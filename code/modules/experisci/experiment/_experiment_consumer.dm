@@ -45,3 +45,29 @@
 /datum/component/experiment_consumer/proc/unlink_techweb()
 	selected_experiment = null
 	linked_web = null
+
+/datum/component/experiment_consumer/proc/select_techweb(mob/user)
+	var/list/servers = get_available_servers()
+	if (servers.len == 0)
+		to_chat(user, "No research servers detected in your vicinity.")
+		return
+	var/snames = list()
+	for (var/obj/s in servers)
+		snames[s.name] = s
+	var/selected = input(user, "Select a research server", "Research Servers") as null|anything in snames
+	var/obj/machinery/rnd/server/new_server = selected ? snames[selected] : null
+	if (new_server && new_server.stored_research != linked_web)
+		link_techweb(new_server.stored_research)
+		to_chat(user, "<span class='notice'>Linked to [new_server.name].</span>")
+	else
+		to_chat(user, "<span class='notice'>You decide not to change the linked research server.</span>")
+
+/datum/component/experiment_consumer/proc/get_available_servers(var/turf/pos = null)
+	if (!pos)
+		pos = get_turf(parent)
+	var/list/local_servers = list()
+	for (var/obj/machinery/rnd/server/s in SSresearch.servers)
+		var/turf/s_pos = get_turf(s)
+		if (pos && s_pos && s_pos.z == pos.z)
+			local_servers += s
+	return local_servers

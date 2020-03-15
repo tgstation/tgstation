@@ -25,3 +25,10 @@
 	. = ..()
 	var/datum/component/experiment_consumer/C = GetComponent(/datum/component/experiment_consumer)
 	C.select_experiment(user, desired_experiments)
+
+/obj/item/experi_scanner/AltClick(mob/user)
+	. = ..()
+	if(!user.canUseTopic(src, be_close=TRUE))
+		return
+	var/datum/component/experiment_consumer/C = GetComponent(/datum/component/experiment_consumer)
+	C.select_techweb(user)
