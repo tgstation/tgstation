@@ -21,7 +21,7 @@
 /obj/projectile/energy/holo
 	name = "holoprojectile"
 	icon_state = "holo"
-	damage = 30
+	damage = 40
 	damage_type = BURN
 	range = 14
 

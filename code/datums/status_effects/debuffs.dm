@@ -654,7 +654,7 @@
 		owner.add_overlay(burn)
 
 /datum/status_effect/holoburn/tick()
-	owner.adjustFireLoss(1)
+	owner.adjustCloneLoss(1)
 
 /datum/status_effect/holoburn/on_remove()
 	owner.cut_overlay(burn)
