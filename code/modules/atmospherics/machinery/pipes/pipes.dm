@@ -12,6 +12,9 @@
 	buckle_requires_restraints = 1
 	buckle_lying = -1
 
+	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
+	var/hide = TRUE
+
 /obj/machinery/atmospherics/pipe/New()
 	add_atom_colour(pipe_color, FIXED_COLOUR_PRIORITY)
 	volume = 35 * device_type
@@ -21,7 +24,8 @@
 /obj/machinery/atmospherics/pipe/Initialize(mapload)
 	. = ..()
 
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	if(hide)
+		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
 /obj/machinery/atmospherics/pipe/nullifyNode(i)
 	var/obj/machinery/atmospherics/oldN = nodes[i]

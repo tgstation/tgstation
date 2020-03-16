@@ -19,6 +19,11 @@
 	var/datum/gas_mixture/air_contents = airs[1]
 	air_contents.volume = 0
 
+/obj/machinery/atmospherics/components/unary/portables_connector/Initialize()
+	. = ..()
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
+
 /obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
 	if(connected_device)
 		connected_device.disconnect()
@@ -48,6 +53,11 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/layer3
 	piping_layer = 3
 	icon_state = "connector_map-3"
+
+/obj/machinery/atmospherics/components/unary/portables_connector/visible/Initialize()
+	. = ..()
+
+	RemoveElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1
 	piping_layer = 1

@@ -3,7 +3,7 @@
 
 /obj/machinery/atmospherics/components
 	var/welded = FALSE //Used on pumps and scrubbers
-	var/showpipe = FALSE
+	var/showpipe = TRUE
 	var/shift_underlay_only = TRUE //Layering only shifts underlay?
 
 	var/list/datum/pipeline/parents
@@ -20,26 +20,15 @@
 		A.volume = 200
 		airs[i] = A
 
-/obj/machinery/atmospherics/components/Initialize()
-	. = ..()
-
-	RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
-
 // Iconnery
 
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
 
-/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
-	showpipe = !covered
-	update_icon()
-
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
 
 	underlays.Cut()
-
-
 
 	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
