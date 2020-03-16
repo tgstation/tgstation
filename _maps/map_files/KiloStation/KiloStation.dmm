@@ -28513,7 +28513,7 @@
 /area/medical/medbay/central)
 "aSv" = (
 /obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
+	req_access_txt = "12;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -49189,7 +49189,7 @@
 "bvV" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Service Production";
-	req_one_access_txt = "25;26;35;28;22;37;46;38"
+	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
