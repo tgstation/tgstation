@@ -20,10 +20,20 @@
 		A.volume = 200
 		airs[i] = A
 
+/obj/machinery/atmospherics/components/Initialize()
+	. = ..()
+
+	if(hide)
+		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+
 // Iconnery
 
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
+
+/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+	showpipe = !covered
+	update_icon()
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
