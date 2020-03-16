@@ -37,7 +37,7 @@ A new subsystem for hydroponics, as a way to share specific traits into plants, 
 
 /obj/item/graft/proc/get_graft_text()
 	var/text = ""
-		text += "- Plant Graft -\n"
+	text += "- Plant Graft -\n"
 	if(parent_seed)
 		text += "- Parent Plant Name:[parent_seed.plantname] -\n"
 	if(stored_trait)
