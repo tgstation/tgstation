@@ -21,7 +21,6 @@
 	desc = "A vile leviathan-esque creature that flies in the most unnatural way.  Slightly looks similar to a space carp."
 	maxHealth = 400
 	health = 400
-	spacewalk = TRUE
 	a_intent = INTENT_HARM
 	speed = 0
 	attack_verb_continuous = "chomps"
@@ -75,6 +74,7 @@
 
 /mob/living/simple_animal/hostile/space_dragon/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	if(small_sprite_type)
 		var/datum/action/small_sprite/small_action = new small_sprite_type()
 		small_action.Grant(src)
