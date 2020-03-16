@@ -59,7 +59,7 @@
 	. = user.transferItemToLoc(I, parent)
 	if(.)
 		var/atom/parent_atom = parent
-		user.visible_message("<span class='notice'>[user] has connected [I] to [parent].</span>", "<span class='notice'>You connect [I] to [parent].</span>")
+		user.visible_message("<span class='notice'>[user] connects [I] to [parent].</span>", "<span class='notice'>You connect [I] to [parent].</span>")
 		parent_atom.add_overlay(I.icon_state+"+o")
 		qdel(I)
 

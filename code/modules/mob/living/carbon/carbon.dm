@@ -262,7 +262,7 @@
 		"<span class='notice'>You stop, drop, and roll!</span>")
 	sleep(30)
 	if(fire_stacks <= 0)
-		visible_message("<span class='danger'>[src] has successfully extinguished [p_them()]self!</span>", \
+		visible_message("<span class='danger'>[src] successfully extinguishes [p_them()]self!</span>", \
 			"<span class='notice'>You extinguish yourself.</span>")
 		ExtinguishMob()
 	return
