@@ -8,22 +8,20 @@
 /// Message displayed when drone in network dies
 #define DRONE_NET_DISCONNECT "<span class='danger'>DRONE NETWORK: [name] is not responding.</span>"
 
-/// For [var/visualAppearance]. Icon states of icons/mob/drone.dmi
-/// Maintenance Drone appearance (multiple colors)
+/// Maintenance Drone icon_state (multiple colors)
 #define MAINTDRONE	"drone_maint"
-/// Repair Drone appearance
+/// Repair Drone icon_state
 #define REPAIRDRONE	"drone_repair"
-/// Scout Drone appearance
+/// Scout Drone icon_state
 #define SCOUTDRONE	"drone_scout"
-/// Clockwork Drone appearance
+/// Clockwork Drone icon_state
 #define CLOCKDRONE	"drone_clock"
 
-/// icon states of hacked drones
-/// [MAINTDRONE] hacked appearance
+/// [MAINTDRONE] hacked icon_state
 #define MAINTDRONE_HACKED "drone_maint_red"
-/// [REPAIRDRONE] hacked appearance
+/// [REPAIRDRONE] hacked icon_state
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
-/// [SCOUTDRONE] hacked appearance
+/// [SCOUTDRONE] hacked icon_state
 #define SCOUTDRONE_HACKED "drone_scout_hacked"
 
 /**

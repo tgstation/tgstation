@@ -3,7 +3,7 @@
   *
   * Arguments:
   * * msg - The message to send
-  * * dead_can_hear - Boolean that determines if ghosts can hear the message (FALSE by default)
+  * * dead_can_hear - Boolean that determines if ghosts can hear the message (`FALSE` by default)
   * * source - [/atom] source that created the message
   * * faction_checked_mob - [/mob/living] to determine faction matches from
   * * exact_faction_match - Passed to [/mob/proc/faction_check_mob]

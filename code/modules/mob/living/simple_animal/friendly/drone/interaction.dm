@@ -56,8 +56,8 @@
 /**
   * Called when a drone attempts to reactivate a dead drone
   *
-  * If the owner is still ghosted, will notify them
-  * If the owner cannot be found, fails with an error message
+  * If the owner is still ghosted, will notify them.
+  * If the owner cannot be found, fails with an error message.
   *
   * Arguments:
   * * user - The [/mob/living] attempting to reactivate the drone
@@ -125,6 +125,7 @@
   *
   * This changes the drone's laws to destroy the station or resets them
   * to normal.
+  *
   * Some debuffs are applied like slowing the drone down and disabling
   * vent crawling
   *

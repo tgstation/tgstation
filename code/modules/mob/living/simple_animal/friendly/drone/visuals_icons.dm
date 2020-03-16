@@ -96,7 +96,8 @@
   * Prompt for usr to pick [/mob/living/simple_animal/drone/var/visualAppearance]
   *
   * Does nothing if there is no usr
-  * Called on [/mob/living/Login]
+  *
+  * Called on [/mob/proc/Login]
   */
 /mob/living/simple_animal/drone/proc/pickVisualAppearance()
 	picked = FALSE
