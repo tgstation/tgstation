@@ -549,6 +549,7 @@
 	if(iscarbon(eater))
 		bbgumhal(eater)
 
+///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
 /obj/item/reagent_containers/food/snacks/chewable/bubbblegum/bubblegum/bbgumhal(mob/living/carbon/victim)
 	if(istype(C) && prob(5)) //cursed by bubblegum
 		if(prob(15))
