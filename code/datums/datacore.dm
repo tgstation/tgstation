@@ -83,7 +83,6 @@
   * * id - record id.
   * * datum/data/crime/crime - premade array containing every variable, usually created by createCrimeEntry.
   */
-
 /datum/datacore/proc/addCrime(id = "", datum/data/crime/crime)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
@@ -99,7 +98,6 @@
   * * id - record id.
   * * cDataId - id of already existing crime.
   */
-
 /datum/datacore/proc/removeCrime(id, cDataId)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
@@ -118,7 +116,6 @@
   * * cDataId - id of already existing crime.
   * * details - data you want to add.
   */
-
 /datum/datacore/proc/addCrimeDetails(id, cDataId, details)
 	for(var/datum/data/record/R in security)
 		if(R.fields["id"] == id)
