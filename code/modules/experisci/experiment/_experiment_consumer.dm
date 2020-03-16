@@ -9,6 +9,11 @@
 	/// Holds the currently selected experiment
 	var/datum/experiment/selected_experiment
 
+/datum/component/experiment_consumer/Initialize(...)
+	. = ..()
+	RegisterSignal(parent, COMSIG_TECHWEB_SELECT, .proc/select_techweb)
+	RegisterSignal(parent, COMSIG_EXPERIMENT_SELECT, .proc/select_experiment)
+
 /**
   * Attempts to have a user select an experiment from the connected techweb
   *
