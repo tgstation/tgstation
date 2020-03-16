@@ -573,6 +573,7 @@
 		ram()
 
 /obj/item/toy/plush/goatplushie/angry/proc/ram()
+if(prob(90) && isturf(loc) && considered_alive(target.mind) && !faction_check(list("goat"), target.faction, FALSE))
 		throw_at(target, 10, 10)
 		visible_message("<span class='danger'>[src] rams [target]!</span>")
 		cooldown = world.time + cooldown_modifier
