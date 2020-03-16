@@ -159,6 +159,7 @@
 	icon_state = "huntingknife"
 
 /obj/item/kitchen/knife/hunting/Initialize()
+	. = ..()
 	var/datum/component/butchering/butcher = GetComponent(/datum/component/butchering)
 	butcher.bonus_modifier += 20 
 
