@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "You can now untie and knot up people's shoelaces! You can do so by laying down next to the person, dragging their sprite onto yours, then clicking \"untie/knot shoes\" next to their shoes."
