@@ -53,12 +53,14 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 			if(E.applies_to(thing, allowed_categories, apply_elastic))
 				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, profit_ratio)
 				report.exported_atoms += " [thing.name]"
+				sold = TRUE
 				if(!QDELETED(thing))
 					report.exported_atoms_ref += thing
 				break
 		if(!sold && thing.custom_materials)
 			var/datum/export/S = new /datum/export
-			S.sell_material_item(thing, report, dry_run, apply_elastic, profit_ratio)
+			if(S.get_material_cost(thing) && (!S.get_cost(thing, allowed_categories , apply_elastic)))
+				S.sell_material_item(thing, report, dry_run, apply_elastic, profit_ratio)
 		if(!dry_run && (sold || delete_unsold))
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)
@@ -218,6 +220,7 @@ GLOBAL_LIST_EMPTY(exports_list)
 
 	if(amount <=0 || material_cost <=0)
 		return FALSE
+	unit_name = "recycled object: [O.name]"
 	if(dry_run == FALSE)
 		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = material_cost & COMSIG_ITEM_SPLIT_VALUE))
 			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
