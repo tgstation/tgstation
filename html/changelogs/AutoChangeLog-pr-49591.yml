@@ -1,0 +1,6 @@
+author: "Archanial"
+delete-after: True
+changes: 
+  - rscdel: "Deleted minor and major crimes (they are just crimes now)."
+  - tweak: "Adding a crime (via sec huds) is now only 1 pop-up, seriously try it."
+  - rscadd: "You can now add crime details in security consoles."
