@@ -81,10 +81,16 @@
 
 ///Does ooze_nutrition + supplied amount and clamps it within 0 and 500
 /mob/living/simple_animal/hostile/ooze/proc/adjust_ooze_nutrition(amount)
-	return ooze_nutrition = clamp(ooze_nutrition + amount, 0, 500)
+	ooze_nutrition = clamp(ooze_nutrition + amount, 0, 500)
+	updateNutritionDisplay()
 
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/A)
 	A.reagents.trans_to(src, A.reagents.total_volume, transfered_by = src)
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(A)
+
+///Updates the display that shows the mobs nutrition
+/mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
+	if(hud_used) //clientless aliens
+		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(getPlasma())]</font></div>"
