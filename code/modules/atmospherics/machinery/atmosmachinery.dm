@@ -185,11 +185,6 @@
 	if(!can_unwrench(user))
 		return ..()
 
-	var/turf/T = get_turf(src)
-	if (level==1 && isturf(T) && T.intact)
-		to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
-		return TRUE
-
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	add_fingerprint(user)
@@ -266,8 +261,6 @@
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
 	setPipingLayer(set_layer)
-	var/turf/T = get_turf(src)
-	level = T.intact ? 2 : 1
 	atmosinit()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)

@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added the Stray Cargo Pod event, which drops a pod containing a random cargo crate into a random location. Rarely, one might even contain assorted syndicate gear!"
