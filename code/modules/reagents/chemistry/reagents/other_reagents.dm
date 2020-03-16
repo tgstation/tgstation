@@ -2100,3 +2100,10 @@
 	reagent_state = SOLID
 	color = "#E6E6DA"
 	taste_mult = 0
+
+/datum/reagent/consumable/gravy
+	name = "Gravy"
+	description = "A mixture of flour, water, and the juices of cooked meat."
+	taste_description = "gravy"
+	color = "#623301"
+	taste_mult = 1.5
