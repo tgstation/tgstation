@@ -92,8 +92,13 @@
 	update_inv_head()
 	update_inv_internal_storage()
 
-
-/mob/living/simple_animal/drone/proc/pickVisualAppearence()
+/**
+  * Prompt for usr to pick [/mob/living/simple_animal/drone/var/visualAppearance]
+  *
+  * Does nothing if there is no usr
+  * Called on [/mob/living/Login]
+  */
+/mob/living/simple_animal/drone/proc/pickVisualAppearance()
 	picked = FALSE
 	var/appearence = input("Choose your appearance!", "Appearance", "Maintenance Drone") in sortList(list("Maintenance Drone", "Repair Drone", "Scout Drone"))
 	switch(appearence)
