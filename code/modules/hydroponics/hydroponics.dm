@@ -125,10 +125,9 @@
 
 	else if(self_sustaining)
 		nutridrain = min(0.5, nutridrain) //By just upgrading your trays you will outpace your trays sustainability.
-		adjustWater(rand(3,5))
-		adjustWeeds(-2)
-		adjustPests(-2)
-		adjustToxic(-2)
+		adjustWater(rand(1,2))
+		adjustWeeds(-1)
+		adjustPests(-1)
 
 	if(world.time > (lastcycle + cycledelay))
 		lastcycle = world.time
