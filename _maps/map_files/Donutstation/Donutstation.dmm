@@ -8094,18 +8094,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "asv" = (
-<<<<<<< HEAD
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/structure/table,
-/obj/machinery/firealarm{
-	pixel_y = 29
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
-=======
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 1
 	},
@@ -8117,7 +8105,6 @@
 /obj/item/storage/bag/trash,
 /turf/open/floor/plasteel,
 /area/security/prison/rec)
->>>>>>> upstream/master
 "asw" = (
 /obj/machinery/vending/snack/random,
 /obj/effect/turf_decal/trimline/white/filled/line{
@@ -8167,11 +8154,6 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "asC" = (
-<<<<<<< HEAD
-/obj/structure/table,
-/turf/open/floor/plasteel,
-/area/hydroponics)
-=======
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/toilet{
 	cistern = 1;
@@ -8180,7 +8162,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison)
->>>>>>> upstream/master
 "asD" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -8870,6 +8851,19 @@
 /obj/item/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"aur" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/structure/table,
+/obj/machinery/firealarm{
+	pixel_y = 29
+	},
+/obj/item/reagent_containers/dropper,
+/obj/item/plant_analyzer,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aus" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/chair/office/light{
@@ -34823,6 +34817,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/qm)
+"byQ" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "byR" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -83988,7 +83986,7 @@ afa
 afa
 afa
 afa
-asC
+byQ
 amA
 akp
 akp
@@ -84756,7 +84754,7 @@ aaT
 afa
 bDc
 afa
-asv
+aur
 aGr
 aGG
 bup

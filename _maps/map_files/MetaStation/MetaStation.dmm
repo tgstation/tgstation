@@ -927,17 +927,6 @@
 /turf/open/space,
 /area/space/nearstation)
 "acl" = (
-<<<<<<< HEAD
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
-=======
 /obj/machinery/light/small{
 	dir = 4
 	},
@@ -948,7 +937,6 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/toilet)
->>>>>>> upstream/master
 "acm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -1294,39 +1282,6 @@
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "acS" = (
-<<<<<<< HEAD
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
-"acT" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/blue,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/mob/living/simple_animal/bot/medbot{
-	auto_patrol = 1;
-	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
-	name = "Inspector Johnson"
-	},
-/turf/open/floor/plasteel/white/corner{
-	dir = 8
-	},
-/area/medical/medbay/central)
-"acU" = (
-=======
->>>>>>> upstream/master
 /obj/structure/closet/crate/necropolis{
 	desc = "Presumably placed here by top men.";
 	name = "\improper Ark of the Covenant"
@@ -1341,8 +1296,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-<<<<<<< HEAD
-=======
 "acT" = (
 /obj/structure/bed/dogbed/runtime,
 /obj/item/toy/cattoy,
@@ -1365,7 +1318,6 @@
 /mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
->>>>>>> upstream/master
 "acV" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/bottle/morphine{
@@ -1689,28 +1641,12 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "adv" = (
-<<<<<<< HEAD
-/obj/structure/bed/dogbed/runtime,
-/obj/item/toy/cattoy,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	dir = 9
-	},
-/mob/living/simple_animal/pet/cat/Runtime,
-/turf/open/floor/plasteel/dark,
-/area/crew_quarters/heads/cmo)
-=======
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
 /mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
->>>>>>> upstream/master
 "adw" = (
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
@@ -1768,14 +1704,7 @@
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "adB" = (
-<<<<<<< HEAD
-/obj/structure/flora/ausbushes/sparsegrass,
-/obj/machinery/airalarm{
-	pixel_y = 22
-	},
-=======
 /obj/structure/cable,
->>>>>>> upstream/master
 /mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
@@ -2007,12 +1936,26 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "aeb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 10
+/obj/item/paper/guides/jobs/hydroponics,
+/obj/machinery/requests_console{
+	department = "Hydroponics";
+	departmentType = 2;
+	pixel_x = -31;
+	pixel_y = -2
 	},
-/mob/living/carbon/monkey,
-/turf/open/floor/grass,
-/area/medical/virology)
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aec" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -2428,10 +2371,16 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aeR" = (
-/obj/structure/cable,
-/mob/living/carbon/monkey,
-/turf/open/floor/grass,
-/area/medical/virology)
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aeS" = (
 /obj/machinery/button/door{
 	id = "permacell2";
@@ -2476,6 +2425,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aeV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/book/manual/hydroponics_pod_people,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aeW" = (
 /obj/machinery/button/door{
 	id = "permacell1";
@@ -45402,28 +45362,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bYe" = (
-/obj/item/book/manual/hydroponics_pod_people,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/machinery/requests_console{
-	department = "Hydroponics";
-	departmentType = 2;
-	pixel_x = -31;
-	pixel_y = -2
-	},
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "bYf" = (
 /obj/item/stack/packageWrap,
 /obj/item/stack/packageWrap,
@@ -93679,11 +93617,7 @@ vHP
 dux
 mnS
 dux
-<<<<<<< HEAD
-acU
-=======
 acS
->>>>>>> upstream/master
 dux
 pLU
 uzM
@@ -94217,11 +94151,7 @@ nrc
 jwJ
 sfD
 pwT
-<<<<<<< HEAD
-aeb
-=======
 adv
->>>>>>> upstream/master
 ngK
 dBN
 aaa
@@ -94474,20 +94404,12 @@ gxl
 lMJ
 lMJ
 cBR
-<<<<<<< HEAD
-adB
-=======
 acU
->>>>>>> upstream/master
 qTL
 qAX
 uFb
 tgQ
-<<<<<<< HEAD
-aeR
-=======
 adB
->>>>>>> upstream/master
 dBN
 lMJ
 fwb
@@ -102948,11 +102870,7 @@ cmu
 cnG
 coS
 cqn
-<<<<<<< HEAD
-adv
-=======
 acT
->>>>>>> upstream/master
 csB
 rAF
 cCf
@@ -103969,11 +103887,7 @@ bXO
 bZc
 fmC
 cbW
-<<<<<<< HEAD
-acT
-=======
 acp
->>>>>>> upstream/master
 ceG
 cfW
 chb
@@ -111679,7 +111593,7 @@ bST
 bUf
 bVs
 bWL
-bYe
+aeb
 bZt
 caK
 ccs
@@ -113995,7 +113909,7 @@ qkD
 bYk
 qkD
 tQN
-acl
+aeR
 bST
 diB
 cgq
@@ -114252,7 +114166,7 @@ bWU
 bYl
 bZv
 caP
-acS
+aeV
 bST
 cff
 cgq
