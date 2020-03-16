@@ -689,6 +689,6 @@
 		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
 		divine = TRUE
 		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	playsound(src, 'sound/hallucinations/wail.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/voice/moth/scream_moth.ogg', 100)
 	user.dust(just_ash = FALSE, drop_items = TRUE)
 	return MANUAL_SUICIDE
