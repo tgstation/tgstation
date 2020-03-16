@@ -24,3 +24,4 @@
 	H.hair_color = "FFF"
 	H.facial_hair_color = "FFF"
 	H.update_hair()
+	H.gender = "male"
