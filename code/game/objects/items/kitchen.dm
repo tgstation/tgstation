@@ -153,6 +153,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = 600
 
+/obj/item/kitchen/knife/hunting
+	name = "hunting knife"
+	desc = "Despite its name, it's mainly used for cutting the meat of dead prey rather than actual hunting."
+	icon_state = "survivalknife"
+
 /obj/item/kitchen/knife/combat
 	name = "combat knife"
 	icon_state = "buckknife"

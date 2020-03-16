@@ -23,8 +23,8 @@
 	health = 25
 	spacewalk = TRUE
 	food_type = list(/obj/item/reagent_containers/food/snacks/meat)
-	tame_chance = 20
-	bonus_tame_chance = 10
+	tame_chance = 10
+	bonus_tame_chance = 5
 	search_objects = 1
 	wanted_objects = list(/obj/item/storage/cans)
 
@@ -159,7 +159,7 @@
 	gold_core_spawnable = NO_SPAWN
 	del_on_death = 1
 	random_color = FALSE
-	food_type = null
+	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
 
@@ -177,7 +177,7 @@
 	pixel_x = -16
 	mob_size = MOB_SIZE_LARGE
 	random_color = FALSE
-	food_type = null
+	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
 
@@ -229,7 +229,7 @@
 	faction = list(ROLE_SYNDICATE)
 	AIStatus = AI_OFF
 	rarechance = 10
-	food_type = null
+	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
 
