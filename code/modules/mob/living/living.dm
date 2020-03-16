@@ -663,9 +663,6 @@
 /mob/living/carbon/alien/humanoid/lying_angle_on_movement(direct)
 	return
 
-/mob/living/carbon/alien/humanoid/lying_angle_on_movement(direct)
-	return
-
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
 		return
