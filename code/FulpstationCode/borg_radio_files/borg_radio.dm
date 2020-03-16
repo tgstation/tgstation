@@ -67,7 +67,10 @@
 		return RADIO_CHANNEL_SERVICE
 	if(istype(module, /obj/item/robot_module/syndicate))
 		return RADIO_CHANNEL_SYNDICATE
-
+	if(istype(module, /obj/item/robot_module/syndicate_medical))
+		return RADIO_CHANNEL_SYNDICATE
+	if(istype(module, /obj/item/robot_module/saboteur))
+		return RADIO_CHANNEL_SYNDICATE
 
 /obj/item/radio/borg/proc/reactivate_integrated_borg_key(user)
 

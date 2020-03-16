@@ -338,6 +338,7 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
+		/obj/item/reagent_containers/borghypo,
 		/obj/item/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/borg/apparatus/beaker,
@@ -349,6 +350,7 @@
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
+		/obj/item/organ_storage,
 		/obj/item/melee/transforming/energy/sword/cyborg/saw,
 		/obj/item/holobed_projector/robot,
 		/obj/item/crowbar/cyborg,
@@ -356,11 +358,14 @@
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/gun/medbeam,
-		/obj/item/organ_storage,
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/borg/lollipop,
 		/obj/item/borg_chameleon
 		)
+
+/obj/item/reagent_containers/borghypo/syndicate
+	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also synthesizes potassium iodide for radiation poisoning and lipolicide and anacea for stealthy kills and heparin for more overt ones."
+	reagent_ids = list(/datum/reagent/medicine/syndicate_nanites, /datum/reagent/medicine/potass_iodide, /datum/reagent/toxin/lipolicide, /datum/reagent/toxin/anacea, /datum/reagent/toxin/heparin)
 
 //***************************************************************************
 //** FULPSTATION SYNDIBORG DISGUISE MENU by Surrealistik March 2020 ENDS
