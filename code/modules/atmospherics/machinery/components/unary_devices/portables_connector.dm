@@ -7,7 +7,6 @@
 	can_unwrench = TRUE
 
 	use_power = NO_POWER_USE
-	level = 0
 	layer = GAS_FILTER_LAYER
 
 	pipe_flags = PIPING_ONE_PER_TURF
@@ -49,9 +48,6 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/layer3
 	piping_layer = 3
 	icon_state = "connector_map-3"
-
-/obj/machinery/atmospherics/components/unary/portables_connector/visible
-	level = 2
 
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1
 	piping_layer = 1
