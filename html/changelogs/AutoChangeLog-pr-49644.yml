@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes: 
+  - tweak: "Ducts can now be hidden under tiles"
+  - code_imp: "tile hiding is now an element and way cooler and sexier"

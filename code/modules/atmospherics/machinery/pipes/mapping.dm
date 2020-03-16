@@ -6,7 +6,6 @@
 		color = Color;					\
 	}									\
 	##Fulltype/visible {				\
-		level = PIPE_VISIBLE_LEVEL;		\
 		layer = GAS_PIPE_VISIBLE_LAYER;	\
 	}									\
 	##Fulltype/visible/layer1 {			\
@@ -16,9 +15,6 @@
 	##Fulltype/visible/layer3 {			\
 		piping_layer = 3;				\
 		icon_state = Iconbase + "-3";	\
-	}									\
-	##Fulltype/hidden {					\
-		level = PIPE_HIDDEN_LEVEL;		\
 	}									\
 	##Fulltype/hidden/layer1 {			\
 		piping_layer = 1;				\

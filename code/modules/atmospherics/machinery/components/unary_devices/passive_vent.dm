@@ -5,7 +5,6 @@
 	desc = "It is an open vent."
 	can_unwrench = TRUE
 
-	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
 	pipe_state = "pvent"
