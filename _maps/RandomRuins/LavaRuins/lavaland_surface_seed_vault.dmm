@@ -262,9 +262,7 @@
 /area/ruin/powered/seedvault)
 "aL" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/disks_plantgene,
-/obj/item/storage/box/disks_plantgene,
-/obj/item/storage/box/disks_plantgene,
+/obj/item/secateurs,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aM" = (
@@ -1054,7 +1052,7 @@ aX
 aE
 aA
 aA
-aM
+aL
 ac
 bm
 br
