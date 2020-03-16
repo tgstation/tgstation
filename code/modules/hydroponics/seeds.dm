@@ -32,7 +32,7 @@
 	/// Amount of growth sprites the plant has.
 	var/growthstages = 6
 	// Chance that a plant will mutate in each stage of it's life.
-	var/stability = 5
+	var/instability = 5
 	/// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
 	var/rarity = 0
 	/// The type of plants that this plant can mutate into.
@@ -78,7 +78,7 @@
 			genes += new /datum/plant_gene/core/production(production)
 		if(potency != -1)
 			genes += new /datum/plant_gene/core/potency(potency)
-			genes += new /datum/plant_gene/core/stability(stability)
+			genes += new /datum/plant_gene/core/instability(instability)
 
 		for(var/p in genes)
 			if(ispath(p))
@@ -102,7 +102,7 @@
 	S.production = production
 	S.yield = yield
 	S.potency = potency
-	S.stability = stability
+	S.instability = instability
 	S.weed_rate = weed_rate
 	S.weed_chance = weed_chance
 	S.name = name
@@ -142,7 +142,7 @@
 	adjust_production(rand(-productmut,productmut))
 	adjust_yield(rand(-yieldmut,yieldmut))
 	adjust_potency(rand(-potmut,potmut))
-	adjust_stability(rand(-stabmut,stabmut))
+	adjust_instability(rand(-stabmut,stabmut))
 	adjust_weed_rate(rand(-wrmut, wrmut))
 	adjust_weed_chance(rand(-wcmut, wcmut))
 	if(prob(traitmut))
@@ -262,12 +262,12 @@
 		if(C)
 			C.value = potency
 
-/obj/item/seeds/proc/adjust_stability(adjustamt)
-	if(stability != -1)
-		stability = clamp(stability + adjustamt, 0, 100)
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/stability)
+/obj/item/seeds/proc/adjust_instability(adjustamt)
+	if(instability != -1)
+		instability = clamp(instability + adjustamt, 0, 100)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
 		if(C)
-			C.value = stability
+			C.value = instability
 
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
 	weed_rate = clamp(weed_rate + adjustamt, 0, 10)
@@ -319,12 +319,12 @@
 		if(C)
 			C.value = potency
 
-/obj/item/seeds/proc/set_stability(adjustamt)
-	if(stability != -1)
-		stability = clamp(adjustamt, 0, 100)
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/stability)
+/obj/item/seeds/proc/set_instability(adjustamt)
+	if(instability != -1)
+		instability = clamp(adjustamt, 0, 100)
+		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
 		if(C)
-			C.value = stability
+			C.value = instability
 
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
 	weed_rate = clamp(adjustamt, 0, 10)
@@ -358,7 +358,7 @@
 		text += "- Production speed: [production]\n"
 	text += "- Endurance: [endurance]\n"
 	text += "- Lifespan: [lifespan]\n"
-	text += "- Stability: [stability]\n"
+	text += "- Instability: [instability]\n"
 	text += "- Weed Growth Rate: [weed_rate]\n"
 	text += "- Weed Vulnerability: [weed_chance]\n"
 	if(rarity)

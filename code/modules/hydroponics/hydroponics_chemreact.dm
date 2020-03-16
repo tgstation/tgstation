@@ -15,7 +15,7 @@
 				visible_message("<span class='warning'>[myseed.plantname] starts to wilt and burn!</span>")
 			if(41 to 90)
 				if(myseed && !self_sustaining) //Stability
-					myseed.adjust_stability(5)
+					myseed.adjust_instability(5)
 			if(21 to 40)
 				visible_message("<span class='notice'>[myseed.plantname] appears unusually reactive...</span>")
 			if(11 to 20)
@@ -34,18 +34,18 @@
 	//Regular Nutrients
 	if(S.has_reagent(/datum/reagent/plantnutriment/eznutriment, 1))
 		if(myseed)
-			myseed.adjust_stability(0.2)
+			myseed.adjust_instability(0.2)
 			myseed.adjust_potency(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 0.05))
 			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 0.1))
 
 	if(S.has_reagent(/datum/reagent/plantnutriment/left4zednutriment, 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/plantnutriment/left4zednutriment) * 0.01))
 		if(myseed)
-			myseed.adjust_stability(round(S.get_reagent_amount(/datum/reagent/plantnutriment/left4zednutriment) * 0.2))
+			myseed.adjust_instability(round(S.get_reagent_amount(/datum/reagent/plantnutriment/left4zednutriment) * 0.2))
 
 	if(S.has_reagent(/datum/reagent/plantnutriment/robustharvestnutriment, 1))
 		if(myseed)
-			myseed.adjust_stability(-0.25)
+			myseed.adjust_instability(-0.25)
 			myseed.adjust_potency(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) * 0.5))
 			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) * 0.1))
 
@@ -107,7 +107,7 @@
 		adjustWater(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 0.1))
 		if(myseed)
-			myseed.adjust_stability(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 0.15))
+			myseed.adjust_instability(round(S.get_reagent_amount(/datum/reagent/water/holywater) * 0.15))
 
 	// A variety of nutrients are dissolved in club soda, without sugar.
 	// These nutrients include carbon, oxygen, hydrogen, phosphorous, potassium, sulfur and sodium, all of which are needed for healthy plant growth.
@@ -165,7 +165,7 @@
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/ammonia) * 0.12))
 		if(myseed && prob(10))
 			myseed.adjust_yield(1)
-			myseed.adjust_stability(1)
+			myseed.adjust_instability(1)
 
 	// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
 	if(S.has_reagent(/datum/reagent/saltpetre, 1))
@@ -185,13 +185,13 @@
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
 		if(myseed)
 			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
-			myseed.adjust_stability(-round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
+			myseed.adjust_instability(-round(S.get_reagent_amount(/datum/reagent/diethylamine) * 1))
 		adjustPests(-rand(1,2))
 
 	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
 	if(S.has_reagent(/datum/reagent/stabilizing_agent, 1))
 		if(myseed)
-			myseed.adjust_stability(-1)
+			myseed.adjust_instability(-1)
 
 	// Compost, effectively
 	if(S.has_reagent(/datum/reagent/consumable/nutriment, 1))

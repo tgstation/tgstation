@@ -10,7 +10,7 @@
 	maturation = 8
 	yield = 6
 	potency = 20
-	stability = 1 //Flowers have 1 stability, if you want to breed out stability, crossbreed with flowers.
+	instability = 1 //Flowers have 1 instability, if you want to breed out instability, crossbreed with flowers.
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
@@ -117,7 +117,7 @@
 	production = 1
 	yield = 2
 	potency = 30
-	stability = 1
+	instability = 1
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
@@ -145,7 +145,7 @@
 	endurance = 20
 	production = 2
 	yield = 2
-	stability = 1
+	instability = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
