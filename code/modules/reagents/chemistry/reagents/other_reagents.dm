@@ -2106,5 +2106,5 @@
 	description = "A mixture of flour, water, and the juices of cooked meat."
 	taste_description = "gravy"
 	color = "#623301"
-	taste_mult = 1.5
+	taste_mult = 1.2
 

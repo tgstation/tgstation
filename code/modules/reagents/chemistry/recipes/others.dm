@@ -565,6 +565,6 @@
 	required_catalysts = list(/datum/reagent/water/holywater = 1)
 
 /datum/chemical_reaction/gravy
-	results = list(/datum/reagent/consumable/gravy = 3)
+	results = list(/datum/reagent/consumable/gravy = 6)
 	required_reagents = list(/datum/reagent/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
 
