@@ -16,7 +16,6 @@
   * - Can swallow mob corpses to heal for half their max health.  Any corpses swallowed are stored within him, and will be regurgitated on death.
   * - Can tear through any type of wall.  This takes 4 seconds for most walls, and 12 seconds for reinforced walls.
   */
-
 /mob/living/simple_animal/hostile/space_dragon
 	name = "Space Dragon"
 	desc = "A vile leviathan-esque creature that flies in the most unnatural way.  Slightly looks similar to a space carp."
@@ -128,6 +127,9 @@
 					adjustHealth(-L.maxHealth * 0.5)
 			return
 	. = ..()
+	if(istype(target, /obj/mecha))
+		var/obj/mecha/M = target
+		M.take_damage(50, BRUTE, "melee", 1)
 
 /mob/living/simple_animal/hostile/space_dragon/Move()
 	if(!using_special)
@@ -159,7 +161,6 @@
   * * range - how many turfs should we go out for
   * * atom/at - The target
   */
-
 /mob/living/simple_animal/hostile/space_dragon/proc/line_target(offset, range, atom/at = target)
 	if(!at)
 		return
@@ -181,7 +182,6 @@
   * Arguments:
   * * atom/at - The target
   */
-
 /mob/living/simple_animal/hostile/space_dragon/proc/fire_stream(var/atom/at = target)
 	playsound(get_turf(src),'sound/magic/fireball.ogg', 200, TRUE)
 	var/range = 20
@@ -194,7 +194,8 @@
 		for(var/obj/structure/window/W in T.contents)
 			return
 		for(var/obj/machinery/door/D in T.contents)
-			return
+			if(D.density)
+				return
 		delayFire += 1.5
 		addtimer(CALLBACK(src, .proc/dragon_fire_line, T), delayFire)
 
@@ -207,7 +208,6 @@
   * Arguments:
   * * turf/T - The turf to trigger the effects on.
   */
-
 mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	var/list/hit_list = list()
 	hit_list += src
@@ -234,7 +234,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * Arguments:
   * * atom/movable/A - The thing being consumed
   */
-
 /mob/living/simple_animal/hostile/space_dragon/proc/eat(atom/movable/A)
 	if(A && A.loc != src)
 		playsound(src, 'sound/magic/demon_attack1.ogg', 100, TRUE)
@@ -249,7 +248,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * Randomly places the contents of the mob onto surrounding tiles.
   * Has a 10% chance to place on the same tile as the mob.
   */
-
 /mob/living/simple_animal/hostile/space_dragon/proc/empty_contents()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(loc)
@@ -263,7 +261,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * If it isn't dead by the time it calls this method, reset the sprite back to the normal living sprite.
   * Also sets the using_special variable to FALSE, allowing Space Dragon to move and attack freely again.
   */
-
 /mob/living/simple_animal/hostile/space_dragon/proc/reset_status()
 	if(stat != DEAD)
 		icon_state = "spacedragon"
@@ -276,7 +273,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * Currently, the only reference they have is to the Dragon which created them, so we clear that before deleting them.
   * Currently used when Space Dragon dies.
   */	
-
 /mob/living/simple_animal/hostile/space_dragon/proc/destroy_rifts()
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.dragon = null
@@ -295,7 +291,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * Arguments:
   * * timer - The timer used for the windup.
   */
-
 /mob/living/simple_animal/hostile/space_dragon/proc/useGust(timer)
 	if(timer != 10)
 		pixel_y = pixel_y + 2;
@@ -328,7 +323,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * Sets all of his rifts to allow for infinite sentient carp spawns
   * Also plays appropiate sounds and CENTCOM messages.
   */
-
 /mob/living/simple_animal/hostile/space_dragon/proc/victory()
 	objective_complete = TRUE
 	var/datum/antagonist/space_dragon/S = mind.has_antag_datum(/datum/antagonist/space_dragon)
@@ -387,7 +381,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 		CR.dragon = S
 		S.rift_list += CR
 		to_chat(S, "<span class='boldwarning'>The rift has been summoned.  Prevent the crew from destroying it at all costs!</span>")
-		notify_ghosts("\[S] has opened a rift!", source = CR, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
+		notify_ghosts("The Space Dragon has opened a rift!", source = CR, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Rift Opened")
 		qdel(src)
 
 /**
@@ -399,7 +393,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * The portals can summon sentient space carp in limited amounts.  The portal also changes color based on whether or not a carp spawn is available.
   * Once it is fully charged, it becomes indestructible, and intermitently spawns non-sentient carp.  It is still destroyed if Space Dragon dies.
   */
-
 /obj/structure/carp_rift
 	name = "carp rift"
 	desc = "A rift akin to the ones space carp use to travel long distances."
@@ -467,7 +460,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * If we're halfway charged, announce to the crew our location in a CENTCOM announcement.
   * If we're fully charged, tell the crew we are, change our color to yellow, become invulnerable, and give Space Dragon the ability to make another rift, if he hasn't summoned 3 total.
   */
-
 /obj/structure/carp_rift/proc/update_check()
 	if(time_charged % 40 == 0 && time_charged != max_charge)
 		carp_stored++
@@ -498,7 +490,6 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * Arguments:
   * * mob/user - The ghost which will take control of the carp.
   */
-
 /obj/structure/carp_rift/proc/summon_carp(mob/user)
 	if(carp_stored == 0)//Not enough carp points
 		return FALSE
