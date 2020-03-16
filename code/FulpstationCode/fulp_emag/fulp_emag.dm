@@ -15,14 +15,17 @@
 		to_chat(user, "<span class='warning'>[src] is out of charges and needs [((timestamp + cooldown) - world.time) / 10] more seconds to recharge!</span>")
 		return
 
-	if(check_emag_status(target)) //Check whether it's already emagged; if so, no need to progress.
+	if(check_emag_status(target)) //Check whether it's already emagged; if so, no need to progress. Exception for borgs that have their panel open because they can be repeatedly emagged.
 		return
 
 	. = ..()
 
-	if(!check_emag_status(target))
+	if(!check_emag_status(target, FALSE)) //Check whether there's a change in emag state; if not, we don't deduct a charge.
 		return
 
+	expend_charge(user)
+
+/obj/item/card/emag/budget/proc/expend_charge(mob/user)
 	charges = max(charges - 1, 0)
 	maptext = "[charges]"
 	timestamp = world.time
@@ -34,7 +37,7 @@
 	maptext = "[charges]"
 	playsound(loc, SEC_BODY_CAM_SOUND, get_clamped_volume(), TRUE, -1)
 
-/obj/item/card/emag/budget/proc/check_emag_status(atom/A)
+/obj/item/card/emag/budget/proc/check_emag_status(atom/A, pre_check = TRUE)
 	if(!A)
 		return FALSE
 
@@ -55,7 +58,23 @@
 
 	if(istype(A, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/R = A
-		if(!R.emagged)
-			return TRUE
+		if(pre_check && (R.opened || R.locked) ) //Checks specific to pre emag act.
+			return FALSE //If the cover is opened, we will always pass false for the pre-check and true for the post-check as borgs can be subverted any number of times.
+
+		return TRUE //We always assume emag is true during the post-check so we can re-subvert borgs; further, we will deplete a charge if the cover was locked at the time of the pre-check.
 
 	return FALSE
+
+
+//EMAG INTERACTIONS
+
+/mob/living/silicon/robot/proc/fulp_emag_features() //Enable kill mode.when emagged
+	if(istype(module, /obj/item/robot_module/security)) //Thus far we only deal with security modules; there is support for others though.
+		var/obj/item/gun/energy/e_gun/cyborg/T = check_for_item(/obj/item/gun/energy/e_gun/cyborg)
+		if(!T)
+			return
+		if(emagged)
+			T.ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
+		else if(!locate(/obj/item/borg/upgrade/e_gun_lethal) in upgrades) //Only revert if we don't have the requisite upgrade for lethals
+			T.ammo_type = list(/obj/item/ammo_casing/energy/disabler)
+		T.update_ammo_types()

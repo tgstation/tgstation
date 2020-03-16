@@ -522,19 +522,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
-//EMAG INTERACTIONS
-
-/mob/living/silicon/robot/proc/fulp_emag_features() //Enable kill mode.when emagged
-	if(istype(module, /obj/item/robot_module/security)) //Thus far we only deal with security modules; there is support for others though.
-		var/obj/item/gun/energy/e_gun/cyborg/T = check_for_item(/obj/item/gun/energy/e_gun/cyborg)
-		if(!T)
-			return
-		if(emagged)
-			T.ammo_type = list(/obj/item/ammo_casing/energy/disabler, /obj/item/ammo_casing/energy/laser)
-		else if(!locate(/obj/item/borg/upgrade/e_gun_lethal) in upgrades) //Only revert if we don't have the requisite upgrade for lethals
-			T.ammo_type = list(/obj/item/ammo_casing/energy/disabler)
-		T.update_ammo_types()
-
 /mob/proc/check_for_item(typepath)
 	if(locate(typepath) in src)
 		return (locate(typepath) in src)
