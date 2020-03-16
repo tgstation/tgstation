@@ -292,10 +292,11 @@
 	return .
 
 /obj/machinery/biogenerator/proc/detach(mob/living/user)
-	if(beaker)
-		user.put_in_hands(beaker)
-		beaker = null
-		update_icon()
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		if(beaker)
+			user.put_in_hands(beaker)
+			beaker = null
+			update_icon()
 
 /obj/machinery/biogenerator/Topic(href, href_list)
 	if(..() || panel_open)
