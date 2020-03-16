@@ -428,8 +428,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return
 
 	tts_message = trim(copytext(sanitize_simple(tts_message, list("\""="", "\n"=" ", "\t"=" ")), 1, MAX_MESSAGE_LEN * 10))	//Remove problematic symbols
+
 	if (!tts_message)
 		return
+
+	tts_message = html_decode(tts_message)	//Prevents HTML from being fed to the generator
 
 	var/talk_key = get_key(tts_message)
 
