@@ -292,7 +292,7 @@
  * Trays - Agouri
  */
 /obj/item/storage/bag/tray
-	name = "tray"
+	name = "serving tray"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
@@ -349,6 +349,12 @@
 /obj/item/storage/bag/tray/Exited()
 	. = ..()
 	update_icon()
+
+/obj/item/storage/bag/tray/cafeteria
+	name = "cafeteria tray"
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "foodtray"
+	desc = "A cheap metal tray to pile today's meal onto."
 
 /*
  *	Chemistry bag

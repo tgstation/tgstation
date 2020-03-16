@@ -223,6 +223,7 @@
 	name = "old sink";
 	pixel_y = 28
 	},
+/obj/item/storage/bag/trash,
 /turf/open/floor/plating{
 	icon_state = "platingdmg3"
 	},
@@ -926,6 +927,7 @@
 /turf/open/space,
 /area/space/nearstation)
 "acl" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -935,6 +937,18 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+=======
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/structure/toilet{
+	cistern = 1;
+	dir = 4;
+	icon_state = "toilet01"
+	},
+/turf/open/floor/plasteel/freezer,
+/area/security/prison/toilet)
+>>>>>>> upstream/master
 "acm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
@@ -962,14 +976,25 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "acp" = (
-/obj/machinery/light/small{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/toilet{
+/obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/turf/open/floor/plasteel/freezer,
-/area/security/prison/toilet)
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/mob/living/simple_animal/bot/medbot{
+	auto_patrol = 1;
+	desc = "A little medical robot, officially part of the Nanotrasen medical inspectorate. He looks somewhat underwhelmed.";
+	name = "Inspector Johnson"
+	},
+/turf/open/floor/plasteel/white/corner{
+	dir = 8
+	},
+/area/medical/medbay/central)
 "acq" = (
 /obj/structure/table,
 /obj/item/storage/box/donkpockets{
@@ -1269,6 +1294,7 @@
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "acS" = (
+<<<<<<< HEAD
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -1299,6 +1325,8 @@
 	},
 /area/medical/medbay/central)
 "acU" = (
+=======
+>>>>>>> upstream/master
 /obj/structure/closet/crate/necropolis{
 	desc = "Presumably placed here by top men.";
 	name = "\improper Ark of the Covenant"
@@ -1313,6 +1341,31 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+<<<<<<< HEAD
+=======
+"acT" = (
+/obj/structure/bed/dogbed/runtime,
+/obj/item/toy/cattoy,
+/obj/structure/disposalpipe/segment,
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 9
+	},
+/mob/living/simple_animal/pet/cat/Runtime,
+/turf/open/floor/plasteel/dark,
+/area/crew_quarters/heads/cmo)
+"acU" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/machinery/airalarm{
+	pixel_y = 22
+	},
+/mob/living/carbon/monkey,
+/turf/open/floor/grass,
+/area/medical/virology)
+>>>>>>> upstream/master
 "acV" = (
 /obj/structure/table,
 /obj/item/reagent_containers/glass/bottle/morphine{
@@ -1636,6 +1689,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "adv" = (
+<<<<<<< HEAD
 /obj/structure/bed/dogbed/runtime,
 /obj/item/toy/cattoy,
 /obj/structure/disposalpipe/segment,
@@ -1649,6 +1703,14 @@
 /mob/living/simple_animal/pet/cat/Runtime,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
+=======
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 10
+	},
+/mob/living/carbon/monkey,
+/turf/open/floor/grass,
+/area/medical/virology)
+>>>>>>> upstream/master
 "adw" = (
 /obj/structure/chair/stool,
 /obj/machinery/light/small{
@@ -1706,10 +1768,14 @@
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "adB" = (
+<<<<<<< HEAD
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
+=======
+/obj/structure/cable,
+>>>>>>> upstream/master
 /mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/medical/virology)
@@ -93613,7 +93679,11 @@ vHP
 dux
 mnS
 dux
+<<<<<<< HEAD
 acU
+=======
+acS
+>>>>>>> upstream/master
 dux
 pLU
 uzM
@@ -94147,7 +94217,11 @@ nrc
 jwJ
 sfD
 pwT
+<<<<<<< HEAD
 aeb
+=======
+adv
+>>>>>>> upstream/master
 ngK
 dBN
 aaa
@@ -94400,12 +94474,20 @@ gxl
 lMJ
 lMJ
 cBR
+<<<<<<< HEAD
 adB
+=======
+acU
+>>>>>>> upstream/master
 qTL
 qAX
 uFb
 tgQ
+<<<<<<< HEAD
 aeR
+=======
+adB
+>>>>>>> upstream/master
 dBN
 lMJ
 fwb
@@ -99693,7 +99775,7 @@ aay
 abh
 abA
 abY
-acp
+acl
 aax
 acZ
 adq
@@ -102866,7 +102948,11 @@ cmu
 cnG
 coS
 cqn
+<<<<<<< HEAD
 adv
+=======
+acT
+>>>>>>> upstream/master
 csB
 rAF
 cCf
@@ -103883,7 +103969,11 @@ bXO
 bZc
 fmC
 cbW
+<<<<<<< HEAD
 acT
+=======
+acp
+>>>>>>> upstream/master
 ceG
 cfW
 chb

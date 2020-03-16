@@ -33,7 +33,7 @@
 
 	var/tiled_dirt = FALSE // use smooth tiled dirt decal
 
-	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID	//when this be added to vis_contents of something it inherit something.plane and be associatet with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
+	vis_flags = VIS_INHERIT_PLANE|VIS_INHERIT_ID	//when this be added to vis_contents of something it inherit something.plane and be associated with something on clicking, important for visualisation of turf in openspace and interraction with openspace that show you turf.
 
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list("x", "y", "z")
@@ -175,6 +175,7 @@
 	return TRUE
 
 /turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)
+	SHOULD_BE_PURE(TRUE)
 	return zPassOut(A, DOWN, target) && target.zPassIn(A, DOWN, src)
 
 /turf/proc/zFall(atom/movable/A, levels = 1, force = FALSE)
