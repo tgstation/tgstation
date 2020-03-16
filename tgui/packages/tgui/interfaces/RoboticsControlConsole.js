@@ -110,7 +110,9 @@ const Cyborgs = props => {
             {cyborg.module}
           </LabeledList.Item>
           <LabeledList.Item label="Master AI">
-            {cyborg.synchronization || "None"}
+            <Box color={cyborg.synchronization ? 'average' : 'bad'}>
+              {cyborg.synchronization || "None"}
+            </Box>
           </LabeledList.Item>
         </LabeledList>
       </Section>

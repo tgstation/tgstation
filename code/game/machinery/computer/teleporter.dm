@@ -6,7 +6,7 @@
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
 	ui_x = 475
-	ui_y = 130
+	ui_y = 140
 	var/regime_set = "Teleporter"
 	var/id
 	var/obj/machinery/teleport/station/power_station
