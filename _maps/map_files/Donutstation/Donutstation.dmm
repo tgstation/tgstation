@@ -19636,7 +19636,7 @@
 "aTo" = (
 /obj/machinery/door/airlock/medical/glass{
 	name = "Service Door";
-	req_one_access_txt = "22;25;26;28;35;37;38;46"
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
@@ -21676,9 +21676,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"aXp" = (
-/turf/closed/wall,
-/area/medical/psychology)
 "aXq" = (
 /obj/structure/table/reinforced,
 /obj/item/folder/white,
@@ -44732,7 +44729,7 @@
 /area/maintenance/port)
 "cbT" = (
 /obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;22;25;26;28;35;37;38;46"
+	req_one_access_txt = "12;22;25;26;28;35;37;38;46;70"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -73433,12 +73430,12 @@ aGE
 beS
 aGE
 aGE
-aXp
-aXp
-aXp
+aJv
+aJv
+aJv
 bXh
-aXp
-aXp
+aJv
+aJv
 bMs
 bfq
 acB
@@ -73695,7 +73692,7 @@ aYl
 mkR
 aJU
 bMe
-aXp
+aJv
 bMs
 bfq
 acB
@@ -73952,7 +73949,7 @@ aKf
 onl
 aXY
 aUs
-aXp
+aJv
 bXP
 bfq
 acB
@@ -74209,7 +74206,7 @@ aXr
 xyk
 bfE
 bdj
-aXp
+aJv
 bZk
 bfm
 eMB
@@ -74461,12 +74458,12 @@ aGE
 bxv
 aGE
 aGE
-aXp
+aJv
 aXH
-aXp
-aXp
-aXp
-aXp
+aJv
+aJv
+aJv
+aJv
 acB
 bMs
 bfq
