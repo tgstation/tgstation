@@ -29316,7 +29316,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
 	name = "Service Hall";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "22;25;26;28;35;37;38;46"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line,
@@ -33300,7 +33300,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/public/glass{
 	name = "Service Foyer";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "22;25;26;28;35;37;38;46"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/stripes/line,
@@ -86106,6 +86106,24 @@
 "ddm" = (
 /turf/closed/wall,
 /area/medical/psychology)
+"ddn" = (
+/turf/closed/wall,
+/area/medical/psychology)
+"ddo" = (
+/turf/closed/wall,
+/area/medical/psychology)
+"ddp" = (
+/turf/closed/wall,
+/area/medical/psychology)
+"ddq" = (
+/turf/closed/wall,
+/area/medical/psychology)
+"ddr" = (
+/turf/closed/wall,
+/area/medical/psychology)
+"dds" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "ddt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
@@ -86819,6 +86837,12 @@
 /obj/structure/bookcase/random/reference,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
+"deS" = (
+/turf/closed/wall,
+/area/medical/psychology)
+"deT" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "deU" = (
 /obj/machinery/door/airlock/maintenance_hatch{
 	name = "Maintenance Hatch";
@@ -87292,6 +87316,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"dfO" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "dfP" = (
 /obj/structure/chair/comfy/brown{
 	dir = 4
@@ -87299,6 +87326,9 @@
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "dfQ" = (
+/turf/open/floor/carpet,
+/area/medical/psychology)
+"dfR" = (
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "dfS" = (
@@ -88197,6 +88227,9 @@
 /obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
+"dhA" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "dhB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -89011,6 +89044,12 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
+/area/medical/psychology)
+"diU" = (
+/turf/open/floor/plasteel/white,
+/area/medical/psychology)
+"diV" = (
+/turf/closed/wall,
 /area/medical/psychology)
 "diW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -166513,12 +166552,12 @@ cAw
 cYg
 cZS
 cIW
-ddm
-ddm
-ddm
-ddm
+diV
+diV
+diV
+diV
 lrz
-ddm
+diV
 dmh
 dmh
 dmh
@@ -166770,7 +166809,7 @@ cAw
 cYh
 cZT
 dbC
-ddm
+diV
 deN
 dfP
 dhv
@@ -167027,10 +167066,10 @@ cAw
 cYi
 cZU
 cIW
-ddm
+diV
 deO
-dfQ
-dhw
+dfR
+diU
 diS
 dkJ
 dmh
@@ -167284,9 +167323,9 @@ cAw
 cYg
 cZU
 eHJ
-ddm
+diV
 deP
-dfQ
+dfR
 dhx
 vNp
 dkK
@@ -167541,7 +167580,7 @@ cAw
 cYj
 cZV
 tfD
-ddm
+diV
 oEw
 dfS
 dhy
@@ -167798,11 +167837,11 @@ cAw
 cYk
 cZV
 cIW
-ddm
+diV
 deQ
 wvD
 dhz
-dhw
+diU
 dkM
 dmh
 dnR
@@ -168055,7 +168094,7 @@ cAw
 cYj
 cZV
 dbC
-ddm
+diV
 deR
 jZv
 sAB
@@ -168312,12 +168351,12 @@ cAw
 cYl
 cZU
 cHW
-ddm
-ddm
+diV
+diV
 dfT
-ddm
-ddm
-ddm
+diV
+diV
+diV
 dmh
 dnT
 dpI

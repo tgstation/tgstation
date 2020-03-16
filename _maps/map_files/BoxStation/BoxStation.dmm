@@ -13902,7 +13902,7 @@
 "aJD" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Bar Maintenance";
-	req_one_access_txt = "12;25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "12;25;26;35;28;22;37;46;38"
 	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -26513,6 +26513,9 @@
 /obj/effect/landmark/start/psychologist,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
+"brk" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "brm" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
@@ -26954,6 +26957,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
+"bsv" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "bsw" = (
 /obj/machinery/door/airlock/research{
 	name = "Robotics Lab";
@@ -27113,6 +27119,9 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/research)
+"btl" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "btm" = (
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 2;
@@ -29435,6 +29444,12 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/closet/wardrobe/white,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
+"bzn" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/bed,
+/obj/item/bedsheet/medical,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "bzo" = (
@@ -54208,6 +54223,9 @@
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
+"tsM" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "tti" = (
 /obj/structure/chair/stool{
 	pixel_y = 8
@@ -55581,7 +55599,7 @@
 "xiw" = (
 /obj/machinery/door/airlock{
 	name = "Service Hall";
-	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
+	req_one_access_txt = "22;25;26;28;35;37;38;46"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -55664,6 +55682,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
+"xzI" = (
+/turf/closed/wall,
+/area/medical/psychology)
 "xzN" = (
 /obj/machinery/door/airlock/external{
 	name = "Common Mining Shuttle Bay"
@@ -95376,7 +95397,7 @@ tiO
 uFy
 bum
 vhn
-bye
+bzn
 bua
 bBL
 bhh
@@ -95890,7 +95911,7 @@ tiO
 gFW
 buq
 vhn
-bye
+bzn
 ljx
 bBN
 bEi
@@ -96140,11 +96161,11 @@ bfL
 bfL
 blg
 qsH
-bpG
+xzI
 bqZ
-bpG
-bpG
-bpG
+xzI
+xzI
+xzI
 bun
 bvr
 bzo
@@ -96401,7 +96422,7 @@ bpJ
 brc
 brj
 jqJ
-bpG
+xzI
 but
 vhn
 pdB
@@ -96658,7 +96679,7 @@ boq
 mYY
 bvw
 gVb
-bpG
+xzI
 gHL
 vhn
 bvs
@@ -96915,7 +96936,7 @@ bpL
 mYY
 svW
 jsb
-bpG
+xzI
 oYY
 vhn
 brb
@@ -97172,7 +97193,7 @@ bpK
 brd
 bvu
 wIs
-bpG
+xzI
 bux
 bvy
 ljx
@@ -97425,11 +97446,11 @@ ipA
 gbT
 cTO
 qsH
-bpG
-bpG
+xzI
+xzI
 cYj
-bpG
-bpG
+xzI
+xzI
 buG
 bvA
 ljx

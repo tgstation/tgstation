@@ -37407,7 +37407,7 @@
 "bFA" = (
 /obj/machinery/door/airlock{
 	name = "Theatre Stage";
-	req_one_access_txt = "12;46;70"
+	req_one_access_txt = "12;46"
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -44197,7 +44197,7 @@
 /obj/machinery/door/airlock{
 	name = "Service Hall";
 	req_access_txt = "null";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "25;26;35;28;22;37;46;38"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -45958,7 +45958,7 @@
 /obj/machinery/door/airlock{
 	name = "Service Hall";
 	req_access_txt = "null";
-	req_one_access_txt = "25;26;35;28;22;37;46;38;70"
+	req_one_access_txt = "25;26;35;28;22;37;46;38"
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -69259,6 +69259,9 @@
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"dJv" = (
+/turf/open/floor/carpet,
+/area/medical/psychology)
 "dJG" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -99781,7 +99784,7 @@ fqC
 ljG
 seP
 jIt
-cEN
+dJv
 cFO
 cGJ
 cHz
@@ -100038,7 +100041,7 @@ lbB
 tNc
 seP
 cDN
-cEN
+dJv
 cFP
 cGK
 cHA
