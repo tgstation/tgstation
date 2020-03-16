@@ -8,7 +8,6 @@
   * Once it grows a venus human trap, the bud itself will destroy itself.
   *
   */
-
 /obj/structure/alien/resin/flower_bud_enemy //inheriting basic attack/damage stuff from alien structures
 	name = "flower bud"
 	desc = "A large pulsating plant..."
