@@ -1,6 +1,5 @@
 /obj/effect/overlay
 	name = "overlay"
-	vis_flags = VIS_INHERIT_PLANE
 
 /obj/effect/overlay/singularity_act()
 	return
