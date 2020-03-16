@@ -162,7 +162,7 @@
 	timeout = 5 MINUTES
 
 /datum/mood_event/pet_borg
-	description = "<span class='nicegreen'>I just love my robot friends!</span>\n"
+	description = "<span class='nicegreen'>I just love my robotic friends!</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
 
