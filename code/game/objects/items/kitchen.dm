@@ -155,7 +155,7 @@
 
 /obj/item/kitchen/knife/hunting
 	name = "hunting knife"
-	desc = "Despite its name, it's mainly used for cutting the meat of dead prey rather than actual hunting."
+	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
 	icon_state = "survivalknife"
 
 /obj/item/kitchen/knife/combat
