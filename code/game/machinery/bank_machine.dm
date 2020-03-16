@@ -4,7 +4,7 @@
 	icon = 'goon/icons/obj/goon_terminals.dmi'
 	idle_power_usage = 100
 	ui_x = 335
-	ui_y = 165
+	ui_y = 160
 	var/siphoning = FALSE
 	var/next_warning = 0
 	var/obj/item/radio/radio
