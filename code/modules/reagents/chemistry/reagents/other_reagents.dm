@@ -2107,3 +2107,4 @@
 	taste_description = "gravy"
 	color = "#623301"
 	taste_mult = 1.5
+

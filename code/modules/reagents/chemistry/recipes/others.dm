@@ -566,4 +566,5 @@
 
 /datum/chemical_reaction/gravy
 	results = list(/datum/reagent/consumable/gravy = 3)
-	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
+	required_reagents = list(/datum/reagent/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
+
