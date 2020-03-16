@@ -50,8 +50,8 @@
 	piping_layer = 3
 	icon_state = "connector_map-3"
 
-/obj/machinery/atmospherics/components/unary/portables_connector/visible/
-	hide = TRUE
+/obj/machinery/atmospherics/components/unary/portables_connector/visible
+	hide = FALSE
 
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer1
 	piping_layer = 1

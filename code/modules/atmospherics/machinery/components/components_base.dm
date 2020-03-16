@@ -2,6 +2,8 @@
 // On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components
+	hide = FALSE
+
 	var/welded = FALSE //Used on pumps and scrubbers
 	var/showpipe = TRUE
 	var/shift_underlay_only = TRUE //Layering only shifts underlay?
