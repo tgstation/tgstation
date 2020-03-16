@@ -171,7 +171,7 @@
 		. += random_string(DNA_UNIQUE_ENZYMES_LEN, GLOB.hex_characters)
 	return .
 
-/datum/dna/proc/create_random_voice()
+/datum/dna/proc/create_random_voice()	//chooses a random gendered voice for Text-to-Speech
 	var/mob/living/carbon/human/H = holder
 	if (H)
 		if (H.gender == FEMALE)

@@ -221,4 +221,4 @@ tools/MapAtmosFixer/MapAtmosFixer/bin/*
 !/config/title_screens/images/exclude
 
 #Text to speech
-/tgstation/tools/tts_generator/data/*
+tools/tts_generator/data/*

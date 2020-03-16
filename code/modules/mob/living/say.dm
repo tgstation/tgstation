@@ -421,13 +421,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		return mind.get_language_holder()
 	. = ..()
 
-/mob/living/proc/say_tts(tts_message, datum/language/tts_language = null)
+/mob/living/proc/say_tts(tts_message, datum/language/tts_language = null)	//Processes the Text-to-Speech sounds before converting them
 	if (!CONFIG_GET(flag/enable_tts))
 		return
 	if (!client)
 		return
 
-	tts_message = trim(copytext(sanitize_simple(tts_message, list("\""="", "\n"=" ", "\t"=" ")), 1, MAX_MESSAGE_LEN * 10))
+	tts_message = trim(copytext(sanitize_simple(tts_message, list("\""="", "\n"=" ", "\t"=" ")), 1, MAX_MESSAGE_LEN * 10))	//Remove problematic symbols
 	if (!tts_message)
 		return
 
@@ -470,11 +470,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if (H)
 			if (H.dna)
 				if (H.dna.tts_voice)
-					tts_voice = H.dna.tts_voice
+					tts_voice = H.dna.tts_voice	//we now have a voice
 
 	if (world.time > client.tts_cooldown && !SStts.check_processing(src))
 		var/tts_volume_mod = 1
-		if (message_mode == MODE_WHISPER)
+		if (message_mode == MODE_WHISPER)	//Whispering people are harder to hear
 			tts_volume_mod /= 2
 
 		var/datum/tts/TTS = new /datum/tts()
@@ -484,4 +484,4 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			return
 		if (!hud_used.tts)
 			return
-		hud_used.tts.icon_state = "tts_cooldown"
+		hud_used.tts.icon_state = "tts_cooldown"	//Sets the HUD to cooldown state

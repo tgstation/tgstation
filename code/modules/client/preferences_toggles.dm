@@ -238,7 +238,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggle_announcement_sound)()
 /datum/verbs/menu/Settings/Sound/toggle_announcement_sound/Get_checked(client/C)
 	return C.prefs.toggles & SOUND_ANNOUNCEMENTS
 
-TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggletts)()
+TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggletts)() //Whether a player will hear sounds around them
 	set name = "Hear/Silence Text-to-Speech"
 	set category = "Preferences"
 	set desc = "Hear Any Text-to-Speech Sounds"
