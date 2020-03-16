@@ -21,7 +21,6 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
-	spacewalk = TRUE
 	food_type = list(/obj/item/reagent_containers/food/snacks/meat)
 	tame_chance = 10
 	bonus_tame_chance = 5
