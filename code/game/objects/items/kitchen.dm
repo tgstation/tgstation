@@ -156,7 +156,12 @@
 /obj/item/kitchen/knife/hunting
 	name = "hunting knife"
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
-	icon_state = "survivalknife"
+	icon_state = "huntingknife"
+
+/obj/item/kitchen/knife/hunting/Initialize()
+	. = ..()
+	var/datum/component/butchering/butcher = GetComponent(/datum/component/butchering)
+	butcher.bonus_modifier += 20 
 
 /obj/item/kitchen/knife/combat
 	name = "combat knife"
