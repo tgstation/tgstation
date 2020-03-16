@@ -9,9 +9,6 @@
 #define LIGHT_BROKEN 2
 #define LIGHT_BURNED 3
 
-#define BROKEN_SPARKS_MIN (30 SECONDS)
-#define BROKEN_SPARKS_MAX (90 SECONDS)
-
 /obj/item/wallframe/light_fixture
 	name = "light fixture frame"
 	desc = "Used for building lights."
@@ -394,18 +391,9 @@
 		else
 			removeStaticPower(static_power_used, STATIC_LIGHT)
 
-	broken_sparks(start_only=TRUE)
-
 /obj/machinery/light/update_atom_colour()
 	..()
 	update()
-
-/obj/machinery/light/proc/broken_sparks(start_only=FALSE)
-	if(!QDELETED(src) && status == LIGHT_BROKEN && has_power())
-		if(!start_only)
-			do_sparks(3, TRUE, src)
-		var/delay = rand(BROKEN_SPARKS_MIN, BROKEN_SPARKS_MAX)
-		addtimer(CALLBACK(src, .proc/broken_sparks), delay, TIMER_UNIQUE | TIMER_NO_HASH_WAIT)
 
 /obj/machinery/light/process()
 	if (!cell)
