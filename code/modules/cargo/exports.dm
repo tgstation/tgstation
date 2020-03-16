@@ -220,7 +220,7 @@ GLOBAL_LIST_EMPTY(exports_list)
 
 	if(amount <=0 || material_cost <=0)
 		return FALSE
-	unit_name = "recycled object: [O.name]"
+	unit_name = "[O.name]"
 	if(dry_run == FALSE)
 		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = material_cost & COMSIG_ITEM_SPLIT_VALUE))
 			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
