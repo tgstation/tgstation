@@ -332,7 +332,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#92661A"
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/tile/bronze
-	value_per_unit = 0.5
+	value_per_unit = 0.025
 	armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
 	beauty_modifier = 0.2
 
