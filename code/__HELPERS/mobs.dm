@@ -231,12 +231,18 @@ GLOBAL_LIST_EMPTY(species_list)
 		checked_health["health"] = health
 	return ..()
 
+///Checks to see if our mob is currently in a do_after with the target as the target
+/mob/proc/is_interacting_with(atom/target)
+	return(target && target in do_afters)
+
 /proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
 	if(target && !isturf(target))
 		Tloc = target.loc
+
+	user.do_afters += target
 
 	var/atom/Uloc = user.loc
 
@@ -295,6 +301,8 @@ GLOBAL_LIST_EMPTY(species_list)
 				break
 	if (progress)
 		qdel(progbar)
+	if(target)
+		user.do_afters -= target
 
 /mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
 	. = 1
