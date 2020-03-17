@@ -21,7 +21,8 @@
 /obj/machinery/atmospherics/pipe/Initialize(mapload)
 	. = ..()
 
-	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+	if(hide)
+		AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE) //if changing this, change the subtypes RemoveElements too, because thats how bespoke works
 
 /obj/machinery/atmospherics/pipe/nullifyNode(i)
 	var/obj/machinery/atmospherics/oldN = nodes[i]
