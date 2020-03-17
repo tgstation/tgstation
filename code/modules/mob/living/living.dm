@@ -1477,8 +1477,10 @@
 	if(!apply_change)
 		return BODYTEMP_NORMAL
 	return BODYTEMP_NORMAL + get_body_temp_normal_change()
-
-/mob/living/proc/update_tts_hud() ///resets the Text-to-Spech indicator after the sound plays
+/**
+  *Resets the [Text-to-Speech] [/datum/controller/subsystem/tts]indicator after the sound plays
+  */
+/mob/living/proc/update_tts_hud()
 	if (!hud_used)
 		return
 	if (!hud_used.tts)

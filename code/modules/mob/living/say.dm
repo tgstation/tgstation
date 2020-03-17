@@ -420,8 +420,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(get_minds && mind)
 		return mind.get_language_holder()
 	. = ..()
-
-/mob/living/proc/say_tts(tts_message, datum/language/tts_language = null)	//Processes the Text-to-Speech sounds before converting them
+/**
+  *Processes the Text-to-Speech sounds before converting them
+  */
+/mob/living/proc/say_tts(tts_message, datum/language/tts_language = null)
 	if (!CONFIG_GET(flag/enable_tts))
 		return
 	if (!client)
@@ -432,7 +434,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if (!tts_message)
 		return
 
-	tts_message = html_decode(tts_message)	//Prevents HTML from being fed to the generator
+	tts_message = html_decode(tts_message)	//Prevents HTML from being fed to the generator, such as apostrophes
 
 	var/talk_key = get_key(tts_message)
 
@@ -464,7 +466,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		tts_language = get_selected_language()
 
 	tts_message = treat_message(tts_message)
-
+	///Voice used by TTS generator
 	var/tts_voice = ""
 
 	if (istype(src, /mob/living/carbon/human))
@@ -481,7 +483,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 			tts_volume_mod /= 2
 
 		var/datum/tts/TTS = new /datum/tts()
-		TTS.say(client, tts_message, voice = tts_voice, volume_mod = tts_volume_mod, language = tts_language)
+		TTS.say(client, tts_message, voice = tts_voice, volume_mod = tts_volume_mod, language = tts_language)	//sends it to the generator
 
 		if (!hud_used)
 			return
