@@ -211,3 +211,7 @@
 			/obj/item/mecha_parts/part/odysseus_right_arm,
 			/obj/item/mecha_parts/part/odysseus_left_leg,
 			/obj/item/mecha_parts/part/odysseus_right_leg)
+
+/obj/structure/mecha_wreckage/nerchen
+	name = "\improper Nerchen wreckage"
+	icon_state = "nerchen-broken"
