@@ -75,6 +75,25 @@
 	holds_charge = TRUE
 	unique_frequency = TRUE
 	max_mod_capacity = 80
+	var/emagged = FALSE //an override for emagged mining borg PKAs to make them deal full damage in pressurized areas
+
+/obj/item/gun/energy/kinetic_accelerator/cyborg/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(iscyborg(user))
+		var/mob/living/silicon/robot/R = user
+		if(R.emagged)
+			emagged = TRUE //for emagged borgs only
+		else
+			emagged = FALSE //if you became un-emagged somehow, you don't get to use the emagged cyborg version of this gun
+	else
+		emagged = FALSE //if you're a human who's gotten ahold of a KA from an emagged cyborg somehow, you don't get to use the emagged cyborg version of this gun
+
+	. = ..() //we now return to your regularly scheduled programming
+
+/obj/item/gun/energy/kinetic_accelerator/cyborg/modify_projectile(obj/projectile/kinetic/K)
+	..()
+	if(emagged) //emagged mining borgs used to have a stun arm, but they lost it and received full PKA damage while indoors as compensation
+		K.pressure_decrease = 1 //this SETS the pressure_decrease variable AFTER any modkits are applied, in case a decrease pressure penalty modkit somehow gets applied to an emagged mining cyborg's PKA
+
 
 /obj/item/gun/energy/kinetic_accelerator/minebot
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL

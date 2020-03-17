@@ -26,13 +26,18 @@ RSF
 /obj/item/rsf/cyborg
 	matter = 30
 
+/obj/item/rsf/cyborg/rbf
+	name = "\improper Rapid-Box-Fabricator"
+	desc = "A device used to rapidly deploy cardboard boxes."
+	mode = 6
+
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rcd_ammo))
-		if((matter + 10) > 30)
+		if(matter >= 30)
 			to_chat(user, "<span class='warning'>The RSF can't hold any more matter!</span>")
 			return
 		qdel(W)
-		matter += 10
+		matter = min(matter+10,30)
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, "<span class='notice'>The RSF now holds [matter]/30 fabrication-units.</span>")
 		icon_state = "rsf"
@@ -40,8 +45,10 @@ RSF
 		return ..()
 
 /obj/item/rsf/attack_self(mob/user)
+	if(mode == 6) //mode 6 is for cardboard RSFs, and they can't switch modes, so they shouldn't make a noise when you try to switch their mode
+		return
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
-	switch(mode)
+	switch(mode) //change mode
 		if(5)
 			mode = 1
 			to_chat(user, "<span class='notice'>Changed dispensing mode to 'Drinking Glass'.</span>")
@@ -57,7 +64,6 @@ RSF
 		if(4)
 			mode = 5
 			to_chat(user, "<span class='notice'>Changed dispensing mode to 'Cigarette'.</span>")
-	// Change mode
 
 /obj/item/rsf/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -68,7 +74,7 @@ RSF
 
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
-		if(!R.cell || R.cell.charge < 200)
+		if(!R.cell || R.cell.charge < 500)
 			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
 			icon_state = "rsf_empty"
 			return
@@ -100,6 +106,11 @@ RSF
 			to_chat(user, "<span class='notice'>Dispensing Cigarette...</span>")
 			new /obj/item/clothing/mask/cigarette(T)
 			use_matter(10, user)
+		if(6) //for RBFs only
+			to_chat(user, "<span class='notice'>Dispensing Cardboard Box...</span>")
+			/obj/structure/closet/cardboard/newbox = new /obj/structure/closet/cardboard(T)
+			newbox.open(user) //so that syndicate saboteur borgs can't spam boxes behind them as temporary walls while running away from pursuers
+			use_matter(500, user) //it's a big box
 
 /obj/item/rsf/proc/use_matter(charge, mob/user)
 	if (iscyborg(user))

@@ -185,7 +185,7 @@
  */
 /obj/item/toy/gun
 	name = "cap gun"
-	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps."
+	desc = "Looks almost like the real thing! Ages 8 years and up. Please recycle in an autolathe when you're out of caps."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "revolver"
 	item_state = "gun"
@@ -198,12 +198,15 @@
 	attack_verb = list("struck", "pistol whipped", "hit", "bashed")
 	var/bullets = 7
 
+/obj/item/toy/gun/cyborg
+	name = "cyborg cap gun"
+	desc = "Looks almost like the real thing! Ages 8 minutes and up. Uses charge from a cyborg's cell instead of caps." //syndicate assault cyborgs usually don't live long enough to see their 8th hour, let alone their 8th minute, so they have permission to use cap guns at a younger age than humans get to
+
 /obj/item/toy/gun/examine(mob/user)
 	. = ..()
 	. += "There [bullets == 1 ? "is" : "are"] [bullets] cap\s left."
 
 /obj/item/toy/gun/attackby(obj/item/toy/ammo/gun/A, mob/user, params)
-
 	if(istype(A, /obj/item/toy/ammo/gun))
 		if (src.bullets >= 7)
 			to_chat(user, "<span class='warning'>It's already fully loaded!</span>")
@@ -232,12 +235,21 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 	src.add_fingerprint(user)
-	if (src.bullets < 1)
+	if(iscyborg(user)) //this charge check is mostly copypasted from rsf code
+		var/mob/living/silicon/robot/R = user
+		if(!R.cell || R.cell.charge < 10)
+			user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
+			playsound(src, 'sound/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
+			return
+		else
+			R.cell.charge -= 10 //10 charge per shot
+	else if(src.bullets < 1) //puny humans have to worry about how many "bullets" are left in their "gun"
 		user.show_message("<span class='warning'>*click*</span>", MSG_AUDIBLE)
 		playsound(src, 'sound/weapons/gun/revolver/dry_fire.ogg', 30, TRUE)
 		return
 	playsound(user, 'sound/weapons/gun/revolver/shot.ogg', 100, TRUE)
-	src.bullets--
+	if(!iscyborg(user)) //the energy cost for cyborgs was already handled earlier, now we just need to apply the cost for everyone else
+		src.bullets--
 	user.visible_message("<span class='danger'>[user] fires [src] at [target]!</span>", \
 						"<span class='danger'>You fire [src] at [target]!</span>", \
 						 "<span class='hear'>You hear a gunshot!</span>")

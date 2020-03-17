@@ -115,7 +115,6 @@
 		if(S && S.source)
 			S.custom_materials = null
 			S.is_cyborg = 1
-
 	if(I.loc != src)
 		I.forceMove(src)
 	modules += I
@@ -303,7 +302,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/stack/cable_coil/cyborg)
-	emag_modules = list(/obj/item/borg/stun)
+	emag_modules = list(/obj/item/jammer) //can be used to jam nearby cries for help over comms without silencing the entire comms network; useful for silent assassinations with the boys
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	magpulsing = TRUE
@@ -315,11 +314,10 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/melee/baton/loaded,
-		/obj/item/gun/energy/disabler/cyborg,
+		/obj/item/gun/energy/e_gun/cyborg, //you can only fire this energy gun on a lethal setting if you're emagged
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/extinguisher/mini)
-	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
-	cyborg_base_icon = "sec"
+	cyborg_base_icon = "sec" //emagged secborgs can use their energy guns like laser guns, they don't need to receive any extra tools when emagged
 	moduleselect_icon = "security"
 	can_be_pushed = FALSE
 	hat_offset = 3
@@ -502,10 +500,9 @@
 		/obj/item/weldingtool/mini,
 		/obj/item/extinguisher/mini,
 		/obj/item/storage/bag/sheetsnatcher/borg,
-		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/gun/energy/kinetic_accelerator/cyborg, //deals full damage while indoors while the mining cyborg is emagged (the code for that is in kinetic_accelerator.dm)
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
-	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	hat_offset = 0
@@ -546,7 +543,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg)
-
+	emag_modules = (/obj/item/toy/gun) //honk   //wait, not honk, guns aren't (usually) a clown thing  //maybe "..." instead?
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -569,22 +566,17 @@
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/twohanded/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
-		/obj/item/surgical_drapes,
-		/obj/item/retractor,
-		/obj/item/hemostat,
-		/obj/item/cautery,
-		/obj/item/surgicaldrill,
-		/obj/item/scalpel,
-		/obj/item/melee/transforming/energy/sword/cyborg/saw,
+		/obj/item/melee/transforming/energy/sword/cyborg/saw, //Syndicate mediborgs used to have the other surgical tools as well, but they didn't really need them since ops start the round with microbomb implants that blow up their bodies upon death anyway. They were removed because they were bloating the inventories of syndicate mediborgs, but if you want your syndicate mediborg to perform surgery for some reason, you can buy a syndicate medical cyborg additional surgical tools upgrade as a nuke (or clown) op for 1 TC to add them back.
 		/obj/item/roller/robo,
+		/obj/item/organ_storage,
+		/obj/item/borg/lollipop, //this'd be down in the emag_modules section, but then every powergaming op would feel "obligated" to emag their syndicate medical cyborgs so that they can stock up on lollipops/omnizine
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,
-		/obj/item/gun/medbeam,
-		/obj/item/organ_storage)
-
+		/obj/item/gun/medbeam)
+	emag_modules = list(/obj/item/borg/cyborghug/medical) //:veryflushed:
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -600,10 +592,8 @@
 		/obj/item/restraints/handcuffs/cable/zipties,
 		/obj/item/extinguisher,
 		/obj/item/weldingtool/largetank/cyborg,
-		/obj/item/screwdriver/nuke,
-		/obj/item/wrench/cyborg,
-		/obj/item/crowbar/cyborg,
-		/obj/item/wirecutters/cyborg,
+		/obj/item/screwdriver/power/cyborg, //screwdriver+wrench
+		/obj/item/crowbar/power/cyborg, //crowbar+wirecutters
 		/obj/item/multitool/cyborg,
 		/obj/item/stack/sheet/metal/cyborg,
 		/obj/item/stack/sheet/glass/cyborg,
@@ -613,9 +603,10 @@
 		/obj/item/destTagger/borg,
 		/obj/item/stack/cable_coil/cyborg,
 		/obj/item/pinpointer/syndicate_cyborg,
-		/obj/item/borg_chameleon,
-		)
-
+		/obj/item/borg_chameleon)
+	emag_modules = list(
+		/obj/item/rsf/cyborg/rbf, //a weapon to surpass metal gear (a rapid-box-fabricator)
+		/obj/item/instrument/recorder) //so you can play a shittyflute rendition of the mission impossible theme to flex on the crew while you sabotage the station
 	cyborg_base_icon = "synd_engi"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE

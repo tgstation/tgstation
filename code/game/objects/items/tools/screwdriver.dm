@@ -148,3 +148,6 @@
 	usesound = 'sound/items/drill_use.ogg'
 	toolspeed = 0.5
 	random_color = FALSE
+
+/obj/item/screwdriver/power/cyborg //for syndicate saboteur cyborgs
+	toolspeed = 0.5

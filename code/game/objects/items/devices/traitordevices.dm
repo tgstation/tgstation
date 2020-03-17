@@ -248,6 +248,27 @@ effective or pretty fucking useless.
 	active = !active
 	if(active)
 		GLOB.active_jammers |= src
+		if(iscyborg(user))
+			START_PROCESSING(SSobj,src)
 	else
 		GLOB.active_jammers -= src
+		STOP_PROCESSING(SSobj,src)
 	update_icon()
+
+/obj/item/jammer/process()
+	var/mob/living/silicon/robot/R = loc
+	if(!R || !iscyborg(R))
+		active = FALSE
+		STOP_PROCESSING(SSobj,src)
+		return
+	if(!R.cell || R.cell.charge < 10) //mostly copied from RSF code
+		to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
+		active = FALSE
+		STOP_PROCESSING(SSobj,src)
+		return
+	R.cell.charge -= 10 //10 points of charge lost every 2 seconds
+
+/obj/item/jammer/cyborg_unequip(mob/user)
+	active = FALSE
+	STOP_PROCESSING(SSobj,src)
+	. = ..()

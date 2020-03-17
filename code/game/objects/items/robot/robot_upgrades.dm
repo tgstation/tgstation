@@ -66,8 +66,8 @@
 	R.revive(full_heal = FALSE, admin_revive = FALSE)
 
 /obj/item/borg/upgrade/disablercooler
-	name = "cyborg rapid disabler cooling module"
-	desc = "Used to cool a mounted disabler, increasing the potential current in it and thus its recharge rate."
+	name = "cyborg rapid energy gun cooling module"
+	desc = "Used to cool a mounted energy gun, increasing the potential current in it and thus its recharge rate."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/security)
@@ -75,9 +75,9 @@
 /obj/item/borg/upgrade/disablercooler/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
+		var/obj/item/gun/energy/e_gun/cyborg/T = locate() in R.module.modules
 		if(!T)
-			to_chat(user, "<span class='warning'>There's no disabler in this unit!</span>")
+			to_chat(user, "<span class='warning'>There's no energy gun in this unit!</span>")
 			return FALSE
 		if(T.charge_delay <= 2)
 			to_chat(R, "<span class='warning'>A cooling unit is already installed!</span>")
@@ -89,7 +89,7 @@
 /obj/item/borg/upgrade/disablercooler/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
-		var/obj/item/gun/energy/disabler/cyborg/T = locate() in R.module.modules
+		var/obj/item/gun/energy/e_gun/cyborg/T = locate() in R.module.modules
 		if(!T)
 			return FALSE
 		T.charge_delay = initial(T.charge_delay)
@@ -367,7 +367,7 @@
 
 /obj/item/borg/upgrade/hypospray
 	name = "medical cyborg hypospray advanced synthesiser"
-	desc = "An upgrade to the Medical module cyborg's hypospray, allowing it \
+	desc = "An upgrade to the medical module's hypospray, allowing it \
 		to produce more advanced and complex medical reagents."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
@@ -392,7 +392,7 @@
 
 /obj/item/borg/upgrade/hypospray/expanded
 	name = "medical cyborg expanded hypospray"
-	desc = "An upgrade to the Medical module's hypospray, allowing it \
+	desc = "An upgrade to the medical module's hypospray, allowing it \
 		to treat a wider range of conditions and problems."
 	additional_reagents = list(/datum/reagent/medicine/mannitol, /datum/reagent/medicine/oculine, /datum/reagent/medicine/inacusiate,
 		/datum/reagent/medicine/mutadone, /datum/reagent/medicine/haloperidol, /datum/reagent/medicine/oxandrolone, /datum/reagent/medicine/sal_acid,
@@ -423,7 +423,7 @@
 
 /obj/item/borg/upgrade/defib
 	name = "medical cyborg defibrillator"
-	desc = "An upgrade to the Medical module, installing a built-in \
+	desc = "An upgrade to the medical module, installing a built-in \
 		defibrillator, for on the scene revival."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
@@ -456,9 +456,9 @@
 
 /obj/item/borg/upgrade/processor
 	name = "medical cyborg surgical processor"
-	desc = "An upgrade to the Medical module, installing a processor \
+	desc = "An upgrade to the medical module, installing a processor \
 		capable of scanning surgery disks and carrying \
-		out procedures"
+		out procedures."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/syndicate_medical)
@@ -475,6 +475,36 @@
 	if (.)
 		var/obj/item/surgical_processor/SP = locate() in R.module
 		R.module.remove_module(SP, TRUE)
+
+/obj/item/borg/upgrade/surgical_tools
+	name = "syndicate medical cyborg additional surgical tools"
+	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, /
+		allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own."
+	icon_state = "cyborg_upgrade3"
+	require_module = 1
+	module_type = list(/obj/item/robot_module/syndicate_medical)
+	var/addedtools = list(/obj/item/surgical_drapes,
+		/obj/item/retractor,
+		/obj/item/hemostat,
+		/obj/item/cautery,
+		/obj/item/surgicaldrill,
+		/obj/item/scalpel)
+
+/obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr) //mostly copy+pasted from the code for surgical processors
+	. = ..()
+	if(.)
+		for(var/obj/item/I in addedtools)
+			I = new(R.module)
+			R.module.basic_modules += I
+			R.module.add_module(I, FALSE, TRUE)
+
+/obj/item/borg/upgrade/processor/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		for(var/obj/item/I in addedtools)
+			I = locate() in R.module
+			R.module.remove_module(I, TRUE)
+
 
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"

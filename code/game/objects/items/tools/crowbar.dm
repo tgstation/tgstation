@@ -112,3 +112,6 @@
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5
+
+/obj/item/crowbar/power/cyborg
+	toolspeed = 0.5

@@ -11,6 +11,33 @@
 	flight_y_offset = 10
 	dual_wield_spread = 60
 
+/obj/item/gun/energy/e_gun/cyborg
+	can_charge = FALSE
+	name = "cyborg energy gun"
+	desc = "An integrated energy gun that draws from a cyborg's power cell. This weapon contains a limiter that keeps cyborgs from firing it on a lethal setting, but an emagged cyborg could probably bypass it." //hint hint nudge nudge
+	use_cyborg_cell = TRUE
+
+/obj/item/gun/energy/e_gun/cyborg/emp_act()
+	return
+
+//the following secborg energy gun code is mostly copied from Fulpstation's secborg patch PR (thanks for letting us use this, Surrealaser!)
+/obj/item/gun/energy/e_gun/cyborg/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	if(!check_limiter())
+		return
+	return ..()
+
+/obj/item/gun/energy/e_gun/cyborg/proc/check_limiter()
+	var/mob/living/silicon/robot/R = loc
+	if(!R || !iscyborg(R))
+		return FALSE
+	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
+	if(shot.harmful && !R.emagged) //If we're emagged, we don't care about whether we're firing lethal shots or not
+		playsound(loc, 'sound/machines/buzz-two.ogg', get_clamped_volume(), TRUE, -1) //buzzkill alert
+		to_chat(loc,"<span class='warning'>[src]'s limiter prevents you from firing it on a lethal setting!</span>")
+		return FALSE
+	return TRUE
+
+
 /obj/item/gun/energy/e_gun/mini
 	name = "miniature energy gun"
 	desc = "A small, pistol-sized energy gun with a built-in flashlight. It has two settings: disable and kill."
@@ -20,7 +47,7 @@
 	cell_type = /obj/item/stock_parts/cell{charge = 600; maxcharge = 600}
 	ammo_x_offset = 2
 	charge_sections = 3
-	can_flashlight = FALSE // Can't attach or detach the flashlight, and override it's icon update
+	can_flashlight = FALSE // Can't attach or detach the flashlight, and override its icon update
 	gunlight_state = "mini-light"
 	flight_x_offset = 19
 	flight_y_offset = 13
