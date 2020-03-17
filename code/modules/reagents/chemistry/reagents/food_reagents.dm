@@ -450,8 +450,15 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
 
+/datum/reagent/consumable/nutraslop
+	name = "Nutraslop"
+	description = "Mixture of leftover prison foods served on previous days."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#3E4A00" // rgb: 62, 74, 0
+	taste_description = "your imprisonment"
+
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
-	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
 	..()
 
 /datum/reagent/consumable/hell_ramen
@@ -561,6 +568,12 @@
 	description = "An white and oily mixture of mixed egg yolks."
 	color = "#DFDFDF"
 	taste_description = "mayonnaise"
+
+/datum/reagent/consumable/mold // yeah, ok, togopal, I guess you could call that a condiment
+	name = "Mold"
+	description = "This condiment will make any food break the mold. Or your stomach."
+	color ="#708a88"
+	taste_description = "rancid fungus"
 
 /datum/reagent/consumable/tearjuice
 	name = "Tear Juice"

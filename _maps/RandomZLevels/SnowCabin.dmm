@@ -189,7 +189,7 @@
 /obj/structure/cable,
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. It seems to be powered just fine without our intervention.";
-	name = "nanotrasen power storage unit"
+	name = "\improper Nanotrasen power storage unit"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -1494,7 +1494,7 @@
 /area/awaymission/cabin/snowforest)
 "eA" = (
 /obj/structure/table/wood,
-/obj/item/twohanded/required/chainsaw,
+/obj/item/chainsaw,
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/lumbermill)
 "eB" = (
@@ -2241,7 +2241,7 @@
 /obj/item/gun/ballistic/automatic/toy{
 	anchored = 1;
 	desc = "Don't try it.";
-	name = "Nanotrasen Saber SMG"
+	name = "\improper Nanotrasen Saber SMG"
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -3043,7 +3043,7 @@
 /area/awaymission/cabin/caves)
 "hR" = (
 /obj/structure/reagent_dispensers/beerkeg{
-	desc = "Hey, Centcom, we located our complimentary case of space beer! The pamphlet didn't lie!";
+	desc = "Hey, CentCom, we located our complimentary case of space beer! The pamphlet didn't lie!";
 	name = "complimentary keg of space beer"
 	},
 /turf/open/floor/plating/snowed,
@@ -4502,7 +4502,7 @@
 /area/awaymission/cabin/caves)
 "lr" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/kitchen/knife/carrotshiv,
+/obj/item/kitchen/knife/shiv/carrot,
 /obj/effect/decal/cleanable/glitter/blue{
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"

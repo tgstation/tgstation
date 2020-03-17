@@ -170,12 +170,14 @@
 		playsound(src, stun_sound, 75, TRUE, -1)
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stun_time*3)
+		user.Knockdown(stun_time*3) //should really be an equivalent to attack(user,user)
 		deductcharge(cell_hit_cost)
-		return
+		return TRUE
+	return FALSE
 
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
-	clumsy_check(user)
+	if(clumsy_check(user))
+		return FALSE
 
 	if(iscyborg(M))
 		..()
@@ -206,7 +208,11 @@
 
 
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
-	check_shields(L, user)
+	if(shields_blocked(L, user))
+		return FALSE
+	if(HAS_TRAIT_FROM(L, TRAIT_IWASBATONED, user)) //no doublebaton abuse anon!
+		to_chat(user, "<span class='danger'>[L] manages to avoid the attack!</span>")
+		return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
 		if(!R || !R.cell || !R.cell.use(cell_hit_cost))
@@ -214,13 +220,12 @@
 	else
 		if(!deductcharge(cell_hit_cost))
 			return FALSE
-
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
 	L.confused = max(confusion_amt, L.confused)
 	L.stuttering = max(8, L.stuttering)
-	L.adjustStaminaLoss(stamina_loss_amt)
+	L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
 
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), apply_stun_delay)
@@ -240,6 +245,9 @@
 
 	attack_cooldown_check = world.time + attack_cooldown
 
+	ADD_TRAIT(L, TRAIT_IWASBATONED, user)
+	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, user), attack_cooldown)
+
 	return 1
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
@@ -257,12 +265,13 @@
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
 
-/obj/item/melee/baton/proc/check_shields(mob/living/L, mob/user)
+/obj/item/melee/baton/proc/shields_blocked(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		if(H.check_shields(src, 0, "[user]'s [name]", MELEE_ATTACK)) //No message; check_shields() handles that
-			playsound(L, 'sound/weapons/genhit.ogg', 50, TRUE)
-			return FALSE
+			playsound(H, 'sound/weapons/genhit.ogg', 50, TRUE)
+			return TRUE
+	return FALSE
 
 //Makeshift stun baton. Replacement for stun gloves.
 /obj/item/melee/baton/cattleprod

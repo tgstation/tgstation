@@ -186,6 +186,14 @@
 	build_path = /obj/item/circuitboard/machine/dnascanner
 	category = list("Medical Machinery")
 
+/datum/design/board/hypnochair
+	name = "Machine Design (Enhanced Interrogation Chamber)"
+	desc = "Allows for the construction of circuit boards used to build an Enhanced Interrogation Chamber."
+	id = "hypnochair"
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	build_path = /obj/item/circuitboard/machine/hypnochair
+	category = list("Misc. Machinery")
+
 /datum/design/board/biogenerator
 	name = "Machine Design (Biogenerator Board)"
 	desc = "The circuit board for a biogenerator."
@@ -602,3 +610,11 @@
 	build_path = /obj/item/circuitboard/machine/medipen_refiller
 	category = list ("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/sheetifier
+	name = "Sheetifier"
+	desc = "This machine turns weird things into sheets."
+	id = "sheetifier"
+	build_path = /obj/item/circuitboard/machine/sheetifier
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL

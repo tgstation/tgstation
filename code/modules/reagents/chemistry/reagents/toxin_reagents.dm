@@ -61,6 +61,7 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
+	material = /datum/material/plasma
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
@@ -167,6 +168,8 @@
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
+	if(fakedeath_active)
+		L.fakedeath(type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
 	L.cure_fakedeath(type)
@@ -175,8 +178,9 @@
 /datum/reagent/toxin/zombiepowder/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	L.adjustOxyLoss(0.5*REM, 0)
 	if(method == INGEST)
-		fakedeath_active = TRUE
-		L.fakedeath(type)
+		var/datum/reagent/toxin/zombiepowder/Z = L.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
+		if(istype(Z))
+			Z.fakedeath_active = TRUE
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M)
 	..()

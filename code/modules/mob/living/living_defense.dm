@@ -58,9 +58,9 @@
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
 		if(throwforce && w_class)
-				return CLAMP((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+				return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
 		else if(w_class)
-				return CLAMP(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
+				return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 		else
 				return 0
 
@@ -69,11 +69,17 @@
 		var/obj/item/I = AM
 		var/zone = ran_zone(BODY_ZONE_CHEST, 65)//Hits a random part of the body, geared towards the chest
 		var/dtype = BRUTE
-		SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone)
+		var/nosell_hit = SEND_SIGNAL(I, COMSIG_MOVABLE_IMPACT_ZONE, src, zone, throwingdatum) // TODO: find a better way to handle hitpush and skipcatch for humans
+		if(nosell_hit)
+			skipcatch = TRUE
+			hitpush = FALSE
+
 		dtype = I.damtype
 		if(!blocked)
 			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
 							"<span class='userdanger'>You're hit by [I]!</span>")
+			if(!I.throwforce)
+				return
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
@@ -402,7 +408,7 @@
 /mob/living/proc/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0, type = /obj/screen/fullscreen/flash)
 	if(HAS_TRAIT(src, TRAIT_NOFLASH))
 		return FALSE
-	if(get_eye_protection() < intensity && (override_blindness_check || !(HAS_TRAIT(src, TRAIT_BLIND))))
+	if(get_eye_protection() < intensity && (override_blindness_check || !is_blind()))
 		overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(src, .proc/clear_fullscreen, "flash", 25), 25)
 		return TRUE

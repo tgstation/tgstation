@@ -98,7 +98,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 
 /datum/material/plasma/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	if(ismovableatom(source))
+	if(ismovable(source))
 		source.AddElement(/datum/element/firestacker, amount=1)
 		source.AddComponent(/datum/component/explodable, 0, 0, amount / 2500, amount / 1250)
 
@@ -176,6 +176,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#caccd9"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	value_per_unit = 0.0125
 	beauty_modifier = -0.01
 	armor_modifiers = list("melee" = 1.5, "bullet" = 1.1, "laser" = 0.3, "energy" = 0.5, "bomb" = 1, "bio" = 1, "rad" = 1, "fire" = 1.1, "acid" = 1)

@@ -229,7 +229,7 @@
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
-	return CLAMP(round(5.5*charge/capacity),0,5)
+	return clamp(round(5.5*charge/capacity),0,5)
 
 /obj/machinery/power/smes/process()
 	if(machine_stat & BROKEN)
@@ -364,11 +364,7 @@
 		if("input")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New input target (0-[input_level_max]):", name, input_level) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 0
 				. = TRUE
 			else if(target == "max")
@@ -381,16 +377,12 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				input_level = CLAMP(target, 0, input_level_max)
+				input_level = clamp(target, 0, input_level_max)
 				log_smes(usr)
 		if("output")
 			var/target = params["target"]
 			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New output target (0-[output_level_max]):", name, output_level) as num|null
-				if(!isnull(target) && !..())
-					. = TRUE
-			else if(target == "min")
+			if(target == "min")
 				target = 0
 				. = TRUE
 			else if(target == "max")
@@ -403,7 +395,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				output_level = CLAMP(target, 0, output_level_max)
+				output_level = clamp(target, 0, output_level_max)
 				log_smes(usr)
 
 /obj/machinery/power/smes/proc/log_smes(mob/user)

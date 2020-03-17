@@ -4,9 +4,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // if true, everyone item when created will have its name changed to be
 // more... RPG-like.
 
+GLOBAL_VAR_INIT(stickpocalypse, FALSE) // if true, all non-embeddable items will be able to harmlessly stick to people when thrown
+GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to embed in people, takes precedence over stickpocalypse
+
 /obj/item
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
+	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	///icon state name for inhand overlays
 	var/item_state = null
 	///Icon file for left hand inhand overlays
@@ -85,7 +89,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER //the icon to indicate this object is being dragged
 
-	var/datum/embedding_behavior/embedding
+	var/list/embedding = NONE
 
 	var/flags_cover = 0 //for flags such as GLASSESCOVERSEYES
 	var/heat = 0
@@ -129,16 +133,13 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 /obj/item/Initialize()
 
-	if (attack_verb)
+	if(attack_verb)
 		attack_verb = typelist("attack_verb", attack_verb)
 
 	. = ..()
 	for(var/path in actions_types)
 		new path(src)
 	actions_types = null
-
-	if(GLOB.rpg_loot_items)
-		AddComponent(/datum/component/fantasy)
 
 	if(force_string)
 		item_flags |= FORCE_STRING_OVERRIDE
@@ -148,16 +149,6 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 			hitsound = 'sound/items/welder.ogg'
 		if(damtype == "brute")
 			hitsound = "swing_hit"
-
-	if (!embedding)
-		embedding = getEmbeddingBehavior()
-	else if (islist(embedding))
-		embedding = getEmbeddingBehavior(arglist(embedding))
-	else if (!istype(embedding, /datum/embedding_behavior))
-		stack_trace("Invalid type [embedding.type] found in .embedding during /obj/item Initialize()")
-
-	if(sharpness) //give sharp objects butchering functionality, for consistency
-		AddComponent(/datum/component/butchering, 80 * toolspeed)
 
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
@@ -177,6 +168,28 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
+
+/obj/item/ComponentInitialize()
+	. = ..()
+
+	// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
+	if(embedding)
+		AddElement(/datum/element/embed, embedding)
+	else if(GLOB.embedpocalypse)
+		embedding = EMBED_POINTY
+		AddElement(/datum/element/embed, embedding)
+		name = "pointy [name]"
+	else if(GLOB.stickpocalypse)
+		embedding = EMBED_HARMLESS
+		AddElement(/datum/element/embed, embedding)
+		name = "sticky [name]"
+
+	if(GLOB.rpg_loot_items)
+		AddComponent(/datum/component/fantasy)
+
+	if(sharpness) //give sharp objects butchering functionality, for consistency
+		AddComponent(/datum/component/butchering, 80 * toolspeed)
+
 
 //user: The mob that is suiciding
 //damagetype: The type of damage the item will inflict on the user
@@ -530,7 +543,7 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		M.adjust_blurriness(15)
 		if(M.stat != DEAD)
 			to_chat(M, "<span class='danger'>Your eyes start to bleed profusely!</span>")
-		if(!(HAS_TRAIT(M, TRAIT_BLIND) || HAS_TRAIT(M, TRAIT_NEARSIGHT)))
+		if(!(M.is_blind() || HAS_TRAIT(M, TRAIT_NEARSIGHT)))
 			to_chat(M, "<span class='danger'>You become nearsighted!</span>")
 		M.become_nearsighted(EYE_DAMAGE)
 		if(prob(50))
@@ -768,7 +781,11 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 		var/mob/living/carbon/human/H = user
 		skill_modifier = H.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 
+		if(H.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_JOURNEYMAN && prob(H.mind.get_skill_modifier(/datum/skill/mining, SKILL_PROBS_MODIFIER))) // we check if the skill level is greater than Journeyman and then we check for the probality for that specific level.
+			mineral_scan_pulse(get_turf(H), SKILL_LEVEL_JOURNEYMAN - 2) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
+
 	delay *= toolspeed * skill_modifier
+
 
 	// Play tool sound at the beginning of tool usage.
 	play_tool_sound(target, volume)
@@ -803,7 +820,9 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 // Called before use_tool if there is a delay, or by use_tool if there isn't.
 // Only ever used by welding tools and stacks, so it's not added on any other use_tool checks.
 /obj/item/proc/tool_start_check(mob/living/user, amount=0)
-	return tool_use_check(user, amount)
+	. = tool_use_check(user, amount)
+	if(.)
+		SEND_SIGNAL(src, COMSIG_TOOL_START_USE, user)
 
 // A check called by tool_start_check once, and by use_tool on every tick of delay.
 /obj/item/proc/tool_use_check(mob/living/user, amount)
@@ -824,9 +843,12 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 
 		playsound(target, played_sound, volume, TRUE)
 
-// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
+/// Used in a callback that is passed by use_tool into do_after call. Do not override, do not call manually.
 /obj/item/proc/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+	SHOULD_NOT_OVERRIDE(TRUE)
+	. = tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
+	if(.)
+		SEND_SIGNAL(src, COMSIG_TOOL_IN_USE, user)
 
 // Returns a numeric value for sorting items used as parts in machines, so they can be replaced by the rped
 /obj/item/proc/get_part_rating()
@@ -859,7 +881,16 @@ GLOBAL_VAR_INIT(rpg_loot_items, FALSE)
 	return
 
 /obj/item/proc/canStrip(mob/stripper, mob/owner)
+	SHOULD_BE_PURE(TRUE)
 	return !HAS_TRAIT(src, TRAIT_NODROP)
 
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
+
+/**
+  * Does the current embedding var meet the criteria for being harmless? Namely, does it explicitly define the pain multiplier and jostle pain mult to be 0? If so, return true.
+  */
+/obj/item/proc/is_embed_harmless()
+	if(embedding)
+		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
+

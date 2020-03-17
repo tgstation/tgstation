@@ -471,7 +471,7 @@ datum/status_effect/rebreathing/tick()
 	colour = "orange"
 
 /datum/status_effect/stabilized/orange/tick()
-	var/body_temperature_difference = BODYTEMP_NORMAL - owner.bodytemperature
+	var/body_temperature_difference = owner.get_body_temp_normal(apply_change=FALSE) - owner.bodytemperature
 	owner.adjust_bodytemperature(min(5,body_temperature_difference))
 	return ..()
 

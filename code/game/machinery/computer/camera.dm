@@ -23,7 +23,7 @@
 		network += "[idnum][i]"
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if( (machine_stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.eye_blind )
+	if( (machine_stat & (NOPOWER|BROKEN)) || user.incapacitated() || user.is_blind() )
 		user.unset_machine()
 		return
 	if(!(user in watchers))
@@ -102,7 +102,7 @@
 		return
 	if(C)
 		var/camera_fail = 0
-		if(!C.can_use() || user.machine != src || user.eye_blind || user.incapacitated())
+		if(!C.can_use() || user.machine != src || user.is_blind() || user.incapacitated())
 			camera_fail = 1
 		else if(iscyborg(user) || long_ranged)
 			var/list/viewing = viewers(src)

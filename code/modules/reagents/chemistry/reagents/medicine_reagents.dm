@@ -20,10 +20,10 @@
 	color = "#DB90C6"
 
 /datum/reagent/medicine/leporazine/on_mob_life(mob/living/carbon/M)
-	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
-		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(M.bodytemperature > M.get_body_temp_normal(apply_change=FALSE))
+		M.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal(apply_change=FALSE))
+	else if(M.bodytemperature < (M.get_body_temp_normal(apply_change=FALSE) + 1))
+		M.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal(apply_change=FALSE))
 	..()
 
 /datum/reagent/medicine/adminordrazine //An OP chemical for admins
@@ -203,9 +203,9 @@
 	. = ..()
 	if(iscarbon(M))
 		var/mob/living/carbon/patient = M
-		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < TRESHOLD_UNHUSK) //One carp yields 12u rezadone.
+		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
 			patient.cure_husk("burn")
-			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.")
+			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.</span>")
 
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
@@ -321,12 +321,13 @@
 	color = "#DCDCDC"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM
 	overdose_threshold = 30
+	var/healing = 0.5
 
 /datum/reagent/medicine/omnizine/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(-0.5*REM, 0)
-	M.adjustOxyLoss(-0.5*REM, 0)
-	M.adjustBruteLoss(-0.5*REM, 0)
-	M.adjustFireLoss(-0.5*REM, 0)
+	M.adjustToxLoss(-healing*REM, 0)
+	M.adjustOxyLoss(-healing*REM, 0)
+	M.adjustBruteLoss(-healing*REM, 0)
+	M.adjustFireLoss(-healing*REM, 0)
 	..()
 	. = 1
 
@@ -337,6 +338,12 @@
 	M.adjustFireLoss(1.5*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	..()
 	. = 1
+
+/datum/reagent/medicine/omnizine/protozine
+	name = "Protozine"
+	description = "A less environmentally friendly and somewhat weaker variant of omnizine."
+	color = "#d8c7b7"
+	healing = 0.2
 
 /datum/reagent/medicine/calomel
 	name = "Calomel"
@@ -729,32 +736,11 @@
 	M.visible_message("<span class='warning'>[M]'s body starts convulsing!</span>")
 	M.notify_ghost_cloning("Your body is being revived with Strange Reagent!")
 	M.do_jitter_animation(10)
+	var/excess_healing = 5*(reac_volume-amount_to_revive) //excess reagent will heal blood and organs across the board
 	addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 40) //jitter immediately, then again after 4 and 8 seconds
 	addtimer(CALLBACK(M, /mob/living/carbon.proc/do_jitter_animation, 10), 80)
-	addtimer(CALLBACK(src, .proc/do_strange_revive,M,reac_volume,amount_to_revive), 79) //timing is everything!
+	addtimer(CALLBACK(M, /mob/living.proc/revive, FALSE, FALSE, excess_healing), 79)
 	..()
-
-/datum/reagent/medicine/strange_reagent/proc/do_strange_revive(mob/living/M,reac_volume,revive_requirement) //we store revive_requirement because if we calculate it now we might have changed our damage numbers.
-	var/excess_healing = 5*(reac_volume-revive_requirement) //excess reagent will heal blood and organs across the board
-	if(iscarbon(M) && excess_healing)
-		var/mob/living/carbon/C = M
-		if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
-			C.blood_volume += (excess_healing*2)//1 excess = 10 blood
-
-		for(var/i in C.internal_organs)
-			var/obj/item/organ/O = i
-			if(O.organ_flags & ORGAN_SYNTHETIC)
-				continue
-			O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
-
-	M.adjustOxyLoss(-20, TRUE)
-	M.adjustToxLoss(-20, TRUE) //slime friendly
-	M.updatehealth()
-	M.grab_ghost()
-	if(M.revive(full_heal = FALSE, admin_revive = FALSE))
-		M.emote("gasp")
-		log_combat(M, M, "revived", src)
-
 
 /datum/reagent/medicine/strange_reagent/on_mob_life(mob/living/carbon/M)
 	var/damage_at_random = rand(0,250)/100 //0 to 2.5
@@ -1207,32 +1193,6 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/trophazole
-	name = "Trophazole"
-	description = "Orginally developed as fitness supplement, this chemical accelerates wound healing and if ingested turns nutriment into healing peptides"
-	reagent_state = LIQUID
-	color = "#FFFF6B"
-	overdose_threshold = 20
-
-/datum/reagent/medicine/trophazole/on_mob_life(mob/living/carbon/M)
-	M.adjustBruteLoss(-1.5*REM, 0.) // heals 3 brute & 0.5 burn if taken with food. compared to 2.5 brute from bicard + nutriment
-	..()
-	. = 1
-
-/datum/reagent/medicine/trophazole/overdose_process(mob/living/M)
-	M.adjustBruteLoss(3*REM, 0)
-	..()
-	. = 1
-
-/datum/reagent/medicine/trophazole/on_transfer(atom/A, method=INGEST, trans_volume)
-	if(method != INGEST || !iscarbon(A))
-		return
-
-	A.reagents.remove_reagent(/datum/reagent/medicine/trophazole, trans_volume * 0.05)
-	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
-
-	..()
-
 /datum/reagent/medicine/metafactor
 	name = "Mitogen Metabolism Factor"
 	description = "This enzyme catalyzes the conversion of nutricious food into healing peptides."
@@ -1247,36 +1207,6 @@
 /datum/reagent/medicine/metafactor/overdose_process(mob/living/carbon/M)
 	if(prob(25))
 		M.vomit()
-	..()
-
-/datum/reagent/medicine/rhigoxane
-	name = "Rhigoxane"
-	description = "A second generation burn treatment agent exhibiting a cooling effect that is especially pronounced when deployed as a spray. Its high halogen content helps extinguish fires."
-	reagent_state = LIQUID
-	color = "#F7FFA5"
-	overdose_threshold = 25
-	reagent_weight = 0.6
-
-/datum/reagent/medicine/rhigoxane/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(-2*REM, 0.)
-	M.adjust_bodytemperature(-20 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	..()
-	. = 1
-
-/datum/reagent/medicine/rhigoxane/reaction_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
-	if(method != VAPOR)
-		return
-
-	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT * 20, 200)
-	M.adjust_fire_stacks(-reac_volume / 2)
-	if(reac_volume >= metabolization_rate)
-		M.ExtinguishMob()
-
-	..()
-
-/datum/reagent/medicine/rhigoxane/overdose_process(mob/living/carbon/M)
-	M.adjustFireLoss(3*REM, 0.)
-	M.adjust_bodytemperature(-35 * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
 	..()
 
 /datum/reagent/medicine/silibinin

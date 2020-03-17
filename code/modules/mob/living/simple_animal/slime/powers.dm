@@ -174,6 +174,7 @@
 			var/new_nutrition = round(nutrition * 0.9)
 			var/new_powerlevel = round(powerlevel / 4)
 			var/datum/component/nanites/original_nanites = GetComponent(/datum/component/nanites)
+			var/turf/drop_loc = drop_location()
 
 			for(var/i=1,i<=4,i++)
 				var/child_colour
@@ -184,7 +185,7 @@
 				else
 					child_colour = colour
 				var/mob/living/simple_animal/slime/M
-				M = new(loc, child_colour)
+				M = new(drop_loc, child_colour)
 				if(ckey)
 					M.set_nutrition(new_nutrition) //Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 				M.powerlevel = new_powerlevel
@@ -192,7 +193,7 @@
 					step_away(M,src)
 				M.Friends = Friends.Copy()
 				babies += M
-				M.mutation_chance = CLAMP(mutation_chance+(rand(5,-5)),0,100)
+				M.mutation_chance = clamp(mutation_chance+(rand(5,-5)),0,100)
 				SSblackbox.record_feedback("tally", "slime_babies_born", 1, M.colour)
 
 				if(original_nanites)

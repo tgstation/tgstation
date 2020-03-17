@@ -89,7 +89,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50), \
-	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50)
+	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
+	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 50)
 ))
 
 /obj/item/stack/sheet/metal
@@ -155,7 +156,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
-	item_state = "sheet-metal"
+	item_state = "sheet-plasteel"
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags_1 = CONDUCT_1
@@ -193,6 +194,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("wooden barrel", /obj/structure/fermenting_barrel, 8, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dresser", /obj/structure/dresser, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
@@ -234,6 +236,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	novariants = TRUE
 	material_type = /datum/material/wood
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
+	walltype = /turf/closed/wall/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/get_main_recipes()
 	. = ..()
@@ -540,7 +543,10 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	icon_state = "sheet-brass"
 	item_state = "sheet-brass"
 	icon = 'icons/obj/stack_objects.dmi'
+	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	force = 5
 	throwforce = 10
 	max_amount = 50
 	throw_speed = 1
@@ -667,3 +673,14 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	desc = "A source of raw socialism, capable of bringing forth the prophesized Soviet Golem."
 	icon_state = "sheet-stalinium"
 	merge_type = /obj/item/stack/sheet/stalinium
+
+/obj/item/stack/sheet/meat
+	name = "meat sheet"
+	desc = "Something's bloody meat compressed into a nice solid sheet"
+	singular_name = "meat sheet"
+	icon_state = "sheet-meat"
+	material_flags = MATERIAL_COLOR
+	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/meat
+	material_type = /datum/material/meat
+	material_modifier = 1 //None of that wussy stuff

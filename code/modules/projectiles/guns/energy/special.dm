@@ -133,14 +133,13 @@
 	usesound = list('sound/items/welder.ogg', 'sound/items/welder2.ogg')
 	tool_behaviour = TOOL_WELDER
 	toolspeed = 0.7 //plasmacutters can be used as welders, and are faster than standard welders
-	var/progress_flash_divisor = 10  //copypasta is best pasta
-	var/light_intensity = 1
 	var/charge_weld = 25 //amount of charge used up to start action (multiplied by amount) and per progress_flash_divisor ticks of welding
 
 /obj/item/gun/energy/plasmacutter/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 25, 105, 0, 'sound/weapons/plasma_cutter.ogg')
 	AddElement(/datum/element/update_icon_blocker)
+	AddElement(/datum/element/tool_flash, 1)
 
 /obj/item/gun/energy/plasmacutter/examine(mob/user)
 	. = ..()
@@ -163,13 +162,6 @@
 	else
 		..()
 
-// Tool procs, in case plasma cutter is used as welder
-// Can we start welding?
-/obj/item/gun/energy/plasmacutter/tool_start_check(mob/living/user, amount)
-	. = tool_use_check(user, amount)
-	if(. && user)
-		user.flash_act(light_intensity)
-
 // Can we weld? Plasma cutter does not use charge continuously.
 // Amount cannot be defaulted to 1: most of the code specifies 0 in the call.
 /obj/item/gun/energy/plasmacutter/tool_use_check(mob/living/user, amount)
@@ -188,17 +180,6 @@
 /obj/item/gun/energy/plasmacutter/use(amount)
 	return (!QDELETED(cell) && cell.use(amount ? amount * charge_weld : charge_weld))
 
-// This only gets called by use_tool(delay > 0)
-// It's also supposed to not get overridden in the first place.
-/obj/item/gun/energy/plasmacutter/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	. = ..() //return tool_use_check(user, amount) && (!extra_checks || extra_checks.Invoke())
-	if(. && user)
-		if (progress_flash_divisor == 0)
-			user.flash_act(min(light_intensity,1))
-			progress_flash_divisor = initial(progress_flash_divisor)
-		else
-			progress_flash_divisor--
-
 /obj/item/gun/energy/plasmacutter/use_tool(atom/target, mob/living/user, delay, amount=1, volume=0, datum/callback/extra_checks)
 	if(amount)
 		. = ..()
@@ -214,13 +195,31 @@
 
 /obj/item/gun/energy/wormhole_projector
 	name = "bluespace wormhole projector"
-	desc = "A projector that emits high density quantum-coupled bluespace beams."
+	desc = "A projector that emits high density quantum-coupled bluespace beams. Requires a bluespace anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/wormhole, /obj/item/ammo_casing/energy/wormhole/orange)
 	item_state = null
 	icon_state = "wormhole_projector"
 	var/obj/effect/portal/p_blue
 	var/obj/effect/portal/p_orange
 	var/atmos_link = FALSE
+	var/firing_core = FALSE
+
+/obj/item/gun/energy/wormhole_projector/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/assembly/signaler/anomaly/bluespace))
+		to_chat(user, "<span class='notice'>You insert [C] into the wormhole projector and the weapon gently hums to life.</span>")
+		firing_core = TRUE
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(C)
+		return
+
+/obj/item/gun/energy/wormhole_projector/can_shoot()
+	if(!firing_core)
+		return FALSE
+	return ..()
+
+/obj/item/gun/energy/wormhole_projector/shoot_with_empty_chamber(mob/living/user)
+	. = ..()
+	to_chat(user, "<span class='danger'>The display says, 'NO CORE INSTALLED'.</span>")
 
 /obj/item/gun/energy/wormhole_projector/update_icon_state()
 	icon_state = item_state = "[initial(icon_state)][select]"
@@ -338,9 +337,25 @@
 	return
 
 /obj/item/gun/energy/gravity_gun
-	name = "one-point bluespace-gravitational manipulator"
-	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity."
+	name = "one-point gravitational manipulator"
+	desc = "An experimental, multi-mode device that fires bolts of Zero-Point Energy, causing local distortions in gravity. Requires a gravitational anomaly core to function."
 	ammo_type = list(/obj/item/ammo_casing/energy/gravity/repulse, /obj/item/ammo_casing/energy/gravity/attract, /obj/item/ammo_casing/energy/gravity/chaos)
 	item_state = "gravity_gun"
 	icon_state = "gravity_gun"
 	var/power = 4
+	var/firing_core = FALSE
+
+/obj/item/gun/energy/gravity_gun/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/assembly/signaler/anomaly/grav))
+		to_chat(user, "<span class='notice'>You insert [C] into the gravitational manipulator and the weapon gently hums to life.</span>")
+		firing_core = TRUE
+		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
+		qdel(C)
+		return
+	return ..()
+
+/obj/item/gun/energy/gravity_gun/can_shoot()
+	if(!firing_core)
+		return FALSE
+	return ..()
+

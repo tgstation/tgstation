@@ -265,7 +265,7 @@
   * You can move in space if you have a spacewalk ability
   */
 /mob/Process_Spacemove(movement_dir = 0)
-	if(spacewalk || ..())
+	if(HAS_TRAIT(src, TRAIT_SPACEWALK) || ..())
 		return TRUE
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
@@ -474,7 +474,7 @@
 	var/turf/target = get_step_multiz(src, dir)
 	if(!target)
 		if(feedback)
-			to_chat(src, "<span class='warning'>There's nothing in that direction!</span>")
+			to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
 		return FALSE
 	if(!canZMove(dir, target))
 		if(feedback)
