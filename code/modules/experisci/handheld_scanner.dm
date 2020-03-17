@@ -7,7 +7,7 @@
 	name = "Experi-Scanner"
 	desc = "A handheld scanner used for completing the many experiments of modern science."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "adv_spectrometer"
+	icon_state = "experiscanner"
 	item_state = "analyzer"
 	/// Holds the desired experiment types for the scanner
 	var/list/desired_experiments = list(/datum/experiment/scanning)
@@ -20,20 +20,17 @@
 	. = ..()
 	if(!proximity)
 		return
-	var/datum/component/experiment_consumer/C = GetComponent(/datum/component/experiment_consumer)
-	var/datum/experiment/scanning/e = C.selected_experiment
-	if (C.linked_web && e && e.scan_atom(target))
+	var/datum/experiment/scanning/e = SEND_SIGNAL(src, COMSIG_GET_EXPERIMENT)
+	if (e && e.scan_atom(target))
 		playsound(user, 'sound/machines/ping.ogg', 25)
 		to_chat(user, "<span>You scan [target.name].</span>")
 
 /obj/item/experi_scanner/attack_self(mob/user)
 	. = ..()
-	var/datum/component/experiment_consumer/C = GetComponent(/datum/component/experiment_consumer)
-	C.select_experiment(user, desired_experiments)
+	SEND_SIGNAL(src, COMSIG_EXPERIMENT_SELECT, user = user, experiment_types = desired_experiments)
 
 /obj/item/experi_scanner/AltClick(mob/user)
 	. = ..()
 	if(!user.canUseTopic(src, be_close=TRUE))
 		return
-	var/datum/component/experiment_consumer/C = GetComponent(/datum/component/experiment_consumer)
-	C.select_techweb(user)
+	SEND_SIGNAL(src, COMSIG_TECHWEB_SELECT, user = user)

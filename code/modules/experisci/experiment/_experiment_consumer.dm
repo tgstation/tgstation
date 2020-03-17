@@ -34,7 +34,7 @@
 		if (parent.type in e.allowed_experimentors)
 			var/matched_type = null
 			if (strict_types)
-				matched_type = e.type in experiment_types ? e.type : null
+				matched_type = (e.type in experiment_types) ? e.type : null
 			else
 				for (var/i in experiment_types)
 					if (istype(e, i))

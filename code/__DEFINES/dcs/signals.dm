@@ -426,3 +426,4 @@
 // /datum/experiment related signals
 #define COMSIG_TECHWEB_SELECT "rnd_select_techweb"
 #define COMSIG_EXPERIMENT_SELECT "rnd_select_experiment"
+#define COMSIG_GET_EXPERIMENT "rnd_get_experiment"
