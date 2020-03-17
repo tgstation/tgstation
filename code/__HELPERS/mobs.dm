@@ -233,7 +233,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 ///Checks to see if our mob is currently in a do_after with the target as the target
 /mob/proc/is_interacting_with(atom/target)
-	return(target && target in do_afters)
+	return(target && (target in do_afters))
 
 /proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
