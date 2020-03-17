@@ -650,7 +650,7 @@
 	else
 		return FALSE
 
-///Called when gravity returns after floating I think
+///Used for making a sound when a mob involuntarily falls into the ground.
 /atom/proc/handle_fall(mob/faller)
 	return
 
