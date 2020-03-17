@@ -37,7 +37,7 @@
 		addtimer(CALLBACK(src, .proc/enable), 0)
 
 	if(use_overlays)
-		create_overlays()
+		AM.update_overlays()
 
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
