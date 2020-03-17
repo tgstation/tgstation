@@ -3,17 +3,29 @@
 /datum/dna
 	var/unique_enzymes
 	var/uni_identity
+	///Blood type of the carbon
 	var/blood_type
-	var/datum/species/species = new /datum/species/human //The type of mutant race the player is if applicable (i.e. potato-man)
-	var/list/features = list("FFF") //first value is mutant color
-	var/real_name //Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
-	var/list/mutations = list()   //All mutations are from now on here
-	var/list/temporary_mutations = list() //Temporary changes to the UE
-	var/list/previous = list() //For temporary name/ui/ue/blood_type modifications
+	///The type of mutant race the player is if applicable (i.e. potato-man)
+	var/datum/species/species = new /datum/species/human
+	///first value is mutant color
+	var/list/features = list("FFF")
+	///Stores the real name of the person who originally got this dna datum. Used primarely for changelings,
+	var/real_name
+	///All mutations are from now on here
+	var/list/mutations = list()
+	///Temporary changes to the UE
+	var/list/temporary_mutations = list()
+	///For temporary name/ui/ue/blood_type modifications
+	var/list/previous = list()
+	///The actual Mob wh's DNA this is
 	var/mob/living/holder
-	var/mutation_index[DNA_MUTATION_BLOCKS] //List of which mutations this carbon has and its assigned block
+	///List of which mutations this carbon has and its assigned block
+	var/mutation_index[DNA_MUTATION_BLOCKS]
+	///Genetic stability of the carbon
 	var/stability = 100
-	var/scrambled = FALSE //Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
+	///Did we take something like mutagen? In that case we cant get our genes scanned to instantly cheese all the powers.
+	var/scrambled = FALSE
+	///Text-to-Speech voice
 	var/tts_voice = ""
 
 /datum/dna/New(mob/living/new_holder)

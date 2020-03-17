@@ -153,7 +153,7 @@ SUBSYSTEM_DEF(tts)
 	var/status = STATUS_NEW
 	///Time the sound plays
 	var/life = 0
-	///What language the text is in, Lizardspeak TTS can't be understood by people who speak lizard
+	///What language the text is in, Lizardspeak TTS can't be understood by people who don't speak lizard
 	var/datum/language/language
 	///Volume modifier for wispering, etc
 	var/volume_mod = 1
