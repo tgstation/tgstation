@@ -1,0 +1,6 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "Aggressive grabs from pacifists now make people drop their items, just like aggressive grabs from non-pacifists do."
+  - balance: "The chances to break out of aggressive, neck, and kill grabs have been modified slightly, and having large amounts of damage should actually affect how hard it is to break out of a kill grab now."
+  - balance: "All types of damage now affect how hard it is to break out of a grab, not just brute and stamina damage. Stamina damage is, as before, weighted twice as much as the other damage types in the grab escape chance calculation(s)."
