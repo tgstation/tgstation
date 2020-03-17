@@ -267,6 +267,23 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	using_special = FALSE
 
 /**
+  * Handles Space Dragon's temporary empowerment after boosting a rift.
+  *
+  * Empowers and depowers Space Dragon after a successful rift charge.
+  * Empowered, Space Dragon regains all his health and becomes temporarily faster for 30 seconds, along with being tinted red.
+  * Depowered simply resets him back to his default state.
+  */
+/mob/living/simple_animal/hostile/space_dragon/proc/rift_empower(is_empowered)
+	if(is_empowered)
+		fully_heal()
+		color = "#FF0000"
+		set_varspeed(-0.5)
+		addtimer(CALLBACK(src, .proc/rift_empower, FALSE), 300)
+	else
+		color = "#FFFFFF"
+		set_varspeed(0)
+
+/**
   * Destroys all of Space Dragon's current rifts.
   *
   * QDeletes all the current rifts after removing their references to other objects.
@@ -435,6 +452,11 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 /obj/structure/carp_rift/process()
 	time_charged = min(time_charged + 1, max_charge + 1)
 	update_check()
+	for(var/mob/living/simple_animal/hostile/hostilehere in loc)
+		if("carp" in hostilehere.faction)
+			hostilehere.adjustHealth(-10)
+			var/obj/effect/temp_visual/heal/H = new /obj/effect/temp_visual/heal(get_turf(hostilehere))
+			H.color = "#0000FF"
 	if(time_charged < max_charge)
 		desc = "A rift akin to the ones space carp use to travel long distances.  It seems to be [(time_charged / max_charge) * 100]% charged."
 		if(carp_stored == 0)
@@ -480,6 +502,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 			dragon.rift = new
 			dragon.rift.Grant(dragon)
 			dragon.riftTimer = 0
+			dragon.rift_empower(TRUE)
 
 /**
   * Used to create carp controlled by ghosts when the option is available.
