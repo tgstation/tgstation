@@ -3,14 +3,15 @@
 		return FALSE
 
 	var/list/borg_disguses_list = list(
-	"Medical", \
-	"Security", \
-	"Engineering", \
-	"Peacekeeper", \
-	"Janitor", \
 	"Clown", \
+	"Engineering", \
+	"Janitor", \
+	"Medical", \
 	"Mining", \
+	"Peacekeeper", \
+	"Security", \
 	"Service", \
+	"Standard", \
 	"Cancel" = null )
 
 	var/choice = input(user,"Which borg module will you disguise as?","Chameleon Borg Disguise") as null|anything in borg_disguses_list
@@ -42,6 +43,9 @@
 		if("Service")
 			disguise_text = "service"
 			disguise = pick("service_f", "service_m", "brobot", "kent", "tophat")
+		if("Standard")
+			disguise_text = "standard"
+			disguise = pick("robot")
 		if("Cancel")
 			to_chat(user, "<span class='warning'>You aborted disguising.</span>")
 			return FALSE
