@@ -914,3 +914,25 @@
 		M.adjustToxLoss(-1, 0)
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/lean
+	name = "Lean"
+	description = "The drank that makes you go wheezy."
+	color = "#DE55ED"
+	quality = DRINK_NICE
+	taste_description = "you can taste purple and a hint of opiod."
+	glass_icon_state = "lean"
+	glass_name = "Lean"
+	glass_desc = "A drink that makes your life less miserable. "
+
+/datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/M)
+	if(M.slurring < 3)
+		M.slurring+= 2
+	if(M.druggy < 3)
+		M.adjust_drugginess(1)
+	if(M.drowsyness < 3)
+		M.drowsyness++
+	. = ..()
+
+
+
