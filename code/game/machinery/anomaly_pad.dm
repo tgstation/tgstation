@@ -18,8 +18,6 @@
 	var/base_power = 500
 
 /obj/machinery/anomaly_pad/RefreshParts()
-	..()
-
 	var/obj/item/stock_parts/micro_laser/L = locate(/obj/item/stock_parts/micro_laser) in contents
 
 	if(L)
@@ -100,7 +98,7 @@
 	///Max anomaly drainage rate
 	var/speed = 100
 	///alright, it'd be gross to make another anomaly var for the fluescent anom, so just track the reagent_type here
-	var/reagent_type 
+	var/reagent_type
 
 /obj/machinery/anomaly_pad/liquid/Initialize()
 	. = ..()
@@ -115,7 +113,7 @@
 	reagents.add_reagent(reagent_type, speed)
 
 /obj/machinery/anomaly_pad/liquid/CaptureAnomaly(obj/item/assembly/signaler/anomaly/fluid/S)
-	..(S)
+	..()
 	reagent_type = S.reagent_type
 
 /obj/machinery/anomaly_pad/liquid/IsAnomalyApplicable(obj/item/assembly/signaler/anomaly/S, mob/living/user)

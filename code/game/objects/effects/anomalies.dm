@@ -9,7 +9,7 @@
 	light_range = 3
 
 	///true for no move and no magic lightning fire explosions. used by anomaly pads. Please call Suspend and Unsuspend to change this
-	var/suspended = FALSE 
+	var/suspended = FALSE
 	var/movechance = 70
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
@@ -403,6 +403,7 @@
 
 /obj/effect/anomaly/fluid/anomalyEffect()
 	..()
+
 	if(lube_chance)
 		for(var/turf/open/OT in range(lube_range, src))
 			OT.MakeSlippery(TURF_WET_LUBE, min_wet_time = lube_time)

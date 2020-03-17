@@ -213,7 +213,7 @@
 
 ///so we can properly override this in-case we need some special stuff passed along with it, like the reagent type with fluescent anomalies. also pass turf because qdel and
 /obj/item/assembly/signaler/anomaly/proc/ReviveAnomaly(turf/T)
-	qdel(src)
+	QDEL_IN(src, 0) //feels wrong to run code on qdelled objects
 	return new anomaly_type(T)
 
 //Anomaly cores
