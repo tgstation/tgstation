@@ -1,7 +1,7 @@
 #define INJECTOR_TIMEOUT 100
 #define NUMBER_OF_BUFFERS 3
 #define SCRAMBLE_TIMEOUT 600
-#define JOKER_TIMEOUT 12000					//20 minutes
+#define JOKER_TIMEOUT 1				//20 minutes
 #define JOKER_UPGRADE 3000
 
 #define RADIATION_STRENGTH_MAX 15
@@ -19,7 +19,7 @@
 #define SCANNER_ACTION_MIXED 4
 
 /obj/machinery/computer/scan_consolenew
-	name = "scan_consolenew"
+	name = "DNA Console"
 	desc = "Scan DNA."
 	icon_screen = "dna"
 	icon_keyboard = "med_key"
@@ -65,11 +65,38 @@
 	var/can_use_scanner = FALSE
 	var/is_viable_occupant = FALSE
 	var/is_scramble_ready = FALSE
+	var/is_joker_ready = FALSE
+	var/is_injector_ready = FALSE
+	var/time_to_scramble = 0
+	var/time_to_joker = 0
+	var/time_to_injector = 0
 	var/obj/machinery/dna_scannernew/connected_scanner = null
 	var/mob/living/carbon/scanner_occupant = null
 	var/list/occupant_mutations = list()
+	var/list/scanner_mutations = list()
+	var/list/diskette_mutations = list()
+	var/list/scanner_chromosomes = list()
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
+	if (istype(I, /obj/item/chromosome))
+		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
+			I.forceMove(src)
+			stored_chromosomes += I
+			to_chat(user, "<span class='notice'>You insert [I].</span>")
+		else
+			to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
+		return
+	if (istype(I, /obj/item/disk/data)) //INSERT SOME DISKETTES
+		if (!user.transferItemToLoc(I,src))
+			return
+		if(diskette)
+			diskette.forceMove(drop_location())
+			diskette = null
+		diskette = I
+		to_chat(user, "<span class='notice'>You insert [I].</span>")
+		updateUsrDialog()
+		return
+	else
 		return ..()
 
 /obj/machinery/computer/scan_consolenew/Initialize()
@@ -90,8 +117,6 @@
 	// Do some additional logic to state whether and when the JOKER option is available.
 	if(jokerready < world.time)
 		. += "<span class='notice'>JOKER algorithm available.</span>"
-	else
-		. += "<span class='notice'>JOKER algorithm available in about [round(0.00166666667 * (jokerready - world.time))] minutes.</span>"
 
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	. = ..()
@@ -114,6 +139,13 @@
 		scanner_occupant = null
 
 	is_scramble_ready = (scrambleready < world.time)
+	time_to_scramble = round((scrambleready - world.time)/10)
+
+	is_joker_ready = (jokerready < world.time)
+	time_to_joker = round((jokerready - world.time)/10)
+
+	is_injector_ready = (injectorready < world.time)
+	time_to_injector = round((injectorready - world.time)/10)
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -145,11 +177,38 @@
 		data["SubjectMutations"] = null
 
 	data["IsScrambleReady"] = is_scramble_ready
+	data["IsJokerReady"] = is_joker_ready
+	data["IsInjectorReady"] = is_injector_ready
+	data["ScrambleSeconds"] = time_to_scramble
+	data["JokerSeconds"] = time_to_joker
+	data["InjectorSeconds"] = time_to_injector
+
+	if(diskette != null)
+		data["HasDisk"] = TRUE
+		data["DiskCapacity"] = diskette.max_mutations - LAZYLEN(diskette.mutations)
+		data["DiskReadOnly"] = diskette.read_only
+		data["DiskMutations"] = diskette_mutations
+	else
+		data["HasDisk"] = FALSE
+		data["DiskCapacity"] = 0
+		data["DiskReadOnly"] = TRUE
+		data["DiskMutations"] = null
+
+	data["MutationCapacity"] = max_storage - LAZYLEN(stored_mutations)
+	data["MutationStorage"] = scanner_mutations
+	data["ChromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
+	data["ChromoStorage"] = scanner_chromosomes
 
 	data["CONSCIOUS"] = CONSCIOUS
 	data["UNCONSCIOUS"] = UNCONSCIOUS
 	data["GENES"] = genes
 	data["REVERSEGENES"] = reversegenes
+	data["CHROMOSONE_NEVER"] = CHROMOSOME_NEVER
+	data["CHROMOSOME_NONE"] = CHROMOSOME_NONE
+	data["CHROMOSOME_USED"] = CHROMOSOME_USED
+	data["MUT_NORMAL"] = MUT_NORMAL
+	data["MUT_EXTRA"] = MUT_EXTRA
+	data["MUT_OTHER"] = MUT_OTHER
 
 	return data
 
@@ -164,12 +223,15 @@
 	switch(action)
 		if("connect_scanner")
 			connect_to_scanner()
+			return
 		if("toggle_door")
 			if(scanner_operational())
 				connected_scanner.toggle_open(usr)
+			return
 		if("toggle_lock")
 			if(scanner_operational())
 				connected_scanner.locked = !connected_scanner.locked
+			return
 		if("scramble_dna")
 			if(can_modify_occupant() && (scrambleready < world.time))
 				scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
@@ -178,12 +240,14 @@
 				to_chat(usr,"<span class'notice'>DNA scrambled.</span>")
 				scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2)
 		if("checkdisc")
-			if(!scanner_operational() || !(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
+			if(!(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
 				return
 			check_discovery(params["alias"])
 		if("pulsegene") // params.pos and params.gene and params.alias
 			// Check for cheese
-			if(!scanner_operational() || !(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
+			// can_modify_occupant() also checks that there is an operational and
+			// connected DNA Scanner, which is important for later code.
+			if(!(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
 				return
 
 			// Resolve mutation path
@@ -199,20 +263,216 @@
 			var/newgene = params["gene"]
 			var/genepos = text2num(params["pos"])
 
+			if((newgene == "J") && (jokerready < world.time))
+				var/truegenes = GET_SEQUENCE(path)
+				newgene = truegenes[genepos]
+				jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
+
 			// Copy genome into scanner occupant and do some basic mutation checks as we've increased rads
 			sequence = copytext_char(sequence, 1, genepos) + newgene + copytext_char(sequence, genepos + 1)
 			scanner_occupant.dna.mutation_index[path] = sequence
 			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff
 			scanner_occupant.domutcheck()
 
-			// Check if we cracked a new mutation
+			// Check if we cracked this new mutation
 			check_discovery(alias)
-		if("DEBUG")
-			to_chat(usr,"<span class'notice'>DEBUG: --------</span>")
-			for(var/i in params)
-				to_chat(usr,"<span class'notice'>DEBUG: [i] = [params[i]]</span>")
+		if("applychromo")
+			// Check for cheese
+			if(!(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
+				return
 
-	return TRUE
+			var/bref = params["mutref"]
+
+
+			// Make sure they have the mutation
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(!HM)
+				return
+
+			// Look through our stored chromos and compare names to find a
+			// stored chromo we can apply.
+			for(var/obj/item/chromosome/CM in stored_chromosomes)
+				if(CM.can_apply(HM) && (CM.name == params["chromo"]))
+					stored_chromosomes -= CM
+					CM.apply(HM)
+		if("print_injector")
+			// Because printing mutators and activators share a bunch of code,
+			// it makes sense to keep them both together and set unique vars
+			// later in the code
+
+			// As a side note, because mutations can contain unique metadata,
+			// this system uses BYOND Atom Refs to safely and accurately
+			// identify mutations from big ol' lists.
+
+			// Make sure the injector is actually ready.
+			if(world.time < injectorready)
+				return
+
+			var/bref = params["mutref"]
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(!HM)
+				return
+
+			var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+			I.add_mutations += new HM.type(copymut = HM)
+
+			var/is_activator = text2num(params["is_activator"])
+
+			if(is_activator)
+				I.name = "[HM.name] activator"
+				I.research = TRUE
+				if(scanner_operational())
+					I.damage_coeff = connected_scanner.damage_coeff*4
+					injectorready = world.time + INJECTOR_TIMEOUT * (1 - 0.1 * connected_scanner.precision_coeff)
+				else
+					injectorready = world.time + INJECTOR_TIMEOUT
+			else
+				I.name = "[HM.name] mutator"
+				I.doitanyway = TRUE
+				if(scanner_operational())
+					I.damage_coeff = connected_scanner.damage_coeff
+					injectorready = world.time + INJECTOR_TIMEOUT * 5 * (1 - 0.1 * connected_scanner.precision_coeff)
+				else
+					injectorready = world.time + INJECTOR_TIMEOUT * 5
+		if("save_console")
+			// Can only be done from the scanner occupant / genetic sequencer
+			if(!can_modify_occupant())
+				return
+
+			if(LAZYLEN(stored_mutations) >= max_storage)
+				to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
+				return
+
+			var/bref = params["mutref"]
+			to_chat(usr,"<span class='warning'>Attempted bref: [bref]</span>")
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(!HM)
+				return
+
+			var/datum/mutation/human/A = new HM.type()
+			A.copy_mutation(HM)
+			stored_mutations += A
+			to_chat(usr,"<span class='notice'>Mutation succesfully stored.</span>")
+			return
+		if("save_disk")
+			if(!diskette)
+				return
+
+			if(LAZYLEN(diskette.mutations) >= diskette.max_mutations)
+				to_chat(usr,"<span class='warning'>Disk storage is full.</span>")
+				return
+
+			if(diskette.read_only)
+				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				return
+
+			var/bref = params["mutref"]
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(!HM)
+				return
+
+			var/datum/mutation/human/A = new HM.type()
+			A.copy_mutation(HM)
+			diskette.mutations += A
+			to_chat(usr,"<span class='notice'>Mutation succesfully stored to disk.</span>")
+		if("add_adv_injector")
+			// ##TODO: IMPLEMENT
+			return
+		if("nullify")
+			if(!can_modify_occupant())
+				return
+
+			var/bref = params["mutref"]
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(!HM)
+				return
+
+			// Nullify should only be used on scrambled or "extra" mutations.
+			if(!HM.scrambled && !(HM.class == MUT_EXTRA))
+				return
+
+			scanner_occupant.dna.remove_mutation(HM.type)
+		if("delete_console_mut")
+			var/bref = params["mutref"]
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(HM)
+				stored_mutations.Remove(HM)
+				qdel(HM)
+		if("delete_disk_mut")
+			if(!diskette)
+				return
+
+			var/bref = params["mutref"]
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(HM)
+				diskette.mutations.Remove(HM)
+				qdel(HM)
+		if("eject_chromo")
+			var/chromname = params["chromo"]
+			to_chat(usr,"<span class='notice'>Trying to eject [chromname].</span>")
+			for(var/obj/item/chromosome/CM in stored_chromosomes)
+				to_chat(usr,"<span class='notice'>Checking [chromname] with [CM.name].</span>")
+				if(chromname == CM.name)
+					to_chat(usr,"<span class='notice'>Match found at [CM.name].</span>")
+					CM.forceMove(drop_location())
+					adjust_item_drop_location(CM)
+					stored_chromosomes -= CM
+					return
+		if("combine_console")
+			if(LAZYLEN(stored_mutations) >= max_storage)
+				to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
+				return
+
+			if(!stored_research)
+				return
+
+			var/result_path = get_mixed_mutation(params["srctype"], params["desttype"])
+
+			if(!result_path)
+				return
+
+			stored_mutations += new result_path()
+			to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to storage</span>")
+
+			if(result_path in stored_research.discovered_mutations)
+				return
+
+			stored_research.discovered_mutations += result_path
+		if("combine_disk")
+			if(!diskette)
+				return
+
+			if(LAZYLEN(diskette.mutations) >= diskette.max_mutations)
+				to_chat(usr,"<span class='warning'>Disk storage is full.</span>")
+				return
+
+			if(diskette.read_only)
+				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				return
+
+			if(!stored_research)
+				return
+
+			var/result_path = get_mixed_mutation(params["srctype"], params["desttype"])
+
+			if(!result_path)
+				return
+
+			diskette.mutations += new result_path()
+			to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to storage</span>")
+
+			if(result_path in stored_research.discovered_mutations)
+				return
+
+			stored_research.discovered_mutations += result_path
+	return
 
 
 // Simple helper proc
@@ -282,46 +542,196 @@
 	else
 		occupant_mutations = list()
 
-	for(var/mutation_type in scanner_occupant.dna.mutation_index)
-		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
+	if(diskette_mutations)
+		diskette_mutations.Cut()
+	else
+		diskette_mutations = list()
 
+	scanner_mutations.Cut()
+	scanner_chromosomes.Cut()
+
+	var/index = 1
+	if(can_modify_occupant())
+		// Start cataloguing all "default" mutations that the occupant has by default
+		for(var/mutation_type in scanner_occupant.dna.mutation_index)
+			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
+
+			var/list/mutation_data = list()
+			var/text_sequence = scanner_occupant.dna.mutation_index[mutation_type]
+			var/list/list_sequence = list()
+
+			for(var/i in 1 to LAZYLEN(text_sequence))
+				list_sequence += text_sequence[i];
+
+			var/discovered = (stored_research && (mutation_type in stored_research.discovered_mutations))
+
+			mutation_data["Alias"] = HM.alias
+			mutation_data["Sequence"] = text_sequence
+			mutation_data["SeqList"] = list_sequence
+			mutation_data["Discovered"] = discovered
+
+			if(discovered)
+				mutation_data["Name"] = HM.name
+				mutation_data["Description"] = HM.desc
+				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
+
+			var/mut_class = MUT_NORMAL
+			var/datum/mutation/human/A = scanner_occupant.dna.get_mutation(mutation_type)
+			if(A)
+				mutation_data["Active"] = TRUE
+				mutation_data["Scrambled"] = A.scrambled
+				mutation_data["Class"] = A.class
+				mut_class = A.class
+				mutation_data["CanChromo"] = A.can_chromosome
+				mutation_data["ByondRef"] = REF(A)
+				mutation_data["Type"] = A.type
+				if(A.can_chromosome)
+					mutation_data["ValidChromos"] = jointext(A.valid_chrom_list, ", ")
+					mutation_data["AppliedChromo"] = A.chromosome_name
+					mutation_data["ValidStoredChromos"] = build_chrom_list(A)
+			else
+				mutation_data["Active"] = FALSE
+				mutation_data["Scrambled"] = FALSE
+				mutation_data["Class"] = MUT_NORMAL
+
+			if (mut_class == MUT_EXTRA)
+				mutation_data["Image"] = "dna_extra.gif"
+			else if(stored_research && (mutation_type in stored_research.discovered_mutations))
+				mutation_data["Image"] = "dna_discovered.gif"
+			else
+				mutation_data["Image"] = "dna_undiscovered.gif"
+
+			occupant_mutations["[index]"] = mutation_data
+			index += 1
+
+		// Now get additional/"extra" mutations that they shouldn't have by default
+		for(var/datum/mutation/human/HM in scanner_occupant.dna.mutations)
+			// If it's in the mutation index array, we've already catalogued this
+			// mutation and can safely skip over it.
+			if(HM.type in scanner_occupant.dna.mutation_index)
+				break
+
+			var/list/mutation_data = list()
+			var/text_sequence = GET_SEQUENCE(HM.type)
+			var/list/list_sequence = list()
+
+			for(var/i in 1 to LAZYLEN(text_sequence))
+				list_sequence += text_sequence[i];
+
+			var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
+
+			mutation_data["Alias"] = A.alias
+			mutation_data["Sequence"] = text_sequence
+			mutation_data["SeqList"] = list_sequence
+			mutation_data["Discovered"] = TRUE
+
+			mutation_data["Name"] = HM.name
+			mutation_data["Description"] = HM.desc
+			mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
+
+			mutation_data["Active"] = TRUE
+			mutation_data["Scrambled"] = HM.scrambled
+			mutation_data["Class"] = HM.class
+			mutation_data["CanChromo"] = HM.can_chromosome
+			mutation_data["ByondRef"] = REF(HM)
+			mutation_data["Type"] = HM.type
+
+			if(HM.can_chromosome)
+				mutation_data["ValidChromos"] = jointext(HM.valid_chrom_list, ", ")
+				mutation_data["AppliedChromo"] = HM.chromosome_name
+				mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
+
+			// Nothing in this list should be undiscovered. Technically nothing
+			// should be anything but EXTRA. But we're just handling some edge cases.
+			if (HM.class == MUT_EXTRA)
+				mutation_data["Image"] = "dna_extra.gif"
+			else
+				mutation_data["Image"] = "dna_discovered.gif"
+
+			occupant_mutations["[index]"] = mutation_data
+			index += 1
+
+	index = 1
+	for(var/datum/mutation/human/HM in stored_mutations)
 		var/list/mutation_data = list()
-		var/text_sequence = scanner_occupant.dna.mutation_index[mutation_type]
+
+		var/text_sequence = GET_SEQUENCE(HM.type)
 		var/list/list_sequence = list()
 
 		for(var/i in 1 to LAZYLEN(text_sequence))
 			list_sequence += text_sequence[i];
 
-		var/mutation_index = scanner_occupant.dna.mutation_index.Find(mutation_type)
+		var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
 
-		mutation_data["Type"] = HM.type
-		mutation_data["Name"] = HM.name
-		mutation_data["Alias"] = HM.alias
-		mutation_data["Sequence"] = text_sequence
+		mutation_data["Alias"] = A.alias
 		mutation_data["SeqList"] = list_sequence
+		mutation_data["Name"] = HM.name
 		mutation_data["Description"] = HM.desc
-		mutation_data["Instability"] = HM.instability
-		mutation_data["Discovered"] = (stored_research && (mutation_type in stored_research.discovered_mutations))
+		mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
+		mutation_data["ByondRef"] = REF(HM)
+		mutation_data["Type"] = HM.type
 
-		var/datum/mutation/human/A = scanner_occupant.dna.get_mutation(mutation_type)
-		if(A)
-			mutation_data["Active"] = TRUE
-			mutation_data["Scrambled"] = A.scrambled
-		else
-			mutation_data["Active"] = FALSE
-			mutation_data["Scrambled"] = FALSE
+		mutation_data["CanChromo"] = HM.can_chromosome
+		if(HM.can_chromosome)
+			mutation_data["ValidChromos"] = jointext(HM.valid_chrom_list, ", ")
+			mutation_data["AppliedChromo"] = HM.chromosome_name
+			mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
 
-		if(mutation_index > DNA_MUTATION_BLOCKS)
-			mutation_data["Image"] = "dna_extra.gif"
-		else if(stored_research && (mutation_type in stored_research.discovered_mutations))
-			mutation_data["Image"] = "dna_discovered.gif"
-		else
-			mutation_data["Image"] = "dna_undiscovered.gif"
+		scanner_mutations["[index]"] = mutation_data
+		index += 1
 
-		occupant_mutations["[mutation_index]"] = mutation_data
+	index = 1
+	for(var/obj/item/chromosome/CM in stored_chromosomes)
+		var/list/chromo_data = list()
+
+		chromo_data["Name"] = CM.name
+		chromo_data["Description"] = CM.desc
+
+		scanner_chromosomes["[index]"] = chromo_data
+		index += 1
+
+	index = 1
+
+	if(diskette)
+		for(var/datum/mutation/human/HM in diskette.mutations)
+			var/list/mutation_data = list()
+
+			var/text_sequence = GET_SEQUENCE(HM.type)
+			var/list/list_sequence = list()
+
+			for(var/i in 1 to LAZYLEN(text_sequence))
+				list_sequence += text_sequence[i];
+
+			var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
+
+			mutation_data["Alias"] = A.alias
+			mutation_data["SeqList"] = list_sequence
+			mutation_data["Name"] = HM.name
+			mutation_data["Description"] = HM.desc
+			mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
+			mutation_data["ByondRef"] = REF(HM)
+			mutation_data["Type"] = HM.type
+
+			mutation_data["CanChromo"] = HM.can_chromosome
+			if(HM.can_chromosome)
+				mutation_data["ValidChromos"] = jointext(HM.valid_chrom_list, ", ")
+				mutation_data["AppliedChromo"] = HM.chromosome_name
+				mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
+
+			diskette_mutations["[index]"] = mutation_data
+			index += 1
+
+/obj/machinery/computer/scan_consolenew/proc/build_chrom_list(mutation)
+	var/list/chromosomes = list()
+
+	for(var/obj/item/chromosome/CM in stored_chromosomes)
+		if(CM.can_apply(mutation))
+			chromosomes += CM.name
+
+	return chromosomes
 
 /obj/machinery/computer/scan_consolenew/proc/check_discovery(alias)
-	if(!scanner_operational() || !(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
+	if(!(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
 		return
 
 	var/path = GET_MUTATION_TYPE_FROM_ALIAS(alias)
@@ -335,6 +745,23 @@
 		return TRUE
 
 	return FALSE
+
+/obj/machinery/computer/scan_consolenew/proc/get_mut_by_ref(ref)
+	if(can_modify_occupant())
+		for(var/datum/mutation/human/HM in scanner_occupant.dna.mutations)
+			if(REF(HM) == ref)
+				return HM
+
+	for(var/datum/mutation/human/HM in stored_mutations)
+		if(REF(HM) == ref)
+			return HM
+
+	if(diskette)
+		for(var/datum/mutation/human/HM in diskette.mutations)
+			if(REF(HM) == ref)
+				return HM
+
+	return null
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT
