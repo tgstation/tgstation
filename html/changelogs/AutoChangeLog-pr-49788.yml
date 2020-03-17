@@ -1,0 +1,18 @@
+# Your name.
+author: "Timberpoes"
+
+# Optional: Remove this file after generating master changelog.  Useful for PR changelogs that won't get used again.
+delete-after: True
+
+# Any changes you've made.  See valid prefix list above.
+# INDENT WITH TWO SPACES.  NOT TABS.  SPACES.
+# SCREW THIS UP AND IT WON'T WORK.
+# Also, this gets changed to [] after reading.  Just remove the brackets when you add new shit.
+# Please surround your changes in  double quotes ("). It works without them, but if you use certain characters it screws up compiling. The quotes will not show up in the changelog.
+changes:
+  - bugfix: "DNA Consoles have had a firmware update. Mutations can once again be removed properly from the selection list of Advanced Injectors and chromosomes can be removed from storage in any order."
+  - bugfix: "Chromosomes can now be added to all activated mutations on a test subject using the DNA Console instead of just the last activated mutation in the list."
+  - bugfix: "Advanced Injectors no longer super-hyper-mega-ultra-expend themselves and will now only expend themselves once."
+  - bugfix: "Genetic data from used Mutation Activators may now be too limited to extract a new chromosome at DNA Consoles."
+  - bugfix: "Chromosomes now always insert themselves into DNA Consoles when created, unless the console storage buffer is full in which case the chromosome is left on top of the console."
+  - tweak: "There are now additional feedback messages during the chromosome creation process to keep the user informed."
