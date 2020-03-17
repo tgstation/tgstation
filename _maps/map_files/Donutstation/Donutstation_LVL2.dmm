@@ -2755,7 +2755,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/openspace,
 /area/maintenance/central)
 "gp" = (
 /obj/effect/turf_decal/trimline/white/filled/corner{
@@ -5734,7 +5734,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/openspace,
 /area/maintenance/central)
 "mn" = (
 /obj/structure/chair/stool,
@@ -5890,7 +5890,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/openspace,
 /area/maintenance/central)
 "mH" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -6117,7 +6117,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/floor/plating,
+/turf/open/openspace,
 /area/maintenance/central)
 "nf" = (
 /obj/effect/turf_decal/tile/red{
