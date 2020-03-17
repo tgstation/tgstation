@@ -158,7 +158,7 @@
 	if(user == loc && tied != SHOES_TIED) // if they're our own shoes, go tie-wards
 		user.visible_message("<span class='notice'>[user] begins [tied ? "unknotting" : "tying"] the laces of [user.p_their()] [src.name].</span>", "<span class='notice'>You begin [tied ? "unknotting" : "tying"] the laces of your [src.name]...</span>")
 
-		if(do_after(user, lace_time, needhand=TRUE, target=src))
+		if(do_after(user, lace_time, needhand=TRUE, target=our_guy))
 			to_chat(user, "<span class='notice'>You [tied ? "unknot" : "tie"] the laces of your [src.name].</span>")
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_TIED, user)
@@ -178,7 +178,7 @@
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 
-		if(do_after(user, mod_time, needhand=TRUE, target=src))
+		if(do_after(user, mod_time, needhand=TRUE, target=our_guy))
 			to_chat(user, "<span class='notice'>You [tied ? "untie" : "knot"] the laces on [loc]'s [src.name].</span>")
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)
