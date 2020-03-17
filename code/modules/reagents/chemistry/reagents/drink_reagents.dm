@@ -920,7 +920,7 @@
 	description = "The drank that makes you go wheezy."
 	color = "#DE55ED"
 	quality = DRINK_NICE
-	taste_description = "you can taste purple and a hint of opiod."
+	taste_description = "purple with a hint of opoid"
 	glass_icon_state = "lean"
 	glass_name = "Lean"
 	glass_desc = "A drink that makes your life less miserable. "
@@ -933,6 +933,5 @@
 	if(M.drowsyness < 3)
 		M.drowsyness++
 	. = ..()
-
 
 
