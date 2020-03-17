@@ -221,16 +221,7 @@
 			if(!panel_open)
 				return
 			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
-				if(!isnull(target) && !..())
-					target += T0C
-					. = TRUE
-			else if(adjust)
-				target = targetTemperature + adjust
-				. = TRUE
-			else if(text2num(target) != null)
+			if(text2num(target) != null)
 				target= text2num(target) + T0C
 				. = TRUE
 			if(.)

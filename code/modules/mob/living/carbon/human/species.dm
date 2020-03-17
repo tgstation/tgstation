@@ -374,6 +374,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				if(hair_color)
 					if(hair_color == "mutcolor")
 						facial_overlay.color = "#" + H.dna.features["mcolor"]
+					else if(hair_color == "fixedmutcolor")
+						facial_overlay.color = "#[fixed_mut_color]"
 					else
 						facial_overlay.color = "#" + hair_color
 				else
@@ -435,6 +437,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					if(hair_color)
 						if(hair_color == "mutcolor")
 							hair_overlay.color = "#" + H.dna.features["mcolor"]
+						else if(hair_color == "fixedmutcolor")
+							hair_overlay.color = "#[fixed_mut_color]"
 						else
 							hair_overlay.color = "#" + hair_color
 					else
@@ -690,6 +694,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						if(HAIR)
 							if(hair_color == "mutcolor")
 								accessory_overlay.color = "#[H.dna.features["mcolor"]]"
+							else if(hair_color == "fixedmutcolor")
+								accessory_overlay.color = "#[fixed_mut_color]"
 							else
 								accessory_overlay.color = "#[H.hair_color]"
 						if(FACEHAIR)
@@ -1600,7 +1606,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			firemodifier = min(firemodifier, 0)
 
 		// this can go below 5 at log 2.5
-		burn_damage = max(log(2 - firemodifier, (H.bodytemperature - H.get_body_temp_normal())) - 5,0)
+		burn_damage = max(log(2 - firemodifier, (H.bodytemperature - H.get_body_temp_normal(apply_change=FALSE))) - 5,0)
 
 		// Display alerts based on the amount of fire damage being taken
 		if (burn_damage)

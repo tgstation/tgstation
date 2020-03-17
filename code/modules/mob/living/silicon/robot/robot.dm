@@ -733,7 +733,7 @@
 
 	if(sight_mode & BORGMESON)
 		sight |= SEE_TURFS
-		lighting_alpha = LIGHTING_PLANE_ALPHA_INVISIBLE
+		lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 		see_in_dark = 1
 
 	if(sight_mode & BORGMATERIAL)
