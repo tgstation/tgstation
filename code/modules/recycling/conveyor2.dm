@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	for(var/atom/movable/AM in loc)
 		if(AM.anchored) // If it can't be moved, ignore it
 			continue
-		if(++i >= MAX_CONVEYOR_ITEMS_MOVE)
+		if(++i > MAX_CONVEYOR_ITEMS_MOVE)
 			break
 		affecting.Add(AM)
 
