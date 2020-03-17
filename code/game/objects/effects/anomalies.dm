@@ -401,7 +401,7 @@
 /obj/effect/anomaly/fluid/anomalyEffect()
 	. = ..()
 
-	if(lube_chance)
+	if(prob(lube_chance))
 		for(var/turf/open/OT in range(lube_range, src))
 			OT.MakeSlippery(TURF_WET_LUBE, min_wet_time = lube_time)
 
@@ -426,6 +426,5 @@
 	reagents.clear_reagents()
 	reagents.add_reagent(reagent_type, volume)
 	add_atom_colour(mix_color_from_reagents(reagents.reagent_list), FIXED_COLOUR_PRIORITY)
-
 
 
