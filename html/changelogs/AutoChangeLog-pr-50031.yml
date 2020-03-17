@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscdel: "Temporarily reverts h2o support in the sm. We need to work out some kinks."
