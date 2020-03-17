@@ -45524,13 +45524,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
-"bYy" = (
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 4;
-	name = "N2 to Airmix"
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "bYz" = (
 /obj/machinery/atmospherics/components/trinary/mixer/airmix{
 	dir = 4
@@ -45995,9 +45988,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bZH" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 4;
-	name = "N2 to Pure"
+/obj/machinery/atmospherics/pipe/simple/yellow/visible{
+	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -46719,10 +46711,6 @@
 /area/engine/atmos)
 "cbf" = (
 /obj/structure/window/reinforced,
-/obj/machinery/atmospherics/components/binary/pump/on{
-	dir = 1;
-	name = "Nitrogen Outlet"
-	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
@@ -46735,6 +46723,11 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "N2 to Airmix";
+	on = 1
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -46751,6 +46744,10 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1;
+	name = "N2 to Pure"
 	},
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
@@ -48685,11 +48682,6 @@
 "cfu" = (
 /obj/structure/lattice,
 /obj/machinery/atmospherics/pipe/simple/green/visible,
-/turf/open/space,
-/area/space/nearstation)
-"cfv" = (
-/obj/structure/lattice,
-/obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /turf/open/space,
 /area/space/nearstation)
 "cfw" = (
@@ -120080,11 +120072,11 @@ bHu
 bVJ
 bXj
 bYx
-bMg
+bKx
 cbf
 ccP
 ceh
-cfv
+cfw
 cgA
 chP
 cje
@@ -120336,12 +120328,12 @@ bxd
 bUA
 bVK
 bXk
-bYy
+bIS
 bZH
 cbg
-ccQ
-bza
-aaf
+ccP
+ceh
+cfx
 bAR
 bAR
 bAR
