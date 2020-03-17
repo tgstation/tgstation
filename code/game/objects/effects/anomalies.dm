@@ -402,7 +402,7 @@
 	SetReagent(get_random_reagent_id())
 
 /obj/effect/anomaly/fluid/anomalyEffect()
-	..()
+	. = ..()
 
 	if(lube_chance)
 		for(var/turf/open/OT in range(lube_range, src))

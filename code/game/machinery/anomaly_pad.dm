@@ -113,7 +113,8 @@
 	reagents.add_reagent(reagent_type, speed)
 
 /obj/machinery/anomaly_pad/liquid/CaptureAnomaly(obj/item/assembly/signaler/anomaly/fluid/S)
-	..()
+	. = ..()
+
 	reagent_type = S.reagent_type
 
 /obj/machinery/anomaly_pad/liquid/IsAnomalyApplicable(obj/item/assembly/signaler/anomaly/S, mob/living/user)
