@@ -535,7 +535,7 @@
 	name = "bubblegum gum"
 	desc = "A rubbery strip of gum. Seems to have a weird feeling around it."
 	color = "#F0B3B3"
-	list_reagents = list(datum/reagent/blood = 15)
+	list_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/process()
@@ -550,13 +550,13 @@
 		bbgumhal(eater)
 
 ///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
-/obj/item/reagent_containers/food/snacks/chewable/bubbblegum/bubblegum/bbgumhal(mob/living/carbon/victim)
-	if(istype(C) && prob(5)) //cursed by bubblegum
+/obj/item/reagent_containers/food/snacks/chewable/bubbblegum/bubblegum/proc/bbgumhal(mob/living/carbon/victim)
+	if(prob(5)) //cursed by bubblegum
 		if(prob(15))
-			new /datum/hallucination/oh_yeah(C)
-			to_chat(C, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
+			new /datum/hallucination/oh_yeah(victim)
+			to_chat(victim, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
 		else
-			to_chat(C, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
+			to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
 
 /obj/item/reagent_containers/food/snacks/gumball
 	name = "gumball"
