@@ -37,7 +37,9 @@
 	///If the RIG is really strong and you don't want it to be upgraded/has modules that shouldn't be obtainable by taking them out/has an infinite battery this prevents putting new parts in or old parts out
 	var/no_customization = FALSE
 	///How much battery power the RIG uses per tick
-	var/battery_usage = 0
+	var/cell_usage = 0
+	///RIG battery
+	var/obj/item/stock_parts/cell/cell
 
 /obj/item/rig/control/Initialize()
 	..()
@@ -51,4 +53,7 @@
 /obj/item/rig/themed/control/process()
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
+	if(cell.charge > 0)
+		cell.charge -= cell_usage
+
 
