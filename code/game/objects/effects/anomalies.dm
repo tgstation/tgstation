@@ -9,7 +9,6 @@
 	light_range = 3
 
 	///true for no move and no magic lightning fire explosions. used by anomaly pads. Please call Suspend and Unsuspend to change this
-	var/suspended = FALSE
 	var/movechance = 70
 	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
@@ -47,8 +46,6 @@
 	countdown.start()
 
 /obj/effect/anomaly/process()
-	if(suspended)
-		return
 	anomalyEffect()
 	if(death_time < world.time)
 		if(loc)
@@ -87,13 +84,13 @@
 
 ///freeze the anomaly and dont let it move or do weird anomaly stuff
 /obj/effect/anomaly/proc/Suspend()
-	suspended = TRUE
-	countdown.stop()
+	STOP_PROCESSING(SSobj, src)
 
 ///unfreeze the anomaly and LET IT RIP
 /obj/effect/anomaly/proc/Unsuspend()
-	suspended = FALSE
-	countdown.start()
+	START_PROCESSING(SSobj, src)
+
+	death_time = world.time + lifespan //reset it
 
 ///////////////////////
 

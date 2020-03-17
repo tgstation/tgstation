@@ -17,6 +17,11 @@
 	///our base active power use. Decreases with laser efficiency and is * 0.1 for inactive
 	var/base_power = 500
 
+/obj/machinery/anomaly_pad/Initialize()
+	. = ..()
+
+	STOP_PROCESSING(SSmachines, src)
+
 /obj/machinery/anomaly_pad/RefreshParts()
 	var/obj/item/stock_parts/micro_laser/L = locate(/obj/item/stock_parts/micro_laser) in contents
 
@@ -43,9 +48,6 @@
 /obj/machinery/anomaly_pad/process()
 	if(anomaly && (!is_operational() || get_turf(src) != get_turf(anomaly)))
 		ReleaseAnomaly()
-		return FALSE //uuhhh dont know if its ok but im using this to see if the check passed on the subtype
-
-	return TRUE
 
 ///Spawn an anomaly from an anomaly core and suspend it ''''''''''safely''''''''''' on us
 /obj/machinery/anomaly_pad/proc/CaptureAnomaly(obj/item/assembly/signaler/anomaly/S)
@@ -53,12 +55,16 @@
 	anomaly.Suspend()
 	use_power = ACTIVE_POWER_USE
 
+	START_PROCESSING(SSmachines, src)
+
 ///let them loose into the world to reign havoc once more
 /obj/machinery/anomaly_pad/proc/ReleaseAnomaly()
 	anomaly.Unsuspend()
 	anomaly = null
 	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 	use_power = IDLE_POWER_USE
+
+	STOP_PROCESSING(SSmachines, src)
 
 ///Check if an anomaly is applicable. Example is the chemical pad only accepting fluescent anomalies
 /obj/machinery/anomaly_pad/proc/IsAnomalyApplicable(obj/item/assembly/signaler/anomaly/S, mob/living/user)
@@ -107,7 +113,8 @@
 
 /obj/machinery/anomaly_pad/liquid/process()
 	. = ..()
-	if(!. || !anomaly)
+
+	if(!anomaly)
 		return
 
 	reagents.add_reagent(reagent_type, speed)
