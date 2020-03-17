@@ -56,8 +56,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(newid)
 		id = newid
 	update_move_direction()
-	RegisterSignal(loc, COMSIG_ATOM_CREATED, .proc/conveyorCrossed) // For receiving signals from newly created items.
-	RegisterSignal(loc, COMSIG_ATOM_ENTERED, .proc/conveyorCrossed) // When any atom moves onto the location of this belt
+	RegisterSignal(loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_CREATED), .proc/conveyorCrossed) // When any atom moves onto the belt or gets created over the belt.
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
@@ -128,8 +127,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 // returns true if there is at least 1 item on the belt that can be moved
 /obj/machinery/conveyor/proc/check_belt_contents()
-	for(var/atom/movable/AM in loc.contents)
-		if(AM && !AM.anchored)
+	for(var/atom/movable/AM in loc)
+		if(!AM.anchored)
 			return TRUE
 	return FALSE
 
@@ -137,12 +136,12 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 /obj/machinery/conveyor/proc/get_belt_contents()
 	affecting = list()
 	var/i = 0
-	for(var/atom/movable/AM in loc.contents)
-		if(AM && !AM.anchored)
-			i += 1
-			if(i >= MAX_CONVEYOR_ITEMS_MOVE)
-				break
-			affecting.Add(AM)
+	for(var/atom/movable/AM in loc)
+		if(AM.anchored) // If it can't be moved, ignore it
+			continue
+		if(++i >= MAX_CONVEYOR_ITEMS_MOVE)
+			break
+		affecting.Add(AM)
 
 // when some item or mob moves over the conveyor belt
 /obj/machinery/conveyor/proc/conveyorCrossed(datum/source, atom/movable/AM, atom/oldLoc)
