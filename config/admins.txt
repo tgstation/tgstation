@@ -139,3 +139,4 @@ LoserWasTaken = Game Master
 Fikou = Game Master
 Skoglol = Game Master
 4dplanner = Game Master
+Time-Green = Game Master

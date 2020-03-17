@@ -18,11 +18,11 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang
 	name = "Families"
 	config_tag = "families"
-	antag_flag = ROLE_TRAITOR
+	antag_flag = ROLE_FAMILIES
 	false_report_weight = 5
 	required_players = 40
-	required_enemies = 4
-	recommended_enemies = 4
+	required_enemies = 6
+	recommended_enemies = 6
 	announce_span = "danger"
 	announce_text = "Grove For Lyfe!"
 	reroll_friendly = FALSE
@@ -36,7 +36,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/list/gangs_to_use
 	var/list/datum/mind/gangbangers = list()
 	var/list/datum/mind/pigs = list()
-	var/datum/mind/undercover_cop
+	var/list/datum/mind/undercover_cops = list()
 	var/list/gangs = list()
 	var/gangs_still_alive = 0
 	var/sent_announcement = FALSE
@@ -50,6 +50,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	name = "Warriors"
 	config_tag = "warriors"
 	announce_text = "Can you survive this onslaught?"
+	gangs_to_generate = 11
 	gang_balance_cap = 3
 
 /datum/game_mode/gang/warriors/pre_setup()
@@ -67,11 +68,11 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		gangbanger.restricted_roles = restricted_jobs
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		antag_candidates.Remove(gangbanger)
-	if(antag_candidates.len)
+	for(var/j = 0, j < gangs_to_generate, j++)
 		var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
 		pigs += one_eight_seven_on_an_undercover_cop
-		undercover_cop = one_eight_seven_on_an_undercover_cop
-		undercover_cop.restricted_roles = restricted_jobs
+		undercover_cops += one_eight_seven_on_an_undercover_cop
+		one_eight_seven_on_an_undercover_cop.restricted_roles = restricted_jobs
 		log_game("[key_name(one_eight_seven_on_an_undercover_cop)] has been selected as a starting undercover cop!")
 		antag_candidates.Remove(one_eight_seven_on_an_undercover_cop)
 	endtime = world.time + time_to_end
@@ -79,6 +80,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 /datum/game_mode/gang/post_setup()
 	var/replacement_gangsters = 0
+	var/replacement_cops = 0
 	for(var/datum/mind/gangbanger in gangbangers)
 		if(!ishuman(gangbanger.current))
 			gangbangers.Remove(gangbanger)
@@ -92,16 +94,22 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			var/datum/mind/gangbanger = antag_pick(antag_candidates)
 			gangbangers += gangbanger
 			log_game("[key_name(gangbanger)] has been selected as a replacement gangster!")
-	if(undercover_cop && !ishuman(undercover_cop.current))
-		pigs.Remove(undercover_cop)
-		log_game("[undercover_cop] was not a human, and thus has lost their undercover cop role.")
-		if(!antag_candidates.len)
-			var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
-			pigs += one_eight_seven_on_an_undercover_cop
-			undercover_cop = one_eight_seven_on_an_undercover_cop
-		else
-			log_game("Unable to find a replacement undercover cop.")
-	if(undercover_cop)
+	for(var/datum/mind/undercover_cop in undercover_cops)
+		if(!ishuman(undercover_cop.current))
+			undercover_cops.Remove(undercover_cop)
+			pigs.Remove(undercover_cop)
+			log_game("[undercover_cop] was not a human, and thus has lost their undercover cop role.")
+			replacement_cops++
+	if(replacement_cops)
+		for(var/j = 0, j < replacement_cops, j++)
+			if(!antag_candidates.len)
+				log_game("Unable to find more replacement undercover cops. Not all of the gangs will spawn.")
+				break
+			var/datum/mind/undercover_cop = antag_pick(antag_candidates)
+			undercover_cops += undercover_cop
+			pigs += undercover_cop
+			log_game("[key_name(undercover_cop)] has been selected as a replacement undercover cop!")
+	for(var/datum/mind/undercover_cop in undercover_cops)
 		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
 		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
 		undercover_cop.current.playsound_local(undercover_cop.current, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
@@ -138,6 +146,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		to_chat(gangbanger.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	addtimer(CALLBACK(src, .proc/five_minute_warning), time_to_end - 5 MINUTES)
+	SSshuttle.registerHostileEnvironment(src)
 	gamemode_ready = TRUE
 	..()
 
@@ -147,7 +156,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		var/datum/team/gang/G = GG
 		readable_gang_names += "[G.name]"
 	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah? Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait an hour. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 	sent_announcement = TRUE
 
 /datum/game_mode/gang/proc/five_minute_warning()
@@ -324,7 +333,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")
 			numagents--
 	cops_arrived = TRUE
-	SSshuttle.registerHostileEnvironment(src)
 	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
 	return TRUE
 
@@ -381,7 +389,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 
 /datum/game_mode/gang/generate_report()
-	return "Something something grove street home at least until I fucked everything up idk nobody reads these reports."
+	return "Potential violent criminal activity has been detected on board your station, and we believe the Spinward Stellar Coalition may be conducting an audit of us. Keep an eye out for tagging of turf, color coordination, and suspicious people asking you to say things a little closer to their chest."
 
 /datum/game_mode/gang/send_intercept(report = 0)
 	return
