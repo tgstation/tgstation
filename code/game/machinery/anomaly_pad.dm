@@ -38,7 +38,7 @@
 		playsound(loc, 'sound/machines/click.ogg', 15, TRUE)
 		return
 
-	. = ..()
+	return ..()
 
 /obj/machinery/anomaly_pad/process()
 	if(anomaly && (!is_operational() || get_turf(src) != get_turf(anomaly)))
