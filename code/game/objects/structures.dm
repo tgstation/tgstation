@@ -10,6 +10,7 @@
 	var/climbable = FALSE
 	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
+	falling_time = 2.5 SECONDS
 
 
 /obj/structure/Initialize()

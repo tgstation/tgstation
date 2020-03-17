@@ -57,9 +57,11 @@
 	RegisterSignal(parent, COMSIG_MOB_CLICKON, .proc/checkTackle)
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/sack)
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, .proc/registerTackle)
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_FALL_IMPACT, .proc/splatGround)
+	RegisterSignal(parent, COMSIG_MOVABLE_Z_FALL_SKIPFALL, .proc/checkSkipFall)
 
 /datum/component/tackler/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW))
+	UnregisterSignal(parent, list(COMSIG_MOB_CLICKON, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_Z_FALL_IMPACT, COMSIG_MOVABLE_Z_FALL_SKIPFALL))
 
 ///Store the thrownthing datum for later use
 /datum/component/tackler/proc/registerTackle(mob/living/carbon/user, datum/thrownthing/TT)
@@ -134,9 +136,14 @@
  *
  * Finally, we return a bitflag to [COMSIG_MOVABLE_IMPACT] that forces the hitpush to false so that we don't knock them away.
 */
-/datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit)
+/datum/component/tackler/proc/sack(mob/living/carbon/user, atom/hit, levels_fell=0)
 	if(!tackling || !tackle)
 		return
+
+	if(levels_fell)
+		var/mob/living/L = hit
+		user.visible_message("<span class='danger'>[user] slams into [L] from above!</span>", "<span class='danger'>You slam into [L] from above!</span>", list(L))
+		to_chat(L, "<span class='danger'>[user] slams into you from above!</span>")
 
 	if(!iscarbon(hit))
 		if(hit.density)
@@ -147,9 +154,11 @@
 	var/mob/living/carbon/human/T = target
 	var/mob/living/carbon/human/S = user
 
-	var/roll = rollTackle(target)
+	var/roll = rollTackle(target, levels_fell)
 	tackling = FALSE
 	tackle.gentle = TRUE
+
+	log_combat(user, target, "has tackled (roll: [roll])")
 
 	switch(roll)
 		if(-INFINITY to -5)
@@ -230,7 +239,7 @@
   * In addition, after subtracting the defender's mod and adding the attacker's mod to the roll, the component's base (skill) mod is added as well. Some sources of tackles
   *	are better at taking people down, like the bruiser and rocket gloves, while the dolphin gloves have a malus in exchange for better mobility.
 */
-/datum/component/tackler/proc/rollTackle(mob/living/carbon/target)
+/datum/component/tackler/proc/rollTackle(mob/living/carbon/target, levels_fell)
 	var/defense_mod = 0
 	var/attack_mod = 0
 
@@ -270,6 +279,9 @@
 				defense_mod += 1
 
 	// OF-FENSE
+	if(levels_fell)
+		attack_mod += 3 * levels_fell
+
 	var/mob/living/carbon/sacker = parent
 
 	if(sacker.drunkenness > 60) // you're far too drunk to hold back!
@@ -321,6 +333,7 @@
 */
 /datum/component/tackler/proc/splat(mob/living/carbon/user, atom/hit)
 	if(istype(hit, /obj/machinery/vending)) // before we do anything else-
+		log_combat(user, hit, "has tackled (vendor)")
 		var/obj/machinery/vending/darth_vendor = hit
 		darth_vendor.tilt(user, TRUE)
 		return
@@ -351,6 +364,8 @@
 	if(oopsie >= 94 && oopsie_mod < 0) // good job avoiding getting paralyzed! gold star!
 		to_chat(user, "<span class='usernotice'>You're really glad you're wearing protection!</span>")
 	oopsie += oopsie_mod
+
+	log_combat(user, hit, "has tackled (obstacle) (roll: [oopsie])")
 
 	switch(oopsie)
 		if(99 to INFINITY)
@@ -415,6 +430,7 @@
 
 ///A special case for splatting for handling windows
 /datum/component/tackler/proc/splatWindow(mob/living/carbon/user, obj/structure/window/W)
+	log_combat(user, W, "has tackled (window)")
 	playsound(user, "sound/effects/Glasshit.ogg", 140, TRUE)
 
 	if(W.type in list(/obj/structure/window, /obj/structure/window/fulltile, /obj/structure/window/unanchored, /obj/structure/window/fulltile/unanchored)) // boring unreinforced windows
@@ -492,5 +508,178 @@
 	playsound(owner, 'sound/weapons/smash.ogg', 70, TRUE)
 	tackle.finalize(hit=TRUE)
 	resetTackle()
+
+
+/**
+  * splatGround handles what happens when you dive off a ledge and land on a lower z-level
+  *
+  * What happens when you dive off a ledge? Nothing pleasant probably! This is another special case like hitting an obstacle, where you probably get into a horrible mess upon impact, unless you hit a mob in which case, very nice!
+  */
+/datum/component/tackler/proc/splatGround(mob/living/carbon/owner, turf/T, levels)
+	if(!tackling)
+		return
+
+	var/mob/living/preferred
+	for(var/mob/living/L in T)
+		if(!L.density)
+			continue
+		if(ishuman(L)) // prefer humans > carbons > other living mobs, get first human standing we see
+			sack(owner, L, levels_fell=levels)
+			return FALL_NO_IMPACT
+		else if(iscarbon(L) && (preferred && !iscarbon(preferred)))
+			preferred = L
+		else if(!preferred)
+			preferred = L
+
+	if(preferred)
+		sack(owner, preferred, levels_fell=levels)
+		return FALL_NO_IMPACT
+
+	var/r = rand(1, 100)
+	var/oopsie_mod = 0
+	oopsie_mod += (levels - 1) * 20
+
+	var/obj/item/organ/tail/cat/cat_tail = owner.getorganslot(ORGAN_SLOT_TAIL) // tails probably do more for balance than ears do for cats
+	var/obj/item/clothing/head/headgear = owner.get_item_by_slot(ITEM_SLOT_HEAD)
+	var/kitty_check = (cat_tail && istype(cat_tail)) || (headgear && istype(headgear, /obj/item/clothing/head/kitty)) // we'll throw cultural appropriators a bone though
+
+	if(HAS_TRAIT(owner, TRAIT_CLUMSY))
+		oopsie_mod += 10
+
+	if(kitty_check)
+		oopsie_mod -= 15 // cats always land on their feet! usually, anyway
+
+	if(headgear && istype(headgear, /obj/item/clothing/head/helmet))
+		oopsie_mod -= 5
+
+	var/mob/living/carbon/human/H = owner
+	if(istype(H))
+		if(H.is_shove_knockdown_blocked())
+			oopsie_mod -= 5
+
+	r += oopsie_mod
+
+	var/limbs_to_dismember = 0
+	var/dismembers = 0
+	var/list/splatters = list()
+	var/spin_clockwise = tackle.init_dir in list(NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH)
+
+	switch(r)
+		if(99 to INFINITY)
+			playsound(owner, 'sound/effects/blobattack.ogg', 60, TRUE)
+			playsound(owner, 'sound/effects/splat.ogg', 70, TRUE)
+			owner.visible_message("<span class='danger'>[owner] impacts [T] and deforms into a horrible amorphous blob of flesh and bone, splattering everything around [owner.p_them()] in a spray of gore! Holy fucking shit!</span>", "<span class='userdanger'>You resign yourself to your imminent future as a pancake. A really, really dumb pancake.</span>")
+			for(var/obj/item/bodypart/B in owner.bodyparts)
+				splatters += B.contents.Copy()
+				splatters += B
+				B.drop_organs()
+				B.dismember()
+			owner.gib(safe_gib=TRUE)
+
+		if(95 to 98)
+			playsound(owner, 'sound/effects/blobattack.ogg', 60, TRUE)
+			playsound(owner, 'sound/effects/splat.ogg', 70, TRUE)
+			limbs_to_dismember = 3
+			owner.visible_message("<span class='danger'>[owner] crashes into [T] head-first like a speeding missile in a spectacular spray of gore, severing several limbs and killing [owner.p_them()] instantly! Holy shit!</span>", "<span class='userdanger'>Your life flashes before your eyes and you try to find peace as you hurtle towards [T]!</span>")
+			for(var/obj/item/bodypart/B in owner.bodyparts)
+				B.receive_damage(30)
+				if(istype(B, /obj/item/bodypart/head))
+					continue
+				B.dismember()
+				splatters += B
+				dismembers++
+				if(dismembers >= limbs_to_dismember)
+					break
+
+		if(85 to 94)
+			playsound(owner, 'sound/effects/blobattack.ogg', 30, TRUE)
+			playsound(owner, 'sound/effects/splat.ogg', 70, TRUE)
+			owner.visible_message("<span class='danger'>[owner] slams into [T] at a horrible angle, crushing a majority of [owner.p_their()] body with a disgusting squelch!</span>", "<span class='userdanger'>You flail helplessly as you smash into [T], a resounding CRUNCH deafening you as you black out!</span>")
+			for(var/obj/item/bodypart/B in owner.bodyparts)
+				B.receive_damage(brute=20)
+				for(var/obj/item/organ/O in B)
+					O.applyOrganDamage(30)
+
+			owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50) // bonus brain damage
+			owner.gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+			owner.Unconscious(10 SECONDS) // assuming they're not in crit, anyway
+			owner.Knockdown(17 SECONDS)
+
+		if(70 to 84)
+			playsound(owner, 'sound/effects/blobattack.ogg', 30, TRUE)
+			playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
+			owner.visible_message("<span class='danger'>[owner] slams [owner.p_their()] head into [T], cartwheeling over and falling limp!</span>", "<span class='userdanger'>You try hopelessly to right yourself as you hurdle towards [T] and feel your head spasm on impact as you black out!</span>")
+			for(var/obj/item/bodypart/B in owner.bodyparts)
+				if(istype(B, /obj/item/bodypart/head))
+					B.receive_damage(40) // extra head damage
+				B.receive_damage(brute=10, stamina=20)
+				for(var/obj/item/organ/O in B)
+					O.applyOrganDamage(15)
+			owner.gain_trauma_type(BRAIN_TRAUMA_MILD)
+			owner.Unconscious(5 SECONDS)
+			owner.Knockdown(10 SECONDS)
+
+		if(50 to 69)
+			playsound(owner, 'sound/effects/blobattack.ogg', 30, TRUE)
+			playsound(owner, 'sound/effects/splat.ogg', 30, TRUE)
+			playsound(owner, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+			owner.visible_message("<span class='danger'>[owner] slams into [T] with a resounding and very painful sounding thud!</span>", "<span class='userdanger'>You slam into [T] with a very painful thud, sending a burning pain shooting through your body!</span>")
+			owner.Paralyze(3 SECONDS)
+			owner.Knockdown(6 SECONDS)
+			for(var/obj/item/bodypart/B in owner.bodyparts)
+				B.receive_damage(brute=12, stamina=20) // 6 bodyparts for normal humans
+				for(var/obj/item/organ/O in B)
+					O.applyOrganDamage(10)
+
+		if(50 to 69)
+			playsound(owner, 'sound/effects/splat.ogg', 30, TRUE)
+			playsound(owner, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+			owner.visible_message("<span class='danger'>[owner] slams into [T] with a painful sounding thud!</span>", "<span class='userdanger'>You slam into [T] with a painful thud, sending a sharp pain through your body!</span>")
+			owner.Paralyze(2 SECONDS)
+			owner.Knockdown(6 SECONDS)
+			for(var/obj/item/bodypart/B in owner.bodyparts)
+				B.receive_damage(brute=8,stamina=16)
+				for(var/obj/item/organ/O in B)
+					O.applyOrganDamage(10)
+
+		if(20 to 49)
+			if(kitty_check)
+				owner.SpinAnimation(5, 1, spin_clockwise)
+				playsound(owner, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+				owner.visible_message("<span class='danger'>[owner] does an impressive tactical roll and manages to stick the landing with [owner.p_their()] cat-like reflexes!</span>", "<span class='danger'>You manage an impressive tactical roll and manages to stick the landing with your cat-like reflexes!</span>")
+				owner.forceMove(get_step(T, tackle.init_dir))
+			else
+				owner.visible_message("<span class='danger'>[owner] manages a rough tactical roll and survives the fall only slightly worse for wear!</span>", "<span class='userdanger'>You manage a rough tactical roll, surviving the fall only slightly worse for wear!</span>")
+				for(var/obj/item/bodypart/B in owner.bodyparts)
+					B.receive_damage(brute=4,stamina=5)
+				owner.forceMove(get_step(T, tackle.init_dir))
+
+		if(-INFINITY to 19)
+			if(kitty_check)
+				owner.SpinAnimation(5, 1, spin_clockwise)
+				playsound(owner, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+				owner.visible_message("<span class='danger'>[owner] does an impressive tactical roll and manages to stick the landing with [owner.p_their()] cat-like reflexes!</span>", "<span class='danger'>You manage an impressive tactical roll and manages to stick the landing with your cat-like reflexes!</span>")
+				owner.forceMove(get_step(T, tackle.init_dir))
+			else
+				owner.SpinAnimation(5, 1, spin_clockwise)
+				playsound(owner, 'sound/weapons/thudswoosh.ogg', 50, TRUE)
+				owner.visible_message("<span class='danger'>[owner] manages a tactical roll and rights [owner.p_them()]self without much issue!</span>", "<span class='userdanger'>You manage a tactical roll, landing without much issue!</span>")
+				owner.forceMove(get_step(T, tackle.init_dir))
+
+	if(owner && owner.stat != CONSCIOUS)
+		if(owner.stat == DEAD)
+			to_chat(owner, "<span class='warning'>That was stupid of you.</span>")
+		else
+			owner.visible_message("<span class='danger'>[owner] blacks out from the fall!</span>", "<span class='userdanger'>You black out from the fall!</span>")
+
+	for(var/obj/item/I in splatters)
+		var/turf/splash_zone = get_step(pick(RANGE_TURFS(2, T)), tackle.init_dir)
+		I.throw_at(splash_zone, 3)
+
+	return FALL_NO_IMPACT
+
+/datum/component/tackler/proc/checkSkipFall(mob/living/carbon/owner, turf/T, levels)
+	if(tackling)
+		return FALL_SKIP_FALLTIME
 
 #undef MAX_TABLE_MESSES

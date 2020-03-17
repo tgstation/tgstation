@@ -47,6 +47,8 @@
 	var/blocks_emissive = FALSE
 	///Internal holder for emissive blocker object, do not use directly use blocks_emissive
 	var/atom/movable/emissive_blocker/em_block
+	///How many seconds it takes for something to fall a z-level (bigger things == more dangerous == more time, fuck physics)
+	var/falling_time = 0.25 SECONDS
 
 
 /atom/movable/Initialize(mapload)
@@ -88,6 +90,11 @@
 	return !(movement_type & FLYING) && has_gravity(source) && !throwing
 
 /atom/movable/proc/onZImpact(turf/T, levels)
+	var/flags = NONE
+	flags |= SEND_SIGNAL(src, COMSIG_MOVABLE_Z_FALL_IMPACT, T, levels)
+	if(flags & FALL_NO_IMPACT)
+		return TRUE // return true so our children know we handled it if they waited to see, mostly for items scaling damage based on w_class
+
 	var/atom/highest = T
 	for(var/i in T.contents)
 		var/atom/A = i
@@ -96,9 +103,8 @@
 		if(isobj(A) || ismob(A))
 			if(A.layer > highest.layer)
 				highest = A
-	INVOKE_ASYNC(src, .proc/SpinAnimation, 5, 2)
+	visible_message("<span class='danger'>[src] crashes into [highest]!</span>")
 	throw_impact(highest)
-	return TRUE
 
 //For physical constraints to travelling up/down.
 /atom/movable/proc/can_zTravel(turf/destination, direction)

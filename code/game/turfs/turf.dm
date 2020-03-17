@@ -169,8 +169,16 @@
 		return
 	if(zFall(A, ++levels))
 		return FALSE
-	A.visible_message("<span class='danger'>[A] crashes into [src]!</span>")
-	A.onZImpact(src, levels)
+
+	var/skip_effects = NONE
+	skip_effects |= SEND_SIGNAL(A, COMSIG_MOVABLE_Z_FALL_SKIPFALL, src, levels)
+
+	if(skip_effects & FALL_SKIP_FALLTIME)
+		A.onZImpact(src, levels)
+	else
+		INVOKE_ASYNC(A, /atom/.proc/SpinAnimation, 8,A.falling_time / 8)
+		addtimer(CALLBACK(A, /atom/movable/.proc/onZImpact, src, levels), A.falling_time)
+
 	return TRUE
 
 /turf/proc/can_zFall(atom/movable/A, levels = 1, turf/target)

@@ -150,6 +150,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		if(damtype == "brute")
 			hitsound = "swing_hit"
 
+	falling_time = w_class * 0.33 SECONDS
+
 /obj/item/Destroy()
 	item_flags &= ~DROPDEL	//prevent reqdels
 	if(ismob(loc))
@@ -894,3 +896,17 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(embedding)
 		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
 
+/obj/item/onZImpact(turf/T, levels)
+	. = ..()
+	// TODO: find a way to not have to duplicate this from the parent
+	var/atom/highest = T
+	for(var/i in T.contents)
+		var/atom/A = i
+		if(!A.density)
+			continue
+		if(isobj(A) || ismob(A))
+			if(A.layer > highest.layer)
+				highest = A
+	if(isliving(highest))
+		var/mob/living/L = highest
+		L.apply_damage(w_class * 5) // this is very rough, no thought put to balance, make this better

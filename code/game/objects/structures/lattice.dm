@@ -16,7 +16,21 @@
 	/turf/closed/wall,
 	/obj/structure/falsewall)
 	smooth = SMOOTH_MORE
+	///how long it takes to cut these with wirecutters
+	var/cut_time = 1 SECONDS
 	//	flags = CONDUCT_1
+
+/obj/structure/lattice/Destroy()
+	var/fall = FALSE
+	var/turf/T = get_turf(src)
+	if(isgroundlessturf(T))
+		fall = TRUE
+	. = ..()
+	if(!fall)
+		return
+
+	for(var/atom/movable/AM in T)
+		T.zFall(AM)
 
 /obj/structure/lattice/examine(mob/user)
 	. = ..()
@@ -38,8 +52,10 @@
 	if(resistance_flags & INDESTRUCTIBLE)
 		return
 	if(C.tool_behaviour == TOOL_WIRECUTTER)
-		to_chat(user, "<span class='notice'>Slicing [name] joints ...</span>")
-		deconstruct()
+		user.visible_message("<span class='notice'>[user] begins cutting [src]...</span>", "<span class='notice'>You begin cutting [src]...</span>")
+		if(do_after(user, cut_time * C.toolspeed, TRUE, src))
+			user.visible_message("<span class='notice'>[user] cuts [src].</span>", "<span class='notice'>You cut [src].</span>")
+			deconstruct()
 	else
 		var/turf/T = get_turf(src)
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)

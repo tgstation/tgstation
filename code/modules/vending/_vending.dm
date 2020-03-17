@@ -157,6 +157,8 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/// how many items have been inserted in a vendor
 	var/loaded_items = 0
 
+	falling_time = 2.5 SECONDS
+
 /obj/item/circuitboard
     ///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
@@ -559,6 +561,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 	var/matrix/M = matrix()
 	M.Turn(0)
 	transform = M
+
+
+/obj/machinery/vending/onZImpact(turf/T, levels)
+	for(var/mob/living/L in T)
+		tilt(L)
+		return
+	visible_message("<span class='warning'>[src] slams into [T] from above!</span>")
 
 /obj/machinery/vending/proc/loadingAttempt(obj/item/I, mob/user)
 	. = TRUE

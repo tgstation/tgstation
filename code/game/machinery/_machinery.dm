@@ -126,6 +126,7 @@ Class Procs:
 	var/ui_style // ID of custom TGUI style (optional)
 	var/ui_x // Default size of TGUI window, in pixels
 	var/ui_y
+	falling_time = 2 SECONDS
 
 /obj/machinery/Initialize()
 	if(!armor)

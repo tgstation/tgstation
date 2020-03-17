@@ -46,9 +46,9 @@
 	return ..()
 
 /mob/living/onZImpact(turf/T, levels)
-	if(!isgroundlessturf(T))
+	. = ..()
+	if(!(.) && !isgroundlessturf(T))
 		ZImpactDamage(T, levels)
-	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
 	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>", \
