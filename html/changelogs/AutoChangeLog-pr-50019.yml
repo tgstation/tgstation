@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - bugfix: "The ablative trenchcoat hood will actually deflect lasers now"
