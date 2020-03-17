@@ -488,7 +488,7 @@
 		/obj/item/hemostat,
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
-		/obj/item/scalpel)
+		/obj/item/scalpel) //The list of tools that this upgrade installs. Notice that there isn't a circular saw in this list; the syndicate medical cyborg's energy saw already counts as a saw for the purposes of surgery, so we don't need to give them another one.
 
 /obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr) //mostly copy+pasted from the code for surgical processors
 	. = ..()

@@ -1046,7 +1046,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
-			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash and crowbar."
+			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash, miniature fire extinguisher, and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	refundable = TRUE
 	cost = 65
@@ -1055,8 +1055,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/support/reinforcement/medical_borg
 	name = "Syndicate Medical Cyborg"
 	desc = "A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities. \
-			It comes equipped with a nanite hypospray, a medical beamgun, combat defibrillator, full surgical kit including an energy saw, an emag, pinpointer and flash. \
-			Thanks to its organ storage bag, it can perform surgery as well as any humanoid."
+			It comes equipped with a health analyzer, nanite hypospray, medical beamgun, lollipop dispenser, combat defibrillator, energy saw, emag, pinpointer, and flash, among other useful items."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 	refundable = TRUE
 	cost = 35
@@ -1066,10 +1065,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Syndicate Saboteur Cyborg"
 	desc = "A streamlined engineering cyborg, equipped with covert modules. Also incapable of leaving the welder in the shuttle. \
 			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
-			Its chameleon projector lets it disguise itself as a Nanotrasen cyborg, on top it has thermal vision and a pinpointer."
+			It also has a chameleon projector lets it disguise itself as a Nanotrasen cyborg, thermal vision, cable cuffs, and a pinpointer, among other useful items."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	refundable = TRUE
 	cost = 35
+	restricted = TRUE
+
+/datum/uplink_item/support/surgeryupgrade
+	name = "Syndicate Medical Cyborg Additional Surgical Tools Upgrade"
+	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, /
+		allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own."
+	refundable = TRUE
+	cost = 1 //this cost is just here so that nuke ops won't (spam) buy this as a meme every round
 	restricted = TRUE
 
 /datum/uplink_item/support/gygax

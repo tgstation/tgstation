@@ -566,7 +566,7 @@
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/twohanded/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
-		/obj/item/melee/transforming/energy/sword/cyborg/saw, //Syndicate mediborgs used to have the other surgical tools as well, but they didn't really need them since ops start the round with microbomb implants that blow up their bodies upon death anyway. They were removed because they were bloating the inventories of syndicate mediborgs, but if you want your syndicate mediborg to perform surgery for some reason, you can buy a syndicate medical cyborg additional surgical tools upgrade as a nuke (or clown) op for 1 TC to add them back.
+		/obj/item/melee/transforming/energy/sword/cyborg/saw, //Syndicate mediborgs used to have the other surgical tools as well, but they didn't really need them since ops start the round with microbomb implants that blow up their bodies upon death anyway. They were removed because they were bloating the inventories of syndicate mediborgs, but if you want your syndicate mediborg to be able to perform surgery on its own for some reason, you can buy a syndicate medical cyborg additional surgical tools upgrade as a nuke op for 1 TC to add them back.
 		/obj/item/roller/robo,
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop, //this'd be down in the emag_modules section, but then every powergaming op would feel "obligated" to emag their syndicate medical cyborgs so that they can stock up on lollipops/omnizine
