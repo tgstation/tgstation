@@ -198,9 +198,6 @@
 	if(istype(M) && M.client && M.machine == src)
 		src.attack_self(M)
 
-/obj/proc/hide(h)
-	return
-
 /obj/singularity_pull(S, current_size)
 	..()
 	if(!anchored || current_size >= STAGE_FIVE)

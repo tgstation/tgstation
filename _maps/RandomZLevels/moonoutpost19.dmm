@@ -2178,8 +2178,7 @@
 /area/awaymission/moonoutpost19/research)
 "ex" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 4;
-	level = 2
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
