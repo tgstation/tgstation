@@ -1318,7 +1318,7 @@
 
 /obj/item/storage/box/gum/bubblegum
 	name = "bubblegum gum packet"
-	desc = "The packaging is entirely in demonic, apparently. You feel like even opening this would be a sin."
+	desc = "The packaging is entirely in Demonic, apparently. You feel like even opening this would be a sin."
 	icon_state = "bubblegum_bubblegum"
 
 /obj/item/storage/box/gum/bubblegum/PopulateContents()

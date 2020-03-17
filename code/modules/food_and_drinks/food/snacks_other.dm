@@ -533,7 +533,7 @@
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum
 	name = "bubblegum gum"
-	desc = "A rubbery strip of gum. Seems to have a weird feeling around it."
+	desc = "A rubbery strip of gum. You don't feel like eating it is a good idea."
 	color = "#F0B3B3"
 	list_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
@@ -550,11 +550,11 @@
 		bbgumhal(eater)
 
 ///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
-/obj/item/reagent_containers/food/snacks/chewable/bubbblegum/bubblegum/proc/bbgumhal(mob/living/carbon/victim)
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/proc/bbgumhal(mob/living/carbon/victim)
 	if(prob(5)) //cursed by bubblegum
 		if(prob(15))
 			new /datum/hallucination/oh_yeah(victim)
-			to_chat(victim, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","DEATH CANNOT HOLD ME.")]</b></span>")
+			to_chat(victim, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","NOTHING CAN HOLD ME.")]</b></span>")
 		else
 			to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
 
