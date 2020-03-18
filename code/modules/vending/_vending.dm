@@ -157,6 +157,9 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 	/// how many items have been inserted in a vendor
 	var/loaded_items = 0
 
+	///Name of lighting mask for the vending machine
+	var/light_mask
+
 /obj/item/circuitboard
     ///determines if the circuit board originated from a vendor off station or not.
 	var/onstation = TRUE
@@ -237,6 +240,15 @@ IF YOU MODIFY THE PRODUCTS LIST OF A MACHINE, MAKE SURE TO UPDATE ITS RESUPPLY C
 		icon_state = initial(icon_state)
 	else
 		icon_state = "[initial(icon_state)]-off"
+
+/obj/machinery/vending/update_overlays()
+	. = ..()
+	if(!light_mask)
+		return
+
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(!(machine_stat & BROKEN) && powered())
+		SSvis_overlays.add_vis_overlay(src, icon, light_mask, EMISSIVE_LAYER, EMISSIVE_PLANE)
 
 /obj/machinery/vending/obj_break(damage_flag)
 	. = ..()
