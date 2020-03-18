@@ -57,5 +57,5 @@
 	ADD_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, "cortex_fold")
 
 /datum/bioware/cortex_fold/on_lose()
-	..()
+	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST, "cortex_fold")
