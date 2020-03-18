@@ -195,7 +195,7 @@
 				var/obj/item/I = X
 				I.acid_level = 0
 				I.extinguish()
-				I.update_overlays()
+				I.cut_overlay(GLOB.fire_overlay, TRUE)
 	..()
 
 /datum/reagent/water/holywater
