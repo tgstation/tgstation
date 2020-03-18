@@ -543,7 +543,7 @@
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg)
-	emag_modules = (/obj/item/toy/gun) //honk   //wait, not honk, guns aren't (usually) a clown thing  //maybe "..." instead?
+	emag_modules = list(/obj/item/toy/gun) //honk   //wait, not honk, guns aren't (usually) a clown thing  //maybe "..." instead?
 	cyborg_base_icon = "synd_sec"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
