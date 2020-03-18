@@ -60,7 +60,7 @@
 		deactivate(user)
 	else
 		if(animation_playing)
-			to_chat(user, "<span class='notice'>\the [src] is recharging.</span>")
+			to_chat(user, "<span class='notice'>The [src] is recharging.</span>")
 			return
 		animation_playing = TRUE
 		if(!fulp_borg_chameleon_menu(user)) //My thanks go once again to Surrealaser for allowing me to port fulpstation's cyborg chameleon projector update to /tg/. The code in the fulp_borg_chameleon_menu() proc was written by him.
