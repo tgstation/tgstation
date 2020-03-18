@@ -485,6 +485,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 /obj/structure/carp_rift/proc/update_check()
 	if(time_charged % 40 == 0 && time_charged != max_charge)
 		carp_stored++
+		notify_ghosts("The carp rift can summon an additional carp!", source = CR, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
 	if(time_charged == (max_charge - 120))
 		var/area/A = get_area(src)
 		priority_announce("A rift is causing an unnaturally large energy flux in [A.map_name].  Stop it at all costs!", "Central Command Spacial Corps", 'sound/ai/spanomalies.ogg')
