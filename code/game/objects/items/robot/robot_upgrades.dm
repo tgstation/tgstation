@@ -479,7 +479,8 @@
 /obj/item/borg/upgrade/surgical_tools
 	name = "syndicate medical cyborg additional surgical tools"
 	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, /
-		allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own."
+		allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own. /
+		WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/syndicate_medical)
@@ -490,7 +491,7 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel) //The list of tools that this upgrade installs. Notice that there isn't a circular saw in this list; the syndicate medical cyborg's energy saw already counts as a saw for the purposes of surgery, so we don't need to give them another one.
 
-/obj/item/borg/upgrade/processor/action(mob/living/silicon/robot/R, user = usr) //mostly copy+pasted from the code for surgical processors
+/obj/item/borg/upgrade/surgical_tools/action(mob/living/silicon/robot/R, user = usr) //mostly copy+pasted from the code for surgical processors
 	. = ..()
 	if(.)
 		for(var/obj/item/I in addedtools)
@@ -498,13 +499,22 @@
 			R.module.basic_modules += I
 			R.module.add_module(I, FALSE, TRUE)
 
-/obj/item/borg/upgrade/processor/deactivate(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/surgical_tools/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if (.)
 		for(var/obj/item/I in addedtools)
 			I = locate() in R.module
 			R.module.remove_module(I, TRUE)
 
+/obj/item/borg/upgrade/surgical_tools/medicalsabotage
+	name = "syndicate medical sabotage"
+	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker apparatus, a syringe, and a dropper, /
+		allowing a syndicate saboteur cyborg with this upgrade installed to sabotage Medbay more effectively. /
+		WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
+	module_type = list(/obj/item/robot_module/saboteur, /obj/item/robot_module/syndicate_medical) //this upgrade is designed for syndicate saboteur cyborgs, but syndicate medical cyborgs can get it as well, if they want to
+	var/addedtools = list(/obj/item/borg/apparatus/beaker,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/syringe)
 
 /obj/item/borg/upgrade/ai
 	name = "B.O.R.I.S. module"
@@ -685,10 +695,10 @@
 
 /obj/item/borg/upgrade/beaker_app
 	name = "beaker storage apparatus"
-	desc = "A supplementary beaker storage apparatus for medical cyborgs."
+	desc = "A supplementary beaker storage apparatus for medical cyborgs." //and syndicate mediborgs and syndicate saboteur borgs, but NT certainly isn't going to advertise that "feature"...
 	icon_state = "cyborg_upgrade3"
 	require_module = TRUE
-	module_type = list(/obj/item/robot_module/medical)
+	module_type = list(/obj/item/robot_module/medical, /obj/item/robot_module/saboteur, /obj/item/robot_module/syndicate_medical) //this is mostly just for syndicate saboteur borgs and syndicate medical cyborgs who somehow become station-aligned
 
 /obj/item/borg/upgrade/beaker_app/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()

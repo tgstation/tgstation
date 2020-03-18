@@ -1073,10 +1073,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/support/surgeryupgrade
 	name = "Syndicate Medical Cyborg Additional Surgical Tools Upgrade"
-	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, /
-		allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own."
+	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, \ 
+			allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own. \
+			WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
+	item = /obj/item/borg/upgrade/surgical_tools
 	refundable = TRUE
 	cost = 1 //this cost is just here so that nuke ops won't (spam) buy this as a meme every round
+	restricted = TRUE
+
+/datum/uplink_item/support/medicalsabotageupgrade
+	name = "Syndicate Medical Sabotage Upgrade"
+	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker apparatus, a syringe, and a dropper, \
+			allowing a syndicate saboteur cyborg with this upgrade installed to sabotage Medbay more effectively. \
+			WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
+	item = /obj/item/borg/upgrade/surgical_tools/medicalsabotage
+	refundable = TRUE
+	cost = 5 //being able to put deathmixes in patches, cryotubes, etc. in Medbay *is* actually a pretty significant buff to saboteur borgs, hence the extra cost
 	restricted = TRUE
 
 /datum/uplink_item/support/gygax
