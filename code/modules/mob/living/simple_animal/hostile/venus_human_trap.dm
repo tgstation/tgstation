@@ -150,7 +150,7 @@
 	if(key || !playable_plant || stat)
 		return
 	var/plant_ask = alert("Become a venus human trap?", "Are you reverse vegan?", "Yes", "No")
-	if(plant_ask == "No" || !src || QDELETED(src))
+	if(plant_ask == "No" || QDELETED(src))
 		return
 	if(key)
 		to_chat(user, "<span class='warning'>Someone else already took this plant!</span>")
