@@ -121,9 +121,6 @@ SUBSYSTEM_DEF(discord)
 	var/regex/num_only = regex("\[^0-9\]", "g")
 	return num_only.Replace(input, "")
 
-/datum/controller/subsystem/discord/proc/has_hour_requirement(ckey)
-
-
 /datum/controller/subsystem/discord/proc/grant_role(id)
 	// Ignore this shit if config isnt enabled for it
 	if(!CONFIG_GET(flag/enable_discord_autorole))
