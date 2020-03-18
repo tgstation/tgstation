@@ -101,18 +101,6 @@
 		return
 	return "<div align='center' valign='middle' style='position:relative; top:0px; left:0px'>[round(S.get_integrity(), 1)]%</div>"
 
-/obj/effect/countdown/transformer
-	name = "transformer countdown"
-	color = "#4C5866"
-
-/obj/effect/countdown/transformer/get_value()
-	var/obj/machinery/transformer/T = attached_to
-	if(!istype(T))
-		return
-	else if(T.cooldown)
-		var/seconds_left = max(0, (T.cooldown_timer - world.time) / 10)
-		return "[round(seconds_left)]"
-
 /obj/effect/countdown/doomsday
 	name = "doomsday countdown"
 
