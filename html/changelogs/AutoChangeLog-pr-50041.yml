@@ -1,0 +1,4 @@
+author: "RiskySikh"
+delete-after: True
+changes: 
+  - rscadd: "reagents.end_metabolization which ensures that the reagents will stop metabolization upon death"
