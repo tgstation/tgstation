@@ -1,15 +1,15 @@
 /**
-  * # Experiment Consumer
+  * # Experiment Handler
   *
   * This is the base component for getting experiments for consumption from a connected techweb.
   */
-/datum/component/experiment_consumer
+/datum/component/experiment_handler
 	/// Holds the currently linked techweb to get experiments from
 	var/datum/techweb/linked_web
 	/// Holds the currently selected experiment
 	var/datum/experiment/selected_experiment
 
-/datum/component/experiment_consumer/Initialize(...)
+/datum/component/experiment_handler/Initialize(...)
 	. = ..()
 	RegisterSignal(parent, COMSIG_TECHWEB_SELECT, .proc/select_techweb)
 	RegisterSignal(parent, COMSIG_EXPERIMENT_SELECT, .proc/select_experiment)
@@ -24,7 +24,7 @@
   * * experiment_types - A collection of /datum/experiment typepaths to filter the experiments shown
   * * strict_types - Boolean operator to determine if type paths have to absolute matches or not
   */
-/datum/component/experiment_consumer/proc/select_experiment(mob/user, var/list/experiment_types = null, strict_types = FALSE)
+/datum/component/experiment_handler/proc/select_experiment(mob/user, var/list/experiment_types = null, strict_types = FALSE)
 	if (!linked_web)
 		to_chat(user, "<span class='notice'>There is no linked research server to get experiments from.</span>")
 		return
@@ -55,13 +55,13 @@
 		to_chat(user, "<span class='notice'>You decide not to change the selected experiment.</span>")
 
 /**
-  * Attempts to link this experiment_consumer to a provided techweb
+  * Attempts to link this experiment_handler to a provided techweb
   *
   * This proc attempts to link the consumer to a provided techweb, overriding the existing techweb if relevant
   * Arguments:
   * * new_web - The new techweb to link to
   */
-/datum/component/experiment_consumer/proc/link_techweb(datum/techweb/new_web)
+/datum/component/experiment_handler/proc/link_techweb(datum/techweb/new_web)
 	if (new_web == linked_web)
 		return
 	selected_experiment = null
@@ -70,7 +70,7 @@
 /**
   * Unlinks this consumer from its techweb
   */
-/datum/component/experiment_consumer/proc/unlink_techweb()
+/datum/component/experiment_handler/proc/unlink_techweb()
 	selected_experiment = null
 	linked_web = null
 
@@ -82,7 +82,7 @@
   * Arguments:
   * * user - The user to show the select prompt to
   */
-/datum/component/experiment_consumer/proc/select_techweb(mob/user)
+/datum/component/experiment_handler/proc/select_techweb(mob/user)
 	var/list/servers = get_available_servers()
 	if (servers.len == 0)
 		to_chat(user, "No research servers detected in your vicinity.")
@@ -104,7 +104,7 @@
   * Arguments:
   * * pos - The turf to get servers on the same z-level of
   */
-/datum/component/experiment_consumer/proc/get_available_servers(var/turf/pos = null)
+/datum/component/experiment_handler/proc/get_available_servers(var/turf/pos = null)
 	if (!pos)
 		pos = get_turf(parent)
 	var/list/local_servers = list()

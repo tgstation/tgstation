@@ -14,7 +14,7 @@
 
 /obj/item/experi_scanner/Initialize()
 	. = ..()
-	AddComponent(/datum/component/experiment_consumer)
+	AddComponent(/datum/component/experiment_handler)
 
 /obj/item/experi_scanner/afterattack(atom/target, mob/user, proximity)
 	. = ..()
