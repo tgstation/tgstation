@@ -1083,7 +1083,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/support/medicalsabotageupgrade
 	name = "Syndicate Medical Sabotage Upgrade"
-	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker apparatus, a syringe, and a dropper, \
+	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker storage apparatus, a syringe, and a dropper, \
 			allowing a syndicate saboteur cyborg with this upgrade installed to sabotage Medbay more effectively. \
 			WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
 	item = /obj/item/borg/upgrade/surgical_tools/medicalsabotage

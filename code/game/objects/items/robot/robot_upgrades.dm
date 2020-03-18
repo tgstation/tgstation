@@ -508,7 +508,7 @@
 
 /obj/item/borg/upgrade/surgical_tools/medicalsabotage
 	name = "syndicate medical sabotage"
-	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker apparatus, a syringe, and a dropper, \
+	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker storage apparatus, a syringe, and a dropper, \
 		allowing a syndicate saboteur cyborg with this upgrade installed to sabotage Medbay more effectively. \
 		WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
 	module_type = list(/obj/item/robot_module/saboteur, /obj/item/robot_module/syndicate_medical) //this upgrade is designed for syndicate saboteur cyborgs, but syndicate medical cyborgs can get it as well, if they want to
