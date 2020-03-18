@@ -7,6 +7,8 @@
 	var/shown_mood //Shown happiness, this is what others can see when they try to examine you, prevents antag checking by noticing traitors are always very happy.
 	var/mood_level = 5 //To track what stage of moodies they're on
 	var/sanity_level = 2 //To track what stage of sanity they're on
+	///Number of bloodied clothing pieces the parent is wearing, used to calculate how gross they are
+	var/dirtiness = 0
 	var/mood_modifier = 1 //Modifier to allow certain mobs to be less affected by moodlets
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
@@ -22,6 +24,7 @@
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
@@ -189,6 +192,7 @@
 		if(9)
 			setSanity(sanity+0.6, SANITY_NEUTRAL, SANITY_MAXIMUM)
 	HandleNutrition()
+	HandleDirtiness()
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
@@ -326,6 +330,22 @@
 		if(0 to NUTRITION_LEVEL_STARVING)
 			add_event(null, "nutrition", /datum/mood_event/starving)
 
+/datum/component/mood/proc/HandleDirtiness()
+	dirtiness = 0
+
+	var/mob/living/L = parent
+	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
+		var/obj/item/I = L.get_item_by_slot(X)
+		if(I && HAS_BLOOD_DNA(I))
+			dirtiness++
+	switch(dirtiness)
+		if(-INFINITY to DIRT_LEVEL_NONE)
+			clear_event(null, "hygiene")
+		if(DIRT_LEVEL_NONE to DIRT_LEVEL_DIRTY)
+			add_event(null, "hygiene", /datum/mood_event/dirty)
+		if(DIRT_LEVEL_DIRTY to DIRT_LEVEL_GROSS)
+			add_event(null, "hygiene", /datum/mood_event/gross)
+
 /datum/component/mood/proc/HandleCharge(mob/living/carbon/human/H)
 	var/datum/species/ethereal/E = H.dna.species
 	switch(E.get_charge(H))
@@ -377,6 +397,15 @@
 		return
 	remove_temp_moods()
 	setSanity(initial(sanity), override = TRUE)
+
+///Update the examine list and add dirt level to the parent's examine
+/datum/component/construction/proc/examine(datum/source, mob/user, list/examine_list)
+	var/mob/living/L = parent
+	switch(dirtiness)
+		if(DIRT_LEVEL_NONE to DIRT_LEVEL_DIRTY)
+			examine_list += "<span class='notice'>[L.p_they(TRUE)] look pretty dirty.</span>"
+		if(DIRT_LEVEL_DIRTY to DIRT_LEVEL_GROSS)
+			examine_list += "<span class='notice'>[L.p_they(TRUE)] looks very gross and are covered in grime.</span>"
 
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN

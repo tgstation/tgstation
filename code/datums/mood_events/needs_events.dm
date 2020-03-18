@@ -91,3 +91,13 @@
 	description = "<span class='nicegreen'>There's nothing like the feeling of a freshly laundered jumpsuit.</span>\n"
 	mood_change = 2
 	timeout = 10 MINUTES
+
+//h-hygiene events
+
+/datum/mood_event/dirty
+	description = "<span class='warning'>I'm slightly dirty.</span>\n"
+	mood_change = -1
+
+/datum/mood_event/gross
+	description = "<span class='warning'>I'm covered in grime, I should go get cleaned up.</span>\n"
+	mood_change = -4
