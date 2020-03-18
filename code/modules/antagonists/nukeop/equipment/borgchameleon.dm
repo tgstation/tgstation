@@ -59,12 +59,12 @@
 		to_chat(user, "<span class='notice'>You deactivate \the [src].</span>")
 		deactivate(user)
 	else
+		if(!fulp_borg_chameleon_menu(user)) //My thanks go once again to Surrealaser for allowing me to port fulpstation's cyborg chameleon projector update to /tg/. The code in the fulp_borg_chameleon_menu() proc was written by him.
+			return
 		if(animation_playing)
 			to_chat(user, "<span class='notice'>The [src] is recharging.</span>")
 			return
 		animation_playing = TRUE
-		if(!fulp_borg_chameleon_menu(user)) //My thanks go once again to Surrealaser for allowing me to port fulpstation's cyborg chameleon projector update to /tg/. The code in the fulp_borg_chameleon_menu() proc was written by him.
-			return
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
 		var/start = user.filters.len
