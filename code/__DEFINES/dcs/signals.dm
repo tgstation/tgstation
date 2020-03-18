@@ -407,7 +407,7 @@
 #define COMSIG_TRY_STORAGE_CAN_INSERT "storage_can_equip"				//(obj/item/insertion_candidate, mob/user, silent) - returns bool
 // /datum/component/swabbing signals
 #define COMSIG_SWAB_FOR_SAMPLES "swab_for_samples"						//()
-	#define COMPONENT_SWAB_FOUND 1
+	#define COMPONENT_SWAB_FOUND (1<<0)
 // /datum/component/two_handed signals
 #define COMSIG_TWOHANDED_WIELD "twohanded_wield"						//from base of datum/component/two_handed/proc/wield(mob/living/carbon/user): (/mob/user)
 	#define COMPONENT_TWOHANDED_BLOCK_WIELD 1
