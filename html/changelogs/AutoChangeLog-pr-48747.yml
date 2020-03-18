@@ -1,0 +1,4 @@
+author: "kevinz000"
+delete-after: True
+changes: 
+  - refactor: "movespeed modifiers are now datums and not lists and support global caching."
