@@ -512,7 +512,7 @@
 		allowing a syndicate saboteur cyborg with this upgrade installed to sabotage Medbay more effectively. \
 		WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
 	module_type = list(/obj/item/robot_module/saboteur, /obj/item/robot_module/syndicate_medical) //this upgrade is designed for syndicate saboteur cyborgs, but syndicate medical cyborgs can get it as well, if they want to
-	var/addedtools = list(/obj/item/borg/apparatus/beaker,
+	addedtools = list(/obj/item/borg/apparatus/beaker,
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe)
 

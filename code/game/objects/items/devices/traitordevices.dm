@@ -262,7 +262,7 @@ effective or pretty fucking useless.
 		STOP_PROCESSING(SSobj,src)
 		return
 	if(!R.cell || R.cell.charge < 10) //mostly copied from RSF code
-		to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
+		to_chat(R, "<span class='warning'>You do not have enough power to use [src].</span>")
 		active = FALSE
 		STOP_PROCESSING(SSobj,src)
 		return

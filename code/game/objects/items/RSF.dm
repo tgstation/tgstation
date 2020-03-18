@@ -108,7 +108,7 @@ RSF
 			use_matter(10, user)
 		if(6) //for RBFs only
 			to_chat(user, "<span class='notice'>Dispensing Cardboard Box...</span>")
-			/obj/structure/closet/cardboard/newbox = new /obj/structure/closet/cardboard(T)
+			var/obj/structure/closet/cardboard/newbox = new /obj/structure/closet/cardboard(T)
 			newbox.open(user) //so that syndicate saboteur borgs can't spam boxes behind them as temporary walls while running away from pursuers
 			use_matter(500, user) //it's a big box
 
