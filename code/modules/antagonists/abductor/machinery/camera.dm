@@ -70,7 +70,7 @@
 /datum/action/innate/teleport_in/Activate()
 	if(!target || !iscarbon(owner))
 		return
-	if(world.time <= on_cooldown)
+	if(world.time < on_cooldown)
 		to_chat(owner, "<span class='warning'>You must wait for the [target] to cool down before using it again!</span>")
 		return
 	var/mob/living/carbon/human/C = owner
@@ -104,7 +104,7 @@
 /datum/action/innate/teleport_self/Activate()
 	if(!target || !iscarbon(owner))
 		return
-	if(world.time <= on_cooldown)
+	if(world.time < on_cooldown)
 		to_chat(owner, "<span class='warning'>You can only teleport to one place at a time!</span>")
 		return
 	var/mob/living/carbon/human/C = owner
