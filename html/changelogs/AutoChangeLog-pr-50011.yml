@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - balance: "unstable mutagen no longer mutates rad immune species"
