@@ -62,7 +62,7 @@
 ///Is the amount of time required between uses
 	var/abductor_pad_cooldown = 8 SECONDS
 ///Is used to compare to world.time in order to determine if the action should early return
-	var/on_cooldown
+	var/use_delay
 	name = "Send To"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_down"
@@ -70,13 +70,13 @@
 /datum/action/innate/teleport_in/Activate()
 	if(!target || !iscarbon(owner))
 		return
-	if(world.time < on_cooldown)
-		to_chat(owner, "<span class='warning'>You must wait for the [target] to cool down before using it again!</span>")
+	if(world.time < use_delay)
+		to_chat(owner, "<span class='warning'>You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!</span>")
 		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
-	on_cooldown = (world.time + abductor_pad_cooldown)
+	use_delay = (world.time + abductor_pad_cooldown)
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		P.PadToLoc(remote_eye.loc)
@@ -96,7 +96,7 @@
 /datum/action/innate/teleport_self
 ///Is the amount of time required between uses
 	var/teleport_self_cooldown = 9 SECONDS
-	var/on_cooldown
+	var/use_delay
 	name = "Send Self"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_down"
@@ -104,13 +104,13 @@
 /datum/action/innate/teleport_self/Activate()
 	if(!target || !iscarbon(owner))
 		return
-	if(world.time < on_cooldown)
+	if(world.time < use_delay)
 		to_chat(owner, "<span class='warning'>You can only teleport to one place at a time!</span>")
 		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
-	on_cooldown = (world.time + teleport_self_cooldown)
+	use_delay = (world.time + teleport_self_cooldown)
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		P.MobToLoc(remote_eye.loc,C)
