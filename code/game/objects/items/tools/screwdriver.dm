@@ -150,4 +150,5 @@
 	random_color = FALSE
 
 /obj/item/screwdriver/power/cyborg //for syndicate saboteur cyborgs
+	name = "cyborg hand drill"
 	toolspeed = 0.5

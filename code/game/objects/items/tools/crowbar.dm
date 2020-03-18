@@ -114,4 +114,5 @@
 	toolspeed = 0.5
 
 /obj/item/crowbar/power/cyborg //for syndicate saboteur cyborgs
+	name = "cyborg jaws of life"
 	toolspeed = 0.5
