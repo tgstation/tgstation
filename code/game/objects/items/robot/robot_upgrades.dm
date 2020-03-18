@@ -478,8 +478,8 @@
 
 /obj/item/borg/upgrade/surgical_tools
 	name = "syndicate medical cyborg additional surgical tools"
-	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, /
-		allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own. /
+	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, \
+		allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own. \
 		WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
@@ -508,8 +508,8 @@
 
 /obj/item/borg/upgrade/surgical_tools/medicalsabotage
 	name = "syndicate medical sabotage"
-	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker apparatus, a syringe, and a dropper, /
-		allowing a syndicate saboteur cyborg with this upgrade installed to sabotage Medbay more effectively. /
+	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker apparatus, a syringe, and a dropper, \
+		allowing a syndicate saboteur cyborg with this upgrade installed to sabotage Medbay more effectively. \
 		WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
 	module_type = list(/obj/item/robot_module/saboteur, /obj/item/robot_module/syndicate_medical) //this upgrade is designed for syndicate saboteur cyborgs, but syndicate medical cyborgs can get it as well, if they want to
 	var/addedtools = list(/obj/item/borg/apparatus/beaker,
