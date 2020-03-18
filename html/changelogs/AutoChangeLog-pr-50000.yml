@@ -1,0 +1,5 @@
+author: "JJRcop"
+delete-after: True
+changes: 
+  - bugfix: "Drone hacking is now fixed"
+  - bugfix: "Fixed drone reactivation"
