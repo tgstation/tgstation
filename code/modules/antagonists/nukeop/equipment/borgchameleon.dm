@@ -61,9 +61,9 @@
 		if(animation_playing)
 			to_chat(user, "<span class='notice'>\the [src] is recharging.</span>")
 			return
-		animation_playing = TRUE
 		if(!fulp_borg_chameleon_menu(user)) //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
 			return
+		animation_playing = TRUE
 		to_chat(user, "<span class='notice'>You activate \the [src].</span>")
 		playsound(src, 'sound/effects/seedling_chargeup.ogg', 100, TRUE, -6)
 		var/start = user.filters.len

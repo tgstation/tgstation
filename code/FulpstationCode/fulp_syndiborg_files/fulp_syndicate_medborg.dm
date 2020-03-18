@@ -12,7 +12,7 @@
 	"Security", \
 	"Service", \
 	"Standard", \
-	"Cancel" = null )
+	"Cancel")
 
 	var/choice = input(user,"Which borg module will you disguise as?","Chameleon Borg Disguise") as null|anything in borg_disguses_list
 	if(QDELETED(src) || user.stat || !in_range(user, src) || user.incapacitated() || !choice)
@@ -47,7 +47,6 @@
 			disguise_text = "standard"
 			disguise = pick("robot")
 		if("Cancel")
-			to_chat(user, "<span class='warning'>You aborted disguising.</span>")
 			return FALSE
 
 	to_chat(user, "<span class='notice'>You are disguising as a Nanotrasen [disguise_text] borg...</span>")

@@ -569,24 +569,30 @@
 	basic_modules = list(
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/reagent_containers/borghypo/syndicate,
+		/obj/item/reagent_containers/borghypo, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
 		/obj/item/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
+		/obj/item/borg/apparatus/beaker, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
+		/obj/item/reagent_containers/dropper, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
+		/obj/item/reagent_containers/syringe, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
 		/obj/item/surgical_drapes,
 		/obj/item/retractor,
 		/obj/item/hemostat,
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
+		/obj/item/organ_storage,
 		/obj/item/melee/transforming/energy/sword/cyborg/saw,
-		/obj/item/roller/robo,
-		/obj/item/card/emag,
+		/obj/item/holobed_projector/robot, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/gun/medbeam,
-		/obj/item/organ_storage)
-
+		/obj/item/borg/cyborghug/medical, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
+		/obj/item/borg/lollipop, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
+		/obj/item/borg_chameleon //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
+		)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
