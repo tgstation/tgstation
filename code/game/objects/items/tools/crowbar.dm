@@ -113,5 +113,5 @@
 	force = 10
 	toolspeed = 0.5
 
-/obj/item/crowbar/power/cyborg
+/obj/item/crowbar/power/cyborg //for syndicate saboteur cyborgs
 	toolspeed = 0.5

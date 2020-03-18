@@ -1046,7 +1046,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/support/reinforcement/assault_borg
 	name = "Syndicate Assault Cyborg"
 	desc = "A cyborg designed and programmed for systematic extermination of non-Syndicate personnel. \
-			Comes equipped with a self-resupplying LMG, a grenade launcher, energy sword, emag, pinpointer, flash, miniature fire extinguisher, and crowbar."
+			Comes equipped with a self-resupplying LMG, grenade launcher, energy sword, emag, pinpointer, flash, miniature fire extinguisher, and crowbar."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	refundable = TRUE
 	cost = 65
@@ -1065,7 +1065,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Syndicate Saboteur Cyborg"
 	desc = "A streamlined engineering cyborg, equipped with covert modules. Also incapable of leaving the welder in the shuttle. \
 			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
-			It also has a chameleon projector lets it disguise itself as a Nanotrasen cyborg, thermal vision, cable cuffs, and a pinpointer, among other useful items."
+			It also has a chameleon projector lets it disguise itself as a Nanotrasen cyborg, thermal vision, cable cuffs, and a pinpointer, among other useful items and features."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	refundable = TRUE
 	cost = 35
