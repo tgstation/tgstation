@@ -12375,6 +12375,12 @@
 	dir = 4
 	},
 /obj/structure/railing,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "aCs" = (
@@ -23759,20 +23765,6 @@
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
-"bca" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/grille,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "bcb" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -28861,6 +28853,12 @@
 /obj/structure/railing/corner{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bmM" = (
@@ -28931,19 +28929,26 @@
 /turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "bmT" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
-	dir = 4
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/turf/open/floor/plasteel,
-/area/crew_quarters/fitness/recreation)
-"bmU" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3,
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
+"bmU" = (
 /obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -28963,13 +28968,11 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "bmW" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 5
-	},
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/junction/flip{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bmX" = (
@@ -29301,12 +29304,16 @@
 	id = "Ferry_Bridge";
 	name = "Ferry Bridge Toggle";
 	pixel_x = -24;
-	pixel_y = 8
+	pixel_y = 24;
+	sync_doors = 0
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /obj/effect/turf_decal/caution,
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bnG" = (
@@ -29477,6 +29484,9 @@
 "bnT" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 5
+	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "bnU" = (
@@ -45722,12 +45732,12 @@
 /turf/open/floor/plating,
 /area/library/abandoned)
 "cpK" = (
-/obj/machinery/door/airlock/public/glass,
 /obj/effect/turf_decal/delivery,
 /obj/structure/cable,
 /obj/machinery/door/poddoor/preopen{
 	id = "Ferry_Bridge"
 	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "csr" = (
@@ -45917,8 +45927,10 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/caution,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "dfK" = (
@@ -45958,6 +45970,18 @@
 	dir = 5
 	},
 /area/science/research)
+"dlj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "dlq" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Supermatter External Chamber";
@@ -47673,7 +47697,8 @@
 	id = "Ferry_Bridge";
 	name = "Ferry Bridge Toggle";
 	pixel_x = -8;
-	pixel_y = -24
+	pixel_y = -24;
+	sync_doors = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -48122,13 +48147,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engine_room)
-"jTr" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "jUK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -48560,7 +48578,6 @@
 /turf/open/floor/plasteel,
 /area/security/processing)
 "lNg" = (
-/obj/machinery/door/airlock/public/glass,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/poddoor/preopen{
 	id = "Ferry_Bridge"
@@ -49497,6 +49514,20 @@
 /obj/effect/turf_decal/stripes/end,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"oYz" = (
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/poddoor/preopen{
+	id = "Ferry_Bridge"
+	},
+/obj/machinery/button/door{
+	id = "Ferry_Bridge";
+	name = "Ferry Bridge Toggle";
+	pixel_x = -24;
+	pixel_y = 8;
+	sync_doors = 0
+	},
+/turf/open/floor/plating,
+/area/maintenance/port/fore)
 "peq" = (
 /obj/item/chair,
 /obj/item/chair{
@@ -49668,15 +49699,6 @@
 	},
 /turf/closed/wall/r_wall,
 /area/engine/supermatter)
-"pyT" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "pBI" = (
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
@@ -49712,6 +49734,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"pNh" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
+	dir = 9
+	},
+/turf/open/floor/plasteel,
+/area/crew_quarters/fitness/recreation)
 "pNn" = (
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
@@ -49904,7 +49933,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engine_room)
 "qxY" = (
-/obj/machinery/door/airlock/public/glass,
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -50210,6 +50238,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 10
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "rzr" = (
@@ -50292,10 +50323,8 @@
 /area/maintenance/port/fore)
 "rLT" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "rMa" = (
@@ -50834,10 +50863,15 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 10
-	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/button/door{
+	id = "Ferry_Bridge";
+	name = "Ferry Bridge Toggle";
+	pixel_x = 24;
+	pixel_y = 24;
+	sync_doors = 0
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "tzv" = (
@@ -51299,6 +51333,9 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/caution{
 	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -67779,8 +67816,8 @@ aaa
 aaa
 aaa
 aeS
-bTU
-bca
+bQW
+bbI
 ano
 aAF
 aAF
@@ -72110,14 +72147,14 @@ jtf
 aYM
 vaD
 lNg
-pyT
+bao
 bTU
 bTU
 bTU
 bTU
 bTU
-jTr
-lNg
+blO
+oYz
 bnF
 aYM
 bTU
@@ -78556,7 +78593,7 @@ aVI
 bkY
 bmi
 bmU
-asQ
+pNh
 acy
 acy
 acy
@@ -78812,7 +78849,7 @@ aCj
 bnR
 boB
 bml
-bmU
+dlj
 asQ
 acy
 bVN
@@ -79069,7 +79106,7 @@ aKP
 aVI
 bgh
 bmm
-bmU
+dlj
 asQ
 acy
 bVV
