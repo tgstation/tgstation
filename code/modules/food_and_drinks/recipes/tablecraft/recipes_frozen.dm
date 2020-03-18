@@ -14,7 +14,7 @@
 	subcategory = CAT_ICE
 
 /datum/crafting_recipe/food/strawberryicecreamsandwich
-	name = "Strawberry icecream sandwich"
+	name = "Strawberry ice cream sandwich"
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
 		/datum/reagent/consumable/ice = 5,

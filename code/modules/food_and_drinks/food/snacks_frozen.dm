@@ -14,7 +14,7 @@
 	foodtype = GRAIN | DAIRY | SUGAR
 
 /obj/item/reagent_containers/food/snacks/strawberryicecreamsandwich
-	name = "strawberry icecream sandwich"
+	name = "strawberry ice cream sandwich"
 	desc = "Portable ice-cream in its own packaging of the strawberry variety."
 	icon = 'icons/obj/food/frozen_treats.dmi'
 	icon_state = "strawberryicecreamsandwich"
