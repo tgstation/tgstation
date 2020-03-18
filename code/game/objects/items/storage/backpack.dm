@@ -606,3 +606,8 @@
 	desc = "Granted to the henchmen who deserve it. This probably doesn't include you."
 	icon_state = "henchmen"
 	item_state = "henchmen"
+
+/obj/item/storage/backpack/duffelbag/cops
+	name = "police bag"
+	desc = "A large duffel bag for holding extra police gear."
+	slowdown = 0
