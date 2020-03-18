@@ -181,7 +181,7 @@
 /obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!myhead)
-		user.visible_message("<span class='suicide'>[user] tries consuming [src]... but they have no mouth!") // and i must scream
+		user.visible_message("<span class='suicide'>[user] tries consuming [src]... but [user.p_they()] [user.p_have] no mouth!") // and i must scream
 		return SHAME
 	user.visible_message("<span class='suicide'>[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicicide!</span>")
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
