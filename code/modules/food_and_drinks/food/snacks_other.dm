@@ -534,7 +534,7 @@
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum
 	name = "bubblegum gum"
 	desc = "A rubbery strip of gum. You don't feel like eating it is a good idea."
-	color = "#F0B3B3"
+	color = "#913D3D"
 	list_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
 
