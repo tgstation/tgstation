@@ -1073,7 +1073,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/support/surgeryupgrade
 	name = "Syndicate Medical Cyborg Additional Surgical Tools Upgrade"
-	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, \ 
+	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, \
 			allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own. \
 			WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
 	item = /obj/item/borg/upgrade/surgical_tools
