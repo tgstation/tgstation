@@ -2,18 +2,14 @@
 	name = "\improper Automatic Robotic Factory 5000"
 	desc = "A large metallic machine with an entrance and an exit. A sign on \
 		the side reads, 'human go in, robot come out'. The human must be \
-		lying down and alive. Has to cooldown between each use."
+		lying down and alive."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "separator-AO1"
 	layer = ABOVE_ALL_MOB_LAYER // Overhead
 	density = FALSE
 	var/transform_dead = 0
 	var/transform_standing = 0
-	var/cooldown_duration = 600 // 1 minute
-	var/cooldown = 0
-	var/cooldown_timer
 	var/robot_cell_charge = 5000
-	var/obj/effect/countdown/transformer/countdown
 	var/mob/living/silicon/ai/masterAI
 
 /obj/machinery/transformer/Initialize()
@@ -22,28 +18,14 @@
 	new /obj/machinery/conveyor/auto(locate(x - 1, y, z), WEST)
 	new /obj/machinery/conveyor/auto(loc, WEST)
 	new /obj/machinery/conveyor/auto(locate(x + 1, y, z), WEST)
-	countdown = new(src)
-	countdown.start()
-
-/obj/machinery/transformer/examine(mob/user)
-	. = ..()
-	if(cooldown && (issilicon(user) || isobserver(user)))
-		. += "It will be ready in [DisplayTimeText(cooldown_timer - world.time)]."
-
-/obj/machinery/transformer/Destroy()
-	QDEL_NULL(countdown)
-	. = ..()
 
 /obj/machinery/transformer/update_icon_state()
-	if(machine_stat & (BROKEN|NOPOWER) || cooldown == 1)
+	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "separator-AO0"
 	else
 		icon_state = initial(icon_state)
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
-	if(cooldown == 1)
-		return
-
 	// Crossed didn't like people lying down.
 	if(ishuman(AM))
 		// Only humans can enter from the west side, while lying down.
@@ -62,24 +44,14 @@
 			return
 	return FALSE
 
-/obj/machinery/transformer/process()
-	if(cooldown && (cooldown_timer <= world.time))
-		cooldown = FALSE
-		update_icon()
-
 /obj/machinery/transformer/proc/do_transform(mob/living/carbon/human/H)
 	if(machine_stat & (BROKEN|NOPOWER))
-		return
-	if(cooldown == 1)
 		return
 
 	if(!transform_dead && H.stat == DEAD)
 		playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		return
 
-	// Activate the cooldown
-	cooldown = 1
-	cooldown_timer = world.time + cooldown_duration
 	update_icon()
 
 	playsound(src.loc, 'sound/items/welder.ogg', 50, TRUE)
