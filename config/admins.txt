@@ -30,7 +30,6 @@ SpacingNevada = Admin Jr.
 papaporopaprito = Admin Jr.
 
 #Admin Candidates
-BLU_REMOTE = Admin Candidate
 BringTheBoom = Admin Candidate
 Saliferous = Admin Candidate
 Guillaume Prata = Admin Candidate
@@ -85,3 +84,4 @@ ImpendingRiot = Moderator
 #FaKanza = Admin
 #Trickytyfly = Admin
 #Qustinnus = Admin removing this abusive boy
+#BLU_REMOTE = Admin Candidate

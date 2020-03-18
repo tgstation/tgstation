@@ -28,6 +28,7 @@ endmap
 map kilostation
 	minplayers 25
 	votable
+	disabled
 endmap
 
 map pubbystation
@@ -42,6 +43,7 @@ endmap
 map donutstation
 	minplayers 50
 	votable
+	disabled
 endmap
 
 map runtimestation
