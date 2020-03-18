@@ -178,7 +178,6 @@
 #define DIRT_LEVEL_NONE 1
 #define DIRT_LEVEL_DIRTY 3
 #define DIRT_LEVEL_GROSS 5
-#define DISGUST_LEVEL_GROSS 25
 
 //Used as an upper limit for species that continuously gain nutriment
 #define NUTRITION_LEVEL_ALMOST_FULL 535

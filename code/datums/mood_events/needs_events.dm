@@ -93,7 +93,6 @@
 	timeout = 10 MINUTES
 
 //h-hygiene events
-
 /datum/mood_event/dirty
 	description = "<span class='warning'>I'm slightly dirty.</span>\n"
 	mood_change = -1

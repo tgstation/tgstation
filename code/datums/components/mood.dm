@@ -331,9 +331,11 @@
 			add_event(null, "nutrition", /datum/mood_event/starving)
 
 /datum/component/mood/proc/HandleDirtiness()
-	dirtiness = 0
-
 	var/mob/living/L = parent
+	dirtiness = 0
+	if(L?.mind.special_role)//Antags aren't affected.
+		return
+
 	for(var/X in list(ITEM_SLOT_HEAD, ITEM_SLOT_MASK, ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING, ITEM_SLOT_FEET))
 		var/obj/item/I = L.get_item_by_slot(X)
 		if(I && HAS_BLOOD_DNA(I))
