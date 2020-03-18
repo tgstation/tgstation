@@ -78,8 +78,8 @@
 		return
 
 	// check for living hours requirement
-	var/required_living_hours = CONFIG_GET(number/required_living_hours) * 60
-	var/living_hours = usr.client ? usr.client.get_exp_living(TRUE) : 0
+	var/required_living_minutes = CONFIG_GET(number/required_living_hours) * 60
+	var/living_minutes = usr.client ? usr.client.get_exp_living(TRUE) : 0
 	if(required_living_hours > 0 && living_hours < required_living_hours)
 		to_chat(usr, "<span class='warning'>You must have at least [required_living_hours] minutes of living " \
 			+ "playtime in a round to verify. You have [living_hours] minutes. Play more!</span>")
