@@ -163,6 +163,7 @@
 /datum/reagent/water/reaction_obj(obj/O, reac_volume)
 	O.extinguish()
 	O.acid_level = 0
+	O.cut_overlay(GLOB.fire_overlay, TRUE)
 	// Monkey cube
 	if(istype(O, /obj/item/reagent_containers/food/snacks/monkeycube))
 		var/obj/item/reagent_containers/food/snacks/monkeycube/cube = O
@@ -188,6 +189,13 @@
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
+		if(istype(M, /mob/living/carbon))
+			var/mob/living/carbon/C = M
+			for(var/X in C.get_equipped_items())
+				var/obj/item/I = X
+				I.acid_level = 0
+				I.extinguish()
+				I.update_overlays()
 	..()
 
 /datum/reagent/water/holywater
