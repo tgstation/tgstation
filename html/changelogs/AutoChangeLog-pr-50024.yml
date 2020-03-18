@@ -1,0 +1,6 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - tweak: "Small UI resizes for Bank Machine, Teleporter and Equipment Reclaimer Station UIs."
+  - tweak: "You now do a confirmatory Button click to lockdown/detonate cyborgs instead of swimming in the input menu."
+  - tweak: "Small cleanup of Remote Robot Control, Equipment Reclaimer Station, Robotics Control Console and Exosuit Control Console UIs."
