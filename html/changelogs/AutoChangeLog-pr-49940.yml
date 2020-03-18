@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Deconstructing plastic and wooden tables now gives the correct materials."

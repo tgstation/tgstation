@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - bugfix: "Cronowarriors no more blind after exit from out of time-bluespace."
