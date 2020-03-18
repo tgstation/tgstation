@@ -112,7 +112,7 @@
 	for(var/datum/beam/B in vines)
 		if(B.target == the_target)
 			pull_vines()
-			ranged_cooldown = world.time + (ranged_cooldown_time / 2)
+			ranged_cooldown = world.time + (ranged_cooldown_time * 0.5)
 			return
 	if(get_dist(src,the_target) > vine_grab_distance || vines.len == max_vines)
 		return
