@@ -1,5 +1,5 @@
 /datum/movespeed_modifier/strained_muscles
-	multiplicative_slowdown = -1
+	multiplicative_slowdown = -0.55
 	blacklisted_movetypes = (FLYING|FLOATING)
 
 /datum/movespeed_modifier/pai_spacewalk
