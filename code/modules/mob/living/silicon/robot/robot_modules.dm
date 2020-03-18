@@ -255,7 +255,7 @@
 		/obj/item/assembly/flash/cyborg,
 		/obj/item/healthanalyzer,
 		/obj/item/reagent_containers/borghypo,
-		/obj/item/borg/apparatus/beaker/medical,
+		/obj/item/borg/apparatus/beaker/medical, //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 		/obj/item/reagent_containers/dropper,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/surgical_drapes,
@@ -265,13 +265,13 @@
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
 		/obj/item/circular_saw,
-		/obj/item/shockpaddles/cyborg,
+		/obj/item/shockpaddles/cyborg, //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 		/obj/item/extinguisher/mini,
-		/obj/item/holobed_projector/robot,
+		/obj/item/holobed_projector/robot, //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/organ_storage,
-		/obj/item/soap/nanotrasen,
+		/obj/item/soap/nanotrasen, //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 		/obj/item/borg/lollipop)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	cyborg_base_icon = "medical"
