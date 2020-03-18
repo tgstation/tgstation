@@ -17,7 +17,7 @@
 	name = "Strawberry icecream sandwich"
 	reqs = list(
 		/datum/reagent/consumable/cream = 5,
-		/datum/reagent/consumabe/ice = 5,
+		/datum/reagent/consumable/ice = 5,
 		/obj/item/reagent_containers/food/snacks/grown/berries = 2,
 	)
 	result = /obj/item/reagent_containers/food/snacks/strawberryicecreamsandwich
