@@ -643,6 +643,10 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/scrunglartiy.ogg',
 		'sound/roundend/petersondisappointed.ogg'\
 		)
+	///The reference to the end of round sound that we have chosen.
+	var/sound/end_of_round_sound_ref = sound(round_end_sound)
+	for(var/mob/M in GLOB.player_list)
+		if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
+			SEND_SOUND(M.client, end_of_round_sound_ref)
 
-	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")

@@ -521,7 +521,7 @@
 			if(mob_mask.Height() > world.icon_size || mob_mask.Width() > world.icon_size)
 				var/health_doll_icon_state = health_doll_icon ? health_doll_icon : "megasprite"
 				mob_mask = icon('icons/mob/screen_gen.dmi', health_doll_icon_state) //swap to something generic if they have no special doll
-			UNLINT(livingdoll.filters += filter(type="alpha", icon = mob_mask))
+			livingdoll.filters += filter(type="alpha", icon = mob_mask)
 			livingdoll.filters += filter(type="drop_shadow", size = -1)
 	if(severity > 0)
 		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
@@ -529,7 +529,23 @@
 		clear_fullscreen("brute")
 
 //Proc used to resuscitate a mob, for full_heal see fully_heal()
-/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE)
+/mob/living/proc/revive(full_heal = FALSE, admin_revive = FALSE, excess_healing = 0)
+	if(excess_healing)
+		if(iscarbon(src) && excess_healing)
+			var/mob/living/carbon/C = src
+			if(!(C.dna?.species && (NOBLOOD in C.dna.species.species_traits)))
+				C.blood_volume += (excess_healing*2)//1 excess = 10 blood
+
+			for(var/i in C.internal_organs)
+				var/obj/item/organ/O = i
+				if(O.organ_flags & ORGAN_SYNTHETIC)
+					continue
+				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
+
+		adjustOxyLoss(-20, TRUE)
+		adjustToxLoss(-20, TRUE) //slime friendly
+		updatehealth()
+		grab_ghost()
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive)
@@ -548,6 +564,9 @@
 			for(var/S in mind.spell_list)
 				var/obj/effect/proc_holder/spell/spell = S
 				spell.updateButtonIcon()
+		if(excess_healing)
+			emote("gasp")
+			log_combat(src, src, "revived")
 
 /mob/living/proc/remove_CC(should_update_mobility = TRUE)
 	SetStun(0, FALSE)
@@ -759,7 +778,7 @@
 		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE // see defines/combat.dm
-		resist_chance = max(resist_chance/altered_grab_state-sqrt((getStaminaLoss()+getBruteLoss()/2)*(3-altered_grab_state)), 0) // https://i.imgur.com/6yAT90T.png for sample output values
+		resist_chance = max((resist_chance/altered_grab_state)-sqrt((getBruteLoss()+getFireLoss()+getOxyLoss()+getToxLoss()+getCloneLoss())*0.5+getStaminaLoss()), 0) //stamina loss is weighted twice as heavily as the other damage types in this calculation
 		if(prob(resist_chance))
 			visible_message("<span class='danger'>[src] breaks free of [pulledby]'s grip!</span>", \
 							"<span class='danger'>You break free of [pulledby]'s grip!</span>", null, null, pulledby)
@@ -899,8 +918,8 @@
 	var/amplitude = min(4, (jitteriness/100) + 1)
 	var/pixel_x_diff = rand(-amplitude, amplitude)
 	var/pixel_y_diff = rand(-amplitude/3, amplitude/3)
-	var/final_pixel_x = get_standard_pixel_x_offset(lying)
-	var/final_pixel_y = get_standard_pixel_y_offset(lying)
+	var/final_pixel_x = get_standard_pixel_x_offset(!(mobility_flags & MOBILITY_STAND))
+	var/final_pixel_y = get_standard_pixel_y_offset(!(mobility_flags & MOBILITY_STAND))
 	animate(src, pixel_x = pixel_x + pixel_x_diff, pixel_y = pixel_y + pixel_y_diff , time = 2, loop = 6)
 	animate(pixel_x = final_pixel_x , pixel_y = final_pixel_y , time = 2)
 	setMovetype(movement_type & ~FLOATING) // If we were without gravity, the bouncing animation got stopped, so we make sure to restart it in next life().

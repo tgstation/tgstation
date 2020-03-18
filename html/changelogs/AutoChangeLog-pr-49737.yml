@@ -1,5 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - tweak: "Hand Tele try place portal ahead of user now."
-  - tweak: "try_move_adjacent can take desirable dir"

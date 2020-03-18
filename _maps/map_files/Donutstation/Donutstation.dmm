@@ -13663,7 +13663,7 @@
 "aFi" = (
 /obj/machinery/door/window/eastleft{
 	name = "Armory";
-	req_access_txt = "2"
+	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -23013,7 +23013,7 @@
 	},
 /obj/machinery/door/window/eastright{
 	name = "Armory";
-	req_access_txt = "2"
+	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -44377,7 +44377,7 @@
 	dir = 8
 	},
 /obj/item/toy/figure/mime,
-/obj/item/gun/magic/wand,
+/obj/item/gun/magic/wand/nothing,
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "caf" = (
