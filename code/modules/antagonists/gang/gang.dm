@@ -58,14 +58,15 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending an undercover cop. Find him and eliminate him."
+	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending undercover cops. Find them and eliminate them all."
 	antag_hud_name = "Triad"
 
 /datum/antagonist/gang/red/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
-	var/mob/living/carbon/human/H = F.undercover_cop.current
-	if(considered_alive(H))
-		return FALSE
+	for(var/datum/mind/M in F.undercover_cops)
+		var/mob/living/carbon/human/H = M.current
+		if(considered_alive(H))
+			return FALSE
 	return TRUE
 
 /datum/antagonist/gang/purple
@@ -380,7 +381,7 @@
 	points += points_to_adjust
 
 /datum/team/gang/roundend_report()
-	return "<div class='panel redborder'><br></div>"
+	return
 
 /datum/action/cooldown/spawn_induction_package
 	name = "Create Induction Package"
@@ -411,6 +412,8 @@
 		for(var/datum/mind/gangers in TT.members)
 			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
 				alive_gangsters++
+		if(!alive_gangsters || TT.members.len <= 1) // Dead or inactive gangs don't count towards the cap.
+			continue
 		if(TT != my_gang_datum.my_gang)
 			if(alive_gangsters < lowest_gang_count)
 				lowest_gang_count = alive_gangsters

@@ -19,50 +19,48 @@ export const RemoteRobotControl = props => {
     );
   }
 
-  return (
-    <Section>
-      {robots.map(robot => (
-        <Section
-          key={robot.ref}
-          title={robot.name + " (" + robot.model + ")"}
-          buttons={(
-            <Fragment>
-              <Button
-                icon="tools"
-                content="Interface"
-                onClick={() => act('interface', {
-                  ref: robot.ref,
-                })} />
-              <Button
-                icon="phone-alt"
-                content="Call"
-                onClick={() => act('callbot', {
-                  ref: robot.ref,
-                })} />
-            </Fragment>
-          )}>
-          <LabeledList>
-            <LabeledList.Item label="Status">
-              <Box inline color={decodeHtmlEntities(robot.mode) === "Inactive"
-                ? 'bad'
-                : decodeHtmlEntities(robot.mode) === "Idle"
-                  ? 'average'
-                  : 'good'}>
-                {decodeHtmlEntities(robot.mode)}
+  return robots.map(robot => {
+    return (
+      <Section
+        key={robot.ref}
+        title={robot.name + " (" + robot.model + ")"}
+        buttons={(
+          <Fragment>
+            <Button
+              icon="tools"
+              content="Interface"
+              onClick={() => act('interface', {
+                ref: robot.ref,
+              })} />
+            <Button
+              icon="phone-alt"
+              content="Call"
+              onClick={() => act('callbot', {
+                ref: robot.ref,
+              })} />
+          </Fragment>
+        )}>
+        <LabeledList>
+          <LabeledList.Item label="Status">
+            <Box inline color={decodeHtmlEntities(robot.mode) === "Inactive"
+              ? 'bad'
+              : decodeHtmlEntities(robot.mode) === "Idle"
+                ? 'average'
+                : 'good'}>
+              {decodeHtmlEntities(robot.mode)}
+            </Box>
+            {' '}
+            {robot.hacked && (
+              <Box inline color="bad">
+                (HACKED)
               </Box>
-              {' '}
-              {robot.hacked && (
-                <Box inline color="bad">
-                  (HACKED)
-                </Box>
-              ) || "" }
-            </LabeledList.Item>
-            <LabeledList.Item label="Location">
-              {robot.location}
-            </LabeledList.Item>
-          </LabeledList>
-        </Section>
-      ))}
-    </Section>
-  );
+            ) || "" }
+          </LabeledList.Item>
+          <LabeledList.Item label="Location">
+            {robot.location}
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+    );
+  });
 };
