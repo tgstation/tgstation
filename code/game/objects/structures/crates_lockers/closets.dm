@@ -73,6 +73,7 @@
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
 	if(!opened)
 		if(icon_door)
 			. += "[icon_door]_door"
@@ -82,6 +83,7 @@
 			. += icon_welded
 		if(secure && !broken)
 			//Overlay is similar enough for both that we can use the same mask for both
+			luminosity = 1
 			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 			if(locked)
 				. += "locked"
