@@ -53,6 +53,24 @@
 	for(var/I in adjacent_turfs)
 		. |= get_area(I)
 
+/**
+ * Get a bounding box from a list of turfs.
+ *
+ * Returns: list(x1, y1, x2, y2)
+ */
+/proc/get_bbox_of_turfs(list/items)
+	var/list/list_x = list()
+	var/list/list_y = list()
+	for(var/turf/item in items)
+		if(isturf(item))
+			list_x += item.x
+			list_y += item.y
+	return list(
+		min(list_x),
+		min(list_y),
+		max(list_x),
+		max(list_y))
+
 // Like view but bypasses luminosity check
 
 /proc/get_hear(range, atom/source)
