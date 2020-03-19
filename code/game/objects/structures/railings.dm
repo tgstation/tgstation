@@ -29,6 +29,7 @@
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
+///Implements behaviour that makes it possible to unanchor the railing.
 /obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(flags_1&NODECONSTRUCT_1)
