@@ -65,9 +65,13 @@
 		show_camera_static()
 	if(!ui)
 		var/user_ref = REF(user)
-		concurrent_users += user_ref
+		var/is_living = ismob(user) && isliving(user)
+		// Ghosts shouldn't count towards concurrent users, which produces
+		// an audible terminal_on click.
+		if(is_living)
+			concurrent_users += user_ref
 		// Turn on the console
-		if(length(concurrent_users) == 1)
+		if(length(concurrent_users) == 1 && is_living)
 			playsound(src, 'sound/machines/terminal_on.ogg', 25, FALSE)
 			use_power(active_power_usage)
 		// Register map objects
@@ -138,11 +142,13 @@
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	var/user_ref = REF(user)
+	var/is_living = ismob(user) && isliving(user)
+	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
 	user.client.clear_map(map_name)
 	// Turn off the console
-	if(length(concurrent_users) == 0)
+	if(length(concurrent_users) == 0 && is_living)
 		active_camera = null
 		playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 		use_power(0)
