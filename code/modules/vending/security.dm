@@ -3,8 +3,8 @@
 	desc = "A security equipment vendor."
 	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
 	icon_state = "sec"
-	light_mask = "sec-light-mask"
 	icon_deny = "sec-deny"
+	light_mask = "sec-light-mask"
 	req_access = list(ACCESS_SECURITY)
 	products = list(/obj/item/restraints/handcuffs = 8,
 					/obj/item/restraints/handcuffs/cable/zipties = 10,

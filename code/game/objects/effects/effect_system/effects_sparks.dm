@@ -26,10 +26,10 @@
 
 /obj/effect/particle_effect/sparks/Initialize()
 	..()
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/particle_effect/sparks/LateInitialize()
+	flick(icon_state, src)
 	playsound(src, "sparks", 100, TRUE)
 	var/turf/T = loc
 	if(isturf(T))
