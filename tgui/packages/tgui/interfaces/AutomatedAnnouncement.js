@@ -19,7 +19,7 @@ export const AutomatedAnnouncement = props => {
         <LabeledList>
           <LabeledList.Item label="Message">
             <Button content={data.arrival}
-              onClick={() => { return act('ArrivalText'); }} />
+              onClick={() => act('ArrivalText')} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -36,7 +36,7 @@ export const AutomatedAnnouncement = props => {
         <LabeledList>
           <LabeledList.Item label="Message">
             <Button content={data.newhead}
-              onClick={() => { return act('NewheadText'); }} />
+              onClick={() => act('NewheadText')} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
