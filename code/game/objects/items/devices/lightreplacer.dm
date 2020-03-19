@@ -174,7 +174,7 @@
 		AddUses(new_bulbs)
 	bulb_shards = bulb_shards % shards_required
 	if(new_bulbs != 0)
-		to_chat(user, "<span class='notice'>\The [src] has fabricated a new bulb from the broken glass it has stored. It now has [uses] uses.</span>")
+		to_chat(user, "<span class='notice'>\The [src] fabricates a new bulb from the broken glass it has stored. It now has [uses] uses.</span>")
 		playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE)
 	return new_bulbs
 
