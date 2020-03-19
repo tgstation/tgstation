@@ -53,7 +53,7 @@
 	var/obj/item/W = I
 	if(W)
 		if(W.is_refillable())
-			return 0 //so we can refill them via their afterattack.
+			return FALSE //so we can refill them via their afterattack.
 	else
 		return ..()
 
