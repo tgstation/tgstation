@@ -10,8 +10,8 @@ var/list/cardTypeLookup = list("name" = 0,
 								"resolve" = 6,
 								"tags" = 7,
 								"cardtype" = 8,
+								"rarity" = 9,
 								)
-#define MAX_INDEX 8
 
 /obj/item/tcgcard
 	name = "Coder"
@@ -23,6 +23,7 @@ var/list/cardTypeLookup = list("name" = 0,
 	var/resolve = 0 //How hard this card can get hit (by default)
 	var/tags = "" //Special tags
 	var/cardtype = "" //Cardtype, for use in battles. Arcane/Inept if you don't update this whole block when you finalize the game I will throw you into the sm
+	var/rarity = 0 //EOB discribe this pls
 
 ///Creates a card based on a passed card string
 /obj/item/tcgcard/Initialize(mapload, card)
@@ -40,6 +41,7 @@ var/list/cardTypeLookup = list("name" = 0,
 		resolve = text2num(extractCardVariable("resolve", card))
 		tags = extractCardVariable("tags", card)
 		cardtype = extractCardVariable("cardtype", card)
+		rarity = text2num(extractCardVariable("rarity", card))
 	. = ..()
 
 /obj/item/cardpack
@@ -52,7 +54,7 @@ var/list/cardTypeLookup = list("name" = 0,
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
-	var/list/cards = extractAllMatchingCards("tags", series, GLOB.card_list, GLOB.card_template_list)
+	var/list/cards = buildCardListWithRarity(extractAllMatchingCards("tags", series, GLOB.card_list, GLOB.card_template_list))
 	for(var/i = 1 to 6)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), pick(cards))
@@ -70,6 +72,21 @@ var/list/cardTypeLookup = list("name" = 0,
 	icon_state = "coin_valid"
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
+
+/***
+*Takes a card list and returns a new list with rarity effecting card count
+*
+*Rarity is used to expand the card list
+*
+*If you use this to set the global list I will throw you into a fire
+***/
+/proc/buildCardListWithRarity(cardList)
+	var/list/toReturn = list()
+	for(var/card in cardList)
+		var/count = text2num(extractCardVariable("rarity", card))
+		for(var/index in 1 to count)
+			toReturn += card
+	return toReturn
 
 ///Extracts all matching cards from the list, and returns a list of them
 /proc/extractAllMatchingCards(matchType = "id", matchBy = -1, cardList, templateList)
@@ -149,7 +166,7 @@ var/list/cardTypeLookup = list("name" = 0,
 	if(split.len >= 2)
 		card = "|[split[2]]"
 	var/done = ""
-	for(var/index in 0 to MAX_INDEX)
+	for(var/index in 0 to cardTypeLookup.len - 1)
 		done += applyCardTemplateByIndex(index, card, template)
 	return done + "|"
 

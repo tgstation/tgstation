@@ -19,7 +19,8 @@ master = {
     "power" :  5,
     "resolve" :  6,
     "tags" :  7,
-    "cardtype" : 8
+    "cardtype" : 8,
+    "rarity" : 9
     }
 
 #Extract all the compressed data into uncompressed format. Place it into the specified file
