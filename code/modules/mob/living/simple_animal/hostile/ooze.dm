@@ -40,7 +40,7 @@
 		return ..()
 	eat_atom(I)
 
-/mob/living/simple_animal/hostile/ooze/AttackingTarget(var/atom/A)
+/mob/living/simple_animal/hostile/ooze/AttackingTarget(atom/A)
 	. = ..()
 	if(!check_edible(A))
 		return ..()
@@ -70,7 +70,7 @@
 		adjustBruteLoss(0.5)
 
 ///Returns whether or not the supplied movable atom is edible.
-/mob/living/simple_animal/hostile/ooze/proc/check_edible(var/atom/movable/AM)
+/mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/movable/AM)
 	if(ismob(AM))
 		return FALSE
 	var/foodtype
