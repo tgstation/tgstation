@@ -44,6 +44,7 @@ import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { ExosuitControlConsole } from './interfaces/ExosuitControlConsole';
+import { Gateway } from './interfaces/Gateway';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
@@ -316,6 +317,10 @@ const ROUTES = {
   },
   exosuit_control_console: {
     component: () => ExosuitControlConsole,
+    scrollable: true,
+  },
+  gateway: {
+    component: () => Gateway,
     scrollable: true,
   },
   gps: {
