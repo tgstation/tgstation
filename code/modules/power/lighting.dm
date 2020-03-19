@@ -649,7 +649,7 @@
 					return
 				to_chat(H, "<span class='notice'>You start channeling some power through the [fitting] into your body.</span>")
 				E.drain_time = world.time + 30
-				if(do_after(user, 50, target = src))
+				if(do_after(user, 30, target = src))
 					var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
 					if(istype(stomach))
 						to_chat(H, "<span class='notice'>You receive some charge from the [fitting].</span>")
