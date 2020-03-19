@@ -4,7 +4,7 @@
 		. = list()
 		for(var/id in considering)
 			var/datum/movespeed_modifier/M = considering[id]
-			if(M.flags & IGNORE_NOSLOW)
+			if(M.flags & IGNORE_NOSLOW || M.multiplicative_slowdown < 0)
 				.[id] = M
 		return
 	return considering
