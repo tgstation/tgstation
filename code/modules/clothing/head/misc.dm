@@ -514,3 +514,8 @@
 	icon_state = "JackFrostHat"
 	item_state = "JackFrostHat"
 
+/obj/item/clothing/head/more
+	name = "hat of more hats"
+	desc = "Chop chop!"
+	icon_state = "morehat"
+	item_state = "morehat"
