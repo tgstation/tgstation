@@ -62,9 +62,9 @@
 	var/obj/mecha/working/clarke/hostmech
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/attach(obj/mecha/M)
+	. = ..()
 	if(istype(M, /obj/mecha/working/clarke))
 		hostmech = M
-	. = ..()
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/detach()
 	hostmech = null //just in case
