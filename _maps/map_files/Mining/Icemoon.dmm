@@ -9,13 +9,13 @@
 	width = 9
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "ah" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "ak" = (
 /turf/closed/mineral/random/high_chance/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "ao" = (
 /obj/machinery/computer/shuttle/labor/one_way{
 	dir = 4
@@ -2094,7 +2094,7 @@
 /area/mine/laborcamp)
 "jL" = (
 /turf/closed/wall/r_wall,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "jU" = (
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
@@ -2185,7 +2185,7 @@
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
 "mL" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-10"
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2346,7 +2346,7 @@
 /area/mine/laborcamp)
 "pi" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-05"
 	},
 /obj/machinery/camera{
@@ -2529,7 +2529,7 @@
 	},
 /obj/structure/sign/mining,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "tn" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -2724,7 +2724,7 @@
 	dir = 1
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "zk" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
@@ -3089,7 +3089,7 @@
 /turf/open/floor/plasteel/dark,
 /area/mine/laborcamp)
 "Gn" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/clothing/under/color/jumpskirt/random,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
 "Gp" = (
@@ -3288,7 +3288,7 @@
 	dir = 8
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "KE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -3300,9 +3300,9 @@
 "KJ" = (
 /obj/structure/closet/crate,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "Lg" = (
-/obj/item/twohanded/required/kirbyplants/random,
+/obj/item/clothing/under/color/jumpskirt/random,
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
 	},
@@ -3342,7 +3342,7 @@
 /area/mine/eva)
 "LU" = (
 /obj/structure/table,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
@@ -3826,7 +3826,7 @@
 	dir = 4
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "Vo" = (
 /obj/item/bikehorn{
 	color = "#000";
@@ -3834,7 +3834,7 @@
 	name = "charred bike horn"
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "VC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -3934,7 +3934,7 @@
 "Xf" = (
 /obj/structure/ore_box,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/danger)
+/area/icemoon/surface/outdoors/unexplored/rivers)
 "Xl" = (
 /obj/structure/bookcase,
 /turf/open/floor/plasteel,

@@ -309,15 +309,16 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		if(!A.tunnel_allowed)
 			sanity = 0
 			return
-	var/flora_spawned = FALSE
-	var/terrain_spawned = FALSE
-	var/monster_spawned = FALSE
-	if(is_mining_level(z))
-		flora_spawned = SpawnFlora(T)	//No space mushrooms, cacti.
-	terrain_spawned = SpawnTerrain(T)
-	monster_spawned = SpawnMonster(T)		//Checks for danger area.
-	if(choose_turf_type && !terrain_spawned && !flora_spawned && !monster_spawned) // don't spawn different turf types under flora or terrain
+	if(choose_turf_type)
 		turf_type = pickweight(choose_turf_type)
+	if(turf_type == initial(turf_type)) // Don't spawn different turf types under flora or terrain
+		var/spawned_flora = FALSE
+		var/spawned_terrain = FALSE
+		if(is_mining_level(z))
+			spawned_flora = SpawnFlora(T)	//No space mushrooms, cacti.
+			spawned_terrain = SpawnTerrain(T)
+		if(!spawned_flora && !spawned_terrain) // No rocks beneath mob spawners / mobs.
+			SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
@@ -328,8 +329,10 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		if(!A.mob_spawn_allowed)
 			return
 		var/randumb = pickweight(mob_spawn_list)
+		if(!randumb)
+			return
 		while(randumb == SPAWN_MEGAFAUNA)
-			if(A.megafauna_spawn_allowed) //this is danger. it's boss time.
+			if(A.megafauna_spawn_allowed && megafauna_spawn_list && megafauna_spawn_list.len) //this is danger. it's boss time.
 				var/maybe_boss = pickweight(megafauna_spawn_list)
 				if(megafauna_spawn_list[maybe_boss])
 					randumb = maybe_boss
@@ -349,8 +352,8 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		if(ispath(randumb, /mob/living/simple_animal/hostile/megafauna/bubblegum)) //there can be only one bubblegum, so don't waste spawns on it
 			megafauna_spawn_list.Remove(randumb)
 
-		if(randumb)
-			return new randumb(T)
+		new randumb(T)
+		return TRUE
 
 #undef SPAWN_MEGAFAUNA
 #undef SPAWN_BUBBLEGUM
@@ -362,10 +365,13 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			if(!A.flora_allowed)
 				return
 		var/randumb = pickweight(flora_spawn_list)
+		if(!randumb)
+			return
 		for(var/obj/structure/flora/F in range(4, T)) //Allows for growing patches, but not ridiculous stacks of flora
 			if(!istype(F, randumb))
 				return
-		return new randumb(T)
+		new randumb(T)
+		return TRUE
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
 	if(prob(1))
@@ -374,11 +380,13 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			if(!A.flora_allowed)
 				return
 		var/randumb = pickweight(terrain_spawn_list)
+		if(!randumb)
+			return
 		for(var/obj/structure/geyser/F in range(7, T))
 			if(istype(F, randumb))
 				return
-		if(randumb)
-			return new randumb(T)
+		new randumb(T)
+		return TRUE
 
 /turf/open/floor/plating/asteroid/snow
 	gender = PLURAL

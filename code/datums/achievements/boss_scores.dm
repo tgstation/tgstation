@@ -47,3 +47,8 @@
 	name = "Swarmer Beacons Killed"
 	desc = "You've killed HOW many?"
 	database_id = SWARMER_BEACON_SCORE
+
+/datum/award/score/wendigo_score
+	name = "Wendigos Killed"
+	desc = "You've killed HOW many?"
+	database_id = WENDIGO_SCORE

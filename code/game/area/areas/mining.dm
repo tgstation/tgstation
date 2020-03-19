@@ -166,6 +166,9 @@
 	mob_spawn_allowed = TRUE
 	megafauna_spawn_allowed = TRUE
 
+/area/icemoon/underground/unexplored/rivers // rivers spawn here
+	icon_state = "danger"
+
 /area/icemoon/underground/explored
 	name = "Icemoon Underground"
 	flora_allowed = FALSE
@@ -179,7 +182,7 @@
 	tunnel_allowed = TRUE
 	mob_spawn_allowed = TRUE
 
-/area/icemoon/surface/outdoors/unexplored/danger
+/area/icemoon/surface/outdoors/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
 
 /area/icemoon/surface/outdoors/explored

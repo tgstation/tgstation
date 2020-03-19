@@ -49,15 +49,15 @@
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/OpenFire()
 	if(teleport_distance <= 0)
-		return
+		return ..()
 	var/list/possible_ends = list()
-	for(var/turf/T in view(2, target.loc) - view(1, target.loc))
+	for(var/turf/T in view(teleport_distance, target.loc) - view(teleport_distance - 1, target.loc))
 		if(isclosedturf(T))
 			continue
 		possible_ends |= T
 	var/turf/end = pick(possible_ends)
 	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
-	SLEEP_CHECK_DEATH(15)
+	SLEEP_CHECK_DEATH(8)
 	. = ..()
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/Life()
