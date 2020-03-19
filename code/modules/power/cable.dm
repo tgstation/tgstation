@@ -17,7 +17,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	icon = 'icons/obj/power_cond/layer_cable.dmi'
 	icon_state = "l2-1-2-4-8-node"
 	color = "yellow"
-	level = 1 //is underfloor
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
@@ -41,11 +40,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
 
-	var/turf/T = get_turf(src)			// hide if turf is not intact
-	if(level==1)
-		hide(T.intact)
 	GLOB.cable_list += src //add it to the global cable list
 	connect_wire()
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 /obj/structure/cable/proc/connect_wire(clear_before_updating = FALSE)
 	var/under_thing = NONE
@@ -82,7 +80,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 						continue
 		var/inverse = turn(check_dir, 180)
 		for(var/obj/structure/cable/C in TB)
-			if(C.cable_layer == cable_layer)
+			if(C.cable_layer & cable_layer)
 				linked_dirs |= check_dir
 				C.linked_dirs |= inverse
 				C.update_icon()
@@ -96,7 +94,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(linked_dirs & check_dir)
 			var/TB = get_step(loc, check_dir)
 			for(var/obj/structure/cable/C in TB)
-				if(cable_layer == C.cable_layer)
+				if(cable_layer & C.cable_layer)
 					C.linked_dirs &= ~inverse
 					C.update_icon()
 
@@ -115,15 +113,9 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // General procedures
 ///////////////////////////////////
 
-//If underfloor, hide the cable
-/obj/structure/cable/hide(i)
-	if(level == 1 && isturf(loc))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
-
 /obj/structure/cable/update_icon_state()
 	if(!linked_dirs)
-		icon_state = "[cable_layer]-noconnection"
+		icon_state = "l[cable_layer]-noconnection"
 	else
 		var/list/dir_icon_list = list()
 		for(var/check_dir in GLOB.cardinals)
@@ -140,7 +132,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 					if(P.should_have_node())
 						dir_string = "[dir_string]-node"
 						break
-		dir_string = "[cable_layer]-[dir_string]"
+		dir_string = "l[cable_layer]-[dir_string]"
 		icon_state = dir_string
 
 
@@ -250,7 +242,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(src == C)
 			continue
 
-		if(cable_layer != C.cable_layer)
+		if(!(cable_layer & C.cable_layer))
 			continue
 
 		if(C.linked_dirs & inverse_dir) //we've got a matching cable in the neighbor turf
@@ -314,7 +306,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		if(linked_dirs & check_dir)
 			T = get_step(src, check_dir)
 			for(var/obj/structure/cable/C in T)
-				if(cable_layer == C.cable_layer)
+				if(cable_layer & C.cable_layer)
 					. += C
 
 /obj/structure/cable/proc/get_machine_connections(powernetless_only)
@@ -434,6 +426,8 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	return TRUE
 
 /obj/item/stack/cable_coil/CtrlClick(mob/living/user)
+	if(loc!=user)
+		return ..()
 	if(!user)
 		return
 	var/list/layer_list = list(
@@ -560,7 +554,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	desc = "A bridge to connect different cable layers, or link terminals to incompatible cable layers."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cable_bridge"
-	level = 1 //is underfloor
 	layer = WIRE_LAYER + 0.02 //Above all the cables but below terminals
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS

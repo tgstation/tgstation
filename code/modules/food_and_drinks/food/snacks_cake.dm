@@ -206,6 +206,8 @@
 
 /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy/attack(mob/living/M, mob/living/user)
 	. = ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && M != user) //Prevents pacifists from attacking others directly
+		return
 	energy_bite(M, user)
 
 /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy/microwave_act(obj/machinery/microwave/M) //super sekriter club
@@ -229,6 +231,8 @@
 
 /obj/item/reagent_containers/food/snacks/cakeslice/birthday/energy/attack(mob/living/M, mob/living/user)
 	. = ..()
+	if(HAS_TRAIT(user, TRAIT_PACIFISM) && M != user) //Prevents pacifists from attacking others directly
+		return
 	energy_bite(M, user)
 
 /obj/item/reagent_containers/food/snacks/store/cake/apple

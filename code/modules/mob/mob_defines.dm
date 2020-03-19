@@ -68,9 +68,6 @@
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
-	/// can this mob move freely in space (should be a trait)
-	var/spacewalk = FALSE
-
 	/**
 	  * back up of the real name during admin possession
 	  *
@@ -106,9 +103,9 @@
 	/// The last known IP of the client who was in this mob
 	var/lastKnownIP = null
 
-	/// movable atoms buckled to this mob
-	var/atom/movable/buckled = null//Living
 	/// movable atom we are buckled to
+	var/atom/movable/buckled = null//Living
+	/// movable atoms buckled to this mob
 	var/atom/movable/buckling
 
 	//Hands

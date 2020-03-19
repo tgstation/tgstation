@@ -15,15 +15,22 @@
 
 /obj/structure/altar_of_gods/examine(mob/user)
 	. = ..()
-	if(!isliving(user))
+	var/can_i_see = FALSE
+	if(isobserver(user))
+		can_i_see = TRUE
+	else if(isliving(user))
+		var/mob/living/L = user
+		if(L.mind?.holy_role)
+			can_i_see = TRUE
+
+	if(!can_i_see || !sect_to_altar)
 		return
-	var/mob/living/L = user
-	if(L.mind?.holy_role && sect_to_altar)
-		. += "<span class='notice'>The sect currently has [round(sect_to_altar.favor)] with [GLOB.deity].</span>"
-		if(!sect_to_altar.rites_list)
-			return
-		. += "List of available Rites:"
-		. += sect_to_altar.rites_list
+
+	. += "<span class='notice'>The sect currently has [round(sect_to_altar.favor)] favor with [GLOB.deity].</span>"
+	if(!sect_to_altar.rites_list)
+		return
+	. += "List of available Rites:"
+	. += sect_to_altar.rites_list
 
 
 /obj/structure/altar_of_gods/Initialize(mapload)
@@ -68,12 +75,12 @@
 			to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
 			return
 		var/selection2type = sect_to_altar.rites_list[rite_select]
-		performing_rite = new selection2type(src, src)
+		performing_rite = new selection2type(src)
 		if(!performing_rite.perform_rite(user, src))
 			QDEL_NULL(performing_rite)
 		else
 			performing_rite.invoke_effect(user, src)
-			sect_to_altar.adjust_favor(performing_rite.favor_cost*-1)
+			sect_to_altar.adjust_favor(-performing_rite.favor_cost)
 			QDEL_NULL(performing_rite)
 		return
 
