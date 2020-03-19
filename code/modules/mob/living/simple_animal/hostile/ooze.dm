@@ -40,7 +40,7 @@
 		return ..()
 	eat_atom(I)
 
-/mob/living/simple_animal/hostile/ooze/AttackingTarget(var/atom/A)
+/mob/living/simple_animal/hostile/ooze/AttackingTarget(atom/A)
 	. = ..()
 	if(!check_edible(A))
 		return ..()
