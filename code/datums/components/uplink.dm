@@ -20,7 +20,6 @@
 	var/datum/game_mode/gamemode
 	var/datum/uplink_purchase_log/purchase_log
 	var/list/uplink_items
-	var/hidden_crystals = 0
 	var/unlock_note
 	var/unlock_code
 	var/failsafe_code
@@ -195,8 +194,6 @@
 		if("lock")
 			active = FALSE
 			locked = TRUE
-			telecrystals += hidden_crystals
-			hidden_crystals = 0
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
