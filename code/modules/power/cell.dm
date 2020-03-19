@@ -20,7 +20,6 @@
 	var/self_recharge = 0 //does it self recharge, over time, or not?
 	var/ratingdesc = TRUE
 	var/grown_battery = FALSE // If it's a grown that acts as a battery, add a wire overlay to it.
-	var/drain_stop = 0 //cooldown for ethereal draining
 
 /obj/item/stock_parts/cell/get_cell()
 	return src
@@ -150,8 +149,11 @@
 					corrupt()
 
 /obj/item/stock_parts/cell/attack_self(mob/user)
-	if((isethereal(user)) && (drain_stop < world.time))
+	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
+		var/datum/species/ethereal/E = H.dna.species
+		if(E.drain_stop < world.time)
+			return
 		if(charge < 100)
 			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
 			return
@@ -160,7 +162,7 @@
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return
 		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
-		drain_stop = world.time + 20
+		E.drain_stop = world.time + 20
 		if(do_after(user, 20, target = src))
 			if((charge < 100) || (stomach.crystal_charge > 146))
 				return
