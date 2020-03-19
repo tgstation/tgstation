@@ -581,7 +581,6 @@
 		/obj/item/cautery,
 		/obj/item/surgicaldrill,
 		/obj/item/scalpel,
-		/obj/item/organ_storage,
 		/obj/item/melee/transforming/energy/sword/cyborg/saw,
 		/obj/item/holobed_projector/robot, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
 		/obj/item/crowbar/cyborg,
@@ -591,8 +590,8 @@
 		/obj/item/gun/medbeam,
 		/obj/item/borg/cyborghug/medical, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
 		/obj/item/borg/lollipop, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
-		/obj/item/borg_chameleon //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
-		)
+		/obj/item/borg_chameleon //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020,
+		/obj/item/organ_storage)
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
