@@ -1090,7 +1090,11 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/irishcarbomb
 	name = "Irish Car Bomb"
+<<<<<<< HEAD
+	description = "Mmm, tastes like the free Irish state."
+=======
 	description = "Mmm, tastes like Anger."
+>>>>>>> BindyJohalEightPR
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 25
 	quality = DRINK_GOOD
