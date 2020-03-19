@@ -8,14 +8,14 @@ export const AutomatedAnnouncement = props => {
     <Fragment>
       <Section
         title="Arrival Announcement"
-        buttons=<Button
-          icon="power-off"
-          selected={data.arrivalToggle}
-          onClick={() => {
-            return act('ArrivalToggle');
-          }}
-          content={data.arrivalToggle ? "On" : "Off"}
-        />>
+        buttons={(
+          <Button
+            icon="power-off"
+            selected={data.arrivalToggle}
+            onClick={() => act('ArrivalToggle')}
+            content={data.arrivalToggle ? "On" : "Off"}
+          />
+        )}>
         <LabeledList>
           <LabeledList.Item label="Message">
             <Button content={data.arrival}
@@ -25,14 +25,14 @@ export const AutomatedAnnouncement = props => {
       </Section>
       <Section
         title="Departmental Head Announcement"
-        buttons=<Button
-          icon="power-off"
-          selected={data.newheadToggle}
-          onClick={() => {
-            return act('NewheadToggle');
-          }}
-          content={data.newheadToggle ? "On" : "Off"}
-        />>
+        buttons={(
+          <Button
+            icon="power-off"
+            selected={data.newheadToggle}
+            onClick={() => act('NewheadToggle')}
+            content={data.newheadToggle ? "On" : "Off"}
+          />
+        )}>
         <LabeledList>
           <LabeledList.Item label="Message">
             <Button content={data.newhead}
