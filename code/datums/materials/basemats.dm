@@ -196,6 +196,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "Flexible, durable, but flamable. Hard to come across in space."
 	color = "#bb8e53"
 	strength_modifier = 0.5
+	sheet_type = /obj/item/stack/sheet/mineral/wood
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	value_per_unit = 0.06
 	beauty_modifier = 0.1

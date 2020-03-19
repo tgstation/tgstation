@@ -11011,11 +11011,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/button/flasher{
-	id = "holdingflash";
-	pixel_y = -26;
-	req_access_txt = "1"
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "axp" = (
