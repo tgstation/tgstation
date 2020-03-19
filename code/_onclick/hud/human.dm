@@ -82,7 +82,6 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
-	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 	var/widescreen_layout = FALSE
 	if(owner.client?.prefs?.widescreenpref)
@@ -314,6 +313,10 @@
 	internals = new /obj/screen/internals()
 	internals.hud = src
 	infodisplay += internals
+
+	spacesuit = new /obj/screen/spacesuit
+	spacesuit.hud = src
+	infodisplay += spacesuit
 
 	healths = new /obj/screen/healths()
 	healths.hud = src

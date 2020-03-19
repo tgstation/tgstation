@@ -21,7 +21,7 @@
 	if(..())
 		return TRUE
 	var/obj/machinery/bsa/full/B = locate()
-	if(B && !B.stat)
+	if(B && !B.machine_stat)
 		return TRUE
 	return FALSE
 
@@ -142,15 +142,15 @@
 		if(WEST)
 			return locate(x - 7,y,z)
 		if(EAST)
-			return locate(x + 4,y,z)
+			return locate(x + 7,y,z)
 	return get_turf(src)
 
 /obj/machinery/bsa/full/proc/get_back_turf()
 	switch(dir)
 		if(WEST)
-			return locate(x + 4,y,z)
+			return locate(x + 5,y,z)
 		if(EAST)
-			return locate(x - 6,y,z)
+			return locate(x - 5,y,z)
 	return get_turf(src)
 
 /obj/machinery/bsa/full/proc/get_target_turf()
@@ -167,11 +167,12 @@
 	switch(cannon_direction)
 		if(WEST)
 			setDir(WEST)
-			pixel_x = -192
 			top_layer.icon_state = "top_west"
 			icon_state = "cannon_west"
 		if(EAST)
 			setDir(EAST)
+			pixel_x = -128
+			bound_x = -128
 			top_layer.icon_state = "top_east"
 			icon_state = "cannon_east"
 	add_overlay(top_layer)
@@ -305,7 +306,7 @@
 		return get_turf(G.parent)
 
 /obj/machinery/computer/bsa_control/proc/fire(mob/user)
-	if(cannon.stat)
+	if(cannon.machine_stat)
 		notice = "Cannon unpowered!"
 		return
 	notice = null

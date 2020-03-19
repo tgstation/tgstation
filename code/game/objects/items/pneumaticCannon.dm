@@ -174,7 +174,7 @@
 	fire_items(T, user)
 	if(pressureSetting >= 3 && iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!")
+		C.visible_message("<span class='warning'>[C] is thrown down by the force of the cannon!</span>", "<span class='userdanger'>[src] slams into your shoulder, knocking you down!</span>")
 		C.Paralyze(60)
 
 /obj/item/pneumatic_cannon/proc/fire_items(turf/target, mob/user)
@@ -212,8 +212,8 @@
 		return target
 	var/x_o = (target.x - starting.x)
 	var/y_o = (target.y - starting.y)
-	var/new_x = CLAMP((starting.x + (x_o * range_multiplier)), 0, world.maxx)
-	var/new_y = CLAMP((starting.y + (y_o * range_multiplier)), 0, world.maxy)
+	var/new_x = clamp((starting.x + (x_o * range_multiplier)), 0, world.maxx)
+	var/new_y = clamp((starting.y + (y_o * range_multiplier)), 0, world.maxy)
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 

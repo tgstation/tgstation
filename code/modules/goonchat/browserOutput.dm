@@ -66,8 +66,8 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	// Arguments are in the form "param[paramname]=thing"
 	var/list/params = list()
 	for(var/key in href_list)
-		if(length(key) > 7 && findtext(key, "param")) // 7 is the amount of characters in the basic param key template.
-			var/param_name = copytext(key, 7, -1)
+		if(length_char(key) > 7 && findtext(key, "param")) // 7 is the amount of characters in the basic param key template.
+			var/param_name = copytext_char(key, 7, -1)
 			var/item       = href_list[key]
 
 			params[param_name] = item
@@ -165,7 +165,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 
 /datum/chatOutput/proc/setMusicVolume(volume = "")
 	if(volume)
-		adminMusicVolume = CLAMP(text2num(volume), 0, 100)
+		adminMusicVolume = clamp(text2num(volume), 0, 100)
 
 //Sends client connection details to the chat to handle and save
 /datum/chatOutput/proc/sendClientData()

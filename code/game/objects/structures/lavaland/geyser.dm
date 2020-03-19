@@ -27,8 +27,8 @@
 		add_overlay(I)
 
 /obj/structure/geyser/process()
-	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
-		reagents.add_reagent(reagent_id, potency)						   //processes
+	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive
+		reagents.add_reagent(reagent_id, potency)
 
 /obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
 	if(!_reinforced)
@@ -39,12 +39,12 @@
 		return
 
 	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!</span>")
-	if(do_after(user, 50*P.plunge_mod, target = src) && !activated)
+	if(do_after(user, 50 * P.plunge_mod, target = src) && !activated)
 		start_chemming()
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/fuel/oil = 2, /datum/reagent/clf3 = 1) //fucking add more
+	var/list/options = list(/datum/reagent/clf3 = 10, /datum/reagent/water/hollowwater = 10, /datum/reagent/medicine/omnizine/protozine = 6, /datum/reagent/wittel = 1)
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
@@ -72,3 +72,5 @@
 
 	reinforced = TRUE
 	plunge_mod = 0.8
+
+	custom_premium_price = 1200

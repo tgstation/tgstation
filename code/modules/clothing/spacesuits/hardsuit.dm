@@ -1,3 +1,6 @@
+/// How much damage you take from an emp when wearing a hardsuit
+#define HARDSUIT_EMP_BURN 2 // a very orange number
+
 	//Baseline hardsuits
 /obj/item/clothing/head/helmet/space/hardsuit
 	name = "hardsuit helmet"
@@ -101,7 +104,7 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	siemens_coefficient = 0
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
-	actions_types = list(/datum/action/item_action/toggle_helmet)
+	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle_helmet)
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit
 	var/obj/item/tank/jetpack/suit/jetpack = null
 	var/hardsuit_type
@@ -116,6 +119,11 @@
 	user.changeNext_move(CLICK_CD_MELEE)
 	..()
 
+/obj/item/clothing/suit/space/hardsuit/examine(mob/user)
+	. = ..()
+	if(!helmet && helmettype)
+		. += "<span class='notice'> The helmet on [src] seems to be malfunctioning. It's light bulb needs to be replaced.</span>"
+
 /obj/item/clothing/suit/space/hardsuit/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/tank/jetpack/suit))
 		if(jetpack)
@@ -129,7 +137,7 @@
 			jetpack = I
 			to_chat(user, "<span class='notice'>You successfully install the jetpack into [src].</span>")
 			return
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
+	else if(!cell_cover_open && I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!jetpack)
 			to_chat(user, "<span class='warning'>[src] has no jetpack installed.</span>")
 			return
@@ -142,8 +150,23 @@
 		jetpack = null
 		to_chat(user, "<span class='notice'>You successfully remove the jetpack from [src].</span>")
 		return
+	else if(istype(I, /obj/item/light) && helmettype)
+		if(src == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
+			to_chat(user, "<span class='warning'>You cannot replace the bulb in the helmet of [src] while wearing it.</span>")
+			return
+		if(helmet)
+			to_chat(user, "<span class='warning'>The helmet of [src] does not require a new bulb.</span>")
+			return
+		var/obj/item/light/L = I
+		if(L.status)
+			to_chat(user, "<span class='warning'>This bulb is too damaged to use as a replacement!</span>")
+			return
+		if(do_after(user, 50, 1, src))
+			qdel(I)
+			helmet = new helmettype(src)
+			to_chat(user, "<span class='notice'>You have successfully repaired [src]'s helmet.</span>")
+			new /obj/item/light/bulb/broken(drop_location())
 	return ..()
-
 
 /obj/item/clothing/suit/space/hardsuit/equipped(mob/user, slot)
 	..()
@@ -163,6 +186,18 @@
 /obj/item/clothing/suit/space/hardsuit/item_action_slot_check(slot)
 	if(slot == ITEM_SLOT_OCLOTHING) //we only give the mob the ability to toggle the helmet if he's wearing the hardsuit.
 		return 1
+
+/// Burn the person inside the hard suit just a little, the suit got really hot for a moment
+/obj/item/clothing/suit/space/emp_act(severity)
+	. = ..()
+	var/mob/living/carbon/human/user = src.loc
+	if(istype(user))
+		user.apply_damage(HARDSUIT_EMP_BURN, BURN, spread_damage=TRUE)
+		to_chat(user, "<span class='warning'>You feel \the [src] heat up from the EMP burning you slightly.</span>")
+
+		// Chance to scream
+		if (user.stat < UNCONSCIOUS && prob(10))
+			user.emote("scream")
 
 	//Engineering
 /obj/item/clothing/head/helmet/space/hardsuit/engine
@@ -226,6 +261,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/engine/elite
 	jetpack = /obj/item/tank/jetpack/suit
+	cell = /obj/item/stock_parts/cell/super
 
 	//Mining hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/mining
@@ -276,7 +312,7 @@
 	visor_flags_inv = HIDEMASK|HIDEEYES|HIDEFACE|HIDEFACIALHAIR
 	visor_flags = STOPSPRESSUREDAMAGE
 
-/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon()
+/obj/item/clothing/head/helmet/space/hardsuit/syndi/update_icon_state()
 	icon_state = "hardsuit[on]-[hardsuit_type]"
 
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/Initialize()
@@ -352,6 +388,7 @@
 	allowed = list(/obj/item/gun, /obj/item/ammo_box,/obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/melee/transforming/energy/sword/saber, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi
 	jetpack = /obj/item/tank/jetpack/suit
+	cell = /obj/item/stock_parts/cell/hyper
 
 //Elite Syndie suit
 /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite
@@ -382,6 +419,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	cell = /obj/item/stock_parts/cell/bluespace
 
 /obj/item/clothing/suit/space/hardsuit/syndi/elite/debug
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/syndi/elite/debug
@@ -432,6 +470,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/wizard
+	cell = /obj/item/stock_parts/cell/hyper
 
 /obj/item/clothing/suit/space/hardsuit/wizard/Initialize()
 	. = ..()
@@ -508,8 +547,7 @@
 	/obj/item/hand_tele, /obj/item/aicard)
 	armor = list("melee" = 30, "bullet" = 5, "laser" = 10, "energy" = 20, "bomb" = 100, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 80)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/rd
-
-
+	cell = /obj/item/stock_parts/cell/super
 
 	//Security hardsuit
 /obj/item/clothing/head/helmet/space/hardsuit/security
@@ -549,6 +587,7 @@
 	armor = list("melee" = 45, "bullet" = 25, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 100, "rad" = 50, "fire" = 95, "acid" = 95)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/security/hos
 	jetpack = /obj/item/tank/jetpack/suit
+	cell = /obj/item/stock_parts/cell/super
 
 	//SWAT MKII
 /obj/item/clothing/head/helmet/space/hardsuit/swat
@@ -576,6 +615,7 @@
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT //this needed to be added a long fucking time ago
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat
 
+// SWAT and Captain get EMP Protection
 /obj/item/clothing/suit/space/hardsuit/swat/Initialize()
 	. = ..()
 	allowed = GLOB.security_hardsuit_allowed
@@ -593,6 +633,7 @@
 	icon_state = "caparmor"
 	item_state = "capspacesuit"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/swat/captain
+	cell = /obj/item/stock_parts/cell/super
 
 	//Clown
 /obj/item/clothing/head/helmet/space/hardsuit/clown
@@ -705,8 +746,6 @@
 		s.start()
 		owner.visible_message("<span class='danger'>[owner]'s shields deflect [attack_text] in a shower of sparks!</span>")
 		current_charges--
-		if(recharge_rate)
-			START_PROCESSING(SSobj, src)
 		if(current_charges <= 0)
 			owner.visible_message("<span class='warning'>[owner]'s shield overloads!</span>")
 			shield_state = "broken"
@@ -716,16 +755,15 @@
 
 
 /obj/item/clothing/suit/space/hardsuit/shielded/Destroy()
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
-	if(world.time > recharge_cooldown && current_charges < max_charges)
-		current_charges = CLAMP((current_charges + recharge_rate), 0, max_charges)
+	. = ..()
+	if(recharge_rate && world.time > recharge_cooldown && current_charges < max_charges)
+		current_charges = clamp((current_charges + recharge_rate), 0, max_charges)
 		playsound(loc, 'sound/magic/charge.ogg', 50, TRUE)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, TRUE)
-			STOP_PROCESSING(SSobj, src)
 		shield_state = "[shield_on]"
 		if(ishuman(loc))
 			var/mob/living/carbon/human/C = loc
@@ -866,3 +904,5 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
+
+#undef HARDSUIT_EMP_BURN

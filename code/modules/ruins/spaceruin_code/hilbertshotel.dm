@@ -44,6 +44,10 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/hilbertshotel/proc/promptAndCheckIn(mob/user)
     var/chosenRoomNumber = input(user, "What number room will you be checking into?", "Room Number") as null|num
+    var/area/currentArea = get_area(src)
+    if(currentArea.type == /area/ruin/powered/kinggoat_arena)
+        to_chat(user, "<span class='warning'>[src] fizzles uselessly.</span>")
+        return
     if(!chosenRoomNumber)
         return
     if(chosenRoomNumber > SHORT_REAL_LIMIT)

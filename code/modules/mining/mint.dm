@@ -31,7 +31,7 @@
 		/datum/material/plastic,
 		/datum/material/runite
 	), MINERAL_MATERIAL_AMOUNT * 75, FALSE, /obj/item/stack)
-	chosen = getmaterialref(chosen)
+	chosen = SSmaterials.GetMaterialRef(chosen)
 
 
 /obj/machinery/mineral/mint/process()

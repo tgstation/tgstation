@@ -145,14 +145,14 @@
 
 /mob/living/simple_animal/slime/on_reagent_change()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE)
+	remove_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod)
 	var/amount = 0
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine)) // morphine slows slimes down
 		amount = 2
 	if(reagents.has_reagent(/datum/reagent/consumable/frostoil)) // Frostoil also makes them move VEEERRYYYYY slow
 		amount = 5
 	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_REAGENTMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_reagentmod, multiplicative_slowdown = amount)
 
 /mob/living/simple_animal/slime/updatehealth()
 	. = ..()
@@ -163,38 +163,35 @@
 			mod += (health_deficiency / 25)
 		if(health <= 0)
 			mod += 2
-	add_movespeed_modifier(MOVESPEED_ID_SLIME_HEALTHMOD, TRUE, 100, multiplicative_slowdown = mod, override = TRUE)
+	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod, multiplicative_slowdown = mod)
 	update_health_hud()
 
 /mob/living/simple_animal/slime/update_health_hud()
-	if(hud_used)
-		var/severity = 0
-		var/healthpercent = (health/maxHealth) * 100
+	var/severity = 0
+	var/healthpercent = (health/maxHealth) * 100
+	if(hud_used?.healthdoll)
 		switch(healthpercent)
 			if(100 to INFINITY)
-				hud_used.healths.icon_state = "slime_health0"
+				severity = 0
 			if(80 to 100)
-				hud_used.healths.icon_state = "slime_health1"
 				severity = 1
 			if(60 to 80)
-				hud_used.healths.icon_state = "slime_health2"
 				severity = 2
 			if(40 to 60)
-				hud_used.healths.icon_state = "slime_health3"
 				severity = 3
 			if(20 to 40)
-				hud_used.healths.icon_state = "slime_health4"
 				severity = 4
-			if(1 to 20)
-				hud_used.healths.icon_state = "slime_health5"
+			if(10 to 20)
 				severity = 5
-			else
-				hud_used.healths.icon_state = "slime_health7"
+			if(1 to 20)
 				severity = 6
-		if(severity > 0)
-			overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
-		else
-			clear_fullscreen("brute")
+			else
+				severity = 7
+		hud_used.healthdoll.icon_state = "slime_health[severity]"
+	if(severity > 0)
+		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
+	else
+		clear_fullscreen("brute")
 
 /mob/living/simple_animal/slime/adjust_bodytemperature()
 	. = ..()
@@ -204,7 +201,7 @@
 	else if(bodytemperature < 283.222)
 		mod = ((283.222 - bodytemperature) / 10) * 1.75
 	if(mod)
-		add_movespeed_modifier(MOVESPEED_ID_SLIME_TEMPMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = mod)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_tempmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/ObjBump(obj/O)
 	if(!client && powerlevel > 0)

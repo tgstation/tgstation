@@ -417,7 +417,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 //Manual loading of away missions.
 /client/proc/admin_away()
 	set name = "Load Away Mission"
-	set category = "Fun"
+	set category = "Admin - Events"
 
 	if(!holder ||!check_rights(R_FUN))
 		return
@@ -523,6 +523,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 
 //DO NOT CALL THIS PROC DIRECTLY, CALL wipe_reservations().
 /datum/controller/subsystem/mapping/proc/do_wipe_turf_reservations()
+	PRIVATE_PROC(TRUE)
 	UNTIL(initialized)							//This proc is for AFTER init, before init turf reservations won't even exist and using this will likely break things.
 	for(var/i in turf_reservations)
 		var/datum/turf_reservation/TR = i

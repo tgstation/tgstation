@@ -35,7 +35,10 @@
 #define TELEPATHY	/datum/mutation/human/telepathy
 #define FIREBREATH	/datum/mutation/human/firebreath
 #define VOID		/datum/mutation/human/void
+#define TONGUESPIKE	/datum/mutation/human/tonguespike
+#define TONGUESPIKECHEM		/datum/mutation/human/tongue_spike/chem
 #define STRONG    	/datum/mutation/human/strong
+#define STIMMED		/datum/mutation/human/stimmed
 #define FIRESWEAT	/datum/mutation/human/fire
 #define THERMAL		/datum/mutation/human/thermal
 #define ANTENNA		/datum/mutation/human/antenna
@@ -50,6 +53,9 @@
 #define EXTRASTUN	/datum/mutation/human/extrastun
 #define GELADIKINESIS		/datum/mutation/human/geladikinesis
 #define CRYOKINESIS /datum/mutation/human/cryokinesis
+#define SPIDER_WEB	/datum/mutation/human/webbing
+#define MARTYRDOM	/datum/mutation/human/martyrdom
+#define HARS		/datum/mutation/human/headless
 
 #define UI_CHANGED "ui changed"
 #define UE_CHANGED "ue changed"
@@ -98,10 +104,6 @@
 #define TR_KEEPORGANS	(1<<8)
 #define TR_KEEPSTUNS	(1<<9)
 #define TR_KEEPREAGENTS	(1<<10)
-
-
-#define CLONER_FRESH_CLONE "fresh"
-#define CLONER_MATURE_CLONE "mature"
 
 //species traits for mutantraces
 #define MUTCOLORS		1

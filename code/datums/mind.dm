@@ -54,7 +54,7 @@
 	var/damnation_type = 0
 	var/datum/mind/soulOwner //who owns the soul.  Under normal circumstances, this will point to src
 	var/hasSoul = TRUE // If false, renders the character unable to sell their soul.
-	var/isholy = FALSE //is this person a chaplain or admin role allowed to use bibles
+	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
 	var/mob/living/enslaved_to //If this mind's master is another mob (i.e. adamantine golems)
 	var/datum/language_holder/language_holder
@@ -149,9 +149,9 @@
 	if(silent)
 		return
 	if(known_skills[S] >= old_level)
-		to_chat(current, "<span class='nicegreen'>I feel like I've become more proficient at [S.name]!</span>")
+		S.level_gained(src, known_skills[S], old_level)
 	else
-		to_chat(current, "<span class='warning'>I feel like I've become worse at [S.name]!</span>")
+		S.level_lost(src, known_skills[S], old_level)
 
 ///Gets the skill's singleton and returns the result of its get_skill_modifier
 /datum/mind/proc/get_skill_modifier(skill, modifier)
@@ -183,9 +183,9 @@
 	last_death = world.time
 
 /datum/mind/proc/store_memory(new_text)
-	var/newlength = length(memory) + length(new_text)
+	var/newlength = length_char(memory) + length_char(new_text)
 	if (newlength > MAX_MESSAGE_LEN * 100)
-		memory = copytext(memory, -newlength-MAX_MESSAGE_LEN * 100)
+		memory = copytext_char(memory, -newlength-MAX_MESSAGE_LEN * 100)
 	memory += "[new_text]<BR>"
 
 /datum/mind/proc/wipe_memory()
@@ -394,7 +394,7 @@
 
 	if(creator.mind.special_role)
 		message_admins("[ADMIN_LOOKUPFLW(current)] has been created by [ADMIN_LOOKUPFLW(creator)], an antagonist.")
-		to_chat(current, "<span class='userdanger'>Despite your creators current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed.</span>")
+		to_chat(current, "<span class='userdanger'>Despite your creator's current allegiances, your true master remains [creator.real_name]. If their loyalties change, so do yours. This will never change unless your creator's body is destroyed.</span>")
 
 /datum/mind/proc/show_memory(mob/recipient, window=1)
 	if(!recipient)
@@ -447,7 +447,7 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = copytext(sanitize(input("Write new memory", "Memory", memory) as null|message),1,MAX_MESSAGE_LEN)
+		var/new_memo = stripped_multiline_input(usr, "Write new memory", "Memory", memory, MAX_MESSAGE_LEN)
 		if (isnull(new_memo))
 			return
 		memory = new_memo

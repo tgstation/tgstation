@@ -7,7 +7,7 @@ All the important duct code:
 	name = "fluid duct"
 	icon = 'icons/obj/plumbing/fluid_ducts.dmi'
 	icon_state = "nduct"
-	level = 1
+
 	///bitfield with the directions we're connected in
 	var/connects
 	///set to TRUE to disable smart duct behaviour
@@ -36,14 +36,16 @@ All the important duct code:
 	///wheter we just unanchored or drop whatever is in the variable. either is safe
 	var/drop_on_wrench = /obj/item/stack/ducts
 
-/obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct, layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
+/obj/machinery/duct/Initialize(mapload, no_anchor, color_of_duct = "#ffffff", layer_of_duct = DUCT_LAYER_DEFAULT, force_connects)
 	. = ..()
+
 	if(no_anchor)
 		active = FALSE
 		anchored = FALSE
 	else if(!can_anchor())
 		qdel(src)
 		CRASH("Overlapping ducts detected")
+
 	if(force_connects)
 		connects = force_connects //skip change_connects() because we're still initializing and we need to set our connects at one point
 	if(!lock_layers)
@@ -52,17 +54,22 @@ All the important duct code:
 		duct_color = color_of_duct
 	if(duct_color)
 		add_atom_colour(duct_color, FIXED_COLOUR_PRIORITY)
+
 	handle_layer()
+
 	for(var/obj/machinery/duct/D in loc)
 		if(D == src)
 			continue
 		if(D.duct_layer & duct_layer)
 			disconnect_duct()
+
 	if(active)
 		attempt_connect()
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+
 ///start looking around us for stuff to connect to
 /obj/machinery/duct/proc/attempt_connect()
-	reset_connects() //All connects are gathered here again eitherway, we might aswell reset it so they properly update when reconnecting
 
 	for(var/atom/movable/AM in loc)
 		var/datum/component/plumbing/P = AM.GetComponent(/datum/component/plumbing)
@@ -76,6 +83,7 @@ All the important duct code:
 			if(connect_network(AM, D))
 				add_connects(D)
 	update_icon()
+
 ///see if whatever we found can be connected to
 /obj/machinery/duct/proc/connect_network(atom/movable/AM, direction, ignore_color)
 	if(istype(AM, /obj/machinery/duct))
@@ -85,6 +93,7 @@ All the important duct code:
 	if(!plumber)
 		return
 	return connect_plumber(plumber, direction)
+
 ///connect to a duct
 /obj/machinery/duct/proc/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	var/opposite_dir = turn(direction, 180)
@@ -124,6 +133,7 @@ All the important duct code:
 	D.attempt_connect()
 
 	return TRUE
+
 ///connect to a plumbing object
 /obj/machinery/duct/proc/connect_plumber(datum/component/plumbing/P, direction)
 	var/opposite_dir = turn(direction, 180)
@@ -140,6 +150,7 @@ All the important duct code:
 		if(duct.add_plumber(P, opposite_dir))
 			neighbours[P.parent] = direction
 			return TRUE
+
 ///we disconnect ourself from our neighbours. we also destroy our ductnet and tell our neighbours to make a new one
 /obj/machinery/duct/proc/disconnect_duct()
 	anchored = FALSE
@@ -190,25 +201,35 @@ All the important duct code:
 /obj/machinery/duct/proc/create_duct()
 	duct = new()
 	duct.add_duct(src)
+
 ///add a duct as neighbour. this means we're connected and will connect again if we ever regenerate
 /obj/machinery/duct/proc/add_neighbour(obj/machinery/duct/D, direction)
 	if(!(D in neighbours))
 		neighbours[D] = direction
 	if(!(src in D.neighbours))
 		D.neighbours[src] = turn(direction, 180)
+
 ///remove all our neighbours, and remove us from our neighbours aswell
 /obj/machinery/duct/proc/lose_neighbours()
 	for(var/obj/machinery/duct/D in neighbours)
 		D.neighbours.Remove(src)
 	neighbours = list()
+
 ///add a connect direction
 /obj/machinery/duct/proc/add_connects(new_connects) //make this a define to cut proc calls?
 	if(!lock_connects)
 		connects |= new_connects
+
+///remove a connect direction
+/obj/machinery/duct/proc/remove_connects(dead_connects)
+	if(!lock_connects)
+		connects &= ~dead_connects
+
 ///remove our connects
 /obj/machinery/duct/proc/reset_connects()
 	if(!lock_connects)
 		connects = 0
+
 ///get a list of the ducts we can connect to if we are dumb
 /obj/machinery/duct/proc/get_adjacent_ducts()
 	var/list/adjacents = list()
@@ -219,7 +240,7 @@ All the important duct code:
 					adjacents += D
 	return adjacents
 
-/obj/machinery/duct/update_icon() //setting connects isnt a parameter because sometimes we make more than one change, overwrite it completely or just add it to the bitfield
+/obj/machinery/duct/update_icon_state()
 	var/temp_icon = initial(icon_state)
 	for(var/D in GLOB.cardinals)
 		if(D & connects)
@@ -232,6 +253,7 @@ All the important duct code:
 			if(D == WEST)
 				temp_icon += "_w"
 	icon_state = temp_icon
+
 ///update the layer we are on
 /obj/machinery/duct/proc/handle_layer()
 	var/offset
@@ -274,7 +296,7 @@ All the important duct code:
 	if(!T)
 		T = get_turf(src)
 	for(var/obj/machinery/duct/D in T)
-		if(!anchored)
+		if(!anchored || D == src)
 			continue
 		for(var/A in GLOB.cardinals)
 			if(A & connects && A & D.connects)
@@ -310,6 +332,7 @@ All the important duct code:
 	add_neighbour(D, direction)
 	connect_network(D, direction, TRUE)
 	update_icon()
+
 ///has a total of 5 layers and doesnt give a shit about color. its also dumb so doesnt autoconnect.
 /obj/machinery/duct/multilayered
 	name = "duct layer-manifold"
@@ -334,8 +357,9 @@ All the important duct code:
 	. = ..()
 	update_connects()
 
-/obj/machinery/duct/multilayered/update_icon()
-	return
+/obj/machinery/duct/multilayered/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/machinery/duct/multilayered/wrench_act(mob/living/user, obj/item/I)
 	. = ..()

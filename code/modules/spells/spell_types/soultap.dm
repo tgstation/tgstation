@@ -17,7 +17,7 @@
 	action_icon = 'icons/mob/actions/actions_spells.dmi'
 	action_icon_state = "soultap"
 
-/obj/effect/proc_holder/spell/self/tap/cast(mob/living/user = usr)
+/obj/effect/proc_holder/spell/self/tap/cast(list/targets, mob/living/user = usr)
 	if(!user.mind.hasSoul)
 		to_chat(user, "<span class='warning'>You do not possess a soul to tap into!</span>")
 		return

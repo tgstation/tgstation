@@ -79,7 +79,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			title = "Resolved Tickets"
 	if(!l2b)
 		return
-	var/list/dat = list("<html><head><title>[title]</title></head>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[title]</title></head>")
 	dat += "<A href='?_src_=holder;[HrefToken()];ahelp_tickets=[state]'>Refresh</A><br><br>"
 	for(var/I in l2b)
 		var/datum/admin_help/AH = I
@@ -113,10 +113,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //Dissasociate ticket
 /datum/admin_help_tickets/proc/ClientLogout(client/C)
 	if(C.current_ticket)
-		C.current_ticket.AddInteraction("Client disconnected.")
-		SSblackbox.LogAhelp(C.current_ticket.id, "Disconnected", "Client disconnected", C.ckey)
-		C.current_ticket.initiator = null
-		C.current_ticket = null
+		var/datum/admin_help/T = C.current_ticket
+		T.AddInteraction("Client disconnected.")
+		SSblackbox.LogAhelp(T, "Disconnected", "Client disconnected", C.ckey)
+		T.initiator = null
 
 //Get a ticket given a ckey
 /datum/admin_help_tickets/proc/CKey2ActiveTicket(ckey)
@@ -167,7 +167,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 //is_bwoink is TRUE if this ticket was started by an admin PM
 /datum/admin_help/New(msg, client/C, is_bwoink)
 	//clean the input msg
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize(copytext_char(msg, 1, MAX_MESSAGE_LEN))
 	if(!msg || !C || !C.mob)
 		qdel(src)
 		return
@@ -175,7 +175,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	id = ++ticket_counter
 	opened_at = world.time
 
-	name = msg
+	name = copytext_char(msg, 1, 100)
 
 	initiator = C
 	initiator_ckey = initiator.ckey
@@ -198,7 +198,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 		MessageNoRecipient(msg)
 
 		//send it to TGS if nobody is on and tell us how many were on
-		var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [name]")
+		var/admin_number_present = send2tgs_adminless_only(initiator_ckey, "Ticket #[id]: [msg]")
 		log_admin_private("Ticket #[id]: [key_name(initiator)]: [name] - heard by [admin_number_present] non-AFK admins who have +BAN.")
 		if(admin_number_present <= 0)
 			to_chat(C, "<span class='notice'>No active admins are online, your adminhelp was sent through TGS to admins who are available. This may use IRC or Discord.</span>")
@@ -391,7 +391,7 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 //Show the ticket panel
 /datum/admin_help/proc/TicketPanel()
-	var/list/dat = list("<html><head><title>Ticket #[id]</title></head>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Ticket #[id]</title></head>")
 	var/ref_src = "[REF(src)]"
 	dat += "<h4>Admin Help Ticket #[id]: [LinkedReplyName(ref_src)]</h4>"
 	dat += "<b>State: "
@@ -484,10 +484,10 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 
 // Used for methods where input via arg doesn't work
 /client/proc/get_adminhelp()
-	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as text|null
+	var/msg = input(src, "Please describe your problem concisely and an admin will help as soon as they're able.", "Adminhelp contents") as message|null
 	adminhelp(msg)
 
-/client/verb/adminhelp(msg as text)
+/client/verb/adminhelp(msg as message)
 	set category = "Admin"
 	set name = "Adminhelp"
 
@@ -584,19 +584,26 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 	msg2 = replacetext(replacetext(msg2, "\proper", ""), "\improper", "")
 	world.TgsTargetedChatBroadcast("[msg] | [msg2]", TRUE)
 
-/proc/send2otherserver(source,msg,type = "Ahelp")
+//
+/proc/send2otherserver(source,msg,type = "Ahelp",target_servers)
 	var/comms_key = CONFIG_GET(string/comms_key)
 	if(!comms_key)
 		return
+
+	var/our_id = CONFIG_GET(string/cross_comms_name)
 	var/list/message = list()
 	message["message_sender"] = source
 	message["message"] = msg
-	message["source"] = "([CONFIG_GET(string/cross_comms_name)])"
+	message["source"] = "([our_id])"
 	message["key"] = comms_key
 	message += type
 
 	var/list/servers = CONFIG_GET(keyed_list/cross_server)
 	for(var/I in servers)
+		if(I == our_id) //No sending to ourselves
+			continue
+		if(target_servers && !(I in target_servers))
+			continue
 		world.Export("[servers[I]]?[list2params(message)]")
 
 

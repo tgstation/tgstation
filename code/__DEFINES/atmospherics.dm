@@ -124,7 +124,7 @@
 /// Minimum amount of kelvin moved toward 310K per tick. So long as abs(310.15 - bodytemp) is more than 50.
 #define BODYTEMP_AUTORECOVERY_MINIMUM		12
 ///Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
-#define BODYTEMP_COLD_DIVISOR				6
+#define BODYTEMP_COLD_DIVISOR				15
 /// Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
 #define BODYTEMP_HEAT_DIVISOR				15
 /// The maximum number of degrees that your body can cool in 1 tick, due to the environment, when in a cold area.
@@ -146,6 +146,8 @@
 #define SPACE_HELM_MAX_TEMP_PROTECT			1500
 /// what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
 #define SPACE_SUIT_MIN_TEMP_PROTECT			2.0
+/// The min cold protection of a space suit without the heater active
+#define SPACE_SUIT_MIN_TEMP_PROTECT_OFF		72
 #define SPACE_SUIT_MAX_TEMP_PROTECT			1500
 
 /// Cold protection for firesuits

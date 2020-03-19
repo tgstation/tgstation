@@ -36,15 +36,15 @@
 	rogue_types = list(/datum/nanite_program/skin_decay)
 
 /datum/nanite_program/temperature/check_conditions()
-	if(host_mob.bodytemperature > (BODYTEMP_NORMAL - 30) && host_mob.bodytemperature < (BODYTEMP_NORMAL + 30))
+	if(host_mob.bodytemperature > (host_mob.get_body_temp_normal(apply_change=FALSE) - 30) && host_mob.bodytemperature < (host_mob.get_body_temp_normal(apply_change=FALSE) + 30))
 		return FALSE
 	return ..()
 
 /datum/nanite_program/temperature/active_effect()
-	if(host_mob.bodytemperature > BODYTEMP_NORMAL)
-		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, BODYTEMP_NORMAL)
-	else if(host_mob.bodytemperature < (BODYTEMP_NORMAL + 1))
-		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, BODYTEMP_NORMAL)
+	if(host_mob.bodytemperature > host_mob.get_body_temp_normal(apply_change=FALSE))
+		host_mob.adjust_bodytemperature(-40 * TEMPERATURE_DAMAGE_COEFFICIENT, host_mob.get_body_temp_normal(apply_change=FALSE))
+	else if(host_mob.bodytemperature < (host_mob.get_body_temp_normal(apply_change=FALSE) + 1))
+		host_mob.adjust_bodytemperature(40 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, host_mob.get_body_temp_normal(apply_change=FALSE))
 
 /datum/nanite_program/purging
 	name = "Blood Purification"
@@ -223,20 +223,9 @@
 	if(!iscarbon(host_mob)) //nonstandard biology
 		return FALSE
 	var/mob/living/carbon/C = host_mob
-	if(C.suiciding || C.hellbound || HAS_TRAIT(C, TRAIT_HUSK)) //can't revive
-		return FALSE
-	if((world.time - C.timeofdeath) > 1800) //too late
-		return FALSE
-	if((C.getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (C.getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE) || !C.can_be_revived()) //too damaged
-		return FALSE
-	if(!C.getorgan(/obj/item/organ/heart)) //what are we even shocking
-		return FALSE
-	var/obj/item/organ/brain/BR = C.getorgan(/obj/item/organ/brain)
-	if(QDELETED(BR) || BR.brain_death || (BR.organ_flags & ORGAN_FAILING) || BR.suicided)
-		return FALSE
 	if(C.get_ghost())
 		return FALSE
-	return TRUE
+	return C.can_defib()
 
 /datum/nanite_program/defib/proc/zap()
 	var/mob/living/carbon/C = host_mob

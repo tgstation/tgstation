@@ -26,10 +26,8 @@
 /obj/machinery/power/solar/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	panel = new()
-#if DM_VERSION >= 513
 	panel.vis_flags = VIS_INHERIT_ID|VIS_INHERIT_ICON|VIS_INHERIT_PLANE
 	vis_contents += panel
-#endif
 	panel.icon = icon
 	panel.icon_state = "solar_panel"
 	panel.layer = FLY_LAYER
@@ -80,7 +78,7 @@
 /obj/machinery/power/solar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(stat & BROKEN)
+			if(machine_stat & BROKEN)
 				playsound(loc, 'sound/effects/hit_on_shattered_glass.ogg', 60, TRUE)
 			else
 				playsound(loc, 'sound/effects/glasshit.ogg', 90, TRUE)
@@ -100,7 +98,7 @@
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.forceMove(loc)
-				S.give_glass(stat & BROKEN)
+				S.give_glass(machine_stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, TRUE)
 			new /obj/item/shard(src.loc)
@@ -112,13 +110,10 @@
 	var/matrix/turner = matrix()
 	turner.Turn(azimuth_current)
 	panel.transform = turner
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		panel.icon_state = "solar_panel-b"
 	else
 		panel.icon_state = "solar_panel"
-#if DM_VERSION <= 512
-	. += new /mutable_appearance(panel)
-#endif
 
 /obj/machinery/power/solar/proc/queue_turn(azimuth)
 	needs_to_turn = TRUE
@@ -169,11 +164,11 @@
 	else
 		//dot product of sun and panel -- Lambert's Cosine Law
 		. = cos(azimuth_current - sun_azimuth)
-		. = CLAMP(round(., 0.01), 0, 1)
+		. = clamp(round(., 0.01), 0, 1)
 	sunfrac = .
 
 /obj/machinery/power/solar/process()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	if(control && (!powernet || control.powernet != powernet))
 		unset_control()
@@ -213,6 +208,16 @@
 	anchored = FALSE
 	var/tracker = 0
 	var/glass_type = null
+	var/random_offset = 6 //amount in pixels an unanchored assembly may be offset by
+
+/obj/item/solar_assembly/Initialize(mapload)
+	. = ..()
+	if(!anchored && !pixel_x && !pixel_y)
+		randomise_offset(random_offset)
+
+/obj/item/solar_assembly/proc/randomise_offset(amount)
+	pixel_x = rand(-amount,amount)
+	pixel_y = rand(-amount,amount)
 
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass(device_broken)
@@ -234,9 +239,12 @@
 		if(anchored)
 			user.visible_message("<span class='notice'>[user] wrenches the solar assembly into place.</span>", "<span class='notice'>You wrench the solar assembly into place.</span>")
 			W.play_tool_sound(src, 75)
+			pixel_x = 0
+			pixel_y = 0
 		else
 			user.visible_message("<span class='notice'>[user] unwrenches the solar assembly from its place.</span>", "<span class='notice'>You unwrench the solar assembly from its place.</span>")
 			W.play_tool_sound(src, 75)
+			randomise_offset(random_offset)
 		return 1
 
 	if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
@@ -331,11 +339,11 @@
 
 /obj/machinery/power/solar_control/update_overlays()
 	. = ..()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		. += mutable_appearance(icon, "[icon_keyboard]_off")
 		return
 	. += mutable_appearance(icon, icon_keyboard)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		. += mutable_appearance(icon, "[icon_state]_broken")
 	else
 		. += mutable_appearance(icon, icon_screen)
@@ -377,7 +385,7 @@
 		if(adjust)
 			value = azimuth_rate + adjust
 		if(value != null)
-			azimuth_rate = round(CLAMP(value, -2 * SSsun.base_rotation, 2 * SSsun.base_rotation), 0.01)
+			azimuth_rate = round(clamp(value, -2 * SSsun.base_rotation, 2 * SSsun.base_rotation), 0.01)
 			return TRUE
 		return FALSE
 	if(action == "tracking")
@@ -397,7 +405,7 @@
 /obj/machinery/power/solar_control/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		if(I.use_tool(src, user, 20, volume=50))
-			if (src.stat & BROKEN)
+			if (src.machine_stat & BROKEN)
 				to_chat(user, "<span class='notice'>The broken glass falls out.</span>")
 				var/obj/structure/frame/computer/A = new /obj/structure/frame/computer( src.loc )
 				new /obj/item/shard( src.loc )
@@ -428,7 +436,7 @@
 /obj/machinery/power/solar_control/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
-			if(stat & BROKEN)
+			if(machine_stat & BROKEN)
 				playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)
 			else
 				playsound(src.loc, 'sound/effects/glasshit.ogg', 75, TRUE)
@@ -455,7 +463,7 @@
 
 ///Rotates the panel to the passed angles
 /obj/machinery/power/solar_control/proc/set_panels(azimuth)
-	azimuth = CLAMP(round(azimuth, 0.01), -360, 719.99)
+	azimuth = clamp(round(azimuth, 0.01), -360, 719.99)
 	if(azimuth >= 360)
 		azimuth -= 360
 	if(azimuth < 0)

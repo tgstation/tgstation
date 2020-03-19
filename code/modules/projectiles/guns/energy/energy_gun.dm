@@ -17,7 +17,7 @@
 	icon_state = "mini"
 	item_state = "gun"
 	w_class = WEIGHT_CLASS_SMALL
-	cell_type = /obj/item/stock_parts/cell{charge = 600; maxcharge = 600}
+	cell_type = /obj/item/stock_parts/cell/mini_egun
 	ammo_x_offset = 2
 	charge_sections = 3
 	can_flashlight = FALSE // Can't attach or detach the flashlight, and override it's icon update
@@ -52,7 +52,7 @@
 /obj/item/gun/energy/e_gun/hos
 	name = "\improper X-01 MultiPhase Energy Gun"
 	desc = "This is an expensive, modern recreation of an antique laser gun. This gun has several unique firemodes, but lacks the ability to recharge over time."
-	cell_type = /obj/item/stock_parts/cell{charge = 1200; maxcharge = 1200}
+	cell_type = /obj/item/stock_parts/cell/hos_gun
 	icon_state = "hoslaser"
 	force = 10
 	ammo_type = list(/obj/item/ammo_casing/energy/disabler/hos, /obj/item/ammo_casing/energy/laser/hos, /obj/item/ammo_casing/energy/ion/hos)
@@ -133,15 +133,15 @@
 		return
 	fail_chance = min(fail_chance + round(15/severity), 100)
 
-/obj/item/gun/energy/e_gun/nuclear/update_icon()
-	..()
+/obj/item/gun/energy/e_gun/nuclear/update_overlays()
+	. = ..()
 	if(reactor_overloaded)
-		add_overlay("[icon_state]_fail_3")
+		. += "[icon_state]_fail_3"
 	else
 		switch(fail_tick)
 			if(0)
-				add_overlay("[icon_state]_fail_0")
+				. += "[icon_state]_fail_0"
 			if(1 to 150)
-				add_overlay("[icon_state]_fail_1")
+				. += "[icon_state]_fail_1"
 			if(151 to INFINITY)
-				add_overlay("[icon_state]_fail_2")
+				. += "[icon_state]_fail_2"

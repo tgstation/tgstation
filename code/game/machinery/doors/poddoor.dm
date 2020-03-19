@@ -92,5 +92,25 @@
 	return
 
 /obj/machinery/door/poddoor/try_to_crowbar(obj/item/I, mob/user)
-	if(stat & NOPOWER)
-		open(1)
+	if(machine_stat & NOPOWER)
+		open(TRUE)
+
+/obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/humanoid/user)
+	if(density & !(resistance_flags & INDESTRUCTIBLE))
+		add_fingerprint(user)
+		user.visible_message("<span class='warning'>[user] begins prying open [src].</span>",\
+					"<span class='noticealien'>You begin digging your claws into [src] with all your might!</span>",\
+					"<span class='warning'>You hear groaning metal...</span>")
+		playsound(src, 'sound/machines/airlock_alien_prying.ogg', 100, TRUE)
+
+		var/time_to_open = 5 SECONDS
+		if(hasPower())
+			time_to_open = 15 SECONDS
+
+		if(do_after(user, time_to_open, TRUE, src))
+			if(density && !open(TRUE)) //The airlock is still closed, but something prevented it opening. (Another player noticed and bolted/welded the airlock in time!)
+				to_chat(user, "<span class='warning'>Despite your efforts, [src] managed to resist your attempts to open it!</span>")
+
+	else
+		return ..()
+

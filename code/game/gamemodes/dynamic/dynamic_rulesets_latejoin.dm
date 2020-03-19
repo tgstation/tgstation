@@ -16,7 +16,7 @@
 			if(!(antag_flag_override in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag_override, ROLE_SYNDICATE)))
 				candidates.Remove(P)
 				continue
-		else 
+		else
 			if(!(antag_flag in P.client.prefs.be_special) || is_banned_from(P.ckey, list(antag_flag, ROLE_SYNDICATE)))
 				candidates.Remove(P)
 				continue
@@ -91,6 +91,7 @@
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
 	var/datum/team/revolution/revolution
@@ -133,20 +134,23 @@
 	else if (check_heads_victory())
 		finished = STATION_VICTORY
 		SSshuttle.clearHostileEnvironment(src)
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your colleagues to work. \
-			We have remotely blacklisted the head revolutionaries from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
 		revolution.save_members()
 		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
 			if(M.has_antag_datum(/datum/antagonist/rev/head))
 				var/datum/antagonist/rev/head/R = M.has_antag_datum(/datum/antagonist/rev/head)
 				R.remove_revolutionary(FALSE, "gamemode")
-				var/mob/living/carbon/C = M.current
-				if(C.stat == DEAD)
-					C.makeUncloneable()
+				if(M.current)
+					var/mob/living/carbon/C = M.current
+					if(istype(C) && C.stat == DEAD)
+						C.makeUncloneable()
 			if(M.has_antag_datum(/datum/antagonist/rev))
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 				R.remove_revolutionary(FALSE, "gamemode")
+		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
+			We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
 		return RULESET_STOP_PROCESSING
+
+
 
 /// Checks for revhead loss conditions and other antag datums.
 /datum/dynamic_ruleset/latejoin/provocateur/proc/check_eligible(var/datum/mind/M)

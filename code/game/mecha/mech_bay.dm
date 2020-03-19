@@ -50,7 +50,7 @@
 		. += "<span class='notice'>The status display reads: Base recharge rate at <b>[max_charge]J</b> per cycle.</span>"
 
 /obj/machinery/mech_bay_recharge_port/process()
-	if(stat & NOPOWER || !recharge_console)
+	if(machine_stat & NOPOWER || !recharge_console)
 		return
 	if(!recharging_mech)
 		recharging_mech = locate(/obj/mecha) in recharging_turf
@@ -139,7 +139,7 @@
 
 /obj/machinery/computer/mech_bay_power_console/update_overlays()
 	. = ..()
-	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || stat & (NOPOWER|BROKEN))
+	if(!recharge_port || !recharge_port.recharging_mech || !recharge_port.recharging_mech.cell || !(recharge_port.recharging_mech.cell.charge < recharge_port.recharging_mech.cell.maxcharge) || machine_stat & (NOPOWER|BROKEN))
 		return
 	. += "recharge_comp_on"
 

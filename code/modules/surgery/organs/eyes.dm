@@ -83,7 +83,6 @@
 		C.clear_fullscreen("eye_damage")
 	return
 
-
 /obj/item/organ/eyes/night_vision
 	name = "shadow eyes"
 	desc = "A spooky set of eyes that can see in the dark."
@@ -197,7 +196,7 @@
 /obj/item/organ/eyes/robotic/shield/emp_act(severity)
 	return
 
-#define RGB2EYECOLORSTRING(definitionvar) ("[copytext(definitionvar,2,3)][copytext(definitionvar,4,5)][copytext(definitionvar,6,7)]")
+#define RGB2EYECOLORSTRING(definitionvar) ("[copytext_char(definitionvar, 2, 3)][copytext_char(definitionvar, 4, 5)][copytext_char(definitionvar, 6, 7)]")
 
 /obj/item/organ/eyes/robotic/glow
 	name = "High Luminosity Eyes"
@@ -252,7 +251,7 @@
 		return
 	var/range = input(user, "Enter range (0 - [max_light_beam_distance])", "Range Select", 0) as null|num
 
-	set_distance(CLAMP(range, 0, max_light_beam_distance))
+	set_distance(clamp(range, 0, max_light_beam_distance))
 	assume_rgb(C)
 
 /obj/item/organ/eyes/robotic/glow/proc/assume_rgb(newcolor)

@@ -2,6 +2,8 @@
 	category = CATEGORY_HUMAN
 	weight = WEIGHT_MOB
 
+/datum/keybinding/human/can_use(client/user)
+	return ishuman(user.mob)
 
 /datum/keybinding/human/quick_equip
 	hotkey_keys = list("E")

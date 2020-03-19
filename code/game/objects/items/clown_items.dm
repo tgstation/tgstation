@@ -73,6 +73,24 @@
 	icon_state = "soapsyndie"
 	cleanspeed = 5 //faster than mop so it is useful for traitors who want to clean crime scenes
 
+/obj/item/soap/omega
+	name = "omega soap"
+	desc = "The most advanced soap known to mankind."
+	icon_state = "soapomega"
+	cleanspeed = 3 //Only the truest of mind soul and body get one of these
+	uses = 301
+
+/obj/item/soap/omega/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is using [src] to scrub themselves from the timeline! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	new /obj/structure/chrono_field(user.loc, user)
+	return MANUAL_SUICIDE
+
+/obj/item/paper/fluff/stations/soap
+	name = "ancient janitorial poem"
+	desc = "An old paper that has passed many hands."
+	info = "The legend of the omega soap</B><BR><BR> Essence of <B>potato</B>. Juice, not grind.<BR><BR> A <B>lizard's</B> tail, turned into <B>wine</B>.<BR><BR> <B>powder of monkey</B>, to help the workload.<BR><BR> Some <B>Krokodil</B>, because meth would explode.<BR><BR> <B>Nitric acid</B> and <B>Baldium</B>, for organic dissolving.<BR><BR> A cup filled with <B>Hooch</B>, for sinful absolving<BR><BR> Some <B>Bluespace Dust</B>, for removal of stains.<BR><BR> A syringe full of <B>Pump-up</B>, it's security's bane.<BR><BR> Add a can of <B>Space Cola</B>, because we've been paid.<BR><BR> <B>Heat</B> as hot as you can, let the soap be your blade.<BR><BR> <B>Ten units of each regent create a soap that could topple all others.</B>"
+
+
 /obj/item/soap/suicide_act(mob/user)
 	user.say(";FFFFFFFFFFFFFFFFUUUUUUUDGE!!", forced="soap suicide")
 	user.visible_message("<span class='suicide'>[user] lifts [src] to [user.p_their()] mouth and gnaws on it furiously, producing a thick froth! [user.p_they(TRUE)]'ll never get that BB gun now!</span>")
@@ -80,7 +98,9 @@
 	return (TOXLOSS)
 
 /obj/item/soap/proc/decreaseUses(mob/user)
-	uses--
+	var/skillcheck = user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)
+	if(prob(skillcheck*100)) //higher level = more uses assuming RNG is nice
+		uses--
 	if(uses <= 0)
 		to_chat(user, "<span class='warning'>[src] crumbles into tiny bits!</span>")
 		qdel(src)
@@ -89,39 +109,47 @@
 	. = ..()
 	if(!proximity || !check_allowed_items(target))
 		return
+	var/clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target, /obj/effect/decal/cleanable))
 		user.visible_message("<span class='notice'>[user] begins to scrub \the [target.name] out with [src].</span>", "<span class='warning'>You begin to scrub \the [target.name] out with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, "<span class='notice'>You scrub \the [target.name] out.</span>")
+			var/obj/effect/decal/cleanable/cleanies = target
+			user?.mind.adjust_experience(/datum/skill/cleaning, max(round(cleanies.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT),0)) //again, intentional that this does NOT round but mops do.
 			qdel(target)
 			decreaseUses(user)
 
 	else if(ishuman(target) && user.zone_selected == BODY_ZONE_PRECISE_MOUTH)
 		var/mob/living/carbon/human/H = user
 		user.visible_message("<span class='warning'>\the [user] washes \the [target]'s mouth out with [src.name]!</span>", "<span class='notice'>You wash \the [target]'s mouth out with [src.name]!</span>") //washes mouth out with soap sounds better than 'the soap' here			if(user.zone_selected == "mouth")
+		if(H.lip_style)
+			user?.mind.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 		H.lip_style = null //removes lipstick
 		H.update_body()
 		decreaseUses(user)
 		return
 	else if(istype(target, /obj/structure/window))
 		user.visible_message("<span class='notice'>[user] begins to clean \the [target.name] with [src]...</span>", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			target.set_opacity(initial(target.opacity))
+			user?.mind.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
 	else
 		user.visible_message("<span class='notice'>[user] begins to clean \the [target.name] with [src]...</span>", "<span class='notice'>You begin to clean \the [target.name] with [src]...</span>")
-		if(do_after(user, src.cleanspeed, target = target))
+		if(do_after(user, clean_speedies, target = target))
 			to_chat(user, "<span class='notice'>You clean \the [target.name].</span>")
 			for(var/obj/effect/decal/cleanable/C in target)
+				user?.mind.adjust_experience(/datum/skill/cleaning, round(C.beauty/CLEAN_SKILL_BEAUTY_ADJUSTMENT))
 				qdel(C)
 			target.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 			SEND_SIGNAL(target, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_MEDIUM)
+			user?.mind.adjust_experience(/datum/skill/cleaning, CLEAN_SKILL_GENERIC_WASH_XP)
 			decreaseUses(user)
 	return
 
