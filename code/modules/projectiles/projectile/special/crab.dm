@@ -37,7 +37,7 @@
 	return NOTNOTLIVE
 
 /obj/projectile/crab/proc/shed(kill)
-	var/mob/living/simple_animal/hostile/headcrustation/creb = new(src)
+	var/mob/living/simple_animal/hostile/headcrustation/creb = new(src.loc)
 	message_admins("Should we kill? [kill]")
 	if(kill)
 		creb.death(FALSE)
