@@ -113,6 +113,10 @@
 #define FACING_EACHOTHER										2
 #define FACING_INIT_FACING_TARGET_TARGET_FACING_PERPENDICULAR	3 //Do I win the most informative but also most stupid define award?
 
+//stages of shoe tying-ness
+#define SHOES_UNTIED 0
+#define SHOES_TIED 1
+#define SHOES_KNOTTED 2
 
 //Cache of bloody footprint images
 //Key:
@@ -482,3 +486,6 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define ALIGNMENT_GOOD "good"
 #define ALIGNMENT_NEUT "neutral"
 #define ALIGNMENT_EVIL "evil"
+
+// The alpha we give to stuff under tiles, if they want it
+#define ALPHA_UNDERTILE 128

@@ -91,6 +91,7 @@
 	requirements = list(101,101,70,40,30,20,20,20,20,20)
 	high_population_requirement = 50
 	flags = HIGHLANDER_RULESET
+	blocking_rules = list(/datum/dynamic_ruleset/roundstart/revs)
 	var/required_heads_of_staff = 3
 	var/finished = FALSE
 	var/datum/team/revolution/revolution

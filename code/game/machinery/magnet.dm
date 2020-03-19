@@ -9,7 +9,6 @@
 	icon_state = "floor_magnet-f"
 	name = "electromagnetic generator"
 	desc = "A device that uses station power to create points of magnetic energy."
-	level = 1		// underfloor
 	layer = LOW_OBJ_LAYER
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
@@ -30,9 +29,11 @@
 /obj/machinery/magnetic_module/Initialize()
 	..()
 	var/turf/T = loc
-	hide(T.intact)
 	center = T
 	SSradio.add_object(src, freq, RADIO_MAGNETS)
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/magnetic_module/LateInitialize()
@@ -43,23 +44,16 @@
 	center = null
 	return ..()
 
-// update the invisibility and icon
-/obj/machinery/magnetic_module/hide(intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
 
 // update the icon_state
 /obj/machinery/magnetic_module/update_icon_state()
 	var/state="floor_magnet"
 	var/onstate=""
+
 	if(!on)
 		onstate="0"
 
-	if(invisibility)
-		icon_state = "[state][onstate]-f"	// if invisible, set icon to faded version
-											// in case of being revealed by T-scanner
-	else
-		icon_state = "[state][onstate]"
+	icon_state = "[state][onstate]"
 
 /obj/machinery/magnetic_module/receive_signal(datum/signal/signal)
 
