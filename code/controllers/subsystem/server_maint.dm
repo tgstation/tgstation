@@ -92,8 +92,8 @@ SUBSYSTEM_DEF(server_maint)
 
 
 /datum/controller/subsystem/server_maint/proc/UpdateHubStatus()
-	if(!CONFIG_GET(flag/hub))
-		return FALSE //no point, hub is disabled
+	if(!CONFIG_GET(flag/hub) || !CONFIG_GET(number/max_hub_pop))
+		return FALSE //no point, hub / auto hub controls are disabled
 
 	var/max_pop = CONFIG_GET(number/max_hub_pop)
 

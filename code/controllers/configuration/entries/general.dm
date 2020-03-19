@@ -40,7 +40,7 @@
 /datum/config_entry/flag/hub	// if the game appears on the hub or not
 
 /datum/config_entry/number/max_hub_pop //At what pop to take hub off the server
-	config_entry_value = 120 //Default is high as we're assuming you don't want auto-unhubbing
+	config_entry_value = 0 //0 means disabled
 	integer = TRUE
 	min_val = 0
 
