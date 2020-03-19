@@ -176,7 +176,7 @@
 
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
 		var/obj/item/stack/sheet/hairlesshide/HH = O
-		new /obj/item/stack/sheet/wetleather(get_turf(HH), HH.amount)
+		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
 		qdel(HH)
 
 /*
