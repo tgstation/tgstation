@@ -1847,3 +1847,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
 	illegal_tech = FALSE
+
+/datum/uplink_item/badass/fakecuffs
+	name = "Fake Handcuffs" //kinky
+	desc = "These fake handcuffs are indistinguishable from normal handcuffs until you try to take them off, which only takes one second to do."
+	item = /obj/item/restraints/handcuffs/reallyfake
+	cost = 1
+	illegal_tech = FALSE

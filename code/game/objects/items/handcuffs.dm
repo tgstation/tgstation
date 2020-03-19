@@ -150,6 +150,9 @@
 	desc = "Fake handcuffs meant for gag purposes."
 	breakouttime = 1 SECONDS
 
+/obj/item/restraints/handcuffs/reallyfake //not a subtype of normal fake handcuffs so that they can use the name and description of normal handcuffs
+	breakouttime = 1 SECONDS
+
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	..()
 	if(istype(I, /obj/item/stack/rods))
