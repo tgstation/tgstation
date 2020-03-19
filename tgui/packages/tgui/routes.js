@@ -18,6 +18,7 @@ import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
 import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
+import { CargoHoldTerminal } from './interfaces/CargoHoldTerminal';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
@@ -97,6 +98,7 @@ import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
 import { RemoteRobotControl } from './interfaces/RemoteRobotControl';
+import { RoboticsControlConsole } from './interfaces/RoboticsControlConsole';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -210,6 +212,10 @@ const ROUTES = {
   },
   cargo_express: {
     component: () => CargoExpress,
+    scrollable: true,
+  },
+  cargo_hold_terminal: {
+    component: () => CargoHoldTerminal,
     scrollable: true,
   },
   cellular_emporium: {
@@ -578,6 +584,10 @@ const ROUTES = {
   },
   remote_robot_control: {
     component: () => RemoteRobotControl,
+    scrollable: true,
+  },
+  robotics_control_console: {
+    component: () => RoboticsControlConsole,
     scrollable: true,
   },
   roulette: {

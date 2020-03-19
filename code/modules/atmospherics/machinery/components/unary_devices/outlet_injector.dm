@@ -7,6 +7,7 @@
 	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
+	hide = TRUE
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
@@ -18,7 +19,6 @@
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
 	pipe_state = "injector"
@@ -158,10 +158,6 @@
 			if(rate == "max")
 				rate = MAX_TRANSFER_RATE
 				. = TRUE
-			else if(rate == "input")
-				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, volume_rate) as num|null
-				if(!isnull(rate) && !..())
-					. = TRUE
 			else if(text2num(rate) != null)
 				rate = text2num(rate)
 				. = TRUE

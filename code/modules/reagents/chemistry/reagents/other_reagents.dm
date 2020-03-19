@@ -87,6 +87,7 @@
 	description = "You don't even want to think about what's in here."
 	taste_description = "gross iron"
 	shot_glass_icon_state = "shotglassred"
+	material = /datum/material/meat
 
 /datum/reagent/vaccine
 	//data must contain virus type
@@ -917,6 +918,7 @@
 	color = "#00CC00" // ditto
 	taste_description = "the colour blue and regret"
 	irradiation_level = 2*REM
+	material = null
 
 /datum/reagent/bluespace
 	name = "Bluespace Dust"
@@ -1243,10 +1245,10 @@
 
 /datum/reagent/nitryl/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.65, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
 
 /datum/reagent/nitryl/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nitryl)
 	..()
 
 /////////////////////////Colorful Powder////////////////////////////
