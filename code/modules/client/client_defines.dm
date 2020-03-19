@@ -42,7 +42,7 @@
 		///////////////
 		//SOUND STUFF//
 		///////////////
-	//Text-to-speech cooldown
+	///Text-to-speech cooldown
 	var/tts_cooldown = 0
 	///Currently playing ambience sound
 	var/ambience_playing = null
