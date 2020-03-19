@@ -34,12 +34,6 @@
 	message = "crosses their arms."
 	restraint_check = TRUE
 
-/datum/emote/living/crack
-	key = "crack"
-	key_third_person = "cracks"
-	message = "cracks their knuckles together."
-	sound = 'sound/misc/knuckles.ogg'
-
 /datum/emote/living/chuckle
 	key = "chuckle"
 	key_third_person = "chuckles"

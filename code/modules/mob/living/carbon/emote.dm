@@ -34,6 +34,17 @@
 							'sound/misc/clap3.ogg',
 							'sound/misc/clap4.ogg')
 
+/datum/emote/living/carbon/crack
+	key = "crack"
+	key_third_person = "cracks"
+	message = "cracks their knuckles."
+	sound = 'sound/misc/knuckles.ogg'
+
+/datum/emote/living/carbon/crack/can_run_emote(mob/living/carbon/user, status_check = TRUE , intentional)
+	. = ..()
+	if(user.get_num_arms() <= 1)
+		return FALSE
+
 /datum/emote/living/carbon/gnarl
 	key = "gnarl"
 	key_third_person = "gnarls"
