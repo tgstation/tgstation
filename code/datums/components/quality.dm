@@ -70,11 +70,11 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 /datum/component/quality/proc/generate_quality(quality_val,quality_skill_modifier)
 	quality_level = clamp(quality_val + quality_skill_modifier ,0,9) +1 // +1 because lists start with 1
 
-	if(quality_level == 9 && prob(0.01)) //Artifact roll
-		quality_level = 10
+	if(quality_level == 10 && prob(0.01)) //Artifact roll
+		quality_level = 11
 
 	if(HAS_TRAIT_FROM(creator,TRAIT_INSPIRED,TRAIT_GENERIC)) //we check if the guy killed a megafauna
-		quality_level = 10
+		quality_level = 11
 		REMOVE_TRAIT(creator,TRAIT_INSPIRED,TRAIT_GENERIC)
 
 	quality = quality_levels[quality_level]
@@ -115,25 +115,25 @@ Items that reach quality of MASTERWORK_QUALITY have a tiny chance of instead bec
 
 /datum/component/quality/proc/handle_name()
 	switch(quality_level)
-		if(0)
-			return "Unusable [old_name]"
 		if(1)
-			return "Shoddy [old_name]"
+			return "Unusable [old_name]"
 		if(2)
-			return "Poor [old_name]"
+			return "Shoddy [old_name]"
 		if(3)
-			return "Normal [old_name]"
+			return "Poor [old_name]"
 		if(4)
-			return "Well-done [old_name]"
+			return "Normal [old_name]"
 		if(5)
-			return "Finely-crafted [old_name]"
+			return "Well-done [old_name]"
 		if(6)
-			return "Superior [old_name]"
+			return "Finely-crafted [old_name]"
 		if(7)
-			return "Exceptional [old_name]"
+			return "Superior [old_name]"
 		if(8)
-			return "Artisan [old_name]"
+			return "Exceptional [old_name]"
 		if(9)
-			return "Masterwork [old_name]"
+			return "Artisan [old_name]"
 		if(10)
+			return "Masterwork [old_name]"
+		if(11)
 			return "Legendary [old_name]"
