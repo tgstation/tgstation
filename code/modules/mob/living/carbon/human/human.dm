@@ -273,7 +273,7 @@
 			update_body()
 
 	var/mob/living/user = usr
-	if(istype(user) && href_list["shoes"] && (user.mobility_flags & MOBILITY_USE)) // we need to be on the ground, so we'll be a bit looser
+	if(istype(user) && href_list["shoes"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY)) // we need to be on the ground, so we'll be a bit looser
 		shoes.handle_tying(usr)
 
 ///////HUDs///////
