@@ -32,7 +32,7 @@
 				return TRUE
 		else
 			if(user_unbuckle_mob(buckled_mobs[1],user))
-				return 1
+				return TRUE
 
 /atom/movable/MouseDrop_T(mob/living/M, mob/living/user)
 	. = ..()
