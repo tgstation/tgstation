@@ -48,7 +48,7 @@
 /client/verb/verify_in_discord()
 	set category = "OOC"
 	set name = "Verify Discord Account"
-	set desc = "Reverify your account to the discord if you get banned, you bad banana"
+	set desc = "Verify or reverify your discord account against your linked ckey"
 
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))
