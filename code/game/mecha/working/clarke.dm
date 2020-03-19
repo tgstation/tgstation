@@ -21,7 +21,7 @@
 /obj/mecha/working/clarke/Initialize()
 	. = ..()
 	box = new /obj/structure/ore_box(src)
-	var/obj/item/mecha_parts/mecha_equipment/ME = new /obj/item/mecha_parts/mecha_equipment/orebox_manager(src)
+	var/obj/item/mecha_parts/mecha_equipment/orebox_manager/ME = new(src)
 	ME.attach(src)
 
 /obj/mecha/working/clarke/Destroy()
@@ -39,7 +39,7 @@
 		var/mob/living/L = occupant
 		var/datum/atom_hud/hud = GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED]
 		hud.remove_hud_from(L)
-	..()
+	return ..()
 
 /obj/mecha/working/clarke/mmi_moved_inside(obj/item/mmi/M, mob/user)
 	. = ..()
@@ -68,13 +68,13 @@
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/detach()
 	hostmech = null //just in case
-	. = ..()
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/Topic(href,href_list)
-	..()
+	. = ..()
 	if(!hostmech || !hostmech.box)
 		return
 	hostmech.box.dump_box_contents()
 
 /obj/item/mecha_parts/mecha_equipment/orebox_manager/get_equip_info()
-	return "[..()] [hostmech?.box?"<a href='?src=[REF(src)];mode=0'>Unload Cargo</a>":"Error"]"
+	return "[..()] [hostmech?.box ? "<a href='?src=[REF(src)];mode=0'>Unload Cargo</a>" : "Error"]"
