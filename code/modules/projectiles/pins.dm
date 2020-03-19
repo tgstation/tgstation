@@ -134,9 +134,12 @@
 
 // Ultra-honk pin, clown's deadly joke item.
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
+/obj/item/firing_pin/clown/ultra
+	name = "ultra hilarious firing pin"
+
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
+	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown") && !(user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) && !(user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)))) //Yep, the antag datum for clown op leaders isn't a subtype of the antag datum for normal clown ops.
 		return FALSE
 	return TRUE
 
@@ -150,6 +153,7 @@
 
 // Now two times deadlier!
 /obj/item/firing_pin/clown/ultra/selfdestruct
+	name = "super ultra hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object. It has a small nitrobananium charge on it."
 	selfdestruct = TRUE
 

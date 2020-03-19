@@ -350,6 +350,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/role_restricted/clownoppin
+	name = "Ultra Hilarious Firing Pin"
+	desc = "A firing pin that, when inserted into a gun, makes that gun only useable by clowns and clumsy people (who can use it without shooting themselves accidentally) and makes that gun honk whenever anyone tries to fire it. For the purposes of this firing pin, clown operatives count as being clowns."
+	cost = 1 //much cheaper for clown ops than for clowns
+	item = /obj/item/firing_pin/clown/ultra
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/clownopsuperpin
+	name = "Super Ultra Hilarious Firing Pin"
+	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown (or a clown operative) tries to fire it."
+	cost = 4 //much cheaper for clown ops than for clowns
+	item = /obj/item/firing_pin/clown/ultra/selfdestruct
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	illegal_tech = FALSE
+
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
 	desc = "A handheld chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger \
@@ -1659,6 +1675,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/badass/normalclownclumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
+	name = "Clumsiness Injector"
+	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clowns who wish to reconnect with their former clownish nature or for clowns who wish to torment and play with their prey before killing them."
+	item = /obj/item/dnainjector/clumsymut
+	cost = 1
+	restricted_roles = list("Clown")
+	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/spider_injector
 	name = "Australicus Slime Mutator"
@@ -1786,6 +1809,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/clownpin
+	name = "Ultra Hilarious Firing Pin"
+	desc = "A firing pin that, when inserted into a gun, makes that gun only useable by clowns and clumsy people (who can use it without shooting themselves accidentally) and makes that gun honk whenever anyone tries to fire it."
+	cost = 4
+	item = /obj/item/firing_pin/clown/ultra
+	restricted_roles = list("Clown")
+	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/clownsuperpin
+	name = "Super Ultra Hilarious Firing Pin"
+	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
+	cost = 7
+	item = /obj/item/firing_pin/clown/ultra/selfdestruct
+	restricted_roles = list("Clown")
+	illegal_tech = FALSE
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
@@ -1846,4 +1885,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "Strong flavor, dense smoke, infused with omnizine."
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
+	illegal_tech = FALSE
+
+/datum/uplink_item/badass/clownopclumsinessinjector //clowns can buy this too, but it's in the role-restricted items section for them
+	name = "Clumsiness Injector"
+	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clown operatives who wish to reconnect with their former clownish nature or for clown operatives who wish to torment and play with their prey before killing them."
+	item = /obj/item/dnainjector/clumsymut
+	cost = 1
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	illegal_tech = FALSE
