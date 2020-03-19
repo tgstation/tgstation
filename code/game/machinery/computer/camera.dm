@@ -136,7 +136,6 @@
 
 		return TRUE
 
-// TODO: This does not get called if user walks out of range.
 /obj/machinery/computer/security/ui_close(mob/user)
 	var/user_ref = REF(user)
 	concurrent_users -= user_ref
