@@ -104,3 +104,6 @@
 
 /datum/movespeed_modifier/mob_config_speedmod
 	variable = TRUE
+
+/datum/movespeed_modifier/metabolicboost
+	multiplicative_slowdown = -1.5

@@ -27,11 +27,12 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 	src.cell_line_amount = cell_line_amount
 	src.virus_chance = virus_chance
 
-///Ran when the parent is swabbed by an object that can swab that type of obj. The list is sent by ref, which means it's updated on the list it came from
+///Ran when the parent is swabbed by an object that can swab that type of obj. The list is sent by ref, which means the thing which sent the signal will still have the updated list.
 /datum/element/swabable/proc/GetSwabbed(datum/source, list/mutable_results)
 	. = COMPONENT_SWAB_FOUND //Return this so the swabbing component knows hes a good boy and found something that needs swabbing.
 
 	mutable_results += GenerateSample()
+	Detach(source)
 
 ///Generates a /datum/biological_sample
 /datum/element/swabable/proc/GenerateSample()

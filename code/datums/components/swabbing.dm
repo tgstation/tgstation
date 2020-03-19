@@ -45,6 +45,9 @@ This component is used in vat growing to swab for microbiological samples which 
 /datum/component/swabbing/proc/TryToSwab(datum/source, atom/target, mob/user, params)
 	set waitfor = FALSE //This prevents do_after() from making this proc not return it's value.
 
+	if(istype(target, /obj/structure/table))//help how do i do this less shitty
+		return NONE //idk bro pls send help
+
 	if(istype(target, /obj/item/petri_dish))
 		if(!swabbed_items.len)
 			return NONE
@@ -75,7 +78,7 @@ This component is used in vat growing to swab for microbiological samples which 
 	. = COMPONENT_NO_ATTACK //Point of no return. No more attacking after this.
 
 	if(swabbed_items.len >= 3)
-		to_chat(user, "<span class='warning'>You cannot collect another sample on [target]!</span>")
+		to_chat(user, "<span class='warning'>You cannot collect another sample on [parent]!</span>")
 		return
 
 	to_chat(user, "<span class='notice'>You start swabbing [target] for samples!</span>")
@@ -87,8 +90,6 @@ This component is used in vat growing to swab for microbiological samples which 
 		return
 
 	to_chat(user, "<span class='nicegreen'>You manage to collect a microbiological sample from [target]!</span>")
-
-	target.RemoveElement(/datum/element/swabable)
 
 	var/obj/item/I = parent
 	I.update_icon()

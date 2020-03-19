@@ -92,5 +92,110 @@
 
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
-	if(hud_used) //clientless aliens
+	if(hud_used) //clientless oozes
 		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(getPlasma())]</font></div>"
+
+///Child of the ooze mob which is fast and is more suited for assassin esque behavior.
+/mob/living/simple_animal/hostile/ooze/gelatinous
+	name = "Gelatinous Cube"
+	desc = "It's a gummy cube, it's a gummy cube, it's a gummy gummy gummy gummy gummy cube."
+	speed = 1
+	///The ability to give yourself a metabolic speed boost which raises heat
+	var/datum/action/innate/metabolicboost/boost
+	///The ability to consume mobs
+	var/obj/effect/proc_holder/consume/consume
+
+///Initializes the mobs abilities and gives them to the mob
+/mob/living/simple_animal/hostile/ooze/gelatinous/Initialize()
+	. = ..()
+	boost = new
+	boost.Grant(src)
+	consume = new
+	AddAbility(consume)
+
+/datum/action/cooldown/metabolicboost
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	cooldown_time = 240
+	var/nutrition_cost
+
+/datum/action/cooldown/metabolicboost/IsAvailable()
+	. = ..()
+	var/mob/living/simple_animal/hostile/ooze/ooze = owner
+	if(. && ooze.ooze_nutrition >= 10)
+		return TRUE
+
+/datum/action/cooldown/metabolicboost/Trigger()
+	. = ..()
+	var/mob/living/simple_animal/hostile/ooze/ooze = owner
+	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
+	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE) //Heat up every second
+	addtimer(CALLBACK(ooze, .proc/FinishSpeedup, timerid), 6 SECONDS)
+	ooze.adjust_ooze_nutrition(-10)
+
+/datum/action/cooldown/metabolicboost/proc/HeatUp()
+	var/mob/living/simple_animal/hostile/ooze/ooze = owner
+	ooze.increase_temperature(5)
+
+/datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
+	var/mob/living/simple_animal/hostile/ooze/ooze = owner
+	ooze.remove_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
+	deltimer(timerid)
+
+
+
+/obj/effect/proc_holder/consume
+	name = "Consume"
+	panel = "Spider"
+	active = FALSE
+	datum/action/spell_action/action = null
+	desc = "Consume your target to get some nutrition"
+	ranged_mousepointer = 'icons/effects/wrap_target.dmi'
+	action_icon = 'icons/mob/actions/actions_animal.dmi'
+	action_icon_state = "wrap_0"
+	action_background_icon_state = "bg_alien"
+
+/obj/effect/proc_holder/consume/Initialize()
+	. = ..()
+	action = new(src)
+
+/obj/effect/proc_holder/consume/update_icon()
+	action.button_icon_state = "wrap_[active]"
+	action.UpdateButtonIcon()
+
+/obj/effect/proc_holder/consume/Click()
+	if(!istype(usr, /mob/living/carbon))
+		return FALSE
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/user = usr
+	activate(user)
+	return TRUE
+
+/obj/effect/proc_holder/wrap/proc/activate(mob/living/user)
+	var/message
+	if(active)
+		message = "<span class='notice'>You no longer prepare to wrap something in a cocoon.</span>"
+		remove_ranged_ability(message)
+	else
+		message = "<span class='notice'>You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B></span>"
+		add_ranged_ability(user, message, TRUE)
+		return 1
+
+/obj/effect/proc_holder/wrap/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return
+	if(ranged_ability_user.incapacitated() || !istype(ranged_ability_user, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
+		remove_ranged_ability()
+		return
+
+	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/user = ranged_ability_user
+
+	if(user.Adjacent(target) && (ismob(target) || isobj(target)))
+		var/atom/movable/target_atom = target
+		if(target_atom.anchored)
+			return
+		user.cocoon_target = target_atom
+		INVOKE_ASYNC(user, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/.proc/cocoon)
+		remove_ranged_ability()
+		return TRUE
+
+/obj/effect/proc_holder/wrap/on_lose(mob/living/carbon/user)
+	remove_ranged_ability()
