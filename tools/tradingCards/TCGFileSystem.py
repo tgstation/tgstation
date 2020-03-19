@@ -6,7 +6,7 @@ def main():
     if leg >= 3 and (args[1].strip().lower() == "extract" or args[1].strip().lower() == "ex"):
         from_file(args[2], args[3])
     elif leg >= 3 and (args[1].strip().lower() == "insert" or args[1].strip().lower() == "is"):
-        to_file(args[3], args[2])
+        to_file(args[2], args[3])
     else:
         print("Invalid Input")
 master = {
