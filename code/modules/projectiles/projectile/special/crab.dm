@@ -1,6 +1,6 @@
 #define HAT -1
-#define LIVE 0
-#define NOTLIVE 1
+#define NOTNOTLIVE 0
+#define NOTNOTDEAD 1
 /obj/projectile/crab
 	name = "Headcrab"
 	icon_state = "crabby_weeee"
@@ -16,14 +16,14 @@
 		var/mob/living/carbon/victim = hit
 		message_admins("Head [victim.head]  Right type [istype(victim.head, /obj/item/clothing/head/headcrab)]")
 		if(victim.head && istype(victim.head, /obj/item/clothing/head/headcrab))
-			return NOTLIVE
+			return NOTNOTLIVE
 		if(ishuman(hit))
 			message_admins("We hit a human")
 			var/mob/living/carbon/human/H = hit
 			if(H.is_mouth_covered(head_only = 1))
 				H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
 									"<span class='userdanger'>[src] smashes against your [H.head]!</span>")
-				return DEAD
+				return NOTNOTDEAD
 		if(victim.head)
 			message_admins("We need to replace their hat")
 			var/obj/item/clothing/W = victim.head
@@ -34,10 +34,10 @@
 		message_admins("It's a hat boys")
 		return HAT
 	message_admins("Nothing happened")
-	return NOTLIVE
+	return NOTNOTLIVE
 
 /obj/projectile/crab/proc/shed(kill)
-	var/mob/living/simple_animal/hostile/headcrustation/creb = new()
+	var/mob/living/simple_animal/hostile/headcrustation/creb = new(src)
 	message_admins("Should we kill? [kill]")
 	if(kill)
 		creb.death(FALSE)
@@ -58,5 +58,5 @@
 	flags_inv = HIDEEARS|HIDEHAIR
 
 #undef HAT
-#undef LIVE
-#undef NOTLIVE
+#undef NOTNOTDEAD
+#undef NOTNOTLIVE

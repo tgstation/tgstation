@@ -22,6 +22,7 @@
 	ranged = TRUE
 	ranged_message = "Leaps"
 	projectiletype = /obj/projectile/crab
+	del_on_death = FALSE
 	var/datum/mind/origin
 
 /mob/living/simple_animal/hostile/headcrustation/Shoot(atom/targeted_atom)
