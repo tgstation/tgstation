@@ -84,11 +84,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///flags for what should be done when you click on the item, default is picking it up
 	var/interaction_flags_item = INTERACT_ITEM_ATTACK_HAND_PICKUP
 
-	///see setup.dm for appropriate bit flags
+	///What body parts are covered by the clothing when you wear it
 	var/body_parts_covered = 0
-	/// for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
+	///Literally does nothing right now
 	var/gas_transfer_coefficient = 1
-	/// for chemicals/diseases
+	/// How likely a disease or chemical is to get through a piece of clothing
 	var/permeability_coefficient = 1
 	/// for electrical admittance/conductance (electrocution checks and shit)
 	var/siemens_coefficient = 1
@@ -127,7 +127,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
 	var/sharpness = IS_BLUNT
 
-	///The type of tool, engineering or mining for example
+	///How a tool acts when you use it on something, such as wirecutters cutting wires while multitools measure power
 	var/tool_behaviour = NONE
 	///How fast does the tool work
 	var/toolspeed = 1
@@ -140,7 +140,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot. For default list, see [/mob/proc/equip_to_appropriate_slot()]
 	var/list/slot_equipment_priority = null
 
-	/// Wheher dogs can wear the item: Needs to be in /obj/item because corgis can wear a lot of non-clothing items
+	///Reference to the datum that determines whether dogs can wear the item: Needs to be in /obj/item because corgis can wear a lot of non-clothing items
 	var/datum/dog_fashion/dog_fashion = null
 
 	//Tooltip vars
