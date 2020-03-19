@@ -1,4 +1,0 @@
-author: "CDranzer"
-delete-after: True
-changes: 
-  - bugfix: "Empty tape recorders no longer get stuck on pocket and belt slots"

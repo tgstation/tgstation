@@ -198,8 +198,8 @@
 			else
 				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 		else
-			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
+			M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
+							"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
 	else
 		if(turned_on)
 			if(attack_cooldown_check <= world.time)
@@ -233,8 +233,8 @@
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
+		L.visible_message("<span class='danger'>[user] stuns [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] stuns you with [src]!</span>")
 		log_combat(user, L, "stunned")
 
 	playsound(src, stun_sound, 50, TRUE, -1)

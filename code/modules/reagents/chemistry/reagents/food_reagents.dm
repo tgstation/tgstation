@@ -293,8 +293,8 @@
 			victim.blind_eyes(3) // 6 seconds
 			victim.confused = max(M.confused, 5) // 10 seconds
 			victim.Knockdown(3 SECONDS)
-			victim.add_movespeed_modifier(MOVESPEED_ID_PEPPER_SPRAY, update=TRUE, priority=100, multiplicative_slowdown=0.25, blacklisted_movetypes=(FLYING|FLOATING))
-			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, MOVESPEED_ID_PEPPER_SPRAY), 10 SECONDS)
+			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
+			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		victim.update_damage_hud()
 	if(method == INGEST)
 		if(!holder.has_reagent(/datum/reagent/consumable/milk))
@@ -449,6 +449,13 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_description = "wet and cheap noodles"
+
+/datum/reagent/consumable/nutraslop
+	name = "Nutraslop"
+	description = "Mixture of leftover prison foods served on previous days."
+	nutriment_factor = 5 * REAGENTS_METABOLISM
+	color = "#3E4A00" // rgb: 62, 74, 0
+	taste_description = "your imprisonment"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/carbon/M)
 	M.adjust_bodytemperature(10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())

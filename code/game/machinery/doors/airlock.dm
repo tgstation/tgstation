@@ -953,25 +953,25 @@
 		if(user.a_intent != INTENT_HELP)
 			if(!W.tool_start_check(user, amount=0))
 				return
-			user.visible_message("<span class='notice'>[user] is [welded ? "unwelding":"welding"] the airlock.</span>", \
+			user.visible_message("<span class='notice'>[user] begins [welded ? "unwelding":"welding"] the airlock.</span>", \
 							"<span class='notice'>You begin [welded ? "unwelding":"welding"] the airlock...</span>", \
 							"<span class='hear'>You hear welding.</span>")
 			if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 				welded = !welded
-				user.visible_message("<span class='notice'>[user.name] has [welded? "welded shut":"unwelded"] [src].</span>", \
+				user.visible_message("<span class='notice'>[user] [welded? "welds shut":"unwelds"] [src].</span>", \
 									"<span class='notice'>You [welded ? "weld the airlock shut":"unweld the airlock"].</span>")
 				update_icon()
 		else
 			if(obj_integrity < max_integrity)
 				if(!W.tool_start_check(user, amount=0))
 					return
-				user.visible_message("<span class='notice'>[user] is welding the airlock.</span>", \
+				user.visible_message("<span class='notice'>[user] begins welding the airlock.</span>", \
 								"<span class='notice'>You begin repairing the airlock...</span>", \
 								"<span class='hear'>You hear welding.</span>")
 				if(W.use_tool(src, user, 40, volume=50, extra_checks = CALLBACK(src, .proc/weld_checks, W, user)))
 					obj_integrity = max_integrity
 					machine_stat &= ~BROKEN
-					user.visible_message("<span class='notice'>[user.name] has repaired [src].</span>", \
+					user.visible_message("<span class='notice'>[user] finishes welding [src].</span>", \
 										"<span class='notice'>You finish repairing the airlock.</span>")
 					update_icon()
 			else
