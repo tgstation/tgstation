@@ -38,9 +38,9 @@
 	riot.Grant(src)
 	faction_num = rand(1,999)
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
-	if(LAZYLEN(candidates))
+	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
-		src.key = C.key
+		key = C.key
 		notify_ghosts("All rise for the rat king, ascendant to the throne in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Rat Created")
 
 /mob/living/simple_animal/hostile/regalrat/handle_automated_action()
@@ -48,7 +48,7 @@
 		riot.Trigger()
 	else if(prob(50))
 		coffer.Trigger()
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/regalrat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
@@ -61,7 +61,7 @@
 				return FALSE
 			else
 				return TRUE
-		. = ..()
+		return ..()
 
 /**
   *This action creates trash, money, dirt, and cheese.
@@ -75,30 +75,17 @@
 	cooldown_time = 50
 
 /datum/action/cooldown/coffer/Trigger()
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
 	var/turf/T = get_turf(owner)
 	var/loot = rand(1,100)
-	var/static/trashpick = list(/obj/item/cigbutt,
-			/obj/item/trash/cheesie,
-			/obj/item/trash/candy,
-			/obj/item/trash/chips,
-			/obj/item/trash/pistachios,
-			/obj/item/trash/plate,
-			/obj/item/trash/popcorn,
-			/obj/item/trash/raisins,
-			/obj/item/trash/sosjerky,
-			/obj/item/trash/syndi_cakes)
-	var/static/coinpick = list(/obj/item/coin/iron,
-			/obj/item/coin/silver,
-			/obj/item/coin/plastic,
-			/obj/item/coin/titanium)
 	switch(loot)
 		if(1 to 5)
 			to_chat(owner, "<span class='notice'>Score! You find some cheese!</span>")
 			new /obj/item/reagent_containers/food/snacks/cheesewedge(T)
 		if(6 to 10)
-			var/pickedcoin = pick(coinpick)
+			var/pickedcoin = pick(GLOB.ratking_coins)
 			to_chat(owner, "<span class='notice'>You find some leftover coins. More for the royal treasury!</span>")
 			for(var/i = 1 to rand(1,3))
 				new pickedcoin(T)
@@ -110,7 +97,7 @@
 			else
 				new /obj/item/coin/antagtoken(T)
 		if(12 to 40)
-			var/pickedtrash = pick(trashpick)
+			var/pickedtrash = pick(GLOB.ratking_trash)
 			to_chat(owner, "<span class='notice'>You just find more garbage and dirt. Lovely, but beneath you now.</span>")
 			new /obj/effect/decal/cleanable/dirt(T)
 			new pickedtrash(T)
@@ -131,26 +118,30 @@
 	background_icon_state = "bg_clock"
 	cooldown_time = 80
 	///Checks to see if there are any nearby mice. Does not count Rats.
-	var/something_from_nothing = FALSE
 
 /datum/action/cooldown/riot/Trigger()
-	if(!..())
-		return FALSE
+	. = ..()
+	if(!.)
+		return
+	var/cap = CONFIG_GET(number/ratcap)
+	var/something_from_nothing = FALSE
 	for(var/mob/living/simple_animal/mouse/M in oview(owner, 5))
-		var/mob/living/simple_animal/hostile/rat/R = new /mob/living/simple_animal/hostile/rat(get_turf(M))
+		var/mob/living/simple_animal/hostile/rat/new_rat = new(get_turf(M))
 		something_from_nothing = TRUE
 		if(M.mind && M.stat == CONSCIOUS)
-			M.mind.transfer_to(R)
+			M.mind.transfer_to(new_rat)
 		if(istype(owner,/mob/living/simple_animal/hostile/regalrat))
 			var/mob/living/simple_animal/hostile/regalrat/giantrat = owner
-			R.faction_num = giantrat.faction_num
+			new_rat.faction_num = giantrat.faction_num
 		qdel(M)
+	if(!something_from_nothing && LAZYLEN(SSmobs.cheeserats) >= cap)
+		to_chat(owner,"<span class='warning'>There's too many mice on this station to beckon a new one! Find them first!</span>")
+		return
 	if(!something_from_nothing)
 		new /mob/living/simple_animal/mouse(owner.loc)
 		owner.visible_message("<span class='warning'>[owner] commands a mouse to its side!</span>")
 	else
 		owner.visible_message("<span class='warning'>[owner] commands its army to action, mutating them into rats!</span>")
-	something_from_nothing = FALSE
 	StartCooldown()
 
 /mob/living/simple_animal/hostile/rat
@@ -180,6 +171,14 @@
 	faction = list("rat")
 	var/faction_num
 
+/mob/living/simple_animal/hostile/rat/Initialize()
+	. = ..()
+	SSmobs.cheeserats += src
+
+/mob/living/simple_animal/hostile/rat/Destroy()
+	SSmobs.cheeserats -= src
+	return ..()
+
 /mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
 		var/mob/living/A = the_target
@@ -195,7 +194,7 @@
 				return FALSE
 			else
 				return TRUE
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/rat/handle_automated_action()
 	. = ..()
@@ -209,7 +208,7 @@
 					playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 					C.deconstruct()
 					death()
-			else if(C.avail())
+			else if(C && C.avail())
 				visible_message("<span class='warning'>[src] chews through the [C]. It looks unharmed!</span>")
 				playsound(src, 'sound/effects/sparks2.ogg', 100, TRUE)
 				C.deconstruct()

@@ -119,7 +119,7 @@
 	var/mob/living/simple_animal/hostile/regalrat = new /mob/living/simple_animal/hostile/regalrat(loc)
 	visible_message("<span class='warning'>[src] devours the cheese! He morphs into something... greater!</span>")
 	regalrat.say("RISE, MY SUBJECTS! SCREEEEEEE!")
-	if(src.mind)
+	if(mind)
 		mind.transfer_to(regalrat)
 	qdel(src)
 
