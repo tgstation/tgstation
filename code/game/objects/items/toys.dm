@@ -178,14 +178,25 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
-/obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/user)
+/obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/human/user)
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!myhead)
-		user.visible_message("<span class='suicide'>[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!") // and i must scream
+		user.visible_message("<span class='suicide'>[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!</span>") // and i must scream
 		return SHAME
 	user.visible_message("<span class='suicide'>[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicicide!</span>")
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
-	qdel(src)
+	user.adjust_nutrition(50) // mmmm delicious
+	sleep(1 SECONDS)
+
+	var/obj/item/bodypart/chest/CH = user.get_bodypart(BODY_ZONE_CHEST)
+	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
+		user.visible_message("<span class='danger'>[user] regurgitates [src]!</span>") // I swear i dont have a fetish
+		user.vomit(100, TRUE, distance = 0)
+		user.adjustOxyLoss(120)
+		user.dropItemToGround(src) // incase the crit state doesn't drop the singulo to the floor
+		return SHAME
+	user.transferItemToLoc(src, user, TRUE)
+	CH.cavity_item = src
 	return OXYLOSS // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
 
 /*
