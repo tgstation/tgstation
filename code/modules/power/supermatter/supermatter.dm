@@ -481,7 +481,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
 		//Value between 1 and 10
 		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((h2ocomp * H2O_HEAT_RESISTANCE) * h2obonus) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
-		//Value between 30 and -5, used to determine radiation output as it concerns things like collecters
+		//Value between 30 and -5, used to determine radiation output as it concerns things like collectors
 		power_transmission_bonus = plasmacomp * gas_trans["PL"]
 		power_transmission_bonus += o2comp * gas_trans["O2"]
 		power_transmission_bonus += (h2ocomp * gas_trans["WV"])*h2obonus
