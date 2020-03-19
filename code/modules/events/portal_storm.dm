@@ -39,7 +39,9 @@
 						/mob/living/simple_animal/hostile/statue = 4, \
 						/mob/living/simple_animal/hostile/zombie = 6, \
 						/mob/living/simple_animal/hostile/netherworld/migo = 4, \
-						/mob/living/simple_animal/hostile/netherworld/blankbody = 3)
+						/mob/living/simple_animal/hostile/netherworld/blankbody = 3, \
+						/mob/living/simple_animal/hostile/headcrustation = 7
+						)
 
 /datum/round_event/portal_storm
 	startWhen = 7
