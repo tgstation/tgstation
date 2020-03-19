@@ -43,3 +43,35 @@
 			alert(usr, "Account link started. Please ping the bot of the server you\'re currently on, followed by \"verify [usr.ckey]\" in Discord to successfully verify your account (Example: @Mr_Terry verify [usr.ckey])")
 			// This is so people cant fill the notify list with a fuckload of ckeys
 			SSdiscord.notify_members -= "[stored_id]" // The list uses strings because BYOND cannot handle a 17 digit integer
+
+// IF you have linked your account, this will trigger a verify of the user
+/client/verb/verify_in_discord()
+	set category = "OOC"
+	set name = "Verify Discord Account"
+	set desc = "Reverify your account to the discord if you get banned, you bad banana"
+
+	// Safety checks
+	if(!CONFIG_GET(flag/sql_enabled))
+		to_chat(src, "<span class='warning'>This feature requires the SQL backend to be running.</span>")
+		return
+
+	if(!SSdiscord) // SS is still starting
+		to_chat(src, "<span class='notice'>The server is still starting up. Please wait before attempting to link your account!</span>")
+		return
+
+	if(!SSdiscord.enabled)
+		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit.</span>")
+		return
+	if(SSdiscord.reverify_cache[usr.ckey] == TRUE)
+		to_chat(src, "<span class='warning'>Thou can only do this once a round, if you're stuck seek help.</span>")
+		return
+	SSdiscord.reverify_cache[usr.ckey] = TRUE
+
+	var/stored_id = SSdiscord.lookup_id(usr.ckey)
+	if(!stored_id) // Account is not linked
+		to_chat(usr, "Link your discord account via the linkdiscord verb in the OOC tab first");
+		return;
+
+	else // Account is already linked
+		// Role the user
+		SSdiscord.grant_role(stored_id)

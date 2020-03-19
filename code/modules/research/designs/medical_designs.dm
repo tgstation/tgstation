@@ -163,13 +163,24 @@
 
 /datum/design/defibrillator_mount
 	name = "Defibrillator Wall Mount"
-	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables."
-	id = "defibmount"
+	desc = "A mounted frame for holding defibrillators, providing easy security."
+	id = "defibmountdefault"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/wallframe/defib_mount
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/defibrillator_mount_charging
+	name = "PENLITE Defibrillator Wall Mount"
+	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables. The PENLITE version also allows for slow recharging of the defib's battery."
+	id = "defibmount"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 500)
+	build_path = /obj/item/wallframe/defib_mount/charging
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 
 /datum/design/defibrillator_compact
 	name = "Compact Defibrillator"
@@ -708,13 +719,6 @@
 	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
 	surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
-
-/datum/design/surgery/revival
-	name = "Revival"
-	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
-	id = "surgery_revival"
-	surgery = /datum/surgery/advanced/revival
-	research_icon_state = "surgery_head"
 
 /datum/design/surgery/brainwashing
 	name = "Brainwashing"

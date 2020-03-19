@@ -15,16 +15,16 @@ export const MiningVendor = props => {
       <Section title="User">
         {data.user && (
           <Box>
-          Welcome, <b>{data.user.name || "Unknown"}</b>,
+            Welcome, <b>{data.user.name || "Unknown"}</b>,
             {' '}
             <b>{data.user.job || "Unemployed"}</b>!
             <br />
-          Your balance is <b>{data.user.points} mining points</b>.
+            Your balance is <b>{data.user.points} mining points</b>.
           </Box>
         ) || (
           <Box color="light-gray">
-          No registered ID card!<br />
-          Please contact your local HoP!
+            No registered ID card!<br />
+            Please contact your local HoP!
           </Box>
         )}
       </Section>

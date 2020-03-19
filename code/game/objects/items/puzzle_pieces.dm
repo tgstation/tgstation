@@ -116,20 +116,28 @@
 	var/reward = /obj/item/reagent_containers/food/snacks/cookie
 	var/claimed = FALSE
 
+/obj/item/pressure_plate/hologrid/Initialize()
+	. = ..()
+
+	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
+
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()
 	if(claimed)
 		. += "<span class='notice'>This one appears to be spent already.</span>"
 
 /obj/item/pressure_plate/hologrid/trigger()
-	reward = new reward(loc)
+	if(!claimed)
+		new reward(loc)
 	flick("lasergrid_a",src)
 	icon_state = "lasergrid_full"
+	claimed = TRUE
 
 /obj/item/pressure_plate/hologrid/Crossed(atom/movable/AM)
 	. = ..()
 	if(trigger_item && istype(AM, specific_item) && !claimed)
-		claimed = TRUE
+		AM.anchored = TRUE
 		flick("laserbox_burn", AM)
+		trigger()
 		sleep(15)
 		qdel(AM)
