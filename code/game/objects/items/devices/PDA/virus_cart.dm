@@ -79,28 +79,3 @@
 			target.explode()
 	else
 		to_chat(U, "<span class='alert'>PDA not found.</span>")
-
-/obj/item/cartridge/virus/frame
-	name = "\improper F.R.A.M.E. cartridge"
-	icon_state = "cart"
-	var/telecrystals = 0
-
-/obj/item/cartridge/virus/frame/send_virus(obj/item/pda/target, mob/living/U)
-	if(charges <= 0)
-		to_chat(U, "<span class='alert'>Out of charges.</span>")
-		return
-	if(!isnull(target) && !target.toff)
-		charges--
-		var/lock_code = "[rand(100,999)] [pick(GLOB.phonetic_alphabet)]"
-		to_chat(U, "<span class='notice'>Virus Sent! The unlock code to the target is: [lock_code]</span>")
-		var/datum/component/uplink/hidden_uplink = target.GetComponent(/datum/component/uplink)
-		if(!hidden_uplink)
-			hidden_uplink = target.AddComponent(/datum/component/uplink)
-			hidden_uplink.unlock_code = lock_code
-		else
-			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
-		hidden_uplink.telecrystals = telecrystals
-		telecrystals = 0
-		hidden_uplink.active = TRUE
-	else
-		to_chat(U, "<span class='alert'>PDA not found.</span>")

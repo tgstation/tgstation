@@ -1330,16 +1330,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	surplus = 1
 
-/datum/uplink_item/device_tools/frame
-	name = "F.R.A.M.E. PDA Cartridge"
-	desc = "When inserted into a personal digital assistant, this cartridge gives you five PDA viruses which \
-			when used cause the targeted PDA to become a new uplink with zero TCs, and immediately become unlocked. \
-			You will receive the unlock code upon activating the virus, and the new uplink may be charged with \
-			telecrystals normally."
-	item = /obj/item/cartridge/virus/frame
-	cost = 4
-	restricted = TRUE
-
 /datum/uplink_item/device_tools/failsafe
 	name = "Failsafe Uplink Code"
 	desc = "When entered the uplink will self-destruct immediately."
