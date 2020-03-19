@@ -49868,8 +49868,10 @@
 	pixel_y = -24
 	},
 /obj/structure/cable,
-/obj/machinery/camera/autoname{
-	dir = 1
+/obj/machinery/camera{
+	c_tag = "Medbay Psychology Office";
+	dir = 1;
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
@@ -51121,7 +51123,7 @@
 /obj/structure/table,
 /obj/effect/spawner/lootdrop/donkpockets,
 /obj/machinery/camera{
-	c_tag = "Ward Port";
+	c_tag = "Medbay Ward";
 	dir = 4;
 	network = list("ss13","medbay")
 	},

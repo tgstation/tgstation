@@ -23851,7 +23851,7 @@
 "biR" = (
 /obj/machinery/light,
 /obj/machinery/camera{
-	c_tag = "Central Primary Hallway Genetics";
+	c_tag = "Central Primary Hallway Custodial";
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue,
@@ -24474,7 +24474,7 @@
 	dir = 1
 	},
 /obj/machinery/camera{
-	c_tag = "Ward Access";
+	c_tag = "Port Emergency Storage";
 	network = list("ss13","medbay")
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -24965,7 +24965,7 @@
 /area/maintenance/department/engine)
 "bmg" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Genetics Maintenance";
+	name = "Port Emergency Storage";
 	req_one_access_txt = "12;45;5;9"
 	},
 /obj/structure/cable,
@@ -27472,8 +27472,10 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/camera/autoname{
-	dir = 4
+/obj/machinery/camera{
+	c_tag = "Medbay Psychology Office";
+	dir = 4;
+	network = list("ss13","medbay")
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
@@ -30478,11 +30480,6 @@
 /area/maintenance/department/engine)
 "bzE" = (
 /obj/structure/flora/grass/jungle/b,
-/obj/machinery/camera{
-	c_tag = "Genetics Monkey Pen Aft";
-	dir = 4;
-	network = list("ss13","medbay")
-	},
 /obj/structure/flora/ausbushes/grassybush,
 /obj/machinery/light/small{
 	dir = 8
@@ -30528,17 +30525,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/cable,
-/turf/open/floor/plasteel/white,
-/area/medical/medbay/zone2)
-"bzM" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-10"
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
@@ -31559,7 +31545,7 @@
 /area/medical/medbay/zone2)
 "bCb" = (
 /obj/machinery/camera{
-	c_tag = "Ward Aft";
+	c_tag = "Medbay Ward";
 	dir = 1;
 	network = list("ss13","medbay")
 	},
@@ -84673,7 +84659,7 @@ btZ
 bvf
 bwB
 byl
-bzM
+bzN
 bAW
 bCf
 bDo

@@ -25395,10 +25395,12 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
-/obj/machinery/camera/autoname{
-	dir = 8
-	},
 /obj/machinery/holopad,
+/obj/machinery/camera{
+	c_tag = "Medical - Psychology Office";
+	dir = 8;
+	network = list("ss13","Medical")
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "bfF" = (
