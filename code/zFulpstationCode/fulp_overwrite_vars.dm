@@ -323,3 +323,25 @@
 //---------------------------------------------------------------------------
 //** Makes the emag much more expensive and introduces a 6 TC budget emag
 //***************************************************************************
+
+
+//***************************************************************************
+//** FULPSTATION SYNDIBORG DISGUISE MENU by Surrealistik March 2020 BEGINS
+//---------------------------------------------------------------------------
+//** Lets medical and engineering syndiborgs choose a disguise from a list.
+//** Also tweaks the medical syndiborg, removing emag and granting more med items
+//***************************************************************************
+/obj/item/borg_chameleon //List of available disguises
+	var/disguise_text //for feedback
+
+
+/obj/item/reagent_containers/borghypo/syndicate
+	desc = "An experimental piece of Syndicate technology used to produce powerful restorative nanites used to very quickly restore injuries of all types. Also synthesizes potassium iodide for radiation poisoning and lipolicide and anacea for stealthy kills and heparin for more overt ones."
+
+
+//***************************************************************************
+//** FULPSTATION SYNDIBORG DISGUISE MENU by Surrealistik March 2020 ENDS
+//---------------------------------------------------------------------------
+//** Lets medical and engineering syndiborgs choose a disguise from a list.
+//** Also tweaks the medical syndiborg, removing emag and granting more med items
+//***************************************************************************
