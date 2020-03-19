@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(server_maint)
 	if(!CONFIG_GET(flag/hub))
 		return FALSE //no point, hub is disabled
 
-	var/max_pop = CONFIG_GET(number/max_hub_pop))
+	var/max_pop = CONFIG_GET(number/max_hub_pop)
 
 	if(GLOB.clients.len > max_pop)
 		world.update_hub_visibility(FALSE)
