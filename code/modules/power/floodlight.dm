@@ -128,7 +128,6 @@
 	else
 		current--
 	change_setting(current, user)
-	..()
 
 /obj/machinery/power/floodlight/obj_break(damage_flag)
 	. = ..()

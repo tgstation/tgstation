@@ -9,7 +9,9 @@
 	var/element_flags = NONE
 	/**
 	  * The index of the first attach argument to consider for duplicate elements
-	  * Is only used when flags contains ELEMENT_BESPOKE
+	  *
+	  * Is only used when flags contains [ELEMENT_BESPOKE]
+	  *
 	  * This is infinity so you must explicitly set this
 	  */
 	var/id_arg_index = INFINITY
@@ -19,11 +21,13 @@
 	SHOULD_CALL_PARENT(1)
 	if(type == /datum/element)
 		return ELEMENT_INCOMPATIBLE
+	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
 	if(element_flags & ELEMENT_DETACH)
 		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/Detach, override = TRUE)
 
 /// Deactivates the functionality defines by the element on the given datum
 /datum/element/proc/Detach(datum/source, force)
+	SEND_SIGNAL(source, COMSIG_ELEMENT_DETACH, src)
 	SHOULD_CALL_PARENT(1)
 	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
 
@@ -44,7 +48,7 @@
 
 /**
   * Finds the singleton for the element type given and detaches it from src
-  * You only need additional arguments beyond the type if you're using ELEMENT_BESPOKE
+  * You only need additional arguments beyond the type if you're using [ELEMENT_BESPOKE]
   */
 /datum/proc/_RemoveElement(list/arguments)
 	var/datum/element/ele = SSdcs.GetElement(arguments)

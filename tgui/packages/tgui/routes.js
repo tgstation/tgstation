@@ -1,6 +1,7 @@
 import { Achievements } from './interfaces/Achievements';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
+import { AiRestorer } from './interfaces/AiRestorer';
 import { AirlockElectronics } from './interfaces/AirlockElectronics';
 import { Apc } from './interfaces/Apc';
 import { AtmosAlertConsole } from './interfaces/AtmosAlertConsole';
@@ -17,6 +18,7 @@ import { BrigTimer } from './interfaces/BrigTimer';
 import { Canister } from './interfaces/Canister';
 import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
+import { CargoHoldTerminal } from './interfaces/CargoHoldTerminal';
 import { CellularEmporium } from './interfaces/CellularEmporium';
 import { CentcomPodLauncher } from './interfaces/CentcomPodLauncher';
 import { ChemAcclimator } from './interfaces/ChemAcclimator';
@@ -38,8 +40,11 @@ import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
+import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
+import { ExosuitControlConsole } from './interfaces/ExosuitControlConsole';
+import { Gateway } from './interfaces/Gateway';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
 import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
@@ -57,6 +62,7 @@ import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
+import { MalfunctionModulePicker } from './interfaces/MalfunctionModulePicker';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
@@ -65,7 +71,6 @@ import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
-import { NtosAiRestorer } from './interfaces/NtosAiRestorer';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
@@ -85,12 +90,16 @@ import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreBox } from './interfaces/OreBox';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { Pandemic } from './interfaces/Pandemic';
+import { ParticleAccelerator } from './interfaces/ParticleAccelerator';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
+import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
+import { RemoteRobotControl } from './interfaces/RemoteRobotControl';
+import { RoboticsControlConsole } from './interfaces/RoboticsControlConsole';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
@@ -107,17 +116,18 @@ import { SpaceHeater } from './interfaces/SpaceHeater';
 import { SpawnersMenu } from './interfaces/SpawnersMenu';
 import { StationAlertConsole } from './interfaces/StationAlertConsole';
 import { SuitStorageUnit } from './interfaces/SuitStorageUnit';
+import { SyndContractor } from './interfaces/SyndContractor';
 import { Tank } from './interfaces/Tank';
 import { TankDispenser } from './interfaces/TankDispenser';
 import { Teleporter } from './interfaces/Teleporter';
 import { ThermoMachine } from './interfaces/ThermoMachine';
 import { Timer } from './interfaces/Timer';
+import { TransferValve } from './interfaces/TransferValve';
 import { TurbineComputer } from './interfaces/TurbineComputer';
 import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
-import { SyndContractor } from './interfaces/SyndContractor';
 
 const ROUTES = {
   achievements: {
@@ -130,6 +140,10 @@ const ROUTES = {
   },
   airalarm: {
     component: () => AirAlarm,
+    scrollable: true,
+  },
+  ai_restorer: {
+    component: () => AiRestorer,
     scrollable: true,
   },
   airlock_electronics: {
@@ -199,6 +213,10 @@ const ROUTES = {
   },
   cargo_express: {
     component: () => CargoExpress,
+    scrollable: true,
+  },
+  cargo_hold_terminal: {
+    component: () => CargoHoldTerminal,
     scrollable: true,
   },
   cellular_emporium: {
@@ -285,6 +303,10 @@ const ROUTES = {
     component: () => EightBallVote,
     scrollable: false,
   },
+  electropack: {
+    component: () => Electropack,
+    scrollable: false,
+  },
   emergency_shuttle_console: {
     component: () => EmergencyShuttleConsole,
     scrollable: false,
@@ -292,6 +314,14 @@ const ROUTES = {
   engraved_message: {
     component: () => EngravedMessage,
     scrollable: false,
+  },
+  exosuit_control_console: {
+    component: () => ExosuitControlConsole,
+    scrollable: true,
+  },
+  gateway: {
+    component: () => Gateway,
+    scrollable: true,
   },
   gps: {
     component: () => Gps,
@@ -366,6 +396,11 @@ const ROUTES = {
     component: () => Mint,
     scrollable: false,
   },
+  malfunction_module_picker: {
+    component: () => MalfunctionModulePicker,
+    scrollable: true,
+    theme: 'malfunction',
+  },
   mulebot: {
     component: () => Mule,
     scrollable: false,
@@ -399,7 +434,7 @@ const ROUTES = {
     scrollable: false,
   },
   ntos_ai_restorer: {
-    component: () => NtosAiRestorer,
+    component: () => AiRestorer,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -515,6 +550,10 @@ const ROUTES = {
     component: () => Pandemic,
     scrollable: true,
   },
+  particle_accelerator: {
+    component: () => ParticleAccelerator,
+    scrollable: false,
+  },
   personal_crafting: {
     component: () => PersonalCrafting,
     scrollable: true,
@@ -542,6 +581,19 @@ const ROUTES = {
   radio: {
     component: () => Radio,
     scrollable: false,
+  },
+  radioactive_microlaser: {
+    component: () => RadioactiveMicrolaser,
+    scrollable: false,
+    theme: 'syndicate',
+  },
+  remote_robot_control: {
+    component: () => RemoteRobotControl,
+    scrollable: true,
+  },
+  robotics_control_console: {
+    component: () => RoboticsControlConsole,
+    scrollable: true,
   },
   roulette: {
     component: () => Roulette,
@@ -632,6 +684,10 @@ const ROUTES = {
   },
   timer: {
     component: () => Timer,
+    scrollable: false,
+  },
+  transfer_valve: {
+    component: () => TransferValve,
     scrollable: false,
   },
   turbine_computer: {

@@ -1,0 +1,5 @@
+author: "Indie-ana Jones"
+delete-after: True
+changes: 
+  - tweak: "Reports coming in indicate that the Space Dragon entity harassing stations has changed tactics, and is now attempting to flood stations with space carp."
+  - tweak: "Space Dragon preference is no longer shared with xenos, and is instead an independent option."

@@ -10,26 +10,38 @@
   * Useful when you want shared behaviour independent of type inheritance
   */
 /datum/component
-	/// Defines how duplicate existing components are handled when added to a datum
-	/// See `COMPONENT_DUPE_*` definitions for available options
+	/**
+	  * Defines how duplicate existing components are handled when added to a datum
+	  *
+	  * See [COMPONENT_DUPE_*][COMPONENT_DUPE_ALLOWED] definitions for available options
+	  */
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
-	/// The type to check for duplication
-	/// `null` means exact match on `type` (default)
-	/// Any other type means that and all subtypes
+	/**
+	  * The type to check for duplication
+	  *
+	  * `null` means exact match on `type` (default)
+	  *
+	  * Any other type means that and all subtypes
+	  */
 	var/dupe_type
 
 	/// The datum this components belongs to
 	var/datum/parent
 
-	/// Only set to true if you are able to properly transfer this component
-	/// At a minimum RegisterWithParent and UnregisterFromParent should be used
-	/// Make sure you also implement PostTransfer for any post transfer handling
+	/**
+	  * Only set to true if you are able to properly transfer this component
+	  *
+	  * At a minimum [RegisterWithParent][/datum/component/proc/RegisterWithParent] and [UnregisterFromParent][/datum/component/proc/UnregisterFromParent] should be used
+	  *
+	  * Make sure you also implement [PostTransfer][/datum/component/proc/PostTransfer] for any post transfer handling
+	  */
 	var/can_transfer = FALSE
 
 /**
   * Create a new component.
-  * Additional arguments are passed to `Initialize()`
+  *
+  * Additional arguments are passed to [Initialize()][/datum/component/proc/Initialize]
   *
   * Arguments:
   * * datum/P the parent datum this component reacts to signals from
@@ -45,6 +57,7 @@
 
 /**
   * Called during component creation with the same arguments as in new excluding parent.
+  *
   * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
   */
 /datum/component/proc/Initialize(...)
@@ -52,8 +65,10 @@
 
 /**
   * Properly removes the component from `parent` and cleans up references
-  * Setting `force` makes it not check for and remove the component from the parent
-  * Setting `silent` deletes the component without sending a `COMSIG_COMPONENT_REMOVING` signal
+  *
+  * Arguments:
+  * * force - makes it not check for and remove the component from the parent
+  * * silent - deletes the component without sending a [COMSIG_COMPONENT_REMOVING] signal
   */
 /datum/component/Destroy(force=FALSE, silent=FALSE)
 	if(!force && parent)
@@ -126,6 +141,7 @@
   * Register the component with the parent object
   *
   * Use this proc to register with your parent object
+  *
   * Overridable proc that's called when added to a new parent
   */
 /datum/component/proc/RegisterWithParent()
@@ -135,6 +151,7 @@
   * Unregister from our parent object
   *
   * Use this proc to unregister from your parent object
+  *
   * Overridable proc that's called when removed from a parent
   * *
   */
@@ -190,6 +207,7 @@
   * Stop listening to a given signal from target
   *
   * Breaks the relationship between target and source datum, removing the callback when the signal fires
+  *
   * Doesn't care if a registration exists or not
   *
   * Arguments:
@@ -229,7 +247,9 @@
 
 /**
   * Called on a component when a component of the same type was added to the same parent
-  * See `/datum/component/var/dupe_mode`
+  *
+  * See [/datum/component/var/dupe_mode]
+  *
   * `C`'s type will always be the same of the called component
   */
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
@@ -237,9 +257,12 @@
 
 
 /**
-  * Called on a component when a component of the same type was added to the same parent with COMPONENT_DUPE_SELECTIVE
-  * See `/datum/component/var/dupe_mode`
+  * Called on a component when a component of the same type was added to the same parent with [COMPONENT_DUPE_SELECTIVE]
+  *
+  * See [/datum/component/var/dupe_mode]
+  *
   * `C`'s type will always be the same of the called component
+  *
   * return TRUE if you are absorbing the component, otherwise FALSE if you are fine having it exist as a duplicate component
   */
 /datum/component/proc/CheckDupeComponent(datum/component/C, ...)
@@ -250,7 +273,6 @@
   * Callback Just before this component is transferred
   *
   * Use this to do any special cleanup you might need to do before being deregged from an object
-  *
   */
 /datum/component/proc/PreTransfer()
 	return
@@ -259,8 +281,8 @@
   * Callback Just after a component is transferred
   *
   * Use this to do any special setup you need to do after being moved to a new object
-  * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
   *
+  * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
   */
 /datum/component/proc/PostTransfer()
 	return COMPONENT_INCOMPATIBLE //Do not support transfer by default as you must properly support it
@@ -279,8 +301,10 @@
 
 /**
   * Internal proc to handle most all of the signaling procedure
+  *
   * Will runtime if used on datums with an empty component list
-  * Use the `SEND_SIGNAL` define instead
+  *
+  * Use the [SEND_SIGNAL] define instead
   */
 /datum/proc/_SendSignal(sigtype, list/arguments)
 	var/target = comp_lookup[sigtype]
@@ -301,6 +325,7 @@
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
   * Return any component assigned to this datum of the given type
+  *
   * This will throw an error if it's possible to have more than one component of that type on the parent
   *
   * Arguments:
@@ -320,6 +345,7 @@
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
   * Return any component assigned to this datum of the exact given type
+  *
   * This will throw an error if it's possible to have more than one component of that type on the parent
   *
   * Arguments:
@@ -356,9 +382,13 @@
 
 /**
   * Creates an instance of `new_type` in the datum and attaches to it as parent
-  * Sends the `COMSIG_COMPONENT_ADDED` signal to the datum
-  * Returns the component that was created. Or the old component in a dupe situation where `COMPONENT_DUPE_UNIQUE` was set
+  *
+  * Sends the [COMSIG_COMPONENT_ADDED] signal to the datum
+  *
+  * Returns the component that was created. Or the old component in a dupe situation where [COMPONENT_DUPE_UNIQUE] was set
+  *
   * If this tries to add an component to an incompatible type, the component will be deleted and the result will be `null`. This is very unperformant, try not to do it
+  *
   * Properly handles duplicate situations based on the `dupe_mode` var
   */
 /datum/proc/_AddComponent(list/raw_args)

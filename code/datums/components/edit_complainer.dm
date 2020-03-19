@@ -3,7 +3,7 @@
 	var/list/say_lines
 
 /datum/component/edit_complainer/Initialize(list/text)
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	var/static/list/default_lines = list(

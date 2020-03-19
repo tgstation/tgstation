@@ -24,7 +24,6 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 #define RNGCHEM_OUTPUT "output"
 
 /datum/chemical_reaction/randomized
-	name = "semi randomized reaction"
 
 	var/persistent = FALSE
 	var/persistence_period = 7 //Will reset every x days
@@ -147,8 +146,6 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	return TRUE
 
 /datum/chemical_reaction/randomized/secret_sauce
-	name = "secret sauce creation"
-	id = "secretsauce"
 	persistent = TRUE
 	persistence_period = 7 //Reset every week
 	randomize_container = TRUE
@@ -168,7 +165,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 
 /obj/item/paper/secretrecipe
 	name = "old recipe"
-	var/recipe_id = "secretsauce"
+	var/recipe_id = /datum/chemical_reaction/randomized/secret_sauce
 
 /obj/item/paper/secretrecipe/examine(mob/user) //Extra secret
 	if(isobserver(user))
@@ -186,6 +183,7 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	var/datum/chemical_reaction/recipe = get_chemical_reaction(recipe_id)
 	if(!recipe)
 		info = "This recipe is illegible."
+		return
 	var/list/dat = list("<ul>")
 	for(var/rid in recipe.required_reagents)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[rid]
