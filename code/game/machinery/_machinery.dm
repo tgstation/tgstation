@@ -329,7 +329,7 @@ Class Procs:
 				return TRUE
 		else
 			if(user_unbuckle_mob(buckled_mobs[1],user))
-				return 1
+				return TRUE
 	return _try_interact(user)
 
 /obj/machinery/attack_ai(mob/user)
