@@ -566,17 +566,25 @@
 		/obj/item/reagent_containers/borghypo/syndicate,
 		/obj/item/twohanded/shockpaddles/syndicate/cyborg,
 		/obj/item/healthanalyzer,
-		/obj/item/melee/transforming/energy/sword/cyborg/saw, //Syndicate mediborgs used to have the other surgical tools as well, but they didn't really need them since ops start the round with microbomb implants that blow up their bodies upon death anyway. They were removed because they were bloating the inventories of syndicate mediborgs, but if you want your syndicate mediborg to be able to perform surgery on its own for some reason, you can buy a syndicate medical cyborg additional surgical tools upgrade as a nuke op for 1 TC to add them back (or research the Cyborg Upgrades: Syndicate tech node and print that upgrade from a mechanical fabricator).
-		/obj/item/roller/robo,
+		/obj/item/surgical_drapes,
+		/obj/item/scalpel/advanced, //scalpel+saw
+		/obj/item/retractor/advanced, //retractor+hemostat
+		/obj/item/surgicaldrill/advanced, //drill+cautery
+		/obj/item/melee/transforming/energy/sword/cyborg/saw, //we already have a tool that can perform saw steps, but c'mon, energy saws are badass (and have a high force)
 		/obj/item/organ_storage,
-		/obj/item/borg/lollipop, //this'd be down in the emag_modules section, but then every powergaming op would feel "obligated" to emag their syndicate medical cyborgs so that they can stock up on lollipops/omnizine
+		/obj/item/roller/robo,
+		/obj/item/borg/apparatus/beaker,
+		/obj/item/reagent_containers/dropper,
+		/obj/item/reagent_containers/syringe,
 		/obj/item/card/emag,
 		/obj/item/crowbar/cyborg,
 		/obj/item/extinguisher/mini,
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/gun/medbeam)
-	emag_modules = list(/obj/item/borg/cyborghug/medical) //:veryflushed:
+	emag_modules = list(
+		/obj/item/borg/cyborghug/medical, //:veryflushed:
+		/obj/item/borg/lollipop) //for rewarding your op buddies for weldering you
 	cyborg_base_icon = "synd_medical"
 	moduleselect_icon = "malf"
 	can_be_pushed = FALSE
@@ -602,6 +610,9 @@
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/destTagger/borg,
 		/obj/item/stack/cable_coil/cyborg,
+		/obj/item/borg/apparatus/beaker, //for sabotaging Medbay
+		/obj/item/reagent_containers/dropper, //also for sabotaging Medbay
+		/obj/item/reagent_containers/syringe, //also for sabotaging Medbay
 		/obj/item/pinpointer/syndicate_cyborg,
 		/obj/item/borg_chameleon)
 	emag_modules = list(

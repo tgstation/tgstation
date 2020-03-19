@@ -1054,8 +1054,8 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/support/reinforcement/medical_borg
 	name = "Syndicate Medical Cyborg"
-	desc = "A combat medical cyborg. Has limited offensive potential, but makes more than up for it with its support capabilities. \
-			It comes equipped with a health analyzer, nanite hypospray, medical beamgun, lollipop dispenser, combat defibrillator, energy saw, emag, pinpointer, and flash, among other useful items."
+	desc = "A combat medical cyborg. Doesn't have much ranged offensive potential, but more than makes up for it with its support capabilities. \
+			It comes equipped with a health analyzer, a nanite hypospray, a medical beamgun, a combat defibrillator, an energy saw, various surgical instruments, an emag, a pinpointer, and a flash, among other useful items."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/medical
 	refundable = TRUE
 	cost = 35
@@ -1065,30 +1065,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Syndicate Saboteur Cyborg"
 	desc = "A streamlined engineering cyborg, equipped with covert modules. Also incapable of leaving the welder in the shuttle. \
 			Aside from regular Engineering equipment, it comes with a special destination tagger that lets it traverse disposals networks. \
-			It also has a chameleon projector lets it disguise itself as a Nanotrasen cyborg, thermal vision, cable cuffs, and a pinpointer, among other useful items and features."
+			It also has a chameleon projector lets it disguise itself as a Nanotrasen cyborg, thermal vision, a beaker storage apparatus, cable cuffs, and a pinpointer, among other useful items and features."
 	item = /obj/item/antag_spawner/nuke_ops/borg_tele/saboteur
 	refundable = TRUE
 	cost = 35
-	restricted = TRUE
-
-/datum/uplink_item/support/surgeryupgrade
-	name = "Syndicate Medical Cyborg Additional Surgical Tools Upgrade"
-	desc = "An upgrade to the syndicate medical module that installs surgical drapes, a retractor, a hemostat, a cautery, a surgical drill, and a scalpel, \
-			allowing a syndicate medical cyborg with this upgrade installed to perform surgery on its own. \
-			WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
-	item = /obj/item/borg/upgrade/surgical_tools
-	refundable = TRUE
-	cost = 1 //this cost is just here so that nuke ops won't (spam) buy this as a meme every round
-	restricted = TRUE
-
-/datum/uplink_item/support/medicalsabotageupgrade
-	name = "Syndicate Medical Sabotage Upgrade"
-	desc = "An upgrade to the syndicate saboteur module (or syndicate medical module) that installs a beaker storage apparatus, a syringe, and a dropper, \
-			allowing a syndicate saboteur cyborg with this upgrade installed to sabotage Medbay more effectively. \
-			WARNING: Can clutter up a cyborg's inventory with tools that they might not need."
-	item = /obj/item/borg/upgrade/surgical_tools/medicalsabotage
-	refundable = TRUE
-	cost = 5 //being able to put deathmixes in patches, cryotubes, etc. in Medbay *is* actually a pretty significant buff to saboteur borgs, hence the extra cost
 	restricted = TRUE
 
 /datum/uplink_item/support/gygax

@@ -606,24 +606,6 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/datum/design/borg_upgrade_syndicate_surgical_tools
-	name = "Cyborg Upgrade (Syndicate Medical Cyborg Additional Surgical Tools)"
-	id = "borg_upgrade_syndicate_surgical_tools"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/surgical_tools
-	materials = list(/datum/material/iron = 5000, /datum/material/glass = 4000, /datum/material/silver = 4000) //same cost as a surgical processor upgrade
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
-/datum/design/borg_upgrade_syndicate_medical_sabotage
-	name = "Cyborg Upgrade (Syndicate Medical Sabotage)"
-	id = "borg_upgrade_syndicate_medical_sabotage"
-	build_type = MECHFAB
-	build_path = /obj/item/borg/upgrade/surgical_tools/medicalsabotage
-	materials = list(/datum/material/iron = 4000, /datum/material/glass = 4500) //twice the cost of a beaker apparatus upgrade
-	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
-
 /datum/design/borg_upgrade_diamonddrill
 	name = "Cyborg Upgrade (Diamond Drill)"
 	id = "borg_upgrade_diamonddrill"

@@ -349,15 +349,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
-/datum/techweb_node/cyborg_upg_syndiborg
-	id = "cyborg_upg_syndiborg"
-	display_name = "Cyborg Upgrades: Syndicate"
-	description = "Upgrades for syndicate cyborgs." //yeah, this kind of breaks the pattern of the descriptions for these things, but the illegal technology node already has a "syndicate upgrade" for cyborgs in the form of the illegal equipment module
-	prereq_ids = list("syndicate_basic", "cyborg_upg_combat")
-	design_ids = list("borg_upgrade_syndicate_surgical_tools", "borg_upgrade_syndicate_medical_sabotage")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	export_price = 5000
-
 /datum/techweb_node/ai
 	id = "ai"
 	display_name = "Artificial Intelligence"
