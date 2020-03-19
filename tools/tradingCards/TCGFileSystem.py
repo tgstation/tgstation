@@ -3,11 +3,11 @@ import sys
 def main():
     args = sys.argv
     leg = len(args)
-    if leg >= 3 and (args[1].strip().lower() == "extract" or args[1].strip().lower() == "ex"): 
+    if leg >= 3 and (args[1].strip().lower() == "extract" or args[1].strip().lower() == "ex"):
         from_file(args[2], args[3])
-    elif leg >= 3 and (args[1].strip().lower() == "insert" or args[1].strip().lower() == "is"): 
+    elif leg >= 3 and (args[1].strip().lower() == "insert" or args[1].strip().lower() == "is"):
         to_file(args[3], args[2])
-    else:    
+    else:
         print("Invalid Input")
 master = {
     "template" : -1,
@@ -79,25 +79,10 @@ def convert_line_from(outdatedJoke):
     toOp = outdatedJoke.split('|')
     if toOp[0] != '':
         toReturn += ':' + list(master.keys())[0] + ' = ' + toOp[0] + '\n'
-    for x in range(1, len(toOp)):
+    for x in range(1, len(toOp) - 1):
         temp = toOp[x].split(',')
         toReturn += ':' + list(master.keys())[int(temp[0]) + 1] + ' = ' + temp[1].replace('|', '') + '\n'
     return toReturn + '\n'
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
