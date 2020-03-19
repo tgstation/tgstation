@@ -103,7 +103,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "crayons and piss"
 	glass_icon_state = "greenbeerglass"
 	glass_name = "glass of green beer"
-	glass_desc = "Mmm... Grayons..."
+	glass_desc = "A freezing pint of green beer. Festive."
 
 /datum/reagent/consumable/ethanol/beer/green/on_mob_life(mob/living/carbon/M)
 	if(M.color != color)
