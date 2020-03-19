@@ -519,3 +519,8 @@
 	desc = "Chop chop!"
 	icon_state = "morehat"
 	item_state = "morehat"
+
+/obj/item/clothing/head/more/attack_self(mob/M)
+	var/list/hat_list = subtypesof(/obj/item/clothing/head)
+ 	var/hat = pick(hat_list)
+ 	new hat(get_turf(M))
