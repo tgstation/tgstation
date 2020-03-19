@@ -1994,7 +1994,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/eastleft{
 	name = "Armory";
-	req_access_txt = "2"
+	req_access_txt = "3"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory/upper)
@@ -2755,7 +2755,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/open/openspace,
 /area/maintenance/central)
 "gp" = (
 /obj/effect/turf_decal/trimline/white/filled/corner{
@@ -5734,7 +5734,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/open/openspace,
 /area/maintenance/central)
 "mn" = (
 /obj/structure/chair/stool,
@@ -5890,7 +5890,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/open/openspace,
 /area/maintenance/central)
 "mH" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -6117,7 +6117,7 @@
 	dir = 8
 	},
 /obj/structure/lattice/catwalk,
-/turf/open/space/basic,
+/turf/open/openspace,
 /area/maintenance/central)
 "nf" = (
 /obj/effect/turf_decal/tile/red{
@@ -16798,7 +16798,7 @@
 /obj/structure/railing/corner,
 /obj/machinery/door/window/eastright{
 	name = "Armory";
-	req_access_txt = "2"
+	req_access_txt = "3"
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/security/armory/upper)
