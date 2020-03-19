@@ -326,7 +326,7 @@ Class Procs:
 		if(buckled_mobs.len > 1)
 			var/unbuckled = input(user, "Who do you wish to unbuckle?","Unbuckle Who?") as null|mob in sortNames(buckled_mobs)
 			if(user_unbuckle_mob(unbuckled,user))
-				return 1
+				return TRUE
 		else
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return 1
