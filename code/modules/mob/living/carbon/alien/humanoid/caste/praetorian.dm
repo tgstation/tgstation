@@ -4,7 +4,7 @@
 	maxHealth = 250
 	health = 250
 	icon_state = "alienp"
-	evolution_paths = list("Queen")
+	evolution_paths = list(/mob/living/carbon/alien/humanoid/royal/queen)
 
 /mob/living/carbon/alien/humanoid/royal/praetorian/Initialize()
 	real_name = name
