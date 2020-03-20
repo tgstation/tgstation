@@ -5,6 +5,7 @@
 	ask_verb = "queries"
 	exclaim_verb = "screeches"
 	whisper_verb = "clicks"
+	sing_verb = "chimes"
 	key = "b"
 	space_chance = 10
 	syllables = list(

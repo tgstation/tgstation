@@ -197,7 +197,7 @@
 	GLOB.apcs_list -= src
 
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	area.power_light = FALSE
 	area.power_equip = FALSE
 	area.power_environ = FALSE
@@ -318,12 +318,17 @@
 	if(update & 2)
 		SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 		if(!(machine_stat & (BROKEN|MAINT)) && update_state & UPSTATE_ALLGOOD)
-			SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, plane, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apcox-[locked]", layer, EMISSIVE_PLANE, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, plane, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "apco3-[charging]", layer, EMISSIVE_PLANE, dir)
 			if(operating)
-				SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-				SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
-				SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco0-[equipment]", layer, EMISSIVE_PLANE, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco1-[lighting]", layer, EMISSIVE_PLANE, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "apco2-[environ]", layer, EMISSIVE_PLANE, dir)
 
 	// And now, separately for cleanness, the lighting changing
 	if(update_state & UPSTATE_ALLGOOD)
@@ -431,23 +436,23 @@
 				if (has_electronics == APC_ELECTRONICS_INSTALLED)
 					has_electronics = APC_ELECTRONICS_MISSING
 					if (machine_stat & BROKEN)
-						user.visible_message("<span class='notice'>[user.name] has broken the power control board inside [src.name]!</span>",\
+						user.visible_message("<span class='notice'>[user.name] breaks the power control board inside [src.name]!</span>",\
 							"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 							"<span class='hear'>You hear a crack.</span>")
 						return
 					else if (obj_flags & EMAGGED)
 						obj_flags &= ~EMAGGED
-						user.visible_message("<span class='notice'>[user.name] has discarded an emagged power control board from [src.name]!</span>",\
+						user.visible_message("<span class='notice'>[user.name] discards an emagged power control board from [src.name]!</span>",\
 							"<span class='notice'>You discard the emagged power control board.</span>")
 						return
 					else if (malfhack)
-						user.visible_message("<span class='notice'>[user.name] has discarded a strangely programmed power control board from [src.name]!</span>",\
+						user.visible_message("<span class='notice'>[user.name] discards a strangely programmed power control board from [src.name]!</span>",\
 							"<span class='notice'>You discard the strangely programmed board.</span>")
 						malfai = null
 						malfhack = 0
 						return
 					else
-						user.visible_message("<span class='notice'>[user.name] has removed the power control board from [src.name]!</span>",\
+						user.visible_message("<span class='notice'>[user.name] removes the power control board from [src.name]!</span>",\
 							"<span class='notice'>You remove the power control board.</span>")
 						new /obj/item/electronics/apc(loc)
 						return
@@ -524,11 +529,11 @@
 		if(W.use_tool(src, user, 50, volume=50, amount=3))
 			if ((machine_stat & BROKEN) || opened==APC_COVER_REMOVED)
 				new /obj/item/stack/sheet/metal(loc)
-				user.visible_message("<span class='notice'>[user.name] has cut [src] apart with [W].</span>",\
+				user.visible_message("<span class='notice'>[user.name] cuts [src] apart with [W].</span>",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else
 				new /obj/item/wallframe/apc(loc)
-				user.visible_message("<span class='notice'>[user.name] has cut [src] from the wall with [W].</span>",\
+				user.visible_message("<span class='notice'>[user.name] cuts [src] from the wall with [W].</span>",\
 					"<span class='notice'>You cut the APC frame from the wall.</span>")
 			qdel(src)
 			return TRUE
@@ -549,7 +554,7 @@
 			if(!user.transferItemToLoc(W, src))
 				return
 			cell = W
-			user.visible_message("<span class='notice'>[user.name] has inserted the power cell to [src.name]!</span>",\
+			user.visible_message("<span class='notice'>[user.name] inserts the power cell to [src.name]!</span>",\
 				"<span class='notice'>You insert the power cell.</span>")
 			chargecount = 0
 			update_icon()
@@ -959,7 +964,7 @@
 		. = UI_INTERACTIVE
 
 /obj/machinery/power/apc/ui_act(action, params)
-	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer))
+	if(..() || !can_use(usr, 1) || (locked && !usr.has_unlimited_silicon_privilege && !failure_timer && action != "toggle_nightshift"))
 		return
 	switch(action)
 		if("lock")
@@ -1073,9 +1078,9 @@
 	occupier.eyeobj.name = "[occupier.name] (AI Eye)"
 	if(malf.parent)
 		qdel(malf)
-	occupier.verbs += /mob/living/silicon/ai/proc/corereturn
+	var/datum/action/innate/core_return/CR = new
+	CR.Grant(occupier)
 	occupier.cancel_camera()
-
 
 /obj/machinery/power/apc/proc/malfvacate(forced)
 	if(!occupier)
@@ -1085,7 +1090,6 @@
 		occupier.parent.shunted = 0
 		occupier.parent.setOxyLoss(occupier.getOxyLoss())
 		occupier.parent.cancel_camera()
-		occupier.parent.verbs -= /mob/living/silicon/ai/proc/corereturn
 		qdel(occupier)
 	else
 		to_chat(occupier, "<span class='danger'>Primary core damaged, unable to return core processes.</span>")
@@ -1374,7 +1378,7 @@
 
 /obj/machinery/power/apc/proc/set_broken()
 	if(malfai && operating)
-		malfai.malf_picker.processing_time = CLAMP(malfai.malf_picker.processing_time - 10,0,1000)
+		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	operating = FALSE
 	obj_break()
 	if(occupier)

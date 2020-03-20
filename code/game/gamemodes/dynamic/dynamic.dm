@@ -119,7 +119,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/antags_rolled = 0
 
 /datum/game_mode/dynamic/admin_panel()
-	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</A><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 
@@ -290,10 +290,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		generate_threat()
 
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-	latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-	midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
+	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	return TRUE
 
@@ -624,7 +624,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		// Somehow it managed to trigger midround multiple times so this was moved here.
 		// There is no way this should be able to trigger an injection twice now.
 		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-		midround_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
+		midround_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
 
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
@@ -753,7 +753,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)

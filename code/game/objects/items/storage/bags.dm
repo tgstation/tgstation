@@ -57,14 +57,14 @@
 
 /obj/item/storage/bag/trash/update_icon_state()
 	switch(contents.len)
-		if(0)
-			icon_state = "[initial(icon_state)]"
-		if(0 to 11)
-			icon_state = "[initial(icon_state)]1"
+		if(20 to INFINITY)
+			icon_state = "[initial(icon_state)]3"
 		if(11 to 20)
 			icon_state = "[initial(icon_state)]2"
+		if(1 to 11)
+			icon_state = "[initial(icon_state)]1"
 		else
-			icon_state = "[initial(icon_state)]3"
+			icon_state = "[initial(icon_state)]"
 
 /obj/item/storage/bag/trash/cyborg
 	insertable = FALSE
@@ -293,7 +293,7 @@
  * Trays - Agouri
  */
 /obj/item/storage/bag/tray
-	name = "tray"
+	name = "serving tray"
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "tray"
 	desc = "A metal tray to lay food on."
@@ -350,6 +350,12 @@
 /obj/item/storage/bag/tray/Exited()
 	. = ..()
 	update_icon()
+
+/obj/item/storage/bag/tray/cafeteria
+	name = "cafeteria tray"
+	icon = 'icons/obj/food/containers.dmi'
+	icon_state = "foodtray"
+	desc = "A cheap metal tray to pile today's meal onto."
 
 /*
  *	Chemistry bag

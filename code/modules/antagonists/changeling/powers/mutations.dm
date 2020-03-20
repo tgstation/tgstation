@@ -476,6 +476,8 @@
 	clothing_flags = STOPSPRESSUREDAMAGE //Not THICKMATERIAL because it's organic tissue, so if somebody tries to inject something into it, it still ends up in your blood. (also balance but muh fluff)
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/oxygen)
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90) //No armor at all.
+	actions_types = list()
+	cell = null
 
 /obj/item/clothing/suit/space/changeling/Initialize()
 	. = ..()
@@ -484,10 +486,15 @@
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around [loc.p_their()] body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='hear'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
 
+// seal the cell door
+/obj/item/clothing/suit/space/changeling/toggle_spacesuit_cell(mob/user)
+	return
+
 /obj/item/clothing/suit/space/changeling/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/H = loc
 		H.reagents.add_reagent(/datum/reagent/medicine/salbutamol, REAGENTS_METABOLISM)
+		H.adjust_bodytemperature(temperature_setting - H.bodytemperature) // force changelings to normal temp step mode played badly
 
 /obj/item/clothing/head/helmet/space/changeling
 	name = "flesh mass"

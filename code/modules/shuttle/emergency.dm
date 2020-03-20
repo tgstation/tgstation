@@ -121,7 +121,7 @@
 
 	if(SSshuttle.emergency.mode == SHUTTLE_STRANDED)
 		authorized.Cut()
-		DISABLE_BITFIELD(obj_flags, EMAGGED)
+		obj_flags &= ~(EMAGGED)
 
 	if(ENGINES_STARTED || (!IS_DOCKED))
 		return .
@@ -140,7 +140,7 @@
 	if(!IS_DOCKED)
 		return
 
-	if(CHECK_BITFIELD(obj_flags, EMAGGED) || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
+	if((obj_flags & EMAGGED) || ENGINES_STARTED)	//SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LA-SYSTEM ERROR: THE SHUTTLE WILL LAUNCH IN 10 SECONDS
 		to_chat(user, "<span class='warning'>The shuttle is already about to launch!</span>")
 		return
 
@@ -148,7 +148,7 @@
 	message_admins("[ADMIN_LOOKUPFLW(user)] has emagged the emergency shuttle [time] seconds before launch.")
 	log_shuttle("[key_name(user)] has emagged the emergency shuttle in [COORD(src)] [time] seconds before launch.")
 
-	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags |= EMAGGED
 	SSshuttle.emergency.movement_force = list("KNOCKDOWN" = 60, "THROW" = 20)//YOUR PUNY SEATBELTS can SAVE YOU NOW, MORTAL
 	var/datum/species/S = new
 	for(var/i in 1 to 10)
@@ -458,11 +458,11 @@
 /obj/machinery/computer/shuttle/pod/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
-	
+
 /obj/machinery/computer/shuttle/pod/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	ENABLE_BITFIELD(obj_flags, EMAGGED)
+	obj_flags |= EMAGGED
 	to_chat(user, "<span class='warning'>You fry the pod's alert level checking system.</span>")
 
 /obj/machinery/computer/shuttle/pod/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)

@@ -11,7 +11,7 @@
 	antag_flag = ROLE_TRAITOR
 	antag_datum = /datum/antagonist/traitor/
 	minimum_required_age = 0
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg")
 	required_candidates = 1
 	weight = 5
@@ -51,7 +51,7 @@
 	name = "Blood Brothers"
 	antag_flag = ROLE_BROTHER
 	antag_datum = /datum/antagonist/brother/
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI")
 	required_candidates = 2
 	weight = 4
@@ -101,7 +101,7 @@
 	name = "Changelings"
 	antag_flag = ROLE_CHANGELING
 	antag_datum = /datum/antagonist/changeling
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI", "Cyborg")
 	required_candidates = 1
 	weight = 3
@@ -198,7 +198,7 @@
 	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/cult
 	minimum_required_age = 14
-	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
+	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Chaplain", "Head of Personnel")
 	required_candidates = 2
 	weight = 3
 	cost = 35
@@ -343,7 +343,7 @@
 	antag_flag_override = ROLE_REV
 	antag_datum = /datum/antagonist/rev/head
 	minimum_required_age = 14
-	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	required_candidates = 3
 	weight = 2
 	delay = 7 MINUTES
@@ -352,6 +352,7 @@
 	high_population_requirement = 10
 	antag_cap = list(3,3,3,3,3,3,3,3,3,3)
 	flags = HIGHLANDER_RULESET
+	blocking_rules = list(/datum/dynamic_ruleset/latejoin/provocateur)
 	// I give up, just there should be enough heads with 35 players...
 	minimum_players = 35
 	var/datum/team/revolution/revolution
@@ -402,19 +403,20 @@
 	else if (check_heads_victory())
 		finished = STATION_VICTORY
 		SSshuttle.clearHostileEnvironment(src)
-		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-			We have remotely blacklisted the head revolutionaries from your cloning software to prevent accidental cloning.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
 		revolution.save_members()
 		for(var/datum/mind/M in revolution.members)	// Remove antag datums and prevents podcloned or exiled headrevs restarting rebellions.
 			if(M.has_antag_datum(/datum/antagonist/rev/head))
 				var/datum/antagonist/rev/head/R = M.has_antag_datum(/datum/antagonist/rev/head)
 				R.remove_revolutionary(FALSE, "gamemode")
-				var/mob/living/carbon/C = M.current
-				if(C.stat == DEAD)
-					C.makeUncloneable()
+				if(M.current)
+					var/mob/living/carbon/C = M.current
+					if(istype(C) && C.stat == DEAD)
+						C.makeUncloneable()
 			if(M.has_antag_datum(/datum/antagonist/rev))
 				var/datum/antagonist/rev/R = M.has_antag_datum(/datum/antagonist/rev)
 				R.remove_revolutionary(FALSE, "gamemode")
+		priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
+			We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, 'sound/ai/attention.ogg', null, "Central Command Loyalty Monitoring Division")
 		return RULESET_STOP_PROCESSING
 
 /// Checks for revhead loss conditions and other antag datums.
@@ -513,7 +515,7 @@
 	name = "Devil"
 	antag_flag = ROLE_DEVIL
 	antag_datum = /datum/antagonist/devil
-	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Head of Security", "Captain", "AI")
+	restricted_roles = list("Lawyer", "Curator", "Chaplain", "Prisoner", "Head of Security", "Captain", "AI")
 	required_candidates = 1
 	weight = 3
 	cost = 0
@@ -567,7 +569,7 @@
 	name = "Monkey"
 	antag_flag = ROLE_MONKEY
 	antag_datum = /datum/antagonist/monkey/leader
-	restricted_roles = list("Cyborg", "AI")
+	restricted_roles = list("Cyborg", "AI", "Prisoner")
 	required_candidates = 1
 	weight = 3
 	cost = 0
@@ -650,6 +652,6 @@
 	if (prob(meteorminutes/2))
 		wavetype = GLOB.meteors_catastrophic
 
-	var/ramp_up_final = CLAMP(round(meteorminutes/rampupdelta), 1, 10)
+	var/ramp_up_final = clamp(round(meteorminutes/rampupdelta), 1, 10)
 
 	spawn_meteors(ramp_up_final, wavetype)

@@ -210,7 +210,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 
 	user.set_machine(src)
 
-	var/dat = "<!DOCTYPE html><html><head><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
+	var/dat = "<!DOCTYPE html><html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Personal Data Assistant</title><link href=\"https://fonts.googleapis.com/css?family=Orbitron|Share+Tech+Mono|VT323\" rel=\"stylesheet\"></head><body bgcolor=\"" + background_color + "\"><style>body{" + font_mode + "}ul,ol{list-style-type: none;}a, a:link, a:visited, a:active, a:hover { color: #000000;text-decoration:none; }img {border-style:none;}a img{padding-right: 9px;}</style>"
 	dat += assets.css_tag()
 	dat += emoji_s.css_tag()
 
@@ -924,12 +924,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 		switch(scanmode)
 
 			if(PDA_SCANNER_MEDICAL)
-				C.visible_message("<span class='alert'>[user] has analyzed [C]'s vitals!</span>")
+				C.visible_message("<span class='notice'>[user] analyzes [C]'s vitals.</span>")
 				healthscan(user, C, 1)
 				add_fingerprint(user)
 
 			if(PDA_SCANNER_HALOGEN)
-				C.visible_message("<span class='warning'>[user] has analyzed [C]'s radiation levels!</span>")
+				C.visible_message("<span class='notice'>[user] analyzes [C]'s radiation levels.</span>")
 
 				user.show_message("<span class='notice'>Analyzing Results for [C]:</span>")
 				if(C.radiation)
@@ -1069,7 +1069,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 	if(incapacitated())
 		return
 	if(!isnull(aiPDA))
-		var/HTML = "<html><head><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
+		var/HTML = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>AI PDA Message Log</title></head><body>[aiPDA.tnote]</body></html>"
 		user << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 	else
 		to_chat(user, "<span class='warning'>You do not have a PDA! You should make an issue report about this.</span>")

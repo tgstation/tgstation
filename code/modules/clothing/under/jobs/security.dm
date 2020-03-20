@@ -53,6 +53,14 @@
 	item_state = "officerblueclothes"
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/security/constable
+	name = "constable outfit"
+	desc = "A british looking outfit."
+	icon_state = "constable"
+	item_state = "constable"
+	can_adjust = FALSE
+	custom_price = 200
+
 /obj/item/clothing/under/rank/security/warden
 	name = "security suit"
 	desc = "A formal security suit for officers complete with Nanotrasen belt buckle."
@@ -221,3 +229,10 @@
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
+
+/obj/item/clothing/under/rank/security/officer/beatcop
+	name = "space police uniform"
+	desc = "A police uniform often found in the lines at donut shops."
+	icon_state = "spacepolice_families"
+	item_state = "spacepolice_families"
+	can_adjust = FALSE

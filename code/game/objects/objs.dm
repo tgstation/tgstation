@@ -33,6 +33,8 @@
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
+	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of obj in openspace.
+
 /obj/vv_edit_var(vname, vval)
 	switch(vname)
 		if("anchored")
@@ -72,7 +74,6 @@
 		var/turf/T = loc
 		T.add_blueprints_preround(src)
 
-
 /obj/Destroy(force=FALSE)
 	if(!ismachinery(src))
 		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
@@ -83,7 +84,7 @@
 	SEND_SIGNAL(src, COMSIG_OBJ_SETANCHORED, anchorvalue)
 	anchored = anchorvalue
 
-/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force)
+/obj/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
 	..()
 	if(obj_flags & FROZEN)
 		visible_message("<span class='danger'>[src] shatters into a million pieces!</span>")
@@ -196,9 +197,6 @@
 	var/mob/M = src.loc
 	if(istype(M) && M.client && M.machine == src)
 		src.attack_self(M)
-
-/obj/proc/hide(h)
-	return
 
 /obj/singularity_pull(S, current_size)
 	..()

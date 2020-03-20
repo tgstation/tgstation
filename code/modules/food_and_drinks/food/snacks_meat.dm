@@ -131,8 +131,9 @@
 	name = "salami"
 	desc = "A slice of cured salami."
 	icon_state = "salami"
+	filling_color = "#CD4122"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1)
-	tastes = list("meat" = 1)
+	tastes = list("meat" = 1, "smoke" = 1)
 	foodtype = MEAT
 
 /obj/item/reagent_containers/food/snacks/rawkhinkali

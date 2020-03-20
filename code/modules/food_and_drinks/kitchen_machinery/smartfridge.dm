@@ -91,7 +91,7 @@
 
 		if(accept_check(O))
 			load(O)
-			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", "<span class='notice'>You add \the [O] to \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] adds \the [O] to \the [src].</span>", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
 			if (visible_contents)
 				update_icon()
@@ -425,10 +425,11 @@
 			return
 		O.applyOrganDamage(-repair_rate)
 
-/obj/machinery/smartfridge/organ/Exited(obj/item/organ/AM, atom/newLoc)
+/obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
-	if(istype(AM))
-		AM.organ_flags &= ~ORGAN_FROZEN
+	if(isorgan(AM))
+		var/obj/item/organ/O = AM
+		O.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------
 // Chemistry Medical Smartfridge

@@ -306,6 +306,42 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	name = "protect nonhuman"
 	human_check = FALSE
 
+/datum/objective/jailbreak
+	name = "jailbreak"
+	martyr_compatible = TRUE //why not?
+	var/target_role_type
+
+/datum/objective/jailbreak/find_target_by_role(role, role_type, invert=FALSE)
+	if(!invert)
+		target_role_type = role_type
+	return ..()
+
+/datum/objective/jailbreak/check_completion()
+	return completed || (considered_escaped(target))
+
+/datum/objective/jailbreak/update_explanation_text()
+	..()
+	if(target?.current)
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] escapes alive and out of custody."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/jailbreak/admin_edit(mob/admin)
+	admin_simple_target_pick(admin)
+
+/datum/objective/jailbreak/detain
+	name = "detain"
+
+/datum/objective/jailbreak/detain/check_completion()
+	return completed || (!considered_escaped(target) && (considered_alive(target) && target.current.onCentCom()))
+
+/datum/objective/jailbreak/detain/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] is delivered to nanotrasen alive and in custody."
+	else
+		explanation_text = "Free Objective"
+
 /datum/objective/hijack
 	name = "hijack"
 	explanation_text = "Hijack the shuttle to ensure no loyalist Nanotrasen crew escape alive and out of custody."
@@ -493,7 +529,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 				if(M.current.mind.assigned_role in possible_item.excludefromjob)
 					continue check_items
 			approved_targets += possible_item
-	return set_target(safepick(approved_targets))
+	if (length(approved_targets))
+		return set_target(pick(approved_targets))
+	return set_target(null)
 
 /datum/objective/steal/proc/set_target(datum/objective_item/item)
 	if(item)
@@ -1060,6 +1098,8 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/maroon,
 		/datum/objective/debrain,
 		/datum/objective/protect,
+		/datum/objective/jailbreak,
+		/datum/objective/jailbreak/detain,
 		/datum/objective/destroy,
 		/datum/objective/hijack,
 		/datum/objective/escape,

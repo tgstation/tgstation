@@ -39,8 +39,8 @@
 /obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-/obj/structure/closet/crate/update_overlays()
-	. = ..()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
 		. += "manifest"
 
@@ -88,10 +88,20 @@
 	name = "internals crate"
 	icon_state = "o2crate"
 
-/obj/structure/closet/crate/trashcart
+/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_state = "trashcart"
+
+/obj/structure/closet/crate/trashcart/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
+
+/obj/structure/closet/crate/trashcart/laundry
+	name = "laundry cart"
+	desc = "A large cart for hauling around large amounts of laundry."
+	icon_state = "laundry"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."

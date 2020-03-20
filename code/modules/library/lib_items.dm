@@ -145,14 +145,6 @@
 	else
 		icon_state = "book-5"
 
-/obj/structure/bookcase/manuals/medical
-	name = "medical manuals bookcase"
-
-/obj/structure/bookcase/manuals/medical/Initialize()
-	. = ..()
-	new /obj/item/book/manual/wiki/medical_cloning(src)
-	update_icon()
-
 
 /obj/structure/bookcase/manuals/engineering
 	name = "engineering manuals bookcase"
@@ -213,7 +205,7 @@
 
 /obj/item/book/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen))
-		if(is_blind(user))
+		if(user.is_blind())
 			to_chat(user, "<span class='warning'>As you are trying to write on the book, you suddenly feel very stupid!</span>")
 			return
 		if(unique)
@@ -323,7 +315,7 @@
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_TINY
-	var/obj/machinery/computer/libraryconsole/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
+	var/obj/machinery/computer/bookmanagement/computer	//Associated computer - Modes 1 to 3 use this
 	var/obj/item/book/book			//Currently scanned book
 	var/mode = 0							//0 - Scan only, 1 - Scan and Set Buffer, 2 - Scan and Attempt to Check In, 3 - Scan and Attempt to Add to Inventory
 

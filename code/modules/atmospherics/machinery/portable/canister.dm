@@ -303,9 +303,9 @@
 		if(close_valve)
 			valve_open = FALSE
 			update_icon()
-			investigate_log("Valve was <b>closed</b> by [key_name(user)].<br>", INVESTIGATE_ATMOS)
+			investigate_log("Valve was <b>closed</b> by [key_name(user)].", INVESTIGATE_ATMOS)
 		else if(valve_open && holding)
-			investigate_log("[key_name(user)] started a transfer into [holding].<br>", INVESTIGATE_ATMOS)
+			investigate_log("[key_name(user)] started a transfer into [holding].", INVESTIGATE_ATMOS)
 
 /obj/machinery/portable_atmospherics/canister/process_atmos()
 	..()
@@ -403,7 +403,7 @@
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				release_pressure = CLAMP(round(pressure), can_min_release_pressure, can_max_release_pressure)
+				release_pressure = clamp(round(pressure), can_min_release_pressure, can_max_release_pressure)
 				investigate_log("was set to [release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("valve")
 			var/logmsg
@@ -447,7 +447,7 @@
 					var/N = text2num(user_input)
 					if(!N)
 						return
-					timer_set = CLAMP(N,minimum_timer_set,maximum_timer_set)
+					timer_set = clamp(N,minimum_timer_set,maximum_timer_set)
 					log_admin("[key_name(usr)] has activated a prototype valve timer")
 					. = TRUE
 				if("toggle_timer")

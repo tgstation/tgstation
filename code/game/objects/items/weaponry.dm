@@ -81,7 +81,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander //ALL COMMENTS MADE REGARDING THIS SWORD MUST BE MADE IN ALL CAPS
 	desc = "<b><i>THERE CAN BE ONLY ONE, AND IT WILL BE YOU!!!</i></b>\nActivate it in your hand to point to the nearest victim."
 	flags_1 = CONDUCT_1
-	item_flags = DROPDEL //If this ever happens, it's because you lost an arm
+	item_flags = DROPDEL //WOW BRO YOU LOST AN ARM, GUESS WHAT YOU DONT GET YOUR SWORD ANYMORE //I CANT BELIEVE SPOOKYDONUT WOULD BREAK THE REQUIREMENTS
 	slot_flags = null
 	block_chance = 0 //RNG WON'T HELP YOU NOW, PANSY
 	light_range = 3
@@ -196,7 +196,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			"<span class='userdanger'>YOU FEEL THE POWER OF VALHALLA FLOWING THROUGH YOU! <i>THERE CAN BE ONLY ONE!!!</i></span>")
 			user.update_icons()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
-			icon_state = "claymore_valhalla"
+			icon_state = "claymore_gold"
 			item_state = "cultblade"
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
@@ -244,7 +244,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/wirerod/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/shard))
-		var/obj/item/twohanded/spear/S = new /obj/item/twohanded/spear
+		var/obj/item/spear/S = new /obj/item/spear
 
 		remove_item_from_storage(user)
 		if (!user.transferItemToLoc(I, S))
@@ -280,11 +280,27 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 2
 	throwforce = 20 //20 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 28 damage on hit due to guaranteed embedding
 	throw_speed = 4
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 100, "embedded_fall_chance" = 0)
+	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0)
+
+
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
 	custom_materials = list(/datum/material/iron=500, /datum/material/glass=500)
 	resistance_flags = FIRE_PROOF
+
+/obj/item/throwing_star/stamina
+	name = "shock throwing star"
+	desc = "An aerodynamic disc designed to cause excruciating pain when stuck inside fleeing targets, hopefully without causing fatal harm."
+	throwforce = 5
+	embedding = list("pain_chance" = 5, "embed_chance" = 100, "fall_chance" = 0, "jostle_chance" = 10, "pain_stam_pct" = 0.8, "jostle_pain_mult" = 3)
+
+/obj/item/throwing_star/toy
+	name = "toy throwing star"
+	desc = "An aerodynamic disc strapped with adhesive for sticking to people, good for playing pranks and getting yourself killed by security."
+	sharpness = IS_BLUNT
+	force = 0
+	throwforce = 0
+	embedding = list("pain_mult" = 0, "jostle_pain_mult" = 0, "embed_chance" = 100, "fall_chance" = 0)
 
 /obj/item/throwing_star/magspear
 	name = "magnetic spear"
@@ -295,7 +311,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	force = 10
 	throw_range = 0 //throwing these invalidates the speargun
 	attack_verb = list("stabbed", "ripped", "gored", "impaled")
-	embedding = list("embedded_pain_multiplier" = 8, "embed_chance" = 100, "embedded_fall_chance" = 0, "embedded_impact_pain_multiplier" = 15) //55 damage+embed on hit
+	embedding = list("pain_mult" = 8, "embed_chance" = 100, "fall_chance" = 0, "impact_pain_mult" = 15) //55 damage+embed on hit
 
 /obj/item/switchblade
 	name = "switchblade"
@@ -450,7 +466,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/mounted_chainsaw/Destroy()
 	var/obj/item/bodypart/part
-	new /obj/item/twohanded/required/chainsaw(get_turf(src))
+	new /obj/item/chainsaw(get_turf(src))
 	if(iscarbon(loc))
 		var/mob/living/carbon/holder = loc
 		var/index = holder.get_held_index_of_item(src)
@@ -475,7 +491,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/statuebust/Initialize()
 	. = ..()
 	AddComponent(/datum/component/art, impressiveness)
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 1000), 0)
+	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 1000)), 0)
 
 /obj/item/statuebust/hippocratic
 	name = "hippocrates bust"
@@ -519,7 +535,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	new board_item_type(get_turf(user))
+	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))//this probably has fucky interactions with telekinesis but for the record it wasnt my fault
+	S.buckle_mob(user)
 	qdel(src)
 
 /obj/item/melee/skateboard/pro
@@ -632,7 +649,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	strong_against = typecacheof(list(
 					/mob/living/simple_animal/hostile/poison/bees/,
 					/mob/living/simple_animal/butterfly,
-					/mob/living/simple_animal/cockroach,
+					/mob/living/simple_animal/hostile/cockroach,
 					/obj/item/queen_bee
 	))
 
@@ -721,3 +738,57 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	item_state = "gohei"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
+
+//HF blade
+/obj/item/vibro_weapon
+	icon_state = "hfrequency0"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	name = "vibro sword"
+	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
+	armour_penetration = 100
+	block_chance = 40
+	force = 20
+	throwforce = 20
+	throw_speed = 4
+	sharpness = IS_SHARP
+	attack_verb = list("cut", "sliced", "diced")
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	var/wielded = FALSE // track wielded status on item
+
+/obj/item/vibro_weapon/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/vibro_weapon/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/butchering, 20, 105)
+	AddComponent(/datum/component/two_handed, force_multiplier=2, icon_wielded="hfrequency1")
+
+/// triggered on wield of two handed item
+/obj/item/vibro_weapon/proc/on_wield(obj/item/source, mob/user)
+	wielded = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/vibro_weapon/proc/on_unwield(obj/item/source, mob/user)
+	wielded = FALSE
+
+/obj/item/vibro_weapon/update_icon_state()
+	icon_state = "hfrequency0"
+
+/obj/item/vibro_weapon/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(wielded)
+		final_block_chance *= 2
+	if(wielded || attack_type != PROJECTILE_ATTACK)
+		if(prob(final_block_chance))
+			if(attack_type == PROJECTILE_ATTACK)
+				owner.visible_message("<span class='danger'>[owner] deflects [attack_text] with [src]!</span>")
+				playsound(src, pick('sound/weapons/bulletflyby.ogg', 'sound/weapons/bulletflyby2.ogg', 'sound/weapons/bulletflyby3.ogg'), 75, TRUE)
+				return 1
+			else
+				owner.visible_message("<span class='danger'>[owner] parries [attack_text] with [src]!</span>")
+				return 1
+	return 0

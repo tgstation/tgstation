@@ -19,11 +19,11 @@
 				return BULLET_ACT_HIT
 			else
 				blocked = 100
-				target.visible_message("<span class='danger'>\The [src] was deflected!</span>", \
-									   "<span class='userdanger'>You were protected against \the [src]!</span>")
+				target.visible_message("<span class='danger'>\The [src] is deflected!</span>", \
+									   "<span class='userdanger'>You are protected against \the [src]!</span>")
 
 	..(target, blocked)
-	DISABLE_BITFIELD(reagents.flags, NO_REACT)
+	reagents.flags &= ~(NO_REACT)
 	reagents.handle_reactions()
 	return BULLET_ACT_HIT
 

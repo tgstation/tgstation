@@ -41,6 +41,8 @@
 		var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return	//no tele-grooming
+		if(HAS_TRAIT(H, TRAIT_BALD))
+			to_chat(H, "<span class='notice'>If only growing back hair were that easy for you...</span>")
 		if(new_style)
 			H.hairstyle = new_style
 

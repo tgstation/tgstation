@@ -83,7 +83,9 @@
 			<hr style='background:#000000; border:0; height:1px'>"}
 		qdel(query_check_unused_rank)
 	else if(!action)
-		output += {"<head>
+		output += {"
+		<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>Permissions Panel</title>
 		<script type='text/javascript' src='search.js'></script>
 		</head>

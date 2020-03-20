@@ -35,7 +35,7 @@
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.</span>"
-	. += "<span class='notice'>[src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to an operating computer.</span>"
+	. += "<span class='notice'>\The [src] is [op_computer ? "linked" : "<b>NOT</b> linked"] to a nearby operating computer.</span>"
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -52,6 +52,9 @@
 		stasis_enabled = !stasis_enabled
 		stasis_can_toggle = world.time + STASIS_TOGGLE_COOLDOWN
 		playsound(src, 'sound/machines/click.ogg', 60, TRUE)
+		user.visible_message("<span class='notice'>\The [src] [stasis_enabled ? "powers on" : "shuts down"].</span>", \
+					"<span class='notice'>You [stasis_enabled ? "power on" : "shut down"] \the [src].</span>", \
+					"<span class='hear'>You hear a nearby machine [stasis_enabled ? "power on" : "shut down"].</span>")
 		play_power_sound()
 		update_icon()
 
@@ -106,12 +109,12 @@
 		return
 	var/freq = rand(24750, 26550)
 	playsound(src, 'sound/effects/spray.ogg', 5, TRUE, 2, frequency = freq)
-	target.apply_status_effect(STATUS_EFFECT_STASIS, null, TRUE)
+	target.apply_status_effect(STATUS_EFFECT_STASIS, STASIS_MACHINE_EFFECT)
 	target.ExtinguishMob()
 	use_power = ACTIVE_POWER_USE
 
 /obj/machinery/stasis/proc/thaw_them(mob/living/target)
-	target.remove_status_effect(STATUS_EFFECT_STASIS)
+	target.remove_status_effect(STATUS_EFFECT_STASIS, STASIS_MACHINE_EFFECT)
 	if(target == occupant)
 		use_power = IDLE_POWER_USE
 
@@ -158,9 +161,4 @@
 /obj/machinery/stasis/nap_violation(mob/violator)
 	unbuckle_mob(violator, TRUE)
 
-/obj/machinery/stasis/attack_robot(mob/user)
-	if(Adjacent(user) && occupant)
-		unbuckle_mob(occupant)
-	else
-		..()
 #undef STASIS_TOGGLE_COOLDOWN

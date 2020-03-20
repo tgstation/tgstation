@@ -39,7 +39,7 @@
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
-		if(camera.bug == src)
+		if(camera && camera.bug == src)
 			camera.bug = null
 	bugged_cameras = list()
 	if(tracking)
@@ -60,7 +60,7 @@
 	interact(user)
 
 /obj/item/camera_bug/check_eye(mob/user)
-	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
+	if ( loc != user || user.incapacitated() || user.is_blind() || !current )
 		user.unset_machine()
 		return 0
 	var/turf/T_user = get_turf(user.loc)
@@ -95,6 +95,8 @@
 			html = "<h3>Select a camera:</h3> <a href='?src=[REF(src)];view'>\[Cancel camera view\]</a><hr><table>"
 			for(var/entry in cameras)
 				var/obj/machinery/camera/C = cameras[entry]
+				if(QDELETED(C))
+					continue
 				var/functions = ""
 				if(C.bug == src)
 					functions = " - <a href='?src=[REF(src)];monitor=[REF(C)]'>\[Monitor\]</a> <a href='?src=[REF(src)];emp=[REF(C)]'>\[Disable\]</a>"

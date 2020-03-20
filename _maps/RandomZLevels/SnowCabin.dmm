@@ -189,7 +189,7 @@
 /obj/structure/cable,
 /obj/machinery/power/smes/magical{
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. It seems to be powered just fine without our intervention.";
-	name = "nanotrasen power storage unit"
+	name = "\improper Nanotrasen power storage unit"
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -644,24 +644,6 @@
 /obj/machinery/processor,
 /turf/open/floor/plasteel/freezer,
 /area/awaymission/cabin)
-"cb" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cc" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cd" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
 "ce" = (
 /obj/structure/chair/wood{
 	dir = 4
@@ -744,20 +726,8 @@
 "cn" = (
 /turf/open/lava,
 /area/awaymission/cabin/caves/mountain)
-"co" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
 "cp" = (
-/obj/machinery/gateway/centeraway,
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cq" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
+/obj/machinery/gateway/away,
 /turf/open/floor/wood,
 /area/awaymission/cabin)
 "cr" = (
@@ -797,23 +767,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/awaymission/cabin)
-"cw" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cx" = (
-/obj/machinery/gateway,
-/obj/structure/cable,
-/turf/open/floor/wood,
-/area/awaymission/cabin)
-"cy" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/wood,
 /area/awaymission/cabin)
 "cz" = (
 /obj/machinery/light{
@@ -1494,7 +1447,7 @@
 /area/awaymission/cabin/snowforest)
 "eA" = (
 /obj/structure/table/wood,
-/obj/item/twohanded/required/chainsaw,
+/obj/item/chainsaw,
 /turf/open/floor/wood/cold,
 /area/awaymission/cabin/lumbermill)
 "eB" = (
@@ -2241,7 +2194,7 @@
 /obj/item/gun/ballistic/automatic/toy{
 	anchored = 1;
 	desc = "Don't try it.";
-	name = "Nanotrasen Saber SMG"
+	name = "\improper Nanotrasen Saber SMG"
 	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -3043,7 +2996,7 @@
 /area/awaymission/cabin/caves)
 "hR" = (
 /obj/structure/reagent_dispensers/beerkeg{
-	desc = "Hey, Centcom, we located our complimentary case of space beer! The pamphlet didn't lie!";
+	desc = "Hey, CentCom, we located our complimentary case of space beer! The pamphlet didn't lie!";
 	name = "complimentary keg of space beer"
 	},
 /turf/open/floor/plating/snowed,
@@ -4502,7 +4455,7 @@
 /area/awaymission/cabin/caves)
 "lr" = (
 /obj/effect/decal/cleanable/blood/old,
-/obj/item/kitchen/knife/carrotshiv,
+/obj/item/kitchen/knife/shiv/carrot,
 /obj/effect/decal/cleanable/glitter/blue{
 	desc = "It looks like fancy glitter to me.";
 	name = "icy wind"
@@ -35823,9 +35776,9 @@ an
 bk
 bJ
 an
-cb
-co
-cw
+aq
+aq
+aq
 eg
 cH
 cQ
@@ -36080,9 +36033,9 @@ an
 nU
 an
 an
-cc
+aq
 cp
-cx
+eg
 eg
 aq
 cQ
@@ -36337,9 +36290,9 @@ an
 jf
 ay
 an
-cd
-cq
-cy
+aq
+aq
+aq
 eg
 cH
 cQ

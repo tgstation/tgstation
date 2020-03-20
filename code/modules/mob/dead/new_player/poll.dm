@@ -288,7 +288,8 @@
 			var/output = {"
 				<html>
 				<head>
-				<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+				<meta http-equiv='X-UA-Compatible' content='IE=edge' />
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<script src="jquery.min.js"></script>
 				<script src="jquery-ui.custom-core-widgit-mouse-sortable-min.js"></script>
 				<style>

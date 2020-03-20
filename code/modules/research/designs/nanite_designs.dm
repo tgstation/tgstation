@@ -532,3 +532,34 @@
 	id = "sensor_species_nanites"
 	program_type = /datum/nanite_program/sensor/species
 	category = list("Sensor Nanites")
+
+////////////////////NANITE PROTOCOLS//////////////////////////////////////
+//Note about the category name: The UI cuts the last 8 characters from the category name to remove the " Nanites" in the other categories
+//Because of this, Protocols was getting cut down to "P", so i had to add some padding
+/datum/design/nanites/kickstart
+	name = "Kickstart Protocol"
+	desc = "Replication Protocol: the nanites focus on early growth, heavily boosting replication rate for a few minutes after the initial implantation."
+	id = "kickstart_nanites"
+	program_type = /datum/nanite_program/protocol/kickstart
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/factory
+	name = "Factory Protocol"
+	desc = "Replication Protocol: the nanites build a factory matrix within the host, gradually increasing replication speed over time. The factory decays if the protocol is not active."
+	id = "factory_nanites"
+	program_type = /datum/nanite_program/protocol/factory
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/tinker
+	name = "Tinker Protocol"
+	desc = "Replication Protocol: the nanites learn to use metallic material in the host's bloodstream to speed up the replication process."
+	id = "tinker_nanites"
+	program_type = /datum/nanite_program/protocol/tinker
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/offline
+	name = "Offline Production Protocol"
+	desc = "Replication Protocol: while the host is asleep or otherwise unconcious, the nanites exploit the reduced interference to replicate more quickly."
+	id = "offline_nanites"
+	program_type = /datum/nanite_program/protocol/offline
+	category = list("Protocols_Nanites")

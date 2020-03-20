@@ -176,7 +176,7 @@
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
-		return CLAMP(20 + round(charge/25000), 20, 195) + rand(-5,5)
+		return clamp(20 + round(charge/25000), 20, 195) + rand(-5,5)
 	else
 		return 0
 
@@ -220,6 +220,14 @@
 	. = ..()
 	charge = 0
 	update_icon()
+
+/obj/item/stock_parts/cell/mini_egun
+	name = "miniature energy gun power cell"
+	maxcharge = 600
+
+/obj/item/stock_parts/cell/hos_gun
+	name = "X-01 multiphase energy gun power cell"
+	maxcharge = 1200
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"
@@ -370,7 +378,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	charge = CLAMP((charge-(10000/severity)),0,maxcharge)
+	charge = clamp((charge-(10000/severity)),0,maxcharge)
 
 /obj/item/stock_parts/cell/emergency_light
 	name = "miniature power cell"

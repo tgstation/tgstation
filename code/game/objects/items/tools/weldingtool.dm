@@ -30,7 +30,6 @@
 	var/change_icons = 1
 	var/can_off_process = 0
 	var/light_intensity = 2 //how powerful the emitted light is when used.
-	var/progress_flash_divisor = 10
 	var/burned_fuel_for = 0	//when fuel was last removed
 	heat = 3800
 	tool_behaviour = TOOL_WELDER
@@ -45,6 +44,7 @@
 /obj/item/weldingtool/ComponentInitialize()
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
+	AddElement(/datum/element/tool_flash, light_intensity)
 
 /obj/item/weldingtool/update_icon_state()
 	if(welding)
@@ -126,10 +126,10 @@
 	. = ..()
 	if(!proximity)
 		return
-	
+
 	if(isOn())
 		handle_fuel_and_temps(1, user)
-		
+
 		if(!QDELETED(O) && isliving(O)) // can't ignite something that doesn't exist
 			var/mob/living/L = O
 			if(L.IgniteMob())
@@ -145,10 +145,10 @@
 	. = ..()
 	if(!proximity)
 		return
-	
+
 	if(isOn())
 		handle_fuel_and_temps(1, user)
-		
+
 		if(!QDELETED(O) && isliving(O)) // can't ignite something that doesn't exist
 			var/mob/living/L = O
 			if(L.IgniteMob())
@@ -245,22 +245,6 @@
 /obj/item/weldingtool/proc/isOn()
 	return welding
 
-// When welding is about to start, run a normal tool_use_check, then flash a mob if it succeeds.
-/obj/item/weldingtool/tool_start_check(mob/living/user, amount=0)
-	. = tool_use_check(user, amount)
-	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
-		user.flash_act(light_intensity)
-
-// Flash the user during welding progress
-/obj/item/weldingtool/tool_check_callback(mob/living/user, amount, datum/callback/extra_checks)
-	. = ..()
-	if(. && user && get_dist(get_turf(src), get_turf(user)) <= 1)
-		if (progress_flash_divisor == 0)
-			user.flash_act(min(light_intensity,1))
-			progress_flash_divisor = initial(progress_flash_divisor)
-		else
-			progress_flash_divisor--
-
 // If welding tool ran out of fuel during a construction task, construction fails.
 /obj/item/weldingtool/tool_use_check(mob/living/user, amount)
 	if(!isOn() || !check_fuel())
@@ -281,10 +265,10 @@
 	status = !status
 	if(status)
 		to_chat(user, "<span class='notice'>You resecure [src] and close the fuel tank.</span>")
-		DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+		reagents.flags &= ~(OPENCONTAINER)
 	else
 		to_chat(user, "<span class='notice'>[src] can now be attached, modified, and refuelled.</span>")
-		ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+		reagents.flags |= OPENCONTAINER
 	add_fingerprint(user)
 
 /obj/item/weldingtool/proc/flamethrower_rods(obj/item/I, mob/user)

@@ -24,6 +24,9 @@
 
 /obj/item/mmi/update_overlays()
 	. = ..()
+	. += add_mmi_overlay()
+
+/obj/item/mmi/proc/add_mmi_overlay()
 	if(brainmob && brainmob.stat != DEAD)
 		. += "mmi_alive"
 	else if(brain)
@@ -57,7 +60,7 @@
 		newbrain.brainmob = null
 		brainmob.forceMove(src)
 		brainmob.container = src
-		var/fubar_brain = newbrain.brain_death && newbrain.suicided && brainmob.suiciding //brain is damaged beyond repair or from a suicider
+		var/fubar_brain = newbrain.suicided || brainmob.suiciding //brain is from a suicider
 		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
 			brainmob.set_stat(CONSCIOUS) //we manually revive the brain mob
 			GLOB.dead_mob_list -= brainmob
@@ -237,7 +240,7 @@
 		if(user)
 			to_chat(user, "<span class='warning'>\The [src] indicates that their mind has no will to live!</span>")
 		return FALSE
-	if(B.stat == DEAD || brain?.brain_death)
+	if(B.stat == DEAD)
 		if(user)
 			to_chat(user, "<span class='warning'>\The [src] indicates that the brain is dead!</span>")
 		return FALSE

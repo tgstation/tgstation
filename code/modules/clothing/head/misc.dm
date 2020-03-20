@@ -1,5 +1,4 @@
 
-
 /obj/item/clothing/head/centhat
 	name = "\improper CentCom hat"
 	icon_state = "centcom"
@@ -8,6 +7,12 @@
 	flags_inv = 0
 	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 80
+
+/obj/item/clothing/head/spacepolice
+	name = "space police cap"
+	desc = "A blue cap for patrolling the daily beat."
+	icon_state = "policecap_families"
+	item_state = "policecap_families"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
@@ -147,6 +152,7 @@
 		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
 /obj/item/clothing/head/pirate/captain
+	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
@@ -208,6 +214,16 @@
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora
+
+/obj/item/clothing/head/fedora/white
+	name = "white fedora"
+	icon_state = "fedora_white"
+	item_state = "fedora_white"
+
+/obj/item/clothing/head/fedora/beige
+	name = "beige fedora"
+	icon_state = "fedora_beige"
+	item_state = "fedora_beige"
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -449,3 +465,52 @@
 	icon_state = "capcap"
 	item_state = "that"
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+
+/obj/item/clothing/head/goatpelt
+	name = "goat pelt hat"
+	desc = "Fuzzy and Warm!"
+	icon_state = "goatpelt"
+	item_state = "goatpelt"
+
+/obj/item/clothing/head/goatpelt/king
+	name = "king goat pelt hat"
+	desc = "Fuzzy, Warm and Robust!"
+	icon_state = "goatpelt"
+	item_state = "goatpelt"
+	color = "#ffd700"
+	body_parts_covered = HEAD
+	armor = list("melee" = 60, "bullet" = 55, "laser" = 55, "energy" = 45, "bomb" = 100, "bio" = 20, "rad" = 20, "fire" = 100, "acid" = 100)
+	dog_fashion = null
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/head/goatpelt/king/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == ITEM_SLOT_HEAD)
+		user.faction |= "goat"
+
+/obj/item/clothing/head/goatpelt/king/dropped(mob/living/carbon/human/user)
+	..()
+	if (user.head == src)
+		user.faction -= "goat"
+
+/obj/item/clothing/head/goatpope
+	name = "goat pope hat"
+	desc = "And on the seventh day King Goat said there will be cabbage!"
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	icon_state = "goatpope"
+	item_state = "goatpope"
+	worn_x_dimension = 64
+	worn_y_dimension = 64
+	resistance_flags = FLAMMABLE
+
+/obj/item/clothing/head/goatpope/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if (slot == ITEM_SLOT_HEAD)
+		user.faction |= "goat"
+
+/obj/item/clothing/head/jackbros
+	name = "frosty hat"
+	desc = "Hee-ho!"
+	icon_state = "JackFrostHat"
+	item_state = "JackFrostHat"
+

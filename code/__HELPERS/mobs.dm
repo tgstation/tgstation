@@ -341,7 +341,7 @@ GLOBAL_LIST_EMPTY(species_list)
 				drifting = 0
 				user_loc = user.loc
 
-			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
+			if(L && !((L.mobility_flags & required_mobility_flags) == required_mobility_flags))
 				. = 0
 				break
 
@@ -425,7 +425,7 @@ GLOBAL_LIST_EMPTY(species_list)
 		var/override = FALSE
 		if(M.client.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
-		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
+		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
 			override = TRUE
 		if(isnewplayer(M) && !override)
 			continue
