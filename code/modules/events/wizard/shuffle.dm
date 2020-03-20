@@ -91,12 +91,11 @@
 
 	shuffle_inplace(mobs)
 
-	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new /obj/effect/proc_holder/spell/pointed/mind_transfer
+	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
 	while(mobs.len > 1)
 		var/mob/living/carbon/human/H = pick(mobs)
 		mobs -= H
-		if(swapper.intercept_check(mobs[mobs.len], H, TRUE, TRUE))
-			swapper.cast(list(H), mobs[mobs.len])
+		swapper.cast(list(H), mobs[mobs.len], TRUE, TRUE)
 		mobs -= mobs[mobs.len]
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)

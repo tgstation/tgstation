@@ -12,13 +12,18 @@
 	action_icon_state = "mindswap"
 	active_msg = "You prepare to swap minds with a target..."
 	/// For how long is the caster stunned for after the spell
-	var/unconscious_amount_caster = 400
+	var/unconscious_amount_caster = 40 SECONDS
 	/// For how long is the victim stunned for after the spell
-	var/unconscious_amount_victim = 400
+	var/unconscious_amount_victim = 40 SECONDS
 
-/obj/effect/proc_holder/spell/pointed/mind_transfer/cast(list/targets, mob/living/user)
+/obj/effect/proc_holder/spell/pointed/mind_transfer/cast(list/targets, mob/living/user, distance_override = FALSE, silent = FALSE)
+	if(!targets.len)
+		return FALSE
+	if(targets.len > 1)
+		return FALSE
+
 	var/mob/living/target = targets[1]
-	if(!target)
+	if(!swap_check(user, target, distance_override, silent))
 		return FALSE
 	if(istype(target, /mob/living/simple_animal/hostile/guardian))
 		var/mob/living/simple_animal/hostile/guardian/stand = target
@@ -48,9 +53,7 @@
 	SEND_SOUND(victim, sound('sound/magic/mandswap.ogg')) // only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
 	return TRUE
 
-/obj/effect/proc_holder/spell/pointed/mind_transfer/intercept_check(mob/user, atom/target, distance_override = FALSE, silent = FALSE)
-	if(!..())
-		return FALSE
+/obj/effect/proc_holder/spell/pointed/mind_transfer/proc/swap_check(mob/user, atom/target, distance_override = FALSE, silent = FALSE)
 	if(!isliving(target))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You can only swap minds with living beings!</span>")
@@ -103,4 +106,11 @@
 					to_chat(user, "<span class='warning'>Swapping minds with your own guardian would just put you back into your own head!</span>")
 				return FALSE
 
+	return TRUE
+
+/obj/effect/proc_holder/spell/pointed/mind_transfer/intercept_check(mob/user, atom/target)
+	if(!..())
+		return FALSE
+	if(!swap_check(user, target))
+		return FALSE
 	return TRUE
