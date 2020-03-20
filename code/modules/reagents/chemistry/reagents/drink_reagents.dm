@@ -922,7 +922,7 @@
 	taste_description = "purple and a hint of opiod."
 	glass_icon_state = "lean"
 	glass_name = "Lean"
-	glass_desc = "A drink that makes your life less miserable. "
+	glass_desc = "A drink that makes your life less miserable."
 
 /datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/M)
 	if(M.slurring < 3)
@@ -932,6 +932,5 @@
 	if(M.drowsyness < 3)
 		M.drowsyness++
 	. = ..()
-
 
 
