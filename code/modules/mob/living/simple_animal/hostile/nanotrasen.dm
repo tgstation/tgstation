@@ -27,7 +27,7 @@
 	faction = list(ROLE_DEATHSQUAD)
 	check_friendly_fire = TRUE
 	status_flags = CANPUSH
-	del_on_death = 1
+	del_on_death = TRUE
 	dodging = TRUE
 	footstep_type = FOOTSTEP_MOB_SHOE
 
