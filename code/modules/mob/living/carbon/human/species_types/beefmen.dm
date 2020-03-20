@@ -209,9 +209,11 @@
 		// Civilian
 		else
 			newSash = new /obj/item/clothing/under/bodysash/civilian()
-
-	H.equip_to_slot_or_del(newSash, ITEM_SLOT_OCLOTHING) // equip_to_slot_or_del
-
+	// Destroy Original Uniform (there probably isn't one though)
+	if (H.w_uniform)
+		qdel(H.w_uniform)
+	// Equip New
+	H.equip_to_slot_or_del(newSash, ITEM_SLOT_ICLOTHING, TRUE) // TRUE is whether or not this is "INITIAL", as in startup
 	return ..()
 
 /datum/species/beefman/after_equip_job(datum/job/J, mob/living/carbon/human/H)
@@ -224,7 +226,6 @@
 	// Remove coat! We don't wear that as a Beefboi
 	if (H.wear_suit)
 		qdel(H.wear_suit)
-
 
 
 /datum/species/beefman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)

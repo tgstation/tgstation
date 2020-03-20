@@ -76,6 +76,7 @@
 
 
 		// Find Animals in Area
+		/* 											REMOVED 3/19/20 Too easy to valid hunt!
 		if (rand(0,2) == 0)
 			var/mobCount = 0
 			var/mobMax = clamp(area_turfs.len / 25, 1, 4)
@@ -96,6 +97,7 @@
 						new SA (T)
 						break
 					area_turfs -= T
+		*/
 
 		// NOTE: area_turfs is now cleared out!
 	if (coffin)

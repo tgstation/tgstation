@@ -590,7 +590,7 @@
 		/obj/item/gun/medbeam,
 		/obj/item/borg/cyborghug/medical, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
 		/obj/item/borg/lollipop, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020
-		/obj/item/borg_chameleon //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020,
+		/obj/item/borg_chameleon, //FULPSTATION SYNDICATE MEDBORG UPDATE by Surrealistik March 2020,
 		/obj/item/organ_storage)
 
 	cyborg_base_icon = "synd_medical"
