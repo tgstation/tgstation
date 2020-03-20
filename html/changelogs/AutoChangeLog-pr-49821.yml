@@ -1,0 +1,6 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "Added Freon"
+  - rscadd: "Added Hot Ice"
+  - rscadd: "Added interactions of freon with SM and reactions with other gases"
