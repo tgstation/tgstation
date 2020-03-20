@@ -75,10 +75,10 @@
 			loan_type = "Russian party squad"
 		if(SPIDER_GIFT)
 			SSshuttle.centcom_message += "Spider Clan gift incoming."
-			loan_type = "Resupply packages"
+			loan_type = "Shuttle full of spiders"
 		if(DEPARTMENT_RESUPPLY)
 			SSshuttle.centcom_message += "Department resupply incoming."
-			loan_type = "Shuttle full of spiders oh god"
+			loan_type = "Resupply packages"
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
 			loan_type = "Virus shuttle"
