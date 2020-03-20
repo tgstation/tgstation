@@ -186,8 +186,8 @@ Des: Removes all infected images from the alien.
 		if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
 			to_chat(user, "<span class='danger'>Without the hivemind, we can't possibly evolve!</span>")
 			return
-		if(isalienroyal(xeno_typepath) && (get_alien_type(/mob/living/carbon/alien/humanoid/royal) || node.recent_queen_death)
-			to_chat(user, "<span class='warning'>With the state of our hive it would be impossible to evolve!</span>")
+		if(isalienroyal(xeno_typepath) && (get_alien_type(/mob/living/carbon/alien/humanoid/royal) || node.recent_queen_death))
+			to_chat(user, "<span class='danger'>With the state of our hive it would be impossible to evolve!</span>")
 			return
 		new_xeno = xeno_typepath
 		break
