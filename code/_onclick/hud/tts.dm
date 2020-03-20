@@ -3,4 +3,4 @@
 	name = "tts"
 	icon_state = "tts_ready"
 	screen_loc = ui_tts
-	mouse_opacity = 0
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
