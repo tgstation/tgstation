@@ -1,12 +1,11 @@
 /obj/effect/proc_holder/spell/pointed
 	name = "pointed spell"
 	ranged_mousepointer = 'icons/effects/throw_target.dmi'
+	action_icon_state = "projectile"
 	/// Message showing to the spell owner upon deactivating pointed spell.
 	var/deactive_msg = "You dispel the magic..."
 	/// Message showing to the spell owner upon activating pointed spell.
 	var/active_msg = "You prepare to use the spell on a target..."
-	/// Default icon for the pointed spell, used for active/inactive states switching.
-	var/base_icon_state = "projectile"
 
 /obj/effect/proc_holder/spell/pointed/Click()
 	var/mob/living/user = usr
@@ -20,11 +19,17 @@
 	if(active)
 		msg = "<span class='notice'>[deactive_msg]</span>"
 		remove_ranged_ability(msg)
-		on_deactivation(user)
 	else
 		msg = "<span class='notice'>[active_msg] <B>Left-click to activate spell on a target!</B></span>"
 		add_ranged_ability(user, msg, TRUE)
-		on_activation(user)
+
+/obj/effect/proc_holder/spell/pointed/remove_ranged_ability(msg)
+	. = ..()
+	on_deactivation(ranged_ability_user)
+
+/obj/effect/proc_holder/spell/pointed/add_ranged_ability(mob/living/user, msg, forced)
+	. = ..()
+	on_activation(user)
 
 /**
   *
@@ -49,19 +54,23 @@
 /obj/effect/proc_holder/spell/pointed/update_icon()
 	if(!action)
 		return
-	action.button_icon_state = "[base_icon_state][active]"
+
+	if(active)
+		action.button_icon_state = "[action_icon_state]1"
+	else
+		action.button_icon_state = "[action_icon_state]"
 	action.UpdateButtonIcon()
 
 /obj/effect/proc_holder/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
-		return FALSE
+		return TRUE
 	if(!intercept_check(ranged_ability_user, target))
-		return FALSE
+		return TRUE
 	if(!cast_check(user = ranged_ability_user))
-		return FALSE
+		return TRUE
 	perform(list(target), user = ranged_ability_user)
 	remove_ranged_ability()
-	return TRUE
+	return TRUE // Do not do any underlying actions after the spell cast
 
  /**
   *
