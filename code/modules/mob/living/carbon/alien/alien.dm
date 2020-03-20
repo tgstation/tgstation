@@ -167,11 +167,11 @@ Des: Removes all infected images from the alien.
 ///Evolves the Xenomorph if progresscheck proc passes, evolves into one of the evolution_paths
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
 	. = FALSE
-	if(!xenoprogress())
+	if(!xenoprogress(user))
 		return
 	to_chat(user, "<span class='name'>You are growing! It is time to choose a caste.</span>")
 	var/list/evolutions = list()
-	for(var/xeno_path in evolution_paths)
+	for(var/xeno_path in user.evolution_paths)
 		var/mob/living/carbon/alien/path = xeno_path
 		evolutions += initial(path.name)
 	var/alien_caste = input(user, "Please choose which alien caste you shall belong to.", "Text") as null|anything in evolutions
@@ -179,7 +179,7 @@ Des: Removes all infected images from the alien.
 		to_chat(user, "<span class='warning'>You cannot evolve when you are incapacitated in some way!</span>")
 		return
 	var/mob/living/carbon/alien/new_xeno
-	for(var/xeno_typepath in evolutions)
+	for(var/mob/living/carbon/alien/xeno_typepath in evolutions)
 		if(alien_caste != initial(xeno_typepath.name))
 			continue
 		var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
