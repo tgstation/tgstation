@@ -33954,9 +33954,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/theatre)
 "bad" = (
-/obj/machinery/computer/rdconsole/robotics{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -33971,6 +33968,9 @@
 	name = "Robotics RC";
 	pixel_x = 30;
 	receive_ore_updates = 1
+	},
+/obj/machinery/computer/rdconsole/production{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
@@ -36409,9 +36409,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/science/mixing)
 "bdG" = (
-/obj/machinery/computer/rdconsole/core{
-	dir = 4
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -36424,6 +36421,9 @@
 	dir = 8
 	},
 /obj/structure/window/reinforced,
+/obj/machinery/computer/rdconsole/production{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/lab)
 "bdH" = (
@@ -48714,9 +48714,6 @@
 /turf/open/floor/plasteel/dark,
 /area/library)
 "bvh" = (
-/obj/machinery/computer/prisoner{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -48730,6 +48727,9 @@
 	pixel_x = -30
 	},
 /obj/structure/cable,
+/obj/machinery/computer/rdconsole/core{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bvi" = (
