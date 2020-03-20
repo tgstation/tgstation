@@ -931,6 +931,5 @@
 		M.adjust_drugginess(1)
 	if(M.drowsyness < 3)
 		M.drowsyness++
-	. = ..()
-
+	return ..()
 
