@@ -17,7 +17,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 	icon = 'icons/obj/power_cond/layer_cable.dmi'
 	icon_state = "l2-1-2-4-8-node"
 	color = "yellow"
-	level = 1 //is underfloor
 	layer = WIRE_LAYER //Above hidden pipes, GAS_PIPE_HIDDEN_LAYER
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS
@@ -41,11 +40,10 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 /obj/structure/cable/Initialize(mapload)
 	. = ..()
 
-	var/turf/T = get_turf(src)			// hide if turf is not intact
-	if(level==1)
-		hide(T.intact)
 	GLOB.cable_list += src //add it to the global cable list
 	connect_wire()
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
 
 /obj/structure/cable/proc/connect_wire(clear_before_updating = FALSE)
 	var/under_thing = NONE
@@ -114,12 +112,6 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 ///////////////////////////////////
 // General procedures
 ///////////////////////////////////
-
-//If underfloor, hide the cable
-/obj/structure/cable/hide(i)
-	if(level == 1 && isturf(loc))
-		invisibility = i ? INVISIBILITY_MAXIMUM : 0
-	update_icon()
 
 /obj/structure/cable/update_icon_state()
 	if(!linked_dirs)
@@ -562,7 +554,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	desc = "A bridge to connect different cable layers, or link terminals to incompatible cable layers."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cable_bridge"
-	level = 1 //is underfloor
 	layer = WIRE_LAYER + 0.02 //Above all the cables but below terminals
 	anchored = TRUE
 	obj_flags = CAN_BE_HIT | ON_BLUEPRINTS

@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Modular Computers will now sell on the cargo shuttle."

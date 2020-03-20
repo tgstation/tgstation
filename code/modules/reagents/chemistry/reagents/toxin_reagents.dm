@@ -35,7 +35,7 @@
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!M.has_dna())
+	if(!M.has_dna() || (HAS_TRAIT(M, TRAIT_RADIMMUNE) || HAS_TRAIT(M, TRAIT_BADDNA)))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()

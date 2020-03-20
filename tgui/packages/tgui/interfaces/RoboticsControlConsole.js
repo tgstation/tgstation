@@ -65,14 +65,14 @@ const Cyborgs = props => {
                   ref: cyborg.ref,
                 })} />
             )}
-            <Button
+            <Button.Confirm
               icon={cyborg.locked_down ? 'unlock' : 'lock'}
               color={cyborg.locked_down ? 'good' : 'default'}
               content={cyborg.locked_down ? "Release" : "Lockdown"}
               onClick={() => act('stopbot', {
                 ref: cyborg.ref,
               })} />
-            <Button
+            <Button.Confirm
               icon="bomb"
               content="Detonate"
               color="bad"
@@ -110,7 +110,9 @@ const Cyborgs = props => {
             {cyborg.module}
           </LabeledList.Item>
           <LabeledList.Item label="Master AI">
-            {cyborg.synchronization || "None"}
+            <Box color={cyborg.synchronization ? 'default' : 'average'}>
+              {cyborg.synchronization || "None"}
+            </Box>
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -138,7 +140,7 @@ const Drones = props => {
         key={drone.ref}
         title={drone.name}
         buttons={(
-          <Button
+          <Button.Confirm
             icon="bomb"
             content="Detonate"
             color="bad"

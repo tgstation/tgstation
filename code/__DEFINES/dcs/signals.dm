@@ -239,6 +239,8 @@
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"				//from /item/organ/proc/Insert() (/obj/item/organ/)
 #define COMSIG_CARBON_LOSE_ORGAN "carbon_lose_organ"				//from /item/organ/proc/Remove() (/obj/item/organ/)
+#define COMSIG_CARBON_EQUIP_HAT "carbon_equip_hat"					//from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
+#define COMSIG_CARBON_UNEQUIP_HAT "carbon_unequip_hat"				//from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
@@ -248,6 +250,7 @@
 #define COMSIG_OBJ_DECONSTRUCT "obj_deconstruct"				//from base of obj/deconstruct(): (disassembled)
 #define COMSIG_OBJ_SETANCHORED "obj_setanchored"				//called in /obj/structure/setAnchored(): (value)
 #define COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH "obj_default_unfasten_wrench"	//from base of code/game/machinery
+#define COMSIG_OBJ_HIDE	"obj_hide"								//from base of /turf/proc/levelupdate(). (intact) true to hide and false to unhide
 
 // /obj/machinery signals
 #define COMSIG_MACHINERY_BROKEN "machinery_broken"				//from /obj/machinery/obj_break(damage_flag): (damage_flag)

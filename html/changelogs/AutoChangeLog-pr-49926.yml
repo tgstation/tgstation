@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Items with no throwforce no longer trigger the \"armour softened hit\" message"
