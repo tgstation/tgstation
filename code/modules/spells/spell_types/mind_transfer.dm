@@ -18,8 +18,12 @@
 
 /obj/effect/proc_holder/spell/pointed/mind_transfer/cast(list/targets, mob/living/user, distance_override = FALSE, silent = FALSE)
 	if(!targets.len)
+		if(!silent)
+			to_chat(user, "<span class='warning'>No mind found!</span>")
 		return FALSE
 	if(targets.len > 1)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Too many minds! You're not a hive damnit!</span>")
 		return FALSE
 
 	var/mob/living/target = targets[1]
@@ -28,10 +32,7 @@
 	if(istype(target, /mob/living/simple_animal/hostile/guardian))
 		var/mob/living/simple_animal/hostile/guardian/stand = target
 		if(stand.summoner)
-			if(stand.summoner == user)
-				return FALSE
-			else
-				target = stand.summoner
+			target = stand.summoner
 
 	var/mob/living/victim = target //The target of the spell whos body will be transferred to.
 	var/mob/living/caster = user //The wizard/whomever doing the body transferring.
