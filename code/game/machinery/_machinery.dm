@@ -113,8 +113,10 @@ Class Procs:
 	var/critical_machine = FALSE //If this machine is critical to station operation and should have the area be excempted from power failures.
 	var/list/occupant_typecache //if set, turned into typecache in Initialize, other wise, defaults to mob/living typecache
 	var/atom/movable/occupant = null
-	var/processing_flags = START_PROCESSING_ON_INIT // By default all machinery will start processing when the round loads up
-	var/subsystem_type = /datum/controller/subsystem/machines // By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds
+	/// Viable flags to go here are START_PROCESSING_ON_INIT, or START_PROCESSING_MANUALLY. See code\__DEFINES\machines.dm for more information on these flags.
+	var/processing_flags = START_PROCESSING_ON_INIT
+	/// What subsystem this machine will use, which is generally SSmachines or SSfastprocess. By default all machinery use SSmachines. This fires a machine's process() roughly every 2 seconds.
+	var/subsystem_type = /datum/controller/subsystem/machines
 	var/obj/item/circuitboard/circuit // Circuit to be created and inserted when the machinery is created
 
 	var/interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
@@ -146,11 +148,12 @@ Class Procs:
 
 	return INITIALIZE_HINT_LATELOAD
 
-/// helper procs for starting and stoppping the appropriate subsystem that a machine uses. Uses their `subsystem_type` var to choose
+/// Helper proc for telling a machine to start processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/begin_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	START_PROCESSING(subsystem, src)
 
+/// Helper proc for telling a machine to stop processing with the subsystem type that is located in its `subsystem_type` var.
 /obj/machinery/proc/end_processing()
 	var/datum/controller/subsystem/processing/subsystem = locate(subsystem_type) in Master.subsystems
 	STOP_PROCESSING(subsystem, src)

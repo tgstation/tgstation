@@ -139,9 +139,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	//get the first 30 items in contents
 	affecting = list()
 	var/i = 0
-	for(var/item in loc.contents)
-		if(item == src)
-			continue
+	var/list/items = loc.contents - src
+	for(var/item in items)
 		i++ // we're sure it's a real target to move at this point
 		if(i >= MAX_CONVEYOR_ITEMS_MOVE)
 			break
@@ -236,6 +235,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
+	processing_flags = START_PROCESSING_MANUALLY
 
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
@@ -243,7 +243,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/invert_icon = FALSE		// If the level points the opposite direction when it's turned on.
 
 	var/id = "" 				// must match conveyor IDs to control them
-	processing_flags = START_PROCESSING_MANUALLY
 
 /obj/machinery/conveyor_switch/Initialize(mapload, newid)
 	. = ..()
@@ -281,7 +280,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	else
 		icon_state = "switch-off"
 
-// if the switch changed, update the linked conveyors
+/// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
 /obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
@@ -293,7 +292,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 			C.end_processing()
 		CHECK_TICK
 
-// find any switches with same id as this one, and set their positions to match us
+/// Finds any switches with same `id` as this one, and set their position and icon to match us.
 /obj/machinery/conveyor_switch/proc/update_linked_switches()
 	for(var/obj/machinery/conveyor_switch/S in GLOB.conveyors_by_id[id])
 		S.invert_icon = invert_icon
@@ -301,6 +300,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		S.update_icon()
 		CHECK_TICK
 
+/// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
 /obj/machinery/conveyor_switch/proc/update_position()
 	if(position == 0)
 		if(oneway)   //is it a oneway switch
@@ -316,7 +316,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		last_pos = position
 		position = 0
 
-// attack with hand, switch position
+/// Called when a user clicks on this switch with an open hand.
 /obj/machinery/conveyor_switch/interact(mob/user)
 	add_fingerprint(user)
 	update_position()

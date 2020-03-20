@@ -14,17 +14,18 @@
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	ui_x = 440
 	ui_y = 550
+	needs_item_input = TRUE
+	processing_flags = START_PROCESSING_MANUALLY
 
 	var/points = 0
 	var/ore_multiplier = 1
 	var/point_upgrade = 1
 	var/list/ore_values = list(/datum/material/iron = 1, /datum/material/glass = 1,  /datum/material/plasma = 15,  /datum/material/silver = 16, /datum/material/gold = 18, /datum/material/titanium = 30, /datum/material/uranium = 30, /datum/material/diamond = 50, /datum/material/bluespace = 50, /datum/material/bananium = 60)
-	var/console_notify_timer // timer used for callbacks to send_console_message(). Used for preventing multiple calls to the proc while the ORM is eating a stack of ores
+	/// Variable that holds a timer which is used for callbacks to `send_console_message()`. Used for preventing multiple calls to this proc while the ORM is eating a stack of ores.
+	var/console_notify_timer
 	var/datum/techweb/stored_research
 	var/obj/item/disk/design_disk/inserted_disk
 	var/datum/component/remote_materials/materials
-	needs_item_input = TRUE
-	processing_flags = START_PROCESSING_MANUALLY
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()

@@ -9,11 +9,11 @@
 	input_dir = EAST
 	ui_x = 300
 	ui_y = 250
+	needs_item_input = TRUE
 
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
 	var/processing = FALSE
 	var/chosen = /datum/material/iron //which material will be used to make coins
-	needs_item_input = TRUE
 
 
 /obj/machinery/mineral/mint/Initialize()
