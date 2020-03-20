@@ -23,7 +23,7 @@
 	mood_change = -2
 
 /datum/mood_event/withdrawal_light/add_effects(drug_name)
-	description = "<span class='warning'>I could use some [drug_name]</span>\n"
+	description = "<span class='warning'>I could use some of that [drug_name]</span>\n"
 
 /datum/mood_event/withdrawal_medium
 	mood_change = -5
@@ -65,12 +65,12 @@
 	timeout = 3 MINUTES
 
 /datum/mood_event/narcotic_heavy
-	description = "<span class='nicegreen'>I feel like I'm wrapped in cotton!</span>\n"
+	description = "<span class='nicegreen'>I feel like I'm wrapped up in cotton!</span>\n"
 	mood_change = 9
 	timeout = 3 MINUTES
 
 /datum/mood_event/stimulant_medium
-	description = "<span class='nicegreen'>I have so much energy and I feel like I could do anything.</span>\n"
+	description = "<span class='nicegreen'>I have so much energy! I feel like I could do anything!</span>\n"
 	mood_change = 4
 	timeout = 3 MINUTES
 
