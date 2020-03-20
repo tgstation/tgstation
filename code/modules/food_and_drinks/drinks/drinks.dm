@@ -513,6 +513,7 @@
 	volume = 20
 	amount_per_transfer_from_this = 5
 	isGlass = FALSE
+	/// Allows the lean sprite to display upon crafting
 	var/random_sprite = TRUE
 
 /obj/item/reagent_containers/food/drinks/colocup/Initialize()
