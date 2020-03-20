@@ -179,8 +179,8 @@
 /obj/item/instrument/trumpet/spectral
 	name = "spectral trumpet"
 	desc = "Things are about to get spooky!"
-	icon_state = "trumpet"
-	item_state = "trombone"
+	icon_state = "spectral_trumpet"
+	item_state = "spectral_trumpet"
 	force = 0
 	instrumentId = "trombone"
 	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")
