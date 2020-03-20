@@ -1777,15 +1777,13 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aeF" = (
-/obj/machinery/airalarm{
-	dir = 8;
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/power/terminal,
 /obj/structure/cable,
+/obj/machinery/power/smes{
+	charge = 5e+006
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "aeG" = (
@@ -26219,10 +26217,14 @@
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bqG" = (
-/obj/machinery/power/smes{
-	charge = 5e+006
-	},
 /obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/airalarm{
+	dir = 8;
+	pixel_x = 24
+	},
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "bqH" = (
@@ -46320,7 +46322,6 @@
 	c_tag = "MiniSat AI Chamber South";
 	network = list("aicore")
 	},
-/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "cBc" = (
@@ -49298,6 +49299,10 @@
 /obj/item/hand_labeler,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
+"fsC" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/ai_monitored/turret_protected/ai)
 "fsD" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 4
@@ -84900,7 +84905,7 @@ bih
 bgN
 bnV
 bph
-afq
+bsc
 bsf
 btG
 buS
@@ -93728,7 +93733,7 @@ cwj
 cwu
 cAV
 cAZ
-cAZ
+cvl
 cvl
 cva
 cva
@@ -93984,7 +93989,7 @@ cww
 cwD
 cvv
 cvv
-cvv
+fsC
 cBb
 cBd
 cva
