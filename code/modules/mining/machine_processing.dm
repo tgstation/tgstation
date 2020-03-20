@@ -15,11 +15,6 @@
 	if(needs_item_input)
 		register_input_turf()
 
-/obj/machinery/mineral/Destroy()
-	. = ..()
-	if(input_turf)
-		unregister_input_turf()
-
 /obj/machinery/mineral/proc/register_input_turf()
 	input_turf = get_step(src, input_dir) // get the turf that players need to place the ore/items onto, defaults to NORTH at round start
 	if(input_turf) // make sure there is actually a turf

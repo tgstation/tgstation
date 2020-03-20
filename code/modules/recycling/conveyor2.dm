@@ -9,6 +9,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
+	processing_flags = START_PROCESSING_MANUALLY
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -18,9 +20,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// Inverts the direction the conveyor belt moves.
-	processing_flags = START_PROCESSING_MANUALLY // conveyor belts only process so they can use power
-	use_power = ACTIVE_POWER_USE
-	active_power_usage = 30 // uses 30 power every 2 seconds while switched on
+	var/conveying = FALSE
 
 /obj/machinery/conveyor/centcom_auto
 	id = "round_end_belt"
@@ -56,7 +56,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	if(newid)
 		id = newid
 	update_move_direction()
-	RegisterSignal(loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_CREATED), .proc/conveyorCrossed) // When any atom moves onto the belt or gets created over the belt.
 	LAZYADD(GLOB.conveyors_by_id[id], src)
 
 /obj/machinery/conveyor/Destroy()
@@ -125,43 +124,39 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		return FALSE
 	return TRUE
 
-// returns true if there is at least 1 item on the belt that can be moved
-/obj/machinery/conveyor/proc/check_belt_contents()
-	for(var/atom/movable/AM in loc)
-		if(!AM.anchored)
-			return TRUE
-	return FALSE
-
-// populates `affecting` with the first 30 items in the belt's contents
-/obj/machinery/conveyor/proc/get_belt_contents()
-	affecting = list()
-	var/i = 0
-	for(var/atom/movable/AM in loc)
-		if(AM.anchored) // If it can't be moved, ignore it
-			continue
-		if(++i > MAX_CONVEYOR_ITEMS_MOVE)
-			break
-		affecting.Add(AM)
-
-// when some item or mob moves over the conveyor belt
-/obj/machinery/conveyor/proc/conveyorCrossed(datum/source, atom/movable/AM, atom/oldLoc)
-	// if the conveyor isn't switched on or is broken / has no power
-	if(!operating || machine_stat & (BROKEN | NOPOWER))
+// machine process
+// move items to the target location
+/obj/machinery/conveyor/process()
+	if(machine_stat & (BROKEN | NOPOWER))
 		return
 
-	get_belt_contents() // populate affecting with the movable items on the belt
-	addtimer(CALLBACK(src, .proc/convey, affecting), pick(1,2)) // pick(1,2) so players have a bit of trouble walking over belts moving in the opposite direction they are
+	//If the conveyor is broken or already moving items
+	if(!operating || conveying)
+		return
 
-// pushes the items sitting on the belt in the direction the belt is operating in
+	use_power(6)
+
+	//get the first 30 items in contents
+	affecting = list()
+	var/i = 0
+	for(var/item in loc.contents)
+		if(item == src)
+			continue
+		i++ // we're sure it's a real target to move at this point
+		if(i >= MAX_CONVEYOR_ITEMS_MOVE)
+			break
+		affecting.Add(item)
+
+	conveying = TRUE
+	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
+
 /obj/machinery/conveyor/proc/convey(list/affecting)
 	for(var/atom/movable/A in affecting)
 		if(!QDELETED(A) && (A.loc == loc))
 			A.ConveyorMove(movedir)
 			//Give this a chance to yield if the server is busy
 			stoplag()
-
-	if(check_belt_contents())
-		conveyorCrossed() // If something is still on the belt, call conveyorCrossed again
+	conveying = FALSE
 
 // attack with item, place item on conveyor
 /obj/machinery/conveyor/attackby(obj/item/I, mob/user, params)
@@ -292,8 +287,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		C.operating = position
 		C.update_move_direction()
 		C.update_icon()
-		if(abs(C.operating)) // equals 1 if the conveyor is moving in either direction, 0 if turned off
-			C.conveyorCrossed() // if there's items on the belt already, start moving them immediately
+		if(C.operating)
 			C.begin_processing()
 		else
 			C.end_processing()
