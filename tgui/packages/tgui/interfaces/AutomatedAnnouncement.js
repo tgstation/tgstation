@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Fragment } from 'inferno';
-import { Section, LabeledList, Button } from '../components';
+import { Section, LabeledList, Button, Input } from '../components';
 
 export const AutomatedAnnouncement = props => {
   const { act, data } = useBackend(props);
@@ -18,8 +18,12 @@ export const AutomatedAnnouncement = props => {
         )}>
         <LabeledList>
           <LabeledList.Item label="Message">
-            <Button content={data.arrival}
-              onClick={() => act('ArrivalText')} />
+            <Input
+              value={data.arrival}
+              width="300px"
+              onChange={(e, value) => act('ArrivalText', {
+                newText: value,
+              })} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -35,8 +39,12 @@ export const AutomatedAnnouncement = props => {
         )}>
         <LabeledList>
           <LabeledList.Item label="Message">
-            <Button content={data.newhead}
-              onClick={() => act('NewheadText')} />
+            <Input
+              value={data.newhead}
+              width="300px"
+              onChange={(e, value) => act('NewheadText', {
+                newText: value,
+              })} />
           </LabeledList.Item>
         </LabeledList>
       </Section>
