@@ -225,6 +225,16 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
+	
+/**
+  * Called when cloning, copies some vars that should be kept
+  *
+  * Used by slimepeople to copy themselves, and by the DNA datum to hardset DNA to a species
+  * Arguments:
+  * old_species - The species that the carbon used to be before becoming this race
+  */
+/datum/species/proc/copy_properties_from(datum/species/old_species)
+	return
 
 /**
   * Checks if this carbon is allowed to be a certain job or rank.
