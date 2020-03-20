@@ -373,10 +373,8 @@
 /obj/item/firing_pin/abductor
 	name = "alien firing pin"
 	icon_state = "firing_pin_ayy"
-	desc = "This firing pin is slimy and warm; you can swear you feel it \
-		constantly trying to mentally probe you."
-	fail_message = "<span class='abductor'>\
-		Firing error, please contact Command.</span>"
+	desc = "This firing pin is slimy and warm; you can swear you feel it constantly trying to mentally probe you."
+	fail_message = "<span class='abductor'>Firing error, please contact Command.</span>"
 
 /obj/item/firing_pin/abductor/pin_auth(mob/living/user)
 	. = isabductor(user)
@@ -510,7 +508,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 /obj/item/melee/baton/abductor/attack(mob/target, mob/living/user)
 	if(!AbductorCheck(user))
-		return
+		return FALSE
 
 	if(!deductcharge(cell_hit_cost))
 		to_chat(user, "<span class='warning'>[src] [cell ? "is out of charge" : "does not have a power source installed"].</span>")
@@ -520,18 +518,22 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		toggle_on(user)
 
 	if(iscyborg(target))
-		if(BATON_STUN)
+		if(mode == BATON_STUN)
 			..()
-		return
+		return FALSE
 
 	if(!isliving(target))
-		return
+		return FALSE
+
+	if(clumsy_check(user))
+		return FALSE
 
 	var/mob/living/L = target
 
 	user.do_attack_animation(L)
 
-	check_shields(L, user)
+	if(shields_blocked(L, user))
+		return FALSE
 
 	switch (mode)
 		if(BATON_STUN)
@@ -566,7 +568,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!</span>")
 			L.drowsyness += 2
 			return
-		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
+		L.visible_message("<span class='danger'>[user] induces sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		L.Sleeping(sleep_time)
 		log_combat(user, L, "put to sleep")

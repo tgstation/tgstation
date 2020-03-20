@@ -36,7 +36,7 @@
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		structureclimber.Paralyze(40)
-		structureclimber.visible_message("<span class='warning'>[structureclimber] has been knocked off [src].", "You're knocked off [src]!", "You see [structureclimber] get knocked off [src].</span>")
+		structureclimber.visible_message("<span class='warning'>[structureclimber] is knocked off [src].</span>", "<span class='warning'>You're knocked off [src]!</span>", "<span class='warning'>You see [structureclimber] get knocked off [src].</span>")
 
 /obj/structure/ui_act(action, params)
 	. = ..()
@@ -66,6 +66,11 @@
 
 /obj/structure/proc/do_climb(atom/movable/A)
 	if(climbable)
+		if(A.loc == src.loc)
+			var/where_to_climb = get_step(A,dir)
+			if(!(is_blocked_turf(where_to_climb)))
+				A.forceMove(where_to_climb)
+				return TRUE
 		density = FALSE
 		. = step(A,get_dir(A,src.loc))
 		density = TRUE

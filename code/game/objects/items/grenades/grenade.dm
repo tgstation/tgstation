@@ -17,6 +17,7 @@
 	var/det_time = 50
 	var/display_timer = 1
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
+	var/sticky = FALSE
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] primes [src], then eats it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -32,19 +33,20 @@
 	if(!QDELETED(src))
 		qdel(src)
 
-/obj/item/grenade/proc/clown_check(mob/living/carbon/human/user)
+/obj/item/grenade/proc/botch_check(mob/living/carbon/human/user)
 	var/clumsy = HAS_TRAIT(user, TRAIT_CLUMSY)
 	if(clumsy && (clumsy_check == GRENADE_CLUMSY_FUMBLE))
 		if(prob(50))
 			to_chat(user, "<span class='warning'>Huh? How does this thing work?</span>")
 			preprime(user, 5, FALSE)
-			return FALSE
+			return TRUE
 	else if(!clumsy && (clumsy_check == GRENADE_NONCLUMSY_FUMBLE))
 		to_chat(user, "<span class='warning'>You pull the pin on [src]. Attached to it is a pink ribbon that says, \"<span class='clown'>HONK</span>\"</span>")
 		preprime(user, 5, FALSE)
-		return FALSE
-	return TRUE
-
+		return TRUE
+	else if(sticky && prob(50)) // to add risk to sticky tape grenade cheese, no return cause we still prime as normal after
+		to_chat(user, "<span class='warning'>What the... [src] is stuck to your hand!</span>")
+		ADD_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
 
 /obj/item/grenade/examine(mob/user)
 	. = ..()
@@ -56,8 +58,16 @@
 
 
 /obj/item/grenade/attack_self(mob/user)
+	if(HAS_TRAIT(src, TRAIT_NODROP))
+		to_chat(user, "<span class='notice'>You try prying [src] off your hand...</span>")
+		if(do_after(user, 70, target=src))
+			to_chat(user, "<span class='notice'>You manage to remove [src] from your hand.</span>")
+			REMOVE_TRAIT(src, TRAIT_NODROP, STICKY_NODROP)
+
+		return
+
 	if(!active)
-		if(clown_check(user))
+		if(!botch_check(user)) // if they botch the prime, it'll be handled in botch_check
 			preprime(user)
 
 /obj/item/grenade/proc/log_grenade(mob/user, turf/T)
@@ -103,7 +113,7 @@
 	if(time != null)
 		if(time < 3)
 			time = 3
-		det_time = round(CLAMP(time * 10, 0, 50))
+		det_time = round(clamp(time * 10, 0, 50))
 	else
 		var/previous_time = det_time
 		switch(det_time)
