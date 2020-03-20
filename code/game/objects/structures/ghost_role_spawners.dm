@@ -662,7 +662,7 @@
 
 /obj/effect/mob_spawn/human/syndicatespace/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	..()
+	return ..()
 
 
 /obj/effect/mob_spawn/human/syndicatespace/captain
