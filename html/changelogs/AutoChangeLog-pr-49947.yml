@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "Enchanted gloves! they are reskinned to be cooler combat gloves, you get them for free if you buy a wizard hardsuit or battlesuit"
+  - tweak: "if you buy a wizard hardsuit you get an oxygen tank, if you buy a wizard battlesuit you get sandals"
