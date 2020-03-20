@@ -1254,7 +1254,7 @@
 
 /datum/reagent/freon
 	name = "Freon"
-	description = "A powerful heat absorbant."
+	description = "A powerful heat adsorbant."
 	reagent_state = GAS
 	metabolization_rate = REAGENTS_METABOLISM * 0.5 // Because stimulum/nitryl/freon are handled through gas breathing, metabolism must be lower for breathcode to keep up
 	color = "90560B"
@@ -1262,10 +1262,10 @@
 
 /datum/reagent/freon/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=1.6, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
 
 /datum/reagent/freon/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
 	..()
 
 /////////////////////////Colorful Powder////////////////////////////
