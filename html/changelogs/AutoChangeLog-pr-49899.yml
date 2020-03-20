@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscdel: "Removes all core RnD Consoles from the Map, except for the bridge."
+  - tweak: "Replaces a console with a Core Console on each map's bridge."
