@@ -59083,13 +59083,11 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet{
-	req_access_txt = "70"
-	},
 /obj/machinery/status_display/evac{
 	pixel_x = -32;
 	req_access_txt = "70"
 	},
+/obj/structure/closet/secure_closet/psychology,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "cGI" = (

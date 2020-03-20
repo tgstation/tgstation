@@ -48570,9 +48570,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet{
-	req_access_txt = "70"
-	},
+/obj/structure/closet/secure_closet/psychology,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "mlN" = (

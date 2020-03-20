@@ -25432,9 +25432,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/closet/secure_closet{
-	req_access_txt = "70"
-	},
+/obj/structure/closet/secure_closet/psychology,
 /turf/open/floor/plasteel/showroomfloor,
 /area/medical/psychology)
 "aOm" = (
