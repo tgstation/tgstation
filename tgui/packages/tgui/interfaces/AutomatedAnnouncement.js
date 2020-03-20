@@ -20,10 +20,15 @@ export const AutomatedAnnouncement = props => {
           <LabeledList.Item label="Message">
             <Input
               value={data.arrival}
-              width="300px"
+              width="290px"
               onChange={(e, value) => act('ArrivalText', {
                 newText: value,
               })} />
+            <Button
+              icon="info"
+              tooltip="%PERSON will be replaced with their name.\
+              %RANK with their job."
+            />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -41,10 +46,15 @@ export const AutomatedAnnouncement = props => {
           <LabeledList.Item label="Message">
             <Input
               value={data.newhead}
-              width="300px"
+              width="290px"
               onChange={(e, value) => act('NewheadText', {
                 newText: value,
               })} />
+            <Button
+              icon="info"
+              tooltip="%PERSON will be replaced with their name.\
+              %RANK with their job."
+            />
           </LabeledList.Item>
         </LabeledList>
       </Section>
