@@ -548,27 +548,18 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bA" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bB" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bC" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
@@ -718,25 +709,19 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bS" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bT" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bU" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -785,25 +770,18 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/engineering)
 "bY" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
 	},
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "bZ" = (
-/obj/machinery/gateway,
 /obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/awaymission/research/interior/gateway)
 "ca" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},

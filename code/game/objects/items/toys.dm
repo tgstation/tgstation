@@ -394,11 +394,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
+	two_hand_force = 0
 	attack_verb = list("attacked", "struck", "hit")
-
-/obj/item/dualsaber/toy/ComponentInitialize()
-	. = ..()
-	AddComponent(/datum/component/two_handed, wieldsound='sound/weapons/saberon.ogg', unwieldsound='sound/weapons/saberoff.ogg')
 
 /obj/item/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
@@ -506,64 +503,68 @@
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/12."
+	desc = "Mini-Mecha action figure! Collect them all! 1/13."
 
 /obj/item/toy/prize/fireripley
 	name = "toy firefighting Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/12."
+	desc = "Mini-Mecha action figure! Collect them all! 2/13."
 	icon_state = "fireripleytoy"
 
 /obj/item/toy/prize/deathripley
 	name = "toy deathsquad Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/12."
+	desc = "Mini-Mecha action figure! Collect them all! 3/13."
 	icon_state = "deathripleytoy"
 
 /obj/item/toy/prize/gygax
 	name = "toy Gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/12."
+	desc = "Mini-Mecha action figure! Collect them all! 4/13."
 	icon_state = "gygaxtoy"
 
 /obj/item/toy/prize/durand
 	name = "toy Durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/12."
-	icon_state = "durandprize"
+	desc = "Mini-Mecha action figure! Collect them all! 5/13."
+	icon_state = "durandtoy"
 
 /obj/item/toy/prize/honk
 	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/12."
-	icon_state = "honkprize"
+	desc = "Mini-Mecha action figure! Collect them all! 6/13."
+	icon_state = "honktoy"
 
 /obj/item/toy/prize/marauder
 	name = "toy Marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/12."
-	icon_state = "marauderprize"
+	desc = "Mini-Mecha action figure! Collect them all! 7/13."
+	icon_state = "maraudertoy"
 
 /obj/item/toy/prize/seraph
 	name = "toy Seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/12."
-	icon_state = "seraphprize"
+	desc = "Mini-Mecha action figure! Collect them all! 8/13."
+	icon_state = "seraphtoy"
 
 /obj/item/toy/prize/mauler
 	name = "toy Mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/12."
-	icon_state = "maulerprize"
+	desc = "Mini-Mecha action figure! Collect them all! 9/13."
+	icon_state = "maulertoy"
 
 /obj/item/toy/prize/odysseus
 	name = "toy Odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/12."
-	icon_state = "odysseusprize"
+	desc = "Mini-Mecha action figure! Collect them all! 10/13."
+	icon_state = "odysseustoy"
 
 /obj/item/toy/prize/phazon
 	name = "toy Phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/12."
-	icon_state = "phazonprize"
+	desc = "Mini-Mecha action figure! Collect them all! 11/13."
+	icon_state = "phazontoy"
 
 /obj/item/toy/prize/reticence
 	name = "toy Reticence"
-	desc = "Mini-Mecha action figure! Collect them all! 12/12."
-	icon_state = "reticenceprize"
+	desc = "Mini-Mecha action figure! Collect them all! 12/13."
+	icon_state = "reticencetoy"
 	quiet = 1
 
+/obj/item/toy/prize/clarke
+	name = "toy Clarke"
+	desc = "Mini-Mecha action figure! Collect them all! 13/13."
+	icon_state = "clarketoy"
 
 /obj/item/toy/talking
 	name = "talking action figure"

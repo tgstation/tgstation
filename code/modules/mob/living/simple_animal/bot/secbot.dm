@@ -293,8 +293,8 @@ Auto Patrol: []"},
 	if(declare_arrests)
 		var/area/location = get_area(src)
 		speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)
-	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
-							"<span class='userdanger'>[src] has stunned you!</span>")
+	C.visible_message("<span class='danger'>[src] stuns [C]!</span>",\
+							"<span class='userdanger'>[src] stuns you!</span>")
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
 	if(!..())

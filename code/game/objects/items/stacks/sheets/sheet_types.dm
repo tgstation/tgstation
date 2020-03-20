@@ -626,6 +626,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	item_state = "sheet-plastic"
 	custom_materials = list(/datum/material/plastic=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
+	material_type = /datum/material/plastic
 	merge_type = /obj/item/stack/sheet/plastic
 
 /obj/item/stack/sheet/plastic/fifty

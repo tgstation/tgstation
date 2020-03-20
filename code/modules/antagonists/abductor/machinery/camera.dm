@@ -59,6 +59,10 @@
 	return HAS_TRAIT(H, TRAIT_ABDUCTOR_SCIENTIST_TRAINING)
 
 /datum/action/innate/teleport_in
+///Is the amount of time required between uses
+	var/abductor_pad_cooldown = 8 SECONDS
+///Is used to compare to world.time in order to determine if the action should early return
+	var/use_delay
 	name = "Send To"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_down"
@@ -66,9 +70,13 @@
 /datum/action/innate/teleport_in/Activate()
 	if(!target || !iscarbon(owner))
 		return
+	if(world.time < use_delay)
+		to_chat(owner, "<span class='warning'>You must wait [DisplayTimeText(use_delay - world.time)] to use the [target] again!</span>")
+		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
+	use_delay = (world.time + abductor_pad_cooldown)
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		P.PadToLoc(remote_eye.loc)
@@ -86,6 +94,9 @@
 	console.TeleporterRetrieve()
 
 /datum/action/innate/teleport_self
+///Is the amount of time required between uses
+	var/teleport_self_cooldown = 9 SECONDS
+	var/use_delay
 	name = "Send Self"
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "beam_down"
@@ -93,9 +104,13 @@
 /datum/action/innate/teleport_self/Activate()
 	if(!target || !iscarbon(owner))
 		return
+	if(world.time < use_delay)
+		to_chat(owner, "<span class='warning'>You can only teleport to one place at a time!</span>")
+		return
 	var/mob/living/carbon/human/C = owner
 	var/mob/camera/aiEye/remote/remote_eye = C.remote_control
 	var/obj/machinery/abductor/pad/P = target
+	use_delay = (world.time + teleport_self_cooldown)
 
 	if(GLOB.cameranet.checkTurfVis(remote_eye.loc))
 		P.MobToLoc(remote_eye.loc,C)

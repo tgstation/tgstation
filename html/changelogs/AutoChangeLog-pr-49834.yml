@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - bugfix: "Fixed Regenerative Coma being permanent if the virus gets cured during a coma."

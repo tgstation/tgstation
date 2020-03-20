@@ -279,6 +279,17 @@
 	. = ..()
 	eatverb = pick("slurp","sip","inhale","drink")
 
+/obj/item/reagent_containers/food/snacks/customizable/poutine
+	name = "poutine"
+	desc = "Fries covered in cheese curds and gravy."
+	icon_state = "poutine"
+	ingMax = 8
+	custom_food_type = /obj/item/reagent_containers/food/snacks/customizable/poutine
+	trash = /obj/item/trash/plate
+	list_reagents = list(/datum/reagent/consumable/nutriment = 7, /datum/reagent/medicine/antihol = 4)
+	filling_color = "#FFD700"
+	tastes = list("potato" = 3, "gravy" = 1, "squeaky cheese" = 1)
+	foodtype = VEGETABLES | GRAIN | FRIED
 
 
 

@@ -78,6 +78,8 @@
 		if(!blocked)
 			visible_message("<span class='danger'>[src] is hit by [I]!</span>", \
 							"<span class='userdanger'>You're hit by [I]!</span>")
+			if(!I.throwforce)
+				return
 			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
@@ -184,7 +186,7 @@
 					visible_message("<span class='danger'>[user] grabs [src] aggressively!</span>", \
 									"<span class='userdanger'>[user] grabs you aggressively!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, user)
 					to_chat(user, "<span class='danger'>You grab [src] aggressively!</span>")
-					drop_all_held_items()
+				drop_all_held_items()
 				stop_pulling()
 				log_combat(user, src, "grabbed", addition="aggressive grab[add_log]")
 			if(GRAB_NECK)
