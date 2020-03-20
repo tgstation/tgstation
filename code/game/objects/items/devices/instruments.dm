@@ -173,7 +173,7 @@
 	name = "trumpet"
 	desc = "To announce the arrival of the king!"
 	icon_state = "trumpet"
-	item_state = "trombone"
+	item_state = "trumpet"
 	instrumentId = "trombone"
 
 /obj/item/instrument/trumpet/spectral
