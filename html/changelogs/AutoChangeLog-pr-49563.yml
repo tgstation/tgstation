@@ -1,7 +1,0 @@
-author: "Fikou (thanks to Shadowmech88 for idea and RealestEstate/ValkyrieSkies for sprites)"
-delete-after: True
-changes: 
-  - rscadd: "Clarke Mech!"
-  - bugfix: "You can now salvage Phazon parts"
-  - rscdel: "Firefighter Mech, rest in peace"
-  - balance: "Ripley MK-II now has similar armor values to firefighter, but without the fireproof stuff"
