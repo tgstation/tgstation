@@ -16,7 +16,7 @@
 
 	rotate_on_lying = 0
 	bodyparts = list(/obj/item/bodypart/chest/larva, /obj/item/bodypart/head/larva)
-	evolution_paths = list("Hunter", "Sentinel", "Drone")
+	evolution_paths = list(/mob/living/carbon/alien/humanoid/drone, /mob/living/carbon/alien/humanoid/hunter, /mob/living/carbon/alien/humanoid/sentinel)
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
 /mob/living/carbon/alien/larva/Initialize()
