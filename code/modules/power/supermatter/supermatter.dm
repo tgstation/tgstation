@@ -447,11 +447,23 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 		gasmix_power_ratio = min(max(plasmacomp + o2comp + co2comp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp - freoncomp, 0), 1)
 		//Minimum value of 1.5, maximum value of 15
-		dynamic_heat_modifier = max((plasmacomp * PLASMA_HEAT_PENALTY) + (o2comp * OXYGEN_HEAT_PENALTY) + (co2comp * CO2_HEAT_PENALTY) + (tritiumcomp * TRITIUM_HEAT_PENALTY) + ((pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus) + (n2comp * NITROGEN_HEAT_PENALTY) + (bzcomp * BZ_HEAT_PENALTY) + (freoncomp * FREON_HEAT_PENALTY), 0.5)
+		dynamic_heat_modifier = plasmacomp * PLASMA_HEAT_PENALTY
+		dynamic_heat_modifier += o2comp * OXYGEN_HEAT_PENALTY
+		dynamic_heat_modifier += co2comp * CO2_HEAT_PENALTY
+		dynamic_heat_modifier += tritiumcomp * TRITIUM_HEAT_PENALTY
+		dynamic_heat_modifier += (pluoxiumcomp * PLUOXIUM_HEAT_PENALTY) * pluoxiumbonus
+		dynamic_heat_modifier += n2comp * NITROGEN_HEAT_PENALTY
+		dynamic_heat_modifier += bzcomp * BZ_HEAT_PENALTY
+		dynamic_heat_modifier += freoncomp * FREON_HEAT_PENALTY
+		dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
 		//Value between 6 and 1
 		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
 		//Value between 30 and -5, used to determine radiation output as it concerns things like collecters
-		power_transmission_bonus = (plasmacomp * gas_trans["PL"]) + (o2comp * gas_trans["O2"]) + (bzcomp * gas_trans["BZ"]) + (tritiumcomp * gas_trans["TRIT"]) + ((pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus)
+		power_transmission_bonus = plasmacomp * gas_trans["PL"]
+		power_transmission_bonus += o2comp * gas_trans["O2"]
+		power_transmission_bonus += bzcomp * gas_trans["BZ"]
+		power_transmission_bonus += tritiumcomp * gas_trans["TRIT"]
+		power_transmission_bonus += (pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
