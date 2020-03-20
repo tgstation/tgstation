@@ -173,14 +173,14 @@ Des: Removes all infected images from the alien.
 	var/list/evolutions = list()
 	for(var/xeno_path in evolution_paths)
 		var/mob/living/carbon/alien/path = xeno_path
-		evolutions += path.castename
+		evolutions += initial(path.name)
 	var/alien_caste = input(user, "Please choose which alien caste you shall belong to.", "Text") as null|anything in evolutions
 	if(QDELETED(user) || user.handcuffed || user.legcuffed || user.incapacitated()) //we tried to evolve while incapacitated.
 		to_chat(user, "<span class='warning'>You cannot evolve when you are incapacitated in some way!</span>")
 		return
 	var/mob/living/carbon/alien/new_xeno
 	for(var/xeno_typepath in evolutions)
-		if(alien_caste != xeno_typepath.castename)
+		if(alien_caste != initial(xeno_typepath.name))
 			continue
 		var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
 		if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
