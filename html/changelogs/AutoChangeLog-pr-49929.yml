@@ -1,4 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - tweak: "Geiger counter no longer does the attack animation when scanning, like the health analyser"
