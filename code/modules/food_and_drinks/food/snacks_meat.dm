@@ -189,7 +189,7 @@
 	Expand()
 	visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
 	ADD_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
-	M.gib(null, True, null, True)
+	M.gib(null, TRUE, null, TRUE)
 	return MANUAL_SUICIDE
 
 /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
