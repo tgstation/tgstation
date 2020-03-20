@@ -574,6 +574,12 @@
 	isGlass = FALSE
 	custom_price = 45
 
+/obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize()
+	..()
+	var/T = pick(subtypesof(/obj/item/reagent_containers/food/drinks/soda_cans) - /obj/item/reagent_containers/food/drinks/soda_cans/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
+
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/human/H)
 	if(!reagents.total_volume)
 		H.visible_message("<span class='warning'>[H] is trying to take a big sip from [src]... The can is empty!</span>")

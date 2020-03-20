@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	wanted_lvl.icon_state = "wanted_0"
 	wanted_lvl.screen_loc = ui_wanted_lvl
 	infodisplay += wanted_lvl
-
+	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)

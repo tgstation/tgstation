@@ -48,30 +48,42 @@
 /client/verb/verify_in_discord()
 	set category = "OOC"
 	set name = "Verify Discord Account"
-	set desc = "Reverify your account to the discord if you get banned, you bad banana"
+	set desc = "Verify or reverify your discord account against your linked ckey"
 
 	// Safety checks
 	if(!CONFIG_GET(flag/sql_enabled))
 		to_chat(src, "<span class='warning'>This feature requires the SQL backend to be running.</span>")
 		return
 
-	if(!SSdiscord) // SS is still starting
+	// ss is still starting
+	if(!SSdiscord)
 		to_chat(src, "<span class='notice'>The server is still starting up. Please wait before attempting to link your account!</span>")
 		return
 
+	// check that tgs is alive and well
 	if(!SSdiscord.enabled)
 		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit.</span>")
 		return
+
+	// check that this is not an IDIOT mistaking us for an attack vector
 	if(SSdiscord.reverify_cache[usr.ckey] == TRUE)
 		to_chat(src, "<span class='warning'>Thou can only do this once a round, if you're stuck seek help.</span>")
 		return
 	SSdiscord.reverify_cache[usr.ckey] = TRUE
 
+	// check that account is linked with discord
 	var/stored_id = SSdiscord.lookup_id(usr.ckey)
 	if(!stored_id) // Account is not linked
 		to_chat(usr, "Link your discord account via the linkdiscord verb in the OOC tab first");
-		return;
+		return
 
-	else // Account is already linked
-		// Role the user
-		SSdiscord.grant_role(stored_id)
+	// check for living hours requirement
+	var/required_living_minutes = CONFIG_GET(number/required_living_hours) * 60
+	var/living_minutes = usr.client ? usr.client.get_exp_living(TRUE) : 0
+	if(required_living_minutes > 0 && living_minutes < required_living_minutes)
+		to_chat(usr, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
+			+ "playtime in a round to verify. You have [living_minutes] minutes. Play more!</span>")
+		return
+
+	// honey its time for your role flattening
+	SSdiscord.grant_role(stored_id)

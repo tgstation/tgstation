@@ -1472,7 +1472,7 @@
 	},
 /area/science/explab)
 "adH" = (
-/obj/machinery/computer/rdconsole/experiment,
+/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel/white/corner,
 /area/science/explab)
 "adI" = (
@@ -4497,11 +4497,11 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "akV" = (
-/obj/machinery/computer/rdconsole/core{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/computer/rdconsole/production{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -13663,7 +13663,7 @@
 "aFi" = (
 /obj/machinery/door/window/eastleft{
 	name = "Armory";
-	req_access_txt = "2"
+	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
@@ -23013,7 +23013,7 @@
 	},
 /obj/machinery/door/window/eastright{
 	name = "Armory";
-	req_access_txt = "2"
+	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -40152,13 +40152,13 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bJD" = (
-/obj/machinery/computer/shuttle/mining{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/computer/rdconsole/core{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bJE" = (
@@ -44377,7 +44377,7 @@
 	dir = 8
 	},
 /obj/item/toy/figure/mime,
-/obj/item/gun/magic/wand,
+/obj/item/gun/magic/wand/nothing,
 /turf/open/floor/carpet,
 /area/crew_quarters/theatre)
 "caf" = (
