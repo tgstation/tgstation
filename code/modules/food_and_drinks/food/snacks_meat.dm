@@ -179,6 +179,19 @@
 		visible_message("<span class='notice'>[src] fails to expand!</span>")
 	qdel(src)
 
+/obj/item/reagent_containers/food/snacks/monkeycube/suicide_act(mob/user)
+	var/mob/living/M = user
+	user.visible_message("<span class='suicide'>[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!</span>")
+	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	if(HAS_TRAIT(M, TRAIT_NOHUNGER))
+		to_chat(user, "<span class='warning'>Your body won't activate [src]...</span>")
+	return SHAME
+	Expand()
+	visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
+	ADD_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
+	M.gib(null, True, null, True)
+	return MANUAL_SUICIDE
+
 /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
 	faction = list("neutral", ROLE_SYNDICATE)
 
