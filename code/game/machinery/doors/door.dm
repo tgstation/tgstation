@@ -412,3 +412,7 @@
 
 /obj/machinery/door/GetExplosionBlock()
 	return density ? real_explosion_block : 0
+
+/obj/machinery/door/power_change()
+	.=..()
+	autoclose_in(rand(5,30))
