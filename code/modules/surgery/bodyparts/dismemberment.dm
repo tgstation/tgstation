@@ -90,8 +90,11 @@
 	C.bodyparts -= src
 
 	if(held_index)
-		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
-		C.hand_bodyparts[held_index] = null
+		if(C.hand_bodyparts[held_index] == src)
+			// We only want to do this if the limb being removed is the active hand part.
+			// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
+			C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
+			C.hand_bodyparts[held_index] = null
 
 	owner = null
 
