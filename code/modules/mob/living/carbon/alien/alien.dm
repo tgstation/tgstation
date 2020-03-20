@@ -145,7 +145,7 @@ Des: Removes all infected images from the alien.
 	return has_fine_manipulation
 
 ///Checks for max growth on larva or full plasma on a full grown xeno
-/mob/living/carbon/alien/proc/progresscheck()
+/mob/living/carbon/alien/proc/xenoprogress(mob/living/carbon/alien/user)
 	if(islarva(user))
 		var/mob/living/carbon/alien/larva/L = user
 		if(L.amount_grown < L.max_grown)	//TODO ~Carn //TODO WHAT YOU FUCK ~Fikou
@@ -167,58 +167,34 @@ Des: Removes all infected images from the alien.
 ///Evolves the Xenomorph if progresscheck proc passes, evolves into one of the evolution_paths
 /obj/effect/proc_holder/alien/evolve/fire(mob/living/carbon/alien/user)
 	. = FALSE
-	if(!progresscheck())
+	if(!xenoprogress())
 		return
 	to_chat(user, "<span class='name'>You are growing! It is time to choose a caste.</span>")
-	var/evolutions = user.evolution_paths
+	var/list/evolutions = list()
+	for(var/xeno_path in evolution_paths)
+		var/mob/living/carbon/alien/path = xeno_path
+		evolutions += path.castename
 	var/alien_caste = input(user, "Please choose which alien caste you shall belong to.", "Text") as null|anything in evolutions
 	if(QDELETED(user) || user.handcuffed || user.legcuffed || user.incapacitated()) //we tried to evolve while incapacitated.
 		to_chat(user, "<span class='warning'>You cannot evolve when you are incapacitated in some way!</span>")
 		return
 	var/mob/living/carbon/alien/new_xeno
-	if(!alien_caste || !(alien_caste in evolutions))
-		return
-
+	for(var/xeno_typepath in evolutions)
+		if(alien_caste != xeno_typepath.castename)
+			continue
+		var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
+		if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
+			to_chat(user, "<span class='danger'>Without the hivemind, we can't possibly evolve!</span>")
+			return
+		if(isalienroyal(xeno_typepath) && (get_alien_type(/mob/living/carbon/alien/humanoid/royal) || node.recent_queen_death)
+			to_chat(user, "<span class='warning'>With the state of our hive it would be impossible to evolve!</span>")
+			return
+		new_xeno = xeno_typepath
+		break
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You can't evolve here!</span>")
 		return
-
-	switch(alien_caste)
-		if("Larva")
-			new_xeno = new /mob/living/carbon/alien/larva(user.loc)
-		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/humanoid/sentinel(user.loc)
-		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/humanoid/drone(user.loc)
-		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/humanoid/hunter(user.loc)
-		if("Praetorian")
-			var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
-			if(!node) //Players are Murphy's Law. We may not expect there to ever be a living xeno with no hivenode, but they _WILL_ make it happen.
-				to_chat(user, "<span class='danger'>Without the hivemind, you can't possibly hold the responsibility of leadership!</span>")
-				return
-			if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal))
-				new_xeno = new /mob/living/carbon/alien/humanoid/royal/praetorian(user.loc)
-			else
-				to_chat(user, "<span class='warning'>We already have a living royal!</span>")
-				return
-		if("Queen")
-			var/obj/item/organ/alien/hivenode/node = user.getorgan(/obj/item/organ/alien/hivenode)
-			if(!node) //Just in case this particular Praetorian gets violated and kept by the RD as a replacement for Lamarr.
-				to_chat(user, "<span class='warning'>Without the hivemind, you would be unfit to rule as queen!</span>")
-				return
-			if(node.recent_queen_death)
-				to_chat(user, "<span class='warning'>You are still too burdened with guilt to evolve into a queen.</span>")
-				return
-			if(!get_alien_type(/mob/living/carbon/alien/humanoid/royal/queen))
-				new_xeno = new /mob/living/carbon/alien/humanoid/royal/queen(user.loc)
-			else
-				to_chat(user, "<span class='warning'>We already have a living queen!</span>")
-				return
-		else
-			CRASH("Someone tried to become a xenomorph type they shouldn't be, somehow.")
-			to_chat(user, "<span class='warning'>Something went very wrong, you tried to become a xeno type you shouldn't be! Yell at the coders.</span>")
-			return
-
+	if(!new_xeno)
+		return
 	user.alien_evolve(new_xeno)
 	return TRUE
