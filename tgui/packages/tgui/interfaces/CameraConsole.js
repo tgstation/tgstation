@@ -1,11 +1,8 @@
 import { classes } from 'common/react';
 import { Component, Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, ByondUi, Input, NoticeBox, Section } from '../components';
-import { createLogger } from '../logging';
+import { Button, ByondUi, Input, Section } from '../components';
 import { refocusLayout } from '../refocus';
-
-const logger = createLogger('CameraConsole');
 
 /**
  * Returns previous and next camera names relative to the currently
