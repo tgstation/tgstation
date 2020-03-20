@@ -185,7 +185,7 @@
 	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(HAS_TRAIT(M, TRAIT_NOHUNGER))
 		to_chat(user, "<span class='warning'>Your body won't activate [src]...</span>")
-	return SHAME
+		return SHAME
 	Expand()
 	visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
 	ADD_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
