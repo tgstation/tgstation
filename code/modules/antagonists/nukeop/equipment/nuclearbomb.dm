@@ -697,7 +697,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 
 /obj/item/disk/nuclear/proc/manual_suicide(mob/living/user)
 	user.remove_atom_colour(ADMIN_COLOUR_PRIORITY)
-	user.visible_message("<span class='suicide'>[user] was destroyed by the nuclear blast!</span>")
+	user.visible_message("<span class='suicide'>[user] is destroyed by the nuclear blast!</span>")
 	user.adjustOxyLoss(200)
 	user.death(0)
 

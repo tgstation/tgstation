@@ -54,7 +54,7 @@
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
-			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
+			visible_message("<span class='warning'>\The [src] is broken by [user] with an electromagnetic card!</span>")
 			return
 
 /obj/item/storage/lockbox/Entered()
