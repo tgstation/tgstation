@@ -374,6 +374,8 @@
 	},
 /obj/item/stack/cable_coil,
 /obj/item/circuitboard/computer/rdconsole,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/stockparts/deluxe,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (

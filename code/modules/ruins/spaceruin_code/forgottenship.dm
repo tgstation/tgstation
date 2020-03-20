@@ -69,7 +69,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 70, "energy" = 50, "bomb" = 15, "bio" = 100, "rad" = 50, "fire" = 60, "acid" = 60)
 	strip_delay = 600
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cybersun
-	actions_types = list(/datum/action/item_action/toggle_helmet)
+	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
 	jetpack = /obj/item/tank/jetpack/suit
 
 //Special NT NPCs
