@@ -81,7 +81,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	icon_living = "nanotrasenrangedassault"
 	icon_dead = null
 	icon_gib = "syndicate_gib"
-	ranged = 1
+	ranged = TRUE
 	rapid = 4
 	rapid_fire_delay = 1
 	rapid_melee = 1
