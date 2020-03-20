@@ -2,7 +2,7 @@
 GLOBAL_VAR_INIT(fscpassword, generate_password())
 
 /proc/generate_password()
-	return "[pick(GLOB.phonetic_alphabet)] [rand(1,1000)]"
+	return "[pick(GLOB.phonetic_alphabet)] [rand(1000,9999)]"
 
 ///////////	forgottenship objects
 
