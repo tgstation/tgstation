@@ -465,15 +465,15 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_gases = air.gases
 	var/temperature = air.temperature
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100), cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/bz][MOLES])
-	var/energy_used = heat_efficency*100
+	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/bz][MOLES])
+	var/energy_used = heat_efficency * 100
 	ASSERT_GAS(/datum/gas/freon,air)
 	if ((cached_gases[/datum/gas/plasma][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/carbon_dioxide][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	cached_gases[/datum/gas/plasma][MOLES] -= heat_efficency*5
+	cached_gases[/datum/gas/plasma][MOLES] -= heat_efficency * 5
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency/2
-	cached_gases[/datum/gas/freon][MOLES] += heat_efficency*2
+	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.5
+	cached_gases[/datum/gas/freon][MOLES] += heat_efficency * 2
 
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()

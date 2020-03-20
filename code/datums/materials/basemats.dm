@@ -267,5 +267,5 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	source.AddComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300)
 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
-	. = ..()
 	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300))
+	return ..()

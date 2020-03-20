@@ -1261,12 +1261,12 @@
 	taste_description = "burning"
 
 /datum/reagent/freon/on_mob_metabolize(mob/living/L)
-	..()
+	. = ..()
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
 
 /datum/reagent/freon/on_mob_end_metabolize(mob/living/L)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/freon)
-	..()
+	return ..()
 
 /////////////////////////Colorful Powder////////////////////////////
 //For colouring in /proc/mix_color_from_reagents

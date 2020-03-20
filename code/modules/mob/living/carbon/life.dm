@@ -252,7 +252,7 @@
 	//FREON
 	if(breath_gases[/datum/gas/freon])
 		var/freon_partialpressure = (breath_gases[/datum/gas/freon][MOLES]/breath.total_moles())*breath_pressure
-		adjustFireLoss(freon_partialpressure/4)
+		adjustFireLoss(freon_partialpressure * 0.25)
 
 	//MIASMA
 	if(breath_gases[/datum/gas/miasma])
