@@ -101,7 +101,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	health = 150
 	melee_damage_lower = 13
 	melee_damage_upper = 18
-	ranged = 1
+	ranged = TRUE
 	rapid = 3
 	rapid_fire_delay = 5
 	rapid_melee = 3
