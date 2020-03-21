@@ -42,7 +42,7 @@
 	visible_message("<span class='danger'>the plant has borne fruit!</span>")
 	new /mob/living/simple_animal/hostile/venus_human_trap(get_turf(src))
 	qdel(src)
-
+	
 /obj/effect/ebeam/vine
 	name = "thick vine"
 	mouse_opacity = MOUSE_OPACITY_ICON
@@ -122,7 +122,10 @@
 		for(var/obj/O in T)
 			if(O.density)
 				return
-	vines += Beam(the_target, "vine", time=INFINITY, maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
+	
+	var/datum/beam/newVine = Beam(the_target, "vine", time=INFINITY, maxdistance = vine_grab_distance, beam_type=/obj/effect/ebeam/vine)
+	RegisterSignal(newVine, COMSIG_PARENT_QDELETING, .proc/remove_vine, newVine)
+	vines += newVine
 	if(isliving(the_target))
 		var/mob/living/L = the_target
 		L.Paralyze(20)
@@ -173,5 +176,14 @@
 				step(AM,get_dir(AM,src))
 		if(get_dist(src,B.target) == 0)
 			B.End()
-		if(QDELETED(B))
-			vines -= B
+
+/**
+  * Removes a vine from the list.
+  *
+  * Removes the vine from our list.
+  * Called specifically when the vine is about to be destroyed, so we don't have any null references.
+  * Arguments:
+  * * datum/beam/vine - The vine to be removed from the list.
+  */
+mob/living/simple_animal/hostile/venus_human_trap/proc/remove_vine(datum/beam/vine)
+	vines -= vine
