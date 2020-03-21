@@ -38,6 +38,13 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	desc = "A disk that contains advanced surgery procedures, must be loaded into an Operating Console."
 	surgeries = list(/datum/surgery/advanced/lobotomy, /datum/surgery/advanced/bioware/vein_threading, /datum/surgery/advanced/bioware/nerve_splicing)
 
+/obj/structure/fluff/empty_sleeper/syndicate/captain
+	icon_state = "sleeper_s-open"
+
+/obj/structure/fluff/empty_sleeper/syndicate/captain/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/gps, "Old Encrypted Signal")
+
 ///////////	forgottenship areas
 
 /area/ruin/space/has_grav/syndicate_forgotten_ship
