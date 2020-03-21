@@ -39349,6 +39349,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "byo" = (
+/obj/machinery/computer/station_alert,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -39356,7 +39357,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/computer/rdconsole/core,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "byp" = (
@@ -86507,11 +86507,11 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "deh" = (
+/obj/machinery/computer/rdconsole/core{
+	dir = 4
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10
-	},
-/obj/machinery/computer/rdconsole/production{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -98677,13 +98677,13 @@
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dEO" = (
+/obj/machinery/computer/rdconsole/robotics{
+	dir = 8
+	},
 /obj/structure/sign/departments/medbay/alt{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/rdconsole/production{
-	dir = 8
-	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "dEP" = (

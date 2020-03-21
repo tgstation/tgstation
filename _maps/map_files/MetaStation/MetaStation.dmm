@@ -26968,6 +26968,7 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bhr" = (
+/obj/machinery/computer/prisoner/management,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -26975,7 +26976,6 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/computer/rdconsole/core,
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bht" = (
@@ -50604,10 +50604,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
 "cjX" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/machinery/computer/rdconsole/production{
+/obj/machinery/computer/rdconsole/core{
 	dir = 4
 	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cjY" = (
@@ -58817,6 +58817,9 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "cGa" = (
+/obj/machinery/computer/rdconsole/robotics{
+	dir = 4
+	},
 /obj/machinery/requests_console{
 	department = "Robotics";
 	departmentType = 2;
@@ -58825,9 +58828,6 @@
 	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/bot,
-/obj/machinery/computer/rdconsole/production{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/science/robotics/lab)
 "cGb" = (
@@ -77792,7 +77792,7 @@
 	dir = 1;
 	layer = 2.9
 	},
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/computer/rdconsole/experiment,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
 "xgL" = (

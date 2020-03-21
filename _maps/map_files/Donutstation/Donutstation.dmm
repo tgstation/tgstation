@@ -1472,7 +1472,7 @@
 	},
 /area/science/explab)
 "adH" = (
-/obj/machinery/computer/rdconsole/production,
+/obj/machinery/computer/rdconsole/experiment,
 /turf/open/floor/plasteel/white/corner,
 /area/science/explab)
 "adI" = (
@@ -4497,11 +4497,11 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "akV" = (
+/obj/machinery/computer/rdconsole/core{
+	dir = 8
+	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
-	},
-/obj/machinery/computer/rdconsole/production{
-	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -40152,13 +40152,13 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bJD" = (
+/obj/machinery/computer/shuttle/mining{
+	dir = 8
+	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
-/obj/machinery/computer/rdconsole/core{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bJE" = (
