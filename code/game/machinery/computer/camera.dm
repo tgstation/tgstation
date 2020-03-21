@@ -123,13 +123,12 @@
 			return TRUE
 
 		// Fill vis_contents with visible turfs
-		var/items = C.isXRay() \
-			? range(C.view_range, C.loc) \
-			: view(C.view_range, C.loc)
+		var/list/items = C.isXRay() \
+			? range(C.view_range, C) \
+			: view(C.view_range, C)
 		cam_screen.vis_contents.Cut()
-		for(var/item in items)
-			if(isturf(item))
-				cam_screen.vis_contents += item
+		for(var/turf/item in items)
+			cam_screen.vis_contents += item
 
 		// Align background to cover the area visible by the camera
 		var/list/bbox = get_bbox_of_turfs(items)
@@ -165,7 +164,6 @@
 		if((is_away_level(z) || is_away_level(C.z)) && (C.z != z))//if on away mission, can only receive feed from same z_level cameras
 			continue
 		L.Add(C)
-	camera_sort(L)
 	var/list/D = list()
 	for(var/obj/machinery/camera/C in L)
 		if(!C.network)

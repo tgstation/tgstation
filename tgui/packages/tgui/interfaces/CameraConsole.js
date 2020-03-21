@@ -1,3 +1,5 @@
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { Component, Fragment } from 'inferno';
 import { useBackend } from '../backend';
@@ -21,14 +23,30 @@ const prevNextCamera = (cameras, activeCamera) => {
   ];
 };
 
+/**
+ * Camera selector.
+ *
+ * Filters cameras, applies search terms and sorts the alphabetically.
+ */
+const selectCameras = (cameras, searchTerm = '') => {
+  const lcSearchTerm = String(searchTerm).toLowerCase();
+  return flow([
+    // Null camera filter
+    filter(camera => camera?.name),
+    // Optional search term
+    lcSearchTerm && filter(camera => (
+      camera.name.toLowerCase().includes(lcSearchTerm)
+    )),
+    // Slightly expensive, but way better than sorting in BYOND
+    sortBy(camera => camera.name),
+  ])(cameras);
+};
+
 export const CameraConsoleWrapper = props => {
   const { act, data, config } = useBackend(props);
   const { children } = props;
-  const {
-    mapRef,
-    activeCamera,
-    cameras,
-  } = data;
+  const { mapRef, activeCamera } = data;
+  const cameras = selectCameras(data.cameras);
   const [
     prevCameraName,
     nextCameraName,
@@ -83,15 +101,8 @@ export class CameraConsole extends Component {
     const { props } = this;
     const { act, data } = useBackend(props);
     const { searchTerm } = this.state;
-    const {
-      activeCamera,
-      network,
-    } = data;
-    const cameras = data.cameras
-      .filter(camera => (
-        camera.name?.toLowerCase()
-          .includes(searchTerm.toLowerCase())
-      ));
+    const { activeCamera } = data;
+    const cameras = selectCameras(data.cameras, searchTerm);
     return (
       <Fragment>
         <Input

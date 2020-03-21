@@ -35,8 +35,8 @@
 	name = "background"
 	icon = 'icons/mob/map_backgrounds.dmi'
 	icon_state = "clear"
-	layer = -1
-	plane = -1
+	layer = GAME_PLANE
+	plane = GAME_PLANE
 
 /**
  * Sets screen_loc of this screen object, in form of point coordinates,
@@ -44,7 +44,7 @@
  *
  * If applicable, "assigned_map" has to be assigned before this proc call.
  */
-/obj/screen/proc/set_position(var/x, var/y, var/px = 0, var/py = 0)
+/obj/screen/proc/set_position(x, y, px = 0, py = 0)
 	if(assigned_map)
 		screen_loc = "[assigned_map]:[x]:[px],[y]:[py]"
 	else
@@ -55,7 +55,7 @@
  *
  * If applicable, "assigned_map" has to be assigned before this proc call.
  */
-/obj/screen/proc/fill_rect(var/x1, var/y1, var/x2, var/y2)
+/obj/screen/proc/fill_rect(x1, y1, x2, y2)
 	if(assigned_map)
 		screen_loc = "[assigned_map]:[x1],[y1] to [x2],[y2]"
 	else
@@ -65,18 +65,18 @@
  * Registers screen obj with the client, which makes it visible on the
  * assigned map, and becomes a part of the assigned map's lifecycle.
  */
-/client/proc/register_map_obj(var/obj/screen/item)
-	if(!item.assigned_map)
-		stack_trace("Can't register [item] without 'assigned_map' property.")
+/client/proc/register_map_obj(obj/screen/screen_obj)
+	if(!screen_obj.assigned_map)
+		stack_trace("Can't register [screen_obj] without 'assigned_map' property.")
 		return
-	if(!screen_maps[item.assigned_map])
-		screen_maps[item.assigned_map] = list()
+	if(!screen_maps[screen_obj.assigned_map])
+		screen_maps[screen_obj.assigned_map] = list()
 	// NOTE: Possibly an expensive operation
-	var/list/screen_map = screen_maps[item.assigned_map]
-	if(!screen_map.Find(item))
-		screen_map += item
-	if(!screen.Find(item))
-		screen += item
+	var/list/screen_map = screen_maps[screen_obj.assigned_map]
+	if(!screen_map.Find(screen_obj))
+		screen_map += screen_obj
+	if(!screen.Find(screen_obj))
+		screen += screen_obj
 
 /**
  * Clears the map of registered screen objects.
@@ -85,13 +85,13 @@
  * on relog. any of the buttons are going to get caught by garbage collection
  * anyway. they're effectively qdel'd.
  */
-/client/proc/clear_map(var/map_name)
+/client/proc/clear_map(map_name)
 	if(!map_name || !(map_name in screen_maps))
 		return FALSE
-	for(var/obj/screen/item in screen_maps[map_name])
-		screen_maps[map_name] -= item
-		if(item.del_on_map_removal)
-			qdel(item)
+	for(var/obj/screen/screen_obj in screen_maps[map_name])
+		screen_maps[map_name] -= screen_obj
+		if(screen_obj.del_on_map_removal)
+			qdel(screen_obj)
 	screen_maps -= map_name
 
 /**
@@ -109,7 +109,7 @@
  *
  * Returns a map name.
  */
-/client/proc/create_popup(var/name, var/ratiox = 100, var/ratioy = 100)
+/client/proc/create_popup(name, ratiox = 100, ratioy = 100)
 	winclone(src, "popupwindow", name)
 	var/list/winparams = list()
 	winparams["size"] = "[ratiox]x[ratioy]"
@@ -133,8 +133,8 @@
  *
  * Width and height are multiplied by 64 by default.
  */
-/client/proc/setup_popup(var/popup_name, var/width = 9, var/height = 9, \
-		var/tilesize = 2, var/bg_icon)
+/client/proc/setup_popup(popup_name, width = 9, height = 9, \
+		tilesize = 2, bg_icon)
 	if(!popup_name)
 		return
 	clear_map("[popup_name]_map")
@@ -154,7 +154,7 @@
 /**
  * Closes a popup.
  */
-/client/proc/close_popup(var/popup)
+/client/proc/close_popup(popup)
 	winshow(src, popup, 0)
 	handle_popup_close(popup)
 
