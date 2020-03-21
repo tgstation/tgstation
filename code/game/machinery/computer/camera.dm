@@ -65,7 +65,7 @@
 		show_camera_static()
 	if(!ui)
 		var/user_ref = REF(user)
-		var/is_living = ismob(user) && isliving(user)
+		var/is_living = isliving(user)
 		// Ghosts shouldn't count towards concurrent users, which produces
 		// an audible terminal_on click.
 		if(is_living)
@@ -140,7 +140,7 @@
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	var/user_ref = REF(user)
-	var/is_living = ismob(user) && isliving(user)
+	var/is_living = isliving(user)
 	// Living creature or not, we remove you anyway.
 	concurrent_users -= user_ref
 	// Unregister map objects
