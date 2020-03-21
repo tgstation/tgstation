@@ -68596,8 +68596,8 @@
 /area/medical/virology)
 "dBX" = (
 /obj/machinery/door/window/brigdoor/security/cell{
-	id = "Cell 2";
-	name = "Cell 2"
+	id = "Cell 3";
+	name = "Cell 3"
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
