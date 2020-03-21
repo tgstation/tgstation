@@ -30,7 +30,7 @@
 	dir = 4
 	},
 /obj/machinery/ticket_machine{
-	pixel_y = 31
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)

@@ -5,7 +5,7 @@
 "aab" = (
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = 23
+	pixel_x = 24
 	},
 /obj/structure/table,
 /obj/machinery/chem_dispenser/drinks/beer{

@@ -31661,7 +31661,7 @@
 	dir = 8
 	},
 /obj/structure/extinguisher_cabinet{
-	pixel_x = -27
+	pixel_x = -26
 	},
 /obj/item/storage/box/pillbottles,
 /obj/item/storage/box/pillbottles,

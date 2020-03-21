@@ -8,7 +8,7 @@
 /area/medical/morgue)
 "aac" = (
 /obj/effect/turf_decal/tile/yellow{
-	dir = 4
+	dir = 8
 	},
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1

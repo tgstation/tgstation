@@ -4,7 +4,7 @@
 /area/space)
 "aab" = (
 /obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 2;
+	dir = 1;
 	name = "plasma mixer"
 	},
 /turf/open/floor/plasteel,
