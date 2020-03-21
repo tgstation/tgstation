@@ -190,7 +190,6 @@
 	sleep(10)
 	Expand()
 	M.visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
-	ADD_TRAIT(M, TRAIT_DISFIGURED, TRAIT_GENERIC)
 	M.gib(null, TRUE, null, TRUE)
 	return MANUAL_SUICIDE
 
