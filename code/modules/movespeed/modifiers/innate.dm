@@ -4,6 +4,7 @@
 
 /datum/movespeed_modifier/pai_spacewalk
 	multiplicative_slowdown = 2
+	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/species
 	movetypes = ~FLYING
