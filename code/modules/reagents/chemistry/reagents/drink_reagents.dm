@@ -376,10 +376,10 @@
 
 /datum/reagent/consumable/nuka_cola/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.35, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
 
 /datum/reagent/consumable/nuka_cola/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nuka_cola)
 	..()
 
 /datum/reagent/consumable/nuka_cola/on_mob_life(mob/living/carbon/M)
@@ -565,17 +565,16 @@
 /datum/reagent/consumable/monkey_energy/on_mob_metabolize(mob/living/L)
 	..()
 	if(ismonkey(L))
-		L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.35, blacklisted_movetypes=(FLYING|FLOATING))
+		L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
 
 /datum/reagent/consumable/monkey_energy/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/monkey_energy)
 	..()
 
 /datum/reagent/consumable/monkey_energy/overdose_process(mob/living/M)
 	if(prob(15))
 		M.say(pick_list_replacements(BOOMER_FILE, "boomer"), forced = /datum/reagent/consumable/monkey_energy)
 	..()
-	return
 
 /datum/reagent/consumable/ice
 	name = "Ice"
@@ -914,3 +913,23 @@
 		M.adjustToxLoss(-1, 0)
 	..()
 	. = TRUE
+
+/datum/reagent/consumable/lean
+	name = "Lean"
+	description = "The drank that makes you go wheezy."
+	color = "#DE55ED"
+	quality = DRINK_NICE
+	taste_description = "purple and a hint of opiod."
+	glass_icon_state = "lean"
+	glass_name = "Lean"
+	glass_desc = "A drink that makes your life less miserable."
+
+/datum/reagent/consumable/lean/on_mob_life(mob/living/carbon/M)
+	if(M.slurring < 3)
+		M.slurring+= 2
+	if(M.druggy < 3)
+		M.adjust_drugginess(1)
+	if(M.drowsyness < 3)
+		M.drowsyness++
+	return ..()
+
