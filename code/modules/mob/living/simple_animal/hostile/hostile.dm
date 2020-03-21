@@ -575,4 +575,4 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 		var/mob/living/fren = whomst
 		friends = fren
 		faction = fren.faction.Copy()
-	..()
+	return ..()
