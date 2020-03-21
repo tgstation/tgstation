@@ -45,10 +45,10 @@
 	cam_background.del_on_map_removal = FALSE
 
 /obj/machinery/computer/security/Destroy()
-	. = ..()
 	qdel(cam_screen)
 	qdel(cam_plane_master)
 	qdel(cam_background)
+	return ..()
 
 /obj/machinery/computer/security/connect_to_shuttle(obj/docking_port/mobile/port, obj/docking_port/stationary/dock, idnum, override=FALSE)
 	for(var/i in network)
