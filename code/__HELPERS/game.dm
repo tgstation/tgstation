@@ -54,19 +54,19 @@
 		. |= get_area(I)
 
 /**
- * Get a bounding box of a list of turfs.
+ * Get a bounding box of a list of atoms.
  *
  * Arguments:
- * - turfs - List of turfs. Can accept output of view() and range() procs.
+ * - atoms - List of atoms. Can accept output of view() and range() procs.
  *
  * Returns: list(x1, y1, x2, y2)
  */
-/proc/get_bbox_of_turfs(list/turfs)
+/proc/get_bbox_of_atoms(list/atoms)
 	var/list/list_x = list()
 	var/list/list_y = list()
-	for(var/turf/item in turfs)
-		list_x += item.x
-		list_y += item.y
+	for(var/atom/A in atoms)
+		list_x += A.x
+		list_y += A.y
 	return list(
 		min(list_x),
 		min(list_y),
