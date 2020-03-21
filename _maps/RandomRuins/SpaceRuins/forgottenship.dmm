@@ -376,6 +376,7 @@
 /obj/item/circuitboard/computer/rdconsole,
 /obj/item/storage/box/stockparts/deluxe,
 /obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/box/beakers,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (
@@ -470,6 +471,10 @@
 	req_one_access_txt = "150"
 	},
 /obj/item/toy/nuke,
+/obj/item/clothing/under/chameleon,
+/obj/item/pda/chameleon,
+/obj/item/clothing/mask/chameleon,
+/obj/item/card/id/syndicate/anyone,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bv" = (
