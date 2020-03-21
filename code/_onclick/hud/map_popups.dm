@@ -67,8 +67,7 @@
  */
 /client/proc/register_map_obj(obj/screen/screen_obj)
 	if(!screen_obj.assigned_map)
-		stack_trace("Can't register [screen_obj] without 'assigned_map' property.")
-		return
+		CRASH("Can't register [screen_obj] without 'assigned_map' property.")
 	if(!screen_maps[screen_obj.assigned_map])
 		screen_maps[screen_obj.assigned_map] = list()
 	// NOTE: Possibly an expensive operation
