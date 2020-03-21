@@ -49,7 +49,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	/////Inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.
 	var/list/no_equip = list()
 	/// Allows the species to equip items that normally require a jumpsuit without having one equipped. Used by golems.
-	var/nojumpsuit = 0
+	var/nojumpsuit = FALSE
 	///Affects the speech message, for example: Motharula flutters, "My speech message is flutters!"
 	var/say_mod = "says"
 	///What languages this species can understand and say. Use a [language holder datum][/datum/language_holder] in this var.
