@@ -21,7 +21,6 @@
 	speed = 0
 	maxHealth = 25
 	health = 25
-	spacewalk = TRUE
 	search_objects = 1
 	wanted_objects = list(/obj/item/storage/cans)
 
@@ -69,6 +68,7 @@
 
 /mob/living/simple_animal/hostile/carp/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	carp_randomify(rarechance)
 	update_icons()
 
