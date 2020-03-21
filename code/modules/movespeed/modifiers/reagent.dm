@@ -25,6 +25,9 @@
 /datum/movespeed_modifier/reagent/nitryl
 	multiplicative_slowdown = -0.65
 
+/datum/movespeed_modifier/reagent/freon
+	multiplicative_slowdown = 1.6
+
 /datum/movespeed_modifier/reagent/lenturi
 	multiplicative_slowdown = 1.5
 

@@ -2680,9 +2680,6 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "gg" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
 /obj/effect/turf_decal/bot_white/right,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2917,9 +2914,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/upper)
 "gG" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2938,9 +2932,6 @@
 /turf/open/floor/plasteel/dark,
 /area/gateway)
 "gH" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/effect/turf_decal/bot_white/left,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3007,9 +2998,6 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/upper)
 "gN" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3069,44 +3057,7 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
-"gS" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot_white,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
-/area/gateway)
-"gT" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/obj/effect/turf_decal/bot_white/left,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
-/area/gateway)
 "gU" = (
-/obj/machinery/gateway,
 /obj/effect/turf_decal/bot_white,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3128,24 +3079,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/upper)
-"gW" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/obj/effect/turf_decal/bot_white/right,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel/dark,
-/area/gateway)
 "gX" = (
 /obj/effect/turf_decal/trimline/white/filled/corner{
 	dir = 8
@@ -3222,13 +3155,13 @@
 /area/gateway)
 "hd" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/secure_closet/exile,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/computer/gateway_control,
 /turf/open/floor/plasteel,
 /area/gateway)
 "he" = (
@@ -7847,6 +7780,7 @@
 /obj/structure/sign/plaques/kiddie{
 	pixel_x = -32
 	},
+/obj/item/aiModule/supplied/quarantine,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "qV" = (
@@ -8396,13 +8330,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/aiModule/supplied/quarantine,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
 	req_access = null;
 	req_one_access_txt = "2;24"
 	},
+/obj/item/aiModule/reset,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "rX" = (
@@ -20906,6 +20840,17 @@
 	},
 /turf/open/openspace/airless,
 /area/hallway/primary/upper)
+"Ya" = (
+/obj/effect/turf_decal/bot,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/exile,
+/turf/open/floor/plasteel,
+/area/gateway)
 "YH" = (
 /turf/open/openspace/airless,
 /area/hallway/primary/upper)
@@ -57547,7 +57492,7 @@ lK
 eL
 gg
 gN
-gT
+gH
 gY
 hc
 tC
@@ -58060,10 +58005,10 @@ lz
 lK
 eL
 gH
-gS
-gW
+gN
+gg
 uf
-hc
+Ya
 tE
 tK
 ob

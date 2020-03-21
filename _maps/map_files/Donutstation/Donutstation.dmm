@@ -1472,7 +1472,7 @@
 	},
 /area/science/explab)
 "adH" = (
-/obj/machinery/computer/rdconsole/experiment,
+/obj/machinery/computer/rdconsole/production,
 /turf/open/floor/plasteel/white/corner,
 /area/science/explab)
 "adI" = (
@@ -4497,11 +4497,11 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "akV" = (
-/obj/machinery/computer/rdconsole/core{
-	dir = 8
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/computer/rdconsole/production{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/science/lab)
@@ -14021,14 +14021,14 @@
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aFR" = (
-/obj/machinery/door/airlock/research/glass{
-	name = "Genetics Research";
-	req_access_txt = "5; 9; 68"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/door/airlock/research/glass{
+	name = "Genetics Research";
+	req_access_txt = "5;9"
+	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "aFS" = (
@@ -33797,7 +33797,7 @@
 "bwm" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Genetics Maintenance Access";
-	req_access_txt = "5; 9; 68"
+	req_access_txt = "5;9"
 	},
 /turf/open/floor/plating,
 /area/maintenance/port)
@@ -40152,13 +40152,13 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bJD" = (
-/obj/machinery/computer/shuttle/mining{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/blue,
+/obj/machinery/computer/rdconsole/core{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "bJE" = (
