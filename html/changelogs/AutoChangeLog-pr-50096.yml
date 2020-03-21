@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscdel: "SlimeHUD removed, as all its features are already contained in the generic HUD version."
-  - rscdel: "Lavaland EliteHUD removed, as all its features are already contained in the generic HUD version."
-  - bugfix: "Mobs with a generic UI style will now properly show background frame for hide/show action button."

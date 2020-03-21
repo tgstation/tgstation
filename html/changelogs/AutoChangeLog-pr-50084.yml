@@ -1,5 +1,0 @@
-author: "wesoda25"
-delete-after: True
-changes: 
-  - bugfix: "You can no longer spam drain power sources as an ethereal."
-  - tweak: "Minor ethereal powersource drain time tweaks."

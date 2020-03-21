@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - rscdel: "removes the posibrain tech node, posibrains are now in advanced robotics"
-  - tweak: "borg upgrade nodes got switched around, 2 nodes were removed and a bunch of stuff switched places"

@@ -1,9 +1,0 @@
-author: "dablusniper"
-delete-after: True
-changes: 
-  - bugfix: "you can no longer get trapped inside the ferry bridge on donutstation as new buttons have been added on the inside"
-  - bugfix: "the ferry bridge now opens and closes properly"
-  - tweak: "moved vents in ferry bridge to no loner leak air into space when the bridge is open"
-  - tweak: "removed airlocks from the ferry bridge to make it look better"
-  - bugfix: "added missing pipes South of holodeck to connect North research maint to the donutstation pipenet"
-  - tweak: "moved an exposed electrified grille in maint so it's no longer electrified"

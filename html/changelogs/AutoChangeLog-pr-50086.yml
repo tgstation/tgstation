@@ -1,8 +1,0 @@
-author: "dablusniper"
-delete-after: True
-changes: 
-  - tweak: "Added \"Reset\" AI module to Donutstation upload"
-  - tweak: "Geneticist now has medical access on Donutstation"
-  - bugfix: "fixed #49688, geneticists can now enter genetics through medbay and genetics maint"
-  - bugfix: "fixed #49551, cell 2 and 3 on metastation now function independently"
-  - bugfix: "fixed #49437, mining access now gives access to the bar area in the luxury bluespace shelter"

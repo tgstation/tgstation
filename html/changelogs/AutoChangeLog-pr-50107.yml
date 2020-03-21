@@ -1,4 +1,0 @@
-author: "RiskySikh"
-delete-after: True
-changes: 
-  - spellcheck: "Fixes some grammatical mistakes in the code for drug_events and generic_negative_event"

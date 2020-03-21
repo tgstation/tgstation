@@ -1,4 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - rscadd: "Positronic brains can now be given a \"personality seed\" by Alt-clicking them. Effectively, this tells ghosts what you plan on using the posibrain for, to advertise and prevent misunderstandings."
