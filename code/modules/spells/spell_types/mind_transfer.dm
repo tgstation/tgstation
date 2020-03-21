@@ -54,6 +54,15 @@
 	SEND_SOUND(victim, sound('sound/magic/mandswap.ogg')) // only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
 	return TRUE
 
+/**
+  * swap_check: Checks if we are allowed and able to swap two minds
+  *
+  * Arguments:
+  * * user - caster of the spell
+  * * target - target of the spell
+  * * distance_override - if set to TRUE, range checks are ignored
+  * * silent - if set to TRUE, spell will not produce any warning messages to the user if the spell fails
+  */
 /obj/effect/proc_holder/spell/pointed/mind_transfer/proc/swap_check(mob/user, atom/target, distance_override = FALSE, silent = FALSE)
 	if(!isliving(target))
 		if(!silent)
