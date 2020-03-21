@@ -324,7 +324,7 @@
 			air.temperature = clamp(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY)
 		return REACTING
 
-/datum/gas_reaction/nitrousformation
+/datum/gas_reaction/nitrousformation //formationn of n2o, esothermic, requires bz as catalyst
 	priority = 3
 	name = "Nitrous Oxide formation"
 	id = "nitrousformation"
@@ -342,23 +342,23 @@
 	var/temperature = air.temperature
 	var/old_heat_capacity = air.heat_capacity()
 	var/heat_efficency = min(cached_gases[/datum/gas/oxygen][MOLES], cached_gases[/datum/gas/nitrogen][MOLES])
-	var/energy_used = heat_efficency*NITROUS_FORMATION_ENERGY
+	var/energy_used = heat_efficency * NITROUS_FORMATION_ENERGY
 	ASSERT_GAS(/datum/gas/nitrous_oxide,air)
-	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 )|| (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	if (temperature > 250)
+	if (temperature > 250) //maximum allowed temperature for the reaction
 		return NO_REACTION
 	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/nitrous_oxide][MOLES] += heat_efficency*2
+	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency * 2
+	cached_gases[/datum/gas/nitrous_oxide][MOLES] += heat_efficency
 
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature*old_heat_capacity + energy_used)/new_heat_capacity),TCMB)
+			air.temperature = max(((temperature * old_heat_capacity + energy_used) / new_heat_capacity),TCMB) //the air heats up when reacting
 		return REACTING
 
-/datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires bz as a catalyst.
+/datum/gas_reaction/nitrylformation //The formation of nitryl. Endothermic. Requires bz.
 	priority = 3
 	name = "Nitryl formation"
 	id = "nitrylformation"
@@ -368,7 +368,7 @@
 		/datum/gas/oxygen = 10,
 		/datum/gas/nitrogen = 20,
 		/datum/gas/bz = 5,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST*60
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 60
 	)
 
 /datum/gas_reaction/nitrylformation/react(datum/gas_mixture/air)
@@ -376,19 +376,20 @@
 	var/temperature = air.temperature
 
 	var/old_heat_capacity = air.heat_capacity()
-	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST*100),cached_gases[/datum/gas/oxygen][MOLES],cached_gases[/datum/gas/nitrogen][MOLES])
-	var/energy_used = heat_efficency*NITRYL_FORMATION_ENERGY
+	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 100),cached_gases[/datum/gas/oxygen][MOLES],cached_gases[/datum/gas/nitrogen][MOLES])
+	var/energy_used = heat_efficency * NITRYL_FORMATION_ENERGY
 	ASSERT_GAS(/datum/gas/nitryl,air)
-	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 )|| (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
+	if ((cached_gases[/datum/gas/oxygen][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/nitrogen][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
 		return NO_REACTION
-	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency
+	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency * 2
 	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/nitryl][MOLES] += heat_efficency*2
+	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.25 //bz gets consumed to balance the nitryl production and not make it too common and/or easy
+	cached_gases[/datum/gas/nitryl][MOLES] += heat_efficency
 
 	if(energy_used > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			air.temperature = max(((temperature*old_heat_capacity - energy_used)/new_heat_capacity),TCMB)
+			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity),TCMB) //the air cools down when reacting
 		return REACTING
 
 /datum/gas_reaction/bzformation //Formation of BZ by combining plasma and tritium at low pressures. Exothermic.
