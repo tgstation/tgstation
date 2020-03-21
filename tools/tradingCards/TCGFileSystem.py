@@ -49,6 +49,10 @@ def convert_to(text):
             if len(toInsert) != 0:
                 output += convert_line_to(toInsert) + '\n'
                 toInsert = dict()
+    #Fucking EOF
+    if len(toInsert) != 0:
+                output += convert_line_to(toInsert) + '\n'
+                toInsert = dict()
     return output
 
 #Converts a string into an entry

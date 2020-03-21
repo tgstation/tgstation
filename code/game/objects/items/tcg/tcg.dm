@@ -78,6 +78,7 @@ var/list/cardTypeLookup = list("name" = 0,
 *
 *Rarity is used to expand the card list
 *
+*cardList should be a fully expanded card list
 *If you use this to set the global list I will throw you into a fire
 ***/
 /proc/buildCardListWithRarity(cardList)
