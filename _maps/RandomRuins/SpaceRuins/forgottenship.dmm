@@ -1279,6 +1279,10 @@
 /obj/effect/spawner/lootdrop/costume,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"dt" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
 
 (1,1,1) = {"
 aa
@@ -1760,17 +1764,17 @@ aa
 ci
 bZ
 dk
-al
+dt
 al
 al
 dm
-al
+dt
 al
 dp
 dq
 al
 al
-al
+dt
 ds
 bZ
 ci
