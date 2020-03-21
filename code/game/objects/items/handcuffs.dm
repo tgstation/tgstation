@@ -74,10 +74,18 @@
 			else
 				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
 		else
-			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>")
+			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>") //if you're trying to cuff yourself while one-handed, this will refer to you in the third person, which is a bit weird, but not a big enough issue to write some shitcode to keep that from happening
 
 /obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
+
+	if(!istype(target)) //some sanity checks, in case apply_cuffs() gets called without attack() being called/fully run through (looking at YOU, clumsy people)
+		return
+
 	if(target.handcuffed)
+		return
+
+	if(!(target.get_num_arms(FALSE) >= 2 || target.get_arm_ignore()))
+		to_chat(user, "<span class='warning'>[target] doesn't have two hands...</span>") 
 		return
 
 	if(!user.temporarilyRemoveItemFromInventory(src) && !dispense)
@@ -146,12 +154,17 @@
 	icon_state = "handcuffAlien"
 
 /obj/item/restraints/handcuffs/fake
+	breakouttime = 1 SECONDS //takes only 1 second to break out of these
+
+/obj/item/restraints/handcuffs/fake/attack(mob/living/carbon/C, mob/living/user)
+	if(C == user)
+		apply_cuffs(user, user) //instant self-application
+	else
+		..()
+
+/obj/item/restraints/handcuffs/fake/toy  //YOU! ARE! A! TOOOOOOOOOOOOY!
 	name = "fake handcuffs"
 	desc = "Fake handcuffs meant for gag purposes."
-	breakouttime = 1 SECONDS
-
-/obj/item/restraints/handcuffs/reallyfake //not a subtype of normal fake handcuffs so that they can use the name and description of normal handcuffs
-	breakouttime = 1 SECONDS
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/rods))

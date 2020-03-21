@@ -1896,7 +1896,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/badass/fakecuffs
 	name = "Professional-Grade Fake Handcuffs" //kinky
-	desc = "These fake handcuffs are indistinguishable from normal handcuffs until you try to take them off, which only takes one second to do."
-	item = /obj/item/restraints/handcuffs/reallyfake
+	desc = "These fake handcuffs look exactly like normal handcuffs, but it takes only 1 second to escape from them and you can handcuff yourself with them instantly and silently."
+	item = /obj/item/restraints/handcuffs/fake
 	cost = 1
 	illegal_tech = FALSE

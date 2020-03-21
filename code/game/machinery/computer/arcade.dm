@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/stack/tile/fakepit/loaded = 2,
 		/obj/item/toy/toy_xeno = 2,
 		/obj/item/storage/box/actionfigure = 1,
-		/obj/item/restraints/handcuffs/fake = 2,
+		/obj/item/restraints/handcuffs/fake/toy = 2,
 		/obj/item/grenade/chem_grenade/glitter/pink = 1,
 		/obj/item/grenade/chem_grenade/glitter/blue = 1,
 		/obj/item/grenade/chem_grenade/glitter/white = 1,
