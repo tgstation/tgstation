@@ -1,0 +1,6 @@
+author: "EgorDinamit"
+delete-after: True
+changes: 
+  - rscadd: "Forgotten ship ruin now additionally contains: Deluxe stock parts box, box with beakers, 3 toolboxes, box with basic firing pins and a little bit more of resources in a protected vault and so on, find it out!"
+  - rscadd: "Replaces interrogation room with medbay."
+  - bugfix: "Fixed cybersun hardsuits by adding thermo-regulation button to it."
