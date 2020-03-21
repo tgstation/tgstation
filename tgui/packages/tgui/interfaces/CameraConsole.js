@@ -22,7 +22,7 @@ const prevNextCamera = (cameras, activeCamera) => {
 };
 
 export const CameraConsoleWrapper = props => {
-  const { act, data, config, visible } = useBackend(props);
+  const { act, data, config } = useBackend(props);
   const { children } = props;
   const {
     mapRef,
