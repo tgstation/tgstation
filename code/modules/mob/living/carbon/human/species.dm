@@ -206,8 +206,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
   * This generates a random unique name based on a human's species and gender.
   * Arguments:
   * gender - The gender that the name should adhere to. Use MALE for male names, use anything else for female names.
-  * unique -
-  * lastname - Does this species' naming system adhere to the last name system? Override this if it doesn't.
+  * unique - If true, ensures that this new name is not a duplicate of anyone else's name currently on the station.
+  * lastname - Does this species' naming system adhere to the last name system? Set to false if it doesn't.
   */
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
