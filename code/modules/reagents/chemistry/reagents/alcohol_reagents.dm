@@ -430,7 +430,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/goldschlager
 	name = "Goldschlager"
-	description = "100% real cinnamon schnapps, made for alcoholic teen girls on spring break."
+	description = "100% proof cinnamon schnapps, made for alcoholic teen girls on spring break."
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 25
 	quality = DRINK_VERYGOOD
