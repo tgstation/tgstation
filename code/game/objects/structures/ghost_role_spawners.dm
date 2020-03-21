@@ -651,7 +651,7 @@
 	icon_state = "sleeper_s"
 	short_desc = "You are a syndicate operative on old ship, stuck in hostile space."
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Fix the ship, find a way to power it and follow your captain's orders."
-	important_info = "Obey orders given by your captain. DO NOT let ship fall into enemy's hands."
+	important_info = "Obey orders given by your captain. DO NOT let the ship fall into enemy's hands."
 	outfit = /datum/outfit/syndicatespace/syndicrew
 
 /datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
@@ -673,7 +673,7 @@
 	icon_state = "sleeper_s"
 	short_desc = "You are the captain of an old ship, stuck in hostile space."
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Command your crew and turn your ship into the most protected fortress."
-	important_info = "Protect the ship and secret documents in your backpack with your own life. DO NOT let ship fall into enemy's hands."
+	important_info = "Protect the ship and secret documents in your backpack with your own life. DO NOT let the ship fall into enemy's hands."
 	mob_gender = "male"
 	outfit = /datum/outfit/syndicatespace/syndicaptain
 
