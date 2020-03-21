@@ -157,11 +157,18 @@ SUBSYSTEM_DEF(vote)
 	if(mode)
 		if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 			return FALSE
-		if(!(usr.ckey in voted))
-			if(vote && 1<=vote && vote<=choices.len)
-				voted += usr.ckey
-				choices[choices[vote]]++	//check this
-				return vote
+		if(usr.ckey in voted)
+			if(vote in voted[usr.ckey])
+				voted[usr.ckey] -= vote
+				choices[choices[vote]]--
+			else
+				voted[usr.ckey] += vote
+				choices[choices[vote]]++
+		else
+			voted += usr.ckey
+			voted[usr.ckey] = list(vote)
+			choices[choices[vote]]++
+			return vote
 	return FALSE
 
 /datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
