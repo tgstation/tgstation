@@ -60,18 +60,18 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/mutant_bodyparts = list()
 	///Internal organs that are unique to this race, like a tail.
 	var/list/mutant_organs = list()
-	///This affects the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
+	///Multiplier for the race's speed. Positive numbers make it move slower, negative numbers make it move faster.
 	var/speedmod = 0
-	///Overall defense for the race, or less defense, if it's negative.
+	///Percentage modifier for overall defense of the race, or less defense, if it's negative.
 	var/armor = 0
 	///multiplier for brute damage
 	var/brutemod = 1
 	///multiplier for burn damage
-	var/burnmod = 1	
+	var/burnmod = 1
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
 	///multiplier for damage from hot temperature
-	var/heatmod = 1	
+	var/heatmod = 1
 	///multiplier for stun durations
 	var/stunmod = 1
 	///Type of damage attack does. Ethereals attack with burn damage for example.
@@ -86,7 +86,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/siemens_coeff = 1
 	///What kind of damage overlays (if any) appear on our species when wounded?
 	var/damage_overlay_type = "human"
-	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA. 
+	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
 	var/fixed_mut_color = ""
 	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
 	var/inert_mutation 	= DWARFISM
@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	//Do NOT remove by setting to null. use OR make a RESPECTIVE TRAIT (removing stomach? add the NOSTOMACH trait to your species)
 	//why does it work this way? because traits also disable the downsides of not having an organ, removing organs but not having the trait will make your species die
-	
+
 	///Replaces default brain with a different organ
 	var/obj/item/organ/brain/mutantbrain = /obj/item/organ/brain
 	///Replaces default heart with a different organ
@@ -206,7 +206,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
   * This generates a random unique name based on a human's species and gender.
   * Arguments:
   * gender - The gender that the name should adhere to. Use MALE for male names, use anything else for female names.
-  * unique - 
+  * unique -
   * lastname - Does this species' naming system adhere to the last name system? Override this if it doesn't.
   */
 /datum/species/proc/random_name(gender,unique,lastname)
@@ -225,7 +225,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		randname += " [pick(GLOB.last_names)]"
 
 	return randname
-	
+
 /**
   * Called when cloning, copies some vars that should be kept
   *
@@ -430,7 +430,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
   * Handles hair icons and dynamic hair.
   *
   * Handles hiding hair with clothing, hair layers, losing hair due to husking or augmented heads, facial hair, head hair, and hair styles.
-  * Arguments: 
+  * Arguments:
   * H - Human, whoever we're handling the hair for
   * forced_colour - The colour of hair we're forcing on this human. Leave null to not change. Mind the british spelling!
   */
