@@ -682,6 +682,7 @@
 
 /obj/effect/mob_spawn/human/syndicatespace/captain/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))
+	return ..()
 
 /datum/outfit/syndicatespace/syndicrew
 	name = "Syndicate Ship Crew Member"
