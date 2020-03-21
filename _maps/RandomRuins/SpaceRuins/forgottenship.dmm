@@ -1195,10 +1195,7 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/disk/surgery{
-	name = "Advanced Surgery Disk";
-	surgeries = list(/datum/surgery/advanced/brainwashing,/datum/surgery/advanced/lobotomy,/datum/surgery/advanced/bioware/vein_threading,/datum/surgery/advanced/bioware/nerve_splicing)
-	},
+/obj/item/disk/surgery/forgottenship,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dj" = (
