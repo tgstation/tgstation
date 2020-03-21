@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/hair_alpha = 255
 
 	///Does the species use skintones or not? As of now only used by humans.
-	var/use_skintones = 0
+	var/use_skintones = FALSE
 	///If your race bleeds something other than bog standard blood, change this to reagent id. For example, ethereals bleed liquid electricity.
 	var/exotic_blood = ""
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
