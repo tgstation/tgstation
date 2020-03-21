@@ -184,9 +184,9 @@
 				if(W.tool_behaviour == TOOL_MULTITOOL)
 					detecting = !detecting
 					if (src.detecting)
-						user.visible_message("<span class='notice'>[user] has reconnected [src]'s detecting unit!</span>", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
+						user.visible_message("<span class='notice'>[user] reconnects [src]'s detecting unit!</span>", "<span class='notice'>You reconnect [src]'s detecting unit.</span>")
 					else
-						user.visible_message("<span class='notice'>[user] has disconnected [src]'s detecting unit!</span>", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
+						user.visible_message("<span class='notice'>[user] disconnects [src]'s detecting unit!</span>", "<span class='notice'>You disconnect [src]'s detecting unit.</span>")
 					return
 
 				else if(W.tool_behaviour == TOOL_WIRECUTTER)

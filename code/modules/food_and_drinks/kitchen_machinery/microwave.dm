@@ -139,7 +139,7 @@
 		if(clean_spray.reagents.has_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this))
 			clean_spray.reagents.remove_reagent(/datum/reagent/space_cleaner, clean_spray.amount_per_transfer_from_this,1)
 			playsound(loc, 'sound/effects/spray3.ogg', 50, TRUE, -6)
-			user.visible_message("<span class='notice'>[user] has cleaned \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] cleans \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
 			update_icon()
 		else
@@ -150,7 +150,7 @@
 		var/obj/item/soap/P = O
 		user.visible_message("<span class='notice'>[user] starts to clean \the [src].</span>", "<span class='notice'>You start to clean \the [src]...</span>")
 		if(do_after(user, P.cleanspeed, target = src))
-			user.visible_message("<span class='notice'>[user] has cleaned \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] cleans \the [src].</span>", "<span class='notice'>You clean \the [src].</span>")
 			dirty = 0
 			update_icon()
 		return TRUE
@@ -182,7 +182,7 @@
 			return FALSE
 
 		ingredients += O
-		user.visible_message("<span class='notice'>[user] has added \a [O] to \the [src].</span>", "<span class='notice'>You add [O] to \the [src].</span>")
+		user.visible_message("<span class='notice'>[user] adds \a [O] to \the [src].</span>", "<span class='notice'>You add [O] to \the [src].</span>")
 		return
 
 	..()
