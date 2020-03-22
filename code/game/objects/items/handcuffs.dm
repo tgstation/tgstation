@@ -159,8 +159,8 @@
 /obj/item/restraints/handcuffs/fake/attack(mob/living/carbon/C, mob/living/user)
 	if(C == user)
 		apply_cuffs(user, user) //instant self-application
-	else
-		..()
+		return
+	return ..()
 
 /obj/item/restraints/handcuffs/fake/toy  //YOU! ARE! A! TOOOOOOOOOOOOY!
 	name = "fake handcuffs"
