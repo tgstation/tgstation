@@ -1,0 +1,7 @@
+author: "dablusniper"
+delete-after: True
+changes: 
+  - rscdel: "removed old trumpet sprite which wasn't even a trumpet (it was a bugle goddamnit)"
+  - rscadd: "added a new sprite and inhands for trumpets"
+  - rscadd: "added a new sprite and inhands for spectral trumpets (they real spooky now)"
+  - bugfix: "fixed trumpets not having their own inhands and using trombone sprites"
