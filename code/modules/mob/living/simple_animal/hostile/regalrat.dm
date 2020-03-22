@@ -134,10 +134,10 @@
 			var/mob/living/simple_animal/hostile/regalrat/giantrat = owner
 			new_rat.faction_num = giantrat.faction_num
 		qdel(M)
-	if(!something_from_nothing && LAZYLEN(SSmobs.cheeserats) >= cap)
-		to_chat(owner,"<span class='warning'>There's too many mice on this station to beckon a new one! Find them first!</span>")
-		return
 	if(!something_from_nothing)
+		if(LAZYLEN(SSmobs.cheeserats) >= cap)
+			to_chat(owner,"<span class='warning'>There's too many mice on this station to beckon a new one! Find them first!</span>")
+			return
 		new /mob/living/simple_animal/mouse(owner.loc)
 		owner.visible_message("<span class='warning'>[owner] commands a mouse to its side!</span>")
 	else
