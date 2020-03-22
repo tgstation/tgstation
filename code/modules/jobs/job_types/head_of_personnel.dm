@@ -14,7 +14,7 @@
 	minimal_player_age = 10
 	exp_requirements = 180
 	exp_type = EXP_TYPE_CREW
-	exp_type_department = EXP_TYPE_SUPPLY
+	exp_type_department = EXP_TYPE_SERVICE
 
 	outfit = /datum/outfit/job/hop
 
