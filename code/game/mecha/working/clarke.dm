@@ -48,13 +48,32 @@
 		var/mob/living/brain/B = M.brainmob
 		hud.add_hud_to(B)
 
+/obj/mecha/working/clarke/play_stepsound(direction)
+	if(prob(30))
+		floor_damage()
+	. = ..()
+
+/obj/mecha/working/clarke/mechturn(direction)
+	if(prob(80))
+		floor_damage()
+	. = ..()
+
+/obj/mecha/working/clarke/proc/floor_damage()
+	var/turf/open/floor/tile = get_turf(src)
+	if(!istype(tile, /turf/open/floor))
+		return
+	if(tile.icon_plating == "basalt") //Find me a better way to tell a tile is basalt, and I'll use it
+		return
+	tile.break_tile()
+
 //Ore Box Controls
 
 ///Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
 /obj/item/mecha_parts/mecha_equipment/orebox_manager
 	name = "ore storage module"
 	desc = "An automated ore box management device."
-	icon_state = "mecha_clamp" //None of this should matter, this shouldn't ever exist outside a mech anyway.
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "bin"
 	selectable = FALSE
 	detachable = FALSE
 	salvageable = FALSE
