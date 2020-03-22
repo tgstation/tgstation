@@ -334,7 +334,16 @@
 	result = /obj/item/reagent_containers/food/snacks/crab_rangoon
 	subcategory = CAT_MISCFOOD
 
-<<<<<<< HEAD
+/datum/crafting_recipe/food/poutine
+	name = "Poutine"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/fries = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/datum/reagent/consumable/gravy = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/customizable/poutine
+	subcategory = CAT_MISCFOOD
+
 /datum/crafting_recipe/food/royalcheese
 	name = "Royal Cheese"
 	reqs = list(
@@ -344,14 +353,4 @@
 		/datum/reagent/toxin/mutagen = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/royalcheese
-=======
-/datum/crafting_recipe/food/poutine
-	name = "Poutine"
-	reqs = list(
-		/obj/item/reagent_containers/food/snacks/fries = 1,
-		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
-		/datum/reagent/consumable/gravy = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/customizable/poutine
->>>>>>> upstream/master
 	subcategory = CAT_MISCFOOD
