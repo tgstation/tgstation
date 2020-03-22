@@ -240,7 +240,7 @@
 		return
 	owner.slowed_by_drag = initial(owner.slowed_by_drag)
 
- ///Amount of units of toxin reagents to remove
+ ///Amount of units of toxin reagents to remove while having the stimmed mutation
  #define STIMMED_PURGE_AMOUNT 0.25
 
 /datum/mutation/human/stimmed
