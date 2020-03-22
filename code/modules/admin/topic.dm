@@ -2201,29 +2201,37 @@
 
 	else if(href_list["beakerpanel"])
 		beaker_panel_act(href_list)
-	
+
+	else if(href_list["reloadpolls"])
+		GLOB.polls.Cut()
+		GLOB.poll_options.Cut()
+		load_poll_data()
+		poll_list_panel()
+
 	else if(href_list["newpoll"])
 		poll_management_panel()
-	
+
 	else if(href_list["editpoll"])
 		var/datum/poll_question/poll = locate(href_list["editpoll"]) in GLOB.polls
 		poll_management_panel(poll)
-	
+
 	else if(href_list["deletepoll"])
-		var/datum/poll_question/poll = locate(href_list["editpoll"]) in GLOB.polls
+		var/datum/poll_question/poll = locate(href_list["deletepoll"]) in GLOB.polls
 		poll.delete_poll()
-	
+		poll_list_panel()
+
 	else if(href_list["initializepoll"])
 		poll_parse_href(href_list)
-	
+
 	else if(href_list["submitpoll"])
 		var/datum/poll_question/poll = locate(href_list["submitpoll"]) in GLOB.polls
 		poll_parse_href(href_list, poll)
-	
+
 	else if(href_list["clearpollvotes"])
 		var/datum/poll_question/poll = locate(href_list["clearpollvotes"]) in GLOB.polls
 		poll.clear_poll_votes()
-	
+		poll_management_panel(poll)
+
 	else if(href_list["addpolloption"])
 		var/datum/poll_question/poll = locate(href_list["addpolloption"]) in GLOB.polls
 		poll_option_panel(poll)
@@ -2235,8 +2243,9 @@
 
 	else if(href_list["deletepolloption"])
 		var/datum/poll_option/option = locate(href_list["deletepolloption"]) in GLOB.poll_options
-		option.delete_option()
-	
+		var/datum/poll_question/poll = option.delete_option()
+		poll_management_panel(poll)
+
 	else if(href_list["submitoption"])
 		var/datum/poll_option/option = locate(href_list["submitoption"]) in GLOB.poll_options
 		var/datum/poll_question/poll = locate(href_list["submitoptionpoll"]) in GLOB.polls

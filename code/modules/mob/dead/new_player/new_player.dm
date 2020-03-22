@@ -58,20 +58,19 @@
 
 	if(!IsGuestKey(src.key))
 		if (SSdbcore.Connect())
-			var/isadmin = 0
-			if(src.client && src.client.holder)
-				isadmin = 1
-			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = false AND")] Now() BETWEEN starttime AND endtime AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = \"[sanitizeSQL(ckey)]\") AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = \"[sanitizeSQL(ckey)]\")")
+			var/isadmin = FALSE
+			if(client?.holder)
+				isadmin = TRUE
+			var/sql_ckey = sanitizeSQL(ckey)
+			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = 0 AND")] Now() BETWEEN starttime AND endtime AND deleted = 0 AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = '[sql_ckey]' AND deleted = 0) AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = '[sql_ckey]' AND deleted = 0)")
 			var/rs = REF(src)
-			if(query_get_new_polls.Execute())
-				var/newpoll = 0
-				if(query_get_new_polls.NextRow())
-					newpoll = 1
-
-				if(newpoll)
-					output += "<p><b><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
-				else
-					output += "<p><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A></p>"
+			if(!query_get_new_polls.Execute())
+				qdel(query_get_new_polls)
+				return
+			if(query_get_new_polls.NextRow())
+				output += "<p><b><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A> (NEW!)</b></p>"
+			else
+				output += "<p><a href='byond://?src=[rs];showpoll=1'>Show Player Polls</A></p>"
 			qdel(query_get_new_polls)
 			if(QDELETED(src))
 				return

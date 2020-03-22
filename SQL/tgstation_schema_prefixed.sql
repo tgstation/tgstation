@@ -556,19 +556,19 @@ CREATE PROCEDURE `set_poll_deleted`(
 )
 SQL SECURITY INVOKER
 BEGIN
-UPDATE `poll_question` SET deleted = 1 WHERE id = poll_id;
-UPDATE `poll_option` SET deleted = 1 WHERE pollid = poll_id;
-UPDATE `poll_vote` SET deleted = 1 WHERE pollid = poll_id;
-UPDATE `poll_textreply` SET deleted = 1 WHERE pollid = poll_id;
+UPDATE `SS13_poll_question` SET deleted = 1 WHERE id = poll_id;
+UPDATE `SS13_poll_option` SET deleted = 1 WHERE pollid = poll_id;
+UPDATE `SS13_poll_vote` SET deleted = 1 WHERE pollid = poll_id;
+UPDATE `SS13_poll_textreply` SET deleted = 1 WHERE pollid = poll_id;
 END
 $$
-CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
+CREATE TRIGGER `SS13_role_timeTlogupdate` AFTER UPDATE ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
 END
 $$
-CREATE TRIGGER `role_timeTloginsert` AFTER INSERT ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
+CREATE TRIGGER `SS13_role_timeTloginsert` AFTER INSERT ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
 END
 $$
-CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
+CREATE TRIGGER `SS13_role_timeTlogdelete` AFTER DELETE ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
 END
 $$
 DELIMITER ;

@@ -7,7 +7,7 @@
 	var/rs = REF(src)
 	for(var/p in GLOB.polls)
 		var/datum/poll_question/poll = p
-		if(poll.admin_only && !client.holder)
+		if((poll.admin_only && !client.holder) || poll.future_poll)
 			continue
 		output += "<tr bgcolor='#e2e2e2'><td><a href='?src=[rs];viewpoll=[REF(poll)]'><b>[poll.question]</b></a></td></tr>"
 	output += "</table>"
@@ -53,7 +53,7 @@
 	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>")
 	if(poll.subtitle)
 		output += "[poll.subtitle]<br>"
-	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><p>"
+	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	if(!voted_option_id || poll.allow_revoting)
@@ -65,7 +65,7 @@
 	for(var/o in poll.options)
 		var/datum/poll_option/option = o
 		output += "<label><input type='radio' name='voteoptionref' value='[REF(option)]'"
-		if(!voted_option_id || poll.allow_revoting)
+		if(voted_option_id && !poll.allow_revoting)
 			output += " disabled"
 		if(voted_option_id == option.option_id)
 			output += " selected"
@@ -94,7 +94,7 @@
 	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>")
 	if(poll.subtitle)
 		output += "[poll.subtitle]<br>"
-	output += "<font size='2'>Feedback gathering runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><p>"
+	output += "<font size='2'>Feedback gathering runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	if(!reply_text || poll.allow_revoting)
@@ -128,7 +128,7 @@
 	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>")
 	if(poll.subtitle)
 		output += "[poll.subtitle]<br>"
-	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><p>"
+	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	if(!length(voted_ratings) || poll.allow_revoting)
@@ -139,7 +139,7 @@
 	for(var/o in poll.options)
 		var/datum/poll_option/option = o
 		var/mid_val = round((option.max_val + option.min_val) / 2)
-		var/selected_rating = voted_ratings["[option.option_id]"]
+		var/selected_rating = text2num(voted_ratings["[option.option_id]"])
 		output += "<label><br>[option.text]: <select name='[REF(option)]'"
 		if(length(voted_ratings) && !poll.allow_revoting)
 			output += " disabled"
@@ -180,7 +180,7 @@
 	var/list/output = list("<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>")
 	if(poll.subtitle)
 		output += "[poll.subtitle]<br>"
-	output += "You can select up to [poll.options_allowed] options. If you select more, the first [poll.options_allowed] will be saved.<br><font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><p>"
+	output += "You can select up to [poll.options_allowed] options. If you select more, the first [poll.options_allowed] will be saved.<br><font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	if(!length(voted_for) || poll.allow_revoting)
@@ -201,7 +201,7 @@
 	if(!length(voted_for) || poll.allow_revoting)
 		output += "<p><input type='submit' value='Vote'></form>"
 	output += "</div>"
-	src << browse(jointext(output, ""),"window=playerpoll;size=500x250")
+	src << browse(jointext(output, ""),"window=playerpoll;size=500x300")
 
 /**
   * Shows voting window for an IRV type poll, listing its options and relevant details.
@@ -268,7 +268,7 @@
 	<div align='center'><B>Player poll</B><hr><b>Question: [poll.question]</b><br>"})
 	if(poll.subtitle)
 		output += "[poll.subtitle]<br>"
-	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><p>"
+	output += "<font size='2'>Poll runs from <b>[poll.start_datetime]</b> until <b>[poll.end_datetime]</b></font><br>"
 	if(poll.allow_revoting)
 		output += "<font size='2'>Revoting is enabled.</font>"
 	output += "Please sort the options in the order of <b>most preferred</b> to <b>least preferred</b><br></div>"
@@ -323,7 +323,7 @@
 		table = "poll_textreply"
 	var/sql_poll_id = sanitizeSQL(poll.poll_id)
 	var/vote_id //only used for option and text polls to save needing another query
-	var/datum/DBQuery/query_validate_poll_vote = SSdbcore.NewQuery("SELECT (SELECT id FROM [format_table_name("[table]")] WHERE ckey = '[sanitizeSQL(ckey)]' AND pollid = [sql_poll_id] LIMIT 1) FROM [format_table_name("poll_question")] WHERE NOW() BETWEEN starttime AND endtime AND deleted = 0 AND id = [sql_poll_id]")
+	var/datum/DBQuery/query_validate_poll_vote = SSdbcore.NewQuery("SELECT (SELECT id FROM [format_table_name("[table]")] WHERE ckey = '[sanitizeSQL(ckey)]' AND pollid = [sql_poll_id] AND deleted = 0 LIMIT 1) FROM [format_table_name("poll_question")] WHERE NOW() BETWEEN starttime AND endtime AND deleted = 0 AND id = [sql_poll_id]")
 	if(!query_validate_poll_vote.warn_execute())
 		qdel(query_validate_poll_vote)
 		return
@@ -332,9 +332,11 @@
 		vote_id = text2num(query_validate_poll_vote.item[1])
 		if(vote_id && !poll.allow_revoting)
 			to_chat(usr, "<span class='danger'>Poll revoting is disabled and you've already replied to this poll.</span>")
+			qdel(query_validate_poll_vote)
 			return
 	else
 		to_chat(usr, "<span class='danger'>Selected poll is not open.</span>")
+		qdel(query_validate_poll_vote)
 		return
 	qdel(query_validate_poll_vote)
 	var/vote_success = FALSE
@@ -350,7 +352,9 @@
 		if(POLLTYPE_IRV)
 			vote_success = vote_on_poll_irv(poll, href_list, admin_rank, sql_poll_id)
 	if(vote_success)
-		poll.poll_votes++
+		if(!vote_id)
+			poll.poll_votes++
+		to_chat(usr, "<span class='notice'>Vote successful.</span>")
 
 /**
   * Processes vote form data and saves results to the database for a option type poll.
@@ -396,7 +400,7 @@
 		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/sql_ip = sanitizeSQL(client.address)
-	var/datum/DBQuery/query_vote_text = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (id, datetime, pollid, ckey, ip, reply_text, adminrank) VALUES ([vote_id], NOW(), [sql_poll_id], '[sql_ckey]', INET_ATON('[sql_ip]'), '[reply_text]', '[admin_rank]') ON DUPLICATE KEY UPDATE datetime = NOW(), ip = INET_ATON('[sql_ip]'), replytext =  '[reply_text]', adminrank = '[admin_rank]'")
+	var/datum/DBQuery/query_vote_text = SSdbcore.NewQuery("INSERT INTO [format_table_name("poll_textreply")] (id, datetime, pollid, ckey, ip, replytext, adminrank) VALUES ([vote_id], NOW(), [sql_poll_id], '[sql_ckey]', INET_ATON('[sql_ip]'), '[reply_text]', '[admin_rank]') ON DUPLICATE KEY UPDATE datetime = NOW(), ip = INET_ATON('[sql_ip]'), replytext =  '[reply_text]', adminrank = '[admin_rank]'")
 	if(!query_vote_text.warn_execute())
 		qdel(query_vote_text)
 		return
@@ -475,7 +479,6 @@
   *
   */
 /mob/dead/new_player/proc/vote_on_poll_irv(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
-	log_sql("[json_encode(href_list)]")
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
