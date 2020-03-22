@@ -690,7 +690,6 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	. = ..()
 
 /obj/item/circlegame/proc/GOTTEM(datum/source, mob/living/sucker)
-	. = ..()
 	var/mob/living/owner = loc // owner in more ways than one, really
 	if(!owner || !(owner.mobility_flags & MOBILITY_USE)|| !istype(owner) || !istype(sucker) || !(sucker in oviewers(owner)))
 		return
