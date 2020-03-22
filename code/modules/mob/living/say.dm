@@ -450,7 +450,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(findtext(tts_message, " ", 1, 2))
 		tts_message = copytext(tts_message, 2)
 
-	// language comma detection.
+	// language comma detection. //Yes this is dupe, but it's needed for non-say() messages
 	var/datum/language/message_language = get_message_language(tts_message)
 	if(message_language)
 		// No, you cannot speak in xenocommon just because you know the key
