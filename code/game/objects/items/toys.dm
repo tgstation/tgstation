@@ -195,8 +195,8 @@
   * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
   * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
   * Throwing the singularity away will cause the user to start choking themself to death.
-  *
-  * user - Whoever is doing the suiciding
+  * Arguments:
+  * * user - Whoever is doing the suiciding
   */
 /obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
 	if(!user)
