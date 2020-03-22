@@ -1,0 +1,5 @@
+author: "Rohesie"
+delete-after: True
+changes: 
+  - rscadd: "You can now thow people you are fireman-carrying, or have them interact with tables depending on intent (smashing their face if on harm, placing them gently if on help, carelessly dropping them else)."
+  - bugfix: "You can now again strip mobs you have in an aggressive grab or superior. When on grab intent you'll try to fireman carry as usual, and on other intents you'll open the strip panel instead."
