@@ -192,6 +192,21 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return removed
 
+/datum/gas_mixture/remove_specific(gas_id, amount)
+	var/list/cached_gases = gases
+	amount = min(amount, cached_gases[gas_id][MOLES])
+	if(amount <= 0)
+		return null
+	var/datum/gas_mixture/removed = new type
+	var/list/removed_gases = removed.gases
+	removed.temperature = temperature
+	ADD_GAS(gas_id, removed.gases)
+	removed_gases[gas_id][MOLES] = amount
+	cached_gases[gas_id][MOLES] -= amount
+
+	garbage_collect()
+	return removed
+
 	///Creates new, identical gas mixture
 	///Returns: duplicate gas mixture
 /datum/gas_mixture/proc/copy()
