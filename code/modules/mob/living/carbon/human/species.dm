@@ -227,11 +227,11 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return randname
 
 /**
-  * Copies some vars and properties over that should be kept when creating a duplicate of this species.
+  * Copies some vars and properties over that should be kept when creating a copy of this species.
   *
   * Used by slimepeople to copy themselves, and by the DNA datum to hardset DNA to a species
   * Arguments:
-  * * old_species - The species that the carbon used to be before becoming this race
+  * * old_species - The species that the carbon used to be before copying
   */
 /datum/species/proc/copy_properties_from(datum/species/old_species)
 	return
