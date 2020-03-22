@@ -24,26 +24,35 @@
 
 	var/datum/gas_mixture/external = loc.return_air()
 	var/datum/gas_mixture/internal = airs[1]
-	var/external_pressure = external.return_pressure()
-	var/internal_pressure = internal.return_pressure()
-	var/pressure_delta = abs(external_pressure - internal_pressure)
 
-	if(pressure_delta > 0.5)
-		if(external_pressure < internal_pressure)
-			var/air_temperature = (external.temperature > 0) ? external.temperature : internal.temperature
-			var/transfer_moles = (pressure_delta * external.volume) / (air_temperature * R_IDEAL_GAS_EQUATION)
-			var/datum/gas_mixture/removed = internal.remove(transfer_moles)
-			external.merge(removed)
-		else
-			var/air_temperature = (internal.temperature > 0) ? internal.temperature : external.temperature
-			var/transfer_moles = (pressure_delta * internal.volume) / (air_temperature * R_IDEAL_GAS_EQUATION)
-			transfer_moles = min(transfer_moles, external.total_moles() * internal.volume / external.volume)
-			var/datum/gas_mixture/removed = external.remove(transfer_moles)
-			if(isnull(removed))
-				return
-			internal.merge(removed)
+	//is there a better way to do this in byond i.e. get the keys?
+	var/list/gas_list = new()
+	for(var/gas_id in internal.gases)
+		gas_list += gas_id
+	for(var/gas_id in external.gases)
+		gas_list += gas_id
+	gas_list = uniqueList(gas_list)
 
-		active = TRUE
+	//calculate delta of partial pressure for each gas, and do transfer for each gas individually
+	var/internal_pp_coeff = R_IDEAL_GAS_EQUATION * internal.temperature / internal.volume
+	var/external_pp_coeff = R_IDEAL_GAS_EQUATION * external.temperature / external.volume
+	for(var/gas_id in gas_list)
+		internal.assert_gas(gas_id)
+		external.assert_gas(gas_id)
+		var/internal_pp = internal.gases[gas_id][MOLES] * internal_pp_coeff
+		var/external_pp = external.gases[gas_id][MOLES] * external_pp_coeff
+		var/delta_pp = abs(internal_pp - external_pp)
+		if(delta_pp > 0.5)
+			active = TRUE
+			//use the volume of the receiving mixture for mole calculation
+			//use the temperature of the sending mixture
+			if(internal_pp > external_pp)
+				var/moles_to_move = (delta_pp * external.volume)/ (internal.temperature * R_IDEAL_GAS_EQUATION)
+				external.merge(internal.remove_specific(gas_id, moles_to_move))
+			else
+				var/moles_to_move = (delta_pp * internal.volume) / (external.temperature * R_IDEAL_GAS_EQUATION)
+				internal.merge(external.remove_specific(gas_id, moles_to_move))
+
 
 	active = internal.temperature_share(external, OPEN_HEAT_TRANSFER_COEFFICIENT) ? TRUE : active
 
