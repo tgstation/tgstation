@@ -78,3 +78,8 @@
 	description = "<span class='nicegreen'>Eh ah AAAAH! HA HA HA HA HAA! Uuuh.</span>\n"
 	mood_change = 6
 	timeout = 3 MINUTES
+
+/datum/mood_event/antidepressant
+	description = "<span class='nicegreen'>All the bad things feel a bit more far away.</span>\n"
+	mood_change = 15
+	timeout = 3 MINUTES

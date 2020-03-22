@@ -484,3 +484,30 @@
 	if(prob(15))
 		M.adjustToxLoss(2, 0)
 	..()
+
+/datum/reagent/drug/antidepressant
+	name = "Antidepressant"
+	description = "Feeling down? Take a happy pill!"
+	reagent_state = LIQUID
+	color = "#18a3a3"
+	metabolization_rate = REAGENTS_METABOLISM
+	overdose_threshold = 15
+	addiction_threshold = 10
+
+/datum/reagent/drug/antidepressant/on_mob_metabolize(mob/living/L)
+	var/datum/component/mood/M = L.GetComponent(/datum/component/mood)
+	if(M.mood_level < 5)
+		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "antidepressant", /datum/mood_event/antidepressant)
+
+/datum/reagent/drug/antidepressant/overdose_start(mob/living/M)
+	to_chat(M, "<span class='userdanger'>Your head begins to pound and the sun shines a little brighter...</span>")
+
+/datum/reagent/drug/antidepressant/overdose_process(mob/living/M)
+	M.Jitter(5)
+	if(prob(15))
+		M.emote(pick("smile","laugh"))
+	if(prob(25))
+		M.adjustStaminaLoss(5, 0)
+	if(prob(15))
+		M.adjustToxLoss(4, 0)
+	..()

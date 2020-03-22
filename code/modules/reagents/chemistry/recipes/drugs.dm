@@ -37,3 +37,7 @@
 /datum/chemical_reaction/pumpup
 	results = list(/datum/reagent/drug/pumpup = 5)
 	required_reagents = list(/datum/reagent/medicine/epinephrine = 2, /datum/reagent/consumable/coffee = 5)
+
+/datum/chemical_reaction/antidepressant
+	results = list(/datum/reagent/drug/antidepressant = 10)
+	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/ammonia = 5,/datum/reagent/consumable/sugar = 5)
