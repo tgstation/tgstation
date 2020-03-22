@@ -144,11 +144,11 @@
 				heirloom_type = pick(subtypesof(/obj/item/toy/prize)) //look at this nerd
 			//Medical
 			if("Chief Medical Officer")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/storage/firstaid/ancient/heirloom)
 			if("Medical Doctor")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/storage/firstaid/ancient/heirloom)
 			if("Paramedic")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/storage/firstaid/ancient/heirloom)
 			if("Chemist")
 				heirloom_type = /obj/item/book/manual/wiki/chemistry
 			if("Virologist")
