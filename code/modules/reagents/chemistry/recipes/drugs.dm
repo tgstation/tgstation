@@ -40,4 +40,4 @@
 
 /datum/chemical_reaction/antidepressant
 	results = list(/datum/reagent/drug/antidepressant = 10)
-	required_reagents = list(/datum/reagent/water = 5, /datum/reagent/ammonia = 5,/datum/reagent/consumable/sugar = 5)
+	required_reagents = list(/datum/reagent/potassium = 5, /datum/reagent/ammonia = 5,/datum/reagent/consumable/sugar = 5)
