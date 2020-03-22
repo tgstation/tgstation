@@ -19,17 +19,26 @@
 		return COMPONENT_INCOMPATIBLE
 
 	label_name = _label_name
-
-	// Add the label to the name of the object in the format of: "Item name (label)"
-	var/atom/owner = parent
-	owner.name += " ([label_name])"
+	apply_label()
 
 /datum/component/label/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/RemoveLabel)
+	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/OnAttackby)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/Examine)
 
 /datum/component/label/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
+
+/**
+	This proc will fire after the parent is hit by a hand labeler which is trying to apply another label.
+	Since the parent already has a label, it will remove the old one from the parent's name, and apply the new one.
+*/
+/datum/component/label/InheritComponent(datum/component/label/new_comp , i_am_original, _label_name)
+	remove_label()
+	if(new_comp)
+		label_name = new_comp.label_name
+	else
+		label_name = _label_name
+	apply_label()
 
 /**
 	This proc will trigger when any object is used to attack the parent.
@@ -42,18 +51,16 @@
 	* attacker: The object that is hitting the parent.
 	* user: The mob who is wielding the attacking object.
 */
-/datum/component/label/proc/RemoveLabel(datum/source, obj/item/attacker, mob/user)
+/datum/component/label/proc/OnAttackby(datum/source, obj/item/attacker, mob/user)
 	// If the attacking object is not a hand labeler or its mode is 1 (has a label ready to apply), return.
 	// The hand labeler should be off (mode is 0), in order to remove a label.
 	var/obj/item/hand_labeler/labeler = attacker
 	if(!istype(labeler) || labeler.mode)
 		return
 
-	var/atom/owner = source // Source will be the owner / parent of this component.
-	owner.name = replacetext(owner.name, "([label_name])", "") // Remove the label text from the parent's name, wherever it may be.
-	owner.name = trim(owner.name) // Shave off any white space from the beginning or end of the parent's name.
-	playsound(owner, 'sound/items/poster_ripped.ogg', 20, TRUE)
-	to_chat(user, "<span class='warning'>You remove the label from [owner].</span>")
+	remove_label()
+	playsound(parent, 'sound/items/poster_ripped.ogg', 20, TRUE)
+	to_chat(user, "<span class='warning'>You remove the label from [parent].</span>")
 	qdel(src) // Remove the component from the object.
 
 /**
@@ -67,3 +74,14 @@
 */
 /datum/component/label/proc/Examine(datum/source, mob/user, list/examine_list)
 	examine_list += "<span class='notice'>It has a label with some words written on it. Use a hand labeler to remove it.</span>"
+
+/// Applies a label to the name of the parent in the format of: "parent_name (label)"
+/datum/component/label/proc/apply_label()
+	var/atom/owner = parent
+	owner.name += " ([label_name])"
+
+/// Removes the label from the parent's name
+/datum/component/label/proc/remove_label()
+	var/atom/owner = parent
+	owner.name = replacetext(owner.name, "([label_name])", "") // Remove the label text from the parent's name, wherever it's located.
+	owner.name = trim(owner.name) // Shave off any white space from the beginning or end of the parent's name.

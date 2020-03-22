@@ -1,0 +1,4 @@
+author: "kriskog"
+delete-after: True
+changes: 
+  - rscadd: "New Camera Console UI (an embedded game view inside tgui window)."

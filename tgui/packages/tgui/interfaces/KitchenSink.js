@@ -1,5 +1,6 @@
 import { Component } from 'inferno';
-import { BlockQuote, Box, Button, Collapsible, Input, LabeledList, NumberInput, ProgressBar, Section, Tabs, Tooltip } from '../components';
+import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, ByondUi, Collapsible, Input, LabeledList, NumberInput, ProgressBar, Section, Tabs, Tooltip } from '../components';
 
 const COLORS_ARBITRARY = [
   'red',
@@ -57,6 +58,10 @@ const PAGES = [
     title: 'BlockQuote',
     component: () => KitchenSinkBlockQuote,
   },
+  {
+    title: 'ByondUi',
+    component: () => KitchenSinkByondUi,
+  },
 ];
 
 export const KitchenSink = props => {
@@ -70,7 +75,7 @@ export const KitchenSink = props => {
             {() => {
               const Component = page.component();
               return (
-                <Component />
+                <Component {...props} />
               );
             }}
           </Tabs.Tab>
@@ -94,7 +99,7 @@ const KitchenSinkButton = props => {
         <Button fluid content="Fluid" />
         <Button
           my={1}
-          lineHeight={4}
+          lineHeight={2}
           minWidth={30}
           textAlign="center"
           content="With Box props" />
@@ -344,5 +349,23 @@ const KitchenSinkBlockQuote = props => {
     <BlockQuote>
       <BoxOfSampleText />
     </BlockQuote>
+  );
+};
+
+const KitchenSinkByondUi = props => {
+  const { config } = useBackend(props);
+  return (
+    <Box>
+      <Section
+        title="Button"
+        level={2}>
+        <ByondUi
+          params={{
+            type: 'button',
+            parent: config.window,
+            text: 'Button',
+          }} />
+      </Section>
+    </Box>
   );
 };

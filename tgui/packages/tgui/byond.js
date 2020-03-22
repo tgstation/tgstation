@@ -22,12 +22,12 @@ export const tridentVersion = (() => {
  * Helper to generate a BYOND href given 'params' as an object
  * (with an optional 'url' for eg winset).
  */
-const href = (url, params = {}) => {
-  return 'byond://' + url + '?' + buildQueryString(params);
+const createByondUrl = (path, params = {}) => {
+  return 'byond://' + path + '?' + buildQueryString(params);
 };
 
-export const callByond = (url, params = {}) => {
-  window.location.href = href(url, params);
+export const callByond = (path, params = {}) => {
+  location.href = createByondUrl(path, params);
 };
 
 /**
@@ -45,7 +45,7 @@ export const callByondAsync = (url, params = {}) => {
     window.__callbacks__.push(resolve);
   });
   // Call BYOND client
-  window.location.href = href(url, {
+  window.location.href = createByondUrl(url, {
     ...params,
     callback: `__callbacks__[${callbackIndex}]`,
   });

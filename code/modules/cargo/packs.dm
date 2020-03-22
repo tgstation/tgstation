@@ -2538,3 +2538,27 @@
 		/obj/item/stock_parts/subspace/ansible
 	)
 	crate_name = "crate"
+
+///Special supply crate that generates random syndicate gear up to a determined TC value
+/datum/supply_pack/misc/syndicate
+	name = "Assorted Syndicate Gear"
+	desc = "Contains a random assortment of syndicate gear."
+	special = TRUE ///Cannot be ordered via cargo
+	contains = list()
+	crate_name = "syndicate gear crate"
+	crate_type = /obj/structure/closet/crate
+	var/crate_value = 30 ///Total TC worth of contained uplink items
+
+///Generate assorted uplink items, taking into account the same surplus modifiers used for surplus crates
+/datum/supply_pack/misc/syndicate/fill(obj/structure/closet/crate/C)
+	var/list/uplink_items = get_uplink_items(SSticker.mode)
+	while(crate_value)
+		var/category = pick(uplink_items)
+		var/item = pick(uplink_items[category])
+		var/datum/uplink_item/I = uplink_items[category][item]
+		if(!I.surplus || prob(100 - I.surplus))
+			continue
+		if(crate_value < I.cost)
+			continue
+		crate_value -= I.cost
+		new I.item(C)

@@ -58,14 +58,15 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket/letterman_red,
 						/obj/item/clothing/under/color/red,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending an undercover cop. Find him and eliminate him."
+	gang_objective = "The Spinward Stellar Coalition police intend to interfere with our operations, by sending undercover cops. Find them and eliminate them all."
 	antag_hud_name = "Triad"
 
 /datum/antagonist/gang/red/check_gang_objective()
 	var/datum/game_mode/gang/F = SSticker.mode
-	var/mob/living/carbon/human/H = F.undercover_cop.current
-	if(considered_alive(H))
-		return FALSE
+	for(var/datum/mind/M in F.undercover_cops)
+		var/mob/living/carbon/human/H = M.current
+		if(considered_alive(H))
+			return FALSE
 	return TRUE
 
 /datum/antagonist/gang/purple
@@ -84,7 +85,7 @@
 						/obj/item/clothing/under/color/lightpurple,
 						/obj/item/toy/crayon/spraycan)
 	var/list/cop_roles = list("Security Officer", "Warden", "Detective", "Head of Security")
-	gang_objective = "We got a deal with the security pigs on this station. We scratch their back, they scratch ours. You feel me? Keep all of security safe from any trouble, and make sure they get out alive."
+	gang_objective = "We're looking to make a deal with the security pigs on this station after the shift. We scratch their back, they scratch ours. You feel me? Keep all of security safe from any trouble, and make sure they get out alive."
 	antag_hud_name = "Ballas"
 
 /datum/antagonist/gang/purple/check_gang_objective()
@@ -165,7 +166,7 @@
 	free_clothes = list(/obj/item/clothing/head/fedora,
 						/obj/item/clothing/under/suit/checkered,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "The boss wants it made very clear that all our esteemed members are to be held with respect. If a friend falls, ensure they are properly buried with a coffin. And keep the Chaplain alive, to ensure the corpses are properly taken care of."
+	gang_objective = "The boss wants it made very clear that all our esteemed members are to be held with respect. If a friend falls, ensure they are properly buried with a coffin. And keep any Chaplains alive, to ensure the corpses are properly taken care of."
 	antag_hud_name = "Italian"
 
 /datum/antagonist/gang/italian_mob/check_gang_objective()
@@ -195,7 +196,7 @@
 	free_clothes = list(/obj/item/clothing/suit/jacket,
 						/obj/item/clothing/under/pants/classicjeans,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "TUNNEL SNAKES RULE!!! Make sure that everyone knows that, by getting 50% of people on station to wear any part of our uniform! TUNNEL SNAKES RULE!!!"
+	gang_objective = "TUNNEL SNAKES RULE!!! Make sure that everyone knows that, by getting 25% of people on station to wear any part of our uniform! TUNNEL SNAKES RULE!!!"
 	antag_hud_name = "Snakes"
 
 /datum/antagonist/gang/tunnel_snakes/check_gang_objective()
@@ -210,7 +211,7 @@
 			for(var/clothing in list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.back, H.gloves, H.shoes, H.belt, H.s_store, H.glasses, H.ears, H.wear_id))
 				if(is_type_in_list(clothing, acceptable_clothes))
 					people_reppin_tunnel_snakes++
-	if(0.5*people_on_station > people_reppin_tunnel_snakes)
+	if(0.25*people_on_station > people_reppin_tunnel_snakes)
 		return FALSE
 	return TRUE
 
@@ -227,7 +228,7 @@
 	free_clothes = list(/obj/item/clothing/mask/bandana/gold,
 						/obj/item/clothing/under/color/yellow,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to Crank."
+	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to meth."
 	antag_hud_name = "Vagos"
 
 
@@ -241,9 +242,9 @@
 			var/mob/living/carbon/human/H = M
 			people_on_station++
 			for(var/R in H.reagents.addiction_list)
-				if(istype(R, /datum/reagent/drug/crank))
+				if(istype(R, /datum/reagent/drug/methamphetamine))
 					people_on_crack++
-	if(0.5*people_on_station > people_on_crack)
+	if(0.25*people_on_station > people_on_crack)
 		return FALSE
 	return TRUE
 
@@ -290,7 +291,7 @@
 						/obj/item/clothing/suit/yakuza,
 						/obj/item/clothing/head/hardhat,
 						/obj/item/toy/crayon/spraycan)
-	gang_objective = "The boss is thrilled about this new construction opportunity we've all been given, yadda yadda, look, he knows we're here to expand our business ventures for the clan, but Majima wanted it made VERY clear that we do NOT fuck this station's infrastructure up. If more than 85% of this station is busted when we get the hell out of here, it's your ass on the line."
+	gang_objective = "The boss is thrilled about this new construction opportunity we've all been given, yadda yadda, look, he knows we're here to expand our business ventures for the clan, but Majima wanted it made VERY clear that we do NOT fuck this station's infrastructure up. If more than 15% of this station is busted when we get the hell out of here, it's your ass on the line."
 	antag_hud_name = "Tojo"
 
 /datum/antagonist/gang/yakuza/check_gang_objective()
@@ -380,7 +381,7 @@
 	points += points_to_adjust
 
 /datum/team/gang/roundend_report()
-	return "<div class='panel redborder'><br></div>"
+	return
 
 /datum/action/cooldown/spawn_induction_package
 	name = "Create Induction Package"
@@ -411,6 +412,8 @@
 		for(var/datum/mind/gangers in TT.members)
 			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
 				alive_gangsters++
+		if(!alive_gangsters || TT.members.len <= 1) // Dead or inactive gangs don't count towards the cap.
+			continue
 		if(TT != my_gang_datum.my_gang)
 			if(alive_gangsters < lowest_gang_count)
 				lowest_gang_count = alive_gangsters

@@ -73,6 +73,7 @@
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
 	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
+	hud_trait = TRAIT_DIAGNOSTIC_HUD
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/hud/diagnostic/night
@@ -229,6 +230,11 @@
 	desc = "For thinking you look cool while brutalizing protestors and minorities."
 	icon_state = "bigsunglasses"
 	hud_type = ANTAG_HUD_GANGSTER
+	darkness_view = 1
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/gray
+
 
 /obj/item/clothing/glasses/hud/spacecop/hidden // for the undercover cop
 	name = "sunglasses"

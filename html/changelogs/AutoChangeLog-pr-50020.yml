@@ -1,0 +1,5 @@
+author: "Mickyan, Fikou"
+delete-after: True
+changes: 
+  - rscadd: "Space Carps can now be tamed by feeding them meat"
+  - rscadd: "Added a new choice for the curator's beacon: the Carp Hunter. That's a pretty misleading name, it's all about making friends with the carps instead of murdering them. You wouldn't do that anyway, would you?"

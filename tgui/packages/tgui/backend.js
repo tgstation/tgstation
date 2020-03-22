@@ -77,7 +77,7 @@ export const backendReducer = (state, action) => {
  * A React hook (sort of) for getting tgui state and related functions.
  *
  * This is supposed to be replaced with a real React Hook, which can only
- * be used in functional components. DO NOT use it in class-based components!
+ * be used in functional components.
  *
  * @return {BackendState & {
  *   act: (action: string, params?: object) => void,
