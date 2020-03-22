@@ -204,10 +204,6 @@
 //***************************************************************************
 
 
-//************************************************************
-//** Improved Sec Starter Gear by Surrealistik Oct 2019 BEGINS
-//************************************************************
-
 //************************************************************************
 //** Airlock Electroadaptive Psuedo Circuit BEGINS - Surrealistik Oct 2019
 //************************************************************************
@@ -361,6 +357,11 @@
 //** Also tweaks the medical syndiborg, removing emag and granting more med items
 //***************************************************************************
 
+
+
+//************************************************************
+//** Improved Sec Starter Gear by Surrealistik Oct 2019 BEGINS
+//************************************************************
 /datum/outfit/job/security
 	backpack_contents = list() //Start with stun baton in belt.
 	r_pocket = /obj/item/pda/security
@@ -382,10 +383,6 @@
 	belt = /obj/item/storage/belt/security/fulp_starter_full
 	box = /obj/item/storage/box/security/improved
 	pda_slot = ITEM_SLOT_RPOCKET
-
-
-/datum/techweb_node/sec_basic
-	design_ids = list("seclite", "pepperspray", "bola_energy", "zipties", "evidencebag", "sec_radio", "protolathe_handcuffs", "stun_baton", "sec_belt", "security_helmet", "security_armor", "security_uniform", "security_boots", "security_headset")
 
 /obj/machinery/vending/security
 	products = list(/obj/item/restraints/handcuffs = 8,

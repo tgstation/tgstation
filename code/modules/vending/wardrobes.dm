@@ -21,6 +21,8 @@
 					/obj/item/storage/backpack/satchel/sec = 3,
 					/obj/item/storage/backpack/duffelbag/sec = 3,
 					/obj/item/clothing/under/rank/security/officer = 3,
+					/obj/item/clothing/suit/armor/vest/alt = 6, //FULPSTATION Improved Sec Starter Gear by Surrealistik MAR 2020 Compensate for loss of gear from sec-lockers (~6).
+					/obj/item/clothing/head/helmet = 6, //FULPSTATION Improved Sec Starter Gear by Surrealistik MAR 2020 Compensate for loss of gear from sec-lockers (~6).
 					/obj/item/clothing/shoes/jackboots = 3,
 					/obj/item/clothing/head/beret/sec = 3,
 					/obj/item/clothing/head/soft/sec = 3,

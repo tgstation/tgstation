@@ -7,11 +7,13 @@
 	req_access = list(ACCESS_SECURITY)
 	products = list(/obj/item/restraints/handcuffs = 8,
 					/obj/item/restraints/handcuffs/cable/zipties = 10,
-					/obj/item/grenade/flashbang = 4,
+					/obj/item/grenade/flashbang = 15, //FULPSTATION Improved Sec Starter Gear by Surrealistik MAR 2020 Increase of flashbangs to compensate for loss of flashbangs from Sec Officer belt (Estimating ~5) and Sec lockers (~6).
 					/obj/item/assembly/flash/handheld = 5,
 					/obj/item/reagent_containers/food/snacks/donut = 12,
 					/obj/item/storage/box/evidence = 6,
 					/obj/item/flashlight/seclite = 4,
+					/obj/item/radio/headset/headset_sec/alt = 6, //FULPSTATION Improved Sec Starter Gear by Surrealistik MAR 2020 Compensate for loss of gear from sec-lockers (~6).
+					/obj/item/clothing/glasses/hud/security/sunglasses = 6, //FULPSTATION Improved Sec Starter Gear by Surrealistik MAR 2020 Compensate for loss of gear from sec-lockers (~6).
 					/obj/item/restraints/legcuffs/bola/energy = 7)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,
 					  /obj/item/storage/fancy/donut_box = 2)
