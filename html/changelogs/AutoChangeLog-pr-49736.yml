@@ -1,0 +1,5 @@
+author: "Indie-ana Jones"
+delete-after: True
+changes: 
+  - balance: "Venus Human Traps have mutated to better hunt their prey, becoming smarter and able to attach vines to their prey."
+  - bugfix: "Plant-based creatures being affected by kudzu has been fixed."

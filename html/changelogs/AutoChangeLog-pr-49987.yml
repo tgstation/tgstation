@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - bugfix: "Observers can now properly view Electropack UI."
-  - tweak: "You must now hold Assemblies, TTV and Electropack in your hands in order to use their UIs."

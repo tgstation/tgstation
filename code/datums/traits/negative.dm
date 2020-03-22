@@ -149,6 +149,9 @@
 				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/storage/firstaid/ancient/heirloom)
 			if("Paramedic")
 				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/storage/firstaid/ancient/heirloom)
+				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+			if("Psychologist")
+				heirloom_type = /obj/item/storage/pill_bottle
 			if("Chemist")
 				heirloom_type = /obj/item/book/manual/wiki/chemistry
 			if("Virologist")

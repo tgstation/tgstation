@@ -935,6 +935,13 @@
 				return 0
 	return ..()
 
+/obj/item/storage/box/papersack/meat
+	desc = "It's slightly moist and smells like a slaughterhouse."
+
+/obj/item/storage/box/papersack/meat/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/food/snacks/meat/slab(src)
+
 #undef NODESIGN
 #undef NANOTRASEN
 #undef SYNDI
