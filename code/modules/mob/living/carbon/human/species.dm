@@ -227,7 +227,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	return randname
 
 /**
-  * Called when cloning, copies some vars that should be kept
+  * Copies some vars and properties over that should be kept when creating a duplicate of this species.
   *
   * Used by slimepeople to copy themselves, and by the DNA datum to hardset DNA to a species
   * Arguments:
