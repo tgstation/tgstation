@@ -648,16 +648,6 @@
 	screen_loc = ui_living_healthdoll
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
 
-/obj/screen/healthdoll/slime
-	icon = 'icons/mob/screen_slime.dmi'
-	icon_state = "slime_health0"
-	screen_loc = ui_living_healthdoll
-
-/obj/screen/healthdoll/lavaland_elite
-	icon = 'icons/mob/screen_elite.dmi'
-	icon_state = "elite_health0"
-	screen_loc = ui_living_healthdoll
-
 /obj/screen/mood
 	name = "mood"
 	icon_state = "mood5"

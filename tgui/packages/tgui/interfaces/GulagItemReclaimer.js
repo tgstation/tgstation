@@ -1,9 +1,22 @@
 import { useBackend } from '../backend';
-import { Button, Section, Table } from '../components';
+import { Button, NoticeBox, Section, Table } from '../components';
 
 export const GulagItemReclaimer = props => {
   const { act, data } = useBackend(props);
-  const mobs = data.mobs || [];
+  const {
+    mobs = [],
+  } = data;
+
+  if (!mobs.length) {
+    return (
+      <Section>
+        <NoticeBox textAlign="center">
+          No stored items
+        </NoticeBox>
+      </Section>
+    );
+  }
+
   return (
     <Section title="Stored Items">
       <Table>

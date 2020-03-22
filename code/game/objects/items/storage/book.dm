@@ -207,7 +207,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 				SS.release_shades(user)
 				qdel(SS)
 			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified [sword]!</span>")
+			user.visible_message("<span class='notice'>[user] purifies [sword]!</span>")
 			qdel(sword)
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			for(var/mob/living/simple_animal/shade/EX in SS)
 				EX.icon_state = "ghost1"
 				EX.name = "Purified [initial(EX.name)]"
-			user.visible_message("<span class='notice'>[user] has purified [SS]!</span>")
+			user.visible_message("<span class='notice'>[user] purifies [SS]!</span>")
 	else if(istype(A, /obj/item/nullrod/scythe/talking))
 		var/obj/item/nullrod/scythe/talking/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword]...</span>")
@@ -241,7 +241,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			sword.possessed = FALSE //allows the chaplain (or someone else) to reroll a new spirit for their sword
 			sword.name = initial(sword.name)
 			REMOVE_TRAIT(sword, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT) //in case the "sword" is a possessed dummy
-			user.visible_message("<span class='notice'>[user] has exorcised [sword]!</span>", \
+			user.visible_message("<span class='notice'>[user] exorcises [sword]!</span>", \
 								"<span class='notice'>You successfully exorcise [sword]!</span>")
 
 /obj/item/storage/book/bible/booze

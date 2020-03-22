@@ -437,11 +437,11 @@
 
 /datum/reagent/medicine/ephedrine/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.5, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/medicine/ephedrine/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/ephedrine)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 
@@ -546,10 +546,10 @@
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/L)
 	..()
-	L.ignore_slowdown(type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
-	L.unignore_slowdown(type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	..()
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
@@ -811,11 +811,11 @@
 
 /datum/reagent/medicine/stimulants/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-1, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 
 /datum/reagent/medicine/stimulants/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	..()
 
@@ -1020,13 +1020,13 @@
 	..()
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.ignore_slowdown(type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
 	..()
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.unignore_slowdown(type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.Dizzy(0)
 	L.Jitter(0)
 
@@ -1043,10 +1043,10 @@
 
 /datum/reagent/medicine/changelinghaste/on_mob_metabolize(mob/living/L)
 	..()
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 
 /datum/reagent/medicine/changelinghaste/on_mob_end_metabolize(mob/living/L)
-	L.remove_movespeed_modifier(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/changelinghaste)
 	..()
 
 /datum/reagent/medicine/changelinghaste/on_mob_life(mob/living/carbon/M)
@@ -1088,13 +1088,13 @@
 	name = "Muscle Stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
 
-/datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/L)
 	. = ..()
-	M.ignore_slowdown(type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
-/datum/reagent/medicine/muscle_stimulant/on_mob_end_metabolize(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	M.unignore_slowdown(type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/modafinil
 	name = "Modafinil"
@@ -1294,14 +1294,14 @@
 	..()
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.add_movespeed_modifier(type, update=TRUE, priority=100, multiplicative_slowdown=-0.45, blacklisted_movetypes=(FLYING|FLOATING))
-	L.ignore_slowdown(type)
+	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
 	..()
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.remove_movespeed_modifier(type)
-	L.unignore_slowdown(type)
+	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.Dizzy(0)
 	L.Jitter(0)
