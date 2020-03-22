@@ -196,7 +196,7 @@
 				adjust_laces(SHOES_UNTIED, user)
 		else // if one of us moved
 			user.visible_message("<span class='danger'>[our_guy] stamps on [user]'s hand, mid-shoelace [tied ? "knotting" : "untying"]!</span>", "<span class='userdanger'>Ow! [our_guy] stamps on your hand!</span>", list(our_guy))
-			to_chat(our_guy, "<span class='userdanger'>You stamp on [user]'s hand! What the- they were [tied ? "knotting" : "untying"] your shoelaces!</span>")
+			to_chat(our_guy, "<span class='userdanger'>You stamp on [user]'s hand! What the- [user.p_they()] [user.p_were()] [tied ? "knotting" : "untying"] your shoelaces!</span>")
 			user.emote("scream")
 			var/obj/item/bodypart/ouchie = user.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			if(ouchie)
@@ -254,13 +254,14 @@
 /obj/item/clothing/shoes/attack_hand(mob/living/carbon/human/user)
 	if(!istype(user))
 		return ..()
-	if(loc == user && tied != SHOES_TIED)
+	if(loc == user && tied != SHOES_TIED && (user.mobility_flags & MOBILITY_USE))
 		handle_tying(user)
 		return
 	..()
 
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
+
 	if(user.is_interacting_with(src))
 		to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 		return

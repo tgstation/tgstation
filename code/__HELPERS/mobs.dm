@@ -233,7 +233,7 @@ GLOBAL_LIST_EMPTY(species_list)
 
 ///Checks to see if our mob is currently in a do_after with the target as the target
 /mob/proc/is_interacting_with(atom/target)
-	return(target && (target in do_afters))
+	return(target in do_afters)
 
 /proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
@@ -242,7 +242,9 @@ GLOBAL_LIST_EMPTY(species_list)
 	if(target && !isturf(target))
 		Tloc = target.loc
 
-	user.do_afters += target
+	if(target)
+		LAZYADD(user.do_afters, target) // i know technically it already handles if we try to add a null but we're already checking if target exists so shut up
+		LAZYADD(target.targeted_by, user) // i know technically it already handles if we try to add a null but we're already checking if target exists so shut up
 
 	var/atom/Uloc = user.loc
 
@@ -301,8 +303,10 @@ GLOBAL_LIST_EMPTY(species_list)
 				break
 	if (progress)
 		qdel(progbar)
-	if(target)
-		user.do_afters -= target
+
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 /mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
 	. = 1
