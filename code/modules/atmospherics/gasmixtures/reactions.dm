@@ -291,6 +291,72 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
 
+/datum/gas_reaction/hydrogenfire
+	priority = -2 //fire should ALWAYS be last, but hydrogen fires happen after tritium fires
+	name = "Hydrogen Combustion"
+	id = "hydrogenfire"
+
+/datum/gas_reaction/hydrogenfire/init_reqs()
+	min_requirements = list(
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST,
+		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/hydrogenfire/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_heat_capacity = air.heat_capacity()
+	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
+	var/temperature = air.temperature
+	var/list/cached_results = air.reaction_results
+	cached_results["fire"] = 0
+	var/turf/open/location = isturf(holder) ? holder : null
+
+	//Handle hydrogen burning
+	var/hydrogen_burn_rate = 0
+	var/oxygen_burn_rate = 0
+	//more hydrogen released at higher temperatures
+	var/temperature_scale = 0
+
+	if(temperature > HYDROGEN_UPPER_TEMPERATURE)
+		temperature_scale = 1
+	else
+		temperature_scale = (temperature-HYDROGEN_MINIMUM_BURN_TEMPERATURE)/(HYDROGEN_UPPER_TEMPERATURE-HYDROGEN_MINIMUM_BURN_TEMPERATURE)
+	if(temperature_scale > 0)
+		oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
+		if(cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/hydrogen][MOLES] * HYDROGEN_OXYGEN_FULLBURN)
+			hydrogen_burn_rate = (cached_gases[/datum/gas/hydrogen][MOLES] * temperature_scale) / HYDROGEN_BURN_RATE_DELTA
+		else
+			hydrogen_burn_rate = (temperature_scale * (cached_gases[/datum/gas/oxygen][MOLES] / HYDROGEN_OXYGEN_FULLBURN)) / HYDROGEN_BURN_RATE_DELTA
+
+		if(hydrogen_burn_rate > MINIMUM_HEAT_CAPACITY)
+			hydrogen_burn_rate = min(hydrogen_burn_rate, cached_gases[/datum/gas/hydrogen][MOLES], cached_gases[/datum/gas/oxygen][MOLES]/oxygen_burn_rate) //Ensures matter is conserved properly
+			cached_gases[/datum/gas/hydrogen][MOLES] = QUANTIZE(cached_gases[/datum/gas/hydrogen][MOLES] - hydrogen_burn_rate)
+			cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (hydrogen_burn_rate * oxygen_burn_rate))
+			ASSERT_GAS(/datum/gas/carbon_dioxide,air)
+			cached_gases[/datum/gas/carbon_dioxide][MOLES] += hydrogen_burn_rate
+
+			energy_released += FIRE_HYDROGEN_ENERGY_RELEASED * (hydrogen_burn_rate)
+
+			cached_results["fire"] += (hydrogen_burn_rate)*(1+oxygen_burn_rate)
+
+	if(energy_released > 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+
+	//let the floor know a fire is happening
+	if(istype(location))
+		temperature = air.temperature
+		if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+			location.hotspot_expose(temperature, CELL_VOLUME)
+			for(var/I in location)
+				var/atom/movable/item = I
+				item.temperature_expose(air, temperature, CELL_VOLUME)
+			location.temperature_expose(air, temperature, CELL_VOLUME)
+
+	return cached_results["fire"] ? REACTING : NO_REACTION
+
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
