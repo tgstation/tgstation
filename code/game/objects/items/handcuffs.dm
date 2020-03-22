@@ -158,7 +158,7 @@
 
 /obj/item/restraints/handcuffs/fake/attack(mob/living/carbon/C, mob/living/user)
 	if(C == user)
-		apply_cuffs(user, user) //instant self-application
+		apply_cuffs(user, user) //instant and silent self-application
 		return
 	return ..()
 
