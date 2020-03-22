@@ -149,7 +149,7 @@
   * *
   * * user: who is the person interacting with the shoes?
   */
-/obj/item/clothing/shoes/proc/handle_tying(mob/living/carbon/human/user)
+/obj/item/clothing/shoes/proc/handle_tying(mob/user)
 	///our_guy here is the wearer, if one exists (and he must exist, or we don't care)
 	var/mob/living/carbon/human/our_guy = loc
 	if(!istype(our_guy))
@@ -173,7 +173,8 @@
 				adjust_laces(SHOES_UNTIED, user)
 
 	else // if they're someone else's shoes, go knot-wards
-		if(user.mobility_flags & MOBILITY_STAND)
+		var/mob/living/L = user
+		if(istype(L) && (L.mobility_flags & MOBILITY_STAND))
 			to_chat(user, "<span class='warning'>You must be on the floor to interact with [src]!</span>")
 			return
 		if(tied == SHOES_KNOTTED)
@@ -198,10 +199,11 @@
 			user.visible_message("<span class='danger'>[our_guy] stamps on [user]'s hand, mid-shoelace [tied ? "knotting" : "untying"]!</span>", "<span class='userdanger'>Ow! [our_guy] stamps on your hand!</span>", list(our_guy))
 			to_chat(our_guy, "<span class='userdanger'>You stamp on [user]'s hand! What the- [user.p_they()] [user.p_were()] [tied ? "knotting" : "untying"] your shoelaces!</span>")
 			user.emote("scream")
-			var/obj/item/bodypart/ouchie = user.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-			if(ouchie)
-				ouchie.receive_damage(brute = 10, stamina = 40)
-			user.Paralyze(10)
+			if(istype(L))
+				var/obj/item/bodypart/ouchie = L.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+				if(ouchie)
+					ouchie.receive_damage(brute = 10, stamina = 40)
+				L.Paralyze(10)
 
 /**
   * check_trip runs on each step to see if we fall over as a result of our lace status. Knotted laces are a guaranteed trip, while untied shoes are just a chance to stumble
