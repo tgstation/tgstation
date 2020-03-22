@@ -281,10 +281,10 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 			ASSERT_GAS(/datum/gas/carbon_dioxide,air)
 			cached_gases[/datum/gas/carbon_dioxide][MOLES] += freon_burn_rate
 
-			if(temperature < 150 && temperature > 130 && prob(2))
+			if(temperature < 160 && temperature > 120 && prob(2))
 				new /obj/item/stack/sheet/hot_ice(location)
 
-			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
+			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate) * 0.45
 
 	if(energy_released < 0)
 		var/new_heat_capacity = air.heat_capacity()
