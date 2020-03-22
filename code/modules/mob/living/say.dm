@@ -204,6 +204,13 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		spans |= SPAN_SINGING
 		message = "[randomnote] [message] [randomnote]"
 
+	///List of symbols that we dont want a dot after
+	var/list/punctuation = list("!","?",".")
+	///Last charachter in the message
+	var/last_charachter = copytext(message,length_char(message))
+	if(!(last_charachter in punctuation))
+		message += "."
+
 	var/radio_return = radio(message, message_mode, spans, language)
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
