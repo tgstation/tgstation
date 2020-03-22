@@ -231,7 +231,7 @@
 	instability = 10
 
 /datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
-		if(..())
+	if(..())
 		return
 	owner.slowed_by_drag = FALSE // Don't get slowed by dragging lockers or mobs
 
