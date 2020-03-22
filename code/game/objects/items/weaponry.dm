@@ -677,10 +677,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/circlegame/Initialize()
 	. = ..()
-	var/mob/owner = loc
+	var/mob/living/owner = loc
 	if(!istype(owner))
 		return
-	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/GOTTEM)
+	RegisterSignal(owner, COMSIG_PARENT_EXAMINE, .proc/ownerExamined)
 
 /obj/item/circlegame/Destroy()
 	var/mob/owner = loc
@@ -689,41 +689,49 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 	. = ..()
 
-/obj/item/circlegame/proc/GOTTEM(datum/source, mob/living/sucker)
-	var/mob/living/owner = loc // owner in more ways than one, really
-	if(!owner || !(owner.mobility_flags & MOBILITY_USE)|| !istype(owner) || !istype(sucker) || !(sucker in oviewers(owner)))
+/obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
+	if(!istype(sucker))
+		return
+	addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 2)
+
+/obj/item/circlegame/proc/GOTTEM(mob/living/owner, mob/living/sucker)
+	if(QDELETED(src) || !owner || !sucker || !(owner.mobility_flags & MOBILITY_USE))
+		return
+	to_chat(sucker, "<span class='danger'>Wait... was that a-</span>")
+
+	sleep(3)
+	if(QDELETED(src) || !owner || !sucker)
 		return
 
 	var/distance = get_dist(owner.loc, sucker.loc)
-
 	if(prob(distance - 1) * 20) // if you're a few tiles away they might not notice...
 		to_chat(sucker, "<span class='notice'>Was that- Phew... [owner] didn't notice you see [owner.p_their()] [src.name]...</span>")
 		return
 
 	to_chat(owner, "<span class='warning'>[sucker] looks down briefly at your [src.name] then tries to avert [sucker.p_their()] eyes, but it's too late!</span>")
-	to_chat(sucker, "<span class='danger'>Wait... was that a-</span>")
 	to_chat(sucker, "<span class='danger'><b>[owner] sees the fear in your eyes as you try to look away from [owner.p_their()] [src.name]!</b></span>")
 
 	if(!in_range(owner, sucker))
 		return
 
+	owner.face_atom(sucker)
 	if(owner.client)
 		owner.client.give_award(/datum/award/achievement/misc/gottem, owner) // then everybody clapped
 
 	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
 	if(HAS_TRAIT(owner, TRAIT_HULK))
 		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", \
-			"<span class='danger'>You bop [sucker] with your [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, list(sucker))
-		sucker.visible_message("<span class='userdanger'>[owner] bops you incredibly hard with [owner.p_their()] [src.name], sending you flying!</span>")
-		sucker.apply_damage(10, BRUTE)
+			"<span class='danger'>You bop [sucker] with your [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", ignored_mobs=list(sucker))
+		to_chat(sucker, "<span class='userdanger'>[owner] bops you incredibly hard with [owner.p_their()] [src.name], sending you flying!</span>")
+		sucker.apply_damage(50, STAMINA)
 		sucker.Knockdown(50)
 		var/atom/throw_target = get_edge_target_turf(sucker, owner.dir)
 		sucker.throw_at(throw_target, 6, 3, owner)
 	else
-		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name]!</span>", \
-			"<span class='danger'>You bop [sucker] with your [src.name]!</span>", list(sucker))
-		sucker.visible_message("<span class='userdanger'>[owner] bops you with [owner.p_their()] [src.name]!</span>")
-
+		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name]!</span>", "<span class='danger'>You bop [sucker] with your [src.name]!</span>", \
+			"<span class='hear'>You hear a dull thud!</span>", ignored_mobs=list(sucker))
+		sucker.apply_damage(15, STAMINA)
+		to_chat(sucker, "<span class='userdanger'>[owner] bops you with [owner.p_their()] [src.name]!</span>")
 	QDEL_NULL(src)
 
 /obj/item/slapper
