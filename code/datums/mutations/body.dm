@@ -231,14 +231,14 @@
 	instability = 10
 
 /datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
-    if(..())
-        return
-    owner.slowed_by_drag = FALSE // Don't get slowed by dragging lockers or mobs
+		if(..())
+		return
+	owner.slowed_by_drag = FALSE // Don't get slowed by dragging lockers or mobs
 
 /datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
-    if(..())
-        return
-    owner.slowed_by_drag = initial(owner.slowed_by_drag)
+	if(..())
+		return
+	owner.slowed_by_drag = initial(owner.slowed_by_drag)
 
  ///Amount of units of toxin reagents to remove
  #define STIMMED_PURGE_AMOUNT 0.25
@@ -251,8 +251,8 @@
 	difficulty = 16
 	instability = 30 // the purging is quite powerful
 
- /datum/mutation/human/stimmed/on_life()
- 	owner.reagents.remove_all_type(/datum/reagent/toxin, STIMMED_PURGE_AMOUNT, FALSE, TRUE)
+/datum/mutation/human/stimmed/on_life()
+	owner.reagents.remove_all_type(/datum/reagent/toxin, STIMMED_PURGE_AMOUNT, FALSE, TRUE)
 
 /datum/mutation/human/insulated
 	name = "Insulated"
