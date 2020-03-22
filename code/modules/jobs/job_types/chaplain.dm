@@ -89,6 +89,8 @@
 			B.name = "The Holy Piby"
 		if("satanism")
 			B.name = "The Unholy Bible"
+		if("sikhism")
+			B.name = "Guru Granth Sahib"
 		if("science")
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		if("scientology")
