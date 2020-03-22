@@ -181,13 +181,25 @@
 
 /obj/item/reagent_containers/food/snacks/monkeycube/suicide_act(mob/user)
 	var/mob/living/M = user
-	user.visible_message("<span class='suicide'>[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!</span>")
-	sleep(10)
-	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	if(HAS_TRAIT(M, TRAIT_NOHUNGER))
-		to_chat(user, "<span class='warning'>Your body won't activate [src]...</span>")
+	M.visible_message("<span class='suicide'>[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!</span>")
+	var/eating_success = do_after(M, 10, TRUE, src, TRUE)
+	if(QDELETED(M)) //qdeletion: the nuclear option of self-harm
 		return SHAME
-	sleep(10)
+	if(!eating_success || QDELETED(src)) //checks if src is gone or if they failed to wait for a second
+		M.visible_message("<span class='suicide'>[M] chickens out!</span>")
+		return SHAME
+	if(HAS_TRAIT(M, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
+		M.visible_message("<span class='suicide'>[M] realizes [M.p_their()] body won't activate [src]!</span>"
+		,"<span class='warning'>Your body won't activate [src]...</span>")
+		return SHAME
+	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	M.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
+	sleep(15) //you've eaten it, you can run now
+	if(QDELETED(M) || QDELETED(src))
+		return SHAME
+	if((src.loc != M)) //how the hell did you manage this
+		to_chat(M, "<span class='warning'>Something happened to [src]...</span>")
+		return SHAME
 	Expand()
 	M.visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
 	M.gib(null, TRUE, null, TRUE)
