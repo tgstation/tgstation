@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(vote)
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
+	var/vote_system = PLURALITY_VOTING
 	var/list/choices = list()
 	var/list/voted = list()
 	var/list/voting = list()
@@ -157,21 +158,35 @@ SUBSYSTEM_DEF(vote)
 	if(mode)
 		if(CONFIG_GET(flag/no_dead_vote) && usr.stat == DEAD && !usr.client.holder)
 			return FALSE
-		if(usr.ckey in voted)
-			if(vote in voted[usr.ckey])
-				voted[usr.ckey] -= vote
-				choices[choices[vote]]--
-			else
-				voted[usr.ckey] += vote
-				choices[choices[vote]]++
-		else
-			voted += usr.ckey
-			voted[usr.ckey] = list(vote)
-			choices[choices[vote]]++
-			return vote
+		if(vote && ISINRANGE(vote, 1, choices.len))
+			switch(vote_system)
+				if(APPROVAL_VOTING)
+					if(usr.ckey in voted)
+						if(vote in voted[usr.ckey])
+							voted[usr.ckey] -= vote
+							choices[choices[vote]]--
+						else
+							voted[usr.ckey] += vote
+							choices[choices[vote]]++
+					else
+						voted += usr.ckey
+						voted[usr.ckey] = list(vote)
+						choices[choices[vote]]++
+						return vote
+				else // plurality-by-default
+					if(usr.ckey in voted)
+						choices[choices[voted[usr.ckey]]]--
+						voted[usr.ckey] = vote
+						choices[choices[vote]]++
+						return vote
+					else
+						voted += usr.ckey
+						voted[usr.ckey] = vote
+						choices[choices[vote]]++	//check this
+						return vote
 	return FALSE
 
-/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
+/datum/controller/subsystem/vote/proc/initiate_vote(vote_type, initiator_key, voting_system = PLURALITY_VOTING)
 	if(!Master.current_runlevel) //Server is still intializing.
 		to_chat(usr, "<span class='warning'>Cannot start vote, server is not done initializing.</span>")
 		return FALSE
@@ -179,7 +194,7 @@ SUBSYSTEM_DEF(vote)
 	var/ckey = ckey(initiator_key)
 	if(GLOB.admin_datums[ckey])
 		admin = TRUE
-
+	vote_system = voting_system
 	if(!mode)
 		if(started_time)
 			var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
@@ -210,7 +225,9 @@ SUBSYSTEM_DEF(vote)
 			if("custom")
 				question = stripped_input(usr,"What is the vote for?")
 				if(!question)
-					return FALSE
+					return 0
+				var/system_string = input(usr,"Which voting type?",GLOB.vote_type_names[1]) in GLOB.vote_type_names
+				vote_system = GLOB.vote_type_names[system_string]
 				for(var/i=1,i<=10,i++)
 					var/option = capitalize(stripped_input(usr,"Please enter an option or hit cancel to finish"))
 					if(!option || mode || !usr.client)
@@ -334,10 +351,10 @@ SUBSYSTEM_DEF(vote)
 				initiate_vote("restart",usr.key)
 		if("gamemode")
 			if(CONFIG_GET(flag/allow_vote_mode) || usr.client.holder)
-				initiate_vote("gamemode",usr.key)
+				initiate_vote("gamemode",usr.key, voting_system = APPROVAL_VOTING)
 		if("map")
 			if(CONFIG_GET(flag/allow_vote_map) || usr.client.holder)
-				initiate_vote("map",usr.key)
+				initiate_vote("map",usr.key, voting_system = APPROVAL_VOTING)
 		if("custom")
 			if(usr.client.holder)
 				initiate_vote("custom",usr.key)
