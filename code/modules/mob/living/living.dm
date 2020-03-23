@@ -1435,15 +1435,15 @@
 	if(lying_angle != lying_prev)
 		update_transform()
 		lying_prev = lying_angle
-	if(lying_angle != 0)
+	if(lying_angle != 0) //We are not standing up.
 		if(layer == initial(layer)) //to avoid things like hiding larvas.
 			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-		if(. != 0)
+		if(. != 0) //We became prone and were not before. We lose density and stop bumping passable dense things.
 			density = FALSE
-	else
+	else //We are prone.
 		if(layer == LYING_MOB_LAYER)
 			layer = initial(layer)
-		if(.)
+		if(.) //We weren't pone before, so we become dense and things can bump into us again.
 			density = initial(density)
 
 
