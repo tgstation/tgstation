@@ -132,8 +132,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//Creates new, identical gas mixture
 	//Returns: duplicate gas mixture
 
-/datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
-	//Copies variables from sample
+/datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample, parial = 1)
+	//Copies variables from sample, moles multiplicated by parial
 	//Returns: 1 if we are mutable, 0 otherwise
 
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
