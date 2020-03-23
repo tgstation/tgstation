@@ -27,11 +27,7 @@
 
 	//is there a better way to do this in byond i.e. get the keys?
 	var/list/gas_list = new()
-	for(var/gas_id in internal.gases)
-		gas_list += gas_id
-	for(var/gas_id in external.gases)
-		gas_list += gas_id
-	gas_list = uniqueList(gas_list)
+	gas_list |= internal.gases | external.gases
 
 	//calculate delta of partial pressure for each gas, and do transfer for each gas individually
 	var/internal_pp_coeff = R_IDEAL_GAS_EQUATION * internal.temperature / internal.volume
