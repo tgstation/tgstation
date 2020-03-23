@@ -32,7 +32,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	var/cooldown = 0 //cooldown for the rune process() only applies to certain rune
 	var/max_cooldown = 100
 
-///runes can also be deleted by bluespace crystals if the xenobiologist is fucking everyone up and you need a way to destroy the rune.
+///runes can also be deleted by bluespace crystals much faster than with soap/mops
 /obj/effect/warped_rune/attackby(obj/item/stack/BC, mob/user)
 	if(!istype(BC,/obj/item/stack/sheet/bluespace_crystal) && !istype(BC,/obj/item/stack/ore/bluespace_crystal))
 		return
@@ -43,13 +43,22 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 		playsound(src, 'sound/effects/phasein.ogg', 20, TRUE)
 		if(BC.amount <= 0)
 			qdel(BC)
+///destroyable by xenomorphs			
+/obj/effect/warped_rune/acid_act() 
+	visible_message("<span class='warning'>The rune is being disolved!</span>")
+	playsound(src, 'sound/items/welder.ogg', 150, TRUE)
+	qdel(src)
 
 //nearly all runes use their turf in some way so we set T to their turf automatically.
 /obj/effect/warped_rune/Initialize()
 	..()
 	T = get_turf(src)
+	RegisterSignal(T, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_rune)
+	cooldown = world.time + max_cooldown //rune starts on cooldown
+	
+/obj/effect/warped_rune/proc/clean_rune()
+	qdel(src)
 
-/obj/effect/warped_rune/greyspace/process()
  ///using the extract on the floor will "draw" the rune.
 /obj/item/slimecross/warping/afterattack(turf/target, mob/user, proximity)
 	if(!proximity)
@@ -285,7 +294,6 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	desc = "Words are powerful things, they can stop someone dead in their tracks if used in the right way"
 	icon_state = "metal_space"
 	density = TRUE
-	storing_time = 50 //faster to destroy with the bluespace crystal than with the crossbreed
 
 
 
