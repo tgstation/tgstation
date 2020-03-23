@@ -23,10 +23,18 @@
 	explosion(src.loc,0,2,3,flame_range = 3)
 	qdel(src)
 
-/obj/item/grenade/syndieminibomb/concussion/frag
+/obj/item/grenade/syndieminibomb/frag
 	name = "frag grenade"
-	desc = "Fire in the hole."
+	desc = "An anti-personnel fragmentation grenade, this weapon excels at killing soft targets by shredding them with metal shrapnel."
 	icon_state = "frag"
+	shrapnel_type = /obj/projectile/bullet/shrapnel
+	shrapnel_radius = 5
+
+/obj/item/grenade/syndieminibomb/frag/prime()
+	. = ..()
+	update_mob()
+	explosion(src.loc,0,1,3,flame_range = 4)
+	qdel(src)
 
 /obj/item/grenade/syndieminibomb/concussion/frag/ComponentInitialize()
 	. = ..()

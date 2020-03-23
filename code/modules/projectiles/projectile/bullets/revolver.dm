@@ -15,10 +15,25 @@
 /obj/projectile/bullet/c38
 	name = ".38 bullet"
 	damage = 25
+	ricochets_max = 2
+	ricochet_chance = 50
+	ricochet_auto_aim_angle = 10
+	ricochet_auto_aim_range = 3
+
+/obj/projectile/bullet/c38/match
+	name = ".38 match bullet"
+	ricochets_max = 4
+	ricochet_chance = 100
+	ricochet_auto_aim_angle = 40
+	ricochet_auto_aim_range = 5
+	ricochet_incidence_leeway = 50
+	ricochet_decay_chance = 1
+	ricochet_decay_damage = 1
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"
 	damage = 10
+	ricochets_max = 0
 
 /obj/projectile/bullet/c38/trac/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -36,6 +51,7 @@
 /obj/projectile/bullet/c38/hotshot //similar to incendiary bullets, but do not leave a flaming trail
 	name = ".38 Hot Shot bullet"
 	damage = 20
+	ricochets_max = 0
 
 /obj/projectile/bullet/c38/hotshot/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -48,6 +64,7 @@
 	name = ".38 Iceblox bullet"
 	damage = 20
 	var/temperature = 100
+	ricochets_max = 0
 
 /obj/projectile/bullet/c38/iceblox/on_hit(atom/target, blocked = FALSE)
 	. = ..()
@@ -60,3 +77,13 @@
 /obj/projectile/bullet/a357
 	name = ".357 bullet"
 	damage = 60
+
+// admin only really, for ocelot memes
+/obj/projectile/bullet/a357/match
+	name = ".357 match bullet"
+	ricochets_max = 5
+	ricochet_chance = 140
+	ricochet_auto_aim_angle = 50
+	ricochet_auto_aim_range = 6
+	ricochet_incidence_leeway = 80
+	ricochet_decay_chance = 1

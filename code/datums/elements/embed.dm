@@ -31,6 +31,7 @@
 	var/jostle_pain_mult
 	var/pain_stam_pct
 	var/payload_type
+	var/embed_chance_turf_mod
 
 /datum/element/embed/Attach(datum/target, list/embedArgs, projectile_payload=/obj/item/shard)
 	. = ..()
@@ -44,6 +45,7 @@
 		RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/checkEmbedOther)
 		RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
+		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, .proc/tryForceEmbed)
 	else
 		payload_type = projectile_payload
 		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/checkEmbedProjectile)
@@ -58,50 +60,69 @@
 
 
 /// Checking to see if we're gonna embed into a human
-/datum/element/embed/proc/checkEmbedMob(obj/item/weapon, mob/living/carbon/human/victim, hit_zone, datum/thrownthing/throwingdatum)
+/datum/element/embed/proc/checkEmbedMob(obj/item/weapon, mob/living/carbon/human/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
 	if(!istype(victim))
 		return
+	if(HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
+		return
 
-	if((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && prob(embed_chance) && !HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
-		victim.AddComponent(/datum/component/embedded,\
-			weapon,\
-			throwingdatum,\
-			embed_chance = embed_chance,\
-			fall_chance = fall_chance,\
-			pain_chance = pain_chance,\
-			pain_mult = pain_mult,\
-			remove_pain_mult = remove_pain_mult,\
-			rip_time = rip_time,\
-			ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
-			jostle_chance = jostle_chance,\
-			jostle_pain_mult = jostle_pain_mult,\
-			pain_stam_pct = pain_stam_pct)
+	var/pass = forced || ((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && prob(embed_chance))
+	if(!pass)
+		return
 
+	var/obj/item/bodypart/L = victim.get_bodypart(hit_zone) || pick(victim.bodyparts)
+	victim.AddComponent(/datum/component/embedded,\
+		weapon,\
+		throwingdatum,\
+		part = L,\
+		embed_chance = embed_chance,\
+		fall_chance = fall_chance,\
+		pain_chance = pain_chance,\
+		pain_mult = pain_mult,\
+		remove_pain_mult = remove_pain_mult,\
+		rip_time = rip_time,\
+		ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
+		jostle_chance = jostle_chance,\
+		jostle_pain_mult = jostle_pain_mult,\
+		pain_stam_pct = pain_stam_pct,\
+		embed_chance_turf_mod = embed_chance_turf_mod)
+
+	return TRUE
 
 /// We need the hit_zone if we're embedding into a human, so this proc only handled if we're embedding into a turf
-/datum/element/embed/proc/checkEmbedOther(obj/item/weapon, turf/closed/hit, datum/thrownthing/throwingdatum)
+/datum/element/embed/proc/checkEmbedOther(obj/item/weapon, turf/closed/hit, datum/thrownthing/throwingdatum, forced=FALSE)
 	if(!istype(hit))
 		return
 
-	var/chance = embed_chance
+	var/chance = embed_chance + embed_chance_turf_mod
 	if(iswallturf(hit))
 		var/turf/closed/wall/W = hit
 		chance += 2 * (W.hardness - STANDARD_WALL_HARDNESS)
 
-	if((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && prob(chance))
-		hit.AddComponent(/datum/component/embedded,\
-			weapon,\
-			throwingdatum,\
-			embed_chance = embed_chance,\
-			fall_chance = fall_chance,\
-			pain_chance = pain_chance,\
-			pain_mult = pain_mult,\
-			remove_pain_mult = remove_pain_mult,\
-			rip_time = rip_time,\
-			ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
-			jostle_chance = jostle_chance,\
-			jostle_pain_mult = jostle_pain_mult,\
-			pain_stam_pct = pain_stam_pct)
+	if(!forced && chance <= 0 || embed_chance_turf_mod <= -100)
+		return
+
+	var/pass = ((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && prob(chance))
+	if(!pass)
+		return
+
+	hit.AddComponent(/datum/component/embedded,\
+		weapon,\
+		throwingdatum,\
+		embed_chance = embed_chance,\
+		fall_chance = fall_chance,\
+		pain_chance = pain_chance,\
+		pain_mult = pain_mult,\
+		remove_pain_mult = remove_pain_mult,\
+		rip_time = rip_time,\
+		ignore_throwspeed_threshold = ignore_throwspeed_threshold,\
+		jostle_chance = jostle_chance,\
+		jostle_pain_mult = jostle_pain_mult,\
+		pain_stam_pct = pain_stam_pct,\
+		embed_chance_turf_mod = embed_chance_turf_mod)
+
+	return TRUE
+
 
 /datum/element/embed/proc/parseArgs(embed_chance = EMBED_CHANCE,
 		fall_chance = EMBEDDED_ITEM_FALLOUT,
@@ -113,7 +134,8 @@
 		ignore_throwspeed_threshold = FALSE,
 		jostle_chance = EMBEDDED_JOSTLE_CHANCE,
 		jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
-		pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
+		pain_stam_pct = EMBEDDED_PAIN_STAM_PCT,
+		embed_chance_turf_mod = EMBED_CHANCE_TURF_MOD)
 
 	src.embed_chance = embed_chance
 	src.fall_chance = fall_chance
@@ -126,6 +148,7 @@
 	src.jostle_chance = jostle_chance
 	src.jostle_pain_mult = jostle_pain_mult
 	src.pain_stam_pct = pain_stam_pct
+	src.embed_chance_turf_mod = embed_chance_turf_mod
 
 ///A different embed element has been attached, so we'll detach and let them handle things
 /datum/element/embed/proc/severancePackage(obj/item/weapon, datum/element/E)
@@ -144,16 +167,32 @@
 		return // we don't care
 
 	var/obj/item/payload = new payload_type(get_turf(hit))
-
-	if(iscarbon(hit))
-		var/mob/living/carbon/C = hit
-		C.hitby(payload, skipcatch=TRUE, hitpush=FALSE)
-	else if(isclosedturf(hit))
-		var/turf/closed/T = hit
-		T.hitby(payload, skipcatch=TRUE, hitpush=FALSE)
-
+	var/did_embed = SEND_SIGNAL(payload, COMSIG_EMBED_TRY_FORCE, hit, P.def_zone)
+	//var/did_embed = tryForceEmbed(payload, hit, P.def_zone)
+	if(!did_embed)
+		payload.failedEmbed()
 	Detach(P)
-	//QDEL_NULL(P)
-	return
 
+/datum/element/embed/proc/tryForceEmbed(obj/item/I, atom/target, hit_zone, forced=FALSE, silent=FALSE)
+	var/obj/item/bodypart/L
+	var/mob/living/carbon/human/H
+	var/turf/closed/T
 
+	if(!forced && !prob(embed_chance))
+		return
+
+	if(ishuman(target))
+		H = target
+		if(!hit_zone)
+			L = pick(H.bodyparts)
+			hit_zone = L.body_zone
+	else if(isbodypart(target))
+		L = target
+		H = L.owner
+	else if(isclosedturf(target))
+		T = target
+
+	if(H)
+		return checkEmbedMob(I, H, hit_zone, forced=TRUE)
+	else if(T)
+		return checkEmbedOther(I, T, forced=TRUE)

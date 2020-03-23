@@ -929,10 +929,8 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 /obj/item/proc/doStrip(mob/stripper, mob/owner)
 	return owner.dropItemToGround(src)
 
-/**
-  * Does the current embedding var meet the criteria for being harmless? Namely, does it explicitly define the pain multiplier and jostle pain mult to be 0? If so, return true.
-  */
-/obj/item/proc/is_embed_harmless()
+///Does the current embedding var meet the criteria for being harmless? Namely, does it have a pain multiplier and jostle pain mult of 0? If so, return true.
+/obj/item/proc/isEmbedHarmless()
 	if(embedding)
 		return !isnull(embedding["pain_mult"]) && !isnull(embedding["jostle_pain_mult"]) && embedding["pain_mult"] == 0 && embedding["jostle_pain_mult"] == 0
 
@@ -945,3 +943,24 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		to_chat(user, "<span class='notice'>You set [src] down gently on the ground.</span>")
 		return
 	return src
+/obj/item/proc/failedEmbed()
+	return
+
+/obj/item/proc/tryEmbed(atom/target, forced=FALSE, silent=FALSE)
+	if(!isbodypart(target) && !iscarbon(target) && !isturf(target))
+		return
+
+	if(!forced && !LAZYLEN(embedding))
+		return
+
+	var/hit_zone
+	if(isbodypart(target))
+		var/obj/item/bodypart/L = target
+		if(!L.owner)
+			return
+		hit_zone = L.body_zone
+		target = L.owner
+	var/did_embed = SEND_SIGNAL(src, COMSIG_EMBED_TRY_FORCE, target, hit_zone, forced, silent)
+
+	if(!did_embed)
+		failedEmbed()

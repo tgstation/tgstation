@@ -47,6 +47,7 @@
 	var/jostle_chance
 	var/jostle_pain_mult
 	var/pain_stam_pct
+	var/embed_chance_turf_mod
 
 	///if both our pain multiplier and jostle pain multiplier are 0, we're harmless and can omit most of the damage related stuff
 	var/harmful
@@ -54,6 +55,7 @@
 
 /datum/component/embedded/Initialize(obj/item/I,
 			datum/thrownthing/throwingdatum,
+			obj/item/bodypart/part,
 			embed_chance = EMBED_CHANCE,
 			fall_chance = EMBEDDED_ITEM_FALLOUT,
 			pain_chance = EMBEDDED_PAIN_CHANCE,
@@ -64,11 +66,14 @@
 			ignore_throwspeed_threshold = FALSE,
 			jostle_chance = EMBEDDED_JOSTLE_CHANCE,
 			jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
-			pain_stam_pct = EMBEDDED_PAIN_STAM_PCT)
+			pain_stam_pct = EMBEDDED_PAIN_STAM_PCT,
+			embed_chance_turf_mod = EMBED_CHANCE_TURF_MOD)
 
 	if((!ishuman(parent) && !isclosedturf(parent)) || !isitem(I))
 		return COMPONENT_INCOMPATIBLE
 
+	if(part)
+		L = part
 	src.embed_chance = embed_chance
 	src.fall_chance = fall_chance
 	src.pain_chance = pain_chance
@@ -80,6 +85,7 @@
 	src.jostle_chance = jostle_chance
 	src.jostle_pain_mult = jostle_pain_mult
 	src.pain_stam_pct = pain_stam_pct
+	src.embed_chance_turf_mod = embed_chance_turf_mod
 
 	src.weapon = I
 
@@ -98,12 +104,10 @@
 		RegisterSignal(parent, COMSIG_HUMAN_EMBED_REMOVAL, .proc/safeRemoveHuman)
 	else if(isclosedturf(parent))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examineTurf)
+		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/itemMoved)
 
 /datum/component/embedded/UnregisterFromParent()
-	if(ishuman(parent))
-		UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_EMBED_RIP, COMSIG_HUMAN_EMBED_REMOVAL))
-	else if(isclosedturf(parent))
-		UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_EMBED_RIP, COMSIG_HUMAN_EMBED_REMOVAL, COMSIG_PARENT_EXAMINE))
 
 /datum/component/embedded/process()
 	if(ishuman(parent))
@@ -125,7 +129,9 @@
 /datum/component/embedded/proc/initHuman()
 	START_PROCESSING(SSdcs, src)
 	var/mob/living/carbon/human/victim = parent
-	L = pick(victim.bodyparts)
+	if(!L || !istype(L))
+		L = pick(victim.bodyparts)
+
 	L.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
 
@@ -170,7 +176,10 @@
 
 
 /// Called when a human with an object embedded/stuck to them inspects themselves and clicks the appropriate link to begin ripping the item out. This handles the ripping attempt, descriptors, and dealing damage, then calls safe_remove()
-/datum/component/embedded/proc/ripOutHuman()
+/datum/component/embedded/proc/ripOutHuman(datum/source, obj/item/I, obj/item/bodypart/limb)
+	if(I != weapon || limb != L)
+		return
+
 	var/mob/living/carbon/human/victim = parent
 	var/time_taken = rip_time * weapon.w_class
 
@@ -178,6 +187,7 @@
 	if(do_after(victim, time_taken, target = victim))
 		if(!weapon || !L || weapon.loc != victim || !(weapon in L.embedded_objects))
 			qdel(src)
+			return
 
 		if(harmful)
 			var/damage = weapon.w_class * remove_pain_mult
@@ -196,9 +206,18 @@
 	var/mob/living/carbon/human/victim = parent
 	L.embedded_objects -= weapon
 
+	if(!weapon || weapon.unembedded())
+		if(!victim.has_embedded_objects())
+			victim.clear_alert("embeddedobject")
+			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+		QDEL_NULL(weapon)
+		qdel(src)
+		return
+
 	if(!victim)
 		weapon.forceMove(get_turf(weapon))
 		qdel(src)
+		return
 
 	if(to_hands)
 		victim.put_in_hands(weapon)
@@ -223,8 +242,13 @@
 	if(victim.stat == DEAD)
 		return
 
-	if(harmful && prob(pain_chance))
-		var/damage = weapon.w_class * pain_mult
+	var/damage = weapon.w_class * pain_mult
+	var/chance = pain_chance
+	if(pain_stam_pct && victim.stam_paralyzed) //if it's a less-lethal embed, give them a break if they're already stamcritted
+		chance *= 0.3
+		damage *= 0.7
+
+	if(harmful && prob(chance))
 		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [L.name] hurts!</span>")
 
@@ -299,6 +323,7 @@
 
 		if(do_after(us, 30, target = parent))
 			us.put_in_hands(weapon)
+			weapon.unembedded()
 			qdel(src)
 
 
@@ -306,4 +331,5 @@
 /datum/component/embedded/proc/itemMoved()
 	weapon.invisibility = initial(weapon.invisibility)
 	weapon.visible_message("<span class='notice'>[weapon] falls loose from [parent].</span>")
+	weapon.unembedded()
 	qdel(src)
