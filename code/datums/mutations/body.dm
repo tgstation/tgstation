@@ -234,7 +234,7 @@
 	. = ..()
 	if(.)
 		return
-	ADD_TRAIT(owner, TRAIT_NOT_SLOWEDBYDRAG, "genetics") // Don't get slowed by dragging lockers or mobs
+	owner.add_movespeed_mod_immunities(type, list(/datum/movespeed_modifier/bulky_drag, /datum/movespeed_modifier/human_carry))
 
 /datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
 	if(..())
