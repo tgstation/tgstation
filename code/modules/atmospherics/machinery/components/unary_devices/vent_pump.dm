@@ -15,6 +15,7 @@
 	can_unwrench = TRUE
 	welded = FALSE
 	layer = GAS_SCRUBBER_LAYER
+	hide = TRUE
 
 	var/id_tag = null
 	var/pump_direction = RELEASING

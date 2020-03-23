@@ -833,3 +833,13 @@
 	update_icon()
 
 #undef PANCAKE_MAX_STACK
+
+/obj/item/reagent_containers/food/snacks/cannoli
+	name = "cannoli"
+	desc = "A sicilian treat that makes you into a wise guy."
+	icon_state = "cannoli"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 1)
+	filling_color = "#ffffff"
+	tastes = list("pastry" = 1)
+	foodtype = GRAIN | DAIRY | SUGAR

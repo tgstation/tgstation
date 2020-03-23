@@ -216,6 +216,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(resistance_flags & ON_FIRE)
 		resistance_flags &= ~ON_FIRE
 		cut_overlay(GLOB.fire_overlay, TRUE)
+		update_icon()
 		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.

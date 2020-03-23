@@ -1,7 +1,6 @@
 import { flow } from 'common/fp';
 import { applyMiddleware, createStore as createReduxStore } from 'common/redux';
 import { backendReducer } from './backend';
-import { toastReducer } from './components/Toast';
 import { hotKeyMiddleware, hotKeyReducer } from './hotkeys';
 import { createLogger } from './logging';
 
@@ -19,7 +18,6 @@ export const createStore = () => {
     (state = {}, action) => state,
     // Global state reducers
     backendReducer,
-    toastReducer,
     hotKeyReducer,
   ]);
   const middleware = [

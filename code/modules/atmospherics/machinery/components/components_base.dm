@@ -2,8 +2,10 @@
 // On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components
+	hide = FALSE
+
 	var/welded = FALSE //Used on pumps and scrubbers
-	var/showpipe = FALSE
+	var/showpipe = TRUE
 	var/shift_underlay_only = TRUE //Layering only shifts underlay?
 
 	var/list/datum/pipeline/parents
@@ -23,7 +25,8 @@
 /obj/machinery/atmospherics/components/Initialize()
 	. = ..()
 
-	RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+	if(hide)
+		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
 
 // Iconnery
 
@@ -38,8 +41,6 @@
 	update_icon_nopipes()
 
 	underlays.Cut()
-
-
 
 	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 

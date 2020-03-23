@@ -513,12 +513,15 @@
 	volume = 20
 	amount_per_transfer_from_this = 5
 	isGlass = FALSE
+	/// Allows the lean sprite to display upon crafting
+	var/random_sprite = TRUE
 
 /obj/item/reagent_containers/food/drinks/colocup/Initialize()
 	.=..()
-	icon_state = "colocup[rand(0, 6)]"
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
+	if (random_sprite)
+		icon_state = "colocup[rand(0, 6)]"
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
