@@ -74,8 +74,7 @@ export const BlackmarketUplink = props => {
               label={name}
               onClick={() => act('set_market', {
                 market: id,
-              })}>
-            </Tabs.Tab>
+              })} />
           );
         })(markets)}
       </Tabs>
