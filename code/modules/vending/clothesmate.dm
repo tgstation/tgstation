@@ -131,6 +131,8 @@
 	default_price = 60
 	extra_price = 120
 	payment_department = NO_FREEBIES
+	light_mask = "wardrobe-light-mask"
+	light_color = "#00FF00"
 
 /obj/machinery/vending/clothing/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)

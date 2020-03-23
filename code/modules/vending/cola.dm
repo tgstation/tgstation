@@ -24,6 +24,8 @@
 	default_price = 45
 	extra_price = 200
 	payment_department = ACCOUNT_SRV
+
+
 /obj/item/vending_refill/cola
 	machine_name = "Robust Softdrinks"
 	icon_state = "refill_cola"
@@ -41,36 +43,49 @@
 
 /obj/machinery/vending/cola/blue
 	icon_state = "Cola_Machine"
+	light_mask = "cola-light-mask"
+	light_color = "#555cc2"
 
 /obj/machinery/vending/cola/black
 	icon_state = "cola_black"
+	light_mask = "cola-light-mask"
 
 /obj/machinery/vending/cola/red
 	icon_state = "red_cola"
 	name = "\improper Space Cola Vendor"
 	desc = "It vends cola, in space."
 	product_slogans = "Cola in space!"
+	light_mask = "red_cola-light-mask"
+	light_color = "#a50824"
 
 /obj/machinery/vending/cola/space_up
 	icon_state = "space_up"
 	name = "\improper Space-up! Vendor"
 	desc = "Indulge in an explosion of flavor."
 	product_slogans = "Space-up! Like a hull breach in your mouth."
+	light_mask = "space_up-light-mask"
+	light_color = "#44964a"
 
 /obj/machinery/vending/cola/starkist
 	icon_state = "starkist"
 	name = "\improper Star-kist Vendor"
 	desc = "The taste of a star in liquid form."
 	product_slogans = "Drink the stars! Star-kist!"
+	light_mask = "starkist-light-mask"
+	light_color = "#ffc44d"
 
 /obj/machinery/vending/cola/sodie
 	icon_state = "soda"
+	light_mask = "soda-light-mask"
+	light_color = ""
 
 /obj/machinery/vending/cola/pwr_game
 	icon_state = "pwr_game"
 	name = "\improper Pwr Game Vendor"
 	desc = "You want it, we got it. Brought to you in partnership with Vlad's Salads."
 	product_slogans = "The POWER that gamers crave! PWR GAME!"
+	light_mask = "pwr_game-light-mask"
+	light_color = "#6927c5"
 
 /obj/machinery/vending/cola/shamblers
 	name = "\improper Shambler's Vendor"
@@ -87,3 +102,5 @@
 					/obj/item/reagent_containers/food/drinks/soda_cans/shamblers = 10)
 	product_slogans = "~Shake me up some of that Shambler's Juice!~"
 	product_ads = "Refreshing!;Jyrbv dv lg jfdv fw kyrk Jyrdscvi'j Alztv!;Over 1 trillion souls drank!;Thirsty? Nyp efk uizeb kyv uribevjj?;Kyv Jyrdscvi uizebj kyv ezxyk!;Drink up!;Krjkp."
+	light_mask = "shamblers-light-mask"
+	light_mask = "#e4005b"
