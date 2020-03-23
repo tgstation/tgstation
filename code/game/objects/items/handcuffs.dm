@@ -74,7 +74,7 @@
 			else
 				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
 		else
-			to_chat(user, "<span class='warning'>[C] doesn't have two hands...</span>") //if you're trying to cuff yourself while one-handed, this will refer to you in the third person, which is a bit weird, but not a big enough issue to write some shitcode to keep that from happening
+			to_chat(user, "<span class='warning'>[C == user ? "You don't" : "[C] doesn't"] have two hands...</span>")
 
 /obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
 
