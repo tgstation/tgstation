@@ -434,7 +434,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 25
 	quality = DRINK_VERYGOOD
-	taste_description = "burning cinnamon and tears of drunk teen girls"
+	taste_description = "burning cinnamon"
 	glass_icon_state = "goldschlagerglass"
 	glass_name = "glass of goldschlager"
 	glass_desc = "100% proof that teen girls will drink anything with gold in it."
@@ -1097,7 +1097,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "the spirit of Ireland"
 	glass_icon_state = "irishcarbomb"
 	glass_name = "Irish Car Bomb"
-	glass_desc = "Britain's worst nightmare."
+	glass_desc = "An Irish car bomb."
 
 /datum/reagent/consumable/ethanol/syndicatebomb
 	name = "Syndicate Bomb"
