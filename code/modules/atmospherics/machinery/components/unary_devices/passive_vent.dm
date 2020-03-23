@@ -25,11 +25,8 @@
 
 	var/internal_volume_fraction = internal.volume/(internal.volume + external.volume)
 
-	var/datum/gas_mixture/holding = new
-	holding.merge(internal.remove_ratio(1))
-	holding.merge(external.remove_ratio(1))
-	internal.merge(holding.remove_ratio(internal_volume_fraction))
-	external.merge(holding)
+	external.merge(internal.remove_ratio(1))
+	internal.merge(external.remove_ratio(internal_volume_fraction))
 
 	air_update_turf()
 	update_parents()
