@@ -2,6 +2,8 @@
 #define MOVE_FORCE_DEFAULT 1000
 #define MOVE_RESIST_DEFAULT 1000
 #define PULL_FORCE_DEFAULT 1000
+#define PROBABILITY_OFFSET 25
+#define PROBABILITY_BASE_PRECENT 75
 
 //Factors/modifiers
 #define MOVE_FORCE_PULL_RATIO 1				//Same move force to pull objects
