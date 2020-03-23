@@ -187,11 +187,10 @@
   */
 /datum/dna/proc/create_random_voice()
 	var/mob/living/carbon/human/H = holder
-	if (H)
-		if (H.gender == FEMALE)
-			tts_voice = pick("betty", "rita", "ursula", "wendy")
-		else
-			tts_voice = pick("dennis", "frank", "harry", "kit", "paul")
+	if (H.gender == FEMALE)
+		tts_voice = pick("betty", "rita", "ursula", "wendy")
+	else
+		tts_voice = pick("dennis", "frank", "harry", "kit", "paul")
 
 /datum/dna/proc/update_ui_block(blocknumber)
 	if(!blocknumber || !ishuman(holder))

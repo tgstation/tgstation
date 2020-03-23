@@ -30,6 +30,7 @@ SUBSYSTEM_DEF(tts)
 
 	if (!CONFIG_GET(flag/enable_tts))
 		can_fire = FALSE
+		stop_engine()
 	else
 		start_engine()
 
@@ -44,12 +45,23 @@ SUBSYSTEM_DEF(tts)
 	var/cmd = "cmd /c start \"tts_generator\" [GENERATOR_PATH]tts_generator.exe"
 	shell(cmd)
 
+/**
+  *Kills the TTS generator
+  */
+/datum/controller/subsystem/tts/proc/stop_engine()
+	var/cmd = "taskkill /F /IM \"tts_generator.exe\" /T"
+	shell(cmd)
+
+/**
+  *Checks if something is currently being proccessed for this client
+  */
 /datum/controller/subsystem/tts/proc/check_processing(client/C)
 	if (!C)
 		return FALSE
 
-	for (var/datum/tts/T in processing)
-		if (T.owner == C)
+	for (var/T in processing)
+		var/datum/tts/tts_datum = T
+		if (tts_datum.owner == C)
 			return TRUE
 
 	return FALSE
@@ -58,32 +70,33 @@ SUBSYSTEM_DEF(tts)
 	if (!LAZYLEN(processing))
 		return
 
-	for (var/datum/tts/T in processing)	//we have something to process, let's make the files
-		switch(T.status)
+	for (var/T in processing)	//we have something to process, let's make the files
+		var/datum/tts/tts_datum = T
+		switch(tts_datum.status)
 			if (STATUS_NEW)
-				var/uid = "[world.time]" + T.owner.ckey
+				var/uid = "[world.time]" + tts_datum.owner.ckey
 				fdel(DATA_PATH + "[uid].request")
 				fdel(DATA_PATH + "[uid].rlock")
 
 				text2file("", DATA_PATH + "[uid].rlock")
 				text2file("name=[uid]", DATA_PATH + "[uid].request")
-				text2file("voice=[T.voice]", DATA_PATH + "[uid].request")
-				text2file("text=[T.text]", DATA_PATH + "[uid].request")
+				text2file("voice=[tts_datum.voice]", DATA_PATH + "[uid].request")
+				text2file("text=[tts_datum.text]", DATA_PATH + "[uid].request")
 				fdel(DATA_PATH + "[uid].rlock")
 
-				T.filename = DATA_PATH + "[uid]"
-				T.status = STATUS_GENERATING
+				tts_datum.filename = DATA_PATH + "[uid]"
+				tts_datum.status = STATUS_GENERATING
 				continue
 			if (STATUS_GENERATING)
 				// Check if this file is ready
-				if (fexists(T.filename + ".ogg") && fexists(T.filename + ".meta"))
-					play_tts(T)
+				if (fexists(tts_datum.filename + ".ogg") && fexists(tts_datum.filename + ".meta"))
+					play_tts(tts_datum)
 				continue
 			if (STATUS_PLAYING)
 				// Delete the file when it's finished
-				if (world.time > T.life)
-					delete_files(T)
-					LAZYREMOVE(processing, T)
+				if (world.time > tts_datum.life)
+					delete_files(tts_datum)
+					LAZYREMOVE(processing, tts_datum)
 				continue
 /**
   *Deletes files once they've been played
@@ -108,13 +121,13 @@ SUBSYSTEM_DEF(tts)
 
 	T.status = STATUS_PLAYING
 
-	var/turf/origin = T.owner.mob.loc
+	var/turf/origin = get_turf(T.owner.mob)
 
 	var/list/listeners = GLOB.player_list
 	listeners = listeners & hearers(world.view, origin)
 	/// Gets length of the created audio file using the .meta file
 	var/audio_length = text2num(file2text(T.filename + ".meta"))
-	audio_length = audio_length / 100
+	audio_length = audio_length * 0.01
 	if (!audio_length)
 		audio_length = length(T.text)
 
@@ -123,20 +136,16 @@ SUBSYSTEM_DEF(tts)
 
 	addtimer(CALLBACK(T.owner.mob, /mob/living.proc/update_tts_hud), audio_length) //Resets the hud and spam protection
 
-	for (var/mob/P in listeners)
-		if (!P.client)
+	for (var/M in listeners)
+		var/mob/listener = M
+		if (!listener.client)
 			continue
-		if (!(P.client.prefs.toggles & SOUND_TTS))
+		if (!(listener.client.prefs.toggles & SOUND_TTS))
 			continue
-		if (T.language)
-			if (!P.can_speak_language(T.language))
-				continue
+		if (T.language && !listener.can_speak_language(T.language))
+			continue
 
-		if (get_dist(P, origin) <= world.view)
-			var/turf/Turf = get_turf(P)
-
-			if (Turf && Turf.z == origin.z)
-				P.playsound_local(origin, T.filename + ".ogg", 100 * T.volume_mod, 0, channel=next_channel)	//play the file we made
+		listener.playsound_local(origin, T.filename + ".ogg", 100 * T.volume_mod, 0, channel=next_channel)	//play the file we made
 
 /datum/tts
 	///Who's saying things
@@ -161,12 +170,12 @@ SUBSYSTEM_DEF(tts)
   *Adds a piece of text to the TTS subsystem
   *
   * Arguments:
-  **client/c - the client creating the message
-  **msg - The message that the client wants to be converted to TTS
-  **voice - The voice that should be used by the TTS generator
-  **is_global - Whether the sound should be globally played
-  **volume_mod - Modifies the volume level of the TTS sound
-  **datum/language/language - The IC language that the message is in
+  * * client/c - the client creating the message
+  * * msg - The message that the client wants to be converted to TTS
+  * * voice - The voice that should be used by the TTS generator
+  * * is_global - Whether the sound should be globally played
+  * * volume_mod - Modifies the volume level of the TTS sound
+  * * datum/language/language - The IC language that the message is in
   */
 /datum/tts/proc/say(client/C, msg, voice = "", is_global = FALSE, volume_mod = 1, datum/language/language)
 	if (!C)

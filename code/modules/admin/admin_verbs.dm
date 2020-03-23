@@ -166,7 +166,8 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_overlay_log,
 	/client/proc/reload_configuration,
 	/datum/admins/proc/create_or_modify_area,
-	/client/proc/start_tts_engine
+	/client/proc/start_tts_engine,
+	/client/proc/stop_tts_engine
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -722,3 +723,16 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	if (SStts)
 		SStts.start_engine()
+
+/client/proc/stop_tts_engine()
+	set category = "Debug"
+	set name = "Stop TTS Engine"
+
+	if (!check_rights(R_DEBUG))
+		return
+	if (!CONFIG_GET(flag/enable_tts))
+		to_chat(usr, "<span='warning'>Text-to-Speech is not enabled!</span>")
+		return
+
+	if (SStts)
+		SStts.stop_engine()

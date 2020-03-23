@@ -228,7 +228,8 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		succumb(1)
 		to_chat(src, compose_message(src, language, message, , spans, message_mode))
 
-	say_tts(message, language)
+	if (CONFIG_GET(flag/enable_tts))
+		say_tts(message, language)
 
 	return 1
 
@@ -424,8 +425,6 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
   *Processes the Text-to-Speech sounds before converting them
   */
 /mob/living/proc/say_tts(tts_message, datum/language/tts_language = null)
-	if (!CONFIG_GET(flag/enable_tts))
-		return
 	if (!client)
 		return
 
@@ -469,24 +468,24 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	///Voice used by TTS generator
 	var/tts_voice = ""
 
-	if (istype(src, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = src
+	if (!istype(src, /mob/living/carbon/human))
+		return
 
-		if (H)
-			if (H.dna)
-				if (H.dna.tts_voice)
-					tts_voice = H.dna.tts_voice	//we now have a voice
+	var/mob/living/carbon/human/human = src
 
-	if (world.time > client.tts_cooldown && !SStts.check_processing(src))
-		var/tts_volume_mod = 1
-		if (message_mode == MODE_WHISPER)	//Whispering people are harder to hear
-			tts_volume_mod /= 2
+	if (human?.dna?.tts_voice)
+		tts_voice = human.dna.tts_voice	//we now have a voice
 
-		var/datum/tts/TTS = new /datum/tts()
-		TTS.say(client, tts_message, voice = tts_voice, volume_mod = tts_volume_mod, language = tts_language)	//sends it to the generator
+	if (!(world.time > client.tts_cooldown && !SStts.check_processing(src))) //If you're in cooldown or in processing ya don't get to talk
+		return
 
-		if (!hud_used)
-			return
-		if (!hud_used.tts)
-			return
-		hud_used.tts.icon_state = "tts_cooldown"	//Sets the HUD to cooldown state
+	var/tts_volume_mod = 1
+	if (message_mode == MODE_WHISPER)	//Whispering people are harder to hear
+		tts_volume_mod *= 0.5
+
+	var/datum/tts/TTS = new /datum/tts()
+	TTS.say(client, tts_message, voice = tts_voice, volume_mod = tts_volume_mod, language = tts_language)	//sends it to the generator
+
+	if (!hud_used?.tts)
+		return
+	hud_used.tts.icon_state = "tts_cooldown"	//Sets the HUD to cooldown state
