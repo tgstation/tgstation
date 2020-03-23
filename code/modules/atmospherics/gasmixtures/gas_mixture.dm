@@ -202,8 +202,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return copy
 
-/datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample, parial = 1)
-	//Copies variables from sample, moles multiplicated by parial
+/datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample, partial = 1)
+	//Copies variables from sample, moles multiplicated by partial
 	//Returns: 1 if we are mutable, 0 otherwise
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/sample_gases = sample.gases
