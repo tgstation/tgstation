@@ -705,3 +705,15 @@
 	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("stabbed", "poked", "slashed", "clocked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
+
+/obj/item/nullrod/shotgun
+	name = "super shotgun replica"
+	desc = "Makes you want to shoot demons."
+	icon = 'icons/obj/guns/ballistic.dmi'
+	icon_state = "dshotgun"
+	item_state = "shotgun_db"
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	attack_verb = list("struck", "hit", "bashed")
+	hitsound = 'sound/weapons/gun/shotgun/shot.ogg'
