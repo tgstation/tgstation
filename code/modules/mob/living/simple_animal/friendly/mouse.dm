@@ -90,11 +90,6 @@
 			be_fruitful()
 			qdel(cheese)
 			return
-
-/mob/living/simple_animal/mouse/Life(seconds, times_fired)
-	. = ..()
-	if(stat != CONSCIOUS)
-		return
 	for(var/obj/item/reagent_containers/food/snacks/royalcheese/bigcheese in range(1, src))
 		qdel(bigcheese)
 		evolve()
