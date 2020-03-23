@@ -498,7 +498,7 @@ export class DnaConsole extends Component {
                 act(
                   ref,
                   "add_adv_injector",
-                  {mutref: mut.ByondRef })} />
+                  { mutref: mut.ByondRef })} />
             { ((mut.Class === data.MUT_EXTRA) || mut.Scrambled)
               ? <Button
                 content={"Nullify"}
@@ -730,64 +730,62 @@ export class DnaConsole extends Component {
         </Tabs.Tab>
         { data.HasDisk
           ? (
-              <Tabs.Tab label="Disk">
-                {() => (
-                  <Fragment>
-                    {this.renderMutStorage(
-                      ref,
-                      data,
-                      "disk",
-                      data.DiskMutations)}
-                      {data.DiskHasMakeup
-                        ? (
-                          <Fragment>
-                            <Section
-                              title="Genetic Makeup Storage"
-                              textAlign="left">
-                              <LabeledList>
-                                <LabeledList.Item label="Subject">
-                                  {data.DiskMakeupBuffer.name
-                                    ? data.DiskMakeupBuffer.name
-                                    : "None"}
-                                </LabeledList.Item>
-                                <LabeledList.Item label="Blood Type">
-                                  {data.DiskMakeupBuffer.blood_type
-                                    ? data.DiskMakeupBuffer.blood_type
-                                    : "None"}
-                                </LabeledList.Item>
-                                <LabeledList.Item label="Unique Enzyme">
-                                  {data.DiskMakeupBuffer.UE
-                                    ? data.DiskMakeupBuffer.UE
-                                    : "None"}
-                                </LabeledList.Item>
-                                <LabeledList.Item label="Unique Identifier">
-                                  {data.DiskMakeupBuffer.UI
-                                    ? data.DiskMakeupBuffer.UI
-                                    : "None"}
-                                </LabeledList.Item>
-                                {(data.DiskMakeupBuffer.UI
-                                  && data.DiskMakeupBuffer.UE)
-                                  ? (
-                                    <LabeledList.Item label="UE/UI Combination">
-                                      {data.DiskMakeupBuffer.UI
-                                        + "/"
-                                        + data.DiskMakeupBuffer.UE}
-                                    </LabeledList.Item>
-                                  ) : false }
-                              </LabeledList>
-                              <Button
-                                disabled={data.DiskReadOnly}
-                                content={"Delete"}
-                                onClick={(e, value) => (
-                                  act(ref, "del_makeup_disk")
-                                )} />
-                            </Section>
-                          </Fragment>)
+            <Tabs.Tab label="Disk">
+              {() => (
+                <Fragment>
+                  {this.renderMutStorage(
+                    ref,
+                    data,
+                    "disk",
+                    data.DiskMutations)}
+                  {data.DiskHasMakeup
+                    ? (
+                      <Section
+                        title="Genetic Makeup Storage"
+                        textAlign="left">
+                        <LabeledList>
+                          <LabeledList.Item label="Subject">
+                            {data.DiskMakeupBuffer.name
+                              ? data.DiskMakeupBuffer.name
+                              : "None"}
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Blood Type">
+                            {data.DiskMakeupBuffer.blood_type
+                              ? data.DiskMakeupBuffer.blood_type
+                              : "None"}
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Unique Enzyme">
+                            {data.DiskMakeupBuffer.UE
+                              ? data.DiskMakeupBuffer.UE
+                              : "None"}
+                          </LabeledList.Item>
+                          <LabeledList.Item label="Unique Identifier">
+                            {data.DiskMakeupBuffer.UI
+                              ? data.DiskMakeupBuffer.UI
+                              : "None"}
+                          </LabeledList.Item>
+                          {(data.DiskMakeupBuffer.UI
+                            && data.DiskMakeupBuffer.UE)
+                            ? (
+                              <LabeledList.Item label="UE/UI Combination">
+                                {data.DiskMakeupBuffer.UI
+                                  + "/"
+                                  + data.DiskMakeupBuffer.UE}
+                              </LabeledList.Item>
+                            ) : false }
+                        </LabeledList>
+                        <Button
+                          disabled={data.DiskReadOnly}
+                          content={"Delete"}
+                          onClick={(e, value) => (
+                            act(ref, "del_makeup_disk")
+                          )} />
+                      </Section>)
                     : (false)}
                 </Fragment>)}
-              </Tabs.Tab>
-            )
-          : (false)}
+            </Tabs.Tab>
+          ) : (
+            false)}
       </Tabs>
     );
   }
@@ -843,69 +841,67 @@ export class DnaConsole extends Component {
 
   renderMakeupButtons(ref, data, index) {
     return (
-      <Fragment>
-        <Collapsible
-          title="Commands">
-          <Box m={1}>
-            {data.IsViableSubject
-              ? (
-                <Fragment>
-                  <Button
-                    content={"Transfer Enzyme"}
-                    onClick={e => (
-                      act(ref, "makeup_apply", {index:index, type:"ue"})
-                    )}/>
-                  <Button
-                    content={"Transfer Identity"}
-                    onClick={e => (
-                      act(ref, "makeup_apply", {index:index, type:"ui"})
-                    )} />
-                  <Button
-                    content={"Transfer Full Makeup"}
-                    onClick={e => (
-                      act(ref, "makeup_apply", {index:index, type:"mixed"})
-                    )} />
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <Button
-                    content={"Transfer Enzyme (Delayed)"}
-                    onClick={e => (
-                      act(ref, "makeup_delay", {index:index, type:"ue"})
-                    )} />
-                  <Button
-                    content={"Transfer Identity (Delayed)"}
-                    onClick={e => (
-                      act(ref, "makeup_delay", {index:index, type:"ui"})
-                    )} />
-                  <Button
-                    content={"Transfer Full Makeup (Delayed)"}
-                    onClick={e => (
-                      act(ref, "makeup_delay", {index:index, type:"mixed"})
-                    )} />
-                </Fragment>
-              )}
-          </Box>
-          <Box m={1}>
-            <Button
-              content={"Print Enzyme Injector"}
-              onClick={e => (
-                act(ref, "makeup_injector", {index:index, type:"ue"})
-              )}/>
-            <Button
-              content={"Print Identity Injector"}
-              onClick={e => (
-                act(ref, "makeup_injector", {index:index, type:"ui"})
-              )}/>
-            <Button
-              content={"Print Full Makeup Injector"}
-              onClick={e => (
-                act(ref, "makeup_injector", {index:index, type:"mixed"})
-              )}/>
-          </Box>
-        </Collapsible>
-      </Fragment>
-    )
+      <Collapsible
+        title="Commands">
+        <Box m={1}>
+          {data.IsViableSubject
+            ? (
+              <Fragment>
+                <Button
+                  content={"Transfer Enzyme"}
+                  onClick={e => (
+                    act(ref, "makeup_apply", { index: index, type: "ue" })
+                  )} />
+                <Button
+                  content={"Transfer Identity"}
+                  onClick={e => (
+                    act(ref, "makeup_apply", { index: index, type: "ui" })
+                  )} />
+                <Button
+                  content={"Transfer Full Makeup"}
+                  onClick={e => (
+                    act(ref, "makeup_apply", { index: index, type: "mixed" })
+                  )} />
+              </Fragment>
+            ) : (
+              <Fragment>
+                <Button
+                  content={"Transfer Enzyme (Delayed)"}
+                  onClick={e => (
+                    act(ref, "makeup_delay", { index: index, type: "ue" })
+                  )} />
+                <Button
+                  content={"Transfer Identity (Delayed)"}
+                  onClick={e => (
+                    act(ref, "makeup_delay", { index: index, type: "ui" })
+                  )} />
+                <Button
+                  content={"Transfer Full Makeup (Delayed)"}
+                  onClick={e => (
+                    act(ref, "makeup_delay", { index: index, type: "mixed" })
+                  )} />
+              </Fragment>
+            )}
+        </Box>
+        <Box m={1}>
+          <Button
+            content={"Print Enzyme Injector"}
+            onClick={e => (
+              act(ref, "makeup_injector", { index: index, type: "ue" })
+            )} />
+          <Button
+            content={"Print Identity Injector"}
+            onClick={e => (
+              act(ref, "makeup_injector", { index: index, type: "ui" })
+            )} />
+          <Button
+            content={"Print Full Makeup Injector"}
+            onClick={e => (
+              act(ref, "makeup_injector", { index: index, type: "mixed" })
+            )} />
+        </Box>
+      </Collapsible>
+    );
   }
 
   renderMakeupBuffers(ref, data) {
