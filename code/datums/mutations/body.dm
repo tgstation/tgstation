@@ -224,17 +224,37 @@
 
 /datum/mutation/human/strong
 	name = "Strength"
-	desc = "The user's muscles slightly expand."
+	desc = "The user's muscles slightly expand, allowing them to move heavy objects easily."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You feel strong.</span>"
+	text_gain_indication = "<span class='notice'>You feel strong!</span>"
 	difficulty = 16
+	instability = 25
+
+/datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	owner.add_movespeed_mod_immunities(type, list(/datum/movespeed_modifier/bulky_drag, /datum/movespeed_modifier/human_carry))
+
+/datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
+	. = ..()
+	if(.)
+		return
+	owner.remove_movespeed_mod_immunities(type, list(/datum/movespeed_modifier/bulky_drag, /datum/movespeed_modifier/human_carry))
+
+ ///Amount of units of toxin reagents to remove while having the stimmed mutation
+ #define STIMMED_PURGE_AMOUNT 0.25
 
 /datum/mutation/human/stimmed
 	name = "Stimmed"
-	desc = "The user's chemical balance is more robust."
+	desc = "The user's chemical balance is more robust, allowing them to quickly remove toxins from their body."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You feel stimmed.</span>"
+	text_gain_indication = "<span class='notice'>You feel relaxed.</span>"
 	difficulty = 16
+	instability = 30 // the purging is quite powerful
+
+/datum/mutation/human/stimmed/on_life()
+	owner.reagents.remove_all_type(/datum/reagent/toxin, STIMMED_PURGE_AMOUNT, FALSE, TRUE)
 
 /datum/mutation/human/insulated
 	name = "Insulated"
