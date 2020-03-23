@@ -1,0 +1,7 @@
+author: "dablusniper"
+delete-after: True
+changes: 
+  - rscadd: "added a bridge between atmos and incinerator on boxstation"
+  - tweak: "added an airlock in North incinerator maint to maintain access to gas storage tanks"
+  - bugfix: "fixed fusion radiation leaking into chem factory by moving incinerator one tile to the left"
+  - tweak: "cleaned up piping in the incinerator room on box"
