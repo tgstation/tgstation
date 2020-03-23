@@ -1839,7 +1839,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/clownpin
 	name = "Ultra Hilarious Firing Pin"
-	desc = "A firing pin that, when inserted into a gun, makes that gun only useable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
+	desc = "A firing pin that, when inserted into a gun, makes that gun only usable by clowns and clumsy people, and makes that gun honk whenever anyone tries to fire it."
 	cost = 4
 	item = /obj/item/firing_pin/clown/ultra
 	restricted_roles = list("Clown")
@@ -1938,4 +1938,3 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	limited_stock = 1
 	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
-
