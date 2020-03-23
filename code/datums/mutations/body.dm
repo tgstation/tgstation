@@ -239,7 +239,7 @@
 /datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	REMOVE_TRAIT(owner, TRAIT_NOT_SLOWEDBYDRAG, "genetics")
+	owner.remove_movespeed_mod_immunities(type, list(/datum/movespeed_modifier/bulky_drag, /datum/movespeed_modifier/human_carry))
 
  ///Amount of units of toxin reagents to remove while having the stimmed mutation
  #define STIMMED_PURGE_AMOUNT 0.25
