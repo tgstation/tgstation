@@ -709,11 +709,20 @@
 /obj/item/nullrod/shotgun
 	name = "super shotgun replica"
 	desc = "Makes you want to shoot demons."
+	force = 12
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "dshotgun"
 	item_state = "shotgun_db"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
 	w_class = WEIGHT_CLASS_NORMAL
-	attack_verb = list("struck", "hit", "bashed")
+	attack_verb = list("shot")
 	hitsound = 'sound/weapons/gun/shotgun/shot.ogg'
+
+/obj/item/nullrod/shotgun/attack(mob/living/target, mob/living/user)
+	. = ..()
+	var/atom/throw_target = get_edge_target_turf(target, user.dir)
+	if(!target.anchored)
+		target.throw_at(throw_target, rand(1,2), 7, user)
