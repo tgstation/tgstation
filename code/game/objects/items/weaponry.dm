@@ -689,30 +689,51 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 	. = ..()
 
+/// Stage 1: The mistake is made
 /obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
-	if(!istype(sucker))
+	if(!istype(sucker) || !in_range(owner, sucker))
 		return
-	addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 2)
+	addtimer(CALLBACK(src, .proc/waitASecond, owner, sucker), 4)
 
+/// Stage 2: Fear sets in
+/obj/item/circlegame/proc/waitASecond(mob/living/owner, mob/living/sucker)
+	if(QDELETED(sucker) || QDELETED(src) || QDELETED(owner))
+		return
+
+	if(owner == sucker) // big mood
+		to_chat(owner, "<span class='danger'>Wait a second... you just looked at your own [src.name]!</span>")
+		addtimer(CALLBACK(src, .proc/selfGottem, owner), 10)
+	else
+		to_chat(sucker, "<span class='danger'>Wait a second... was that a-</span>")
+		addtimer(CALLBACK(src, .proc/GOTTEM, owner, sucker), 6)
+
+/// Stage 3A: We face our own failures
+/obj/item/circlegame/proc/selfGottem(mob/living/owner)
+	if(QDELETED(src) || QDELETED(owner))
+		return
+
+	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
+	owner.visible_message("<span class='danger'>[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name].</span>", "<span class='userdanger'>You shamefully bop yourself with your [src.name].</span>", \
+		"<span class='hear'>You hear a dull thud!</span>")
+	owner.apply_damage(100, STAMINA)
+	owner.Knockdown(10)
+	QDEL_NULL(src)
+
+/// Stage 3B: We face our reckoning (unless we moved away or they're incapacitated)
 /obj/item/circlegame/proc/GOTTEM(mob/living/owner, mob/living/sucker)
-	if(QDELETED(src) || !owner || !sucker || !(owner.mobility_flags & MOBILITY_USE))
-		return
-	to_chat(sucker, "<span class='danger'>Wait... was that a-</span>")
-
-	sleep(3)
-	if(QDELETED(src) || !owner || !sucker)
+	if(QDELETED(sucker))
 		return
 
-	var/distance = get_dist(owner.loc, sucker.loc)
-	if(prob(distance - 1) * 20) // if you're a few tiles away they might not notice...
-		to_chat(sucker, "<span class='notice'>Was that- Phew... [owner] didn't notice you see [owner.p_their()] [src.name]...</span>")
+	if(QDELETED(src) || QDELETED(owner))
+		to_chat(sucker, "<span class='warning'>Nevermind... must've been your imagination...</span>")
+		return
+
+	if(!in_range(owner, sucker) || !(owner.mobility_flags & MOBILITY_USE))
+		to_chat(sucker, "<span class='notice'>Phew... you moved away before [owner] noticed you see [owner.p_their()] [src.name]...</span>")
 		return
 
 	to_chat(owner, "<span class='warning'>[sucker] looks down briefly at your [src.name] then tries to avert [sucker.p_their()] eyes, but it's too late!</span>")
 	to_chat(sucker, "<span class='danger'><b>[owner] sees the fear in your eyes as you try to look away from [owner.p_their()] [src.name]!</b></span>")
-
-	if(!in_range(owner, sucker))
-		return
 
 	owner.face_atom(sucker)
 	if(owner.client)
