@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Added new type of spells - Pointed, which use direct cursor guidance to find its target!"
-  - rscadd: "Blind spell is now pointed spell. No more clumsy input menu."

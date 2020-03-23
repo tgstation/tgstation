@@ -50,6 +50,7 @@
 /datum/movespeed_modifier/config_walk_run
 	multiplicative_slowdown = 1
 	id = MOVESPEED_ID_MOB_WALK_RUN
+	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/config_walk_run/proc/sync()
 
@@ -82,9 +83,11 @@
 /datum/movespeed_modifier/limbless
 	variable = TRUE
 	movetypes = GROUND
+	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/simplemob_varspeed
 	variable = TRUE
+	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/tarantula_web
 	multiplicative_slowdown = 3
@@ -92,15 +95,19 @@
 /datum/movespeed_modifier/gravity
 	blacklisted_movetypes = FLOATING
 	variable = TRUE
+	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/carbon_softcrit
 	multiplicative_slowdown = SOFTCRIT_ADD_SLOWDOWN
+	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/slime_tempmod
 	variable = TRUE
 
 /datum/movespeed_modifier/carbon_crawling
 	multiplicative_slowdown = CRAWLING_ADD_SLOWDOWN
+	flags = IGNORE_NOSLOW
 
 /datum/movespeed_modifier/mob_config_speedmod
 	variable = TRUE
+	flags = IGNORE_NOSLOW

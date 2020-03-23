@@ -92,8 +92,12 @@
 	var/bayonet = FALSE	//Can this be attached to a gun?
 	custom_price = 250
 
-/obj/item/kitchen/knife/Initialize()
+/obj/item/kitchen/knife/ComponentInitialize()
 	. = ..()
+	set_butchering()
+
+///Adds the butchering component, used to override stats for special cases
+/obj/item/kitchen/knife/proc/set_butchering()
 	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
 
 /obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -152,6 +156,15 @@
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = 600
+
+/obj/item/kitchen/knife/hunting
+	name = "hunting knife"
+	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
+	item_state = "huntingknife"
+	icon_state = "huntingknife"
+
+/obj/item/kitchen/knife/hunting/set_butchering()
+	AddComponent(/datum/component/butchering, 80 - force, 100, force + 10)
 
 /obj/item/kitchen/knife/combat
 	name = "combat knife"

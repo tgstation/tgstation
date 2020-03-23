@@ -72,7 +72,7 @@ const styleMapperByPropName = {
   maxHeight: mapUnitPropTo('max-height'),
   fontSize: mapUnitPropTo('font-size'),
   fontFamily: mapRawPropTo('font-family'),
-  lineHeight: mapUnitPropTo('line-height'),
+  lineHeight: mapRawPropTo('line-height'),
   opacity: mapRawPropTo('opacity'),
   textAlign: mapRawPropTo('text-align'),
   verticalAlign: mapRawPropTo('vertical-align'),

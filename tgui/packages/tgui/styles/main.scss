@@ -15,6 +15,7 @@
 // Components
 @include meta.load-css('./components/BlockQuote.scss');
 @include meta.load-css('./components/Button.scss');
+@include meta.load-css('./components/CameraConsole.scss');
 @include meta.load-css('./components/ColorBox.scss');
 @include meta.load-css('./components/Dropdown.scss');
 @include meta.load-css('./components/FatalError.scss');
@@ -41,8 +42,4 @@
   background-size: 70%;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-.action_test {
-  display: inherit;
 }

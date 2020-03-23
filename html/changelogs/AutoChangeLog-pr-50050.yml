@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "The abductor ship telepad requires a moment to cool down between uses, and can no longer teleport the console user to multiple locations."
