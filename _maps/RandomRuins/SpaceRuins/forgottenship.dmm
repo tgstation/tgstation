@@ -13,7 +13,7 @@
 	dir = 4;
 	name = "Syndicate Ship Turret";
 	on = 0;
-	shot_delay = 8
+	shot_delay = 10
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -767,7 +767,7 @@
 	dir = 4;
 	name = "Syndicate Ship Turret";
 	on = 0;
-	shot_delay = 8
+	shot_delay = 10
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
