@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - tweak: "Airlocks now try close self on power up."
