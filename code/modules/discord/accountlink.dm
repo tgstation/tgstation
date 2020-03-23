@@ -86,4 +86,5 @@
 		return
 
 	// honey its time for your role flattening
+	to_chat(usr, "<span class='notice'>Discord verified</span>")
 	SSdiscord.grant_role(stored_id)
