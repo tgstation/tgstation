@@ -271,4 +271,4 @@ effective or pretty fucking useless.
 /obj/item/jammer/cyborg_unequip(mob/user)
 	active = FALSE
 	STOP_PROCESSING(SSobj,src)
-	. = ..()
+	return ..()
