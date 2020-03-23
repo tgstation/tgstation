@@ -18,7 +18,6 @@
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = ELECTROLYZER_MODE_STANDBY
-	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
 	var/workingPower = 1
 	var/efficiency = 0.5
 
@@ -77,7 +76,7 @@
 				update_icon()
 			return
 
-		var/datum/gas_mixture/env = L.return_air()
+		var/datum/gas_mixture/env = L.return_air() //get air from the turf
 		var/datum/gas_mixture/removed
 		removed = env.remove(0.1 * env.total_moles())
 		removed.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
@@ -85,14 +84,14 @@
 		removed.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * workingPower
 		removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower
 		removed.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * workingPower
-		env.merge(removed)
+		env.merge(removed) //put back the new gases in the turf
 		air_update_turf()
 
 		var/newMode = ELECTROLYZER_MODE_STANDBY
 		if(on)
-			newMode = ELECTROLYZER_MODE_WORKING
+			newMode = ELECTROLYZER_MODE_WORKING //change the mode to working if the machine is on
 
-		if(mode != newMode)
+		if(mode != newMode) //check if the mode is set correctly
 			mode = newMode
 			update_icon()
 
@@ -113,9 +112,9 @@
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
 		cap += M.rating
 
-	workingPower = laser
+	workingPower = laser //used in the amount of moles processed
 
-	efficiency = (cap + 1) * 0.5
+	efficiency = (cap + 1) * 0.5 //used in the amount of charge in power cell uses
 
 /obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
