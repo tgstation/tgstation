@@ -717,7 +717,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("shot")
 	hitsound = 'sound/weapons/gun/shotgun/shot.ogg'
