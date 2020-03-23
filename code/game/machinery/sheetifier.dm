@@ -51,5 +51,4 @@
 		return
 	if(default_deconstruction_crowbar(I))
 		return
-	else
-		return ..()
+	return ..()
