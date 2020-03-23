@@ -179,8 +179,7 @@
 		visible_message("<span class='notice'>[src] fails to expand!</span>")
 	qdel(src)
 
-/obj/item/reagent_containers/food/snacks/monkeycube/suicide_act(mob/user)
-	var/mob/living/M = user
+/obj/item/reagent_containers/food/snacks/monkeycube/suicide_act(mob/living/M)
 	M.visible_message("<span class='suicide'>[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!</span>")
 	var/eating_success = do_after(M, 10, TRUE, src, TRUE)
 	if(QDELETED(M)) //qdeletion: the nuclear option of self-harm
