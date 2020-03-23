@@ -1,9 +1,0 @@
-author: "EgorDinamit"
-delete-after: True
-changes: 
-  - rscadd: "Long-range scanners found unknown armed ship near the station. Caution should be taken while investigating the object."
-  - rscadd: "Recent operations discovered syndicate storage pods all around the universe. It seems that in your location might be one, containing experimental hardsuit made by Cyber Sun industries long ago."
-  - rscadd: "Discovering that there is no need to use soldiers as security officers, Nanotrasen hired most professional units into the new formed assault force."
-  - imageadd: "Added icons for Cybersun hardsuit."
-  - imageadd: "Added icons for new NT NPCs subtypes: Assault and Elite(ERT suit) officers."
-  - config: "Added forgottenship ruin to spaceruinblacklist config."

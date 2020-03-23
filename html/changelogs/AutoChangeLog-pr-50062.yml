@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Burning clothes no longer burn forever if you're set on fire for too long."
