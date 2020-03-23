@@ -674,7 +674,7 @@
 	H.remove_hud_from(user)
 
 /obj/item/clothing/head/hooded/ablative/IsReflect(def_zone)
-	if(!(def_zone in BODY_ZONE_HEAD)) //If not shot where ablative is covering you, you don't get the reflection bonus!
+	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
 	if (prob(hit_reflect_chance))
 		return TRUE
@@ -772,3 +772,18 @@
 	desc = "A cool shirt for chilling on the beach."
 	icon_state = "hawaiian_blue"
 	item_state = "hawaiian_blue"
+
+/obj/item/clothing/suit/yakuza
+	name = "tojo clan jacket"
+	desc = "The jacket of a mad dog."
+	icon_state = "MajimaJacket"
+	item_state = "MajimaJacket"
+	body_parts_covered = ARMS
+
+/obj/item/clothing/suit/dutch
+	name = "dutch's jacket"
+	desc = "For those long nights on the beach in Tahiti."
+	icon_state = "DutchJacket"
+	item_state = "DutchJacket"
+	body_parts_covered = ARMS
+

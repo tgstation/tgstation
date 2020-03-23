@@ -114,6 +114,16 @@
 	icon_state = "[initial(icon_state)]"
 	update_icon()
 
+/obj/item/instrument/piano_synth/headphones/spacepods
+	name = "\improper Nanotrasen space pods"
+	desc = "Flex your money, AND ignore what everyone else says, all at once!"
+	icon_state = "spacepods"
+	item_state = "spacepods"
+	slot_flags = ITEM_SLOT_EARS
+	strip_delay = 100 //air pods don't fall out
+	instrumentRange = 0 //you're paying for quality here
+	custom_premium_price = 1800
+
 /obj/item/instrument/banjo
 	name = "banjo"
 	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
@@ -163,14 +173,14 @@
 	name = "trumpet"
 	desc = "To announce the arrival of the king!"
 	icon_state = "trumpet"
-	item_state = "trombone"
+	item_state = "trumpet"
 	instrumentId = "trombone"
 
 /obj/item/instrument/trumpet/spectral
 	name = "spectral trumpet"
 	desc = "Things are about to get spooky!"
-	icon_state = "trumpet"
-	item_state = "trombone"
+	icon_state = "spectral_trumpet"
+	item_state = "spectral_trumpet"
 	force = 0
 	instrumentId = "trombone"
 	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")

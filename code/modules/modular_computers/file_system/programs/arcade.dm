@@ -10,19 +10,24 @@
 	ui_x = 450
 	ui_y = 350
 
-	var/game_active = TRUE //Checks to see if a game is in progress.
-	var/pause_state = FALSE //This disables buttons in order to prevent multiple actions before the opponent's actions.
+	///Returns TRUE if the game is being played.
+	var/game_active = TRUE
+	///This disables buttom actions from having any impact if TRUE. Resets to FALSE when the player is allowed to make an action again.
+	var/pause_state = FALSE
 	var/boss_hp = 45
 	var/boss_mp = 15
 	var/player_hp = 30
 	var/player_mp = 10
 	var/ticket_count = 0
-	var/heads_up = "Nanotrasen says, winners make us money."//Shows the active display text for the app
+	///Shows what text is shown on the app, usually showing the log of combat actions taken by the player.
+	var/heads_up = "Nanotrasen says, winners make us money."
 	var/boss_name = "Cuban Pete's Minion"
+	///Determines which boss image to use on the UI.
 	var/boss_id = 1
 
 /datum/computer_file/program/arcade/proc/game_check(mob/user)
 	sleep(5)
+	user?.mind?.adjust_experience(/datum/skill/gaming, 1)
 	if(boss_hp <= 0)
 		heads_up = "You have crushed [boss_name]! Rejoice!"
 		playsound(computer.loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -31,8 +36,8 @@
 		if(istype(computer))
 			computer.update_icon()
 		ticket_count += 1
+		user?.mind?.adjust_experience(/datum/skill/gaming, 50)
 		sleep(10)
-		return
 	else if(player_hp <= 0 || player_mp <= 0)
 		heads_up = "You have been defeated... how will the station survive?"
 		playsound(computer.loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -40,9 +45,8 @@
 		program_icon_state = "arcade_off"
 		if(istype(computer))
 			computer.update_icon()
+		user?.mind?.adjust_experience(/datum/skill/gaming, 10)
 		sleep(10)
-		return
-	return
 
 /datum/computer_file/program/arcade/proc/enemy_check(mob/user)
 	var/boss_attackamt = 0 //Spam protection from boss attacks as well.
@@ -90,18 +94,20 @@
 	data["BossID"] = "boss[boss_id].gif"
 	return data
 
-/datum/computer_file/program/arcade/ui_act(action, list/params, mob/user)
+/datum/computer_file/program/arcade/ui_act(action, list/params)
 	if(..())
 		return TRUE
 	var/obj/item/computer_hardware/printer/printer
 	if(computer)
 		printer = computer.all_components[MC_PRINT]
 
+	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 	switch(action)
 		if("Attack")
 			var/attackamt = 0 //Spam prevention.
 			if(pause_state == FALSE)
-				attackamt = rand(2,6)
+				attackamt = rand(2,6) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You attack for [attackamt] damage."
 			playsound(computer.loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -114,8 +120,11 @@
 			var/healamt = 0 //More Spam Prevention.
 			var/healcost = 0
 			if(pause_state == FALSE)
-				healamt = rand(6,8)
-				healcost = rand(1,3)
+				healamt = rand(6,8) + rand(0, gamerSkill)
+				var/maxPointCost = 3
+				if(gamerSkillLevel >= SKILL_LEVEL_JOURNEYMAN)
+					maxPointCost = 2
+				healcost = rand(1, maxPointCost)
 			pause_state = TRUE
 			heads_up = "You heal for [healamt] damage."
 			playsound(computer.loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -128,7 +137,7 @@
 		if("Recharge_Power")
 			var/rechargeamt = 0 //As above.
 			if(pause_state == FALSE)
-				rechargeamt = rand(4,7)
+				rechargeamt = rand(4,7) + rand(0, gamerSkill)
 			pause_state = TRUE
 			heads_up = "You regain [rechargeamt] magic power."
 			playsound(computer.loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -148,11 +157,11 @@
 				computer.visible_message("<span class='notice'>\The [computer] prints out paper.</span>")
 				if(ticket_count >= 1)
 					new /obj/item/stack/arcadeticket((get_turf(computer)), 1)
-					to_chat(user, "<span class='notice'>[src] dispenses a ticket!</span>")
+					to_chat(usr, "<span class='notice'>[src] dispenses a ticket!</span>")
 					ticket_count -= 1
 					printer.stored_paper -= 1
 				else
-					to_chat(user, "<span class='notice'>You don't have any stored tickets!</span>")
+					to_chat(usr, "<span class='notice'>You don't have any stored tickets!</span>")
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE

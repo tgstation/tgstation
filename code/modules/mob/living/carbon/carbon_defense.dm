@@ -164,8 +164,8 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-				"<span class='userdanger'>The [M.name] has shocked you!</span>")
+				visible_message("<span class='danger'>The [M.name] shocks [src]!</span>", \
+				"<span class='userdanger'>The [M.name] shocks you!</span>")
 
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
@@ -342,7 +342,7 @@
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.damage - 25))
-					if(!HAS_TRAIT(src, TRAIT_BLIND))
+					if(!is_blind())
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					eyes.applyOrganDamage(eyes.maxHealth)
 

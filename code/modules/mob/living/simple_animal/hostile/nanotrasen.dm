@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/nanotrasen
-	name = "Nanotrasen Private Security Officer"
+	name = "\improper Nanotrasen Private Security Officer"
 	desc = "An officer part of Nanotrasen's private security force, he seems rather unpleased to meet you."
 	icon = 'icons/mob/simple_human.dmi'
 	icon_state = "nanotrasen"
@@ -25,9 +25,9 @@
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 15
 	faction = list(ROLE_DEATHSQUAD)
-	check_friendly_fire = 1
+	check_friendly_fire = TRUE
 	status_flags = CANPUSH
-	del_on_death = 1
+	del_on_death = TRUE
 	dodging = TRUE
 	footstep_type = FOOTSTEP_MOB_SHOE
 

@@ -4,58 +4,48 @@
 	program_icon_state = "comm_monitor"
 	extended_desc = "This program monitors stationwide NTNet network, provides access to logging systems, and allows for configuration changes"
 	size = 12
-	requires_ntnet = 1
+	requires_ntnet = TRUE
 	required_access = ACCESS_NETWORK	//NETWORK CONTROL IS A MORE SECURE PROGRAM.
-	available_on_ntnet = 1
+	available_on_ntnet = TRUE
 	tgui_id = "ntos_net_monitor"
 
 /datum/computer_file/program/ntnetmonitor/ui_act(action, params)
 	if(..())
-		return 1
+		return
 	switch(action)
 		if("resetIDS")
-			. = 1
 			if(SSnetworks.station_network)
 				SSnetworks.station_network.resetIDS()
-			return 1
+			return TRUE
 		if("toggleIDS")
-			. = 1
 			if(SSnetworks.station_network)
 				SSnetworks.station_network.toggleIDS()
-			return 1
+			return TRUE
 		if("toggleWireless")
-			. = 1
 			if(!SSnetworks.station_network)
-				return 1
+				return
 
 			// NTNet is disabled. Enabling can be done without user prompt
 			if(SSnetworks.station_network.setting_disabled)
-				SSnetworks.station_network.setting_disabled = 0
-				return 1
+				SSnetworks.station_network.setting_disabled = FALSE
+				return TRUE
 
-			// NTNet is enabled and user is about to shut it down. Let's ask them if they really want to do it, as wirelessly connected computers won't connect without NTNet being enabled (which may prevent people from turning it back on)
-			var/mob/user = usr
-			if(!user)
-				return 1
-			var/response = alert(user, "Really disable NTNet wireless? If your computer is connected wirelessly you won't be able to turn it back on! This will affect all connected wireless devices.", "NTNet shutdown", "Yes", "No")
-			if(response == "Yes")
-				SSnetworks.station_network.setting_disabled = 1
-			return 1
+			SSnetworks.station_network.setting_disabled = TRUE
+			return TRUE
 		if("purgelogs")
-			. = 1
 			if(SSnetworks.station_network)
 				SSnetworks.station_network.purge_logs()
+			return TRUE
 		if("updatemaxlogs")
-			. = 1
-			var/mob/user = usr
-			var/logcount = text2num(input(user,"Enter amount of logs to keep in memory ([MIN_NTNET_LOGS]-[MAX_NTNET_LOGS]):"))
+			var/logcount = params["new_number"]
 			if(SSnetworks.station_network)
 				SSnetworks.station_network.update_max_log_count(logcount)
+			return TRUE
 		if("toggle_function")
-			. = 1
 			if(!SSnetworks.station_network)
-				return 1
+				return
 			SSnetworks.station_network.toggle_function(text2num(params["id"]))
+			return TRUE
 
 /datum/computer_file/program/ntnetmonitor/ui_data(mob/user)
 	if(!SSnetworks.station_network)
@@ -73,6 +63,8 @@
 	data["config_systemcontrol"] = SSnetworks.station_network.setting_systemcontrol
 
 	data["ntnetlogs"] = list()
+	data["minlogs"] = MIN_NTNET_LOGS
+	data["maxlogs"] = MAX_NTNET_LOGS
 
 	for(var/i in SSnetworks.station_network.logs)
 		data["ntnetlogs"] += list(list("entry" = i))

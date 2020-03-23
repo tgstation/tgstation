@@ -8,6 +8,12 @@
 	armor = list("melee" = 30, "bullet" = 15, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	strip_delay = 80
 
+/obj/item/clothing/head/spacepolice
+	name = "space police cap"
+	desc = "A blue cap for patrolling the daily beat."
+	icon_state = "policecap_families"
+	item_state = "policecap_families"
+
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
 	desc = "A powdered wig."
@@ -146,6 +152,7 @@
 		to_chat(user, "<span class='boldnotice'>You can no longer speak like a pirate.</span>")
 
 /obj/item/clothing/head/pirate/captain
+	name = "pirate captain hat"
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 
@@ -207,6 +214,16 @@
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/small/fedora
+
+/obj/item/clothing/head/fedora/white
+	name = "white fedora"
+	icon_state = "fedora_white"
+	item_state = "fedora_white"
+
+/obj/item/clothing/head/fedora/beige
+	name = "beige fedora"
+	icon_state = "fedora_beige"
+	item_state = "fedora_beige"
 
 /obj/item/clothing/head/fedora/suicide_act(mob/user)
 	if(user.gender == FEMALE)
@@ -490,3 +507,10 @@
 	..()
 	if (slot == ITEM_SLOT_HEAD)
 		user.faction |= "goat"
+
+/obj/item/clothing/head/jackbros
+	name = "frosty hat"
+	desc = "Hee-ho!"
+	icon_state = "JackFrostHat"
+	item_state = "JackFrostHat"
+

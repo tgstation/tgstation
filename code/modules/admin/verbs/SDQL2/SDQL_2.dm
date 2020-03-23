@@ -1176,7 +1176,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 				char = query_text[i]
 
 				if(char == "\"")
-					if(query_text[i + length(char)] == "'")
+					if((i + length(char) <= len) && query_text[i + length(char)] == "'")
 						word += "\""
 						i += length(query_text[i + length(char)])
 

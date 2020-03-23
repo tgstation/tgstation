@@ -1,6 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Soil no longer renames itself hydroponics tray while something is planted in it"
-  - bugfix: "Hydroponics planter names will update when weeds are mutated"
-  - rscdel: "Planters no longer change description to match that of what's planted in them"

@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "Replaced the effect of the \"two left feet\" mutation with random knockdowns while moving."

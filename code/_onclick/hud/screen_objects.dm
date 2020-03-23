@@ -342,6 +342,11 @@
 			return
 	C.update_action_buttons_icon()
 
+/obj/screen/spacesuit
+	name = "Space suit cell status"
+	icon_state = "spacesuit_0"
+	screen_loc = ui_spacesuit
+
 /obj/screen/mov_intent
 	name = "run/walk toggle"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -406,7 +411,6 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-
 	if(!user.resting)
 		icon_state = "act_rest"
 	else
@@ -643,16 +647,6 @@
 	icon_state = "fullhealth0"
 	screen_loc = ui_living_healthdoll
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
-
-/obj/screen/healthdoll/slime
-	icon = 'icons/mob/screen_slime.dmi'
-	icon_state = "slime_health0"
-	screen_loc = ui_living_healthdoll
-
-/obj/screen/healthdoll/lavaland_elite
-	icon = 'icons/mob/screen_elite.dmi'
-	icon_state = "elite_health0"
-	screen_loc = ui_living_healthdoll
 
 /obj/screen/mood
 	name = "mood"
