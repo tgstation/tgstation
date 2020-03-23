@@ -4,11 +4,11 @@
 /obj/machinery/electrolyzer
 	anchored = FALSE
 	density = TRUE
-	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_WIRES_IF_OPEN
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "electrolyzer-off"
-	name = "electrolyzer"
-	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire. Warranty void if used in engines."
+	name = "space electrolyzer"
+	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
 	max_integrity = 250
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 10)
 	circuit = /obj/item/circuitboard/machine/electrolyzer
@@ -19,17 +19,8 @@
 	var/on = FALSE
 	var/mode = ELECTROLYZER_MODE_STANDBY
 	var/setMode = "auto" // Anything other than "heat" or "cool" is considered auto.
-	var/heatingPower = 40000
-	var/workloadPower = 40000
-	var/efficiency = 20000
-	var/produces_gas = TRUE
-	var/gasefficency = 1
-
-	var/o2comp = 0
-	var/h2comp = 0
-	var/h2ocomp = 0
-	var/gas_change_rate = 0.05
-	var/combined_gas = 0
+	var/workingPower = 1
+	var/efficiency = 0.5
 
 /obj/machinery/electrolyzer/get_cell()
 	return cell
@@ -59,8 +50,6 @@
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
-	if(in_range(user, src) || isobserver(user))
-		. += "<span class='notice'>The status display reads:Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.</span>" //100%, 75%, 50%, 25%
 
 /obj/machinery/electrolyzer/update_icon_state()
 	if(on)
@@ -90,44 +79,27 @@
 
 		var/datum/gas_mixture/env = L.return_air()
 		var/datum/gas_mixture/removed
-		if(produces_gas)
-		//Remove gas from surrounding area
-			removed = env.remove(gasefficency * env.total_moles())
-		else
-		// Pass all the gas related code an empty gas container
-			removed = new()
+		removed = env.remove(0.1 * env.total_moles())
+		removed.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
+		var/proportion = min(removed.gases[/datum/gas/water_vapor][MOLES], 5)//Works on 5 mols at a time.
+		removed.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * workingPower
+		removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower
+		removed.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * workingPower
+		env.merge(removed)
+		air_update_turf()
 
-		if(h2ocomp > 0)
-			produces_gas = TRUE
-		else
-			produces_gas = FALSE
+		var/newMode = ELECTROLYZER_MODE_STANDBY
+		if(on)
+			newMode = ELECTROLYZER_MODE_WORKING
 
-		if(produces_gas)
-			removed.assert_gases(/datum/gas/oxygen, /datum/gas/water_vapor, /datum/gas/hydrogen)
-			combined_gas = max(removed.total_moles(), 0)
-			o2comp += clamp(max(removed.gases[/datum/gas/oxygen][MOLES]/combined_gas, 0) - o2comp, -1, gas_change_rate)
-			h2comp += clamp(max(removed.gases[/datum/gas/hydrogen][MOLES]/combined_gas, 0) - h2comp, -1, gas_change_rate)
-			h2ocomp += clamp(max(removed.gases[/datum/gas/water_vapor][MOLES]/combined_gas, 0) - h2ocomp, -1, gas_change_rate)
-			removed.gases[/datum/gas/oxygen][MOLES] += max(1, 0)
-			removed.gases[/datum/gas/hydrogen][MOLES] += max(1, 0)
-			removed.gases[/datum/gas/water_vapor][MOLES] -= max(1, 0)
-			if(h2ocomp > 0)
-				produces_gas = TRUE
-			else
-				produces_gas = FALSE
-			if(produces_gas)
-				env.merge(removed)
-				air_update_turf()
-				if(mode != ELECTROLYZER_MODE_WORKING)
-					mode = ELECTROLYZER_MODE_WORKING
-					update_icon()
-		else
-			mode = ELECTROLYZER_MODE_STANDBY
+		if(mode != newMode)
+			mode = newMode
 			update_icon()
-		return
-		var/heat_efficency = 1 / h2ocomp
-		var/requiredPower = abs(env.temperature - h2ocomp) * heat_efficency
-		cell.use(requiredPower / efficiency)
+
+		if(mode == ELECTROLYZER_MODE_STANDBY)
+			return
+
+		cell.use(workingPower / (efficiency + workingPower))
 	else
 		on = FALSE
 		update_icon()
@@ -141,15 +113,9 @@
 	for(var/obj/item/stock_parts/capacitor/M in component_parts)
 		cap += M.rating
 
-	heatingPower = laser * 40000
-	efficiency = (cap + 1) * 10000
+	workingPower = laser
 
-/obj/machinery/electrolyzer/emp_act(severity)
-	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
-		return
-	if(cell)
-		cell.emp_act(severity)
+	efficiency = (cap + 1) * 0.5
 
 /obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
@@ -183,29 +149,16 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "space_heater", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "electrolyzer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/electrolyzer/ui_data()
 	var/list/data = list()
 	data["open"] = panel_open
 	data["on"] = on
-	data["mode"] = setMode
 	data["hasPowercell"] = !!cell
 	if(cell)
 		data["powerLevel"] = round(cell.percent(), 1)
-
-	var/turf/L = get_turf(loc)
-	var/curTemp
-	if(istype(L))
-		var/datum/gas_mixture/env = L.return_air()
-		curTemp = env.temperature
-	else if(isturf(L))
-		curTemp = L.temperature
-	if(isnull(curTemp))
-		data["currentTemp"] = "N/A"
-	else
-		data["currentTemp"] = round(curTemp - T0C, 1)
 	return data
 
 /obj/machinery/electrolyzer/ui_act(action, params)
@@ -219,9 +172,6 @@
 			update_icon()
 			if (on)
 				START_PROCESSING(SSmachines, src)
-			. = TRUE
-		if("mode")
-			setMode = params["mode"]
 			. = TRUE
 		if("eject")
 			if(panel_open && cell)
