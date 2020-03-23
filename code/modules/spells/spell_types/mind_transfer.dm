@@ -119,7 +119,8 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/pointed/mind_transfer/intercept_check(mob/user, atom/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	if(!swap_check(user, target))
 		return FALSE
