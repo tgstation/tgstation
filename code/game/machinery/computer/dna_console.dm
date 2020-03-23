@@ -10,7 +10,6 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
 
-
 #define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject receives
 
 #define SCANNER_ACTION_SE 1
@@ -37,8 +36,8 @@
 	var/radduration = 2
 	var/radstrength = 1
 	var/max_chromosomes = 6
-	///Amount of mutations we can store
-	var/list/buffer[NUMBER_OF_BUFFERS]
+	///Amount of UI/UEs we can store
+	var/list/genetic_makeup_buffer[NUMBER_OF_BUFFERS]
 	///mutations we have stored
 	var/list/stored_mutations = list()
 	///chromosomes we have stored
@@ -72,10 +71,11 @@
 	var/time_to_injector = 0
 	var/obj/machinery/dna_scannernew/connected_scanner = null
 	var/mob/living/carbon/scanner_occupant = null
-	var/list/occupant_mutations = list()
-	var/list/scanner_mutations = list()
-	var/list/diskette_mutations = list()
-	var/list/scanner_chromosomes = list()
+	var/list/tgui_occupant_mutations = list()
+	var/list/tgui_scanner_mutations = list()
+	var/list/tgui_diskette_mutations = list()
+	var/list/tgui_scanner_chromosomes = list()
+	var/list/tgui_genetic_makeup = list()
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/chromosome))
@@ -96,6 +96,25 @@
 		to_chat(user, "<span class='notice'>You insert [I].</span>")
 		updateUsrDialog()
 		return
+	if(istype(I, /obj/item/dnainjector/activator))
+		var/obj/item/dnainjector/activator/A = I
+		if(A.used)
+			to_chat(user,"<span class='notice'>Recycled [I].</span>")
+			if(A.research)
+				if(prob(60))
+					var/c_typepath = generate_chromosome()
+					var/obj/item/chromosome/CM = new c_typepath (drop_location())
+					if(LAZYLEN(stored_chromosomes) < max_chromosomes)
+						CM.forceMove(src)
+						stored_chromosomes += CM
+						to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
+					else
+						to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
+						to_chat(user, "<span class='notice'>[capitalize(CM.name)] added on top of the console.</span>")
+				else
+					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
+			qdel(I)
+			return
 	else
 		return ..()
 
@@ -138,6 +157,8 @@
 		is_viable_occupant = FALSE
 		scanner_occupant = null
 
+	build_genetic_makeup_list()
+
 	is_scramble_ready = (scrambleready < world.time)
 	time_to_scramble = round((scrambleready - world.time)/10)
 
@@ -159,6 +180,18 @@
 	if(can_use_scanner)
 		data["ScannerOpen"] = connected_scanner.state_open
 		data["ScannerLocked"] = connected_scanner.locked
+		data["RadStrength"] = radstrength
+		data["RadDuration"] = radduration
+		data["StdDevStr"] = radstrength*RADIATION_STRENGTH_MULTIPLIER
+		switch(RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected_scanner.precision_coeff ** 2)))	//hardcoded values from a z-table for a normal distribution
+			if(0 to 0.25)
+				data["StdDevAcc"] = ">95 %"
+			if(0.25 to 0.5)
+				data["StdDevAcc"] = "68-95 %"
+			if(0.5 to 0.75)
+				data["StdDevAcc"] = "55-68 %"
+			else
+				data["StdDevAcc"] = "<38 %"
 
 	data["IsViableSubject"] = is_viable_occupant
 	if(is_viable_occupant)
@@ -167,7 +200,7 @@
 		data["SubjectHealth"] = scanner_occupant.health
 		data["SubjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["SubjectEnzymes"] = scanner_occupant.dna.unique_enzymes
-		data["SubjectMutations"] = occupant_mutations
+		data["SubjectMutations"] = tgui_occupant_mutations
 	else
 		data["SubjectName"] = null
 		data["SubjectStatus"] = null
@@ -187,17 +220,23 @@
 		data["HasDisk"] = TRUE
 		data["DiskCapacity"] = diskette.max_mutations - LAZYLEN(diskette.mutations)
 		data["DiskReadOnly"] = diskette.read_only
-		data["DiskMutations"] = diskette_mutations
+		data["DiskMutations"] = tgui_diskette_mutations
+		data["DiskHasMakeup"] = (LAZYLEN(diskette.genetic_makeup_buffer) > 0)
+		data["DiskMakeupBuffer"] = diskette.genetic_makeup_buffer.Copy()
 	else
 		data["HasDisk"] = FALSE
 		data["DiskCapacity"] = 0
 		data["DiskReadOnly"] = TRUE
 		data["DiskMutations"] = null
+		data["DiskHasMakeup"] = FALSE
+		data["DiskMakeupBuffer"] = null
 
 	data["MutationCapacity"] = max_storage - LAZYLEN(stored_mutations)
-	data["MutationStorage"] = scanner_mutations
+	data["MutationStorage"] = tgui_scanner_mutations
 	data["ChromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
-	data["ChromoStorage"] = scanner_chromosomes
+	data["ChromoStorage"] = tgui_scanner_chromosomes
+	data["MakeupCapcity"] = NUMBER_OF_BUFFERS
+	data["MakeupStorage"] = tgui_genetic_makeup
 
 	data["CONSCIOUS"] = CONSCIOUS
 	data["UNCONSCIOUS"] = UNCONSCIOUS
@@ -209,6 +248,8 @@
 	data["MUT_NORMAL"] = MUT_NORMAL
 	data["MUT_EXTRA"] = MUT_EXTRA
 	data["MUT_OTHER"] = MUT_OTHER
+	data["RADIATION_DURATION_MAX"] = RADIATION_DURATION_MAX
+	data["RADIATION_STRENGTH_MAX"] = RADIATION_STRENGTH_MAX
 
 	return data
 
@@ -239,11 +280,11 @@
 				scrambleready = world.time + SCRAMBLE_TIMEOUT
 				to_chat(usr,"<span class'notice'>DNA scrambled.</span>")
 				scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2)
-		if("checkdisc")
+		if("check_discovery")
 			if(!(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
 				return
 			check_discovery(params["alias"])
-		if("pulsegene") // params.pos and params.gene and params.alias
+		if("pulse_gene") // params.pos and params.gene and params.alias
 			// Check for cheese
 			// can_modify_occupant() also checks that there is an operational and
 			// connected DNA Scanner, which is important for later code.
@@ -276,13 +317,12 @@
 
 			// Check if we cracked this new mutation
 			check_discovery(alias)
-		if("applychromo")
+		if("apply_chromo")
 			// Check for cheese
 			if(!(scanner_occupant == connected_scanner.occupant) || !can_modify_occupant())
 				return
 
 			var/bref = params["mutref"]
-
 
 			// Make sure they have the mutation
 			var/datum/mutation/human/HM = get_mut_by_ref(bref)
@@ -466,12 +506,152 @@
 				return
 
 			diskette.mutations += new result_path()
-			to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to storage</span>")
+			to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to the disk.</span>")
 
 			if(result_path in stored_research.discovered_mutations)
 				return
 
 			stored_research.discovered_mutations += result_path
+		if("set_pulse_strength")
+			var/value = round(text2num(params["val"]))
+			radstrength = WRAP(value, 1, RADIATION_STRENGTH_MAX+1)
+			return
+		if("set_pulse_duration")
+			var/value = round(text2num(params["val"]))
+			radduration = WRAP(value, 1, RADIATION_DURATION_MAX+1)
+			return
+		if("save_makeup_disk")
+			if(!diskette)
+				return
+
+			if(diskette.read_only)
+				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				return
+
+			var/buffer_index = text2num(params["index"])
+			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
+
+			var/list/buffer_slot = genetic_makeup_buffer[buffer_index]
+
+			if(istype(buffer_slot))
+				diskette.genetic_makeup_buffer = buffer_slot.Copy()
+		if("load_makeup_disk")
+			if(!diskette)
+				return
+
+			if(istype(diskette.genetic_makeup_buffer))
+				var/buffer_index = text2num(params["index"])
+				buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
+				genetic_makeup_buffer[buffer_index] = diskette.genetic_makeup_buffer.Copy()
+				return
+		if("del_makeup_disk")
+			if(!diskette)
+				return
+
+			if(diskette.read_only)
+				to_chat(usr,"<span class='warning'>Disk is set to read only mode.</span>")
+				return
+
+			diskette.genetic_makeup_buffer = null
+		if("set_makeup_label")
+			var/buffer_index = text2num(params["index"])
+			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
+
+			var/list/buffer_slot = genetic_makeup_buffer[buffer_index]
+
+			if(istype(buffer_slot))
+				buffer_slot[buffer_index]["label"] = params["label"]
+		if("save_makeup_console")
+			if(!can_modify_occupant())
+				return
+
+			var/buffer_index = text2num(params["index"])
+			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
+			genetic_makeup_buffer[buffer_index] = list(
+				"label"="Slot [buffer_index]:[scanner_occupant.real_name]",
+				"UI"=scanner_occupant.dna.uni_identity,
+				"UE"=scanner_occupant.dna.unique_enzymes,
+				"name"=scanner_occupant.real_name,
+				"blood_type"=scanner_occupant.dna.blood_type)
+		if("del_makeup_console")
+			var/buffer_index = text2num(params["index"])
+			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
+			var/list/buffer_slot = genetic_makeup_buffer[buffer_index]
+			if(istype(buffer_slot))
+				genetic_makeup_buffer[buffer_index] = null
+		if("eject_disk")
+			if(diskette)
+				diskette.forceMove(drop_location())
+				diskette = null
+		if("makeup_injector")
+			var/buffer_index = text2num(params["index"])
+			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
+			var/buffer_slot = genetic_makeup_buffer[buffer_index]
+
+			if(!istype(buffer_slot))
+				return
+
+			var/type = params["type"]
+			var/obj/item/dnainjector/timed/I
+
+			switch(type)
+				if("ui")
+					if(buffer_slot["UI"])
+						I = new /obj/item/dnainjector/timed(loc)
+						I.fields = list("UI"=buffer_slot["UI"])
+						if(scanner_operational())
+							I.damage_coeff = connected.damage_coeff
+						return
+				if("ue")
+					if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
+						I = new /obj/item/dnainjector/timed(loc)
+						I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
+						if(scanner_operational())
+							I.damage_coeff  = connected.damage_coeff
+						return
+				if("mixed")
+					if(buffer_slot["UI"] && buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
+						I = new /obj/item/dnainjector/timed(loc)
+						I.fields = list("UI"=buffer_slot["UI"],"name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
+						if(scanner_operational())
+							I.damage_coeff = connected.damage_coeff
+						return
+			if(I)
+				injectorready = world.time + INJECTOR_TIMEOUT
+		if("makeup_apply")
+			var/buffer_index = text2num(params["index"])
+			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
+			var/buffer_slot = genetic_makeup_buffer[buffer_index]
+
+			if(!istype(buffer_slot))
+				return
+
+			var/type = params["type"]
+
+			switch(type)
+				if("ui")
+					if(buffer_slot["UI"])
+						viable_occupant.dna.uni_identity = buffer_slot["UI"]
+						viable_occupant.updateappearance(mutations_overlay_update=1)
+					return
+				if("ue")
+					if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
+						viable_occupant.real_name = buffer_slot["name"]
+						viable_occupant.name = buffer_slot["name"]
+						viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
+						viable_occupant.dna.blood_type = buffer_slot["blood_type"]
+					return
+				if("mixed")
+					if(buffer_slot["UI"])
+						viable_occupant.dna.uni_identity = buffer_slot["UI"]
+						viable_occupant.updateappearance(mutations_overlay_update=1)
+					if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
+						viable_occupant.real_name = buffer_slot["name"]
+						viable_occupant.name = buffer_slot["name"]
+						viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
+						viable_occupant.dna.blood_type = buffer_slot["blood_type"]
+					return
+
 	return
 
 
@@ -532,23 +712,35 @@
 	if(can_modify_occupant())
 		to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
 
+/obj/machinery/computer/scan_consolenew/proc/build_genetic_makeup_list()
+	if(tgui_genetic_makeup)
+		tgui_genetic_makeup.Cut()
+	else
+		tgui_genetic_makeup = list()
+
+	for(var/i=1, i <= NUMBER_OF_BUFFERS, i++)
+		if(genetic_makeup_buffer[i])
+			tgui_genetic_makeup["[i]"] = genetic_makeup_buffer[i].Copy()
+		else
+			tgui_genetic_makeup["[i]"] = null
+
 /obj/machinery/computer/scan_consolenew/proc/build_mutation_list()
 	if(!can_modify_occupant())
-		occupant_mutations = null
+		tgui_occupant_mutations = null
 		return
 
-	if(occupant_mutations)
-		occupant_mutations.Cut()
+	if(tgui_occupant_mutations)
+		tgui_occupant_mutations.Cut()
 	else
-		occupant_mutations = list()
+		tgui_occupant_mutations = list()
 
-	if(diskette_mutations)
-		diskette_mutations.Cut()
+	if(tgui_diskette_mutations)
+		tgui_diskette_mutations.Cut()
 	else
-		diskette_mutations = list()
+		tgui_diskette_mutations = list()
 
-	scanner_mutations.Cut()
-	scanner_chromosomes.Cut()
+	tgui_scanner_mutations.Cut()
+	tgui_scanner_chromosomes.Cut()
 
 	var/index = 1
 	if(can_modify_occupant())
@@ -601,8 +793,8 @@
 			else
 				mutation_data["Image"] = "dna_undiscovered.gif"
 
-			occupant_mutations["[index]"] = mutation_data
-			index += 1
+			tgui_occupant_mutations["[index]"] = mutation_data
+			index++
 
 		// Now get additional/"extra" mutations that they shouldn't have by default
 		for(var/datum/mutation/human/HM in scanner_occupant.dna.mutations)
@@ -648,8 +840,8 @@
 			else
 				mutation_data["Image"] = "dna_discovered.gif"
 
-			occupant_mutations["[index]"] = mutation_data
-			index += 1
+			tgui_occupant_mutations["[index]"] = mutation_data
+			index++
 
 	index = 1
 	for(var/datum/mutation/human/HM in stored_mutations)
@@ -677,8 +869,8 @@
 			mutation_data["AppliedChromo"] = HM.chromosome_name
 			mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
 
-		scanner_mutations["[index]"] = mutation_data
-		index += 1
+		tgui_scanner_mutations["[index]"] = mutation_data
+		index++
 
 	index = 1
 	for(var/obj/item/chromosome/CM in stored_chromosomes)
@@ -687,8 +879,8 @@
 		chromo_data["Name"] = CM.name
 		chromo_data["Description"] = CM.desc
 
-		scanner_chromosomes["[index]"] = chromo_data
-		index += 1
+		tgui_scanner_chromosomes["[index]"] = chromo_data
+		index++
 
 	index = 1
 
@@ -718,7 +910,7 @@
 				mutation_data["AppliedChromo"] = HM.chromosome_name
 				mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
 
-			diskette_mutations["[index]"] = mutation_data
+			tgui_diskette_mutations["[index]"] = mutation_data
 			index += 1
 
 /obj/machinery/computer/scan_consolenew/proc/build_chrom_list(mutation)

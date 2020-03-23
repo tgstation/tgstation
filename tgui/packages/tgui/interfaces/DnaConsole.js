@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
 import { Fragment, Component } from 'inferno';
-import { Section, Box, LabeledList, ProgressBar, Grid, Button, Tabs, Flex, Table, Dropdown, Collapsible } from '../components';
+import { Section, Box, LabeledList, ProgressBar, Grid, Button,
+  Tabs, Flex, Table, Dropdown, Collapsible, NumberInput } from '../components';
 import { act } from '../byond';
 
 import { createLogger } from '../logging';
@@ -15,7 +16,7 @@ export class DropdownEx extends Component {
       highlights: props.highlights || [],
       onSelected: props.onSelected,
       options: props.options || [],
-      exKey: props.exKey
+      exKey: props.exKey,
     };
 
     this.state.color = this.getColor(props.selected);
@@ -33,7 +34,7 @@ export class DropdownEx extends Component {
     let trueSelected = selected;
     this.state.options.map((value, key) => {
       if (value[this.state.exKey] === selected)
-      { trueSelected = value }
+      { trueSelected = value; }
     });
     this.state.onSelected(trueSelected);
     this.setState({ color: this.getColor(selected) });
@@ -253,6 +254,11 @@ export class DnaConsole extends Component {
           content={"Scramble DNA"}
           onClick={() =>
             act(ref, "scramble_dna")} />
+        <Button
+          disabled={!data.HasDisk}
+          content={"Eject Disk"}
+          onClick={() =>
+            act(ref, "eject_disk")} />
       </Fragment>
     );
   }
@@ -298,7 +304,7 @@ export class DnaConsole extends Component {
           width={"65"} />
         onClick={e =>
           act(ref,
-            "checkdisc",
+            "check_discovery",
             { alias: mut.Alias })}>
         {() => (
           <Fragment>
@@ -353,7 +359,7 @@ export class DnaConsole extends Component {
                           { "C": "blue" },
                         ]}
                         onSelected={e =>
-                          act(ref, "pulsegene", {
+                          act(ref, "pulse_gene", {
                             pos: k+1,
                             gene: e,
                             alias: mut.Alias })} />
@@ -391,7 +397,7 @@ export class DnaConsole extends Component {
                           { "C": "blue" },
                         ]}
                         onSelected={e =>
-                          act(ref, "pulsegene", {
+                          act(ref, "pulse_gene", {
                             pos: k+1,
                             gene: e,
                             alias: mut.Alias })} />
@@ -436,7 +442,7 @@ export class DnaConsole extends Component {
                           }
                           width={"280px"}
                           onSelected={e =>
-                            act(ref, "applychromo", {
+                            act(ref, "apply_chromo", {
                               chromo: e, mutref: mut.ByondRef })} />
                       </LabeledList.Item>
                     </Fragment>
@@ -492,8 +498,7 @@ export class DnaConsole extends Component {
                 act(
                   ref,
                   "add_adv_injector",
-                  {
-                    mutref: mut.ByondRef })} />
+                  {mutref: mut.ByondRef })} />
             { ((mut.Class === data.MUT_EXTRA) || mut.Scrambled)
               ? <Button
                 content={"Nullify"}
@@ -558,13 +563,13 @@ export class DnaConsole extends Component {
               title="Combine">
               <DropdownEx
                 key={prefix+source+"_dd_"+key}
-                disable={ (source === "console")
-                  ? ( !(data.MutationCapacity > 0) )
-                  : ( (source === "disk")
-                    ? ( !data.HasDisk
+                disable={(source === "console")
+                  ? (!(data.MutationCapacity > 0))
+                  : ((source === "disk")
+                    ? (!data.HasDisk
                       || !(data.DiskCapacity > 0)
-                      || data.DiskReadOnly )
-                    : ( false ))}
+                      || data.DiskReadOnly)
+                    : (false))}
                 options={filteredList}
                 exKey={"Name"}
                 width={"150px"}
@@ -608,8 +613,7 @@ export class DnaConsole extends Component {
                         act(ref, "save_console", {
                           mutref: mut.ByondRef })} />)
                   : (false)
-                )
-              }
+                )}
 
               <Button
                 disabled
@@ -665,7 +669,6 @@ export class DnaConsole extends Component {
   }
 
   renderMutStorage(ref, data, source, storageList) {
-    logger.log(JSON.stringify(source))
     return (
       <Section
         title="Mutation Storage"
@@ -681,8 +684,8 @@ export class DnaConsole extends Component {
                 key,
                 this.createBrefFilteredList(
                   storageList,
-                  storageList.ByondRef,),
-                source
+                  storageList.ByondRef),
+                source,
               )
             ); }) }
         </Tabs>
@@ -710,20 +713,295 @@ export class DnaConsole extends Component {
     );
   }
 
-  renderStorage(ref, data)
-  {
+  renderStorage(ref, data) {
     return (
       <Tabs vertical>
         <Tabs.Tab label="Console">
           { () => (
             <Fragment>
-              {this.renderMutStorage(ref, data, "console", data.MutationStorage)}
+              {this.renderMutStorage(
+                ref,
+                data,
+                "console",
+                data.MutationStorage)}
               {this.renderChromoStorage(ref, data)}
             </Fragment>
           )}
         </Tabs.Tab>
+        { data.HasDisk
+          ? (
+              <Tabs.Tab label="Disk">
+                {() => (
+                  <Fragment>
+                    {this.renderMutStorage(
+                      ref,
+                      data,
+                      "disk",
+                      data.DiskMutations)}
+                      {data.DiskHasMakeup
+                        ? (
+                          <Fragment>
+                            <Section
+                              title="Genetic Makeup Storage"
+                              textAlign="left">
+                              <LabeledList>
+                                <LabeledList.Item label="Subject">
+                                  {data.DiskMakeupBuffer.name
+                                    ? data.DiskMakeupBuffer.name
+                                    : "None"}
+                                </LabeledList.Item>
+                                <LabeledList.Item label="Blood Type">
+                                  {data.DiskMakeupBuffer.blood_type
+                                    ? data.DiskMakeupBuffer.blood_type
+                                    : "None"}
+                                </LabeledList.Item>
+                                <LabeledList.Item label="Unique Enzyme">
+                                  {data.DiskMakeupBuffer.UE
+                                    ? data.DiskMakeupBuffer.UE
+                                    : "None"}
+                                </LabeledList.Item>
+                                <LabeledList.Item label="Unique Identifier">
+                                  {data.DiskMakeupBuffer.UI
+                                    ? data.DiskMakeupBuffer.UI
+                                    : "None"}
+                                </LabeledList.Item>
+                                {(data.DiskMakeupBuffer.UI
+                                  && data.DiskMakeupBuffer.UE)
+                                  ? (
+                                    <LabeledList.Item label="UE/UI Combination">
+                                      {data.DiskMakeupBuffer.UI
+                                        + "/"
+                                        + data.DiskMakeupBuffer.UE}
+                                    </LabeledList.Item>
+                                  ) : false }
+                              </LabeledList>
+                              <Button
+                                disabled={data.DiskReadOnly}
+                                content={"Delete"}
+                                onClick={(e, value) => (
+                                  act(ref, "del_makeup_disk")
+                                )} />
+                            </Section>
+                          </Fragment>)
+                    : (false)}
+                </Fragment>)}
+              </Tabs.Tab>
+            )
+          : (false)}
       </Tabs>
+    );
+  }
+
+  renderUniqueIdentifiers(ref, data) {
+    return (
+      <Fragment>
+        <Section
+          title="Radiation Emitter Status"
+          textAlign="left">
+          <LabeledList>
+            <LabeledList.Item label="Output Level">
+              <NumberInput
+                value={data.RadStrength}
+                step={1}
+                stepPixelSize={10}
+                minValue={1}
+                maxValue={data.RADIATION_STRENGTH_MAX}
+                animated
+                onDrag={(e, value) => (
+                  act(ref, "set_pulse_strength", { val: value })
+                )} />
+            </LabeledList.Item>
+            <LabeledList.Item label=" > Mutation">
+              {`(-${data.StdDevStr} to +${data.StdDevStr} = 68 %)`
+              + `(-${2*(data.StdDevStr)} to +${2*(data.StdDevStr)} = 95 %)`}
+            </LabeledList.Item>
+            <LabeledList.Item label="Pulse Duration">
+              <NumberInput
+                value={data.RadDuration}
+                step={1}
+                stepPixelSize={10}
+                minValue={1}
+                maxValue={data.RADIATION_DURATION_MAX}
+                animated
+                onDrag={(e, value) => (
+                  act(ref, "set_pulse_duration", { val: value })
+                )} />
+            </LabeledList.Item>
+            <LabeledList.Item label=" > Accuracy">
+              {data.StdDevAcc}
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        <Section
+          title="Genetic Makeup Buffers"
+          textAlign="left">
+          {this.renderMakeupBuffers(ref, data)}
+        </Section>
+      </Fragment>
+    );
+  }
+
+  renderMakeupButtons(ref, data, index) {
+    return (
+      <Fragment>
+        <Collapsible
+          title="Commands">
+          <Box m={1}>
+            {data.IsViableSubject
+              ? (
+                <Fragment>
+                  <Button
+                    content={"Transfer Enzyme"}
+                    onClick={e => (
+                      act(ref, "makeup_apply", {index:index, type:"ue"})
+                    )}/>
+                  <Button
+                    content={"Transfer Identity"}
+                    onClick={e => (
+                      act(ref, "makeup_apply", {index:index, type:"ui"})
+                    )} />
+                  <Button
+                    content={"Transfer Full Makeup"}
+                    onClick={e => (
+                      act(ref, "makeup_apply", {index:index, type:"mixed"})
+                    )} />
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <Button
+                    content={"Transfer Enzyme (Delayed)"}
+                    onClick={e => (
+                      act(ref, "makeup_delay", {index:index, type:"ue"})
+                    )} />
+                  <Button
+                    content={"Transfer Identity (Delayed)"}
+                    onClick={e => (
+                      act(ref, "makeup_delay", {index:index, type:"ui"})
+                    )} />
+                  <Button
+                    content={"Transfer Full Makeup (Delayed)"}
+                    onClick={e => (
+                      act(ref, "makeup_delay", {index:index, type:"mixed"})
+                    )} />
+                </Fragment>
+              )}
+          </Box>
+          <Box m={1}>
+            <Button
+              content={"Print Enzyme Injector"}
+              onClick={e => (
+                act(ref, "makeup_injector", {index:index, type:"ue"})
+              )}/>
+            <Button
+              content={"Print Identity Injector"}
+              onClick={e => (
+                act(ref, "makeup_injector", {index:index, type:"ui"})
+              )}/>
+            <Button
+              content={"Print Full Makeup Injector"}
+              onClick={e => (
+                act(ref, "makeup_injector", {index:index, type:"mixed"})
+              )}/>
+          </Box>
+        </Collapsible>
+      </Fragment>
     )
+  }
+
+  renderMakeupBuffers(ref, data) {
+    let buffer = [];
+    let currentMakeup;
+
+    for (let i = 1; i <= data.MakeupCapcity; ++i) {
+      currentMakeup = data.MakeupStorage[i.toString()];
+      buffer.push(
+        currentMakeup
+          ? (
+            <Collapsible
+              title={
+                currentMakeup.label
+                  ? currentMakeup.label
+                  : currentMakeup.name
+              }
+              buttons={
+                <Fragment>
+                  <Button
+                    disabled={!(data.IsViableSubject)}
+                    content={"Save To Slot"}
+                    onClick={(e, value) => (
+                      act(ref, "save_makeup_console", { index: i })
+                    )} />
+                  <Button
+                    content={"Clear Slot"}
+                    onClick={(e, value) => (
+                      act(ref, "del_makeup_console", { index: i })
+                    )} />
+                  <Button
+                    disabled={!(data.HasDisk) || !(data.DiskHasMakeup)}
+                    content={"Import From Disk"}
+                    onClick={(e, value) => (
+                      act(ref, "load_makeup_disk", { index: i })
+                    )} />
+                  <Button
+                    disabled={!(data.HasDisk)
+                    || (data.DiskReadOnly)}
+                    content={"Export To Disk"}
+                    onClick={(e, value) => (
+                      act(ref, "save_makeup_disk", { index: i })
+                    )} />
+                </Fragment>
+              } >
+              <LabeledList>
+                <LabeledList.Item label="Subject">
+                  {currentMakeup.name
+                    ? currentMakeup.name
+                    : "None"}
+                </LabeledList.Item>
+                <LabeledList.Item label="Blood Type">
+                  {currentMakeup.blood_type
+                    ? currentMakeup.blood_type
+                    : "None"}
+                </LabeledList.Item>
+                <LabeledList.Item label="Unique Enzyme">
+                  {currentMakeup.UE
+                    ? currentMakeup.UE
+                    : "None"}
+                </LabeledList.Item>
+                <LabeledList.Item label="Unique Identifier">
+                  {currentMakeup.UI
+                    ? currentMakeup.UI
+                    : "None"}
+                </LabeledList.Item>
+              </LabeledList>
+              {this.renderMakeupButtons(ref, data, i)}
+            </Collapsible>)
+          : (
+            <Collapsible
+              title={"Slot " + i}
+              buttons={(
+                <Fragment>
+                  <Button
+                    content={"Save To Slot"}
+                    onClick={(e, value) => (
+                      act(ref, "save_makeup_console", { index: i })
+                    )} />
+                  <Button
+                    disabled={!(data.HasDisk) || !(data.DiskHasMakeup)}
+                    content={"Import From Disk"}
+                    onClick={(e, value) => (
+                      act(ref, "load_makeup_disk", { index: i })
+                    )} />
+                </Fragment>
+              )}>
+              No stored subject data.
+            </Collapsible>
+          ),
+      );
+    }
+
+    return (
+      buffer
+    );
   }
 
   render()
@@ -795,9 +1073,7 @@ export class DnaConsole extends Component {
             label="Storage">
             {() => {
               return (
-                <Fragment>
-                  {this.renderStorage(ref, data)}
-                </Fragment>
+                this.renderStorage(ref, data)
               );
             }}
           </Tabs.Tab>
@@ -824,9 +1100,9 @@ export class DnaConsole extends Component {
             )}
           </Tabs.Tab>
           <Tabs.Tab
-            label="Unique Identifiers">
+            label="Genetic Makeup">
             {() => (
-              "List of UIs"
+              this.renderUniqueIdentifiers(ref, data)
             )}
           </Tabs.Tab>
           <Tabs.Tab
