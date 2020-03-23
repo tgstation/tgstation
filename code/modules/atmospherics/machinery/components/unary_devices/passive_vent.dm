@@ -25,36 +25,16 @@
 	var/datum/gas_mixture/external = loc.return_air()
 	var/datum/gas_mixture/internal = airs[1]
 
-	//is there a better way to do this in byond i.e. get the keys?
-	var/list/gas_list = new()
-	gas_list |= internal.gases | external.gases
+	var/internal_volume_fraction = internal.volume/(internal.volume + external.volume)
 
-	//calculate delta of partial pressure for each gas, and do transfer for each gas individually
-	var/internal_pp_coeff = R_IDEAL_GAS_EQUATION * internal.temperature / internal.volume
-	var/external_pp_coeff = R_IDEAL_GAS_EQUATION * external.temperature / external.volume
-	for(var/gas_id in gas_list)
-		internal.assert_gas(gas_id)
-		external.assert_gas(gas_id)
-		var/internal_pp = internal.gases[gas_id][MOLES] * internal_pp_coeff
-		var/external_pp = external.gases[gas_id][MOLES] * external_pp_coeff
-		var/delta_pp = abs(internal_pp - external_pp)
-		if(delta_pp > 0.5)
-			active = TRUE
-			//use the volume of the receiving mixture for mole calculation
-			//use the temperature of the sending mixture
-			if(internal_pp > external_pp)
-				var/moles_to_move = (delta_pp * external.volume)/ (internal.temperature * R_IDEAL_GAS_EQUATION)
-				external.merge(internal.remove_specific(gas_id, moles_to_move))
-			else
-				var/moles_to_move = (delta_pp * internal.volume) / (external.temperature * R_IDEAL_GAS_EQUATION)
-				internal.merge(external.remove_specific(gas_id, moles_to_move))
+	var/datum/gas_mixture/holding = new
+	holding.merge(internal.remove_ratio(1))
+	holding.merge(external.remove_ratio(1))
+	internal.merge(holding.remove_ratio(internal_volume_fraction))
+	external.merge(holding)
 
-
-	active = internal.temperature_share(external, OPEN_HEAT_TRANSFER_COEFFICIENT) ? TRUE : active
-
-	if(active)
-		air_update_turf()
-		update_parents()
+	air_update_turf()
+	update_parents()
 
 /obj/machinery/atmospherics/components/unary/passive_vent/can_crawl_through()
 	return TRUE
