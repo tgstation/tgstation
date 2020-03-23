@@ -167,6 +167,8 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to CentCom.")
+				investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])

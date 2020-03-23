@@ -54,7 +54,8 @@
 /obj/item/mecha_parts/mecha_equipment/orebox_manager
 	name = "ore storage module"
 	desc = "An automated ore box management device."
-	icon_state = "mecha_clamp" //None of this should matter, this shouldn't ever exist outside a mech anyway.
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "bin"
 	selectable = FALSE
 	detachable = FALSE
 	salvageable = FALSE
