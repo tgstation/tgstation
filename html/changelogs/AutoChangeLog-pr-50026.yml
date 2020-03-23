@@ -1,0 +1,5 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "Bubblegum Gum, available at your nearest mining vendor for 100 points! Good for people with blood deficiency"
+  - imageadd: "basic gum packet sprite"
