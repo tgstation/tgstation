@@ -1323,6 +1323,15 @@
 	for(var/i in 1 to 4)
 		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness(src)
 
+/obj/item/storage/box/gum/bubblegum
+	name = "bubblegum gum packet"
+	desc = "The packaging is entirely in Demonic, apparently. You feel like even opening this would be a sin."
+	icon_state = "bubblegum_bubblegum"
+
+/obj/item/storage/box/gum/bubblegum/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum(src)
+
 /obj/item/storage/box/shipping
 	name = "box of shipping supplies"
 	desc = "Contains several scanners and labelers for shipping things. Wrapping Paper not included."
