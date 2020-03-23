@@ -11,6 +11,7 @@
 	var/list/datum/mood_event/mood_events = list()
 	var/insanity_effect = 0 //is the owner being punished for low mood? If so, how much?
 	var/obj/screen/mood/screen_obj
+	var/depressant = FALSE
 
 /datum/component/mood/Initialize()
 	if(!isliving(parent))
@@ -22,6 +23,7 @@
 	RegisterSignal(parent, COMSIG_CLEAR_MOOD_EVENT, .proc/clear_event)
 	RegisterSignal(parent, COMSIG_ENTER_AREA, .proc/check_area_mood)
 	RegisterSignal(parent, COMSIG_LIVING_REVIVE, .proc/on_revive)
+	RegisterSignal(parent, COMSIG_ADD_DEPRESSANT, .proc/enable_depressant)
 
 	RegisterSignal(parent, COMSIG_MOB_HUD_CREATED, .proc/modify_hud)
 	RegisterSignal(parent, COMSIG_JOB_RECEIVED, .proc/register_job_signals)
@@ -31,6 +33,9 @@
 		modify_hud()
 		var/datum/hud/hud = owner.hud_used
 		hud.show_hud(hud.hud_version)
+
+/datum/component/mood/proc/toggle_depressant()
+	depressant = TRUE
 
 /datum/component/mood/Destroy()
 	STOP_PROCESSING(SSmood, src)
@@ -97,6 +102,8 @@
 		mood += event.mood_change
 		if(!event.hidden)
 			shown_mood += event.mood_change
+		if(event.mood_change < 0 && depressant == TRUE)
+			event.mood_change /= 2
 		mood *= mood_modifier
 		shown_mood *= mood_modifier
 

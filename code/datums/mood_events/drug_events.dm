@@ -81,5 +81,5 @@
 
 /datum/mood_event/antidepressant
 	description = "<span class='nicegreen'>All the bad things feel a bit more far away.</span>\n"
-	mood_change = 15
+	mood_change = 0
 	timeout = 3 MINUTES

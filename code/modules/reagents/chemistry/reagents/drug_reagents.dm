@@ -495,12 +495,11 @@
 	addiction_threshold = 10
 
 /datum/reagent/drug/antidepressant/on_mob_metabolize(mob/living/L)
-	var/datum/component/mood/M = L.GetComponent(/datum/component/mood)
-	if(M.mood_level < 5)
-		SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "antidepressant", /datum/mood_event/antidepressant)
+	SEND_SIGNAL(L, COMSIG_ADD_DEPRESSANT)
+	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "antidepressant", /datum/mood_event/antidepressant)
 
 /datum/reagent/drug/antidepressant/overdose_start(mob/living/M)
-	to_chat(M, "<span class='userdanger'>Your head begins to pound and the sun shines a little brighter...</span>")
+	to_chat(M, "<span class='userdanger'>Your head begins to pound and the sun shines a little too bright...</span>")
 
 /datum/reagent/drug/antidepressant/overdose_process(mob/living/M)
 	M.Jitter(5)
