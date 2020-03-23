@@ -87,7 +87,7 @@
 	else
 		emagged = FALSE //if you're a human who's gotten ahold of a KA from an emagged cyborg somehow, you don't get to use the emagged cyborg version of this gun
 
-	. = ..() //we now return to your regularly scheduled programming
+	return ..() //we now return to your regularly scheduled programming
 
 /obj/item/gun/energy/kinetic_accelerator/cyborg/modify_projectile(obj/projectile/kinetic/K)
 	..()
