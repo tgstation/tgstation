@@ -9,9 +9,12 @@
 	if(_profit_ratio)
 		profit_ratio = _profit_ratio
 	RegisterSignal(parent, COMSIG_ITEM_SOLD, .proc/split_profit)
+	RegisterSignal(parent, COMSIG_ITEM_SOLD_MATERIAL, .proc/split_profit)
 	RegisterSignal(parent, COMSIG_STRUCTURE_UNWRAPPED, .proc/Unwrapped)
 	RegisterSignal(parent, COMSIG_ITEM_UNWRAPPED, .proc/Unwrapped)
 	RegisterSignal(parent, COMSIG_ITEM_SPLIT_PROFIT, .proc/return_ratio)
+	RegisterSignal(parent, COMSIG_ITEM_SPLIT_PROFIT_DRY, .proc/return_ratio)
+	RegisterSignal(parent, COMSIG_ITEM_SPLIT_PROFIT_MATERIAL, .proc/return_ratio)
 
 /datum/component/pricetag/proc/Unwrapped()
 	qdel(src) //Once it leaves it's wrapped container, the object in question should lose it's pricetag component.

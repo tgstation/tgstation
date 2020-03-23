@@ -53,7 +53,6 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 			if(E.applies_to(thing, allowed_categories, apply_elastic))
 				sold = E.sell_object(thing, report, dry_run, allowed_categories , apply_elastic, profit_ratio)
 				report.exported_atoms += " [thing.name]"
-				sold = TRUE
 				if(!QDELETED(thing))
 					report.exported_atoms_ref += thing
 				break
@@ -61,6 +60,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 			var/datum/export/S = new /datum/export
 			if(S.get_material_cost(thing) && (!S.get_cost(thing, allowed_categories , apply_elastic)))
 				S.sell_material_item(thing, report, dry_run, apply_elastic, profit_ratio)
+				sold = TRUE
 		if(!dry_run && (sold || delete_unsold))
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export",INVESTIGATE_CARGO)
@@ -141,24 +141,20 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export/proc/sell_object(obj/O, datum/export_report/report, dry_run = TRUE, allowed_categories = EXPORT_CARGO , apply_elastic = TRUE)
 	///This is the value of the object, as derived from export datums.
 	var/the_cost = get_cost(O, allowed_categories , apply_elastic)
-	///This is the value of the object, as derived from material datums. Overwritten by the_cost if it's defined.
-	var/the_material_cost = get_material_cost(O)
 	///Quantity of the object in question.
 	var/amount = get_amount(O)
 	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
 	var/profit_ratio = 0
 
-	if(amount <=0 || the_cost <=0 && the_material_cost <=0)
+	if(amount <=0 || the_cost <=0)
 		return FALSE
-	if(the_cost <= 1 && the_material_cost > 0)
-		the_cost = the_material_cost
 	if(dry_run == FALSE)
 		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = get_cost(O, allowed_categories , apply_elastic)) & COMSIG_ITEM_SPLIT_VALUE)
-			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
-			the_cost = the_cost*((100-profit_ratio)/100)
+			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT_DRY)
+			the_cost = the_cost * ((100 - profit_ratio) * 0.01)
 	else
 		profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
-		the_cost = the_cost*((100-profit_ratio)/100)
+		the_cost = the_cost * ((100 - profit_ratio) * 0.01)
 	report.total_value[src] += the_cost
 
 	if(istype(O, /datum/export/material))
@@ -203,11 +199,10 @@ GLOBAL_LIST_EMPTY(exports_list)
 
 /datum/export/proc/get_material_cost(atom/movable/A)
 	var/value = 0
-	if(A.custom_materials)
-		for(var/i in A.custom_materials)
-			var/datum/material/M = i
-			value += M.value_per_unit * A.custom_materials[M]
-	value = round(value)
+	for(var/i in A.custom_materials)
+		var/datum/material/M = i
+		value += M.value_per_unit * A.custom_materials[M]
+	value = round(value)  //floor of the value
 	return value
 
 /datum/export/proc/sell_material_item(obj/O, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
@@ -221,13 +216,10 @@ GLOBAL_LIST_EMPTY(exports_list)
 	if(amount <=0 || material_cost <=0)
 		return FALSE
 	unit_name = "[O.name]"
+	profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT_MATERIAL)
+	material_cost = material_cost * ((100 - profit_ratio) * 0.01)
 	if(dry_run == FALSE)
-		if(SEND_SIGNAL(O, COMSIG_ITEM_SOLD, item_value = material_cost & COMSIG_ITEM_SPLIT_VALUE))
-			profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
-			material_cost = material_cost*((100-profit_ratio)/100)
-	else
-		profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT)
-		material_cost = material_cost*((100-profit_ratio)/100)
+		SEND_SIGNAL(O, COMSIG_ITEM_SOLD_MATERIAL, item_value = material_cost & COMSIG_ITEM_SPLIT_VALUE_MATERIAL)
 	report.total_value[src] += material_cost
 
 	if(istype(O, /datum/export/material))
