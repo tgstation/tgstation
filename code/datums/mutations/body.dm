@@ -231,7 +231,8 @@
 	instability = 20
 
 /datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	ADD_TRAIT(owner, TRAIT_NOT_SLOWEDBYDRAG, "genetics") // Don't get slowed by dragging lockers or mobs
 
