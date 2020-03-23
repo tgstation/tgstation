@@ -539,7 +539,7 @@
 	tastes = list("hell" = 1)
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/process()
-	..()
+	. = ..()
 	if(iscarbon(loc))
 		hallucinate(loc)
 
