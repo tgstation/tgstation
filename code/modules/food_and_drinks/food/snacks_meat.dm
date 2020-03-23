@@ -191,7 +191,7 @@
 		M.visible_message("<span class='suicide'>[M] realizes [M.p_their()] body won't activate [src]!</span>"
 		,"<span class='warning'>Your body won't activate [src]...</span>")
 		return SHAME
-	playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	playsound(M, 'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	M.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
 	sleep(15) //you've eaten it, you can run now
 	if(QDELETED(M) || QDELETED(src))
