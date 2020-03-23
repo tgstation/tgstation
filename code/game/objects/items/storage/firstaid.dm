@@ -114,7 +114,7 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/ancient
-	icon_state = "oldfirstaid"
+	icon_state = "oldifrstaid" // yes this is the icon state its typo'd i know stop asking
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
 /obj/item/storage/firstaid/ancient/PopulateContents()
