@@ -204,7 +204,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed_gases[gas_id][MOLES] = amount
 	cached_gases[gas_id][MOLES] -= amount
 
-	garbage_collect()
+	garbage_collect(list(gas_id))
 	return removed
 
 	///Creates new, identical gas mixture
