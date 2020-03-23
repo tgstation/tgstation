@@ -21,6 +21,7 @@
 	extra_price = 500
 	payment_department = ACCOUNT_MED
 	tiltable = FALSE
+	light_mask = "wallmed-light-mask"
 
 /obj/item/vending_refill/wallmed
 	machine_name = "NanoMed"
