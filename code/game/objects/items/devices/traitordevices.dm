@@ -257,7 +257,7 @@ effective or pretty fucking useless.
 
 /obj/item/jammer/process()
 	var/mob/living/silicon/robot/R = loc
-	if(!R || !iscyborg(R))
+	if(QDELETED(R) || !iscyborg(R))
 		active = FALSE
 		STOP_PROCESSING(SSobj,src)
 		return
