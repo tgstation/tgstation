@@ -161,6 +161,7 @@
 		return ..()
 
 /mob/living/simple_animal/cow/tamed()
+	. = ..()
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
