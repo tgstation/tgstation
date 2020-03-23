@@ -49,7 +49,8 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	..()
 	T = get_turf(src)
 
-///using the extract on the floor will "draw" the rune.
+/obj/effect/warped_rune/greyspace/process()
+ ///using the extract on the floor will "draw" the rune.
 /obj/item/slimecross/warping/afterattack(turf/target, mob/user, proximity)
 	if(!proximity)
 		return
