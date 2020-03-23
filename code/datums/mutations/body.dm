@@ -228,7 +228,7 @@
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>You feel strong!</span>"
 	difficulty = 16
-	instability = 25
+	instability = 20
 
 /datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
 	. = ..()
