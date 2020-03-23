@@ -90,7 +90,7 @@
 	return ..() //we now return to your regularly scheduled programming
 
 /obj/item/gun/energy/kinetic_accelerator/cyborg/modify_projectile(obj/projectile/kinetic/K)
-	..()
+	. = ..()
 	if(emagged) //emagged mining borgs used to have a stun arm, but they lost it and received full PKA damage while indoors as compensation
 		K.pressure_decrease = 1 //this SETS the pressure_decrease variable AFTER any modkits are applied, in case a decrease pressure penalty modkit somehow gets applied to an emagged mining cyborg's PKA
 
