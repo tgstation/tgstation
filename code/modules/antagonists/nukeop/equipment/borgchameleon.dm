@@ -110,7 +110,7 @@
 	"Cancel" = null )
 
 	var/choice = input(user,"Which cyborg module will you disguise as?","Chameleon Cyborg Disguise") as null|anything in borg_disguses_list
-	if(QDELETED(src) || user.stat || !in_range(user, src) || user.incapacitated() || !choice)
+	if(QDELETED(src) || QDELETED(user) || !in_range(user, src) || user.incapacitated() || !choice)
 		return FALSE
 
 	switch(choice)
