@@ -20,8 +20,6 @@
 /obj/machinery/atmospherics/components/unary/passive_vent/process_atmos()
 	..()
 
-	var/active = FALSE
-
 	var/datum/gas_mixture/external = loc.return_air()
 	var/datum/gas_mixture/internal = airs[1]
 
