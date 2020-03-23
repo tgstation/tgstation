@@ -312,19 +312,19 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	cached_results["fire"] = 0
 	var/turf/open/location = isturf(holder) ? holder : null
 	var/burned_fuel = 0
-	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/hydrogen][MOLES] || MINIMUM_TRIT_OXYBURN_ENERGY > air.thermal_energy())
-		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/TRITIUM_BURN_OXY_FACTOR
+	if(cached_gases[/datum/gas/oxygen][MOLES] < cached_gases[/datum/gas/hydrogen][MOLES] || MINIMUM_H2_OXYBURN_ENERGY > air.thermal_energy())
+		burned_fuel = cached_gases[/datum/gas/oxygen][MOLES]/HYDROGEN_BURN_OXY_FACTOR
 		cached_gases[/datum/gas/hydrogen][MOLES] -= burned_fuel
 	else
-		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES]*TRITIUM_BURN_TRIT_FACTOR
-		cached_gases[/datum/gas/hydrogen][MOLES] -= cached_gases[/datum/gas/hydrogen][MOLES]/TRITIUM_BURN_TRIT_FACTOR
+		burned_fuel = cached_gases[/datum/gas/hydrogen][MOLES]*HYDROGEN_BURN_H2_FACTOR
+		cached_gases[/datum/gas/hydrogen][MOLES] -= cached_gases[/datum/gas/hydrogen][MOLES]/HYDROGEN_BURN_H2_FACTOR
 		cached_gases[/datum/gas/oxygen][MOLES] -= cached_gases[/datum/gas/hydrogen][MOLES]
 
 	if(burned_fuel)
 		energy_released += (FIRE_HYDROGEN_ENERGY_RELEASED * burned_fuel)
 
 		ASSERT_GAS(/datum/gas/water_vapor, air) //oxygen+more-or-less hydrogen=H2O
-		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel/TRITIUM_BURN_OXY_FACTOR
+		cached_gases[/datum/gas/water_vapor][MOLES] += burned_fuel/HYDROGEN_BURN_OXY_FACTOR
 
 		cached_results["fire"] += burned_fuel
 
