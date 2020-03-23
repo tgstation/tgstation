@@ -25,7 +25,8 @@
 	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/pointed/trigger/blind/intercept_check(mob/user, atom/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	if(!isliving(target))
 		to_chat(user, "<span class='warning'>You can only blind living beings!</span>")

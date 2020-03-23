@@ -26,31 +26,28 @@
 			to_chat(user, "<span class='warning'>Too many minds! You're not a hive damnit!</span>")
 		return FALSE
 
-	var/mob/living/target = targets[1]
-	if(!swap_check(user, target, distance_override, silent))
+	var/mob/living/victim = targets[1] //The target of the spell whos body will be transferred to.
+	if(!swap_check(user, victim, distance_override, silent))
 		return FALSE
-	if(istype(target, /mob/living/simple_animal/hostile/guardian))
-		var/mob/living/simple_animal/hostile/guardian/stand = target
+	if(istype(victim, /mob/living/simple_animal/hostile/guardian))
+		var/mob/living/simple_animal/hostile/guardian/stand = victim
 		if(stand.summoner)
-			target = stand.summoner
-
-	var/mob/living/victim = target //The target of the spell whos body will be transferred to.
-	var/mob/living/caster = user //The wizard/whomever doing the body transferring.
+			victim = stand.summoner
 
 	//MIND TRANSFER BEGIN
 	var/mob/dead/observer/ghost = victim.ghostize()
-	caster.mind.transfer_to(victim)
+	user.mind.transfer_to(victim)
 
-	ghost.mind.transfer_to(caster)
+	ghost.mind.transfer_to(user)
 	if(ghost.key)
-		caster.key = ghost.key	//have to transfer the key since the mind was not active
+		user.key = ghost.key	//have to transfer the key since the mind was not active
 	qdel(ghost)
 	//MIND TRANSFER END
 
 	//Here we knock both mobs out for a time.
-	caster.Unconscious(unconscious_amount_caster)
+	user.Unconscious(unconscious_amount_caster)
 	victim.Unconscious(unconscious_amount_victim)
-	SEND_SOUND(caster, sound('sound/magic/mandswap.ogg'))
+	SEND_SOUND(user, sound('sound/magic/mandswap.ogg'))
 	SEND_SOUND(victim, sound('sound/magic/mandswap.ogg')) // only the caster and victim hear the sounds, that way no one knows for sure if the swap happened
 	return TRUE
 
@@ -119,7 +116,8 @@
 	return TRUE
 
 /obj/effect/proc_holder/spell/pointed/mind_transfer/intercept_check(mob/user, atom/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	if(!swap_check(user, target))
 		return FALSE
