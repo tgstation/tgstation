@@ -258,7 +258,4 @@
 		//Update individual gas_mixtures by volume ratio
 		for(var/i in GL)
 			var/datum/gas_mixture/G = i
-			G.copy_from(total_gas_mixture)
-			var/list/G_gases = G.gases
-			for(var/id in G_gases)
-				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
+			G.copy_from(total_gas_mixture, G.volume/total_gas_mixture.volume)
