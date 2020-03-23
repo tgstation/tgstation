@@ -206,7 +206,7 @@
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
 	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
 	/// Mob used in book recoils to store an identity for mindswaps
-	var/mob/stored_swap
+	var/mob/living/stored_swap
 
 /obj/item/book/granter/spell/mindswap/onlearned()
 	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
