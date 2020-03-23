@@ -11,6 +11,7 @@
 
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
+#define LAZYCOPY(L) (L ? L.Copy() : list() )
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;
 #define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
