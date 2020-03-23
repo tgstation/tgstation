@@ -709,7 +709,7 @@
 /obj/item/nullrod/shotgun
 	name = "super shotgun replica"
 	desc = "Makes you want to shoot demons."
-	icon = 'icons/obj/guns/ballistic.dmi'
+	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "dshotgun"
 	item_state = "shotgun_db"
 	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
