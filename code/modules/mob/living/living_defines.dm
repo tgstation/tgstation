@@ -123,8 +123,6 @@
 	var/list/diseases = list() /// list of all diseases in a mob
 	var/list/disease_resistances = list()
 
-	var/slowed_by_drag = TRUE ///Whether the mob is slowed down when dragging another prone mob
-
 	var/list/ownedSoullinks //soullinks we are the owner of
 	var/list/sharedSoullinks //soullinks we are a/the sharer of
 

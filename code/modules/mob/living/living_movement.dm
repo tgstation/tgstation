@@ -38,14 +38,14 @@
 	if(pulling)
 		if(isliving(pulling))
 			var/mob/living/L = pulling
-			if(!slowed_by_drag || (L.mobility_flags & MOBILITY_STAND) || L.buckled || grab_state >= GRAB_AGGRESSIVE)
+			if(HAS_TRAIT(src, TRAIT_NOT_SLOWEDBYDRAG) || (L.mobility_flags & MOBILITY_STAND) || L.buckled || grab_state >= GRAB_AGGRESSIVE)
 				remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 				return
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bulky_drag, multiplicative_slowdown = PULL_PRONE_SLOWDOWN)
 			return
 		if(isobj(pulling))
 			var/obj/structure/S = pulling
-			if(!slowed_by_drag || !S.drag_slowdown)
+			if(HAS_TRAIT(src, TRAIT_NOT_SLOWEDBYDRAG) || !S.drag_slowdown)
 				remove_movespeed_modifier(/datum/movespeed_modifier/bulky_drag)
 				return
 			add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/bulky_drag, multiplicative_slowdown = S.drag_slowdown)

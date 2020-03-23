@@ -226,19 +226,19 @@
 	name = "Strength"
 	desc = "The user's muscles slightly expand, allowing them to move heavy objects easily."
 	quality = POSITIVE
-	text_gain_indication = "<span class='notice'>You feel strong.</span>"
+	text_gain_indication = "<span class='notice'>You feel strong!</span>"
 	difficulty = 16
-	instability = 25
+	instability = 20
 
 /datum/mutation/human/strong/on_acquiring(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.slowed_by_drag = FALSE // Don't get slowed by dragging lockers or mobs
+	ADD_TRAIT(owner, TRAIT_NOT_SLOWEDBYDRAG, "genetics") // Don't get slowed by dragging lockers or mobs
 
 /datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.slowed_by_drag = initial(owner.slowed_by_drag)
+	REMOVE_TRAIT(owner, TRAIT_NOT_SLOWEDBYDRAG, "genetics")
 
  ///Amount of units of toxin reagents to remove while having the stimmed mutation
  #define STIMMED_PURGE_AMOUNT 0.25
