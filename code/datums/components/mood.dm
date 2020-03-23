@@ -401,7 +401,7 @@
 	setSanity(initial(sanity), override = TRUE)
 
 ///Update the examine list and add dirt level to the parent's examine
-/datum/component/construction/proc/examine(datum/source, mob/user, list/examine_list)
+/datum/component/mood/proc/examine(datum/source, mob/user, list/examine_list)
 	var/mob/living/L = parent
 	switch(dirtiness)
 		if(DIRT_LEVEL_NONE to DIRT_LEVEL_DIRTY)
