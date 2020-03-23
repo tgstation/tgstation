@@ -237,7 +237,8 @@
 	owner.add_movespeed_mod_immunities(type, list(/datum/movespeed_modifier/bulky_drag, /datum/movespeed_modifier/human_carry))
 
 /datum/mutation/human/strong/on_losing(mob/living/carbon/human/owner)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	owner.remove_movespeed_mod_immunities(type, list(/datum/movespeed_modifier/bulky_drag, /datum/movespeed_modifier/human_carry))
 
