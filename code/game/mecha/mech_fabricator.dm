@@ -29,6 +29,7 @@
 								"Gygax",
 								"Durand",
 								"H.O.N.K",
+								"Nerchen",
 								"Phazon",
 								"Exosuit Equipment",
 								"Exosuit Ammunition",

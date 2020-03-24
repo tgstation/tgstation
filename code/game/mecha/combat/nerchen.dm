@@ -1,12 +1,12 @@
 /obj/mecha/combat/nerchen
-	desc = "This is a discontinued and highly experimental exosuit. Early on in the production in the durand, the idea of a second pilot was thrown around, resulting in this mecha."
+	desc = "Old mecha used back when mechas were deemed a two person required vehicle. The extra plating, internals, and other whathaveyou to make this run have made it extremely tanky."
 	name = "\improper Nerchen"
 	icon = 'icons/mecha/mecha_tall.dmi'
 	icon_state = "nerchen"
 	step_in = 3
 	dir_in = 2 //Facing South.
-	max_integrity = 200 //breaks into two when destroyed, so this is actually more.
-	deflect_chance = 30
+	max_integrity = 450 //really tanky
+	deflect_chance = 25
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 50, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
 	infra_luminosity = 3
@@ -14,12 +14,12 @@
 	melee_can_hit = FALSE
 	add_req_access = 1
 	internal_damage_threshold = 25
-	var/obj/mecha/combat/chen/chen
+	var/obj/mecha/combat/chen/chen //keeps the other internal mech in check
 
 /obj/mecha/combat/nerchen/Initialize()
 	. = ..()
 	chen = new(src, src)
-	change_eyes()
+	cockpit_icon()
 
 /obj/mecha/combat/nerchen/obj_destruction()
 	chen.Destroy()
@@ -32,7 +32,7 @@
 	to_chat(user, "<span class='warning'>There doesn't seem to be any way to interface with the mech!</span>")
 	return FALSE
 
-/obj/mecha/combat/nerchen/proc/change_eyes() //icon proc
+/obj/mecha/combat/nerchen/proc/cockpit_icon() //icon proc
 	var/newicon = initial(icon_state)
 	newicon += "-"
 	if(occupant)
@@ -49,11 +49,11 @@
 
 /obj/mecha/combat/nerchen/moved_inside(mob/living/carbon/human/H)
 	. = ..()
-	change_eyes()
+	cockpit_icon()
 
 /obj/mecha/combat/nerchen/go_out(forced, atom/newloc = loc)
 	..()
-	change_eyes()
+	cockpit_icon()
 
 /obj/mecha/combat/nerchen/MouseDrop_T(mob/M, mob/user) //if chen exists, you can enter that instead.
 	switch(alert("Which cockpit would you like to enter?","Mecha","Ner (Movement)","Chen (Weapons)", "Cancel"))
@@ -149,7 +149,7 @@
 
 /obj/mecha/combat/chen/moved_inside(mob/living/carbon/human/H)
 	. = ..()
-	ner.change_eyes()
+	ner.cockpit_icon()
 
 /obj/mecha/combat/chen/domove(direction)
 	to_chat(occupant, "<span class='warning'>You need to be in the other cockpit to move!</span>")
@@ -157,7 +157,7 @@
 
 /obj/mecha/combat/chen/go_out(forced, atom/newloc = ner.loc)
 	..()
-	ner.change_eyes()
+	ner.cockpit_icon()
 
 /* maybe add a punch animation
 /obj/mecha/combat/chen/click_action(atom/target,mob/user,params)

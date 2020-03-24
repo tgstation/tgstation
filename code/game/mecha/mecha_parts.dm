@@ -291,6 +291,46 @@
 	desc="Phazon armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
 	icon_state = "phazon_armor"
 
+// Nerchen
+
+/obj/item/mecha_parts/chassis/nerchen
+	name = "\improper Nerchen chassis"
+	construct_type = /datum/component/construction/unordered/mecha_chassis/nerchen
+
+/obj/item/mecha_parts/part/nerchen_torso
+	name="\improper Nerchen torso"
+	desc="A Nerchen torso part. It's missing a huge chunk of space..."
+	icon_state = "nerchen_harness"
+
+/obj/item/mecha_parts/part/nerchen_head
+	name="\improper Nerchen head"
+	desc="A Nerchen head. It's sensors have been adjusted to support graceful landings."
+	icon_state = "nerchen_head"
+
+/obj/item/mecha_parts/part/nerchen_left_arm
+	name="\improper Nerchen left arm"
+	desc="A Nerchen left arm. Hidden rocket fabrication included in the wrists."
+	icon_state = "nerchen_l_arm"
+
+/obj/item/mecha_parts/part/nerchen_right_arm
+	name="\improper Nerchen right arm"
+	desc="A Nerchen left arm. Hidden rocket fabrication included in the wrists."
+	icon_state = "nerchen_r_arm"
+
+/obj/item/mecha_parts/part/nerchen_left_leg
+	name="\improper Nerchen left leg"
+	desc="A Nerchen left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
+	icon_state = "nerchen_l_leg"
+
+/obj/item/mecha_parts/part/nerchen_right_leg
+	name="\improper Nerchen right leg"
+	desc="A Nerchen left leg. In production they were designed to carry more than two passengers, so the leaping functionality was added as to not waste potential."
+	icon_state = "nerchen_r_leg"
+
+/obj/item/mecha_parts/part/nerchen_armor
+	name="Nerchen armor"
+	desc="Nerchen armor plates. They are uniquely shaped and reinforced to deal with the stresses of two pilots, grandiose leaps, and missiles."
+	icon_state = "nerchen_armor"
 
 ///////// Circuitboards
 
@@ -361,6 +401,17 @@
 	name = "Odysseus Central Control module (Exosuit Board)"
 	icon_state = "mainboard"
 
+/obj/item/circuitboard/mecha/nerchen/peripherals
+	name = "Ner Peripherals Control module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/nerchen/targeting
+	name = "Chen Weapon Control and Targeting module (Exosuit Board)"
+	icon_state = "mcontroller"
+
+/obj/item/circuitboard/mecha/nerchen/main
+	name = "Nerchen Combination Control Lock module (Exosuit Board)"
+
 /obj/item/circuitboard/mecha/phazon/peripherals
 	name = "Phazon Peripherals Control module (Exosuit Board)"
 	icon_state = "mcontroller"
@@ -371,60 +422,6 @@
 
 /obj/item/circuitboard/mecha/phazon/main
 	name = "Phazon Central Control module (Exosuit Board)"
-
-// Nerchen
-
-/obj/item/mecha_parts/chassis/nerchen
-	name = "\improper Nerchen chassis"
-	construct_type = /datum/component/construction/unordered/mecha_chassis/phazon
-
-/obj/item/mecha_parts/part/nerchen_torso
-	name="\improper Nerchen torso"
-	desc="A Nerchen torso part. The socket for the bluespace core that powers the exosuit's unique phase drives is located in the middle."
-	icon_state = "nerchen_harness"
-
-/obj/item/mecha_parts/part/nerchen_head
-	name="\improper Nerchen head"
-	desc="A Nerchen head. Its sensors are carefully calibrated to provide vision and data even when the exosuit is phasing."
-	icon_state = "nerchen_head"
-
-/obj/item/mecha_parts/part/nerchen_left_arm
-	name="\improper Nerchen left arm"
-	desc="A Nerchen left arm. Several microtool arrays are located under the armor plating, which can be adjusted to the situation at hand."
-	icon_state = "nerchen_l_arm"
-
-/obj/item/mecha_parts/part/nerchen_right_arm
-	name="\improper Nerchen right arm"
-	desc="A Nerchen right arm. Several microtool arrays are located under the armor plating, which can be adjusted to the situation at hand."
-	icon_state = "nerchen_r_arm"
-
-/obj/item/mecha_parts/part/nerchen_left_leg
-	name="\improper Nerchen left leg"
-	desc="A Nerchen left leg. It contains the unique phase drives that allow the exosuit to phase through solid matter when engaged."
-	icon_state = "nerchen_l_leg"
-
-/obj/item/mecha_parts/part/nerchen_right_leg
-	name="\improper Nerchen right leg"
-	desc="A Nerchen right leg. It contains the unique phase drives that allow the exosuit to phase through solid matter when engaged."
-	icon_state = "nerchen_r_leg"
-
-/obj/item/mecha_parts/part/nerchen_armor
-	name="Nerchen armor"
-	desc="Nerchen armor plates. They are layered with plasma to protect the pilot from the stress of phasing and have unusual properties."
-	icon_state = "nerchen_armor"
-
-/obj/item/circuitboard/mecha/nerchen/peripherals
-	name = "Nerchen Peripherals Control module (Exosuit Board)"
-	icon_state = "mcontroller"
-
-/obj/item/circuitboard/mecha/nerchen/targeting
-	name = "Nerchen Weapon Control and Targeting module (Exosuit Board)"
-	icon_state = "mcontroller"
-
-/obj/item/circuitboard/mecha/nerchen/main
-	name = "Nerchen Central Control module (Exosuit Board)"
-
-//Clarke
 
 /obj/item/circuitboard/mecha/clarke/peripherals
 	name = "Clarke Peripherals Control module (Exosuit Board)"

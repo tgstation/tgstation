@@ -391,6 +391,51 @@
 	construction_time = 200
 	category = list("H.O.N.K")
 
+//Nerchen
+/datum/design/nerchen_chassis
+	name = "Exosuit Chassis (\"Nerchen\")"
+	id = "nerchen_chassis"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/chassis/nerchen
+	materials = list(/datum/material/iron=20000)
+	construction_time = 100
+	category = list("Nerchen")
+
+/datum/design/nerchen_torso
+	name = "Exosuit Torso (\"Nerchen\")"
+	id = "nerchen_torso"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/nerchen_torso
+	materials = list(/datum/material/iron=20000,/datum/material/glass = 7500)
+	construction_time = 200
+	category = list("Nerchen")
+
+/datum/design/nerchen_head
+	name = "Exosuit Head (\"Nerchen\")"
+	id = "nerchen_head"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/nerchen_head
+	materials = list(/datum/material/iron=6000,/datum/material/glass = 10000)
+	construction_time = 100
+	category = list("Nerchen")
+
+/datum/design/nerchen_left_arm
+	name = "Exosuit Left Arm (\"Nerchen\")"
+	id = "nerchen_left_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/nerchen_left_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Nerchen")
+
+/datum/design/nerchen_right_arm
+	name = "Exosuit Right Arm (\"Nerchen\")"
+	id = "nerchen_right_arm"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/part/nerchen_right_arm
+	materials = list(/datum/material/iron=15000)
+	construction_time = 150
+	category = list("Nerchen")
 
 //Phazon
 /datum/design/phazon_chassis
