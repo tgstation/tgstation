@@ -1,13 +1,13 @@
 
 /*
 Warping extracts crossbreed
-put up a rune with bluespace effects, lots of those runes are fluff or act as a passive buff, others are just griefind tools.
+put up a rune with passive effects, lots of those runes are fluff or act as a passive buff, others are just griefind tools.
 
 Note : Entered() doesn't seem to work for whatever reason so I had to use Initialize and Signals together, convoluted but it works.
 */
 
 /obj/item/slimecross/warping
-	name = "Bluespace crossbreed"
+	name = "crossbreed"
 	desc = "It just won't stay in place."
 	icon_state = "warping"
 	effect = "warping"
@@ -19,7 +19,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	var/drawing_time = 15 ///time it takes to draw the rune
 
 /obj/effect/warped_rune
-	name = "warped rune"
+	name = "Warped rune"
 	desc = "An unstable rune born of the depth of bluespace"
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "greyspace_rune"
@@ -92,10 +92,10 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 			return
 		warp_charge--
 		new runepath(target)
+		to_chat(user, "<span class='notice'>You carefully draw the rune with your crossbreed.</span>")
 
 
 /obj/item/slimecross/warping/grey
-	name = "greyspace crossbreed"
 	colour = "grey"
 	effect_desc = "Creates a rune.Extracts the rune is on are absorbed, 8 extracts produces a slime of that color."
 	runepath = /obj/effect/warped_rune/greyspace
@@ -103,7 +103,6 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 
 
 /obj/effect/warped_rune/greyspace
-	name = "greyspace rune"
 	desc = "Death is merely a setback, anything can be rebuilt given the right components"
 	icon_state = "greyspace_rune"
 	var/i = 0 //number of slime extract currently absorbed by the rune
@@ -170,7 +169,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 /obj/effect/warped_rune/orangespace/process()
 	if(cooldown < world.time)
 		cooldown = world.time + max_cooldown
-		teleport_fire() //triggers it every 10 seconds anyway
+		teleport_fire() //triggers it every 5 seconds anyway
 
 
 
@@ -227,7 +226,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 		transmute_heal()
 
 
-///""transforms"" cloth and plastic into suture and regenerative mesh TODO :add a process or something so that it has a proper cooldown
+///""transforms"" cloth and plastic into suture and regenerative mesh
 /obj/effect/warped_rune/purplespace/proc/transmute_heal() //transmute plastic and cloth into suture and regenerative mesh
 	for(var/obj/item/stack/sheet/plastic/P in T)  //transmute Plastic into regenerative mesh
 		M = new (T,1)
@@ -340,9 +339,9 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 		P.cell.charge += P.cell.maxcharge/100 //will basically recharge 1% of the APC cell every 10 seconds,we don't want to run engineers out of buisness
 		
 
-///charge whatever battery is put on the rune, is triggered whenever a battery is on the rune
+///charge whatever battery is put on the rune
 /obj/effect/warped_rune/yellowspace/proc/electrivore()
-	for(var/obj/item/stock_parts/cell/C in T) //check if there's even a battery on there
+	for(var/obj/item/stock_parts/cell/C in T)
 		if(C.charge < C.maxcharge) //check if the battery is not full
 			C.charge += C.maxcharge/10
 
@@ -371,7 +370,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	runepath = /obj/effect/warped_rune/darkpurplespace
 	max_cooldown = 600 //creates one sheet every minute
 
-/obj/item/stack/sheet/slime_crystal //shit ain't plasma, it just looks like it, TODO : move this to another file along with the resin sheets
+/obj/item/stack/sheet/slime_crystal //shit ain't plasma, it just looks like it.
 	name = "Pure plasma sheet"
 	desc = "It's pure plasma, it can probably be grinded into a lot of plasma dust but you doubt it has any other use."
 	singular_name = "Pure plasma"
@@ -440,7 +439,7 @@ TODO : Improve it so it doesn't steal the spotlight of the chef but instead acts
 
 /obj/effect/warped_rune/silverspace/Initialize()
 	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/food_time)
+	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/food_time)
 
 
 ///eats food, if it ate 5 food it will put anyone who walk on it to a well fed status
@@ -462,7 +461,7 @@ TODO : Improve it so it doesn't steal the spotlight of the chef but instead acts
 /obj/item/slimecross/warping/bluespace
 	colour = "bluespace"
 	runepath = /obj/effect/warped_rune/bluespace
-	effect_desc = "Puts up a rune that will swap the next two person that walk on the rune."
+	effect_desc = "Draw a rune that will swap the place of the next two person that walk on the rune."
 
 obj/effect/warped_rune/bluespace
 	desc = "Everyone is everywhere at once, yet so far away from each other"
@@ -474,7 +473,7 @@ obj/effect/warped_rune/bluespace
 
 obj/effect/warped_rune/bluespace/Initialize()
 	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/swapping)
+	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/swapping)
 
 
 ///the first two person that stepped on the rune swap places after the second person stepped on it. TODO: fix the potential lag abyse
@@ -513,14 +512,14 @@ obj/effect/warped_rune/sepiaspace
 
 obj/effect/warped_rune/sepiaspace/Initialize()
 	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/timewarp)
+	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/timewarp)
 
 
-///stops time on a single tile ALERT : it creates a small proximity runtime, nothing lagworthy but a runtime nonetheless
+///stops time on a single tile, it creates a small runtime common to all timestop.pretty minor compared to the wizard timestop.
 obj/effect/warped_rune/sepiaspace/proc/timewarp()
 	if(locate(TS) in T)//checks if there's already a timestop on the rune. here to avoid the effect triggering multiple time at the same time.
 		return
-	new TS(T, 0, 50, list(src)) //reminder : timestop(turf , range , duration) these variables may be changed later due to balance concerns
+	new TS(T, 0, 50) //make a timestop of 0 range so it only affects the tile
 
 
 
@@ -531,6 +530,7 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 /*Cerulean crossbreed : creates a hologram of the last person that stepped on the tile */
 
 /obj/item/slimecross/warping/cerulean
+	effect_desc = "Draw a rune that will make a hologram of the last thing that stepped on it."
 	colour = "cerulean"
 	runepath = /obj/effect/warped_rune/ceruleanspace
 
@@ -579,7 +579,7 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 
 /obj/effect/warped_rune/pyritespace/Initialize()
 	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/colored)
+	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/colored)
 
 ///colors whoever steps on the rune randomly
 /obj/effect/warped_rune/pyritespace/proc/colored()
@@ -593,6 +593,7 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 	colour = "red"
 	runepath = /obj/effect/warped_rune/redspace
 	effect_desc = "draw a rune severely increasing your punch damage. Only works on one person at a time."
+    drawing_time = 100 //longer to draw so you don't draw it in the middle of a fight.
 
 /obj/effect/warped_rune/redspace
 	desc = "Progress is made through adversity, power is obtained through violence"
@@ -605,13 +606,13 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 
 /obj/effect/warped_rune/redspace/Initialize()
 	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/angry_in)
-	RegisterSignal(get_turf(src),COMSIG_ATOM_EXITED,.proc/angry_out)
+	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/angry_in)
+	RegisterSignal(T,COMSIG_ATOM_EXITED,.proc/angry_out)
 
 
 /obj/effect/warped_rune/redspace/proc/angry_in()
 
-	if(rage)
+	if(rage) //don't buff anyone if someone is already buffed by the rune.
 		return
 
 	for(var/mob/living/carbon/human/A in T)
@@ -679,9 +680,7 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 		if(P.amount <= 0)
 			qdel(P)
 
-
-
-//TODO : move that shit to the sheet file before you get murdered by the maintainers
+//list of things you can build with resin sheets.
 GLOBAL_LIST_INIT(resin_recipes, list ( \
 	new/datum/stack_recipe("Resin seed", /obj/structure/alien/weeds/node, 10, one_per_turf = 1, on_floor = 1, time = 100), \
 	new/datum/stack_recipe("Resin Wall", /obj/structure/alien/resin/wall, 5, one_per_turf = 1, on_floor = 1 , time = 50), \
@@ -710,9 +709,9 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 /obj/effect/warped_rune/pinkspace/Initialize()
 	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/hug_rune)
+	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/hug_rune)
 
-///adds the hug mood effect along with the sound effect. TODO : add the right sound effect and the heart animation thing
+///adds the hug mood effect along with the sound effect.
 /obj/effect/warped_rune/pinkspace/proc/hug_rune()
 	for(var/mob/living/carbon/human/H in T)
 		playsound(T, "sound/weapons/thudswoosh.ogg", 50, TRUE)
@@ -734,7 +733,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 /obj/effect/warped_rune/goldspace/Initialize()
 	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/midas_touch)
+	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/midas_touch)
 
 ///turn anything on the tile to a golden version of themselves. Sheets of any kind will be directly turned into gold bars.
 /obj/effect/warped_rune/goldspace/proc/midas_touch()
@@ -748,7 +747,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 	for(var/obj/item/I in T)
 		I.material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
-		I.set_custom_materials(list(/datum/material/gold=500)) //always set at 500 to not make it too abusable
+		I.set_custom_materials(list(/datum/material/gold=500)) 
 
 
 /*
@@ -760,19 +759,8 @@ Anything after this is in """progress"""
 	colour = "oil"
 	runepath = /obj/effect/warped_rune/oilspace
 
-
 /obj/effect/warped_rune/oilspace
 	desc = "haha bomb machine go boom"
-
-/obj/effect/warped_rune/oilspace/Initialize()
-	.=..()
-	T = get_turf(src)
-	RegisterSignal(T, COMSIG_GLOB_EXPLOSION, .proc/slimeboom)
-
-/obj/effect/warped_rune/oilspace/proc/slimeboom(datum/source, turf/epicenter, devastation_range)
-	if(locate(epicenter) in T)
-		return
-
 
 /obj/item/slimecross/warping/black
 	colour = "black"
