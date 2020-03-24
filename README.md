@@ -29,6 +29,8 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 
 [Documenting your code](.github/AUTODOC_GUIDE.md)
 
+[Policy configuration system](.github/POLICYCONFIG.md)
+
 ## LICENSE
 
 All code after [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 at 4:38 PM PST](https://github.com/tgstation/tgstation/commit/333c566b88108de218d882840e61928a9b759d8f) is licensed under [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
