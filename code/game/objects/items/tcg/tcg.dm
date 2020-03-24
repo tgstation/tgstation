@@ -1,4 +1,11 @@
 ///A global list of cards, or rather changes to be applied to cards in the format
+#define CARD_RARITY_COMMON 50
+#define CARD_RARITY_UNCOMMON 30
+#define CARD_RARITY_RARE 12
+#define CARD_RARITY_EPIC 6
+#define CARD_RARITY_LEGENDARY 2
+#define CARD_RARITY_MISPRINT 1
+
 GLOBAL_LIST(card_list)
 GLOBAL_LIST(card_template_list)
 var/list/cardTypeLookup = list("name" = 0,
@@ -64,6 +71,14 @@ var/list/cardTypeLookup = list("name" = 0,
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "cardback_nt"
 	series = "S1"
+	contains_coin = 0
+
+/obj/item/cardpack/resin
+	name = "Trading Card Pack: Resin Frontier Booster Pack"
+	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
+	icon = 'icons/obj/tcg_xenos.dmi'
+	icon_state = "cardback_xeno"
+	series = "S2"
 	contains_coin = 0
 
 /obj/item/cardpack/attack_self(mob/user)
