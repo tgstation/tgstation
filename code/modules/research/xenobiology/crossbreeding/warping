@@ -7,7 +7,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 */
 
 /obj/item/slimecross/warping
-	name = "crossbreed"
+	name = "warping extract"
 	desc = "It just won't stay in place."
 	icon_state = "warping"
 	effect = "warping"
@@ -19,7 +19,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	var/drawing_time = 15 ///time it takes to draw the rune
 
 /obj/effect/warped_rune
-	name = "Warped rune"
+	name = "warped rune"
 	desc = "An unstable rune born of the depth of bluespace"
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "greyspace_rune"
@@ -603,6 +603,7 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 	var/datum/species/og_punch_low //used to remember the original low punch force of H
 	var/og_punch_high //used to remember the original high punch force of H
 	var/rage = FALSE //here to check if someone is already enraged on the rune
+	var/og_threshold
 
 /obj/effect/warped_rune/redspace/Initialize()
 	.=..()
@@ -618,9 +619,12 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 	for(var/mob/living/carbon/human/A in T)
 		og_punch_low = A.dna.species.punchdamagelow
 		og_punch_high = A.dna.species.punchdamagehigh
+		og_threshold = A.dna.species.punchstunthreshold
 		H = A
-		H.dna.species.punchdamagelow = 30
-		H.dna.species.punchdamagehigh = 60
+		RegisterSignal(H,COMSIG_HUMAN_MELEE_UNARMED_ATTACK,.proc/blind_rage)//triggers whenever H attacks
+		H.dna.species.punchdamagelow = 40
+		H.dna.species.punchdamagehigh = 50
+		H.dna.species.punchstunthreshold = 50 //so each punch doesn't insta stun
 		rage = TRUE
 
 
@@ -630,7 +634,19 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 		return
 	H.dna.species.punchdamagelow = og_punch_low
 	H.dna.species.punchdamagehigh = og_punch_high
+	H.dna.species.punchstunthreshold = og_threshold 
+	UnregisterSignal(H,COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
 	rage = FALSE //allows another person to enter rage mode on the rune.
+
+///triggers whenever the enraged player punches something. lowers their punch damage and deals stamina damage to themselves.
+/obj/effect/warped_rune/redspace/proc/blind_rage()
+	H.dna.species.punchdamagelow -= 10
+	H.dna.species.punchdamagehigh -= 10
+	H.dna.species.punchstunthreshold -= 10
+	H.adjustStaminaLoss(10)
+	to_chat(H, "<span class='warning'>You are feeling weaker with each punch!</span>")
+//this proc has a bug where it triggers even when you pick up an item with an empty hand.
+
 
 ///destroying the rune will also remove the punch force of the person currently in rage mode
 /obj/effect/warped_rune/redspace/Destroy()
