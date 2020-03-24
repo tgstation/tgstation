@@ -13696,7 +13696,7 @@
 /area/maintenance/solars/port/fore)
 "BU" = (
 /obj/machinery/power/apc{
-	areastring = "/area/maintenance/solar/port/fore";
+	areastring = "/area/maintenance/solars/port/fore";
 	dir = 4;
 	name = "Port Bow Solar APC";
 	pixel_x = 25;
