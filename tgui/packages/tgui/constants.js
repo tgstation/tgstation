@@ -195,6 +195,12 @@ const GASES = [
     'label': 'Miasma',
     'color': 'olive',
   },
+  {
+    'id': 'hydrogen',
+    'name': 'Hydrogen',
+    'label': 'H2',
+    'color': 'white',
+  },
 ];
 
 export const getGasLabel = (gasId, fallbackValue) => {
