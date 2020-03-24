@@ -358,64 +358,6 @@
 	return data
 
 
-/datum/computer_file/program/card_mod/proc/build_manage(datum/job,open = FALSE)
-	var/out = "Denied"
-	var/can_change= 0
-	if(open)
-		can_change = can_open_job(job)
-	else
-		can_change = can_close_job(job)
-	var/enable = 0
-	if(can_change == 1)
-		out = "[open ? "Open Position" : "Close Position"]"
-		enable = 1
-	else if(can_change == -2)
-		var/time_to_wait = round(change_position_cooldown - ((world.time / 10) - GLOB.time_last_changed_position), 1)
-		var/mins = round(time_to_wait / 60)
-		var/seconds = time_to_wait - (60*mins)
-		out = "Cooldown ongoing: [mins]:[(seconds < 10) ? "0[seconds]" : "[seconds]"]"
-	else
-		out = "Denied"
-
-	return list("enable" = enable, "desc" = out)
-
-
-/datum/computer_file/program/card_mod/proc/authorized()
-	if(!authenticated && computer)
-		var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
-		if(card_slot)
-			var/obj/item/card/id/auth_card = card_slot.stored_card2
-			if(auth_card)
-				region_access = list()
-				if(ACCESS_CHANGE_IDS in auth_card.GetAccess())
-					minor = 0
-					authenticated = 1
-					return 1
-				else
-					if((ACCESS_HOP in auth_card.access) && ((target_dept==1) || !target_dept))
-						region_access |= 1
-						get_subordinates("Head of Personnel")
-					if((ACCESS_HOS in auth_card.access) && ((target_dept==2) || !target_dept))
-						region_access |= 2
-						get_subordinates("Head of Security")
-					if((ACCESS_CMO in auth_card.access) && ((target_dept==3) || !target_dept))
-						region_access |= 3
-						get_subordinates("Chief Medical Officer")
-					if((ACCESS_RD in auth_card.access) && ((target_dept==4) || !target_dept))
-						region_access |= 4
-						get_subordinates("Research Director")
-					if((ACCESS_CE in auth_card.access) && ((target_dept==5) || !target_dept))
-						region_access |= 5
-						get_subordinates("Chief Engineer")
-					if((ACCESS_QM in auth_card.access) && ((target_dept==6) || !target_dept))
-						region_access |= 6
-						get_subordinates("Quartermaster")
-					if(region_access.len)
-						minor = 1
-						authenticated = 1
-						return 1
-	else
-		return authenticated
 
 #undef CARDCON_DEPARTMENT_SERVICE
 #undef CARDCON_DEPARTMENT_SECURITY

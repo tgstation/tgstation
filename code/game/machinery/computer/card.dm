@@ -422,7 +422,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 						if((ACCESS_CE in inserted_scan_id.access) && ((target_dept==5) || !target_dept))
 							region_access |= 5
 							get_subordinates("Chief Engineer")
-						if((ACCESS_QM in scan.access) && ((target_dept==6) || !target_dept))
+						if((ACCESS_QM in inserted_scan_id.access) && ((target_dept==6) || !target_dept))
 							region_access |= 6
 							get_subordinates("Quartermaster")
 						if(region_access)
