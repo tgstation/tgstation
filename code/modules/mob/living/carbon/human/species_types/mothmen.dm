@@ -43,7 +43,13 @@
 	if(H.dna.features["moth_wings"] != "Burnt Off" && H.bodytemperature >= 800 && H.fire_stacks > 0) //do not go into the extremely hot light. you will not survive
 		to_chat(H, "<span class='danger'>Your precious wings burn to a crisp!</span>")
 		H.dna.features["moth_wings"] = "Burnt Off"
-		H.dna.features["wings"] = "None"
+		if(flying_species) //This is all exclusive to if the person has the effects of a potion of flight
+			if(H.movement_type & FLYING)
+				ToggleFlight(H)
+				H.Knockdown(1.5 SECONDS)
+			fly.Remove(H)
+			QDEL_NULL(fly)
+			H.dna.features["wings"] = "None"
 		handle_mutant_bodyparts(H)
 
 /datum/species/moth/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -59,7 +65,7 @@
 
 /datum/species/moth/space_move(mob/living/carbon/human/H)
 	. = ..()
-	if(H.loc && !isspaceturf(H.loc) && H.dna.features["moth_wings"] != "Burnt Off" && H.dna.features["wings"] != wings_icon )
+	if(H.loc && !isspaceturf(H.loc) && H.dna.features["moth_wings"] != "Burnt Off" && H.dna.features["wings"] != wings_icon ) //"wings" are exclusive to the potion of flight, and those have their own flying mechanics. If they want to fly they can use that mechanic instead
 		var/datum/gas_mixture/current = H.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
