@@ -787,6 +787,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/psychology
 	name = "Psychology Office"
 	icon_state = "psychology"
+	mood_bonus = 3
+	mood_message = "<span class='nicegreen'>I feel at ease here.\n</span>"
 
 //Security
 
