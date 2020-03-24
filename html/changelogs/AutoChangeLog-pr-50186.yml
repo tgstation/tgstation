@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Vapes loaded with welding fuel no longer prevent you from being further set on fire from other sources."
