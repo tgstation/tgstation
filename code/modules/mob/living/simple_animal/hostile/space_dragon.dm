@@ -350,6 +350,8 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds.  Evacuation of the remamining crew will begin immediately.", "Central Command Spacial Corps")
+	for(var/obj/structure/carp_rift/rift in rift_list)
+		rift.carp_stored = INFINITY
 	sleep(50)
 	SSshuttle.emergency.request(null, set_coefficient = 0.3)
 
