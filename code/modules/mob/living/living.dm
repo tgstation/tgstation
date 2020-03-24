@@ -1481,8 +1481,6 @@
   *Resets the [Text-to-Speech] [/datum/controller/subsystem/tts]indicator after the sound plays
   */
 /mob/living/proc/update_tts_hud()
-	if (!hud_used)
-		return
-	if (!hud_used.tts)
+	if (!hud_used_.tts)
 		return
 	hud_used.tts.icon_state = "tts_ready"

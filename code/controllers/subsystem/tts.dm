@@ -30,11 +30,14 @@ SUBSYSTEM_DEF(tts)
 
 	if (!CONFIG_GET(flag/enable_tts))
 		can_fire = FALSE
-		stop_engine()
+		stop_engine()	//Incase Word/Del() isn't called before reboot(Ex:crashes).
 	else
 		start_engine()
 
 	return ..()
+
+/world/Del()
+	stop_engine1()	//Server shutdown and reboot stops the engine. We use world/Del() instead of shutdown because shutdown isn't called on server shutdown(it's only called om reboot)
 
 /**
   *Launches the actual TTS generator
@@ -48,6 +51,10 @@ SUBSYSTEM_DEF(tts)
 /**
   *Kills the TTS generator
   */
+/proc/stop_engine1()
+	var/cmd = "taskkill /F /IM \"tts_generator.exe\" /T"
+	shell(cmd)
+
 /datum/controller/subsystem/tts/proc/stop_engine()
 	var/cmd = "taskkill /F /IM \"tts_generator.exe\" /T"
 	shell(cmd)
