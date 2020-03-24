@@ -52,7 +52,6 @@
 
 	B.deity_name = new_deity
 
-
 	switch(lowertext(new_religion))
 		if("christianity") // DEFAULT_RELIGION
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
