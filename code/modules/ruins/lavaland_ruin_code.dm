@@ -161,9 +161,5 @@
 /datum/outfit/lavaland_syndicate/comms
 	name = "Lavaland Syndicate Comms Agent"
 	r_hand = /obj/item/melee/transforming/energy/sword/saber
-	mask = /obj/item/clothing/mask/chameleon/gps
+	mask = /obj/item/clothing/mask/chameleon/
 	suit = /obj/item/clothing/suit/armor/vest
-
-/obj/item/clothing/mask/chameleon/gps/Initialize()
-	. = ..()
-	AddComponent(/datum/component/gps, "Encrypted Signal")
