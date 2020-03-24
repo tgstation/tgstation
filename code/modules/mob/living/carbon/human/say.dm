@@ -8,12 +8,18 @@
 /mob/living/carbon/human/GetVoice()
 	if(istype(wear_mask, /obj/item/clothing/mask/chameleon))
 		var/obj/item/clothing/mask/chameleon/V = wear_mask
-		if(V.vchange && wear_id)
+		if(V.voice_change && wear_id)
 			var/obj/item/card/id/idcard = wear_id.GetID()
 			if(istype(idcard))
 				return idcard.registered_name
 			else
 				return real_name
+		else
+			return real_name
+	if(istype(wear_mask, /obj/item/clothing/mask/infiltrator))
+		var/obj/item/clothing/mask/infiltrator/V = wear_mask
+		if(V.voice_unknown)
+			return ("Unknown")
 		else
 			return real_name
 	if(mind)
@@ -86,7 +92,7 @@
 			var/say_starter = "Say \"" //"
 			if(findtextEx(temp, say_starter, 1, length(say_starter) + 1) && length(temp) > length(say_starter))	//case sensitive means
 
-				temp = trim_left(copytext(temp, length(say_starter + 1)))
+				temp = trim_left(copytext(temp, length(say_starter) + 1))
 				temp = replacetext(temp, ";", "", 1, 2)	//general radio
 				while(trim_left(temp)[1] == ":")	//dept radio again (necessary)
 					temp = copytext_char(trim_left(temp), 3)

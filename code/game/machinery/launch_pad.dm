@@ -81,7 +81,7 @@
 	ghost.forceMove(target)
 
 /obj/machinery/launchpad/proc/isAvailable()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return FALSE
 	if(panel_open)
 		return FALSE
@@ -102,9 +102,9 @@
 	if(teleporting)
 		return
 	if(!isnull(x))
-		x_offset = CLAMP(x, -range, range)
+		x_offset = clamp(x, -range, range)
 	if(!isnull(y))
-		y_offset = CLAMP(y, -range, range)
+		y_offset = clamp(y, -range, range)
 	update_indicator()
 
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending)

@@ -101,6 +101,7 @@
   *
   * Result can be
   * * MODE_WHISPER (Quiet speech)
+  * * MODE_SING (Singing)
   * * MODE_HEADSET (Common radio channel)
   * * A department radio (lots of values here)
   */
@@ -108,6 +109,8 @@
 	var/key = message[1]
 	if(key == "#")
 		return MODE_WHISPER
+	else if(key == "%")
+		return MODE_SING
 	else if(key == ";")
 		return MODE_HEADSET
 	else if((length(message) > (length(key) + 1)) && (key in GLOB.department_radio_prefixes))

@@ -68,7 +68,7 @@
 			. += "<span class='info'>The brain has been removed from [src].</span>"
 		else if(brain.suicided || brainmob?.suiciding)
 			. += "<span class='info'>There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.</span>"
-		else if(brain.brain_death || brainmob?.health <= HEALTH_THRESHOLD_DEAD)
+		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
 			. += "<span class='info'>It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.</span>"
 		else if(brainmob)
 			if(brainmob.get_ghost(FALSE, TRUE))
@@ -147,6 +147,8 @@
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
 					facial_hair_color = H.dna.features["mcolor"]
+				else if(hair_color == "fixedmutcolor")
+					facial_hair_color = "#[S.fixed_mut_color]"
 				else
 					facial_hair_color = S.hair_color
 			else
@@ -162,6 +164,8 @@
 			if(S.hair_color)
 				if(S.hair_color == "mutcolor")
 					hair_color = H.dna.features["mcolor"]
+				else if(hair_color == "fixedmutcolor")
+					hair_color = "#[S.fixed_mut_color]"
 				else
 					hair_color = S.hair_color
 			else

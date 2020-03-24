@@ -53,6 +53,27 @@
 	for(var/I in adjacent_turfs)
 		. |= get_area(I)
 
+/**
+ * Get a bounding box of a list of atoms.
+ *
+ * Arguments:
+ * - atoms - List of atoms. Can accept output of view() and range() procs.
+ *
+ * Returns: list(x1, y1, x2, y2)
+ */
+/proc/get_bbox_of_atoms(list/atoms)
+	var/list/list_x = list()
+	var/list/list_y = list()
+	for(var/_a in atoms)
+		var/atom/a = _a
+		list_x += a.x
+		list_y += a.y
+	return list(
+		min(list_x),
+		min(list_y),
+		max(list_x),
+		max(list_y))
+
 // Like view but bypasses luminosity check
 
 /proc/get_hear(range, atom/source)
@@ -152,11 +173,11 @@
 /proc/recursive_hear_check(O)
 	var/list/processing_list = list(O)
 	. = list()
-	while(processing_list.len)
-		var/atom/A = processing_list[1]
+	var/i = 0
+	while(i < length(processing_list))
+		var/atom/A = processing_list[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
-		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
 /** recursive_organ_check
@@ -200,10 +221,8 @@
 	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
 	var/turf/T = get_turf(source)
 	. = list()
-
 	if(!T)
 		return
-
 	var/list/processing_list = list()
 	if (R == 0) // if the range is zero, we know exactly where to look for, we can skip view
 		processing_list += T.contents // We can shave off one iteration by assuming turfs cannot hear
@@ -216,12 +235,12 @@
 			processing_list += O
 		T.luminosity = lum
 
-	while(processing_list.len) // recursive_hear_check inlined here
-		var/atom/A = processing_list[1]
+	var/i = 0
+	while(i < length(processing_list)) // recursive_hear_check inlined here
+		var/atom/A = processing_list[++i]
 		if(A.flags_1 & HEAR_1)
 			. += A
 			SEND_SIGNAL(A, COMSIG_ATOM_HEARER_IN_VIEW, processing_list, .)
-		processing_list.Cut(1, 2)
 		processing_list += A.contents
 
 /proc/get_mobs_in_radio_ranges(list/obj/item/radio/radios)
@@ -230,7 +249,6 @@
 	for(var/obj/item/radio/R in radios)
 		if(R)
 			. |= get_hearers_in_view(R.canhear_range, R)
-
 
 #define SIGNV(X) ((X<0)?-1:1)
 
@@ -279,12 +297,15 @@
 	else
 		return 0
 
-
-/proc/try_move_adjacent(atom/movable/AM)
+/proc/try_move_adjacent(atom/movable/AM, trydir)
 	var/turf/T = get_turf(AM)
-	for(var/direction in GLOB.cardinals)
+	if(trydir)
+		if(AM.Move(get_step(T, trydir)))
+			return TRUE
+	for(var/direction in (GLOB.cardinals-trydir))
 		if(AM.Move(get_step(T, direction)))
-			break
+			return TRUE
+	return FALSE
 
 /proc/get_mob_by_key(key)
 	var/ckey = ckey(key)

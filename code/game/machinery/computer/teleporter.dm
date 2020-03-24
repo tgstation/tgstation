@@ -5,8 +5,8 @@
 	icon_keyboard = "teleport_key"
 	light_color = LIGHT_COLOR_BLUE
 	circuit = /obj/item/circuitboard/computer/teleporter
-	ui_x = 475
-	ui_y = 130
+	ui_x = 470
+	ui_y = 140
 	var/regime_set = "Teleporter"
 	var/id
 	var/obj/machinery/teleport/station/power_station
@@ -159,12 +159,12 @@
 		log_game("[key_name(user)] has set the teleporter target to [target_station] at [AREACOORD(T)]")
 		target = target_station.teleporter_hub
 		target_station.linked_stations |= power_station
-		target_station.stat &= ~NOPOWER
+		target_station.machine_stat &= ~NOPOWER
 		if(target_station.teleporter_hub)
-			target_station.teleporter_hub.stat &= ~NOPOWER
+			target_station.teleporter_hub.machine_stat &= ~NOPOWER
 			target_station.teleporter_hub.update_icon()
 		if(target_station.teleporter_console)
-			target_station.teleporter_console.stat &= ~NOPOWER
+			target_station.teleporter_console.machine_stat &= ~NOPOWER
 			target_station.teleporter_console.update_icon()
 
 /obj/machinery/computer/teleporter/proc/is_eligible(atom/movable/AM)

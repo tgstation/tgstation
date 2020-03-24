@@ -98,7 +98,10 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/fries/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
@@ -108,7 +111,10 @@
 	filling_color = "FFD700"
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/tatortot/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -130,7 +136,10 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN | DAIRY
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/cheesyfries/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
@@ -149,7 +158,10 @@
 	filling_color = "#FFA500"
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtype = VEGETABLES
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/carrotfries/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/candiedapple
 	name = "candied apple"
@@ -399,38 +411,26 @@
 	icon_state = "powercrepe"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/iron = 10)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/cherryjelly = 5)
-	force = 20
-	throwforce = 10
-	block_chance = 50
-	armour_penetration = 75
+	force = 30
+	throwforce = 15
+	block_chance = 55
+	armour_penetration = 80
 	attack_verb = list("slapped", "slathered")
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
 
-/obj/item/reagent_containers/food/snacks/lollipop
-	name = "lollipop"
-	desc = "A delicious lollipop. Makes for a great Valentine's present."
-	icon = 'icons/obj/lollipop.dmi'
-	icon_state = "lollipop_stick"
-	item_state = "lollipop_stick"
+/obj/item/reagent_containers/food/snacks/chewable
 	slot_flags = ITEM_SLOT_MASK
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
-	var/mutable_appearance/head
-	var/headcolor = rgb(0, 0, 0)
+	///How long it lasts before being deleted
 	var/succ_dur = 180
+	///The delay between each time it will handle reagents
 	var/succ_int = 100
+	///Stores the time set for the next handle_reagents
 	var/next_succ = 0
-	tastes = list("candy" = 1)
-	foodtype = JUNKFOOD | SUGAR
 
-/obj/item/reagent_containers/food/snacks/lollipop/Initialize()
-	. = ..()
-	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
-	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
-
-	//makes lollipops actually wearable as masks and still edible the old fashioned way.
-/obj/item/reagent_containers/food/snacks/lollipop/proc/handle_reagents()
+	//makes snacks actually wearable as masks and still edible the old fashioned way.
+/obj/item/reagent_containers/food/snacks/chewable/proc/handle_reagents()
 	if(reagents.total_volume)
 		if(iscarbon(loc))
 			var/mob/living/carbon/C = loc
@@ -442,7 +442,7 @@
 				return
 		reagents.remove_any(REAGENTS_METABOLISM)
 
-/obj/item/reagent_containers/food/snacks/lollipop/process()
+/obj/item/reagent_containers/food/snacks/chewable/process()
 	if(iscarbon(loc))
 		if(succ_dur < 1)
 			qdel(src)
@@ -452,42 +452,112 @@
 			handle_reagents()
 			next_succ = world.time + succ_int
 
-/obj/item/reagent_containers/food/snacks/lollipop/equipped(mob/user, slot)
+/obj/item/reagent_containers/food/snacks/chewable/equipped(mob/user, slot)
 	. = ..()
 	if(slot == ITEM_SLOT_MASK)
 		START_PROCESSING(SSobj, src)
 	else
 		STOP_PROCESSING(SSobj, src)
 
-/obj/item/reagent_containers/food/snacks/lollipop/Destroy()
+/obj/item/reagent_containers/food/snacks/chewable/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/reagent_containers/food/snacks/lollipop/proc/change_head_color(C)
+/obj/item/reagent_containers/food/snacks/chewable/lollipop
+	name = "lollipop"
+	desc = "A delicious lollipop. Makes for a great Valentine's present."
+	icon = 'icons/obj/lollipop.dmi'
+	icon_state = "lollipop_stick"
+	item_state = "lollipop_stick"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
+	var/mutable_appearance/head
+	var/headcolor = rgb(0, 0, 0)
+	succ_dur = 180
+	succ_int = 100
+	next_succ = 0
+	tastes = list("candy" = 1)
+	foodtype = JUNKFOOD | SUGAR
+
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/Initialize()
+	. = ..()
+	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
+	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
+
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/proc/change_head_color(C)
 	headcolor = C
 	cut_overlay(head)
 	head.color = C
 	add_overlay(head)
 
-/obj/item/reagent_containers/food/snacks/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	..(hit_atom)
 	throw_speed = 1
 	throwforce = 0
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/Initialize()
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/equipped(mob/living/user, slot)
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg/equipped(mob/living/user, slot)
 	. = ..(user, slot)
 	spamchecking = FALSE
 
-/obj/item/reagent_containers/food/snacks/lollipop/cyborg/proc/spamcheck()
+/obj/item/reagent_containers/food/snacks/chewable/lollipop/cyborg/proc/spamcheck()
 	if(spamchecking)
 		qdel(src)
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum
+	name = "bubblegum"
+	desc = "A rubbery strip of gum. Not exactly filling, but it keeps you busy."
+	icon_state = "bubblegum"
+	item_state = "bubblegum"
+	color = "#E48AB5" // craftable custom gums someday?
+	list_reagents = list(/datum/reagent/consumable/sugar = 5)
+	tastes = list("candy" = 1)
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine
+	name = "nicotine gum"
+	list_reagents = list(/datum/reagent/drug/nicotine = 10, /datum/reagent/consumable/menthol = 5)
+	tastes = list("mint" = 1)
+	color = "#60A584"
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness
+	name = "HP+ gum"
+	desc = "A rubbery strip of gum. It smells funny."
+	list_reagents = list(/datum/reagent/drug/happiness = 15)
+	tastes = list("paint thinner" = 1)
+	color = "#EE35FF"
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum
+	name = "bubblegum gum"
+	desc = "A rubbery strip of gum. You don't feel like eating it is a good idea."
+	color = "#913D3D"
+	list_reagents = list(/datum/reagent/blood = 15)
+	tastes = list("hell" = 1)
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/process()
+	. = ..()
+	if(iscarbon(loc))
+		hallucinate(loc)
+
+
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/On_Consume(mob/living/eater)
+	. = ..()
+	if(iscarbon(eater))
+		hallucinate(eater)
+
+///This proc has a 5% chance to have a bubblegum line appear, with an 85% chance for just text and 15% for a bubblegum hallucination and scarier text.
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/proc/hallucinate(mob/living/carbon/victim)
+	if(!prob(5)) //cursed by bubblegum
+		return
+	if(prob(15))
+		new /datum/hallucination/oh_yeah(victim)
+		to_chat(victim, "<span class='colossus'><b>[pick("I AM IMMORTAL.","I SHALL TAKE YOUR WORLD.","I SEE YOU.","YOU CANNOT ESCAPE ME FOREVER.","NOTHING CAN HOLD ME.")]</b></span>")
+	else
+		to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
 
 /obj/item/reagent_containers/food/snacks/gumball
 	name = "gumball"
@@ -593,6 +663,7 @@
 	desc = "A sliced piece of juicy pineapple."
 	icon_state = "pineapple_slice"
 	filling_color = "#F6CB0B"
+	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
 	tastes = list("pineapple" = 1)
 	foodtype = FRUIT | PINEAPPLE
 
@@ -619,7 +690,7 @@
 /obj/item/reagent_containers/food/snacks/canned/proc/open_can(mob/user)
 	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
 	playsound(user.loc, 'sound/items/foodcanopen.ogg', 50)
-	ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+	reagents.flags |= OPENCONTAINER
 	spillable = TRUE
 
 /obj/item/reagent_containers/food/snacks/canned/attack_self(mob/user)
@@ -683,3 +754,4 @@
 	filling_color = "#ECA735"
 	tastes = list("fried corn" = 1)
 	foodtype = JUNKFOOD | FRIED
+

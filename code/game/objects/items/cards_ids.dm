@@ -411,8 +411,8 @@ update_label()
 
 			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
 			if(!target_occupation)
-				registered_name = ""
 				return
+			registered_name = input_name
 			assignment = target_occupation
 			update_label()
 			forged = TRUE
@@ -457,6 +457,26 @@ update_label()
 	desc = "An ID straight from the Syndicate."
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
+	icon_state = "syndie"
+	access = list(ACCESS_SYNDICATE)
+	uses_overlays = FALSE
+
+/obj/item/card/id/syndicate_command/crew_id
+	name = "syndicate ID card"
+	id_type_name = "syndicate ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Operative"
+	icon_state = "syndie"
+	access = list(ACCESS_SYNDICATE)
+	uses_overlays = FALSE
+
+/obj/item/card/id/syndicate_command/captain_id
+	name = "syndicate captain ID card"
+	id_type_name = "syndicate captain ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Ship Captain"
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE

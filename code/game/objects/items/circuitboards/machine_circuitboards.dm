@@ -654,23 +654,8 @@
 	else
 		return ..()
 
-/obj/item/circuitboard/machine/clonepod
-	name = "Clone Pod (Machine Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/clonepod
-	req_components = list(
-		/obj/item/stack/cable_coil = 2,
-		/obj/item/stock_parts/scanning_module = 2,
-		/obj/item/stock_parts/manipulator = 2,
-		/obj/item/stack/sheet/glass = 1)
-
-/obj/item/circuitboard/machine/clonepod/experimental
-	name = "Experimental Clone Pod (Machine Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/clonepod/experimental
-
-/obj/item/circuitboard/machine/clonescanner
-	name = "Cloning Scanner (Machine Board)"
+/obj/item/circuitboard/machine/dnascanner
+	name = "DNA Scanner (Machine Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/dna_scannernew
 	req_components = list(
@@ -717,7 +702,7 @@
 	if(!new_cost || (loc != user))
 		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its cost!</span>")
 		return
-	custom_cost = CLAMP(round(new_cost, 1), 10, 1000)
+	custom_cost = clamp(round(new_cost, 1), 10, 1000)
 	to_chat(user, "<span class='notice'>The cost is now set to [custom_cost].</span>")
 
 /obj/item/circuitboard/machine/medical_kiosk/examine(mob/user)
@@ -748,6 +733,10 @@
 		/obj/item/stack/cable_coil = 1,
 		/obj/item/stack/sheet/glass = 2)
 
+/obj/item/circuitboard/machine/sleeper/party
+	name = "Party Pod (Machine Board)"
+	build_path = /obj/machinery/sleeper/party
+
 /obj/item/circuitboard/machine/smoke_machine
 	name = "Smoke Machine (Machine Board)"
 	icon_state = "medical"
@@ -768,6 +757,13 @@
 		/obj/item/stack/cable_coil = 3,
 		/obj/item/stock_parts/manipulator = 1,
 		/obj/item/stock_parts/capacitor = 1)
+
+/obj/item/circuitboard/machine/medipen_refiller
+	name = "Medipen Refiller (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medipen_refiller
+	req_components = list(
+		/obj/item/stock_parts/matter_bin = 1)
 
 /obj/item/circuitboard/machine/techfab/department/medical
 	name = "\improper Departmental Techfab (Machine Board) - Medical"
@@ -887,7 +883,7 @@
 	if(!new_cloud || (loc != user))
 		to_chat(user, "<span class='warning'>You must hold the circuitboard to change its Cloud ID!</span>")
 		return
-	cloud_id = CLAMP(round(new_cloud, 1), 1, 100)
+	cloud_id = clamp(round(new_cloud, 1), 1, 100)
 
 /obj/item/circuitboard/machine/public_nanite_chamber/examine(mob/user)
 	. = ..()
@@ -1176,17 +1172,15 @@
 	icon_state = "supply"
 	build_path = /obj/machinery/rnd/production/techfab/department/cargo
 
-/obj/item/circuitboard/machine/pump
-	name = "Portable Liquid Pump (Machine Board)"
+//Misc
+/obj/item/circuitboard/machine/sheetifier
+	name = "Sheet-meister 2000 (Machine Board)"
 	icon_state = "supply"
-	build_path = /obj/machinery/power/liquid_pump
-	needs_anchored = FALSE
+	build_path = /obj/machinery/sheetifier
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/matter_bin = 2)
-
-//Misc
-
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
@@ -1211,3 +1205,12 @@
 		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
 		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
+
+/obj/item/circuitboard/machine/hypnochair
+	name = "Enhanced Interrogation Chamber (Machine Board)"
+	icon_state = "security"
+	build_path = /obj/machinery/hypnochair
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/scanning_module = 2
+	)

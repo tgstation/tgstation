@@ -373,8 +373,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 			sharer_temperature = max(sharer_temperature + heat/sharer_heat_capacity, TCMB)
 			if(sharer)
 				sharer.temperature = sharer_temperature
-				if (initial(sharer.gc_share)) 
-					sharer.garbage_collect() 
+				if (initial(sharer.gc_share))
+					sharer.garbage_collect()
 	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
 
@@ -410,8 +410,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!length(cached_gases))
 		return
 	var/list/reactions = list()
-	for(var/I in cached_gases)
-		reactions += SSair.gas_reactions[I]
+	for(var/datum/gas_reaction/G in SSair.gas_reactions)
+		if(cached_gases[G.major_gas])
+			reactions += G
 	if(!length(reactions))
 		return
 	reaction_results = new

@@ -8,11 +8,12 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	throwforce = 0
 
 /mob/dead/Initialize()
+	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 	tag = "mob_[next_mob_id++]"
-	GLOB.mob_list += src
+	add_to_mob_list()
 
 	prepare_huds()
 

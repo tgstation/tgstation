@@ -35,7 +35,7 @@
 /datum/reagent/toxin/mutagen/reaction_mob(mob/living/carbon/M, method=TOUCH, reac_volume)
 	if(!..())
 		return
-	if(!M.has_dna())
+	if(!M.has_dna() || (HAS_TRAIT(M, TRAIT_RADIMMUNE) || HAS_TRAIT(M, TRAIT_BADDNA)))
 		return  //No robots, AIs, aliens, Ians or other mobs should be affected by this.
 	if((method==VAPOR && prob(min(33, reac_volume))) || method==INGEST || method==PATCH || method==INJECT)
 		M.randmuti()
@@ -61,6 +61,7 @@
 	taste_mult = 1.5
 	color = "#8228A0"
 	toxpwr = 3
+	material = /datum/material/plasma
 
 /datum/reagent/toxin/plasma/on_mob_life(mob/living/carbon/C)
 	if(holder.has_reagent(/datum/reagent/medicine/epinephrine))
@@ -167,6 +168,8 @@
 /datum/reagent/toxin/zombiepowder/on_mob_metabolize(mob/living/L)
 	..()
 	ADD_TRAIT(L, TRAIT_FAKEDEATH, type)
+	if(fakedeath_active)
+		L.fakedeath(type)
 
 /datum/reagent/toxin/zombiepowder/on_mob_end_metabolize(mob/living/L)
 	L.cure_fakedeath(type)
@@ -175,8 +178,9 @@
 /datum/reagent/toxin/zombiepowder/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	L.adjustOxyLoss(0.5*REM, 0)
 	if(method == INGEST)
-		fakedeath_active = TRUE
-		L.fakedeath(type)
+		var/datum/reagent/toxin/zombiepowder/Z = L.reagents.has_reagent(/datum/reagent/toxin/zombiepowder)
+		if(istype(Z))
+			Z.fakedeath_active = TRUE
 
 /datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M)
 	..()
@@ -903,3 +907,20 @@
 		to_chat(M, "<span class='notice'>[tox_message]</span>")
 	. = 1
 	..()
+
+/datum/reagent/toxin/leadacetate
+	name = "Lead Acetate"
+	description = "Used hundreds of years ago as a sweetener, before it was realized that it's incredibly poisonous."
+	reagent_state = SOLID
+	color = "#2b2b2b" // rgb: 127, 132, 0
+	toxpwr = 0.5
+	taste_mult = 1.3
+	taste_description = "sugary sweetness"
+
+/datum/reagent/toxin/leadacetate/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS,1)
+	M.adjustOrganLoss(ORGAN_SLOT_BRAIN,1)
+	if(prob(1))
+		to_chat(M, "<span class='notice'>Ah, what was that? You thought you heard something...</span>")
+		M.confused += 5
+	return ..()

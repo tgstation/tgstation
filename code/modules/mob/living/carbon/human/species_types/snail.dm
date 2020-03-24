@@ -41,7 +41,7 @@
 	var/obj/item/storage/backpack/bag = C.get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()
-		C.doUnEquip(bag, TRUE, no_move = TRUE)
+		C.temporarilyRemoveItemFromInventory(bag, TRUE)
 		qdel(bag)
 
 /obj/item/storage/backpack/snail

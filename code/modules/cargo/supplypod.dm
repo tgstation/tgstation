@@ -79,15 +79,15 @@
 	. = ..()
 	setStyle(style, TRUE) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
-/obj/structure/closet/supplypod/update_icon()
-	cut_overlays()
+/obj/structure/closet/supplypod/update_overlays()
+	. = ..()
 	if (style == STYLE_SEETHROUGH || style == STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
 		return
 	else
 		if (opened)
-			add_overlay("[icon_state]_open")
+			. += "[icon_state]_open"
 		else
-			add_overlay("[icon_state]_door")
+			. += "[icon_state]_door"
 
 /obj/structure/closet/supplypod/proc/setStyle(chosenStyle, duringInit = FALSE) //Used to give the sprite an icon state, name, and description
 	if (!duringInit && style == chosenStyle) //Check if the input style is already the same as the pod's style. This happens in centcom_podlauncher, and as such we set the style to STYLE_CENTCOM.

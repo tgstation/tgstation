@@ -252,7 +252,7 @@
 		if(6)
 			//Cut speed
 			T.visible_message("<span class='userdanger'>[user] starts moving slower!</span>")
-			user.add_movespeed_modifier(MOVESPEED_ID_DIE_OF_FATE, update=TRUE, priority=100, multiplicative_slowdown=1)
+			user.add_movespeed_modifier(/datum/movespeed_modifier/die_of_fate)
 		if(7)
 			//Throw
 			T.visible_message("<span class='userdanger'>Unseen forces throw [user]!</span>")
@@ -389,8 +389,9 @@
 	icon_state = "1"
 	color = rgb(0,0,255)
 
-/obj/structure/ladder/unbreakable/rune/update_icon()
-	return
+/obj/structure/ladder/unbreakable/rune/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
 
 /obj/structure/ladder/unbreakable/rune/show_fluff_message(up,mob/user)
 	user.visible_message("<span class='notice'>[user] activates \the [src].</span>", "<span class='notice'>You activate \the [src].</span>")
