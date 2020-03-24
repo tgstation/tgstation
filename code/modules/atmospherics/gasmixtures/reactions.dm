@@ -1,4 +1,22 @@
 //All defines used in reactions are located in ..\__DEFINES\reactions.dm
+/*priority so far, check this list to see what are the numbers used. please use a different priority if the reaction doesn't work (higher number are done first)
+miaster = -10 (this should always be under all other fires)
+freonfire = -3
+plasmafire = -2
+h2fire = -1
+tritfire = -1
+nitrous_decomp = 0
+water_vapor = 1
+fusion = 2
+nitrylformation = 3
+bzformation = 4
+freonformation = 5
+stimformation = 5
+nobiliumformation = 6
+stimball = 7
+ammoniacrystals = 8
+nobiliumsuppression = INFINITY
+*/
 
 /proc/init_gas_reactions()
 	. = list()
@@ -292,6 +310,36 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
 
 	if(energy_released < 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+
+/datum/gas_reaction/ammoniacrystals
+	priority = 8
+	name = "Ammonia crystals formation"
+	id = "n2crystals"
+
+/datum/gas_reaction/ammoniacrystals/init_reqs()
+	min_requirements = list(
+		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
+		/datum/gas/nitrogen = MINIMUM_MOLE_COUNT
+	)
+
+/datum/gas_reaction/ammoniacrystals/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_heat_capacity = air.heat_capacity()
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/turf/open/location = isturf(holder) ? holder : null
+	var/consumed_fuel = 0
+	if(temperature > 150 && temperature < T0C && cached_gases[/datum/gas/nitrogen][MOLES] > cached_gases[/datum/gas/hydrogen][MOLES])
+		consumed_fuel = (cached_gases[/datum/gas/hydrogen][MOLES] / AMMONIA_FORMATION_FACTOR)
+		cached_gases[/datum/gas/nitrogen][MOLES] -= consumed_fuel
+		cached_gases[/datum/gas/hydrogen][MOLES] -= consumed_fuel * 4
+		if(prob(30 * consumed_fuel))
+			new /obj/item/stack/ammonia_crystals(location)
+		energy_released += consumed_fuel * AMMONIA_FORMATION_ENERGY
+	if(energy_released > 0)
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
