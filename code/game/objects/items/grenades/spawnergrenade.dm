@@ -1,5 +1,5 @@
 /obj/item/grenade/spawnergrenade
-	desc = "It will unleash an unspecified anomaly into the vicinity."
+	desc = "It will unleash an unspecified anomaly in the surrounding vicinity."
 	name = "delivery grenade"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "delivery"
