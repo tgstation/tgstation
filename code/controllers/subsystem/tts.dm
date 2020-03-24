@@ -9,6 +9,7 @@
   *.ogg is file is then played and .meta is used to measure the length of the speech,
   *which determines the length of the timer for spam limiting and resets the HUD icon
   *After the sound is played both files are deleted and the cycle begins anew
+  *The generator itself is an exe file and not a dll so it doesnt help cause OOM, since .dlls eat already limited BYOND memory space
   */
 
 #define GENERATOR_PATH    "tools\\tts_generator\\"	//TTS generator file location
@@ -30,14 +31,15 @@ SUBSYSTEM_DEF(tts)
 
 	if (!CONFIG_GET(flag/enable_tts))
 		can_fire = FALSE
-		stop_engine()	//Incase Word/Del() isn't called before reboot(Ex:crashes).
+		stop_engine()	//Incase Word/Del() isn't called before reboot(Ex.:crashes) and someone disabled the config.
 	else
 		start_engine()
 
 	return ..()
 
 /world/Del()
-	stop_engine()	//Server shutdown and reboot stops the engine. We use world/Del() instead of shutdown because shutdown isn't called on server shutdown(it's only called om reboot)
+	if (SStts)
+		SStts.stop_engine()	//Server shutdown and reboot stops the engine. We use world/Del() instead of shutdown because shutdown isn't called on server shutdown(it's only called om reboot)
 
 /**
   *Launches the actual TTS generator
@@ -51,13 +53,12 @@ SUBSYSTEM_DEF(tts)
 /**
   *Kills the TTS generator
   *
-  *Global proc because it needs to be called on World/Del() and the SS itsel
   *Also no config check because this should be called if configs are changed and the world restarts
   */
-/proc/stop_engine()
+
+/datum/controller/subsystem/tts/proc/stop_engine()
 	var/cmd = "taskkill /F /IM \"tts_generator.exe\" /T"
 	shell(cmd)
-
 /**
   *Checks if something is currently being proccessed for this client
   */
@@ -115,32 +116,31 @@ SUBSYSTEM_DEF(tts)
 	fdel(T.filename + ".ogg")
 	fdel(T.filename + ".meta")
 
-/datum/controller/subsystem/tts/proc/play_tts(datum/tts/T)
-	if (!T.owner)
+/datum/controller/subsystem/tts/proc/play_tts(datum/tts/TTS)
+	if (!TTS.owner)
 		message_admins("TTS request has no owner")	//I dunno how the fuck you managed to play a sound with no owner but don't
 		return
-	if (!T.owner.mob)
+	if (!TTS.owner.mob)
 		message_admins("TTS request has no mob")
 		return
 
 	var/next_channel = open_sound_channel()
 
-	T.status = STATUS_PLAYING
+	TTS.status = STATUS_PLAYING
 
-	var/turf/origin = get_turf(T.owner.mob)
+	var/turf/origin = get_turf(TTS.owner.mob)
 
-	var/list/listeners = GLOB.player_list
-	listeners = listeners & hearers(world.view, origin)
+	var/list/listeners = hearers(world.view, origin)
 	/// Gets length of the created audio file using the .meta file
-	var/audio_length = text2num(file2text(T.filename + ".meta"))
+	var/audio_length = text2num(file2text(TTS.filename + ".meta"))
 	audio_length = audio_length * 0.01
 	if (!audio_length)
-		audio_length = length(T.text)
+		audio_length = length(TTS.text)
 
-	T.life = world.time + audio_length
-	T.owner.tts_cooldown = world.time + audio_length
+	TTS.life = world.time + audio_length
+	TTS.owner.tts_cooldown = world.time + audio_length
 
-	addtimer(CALLBACK(T.owner.mob, /mob/living.proc/update_tts_hud), audio_length) //Resets the hud and spam protection
+	addtimer(CALLBACK(TTS.owner.mob, /mob/living.proc/update_tts_hud), audio_length) //Resets the hud and spam protection
 
 	for (var/M in listeners)
 		var/mob/listener = M
@@ -148,10 +148,10 @@ SUBSYSTEM_DEF(tts)
 			continue
 		if (!(listener.client.prefs.toggles & SOUND_TTS))
 			continue
-		if (T.language && !listener.can_speak_language(T.language))
+		if (TTS.language && !listener.can_speak_language(TTS.language))
 			continue
 
-		listener.playsound_local(origin, T.filename + ".ogg", 100 * T.volume_mod, 0, channel=next_channel)	//play the file we made
+		listener.playsound_local(origin, TTS.filename + ".ogg", 100 * TTS.volume_mod, 0, channel=next_channel)	//play the file we made
 
 /datum/tts
 	///Who's saying things
