@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(tts)
 	return ..()
 
 /world/Del()
-	stop_engine1()	//Server shutdown and reboot stops the engine. We use world/Del() instead of shutdown because shutdown isn't called on server shutdown(it's only called om reboot)
+	stop_engine()	//Server shutdown and reboot stops the engine. We use world/Del() instead of shutdown because shutdown isn't called on server shutdown(it's only called om reboot)
 
 /**
   *Launches the actual TTS generator
@@ -50,12 +50,11 @@ SUBSYSTEM_DEF(tts)
 
 /**
   *Kills the TTS generator
+  *
+  *Global proc because it needs to be called on World/Del() and the SS itsel
+  *Also no config check because this should be called if configs are changed and the world restarts
   */
-/proc/stop_engine1()
-	var/cmd = "taskkill /F /IM \"tts_generator.exe\" /T"
-	shell(cmd)
-
-/datum/controller/subsystem/tts/proc/stop_engine()
+/proc/stop_engine()
 	var/cmd = "taskkill /F /IM \"tts_generator.exe\" /T"
 	shell(cmd)
 

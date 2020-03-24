@@ -735,4 +735,4 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		return
 
 	if (SStts)
-		SStts.stop_engine()
+		stop_engine()
