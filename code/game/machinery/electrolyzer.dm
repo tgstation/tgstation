@@ -18,7 +18,9 @@
 	var/obj/item/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = ELECTROLYZER_MODE_STANDBY
+	///Increase the amount of moles worked on, changed by upgrading the laser tier
 	var/workingPower = 1
+	///Decrease the amount of power usage, changed by upgrading the capacitor tier
 	var/efficiency = 0.5
 
 /obj/machinery/electrolyzer/get_cell()
@@ -45,16 +47,14 @@
 /obj/machinery/electrolyzer/examine(mob/user)
 	. = ..()
 	. += "\The [src] is [on ? "on" : "off"], and the hatch is [panel_open ? "open" : "closed"]."
+
 	if(cell)
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
 
 /obj/machinery/electrolyzer/update_icon_state()
-	if(on)
-		icon_state = "electrolyzer-[mode]"
-	else
-		icon_state = "electrolyzer-off"
+	icon_state = "electrolyzer-[on ? "[mode]" : "off"]"
 
 /obj/machinery/electrolyzer/update_overlays()
 	. = ..()

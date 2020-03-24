@@ -66,6 +66,11 @@
 		if(location && location.freon_gas_act())
 			. = REACTING
 
+	else if(air.temperature <= T20C + 10)
+		if(location && location.water_vapor_gas_act())
+			air.gases[/datum/gas/water_vapor][MOLES] -= MOLES_GAS_VISIBLE
+			. = REACTING
+
 
 //tritium combustion: combustion of oxygen and tritium (treated as hydrocarbons). creates hotspots. exothermic
 /datum/gas_reaction/nitrous_decomp
