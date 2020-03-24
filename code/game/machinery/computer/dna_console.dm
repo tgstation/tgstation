@@ -586,7 +586,7 @@
 		if("makeup_injector")
 			var/buffer_index = text2num(params["index"])
 			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
-			var/buffer_slot = genetic_makeup_buffer[buffer_index]
+			var/list/buffer_slot = genetic_makeup_buffer[buffer_index]
 
 			if(!istype(buffer_slot))
 				return
@@ -600,60 +600,87 @@
 						I = new /obj/item/dnainjector/timed(loc)
 						I.fields = list("UI"=buffer_slot["UI"])
 						if(scanner_operational())
-							I.damage_coeff = connected.damage_coeff
+							I.damage_coeff = connected_scanner.damage_coeff
 						return
 				if("ue")
 					if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 						I = new /obj/item/dnainjector/timed(loc)
 						I.fields = list("name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
 						if(scanner_operational())
-							I.damage_coeff  = connected.damage_coeff
+							I.damage_coeff  = connected_scanner.damage_coeff
 						return
 				if("mixed")
 					if(buffer_slot["UI"] && buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
 						I = new /obj/item/dnainjector/timed(loc)
 						I.fields = list("UI"=buffer_slot["UI"],"name"=buffer_slot["name"], "UE"=buffer_slot["UE"], "blood_type"=buffer_slot["blood_type"])
 						if(scanner_operational())
-							I.damage_coeff = connected.damage_coeff
+							I.damage_coeff = connected_scanner.damage_coeff
 						return
 			if(I)
 				injectorready = world.time + INJECTOR_TIMEOUT
 		if("makeup_apply")
 			var/buffer_index = text2num(params["index"])
 			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
-			var/buffer_slot = genetic_makeup_buffer[buffer_index]
+			var/list/buffer_slot = genetic_makeup_buffer[buffer_index]
 
 			if(!istype(buffer_slot))
 				return
 
 			var/type = params["type"]
 
-			switch(type)
-				if("ui")
-					if(buffer_slot["UI"])
-						viable_occupant.dna.uni_identity = buffer_slot["UI"]
-						viable_occupant.updateappearance(mutations_overlay_update=1)
-					return
-				if("ue")
-					if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
-						viable_occupant.real_name = buffer_slot["name"]
-						viable_occupant.name = buffer_slot["name"]
-						viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
-						viable_occupant.dna.blood_type = buffer_slot["blood_type"]
-					return
-				if("mixed")
-					if(buffer_slot["UI"])
-						viable_occupant.dna.uni_identity = buffer_slot["UI"]
-						viable_occupant.updateappearance(mutations_overlay_update=1)
-					if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
-						viable_occupant.real_name = buffer_slot["name"]
-						viable_occupant.name = buffer_slot["name"]
-						viable_occupant.dna.unique_enzymes = buffer_slot["UE"]
-						viable_occupant.dna.blood_type = buffer_slot["blood_type"]
-					return
+			if((type != "ui") && (type != "ue") && (type != "mixed"))
+				return
 
+			apply_genetic_makeup(type, buffer_slot)
+
+		if("makeup_delay")
+			var/buffer_index = text2num(params["index"])
+			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
+			var/list/buffer_slot = genetic_makeup_buffer[buffer_index]
+
+			if(!istype(buffer_slot))
+				return
+
+			var/type = params["type"]
+
+			if((type != "ui") && (type != "ue") && (type != "mixed"))
+				return
+
+			delayed_action = list("type" = type, "buffer_slot" = buffer_slot)
 	return
 
+/obj/machinery/computer/scan_consolenew/proc/apply_genetic_makeup(type, buffer_slot)
+	if(!can_modify_occupant())
+		return
+
+	var/rad_increase = rand(100/(connected_scanner.damage_coeff ** 2),250/(connected_scanner.damage_coeff ** 2))
+
+	switch(type)
+		if("ui")
+			if(buffer_slot["UI"])
+				scanner_occupant.dna.uni_identity = buffer_slot["UI"]
+				scanner_occupant.updateappearance(mutations_overlay_update=1)
+			scanner_occupant.radiation += rad_increase
+			return
+		if("ue")
+			if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
+				scanner_occupant.real_name = buffer_slot["name"]
+				scanner_occupant.name = buffer_slot["name"]
+				scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
+				scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
+			scanner_occupant.radiation += rad_increase
+			return
+		if("mixed")
+			if(buffer_slot["UI"])
+				scanner_occupant.dna.uni_identity = buffer_slot["UI"]
+				scanner_occupant.updateappearance(mutations_overlay_update=1)
+			if(buffer_slot["name"] && buffer_slot["UE"] && buffer_slot["blood_type"])
+				scanner_occupant.real_name = buffer_slot["name"]
+				scanner_occupant.name = buffer_slot["name"]
+				scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
+				scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
+			scanner_occupant.radiation += rad_increase
+			return
 
 // Simple helper proc
 // Checks if there is a connected DNA Scanner that is operational
@@ -709,8 +736,12 @@
 
 // Called by DNA Scanners when they close
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	if(can_modify_occupant())
+	if(can_modify_occupant() && delayed_action)
 		to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
+		var/type = delayed_action["type"]
+		var/buffer_slot = delayed_action["buffer_slot"]
+		apply_genetic_makeup(type, buffer_slot)
+		delayed_action = null
 
 /obj/machinery/computer/scan_consolenew/proc/build_genetic_makeup_list()
 	if(tgui_genetic_makeup)
@@ -939,20 +970,22 @@
 	return FALSE
 
 /obj/machinery/computer/scan_consolenew/proc/get_mut_by_ref(ref)
-	if(can_modify_occupant())
-		for(var/datum/mutation/human/HM in scanner_occupant.dna.mutations)
-			if(REF(HM) == ref)
-				return HM
+	var/mutation
 
-	for(var/datum/mutation/human/HM in stored_mutations)
-		if(REF(HM) == ref)
-			return HM
+	if(can_modify_occupant())
+		mutation = (locate(ref) in scanner_occupant.dna.mutations)
+		if(mutation)
+			return mutation
+
+	mutation = (locate(ref) in stored_mutations)
+	if(mutation)
+		return mutation
 
 	if(diskette)
-		for(var/datum/mutation/human/HM in diskette.mutations)
-			if(REF(HM) == ref)
-				return HM
-
+		mutation = (locate(ref) in diskette.mutations)
+		if(mutation)
+			return mutation
+			
 	return null
 
 /////////////////////////// DNA MACHINES
