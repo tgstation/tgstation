@@ -21,7 +21,7 @@
 	empty_pod()
 	return ..()
 
-/obj/structure/transit_tube_pod/update_icon()
+/obj/structure/transit_tube_pod/update_icon_state()
 	if(contents.len)
 		icon_state = occupied_icon_state
 	else
@@ -151,7 +151,14 @@
 		outside_tube()
 
 /obj/structure/transit_tube_pod/proc/outside_tube()
+	var/list/savedcontents = contents.Copy()
+	var/saveddir = dir
+	var/turf/destination = get_edge_target_turf(src,saveddir)
+	visible_message("<span class='warning'>[src] ejects its insides out!</span>")
 	deconstruct(FALSE)//we automatically deconstruct the pod
+	for(var/i in savedcontents)
+		var/atom/movable/AM = i
+		AM.throw_at(destination,rand(1,3),5)
 
 /obj/structure/transit_tube_pod/return_air()
 	return air_contents

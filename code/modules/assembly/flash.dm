@@ -23,7 +23,7 @@
 	if(burnt_out)
 		user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but it's burnt out!</span>")
 		return SHAME
-	else if(user.eye_blind)
+	else if(user.is_blind())
 		user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it ... but [user.p_theyre()] blind!</span>")
 		return SHAME
 	user.visible_message("<span class='suicide'>[user] raises \the [src] up to [user.p_their()] eyes and activates it! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -191,6 +191,8 @@
 				to_chat(user, "<span class='warning'>They must be conscious before you can convert [H.p_them()]!</span>")
 				return
 			if(converter.add_revolutionary(H.mind))
+				if(prob(1) || SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+					H.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in.")
 				times_used -- //Flashes less likely to burn out for headrevs when used for conversion
 			else
 				to_chat(user, "<span class='warning'>This mind seems resistant to the flash!</span>")
@@ -276,7 +278,7 @@
 				user.visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>", "<span class='danger'>You hypno-flash [M]!</span>")
 
 			if(!hypnosis)
-				to_chat(M, "<span class='notice'>The light makes you feel oddly relaxed...</span>")
+				to_chat(M, "<span class='hypnophrase'>The light makes you feel oddly relaxed...</span>")
 				M.confused += min(M.confused + 10, 20)
 				M.dizziness += min(M.dizziness + 10, 20)
 				M.drowsyness += min(M.drowsyness + 10, 20)

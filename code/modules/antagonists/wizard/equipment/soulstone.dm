@@ -79,7 +79,7 @@
 		return
 	if(!ishuman(M))//If target is not a human.
 		return ..()
-	if(!M.mind.hasSoul || is_devil(M))
+	if((M.mind && !M.mind.hasSoul) || is_devil(M))
 		to_chat(user, "<span class='warning'>This... thing has no soul! It's filled with evil!</span>")
 		return
 	if(iscultist(M))
@@ -292,7 +292,10 @@
 	S.name = "Shade of [T.real_name]"
 	S.real_name = "Shade of [T.real_name]"
 	S.key = shade_controller.key
-	S.language_holder = user.language_holder.copy(S)
+	S.copy_languages(T, LANGUAGE_MIND)//Copies the old mobs languages into the new mob holder.
+	S.copy_languages(user, LANGUAGE_MASTER)
+	S.update_atom_languages()
+	grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
 	if(user)
 		S.faction |= "[REF(user)]" //Add the master as a faction, allowing inter-mob cooperation
 	if(user && iscultist(user))

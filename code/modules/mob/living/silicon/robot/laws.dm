@@ -6,6 +6,11 @@
 		return //won't work if dead
 	show_laws()
 
+/mob/living/silicon/robot/deadchat_lawchange()
+	if(lawupdate)
+		return
+	..()
+
 /mob/living/silicon/robot/show_laws(everyone = 0)
 	laws_sanity_check()
 	var/who

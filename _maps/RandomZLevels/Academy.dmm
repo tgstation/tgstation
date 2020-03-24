@@ -2136,7 +2136,7 @@
 /area/awaymission/academy/academyaft)
 "iv" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -2168,7 +2168,7 @@
 /area/awaymission/academy/academyaft)
 "iA" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/cafeteria,
@@ -2648,30 +2648,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
-"km" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kn" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"ko" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kp" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
 "kq" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -2682,29 +2658,6 @@
 /mob/living/simple_animal/hostile/wizard,
 /turf/open/floor/plasteel,
 /area/awaymission/academy/classrooms)
-"kr" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"ks" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"kt" = (
-/obj/machinery/gateway,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
-"ku" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/awaymission/academy/academygate)
 "kv" = (
 /obj/machinery/light,
 /turf/open/floor/carpet,
@@ -2775,7 +2728,7 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/academy/academyaft)
 "kI" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/away,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/academy/academygate)
@@ -3139,7 +3092,7 @@
 /area/awaymission/academy/academyengine)
 "mn" = (
 /obj/structure/rack,
-/obj/item/gun/magic/wand,
+/obj/item/gun/magic/wand/nothing,
 /turf/open/floor/plating,
 /area/awaymission/academy/academyengine)
 "mo" = (
@@ -12010,9 +11963,9 @@ jZ
 jU
 ke
 ke
-km
-kp
-ks
+kf
+kf
+kf
 ke
 kf
 ky
@@ -12140,9 +12093,9 @@ jY
 jU
 jW
 kf
-kn
+kf
 kI
-kt
+ke
 ke
 kf
 ky
@@ -12270,9 +12223,9 @@ jY
 jU
 jW
 kf
-ko
-kr
-ku
+kf
+kf
+kf
 kf
 kf
 ky

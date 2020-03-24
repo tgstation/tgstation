@@ -4,7 +4,7 @@
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
-		param = copytext(act, custom_param + 1, length(act) + 1)
+		param = copytext(act, custom_param + length(act[custom_param]))
 		act = copytext(act, 1, custom_param)
 
 	var/list/key_emotes = GLOB.emote_list[act]
@@ -19,6 +19,7 @@
 			silenced = TRUE
 			continue
 		if(P.run_emote(src, param, m_type, intentional))
+			SEND_SIGNAL(src, COMSIG_MOB_EMOTE, P, act, m_type, message, intentional)
 			return TRUE
 	if(intentional && !silenced)
 		to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
@@ -70,11 +71,15 @@
 	if(.)
 		user.spin(20, 1)
 
-		if(iscyborg(user) && user.has_buckled_mobs())
-			var/mob/living/silicon/robot/R = user
-			var/datum/component/riding/riding_datum = R.GetComponent(/datum/component/riding)
+		if((iscyborg(user) || isanimal(user)) && user.has_buckled_mobs())
+			var/mob/living/L = user
+			var/datum/component/riding/riding_datum = L.GetComponent(/datum/component/riding)
 			if(riding_datum)
-				for(var/mob/M in R.buckled_mobs)
-					riding_datum.force_dismount(M)
+				if(L.a_intent == INTENT_HELP)
+					for(var/mob/M in L.buckled_mobs)
+						riding_datum.force_dismount(M, TRUE)
+				else
+					for(var/mob/M in L.buckled_mobs)
+						riding_datum.force_dismount(M)
 			else
-				R.unbuckle_all_mobs()
+				L.unbuckle_all_mobs()

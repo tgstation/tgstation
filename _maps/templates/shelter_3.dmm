@@ -129,7 +129,7 @@
 /area/survivalpod)
 "v" = (
 /obj/machinery/door/window/survival_pod{
-	req_access_txt = "25"
+	req_access_txt = "25;48"
 	},
 /turf/open/floor/pod/dark,
 /area/survivalpod)
@@ -212,7 +212,7 @@
 /area/survivalpod)
 "I" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/light/small{

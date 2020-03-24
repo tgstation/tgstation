@@ -18,7 +18,7 @@
 	result_filters = list("Name" = null, "Charge Above" = null, "Charge Below" = null, "Responsive" = null)
 
 /obj/machinery/computer/apc_control/process()
-	if(operator && (!operator.Adjacent(src) || stat))
+	if(operator && (!operator.Adjacent(src) || machine_stat))
 		operator = null
 		if(active_apc)
 			if(!active_apc.locked)
@@ -37,7 +37,7 @@
 	..(user)
 
 /obj/machinery/computer/apc_control/proc/check_apc(obj/machinery/power/apc/APC)
-	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
+	return APC.z == z && !APC.malfhack && !APC.aidisabled && !(APC.obj_flags & EMAGGED) && !APC.machine_stat && !istype(APC.area, /area/ai_monitored) && !APC.area.outdoors
 
 /obj/machinery/computer/apc_control/ui_interact(mob/living/user)
 	. = ..()
@@ -89,7 +89,7 @@
 /obj/machinery/computer/apc_control/Topic(href, href_list)
 	if(..())
 		return
-	if(!usr || !usr.canUseTopic(src, !issilicon(usr)) || stat || QDELETED(src))
+	if(!usr || !usr.canUseTopic(src, !issilicon(usr)) || machine_stat || QDELETED(src))
 		return
 	if(href_list["authenticate"])
 		var/obj/item/card/id/ID = usr.get_idcard(TRUE)
@@ -140,7 +140,7 @@
 	if(href_list["name_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		var/new_filter = stripped_input(usr, "What name are you looking for?", name)
-		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || stat || QDELETED(src))
+		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || machine_stat || QDELETED(src))
 			return
 		log_activity("changed name filter to \"[new_filter]\"")
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
@@ -148,21 +148,21 @@
 	if(href_list["above_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (greater than).", name) as null|num
-		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || stat || QDELETED(src))
+		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || machine_stat || QDELETED(src))
 			return
 		log_activity("changed greater than charge filter to \"[new_filter]\"")
 		if(new_filter)
-			new_filter = CLAMP(new_filter, 0, 100)
+			new_filter = clamp(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 		result_filters["Charge Above"] = new_filter
 	if(href_list["below_filter"])
 		playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 		var/new_filter = input(usr, "Enter a percentage from 1-100 to sort by (lesser than).", name) as null|num
-		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || stat || QDELETED(src))
+		if(!src || !usr || !usr.canUseTopic(src, !issilicon(usr)) || machine_stat || QDELETED(src))
 			return
 		log_activity("changed lesser than charge filter to \"[new_filter]\"")
 		if(new_filter)
-			new_filter = CLAMP(new_filter, 0, 100)
+			new_filter = clamp(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 		result_filters["Charge Below"] = new_filter
 	if(href_list["access_filter"])
@@ -189,7 +189,8 @@
 		authenticated = TRUE
 		log_activity("logged in")
 	else if(!(obj_flags & EMAGGED))
-		user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>You emag [src], disabling precise logging and allowing you to clear logs.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], disabling operator tracking.")
 		obj_flags |= EMAGGED
 	playsound(src, "sparks", 50, TRUE)
@@ -200,6 +201,6 @@
 
 /mob/proc/using_power_flow_console()
 	for(var/obj/machinery/computer/apc_control/A in range(1, src))
-		if(A.operator && A.operator == src && !A.stat)
+		if(A.operator && A.operator == src && !A.machine_stat)
 			return TRUE
 	return

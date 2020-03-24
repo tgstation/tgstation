@@ -28,13 +28,16 @@
 #define ROLE_OVERTHROW			"Syndicate Mutineer"		//Role removed, left here for safety.
 #define ROLE_HIVE				"Hivemind Host"				//Role removed, left here for safety.
 #define ROLE_OBSESSED				"Obsessed"
+#define ROLE_SPACE_DRAGON		"Space Dragon"
 #define ROLE_SENTIENCE			"Sentience Potion Spawn"
+#define ROLE_PYROCLASTIC_SLIME 	"Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER		"Mind Transfer Potion"
 #define ROLE_POSIBRAIN			"Posibrain"
 #define ROLE_DRONE				"Drone"
 #define ROLE_DEATHSQUAD			"Deathsquad"
 #define ROLE_LAVALAND			"Lavaland"
 #define ROLE_INTERNAL_AFFAIRS	"Internal Affairs Agent"
+#define ROLE_FAMILIES			"Familes Antagonists"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -53,12 +56,14 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_BLOB,
 	ROLE_NINJA,
 	ROLE_OBSESSED,
+	ROLE_SPACE_DRAGON,
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR,
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
-	ROLE_SENTIENCE
+	ROLE_SENTIENCE,
+	ROLE_FAMILIES = /datum/game_mode/gang
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection

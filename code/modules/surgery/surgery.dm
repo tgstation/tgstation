@@ -79,7 +79,7 @@
 
 	if(!opcomputer)
 		return
-	if(opcomputer.stat & (NOPOWER|BROKEN))
+	if(opcomputer.machine_stat & (NOPOWER|BROKEN))
 		return .
 	if(replaced_by in opcomputer.advanced_surgeries)
 		return FALSE
@@ -101,7 +101,7 @@
 		var/obj/item/tool = user.get_active_held_item()
 		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
-		if(tool?.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")
 			return TRUE
 	return FALSE

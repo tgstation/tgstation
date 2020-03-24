@@ -86,13 +86,18 @@
 		if(A.used)
 			to_chat(user,"<span class='notice'>Recycled [I].</span>")
 			if(A.research)
-				var/c_typepath = generate_chromosome()
-				var/obj/item/chromosome/CM = new c_typepath (drop_location())
-				to_chat(user,"<span class='notice'>Recycled [I].</span>")
-				if((LAZYLEN(stored_chromosomes) < max_chromosomes) && prob(60))
-					CM.forceMove(src)
-					stored_chromosomes += CM
-					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
+				if(prob(60))
+					var/c_typepath = generate_chromosome()
+					var/obj/item/chromosome/CM = new c_typepath (drop_location())
+					if(LAZYLEN(stored_chromosomes) < max_chromosomes)
+						CM.forceMove(src)
+						stored_chromosomes += CM
+						to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
+					else
+						to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
+						to_chat(user, "<span class='notice'>[capitalize(CM.name)] added on top of the console.</span>")
+				else
+					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
 			qdel(I)
 			return
 
@@ -126,9 +131,6 @@
 	if(user.client)
 		var/datum/asset/simple/assets =  get_asset_datum(/datum/asset/simple/genetics)
 		assets.send(user.client)
-	if(!(in_range(src, user) || issilicon(user)))
-		popup.close()
-		return
 	popup.add_stylesheet("scannernew", 'html/browser/scannernew.css')
 
 	var/mob/living/carbon/viable_occupant
@@ -248,13 +250,18 @@
 			var/max_line_len = 7*DNA_BLOCK_SIZE
 			if(viable_occupant)
 				temp_html += "<div class='dnaBlockNumber'>1</div>"
-				var/len = length(viable_occupant.dna.uni_identity)
-				for(var/i=1, i<=len, i++)
-					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[i];'>[copytext(viable_occupant.dna.uni_identity,i,i+1)]</a>"
-					if ((i % max_line_len) == 0)
+				var/char = ""
+				var/ui_text = viable_occupant.dna.uni_identity
+				var/len_byte = length(ui_text)
+				var/char_it = 0
+				for(var/byte_it = 1, byte_it <= len_byte, byte_it += length(char))
+					char_it++
+					char = ui_text[byte_it]
+					temp_html += "<a class='dnaBlock' href='?src=[REF(src)];task=pulseui;num=[char_it];'>[char]</a>"
+					if((char_it % max_line_len) == 0)
 						temp_html += "</div><div class='clearBoth'>"
-					if((i % DNA_BLOCK_SIZE) == 0 && i < len)
-						temp_html += "<div class='dnaBlockNumber'>[(i / DNA_BLOCK_SIZE) + 1]</div>"
+					if((char_it % DNA_BLOCK_SIZE) == 0 && byte_it < len_byte)
+						temp_html += "<div class='dnaBlockNumber'>[(char_it / DNA_BLOCK_SIZE) + 1]</div>"
 			else
 				temp_html += "---------"
 			temp_html += "</div></div><br><h1>Buffer Menu</h1>"
@@ -512,16 +519,21 @@
 			if(HM.chromosome_name)
 				chromosome_name = HM.chromosome_name
 			temp_html += "<div class='statusLine'>Chromosome status: [chromosome_name]<br></div>"
+		temp_html += "<div class='statusLine'>Compatible chromosomes: [jointext(HM.valid_chrom_list, ", ")]<br></div>"
+
 	temp_html += "<div class='statusLine'>Sequence:<br><br></div>"
 	if(!scrambled)
 		for(var/block in 1 to A.blocks)
 			var/whole_sequence = get_valid_gene_string(mutation)
-			var/sequence = copytext(whole_sequence, 1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
+			var/sequence = copytext_char(whole_sequence, 1+(block-1)*(DNA_SEQUENCE_LENGTH*2),(DNA_SEQUENCE_LENGTH*2*block+1))
 			temp_html += "<div class='statusLine'><table class='statusDisplay'><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = 1+(i-1)*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				if(sequence[num] == "X")
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a class='incompleteBlock' href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr><tr>"
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				temp_html += "<td><div class='statusLine'>|</div></td>"
@@ -529,7 +541,11 @@
 			for(var/i in 1 to DNA_SEQUENCE_LENGTH)
 				var/num = i*2
 				var/genenum = num+(DNA_SEQUENCE_LENGTH*2*(block-1))
-				temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+
+				if(sequence[num] == "X")
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a class='incompleteBlock' href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
+				else
+					temp_html += "<td><div class='statusLine'><span class='dnaBlockNumber'><a href='?src=[REF(src)];task=pulsegene;num=[genenum];alias=[alias];'>[sequence[num]]</span></a></div></td>"
 			temp_html += "</tr></table></div>"
 		temp_html += "<br><br><br><br><br>"
 	else
@@ -560,10 +576,6 @@
 
 /obj/machinery/computer/scan_consolenew/Topic(href, href_list)
 	if(..())
-		return
-	if(!isturf(usr.loc))
-		return
-	if(!((isturf(loc) && in_range(src, usr)) || issilicon(usr)))
 		return
 	if(current_screen == "working")
 		return
@@ -606,13 +618,13 @@
 		if("setbufferlabel")
 			var/text = sanitize(input(usr, "Input a new label:", "Input a Text", null) as text|null)
 			if(num && text)
-				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
+				num = clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					buffer_slot["label"] = text
 		if("setbuffer")
 			if(num && viable_occupant)
-				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
+				num = clamp(num, 1, NUMBER_OF_BUFFERS)
 				buffer[num] = list(
 					"label"="Buffer[num]:[viable_occupant.real_name]",
 					"UI"=viable_occupant.dna.uni_identity,
@@ -622,7 +634,7 @@
 					)
 		if("clearbuffer")
 			if(num)
-				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
+				num = clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					buffer_slot.Cut()
@@ -637,7 +649,7 @@
 						apply_buffer(SCANNER_ACTION_MIXED,num)
 		if("injector")
 			if(num && injectorready < world.time)
-				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
+				num = clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					var/obj/item/dnainjector/timed/I
@@ -664,11 +676,11 @@
 						injectorready = world.time + INJECTOR_TIMEOUT
 		if("loaddisk")
 			if(num && diskette && diskette.fields)
-				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
+				num = clamp(num, 1, NUMBER_OF_BUFFERS)
 				buffer[num] = diskette.fields.Copy()
 		if("savedisk")
 			if(num && diskette && !diskette.read_only)
-				num = CLAMP(num, 1, NUMBER_OF_BUFFERS)
+				num = clamp(num, 1, NUMBER_OF_BUFFERS)
 				var/list/buffer_slot = buffer[num]
 				if(istype(buffer_slot))
 					diskette.name = "data disk \[[buffer_slot["label"]]\]"
@@ -698,7 +710,7 @@
 					viable_occupant.radiation += (RADIATION_IRRADIATION_MULTIPLIER*radduration*radstrength)/(connected.damage_coeff ** 2) //Read comment in "transferbuffer" section above for explanation
 					switch(href_list["task"])                                                                                             //Same thing as there but values are even lower, on best part they are about 0.0*, effectively no damage
 						if("pulseui")
-							var/len = length(viable_occupant.dna.uni_identity)
+							var/len = length_char(viable_occupant.dna.uni_identity)
 							num = WRAP(num, 1, len+1)
 							num = randomize_radiation_accuracy(num, radduration + (connected.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2
                                                                                                                          //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
@@ -706,12 +718,12 @@
 							var/subblock = num - block*DNA_BLOCK_SIZE
 							last_change = "UI #[block]-[subblock]; "
 
-							var/hex = copytext(viable_occupant.dna.uni_identity, num, num+1)
+							var/hex = copytext_char(viable_occupant.dna.uni_identity, num, num+1)
 							last_change += "[hex]"
 							hex = scramble(hex, radstrength, radduration)
 							last_change += "->[hex]"
 
-							viable_occupant.dna.uni_identity = copytext(viable_occupant.dna.uni_identity, 1, num) + hex + copytext(viable_occupant.dna.uni_identity, num+1, 0)
+							viable_occupant.dna.uni_identity = copytext_char(viable_occupant.dna.uni_identity, 1, num) + hex + copytext_char(viable_occupant.dna.uni_identity, num + 1)
 							viable_occupant.updateappearance(mutations_overlay_update=1)
 				else
 					current_screen = "mainmenu"
@@ -823,7 +835,7 @@
 							var/true_genes = GET_SEQUENCE(current_mutation)
 							new_gene = true_genes[num]
 							jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected.precision_coeff-1))
-						sequence = copytext(sequence, 1, num) + new_gene + copytext(sequence, num+1, length(sequence)+1)
+						sequence = copytext_char(sequence, 1, num) + new_gene + copytext_char(sequence, num + 1)
 						viable_occupant.dna.mutation_index[path] = sequence
 					viable_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected.damage_coeff
 					viable_occupant.domutcheck()
@@ -872,13 +884,13 @@
 				else
 					to_chat(usr, "<span class='warning'>Not enough space to store potential mutation.</span>")
 		if("ejectchromosome")
-			if(LAZYLEN(stored_chromosomes) <= num)
+			if(LAZYLEN(stored_chromosomes) >= num)
 				var/obj/item/chromosome/CM = stored_chromosomes[num]
 				CM.forceMove(drop_location())
 				adjust_item_drop_location(CM)
 				stored_chromosomes -= CM
 		if("applychromosome")
-			if(viable_occupant && (LAZYLEN(viable_occupant.dna.mutations) <= num))
+			if(viable_occupant && (LAZYLEN(viable_occupant.dna.mutations) >= num))
 				var/datum/mutation/human/HM = viable_occupant.dna.mutations[num]
 				var/list/chromosomes = list()
 				for(var/obj/item/chromosome/CM in stored_chromosomes)
@@ -915,7 +927,7 @@
 					var/datum/mutation/human/HM = B
 					if(HM.type == mutation)
 						true_selection -= HM
-					break
+						break
 
 		if("remove_advinjector")
 			var/selection = href_list["injector"]
@@ -925,7 +937,7 @@
 
 		if("add_advinjector")
 			if(LAZYLEN(injector_selection) < max_injector_selections)
-				var/new_selection = input(usr, "Enter Adv. Injector name", "Advanced Injectors") as text|null
+				var/new_selection = stripped_input(usr, "Enter Adv. Injector name", "Advanced Injectors")
 				if(new_selection && !(new_selection in injector_selection))
 					injector_selection[new_selection] = list()
 
@@ -957,7 +969,7 @@
 	return viable_occupant
 
 /obj/machinery/computer/scan_consolenew/proc/apply_buffer(action,buffer_num)
-	buffer_num = CLAMP(buffer_num, 1, NUMBER_OF_BUFFERS)
+	buffer_num = clamp(buffer_num, 1, NUMBER_OF_BUFFERS)
 	var/list/buffer_slot = buffer[buffer_num]
 	var/mob/living/carbon/viable_occupant = get_viable_occupant()
 	if(istype(buffer_slot))

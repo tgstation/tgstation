@@ -76,6 +76,7 @@
 	name = "Fish burger"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/carpmeat = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/fish
@@ -94,6 +95,7 @@
 	name = "Ghost burger"
 	reqs = list(
 		/obj/item/ectoplasm = 1,
+		/datum/reagent/consumable/sodiumchloride = 2,
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/ghost
@@ -201,6 +203,7 @@
 	name = "Spell burger"
 	reqs = list(
 		/obj/item/clothing/head/wizard/fake = 1,
+		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/spell
 	subcategory = CAT_BURGER
@@ -218,6 +221,7 @@
 	name = "Big bite burger"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 3,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
 		/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/burger/bigbite
@@ -231,7 +235,8 @@
 		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 5,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 4,
 		/obj/item/reagent_containers/food/snacks/cheesewedge = 3,
-		/obj/item/reagent_containers/food/snacks/boiledegg = 2,
+		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
+		/obj/item/reagent_containers/food/snacks/meat/bacon = 1,
 		/obj/item/reagent_containers/food/snacks/bun = 1
 
 	)
@@ -259,6 +264,7 @@
 /datum/crafting_recipe/food/fivealarmburger
 	name = "Five alarm burger"
 	reqs = list(
+			/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
 			/obj/item/reagent_containers/food/snacks/grown/ghost_chili = 2,
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
@@ -287,7 +293,6 @@
 	name = "Bacon Burger"
 	reqs = list(
 			/obj/item/reagent_containers/food/snacks/meat/bacon = 3,
-			/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
 			/obj/item/reagent_containers/food/snacks/bun = 1
 	)
 
@@ -312,4 +317,54 @@
 	)
 
 	result = /obj/item/reagent_containers/food/snacks/burger/crab
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/cheeseburger
+	name = "Cheese Burger"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
+			/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/cheese
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/soylentburger
+	name = "Soylent Burger"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/soylentgreen = 1, //two full meats worth.
+			/obj/item/reagent_containers/food/snacks/cheesewedge = 2,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/soylent
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/ribburger
+	name = "McRib"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/bbqribs = 1,     //The sauce is already included in the ribs
+			/obj/item/reagent_containers/food/snacks/onion_slice = 1, //feel free to remove if too burdensome.
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/rib
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/mcguffin
+	name = "McGuffin"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/friedegg = 1,
+			/obj/item/reagent_containers/food/snacks/meat/bacon = 2,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/mcguffin
+	subcategory = CAT_BURGER
+
+/datum/crafting_recipe/food/chickenburger
+	name = "Chicken Sandwich"
+	reqs = list(
+			/obj/item/reagent_containers/food/snacks/meat/steak/chicken = 1,
+			/datum/reagent/consumable/mayonnaise = 5,
+			/obj/item/reagent_containers/food/snacks/bun = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/burger/chicken
 	subcategory = CAT_BURGER

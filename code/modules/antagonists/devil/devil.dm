@@ -260,7 +260,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	owner.current.forceMove(A)
 	A.oldform = owner.current
 	owner.transfer_to(A)
-	A.set_name()
+	A.set_devil_name()
 	give_appropriate_spells()
 	form = TRUE_DEVIL
 	update_hud()
@@ -473,7 +473,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 				H.forceMove(A)
 				A.oldform = H
 				owner.transfer_to(A, TRUE)
-				A.set_name()
+				A.set_devil_name()
 				if(SOULVALUE >= ARCH_THRESHOLD && ascendable)
 					A.convert_to_archdevil()
 	else
@@ -523,7 +523,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	handle_clown_mutation(M, mob_override ? null : "Your infernal nature has allowed you to overcome your clownishness.")
-	owner.current.grant_all_languages(TRUE)
+	owner.current.grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_DEVIL)
 	update_hud()
 	.=..()
 
@@ -535,6 +535,7 @@ GLOBAL_LIST_INIT(devil_suffix, list(" the Red", " the Soulless", " the Master", 
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
 	handle_clown_mutation(M, removing = FALSE)
+	owner.current.remove_all_languages(LANGUAGE_DEVIL)
 	.=..()
 
 /datum/antagonist/devil/proc/printdevilinfo()

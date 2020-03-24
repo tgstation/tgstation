@@ -7,11 +7,19 @@
 #define PLAYER_READY_TO_PLAY 1
 #define PLAYER_READY_TO_OBSERVE 2
 
+//Game mode list indexes
+#define CURRENT_LIVING_PLAYERS	"living_players_list"
+#define CURRENT_LIVING_ANTAGS	"living_antags_list"
+#define CURRENT_DEAD_PLAYERS	"dead_players_list"
+#define CURRENT_OBSERVERS		"current_observers_list"
+
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
 
 //Blood levels
+#define BLOOD_VOLUME_MAX_LETHAL		2150
+#define BLOOD_VOLUME_EXCESS			2100
 #define BLOOD_VOLUME_MAXIMUM		2000
 #define BLOOD_VOLUME_SLIME_SPLIT	1120
 #define BLOOD_VOLUME_NORMAL			560
@@ -33,8 +41,8 @@
 #define VENTCRAWLER_ALWAYS 2
 
 //Bloodcrawling defines
-#define BLOODCRAWL 1
-#define BLOODCRAWL_EAT 2
+#define BLOODCRAWL 1 /// bloodcrawling, see: [/mob/living/var/bloodcrawl]
+#define BLOODCRAWL_EAT 2 /// crawling+mob devour
 
 //Mob bio-types flags
 #define MOB_ORGANIC 	1 << 0
@@ -181,6 +189,8 @@
 #define ETHEREAL_CHARGE_NORMAL 50
 #define ETHEREAL_CHARGE_ALMOSTFULL 75
 #define ETHEREAL_CHARGE_FULL 100
+#define ETHEREAL_CHARGE_OVERLOAD 125
+#define ETHEREAL_CHARGE_DANGEROUS 150
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -238,9 +248,9 @@
 ///The shock doesn't stun.
 #define SHOCK_NOSTUN (1 << 3)
 
-#define INCORPOREAL_MOVE_BASIC 1
-#define INCORPOREAL_MOVE_SHADOW 2 // leaves a trail of shadows
-#define INCORPOREAL_MOVE_JAUNT 3 // is blocked by holy water/salt
+#define INCORPOREAL_MOVE_BASIC 1 /// normal movement, see: [/mob/living/var/incorporeal_move]
+#define INCORPOREAL_MOVE_SHADOW 2 /// leaves a trail of shadows
+#define INCORPOREAL_MOVE_JAUNT 3 /// is blocked by holy water/salt
 
 //Secbot and ED209 judgement criteria bitflag values
 #define JUDGE_EMAGGED		(1<<0)

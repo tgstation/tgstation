@@ -132,13 +132,11 @@
 		M.emote("cough")
 		return 1
 
-/obj/effect/particle_effect/smoke/bad/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover, /obj/projectile/beam))
-		var/obj/projectile/beam/B = mover
+/obj/effect/particle_effect/smoke/bad/Crossed(atom/movable/AM, oldloc)
+	. = ..()
+	if(istype(AM, /obj/projectile/beam))
+		var/obj/projectile/beam/B = AM
 		B.damage = (B.damage/2)
-	return 1
-
-
 
 /datum/effect_system/smoke_spread/bad
 	effect_type = /obj/effect/particle_effect/smoke/bad
@@ -180,7 +178,7 @@
 				if(!isnull(U.welded) && !U.welded) //must be an unwelded vent pump or vent scrubber.
 					U.welded = TRUE
 					U.update_icon()
-					U.visible_message("<span class='danger'>[U] was frozen shut!</span>")
+					U.visible_message("<span class='danger'>[U] is frozen shut!</span>")
 		for(var/mob/living/L in T)
 			L.ExtinguishMob()
 		for(var/obj/item/Item in T)
@@ -233,8 +231,6 @@
 		var/fraction = 1/initial(lifetime)
 		for(var/atom/movable/AM in T)
 			if(AM.type == src.type)
-				continue
-			if(T.intact && AM.level == 1) //hidden under the floor
 				continue
 			reagents.reaction(AM, TOUCH, fraction)
 

@@ -9,7 +9,7 @@
 	icon_state = "bus"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ntnet_relay
-	ui_x = 500
+	ui_x = 400
 	ui_y = 300
 
 	var/datum/ntnet/NTNet = null // This is mostly for backwards reference and to allow varedit modifications from ingame.
@@ -27,7 +27,7 @@
 
 // TODO: Implement more logic here. For now it's only a placeholder.
 /obj/machinery/ntnet_relay/is_operational()
-	if(stat & (BROKEN | NOPOWER | EMPED))
+	if(machine_stat & (BROKEN | NOPOWER | EMPED))
 		return FALSE
 	if(dos_failure)
 		return FALSE
@@ -35,7 +35,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/ntnet_relay/update_icon()
+/obj/machinery/ntnet_relay/update_icon_state()
 	if(is_operational())
 		icon_state = "bus"
 	else
@@ -91,10 +91,12 @@
 			dos_failure = 0
 			update_icon()
 			SSnetworks.station_network.add_log("Quantum relay manually restarted from overload recovery mode to normal operation mode.")
+			return TRUE
 		if("toggle")
 			enabled = !enabled
 			SSnetworks.station_network.add_log("Quantum relay manually [enabled ? "enabled" : "disabled"].")
 			update_icon()
+			return TRUE
 
 /obj/machinery/ntnet_relay/Initialize()
 	uid = gl_uid++

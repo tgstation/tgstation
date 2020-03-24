@@ -29,11 +29,10 @@
 				latches = "triple_latch"
 	update_icon()
 
-/obj/item/storage/toolbox/update_icon()
-	..()
-	cut_overlays()
+/obj/item/storage/toolbox/update_overlays()
+	. = ..()
 	if(has_latches)
-		add_overlay(latches)
+		. += latches
 
 
 /obj/item/storage/toolbox/suicide_act(mob/user)
@@ -226,6 +225,41 @@
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
 	new /obj/item/ammo_box/a762(src)
+
+/obj/item/storage/toolbox/infiltrator
+	name = "insidious case"
+	desc = "Bearing the emblem of the Syndicate, this case contains a full infiltrator stealth suit, and has enough room to fit weaponry if necessary."
+	icon_state = "infiltrator_case"
+	item_state = "infiltrator_case"
+	force = 15
+	throwforce = 18
+	w_class = WEIGHT_CLASS_NORMAL
+	has_latches = FALSE
+
+/obj/item/storage/toolbox/infiltrator/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 10
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.set_holdable(list(
+		/obj/item/clothing/head/helmet/infiltrator,
+		/obj/item/clothing/suit/armor/vest/infiltrator,
+		/obj/item/clothing/under/syndicate/bloodred,
+		/obj/item/clothing/gloves/color/latex/nitrile/infiltrator,
+		/obj/item/clothing/mask/infiltrator,
+		/obj/item/clothing/shoes/combat/sneakboots,
+		/obj/item/gun/ballistic/automatic/pistol,
+		/obj/item/gun/ballistic/revolver,
+		/obj/item/ammo_box
+		))
+
+/obj/item/storage/toolbox/infiltrator/PopulateContents()
+	new /obj/item/clothing/head/helmet/infiltrator(src)
+	new /obj/item/clothing/suit/armor/vest/infiltrator(src)
+	new /obj/item/clothing/under/syndicate/bloodred(src)
+	new /obj/item/clothing/gloves/color/latex/nitrile/infiltrator(src)
+	new /obj/item/clothing/mask/infiltrator(src)
+	new /obj/item/clothing/shoes/combat/sneakboots(src)
 
 //floorbot assembly
 /obj/item/storage/toolbox/attackby(obj/item/stack/tile/plasteel/T, mob/user, params)

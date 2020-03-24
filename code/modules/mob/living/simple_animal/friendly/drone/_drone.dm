@@ -3,18 +3,41 @@
 #define DRONE_HEAD_LAYER 2
 #define DRONE_TOTAL_LAYERS 2
 
+/// Message displayed when new drone spawns in drone network
 #define DRONE_NET_CONNECT "<span class='notice'>DRONE NETWORK: [name] connected.</span>"
+/// Message displayed when drone in network dies
 #define DRONE_NET_DISCONNECT "<span class='danger'>DRONE NETWORK: [name] is not responding.</span>"
 
+/// Maintenance Drone icon_state (multiple colors)
 #define MAINTDRONE	"drone_maint"
+/// Repair Drone icon_state
 #define REPAIRDRONE	"drone_repair"
+/// Scout Drone icon_state
 #define SCOUTDRONE	"drone_scout"
+/// Clockwork Drone icon_state
 #define CLOCKDRONE	"drone_clock"
 
+/// [MAINTDRONE] hacked icon_state
 #define MAINTDRONE_HACKED "drone_maint_red"
+/// [REPAIRDRONE] hacked icon_state
 #define REPAIRDRONE_HACKED "drone_repair_hacked"
+/// [SCOUTDRONE] hacked icon_state
 #define SCOUTDRONE_HACKED "drone_scout_hacked"
 
+/**
+  * # Maintenance Drone
+  *
+  * Small player controlled fixer-upper
+  *
+  * The maintenace drone is a ghost role with the objective to repair and
+  * maintain the station.
+  *
+  * Featuring two dexterous hands, and a built in toolbox stocked with
+  * tools.
+  *
+  * They have laws to prevent them from doing anything else.
+  *
+  */
 /mob/living/simple_animal/drone
 	name = "Drone"
 	desc = "A maintenance drone, an expendable robot built to perform station repairs."
@@ -51,24 +74,44 @@
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	see_in_dark = 7
 	can_be_held = TRUE
+	worn_slot_flags = ITEM_SLOT_HEAD
 	held_items = list(null, null)
-	var/staticChoice = "static"
-	var/list/staticChoices = list("static", "blank", "letter", "animal")
-	var/picked = FALSE //Have we picked our visual appearence (+ colour if applicable)
-	var/colour = "grey"	//Stored drone color, so we can go back when unhacked.
+	/// `TRUE` if we have picked our visual appearance, `FALSE` otherwise (default)
+	var/picked = FALSE
+	/// Stored drone color, restored when unhacked
+	var/colour = "grey"
 	var/list/drone_overlays[DRONE_TOTAL_LAYERS]
+	/// Drone laws announced on spawn
 	var/laws = \
 	"1. You may not involve yourself in the matters of another being, even if such matters conflict with Law Two or Law Three, unless the other being is another Drone.\n"+\
 	"2. You may not harm any being, regardless of intent or circumstance.\n"+\
 	"3. Your goals are to actively build, maintain, repair, improve, and provide power to the best of your abilities within the facility that housed your activation." //for derelict drones so they don't go to station.
-	var/heavy_emp_damage = 25 //Amount of damage sustained if hit by a heavy EMP pulse
+	/// Amount of damage sustained if hit by a heavy EMP pulse
+	var/heavy_emp_damage = 25
+	/// List of active alarms. See [/mob/living/simple_animal/drone/proc/triggerAlarm] and [/mob/living/simple_animal/drone/proc/cancelAlarm]
 	var/alarms = list("Atmosphere" = list(), "Fire" = list(), "Power" = list())
-	var/obj/item/internal_storage //Drones can store one item, of any size/type in their body
+	/// Internal storage slot. Fits any item
+	var/obj/item/internal_storage
+	/// Headwear slot
 	var/obj/item/head
-	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone //If this exists, it will spawn in internal storage
-	var/obj/item/default_hatmask //If this exists, it will spawn in the hat/mask slot if it can fit
-	var/visualAppearence = MAINTDRONE //What we appear as
-	var/hacked = FALSE //If we have laws to destroy the station
+	/// Default [/mob/living/simple_animal/drone/var/internal_storage] item
+	var/obj/item/default_storage = /obj/item/storage/backpack/duffelbag/drone
+	/// Default [/mob/living/simple_animal/drone/var/head] item
+	var/obj/item/default_hatmask
+	/**
+	  * icon_state of drone from icons/mobs/drone.dmi
+	  *
+	  * Possible states are:
+	  *
+	  * - [MAINTDRONE]
+	  * - [REPAIRDRONE]
+	  * - [SCOUTDRONE]
+	  * - [CLOCKDRONE]
+	  */
+	var/visualAppearance = MAINTDRONE
+	/// Hacked state, see [/mob/living/simple_animal/drone/proc/update_drone_hack]
+	var/hacked = FALSE
+	/// Flavor text announced to drones on [/mob/proc/Login]
 	var/flavortext = \
 	"\n<big><span class='warning'>DO NOT INTERFERE WITH THE ROUND AS A DRONE OR YOU WILL BE DRONE BANNED</span></big>\n"+\
 	"<span class='notice'>Drones are a ghost role that are allowed to fix the station and build things. Interfering with the round as a drone is against the rules.</span>\n"+\
@@ -100,7 +143,6 @@
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
 
-
 /mob/living/simple_animal/drone/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
@@ -131,7 +173,7 @@
 		to_chat(src, "[flavortext]")
 
 	if(!picked)
-		pickVisualAppearence()
+		pickVisualAppearance()
 
 /mob/living/simple_animal/drone/auto_deadmin_on_login()
 	if(!client?.holder)
@@ -208,6 +250,15 @@
 		to_chat(src, "<span class='userdanger'>HeAV% DA%^MMA+G TO I/O CIR!%UUT!</span>")
 
 
+/**
+  * Alerts drones about different priorities of alarms
+  *
+  * Arguments:
+  * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
+  * * A - [/area] the alarm occurs
+  * * O - unused argument, see [/mob/living/silicon/robot/triggerAlarm]
+  * * alarmsource - [/atom] source of the alarm
+  */
 /mob/living/simple_animal/drone/proc/triggerAlarm(class, area/A, O, obj/alarmsource)
 	if(alarmsource.z != z)
 		return
@@ -223,7 +274,14 @@
 		L[A.name] = list(A, list(alarmsource))
 		to_chat(src, "--- [class] alarm detected in [A.name]!")
 
-
+/**
+  * Clears alarm and alerts drones
+  *
+  * Arguments:
+  * * class - One of the keys listed in [/mob/living/simple_animal/drone/var/alarms]
+  * * A - [/area] the alarm occurs
+  * * alarmsource - [/atom] source of the alarm
+  */
 /mob/living/simple_animal/drone/proc/cancelAlarm(class, area/A, obj/origin)
 	if(stat != DEAD)
 		var/list/L = alarms[class]

@@ -137,9 +137,6 @@
 /obj/effect/temp_visual/dir_setting/curse/hand
 	icon_state = "cursehand"
 
-/obj/effect/temp_visual/dir_setting/curse/hand/Initialize(mapload, set_dir, handedness)
-	. = ..()
-	update_icon()
 
 /obj/effect/temp_visual/bsa_splash
 	name = "\improper Bluespace energy wave"
@@ -157,9 +154,6 @@
 			icon_state = "beam_splash_w"
 		if(EAST)
 			icon_state = "beam_splash_e"
-
-/obj/projectile/curse_hand/update_icon()
-	icon_state = "[icon_state][handedness]"
 
 /obj/effect/temp_visual/wizard
 	name = "water"
@@ -462,3 +456,43 @@
 	else
 		return INITIALIZE_HINT_QDEL
 
+/obj/effect/constructing_effect
+	icon = 'icons/effects/effects_rcd.dmi'
+	icon_state = ""
+	layer = ABOVE_ALL_MOB_LAYER
+	anchored = TRUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	var/status = 0
+	var/delay = 0
+
+/obj/effect/constructing_effect/Initialize(mapload, rcd_delay, rcd_status)
+	. = ..()
+	status = rcd_status
+	delay = rcd_delay
+	if (status == RCD_DECONSTRUCT)
+		addtimer(CALLBACK(src, /atom/.proc/update_icon), 11)
+		delay -= 11
+		icon_state = "rcd_end_reverse"
+	else
+		update_icon()
+
+/obj/effect/constructing_effect/update_icon_state()
+	icon_state = "rcd"
+	if (delay < 10)
+		icon_state += "_shortest"
+	else if (delay < 20)
+		icon_state += "_shorter"
+	else if (delay < 37)
+		icon_state += "_short"
+	if (status == RCD_DECONSTRUCT)
+		icon_state += "_reverse"
+
+/obj/effect/constructing_effect/proc/end_animation()
+	if (status == RCD_DECONSTRUCT)
+		qdel(src)
+	else
+		icon_state = "rcd_end"
+		addtimer(CALLBACK(src, .proc/end), 15)
+
+/obj/effect/constructing_effect/proc/end()
+	qdel(src)

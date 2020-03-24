@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(job)
 		if(!job.config_check())
 			continue
 		if(!job.map_check())	//Even though we initialize before mapping, this is fine because the config is loaded at new
-			testing("Removed [job.type] due to map config");
+			testing("Removed [job.type] due to map config")
 			continue
 		occupations += job
 		name_occupations[job.title] = job
@@ -115,7 +115,7 @@ SUBSYSTEM_DEF(job)
 		if(flag && (!(flag in player.client.prefs.be_special)))
 			JobDebug("FOC flag failed, Player: [player], Flag: [flag], ")
 			continue
-		if(player.mind && job.title in player.mind.restricted_roles)
+		if(player.mind && (job.title in player.mind.restricted_roles))
 			JobDebug("FOC incompatible with antagonist role, Player: [player]")
 			continue
 		if(player.client.prefs.job_preferences[job.title] == level)
@@ -151,7 +151,7 @@ SUBSYSTEM_DEF(job)
 			JobDebug("GRJ player not enough xp, Player: [player]")
 			continue
 
-		if(player.mind && job.title in player.mind.restricted_roles)
+		if(player.mind && (job.title in player.mind.restricted_roles))
 			JobDebug("GRJ incompatible with antagonist role, Player: [player], Job: [job.title]")
 			continue
 
@@ -331,7 +331,7 @@ SUBSYSTEM_DEF(job)
 					JobDebug("DO player not enough xp, Player: [player], Job:[job.title]")
 					continue
 
-				if(player.mind && job.title in player.mind.restricted_roles)
+				if(player.mind && (job.title in player.mind.restricted_roles))
 					JobDebug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
 					continue
 
@@ -400,55 +400,59 @@ SUBSYSTEM_DEF(job)
 		log_game(message)
 		message_admins(message)
 		RejectPlayer(player)
+
+
 //Gives the player the stuff he should have with his rank
 /datum/controller/subsystem/job/proc/EquipRank(mob/M, rank, joined_late = FALSE)
-	var/mob/dead/new_player/N
-	var/mob/living/H
+	var/mob/dead/new_player/newplayer
+	var/mob/living/living_mob
 	if(!joined_late)
-		N = M
-		H = N.new_character
+		newplayer = M
+		living_mob = newplayer.new_character
 	else
-		H = M
+		living_mob = M
 
 	var/datum/job/job = GetJob(rank)
 
-	H.job = rank
+	living_mob.job = rank
 
-	SEND_SIGNAL(H, COMSIG_JOB_RECEIVED, H.job)
-		
+	SEND_SIGNAL(living_mob, COMSIG_JOB_RECEIVED, living_mob.job)
 
 	//If we joined at roundstart we should be positioned at our workstation
 	if(!joined_late)
 		var/obj/S = null
-		for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
-			if(sloc.name != rank)
-				S = sloc //so we can revert to spawning them on top of eachother if something goes wrong
-				continue
-			if(locate(/mob/living) in sloc.loc)
-				continue
-			S = sloc
-			sloc.used = TRUE
-			break
 		if(length(GLOB.jobspawn_overrides[rank]))
 			S = pick(GLOB.jobspawn_overrides[rank])
+		else
+			for(var/_sloc in GLOB.start_landmarks_list)
+				var/obj/effect/landmark/start/sloc = _sloc
+				if(sloc.name != rank)
+					continue
+				S = sloc
+				if(locate(/mob/living) in sloc.loc) //so we can revert to spawning them on top of eachother if something goes wrong
+					continue
+				sloc.used = TRUE
+				break
 		if(S)
-			S.JoinPlayerHere(H, FALSE)
+			S.JoinPlayerHere(living_mob, FALSE)
 		if(!S) //if there isn't a spawnpoint send them to latejoin, if there's no latejoin go yell at your mapper
 			log_world("Couldn't find a round start spawn point for [rank]")
-			SendToLateJoin(H)
+			if(!SendToLateJoin(living_mob))
+				living_mob.move_to_error_room()
 
 
-	if(H.mind)
-		H.mind.assigned_role = rank
+	if(living_mob.mind)
+		living_mob.mind.assigned_role = rank
 
+	to_chat(M, "<b>You are the [rank].</b>")
 	if(job)
-		var/new_mob = job.equip(H, null, null, joined_late , null, M.client)
+		var/new_mob = job.equip(living_mob, null, null, joined_late , null, M.client)//silicons override this proc to return a mob
 		if(ismob(new_mob))
-			H = new_mob
+			living_mob = new_mob
 			if(!joined_late)
-				N.new_character = H
+				newplayer.new_character = living_mob
 			else
-				M = H
+				M = living_mob
 
 		SSpersistence.antag_rep_change[M.client.ckey] += job.GetAntagRep()
 
@@ -458,24 +462,23 @@ SUBSYSTEM_DEF(job)
 			else
 				handle_auto_deadmin_roles(M.client, rank)
 
-	to_chat(M, "<b>You are the [rank].</b>")
-	if(job)
 		to_chat(M, "<b>As the [rank] you answer directly to [job.supervisors]. Special circumstances may change this.</b>")
 		job.radio_help_message(M)
 		if(job.req_admin_notify)
 			to_chat(M, "<b>You are playing a job that is important for Game Progression. If you have to disconnect, please notify the admins via adminhelp.</b>")
 		if(CONFIG_GET(number/minimal_access_threshold))
 			to_chat(M, "<span class='notice'><B>As this station was initially staffed with a [CONFIG_GET(flag/jobs_have_minimal_access) ? "full crew, only your job's necessities" : "skeleton crew, additional access may"] have been added to your ID card.</B></span>")
+
 	var/related_policy = get_policy(rank)
 	if(related_policy)
 		to_chat(M,related_policy)
-	if(ishuman(H))
-		var/mob/living/carbon/human/wageslave = H
-		H.add_memory("Your account ID is [wageslave.account_id].")
-	if(job && H)
-		job.after_spawn(H, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
+	if(ishuman(living_mob))
+		var/mob/living/carbon/human/wageslave = living_mob
+		living_mob.add_memory("Your account ID is [wageslave.account_id].")
+	if(job && living_mob)
+		job.after_spawn(living_mob, M, joined_late) // note: this happens before the mob has a key! M will always have a client, H might not.
 
-	return H
+	return living_mob
 
 /datum/controller/subsystem/job/proc/handle_auto_deadmin_roles(client/C, rank)
 	if(!C?.holder)
@@ -611,12 +614,12 @@ SUBSYSTEM_DEF(job)
 	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role])
 		destination.JoinPlayerHere(M, FALSE)
-		return
+		return TRUE
 
 	if(latejoin_trackers.len)
 		destination = pick(latejoin_trackers)
 		destination.JoinPlayerHere(M, buckle)
-		return
+		return TRUE
 
 	//bad mojo
 	var/area/shuttle/arrival/A = GLOB.areas_by_type[/area/shuttle/arrival]
@@ -625,7 +628,7 @@ SUBSYSTEM_DEF(job)
 		var/obj/structure/chair/C = locate() in A
 		if(C)
 			C.JoinPlayerHere(M, buckle)
-			return
+			return TRUE
 
 		//last hurrah
 		var/list/avail = list()
@@ -635,7 +638,7 @@ SUBSYSTEM_DEF(job)
 		if(avail.len)
 			destination = pick(avail)
 			destination.JoinPlayerHere(M, FALSE)
-			return
+			return TRUE
 
 	//pick an open spot on arrivals and dump em
 	var/list/arrivals_turfs = shuffle(get_area_turfs(/area/shuttle/arrival))
@@ -643,10 +646,11 @@ SUBSYSTEM_DEF(job)
 		for(var/turf/T in arrivals_turfs)
 			if(!is_blocked_turf(T, TRUE))
 				T.JoinPlayerHere(M, FALSE)
-				return
+				return TRUE
 		//last chance, pick ANY spot on arrivals and dump em
 		destination = arrivals_turfs[1]
 		destination.JoinPlayerHere(M, FALSE)
+		return TRUE
 	else
 		var/msg = "Unable to send mob [M] to late join!"
 		message_admins(msg)

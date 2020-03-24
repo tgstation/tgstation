@@ -189,14 +189,14 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "J" = (
-/mob/living/simple_animal/hostile/carp/eyeball{
+/mob/living/simple_animal/hostile/eyeball{
 	faction = list("cult");
 	name = "left eyeball"
 	},
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "K" = (
-/mob/living/simple_animal/hostile/carp/eyeball{
+/mob/living/simple_animal/hostile/eyeball{
 	faction = list("cult");
 	name = "right eyeball"
 	},

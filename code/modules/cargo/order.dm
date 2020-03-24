@@ -46,6 +46,7 @@
 	P.info += "<h2>[station_name()] Supply Requisition</h2>"
 	P.info += "<hr/>"
 	P.info += "Order #[id]<br/>"
+	P.info += "Time of Order: [station_time_timestamp()]<br/>"
 	P.info += "Item: [pack.name]<br/>"
 	P.info += "Access Restrictions: [get_access_desc(pack.access)]<br/>"
 	P.info += "Requested by: [orderer]<br/>"

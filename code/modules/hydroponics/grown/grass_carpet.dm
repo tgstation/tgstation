@@ -66,7 +66,7 @@
 	name = "pack of carpet seeds"
 	desc = "These seeds grow into stylish carpet samples."
 	icon_state = "seed-carpet"
-	species = /datum/reagent/carpet
+	species = "carpet"
 	plantname = "Carpet"
 	product = /obj/item/reagent_containers/food/snacks/grown/grass/carpet
 	mutatelist = list()

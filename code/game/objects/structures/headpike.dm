@@ -6,7 +6,7 @@
 	density = FALSE
 	anchored = TRUE
 	var/bonespear = FALSE
-	var/obj/item/twohanded/spear/spear
+	var/obj/item/spear/spear
 	var/obj/item/bodypart/head/victim
 
 /obj/structure/headpike/bone //for bone spears
@@ -19,30 +19,31 @@
 	name = "[victim.name] on a spear"
 	update_icon()
 	if(bonespear)
-		spear = locate(/obj/item/twohanded/spear/bonespear) in parts_list
+		spear = locate(/obj/item/spear/bonespear) in parts_list
 	else
-		spear = locate(/obj/item/twohanded/spear) in parts_list
+		spear = locate(/obj/item/spear) in parts_list
 
 /obj/structure/headpike/Initialize()
 	. = ..()
 	pixel_x = rand(-8, 8)
 
-/obj/structure/headpike/update_icon()
-	..()
+/obj/structure/headpike/update_overlays()
+	. = ..()
 	var/obj/item/bodypart/head/H = locate() in contents
-	var/mutable_appearance/MA = new()
 	if(H)
+		var/mutable_appearance/MA = new()
 		MA.copy_overlays(H)
 		MA.pixel_y = 12
-		add_overlay(H)
+		. += H
 
 /obj/structure/headpike/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	to_chat(user, "<span class='notice'>You take down [src].</span>")
-	victim.forceMove(drop_location())
-	victim = null
+	if(victim)
+		victim.forceMove(drop_location())
+		victim = null
 	spear.forceMove(drop_location())
 	spear = null
 	qdel(src)

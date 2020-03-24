@@ -819,7 +819,7 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "dL" = (
-/obj/mecha/working/ripley/firefighter{
+/obj/mecha/working/clarke{
 	ruin_mecha = 1
 	},
 /turf/open/floor/plating,
@@ -944,24 +944,6 @@
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
-"ec" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
-"ed" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
-"ee" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "ef" = (
 /mob/living/simple_animal/hostile/syndicate/melee/spacebattle,
 /turf/open/floor/mineral/plastitanium/red,
@@ -999,21 +981,9 @@
 "el" = (
 /turf/open/floor/engine,
 /area/awaymission/spacebattle/cruiser)
-"em" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "en" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
-	},
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
-"eo" = (
-/obj/machinery/gateway{
-	dir = 4
 	},
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
@@ -1030,22 +1000,6 @@
 "er" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/awaymission/spacebattle/syndicate4)
-"et" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
-"eu" = (
-/obj/machinery/gateway,
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
-"ev" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/awaymission/spacebattle/cruiser)
 "ew" = (
 /obj/structure/chair,
 /turf/open/floor/mineral/plastitanium/red,
@@ -2222,7 +2176,7 @@
 /area/awaymission/spacebattle/cruiser)
 "io" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,
@@ -2553,13 +2507,13 @@
 /turf/open/floor/plating,
 /area/awaymission/spacebattle/cruiser)
 "jK" = (
-/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/mob/living/simple_animal/hostile/syndicate/melee/sword,
 /turf/open/floor/plasteel,
 /area/awaymission/spacebattle/cruiser)
 "jL" = (
@@ -26891,9 +26845,9 @@ cc
 cc
 bT
 cK
-ec
-em
-et
+cK
+cK
+cK
 cK
 cK
 cK
@@ -27148,9 +27102,9 @@ cA
 cc
 bT
 cK
-ed
+cK
 en
-eu
+cK
 cK
 cK
 cK
@@ -27405,9 +27359,9 @@ cc
 cc
 bT
 cK
-ee
-eo
-ev
+cK
+cK
+cK
 cK
 jF
 fb

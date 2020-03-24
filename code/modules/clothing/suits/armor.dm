@@ -41,7 +41,7 @@
 	desc = "A large, yet comfortable piece of armor, protecting you from some threats."
 	icon_state = "blueshift"
 	item_state = "blueshift"
-	custom_premium_price = 600
+	custom_premium_price = 750
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -172,6 +172,15 @@
 	. = ..()
 	allowed = GLOB.detective_vest_allowed
 
+/obj/item/clothing/suit/armor/vest/infiltrator
+	name = "infiltrator vest"
+	desc = "This vest appears to be made of of highly flexible materials that absorb impacts with ease."
+	icon_state = "infiltrator"
+	item_state = "infiltrator"
+	armor = list("melee" = 30, "bullet" = 40, "laser" = 20, "energy" = 30, "bomb" = 70, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+	strip_delay = 80
+
 //All of the armor below is mostly unused
 
 /obj/item/clothing/suit/armor/centcom
@@ -229,6 +238,7 @@
 	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
 	item_state = "knight_green"
+	allowed = list(/obj/item/nullrod, /obj/item/claymore, /obj/item/banner, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
@@ -247,7 +257,7 @@
 	desc = "A classic suit of armour, able to be made from many different materials."
 	icon_state = "knight_greyscale"
 	item_state = "knight_greyscale"
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR//Can change color and add prefix
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix
 	armor = list("melee" = 35, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 10, "bio" = 10, "rad" = 10, "fire" = 40, "acid" = 40)
 
 /obj/item/clothing/suit/armor/vest/durathread

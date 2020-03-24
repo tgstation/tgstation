@@ -22,8 +22,7 @@
 	response_disarm_simple = "gently push aside"
 	maxHealth = 60
 	health = 60
-	spacewalk = TRUE
-	var/armored = FALSE
+	speed = 0
 
 	obj_damage = 60
 	melee_damage_lower = 20
@@ -40,9 +39,35 @@
 	maxbodytemp = 1500
 
 	faction = list("russian")
-	gold_core_spawnable = HOSTILE_SPAWN
 
 	footstep_type = FOOTSTEP_MOB_CLAW
+
+	var/armored = FALSE
+	var/rideable = FALSE
+
+/mob/living/simple_animal/hostile/bear/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+
+/mob/living/simple_animal/hostile/bear/Life()
+	. = ..()
+	if(!rideable && mind)
+		can_buckle = TRUE
+		buckle_lying = FALSE
+		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(1, 8), TEXT_SOUTH = list(1, 8), TEXT_EAST = list(-3, 6), TEXT_WEST = list(3, 6)))
+		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+		D.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
+		D.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
+		rideable = TRUE
+
+/mob/living/simple_animal/hostile/bear/update_icons()
+	..()
+	if(armored)
+		add_overlay("armor_bear")
+
+
 
 //SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
@@ -72,11 +97,7 @@
 	health = 120
 	maxHealth = 120
 	armored = TRUE
-
-/mob/living/simple_animal/hostile/bear/update_icons()
-	..()
-	if(armored)
-		add_overlay("armor_bear")
+	gold_core_spawnable = HOSTILE_SPAWN
 
 /obj/item/bear_armor
 	name = "pile of bear armor"

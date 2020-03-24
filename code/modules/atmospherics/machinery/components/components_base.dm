@@ -2,8 +2,10 @@
 // On top of that, now people can add component-speciic procs/vars if they want!
 
 /obj/machinery/atmospherics/components
+	hide = FALSE
+
 	var/welded = FALSE //Used on pumps and scrubbers
-	var/showpipe = FALSE
+	var/showpipe = TRUE
 	var/shift_underlay_only = TRUE //Layering only shifts underlay?
 
 	var/list/datum/pipeline/parents
@@ -20,26 +22,30 @@
 		A.volume = 200
 		airs[i] = A
 
+/obj/machinery/atmospherics/components/Initialize()
+	. = ..()
+
+	if(hide)
+		RegisterSignal(src, COMSIG_OBJ_HIDE, .proc/hide_pipe)
+
 // Iconnery
 
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
+
+/obj/machinery/atmospherics/components/proc/hide_pipe(datum/source, covered)
+	showpipe = !covered
+	update_icon()
 
 /obj/machinery/atmospherics/components/update_icon()
 	update_icon_nopipes()
 
 	underlays.Cut()
 
-	var/turf/T = loc
-	if(level == 2 || !T.intact)
-		showpipe = TRUE
-		plane = GAME_PLANE
-	else
-		showpipe = FALSE
-		plane = FLOOR_PLANE
+	plane = showpipe ? GAME_PLANE : FLOOR_PLANE
 
 	if(!showpipe)
-		return //no need to update the pipes if they aren't showing
+		return
 
 	var/connected = 0 //Direction bitset
 
@@ -85,7 +91,6 @@
 /obj/machinery/atmospherics/components/proc/nullifyPipenet(datum/pipeline/reference)
 	if(!reference)
 		CRASH("nullifyPipenet(null) called by [type] on [COORD(src)]")
-		return
 	var/i = parents.Find(reference)
 	reference.other_airs -= airs[i]
 	reference.other_atmosmch -= src
@@ -152,6 +157,7 @@
 		if(!parent)
 			WARNING("Component is missing a pipenet! Rebuilding...")
 			build_network()
+			parent = parents[i]
 		parent.update = 1
 
 /obj/machinery/atmospherics/components/returnPipenets()

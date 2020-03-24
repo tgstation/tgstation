@@ -27,9 +27,10 @@
 	drop_sound = 'sound/items/handling/multitool_drop.ogg'
 	pickup_sound =  'sound/items/handling/multitool_pickup.ogg'
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=20)
-	var/obj/machinery/buffer // simple machine buffer for device linkage
+	custom_premium_price = 450
 	toolspeed = 1
 	usesound = 'sound/weapons/empty.ogg'
+	var/obj/machinery/buffer // simple machine buffer for device linkage
 	var/mode = 0
 
 /obj/item/multitool/examine(mob/user)

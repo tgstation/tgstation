@@ -11,19 +11,28 @@
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	anchored = TRUE
-//
+	/// The identifier of the port or ship.
+	/// This will be used in numerous other places like the console,
+	/// stationary ports and whatnot to tell them your ship's mobile
+	/// port can be used in these places, or the docking port is compatible, etc.
 	var/id
-	// this should point -away- from the dockingport door, ie towards the ship
+	///Common standard is for this to point -away- from the dockingport door, ie towards the ship
 	dir = NORTH
-	var/width = 0	//size of covered area, perpendicular to dir
-	var/height = 0	//size of covered area, parallel to dir
-	var/dwidth = 0	//position relative to covered area, perpendicular to dir
-	var/dheight = 0	//position relative to covered area, parallel to dir
+	///size of covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports, set automatically.
+	var/width = 0
+	///size of covered area, parallel to dir. You shouldn't modify this for mobile dockingports, set automatically.
+	var/height = 0
+	///position relative to covered area, perpendicular to dir. You shouldn't modify this for mobile dockingports, set automatically.
+	var/dwidth = 0
+	///position relative to covered area, parallel to dir. You shouldn't modify this for mobile dockingports, set automatically.
+	var/dheight = 0
 
 	var/area_type
-	var/hidden = FALSE //are we invisible to shuttle navigation computers?
+	///are we invisible to shuttle navigation computers?
+	var/hidden = FALSE
 
-	var/delete_after = FALSE ///Delete this port after ship fly off.
+	///Delete this port after ship fly off.
+	var/delete_after = FALSE
 
 	//these objects are indestructible
 /obj/docking_port/Destroy(force)
@@ -245,18 +254,25 @@
 
 	var/list/shuttle_areas
 
-	var/timer						//used as a timer (if you want time left to complete move, use timeLeft proc)
+	///used as a timer (if you want time left to complete move, use timeLeft proc)
+	var/timer
 	var/last_timer_length
+	///current shuttle mode
+	var/mode = SHUTTLE_IDLE
+	///time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
+	var/callTime = 100
+	/// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
+	var/ignitionTime = 55
+	/// time spent after arrival before being able to begin ignition
+	var/rechargeTime = 0
+	/// time spent after transit 'landing' before actually arriving
+	var/prearrivalTime = 0
 
-	var/mode = SHUTTLE_IDLE			//current shuttle mode
-	var/callTime = 100				//time spent in transit (deciseconds). Should not be lower then 10 seconds without editing the animation of the hyperspace ripples.
-	var/ignitionTime = 55			// time spent "starting the engines". Also rate limits how often we try to reserve transit space if its ever full of transiting shuttles.
-	var/rechargeTime = 0		// time spent after arrival before being able to begin ignition
-	var/prearrivalTime = 0		// time spent after transit 'landing' before actually arriving
-
-	// The direction the shuttle prefers to travel in
+	/// The direction the shuttle prefers to travel in, ie what direction
+	/// the animation will cause it to appear to be traveling in
 	var/preferred_direction = NORTH
-	// And the angle from the front of the shuttle to the port
+	/// relative direction of the docking port from the front of the shuttle
+	/// NORTH is towards front, EAST would be starboard side, WEST port, etc.
 	var/port_direction = NORTH
 
 	var/obj/docking_port/stationary/destination
@@ -266,14 +282,16 @@
 
 	var/launch_status = NOLAUNCH
 
+	///Whether or not you want your ship to knock people down, and also whether it will throw them several tiles upon launching.
 	var/list/movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
 
 	var/list/ripples = list()
-	var/engine_coeff = 1 //current engine coeff
-	var/current_engines = 0 //current engine power
-	var/initial_engines = 0 //initial engine power
+	var/engine_coeff = 1
+	var/current_engines = 0
+	var/initial_engines = 0
 	var/list/engine_list = list()
-	var/can_move_docking_ports = FALSE //if this shuttle can move docking ports other than the one it is docked at
+	///if this shuttle can move docking ports other than the one it is docked at
+	var/can_move_docking_ports = FALSE
 	var/list/hidden_turfs = list()
 
 /obj/docking_port/mobile/proc/register()
@@ -686,7 +704,7 @@
 	if(timeleft > 1 HOURS)
 		return "--:--"
 	else if(timeleft > 0)
-		return "[add_zero(num2text((timeleft / 60) % 60),2)]:[add_zero(num2text(timeleft % 60), 2)]"
+		return "[add_leading(num2text((timeleft / 60) % 60), 2, "0")]:[add_leading(num2text(timeleft % 60), 2, "0")]"
 	else
 		return "00:00"
 
@@ -814,13 +832,13 @@
 		var/change_per_engine = (1 - ENGINE_COEFF_MIN) / ENGINE_DEFAULT_MAXSPEED_ENGINES // 5 by default
 		if(initial_engines > 0)
 			change_per_engine = (1 - ENGINE_COEFF_MIN) / initial_engines // or however many it had
-		return CLAMP(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
+		return clamp(1 - delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 	if(new_value < initial_engines)
 		var/delta = initial_engines - new_value
 		var/change_per_engine = 1 //doesn't really matter should not be happening for 0 engine shuttles
 		if(initial_engines > 0)
 			change_per_engine = (ENGINE_COEFF_MAX -  1) / initial_engines //just linear drop to max delay
-		return CLAMP(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
+		return clamp(1 + delta * change_per_engine,ENGINE_COEFF_MIN,ENGINE_COEFF_MAX)
 
 
 /obj/docking_port/mobile/proc/in_flight()

@@ -10,10 +10,11 @@
 	var/datum/song/handheld/song
 	var/instrumentId = "generic"
 	var/instrumentExt = "mid"
+	var/instrumentRange = 15
 
 /obj/item/instrument/Initialize()
 	. = ..()
-	song = new(instrumentId, src, instrumentExt)
+	song = new(instrumentId, src, instrumentExt, instrumentRange)
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
@@ -43,6 +44,12 @@
 
 	user.set_machine(src)
 	song.interact(user)
+
+/obj/item/instrument/proc/start_playing()
+	return
+
+/obj/item/instrument/proc/stop_playing()
+	return
 
 /obj/item/instrument/violin
 	name = "space violin"
@@ -78,6 +85,44 @@
 	if(!insTypes[chosen])
 		return
 	return changeInstrument(chosen)
+
+/obj/item/instrument/piano_synth/headphones
+	name = "headphones"
+	desc = "Unce unce unce unce. Boop!"
+	icon = 'icons/obj/clothing/accessories.dmi'
+	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	icon_state = "headphones"
+	item_state = "headphones"
+	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
+	force = 0
+	w_class = WEIGHT_CLASS_SMALL
+	custom_price = 125
+	instrumentRange = 1
+
+/obj/item/instrument/piano_synth/headphones/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	RegisterSignal(src, COMSIG_SONG_START, .proc/start_playing)
+	RegisterSignal(src, COMSIG_SONG_END, .proc/stop_playing)
+
+/obj/item/instrument/piano_synth/headphones/start_playing()
+	icon_state = "[initial(icon_state)]_on"
+	update_icon()
+
+/obj/item/instrument/piano_synth/headphones/stop_playing()
+	icon_state = "[initial(icon_state)]"
+	update_icon()
+
+/obj/item/instrument/piano_synth/headphones/spacepods
+	name = "\improper Nanotrasen space pods"
+	desc = "Flex your money, AND ignore what everyone else says, all at once!"
+	icon_state = "spacepods"
+	item_state = "spacepods"
+	slot_flags = ITEM_SLOT_EARS
+	strip_delay = 100 //air pods don't fall out
+	instrumentRange = 0 //you're paying for quality here
+	custom_premium_price = 1800
 
 /obj/item/instrument/banjo
 	name = "banjo"
@@ -128,14 +173,14 @@
 	name = "trumpet"
 	desc = "To announce the arrival of the king!"
 	icon_state = "trumpet"
-	item_state = "trombone"
+	item_state = "trumpet"
 	instrumentId = "trombone"
 
 /obj/item/instrument/trumpet/spectral
 	name = "spectral trumpet"
 	desc = "Things are about to get spooky!"
-	icon_state = "trumpet"
-	item_state = "trombone"
+	icon_state = "spectral_trumpet"
+	item_state = "spectral_trumpet"
 	force = 0
 	instrumentId = "trombone"
 	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")
@@ -266,7 +311,8 @@
 							/obj/item/instrument/saxophone,
 							/obj/item/instrument/trombone,
 							/obj/item/instrument/recorder,
-							/obj/item/instrument/harmonica
+							/obj/item/instrument/harmonica,
+							/obj/item/instrument/piano_synth/headphones
 							)
 		for(var/V in templist)
 			var/atom/A = V

@@ -1,7 +1,7 @@
 /obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "recharger0"
+	icon_state = "recharger"
 	desc = "A charging dock for energy based weaponry."
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
@@ -10,6 +10,7 @@
 	pass_flags = PASSTABLE
 	var/obj/item/charging = null
 	var/recharge_coeff = 1
+	var/using_power = FALSE //Did we put power into "charging" last process()?
 
 	var/static/list/allowed_devices = typecacheof(list(
 		/obj/item/gun/energy,
@@ -31,7 +32,7 @@
 		. += {"<span class='notice'>\The [src] contains:</span>
 		<span class='notice'>- \A [charging].</span>"}
 
-	if(!(stat & (NOPOWER|BROKEN)))
+	if(!(machine_stat & (NOPOWER|BROKEN)))
 		. += "<span class='notice'>The status display reads:</span>"
 		. += "<span class='notice'>- Recharging <b>[recharge_coeff*10]%</b> cell charge per cycle.</span>"
 		if(charging)
@@ -44,9 +45,11 @@
 	if (new_charging)
 		START_PROCESSING(SSmachines, src)
 		use_power = ACTIVE_POWER_USE
-		update_icon(scan = TRUE)
+		using_power = TRUE
+		update_icon()
 	else
 		use_power = IDLE_POWER_USE
+		using_power = FALSE
 		update_icon()
 
 /obj/machinery/recharger/attackby(obj/item/G, mob/user, params)
@@ -116,26 +119,26 @@
 		setCharging(null)
 
 /obj/machinery/recharger/process()
-	if(stat & (NOPOWER|BROKEN) || !anchored)
+	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return PROCESS_KILL
 
-	var/using_power = 0
+	using_power = FALSE
 	if(charging)
 		var/obj/item/stock_parts/cell/C = charging.get_cell()
 		if(C)
 			if(C.charge < C.maxcharge)
 				C.give(C.chargerate * recharge_coeff)
 				use_power(250 * recharge_coeff)
-				using_power = 1
-			update_icon(using_power)
+				using_power = TRUE
+			update_icon()
 
 		if(istype(charging, /obj/item/ammo_box/magazine/recharge))
 			var/obj/item/ammo_box/magazine/recharge/R = charging
 			if(R.stored_ammo.len < R.max_ammo)
 				R.stored_ammo += new R.ammo_type(R)
 				use_power(200 * recharge_coeff)
-				using_power = 1
-			update_icon(using_power)
+				using_power = TRUE
+			update_icon()
 			return
 	else
 		return PROCESS_KILL
@@ -144,7 +147,7 @@
 	. = ..()
 	if (. & EMP_PROTECT_CONTENTS)
 		return
-	if(!(stat & (NOPOWER|BROKEN)) && anchored)
+	if(!(machine_stat & (NOPOWER|BROKEN)) && anchored)
 		if(istype(charging,  /obj/item/gun/energy))
 			var/obj/item/gun/energy/E = charging
 			if(E.cell)
@@ -155,21 +158,24 @@
 			if(B.cell)
 				B.cell.charge = 0
 
-
-/obj/machinery/recharger/update_icon(using_power = 0, scan)	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
-	if(stat & (NOPOWER|BROKEN) || !anchored)
-		icon_state = "rechargeroff"
-		return
-	if(scan)
-		icon_state = "rechargeroff"
+/obj/machinery/recharger/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
+	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
 		return
 	if(panel_open)
-		icon_state = "rechargeropen"
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-open", layer, plane, dir, alpha)
 		return
-	if(charging)
+
+	luminosity = 1
+	if (charging)
 		if(using_power)
-			icon_state = "recharger1"
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-charging", layer, plane, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-charging", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 		else
-			icon_state = "recharger2"
-		return
-	icon_state = "recharger0"
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", layer, plane, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+	else
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)

@@ -6,6 +6,8 @@
 
 	buffer = 200
 	reagent_flags = TRANSPARENT | NO_REACT
+	ui_x = 250
+	ui_y = 225
 	/**list of set reagents that the reaction_chamber allows in, and must all be present before mixing is enabled.
 	* example: list(/datum/reagent/water = 20, /datum/reagent/fuel/oil = 50)
 	*/
@@ -32,7 +34,7 @@
 /obj/machinery/plumbing/reaction_chamber/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "reaction_chamber", name, 500, 300, master_ui, state)
+		ui = new(user, src, ui_key, "reaction_chamber", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/reaction_chamber/ui_data(mob/user)
@@ -56,8 +58,8 @@
 			if(reagent)
 				required_reagents.Remove(reagent)
 		if("add")
-			var/input_reagent = get_chem_id(input("Enter the name of the reagent", "Input") as text|null)
+			var/input_reagent = get_chem_id(params["chem"])
 			if(input_reagent && !required_reagents.Find(input_reagent))
-				var/input_amount = CLAMP(round(input("Enter amount", "Input") as num|null), 1, 100)
+				var/input_amount = text2num(params["amount"])
 				if(input_amount)
 					required_reagents[input_reagent] = input_amount

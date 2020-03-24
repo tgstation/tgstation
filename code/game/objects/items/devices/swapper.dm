@@ -20,12 +20,11 @@
 		linked_swapper = null
 	return ..()
 
-/obj/item/swapper/update_icon()
+/obj/item/swapper/update_icon_state()
 	if(linked_swapper)
 		icon_state = "swapper-linked"
 	else
 		icon_state = "swapper"
-	..()
 
 /obj/item/swapper/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/swapper))
@@ -82,7 +81,7 @@
 //Gets the topmost teleportable container
 /obj/item/swapper/proc/get_teleportable_container()
 	var/atom/movable/teleportable = src
-	while(ismovableatom(teleportable.loc))
+	while(ismovable(teleportable.loc))
 		var/atom/movable/AM = teleportable.loc
 		if(AM.anchored)
 			break

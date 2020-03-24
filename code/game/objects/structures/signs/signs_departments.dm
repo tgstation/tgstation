@@ -15,6 +15,11 @@
 	desc = "A sign labelling an area containing chemical equipment."
 	icon_state = "chemistry1"
 
+/obj/structure/sign/departments/chemistry/pharmacy
+	name = "\improper PHARMACY"
+	desc = "A sign labelling an area containing pharmacy equipment."
+	icon_state = "pharmacy"
+
 /obj/structure/sign/departments/botany
 	name = "\improper HYDROPONICS"
 	desc = "A sign labelling an area as a place where plants are grown."
@@ -85,3 +90,7 @@
 	name = "\improper NANITE LAB"
 	desc = "A sign labelling an area where testing and development of nanites is performed."
 	icon_state = "nanites"
+/obj/structure/sign/departments/psychology
+	name = "\improper PSYCHOLOGY"
+	desc = "A sign labelling where the Psychologist works, they can probably help you get your head straight."
+	icon_state = "psychology"

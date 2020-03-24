@@ -11,7 +11,6 @@
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
-	mats_per_stack = 500
 	var/turf_type = null
 	var/mineralType = null
 	novariants = TRUE
@@ -334,3 +333,21 @@
 	icon_state = "tile_plastic"
 	custom_materials = list(/datum/material/plastic=500)
 	turf_type = /turf/open/floor/plastic
+
+/obj/item/stack/tile/material
+	name = "tile"
+	singular_name = "floor tile"
+	desc = "A tile of flooring."
+	icon_state = "material_tile"
+	turf_type = /turf/open/floor/material
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/obj/item/stack/tile/eighties
+	name = "retro tile"
+	singular_name = "retro floor tile"
+	desc = "A stack of floor tiles that remind you of an age of funk."
+	icon_state = "tile_eighties"
+	turf_type = /turf/open/floor/eighties
+
+/obj/item/stack/tile/eighties/loaded
+	amount = 15

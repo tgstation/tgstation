@@ -122,7 +122,10 @@
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 
 
-
+/turf/open/floor/plating/asteroid/lowpressure
+	initial_gas_mix = OPENTURF_LOW_PRESSURE
+	baseturfs = /turf/open/floor/plating/asteroid/lowpressure
+	turf_type = /turf/open/floor/plating/asteroid/lowpressure
 
 /turf/open/floor/plating/asteroid/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -256,7 +259,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		return
 	if(is_mining_level(z))
 		SpawnFlora(T)	//No space mushrooms, cacti.
-	// SpawnTerrain(T)
+	SpawnTerrain(T)
 	SpawnMonster(T)		//Checks for danger area.
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
@@ -302,7 +305,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		new randumb(T)
 
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
-	if(prob(2))
+	if(prob(1))
 		if(istype(loc, /area/mine/explored) || istype(loc, /area/lavaland/surface/outdoors/explored))
 			return
 		var/randumb = pickweight(terrain_spawn_list)
@@ -324,6 +327,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	environment_type = "snow"
 	flags_1 = NONE
 	planetary_atmos = TRUE
+	broken_states = list("snow_dug")
 	burnt_states = list("snow_dug")
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null

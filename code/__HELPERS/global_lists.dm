@@ -31,7 +31,7 @@
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.r_wings_list,roundstart = TRUE)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
-
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
 
 	//Species
 	for(var/spath in subtypesof(/datum/species))
@@ -52,7 +52,7 @@
 
 	// Keybindings
 	init_keybindings()
-		
+
 	GLOB.emote_list = init_emote_list()
 
 	init_subtypes(/datum/crafting_recipe, GLOB.crafting_recipes)

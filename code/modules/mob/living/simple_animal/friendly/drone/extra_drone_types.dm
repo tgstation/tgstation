@@ -86,15 +86,15 @@
 /mob/living/simple_animal/drone/polymorphed/Initialize()
 	. = ..()
 	liberate()
-	visualAppearence = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
-	if(visualAppearence == MAINTDRONE)
+	visualAppearance = pick(MAINTDRONE, REPAIRDRONE, SCOUTDRONE)
+	if(visualAppearance == MAINTDRONE)
 		var/colour = pick("grey", "blue", "red", "green", "pink", "orange")
-		icon_state = "[visualAppearence]_[colour]"
+		icon_state = "[visualAppearance]_[colour]"
 	else
-		icon_state = visualAppearence
+		icon_state = visualAppearance
 
 	icon_living = icon_state
-	icon_dead = "[visualAppearence]_dead"
+	icon_dead = "[visualAppearance]_dead"
 
 /obj/effect/mob_spawn/drone/derelict
 	name = "derelict drone shell"
@@ -124,3 +124,10 @@
 	"<span class='notice'>     - Interacting with non-drone players outside KS13, dead or alive.</span>\n"+\
 	"<span class='warning'>These rules are at admin discretion and will be heavily enforced.</span>\n"+\
 	"<span class='warning'><u>If you do not have the regular drone laws, follow your laws to the best of your ability.</u></span>"
+
+/mob/living/simple_animal/drone/derelict/Initialize()
+	. = ..()
+	AddComponent(/datum/component/stationstuck, TRUE, "Your emergency station return device activates, sending you back to KS13!", "01000110 01010101 01000011 01001011 00100000 01011001 01001111 01010101<br>WARNING: Dereliction of KS13 detected. Self destruct activated.")
+
+
+

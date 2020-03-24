@@ -27,6 +27,7 @@
 
 /obj/item/radio/intercom/examine(mob/user)
 	. = ..()
+	. += "<span class='notice'>Use [MODE_TOKEN_INTERCOM] when nearby to speak into it.</span>"
 	if(!unfastened)
 		. += "<span class='notice'>It's <b>screwed</b> and secured to the wall.</span>"
 	else
@@ -91,7 +92,6 @@
 
 
 /obj/item/radio/intercom/Hear(message, atom/movable/speaker, message_langs, raw_message, radio_freq, list/spans, message_mode)
-	. = ..()
 	if (message_mode == MODE_INTERCOM)
 		return  // Avoid hearing the same thing twice
 	if(!anyai && !(speaker in ai))

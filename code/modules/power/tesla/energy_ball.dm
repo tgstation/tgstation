@@ -60,12 +60,12 @@
 		pixel_x = 0
 		pixel_y = 0
 
-		tesla_zap(src, 7, TESLA_DEFAULT_POWER, TRUE)
+		tesla_zap(src, 7, TESLA_DEFAULT_POWER)
 
 		pixel_x = -32
 		pixel_y = -32
 		for (var/ball in orbiting_balls)
-			var/range = rand(1, CLAMP(orbiting_balls.len, 3, 7))
+			var/range = rand(1, clamp(orbiting_balls.len, 3, 7))
 			tesla_zap(ball, range, TESLA_MINI_POWER/7*range)
 	else
 		energy = 0 // ensure we dont have miniballs of miniballs
@@ -168,20 +168,27 @@
 	var/mob/living/carbon/C = A
 	C.dust()
 
-/proc/tesla_zap(atom/source, zap_range = 3, power, tesla_flags = TESLA_DEFAULT_FLAGS, list/shocked_targets)
+/proc/tesla_zap(atom/source, zap_range = 3, power, zap_flags = ZAP_DEFAULT_FLAGS, list/shocked_targets)
+	if(QDELETED(source))
+		return
 	. = source.dir
 	if(power < 1000)
 		return
 
+	/*
+	THIS IS SO FUCKING UGLY AND I HATE IT, but I can't make it nice without making it slower, check*N rather then n. So we're stuck with it.
+	*/
 	var/closest_dist = 0
 	var/closest_atom
+	var/obj/vehicle/ridden/bicycle/closest_million_dollar_baby
 	var/obj/machinery/power/tesla_coil/closest_tesla_coil
 	var/obj/machinery/power/grounding_rod/closest_grounding_rod
+	var/obj/vehicle/ridden/closest_rideable
 	var/mob/living/closest_mob
 	var/obj/machinery/closest_machine
 	var/obj/structure/closest_structure
 	var/obj/structure/blob/closest_blob
-	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure))
+	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure, /obj/vehicle/ridden))
 	var/static/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field/generator,
@@ -202,27 +209,35 @@
 										/obj/machinery/gateway,
 										/obj/structure/lattice,
 										/obj/structure/grille,
-										/obj/machinery/the_singularitygen/tesla,
 										/obj/structure/frame/machine))
 
 	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
-		if(!(tesla_flags & TESLA_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
+		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
 
-		if(istype(A, /obj/machinery/power/tesla_coil))
+		if(istype(A, /obj/vehicle/ridden/bicycle))//God's not on our side cause he hates idiots.
+			var/dist = get_dist(source, A)
+			var/obj/vehicle/ridden/bicycle/B = A
+			if(dist <= zap_range && (dist < closest_dist || !closest_million_dollar_baby) && !(B.obj_flags & BEING_SHOCKED) && B.can_buckle)//Gee goof thanks for the boolean
+				closest_dist = dist
+				//we use both of these to save on istype and typecasting overhead later on
+				//while still allowing common code to run before hand
+				closest_million_dollar_baby = B
+				closest_atom = B
+
+		else if(closest_million_dollar_baby)
+			continue //no need checking these other things
+
+		else if(istype(A, /obj/machinery/power/tesla_coil))
 			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
 			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(C.obj_flags & BEING_SHOCKED))
 				closest_dist = dist
-
-				//we use both of these to save on istype and typecasting overhead later on
-				//while still allowing common code to run before hand
 				closest_tesla_coil = C
 				closest_atom = C
 
-
 		else if(closest_tesla_coil)
-			continue //no need checking these other things
+			continue
 
 		else if(istype(A, /obj/machinery/power/grounding_rod))
 			var/dist = get_dist(source, A)-2
@@ -234,10 +249,21 @@
 		else if(closest_grounding_rod)
 			continue
 
+		else if(istype(A,/obj/vehicle/ridden))
+			var/dist = get_dist(source, A)
+			var/obj/vehicle/ridden/R = A
+			if(dist <= zap_range && (dist < closest_dist || !closest_rideable) && R.can_buckle && !(R.obj_flags & BEING_SHOCKED))
+				closest_rideable = R
+				closest_atom = A
+				closest_dist = dist
+
+		else if(closest_rideable)
+			continue
+
 		else if(isliving(A))
 			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(L.flags_1 & TESLA_IGNORE_1))
+			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(HAS_TRAIT(L, TRAIT_TESLA_SHOCKIMMUNE)) && !(L.flags_1 & SHOCKED_1))
 				closest_mob = L
 				closest_atom = A
 				closest_dist = dist
@@ -259,7 +285,7 @@
 		else if(istype(A, /obj/structure/blob))
 			var/obj/structure/blob/B = A
 			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(B.obj_flags & BEING_SHOCKED))
+			if(dist <= zap_range && (dist < closest_dist || !closest_blob) && !(B.obj_flags & BEING_SHOCKED))
 				closest_blob = B
 				closest_atom = A
 				closest_dist = dist
@@ -270,47 +296,60 @@
 		else if(isstructure(A))
 			var/obj/structure/S = A
 			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(S.obj_flags & BEING_SHOCKED))
+			//There's no closest_structure here because there are no checks below this one, re-add it if that changes
+			if(dist <= zap_range && (dist < closest_dist) && !(S.obj_flags & BEING_SHOCKED))
 				closest_structure = S
 				closest_atom = A
 				closest_dist = dist
-				
-		else if(closest_structure)
-			continue
 
 	//Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
 		//common stuff
 		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
-		if(!(tesla_flags & TESLA_ALLOW_DUPLICATES))
+		if(!(zap_flags & ZAP_ALLOW_DUPLICATES))
 			LAZYSET(shocked_targets, closest_atom, TRUE)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir
 
 	//per type stuff:
-	if(!QDELETED(closest_tesla_coil))
-		closest_tesla_coil.tesla_act(power, tesla_flags, shocked_targets)
+	var/range = 3
+	if(!QDELETED(closest_million_dollar_baby))
+		power = closest_million_dollar_baby.zap_act(power, zap_flags, shocked_targets)
+
+	else if(!QDELETED(closest_tesla_coil))
+		power = closest_tesla_coil.zap_act(power, zap_flags, shocked_targets)
+		range = 5
 
 	else if(!QDELETED(closest_grounding_rod))
-		closest_grounding_rod.tesla_act(power, tesla_flags, shocked_targets)
+		power = closest_grounding_rod.zap_act(power, zap_flags, shocked_targets)
+
+	else if(!QDELETED(closest_rideable))
+		power = closest_rideable.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_mob))
-		var/shock_damage = (tesla_flags & TESLA_MOB_DAMAGE)? (min(round(power/600), 90) + rand(-5, 5)) : 0
-		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((tesla_flags & TESLA_MOB_STUN) ? NONE : SHOCK_NOSTUN))
+		closest_mob.set_shocked()
+		addtimer(CALLBACK(closest_mob, /mob/living/proc/reset_shocked), 10)
+		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE) ? (min(round(power/600), 90) + rand(-5, 5)) : 0
+		closest_mob.electrocute_act(shock_damage, source, 1, SHOCK_TESLA | ((zap_flags & ZAP_MOB_STUN) ? NONE : SHOCK_NOSTUN))
 		if(issilicon(closest_mob))
 			var/mob/living/silicon/S = closest_mob
-			if((tesla_flags & TESLA_MOB_STUN) && (tesla_flags & TESLA_MOB_DAMAGE))
+			if((zap_flags & ZAP_MOB_STUN) && (zap_flags & ZAP_MOB_DAMAGE))
 				S.emp_act(EMP_LIGHT)
-			tesla_zap(S, 7, power / 1.5, tesla_flags, shocked_targets) // metallic folks bounce it further
+			range = 7 // metallic folks bounce it further
 		else
-			tesla_zap(closest_mob, 5, power / 1.5, tesla_flags, shocked_targets)
+			range = 5
+		power /= 1.5
 
 	else if(!QDELETED(closest_machine))
-		closest_machine.tesla_act(power, tesla_flags, shocked_targets)
+		power = closest_machine.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_blob))
-		closest_blob.tesla_act(power, tesla_flags, shocked_targets)
+		power = closest_blob.zap_act(power, zap_flags, shocked_targets)
 
 	else if(!QDELETED(closest_structure))
-		closest_structure.tesla_act(power, tesla_flags, shocked_targets)
+		power = closest_structure.zap_act(power, zap_flags, shocked_targets)
+
+	tesla_zap(closest_mob, range, power, zap_flags, shocked_targets)
+	if(prob(20))//I know I know
+		tesla_zap(closest_mob, range, power / 2, zap_flags, shocked_targets)

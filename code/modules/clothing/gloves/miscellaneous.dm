@@ -9,7 +9,7 @@
 	equip_delay_other = 20
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
-	custom_price = 10
+	custom_price = 75
 	undyeable = TRUE
 
 /obj/item/clothing/gloves/botanic_leather
@@ -65,3 +65,83 @@
 /obj/item/clothing/gloves/rapid/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/punchcooldown)
+
+
+/obj/item/clothing/gloves/color/plasmaman
+	desc = "Covers up those scandalous boney hands."
+	name = "plasma envirogloves"
+	icon_state = "plasmaman"
+	item_state = "plasmaman"
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = NONE
+	permeability_coefficient = 0.05
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
+
+/obj/item/clothing/gloves/color/plasmaman/black
+	name = "black envirogloves"
+	icon_state = "blackplasma"
+	item_state = "blackplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/white
+	name = "white envirogloves"
+	icon_state = "whiteplasma"
+	item_state = "whiteplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/robot
+	name = "roboticist envirogloves"
+	icon_state = "robotplasma"
+	item_state = "robotplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/janny
+	name = "janitor envirogloves"
+	icon_state = "jannyplasma"
+	item_state = "jannyplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/cargo
+	name = "cargo envirogloves"
+	icon_state = "cargoplasma"
+	item_state = "cargoplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/engineer
+	name = "engineering envirogloves"
+	icon_state = "engieplasma"
+	item_state = "engieplasma"
+	siemens_coefficient = 0
+
+/obj/item/clothing/gloves/color/plasmaman/atmos
+	name = "atmos envirogloves"
+	icon_state = "atmosplasma"
+	item_state = "atmosplasma"
+	siemens_coefficient = 0
+
+/obj/item/clothing/gloves/color/plasmaman/explorer
+	name = "explorer envirogloves"
+	icon_state = "explorerplasma"
+	item_state = "explorerplasma"
+
+/obj/item/clothing/gloves/color/botanic_leather/plasmaman
+	name = "botany envirogloves"
+	desc = "Covers up those scandalous boney hands."
+	icon_state = "botanyplasma"
+	item_state = "botanyplasma"
+	permeability_coefficient = 0.05
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 95)
+
+/obj/item/clothing/gloves/color/plasmaman/prototype
+	name = "prototype envirogloves"
+	icon_state = "protoplasma"
+	item_state = "protoplasma"
+
+/obj/item/clothing/gloves/color/plasmaman/clown
+	name = "clown envirogloves"
+	icon_state = "clownplasma"
+	item_state = "clownplasma"
+
+/obj/item/clothing/gloves/combat/wizard
+	name = "enchanted gloves"
+	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
+	icon_state = "wizard"
+	item_state = "purplegloves"

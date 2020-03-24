@@ -26,22 +26,23 @@
 		opened = TRUE
 	update_icon()
 
-/obj/structure/closet/crate/CanPass(atom/movable/mover, turf/target)
+/obj/structure/closet/crate/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(!istype(mover, /obj/structure/closet))
 		var/obj/structure/closet/crate/locatedcrate = locate(/obj/structure/closet/crate) in get_turf(mover)
 		if(locatedcrate) //you can walk on it like tables, if you're not in an open crate trying to move to a closed crate
 			if(opened) //if we're open, allow entering regardless of located crate openness
-				return 1
+				return TRUE
 			if(!locatedcrate.opened) //otherwise, if the located crate is closed, allow entering
-				return 1
-	return !density
+				return TRUE
 
-/obj/structure/closet/crate/update_icon()
+/obj/structure/closet/crate/update_icon_state()
 	icon_state = "[initial(icon_state)][opened ? "open" : ""]"
 
-	cut_overlays()
+/obj/structure/closet/crate/closet_update_overlays(list/new_overlays)
+	. = new_overlays
 	if(manifest)
-		add_overlay("manifest")
+		. += "manifest"
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	. = ..()
@@ -87,10 +88,20 @@
 	name = "internals crate"
 	icon_state = "o2crate"
 
-/obj/structure/closet/crate/trashcart
+/obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
 	name = "trash cart"
 	icon_state = "trashcart"
+
+/obj/structure/closet/crate/trashcart/Moved()
+	. = ..()
+	if(has_gravity())
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
+
+/obj/structure/closet/crate/trashcart/laundry
+	name = "laundry cart"
+	desc = "A large cart for hauling around large amounts of laundry."
+	icon_state = "laundry"
 
 /obj/structure/closet/crate/medical
 	desc = "A medical crate."

@@ -7,6 +7,7 @@
 	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
+	hide = TRUE
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
@@ -18,7 +19,6 @@
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
 	pipe_state = "injector"
@@ -122,7 +122,7 @@
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
 		var/datum/gas_mixture/air_contents = airs[1]
-		volume_rate = CLAMP(number, 0, air_contents.volume)
+		volume_rate = clamp(number, 0, air_contents.volume)
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
@@ -158,15 +158,11 @@
 			if(rate == "max")
 				rate = MAX_TRANSFER_RATE
 				. = TRUE
-			else if(rate == "input")
-				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, volume_rate) as num|null
-				if(!isnull(rate) && !..())
-					. = TRUE
 			else if(text2num(rate) != null)
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				volume_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
+				volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()

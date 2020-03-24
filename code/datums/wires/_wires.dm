@@ -35,7 +35,6 @@
 	..()
 	if(!istype(holder, holder_type))
 		CRASH("Wire holder is not of the expected type!")
-		return
 
 	src.holder = holder
 	if(randomize)
@@ -121,7 +120,7 @@
 		return TRUE
 
 /datum/wires/proc/is_dud(wire)
-	return dd_hasprefix(wire, WIRE_DUD_PREFIX)
+	return findtext(wire, WIRE_DUD_PREFIX, 1, length(WIRE_DUD_PREFIX) + 1)
 
 /datum/wires/proc/is_dud_color(color)
 	return is_dud(get_wire(color))
@@ -173,6 +172,7 @@
 		S.forceMove(holder.drop_location())
 		return S
 
+/// Called from [/atom/proc/emp_act]
 /datum/wires/proc/emp_pulse()
 	var/list/possible_wires = shuffle(wires)
 	var/remaining_pulses = MAXIMUM_EMP_WIRES

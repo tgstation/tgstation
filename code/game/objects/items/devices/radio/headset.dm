@@ -157,6 +157,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 	icon_state = "srvsec_headset"
 	keyslot = new /obj/item/encryptionkey/headset_srvsec
 
+/obj/item/radio/headset/headset_srvmed
+	name = "psychology headset"
+	desc = "A headset allowing the wearer to communicate with medbay and service."
+	icon_state = "med_headset"
+	keyslot = new /obj/item/encryptionkey/headset_srvmed
+
 /obj/item/radio/headset/headset_com
 	name = "command radio headset"
 	desc = "A headset with a commanding channel."
@@ -287,14 +293,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 				SSradio.remove_object(src, GLOB.radiochannels[ch_name])
 				secure_radio_connections[ch_name] = null
 
-			var/turf/T = user.drop_location()
-			if(T)
-				if(keyslot)
-					keyslot.forceMove(T)
-					keyslot = null
-				if(keyslot2)
-					keyslot2.forceMove(T)
-					keyslot2 = null
+			if(keyslot)
+				user.put_in_hands(keyslot)
+				keyslot = null
+			if(keyslot2)
+				user.put_in_hands(keyslot2)
+				keyslot2 = null
 
 			recalculateChannels()
 			to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset.</span>")

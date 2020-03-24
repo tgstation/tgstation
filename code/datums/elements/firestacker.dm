@@ -2,30 +2,30 @@
   * Can be applied to /atom/movable subtypes to make them apply fire stacks to things they hit
   */
 /datum/element/firestacker
-	element_flags = ELEMENT_DETACH
-	/// A list in format {atom/movable/owner, number}
-	/// Used to keep track of movables which want to apply a different number of fire stacks than default
-	var/list/amount_by_owner = list()
+	element_flags = ELEMENT_BESPOKE
+	id_arg_index = 2
+	/// How many firestacks to apply per hit
+	var/amount
 
 /datum/element/firestacker/Attach(datum/target, amount)
 	. = ..()
-	if(!ismovableatom(target))
+	
+	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
+	
+	src.amount = amount
+	
 	RegisterSignal(target, COMSIG_MOVABLE_IMPACT, .proc/impact, override = TRUE)
 	if(isitem(target))
 		RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/item_attack, override = TRUE)
 		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, .proc/item_attack_self, override = TRUE)
 
-	if(amount) // If amount is not given we default to 1 and don't need to save it here
-		amount_by_owner[target] = amount
-
 /datum/element/firestacker/Detach(datum/source, force)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_MOVABLE_IMPACT, COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_SELF))
-	amount_by_owner -= source
 
 /datum/element/firestacker/proc/stack_on(datum/owner, mob/living/target)
-	target.adjust_fire_stacks(amount_by_owner[owner] || 1)
+	target.adjust_fire_stacks(amount)
 
 /datum/element/firestacker/proc/impact(datum/source, atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(isliving(hit_atom))

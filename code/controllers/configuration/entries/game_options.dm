@@ -66,6 +66,8 @@
 
 /datum/config_entry/flag/disable_peaceborg
 
+/datum/config_entry/flag/disable_warops
+
 /datum/config_entry/flag/economy	//money money money money money money money money money money money money
 
 /datum/config_entry/number/traitor_scaling_coeff	//how much does the amount of players get divided by to determine traitors
@@ -241,8 +243,18 @@
 /datum/config_entry/number/movedelay/run_delay
 	integer = FALSE
 
+/datum/config_entry/number/movedelay/run_delay/ValidateAndSet()
+	. = ..()
+	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/run)
+	M.sync()
+
 /datum/config_entry/number/movedelay/walk_delay
 	integer = FALSE
+
+/datum/config_entry/number/movedelay/walk_delay/ValidateAndSet()
+	. = ..()
+	var/datum/movespeed_modifier/config_walk_run/M = get_cached_movespeed_modifier(/datum/movespeed_modifier/config_walk_run/walk)
+	M.sync()
 
 /////////////////////////////////////////////////Outdated move delay
 /datum/config_entry/number/outdated_movedelay
@@ -377,6 +389,14 @@
 
 /datum/config_entry/number/monkeycap
 	config_entry_value = 64
+	min_val = 0
+
+/datum/config_entry/number/ratcap
+	config_entry_value = 64
+	min_val = 0
+
+/datum/config_entry/number/maxfine
+	config_entry_value = 1000
 	min_val = 0
 
 /datum/config_entry/flag/dynamic_config_enabled

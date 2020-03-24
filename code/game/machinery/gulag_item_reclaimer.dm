@@ -8,8 +8,8 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 100
 	active_power_usage = 2500
-	ui_x = 455
-	ui_y = 440
+	ui_x = 325
+	ui_y = 400
 	var/list/stored_items = list()
 	var/obj/machinery/gulag_teleporter/linked_teleporter = null
 
@@ -60,20 +60,22 @@
 		mobs += list(mob_info)
 
 	data["mobs"] = mobs
-
-
 	data["can_reclaim"] = can_reclaim
 
 	return data
 
-/obj/machinery/gulag_item_reclaimer/ui_act(action, list/params)
-	if(action != "release_items") //Since we only have one button, this is fine.
+/obj/machinery/gulag_item_reclaimer/ui_act(action, params)
+	if(..())
 		return
-	var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
-	if(H != usr && !allowed(usr))
-		to_chat(usr, "<span class='warning'>Access denied.</span>")
-		return
-	drop_items(H)
+
+	switch(action)
+		if("release_items")
+			var/mob/living/carbon/human/H = locate(params["mobref"]) in stored_items
+			if(H != usr && !allowed(usr))
+				to_chat(usr, "<span class='warning'>Access denied.</span>")
+				return
+			drop_items(H)
+			. = TRUE
 
 /obj/machinery/gulag_item_reclaimer/proc/drop_items(mob/user)
 	if(!stored_items[user])

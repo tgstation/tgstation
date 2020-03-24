@@ -93,7 +93,7 @@
 
 /obj/structure/sign/warning/testchamber
 	name = "\improper TESTING AREA"
-	desc = "A sign that warns of high power testing equipment in the area. That's either a really powerful laser... or a satellite landing on some person's head."
+	desc = "A sign that warns of high-power testing equipment in the area. That's either a really powerful laser... or a satellite landing on some person's head."
 	icon_state = "testchamber"
 
 /obj/structure/sign/warning/firingrange
@@ -113,7 +113,7 @@
 
 /obj/structure/sign/warning/gasmask
 	name = "\improper CONTAMINATED AIR"
-	desc = "A sign that warns of dangerous particulates in the air, instructing you to wear a filtration device.."
+	desc = "A sign that warns of dangerous particulates in the air, instructing you to wear a filtration device."
 	icon_state = "gasmask"
 
 /obj/structure/sign/warning/chemdiamond

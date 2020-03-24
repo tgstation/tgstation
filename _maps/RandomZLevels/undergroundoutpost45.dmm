@@ -1184,7 +1184,6 @@
 "cM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5;
-	level = 2
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -1419,7 +1418,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "do" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -2905,7 +2904,7 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "fT" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -3277,45 +3276,6 @@
 	},
 /area/awaymission/undergroundoutpost45/central)
 "gR" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/gateway)
-"gS" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/gateway)
-"gT" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3586,47 +3546,11 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/crew_quarters)
-"ht" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/gateway)
 "hu" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/gateway)
-"hv" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -3873,7 +3797,6 @@
 "hU" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4;
-	level = 2
 	},
 /obj/structure/table,
 /obj/item/book/manual/chef_recipes,
@@ -3886,7 +3809,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4;
-	level = 2
 	},
 /turf/open/floor/plating{
 	heat_capacity = 1e+006
@@ -3909,26 +3831,7 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/undergroundoutpost45/central)
-"hY" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/gateway)
 "hZ" = (
-/obj/machinery/gateway,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3940,24 +3843,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/undergroundoutpost45/gateway)
-"ia" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -5084,7 +4969,7 @@
 	},
 /area/awaymission/undergroundoutpost45/gateway)
 "kh" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -6623,7 +6508,7 @@
 /area/awaymission/undergroundoutpost45/research)
 "mQ" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -8100,7 +7985,7 @@
 	},
 /area/awaymission/undergroundoutpost45/research)
 "pl" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8474,7 +8359,7 @@
 	pixel_x = 28
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -8594,7 +8479,7 @@
 "qm" = (
 /obj/machinery/light/small,
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -11
 	},
 /obj/structure/mirror{
@@ -8701,7 +8586,7 @@
 /area/awaymission/undergroundoutpost45/crew_quarters)
 "qx" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -9056,7 +8941,7 @@
 	pixel_x = 28
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer{
@@ -9125,7 +9010,7 @@
 	},
 /area/awaymission/undergroundoutpost45/engineering)
 "rk" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/turf_decal/tile/yellow{
@@ -9399,7 +9284,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4;
-	level = 2
 	},
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Maintenance";
@@ -11265,7 +11149,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/computer/atmos_control{
 	dir = 4;
-	level = 3;
 	name = "Distribution and Waste Monitor";
 	sensors = list("UO45_air_sensor" = "Mixed Air Supply Tank", "UO45_distro_meter" = "Distribution Loop", "UO45_waste_meter" = "Waste Loop")
 	},
@@ -11897,7 +11780,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	layer = 5
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -12250,7 +12133,7 @@
 /area/awaymission/undergroundoutpost45/engineering)
 "wL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/light/small,
@@ -32692,8 +32575,8 @@ ad
 gv
 gJ
 gR
-ht
-hY
+gR
+gR
 it
 iO
 jh
@@ -32948,7 +32831,7 @@ ad
 ad
 gv
 gJ
-gS
+gR
 hu
 hZ
 iu
@@ -33205,9 +33088,9 @@ ad
 ad
 gw
 gJ
-gT
-hv
-ia
+gR
+gR
+gR
 iv
 iQ
 jj

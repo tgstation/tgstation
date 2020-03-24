@@ -8,7 +8,7 @@
 	ruletype = "Midround"
 	/// If the ruleset should be restricted from ghost roles.
 	var/restrict_ghost_roles = TRUE
-	/// What mob type the ruleset is restricted to. 
+	/// What mob type the ruleset is restricted to.
 	var/required_type = /mob/living/carbon/human
 	var/list/living_players = list()
 	var/list/living_antags = list()
@@ -48,7 +48,7 @@
 				trimmed_list.Remove(M)
 				continue
 		if (M.mind)
-			if (restrict_ghost_roles && M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL]) // Are they playing a ghost role?
+			if (restrict_ghost_roles && (M.mind.assigned_role in GLOB.exp_specialmap[EXP_TYPE_SPECIAL])) // Are they playing a ghost role?
 				trimmed_list.Remove(M)
 				continue
 			if (M.mind.assigned_role in restricted_roles) // Does their job allow it?
@@ -97,13 +97,11 @@
 	message_admins("Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 	log_game("DYNAMIC: Polling [possible_volunteers.len] players to apply for the [name] ruleset.")
 
-	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, SSticker.mode, antag_flag, poll_time = 300)
-	
+	candidates = pollGhostCandidates("The mode is looking for volunteers to become [antag_flag] for [name]", antag_flag, SSticker.mode, antag_flag_override ? antag_flag_override : antag_flag, poll_time = 300)
+
 	if(!candidates || candidates.len <= 0)
 		message_admins("The ruleset [name] received no applications.")
 		log_game("DYNAMIC: The ruleset [name] received no applications.")
-		mode.refund_threat(cost)
-		mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (no applications)"
 		mode.executed_rules -= src
 		return
 
@@ -118,8 +116,6 @@
 		if(candidates.len <= 0)
 			if(i == 1)
 				// We have found no candidates so far and we are out of applicants.
-				mode.refund_threat(cost)
-				mode.threat_log += "[worldtime2text()]: Rule [name] refunded [cost] (all applications invalid)"
 				mode.executed_rules -= src
 			break
 		var/mob/applicant = pick(candidates)
@@ -168,7 +164,7 @@
 	name = "Syndicate Sleeper Agent"
 	antag_datum = /datum/antagonist/traitor
 	antag_flag = ROLE_TRAITOR
-	protected_roles = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_roles = list("Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("Cyborg", "AI", "Positronic Brain")
 	required_candidates = 1
 	weight = 7
@@ -191,7 +187,7 @@
 	..()
 	for(var/mob/living/player in living_players)
 		if(issilicon(player)) // Your assigned role doesn't change when you are turned into a silicon.
-			living_players -= player 
+			living_players -= player
 			continue
 		if(is_centcom_level(player.z))
 			living_players -= player // We don't autotator people in CentCom
@@ -453,4 +449,49 @@
 	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
 	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Nightmare by the midround ruleset.")
 	log_game("DYNAMIC: [key_name(S)] was spawned as a Nightmare by the midround ruleset.")
+	return S
+
+//////////////////////////////////////////////
+//                                          //
+//           SPACE DRAGON (GHOST)           //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon
+	name = "Space Dragon"
+	antag_datum = /datum/antagonist/space_dragon
+	antag_flag = "Space Dragon"
+	antag_flag_override = ROLE_SPACE_DRAGON
+	enemy_roles = list("Security Officer", "Detective", "Head of Security", "Captain")
+	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
+	required_candidates = 1
+	weight = 4
+	cost = 10
+	requirements = list(101,101,101,80,60,50,30,20,10,10)
+	high_population_requirement = 50
+	repeatable = TRUE
+	var/list/spawn_locs = list()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/execute()
+	for(var/obj/effect/landmark/carpspawn/C in GLOB.landmarks_list)
+		spawn_locs += (C.loc)
+	if(!spawn_locs.len)
+		message_admins("No valid spawn locations found, aborting...")
+		return MAP_ERROR
+	. = ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/space_dragon/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/simple_animal/hostile/space_dragon/S = new (pick(spawn_locs))
+	player_mind.transfer_to(S)
+	player_mind.assigned_role = "Space Dragon"
+	player_mind.special_role = "Space Dragon"
+	player_mind.add_antag_datum(/datum/antagonist/space_dragon)
+
+	playsound(S, 'sound/magic/ethereal_exit.ogg', 50, TRUE, -1)
+	message_admins("[ADMIN_LOOKUPFLW(S)] has been made into a Space Dragon by the midround ruleset.")
+	log_game("DYNAMIC: [key_name(S)] was spawned as a Space Dragon by the midround ruleset.")
+	priority_announce("A large organic energy flux has been recorded near of [station_name()], please stand-by.", "Lifesign Alert")
 	return S

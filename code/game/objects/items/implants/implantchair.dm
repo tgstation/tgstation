@@ -77,10 +77,10 @@
 		ready_implants--
 		if(!replenishing && auto_replenish)
 			replenishing = TRUE
-			addtimer(CALLBACK(src,"replenish"),replenish_cooldown)
+			addtimer(CALLBACK(src,.proc/replenish),replenish_cooldown)
 		if(injection_cooldown > 0)
 			ready = FALSE
-			addtimer(CALLBACK(src,"set_ready"),injection_cooldown)
+			addtimer(CALLBACK(src,.proc/set_ready),injection_cooldown)
 	else
 		playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 25, TRUE)
 	update_icon()
@@ -90,24 +90,25 @@
 	if(istype(I, /obj/item/implant))
 		var/obj/item/implant/P = I
 		if(P.implant(M))
-			visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
+			visible_message("<span class='warning'>[M] is implanted by [src].</span>")
 			return TRUE
 	else if(istype(I, /obj/item/organ))
 		var/obj/item/organ/P = I
 		P.Insert(M, FALSE, FALSE)
-		visible_message("<span class='warning'>[M] has been implanted by [src].</span>")
+		visible_message("<span class='warning'>[M] is implanted by [src].</span>")
 		return TRUE
 
-/obj/machinery/implantchair/update_icon()
+/obj/machinery/implantchair/update_icon_state()
 	icon_state = initial(icon_state)
 	if(state_open)
 		icon_state += "_open"
 	if(occupant)
 		icon_state += "_occupied"
+
+/obj/machinery/implantchair/update_overlays()
+	. = ..()
 	if(ready)
-		add_overlay("ready")
-	else
-		cut_overlays()
+		. += "ready"
 
 /obj/machinery/implantchair/proc/replenish()
 	if(ready_implants < max_implants)

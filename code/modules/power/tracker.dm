@@ -1,6 +1,6 @@
 //Solar tracker
 
-//Machine that tracks the sun and reports it's direction to the solar controllers
+//Machine that tracks the sun and reports its direction to the solar controllers
 //As long as this is working, solar panels on same powernet will track automatically
 
 /obj/machinery/power/tracker
@@ -14,31 +14,36 @@
 	integrity_failure = 0.2
 
 	var/id = 0
-	var/sun_angle = 0		// sun angle as set by sun datum
-	var/obj/machinery/power/solar_control/control = null
+	var/obj/machinery/power/solar_control/control
 
 /obj/machinery/power/tracker/Initialize(mapload, obj/item/solar_assembly/S)
 	. = ..()
 	Make(S)
 	connect_to_network()
+	RegisterSignal(SSsun, COMSIG_SUN_MOVED, .proc/sun_update)
 
 /obj/machinery/power/tracker/Destroy()
 	unset_control() //remove from control computer
 	return ..()
 
-//set the control of the tracker to a given computer if closer than SOLAR_MAX_DIST
 /obj/machinery/power/tracker/proc/set_control(obj/machinery/power/solar_control/SC)
-	if(!SC || (get_dist(src, SC) > SOLAR_MAX_DIST))
-		return 0
+	unset_control()
 	control = SC
 	SC.connected_tracker = src
-	return 1
 
 //set the control of the tracker to null and removes it from the previous control computer if needed
 /obj/machinery/power/tracker/proc/unset_control()
 	if(control)
+		if(control.track == SOLAR_TRACK_AUTO)
+			control.track = SOLAR_TRACK_OFF
 		control.connected_tracker = null
-	control = null
+		control = null
+
+///Tell the controller to turn the solar panels
+/obj/machinery/power/tracker/proc/sun_update(datum/source, azimuth)
+	setDir(angle2dir(azimuth))
+	if(control && control.track == SOLAR_TRACK_AUTO)
+		control.set_panels(azimuth)
 
 /obj/machinery/power/tracker/proc/Make(obj/item/solar_assembly/S)
 	if(!S)
@@ -47,17 +52,6 @@
 		S.tracker = 1
 		S.anchored = TRUE
 	S.forceMove(src)
-	update_icon()
-
-//updates the tracker icon and the facing angle for the control computer
-/obj/machinery/power/tracker/proc/set_angle(angle)
-	sun_angle = angle
-
-	//set icon dir to show sun illumination
-	setDir(turn(NORTH, -angle - 22.5)	)// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
-
-	if(powernet && (powernet == control.powernet)) //update if we're still in the same powernet
-		control.currentdir = angle
 
 /obj/machinery/power/tracker/crowbar_act(mob/user, obj/item/I)
 	playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
@@ -74,13 +68,13 @@
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)
 		unset_control()
 
-/obj/machinery/power/solar/deconstruct(disassembled = TRUE)
+/obj/machinery/power/tracker/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
 		if(disassembled)
 			var/obj/item/solar_assembly/S = locate() in src
 			if(S)
 				S.forceMove(loc)
-				S.give_glass(stat & BROKEN)
+				S.give_glass(machine_stat & BROKEN)
 		else
 			playsound(src, "shatter", 70, TRUE)
 			new /obj/item/shard(src.loc)

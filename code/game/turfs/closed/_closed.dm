@@ -13,10 +13,10 @@
 /turf/closed/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	return FALSE
 
-/turf/closed/CanPass(atom/movable/mover, turf/target)
+/turf/closed/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSCLOSEDTURF))
 		return TRUE
-	return ..()
 
 /turf/closed/indestructible
 	name = "wall"
@@ -56,7 +56,8 @@
 	name = "Space Station 13"
 	icon = 'icons/blank_title.png'
 	icon_state = ""
-	layer = FLY_LAYER
+	layer = SPLASHSCREEN_LAYER
+	plane = SPLASHSCREEN_PLANE
 	bullet_bounce_sound = null
 
 /turf/closed/indestructible/splashscreen/New()
@@ -85,6 +86,12 @@
 /turf/closed/indestructible/riveted/uranium
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
+
+/turf/closed/indestructible/riveted/plastinum
+	name = "plastinum wall"
+	desc = "A luxurious wall made out of a plasma-platinum alloy. Effectively impervious to conventional methods of destruction."
+	icon = 'icons/turf/walls/plastinum_wall.dmi'
+	icon_state = "shuttle"
 
 /turf/closed/indestructible/abductor
 	icon_state = "alien1"

@@ -5,7 +5,10 @@
 	slices_num = 5
 	tastes = list("bread" = 10)
 	foodtype = GRAIN
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/store/bread/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/breadslice
 	icon = 'icons/obj/food/burgerbread.dmi'
@@ -16,7 +19,10 @@
 	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
-	dunkable = TRUE
+
+/obj/item/reagent_containers/food/snacks/breadslice/Initialize()
+	. = ..()
+	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"
@@ -35,6 +41,15 @@
 	icon_state = "breadslice"
 	customfoodfilling = 1
 	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/breadslice/moldy
+	name = "moldy bread slice"
+	desc = "Entire stations have been ripped apart over arguing whether this is still good to eat."
+	icon_state = "moldybreadslice"
+	customfoodfilling = 0
+	bonus_reagents = list(/datum/reagent/consumable/mold = 10)
+	tastes = list("decaying fungus" = 1)
+	foodtype = GROSS
 
 /obj/item/reagent_containers/food/snacks/store/bread/meat
 	name = "meatbread loaf"
@@ -178,6 +193,7 @@
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	attack_verb = list("touche'd")
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
 

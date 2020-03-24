@@ -13,7 +13,7 @@ FLOOR SAFES
 	anchored = TRUE
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
-	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT 
+	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_UI_INTERACT
 	var/open = FALSE		//is the safe open?
 	var/tumbler_1_pos	//the tumbler position- from 0 to 72
 	var/tumbler_1_open	//the tumbler position to open at- 0 to 72
@@ -73,7 +73,7 @@ FLOOR SAFES
 		num = 0
 	return num
 
-/obj/structure/safe/update_icon()
+/obj/structure/safe/update_icon_state()
 	if(open)
 		icon_state = "[initial(icon_state)]-open"
 	else
@@ -89,7 +89,7 @@ FLOOR SAFES
 			var/obj/item/P = contents[i]
 			dat += "<tr><td><a href='?src=[REF(src)];retrieve=[REF(P)]'>[P.name]</a></td></tr>"
 		dat += "</table></center>"
-	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=safe;size=350x300")
+	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head><body>[dat]</body></html>", "window=safe;size=350x300")
 
 /obj/structure/safe/Topic(href, href_list)
 	if(!ishuman(usr))
@@ -196,16 +196,10 @@ FLOOR SAFES
 	name = "floor safe"
 	icon_state = "floorsafe"
 	density = FALSE
-	level = 1	//underfloor
 	layer = LOW_OBJ_LAYER
 
 
 /obj/structure/safe/floor/Initialize(mapload)
 	. = ..()
-	if(mapload)
-		var/turf/T = loc
-		hide(T.intact)
 
-
-/obj/structure/safe/floor/hide(var/intact)
-	invisibility = intact ? INVISIBILITY_MAXIMUM : 0
+	AddElement(/datum/element/undertile)

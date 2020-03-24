@@ -51,8 +51,9 @@
 /obj/machinery/computer/cargo/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
-	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
-	"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
+	if(user)
+		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
+		"<span class='notice'>You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband.</span>")
 
 	obj_flags |= EMAGGED
 	contraband = TRUE
@@ -166,6 +167,8 @@
 			else
 				SSshuttle.shuttle_loan.loan_shuttle()
 				say("The supply shuttle has been loaned to CentCom.")
+				investigate_log("[key_name(usr)] accepted a shuttle loan event.", INVESTIGATE_CARGO)
+				log_game("[key_name(usr)] accepted a shuttle loan event.")
 				. = TRUE
 		if("add")
 			var/id = text2path(params["id"])

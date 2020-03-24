@@ -77,9 +77,10 @@
 /obj/structure/reagent_dispensers/fueltank/fire_act(exposed_temperature, exposed_volume)
 	boom()
 
-/obj/structure/reagent_dispensers/fueltank/tesla_act()
+/obj/structure/reagent_dispensers/fueltank/zap_act(zap_flags)
 	..() //extend the zap
-	boom()
+	if(ZAP_OBJ_DAMAGE & zap_flags)
+		boom()
 
 /obj/structure/reagent_dispensers/fueltank/bullet_act(obj/projectile/P)
 	. = ..()
@@ -94,7 +95,7 @@
 			to_chat(user, "<span class='warning'>[src] is out of fuel!</span>")
 			return
 		var/obj/item/weldingtool/W = I
-		if(!W.welding)
+		if(istype(W) && !W.welding)
 			if(W.reagents.has_reagent(/datum/reagent/fuel, W.max_fuel))
 				to_chat(user, "<span class='warning'>Your [W.name] is already full!</span>")
 				return
@@ -103,10 +104,8 @@
 			playsound(src, 'sound/effects/refill.ogg', 50, TRUE)
 			W.update_icon()
 		else
-			user.visible_message("<span class='warning'>[user] catastrophically fails at refilling [user.p_their()] [W.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
-
+			user.visible_message("<span class='danger'>[user] catastrophically fails at refilling [user.p_their()] [I.name]!</span>", "<span class='userdanger'>That was stupid of you.</span>")
 			log_bomber(user, "detonated a", src, "via welding tool")
-
 			boom()
 		return
 	return ..()
@@ -183,6 +182,14 @@
 	icon_state = "vat"
 	anchored = TRUE
 	reagent_id = /datum/reagent/consumable/cooking_oil
+
+/obj/structure/reagent_dispensers/servingdish
+	name = "serving dish"
+	desc = "A dish full of food slop for your bowl."
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "serving"
+	anchored = TRUE
+	reagent_id = /datum/reagent/consumable/nutraslop
 
 /obj/structure/reagent_dispensers/plumbed
 	name = "stationairy water tank"
