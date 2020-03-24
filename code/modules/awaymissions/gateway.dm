@@ -297,6 +297,8 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /obj/machinery/computer/gateway_control/ui_act(action, list/params)
 	. = ..()
+	if(.)
+		return
 	switch(action)
 		if("linkup")
 			try_to_linkup()
