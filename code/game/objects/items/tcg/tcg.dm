@@ -23,7 +23,7 @@ var/list/cardTypeLookup = list("name" = 0,
 	var/resolve = 0 //How hard this card can get hit (by default)
 	var/tags = "" //Special tags
 	var/cardtype = "" //Cardtype, for use in battles. Arcane/Inept if you don't update this whole block when you finalize the game I will throw you into the sm
-	var/rarity = 0 //EOB discribe this pls
+	var/rarity = 0 //The rarity of this card in a set, each set must have at least one of all types
 
 ///Creates a card based on a passed card string
 /obj/item/tcgcard/Initialize(mapload, card)
@@ -45,16 +45,30 @@ var/list/cardTypeLookup = list("name" = 0,
 	. = ..()
 
 /obj/item/cardpack
+	name = "Trading Card Pack: Coder"
+	desc = "If you find this go yell at us on the github"
+	icon = 'icons/obj/tcg.dmi'
+	icon_state = "cardback_nt"
+	var/series = "MEME" //Mirrors the card series.
+	var/contains_coin = -1 //Chance of the pack having a coin in it.
+	var/list/rarityTable = list(1,
+							5,
+							100,
+							500,
+							1000,
+							) //The rarity table, the set must contain at least one of each
+
+/obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
 	desc = "Contains six cards of varying rarity from Series 1. Collect them all!"
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "cardback_nt"
-	var/series = "S1" //Mirrors the card series.
-	var/contains_coin = 0 //Chance of the pack having a coin in it.
+	series = "S1"
+	contains_coin = 0
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
-	var/list/cards = buildCardListWithRarity(extractAllMatchingCards("tags", series, GLOB.card_list, GLOB.card_template_list))
+	var/list/cards = buildCardListWithRarity(6, 4, GLOB.card_list, GLOB.card_template_list)
 	for(var/i = 1 to 6)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), pick(cards))
@@ -73,27 +87,46 @@ var/list/cardTypeLookup = list("name" = 0,
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
 
-/***
-*Takes a card list and returns a new list with rarity effecting card count
-*
-*Rarity is used to expand the card list
-*
-*cardList should be a fully expanded card list
-*If you use this to set the global list I will throw you into a fire
-***/
-/proc/buildCardListWithRarity(cardList)
+///Returns a list of cards of cardCount weighted by rarity from cardList + templates that have matching tags to series, with at least one of guarenteedRarity.
+/obj/item/cardpack/proc/buildCardListWithRarity(cardCount, guarenteedRarity, cardList, templates)
+	var/list/cards = extractAllMatchingCards("tags", series, cardList, templates)
+	if(guarenteedRarity > 0 && guarenteedRarity <= rarityTable.len)
+		cardCount--
+	cards = returnCardsByRarity(cardCount, cards, templates)
+	//You can always get at least one of some rarity
+	if(guarenteedRarity > 0 && guarenteedRarity <= rarityTable.len)
+		var/list/forSure = extractAllMatchingCards("rarity", guarenteedRarity, cardList)
+		if(forSure)
+			cards += pick(forSure)
+		else
+			cards += expandCard("", templates)
+	return cards
+
+///Returns a list of cards of the length cardCount that match a random rarity weighted by rarityTable[]
+/obj/item/cardpack/proc/returnCardsByRarity(cardCount, cardList, templateList)
 	var/list/toReturn = list()
-	for(var/card in cardList)
-		var/count = text2num(extractCardVariable("rarity", card))
-		for(var/index in 1 to count)
-			toReturn += card
+	var/list/cards = list()
+	for(var/card in 1 to cardCount)
+		//Some number between 1 and the final value of the table
+		var/rarity = rand(1, rarityTable[rarityTable.len])
+		for(var/bracket in rarityTable.len)
+			if(rarity <= rarityTable[bracket])
+				rarity = bracket
+				break
+		cards = extractAllMatchingCards("rarity", rarity, cardList)
+		if(cards.len)
+			toReturn += pick(cards)
+		else
+			//If we still don't find anything add the default. Lazy coders.
+			toReturn += expandCard("", templateList)
 	return toReturn
 
 ///Extracts all matching cards from the list, and returns a list of them
-/proc/extractAllMatchingCards(matchType = "id", matchBy = -1, cardList, templateList)
+/proc/extractAllMatchingCards(matchType = "id", matchBy = -1, cardList, templateList = "")
 	var/list/toReturn = list()
 	for(var/card in cardList)
-		card = expandCard(cardList[card], templateList)
+		if(templateList)
+			card = expandCard(cardList[card], templateList)
 		if(isCardMatch(matchType, matchBy, card))
 			toReturn += card
 	return toReturn

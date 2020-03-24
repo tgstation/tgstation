@@ -8,6 +8,7 @@
 	var/resolve = 0 //How hard this card can get hit (by default).
     var/tags = "" //Special tags
     var/cardtype = "" //Cardtype, for use ingame
+	var/rarity = 1 //The rarity of this card in a set, defined by the set it's called by
 
 //Converter:
 I have written a python program to convert human readable into the concentrated format

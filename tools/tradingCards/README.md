@@ -19,6 +19,7 @@ tags //A tagging system to be used for formulating packs and adding behavior in 
      //A tag may be any sequence of chars except |, $ or &
      //Stacking tags: To stack tags, place a & between each. For instance CE&NERD
 cardtype //A string that allows us to define the use of the card ingame
+rarity // The rarity of the card, based off the set it's called by
 
 Here's how the readable format works.
 \n (Newline) If alone, indecates that the current card def has ended and that we need to start a new one
