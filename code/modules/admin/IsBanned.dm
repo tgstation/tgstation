@@ -13,10 +13,17 @@
 			return FALSE
 		log_access("Failed Login (invalid data): [key] [address]-[computer_id]")
 		return list("reason"="invalid login data", "desc"="Error: Could not check ban status, Please try again. Error message: Your computer provided invalid or blank information to the server on connection (byond username, IP, and Computer ID.) Provided information for reference: Username:'[key]' IP:'[address]' Computer ID:'[computer_id]'. (If you continue to get this error, please restart byond or contact byond support.)")
-
+	
+	if (type == "world")
+		return ..() //shunt world topic banchecks to purely to byond's internal ban system
+		
 	var/admin = FALSE
 	var/ckey = ckey(key)
-
+	
+	var/client/C = GLOB.directory[ckey]
+	if (C && ckey == C.ckey && computer_id == C.computer_id && address == C.address)
+		return //don't recheck connected clients.
+		
 	//IsBanned can get re-called on a user in certain situations, this prevents that leading to repeated messages to admins.
 	var/static/list/checkedckeys = list()
 	//magic voodo to check for a key in a list while also adding that key to the list without having to do two associated lookups
@@ -24,8 +31,6 @@
 
 	if(GLOB.admin_datums[ckey] || GLOB.deadmins[ckey])
 		admin = TRUE
-
-	var/client/C = GLOB.directory[ckey]
 
 
 	//Whitelist
@@ -89,7 +94,23 @@
 				[expires]"}
 				log_access("Failed Login: [key] [computer_id] [address] - Banned (#[i["id"]])")
 				return list("reason"="Banned","desc"="[desc]")
+	if (admin)
+		if (GLOB.directory[ckey])
+			return
 
+		//oh boy, so basically, because of a bug in byond, sometimes stickyban matches don't trigger here, so we can't exempt admins.
+		//	Whitelisting the ckey with the byond whitelist field doesn't work.
+		//	So we instead have to remove every stickyban than later re-add them.
+		if (!length(GLOB.stickybanadminexemptions))
+			for (var/banned_ckey in world.GetConfig("ban"))
+				GLOB.stickybanadmintexts[banned_ckey] = world.GetConfig("ban", banned_ckey)
+				world.SetConfig("ban", banned_ckey, null)
+		if (!SSstickyban.initialized)
+			return
+		GLOB.stickybanadminexemptions[ckey] = world.time
+		stoplag() // sleep a byond tick
+		GLOB.stickbanadminexemptiontimerid = addtimer(CALLBACK(GLOBAL_PROC, /proc/restore_stickybans), 5 SECONDS, TIMER_STOPPABLE|TIMER_UNIQUE|TIMER_OVERRIDE)
+		return
 	var/list/ban = ..()	//default pager ban stuff
 
 	if (ban)
@@ -191,7 +212,7 @@
 			return null
 
 		if (C) //user is already connected!.
-			to_chat(C, "You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was automatically reversed.")
+			to_chat(C, "<span class='redtext'>You are about to get disconnected for matching a sticky ban after you connected. If this turns out to be the ban evasion detection system going haywire, we will automatically detect this and revert the matches. if you feel that this is the case, please wait EXACTLY 6 seconds then reconnect using file -> reconnect to see if the match was automatically reversed.</span>")
 
 		var/desc = "\nReason:(StickyBan) You, or another user of this computer or connection ([bannedckey]) is banned from playing here. The ban reason is:\n[ban["message"]]\nThis ban was applied by [ban["admin"]]\nThis is a BanEvasion Detection System ban, if you think this ban is a mistake, please wait EXACTLY 6 seconds, then try again before filing an appeal.\n"
 		. = list("reason" = "Stickyban", "desc" = desc)
@@ -199,6 +220,14 @@
 
 	return .
 
+/proc/restore_stickybans()
+	for (var/banned_ckey in GLOB.stickybanadmintexts)
+		world.SetConfig("ban", banned_ckey, GLOB.stickybanadmintexts[banned_ckey])
+	GLOB.stickybanadminexemptions = list()
+	GLOB.stickybanadmintexts = list()
+	if (GLOB.stickbanadminexemptiontimerid)
+		deltimer(GLOB.stickbanadminexemptiontimerid)
+	GLOB.stickbanadminexemptiontimerid = null
 
 #undef STICKYBAN_MAX_MATCHES
 #undef STICKYBAN_MAX_EXISTING_USER_MATCHES

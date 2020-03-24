@@ -25,6 +25,20 @@
 	program_type = /datum/nanite_program/viral
 	category = list("Utility Nanites")
 
+/datum/design/nanites/research
+	name = "Distributed Computing"
+	desc = "The nanites aid the research servers by performing a portion of its calculations, increasing research point generation."
+	id = "research_nanites"
+	program_type = /datum/nanite_program/research
+	category = list("Utility Nanites")
+
+/datum/design/nanites/researchplus
+	name = "Neural Network"
+	desc = "The nanites link the host's brains together forming a neural research network, that becomes more efficient with the amount of total hosts. Can be overloaded to increase research output."
+	id = "researchplus_nanites"
+	program_type = /datum/nanite_program/researchplus
+	category = list("Utility Nanites")
+
 /datum/design/nanites/monitoring
 	name = "Monitoring"
 	desc = "The nanites monitor the host's vitals and location, sending them to the suit sensor network."
@@ -36,7 +50,14 @@
 	name = "Host Scan"
 	desc = "The nanites display a detailed readout of a body scan to the host."
 	id = "selfscan_nanites"
-	program_type = /datum/nanite_program/triggered/self_scan
+	program_type = /datum/nanite_program/self_scan
+	category = list("Utility Nanites")
+
+/datum/design/nanites/dermal_button
+	name = "Dermal Button"
+	desc = "Displays a button on the host's skin, which can be used to send a signal to the nanites."
+	id = "dermal_button_nanites"
+	program_type = /datum/nanite_program/dermal_button
 	category = list("Utility Nanites")
 
 /datum/design/nanites/stealth
@@ -46,11 +67,19 @@
 	program_type = /datum/nanite_program/stealth
 	category = list("Utility Nanites")
 
+/datum/design/nanites/reduced_diagnostics
+	name = "Reduced Diagnostics"
+	desc = "Disables some high-cost diagnostics in the nanites, making them unable to communicate their program list to portable scanners. \
+	Doing so saves some power, slightly increasing their replication speed."
+	id = "red_diag_nanites"
+	program_type = /datum/nanite_program/reduced_diagnostics
+	category = list("Utility Nanites")
+
 /datum/design/nanites/access
 	name = "Subdermal ID"
 	desc = "The nanites store the host's ID access rights in a subdermal magnetic strip. Updates when triggered, copying the host's current access."
 	id = "access_nanites"
-	program_type = /datum/nanite_program/triggered/access
+	program_type = /datum/nanite_program/access
 	category = list("Utility Nanites")
 
 /datum/design/nanites/relay
@@ -76,9 +105,9 @@
 
 /datum/design/nanites/emp
 	name = "Electromagnetic Resonance"
-	desc = "The nanites cause an elctromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
+	desc = "The nanites cause an electromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
 	id = "emp_nanites"
-	program_type = /datum/nanite_program/triggered/emp
+	program_type = /datum/nanite_program/emp
 	category = list("Utility Nanites")
 
 /datum/design/nanites/spreading
@@ -87,6 +116,13 @@
 			resulting in an extremely infective strain of nanites."
 	id = "spreading_nanites"
 	program_type = /datum/nanite_program/spreading
+	category = list("Utility Nanites")
+
+/datum/design/nanites/nanite_sting
+	name = "Nanite Sting"
+	desc = "When triggered, projects a nearly invisible spike of nanites that attempts to infect a nearby non-host with a copy of the host's nanites cluster."
+	id = "nanite_sting_nanites"
+	program_type = /datum/nanite_program/nanite_sting
 	category = list("Utility Nanites")
 
 /datum/design/nanites/mitosis
@@ -167,7 +203,7 @@
 	name = "Defibrillation"
 	desc = "The nanites, when triggered, send a defibrillating shock to the host's heart."
 	id = "defib_nanites"
-	program_type = /datum/nanite_program/triggered/defib
+	program_type = /datum/nanite_program/defib
 	category = list("Medical Nanites")
 
 
@@ -212,7 +248,7 @@
 	name = "Adrenaline Burst"
 	desc = "The nanites cause a burst of adrenaline when triggered, waking the host from stuns and temporarily increasing their speed."
 	id = "adrenaline_nanites"
-	program_type = /datum/nanite_program/triggered/adrenaline
+	program_type = /datum/nanite_program/adrenaline
 	category = list("Augmentation Nanites")
 
 /datum/design/nanites/mindshield
@@ -336,21 +372,21 @@
 	name = "Heart-Stopper"
 	desc = "Stops the host's heart when triggered; restarts it if triggered again."
 	id = "heartstop_nanites"
-	program_type = /datum/nanite_program/triggered/heart_stop
+	program_type = /datum/nanite_program/heart_stop
 	category = list("Weaponized Nanites")
 
 /datum/design/nanites/explosive
 	name = "Chain Detonation"
 	desc = "Blows up all the nanites inside the host in a chain reaction when triggered."
 	id = "explosive_nanites"
-	program_type = /datum/nanite_program/triggered/explosive
+	program_type = /datum/nanite_program/explosive
 	category = list("Weaponized Nanites")
 
 /datum/design/nanites/mind_control
 	name = "Mind Control"
 	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
 	id = "mindcontrol_nanites"
-	program_type = /datum/nanite_program/mind_control
+	program_type = /datum/nanite_program/comm/mind_control
 	category = list("Weaponized Nanites")
 
 ////////////////////SUPPRESSION NANITES//////////////////////////////////////
@@ -359,21 +395,21 @@
 	name = "Electric Shock"
 	desc = "The nanites shock the host when triggered. Destroys a large amount of nanites!"
 	id = "shock_nanites"
-	program_type = /datum/nanite_program/triggered/shocking
+	program_type = /datum/nanite_program/shocking
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/stun
 	name = "Neural Shock"
 	desc = "The nanites pulse the host's nerves when triggered, inapacitating them for a short period."
 	id = "stun_nanites"
-	program_type = /datum/nanite_program/triggered/stun
+	program_type = /datum/nanite_program/stun
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/sleepy
 	name = "Sleep Induction"
 	desc = "The nanites cause rapid narcolepsy when triggered."
 	id = "sleep_nanites"
-	program_type = /datum/nanite_program/triggered/sleepy
+	program_type = /datum/nanite_program/sleepy
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/paralyzing
@@ -415,21 +451,35 @@
 	name = "Skull Echo"
 	desc = "The nanites echo a synthesized message inside the host's skull."
 	id = "voice_nanites"
-	program_type = /datum/nanite_program/triggered/comm/voice
+	program_type = /datum/nanite_program/comm/voice
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/speech
 	name = "Forced Speech"
 	desc = "The nanites force the host to say a pre-programmed sentence when triggered."
 	id = "speech_nanites"
-	program_type = /datum/nanite_program/triggered/comm/speech
+	program_type = /datum/nanite_program/comm/speech
 	category = list("Suppression Nanites")
 
 /datum/design/nanites/hallucination
 	name = "Hallucination"
 	desc = "The nanites make the host see and hear things that aren't real."
 	id = "hallucination_nanites"
-	program_type = /datum/nanite_program/triggered/comm/hallucination
+	program_type = /datum/nanite_program/comm/hallucination
+	category = list("Suppression Nanites")
+
+/datum/design/nanites/good_mood
+	name = "Happiness Enhancer"
+	desc = "The nanites synthesize serotonin inside the host's brain, creating an artificial sense of happiness."
+	id = "good_mood_nanites"
+	program_type = /datum/nanite_program/good_mood
+	category = list("Suppression Nanites")
+
+/datum/design/nanites/bad_mood
+	name = "Happiness Suppressor"
+	desc = "The nanites suppress the production of serotonin inside the host's brain, creating an artificial state of depression."
+	id = "bad_mood_nanites"
+	program_type = /datum/nanite_program/bad_mood
 	category = list("Suppression Nanites")
 
 ////////////////////SENSOR NANITES//////////////////////////////////////
@@ -469,9 +519,47 @@
 	program_type = /datum/nanite_program/sensor/voice
 	category = list("Sensor Nanites")
 
-/datum/design/nanites/sensor__nanite_volume
+/datum/design/nanites/sensor_nanite_volume
 	name = "Nanite Volume Sensor"
 	desc = "The nanites receive a signal when the nanite supply is above/below a certain percentage."
 	id = "sensor_nanite_volume"
 	program_type = /datum/nanite_program/sensor/nanite_volume
 	category = list("Sensor Nanites")
+
+/datum/design/nanites/sensor_species
+	name = "Species Sensor"
+	desc = "When triggered, the nanites scan the host to determine their species and output a signal depending on the conditions set in the settings."
+	id = "sensor_species_nanites"
+	program_type = /datum/nanite_program/sensor/species
+	category = list("Sensor Nanites")
+
+////////////////////NANITE PROTOCOLS//////////////////////////////////////
+//Note about the category name: The UI cuts the last 8 characters from the category name to remove the " Nanites" in the other categories
+//Because of this, Protocols was getting cut down to "P", so i had to add some padding
+/datum/design/nanites/kickstart
+	name = "Kickstart Protocol"
+	desc = "Replication Protocol: the nanites focus on early growth, heavily boosting replication rate for a few minutes after the initial implantation."
+	id = "kickstart_nanites"
+	program_type = /datum/nanite_program/protocol/kickstart
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/factory
+	name = "Factory Protocol"
+	desc = "Replication Protocol: the nanites build a factory matrix within the host, gradually increasing replication speed over time. The factory decays if the protocol is not active."
+	id = "factory_nanites"
+	program_type = /datum/nanite_program/protocol/factory
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/tinker
+	name = "Tinker Protocol"
+	desc = "Replication Protocol: the nanites learn to use metallic material in the host's bloodstream to speed up the replication process."
+	id = "tinker_nanites"
+	program_type = /datum/nanite_program/protocol/tinker
+	category = list("Protocols_Nanites")
+
+/datum/design/nanites/offline
+	name = "Offline Production Protocol"
+	desc = "Replication Protocol: while the host is asleep or otherwise unconcious, the nanites exploit the reduced interference to replicate more quickly."
+	id = "offline_nanites"
+	program_type = /datum/nanite_program/protocol/offline
+	category = list("Protocols_Nanites")

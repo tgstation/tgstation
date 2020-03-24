@@ -12,6 +12,10 @@
 		battery = new battery_type(src)
 	..()
 
+/obj/item/computer_hardware/battery/Destroy()
+	. = ..()
+	QDEL_NULL(battery)
+
 /obj/item/computer_hardware/battery/handle_atom_del(atom/A)
 	if(A == battery)
 		try_eject(0, null, TRUE)
@@ -58,7 +62,6 @@
 				holder.shutdown_computer()
 
 		return TRUE
-	return FALSE
 
 
 

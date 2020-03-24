@@ -12,7 +12,7 @@
 	var/sound2 = 'sound/weapons/zapbang.ogg'
 
 /obj/effect/proc_holder/spell/targeted/turf_teleport/cast(list/targets,mob/user = usr)
-	playsound(get_turf(user), sound1, 50,1)
+	playsound(get_turf(user), sound1, 50,TRUE)
 	for(var/mob/living/target in targets)
 		var/list/turfs = new/list()
 		for(var/turf/T in range(target,outer_tele_radius))
@@ -41,4 +41,4 @@
 			return
 
 		if(do_teleport(user, picked, forceMove = TRUE, channel = TELEPORT_CHANNEL_MAGIC))
-			playsound(get_turf(user), sound1, 50,1)
+			playsound(get_turf(user), sound1, 50,TRUE)

@@ -25,7 +25,7 @@
 	shoes = /obj/item/clothing/shoes/laceup
 	belt = /obj/item/pda/curator
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/curator
+	uniform = /obj/item/clothing/under/rank/civilian/curator
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/laser_pointer
@@ -42,4 +42,4 @@
 	if(visualsOnly)
 		return
 
-	H.grant_all_languages(omnitongue=TRUE)
+	H.grant_all_languages(TRUE, TRUE, TRUE, LANGUAGE_CURATOR)

@@ -19,14 +19,13 @@ Contents:
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/stock_parts/cell)
 	slowdown = 1
 	resistance_flags = LAVA_PROOF | ACID_PROOF
-	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 60, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 100, "acid" = 100)
 	strip_delay = 12
-
+	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	actions_types = list(/datum/action/item_action/initialize_ninja_suit, /datum/action/item_action/ninjasmoke, /datum/action/item_action/ninjaboost, /datum/action/item_action/ninjapulse, /datum/action/item_action/ninjastar, /datum/action/item_action/ninjanet, /datum/action/item_action/ninja_sword_recall, /datum/action/item_action/ninja_stealth, /datum/action/item_action/toggle_glove)
 
 		//Important parts of the suit.
 	var/mob/living/carbon/human/affecting = null
-	var/obj/item/stock_parts/cell/cell
 	var/datum/effect_system/spark_spread/spark_system
 	var/datum/techweb/stored_research
 	var/obj/item/disk/tech_disk/t_disk//To copy design onto disk.
@@ -75,6 +74,17 @@ Contents:
 	cell.charge = 9000
 	cell.name = "black power cell"
 	cell.icon_state = "bscell"
+
+// seal the cell in the ninja outfit
+/obj/item/clothing/suit/space/space_ninja/toggle_spacesuit_cell(mob/user)
+	return
+
+// Space Suit temperature regulation and power usage
+/obj/item/clothing/suit/space/space_ninja/process()
+	var/mob/living/carbon/human/user = src.loc
+	if(!user || !ishuman(user) || !(user.wear_suit == src))
+		return
+	user.adjust_bodytemperature(BODYTEMP_NORMAL - user.bodytemperature)
 
 //Simply deletes all the attachments and self, killing all related procs.
 /obj/item/clothing/suit/space/space_ninja/proc/terminate()
@@ -148,7 +158,7 @@ Contents:
 
 
 /obj/item/clothing/suit/space/space_ninja/examine(mob/user)
-	. = .()
+	. = ..()
 	if(s_initialized)
 		if(user == affecting)
 			. += "All systems operational. Current energy capacity: <B>[DisplayEnergy(cell.charge)]</B>.\n"+\
@@ -161,7 +171,7 @@ Contents:
 		toggle_on_off()
 		return TRUE
 	if(!s_initialized)
-		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline.  Please activate suit.</span>")
+		to_chat(user, "<span class='warning'><b>ERROR</b>: suit offline. Please activate suit.</span>")
 		return FALSE
 	if(istype(action, /datum/action/item_action/ninjasmoke))
 		ninjasmoke()

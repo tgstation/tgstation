@@ -46,8 +46,6 @@
 	for(var/node in back_nodes)
 		add_attached_images(node)
 
-	update_alpha()
-
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/add_attached_images(obj/machinery/atmospherics/A)
 	if(!A)
 		return
@@ -99,8 +97,6 @@
 /obj/machinery/atmospherics/pipe/layer_manifold/atmosinit()
 	normalize_cardinal_directions()
 	findAllConnections()
-	var/turf/T = loc			// hide if turf is not intact
-	hide(T.intact)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/setPipingLayer()
 	piping_layer = PIPING_LAYER_DEFAULT
@@ -128,12 +124,10 @@
 	if(initialize_directions & dir)
 		return ..()
 	if((NORTH|EAST) & dir)
-		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer + 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	if((SOUTH|WEST) & dir)
-		user.ventcrawl_layer = CLAMP(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
+		user.ventcrawl_layer = clamp(user.ventcrawl_layer - 1, PIPING_LAYER_MIN, PIPING_LAYER_MAX)
 	to_chat(user, "You align yourself with the [user.ventcrawl_layer]\th output.")
 
 /obj/machinery/atmospherics/pipe/layer_manifold/visible
-	level = PIPE_VISIBLE_LEVEL
 	layer = GAS_PIPE_VISIBLE_LAYER
-	

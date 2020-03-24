@@ -12,9 +12,6 @@
 		else
 			to_chat(user, "<span class='notice'>You discreetly slip [I] into [parent].</span>")
 
-/datum/component/storage/concrete/pockets
-	max_w_class = WEIGHT_CLASS_NORMAL
-
 /datum/component/storage/concrete/pockets/small
 	max_items = 1
 	max_w_class = WEIGHT_CLASS_SMALL

@@ -32,7 +32,7 @@
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/qm
 	ears = /obj/item/radio/headset/heads/qm
-	uniform = /obj/item/clothing/under/rank/cargo
+	uniform = /obj/item/clothing/under/rank/cargo/qm
 	shoes = /obj/item/clothing/shoes/sneakers/brown
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/clipboard

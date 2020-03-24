@@ -31,16 +31,11 @@
 	trigger_species = SStraumas.phobia_species[phobia_type]
 	..()
 
-
-/datum/brain_trauma/mild/phobia/on_clone()
-	if(clonable)
-		return new type(phobia_type)
-
 /datum/brain_trauma/mild/phobia/on_life()
 	..()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	if(is_blind(owner))
+	if(owner.is_blind())
 		return
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 50
@@ -88,7 +83,7 @@
 
 		if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
 			addtimer(CALLBACK(src, .proc/freak_out, null, word), 10) //to react AFTER the chat message
-			hearing_args[HEARING_MESSAGE] = reg.Replace(hearing_args[HEARING_MESSAGE], "<span class='phobia'>$1</span>")
+			hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='phobia'>$1</span>")
 			break
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)

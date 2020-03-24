@@ -1,6 +1,0 @@
-author: "blargety, Onule"
-delete-after: True
-changes: 
-  - rscadd: "Added departmental sprites for circuit boards commonly used within a department. For example, a SMES will have a orange base."
-  - imageadd: "Adds 8 new icons for circuit boards, based on department colors."
-  - refactor: "Reorganizes computer_circuits.dm and machine_circuitboard.dm based on an alphabetical order divided by department."

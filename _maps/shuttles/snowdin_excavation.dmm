@@ -31,7 +31,6 @@
 /area/shuttle/snowdin/elevator1)
 "f" = (
 /obj/machinery/computer/shuttle/snowdin/mining{
-	dir = 2;
 	name = "Excavation Elevator Console";
 	possible_destinations = "snowdin_excavation_top;snowdin_excavation_down";
 	shuttleId = "snowdin_excavation"

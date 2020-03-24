@@ -4,7 +4,7 @@
 
 	var/datum/map_template/template
 
-	var/map = input(src, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in SSmapping.map_templates
+	var/map = input(src, "Choose a Map Template to place at your CURRENT LOCATION","Place Map Template") as null|anything in sortList(SSmapping.map_templates)
 	if(!map)
 		return
 	template = SSmapping.map_templates[map]
@@ -33,7 +33,7 @@
 	var/map = input(src, "Choose a Map Template to upload to template storage","Upload Map Template") as null|file
 	if(!map)
 		return
-	if(copytext("[map]",-4) != ".dmm")
+	if(copytext("[map]", -4) != ".dmm")//4 == length(".dmm")
 		to_chat(src, "<span class='warning'>Filename must end in '.dmm': [map]</span>")
 		return
 	var/datum/map_template/M

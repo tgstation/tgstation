@@ -4,7 +4,7 @@
 /area/template_noop)
 "ab" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/machinery/door/poddoor/preopen{
 	id = "escape_cockpit_windows";
 	name = "Cockpit Blast Door"
@@ -249,7 +249,6 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/wrench,
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -31
 	},
@@ -591,7 +590,7 @@
 /area/shuttle/escape)
 "br" = (
 /obj/structure/grille,
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /turf/open/floor/plating,
 /area/shuttle/escape)
 "bs" = (
@@ -765,14 +764,14 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = 6
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = -3
 	},
 /obj/item/reagent_containers/glass/bottle/epinephrine{
 	pixel_x = -3;
 	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/bottle/charcoal{
+/obj/item/reagent_containers/glass/bottle/multiver{
 	pixel_x = 6;
 	pixel_y = 8
 	},
@@ -858,7 +857,6 @@
 /obj/structure/closet/emcloset,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = 23
 	},
@@ -1544,9 +1542,7 @@
 /turf/open/floor/plasteel/dark,
 /area/shuttle/escape)
 "db" = (
-/obj/structure/closet/crate/medical{
-	name = "medical crate"
-	},
+/obj/structure/closet/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/o2{
 	pixel_x = 3;
@@ -1775,7 +1771,6 @@
 	},
 /obj/machinery/light,
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = -28
 	},
@@ -1891,7 +1886,6 @@
 /area/shuttle/escape)
 "dE" = (
 /obj/item/radio/intercom{
-	dir = 2;
 	name = "Station Intercom (General)";
 	pixel_y = 22
 	},

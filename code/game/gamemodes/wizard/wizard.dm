@@ -45,7 +45,7 @@
 
 
 /datum/game_mode/wizard/are_special_antags_dead()
-	for(var/datum/mind/wizard in wizards)
+	for(var/datum/mind/wizard in wizards | apprentices)
 		if(isliving(wizard.current) && wizard.current.stat!=DEAD)
 			return FALSE
 
@@ -58,6 +58,14 @@
 		SSevents.resetFrequency()
 
 	return TRUE
+
+/datum/game_mode/wizard/check_finished()
+	. = ..()
+	if(.)
+		finished = TRUE
+	else if(gamemode_ready && are_special_antags_dead() && !CONFIG_GET(keyed_list/continuous)[config_tag])
+		finished = TRUE
+		. = TRUE
 
 /datum/game_mode/wizard/set_round_result()
 	..()

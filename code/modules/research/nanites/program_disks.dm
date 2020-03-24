@@ -31,7 +31,7 @@
 	program_type = /datum/nanite_program/relay
 
 /obj/item/disk/nanite_program/emp
-	program_type = /datum/nanite_program/triggered/emp
+	program_type = /datum/nanite_program/emp
 
 /obj/item/disk/nanite_program/spreading
 	program_type = /datum/nanite_program/spreading
@@ -91,16 +91,16 @@
 	program_type = /datum/nanite_program/suffocating
 
 /obj/item/disk/nanite_program/heart_stop
-	program_type = /datum/nanite_program/triggered/heart_stop
+	program_type = /datum/nanite_program/heart_stop
 
 /obj/item/disk/nanite_program/explosive
-	program_type = /datum/nanite_program/triggered/explosive
+	program_type = /datum/nanite_program/explosive
 
 /obj/item/disk/nanite_program/shock
-	program_type = /datum/nanite_program/triggered/shocking
+	program_type = /datum/nanite_program/shocking
 
 /obj/item/disk/nanite_program/sleepy
-	program_type = /datum/nanite_program/triggered/sleepy
+	program_type = /datum/nanite_program/sleepy
 
 /obj/item/disk/nanite_program/paralyzing
 	program_type = /datum/nanite_program/paralyzing
@@ -130,4 +130,4 @@
 	program_type = /datum/nanite_program/pacifying
 
 /obj/item/disk/nanite_program/stun
-	program_type = /datum/nanite_program/triggered/stun
+	program_type = /datum/nanite_program/stun

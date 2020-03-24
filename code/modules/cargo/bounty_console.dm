@@ -3,7 +3,7 @@
 
 
 /obj/machinery/computer/bounty
-	name = "Nanotrasen bounty console"
+	name = "\improper Nanotrasen bounty console"
 	desc = "Used to check and claim bounties offered by Nanotrasen"
 	icon_screen = "bounty"
 	circuit = /obj/item/circuitboard/computer/bounty
@@ -91,6 +91,6 @@
 				B.claim()
 
 	if(href_list["refresh"])
-		playsound(src, "terminal_type", 25, 0)
+		playsound(src, "terminal_type", 25, FALSE)
 
 	updateUsrDialog()

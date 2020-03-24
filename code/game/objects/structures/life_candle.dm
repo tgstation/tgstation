@@ -46,7 +46,7 @@
 		STOP_PROCESSING(SSobj, src)
 		set_light(0)
 
-/obj/structure/life_candle/update_icon()
+/obj/structure/life_candle/update_icon_state()
 	if(linked_minds.len)
 		icon_state = icon_state_active
 	else
@@ -85,10 +85,10 @@
 		mind.transfer_to(body)
 	else
 		body.forceMove(T)
-		body.revive(1,1)
+		body.revive(full_heal = TRUE, admin_revive = TRUE)
 	mind.grab_ghost(TRUE)
 	body.flash_act()
 
 	if(ishuman(body) && istype(outfit))
 		outfit.equip(body)
-	playsound(T, respawn_sound, 50, 1)
+	playsound(T, respawn_sound, 50, TRUE)

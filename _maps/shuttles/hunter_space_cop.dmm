@@ -1,8 +1,7 @@
-//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE 
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/hunter{
 	dir = 8;
-	jumpto_ports = list("huntership_home" = 1);
 	view_range = 7;
 	x_offset = 6
 	},
@@ -25,7 +24,6 @@
 	width = 7
 	},
 /obj/docking_port/mobile{
-	dheight = 0;
 	dir = 4;
 	dwidth = 3;
 	height = 12;
@@ -45,14 +43,12 @@
 	pixel_y = 26
 	},
 /obj/effect/turf_decal/stripes{
-	icon_state = "warningline";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "af" = (
 /obj/effect/turf_decal/stripes{
-	icon_state = "warningline";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -63,34 +59,29 @@
 /area/shuttle/hunter)
 "ah" = (
 /obj/effect/turf_decal/loading_area{
-	icon_state = "loadingarea";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "aj" = (
-/obj/structure/closet/crate,
+/obj/structure/closet/crate/eva,
 /obj/effect/turf_decal/box,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "ak" = (
 /obj/structure/chair/comfy/shuttle{
-	icon_state = "shuttle_chair";
 	dir = 1
 	},
 /obj/effect/mob_spawn/human/fugitive/spacepol{
-	icon_state = "sleeper";
 	dir = 1
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)
 "al" = (
 /obj/effect/turf_decal/stripes{
-	icon_state = "warningline";
 	dir = 8
 	},
 /obj/effect/turf_decal/caution{
-	icon_state = "caution";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -102,8 +93,7 @@
 "gi" = (
 /obj/structure/table,
 /obj/effect/mob_spawn/human/fugitive/spacepol{
-	dir = 8;
-	icon_state = "sleeper"
+	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/hunter)

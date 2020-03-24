@@ -1,5 +1,5 @@
 //Ranged
-/obj/item/projectile/guardian
+/obj/projectile/guardian
 	name = "crystal spray"
 	icon_state = "guardian"
 	damage = 5
@@ -8,11 +8,12 @@
 
 /mob/living/simple_animal/hostile/guardian/ranged
 	a_intent = INTENT_HELP
-	friendly = "quietly assesses"
+	friendly_verb_continuous = "quietly assesses"
+	friendly_verb_simple = "quietly assess"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, CLONE = 0.9, STAMINA = 0, OXY = 0.9)
-	projectiletype = /obj/item/projectile/guardian
+	projectiletype = /obj/projectile/guardian
 	ranged_cooldown_time = 1 //fast!
 	projectilesound = 'sound/effects/hit_on_shattered_glass.ogg'
 	ranged = 1
@@ -21,6 +22,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Diamond, a powerful projectile thrower.</span>"
 	see_invisible = SEE_INVISIBLE_LIVING
 	see_in_dark = 8
 	toggle_button_type = /obj/screen/guardian/ToggleMode
@@ -28,7 +30,7 @@
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
-	if(src.loc == summoner)
+	if(loc == summoner)
 		if(toggle)
 			ranged = initial(ranged)
 			melee_damage_lower = initial(melee_damage_lower)
@@ -54,10 +56,10 @@
 
 /mob/living/simple_animal/hostile/guardian/ranged/Shoot(atom/targeted_atom)
 	. = ..()
-	if(istype(., /obj/item/projectile))
-		var/obj/item/projectile/P = .
-		if(namedatum)
-			P.color = namedatum.colour
+	if(istype(., /obj/projectile))
+		var/obj/projectile/P = .
+		if(guardiancolor)
+			P.color = guardiancolor
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
 	var/msg
@@ -82,12 +84,12 @@
 	set name = "Set Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Set an invisible snare that will alert you when living creatures walk over it. Max of 5"
-	if(src.snares.len <6)
-		var/turf/snare_loc = get_turf(src.loc)
+	if(snares.len <6)
+		var/turf/snare_loc = get_turf(loc)
 		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc)
 		S.spawner = src
 		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
-		src.snares |= S
+		snares |= S
 		to_chat(src, "<span class='danger'><B>Surveillance snare deployed!</span></B>")
 	else
 		to_chat(src, "<span class='danger'><B>You have too many snares deployed. Remove some first.</span></B>")
@@ -96,9 +98,9 @@
 	set name = "Remove Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Disarm unwanted surveillance snares."
-	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in src.snares
+	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in sortNames(snares)
 	if(picked_snare)
-		src.snares -= picked_snare
+		snares -= picked_snare
 		qdel(picked_snare)
 		to_chat(src, "<span class='danger'><B>Snare disarmed.</span></B>")
 
@@ -110,6 +112,7 @@
 
 
 /obj/effect/snare/Crossed(AM as mob|obj)
+	. = ..()
 	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
 		to_chat(spawner.summoner, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")
 		var/list/guardians = spawner.summoner.hasparasites()
@@ -131,3 +134,8 @@
 	// To stop scout mode from moving when recalled
 	incorporeal_move = FALSE
 	. = ..()
+
+/mob/living/simple_animal/hostile/guardian/ranged/AttackingTarget()
+	if(toggle)
+		return
+	..()

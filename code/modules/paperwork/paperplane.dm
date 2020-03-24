@@ -33,7 +33,9 @@
 
 /obj/item/paperplane/handle_atom_del(atom/A)
 	if(A == internalPaper)
+		var/obj/item/paper/P = internalPaper
 		internalPaper = null
+		P.moveToNullspace() //So we're not deleting it twice when deleting our contents.
 		if(!QDELETED(src))
 			qdel(src)
 	return ..()
@@ -46,7 +48,7 @@
 			qdel(src)
 
 /obj/item/paperplane/Destroy()
-	QDEL_NULL(internalPaper)
+	internalPaper = null
 	return ..()
 
 /obj/item/paperplane/suicide_act(mob/living/user)
@@ -59,12 +61,12 @@
 	sleep(10)
 	return (BRUTELOSS)
 
-/obj/item/paperplane/update_icon()
-	cut_overlays()
+/obj/item/paperplane/update_overlays()
+	. = ..()
 	var/list/stamped = internalPaper.stamped
 	if(stamped)
 		for(var/S in stamped)
-			add_overlay("paperplane_[S]")
+			. += "paperplane_[S]"
 
 /obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")
@@ -84,7 +86,7 @@
 		internalPaper.attackby(P, user) //spoofed attack to update internal paper.
 		update_icon()
 
-	else if(P.is_hot())
+	else if(P.get_temperature())
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(10))
 			user.visible_message("<span class='warning'>[user] accidentally ignites [user.p_them()]self!</span>", \
 				"<span class='userdanger'>You miss [src] and accidentally light yourself on fire!</span>")
@@ -120,9 +122,9 @@
 	if(prob(hit_probability))
 		if(H.is_eyes_covered())
 			return
-		visible_message("<span class='danger'>\The [src] hits [H] in the eye!</span>")
+		visible_message("<span class='danger'>\The [src] hits [H] in the eye[eyes ? "" : " socket"]!</span>")
 		H.adjust_blurriness(6)
-		eyes.applyOrganDamage(rand(6,8))
+		eyes?.applyOrganDamage(rand(6,8))
 		H.Paralyze(40)
 		H.emote("scream")
 
@@ -133,6 +135,11 @@
 /obj/item/paper/AltClick(mob/living/carbon/user, obj/item/I)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		return
+	if(istype(src, /obj/item/paper/carbon))
+		var/obj/item/paper/carbon/Carbon = src
+		if(!Carbon.iscopy && !Carbon.copied)
+			to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
+			return
 	to_chat(user, "<span class='notice'>You fold [src] into the shape of a plane!</span>")
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/paperplane/plane_type = /obj/item/paperplane

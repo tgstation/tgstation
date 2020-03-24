@@ -32,7 +32,6 @@
 /area/shuttle/transport)
 "h" = (
 /obj/structure/shuttle/engine/propulsion/left{
-	icon_state = "propulsion_l";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -44,7 +43,6 @@
 /obj/structure/window/shuttle,
 /obj/structure/grille,
 /obj/structure/shuttle/engine/heater{
-	icon_state = "heater";
 	dir = 8
 	},
 /turf/open/floor/plating,
@@ -99,7 +97,6 @@
 /area/shuttle/transport)
 "p" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -162,7 +159,6 @@
 	height = 11;
 	id = "ferry";
 	name = "ferry shuttle";
-	port_direction = 1;
 	preferred_direction = 4;
 	width = 5
 	},
@@ -170,7 +166,6 @@
 /area/shuttle/transport)
 "u" = (
 /obj/structure/shuttle/engine/propulsion/right{
-	icon_state = "propulsion_r";
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{

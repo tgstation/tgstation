@@ -9,9 +9,7 @@
 /turf/closed/wall,
 /area/ruin/space/has_grav/listeningstation)
 "ad" = (
-/obj/machinery/computer/message_monitor{
-	dir = 2
-	},
+/obj/machinery/computer/message_monitor,
 /obj/machinery/airalarm/syndicate{
 	pixel_y = 24
 	},
@@ -23,11 +21,10 @@
 "ae" = (
 /obj/structure/table/reinforced,
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/libraryconsole/bookmanagement,
+/obj/machinery/computer/bookmanagement,
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/listeningstation)
 "af" = (
@@ -169,7 +166,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "ar" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/toilet{
@@ -612,7 +609,6 @@
 "aT" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 2;
 	piping_layer = 3;
 	pixel_x = 5;
 	pixel_y = 5
@@ -673,7 +669,6 @@
 	dir = 1
 	},
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -1076,7 +1071,7 @@
 /area/ruin/space/has_grav/listeningstation)
 "bB" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/iv_drip,

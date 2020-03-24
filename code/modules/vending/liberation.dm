@@ -23,11 +23,12 @@
 		           /obj/item/ammo_box/magazine/m75 = 2,
 				   /obj/item/reagent_containers/food/snacks/cheesyfries = 5,
 				   /obj/item/reagent_containers/food/snacks/burger/baconburger = 5) //Premium burgers for the premium section
-	contraband = list(/obj/item/clothing/under/patriotsuit = 3,
+	contraband = list(/obj/item/clothing/under/misc/patriotsuit = 3,
 		              /obj/item/bedsheet/patriot = 5,
 					  /obj/item/reagent_containers/food/snacks/burger/superbite = 3) //U S A
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
-	default_price = 50
-	extra_price = 100
+	default_price = 150
+	extra_price = 500
 	payment_department = ACCOUNT_SEC
+	light_mask = "liberation-light-mask"

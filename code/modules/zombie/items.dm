@@ -72,5 +72,5 @@
 		user.adjustFireLoss(-hp_gained, 0)
 		user.adjustCloneLoss(-hp_gained, 0)
 		user.updatehealth()
-		user.adjustBrainLoss(-hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
+		user.adjustOrganLoss(ORGAN_SLOT_BRAIN, -hp_gained) // Zom Bee gibbers "BRAAAAISNSs!1!"
 		user.set_nutrition(min(user.nutrition + hp_gained, NUTRITION_LEVEL_FULL))

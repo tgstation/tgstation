@@ -11,6 +11,8 @@
 
 /obj/item/storage/bag/money/Initialize()
 	. = ..()
+	if(prob(20))
+		icon_state = "moneybagalt"
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_items = 40

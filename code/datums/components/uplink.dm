@@ -1,5 +1,3 @@
-GLOBAL_LIST_EMPTY(uplinks)
-
 #define PEN_ROTATIONS 2
 
 /**
@@ -26,6 +24,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/unlock_note
 	var/unlock_code
 	var/failsafe_code
+	var/compact_mode = FALSE
+	var/debug = FALSE
 
 	var/list/previous_attempts
 
@@ -49,7 +49,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 	else if(istype(parent, /obj/item/pen))
 		RegisterSignal(parent, COMSIG_PEN_ROTATED, .proc/pen_rotation)
 
-	GLOB.uplinks += src
 	uplink_items = get_uplink_items(_gamemode, TRUE, allow_restricted)
 
 	if(_owner)
@@ -79,7 +78,6 @@ GLOBAL_LIST_EMPTY(uplinks)
 		purchase_log.MergeWithAndDel(U.purchase_log)
 
 /datum/component/uplink/Destroy()
-	GLOB.uplinks -= src
 	gamemode = null
 	purchase_log = null
 	return ..()
@@ -127,7 +125,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	active = TRUE
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "uplink", name, 450, 750, master_ui, state)
+		ui = new(user, src, ui_key, "uplink", name, 620, 580, master_ui, state)
 		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
 		ui.set_style("syndicate")
 		ui.open()
@@ -138,39 +136,43 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
+	data["compact_mode"] = compact_mode
 
+	return data
+
+/datum/component/uplink/ui_static_data(mob/user)
+	var/list/data = list()
 	data["categories"] = list()
 	for(var/category in uplink_items)
 		var/list/cat = list(
 			"name" = category,
 			"items" = (category == selected_cat ? list() : null))
-		if(category == selected_cat)
-			for(var/item in uplink_items[category])
-				var/datum/uplink_item/I = uplink_items[category][item]
-				if(I.limited_stock == 0)
+		for(var/item in uplink_items[category])
+			var/datum/uplink_item/I = uplink_items[category][item]
+			if(I.limited_stock == 0)
+				continue
+			if(I.restricted_roles.len)
+				var/is_inaccessible = TRUE
+				for(var/R in I.restricted_roles)
+					if(R == user.mind.assigned_role || debug)
+						is_inaccessible = FALSE
+				if(is_inaccessible)
 					continue
-				if(I.restricted_roles.len)
-					var/is_inaccessible = 1
-					for(var/R in I.restricted_roles)
-						if(R == user.mind.assigned_role)
-							is_inaccessible = 0
+			if(I.restricted_species)
+				if(ishuman(user))
+					var/is_inaccessible = TRUE
+					var/mob/living/carbon/human/H = user
+					for(var/F in I.restricted_species)
+						if(F == H.dna.species.id || debug)
+							is_inaccessible = FALSE
+							break
 					if(is_inaccessible)
 						continue
-				if(I.restricted_species)
-					if(ishuman(user))
-						var/is_inaccessible = TRUE
-						var/mob/living/carbon/human/H = user
-						for(var/F in I.restricted_species)
-							if(F == H.dna.species.id)
-								is_inaccessible = FALSE
-								break
-						if(is_inaccessible)
-							continue
-				cat["items"] += list(list(
-					"name" = I.name,
-					"cost" = I.cost,
-					"desc" = I.desc,
-				))
+			cat["items"] += list(list(
+				"name" = I.name,
+				"cost" = I.cost,
+				"desc" = I.desc,
+			))
 		data["categories"] += list(cat)
 	return data
 
@@ -198,6 +200,8 @@ GLOBAL_LIST_EMPTY(uplinks)
 			SStgui.close_uis(src)
 		if("select")
 			selected_cat = params["category"]
+		if("compact_toggle")
+			compact_mode = !compact_mode
 	return TRUE
 
 /datum/component/uplink/proc/MakePurchase(mob/user, datum/uplink_item/U)
@@ -243,12 +247,12 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/obj/item/pda/master = parent
 	if(trim(lowertext(new_ring_text)) != trim(lowertext(unlock_code)))
 		if(trim(lowertext(new_ring_text)) == trim(lowertext(failsafe_code)))
-			failsafe()
+			failsafe(user)
 			return COMPONENT_STOP_RINGTONE_CHANGE
 		return
 	locked = FALSE
 	interact(null, user)
-	to_chat(user, "The PDA softly beeps.")
+	to_chat(user, "<span class='hear'>The PDA softly beeps.</span>")
 	user << browse(null, "window=pda")
 	master.mode = 0
 	return COMPONENT_STOP_RINGTONE_CHANGE
@@ -263,7 +267,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 	var/frequency = arguments[1]
 	if(frequency != unlock_code)
 		if(frequency == failsafe_code)
-			failsafe()
+			failsafe(master.loc)
 		return
 	locked = FALSE
 	if(ismob(master.loc))
@@ -285,7 +289,7 @@ GLOBAL_LIST_EMPTY(uplinks)
 		to_chat(user, "<span class='warning'>Your pen makes a clicking noise, before quickly rotating back to 0 degrees!</span>")
 
 	else if(compare_list(previous_attempts, failsafe_code))
-		failsafe()
+		failsafe(user)
 
 /datum/component/uplink/proc/setup_unlock_code()
 	unlock_code = generate_code()
@@ -308,11 +312,13 @@ GLOBAL_LIST_EMPTY(uplinks)
 			L += rand(1, 360)
 		return L
 
-/datum/component/uplink/proc/failsafe()
+/datum/component/uplink/proc/failsafe(mob/living/carbon/user)
 	if(!parent)
 		return
 	var/turf/T = get_turf(parent)
 	if(!T)
 		return
+	message_admins("[ADMIN_LOOKUPFLW(user)] has triggered an uplink failsafe explosion at [AREACOORD(T)] The owner of the uplink was [ADMIN_LOOKUPFLW(owner)].")
+	log_game("[key_name(user)] triggered an uplink failsafe explosion. The owner of the uplink was [key_name(owner)].")
 	explosion(T,1,2,3)
 	qdel(parent) //Alternatively could brick the uplink.

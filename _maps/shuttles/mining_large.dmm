@@ -450,7 +450,6 @@
 	dir = 1
 	},
 /obj/docking_port/mobile{
-	dir = 1;
 	dwidth = 3;
 	height = 10;
 	id = "mining";

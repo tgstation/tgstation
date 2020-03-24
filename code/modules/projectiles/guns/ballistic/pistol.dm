@@ -9,11 +9,18 @@
 	fire_delay = 0
 	actions_types = list()
 	bolt_type = BOLT_TYPE_LOCKING
-	fire_sound = "sound/weapons/gunshot.ogg"
+	fire_sound = 'sound/weapons/gun/pistol/shot.ogg'
+	dry_fire_sound = 'sound/weapons/gun/pistol/dry_fire.ogg'
+	suppressed_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
+	load_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
+	load_empty_sound = 'sound/weapons/gun/pistol/mag_insert.ogg'
+	eject_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
+	eject_empty_sound = 'sound/weapons/gun/pistol/mag_release.ogg'
 	vary_fire_sound = FALSE
-	fire_sound_volume = 80
-	rack_sound = "sound/weapons/pistolrack.ogg"
-	bolt_drop_sound = "sound/weapons/pistolslidedrop.ogg"
+	rack_sound = 'sound/weapons/gun/pistol/rack_small.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/lock_small.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/drop_small.ogg'
+	fire_sound_volume = 90
 	bolt_wording = "slide"
 
 /obj/item/gun/ballistic/automatic/pistol/no_mag
@@ -31,7 +38,11 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m45
 	can_suppress = FALSE
-
+	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
+	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
 
@@ -43,7 +54,11 @@
 	mag_type = /obj/item/ammo_box/magazine/m50
 	can_suppress = FALSE
 	mag_display = TRUE
-
+	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
+	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
+	
 /obj/item/gun/ballistic/automatic/pistol/deagle/gold
 	desc = "A gold plated Desert Eagle folded over a million times by superior martian gunsmiths. Uses .50 AE ammo."
 	icon_state = "deagleg"
@@ -71,6 +86,7 @@
 	icon_state = "flatgun"
 
 /obj/item/gun/ballistic/automatic/pistol/stickman/pickup(mob/living/user)
+	SHOULD_CALL_PARENT(0)
 	to_chat(user, "<span class='notice'>As you try to pick up [src], it slips out of your grip..</span>")
 	if(prob(50))
 		to_chat(user, "<span class='notice'>..and vanishes from your vision! Where the hell did it go?</span>")

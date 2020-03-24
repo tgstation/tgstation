@@ -6,7 +6,7 @@
 
 /client/proc/investigate_show()
 	set name = "Investigate"
-	set category = "Admin"
+	set category = "Admin - Game"
 	if(!holder)
 		return
 
@@ -22,7 +22,7 @@
 		else
 			logs_missing += "[subject] (empty)"
 
-	var/list/combined = logs_present + logs_missing
+	var/list/combined = sortList(logs_present) + sortList(logs_missing)
 
 	var/selected = input("Investigate what?", "Investigate") as null|anything in combined
 

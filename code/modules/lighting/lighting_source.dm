@@ -29,7 +29,7 @@
 	var/needs_update = LIGHTING_NO_UPDATE    // Whether we are queued for an update.
 
 
-/datum/light_source/New(var/atom/owner, var/atom/top)
+/datum/light_source/New(atom/owner, atom/top)
 	source_atom = owner // Set our new owner.
 	LAZYADD(source_atom.light_sources, src)
 	top_atom = top

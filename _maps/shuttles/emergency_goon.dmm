@@ -35,9 +35,7 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/docking_port/mobile/emergency{
-	dheight = 0;
 	dir = 2;
-	dwidth = 9;
 	name = "NES Port";
 	width = 19
 	},

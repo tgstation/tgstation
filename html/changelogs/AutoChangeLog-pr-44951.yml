@@ -1,4 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes: 
-  - bugfix: "Clones no longer have their genetic sequence quantum garble fucked together"

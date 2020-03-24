@@ -140,12 +140,12 @@
 	pixel_x = 3;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/glass/beaker/waterbottle{
+/obj/item/reagent_containers/food/drinks/waterbottle{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/beaker/waterbottle,
-/obj/item/reagent_containers/glass/beaker/waterbottle{
+/obj/item/reagent_containers/food/drinks/waterbottle,
+/obj/item/reagent_containers/food/drinks/waterbottle{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -230,6 +230,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/shuttle/caravan/freighter1)
 "lM" = (
@@ -711,7 +712,6 @@
 /area/shuttle/caravan/freighter1)
 "GJ" = (
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -854,9 +854,6 @@
 /obj/item/folder/yellow{
 	pixel_x = -6
 	},
-/obj/item/gps{
-	gpstag = "Distress Signal"
-	},
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -951,7 +948,6 @@
 	dir = 4;
 	name = "Small Freighter APC";
 	pixel_x = 24;
-	req_access = null;
 	start_charge = 0
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -963,7 +959,6 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/firealarm{
-	dir = 2;
 	pixel_y = 24
 	},
 /obj/item/stack/cable_coil{
@@ -1039,9 +1034,7 @@
 	},
 /area/shuttle/caravan/freighter1)
 "VD" = (
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 2
-	},
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/external{
 	id_tag = "caravantrade1_bolt"
@@ -1118,9 +1111,7 @@
 	},
 /area/shuttle/caravan/freighter1)
 "WZ" = (
-/obj/machinery/power/smes{
-	charge = 0
-	},
+/obj/machinery/power/smes,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},

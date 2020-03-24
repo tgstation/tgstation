@@ -1,4 +1,0 @@
-author: "WJohnston"
-delete-after: True
-changes: 
-  - rscadd: "Redesigned boxstation's SMES room. It is now part of engineering power storage like it once was instead of being strangely separated from the station."

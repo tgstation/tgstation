@@ -4,7 +4,7 @@
 	icon_state = "saber"
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/toy/smg
-	fire_sound = 'sound/weapons/gunshot_smg.ogg'
+	fire_sound = 'sound/items/syringeproj.ogg'
 	force = 0
 	throwforce = 0
 	burst_size = 3
@@ -13,9 +13,9 @@
 	item_flags = NONE
 	casing_ejector = FALSE
 
-/obj/item/gun/ballistic/automatic/toy/update_icon()
+/obj/item/gun/ballistic/automatic/toy/update_overlays()
 	. = ..()
-	add_overlay("[icon_state]_toy")
+	. += "[icon_state]_toy"
 
 /obj/item/gun/ballistic/automatic/toy/unrestricted
 	pin = /obj/item/firing_pin
@@ -27,7 +27,7 @@
 	bolt_type = BOLT_TYPE_LOCKING
 	w_class = WEIGHT_CLASS_SMALL
 	mag_type = /obj/item/ammo_box/magazine/toy/pistol
-	fire_sound = 'sound/weapons/gunshot.ogg'
+	fire_sound = 'sound/items/syringeproj.ogg'
 	burst_size = 1
 	fire_delay = 0
 	actions_types = list()
@@ -51,14 +51,16 @@
 	force = 0
 	throwforce = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy
+	fire_sound = 'sound/items/syringeproj.ogg'
 	clumsy_check = FALSE
 	item_flags = NONE
 	casing_ejector = FALSE
 	can_suppress = FALSE
+	pb_knockback = 0
 
-/obj/item/gun/ballistic/shotgun/toy/update_icon()
+/obj/item/gun/ballistic/shotgun/toy/update_overlays()
 	. = ..()
-	add_overlay("[icon_state]_toy")
+	. += "[icon_state]_toy"
 
 /obj/item/gun/ballistic/shotgun/toy/process_chamber(empty_chamber = 0)
 	..()
@@ -95,13 +97,14 @@
 /obj/item/gun/ballistic/automatic/c20r/toy/unrestricted/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/smgm45/riot
 
-/obj/item/gun/ballistic/automatic/c20r/toy/update_icon()
+/obj/item/gun/ballistic/automatic/c20r/toy/update_overlays()
 	. = ..()
-	add_overlay("[icon_state]_toy")
+	. += "[icon_state]_toy"
 
 /obj/item/gun/ballistic/automatic/l6_saw/toy //This is the syndicate variant with syndicate firing pin and riot darts.
 	name = "donksoft LMG"
 	desc = "A heavily modified toy light machine gun, designated 'L6 SAW'. Ages 8 and up."
+	fire_sound = 'sound/items/syringeproj.ogg'
 	can_suppress = FALSE
 	item_flags = NONE
 	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
@@ -115,6 +118,6 @@
 /obj/item/gun/ballistic/automatic/l6_saw/toy/unrestricted/riot
 	mag_type = /obj/item/ammo_box/magazine/toy/m762/riot
 
-/obj/item/gun/ballistic/automatic/l6_saw/toy/update_icon()
+/obj/item/gun/ballistic/automatic/l6_saw/toy/update_overlays()
 	. = ..()
-	add_overlay("[icon_state]_toy")
+	. += "[icon_state]_toy"

@@ -140,6 +140,9 @@ LOG_VIRUS
 ## log cloning actions
 LOG_CLONING
 
+# log shuttle actions
+LOG_SHUTTLE
+
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
 
@@ -378,12 +381,6 @@ MAPROTATION
 ## When it's set to zero, the map will be randomly picked each round
 PREFERENCE_MAP_VOTING 1
 
-## Map rotate chance delta
-## This is the chance of map rotation factored to the round length.
-## A value of 1 would mean the map rotation chance is the round length in minutes (hour long round == 60% rotation chance)
-## A value of 0.5 would mean the map rotation chance is half of the round length in minutes (hour long round == 30% rotation chance)
-#MAPROTATIONCHANCEDELTA 0.75
-
 ## AUTOADMIN
 ## The default admin rank
 AUTOADMIN_RANK Game Master
@@ -499,3 +496,26 @@ DEFAULT_VIEW 15x15
 ## The alternative square viewport size if you're using a widescreen view size
 ## You probably shouldn't ever be changing this, but it's here if you want to.
 DEFAULT_VIEW_SQUARE 15x15
+
+
+## Enable automatic profiling - Byond 513.1506 and newer only.
+#AUTO_PROFILE
+
+#### DISCORD STUFFS ####
+## MAKE SURE ALL SECTIONS OF THIS ARE FILLED OUT BEFORE ENABLING
+## Discord IDs can be obtained by following this guide: https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-
+
+## Uncomment to enable discord auto-roling when users link their BYOND and Discord accounts
+#ENABLE_DISCORD_AUTOROLE
+
+## Set to a value greater than zero to require a user to have at least this many hours of living role time to be assigned the role
+REQUIRED_LIVING_HOURS 0
+
+## Add your discord bot token here. Make sure it has the ability to manage roles
+#DISCORD_TOKEN someDiscordToken
+
+## Add the ID of your guild (server) here
+#DISCORD_GUILDID 000000000000000000
+
+## Add the ID of the role you want assigning here
+#DISCORD_ROLEID 000000000000000000

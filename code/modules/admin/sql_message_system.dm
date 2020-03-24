@@ -393,7 +393,7 @@
 			var/nsd = CONFIG_GET(number/note_stale_days)
 			var/nfd = CONFIG_GET(number/note_fresh_days)
 			if (agegate && type == "note" && isnum(nsd) && isnum(nfd) && nsd > nfd)
-				var/alpha = CLAMP(100 - (age - nfd) * (85 / (nsd - nfd)), 15, 100)
+				var/alpha = clamp(100 - (age - nfd) * (85 / (nsd - nfd)), 15, 100)
 				if (alpha < 100)
 					if (alpha <= 15)
 						if (skipped)
@@ -542,7 +542,7 @@
 				qdel(query_message_read)
 			if("watchlist entry")
 				message_admins("<font color='red'><B>Notice: </B></font><font color='blue'>[key_name_admin(target_ckey)] has been on the watchlist since [timestamp] and has just connected - Reason: [text]</font>")
-				send2irc_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
+				send2tgs_adminless_only("Watchlist", "[key_name(target_ckey)] is on the watchlist and has just connected - Reason: [text]")
 			if("memo")
 				output += "<span class='memo'>Memo by <span class='prefix'>[admin_key]</span> on [timestamp]"
 				if(editor_key)

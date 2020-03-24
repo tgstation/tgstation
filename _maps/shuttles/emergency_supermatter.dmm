@@ -209,9 +209,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 2
-	},
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
 "aZ" = (

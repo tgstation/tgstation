@@ -22,14 +22,14 @@
 
 /obj/item/hourglass/proc/toggle(mob/user)
 	if(!timing_id)
-		to_chat(user,"<span class='notice'>You flip the [src]</span>")
+		to_chat(user,"<span class='notice'>You flip the [src].</span>")
 		start()
 		flick("hourglass_flip",src)
 	else
 		to_chat(user,"<span class='notice'>You stop the [src].</span>") //Sand magically flows back because that's more convinient to use.
 		stop()
 
-/obj/item/hourglass/update_icon()
+/obj/item/hourglass/update_icon_state()
 	if(timing_id)
 		icon_state = "hourglass_active"
 	else

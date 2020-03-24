@@ -10,6 +10,7 @@
 
 	density = FALSE
 	stat = DEAD
+	hud_possible = list()
 
 	var/mob/living/new_character	//for instant transfer once the round is set up
 
@@ -29,6 +30,12 @@
 	ComponentInitialize()
 
 	. = ..()
+
+	GLOB.new_player_list += src
+
+/mob/dead/new_player/Destroy()
+	GLOB.new_player_list -= src
+	return ..()
 
 /mob/dead/new_player/prepare_huds()
 	return
@@ -115,8 +122,8 @@
 		new_player_panel()
 
 	if(href_list["late_join"])
-		if(!SSticker || !SSticker.IsRoundInProgress())
-			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+		if(!SSticker?.IsRoundInProgress())
+			to_chat(usr, "<span class='boldwarning'>The round is either not ready, or has already finished...</span>")
 			return
 
 		if(href_list["late_join"] == "override")
@@ -141,6 +148,9 @@
 		ViewManifest()
 
 	if(href_list["SelectedJob"])
+		if(!SSticker?.IsRoundInProgress())
+			to_chat(usr, "<span class='danger'>The round is either not ready, or has already finished...</span>")
+			return
 
 		if(!GLOB.enter_allowed)
 			to_chat(usr, "<span class='notice'>There is an administrative lock on entering the game!</span>")
@@ -428,12 +438,14 @@
 			SSjob.prioritized_jobs -= prioritized_job
 	dat += "<table><tr><td valign='top'>"
 	var/column_counter = 0
-	for(var/list/category in list(GLOB.command_positions) + list(GLOB.engineering_positions) + list(GLOB.supply_positions) + list(GLOB.nonhuman_positions - "pAI") + list(GLOB.civilian_positions) + list(GLOB.medical_positions) + list(GLOB.science_positions) + list(GLOB.security_positions))
-		var/cat_color = SSjob.name_occupations[category[1]].selection_color //use the color of the first job in the category (the department head) as the category color
+	// render each category's available jobs
+	for(var/category in GLOB.position_categories)
+		// position_categories contains category names mapped to available jobs and an appropriate color
+		var/cat_color = GLOB.position_categories[category]["color"]
 		dat += "<fieldset style='width: 185px; border: 2px solid [cat_color]; display: inline'>"
-		dat += "<legend align='center' style='color: [cat_color]'>[SSjob.name_occupations[category[1]].exp_type_department]</legend>"
+		dat += "<legend align='center' style='color: [cat_color]'>[category]</legend>"
 		var/list/dept_dat = list()
-		for(var/job in category)
+		for(var/job in GLOB.position_categories[category]["jobs"])
 			var/datum/job/job_datum = SSjob.name_occupations[job]
 			if(job_datum && IsJobUnavailable(job_datum.title, TRUE) == JOB_AVAILABLE)
 				var/command_bold = ""
@@ -471,7 +483,12 @@
 	if(frn)
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
-	client.prefs.copy_to(H)
+
+	var/is_antag
+	if(mind in GLOB.pre_setup_antags)
+		is_antag = TRUE
+
+	client.prefs.copy_to(H, antagonist = is_antag)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
@@ -489,15 +506,15 @@
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character
 	if(.)
-		new_character.key = key		//Manually transfer the key to log them in
+		new_character.key = key		//Manually transfer the key to log them in,
 		new_character.stop_sound_channel(CHANNEL_LOBBYMUSIC)
 		new_character = null
 		qdel(src)
 
 /mob/dead/new_player/proc/ViewManifest()
-	var/dat = "<html><body>"
+	var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'></head><body>"
 	dat += "<h4>Crew Manifest</h4>"
-	dat += GLOB.data_core.get_manifest(OOC = 1)
+	dat += GLOB.data_core.get_manifest_html()
 
 	src << browse(dat, "window=manifest;size=387x420;can_close=1")
 
@@ -535,6 +552,6 @@
 		if(has_antags)
 			log_admin("[src.ckey] just got booted back to lobby with no jobs, but antags enabled.")
 			message_admins("[src.ckey] just got booted back to lobby with no jobs enabled, but antag rolling enabled. Likely antag rolling abuse.")
-		
+
 		return FALSE //This is the only case someone should actually be completely blocked from antag rolling as well
 	return TRUE

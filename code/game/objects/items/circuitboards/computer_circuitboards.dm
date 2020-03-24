@@ -38,7 +38,7 @@
 
 /obj/item/circuitboard/computer/card/minor/examine(user)
 	..()
-	to_chat(user, "Currently set to \"[dept_list[target_dept]]\".")
+	to_chat(user, "<span class='notice'>Currently set to \"[dept_list[target_dept]]\".</span>")
 
 
 //obj/item/circuitboard/computer/shield
@@ -62,6 +62,14 @@
 	name = "Atmospheric Monitor (Computer Board)"
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/atmos_control
+
+/obj/item/circuitboard/computer/atmos_control/incinerator
+	name = "Incinerator Air Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/incinerator
+
+/obj/item/circuitboard/computer/atmos_control/toxinsmix
+	name = "Toxins Mixing Air Control (Computer Board)"
+	build_path = /obj/machinery/computer/atmos_control/toxinsmix
 
 /obj/item/circuitboard/computer/atmos_control/tank
 	name = "Tank Control (Computer Board)"
@@ -94,10 +102,6 @@
 /obj/item/circuitboard/computer/atmos_control/tank/carbon_tank
 	name = "Carbon Dioxide Supply Control (Computer Board)"
 	build_path = /obj/machinery/computer/atmos_control/tank/carbon_tank
-
-/obj/item/circuitboard/computer/atmos_control/tank/incinerator
-	name = "Incinerator Air Control (Computer Board)"
-	build_path = /obj/machinery/computer/atmos_control/tank/incinerator
 
 /obj/item/circuitboard/computer/auxillary_base
 	name = "Auxillary Base Management Console (Computer Board)"
@@ -155,11 +159,6 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/computer/station_alert
 
-/obj/item/circuitboard/computer/teleporter
-	name = "Teleporter (Computer Board)"
-	icon_state = "engineering"
-	build_path = /obj/machinery/computer/teleporter
-
 /obj/item/circuitboard/computer/turbine_computer
 	name = "Turbine Computer (Computer Board)"
 	icon_state = "engineering"
@@ -198,13 +197,13 @@
 
 /obj/item/circuitboard/computer/libraryconsole/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(build_path == /obj/machinery/computer/libraryconsole/bookmanagement)
+		if(build_path == /obj/machinery/computer/bookmanagement)
 			name = "Library Visitor Console (Computer Board)"
 			build_path = /obj/machinery/computer/libraryconsole
 			to_chat(user, "<span class='notice'>Defaulting access protocols.</span>")
 		else
 			name = "Book Inventory Management Console (Computer Board)"
-			build_path = /obj/machinery/computer/libraryconsole/bookmanagement
+			build_path = /obj/machinery/computer/bookmanagement
 			to_chat(user, "<span class='notice'>Access protocols successfully updated.</span>")
 	else
 		return ..()
@@ -269,12 +268,7 @@
 
 //Medical
 
-/obj/item/circuitboard/computer/cloning
-	name = "Cloning (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/cloning
-
-	/obj/item/circuitboard/computer/crew
+/obj/item/circuitboard/computer/crew
 	name = "Crew Monitoring Console (Computer Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/crew
@@ -293,11 +287,6 @@
 	name = "PanD.E.M.I.C. 2200 (Computer Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/pandemic
-
-/obj/item/circuitboard/computer/prototype_cloning
-	name = "Prototype Cloning (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/prototype_cloning
 
 /obj/item/circuitboard/computer/scan_consolenew
 	name = "DNA Machine (Computer Board)"
@@ -374,6 +363,11 @@
 	icon_state = "science"
 	build_path = /obj/machinery/computer/robotics
 
+/obj/item/circuitboard/computer/teleporter
+	name = "Teleporter (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/teleporter
+
 /obj/item/circuitboard/computer/xenobiology
 	name = "circuit board (Xenobiology Console)"
 	icon_state = "science"
@@ -394,12 +388,12 @@
 /obj/item/circuitboard/computer/gulag_teleporter_console
 	name = "Labor Camp teleporter console (Computer Board)"
 	icon_state = "security"
-	build_path = /obj/machinery/computer/gulag_teleporter_computer
+	build_path = /obj/machinery/computer/prisoner/gulag_teleporter_computer
 
 /obj/item/circuitboard/computer/prisoner
 	name = "Prisoner Management Console (Computer Board)"
 	icon_state = "security"
-	build_path = /obj/machinery/computer/prisoner
+	build_path = /obj/machinery/computer/prisoner/management
 
 /obj/item/circuitboard/computer/secure_data
 	name = "Security Records Console (Computer Board)"
@@ -416,12 +410,17 @@
 	icon_state = "security"
 	build_path = /obj/machinery/computer/security
 
+/obj/item/circuitboard/computer/advanced_camera
+	name = "Advanced Camera Console (Computer Board)"
+	icon_state = "security"
+	build_path = /obj/machinery/computer/camera_advanced/syndie
+
 //Service
 
 //Supply
 
 /obj/item/circuitboard/computer/bounty
-	name = "Nanotrasen Bounty Console (Computer Board)"
+	name = "\improper Nanotrasen Bounty Console (Computer Board)"
 	icon_state = "supply"
 	build_path = /obj/machinery/computer/bounty
 
@@ -432,11 +431,12 @@
 	var/contraband = FALSE
 
 /obj/item/circuitboard/computer/cargo/multitool_act(mob/living/user)
+	. = ..()
 	if(!(obj_flags & EMAGGED))
 		contraband = !contraband
 		to_chat(user, "<span class='notice'>Receiver spectrum set to [contraband ? "Broad" : "Standard"].</span>")
 	else
-		to_chat(user, "<span class='notice'>The spectrum chip is unresponsive.</span>")
+		to_chat(user, "<span class='alert'>The spectrum chip is unresponsive.</span>")
 
 /obj/item/circuitboard/computer/cargo/emag_act(mob/living/user)
 	if(!(obj_flags & EMAGGED))
@@ -449,8 +449,9 @@
 	build_path = /obj/machinery/computer/cargo/express
 
 /obj/item/circuitboard/computer/cargo/express/multitool_act(mob/living/user)
+	. = ..()
 	if (!(obj_flags & EMAGGED))
-		to_chat(user, "<span class='notice'>Routing protocols are already set to: \"factory defaults\".</span>")
+		to_chat(user, "<span class='alert'>Routing protocols are already set to: \"factory defaults\".</span>")
 	else
 		to_chat(user, "<span class='notice'>You reset the routing protocols to: \"factory defaults\".</span>")
 		obj_flags &= ~EMAGGED
