@@ -335,9 +335,8 @@
 	turf_type = /turf/open/floor/plastic
 
 /obj/item/stack/tile/material
-	name = "tile"
+	name = "floor tile"
 	singular_name = "floor tile"
-	desc = "A tile of flooring."
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
