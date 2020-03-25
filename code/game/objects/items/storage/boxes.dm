@@ -172,6 +172,10 @@
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
 
+// Medical survival box
+/obj/item/storage/box/survival/medical
+	mask_type = /obj/item/clothing/mask/breath/medical
+
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains sterile latex gloves."
