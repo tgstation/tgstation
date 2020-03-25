@@ -7,7 +7,7 @@
 	icon = 'icons/obj/tiles.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 1
-	throwforce = 5
+	throwforce = 1
 	throw_speed = 3
 	throw_range = 7
 	max_amount = 60
@@ -337,6 +337,7 @@
 /obj/item/stack/tile/material
 	name = "floor tile"
 	singular_name = "floor tile"
+	throwforce = 5
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_UPDATE_DESC
