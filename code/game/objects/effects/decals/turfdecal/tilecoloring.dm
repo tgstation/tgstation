@@ -5,7 +5,8 @@
 	alpha = 110
 
 /obj/effect/turf_decal/tile/Initialize()
-	color = "#[random_short_color()]"
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		color = "#[random_short_color()]"
 	. = ..()
 
 /obj/effect/turf_decal/tile/blue
@@ -48,7 +49,8 @@
 	icon_state = "trimline_box"
 
 /obj/effect/turf_decal/trimline/Initialize()
-	color = "#[random_short_color()]"
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		color = "#[random_short_color()]"
 	. = ..()
 
 /obj/effect/turf_decal/trimline/white
