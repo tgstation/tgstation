@@ -23,7 +23,7 @@
 		if(shoes && istype(shoes, /obj/item/clothing))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP_ICE)
-				return 0
+				return FALSE
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()

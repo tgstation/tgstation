@@ -148,16 +148,19 @@ Difficulty: Extremely Hard
 	return
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
-	if(!enraging)
-		. = ..()
+	if(enraging)
+		return
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/MoveToTarget(list/possible_targets)
-	if(!enraging)
-		. = ..()
+	if(enraging)
+		return
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Move()
-	if(!enraging)
-		. = ..()
+	if(enraging)
+		return
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/frost_orbs(added_delay = 10, shoot_times = 8)
 	for(var/i in 1 to shoot_times)
@@ -262,7 +265,7 @@ Difficulty: Extremely Hard
 			new /obj/item/clothing/shoes/winterboots/ice_boots/speedy(T)
 		if(3)
 			new /obj/item/pickaxe/drill/jackhammer/demonic(T)
-	. = ..()
+	return ..()
 
 /obj/item/resurrection_crystal
 	name = "resurrection crystal"
@@ -306,7 +309,7 @@ Difficulty: Extremely Hard
 	toolspeed = 0
 
 /obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
-	..()
+	. = ..()
 	AddComponent(/datum/component/knockback, 4, FALSE, TRUE)
 	AddComponent(/datum/component/lifesteal, 5)
 

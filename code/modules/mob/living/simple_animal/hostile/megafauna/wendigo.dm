@@ -110,7 +110,7 @@ Difficulty: Very Hard
 	if(!can_move)
 		return
 	stored_move_dirs |= direct
-	. = ..()
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/Moved(atom/oldloc, direct)
 	. = ..()
@@ -137,7 +137,6 @@ Difficulty: Very Hard
 				shake_camera(L, 2, 1)
 			all_turfs -= T
 		sleep(delay)
-	return
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/heavy_stomp()
 	can_move = FALSE
@@ -154,9 +153,8 @@ Difficulty: Very Hard
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
-	else
-		var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
-		exit.id = "wendigo arena exit"
-		exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
-		exit.set_light(20, 1, LIGHT_COLOR_RED)
-		. = ..()
+	var/obj/effect/portal/permanent/one_way/exit = new /obj/effect/portal/permanent/one_way(starting)
+	exit.id = "wendigo arena exit"
+	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
+	exit.set_light(20, 1, LIGHT_COLOR_RED)
+	return ..()

@@ -19,7 +19,7 @@
 
 /obj/structure/spawner/ice_moon/deconstruct(disassembled)
 	destroy_message()
-	. = ..()
+	return ..()
 
 /obj/structure/spawner/ice_moon/proc/destroy_message()
 	visible_message("<span class='userdanger'>[src] collapses, sealing everything inside!</span>")
