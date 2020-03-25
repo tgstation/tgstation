@@ -8,6 +8,7 @@ jobs:
   compile:
     name: "Compile changelogs"
     runs-on: ubuntu-latest
+    if: secrets.CompileChangelogs == true
     steps:
       - name: "Setup python"
         uses: actions/setup-python@v1

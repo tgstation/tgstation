@@ -101,3 +101,9 @@
 	material_id = /datum/material/glass
 	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
 		/obj/item/shard)
+
+/datum/export/material/hot_ice
+	cost = 400
+	message = "cm3 of Hot Ice"
+	material_id = /datum/material/hot_ice
+	export_types = /obj/item/stack/sheet/hot_ice
