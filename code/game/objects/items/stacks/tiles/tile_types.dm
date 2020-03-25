@@ -340,7 +340,7 @@
 	throwforce = 5
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS | MATERIAL_UPDATE_DESC
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_UPDATE_DESC | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/item/stack/tile/material/mat_update_desc(mat)
 	switch(throwforce)
