@@ -660,11 +660,6 @@
 	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
 	important_info = policy || important_info
 
-/obj/effect/mob_spawn/human/syndicatespace/Initialize(mapload)
-	. = ..()
-	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
-	important_info = policy || important_info
-
 /datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
 
@@ -685,13 +680,9 @@
 	short_desc = "You are the captain of an old ship, stuck in hostile space."
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Command your crew and turn your ship into the most protected fortress."
 	important_info = "Protect the ship and secret documents in your backpack with your own life. DO NOT let the ship fall into enemy hands."
+	mob_gender = "male"
 	outfit = /datum/outfit/syndicatespace/syndicaptain
 	assignedrole = "Cybersun Captain"
-
-/obj/effect/mob_spawn/human/syndicatespace/syndicaptain/Initialize(mapload)
-	. = ..()
-	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN_CAPTAIN)
-	important_info = policy || important_info
 
 /obj/effect/mob_spawn/human/syndicatespace/syndicaptain/Initialize(mapload)
 	. = ..()

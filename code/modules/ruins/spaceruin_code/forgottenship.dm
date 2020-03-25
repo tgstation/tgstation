@@ -86,6 +86,8 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /obj/item/storage/box/firingpins/syndicate
 	name = "box of syndicate firing pins"
 	desc = "A box full of special syndicate firing pins which allow only syndicate operatives to use weapons with those firing pins."
+	icon_state = "secbox"
+	illustration = "firingpin"
 
 /obj/item/storage/box/firingpins/syndicate/PopulateContents()
 	for(var/i in 1 to 5)
@@ -132,7 +134,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	icon_state = "cybersun"
 	item_state = "cybersun"
 	hardsuit_type = "cybersun"
-	armor = list("melee" = 30, "bullet" = 40, "laser" = 70, "energy" = 70, "bomb" = 30, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 60)
+	armor = list("melee" = 30, "bullet" = 40, "laser" = 80, "energy" = 60, "bomb" = 35, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 60)
 	strip_delay = 600
 	actions_types = list()
 
@@ -143,9 +145,8 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	hardsuit_type = "cybersun"
 	name = "Cybersun hardsuit"
 	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else. Requires the user to activate the inner mechanism in order to unequip it, making it really difficult to take it off from somebody else."
-	armor = list("melee" = 30, "bullet" = 40, "laser" = 70, "energy" = 70, "bomb" = 30, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 60)
+	armor = list("melee" = 30, "bullet" = 40, "laser" = 80, "energy" = 60, "bomb" = 35, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 60)
 	strip_delay = 600
-	slowdown = 0
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/cybersun
 	actions_types = list(/datum/action/item_action/toggle_helmet, /datum/action/item_action/toggle_spacesuit)
 	jetpack = /obj/item/tank/jetpack/suit

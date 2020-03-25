@@ -1910,3 +1910,4 @@ datum/uplink_item/suits/hardsuit/cybersun/nuke
 	limited_stock = 1
 	cant_discount = TRUE
 	include_modes = list(/datum/game_mode/nuclear)
+
