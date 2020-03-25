@@ -90,11 +90,8 @@
 			merge(P.parent)
 		P.parent = src
 		var/list/adjacent = P.pipeline_expansion()
-		for(var/obj/machinery/atmospherics/pipe/I in adjacent)
-			if(I.parent == src)
-				continue
-			var/datum/pipeline/E = I.parent
-			merge(E)
+		for(var/obj/machinery/atmospherics/pipe/I in adjacent - members)
+			merge(I.parent)
 		if(!members.Find(P))
 			members += P
 			air.volume += P.volume
@@ -139,7 +136,6 @@
 		member.air_temporary = new
 		member.air_temporary.volume = member.volume
 		member.air_temporary.copy_from(air, member.volume/air.volume)
-
 		member.air_temporary.temperature = air.temperature
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)

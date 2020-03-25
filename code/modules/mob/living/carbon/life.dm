@@ -294,7 +294,17 @@
 	else
 		SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
+	var/gasstring = ""
+	for(var/gasid in breath.gases)
+		gasstring += "[gasid], "
+	to_chat(world, "## TESTING: check_breath() b [gasstring]")
+
 	breath.garbage_collect()
+
+	gasstring = ""
+	for(var/gasid in breath.gases)
+		gasstring += "[gasid], "
+	to_chat(world, "## TESTING: check_breath() a [gasstring]")
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)

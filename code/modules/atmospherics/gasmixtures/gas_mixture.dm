@@ -8,7 +8,7 @@ What are the archived variables for?
 #define MINIMUM_MOLE_MANIPULATION_COUNT		0.001
 #define QUANTIZE(variable)		(round(variable, MINIMUM_MOLE_MANIPULATION_COUNT))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
-#define QUANTIZE_TO_MOVE(variable)	max(QUANTIZE(variable), MINIMUM_MOLE_MANIPULATION_COUNT) //like QUANTIZE but can't return 0
+#define QUANTIZE_TO_MOVE(variable)	(max(QUANTIZE(variable), MINIMUM_MOLE_MANIPULATION_COUNT)) //like QUANTIZE but can't return 0
 
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
@@ -71,13 +71,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	///Must be used after subtracting from a gas. Must be used after assert_gas()
 		///if assert_gas() was called only to read from the gas.
 	///By removing empty gases, processing speed is increased.
-/datum/gas_mixture/proc/garbage_collect(list/tocheck)
+/datum/gas_mixture/proc/garbage_collect(list/tocheck, logging = log)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
-		if(log) testing("garbage_collect() [QUANTIZE(cached_gases[id][MOLES])] [cached_gases[id]] [cached_gases[id][MOLES]]")
+		if (logging) to_chat(world, "## TESTING: garbage_collect([logging]) [QUANTIZE(cached_gases[id][MOLES])] [id] [cached_gases[id][MOLES]]")
 		if(QUANTIZE(cached_gases[id][MOLES]) < MINIMUM_MOLE_MANIPULATION_COUNT && QUANTIZE(cached_gases[id][ARCHIVE]) < MINIMUM_MOLE_MANIPULATION_COUNT)
-			if(log) testing("|			garbage_collect() removed [id]")
+			if (logging) to_chat(world, "## TESTING: garbage_collect([logging]) removed [id]")
 
 	//PV = nRT
 
@@ -142,7 +141,28 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	volume += giver.volume
 	return 1
 
-	///Merges all air from giver into self. Returns: 1 if we are mutable, 0 otherwise
+/datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
+	if(!giver)
+		return 0
+
+	//heat transfer
+	if(abs(temperature - giver.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
+		var/self_heat_capacity = heat_capacity()
+		var/giver_heat_capacity = giver.heat_capacity()
+		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
+		if(combined_heat_capacity)
+			temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
+
+	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
+	var/list/giver_gases = giver.gases
+	//gas transfer
+	for(var/giver_id in giver_gases)
+		ASSERT_GAS(giver_id, src)
+		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
+
+	return 1
+
+/*	///Merges all air from giver into self. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return 0
@@ -170,16 +190,18 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/giver_id in gases_both)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
-	return 1
+	return 1*/
 
 	///Proportionally removes amount of gas from the gas_mixture.
 	///Returns: gas_mixture with the gases removed
 /datum/gas_mixture/proc/remove(amount)
+	//garbage_collect(logging = "pre remove")
 	var/sum
 	var/list/cached_gases = gases
 	TOTAL_MOLES(cached_gases, sum)
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
+		to_chat(world, "## TESTING: !!! remove([amount]) !!!")
 		return null
 	var/ratio = amount / sum
 
@@ -189,7 +211,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
-		removed_gases[id][MOLES] = QUANTIZE_TO_MOVE((cached_gases[id][MOLES] * ratio)
+		to_chat(world, "## TESTING: remove([amount]) move [id] [amount]")
+		removed_gases[id][MOLES] = min(QUANTIZE_TO_MOVE(cached_gases[id][MOLES] * ratio), cached_gases[id][MOLES])
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
 
@@ -198,7 +221,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	///Proportionally removes amount of gas from the gas_mixture.
 	///Returns: gas_mixture with the gases removed
 /datum/gas_mixture/proc/remove_ratio(ratio)
+	garbage_collect(logging = "pre remove ratio")
 	if(ratio <= 0)
+		to_chat(world, "## TESTING: !!! remove_ratio([ratio]) !!!")
 		return null
 	ratio = min(ratio, 1)
 
