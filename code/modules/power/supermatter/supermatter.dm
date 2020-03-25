@@ -76,8 +76,8 @@
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
-	name = "supermatter crystal"
-	desc = "A strangely translucent and iridescent crystal."
+	name = "Pickle Super Matter"
+	desc = "Funniest shit I’ve ever seen."
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter"
 	density = TRUE
@@ -789,8 +789,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	is_main_engine = TRUE
 
 /obj/machinery/power/supermatter_crystal/shard
-	name = "supermatter shard"
-	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."
+	name = "Pickle Super Matter Shard"
+	desc = "Second funniest shit I’ve ever seen"
 	base_icon_state = "darkmatter_shard"
 	icon_state = "darkmatter_shard"
 	anchored = FALSE
