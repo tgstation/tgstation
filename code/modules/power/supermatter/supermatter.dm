@@ -76,7 +76,7 @@
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal
-	name = "Pickle Super Matter"
+	name = "Pickle Matter"
 	desc = "Funniest shit I’ve ever seen."
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "darkmatter"
@@ -789,7 +789,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	is_main_engine = TRUE
 
 /obj/machinery/power/supermatter_crystal/shard
-	name = "Pickle Super Matter Shard"
+	name = "Pickle Matter Shard"
 	desc = "Second funniest shit I’ve ever seen."
 	base_icon_state = "darkmatter_shard"
 	icon_state = "darkmatter_shard"
