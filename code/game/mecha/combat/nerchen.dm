@@ -10,10 +10,11 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 50, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
 	infra_luminosity = 3
-	//wreckage
+	wreckage = /obj/structure/mecha_wreckage/nerchen
 	melee_can_hit = FALSE
 	add_req_access = 1
 	internal_damage_threshold = 25
+	var/leaping = TRUE
 	var/obj/mecha/combat/chen/chen //keeps the other internal mech in check
 
 /obj/mecha/combat/nerchen/Initialize()
@@ -28,11 +29,23 @@
 	chen.Destroy()
 	..()
 
+/obj/mecha/combat/nerchen/GrantActions(mob/living/user, human_occupant = 0)
+	..()
+	defense_action.Grant(user, src)
+
+/obj/mecha/combat/nerchen/RemoveActions(mob/living/user, human_occupant = 0)
+	..()
+	defense_action.Remove(user)
+
+/obj/mecha/combat/nerchen/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	cockpit_icon()
+	..()
+
 /obj/mecha/combat/nerchen/mmi_move_inside(obj/item/mmi/mmi_as_oc, mob/user) //no cheese
 	to_chat(user, "<span class='warning'>There doesn't seem to be any way to interface with the mech!</span>")
 	return FALSE
 
-/obj/mecha/combat/nerchen/proc/cockpit_icon() //icon proc
+/obj/mecha/combat/nerchen/proc/cockpit_icon() //icon proc, will also reset
 	var/newicon = initial(icon_state)
 	newicon += "-"
 	if(occupant)
@@ -55,6 +68,11 @@
 	..()
 	cockpit_icon()
 
+/obj/mecha/combat/nerchen/click_action(atom/target,mob/user,params, chencommand = FALSE)
+	if(!chencommand)
+		to_chat(occupant, "<span class='warning'>You need to be in the other cockpit to punch!</span>")
+		return FALSE
+
 /obj/mecha/combat/nerchen/MouseDrop_T(mob/M, mob/user) //if chen exists, you can enter that instead.
 	switch(alert("Which cockpit would you like to enter?","Mecha","Ner (Movement)","Chen (Weapons)", "Cancel"))
 		if("Chen (Weapons)")
@@ -69,12 +87,11 @@
 	name = "Gunner Seat"
 	icon_state = "phazon"
 	dir_in = 2 //Facing South. not sure if this one matters?
-	max_integrity = 200 //breaks into two when destroyed, so this is actually more.
 	deflect_chance = 30
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 50, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
 	infra_luminosity = 3
-	wreckage = /obj/structure/mecha_wreckage/durand
+	wreckage = null
 	add_req_access = 1
 	internal_damage_threshold = 25
 	force = 15
@@ -159,8 +176,36 @@
 	..()
 	ner.cockpit_icon()
 
-/* maybe add a punch animation
-/obj/mecha/combat/chen/click_action(atom/target,mob/user,params)
-	to_chat(occupant, "<span class='warning'>You need to be in the other cockpit to punch!</span>")
-	return FALSE
-*/
+/obj/mecha/combat/chen/click_action(atom/target,mob/user,params, chencommand = FALSE)
+	ner.click_action(target, user, params, chencommand = TRUE)
+
+#define LEAP_COOLDOWN 30 SECONDS
+
+//action buttons
+/datum/action/innate/mecha/leap
+	name = "Mecha Leap"
+	button_icon_state = "mech_missile"
+	var/cooldowns = 0 //i know we have a cooldown action but other mecha action buttons have not used it
+
+/datum/action/innate/mecha/leap/Activate(forced_state = null)
+	if(!owner || !chassis || chassis.occupant != owner)
+		return
+	if(!isnull(forced_state))
+		chassis.leg_overload_mode = forced_state
+	else
+		chassis.leg_overload_mode = !chassis.leg_overload_mode
+	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
+	chassis.log_message("Leaped forward.", LOG_MECHA)
+	if(chassis.leg_overload_mode)
+		chassis.leg_overload_mode = 1
+		chassis.step_in = min(1, round(chassis.step_in/2))
+		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
+		chassis.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
+	else
+		chassis.leg_overload_mode = 0
+		chassis.step_in = initial(chassis.step_in)
+		chassis.step_energy_drain = chassis.normal_step_energy_drain
+		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
+	UpdateButtonIcon()
+
+#undef LEAP_COOLDOWN

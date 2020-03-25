@@ -625,7 +625,7 @@
 /datum/action/cooldown
 	check_flags = NONE
 	transparent_when_unavailable = FALSE
-	var/cooldown_time = 0
+	var/cooldown_time = 0 //use this for the cooldown
 	var/next_use_time = 0
 
 /datum/action/cooldown/New()

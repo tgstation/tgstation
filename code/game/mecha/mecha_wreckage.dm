@@ -196,6 +196,17 @@
 			/obj/item/mecha_parts/part/durand_left_leg,
 			/obj/item/mecha_parts/part/durand_right_leg)
 
+/obj/structure/mecha_wreckage/nerchen
+	name = "\improper nerchen wreckage"
+	icon_state = "nerchen-broken"
+	parts = list(
+		/obj/item/mecha_parts/part/nerchen_torso,
+		/obj/item/mecha_parts/part/nerchen_head,
+		/obj/item/mecha_parts/part/nerchen_left_arm,
+		/obj/item/mecha_parts/part/nerchen_right_arm,
+		/obj/item/mecha_parts/part/nerchen_left_leg,
+		/obj/item/mecha_parts/part/nerchen_right_leg)
+
 /obj/structure/mecha_wreckage/phazon
 	name = "\improper Phazon wreckage"
 	icon_state = "phazon-broken"
@@ -206,8 +217,6 @@
 		/obj/item/mecha_parts/part/phazon_right_arm,
 		/obj/item/mecha_parts/part/phazon_left_leg,
 		/obj/item/mecha_parts/part/phazon_right_leg)
-
-
 
 /obj/structure/mecha_wreckage/odysseus
 	name = "\improper Odysseus wreckage"
