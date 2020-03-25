@@ -46,7 +46,7 @@
 	if(ismecha(hit_atom) || isliving(hit_atom))
 		var/atom/movable/AM = hit_atom
 		var/turf/throwbackwards = get_step(src, turn(dir, 180)) //get the turf behind the mecha
-		visible_message("<span class='danger'>[src] throws [AM] over their head, smashing them into [throwbackwards]!")
+		visible_message("<span class='danger'>[src] throws [AM] over their head, smashing them into [throwbackwards]!</span>")
 		if(!isopenturf(throwbackwards))
 			AM.forceMove(loc)//prevents them from getting put into a wall
 		else
@@ -75,16 +75,7 @@
 	icon_state += build_cockpit_state()
 
 /obj/mecha/combat/nerchen/proc/build_cockpit_state() //checks which cockpits are open
-	. = "-"
-	if(occupant)
-		. += "closed"
-	else
-		. += "open"
-	. += "-"
-	if(chen.occupant)
-		. += "closed"
-	else
-		. += "open"
+	return "-[occupant ? "closed" : "open"]-[chen.occupant ? "closed" : "open"]"
 
 /obj/mecha/combat/nerchen/moved_inside(mob/living/carbon/human/H)
 	. = ..()
