@@ -114,7 +114,7 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/ancient
-	icon_state = "oldifrstaid" // Alan please correct this typo because i have no idea how merges work
+	icon_state = "oldfirstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
 /obj/item/storage/firstaid/ancient/PopulateContents()
