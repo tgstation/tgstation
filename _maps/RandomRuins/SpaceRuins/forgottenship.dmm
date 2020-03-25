@@ -13,7 +13,7 @@
 	dir = 4;
 	name = "Syndicate Ship Turret";
 	on = 0;
-	shot_delay = 8
+	shot_delay = 10
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -132,7 +132,9 @@
 	secure = 1
 	},
 /obj/item/coin/antagtoken,
-/obj/item/coin/gold,
+/obj/item/encryptionkey/syndicate,
+/obj/item/encryptionkey/syndicate,
+/obj/item/encryptionkey/syndicate,
 /obj/item/dnainjector/thermal,
 /obj/item/storage/box/firingpins/syndicate,
 /obj/item/storage/box/firingpins/syndicate,
@@ -767,7 +769,7 @@
 	dir = 4;
 	name = "Syndicate Ship Turret";
 	on = 0;
-	shot_delay = 8
+	shot_delay = 10
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -838,14 +840,12 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "ct" = (
-/obj/machinery/vending/medical/syndicate_access{
-	premium = list(/obj/item/reagent_containers/medigel/instabitaluri = 2, /obj/item/storage/pill_bottle/psicodine = 2, /obj/item/reagent_containers/hypospray/medipen = 3, /obj/item/storage/belt/medical = 3, /obj/item/sensor_device = 2, /obj/item/pinpointer/crew = 2, /obj/item/storage/firstaid = 5, /obj/item/storage/firstaid/advanced = 2, /obj/item/storage/firstaid/tactical = 1, /obj/item/shears = 1, /obj/item/plunger/reinforced = 2)
-	},
+/obj/machinery/vending/medical/syndicate_access/cybersun,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cu" = (
 /obj/machinery/computer/security{
-	desc = "Used to access interrogation room camera.";
+	desc = "Used to access cameras on the ship.";
 	dir = 8;
 	name = "Ship cameras console";
 	network = list("fsc","fsci");

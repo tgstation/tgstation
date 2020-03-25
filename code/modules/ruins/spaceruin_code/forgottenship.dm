@@ -13,6 +13,42 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	. = ..()
 	password = "[GLOB.fscpassword]"
 
+/obj/machinery/vending/medical/syndicate_access/cybersun
+	name = "\improper CyberMed ++"
+	desc = "Advanced vendor dispensing medical drugs."
+	products = list(/obj/item/reagent_containers/syringe = 4,
+					/obj/item/healthanalyzer = 4,
+					/obj/item/reagent_containers/pill/patch/libital = 5,
+					/obj/item/reagent_containers/pill/patch/aiuri = 5,
+					/obj/item/reagent_containers/glass/bottle/multiver = 1,
+					/obj/item/reagent_containers/glass/bottle/syriniver = 1,
+					/obj/item/reagent_containers/glass/bottle/epinephrine = 3,
+					/obj/item/reagent_containers/glass/bottle/morphine = 3,
+					/obj/item/reagent_containers/glass/bottle/potass_iodide = 1,
+					/obj/item/reagent_containers/glass/bottle/salglu_solution = 3,
+					/obj/item/reagent_containers/syringe/antiviral = 5,
+					/obj/item/reagent_containers/medigel/libital = 2,
+					/obj/item/reagent_containers/medigel/aiuri = 2,
+					/obj/item/reagent_containers/medigel/sterilizine = 1)
+	contraband = list(/obj/item/reagent_containers/glass/bottle/cold = 2,
+					/obj/item/restraints/handcuffs = 4,
+					/obj/item/storage/backpack/duffelbag/syndie/surgery = 1,
+					/obj/item/storage/firstaid/tactical = 1)
+	premium = list(/obj/item/storage/pill_bottle/psicodine = 2,
+					/obj/item/reagent_containers/hypospray/medipen = 3,
+					/obj/item/reagent_containers/hypospray/medipen/atropine = 2,
+					/obj/item/storage/firstaid/regular = 3,
+					/obj/item/storage/firstaid/brute = 1,
+					/obj/item/storage/firstaid/fire = 1,
+					/obj/item/storage/firstaid/toxin = 1,
+					/obj/item/storage/firstaid/o2 = 1,
+					/obj/item/storage/firstaid/advanced = 1,
+					/obj/item/defibrillator/loaded = 1,
+					/obj/item/wallframe/defib_mount = 1,
+					/obj/item/sensor_device = 2,
+					/obj/item/pinpointer/crew = 2,
+					/obj/item/shears = 1)
+
 ///////////	forgottenship lore
 
 /obj/item/paper/fluff/ruins/forgottenship/password
@@ -77,14 +113,17 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /area/ruin/space/has_grav/syndicate_forgotten_ship
 	name = "Syndicate Forgotten Ship"
 	icon_state = "syndie-ship"
+	ambientsounds = list('sound/ambience/ambidanger.ogg', 'sound/ambience/ambidanger2.ogg', 'sound/ambience/ambigen9.ogg', 'sound/ambience/ambigen10.ogg')
 
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod
 	name = "Syndicate Forgotten Cargo pod"
 	icon_state = "syndie-ship"
+	ambientsounds = list('sound/ambience/ambigen4.ogg', 'sound/ambience/signal.ogg')
 
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault
 	name = "Syndicate Forgotten Vault"
 	icon_state = "syndie-ship"
+	ambientsounds = list('sound/ambience/ambitech2.ogg', 'sound/ambience/ambitech3.ogg')
 	noteleport = TRUE
 
 	//Cybersun hardsuit
@@ -150,6 +189,6 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
 	projectiletype = /obj/projectile/beam/laser
-	projectilesound = 'sound/weapons/pulse.ogg'
+	projectilesound = 'sound/weapons/laser.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 	faction = list(ROLE_DEATHSQUAD)
