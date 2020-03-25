@@ -588,6 +588,41 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 			air.temperature = max(((temperature*old_heat_capacity - energy_used)/new_heat_capacity),TCMB)
 		return REACTING
 
+/datum/gas_reaction/metalhydrogen
+	priority = 9
+	name = "Metal Hydrogen formation"
+	id = "metalhydrogen"
+
+/datum/gas_reaction/metalhydrogen/init_reqs()
+	min_requirements = list(
+		/datum/gas/hydrogen = 100,
+		/datum/gas/bz		= 50,
+		"TEMP" = METAL_HYDROGEN_MINIMUM_HEAT
+		)
+
+/datum/gas_reaction/metalhydrogen/react(datum/gas_mixture/air, datum/holder)
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/old_heat_capacity = air.heat_capacity()
+	var/increase_factor = temperature / METAL_HYDROGEN_MINIMUM_HEAT
+	var/heat_efficency = cached_gases[/datum/gas/hydrogen][MOLES] * 0.01 * increase_factor
+	var/pressure = air.return_pressure()
+	var/energy_used = heat_efficency * METAL_HYDROGEN_FORMATION_ENERGY
+	var/turf/open/location = isturf(holder) ? holder : null
+
+	if(pressure >= METAL_HYDROGEN_MINIMUM_PRESSURE && temperature >= METAL_HYDROGEN_MINIMUM_HEAT)
+		cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.01
+		if (prob(40 * increase_factor))
+			cached_gases[/datum/gas/hydrogen][MOLES] -= heat_efficency
+			if (prob(100 / increase_factor))
+				new /obj/item/stack/sheet/mineral/metal_hydrogen(location)
+
+	if(energy_used > 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((temperature * old_heat_capacity - energy_used) / new_heat_capacity),TCMB)
+		return REACTING
+
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.
 	priority = 5
 	name = "Stimulum formation"

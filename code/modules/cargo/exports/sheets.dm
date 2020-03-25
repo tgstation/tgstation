@@ -104,6 +104,11 @@
 	unit_name = "of ammonia crystal"
 	export_types = list(/obj/item/stack/ammonia_crystals)
 
+/datum/ecport/stack/metal_hydrogen
+	cost = 550
+	unit_name = "of metallic hydrogen"
+	export_types = list(/obj/item/stack/sheet/mineral/metal_hydrogen)
+
 // Weird Stuff
 
 /datum/export/stack/abductor
