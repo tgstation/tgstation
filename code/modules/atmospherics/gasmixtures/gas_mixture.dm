@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return removed
 
-/datum/gas_mixture/remove_specific(gas_id, amount)
+/datum/gas_mixture/proc/remove_specific(gas_id, amount)
 	var/list/cached_gases = gases
 	amount = min(amount, cached_gases[gas_id][MOLES])
 	if(amount <= 0)
