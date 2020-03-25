@@ -8,13 +8,13 @@
 	var/atom/aim_target
 	var/proj_name
 	var/radius = 4
-	var/holdup = FALSE
+	var/not_done_yet = FALSE
 
 /datum/component/pellet_cloud/Initialize(projectile_type, magnitude=5)
 	if(!istype(parent, /obj/item/ammo_casing) && !isgrenade(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(isgrenade(parent))
-		holdup = TRUE
+		not_done_yet = TRUE
 
 	src.projectile_type = projectile_type
 	if(istype(parent, /obj/item/ammo_casing))
@@ -26,7 +26,7 @@
 	proj_name = initial(p.name)
 
 /datum/component/pellet_cloud/Destroy(force, silent)
-	if(holdup)
+	if(not_done_yet)
 		return QDEL_HINT_LETMELIVE
 	return ..()
 
@@ -37,20 +37,23 @@
 		RegisterSignal(parent, COMSIG_GRENADE_PRIME, .proc/circle_pellets)
 
 /datum/component/pellet_cloud/UnregisterFromParent()
-	if(holdup)
+	if(not_done_yet)
 		return QDEL_HINT_LETMELIVE
 	UnregisterSignal(parent, list(COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME))
 
-/datum/component/pellet_cloud/proc/create_pellets(obj/item/ammo_casing/A, target, user, fired_from)
+/datum/component/pellet_cloud/proc/create_pellets(obj/item/ammo_casing/A, target, user, fired_from, randomspread, distro)
 	aim_target = target
 	for(var/i in 1 to num_pellets)
 		var/obj/projectile/P = new projectile_type(get_turf(parent))
 		P.original = target
-		P.spread = rand(-40,40)
+		if(randomspread)
+			P.spread = round((rand() - 0.5) * distro)
+		else //Smart spread
+			P.spread = round(1 - 0.5) * distro
 		P.fired_from = fired_from
 		P.firer = user
 		P.permutated += user
-		P.suppressed = SUPPRESSED_VERY
+		P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
 		P.preparePixelProjectile(target, fired_from)
 		RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
 		RegisterSignal(P, COMSIG_PROJECTILE_RANGE_OUT, .proc/pellet_range)
@@ -105,5 +108,5 @@
 		else
 			target.visible_message("<span class='danger'>[target] is hit by a [proj_name]!</span>", "<span class='userdanger'>You're hit by a [proj_name]!</span>")
 
-	holdup = FALSE
+	not_done_yet = FALSE
 	qdel(src)

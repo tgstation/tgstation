@@ -17,6 +17,7 @@
 /datum/element/embed
 	element_flags = ELEMENT_BESPOKE
 	id_arg_index = 2
+	var/initialized = FALSE /// whether we can skip assigning all the vars (since these are bespoke elements, we don't have to reset the vars every time we attach to something, we already know what we are!)
 
 	// all of this stuff is explained in _DEFINES/combat.dm
 	var/embed_chance
@@ -33,9 +34,8 @@
 	var/payload_type
 	var/embed_chance_turf_mod
 
-/datum/element/embed/Attach(datum/target, list/embedArgs, projectile_payload=/obj/item/shard)
+/datum/element/embed/Attach(datum/target, embed_chance, fall_chance, pain_chance, pain_mult, remove_pain_mult, impact_pain_mult, rip_time, ignore_throwspeed_threshold, jostle_chance, jostle_pain_mult, pain_stam_pct, embed_chance_turf_mod, projectile_payload=/obj/item/shard)
 	. = ..()
-	parseArgs(arglist(embedArgs))
 
 	if(!isitem(target) && !isprojectile(target))
 		return ELEMENT_INCOMPATIBLE
@@ -46,6 +46,21 @@
 		RegisterSignal(target, COMSIG_ELEMENT_ATTACH, .proc/severancePackage)
 		RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/examined)
 		RegisterSignal(target, COMSIG_EMBED_TRY_FORCE, .proc/tryForceEmbed)
+		RegisterSignal(target, COMSIG_ITEM_DISABLE_EMBED, .proc/detachFromWeapon)
+		if(!initialized)
+			src.embed_chance = embed_chance
+			src.fall_chance = fall_chance
+			src.pain_chance = pain_chance
+			src.pain_mult = pain_mult
+			src.remove_pain_mult = remove_pain_mult
+			src.rip_time = rip_time
+			src.impact_pain_mult = impact_pain_mult
+			src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
+			src.jostle_chance = jostle_chance
+			src.jostle_pain_mult = jostle_pain_mult
+			src.pain_stam_pct = pain_stam_pct
+			src.embed_chance_turf_mod = embed_chance_turf_mod
+			initialized = TRUE
 	else
 		payload_type = projectile_payload
 		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/checkEmbedProjectile)
@@ -54,16 +69,14 @@
 /datum/element/embed/Detach(obj/item/target)
 	. = ..()
 	if(isitem(target))
-		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE))
+		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE, COMSIG_EMBED_TRY_FORCE))
 	else
 		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT))
 
 
 /// Checking to see if we're gonna embed into a human
-/datum/element/embed/proc/checkEmbedMob(obj/item/weapon, mob/living/carbon/human/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
-	if(!istype(victim))
-		return
-	if(HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
+/datum/element/embed/proc/checkEmbedMob(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
+	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return
 
 	var/pass = forced || ((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && prob(embed_chance))
@@ -123,43 +136,20 @@
 
 	return TRUE
 
-
-/datum/element/embed/proc/parseArgs(embed_chance = EMBED_CHANCE,
-		fall_chance = EMBEDDED_ITEM_FALLOUT,
-		pain_chance = EMBEDDED_PAIN_CHANCE,
-		pain_mult = EMBEDDED_PAIN_MULTIPLIER,
-		remove_pain_mult = EMBEDDED_UNSAFE_REMOVAL_PAIN_MULTIPLIER,
-		rip_time = EMBEDDED_UNSAFE_REMOVAL_TIME,
-		impact_pain_mult = EMBEDDED_IMPACT_PAIN_MULTIPLIER,
-		ignore_throwspeed_threshold = FALSE,
-		jostle_chance = EMBEDDED_JOSTLE_CHANCE,
-		jostle_pain_mult = EMBEDDED_JOSTLE_PAIN_MULTIPLIER,
-		pain_stam_pct = EMBEDDED_PAIN_STAM_PCT,
-		embed_chance_turf_mod = EMBED_CHANCE_TURF_MOD)
-
-	src.embed_chance = embed_chance
-	src.fall_chance = fall_chance
-	src.pain_chance = pain_chance
-	src.pain_mult = pain_mult
-	src.remove_pain_mult = remove_pain_mult
-	src.impact_pain_mult = impact_pain_mult
-	src.rip_time = rip_time
-	src.ignore_throwspeed_threshold = ignore_throwspeed_threshold
-	src.jostle_chance = jostle_chance
-	src.jostle_pain_mult = jostle_pain_mult
-	src.pain_stam_pct = pain_stam_pct
-	src.embed_chance_turf_mod = embed_chance_turf_mod
-
 ///A different embed element has been attached, so we'll detach and let them handle things
 /datum/element/embed/proc/severancePackage(obj/item/weapon, datum/element/E)
 	if(istype(E, /datum/element/embed))
 		Detach(weapon)
 
+/datum/element/embed/proc/detachFromWeapon(obj/item/weapon)
+	Detach(weapon)
+
 /datum/element/embed/proc/examined(obj/item/I, mob/user, list/examine_list)
-	if(!pain_mult && !jostle_pain_mult)
+	if(I.isEmbedHarmless())
 		examine_list += "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
 	else
 		examine_list += "[I] has a fine point, and could probably embed in someone if thrown properly!"
+
 
 /datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit)
 	if(!iscarbon(hit) && !isclosedturf(hit))
@@ -167,32 +157,50 @@
 		return // we don't care
 
 	var/obj/item/payload = new payload_type(get_turf(hit))
-	var/did_embed = SEND_SIGNAL(payload, COMSIG_EMBED_TRY_FORCE, hit, P.def_zone)
-	//var/did_embed = tryForceEmbed(payload, hit, P.def_zone)
+	var/did_embed
+	if(iscarbon(hit))
+		var/mob/living/carbon/C = hit
+		var/obj/item/bodypart/L = C.get_bodypart(C.check_limb_hit(P.def_zone))
+		did_embed = payload.tryEmbed(L)
+	else
+		did_embed = payload.tryEmbed(hit)
+
 	if(!did_embed)
 		payload.failedEmbed()
 	Detach(P)
 
-/datum/element/embed/proc/tryForceEmbed(obj/item/I, atom/target, hit_zone, forced=FALSE, silent=FALSE)
+/**
+  * tryForceEmbed() is called here when we fire COMSIG_EMBED_TRY_FORCE from [/obj/item/proc/tryEmbed]. Mostly, this means we're a piece of shrapnel from a projectile that just impacted something, and we're trying to embed in it.
+  *
+  * The reason for this extra mucking about is avoiding having to do an extra hitby(), and annoying the target by impacting them once with the projectile, then again with the shrapnel (which likely represents said bullet), and possibly
+  * AGAIN if we actually embed. This way, we save on at least one message. Runs the standard embed checks on the mob/turf.
+  *
+  * Arguments:
+  * * I- what we're trying to embed, obviously
+  * * target- what we're trying to shish-kabob, either a bodypart, a carbon, or a closed turf
+  * * hit_zone- if our target is a carbon, try to hit them in this zone, if we don't have one, pick a random one. If our target is a bodypart, we already know where we're hitting.
+  * * forced- if we want this to succeed 100%
+  */
+/datum/element/embed/proc/tryForceEmbed(obj/item/I, atom/target, hit_zone, forced=FALSE)
 	var/obj/item/bodypart/L
-	var/mob/living/carbon/human/H
+	var/mob/living/carbon/C
 	var/turf/closed/T
 
 	if(!forced && !prob(embed_chance))
 		return
 
-	if(ishuman(target))
-		H = target
+	if(iscarbon(target))
+		C = target
 		if(!hit_zone)
-			L = pick(H.bodyparts)
+			L = pick(C.bodyparts)
 			hit_zone = L.body_zone
 	else if(isbodypart(target))
 		L = target
-		H = L.owner
+		C = L.owner
 	else if(isclosedturf(target))
 		T = target
 
-	if(H)
-		return checkEmbedMob(I, H, hit_zone, forced=TRUE)
+	if(C)
+		return checkEmbedMob(I, C, hit_zone, forced=TRUE)
 	else if(T)
 		return checkEmbedOther(I, T, forced=TRUE)

@@ -89,7 +89,7 @@
 
 	src.weapon = I
 
-	if(src.pain_mult || src.jostle_pain_mult)
+	if(!weapon.isEmbedHarmless())
 		harmful = TRUE
 
 	if(ishuman(parent))
@@ -128,7 +128,7 @@
 /// Set up an instance of embedding for a human. This is basically an extension of Initialize() so not much to say
 /datum/component/embedded/proc/initHuman()
 	START_PROCESSING(SSdcs, src)
-	var/mob/living/carbon/human/victim = parent
+	var/mob/living/carbon/victim = parent
 	if(!L || !istype(L))
 		L = pick(victim.bodyparts)
 
@@ -149,7 +149,7 @@
 
 /// Called every time a human with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the human is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
-	var/mob/living/carbon/human/victim = parent
+	var/mob/living/carbon/victim = parent
 
 	var/chance = jostle_chance
 	if(victim.m_intent == MOVE_INTENT_WALK || !(victim.mobility_flags & MOBILITY_STAND))
@@ -163,7 +163,7 @@
 
 /// Called when then item randomly falls out of a human. This handles the damage and descriptors, then calls safe_remove()
 /datum/component/embedded/proc/fallOutHuman()
-	var/mob/living/carbon/human/victim = parent
+	var/mob/living/carbon/victim = parent
 
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
@@ -180,7 +180,7 @@
 	if(I != weapon || limb != L)
 		return
 
-	var/mob/living/carbon/human/victim = parent
+	var/mob/living/carbon/victim = parent
 	var/time_taken = rip_time * weapon.w_class
 
 	victim.visible_message("<span class='warning'>[victim] attempts to remove [weapon] from [victim.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [weapon] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
@@ -203,10 +203,10 @@
 /// This proc handles the final step and actual removal of an embedded/stuck item from a human, whether or not it was actually removed safely.
 /// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
 /datum/component/embedded/proc/safeRemoveHuman(to_hands)
-	var/mob/living/carbon/human/victim = parent
+	var/mob/living/carbon/victim = parent
 	L.embedded_objects -= weapon
 
-	if(!weapon || weapon.unembedded())
+	if(!weapon || (weapon.item_flags & DROPDEL))
 		if(!victim.has_embedded_objects())
 			victim.clear_alert("embeddedobject")
 			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
@@ -218,6 +218,8 @@
 		weapon.forceMove(get_turf(weapon))
 		qdel(src)
 		return
+
+	weapon.unembedded()
 
 	if(to_hands)
 		victim.put_in_hands(weapon)
@@ -233,7 +235,7 @@
 /// Items embedded/stuck to humans both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
 /// Items harmfully embedded in humans have an additional check for random pain (if applicable)
 /datum/component/embedded/proc/processHuman()
-	var/mob/living/carbon/human/victim = parent
+	var/mob/living/carbon/victim = parent
 
 	if(!victim || !L) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)
 		weapon.forceMove(get_turf(weapon))

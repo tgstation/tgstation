@@ -14,7 +14,7 @@
 		if(isnull(BB))
 			return 0
 		AddComponent(/datum/component/pellet_cloud, projectile_type, pellets)
-		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from)
+		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, distro)
 		QDEL_NULL(BB)
 
 	if(click_cooldown_override)
