@@ -480,7 +480,7 @@
 
 /obj/item/storage/pill_bottle/lsdpsych
 	name = "mindbreaker toxin pills"
-	desc = "!FOR THERAPEUTIC USE ONLY! Contains pills used to alleviate symptoms of Reality Dissociation Syndrome."
+	desc = "!FOR THERAPEUTIC USE ONLY! Contains pills used to alleviate the symptoms of Reality Dissociation Syndrome."
 
 /obj/item/storage/pill_bottle/lsdpsych/PopulateContents()
 	for(var/i in 1 to 5)
