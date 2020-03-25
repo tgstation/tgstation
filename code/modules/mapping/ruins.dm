@@ -11,16 +11,14 @@
 
 		for(var/turf/check in get_affected_turfs(central_turf,1))
 			var/area/new_area = get_area(check)
+			valid = FALSE // set to false before we check
 			if(check.flags_1 & NO_RUINS_1)
-				valid = FALSE
-			else
-				valid = FALSE // set to false before we check
-				for(var/type in allowed_areas)
-					if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
-						valid = TRUE
-						break
-			if(!valid)
 				break
+			for(var/type in allowed_areas)
+				if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
+					valid = TRUE
+					break
+			break
 
 		if(!valid)
 			continue
