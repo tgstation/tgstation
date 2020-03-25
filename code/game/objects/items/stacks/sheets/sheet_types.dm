@@ -685,3 +685,14 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	merge_type = /obj/item/stack/sheet/meat
 	material_type = /datum/material/meat
 	material_modifier = 1 //None of that wussy stuff
+
+/obj/item/stack/sheet/obamium
+	name = "obamium sheet"
+	desc = "Finally...Obamium"
+	singular_name = "obamium sheet"
+	icon_state = "sheet-meat"
+	material_flags = MATERIAL_COLOR
+	custom_materials = list(/datum/material/obamium = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/obamium
+	material_type = /datum/material/obamium
+	material_modifier = 1 //None of that wussy stuff

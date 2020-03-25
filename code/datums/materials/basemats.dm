@@ -269,3 +269,16 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
 	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300))
 	return ..()
+
+/datum/material/obamium
+	name = "obamium"
+	id = "obamium"
+	desc = "Who the fuck is Obama?"
+	color = null //We use the texture
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/obamium
+	texture_layer_icon_state = "obamium"
+	value_per_unit = 0.05 //Market crash so he's not worth that much
+	beauty_modifier = 100 //God i fucking love Obama
+	strength_modifier = 1.2 //Obama is fucking strong
+	armor_modifiers = list("melee" = 1.5, "bullet" = 1.5, "laser" = 1.5, "energy" = 1.5, "bomb" = 1.5, "bio" = 1.5, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5) //Obama protects
