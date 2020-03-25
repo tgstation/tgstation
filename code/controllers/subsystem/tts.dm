@@ -9,8 +9,13 @@
   *.ogg is file is then played and .meta is used to measure the length of the speech,
   *which determines the length of the timer for spam limiting and resets the HUD icon
   *After the sound is played both files are deleted and the cycle begins anew
+  *
   *The generator itself is an exe file and not a dll so it doesnt help cause OOM, since .dlls eat already limited BYOND memory space.
   *it also allows for multiple Dreamdaemons to make use of a single generator for TTS requests
+  *Shutdown is handeled by the exe, which regularily checks for a DreamDaemon instance (as requested by MSO).
+  *Since /tg/ servers run DD in pairs this makes sure that the TTS is active even if one DD instance shuts down,
+  *while still handling normal shutdowns such as on a localhost.
+  *start_engine() can be called even with an active .exe instance since the exe prevents further instances of itself
   */
 
 #define GENERATOR_PATH    "tools\\tts_generator\\"	//TTS generator file location
@@ -32,15 +37,10 @@ SUBSYSTEM_DEF(tts)
 
 	if (!CONFIG_GET(flag/enable_tts))
 		can_fire = FALSE
-		stop_engine()	//Incase Word/Del() isn't called before reboot(Ex.:crashes) and someone disabled the config.
 	else
 		start_engine()
 
 	return ..()
-
-/world/Del()
-	if (SStts)
-		SStts.stop_engine()	//Server shutdown and reboot stops the engine. We use world/Del() instead of shutdown because shutdown isn't called on server shutdown(it's only called om reboot)
 
 /**
   *Launches the actual TTS generator
@@ -54,7 +54,7 @@ SUBSYSTEM_DEF(tts)
 /**
   *Kills the TTS generator
   *
-  *Also no config check because this should be called if configs are changed and the world restarts
+  *Can only be called as a debug verb by admins
   */
 
 /datum/controller/subsystem/tts/proc/stop_engine()
