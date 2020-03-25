@@ -9,7 +9,8 @@
   *.ogg is file is then played and .meta is used to measure the length of the speech,
   *which determines the length of the timer for spam limiting and resets the HUD icon
   *After the sound is played both files are deleted and the cycle begins anew
-  *The generator itself is an exe file and not a dll so it doesnt help cause OOM, since .dlls eat already limited BYOND memory space
+  *The generator itself is an exe file and not a dll so it doesnt help cause OOM, since .dlls eat already limited BYOND memory space.
+  *it also allows for multiple Dreamdaemons to make use of a single generator for TTS requests
   */
 
 #define GENERATOR_PATH    "tools\\tts_generator\\"	//TTS generator file location
