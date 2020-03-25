@@ -28,9 +28,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/worn_x_dimension = 32
 	///Dimensions of the icon file used when this item is worn, eg: hats.dmi (32x32 sprite, 64x64 sprite, etc.). Allows inhands/worn sprites to be of any size, but still centered on a mob properly
 	var/worn_y_dimension = 32
-	///Same as for worn_x_dimension but for inhands, uses the lefthand_ and righthand_ file vars
+	///Same as for [worn_x_dimension][/obj/item/var/worn_x_dimension] but for inhands, uses the lefthand_ and righthand_ file vars
 	var/inhand_x_dimension = 32
-	///Same as for worn_y_dimension but for inhands, uses the lefthand_ and righthand_ file vars
+	///Same as for [worn_y_dimension][/obj/item/var/worn_y_dimension] but for inhands, uses the lefthand_ and righthand_ file vars
 	var/inhand_y_dimension = 32
 
 
@@ -96,7 +96,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/slowdown = 0
 	///percentage of armour effectiveness to remove
 	var/armour_penetration = 0
-	///suit storage stuff.
+	///What objects the suit storage can store
 	var/list/allowed = null
 	///In deciseconds, how long an item takes to equip; counts only for normal clothing slots, not pockets etc.
 	var/equip_delay_self = 0
@@ -107,7 +107,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///How long it takes to resist out of the item (cuffs and such)
 	var/breakouttime = 0
 
-	///Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
+	///Used in [atom/proc/attackby] to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/list/attack_verb
 	///list() of species types, if a species cannot put items in a certain slot, but species type is in list, it will be able to wear that item
 	var/list/species_exception = null
@@ -121,7 +121,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///Does it embed and if yes, what kind of embed
 	var/list/embedding = NONE
 
-	///for flags such as GLASSESCOVERSEYES
+	///for flags such as [GLASSESCOVERSEYES]
 	var/flags_cover = 0
 	var/heat = 0
 	///All items with sharpness of IS_SHARP or higher will automatically get the butchering component.
@@ -137,7 +137,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	///In tiles, how far this weapon can reach; 1 for adjacent, which is default
 	var/reach = 1
 
-	///The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot. For default list, see [/mob/proc/equip_to_appropriate_slot()]
+	///The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot. For default list, see [/mob/proc/equip_to_appropriate_slot]
 	var/list/slot_equipment_priority = null
 
 	///Reference to the datum that determines whether dogs can wear the item: Needs to be in /obj/item because corgis can wear a lot of non-clothing items
@@ -201,12 +201,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	else
 		return 1
 
-///Handles attacking by blobs
 /obj/item/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
-/// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
-/obj/item/ComponentInitialize()
+
+/obj/item/ComponentInitialize()// this proc says it's for initializing components, but we're initializing elements too because it's you and me against the world >:)
 	. = ..()
 
 	if(embedding)
@@ -228,13 +227,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /**Makes cool stuff happen when you suicide with an item
   *
-  *user: The mob that is suiciding
-  *damagetype: The type of damage the item will inflict on the user
-  *BRUTELOSS = 1
-  *FIRELOSS = 2
-  *TOXLOSS = 4
-  *OXYLOSS = 8
-  *Output a creative message and then return the damagetype done
+  *Outputs a creative message and then return the damagetype done
+  * Arguments:
+  * * user: The mob that is suiciding
   */
 /obj/item/proc/suicide_act(mob/user)
 	return
@@ -467,10 +462,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 /**
   *called after an item is placed in an equipment slot
-  *user is mob that equipped it
-  *slot uses the slot_X defines found in setup.dm
-  *for items that can be placed in multiple slots
-  *Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
+
+  * Arguments:
+  * * user is mob that equipped it
+  * * slot uses the slot_X defines found in setup.dm for items that can be placed in multiple slots
+  * * Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
   */
 /obj/item/proc/equipped(mob/user, slot, initial = FALSE)
 	SHOULD_CALL_PARENT(1)
@@ -497,7 +493,11 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
   *the mob M is attempting to equip this item into the slot passed through as 'slot'. Return 1 if it can do this and 0 if it can't.
   *if this is being done by a mob other than M, it will include the mob equipper, who is trying to equip the item to mob M. equipper will be null otherwise.
   *If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
-  *Set disable_warning to TRUE if you wish it to not give you outputs.
+  * Arguments:
+  * * disable_warning to TRUE if you wish it to not give you text outputs.
+  * * slot is the slot we are trying to equip to
+  * * equipper is the mob trying to equip the item
+  * * bypass_equip_delay_self for whether we want to bypass the equip delay
   */
 /obj/item/proc/mob_can_equip(mob/living/M, mob/living/equipper, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
 	if(!M)
@@ -861,13 +861,13 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	return TRUE
 
-/// Called before use_tool if there is a delay, or by use_tool if there isn't. Only ever used by welding tools and stacks, so it's not added on any other use_tool checks.
+/// Called before [obj/item/proc/use_tool] if there is a delay, or by [obj/item/proc/use_tool] if there isn't. Only ever used by welding tools and stacks, so it's not added on any other [obj/item/proc/use_tool] checks.
 /obj/item/proc/tool_start_check(mob/living/user, amount=0)
 	. = tool_use_check(user, amount)
 	if(.)
 		SEND_SIGNAL(src, COMSIG_TOOL_START_USE, user)
 
-/// A check called by tool_start_check once, and by use_tool on every tick of delay.
+/// A check called by [/obj/item/proc/tool_start_check] once, and by use_tool on every tick of delay.
 /obj/item/proc/tool_use_check(mob/living/user, amount)
 	return !amount
 
