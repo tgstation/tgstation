@@ -1373,18 +1373,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/aiModule/syndicate
 	cost = 9
 
-/datum/uplink_item/device_tools/hypnotic_flash
-	name = "Hypnotic Flash"
-	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
-	item = /obj/item/assembly/flash/hypnotic
-	cost = 7
-
-/datum/uplink_item/device_tools/hypnotic_grenade
-	name = "Hypnotic Grenade"
-	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
-	item = /obj/item/grenade/hypnotic
-	cost = 12
-
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
@@ -1676,6 +1664,20 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/disk/surgery/brainwashing
 	restricted_roles = list("Medical Doctor", "Chief Medical Officer", "Roboticist")
 	cost = 5
+
+/datum/uplink_item/role_restricted/hypnotic_flash
+	name = "Hypnotic Flash"
+	desc = "A modified flash able to hypnotize targets. If the target is not in a mentally vulnerable state, it will only confuse and pacify them temporarily."
+	item = /obj/item/assembly/flash/hypnotic
+	cost = 7
+	restricted_roles = list("Psychologist")
+
+/datum/uplink_item/role_restricted/hypnotic_grenade
+	name = "Hypnotic Grenade"
+	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
+	item = /obj/item/grenade/hypnotic
+	cost = 12
+	restricted_roles = list("Psychologist")
 
 /datum/uplink_item/role_restricted/clown_bomb
 	name = "Clown Bomb"
