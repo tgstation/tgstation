@@ -655,6 +655,9 @@
 	outfit = /datum/outfit/syndicatespace/syndicrew
 	assignedrole = "Cybersun Crewmember"
 
+/obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
+	new_spawn.mind.add_antag_datum(/datum/antagonist/cybersun)
+
 /obj/effect/mob_spawn/human/syndicatespace/Initialize(mapload)
 	. = ..()
 	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
