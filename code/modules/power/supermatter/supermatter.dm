@@ -134,8 +134,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	var/lastwarning = 0                // Time in 1/10th of seconds since the last sent warning
 	var/power = 0
-
+	///Determines the rate of positve change in gas comp values
 	var/gas_change_rate = 0.05
+	///Ranging from 0 to 1, this is used to judge gas composition. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call
 	var/n2comp = 0                    // raw composition of each gas in the chamber, ranges from 0 to 1
 	var/plasmacomp = 0
 	var/o2comp = 0
@@ -153,6 +154,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/h2omalus = 1 //used when calculating if the h2o "malus" is applied, the malus is an increase in power, waste gases and heat (wich is bad if not ready) also now used when calculating amount of radiations
 	var/h2ofixed = 0.5 //fix for the heat penalty, making it work differently at different %
 
+	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
 	var/gasmix_power_ratio = 0
 	var/dynamic_heat_modifier = 1
