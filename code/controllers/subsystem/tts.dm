@@ -10,6 +10,8 @@
   *which determines the length of the timer for spam limiting and resets the HUD icon
   *After the sound is played both files are deleted and the cycle begins anew
   *
+  * Each file has a userid which ensures that no file mixups occur
+  *
   *The generator itself is an exe file and not a dll so it doesnt help cause OOM, since .dlls eat already limited BYOND memory space.
   *it also allows for multiple Dreamdaemons to make use of a single generator for TTS requests
   *Shutdown is handeled by the exe, which regularily checks for a DreamDaemon instance (as requested by MSO).
