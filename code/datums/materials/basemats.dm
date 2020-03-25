@@ -273,7 +273,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 /datum/material/obamium
 	name = "obamium"
 	id = "obamium"
-	desc = "Who the fuck is Obama?"
+	desc = "What the fuck is Obama?"
 	color = null //We use the texture
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/obamium
