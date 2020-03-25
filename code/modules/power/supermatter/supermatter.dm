@@ -790,7 +790,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/shard
 	name = "Pickle Super Matter Shard"
-	desc = "Second funniest shit I’ve ever seen"
+	desc = "Second funniest shit I’ve ever seen."
 	base_icon_state = "darkmatter_shard"
 	icon_state = "darkmatter_shard"
 	anchored = FALSE
