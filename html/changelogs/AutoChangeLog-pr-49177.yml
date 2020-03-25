@@ -1,4 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - bugfix: "Removed latejoin prisoner option"

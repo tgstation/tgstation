@@ -342,6 +342,11 @@
 			return
 	C.update_action_buttons_icon()
 
+/obj/screen/spacesuit
+	name = "Space suit cell status"
+	icon_state = "spacesuit_0"
+	screen_loc = ui_spacesuit
+
 /obj/screen/mov_intent
 	name = "run/walk toggle"
 	icon = 'icons/mob/screen_midnight.dmi'
@@ -406,7 +411,6 @@
 	var/mob/living/user = hud?.mymob
 	if(!istype(user))
 		return
-
 	if(!user.resting)
 		icon_state = "act_rest"
 	else
@@ -609,39 +613,25 @@
 
 /obj/screen/healths/blob/naut/core
 	name = "overmind health"
-	screen_loc = ui_health
 	icon_state = "corehealth"
+	screen_loc = ui_health
 
 /obj/screen/healths/guardian
 	name = "summoner health"
 	icon = 'icons/mob/guardian.dmi'
 	icon_state = "base"
-	screen_loc = ui_living_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/revenant
 	name = "essence"
 	icon = 'icons/mob/actions/backgrounds.dmi'
 	icon_state = "bg_revenant"
-	screen_loc = ui_living_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healths/construct
 	icon = 'icons/mob/screen_construct.dmi'
 	icon_state = "artificer_health0"
 	screen_loc = ui_construct_health
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/screen/healths/slime
-	icon = 'icons/mob/screen_slime.dmi'
-	icon_state = "slime_health0"
-	screen_loc = ui_slime_health
-	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-
-/obj/screen/healths/lavaland_elite
-	icon = 'icons/mob/screen_elite.dmi'
-	icon_state = "elite_health0"
-	screen_loc = ui_living_health
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/screen/healthdoll

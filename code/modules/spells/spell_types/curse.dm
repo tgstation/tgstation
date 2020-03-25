@@ -8,7 +8,7 @@ GLOBAL_VAR_INIT(curse_of_madness_triggered, FALSE)
 
 	GLOB.curse_of_madness_triggered = message // So latejoiners are also afflicted.
 
-	deadchat_broadcast("A <span class='name'>Curse of Madness</span> has stricken the station, shattering their minds with the awful secret: \"<span class='big hypnophrase'>[message]</span>\"")
+	deadchat_broadcast("A <span class='name'>Curse of Madness</span> has stricken the station, shattering their minds with the awful secret: \"<span class='big hypnophrase'>[message]</span>\"", message_type=DEADCHAT_ANNOUNCEMENT)
 
 	for(var/mob/living/carbon/human/H in GLOB.player_list)
 		if(H.stat == DEAD)

@@ -173,3 +173,10 @@
 	custom_materials = list(/datum/material/plastic=500)
 	floor_tile = /obj/item/stack/tile/plastic
 	broken_states = list("plastic-damaged1","plastic-damaged2")
+
+/turf/open/floor/eighties
+	name = "retro floor"
+	desc = "This one takes you back."
+	icon_state = "eighties"
+	floor_tile = /obj/item/stack/tile/eighties
+	broken_states = list("damaged")

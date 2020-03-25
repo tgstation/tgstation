@@ -1,12 +1,29 @@
+GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
+
+/atom/movable/openspace_backdrop
+	name			= "openspace_backdrop"
+
+	anchored		= TRUE
+
+	icon            = 'icons/turf/floors.dmi'
+	icon_state      = "grey"
+	plane           = OPENSPACE_BACKDROP_PLANE
+	mouse_opacity 	= MOUSE_OPACITY_TRANSPARENT
+	layer           = SPLASHSCREEN_LAYER
+
 /turf/open/openspace
 	name = "open space"
 	desc = "Watch your step!"
-	icon_state = "grey"
+	icon_state = "transparent"
 	baseturfs = /turf/open/openspace
 	CanAtmosPassVertical = ATMOS_PASS_YES
 	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
+
+	intact = 0
+/turf/open/openspace/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/openspace/debug/update_multiz()
 	..()
@@ -14,8 +31,11 @@
 
 /turf/open/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	plane = FLOOR_OPENSPACE_PLANE
+	plane = OPENSPACE_PLANE
 	layer = OPENSPACE_LAYER
+
+	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
+
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
@@ -24,6 +44,11 @@
 /turf/open/openspace/Destroy()
 	vis_contents.len = 0
 	return ..()
+
+/turf/open/openspace/can_have_cabling()
+	if(locate(/obj/structure/lattice/catwalk, src))
+		return TRUE
+	return FALSE
 
 /turf/open/openspace/update_multiz(prune_on_fail = FALSE, init = FALSE)
 	. = ..()

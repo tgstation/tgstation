@@ -161,6 +161,7 @@
 		return ..()
 
 /mob/living/simple_animal/cow/tamed()
+	. = ..()
 	can_buckle = TRUE
 	buckle_lying = FALSE
 	var/datum/component/riding/D = LoadComponent(/datum/component/riding)
@@ -201,6 +202,30 @@
 					"<span class='revennotice'>[internal]</span>")
 	else
 		..()
+
+///Wisdom cow, gives XP to a random skill and speaks wisdoms
+/mob/living/simple_animal/cow/wisdom
+	name = "wisdom cow"
+	desc = "Known for its wisdom, shares it with all"
+	gold_core_spawnable = FALSE
+	tame_chance = 0
+	bonus_tame_chance = 0
+	speak_chance = 15
+
+/mob/living/simple_animal/cow/wisdom/Initialize()
+	. = ..()
+	speak = GLOB.wisdoms //Done here so it's setup properly
+
+///Give intense wisdom to the attacker if they're being friendly about it
+/mob/living/simple_animal/cow/wisdom/attack_hand(mob/living/carbon/M)
+	if(!stat && M.a_intent == INTENT_HELP)
+		to_chat(M, "<span class='nicegreen'>[src] whispers you some intense wisdoms and then disappears!</span>")
+		M.mind?.adjust_experience(pick(subtypesof(/datum/skill)), 500)
+		do_smoke(1, get_turf(src))
+		qdel(src)
+		return
+	return ..()
+
 
 /mob/living/simple_animal/chick
 	name = "\improper chick"

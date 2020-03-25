@@ -42,8 +42,8 @@
 		RegisterSignal(parent, COMSIG_ADD_MOOD_EVENT_RND, .proc/add_event) //Mood events that are only for RnD members
 
 /datum/component/mood/proc/print_mood(mob/user)
-	var/msg = "<span class='info'>*---------*\n<EM>Your current mood</EM></span>\n"
-	msg += "<span class='notice'>My mental status: </span>" //Long term
+	var/msg = "<span class='info'>*---------*\n<EM>My current mental status:</EM></span>\n"
+	msg += "<span class='notice'>My current sanity: </span>" //Long term
 	switch(sanity)
 		if(SANITY_GREAT to INFINITY)
 			msg += "<span class='nicegreen'>My mind feels like a temple!</span>\n"
@@ -192,15 +192,12 @@
 
 ///Sets sanity to the specified amount and applies effects.
 /datum/component/mood/proc/setSanity(amount, minimum=SANITY_INSANE, maximum=SANITY_GREAT, override = FALSE)
-	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.5
+	// If we're out of the acceptable minimum-maximum range move back towards it in steps of 0.7
 	// If the new amount would move towards the acceptable range faster then use it instead
 	if(amount < minimum)
-		amount += CLAMP(minimum - sanity, 0, 0.7)
-	else
-		if(!override && HAS_TRAIT(parent, TRAIT_UNSTABLE))
-			maximum = sanity
-		if(amount > maximum)
-			amount = min(maximum, sanity)
+		amount += clamp(minimum - amount, 0, 0.7)
+	if((!override && HAS_TRAIT(parent, TRAIT_UNSTABLE)) || amount > maximum)
+		amount = min(sanity, amount)
 	if(amount == sanity) //Prevents stuff from flicking around.
 		return
 	sanity = amount
@@ -208,27 +205,27 @@
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
 			setInsanityEffect(MAJOR_INSANITY_PEN)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=1, movetypes=(~FLYING))
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
 			sanity_level = 6
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
 			setInsanityEffect(MINOR_INSANITY_PEN)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.5, movetypes=(~FLYING))
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
 			sanity_level = 5
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
 			setInsanityEffect(0)
-			master.add_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE, 100, override=TRUE, multiplicative_slowdown=0.25, movetypes=(~FLYING))
+			master.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
 			sanity_level = 4
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
 			setInsanityEffect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 3
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
 			setInsanityEffect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 2
 		if(SANITY_GREAT+1 to INFINITY)
 			setInsanityEffect(0)
-			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY, TRUE)
+			master.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 			sanity_level = 1
 	update_mood_icon()
 

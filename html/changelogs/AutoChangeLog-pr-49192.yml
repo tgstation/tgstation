@@ -1,5 +1,0 @@
-author: "SteelSlayer"
-delete-after: True
-changes: 
-  - code_imp: "Adds the dunkable element. Converts items who were using the dunkable var to instead use this element and removes the dunkable var."
-  - code_imp: "Adds a new \"DUNKABLE\" reagent flag for reagent containers. This determines whether or not the container can have items dunked into it."

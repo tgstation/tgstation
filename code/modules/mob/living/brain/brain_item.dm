@@ -196,13 +196,13 @@
 	damage_delta = damage - prev_damage
 	if(damage > BRAIN_DAMAGE_MILD)
 		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
-			gain_trauma_type(BRAIN_TRAUMA_MILD)
+			gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
 	if(damage > BRAIN_DAMAGE_SEVERE)
 		if(prob(damage_delta * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
 			if(prob(20))
-				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
+				gain_trauma_type(BRAIN_TRAUMA_SPECIAL, natural_gain = TRUE)
 			else
-				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
+				gain_trauma_type(BRAIN_TRAUMA_SEVERE, natural_gain = TRUE)
 
 	if (owner)
 		if(owner.stat < UNCONSCIOUS) //conscious or soft-crit
@@ -240,7 +240,7 @@
 		if(istype(BT, brain_trauma_type) && (BT.resilience <= resilience))
 			. += BT
 
-/obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience)
+/obj/item/organ/brain/proc/can_gain_trauma(datum/brain_trauma/trauma, resilience, natural_gain = FALSE)
 	if(!ispath(trauma))
 		trauma = trauma.type
 	if(!initial(trauma.can_gain))
@@ -269,7 +269,7 @@
 		if(TRAUMA_RESILIENCE_ABSOLUTE)
 			max_traumas = TRAUMA_LIMIT_ABSOLUTE
 
-	if(resilience_tier_count >= max_traumas)
+	if(natural_gain && resilience_tier_count >= max_traumas)
 		return FALSE
 	return TRUE
 
@@ -309,11 +309,11 @@
 	SSblackbox.record_feedback("tally", "traumas", 1, actual_trauma.type)
 
 //Add a random trauma of a certain subtype
-/obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience)
+/obj/item/organ/brain/proc/gain_trauma_type(brain_trauma_type = /datum/brain_trauma, resilience, natural_gain = FALSE)
 	var/list/datum/brain_trauma/possible_traumas = list()
 	for(var/T in subtypesof(brain_trauma_type))
 		var/datum/brain_trauma/BT = T
-		if(can_gain_trauma(BT, resilience) && initial(BT.random_gain))
+		if(can_gain_trauma(BT, resilience, natural_gain) && initial(BT.random_gain))
 			possible_traumas += BT
 
 	if(!LAZYLEN(possible_traumas))

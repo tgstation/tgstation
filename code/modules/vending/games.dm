@@ -8,6 +8,7 @@
 		            /obj/item/toy/cards/deck/cas = 3,
 		            /obj/item/toy/cards/deck/cas/black = 3,
 					/obj/item/hourglass = 2,
+					/obj/item/instrument/piano_synth/headphones = 4,
 					/obj/item/camera = 3)
 	contraband = list(/obj/item/dice/fudge = 9)
 	premium = list(/obj/item/melee/skateboard/pro = 3,
@@ -16,6 +17,7 @@
 	default_price = 50
 	extra_price = 250
 	payment_department = ACCOUNT_SRV
+	light_mask = "games-light-mask"
 
 /obj/item/vending_refill/games
 	machine_name = "\improper Good Clean Fun"

@@ -232,13 +232,13 @@
 				playsound(computer, "terminal_type", 50, FALSE)
 				return TRUE
 		if("PRG_grantall")
-			if(!computer || !authenticated)
+			if(!computer || !authenticated || minor)
 				return
 			id_card.access |= (is_centcom ? get_all_centcom_access() : get_all_accesses())
 			playsound(computer, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 			return TRUE
 		if("PRG_denyall")
-			if(!computer || !authenticated)
+			if(!computer || !authenticated || minor)
 				return
 			id_card.access.Cut()
 			playsound(computer, 'sound/machines/terminal_prompt_deny.ogg', 50, FALSE)
@@ -272,7 +272,7 @@
 
 	var/list/departments = target_dept
 	if(is_centcom)
-		departments = list("Centcom" = get_all_centcom_jobs())
+		departments = list("CentCom" = get_all_centcom_jobs())
 	else if(isnull(departments))
 		departments = list(
 			CARDCON_DEPARTMENT_COMMAND = list("Captain"),//lol
