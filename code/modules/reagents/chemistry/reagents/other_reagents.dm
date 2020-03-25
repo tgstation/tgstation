@@ -2094,6 +2094,40 @@
 	A.material_flags = applied_material_flags
 	A.set_custom_materials(metal_dat)
 
+/datum/reagent/obamium
+	name = "Obamium"
+	data = list("material"=null)
+	description = "A brown liquid made from a previous president. Can turn anything into his liking"
+	color = "#341c02"
+	taste_mult = 100 //god the flavor
+	taste_description = "healthcare and drone-strikes" //what a legend
+	material = /datum/material/obamium
+
+	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+
+/datum/reagent/obamium/reaction_obj(obj/O, volume)
+	metal_morph(O)
+	return
+
+/datum/reagent/obamium/reaction_turf(turf/T, volume)
+	metal_morph(T)
+	return
+
+///turn an object into a special material
+/datum/reagent/obamium/proc/metal_morph(atom/A)
+	var/metal_amount
+	for(var/B in A.custom_materials) //list with what they're made of
+		metal_amount += A.custom_materials[B]
+
+	if(!metal_amount)
+		metal_amount = 2000 //some stuff doesn't have materials at all. To still give them properties, we give them a material. Basically doesnt exist
+
+	var/list/metal_dat = list()
+	metal_dat[SSmaterials.GetMaterialRef(/datum/material/obamium)] = metal_amount
+	A.material_flags = applied_material_flags
+	A.set_custom_materials(metal_dat)
+
+
 /datum/reagent/gravitum
 	name = "Gravitum"
 	description = "A rare kind of null fluid, capable of temporalily removing all weight of whatever it touches." //i dont even
