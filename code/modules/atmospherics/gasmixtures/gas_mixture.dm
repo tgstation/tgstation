@@ -5,8 +5,11 @@ What are the archived variables for?
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
-#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
+#define MINIMUM_MOLE_MANIPULATION_COUNT		0.001
+#define QUANTIZE(variable)		(round(variable, MINIMUM_MOLE_MANIPULATION_COUNT))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+#define QUANTIZE_TO_MOVE(variable)	max(QUANTIZE(variable), MINIMUM_MOLE_MANIPULATION_COUNT) //like QUANTIZE but can't return 0
+
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
@@ -30,6 +33,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/reaction_results
 	var/list/analyzer_results //used for analyzer feedback - not initialized until its used
 	var/gc_share = FALSE // Whether to call garbage_collect() on the sharer during shares, used for immutable mixtures
+	
+	var/log = 0
 
 /datum/gas_mixture/New(volume)
 	gases = new
@@ -70,7 +75,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
 		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
-			cached_gases -= id
+		if(log) testing("garbage_collect() [QUANTIZE(cached_gases[id][MOLES])] [cached_gases[id]] [cached_gases[id][MOLES]]")
+		if(QUANTIZE(cached_gases[id][MOLES]) < MINIMUM_MOLE_MANIPULATION_COUNT && QUANTIZE(cached_gases[id][ARCHIVE]) < MINIMUM_MOLE_MANIPULATION_COUNT)
+			if(log) testing("|			garbage_collect() removed [id]")
 
 	//PV = nRT
 
@@ -128,7 +135,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return 1
 
-	///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
+	///Merges all air and volume from giver into self. Returns: 1 if we are mutable, 0 otherwise
+/datum/gas_mixture/proc/full_merge(datum/gas_mixture/giver)
+	if(!merge(giver))
+		return 0
+	volume += giver.volume
+	return 1
+
+	///Merges all air from giver into self. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return 0
@@ -143,9 +157,17 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/giver_gases = giver.gases
+	var/list/gases_both = cached_gases & giver_gases
+	var/list/gases_new = giver_gases ^ gases_both
+
+	var/list/tmp_gas
+	//add new gases
+	for(var/new_id in gases_new)
+		tmp_gas = gases_new[new_id]
+		cached_gases[new_id] = tmp_gas.Copy() //from ADD_GAS
+
 	//gas transfer
-	for(var/giver_id in giver_gases)
-		ASSERT_GAS(giver_id, src)
+	for(var/giver_id in gases_both)
 		cached_gases[giver_id][MOLES] += giver_gases[giver_id][MOLES]
 
 	return 1
@@ -159,13 +181,15 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	amount = min(amount, sum) //Can not take more air than tile has!
 	if(amount <= 0)
 		return null
+	var/ratio = amount / sum
+
 	var/datum/gas_mixture/removed = new type
 	var/list/removed_gases = removed.gases //accessing datum vars is slower than proc vars
 
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
-		removed_gases[id][MOLES] = QUANTIZE((cached_gases[id][MOLES] / sum) * amount)
+		removed_gases[id][MOLES] = QUANTIZE_TO_MOVE((cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
 
@@ -185,7 +209,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
-		removed_gases[id][MOLES] = QUANTIZE(cached_gases[id][MOLES] * ratio)
+		removed_gases[id][MOLES] = QUANTIZE_TO_MOVE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 
 	garbage_collect()
