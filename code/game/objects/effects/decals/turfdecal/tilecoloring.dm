@@ -43,10 +43,6 @@
 	color = "#D4D4D4"
 	alpha = 50
 
-/obj/effect/turf_decal/tile/blue
-	name = "blue corner"
-	color = "#52B4E9"
-
 /obj/effect/turf_decal/tile/random // so many colors
 	name = "colorful corner"
 
