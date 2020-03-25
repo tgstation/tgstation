@@ -14,13 +14,13 @@
 	melee_can_hit = FALSE
 	add_req_access = 1
 	internal_damage_threshold = 25
-	var/leaping = TRUE
+	var/leaping = FALSE
 	var/obj/mecha/combat/chen/chen //keeps the other internal mech in check
 
 /obj/mecha/combat/nerchen/Initialize()
 	. = ..()
 	chen = new(src, src)
-	cockpit_icon()
+	rebuild_icon()
 
 /obj/mecha/combat/nerchen/obj_destruction()
 	chen.Destroy()
@@ -37,36 +37,62 @@
 	..()
 	defense_action.Remove(user)
 
+//leaping interactions with living mobs and mechas
 /obj/mecha/combat/nerchen/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	cockpit_icon()
-	..()
+	if(!leaping)
+		return ..()
+	leaping = FALSE
+	rebuild_icon()
+	if(ismecha(hit_atom) || isliving(hit_atom))
+		var/atom/movable/AM = hit_atom
+		var/turf/throwbackwards = get_step(src, turn(dir, 180)) //get the turf behind the mecha
+		visible_message("<span class='danger'>[src] throws [AM] over their head, smashing them into [throwbackwards]!")
+		if(!isopenturf(throwbackwards))
+			AM.forceMove(loc)//prevents them from getting put into a wall
+		else
+			AM.forceMove(throwbackwards)
+			if(isfloorturf(throwbackwards))
+				var/turf/open/floor/plating = throwbackwards
+				plating.break_tile()
+		if(isliving(AM))
+			var/mob/living/L = AM
+			L.Knockdown(5 SECONDS)
+			L.adjustBruteLoss(10) //not meant as a huge damage dealer
+		else
+			var/obj/mecha/mech = AM //but for mechs it is
+			mech.take_damage(50)
+			mech.emp_act(EMP_LIGHT)
+			for(var/i in 1 to 3)
+				mech.spark_system.start()
+				sleep(2)
 
 /obj/mecha/combat/nerchen/mmi_move_inside(obj/item/mmi/mmi_as_oc, mob/user) //no cheese
 	to_chat(user, "<span class='warning'>There doesn't seem to be any way to interface with the mech!</span>")
 	return FALSE
 
-/obj/mecha/combat/nerchen/proc/cockpit_icon() //icon proc, will also reset
-	var/newicon = initial(icon_state)
-	newicon += "-"
-	if(occupant)
-		newicon += "closed"
-	else
-		newicon += "open"
-	newicon += "-"
-	if(chen.occupant)
-		newicon += "closed"
-	else
-		newicon += "open"
-	icon_state = newicon
+/obj/mecha/combat/nerchen/proc/rebuild_icon() //icon proc, will also reset to arms down (and used as such)
+	icon_state = initial(icon_state) //lowers arms
+	icon_state += build_cockpit_state()
 
+/obj/mecha/combat/nerchen/proc/build_cockpit_state() //checks which cockpits are open
+	. = "-"
+	if(occupant)
+		. += "closed"
+	else
+		. += "open"
+	. += "-"
+	if(chen.occupant)
+		. += "closed"
+	else
+		. += "open"
 
 /obj/mecha/combat/nerchen/moved_inside(mob/living/carbon/human/H)
 	. = ..()
-	cockpit_icon()
+	rebuild_icon()
 
 /obj/mecha/combat/nerchen/go_out(forced, atom/newloc = loc)
 	..()
-	cockpit_icon()
+	rebuild_icon()
 
 /obj/mecha/combat/nerchen/click_action(atom/target,mob/user,params, chencommand = FALSE)
 	if(!chencommand)
@@ -166,7 +192,7 @@
 
 /obj/mecha/combat/chen/moved_inside(mob/living/carbon/human/H)
 	. = ..()
-	ner.cockpit_icon()
+	ner.rebuild_icon()
 
 /obj/mecha/combat/chen/domove(direction)
 	to_chat(occupant, "<span class='warning'>You need to be in the other cockpit to move!</span>")
@@ -174,7 +200,7 @@
 
 /obj/mecha/combat/chen/go_out(forced, atom/newloc = ner.loc)
 	..()
-	ner.cockpit_icon()
+	ner.rebuild_icon()
 
 /obj/mecha/combat/chen/click_action(atom/target,mob/user,params, chencommand = FALSE)
 	ner.click_action(target, user, params, chencommand = TRUE)
@@ -184,28 +210,29 @@
 //action buttons
 /datum/action/innate/mecha/leap
 	name = "Mecha Leap"
-	button_icon_state = "mech_missile"
-	var/cooldowns = 0 //i know we have a cooldown action but other mecha action buttons have not used it
+	desc = "Engages the mech into a leap, throwing yourself a fair distance forward. If you collide with a creature or a mech, you will suplex it over yourself."
+	button_icon_state = "mech_leap"
+	var/leapcooldown = 0 //i know we have a cooldown action but other mecha action buttons have not used it
 
 /datum/action/innate/mecha/leap/Activate(forced_state = null)
 	if(!owner || !chassis || chassis.occupant != owner)
 		return
-	if(!isnull(forced_state))
-		chassis.leg_overload_mode = forced_state
-	else
-		chassis.leg_overload_mode = !chassis.leg_overload_mode
-	button_icon_state = "mech_overload_[chassis.leg_overload_mode ? "on" : "off"]"
-	chassis.log_message("Leaped forward.", LOG_MECHA)
-	if(chassis.leg_overload_mode)
-		chassis.leg_overload_mode = 1
-		chassis.step_in = min(1, round(chassis.step_in/2))
-		chassis.step_energy_drain = max(chassis.overload_step_energy_drain_min,chassis.step_energy_drain*chassis.leg_overload_coeff)
-		chassis.occupant_message("<span class='danger'>You enable leg actuators overload.</span>")
-	else
-		chassis.leg_overload_mode = 0
-		chassis.step_in = initial(chassis.step_in)
-		chassis.step_energy_drain = chassis.normal_step_energy_drain
-		chassis.occupant_message("<span class='notice'>You disable leg actuators overload.</span>")
-	UpdateButtonIcon()
+	if(leapcooldown > world.time)
+		chassis.occupant_message("<span class='danger'>Thrusters have not recharged yet!</span>")
+		return
+	var/obj/mecha/combat/nerchen/ner = chassis
+	ner.occupant_message("<span class='danger'>Enagaging thrusters for Mecha Leap!</span>")
+
+	//cooldown icon changes
+	leapcooldown = world.time + LEAP_COOLDOWN
+	var/mutable_appearance/cooldown_redness
+	cooldown_redness = cooldown_redness || mutable_appearance('icons/mob/actions/actions_mecha.dmi')
+	cooldown_redness.icon_state = "nerchen_cooldown"
+	animate(cooldown_redness, alpha = 0, time = LEAP_COOLDOWN)
+	button.add_overlay(cooldown_redness)
+	ner.leaping = TRUE
+	ner.icon_state = "nerchen-leap" + ner.build_cockpit_state()
+	ner.throw_at(get_edge_target_turf(ner, ner.dir), 7, 2)
+	ner.log_message("Leaped forward (mech threw itself with ability).", LOG_MECHA)
 
 #undef LEAP_COOLDOWN
