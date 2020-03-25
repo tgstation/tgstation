@@ -150,13 +150,9 @@
 		to_chat(usr, "<span class='warning'>The [name] is already occupied!</span>")
 		log_message("Permission denied (Occupied).", LOG_MECHA)
 		return
-	if(dna_lock)
-		var/passed = FALSE
-		if(user.has_dna())
-			var/mob/living/carbon/C = user
-			if(C.dna.unique_enzymes==dna_lock)
-				passed = TRUE
-		if (!passed)
+	if(dna_lock && user.has_dna())
+		var/mob/living/carbon/C = user
+		if(C.dna.unique_enzymes != dna_lock)
 			to_chat(user, "<span class='warning'>Access denied. [name] is secured with a DNA lock.</span>")
 			log_message("Permission denied (DNA LOCK).", LOG_MECHA)
 			return
