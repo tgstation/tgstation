@@ -201,7 +201,6 @@
 /obj/item/reagent_containers/pill/paxpsych
 	name = "pacification pill"
 	desc = "Used to temporarily suppress violent, homicidal, or suicidal behavior in patients."
-
 	list_reagents = list(/datum/reagent/pax = 5)
 	icon_state = "pill12"
 	rename_with_volume = TRUE
