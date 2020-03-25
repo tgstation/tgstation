@@ -488,7 +488,7 @@
 
 /obj/item/storage/pill_bottle/paxpsych
 	name = "pax pills"
-	desc = "Contains pills used to temporarily render harmless patients deemed a harm to them self or others."
+	desc = "Contains pills used to temporarily pacify patients that are deemed a harm to themselves or others."
 
 /obj/item/storage/pill_bottle/paxpsych/PopulateContents()
 	for(var/i in 1 to 5)
