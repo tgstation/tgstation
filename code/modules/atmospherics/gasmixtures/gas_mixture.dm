@@ -6,7 +6,7 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
 #define MINIMUM_MOLE_MANIPULATION_COUNT		0.001
-#define QUANTIZE(variable)		(round(variable, MINIMUM_MOLE_MANIPULATION_COUNT))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
+#define QUANTIZE(variable)		(round(variable, 0.0001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
 #define QUANTIZE_TO_MOVE(variable)	(max(QUANTIZE(variable), MINIMUM_MOLE_MANIPULATION_COUNT)) //like QUANTIZE but can't return 0
 
@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
 		if (logging) to_chat(world, "## TESTING: garbage_collect([logging]) [QUANTIZE(cached_gases[id][MOLES])] [id] [cached_gases[id][MOLES]]")
-		if(QUANTIZE(cached_gases[id][MOLES]) < MINIMUM_MOLE_MANIPULATION_COUNT && QUANTIZE(cached_gases[id][ARCHIVE]) < MINIMUM_MOLE_MANIPULATION_COUNT)
+		if(QUANTIZE(cached_gases[id][MOLES]) < MINIMUM_MOLE_MANIPULATION_COUNT)// && QUANTIZE(cached_gases[id][ARCHIVE]) < MINIMUM_MOLE_MANIPULATION_COUNT)
 			if (logging) to_chat(world, "## TESTING: garbage_collect([logging]) removed [id]")
 
 	//PV = nRT
@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
-		to_chat(world, "## TESTING: remove([amount]) move [id] [amount]")
+		//to_chat(world, "remove([amount]) [id] [cached_gases[id][MOLES]] [QUANTIZE(cached_gases[id][MOLES] * amount / sum)]")
 		removed_gases[id][MOLES] = min(QUANTIZE_TO_MOVE(cached_gases[id][MOLES] * ratio), cached_gases[id][MOLES])
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
@@ -234,6 +234,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	removed.temperature = temperature
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
+		//to_chat(world, "remove_ratio([ratio]) [id] [cached_gases[id][MOLES]] [QUANTIZE(cached_gases[id][MOLES] * ratio)]")
 		removed_gases[id][MOLES] = QUANTIZE_TO_MOVE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 

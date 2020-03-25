@@ -73,7 +73,7 @@
 
 	var/gasstring = ""
 	for(var/gasid in breath.gases)
-		gasstring += "[gasid] [breath.gases[gasid][MOLES]], "
+		gasstring += "[gasid] [breath.gases[gasid][MOLES]] [breath.gases[gasid][ARCHIVE]], "
 	to_chat(world, "## TESTING: check_breath() Starting gas [gasstring]")
 
 
@@ -370,19 +370,19 @@
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "smell")
 
 		handle_breath_temperature(breath, H)
-/*
+
 		gasstring = ""
 		for(var/gasid in breath.gases)
-			gasstring += "[gasid] [breath.gases[gasid][MOLES]], "
+			gasstring += "[gasid] [breath.gases[gasid][MOLES]] [breath.gases[gasid][ARCHIVE]], "
 		to_chat(world, "## TESTING: check_breath() b [gasstring]")
-*/
-		breath.garbage_collect()//logging = "breath")
-/*
+
+		breath.garbage_collect(logging = "breath")
+
 		gasstring = ""
 		for(var/gasid in breath.gases)
-			gasstring += "[gasid] [breath.gases[gasid][MOLES]], "
+			gasstring += "[gasid] [breath.gases[gasid][MOLES]] [breath.gases[gasid][ARCHIVE]], "
 		to_chat(world, "## TESTING: check_breath() b [gasstring]")
-*/
+
 	return TRUE
 
 
