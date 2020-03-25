@@ -5,7 +5,7 @@
 	icon_state = "wall"
 	canSmoothWith = list(/turf/closed/wall/material)
 	smooth = SMOOTH_TRUE
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_UPDATE_DESC | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /turf/closed/wall/material/break_wall()
 	for(var/i in custom_materials)
@@ -17,3 +17,7 @@
 	for(var/i in custom_materials)
 		var/datum/material/M = i
 		new M.sheet_type(src, FLOOR(custom_materials[M] / MINERAL_MATERIAL_AMOUNT, 1))
+
+/turf/closed/wall/material/mat_update_desc(mat)
+	desc = "A huge chunk of [mat] used to separate rooms."
+
