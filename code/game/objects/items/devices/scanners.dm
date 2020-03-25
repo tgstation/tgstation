@@ -551,22 +551,21 @@ GENE SCANNER
 		var/cached_scan_results = air_contents.analyzer_results
 
 		if(total_moles > 0)
-			render_list += "<span class='notice'>Moles: [round(total_moles, 0.01)] mol</span>\
-						 \n<span class='notice'>Volume: [volume] L</span>\
-						 \n<span class='notice'>Pressure: [round(pressure,0.01)] kPa</span>"
+			render_list += "<span class='notice'>Moles: [total_moles] mol</span>\
+							\n<span class='notice'>Volume: [volume] L</span>\
+							\n<span class='notice'>Pressure: [pressure] kPa</span>"
 
 			var/list/cached_gases = air_contents.gases
 			for(var/id in cached_gases)
 				var/gas_concentration = cached_gases[id][MOLES]/total_moles
-				render_list += "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [round(gas_concentration*100, 0.01)] % ([round(cached_gases[id][MOLES], 0.01)] mol)</span>"
-			render_list += "<span class='notice'>Temperature: [round(temperature - T0C,0.01)] &deg;C ([round(temperature, 0.01)] K)</span>"
+				render_list += "<span class='notice'>[cached_gases[id][GAS_META][META_GAS_NAME]]: [gas_concentration*100] % ([cached_gases[id][MOLES]] mol)</span>"
+			render_list += "<span class='notice'>Temperature: [temperature - T0C] &deg;C ([temperature] K)</span>"
 		else
-			render_list += airs.len > 1 ? "<span class='notice'>This node is empty!</span>" : "<span class='notice'>[target] is empty!</span>"
+			render_list += airs.len > 1 ? "<span class='notice'>This node is empty!</span><span class='notice'>Volume: [volume] L</span>" : "<span class='notice'>[target] is empty!</span><span class='notice'>Volume: [volume] L</span>"
 
 		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
 			render_list += "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>\
-						 \n<span class='notice'>Instability of the last fusion reaction: [round(cached_scan_results["fusion"], 0.01)].</span>"
-
+						 \n<span class='notice'>Instability of the last fusion reaction: [cached_scan_results["fusion"]].</span>"
 	to_chat(user, jointext(render_list, "\n")) // we let the join apply newlines so we do need handholding
 	return TRUE
 
