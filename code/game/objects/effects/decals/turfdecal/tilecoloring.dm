@@ -43,6 +43,18 @@
 	color = "#D4D4D4"
 	alpha = 50
 
+/obj/effect/turf_decal/tile/blue
+	name = "blue corner"
+	color = "#52B4E9"
+
+/obj/effect/turf_decal/tile/random // so many colors
+	name = "colorful corner"
+
+/obj/effect/turf_decal/tile/random/Initialize()
+	color = "#[random_short_color()]"
+	. = ..()
+
+
 /obj/effect/turf_decal/trimline
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
