@@ -653,6 +653,15 @@
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Fix the ship, find a way to power it and follow your captain's orders."
 	important_info = "Obey orders given by your captain. DO NOT let the ship fall into enemy hands."
 	outfit = /datum/outfit/syndicatespace/syndicrew
+	assignedrole = "Cybersun Crewmember"
+
+/obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
+	new_spawn.mind.add_antag_datum(/datum/antagonist/cybersun)
+
+/obj/effect/mob_spawn/human/syndicatespace/Initialize(mapload)
+	. = ..()
+	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
+	important_info = policy || important_info
 
 /datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -676,6 +685,12 @@
 	important_info = "Protect the ship and secret documents in your backpack with your own life. DO NOT let the ship fall into enemy hands."
 	mob_gender = "male"
 	outfit = /datum/outfit/syndicatespace/syndicaptain
+	assignedrole = "Cybersun Captain"
+
+/obj/effect/mob_spawn/human/syndicatespace/syndicaptain/Initialize(mapload)
+	. = ..()
+	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN_CAPTAIN)
+	important_info = policy || important_info
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -706,7 +721,7 @@
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
 	head = /obj/item/clothing/head/HoS/beret/syndicate
-	ears = /obj/item/radio/headset/syndicate/alt
+	ears = /obj/item/radio/headset/syndicate/alt/leader
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack
