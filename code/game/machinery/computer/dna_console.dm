@@ -59,16 +59,22 @@
 	var/scrambleready = 0
 
 	var/obj/item/disk/data/diskette = null
+
 	var/list/delayed_action = null
+
+	var/rad_pulse_index = 0
+	var/rad_pulse_timer = 0
 
 	var/can_use_scanner = FALSE
 	var/is_viable_occupant = FALSE
 	var/is_scramble_ready = FALSE
 	var/is_joker_ready = FALSE
 	var/is_injector_ready = FALSE
+	var/is_pulsing_rads = FALSE
 	var/time_to_scramble = 0
 	var/time_to_joker = 0
 	var/time_to_injector = 0
+	var/time_to_pulse = 0
 	var/obj/machinery/dna_scannernew/connected_scanner = null
 	var/mob/living/carbon/scanner_occupant = null
 	var/list/tgui_occupant_mutations = list()
@@ -76,6 +82,13 @@
 	var/list/tgui_diskette_mutations = list()
 	var/list/tgui_scanner_chromosomes = list()
 	var/list/tgui_genetic_makeup = list()
+
+/obj/machinery/computer/scan_consolenew/process()
+	. = ..()
+
+	if((rad_pulse_index > 0) && (rad_pulse_timer <= world.time))
+		rad_pulse()
+		return
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	if (istype(I, /obj/item/chromosome))
@@ -168,7 +181,11 @@
 	is_injector_ready = (injectorready < world.time)
 	time_to_injector = round((injectorready - world.time)/10)
 
+	is_pulsing_rads = ((rad_pulse_index > 0) && (rad_pulse_timer > world.time))
+	time_to_pulse = round((rad_pulse_timer - world.time)/10)
+
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+
 	if(!ui)
 		ui = new(user, src, ui_key, "scan_consolenew", name, 660, 800, master_ui, state)
 		ui.open()
@@ -200,6 +217,15 @@
 		data["SubjectHealth"] = scanner_occupant.health
 		data["SubjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["SubjectEnzymes"] = scanner_occupant.dna.unique_enzymes
+
+		var/text_sequence = scanner_occupant.dna.uni_identity
+		var/list/list_sequence = list()
+
+		for(var/i in 1 to LAZYLEN(text_sequence))
+			list_sequence += text_sequence[i];
+
+		data["SubjectUNI"] = text_sequence
+		data["SubjectUNIList"] = list_sequence
 		data["SubjectMutations"] = tgui_occupant_mutations
 	else
 		data["SubjectName"] = null
@@ -209,12 +235,15 @@
 		data["SubjectEnzymes"] = null
 		data["SubjectMutations"] = null
 
+	data["HasDelayedAction"] = (delayed_action != null)
 	data["IsScrambleReady"] = is_scramble_ready
 	data["IsJokerReady"] = is_joker_ready
 	data["IsInjectorReady"] = is_injector_ready
 	data["ScrambleSeconds"] = time_to_scramble
 	data["JokerSeconds"] = time_to_joker
 	data["InjectorSeconds"] = time_to_injector
+	data["IsPulsingRads"] = is_pulsing_rads
+	data["RadPulseSeconds"] = time_to_pulse
 
 	if(diskette != null)
 		data["HasDisk"] = TRUE
@@ -250,11 +279,11 @@
 	data["MUT_OTHER"] = MUT_OTHER
 	data["RADIATION_DURATION_MAX"] = RADIATION_DURATION_MAX
 	data["RADIATION_STRENGTH_MAX"] = RADIATION_STRENGTH_MAX
+	data["DNA_BLOCK_SIZE"] = DNA_BLOCK_SIZE
 
 	return data
 
 /obj/machinery/computer/scan_consolenew/ui_act(action, params)
-	//to_chat(usr,"<span class'notice'>DEBUG: Called ui_act to [action]</span>")
 	if(..())
 		return
 
@@ -647,6 +676,15 @@
 				return
 
 			delayed_action = list("type" = type, "buffer_slot" = buffer_slot)
+		if("makeup_pulse")
+			if(!can_modify_occupant())
+				return
+
+			var/len = length_char(scanner_occupant.dna.uni_identity)
+			rad_pulse_timer = world.time + (radduration*10)
+			rad_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
+		if("cancel_delay")
+			delayed_action = null
 	return
 
 /obj/machinery/computer/scan_consolenew/proc/apply_genetic_makeup(type, buffer_slot)
@@ -725,6 +763,7 @@
 		if(!isnull(test_scanner))
 			if(test_scanner.is_operational())
 				connected_scanner = test_scanner
+				connected_scanner.linked_console = src
 				return
 			else
 				broken_scanner = test_scanner
@@ -733,15 +772,28 @@
 	// a fallback case, but the code above will prefer a working scanner
 	if(!isnull(broken_scanner))
 		connected_scanner = broken_scanner
+		connected_scanner.linked_console = src
 
 // Called by DNA Scanners when they close
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
-	if(can_modify_occupant() && delayed_action)
+	if(!can_modify_occupant())
+		return
+
+	scanner_occupant = connected_scanner.occupant
+
+	if(delayed_action)
 		to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
 		var/type = delayed_action["type"]
 		var/buffer_slot = delayed_action["buffer_slot"]
+		to_chat(usr, "<span class='notice'>Delayed activation of [type] in [buffer_slot]!</span>")
 		apply_genetic_makeup(type, buffer_slot)
 		delayed_action = null
+
+// Called by DNA Scanners when they open
+/obj/machinery/computer/scan_consolenew/proc/on_scanner_open()
+	rad_pulse_index = 0
+	rad_pulse_timer = 0
+	scanner_occupant = null
 
 /obj/machinery/computer/scan_consolenew/proc/build_genetic_makeup_list()
 	if(tgui_genetic_makeup)
@@ -985,8 +1037,41 @@
 		mutation = (locate(ref) in diskette.mutations)
 		if(mutation)
 			return mutation
-			
+
 	return null
+
+/obj/machinery/computer/scan_consolenew/proc/randomize_radiation_accuracy(position, radduration, number_of_blocks)
+	var/val = round(gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration) + position, 1)
+	return WRAP(val, 1, number_of_blocks+1)
+
+/obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd) //hexadecimal genetics. dont confuse with scramble button
+	var/length = length(input)
+	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
+	if(ran == 0)
+		ran = pick(-1,1)	//hacky, statistically should almost never happen. 0-chance makes people mad though
+	else if(ran < 0)
+		ran = round(ran)	//negative, so floor it
+	else
+		ran = -round(-ran)	//positive, so ceiling it
+	return num2hex(WRAP(hex2num(input)+ran, 0, 16**length), length)
+
+/obj/machinery/computer/scan_consolenew/proc/rad_pulse()
+	if(!can_modify_occupant())
+		rad_pulse_index = 0
+		rad_pulse_timer = 0
+		return
+
+	var/len = length_char(scanner_occupant.dna.uni_identity)
+	var/num = randomize_radiation_accuracy(rad_pulse_index, radduration + (connected_scanner.precision_coeff ** 2), len) //Each manipulator level above 1 makes randomization as accurate as selected time + manipulator lvl^2																																																		 //Value is this high for the same reason as with laser - not worth the hassle of upgrading if the bonus is low
+	var/hex = copytext_char(scanner_occupant.dna.uni_identity, num, num+1)
+	hex = scramble(hex, radstrength, radduration)
+
+	scanner_occupant.dna.uni_identity = copytext_char(scanner_occupant.dna.uni_identity, 1, num) + hex + copytext_char(scanner_occupant.dna.uni_identity, num + 1)
+	scanner_occupant.updateappearance(mutations_overlay_update=1)
+
+
+	return
+
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT

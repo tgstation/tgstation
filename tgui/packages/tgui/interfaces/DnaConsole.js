@@ -223,43 +223,52 @@ export class DnaConsole extends Component {
 
   renderCommands(ref, data) {
     return (
-      <Fragment>
-        <Button
-          disabled={data.IsScannerConnected}
-          content={"Connect Scanner"}
-          onClick={() =>
-            act(ref, "connect_scanner")} />
-        <Button
-          disabled={!data.IsScannerConnected | data.ScannerLocked}
-          content={data.IsScannerConnected
-            ? (data.ScannerOpen
-              ? ("Close Scanner")
-              : ("Open Scanner"))
-            : ("No Scanner")}
-          onClick={() =>
-            act(ref, "toggle_door")} />
-        <Button
-          disabled={!data.IsScannerConnected || data.ScannerOpen}
-          content={data.IsScannerConnected
-            ? (data.ScannerLocked
-              ? ("Unlock Scanner")
-              : ("Lock Scanner"))
-            : ("No Scanner")}
-          onClick={() =>
-            act(ref, "toggle_lock")} />
-        <Button
-          disabled={!data.IsScannerConnected
-            || !data.IsViableSubject
-            || !data.IsScrambleReady}
-          content={"Scramble DNA"}
-          onClick={() =>
-            act(ref, "scramble_dna")} />
-        <Button
-          disabled={!data.HasDisk}
-          content={"Eject Disk"}
-          onClick={() =>
-            act(ref, "eject_disk")} />
-      </Fragment>
+      data.HasDelayedAction
+        ? (
+          <Button
+            content={"Cancel Delayed Action"}
+            onClick={() =>
+              act(ref, "cancel_delay")} />
+        ) : (
+          <Fragment>
+            <Button
+              disabled={data.IsScannerConnected}
+              content={"Connect Scanner"}
+              onClick={() =>
+                act(ref, "connect_scanner")} />
+            <Button
+              disabled={!data.IsScannerConnected | data.ScannerLocked}
+              content={data.IsScannerConnected
+                ? (data.ScannerOpen
+                  ? ("Close Scanner")
+                  : ("Open Scanner"))
+                : ("No Scanner")}
+              onClick={() =>
+                act(ref, "toggle_door")} />
+            <Button
+              disabled={!data.IsScannerConnected || data.ScannerOpen}
+              content={data.IsScannerConnected
+                ? (data.ScannerLocked
+                  ? ("Unlock Scanner")
+                  : ("Lock Scanner"))
+                : ("No Scanner")}
+              onClick={() =>
+                act(ref, "toggle_lock")} />
+            <Button
+              disabled={!data.IsScannerConnected
+                || !data.IsViableSubject
+                || !data.IsScrambleReady
+                || data.IsPulsingRads}
+              content={"Scramble DNA"}
+              onClick={() =>
+                act(ref, "scramble_dna")} />
+            <Button
+              disabled={!data.HasDisk}
+              content={"Eject Disk"}
+              onClick={() =>
+                act(ref, "eject_disk")} />
+          </Fragment>
+        )
     );
   }
 
@@ -830,12 +839,49 @@ export class DnaConsole extends Component {
             </LabeledList.Item>
           </LabeledList>
         </Section>
+        {data.IsViableSubject
+          ? (
+            <Section
+              title="Unique Identifiers"
+              textAlign="left">
+              {this.renderUniqueIdentifierButtons(ref, data)}
+            </Section>
+          ) : (
+            false
+          )}
         <Section
           title="Genetic Makeup Buffers"
           textAlign="left">
           {this.renderMakeupBuffers(ref, data)}
         </Section>
       </Fragment>
+    );
+  }
+
+  renderUniqueIdentifierButtons(ref, data) {
+    let buffer = [];
+    let current_block = 0;
+    let uni_list = data.SubjectUNIList;
+
+    for (let i = 0; i < uni_list.length; ++i) {
+      if ((i % data.DNA_BLOCK_SIZE) === 0) {
+        buffer.push(
+          <Button
+            content={++current_block}
+            disabled />,
+        );
+      }
+
+      buffer.push(
+        <Button
+          content={uni_list[i]}
+          onClick={e => (
+            act(ref, "makeup_pulse", { index: i+1 })
+          )} />,
+      );
+    }
+    return (
+      buffer
     );
   }
 
@@ -1064,50 +1110,72 @@ export class DnaConsole extends Component {
           textAlign="left">
           {this.renderCommands(ref, data)}
         </Section>
-        <Tabs>
-          <Tabs.Tab
-            label="Storage">
-            {() => {
-              return (
-                this.renderStorage(ref, data)
-              );
-            }}
-          </Tabs.Tab>
-          <Tabs.Tab
-            label="Genetic Sequencer"
-            disabled={!IsViableSubject}>
-            {() => (
-              <Tabs altSelection>
-                {data.SubjectMutations
-                  ? (
-                    Object.keys(mutations).map((value, key) => {
+        {data.IsPulsingRads
+          ? (
+            <Table>
+              <Table.Row>
+                {"Radiation pulse underway..."}
+              </Table.Row>
+              <Table.Row>
+                {"Process complete in "
+                + Math.floor(data.RadPulseSeconds/60)
+                  + ":"
+                  + ((data.RadPulseSeconds % 60) < 10
+                    ? "0" + data.RadPulseSeconds % 60
+                    : data.RadPulseSeconds % 60)}
+              </Table.Row>
+            </Table>
+          ) : (
+            data.HasDelayedAction
+              ? (false)
+              : (
+                <Tabs>
+                  <Tabs.Tab
+                    label="Storage">
+                    {() => {
                       return (
-                        this.renderGeneticSequencer(
-                          ref,
-                          data,
-                          mutations[value],
-                          key)
+                        this.renderStorage(ref, data)
                       );
-                    })
-                  ) : (
-                    false
-                  )}
-              </Tabs>
-            )}
-          </Tabs.Tab>
-          <Tabs.Tab
-            label="Genetic Makeup">
-            {() => (
-              this.renderUniqueIdentifiers(ref, data)
-            )}
-          </Tabs.Tab>
-          <Tabs.Tab
-            label="Advanced Injectors">
-            {() => (
-              "List of advanced injectors."
-            )}
-          </Tabs.Tab>
-        </Tabs>
+                    }}
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    label="Genetic Sequencer"
+                    disabled={!IsViableSubject}>
+                    {() => (
+                      <Tabs altSelection>
+                        {data.SubjectMutations
+                          ? (
+                            Object.keys(mutations).map((value, key) => {
+                              return (
+                                this.renderGeneticSequencer(
+                                  ref,
+                                  data,
+                                  mutations[value],
+                                  key)
+                              );
+                            })
+                          ) : (
+                            false
+                          )}
+                      </Tabs>
+                    )}
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    label="Genetic Makeup">
+                    {() => (
+                      this.renderUniqueIdentifiers(ref, data)
+                    )}
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    label="Advanced Injectors">
+                    {() => (
+                      "List of advanced injectors."
+                    )}
+                  </Tabs.Tab>
+                </Tabs>
+              )
+          )}
+
       </Section>
     );
   }
