@@ -225,7 +225,10 @@
 			pollinate()
 
 //This is where stability mutations exist now.
-			if(myseed.instability >= 60)
+			if(myseed.instability >= 80)
+				if(prob(20))
+					mutate(0, 0, 0, 0, 0, 0, 0, 10, 0) //Exceedingly low odds of gaining a trait.
+			else if(myseed.instability >= 60)
 				if(prob((myseed.instability)/2) && !self_sustaining)
 					mutatespecie()
 					myseed.instability = myseed.instability/2
@@ -235,9 +238,6 @@
 			else if(myseed.instability >= 20 && myseed.instability < 39)
 				if(prob(40))
 					mutate()
-			else if (myseed.instability >= 80)
-				if(prob(20))
-					mutate(0, 0, 0, 0, 0, 0, 0, 10, 0) //Exceedingly low odds of gaining a trait.
 
 //Health & Age///////////////////////////////////////////////////////////
 
