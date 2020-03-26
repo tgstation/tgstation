@@ -74,8 +74,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck, logging = log)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if (logging) to_chat(world, "## TESTING: garbage_collect([logging]) [QUANTIZE(cached_gases[id][MOLES])] [id] [cached_gases[id][MOLES]]")
-		if(QUANTIZE(cached_gases[id][MOLES]) < MINIMUM_MOLE_MANIPULATION_COUNT)// && QUANTIZE(cached_gases[id][ARCHIVE]) < MINIMUM_MOLE_MANIPULATION_COUNT)
+		if (logging) to_chat(world, "## TESTING: garbage_collect([logging]) [QUANTIZE(cached_gases[id][MOLES])] [id] [cached_gases[id][MOLES]] [cached_gases[id][ARCHIVE]]")
+		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
+			cached_gases -= id
 			if (logging) to_chat(world, "## TESTING: garbage_collect([logging]) removed [id]")
 
 	//PV = nRT
