@@ -798,9 +798,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 					return
 				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 				if(istype(R.product_path,/obj/item/reagent_containers/food/drinks/soda_cans/cola))
-					SSeconomy.get_dep_account(ACCOUNT_SCI).adjust_money(price_to_use)
-					D = null
-				if(D)
+					var/datum/bank_account/cola_account = SSeconomy.get_dep_account(ACCOUNT_SCI)
+					cola_account.adjust_money(price_to_use)
+				else if(D)
 					D.adjust_money(price_to_use)
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
 				say("Thank you for shopping with [src]!")
