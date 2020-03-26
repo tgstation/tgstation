@@ -776,7 +776,7 @@
 	med_hud_set_status()
 
 mob/living/carbon/proc/do_fortnite()	//The assistant is dying in maintenance with no sensors! I need the number on the front of your moms credit card, the three digit number on the back and the expiry date to save them.
-	if(stat == CONSCIOUS) //*floss
+	if(stat == CONSCIOUS) //*floss //prevents players in crit being attacked playing the sound
 		playsound(src, 'sound/health/radiobeep.ogg', 100, TRUE)	//WE LIKE FORTNITE WE LIKE FORTNITE
 
 //called when we get cuffed/uncuffed
