@@ -24,17 +24,21 @@
 /obj/item/stack/tile/examine(mob/user)
 	..()
 	if(throwforce) //do not want to divide by zero
-		switch(CEILING(human_maxHealth / throwforce)) //amount of throws to crit
+		var/verb
+		switch(CEILING(human_maxHealth / throwforce, 1)) //amount of throws to crit a human
 			if(1 to 3)
-				to_chat(user, "Those could work as a spectacular throwing weapon.")
+				verb = "superb"
 			if(4 to 6)
-				to_chat(user, "Those could work as a fantastic throwing weapon.")				
+				verb = "great"
 			if(7 to 9)
-				to_chat(user, "Those could work as a great throwing weapon.")
-			if(10)
-				to_chat(user, "Those could work as a fairly decent throwing weapon.")
-			if(11 to 13)
-				to_chat(user, "Those could work as a mediocre throwing weapon.")
+				verb = "good"
+			if(10 to 12)
+				verb = "fairly decent"
+			if(13 to 15)
+				verb = "mediocre"
+		if(!verb)
+			return
+		to_chat(user, "<span class='notice'>Those could work as a [verb] throwing weapon.</span>")
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
