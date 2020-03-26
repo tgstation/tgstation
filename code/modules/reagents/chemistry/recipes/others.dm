@@ -568,3 +568,6 @@
 	results = list(/datum/reagent/consumable/gravy = 3)
 	required_reagents = list(/datum/reagent/consumable/milk = 1, /datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/flour = 1)
 
+/datum/chemical_reaction/obamium
+	results = list(/datum/reagent/obamium = 1)
+	required_reagents = list(/datum/reagent/water/holywater = 1, /datum/reagent/carbon = 1, /datum/reagent/medicine/C2/instabitaluri = 1) //instabitaluri as synthflesh (skin), carbon for obama colored, holy water because god bless america
