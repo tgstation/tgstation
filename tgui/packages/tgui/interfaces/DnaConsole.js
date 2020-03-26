@@ -1111,8 +1111,6 @@ export class DnaConsole extends Component {
   renderAdvInjMutations(ref, data, inj, injname) {
     let buffer = [];
 
-    logger.log(injname);
-
     Object.keys(inj).map((value, key) => (
       buffer.push(
         <Tabs.Tab
