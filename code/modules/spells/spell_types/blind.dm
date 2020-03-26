@@ -31,7 +31,4 @@
 	if(!isliving(target))
 		to_chat(user, "<span class='warning'>You can only blind living beings!</span>")
 		return FALSE
-	if(!(target in oview(range)))
-		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
-		return FALSE
 	return TRUE

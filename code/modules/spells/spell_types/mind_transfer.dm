@@ -16,7 +16,7 @@
 	/// For how long is the victim stunned for after the spell
 	var/unconscious_amount_victim = 40 SECONDS
 
-/obj/effect/proc_holder/spell/pointed/mind_transfer/cast(list/targets, mob/living/user, distance_override = FALSE, silent = FALSE)
+/obj/effect/proc_holder/spell/pointed/mind_transfer/cast(list/targets, mob/living/user, silent = FALSE)
 	if(!targets.len)
 		if(!silent)
 			to_chat(user, "<span class='warning'>No mind found!</span>")
@@ -27,7 +27,7 @@
 		return FALSE
 
 	var/mob/living/victim = targets[1] //The target of the spell whos body will be transferred to.
-	if(!swap_check(user, victim, distance_override, silent))
+	if(!swap_check(user, victim, silent))
 		return FALSE
 	if(istype(victim, /mob/living/simple_animal/hostile/guardian))
 		var/mob/living/simple_animal/hostile/guardian/stand = victim
@@ -57,14 +57,14 @@
   * Arguments:
   * * user - caster of the spell
   * * target - target of the spell
-  * * distance_override - if set to TRUE, range checks are ignored
-  * * silent - if set to TRUE, spell will not produce any warning messages to the user if the spell fails
+  * * silent - if set to TRUE, the spell will not produce any warning messages to the user if the spell fails
   */
-/obj/effect/proc_holder/spell/pointed/mind_transfer/proc/swap_check(mob/user, atom/target, distance_override = FALSE, silent = FALSE)
+/obj/effect/proc_holder/spell/pointed/mind_transfer/proc/swap_check(mob/user, atom/target, silent = FALSE)
 	if(!isliving(target))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You can only swap minds with living beings!</span>")
 		return FALSE
+
 	if(user == target)
 		if(!silent)
 			to_chat(user, "<span class='warning'>You can't swap minds with yourself!</span>")
@@ -72,12 +72,6 @@
 
 	var/mob/living/victim = target
 	var/t_He = victim.p_they(TRUE)
-	var/t_is = victim.p_are()
-
-	if(!(victim in oview(range)) && !distance_override) //If they are not in overview after selection. Do note that !() is necessary for in to work because ! takes precedence over it.
-		if(!silent)
-			to_chat(user, "<span class='warning'>[t_He] [t_is] too far away!</span>")
-		return FALSE
 
 	if(ismegafauna(victim))
 		if(!silent)

@@ -226,7 +226,7 @@
 		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
 	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
-	if(swapper.cast(list(stored_swap), user, TRUE, TRUE))
+	if(swapper.cast(list(stored_swap), user, TRUE))
 		to_chat(user,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
 		to_chat(stored_swap,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
 	else

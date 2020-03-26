@@ -95,7 +95,7 @@
 	while(mobs.len > 1)
 		var/mob/living/carbon/human/H = pick(mobs)
 		mobs -= H
-		swapper.cast(list(H), mobs[mobs.len], TRUE, TRUE)
+		swapper.cast(list(H), mobs[mobs.len], TRUE)
 		mobs -= mobs[mobs.len]
 
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)

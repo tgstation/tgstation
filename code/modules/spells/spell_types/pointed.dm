@@ -52,7 +52,6 @@
 /obj/effect/proc_holder/spell/pointed/update_icon()
 	if(!action)
 		return
-
 	if(active)
 		action.button_icon_state = "[action_icon_state]1"
 	else
@@ -61,6 +60,9 @@
 
 /obj/effect/proc_holder/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
+		return TRUE
+	if(!(target in view_or_range(range, ranged_ability_user, selection_type)))
+		to_chat(ranged_ability_user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
 		return TRUE
 	if(!intercept_check(ranged_ability_user, target))
 		return TRUE
@@ -78,4 +80,7 @@
   * * target The atom that is being targeted by the spell via intercept.
   */
 /obj/effect/proc_holder/spell/pointed/proc/intercept_check(mob/user, atom/target)
+	if(!can_target(target))
+		to_chat(user, "<span class='warning'>Invalid target!</span>")
+		return FALSE
 	return TRUE
