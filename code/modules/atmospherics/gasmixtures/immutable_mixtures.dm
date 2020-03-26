@@ -9,7 +9,7 @@
 	..()
 	garbage_collect()
 
-/datum/gas_mixture/immutable/garbage_collect()
+/datum/gas_mixture/immutable/garbage_collect(logging = log)
 	temperature = initial_temperature
 	temperature_archived = initial_temperature
 	gases.Cut()

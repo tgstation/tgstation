@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	for(var/id in cached_gases)
 		ADD_GAS(id, removed.gases)
 		//to_chat(world, "remove([amount]) [id] [cached_gases[id][MOLES]] [QUANTIZE(cached_gases[id][MOLES] * amount / sum)]")
-		removed_gases[id][MOLES] = min(QUANTIZE_TO_MOVE(cached_gases[id][MOLES] * ratio), cached_gases[id][MOLES])
+		removed_gases[id][MOLES] = QUANTIZE_TO_MOVE(cached_gases[id][MOLES] * ratio)
 		cached_gases[id][MOLES] -= removed_gases[id][MOLES]
 	garbage_collect()
 
