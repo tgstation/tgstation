@@ -41,8 +41,8 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
 
-/obj/machinery/smartfridge/update_icon()
-	if(!stat)
+/obj/machinery/smartfridge/update_icon_state()
+	if(!machine_stat)
 		if (visible_contents)
 			switch(contents.len)
 				if(0)
@@ -83,7 +83,7 @@
 		updateUsrDialog()
 		return
 
-	if(!stat)
+	if(!machine_stat)
 
 		if(contents.len >= max_n_of_items)
 			to_chat(user, "<span class='warning'>\The [src] is full!</span>")
@@ -97,7 +97,12 @@
 				update_icon()
 			return TRUE
 
-		if(istype(O, /obj/item/storage/bag))
+		if(istype(O, /obj/item/storage/bag) || istype(O, /obj/item/organ_storage)) //FULPSTATION MEDBORG ORGAN STORAGE FIX Surrealistik Nov 2019
+			if(istype(O, /obj/item/organ_storage)) //FULPSTATION MEDBORG ORGAN STORAGE TWEAK Surrealistik Jan 2020 BEGIN
+				O.icon_state = initial(O.icon_state) //We need to properly update the icon and overlays by reverting to our initial state.
+				O.desc = initial(O.desc)
+				O.cut_overlays()
+				O = O.contents[1] //FULPSTATION MEDBORG ORGAN STORAGE TWEAK Surrealistik Jan 2020 END
 			var/obj/item/storage/P = O
 			var/loaded = 0
 			for(var/obj/G in P.contents)
@@ -294,13 +299,12 @@
 	..()
 	update_icon()
 
-/obj/machinery/smartfridge/drying_rack/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/smartfridge/drying_rack/update_overlays()
+	. = ..()
 	if(drying)
-		add_overlay("drying_rack_drying")
+		. += "drying_rack_drying"
 	if(contents.len)
-		add_overlay("drying_rack_filled")
+		. += "drying_rack_filled"
 
 /obj/machinery/smartfridge/drying_rack/process()
 	..()
@@ -426,10 +430,11 @@
 			return
 		O.applyOrganDamage(-repair_rate)
 
-/obj/machinery/smartfridge/organ/Exited(obj/item/organ/AM, atom/newLoc)
+/obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
-	if(istype(AM))
-		AM.organ_flags &= ~ORGAN_FROZEN
+	if(isorgan(AM))
+		var/obj/item/organ/O = AM
+		O.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------
 // Chemistry Medical Smartfridge

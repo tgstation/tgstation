@@ -46,7 +46,7 @@
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
 			return
-		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
@@ -73,10 +73,10 @@
 			return
 		user.visible_message("<span class='notice'>[user] attaches [W] to [src].</span>", "<span class='notice'>You attach [W] to [src].</span>")
 		note = W
+		var/overlaystring = "[icon_state]_note"
 		if(giftwrapped)
-			add_overlay(copytext("[icon_state]_note",5))
-			return
-		add_overlay("[icon_state]_note")
+			overlaystring = copytext(overlaystring, 5) //5 == length("gift") + 1
+		add_overlay(overlaystring)
 
 	else
 		return ..()
@@ -158,7 +158,7 @@
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on the side of [src]!</span>")
 			return
-		var/str = copytext(sanitize(input(user,"Label text?","Set label","")),1,MAX_NAME_LEN)
+		var/str = stripped_input(user, "Label text?", "Set label", "", MAX_NAME_LEN)
 		if(!user.canUseTopic(src, BE_CLOSE))
 			return
 		if(!str || !length(str))
@@ -185,10 +185,10 @@
 			return
 		user.visible_message("<span class='notice'>[user] attaches [W] to [src].</span>", "<span class='notice'>You attach [W] to [src].</span>")
 		note = W
+		var/overlaystring = "[icon_state]_note"
 		if(giftwrapped)
-			add_overlay(copytext("[icon_state]_note",5))
-			return
-		add_overlay("[icon_state]_note")
+			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
+		add_overlay(overlaystring)
 
 /obj/item/destTagger
 	name = "destination tagger"

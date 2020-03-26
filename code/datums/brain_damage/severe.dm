@@ -26,21 +26,15 @@
 	scan_desc = "extensive damage to the brain's language center"
 	gain_text = "<span class='warning'>You have trouble forming words in your head...</span>"
 	lose_text = "<span class='notice'>You suddenly remember how languages work.</span>"
-	var/datum/language_holder/prev_language
-	var/datum/language_holder/mob_language
 
 /datum/brain_trauma/severe/aphasia/on_gain()
-	mob_language = owner.get_language_holder()
-	prev_language = mob_language.copy()
-	mob_language.remove_all_languages()
-	mob_language.grant_language(/datum/language/aphasia)
+	owner.add_blocked_language(subtypesof(/datum/language/) - /datum/language/aphasia, LANGUAGE_APHASIA)
+	owner.grant_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/aphasia/on_lose()
-	mob_language.remove_language(/datum/language/aphasia)
-	mob_language.copy_known_languages_from(prev_language) //this will also preserve languages learned during the trauma
-	QDEL_NULL(prev_language)
-	mob_language = null
+	owner.remove_blocked_language(subtypesof(/datum/language/), LANGUAGE_APHASIA)
+	owner.remove_language(/datum/language/aphasia, TRUE, TRUE, LANGUAGE_APHASIA)
 	..()
 
 /datum/brain_trauma/severe/blindness

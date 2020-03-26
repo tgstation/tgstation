@@ -10,6 +10,7 @@
 	name = "extract implant"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_CROWBAR = 65)
 	time = 64
+	experience_given = MEDICAL_SKILL_MEDIUM
 	var/obj/item/implant/I = null
 
 /datum/surgery_step/extract_implant/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
@@ -25,7 +26,7 @@
 			"<span class='notice'>[user] looks for an implant in [target]'s [target_zone].</span>",
 			"<span class='notice'>[user] looks for something in [target]'s [target_zone].</span>")
 
-/datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/extract_implant/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	if(I)
 		display_results(user, target, "<span class='notice'>You successfully remove [I] from [target]'s [target_zone].</span>",
 			"<span class='notice'>[user] successfully removes [I] from [target]'s [target_zone]!</span>",
@@ -50,7 +51,7 @@
 
 	else
 		to_chat(user, "<span class='warning'>You can't find anything in [target]'s [target_zone]!</span>")
-	return ..(default_display_results = FALSE)
+	return ..()
 
 /datum/surgery/implant_removal/mechanic
 	name = "implant removal"

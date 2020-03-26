@@ -2222,7 +2222,7 @@
 /area/awaymission/spacebattle/cruiser)
 "io" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/freezer,

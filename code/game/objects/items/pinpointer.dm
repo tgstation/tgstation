@@ -17,7 +17,6 @@
 	var/active = FALSE
 	var/atom/movable/target //The thing we're searching for
 	var/minimum_range = 0 //at what range the pinpointer declares you to be at your destination
-	var/ignore_suit_sensor_level = FALSE // Do we find people even if their suit sensors are turned off
 	var/alert = FALSE // TRUE to display things more seriously
 	var/process_scan = TRUE // some pinpointers change target every time they scan, which means we can't have it change very process but instead when it turns on.
 	var/icon_suffix = "" // for special pinpointer icons
@@ -58,37 +57,43 @@
 /obj/item/pinpointer/proc/scan_for_target()
 	return
 
-/obj/item/pinpointer/update_icon()
-	cut_overlays()
+/obj/item/pinpointer/update_overlays()
+	. = ..()
 	if(!active)
 		return
 	if(!target)
-		add_overlay("pinon[alert ? "alert" : ""]null[icon_suffix]")
+		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
 		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
 	if(here.z != there.z)
-		add_overlay("pinon[alert ? "alert" : ""]null[icon_suffix]")
+		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
 		return
+	. += get_direction_icon(here, there)
+
+///Called by update_icon after sanity. There is a target
+/obj/item/pinpointer/proc/get_direction_icon(here, there)
 	if(get_dist_euclidian(here,there) <= minimum_range)
-		add_overlay("pinon[alert ? "alert" : ""]direct[icon_suffix]")
+		return "pinon[alert ? "alert" : ""]direct[icon_suffix]"
 	else
 		setDir(get_dir(here, there))
 		switch(get_dist(here, there))
 			if(1 to 8)
-				add_overlay("pinon[alert ? "alert" : "close"][icon_suffix]")
+				return "pinon[alert ? "alert" : "close"][icon_suffix]"
 			if(9 to 16)
-				add_overlay("pinon[alert ? "alert" : "medium"][icon_suffix]")
+				return "pinon[alert ? "alert" : "medium"][icon_suffix]"
 			if(16 to INFINITY)
-				add_overlay("pinon[alert ? "alert" : "far"][icon_suffix]")
+				return "pinon[alert ? "alert" : "far"][icon_suffix]"
 
 /obj/item/pinpointer/crew // A replacement for the old crew monitoring consoles
 	name = "crew pinpointer"
 	desc = "A handheld tracking device that points to crew suit sensors."
 	icon_state = "pinpointer_crew"
-	custom_price = 1000
+	custom_price = 900
+	custom_premium_price = 900
 	var/has_owner = FALSE
 	var/pinpointer_owner = null
+	var/ignore_suit_sensor_level = FALSE /// Do we find people even if their suit sensors are turned off
 
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
@@ -158,6 +163,26 @@
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
 
+/obj/item/pinpointer/crew/prox //Weaker version of crew monitor primarily for EMT
+	name = "proximity crew pinpointer"
+	desc = "A handheld tracking device that displays its proximity to crew suit sensors."
+	icon_state = "pinpointer_crewprox"
+	custom_price = 300
+
+/obj/item/pinpointer/crew/prox/get_direction_icon(here, there)
+	var/size = ""
+	if(here == there)
+		size = "small"
+	else
+		switch(get_dist(here, there))
+			if(1 to 4)
+				size = "xtrlarge"
+			if(5 to 16)
+				size = "large"
+			//17 through 28 use the normal pinion, "pinondirect"
+			if(29 to INFINITY)
+				size = "small"
+	return "pinondirect[size]"
 
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"

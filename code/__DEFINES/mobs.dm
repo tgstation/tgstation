@@ -183,6 +183,8 @@
 #define ETHEREAL_CHARGE_NORMAL 50
 #define ETHEREAL_CHARGE_ALMOSTFULL 75
 #define ETHEREAL_CHARGE_FULL 100
+#define ETHEREAL_CHARGE_OVERLOAD 125
+#define ETHEREAL_CHARGE_DANGEROUS 150
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10

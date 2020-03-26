@@ -208,6 +208,7 @@ class PackagingControls extends Component {
       pillAmount: 1,
       patchAmount: 1,
       bottleAmount: 1,
+      medipenAmount: 1, // FULP
       packAmount: 1,
     };
   }
@@ -219,6 +220,7 @@ class PackagingControls extends Component {
       pillAmount,
       patchAmount,
       bottleAmount,
+      medipenAmount, // FULP
       packAmount,
     } = this.state;
     const {
@@ -285,6 +287,21 @@ class PackagingControls extends Component {
             onCreate={() => act(ref, 'create', {
               type: 'bottle',
               amount: bottleAmount,
+              volume: 'auto',
+            })} />
+        )}
+        {!condi && (
+          <PackagingControlsItem
+            label="Medipens"
+            amount={medipenAmount}
+            amountUnit="medipens"
+            sideNote="max 10u"
+            onChangeAmount={(e, value) => this.setState({
+              medipenAmount: value,
+            })}
+            onCreate={() => act(ref, 'create', {
+              type: 'medipen',
+              amount: medipenAmount,
               volume: 'auto',
             })} />
         )}

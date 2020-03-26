@@ -268,11 +268,6 @@
 
 //Medical
 
-/obj/item/circuitboard/computer/cloning
-	name = "Cloning (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/cloning
-
 /obj/item/circuitboard/computer/crew
 	name = "Crew Monitoring Console (Computer Board)"
 	icon_state = "medical"
@@ -292,11 +287,6 @@
 	name = "PanD.E.M.I.C. 2200 (Computer Board)"
 	icon_state = "medical"
 	build_path = /obj/machinery/computer/pandemic
-
-/obj/item/circuitboard/computer/prototype_cloning
-	name = "Prototype Cloning (Computer Board)"
-	icon_state = "medical"
-	build_path = /obj/machinery/computer/prototype_cloning
 
 /obj/item/circuitboard/computer/scan_consolenew
 	name = "DNA Machine (Computer Board)"

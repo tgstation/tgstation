@@ -185,26 +185,14 @@
 
 				if(istype(P, /obj/item/mmi) && !brain)
 					var/obj/item/mmi/M = P
-					if(!M.brainmob)
-						to_chat(user, "<span class='warning'>Sticking an empty [M.name] into the frame would sort of defeat the purpose!</span>")
-						return
-					if(M.brainmob.stat == DEAD)
-						to_chat(user, "<span class='warning'>Sticking a dead [M.name] into the frame would sort of defeat the purpose!</span>")
+					if(!M.brain_check(user))
 						return
 
-					if(!M.brainmob.client)
-						to_chat(user, "<span class='warning'>Sticking an inactive [M.name] into the frame would sort of defeat the purpose.</span>")
-						return
-
-					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(M.brainmob.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
+					var/mob/living/brain/B = M.brainmob
+					if(!CONFIG_GET(flag/allow_ai) || (is_banned_from(B.ckey, "AI") && !QDELETED(src) && !QDELETED(user) && !QDELETED(M) && !QDELETED(user) && Adjacent(user)))
 						if(!QDELETED(M))
 							to_chat(user, "<span class='warning'>This [M.name] does not seem to fit!</span>")
 						return
-
-					if(!M.brainmob.mind)
-						to_chat(user, "<span class='warning'>This [M.name] is mindless!</span>")
-						return
-
 					if(!user.transferItemToLoc(M,src))
 						return
 
@@ -234,18 +222,20 @@
 					P.play_tool_sound(src)
 					to_chat(user, "<span class='notice'>You connect the monitor.</span>")
 					if(brain)
-						SSticker.mode.remove_antag_for_borging(brain.brainmob.mind)
+						var/mob/living/brain/B = brain.brainmob
+						SSticker.mode.remove_antag_for_borging(B.mind)
 
 						var/mob/living/silicon/ai/A = null
 
 						if (brain.overrides_aicore_laws)
-							A = new /mob/living/silicon/ai(loc, brain.laws, brain.brainmob)
+							A = new /mob/living/silicon/ai(loc, brain.laws, B)
 						else
-							A = new /mob/living/silicon/ai(loc, laws, brain.brainmob)
+							A = new /mob/living/silicon/ai(loc, laws, B)
 
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
 						SSblackbox.record_feedback("amount", "ais_created", 1)
+						deadchat_broadcast(" has been brought online at <b>[get_area_name(A, TRUE)]</b>.", "<span class='name'>[A]</span>", follow_target=A)
 						qdel(src)
 					else
 						state = AI_READY_CORE
@@ -265,7 +255,7 @@
 					return
 	return ..()
 
-/obj/structure/AIcore/update_icon()
+/obj/structure/AIcore/update_icon_state()
 	switch(state)
 		if(EMPTY_CORE)
 			icon_state = "0"

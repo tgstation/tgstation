@@ -97,11 +97,6 @@
 /obj/structure/alien/resin/attack_paw(mob/user)
 	return attack_hand(user)
 
-
-/obj/structure/alien/resin/CanPass(atom/movable/mover, turf/target)
-	return !density
-
-
 /*
  * Weeds
  */
@@ -234,8 +229,7 @@
 	if(status == BURST)
 		obj_integrity = integrity_failure * max_integrity
 
-/obj/structure/alien/egg/update_icon()
-	..()
+/obj/structure/alien/egg/update_icon_state()
 	switch(status)
 		if(GROWING)
 			icon_state = "[base_icon]_growing"

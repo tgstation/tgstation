@@ -25,12 +25,15 @@
     'color-danger': #9a9d00,
   ));
   @include meta.load-css('../components/Input.scss', $with: (
-    'border-color': colors.$primary,
+    'border-color': #87ce87,
   ));
   @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/NoticeBox.scss', $with: (
     'color-first': #750000,
     'color-second': #910101,
+  ));
+  @include meta.load-css('../components/NumberInput.scss', $with: (
+    'border-color': #87ce87,
   ));
   @include meta.load-css('../components/ProgressBar.scss', $with: (
     'color-background': rgba(0, 0, 0, 0.5),

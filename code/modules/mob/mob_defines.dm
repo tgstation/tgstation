@@ -190,7 +190,7 @@
 	///Allows a datum to intercept all click calls this mob is the source of
 	var/datum/click_intercept
 
-	///The z level this mob is currently registered in
+	///THe z level this mob is currently registered in
 	var/registered_z = null
 
 	var/memory_throttle_time = 0
@@ -204,11 +204,7 @@
 
 	var/bloody_hands = 0
 
-	/// What receives our keyboard inputs. src by default
-	var/datum/focus 
+	var/datum/focus //What receives our keyboard inputs. src by default
 
 	/// Used for tracking last uses of emotes for cooldown purposes
 	var/list/emotes_used
-
-	///Whether the mob is updating glide size when movespeed updates or not
-	var/updating_glide_size = TRUE

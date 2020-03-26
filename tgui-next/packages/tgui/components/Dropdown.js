@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { Component } from 'inferno';
+import { Component, createRef } from 'inferno';
 import { Box } from './Box';
 import { Icon } from './Icon';
 
@@ -25,6 +25,7 @@ export class Dropdown extends Component {
     this.setState({ open: open });
     if (open) {
       setTimeout(() => window.addEventListener('click', this.handleClick));
+      this.menuRef.focus();
     }
     else {
       window.removeEventListener('click', this.handleClick);
@@ -61,7 +62,6 @@ export class Dropdown extends Component {
       over,
       width,
       onClick,
-      onSet,
       selected,
       ...boxProps
     } = props;
@@ -73,14 +73,18 @@ export class Dropdown extends Component {
     const adjustedOpen = over ? !this.state.open : this.state.open;
 
     const menu = this.state.open ? (
-      <Box
-        width={width}
+      <div
+        ref={menu => { this.menuRef = menu; }}
+        tabIndex="-1"
+        style={{
+          'width': width,
+        }}
         className={classes([
           'Dropdown__menu',
           over && 'Dropdown__over',
         ])}>
         {this.buildMenu()}
-      </Box>
+      </div>
     ) : null;
 
     return (

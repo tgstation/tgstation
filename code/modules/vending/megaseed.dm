@@ -29,7 +29,6 @@
 					/obj/item/seeds/potato = 3,
 					/obj/item/seeds/poppy = 3,
 					/obj/item/seeds/pumpkin = 3,
-					/obj/item/seeds/replicapod = 3,
 					/obj/item/seeds/wheat/rice = 3,
 					/obj/item/seeds/soya = 3,
 					/obj/item/seeds/sugarcane = 3,
@@ -42,14 +41,14 @@
 					/obj/item/seeds/wheat = 3,
 					/obj/item/seeds/whitebeet = 3)
 	contraband = list(/obj/item/seeds/amanita = 2,
-					  /obj/item/seeds/glowshroom = 2,
-					  /obj/item/seeds/liberty = 2,
-					  /obj/item/seeds/nettle = 2,
-					  /obj/item/seeds/plump = 2,
-					  /obj/item/seeds/reishi = 2,
-					  /obj/item/seeds/cannabis = 3,
-					  /obj/item/seeds/starthistle = 2,
-					  /obj/item/seeds/random = 2)
+					/obj/item/seeds/glowshroom = 2,
+					/obj/item/seeds/liberty = 2,
+					/obj/item/seeds/nettle = 2,
+					/obj/item/seeds/plump = 2,
+					/obj/item/seeds/reishi = 2,
+					/obj/item/seeds/cannabis = 3,
+					/obj/item/seeds/starthistle = 2,
+					/obj/item/seeds/random = 2)
 	premium = list(/obj/item/reagent_containers/spray/waterflower = 1)
 	refill_canister = /obj/item/vending_refill/hydroseeds
 	default_price = 100

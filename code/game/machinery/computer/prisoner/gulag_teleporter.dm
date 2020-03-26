@@ -6,8 +6,8 @@
 	icon_keyboard = "security_key"
 	req_access = list(ACCESS_ARMORY)
 	circuit = /obj/item/circuitboard/computer/gulag_teleporter_console
-	ui_x = 455
-	ui_y = 440
+	ui_x = 350
+	ui_y = 295
 
 	var/default_goal = 200
 	var/obj/machinery/gulag_teleporter/teleporter = null
@@ -53,13 +53,19 @@
 		data["teleporter_location"] = "([teleporter.x], [teleporter.y], [teleporter.z])"
 		data["teleporter_lock"] = teleporter.locked
 		data["teleporter_state_open"] = teleporter.state_open
+	else
+		data["teleporter"] = null
 	if(beacon)
 		data["beacon"] = beacon
 		data["beacon_location"] = "([beacon.x], [beacon.y], [beacon.z])"
+	else
+		data["beacon"] = null
 	if(contained_id)
 		data["id"] = contained_id
 		data["id_name"] = contained_id.registered_name
 		data["goal"] = contained_id.goal
+	else
+		data["id"] = null
 	data["can_teleport"] = can_teleport
 
 	return data
@@ -75,36 +81,41 @@
 	switch(action)
 		if("scan_teleporter")
 			teleporter = findteleporter()
+			return TRUE
 		if("scan_beacon")
 			beacon = findbeacon()
+			return TRUE
 		if("handle_id")
 			if(contained_id)
 				id_eject(usr)
 			else
 				id_insert(usr)
+			return TRUE
 		if("set_goal")
-			var/new_goal = input("Set the amount of points:", "Points", contained_id.goal) as num|null
+			var/new_goal = text2num(params["value"])
 			if(!isnum(new_goal))
 				return
 			if(!new_goal)
 				new_goal = default_goal
-			if (new_goal > 1000)
-				to_chat(usr, "<span class='alert'>The entered amount of points is too large. Points have instead been set to the maximum allowed amount.</span>")
 			contained_id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
+			return TRUE
 		if("toggle_open")
 			if(teleporter.locked)
 				to_chat(usr, "<span class='alert'>The teleporter must be unlocked first.</span>")
 				return
 			teleporter.toggle_open()
+			return TRUE
 		if("teleporter_lock")
 			if(teleporter.state_open)
 				to_chat(usr, "<span class='alert'>The teleporter must be closed first.</span>")
 				return
 			teleporter.locked = !teleporter.locked
+			return TRUE
 		if("teleport")
 			if(!teleporter || !beacon)
 				return
 			addtimer(CALLBACK(src, .proc/teleport, usr), 5)
+			return TRUE
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/proc/scan_machinery()
 	teleporter = findteleporter()

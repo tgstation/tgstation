@@ -225,7 +225,7 @@
 	return FALSE
 
 /obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	if(stat & (BROKEN | NOPOWER | MAINT))
+	if(machine_stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()
 		return FALSE
@@ -241,15 +241,15 @@
 		if(!user.temporarilyRemoveItemFromInventory(c))
 			return
 		credits += c.value
-		visible_message("<span class='info'><span class='name'>[user]</span> inserts [c.value] credits into [src].</span>")
+		visible_message("<span class='info'><span class='name'>[user]</span> inserts [c.value] cr into [src].</span>")
 		qdel(c)
 		return
 	else if(istype(I, /obj/item/holochip))
 		var/obj/item/holochip/HC = I
 		credits += HC.credits
-		visible_message("<span class='info'>[user] inserts a $[HC.credits] holocredit chip into [src].</span>")
+		visible_message("<span class='info'>[user] inserts a [HC.credits] cr holocredit chip into [src].</span>")
 		qdel(HC)
-		return		
+		return
 	else if(istype(I, /obj/item/card/id))
 		if(state != 2)
 			return
@@ -257,10 +257,10 @@
 		var/datum/bank_account/account = ID.registered_account
 		var/target_credits = total_price - credits
 		if(!account.adjust_money(-target_credits))
-			say("Insufficient money on card to purchase!")
+			say("Insufficient credits on card to purchase!")
 			return
 		credits += target_credits
-		say("$[target_credits] has been desposited from your account.")
+		say("[target_credits] cr has been desposited from your account.")
 		return
 	return ..()
 

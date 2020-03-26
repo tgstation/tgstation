@@ -41,7 +41,7 @@
 		pill_styles += list(SL)
 
 /obj/machinery/plumbing/pill_press/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(reagents.total_volume >= pill_size)
 		var/obj/item/reagent_containers/pill/P = new(src)
@@ -50,7 +50,7 @@
 		stored_pills += P
 		if(pill_number == RANDOM_PILL_STYLE)
 			P.icon_state = "pill[rand(1,21)]"
-		else 
+		else
 			P.icon_state = "pill[pill_number]"
 		if(P.icon_state == "pill4") //mirrored from chem masters
 			P.desc = "A tablet or capsule, but not just any, a red one, one taken by the ones not scared of knowledge, freedom, uncertainty and the brutal truths of reality."
@@ -64,7 +64,7 @@
 			var/atom/movable/AM = stored_pills[1] //AM because forceMove is all we need
 			stored_pills -= AM
 			AM.forceMove(drop_location())
-			
+
 
 /obj/machinery/plumbing/pill_press/ui_base_html(html)
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
@@ -99,5 +99,5 @@
 			var/new_name = html_encode(params["name"])
 			if(findtext(new_name, "pill")) //names like pillatron and Pilliam are thus valid
 				pill_name = new_name
-			else 
+			else
 				pill_name = new_name + " pill"

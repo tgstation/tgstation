@@ -46,13 +46,12 @@
 		locked = FALSE
 		update_icon()
 
-/obj/item/nanite_remote/update_icon()
+/obj/item/nanite_remote/update_overlays()
 	. = ..()
-	cut_overlays()
 	if(obj_flags & EMAGGED)
-		add_overlay("nanite_remote_emagged")
+		. += "nanite_remote_emagged"
 	if(locked)
-		add_overlay("nanite_remote_locked")
+		. += "nanite_remote_locked"
 
 /obj/item/nanite_remote/afterattack(atom/target, mob/user, etc)
 	switch(mode)

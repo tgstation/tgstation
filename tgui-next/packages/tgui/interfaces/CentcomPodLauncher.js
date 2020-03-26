@@ -55,9 +55,9 @@ export const CentcomPodLauncher = props => {
               disabled={!data.oldArea}
               onClick={() => act('teleportBack')} />
           </LabeledList.Item>
-          <LabeledList.Item label="Clone Mode" >
+          <LabeledList.Item label="Item Mode" >
             <Button
-              content="Launch Clones"
+              content="Clone Items"
               selected={data.launchClone}
               tooltip={multiline`
                 Choosing this will create a duplicate of the item to be
@@ -66,6 +66,15 @@ export const CentcomPodLauncher = props => {
                 the supplypod after it lands (but before it opens).
               `}
               onClick={() => act('launchClone')} />
+            <Button
+              content="Random Items"
+              selected={data.launchRandomItem}
+              tooltip={multiline`
+                Choosing this will pick a random item from the selected turf
+                instead of the entire turfs contents. Best combined with
+                single/random turf.
+              `}
+              onClick={() => act('launchRandomItem')} />
           </LabeledList.Item>
           <LabeledList.Item label="Launch style">
             <Button
@@ -79,13 +88,13 @@ export const CentcomPodLauncher = props => {
               `}
               onClick={() => act('launchOrdered')} />
             <Button
-              content="Random"
+              content="Random Turf"
               selected={data.launchChoice === 2}
               tooltip={multiline`
                 Instead of launching everything in the bay at once, this
                 will launch one random turf of items at a time.
               `}
-              onClick={() => act('launchRandom')} />
+              onClick={() => act('launchRandomTurf')} />
           </LabeledList.Item>
           <LabeledList.Item label="Explosion">
             <Button

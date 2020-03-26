@@ -2,6 +2,8 @@
 	category = CATEGORY_ADMIN
 	weight = WEIGHT_ADMIN
 
+/datum/keybinding/admin/can_use(client/user)
+	return user.holder ? TRUE : FALSE
 
 /datum/keybinding/admin/admin_say
 	hotkey_keys = list("F3")
@@ -71,4 +73,24 @@
 
 /datum/keybinding/admin/deadsay/down(client/user)
 	user.get_dead_say()
+	return TRUE
+
+/datum/keybinding/admin/deadmin
+	hotkey_keys = list("Unbound")
+	name = "deadmin"
+	full_name = "Deadmin"
+	description = "Shed your admin powers"
+
+/datum/keybinding/admin/deadmin/down(client/user)
+	user.deadmin()
+	return TRUE
+
+/datum/keybinding/admin/readmin
+	hotkey_keys = list("Unbound")
+	name = "readmin"
+	full_name = "Readmin"
+	description = "Regain your admin powers"
+
+/datum/keybinding/admin/readmin/down(client/user)
+	user.readmin()
 	return TRUE

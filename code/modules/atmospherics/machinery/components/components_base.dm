@@ -31,7 +31,7 @@
 	underlays.Cut()
 
 	var/turf/T = loc
-	if(level == 2 || !T.intact)
+	if(level == 2 || (istype(T) && !T.intact))
 		showpipe = TRUE
 		plane = GAME_PLANE
 	else
@@ -151,6 +151,7 @@
 		if(!parent)
 			WARNING("Component is missing a pipenet! Rebuilding...")
 			build_network()
+			parent = parents[i]
 		parent.update = 1
 
 /obj/machinery/atmospherics/components/returnPipenets()

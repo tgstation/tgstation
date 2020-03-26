@@ -110,8 +110,6 @@ Key procs
 				continue
 		. += amt
 	cached_multiplicative_slowdown = .
-	if(updating_glide_size)
-		set_glide_size(DELAY_TO_GLIDE_SIZE(cached_multiplicative_slowdown))
 
 ///Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()

@@ -230,7 +230,7 @@ PROTECT_ROLES_FROM_ANTAGONIST
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
 
 ## If non-human species are barred from joining as a head of staff
-ENFORCE_HUMAN_AUTHORITY
+#ENFORCE_HUMAN_AUTHORITY
 
 ## If late-joining players have a chance to become a traitor/changeling
 ALLOW_LATEJOIN_ANTAGONISTS
@@ -252,6 +252,9 @@ MAX_TICKETS_PER_ROLL 100
 
 ## Uncomment to allow players to see the set odds of different rounds in secret/random in the get server revision screen. This will NOT tell the current roundtype.
 #SHOW_GAME_TYPE_ODDS
+
+## Uncomment to prevent the nuclear operative leader from getting the war declaration item
+#DISABLE_WAROPS
 
 ## Uncomment to enable dynamic ruleset config file.
 #DYNAMIC_CONFIG_ENABLED
@@ -364,9 +367,9 @@ RANDOM_LAWS corporate
 ## Quirky laws. Shouldn't cause too much harm
 RANDOM_LAWS hippocratic
 RANDOM_LAWS maintain
-RANDOM_LAWS drone
-RANDOM_LAWS liveandletlive
-RANDOM_LAWS peacekeeper
+#RANDOM_LAWS drone
+#RANDOM_LAWS liveandletlive
+#RANDOM_LAWS peacekeeper
 RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
 
@@ -554,7 +557,7 @@ ROUNDSTART_TRAITS
 #DISABLE_HUMAN_MOOD
 
 ## Enable night shifts ##
-#ENABLE_NIGHT_SHIFTS
+ENABLE_NIGHT_SHIFTS
 
 ## Enable randomized shift start times##
 #RANDOMIZE_SHIFT_TIME
@@ -564,6 +567,12 @@ ROUNDSTART_TRAITS
 
 ## A cap on how many monkeys may be created via monkey cubes
 MONKEYCAP 64
+
+## A cap on how many mice can be bred via cheese wedges
+RATCAP 64
+
+## Maximum fine for a citation
+MAXFINE 2000
 
 ## Enable the capitalist agenda on your server.
 ECONOMY

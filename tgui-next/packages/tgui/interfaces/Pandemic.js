@@ -83,7 +83,7 @@ export const PandemicDiseaseDisplay = props => {
       return (
         <Section
           key={virus.name}
-          title={!virus.is_adv && virus.can_rename ? (
+          title={virus.can_rename ? (
             <Input
               value={virus.name}
               onChange={(e, value) => act('rename_disease', {

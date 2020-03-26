@@ -55,11 +55,11 @@
 			for(var/datum/data/crime/c in current.fields["citation"])
 				var/owed = c.fine - c.paid
 				dat += {"<tr><td>[c.crimeName]</td>
-				<td>$[c.fine]</td>
+				<td>[c.fine] cr</td>
 				<td>[c.author]</td>
 				<td>[c.time]</td>"}
 				if(owed > 0)
-					dat += {"<td>$[owed]</td>
+					dat += {"<td>[owed] cr</td>
 					<td><A href='?src=[REF(src)];choice=Pay;field=citation_pay;cdataid=[c.dataId]'>\[Pay\]</A></td>"}
 				else
 					dat += "<td colspan='2'>All Paid Off</td>"

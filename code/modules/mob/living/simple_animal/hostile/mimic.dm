@@ -283,37 +283,36 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	var/max_mob_size = MOB_SIZE_HUMAN
 	var/locked = FALSE
 	var/datum/action/innate/mimic/lock/lock
-	
+
 /mob/living/simple_animal/hostile/mimic/xenobio/Initialize()
 	. = ..()
 	lock = new
 	lock.Grant(src)
-	
+
 /mob/living/simple_animal/hostile/mimic/xenobio/AttackingTarget()
 	if(src == target)
 		toggle_open()
 		return
 	return ..()
-	
+
 /mob/living/simple_animal/hostile/mimic/xenobio/attack_hand(mob/living/carbon/human/M)
 	. = ..()
 	if(M.a_intent != "help")
 		return
 	toggle_open()
-			
+
 /mob/living/simple_animal/hostile/mimic/xenobio/death()
 	var/obj/structure/closet/crate/C = new(get_turf(src))
 	// Put loot in crate
 	for(var/atom/movable/AM in src)
 		AM.forceMove(C)
 	return ..()
-			
-/mob/living/simple_animal/hostile/mimic/xenobio/CanPass(atom/movable/mover, turf/target)
+
+/mob/living/simple_animal/hostile/mimic/xenobio/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover, /obj/structure/closet))
 		return FALSE
-	else
-		return !density
-		
+
 /mob/living/simple_animal/hostile/mimic/xenobio/proc/toggle_open()
 	if(locked)
 		return
@@ -332,7 +331,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 		for(var/atom/movable/AM in get_turf(src))
 			if(insertion_allowed(AM))
 				AM.forceMove(src)
-		
+
 /mob/living/simple_animal/hostile/mimic/xenobio/proc/insertion_allowed(atom/movable/AM)
 	if(ismob(AM))
 		if(!isliving(AM))  //Don't let ghosts and such get trapped in the beast.
@@ -355,14 +354,14 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 	else
 		return FALSE
 	return TRUE
-	
+
 /datum/action/innate/mimic
 	background_icon_state = "bg_default"
-	
+
 /datum/action/innate/mimic/lock
 	name = "Lock/Unlock"
 	desc = "Toggle preventing yourself from being opened or closed."
-	
+
 /datum/action/innate/mimic/lock/Activate()
 	var/mob/living/simple_animal/hostile/mimic/xenobio/M = owner
 	M.locked = !M.locked

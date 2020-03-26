@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
+import { Box, Button, NumberInput, LabeledList, ProgressBar, Section } from '../components';
 
 export const Smes = props => {
   const { act, data } = useBackend(props);
@@ -75,6 +75,17 @@ export const Smes = props => {
               onClick={() => act('input', {
                 adjust: -10000,
               })} />
+            <NumberInput
+              value={Math.round(data.inputLevel/1000)}
+              unit="kW"
+              width="65px"
+              minValue={0}
+              maxValue={data.inputLevelMax/1000}
+              onChange={(e, value) => {
+                return act('input', {
+                  target: value*1000,
+                });
+              }} />
             <Button
               icon="forward"
               disabled={data.inputLevel === data.inputLevelMax}
@@ -131,6 +142,17 @@ export const Smes = props => {
               onClick={() => act('output', {
                 adjust: -10000,
               })} />
+            <NumberInput
+              value={Math.round(data.outputLevel/1000)}
+              unit="kW"
+              width="65px"
+              minValue={0}
+              maxValue={data.outputLevelMax/1000}
+              onChange={(e, value) => {
+                return act('output', {
+                  target: value*1000,
+                });
+              }} />
             <Button
               icon="forward"
               disabled={data.outputLevel === data.outputLevelMax}

@@ -36,13 +36,10 @@
 	integrity_failure = machinery_computer.integrity_failure
 	base_active_power_usage = machinery_computer.base_active_power_usage
 	base_idle_power_usage = machinery_computer.base_idle_power_usage
+	machinery_computer.RegisterSignal(src, COMSIG_ATOM_UPDATED_ICON, /atom/proc/update_icon) //when we update_icon, also update the computer
 
 /obj/item/modular_computer/processor/relay_qdel()
 	qdel(machinery_computer)
-
-/obj/item/modular_computer/processor/update_icon()
-	if(machinery_computer)
-		return machinery_computer.update_icon()
 
 // This thing is not meant to be used on it's own, get topic data from our machinery owner.
 //obj/item/modular_computer/processor/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)

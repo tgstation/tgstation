@@ -51,7 +51,7 @@ Note: Must be placed within 3 tiles of the R&D Console
 	update_icon()
 	reset_busy()
 
-/obj/machinery/rnd/destructive_analyzer/update_icon()
+/obj/machinery/rnd/destructive_analyzer/update_icon_state()
 	if(loaded_item)
 		icon_state = "d_analyzer_l"
 	else

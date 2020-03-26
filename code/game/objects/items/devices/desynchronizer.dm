@@ -14,6 +14,7 @@
 	var/last_use = 0
 	var/next_use = 0
 	var/obj/effect/abstract/sync_holder/sync_holder
+	var/resync_timer
 
 /obj/item/desynchronizer/attack_self(mob/living/user)
 	if(world.time < next_use)
@@ -54,16 +55,20 @@
 		SEND_SIGNAL(AM, COMSIG_MOVABLE_SECLUDED_LOCATION)
 	last_use = world.time
 	icon_state = "desynchronizer-on"
-	addtimer(CALLBACK(src, .proc/resync), duration)
+	resync_timer = addtimer(CALLBACK(src, .proc/resync), duration , TIMER_STOPPABLE)
 
 /obj/item/desynchronizer/proc/resync()
 	new /obj/effect/temp_visual/desynchronizer(sync_holder.drop_location())
 	QDEL_NULL(sync_holder)
+	if(resync_timer)
+		deltimer(resync_timer)
+		resync_timer = null
 	icon_state = initial(icon_state)
 	next_use = world.time + (world.time - last_use) // Could be 2*world.time-last_use but that would just be confusing
 
 /obj/item/desynchronizer/Destroy()
-	resync()
+	if(sync_holder)
+		resync()
 	return ..()
 
 /obj/effect/abstract/sync_holder

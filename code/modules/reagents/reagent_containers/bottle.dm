@@ -57,6 +57,11 @@
 	desc = "A small bottle of multiver, which removes toxins and other chemicals from the bloodstream but causes shortness of breath. All effects scale with the amount of reagents in the patient."
 	list_reagents = list(/datum/reagent/medicine/C2/multiver = 30)
 
+/obj/item/reagent_containers/glass/bottle/calomel
+	name = "calomel bottle"
+	desc = "A small bottle of calomel, which quickly purges all chemicals from the patient. Causes toxin damage if the patient is not heavily injured."
+	list_reagents = list(/datum/reagent/medicine/calomel = 30)
+
 /obj/item/reagent_containers/glass/bottle/syriniver
 	name = "syriniver bottle"
 	desc = "A small bottle of syriniver."
@@ -142,7 +147,7 @@
 
 /obj/item/reagent_containers/glass/bottle/formaldehyde
 	name = "formaldehyde bottle"
-	desc = "A small bottle. Contains Formaldehyde."
+	desc = "A small bottle. Contains formaldehyde, a chemical that prevents organs from decaying."
 	list_reagents = list(/datum/reagent/toxin/formaldehyde = 30)
 
 /obj/item/reagent_containers/glass/bottle/initropidril
@@ -385,3 +390,6 @@
 	name = "bromine bottle"
 	list_reagents = list(/datum/reagent/bromine = 30)
 
+/obj/item/reagent_containers/glass/bottle/thermite
+	name = "thermite bottle"
+	list_reagents = list(/datum/reagent/thermite = 30)

@@ -1,0 +1,19 @@
+"a" = (/turf/template_noop,/area/template_noop)
+"b" = (/turf/closed/mineral/random/no_caves,/area/ruin/unpowered)
+"c" = (/turf/closed/mineral/random/low_chance,/area/ruin/unpowered)
+"d" = (/turf/closed/mineral/bscrystal,/area/ruin/unpowered)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaa
+aaaabbbbbaaaaaa
+aaabbbbbbbaaaaa
+aaabbbbbbbbaaaa
+aaabbbbcccbaaaa
+aaaabbbcdcbaaaa
+aaaaaabcccbbaaa
+aaaaaabbbbbbaaa
+aaaaaaaabbbbbaa
+aaaaaaaaaabbbba
+aaaaaaaaaaaabba
+aaaaaaaaaaaaaaa
+"}
