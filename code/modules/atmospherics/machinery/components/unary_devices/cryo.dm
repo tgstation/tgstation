@@ -16,7 +16,7 @@
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 
 	var/autoeject = TRUE
-	var/volume = 100
+	volume = 100
 
 	var/efficiency = 1
 	var/sleep_factor = 0.00125
