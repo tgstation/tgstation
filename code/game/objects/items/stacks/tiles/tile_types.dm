@@ -337,19 +337,17 @@
 /obj/item/stack/tile/material
 	name = "floor tile"
 	singular_name = "floor tile"
-	throwforce = 5
+	desc = "Those could work as a pretty decent throwing weapon."
+	throwforce = 10
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_UPDATE_DESC | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
 /obj/item/stack/tile/material/mat_update_desc(mat)
-	switch(throwforce)
-		if (6 to 8)
-			desc = "Those could make an okay throwing weapon."
-		if(9 to INFINITY)
-			desc = "Those could work as a pretty decent throwing weapon."
-		else
-			desc = "Those would make a lousy throwing weapon."
+	if(throwforce >= 10)
+		desc = "Those could work as a pretty decent throwing weapon."
+	else
+		desc = "Those wouldn't make a very good throwing weapon."
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"
