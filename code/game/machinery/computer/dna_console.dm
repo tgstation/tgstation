@@ -1195,7 +1195,7 @@
 	scanner_occupant.dna.uni_identity = copytext_char(scanner_occupant.dna.uni_identity, 1, num) + hex + copytext_char(scanner_occupant.dna.uni_identity, num + 1)
 	scanner_occupant.updateappearance(mutations_overlay_update=1)
 
-
+	rad_pulse_index = 0
 	return
 
 
