@@ -750,7 +750,8 @@
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
-			do_fortnite()
+			die_fortnite()
+			new /obj/item/storage/toolbox/mechanical(src.loc)
 			death()
 			cure_blind(UNCONSCIOUS_BLIND)
 			return
@@ -774,6 +775,10 @@
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
+
+
+mob/living/carbon/proc/die_fortnite()	//n00b died in tilted towers what an IDIOT
+	playsound(src, 'sound/health/radiodeath.ogg', 100, TRUE)	//I have all 420 fortnite skins
 
 mob/living/carbon/proc/do_fortnite()	//The assistant is dying in maintenance with no sensors! I need the number on the front of your moms credit card, the three digit number on the back and the expiry date to save them.
 	if(stat == CONSCIOUS) //*floss //prevents players in crit being attacked playing the sound
