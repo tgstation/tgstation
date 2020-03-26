@@ -26,26 +26,37 @@
 /datum/pipeline/process()
 	if(update)
 		update = FALSE
-		reconcile_air()
+		//reconcile_air()
 	update = air.react(src)
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
-	var/volume = 0
+	if(!air)
+		air = new(0)
 	if(istype(base, /obj/machinery/atmospherics/pipe))
 		var/obj/machinery/atmospherics/pipe/E = base
-		volume = E.volume
+		air.volume = E.volume
 		members += E
 		if(E.air_temporary)
-			air = E.air_temporary
+			air.merge(E.air_temporary)
 			E.air_temporary = null
 	else
-		addMachineryMember(base)
-	if(!air)
-		air = new
+		var/obj/machinery/atmospherics/components/C = base
+		other_atmosmch |= C
+		var/datum/gas_mixture/G = C.returnPipenetAir(src)
+		if(!G)
+			to_chat(world, "addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: ([C.x], [C.y], [C.z])")
+			air.volume = C.volume
+		else
+			other_airs |= G
+			air.full_merge(G)
+			to_chat(world, "addMachineryMember: [C] [C.type] [C.volume] [air.volume]. Nearby: ([C.x], [C.y], [C.z])")
+		C.airs[C.parents.Find(src)] = air
+		to_chat(world, "## TESTING: [base] base ")
+
 	var/list/possible_expansions = list(base)
 	while(possible_expansions.len)
 		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
-			var/list/result = borderline.pipeline_expansion(src)
+			var/list/result = borderline.pipeline_expansion(src) - members
 			if(result && result.len)
 				for(var/obj/machinery/atmospherics/P in result)
 					if(istype(P, /obj/machinery/atmospherics/pipe))
@@ -62,7 +73,8 @@
 							members += item
 							possible_expansions += item
 
-							volume += item.volume
+							air.volume += item.volume
+							to_chat(world, "## TESTING: build_pipeline() [P] volume++")
 							item.parent = src
 
 							if(item.air_temporary)
@@ -74,14 +86,15 @@
 
 			possible_expansions -= borderline
 
-	air.volume = volume
-
 /datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
 	other_atmosmch |= C
 	var/datum/gas_mixture/G = C.returnPipenetAir(src)
 	if(!G)
 		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: ([C.x], [C.y], [C.z])")
 	other_airs |= G
+	air.full_merge(G)
+	C.airs[C.parents.Find(src)] = air
+	to_chat(world, "## TESTING: [src].addMachineryMember([C])")
 
 /datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
 	if(istype(A, /obj/machinery/atmospherics/pipe))
@@ -137,6 +150,15 @@
 		member.air_temporary.volume = member.volume
 		member.air_temporary.copy_from(air, member.volume/air.volume)
 		member.air_temporary.temperature = air.temperature
+	
+	for(var/obj/machinery/atmospherics/components/member in other_atmosmch)
+		var/datum/gas_mixture/G = new
+
+		G.volume = member.volume
+		G.copy_from(air, member.volume/air.volume)
+		G.temperature = air.temperature
+		
+		member.airs[member.parents.Find(src)] = G
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()

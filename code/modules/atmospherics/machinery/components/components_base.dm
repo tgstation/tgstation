@@ -20,8 +20,7 @@
 	..()
 
 	for(var/i in 1 to device_type)
-		var/datum/gas_mixture/A = new
-		A.volume = volume 
+		var/datum/gas_mixture/A = new(volume)
 		airs[i] = A
 
 /obj/machinery/atmospherics/components/Initialize()
@@ -97,6 +96,9 @@
 	reference.other_airs -= airs[i]
 	reference.other_atmosmch -= src
 	parents[i] = null
+	//var/datum/gas_mixture/A = new
+	//A.volume = volume 
+	//airs[i] = A
 
 /obj/machinery/atmospherics/components/returnPipenetAir(datum/pipeline/reference)
 	return airs[parents.Find(reference)]
