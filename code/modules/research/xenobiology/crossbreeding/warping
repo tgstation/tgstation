@@ -27,11 +27,11 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	var/storing_time = 5 ///is only used for bluespace crystal erasing as of now
 	anchored = TRUE
 	layer = MID_TURF_LAYER
-	resistance_flags = FIRE_PROOF  //It's not acidproof like cult runes to give another way to delete them
+	resistance_flags = FIRE_PROOF  //It's only fireproof because of the fire rune and because how do you burn a rune anyway.
 	var/turf/T //used on a LOT of runes, so we might as well put it here
 	var/cooldown = 0 //cooldown for the rune process() only applies to certain runes
 	var/max_cooldown = 100
-	move_resist = INFINITY
+	move_resist = INFINITY //here to avoid the rune being moved since it only sets it's turf once when it's drawn. doesn't include admin fuckery.
 
 ///runes can also be deleted by bluespace crystals if the xenobiologist is fucking everyone up and you need a way to destroy the rune.
 /obj/effect/warped_rune/attackby(obj/item/stack/BC, mob/user)
@@ -53,9 +53,9 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	playsound(src, 'sound/items/welder.ogg', 150, TRUE)
 	qdel(src)
 
-//nearly all runes use their turf in some way so we set T to their turf automatically.
+///nearly all runes use their turf in some way so we set T to their turf automatically, the rune also start on cooldown if it uses one.
 /obj/effect/warped_rune/Initialize()
-	..()
+	.=..()
 	T = get_turf(src)
 	RegisterSignal(T, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_rune)
 	cooldown = world.time + max_cooldown
@@ -89,7 +89,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 		to_chat(user, "<span class='warning'>something is in the way of the rune!</span>")
 		return
 
-	if(warp_charge > 0 && do_after(user, drawing_time,target = target)) //finally spawns the right rune if you have charge(s) left
+	if(warp_charge > 0 && do_after(user, drawing_time,target = target)) //spawns the right rune if you have charge(s) left
 		playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
 
 		if(warp_charge <= 0) //this is only here to fix a bug where the user can draw multiple runes at once if they spam click
@@ -277,7 +277,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 /obj/effect/warped_rune/cyanspace/process()
 	slippery_rune(T)
 
-
+//just spam lube on the tile the rune is on every process, as horrible as it sounds.
 /obj/effect/warped_rune/cyanspace/proc/slippery_rune(turf/open/T)
 	T.MakeSlippery(TURF_WET_LUBE,min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
@@ -293,7 +293,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 	runepath = /obj/effect/warped_rune/metalspace
 	effect_desc = "Draws a rune that prevents passage above it, takes longer to store and draw than other runes."
 	drawing_time = 100  //Long to draw like most griefing runes
-	max_charge = 4 //higher to allow a wider degree of fuckery, still takes a long ass time to draw
+	max_charge = 4 //higher to allow a wider degree of fuckery, still takes a long ass time to draw but you can draw multiple ones at once.
 	warp_charge = 4
 
 //It's a wall what do you want from me
@@ -336,17 +336,18 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 		apc_charge()
 		electrivore()
 
+///recharge the APC every 10 seconds by 10%
 /obj/effect/warped_rune/yellowspace/proc/apc_charge()
 
 	var/area/A = get_area(T)
 	for(var/obj/machinery/power/apc/P in A)
 		if(!P.cell)
 			return
-		if(P.cell.charge <! (P.cell.maxcharge - 5))
+		if(P.cell.charge <! (P.cell.maxcharge))
 			return
 		P.cell.charge += P.cell.maxcharge/10 //will basically recharge 10% of the APC cell every 10 seconds.
 		if(P.cell.charge > P.cell.maxcharge)
-			P.cell.charge = P.cell.maxcharge
+			P.cell.charge = P.cell.maxcharge //set the cell back to 100% if it goes overboard. and trust me it will.
 
 
 ///charge whatever battery is put on the rune, is triggered whenever a battery/baton/energy gun is on the rune
@@ -505,9 +506,6 @@ obj/effect/warped_rune/bluespace
 	var/count = 0
 	max_cooldown = 20 //only here to avoid spam lag
 
-obj/effect/warped_rune/bluespace/Initialize()
-	.=..()
-
 
 ///the first two person that stepped on the rune swap places after the second person stepped on it. TODO: fix the potential lag abyse
 obj/effect/warped_rune/bluespace/Crossed(atom/movable/AM)
@@ -550,13 +548,10 @@ obj/effect/warped_rune/sepiaspace
 	desc = "The clock is ticking, but in what direction?"
 	var/TS = /obj/effect/timestop //The timestop path here used during the timewarp() proc
 
-obj/effect/warped_rune/sepiaspace/Initialize()
-	.=..()
-	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/timewarp)
 
 
-///stops time on a single tile ALERT : it creates a small proximity runtime, nothing lagworthy but a runtime nonetheless
-obj/effect/warped_rune/sepiaspace/proc/timewarp()
+///stops time on a single tile for 5 seconds
+obj/effect/warped_rune/sepiaspace/Crossed()
 	if(locate(TS) in T)//checks if there's already a timestop on the rune. here to avoid the effect triggering multiple time at the same time.
 		return
 	new TS(T, 0, 50) //reminder : timestop(turf , range , duration) these variables may be changed later due to balance concerns
@@ -618,17 +613,13 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 	desc = "Who shall we be today? they asked, but not even the canvas would answer."
 	icon_state = "colorune"
 
-/obj/effect/warped_rune/pyritespace/Initialize()
-	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/colored)
 
 ///colors whoever steps on the rune randomly
-/obj/effect/warped_rune/pyritespace/proc/colored()
-	for(var/mob/living/L in T)
-		L.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+/obj/effect/warped_rune/pyritespace/Crossed(atom/movable/AM)
+	AM.color = rgb(rand(0,255),rand(0,255),rand(0,255))
 
 
-/* Will make anyone on the rune do much more punch damage. Doesn't boost normal melee weapon damage, may need rebalancing*/
+/* Will make anyone on the rune do much more punch damage. Doesn't boost normal melee weapon damage, may need rebalancing,*/
 
 /obj/item/slimecross/warping/red
 	colour = "red"
@@ -653,7 +644,7 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 	to_chat(H, "<span class='warning'>You feel the urge to punch something really hard!</span>")
 
 
-
+///takes away the punch damage when you leave
 /obj/effect/warped_rune/redspace/Uncrossed(atom/movable/AM)
 	if(!istype(AM,/mob/living/carbon/human)) //checks if the person that just left is the same as the currently enraged person
 		return
@@ -798,6 +789,8 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		I.material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 		I.set_custom_materials(list(/datum/material/gold=gold_amount))
 		return
+
+
 
 /*Adamantine rune, will spawn ores depending on the mineral rocks surrounding it. Here to make miners do their job even less.  */
 
