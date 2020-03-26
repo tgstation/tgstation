@@ -2260,7 +2260,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 50
 	color = "#ab2f41"
 	quality = DRINK_NICE
-	taste_description = "sand"
+	taste_description = "sand and disappointment"
 	glass_icon_state = "bloomlight"
 	glass_name = "Bloom Light"
 	glass_desc = "It's so unnecessarily brown..."
@@ -2271,7 +2271,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 70
 	color = "#138bfa"
 	quality = DRINK_NICE
-	taste_description = "sugar"
+	taste_description = "sugar, absinthe, and the colour blue"
 	glass_icon_state = "bluefairy"
 	glass_name = "Blue Fairy"
 	glass_desc = "One of these will make all your teeth turn blue. Hope you brushed them well."
@@ -2300,14 +2300,14 @@ All effects don't start immediately, but rather get worse over time; the rate is
 
 /datum/reagent/consumable/ethanol/fluffydream
 	name = "Fluffy Dream"
-	description = "A couple of these will make your tongue feel velvet-y. More of them and you'll be sleeping soundly."
+	description = "A couple of these will make your tongue feel velvety. More of them and you'll be sleeping soundly."
 	boozepwr = 60
 	color = "#a0df9f"
 	quality = DRINK_NICE
-	taste_description = "dreams"
+	taste_description = "dreams, soft clouds, and a hint of sulfonal"
 	glass_icon_state = "fluffydream"
 	glass_name = "Fluffy Dream"
-	glass_desc = "A couple of these will make your tongue feel velvet-y. More of them and you'll be sleeping soundly."
+	glass_desc = "A couple of these will make your tongue feel velvety. More of them and you'll be sleeping soundly."
 
 /datum/reagent/consumable/ethanol/grizzlytemple
 	name = "Grizzly Temple"
@@ -2315,7 +2315,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 80
 	color = "#a0df9f"
 	quality = DRINK_NICE
-	taste_description = "something awful"
+	taste_description = "wet bear fur and promotional material"
 	glass_icon_state = "grizzlytemple"
 	glass_name = "Grizzly Temple"
 	glass_desc = "This one's kinda unbearable. It's mostly for fans of the movie it was used on."
@@ -2326,7 +2326,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 90
 	color = "#ffc87"
 	quality = DRINK_NICE
-	taste_description = "pain"
+	taste_description = "blood and crippling pain"
 	glass_icon_state = "gutpunch"
 	glass_name = "Gut Punch"
 	glass_desc = "It's supposed to mean 'a punch made of innards', but the name actually described what you feel while drinking it."
@@ -2337,7 +2337,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 70
 	color = "#f69137"
 	quality = DRINK_NICE
-	taste_description = "fire"
+	taste_description = "the fire of a desolate world"
 	glass_icon_state = "marsblast"
 	glass_name = "Marsblast"
 	glass_desc = "One of these is enough to leave your face red like the actual planet."
@@ -2348,7 +2348,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 60
 	color = "#2497d5"
 	quality = DRINK_NICE
-	taste_description = "mercury"
+	taste_description = "mercury and dying brain cells"
 	glass_icon_state = "mercuryblast"
 	glass_name = "Mercuryblast"
 	glass_desc = "No thermometer was harmed in the creation of this drink."
@@ -2359,7 +2359,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 60
 	color = "#d13f75"
 	quality = DRINK_NICE
-	taste_description = "a hadron cannon"
+	taste_description = "a lunar hadron cannon"
 	glass_icon_state = "moonblast"
 	glass_name = "Moonblast"
 	glass_desc = "No relation to the Hadron cannon you can see on the moon for one week every month."
@@ -2370,7 +2370,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 60
 	color = "#0c9bad"
 	quality = DRINK_NICE
-	taste_description = "ebony and ivory"
+	taste_description = "ebony, ivory, and the spirit of music"
 	glass_icon_state = "pianoman"
 	glass_name = "Piano Man"
 	glass_desc = "This drink does not represent the opinions of the Bar Pianists Union or its associates."
@@ -2393,7 +2393,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 70
 	color = "#f69137"
 	quality = DRINK_NICE
-	taste_description = "burning"
+	taste_description = "mild burning and regret"
 	glass_icon_state = "piledriver"
 	glass_name = "Pile Driver"
 	glass_desc = "It doesn't burn as hard on the tongue but you better not have a sore throat when drinking it..."
@@ -2404,7 +2404,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 40
 	color = "#f69137"
 	quality = DRINK_NICE
-	taste_description = "sparkles"
+	taste_description = "sparkles, friendship, and fluff"
 	glass_icon_state = "sparklestar"
 	glass_name = "Sparkle Star"
 	glass_desc = "They used to actually sparkle, but too many complaints about skin problems made them redesign the drink without sparkling."
@@ -2423,10 +2423,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/suplex
 	name = "Suplex"
 	description = "A small twist on the Piledriver, putting more emphasis on the tongue burning and less on the throat burning."
-	boozepwr = 80
+	boozepwr = 90
 	color = "#f69137"
 	quality = DRINK_NICE
-	taste_description = "burning"
+	taste_description = "intense burning, regret, and the inside of a wrestler's suit"
 	glass_icon_state = "suplex"
 	glass_name = "Suplex"
 	glass_desc = "A small twist on the Piledriver, putting more emphasis on the tongue burning and less on the throat burning."
@@ -2437,7 +2437,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	boozepwr = 50
 	color = "#3459cb"
 	quality = DRINK_NICE
-	taste_description = "something horrific"
+	taste_description = "inner peace"
 	glass_icon_state = "zenstar"
 	glass_name = "Zen Star"
 	glass_desc = "You'd think something so balanced would actually taste nice... you'd be dead wrong."
