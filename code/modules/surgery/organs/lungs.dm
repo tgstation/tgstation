@@ -70,13 +70,6 @@
 
 
 /obj/item/organ/lungs/proc/check_breath(datum/gas_mixture/breath, mob/living/carbon/human/H)
-
-	var/gasstring = ""
-	for(var/gasid in breath.gases)
-		gasstring += "[gasid] [breath.gases[gasid][MOLES]] [breath.gases[gasid][ARCHIVE]], "
-	to_chat(world, "## TESTING: check_breath() Starting gas [gasstring]")
-
-
 	if(H.status_flags & GODMODE)
 		return
 	if(HAS_TRAIT(H, TRAIT_NOBREATH))
@@ -371,17 +364,7 @@
 
 		handle_breath_temperature(breath, H)
 
-		gasstring = ""
-		for(var/gasid in breath.gases)
-			gasstring += "[gasid] [breath.gases[gasid][MOLES]] [breath.gases[gasid][ARCHIVE]], "
-		to_chat(world, "## TESTING: check_breath() b [gasstring]")
-
-		breath.garbage_collect(logging = "breath")
-
-		gasstring = ""
-		for(var/gasid in breath.gases)
-			gasstring += "[gasid] [breath.gases[gasid][MOLES]] [breath.gases[gasid][ARCHIVE]], "
-		to_chat(world, "## TESTING: check_breath() b [gasstring]")
+		breath.garbage_collect()
 
 	return TRUE
 
