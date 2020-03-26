@@ -750,10 +750,12 @@
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
+			do_fortnite()
 			death()
 			cure_blind(UNCONSCIOUS_BLIND)
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
+			do_fortnite()
 			set_stat(UNCONSCIOUS)
 			become_blind(UNCONSCIOUS_BLIND)
 			if(CONFIG_GET(flag/near_death_experience) && health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
@@ -762,6 +764,7 @@
 				REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
+				do_fortnite()
 				set_stat(SOFT_CRIT)
 			else
 				set_stat(CONSCIOUS)
@@ -771,6 +774,10 @@
 	update_damage_hud()
 	update_health_hud()
 	med_hud_set_status()
+
+mob/living/carbon/proc/do_fortnite()	//The assistant is dying in maintenance with no sensors! I need the number on the front of your moms credit card, the three digit number on the back and the expiry date to save them.
+	if(stat == CONSCIOUS) //*floss
+		playsound(src, 'sound/health/radiobeep.ogg', 100, TRUE)	//WE LIKE FORTNITE WE LIKE FORTNITE
 
 //called when we get cuffed/uncuffed
 /mob/living/carbon/proc/update_handcuffed()

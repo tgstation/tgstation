@@ -17,7 +17,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	circuit = /obj/item/circuitboard/machine/announcement_system
 
 	var/obj/item/radio/headset/radio
-	var/arrival = "%PERSON has signed up as %RANK"
+	var/arrival = "%PERSON has arrived on the battle bus as %RANK"
 	var/arrivalToggle = 1
 	var/newhead = "%PERSON, %RANK, is the department head."
 	var/newheadToggle = 1
