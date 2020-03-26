@@ -303,7 +303,7 @@
 			return
 		else
 			to_chat(user, "<span class='notice'>You attach the ends of the two plastic swords, making a single double-bladed toy! You're fake-cool.</span>")
-			var/obj/item/twohanded/dualsaber/toy/newSaber = new /obj/item/twohanded/dualsaber/toy(user.loc)
+			var/obj/item/dualsaber/toy/newSaber = new /obj/item/dualsaber/toy(user.loc)
 			if(hacked) // That's right, we'll only check the "original" "sword".
 				newSaber.hacked = TRUE
 				newSaber.saber_color = "rainbow"
@@ -387,21 +387,20 @@
 /*
  * Subtype of Double-Bladed Energy Swords
  */
-/obj/item/twohanded/dualsaber/toy
+/obj/item/dualsaber/toy
 	name = "double-bladed toy sword"
 	desc = "A cheap, plastic replica of TWO energy swords.  Double the fun!"
 	force = 0
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 5
-	force_unwielded = 0
-	force_wielded = 0
+	two_hand_force = 0
 	attack_verb = list("attacked", "struck", "hit")
 
-/obj/item/twohanded/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+/obj/item/dualsaber/toy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	return 0
 
-/obj/item/twohanded/dualsaber/toy/IsReflect()//Stops Toy Dualsabers from reflecting energy projectiles
+/obj/item/dualsaber/toy/IsReflect() //Stops Toy Dualsabers from reflecting energy projectiles
 	return 0
 
 /obj/item/toy/katana
@@ -450,6 +449,7 @@
 		pop_burst()
 
 /obj/item/toy/snappop/Crossed(H as mob|obj)
+	. = ..()
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
@@ -503,64 +503,68 @@
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/12."
+	desc = "Mini-Mecha action figure! Collect them all! 1/13."
 
 /obj/item/toy/prize/fireripley
 	name = "toy firefighting Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/12."
+	desc = "Mini-Mecha action figure! Collect them all! 2/13."
 	icon_state = "fireripleytoy"
 
 /obj/item/toy/prize/deathripley
 	name = "toy deathsquad Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/12."
+	desc = "Mini-Mecha action figure! Collect them all! 3/13."
 	icon_state = "deathripleytoy"
 
 /obj/item/toy/prize/gygax
 	name = "toy Gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/12."
+	desc = "Mini-Mecha action figure! Collect them all! 4/13."
 	icon_state = "gygaxtoy"
 
 /obj/item/toy/prize/durand
 	name = "toy Durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/12."
-	icon_state = "durandprize"
+	desc = "Mini-Mecha action figure! Collect them all! 5/13."
+	icon_state = "durandtoy"
 
 /obj/item/toy/prize/honk
 	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/12."
-	icon_state = "honkprize"
+	desc = "Mini-Mecha action figure! Collect them all! 6/13."
+	icon_state = "honktoy"
 
 /obj/item/toy/prize/marauder
 	name = "toy Marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/12."
-	icon_state = "marauderprize"
+	desc = "Mini-Mecha action figure! Collect them all! 7/13."
+	icon_state = "maraudertoy"
 
 /obj/item/toy/prize/seraph
 	name = "toy Seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/12."
-	icon_state = "seraphprize"
+	desc = "Mini-Mecha action figure! Collect them all! 8/13."
+	icon_state = "seraphtoy"
 
 /obj/item/toy/prize/mauler
 	name = "toy Mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/12."
-	icon_state = "maulerprize"
+	desc = "Mini-Mecha action figure! Collect them all! 9/13."
+	icon_state = "maulertoy"
 
 /obj/item/toy/prize/odysseus
 	name = "toy Odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/12."
-	icon_state = "odysseusprize"
+	desc = "Mini-Mecha action figure! Collect them all! 10/13."
+	icon_state = "odysseustoy"
 
 /obj/item/toy/prize/phazon
 	name = "toy Phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/12."
-	icon_state = "phazonprize"
+	desc = "Mini-Mecha action figure! Collect them all! 11/13."
+	icon_state = "phazontoy"
 
 /obj/item/toy/prize/reticence
 	name = "toy Reticence"
-	desc = "Mini-Mecha action figure! Collect them all! 12/12."
-	icon_state = "reticenceprize"
+	desc = "Mini-Mecha action figure! Collect them all! 12/13."
+	icon_state = "reticencetoy"
 	quiet = 1
 
+/obj/item/toy/prize/clarke
+	name = "toy Clarke"
+	desc = "Mini-Mecha action figure! Collect them all! 13/13."
+	icon_state = "clarketoy"
 
 /obj/item/toy/talking
 	name = "talking action figure"

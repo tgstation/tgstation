@@ -47,7 +47,7 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
@@ -63,7 +63,7 @@
 
 /obj/machinery/power/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
@@ -292,6 +292,7 @@
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)
+				SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 				return 0		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
@@ -353,12 +354,12 @@
 ///////////////////////////////////////////////
 
 // return a cable if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node()
+/turf/proc/get_cable_node(check_layer = CABLE_LAYER_2)
 	if(!can_have_cabling())
 		return null
 	var/obj/structure/cable_bridge/B = locate() in src
 	for(var/obj/structure/cable/C in src)
-		if(C.cable_layer == CABLE_LAYER_2 || B)
+		if(C.cable_layer & check_layer || B)
 			C.update_icon()
 			return C
 	return null

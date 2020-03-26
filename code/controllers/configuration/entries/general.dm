@@ -484,3 +484,16 @@
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
 /datum/config_entry/flag/auto_profile
+
+// DISCORD ROLE STUFFS
+// Using strings for everything because BYOND does not like numbers this big
+// (exception to the above is required living hours haha)
+/datum/config_entry/flag/enable_discord_autorole
+
+/datum/config_entry/number/required_living_hours
+
+/datum/config_entry/string/discord_token
+
+/datum/config_entry/string/discord_guildid
+
+/datum/config_entry/string/discord_roleid
