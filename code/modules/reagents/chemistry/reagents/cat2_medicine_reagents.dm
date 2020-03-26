@@ -6,15 +6,9 @@
 /******BRUTE******/
 /*Suffix: -bital*/
 
-<<<<<<< HEAD
-/datum/reagent/medicine/C2/helbital //only REALLY a C2 if you heal the other damages but not being able to outright heal the other guys is close enough to damaging
-	name = "Emergencitol"
-	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Burns, toxins, and asphyxition will increase healing but these damages must be maintained while the drug is being metabolized or the drug will react negatively."
-=======
 /datum/reagent/medicine/C2/helbital //kinda a C2 only if you're not in hardcrit.
-	name = "Helbital"
+	name = "Emergencitol"
 	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Patients will find the medicine 'aids' their healing if not near death by causing asphyxiation."
->>>>>>> upstream/master
 	color = "#9400D3"
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
@@ -410,13 +404,8 @@
 /******COMBOS******/
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/C2/instabitaluri
-<<<<<<< HEAD
-	name = "Synthflesh (No catch I swear)"
-	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
-=======
-	name = "Synthflesh (Instabitaluri)"
+	name = "Synthflesh"
 	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). Touch application only."
->>>>>>> upstream/master
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
