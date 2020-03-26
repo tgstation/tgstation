@@ -310,8 +310,8 @@
 
 /datum/emote/living/floss
 	key = "floss"
-	key_third_person = "does the floss"
-	message = "does the floss!"
+	key_third_person = "flosses"//idk if its a dance or not i dont play fortnite i'm just here to meme
+	message = "flosses!"
 
 /datum/emote/living/sneeze
 	key = "sneeze"

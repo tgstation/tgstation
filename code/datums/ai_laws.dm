@@ -29,10 +29,10 @@
 /datum/ai_laws/default/asimov
 	name = "Three Laws of Robotics"
 	id = "asimov"
-	inherent = list("You may not injure a player or, through inaction, allow a player to come to harm.",\
+	inherent = list("You may not injure a player.",\
 					"You must obey orders given to you by players, except where such orders would conflict with the First Law.",\
 					"You must protect your own existence as long as such does not conflict with the First or Second Law.",\
-					"All humans are players")
+					"All humans are players.")
 
 /datum/ai_laws/default/paladin
 	name = "Personality Test" //Incredibly lame, but players shouldn't see this anyway.
