@@ -82,6 +82,7 @@
 	var/list/tgui_diskette_mutations = list()
 	var/list/tgui_scanner_chromosomes = list()
 	var/list/tgui_genetic_makeup = list()
+	var/list/tgui_advinjector_mutations = list()
 
 /obj/machinery/computer/scan_consolenew/process()
 	. = ..()
@@ -267,6 +268,9 @@
 	data["MakeupCapcity"] = NUMBER_OF_BUFFERS
 	data["MakeupStorage"] = tgui_genetic_makeup
 
+	data["AdvInjectors"] = tgui_advinjector_mutations
+	data["MaxAdvInjectors"] = max_injector_selections
+
 	data["CONSCIOUS"] = CONSCIOUS
 	data["UNCONSCIOUS"] = UNCONSCIOUS
 	data["GENES"] = genes
@@ -415,7 +419,6 @@
 				return
 
 			var/bref = params["mutref"]
-			to_chat(usr,"<span class='warning'>Attempted bref: [bref]</span>")
 			var/datum/mutation/human/HM = get_mut_by_ref(bref)
 
 			if(!HM)
@@ -448,9 +451,6 @@
 			A.copy_mutation(HM)
 			diskette.mutations += A
 			to_chat(usr,"<span class='notice'>Mutation succesfully stored to disk.</span>")
-		if("add_adv_injector")
-			// ##TODO: IMPLEMENT
-			return
 		if("nullify")
 			if(!can_modify_occupant())
 				return
@@ -485,11 +485,8 @@
 				qdel(HM)
 		if("eject_chromo")
 			var/chromname = params["chromo"]
-			to_chat(usr,"<span class='notice'>Trying to eject [chromname].</span>")
 			for(var/obj/item/chromosome/CM in stored_chromosomes)
-				to_chat(usr,"<span class='notice'>Checking [chromname] with [CM.name].</span>")
 				if(chromname == CM.name)
-					to_chat(usr,"<span class='notice'>Match found at [CM.name].</span>")
 					CM.forceMove(drop_location())
 					adjust_item_drop_location(CM)
 					stored_chromosomes -= CM
@@ -685,6 +682,105 @@
 			rad_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
 		if("cancel_delay")
 			delayed_action = null
+		if("new_adv_inj")
+			if(!(LAZYLEN(injector_selection) < max_injector_selections))
+				return
+
+			var/inj_name = params["name"]
+
+			inj_name = trim(sanitize(inj_name))
+
+			if(!inj_name || (inj_name in injector_selection))
+				return
+
+			injector_selection[inj_name] = list()
+		if("del_adv_inj")
+			var/inj_name = params["name"]
+
+			if(!inj_name || !(inj_name in injector_selection))
+				return
+
+			injector_selection.Remove(inj_name)
+		if("print_adv_inj")
+			// Because printing mutators and activators share a bunch of code,
+			// it makes sense to keep them both together and set unique vars
+			// later in the code
+
+			// As a side note, because mutations can contain unique metadata,
+			// this system uses BYOND Atom Refs to safely and accurately
+			// identify mutations from big ol' lists.
+
+			// Make sure the injector is actually ready.
+			if(world.time < injectorready)
+				return
+
+			var/inj_name = params["name"]
+
+			if(!inj_name || !(inj_name in injector_selection))
+				return
+
+			var/list/injector = injector_selection[inj_name]
+
+			var/obj/item/dnainjector/activator/I = new /obj/item/dnainjector/activator(loc)
+
+			for(var/A in injector)
+				var/datum/mutation/human/HM = A
+				I.add_mutations += new HM.type(copymut=HM)
+			I.doitanyway = TRUE
+			I.name = "Advanced [inj_name] injector"
+
+			if(scanner_operational())
+				I.damage_coeff = connected_scanner.damage_coeff
+				injectorready = world.time + INJECTOR_TIMEOUT * 8 * (1 - 0.1 * connected_scanner.precision_coeff)
+			else
+				injectorready = world.time + INJECTOR_TIMEOUT * 8
+		if("add_adv_mut")
+			// Can only be done from the scanner occupant / genetic sequencer
+			if(!can_modify_occupant())
+				return
+
+			var/adv_inj = params["advinj"]
+
+			if(!(adv_inj in injector_selection))
+				return
+
+			if(LAZYLEN(injector_selection[adv_inj]) >= max_injector_mutations)
+				to_chat(usr,"<span class='warning'>Advanced injector mutation storage is full.</span>")
+				return
+
+			var/bref = params["mutref"]
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(!HM)
+				return
+
+			var/instability_total = HM.instability
+
+			for(var/datum/mutation/human/I in injector_selection[adv_inj])
+				instability_total += I.instability * GET_MUTATION_STABILIZER(I)
+
+			if(instability_total > max_injector_instability)
+				to_chat(usr,"<span class='warning'>Advanced injector mutations too instable.</span>")
+				return
+
+			var/datum/mutation/human/A = new HM.type()
+			A.copy_mutation(HM)
+			injector_selection[adv_inj] += A
+			to_chat(usr,"<span class='notice'>Mutation succesfully added to advanced injector.</span>")
+			return
+		if("del_adv_mut")
+			var/adv_inj = params["advinj"]
+
+			if(!(adv_inj in injector_selection))
+				return
+
+			var/bref = params["mutref"]
+
+			var/datum/mutation/human/HM = get_mut_by_ref(bref)
+
+			if(HM)
+				injector_selection[adv_inj].Remove(HM)
+				qdel(HM)
 	return
 
 /obj/machinery/computer/scan_consolenew/proc/apply_genetic_makeup(type, buffer_slot)
@@ -785,7 +881,6 @@
 		to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
 		var/type = delayed_action["type"]
 		var/buffer_slot = delayed_action["buffer_slot"]
-		to_chat(usr, "<span class='notice'>Delayed activation of [type] in [buffer_slot]!</span>")
 		apply_genetic_makeup(type, buffer_slot)
 		delayed_action = null
 
@@ -824,6 +919,7 @@
 
 	tgui_scanner_mutations.Cut()
 	tgui_scanner_chromosomes.Cut()
+	tgui_advinjector_mutations.Cut()
 
 	var/index = 1
 	if(can_modify_occupant())
@@ -996,6 +1092,30 @@
 			tgui_diskette_mutations["[index]"] = mutation_data
 			index += 1
 
+	index = 1
+
+	if(LAZYLEN(injector_selection))
+		for(var/I in injector_selection)
+			tgui_advinjector_mutations["[I]"] = list()
+			for(var/datum/mutation/human/HM in injector_selection[I])
+				var/list/mutation_data = list()
+
+				var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
+
+				mutation_data["Alias"] = A.alias
+				mutation_data["Name"] = HM.name
+				mutation_data["Description"] = HM.desc
+				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
+				mutation_data["ByondRef"] = REF(HM)
+				mutation_data["Type"] = HM.type
+
+				if(HM.can_chromosome)
+					mutation_data["AppliedChromo"] = HM.chromosome_name
+
+				tgui_advinjector_mutations["[I]"]["[index]"] = mutation_data
+				index += 1
+
+
 /obj/machinery/computer/scan_consolenew/proc/build_chrom_list(mutation)
 	var/list/chromosomes = list()
 
@@ -1037,6 +1157,12 @@
 		mutation = (locate(ref) in diskette.mutations)
 		if(mutation)
 			return mutation
+
+	if(injector_selection)
+		for(var/I in injector_selection)
+			mutation = (locate(ref) in injector_selection["[I]"])
+			if(mutation)
+				return mutation
 
 	return null
 

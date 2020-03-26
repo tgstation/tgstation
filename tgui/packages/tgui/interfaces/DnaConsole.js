@@ -258,7 +258,7 @@ export class DnaConsole extends Component {
               disabled={!data.IsScannerConnected
                 || !data.IsViableSubject
                 || !data.IsScrambleReady
-                || data.IsPulsingRads}
+                || data.IsR}
               content={"Scramble DNA"}
               onClick={() =>
                 act(ref, "scramble_dna")} />
@@ -286,6 +286,21 @@ export class DnaConsole extends Component {
               </LabeledList.Item>
               <LabeledList.Item label="Instability">
                 {mut.Instability}
+              </LabeledList.Item>
+              <LabeledList.Item label="Add to Adv. Injector">
+                <Dropdown
+                  textAlign="center"
+                  options={Object.keys(data.AdvInjectors)}
+                  disabled={(Object.keys(data.AdvInjectors).length === 0)}
+                  selected={
+                    (Object.keys(data.AdvInjectors).length === 0)
+                      ? "No Advanced Injectors"
+                      : "Select an injector"
+                  }
+                  width={"280px"}
+                  onSelected={value =>
+                    act(ref, "add_adv_mut", {
+                      mutref: mut.ByondRef, advinj: value })} />
               </LabeledList.Item>
             </LabeledList>
             {this.renderChromoAdd(
@@ -500,14 +515,6 @@ export class DnaConsole extends Component {
               onClick={() =>
                 act(ref, "save_disk", {
                   mutref: mut.ByondRef })} />
-            <Button
-              disabled
-              content={"Add to Adv. Injector"}
-              onClick={() =>
-                act(
-                  ref,
-                  "add_adv_injector",
-                  { mutref: mut.ByondRef })} />
             { ((mut.Class === data.MUT_EXTRA) || mut.Scrambled)
               ? <Button
                 content={"Nullify"}
@@ -1046,42 +1053,123 @@ export class DnaConsole extends Component {
     );
   }
 
+  renderAdvInjectors(ref, data) {
+    let buffer = [];
+
+    if (data.AdvInjectors) {
+      if (Object.keys(data.AdvInjectors).length < data.MaxAdvInjectors) {
+        buffer.push(
+          <Button.Input
+            m={1}
+            content={"Create New Injector"}
+            onCommit={(e, v) => (
+              act(ref, "new_adv_inj", { name: v })
+            )} />,
+        );
+      }
+
+      Object.keys(data.AdvInjectors).map((value, key) => {
+        return (
+          buffer.push(
+            <Collapsible
+              title={value}
+              buttons={(
+                <Fragment>
+                  <Button
+                    content={"Delete"}
+                    onClick={() => (
+                      act(ref, "del_adv_inj", { name: value })
+                    )} />
+                  <Button
+                    content={"Print"}
+                    onClick={() => (
+                      act(ref, "print_adv_inj", { name: value })
+                    )} />
+                </Fragment>
+              )} >
+              <Section
+                title="Mutations"
+                textAlign="left">
+                {this.renderAdvInjMutations(
+                  ref, data, data.AdvInjectors[value], value)}
+              </Section>
+            </Collapsible>,
+          )
+        );
+      });
+    }
+
+    return (
+      <Section
+        title="Advanced Injectors"
+        textAlign="left">
+        {buffer}
+      </Section>
+    );
+  }
+
+  renderAdvInjMutations(ref, data, inj, injname) {
+    let buffer = [];
+
+    logger.log(injname);
+
+    Object.keys(inj).map((value, key) => (
+      buffer.push(
+        <Tabs.Tab
+          key={"AdvInjMut"+value}
+          label={inj[value].Name}>
+          {() => (
+            <Fragment>
+              <LabeledList>
+                <LabeledList.Item label="Name">
+                  {inj[value].Name}
+                </LabeledList.Item>
+                <LabeledList.Item label="Description">
+                  {inj[value].Description}
+                </LabeledList.Item>
+                <LabeledList.Item label="Instability">
+                  {inj[value].Instability}
+                </LabeledList.Item>
+                {
+                  inj[value].AppliedChromo
+                    ? (
+                      <LabeledList.Item label="Chromosome">
+                        {inj[value].AppliedChromo}
+                      </LabeledList.Item>
+                    ) : (
+                      false
+                    )
+                }
+              </LabeledList>
+              <Button
+                content={"Delete"}
+                onClick={e => (
+                  act(
+                    ref,
+                    "del_adv_mut",
+                    { advinj: injname, mutref: inj[value].ByondRef },
+                  )
+                )} />
+            </Fragment>
+          )}
+        </Tabs.Tab>,
+      )
+    ));
+
+    return (
+      <Tabs vertical>
+        {buffer}
+      </Tabs>
+    );
+  }
+
+
   render()
   {
     const { state } = this.props;
     const { config, data } = state;
     const { ref } = config;
-    const {
-      IsScannerConnected,
-      ScannerOpen,
-      ScannerLocked,
-      IsViableSubject,
-      SubjectName,
-      SubjectStatus,
-      SubjectHealth,
-      SubjectRads,
-      SubjectEnzymes,
-      IsScrambleReady,
-      IsJokerReady,
-      IsInjectorReady,
-      ScrambleSeconds,
-      JokerSeconds,
-      InjectorSeconds,
-      HasDisk,
-      DiskCapacity,
-      DiskReadOnly,
-      MutationCapacity,
-      MutationStorage,
-      ChromoCapacity,
-      ChromoStore,
-      CONSCIOUS,
-      UNCONSCIOUS,
-      GENES,
-      REVERSEGENES,
-      CHROMOSOME_NEVER,
-      CHROMOSOME_NONE,
-      CHROMOSOME_USED,
-    } = data;
+
     const mutations = data.SubjectMutations || {};
 
     return (
@@ -1140,7 +1228,7 @@ export class DnaConsole extends Component {
                   </Tabs.Tab>
                   <Tabs.Tab
                     label="Genetic Sequencer"
-                    disabled={!IsViableSubject}>
+                    disabled={!data.IsViableSubject}>
                     {() => (
                       <Tabs altSelection>
                         {data.SubjectMutations
@@ -1169,7 +1257,7 @@ export class DnaConsole extends Component {
                   <Tabs.Tab
                     label="Advanced Injectors">
                     {() => (
-                      "List of advanced injectors."
+                      this.renderAdvInjectors(ref, data)
                     )}
                   </Tabs.Tab>
                 </Tabs>
