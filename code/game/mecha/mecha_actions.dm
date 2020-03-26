@@ -5,7 +5,8 @@
 		eject_action.Grant(user, src)
 	if(enclosed)
 		internals_action.Grant(user, src)
-	cycle_action.Grant(user, src)
+	if(max_equip > 0) //mechs that cannot equip shouldn't get a cycle
+		cycle_action.Grant(user, src)
 	if(haslights)
 		lights_action.Grant(user, src)
 	stats_action.Grant(user, src)

@@ -10,17 +10,28 @@
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 30, "bio" = 0, "rad" = 50, "fire" = 100, "acid" = 100)
 	max_temperature = 25000
 	infra_luminosity = 3
+	max_equip = 0
 	wreckage = /obj/structure/mecha_wreckage/nerchen
 	melee_can_hit = FALSE
 	add_req_access = 1
 	internal_damage_threshold = 25
 	var/leaping = FALSE
 	var/obj/mecha/combat/chen/chen //keeps the other internal mech in check
+	var/datum/action/innate/mecha/leap/leap_action = new
 
 /obj/mecha/combat/nerchen/Initialize()
 	. = ..()
 	chen = new(src, src)
 	rebuild_icon()
+
+/obj/mecha/combat/nerchen/GrantActions(mob/living/user, human_occupant = 0)
+	..()
+	leap_action.Grant(user, src)
+
+/obj/mecha/combat/nerchen/RemoveActions(mob/living/user, human_occupant = 0)
+	..()
+	leap_action.Remove(user)
+
 
 /obj/mecha/combat/nerchen/obj_destruction()
 	chen.Destroy()
@@ -208,15 +219,12 @@
 		chassis.occupant_message("<span class='danger'>Thrusters have not recharged yet!</span>")
 		return
 	var/obj/mecha/combat/nerchen/ner = chassis
-	ner.occupant_message("<span class='danger'>Enagaging thrusters for Mecha Leap!</span>")
+	ner.occupant_message("<span class='danger'>Engaging thrusters for Mecha Leap!</span>")
 
 	//cooldown icon changes
 	leapcooldown = world.time + LEAP_COOLDOWN
-	var/mutable_appearance/cooldown_redness
-	cooldown_redness = cooldown_redness || mutable_appearance('icons/mob/actions/actions_mecha.dmi')
-	cooldown_redness.icon_state = "nerchen_cooldown"
-	animate(cooldown_redness, alpha = 0, time = LEAP_COOLDOWN)
-	button.add_overlay(cooldown_redness)
+
+
 	ner.leaping = TRUE
 	ner.icon_state = "nerchen-leap" + ner.build_cockpit_state()
 	ner.throw_at(get_edge_target_turf(ner, ner.dir), 7, 2)
