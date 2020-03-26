@@ -3,7 +3,7 @@
 Warping extracts crossbreed
 put up a rune with bluespace effects, lots of those runes are fluff or act as a passive buff, others are just griefind tools.
 
-Note : Entered() doesn't seem to work for whatever reason so I had to use Initialize and Signals together, convoluted but it works.
+Note : Entered() doesn't seem to work for whatever reason so I had to use Initialize and Signals together, Crossed() works though.
 */
 
 /obj/item/slimecross/warping
@@ -79,6 +79,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 			to_chat(user, "<span class='notice'>You store the rune in [src].</span>")
 			qdel(target)
 			warp_charge++
+			desc = "It just won't stay in place. it has [src.warp_charge] charge left"
 			return
 
 	if(!istype(target) || isspaceturf(target))
@@ -95,6 +96,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 			to_chat(user, "<span class='warning'>[src] is empty!</span>")
 			return
 		warp_charge--
+		desc = "It just won't stay in place. it has [src.warp_charge] charge left"
 		new runepath(target)
 		to_chat(user, "<span class='notice'>You carefully draw the rune with [src].</span>")
 
@@ -463,7 +465,7 @@ TODO : Improve it so it doesn't steal the spotlight of the chef but instead acts
 
 
 /obj/effect/warped_rune/silverspace
-	desc = "Feed me and I will feed you back, such is the deal." 
+	desc = "Feed me and I will feed you back, such is the deal."
 	icon_state = "food_rune"
 	var/nutriment = 0 //Used to remember how much food/nutriment has been absorbed by the rune
 
@@ -516,16 +518,16 @@ obj/effect/warped_rune/bluespace/Crossed(atom/movable/AM)
 		return
 
 	if(count == 0)
-		
+
 		C = AM //remember who stepped in so we can teleport them later.
 		count++
-		return   
+		return
 	if(AM == C)
 		return
 	M = AM
 	do_teleport(M, C, forceMove = TRUE)//swap both of their place.
 	do_teleport(C, T, forceMove = TRUE)
-	count-- 
+	count--
 
 
 
@@ -570,31 +572,33 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 /obj/item/slimecross/warping/cerulean
 	colour = "cerulean"
 	runepath = /obj/effect/warped_rune/ceruleanspace
+	effect_desc = "Draws a rune creating a hologram of the last living thing that stepped on the tile. Can draw up to 6 runes."
+	max_charge = 6
+	warp_charge = 6 //it's not that powerful anyway so we might as well let them do a hologram museum
+
 
 /obj/effect/warped_rune/ceruleanspace
 	desc = "A shadow of what once passed these halls, a memory perhaps?"
 	icon_state = "holo_rune"
 	var/obj/effect/overlay/holotile
+	var/mob/living/L
 
-
-/obj/effect/warped_rune/ceruleanspace/Initialize()
-	.=..()
-	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/holoform)
 
 ///makes a hologram of the mob stepping on the tile, any new person stepping in will replace it with a new hologram
-/obj/effect/warped_rune/ceruleanspace/proc/holoform()
+/obj/effect/warped_rune/ceruleanspace/Crossed(atom/movable/AM)
 
-	for(var/mob/living/L in T)
-		if(locate(holotile) in T)//here to avoid multiple person on the rune related bugs
-			qdel(holotile)
-
-		holotile = new(T) //setting up the hologram to look like the person that just stepped in
-		holotile.icon = L.icon
-		holotile.icon_state = L.icon_state
-		holotile.alpha = 100
-		holotile.name = "[L.name] (Hologram)"
-		holotile.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
-		holotile.copy_overlays(L, TRUE)
+	if(!istype(AM,/mob/living))
+		return
+	if(locate(holotile) in T)//here to both delete the previous hologram,
+		qdel(holotile)
+	L = AM
+	holotile = new(T) //setting up the hologram to look like the person that just stepped in
+	holotile.icon = L.icon
+	holotile.icon_state = L.icon_state
+	holotile.alpha = 100
+	holotile.name = "[L.name] (Hologram)"
+	holotile.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
+	holotile.copy_overlays(L, TRUE)
 
 ///destroys the hologram with the rune
 /obj/effect/warped_rune/ceruleanspace/Destroy()
@@ -624,68 +628,48 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 		L.color = rgb(rand(0,255),rand(0,255),rand(0,255))
 
 
-/* Will make anyone on the rune do much MUCH more punch damage. Doesn't boost normal melee weapon damage, may need rebalancing*/
+/* Will make anyone on the rune do much more punch damage. Doesn't boost normal melee weapon damage, may need rebalancing*/
 
 /obj/item/slimecross/warping/red
 	colour = "red"
 	runepath = /obj/effect/warped_rune/redspace
-	effect_desc = "draw a rune severely increasing your punch damage. Only works on one person at a time."
+	effect_desc = "Draws a rune severely increasing your punch damage as long as you stand on it."
 	drawing_time = 100 // slightly longer to draw so you don't draw it in the middle of a fight.
 
 /obj/effect/warped_rune/redspace
 	desc = "Progress is made through adversity, power is obtained through violence"
 	icon_state = "rage_rune"
-	runepath = /obj/effect/warped_rune/redspace
 	var/mob/living/carbon/human/H
-	var/og_punch_low //used to remember the original low punch force of H
-	var/og_punch_high
-	var/og_threshold
-	var/rage = FALSE //here to check if someone is already enraged on the rune
 
-/obj/effect/warped_rune/redspace/Initialize()
-	.=..()
-	RegisterSignal(T,COMSIG_ATOM_EXITED,.proc/angry_out)
+
 ///boost up the unarmed damage of the person currently on the tile.
-
-
 /obj/effect/warped_rune/redspace/Crossed(atom/movable/AM)
-	if(rage)
-		return
-
 	if(!istype(AM,/mob/living/carbon/human))
 		return
 	H = AM
-	og_punch_low = H.dna.species.punchdamagelow
-	og_punch_high = H.dna.species.punchdamagehigh
-	og_threshold = H.dna.species.punchstunthreshold
-
-	RegisterSignal(H,COMSIG_HUMAN_MELEE_UNARMED_ATTACK,.proc/blind_rage)//triggers whenever H attacks
-	H.dna.species.punchstunthreshold = 40//we don't want them to insta stun everyone.
-	H.dna.species.punchdamagelow = 30
-	H.dna.species.punchdamagehigh = 40 //buffed up punch damage
-	rage = TRUE
+	H.dna.species.punchstunthreshold += 20//we don't want them to insta stun everyone.
+	H.dna.species.punchdamagelow += 20
+	H.dna.species.punchdamagehigh += 20 //buffed up punch damage
 	to_chat(H, "<span class='warning'>You feel the urge to punch something really hard!</span>")
 
-///give back any punching stats the enraged player previously had.
-/obj/effect/warped_rune/redspace/proc/angry_out()
-	if(locate(H) in T && locate(src) in T) //checks if the person that just left is the same as the currently enraged person
-		return
-	H.dna.species.punchdamagelow = og_punch_low //give back the original punch stats
-	H.dna.species.punchdamagehigh = og_punch_high
-	H.dna.species.punchstunthreshold = og_threshold
-	rage = FALSE //allows another person to enter rage mode on the rune.
-	UnregisterSignal(H,COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
 
-///destroying the rune will also remove the punch force of the person currently in rage mode
+
+/obj/effect/warped_rune/redspace/Uncrossed(atom/movable/AM)
+	if(!istype(AM,/mob/living/carbon/human)) //checks if the person that just left is the same as the currently enraged person
+		return
+	H = AM
+	H.dna.species.punchstunthreshold -= 20
+	H.dna.species.punchdamagelow -= 20
+	H.dna.species.punchdamagehigh -= 20
+
+
+///destroying the rune will also remove the punch force of the persons on the rune.
 /obj/effect/warped_rune/redspace/Destroy()
 	..()
-	angry_out()
-
-///triggers whenever the enraged player punches something. lowers their punch damage and deals stamina damage with each punch.
-/obj/effect/warped_rune/redspace/proc/blind_rage()
-	H.adjustStaminaLoss(5)
-	to_chat(H, "<span class='warning'>It feels like the rune is sapping your strenght away!</span>")
-//this proc has a bug where it triggers even when you pick up an item with an empty hand.
+	for(var/mob/living/carbon/human/D in T) // takes away people's punch damage that are on the rune anyway.
+		H.dna.species.punchstunthreshold -= 20
+		H.dna.species.punchdamagelow -= 20
+		H.dna.species.punchdamagehigh -= 20.
 
 
 
@@ -733,10 +717,10 @@ obj/effect/warped_rune/sepiaspace/proc/timewarp()
 
 //note : some of these can only be built ON resin weeds such as the resin nest.
 GLOBAL_LIST_INIT(resin_recipes, list ( \
-	new/datum/stack_recipe("Resin seed", /obj/structure/alien/weeds/node, 10, one_per_turf = 1, on_floor = 1, time = 100), \ 
-	new/datum/stack_recipe("Resin Wall", /obj/structure/alien/resin/wall, 3, one_per_turf = 1, on_floor = 1 , time = 50), \ 
-	new/datum/stack_recipe("Fake hatched egg", /obj/structure/alien/egg/burst, 2, one_per_turf = 1, on_floor = 1), \ 
-	new/datum/stack_recipe("Resin nest", /obj/structure/bed/nest , 5, one_per_turf = 1, on_floor = 0, time = 50), \ 
+	new/datum/stack_recipe("Resin seed", /obj/structure/alien/weeds/node, 10, one_per_turf = 1, on_floor = 1, time = 100), \
+	new/datum/stack_recipe("Resin Wall", /obj/structure/alien/resin/wall, 3, one_per_turf = 1, on_floor = 1 , time = 50), \
+	new/datum/stack_recipe("Fake hatched egg", /obj/structure/alien/egg/burst, 2, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("Resin nest", /obj/structure/bed/nest , 5, one_per_turf = 1, on_floor = 0, time = 50), \
 	))
 
 /obj/item/stack/sheet/xeno_resin/get_main_recipes()
@@ -749,11 +733,11 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 
 
-/* pink rune, makes people slightly happier when they get hugged on it */
+/* pink rune, makes people slightly happier after walking on it*/
 
 /obj/item/slimecross/warping/pink
 	colour = "pink"
-	effect_desc = "Draws a rune that gives makes everyone that walks on it happier!"
+	effect_desc = "Draws a rune that makes people happier!"
 	runepath = /obj/effect/warped_rune/pinkspace
 
 
@@ -763,7 +747,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	icon_state = "love_rune"
 
 
-///adds the hug mood effect along with the sound effect.
+///adds the jolly mood effect along with hug sound effect.
 /obj/effect/warped_rune/pinkspace/Crossed(atom/movable/AM)
 	if(istype(AM,/mob/living/carbon/human))
 		playsound(T, "sound/weapons/thudswoosh.ogg", 50, TRUE)
@@ -778,30 +762,42 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 /obj/item/slimecross/warping/gold
 	colour = "gold"
 	runepath = /obj/effect/warped_rune/goldspace
-	effect_desc = "Draws a rune capable of turning nearly anything put on it to gold."
+	effect_desc = "Draws a rune capable of turning nearly anything put on it to gold every 30 seconds"
 
 /obj/effect/warped_rune/goldspace
 	icon_state = "midas_rune"
 	desc = "When everything is abundant, it becomes easy to forget when one had to work to obtain anything."
+	max_cooldown = 300
 
 /obj/effect/warped_rune/goldspace/Initialize()
 	.=..()
-	RegisterSignal(get_turf(src),COMSIG_ATOM_ENTERED,.proc/midas_touch)
+	START_PROCESSING(SSprocessing, src)
 
 ///turn anything on the tile to a golden version of themselves. Sheets of any kind will be directly turned into gold bars.
-/obj/effect/warped_rune/goldspace/proc/midas_touch()
+/obj/effect/warped_rune/goldspace/process()
+	if(cooldown > world.time)
+		return
+	cooldown = world.time + max_cooldown
+
 	for(var/obj/item/stack/sheet/S in T)
 		if(istype(S,/obj/item/stack/sheet/mineral/gold)) //can't turn gold into gold
 			return
 		var/obj/item/stack/sheet/mineral/gold/G = new(T)
-		G.amount = S.amount //as broken as it sounds if you mass produce easy stacks
+		G.amount = S.amount //as broken as it sounds if you mass produce easy stacks.
 		qdel(S)
-		return
+		return //return so it only does one stack at a time
 
-	for(var/obj/item/I in T)
+	for(var/obj/item/I in T) //basically copied from the metalgen chem code with a few minor tweaks to make it gold.
+		var/gold_amount = 0
+		for(var/B in I.custom_materials)
+			gold_amount += I.custom_materials[B]
+
+		if(!gold_amount)
+			gold_amount = 50 //if the item doesn't have any material it makes the item worth around 0.005 gold bars.
+
 		I.material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
-		I.set_custom_materials(list(/datum/material/gold=500)) //always set at 500 to not make it too abusable
-
+		I.set_custom_materials(list(/datum/material/gold=gold_amount))
+		return
 
 /*Adamantine rune, will spawn ores depending on the mineral rocks surrounding it. Here to make miners do their job even less.  */
 
@@ -810,9 +806,11 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	runepath = /obj/effect/warped_rune/adamantinespace
 	effect_desc = "draws a rune capable of copying the ores of nearby mineral rocks."
 
+
 /obj/effect/warped_rune/adamantinespace  //doesn't have a rune icon yet please spriters help me I can't sprite for shit I beg you
 	desc = "The universe's ressource are nothing but tools for us to use and abuse."
 	max_cooldown = 300  //"mines" things every 30 seconds.
+	icon_state = "mining_rune"
 
 /obj/effect/warped_rune/adamantinespace/Initialize()
 	.=..()
@@ -825,10 +823,11 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 /obj/effect/warped_rune/adamantinespace/proc/auto_mining()
 	for(var/turf/closed/mineral/M in range(7,T)) //the range is pretty big to at least try to rival miners and their plasma cutters.
-		if(M.mineralType == null) //here to counter runtimes when the mineral type of the rock is null, does absolutely nothing.
-
-		else
+		if(M.mineralType != null) //here to counter runtimes when the mineral type of the rock is null
 			new M.mineralType(T)
+
+
+
 
 /*
 Anything after this is in """progress"""
