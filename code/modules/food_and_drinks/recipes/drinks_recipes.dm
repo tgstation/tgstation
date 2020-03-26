@@ -579,7 +579,7 @@
 
 /datum/chemical_reaction/bleedingjane
 	results = list(/datum/reagent/consumable/ethanol/bleedingjane = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/consumable/tomatojuice = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol = 5, /datum/reagent/consumable/tomatojuice = 5)
 
 /datum/chemical_reaction/bloomlight
 	results = list(/datum/reagent/consumable/ethanol/bloomlight = 10)
@@ -603,7 +603,7 @@
 
 /datum/chemical_reaction/grizzlytemple
 	results = list(/datum/reagent/consumable/ethanol/grizzlytemple = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 5, /datum/reagent/consumable/ethanol/gin = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 5, /datum/reagent/consumable/ethanol = 5)
 
 /datum/chemical_reaction/gutpunch
 	results = list(/datum/reagent/consumable/ethanol/gutpunch = 10)
@@ -643,7 +643,7 @@
 
 /datum/chemical_reaction/suplex
 	results = list(/datum/reagent/consumable/ethanol/suplex = 10)
-	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/ethanol/vodka = 5)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/ethanol = 5)
 
 /datum/chemical_reaction/zenstar
 	results = list(/datum/reagent/consumable/ethanol/zenstar = 10)
