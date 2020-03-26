@@ -688,7 +688,7 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 
 /obj/item/stack/sheet/obamium
 	name = "obamium sheet"
-	desc = "Finally...Obamium"
+	desc = "Finally... Obamium..."
 	singular_name = "obamium sheet"
 	icon_state = "sheet-meat"
 	material_flags = MATERIAL_COLOR
