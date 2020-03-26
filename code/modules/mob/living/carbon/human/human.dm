@@ -18,6 +18,8 @@
 
 	. = ..()
 
+	add_movespeed_modifier(/datum/movespeed_modifier/car_driving_society)//vroom vroom
+
 	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_blood)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_HUMAN, 1, 2)

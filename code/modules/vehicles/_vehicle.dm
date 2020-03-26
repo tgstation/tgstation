@@ -112,10 +112,15 @@
 		return driver_move(user, direction)
 	return FALSE
 
-/obj/vehicle/proc/driver_move(mob/user, direction)
+/obj/vehicle/proc/key_check(mob/M)
 	if(key_type && !is_key(inserted_key))
-		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
+		to_chat(M, "<span class='warning'>[src] has no key inserted!</span>")
 		return FALSE
+	return TRUE
+
+/obj/vehicle/proc/driver_move(mob/user, direction)
+	if(!key_check(user))
+		return
 	if(!default_driver_move)
 		return
 	if(!canmove)
