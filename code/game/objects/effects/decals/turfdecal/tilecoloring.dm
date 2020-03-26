@@ -45,6 +45,7 @@
 
 /obj/effect/turf_decal/tile/random // so many colors
 	name = "colorful corner"
+	color = "#E300FF" //bright pink as default for mapping
 
 /obj/effect/turf_decal/tile/random/Initialize()
 	color = "#[random_short_color()]"
