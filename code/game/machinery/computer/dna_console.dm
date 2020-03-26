@@ -1,7 +1,7 @@
 #define INJECTOR_TIMEOUT 100
 #define NUMBER_OF_BUFFERS 3
 #define SCRAMBLE_TIMEOUT 600
-#define JOKER_TIMEOUT 1				//20 minutes
+#define JOKER_TIMEOUT 12000				//20 minutes
 #define JOKER_UPGRADE 3000
 
 #define RADIATION_STRENGTH_MAX 15
