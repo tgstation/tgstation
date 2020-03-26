@@ -146,7 +146,7 @@
 		if(!ishuman(i))
 			continue
 		var/mob/living/carbon/human/boomer = i
-		boomer.say(pick("HOLY SHIT MY PAINT IS RUINED", "I LEASED THIS YOU DICK!", "I WILL END YOU GET OUT OF THE WAY!", "WHAT THE FUCK DO YOU KNOW HOW EXPENSIVE CARS ARE?", "GET OF THE ROAD YOU BRAINDEAD TROGLODYTE", "GET OUT OF THE GODDAMN WAY"), forced="car crash")
+		boomer.say(pick("HOLY SHIT MY PAINT IS RUINED!!", "I LEASED THIS YOU DICK!!", "GET OUT OF THE WAY! I WILL END YOU!!", "WHAT THE FUCK!? DO YOU KNOW HOW EXPENSIVE CARS ARE?!!", "GET OFF THE ROAD YOU BRAINDEAD TROGLODYTE!!", "GET OUT OF THE GODDAMN WAY!!"), forced="car crash")
 	var/throw_dir = turn(src.dir, pick(-90, 90))
 	var/throw_target = get_edge_target_turf(L, throw_dir)
 	playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
