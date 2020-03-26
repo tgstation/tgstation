@@ -1247,7 +1247,6 @@ datum/uplink_item/suits/hardsuit/cybersun
 	exclude_modes = list(/datum/game_mode/nuclear) //nuke ops get it for lower value
 
 datum/uplink_item/suits/hardsuit/cybersun/nuke
-	item = /obj/item/clothing/suit/space/hardsuit/cybersun
 	cost = 8
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	exclude_modes = list()
