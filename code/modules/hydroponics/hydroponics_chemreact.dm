@@ -31,23 +31,20 @@
 		adjustToxic(round(S.get_reagent_amount(/datum/reagent/uranium/radium) * 3)) // Radium is harsher (OOC: also easier to produce)
 
 	//Regular Nutrients
-	if(S.has_reagent(/datum/reagent/plantnutriment/eznutriment, 1))
-		if(myseed)
-			myseed.adjust_instability(0.2)
-			myseed.adjust_potency(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 0.05))
-			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 0.1))
+	if(myseed && S.has_reagent(/datum/reagent/plantnutriment/eznutriment, 1))
+		myseed.adjust_instability(0.2)
+		myseed.adjust_potency(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 0.05))
+		myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/plantnutriment/eznutriment) * 0.1))
 
 	if(S.has_reagent(/datum/reagent/plantnutriment/left4zednutriment, 1))
 		adjustHealth(round(S.get_reagent_amount(/datum/reagent/plantnutriment/left4zednutriment) * 0.01))
 		if(myseed)
 			myseed.adjust_instability(round(S.get_reagent_amount(/datum/reagent/plantnutriment/left4zednutriment) * 0.2))
 
-	if(S.has_reagent(/datum/reagent/plantnutriment/robustharvestnutriment, 1))
-		if(myseed)
-			myseed.adjust_instability(-0.25)
-			myseed.adjust_potency(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) * 0.5))
-			myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) * 0.1))
-
+	if(myseed && S.has_reagent(/datum/reagent/plantnutriment/robustharvestnutriment, 1))
+		myseed.adjust_instability(-0.25)
+		myseed.adjust_potency(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) * 0.5))
+		myseed.adjust_yield(round(S.get_reagent_amount(/datum/reagent/plantnutriment/robustharvestnutriment) * 0.1))
 	// Antitoxin binds plants pretty well. So the tox goes significantly down
 	if(S.has_reagent(/datum/reagent/medicine/C2/multiver, 1))
 		adjustToxic(-round(S.get_reagent_amount(/datum/reagent/medicine/C2/multiver) * 2))
@@ -188,9 +185,8 @@
 		adjustPests(-rand(1,2))
 
 	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
-	if(S.has_reagent(/datum/reagent/stabilizing_agent, 1))
-		if(myseed)
-			myseed.adjust_instability(-1)
+	if(myseed && S.has_reagent(/datum/reagent/stabilizing_agent, 1))
+		myseed.adjust_instability(-1)
 
 	// Compost, effectively
 	if(S.has_reagent(/datum/reagent/consumable/nutriment, 1))

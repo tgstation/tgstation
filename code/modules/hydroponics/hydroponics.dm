@@ -1,4 +1,7 @@
 #define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
+#define YIELD_WEED_MINIMUM 3
+#define YIELD_WEED_MAXIMUM 10
+
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
@@ -9,29 +12,52 @@
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	idle_power_usage = 0
-	var/waterlevel = 100	//The amount of water in the tray (max 100)
-	var/maxwater = 100		//The maximum amount of water in the tray
-	var/nutridrain = 1		//How many units of nutrients will be drained in the tray.
-	var/maxnutri = 10		//The maximum nutrient of water in the tray
-	var/pestlevel = 0		//The amount of pests in the tray (max 10)
-	var/weedlevel = 0		//The amount of weeds in the tray (max 10)
-	var/yieldmod = 1		//Nutriment's effect on yield
-	var/mutmod = 1			//Nutriment's effect on mutations
-	var/toxic = 0			//Toxicity in the tray?
-	var/age = 0				//Current age
-	var/dead = FALSE		//Is it dead?
-	var/plant_health		//Its health
-	var/lastproduce = 0		//Last time it was harvested
-	var/lastcycle = 0		//Used for timing of cycles.
-	var/cycledelay = 200	//About 10 seconds / cycle
-	var/harvest = FALSE			//Ready to harvest?
-	var/obj/item/seeds/myseed = null	//The currently planted seed
+	///The amount of water in the tray (max 100)
+	var/waterlevel = 100
+	///The maximum amount of water in the tray
+	var/maxwater = 100
+	///How many units of nutrients will be drained in the tray.
+	var/nutridrain = 1
+	///The maximum nutrient of water in the tray
+	var/maxnutri = 10
+	///The amount of pests in the tray (max 10)
+	var/pestlevel = 0
+	///The amount of weeds in the tray (max 10)
+	var/weedlevel = 0
+	///Nutriment's effect on yield
+	var/yieldmod = 1
+	///Nutriment's effect on mutations
+	var/mutmod = 1
+	///Toxicity in the tray?
+	var/toxic = 0
+	///Current age
+	var/age = 0
+	///Is it dead?
+	var/dead = FALSE
+	///Its health
+	var/plant_health
+	///Last time it was harvested
+	var/lastproduce = 0
+	///Used for timing of cycles.
+	var/lastcycle = 0
+	///About 10 seconds / cycle
+	var/cycledelay = 200
+	///Ready to harvest?
+	var/harvest = FALSE
+	///The currently planted seed
+	var/obj/item/seeds/myseed = null
+	///Obtained from the quality of the parts used in the tray, determines nutrient drain rate.
 	var/rating = 1
+	///Can it be unwrenched to move?
 	var/unwrenchable = TRUE
-	var/recent_bee_visit = FALSE //Have we been visited by a bee recently, so bees dont overpollinate one plant
-	var/using_irrigation = FALSE //If the tray is connected to other trays via irrigation hoses
-	var/mob/lastuser			//The last user to add a reagent to the tray, mostly for logging purposes.
-	var/self_sustaining = FALSE //If the tray generates nutrients and water on its own
+	///Have we been visited by a bee recently, so bees dont overpollinate one plant
+	var/recent_bee_visit = FALSE
+	///If the tray is connected to other trays via irrigation hoses
+	var/using_irrigation = FALSE
+	///The last user to add a reagent to the tray, mostly for logging purposes.
+	var/mob/lastuser
+	///If the tray generates nutrients and water on its own
+	var/self_sustaining = FALSE
 
 /obj/machinery/hydroponics/Initialize()
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
@@ -225,19 +251,20 @@
 			pollinate()
 
 //This is where stability mutations exist now.
-			if(myseed.instability >= 80)
-				if(prob(20))
-					mutate(0, 0, 0, 0, 0, 0, 0, 10, 0) //Exceedingly low odds of gaining a trait.
-			else if(myseed.instability >= 60)
-				if(prob((myseed.instability)/2) && !self_sustaining)
-					mutatespecie()
-					myseed.instability = myseed.instability/2
-			else if(myseed.instability >= 40 && myseed.instability < 59)
-				if(prob(40))
-					hardmutate()
-			else if(myseed.instability >= 20 && myseed.instability < 39)
-				if(prob(40))
-					mutate()
+			switch(myseed.instability)
+				if(100 to 80)
+					if(prob(20))
+						mutate(0, 0, 0, 0, 0, 0, 0, 10, 0) //Exceedingly low odds of gaining a trait.
+				if(79 to 60)
+					if(prob((myseed.instability)/2) && !self_sustaining)
+						mutatespecie()
+						myseed.instability = myseed.instability/2
+				if(59 to 40)
+					if(prob(40))
+						hardmutate()
+				if(39 to 20)
+					if(prob(40))
+						mutate()
 
 //Health & Age///////////////////////////////////////////////////////////
 
@@ -251,10 +278,10 @@
 				adjustHealth(-rand(1,5) / rating)
 
 			// Harvest code
-				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
-					harvest = TRUE
-				else
-					lastproduce = age
+			if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
+				harvest = TRUE
+			else
+				lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
 				adjustPests(1 / rating)
 		else
@@ -265,7 +292,7 @@
 		if(weedlevel >= 10 && prob(50) && !self_sustaining) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(myseed && myseed.yield >= 3)
 				myseed.adjust_yield(-rand(1,2)) //Loses even more yield per tick, quickly dropping to 3 minimum.
-				myseed.yield = min((myseed.yield),3,10)
+				myseed.yield = min((myseed.yield),YIELD_WEED_MINIMUM,YIELD_WEED_MAXIMUM)
 			if(!myseed)
 				weedinvasion()
 			needs_update = 1
@@ -550,10 +577,6 @@
 
 		for(var/obj/machinery/hydroponics/H in trays)
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
-
-			//var/datum/reagents/S = new /datum/reagents() //This is a strange way, but I don't know of a better one so I can't fix it at the moment...
-			//S.my_atom = H
-
 			//This was originally in applyChemicals, but due to applyChemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
 				adjustWater(round(reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/trays.len))
@@ -563,8 +586,6 @@
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				lastuser = user
-			//S.clear_reagents()
-			//qdel(S)
 			H.update_icon()
 		if(reagent_source) // If the source wasn't composted and destroyed
 			reagent_source.update_icon()
@@ -615,13 +636,13 @@
 		if(!myseed)
 			to_chat(user, "<span class='notice'>This plot is empty.</span>")
 			return
-		else if(harvest == FALSE)
+		else if(!harvest)
 			to_chat(user, "<span class='notice'>This plant must be harvestable in order to be grafted.</span>")
 			return
-		else if(myseed && myseed.grafted == TRUE)
+		else if(myseed.grafted)
 			to_chat(user, "<span class='notice'>This plant has already been grafted.</span>")
 			return
-		else if(myseed && myseed.grafted == FALSE)
+		else
 			user.visible_message("<span class='notice'>[user] grafts off a limb from [src].</span>", "<span class='notice'>You carefully graft off a portion of [src].</span>")
 			var/obj/item/graft/snip = new /obj/item/graft(loc)
 			if(myseed.graft_gene)
@@ -730,13 +751,10 @@
 		return
 	if(!powered())
 		to_chat(user, "<span class='warning'>[name] has no power.</span>")
+		return
 	self_sustaining = !self_sustaining
-	if(self_sustaining)
-		idle_power_usage = 5000
-		to_chat(user, "<span class='notice'>You activate [src]'s autogrow function, maintaining the tray's health while using high amounts of power.</span>")
-	else
-		idle_power_usage = 0
-		to_chat(user, "<span class='notice'>You deactivated [src]'s autogrow function.</span>")
+	idle_power_usage = self_sustaining ? 5000 : 0
+	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
 	update_icon()
 
 /obj/machinery/hydroponics/AltClick(mob/user)

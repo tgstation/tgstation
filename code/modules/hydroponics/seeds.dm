@@ -7,16 +7,22 @@
 	icon_state = "seed"				// Unknown plant seed - these shouldn't exist in-game.
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
-	var/plantname = "Plants"		// Name of plant when planted.
-	var/obj/item/product						// A type path. The thing that is created when the plant is harvested.
+	/// Name of plant when planted.
+	var/plantname = "Plants"
+	/// A type path. The thing that is created when the plant is harvested.
+	var/obj/item/product
+	///Describes the product on the product path.
 	var/productdesc
-	var/species = ""				// Used to update icons. Should match the name in the sprites unless all icon_* are overridden.
-
-	var/growing_icon = 'icons/obj/hydroponics/growing.dmi' //the file that stores the sprites of the growing plant from this seed.
-	var/icon_grow					// Used to override grow icon (default is "[species]-grow"). You can use one grow icon for multiple closely related plants with it.
-	var/icon_dead					// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
-	var/icon_harvest				// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
-
+	/// Used to update icons. Should match the name in the sprites unless all icon_* are overridden.
+	var/species = ""
+	///the file that stores the sprites of the growing plant from this seed.
+	var/growing_icon = 'icons/obj/hydroponics/growing.dmi'
+	/// Used to override grow icon (default is "[species]-grow"). You can use one grow icon for multiple closely related plants with it.
+	var/icon_grow
+	/// Used to override dead icon (default is "[species]-dead"). You can use one dead icon for multiple closely related plants with it.
+	var/icon_dead
+	/// Used to override harvest icon (default is "[species]-harvest"). If null, plant will use [icon_grow][growthstages].
+	var/icon_harvest
 	/// How long before the plant begins to take damage from age.
 	var/lifespan = 25
 	/// Amount of health the plant has.
@@ -44,7 +50,6 @@
 	// Format: "reagent_id" = potency multiplier
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
-
 	///If the chance below passes, then this many weeds sprout during growth
 	var/weed_rate = 1
 	///Percentage chance per tray update to grow weeds
@@ -263,11 +268,12 @@
 			C.value = potency
 
 /obj/item/seeds/proc/adjust_instability(adjustamt)
-	if(instability != -1)
-		instability = clamp(instability + adjustamt, 0, 100)
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
-		if(C)
-			C.value = instability
+	if(instability == -1)
+		return
+	instability = clamp(instability + adjustamt, 0, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
+	if(C)
+		C.value = instability
 
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
 	weed_rate = clamp(weed_rate + adjustamt, 0, 10)
@@ -320,11 +326,12 @@
 			C.value = potency
 
 /obj/item/seeds/proc/set_instability(adjustamt)
-	if(instability != -1)
-		instability = clamp(adjustamt, 0, 100)
-		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
-		if(C)
-			C.value = instability
+	if(instability == -1)
+		return
+	instability = clamp(adjustamt, 0, 100)
+	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/instability)
+	if(C)
+		C.value = instability
 
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
 	weed_rate = clamp(adjustamt, 0, 10)

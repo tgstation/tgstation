@@ -33,11 +33,14 @@ A new subsystem for hydroponics, as a way to share specific traits into plants, 
 /obj/item/graft/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/plant_analyzer))
 		to_chat(user, get_graft_text())
-	. = ..()
+	return ..()
 
+
+/*
+Adds text to the plant analyzer which describes the graft's parent plant and any stored trait it has, if any.
+*/
 /obj/item/graft/proc/get_graft_text()
-	var/text = ""
-	text += "- Plant Graft -\n"
+	var/text = "- Plant Graft -\n"
 	if(parent_seed)
 		text += "- Parent Plant Name:[parent_seed.plantname] -\n"
 	if(stored_trait)
