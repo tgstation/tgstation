@@ -100,7 +100,7 @@
 
 /obj/vehicle/sealed/car/civ
 	name = "car"
-	desc = "This used to be a pedastrian focused station, and now all these cars are ruining it!." //ok boomer
+	desc = "This used to be a pedestrian-focused station, and now all these cars are ruining it!" //ok boomer
 	icon_state = "car"
 	max_integrity = 300
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
