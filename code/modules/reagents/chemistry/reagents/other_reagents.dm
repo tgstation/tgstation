@@ -2097,7 +2097,7 @@
 /datum/reagent/obamium
 	name = "Obamium"
 	data = list("material"=null)
-	description = "A brown liquid made from a previous president. Can turn anything into his liking"
+	description = "A brown liquid made from a previous president. Can turn anything that it touches into his face."
 	color = "#341c02"
 	taste_mult = 100 //god the flavor
 	taste_description = "healthcare and drone strikes" //what a legend
