@@ -112,7 +112,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	for(var/datum/mind/undercover_cop in undercover_cops)
 		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
 		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
-		undercover_cop.current.playsound_local(undercover_cop.current, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	for(var/datum/mind/gangbanger in gangbangers)
 		var/gang_to_use = pick_n_take(gangs_to_use)
