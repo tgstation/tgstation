@@ -2100,7 +2100,7 @@
 	description = "A brown liquid made from a previous president. Can turn anything into his liking"
 	color = "#341c02"
 	taste_mult = 100 //god the flavor
-	taste_description = "healthcare and drone-strikes" //what a legend
+	taste_description = "healthcare and drone strikes" //what a legend
 	material = /datum/material/obamium
 
 	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
@@ -2160,4 +2160,3 @@
 	taste_description = "gravy"
 	color = "#623301"
 	taste_mult = 1.2
-
