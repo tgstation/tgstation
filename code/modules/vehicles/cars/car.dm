@@ -113,7 +113,9 @@
 
 
 /obj/vehicle/sealed/car/civ/Initialize()
-	custom_materials = list(pick(subtypesof(/datum/material) = 10000))
+	var/datum/material/M = pick(subtypesof(/datum/material))
+	custom_materials = list()
+	custom_materials[M] = 10000
 	. = ..()
 
 
