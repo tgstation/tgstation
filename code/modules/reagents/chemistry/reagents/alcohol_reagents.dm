@@ -2231,3 +2231,214 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M)
 	M.adjust_disgust(5)
 	..()
+
+/datum/reagent/consumable/ethanol/badtouch
+	name = "Bad Touch"
+	description = "We're nothing but mammals after all."
+	boozepwr = 20
+	color = "#1fb563"
+	quality = DRINK_NICE
+	taste_description = "extreme discomfort"
+	glass_icon_state = "badtouch"
+	glass_name = "Bad Touch"
+	glass_desc = "We're nothing but mammals after all."
+
+/datum/reagent/consumable/ethanol/bleedingjane
+	name = "Bleeding Jane"
+	description = "Say the name of this drink three times in front of a mirror and you'll look like a fool."
+	boozepwr = 20
+	color = "#d93f2d"
+	quality = DRINK_NICE
+	taste_description = "something concerningly similar to a bloody mary"
+	glass_icon_state = "bleedingjane"
+	glass_name = "Bleeding Jane"
+	glass_desc = "Say the name of this drink three times in front of a mirror and you'll look like a fool."
+
+/datum/reagent/consumable/ethanol/bloomlight
+	name = "Bloom Light"
+	description = "It's so unnecessarily brown..."
+	boozepwr = 20
+	color = "#ab2f41"
+	quality = DRINK_NICE
+	taste_description = "sand"
+	glass_icon_state = "bloomlight"
+	glass_name = "Bloom Light"
+	glass_desc = "It's so unnecessarily brown..."
+
+/datum/reagent/consumable/ethanol/bluefairy
+	name = "Blue Fairy"
+	description = "One of these will make all your teeth turn blue. Hope you brushed them well."
+	boozepwr = 20
+	color = "#138bfa"
+	quality = DRINK_NICE
+	taste_description = "sugar"
+	glass_icon_state = "bluefairy"
+	glass_name = "Blue Fairy"
+	glass_desc = "One of these will make all your teeth turn blue. Hope you brushed them well."
+
+/datum/reagent/consumable/ethanol/brandtini
+	name = "Brandtini"
+	description = "8 out of 10 smug assholes would recommend it but they're too busy being smug assholes."
+	boozepwr = 20
+	color = "#ab2f41"
+	quality = DRINK_NICE
+	taste_description = "a discount martini"
+	glass_icon_state = "brandtini"
+	glass_name = "Brandtini"
+	glass_desc = "8 out of 10 smug assholes would recommend it but they're too busy being smug assholes."
+
+/datum/reagent/consumable/ethanol/cobaltvelvet
+	name = "Cobalt Velvet"
+	description = "It's like champagne, served in a cup that had a bit of cola left."
+	boozepwr = 20
+	color = "#56e4c9"
+	quality = DRINK_NICE
+	taste_description = "champagne, but with a little bit of cola"
+	glass_icon_state = "cobaltvelvet"
+	glass_name = "Cobalt Velvet"
+	glass_desc = "It's like champagne, served in a cup that had a bit of cola left."
+
+/datum/reagent/consumable/ethanol/fluffydream
+	name = "Fluffy Dream"
+	description = "A couple of these will make your tongue feel velvet-y. More of them and you'll be sleeping soundly."
+	boozepwr = 20
+	color = "#a0df9f"
+	quality = DRINK_NICE
+	taste_description = "dreams"
+	glass_icon_state = "fluffydream"
+	glass_name = "Fluffy Dream"
+	glass_desc = "A couple of these will make your tongue feel velvet-y. More of them and you'll be sleeping soundly."
+
+/datum/reagent/consumable/ethanol/grizzlytemple
+	name = "Grizzly Temple"
+	description = "This one's kinda unbearable. It's mostly for fans of the movie it was used on."
+	boozepwr = 20
+	color = "#a0df9f"
+	quality = DRINK_NICE
+	taste_description = "something awful"
+	glass_icon_state = "grizzlytemple"
+	glass_name = "Grizzly Temple"
+	glass_desc = "This one's kinda unbearable. It's mostly for fans of the movie it was used on."
+
+/datum/reagent/consumable/ethanol/gutpunch
+	name = "Gut Punch"
+	description = "It's supposed to mean 'a punch made of innards', but the name actually described what you feel while drinking it."
+	boozepwr = 20
+	color = "#ffc87"
+	quality = DRINK_NICE
+	taste_description = "pain"
+	glass_icon_state = "gutpunch"
+	glass_name = "Gut Punch"
+	glass_desc = "It's supposed to mean 'a punch made of innards', but the name actually described what you feel while drinking it."
+
+/datum/reagent/consumable/ethanol/marsblast
+	name = "Marsblast"
+	description = "One of these is enough to leave your face red like the actual planet."
+	boozepwr = 20
+	color = "#f69137"
+	quality = DRINK_NICE
+	taste_description = "fire"
+	glass_icon_state = "marsblast"
+	glass_name = "Marsblast"
+	glass_desc = "One of these is enough to leave your face red like the actual planet."
+
+/datum/reagent/consumable/ethanol/mercuryblast
+	name = "Mercuryblast"
+	description = "No thermometer was harmed in the creation of this drink."
+	boozepwr = 20
+	color = "#2497d5"
+	quality = DRINK_NICE
+	taste_description = "mercury"
+	glass_icon_state = "mercuryblast"
+	glass_name = "Mercuryblast"
+	glass_desc = "No thermometer was harmed in the creation of this drink."
+
+/datum/reagent/consumable/ethanol/moonblast
+	name = "Moonblast"
+	description = "No relation to the Hadron cannon you can see on the moon for one week every month."
+	boozepwr = 20
+	color = "#d13f75"
+	quality = DRINK_NICE
+	taste_description = "a hadron cannon"
+	glass_icon_state = "moonblast"
+	glass_name = "Moonblast"
+	glass_desc = "No relation to the Hadron cannon you can see on the moon for one week every month."
+
+/datum/reagent/consumable/ethanol/pianoman
+	name = "Piano Man"
+	description = "This drink does not represent the opinions of the Bar Pianists Union or its associates."
+	boozepwr = 20
+	color = "#0c9bad"
+	quality = DRINK_NICE
+	taste_description = "ebony and ivory"
+	glass_icon_state = "pianoman"
+	glass_name = "Piano Man"
+	glass_desc = "This drink does not represent the opinions of the Bar Pianists Union or its associates."
+
+/datum/reagent/consumable/ethanol/pianowoman
+	name = "Piano Woman"
+	description = "It was originally called Pretty Woman, but too many people complained there should be a Piano Woman if there was a Piano Man."
+	boozepwr = 20
+	color = "#0c9bad"
+	quality = DRINK_NICE
+	taste_description = "ebony, ivory, and unnecessary gendering"
+	glass_icon_state = "pianowoman"
+	glass_name = "Piano Woman"
+	glass_desc = "It was originally called Pretty Woman, but too many people complained there should be a Piano Woman if there was a Piano Man."
+
+
+/datum/reagent/consumable/ethanol/piledriver
+	name = "Pile Driver"
+	description = "It doesn't burn as hard on the tongue but you better not have a sore throat when drinking it..."
+	boozepwr = 20
+	color = "#f69137"
+	quality = DRINK_NICE
+	taste_description = "burning"
+	glass_icon_state = "piledriver"
+	glass_name = "Pile Driver"
+	glass_desc = "It doesn't burn as hard on the tongue but you better not have a sore throat when drinking it..."
+
+/datum/reagent/consumable/ethanol/sparklestar
+	name = "Sparkle Star"
+	description = "They used to actually sparkle, but too many complaints about skin problems made them redesign the drink without sparkling."
+	boozepwr = 20
+	color = "#f69137"
+	quality = DRINK_NICE
+	taste_description = "sparkles"
+	glass_icon_state = "sparklestar"
+	glass_name = "Sparkle Star"
+	glass_desc = "They used to actually sparkle, but too many complaints about skin problems made them redesign the drink without sparkling."
+
+/datum/reagent/consumable/ethanol/sunshinecloud
+	name = "Sunshine Cloud"
+	description = "Tastes like old chocolate milk with its good smell intact. Some say it tastes like caramel too..."
+	boozepwr = 20
+	color = "#cd7038"
+	quality = DRINK_NICE
+	taste_description = "caramel and old chocolate milk"
+	glass_icon_state = "sunshinecloud"
+	glass_name = "Sunshine Cloud"
+	glass_desc = "Tastes like old chocolate milk with its good smell intact. Some say it tastes like caramel too..."
+
+/datum/reagent/consumable/ethanol/suplex
+	name = "Suplex"
+	description = "A small twist on the Piledriver, putting more emphasis on the tongue burning and less on the throat burning."
+	boozepwr = 20
+	color = "#f69137"
+	quality = DRINK_NICE
+	taste_description = "burning"
+	glass_icon_state = "suplex"
+	glass_name = "Suplex"
+	glass_desc = "A small twist on the Piledriver, putting more emphasis on the tongue burning and less on the throat burning."
+
+/datum/reagent/consumable/ethanol/zenstar
+	name = "Zen Star"
+	description = "You'd think something so balanced would actually taste nice... you'd be dead wrong."
+	boozepwr = 20
+	color = "#3459cb"
+	quality = DRINK_NICE
+	taste_description = "something horrific"
+	glass_icon_state = "zenstar"
+	glass_name = "Zen Star"
+	glass_desc = "You'd think something so balanced would actually taste nice... you'd be dead wrong."
+

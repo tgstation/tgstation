@@ -572,3 +572,79 @@
 /datum/chemical_reaction/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
+
+/datum/chemical_reaction/badtouch
+	results = list(/datum/reagent/consumable/ethanol/badtouch = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 5, /datum/reagent/consumable/ethanol/wine = 5)
+
+/datum/chemical_reaction/bleedingjane
+	results = list(/datum/reagent/consumable/ethanol/bleedingjane = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/vodka = 5, /datum/reagent/consumable/tomatojuice = 5)
+
+/datum/chemical_reaction/bloomlight
+	results = list(/datum/reagent/consumable/ethanol/bloomlight = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/gin = 5, /datum/reagent/consumable/ethanol/creme_de_cacao = 5)
+
+/datum/chemical_reaction/bluefairy
+	results = list(/datum/reagent/consumable/ethanol/bluefairy = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 5, /datum/reagent/consumable/pwr_game = 5)
+
+/datum/chemical_reaction/brandtini
+	results = list(/datum/reagent/consumable/ethanol/brandtini = 10)
+	required_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/ethanol/vermouth = 5)
+
+/datum/chemical_reaction/cobaltvelvet
+	results = list(/datum/reagent/consumable/ethanol/cobaltvelvet = 10)
+	required_reagents = list(/datum/reagent/consumable/space_cola = 5, /datum/reagent/consumable/ethanol/champagne = 5)
+
+/datum/chemical_reaction/fluffydream
+	results = list(/datum/reagent/consumable/ethanol/fluffydream = 10)
+	required_reagents = list(/datum/reagent/consumable/cream = 5, /datum/reagent/consumable/spacemountainwind = 5)
+
+/datum/chemical_reaction/grizzlytemple
+	results = list(/datum/reagent/consumable/ethanol/grizzlytemple = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 5, /datum/reagent/consumable/ethanol/gin = 5)
+
+/datum/chemical_reaction/gutpunch
+	results = list(/datum/reagent/consumable/ethanol/gutpunch = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 5, /datum/reagent/consumable/ethanol/tequila = 5)
+
+/datum/chemical_reaction/marsblast
+	results = list(/datum/reagent/consumable/ethanol/marsblast = 10)
+	required_reagents = list(/datum/reagent/consumable/menthol = 5, /datum/reagent/consumable/tomatojuice = 5)
+
+/datum/chemical_reaction/mercuryblast
+	results = list(/datum/reagent/consumable/ethanol/mercuryblast = 10)
+	required_reagents = list(/datum/reagent/consumable/menthol = 5, /datum/reagent/consumable/pwr_game = 5)
+
+/datum/chemical_reaction/moonblast
+	results = list(/datum/reagent/consumable/ethanol/moonblast = 10)
+	required_reagents = list(/datum/reagent/consumable/ice = 5, /datum/reagent/consumable/grenadine = 5)
+
+/datum/chemical_reaction/pianoman
+	results = list(/datum/reagent/consumable/ethanol/pianoman = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/sake = 5, /datum/reagent/consumable/space_up = 5)
+
+/datum/chemical_reaction/pianowoman
+	results = list(/datum/reagent/consumable/ethanol/pianowoman = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 5, /datum/reagent/consumable/space_up = 5)
+
+/datum/chemical_reaction/piledriver
+	results = list(/datum/reagent/consumable/ethanol/piledriver = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/orangejuice = 5)
+
+/datum/chemical_reaction/sparklestar
+	results = list(/datum/reagent/consumable/ethanol/sparklestar = 10)
+	required_reagents = list(/datum/reagent/consumable/sodawater = 5, /datum/reagent/consumable/grenadine = 5)
+
+/datum/chemical_reaction/sunshinecloud
+	results = list(/datum/reagent/consumable/ethanol/sunshinecloud = 10)
+	required_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/ethanol/creme_de_cacao = 5)
+
+/datum/chemical_reaction/suplex
+	results = list(/datum/reagent/consumable/ethanol/suplex = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/ethanol/vodka = 5)
+
+/datum/chemical_reaction/zenstar
+	results = list(/datum/reagent/consumable/ethanol/zenstar = 10)
+	required_reagents = list(/datum/reagent/consumable/sodawater = 5, /datum/reagent/consumable/spacemountainwind = 5)
