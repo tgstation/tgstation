@@ -107,8 +107,15 @@
 	enter_delay = 50 //No speed escapes
 	max_occupants = 5
 	movedelay = 1.15
+	material_flags = MATERIAL_AFFECT_STATISTICS | MATERIAL_COLOR | MATERIAL_ADD_PREFIX
 	var/obj/item/card/id/linked_id = null
 	var/can_drive = FALSE
+
+
+/obj/vehicle/sealed/car/civ/Initialize()
+	custom_materials = list(pick(subtypesof(/datum/material) = 10000))
+	. = ..()
+
 
 /obj/vehicle/sealed/car/civ/generate_actions()
 	. = ..()
