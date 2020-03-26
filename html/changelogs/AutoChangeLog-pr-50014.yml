@@ -1,4 +1,0 @@
-author: "Capsandi"
-delete-after: True
-changes: 
-  - bugfix: "Sheetifier may now be unanchored and deconstructed"

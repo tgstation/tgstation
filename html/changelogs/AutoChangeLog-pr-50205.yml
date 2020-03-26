@@ -1,0 +1,4 @@
+author: "F-OS"
+delete-after: True
+changes: 
+  - spellcheck: "corrects literaly to literally in the description for the Permabrig's plate press"
