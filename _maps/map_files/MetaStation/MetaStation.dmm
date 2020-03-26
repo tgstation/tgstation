@@ -545,6 +545,9 @@
 /obj/structure/chair/stool,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/lizardplushie{
+	name = "Plans-To-Escape"
+	},
 /turf/open/floor/plating,
 /area/security/prison)
 "abJ" = (
@@ -681,6 +684,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "acj" = (
@@ -796,6 +800,7 @@
 	name = "Escape Pod Two"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "acz" = (
@@ -875,12 +880,6 @@
 "acH" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
-	},
-/obj/item/radio/intercom{
-	desc = "Talk through this. It looks like it has been modified to not broadcast.";
-	name = "Prison Intercom (General)";
-	pixel_y = -28;
-	prison_radio = 1
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -1081,6 +1080,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Kills-The-Criminals"
+	},
 /turf/open/floor/plating,
 /area/security/execution/education)
 "acZ" = (
@@ -1116,6 +1118,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "adc" = (
@@ -1134,6 +1137,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "ade" = (
@@ -1146,6 +1150,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "adg" = (
@@ -1334,9 +1339,6 @@
 /turf/open/floor/plating,
 /area/janitor)
 "adJ" = (
-/obj/item/radio/intercom{
-	pixel_x = -28
-	},
 /obj/structure/table,
 /obj/item/storage/backpack/duffelbag/sec/surgery{
 	pixel_y = 5
@@ -1451,6 +1453,9 @@
 /obj/machinery/iv_drip,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/iv_drip,
+/obj/item/toy/plush/lizardplushie{
+	name = "Is-Criminally-Insane"
+	},
 /turf/open/floor/plating,
 /area/security/prison)
 "adY" = (
@@ -1488,6 +1493,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "aeg" = (
@@ -1530,6 +1536,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/execution/education)
 "aek" = (
@@ -1548,6 +1555,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "aen" = (
@@ -1560,6 +1568,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "aep" = (
@@ -1567,6 +1576,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "aeq" = (
@@ -1635,6 +1645,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod Three"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "aeB" = (
@@ -1888,10 +1899,6 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/item/radio/intercom{
-	pixel_x = -29;
-	pixel_y = 23
-	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "afj" = (
@@ -2016,6 +2023,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "afF" = (
@@ -2063,15 +2071,6 @@
 	dir = 4
 	},
 /obj/effect/landmark/event_spawn,
-/turf/open/floor/plating,
-/area/security/prison)
-"afO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = -30
-	},
 /turf/open/floor/plating,
 /area/security/prison)
 "afP" = (
@@ -2248,6 +2247,9 @@
 	pixel_y = 7
 	},
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Scared-Of-Spiders"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "ago" = (
@@ -2280,6 +2282,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "agt" = (
@@ -2366,6 +2369,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "agL" = (
@@ -2380,6 +2384,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "agO" = (
@@ -2411,15 +2416,6 @@
 /obj/structure/lattice,
 /turf/closed/wall/r_wall,
 /area/security/warden)
-"agU" = (
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/security/brig)
 "agW" = (
 /obj/machinery/recharger,
 /obj/structure/cable,
@@ -2535,9 +2531,6 @@
 /area/maintenance/solars/port/fore)
 "aht" = (
 /obj/machinery/power/terminal,
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
@@ -2734,6 +2727,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "aic" = (
@@ -2746,6 +2740,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "aie" = (
@@ -2839,6 +2834,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "aiu" = (
@@ -2879,6 +2875,9 @@
 /obj/structure/closet{
 	name = "Evidence Closet 6"
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Did-The-Crime"
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "aiA" = (
@@ -2918,6 +2917,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
 "aiH" = (
@@ -3055,6 +3055,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "aji" = (
@@ -3083,9 +3084,8 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/lizard{
-	name = "Wags-His-Tail";
-	real_name = "Wags-His-Tail"
+/obj/item/toy/plush/lizardplushie{
+	name = "Wags-His-Tail"
 	},
 /turf/open/floor/plating,
 /area/janitor)
@@ -3115,6 +3115,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "ajo" = (
@@ -3129,6 +3130,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "ajq" = (
@@ -3169,9 +3171,6 @@
 /area/maintenance/disposal/incinerator)
 "ajv" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/obj/item/radio/intercom{
-	pixel_y = 25
-	},
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "ajw" = (
@@ -3180,7 +3179,9 @@
 	req_access_txt = "3"
 	},
 /obj/effect/spawner/lootdrop/maintenance/three,
-/obj/effect/spawner/lootdrop/armory_contraband/metastation,
+/obj/item/toy/plush/lizardplushie{
+	name = "No-Guns-Here"
+	},
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "ajx" = (
@@ -3337,6 +3338,9 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Holos-The-Deck"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "ajZ" = (
@@ -3412,6 +3416,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "akn" = (
@@ -3472,9 +3477,6 @@
 /area/security/brig)
 "aku" = (
 /obj/structure/table,
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
 /obj/item/folder/red{
 	pixel_x = 3
 	},
@@ -3600,9 +3602,6 @@
 /turf/open/floor/plating,
 /area/security/main)
 "akN" = (
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -3781,6 +3780,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "aln" = (
@@ -3793,15 +3793,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
-/turf/open/floor/plating,
-/area/crew_quarters/fitness/recreation)
-"alo" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "alp" = (
@@ -3828,6 +3820,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "alx" = (
@@ -3999,6 +3992,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "alS" = (
@@ -4032,6 +4026,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
 "alY" = (
@@ -4131,6 +4126,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/range)
 "amq" = (
@@ -4243,6 +4239,7 @@
 /obj/machinery/door/airlock/external{
 	req_one_access_txt = "13,8"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "amI" = (
@@ -4328,9 +4325,6 @@
 "amV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/radio/intercom{
-	pixel_y = -29
-	},
 /obj/machinery/computer/atmos_control/incinerator{
 	dir = 4
 	},
@@ -4384,6 +4378,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "and" = (
@@ -4400,6 +4395,9 @@
 "anf" = (
 /obj/structure/bed/roller,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/toy/plush/lizardplushie{
+	name = "Administers-The-Aid"
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "ang" = (
@@ -4533,6 +4531,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "anE" = (
@@ -4739,6 +4738,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aon" = (
@@ -4848,6 +4848,9 @@
 "aoz" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Not-A-Gun"
+	},
 /turf/open/floor/plating,
 /area/security/warden)
 "aoC" = (
@@ -4981,6 +4984,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aoT" = (
@@ -5104,6 +5108,10 @@
 /area/engine/gravity_generator)
 "apj" = (
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "apk" = (
@@ -5159,6 +5167,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "apt" = (
@@ -5416,9 +5425,6 @@
 /area/crew_quarters/fitness/recreation)
 "aqk" = (
 /obj/machinery/vending/coffee,
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /turf/open/floor/plating,
 /area/crew_quarters/fitness/recreation)
 "aql" = (
@@ -5506,9 +5512,6 @@
 /area/maintenance/solars/starboard/fore)
 "aqA" = (
 /obj/machinery/power/terminal,
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
@@ -5652,6 +5655,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/ai_monitored/security/armory)
 "arh" = (
@@ -5739,6 +5743,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/main)
 "arx" = (
@@ -5778,6 +5783,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "arD" = (
@@ -5790,6 +5796,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "arF" = (
@@ -5885,6 +5892,9 @@
 "arS" = (
 /obj/structure/chair/office/light,
 /obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Breaks-The-Gravity"
+	},
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "arT" = (
@@ -5934,6 +5944,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"asa" = (
+/obj/item/toy/plush/lizardplushie{
+	name = "Watches-The-Blasts"
+	},
+/turf/open/floor/plating,
+/area/science/mixing)
 "asd" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -5950,6 +5966,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asg" = (
@@ -5998,6 +6015,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asn" = (
@@ -6105,11 +6123,6 @@
 	pixel_y = 7
 	},
 /obj/structure/table,
-/obj/item/radio/intercom{
-	frequency = 1423;
-	name = "Interrogation Intercom";
-	pixel_y = -31
-	},
 /turf/open/floor/plating,
 /area/security/main)
 "asP" = (
@@ -6146,6 +6159,9 @@
 "asT" = (
 /obj/structure/table/wood,
 /obj/item/lighter,
+/obj/item/toy/plush/lizardplushie{
+	name = "Loves-The-Fire"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "asU" = (
@@ -6219,6 +6235,9 @@
 	pixel_y = 23
 	},
 /obj/item/clothing/under/suit/burgundy,
+/obj/item/toy/plush/lizardplushie{
+	name = "In-The-Closet"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "atc" = (
@@ -6244,6 +6263,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "ath" = (
@@ -6272,6 +6292,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "atl" = (
@@ -6285,6 +6306,7 @@
 /obj/machinery/door/airlock/external{
 	req_access_txt = "13"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "ato" = (
@@ -6293,6 +6315,7 @@
 	name = "Cargo Bay Bridge Access"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ats" = (
@@ -6396,6 +6419,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "atC" = (
@@ -6530,6 +6554,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/main)
 "atY" = (
@@ -6587,6 +6612,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "auh" = (
@@ -6616,6 +6642,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aul" = (
@@ -6631,9 +6658,6 @@
 	dir = 8
 	},
 /turf/open/floor/plating,
-/area/crew_quarters/dorms)
-"aun" = (
-/turf/open/floor/carpet,
 /area/crew_quarters/dorms)
 "auo" = (
 /obj/structure/mopbucket,
@@ -6969,6 +6993,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "avw" = (
@@ -7008,6 +7033,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "avA" = (
@@ -7089,6 +7115,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "avK" = (
@@ -7143,6 +7170,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "avZ" = (
@@ -7158,6 +7186,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "awa" = (
@@ -7280,6 +7309,9 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Will-Never-Confess"
+	},
 /turf/open/floor/plating,
 /area/security/brig)
 "awA" = (
@@ -7333,6 +7365,9 @@
 "awH" = (
 /obj/structure/table/wood,
 /obj/item/paper,
+/obj/item/toy/plush/lizardplushie{
+	name = "Sleeps-All-Day"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "awI" = (
@@ -7360,6 +7395,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/gravity_generator)
 "awM" = (
@@ -7508,6 +7544,9 @@
 /obj/item/clothing/head/beret/sec/navywarden,
 /obj/item/clothing/head/beret/sec/navyhos,
 /obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Wears-Fancy-Clothes"
+	},
 /turf/open/floor/plating,
 /area/security/warden)
 "axm" = (
@@ -7599,13 +7638,6 @@
 /obj/item/taperecorder,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
-	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1423;
-	listening = 0;
-	name = "Interrogation Intercom";
-	pixel_y = -24
 	},
 /turf/open/floor/plating,
 /area/security/brig)
@@ -7787,6 +7819,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayl" = (
@@ -7798,6 +7831,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ayn" = (
@@ -7912,6 +7946,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "ayI" = (
@@ -8009,6 +8044,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "ayX" = (
@@ -8034,6 +8070,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/warden)
 "azd" = (
@@ -8093,6 +8130,9 @@
 	},
 /obj/structure/closet/wardrobe/miner,
 /obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Digs-For-Gold"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
 "azo" = (
@@ -8225,6 +8265,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "azO" = (
@@ -8259,6 +8300,9 @@
 	dir = 5
 	},
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Solves-The-Mystery"
+	},
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "azU" = (
@@ -8339,6 +8383,9 @@
 "aAb" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/item/bikehorn/rubberducky,
+/obj/item/toy/plush/lizardplushie{
+	name = "Almost-A-Duck"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "aAc" = (
@@ -8358,9 +8405,6 @@
 /obj/structure/table,
 /obj/item/clothing/under/suit/black/skirt,
 /obj/item/clothing/under/suit/black_really,
-/obj/item/radio/intercom{
-	pixel_y = 28
-	},
 /obj/item/clothing/accessory/waistcoat,
 /obj/item/clothing/suit/toggle/lawyer/black,
 /obj/item/clothing/under/suit/red,
@@ -8404,6 +8448,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aAm" = (
@@ -8433,12 +8478,6 @@
 "aAp" = (
 /obj/structure/closet/secure_closet/engineering_personal,
 /obj/item/clothing/suit/hooded/wintercoat/engineering,
-/turf/open/floor/plating,
-/area/engine/engineering)
-"aAr" = (
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aAt" = (
@@ -8501,6 +8540,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
 "aAC" = (
@@ -8513,6 +8553,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
 "aAF" = (
@@ -8594,6 +8635,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "High-Value-Loot"
+	},
 /turf/open/floor/plating,
 /area/security/nuke_storage)
 "aAS" = (
@@ -8623,6 +8667,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Labor Camp Shuttle Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
 "aAX" = (
@@ -8824,6 +8869,9 @@
 /area/maintenance/starboard/fore)
 "aBD" = (
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/toy/plush/lizardplushie{
+	name = "Replaced-A-Plant"
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aBE" = (
@@ -9093,6 +9141,7 @@
 	req_access_txt = "12"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aCA" = (
@@ -9104,6 +9153,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "aCC" = (
@@ -9163,7 +9213,7 @@
 	dir = 8
 	},
 /obj/item/bedsheet/dorms,
-/turf/open/floor/carpet,
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aCK" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
@@ -9171,7 +9221,7 @@
 	pixel_y = 23
 	},
 /obj/item/clothing/under/suit/navy,
-/turf/open/floor/carpet,
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aCM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -9180,9 +9230,6 @@
 /area/maintenance/starboard/fore)
 "aCN" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/radio/intercom{
-	pixel_x = -30
-	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aCR" = (
@@ -9241,6 +9288,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aCZ" = (
@@ -9337,6 +9385,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/nuke_storage)
 "aDs" = (
@@ -9357,6 +9406,10 @@
 	pixel_x = -25;
 	req_access_txt = "2"
 	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
 "aDx" = (
@@ -9439,9 +9492,6 @@
 /turf/open/floor/plating,
 /area/security/detectives_office)
 "aDL" = (
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -9502,6 +9552,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "aDR" = (
@@ -9587,27 +9638,18 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
-"aEd" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/door/airlock/maintenance{
-	req_access_txt = "12"
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
 "aEe" = (
 /obj/effect/landmark/xeno_spawn,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aEf" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/carpet,
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aEh" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -9887,6 +9929,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "aFj" = (
@@ -9983,6 +10026,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aFB" = (
@@ -10072,6 +10116,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aFN" = (
@@ -10086,6 +10131,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/construction/storage_wing)
 "aFX" = (
@@ -10127,15 +10173,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
-"aGh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/fore)
 "aGj" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -10172,6 +10209,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "aGr" = (
@@ -10230,6 +10268,9 @@
 /area/crew_quarters/toilet/restrooms)
 "aGC" = (
 /obj/effect/landmark/event_spawn,
+/obj/item/toy/plush/lizardplushie{
+	name = "Sprays-The-Cologne"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/restrooms)
 "aGE" = (
@@ -10292,12 +10333,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aGP" = (
 /obj/structure/closet/secure_closet/personal/cabinet,
 /obj/item/clothing/under/misc/assistantformal,
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aGQ" = (
 /obj/structure/table,
@@ -10396,6 +10437,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/quartermaster/miningoffice)
 "aHe" = (
@@ -10516,11 +10558,11 @@
 /turf/closed/wall,
 /area/lawoffice)
 "aHH" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Law Office Maintenance";
-	req_access_txt = "38"
-	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aHI" = (
@@ -10581,18 +10623,21 @@
 	dir = 8
 	},
 /obj/item/bedsheet/dorms,
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aHT" = (
 /obj/structure/chair/wood{
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aHU" = (
 /obj/structure/table/wood,
 /obj/item/paper,
-/turf/open/floor/wood,
+/obj/item/toy/plush/lizardplushie{
+	name = "Watches-You-Sleep"
+	},
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aHV" = (
 /obj/structure/closet,
@@ -10730,6 +10775,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/construction/storage_wing)
 "aIs" = (
@@ -10773,9 +10819,6 @@
 /area/construction/storage_wing)
 "aIx" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -10839,12 +10882,6 @@
 "aIM" = (
 /obj/structure/chair{
 	name = "Bailiff"
-	},
-/turf/open/floor/plating,
-/area/security/courtroom)
-"aIN" = (
-/obj/item/radio/intercom{
-	pixel_y = 20
 	},
 /turf/open/floor/plating,
 /area/security/courtroom)
@@ -11088,6 +11125,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aJN" = (
@@ -11102,6 +11140,7 @@
 	req_one_access_txt = "12;27"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/storage/primary)
 "aJR" = (
@@ -11130,22 +11169,13 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "aJX" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
 	},
-/turf/open/floor/plating,
-/area/security/courtroom)
-"aJZ" = (
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	dir = 8;
-	listening = 0;
-	name = "Station Intercom (Court)"
-	},
-/obj/structure/table,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "aKa" = (
@@ -11181,10 +11211,6 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/item/radio/intercom{
-	dir = 8;
-	pixel_x = -28
-	},
 /turf/open/floor/plating,
 /area/lawoffice)
 "aKg" = (
@@ -11212,6 +11238,7 @@
 	req_one_access_txt = "1;4;38;12"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aKm" = (
@@ -11221,6 +11248,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aKn" = (
@@ -11233,6 +11261,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "aKp" = (
@@ -11525,6 +11554,9 @@
 	charge = 100;
 	maxcharge = 15000
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Greys-The-Tide"
+	},
 /turf/open/floor/plating,
 /area/storage/primary)
 "aLk" = (
@@ -11698,9 +11730,6 @@
 "aLP" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/scrubber,
-/obj/item/radio/intercom{
-	pixel_y = 26
-	},
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
 "aLQ" = (
@@ -11787,6 +11816,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "aMk" = (
@@ -11815,6 +11848,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aMw" = (
@@ -11922,13 +11956,6 @@
 /obj/item/aiModule/reset/purge,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_upload)
-"aMJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/radio/intercom{
-	pixel_x = -29
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/fore)
 "aML" = (
 /obj/structure/chair{
 	dir = 4;
@@ -11961,6 +11988,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "aMR" = (
@@ -12434,6 +12462,9 @@
 /area/ai_monitored/turret_protected/ai_upload)
 "aOc" = (
 /obj/machinery/holopad/secure,
+/obj/item/toy/plush/lizardplushie{
+	name = "Is-Very-Confused"
+	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_upload)
 "aOd" = (
@@ -12627,6 +12658,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hydroponics/garden)
 "aOH" = (
@@ -12764,6 +12796,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/quartermaster/qm)
 "aPh" = (
@@ -12919,6 +12952,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/lawoffice)
 "aPG" = (
@@ -12999,9 +13033,6 @@
 /turf/open/floor/plating,
 /area/hydroponics/garden)
 "aPR" = (
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
@@ -13058,6 +13089,9 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
+/obj/item/toy/plush/lizardplushie{
+	name = "Covets-The-Belt"
+	},
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aQd" = (
@@ -13182,10 +13216,6 @@
 /area/storage/primary)
 "aQy" = (
 /obj/structure/table,
-/obj/item/radio/intercom{
-	dir = 4;
-	pixel_x = 27
-	},
 /obj/item/t_scanner,
 /obj/item/clothing/gloves/color/fyellow,
 /turf/open/floor/plating,
@@ -13206,15 +13236,6 @@
 	pixel_y = -23
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/ai_monitored/turret_protected/ai_upload)
-"aQC" = (
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	name = "Private AI Channel";
-	pixel_y = -25
-	},
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_upload)
 "aQD" = (
@@ -13506,6 +13527,9 @@
 /obj/item/paper,
 /obj/item/paper,
 /obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Orders-The-Insuls"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "aRK" = (
@@ -13535,6 +13559,9 @@
 /obj/item/paper_bin/carbon{
 	pixel_x = -3;
 	pixel_y = 7
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Isn't-A-Head"
 	},
 /turf/open/floor/plating,
 /area/quartermaster/qm)
@@ -13611,6 +13638,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "aRZ" = (
@@ -13885,6 +13913,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "aTa" = (
@@ -13940,16 +13969,11 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_upload)
 "aTk" = (
 /obj/effect/spawner/structure/window/reinforced/tinted,
-/turf/open/floor/plating,
-/area/security/courtroom)
-"aTm" = (
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
 /turf/open/floor/plating,
 /area/security/courtroom)
 "aTo" = (
@@ -14015,15 +14039,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/locker)
-"aTw" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/locker)
 "aTA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -14035,6 +14050,7 @@
 	req_access_txt = "12"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aTD" = (
@@ -14188,6 +14204,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Escape Pod One"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "aUd" = (
@@ -14196,6 +14213,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aUe" = (
@@ -14223,6 +14241,9 @@
 /obj/structure/closet/secure_closet/security/cargo,
 /obj/machinery/airalarm{
 	pixel_y = 23
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Guards-The-Cargo"
 	},
 /turf/open/floor/plating,
 /area/security/checkpoint/supply)
@@ -14315,13 +14336,6 @@
 	icon_state = "control_stun";
 	name = "AI Upload turret control";
 	pixel_y = 28
-	},
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1447;
-	name = "Private AI Channel";
-	pixel_x = -24;
-	pixel_y = 24
 	},
 /obj/effect/landmark/start/cyborg,
 /obj/machinery/power/apc{
@@ -14537,13 +14551,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
-"aVv" = (
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
-/obj/structure/chair,
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
 "aVy" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -14634,6 +14641,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/checkpoint/supply)
 "aVN" = (
@@ -14664,6 +14672,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/storage/primary)
 "aVT" = (
@@ -14695,6 +14704,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "aVZ" = (
@@ -14738,12 +14748,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
-"aWk" = (
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/central)
 "aWl" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -14751,6 +14755,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "aWo" = (
@@ -14781,6 +14786,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aWt" = (
@@ -14794,6 +14800,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aWv" = (
@@ -14843,6 +14850,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "aWC" = (
@@ -14857,6 +14865,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aWH" = (
@@ -15138,9 +15147,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
@@ -15324,9 +15330,6 @@
 	},
 /obj/item/assembly/flash/handheld,
 /obj/item/assembly/flash/handheld,
-/obj/item/radio/intercom{
-	pixel_y = 28
-	},
 /turf/open/floor/plating,
 /area/storage/tech)
 "aYn" = (
@@ -15335,12 +15338,6 @@
 /obj/item/aiModule/reset,
 /turf/open/floor/plating,
 /area/storage/tech)
-"aYo" = (
-/obj/item/radio/intercom{
-	pixel_x = -29
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/heads/chief)
 "aYp" = (
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
@@ -15375,9 +15372,6 @@
 /turf/open/floor/plating,
 /area/engine/engineering)
 "aYt" = (
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /obj/structure/closet/firecloset,
 /obj/item/clothing/glasses/meson/engine,
 /turf/open/floor/plating,
@@ -15497,6 +15491,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "aYV" = (
@@ -15933,6 +15928,7 @@
 	req_one_access_txt = "12;48;50;1"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bag" = (
@@ -16042,6 +16038,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "bav" = (
@@ -16157,16 +16154,6 @@
 /obj/machinery/holopad,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
-"baZ" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 1
-	},
-/obj/item/radio/intercom{
-	pixel_x = -27;
-	pixel_y = -29
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/central)
 "bba" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
@@ -16195,8 +16182,8 @@
 /area/storage/tools)
 "bbf" = (
 /obj/structure/closet/toolcloset,
-/obj/item/radio/intercom{
-	pixel_y = 28
+/obj/item/toy/plush/lizardplushie{
+	name = "Steals-The-Insuls"
 	},
 /turf/open/floor/plating,
 /area/storage/tools)
@@ -16231,12 +16218,6 @@
 /obj/effect/spawner/lootdrop/techstorage/AI,
 /turf/open/floor/plating,
 /area/storage/tech)
-"bbl" = (
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
-/turf/open/floor/plating,
-/area/storage/tech)
 "bbm" = (
 /turf/open/floor/plating,
 /area/storage/tech)
@@ -16252,6 +16233,9 @@
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/spawner/lootdrop/techstorage/tcomms,
+/obj/item/toy/plush/lizardplushie{
+	name = "Is-Tech-Savvy"
+	},
 /turf/open/floor/plating,
 /area/storage/tech)
 "bbr" = (
@@ -16313,6 +16297,9 @@
 	pixel_y = 7
 	},
 /obj/item/pen,
+/obj/item/toy/plush/lizardplushie{
+	name = "Delams-The-Engine"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "bbz" = (
@@ -16512,6 +16499,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bci" = (
@@ -16575,6 +16563,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bcy" = (
@@ -16736,9 +16725,6 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
 "bcZ" = (
-/obj/item/radio/intercom{
-	pixel_y = 20
-	},
 /obj/machinery/computer/security,
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
@@ -16928,10 +16914,6 @@
 	},
 /obj/structure/table,
 /obj/item/stack/sheet/metal/five,
-/obj/item/radio/intercom{
-	pixel_x = 28;
-	pixel_y = 5
-	},
 /obj/item/circuitboard/machine/paystand,
 /obj/item/stack/cable_coil/five,
 /turf/open/floor/plating,
@@ -16952,9 +16934,6 @@
 /obj/item/flashlight/lamp/green{
 	pixel_x = 1;
 	pixel_y = 5
-	},
-/obj/item/radio/intercom{
-	pixel_x = -27
 	},
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -17089,9 +17068,6 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/chief)
 "beg" = (
@@ -17140,6 +17116,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "bep" = (
@@ -17269,6 +17246,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "beT" = (
@@ -17280,6 +17258,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "beV" = (
@@ -17330,6 +17309,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "bfj" = (
@@ -17376,6 +17356,7 @@
 	req_one_access_txt = "12;63;48;50"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bfo" = (
@@ -17463,6 +17444,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/storage/tools)
 "bfJ" = (
@@ -17493,6 +17475,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "bfN" = (
@@ -17509,6 +17492,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/storage/tech)
 "bfQ" = (
@@ -17560,6 +17544,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
 "bfX" = (
@@ -17833,6 +17818,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bgO" = (
@@ -17886,6 +17872,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "bgU" = (
@@ -18045,12 +18032,6 @@
 /obj/item/camera{
 	pixel_y = 4
 	},
-/obj/item/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Station Intercom (Captain)";
-	pixel_x = -28
-	},
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
@@ -18098,6 +18079,9 @@
 	pixel_y = 4
 	},
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Loves-The-Captain"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
 "bhA" = (
@@ -18257,15 +18241,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/break_room)
-"bia" = (
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/engine/break_room)
 "bib" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -18414,6 +18389,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
 "biz" = (
@@ -18432,6 +18408,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "biC" = (
@@ -18584,6 +18561,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Commands-The-Bridge"
+	},
 /turf/open/floor/plating,
 /area/bridge)
 "bjb" = (
@@ -18799,6 +18779,7 @@
 	name = "Escape Pod Four";
 	req_access_txt = "32"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/break_room)
 "bjO" = (
@@ -18980,6 +18961,9 @@
 /area/quartermaster/office)
 "bko" = (
 /obj/machinery/photocopier,
+/obj/item/toy/plush/lizardplushie{
+	name = "Copies-His-Ass"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/office)
 "bkq" = (
@@ -19043,9 +19027,6 @@
 "bkw" = (
 /obj/structure/table,
 /obj/item/toner,
-/obj/item/radio/intercom{
-	pixel_x = 30
-	},
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "bkz" = (
@@ -19070,9 +19051,6 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bkD" = (
-/obj/item/radio/intercom{
-	pixel_y = 29
-	},
 /obj/machinery/modular_computer/console/preset/engineering,
 /turf/open/floor/plating,
 /area/bridge)
@@ -19216,15 +19194,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/hallway/primary/starboard)
-"bkX" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = -29
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/starboard)
 "bla" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -19279,6 +19248,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/break_room)
 "blk" = (
@@ -19618,6 +19588,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "bmn" = (
@@ -19744,6 +19715,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
 "bmJ" = (
@@ -19769,6 +19741,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/storage/art)
 "bmO" = (
@@ -19782,6 +19755,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bmR" = (
@@ -19793,6 +19767,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bmT" = (
@@ -19801,6 +19776,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bmV" = (
@@ -20188,6 +20164,7 @@
 	name = "Common Mining Dock"
 	},
 /obj/machinery/navbeacon/wayfinding,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "bnR" = (
@@ -20259,6 +20236,17 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/hallway/primary/port)
+"boh" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/hallway/primary/fore)
 "boj" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
@@ -20397,12 +20385,6 @@
 /obj/machinery/computer/communications{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	dir = 8;
-	freerange = 1;
-	name = "Station Intercom (Captain)";
-	pixel_x = 28
-	},
 /obj/machinery/status_display/ai{
 	pixel_y = 32
 	},
@@ -20418,15 +20400,6 @@
 /obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
-"boJ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/radio/intercom{
-	dir = 8;
-	pixel_x = -28
-	},
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/plating,
-/area/hallway/primary/central)
 "boK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
@@ -20455,6 +20428,9 @@
 /obj/structure/easel,
 /obj/item/canvas/twentythreeXtwentythree,
 /obj/item/canvas/twentythreeXtwentythree,
+/obj/item/toy/plush/lizardplushie{
+	name = "Rembrant"
+	},
 /turf/open/floor/plating,
 /area/storage/art)
 "boP" = (
@@ -20478,12 +20454,6 @@
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
-"boS" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/wood,
-/area/crew_quarters/dorms)
 "boT" = (
 /obj/machinery/door/window/southleft{
 	name = "Bar Delivery";
@@ -20913,6 +20883,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "bqi" = (
@@ -21074,9 +21045,6 @@
 /obj/machinery/vending/cart{
 	req_access_txt = "57"
 	},
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "bqF" = (
@@ -21146,9 +21114,6 @@
 /turf/open/floor/plating,
 /area/bridge)
 "bqP" = (
-/obj/item/radio/intercom{
-	pixel_y = -29
-	},
 /obj/structure/rack,
 /obj/item/assembly/signaler,
 /obj/item/assembly/signaler,
@@ -21280,9 +21245,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/radio/intercom{
-	pixel_y = -30
-	},
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "brl" = (
@@ -21295,6 +21257,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "brn" = (
@@ -21325,6 +21288,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "brr" = (
@@ -21422,6 +21386,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "brL" = (
@@ -21769,6 +21734,9 @@
 "bsr" = (
 /obj/structure/cable,
 /obj/structure/chair/office,
+/obj/item/toy/plush/lizardplushie{
+	name = "Welcomes-New-Arrivals"
+	},
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
 "bss" = (
@@ -21789,15 +21757,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/hallway/primary/port)
-"bsw" = (
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/hallway/primary/port)
 "bsy" = (
@@ -21879,6 +21838,9 @@
 	},
 /obj/structure/bed/dogbed/ian,
 /mob/living/simple_animal/pet/dog/corgi/Ian,
+/obj/item/toy/plush/lizardplushie{
+	name = "Ian's-Best-Friend"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "bsQ" = (
@@ -21893,6 +21855,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "bsT" = (
@@ -21901,6 +21864,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "bsU" = (
@@ -21965,6 +21929,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "btc" = (
@@ -22012,10 +21977,10 @@
 "btg" = (
 /obj/item/hand_tele,
 /obj/structure/window/reinforced,
-/obj/item/radio/intercom{
-	pixel_x = 27
-	},
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Is-In-Control"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
 "bth" = (
@@ -22040,6 +22005,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "btj" = (
@@ -22097,6 +22063,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "btt" = (
@@ -22150,9 +22117,6 @@
 /turf/open/floor/plating,
 /area/engine/break_room)
 "btE" = (
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /obj/structure/chair/office{
 	dir = 4
 	},
@@ -22295,6 +22259,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/library)
 "buh" = (
@@ -22302,6 +22267,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/library)
 "buk" = (
@@ -22331,6 +22297,10 @@
 	},
 /obj/structure/cable,
 /obj/machinery/navbeacon/wayfinding,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "bun" = (
@@ -22386,6 +22356,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
 "buv" = (
@@ -22423,6 +22394,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "buB" = (
@@ -22431,12 +22403,6 @@
 /area/bridge)
 "buC" = (
 /obj/structure/bookcase,
-/turf/open/floor/plating,
-/area/bridge)
-"buD" = (
-/obj/item/radio/intercom{
-	pixel_x = -26
-	},
 /turf/open/floor/plating,
 /area/bridge)
 "buF" = (
@@ -22465,6 +22431,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "buP" = (
@@ -22532,6 +22499,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bva" = (
@@ -22833,6 +22801,7 @@
 	name = "MiniSat Space Access Airlock";
 	req_access_txt = "32"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "bwm" = (
@@ -22876,9 +22845,6 @@
 /obj/machinery/shower{
 	pixel_y = 12
 	},
-/obj/item/radio/intercom{
-	pixel_x = 28
-	},
 /turf/open/floor/plating,
 /area/medical/virology)
 "bwq" = (
@@ -22896,9 +22862,6 @@
 "bwt" = (
 /obj/item/book/manual/wiki/security_space_law{
 	pixel_y = 3
-	},
-/obj/item/radio/intercom{
-	pixel_y = 28
 	},
 /obj/structure/table,
 /turf/open/floor/plating,
@@ -22989,6 +22952,10 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bwH" = (
@@ -23027,13 +22994,6 @@
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "bwS" = (
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/crew_quarters/bar)
-"bwU" = (
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
@@ -23095,6 +23055,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bxf" = (
@@ -23154,6 +23115,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/dark,
 /area/engine/break_room)
 "bxn" = (
@@ -23251,6 +23213,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "bxP" = (
@@ -23333,13 +23296,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hop)
-"byc" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/radio/intercom{
-	pixel_x = -26
-	},
-/turf/open/floor/plating,
-/area/bridge)
 "byf" = (
 /obj/structure/chair/comfy/beige,
 /turf/open/floor/plating,
@@ -23353,6 +23309,9 @@
 	dir = 5
 	},
 /obj/structure/chair/comfy/beige,
+/obj/item/toy/plush/lizardplushie{
+	name = "Buys-The-Shares"
+	},
 /turf/open/floor/plating,
 /area/bridge)
 "byi" = (
@@ -23372,6 +23331,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "byn" = (
@@ -23385,6 +23345,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
 "byp" = (
@@ -23454,6 +23415,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "byD" = (
@@ -23594,6 +23556,9 @@
 "bzd" = (
 /obj/machinery/meter/atmos/distro_loop,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/visible,
+/obj/item/toy/plush/lizardplushie{
+	name = "Sabotages-The-Air"
+	},
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bze" = (
@@ -23788,6 +23753,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/library)
 "bzJ" = (
@@ -23801,9 +23767,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/command)
 "bzM" = (
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /obj/structure/sign/warning/electricshock{
 	pixel_y = 32
 	},
@@ -23813,13 +23776,6 @@
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
-/turf/open/floor/plating,
-/area/hallway/secondary/command)
-"bzO" = (
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/hallway/secondary/command)
 "bzP" = (
@@ -23932,12 +23888,6 @@
 /mob/living/simple_animal/pet/fox/Renault,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/captain/private)
-"bAf" = (
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/heads/captain/private)
 "bAg" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plating,
@@ -23955,6 +23905,9 @@
 /area/crew_quarters/bar)
 "bAj" = (
 /obj/structure/table/reinforced,
+/obj/item/toy/plush/lizardplushie{
+	name = "Mixes-The-Drinks"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "bAk" = (
@@ -24085,9 +24038,8 @@
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/radio/intercom{
-	pixel_x = -30;
-	pixel_y = 24
+/obj/item/toy/plush/lizardplushie{
+	name = "Floods-The-Plasma"
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -24331,6 +24283,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/toilet/auxiliary)
 "bBp" = (
@@ -24409,6 +24362,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "bBF" = (
@@ -24423,6 +24377,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "bBH" = (
@@ -24445,6 +24400,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "bBO" = (
@@ -24454,6 +24410,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bBR" = (
@@ -24832,15 +24789,6 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/command)
-"bDh" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/command)
 "bDi" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -25016,6 +24964,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bDT" = (
@@ -25125,6 +25074,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bEn" = (
@@ -25137,6 +25087,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bEq" = (
@@ -25322,6 +25273,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/bar)
 "bFr" = (
@@ -25417,6 +25369,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bFB" = (
@@ -25545,6 +25498,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bFQ" = (
@@ -25682,9 +25636,9 @@
 /area/maintenance/starboard)
 "bGq" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance";
-	req_one_access_txt = "12;37"
+	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bGr" = (
@@ -25705,12 +25659,6 @@
 	},
 /turf/open/floor/plating,
 /area/library)
-"bGv" = (
-/obj/item/radio/intercom{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/library)
 "bGy" = (
 /turf/closed/wall/r_wall,
 /area/ai_monitored/storage/eva)
@@ -25719,6 +25667,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/ai_monitored/storage/eva)
 "bGA" = (
@@ -25732,6 +25681,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/ai_monitored/storage/eva)
 "bGC" = (
@@ -25742,6 +25692,10 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
 /obj/machinery/navbeacon/wayfinding,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/teleporter)
 "bGE" = (
@@ -25792,6 +25746,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/gateway)
 "bGP" = (
@@ -25811,6 +25766,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bGV" = (
@@ -26239,12 +26195,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/gateway)
-"bIu" = (
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/bar)
 "bIv" = (
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 10
@@ -26519,9 +26469,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/obj/item/radio/intercom{
-	pixel_x = -29
-	},
 /turf/open/floor/wood,
 /area/vacant_room/office)
 "bJv" = (
@@ -26555,6 +26502,9 @@
 /area/vacant_room/office)
 "bJy" = (
 /obj/effect/decal/cleanable/cobweb,
+/obj/item/toy/plush/lizardplushie{
+	name = "Reads-The-Novels"
+	},
 /turf/open/floor/plating,
 /area/library)
 "bJA" = (
@@ -26741,6 +26691,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "bKl" = (
@@ -26769,6 +26720,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/theatre)
 "bKr" = (
@@ -27067,6 +27019,9 @@
 /area/ai_monitored/storage/eva)
 "bLr" = (
 /obj/machinery/teleport/hub,
+/obj/item/toy/plush/lizardplushie{
+	name = "Goes-To-Space"
+	},
 /turf/open/floor/plating,
 /area/teleporter)
 "bLs" = (
@@ -27117,6 +27072,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge/showroom/corporate)
 "bLy" = (
@@ -27252,6 +27208,9 @@
 /obj/item/stock_parts/subspace/analyzer,
 /obj/item/stock_parts/subspace/analyzer,
 /obj/item/stock_parts/subspace/analyzer,
+/obj/item/toy/plush/lizardplushie{
+	name = "Doesn't-Understand-Telecoms"
+	},
 /turf/open/floor/plasteel/dark,
 /area/storage/tcom)
 "bLX" = (
@@ -27285,9 +27244,6 @@
 /area/engine/atmos)
 "bMe" = (
 /obj/structure/reagent_dispensers/fueltank,
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -27302,6 +27258,9 @@
 /obj/item/clothing/gloves/color/black,
 /obj/item/clothing/mask/gas,
 /obj/item/clothing/mask/gas,
+/obj/item/toy/plush/lizardplushie{
+	name = "Stares-At-Pipes"
+	},
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bMg" = (
@@ -27401,15 +27360,6 @@
 "bMv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
-	},
-/turf/open/floor/plating,
-/area/hallway/secondary/entry)
-"bMw" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = -25
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
@@ -27618,9 +27568,6 @@
 	pixel_x = 5;
 	pixel_y = -1
 	},
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/bridge/showroom/corporate)
@@ -27694,23 +27641,12 @@
 	pixel_x = -1;
 	pixel_y = 2
 	},
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /turf/open/floor/plating,
 /area/gateway)
 "bNs" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/central)
-"bNt" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/radio/intercom{
-	dir = 8;
-	pixel_x = -28
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/central)
 "bNv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -27760,6 +27696,9 @@
 /obj/machinery/gibber,
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 4
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Is-The-Food"
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen/coldroom)
@@ -27903,6 +27842,7 @@
 	name = "Auxiliary Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "bOf" = (
@@ -27936,6 +27876,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/library)
 "bOm" = (
@@ -27943,6 +27884,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/library)
 "bOo" = (
@@ -28000,6 +27942,9 @@
 /obj/item/tank/jetpack/carbondioxide{
 	pixel_x = -4;
 	pixel_y = 1
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Explores-The-Void"
 	},
 /turf/open/floor/plating,
 /area/ai_monitored/storage/eva)
@@ -28087,6 +28032,9 @@
 /area/crew_quarters/kitchen)
 "bOS" = (
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Cooks-The-Food"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "bOT" = (
@@ -28147,6 +28095,9 @@
 	pixel_y = -2
 	},
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Honks-A-Lot"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/theatre)
 "bPd" = (
@@ -28178,6 +28129,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bPg" = (
@@ -28430,6 +28382,9 @@
 /area/library)
 "bPW" = (
 /obj/structure/chair/comfy/brown,
+/obj/item/toy/plush/lizardplushie{
+	name = "Does-The-Research"
+	},
 /turf/open/floor/plating,
 /area/library)
 "bPX" = (
@@ -28569,6 +28524,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/gateway)
 "bQu" = (
@@ -28593,6 +28549,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/central)
 "bQy" = (
@@ -28747,14 +28704,6 @@
 	},
 /turf/open/floor/plating,
 /area/library)
-"bRo" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/radio/intercom{
-	dir = 4;
-	pixel_x = 27
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/central)
 "bRs" = (
 /obj/machinery/power/shieldwallgen,
 /turf/open/floor/plating,
@@ -28979,14 +28928,12 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/kitchen)
 "bRX" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = -29
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -29157,10 +29104,6 @@
 "bSC" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk,
-/obj/item/radio/intercom{
-	dir = 4;
-	pixel_x = 27
-	},
 /turf/open/floor/plating,
 /area/library)
 "bSE" = (
@@ -29209,6 +29152,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge/showroom/corporate)
 "bSM" = (
@@ -29216,6 +29160,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge/showroom/corporate)
 "bSO" = (
@@ -29239,6 +29184,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hydroponics)
 "bSV" = (
@@ -29283,6 +29229,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bTa" = (
@@ -29450,15 +29397,6 @@
 	location = "10.2-Aft-Port-Corner"
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/hallway/primary/central)
-"bTM" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "bTO" = (
@@ -29695,9 +29633,6 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bUC" = (
-/obj/item/radio/intercom{
-	pixel_y = 28
-	},
 /obj/machinery/pipedispenser/disposal/transit_tube,
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -29787,6 +29722,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bUT" = (
@@ -29915,6 +29851,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bVB" = (
@@ -30059,6 +29996,7 @@
 	req_one_access_txt = "12;5;39;37;25;28"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bWg" = (
@@ -30198,6 +30136,9 @@
 /obj/machinery/hydroponics/constructable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Grows-From-Soil"
 	},
 /turf/open/floor/plating,
 /area/hydroponics)
@@ -30520,6 +30461,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "bYc" = (
@@ -30531,6 +30473,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "bYe" = (
@@ -30631,9 +30574,6 @@
 /obj/item/tank/internals/oxygen,
 /obj/item/radio/off,
 /obj/item/radio/off,
-/obj/item/radio/intercom{
-	pixel_x = 27
-	},
 /turf/open/floor/plating,
 /area/teleporter)
 "bYr" = (
@@ -30744,6 +30684,7 @@
 	req_one_access_txt = "12;5;39;25;28"
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bYR" = (
@@ -30808,6 +30749,9 @@
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Guards-The-Medbay"
 	},
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
@@ -30926,6 +30870,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bZB" = (
@@ -30944,9 +30889,6 @@
 "bZF" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 5
-	},
-/obj/item/radio/intercom{
-	pixel_x = -30
 	},
 /turf/open/floor/plating,
 /area/engine/atmos)
@@ -31072,6 +31014,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
 "caf" = (
@@ -31130,6 +31073,9 @@
 	},
 /obj/item/clothing/glasses/science,
 /obj/item/relic,
+/obj/item/toy/plush/lizardplushie{
+	name = "Has-Terrible-Computer"
+	},
 /turf/open/floor/plating,
 /area/science/research)
 "cav" = (
@@ -31239,6 +31185,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hydroponics)
 "caK" = (
@@ -31266,6 +31213,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hydroponics)
 "caR" = (
@@ -31300,6 +31248,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "caU" = (
@@ -31564,14 +31513,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/maintenance{
-	name = "Medical Freezer Maintenance";
-	req_access_txt = "5"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cbE" = (
@@ -31608,6 +31557,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/coldroom)
 "cbJ" = (
@@ -31666,13 +31616,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
-"cbR" = (
-/obj/item/radio/intercom{
-	pixel_x = -28
-	},
-/obj/structure/chair,
-/turf/open/floor/plating,
-/area/medical/medbay/central)
 "cbS" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -31805,9 +31748,6 @@
 /obj/item/toy/prize/honk{
 	pixel_y = 12
 	},
-/obj/item/radio/intercom{
-	pixel_y = -29
-	},
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/crew_quarters/theatre)
@@ -31821,9 +31761,6 @@
 /obj/structure/table,
 /obj/item/book/manual/hydroponics_pod_people,
 /obj/item/paper/guides/jobs/hydroponics,
-/obj/item/radio/intercom{
-	pixel_y = -25
-	},
 /turf/open/floor/plating,
 /area/hallway/primary/central)
 "ccr" = (
@@ -31837,13 +31774,6 @@
 	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
-	},
-/turf/open/floor/plating,
-/area/hydroponics)
-"ccu" = (
-/obj/machinery/hydroponics/constructable,
-/obj/item/radio/intercom{
-	pixel_y = -29
 	},
 /turf/open/floor/plating,
 /area/hydroponics)
@@ -31992,6 +31922,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "ccX" = (
@@ -32103,6 +32034,9 @@
 	dir = 1;
 	pixel_y = -22
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Cold-As-Fuck"
+	},
 /turf/open/floor/plating,
 /area/medical/coldroom)
 "cdo" = (
@@ -32154,10 +32088,6 @@
 	dir = 5
 	},
 /obj/effect/landmark/start/depsec/medical,
-/obj/item/radio/intercom{
-	pixel_x = -27;
-	pixel_y = -25
-	},
 /turf/open/floor/plating,
 /area/security/checkpoint/medical)
 "cdy" = (
@@ -32294,12 +32224,16 @@
 /obj/structure/chair{
 	dir = 8
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Guards-The-Science"
+	},
 /turf/open/floor/plating,
 /area/security/checkpoint/science/research)
 "cdU" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cdV" = (
@@ -32324,9 +32258,6 @@
 /obj/item/clothing/gloves/color/orange{
 	pixel_x = 4;
 	pixel_y = -2
-	},
-/obj/item/radio/intercom{
-	pixel_y = 28
 	},
 /turf/open/floor/plating,
 /area/janitor)
@@ -32475,13 +32406,6 @@
 /obj/machinery/telecomms/server/presets/command,
 /turf/open/floor/circuit/telecomms/mainframe,
 /area/tcommsat/server)
-"ceF" = (
-/obj/structure/bed/roller,
-/obj/item/radio/intercom{
-	pixel_y = -30
-	},
-/turf/open/floor/plating,
-/area/medical/medbay/central)
 "ceG" = (
 /obj/structure/bed/roller,
 /turf/open/floor/plating,
@@ -32519,12 +32443,6 @@
 	},
 /turf/open/floor/plating,
 /area/science/research)
-"ceS" = (
-/obj/item/radio/intercom{
-	pixel_y = -30
-	},
-/turf/open/floor/plating,
-/area/science/research)
 "ceU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/airalarm{
@@ -32551,10 +32469,6 @@
 /turf/open/floor/plating,
 /area/security/checkpoint/science/research)
 "ceX" = (
-/obj/item/radio/intercom{
-	dir = 4;
-	pixel_x = 27
-	},
 /obj/structure/chair{
 	dir = 8
 	},
@@ -32645,6 +32559,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cfi" = (
@@ -32679,6 +32594,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "cfl" = (
@@ -32787,8 +32703,8 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/item/radio/intercom{
-	pixel_x = 28
+/obj/item/toy/plush/lizardplushie{
+	name = "Tends-To-Cryo"
 	},
 /turf/open/floor/plating,
 /area/medical/cryo)
@@ -32799,6 +32715,8 @@
 "cfU" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/navbeacon/wayfinding,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "cfW" = (
@@ -32853,6 +32771,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "cgb" = (
@@ -33229,6 +33148,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/checkpoint/science/research)
 "chr" = (
@@ -33239,6 +33159,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "chs" = (
@@ -33267,6 +33188,9 @@
 	pixel_y = 32
 	},
 /obj/structure/chair/stool,
+/obj/item/toy/plush/lizardplushie{
+	name = "Drinks-The-Coffee"
+	},
 /turf/open/floor/plating,
 /area/science/research)
 "chv" = (
@@ -33441,6 +33365,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "cif" = (
@@ -33463,6 +33388,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "cit" = (
@@ -33631,6 +33557,10 @@
 	pixel_y = 8
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "cjb" = (
@@ -33770,6 +33700,9 @@
 /area/medical/storage)
 "cjA" = (
 /obj/machinery/recharge_station,
+/obj/item/toy/plush/lizardplushie{
+	name = "Charged-To-Capacity"
+	},
 /turf/open/floor/plating,
 /area/medical/storage)
 "cjB" = (
@@ -33832,6 +33765,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "cjQ" = (
@@ -34033,9 +33967,6 @@
 /area/science/research)
 "ckq" = (
 /obj/machinery/vending/coffee,
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /turf/open/floor/plating,
 /area/science/research)
 "cku" = (
@@ -34370,10 +34301,6 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	dir = 8;
-	pixel_y = -28
-	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plating,
 /area/science/research)
@@ -34396,6 +34323,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "clL" = (
@@ -34457,9 +34385,6 @@
 	pixel_x = 3;
 	pixel_y = 4
 	},
-/obj/item/radio/intercom{
-	pixel_x = 28
-	},
 /turf/open/floor/plating,
 /area/science/genetics)
 "clW" = (
@@ -34518,6 +34443,10 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "cme" = (
@@ -34613,9 +34542,9 @@
 /area/crew_quarters/heads/cmo)
 "cmy" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Medbay Maintenance";
-	req_one_access_txt = "5;12;33;69"
+	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
 "cmz" = (
@@ -34643,6 +34572,9 @@
 /obj/item/stack/packageWrap,
 /obj/item/hand_labeler,
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Mixes-The-Meth"
+	},
 /turf/open/floor/plating,
 /area/medical/pharmacy)
 "cmD" = (
@@ -34659,19 +34591,15 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/aft)
-"cmF" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	pixel_x = -28
-	},
-/turf/open/floor/plating,
-/area/science/lab)
 "cmG" = (
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 6
 	},
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Researches-Mining-Tech"
+	},
 /turf/open/floor/plating,
 /area/science/lab)
 "cmH" = (
@@ -34720,6 +34648,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cmN" = (
@@ -34727,6 +34656,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5
 	},
@@ -34884,6 +34814,9 @@
 "cnv" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden,
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Treats-The-Injured"
+	},
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "cnx" = (
@@ -34939,10 +34872,6 @@
 /turf/open/floor/plating,
 /area/crew_quarters/heads/cmo)
 "cnH" = (
-/obj/item/radio/intercom{
-	dir = 8;
-	pixel_x = -28
-	},
 /obj/item/book/manual/wiki/chemistry{
 	pixel_x = -4;
 	pixel_y = 4
@@ -35097,12 +35026,6 @@
 "cof" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
-	},
-/turf/open/floor/plating,
-/area/science/research)
-"cog" = (
-/obj/item/radio/intercom{
-	pixel_y = 20
 	},
 /turf/open/floor/plating,
 /area/science/research)
@@ -35273,6 +35196,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "coO" = (
@@ -35496,6 +35420,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/genetics)
 "cpy" = (
@@ -35535,6 +35460,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "cpG" = (
@@ -35718,9 +35644,9 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/maintenance{
-	name = "CMO Maintenance";
-	req_access_txt = "40"
+	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
 "cqq" = (
@@ -36075,22 +36001,15 @@
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
 "crE" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Pharmacy Maintenance";
-	req_access_txt = "69"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
-"crF" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/radio/intercom{
-	pixel_x = -29
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/aft)
 "crH" = (
 /obj/machinery/power/apc/highcap/five_k{
 	areastring = "/area/hallway/primary/aft";
@@ -36173,6 +36092,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/storage)
 "crU" = (
@@ -36399,6 +36319,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
 "csJ" = (
@@ -36441,6 +36362,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science/central)
 "csN" = (
@@ -36473,6 +36395,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science/central)
 "csR" = (
@@ -36567,6 +36490,9 @@
 /obj/structure/sign/warning/biohazard{
 	pixel_y = 32
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Better-Than-Lamarr"
+	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
 "cte" = (
@@ -36635,12 +36561,6 @@
 	pixel_x = -7;
 	pixel_y = -26;
 	req_access_txt = "40"
-	},
-/turf/open/floor/plating,
-/area/crew_quarters/heads/cmo)
-"cty" = (
-/obj/item/radio/intercom{
-	pixel_y = -26
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/cmo)
@@ -36744,6 +36664,9 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Ruptures-The-Tanks"
+	},
 /turf/open/floor/plating,
 /area/science/storage)
 "ctZ" = (
@@ -36800,6 +36723,9 @@
 	dir = 4
 	},
 /obj/structure/chair/comfy,
+/obj/item/toy/plush/lizardplushie{
+	name = "Comfy-As-Hell"
+	},
 /turf/open/floor/plating,
 /area/medical/break_room)
 "cum" = (
@@ -37054,6 +36980,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
 "cvQ" = (
@@ -37114,13 +37041,6 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/open/floor/plating,
 /area/science/storage)
-"cvY" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
-/turf/open/floor/plating,
-/area/science/storage)
 "cwa" = (
 /obj/structure/reagent_dispensers/watertank/high,
 /turf/open/floor/plating,
@@ -37138,6 +37058,9 @@
 /area/space/nearstation)
 "cwn" = (
 /obj/structure/closet/secure_closet/medical2,
+/obj/item/toy/plush/lizardplushie{
+	name = "Causes-The-Sleep"
+	},
 /turf/open/floor/plating,
 /area/medical/surgery/room_b)
 "cwo" = (
@@ -37186,9 +37109,6 @@
 /area/science/robotics/mechbay)
 "cwJ" = (
 /obj/machinery/computer/mech_bay_power_console,
-/obj/item/radio/intercom{
-	pixel_y = 20
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/robotics/mechbay)
@@ -37201,6 +37121,9 @@
 	dir = 4
 	},
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Played-College-Ball"
+	},
 /turf/open/floor/plating,
 /area/science/nanite)
 "cwM" = (
@@ -37267,9 +37190,6 @@
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
-	},
-/obj/item/radio/intercom{
-	pixel_y = -29
 	},
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hor)
@@ -37427,9 +37347,6 @@
 /turf/open/floor/plating,
 /area/science/nanite)
 "cxJ" = (
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /obj/structure/sink{
 	dir = 8;
 	pixel_x = 11
@@ -37563,9 +37480,6 @@
 /turf/open/floor/plating,
 /area/science/mixing)
 "cyC" = (
-/obj/item/radio/intercom{
-	pixel_y = 25
-	},
 /obj/machinery/atmospherics/components/unary/thermomachine/heater,
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -37635,6 +37549,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/break_room)
 "cyT" = (
@@ -37653,13 +37568,6 @@
 /obj/structure/disposalpipe/junction/flip,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
-"czf" = (
-/obj/item/radio/intercom{
-	pixel_x = -26
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plating,
-/area/hallway/primary/aft)
 "czh" = (
 /obj/machinery/button/door{
 	id = "Skynet_launch";
@@ -37693,9 +37601,6 @@
 /obj/item/paper_bin{
 	pixel_x = -2;
 	pixel_y = 4
-	},
-/obj/item/radio/intercom{
-	pixel_x = -29
 	},
 /turf/open/floor/plating,
 /area/science/nanite)
@@ -37750,6 +37655,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "czD" = (
@@ -37780,6 +37686,9 @@
 	pixel_y = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/lizardplushie{
+	name = "Absorbs-The-Rads"
+	},
 /turf/open/floor/plating,
 /area/maintenance/disposal/incinerator)
 "czI" = (
@@ -37945,6 +37854,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/mixing)
 "cAx" = (
@@ -38062,6 +37972,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/research)
 "cAO" = (
@@ -38269,6 +38180,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
 "cBD" = (
@@ -38307,6 +38219,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/mixing)
 "cBH" = (
@@ -38397,13 +38310,6 @@
 /obj/machinery/vending/cigarette,
 /turf/open/floor/plasteel/dark,
 /area/hallway/primary/aft)
-"cCm" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/aft)
 "cCn" = (
 /turf/closed/wall/r_wall,
 /area/science/robotics/mechbay)
@@ -38421,6 +38327,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/robotics/mechbay)
 "cCq" = (
@@ -38493,9 +38400,6 @@
 /area/science/mixing)
 "cCx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /obj/structure/tank_dispenser,
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -38644,12 +38548,6 @@
 	},
 /turf/open/floor/plating,
 /area/medical/medbay/central)
-"cCY" = (
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
-/turf/open/floor/plating,
-/area/medical/chemistry)
 "cCZ" = (
 /obj/machinery/vending/cola/random,
 /turf/open/floor/plasteel/dark,
@@ -38728,6 +38626,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/research)
 "cDi" = (
@@ -38845,9 +38744,6 @@
 /turf/open/floor/plating,
 /area/medical/psychology)
 "cDO" = (
-/obj/item/radio/intercom{
-	pixel_x = 28
-	},
 /obj/item/flashlight/lamp/green{
 	pixel_y = 4
 	},
@@ -39213,6 +39109,10 @@
 /area/science/mixing/chamber)
 "cFo" = (
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "cFp" = (
@@ -39222,6 +39122,10 @@
 /area/science/mixing/chamber)
 "cFq" = (
 /obj/effect/mapping_helpers/airlock/locked,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/mixing/chamber)
 "cFs" = (
@@ -39638,6 +39542,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cHi" = (
@@ -39775,6 +39680,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cHN" = (
@@ -39812,6 +39718,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/robotics/lab)
 "cHW" = (
@@ -39842,6 +39749,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/server)
 "cIa" = (
@@ -39926,6 +39834,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/lab)
 "cIu" = (
@@ -39935,6 +39844,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cIA" = (
@@ -40047,9 +39957,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 9
 	},
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /turf/open/floor/plating,
 /area/science/research)
 "cIT" = (
@@ -40060,6 +39967,9 @@
 /area/science/server)
 "cIV" = (
 /obj/structure/chair/office/light,
+/obj/item/toy/plush/lizardplushie{
+	name = "Generates-The-Points"
+	},
 /turf/open/floor/plating,
 /area/science/server)
 "cIW" = (
@@ -40075,6 +39985,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/dark,
 /area/science/server)
 "cIY" = (
@@ -40148,6 +40059,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/department/science/central)
 "cJq" = (
@@ -40192,9 +40104,6 @@
 /obj/machinery/reagentgrinder,
 /obj/item/stack/sheet/mineral/plasma{
 	pixel_y = 10
-	},
-/obj/item/radio/intercom{
-	pixel_y = -28
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -40257,9 +40166,6 @@
 /obj/structure/table,
 /obj/item/retractor,
 /obj/item/hemostat,
-/obj/item/radio/intercom{
-	pixel_x = -29
-	},
 /obj/item/cautery,
 /turf/open/floor/plating,
 /area/science/robotics/lab)
@@ -40345,9 +40251,6 @@
 /turf/open/floor/plating,
 /area/science/server)
 "cJS" = (
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /obj/machinery/computer/rdservercontrol{
 	dir = 1
 	},
@@ -40409,6 +40312,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "cKn" = (
@@ -40554,6 +40458,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
 "cKI" = (
@@ -40612,6 +40517,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "cKR" = (
@@ -40647,6 +40553,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cLc" = (
@@ -40656,6 +40563,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cLd" = (
@@ -40721,6 +40629,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;5;39;6"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cLn" = (
@@ -40785,6 +40694,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
 "cLx" = (
@@ -40808,6 +40718,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
 "cLB" = (
@@ -40901,6 +40812,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "cLQ" = (
@@ -40958,6 +40870,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/chapel/office)
 "cMa" = (
@@ -40974,6 +40887,9 @@
 /obj/item/organ/heart,
 /obj/item/soulstone/anybody/chaplain,
 /obj/structure/table,
+/obj/item/toy/plush/lizardplushie{
+	name = "Sword-Of-God"
+	},
 /turf/open/floor/plating,
 /area/chapel/office)
 "cMb" = (
@@ -40982,6 +40898,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "cMd" = (
@@ -41019,6 +40936,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "cMo" = (
@@ -41255,6 +41173,9 @@
 	icon_state = "map-left-MS";
 	pixel_y = 32
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Beats-The-Clown"
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "cNd" = (
@@ -41278,6 +41199,7 @@
 	name = "Auxiliary Escape Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
 "cNf" = (
@@ -41402,12 +41324,6 @@
 /turf/open/floor/plating,
 /area/chapel/office)
 "cNz" = (
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = -25
-	},
 /obj/structure/chair,
 /turf/open/floor/plating,
 /area/chapel/office)
@@ -41415,6 +41331,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/chapel/main)
 "cNB" = (
@@ -41470,6 +41387,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/chapel/main)
 "cNI" = (
@@ -41608,6 +41526,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/chapel/office)
 "cOd" = (
@@ -41684,6 +41603,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/chapel/main)
 "cOo" = (
@@ -41720,6 +41640,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "cOw" = (
@@ -41780,6 +41701,9 @@
 	pixel_x = 2;
 	pixel_y = 2
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Burns-The-Heathens"
+	},
 /turf/open/floor/plating,
 /area/chapel/office)
 "cOG" = (
@@ -41813,12 +41737,6 @@
 /turf/open/floor/plating,
 /area/chapel/office)
 "cOL" = (
-/obj/item/radio/intercom{
-	broadcasting = 1;
-	frequency = 1481;
-	name = "Confessional Intercom";
-	pixel_x = 25
-	},
 /obj/structure/chair{
 	dir = 1
 	},
@@ -41858,6 +41776,9 @@
 	},
 /obj/structure/chair{
 	dir = 8
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Escapes-The-Station"
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
@@ -41952,6 +41873,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/chapel/office)
 "cPm" = (
@@ -42134,6 +42056,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/white,
 /area/science/research)
 "cPZ" = (
@@ -42166,6 +42089,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/chapel/main)
 "cQk" = (
@@ -42211,9 +42135,6 @@
 "cQB" = (
 /obj/machinery/doppler_array/research/science{
 	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = 22
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
@@ -42298,16 +42219,6 @@
 	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
-"cQS" = (
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "xeno_blastdoor";
-	name = "biohazard containment door"
-	},
-/turf/open/floor/plating,
-/area/science/xenobiology)
 "cQV" = (
 /obj/item/flashlight/lantern{
 	pixel_y = 7
@@ -42330,6 +42241,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Departure Lounge Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "cQZ" = (
@@ -42358,6 +42270,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "cRe" = (
@@ -42453,6 +42366,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "cRw" = (
@@ -43049,6 +42963,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "cTr" = (
@@ -43120,6 +43035,13 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
+"cTX" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/item/toy/plush/lizardplushie{
+	name = "Surprise-Botanist-Friend"
+	},
+/turf/open/floor/plating,
+/area/hydroponics)
 "cTY" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/flasher{
@@ -43192,22 +43114,9 @@
 /obj/item/camera_film{
 	pixel_y = 9
 	},
-/obj/item/radio/intercom{
-	dir = 4;
-	pixel_x = 27
-	},
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/library)
-"cVd" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 8
-	},
-/obj/item/radio/intercom{
-	pixel_x = -30
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/central)
 "cVe" = (
 /obj/machinery/computer/bookmanagement,
 /obj/structure/noticeboard{
@@ -43262,6 +43171,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/virology)
 "cVJ" = (
@@ -43287,6 +43197,7 @@
 	name = "Construction Zone"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "cWN" = (
@@ -43338,6 +43249,9 @@
 /obj/structure/table/optable{
 	name = "Robotics Operating Table"
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Removes-The-Brain"
+	},
 /turf/open/floor/plating,
 /area/science/robotics/lab)
 "cYj" = (
@@ -43386,6 +43300,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "cYQ" = (
@@ -43528,12 +43443,6 @@
 /obj/item/assembly/igniter{
 	pixel_x = 2;
 	pixel_y = -1
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
-"daN" = (
-/obj/item/radio/intercom{
-	pixel_y = -25
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
@@ -43680,6 +43589,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/research)
 "dbI" = (
@@ -43691,6 +43601,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/research)
 "dbJ" = (
@@ -43726,6 +43637,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "dbS" = (
@@ -43843,9 +43755,6 @@
 /obj/machinery/shower{
 	dir = 4
 	},
-/obj/item/radio/intercom{
-	pixel_x = -29
-	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "dch" = (
@@ -43878,6 +43787,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "dck" = (
@@ -44071,9 +43981,6 @@
 /area/science/xenobiology)
 "dcM" = (
 /obj/machinery/chem_master,
-/obj/item/radio/intercom{
-	pixel_y = -29
-	},
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "dcN" = (
@@ -44224,9 +44131,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/general/visible,
-/obj/item/radio/intercom{
-	pixel_y = -29
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/science/xenobiology)
@@ -44242,6 +44146,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "ddq" = (
@@ -44298,6 +44203,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "ddB" = (
@@ -44451,6 +44357,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "dex" = (
@@ -44511,6 +44418,9 @@
 /area/engine/engineering)
 "dfa" = (
 /obj/machinery/power/supermatter_crystal/engine,
+/obj/item/toy/plush/lizardplushie{
+	name = "Will-Always-Fry"
+	},
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "dfb" = (
@@ -45043,6 +44953,9 @@
 	pixel_y = 32
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/toy/plush/lizardplushie{
+	name = "Organises-The-Warehouse"
+	},
 /turf/open/floor/plating,
 /area/quartermaster/warehouse)
 "dhz" = (
@@ -45319,9 +45232,6 @@
 /area/crew_quarters/theatre)
 "dij" = (
 /obj/item/instrument/violin,
-/obj/item/radio/intercom{
-	pixel_x = 29
-	},
 /obj/structure/sign/poster/random{
 	pixel_y = -32
 	},
@@ -45688,6 +45598,7 @@
 	name = "Arrival Airlock";
 	safety_mode = 1
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "djB" = (
@@ -45706,6 +45617,7 @@
 	name = "Arrival Airlock";
 	safety_mode = 1
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "djM" = (
@@ -45757,6 +45669,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "dmr" = (
@@ -45766,6 +45679,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/xenobiology)
 "dmD" = (
@@ -45952,6 +45866,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "dtS" = (
@@ -46036,6 +45951,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "dwr" = (
@@ -46114,6 +46030,9 @@
 	pixel_y = 22
 	},
 /obj/structure/table_frame,
+/obj/item/toy/plush/lizardplushie{
+	name = "Sharp-With-Scalpels"
+	},
 /turf/open/floor/plating,
 /area/medical/surgery)
 "dyw" = (
@@ -46133,6 +46052,12 @@
 /obj/machinery/space_heater,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"dzE" = (
+/obj/item/toy/plush/lizardplushie{
+	name = "Dodges-The-Bullets"
+	},
+/turf/open/floor/plating,
+/area/security/range)
 "dzK" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/vehicle/ridden/wheelchair,
@@ -46166,6 +46091,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dAp" = (
@@ -46186,6 +46112,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "dAZ" = (
@@ -46313,6 +46240,9 @@
 	pixel_y = 7
 	},
 /obj/item/key/security,
+/obj/item/toy/plush/lizardplushie{
+	name = "Never-Leaves-Brig"
+	},
 /turf/open/floor/plating,
 /area/security/warden)
 "dCi" = (
@@ -46655,6 +46585,9 @@
 /obj/item/wallframe/camera,
 /obj/item/wallframe/camera,
 /obj/item/assault_pod/mining,
+/obj/item/toy/plush/lizardplushie{
+	name = "Builds-The-Auxbase"
+	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
 "dDL" = (
@@ -46684,6 +46617,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/quartermaster/storage)
 "dJr" = (
@@ -46735,15 +46669,19 @@
 	pixel_y = 32
 	},
 /obj/vehicle/ridden/wheelchair,
-/obj/item/radio/intercom{
-	pixel_x = -28
-	},
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "dQV" = (
 /obj/structure/grille/broken,
 /turf/open/space/basic,
 /area/space/nearstation)
+"dXt" = (
+/obj/structure/chair,
+/obj/item/toy/plush/lizardplushie{
+	name = "Delivers-The-Sermon"
+	},
+/turf/open/floor/plating,
+/area/chapel/main)
 "dYu" = (
 /obj/machinery/door/airlock/external{
 	name = "Auxiliary Airlock"
@@ -46751,13 +46689,11 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "dZw" = (
 /obj/machinery/iv_drip,
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /turf/open/floor/plating,
 /area/medical/surgery/room_b)
 "ecj" = (
@@ -46856,19 +46792,19 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/warden)
+"eiO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/medical/cryo)
 "elp" = (
 /obj/structure/closet/l3closet,
 /turf/open/floor/plating,
 /area/medical/virology)
-"enV" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/item/radio/intercom{
-	pixel_x = -29
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/central)
 "eoK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -46931,6 +46867,13 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
+"ezl" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/item/toy/plush/lizardplushie{
+	name = "Not-A-Canister"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "eBl" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/chair/stool/bar,
@@ -46970,6 +46913,7 @@
 /obj/machinery/door/airlock/external{
 	name = "Departure Lounge Airlock"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "eDt" = (
@@ -46980,6 +46924,15 @@
 	icon_state = "wood-broken4"
 	},
 /area/maintenance/port/aft)
+"eDR" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Wins-The-Match"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/fitness/recreation)
 "eEu" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -47107,6 +47060,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/storage_shared)
 "fdX" = (
@@ -47177,6 +47131,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "fos" = (
@@ -47246,6 +47201,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "fDB" = (
@@ -47512,12 +47468,6 @@
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
-"gnZ" = (
-/obj/item/radio/intercom{
-	pixel_y = -30
-	},
-/turf/open/floor/plating,
-/area/science/misc_lab/range)
 "gox" = (
 /turf/closed/wall,
 /area/medical/coldroom)
@@ -47574,6 +47524,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "gtr" = (
@@ -47620,6 +47571,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/virology)
 "gyL" = (
@@ -47634,6 +47586,15 @@
 	},
 /turf/open/floor/plating,
 /area/medical/surgery/room_c)
+"gDO" = (
+/obj/structure/chair/stool{
+	pixel_y = 8
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Calls-The-Bluff"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/bar)
 "gEz" = (
 /obj/machinery/smartfridge/chemistry/virology/preloaded,
 /turf/open/floor/plating,
@@ -47707,16 +47668,29 @@
 	},
 /turf/open/floor/plating,
 /area/medical/surgery/room_b)
+"gPN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/medical/cryo)
 "gPT" = (
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/hallway/primary/fore)
+"gSL" = (
+/obj/machinery/conveyor{
+	dir = 4;
+	id = "packageSort2"
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Rides-The-Belt"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/sorting)
 "gXi" = (
 /obj/structure/sink{
 	pixel_y = 15
-	},
-/obj/item/radio/intercom{
-	pixel_y = 26
 	},
 /turf/open/floor/plating,
 /area/medical/sleeper)
@@ -47891,6 +47865,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/surgery/room_b)
 "hyP" = (
@@ -47900,6 +47875,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "hzY" = (
@@ -47912,6 +47888,9 @@
 "hAu" = (
 /obj/structure/sign/poster/official/random{
 	pixel_x = 32
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Nurses-To-Health"
 	},
 /turf/open/floor/plating,
 /area/medical/patients_rooms)
@@ -48075,6 +48054,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "ifK" = (
@@ -48089,6 +48069,12 @@
 	},
 /turf/open/floor/wood,
 /area/vacant_room/office)
+"ild" = (
+/obj/item/toy/plush/lizardplushie{
+	name = "Monitors-The-Grid"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "imI" = (
 /obj/machinery/holopad,
 /turf/open/floor/plating,
@@ -48106,6 +48092,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/bridge)
 "ios" = (
@@ -48128,6 +48115,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/misc_lab/range)
 "ixg" = (
@@ -48356,6 +48344,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "jvy" = (
@@ -48436,7 +48425,9 @@
 	pixel_y = 32
 	},
 /obj/structure/chair/sofa/right,
-/obj/item/toy/plush/moth,
+/obj/item/toy/plush/lizardplushie{
+	name = "Better-Than-Moff"
+	},
 /turf/open/floor/plating,
 /area/medical/psychology)
 "jKK" = (
@@ -48446,6 +48437,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "jLY" = (
@@ -48473,6 +48465,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/paramedic)
 "jPR" = (
@@ -48510,6 +48503,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/patients_rooms)
 "jTg" = (
@@ -48522,6 +48516,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/psychology)
 "jTj" = (
@@ -48561,6 +48556,12 @@
 	},
 /turf/open/floor/plating,
 /area/science/mixing)
+"kid" = (
+/obj/item/toy/plush/lizardplushie{
+	name = "Not-A-Monkey"
+	},
+/turf/open/floor/plating,
+/area/science/genetics)
 "kjh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/vehicle/ridden/janicart,
@@ -48648,6 +48649,9 @@
 	pixel_x = 24
 	},
 /obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Hidden-From-All"
+	},
 /turf/open/floor/plating,
 /area/hallway/secondary/service)
 "kzn" = (
@@ -48657,6 +48661,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
 "kBh" = (
@@ -48691,6 +48696,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "kDT" = (
@@ -48700,6 +48706,9 @@
 	pixel_y = 26
 	},
 /obj/structure/table/reinforced,
+/obj/item/toy/plush/lizardplushie{
+	name = "Wipes-The-Brow"
+	},
 /turf/open/floor/plating,
 /area/medical/surgery/room_c)
 "kDW" = (
@@ -48883,8 +48892,16 @@
 	name = "Departure Lounge Airlock"
 	},
 /obj/machinery/navbeacon/wayfinding,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/exit/departure_lounge)
+"lxH" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance,
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/medical/medbay/central)
 "lyI" = (
 /obj/machinery/power/apc{
 	areastring = "/area/crew_quarters/kitchen";
@@ -49012,6 +49029,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "lOR" = (
@@ -49019,6 +49037,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "lSZ" = (
@@ -49028,6 +49047,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "lTo" = (
@@ -49104,6 +49124,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/science/nanite)
 "lZn" = (
@@ -49114,6 +49135,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "lZV" = (
@@ -49151,10 +49173,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/radio/intercom{
-	pixel_x = 28;
-	pixel_y = -30
-	},
 /turf/open/floor/plating,
 /area/medical/storage)
 "mdG" = (
@@ -49179,6 +49197,9 @@
 "meP" = (
 /obj/structure/sign/poster/official/anniversary_vintage_reprint{
 	pixel_y = 32
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Brings-The-Boom"
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
@@ -49294,6 +49315,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "mCu" = (
@@ -49330,6 +49352,9 @@
 "mHR" = (
 /obj/machinery/computer/rdconsole/production,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/item/toy/plush/lizardplushie{
+	name = "Turns-The-Wrench"
+	},
 /turf/open/floor/plating,
 /area/engine/storage_shared)
 "mKb" = (
@@ -49375,6 +49400,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/virology)
 "mTj" = (
@@ -49460,6 +49486,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/morgue)
 "nmr" = (
@@ -49558,6 +49585,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/construction/storage_wing)
 "nLv" = (
@@ -49573,6 +49601,9 @@
 "nLx" = (
 /obj/structure/table/reinforced,
 /obj/item/trash/popcorn,
+/obj/item/toy/plush/lizardplushie{
+	name = "Eats-The-Popcorn"
+	},
 /turf/open/floor/plating,
 /area/engine/break_room)
 "nLZ" = (
@@ -49616,9 +49647,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /turf/open/floor/plating,
 /area/medical/break_room)
 "nXA" = (
@@ -49656,6 +49684,9 @@
 	desc = "A cold, hard place for your final rest.";
 	name = "Morgue Slab"
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Watches-The-Corpses"
+	},
 /turf/open/floor/plating,
 /area/medical/morgue)
 "obX" = (
@@ -49670,6 +49701,17 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"ocz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/medical/pharmacy)
 "ocT" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -49690,6 +49732,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/courtroom)
 "ofT" = (
@@ -49700,6 +49743,9 @@
 /area/engine/break_room)
 "ogE" = (
 /obj/structure/closet/firecloset,
+/obj/item/toy/plush/lizardplushie{
+	name = "Extinguishes-The-Fires"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
 "ogO" = (
@@ -49718,15 +49764,13 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "ojg" = (
 /turf/closed/wall,
 /area/science/misc_lab/range)
 "onu" = (
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /obj/machinery/computer/atmos_control/toxinsmix{
 	dir = 1
 	},
@@ -49883,7 +49927,10 @@
 /area/medical/morgue)
 "oRa" = (
 /obj/structure/dresser,
-/turf/open/floor/carpet,
+/obj/item/toy/plush/lizardplushie{
+	name = "In-Pointless-Room"
+	},
+/turf/open/floor/plating,
 /area/crew_quarters/dorms)
 "oRL" = (
 /obj/docking_port/stationary{
@@ -49954,6 +50001,9 @@
 /area/maintenance/port/aft)
 "pak" = (
 /obj/structure/chair/office/light,
+/obj/item/toy/plush/lizardplushie{
+	name = "Tests-The-Anomalies"
+	},
 /turf/open/floor/plating,
 /area/science/misc_lab/range)
 "pay" = (
@@ -49999,6 +50049,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "plQ" = (
@@ -50065,6 +50116,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/engineering)
 "pwn" = (
@@ -50076,11 +50128,19 @@
 	icon_state = "panelscorched"
 	},
 /area/maintenance/port/aft)
+"pyV" = (
+/obj/structure/chair/office,
+/obj/item/toy/plush/lizardplushie{
+	name = "Dungeons-And-Dragons"
+	},
+/turf/open/floor/plating,
+/area/library)
 "pzj" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "pzC" = (
@@ -50216,6 +50276,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
 "pTS" = (
@@ -50264,15 +50325,14 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/item/radio/intercom{
-	dir = 4;
-	pixel_y = 24
-	},
 /obj/structure/table,
 /obj/machinery/recharger{
 	pixel_y = 4
 	},
 /obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Guards-The-Engine"
+	},
 /turf/open/floor/plating,
 /area/security/checkpoint/engineering)
 "qby" = (
@@ -50378,6 +50438,9 @@
 /obj/structure/chair/sofa/left{
 	dir = 8
 	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Emergency-Medical-Technician"
+	},
 /turf/open/floor/plating,
 /area/medical/paramedic)
 "qyH" = (
@@ -50420,6 +50483,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/virology)
 "qFk" = (
@@ -50473,13 +50537,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/medical/virology)
-"qRr" = (
-/obj/machinery/flasher/portable,
-/obj/item/radio/intercom{
-	pixel_x = 30
-	},
-/turf/open/floor/plating,
-/area/security/warden)
 "qTc" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -50594,6 +50651,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/aft)
 "rqO" = (
@@ -50606,6 +50664,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "rrB" = (
@@ -50879,8 +50938,20 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"scD" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/hallway/primary/fore)
 "scY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -51023,6 +51094,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/surgery/room_c)
 "suP" = (
@@ -51043,6 +51115,14 @@
 	},
 /turf/open/floor/plating,
 /area/medical/chemistry)
+"svn" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/chair,
+/obj/item/toy/plush/lizardplushie{
+	name = "Praises-The-Gods"
+	},
+/turf/open/floor/plating,
+/area/chapel/main)
 "sxS" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;5;39"
@@ -51050,6 +51130,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "szA" = (
@@ -51083,6 +51164,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/fore)
 "sIi" = (
@@ -51098,6 +51180,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "sJW" = (
@@ -51138,22 +51221,12 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/aft)
-"sWX" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Chemistry Maintenance";
-	req_access_txt = "33"
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/medical/central)
 "sYH" = (
 /turf/closed/wall/r_wall,
 /area/medical/medbay/central)
 "sZl" = (
 /obj/item/hand_labeler,
 /obj/item/radio/headset/headset_med,
-/obj/item/radio/intercom{
-	pixel_x = -28
-	},
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/medical/virology)
@@ -51164,6 +51237,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/virology)
 "tay" = (
@@ -51341,6 +51415,10 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "tFJ" = (
@@ -51359,17 +51437,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/engine/engineering)
-"tNc" = (
-/obj/item/radio/intercom{
-	pixel_y = -26
-	},
-/obj/structure/closet/secure_closet/personal/patient,
-/turf/open/floor/plating,
-/area/medical/patients_rooms)
 "tNJ" = (
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "tOc" = (
@@ -51424,9 +51496,6 @@
 "tYi" = (
 /obj/machinery/vending/wardrobe/viro_wardrobe,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/item/radio/intercom{
-	pixel_x = 28
-	},
 /turf/open/floor/plating,
 /area/medical/virology)
 "tYD" = (
@@ -51518,6 +51587,12 @@
 	},
 /turf/open/floor/plating,
 /area/engine/break_room)
+"upF" = (
+/obj/item/toy/plush/lizardplushie{
+	name = "Locked-In-Storage"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "upQ" = (
 /obj/structure/closet/crate,
 /obj/effect/spawner/lootdrop/maintenance/two,
@@ -51530,6 +51605,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/storage_shared)
 "uun" = (
@@ -51565,6 +51641,13 @@
 	},
 /turf/open/floor/plating,
 /area/medical/surgery)
+"uBN" = (
+/obj/structure/dresser,
+/obj/item/toy/plush/lizardplushie{
+	name = "Plays-The-Role"
+	},
+/turf/open/floor/plating,
+/area/crew_quarters/dorms)
 "uEH" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -51616,6 +51699,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;27"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/brig)
 "uOc" = (
@@ -51685,9 +51769,6 @@
 "vgd" = (
 /obj/item/taperecorder,
 /obj/item/camera,
-/obj/item/radio/intercom{
-	pixel_y = -29
-	},
 /obj/structure/table,
 /turf/open/floor/plating,
 /area/library)
@@ -51750,6 +51831,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "vrI" = (
@@ -51914,6 +51996,9 @@
 /area/maintenance/port/aft)
 "vIO" = (
 /obj/machinery/igniter/incinerator_toxmix,
+/obj/item/toy/plush/lizardplushie{
+	name = "Makes-The-Bombs"
+	},
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "vKB" = (
@@ -51924,6 +52009,15 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
+"vLo" = (
+/obj/structure/chair{
+	name = "Judge"
+	},
+/obj/item/toy/plush/lizardplushie{
+	name = "Judges-Very-Fairly"
+	},
+/turf/open/floor/plating,
+/area/security/courtroom)
 "vLD" = (
 /obj/structure/lattice,
 /turf/open/space/basic,
@@ -51942,6 +52036,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "vOs" = (
@@ -51975,6 +52070,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/sleeper)
 "vTD" = (
@@ -51996,12 +52092,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/starboard/secondary)
-"waj" = (
-/obj/item/radio/intercom{
-	pixel_y = 20
-	},
-/turf/open/floor/plating,
-/area/medical/chemistry)
 "wdc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -52014,6 +52104,12 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"weA" = (
+/obj/item/toy/plush/lizardplushie{
+	name = "In-The-Way"
+	},
+/turf/open/floor/plating,
+/area/engine/engineering)
 "wfq" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/carpet/green,
@@ -52029,9 +52125,6 @@
 /turf/open/floor/plating,
 /area/medical/medbay/central)
 "wgZ" = (
-/obj/item/radio/intercom{
-	pixel_x = -26
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -52045,6 +52138,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/security/prison)
 "wmt" = (
@@ -52079,6 +52173,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/medical/surgery)
 "wtn" = (
@@ -52112,6 +52207,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/engine/atmos)
 "wxi" = (
@@ -52210,6 +52306,14 @@
 /obj/machinery/atmospherics/pipe/simple/orange/visible,
 /turf/closed/wall/r_wall,
 /area/engine/engineering)
+"wKQ" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/obj/item/toy/plush/lizardplushie{
+	name = "Loose-Cannon-Cop"
+	},
+/turf/open/floor/plating,
+/area/security/main)
 "wOc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -52268,9 +52372,6 @@
 /turf/open/space/basic,
 /area/space)
 "wQy" = (
-/obj/item/radio/intercom{
-	pixel_y = 21
-	},
 /turf/open/floor/plating,
 /area/medical/surgery)
 "wQA" = (
@@ -52285,11 +52386,27 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/primary/port)
+"wRm" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "wRy" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/science)
+"wRz" = (
+/obj/structure/bed/roller,
+/obj/item/toy/plush/lizardplushie{
+	name = "Extremely-Ill-Lizard"
+	},
+/turf/open/floor/plating,
+/area/medical/medbay/central)
 "wVo" = (
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -52303,6 +52420,7 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "wWt" = (
@@ -52413,15 +52531,6 @@
 	},
 /turf/open/floor/plating,
 /area/janitor)
-"xoZ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
-/turf/open/floor/plating,
-/area/hallway/primary/port)
 "xpZ" = (
 /turf/closed/wall,
 /area/medical/abandoned)
@@ -52437,6 +52546,7 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/solars/starboard/aft)
 "xuA" = (
@@ -52452,15 +52562,16 @@
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = "12"
 	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "xwG" = (
-/obj/machinery/door/airlock/maintenance{
-	name = "Library Maintenance";
-	req_one_access_txt = "12;37"
-	},
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/door/airlock/maintenance{
+	req_access_txt = "12"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "xyp" = (
@@ -62566,7 +62677,7 @@ aaa
 wOY
 aSI
 aRA
-aVv
+cZf
 bsk
 aVs
 aaf
@@ -64133,7 +64244,7 @@ aaa
 aaa
 aVs
 bsk
-bMw
+aVz
 aRA
 aaa
 aaf
@@ -65152,7 +65263,7 @@ djz
 bsk
 djC
 aWZ
-bMw
+aVz
 aRA
 aVs
 aVs
@@ -65419,7 +65530,7 @@ bHH
 aRA
 bsk
 bxD
-bud
+wRm
 bOv
 bbL
 alK
@@ -66445,7 +66556,7 @@ bEo
 bbL
 bqi
 bJq
-bud
+wRm
 dLM
 dLM
 vTD
@@ -68239,7 +68350,7 @@ rJv
 rJv
 bnM
 bCL
-xoZ
+bdr
 bzx
 bzx
 oyx
@@ -69518,7 +69629,7 @@ dmF
 dmF
 wZA
 bql
-bsw
+bdr
 baE
 bvW
 bxO
@@ -70024,7 +70135,7 @@ aHh
 aYK
 ban
 bbO
-bdi
+gSL
 beV
 beV
 biE
@@ -72617,7 +72728,7 @@ bwd
 bMK
 bOl
 bPR
-bRi
+pyV
 bSA
 bxU
 bue
@@ -72863,7 +72974,7 @@ bdr
 bue
 aze
 bwe
-bGv
+bue
 bwf
 bxW
 dCZ
@@ -73443,7 +73554,7 @@ cLa
 cLa
 cPD
 cQb
-cON
+dXt
 cQb
 cON
 cPA
@@ -74452,7 +74563,7 @@ jpv
 seP
 cFR
 lbB
-tNc
+cFR
 seP
 cDN
 cEN
@@ -74904,7 +75015,7 @@ aTa
 aUp
 aJO
 aXv
-enV
+aWg
 aWg
 aWg
 aWg
@@ -74924,7 +75035,7 @@ aWg
 bhC
 aWg
 aWg
-cVd
+bhC
 aWg
 aWg
 aWg
@@ -75406,7 +75517,7 @@ aaa
 aDu
 aDu
 aDu
-aEN
+scD
 aJN
 aLj
 aME
@@ -75444,7 +75555,7 @@ aWe
 aWe
 aWe
 bmn
-bRo
+aWe
 aWe
 bGV
 bVa
@@ -75456,7 +75567,7 @@ cbM
 cds
 xNe
 cfM
-cfM
+eiO
 cil
 bZc
 clk
@@ -75713,7 +75824,7 @@ cbN
 cdt
 cex
 cfN
-cdu
+gPN
 cbX
 cjM
 cll
@@ -76484,7 +76595,7 @@ bXL
 bXL
 bXL
 bXL
-cbR
+cgX
 rHA
 cjQ
 clo
@@ -76494,7 +76605,7 @@ coP
 cqm
 crz
 csy
-cty
+cnF
 rAF
 cus
 cus
@@ -76524,7 +76635,7 @@ cMN
 cNF
 cOm
 cOQ
-cOQ
+svn
 cOQ
 djr
 cMK
@@ -76667,7 +76778,7 @@ ads
 adU
 ael
 aeM
-afO
+afG
 abe
 ahv
 air
@@ -76689,7 +76800,7 @@ aAW
 azC
 aDu
 aDu
-aFY
+boh
 aHx
 aaa
 aaa
@@ -76975,7 +77086,7 @@ dCO
 bup
 bwm
 bkz
-bzO
+bGI
 bBz
 bCZ
 bED
@@ -77511,7 +77622,7 @@ cai
 cbT
 bZc
 bZc
-bZc
+lxH
 cgZ
 cit
 cjQ
@@ -77780,7 +77891,7 @@ cqq
 crD
 csC
 rAF
-waj
+cus
 cus
 cus
 cxm
@@ -78024,10 +78135,10 @@ bZa
 cak
 cbV
 cdA
-ceF
+ceG
 uGS
 uGS
-civ
+ocz
 cfY
 cls
 uGS
@@ -78259,7 +78370,7 @@ bjc
 bsS
 buv
 bwq
-byc
+bwq
 bwq
 bBE
 bDf
@@ -78273,7 +78384,7 @@ bYq
 bQb
 bRs
 bGC
-bTM
+baQ
 dCE
 bWp
 aZd
@@ -78281,7 +78392,7 @@ bZc
 bZc
 cbW
 acp
-ceG
+wRz
 cfW
 chb
 civ
@@ -78496,7 +78607,7 @@ aLu
 aMH
 aMH
 aPu
-aQC
+aMH
 aJS
 aJS
 aUx
@@ -78550,7 +78661,7 @@ coU
 cqs
 crE
 csF
-sWX
+cmy
 vvb
 cus
 cus
@@ -78776,7 +78887,7 @@ bsU
 buA
 bux
 bfv
-bDh
+bDj
 bED
 bBz
 aaf
@@ -79002,7 +79113,7 @@ aBa
 aCk
 aCj
 aEN
-aGh
+aGg
 aHx
 aaa
 aaa
@@ -79074,7 +79185,7 @@ cus
 cus
 cus
 cus
-cCY
+cus
 cus
 cus
 kmq
@@ -79778,7 +79889,7 @@ aHz
 aDD
 aJT
 aLy
-aMJ
+aHz
 aHz
 aHz
 aJT
@@ -79833,7 +79944,7 @@ cmD
 cnN
 bZf
 bZf
-crF
+bZf
 csJ
 bZf
 cgb
@@ -79841,7 +79952,7 @@ bZf
 bZf
 cxz
 bZf
-czf
+bZf
 cAh
 bZf
 bZf
@@ -80358,7 +80469,7 @@ cnP
 czh
 cAj
 bZh
-cCm
+bZh
 bZh
 bZh
 cFc
@@ -80533,7 +80644,7 @@ aeq
 aeq
 aeq
 aeq
-agU
+akA
 ahG
 adY
 ayE
@@ -81114,7 +81225,7 @@ chj
 chk
 chk
 clA
-cmF
+chk
 cnS
 cpd
 cqx
@@ -81294,7 +81405,7 @@ adY
 agS
 aEW
 ixj
-qRr
+aEW
 adY
 aex
 ajy
@@ -81317,7 +81428,7 @@ gPT
 aCj
 ooY
 aHD
-aIN
+aIR
 aIR
 aIR
 aMM
@@ -81325,9 +81436,9 @@ aOh
 aPB
 aQH
 aQH
-aTm
+aIR
 aHD
-aWk
+aWc
 aXy
 aWb
 baQ
@@ -81575,7 +81686,7 @@ ajm
 ajm
 eZU
 aIO
-aJZ
+aOk
 aIR
 aIR
 aIR
@@ -81598,7 +81709,7 @@ byk
 oem
 bjc
 bsS
-buD
+bjc
 bjc
 byk
 bAa
@@ -81831,7 +81942,7 @@ ajm
 ane
 aDH
 eZU
-aIO
+vLo
 aKa
 aLB
 aMN
@@ -82393,7 +82504,7 @@ bZk
 caz
 cci
 cdM
-ceS
+ccc
 cgd
 cgd
 cgd
@@ -82642,7 +82753,7 @@ bJY
 bQs
 bRK
 bGM
-bTM
+baQ
 aWb
 bWA
 aWc
@@ -82888,7 +82999,7 @@ bwC
 byq
 bfA
 bcj
-bDh
+bDj
 bED
 bGM
 bGM
@@ -83101,7 +83212,7 @@ akQ
 amj
 any
 aoE
-ajG
+wKQ
 arq
 asG
 ajD
@@ -83400,7 +83511,7 @@ btf
 boG
 bwE
 bys
-bAf
+bfA
 bcj
 bDi
 bFc
@@ -83710,7 +83821,7 @@ cIS
 ccc
 cgo
 cQr
-cQS
+cQR
 cRb
 cRe
 cRe
@@ -84671,7 +84782,7 @@ aUM
 aWp
 aXy
 aWb
-baZ
+baL
 aWe
 aWe
 bfE
@@ -84679,7 +84790,7 @@ bhA
 bjl
 bkQ
 bmJ
-boJ
+bjl
 bjl
 btj
 aWe
@@ -84693,7 +84804,7 @@ bGV
 aWe
 aWe
 bLH
-bNt
+aWe
 aWe
 aWe
 aWe
@@ -85147,7 +85258,7 @@ aaa
 aaf
 aaf
 aez
-afp
+dzE
 ago
 afp
 afp
@@ -85227,7 +85338,7 @@ ciN
 ckm
 clN
 bZn
-cog
+ccc
 cpr
 hSZ
 crQ
@@ -85437,7 +85548,7 @@ aLK
 aOv
 aQR
 dCv
-aTw
+aTt
 aUM
 aWs
 dnh
@@ -85944,7 +86055,7 @@ aFc
 aFc
 aHI
 aFd
-aFd
+aDQ
 aLK
 aMY
 aOw
@@ -85975,7 +86086,7 @@ bBT
 bDD
 bFl
 bHa
-bIu
+brg
 bKe
 bLJ
 qBD
@@ -86201,7 +86312,7 @@ aFd
 aGC
 aHJ
 aHJ
-aFd
+aDQ
 aLK
 aMZ
 aOx
@@ -86503,7 +86614,7 @@ bWM
 bUh
 dDl
 caL
-ccu
+bWT
 bST
 cfd
 cgq
@@ -86990,7 +87101,7 @@ aZt
 aZt
 bhI
 bjs
-bkX
+bkT
 bmP
 boQ
 brh
@@ -87024,7 +87135,7 @@ cgq
 cur
 sRB
 cvx
-cur
+kid
 htB
 cur
 cpC
@@ -87033,7 +87144,7 @@ cgq
 ctf
 cua
 cuV
-cvY
+cvX
 cvX
 crR
 cyK
@@ -87086,7 +87197,7 @@ cRY
 daC
 cSn
 cSn
-daN
+cSn
 cRi
 dmr
 cRi
@@ -87732,7 +87843,7 @@ arB
 asT
 aud
 arB
-atc
+uBN
 kHL
 arB
 aAd
@@ -88538,7 +88649,7 @@ bBj
 brn
 bmP
 bmP
-bwU
+bwS
 byE
 bAq
 aaL
@@ -88797,7 +88908,7 @@ bts
 buR
 bwV
 byF
-bwX
+gDO
 brg
 cTR
 bFt
@@ -88838,7 +88949,7 @@ pcn
 xfP
 xVP
 ojg
-czx
+asa
 czx
 czx
 cAP
@@ -89007,7 +89118,7 @@ agt
 ahj
 ahX
 adE
-aia
+eDR
 adE
 amy
 anI
@@ -89071,7 +89182,7 @@ bUp
 rUK
 bWV
 bYm
-bYm
+cTX
 caR
 ccA
 bST
@@ -89297,7 +89408,7 @@ avB
 dnS
 dnS
 aZw
-bbl
+bbm
 bbm
 bbm
 aZw
@@ -89537,9 +89648,9 @@ avo
 aAi
 arB
 avo
-aEd
+auk
 arB
-aEd
+auk
 avo
 aJh
 aKs
@@ -89607,7 +89718,7 @@ cwd
 fUC
 fUC
 fUC
-gnZ
+fUC
 ojg
 czI
 cAP
@@ -89796,7 +89907,7 @@ arB
 aCJ
 aEe
 arB
-boS
+aGI
 aHS
 aJh
 aKt
@@ -90308,7 +90419,7 @@ arB
 axO
 arB
 oRa
-aun
+kHL
 arB
 aGP
 aHU
@@ -91608,7 +91719,7 @@ aSp
 aTD
 axY
 aWx
-aYo
+aYp
 aZC
 bbs
 bcE
@@ -91860,7 +91971,7 @@ aMa
 aMa
 axY
 aPV
-aJu
+ild
 aSp
 aTD
 axY
@@ -92113,7 +92224,7 @@ aGS
 axY
 aJm
 aKx
-aJu
+upF
 aNo
 axY
 aPW
@@ -92349,7 +92460,7 @@ acP
 aia
 aiZ
 ajX
-alo
+aoZ
 acP
 dnz
 dnR
@@ -93903,7 +94014,7 @@ avu
 axY
 axT
 axY
-aAr
+aJu
 ddW
 aCU
 aEq
@@ -94184,7 +94295,7 @@ fMA
 aYu
 aYu
 tqI
-bia
+bhZ
 fHj
 blo
 bne
@@ -95957,7 +96068,7 @@ ajb
 ajb
 avC
 axY
-ddO
+ezl
 tKc
 ddU
 aBQ
@@ -96733,7 +96844,7 @@ bTq
 aAx
 aBO
 aIe
-aAr
+aJu
 deu
 aGY
 deN
@@ -97767,7 +97878,7 @@ dex
 aJu
 aJu
 aJu
-aJu
+weA
 aJu
 aJu
 aJu
@@ -98018,7 +98129,7 @@ aaa
 aaa
 aaa
 axY
-aAr
+aJu
 aJu
 deK
 aJu
