@@ -43,7 +43,7 @@
 	///chromosomes we have stored
 	var/list/stored_chromosomes = list()
 	///combinations of injectors for the 'injector selection'. format is list("Elsa" = list(Cryokinesis, Geladikinesis), "The Hulk" = list(Hulk, Gigantism), etc) Glowy and the gang being an initialized datum
-	var/list/injector_selection = list()
+	var/list/list/injector_selection = list()
 	///max amount of selections you can make
 	var/max_injector_selections = 2
 	///hard-cap on the advanced dna injector
