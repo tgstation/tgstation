@@ -1,4 +1,0 @@
-author: "Dennok"
-delete-after: True
-changes: 
-  - code_imp: "now copy_from(target, partial) can copy part of target gas moles"

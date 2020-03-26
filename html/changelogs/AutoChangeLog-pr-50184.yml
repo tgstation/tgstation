@@ -1,4 +1,0 @@
-author: "Detective-Google"
-delete-after: True
-changes: 
-  - code_imp: "shotgun's weapon_weight variable being defined twice"
