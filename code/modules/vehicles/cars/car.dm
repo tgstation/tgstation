@@ -133,7 +133,7 @@
 			if(!ishuman(i))
 				continue
 			var/mob/living/carbon/human/boomer = i
-			boomer.say(pick("DON'T LIE INFRONT OF MY CAR YA FUCKIN KNOB", "GET OUTA DA WAY I'M DRIVIN' HERE", "YOU ARE RUINING MY SUSPENSION CUNT!"), forced="car crash")
+			boomer.say(pick("DON'T LIE IN FRONT OF MY CAR YA FUCKIN' KNOB!!", "HEY! I'M DRIVIN' HERE!!", "YOU ARE RUINING MY SUSPENSION, CUNT!"), forced="car crash")
 		L.adjustBruteLoss(3) //tires burn
 		return
 
@@ -209,4 +209,3 @@
 
 	new /obj/effect/DPtarget(drop_location(), toLaunch)
 	qdel(src)
-
