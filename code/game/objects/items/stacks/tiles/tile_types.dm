@@ -20,6 +20,11 @@
 	pixel_x = rand(-3, 3)
 	pixel_y = rand(-3, 3) //randomize a little
 
+/obj/item/stack/tile/examine(mob/user)
+	..()
+	if(throwforce >= 10)
+		to_chat(user, "Those could work as a pretty decent throwing weapon.")
+
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
 	if (W.tool_behaviour == TOOL_WELDER)
@@ -308,7 +313,6 @@
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
 	singular_name = "floor tile"
-	desc = "Those could work as a pretty decent throwing weapon."
 	icon_state = "tile"
 	item_state = "tile"
 	force = 6
@@ -337,17 +341,10 @@
 /obj/item/stack/tile/material
 	name = "floor tile"
 	singular_name = "floor tile"
-	desc = "Those could work as a pretty decent throwing weapon."
 	throwforce = 10
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
-
-/obj/item/stack/tile/material/mat_update_desc(mat)
-	if(throwforce >= 10)
-		desc = "Those could work as a pretty decent throwing weapon."
-	else
-		desc = "Those wouldn't make a very good throwing weapon."
 
 /obj/item/stack/tile/eighties
 	name = "retro tile"
