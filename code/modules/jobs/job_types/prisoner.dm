@@ -21,3 +21,4 @@
 	id = /obj/item/card/id/prisoner
 	ears = null
 	belt = null
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted

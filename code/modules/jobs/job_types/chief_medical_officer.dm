@@ -43,6 +43,7 @@
 	l_hand = /obj/item/storage/firstaid/medical
 	suit_store = /obj/item/flashlight/pen
 	backpack_contents = list(/obj/item/melee/classic_baton/telescopic=1)
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

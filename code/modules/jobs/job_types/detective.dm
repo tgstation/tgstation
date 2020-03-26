@@ -41,6 +41,7 @@
 		/obj/item/detective_scanner=1,\
 		/obj/item/melee/classic_baton=1)
 	mask = /obj/item/clothing/mask/cigarette
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 	implants = list(/obj/item/implant/mindshield)
 

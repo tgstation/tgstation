@@ -44,6 +44,7 @@
 	l_pocket = /obj/item/restraints/handcuffs
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec

@@ -28,6 +28,8 @@ Assistant
 /datum/outfit/job/assistant
 	name = "Assistant"
 	jobtype = /datum/job/assistant
+	
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 /datum/outfit/job/assistant/pre_equip(mob/living/carbon/human/H)
 	..()

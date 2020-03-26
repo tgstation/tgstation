@@ -39,6 +39,7 @@
 		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
 		/obj/item/instrument/bikehorn = 1,
 		)
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 	implants = list(/obj/item/implant/sad_trombone)
 

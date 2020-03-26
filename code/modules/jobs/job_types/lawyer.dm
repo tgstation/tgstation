@@ -32,6 +32,7 @@
 	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 	chameleon_extras = /obj/item/stamp/law
 

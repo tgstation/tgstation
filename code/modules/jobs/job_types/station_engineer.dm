@@ -33,6 +33,7 @@
 	shoes = /obj/item/clothing/shoes/workboots
 	head = /obj/item/clothing/head/hardhat
 	r_pocket = /obj/item/t_scanner
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng

@@ -29,6 +29,7 @@
 	ears = /obj/item/radio/headset/headset_eng
 	uniform = /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	r_pocket = /obj/item/analyzer
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
@@ -44,3 +45,4 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/engine/atmos
 	suit_store = /obj/item/tank/internals/oxygen
 	internals_slot = ITEM_SLOT_SUITSTORE
+

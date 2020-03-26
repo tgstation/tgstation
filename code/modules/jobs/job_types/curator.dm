@@ -35,6 +35,7 @@
 		/obj/item/soapstone = 1,
 		/obj/item/barcodescanner = 1
 	)
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 /datum/outfit/job/curator/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	..()

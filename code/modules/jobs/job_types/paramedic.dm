@@ -33,6 +33,7 @@
 	l_pocket = /obj/item/pda/medical
 	suit_store = /obj/item/flashlight/pen
 	backpack_contents = list(/obj/item/roller=1)
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	pda_slot = ITEM_SLOT_LPOCKET
 
 	backpack = /obj/item/storage/backpack/medic

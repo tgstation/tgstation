@@ -33,6 +33,7 @@
 	backpack = /obj/item/storage/backpack/chemistry
 	satchel = /obj/item/storage/backpack/satchel/chem
 	duffelbag = /obj/item/storage/backpack/duffelbag/med
+	r_hand = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 
 	chameleon_extras = /obj/item/gun/syringe
 
