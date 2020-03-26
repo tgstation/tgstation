@@ -177,11 +177,12 @@
 		mode = BOT_IDLE
 		return
 
-	if(prob(1) && target_fire == null)
+	if(prob(5) && target_fire == null)
 		var/list/messagevoice = list("No fires detected." = 'sound/voice/firebot/nofires.ogg',
 		"Only you can prevent station fires." = 'sound/voice/firebot/onlyyou.ogg',
 		"Temperature nominal." = 'sound/voice/firebot/tempnominal.ogg',
-		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg')
+		"Keep it cool." = 'sound/voice/firebot/keepitcool.ogg',
+		"Please activate your copy of the Nanotrasen Voice System!" = 'sound/voice/firebot/activate.ogg')
 		var/message = pick(messagevoice)
 		speak(message)
 		playsound(src, messagevoice[message], 50)
