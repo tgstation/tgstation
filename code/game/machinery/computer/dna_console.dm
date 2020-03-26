@@ -251,8 +251,12 @@
 		data["DiskCapacity"] = diskette.max_mutations - LAZYLEN(diskette.mutations)
 		data["DiskReadOnly"] = diskette.read_only
 		data["DiskMutations"] = tgui_diskette_mutations
-		data["DiskHasMakeup"] = (LAZYLEN(diskette.genetic_makeup_buffer) > 0)
-		data["DiskMakeupBuffer"] = diskette.genetic_makeup_buffer.Copy()
+		if(istype(diskette.genetic_makeup_buffer))
+			data["DiskHasMakeup"] = TRUE
+			data["DiskMakeupBuffer"] = diskette.genetic_makeup_buffer.Copy()
+		else
+			data["DiskHasMakeup"] = FALSE
+			data["DiskMakeupBuffer"] = null
 	else
 		data["HasDisk"] = FALSE
 		data["DiskCapacity"] = 0

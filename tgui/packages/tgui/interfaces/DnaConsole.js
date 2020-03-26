@@ -323,7 +323,7 @@ export class DnaConsole extends Component {
         color={(mut.Active)
           ? ("green")
           : ("yellow")}
-        key={key+mut.Alias}
+        key={"rgs_"+mut.Alias}
         label=<img src={mut.Image}
           width={"65"} />
         onClick={e =>
