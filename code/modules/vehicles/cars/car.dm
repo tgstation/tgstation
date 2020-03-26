@@ -25,6 +25,8 @@
 	if(key_type && !is_key(inserted_key))
 		to_chat(user, "<span class='warning'>[src] has no key inserted!</span>")
 		return FALSE
+	else if(!key_check(user))
+		return FALSE
 	var/datum/component/riding/R = GetComponent(/datum/component/riding)
 	R.handle_ride(user, direction)
 	if(world.time < last_enginesound_time + engine_sound_length)
@@ -100,11 +102,11 @@
 	name = "car"
 	desc = "This used to be a pedastrian focused station, and now all these cars are ruining it!." //ok boomer
 	icon_state = "car"
-	max_integrity = 250
+	max_integrity = 300
 	armor = list("melee" = 70, "bullet" = 40, "laser" = 40, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
-	enter_delay = 20
+	enter_delay = 50 //No speed escapes
 	max_occupants = 5
-	movedelay = 1
+	movedelay = 1.15
 	var/obj/item/card/id/linked_id = null
 	var/can_drive = FALSE
 
@@ -139,7 +141,7 @@
 	var/throw_dir = turn(src.dir, pick(-90, 90))
 	var/throw_target = get_edge_target_turf(L, throw_dir)
 	playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
-	L.throw_at(throw_target, rand(2,3), 12)
+	L.throw_at(throw_target, rand(2,3), 4)
 	L.adjustBruteLoss(1) //NT guaranteed baby bumpers
 
 
@@ -171,6 +173,11 @@
 		return
 	return ..()
 
+/obj/vehicle/sealed/car/civ/mob_try_enter(mob/M)
+	if(!linked_id)
+		to_chat(M, "<span class='notice'>You need to link the car to your ID first!</span>")
+		return FALSE
+	return ..()
 
 /obj/item/car_beacon
 	name = "car beacon"
