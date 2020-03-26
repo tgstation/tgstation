@@ -129,8 +129,8 @@
 					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
 			qdel(I)
 			return
-	else
-		return ..()
+
+	return ..()
 
 /obj/machinery/computer/scan_consolenew/Initialize()
 	. = ..()

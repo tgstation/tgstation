@@ -323,7 +323,7 @@ export class DnaConsole extends Component {
         color={(mut.Active)
           ? ("green")
           : ("yellow")}
-        key={"rgs_"+mut.Alias}
+        key={`rgs_${key}_${mut.Alias}`}
         label=<img src={mut.Image}
           width={"65"} />
         onClick={e =>
@@ -535,7 +535,7 @@ export class DnaConsole extends Component {
   renderMutInfo(ref, data, mut, prefix, key, filteredList, source) {
     return (
       <Tabs.Tab
-        key={prefix+key+mut.Name}
+        key={`rmi_${prefix}_${key}_${mut.Name}`}
         label={mut.Name}>
         {() => (
           <Fragment>
@@ -659,7 +659,7 @@ export class DnaConsole extends Component {
   renderChromInfo(ref, data, chrom, prefix, key) {
     return (
       <Tabs.Tab
-        key={prefix+key+chrom.Name}
+        key={`rci_${prefix}_${key}_${chrom.Name}`}
         label={chrom.Name}>
         {() => (
           <Fragment>
@@ -732,7 +732,9 @@ export class DnaConsole extends Component {
   renderStorage(ref, data) {
     return (
       <Tabs vertical>
-        <Tabs.Tab label="Console">
+        <Tabs.Tab
+          key={`rs_console`}
+          label="Console">
           { () => (
             <Fragment>
               {this.renderMutStorage(
@@ -746,7 +748,9 @@ export class DnaConsole extends Component {
         </Tabs.Tab>
         { data.HasDisk
           ? (
-            <Tabs.Tab label="Disk">
+            <Tabs.Tab
+              key={`rs_disk`}
+              label="Disk">
               {() => (
                 <Fragment>
                   {this.renderMutStorage(
@@ -1114,7 +1118,7 @@ export class DnaConsole extends Component {
     Object.keys(inj).map((value, key) => (
       buffer.push(
         <Tabs.Tab
-          key={"AdvInjMut"+value}
+          key={`raim_${value}_${key}_${injname}`}
           label={inj[value].Name}>
           {() => (
             <Fragment>
@@ -1217,6 +1221,7 @@ export class DnaConsole extends Component {
               : (
                 <Tabs>
                   <Tabs.Tab
+                    key={`r_storage`}
                     label="Storage">
                     {() => {
                       return (
@@ -1225,6 +1230,7 @@ export class DnaConsole extends Component {
                     }}
                   </Tabs.Tab>
                   <Tabs.Tab
+                    key={`r_genseq`}
                     label="Genetic Sequencer"
                     disabled={!data.IsViableSubject}>
                     {() => (
@@ -1247,12 +1253,14 @@ export class DnaConsole extends Component {
                     )}
                   </Tabs.Tab>
                   <Tabs.Tab
+                    key={`r_genmakeup`}
                     label="Genetic Makeup">
                     {() => (
                       this.renderUniqueIdentifiers(ref, data)
                     )}
                   </Tabs.Tab>
                   <Tabs.Tab
+                    key={`r_advinj`}
                     label="Advanced Injectors">
                     {() => (
                       this.renderAdvInjectors(ref, data)
