@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 
 /obj/effect/proc_holder/ranged_ai/override_machine
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/override_machine_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/override_machine_target.dmi'
 	enable_text = "<span class='notice'>You tap into the station's powernet. Click on a machine to animate it, or use the ability again to cancel.</span>"
 	disable_text = "<span class='notice'>You release your hold on the powernet.</span>"
 
@@ -466,7 +466,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 
 /obj/effect/proc_holder/ranged_ai/overload_machine
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/overload_machine_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/overload_machine_target.dmi'
 	enable_text = "<span class='notice'>You tap into the station's powernet. Click on a machine to detonate it, or use the ability again to cancel.</span>"
 	disable_text = "<span class='notice'>You release your hold on the powernet.</span>"
 

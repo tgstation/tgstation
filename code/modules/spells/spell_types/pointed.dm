@@ -1,6 +1,6 @@
 /obj/effect/proc_holder/spell/pointed
 	name = "pointed spell"
-	ranged_mousepointer = 'icons/effects/throw_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 	action_icon_state = "projectile"
 	/// Message showing to the spell owner upon deactivating pointed spell.
 	var/deactive_msg = "You dispel the magic..."
