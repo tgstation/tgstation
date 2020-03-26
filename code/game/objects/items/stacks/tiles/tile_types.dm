@@ -14,6 +14,7 @@
 	var/turf_type = null
 	var/mineralType = null
 	novariants = TRUE
+	var/human_maxHealth = 100
 
 /obj/item/stack/tile/Initialize(mapload, amount)
 	. = ..()
@@ -22,8 +23,18 @@
 
 /obj/item/stack/tile/examine(mob/user)
 	..()
-	if(throwforce >= 10)
-		to_chat(user, "Those could work as a pretty decent throwing weapon.")
+	if(throwforce) //do not want to divide by zero
+		switch(CEILING(human_maxHealth / throwforce)) //amount of throws to crit
+			if(1 to 3)
+				to_chat(user, "Those could work as a spectacular throwing weapon.")
+			if(4 to 6)
+				to_chat(user, "Those could work as a fantastic throwing weapon.")				
+			if(7 to 9)
+				to_chat(user, "Those could work as a great throwing weapon.")
+			if(10)
+				to_chat(user, "Those could work as a fairly decent throwing weapon.")
+			if(11 to 13)
+				to_chat(user, "Those could work as a mediocre throwing weapon.")
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
