@@ -238,6 +238,59 @@
 
 	return cached_results["fire"] ? REACTING : NO_REACTION
 
+//freon reaction (is not a fire yet)
+datum/gas_reaction/freonfire
+	priority = -3
+	name = "Freon combustion"
+	id = "freonfire"
+
+datum/gas_reaction/freonfire/init_reqs()
+	min_requirements = list(
+		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
+		/datum/gas/freon = MINIMUM_MOLE_COUNT
+		)
+
+datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
+	var/energy_released = 0
+	var/old_heat_capacity = air.heat_capacity()
+	var/list/cached_gases = air.gases //this speeds things up because accessing datum vars is slow
+	var/temperature = air.temperature
+	var/turf/open/location = isturf(holder) ? holder : null
+
+	//Handle freon burning (only reaction now)
+	var/freon_burn_rate = 0
+	var/oxygen_burn_rate = 0
+	//more freon released at lower temperatures
+	var/temperature_scale = 1
+
+	if(temperature < FREON_LOWER_TEMPERATURE) //stop the reaction when too cold
+		temperature_scale = 0
+	else
+		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature)/(FREON_MAXIMUM_BURN_TEMPERATURE - FREON_LOWER_TEMPERATURE) //calculate the scale based on the temperature
+	if(temperature_scale > 0)
+		oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
+		if(cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/freon][MOLES]*FREON_OXYGEN_FULLBURN)
+			freon_burn_rate = (cached_gases[/datum/gas/freon][MOLES]*temperature_scale)/FREON_BURN_RATE_DELTA
+		else
+			freon_burn_rate = (temperature_scale*(cached_gases[/datum/gas/oxygen][MOLES]/FREON_OXYGEN_FULLBURN))/FREON_BURN_RATE_DELTA
+
+		if(freon_burn_rate > MINIMUM_HEAT_CAPACITY)
+			freon_burn_rate = min(freon_burn_rate,cached_gases[/datum/gas/freon][MOLES],cached_gases[/datum/gas/oxygen][MOLES]/oxygen_burn_rate) //Ensures matter is conserved properly
+			cached_gases[/datum/gas/freon][MOLES] = QUANTIZE(cached_gases[/datum/gas/freon][MOLES] - freon_burn_rate)
+			cached_gases[/datum/gas/oxygen][MOLES] = QUANTIZE(cached_gases[/datum/gas/oxygen][MOLES] - (freon_burn_rate * oxygen_burn_rate))
+			ASSERT_GAS(/datum/gas/carbon_dioxide,air)
+			cached_gases[/datum/gas/carbon_dioxide][MOLES] += freon_burn_rate
+
+			if(temperature < 150 && temperature > 130 && prob(2))
+				new /obj/item/stack/sheet/hot_ice(location)
+
+			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
+
+	if(energy_released < 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
+
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
@@ -393,6 +446,39 @@
 		var/new_heat_capacity = air.heat_capacity()
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = max(((temperature*old_heat_capacity + energy_released)/new_heat_capacity),TCMB)
+		return REACTING
+
+/datum/gas_reaction/freonformation
+	priority = 5
+	name = "Freon formation"
+	id = "freonformation"
+
+/datum/gas_reaction/freonformation/init_reqs() //minimum requirements for freon formation
+	min_requirements = list(
+		/datum/gas/plasma = 40,
+		/datum/gas/carbon_dioxide = 20,
+		/datum/gas/bz = 20,
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+		)
+
+/datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
+	var/list/cached_gases = air.gases
+	var/temperature = air.temperature
+	var/old_heat_capacity = air.heat_capacity()
+	var/heat_efficency = min(temperature/(FIRE_MINIMUM_TEMPERATURE_TO_EXIST * 10), cached_gases[/datum/gas/plasma][MOLES], cached_gases[/datum/gas/carbon_dioxide][MOLES], cached_gases[/datum/gas/bz][MOLES])
+	var/energy_used = heat_efficency * 100
+	ASSERT_GAS(/datum/gas/freon,air)
+	if ((cached_gases[/datum/gas/plasma][MOLES] - heat_efficency < 0 ) || (cached_gases[/datum/gas/carbon_dioxide][MOLES] - heat_efficency < 0) || (cached_gases[/datum/gas/bz][MOLES] - heat_efficency < 0)) //Shouldn't produce gas from nothing.
+		return NO_REACTION
+	cached_gases[/datum/gas/plasma][MOLES] -= heat_efficency * 5
+	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= heat_efficency
+	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.5
+	cached_gases[/datum/gas/freon][MOLES] += heat_efficency * 2
+
+	if(energy_used > 0)
+		var/new_heat_capacity = air.heat_capacity()
+		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
+			air.temperature = max(((temperature*old_heat_capacity - energy_used)/new_heat_capacity),TCMB)
 		return REACTING
 
 /datum/gas_reaction/stimformation //Stimulum formation follows a strange pattern of how effective it will be at a given temperature, having some multiple peaks and some large dropoffs. Exo and endo thermic.

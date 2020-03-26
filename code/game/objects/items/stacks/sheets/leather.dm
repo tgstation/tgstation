@@ -131,10 +131,10 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon_state = "sheet-hairlesshide"
 	item_state = "sheet-hairlesshide"
 
-/obj/item/stack/sheet/wetleather
-	name = "wet leather"
-	desc = "This leather has been cleaned but still needs to be dried."
-	singular_name = "wet leather piece"
+/obj/item/stack/sheet/wethide
+	name = "wet hide"
+	desc = "This hide has been cleaned but still needs to be dried."
+	singular_name = "wet hide piece"
 	icon_state = "sheet-wetleather"
 	item_state = "sheet-wetleather"
 	var/wetness = 30 //Reduced when exposed to high temperautres
@@ -232,7 +232,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step two - washing..... it's actually in washing machine code.
 
 //Step three - drying
-/obj/item/stack/sheet/wetleather/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/item/stack/sheet/wethide/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
 	if(exposed_temperature >= drying_threshold_temperature)
 		wetness--
@@ -241,7 +241,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 			wetness = initial(wetness)
 			use(1)
 
-/obj/item/stack/sheet/wetleather/microwave_act(obj/machinery/microwave/MW)
+/obj/item/stack/sheet/wethide/microwave_act(obj/machinery/microwave/MW)
 	..()
 	new /obj/item/stack/sheet/leather(drop_location(), amount)
 	qdel(src)

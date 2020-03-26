@@ -898,7 +898,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					reagents.remove_any(REAGENTS_METABOLISM)
 				if(reagents.get_reagent_amount(/datum/reagent/fuel))
 					//HOT STUFF
-					C.fire_stacks = 2
+					C.adjust_fire_stacks(2)
 					C.IgniteMob()
 
 				if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire
