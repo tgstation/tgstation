@@ -280,6 +280,12 @@ export const SyndPane = props => {
                 onClick={() => act('PRG_call_extraction')} />
             )}>
             {contracts.map(contract => {
+              if (data.ongoing_contract) {
+                if (contract.status !== 2) {
+                  return;
+                }
+              }
+
               const active = (contract.status > 1);
               if (contract.status >= 5) {
                 return;
@@ -287,7 +293,9 @@ export const SyndPane = props => {
               return (
                 <Section
                   key={contract.target}
-                  title={`${contract.target} (${contract.target_rank})`}
+                  title={contract.target
+                    ? `${contract.target} (${contract.target_rank})`
+                    : "Invalid Target"}
                   level={active ? 1 : 2}
                   buttons={(
                     <Fragment>
@@ -327,8 +335,16 @@ export const SyndPane = props => {
               );
             })}
           </Section>
+          <Section
+            title="Dropoff Locator"
+            textAlign="center"
+            opacity={data.ongoing_contract ? 100 : 0}>
+            <Box bold>
+              {data.dropoff_direction}
+            </Box>
+          </Section>
         </Tabs.Tab>
-        <Tabs.Tab label="Uplink">
+        <Tabs.Tab label="Hub">
           <Section>
             {contractor_hub_items.map(item => {
               const repInfo = item.cost ? (item.cost + ' Rep') : 'FREE';
