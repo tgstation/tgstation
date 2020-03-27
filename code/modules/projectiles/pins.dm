@@ -139,9 +139,17 @@
 
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown") && !(user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) && !(user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)))) //Yep, the antag datum for clown op leaders isn't a subtype of the antag datum for normal clown ops.
-		return FALSE
-	return TRUE
+	if(!user) //how the hell...?
+		return TRUE
+	if(HAS_TRAIT(user, TRAIT_CLUMSY)) //clumsy
+		return TRUE
+	if(user.mind && user.mind.assigned_role == "Clown") //traitor clowns can use this, even though they're technically not clumsy
+		return TRUE
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
+		return TRUE
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)) //Wanna hear a funny joke?
+		return TRUE //The clown op leader antag datum isn't a subtype of the normal clown op antag datum.
+	return FALSE
 
 /obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/G)
 	..()
