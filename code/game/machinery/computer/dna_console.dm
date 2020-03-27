@@ -248,6 +248,7 @@
 		data["SubjectHealth"] = scanner_occupant.health
 		data["SubjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["SubjectEnzymes"] = scanner_occupant.dna.unique_enzymes
+		data["IsMonkey"] = ismonkey(scanner_occupant)
 
 		var/text_sequence = scanner_occupant.dna.uni_identity
 		var/list/list_sequence = list()
@@ -320,7 +321,9 @@
 
 /obj/machinery/computer/scan_consolenew/ui_act(action, params)
 	if(..())
-		return
+		return TRUE
+
+	. = TRUE
 
 	add_fingerprint(usr)
 	usr.set_machine(src)
@@ -361,7 +364,7 @@
 			scanner_occupant.dna.remove_all_mutations(list(MUT_NORMAL, MUT_EXTRA))
 			scanner_occupant.dna.generate_dna_blocks()
 			scrambleready = world.time + SCRAMBLE_TIMEOUT
-			to_chat(usr,"<span class'notice'>DNA scrambled.</span>")
+			to_chat(usr,"<span class='notice'>DNA scrambled.</span>")
 			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER*50/(connected_scanner.damage_coeff ** 2)
 			return
 
@@ -388,7 +391,6 @@
 				return
 
 			check_discovery(params["alias"])
-
 			return
 
 		// Check all mutations of the occupant and check if any are discovered.
@@ -411,7 +413,7 @@
 			for(var/mutation_type in scanner_occupant.dna.mutation_index)
 				var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
 				check_discovery(HM.alias)
-				
+
 			return
 
 		// Set a gene in a mutation's genetic sequence. Will also check for mutations
@@ -922,6 +924,7 @@
 				return
 
 			diskette.genetic_makeup_buffer.Cut()
+			return
 
 		// UNUSED
 		/*
@@ -1216,7 +1219,6 @@
 			injector_selection.Remove(inj_name)
 			return
 
-
 		// Creates an injector from an advanced injector buffer
 		// ---------------------------------------------------------------------- //
 		// params["name"] - The name of the injector to print
@@ -1258,6 +1260,8 @@
 				injectorready = world.time + INJECTOR_TIMEOUT * 8 * (1 - 0.1 * connected_scanner.precision_coeff)
 			else
 				injectorready = world.time + INJECTOR_TIMEOUT * 8
+
+			return
 
 		// Adds a mutation to an advanced injector
 		// ---------------------------------------------------------------------- //
@@ -1336,7 +1340,7 @@
 			injector_selection[adv_inj].Remove(HM)
 			qdel(HM)
 			return
-	return
+	return FALSE
 
 // Applies the type of a specific genetic makeup buffer to the current scanner
 //  occupant

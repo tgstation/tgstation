@@ -8,6 +8,11 @@ import { createLogger } from '../logging';
 
 const logger = createLogger('dna_scannertgui');
 
+const MODE_STORAGE = 1;
+const MODE_SEQUENCER = 2;
+const MODE_ENZYMES = 3;
+const MODE_ADV_INJ = 4;
+
 export class DropdownEx extends Component {
   constructor(props) {
     super(props);
@@ -92,7 +97,7 @@ export class DnaConsole extends Component {
   constructor() {
     super();
     this.state = {
-
+      mode: MODE_STORAGE,
     };
   }
 
@@ -134,141 +139,316 @@ export class DnaConsole extends Component {
 
   renderCooldowns(data) {
     return (
-      <LabeledList>
-        <LabeledList.Item label="Scramble DNA">
-          { data.IsScrambleReady
-            ? "READY"
-            : Math.floor(data.ScrambleSeconds/60)
-              + ":"
-              + ((data.ScrambleSeconds % 60) < 10
-                ? "0" + data.ScrambleSeconds % 60
-                : data.ScrambleSeconds % 60)}
-        </LabeledList.Item>
-        <LabeledList.Item label="JOKER Alogrithm">
-          { data.IsJokerReady
-            ? "READY"
-            : Math.floor(data.JokerSeconds/60)
-              + ":"
-              + ((data.JokerSeconds % 60) < 10
-                ? "0" + data.JokerSeconds % 60
-                : data.JokerSeconds % 60)}
-        </LabeledList.Item>
-        <LabeledList.Item label="Injector Cooldown">
-          { data.IsInjectorReady
-            ? "READY"
-            : Math.floor(data.InjectorSeconds/60)
-              + ":"
-              + ((data.InjectorSeconds % 60) < 10
-                ? "0" + data.InjectorSeconds % 60
-                : data.InjectorSeconds % 60)}
-        </LabeledList.Item>
-      </LabeledList>
+      <Grid mb={1}>
+        <Grid.Column>
+          <Section title="Scramble DNA">
+            { data.IsScrambleReady
+              ? "READY"
+              : Math.floor(data.ScrambleSeconds/60)
+                + ":"
+                + ((data.ScrambleSeconds % 60) < 10
+                  ? "0" + data.ScrambleSeconds % 60
+                  : data.ScrambleSeconds % 60)}
+          </Section>
+        </Grid.Column>
+        <Grid.Column>
+          <Section title="JOKER Alogrithm">
+            { data.IsJokerReady
+              ? "READY"
+              : Math.floor(data.JokerSeconds/60)
+                + ":"
+                + ((data.JokerSeconds % 60) < 10
+                  ? "0" + data.JokerSeconds % 60
+                  : data.JokerSeconds % 60)}
+          </Section>
+        </Grid.Column>
+        <Grid.Column>
+          <Section title="Injector Cooldown">
+            { data.IsInjectorReady
+              ? "READY"
+              : Math.floor(data.InjectorSeconds/60)
+                + ":"
+                + ((data.InjectorSeconds % 60) < 10
+                  ? "0" + data.InjectorSeconds % 60
+                  : data.InjectorSeconds % 60)}
+          </Section>
+        </Grid.Column>
+      </Grid>
     );
   }
 
   renderSubjectStatus(data) {
-    return (
-      <LabeledList>
-        { data.IsViableSubject
-          ? (
-            <Fragment>
-              <LabeledList.Item label="Status">
-                {data.SubjectName}{" => "}
+    let buffer = [];
+    let subjectStatusColor = "";
+
+    switch (data.SubjectStatus) {
+      case data.CONSCIOUS:
+        subjectStatusColor = "good";
+        break;
+      case data.UNCONSCIOUS:
+        subjectStatusColor = "average";
+        break;
+      default:
+        subjectStatusColor = "bad";
+        break;
+    }
+
+    if (data.IsViableSubject) {
+      buffer.push(
+        <Fragment>
+          <LabeledList.Item label="Status">
+            {data.SubjectName}
+            {" => "}
+            <Box
+              inline
+              color={subjectStatusColor} >
+              <b>
                 {data.SubjectStatus === data.CONSCIOUS
                   ? ("Conscious")
                   : data.SubjectStatus === data.UNCONSCIOUS
                     ? ("Unconscious")
                     : ("Dead")}
-              </LabeledList.Item>
-              <LabeledList.Item label="Health">
-                <ProgressBar
-                  value={data.SubjectHealth}
-                  minValue={0}
-                  maxValue={100}
-                  ranges={{
-                    olive: [101, Infinity],
-                    good: [70, 101],
-                    average: [30, 70],
-                    bad: [-Infinity, 30],
-                  }}>
-                  {data.SubjectHealth}%
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Radiation">
-                <ProgressBar
-                  value={data.SubjectRads}
-                  minValue={0}
-                  maxValue={100}
-                  ranges={{
-                    bad: [71, Infinity],
-                    average: [30, 71],
-                    good: [0, 30],
-                    olive: [-Infinity, 0],
-                  }}>
-                  {data.SubjectRads}%
-                </ProgressBar>
-              </LabeledList.Item>
-              <LabeledList.Item label="Unique Enzymes">
-                {data.SubjectEnzymes}
-              </LabeledList.Item>
-            </Fragment>
-          ) : (
-            <LabeledList.Item label="Subject Status">
-              No viable subject in DNA Scanner.
-            </LabeledList.Item>
-          )}
+              </b>
+            </Box>
+          </LabeledList.Item>
+          <LabeledList.Item label="Health">
+            <ProgressBar
+              value={data.SubjectHealth}
+              minValue={0}
+              maxValue={100}
+              ranges={{
+                olive: [101, Infinity],
+                good: [70, 101],
+                average: [30, 70],
+                bad: [-Infinity, 30],
+              }}>
+              {data.SubjectHealth}%
+            </ProgressBar>
+          </LabeledList.Item>
+          <LabeledList.Item label="Radiation">
+            <ProgressBar
+              value={data.SubjectRads}
+              minValue={0}
+              maxValue={100}
+              ranges={{
+                bad: [71, Infinity],
+                average: [30, 71],
+                good: [0, 30],
+                olive: [-Infinity, 0],
+              }}>
+              {data.SubjectRads}%
+            </ProgressBar>
+          </LabeledList.Item>
+        </Fragment>,
+      );
+    }
+    else {
+      buffer.push(
+        <LabeledList.Item label="Status">
+          No viable subject in DNA Scanner.
+        </LabeledList.Item>,
+      );
+    }
+
+    return (
+      <LabeledList>
+        {buffer}
       </LabeledList>
     );
   }
 
-  renderCommands(ref, data) {
-    return (
-      data.HasDelayedAction
-        ? (
+  renderScannerCommands(ref, data) {
+    let buffer = [];
+
+    // If scanner is not connected, only display the connect button.
+    if (!data.IsScannerConnected) {
+      buffer.push(
+        <Button
+          content={"Connect Scanner"}
+          onClick={() =>
+            act(ref, "connect_scanner")} />,
+      );
+    }
+    // Else display the rest of the buttons
+    else {
+      // Only display the Cancel Delayed Action button if there's one to cancel.
+      if (data.HasDelayedAction) {
+        buffer.push(
           <Button
             content={"Cancel Delayed Action"}
             onClick={() =>
-              act(ref, "cancel_delay")} />
-        ) : (
-          <Fragment>
-            <Button
-              disabled={data.IsScannerConnected}
-              content={"Connect Scanner"}
-              onClick={() =>
-                act(ref, "connect_scanner")} />
-            <Button
-              disabled={!data.IsScannerConnected | data.ScannerLocked}
-              content={data.IsScannerConnected
-                ? (data.ScannerOpen
-                  ? ("Close Scanner")
-                  : ("Open Scanner"))
-                : ("No Scanner")}
-              onClick={() =>
-                act(ref, "toggle_door")} />
-            <Button
-              disabled={!data.IsScannerConnected || data.ScannerOpen}
-              content={data.IsScannerConnected
-                ? (data.ScannerLocked
-                  ? ("Unlock Scanner")
-                  : ("Lock Scanner"))
-                : ("No Scanner")}
-              onClick={() =>
-                act(ref, "toggle_lock")} />
-            <Button
-              disabled={!data.IsScannerConnected
-                || !data.IsViableSubject
-                || !data.IsScrambleReady
-                || data.IsR}
-              content={"Scramble DNA"}
-              onClick={() =>
-                act(ref, "scramble_dna")} />
-            <Button
-              disabled={!data.HasDisk}
-              content={"Eject Disk"}
-              onClick={() =>
-                act(ref, "eject_disk")} />
-          </Fragment>
-        )
+              act(ref, "cancel_delay")} />,
+        );
+      }
+      // Only display the Scramble DNA button if there's a viable occupant.
+      if (data.IsViableSubject) {
+        buffer.push(
+          <Button
+            disabled={
+              !data.IsScrambleReady
+              || data.IsPulsingRads
+            }
+            content={"Scramble DNA"}
+            onClick={() =>
+              act(ref, "scramble_dna")} />,
+        );
+      }
+      // Display the open and lock scanner buttons
+      buffer.push(
+        <Fragment>
+          <Button
+            disabled={data.ScannerOpen}
+            content={
+              data.ScannerLocked
+                ? ("Unlock Scanner")
+                : ("Lock Scanner")
+            }
+            onClick={() =>
+              act(ref, "toggle_lock")} />
+          <Button
+            disabled={data.ScannerLocked}
+            content={
+              data.ScannerOpen
+                ? ("Close Scanner")
+                : ("Open Scanner")
+            }
+            onClick={() =>
+              act(ref, "toggle_door")} />
+        </Fragment>,
+      );
+    }
+
+    return (
+      buffer
+    );
+  }
+
+  renderConsoleCommands(ref, data) {
+    let buffer = [];
+    let modeBuffer = [];
+
+    const seqOnClick = (ref, parent) => {
+      parent.setState({ mode: MODE_SEQUENCER });
+      act(ref, "all_check_discovery");
+    };
+
+    modeBuffer.push(
+      <Button
+        content={"Storage"}
+        selected={this.state.mode === MODE_STORAGE}
+        onClick={() => (
+          this.setState({ mode: MODE_STORAGE })
+        )} />,
+    );
+
+    if (data.IsViableSubject) {
+      modeBuffer.push(
+        <Button
+          content={"Sequencer"}
+          selected={this.state.mode === MODE_SEQUENCER}
+          onClick={() => (
+            seqOnClick(ref, this)
+          )} />,
+      );
+    }
+
+    modeBuffer.push(
+      <Fragment>
+        <Button
+          content={"Enzymes"}
+          selected={this.state.mode === MODE_ENZYMES}
+          onClick={() => (
+            this.setState({ mode: MODE_ENZYMES })
+          )} />
+        <Button
+          content={"Advanced Injectors"}
+          selected={this.state.mode === MODE_ADV_INJ}
+          onClick={() => (
+            this.setState({ mode: MODE_ADV_INJ })
+          )} />
+      </Fragment>,
+    );
+
+    buffer.push(
+      <LabeledList.Item label="Mode">
+        {modeBuffer}
+      </LabeledList.Item>,
+    );
+
+    if (data.HasDisk) {
+      buffer.push(
+        <LabeledList.Item label="Disk">
+          <Button
+            disabled={!data.HasDisk}
+            content={"Eject Disk"}
+            onClick={() =>
+              act(ref, "eject_disk")} />
+        </LabeledList.Item>,
+      );
+    }
+
+    return (
+      buffer
+    );
+  }
+
+  renderMode(ref, data, mutations) {
+    let buffer = [];
+
+    switch (this.state.mode) {
+      case MODE_STORAGE:
+        buffer.push(
+          <Section
+            title="Storage">
+            {this.renderStorage(ref, data)}
+          </Section>,
+        );
+        break;
+      case MODE_SEQUENCER:
+        buffer.push(
+          <Section
+            title="Genetic Sequencer">
+            <Tabs altSelection>
+              {data.SubjectMutations
+                ? (
+                  Object.keys(mutations).map((value, key) => {
+                    return (
+                      this.renderGeneticSequencer(
+                        ref,
+                        data,
+                        mutations[value],
+                        key)
+                    );
+                  })
+                ) : (
+                  false
+                )}
+            </Tabs>
+          </Section>,
+        );
+        break;
+      case MODE_ENZYMES:
+        buffer.push(
+          <Section
+            title="Enzymes">
+            {this.renderUniqueIdentifiers(ref, data)}
+          </Section>,
+        );
+        break;
+      case MODE_ADV_INJ:
+        buffer.push(
+          <Section
+            title="Advanced Injectors">
+            {this.renderAdvInjectors(ref, data)}
+          </Section>,
+        );
+        break;
+      default:
+        break;
+    }
+
+    return (
+      buffer
     );
   }
 
@@ -354,85 +534,89 @@ export class DnaConsole extends Component {
   renderGeneSequence(ref, data, mut) {
     return (
       <Box m={1}>
-        <Table>
-          <Table.Row>
-            {mut.SeqList.map((v, k) => {
-              return (
-                (k % 2 === 0)
-                  ? (
-                    <Table.Cell>
-                      <DropdownEx
-                        disabled={(mut.Class !== data.MUT_NORMAL)}
-                        key={k+v+mut.Alias}
-                        textAlign="center"
-                        options={
-                          data.IsJokerReady
-                            ? ["J"].concat(data.REVERSEGENES)
-                            : data.REVERSEGENES
-                        }
-                        width="20px"
-                        selected={v}
-                        over
-                        nochevron
-                        noscroll
-                        highlights={[
-                          { "X": "red" },
-                          { "A": "green" },
-                          { "T": "green" },
-                          { "G": "blue" },
-                          { "C": "blue" },
-                        ]}
-                        onSelected={e =>
-                          act(ref, "pulse_gene", {
-                            pos: k+1,
-                            gene: e,
-                            alias: mut.Alias })} />
-                    </Table.Cell>
-                  ) : (
-                    false
-                  )
-              );
-            })}
-          </Table.Row>
-          <Table.Row>
-            {mut.SeqList.map((v, k) => {
-              return (
-                (k % 2 !== 0)
-                  ? (
-                    <Table.Cell>
-                      <DropdownEx
-                        disabled={(mut.Class !== data.MUT_NORMAL)}
-                        key={k+v+mut.Alias}
-                        textAlign="center"
-                        options={
-                          data.IsJokerReady
-                            ? data.GENES.concat(["J"])
-                            : data.GENES
-                        }
-                        width="20px"
-                        selected={v}
-                        nochevron
-                        noscroll
-                        highlights={[
-                          { "X": "red" },
-                          { "A": "green" },
-                          { "T": "green" },
-                          { "G": "blue" },
-                          { "C": "blue" },
-                        ]}
-                        onSelected={e =>
-                          act(ref, "pulse_gene", {
-                            pos: k+1,
-                            gene: e,
-                            alias: mut.Alias })} />
-                    </Table.Cell>
-                  ) : (
-                    false
-                  )
-              );
-            })}
-          </Table.Row>
-        </Table>
+        {(data.IsMonkey && mut.Name !== "Monkified")
+          ? (`GENETIC SEQUENCE CORRUPTED: SUBJECT DIAGNOSTIC REPORT - MONKEY`)
+          : (
+            <Table>
+              <Table.Row>
+                {mut.SeqList.map((v, k) => {
+                  return (
+                    (k % 2 === 0)
+                      ? (
+                        <Table.Cell>
+                          <DropdownEx
+                            disabled={(mut.Class !== data.MUT_NORMAL)}
+                            key={k+v+mut.Alias}
+                            textAlign="center"
+                            options={
+                              data.IsJokerReady
+                                ? ["J"].concat(data.REVERSEGENES)
+                                : data.REVERSEGENES
+                            }
+                            width="20px"
+                            selected={v}
+                            over
+                            nochevron
+                            noscroll
+                            highlights={[
+                              { "X": "red" },
+                              { "A": "green" },
+                              { "T": "green" },
+                              { "G": "blue" },
+                              { "C": "blue" },
+                            ]}
+                            onSelected={e =>
+                              act(ref, "pulse_gene", {
+                                pos: k+1,
+                                gene: e,
+                                alias: mut.Alias })} />
+                        </Table.Cell>
+                      ) : (
+                        false
+                      )
+                  );
+                })}
+              </Table.Row>
+              <Table.Row>
+                {mut.SeqList.map((v, k) => {
+                  return (
+                    (k % 2 !== 0)
+                      ? (
+                        <Table.Cell>
+                          <DropdownEx
+                            disabled={(mut.Class !== data.MUT_NORMAL)}
+                            key={k+v+mut.Alias}
+                            textAlign="center"
+                            options={
+                              data.IsJokerReady
+                                ? data.GENES.concat(["J"])
+                                : data.GENES
+                            }
+                            width="20px"
+                            selected={v}
+                            nochevron
+                            noscroll
+                            highlights={[
+                              { "X": "red" },
+                              { "A": "green" },
+                              { "T": "green" },
+                              { "G": "blue" },
+                              { "C": "blue" },
+                            ]}
+                            onSelected={e =>
+                              act(ref, "pulse_gene", {
+                                pos: k+1,
+                                gene: e,
+                                alias: mut.Alias })} />
+                        </Table.Cell>
+                      ) : (
+                        false
+                      )
+                  );
+                })}
+              </Table.Row>
+            </Table>
+          )}
       </Box>
     );
   }
@@ -1175,8 +1359,7 @@ export class DnaConsole extends Component {
   }
 
 
-  render()
-  {
+  render() {
     const { state } = this.props;
     const { config, data } = state;
     const { ref } = config;
@@ -1184,30 +1367,20 @@ export class DnaConsole extends Component {
     const mutations = data.SubjectMutations || {};
 
     return (
-      <Section
-        title="DNA Console"
-        textAlign="left">
+      <Fragment>
         <Section
-          title="Subject Status"
-          textAlign="left">
+          title="DNA Scanner"
+          textAlign="left"
+          buttons={this.renderScannerCommands(ref, data)}>
           {this.renderSubjectStatus(data)}
         </Section>
-        <Flex>
-          <Section
-            title="DNA Scanner Status"
-            textAlign="left">
-            {this.renderScanner(data)}
-          </Section>
-          <Section
-            title="DNA Console Status"
-            textAlign="left">
-            {this.renderCooldowns(data)}
-          </Section>
-        </Flex>
+        {this.renderCooldowns(data)}
         <Section
-          title="Commands"
+          title="DNA Console"
           textAlign="left">
-          {this.renderCommands(ref, data)}
+          <LabeledList>
+            {this.renderConsoleCommands(ref, data)}
+          </LabeledList>
         </Section>
         {data.IsPulsingRads
           ? (
@@ -1228,61 +1401,10 @@ export class DnaConsole extends Component {
             data.HasDelayedAction
               ? (false)
               : (
-                <Tabs>
-                  <Tabs.Tab
-                    key={`r_storage`}
-                    label="Storage">
-                    {() => {
-                      return (
-                        this.renderStorage(ref, data)
-                      );
-                    }}
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    key={`r_genseq`}
-                    label="Genetic Sequencer"
-                    disabled={!data.IsViableSubject}
-                    onClick={() => (
-                      act(ref, "all_check_discovery")
-                    )}>
-                    {() => (
-                      <Tabs altSelection>
-                        {data.SubjectMutations
-                          ? (
-                            Object.keys(mutations).map((value, key) => {
-                              return (
-                                this.renderGeneticSequencer(
-                                  ref,
-                                  data,
-                                  mutations[value],
-                                  key)
-                              );
-                            })
-                          ) : (
-                            false
-                          )}
-                      </Tabs>
-                    )}
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    key={`r_genmakeup`}
-                    label="Genetic Makeup">
-                    {() => (
-                      this.renderUniqueIdentifiers(ref, data)
-                    )}
-                  </Tabs.Tab>
-                  <Tabs.Tab
-                    key={`r_advinj`}
-                    label="Advanced Injectors">
-                    {() => (
-                      this.renderAdvInjectors(ref, data)
-                    )}
-                  </Tabs.Tab>
-                </Tabs>
+                this.renderMode(ref, data, mutations)
               )
           )}
-
-      </Section>
+      </Fragment>
     );
   }
 }
