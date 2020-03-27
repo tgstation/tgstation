@@ -186,7 +186,7 @@
 	user.visible_message("<span class='suicide'>[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicicide!</span>")
 	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
 	user.adjust_nutrition(50) // mmmm delicious
-	addtimer(CALLBACK(src, .proc/manual_suicide, user), 30)
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), (3SECONDS))
 	return MANUAL_SUICIDE
 
 /**
