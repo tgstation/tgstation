@@ -186,15 +186,12 @@
 		can_use_scanner = FALSE
 		connected_scanner = null
 		is_viable_occupant = FALSE
-		scanner_occupant = null
 
 	// Check for a viable occupant in the scanner.
 	if(can_modify_occ)
 		is_viable_occupant = TRUE
-		scanner_occupant = connected_scanner.occupant
 	else
 		is_viable_occupant = FALSE
-		scanner_occupant = null
 
 
 	// Populates various buffers for passing to tgui
@@ -394,6 +391,29 @@
 
 			return
 
+		// Check all mutations of the occupant and check if any are discovered.
+		// This is called when the Genetic Sequencer is selected. It'll do things
+		//  like immediately discover Monkified without needing to click through
+		//  the mutation tabs and handle cases where mutations are solved but not
+		//  discovered due to the Monkified mutation being active then removed.
+		if("all_check_discovery")
+			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
+			//  operational guard checks.
+			if(!can_modify_occupant())
+				return
+
+			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
+			//  unexpected.
+			if(!(scanner_occupant == connected_scanner.occupant))
+				return
+
+			// Go over all standard mutations and check if they've been discovered.
+			for(var/mutation_type in scanner_occupant.dna.mutation_index)
+				var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
+				check_discovery(HM.alias)
+				
+			return
+
 		// Set a gene in a mutation's genetic sequence. Will also check for mutations
 		//  discovery as part of the process.
 		// ---------------------------------------------------------------------- //
@@ -441,7 +461,16 @@
 			scanner_occupant.radiation += RADIATION_STRENGTH_MULTIPLIER/connected_scanner.damage_coeff
 			scanner_occupant.domutcheck()
 
-			// Check if we cracked this new mutation
+			// GUARD CHECK - Modifying genetics can lead to edge cases where the
+			//  scanner occupant is qdel'd and replaced with a different entity.
+			//  Examples of this include adding/removing the Monkified mutation which
+			//  qdels the previous entity and creates a brand new one in its place.
+			// We should redo all of our occupant modification checks again, although
+			//  it is less than ideal.
+			if(!can_modify_occupant())
+				return
+
+			// Check if we cracked a mutation
 			check_discovery(alias)
 
 			return
@@ -1372,9 +1401,8 @@
 	return (connected_scanner && connected_scanner.is_operational())
 
 // Checks if there is a valid subject in the DNA Scanner that can be genetically
-//  modified
+//  modified. Will set the scanner occupant var as part of this check.
 // Requires that the scanner can be operated and will return early if it can't
-//  be
 /obj/machinery/computer/scan_consolenew/proc/can_modify_occupant()
 	// GUARD CHECK - We always want to perform the scanner operational check as
 	//  part of checking if we can modify the occupant.
@@ -1385,7 +1413,7 @@
 	if(!connected_scanner.occupant)
 		return FALSE
 
-	var/mob/living/carbon/test_occupant = connected_scanner.occupant
+	scanner_occupant = connected_scanner.occupant
 
 		// Check validity of occupent for DNA Modification
 		// DNA Modification:
@@ -1393,7 +1421,7 @@
 		//	   this DNA can not be bad
 		//   is done via radiation bursts, so radiation immune carbons are not viable
 		// And the DNA Scanner itself must have a valid scan level
-	if(test_occupant.has_dna() && !HAS_TRAIT(test_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(test_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
+	if(scanner_occupant.has_dna() && !HAS_TRAIT(scanner_occupant, TRAIT_RADIMMUNE) && !HAS_TRAIT(scanner_occupant, TRAIT_BADDNA) || (connected_scanner.scan_level == 3))
 		return TRUE
 
 	return FALSE
@@ -1479,6 +1507,7 @@
 	//  previously included checks to make sure the DNA Scanner is still
 	//  operational
 	if(can_modify_occ)
+		// ---------------------------------------------------------------------- //
 		// Start cataloguing all mutations that the occupant has by default
 		for(var/mutation_type in scanner_occupant.dna.mutation_index)
 			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
@@ -1547,6 +1576,7 @@
 			tgui_occupant_mutations["[index]"] = mutation_data
 			index++
 
+		// ---------------------------------------------------------------------- //
 		// Now get additional/"extra" mutations that they shouldn't have by default
 		for(var/datum/mutation/human/HM in scanner_occupant.dna.mutations)
 			// If it's in the mutation index array, we've already catalogued this

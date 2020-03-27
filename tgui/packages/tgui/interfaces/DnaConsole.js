@@ -1241,7 +1241,10 @@ export class DnaConsole extends Component {
                   <Tabs.Tab
                     key={`r_genseq`}
                     label="Genetic Sequencer"
-                    disabled={!data.IsViableSubject}>
+                    disabled={!data.IsViableSubject}
+                    onClick={() => (
+                      act(ref, "all_check_discovery")
+                    )}>
                     {() => (
                       <Tabs altSelection>
                         {data.SubjectMutations
