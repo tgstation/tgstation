@@ -106,7 +106,10 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		user.put_in_hands(beaker)
+		if(can_interact(user))
+			user.put_in_hands(beaker)
+		else
+			beaker.drop_location(get_turf(src))
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
@@ -218,12 +221,13 @@
 			examine(user)
 
 /obj/machinery/reagentgrinder/proc/eject(mob/user)
-	for(var/i in holdingitems)
-		var/obj/item/O = i
-		O.forceMove(drop_location())
-		holdingitems -= O
-	if(beaker)
-		replace_beaker(user)
+	if(!can_interact(user) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+		for(var/i in holdingitems)
+			var/obj/item/O = i
+			O.forceMove(drop_location())
+			holdingitems -= O
+		if(beaker)
+			replace_beaker(user)
 
 /obj/machinery/reagentgrinder/proc/remove_object(obj/item/O)
 	holdingitems -= O
