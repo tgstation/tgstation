@@ -46436,6 +46436,10 @@
 /obj/structure/table/wood/fancy,
 /obj/item/folder,
 /obj/item/pen,
+/obj/item/book/granter/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
+/obj/item/organ/heart,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "cru" = (
@@ -46503,6 +46507,7 @@
 "crD" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/box/bodybags,
+/obj/item/soulstone/anybody/chaplain,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "crE" = (
@@ -47821,9 +47826,8 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/button/massdriver{
-	id = "chapelgun";
-	pixel_x = 28
+/obj/machinery/computer/pod/wall{
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/main/monastery)
@@ -51263,6 +51267,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/structure/altar_of_gods,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "hYm" = (

@@ -12071,12 +12071,7 @@
 /area/chapel/main)
 "aFA" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/computer/pod/old{
-	density = 0;
-	icon = 'icons/obj/airlock_machines.dmi';
-	icon_state = "airlock_control_standby";
-	id = "chapelgun";
-	name = "Mass Driver Controller";
+/obj/machinery/computer/pod/wall{
 	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
@@ -13868,6 +13863,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/soulstone/anybody/chaplain,
+/obj/item/book/granter/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "aJN" = (
@@ -13919,6 +13918,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/item/organ/heart,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "aJV" = (
@@ -16172,8 +16172,9 @@
 	},
 /area/chapel/main)
 "aQw" = (
-/obj/structure/table/wood,
-/turf/open/floor/plasteel/dark,
+/obj/structure/altar_of_gods,
+/obj/item/storage/book/bible,
+/turf/open/floor/carpet,
 /area/chapel/main)
 "aQx" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,

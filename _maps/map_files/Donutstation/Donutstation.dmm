@@ -364,6 +364,9 @@
 /obj/machinery/camera{
 	c_tag = "Civilian - Chapel Cremator"
 	},
+/obj/item/book/granter/spell/smoke/lesser{
+	name = "mysterious old book of cloud-chasing"
+	},
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "aaV" = (
@@ -1360,8 +1363,8 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "adu" = (
-/obj/structure/table/wood,
 /obj/item/storage/book/bible,
+/obj/structure/altar_of_gods,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
@@ -1529,11 +1532,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "adR" = (
-/obj/machinery/button/massdriver{
-	id = "chapelgun";
-	pixel_x = 8;
-	pixel_y = 24
-	},
 /obj/structure/table/wood,
 /obj/structure/sign/plaques/kiddie/badger{
 	pixel_x = -32
@@ -1549,6 +1547,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Civilian - Chapel Mass Driver"
+	},
+/obj/machinery/computer/pod/wall{
+	pixel_y = 26
 	},
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
@@ -2553,6 +2554,7 @@
 "agq" = (
 /obj/structure/table/wood,
 /obj/item/storage/book/bible,
+/obj/item/organ/heart,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/office)
 "agr" = (
