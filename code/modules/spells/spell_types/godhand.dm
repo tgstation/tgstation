@@ -112,7 +112,7 @@
 	return ..()
 
 /obj/item/melee/touch_attack/honk
-	name = "\improper clown's revenge"
+	name = "\improper silly touch"
 	desc = "Can you hear it? The pained laughter? The dull smack of a forehead against metal and glass? The incessant need to honk without end?"
 	catchphrase = "Lonk-Lonk-Lonk, FMR'shNK Cluw-NR!!!"
 	on_use_sound = 'sound/items/airhorn.ogg'
