@@ -106,7 +106,10 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		user.put_in_hands(beaker)
+		if(can_interact(user))
+			user.put_in_hands(beaker)
+		else
+			beaker.drop_location(get_turf(src))
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
