@@ -18,7 +18,8 @@
 				if(istype(new_area, type)) // it's at least one of our types so it's whitelisted
 					valid = TRUE
 					break
-			break
+			if(!valid)
+				break
 
 		if(!valid)
 			continue

@@ -61,6 +61,7 @@
 	view_range = 13
 	x_offset = -7
 	y_offset = -1
+	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral)
 	see_hidden = TRUE
 
 #undef SYNDICATE_CHALLENGE_TIMER
