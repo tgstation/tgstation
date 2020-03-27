@@ -185,9 +185,6 @@
 
 /obj/item/areaeditor/proc/edit_area()
 	var/area/A = get_area(usr)
-	if(A.noteleport)
-		to_chat(usr, "<span class='warning'>You cannot edit restricted areas.</span>")
-		return
 	var/prevname = "[A.name]"
 	var/str = stripped_input(usr,"New area name:", "Area Creation", "", MAX_NAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
