@@ -2342,6 +2342,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Marsblast"
 	glass_desc = "One of these is enough to leave your face red like the actual planet."
 
+/datum/reagent/consumable/ethanol/marsblast/on_mob_life(mob/living/carbon/M)
+	M.adjust_bodytemperature(5 * TEMPERATURE_DAMAGE_COEFFICIENT, 0, M.get_body_temp_normal())
+	..()
+
 /datum/reagent/consumable/ethanol/mercuryblast
 	name = "Mercuryblast"
 	description = "No thermometer was harmed in the creation of this drink."
