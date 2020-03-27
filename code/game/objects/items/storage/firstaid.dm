@@ -472,7 +472,7 @@
 ///////////////////////////////////////// Psychologist inventory pillbottles
 /obj/item/storage/pill_bottle/happinesspsych
 	name = "happiness pills"
-	desc = "Contains pills used to temporarily stabilize depression and anxiety. WARNING: side effects may include reduced ability to concentrate, slurred speech, drooling, and severe addiction."
+	desc = "Contains pills used as a last resort means to temporarily stabilize depression and anxiety. WARNING: side effects may include slurred speech, drooling, and severe addiction."
 
 /obj/item/storage/pill_bottle/happinesspsych/PopulateContents()
 	for(var/i in 1 to 5)
