@@ -40,6 +40,9 @@
 #define COMSIG_PARENT_QDELETING "parent_qdeleting"
 /// generic topic handler (usr, href_list)
 #define COMSIG_TOPIC "handle_topic"
+/// Trait signals
+#define COMPONENT_ADD_TRAIT (1<<0)
+#define COMPONENT_REMOVE_TRAIT (1<<1)
 
 /// fires on the target datum when an element is attached to it (/datum/element)
 #define COMSIG_ELEMENT_ATTACH "element_attach"

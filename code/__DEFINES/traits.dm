@@ -1,3 +1,5 @@
+#define SIGNAL_TRAIT(trait_ref) "trait [trait_ref]"
+
 // trait accessor defines
 #define ADD_TRAIT(target, trait, source) \
 	do { \
@@ -6,12 +8,14 @@
 			target.status_traits = list(); \
 			_L = target.status_traits; \
 			_L[trait] = list(source); \
+			SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 		} else { \
 			_L = target.status_traits; \
 			if (_L[trait]) { \
 				_L[trait] |= list(source); \
 			} else { \
 				_L[trait] = list(source); \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_ADD_TRAIT); \
 			} \
 		} \
 	} while (0)
@@ -31,7 +35,8 @@
 				} \
 			};\
 			if (!length(_L[trait])) { \
-				_L -= trait \
+				_L -= trait; \
+				SEND_SIGNAL(target, SIGNAL_TRAIT(trait), COMPONENT_REMOVE_TRAIT); \
 			}; \
 			if (!length(_L)) { \
 				target.status_traits = null \
@@ -46,11 +51,13 @@
 			for (var/_T in _L) { \
 				_L[_T] &= _S;\
 				if (!length(_L[_T])) { \
-					_L -= _T } \
+					_L -= _T; \
+					SEND_SIGNAL(target, SIGNAL_TRAIT(_T), COMPONENT_REMOVE_TRAIT); \
+					}; \
 				};\
-				if (!length(_L)) { \
-					target.status_traits = null\
-				};\
+			if (!length(_L)) { \
+				target.status_traits = null\
+			};\
 		}\
 	} while (0)
 #define HAS_TRAIT(target, trait) (target.status_traits ? (target.status_traits[trait] ? TRUE : FALSE) : FALSE)
