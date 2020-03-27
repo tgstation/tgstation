@@ -1,6 +1,6 @@
 /obj/item/melee/baton
-	name = "stun baton"
-	desc = "A stun baton for incapacitating people with."
+	name = "arrest baton"
+	desc = "An arrest baton for arresting people with."
 
 	icon_state = "stunbaton"
 	item_state = "baton"
@@ -164,6 +164,20 @@
 			to_chat(user, "<span class='warning'>[src] is out of charge.</span>")
 	update_icon()
 	add_fingerprint(user)
+	
+/obj/item/melee/baton/proc/move_to_jail(mob/living/L, user)
+	//pick randomly from a list of prison turfs to teleport the RDMer to
+	var/list/validturfs = list() //Find all open prison turfs so we can pick from them later
+	for(var/area/security/prison/P in SSmapping.areas_in_z["[SSmapping.station_start]"])
+		for(var/turf/open/floor/F in P.contents)
+			validturfs += F
+	if(LAZYLEN(validturfs))
+		var/turf/newturf = pick(validturfs)
+		L.loc = newturf
+		priority_announce("[L] has been arrested for 300 seconds")
+		to_chat(L,"You have been arrested for 300 seconds")
+		if(L != user)
+			to_chat(user,"You have arrested [L] for 300 seconds")
 
 /obj/item/melee/baton/proc/clumsy_check(mob/living/carbon/human/user)
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
@@ -172,6 +186,7 @@
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		user.Knockdown(stun_time*3) //should really be an equivalent to attack(user,user)
 		deductcharge(cell_hit_cost)
+		move_to_jail(user,user)
 		return TRUE
 	return FALSE
 
@@ -222,6 +237,7 @@
 			return FALSE
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
+	move_to_jail(L, user)
 	L.Jitter(20)
 	L.confused = max(confusion_amt, L.confused)
 	L.stuttering = max(8, L.stuttering)
