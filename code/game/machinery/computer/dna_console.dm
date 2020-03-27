@@ -599,12 +599,18 @@
 			if(!num)
 				num = round(input(usr, "Choose pulse duration:", "Input an Integer", null) as num|null)
 			if(num)
-				radduration = WRAP(num, 1, RADIATION_DURATION_MAX+1)
+				if(num < 1)
+					radduration = 1
+				if(num > RADIATION_DURATION_MAX)
+					radduration = RADIATION_DURATION_MAX
 		if("setstrength")
 			if(!num)
 				num = round(input(usr, "Choose pulse strength:", "Input an Integer", null) as num|null)
 			if(num)
-				radstrength = WRAP(num, 1, RADIATION_STRENGTH_MAX+1)
+				if(num < 1)
+					radstrength = 1
+				if(num > RADIATION_STRENGTH_MAX)
+					radstrength = RADIATION_STRENGTH_MAX
 		if("screen")
 			current_screen = href_list["text"]
 		if("scramble")
