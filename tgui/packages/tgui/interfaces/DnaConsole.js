@@ -186,10 +186,14 @@ export class DnaConsole extends Component {
         subjectStatusColor = "good";
         break;
       case data.UNCONSCIOUS:
+      case data.SOFT_CRIT:
         subjectStatusColor = "average";
         break;
-      default:
+      case data.DEAD:
         subjectStatusColor = "bad";
+        break;
+      default:
+        subjectStatusColor = "good";
         break;
     }
 
@@ -204,10 +208,12 @@ export class DnaConsole extends Component {
               color={subjectStatusColor} >
               <b>
                 {data.SubjectStatus === data.CONSCIOUS
-                  ? ("Conscious")
-                  : data.SubjectStatus === data.UNCONSCIOUS
-                    ? ("Unconscious")
-                    : ("Dead")}
+                  ? "Conscious"
+                  : data.SubjectStatus === data.SOFT_CRIT
+                    ? "Critical"
+                    : data.SubjectStatus === data.UNCONSCIOUS
+                      ? "Unconscious"
+                      : "Dead"}
               </b>
             </Box>
           </LabeledList.Item>
@@ -534,89 +540,91 @@ export class DnaConsole extends Component {
   renderGeneSequence(ref, data, mut) {
     return (
       <Box m={1}>
-        {(data.IsMonkey && mut.Name !== "Monkified")
-          ? (`GENETIC SEQUENCE CORRUPTED: SUBJECT DIAGNOSTIC REPORT - MONKEY`)
-          : (
-            <Table>
-              <Table.Row>
-                {mut.SeqList.map((v, k) => {
-                  return (
-                    (k % 2 === 0)
-                      ? (
-                        <Table.Cell>
-                          <DropdownEx
-                            disabled={(mut.Class !== data.MUT_NORMAL)}
-                            key={k+v+mut.Alias}
-                            textAlign="center"
-                            options={
-                              data.IsJokerReady
-                                ? ["J"].concat(data.REVERSEGENES)
-                                : data.REVERSEGENES
-                            }
-                            width="20px"
-                            selected={v}
-                            over
-                            nochevron
-                            noscroll
-                            highlights={[
-                              { "X": "red" },
-                              { "A": "green" },
-                              { "T": "green" },
-                              { "G": "blue" },
-                              { "C": "blue" },
-                            ]}
-                            onSelected={e =>
-                              act(ref, "pulse_gene", {
-                                pos: k+1,
-                                gene: e,
-                                alias: mut.Alias })} />
-                        </Table.Cell>
-                      ) : (
-                        false
-                      )
-                  );
-                })}
-              </Table.Row>
-              <Table.Row>
-                {mut.SeqList.map((v, k) => {
-                  return (
-                    (k % 2 !== 0)
-                      ? (
-                        <Table.Cell>
-                          <DropdownEx
-                            disabled={(mut.Class !== data.MUT_NORMAL)}
-                            key={k+v+mut.Alias}
-                            textAlign="center"
-                            options={
-                              data.IsJokerReady
-                                ? data.GENES.concat(["J"])
-                                : data.GENES
-                            }
-                            width="20px"
-                            selected={v}
-                            nochevron
-                            noscroll
-                            highlights={[
-                              { "X": "red" },
-                              { "A": "green" },
-                              { "T": "green" },
-                              { "G": "blue" },
-                              { "C": "blue" },
-                            ]}
-                            onSelected={e =>
-                              act(ref, "pulse_gene", {
-                                pos: k+1,
-                                gene: e,
-                                alias: mut.Alias })} />
-                        </Table.Cell>
-                      ) : (
-                        false
-                      )
-                  );
-                })}
-              </Table.Row>
-            </Table>
-          )}
+        {(data.SubjectStatus === data.DEAD)
+          ? `GENETIC SEQUENCE CORRUPTED: SUBJECT DIAGNOSTIC REPORT - DECEASED`
+          : (data.IsMonkey && (mut.Name !== "Monkified"))
+            ? `GENETIC SEQUENCE CORRUPTED: SUBJECT DIAGNOSTIC REPORT - MONKEY`
+            : (
+              <Table>
+                <Table.Row>
+                  {mut.SeqList.map((v, k) => {
+                    return (
+                      (k % 2 === 0)
+                        ? (
+                          <Table.Cell>
+                            <DropdownEx
+                              disabled={(mut.Class !== data.MUT_NORMAL)}
+                              key={k+v+mut.Alias}
+                              textAlign="center"
+                              options={
+                                data.IsJokerReady
+                                  ? ["J"].concat(data.REVERSEGENES)
+                                  : data.REVERSEGENES
+                              }
+                              width="20px"
+                              selected={v}
+                              over
+                              nochevron
+                              noscroll
+                              highlights={[
+                                { "X": "red" },
+                                { "A": "green" },
+                                { "T": "green" },
+                                { "G": "blue" },
+                                { "C": "blue" },
+                              ]}
+                              onSelected={e =>
+                                act(ref, "pulse_gene", {
+                                  pos: k+1,
+                                  gene: e,
+                                  alias: mut.Alias })} />
+                          </Table.Cell>
+                        ) : (
+                          false
+                        )
+                    );
+                  })}
+                </Table.Row>
+                <Table.Row>
+                  {mut.SeqList.map((v, k) => {
+                    return (
+                      (k % 2 !== 0)
+                        ? (
+                          <Table.Cell>
+                            <DropdownEx
+                              disabled={(mut.Class !== data.MUT_NORMAL)}
+                              key={k+v+mut.Alias}
+                              textAlign="center"
+                              options={
+                                data.IsJokerReady
+                                  ? data.GENES.concat(["J"])
+                                  : data.GENES
+                              }
+                              width="20px"
+                              selected={v}
+                              nochevron
+                              noscroll
+                              highlights={[
+                                { "X": "red" },
+                                { "A": "green" },
+                                { "T": "green" },
+                                { "G": "blue" },
+                                { "C": "blue" },
+                              ]}
+                              onSelected={e =>
+                                act(ref, "pulse_gene", {
+                                  pos: k+1,
+                                  gene: e,
+                                  alias: mut.Alias })} />
+                          </Table.Cell>
+                        ) : (
+                          false
+                        )
+                    );
+                  })}
+                </Table.Row>
+              </Table>
+            )}
       </Box>
     );
   }

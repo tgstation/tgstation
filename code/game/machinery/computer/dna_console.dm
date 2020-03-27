@@ -304,7 +304,9 @@
 
 	// These are effectively DEFINES/constants
 	data["CONSCIOUS"] = CONSCIOUS
+	data["SOFT_CRIT"] = SOFT_CRIT
 	data["UNCONSCIOUS"] = UNCONSCIOUS
+	data["DEAD"] = DEAD
 	data["GENES"] = genes
 	data["REVERSEGENES"] = reversegenes
 	data["CHROMOSONE_NEVER"] = CHROMOSOME_NEVER
