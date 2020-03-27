@@ -84,7 +84,7 @@
 	return TRUE
 
 /datum/micro_organism/cell_line/proc/fuck_up_growing(var/obj/machinery/plumbing/growing_vat/vat)
-	vat.visible_message("<span class='warning'>the biological sample in [vat] seems to have dissipated!</span>")
+	vat.visible_message("<span class='warning'>The biological sample in [vat] seems to have dissipated!</span>")
 	QDEL_NULL(vat.biological_sample) //Kill off the sample, we're done
 	if(prob(50))
 		new /obj/effect/gibspawner/generic(get_turf(vat)) //Spawn some gibs.
