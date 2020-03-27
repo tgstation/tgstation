@@ -27,7 +27,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/welcome_message = "<span class='warning'>ALL PAST LIVES ARE FORGOTTEN.</span>\n\
 	<b>You are a positronic brain, brought into existence aboard Space Station 13.\n\
 	As a synthetic intelligence, you answer to all crewmembers and the AI.\n\
-	Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
+	Remember, the purpose of your existence is to serve the crew and the station.\n\
+	Do your best to not be harmful to your ship or crewmates.</b>"
 	///Visible message sent when a player possesses the brain
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	///Examine message when the posibrain has no mob
