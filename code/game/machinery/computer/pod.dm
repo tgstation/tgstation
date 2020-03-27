@@ -138,4 +138,5 @@
 	density = FALSE
 	icon_screen = null
 	icon_keyboard = null
+	req_access = list(ACCESS_CHAPEL_OFFICE)
 	id = "chapelgun"
