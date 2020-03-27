@@ -78,7 +78,7 @@
   */
 /obj/effect/proc_holder/spell/pointed/proc/intercept_check(mob/user, atom/target)
 	if(!self_castable && target == user)
-		to_chat(user, "<span class='warning'>You can't cast spell on yourself!</span>")
+		to_chat(user, "<span class='warning'>You cannot cast the spell on yourself!</span>")
 		return FALSE
 	if(!(target in view_or_range(range, user, selection_type)))
 		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
