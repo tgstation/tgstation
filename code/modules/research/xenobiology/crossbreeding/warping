@@ -820,25 +820,51 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 			new M.mineralType(T)
 
 
+/* Lightpink rune. Revive suicided/soulless corpses by yeeting a willing soul into it */
+
+/obj/item/slimecross/warping/lightpink
+	colour = "light pink"
+	runepath = /obj/effect/warped_rune/lightpinkspace
+	effect_desc = "draws a rune that will repair the soul of a human corpse in the hope of bringing them back to life."
+	drawing_time = 100
+
+/obj/effect/warped_rune/lightpinkspace
+	icon_state = "purplespace" //use the purple rune icon for now.will really have to change that later
+	desc = "Souls are like any other material, You just have to find the right place to manufacture them."
+	max_cooldown = 100 
+
+
+/obj/effect/warped_rune/lightpinkspace/attack_hand(mob/living/U)
+	if(cooldown > world.time)
+		to_chat(U, "<span class='warning'>The rune is still charging!</span>")
+		return
+
+	for(var/mob/living/carbon/human/L in T)
+		if(!L.getorgan(/obj/item/organ/brain) || L.key || L.get_ghost(FALSE, TRUE)) //checks if the ghost and brain's there
+			to_chat(U, "<span class='warning'>This body can't be fixed by the rune in this state!</span>")
+			return
+		cooldown = world.time + max_cooldown //only start the cooldown if there's an actual body on there and it can be resurrected.
+		to_chat(U, "<span class='warning'>The rune is trying to repair [L.name]'s soul!</span>")
+		var/list/candidates = pollCandidatesForMob("Do you want to replace the soul of [L.name]?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, L,POLL_IGNORE_SENTIENCE_POTION)//sentience flags because lightpink. 
+
+
+		if(LAZYLEN(candidates)) //check if anyone wanted to play as the dead person
+			var/mob/dead/observer/C = pick(candidates)
+			L.key = C.key
+			L.suiciding = 0 //turns off the suicide var just in case
+			L.revive(full_heal = TRUE, admin_revive = TRUE) //might as well go all the way
+			to_chat(L, "<span class='warning'>You may wear the skin of someone else, but you know who and what you are. Pretend to be the original owner of this body as best as you can.</span>")
+			to_chat(U, "<span class='notice'>[L.name] is slowly getting back up with an empty look in [L.p_their()] eyes. It...worked?</span>")
+			playsound(L, "sound/magic/castsummon.ogg", 50, TRUE)
+			return  
+		else
+			to_chat(U, "<span class='warning'>The rune failed! Maybe you should try again later.</span>")
+
+
 
 
 /*
 Anything after this is in """progress"""
-/obj/effect/warped_rune/lightpinkspace
-
-/* Lightpink rune. Revive suicided corpses by yeeting a random soul into it */
-
-/obj/item/slimecross/warping/lightpink
-	colour = "light pink"
-	//runepath = /obj/effect/warped_rune/lightpinkspace
-	effect_desc = "draws a rune replacing the soul of a corpse with no hope of recovery to make it possible to revive them."
-
-
-
-
-
-
-
 
 
 /*Any explosion over the rune will convert anything in the range of the explosion to SLIME, not people because even I'm not that evil */
