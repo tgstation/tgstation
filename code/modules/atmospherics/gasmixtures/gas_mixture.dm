@@ -7,7 +7,7 @@ What are the archived variables for?
 #define MINIMUM_MOLE_COUNT		0.01
 
 #define ACCURACY 1E-7
-#define ACCURACY_DIVIDE = 1 / ACCURACY_DIVIDE
+#define ACCURACY_DIVIDE 1 / ACCURACY_DIVIDE
 #define QUANTIZE(variable) (round(variable * ACCURACY_DIVIDE)*ACCURACY)/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude
 															Fun fact, this used to round up. So if you had gas at 0.5 and the ACCURACY was at 1, it'd return 1. Imagine all the problems*/
