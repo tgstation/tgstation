@@ -11,7 +11,7 @@
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "c-reader", "desttagger", "salestagger", "handlabel", "packagewrap",
 					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
 					"paystand", "space_heater", "bucket", "sec_rshot", "sec_beanbag_slug", "sec_bshot", "sec_slug", "sec_Islug", "sec_dart", "sec_38", "rglass", "plasteel",
-					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon")
+					"plastitanium", "plasmaglass", "plasmareinforcedglass", "titaniumglass", "plastitaniumglass", "plastic_knife", "plastic_fork", "plastic_spoon", "conveyor_belt", "conveyor_switch")
 
 /datum/techweb_node/mmi
 	id = "mmi"
@@ -33,7 +33,7 @@
 	starting_node = TRUE
 	display_name = "Mechanical Exosuits"
 	description = "Mechanized exosuits that are several magnitudes stronger and more powerful than the average human."
-	design_ids = list("mecha_tracking", "mechacontrol", "mechapower", "mech_recharger", "ripley_chassis", "firefighter_chassis", "ripley_torso", "ripley_left_arm",
+	design_ids = list("mecha_tracking", "mechacontrol", "mechapower", "mech_recharger", "ripley_chassis", "ripley_torso", "ripley_left_arm",
 					"ripley_right_arm", "ripley_left_leg", "ripley_right_leg", "ripley_main", "ripley_peri", "ripleyupgrade", "mech_hydraulic_clamp")
 
 /datum/techweb_node/mech_tools
@@ -290,9 +290,9 @@
 /datum/techweb_node/adv_robotics
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
-	description = "It can even do the dishes!"
-	prereq_ids = list("robotics")
-	design_ids = list("borg_upgrade_diamonddrill", "borg_upgrade_trashofholding", "borg_upgrade_advancedmop")
+	description = "Machines using actual neural networks to simulate human lives."
+	prereq_ids = list("neural_programming", "robotics")
+	design_ids = list("mmi_posi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -304,30 +304,21 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/posibrain
-	id = "posibrain"
-	display_name = "Positronic Brain"
-	description = "Applied usage of neural technology allowing for autonomous AI units based on special metallic cubes with conductive and processing circuits."
-	prereq_ids = list("neural_programming")
-	design_ids = list("mmi_posi")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 5000
-
 /datum/techweb_node/cyborg_upg_util
 	id = "cyborg_upg_util"
 	display_name = "Cyborg Upgrades: Utility"
 	description = "Utility upgrades for cyborgs."
-	prereq_ids = list("engineering")
-	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand")
+	prereq_ids = list("adv_robotics")
+	design_ids = list("borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand", "borg_upgrade_disablercooler", "borg_upgrade_trashofholding", "borg_upgrade_advancedmop")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
-/datum/techweb_node/cyborg_upg_engi
-	id = "cyborg_upg_engi"
-	display_name = "Cyborg Upgrades: Engineering"
-	description = "Engineering upgrades for cyborgs."
-	prereq_ids = list("engineering")
-	design_ids = list("borg_upgrade_rped", "borg_upgrade_circuitapp")
+/datum/techweb_node/cyborg_upg_engiminer
+	id = "cyborg_upg_engiminer"
+	display_name = "Cyborg Upgrades: Engineering & Mining"
+	description = "Engineering and Mining upgrades for cyborgs."
+	prereq_ids = list("adv_engi", "basic_mining")
+	design_ids = list("borg_upgrade_rped", "borg_upgrade_circuitapp", "borg_upgrade_diamonddrill", "borg_upgrade_lavaproof", "borg_upgrade_holding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
@@ -340,20 +331,11 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
-/datum/techweb_node/cyborg_upg_combat
-	id = "cyborg_upg_combat"
-	display_name = "Cyborg Upgrades: Combat"
-	description = "Military grade upgrades for cyborgs."
-	prereq_ids = list("adv_robotics", "adv_engi" , "weaponry")
-	design_ids = list("borg_upgrade_disablercooler")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	export_price = 5000
-
 /datum/techweb_node/ai
 	id = "ai"
 	display_name = "Artificial Intelligence"
 	description = "AI unit research."
-	prereq_ids = list("robotics", "posibrain")
+	prereq_ids = list("adv_robotics")
 	design_ids = list("aifixer", "aicore", "safeguard_module", "onehuman_module", "protectstation_module", "quarantine_module", "oxygen_module", "freeform_module",
 	"reset_module", "purge_module", "remove_module", "freeformcore_module", "asimov_module", "paladin_module", "tyrant_module", "overlord_module", "corporate_module",
 	"default_module", "borg_ai_control", "mecha_tracking_ai_control", "aiupload", "intellicard")
@@ -730,6 +712,15 @@
 	prereq_ids = list("base")
 	design_ids = list("odysseus_chassis", "odysseus_torso", "odysseus_head", "odysseus_left_arm", "odysseus_right_arm" ,"odysseus_left_leg", "odysseus_right_leg",
 	"odysseus_main", "odysseus_peri")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
+	export_price = 5000
+
+/datum/techweb_node/clarke
+	id = "mecha_clarke"
+	display_name = "EXOSUIT: Clarke"
+	description = "Clarke exosuit designs"
+	prereq_ids = list("engineering")
+	design_ids = list("clarke_chassis", "clarke_torso", "clarke_head", "clarke_left_arm", "clarke_right_arm", "clarke_main", "clarke_peri")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 

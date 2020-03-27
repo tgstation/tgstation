@@ -1,3 +1,6 @@
+// routes.js
+// Tip: Press Shift+Alt+O in VSCode to organize these imports.
+
 import { Achievements } from './interfaces/Achievements';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
@@ -10,11 +13,12 @@ import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
 import { BankMachine } from './interfaces/BankMachine';
+import { Bepis } from './interfaces/Bepis';
 import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
-import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
+import { CameraConsole, CameraConsoleWrapper } from './interfaces/CameraConsole';
 import { Canister } from './interfaces/Canister';
 import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
@@ -44,10 +48,11 @@ import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { ExosuitControlConsole } from './interfaces/ExosuitControlConsole';
+import { Gateway } from './interfaces/Gateway';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
-import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
+import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { Holodeck } from './interfaces/Holodeck';
 import { HypnoChair } from './interfaces/HypnoChair';
 import { ImplantChair } from './interfaces/ImplantChair';
@@ -57,11 +62,11 @@ import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
+import { MalfunctionModulePicker } from './interfaces/MalfunctionModulePicker';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
-import { MalfunctionModulePicker } from './interfaces/MalfunctionModulePicker';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
@@ -91,15 +96,15 @@ import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { Pandemic } from './interfaces/Pandemic';
 import { ParticleAccelerator } from './interfaces/ParticleAccelerator';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
-import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
+import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
+import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { RemoteRobotControl } from './interfaces/RemoteRobotControl';
 import { RoboticsControlConsole } from './interfaces/RoboticsControlConsole';
-import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
@@ -197,6 +202,11 @@ const ROUTES = {
   bsa: {
     component: () => BluespaceArtillery,
     scrollable: false,
+  },
+  camera_console: {
+    component: () => CameraConsole,
+    wrapper: () => CameraConsoleWrapper,
+    scrollable: true,
   },
   canister: {
     component: () => Canister,
@@ -316,6 +326,10 @@ const ROUTES = {
   },
   exosuit_control_console: {
     component: () => ExosuitControlConsole,
+    scrollable: true,
+  },
+  gateway: {
+    component: () => Gateway,
     scrollable: true,
   },
   gps: {

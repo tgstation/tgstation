@@ -17,6 +17,7 @@
 	default_price = 50
 	extra_price = 250
 	payment_department = ACCOUNT_SRV
+	light_mask = "games-light-mask"
 
 /obj/item/vending_refill/games
 	machine_name = "\improper Good Clean Fun"
