@@ -4,7 +4,7 @@
 /obj/projectile/crab
 	name = "Headcrab"
 	icon_state = "crabby_weeee"
-	damage = 200
+	damage = 80
 	damage_type = STAMINA
 	def_zone = BODY_ZONE_HEAD
 	hitsound = 'sound/weapons/tap.ogg'
@@ -41,6 +41,12 @@
 	var/state = weHit(hit)
 	if(state != HAT)
 		shed(state)
+	else if(istype(hit, /mob/living/carbon))
+		var/mob/living/carbon/humies = hit
+		//Make this permanent
+		humies.adjust_blindness(10)
+		//Make this effect the head
+		humies.adjustBruteLoss(20)
 
 /obj/item/clothing/head/headcrab
 	name = "Headcrab"
@@ -49,6 +55,15 @@
 	item_state = "headcrab"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
+
+/obj/item/clothing/head/headcrab/equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/head/headcrab/process()
+	if(item_flags & IN_INVENTORY && istype(loc, /mob/living/carbon))
+		var/mob/living/carbon/humies = loc
+		humies.adjustOrganLoss(ORGAN_SLOT_BRAIN, 1)
 
 #undef HAT
 #undef NOTNOTDEAD

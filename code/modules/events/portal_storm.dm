@@ -58,13 +58,12 @@
 	var/mutable_appearance/storm
 
 /datum/round_event/portal_storm/portal_storm_mesa/setup()
-	storm = mutable_appearance('icons/obj/stationobjs.dmi', "fart_hole", FLY_LAYER)//Why do I do these things??
 	. = ..()
+	storm = mutable_appearance('icons/obj/stationobjs.dmi', "fart_hole", FLY_LAYER)//Why do I do these things??
 
 /datum/round_event/portal_storm/setup()
-	if(!storm)
-		storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
-		storm.color = "#00FF00"
+	storm = mutable_appearance('icons/obj/tesla_engine/energy_ball.dmi', "energy_ball_fast", FLY_LAYER)
+	storm.color = "#00FF00"
 
 	number_of_bosses = 0
 	for(var/boss in boss_types)

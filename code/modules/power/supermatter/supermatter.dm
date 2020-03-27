@@ -86,7 +86,7 @@
 #define DEFAULT_ZAP_ICON_STATE "sm_arc"
 #define SLIGHTLY_CHARGED_ZAP_ICON_STATE "sm_arc_supercharged"
 #define OVER_9000_ZAP_ICON_STATE "sm_arc_dbz_refrance" //Witty I know
-#define MESA_ZAP_STATE "sm_arc_mesa" //Witty I know
+#define MESA_ZAP_STATE "sm_arc_mesa" //You know what this is
 
 GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
