@@ -271,7 +271,7 @@
 "fk" = (/obj/structure/cable,/obj/machinery/firealarm{dir = 1; pixel_y = -24},/turf/open/floor/wood/airless,/area/ruin/has_grav/prototype/Captain)
 "fl" = (/turf/open/space/basic,/turf/closed/wall/mineral/plastitanium/interior{icon_state = "d-nw"},/turf/closed/wall/mineral/plastitanium/interior{icon_state = "d-nw-0"},/area/ruin/space/has_grav/powered)
 "fm" = (/turf/open/floor/plasteel/airless,/area/ruin/has_grav/prototype/shallway)
-"fn" = (/obj/item/circuitboard/machine/stasis,/obj/item/circuitboard/machine/clonepod,/obj/item/circuitboard/machine/clonescanner,/obj/structure/closet/crate/secure/science,/obj/item/circuitboard/computer/cloning,/turf/template_noop,/area/ruin/has_grav/prototype/shallway)
+"fn" = (/obj/item/circuitboard/machine/stasis,/obj/structure/closet/crate/secure/science,/obj/turf/template_noop,/area/ruin/has_grav/prototype/shallway)
 "fo" = (/turf/closed/wall/r_wall/rust,/area/ruin/has_grav/prototype/Captain)
 "fp" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/turf/template_noop,/area/space/nearstation)
 "fq" = (/obj/structure/lattice/catwalk,/turf/template_noop,/area/space/nearstation)
