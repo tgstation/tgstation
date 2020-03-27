@@ -236,12 +236,15 @@
 
 /mob/living/carbon/resist_buckle()
 	if(restrained())
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
 		var/buckle_cd = 600
 		if(handcuffed)
 			var/obj/item/restraints/O = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
 			buckle_cd = O.breakouttime
+			changeNext_move(min(CLICK_CD_BREAKOUT, O.breakouttime)) //basically just here for fake handcuffs
+			last_special = world.time + min(CLICK_CD_BREAKOUT, O.breakouttime)
+		else
+			changeNext_move(CLICK_CD_BREAKOUT)
+			last_special = world.time + CLICK_CD_BREAKOUT
 		visible_message("<span class='warning'>[src] attempts to unbuckle [p_them()]self!</span>", \
 					"<span class='notice'>You attempt to unbuckle yourself... (This will take around [round(buckle_cd/600,1)] minute\s, and you need to stay still.)</span>")
 		if(do_after(src, buckle_cd, 0, target = src))
@@ -278,8 +281,9 @@
 		type = 2
 	if(I)
 		if(type == 1)
-			changeNext_move(CLICK_CD_BREAKOUT)
-			last_special = world.time + CLICK_CD_BREAKOUT
+			var/obj/item/restraints/O = src.get_item_by_slot(ITEM_SLOT_HANDCUFFED)
+			changeNext_move(min(CLICK_CD_BREAKOUT, O.breakouttime)) //basically just here for fake handcuffs
+			last_special = world.time + min(CLICK_CD_BREAKOUT, O.breakouttime)
 		if(type == 2)
 			changeNext_move(CLICK_CD_RANGE)
 			last_special = world.time + CLICK_CD_RANGE
