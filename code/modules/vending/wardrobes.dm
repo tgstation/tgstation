@@ -412,7 +412,7 @@
 					/obj/item/storage/backpack/genetics = 2,
 					/obj/item/storage/backpack/satchel/gen = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/gene_wardrobe
-	payment_department = ACCOUNT_MED
+	payment_department = ACCOUNT_SCI
 /obj/item/vending_refill/wardrobe/gene_wardrobe
 	machine_name = "GeneDrobe"
 
