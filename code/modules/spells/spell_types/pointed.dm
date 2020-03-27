@@ -25,6 +25,9 @@
 		msg = "<span class='notice'>[active_msg] <B>Left-click to activate spell on a target!</B></span>"
 		add_ranged_ability(user, msg, TRUE)
 
+/obj/effect/proc_holder/spell/pointed/on_lose(mob/living/user)
+	remove_ranged_ability()
+
 /obj/effect/proc_holder/spell/pointed/remove_ranged_ability(msg)
 	. = ..()
 	on_deactivation(ranged_ability_user)
