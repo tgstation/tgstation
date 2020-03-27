@@ -101,6 +101,7 @@
 			hidden_uplink.hidden_crystals += hidden_uplink.telecrystals //Temporarially hide the PDA's crystals, so you can't steal telecrystals.
 		hidden_uplink.telecrystals = telecrystals
 		telecrystals = 0
+		hidden_uplink.locked = FALSE
 		hidden_uplink.active = TRUE
 	else
 		to_chat(U, "<span class='alert'>PDA not found.</span>")
