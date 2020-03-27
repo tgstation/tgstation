@@ -5,8 +5,12 @@ What are the archived variables for?
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
-#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
-															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+
+#define ACCURACY 1E-7
+#define ACCURACY_DIVIDE = 1 / ACCURACY_DIVIDE
+#define QUANTIZE(variable) (round(variable * ACCURACY_DIVIDE)*ACCURACY)/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
+															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude
+															Fun fact, this used to round up. So if you had gas at 0.5 and the ACCURACY was at 1, it'd return 1. Imagine all the problems*/
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
@@ -346,11 +350,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	garbage_collect()
 	sharer.garbage_collect()
-	//if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
-	//	garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
-	//	sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
-	//if (initial(sharer.gc_share))
-	//	sharer.garbage_collect()
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
