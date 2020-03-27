@@ -226,7 +226,7 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /turf/open/space/bluespace/Entered(atom/movable/A)
 	. = ..()
-	if(A.forceMove(get_turf(parentSphere)))
+	if(parentSphere && A.forceMove(get_turf(parentSphere)))
 		do_sparks(3, FALSE, get_turf(A))
 
 /turf/closed/indestructible/hoteldoor
