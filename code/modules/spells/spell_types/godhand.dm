@@ -110,3 +110,36 @@
 	M.Stun(40)
 	M.petrify()
 	return ..()
+
+/obj/item/melee/touch_attack/honk
+	name = "\improper clown's revenge"
+	desc = "Can you hear it? The pained laughter? The dull smack of a forehead against metal and glass? The incessant need to honk without end?"
+	catchphrase = "Lonk-Lonk-Lonk, FMR'shNK Cluw-NR!!!"
+	on_use_sound = 'sound/items/airhorn.ogg'
+	icon_state = "clown"
+	item_state = "clown"
+
+/obj/item/melee/touch_attack/honk/afterattack(atom/target, mob/living/carbon/user, proximity)
+	if(!proximity || !isliving(target) || !iscarbon(user))
+		return
+	if(!(user.mobility_flags & MOBILITY_USE))
+		to_chat(user, "<span class='warning'>You can't reach out!</span>")
+		return
+	if(!user.can_speak_vocal())
+		to_chat(user, "<span class='warning'>You can't get the rage out of your system!</span>")
+		return
+	var/mob/living/M = target
+	if(HAS_TRAIT(M, TRAIT_CLUMSY)) //Your holyness can't save you now!
+		to_chat(user, "<span class='warning'>The clown's rage can't seem to affect [M]!</span>")
+		to_chat(M, "<span class='notice'>You feel silly for a moment, but you realize you're already silly.</span>")
+		..()
+		return
+	// Turn em into a clown
+	for(var/obj/item/W in M)
+		M.dropItemToGround(W)
+	var/datum/job/clown/C = new /datum/job/clown()
+	C.equip(M)
+	qdel(C)
+	M.say("HONK HONK HUENK HENK HONK HAAANK!!!!!", forced = "curse of the clown")
+	to_chat(M, "<span class='userdanger'>You've been turned into a clumsy cluwne! You have an incessent urge to HONK.</span>")
+	return ..()

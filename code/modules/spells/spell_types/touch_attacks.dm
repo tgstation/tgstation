@@ -81,3 +81,21 @@
 
 	action_icon_state = "statue"
 	sound = 'sound/magic/fleshtostone.ogg'
+
+/obj/effect/proc_holder/spell/targeted/touch/honk
+	name = "Curse of the Clown"
+	desc = "This spell charges your hand with the vengeful anger of a thousand clowns, turning victims into evil clumsy cluwnes."
+	hand_path = /obj/item/melee/touch_attack/honk
+
+	school = "transmutation"
+	charge_max = 1200 // you have to wait 2 minutes because you're dropping all items and turning your target into a clown
+	clothes_req = TRUE
+	cooldown_min = 600 // 200 deciseconds reduction per rank
+	still_recharging_msg = "<span class='notice'>The clowns are pleased at the moment, but that can change at any moment.</span>"
+	drawmessage = "You channel the rage of a thousand clowns into your hand!"
+	dropmessage = "You let go of the anger."
+	invocation = "HUDO'HURONK..." //warn the crew that you're about to clown someone
+	invocation_type = "whisper" //help the man in the blue robe whispered sweet honkings into my ear
+
+	action_icon_state = "clown"
+	sound = 'sound/items/bikehorn.ogg'

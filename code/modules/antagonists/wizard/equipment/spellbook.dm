@@ -269,6 +269,13 @@
 	category = "Defensive"
 	cost = 1
 
+/datum/spellbook_entry/honk
+	name = "Curse of the Clown"
+	spell_type = /obj/effect/proc_holder/spell/targeted/touch/honk
+	category = "Offensive"
+	cost = 3
+	no_coexistance_typecache = /obj/effect/proc_holder/spell/targeted/touch/flesh_to_stone // there may only be one transformative touch spell
+
 
 /datum/spellbook_entry/item
 	name = "Buy Item"
