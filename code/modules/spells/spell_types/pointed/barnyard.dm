@@ -11,7 +11,6 @@
 	invocation_type = "shout"
 	range = 7
 	cooldown_min = 30
-	selection_type = "range"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/barn_target.dmi'
 	action_icon_state = "barn"
 	active_msg = "You prepare to curse a target..."
