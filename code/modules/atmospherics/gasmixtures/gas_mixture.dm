@@ -6,7 +6,9 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
 #define ACCURACY 1E-7
-#define QUANTIZE(variable) ((variable < ACCURACY) ? 0 : round(variable, ACCURACY))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
+#define QUANTIZE_A(variable) ((variable < ACCURACY) ? 0 : round(variable, ACCURACY))
+#define QUANTIZE_B(variable) (((variable) >= (ACCURACY)) && round((variable), (ACCURACY)))
+#define QUANTIZE(variable) (QUANTIZE_B(variable))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
 															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude
 															Fun fact, this used to round up. So if you had gas at 0.5 and the ACCURACY was at 1, it'd return 1. Imagine all the problems*/
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
