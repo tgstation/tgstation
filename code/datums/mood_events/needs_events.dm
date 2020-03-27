@@ -91,3 +91,18 @@
 	description = "<span class='nicegreen'>There's nothing like the feeling of a freshly laundered jumpsuit.</span>\n"
 	mood_change = 2
 	timeout = 10 MINUTES
+/datum/mood_event/missing_the_light
+	description = "<span class='warning'>I miss the light.</span>\n"
+	mood_change = -2
+	timeout = 5 MINUTES
+
+/datum/mood_event/missing_the_light_a_lot
+	description = "<span class='warning'>I miss the light A LOT.</span>\n"
+	mood_change = -4
+	timeout = 5 MINUTES
+
+/datum/mood_event/mesmerised
+	description = "<span class='warning'>...LÄMP...</span>"
+	mood_change = 10
+	special_screen_obj = "mood_mesmerised"
+	timeout = 2 MINUTES
