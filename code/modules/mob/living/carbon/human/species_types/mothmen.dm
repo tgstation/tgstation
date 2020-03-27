@@ -20,6 +20,14 @@
 	wings_icon = "Megamoth"
 	has_innate_wings = TRUE
 
+/datum/species/moth/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	. = ..()
+	C.AddComponent(/datum/component/lightdrawn)
+
+/datum/species/moth/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	qdel(C.GetComponent(/datum/component/lightdrawn))
+
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 	. = ..()
 	if(ishuman(C))

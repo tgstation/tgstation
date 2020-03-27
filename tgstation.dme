@@ -403,6 +403,7 @@
 #include "code\datums\components\knockoff.dm"
 #include "code\datums\components\label.dm"
 #include "code\datums\components\lifesteal.dm"
+#include "code\datums\components\lightdrawn.dm"
 #include "code\datums\components\lockon_aiming.dm"
 #include "code\datums\components\magnetic_catch.dm"
 #include "code\datums\components\manual_blinking.dm"
