@@ -11,7 +11,6 @@
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind", "/obj/effect/proc_holder/spell/targeted/genetic/blind")
 	ranged_mousepointer = 'icons/effects/blind_target.dmi'
 	action_icon_state = "blind"
-	base_icon_state = "blind"
 	active_msg = "You prepare to blind a target..."
 
 /obj/effect/proc_holder/spell/targeted/inflict_handler/blind
@@ -26,7 +25,8 @@
 	sound = 'sound/magic/blind.ogg'
 
 /obj/effect/proc_holder/spell/pointed/trigger/blind/intercept_check(mob/user, atom/target)
-	if(!..())
+	. = ..()
+	if(!.)
 		return FALSE
 	if(!isliving(target))
 		to_chat(user, "<span class='warning'>You can only blind living beings!</span>")
