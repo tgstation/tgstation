@@ -1,13 +1,13 @@
 /mob/living/carbon/human/get_movespeed_modifiers()
 	var/list/considering = ..()
-	. = list()
 	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
+		. = list()
 		for(var/id in considering)
 			var/datum/movespeed_modifier/M = considering[id]
-			if(M.flags & IGNORE_NOSLOW)
+			if(M.flags & IGNORE_NOSLOW || M.multiplicative_slowdown < 0)
 				.[id] = M
-	else
-		. = considering
+		return
+	return considering
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))

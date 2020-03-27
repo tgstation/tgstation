@@ -189,3 +189,7 @@
 /datum/mood_event/area/add_effects(_mood_change, _description)
 	mood_change = _mood_change
 	description = _description
+
+/datum/mood_event/confident_mane
+	description = "<span class='nicegreen'>I'm feeling confident with a head full of hair.</span>\n"
+	mood_change = 2

@@ -89,7 +89,7 @@
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "x" = (
-/obj/structure/mecha_wreckage/ripley/firefighter,
+/obj/structure/mecha_wreckage/clarke,
 /turf/open/floor/mineral/titanium/yellow/airless,
 /area/ruin/space/has_grav/powered/mechtransport)
 "y" = (

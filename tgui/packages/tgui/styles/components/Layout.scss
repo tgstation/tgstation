@@ -24,9 +24,18 @@
   height: 32px;
 }
 
-.Layout__content {
+// Everything after the title bar
+.Layout__rest {
   position: fixed;
   top: 32px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.Layout__content {
+  position: absolute;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
@@ -65,7 +74,7 @@
 
 .Layout__dimmer {
   position: fixed;
-  top: 32px;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;

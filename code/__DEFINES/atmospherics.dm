@@ -87,6 +87,15 @@
 #define PLASMA_UPPER_TEMPERATURE			(1370+T0C)
 #define PLASMA_OXYGEN_FULLBURN				10
 
+//COLD FIRE (this is used only for the freon-o2 reaction, there is no fire still)
+#define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_SPREAD	263 //fire will spread if the temperature is -10 °C
+#define COLD_FIRE_MAXIMUM_TEMPERATURE_TO_EXIST	273 //fire will start if the temperature is 0 °C
+#define COLD_FIRE_SPREAD_RADIOSITY_SCALE		0.95
+#define COLD_FIRE_GROWTH_RATE					40000
+#define FREON_MAXIMUM_BURN_TEMPERATURE			293
+#define FREON_LOWER_TEMPERATURE					30 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
+#define FREON_OXYGEN_FULLBURN					10
+
 //GASES
 #define MIN_TOXIC_GAS_DAMAGE				1
 #define MAX_TOXIC_GAS_DAMAGE				10
