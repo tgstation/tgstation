@@ -383,7 +383,7 @@
 		return NO_REACTION
 	cached_gases[/datum/gas/oxygen][MOLES] -= heat_efficency * 2
 	cached_gases[/datum/gas/nitrogen][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.25 //bz gets consumed to balance the nitryl production and not make it too common and/or easy
+	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.05 //bz gets consumed to balance the nitryl production and not make it too common and/or easy
 	cached_gases[/datum/gas/nitryl][MOLES] += heat_efficency
 
 	if(energy_used > 0)
