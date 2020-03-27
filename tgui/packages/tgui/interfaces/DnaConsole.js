@@ -321,8 +321,8 @@ export class DnaConsole extends Component {
     return (
       <Tabs.Tab
         color={(mut.Active)
-          ? ("green")
-          : ("yellow")}
+          ? ("good")
+          : ("bad")}
         key={`rgs_${key}_${mut.Alias}`}
         label=<img src={mut.Image}
           width={"65"} />
@@ -377,8 +377,8 @@ export class DnaConsole extends Component {
                         noscroll
                         highlights={[
                           { "X": "red" },
-                          { "A": "olive" },
-                          { "T": "olive" },
+                          { "A": "green" },
+                          { "T": "green" },
                           { "G": "blue" },
                           { "C": "blue" },
                         ]}
@@ -415,8 +415,8 @@ export class DnaConsole extends Component {
                         noscroll
                         highlights={[
                           { "X": "red" },
-                          { "A": "olive" },
-                          { "T": "olive" },
+                          { "A": "green" },
+                          { "T": "green" },
                           { "G": "blue" },
                           { "C": "blue" },
                         ]}
@@ -494,19 +494,23 @@ export class DnaConsole extends Component {
               onClick={() =>
                 act(ref, "print_injector",
                   { mutref: mut.ByondRef,
-                    is_activator: 1 })} />
+                    is_activator: 1,
+                    source: "sequencer" })} />
             <Button
               disabled={!data.IsInjectorReady}
               content={"Print Mutator"}
               onClick={() =>
                 act(ref, "print_injector",
                   { mutref: mut.ByondRef,
-                    is_activator: 0 })} />
+                    is_activator: 0,
+                    source: "sequencer" })} />
             <Button
               disabled={!(data.MutationCapacity > 0)}
               content={"Save to Console"}
               onClick={() =>
-                act(ref, "save_console", { mutref: mut.ByondRef })} />
+                act(ref, "save_console",
+                  { mutref: mut.ByondRef,
+                    source: "sequencer" })} />
             <Button
               disabled={!data.HasDisk
               || !(data.DiskCapacity > 0)
@@ -514,7 +518,8 @@ export class DnaConsole extends Component {
               content={"Save to Disk"}
               onClick={() =>
                 act(ref, "save_disk", {
-                  mutref: mut.ByondRef })} />
+                  mutref: mut.ByondRef,
+                  source: "sequencer" })} />
             { ((mut.Class === data.MUT_EXTRA) || mut.Scrambled)
               ? <Button
                 content={"Nullify"}
@@ -602,14 +607,16 @@ export class DnaConsole extends Component {
                 onClick={() =>
                   act(ref, "print_injector",
                     { mutref: mut.ByondRef,
-                      is_activator: 1 })} />
+                      is_activator: 1,
+                      source: source })} />
               <Button
                 disabled={!data.IsInjectorReady}
                 content={"Print Mutator"}
                 onClick={() =>
                   act(ref, "print_injector",
                     { mutref: mut.ByondRef,
-                      is_activator: 0 })} />
+                      is_activator: 0,
+                      source: source })} />
               { source === "console"
                 ? (
                   <Button
@@ -619,7 +626,8 @@ export class DnaConsole extends Component {
                     content={"Export to Disk"}
                     onClick={() =>
                       act(ref, "save_disk", {
-                        mutref: mut.ByondRef })} />)
+                        mutref: mut.ByondRef,
+                        source: source })} />)
                 : (source === "disk"
                   ? (
                     <Button
@@ -627,7 +635,8 @@ export class DnaConsole extends Component {
                       content={"Export to Console"}
                       onClick={() =>
                         act(ref, "save_console", {
-                          mutref: mut.ByondRef })} />)
+                          mutref: mut.ByondRef,
+                          source: source })} />)
                   : (false)
                 )}
 
