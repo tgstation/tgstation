@@ -77,11 +77,7 @@
 			to_chat(user, "<span class='warning'>[C == user ? "You don't" : "[C] doesn't"] have two hands...</span>")
 
 /obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
-
-	if(!istype(target)) //some sanity checks, in case apply_cuffs() gets called without attack() being called/fully run through (looking at YOU, clumsy people)
-		return
-
-	if(target.handcuffed)
+	if(target.handcuffed) //some sanity checks, in case apply_cuffs() gets called without attack() being called/fully run through (looking at YOU, clumsy people)
 		return
 
 	if(!(target.get_num_arms(FALSE) >= 2 || target.get_arm_ignore()))
