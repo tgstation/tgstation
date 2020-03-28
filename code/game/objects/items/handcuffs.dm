@@ -167,7 +167,7 @@
 
 /obj/item/restraints/handcuffs/fake/toy  //YOU! ARE! A! TOOOOOOOOOOOOY!
 	name = "fake handcuffs"
-	desc = "Fake handcuffs meant for gag purposes. Cuffing yourself with them is instant and silent, and breaking out of them takes only one second."
+	desc = "Fake handcuffs meant for gag purposes. Cuffing yourself with them is instant and silent, and it only takes one second to break out of them."
 
 /obj/item/restraints/handcuffs/cable/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/stack/rods))
