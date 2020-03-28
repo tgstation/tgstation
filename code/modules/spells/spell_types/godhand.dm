@@ -152,6 +152,4 @@
 		H.equipOutfit(/datum/outfit/job/clown/cluwne) // See clothing/outfits/standard.dm for cluwne gear
 	H.say("HONK HONK HUENK HENK HONK HAAANK!!!!!", forced = "curse of the clown")
 	to_chat(H, "<span class='userdanger'>You've been turned into a clumsy cluwne! You have an incessent urge to HONK.</span>")
-	to_chat(H, "<span class='big bold info'>As a Cluwne, you are valid at all times and can be killed for any reason, by anyone, but you are not an antagonist. \
-	You are treated as a normal crewmember in terms of instigating violence.</span>")
 	return ..()
