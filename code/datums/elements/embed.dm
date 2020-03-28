@@ -1,15 +1,12 @@
 /*
-	The presence of this element allows an item to embed itself in a human or turf when it is thrown into a target (whether by hand, gun, or explosive wave)
-	with either at least 4 throwspeed (EMBED_THROWSPEED_THRESHOLD) or ignore_throwspeed_threshold set to TRUE.
+	The presence of this element allows an item (or a projectile carrying an item) to embed itself in a human or turf when it is thrown into a target (whether by hand, gun, or explosive wave) with either
+	at least 4 throwspeed (EMBED_THROWSPEED_THRESHOLD) or ignore_throwspeed_threshold set to TRUE. Items meant to be used as shrapnel for projectiles should have ignore_throwspeed_threshold set to true.
 
-	This element is granted primarily to any /obj/item that has something in its /embedding var, which should be formatted as a list. If you wish to be able to
-	grant/rescind the ability for an item to embed (say, when activating and deactivating an edagger), you can do so in two ways:
-
-		1. Drop the throw_speed var below EMBED_THROWSPEED_THRESHOLD (object will still be able to otherwise embed if thrown at high speed by something else like a blast)
-		2. Add/Remove the embed element as needed (won't be able to embed at all)
+	Whether we're dealing with a direct /obj/item (throwing a knife at someone) or an /obj/projectile with a shrapnel_type, how we handle things plays out the same, with one extra step separating them.
+	Items simply make their COMSIG_MOVABLE_IMPACT or COMSIG_MOVABLE_IMPACT_ZONE check (against a closed turf or a carbon, respectively), while projectiles check on COMSIG_PROJECTILE_SELF_ON_HIT.
+	Upon a projectile hitting a valid target, it spawns whatever type of payload it has defined, then has that try to embed itself in the target on its own.
 
 	Otherwise non-embeddable or stickable items can be made embeddable/stickable through wizard events/sticky tape/admin memes.
-
 */
 
 #define STANDARD_WALL_HARDNESS 40
@@ -69,7 +66,7 @@
 /datum/element/embed/Detach(obj/item/target)
 	. = ..()
 	if(isitem(target))
-		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE, COMSIG_EMBED_TRY_FORCE))
+		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE, COMSIG_EMBED_TRY_FORCE, COMSIG_ITEM_DISABLE_EMBED))
 	else
 		UnregisterSignal(target, list(COMSIG_PROJECTILE_SELF_ON_HIT))
 
@@ -78,6 +75,9 @@
 /datum/element/embed/proc/checkEmbedMob(obj/item/weapon, mob/living/carbon/victim, hit_zone, datum/thrownthing/throwingdatum, forced=FALSE)
 	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return
+
+	if(!forced)
+		victim.run_armor_check(hit_zone, weapon.damtype)
 
 	var/pass = forced || ((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && prob(embed_chance))
 	if(!pass)
@@ -102,7 +102,7 @@
 
 	return TRUE
 
-/// We need the hit_zone if we're embedding into a human, so this proc only handled if we're embedding into a turf
+/// We need the hit_zone if we're embedding into a human, so this proc only handles if we're embedding into a turf
 /datum/element/embed/proc/checkEmbedOther(obj/item/weapon, turf/closed/hit, datum/thrownthing/throwingdatum, forced=FALSE)
 	if(!istype(hit))
 		return
@@ -141,16 +141,23 @@
 	if(istype(E, /datum/element/embed))
 		Detach(weapon)
 
+///If we don't want to be embeddable anymore (deactivating an e-dagger for instance)
 /datum/element/embed/proc/detachFromWeapon(obj/item/weapon)
 	Detach(weapon)
 
+///Someone inspected our embeddable item
 /datum/element/embed/proc/examined(obj/item/I, mob/user, list/examine_list)
 	if(I.isEmbedHarmless())
 		examine_list += "[I] feels sticky, and could probably get stuck to someone if thrown properly!"
 	else
 		examine_list += "[I] has a fine point, and could probably embed in someone if thrown properly!"
 
-
+/**
+  * checkEmbedProjectile() is what we get when a projectile with a defined shrapnel_type impacts a target.
+  *
+  * If we hit a valid target (carbon or closed turf), we create the shrapnel_type object and immediately call tryEmbed() on it, targeting what we impacted. That will lead
+  *	it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
+  */
 /datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit)
 	if(!iscarbon(hit) && !isclosedturf(hit))
 		Detach(P)

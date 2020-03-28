@@ -5,19 +5,25 @@
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
 	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/shrapnel/unembedded()
-	. = ..()
-	return TRUE
-
-/obj/item/shrapnel/failedEmbed()
-	QDEL_NULL(src)
+	item_flags = DROPDEL
 
 /obj/item/shrapnel/stingball // stingbang grenades
 	name = "stingball"
 	embedding = list(embed_chance=90, fall_chance=3, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.7, pain_mult=5, jostle_pain_mult=6, rip_time=15, embed_chance_turf_mod=-100)
 	icon_state = "tiny"
 
+/obj/item/shrapnel/bullet // bullets
+	name = "bullet"
+	icon = 'icons/obj/ammo.dmi'
+	icon_state = "s-casing"
+	item_flags = NONE
+
+/obj/item/shrapnel/bullet/c38 // .38 round
+	name = ".38 bullet"
+
+/obj/item/shrapnel/bullet/c38/dumdum // .38 DumDum round
+	name = ".38 DumDum bullet"
+	embedding = list(embed_chance=70, fall_chance=10, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=15, embed_chance_turf_mod=-100)
 
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"

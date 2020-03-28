@@ -21,7 +21,7 @@
 	ricochet_auto_aim_range = 3
 
 /obj/projectile/bullet/c38/match
-	name = ".38 match bullet"
+	name = ".38 Match bullet"
 	ricochets_max = 4
 	ricochet_chance = 100
 	ricochet_auto_aim_angle = 40
@@ -29,6 +29,24 @@
 	ricochet_incidence_leeway = 50
 	ricochet_decay_chance = 1
 	ricochet_decay_damage = 1
+
+/obj/projectile/bullet/c38/match/bouncy
+	name = ".38 Rubber bullet"
+	damage = 10
+	stamina = 30
+	armour_penetration = -30
+	ricochets_max = 6
+	ricochet_incidence_leeway = 70
+	ricochet_chance = 130
+	ricochet_decay_damage = 0.8
+	shrapnel_type = NONE
+
+/obj/projectile/bullet/c38/dumdum
+	name = ".38 DumDum bullet"
+	damage = 15
+	armour_penetration = -30
+	ricochets_max = 0
+	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"

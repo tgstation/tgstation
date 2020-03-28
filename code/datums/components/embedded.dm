@@ -102,6 +102,7 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
 		RegisterSignal(parent, COMSIG_HUMAN_EMBED_RIP, .proc/ripOutHuman)
 		RegisterSignal(parent, COMSIG_HUMAN_EMBED_REMOVAL, .proc/safeRemoveHuman)
+		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/tryPryHuman)
 	else if(isclosedturf(parent))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examineTurf)
 		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/itemMoved)
@@ -257,6 +258,33 @@
 	if(prob(fall_chance))
 		fallOutHuman()
 
+
+/// Items embedded/stuck to humans both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
+/// Items harmfully embedded in humans have an additional check for random pain (if applicable)
+/datum/component/embedded/proc/tryPryHuman(atom/source, obj/item/I, mob/living/attacker, params)
+	var/mob/living/carbon/victim = parent
+	if(attacker.a_intent != INTENT_HELP || !(I.sharpness) || attacker.zone_selected != L.body_zone)
+		return
+
+	var/damage = weapon.w_class * remove_pain_mult * 1.5
+	var/time_taken = rip_time * weapon.w_class * 4
+
+	attacker.visible_message("<span class='warning'>[attacker] attempts to pry [weapon] from [victim]'s [L.name] with [I]!</span>","<span class='notice'>You attempt to pry [weapon] from [victim]'s [L.name] with [I]... (It will take [DisplayTimeText(time_taken)].)</span>", ignored_mobs=victim)
+	to_chat(victim, "<span class='userdanger>[attacker] starts digging around in your [L] with [I]!</span>")
+	if(do_after(attacker, time_taken, target = victim))
+		if(!weapon || !L || weapon.loc != victim || !(weapon in L.embedded_objects))
+			qdel(src)
+			return
+
+		if(harmful)
+			L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage) //It hurts to rip it out, get surgery you dingus.
+			victim.emote("scream")
+			victim.visible_message("<span class='notice'>[attacker] successfully pries [weapon] out of [victim]'s [L.name]!</span>", "<span class='notice'>You successfully pry [weapon] from [victim]'s [L.name].</span>")
+			to_chat(victim, "<span class='userdanger>[attacker] successfully pries [weapon] out of your [L]!</span>")
+		else
+			victim.visible_message("<span class='notice'>[attacker] successfully pries [weapon] off of [victim]'s [L.name]!</span>", "<span class='notice'>You successfully pry [weapon] from [victim]'s [L.name]..</span>")
+
+		safeRemoveHuman(TRUE)
 
 ////////////////////////////////////////
 //////////////TURF PROCS////////////////

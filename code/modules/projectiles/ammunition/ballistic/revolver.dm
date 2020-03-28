@@ -34,9 +34,19 @@
 	projectile_type = /obj/projectile/bullet/c38/trac
 
 /obj/item/ammo_casing/c38/match
-	name = ".38 match bullet casing"
+	name = ".38 Match bullet casing"
 	desc = "A .38 bullet casing, manufactured to exceedingly high standards."
 	projectile_type = /obj/projectile/bullet/c38/match
+
+/obj/item/ammo_casing/c38/match/bouncy
+	name = ".38 Rubber bullet casing"
+	desc = "A .38 rubber bullet casing, manufactured to exceedingly high standards."
+	projectile_type = /obj/projectile/bullet/c38/match/bouncy
+
+/obj/item/ammo_casing/c38/dumdum
+	name = ".38 DumDum bullet casing"
+	desc = "A .38 DumDum bullet casing."
+	projectile_type = /obj/projectile/bullet/c38/dumdum
 
 /obj/item/ammo_casing/c38/hotshot
 	name = ".38 Hot Shot bullet casing"

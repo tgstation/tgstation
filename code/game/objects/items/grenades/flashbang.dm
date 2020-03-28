@@ -51,6 +51,10 @@
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 	shrapnel_radius = 6
 
+/obj/item/grenade/stingbang/mega
+	name = "super stingbang"
+	shrapnel_radius = 9
+
 /obj/item/grenade/stingbang/prime()
 	. = ..()
 	update_mob()
