@@ -487,6 +487,7 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	force = 5
 	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
 	throw_speed = 1
 	throw_range = 3
 	point_value = 100
