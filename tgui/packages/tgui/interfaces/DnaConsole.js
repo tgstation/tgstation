@@ -13,6 +13,16 @@ const MODE_SEQUENCER = 2;
 const MODE_ENZYMES = 3;
 const MODE_ADV_INJ = 4;
 
+const MODE_ST_CONSOLE = 1;
+const MODE_ST_DISK = 2;
+
+const MODE_CST_MUT = 1;
+const MODE_CST_CHROM = 2;
+
+const MODE_CST_MUTINFO = 1;
+const MODE_CST_MUTCOMB = 2;
+const MODE_CST_MUTACT = 3;
+
 export class DropdownEx extends Component {
   constructor(props) {
     super(props);
@@ -81,14 +91,13 @@ export class DropdownEx extends Component {
 
     return (
       <Dropdown
-        {... props}
+        {...props}
         color={this.state.color}
         options={this.state.optionsEx
           ? this.state.optionsEx
           : props.options}
         onSelected={e => { this.onSelected(e); }}
       />
-
     );
   }
 }
@@ -97,7 +106,18 @@ export class DnaConsole extends Component {
   constructor() {
     super();
     this.state = {
-      mode: MODE_STORAGE,
+      console: {
+        mode: MODE_STORAGE,
+      },
+      storage: {
+        mode: MODE_ST_CONSOLE,
+      },
+      consStorage: {
+        mode: MODE_CST_MUT,
+        mutIndex: 1,
+        chromIndex: 1,
+        mutMode: MODE_CST_MUTINFO,
+      },
     };
   }
 
@@ -180,24 +200,39 @@ export class DnaConsole extends Component {
   renderSubjectStatus(data) {
     let buffer = [];
     let subjectStatusColor = "";
+    let subjectStatusString = "";
 
     switch (data.SubjectStatus) {
       case data.CONSCIOUS:
         subjectStatusColor = "good";
+        subjectStatusString = "Conscious";
         break;
       case data.UNCONSCIOUS:
+        subjectStatusColor = "average";
+        subjectStatusString = "Unconscious";
+        break;
       case data.SOFT_CRIT:
         subjectStatusColor = "average";
+        subjectStatusString = "Critical";
         break;
       case data.DEAD:
         subjectStatusColor = "bad";
+        subjectStatusString = "Dead";
         break;
       default:
+        subjectStatusString = "";
         subjectStatusColor = "good";
         break;
     }
 
-    if (data.IsViableSubject) {
+    if (!data.IsScannerConnected) {
+      buffer.push(
+        <LabeledList.Item label="Status">
+          No DNA Scanner connected.
+        </LabeledList.Item>,
+      );
+    }
+    else if (data.IsViableSubject) {
       buffer.push(
         <Fragment>
           <LabeledList.Item label="Status">
@@ -206,15 +241,7 @@ export class DnaConsole extends Component {
             <Box
               inline
               color={subjectStatusColor} >
-              <b>
-                {data.SubjectStatus === data.CONSCIOUS
-                  ? "Conscious"
-                  : data.SubjectStatus === data.SOFT_CRIT
-                    ? "Critical"
-                    : data.SubjectStatus === data.UNCONSCIOUS
-                      ? "Unconscious"
-                      : "Dead"}
-              </b>
+              <b>{subjectStatusString}</b>
             </Box>
           </LabeledList.Item>
           <LabeledList.Item label="Health">
@@ -334,16 +361,35 @@ export class DnaConsole extends Component {
     let modeBuffer = [];
 
     const seqOnClick = (ref, parent) => {
-      parent.setState({ mode: MODE_SEQUENCER });
+      parent.setState({
+        console: {
+          ...parent.state.console,
+          mode: MODE_SEQUENCER,
+        },
+      });
       act(ref, "all_check_discovery");
+    };
+
+    const ejdiskOnClick = (ref, parent) => {
+      parent.setState({
+        storage: {
+          ...parent.state.storage,
+          mode: MODE_ST_CONSOLE,
+        },
+      });
+      act(ref, "eject_disk");
     };
 
     modeBuffer.push(
       <Button
         content={"Storage"}
-        selected={this.state.mode === MODE_STORAGE}
+        selected={this.state.console.mode === MODE_STORAGE}
         onClick={() => (
-          this.setState({ mode: MODE_STORAGE })
+          this.setState(
+            prevState => (
+              { console: { ...prevState.console, mode: MODE_STORAGE } }
+            ),
+          )
         )} />,
     );
 
@@ -351,7 +397,7 @@ export class DnaConsole extends Component {
       modeBuffer.push(
         <Button
           content={"Sequencer"}
-          selected={this.state.mode === MODE_SEQUENCER}
+          selected={this.state.console.mode === MODE_SEQUENCER}
           onClick={() => (
             seqOnClick(ref, this)
           )} />,
@@ -362,15 +408,23 @@ export class DnaConsole extends Component {
       <Fragment>
         <Button
           content={"Enzymes"}
-          selected={this.state.mode === MODE_ENZYMES}
+          selected={this.state.console.mode === MODE_ENZYMES}
           onClick={() => (
-            this.setState({ mode: MODE_ENZYMES })
+            this.setState(
+              prevState => (
+                { console: { ...prevState.console, mode: MODE_ENZYMES } }
+              ),
+            )
           )} />
         <Button
           content={"Advanced Injectors"}
-          selected={this.state.mode === MODE_ADV_INJ}
+          selected={this.state.console.mode === MODE_ADV_INJ}
           onClick={() => (
-            this.setState({ mode: MODE_ADV_INJ })
+            this.setState(
+              prevState => (
+                { console: { ...prevState.console, mode: MODE_ADV_INJ } }
+              ),
+            )
           )} />
       </Fragment>,
     );
@@ -388,7 +442,7 @@ export class DnaConsole extends Component {
             disabled={!data.HasDisk}
             content={"Eject Disk"}
             onClick={() =>
-              act(ref, "eject_disk")} />
+              ejdiskOnClick(ref, this)} />
         </LabeledList.Item>,
       );
     }
@@ -401,13 +455,10 @@ export class DnaConsole extends Component {
   renderMode(ref, data, mutations) {
     let buffer = [];
 
-    switch (this.state.mode) {
+    switch (this.state.console.mode) {
       case MODE_STORAGE:
         buffer.push(
-          <Section
-            title="Storage">
-            {this.renderStorage(ref, data)}
-          </Section>,
+          this.renderStorage(ref, data),
         );
         break;
       case MODE_SEQUENCER:
@@ -729,285 +780,563 @@ export class DnaConsole extends Component {
     );
   }
 
-  renderMutInfo(ref, data, mut, prefix, key, filteredList, source) {
-    return (
-      <Tabs.Tab
-        key={`rmi_${prefix}_${key}_${mut.Name}`}
-        label={mut.Name}>
-        {() => (
-          <Fragment>
-            <Collapsible
-              title="Information">
-              <LabeledList>
-                <LabeledList.Item label="Name">
-                  {mut.Name}
-                </LabeledList.Item>
-                <LabeledList.Item label="Description">
-                  {mut.Description}
-                </LabeledList.Item>
-                <LabeledList.Item label="Instability">
-                  {mut.Instability}
-                </LabeledList.Item>
-                { mut.CanChromo
-                  ? (
-                    <Fragment>
-                      <LabeledList.Item label="Compatible Chromosomes">
-                        {mut.ValidChromos}
-                      </LabeledList.Item>
-                      { mut.AppliedChromo
-                        ? (
-                          <LabeledList.Item label="Applied Chromosome">
-                            {mut.AppliedChromo}
-                          </LabeledList.Item>
-                        ) : (
-                          <LabeledList.Item label="Applied Chromosome">
-                            None
-                          </LabeledList.Item>
-                        )}
-                    </Fragment>
-                  ) : (
+  renderMutInfo(ref, data, mut, filteredList, source) {
+    let buffer = [];
+
+    switch (source) {
+      case "disk":
+        break;
+      case "console":
+        break;
+    }
+
+    switch (this.state.consStorage.mutMode) {
+      case MODE_CST_MUTINFO:
+        buffer.push(
+          <Section
+            title="Information">
+            <LabeledList>
+              <LabeledList.Item label="Name">
+                {mut.Name}
+              </LabeledList.Item>
+              <LabeledList.Item label="Description">
+                {mut.Description}
+              </LabeledList.Item>
+              <LabeledList.Item label="Instability">
+                {mut.Instability}
+              </LabeledList.Item>
+              { mut.CanChromo
+                ? (
+                  <Fragment>
                     <LabeledList.Item label="Compatible Chromosomes">
-                      None
+                      {mut.ValidChromos}
                     </LabeledList.Item>
-                  ) }
-              </LabeledList>
-            </Collapsible>
-            <Collapsible
-              title="Combine">
-              <DropdownEx
-                key={prefix+source+"_dd_"+key}
-                disable={(source === "console")
-                  ? (!(data.MutationCapacity > 0))
-                  : ((source === "disk")
-                    ? (!data.HasDisk
-                      || !(data.DiskCapacity > 0)
-                      || data.DiskReadOnly)
-                    : (false))}
-                options={filteredList}
-                exKey={"Name"}
-                width={"150px"}
-                selected={"Available Mutations"}
-                onSelected={e =>
-                  act(ref, "combine_" + source, {
-                    srctype: mut.Type,
-                    desttype: e.Type })} />
-            </Collapsible>
-            <Box m={1}>
-              <Button
-                disabled={!data.IsInjectorReady}
-                content={"Print Activator"}
-                onClick={() =>
-                  act(ref, "print_injector",
-                    { mutref: mut.ByondRef,
-                      is_activator: 1,
-                      source: source })} />
-              <Button
-                disabled={!data.IsInjectorReady}
-                content={"Print Mutator"}
-                onClick={() =>
-                  act(ref, "print_injector",
-                    { mutref: mut.ByondRef,
-                      is_activator: 0,
-                      source: source })} />
-              { source === "console"
+                    { mut.AppliedChromo
+                      ? (
+                        <LabeledList.Item label="Applied Chromosome">
+                          {mut.AppliedChromo}
+                        </LabeledList.Item>
+                      ) : (
+                        <LabeledList.Item label="Applied Chromosome">
+                          None
+                        </LabeledList.Item>
+                      )}
+                  </Fragment>
+                ) : (
+                  <LabeledList.Item label="Compatible Chromosomes">
+                    None
+                  </LabeledList.Item>
+                ) }
+            </LabeledList>
+          </Section>,
+        );
+        break;
+      case MODE_CST_MUTCOMB:
+        buffer.push(
+          <Section
+            title="Combine Mutations">
+            <DropdownEx
+              key={mut.ByondRef+"_dd"}
+              disable={(source === "console")
+                ? (!(data.MutationCapacity > 0))
+                : ((source === "disk")
+                  ? (!data.HasDisk
+                    || !(data.DiskCapacity > 0)
+                    || data.DiskReadOnly)
+                  : (false))}
+              options={filteredList}
+              exKey={"Name"}
+              width={"200px"}
+              selected={"Available Mutations"}
+              onSelected={e =>
+                act(ref, "combine_" + source, {
+                  srctype: mut.Type,
+                  desttype: e.Type })} />
+          </Section>,
+        );
+        break;
+      case MODE_CST_MUTACT:
+        buffer.push(
+          <Section
+            title="Commands">
+            <Button
+              disabled={!data.IsInjectorReady}
+              content={"Print Activator"}
+              onClick={() =>
+                act(ref, "print_injector",
+                  { mutref: mut.ByondRef,
+                    is_activator: 1,
+                    source: source })} />
+            <Button
+              disabled={!data.IsInjectorReady}
+              content={"Print Mutator"}
+              onClick={() =>
+                act(ref, "print_injector",
+                  { mutref: mut.ByondRef,
+                    is_activator: 0,
+                    source: source })} />
+            { source === "console"
+              ? (
+                <Button
+                  disabled={!data.HasDisk
+                  || !(data.DiskCapacity > 0)
+                  || data.DiskReadOnly}
+                  content={"Export to Disk"}
+                  onClick={() =>
+                    act(ref, "save_disk", {
+                      mutref: mut.ByondRef,
+                      source: source })} />)
+              : (source === "disk"
                 ? (
                   <Button
-                    disabled={!data.HasDisk
-                    || !(data.DiskCapacity > 0)
-                    || data.DiskReadOnly}
-                    content={"Export to Disk"}
+                    disabled={!(data.MutationCapacity > 0)}
+                    content={"Export to Console"}
                     onClick={() =>
-                      act(ref, "save_disk", {
+                      act(ref, "save_console", {
                         mutref: mut.ByondRef,
                         source: source })} />)
-                : (source === "disk"
-                  ? (
-                    <Button
-                      disabled={!(data.MutationCapacity > 0)}
-                      content={"Export to Console"}
-                      onClick={() =>
-                        act(ref, "save_console", {
-                          mutref: mut.ByondRef,
-                          source: source })} />)
-                  : (false)
-                )}
+                : (false)
+              )}
 
-              <Button
-                disabled
-                content={"Add to Adv. Injector"}
-                onClick={() =>
-                  act(
-                    ref,
-                    "add_adv_injector",
-                    {
-                      mutref: mut.ByondRef,
-                      source: source })} />
-              <Button
-                content={"Delete"}
-                onClick={() =>
-                  act(
-                    ref,
-                    "delete_" + source + "_mut",
-                    {
-                      mutref: mut.ByondRef })} />
-            </Box>
-          </Fragment>
-        )}
-      </Tabs.Tab>
+            <Button
+              disabled
+              content={"Add to Adv. Injector"}
+              onClick={() =>
+                act(
+                  ref,
+                  "add_adv_injector",
+                  {
+                    mutref: mut.ByondRef,
+                    source: source })} />
+            <Button
+              content={"Delete"}
+              onClick={() =>
+                act(
+                  ref,
+                  "delete_" + source + "_mut",
+                  {
+                    mutref: mut.ByondRef })} />
+          </Section>,
+        );
+        break;
+    }
+
+    return (
+      buffer
     );
   }
 
-  renderChromInfo(ref, data, chrom, prefix, key) {
+  renderChromInfo(ref, data, chrom) {
     return (
-      <Tabs.Tab
-        key={`rci_${prefix}_${key}_${chrom.Name}`}
-        label={chrom.Name}>
-        {() => (
-          <Fragment>
-            <LabeledList>
-              <LabeledList.Item label="Name">
-                {chrom.Name}
-              </LabeledList.Item>
-              <LabeledList.Item label="Description">
-                {chrom.Description}
-              </LabeledList.Item>
-            </LabeledList>
-            <Box m={1}>
-              <Button
-                content={"Eject Chromosome"}
-                onClick={() =>
-                  act(ref, "eject_chromo",
-                    { chromo: chrom.Name })} />
-            </Box>
-          </Fragment>
-        )}
-      </Tabs.Tab>
+      <Section
+        title="Information">
+        <LabeledList>
+          <LabeledList.Item label="Name">
+            {chrom.Name}
+          </LabeledList.Item>
+          <LabeledList.Item label="Description">
+            {chrom.Description}
+          </LabeledList.Item>
+          <LabeledList.Item label="Eject">
+            <Button
+              mt={1}
+              content={"Eject Chromosome"}
+              onClick={() =>
+                act(ref, "eject_chromo",
+                  { chromo: chrom.Name })} />
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
+    );
+  }
+
+  renderMutModeButtons(ref, data) {
+    let buffer=[];
+
+    const btnOnClick = function (ref, parent, mode) {
+      parent.setState({
+        consStorage: {
+          ...parent.state.consStorage,
+          mutMode: mode,
+        },
+      });
+    };
+
+    buffer.push(
+      <Fragment>
+        <Button
+          content={"Information"}
+          selected={this.state.consStorage.mutMode === MODE_CST_MUTINFO}
+          onClick={() => (
+            btnOnClick(ref, this, MODE_CST_MUTINFO)
+          )} />
+        <Button
+          content={"Combination"}
+          selected={this.state.consStorage.mutMode === MODE_CST_MUTCOMB}
+          onClick={() => (
+            btnOnClick(ref, this, MODE_CST_MUTCOMB)
+          )} />
+        <Button
+          content={"Commands"}
+          selected={this.state.consStorage.mutMode === MODE_CST_MUTACT}
+          onClick={() => (
+            btnOnClick(ref, this, MODE_CST_MUTACT)
+          )} />
+      </Fragment>,
+    );
+
+    return (
+      buffer
     );
   }
 
   renderMutStorage(ref, data, source, storageList) {
+    let buffer = [];
+    let mutButtonBuffer = [];
+    let mutBoxBuffer = [];
+
+    const btnOnClick = (ref, parent, index) => {
+      parent.setState({
+        consStorage: {
+          ...parent.state.consStorage,
+          mutIndex: index,
+        },
+      });
+    };
+
+    // Do some initial cleanup
+    const clamp = function (num, min, max) {
+      return Math.min(Math.max(num, min), max);
+    };
+
+    let clampedIndex = clamp(
+      this.state.consStorage.mutIndex, 1, Object.keys(storageList).length);
+
+    if (clampedIndex !== this.state.consStorage.mutIndex) {
+      this.setState(
+        prevState => (
+          { consStorage: { ...prevState.consStorage, mutIndex: clampedIndex } }
+        ),
+      );
+    }
+
+    Object.keys(storageList).map((value, key) => {
+      return (
+        mutButtonBuffer.push(
+          <Table.Row>
+            <Button
+              content={storageList[value].Name}
+              selected={clampedIndex === parseInt(value, 10)}
+              fluid
+              ellipsis
+              textAlign={"center"}
+              width={"8em"}
+              onClick={() => (
+                btnOnClick(ref, this, parseInt(value, 10))
+              )} />
+          </Table.Row>,
+        )
+      );
+    });
+
+    if (Object.keys(storageList).length > 0) {
+      mutBoxBuffer.push(
+        <Table>
+          <Table.Cell
+            collapsing
+            height="132px"
+            overflowY="scroll">
+            {mutButtonBuffer}
+          </Table.Cell>
+          <Table.Cell>
+            {this.renderMutInfo(
+              ref,
+              data,
+              storageList[clampedIndex],
+              this.createBrefFilteredList(
+                storageList, storageList[clampedIndex].ByondRef),
+              "console")}
+          </Table.Cell>
+        </Table>,
+      );
+    }
+
     return (
       <Section
-        title="Mutation Storage"
-        textAlign="left">
-        <Tabs vertical>
-          { Object.keys(storageList).map((value, key) => {
-            return (
-              this.renderMutInfo(
-                ref,
-                data,
-                storageList[value],
-                "mut_stor",
-                key,
-                this.createBrefFilteredList(
-                  storageList,
-                  storageList.ByondRef),
-                source,
-              )
-            ); }) }
-        </Tabs>
+        title="Mutations"
+        textAlign="left"
+        buttons={this.renderMutModeButtons(ref, data)}>
+        {mutBoxBuffer}
       </Section>
     );
   }
 
   renderChromoStorage(ref, data) {
+    let buffer = [];
+    let chromButtonBuffer = [];
+    let chromBoxBuffer = [];
+
+    // Do some initial cleanup
+    const clamp = function (num, min, max) {
+      return Math.min(Math.max(num, min), max);
+    };
+
+    let clampedIndex = clamp(
+      this.state.consStorage.chromIndex,
+      1,
+      Object.keys(data.ChromoStorage).length);
+
+    if (clampedIndex !== this.state.consStorage.chromIndex) {
+      this.setState(
+        prevState => (
+          { consStorage: {
+            ...prevState.consStorage, chromIndex: clampedIndex,
+          } }
+        ),
+      );
+    }
+
+
+    const btnOnClick = (ref, parent, index) => {
+      parent.setState({
+        consStorage: {
+          ...parent.state.consStorage,
+          chromIndex: index,
+        },
+      });
+    };
+
+    Object.keys(data.ChromoStorage).map((value, key) => {
+      return (
+        chromButtonBuffer.push(
+          <Table.Row>
+            <Button
+              content={data.ChromoStorage[value].Name.split(" ")[0]}
+              selected={clampedIndex === parseInt(value, 10)}
+              fluid
+              textAlign={"center"}
+              onClick={() => (
+                btnOnClick(ref, this, parseInt(value, 10))
+              )} />
+          </Table.Row>,
+        )
+      );
+    });
+
+    if (Object.keys(data.ChromoStorage).length > 0) {
+      chromBoxBuffer.push(
+        <Table>
+          <Table.Cell
+            collapsing
+            height="132px"
+            overflowY="scroll">
+            {chromButtonBuffer}
+          </Table.Cell>
+          <Table.Cell>
+            {this.renderChromInfo(
+              ref,
+              data,
+              data.ChromoStorage[clampedIndex])}
+          </Table.Cell>
+        </Table>,
+      );
+    }
+
     return (
       <Section
-        title="Chromosome Storage"
+        title="Chromosomes"
         textAlign="left">
-        <Tabs vertical>
-          { Object.keys(data.ChromoStorage).map((value, key) => {
-            return (
-              this.renderChromInfo(
-                ref,
-                data,
-                data.ChromoStorage[value],
-                "chrom_stor",
-                key,
-              )); }) }
-        </Tabs>
+        {chromBoxBuffer}
       </Section>
     );
   }
 
-  renderStorage(ref, data) {
+  renderStorageButtons(ref, data) {
+    let buffer = [];
+
+    buffer.push(
+      <Button
+        content={"Console"}
+        selected={this.state.storage.mode === MODE_ST_CONSOLE}
+        onClick={() => (
+          this.setState(
+            prevState => (
+              { storage: { ...prevState.storage, mode: MODE_ST_CONSOLE } }
+            ),
+          )
+        )} />,
+    );
+
+
+
+    if (data.HasDisk) {
+      buffer.push(
+        <Button
+          content={"Disk"}
+          selected={this.state.storage.mode === MODE_ST_DISK}
+          onClick={() => (
+            this.setState(
+              prevState => (
+                { storage: { ...prevState.storage, mode: MODE_ST_DISK } }
+              ),
+            )
+          )} />,
+      );
+    }
+
     return (
-      <Tabs vertical>
-        <Tabs.Tab
-          key={`rs_console`}
-          label="Console">
-          { () => (
-            <Fragment>
-              {this.renderMutStorage(
-                ref,
-                data,
-                "console",
-                data.MutationStorage)}
-              {this.renderChromoStorage(ref, data)}
-            </Fragment>
-          )}
-        </Tabs.Tab>
-        { data.HasDisk
-          ? (
-            <Tabs.Tab
-              key={`rs_disk`}
-              label="Disk">
-              {() => (
-                <Fragment>
-                  {this.renderMutStorage(
-                    ref,
-                    data,
-                    "disk",
-                    data.DiskMutations)}
-                  {data.DiskHasMakeup
-                    ? (
-                      <Section
-                        title="Genetic Makeup Storage"
-                        textAlign="left">
-                        <LabeledList>
-                          <LabeledList.Item label="Subject">
-                            {data.DiskMakeupBuffer.name
-                              ? data.DiskMakeupBuffer.name
-                              : "None"}
-                          </LabeledList.Item>
-                          <LabeledList.Item label="Blood Type">
-                            {data.DiskMakeupBuffer.blood_type
-                              ? data.DiskMakeupBuffer.blood_type
-                              : "None"}
-                          </LabeledList.Item>
-                          <LabeledList.Item label="Unique Enzyme">
-                            {data.DiskMakeupBuffer.UE
-                              ? data.DiskMakeupBuffer.UE
-                              : "None"}
-                          </LabeledList.Item>
-                          <LabeledList.Item label="Unique Identifier">
-                            {data.DiskMakeupBuffer.UI
-                              ? data.DiskMakeupBuffer.UI
-                              : "None"}
-                          </LabeledList.Item>
-                          {(data.DiskMakeupBuffer.UI
-                            && data.DiskMakeupBuffer.UE)
-                            ? (
-                              <LabeledList.Item label="UE/UI Combination">
-                                {data.DiskMakeupBuffer.UI
-                                  + "/"
-                                  + data.DiskMakeupBuffer.UE}
-                              </LabeledList.Item>
-                            ) : false }
-                        </LabeledList>
-                        <Button
-                          disabled={data.DiskReadOnly}
-                          content={"Delete"}
-                          onClick={(e, value) => (
-                            act(ref, "del_makeup_disk")
-                          )} />
-                      </Section>)
-                    : (false)}
-                </Fragment>)}
-            </Tabs.Tab>
-          ) : (
-            false)}
-      </Tabs>
+      buffer
+    );
+  }
+
+  renderDiskGenMakeup(ref, data) {
+    return (
+      <Section
+        title="Genetic Makeup Storage"
+        textAlign="left">
+        <LabeledList>
+          <LabeledList.Item label="Subject">
+            {data.DiskMakeupBuffer.name
+              ? data.DiskMakeupBuffer.name
+              : "None"}
+          </LabeledList.Item>
+          <LabeledList.Item label="Blood Type">
+            {data.DiskMakeupBuffer.blood_type
+              ? data.DiskMakeupBuffer.blood_type
+              : "None"}
+          </LabeledList.Item>
+          <LabeledList.Item label="Unique Enzyme">
+            {data.DiskMakeupBuffer.UE
+              ? data.DiskMakeupBuffer.UE
+              : "None"}
+          </LabeledList.Item>
+          <LabeledList.Item label="Unique Identifier">
+            {data.DiskMakeupBuffer.UI
+              ? data.DiskMakeupBuffer.UI
+              : "None"}
+          </LabeledList.Item>
+          {(data.DiskMakeupBuffer.UI
+            && data.DiskMakeupBuffer.UE)
+            ? (
+              <LabeledList.Item label="UE/UI Combination">
+                {data.DiskMakeupBuffer.UI
+                  + "/"
+                  + data.DiskMakeupBuffer.UE}
+              </LabeledList.Item>
+            ) : false }
+        </LabeledList>
+        <Button
+          disabled={data.DiskReadOnly}
+          content={"Delete"}
+          onClick={(e, value) => (
+            act(ref, "del_makeup_disk")
+          )} />
+      </Section>
+    );
+  }
+
+  renderConsoleStorageButtons(ref, data) {
+    let buffer = [];
+
+    let mutButtonDisabled = (Object.keys(data.MutationStorage).length === 0);
+
+    const btnOnClick = (ref, parent, mode) => {
+      parent.setState({
+        consStorage: {
+          ...parent.state.consStorage,
+          mode: mode,
+        },
+      });
+    };
+
+    buffer.push(
+      <Fragment>
+        <Button
+          content={"Mutations"}
+          selected={this.state.consStorage.mode === MODE_CST_MUT}
+          onClick={() => (
+            btnOnClick(ref, this, MODE_CST_MUT)
+          )} />
+        <Button
+          content={"Chromosomes"}
+          selected={this.state.consStorage.mode === MODE_CST_CHROM}
+          onClick={() => (
+            btnOnClick(ref, this, MODE_CST_CHROM)
+          )} />
+      </Fragment>,
+    );
+
+    return (
+      buffer
+    );
+  }
+
+  renderConsoleStorage(ref, data) {
+    let buffer = [];
+
+    switch (this.state.consStorage.mode) {
+      case MODE_CST_MUT:
+        buffer.push(
+          this.renderMutStorage(
+            ref,
+            data,
+            "console",
+            data.MutationStorage),
+        );
+        break;
+      case MODE_CST_CHROM:
+        buffer.push(
+          this.renderChromoStorage(ref, data),
+        );
+        break;
+    }
+
+    return (
+      buffer
+    );
+  }
+
+  renderStorage(ref, data) {
+    let buffer = [];
+    let contentBuffer = [];
+
+    switch (this.state.storage.mode) {
+      case MODE_ST_CONSOLE:
+        contentBuffer.push(
+          <Section
+            title="Console"
+            buttons={this.renderConsoleStorageButtons(ref, data)}>
+            {this.renderConsoleStorage(ref, data)}
+          </Section>,
+        );
+        break;
+      case MODE_ST_DISK:
+        contentBuffer.push(
+          <Fragment>
+            {this.renderMutStorage(
+              ref,
+              data,
+              "disk",
+              data.DiskMutations)}
+            {this.renderDiskGenMakeup(
+              ref,
+              data,
+            )}
+          </Fragment>,
+        );
+        break;
+    }
+
+    buffer.push(
+      <Section
+        title="Storage"
+        buttons={this.renderStorageButtons(ref, data)}>
+        {contentBuffer}
+      </Section>,
+    );
+
+    return (
+      buffer
     );
   }
 
