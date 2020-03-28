@@ -885,6 +885,7 @@
 	var/randomDecoration = pick(/obj/item/storage/crayons,
 		/obj/item/stack/tile/fakespace/loaded,
 		/obj/item/stack/tile/fakepit/loaded,
+		/obj/item/stack/tile/eighties/loaded,
 		pick(subtypesof(/obj/item/grenade/chem_grenade/glitter)))
 	new randomDecoration(src)
 
