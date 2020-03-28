@@ -24,11 +24,11 @@
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	ventcrawler = VENTCRAWLER_ALWAYS
+	unique_name = TRUE
 	faction = list("rat")
 	var/datum/action/cooldown/coffer
 	var/datum/action/cooldown/riot
 	///Number assigned to rats and mice, checked when determining infighting.
-	var/faction_num = 0
 
 /mob/living/simple_animal/hostile/regalrat/Initialize()
 	. = ..()
@@ -36,7 +36,6 @@
 	riot = new /datum/action/cooldown/riot
 	coffer.Grant(src)
 	riot.Grant(src)
-	faction_num = rand(1,999)
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you want to play as the Royal Rat, cheesey be his crown?", ROLE_SENTIENCE, null, FALSE, 100, POLL_IGNORE_SENTIENCE_POTION)
 	if(LAZYLEN(candidates) && !mind)
 		var/mob/dead/observer/C = pick(candidates)
@@ -57,11 +56,22 @@
 			return TRUE
 		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
-			if(R.faction_num == faction_num)
+			if(R.faction_check_mob(src, TRUE))
 				return FALSE
 			else
 				return TRUE
 		return ..()
+
+/mob/living/simple_animal/hostile/regalrat/examine(mob/user)
+	. = ..()
+	if(istype(user,/mob/living/simple_animal/hostile/rat))
+		var/mob/living/simple_animal/hostile/rat/ratself = user
+		if(ratself.faction_check_mob(src, TRUE))
+			. += "<span class='notice'>This is your king. Long live his majesty!</span>"
+		else
+			. += "<span class='warning'>This is a false king! Strike him down!</span>"
+	if(istype(user,/mob/living/simple_animal/hostile/regalrat))
+		. += "<span class='warning'>Who is this foolish false king? This will not stand!</span>"
 
 /**
   *This action creates trash, money, dirt, and cheese.
@@ -132,7 +142,7 @@
 			M.mind.transfer_to(new_rat)
 		if(istype(owner,/mob/living/simple_animal/hostile/regalrat))
 			var/mob/living/simple_animal/hostile/regalrat/giantrat = owner
-			new_rat.faction_num = giantrat.faction_num
+			new_rat.faction = giantrat.faction
 		qdel(M)
 	if(!something_from_nothing)
 		if(LAZYLEN(SSmobs.cheeserats) >= cap)
@@ -169,7 +179,6 @@
 	mob_size = MOB_SIZE_TINY
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	faction = list("rat")
-	var/faction_num
 
 /mob/living/simple_animal/hostile/rat/Initialize()
 	. = ..()
@@ -179,18 +188,33 @@
 	SSmobs.cheeserats -= src
 	return ..()
 
+/mob/living/simple_animal/hostile/rat/examine(mob/user)
+	. = ..()
+	if(istype(user,/mob/living/simple_animal/hostile/rat))
+		var/mob/living/simple_animal/hostile/rat/ratself = user
+		if(ratself.faction_check_mob(src, TRUE))
+			. += "<span class='notice'>You both serve the same king.</span>"
+		else
+			. += "<span class='warning'>This fool serves a different king!</span>"
+	if(istype(user,/mob/living/simple_animal/hostile/regalrat))
+		var/mob/living/simple_animal/hostile/regalrat/ratking = user
+		if(ratking.faction_check_mob(src, TRUE))
+			. += "<span class='notice'>This rat serves under you.</span>"
+		else
+			. += "<span class='warning'>This peasant serves a different king! Strike him down!</span>"
+
 /mob/living/simple_animal/hostile/rat/CanAttack(atom/the_target)
 	if(istype(the_target,/mob/living/simple_animal))
 		var/mob/living/A = the_target
 		if(istype(the_target, /mob/living/simple_animal/hostile/regalrat) && A.stat == CONSCIOUS)
-			var/mob/living/simple_animal/hostile/regalrat/R = the_target
-			if(R.faction_num == faction_num)
+			var/mob/living/simple_animal/hostile/regalrat/ratking = the_target
+			if(ratking.faction_check_mob(src, TRUE))
 				return FALSE
 			else
 				return TRUE
 		if(istype(the_target, /mob/living/simple_animal/hostile/rat) && A.stat == CONSCIOUS)
 			var/mob/living/simple_animal/hostile/rat/R = the_target
-			if(R.faction_num == faction_num)
+			if(R.faction_check_mob(src, TRUE))
 				return FALSE
 			else
 				return TRUE
