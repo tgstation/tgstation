@@ -37,7 +37,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
 	var/list/possible_names ///One of these names is randomly picked as the posibrain's name on possession. If left blank, it will use the global posibrain names
 	var/picked_name ///Picked posibrain name
-	var/policy = get_policy(ROLE_POSIBRAIN)
 
 /obj/item/mmi/posibrain/Topic(href, href_list)
 	if(href_list["activate"])
@@ -152,6 +151,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		brainmob.ckey = candidate.ckey
 	name = "[initial(name)] ([brainmob.name])"
 	to_chat(brainmob, welcome_message)
+	var/policy = get_policy(ROLE_POSIBRAIN)
 	if(policy)
 		to_chat(brainmob, policy)
 	brainmob.mind.assigned_role = new_role
