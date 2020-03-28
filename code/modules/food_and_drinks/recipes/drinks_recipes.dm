@@ -576,55 +576,69 @@
 /datum/chemical_reaction/badtouch
 	results = list(/datum/reagent/consumable/ethanol/badtouch = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 5, /datum/reagent/consumable/ethanol/wine = 5)
+	mix_message = "The mixture seems uncomfortable with its own existence."
 
 /datum/chemical_reaction/bluefairy
 	results = list(/datum/reagent/consumable/ethanol/bluefairy = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/absinthe = 5, /datum/reagent/consumable/pwr_game = 5)
+	mix_message = "The mixture shimmers gently, like fairy dust on a forest mushroom."
 
 /datum/chemical_reaction/cobaltvelvet
 	results = list(/datum/reagent/consumable/ethanol/cobaltvelvet = 10)
 	required_reagents = list(/datum/reagent/consumable/space_cola = 5, /datum/reagent/consumable/ethanol/champagne = 5)
+	mix_message = "The mixture begins to glow softly. It seems to thicken itself when moved."
 
 /datum/chemical_reaction/fluffydream
 	results = list(/datum/reagent/consumable/ethanol/fluffydream = 10)
 	required_reagents = list(/datum/reagent/consumable/cream = 5, /datum/reagent/consumable/spacemountainwind = 5)
+	mix_message = "The mixture bubbles. It looks like the softest thing ever, and you feel tired just looking at it."
 
 /datum/chemical_reaction/gutpunch
 	results = list(/datum/reagent/consumable/ethanol/gutpunch = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 5, /datum/reagent/consumable/ethanol/tequila = 5)
+	mix_message = "The mixture seems aggressive, somehow. Was this really a good idea?"
 
 /datum/chemical_reaction/marsblast
 	results = list(/datum/reagent/consumable/ethanol/marsblast = 10)
 	required_reagents = list(/datum/reagent/consumable/menthol = 5, /datum/reagent/consumable/tomatojuice = 5)
+	mix_message = "The mixture turns to the red of a dying sun."
 
 /datum/chemical_reaction/mercuryblast
 	results = list(/datum/reagent/consumable/ethanol/mercuryblast = 10)
 	required_reagents = list(/datum/reagent/consumable/menthol = 5, /datum/reagent/consumable/pwr_game = 5)
+	mix_message = "The mixture begins to bubble. Its contents turn orange where your fingers touch the glass."
 
 /datum/chemical_reaction/moonblast
 	results = list(/datum/reagent/consumable/ethanol/moonblast = 10)
 	required_reagents = list(/datum/reagent/consumable/ice = 5, /datum/reagent/consumable/grenadine = 5)
+	mix_message = "The mixture begins to buzz, like a massive orbital weapon being charged."
 
 /datum/chemical_reaction/pianoman
 	results = list(/datum/reagent/consumable/ethanol/pianoman = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/sake = 5, /datum/reagent/consumable/space_up = 5)
+	mix_message = "The mixture makes the sound of a piano key being gently pressed."
 
 /datum/chemical_reaction/pianowoman
 	results = list(/datum/reagent/consumable/ethanol/pianowoman = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 5, /datum/reagent/consumable/space_up = 5)
+	mix_message = "The mixture makes the sound of a piano key being gently pressed."
 
 /datum/chemical_reaction/piledriver
 	results = list(/datum/reagent/consumable/ethanol/piledriver = 10)
 	required_reagents = list(/datum/reagent/consumable/ethanol/rum = 5, /datum/reagent/consumable/orangejuice = 5)
+	mix_message = "The mixture seems to be trying to prove something."
 
 /datum/chemical_reaction/sparklestar
 	results = list(/datum/reagent/consumable/ethanol/sparklestar = 10)
 	required_reagents = list(/datum/reagent/consumable/sodawater = 5, /datum/reagent/consumable/grenadine = 5)
+	mix_message = "The mixture erupts into a blinding flash! No, wait. It's just sparkling."
 
 /datum/chemical_reaction/sunshinecloud
 	results = list(/datum/reagent/consumable/ethanol/sunshinecloud = 10)
 	required_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/consumable/ethanol/creme_de_cacao = 5)
+	mix_message = "The mixture turns into a lovely cocktail. But where did that leaf come from?"
 
 /datum/chemical_reaction/zenstar
 	results = list(/datum/reagent/consumable/ethanol/zenstar = 10)
 	required_reagents = list(/datum/reagent/consumable/sodawater = 5, /datum/reagent/consumable/spacemountainwind = 5)
+	mix_message = "The mixture gently hums. You can feel it balancing your chakras, or something."
