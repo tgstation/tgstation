@@ -605,7 +605,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/temperature = air.temperature
 	var/old_heat_capacity = air.heat_capacity()
 	///the more heat you use the higher is this factor
-	var/increase_factor = temperature / METAL_HYDROGEN_MINIMUM_HEAT
+	var/increase_factor = (temperature / METAL_HYDROGEN_MINIMUM_HEAT) * 0.1
 	///the more moles you use and the higher the heat, the higher is the efficiency
 	var/heat_efficency = cached_gases[/datum/gas/hydrogen][MOLES] * 0.01 * increase_factor
 	var/pressure = air.return_pressure()
@@ -614,9 +614,9 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 
 	if(pressure >= METAL_HYDROGEN_MINIMUM_PRESSURE && temperature >= METAL_HYDROGEN_MINIMUM_HEAT)
 		cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.01
-		if (prob(25 * (increase_factor * 2)))
-			cached_gases[/datum/gas/hydrogen][MOLES] -= heat_efficency
-			if (prob(75 / (increase_factor * 2)))
+		if (prob(50 * increase_factor))
+			cached_gases[/datum/gas/hydrogen][MOLES] -= heat_efficency * 10
+			if (prob(100 / increase_factor))
 				new /obj/item/stack/sheet/mineral/metal_hydrogen(location)
 				SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min((heat_efficency * increase_factor), METAL_HYDROGEN_RESEARCH_MAX_AMOUNT))
 
