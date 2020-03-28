@@ -96,7 +96,7 @@
 	clothes_req = FALSE
 	invocation = "P'WAH, UNLIM'TED P'WAH"
 	invocation_type = "shout"
-	cooldown_min = 10
+	cooldown_min = 20
 	base_icon_state = "lightning"
 	action_icon_state = "lightning0"
 	sound = 'sound/magic/lightningbolt.ogg'
