@@ -2,16 +2,23 @@
 /**
   * Drawn to light component
   *
-  * This component adds game mechanics to emulate the moth lamp meme
+  * This component adds game mechanics to emulate the moth chasing a lamp meme
   */
 /datum/component/lightdrawn
-	var/next_move /// Next time we can move
-	var/move_delay = 2 SECONDS /// How often we move
-	var/next_message /// Limiter to stop LAMP spam
-	var/light_mood = 100 /// current light mood
-	var/light_mood_threshold = 50 /// threshold below which lamp memes happen
-	var/light_level_threshold = 1 /// threshold to compare with [/atom/movable/lighting_object/var/cached_max]
-	var/mesmerised = FALSE /// boolean to track druggy/mesmerised overlay add/remove
+	/// Next time we can move
+	var/next_move
+	/// How often we move
+	var/move_delay = 2 SECONDS
+	/// Limiter to stop LAMP spam
+	var/next_message
+	/// current light mood
+	var/light_mood = 100
+	/// threshold below which lamp memes happen
+	var/light_mood_threshold = 50
+	/// threshold to compare with [/atom/movable/lighting_object/var/cached_max]
+	var/light_level_threshold = 1
+	/// boolean to track druggy/mesmerised overlay add/remove
+	var/mesmerised = FALSE
 
 /datum/component/lightdrawn/Initialize()
 	if(!isliving(parent))
@@ -39,7 +46,9 @@
 
 	var/mob/living/living_parent = parent
 
+	///The amount our ssight is tinted by, such as glasses
 	var/tint_factor = 1
+	///The brightness multplier for the seen brightness
 	var/brightness_mult = 1
 
 	if(iscarbon(parent))
@@ -53,6 +62,7 @@
 			totaltint += eye.tint
 		tint_factor = 1/(1 + totaltint)
 
+	///The actual brightness we "see"
 	var/apparent_brightness = T.lighting_object.cached_max * tint_factor * brightness_mult
 
 	// update their mood
@@ -101,8 +111,11 @@
 		var/datum/light_source/light = l
 		if(light.source_atom == living_parent)
 			continue
+		///How bright a certain light is
 		var/brightness = light.light_power * light.light_range
+		///distance to a certain light
 		var/distance = max(1, get_dist(living_parent, light.source_turf))
+		///relative brightness of the light, factoring in distance from the mob being affected
 		var/thislightsrelativebrightness = brightness/brightness*sqrt(distance)**2/distance
 
 		if(thislightsrelativebrightness > brightestest)
