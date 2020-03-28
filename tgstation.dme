@@ -204,6 +204,7 @@
 #include "code\_onclick\hud\credits.dm"
 #include "code\_onclick\hud\devil.dm"
 #include "code\_onclick\hud\drones.dm"
+#include "code\_onclick\hud\families.dm"
 #include "code\_onclick\hud\fullscreen.dm"
 #include "code\_onclick\hud\generic_dextrous.dm"
 #include "code\_onclick\hud\ghost.dm"
