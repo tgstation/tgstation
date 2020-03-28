@@ -284,7 +284,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 			if(temperature < 160 && temperature > 120 && prob(2))
 				new /obj/item/stack/sheet/hot_ice(location)
 
-			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate) * 0.45
+			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
 
 	if(energy_released < 0)
 		var/new_heat_capacity = air.heat_capacity()
