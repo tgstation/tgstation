@@ -727,7 +727,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	unlock_sound = 'sound/items/rped.ogg'
 
 /datum/AI_Module/upgrade/upgrade_cameras/upgrade(mob/living/silicon/ai/AI)
-	AI.see_override = SEE_INVISIBLE_MINIMUM //Night-vision, without which X-ray would be very limited in power.
+	AI.lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE //Night-vision, without which X-ray would be very limited in power.
 	AI.update_sight()
 
 	var/upgraded_cameras = 0

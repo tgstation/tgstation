@@ -7780,6 +7780,7 @@
 /obj/structure/sign/plaques/kiddie{
 	pixel_x = -32
 	},
+/obj/item/aiModule/supplied/quarantine,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "qV" = (
@@ -8329,13 +8330,13 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/item/aiModule/supplied/quarantine,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24;
 	req_access = null;
 	req_one_access_txt = "2;24"
 	},
+/obj/item/aiModule/reset,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai_upload)
 "rX" = (
@@ -13695,7 +13696,7 @@
 /area/maintenance/solars/port/fore)
 "BU" = (
 /obj/machinery/power/apc{
-	areastring = "/area/maintenance/solar/port/fore";
+	areastring = "/area/maintenance/solars/port/fore";
 	dir = 4;
 	name = "Port Bow Solar APC";
 	pixel_x = 25;

@@ -30,6 +30,9 @@
 	light_range = 7
 	light_color = "#ff3232"
 
+	//Trick to get the glowing overlay visible from a distance
+	luminosity = 1
+
 	var/detecting = 1
 	var/buildstage = 2 // 2 = complete, 1 = no wires, 0 = circuit gone
 	var/last_alarm = 0
