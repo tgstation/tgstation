@@ -123,6 +123,30 @@
 "aaq" = (
 /turf/closed/wall,
 /area/security/prison/safe)
+"aar" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Gravity Generator";
+	req_access_txt = "11"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
+"aas" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering{
+	name = "Gravity Generator";
+	req_access_txt = "11"
+	},
+/obj/effect/turf_decal/delivery,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
 "aat" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -149,6 +173,16 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aay" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "aaz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -258,6 +292,11 @@
 /obj/item/kitchen/fork/plastic,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aaQ" = (
+/obj/machinery/holopad,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "aaR" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/plasteel,
@@ -467,6 +506,16 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/fore)
+"abt" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "abu" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
@@ -485,6 +534,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"abw" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/public/glass{
+	name = "Central Access"
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/hallway/primary/central)
 "abx" = (
 /obj/machinery/door/airlock/security/glass{
 	id_tag = "permainner";
@@ -27185,16 +27242,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/crew_quarters/heads/hop)
-"btF" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Gravity Generator";
-	req_access_txt = "11"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper,
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
 "btG" = (
 /turf/closed/wall/r_wall,
 /area/engine/gravity_generator)
@@ -28013,15 +28060,6 @@
 	},
 /turf/open/floor/plating,
 /area/quartermaster/storage)
-"bvW" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "bvX" = (
 /obj/machinery/camera{
 	c_tag = "Cargo Bay South";
@@ -29630,10 +29668,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bAf" = (
-/obj/machinery/holopad,
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "bAg" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=AftH";
@@ -29925,10 +29959,6 @@
 	},
 /turf/open/floor/plating,
 /area/storage/tech)
-"bAN" = (
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
 "bAO" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
@@ -30136,15 +30166,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"bBp" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/central)
 "bBq" = (
 /obj/structure/disposalpipe/junction/flip{
 	dir = 2
@@ -50770,18 +50791,6 @@
 	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
-"knx" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/engineering{
-	name = "Gravity Generator";
-	req_access_txt = "11"
-	},
-/obj/effect/turf_decal/delivery,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
 "kob" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment,
@@ -84817,18 +84826,18 @@ bgN
 bnU
 aeE
 afr
-bsc
-btF
-bph
-bsc
-knx
-bvW
-bAf
-bBp
-aHP
-bAN
-bQg
-bQg
+afq
+aar
+aeE
+afq
+aas
+aay
+aaQ
+abt
+abw
+bQQ
+bMG
+bMG
 bFh
 bGN
 bHj
