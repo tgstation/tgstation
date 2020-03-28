@@ -28,7 +28,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	<b>You are a positronic brain, brought into existence aboard Space Station 13.\n\
 	As a synthetic intelligence, you answer to all crewmembers and the AI.\n\
 	Remember, the purpose of your existence is to serve the crew and the station.\n\
-	Above all else, do not be harmful to your crewmates.</b>"
+	Above all else, try not to be harmful to your station or crewmates.</b>"
 	///Visible message sent when a player possesses the brain
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	///Examine message when the posibrain has no mob
@@ -37,6 +37,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/recharge_message = "<span class='warning'>The positronic brain isn't ready to activate again yet! Give it some time to recharge.</span>"
 	var/list/possible_names ///One of these names is randomly picked as the posibrain's name on possession. If left blank, it will use the global posibrain names
 	var/picked_name ///Picked posibrain name
+	var/policy = get_policy(ROLE_POSIBRAIN)
 
 /obj/item/mmi/posibrain/Topic(href, href_list)
 	if(href_list["activate"])
@@ -151,6 +152,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		brainmob.ckey = candidate.ckey
 	name = "[initial(name)] ([brainmob.name])"
 	to_chat(brainmob, welcome_message)
+	if(policy)
+		to_chat(brainmob, policy)
 	brainmob.mind.assigned_role = new_role
 	brainmob.set_stat(CONSCIOUS)
 	brainmob.remove_from_dead_mob_list()
