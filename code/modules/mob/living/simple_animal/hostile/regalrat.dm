@@ -70,7 +70,7 @@
 			. += "<span class='notice'>This is your king. Long live his majesty!</span>"
 		else
 			. += "<span class='warning'>This is a false king! Strike him down!</span>"
-	if(istype(user,/mob/living/simple_animal/hostile/regalrat))
+	else if(istype(user,/mob/living/simple_animal/hostile/regalrat))
 		. += "<span class='warning'>Who is this foolish false king? This will not stand!</span>"
 
 /**
@@ -196,7 +196,7 @@
 			. += "<span class='notice'>You both serve the same king.</span>"
 		else
 			. += "<span class='warning'>This fool serves a different king!</span>"
-	if(istype(user,/mob/living/simple_animal/hostile/regalrat))
+	else if(istype(user,/mob/living/simple_animal/hostile/regalrat))
 		var/mob/living/simple_animal/hostile/regalrat/ratking = user
 		if(ratking.faction_check_mob(src, TRUE))
 			. += "<span class='notice'>This rat serves under you.</span>"
