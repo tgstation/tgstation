@@ -829,7 +829,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	drawing_time = 100
 
 /obj/effect/warped_rune/lightpinkspace
-	icon_state = "purplespace" //use the purple rune icon for now.will really have to change that later
+	icon_state = "necro_rune" //use the purple rune icon for now.will really have to change that later
 	desc = "Souls are like any other material, You just have to find the right place to manufacture them."
 	max_cooldown = 100 
 
@@ -860,6 +860,48 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		else
 			to_chat(U, "<span class='warning'>The rune failed! Maybe you should try again later.</span>")
 
+
+
+
+/*      black space rune : will swap out the species of the two next person walking on the rune  */
+
+/obj/item/slimecross/warping/black
+	colour = "black"
+	runepath = /obj/effect/warped_rune/blackspace
+	effect_desc = "Will swap the species of the first two humanoids that walk on the rune. Also works on corpses."
+	drawing_time = 50
+
+/obj/effect/warped_rune/blackspace
+	icon_state = "cursed_rune" 
+	desc = "Your body is the problem, limited, so very very limited."
+	var/mob/living/carbon/human/H1
+	var/mob/living/carbon/human/H2
+	var/stepped_on = FALSE //here to check if someone already stepped on the rune
+
+/obj/effect/warped_rune/blackspace/Initialize()
+	.=..()
+	cooldown = 0 //doesn't start on cooldown like most runes
+	
+///will swap the species of the first two human or human subset that walk on the rune	
+/obj/effect/warped_rune/blackspace/Crossed(atom/movable/AM)
+	if(cooldown > world.time) //here to avoid spam/lag
+		to_chat(AM, "<span class='warning'>The rune needs a little more time before processing your DNA!</span>")
+		return
+	if(!istype(AM,/mob/living/carbon/human))
+		return
+	if(!stepped_on)
+		H1 = AM
+		stepped_on = TRUE
+		return
+	if(AM == H1) 
+		return
+	H2 = AM 
+	var/dna1 = H1.dna.species
+	var/dna2 = H2.dna.species
+	H2.set_species(dna1)  //swap the species 
+	H1.set_species(dna2)
+	stepped_on = FALSE
+	cooldown = max_cooldown + world.time //the default max cooldown is of 10 seconds
 
 
 
