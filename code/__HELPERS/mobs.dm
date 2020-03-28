@@ -291,6 +291,10 @@ GLOBAL_LIST_EMPTY(species_list)
 				. = 0
 				break
 
+		if(target && (!(target in user.do_afters) || !(user in target.targeted_by)))
+			. = 0
+			break
+
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to pull some item/tool out of the construction
