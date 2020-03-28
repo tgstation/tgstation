@@ -2617,6 +2617,25 @@
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
+"aen" = (
+/obj/structure/table,
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 24
+	},
+/obj/item/clipboard,
+/obj/item/paper/guides/jobs/engi/gravity_gen,
+/obj/item/pen/blue,
+/obj/structure/cable,
+/obj/machinery/power/apc{
+	areastring = "/area/engine/gravity_generator";
+	dir = 1;
+	name = "Gravity Generator APC";
+	pixel_y = 26
+	},
+/turf/open/floor/circuit/green{
+	luminosity = 2
+	},
+/area/engine/gravity_generator)
 "aeo" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -12592,6 +12611,20 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/science/genetics)
+"auc" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 5
+	},
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 28
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
+/turf/open/floor/engine,
+/area/engine/gravity_generator)
 "aud" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -18742,6 +18775,20 @@
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/open/floor/engine/n2,
 /area/engine/atmos)
+"aDB" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/engine/gravity_generator)
 "aDC" = (
 /turf/open/floor/engine/o2,
 /area/engine/atmos)
@@ -24742,6 +24789,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
+"aNe" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/engine/gravity_generator)
 "aNf" = (
 /obj/structure/reflector/single/anchored{
 	dir = 5
@@ -24956,6 +25014,15 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"aNt" = (
+/obj/effect/turf_decal/delivery,
+/obj/structure/closet/radiation,
+/obj/item/clothing/glasses/meson,
+/obj/item/radio/intercom{
+	pixel_y = -28
+	},
+/turf/open/floor/plasteel/dark,
+/area/engine/gravity_generator)
 "aNu" = (
 /turf/closed/wall,
 /area/medical/morgue)
@@ -24985,6 +25052,28 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
+"aNx" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Gravity Generator Foyer";
+	dir = 4;
+	name = "engineering camera";
+	network = list("ss13","engine")
+	},
+/obj/machinery/button/door{
+	id = "gravity";
+	name = "Gravity Generator Lockdown";
+	pixel_x = -24;
+	req_one_access_txt = "19;23"
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
+/area/engine/gravity_generator)
 "aNy" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -75695,27 +75784,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/engine/atmos)
-"ckc" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/obj/machinery/power/terminal{
-	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "Gravity Generator Foyer";
-	dir = 4;
-	name = "engineering camera";
-	network = list("ss13","engine")
-	},
-/obj/machinery/button/door{
-	id = "gravity";
-	name = "Gravity Generator Lockdown";
-	pixel_x = -24;
-	req_one_access_txt = "19;23"
-	},
-/turf/open/floor/engine,
-/area/engine/gravity_generator)
 "ckd" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -76796,18 +76864,6 @@
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/radiation,
 /obj/item/clothing/glasses/meson,
-/turf/open/floor/plasteel/dark,
-/area/engine/gravity_generator)
-"clW" = (
-/obj/effect/turf_decal/delivery,
-/obj/structure/closet/radiation,
-/obj/item/clothing/glasses/meson,
-/obj/machinery/power/apc{
-	areastring = "/area/engine/gravity_generator";
-	name = "Gravity Generator APC";
-	pixel_y = -26
-	},
-/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/gravity_generator)
 "clX" = (
@@ -87361,18 +87417,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/atmos)
-"cDn" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/engine/gravity_generator)
 "cDo" = (
 /obj/machinery/power/solar{
 	id = "aftstarboard";
@@ -90383,22 +90427,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/storage/tcom)
-"cIo" = (
-/obj/structure/table,
-/obj/structure/extinguisher_cabinet{
-	pixel_x = 24
-	},
-/obj/item/radio/intercom{
-	pixel_y = 22
-	},
-/obj/item/clipboard,
-/obj/item/paper/guides/jobs/engi/gravity_gen,
-/obj/item/pen/blue,
-/obj/structure/cable,
-/turf/open/floor/circuit/green{
-	luminosity = 2
-	},
-/area/engine/gravity_generator)
 "cIp" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -90535,21 +90563,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/starboard/fore)
-"cIw" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 5
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 28
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
-/obj/structure/cable,
-/turf/open/floor/engine,
-/area/engine/gravity_generator)
 "cIx" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/atmos{
@@ -90562,19 +90575,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/maintenance/disposal/incinerator)
-"cIy" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 8
-	},
-/turf/open/floor/engine,
-/area/engine/gravity_generator)
 "cIz" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -132548,9 +132548,9 @@ bPJ
 aeu
 akn
 cIm
-ckc
-cIy
-clV
+aNx
+aDB
+aNt
 cju
 cma
 bEg
@@ -132804,10 +132804,10 @@ bUe
 bPJ
 bPJ
 cju
-cIo
-cIw
-cDn
-clW
+aen
+auc
+aNe
+clV
 akn
 bEg
 cku
