@@ -129,6 +129,15 @@
 		to_chat(user, "<span class='warning'>You can't get the rage out of your system!</span>")
 		return
 	var/mob/living/carbon/human/H = target // Only humans can wear stuff
+	// Check if they already have clown gear on, if so, turn that suit into a clown simplemob
+	var/obj/item/clothing/under/rank/civilian/clown/suit = H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	if(istype(suit))
+		H.visible_message("<span class='danger'>[H]'s [suit] animates and jumps off of [H.p_them()], turning into a clown!</span>")
+		H.dropItemToGround(suit)
+		qdel(suit)
+		new /mob/living/simple_animal/hostile/retaliate/clown(H.loc)
+		return ..()
+
 	if(HAS_TRAIT(H, TRAIT_CLUMSY)) //Your holyness can't save you now!
 		to_chat(user, "<span class='warning'>The clown's rage doesn't seem to affect [H]!</span>")
 		to_chat(H, "<span class='notice'>You feel silly for a moment, but you realize you're already silly.</span>")
