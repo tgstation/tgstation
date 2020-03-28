@@ -859,15 +859,75 @@
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 
-/obj/item/storage/box/actionfigure
+/obj/item/storage/box/figurines
 	name = "box of action figures"
-	desc = "The latest set of collectable action figures."
+	desc = "The latest set of collectable figurines."
 	icon_state = "box"
 
-/obj/item/storage/box/actionfigure/PopulateContents()
+/obj/item/storage/box/figurines/PopulateContents()
 	for(var/i in 1 to 4)
-		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
+		var/randomFigure = pick(pick(subtypesof(/obj/item/toy/figure)),
+			pick(subtypesof(/obj/item/toy/prize)),
+			pick((subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas))),
+			pick((subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/kinggoat))))
 		new randomFigure(src)
+
+/obj/item/storage/box/decorations
+	name = "box of decorations"
+	desc = "A fun decoration to liven up the room!"
+	icon_state = "box"
+
+/obj/item/storage/box/decorations/PopulateContents()
+	var/randomDecoration = pick(/obj/item/storage/crayons,
+		/obj/item/stack/tile/fakespace/loaded,
+		/obj/item/stack/tile/fakepit/loaded,
+		pick(subtypesof(/obj/item/grenade/chem_grenade/glitter)))
+	new randomDecoration(src)
+
+/obj/item/storage/box/gamergear
+	name = "box of gamer gear"
+	desc = "This is what we like to call some pro-gamer gear!"
+	icon_state = "box"
+
+/obj/item/storage/box/gamergear/PopulateContents()
+	var/randomGamergear = pick(/obj/item/storage/box/fakesyndiesuit,
+        /obj/item/storage/belt/military/snack,
+        /obj/item/clothing/under/syndicate/tacticool,
+        /obj/item/clothing/shoes/wheelys,
+        /obj/item/clothing/shoes/kindleKicks,
+        /obj/item/clothing/glasses/trickblindfold)
+	new randomGamergear(src)
+
+/obj/item/storage/box/pranks
+	name = "box of pranks"
+	desc = "Robust toys for plenty of !!fun!!"
+	icon_state = "box"
+
+/obj/item/storage/box/pranks/PopulateContents()
+	for(var/i in 1 to 2)
+		var/randomPranks = pick(/obj/item/toy/talking/codex_gigas,
+			/obj/item/coin/antagtoken,
+			/obj/item/hot_potato/harmless/toy,
+			/obj/item/card/emagfake,
+			/obj/item/gun/ballistic/shotgun/toy/crossbow,
+			/obj/item/restraints/handcuffs/fake,
+			/obj/item/extendohand/acme,
+			/obj/item/storage/box/snappops,
+			/obj/item/toy/braintoy,
+			/obj/item/toy/brokenradio,
+			/obj/item/toy/cards/deck,
+			/obj/item/toy/clockwork_watch,
+			/obj/item/toy/eightball,
+			/obj/item/toy/gun,
+			/obj/item/toy/minimeteor,
+			/obj/item/toy/nuke,
+			/obj/item/toy/redbutton,
+			/obj/item/toy/spinningtoy,
+			/obj/item/toy/sword,
+			/obj/item/toy/toy_dagger,
+			/obj/item/toy/toy_xeno,
+			/obj/item/toy/windupToolbox)
+		new randomPranks(src)
 
 #define NODESIGN "None"
 #define NANOTRASEN "NanotrasenStandard"
@@ -941,7 +1001,7 @@
 #undef HEART
 #undef SMILEY
 
-/obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
+/obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef spawns with, it shows up in some maps.
 	name = "ingredients box"
 	illustration = "fruit"
 	var/theme_name
