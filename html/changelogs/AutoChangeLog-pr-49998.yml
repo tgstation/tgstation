@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Grinder and biogen now rangecheck before ejecting beaker into hand."
