@@ -88,9 +88,9 @@
 	hand_path = /obj/item/melee/touch_attack/honk
 
 	school = "transmutation"
-	charge_max = 1200 // you have to wait 2 minutes because you're dropping all items and turning your target into a clown
+	charge_max = 800 // you have to wait 1 minute and 20 seconds because you're dropping all items and turning your target into a clown
 	clothes_req = TRUE
-	cooldown_min = 600 // 200 deciseconds reduction per rank
+	cooldown_min = 400 // 100 deciseconds reduction per rank
 	still_recharging_msg = "<span class='notice'>The clowns are pleased at the moment, but that can change at any moment.</span>"
 	drawmessage = "You channel the rage of a thousand clowns into your hand!"
 	dropmessage = "You let go of the anger."
