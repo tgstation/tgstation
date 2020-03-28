@@ -46,7 +46,7 @@
 
 	if(iscarbon(user) && (HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50)))
 		to_chat(user, "<span class='warning'>Uh... how do those things work?!</span>")
-		apply_cuffs(user,user)
+		apply_cuffs(user,user, FALSE, TRUE)
 		return
 
 	// chance of monkey retaliation
@@ -61,31 +61,38 @@
 								"<span class='userdanger'>[user] is trying to put [src.name] on you!</span>")
 
 			playsound(loc, cuffsound, 30, TRUE, -2)
-			if(do_mob(user, C, 30) && (C.get_num_arms(FALSE) >= 2 || C.get_arm_ignore()))
+			if(do_mob(user, C, 30))
 				if(iscyborg(user))
 					apply_cuffs(C, user, TRUE)
 				else
 					apply_cuffs(C, user)
-				C.visible_message("<span class='notice'>[user] handcuffs [C].</span>", \
-									"<span class='userdanger'>[user] handcuffs you.</span>")
-				SSblackbox.record_feedback("tally", "handcuffs", 1, type)
-
-				log_combat(user, C, "handcuffed")
 			else
 				to_chat(user, "<span class='warning'>You fail to handcuff [C]!</span>")
 		else
 			to_chat(user, "<span class='warning'>[C == user ? "You don't" : "[C] doesn't"] have two hands...</span>")
+	else
+		to_chat(user, "<span class='warning'>[C == user ? "You're" : "[C] is"] already handcuffed!</span>")
 
-/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0)
-	if(target.handcuffed) //some sanity checks, in case apply_cuffs() gets called without attack() being called/fully run through (looking at YOU, clumsy people)
+/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0, intentional = 0)
+	if(target.handcuffed)
+		if(!intentional) //if a clumsy person rolls the chance to accidentally cuff themself but their character can't be cuffed, just give feedback as if they didn't make the (accidental) self-cuffing attempt at all and pretend that they just fiddled around with the cuffs without doing anything or something
+			to_chat(user, "<span class='warning'>[target == user ? "You're" : "[target] is"] already handcuffed!</span>")
 		return
 
 	if(!(target.get_num_arms(FALSE) >= 2 || target.get_arm_ignore()))
-		to_chat(user, "<span class='warning'>[target] doesn't have two hands...</span>") 
+		if(!intentional) //if a clumsy person rolls the chance to accidentally cuff themself but their character can't be cuffed, just give feedback as if they didn't make the (accidental) self-cuffing attempt at all and pretend that they just fiddled around with the cuffs without doing anything or something
+			to_chat(user, "<span class='warning'>[target == user ? "You don't" : "[target] doesn't"] have two hands...</span>")
 		return
 
 	if(!user.temporarilyRemoveItemFromInventory(src) && !dispense)
 		return
+
+	if(intentional) //the code in attack() for accidentally cuffing yourself doesn't actually play any handcuffing noises or check to see if it's even possible to cuff yourself, so we have to play those noises here (after we're sure that your character can, in fact, be cuffed)
+		playsound(loc, cuffsound, 30, TRUE, -2)
+
+	target.visible_message("<span class='notice'>[user] handcuffs [target].</span>", "<span class='userdanger'>[user] handcuffs you.</span>")
+	SSblackbox.record_feedback("tally", "handcuffs", 1, type)
+	log_combat(user, target, "handcuffed")
 
 	var/obj/item/restraints/handcuffs/cuffs = src
 	if(trashtype)
