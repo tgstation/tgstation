@@ -53,7 +53,8 @@
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon
+		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
+		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -155,13 +156,20 @@
 	gas_type = /datum/gas/freon
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/hydrogen
+	name = "hydrogen canister"
+	desc = "Hydrogen, highly flammable"
+	icon_state = "grey"
+	gas_type = /datum/gas/hydrogen
+	filled = 1
+
 /obj/machinery/portable_atmospherics/canister/fusion_test
 	name = "fusion test canister"
 	desc = "Don't be a badmin."
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.add_gases(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/tritium)
-	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 500
+	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/plasma, /datum/gas/tritium)
+	air_contents.gases[/datum/gas/hydrogen][MOLES] = 500
 	air_contents.gases[/datum/gas/plasma][MOLES] = 500
 	air_contents.gases[/datum/gas/tritium][MOLES] = 350
 	air_contents.temperature = 15000
