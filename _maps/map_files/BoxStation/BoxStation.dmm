@@ -550,6 +550,18 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aby" = (
+/obj/structure/chair/office/light,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -24
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/gravity_generator)
 "abz" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -25699,17 +25711,6 @@
 	},
 /turf/open/floor/carpet,
 /area/crew_quarters/heads/hop)
-"bpg" = (
-/obj/structure/chair/office/light,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = -24
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9
-	},
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
 "bph" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -84310,7 +84311,7 @@ bgN
 bmv
 bkI
 bnT
-bpg
+aby
 bqD
 bsa
 bgO
@@ -84568,7 +84569,7 @@ bii
 bgN
 bnV
 bph
-afq
+bsc
 bsd
 btG
 buQ
@@ -84824,7 +84825,7 @@ bgN
 bkZ
 bgN
 bnU
-aeE
+bph
 afr
 afq
 aar
@@ -85082,7 +85083,7 @@ bih
 bgN
 bnV
 bph
-bsc
+afq
 bsf
 btG
 buS
