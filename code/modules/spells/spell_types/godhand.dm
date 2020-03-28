@@ -120,7 +120,7 @@
 	item_state = "clown"
 
 /obj/item/melee/touch_attack/honk/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || !isliving(target) || !iscarbon(user))
+	if(!proximity || !ishuman(target) || !iscarbon(user))
 		return
 	if(!(user.mobility_flags & MOBILITY_USE))
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
@@ -128,18 +128,21 @@
 	if(!user.can_speak_vocal())
 		to_chat(user, "<span class='warning'>You can't get the rage out of your system!</span>")
 		return
-	var/mob/living/M = target
-	if(HAS_TRAIT(M, TRAIT_CLUMSY)) //Your holyness can't save you now!
-		to_chat(user, "<span class='warning'>The clown's rage can't seem to affect [M]!</span>")
-		to_chat(M, "<span class='notice'>You feel silly for a moment, but you realize you're already silly.</span>")
+	var/mob/living/carbon/human/H = target // Only humans can wear stuff
+	if(HAS_TRAIT(H, TRAIT_CLUMSY)) //Your holyness can't save you now!
+		to_chat(user, "<span class='warning'>The clown's rage doesn't seem to affect [H]!</span>")
+		to_chat(H, "<span class='notice'>You feel silly for a moment, but you realize you're already silly.</span>")
 		..()
 		return
 	// Turn em into a clown
-	for(var/obj/item/W in M)
-		M.dropItemToGround(W)
-	var/datum/job/clown/C = new /datum/job/clown()
-	C.equip(M)
-	qdel(C)
-	M.say("HONK HONK HUENK HENK HONK HAAANK!!!!!", forced = "curse of the clown")
-	to_chat(M, "<span class='userdanger'>You've been turned into a clumsy cluwne! You have an incessent urge to HONK.</span>")
+	for(var/obj/item/W in H)
+		H.dropItemToGround(W)
+	if(isplasmaman(H)) // Too lazy to make cluwne outfit for plasmamen also i'm a terrible coderspriter
+		H.equipOutfit(/datum/outfit/job/clown/cluwne/plasma) // regardless, plasmamen are stuck in the plasmaclown suit due to their nature
+	else
+		H.equipOutfit(/datum/outfit/job/clown/cluwne) // See clothing/outfits/standard.dm for cluwne gear
+	H.say("HONK HONK HUENK HENK HONK HAAANK!!!!!", forced = "curse of the clown")
+	to_chat(H, "<span class='userdanger'>You've been turned into a clumsy cluwne! You have an incessent urge to HONK.</span>")
+	to_chat(H, "<span class='big bold info'>As a Cluwne, you are valid at all times and can be killed for any reason, by anyone, but you are not an antagonist. \
+	You are treated as a normal crewmember in terms of instigating violence.</span>")
 	return ..()

@@ -174,6 +174,21 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
+/datum/outfit/job/clown/cluwne
+	name = "Cluwne"
+
+	uniform = /obj/item/clothing/under/rank/civilian/clown/green/cluwne
+	shoes = /obj/item/clothing/shoes/clown_shoes/cluwne
+	mask = /obj/item/clothing/mask/gas/cluwne_mask
+	r_pocket = /obj/item/bikehorn
+	gloves = /obj/item/clothing/gloves/color/green
+
+/datum/outfit/job/clown/cluwne/plasma
+	name = "Plasmacluwne"
+	head = /obj/item/clothing/head/helmet/space/plasmaman/clown
+	uniform = /obj/item/clothing/under/plasmaman/clown
+	r_hand = /obj/item/tank/internals/plasmaman/belt/full
+
 /datum/outfit/psycho
 	name = "Masked Killer"
 

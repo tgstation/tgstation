@@ -45,6 +45,15 @@
 	fitted = FEMALE_UNIFORM_TOP
 	can_adjust = FALSE
 
+/obj/item/clothing/under/rank/civilian/clown/green/cluwne
+	name = "cluwne suit"
+	desc = "<i>'HUEEENK.'</i> This clown suit has been painfully grafted onto your skin, making it unremovable."
+	species_exception = list(/datum/species/) // THE CURSE ATTACHES REGARDLESS OF COMFORT
+
+/obj/item/clothing/under/rank/civilian/clown/green/cluwne/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CLUWNE)
+
 /obj/item/clothing/under/rank/civilian/clown/yellow
 	name = "yellow clown suit"
 	desc = "<i>'YELLOW HONK!'</i>"

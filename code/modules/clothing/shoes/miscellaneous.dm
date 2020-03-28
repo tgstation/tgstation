@@ -129,6 +129,15 @@
 		to_chat(user, "<span class='notice'>You switch on the waddle dampeners!</span>")
 		enabled_waddle = FALSE
 
+/obj/item/clothing/shoes/clown_shoes/cluwne
+	name = "cluwne shoes"
+	desc = "The prankster's standard-issue cluwning shoes... wait, why can't i get out of them?"
+	species_exception = list(/datum/species/) // THE CURSE ATTACHES REGARDLESS OF COMFORT
+
+/obj/item/clothing/shoes/clown_shoes/cluwne/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CLUWNE)
+
 /obj/item/clothing/shoes/clown_shoes/jester
 	name = "jester shoes"
 	desc = "A court jester's shoes, updated with modern squeaking technology."

@@ -106,6 +106,19 @@
 		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
 		return 1
 
+/obj/item/clothing/mask/gas/cluwne_mask
+	name = "cluwne wig and mask"
+	desc = "To a horrifying revelation, you realize this mask is permanentally soldered to your face!"
+	clothing_flags = MASKINTERNALS // this is a mercy
+	icon_state = "joker"
+	item_state = "clown_hat"
+	flags_cover = MASKCOVERSEYES
+	species_exception = list(/datum/species/) // THE CURSE ATTACHES REGARDLESS OF COMFORT
+
+/obj/item/clothing/mask/gas/cluwne_mask/Initialize()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_NODROP, CLUWNE)
+
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
