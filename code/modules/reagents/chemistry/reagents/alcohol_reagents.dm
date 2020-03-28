@@ -2243,28 +2243,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_name = "Bad Touch"
 	glass_desc = "We're nothing but mammals after all."
 
-/datum/reagent/consumable/ethanol/bleedingjane
-	name = "Bleeding Jane"
-	description = "Say the name of this drink three times in front of a mirror and you'll look like a fool."
-	boozepwr = 40
-	color = "#d93f2d"
-	quality = DRINK_NICE
-	taste_description = "something concerningly similar to a bloody mary"
-	glass_icon_state = "bleedingjane"
-	glass_name = "Bleeding Jane"
-	glass_desc = "Say the name of this drink three times in front of a mirror and you'll look like a fool."
-
-/datum/reagent/consumable/ethanol/bloomlight
-	name = "Bloom Light"
-	description = "It's so unnecessarily brown..."
-	boozepwr = 50
-	color = "#ab2f41"
-	quality = DRINK_NICE
-	taste_description = "sand and disappointment"
-	glass_icon_state = "bloomlight"
-	glass_name = "Bloom Light"
-	glass_desc = "It's so unnecessarily brown..."
-
 /datum/reagent/consumable/ethanol/bluefairy
 	name = "Blue Fairy"
 	description = "One of these will make all your teeth turn blue. Hope you brushed them well."
@@ -2275,17 +2253,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "bluefairy"
 	glass_name = "Blue Fairy"
 	glass_desc = "One of these will make all your teeth turn blue. Hope you brushed them well."
-
-/datum/reagent/consumable/ethanol/brandtini
-	name = "Brandtini"
-	description = "8 out of 10 smug assholes would recommend it but they're too busy being smug assholes."
-	boozepwr = 70
-	color = "#ab2f41"
-	quality = DRINK_NICE
-	taste_description = "a discount martini"
-	glass_icon_state = "brandtini"
-	glass_name = "Brandtini"
-	glass_desc = "8 out of 10 smug assholes would recommend it but they're too busy being smug assholes."
 
 /datum/reagent/consumable/ethanol/cobaltvelvet
 	name = "Cobalt Velvet"
@@ -2308,17 +2275,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "fluffydream"
 	glass_name = "Fluffy Dream"
 	glass_desc = "A couple of these will make your tongue feel velvety. More of them and you'll be sleeping soundly."
-
-/datum/reagent/consumable/ethanol/grizzlytemple
-	name = "Grizzly Temple"
-	description = "This one's kinda unbearable. It's mostly for fans of the movie it was used on."
-	boozepwr = 80
-	color = "#a0df9f"
-	quality = DRINK_NICE
-	taste_description = "wet bear fur and promotional material"
-	glass_icon_state = "grizzlytemple"
-	glass_name = "Grizzly Temple"
-	glass_desc = "This one's kinda unbearable. It's mostly for fans of the movie it was used on."
 
 /datum/reagent/consumable/ethanol/gutpunch
 	name = "Gut Punch"
@@ -2423,17 +2379,6 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_icon_state = "sunshinecloud"
 	glass_name = "Sunshine Cloud"
 	glass_desc = "Tastes like old chocolate milk with its good smell intact. Some say it tastes like caramel too..."
-
-/datum/reagent/consumable/ethanol/suplex
-	name = "Suplex"
-	description = "A small twist on the Piledriver, putting more emphasis on the tongue burning and less on the throat burning."
-	boozepwr = 90
-	color = "#f69137"
-	quality = DRINK_NICE
-	taste_description = "intense burning, regret, and the inside of a wrestler's suit"
-	glass_icon_state = "suplex"
-	glass_name = "Suplex"
-	glass_desc = "A small twist on the Piledriver, putting more emphasis on the tongue burning and less on the throat burning."
 
 /datum/reagent/consumable/ethanol/zenstar
 	name = "Zen Star"
