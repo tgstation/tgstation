@@ -949,8 +949,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 		to_chat(user, "<span class='notice'>You set [src] down gently on the ground.</span>")
 		return
 	return src
-/obj/item/proc/failedEmbed()
-	return
 
 /**
   * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targetting the target.

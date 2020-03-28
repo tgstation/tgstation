@@ -56,6 +56,13 @@
 	shrapnel_radius = 9
 
 /obj/item/grenade/stingbang/prime()
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		var/obj/item/bodypart/B = C.get_holding_bodypart_of_item(src)
+		if(B)
+			C.visible_message("<b><span class='danger'>[src] goes off in [C]'s hand, blowing [C.p_their()] [B.name] to bloody shreds!</span></b>", "<span class='userdanger'>[src] goes off in your hand, blowing your [B.name] to bloody shreds!</span>")
+			B.dismember()
+
 	. = ..()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
@@ -73,7 +80,6 @@
 		return
 	M.show_message("<span class='warning'>POP</span>", MSG_AUDIBLE)
 	var/distance = max(0,get_dist(get_turf(src),T))
-
 //Flash
 	if(M.flash_act(affect_silicon = 1))
 		M.Paralyze(max(10/max(1,distance), 5))

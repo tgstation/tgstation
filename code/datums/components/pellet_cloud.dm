@@ -88,36 +88,46 @@
 	var/list/martyrs = list()
 	for(var/mob/living/L in get_turf(parent))
 		if(!(L in bodies))
-			testing("Adding [L] to martyrs")
 			martyrs += L
 
 	var/magnitude_absorbed
+	var/total_pellets_absorbed = 0
 
 	for(var/M in martyrs)
 		var/mob/living/L = M
-		testing("[L] is a martyr")
 		if(radius > 5)
 			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, absorbing a load of the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, absorbing a load of the shrapnel!</span>")
-			magnitude_absorbed = round(radius * 0.5)
+			magnitude_absorbed += round(radius * 0.5)
 		else if(radius > 3)
 			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, absorbing some of the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, absorbing some of the shrapnel!</span>")
-			magnitude_absorbed = 1
+			magnitude_absorbed += 1
 		else
 			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, snuffing out the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, snuffing out the shrapnel!</span>")
 			magnitude_absorbed = radius
 
-	var/pellets_absorbed
-	pellets_absorbed = (radius ** 2) - ((radius - magnitude_absorbed - 1) ** 2)
-	testing("Absorbed [pellets_absorbed] (Radius [radius] -> [radius - magnitude_absorbed])")
-	radius -= magnitude_absorbed
+		var/pellets_absorbed
+		pellets_absorbed = (radius ** 2) - ((radius - magnitude_absorbed - 1) ** 2)
+		testing("Absorbed [pellets_absorbed] (Radius [radius] -> [radius - magnitude_absorbed])")
+		radius -= magnitude_absorbed
+		total_pellets_absorbed += round(pellets_absorbed/2)
 
-	if(radius < 1)
-		not_done_yet = FALSE
-		QDEL_NULL(src)
-		return
+		for(var/i in 1 to round(pellets_absorbed/2))
+			var/obj/projectile/P = new projectile_type(get_turf(L))
+			P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
+			P.original = L
+			P.preparePixelProjectile(L, target)
+			pellets += P
+			P.fire()
+
+		if(radius < 1)
+			break
 
 	var/list/all_the_turfs_were_gonna_lacerate = RANGE_TURFS(radius, target) - RANGE_TURFS(radius-1, target)
-	num_pellets = all_the_turfs_were_gonna_lacerate.len
+	num_pellets = all_the_turfs_were_gonna_lacerate.len + total_pellets_absorbed
+	testing("Total pellets: [num_pellets] ([total_pellets_absorbed] absorbed, [all_the_turfs_were_gonna_lacerate.len] free")
+
+	if(radius < 1)
+		return
 	for(var/T in all_the_turfs_were_gonna_lacerate)
 		var/turf/shootat_turf = T
 		var/obj/projectile/P = new projectile_type(get_turf(target))
