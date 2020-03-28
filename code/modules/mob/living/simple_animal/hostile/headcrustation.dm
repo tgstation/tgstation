@@ -26,6 +26,9 @@
 
 /mob/living/simple_animal/hostile/headcrustation/Shoot(atom/targeted_atom)
 	. = ..()
+	if(istype(., /obj/projectile/crab))
+		var/obj/projectile/crab/creb = .
+		creb.takenHealth = bruteloss
 	qdel(src)
 
 /mob/living/simple_animal/hostile/headcrustation/attackby(obj/item/W, mob/living/user, params)
