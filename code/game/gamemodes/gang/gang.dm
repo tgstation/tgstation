@@ -271,7 +271,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		if(3)
 			announcement_message = "There are no longer top-trained agents in the fleet headed towards [station_name()]."
 		if(4)
-			announcement_message = "The convoy enroute to [station_name()] seems to no longer consists of national guard personnel."
+			announcement_message = "The convoy enroute to [station_name()] seems to no longer consist of national guard personnel."
 	priority_announce(announcement_message, "Station Spaceship Detection Systems")
 
 /datum/game_mode/gang/proc/send_in_the_fuzz()
