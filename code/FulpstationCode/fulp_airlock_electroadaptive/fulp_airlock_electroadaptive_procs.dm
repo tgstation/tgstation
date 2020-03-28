@@ -10,7 +10,7 @@
 		if(!src || electronics )
 			return
 
-		to_chat(user, "<span class='notice'>You install the [W].</span>")
+		to_chat(user, "<span class='notice'>You install [W].</span>")
 
 		electronics = new /obj/item/electronics/airlock
 
@@ -32,7 +32,7 @@
 		if( state != AIRLOCK_ASSEMBLY_NEEDS_ELECTRONICS )
 			return
 
-		to_chat(user, "<span class='notice'>You install the [W].</span>")
+		to_chat(user, "<span class='notice'>You install [W].</span>")
 		state = AIRLOCK_ASSEMBLY_NEEDS_SCREWDRIVER
 		name = "near finished airlock assembly"
 		electronics = new /obj/item/electronics/airlock
@@ -42,30 +42,30 @@
 		electronics.unres_sides = W.unres_sides
 
 
-/obj/item/electroadaptive_pseudocircuit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "airlock_electronics", name, 975, 420, master_ui, state)
-		ui.open()
+/obj/item/electroadaptive_pseudocircuit/ui_static_data(mob/user)
+	var/list/data = list()
+	var/list/regions = list()
+	for(var/i in 1 to 7)
+		var/list/accesses = list()
+		for(var/access in get_region_accesses(i))
+			if (get_access_desc(access))
+				accesses += list(list(
+					"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
+					"ref" = access,
+				))
+
+		regions += list(list(
+			"name" = get_region_accesses_name(i),
+			"regid" = i,
+			"accesses" = accesses
+		))
+
+	data["regions"] = regions
+	return data
 
 /obj/item/electroadaptive_pseudocircuit/ui_data()
 	var/list/data = list()
-	var/list/regions = list()
-
-	for(var/i in 1 to 7)
-		var/list/region = list()
-		var/list/accesses = list()
-		for(var/j in get_region_accesses(i))
-			var/list/access = list()
-			access["name"] = get_access_desc(j)
-			access["id"] = j
-			access["req"] = (j in src.accesses)
-			accesses[++accesses.len] = access
-		region["name"] = get_region_accesses_name(i)
-		region["accesses"] = accesses
-		regions[++regions.len] = region
-	data["regions"] = regions
+	data["accesses"] = accesses
 	data["oneAccess"] = one_access
 	data["unres_direction"] = unres_sides
 
@@ -96,6 +96,26 @@
 			var/unres_direction = text2num(params["unres_direction"])
 			unres_sides ^= unres_direction //XOR, toggles only the bit that was clicked
 			. = TRUE
+		if("grant_region")
+			var/region = text2num(params["region"])
+			if(isnull(region))
+				return
+			accesses |= get_region_accesses(region)
+			. = TRUE
+		if("deny_region")
+			var/region = text2num(params["region"])
+			if(isnull(region))
+				return
+			accesses -= get_region_accesses(region)
+			. = TRUE
+
+
+/obj/item/electroadaptive_pseudocircuit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "airlock_electronics", name, 420, 485, master_ui, state)
+		ui.open()
 
 /obj/item/electroadaptive_pseudocircuit/proc/restock_circuit() //When the pseudocircuit recharges, attempts to produce an additional circuit
 	if(!istype(loc, /mob/living/silicon/robot))
@@ -118,3 +138,13 @@
 		return
 
 	circuits = min(circuits + 1, 5)
+	maptext = "[circuits]"
+
+/obj/item/electroadaptive_pseudocircuit/proc/absorb_circuit(mob/user)
+	if(circuits > 4)
+		to_chat(user, "<span class='warning'>You cannot store any additional circuits!</span>")
+		return FALSE
+
+	circuits = min(circuits + 1, 5)
+	maptext = "[circuits]"
+	return TRUE

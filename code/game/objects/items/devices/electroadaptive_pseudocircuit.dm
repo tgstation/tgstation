@@ -53,7 +53,8 @@
 		return
 	if(!is_type_in_typecache(target, recycleable_circuits))
 		return
-	circuits++
+	if(!absorb_circuit(user)) //FULPSTATION ELECTROADAPTIVE PROCS FOR AIRLOCKS PR, Surrealistik Mar 2020
+		return
 	maptext = "[circuits]"
 	user.visible_message("<span class='notice'>User breaks down [target] with [src].</span>", \
 	"<span class='notice'>You recycle [target] into [src]. It now has material for <b>[circuits]</b> circuits.</span>")
