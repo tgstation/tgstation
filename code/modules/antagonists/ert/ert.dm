@@ -228,7 +228,7 @@
 	if(policy)
 		to_chat(owner, policy)
 	var/mob/living/M = owner.current
-	M.playsound_local(undercover_cop.current, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
+	M.playsound_local(M, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/ert/families/undercover_cop
 	name = "Undercover Cop"

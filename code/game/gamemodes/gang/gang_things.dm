@@ -31,7 +31,7 @@
 	if(policy)
 		to_chat(user, policy)
 	swappin_sides.my_gang = team_to_use
-	user.playsound_local(gangbanger.current, 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
+	user.playsound_local(user, 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
 		new threads(get_turf(user))
