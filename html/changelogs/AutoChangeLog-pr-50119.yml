@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Mind Transfer is now a cursor-guided spell. That input menu is gone, forever."

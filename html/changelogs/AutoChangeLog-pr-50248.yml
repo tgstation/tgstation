@@ -1,0 +1,4 @@
+author: "lordpidey"
+delete-after: True
+changes: 
+  - bugfix: "The F.R.A.M.E. cartridge once again creates an unlocked uplink."

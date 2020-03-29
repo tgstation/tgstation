@@ -8,7 +8,7 @@
 	invocation_type = "whisper"
 	range = 1
 	cooldown_min = 200 //100 deciseconds reduction per rank
-	ranged_mousepointer = 'icons/effects/mindswap_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/mindswap_target.dmi'
 	action_icon_state = "mindswap"
 	active_msg = "You prepare to swap minds with a target..."
 	/// For how long is the caster stunned for after the spell

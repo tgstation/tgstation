@@ -1,5 +1,0 @@
-author: "MrStonedOne"
-delete-after: True
-changes: 
-  - refactor: "Browser resources (images/css/javascript) will no longer be needlessly resent to all clients between rounds and reconnections"
-  - tweak: "Reduced the number of single use html files saved to the Browser Resource folder (tmp12345) on player machines."
