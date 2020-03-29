@@ -36,7 +36,7 @@
 /obj/item/storage/belt/holster/detective/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
+	STR.max_items = 4
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.set_holdable(list(
 		/obj/item/gun/ballistic/revolver,
@@ -48,7 +48,7 @@
 /obj/item/storage/belt/holster/detective/full/PopulateContents()
 	var/static/items_inside = list(
 		/obj/item/gun/ballistic/revolver/detective = 1,
-		/obj/item/ammo_box/c38 = 2)
+		/obj/item/ammo_box/c38 = 3)
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/belt/holster/chameleon
