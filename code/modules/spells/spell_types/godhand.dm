@@ -120,7 +120,7 @@
 	item_state = "clown"
 
 /obj/item/melee/touch_attack/honk/afterattack(atom/target, mob/living/carbon/user, proximity)
-	if(!proximity || !ishuman(target) || !iscarbon(user))
+	if(!proximity || !iscarbon(user))
 		return
 	if(!(user.mobility_flags & MOBILITY_USE))
 		to_chat(user, "<span class='warning'>You can't reach out!</span>")
@@ -128,7 +128,21 @@
 	if(!user.can_speak_vocal())
 		to_chat(user, "<span class='warning'>You can't get the rage out of your system!</span>")
 		return
+
+	// Check if we're hitting a borg, and turn them into a clownborg.
+	if(iscyborg(target))
+		var/mob/living/silicon/robot/R = target
+		R.module.transform_to(/obj/item/robot_module/clown)
+		playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
+		audible_message("<span class='warning'>[R] sounds an alarm! \"MODULE ERROR: ERROR CODE 8-15-14K.\"</span>")
+		to_chat(R, "<span class='userdanger'>ERROR: MODULE ERROR 8-15-14K. PLEASE VISIT ROBOTICS FOR DIAGNOSTICS CHECK.</span>")
+		return ..()
+
+	// Next, human clownification
+	if(!ishuman(target))
+		return
 	var/mob/living/carbon/human/H = target // Only humans can wear stuff
+
 	// Check if they already have clown gear on, if so, turn that suit into a clown simplemob
 	var/obj/item/clothing/under/rank/civilian/clown/suit = H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
 	if(istype(suit))
@@ -141,8 +155,8 @@
 	if(HAS_TRAIT(H, TRAIT_CLUMSY)) //Your holyness can't save you now!
 		to_chat(user, "<span class='warning'>The clown's rage doesn't seem to affect [H]!</span>")
 		to_chat(H, "<span class='notice'>You feel silly for a moment, but you realize you're already silly.</span>")
-		..()
-		return
+		return ..()
+
 	// Turn em into a clown
 	for(var/obj/item/W in H)
 		H.dropItemToGround(W)
