@@ -461,11 +461,12 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	cached_gases[/datum/gas/tritium][MOLES] -= FUSION_TRITIUM_MOLES_USED
 	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
 	if(reaction_energy > 0)
-		air.assert_gases(/datum/gas/carbon_dioxide)
+		air.assert_gases(/datum/gas/carbon_dioxide, /datum/gas/water_vapor)
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		cached_gases[/datum/gas/water_vapor][MOLES] += (FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)) * 0.25
 	else
-		air.assert_gases(/datum/gas/stimulum)
-		cached_gases[/datum/gas/stimulum][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		air.assert_gases(/datum/gas/carbon_dioxide)
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
 
 	if(reaction_energy)
 		if(location)
