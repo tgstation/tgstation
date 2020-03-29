@@ -197,14 +197,23 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 GLOBAL_LIST_EMPTY(exports_list)
 
+/**
+  * Calculates the exact export value of the object based on the object's datum materials.
+  *
+  * loops through the atom's material datums and then multiplies that amount by it's relative worth, and sums the total.
+  */
 /datum/export/proc/get_material_cost(atom/movable/A)
-	var/value = 0
 	for(var/i in A.custom_materials)
 		var/datum/material/M = i
-		value += M.value_per_unit * A.custom_materials[M]
-	value = round(value)  //floor of the value
-	return value
+		. += M.value_per_unit * A.custom_materials[M]
+	. = round(.)  //floor of the value
 
+/**
+  * Sells an object using it's material cost.
+  *
+  * Works similarly to the sell object proc, but utilizes the get_material_cost proc in order to obtain it's raw value in terms of materials.
+  * Similarly checks for pricetags to split export profit the same way.
+  */
 /datum/export/proc/sell_material_item(obj/O, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
 	///This is the value of the object, as derived from material datums.
 	var/material_cost = get_material_cost(O)
@@ -218,8 +227,8 @@ GLOBAL_LIST_EMPTY(exports_list)
 	unit_name = "[O.name]"
 	profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT_MATERIAL)
 	material_cost = material_cost * ((100 - profit_ratio) * 0.01)
-	if(dry_run == FALSE)
-		SEND_SIGNAL(O, COMSIG_ITEM_SOLD_MATERIAL, item_value = material_cost & COMSIG_ITEM_SPLIT_VALUE_MATERIAL)
+	if(dry_run == FALSE & COMSIG_ITEM_SPLIT_VALUE)
+		SEND_SIGNAL(O, COMSIG_ITEM_SOLD_MATERIAL, item_value = material_cost)
 	report.total_value[src] += material_cost
 
 	if(istype(O, /datum/export/material))
