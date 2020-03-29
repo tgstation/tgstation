@@ -18,7 +18,7 @@
 /datum/syndicate_contract/proc/generate(blacklist)
 	contract.find_target(null, blacklist)
 
-	var/datum/data/record/record = null
+	var/datum/data/record/record
 	if (contract.target)
 		record = find_record("name", contract.target.name, GLOB.data_core.general)
 
@@ -234,4 +234,3 @@
 			var/mob/living/carbon/C = M
 			if (C.can_heartattack())
 				C.set_heartattack(TRUE)
-
