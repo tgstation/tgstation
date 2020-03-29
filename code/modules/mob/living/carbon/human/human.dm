@@ -1,3 +1,6 @@
+/mob/living/carbon/human
+	var/lockdown = 0
+
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
 	verbs += /mob/living/proc/lay_down
@@ -37,6 +40,7 @@
 /mob/living/carbon/human/Destroy()
 	QDEL_NULL(physiology)
 	GLOB.human_list -= src
+	GLOB.crew_mobs -= src
 	return ..()
 
 
@@ -1116,6 +1120,13 @@
 	if(HAS_TRAIT(src, TRAIT_NOHUNGER))
 		return FALSE
 	return ..()
+
+/mob/living/carbon/human/proc/SetLockdown(state = 1)
+	if(state)
+		throw_alert("locked", /obj/screen/alert/crewlocked)
+	else
+		clear_alert("locked")
+	lockdown = state
 
 /mob/living/carbon/human/species
 	var/race = null

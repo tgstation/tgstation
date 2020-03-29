@@ -363,6 +363,11 @@
 	icon_state = "science"
 	build_path = /obj/machinery/computer/robotics
 
+/obj/item/circuitboard/computer/crewcontrol
+	name = "Crew Control (Computer Board)"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/crewcontrol
+
 /obj/item/circuitboard/computer/teleporter
 	name = "Teleporter (Computer Board)"
 	icon_state = "science"

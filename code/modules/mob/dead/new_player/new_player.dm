@@ -502,6 +502,7 @@
 	new_character = .
 	if(transfer_after)
 		transfer_character()
+	GLOB.crew_mobs += .
 
 /mob/dead/new_player/proc/transfer_character()
 	. = new_character

@@ -96345,7 +96345,6 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "dAf" = (
-/obj/item/kirbyplants/random,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -96368,6 +96367,10 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/machinery/computer/crewcontrol{
+	icon_state = "computer";
+	dir = 8
+	},
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},

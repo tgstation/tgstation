@@ -753,14 +753,11 @@
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
 "abo" = (
-/obj/structure/table/glass,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/folder/white,
-/obj/item/wrench/medical,
-/obj/item/toy/figure/cmo,
+/obj/machinery/computer/crewcontrol,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "abp" = (
@@ -16376,6 +16373,7 @@
 	pixel_y = 26
 	},
 /obj/structure/cable,
+/obj/item/wrench/medical,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "azV" = (
@@ -26052,6 +26050,7 @@
 /obj/item/clothing/neck/stethoscope{
 	pixel_y = 5
 	},
+/obj/item/toy/figure/cmo,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/heads/cmo)
 "aPc" = (
@@ -27195,6 +27194,7 @@
 	name = "Chief Medical Officer RC";
 	pixel_y = 28
 	},
+/obj/item/folder/white,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "aQB" = (

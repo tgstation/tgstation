@@ -479,6 +479,11 @@ Recharging stations are available in robotics, the dormitory bathrooms, and the 
 office by your AI master or any qualified human may resolve this matter. Robotics may provide further assistance if necessary."
 	icon_state = "locked"
 
+/obj/screen/alert/crewlocked
+	name = "Locked Down"
+	desc = "Your muscles are tight and unresponsive, and you're unable to move at all. Perhaps you can get someone to release you at the Crew Control Console in the medical wing?"
+	icon_state = "paralysis"
+
 /obj/screen/alert/newlaw
 	name = "Law Update"
 	desc = "Laws have potentially been uploaded to or removed from this unit. Please be aware of any changes \

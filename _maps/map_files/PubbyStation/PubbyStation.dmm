@@ -31049,6 +31049,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/item/kirbyplants{
+	icon_state = "plant-16"
+	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "bBh" = (
@@ -32815,9 +32818,6 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "bEH" = (
-/obj/item/kirbyplants{
-	icon_state = "plant-16"
-	},
 /obj/machinery/light_switch{
 	pixel_y = -22
 	},
@@ -32826,6 +32826,9 @@
 	},
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
+	},
+/obj/machinery/computer/crewcontrol{
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)

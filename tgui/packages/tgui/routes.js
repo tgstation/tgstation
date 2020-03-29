@@ -39,6 +39,7 @@ import { CodexGigas } from './interfaces/CodexGigas';
 import { ComputerFabricator } from './interfaces/ComputerFabricator';
 import { Crayon } from './interfaces/Crayon';
 import { CrewConsole } from './interfaces/CrewConsole';
+import { CrewControlConsole } from './interfaces/CrewControlConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
@@ -290,6 +291,10 @@ const ROUTES = {
   },
   crew: {
     component: () => CrewConsole,
+    scrollable: true,
+  },
+  crew_control_console: {
+    component: () => CrewControlConsole,
     scrollable: true,
   },
   cryo: {

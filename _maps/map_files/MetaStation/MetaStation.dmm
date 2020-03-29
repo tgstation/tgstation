@@ -52141,6 +52141,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/toy/figure/cmo,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "cnF" = (
@@ -54005,6 +54006,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
+/obj/item/paper_bin,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "crz" = (
@@ -54015,14 +54017,12 @@
 	},
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/clipboard,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "crA" = (
-/obj/structure/table/glass,
-/obj/item/paper_bin,
-/obj/item/clipboard,
-/obj/item/toy/figure/cmo,
 /obj/structure/cable,
+/obj/machinery/computer/crewcontrol,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "crD" = (
