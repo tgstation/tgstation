@@ -348,8 +348,12 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	garbage_collect()
-	sharer.garbage_collect()
+	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
+		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
+		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
+		message_admins(cached_gases ^ sharer_gases)
+	if (initial(sharer.gc_share))
+		sharer.garbage_collect()
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
