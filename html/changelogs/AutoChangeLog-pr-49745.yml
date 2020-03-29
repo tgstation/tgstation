@@ -1,0 +1,5 @@
+author: "ATHATH"
+delete-after: True
+changes: 
+  - balance: "The Lightning Bolt spell is now robeless, has lower cooldowns, and is cheaper."
+  - spellcheck: "\"Lightning bolt! Lightning bolt!\" is now renamed to \"Thrown lightning\"."
