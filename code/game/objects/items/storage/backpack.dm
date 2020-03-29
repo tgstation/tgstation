@@ -37,6 +37,28 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 12
 
+/obj/item/bag_of_holding_inert
+	name = "inert bag of holding"
+	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "brokenpack"
+	item_state = "brokenpack"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FIRE_PROOF
+	item_flags = NO_MAT_REDEMPTION
+	
+/obj/item/bag_of_holding_inert/attackby(obj/item/I, mob/user, params)
+	..()
+	if(istype(I, /obj/item/assembly/signaler/anomaly/bluespace))
+		var/obj/item/assembly/signaler/anomaly/bluespace/A = I
+		var/holdingbag = /obj/item/storage/backpack/holding
+		to_chat(user, "<span class='notice'>You insert [A] into the case, and the bluespace compartment opens.</span>")
+		new holdingbag(get_turf(src))
+		qdel(src)
+		qdel(A)
+
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
