@@ -136,6 +136,7 @@
 		playsound(loc, 'sound/machines/warning-buzzer.ogg', 50, TRUE, TRUE)
 		audible_message("<span class='warning'>[R] sounds an alarm! \"MODULE ERROR: ERROR CODE 8-15-14K.\"</span>")
 		to_chat(R, "<span class='userdanger'>ERROR: MODULE ERROR 8-15-14K. PLEASE VISIT ROBOTICS FOR DIAGNOSTICS CHECK.</span>")
+		R.set_zeroth_law("You are a clown! Pull pranks on the station crew, and honk when you successfully pull a prank on someone. Do not harm organics while pranking, hurting organics is not funny.")
 		return ..()
 
 	// Next, human clownification
