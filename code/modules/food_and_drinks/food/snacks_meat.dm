@@ -193,16 +193,18 @@
 		return SHAME
 	playsound(M, 'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	M.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
-	sleep(15) //you've eaten it, you can run now
+	addtimer(CALLBACK(src, .proc/finish_suicide, M), 15) //you've eaten it, you can run now
+	return MANUAL_SUICIDE
+
+/obj/item/reagent_containers/food/snacks/monkecube/proc/finish_suicide(mob/living/M) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
 	if(QDELETED(M) || QDELETED(src))
-		return SHAME
+		return
 	if((src.loc != M)) //how the hell did you manage this
 		to_chat(M, "<span class='warning'>Something happened to [src]...</span>")
-		return SHAME
+		return
 	Expand()
 	M.visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
 	M.gib(null, TRUE, null, TRUE)
-	return MANUAL_SUICIDE
 
 /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
 	faction = list("neutral", ROLE_SYNDICATE)
