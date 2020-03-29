@@ -484,12 +484,8 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	icon_state = "sheet-metalhydrogen"
 	item_state = "sheet-metalhydrogen"
 	singular_name = "Metal Hydrogen sheet"
-	force = 5
-	throwforce = 5
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | LAVA_PROOF | ACID_PROOF | INDESTRUCTIBLE
-	throw_speed = 1
-	throw_range = 3
 	point_value = 100
 	custom_materials = list(/datum/material/metalhydrogen=MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/mineral/metal_hydrogen
