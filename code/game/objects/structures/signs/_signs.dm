@@ -46,7 +46,7 @@
 			qdel(src)
 		return
 	else if(istype(I, /obj/item/pen) && buildable_sign)
-		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
+		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Psychology", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology", "Test Chamber","Firing Range", "Extreme Cold", "Extreme Heat", "Gas Mask", "Nanites Lab", "Maintenance", "Reactive Chemicals")
 		var/obj/structure/sign/sign_type
 		switch(input(user, "Select a sign type.", "Sign Customization") as null|anything in sortList(sign_types))
@@ -82,6 +82,8 @@
 				sign_type = /obj/structure/sign/warning/chemdiamond
 			if("Medbay")
 				sign_type = /obj/structure/sign/departments/medbay/alt
+			if("Psychology")
+				sign_type = /obj/structure/sign/departments/psychology
 			if("Science")
 				sign_type = /obj/structure/sign/departments/science
 			if("Chemistry")
