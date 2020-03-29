@@ -1,4 +1,0 @@
-author: "ArcaneDefence"
-delete-after: True
-changes: 
-  - bugfix: "Malfunctioning AIs will no longer be effectively blinded when choosing to use the camera upgrade module."
