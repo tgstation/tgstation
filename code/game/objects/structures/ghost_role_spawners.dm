@@ -666,11 +666,6 @@
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 
-/obj/effect/mob_spawn/human/syndicatespace/Destroy()
-	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	return ..()
-
-
 /obj/effect/mob_spawn/human/syndicatespace/captain
 	name = "Syndicate Ship Captain"
 	roundstart = FALSE
