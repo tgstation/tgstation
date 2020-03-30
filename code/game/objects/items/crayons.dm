@@ -161,7 +161,7 @@
 			update_icon()
 
 /obj/item/toy/crayon/CtrlClick(mob/user)
-	if(can_change_colour && (src in user.GetAllContents()) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
 		select_colour(user)
 	else
 		return ..()
