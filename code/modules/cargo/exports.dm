@@ -214,24 +214,24 @@ GLOBAL_LIST_EMPTY(exports_list)
   * Works similarly to the sell object proc, but utilizes the get_material_cost proc in order to obtain it's raw value in terms of materials.
   * Similarly checks for pricetags to split export profit the same way.
   */
-/datum/export/proc/sell_material_item(obj/O, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
+/datum/export/proc/sell_material_item(obj/sold_object, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
 	///This is the value of the object, as derived from material datums.
-	var/material_cost = get_material_cost(O)
+	var/material_cost = get_material_cost(sold_object)
 	///Quantity of the object in question.
-	var/amount = get_amount(O)
+	var/amount = get_amount(sold_object)
 	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
 	var/profit_ratio = 0
 
-	if(amount <=0 || material_cost <=0)
+	if(amount <= 0 || material_cost <= 0)
 		return FALSE
-	unit_name = "[O.name]"
-	profit_ratio = SEND_SIGNAL(O, COMSIG_ITEM_SPLIT_PROFIT_MATERIAL)
+	unit_name = "[sold_object.name]"
+	profit_ratio = SEND_SIGNAL(sold_object, COMSIG_ITEM_SPLIT_PROFIT_MATERIAL)
 	material_cost = material_cost * ((100 - profit_ratio) * 0.01)
 	if(dry_run == FALSE & COMSIG_ITEM_SPLIT_VALUE)
-		SEND_SIGNAL(O, COMSIG_ITEM_SOLD_MATERIAL, item_value = material_cost)
+		SEND_SIGNAL(sold_object, COMSIG_ITEM_SOLD_MATERIAL, item_value = material_cost)
 	report.total_value[src] += material_cost
 
-	if(istype(O, /datum/export/material))
+	if(istype(sold_object, /datum/export/material))
 		report.total_amount[src] += amount*MINERAL_MATERIAL_AMOUNT
 	else
 		report.total_amount[src] += amount
