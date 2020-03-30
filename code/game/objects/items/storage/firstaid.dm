@@ -145,6 +145,7 @@
 	if(empty)
 		return
 	var/static/items_inside = list(
+		/obj/item/storage/pill_bottle/kelotane = 1,
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
 		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
