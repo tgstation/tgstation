@@ -484,3 +484,34 @@
 	if(prob(15))
 		M.adjustToxLoss(2, 0)
 	..()
+
+/datum/reagent/drug/kelotane
+	name = "Kelotane"
+	description = "Wait, this doesn't seem right..."
+	reagent_state = LIQUID
+	color = "#C8A5DC"
+	overdose_threshold = 30
+
+/datum/reagent/medicine/kelotane/on_mob_life(mob/living/carbon/M)
+	M.adjustFireLoss(-2*REM, 0)
+	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
+	M.Jitter(10)
+	if(prob(30))
+		M.emote(pick("twitch","laugh","frown"))
+	M.set_drugginess(15)
+	if(isturf(M.loc) && !isspaceturf(M.loc))
+		if(M.mobility_flags & MOBILITY_MOVE)
+			if(prob(10))
+				step(M, pick(GLOB.cardinals))
+	if(prob(7))
+		M.emote(pick("twitch","drool","moan","giggle"))
+	if(prob(3))
+	to_chat(M, "<span class='userdanger'>You don't think that was Kelotane, wait, is that... Ketamine?</span>")
+	..()
+	. = 1
+
+/datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
+	M.adjustFireLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.hallucination += 10
+	..()
+	. = 1
