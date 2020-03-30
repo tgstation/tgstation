@@ -1,4 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "curator,chaplain,lawyer,genetist no longer pay for RP important supply of fluff items"

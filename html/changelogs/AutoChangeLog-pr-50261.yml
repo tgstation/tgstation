@@ -1,4 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - bugfix: "Blueprints may no longer edit noteleport areas"

@@ -1,4 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - code_imp: "Mouse pointer icons were reorganized to be more easily used in the future."

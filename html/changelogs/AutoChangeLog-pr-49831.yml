@@ -1,4 +1,0 @@
-author: "bandit"
-delete-after: True
-changes: 
-  - admin: "The Create Command Report dialog now tells you the current CentCom name."

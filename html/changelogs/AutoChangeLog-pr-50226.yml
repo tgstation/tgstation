@@ -1,5 +1,0 @@
-author: "Archanial"
-delete-after: True
-changes: 
-  - rscadd: "You can now take out disks from nanite consoles by alt-clicking."
-  - tweak: "When exchanging disks in nanite machines, it lands in your hand instead of on the top it."
