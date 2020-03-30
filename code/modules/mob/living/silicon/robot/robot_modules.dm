@@ -470,24 +470,24 @@
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sortList(list("Waitress", "Butler", "Tophat", "Kent", "Bro"))
-	if(!borg_icon)
+
+	var/list/iconstates = GLOB.service_robot_icons
+	for(var/option in iconstates)
+		iconstates[option] = image(icon = R.icon, icon_state = resolve_service_robot_icon(option))
+
+	var/service_robot_icon = show_radial_menu(R, R , iconstates, radius = 42)
+	if(!service_robot_icon)
 		return FALSE
-	switch(borg_icon)
-		if("Waitress")
-			cyborg_base_icon = "service_f"
-		if("Butler")
-			cyborg_base_icon = "service_m"
-		if("Bro")
-			cyborg_base_icon = "brobot"
-		if("Kent")
-			cyborg_base_icon = "kent"
-			special_light_key = "medical"
-			hat_offset = 3
-		if("Tophat")
-			cyborg_base_icon = "tophat"
+
+	cyborg_base_icon = resolve_service_robot_icon(service_robot_icon)
+	switch(cyborg_base_icon)
+		if("tophat")
 			special_light_key = null
 			hat_offset = INFINITY //He is already wearing a hat
+		if("kent")
+			special_light_key = "medical"
+			hat_offset = 3
+
 	return ..()
 
 /obj/item/robot_module/miner
@@ -513,17 +513,19 @@
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/borg_icon = input(R, "Select an icon!", "Robot Icon", null) as null|anything in sortList(list("Lavaland Miner", "Asteroid Miner", "Spider Miner"))
-	if(!borg_icon)
+
+	var/list/iconstates = GLOB.miner_robot_icons
+	for(var/option in iconstates)
+		iconstates[option] = image(icon = R.icon, icon_state = resolve_miner_robot_icon(option))
+
+	var/miner_robot_icon = show_radial_menu(R, R , iconstates, radius = 42)
+	if(!miner_robot_icon)
 		return FALSE
-	switch(borg_icon)
-		if("Lavaland Miner")
-			cyborg_base_icon = "miner"
-		if("Asteroid Miner")
-			cyborg_base_icon = "minerOLD"
-			special_light_key = "miner"
-		if("Spider Miner")
-			cyborg_base_icon = "spidermin"
+
+	cyborg_base_icon = resolve_miner_robot_icon(miner_robot_icon)
+	if(cyborg_base_icon == "minerOLD")
+		special_light_key = "miner"
+
 	return ..()
 
 /obj/item/robot_module/miner/rebuild_modules()
