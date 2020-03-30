@@ -220,6 +220,7 @@
 		var/mob/M = i
 		LAZYREMOVE(M.do_afters, src)
 
+	targeted_by = null
 	QDEL_NULL(light)
 
 	return ..()
