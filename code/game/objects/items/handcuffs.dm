@@ -73,7 +73,8 @@
 	else
 		to_chat(user, "<span class='warning'>[C == user ? "You're" : "[C] is"] already handcuffed!</span>")
 
-/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = 0, intentional = 0)
+/obj/item/restraints/handcuffs/proc/apply_cuffs(mob/living/carbon/target, mob/user, dispense = FALSE, intentional = FALSE)
+
 	if(target.handcuffed)
 		if(!intentional) //if a clumsy person rolls the chance to accidentally cuff themself but their character can't be cuffed, just give feedback as if they didn't make the (accidental) self-cuffing attempt at all and pretend that they just fiddled around with the cuffs without doing anything or something
 			to_chat(user, "<span class='warning'>[target == user ? "You're" : "[target] is"] already handcuffed!</span>")
