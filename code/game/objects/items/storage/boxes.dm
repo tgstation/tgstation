@@ -1269,7 +1269,7 @@
 		new/obj/item/sparkler(src)
 		new/obj/item/grenade/firecracker(src)
 	if(prob(20))
-		new /obj/item/grenade/syndieminibomb/frag(src)
+		new /obj/item/grenade/frag(src)
 	else
 		new /obj/item/toy/snappop(src)
 

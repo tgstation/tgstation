@@ -1,8 +1,8 @@
 /obj/item/ammo_casing/proc/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	distro += variance
+	var/targloc = get_turf(target)
+	ready_proj(target, user, quiet, zone_override, fired_from)
 	if(pellets == 1)
-		var/targloc = get_turf(target)
-		ready_proj(target, user, quiet, zone_override, fired_from)
 		if(distro) //We have to spread a pixel-precision bullet. throw_proj was called before so angles should exist by now...
 			if(randomspread)
 				spread = round((rand() - 0.5) * distro)
@@ -14,7 +14,7 @@
 		if(isnull(BB))
 			return 0
 		AddComponent(/datum/component/pellet_cloud, projectile_type, pellets)
-		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, distro)
+		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, spread, zone_override, params, distro)
 		QDEL_NULL(BB)
 
 	if(click_cooldown_override)

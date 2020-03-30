@@ -2,6 +2,7 @@
 	name = "shrapnel shard"
 	embedding = list(embed_chance=70, ignore_throwspeed_threshold=TRUE, fall_chance=4, embed_chance_turf_mod=-100)
 	custom_materials = list(/datum/material/iron=50)
+	armour_penetration = -20
 	icon = 'icons/obj/shards.dmi'
 	icon_state = "large"
 	w_class = WEIGHT_CLASS_TINY
@@ -28,6 +29,9 @@
 /obj/projectile/bullet/shrapnel
 	name = "flying shrapnel shard"
 	damage = 9
+	range = 10
+	armour_penetration = -20
+	dismemberment = 5
 	ricochets_max = 2
 	ricochet_chance = 40
 	shrapnel_type = /obj/item/shrapnel

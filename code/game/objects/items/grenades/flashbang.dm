@@ -50,6 +50,7 @@
 	var/flashbang_range = 1 //how many tiles away the mob will be stunned.
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 	shrapnel_radius = 6
+	custom_premium_price = 700 // mostly gotten through cargo, but throw in one for the sec vendor ;)
 
 /obj/item/grenade/stingbang/mega
 	name = "super stingbang"
@@ -117,7 +118,7 @@
 	qdel(src)
 
 /obj/item/grenade/primer/stingbang
-	name = "rotfrag"
+	name = "rotsting"
 	desc = "A grenade that generates more shrapnel the more you rotate it in your hand after pulling the pin. This one releases stingballs."
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'

@@ -24,16 +24,18 @@
 	var/radius = 4
 	var/not_done_yet
 	var/list/bodies
+	var/list/purple_hearts
+	var/mob/living/shooter /// for if we're an ammo casing being fired
 
 /datum/component/pellet_cloud/Initialize(projectile_type, magnitude=5)
-	if(!isammocasing(parent) && !isgrenade(parent))
+	if(!isammocasing(parent) && !isgrenade(parent) && !islandmine(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.projectile_type = projectile_type
 
 	if(isammocasing(parent))
 		num_pellets = magnitude
-	else if(isgrenade(parent))
+	else if(isgrenade(parent) || islandmine(parent))
 		radius = magnitude
 		not_done_yet = TRUE
 
@@ -51,30 +53,39 @@
 	else if(isgrenade(parent))
 		RegisterSignal(parent, COMSIG_GRENADE_ARMED, .proc/grenade_armed)
 		RegisterSignal(parent, COMSIG_GRENADE_PRIME, .proc/circle_pellets)
+	else if(islandmine(parent))
+		RegisterSignal(parent, COMSIG_MINE_TRIGGERED, .proc/circle_pellets)
 
 /datum/component/pellet_cloud/UnregisterFromParent()
 	if(not_done_yet)
 		return QDEL_HINT_LETMELIVE
-	UnregisterSignal(parent, list(COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED))
+	UnregisterSignal(parent, list(COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
 
 ///Creating pellets for an ammo casing we just fired
-/datum/component/pellet_cloud/proc/create_pellets(obj/item/ammo_casing/A, target, user, fired_from, randomspread, distro)
+/datum/component/pellet_cloud/proc/create_pellets(obj/item/ammo_casing/A, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro)
+	shooter = user
+
+	if(!zone_override)
+		zone_override = shooter.zone_selected
+	var/targloc = get_turf(target)
+
 	for(var/i in 1 to num_pellets)
-		var/obj/projectile/P = new projectile_type(get_turf(parent))
-		P.original = target
-		if(randomspread)
-			P.spread = round((rand() - 0.5) * distro)
-		else //Smart spread
-			P.spread = round(1 - 0.5) * distro
-		P.fired_from = fired_from
-		P.firer = user
-		P.permutated += user
-		P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
-		P.preparePixelProjectile(target, fired_from)
-		RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
-		RegisterSignal(P, COMSIG_PROJECTILE_RANGE_OUT, .proc/pellet_range)
-		pellets += P
-		P.fire()
+		A.ready_proj(target, user, SUPPRESSED_VERY, zone_override, fired_from)
+		if(distro)
+			if(randomspread)
+				spread = round((rand() - 0.5) * distro)
+			else //Smart spread
+				spread = round((i / num_pellets - 0.5) * distro)
+
+		RegisterSignal(A.BB, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
+		RegisterSignal(A.BB, COMSIG_PROJECTILE_RANGE_OUT, .proc/pellet_range)
+		pellets += A.BB
+		if(!A.throw_proj(target, targloc, shooter, params, spread))
+			return 0
+		if(i != num_pellets)
+			A.newshot()
+
+		//pew_gun(target, spread, zone_override)
 
 ///Creating pellets for a grenade
 /datum/component/pellet_cloud/proc/circle_pellets()
@@ -84,7 +95,23 @@
 		return
 
 	var/atom/target = parent
+	var/total_pellets_absorbed = 0
 
+	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
+		total_pellets_absorbed = handle_martyrs()
+
+	if(radius < 1)
+		return
+
+	var/list/all_the_turfs_were_gonna_lacerate = RANGE_TURFS(radius, target) - RANGE_TURFS(radius-1, target)
+	num_pellets = all_the_turfs_were_gonna_lacerate.len + total_pellets_absorbed
+	testing("Total pellets: [num_pellets] ([total_pellets_absorbed] absorbed, [all_the_turfs_were_gonna_lacerate.len] free")
+
+	for(var/T in all_the_turfs_were_gonna_lacerate)
+		var/turf/shootat_turf = T
+		pew(shootat_turf)
+
+/datum/component/pellet_cloud/proc/handle_martyrs()
 	var/list/martyrs = list()
 	for(var/mob/living/L in get_turf(parent))
 		if(!(L in bodies))
@@ -95,12 +122,12 @@
 
 	for(var/M in martyrs)
 		var/mob/living/L = M
-		if(radius > 5)
+		if(radius > 4)
 			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, absorbing a load of the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, absorbing a load of the shrapnel!</span>")
 			magnitude_absorbed += round(radius * 0.5)
-		else if(radius > 3)
+		else if(radius >= 2)
 			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, absorbing some of the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, absorbing some of the shrapnel!</span>")
-			magnitude_absorbed += 1
+			magnitude_absorbed += 2
 		else
 			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, snuffing out the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, snuffing out the shrapnel!</span>")
 			magnitude_absorbed = radius
@@ -112,37 +139,15 @@
 		total_pellets_absorbed += round(pellets_absorbed/2)
 
 		for(var/i in 1 to round(pellets_absorbed/2))
-			var/obj/projectile/P = new projectile_type(get_turf(L))
-			P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
-			P.original = L
-			P.preparePixelProjectile(L, target)
-			pellets += P
-			P.fire()
+			pew(L)
+
+		if(L.stat != DEAD && L.client)
+			LAZYADD(purple_hearts, L)
 
 		if(radius < 1)
 			break
 
-	var/list/all_the_turfs_were_gonna_lacerate = RANGE_TURFS(radius, target) - RANGE_TURFS(radius-1, target)
-	num_pellets = all_the_turfs_were_gonna_lacerate.len + total_pellets_absorbed
-	testing("Total pellets: [num_pellets] ([total_pellets_absorbed] absorbed, [all_the_turfs_were_gonna_lacerate.len] free")
-
-	if(radius < 1)
-		return
-	for(var/T in all_the_turfs_were_gonna_lacerate)
-		var/turf/shootat_turf = T
-		var/obj/projectile/P = new projectile_type(get_turf(target))
-		//Shooting Code:
-		P.range = radius+1
-		P.original = shootat_turf
-		P.fired_from = target
-		P.firer = target // don't hit ourself that would be really annoying
-		P.permutated += target // don't hit the target we hit already with the flak
-		P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
-		P.preparePixelProjectile(shootat_turf, target)
-		RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
-		RegisterSignal(P, COMSIG_PROJECTILE_RANGE_OUT, .proc/pellet_range)
-		pellets += P
-		P.fire()
+	return total_pellets_absorbed
 
 ///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
 /datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/P, atom/movable/firer, atom/target, Angle)
@@ -160,14 +165,68 @@
 	if(terminated == num_pellets)
 		finalize()
 
+/datum/component/pellet_cloud/proc/pew_gun(atom/target, mob/living/user, spread, zone)
+	return
+/*
+	var/obj/item/ammo_casing/A = parent
+	var/obj/projectile/P = new projectile_type(get_turf(parent))
+	P.def_zone = zone
+
+	if(A.reagents && P.reagents)
+		A.reagents.trans_to(P, A.reagents.total_volume, transfered_by = shooter) //For chemical darts/bullets
+		qdel(A.reagents)
+	//Shooting Code:
+	P.spread = spread
+	P.original = target
+	P.fired_from = A.fired_from
+	P.firer = shooter // don't hit ourself that would be really annoying
+	P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
+	P.preparePixelProjectile(target, parent, , spread)
+
+	var/firing_dir
+	if(A.firer)
+		firing_dir = A.firer.dir
+	if(!A.suppressed && A.firing_effect_type)
+		new firing_effect_type(get_turf(src), firing_dir)
+
+	RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
+	RegisterSignal(P, COMSIG_PROJECTILE_RANGE_OUT, .proc/pellet_range)
+	pellets += P
+	P.fire()
+*/
+/datum/component/pellet_cloud/proc/pew(atom/target, spread=0)
+	var/obj/projectile/P = new projectile_type(get_turf(parent))
+
+	//Shooting Code:
+	P.spread = spread
+	P.original = target
+	P.fired_from = parent
+	P.firer = parent // don't hit ourself that would be really annoying
+	P.permutated += parent // don't hit the target we hit already with the flak
+	P.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
+	P.preparePixelProjectile(target, parent)
+	RegisterSignal(P, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
+	RegisterSignal(P, COMSIG_PROJECTILE_RANGE_OUT, .proc/pellet_range)
+	pellets += P
+	P.fire()
+
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]
 		if(num_hits > 1)
-			target.visible_message("<span class='danger'>[target] is hit by [num_hits] [proj_name]s!</span>", "<span class='userdanger'>You're hit by [num_hits] [proj_name]s!</span>")
+			target.visible_message("<span class='danger'>[target] is hit by [num_hits] [proj_name]s!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s!</span>")
 		else
-			target.visible_message("<span class='danger'>[target] is hit by a [proj_name]!</span>", "<span class='userdanger'>You're hit by a [proj_name]!</span>")
+			target.visible_message("<span class='danger'>[target] is hit by a [proj_name]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
+			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s!</span>")
+
+	if(purple_hearts)
+		for(var/M in purple_hearts)
+			var/mob/living/L = M
+			if(L.stat == DEAD && L.client)
+				//L.client.give_award(/datum/award/achievement/misc/lookoutsir, L)
+				testing("Award!")
 
 	not_done_yet = FALSE
 	qdel(src)
@@ -175,7 +234,7 @@
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/grenade_armed()
 	LAZYINITLIST(bodies)
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/grenade_moved)
+	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED), .proc/grenade_moved)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/grenade_uncrossed)
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
