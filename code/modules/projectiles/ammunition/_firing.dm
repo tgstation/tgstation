@@ -15,7 +15,6 @@
 			return 0
 		AddComponent(/datum/component/pellet_cloud, projectile_type, pellets)
 		SEND_SIGNAL(src, COMSIG_PELLET_CLOUD_INIT, target, user, fired_from, randomspread, spread, zone_override, params, distro)
-		QDEL_NULL(BB)
 
 	if(click_cooldown_override)
 		user.changeNext_move(click_cooldown_override)

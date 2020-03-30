@@ -76,13 +76,15 @@
 	if(!istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return
 
-	var/actual_chance = 0
-	var/armor = victim.run_armor_check(hit_zone, weapon.damtype, silent=TRUE)
+	var/actual_chance = embed_chance
+	var/armor = max(victim.run_armor_check(hit_zone, "bullet", silent=TRUE), victim.run_armor_check(hit_zone, "bomb", silent=TRUE)) // we'll be nice and take the better of bullet and bomb armor
 
-	if(armor > 0) // we only care about armor penetration if there's actually armor to penetrate
-		var/pen_mod = -armor + weapon.armour_penetration
-		actual_chance += pen_mod
-		testing("[victim] has armor [armor] + armor pen [weapon.armour_penetration] for chance [actual_chance]")
+	if(armor) // we only care about armor penetration if there's actually armor to penetrate
+		var/pen_mod = -armor + weapon.armour_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
+		actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
+		if(actual_chance <= 0)
+			victim.visible_message("<span class='danger'>[weapon] bounces off [victim]'s armor!</span>", "<span class='notice'>[weapon] bounces off your armor!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+			return
 
 	var/roll_embed = prob(actual_chance)
 	var/pass = forced || ((((throwingdatum ? throwingdatum.speed : weapon.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || ignore_throwspeed_threshold) && roll_embed)
