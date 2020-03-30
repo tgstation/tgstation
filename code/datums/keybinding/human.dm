@@ -40,7 +40,7 @@
 /datum/keybinding/human/quick_equip_belt/quick_equip_suit_storage
 	hotkey_keys = list("ShiftQ")
 	name = "quick_equip_suit_storage"
-	full_name = "Bag equip"
-	description = "Put held thing in suit storage slot or take out most recent thing from suit storage slot"
+	full_name = "Quick equip suit storage slot"
+	description = "Put held thing in suit storage slot item or take out most recent thing from suit storage slot item"
 	slot_type = ITEM_SLOT_SUITSTORE
 	slot_item_name = "suit storage slot item"
