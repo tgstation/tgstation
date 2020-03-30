@@ -3,7 +3,6 @@
 Warping extracts crossbreed
 put up a rune with bluespace effects, lots of those runes are fluff or act as a passive buff, others are just griefind tools.
 
-Note : Entered() doesn't seem to work for whatever reason so I had to use Initialize and Signals together, Crossed() works though.
 */
 
 /obj/item/slimecross/warping
@@ -100,10 +99,12 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 		new runepath(target)
 		to_chat(user, "<span class='notice'>You carefully draw the rune with [src].</span>")
 
+
+
 /obj/item/slimecross/warping/grey
 	name = "greyspace crossbreed"
 	colour = "grey"
-	effect_desc = "Creates a rune. Extracts that are on the rune are absorbed, 8 extracts produces a rabid adult slime of that color."
+	effect_desc = "Creates a rune. Extracts that are on the rune are absorbed, 8 extracts produces an adult slime of that color."
 	runepath = /obj/effect/warped_rune/greyspace
 
 
@@ -147,8 +148,8 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 		playsound(T, 'sound/effects/splat.ogg', 20, TRUE)
 		S = new(T, extr.color_slime)  //spawn a slime from the extract's color
 		S.amount_grown = SLIME_EVOLUTION_THRESHOLD
-		S.Evolve()
-		i = 0
+		S.Evolve() //slime starts as an adult
+		i = 0 
 		extractype = 0 // reset the type to allow a new extract type
 
 
@@ -172,9 +173,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 
 /obj/effect/warped_rune/orangespace/Initialize()
 	.=..()
-	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/teleport_fire) //TODO : figure out how to use the shortened version of this
-	START_PROCESSING(SSprocessing, src)
-
+	RegisterSignal(T,COMSIG_ATOM_ENTERED,.proc/teleport_fire) 
 
 ///teleport people and put them on fire if they run into the rune.
 /obj/effect/warped_rune/orangespace/proc/teleport_fire()
@@ -185,16 +184,6 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 		do_teleport(F, T, 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		F.adjust_fire_stacks(10)
 		F.IgniteMob()
-
-
-
-/*
-		for(F.fire_stacks > 0 && !istype(F,/mob/living/simple_animal)) //Keeps teleporting the guy as long as he is on fire (doesn't include simplemobs) WIP
-			do_teleport(F, get_turf(F), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
- */
-
-
-
 
 
 
@@ -213,8 +202,8 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 /obj/effect/warped_rune/purplespace
 	desc = "When all that was left were plastic walls and the clothes on their back, they knew what they had to do."
 	icon_state = "purplespace"
-	var/obj/item/stack/medical/suture/S          // S stands for suture because it just make sense
-	var/obj/item/stack/medical/mesh/M            //M is for mesh and you
+	var/obj/item/stack/medical/suture/S  
+	var/obj/item/stack/medical/mesh/M   
 	max_cooldown = 30
 
 /obj/effect/warped_rune/purplespace/Initialize()
@@ -277,7 +266,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 /obj/effect/warped_rune/cyanspace/process()
 	slippery_rune(T)
 
-//just spam lube on the tile the rune is on every process, as horrible as it sounds.
+///Spawn lube on the tile the rune is on every process, as horrible as it sounds.
 /obj/effect/warped_rune/cyanspace/proc/slippery_rune(turf/open/T)
 	T.MakeSlippery(TURF_WET_LUBE,min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
 
@@ -310,9 +299,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 
 
 
-/*  Yellow rune space acts as an infinite generator, works without power and anywhere, recharges the APC of the room it's in and any battery fueled things.
-
-*/
+/*  Yellow rune space acts as an infinite generator, works without power and anywhere, recharges the APC of the room it's in and any battery fueled things. */
 
 
 /obj/item/slimecross/warping/yellow
@@ -347,7 +334,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 			return
 		P.cell.charge += P.cell.maxcharge/10 //will basically recharge 10% of the APC cell every 10 seconds.
 		if(P.cell.charge > P.cell.maxcharge)
-			P.cell.charge = P.cell.maxcharge //set the cell back to 100% if it goes overboard. and trust me it will.
+			P.cell.charge = P.cell.maxcharge //set the cell back to 100% if it goes overboard.
 
 
 ///charge whatever battery is put on the rune, is triggered whenever a battery/baton/energy gun is on the rune
@@ -449,7 +436,7 @@ Note : Entered() doesn't seem to work for whatever reason so I had to use Initia
 ///it makes people that step on the tile very cold.
 /obj/effect/warped_rune/darkbluespace/proc/cold_tile()
 	for(var/mob/living/carbon/H in T)
-		H.adjust_bodytemperature(-1000) //it sounds like a lot but unless you'r weak to cold it's more like a slight inconvenience
+		H.adjust_bodytemperature(-1000) //Not enough to crit anyone not already weak to cold
 
 
 
@@ -554,7 +541,7 @@ obj/effect/warped_rune/sepiaspace
 obj/effect/warped_rune/sepiaspace/Crossed()
 	if(locate(TS) in T)//checks if there's already a timestop on the rune. here to avoid the effect triggering multiple time at the same time.
 		return
-	new TS(T, 0, 50) //reminder : timestop(turf , range , duration) these variables may be changed later due to balance concerns
+	new TS(T, 0, 50) //spawn a timestop for 5 seconds.
 
 
 
@@ -743,7 +730,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	if(istype(AM,/mob/living/carbon/human))
 		playsound(T, "sound/weapons/thudswoosh.ogg", 50, TRUE)
 		SEND_SIGNAL(AM, COMSIG_ADD_MOOD_EVENT,"jolly", /datum/mood_event/jolly)
-		AM.visible_message(AM, "<span class='notice'>You start feeling happier somehow.</span>")
+		AM.visible_message(AM, "<span class='notice'>You feel happier.</span>")
 
 
 
@@ -869,7 +856,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	colour = "black"
 	runepath = /obj/effect/warped_rune/blackspace
 	effect_desc = "Will swap the species of the first two humanoids that walk on the rune. Also works on corpses."
-	drawing_time = 50
+	drawing_time = 100
 
 /obj/effect/warped_rune/blackspace
 	icon_state = "cursed_rune" 
@@ -884,10 +871,10 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	
 ///will swap the species of the first two human or human subset that walk on the rune	
 /obj/effect/warped_rune/blackspace/Crossed(atom/movable/AM)
-	if(cooldown > world.time) //here to avoid spam/lag
+	if(cooldown > world.time) //here to avoid spam/lag 
 		to_chat(AM, "<span class='warning'>The rune needs a little more time before processing your DNA!</span>")
 		return
-	if(!istype(AM,/mob/living/carbon/human))
+	if(!istype(AM,/mob/living/carbon/human)) 
 		return
 	if(!stepped_on)
 		H1 = AM
@@ -906,7 +893,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 
 /*
-Anything after this is in """progress"""
+Anything after this is in """progress""" and isn't part of the actual code
 
 
 /*Any explosion over the rune will convert anything in the range of the explosion to SLIME, not people because even I'm not that evil */
