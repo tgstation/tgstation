@@ -61,3 +61,14 @@
 		var/datum/gas_mixture/current = H.loc.return_air()
 		if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85)) //as long as there's reasonable pressure and no gravity, flight is possible
 			return TRUE
+
+/datum/species/moth/ultra
+	name = "Ultra-Mothman"
+	mutanteyes = /obj/item/organ/eyes/moth/ultra
+	changesource_flags = MIRROR_BADMIN //admin-only
+
+/datum/species/moth/ultra/check_roundstart_eligible()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS]) //... unless it's Aprils Fools' Day
+		return TRUE
+	return ..()
+

@@ -76,6 +76,7 @@
 	text_gain_indication = "<span class='notice'>You feel pressure building up behind your eyes.</span>"
 	layer_used = FRONT_MUTATIONS_LAYER
 	limb_req = BODY_ZONE_HEAD
+	var/requires_sight = FALSE //can you fire lasers with this mutation while blind?
 
 /datum/mutation/human/laser_eyes/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	..()
@@ -101,6 +102,8 @@
 /datum/mutation/human/laser_eyes/proc/on_ranged_attack(mob/living/carbon/human/source, atom/target, mouseparams)
 	if(source.a_intent != INTENT_HARM)
 		return
+	if(requires_sight && source.is_blind())
+		return
 	to_chat(source, "<span class='warning'>You shoot with your laser eyes!</span>")
 	source.changeNext_move(CLICK_CD_RANGE)
 	source.newtonian_move(get_dir(target, source))
@@ -110,6 +113,9 @@
 	LE.preparePixelProjectile(target, source, mouseparams)
 	LE.fire()
 	playsound(source, 'sound/weapons/taser2.ogg', 75, TRUE)
+
+/datum/mutation/human/laser_eyes/noblind
+	requires_sight = TRUE
 
 ///Projectile type used by laser eyes
 /obj/projectile/beam/laser_eyes

@@ -30,6 +30,7 @@
 	var/lighting_alpha
 	var/no_glasses
 	var/damaged	= FALSE	//damaged indicates that our eyes are undergoing some level of negative effect
+	var/oculine_compatible = TRUE //can oculine heal these eyes?
 
 /obj/item/organ/eyes/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE, initialising)
 	. = ..()
@@ -379,6 +380,38 @@
 	name = "moth eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	flash_protect = FLASH_PROTECTION_SENSITIVE
+
+/obj/item/organ/eyes/moth/ultra
+	name = "ultra-moth eyes" //for the admin/April Fools Day-only ultra-moth race
+	desc = "These incredibly delicate eyes are incredibly sensitive to bright light (and damage in general) and can't be healed by oculine, but can shoot lasers if functional."
+	flash_protect = FLASH_PROTECTION_ULTRAMOTH //these have a flash_protect of -10; you are FUCKED if you get flashed or eyestabbed
+	high_threshold_passed = "<span class='userdanger'>HOLY SHIT YOUR RETINAS ARE FUCKING GONE OH GOD THE PAIN</span>" //the lack of punctuation is intentional
+	oculine_compatible = FALSE //you can't just cheese these by chugging 500u of oculine
+
+/obj/item/organ/eyes/moth/ultra/applyOrganDamage(d, maximum = maxHealth)
+	if(d > 0)
+		d = 100 //any amount of organ damage to your eyes will be turned into enough damage to blind you
+		if(owner && !owner.is_blind())
+			owner.emote("scream")
+			owner.apply_damage(10, BURN, BODY_ZONE_HEAD) //the pain is so great that your eyes literally burn (yes, even if you get eyestabbed)
+			owner.Paralyze(rand(80,120)) //same length as a stun from a handheld flash
+			owner.say("AAAAAAHHHHH!! MY RETINAS, MY PRECIOUS RETINAS!!", forced = "ultra-moth eyes") //I debated whether or not to make this make you say "MY EYES!! MY EYES!!" as a Spongebob reference, but I eventually went with this because I thought it was funnier
+	..()
+
+/obj/item/organ/eyes/moth/ultra/Insert(mob/living/carbon/M, special = FALSE, drop_if_replaced = FALSE)
+	. = ..()
+	if(M.dna)
+		M.dna.add_mutation(LASEREYESNOBLIND) //even plasmamen and such should be allowed to have this mutation if they get ulta-moth eyes implanted in them
+
+/obj/item/organ/eyes/moth/ultra/Remove(mob/living/carbon/M, special = FALSE)
+	. = ..()
+	if(M.dna)
+		M.dna.remove_mutation(LASEREYESNOBLIND)
+
+/obj/item/organ/eyes/moth/ultra/Destroy()
+	if(owner.dna)
+		owner.dna.remove_mutation(LASEREYESNOBLIND)
+	return ..()
 
 /obj/item/organ/eyes/snail
 	name = "snail eyes"
