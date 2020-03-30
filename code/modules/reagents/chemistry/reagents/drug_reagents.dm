@@ -494,7 +494,6 @@
 
 /datum/reagent/drug/kelotane/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-2*REM, 0)
-	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
 	M.Jitter(10)
 	if(prob(30))
 		M.emote(pick("twitch","laugh","frown"))
@@ -506,7 +505,7 @@
 	if(prob(7))
 		M.emote(pick("twitch","drool","moan","giggle"))
 	if(prob(3))
-	to_chat(M, "<span class='userdanger'>You don't think that was Kelotane, wait, is that... Ketamine?</span>")
+		to_chat(M, "<span class='userdanger'>You don't think that was Kelotane, wait, is that... Ketamine?</span>")
 	..()
 	. = 1
 

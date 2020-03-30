@@ -280,4 +280,4 @@
 	name = "kelotane pill"
 	desc = "Used to treat burn damage."
 	icon_state = "pill12"
-	list_reagents = list(/datum/reagent/kelotane = 25)
+	list_reagents = list(/datum/reagent/drug/kelotane = 25)
