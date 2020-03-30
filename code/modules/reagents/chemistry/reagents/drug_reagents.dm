@@ -492,7 +492,7 @@
 	color = "#C8A5DC"
 	overdose_threshold = 30
 
-/datum/reagent/medicine/kelotane/on_mob_life(mob/living/carbon/M)
+/datum/reagent/drug/kelotane/on_mob_life(mob/living/carbon/M)
 	M.adjustFireLoss(-2*REM, 0)
 	mood.setSanity(min(mood.sanity, SANITY_UNSTABLE))
 	M.Jitter(10)
@@ -510,7 +510,7 @@
 	..()
 	. = 1
 
-/datum/reagent/medicine/kelotane/overdose_process(mob/living/M)
+/datum/reagent/drug/kelotane/overdose_process(mob/living/M)
 	M.adjustFireLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
 	M.hallucination += 10
 	..()
