@@ -442,6 +442,8 @@
 	var/obj/item/I = get_active_held_item()
 	if (I)
 		if(!do_after(src, 1 SECONDS, target = I))
+			to_chat(src, "<span class='warning'>You fumble with your equipment, accidentally dropping it on the floor!</span>")
+			dropItemToGround(I)
 			return
 		I.equip_to_best_slot(src, TRUE)
 
