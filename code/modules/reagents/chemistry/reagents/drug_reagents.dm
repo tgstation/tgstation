@@ -511,6 +511,11 @@
 
 /datum/reagent/drug/kelotane/overdose_process(mob/living/M)
 	M.adjustFireLoss(4*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	M.adjustOxyLoss(rand(10,18))
 	M.hallucination += 10
+	if(prob(10))
+		M.emote("gasp")
+	if(prob(5))
+		M.say("ARRGHH SPONGE ME BOY, I'VE OVERDOSED ON KETAMINE, AND I'M GOING TO DIE ARGH ARGH ARGH", forced = /datum/reagent/drug/kelotane)
 	..()
 	. = 1
