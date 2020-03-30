@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//PV = nRT
 
 	///joules per kelvin
-/datum/gas_mixture/proc/heat_capacity(data = MOLES) 
+/datum/gas_mixture/proc/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 	/// Same as above except vacuums return HEAT_CAPACITY_VACUUM
-/datum/gas_mixture/turf/heat_capacity(data = MOLES) 
+/datum/gas_mixture/turf/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
