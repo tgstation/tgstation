@@ -209,7 +209,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	garbage_collect(list(gas_id))
 	return removed
 
-	///Distributes gases equally between two mixtures, as if they were connected by an open link
+	///Distributes the contents of two mixes equally between themselves
 	//Returns: bool indicating whether gases moved between the two mixes
 /datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
 	. = FALSE
