@@ -231,6 +231,10 @@
 
 
 /// Setters procs ///
+
+/**
+  * Adjusts seed yield up or down according to adjustamt. (Max 10)
+  */
 /obj/item/seeds/proc/adjust_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		yield = clamp(yield + adjustamt, 0, 10)
@@ -241,18 +245,27 @@
 		if(C)
 			C.value = yield
 
+/**
+  * Adjusts seed lifespan up or down according to adjustamt. (Max 100)
+  */
 /obj/item/seeds/proc/adjust_lifespan(adjustamt)
 	lifespan = clamp(lifespan + adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
 	if(C)
 		C.value = lifespan
 
+/**
+  * Adjusts seed endurance up or down according to adjustamt. (Max 100)
+  */
 /obj/item/seeds/proc/adjust_endurance(adjustamt)
 	endurance = clamp(endurance + adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
 	if(C)
 		C.value = endurance
 
+/**
+  * Adjusts seed production seed up or down according to adjustamt. (Max 10)
+  */
 /obj/item/seeds/proc/adjust_production(adjustamt)
 	if(yield != -1)
 		production = clamp(production + adjustamt, 1, 10)
@@ -260,6 +273,9 @@
 		if(C)
 			C.value = production
 
+/**
+  * Adjusts seed potency up or down according to adjustamt. (Max 100)
+  */
 /obj/item/seeds/proc/adjust_potency(adjustamt)
 	if(potency != -1)
 		potency = clamp(potency + adjustamt, 0, 100)
@@ -267,6 +283,9 @@
 		if(C)
 			C.value = potency
 
+/**
+  * Adjusts seed instability up or down according to adjustamt. (Max 100)
+  */
 /obj/item/seeds/proc/adjust_instability(adjustamt)
 	if(instability == -1)
 		return
@@ -275,12 +294,18 @@
 	if(C)
 		C.value = instability
 
+/**
+  * Adjusts seed weed grwoth speed up or down according to adjustamt. (Max 10)
+  */
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
 	weed_rate = clamp(weed_rate + adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
 
+/**
+  * Adjusts seed weed chance up or down according to adjustamt. (Max 67%)
+  */
 /obj/item/seeds/proc/adjust_weed_chance(adjustamt)
 	weed_chance = clamp(weed_chance + adjustamt, 0, 67)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
@@ -289,6 +314,9 @@
 
 //Directly setting stats
 
+/**
+  * Sets the plant's yield stat to the value of adjustamt. (Max 10)
+  */
 /obj/item/seeds/proc/set_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		yield = clamp(adjustamt, 0, 10)
@@ -299,18 +327,27 @@
 		if(C)
 			C.value = yield
 
+/**
+  * Sets the plant's lifespan stat to the value of adjustamt. (Max 100)
+  */
 /obj/item/seeds/proc/set_lifespan(adjustamt)
 	lifespan = clamp(adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
 	if(C)
 		C.value = lifespan
 
+/**
+  * Sets the plant's endurance stat to the value of adjustamt. (Max 100)
+  */
 /obj/item/seeds/proc/set_endurance(adjustamt)
 	endurance = clamp(adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
 	if(C)
 		C.value = endurance
 
+/**
+  * Sets the plant's production stat to the value of adjustamt. (Max 10)
+  */
 /obj/item/seeds/proc/set_production(adjustamt)
 	if(yield != -1)
 		production = clamp(adjustamt, 1, 10)
@@ -318,6 +355,9 @@
 		if(C)
 			C.value = production
 
+/**
+  * Sets the plant's potency stat to the value of adjustamt. (Max 100)
+  */
 /obj/item/seeds/proc/set_potency(adjustamt)
 	if(potency != -1)
 		potency = clamp(adjustamt, 0, 100)
@@ -325,6 +365,9 @@
 		if(C)
 			C.value = potency
 
+/**
+  * Sets the plant's instability stat to the value of adjustamt. (Max 100)
+  */
 /obj/item/seeds/proc/set_instability(adjustamt)
 	if(instability == -1)
 		return
@@ -333,12 +376,18 @@
 	if(C)
 		C.value = instability
 
+/**
+  * Sets the plant's weed production rate to the value of adjustamt. (Max 10)
+  */
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
 	weed_rate = clamp(adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
 
+/**
+  * Sets the plant's weed growth percentage to the value of adjustamt. (Max 67%)
+  */
 /obj/item/seeds/proc/set_weed_chance(adjustamt)
 	weed_chance = clamp(adjustamt, 0, 67)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)

@@ -278,10 +278,11 @@
 				adjustHealth(-rand(1,5) / rating)
 
 			// Harvest code
-			if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
-				harvest = TRUE
-			else
-				lastproduce = age
+			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
+				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
+					harvest = TRUE
+				else
+					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
 				adjustPests(1 / rating)
 		else
@@ -605,8 +606,10 @@
 			plant_health = myseed.endurance
 			lastcycle = world.time
 			update_icon()
+			return
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
+			return
 
 	else if(istype(O, /obj/item/plant_analyzer))
 		if(myseed)
@@ -615,6 +618,7 @@
 			var/list/text_string = myseed.get_analyzer_text()
 			if(text_string)
 				to_chat(user, text_string)
+			return
 		else
 			to_chat(user, "<B>No plant found.</B>")
 		to_chat(user, "- Weed level: <span class='notice'>[weedlevel] / 10</span>")
@@ -623,14 +627,17 @@
 		to_chat(user, "- Water level: <span class='notice'>[waterlevel] / [maxwater]</span>")
 		to_chat(user, "- Nutrition level: <span class='notice'>[reagents.total_volume] / [maxnutri]</span>")
 		to_chat(user, "")
+		return
 
 	else if(istype(O, /obj/item/cultivator))
 		if(weedlevel > 0)
 			user.visible_message("<span class='notice'>[user] uproots the weeds.</span>", "<span class='notice'>You remove the weeds from [src].</span>")
 			weedlevel = 0
 			update_icon()
+			return
 		else
 			to_chat(user, "<span class='warning'>This plot is completely devoid of weeds! It doesn't need uprooting.</span>")
+			return
 
 	else if(istype(O, /obj/item/secateurs))
 		if(!myseed)
@@ -650,6 +657,7 @@
 			snip.parent_seed = myseed
 			myseed.grafted = TRUE
 			adjustHealth(-5)
+			return
 
 	else if(istype(O, /obj/item/graft))
 		var/obj/item/graft/snip = O
@@ -674,6 +682,7 @@
 		attack_hand(user)
 		for(var/obj/item/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
 			SEND_SIGNAL(O, COMSIG_TRY_STORAGE_INSERT, G, user, TRUE)
+		return
 
 	else if(default_unfasten_wrench(user, O))
 		return
@@ -688,6 +697,7 @@
 		"<span class='notice'>You [using_irrigation ? "" : "dis"]connect [src]'s irrigation hoses.</span>")
 		for(var/obj/machinery/hydroponics/h in range(1,src))
 			h.update_icon()
+		return
 
 	else if(istype(O, /obj/item/shovel/spade))
 		if(!myseed && !weedlevel)
@@ -709,8 +719,10 @@
 				desc = initial(desc)
 			weedlevel = 0 //Has a side effect of cleaning up those nasty weeds
 			update_icon()
-
-
+			return
+	else if(istype(O, /obj/item/storage/part_replacer))
+		RefreshParts()
+		return
 	else
 		return ..()
 

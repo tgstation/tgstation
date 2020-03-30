@@ -31,7 +31,7 @@ A new subsystem for hydroponics, as a way to share specific traits into plants, 
 			icon_state = "graft_doom"
 
 /obj/item/graft/attackby(obj/item/I, mob/living/user, params)
-	if(istype(I, /obj/item/plant_analyzer))
+	if(istype(I, /obj/item/plant_analyzer) && user.a_intent == INTENT_HELP)
 		to_chat(user, get_graft_text())
 	return ..()
 
