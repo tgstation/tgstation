@@ -160,7 +160,7 @@
 		return
 
 	if(user == loc && tied != SHOES_TIED) // if they're our own shoes, go tie-wards
-		if(user.is_interacting_with(our_guy))
+		if(INTERACTING_WITH(user, our_guy))
 			to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] begins [tied ? "unknotting" : "tying"] the laces of [user.p_their()] [src.name].</span>", "<span class='notice'>You begin [tied ? "unknotting" : "tying"] the laces of your [src.name]...</span>")
@@ -180,7 +180,7 @@
 		if(tied == SHOES_KNOTTED)
 			to_chat(user, "<span class='warning'>The laces on [loc]'s [src.name] are already a hopelessly tangled mess!</span>")
 			return
-		if(user.is_interacting_with(our_guy))
+		if(INTERACTING_WITH(user, our_guy))
 			to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 			return
 
@@ -207,7 +207,7 @@
 
 ///checking to make sure we're still on the person we're supposed to be, for lacing do_after's
 /obj/item/clothing/shoes/proc/still_shoed(mob/living/carbon/our_guy)
-	return (our_guy == src.loc)
+	return (loc == our_guy)
 
 ///check_trip runs on each step to see if we fall over as a result of our lace status. Knotted laces are a guaranteed trip, while untied shoes are just a chance to stumble
 /obj/item/clothing/shoes/proc/check_trip()
@@ -266,7 +266,7 @@
 /obj/item/clothing/shoes/attack_self(mob/user)
 	. = ..()
 
-	if(user.is_interacting_with(src))
+	if(INTERACTING_WITH(user, src))
 		to_chat(user, "<span class='warning'>You're already interacting with [src]!</span>")
 		return
 

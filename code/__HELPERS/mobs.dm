@@ -238,13 +238,14 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
+
 	var/atom/Tloc = null
 	if(target && !isturf(target))
 		Tloc = target.loc
 
 	if(target)
-		LAZYADD(user.do_afters, target) // i know technically it already handles if we try to add a null but we're already checking if target exists so shut up
-		LAZYADD(target.targeted_by, user) // i know technically it already handles if we try to add a null but we're already checking if target exists so shut up
+		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
 
 	var/atom/Uloc = user.loc
 
@@ -291,7 +292,7 @@ GLOBAL_LIST_EMPTY(species_list)
 				. = 0
 				break
 
-		if(target && (!(target in user.do_afters) || !(user in target.targeted_by)))
+		if(target && !(target in user.do_afters))
 			. = 0
 			break
 
