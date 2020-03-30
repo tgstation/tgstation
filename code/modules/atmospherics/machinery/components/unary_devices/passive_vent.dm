@@ -23,13 +23,9 @@
 	var/datum/gas_mixture/external = loc.return_air()
 	var/datum/gas_mixture/internal = airs[1]
 
-	var/internal_volume_fraction = internal.volume/(internal.volume + external.volume)
-
-	external.merge(internal.remove_ratio(1))
-	internal.merge(external.remove_ratio(internal_volume_fraction))
-
-	air_update_turf()
-	update_parents()
+	if(internal.equalize(external))
+		air_update_turf()
+		update_parents()
 
 /obj/machinery/atmospherics/components/unary/passive_vent/can_crawl_through()
 	return TRUE
