@@ -80,7 +80,7 @@
 			to_chat(user, "<span class='warning'>[target == user ? "You're" : "[target] is"] already handcuffed!</span>")
 		return
 
-	if(!(target.get_num_arms(FALSE) >= 2 || target.get_arm_ignore()))
+	if(target.get_num_arms(FALSE) < 2 && !target.get_arm_ignore())
 		if(!intentional) //if a clumsy person rolls the chance to accidentally cuff themself but their character can't be cuffed, just give feedback as if they didn't make the (accidental) self-cuffing attempt at all and pretend that they just fiddled around with the cuffs without doing anything or something
 			to_chat(user, "<span class='warning'>[target == user ? "You don't" : "[target] doesn't"] have two hands...</span>")
 		return
