@@ -425,6 +425,7 @@
 			S.switch_mode_to(TRACK_INFILTRATOR)
 		countdown.start()
 		set_security_level("delta")
+		SSshuttle.registerHostileEnvironment(src)
 	else
 		detonation_timer = null
 		set_security_level(previous_level)
@@ -432,6 +433,7 @@
 			S.switch_mode_to(initial(S.mode))
 			S.alert = FALSE
 		countdown.stop()
+		SSshuttle.clearHostileEnvironment(src)
 	update_icon()
 
 /obj/machinery/nuclearbomb/proc/get_time_left()
