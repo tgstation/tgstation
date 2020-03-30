@@ -150,6 +150,13 @@
 		data["contracts_completed"] = traitor_data.contractor_hub.contracts_completed
 		data["contract_rep"] = traitor_data.contractor_hub.contract_rep
 
+		data["CONTRACT_STATUS_INACTIVE"] = 1
+		data["CONTRACT_STATUS_ACTIVE"] = 2
+		data["CONTRACT_STATUS_BOUNTY_CONSOLE_ACTIVE"] = 3
+		data["CONTRACT_STATUS_EXTRACTING"] = 4
+		data["CONTRACT_STATUS_COMPLETE"] = 5
+		data["CONTRACT_STATUS_ABORTED"] = 6
+
 		data["info_screen"] = info_screen
 
 		data["error"] = error

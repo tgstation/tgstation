@@ -280,12 +280,13 @@ export const SyndPane = props => {
                 onClick={() => act('PRG_call_extraction')} />
             )}>
             {contracts.map(contract => {
-              if (data.ongoing_contract && contract.status !== 2) {
+              if (data.ongoing_contract
+                && contract.status !== data.CONTRACT_STATUS_ACTIVE) {
                 return;
               }
 
-              const active = (contract.status > 1);
-              if (contract.status >= 5) {
+              const active = (contract.status > data.CONTRACT_STATUS_INACTIVE);
+              if (contract.status >= data.CONTRACT_STATUS_COMPLETE) {
                 return;
               }
               return (
