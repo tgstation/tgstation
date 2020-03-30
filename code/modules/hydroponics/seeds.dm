@@ -42,11 +42,11 @@
 	/// How rare the plant is. Used for giving points to cargo when shipping off to CentCom.
 	var/rarity = 0
 	/// The type of plants that this plant can mutate into.
-	var/list/mutatelist = list()
+	var/list/mutatelist
 	/// Plant genes are stored here, see plant_genes.dm for more info.
-	var/list/genes = list()
+	var/list/genes
 	/// A list of reagents to add to product.
-	var/list/reagents_add = list()
+	var/list/reagents_add
 	// Format: "reagent_id" = potency multiplier
 	// Stronger reagents must always come first to avoid being displaced by weaker ones.
 	// Total amount of any reagent in plant is calculated by formula: 1 + round(potency * multiplier)
@@ -74,6 +74,7 @@
 		icon_harvest = "[species]-harvest"
 
 	if(!nogenes) // not used on Copy()
+		genes = list()
 		genes += new /datum/plant_gene/core/lifespan(lifespan)
 		genes += new /datum/plant_gene/core/endurance(endurance)
 		genes += new /datum/plant_gene/core/weed_rate(weed_rate)
