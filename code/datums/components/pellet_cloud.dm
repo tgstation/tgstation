@@ -212,7 +212,7 @@
 /datum/component/pellet_cloud/proc/finalize()
 	var/obj/projectile/P = new projectile_type
 	var/proj_name = initial(P.name)
-	qdel(P)
+	QDEL_NULL(P)
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]
 		if(num_hits > 1)

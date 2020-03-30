@@ -14,18 +14,13 @@
 	update_mob()
 	qdel(src)
 
-/obj/item/grenade/concussion
+/obj/item/grenade/syndieminibomb/concussion
 	name = "HE Grenade"
 	desc = "A compact shrapnel grenade meant to devastate nearby organisms and cause some damage in the process. Pull pin and throw opposite direction."
 	icon_state = "concussion"
 	ex_heavy = 2
 	ex_light = 3
 	ex_flame = 3
-
-/obj/item/grenade/concussion/prime()
-	. = ..()
-	update_mob()
-	qdel(src)
 
 /obj/item/grenade/frag
 	name = "frag grenade"

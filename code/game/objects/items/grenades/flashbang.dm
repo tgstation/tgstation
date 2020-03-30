@@ -49,12 +49,13 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 1 //how many tiles away the mob will be stunned.
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball
-	shrapnel_radius = 6
+	shrapnel_radius = 5
 	custom_premium_price = 700 // mostly gotten through cargo, but throw in one for the sec vendor ;)
 
 /obj/item/grenade/stingbang/mega
-	name = "super stingbang"
-	shrapnel_radius = 9
+	name = "mega stingbang"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball/mega
+	shrapnel_radius = 12
 
 /obj/item/grenade/stingbang/prime()
 	if(iscarbon(loc))

@@ -590,8 +590,10 @@
 			return FALSE
 	else
 		var/mob/living/L = target
-		if(!direct_target && !hit_stunned_targets)
-			var/checking = MOBILITY_USE | MOBILITY_MOVE | MOBILITY_STAND
+		if(!direct_target)
+			var/checking = NONE
+			if(!hit_stunned_targets)
+				checking = MOBILITY_USE | MOBILITY_MOVE | MOBILITY_STAND
 			if(!((L.mobility_flags & checking) == checking) || !(L.stat == CONSCIOUS))		//If they're able to 1. stand or 2. use items or 3. move, AND they are not softcrit,  they are not stunned enough to dodge projectiles passing over.
 				return FALSE
 	return TRUE

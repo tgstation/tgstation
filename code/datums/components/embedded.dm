@@ -102,7 +102,7 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
 		RegisterSignal(parent, COMSIG_HUMAN_EMBED_RIP, .proc/ripOutHuman)
 		RegisterSignal(parent, COMSIG_HUMAN_EMBED_REMOVAL, .proc/safeRemoveHuman)
-		RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/tryPryHuman)
+
 	else if(isclosedturf(parent))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examineTurf)
 		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/itemMoved)
@@ -115,6 +115,8 @@
 		processHuman()
 
 /datum/component/embedded/Destroy()
+	if(weapon)
+		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	if(overlay)
 		var/atom/A = parent
 		A.cut_overlay(overlay, TRUE)
@@ -135,6 +137,7 @@
 
 	L.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
+	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/byeItemHuman)
 
 	if(harmful)
 		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [L.name]!</span>",ignored_mobs=victim)
@@ -190,7 +193,7 @@
 	victim.visible_message("<span class='warning'>[victim] attempts to remove [weapon] from [victim.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [weapon] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
 	if(do_after(victim, time_taken, target = victim))
 		if(!weapon || !L || weapon.loc != victim || !(weapon in L.embedded_objects))
-			qdel(src)
+			QDEL_NULL(src)
 			return
 
 		if(harmful)
@@ -210,20 +213,23 @@
 	var/mob/living/carbon/victim = parent
 	L.embedded_objects -= weapon
 
-	if(!weapon || (weapon.item_flags & DROPDEL))
+	if(!weapon)
 		if(!victim.has_embedded_objects())
 			victim.clear_alert("embeddedobject")
 			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-		QDEL_NULL(weapon)
-		qdel(src)
+		QDEL_NULL(src)
 		return
 
 	if(!victim)
 		weapon.forceMove(get_turf(weapon))
-		qdel(src)
+		QDEL_NULL(src)
 		return
 
+	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	weapon.unembedded()
+	if(QDELETED(weapon))
+		QDEL_NULL(src)
+		return
 
 	if(to_hands)
 		victim.put_in_hands(weapon)
@@ -233,7 +239,23 @@
 	if(!victim.has_embedded_objects())
 		victim.clear_alert("embeddedobject")
 		SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	qdel(src)
+	QDEL_NULL(src)
+
+
+/// Something deleted or moved our weapon while it was embedded, how rude!
+/datum/component/embedded/proc/byeItemHuman()
+	var/mob/living/carbon/victim = parent
+	L.embedded_objects -= weapon
+	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
+	weapon.unembedded()
+	weapon = null
+
+	if(victim)
+		to_chat(victim, "<span class='userdanger'>\The [weapon] that was embedded in your [L.name] disappears!</span>")
+		if(!victim.has_embedded_objects())
+			victim.clear_alert("embeddedobject")
+			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	QDEL_NULL(src)
 
 
 /// Items embedded/stuck to humans both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
@@ -243,7 +265,7 @@
 
 	if(!victim || !L) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)
 		weapon.forceMove(get_turf(weapon))
-		qdel(src)
+		QDEL_NULL(src)
 
 	if(victim.stat == DEAD)
 		return
@@ -261,33 +283,6 @@
 	if(prob(fall_chance))
 		fallOutHuman()
 
-
-/// Items embedded/stuck to humans both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
-/// Items harmfully embedded in humans have an additional check for random pain (if applicable)
-/datum/component/embedded/proc/tryPryHuman(atom/source, obj/item/I, mob/living/attacker, params)
-	var/mob/living/carbon/victim = parent
-	if(attacker.a_intent != INTENT_HELP || !(I.sharpness) || attacker.zone_selected != L.body_zone)
-		return
-
-	var/damage = weapon.w_class * remove_pain_mult * 1.5
-	var/time_taken = rip_time * weapon.w_class * 4
-
-	attacker.visible_message("<span class='warning'>[attacker] attempts to pry [weapon] from [victim]'s [L.name] with [I]!</span>","<span class='notice'>You attempt to pry [weapon] from [victim]'s [L.name] with [I]... (It will take [DisplayTimeText(time_taken)].)</span>", ignored_mobs=victim)
-	to_chat(victim, "<span class='userdanger>[attacker] starts digging around in your [L] with [I]!</span>")
-	if(do_after(attacker, time_taken, target = victim))
-		if(!weapon || !L || weapon.loc != victim || !(weapon in L.embedded_objects))
-			qdel(src)
-			return
-
-		if(harmful)
-			L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage) //It hurts to rip it out, get surgery you dingus.
-			victim.emote("scream")
-			victim.visible_message("<span class='notice'>[attacker] successfully pries [weapon] out of [victim]'s [L.name]!</span>", "<span class='notice'>You successfully pry [weapon] from [victim]'s [L.name].</span>")
-			to_chat(victim, "<span class='userdanger>[attacker] successfully pries [weapon] out of your [L]!</span>")
-		else
-			victim.visible_message("<span class='notice'>[attacker] successfully pries [weapon] off of [victim]'s [L.name]!</span>", "<span class='notice'>You successfully pry [weapon] from [victim]'s [L.name]..</span>")
-
-		safeRemoveHuman(TRUE)
 
 ////////////////////////////////////////
 //////////////TURF PROCS////////////////
@@ -357,7 +352,7 @@
 		if(do_after(us, 30, target = parent))
 			us.put_in_hands(weapon)
 			weapon.unembedded()
-			qdel(src)
+			QDEL_NULL(src)
 
 
 /// This proc handles if something knocked the invisible item loose from the turf somehow (probably an explosion). Just make it visible and say it fell loose, then get outta here.
@@ -365,4 +360,4 @@
 	weapon.invisibility = initial(weapon.invisibility)
 	weapon.visible_message("<span class='notice'>[weapon] falls loose from [parent].</span>")
 	weapon.unembedded()
-	qdel(src)
+	QDEL_NULL(src)

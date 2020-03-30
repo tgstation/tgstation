@@ -20,10 +20,10 @@
 	item_flags = NONE
 
 /obj/item/shrapnel/bullet/c38 // .38 round
-	name = ".38 bullet"
+	name = "\improper .38 bullet"
 
 /obj/item/shrapnel/bullet/c38/dumdum // .38 DumDum round
-	name = ".38 DumDum bullet"
+	name = "\improper .38 DumDum bullet"
 	embedding = list(embed_chance=70, fall_chance=10, jostle_chance=7, ignore_throwspeed_threshold=TRUE, pain_stam_pct=0.4, pain_mult=5, jostle_pain_mult=6, rip_time=15, embed_chance_turf_mod=-100)
 
 /obj/projectile/bullet/shrapnel
@@ -49,6 +49,10 @@
 	ricochet_auto_aim_range = 2
 	ricochet_incidence_leeway = 0
 	shrapnel_type = /obj/item/shrapnel/stingball
+
+/obj/projectile/bullet/pellet/stingball/mega
+	name = "megastingball pellet"
+	ricochet_chance = 110
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_stunned_targets = TRUE // ducking will save you from the first wave, but not the rebounds
