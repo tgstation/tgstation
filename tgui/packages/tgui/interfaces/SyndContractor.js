@@ -266,6 +266,13 @@ export const SyndPane = props => {
   const contractor_hub_items = data.contractor_hub_items || [];
   const contracts = data.contracts || [];
 
+  const CONTRACT_STATUS_INACTIVE = 1;
+  const CONTRACT_STATUS_ACTIVE = 2;
+  const CONTRACT_STATUS_BOUNTY_CONSOLE_ACTIVE = 3;
+  const CONTRACT_STATUS_EXTRACTING = 4;
+  const CONTRACT_STATUS_COMPLETE = 5;
+  const CONTRACT_STATUS_ABORTED = 6;
+
   return (
     <Fragment>
       <StatusPane state={props.state} />
@@ -281,12 +288,12 @@ export const SyndPane = props => {
             )}>
             {contracts.map(contract => {
               if (data.ongoing_contract
-                && contract.status !== data.CONTRACT_STATUS_ACTIVE) {
+                && contract.status !== CONTRACT_STATUS_ACTIVE) {
                 return;
               }
 
-              const active = (contract.status > data.CONTRACT_STATUS_INACTIVE);
-              if (contract.status >= data.CONTRACT_STATUS_COMPLETE) {
+              const active = (contract.status > CONTRACT_STATUS_INACTIVE);
+              if (contract.status >= CONTRACT_STATUS_COMPLETE) {
                 return;
               }
               return (
