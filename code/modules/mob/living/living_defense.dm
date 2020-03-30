@@ -5,7 +5,7 @@
 	//the if "armor" check is because this is used for everything on /living, including humans
 	if(armor > 0 && armour_penetration && silent)
 		armor = max(0, armor - armour_penetration)
-		return
+		return armor
 
 	if(armor > 0 && armour_penetration)
 		armor = max(0, armor - armour_penetration)

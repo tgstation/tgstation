@@ -137,7 +137,8 @@
 	weapon.forceMove(victim)
 
 	if(harmful)
-		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [L.name]!</span>","<span class='userdanger'>[weapon] embeds itself in your [L.name]!</span>")
+		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [L.name]!</span>",ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] embeds itself in your [L.name]!</span>")
 		victim.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
@@ -145,8 +146,8 @@
 		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 	else
-		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [L.name]!</span>","<span class='userdanger'>[weapon] sticks itself to your [L.name]!</span>")
-
+		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [L.name]!</span>",ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] sticks itself to your [L.name]!</span>")
 
 /// Called every time a human with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the human is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
@@ -169,9 +170,11 @@
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
 		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
-		victim.visible_message("<span class='danger'>[weapon] falls out of [victim.name]'s [L.name]!</span>","<span class='userdanger'>[weapon] falls out of your [L.name]!</span>")
+		victim.visible_message("<span class='danger'>[weapon] falls out of [victim.name]'s [L.name]!</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] falls out of your [L.name]!</span>")
 	else
-		victim.visible_message("<span class='danger'>[weapon] falls off of [victim.name]'s [L.name]!</span>","<span class='userdanger'>[weapon] falls off of your [L.name]!</span>")
+		victim.visible_message("<span class='danger'>[weapon] falls off of [victim.name]'s [L.name]!</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] falls off of your [L.name]!</span>")
 
 	safeRemoveHuman()
 
