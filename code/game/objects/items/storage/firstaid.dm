@@ -455,7 +455,7 @@
 
 /obj/item/storage/pill_bottle/kelotane
 	name = "bottle of kelotane pills"
-	desc = "Contains pills to treat burn damage. The label seems kinda scratched off"
+	desc = "Contains pills to treat burn damage. The label seems kinda scratched off."
 
 /obj/item/storage/pill_bottle/kelotane/PopulateContents()
 	for(var/i in 1 to 5)
