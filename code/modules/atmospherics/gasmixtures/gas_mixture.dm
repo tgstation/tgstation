@@ -209,6 +209,30 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	garbage_collect(list(gas_id))
 	return removed
 
+	///Distributes gases equally between two mixtures, as if they were connected by an open link
+	//Returns: bool indicating whether gases moved between the two mixes
+/datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
+	. = FALSE
+	if(abs(return_temperature() - other.return_temperature()) > 1)
+		. = TRUE
+		var/self_heat_cap = heat_capacity()
+		var/other_heat_cap = other.heat_capacity()
+		var/new_temp = (temperature * self_heat_cap + other.temperature * other_heat_cap) / (self_heat_cap + other_heat_cap)
+		temperature = new_temp
+		other.temperature = new_temp
+
+	var/total_volume = volume + other.volume
+	var/list/gas_list = gases | other.gases
+	for(var/gas_id in gas_list)
+		assert_gas(gas_id)
+		other.assert_gas(gas_id)
+		if(abs(gases[gas_id][MOLES] - other.gases[gas_id][MOLES]) > 0.001)
+			. = TRUE
+			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
+			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
+			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
+
+
 	///Creates new, identical gas mixture
 	///Returns: duplicate gas mixture
 /datum/gas_mixture/proc/copy()
