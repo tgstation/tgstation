@@ -453,6 +453,14 @@
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/neurine(src)
 
+/obj/item/storage/pill_bottle/kelotane
+	name = "bottle of kelotane pills"
+	desc = "Contains pills to treat burn damage. The label seems kinda scratched off"
+
+/obj/item/storage/pill_bottle/neurine/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/kelotane(src)
+
 /obj/item/storage/pill_bottle/floorpill
 	name = "bottle of floorpills"
 	desc = "An old pill bottle. It smells musty."
