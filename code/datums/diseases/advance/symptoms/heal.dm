@@ -267,12 +267,10 @@
 	var/mob/living/M = A.affected_mob
 	if(HAS_TRAIT(M, TRAIT_DEATHCOMA))
 		return power
-	else if(M.IsUnconscious() || M.stat == UNCONSCIOUS)
+	else if(M.stat == UNCONSCIOUS)
 		return power * 0.9
 	else if(M.stat == SOFT_CRIT)
 		return power * 0.5
-	else if(M.IsSleeping())
-		return power * 0.25
 	else if(M.getBruteLoss() + M.getFireLoss() >= 70 && !active_coma)
 		to_chat(M, "<span class='warning'>You feel yourself slip into a regenerative coma...</span>")
 		active_coma = TRUE

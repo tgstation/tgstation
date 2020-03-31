@@ -51,6 +51,16 @@
 	id = "unconscious"
 	needs_update_stat = TRUE
 
+/datum/status_effect/incapacitating/unconscious/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/unconscious/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+	return ..()
+
 /datum/status_effect/incapacitating/unconscious/tick()
 	if(owner.getStaminaLoss())
 		owner.adjustStaminaLoss(-0.3) //reduce stamina loss by 0.3 per tick, 6 per 2 seconds
@@ -74,6 +84,16 @@
 /datum/status_effect/incapacitating/sleeping/Destroy()
 	carbon_owner = null
 	human_owner = null
+	return ..()
+
+/datum/status_effect/incapacitating/sleeping/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/sleeping/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()

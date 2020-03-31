@@ -1,5 +1,6 @@
 /mob/living/Initialize()
 	. = ..()
+	register_init_signals()
 	if(unique_name)
 		set_name()
 	var/datum/atom_hud/data/human/medical/advanced/medhud = GLOB.huds[DATA_HUD_MEDICAL_ADVANCED]
@@ -44,6 +45,26 @@
 		S.removeSoulsharer(src) //If a sharer is destroy()'d, they are simply removed
 	sharedSoullinks = null
 	return ..()
+
+/mob/living/proc/register_init_signals()
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_gain)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_DEATHCOMA), .proc/on_deathcoma_trait_loss)
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_gain)
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_KNOCKEDOUT), .proc/on_knockedout_trait_loss)
+
+/mob/living/proc/on_deathcoma_trait_gain(datum/source)
+	ADD_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
+
+/mob/living/proc/on_deathcoma_trait_loss(datum/source)
+	REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, TRAIT_DEATHCOMA)
+
+/mob/living/proc/on_knockedout_trait_gain(datum/source)
+	if(stat < UNCONSCIOUS)
+		set_stat(UNCONSCIOUS)
+
+/mob/living/proc/on_knockedout_trait_loss(datum/source)
+	if(stat < DEAD)
+		update_stat()
 
 /mob/living/onZImpact(turf/T, levels)
 	if(!isgroundlessturf(T))
@@ -1162,8 +1183,7 @@
 //Robots, animals and brains have their own version so don't worry about them
 /mob/living/proc/update_mobility()
 	var/stat_softcrit = stat == SOFT_CRIT
-	var/stat_conscious = (stat == CONSCIOUS) || stat_softcrit
-	var/conscious = !IsUnconscious() && stat_conscious && !HAS_TRAIT(src, TRAIT_DEATHCOMA)
+	var/conscious = (stat == CONSCIOUS) || stat_softcrit
 	var/chokehold = pulledby && pulledby.grab_state >= GRAB_NECK
 	var/restrained = restrained()
 	var/has_legs = get_num_legs()
