@@ -239,7 +239,7 @@ GLOBAL_LIST_EMPTY(exports_list)
 	if(!dry_run)
 		if(apply_elastic)
 			cost *= NUM_E**(-1*k_elasticity*amount)		//marginal cost modifier
-		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[O.type]", "[material_cost]"))
+		SSblackbox.record_feedback("nested tally", "export_sold_cost", 1, list("[sold_object.type]", "[material_cost]"))
 	return TRUE
 
 /proc/setupExports()
