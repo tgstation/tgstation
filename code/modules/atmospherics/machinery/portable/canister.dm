@@ -76,7 +76,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "A canister of tier [mode]"
+		. += "<span class='notice'>This canister is tier [mode].</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"

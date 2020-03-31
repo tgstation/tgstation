@@ -1,12 +1,9 @@
 #define FRAME_TIER_0	"0"
 #define FRAME_TIER_1	"1"
 #define FRAME_TIER_2	"2"
-#define CANISTER_TIER_1					1
-#define CANISTER_TIER_2					2
-#define CANISTER_TIER_3					3
 //Canister Frames
 /obj/structure/canister_frame
-	name = "frame"
+	name = "canister frame"
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "frame_0"
 	density = TRUE
@@ -22,12 +19,12 @@
 
 /obj/structure/canister_frame/machine
 	name = "canister frame"
-	desc = "A frame to build different kind of canisters"
+	desc = "A frame used to build different kinds of canisters."
 
 /obj/structure/canister_frame/machine/examine(user)
 	. = ..()
 	if(mode_frame)
-		. += "A canister frame of tier [mode_frame]"
+		. += "<span class='notice'>This canister frame is tier [mode_frame].</span>"
 
 /obj/structure/canister_frame/machine/update_icon_state()
 	if (mode_frame == FRAME_TIER_0)
@@ -44,6 +41,9 @@
 	var/is_bscrystal_sheet = istype(S, /obj/item/stack/sheet/bluespace_crystal)
 	var/is_plastitanium_sheet = istype(S, /obj/item/stack/sheet/mineral/plastitanium)
 	var/obj/item/stack/ST = S
+	var/CANISTER_TIER_1 = 1
+	var/CANISTER_TIER_2 = 2
+	var/CANISTER_TIER_3 = 3
 	if (ST.get_amount() < 5)
 		to_chat(user, "<span class='warning'>You need at least five sheets for that!</span>")
 		return
