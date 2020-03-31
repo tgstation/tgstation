@@ -227,7 +227,7 @@ GLOBAL_LIST_EMPTY(exports_list)
 	unit_name = "[sold_object.name]"
 	profit_ratio = SEND_SIGNAL(sold_object, COMSIG_ITEM_SPLIT_PROFIT_MATERIAL)
 	material_cost = material_cost * ((100 - profit_ratio) * 0.01)
-	if(dry_run == FALSE & COMSIG_ITEM_SPLIT_VALUE)
+	if(dry_run == FALSE)
 		SEND_SIGNAL(sold_object, COMSIG_ITEM_SOLD_MATERIAL, item_value = material_cost)
 	report.total_value[src] += material_cost
 
