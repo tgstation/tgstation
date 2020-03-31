@@ -22,6 +22,61 @@
 #define SEARCH_DISKETTE 4
 #define SEARCH_ADV_INJ 8
 
+//----------------------------------------------------------------------------//
+// START TGUI CONSOLE STATE DEFINES                                           //
+//----------------------------------------------------------------------------//
+// STATE IDENTIFIERS
+#define STATE_BASE 1
+#define STATE_ST 2
+#define STATE_STC 3
+#define STATE_STCM 4
+#define STATE_STCC 5
+#define STATE_STD 6
+#define STATE_STDM 7
+#define STATE_GS 8
+
+// BASE CONSOLE STATES
+// STORAGE
+#define TGUI_MODE_ST 1
+// SEQUENCER
+#define TGUI_MODE_SEQ 2
+// ENZYMES
+#define TGUI_MODE_ENZ 3
+// ADVANCED INJECTORS
+#define TGUI_MODE_ADV 4
+
+// STORAGE STATES
+// STORAGE > CONSOLE
+#define TGUI_ST_CO 1
+// STORAGE > DISK
+#define TGUI_ST_DI 2
+
+// STORAGE (CONSOLE/DISK) STATES
+// STORAGE > MUTATIONS
+#define TGUI_ST_MUT 1
+// STORAGE > CHROMOSOMES
+#define TGUI_ST_CHR 2
+// STORAGE > GENETICS
+#define TGUI_ST_GEN 3
+
+// STORAGE (MUTATIONS) STATES
+// STORAGE > MUTATIONS > INFO
+#define TGUI_ST_M_INFO 1
+// STORAGE > MUTATIONS > COMBINATION
+#define TGUI_ST_M_COMB 2
+// STORAGE > MUTATIONS > COMMANDS
+#define TGUI_ST_M_COMM 3
+
+// GENE SEQUENCER STATES
+#define TGUI_GS_INFO 1
+#define TGUI_GS_COMM 2
+
+
+//----------------------------------------------------------------------------//
+// END TGUI CONSOLE STATE DEFINES                                             //
+//----------------------------------------------------------------------------//
+
+
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
 	desc = "Scan DNA."
@@ -34,6 +89,43 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 	light_color = LIGHT_COLOR_BLUE
+
+	// TGUI State stuff
+	// Console state
+	// state
+
+	// Console > Storage state
+	// state_st
+
+	// Console > Storage > Console state
+	// state_stc
+
+	// Console > Storage > Console > Mutation state
+	// state_stcm
+	// state_stcm_index
+
+	// Console > Storage > Console > Chromosome state
+	// state_stcc_index
+
+	// Console > Storage > Disk state
+	// state_std
+
+	// Console > Storage > Disk > Mutation state
+	// state_stdm
+	// state_stdm_index
+	var/list/list/state = list(
+		STATE_BASE = list("mode" = TGUI_MODE_ST),
+		STATE_ST = list("mode" = TGUI_ST_CO),
+		STATE_STC = list("mode" = TGUI_ST_MUT),
+		STATE_STCM = list("mode" = TGUI_ST_M_INFO, "index" = 1),
+		STATE_STCC = list("index" = 1),
+		STATE_STD = list("mode" = TGUI_ST_MUT),
+		STATE_STDM = list("mode" = TGUI_ST_M_INFO, "index" = 1),
+		STATE_GS = list("mode" = TGUI_GS_INFO, "index" = 1)
+	)
+
+	var/list/cheekystate
+	var/list/cheekystatelist
 
 	var/datum/techweb/stored_research
 	var/max_storage = 6
@@ -88,6 +180,7 @@
 	var/list/tgui_scanner_chromosomes = list()
 	var/list/tgui_genetic_makeup = list()
 	var/list/tgui_advinjector_mutations = list()
+	var/list/list/tgui_state = list()
 
 /obj/machinery/computer/scan_consolenew/process()
 	. = ..()
@@ -159,6 +252,20 @@
 	scrambleready = world.time + SCRAMBLE_TIMEOUT
 	jokerready = world.time + JOKER_TIMEOUT
 
+	// Init default states
+	tgui_state = list(
+		"Storage" = list(
+			"Console" = list(
+				"Mutation" = list(),
+				"Chromo" = list()
+			),
+			"Disk" = list(
+				"Mutation" = list()
+			)
+		),
+		"Sequencer" = list()
+	)
+
 	// Link machine with research techweb. Used for discovering and accessing
 	//  already discovered mutations
 	stored_research = SSresearch.science_tech
@@ -197,6 +304,7 @@
 	// Populates various buffers for passing to tgui
 	build_mutation_list(can_modify_occ)
 	build_genetic_makeup_list()
+	build_state_list()
 
 	// Populate variables for passing to tgui interface
 	is_scramble_ready = (scrambleready < world.time)
@@ -220,6 +328,8 @@
 
 /obj/machinery/computer/scan_consolenew/ui_data(mob/user)
 	var/list/data = list()
+
+	data["State"] = tgui_state
 
 	// This block of code generates the huge data structure passed to the tgui
 	//  interface for displaying all the various bits of console/scanner data
@@ -321,7 +431,7 @@
 
 	return data
 
-/obj/machinery/computer/scan_consolenew/ui_act(action, params)
+/obj/machinery/computer/scan_consolenew/ui_act(action, var/list/params)
 	if(..())
 		return TRUE
 
@@ -1342,6 +1452,21 @@
 			injector_selection[adv_inj].Remove(HM)
 			qdel(HM)
 			return
+
+		// Sets a new tgui state
+		// ---------------------------------------------------------------------- //
+		// params["id"] - Key for the state to set
+		// params[...] - Every other element is used to set state variables
+		if("set_state")
+			// Get our state index the sanitise the param list, removing the id and
+			//  src elements which we won't use.
+			var/index = text2num(params["id"])
+			var/list/new_state = (params - "id") - "src"
+
+			for(var/key in new_state)
+				state[index][key] = text2num(new_state[key])
+
+			return
 	return FALSE
 
 // Applies the type of a specific genetic makeup buffer to the current scanner
@@ -1749,6 +1874,32 @@
 			chromosomes += CM.name
 
 	return chromosomes
+
+	/*
+	var/list/list/state = list(
+		STATE_BASE = list("mode" = TGUI_MODE_ST),
+		STATE_ST = list("mode" = TGUI_ST_CO),
+		STATE_STC = list("mode" = TGUI_ST_MUT),
+		STATE_STCM = list("mode" = TGUI_ST_M_INFO, "index" = 1),
+		STATE_STCC = list("index" = 1),
+		STATE_STD = list("mode" = TGUI_ST_MUT),
+		STATE_STDM = list("mode" = TGUI_ST_M_INFO, "index" = 1)
+	)
+	)*/
+
+// Builds the state list for the tgui interface
+/obj/machinery/computer/scan_consolenew/proc/build_state_list()
+	tgui_state["Mode"] = state[STATE_BASE]["mode"]
+	tgui_state["Storage"]["Mode"] = state[STATE_ST]["mode"]
+	tgui_state["Storage"]["Console"]["Mode"] = state[STATE_STC]["mode"]
+	tgui_state["Storage"]["Console"]["Mutation"]["Mode"] = state[STATE_STCM]["mode"]
+	tgui_state["Storage"]["Console"]["Mutation"]["Index"] = state[STATE_STCM]["index"]
+	tgui_state["Storage"]["Console"]["Chromo"]["Index"] = state[STATE_STCC]["index"]
+	tgui_state["Storage"]["Disk"]["Mode"] = state[STATE_STD]["mode"]
+	tgui_state["Storage"]["Disk"]["Mutation"]["Mode"] = state[STATE_STDM]["mode"]
+	tgui_state["Storage"]["Disk"]["Mutation"]["Index"] = state[STATE_STDM]["index"]
+	tgui_state["Sequencer"]["Mode"] = state[STATE_GS]["mode"]
+	tgui_state["Sequencer"]["Index"] = state[STATE_GS]["index"]
 
 // Checks wether
 /obj/machinery/computer/scan_consolenew/proc/check_discovery(alias)
