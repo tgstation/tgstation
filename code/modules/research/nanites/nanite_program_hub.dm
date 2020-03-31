@@ -10,7 +10,7 @@
 	ui_x = 500
 	ui_y = 700
 
-	var/obj/item/disk/nanite_program/disk
+	var/datum/nanite_program/data_on_disk
 	var/datum/techweb/linked_techweb
 	var/current_category = "Main"
 	var/detail_view = TRUE
@@ -28,30 +28,14 @@
 	. = ..()
 	linked_techweb = SSresearch.science_tech
 
-/obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/disk/nanite_program))
-		var/obj/item/disk/nanite_program/N = I
-		if(user.transferItemToLoc(N, src))
-			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-			if(disk)
-				eject(user)
-			disk = N
-	else
-		..()
+/obj/machinery/nanite_program_hub/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/diskmachine, CALLBACK(src, .proc/diskcallback), /obj/item/disk/nanite_program)
 
-/obj/machinery/nanite_program_hub/proc/eject(mob/living/user)
-	if(!disk)
-		return
-	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(disk))
-		disk.forceMove(drop_location())
-	disk = null
-
-/obj/machinery/nanite_program_hub/AltClick(mob/user)
-	if(disk && user.canUseTopic(src, !issilicon(user)))
-		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
-		eject(user)
-	return
+/obj/machinery/nanite_program_hub/proc/diskcallback(datum/disk_data)
+	data_on_disk = disk_data
+	if(SEND_SIGNAL(src, COMPONENT_HAS_DISK) & COMPONENT_DISK_INSERTED)
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 
 /obj/machinery/nanite_program_hub/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -61,10 +45,10 @@
 
 /obj/machinery/nanite_program_hub/ui_data()
 	var/list/data = list()
-	if(disk)
+	if(SEND_SIGNAL(src, COMPONENT_HAS_DISK) & COMPONENT_DISK_INSERTED)
 		data["has_disk"] = TRUE
 		var/list/disk_data = list()
-		var/datum/nanite_program/P = disk.program
+		var/datum/nanite_program/P = data_on_disk
 		if(P)
 			data["has_program"] = TRUE
 			disk_data["name"] = P.name
@@ -103,18 +87,17 @@
 		return
 	switch(action)
 		if("eject")
-			eject(usr)
+			SEND_SIGNAL(src, COMPONENT_DISK_EJECT, usr)
 			. = TRUE
 		if("download")
-			if(!disk)
+			if(!(SEND_SIGNAL(src, COMPONENT_HAS_DISK) & COMPONENT_DISK_INSERTED))
 				return
 			var/datum/design/nanites/downloaded = linked_techweb.isDesignResearchedID(params["program_id"]) //check if it's a valid design
 			if(!istype(downloaded))
 				return
-			if(disk.program)
-				qdel(disk.program)
-			disk.program = new downloaded.program_type
-			disk.name = "[initial(disk.name)] \[[disk.program.name]\]"
+
+			data_on_disk = new downloaded.program_type
+			SEND_SIGNAL(src, COMPONENT_SAVE_DATA, data_on_disk, data_on_disk.name)
 			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 			. = TRUE
 		if("refresh")
@@ -124,8 +107,6 @@
 			detail_view = !detail_view
 			. = TRUE
 		if("clear")
-			if(disk && disk.program)
-				qdel(disk.program)
-				disk.program = null
-				disk.name = initial(disk.name)
+			SEND_SIGNAL(src, COMPONENT_SAVE_DATA, null, null)
+			data_on_disk = null
 			. = TRUE

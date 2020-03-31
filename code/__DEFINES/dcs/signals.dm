@@ -427,6 +427,7 @@
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
 
-#define COMPONENT_DISK_EJECT "disk_eject"		///(mob/user) Send to self to eject a disk, used for tgui
+#define COMPONENT_DISK_EJECT "disk_eject"		///:(mob/user) Send to self to eject a disk, used for tgui
 #define COMPONENT_HAS_DISK "has_disk"			///used for tgui, send to self to check for a disk
 	#define COMPONENT_DISK_INSERTED 1			/// returned by diskmachine component if a disk is present
+#define COMPONENT_SAVE_DATA "save_data"			/// called to save to disk: (datum, newname)

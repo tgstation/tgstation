@@ -3,9 +3,21 @@
 	var/obj/item/disk/disk
 	/// callback for passing the data
 	var/datum/callback/data_callback
+	/// disk types allowed
+	var/list/disk_typecache
 
-/datum/component/diskmachine/Initialize(datum/callback/data_callback)
+/datum/component/diskmachine/Initialize(datum/callback/data_callback, list/disk_typecache)
+	if(!isatom(parent))
+		return COMPONENT_INCOMPATIBLE
 	src.data_callback = data_callback
+	if(!disk_typecache)
+		src.disk_typecache = typecacheof(/obj/item/disk)
+	else if(!islist(disk_typecache))
+		if(!ispath(disk_typecache))
+			CRASH("arg passed to diskmachine component wasn't a valid path")
+		src.disk_typecache = typecacheof(disk_typecache)
+	else
+		src.disk_typecache = disk_typecache
 
 /datum/component/diskmachine/Destroy(force, silent)
 	. = ..()
@@ -20,6 +32,7 @@
 		COMSIG_CLICK_ALT,
 		COMPONENT_DISK_EJECT), .proc/eject)
 	RegisterSignal(parent, COMPONENT_HAS_DISK, .proc/hasdisk)
+	RegisterSignal(parent, COMPONENT_SAVE_DATA, .proc/savedata)
 
 /datum/component/diskmachine/UnregisterFromParent()
 	. = ..()
@@ -27,14 +40,25 @@
 		COMSIG_PARENT_ATTACKBY,
 		COMSIG_CLICK_ALT,
 		COMPONENT_DISK_EJECT,
-		COMPONENT_HAS_DISK))
+		COMPONENT_HAS_DISK,
+		COMPONENT_SAVE_DATA))
+
+/datum/component/diskmachine/proc/savedata(datum/source, datum/newdata, newname)
+	if(!disk)
+		return
+	if(disk.data)
+		QDEL_NULL(disk.data)
+
+	disk.data = newdata
+
+	disk.name = "[initial(disk.name)][newname?"\[[newname]\]":""]"
 
 /datum/component/diskmachine/proc/hasdisk()
 	if(disk)
 		return COMPONENT_DISK_INSERTED
 
 /datum/component/diskmachine/proc/disk_inserted(datum/source, obj/item/disk/disk, mob/living/user)
-	if(!istype(disk))
+	if(!is_type_in_typecache(disk, disk_typecache))
 		return
 
 	user.transferItemToLoc(disk, src)
@@ -55,10 +79,15 @@
 	if(!disk)
 		return
 
-	if(user.put_in_active_hand(disk))
+	var/atom/atom_parent = parent
+
+	if(user.canUseTopic(parent, !issilicon(user)) && atom_parent.Adjacent(user) && user.put_in_active_hand(disk))
 		to_chat(user, "<span class='notice'>You eject the [disk] from [parent]")
-		data_callback.Invoke(null)
-		disk = null
+	else
+		disk.forceMove(atom_parent.drop_location())
+
+	data_callback.Invoke(null)
+	disk = null
 
 /obj/item/disk
 	var/datum/data

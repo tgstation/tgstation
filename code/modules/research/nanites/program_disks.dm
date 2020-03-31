@@ -5,12 +5,11 @@
 	name = "nanite program disk"
 	desc = "A disk capable of storing nanite programs. Can be customized using a Nanite Programming Console."
 	var/program_type
-	var/datum/nanite_program/program
 
 /obj/item/disk/nanite_program/Initialize()
 	. = ..()
 	if(program_type)
-		program = new program_type
+		data = new program_type
 
 /obj/item/disk/nanite_program/aggressive_replication
 	program_type = /datum/nanite_program/aggressive_replication

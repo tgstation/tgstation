@@ -14,7 +14,7 @@
 
 /obj/machinery/computer/nanite_cloud_controller/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/diskmachine, CALLBACK(src, .proc/diskcallback))
+	AddComponent(/datum/component/diskmachine, CALLBACK(src, .proc/diskcallback), /obj/item/disk/nanite_program)
 
 /obj/machinery/computer/nanite_cloud_controller/proc/diskcallback(datum/disk_data)
 	data_on_disk = disk_data
