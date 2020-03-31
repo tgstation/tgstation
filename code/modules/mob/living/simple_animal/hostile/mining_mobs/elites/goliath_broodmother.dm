@@ -209,7 +209,7 @@
 		if((!QDELETED(spawner) && spawner.faction_check_mob(L)) || L.stat == DEAD)
 			continue
 		visible_message("<span class='danger'>[src] grabs hold of [L]!</span>")
-		L.Stun(10)
+		L.Stun(20)
 		L.adjustBruteLoss(rand(30,35))
 		latched = TRUE
 	if(!latched)

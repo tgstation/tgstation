@@ -18,7 +18,7 @@
 /obj/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
 	damage = 5
-	paralyze = 100
+	paralyze = 200
 	stutter = 5
 	jitter = 20
 	range = 7
@@ -30,7 +30,7 @@
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "dust"
 	damage = 30
-	paralyze = 15
+	paralyze = 30
 	knockdown = 80
 	hitsound = 'sound/effects/meteorimpact.ogg'
 
@@ -48,7 +48,7 @@
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
 	damage = 25
-	paralyze = 50
+	paralyze = 100
 
 /obj/projectile/bullet/shotgun_frag12/on_hit(atom/target, blocked = FALSE)
 	..()

@@ -326,7 +326,7 @@
 
 	if(ishuman(M) || ismonkey(M))
 		if(prob(10))
-			M.Paralyze(40)
+			M.Paralyze(80)
 	update_icon()
 
 /obj/item/storage/bag/tray/proc/do_scatter(obj/item/I)

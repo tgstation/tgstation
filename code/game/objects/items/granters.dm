@@ -244,7 +244,7 @@
 /obj/item/book/granter/spell/forcewall/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You suddenly feel very solid!</span>")
-	user.Stun(40, ignore_canstun = TRUE)
+	user.Stun(80, ignore_canstun = TRUE)
 	user.petrify(30)
 
 /obj/item/book/granter/spell/knock
@@ -257,7 +257,7 @@
 /obj/item/book/granter/spell/knock/recoil(mob/living/user)
 	..()
 	to_chat(user,"<span class='warning'>You're knocked down!</span>")
-	user.Paralyze(40)
+	user.Paralyze(80)
 
 /obj/item/book/granter/spell/barnyard
 	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse

@@ -35,7 +35,7 @@
 	if(structureclimber && structureclimber != user)
 		user.changeNext_move(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
-		structureclimber.Paralyze(40)
+		structureclimber.Paralyze(80)
 		structureclimber.visible_message("<span class='warning'>[structureclimber] is knocked off [src].</span>", "<span class='warning'>You're knocked off [src]!</span>", "<span class='warning'>You see [structureclimber] get knocked off [src].</span>")
 
 /obj/structure/ui_act(action, params)

@@ -99,7 +99,7 @@
 		mob_exit(i, null, randomstep)
 		if(iscarbon(i))
 			var/mob/living/carbon/Carbon = i
-			Carbon.Paralyze(40)
+			Carbon.Paralyze(80)
 
 /obj/vehicle/sealed/proc/DumpSpecificMobs(flag, randomstep = TRUE)
 	for(var/i in occupants)
@@ -107,7 +107,7 @@
 			mob_exit(i, null, randomstep)
 			if(iscarbon(i))
 				var/mob/living/carbon/C = i
-				C.Paralyze(40)
+				C.Paralyze(80)
 
 
 /obj/vehicle/sealed/AllowDrop()

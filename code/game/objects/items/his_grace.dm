@@ -91,7 +91,7 @@
 				master.emote("scream")
 				master.remove_status_effect(STATUS_EFFECT_HISGRACE)
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
-				master.Paralyze(60)
+				master.Paralyze(120)
 				master.adjustBruteLoss(master.maxHealth)
 				playsound(master, 'sound/effects/splat.ogg', 100, FALSE)
 			else

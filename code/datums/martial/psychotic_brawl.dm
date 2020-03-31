@@ -19,7 +19,7 @@
 			atk_verb = "helped"
 		if(2)
 			A.emote("cry")
-			A.Stun(20)
+			A.Stun(40)
 			atk_verb = "cried looking at"
 		if(3)
 			if(A.grab_state >= GRAB_AGGRESSIVE)
@@ -49,8 +49,8 @@
 			A.apply_damage(rand(5,10), A.dna.species.attack_type, BODY_ZONE_HEAD)
 			if(!istype(D.head,/obj/item/clothing/head/helmet/) && !istype(D.head,/obj/item/clothing/head/hardhat))
 				D.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
-			A.Stun(rand(10,45))
-			D.Stun(rand(5,30))
+			A.Stun(rand(20,90))
+			D.Stun(rand(10,60))
 		if(5,6)
 			A.do_attack_animation(D, ATTACK_EFFECT_PUNCH)
 			atk_verb = pick("kick", "hit", "slam")
@@ -61,7 +61,7 @@
 			playsound(get_turf(D), 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 			var/throwtarget = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 			D.throw_at(throwtarget, 4, 2, A)//So stuff gets tossed around at the same time.
-			D.Paralyze(60)
+			D.Paralyze(120)
 		if(7,8)
 			return FALSE //Resume default behaviour
 

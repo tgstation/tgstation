@@ -195,7 +195,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 			C.stuttering = 20
 			C.adjustEarDamage(0, 5) //far less damage than the H.O.N.K.
 			C.Jitter(50)
-			C.Paralyze(60)
+			C.Paralyze(120)
 			var/mob/living/carbon/human/H = C
 			if(client) //prevent spam from players..
 				spam_flag = TRUE
@@ -214,7 +214,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 					"<span class='userdanger'>[src] honks you!</span>")
 		else
 			C.stuttering = 20
-			C.Paralyze(80)
+			C.Paralyze(160)
 			addtimer(CALLBACK(src, .proc/spam_flag_false), cooldowntime)
 
 
@@ -357,7 +357,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 						  	"[C] trips over [src] and falls!", \
 						  	"[C] topples over [src]!", \
 						  	"[C] leaps out of [src]'s way!")]</span>")
-			C.Paralyze(10)
+			C.Paralyze(20)
 			playsound(loc, 'sound/misc/sadtrombone.ogg', 50, TRUE, -1)
 			if(!client)
 				speak("Honk!")

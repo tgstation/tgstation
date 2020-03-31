@@ -211,13 +211,13 @@
 		else if(!M.client || prob(5)) // only natural monkeys get to stun reliably, (they only do it occasionaly)
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if (src.IsKnockdown() && !src.IsParalyzed())
-				Paralyze(40)
+				Paralyze(80)
 				log_combat(M, src, "pinned")
 				visible_message("<span class='danger'>[M] pins [src] down!</span>", \
 								"<span class='userdanger'>[M] pins you down!</span>", "<span class='hear'>You hear shuffling and a muffled groan!</span>", null, M)
 				to_chat(M, "<span class='danger'>You pin [src] down!</span>")
 			else
-				Knockdown(30)
+				Knockdown(60)
 				log_combat(M, src, "tackled")
 				visible_message("<span class='danger'>[M] tackles [src] down!</span>", \
 								"<span class='userdanger'>[M] tackles you down!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, M)
@@ -276,7 +276,7 @@
 				to_chat(M, "<span class='danger'>You disarm [src]!</span>")
 			else
 				playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
-				Paralyze(100)
+				Paralyze(200)
 				log_combat(M, src, "tackled")
 				visible_message("<span class='danger'>[M] tackles [src] down!</span>", \
 								"<span class='userdanger'>[M] tackles you down!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", null, M)
@@ -351,7 +351,7 @@
 					if(M.force > 35) // durand and other heavy mechas
 						Unconscious(20)
 					else if(M.force > 20 && !IsKnockdown()) // lightweight mechas like gygax
-						Knockdown(40)
+						Knockdown(80)
 					update |= temp.receive_damage(dmg, 0)
 					playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
 				if("fire")
@@ -413,7 +413,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(30, 120)
 			Unconscious(20)							//short amount of time for follow up attacks against elusive enemies like wizards
-			Knockdown(200 - (bomb_armor * 1.6)) 	//between ~4 and ~20 seconds of knockdown depending on bomb armor
+			Knockdown(400 - (bomb_armor * 1.6)) 	//between ~4 and ~20 seconds of knockdown depending on bomb armor
 
 		if(EXPLODE_LIGHT)
 			brute_loss = 30
@@ -422,7 +422,7 @@
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, "bomb")
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				adjustEarDamage(15,60)
-			Knockdown(160 - (bomb_armor * 1.6))		//100 bomb armor will prevent knockdown altogether
+			Knockdown(320 - (bomb_armor * 1.6))		//100 bomb armor will prevent knockdown altogether
 
 	take_overall_damage(brute_loss,burn_loss)
 
@@ -491,10 +491,10 @@
 			switch(severity)
 				if(1)
 					L.receive_damage(0,10)
-					Paralyze(200)
+					Paralyze(400)
 				if(2)
 					L.receive_damage(0,5)
-					Paralyze(100)
+					Paralyze(200)
 
 /mob/living/carbon/human/acid_act(acidpwr, acid_volume, bodyzone_hit) //todo: update this to utilize check_obscured_slots() //and make sure it's check_obscured_slots(TRUE) to stop aciding through visors etc
 	var/list/damaged = list()

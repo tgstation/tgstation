@@ -656,7 +656,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
 						if(severity == 2)
 							to_chat(usr, "<span class='userdanger'>You suddenly feel extremely nauseated and hunch over until it passes.</span>")
-							M.Stun(60)
+							M.Stun(120)
 						if(severity >= 3) //you didn't pray hard enough
 							to_chat(M, "<span class='warning'>An overpowering wave of nausea consumes over you. You hunch over, your stomach's contents preparing for a spectacular exit.</span>")
 							M.Stun(100)
@@ -664,7 +664,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
 						if(prob(75-gamerSkill))
-							M.Paralyze(60)
+							M.Paralyze(120)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
 							playsound(loc, 'sound/weapons/genhit.ogg', 100, TRUE)
@@ -762,7 +762,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 					say("A miniature black hole suddenly appears in front of [src], devouring [usr] alive!")
 					if(isliving(usr))
 						var/mob/living/L = usr
-						L.Stun(200, ignore_canstun = TRUE) //you can't run :^)
+						L.Stun(400, ignore_canstun = TRUE) //you can't run :^)
 					var/S = new /obj/singularity/academy(usr.loc)
 					addtimer(CALLBACK(src, /atom/movable/proc/say, "[S] winks out, just as suddenly as it appeared."), 50)
 					QDEL_IN(S, 50)

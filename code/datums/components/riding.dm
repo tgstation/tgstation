@@ -85,7 +85,7 @@
 			M.visible_message("<span class='warning'>[M] is thrown violently from [AM]!</span>", \
 			"<span class='warning'>You're thrown violently from [AM]!</span>")
 			M.throw_at(target, 14, 5, AM, gentle = FALSE)
-		M.Knockdown(3 SECONDS)
+		M.Knockdown(6 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets()
 	var/atom/movable/AM = parent
@@ -267,7 +267,7 @@
 /datum/component/riding/human/force_dismount(mob/living/user)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(user)
-	user.Paralyze(60)
+	user.Paralyze(120)
 	user.visible_message("<span class='warning'>[AM] pushes [user] off of [AM.p_them()]!</span>", \
 						"<span class='warning'>[AM] pushes you off of [AM.p_them()]!</span>")
 

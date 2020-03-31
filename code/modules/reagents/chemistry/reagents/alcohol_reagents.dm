@@ -218,7 +218,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_start(mob/living/M)
 	to_chat(M, "<span class='userdanger'>Your entire body violently jitters as you start to feel queasy. You really shouldn't have drank all of that [name]!</span>")
 	M.Jitter(20)
-	M.Stun(15)
+	M.Stun(30)
 
 /datum/reagent/consumable/ethanol/thirteenloko/overdose_process(mob/living/M)
 	if(prob(7) && iscarbon(M))

@@ -40,7 +40,7 @@
 		obj_flags |= IN_USE
 		icon_state = icon_state_inuse
 		user.setDir(SOUTH)
-		user.Stun(80)
+		user.Stun(160)
 		user.forceMove(src.loc)
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")

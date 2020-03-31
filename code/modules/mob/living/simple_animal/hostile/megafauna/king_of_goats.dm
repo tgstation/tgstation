@@ -318,7 +318,7 @@ Difficulty: Insanely Hard
 		if(L.stat == DEAD)
 			L.gib()
 		if(prob(stun_chance))
-			L.Paralyze(5)
+			L.Paralyze(10)
 			visible_message("<span class='warning'>\The [L] is bowled over by the impact of [src]'s attack!</span>")
 
 /mob/living/simple_animal/hostile/megafauna/king/phase2/AttackingTarget()

@@ -157,7 +157,7 @@
 		update_titles()
 
 		weapon.attack(C, src)
-		C.Knockdown(20)
+		C.Knockdown(40)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))

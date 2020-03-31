@@ -87,7 +87,7 @@
 	name = "shock trap"
 	desc = "A trap that will shock and render you immobile. You'd better avoid it."
 	icon_state = "trap-shock"
-	var/stun_time = 100
+	var/stun_time = 200
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
 	L.electrocute_act(30, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
@@ -98,7 +98,7 @@
 	desc = "A trap that only goes off when a fugitive steps on it, announcing the location and stunning the target. You'd better avoid it."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "bounty_trap_on"
-	stun_time = 200
+	stun_time = 400
 	sparks = FALSE //the item version gives them off to prevent runtimes (see Destroy())
 	checks_antimagic  = FALSE
 	var/obj/item/bountytrap/stored_item
@@ -174,7 +174,7 @@
 
 /obj/structure/trap/fire/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>Spontaneous combustion!</B></span>")
-	L.Paralyze(20)
+	L.Paralyze(40)
 	new /obj/effect/hotspot(get_turf(src))
 
 /obj/structure/trap/chill
@@ -184,7 +184,7 @@
 
 /obj/structure/trap/chill/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>You're frozen solid!</B></span>")
-	L.Paralyze(20)
+	L.Paralyze(40)
 	L.adjust_bodytemperature(-300)
 	L.apply_status_effect(/datum/status_effect/freon)
 
@@ -197,7 +197,7 @@
 
 /obj/structure/trap/damage/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>The ground quakes beneath your feet!</B></span>")
-	L.Paralyze(100)
+	L.Paralyze(200)
 	L.adjustBruteLoss(35)
 	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 200)
@@ -222,7 +222,7 @@
 /obj/structure/trap/cult/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>With a crack, the hostile constructs come out of hiding, stunning you!</B></span>")
 	L.electrocute_act(10, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
-	L.Paralyze(20)
+	L.Paralyze(40)
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
 	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
 	QDEL_IN(src, 30)

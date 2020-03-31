@@ -184,7 +184,7 @@
 			var/mob/living/carbon/carbon_mob = rev_mind.current
 			carbon_mob.silent = max(carbon_mob.silent, 5)
 			carbon_mob.flash_act(1, 1)
-		rev_mind.current.Stun(100)
+		rev_mind.current.Stun(200)
 	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
 	rev_mind.special_role = ROLE_REV
 	return TRUE

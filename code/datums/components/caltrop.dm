@@ -61,4 +61,4 @@
 
 			cooldown = world.time
 		H.apply_damage(damage, BRUTE, picked_def_zone)
-		H.Paralyze(60)
+		H.Paralyze(120)

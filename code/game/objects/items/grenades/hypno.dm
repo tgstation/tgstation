@@ -39,21 +39,21 @@
 			hypno_sound = TRUE
 
 	if(!distance || loc == M || loc == M.loc)
-		M.Paralyze(10)
-		M.Knockdown(100)
+		M.Paralyze(20)
+		M.Knockdown(200)
 		to_chat(M, "<span class='hypnophrase'>The sound echoes in your brain...</span>")
 		M.hallucination += 50
 	else
 		if(distance <= 1)
-			M.Paralyze(5)
-			M.Knockdown(30)
+			M.Paralyze(10)
+			M.Knockdown(0)
 		if(hypno_sound)
 			to_chat(M, "<span class='hypnophrase'>The sound echoes in your brain...</span>")
 			M.hallucination += 50
 
 	//Flash
 	if(M.flash_act(affect_silicon = 1))
-		M.Paralyze(max(10/max(1,distance), 5))
+		M.Paralyze(max(20/max(1,distance), 5))
 		M.Knockdown(max(100/max(1,distance), 40))
 		if(iscarbon(M))
 			var/mob/living/carbon/C = M

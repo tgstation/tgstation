@@ -67,7 +67,7 @@
 			if(!IsUnconscious())
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
-					Paralyze(40)
+					Paralyze(80)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
 					log_combat(M, src, "pushed")
 					visible_message("<span class='danger'>[M] pushes [src] down!</span>", \
@@ -115,7 +115,7 @@
 			var/obj/item/I = null
 			playsound(loc, 'sound/weapons/pierce.ogg', 25, TRUE, -1)
 			if(prob(95))
-				Paralyze(20)
+				Paralyze(40)
 				visible_message("<span class='danger'>[M] tackles [name] down!</span>", \
 								"<span class='userdanger'>[M] tackles you down!</span>", "<span class='hear'>You hear aggressive shuffling followed by a loud thud!</span>", COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='danger'>You tackle [name] down!</span>")

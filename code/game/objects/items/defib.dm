@@ -466,7 +466,7 @@
 	M.visible_message("<span class='danger'>[user] touches [M] with [src]!</span>", \
 			"<span class='userdanger'>[user] touches [M] with [src]!</span>")
 	M.adjustStaminaLoss(60)
-	M.Knockdown(75)
+	M.Knockdown(150)
 	M.Jitter(50)
 	M.apply_status_effect(STATUS_EFFECT_CONVULSING)
 	playsound(src,  'sound/machines/defib_zap.ogg', 50, TRUE, -1)
@@ -524,8 +524,8 @@
 				H.set_heartattack(TRUE)
 			H.apply_damage(50, BURN, BODY_ZONE_CHEST)
 			log_combat(user, H, "overloaded the heart of", defib)
-			H.Paralyze(100)
-			H.Jitter(100)
+			H.Paralyze(200)
+			H.Jitter(200)
 			if(req_defib)
 				defib.deductcharge(revivecost)
 				cooldown = TRUE

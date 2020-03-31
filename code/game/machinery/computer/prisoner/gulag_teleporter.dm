@@ -145,7 +145,7 @@
 	teleporter.handle_prisoner(contained_id, temporary_record)
 	playsound(src, 'sound/weapons/emitter.ogg', 50, TRUE)
 	prisoner.forceMove(get_turf(beacon))
-	prisoner.Paralyze(40) // small travel dizziness
+	prisoner.Paralyze(80) // small travel dizziness
 	to_chat(prisoner, "<span class='warning'>The teleportation makes you a little dizzy.</span>")
 	new /obj/effect/particle_effect/sparks(get_turf(prisoner))
 	playsound(src, "sparks", 50, TRUE)

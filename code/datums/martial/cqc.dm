@@ -50,7 +50,7 @@
 		to_chat(A, "<span class='danger'>You slam [D] into the ground!</span>")
 		playsound(get_turf(A), 'sound/weapons/slam.ogg', 50, TRUE, -1)
 		D.apply_damage(10, BRUTE)
-		D.Paralyze(120)
+		D.Paralyze(240)
 		log_combat(A, D, "slammed (CQC)")
 	return TRUE
 
@@ -98,7 +98,7 @@
 						"<span class='userdanger'>You're locked into a restraining position by [A]!</span>", "<span class='hear'>You hear shuffling and a muffled groan!</span>", null, A)
 		to_chat(A, "<span class='danger'>You lock [D] into a restraining position!</span>")
 		D.adjustStaminaLoss(20)
-		D.Stun(100)
+		D.Stun(200)
 		restraining = TRUE
 		addtimer(VARSET_CALLBACK(src, restraining, FALSE), 50, TIMER_UNIQUE)
 	return TRUE
@@ -165,7 +165,7 @@
 		to_chat(A, "<span class='danger'>You leg sweep [D]!</span>")
 		playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 		D.apply_damage(10, BRUTE)
-		D.Paralyze(60)
+		D.Paralyze(120)
 		log_combat(A, D, "sweeped (CQC)")
 	return TRUE
 

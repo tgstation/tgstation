@@ -243,7 +243,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 					"<span class='userdanger'>[M] has disabled [src]'s active module!</span>", null, COMBAT_MESSAGE_RANGE)
 				log_combat(M, src, "disarmed", "[I ? " removing \the [I]" : ""]")
 			else
-				Stun(40)
+				Stun(80)
 				step(src,get_dir(M,src))
 				log_combat(M, src, "pushed")
 				visible_message("<span class='danger'>[M] forces back [src]!</span>", \
@@ -305,9 +305,9 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 	switch(severity)
 		if(1)
-			Stun(160)
+			Stun(320)
 		if(2)
-			Stun(60)
+			Stun(120)
 
 /mob/living/silicon/robot/emag_act(mob/user)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -343,7 +343,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return
 
 	SetEmagged(1)
-	SetStun(60) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
+	SetStun(120) //Borgs were getting into trouble because they would attack the emagger before the new laws were shown
 	lawupdate = 0
 	connected_ai = null
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")

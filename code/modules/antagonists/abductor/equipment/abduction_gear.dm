@@ -456,7 +456,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	confusion_amt = 0
 	stamina_loss_amt = 0
 	apply_stun_delay = 0 SECONDS
-	stun_time = 14 SECONDS
+	stun_time = 28 SECONDS
 
 	preload_cell_type = /obj/item/stock_parts/cell/infinite //Any sufficiently advanced technology is indistinguishable from magic
 	activate_sound = null
@@ -633,7 +633,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	icon_state = "cuff" // Needs sprite
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	breakouttime = 45 SECONDS
+	breakouttime = 90 SECONDS
 	trashtype = /obj/item/restraints/handcuffs/energy/used
 	flags_1 = NONE
 

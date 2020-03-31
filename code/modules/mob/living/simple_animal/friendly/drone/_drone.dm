@@ -243,7 +243,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	Stun(100)
+	Stun(200)
 	to_chat(src, "<span class='danger'><b>ER@%R: MME^RY CO#RU9T!</b> R&$b@0tin)...</span>")
 	if(severity == 1)
 		adjustBruteLoss(heavy_emp_damage)

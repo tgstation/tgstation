@@ -100,7 +100,7 @@
 		AM.forceMove(T)
 		if(isliving(AM))
 			var/mob/living/L = AM
-			L.Paralyze(100)
+			L.Paralyze(200)
 			L.adjustBruteLoss(30)
 		falling_atoms -= AM
 
@@ -110,7 +110,7 @@
 		if (isliving(AM))
 			var/mob/living/L = AM
 			L.notransform = TRUE
-			L.Stun(200)
+			L.Stun(400)
 			L.resting = TRUE
 
 		var/oldtransform = AM.transform

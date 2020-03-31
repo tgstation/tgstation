@@ -96,7 +96,7 @@
 				owner.slurring += 30
 			if(10)
 				to_chat(owner, "<span class='notice'>You forget for a moment what you were doing.</span>")
-				owner.Stun(20)
+				owner.Stun(40)
 			if(11)
 				to_chat(owner, "<span class='warning'>You faint.</span>")
 				owner.Unconscious(80)
@@ -136,7 +136,7 @@
 		fall_chance += 2
 	if(prob(fall_chance) && (owner.mobility_flags & MOBILITY_STAND))
 		to_chat(owner, "<span class='warning'>Your leg gives out!</span>")
-		owner.Paralyze(35)
+		owner.Paralyze(70)
 
 	else if(owner.get_active_held_item())
 		var/drop_chance = 1

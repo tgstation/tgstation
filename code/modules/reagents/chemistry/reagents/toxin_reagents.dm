@@ -490,7 +490,7 @@
 		M.losebreath += 1
 	if(prob(8))
 		to_chat(M, "<span class='danger'>You feel horrendously weak!</span>")
-		M.Stun(40, 0)
+		M.Stun(80, 0)
 		M.adjustToxLoss(2*REM, 0)
 	return ..()
 
@@ -549,7 +549,7 @@
 		var/picked_option = rand(1,3)
 		switch(picked_option)
 			if(1)
-				C.Paralyze(60, 0)
+				C.Paralyze(120, 0)
 				. = TRUE
 			if(2)
 				C.losebreath += 10
@@ -578,7 +578,7 @@
 
 /datum/reagent/toxin/pancuronium/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 10)
-		M.Stun(40, 0)
+		M.Stun(80, 0)
 		. = TRUE
 	if(prob(20))
 		M.losebreath += 4
@@ -693,7 +693,7 @@
 
 /datum/reagent/toxin/curare/on_mob_life(mob/living/carbon/M)
 	if(current_cycle >= 11)
-		M.Paralyze(60, 0)
+		M.Paralyze(120, 0)
 	M.adjustOxyLoss(1*REM, 0)
 	. = 1
 	..()
@@ -834,7 +834,7 @@
 		holder.remove_reagent(type, actual_metaboliztion_rate * M.metabolism_efficiency)
 		M.adjustToxLoss(actual_toxpwr*REM, 0)
 		if(prob(10))
-			M.Paralyze(20, 0)
+			M.Paralyze(40, 0)
 		. = 1
 	..()
 

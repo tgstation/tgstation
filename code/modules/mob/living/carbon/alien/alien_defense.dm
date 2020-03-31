@@ -23,7 +23,7 @@ In all, this is a lot like the monkey code. /N
 		if ("help")
 			set_resting(FALSE)
 			AdjustStun(-60)
-			AdjustKnockdown(-60)
+			AdjustKnockdown(-120)
 			AdjustImmobilized(-60)
 			AdjustParalyzed(-60)
 			AdjustUnconscious(-60)

@@ -336,7 +336,7 @@
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(C.health < C.maxHealth*0.5)
-				C.Paralyze(20)
+				C.Paralyze(40)
 		smash(user)
 
 /obj/item/chair/greyscale

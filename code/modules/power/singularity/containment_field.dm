@@ -116,12 +116,12 @@
 	var/shock_damage = min(rand(30,40),rand(30,40))
 
 	if(iscarbon(user))
-		user.Paralyze(300)
+		user.Paralyze(600)
 		user.electrocute_act(shock_damage, src, 1)
 
 	else if(issilicon(user))
 		if(prob(20))
-			user.Stun(40)
+			user.Stun(80)
 		user.take_overall_damage(0, shock_damage)
 		user.visible_message("<span class='danger'>[user.name] is shocked by the [src.name]!</span>", \
 		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \

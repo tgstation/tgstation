@@ -5,7 +5,7 @@
 	if(target.check_block())
 		target.visible_message("<span class='danger'>[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!</span>",
 					"<span class='userdanger'>You block the attack!</span>")
-		user.Stun(40)
+		user.Stun(80)
 		return TRUE
 
 

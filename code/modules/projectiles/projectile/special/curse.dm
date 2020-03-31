@@ -9,7 +9,7 @@
 	layer = LARGE_MOB_LAYER
 	damage_type = BURN
 	damage = 10
-	paralyze = 20
+	paralyze = 40
 	speed = 2
 	range = 16
 	var/datum/beam/arm

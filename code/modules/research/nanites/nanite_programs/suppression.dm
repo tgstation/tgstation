@@ -20,7 +20,7 @@
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
 /datum/nanite_program/paralyzing/active_effect()
-	host_mob.Stun(40)
+	host_mob.Stun(80)
 
 /datum/nanite_program/paralyzing/enable_passive_effect()
 	. = ..()
@@ -52,7 +52,7 @@
 
 /datum/nanite_program/stun/on_trigger(comm_message)
 	playsound(host_mob, "sparks", 75, TRUE, -1)
-	host_mob.Paralyze(80)
+	host_mob.Paralyze(160)
 
 /datum/nanite_program/pacifying
 	name = "Pacification"

@@ -18,7 +18,7 @@
 		switch(pick(1,3))
 			if(1)
 				to_chat(H, "<span class='userdanger'>You hear a loud buzz in your head, silencing your thoughts!</span>")
-				H.Stun(50)
+				H.Stun(100)
 			if(2)
 				to_chat(H, "<span class='warning'>You hear an annoying buzz in your head.</span>")
 				H.confused += 15

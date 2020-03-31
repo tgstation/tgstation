@@ -63,7 +63,7 @@
 	playsound(get_turf(A), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
 	if((D.mobility_flags & MOBILITY_STAND))
 		D.apply_damage(10, A.dna.species.attack_type, BODY_ZONE_HEAD)
-		D.Knockdown(40)
+		D.Knockdown(80)
 		D.visible_message("<span class='warning'>[A] kicks [D] in the head, sending them face first into the floor!</span>", \
 					"<span class='userdanger'>You are kicked in the head by [A], sending you crashing to the floor!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", COMBAT_MESSAGE_RANGE, A)
 	if(!(D.mobility_flags & MOBILITY_STAND))
@@ -208,7 +208,7 @@
 	add_fingerprint(user)
 	if((HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(50))
 		to_chat(user, "<span class='warning'>You club yourself over the head with [src].</span>")
-		user.Paralyze(60)
+		user.Paralyze(120)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.apply_damage(2*force, BRUTE, BODY_ZONE_HEAD)
@@ -238,7 +238,7 @@
 		if(prob(10))
 			H.visible_message("<span class='warning'>[H] collapses!</span>", \
 							"<span class='userdanger'>Your legs give out!</span>")
-			H.Paralyze(80)
+			H.Paralyze(160)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
 			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)

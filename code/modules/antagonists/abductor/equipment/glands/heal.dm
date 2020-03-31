@@ -141,7 +141,7 @@
 /obj/item/organ/heart/gland/heal/proc/keep_replacing_blood()
 	var/keep_going = FALSE
 	owner.vomit(0, TRUE, FALSE, 3, FALSE, FALSE, FALSE, TRUE)
-	owner.Stun(15)
+	owner.Stun(30)
 	owner.adjustToxLoss(-15, TRUE, TRUE)
 
 	owner.blood_volume = min(BLOOD_VOLUME_NORMAL, owner.blood_volume + 20)

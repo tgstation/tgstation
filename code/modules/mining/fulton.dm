@@ -78,7 +78,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 			var/mutable_appearance/balloon3
 			if(isliving(A))
 				var/mob/living/M = A
-				M.Paralyze(320) // Keep them from moving during the duration of the extraction
+				M.Paralyze(640) // Keep them from moving during the duration of the extraction
 				M.buckled = 0 // Unbuckle them to prevent anchoring problems
 			else
 				A.anchored = TRUE

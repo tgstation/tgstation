@@ -138,14 +138,14 @@
 			else
 				deity = "Christ"
 			to_chat(R, "<span class='userdanger'>The power of [deity] compels you!</span>")
-			R.stun(20)
+			R.stun(40)
 			R.reveal(100)
 			R.adjustHealth(50)
 		sleep(20)
 		for(var/mob/living/carbon/C in get_hearers_in_view(round(created_volume/48,1),get_turf(holder.my_atom)))
 			if(iscultist(C))
 				to_chat(C, "<span class='userdanger'>The divine explosion sears you!</span>")
-				C.Paralyze(40)
+				C.Paralyze(80)
 				C.adjust_fire_stacks(5)
 				C.IgniteMob()
 	..()
@@ -293,9 +293,9 @@
 	for(var/mob/living/C in get_hearers_in_view(range, location))
 		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
-				C.Paralyze(60)
+				C.Paralyze(120)
 			else
-				C.Stun(100)
+				C.Stun(200)
 	holder.remove_reagent(/datum/reagent/flash_powder, created_volume*3)
 
 /datum/chemical_reaction/flash_powder_flash
@@ -312,9 +312,9 @@
 	for(var/mob/living/C in get_hearers_in_view(range, location))
 		if(C.flash_act(affect_silicon = TRUE))
 			if(get_dist(C, location) < 4)
-				C.Paralyze(60)
+				C.Paralyze(120)
 			else
-				C.Stun(100)
+				C.Stun(200)
 
 /datum/chemical_reaction/smoke_powder
 	results = list(/datum/reagent/smoke_powder = 3)

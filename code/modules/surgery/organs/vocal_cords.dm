@@ -258,14 +258,14 @@
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Stun(60 * power_multiplier)
+			L.Stun(120 * power_multiplier)
 
 	//KNOCKDOWN
 	else if(findtext(message, knockdown_words))
 		cooldown = COOLDOWN_STUN
 		for(var/V in listeners)
 			var/mob/living/L = V
-			L.Paralyze(60 * power_multiplier)
+			L.Paralyze(120 * power_multiplier)
 
 	//SLEEP
 	else if((findtext(message, sleep_words)))

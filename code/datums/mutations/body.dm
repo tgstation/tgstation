@@ -134,7 +134,7 @@
 
 /datum/mutation/human/tourettes/on_life()
 	if(prob(10 * GET_MUTATION_SYNCHRONIZER(src)) && owner.stat == CONSCIOUS && !owner.IsStun())
-		owner.Stun(200)
+		owner.Stun(400)
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
@@ -397,7 +397,7 @@
 	if(owner.buckled || !(owner.mobility_flags & MOBILITY_STAND) || !((owner.mobility_flags & (MOBILITY_STAND | MOBILITY_MOVE)) == (MOBILITY_STAND | MOBILITY_MOVE)) || owner.throwing || owner.movement_type & (VENTCRAWLING | FLYING | FLOATING))
 		return //remove the 'edge' cases
 	to_chat(owner, "<span class='danger'>You trip over your own feet.</span>")
-	owner.Knockdown(30)
+	owner.Knockdown(60)
 
 /datum/mutation/human/martyrdom
 	name = "Internal Martyrdom"
@@ -434,13 +434,13 @@
 			to_chat(H, "<span class='userdanger'>You are blinded by a shower of blood!</span>")
 		else
 			to_chat(H, "<span class='userdanger'>You are knocked down by a wave of... blood?!</span>")
-		H.Stun(20)
+		H.Stun(40)
 		H.blur_eyes(20)
 		eyes?.applyOrganDamage(5)
 		H.confused += 3
 	for(var/mob/living/silicon/S in view(2,owner))
 		to_chat(S, "<span class='userdanger'>Your sensors are disabled by a shower of blood!</span>")
-		S.Paralyze(60)
+		S.Paralyze(120)
 	owner.gib()
 
 /datum/mutation/human/headless

@@ -169,7 +169,7 @@
 
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
-				Paralyze(power*20)
+				Paralyze(power*40)
 				if(stuttering < power)
 					stuttering = power
 				if (prob(stunprob) && M.powerlevel >= 8)
@@ -239,7 +239,7 @@
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
 	if(should_stun)
-		Paralyze(40)
+		Paralyze(80)
 	//Jitter and other fluff.
 	jitteriness += 1000
 	do_jitter_animation(jitteriness)
@@ -251,7 +251,7 @@
 /mob/living/carbon/proc/secondary_shock(should_stun)
 	jitteriness = max(jitteriness - 990, 10)
 	if(should_stun)
-		Paralyze(60)
+		Paralyze(120)
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
@@ -296,7 +296,7 @@
 		for(var/datum/brain_trauma/trauma in M.get_traumas())
 			trauma.on_hug(M, src)
 	AdjustStun(-60)
-	AdjustKnockdown(-60)
+	AdjustKnockdown(-120)
 	AdjustUnconscious(-60)
 	AdjustSleeping(-100)
 	AdjustParalyzed(-60)
@@ -367,7 +367,7 @@
 	var/effect_amount = intensity - ear_safety
 	if(effect_amount > 0)
 		if(stun_pwr)
-			Paralyze((stun_pwr*effect_amount)*0.1)
+			Paralyze((stun_pwr*effect_amount)*0.2)
 			Knockdown(stun_pwr*effect_amount)
 
 		if(istype(ears) && (deafen_pwr || damage_pwr))

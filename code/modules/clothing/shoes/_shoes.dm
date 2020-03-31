@@ -191,7 +191,7 @@
 			var/obj/item/bodypart/ouchie = user.get_bodypart(pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 			if(ouchie)
 				ouchie.receive_damage(15)
-			user.Paralyze(5)
+			user.Paralyze(10)
 
 /**
   * check_trip runs on each step to see if we fall over as a result of our lace status. Knotted laces are a guaranteed trip, while untied shoes are just a chance to stumble
@@ -202,8 +202,8 @@
 		return
 
 	if(tied == SHOES_KNOTTED)
-		our_guy.Paralyze(5)
-		our_guy.Knockdown(10)
+		our_guy.Paralyze(10)
+		our_guy.Knockdown(20)
 		our_guy.visible_message("<span class='danger'>[our_guy] trips on [our_guy.p_their()] knotted shoelaces and falls! What a klutz!</span>", "<span class='userdanger'>You trip on your knotted shoelaces and fall over!</span>")
 		SEND_SIGNAL(our_guy, COMSIG_ADD_MOOD_EVENT, "trip", /datum/mood_event/tripped) // well we realized they're knotted now!
 		our_alert = our_guy.throw_alert("shoealert", /obj/screen/alert/shoes/knotted)
@@ -211,8 +211,8 @@
 		var/wiser = TRUE // did we stumble and realize our laces are undone?
 		switch(rand(1, 1000))
 			if(1) // .1% chance to trip and fall over (note these are per step while our laces are undone)
-				our_guy.Paralyze(5)
-				our_guy.Knockdown(10)
+				our_guy.Paralyze(10)
+				our_guy.Knockdown(20)
 				our_guy.visible_message("<span class='danger'>[our_guy] trips on [our_guy.p_their()] untied shoelaces and falls! What a klutz!</span>", "<span class='userdanger'>You trip on your untied shoelaces and fall over!</span>")
 			if(2 to 5) // .4% chance to stumble and lurch forward
 				our_guy.throw_at(get_step(our_guy, our_guy.dir), 3, 2)

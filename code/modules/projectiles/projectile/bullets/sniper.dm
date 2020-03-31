@@ -4,7 +4,7 @@
 	name =".50 bullet"
 	speed = 0.4
 	damage = 70
-	paralyze = 100
+	paralyze = 200
 	dismemberment = 50
 	armour_penetration = 50
 	var/breakthings = TRUE

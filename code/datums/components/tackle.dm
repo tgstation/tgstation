@@ -156,7 +156,7 @@
 			user.visible_message("<span class='danger'>[user] botches [user.p_their()] tackle and slams [user.p_their()] head into [target], knocking [user.p_them()]self silly!</span>", "<span class='userdanger'>You botch your tackle and slam your head into [target], knocking yourself silly!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] botches [user.p_their()] tackle and slams [user.p_their()] head into you, knocking [user.p_them()]self silly!</span>")
 
-			user.Paralyze(30)
+			user.Paralyze(60)
 			var/obj/item/bodypart/head/hed = user.get_bodypart(BODY_ZONE_HEAD)
 			if(hed)
 				hed.receive_damage(brute=20, updating_health=TRUE)
@@ -166,7 +166,7 @@
 			user.visible_message("<span class='warning'>[user] lands a weak tackle on [target], briefly knocking [target.p_them()] off-balance!</span>", "<span class='userdanger'>You land a weak tackle on [target], briefly knocking [target.p_them()] off-balance!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a weak tackle on you, briefly knocking you off-balance!</span>")
 
-			user.Knockdown(30)
+			user.Knockdown(60)
 			if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
 				T.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
 				addtimer(CALLBACK(T, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
@@ -176,18 +176,18 @@
 			to_chat(target, "<span class='userdanger'>[user] lands a passable tackle on you, sending you both tumbling!</span>")
 
 			target.adjustStaminaLoss(stamina_cost)
-			target.Paralyze(5)
-			user.Knockdown(20)
-			target.Knockdown(25)
+			target.Paralyze(10)
+			user.Knockdown(40)
+			target.Knockdown(50)
 
 		if(1 to 2) // solid hit, tackler has a slight advantage
 			user.visible_message("<span class='warning'>[user] lands a solid tackle on [target], knocking them both down hard!</span>", "<span class='userdanger'>You land a solid tackle on [target], knocking you both down hard!</span>", target)
 			to_chat(target, "<span class='userdanger'>[user] lands a solid tackle on you, knocking you both down hard!</span>")
 
 			target.adjustStaminaLoss(30)
-			target.Paralyze(5)
-			user.Knockdown(10)
-			target.Knockdown(20)
+			target.Paralyze(10)
+			user.Knockdown(20)
+			target.Knockdown(40)
 
 		if(3 to 4) // really good hit, the target is definitely worse off here. Without positive modifiers, this is as good a tackle as you can land
 			user.visible_message("<span class='warning'>[user] lands an expert tackle on [target], knocking [target.p_them()] down hard while landing on [user.p_their()] feet with a passive grip!</span>", "<span class='userdanger'>You land an expert tackle on [target], knocking [target.p_them()] down hard while landing on your feet with a passive grip!</span>", target)
@@ -196,8 +196,8 @@
 			user.SetKnockdown(0)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
-			target.Paralyze(5)
-			target.Knockdown(30)
+			target.Paralyze(10)
+			target.Knockdown(60)
 			if(ishuman(target) && ishuman(user))
 				S.dna.species.grab(S, T)
 				S.setGrabState(GRAB_PASSIVE)
@@ -209,8 +209,8 @@
 			user.SetKnockdown(0)
 			user.forceMove(get_turf(target))
 			target.adjustStaminaLoss(40)
-			target.Paralyze(5)
-			target.Knockdown(30)
+			target.Paralyze(10)
+			target.Knockdown(60)
 			if(ishuman(target) && ishuman(user))
 				S.dna.species.grab(S, T)
 				S.setGrabState(GRAB_AGGRESSIVE)
@@ -385,7 +385,7 @@
 			if(prob(80))
 				user.gain_trauma(/datum/brain_trauma/mild/concussion)
 			user.playsound_local(get_turf(user), 'sound/weapons/flashbang.ogg', 100, TRUE, 8, 0.9)
-			user.Knockdown(40)
+			user.Knockdown(80)
 			shake_camera(user, 5, 5)
 			user.overlay_fullscreen("flash", /obj/screen/fullscreen/flash)
 			user.clear_fullscreen("flash", 2.5)
@@ -395,14 +395,14 @@
 			user.adjustStaminaLoss(30)
 			user.adjustBruteLoss(10)
 			user.confused += 10
-			user.Knockdown(30)
+			user.Knockdown(60)
 			shake_camera(user, 3, 4)
 
 		if(1 to 63)
 			user.visible_message("<span class='danger'>[user] slams into [hit]!</span>", "<span class='userdanger'>You slam into [hit]!</span>")
 			user.adjustStaminaLoss(20)
 			user.adjustBruteLoss(10)
-			user.Knockdown(30)
+			user.Knockdown(60)
 			shake_camera(user, 2, 2)
 
 	playsound(user, 'sound/weapons/smash.ogg', 70, TRUE)
@@ -427,13 +427,13 @@
 			shard.AddElement(/datum/element/embed, shard.embedding)
 		W.obj_destruction()
 		user.adjustStaminaLoss(10 * speed)
-		user.Paralyze(30)
+		user.Paralyze(60)
 		user.visible_message("<span class='danger'>[user] slams into [W] and shatters it, shredding [user.p_them()]self with glass!</span>", "<span class='userdanger'>You slam into [W] and shatter it, shredding yourself with glass!</span>")
 
 	else
 		user.visible_message("<span class='danger'>[user] slams into [W] like a bug, then slowly slides off it!</span>", "<span class='userdanger'>You slam into [W] like a bug, then slowly slide off it!</span>")
-		user.Paralyze(10)
-		user.Knockdown(30)
+		user.Paralyze(20)
+		user.Knockdown(60)
 		W.take_damage(20 * speed)
 		user.adjustStaminaLoss(10 * speed)
 		user.adjustBruteLoss(5 * speed)
@@ -478,8 +478,8 @@
 	owner.visible_message("<span class='danger'>[owner] trips over [kevved] and slams into it face-first[HOW_big_of_a_miss_did_we_just_make]!</span>", "<span class='userdanger'>You trip over [kevved] and slam into it face-first[HOW_big_of_a_miss_did_we_just_make]!</span>")
 	owner.adjustStaminaLoss(20 + messes.len * 2)
 	owner.adjustBruteLoss(10 + messes.len)
-	owner.Paralyze(5 * messes.len) // half a second of paralyze for each thing you knock around
-	owner.Knockdown(20 + 5 * messes.len) // 2 seconds of knockdown after the paralyze
+	owner.Paralyze(10 * messes.len) // half a second of paralyze for each thing you knock around
+	owner.Knockdown(40 + 5 * messes.len) // 2 seconds of knockdown after the paralyze
 
 	for(var/obj/item/I in messes)
 		var/dist = rand(1, 3)

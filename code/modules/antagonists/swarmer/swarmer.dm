@@ -578,7 +578,7 @@
 			playsound(loc,'sound/effects/snap.ogg',50, TRUE, -1)
 			L.electrocute_act(0, src, 1, flags = SHOCK_NOGLOVES|SHOCK_ILLUSION)
 			if(iscyborg(L))
-				L.Paralyze(100)
+				L.Paralyze(200)
 			qdel(src)
 	..()
 

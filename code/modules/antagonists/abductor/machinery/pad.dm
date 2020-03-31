@@ -17,7 +17,7 @@
 		target.forceMove(teleport_target)
 		new /obj/effect/temp_visual/dir_setting/ninja(get_turf(target), target.dir)
 		to_chat(target, "<span class='warning'>The instability of the warp leaves you disoriented!</span>")
-		target.Stun(60)
+		target.Stun(120)
 
 /obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
 	flick("alien-pad", src)

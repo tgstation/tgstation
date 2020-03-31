@@ -292,7 +292,7 @@
 			victim.blur_eyes(5) // 10 seconds
 			victim.blind_eyes(3) // 6 seconds
 			victim.confused = max(M.confused, 5) // 10 seconds
-			victim.Knockdown(3 SECONDS)
+			victim.Knockdown(6 SECONDS)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/reagent/pepperspray)
 			addtimer(CALLBACK(victim, /mob.proc/remove_movespeed_modifier, /datum/movespeed_modifier/reagent/pepperspray), 10 SECONDS)
 		victim.update_damage_hud()
@@ -389,8 +389,8 @@
 	if(isvampire(M)) //incapacitating but not lethal. Unfortunately, vampires cannot vomit.
 		if(prob(min(25,current_cycle)))
 			to_chat(M, "<span class='danger'>You can't get the scent of garlic out of your nose! You can barely think...</span>")
-			M.Paralyze(10)
-			M.Jitter(10)
+			M.Paralyze(20)
+			M.Jitter(20)
 	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.job == "Cook")

@@ -170,7 +170,7 @@
 			H.ForceContractDisease(D)
 			to_chat(H, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
 			H.playsound_local(H, 'sound/effects/singlebeat.ogg', 100, 0)
-		H.Paralyze(100)
+		H.Paralyze(200)
 		return
 
 /datum/species/ethereal/proc/get_charge(mob/living/carbon/H) //this feels like it should be somewhere else. Eh?

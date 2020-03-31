@@ -111,7 +111,7 @@
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 				H.updatehealth()
 			visible_message("<span class='danger'>[src] crashes into [A], sending [H] flying!</span>")
-			H.Paralyze(80)
+			H.Paralyze(160)
 		else
 			var/backdir = turn(dir, 180)
 			vehicle_move(backdir)
@@ -130,7 +130,7 @@
 			var/atom/throw_target = get_edge_target_turf(src, pick(GLOB.cardinals))
 			L.throw_at(throw_target, 2, 2)
 			visible_message("<span class='danger'>[L] loses [L.p_their()] footing and slams on the ground!</span>")
-			L.Paralyze(40)
+			L.Paralyze(80)
 			grinding = FALSE
 			icon_state = board_icon
 			return
@@ -287,7 +287,7 @@
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 4, 3)
-		H.Paralyze(30)
+		H.Paralyze(60)
 		H.adjustStaminaLoss(10)
 		var/head_slot = H.get_item_by_slot(ITEM_SLOT_HEAD)
 		if(!head_slot || !(istype(head_slot,/obj/item/clothing/head/helmet) || istype(head_slot,/obj/item/clothing/head/hardhat)))

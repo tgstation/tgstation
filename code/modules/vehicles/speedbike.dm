@@ -78,7 +78,7 @@
 			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
-			H.Paralyze(100)
+			H.Paralyze(200)
 			H.adjustStaminaLoss(30)
 			H.apply_damage(rand(20,35), BRUTE)
 			if(!crash_all)

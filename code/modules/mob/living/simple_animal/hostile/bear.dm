@@ -172,6 +172,6 @@ mob/living/simple_animal/hostile/bear/butter/AttackingTarget() //Makes some atta
 	if(isliving(target))
 		var/mob/living/L = target
 		if((L.mobility_flags & MOBILITY_STAND))
-			L.Knockdown(20)
+			L.Knockdown(40)
 			playsound(loc, 'sound/misc/slip.ogg', 15)
 			L.visible_message("<span class='danger'>[L] slips on butter!</span>")

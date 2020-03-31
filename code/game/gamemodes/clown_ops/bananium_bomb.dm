@@ -8,7 +8,7 @@
 	if(deconstruction_state != NUKESTATE_INTACT)
 		icon_state = "bananiumbomb_base"
 		return
-	
+
 	switch(get_nuke_state())
 		if(NUKE_OFF_LOCKED, NUKE_OFF_UNLOCKED)
 			icon_state = "bananiumbomb_base"
@@ -34,7 +34,7 @@
 		var/turf/T = get_turf(H)
 		if(!T || T.z != z)
 			continue
-		H.Stun(10)
+		H.Stun(20)
 		var/obj/item/clothing/C
 		if(!H.w_uniform || H.dropItemToGround(H.w_uniform))
 			C = new /obj/item/clothing/under/rank/civilian/clown(H)

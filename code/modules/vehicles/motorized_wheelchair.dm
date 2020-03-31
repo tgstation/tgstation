@@ -6,7 +6,7 @@
 	var/power_efficiency = 1
 	var/power_usage = 100
 	var/panel_open = FALSE
-	var/list/required_parts = list(/obj/item/stock_parts/manipulator, 
+	var/list/required_parts = list(/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/manipulator,
 							/obj/item/stock_parts/capacitor)
 	var/obj/item/stock_parts/cell/power_cell
@@ -42,7 +42,7 @@
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
-		if(power_cell.charge < power_usage / max(power_efficiency, 1))			
+		if(power_cell.charge < power_usage / max(power_efficiency, 1))
 			to_chat(user, "<span class='warning'>The display on [src] blinks 'Out of Power'.</span>")
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
@@ -74,7 +74,7 @@
 		to_chat(user, "<span class='notice'>You remove the power cell from [src].</span>")
 		return
 	return ..()
-	
+
 /obj/vehicle/ridden/wheelchair/motorized/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		I.play_tool_sound(src)
@@ -148,13 +148,13 @@
 		var/atom/throw_target = get_edge_target_turf(H, pick(GLOB.cardinals))
 		unbuckle_mob(H)
 		H.throw_at(throw_target, 2, 3)
-		H.Knockdown(100)
+		H.Knockdown(200)
 		H.adjustStaminaLoss(40)
 		if(isliving(A))
 			var/mob/living/D = A
 			throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
 			D.throw_at(throw_target, 2, 3)
-			D.Knockdown(80)
+			D.Knockdown(160)
 			D.adjustStaminaLoss(35)
 			visible_message("<span class='danger'>[src] crashes into [A], sending [H] and [D] flying!</span>")
 		else

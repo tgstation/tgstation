@@ -330,7 +330,7 @@
 							 	 "<span class='hear'>You hear a loud metal bang.</span>")
 			var/mob/living/L = O
 			if(!issilicon(L))
-				L.Paralyze(40)
+				L.Paralyze(80)
 			O.forceMove(T)
 			close()
 	else

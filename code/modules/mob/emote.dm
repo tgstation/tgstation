@@ -46,7 +46,7 @@
 	if(isliving(user))
 		var/mob/living/flippy_mcgee = user
 		if(prob(20))
-			flippy_mcgee.Knockdown(1 SECONDS)
+			flippy_mcgee.Knockdown(2 SECONDS)
 			flippy_mcgee.visible_message(
 				"<span class='notice'>[flippy_mcgee] attempts to do a flip and falls over, what a doofus!</span>",
 				"<span class='notice'>You attempt to do a flip while still off balance from the last flip and fall down!</span>"

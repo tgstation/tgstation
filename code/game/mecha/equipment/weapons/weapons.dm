@@ -195,7 +195,7 @@
 		M.adjustEarDamage(0, 30)
 		M.Paralyze(60)
 		if(prob(30))
-			M.Stun(200)
+			M.Stun(400)
 			M.Unconscious(80)
 		else
 			M.Jitter(500)

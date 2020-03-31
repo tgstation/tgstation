@@ -1148,7 +1148,7 @@
 						"[C] trips over [src] and falls!", \
 						"[C] topples over [src]!", \
 						"[C] leaps out of [src]'s way!")]</span>")
-	C.Paralyze(40)
+	C.Paralyze(80)
 
 /mob/living/ConveyorMove()
 	if((movement_type & FLYING) && !stat)

@@ -22,7 +22,7 @@
 	trigger_range = 0
 	linger = TRUE
 	nodamage = FALSE
-	paralyze = 60
+	paralyze = 120
 	hitsound = 'sound/magic/mm_hit.ogg'
 
 	trail = TRUE
@@ -275,7 +275,7 @@
 		if(distfromcaster == 0)
 			if(isliving(AM))
 				var/mob/living/M = AM
-				M.Paralyze(100)
+				M.Paralyze(200)
 				M.adjustBruteLoss(5)
 				to_chat(M, "<span class='userdanger'>You're slammed into the floor by [user]!</span>")
 		else

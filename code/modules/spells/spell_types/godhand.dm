@@ -107,6 +107,6 @@
 		to_chat(M, "<span class='warning'>You feel your flesh turn to stone for a moment, then revert back!</span>")
 		..()
 		return
-	M.Stun(40)
+	M.Stun(80)
 	M.petrify()
 	return ..()

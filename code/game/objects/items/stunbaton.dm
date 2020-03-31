@@ -32,7 +32,7 @@
 	var/confusion_amt = 10
 	var/stamina_loss_amt = 60
 	var/apply_stun_delay = 2 SECONDS
-	var/stun_time = 5 SECONDS
+	var/stun_time = 10 SECONDS
 
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
@@ -284,7 +284,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stun_time = 5 SECONDS
+	stun_time = 10 SECONDS
 	cell_hit_cost = 2000
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK

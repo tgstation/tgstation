@@ -442,7 +442,7 @@
 
 /datum/status_effect/trance/tick()
 	if(stun)
-		owner.Stun(60, TRUE, TRUE)
+		owner.Stun(120, TRUE, TRUE)
 	owner.dizziness = 20
 
 /datum/status_effect/trance/on_apply()

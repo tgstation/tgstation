@@ -80,7 +80,7 @@
 				"<span class='danger'>You fall off \the [src] while trying to operate it without [arms_required ? "both arms":"an arm"]!</span>")
 				if(isliving(user))
 					var/mob/living/L = user
-					L.Stun(30)
+					L.Stun(600)
 				return FALSE
 
 			if(message_cooldown < world.time)

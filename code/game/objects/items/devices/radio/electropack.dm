@@ -75,7 +75,7 @@
 		s.set_up(3, 1, L)
 		s.start()
 
-		L.Paralyze(100)
+		L.Paralyze(200)
 
 	if(master)
 		master.receive_signal()

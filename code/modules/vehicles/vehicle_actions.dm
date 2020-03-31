@@ -211,7 +211,7 @@
 			playsound(src, 'sound/effects/bang.ogg', 20, TRUE)
 			V.unbuckle_mob(L)
 			L.throw_at(landing_turf, 2, 2)
-			L.Paralyze(40)
+			L.Paralyze(80)
 			V.visible_message("<span class='danger'>[L] misses the landing and falls on [L.p_their()] face!</span>")
 		else
 			L.spin(4, 1)

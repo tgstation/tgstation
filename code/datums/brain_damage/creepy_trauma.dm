@@ -92,7 +92,7 @@
 			fail = TRUE
 		if(3)
 			to_chat(owner, "<span class='userdanger'>You feel your heart lurching in your chest...</span>")
-			owner.Stun(20)
+			owner.Stun(40)
 			shake_camera(owner, 15, 1)
 		if(4)
 			to_chat(owner, "<span class='warning'>You faint.</span>")

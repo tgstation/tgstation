@@ -7,7 +7,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	take_holo_damage(50/severity)
-	Paralyze(400/severity)
+	Paralyze(800/severity)
 	silent = max(20/severity, silent)
 	if(holoform)
 		fold_in(force = TRUE)
@@ -35,10 +35,10 @@
 			qdel(src)
 		if(2)
 			fold_in(force = 1)
-			Paralyze(400)
+			Paralyze(800)
 		if(3)
 			fold_in(force = 1)
-			Paralyze(200)
+			Paralyze(400)
 
 /mob/living/silicon/pai/attack_hand(mob/living/carbon/human/user)
 	switch(user.a_intent)

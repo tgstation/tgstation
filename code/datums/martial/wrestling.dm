@@ -134,7 +134,7 @@
 	D.forceMove(A.loc)
 	D.setDir(get_dir(D, A))
 
-	D.Stun(80)
+	D.Stun(160)
 	D.visible_message("<span class='danger'>[A] starts spinning around with [D]!</span>", \
 					"<span class='userdanger'>You're spun around by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", null, A)
 	to_chat(A, "<span class='danger'>You start spinning around with [D]!</span>")
@@ -296,7 +296,7 @@
 		playsound(A.loc, "swing_hit", 50, TRUE)
 		if (!D.stat)
 			D.emote("scream")
-			D.Paralyze(40)
+			D.Paralyze(80)
 
 			switch(rand(1,3))
 				if (2)
@@ -358,7 +358,7 @@
 
 	var/turf/T = get_edge_target_turf(A, get_dir(A, get_step_away(D, A)))
 	if (T && isturf(T))
-		D.Paralyze(20)
+		D.Paralyze(40)
 		D.throw_at(T, 3, 2)
 	log_combat(A, D, "roundhouse-kicked")
 
@@ -399,7 +399,7 @@
 				A.visible_message("<span class='danger'>...and dives head-first into the ground, ouch!</span>", \
 								"<span class='userdanger'>...and dive head-first into the ground, ouch!</span>")
 				A.adjustBruteLoss(rand(10,20))
-				A.Paralyze(60)
+				A.Paralyze(120)
 			to_chat(A, "<span class='warning'>[D] is too far away!</span>")
 			return 0
 
@@ -430,7 +430,7 @@
 		else
 			D.adjustBruteLoss(rand(20,30))
 
-		D.Paralyze(40)
+		D.Paralyze(80)
 
 		A.pixel_y = 0
 
@@ -455,7 +455,7 @@
 	D.visible_message("<span class='danger'>[A] gets [D] in a cinch!</span>", \
 					"<span class='userdanger'>You're put into a cinch by [A]!</span>", "<span class='hear'>You hear aggressive shuffling!</span>", COMBAT_MESSAGE_RANGE, A)
 	to_chat(A, "<span class='danger'>You get [D] in a cinch!</span>")
-	D.Stun(rand(60,100))
+	D.Stun(rand(120,200))
 	log_combat(A, D, "cinched")
 	return 1
 

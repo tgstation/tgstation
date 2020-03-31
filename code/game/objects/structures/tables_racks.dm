@@ -125,7 +125,7 @@
 		pushed_mob.pass_flags &= ~PASSTABLE
 	if(pushed_mob.loc != loc) //Something prevented the tabling
 		return
-	pushed_mob.Knockdown(30)
+	pushed_mob.Knockdown(60)
 	pushed_mob.apply_damage(10, BRUTE)
 	pushed_mob.apply_damage(40, STAMINA)
 	if(user.mind?.martial_art.smashes_tables && user.mind?.martial_art.can_use(user))
@@ -137,7 +137,7 @@
 	SEND_SIGNAL(pushed_mob, COMSIG_ADD_MOOD_EVENT, "table", /datum/mood_event/table)
 
 /obj/structure/table/proc/tableheadsmash(mob/living/user, mob/living/pushed_mob)
-	pushed_mob.Knockdown(30)
+	pushed_mob.Knockdown(60)
 	pushed_mob.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
 	pushed_mob.apply_damage(60, STAMINA)
 	take_damage(50)
@@ -328,7 +328,7 @@
 		debris -= AM
 		if(istype(AM, /obj/item/shard))
 			AM.throw_impact(L)
-	L.Paralyze(100)
+	L.Paralyze(200)
 	qdel(src)
 
 /obj/structure/table/glass/deconstruct(disassembled = TRUE, wrench_disassembly = 0)

@@ -29,7 +29,7 @@
 	if(!petrified_mob)
 		STOP_PROCESSING(SSobj, src)
 	timer--
-	petrified_mob.Stun(40) //So they can't do anything while petrified
+	petrified_mob.Stun(80) //So they can't do anything while petrified
 	if(timer <= 0)
 		STOP_PROCESSING(SSobj, src)
 		qdel(src)
@@ -49,7 +49,7 @@
 		if(S.mind)
 			if(petrified_mob)
 				S.mind.transfer_to(petrified_mob)
-				petrified_mob.Paralyze(100)
+				petrified_mob.Paralyze(200)
 				to_chat(petrified_mob, "<span class='notice'>You slowly come back to your senses. You are in control of yourself again!</span>")
 		qdel(S)
 

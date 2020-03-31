@@ -227,7 +227,7 @@
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 	M.AdjustStun(-80)
-	M.AdjustKnockdown(-80)
+	M.AdjustKnockdown(-160)
 	M.AdjustParalyzed(-80)
 	M.AdjustImmobilized(-80)
 	M.AdjustUnconscious(-80)
