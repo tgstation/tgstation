@@ -3749,8 +3749,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ajl" = (
@@ -6299,8 +6298,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "aoI" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "aoJ" = (
@@ -14450,8 +14448,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aGT" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aGU" = (
@@ -15199,8 +15196,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "aIH" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aII" = (
@@ -22901,8 +22897,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "bac" = (
@@ -25048,8 +25043,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
 	},
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
 "beW" = (
@@ -26110,8 +26104,7 @@
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "bhg" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable/layer1,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bhi" = (
@@ -26657,8 +26650,7 @@
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "bin" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room)
 "bip" = (
@@ -31534,8 +31526,7 @@
 /turf/closed/wall,
 /area/tcommsat/computer)
 "bsi" = (
-/obj/structure/cable,
-/obj/machinery/power/deck_relay,
+/obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -40745,8 +40736,7 @@
 /area/security/prison/visit)
 "bLd" = (
 /obj/machinery/light/small,
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/security/prison)
 "bLi" = (

@@ -74275,9 +74275,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/cable,
-/obj/structure/cable_bridge,
-/obj/structure/cable/layer3,
+/obj/structure/cable/multilayer{
+	cable_layer = 6
+	},
 /turf/open/floor/engine,
 /area/ai_monitored/storage/satellite)
 "cic" = (
