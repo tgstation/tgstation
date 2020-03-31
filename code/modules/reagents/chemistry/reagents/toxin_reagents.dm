@@ -51,6 +51,10 @@
 	C.apply_effect(5,EFFECT_IRRADIATE,0)
 	return ..()
 
+/datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	mytray.mutation_roll(user)
+	. = ..()
+
 #define	LIQUID_PLASMA_BP (50+T0C)
 
 /datum/reagent/toxin/plasma
