@@ -18,17 +18,8 @@ A new subsystem for hydroponics, as a way to share specific traits into plants, 
 /obj/item/graft/Initialize()
 	. = ..()
 	stored_trait = new /datum/plant_gene/trait/repeated_harvest //Default gene is repeated harvest.
-
-	graft_appearance = rand(100)
-	switch(graft_appearance)
-		if(0 to 25)
-			icon_state = "graft_plant"
-		if (26 to 50)
-			icon_state = "graft_flower"
-		if (51 to 95)
-			icon_state = "graft_mushroom"
-		if(96 to 100)
-			icon_state = "graft_doom"
+	var/list/graft_types = list("graft_plant"= 0.5, "graft_flower"= 0.25, "graft_mushroom"= 0.2, "graft_doom"= 0.05)
+	graft_appearance = pickweight(graft_types)
 
 /obj/item/graft/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/plant_analyzer) && user.a_intent == INTENT_HELP)
