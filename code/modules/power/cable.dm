@@ -633,9 +633,9 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	var/G = 50
 	var/B = 50
 
-	R += cable_layer & CABLE_LAYER_1 ? 150:0
-	G += cable_layer & CABLE_LAYER_2 ? 150:0
-	B += cable_layer & CABLE_LAYER_3 ? 150:0
+	R += cable_layer & CABLE_LAYER_1 ? 150 : 0
+	G += cable_layer & CABLE_LAYER_2 ? 150 : 0
+	B += cable_layer & CABLE_LAYER_3 ? 150 : 0
 
 	color = rgb(R, G, B)
 
