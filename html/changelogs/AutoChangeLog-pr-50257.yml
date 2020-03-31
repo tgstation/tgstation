@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Curse of the Barnyard is now a cursor-guided spell. Oink."

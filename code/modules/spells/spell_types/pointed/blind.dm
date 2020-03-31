@@ -9,7 +9,7 @@
 	message = "<span class='notice'>Your eyes cry out in pain!</span>"
 	cooldown_min = 50 //12 deciseconds reduction per rank
 	starting_spells = list("/obj/effect/proc_holder/spell/targeted/inflict_handler/blind", "/obj/effect/proc_holder/spell/targeted/genetic/blind")
-	ranged_mousepointer = 'icons/effects/blind_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/blind_target.dmi'
 	action_icon_state = "blind"
 	active_msg = "You prepare to blind a target..."
 
@@ -24,11 +24,12 @@
 	charge_max = 400 // needs to be higher than the duration or it'll be permanent
 	sound = 'sound/magic/blind.ogg'
 
-/obj/effect/proc_holder/spell/pointed/trigger/blind/intercept_check(mob/user, atom/target)
+/obj/effect/proc_holder/spell/pointed/trigger/blind/can_target(atom/target, mob/user, silent)
 	. = ..()
 	if(!.)
 		return FALSE
 	if(!isliving(target))
-		to_chat(user, "<span class='warning'>You can only blind living beings!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>You can only blind living beings!</span>")
 		return FALSE
 	return TRUE
