@@ -51,7 +51,7 @@
 /obj/mecha/working/clarke/play_stepsound(direction)
 	if(prob(30))
 		floor_damage()
-	. = ..()
+	return ..()
 
 /obj/mecha/working/clarke/mechturn(direction)
 	if(prob(80))
