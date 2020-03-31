@@ -92,6 +92,9 @@
 		M.Paralyze(20)
 		M.Knockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
+		if(M.apply_damages(10, 10))
+			to_chat(M, "<span class='userdanger'>The blast from \the [src] bruises and burns you!</span>")
+
 	// only checking if they're on top of the tile, cause being one tile over will be its own punishment
 
 // Grenade that releases more shrapnel the more times you use it in hand between priming and detonation (sorta like the 9bang from MW3), for admin goofs

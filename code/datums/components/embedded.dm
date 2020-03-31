@@ -217,18 +217,19 @@
 		if(!victim.has_embedded_objects())
 			victim.clear_alert("embeddedobject")
 			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-		QDEL_NULL(src)
+		qdel(src)
 		return
 
 	if(!victim)
 		weapon.forceMove(get_turf(weapon))
-		QDEL_NULL(src)
+		qdel(src)
 		return
 
 	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
-	weapon.unembedded()
-	if(QDELETED(weapon))
-		QDEL_NULL(src)
+
+	if(weapon.unembedded()) // if it deleted itself
+		weapon = null
+		qdel(src)
 		return
 
 	if(to_hands)
@@ -239,7 +240,7 @@
 	if(!victim.has_embedded_objects())
 		victim.clear_alert("embeddedobject")
 		SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	QDEL_NULL(src)
+	qdel(src)
 
 
 /// Something deleted or moved our weapon while it was embedded, how rude!
@@ -247,7 +248,6 @@
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
 	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
-	weapon.unembedded()
 	weapon = null
 
 	if(victim)
@@ -255,7 +255,7 @@
 		if(!victim.has_embedded_objects())
 			victim.clear_alert("embeddedobject")
 			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	QDEL_NULL(src)
+	qdel(src)
 
 
 /// Items embedded/stuck to humans both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
@@ -265,7 +265,7 @@
 
 	if(!victim || !limb) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)
 		weapon.forceMove(get_turf(weapon))
-		QDEL_NULL(src)
+		qdel(src)
 
 	if(victim.stat == DEAD)
 		return
@@ -352,7 +352,7 @@
 		if(do_after(us, 30, target = parent))
 			us.put_in_hands(weapon)
 			weapon.unembedded()
-			QDEL_NULL(src)
+			qdel(src)
 
 
 /// This proc handles if something knocked the invisible item loose from the turf somehow (probably an explosion). Just make it visible and say it fell loose, then get outta here.
@@ -360,4 +360,4 @@
 	weapon.invisibility = initial(weapon.invisibility)
 	weapon.visible_message("<span class='notice'>[weapon] falls loose from [parent].</span>")
 	weapon.unembedded()
-	QDEL_NULL(src)
+	qdel(src)

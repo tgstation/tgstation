@@ -50,7 +50,7 @@
 	var/ricochet_decay_damage = 0.7 /// 0-1 (or more, I guess) multiplier, the projectile's damage is modified by multiplying this after each ricochet
 	var/ricochet_auto_aim_range = 0 /// On ricochet, if nonzero, we consider all mobs within this range of our projectile at the time of ricochet to home in on like Revolver Ocelot, as governed by ricochet_auto_aim_angle
 	var/ricochet_auto_aim_angle = 30 /// On ricochet, if ricochet_auto_aim_range is nonzero, we'll consider any mobs within this range of the normal angle of incidence to home in on, higher = more auto aim
-	var/ricochet_incidence_leeway = 30 /// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
+	var/ricochet_incidence_leeway = 40 /// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
 	var/force_hit = FALSE //If the object being hit can pass ths damage on to something else, it should not do it for this bullet.
 
 	//Hitscan
