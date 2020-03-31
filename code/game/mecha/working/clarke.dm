@@ -56,7 +56,7 @@
 /obj/mecha/working/clarke/mechturn(direction)
 	if(prob(80))
 		floor_damage()
-	. = ..()
+	return ..()
 
 /obj/mecha/working/clarke/proc/floor_damage()
 	var/turf/open/floor/tile = get_turf(src)
