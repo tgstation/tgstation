@@ -80,6 +80,9 @@
 
 	var/list/alternate_appearances
 
+	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
+	var/list/targeted_by
+
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
@@ -213,6 +216,11 @@
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
 
+	for(var/i in targeted_by)
+		var/mob/M = i
+		LAZYREMOVE(M.do_afters, src)
+
+	targeted_by = null
 	QDEL_NULL(light)
 
 	return ..()
