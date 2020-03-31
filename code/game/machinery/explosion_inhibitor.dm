@@ -145,4 +145,4 @@
 
 #undef INHIB_ACTIVE
 #undef INHIB_CHARGING
-#undef INHIB_INHIB_OFF
+#undef INHIB_OFF
