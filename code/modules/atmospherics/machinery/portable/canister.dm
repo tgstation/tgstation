@@ -1,4 +1,7 @@
-#define CAN_DEFAULT_RELEASE_PRESSURE (ONE_ATMOSPHERE)
+#define CAN_DEFAULT_RELEASE_PRESSURE 	(ONE_ATMOSPHERE)
+#define CANISTER_TIER_1					1
+#define CANISTER_TIER_2					2
+#define CANISTER_TIER_3					3
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
@@ -18,6 +21,12 @@
 	var/release_pressure = ONE_ATMOSPHERE
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
+	var/tier1heat = 5000
+	var/tier2heat = 500000
+	var/tier3heat = 1e12
+	var/tier1pressure = 50000
+	var/tier2pressure = 5e6
+	var/tier3pressure = 1e14
 
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 50)
 	max_integrity = 250
@@ -34,6 +43,7 @@
 	var/maximum_timer_set = 300
 	var/timing = FALSE
 	var/restricted = FALSE
+	var/mode = CANISTER_TIER_1
 	req_access = list()
 
 	var/update = 0
@@ -62,6 +72,11 @@
 		playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
 		return
 	..()
+
+/obj/machinery/portable_atmospherics/canister/examine(user)
+	. = ..()
+	if(mode)
+		. += "A canister of tier [mode]"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
@@ -212,6 +227,7 @@
 	pump.on = TRUE
 	pump.machine_stat = 0
 	pump.build_network()
+	update_overlays()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
 	qdel(pump)
@@ -251,6 +267,12 @@
 		. += "can-o1"
 	else if(pressure >= 10)
 		. += "can-o0"
+	if(mode == CANISTER_TIER_1)
+		. += "tier1-o"
+	else if(mode == CANISTER_TIER_2)
+		. += "tier2-o"
+	else if(mode == CANISTER_TIER_3)
+		. += "tier3-o"
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > temperature_resistance)
@@ -468,3 +490,100 @@
 				replace_tank(usr, FALSE)
 				. = TRUE
 	update_icon()
+
+#define FRAME_TIER_0	"0"
+#define FRAME_TIER_1	"1"
+#define FRAME_TIER_2	"2"
+//Canister Frames
+/obj/machinery/portable_atmospherics/canister/frame
+	name = "frame"
+	icon_state = "frame_0"
+	density = TRUE
+	max_integrity = 250
+	var/broken = FALSE
+	var/mode_frame = FRAME_TIER_0
+
+/obj/machinery/portable_atmospherics/canister/frame/examine(user)
+	. = ..()
+
+/obj/machinery/portable_atmospherics/canister/frame/deconstruct(disassembled = TRUE)
+	if(!(flags_1 & NODECONSTRUCT_1))
+		new /obj/item/stack/sheet/metal(loc, 5)
+	qdel(src)
+
+/obj/machinery/portable_atmospherics/canister/frame/machine
+	name = "canister frame"
+	desc = "A frame to build different kind of canisters"
+
+/obj/machinery/portable_atmospherics/canister/frame/machine/examine(user)
+	. = ..()
+	if(mode_frame)
+		. += "A canister frame of tier [mode_frame]"
+
+/obj/machinery/portable_atmospherics/canister/frame/machine/update_icon_state()
+	if (mode_frame == FRAME_TIER_0)
+		icon_state = "frame_0"
+	else if (mode_frame == FRAME_TIER_1)
+		icon_state = "frame_1"
+	else if (mode_frame == FRAME_TIER_2)
+		icon_state = "frame_2"
+
+/obj/machinery/portable_atmospherics/canister/frame/machine/attackby(obj/item/S, mob/user, params)
+
+	var/is_metal_sheet = istype(S, /obj/item/stack/sheet/metal)
+	var/is_plasteel_sheet = istype(S, /obj/item/stack/sheet/plasteel)
+	var/is_titanium_sheet = istype(S, /obj/item/stack/sheet/mineral/titanium)
+	var/is_bscrystal_sheet = istype(S, /obj/item/stack/sheet/bluespace_crystal)
+	var/is_plastitanium_sheet = istype(S, /obj/item/stack/sheet/mineral/plastitanium)
+	var/obj/item/stack/ST = S
+	if (ST.get_amount() < 5)
+		to_chat(user, "<span class='warning'>You need at least five sheets for that!</span>")
+		return
+	if(is_metal_sheet && mode_frame != FRAME_TIER_1 && mode_frame != FRAME_TIER_2)
+		if(do_after(user,15, target = src))
+			var/obj/machinery/portable_atmospherics/canister/tier_1 = new /obj/machinery/portable_atmospherics/canister(drop_location())
+			if (tier_1.mode != CANISTER_TIER_1)
+				tier_1.mode = CANISTER_TIER_1
+				tier_1.update_overlays()
+				message_admins("TIER1")
+			qdel(src)
+			ST.use(5)
+	else if(is_plasteel_sheet && mode_frame != FRAME_TIER_1 && mode_frame != FRAME_TIER_2)
+		if(do_after(user,15, target = src))
+			var/obj/machinery/portable_atmospherics/canister/frame/machine/frame_1 = new /obj/machinery/portable_atmospherics/canister/frame/machine(drop_location())
+			if (frame_1.mode_frame != FRAME_TIER_1)
+				frame_1.mode_frame = FRAME_TIER_1
+				frame_1.update_icon_state()
+				message_admins("FRAMETIER1")
+			qdel(src)
+			ST.use(5)
+	else if (is_titanium_sheet && mode_frame == FRAME_TIER_1)
+		if(do_after(user,15, target = src))
+			var/obj/machinery/portable_atmospherics/canister/tier_2 = new /obj/machinery/portable_atmospherics/canister(drop_location())
+			if (tier_2.mode != CANISTER_TIER_2)
+				tier_2.mode = CANISTER_TIER_2
+				tier_2.update_overlays()
+				message_admins("TIER2")
+			qdel(src)
+			ST.use(5)
+	else if (is_bscrystal_sheet && mode_frame == FRAME_TIER_1)
+		if(do_after(user,15, target = src))
+			var/obj/machinery/portable_atmospherics/canister/frame/machine/frame_2 = new /obj/machinery/portable_atmospherics/canister/frame/machine(drop_location())
+			if (frame_2.mode_frame != FRAME_TIER_2)
+				frame_2.mode_frame = FRAME_TIER_2
+				frame_2.update_icon_state()
+				message_admins("FRAMETIER2")
+			qdel(src)
+			ST.use(5)
+	else if (is_plastitanium_sheet && mode_frame == FRAME_TIER_2)
+		if(do_after(user,15, target = src))
+			var/obj/machinery/portable_atmospherics/canister/tier_3 = new /obj/machinery/portable_atmospherics/canister(drop_location())
+			if (tier_3.mode != CANISTER_TIER_3)
+				tier_3.mode = CANISTER_TIER_3
+				tier_3.update_overlays()
+				message_admins("TIER2")
+			qdel(src)
+			ST.use(5)
+	else
+		to_chat(user, "<span class='warning'>Those are no the right sheets!</span>")
+		return
