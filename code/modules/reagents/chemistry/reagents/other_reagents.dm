@@ -2064,7 +2064,7 @@
 	description = "A purple metal morphic liquid, said to impose it's metallic properties on whatever it touches."
 	color = "#b000aa"
 	taste_mult = 0 // oderless and tasteless
-	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	var/applied_material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_NO_EXPORT
 	var/minumum_material_amount = 100
 
 /datum/reagent/metalgen/reaction_obj(obj/O, volume)
