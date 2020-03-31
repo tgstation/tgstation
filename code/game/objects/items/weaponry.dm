@@ -716,7 +716,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	owner.visible_message("<span class='danger'>[owner] shamefully bops [owner.p_them()]self with [owner.p_their()] [src.name].</span>", "<span class='userdanger'>You shamefully bop yourself with your [src.name].</span>", \
 		"<span class='hear'>You hear a dull thud!</span>")
 	log_combat(owner, owner, "bopped", src.name, "(self)")
-	owner.do_attack_animation(owner, used_item=src)
+	owner.do_attack_animation(owner)
 	owner.apply_damage(100, STAMINA)
 	owner.Knockdown(10)
 	qdel(src)
@@ -742,7 +742,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		owner.client.give_award(/datum/award/achievement/misc/gottem, owner) // then everybody clapped
 
 	playsound(get_turf(owner), 'sound/effects/hit_punch.ogg', 50, TRUE, -1)
-	owner.do_attack_animation(sucker, used_item=src)
+	owner.do_attack_animation(sucker)
 
 	if(HAS_TRAIT(owner, TRAIT_HULK))
 		owner.visible_message("<span class='danger'>[owner] bops [sucker] with [owner.p_their()] [src.name] much harder than intended, sending [sucker.p_them()] flying!</span>", \
