@@ -3,7 +3,7 @@
 #define INHIB_ACTIVE 2
 /obj/machinery/explosion_inhibitor
 	name = "explosion inhibitor"
-	desc = "This machine supresses nearby explosions using a  disortion field."
+	desc = "This machine suppresses nearby explosions using a disortion field."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler-off"
 	density = TRUE
