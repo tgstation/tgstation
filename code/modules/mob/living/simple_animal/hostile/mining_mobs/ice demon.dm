@@ -1,5 +1,5 @@
 /mob/living/simple_animal/hostile/asteroid/ice_demon
-	name = "ice demon"
+	name = "demonic watcher"
 	desc = "A creature formed entirely out of ice, bluespace energy emanates from inside of it."
 	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
 	icon_state = "ice_demon"
@@ -32,7 +32,8 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 	del_on_death = TRUE
-	loot = list()
+	loot = list(/obj/item/stack/ore/bluespace_crystal = 3)
+	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	deathmessage = "fades as the energies that tied it to this world dissipate."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = UNCONSCIOUS
@@ -69,4 +70,7 @@
 	move_force = MOVE_FORCE_DEFAULT
 	move_resist = MOVE_RESIST_DEFAULT
 	pull_force = PULL_FORCE_DEFAULT
+	var/turf/T = get_turf(src)
+	if(T && prob(5))
+		new /obj/item/assembly/signaler/anomaly/bluespace(T)
 	return ..()

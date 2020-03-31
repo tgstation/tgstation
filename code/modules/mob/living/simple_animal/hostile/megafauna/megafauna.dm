@@ -69,20 +69,19 @@
 /mob/living/simple_animal/hostile/megafauna/death(gibbed, list/force_grant)
 	if(health > 0)
 		return
-	else
-		var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
-		var/crusher_kill = FALSE
-		if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
-			spawn_crusher_loot()
-			crusher_kill = TRUE
-		if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
-			var/tab = "megafauna_kills"
-			if(crusher_kill)
-				tab = "megafauna_kills_crusher"
-			if(!elimination)	//used so the achievment only occurs for the last legion to die.
-				grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
-				SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
-		..()
+	var/datum/status_effect/crusher_damage/C = has_status_effect(STATUS_EFFECT_CRUSHERDAMAGETRACKING)
+	var/crusher_kill = FALSE
+	if(C && crusher_loot && C.total_damage >= maxHealth * 0.6)
+		spawn_crusher_loot()
+		crusher_kill = TRUE
+	if(true_spawn && !(flags_1 & ADMIN_SPAWNED_1))
+		var/tab = "megafauna_kills"
+		if(crusher_kill)
+			tab = "megafauna_kills_crusher"
+		if(!elimination)	//used so the achievment only occurs for the last legion to die.
+			grant_achievement(achievement_type, score_achievement_type, crusher_kill, force_grant)
+			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
+	..()
 
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
 	loot = crusher_loot

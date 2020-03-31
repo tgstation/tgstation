@@ -12,12 +12,6 @@
 /obj/effect/mob_spawn/human/miner/explorer,
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
 /area/icemoon/underground/explored)
-"l" = (
-/obj/effect/mob_spawn/human/skeleton,
-/turf/open/indestructible/necropolis{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/icemoon/underground/explored)
 "q" = (
 /mob/living/simple_animal/hostile/megafauna/wendigo,
 /turf/open/indestructible/necropolis{
@@ -28,7 +22,6 @@
 /obj/effect/landmark/portal_exit{
 	id = "wendigo arena"
 	},
-/obj/effect/mob_spawn/human/skeleton,
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
@@ -401,13 +394,13 @@ N
 N
 N
 N
-l
 N
 N
 N
 N
 N
-l
+N
+N
 N
 N
 a
@@ -497,7 +490,7 @@ a
 N
 N
 N
-l
+N
 N
 N
 N
@@ -537,12 +530,12 @@ N
 N
 N
 N
-l
 N
 N
 N
 N
-l
+N
+N
 N
 a
 a
@@ -565,7 +558,7 @@ N
 N
 N
 N
-l
+N
 N
 N
 N
@@ -604,12 +597,12 @@ N
 N
 N
 N
-l
 N
 N
 N
 N
-l
+N
+N
 a
 a
 a
@@ -627,7 +620,7 @@ a
 a
 a
 N
-l
+N
 N
 N
 N
@@ -641,7 +634,7 @@ N
 N
 N
 N
-l
+N
 z
 a
 a
@@ -663,7 +656,6 @@ N
 N
 N
 N
-l
 N
 N
 N
@@ -675,7 +667,8 @@ N
 N
 N
 N
-l
+N
+N
 a
 a
 a
@@ -700,7 +693,7 @@ N
 N
 N
 N
-l
+N
 N
 N
 N
@@ -737,7 +730,7 @@ N
 N
 N
 N
-l
+N
 N
 N
 N
@@ -794,7 +787,6 @@ a
 N
 N
 N
-l
 N
 N
 N
@@ -805,7 +797,8 @@ N
 N
 N
 N
-l
+N
+N
 N
 N
 a
@@ -834,7 +827,7 @@ N
 N
 N
 N
-l
+N
 N
 N
 N
@@ -896,7 +889,7 @@ a
 N
 N
 N
-l
+N
 N
 N
 N

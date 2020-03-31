@@ -10,8 +10,8 @@
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	speak_emote = list("roars")
-	speed = 10
-	move_to_delay = 10
+	speed = 30
+	move_to_delay = 30
 	ranged = TRUE
 	ranged_cooldown_time = 40
 	maxHealth = 350
@@ -30,6 +30,7 @@
 	pull_force = MOVE_FORCE_VERY_STRONG
 	butcher_results = list(/obj/item/stack/ore/diamond = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 10, /obj/item/stack/sheet/animalhide/ashdrake = 1)
 	loot = list()
+	crusher_loot = /obj/item/crusher_trophy/tail_spike
 	deathmessage = "collapses on it's side."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = UNCONSCIOUS

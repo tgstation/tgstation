@@ -9,13 +9,13 @@
 	width = 9
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "ah" = (
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "ak" = (
 /turf/closed/mineral/random/high_chance/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "ao" = (
 /obj/machinery/computer/shuttle/labor/one_way{
 	dir = 4
@@ -2094,7 +2094,7 @@
 /area/mine/laborcamp)
 "jL" = (
 /turf/closed/wall/r_wall,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "jU" = (
 /obj/structure/ore_box,
 /obj/effect/decal/cleanable/dirt,
@@ -2529,7 +2529,7 @@
 	},
 /obj/structure/sign/mining,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "tn" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
@@ -2724,7 +2724,7 @@
 	dir = 1
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "zk" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
@@ -3288,7 +3288,7 @@
 	dir = 8
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "KE" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -3300,7 +3300,7 @@
 "KJ" = (
 /obj/structure/closet/crate,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "Lg" = (
 /obj/item/clothing/under/color/jumpskirt/random,
 /obj/effect/turf_decal/tile/brown{
@@ -3826,7 +3826,7 @@
 	dir = 4
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "Vo" = (
 /obj/item/bikehorn{
 	color = "#000";
@@ -3834,7 +3834,7 @@
 	name = "charred bike horn"
 	},
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "VC" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light{
@@ -3934,7 +3934,7 @@
 "Xf" = (
 /obj/structure/ore_box,
 /turf/closed/mineral/random/snow,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/underground/unexplored/rivers)
 "Xl" = (
 /obj/structure/bookcase,
 /turf/open/floor/plasteel,

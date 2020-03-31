@@ -1,6 +1,6 @@
 /*
 
-Difficulty: Very Hard
+Difficulty: Hard
 
 */
 
@@ -29,10 +29,10 @@ Difficulty: Very Hard
 	melee_queue_distance = 20 // as far as possible really, need this because of charging and teleports
 	ranged = TRUE
 	pixel_x = -16
-	crusher_loot = list()
 	loot = list()
 	butcher_results = list()
-	guaranteed_butcher_results = list()
+	guaranteed_butcher_results = list(/obj/item/wendigo_blood)
+	crusher_loot = list(/obj/item/wendigo_blood, /obj/item/crusher_trophy/demon_claws)
 	wander = FALSE
 	del_on_death = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -43,7 +43,7 @@ Difficulty: Very Hard
 	deathsound = 'sound/effects/gravhit.ogg'
 	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
-							   /datum/action/innate/megafauna_attack/teleport_charge,
+							   /datum/action/innate/megafauna_attack/teleport,
 							   /datum/action/innate/megafauna_attack/disorienting_scream)
 	var/turf/starting
 	var/stomp_range = 1
@@ -57,11 +57,11 @@ Difficulty: Very Hard
 	chosen_message = "<span class='colossus'>You are now stomping the ground around you.</span>"
 	chosen_attack_num = 1
 
-/datum/action/innate/megafauna_attack/teleport_charge
-	name = "Teleport Charge"
+/datum/action/innate/megafauna_attack/teleport
+	name = "Teleport"
 	icon_icon = 'icons/effects/bubblegum.dmi'
 	button_icon_state = "smack ya one"
-	chosen_message = "<span class='colossus'>You are now teleport charging at the target you click on.</span>"
+	chosen_message = "<span class='colossus'>You are now teleporting at the target you click on.</span>"
 	chosen_attack_num = 2
 
 /datum/action/innate/megafauna_attack/disorienting_scream
@@ -77,34 +77,33 @@ Difficulty: Very Hard
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/OpenFire()
 	SetRecoveryTime(0, 100)
+	if(health <= maxHealth*0.5)
+		stomp_range = 2
+		speed = 6
+		move_to_delay = 6
+	else
+		stomp_range = initial(stomp_range)
+		speed = initial(speed)
+		move_to_delay = initial(move_to_delay)
 
 	if(client)
 		switch(chosen_attack)
 			if(1)
 				heavy_stomp()
 			if(2)
-				teleport_charge()
+				teleport()
 			if(3)
 				disorienting_scream()
 		return
 
 	chosen_attack = rand(1, 3)
-	if(health >= maxHealth*0.5)
-		switch(chosen_attack)
-			if(1)
-				heavy_stomp()
-			if(2)
-				teleport_charge()
-			if(3)
-				disorienting_scream()
-	else
-		switch(chosen_attack)
-			if(1)
-				heavy_stomp()
-			if(2)
-				teleport_charge()
-			if(3)
-				disorienting_scream()
+	switch(chosen_attack)
+		if(1)
+			heavy_stomp()
+		if(2)
+			teleport()
+		if(3)
+			disorienting_scream()
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/Move(atom/newloc, direct)
 	if(!can_move)
@@ -125,7 +124,7 @@ Difficulty: Very Hard
 		for(var/turf/T in all_turfs)
 			if(get_dist(orgin, T) > i)
 				continue
-			playsound(T,'sound/effects/bamf.ogg', 600, 1, 10)
+			playsound(T,'sound/effects/bamf.ogg', 600, TRUE, 10)
 			new /obj/effect/temp_visual/small_smoke/halfsecond(T)
 			for(var/mob/living/L in T)
 				if(L == src || L.throwing)
@@ -144,10 +143,25 @@ Difficulty: Very Hard
 	SetRecoveryTime(0, 0)
 	can_move = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/wendigo/proc/teleport_charge()
-	return
+/mob/living/simple_animal/hostile/megafauna/wendigo/proc/teleport()
+	var/list/possible_ends = list()
+	for(var/turf/T in view(4, target.loc) - view(3, target.loc))
+		if(isclosedturf(T))
+			continue
+		possible_ends |= T
+	var/turf/end = pick(possible_ends)
+	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_FREE, forced = TRUE)
+	SetRecoveryTime(20, 0)
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/disorienting_scream()
+	can_move = FALSE
+	playsound(src, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
+	for(var/mob/living/L in get_hearers_in_view(7, src))
+		shake_camera(L, 120, 2)
+		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
+	SetRecoveryTime(30, 0)
+	SLEEP_CHECK_DEATH(12)
+	can_move = TRUE
 	return
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
@@ -158,3 +172,29 @@ Difficulty: Very Hard
 	exit.add_atom_colour(COLOR_RED_LIGHT, ADMIN_COLOUR_PRIORITY)
 	exit.set_light(20, 1, LIGHT_COLOR_RED)
 	return ..()
+
+/obj/item/wendigo_blood
+	name = "bottle of wendigo blood"
+	desc = "You're not actually going to drink this, are you?"
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "vial"
+
+/obj/item/wendigo_blood/attack_self(mob/living/user)
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(!H.mind)
+		return
+	to_chat(H, "<span class='danger'>Power courses through you! You can now shift your form at will.</span>")
+	var/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear/P = new
+	H.mind.AddSpell(P)
+	playsound(H.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
+	qdel(src)
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/polar_bear
+	name = "Polar Bear Form"
+	desc = "Take on the shape of a polar bear."
+	invocation = "RAAAAAAAAWR!"
+	convert_damage = FALSE
+
+	shapeshift_type = /mob/living/simple_animal/hostile/asteroid/polarbear
