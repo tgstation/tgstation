@@ -714,10 +714,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 
 	Disconnect_cable()
 
-	if(cable_layer & CL)
-		cable_layer ^= CL
-	else
-		cable_layer |= CL
+	cable_layer ^= CL
 
 	Connect_cable(TRUE)
 
