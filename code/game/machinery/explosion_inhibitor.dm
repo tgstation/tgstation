@@ -4,8 +4,8 @@
 /obj/machinery/explosion_inhibitor
 	name = "explosion inhibitor"
 	desc = "This machine suppresses nearby explosions using a disortion field."
-	icon = 'icons/obj/machines/research.dmi'
-	icon_state = "tdoppler-off"
+	icon = 'icons/obj/machines/inhibitor.dmi'
+	icon_state = "inhibitor-off"
 	density = TRUE
 
 	idle_power_usage = 100
@@ -83,11 +83,11 @@
 /obj/machinery/explosion_inhibitor/update_icon_state()
 	switch(state)
 		if(INHIB_OFF)
-			icon_state = "tdoppler-off"
+			icon_state = "inhibitor-off"
 		if(INHIB_ACTIVE)
-			icon_state = "tdoppler"
+			icon_state = "inhibitor"
 		if(INHIB_CHARGING)
-			icon_state = "tdoppler" //todo icon
+			icon_state = "inhibitor-charge"
 
 /obj/machinery/explosion_inhibitor/ex_act(severity, target)
 	if(state == INHIB_ACTIVE)
