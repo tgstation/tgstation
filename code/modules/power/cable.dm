@@ -707,10 +707,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 			CL = CABLE_LAYER_3
 			to_chat(user, "<span class='warning'>You toggle L3 connection.</span>")
 		if("Machinery")
-			if(machinery_layer & MACHINERY_LAYER_1)
-				machinery_layer ^= MACHINERY_LAYER_1
-			else
-				machinery_layer |= MACHINERY_LAYER_1
+			machinery_layer ^= MACHINERY_LAYER_1
 			to_chat(user, "<span class='warning'>You toggle machinery connection.</span>")
 
 	cut_cable_from_powernet(FALSE)
