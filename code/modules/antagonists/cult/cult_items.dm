@@ -241,26 +241,6 @@
 	sleep(sword.spin_cooldown)
 	holder.update_action_buttons_icon()
 
-/obj/item/restraints/legcuffs/bola/cult
-	name = "\improper Nar'Sien bola"
-	desc = "A strong bola, bound with dark magic that allows it to pass harmlessly through Nar'Sien cultists. Throw it to trip and slow your victim."
-	icon_state = "bola_cult"
-	item_state = "bola_cult"
-	breakouttime = 60
-	knockdown = 30
-
-/obj/item/restraints/legcuffs/bola/cult/attack_hand(mob/living/user)
-	. = ..()
-	if(!iscultist(user))
-		to_chat(user, "<span class='warning'>The bola seems to take on a life of its own!</span>")
-		ensnare(user)
-
-/obj/item/restraints/legcuffs/bola/cult/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(iscultist(hit_atom))
-		return
-	. = ..()
-
-
 /obj/item/clothing/head/hooded/cult_hoodie
 	name = "ancient cultist hood"
 	icon_state = "culthood"
