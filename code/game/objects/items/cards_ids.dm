@@ -119,6 +119,7 @@
 	var/obj/machinery/paystand/my_store
 	var/uses_overlays = TRUE
 	var/icon/cached_flat_icon
+	var/registered_age = 13 // default age for ss13 players
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -142,7 +143,7 @@
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("assignment","registered_name")
+			if("assignment","registered_name","registered_age")
 				update_label()
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
@@ -274,6 +275,8 @@
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
+	if(registered_age)
+		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b><span class='danger'>'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'</span></b> along the bottom of the card." : ""]"
 	if(mining_points)
 		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
@@ -335,7 +338,7 @@ update_label()
 
 /obj/item/card/id/proc/update_label()
 	var/blank = !registered_name
-	name = "[blank ? id_type_name : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"]"
+	name = "[blank ? id_type_name : "[registered_name]'s ID Card"][(!assignment) ? "" : " ([assignment])"][!blank && registered_age < AGE_MINOR ? " <b>(MINOR)</b>":""]"
 	update_icon()
 
 /obj/item/card/id/silver
@@ -412,6 +415,11 @@ update_label()
 			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
 			if(!target_occupation)
 				return
+
+			var/newAge = input(user, "Choose the ID's age:\n([AGE_MIN]-[AGE_MAX])", "Agent card age") as num|null
+			if(newAge)
+				registered_age = max(round(text2num(newAge)), 0)
+
 			registered_name = input_name
 			assignment = target_occupation
 			update_label()
@@ -460,6 +468,7 @@ update_label()
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE
+	registered_age = null
 
 /obj/item/card/id/syndicate_command/crew_id
 	name = "syndicate ID card"
@@ -491,6 +500,7 @@ update_label()
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	registered_name = "Captain"
 	assignment = "Captain"
+	registered_age = null
 
 /obj/item/card/id/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
@@ -513,6 +523,7 @@ update_label()
 	registered_name = "Central Command"
 	assignment = "Central Command"
 	uses_overlays = FALSE
+	registered_age = null
 
 /obj/item/card/id/centcom/Initialize()
 	access = get_all_centcom_access()
@@ -526,6 +537,7 @@ update_label()
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 	uses_overlays = FALSE
+	registered_age = null
 
 /obj/item/card/id/ert/Initialize()
 	access = get_all_accesses()+get_ert_access("commander")-ACCESS_CHANGE_IDS
@@ -619,6 +631,7 @@ update_label()
 	uses_overlays = FALSE
 	var/goal = 0 //How far from freedom?
 	var/points = 0
+	registered_age = null
 
 /obj/item/card/id/prisoner/attack_self(mob/user)
 	to_chat(usr, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
@@ -668,6 +681,7 @@ update_label()
 	access = list(ACCESS_AWAY_GENERAL)
 	icon_state = "retro"
 	uses_overlays = FALSE
+	registered_age = null
 
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
@@ -715,6 +729,7 @@ update_label()
 	uses_overlays = FALSE
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
+	registered_age = null
 
 /obj/item/card/id/departmental_budget/Initialize()
 	. = ..()

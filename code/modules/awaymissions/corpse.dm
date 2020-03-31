@@ -221,6 +221,8 @@
 
 	var/obj/item/card/id/W = H.wear_id
 	if(W)
+		if(H.age)
+			W.registered_age = H.age
 		if(id_access)
 			for(var/jobtype in typesof(/datum/job))
 				var/datum/job/J = new jobtype
