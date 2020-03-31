@@ -10,7 +10,7 @@ Policy configuration is a json file that the administrators of a server can edit
 
 The policy text for a specific keyword should be displayed when relevant and appropriate, to allow server administrators to define the broad strokes of policy for some feature or mob.
 
-It is okay to provide a default text when the config is not set, but you are required to provide one in all cases of a ghost role or an antagonist, or minor event.
+It is okay to provide a default text when the config is not set, but you are required to provide the config in all cases of a ghost role or an antagonist, or minor event.
 
 If you're in doubt about needing to support policy config, I suggest doing it anyway. This should replace all flavour text, ghost spawn messages and so forth that the player (i.e client) sees upon entering the role, mob, feature.
 
