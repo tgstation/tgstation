@@ -27,6 +27,9 @@
 	remove_from_dead_mob_list()
 	remove_from_alive_mob_list()
 	focus = null
+	if(length(progressbars))
+		stack_trace("[src] destroyed with elements in its progressbars list")
+		progressbars = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
