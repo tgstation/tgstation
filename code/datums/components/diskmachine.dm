@@ -61,7 +61,8 @@
 	if(!is_type_in_typecache(disk, disk_typecache))
 		return
 
-	user.transferItemToLoc(disk, src)
+	user.transferItemToLoc(disk, parent)
+	disk.moveToNullspace()
 
 	if(src.disk)
 		user.put_in_active_hand(src.disk)
