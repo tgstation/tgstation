@@ -9,6 +9,8 @@
 #define COMSIG_GLOB_NEW_Z "!new_z"
 /// called after a successful var edit somewhere in the world: (list/args)
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"
+/// called before explosions starts - capped (explosion_datum)
+#define COMSIG_GLOB_BEFORE_EXPLOSION "!before_explosion"
 /// called after an explosion happened : (epicenter, devastation_range, heavy_impact_range, light_impact_range, took, orig_dev_range, orig_heavy_range, orig_light_range)
 #define COMSIG_GLOB_EXPLOSION "!explosion"
 /// mob was created somewhere : (mob)
@@ -442,3 +444,10 @@
 #define COMSIG_XENO_TURF_CLICK_SHIFT "xeno_turf_click_shift"				//from turf ShiftClickOn(): (/mob)
 #define COMSIG_XENO_TURF_CLICK_CTRL "xeno_turf_click_alt"					//from turf AltClickOn(): (/mob)
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
+
+#define COMSIG_EXPLOSION_TURF_BEFORE_EX_ACT "explosion_turf_before_ex_act"
+	#define COMPONENT_EXPLOSION_SKIP_TURF 1
+	#define COMPONENT_EXPLOSION_MODIFY 2
+
+	#define DIST_ARG "dist"
+	#define FLAME_ARG "flame"

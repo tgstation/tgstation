@@ -20,6 +20,13 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/stopped = 0		//This is the number of threads stopped !DOESN'T COUNT THREAD 2!
 	var/static/id_counter = 0
 
+	var/devastation_range
+	var/heavy_impact_range
+	var/light_impact_range
+	var/flash_range
+	var/flame_range
+	var/turf/epicenter
+
 #define EX_PREPROCESS_EXIT_CHECK \
 	if(!running) {\
 		stopped = 2;\
@@ -33,16 +40,22 @@ GLOBAL_LIST_EMPTY(explosions)
 		EX_PREPROCESS_EXIT_CHECK\
 	}
 
-/datum/explosion/New(atom/epicenter, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, ignorecap, flame_range, silent, smoke)
+/datum/explosion/New(atom/_epicenter, _devastation_range, _heavy_impact_range, _light_impact_range, _flash_range, adminlog, ignorecap, _flame_range, silent, smoke)
 	set waitfor = FALSE
 
 	var/id = ++id_counter
 	explosion_id = id
-	explosion_source = epicenter
+	explosion_source = _epicenter
 
-	epicenter = get_turf(epicenter)
+	epicenter = get_turf(_epicenter)
 	if(!epicenter)
 		return
+
+	devastation_range = _devastation_range
+	heavy_impact_range = _heavy_impact_range
+	light_impact_range = _light_impact_range
+	flash_range = _flash_range
+	flame_range = _flame_range
 
 	GLOB.explosions += src
 	if(isnull(flame_range))
@@ -68,6 +81,9 @@ GLOBAL_LIST_EMPTY(explosions)
 		light_impact_range = min(GLOB.MAX_EX_LIGHT_RANGE * cap_multiplier, light_impact_range)
 		flash_range = min(GLOB.MAX_EX_FLASH_RANGE * cap_multiplier, flash_range)
 		flame_range = min(GLOB.MAX_EX_FLAME_RANGE * cap_multiplier, flame_range)
+
+	//todo make ignore into explosion flags and check that in response
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BEFORE_EXPLOSION,src)
 
 	//DO NOT REMOVE THIS STOPLAG, IT BREAKS THINGS
 	//not sleeping causes us to ex_act() the thing that triggered the explosion
@@ -168,6 +184,7 @@ GLOBAL_LIST_EMPTY(explosions)
 	var/iteration = 0
 	var/affTurfLen = affected_turfs.len
 	var/expBlockLen = cached_exp_block.len
+	var/distarglist = list()
 	for(var/TI in affected_turfs)
 		var/turf/T = TI
 		++iteration
@@ -179,7 +196,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			while(Trajectory != epicenter)
 				Trajectory = get_step_towards(Trajectory, epicenter)
 				dist += cached_exp_block[Trajectory]
-
+		var/base_dist = dist
 		var/flame_dist = dist < flame_range
 		var/throw_dist = dist
 
@@ -192,36 +209,40 @@ GLOBAL_LIST_EMPTY(explosions)
 		else
 			dist = EXPLODE_NONE
 
+		var/sigresult = SEND_SIGNAL(src,COMSIG_EXPLOSION_TURF_BEFORE_EX_ACT,T,base_dist,distarglist)
+		if(sigresult & COMPONENT_EXPLOSION_MODIFY)
+			dist = distarglist[DIST_ARG]
+			flame_dist = distarglist[FLAME_ARG]
 		//------- EX_ACT AND TURF FIRES -------
+		if(!(sigresult & COMPONENT_EXPLOSION_SKIP_TURF))
+			if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
+				var/list/items = list()
+				for(var/I in T)
+					var/atom/A = I
+					if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
+						items += A.GetAllContents()
+				for(var/O in items)
+					var/atom/A = O
+					if(!QDELETED(A))
+						A.ex_act(dist)
 
-		if(T == epicenter) // Ensures explosives detonating from bags trigger other explosives in that bag
-			var/list/items = list()
-			for(var/I in T)
-				var/atom/A = I
-				if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
-					items += A.GetAllContents()
-			for(var/O in items)
-				var/atom/A = O
-				if(!QDELETED(A))
-					A.ex_act(dist)
+			if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
+				new /obj/effect/hotspot(T) //Mostly for ambience!
 
-		if(flame_dist && prob(40) && !isspaceturf(T) && !T.density)
-			new /obj/effect/hotspot(T) //Mostly for ambience!
+			if(dist > EXPLODE_NONE)
+				T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
+				T.explosion_id = id
+				T.ex_act(dist)
+				exploded_this_tick += T
 
-		if(dist > EXPLODE_NONE)
-			T.explosion_level = max(T.explosion_level, dist)	//let the bigger one have it
-			T.explosion_id = id
-			T.ex_act(dist)
-			exploded_this_tick += T
+			//--- THROW ITEMS AROUND ---
 
-		//--- THROW ITEMS AROUND ---
-
-		var/throw_dir = get_dir(epicenter,T)
-		for(var/obj/item/I in T)
-			if(!I.anchored)
-				var/throw_range = rand(throw_dist, max_range)
-				var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
-				I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
+			var/throw_dir = get_dir(epicenter,T)
+			for(var/obj/item/I in T)
+				if(!I.anchored)
+					var/throw_range = rand(throw_dist, max_range)
+					var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
+					I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
 
 		//wait for the lists to repop
 		var/break_condition

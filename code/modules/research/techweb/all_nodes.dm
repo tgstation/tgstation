@@ -595,6 +595,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
+/datum/techweb_node/anti_explosives
+	id = "anti_explosives"
+	display_name = "Explosives countermeasures"
+	description = "Technology to protect the station from explosions."
+	design_ids = list("explosion_inhibitor")
+	prereq_ids = list("practical_bluespace","sec_basic")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	export_price = 5000
+
 /////////////////////////weaponry tech/////////////////////////
 /datum/techweb_node/weaponry
 	id = "weaponry"

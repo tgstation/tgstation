@@ -618,3 +618,12 @@
 	build_path = /obj/item/circuitboard/machine/sheetifier
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+/datum/design/board/explosion_inhibitor
+	name = "Machine Design (Explosion Inhibitor)"
+	desc = "Circuitboard for explosion inhibitor."
+	id = "explosion_inhibitor"
+	build_path = /obj/item/circuitboard/machine/explosion_inhibitor
+	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 3000 , /datum/material/uranium = 3000)
+	category = list("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY // Engineering maybe ? But i like the idea of sec actually doing something to protect the station.
