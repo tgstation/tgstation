@@ -173,7 +173,7 @@
 
 
 /obj/vehicle/sealed/car/clowncar/proc/EnterCannonMode()
-	mouse_pointer = 'icons/mecha/mecha_mouse.dmi'
+	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	cannonmode = TRUE
 	cannonbusy = FALSE
 	for(var/mob/living/L in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))

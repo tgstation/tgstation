@@ -49,7 +49,7 @@
 	. = ..()
 	to_chat(C, "[info_text]")
 
-	C.fully_replace_character_name("[pick(GLOB.nightmare_names)]")
+	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
 
 /datum/species/shadow/nightmare/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -153,6 +153,11 @@
 		owner.visible_message("<span class='warning'>[owner] staggers to [owner.p_their()] feet!</span>")
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 		respawn_progress = 0
+
+/obj/item/organ/heart/nightmare/get_availability(datum/species/S)
+	if(istype(S,/datum/species/shadow/nightmare))
+		return TRUE
+	return ..()
 
 //Weapon
 

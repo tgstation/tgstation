@@ -8,7 +8,7 @@ $color-selected: colors.bg(colors.$green) !default;
 $color-caution: colors.bg(colors.$yellow) !default;
 $color-danger: colors.bg(colors.$red) !default;
 $color-transparent-text: rgba(255, 255, 255, 0.5) !default;
-$border-radius: 0 !default;
+$border-radius: base.$border-radius !default;
 $bg-map: colors.$bg-map !default;
 
 @mixin button-color($color) {

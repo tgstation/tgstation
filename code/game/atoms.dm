@@ -7,7 +7,6 @@
 /atom
 	layer = TURF_LAYER
 	plane = GAME_PLANE
-	var/level = 2
 
 	///If non-null, overrides a/an/some in all cases
 	var/article
@@ -81,6 +80,9 @@
 
 	var/list/alternate_appearances
 
+	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
+	var/list/targeted_by
+
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
@@ -146,6 +148,9 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	if(loc)
+		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
 	//atom color stuff
 	if(color)
@@ -214,6 +219,11 @@
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
 
+	for(var/i in targeted_by)
+		var/mob/M = i
+		LAZYREMOVE(M.do_afters, src)
+
+	targeted_by = null
 	QDEL_NULL(light)
 
 	return ..()
@@ -651,8 +661,8 @@
 	else
 		return FALSE
 
-///Called when gravity returns after floating I think
-/atom/proc/handle_fall()
+///Used for making a sound when a mob involuntarily falls into the ground.
+/atom/proc/handle_fall(mob/faller)
 	return
 
 ///Respond to the singularity eating this atom

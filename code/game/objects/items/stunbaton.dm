@@ -198,8 +198,8 @@
 			else
 				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 		else
-			M.visible_message("<span class='warning'>[user] has prodded [M] with [src]. Luckily it was off.</span>", \
-							"<span class='warning'>[user] has prodded you with [src]. Luckily it was off</span>")
+			M.visible_message("<span class='warning'>[user] prods [M] with [src]. Luckily it was off.</span>", \
+							"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
 	else
 		if(turned_on)
 			if(attack_cooldown_check <= world.time)
@@ -233,8 +233,8 @@
 	if(user)
 		L.lastattacker = user.real_name
 		L.lastattackerckey = user.ckey
-		L.visible_message("<span class='danger'>[user] has stunned [L] with [src]!</span>", \
-								"<span class='userdanger'>[user] has stunned you with [src]!</span>")
+		L.visible_message("<span class='danger'>[user] stuns [L] with [src]!</span>", \
+								"<span class='userdanger'>[user] stuns you with [src]!</span>")
 		log_combat(user, L, "stunned")
 
 	playsound(src, stun_sound, 50, TRUE, -1)
@@ -253,12 +253,13 @@
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	if(!target.IsKnockdown())
+		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
+
 	if(trait_check)
 		target.Knockdown(stun_time * 0.1)
 	else
 		target.Knockdown(stun_time)
-	if(!target.IsKnockdown())
-		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()

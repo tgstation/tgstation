@@ -35,7 +35,7 @@ export const ExosuitControlConsole = props => {
               })} />
             <Button
               icon="wifi"
-              content={mech.emp_recharging ? "Recharging..." : "Radiate EMP"}
+              content={mech.emp_recharging ? "Recharging..." : "EMP Burst"}
               color="bad"
               disabled={mech.emp_recharging}
               onClick={() => act('shock', {

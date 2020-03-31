@@ -1180,6 +1180,7 @@
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/matter_bin = 2)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
