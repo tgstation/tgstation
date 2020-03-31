@@ -496,6 +496,7 @@ obj/effect/warped_rune/bluespace
 
 ///the first two person that stepped on the rune swap places after the second person stepped on it. TODO: fix the potential lag abyse
 obj/effect/warped_rune/bluespace/Crossed(atom/movable/AM)
+	..()
 	if(cooldown > world.time) //checks if 2 seconds have passed to avoid spam.
 		return
 	cooldown = max_cooldown + world.time //sorry no constantly running into it with a frend for free lag.
@@ -539,6 +540,7 @@ obj/effect/warped_rune/sepiaspace
 
 ///stops time on a single tile for 5 seconds
 obj/effect/warped_rune/sepiaspace/Crossed()
+	..()
 	if(locate(TS) in T)//checks if there's already a timestop on the rune. here to avoid the effect triggering multiple time at the same time.
 		return
 	new TS(T, 0, 50) //spawn a timestop for 5 seconds.
@@ -568,7 +570,7 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 
 ///makes a hologram of the mob stepping on the tile, any new person stepping in will replace it with a new hologram
 /obj/effect/warped_rune/ceruleanspace/Crossed(atom/movable/AM)
-
+	..()
 	if(!istype(AM,/mob/living))
 		return
 	if(locate(holotile) in T)//here to both delete the previous hologram,
@@ -603,6 +605,7 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 
 ///colors whoever steps on the rune randomly
 /obj/effect/warped_rune/pyritespace/Crossed(atom/movable/AM)
+	..()
 	AM.color = rgb(rand(0,255),rand(0,255),rand(0,255))
 
 
@@ -622,6 +625,7 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 
 ///boost up the unarmed damage of the person currently on the tile.
 /obj/effect/warped_rune/redspace/Crossed(atom/movable/AM)
+	..()
 	if(!istype(AM,/mob/living/carbon/human))
 		return
 	H = AM
@@ -727,6 +731,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 ///adds the jolly mood effect along with hug sound effect.
 /obj/effect/warped_rune/pinkspace/Crossed(atom/movable/AM)
+	..()
 	if(istype(AM,/mob/living/carbon/human))
 		playsound(T, "sound/weapons/thudswoosh.ogg", 50, TRUE)
 		SEND_SIGNAL(AM, COMSIG_ADD_MOOD_EVENT,"jolly", /datum/mood_event/jolly)
@@ -871,6 +876,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	
 ///will swap the species of the first two human or human subset that walk on the rune	
 /obj/effect/warped_rune/blackspace/Crossed(atom/movable/AM)
+	..()
 	if(cooldown > world.time) //here to avoid spam/lag 
 		to_chat(AM, "<span class='warning'>The rune needs a little more time before processing your DNA!</span>")
 		return
