@@ -640,17 +640,6 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	color = rgb(R, G, B)
 
 	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
-
-	//var/list/obj/node = list()
-	//var/separated_linked_dir = 0
-	
-	/*if(cable_layer & CABLE_LAYER_1)
-		cable_node_1.alpha = 255
-		node = get_cable_connections(linked_dirs, CABLE_LAYER_1)
-		for(var/obj/target_node)
-
-	else
-		cable_node_1.alpha = 0*/
 	
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
 
