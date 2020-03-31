@@ -163,3 +163,10 @@
 	. = ..()
 	if(active)
 		user.throw_item(target)
+
+/// Don't call qdel() directly on the grenade after it booms, call this instead so it can still resolve its pellet_cloud component if it has shrapnel, then the component will qdel it
+/obj/item/grenade/proc/resolve()
+	if(shrapnel_type)
+		moveToNullspace()
+	else
+		qdel(src)

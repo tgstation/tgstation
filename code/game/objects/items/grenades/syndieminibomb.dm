@@ -12,7 +12,7 @@
 /obj/item/grenade/syndieminibomb/prime()
 	. = ..()
 	update_mob()
-	qdel(src)
+	resolve()
 
 /obj/item/grenade/syndieminibomb/concussion
 	name = "HE Grenade"
@@ -35,7 +35,7 @@
 /obj/item/grenade/frag/prime()
 	. = ..()
 	update_mob()
-	qdel(src)
+	resolve()
 
 /obj/item/grenade/gluon
 	desc = "An advanced grenade that releases a harmful stream of gluons inducing radiation in those nearby. These gluon streams will also make victims feel exhausted, and induce shivering. This extreme coldness will also likely wet any nearby floors."
@@ -59,4 +59,4 @@
 			for(var/mob/living/carbon/L in T)
 				L.adjustStaminaLoss(stamina_damage)
 				L.adjust_bodytemperature(-230)
-	qdel(src)
+	resolve()

@@ -21,7 +21,7 @@
 		var/list/spawned = spawn_and_random_walk(spawner_type, T, deliveryamt, walk_chance=50, admin_spawn=((flags_1 & ADMIN_SPAWNED_1) ? TRUE : FALSE))
 		afterspawn(spawned)
 
-	qdel(src)
+	resolve()
 
 /obj/item/grenade/spawnergrenade/proc/afterspawn(list/mob/spawned)
 	return

@@ -30,8 +30,6 @@
 	var/terminated /// how many pellets ranged out without hitting anything
 	var/hits /// how many pellets impacted something
 
-	var/not_done_yet /// for grenades and landmines (and I guess caseless ammo casings actually, goddammit) where the parent deletes itself before all the pellets are accounted for
-
 	var/mob/living/shooter /// for if we're an ammo casing being fired
 
 /datum/component/pellet_cloud/Initialize(projectile_type=/obj/item/shrapnel, magnitude=5)
@@ -39,7 +37,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(magnitude < 1)
-		CRASH("Invalid magnitude [magnitude] < 1 on pellet_cloud, parent: [parent]")
+		stack_trace("Invalid magnitude [magnitude] < 1 on pellet_cloud, parent: [parent]")
 		qdel(src, TRUE)
 		return
 
@@ -47,20 +45,14 @@
 
 	if(isammocasing(parent))
 		num_pellets = magnitude
-		if(istype(parent, /obj/item/ammo_casing/caseless))
-			not_done_yet = TRUE
 	else if(isgrenade(parent) || islandmine(parent))
 		radius = magnitude
-		not_done_yet = TRUE
 
 /datum/component/pellet_cloud/Destroy(force, silent)
-	if(not_done_yet)
-		return QDEL_HINT_LETMELIVE
-
-	QDEL_NULL(purple_hearts)
-	QDEL_NULL(pellets)
-	QDEL_NULL(targets_hit)
-	QDEL_NULL(bodies)
+	purple_hearts = null
+	pellets = null
+	targets_hit = null
+	bodies = null
 	return ..()
 
 /datum/component/pellet_cloud/RegisterWithParent()
@@ -73,8 +65,6 @@
 		RegisterSignal(parent, COMSIG_MINE_TRIGGERED, .proc/create_blast_pellets)
 
 /datum/component/pellet_cloud/UnregisterFromParent()
-	if(not_done_yet)
-		return QDEL_HINT_LETMELIVE
 	UnregisterSignal(parent, list(COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
 
 /**
@@ -101,7 +91,7 @@
 		RegisterSignal(A.BB, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
 		pellets += A.BB
 		if(!A.throw_proj(target, targloc, shooter, params, spread))
-			return 0
+			return
 		if(i != num_pellets)
 			A.newshot()
 
@@ -138,35 +128,34 @@
   */
 /datum/component/pellet_cloud/proc/handle_martyrs()
 	var/list/martyrs = list()
-	for(var/mob/living/L in get_turf(parent))
-		if(!(L in bodies))
-			martyrs += L
+	for(var/mob/living/body in get_turf(parent))
+		if(!(body in bodies))
+			martyrs += body // promoted from a corpse to a hero
 
 	var/magnitude_absorbed
 	var/total_pellets_absorbed
 
 	for(var/M in martyrs)
-		var/mob/living/L = M
+		var/mob/living/martyr = M
 		if(radius > 4)
-			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, absorbing a load of the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, absorbing a load of the shrapnel!</span>")
+			martyr.visible_message("<b><span class='danger'>[martyr] heroically covers \the [parent] with [martyr.p_their()] body, absorbing a load of the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, absorbing a load of the shrapnel!</span>")
 			magnitude_absorbed += round(radius * 0.5)
 		else if(radius >= 2)
-			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, absorbing some of the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, absorbing some of the shrapnel!</span>")
+			martyr.visible_message("<b><span class='danger'>[martyr] heroically covers \the [parent] with [martyr.p_their()] body, absorbing some of the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, absorbing some of the shrapnel!</span>")
 			magnitude_absorbed += 2
 		else
-			L.visible_message("<b><span class='danger'>[L] heroically covers \the [parent] with [L.p_their()] body, snuffing out the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, snuffing out the shrapnel!</span>")
+			martyr.visible_message("<b><span class='danger'>[martyr] heroically covers \the [parent] with [martyr.p_their()] body, snuffing out the shrapnel!</span></b>", "<span class='userdanger'>You heroically cover \the [parent] with your body, snuffing out the shrapnel!</span>")
 			magnitude_absorbed = radius
 
-		var/pellets_absorbed
-		pellets_absorbed = (radius ** 2) - ((radius - magnitude_absorbed - 1) ** 2)
+		var/pellets_absorbed = (radius ** 2) - ((radius - magnitude_absorbed - 1) ** 2)
 		radius -= magnitude_absorbed
 		total_pellets_absorbed += round(pellets_absorbed/2)
 
-		if(L.stat != DEAD && L.client)
-			LAZYADD(purple_hearts, L)
+		if(martyr.stat != DEAD && martyr.client)
+			LAZYADD(purple_hearts, martyr)
 
 		for(var/i in 1 to round(pellets_absorbed/2))
-			pew(L)
+			pew(martyr)
 
 		if(radius < 1)
 			break
@@ -210,9 +199,9 @@
 
 ///All of our pellets are accounted for, time to go target by target and tell them how many things they got hit by.
 /datum/component/pellet_cloud/proc/finalize()
-	var/obj/projectile/P = new projectile_type
+	var/obj/projectile/P = projectile_type
 	var/proj_name = initial(P.name)
-	QDEL_NULL(P)
+
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]
 		if(num_hits > 1)
@@ -222,13 +211,12 @@
 			target.visible_message("<span class='danger'>[target] is hit by a [proj_name]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
 			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s!</span>")
 
-	if(purple_hearts)
-		for(var/M in purple_hearts)
-			var/mob/living/L = M
-			if(L.stat == DEAD && L.client)
-				L.client.give_award(/datum/award/achievement/misc/lookoutsir, L)
+	for(var/M in purple_hearts)
+		var/mob/living/martyr = M
+		if(martyr.stat == DEAD && martyr.client)
+			martyr.client.give_award(/datum/award/achievement/misc/lookoutsir, martyr)
 
-	not_done_yet = FALSE
+	qdel(parent)
 	qdel(src)
 
 /// Look alive, we're armed! Now we start watching to see if anyone's covering us

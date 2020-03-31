@@ -112,7 +112,7 @@ obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volum
 	. = ..()
 	update_mob()
 	var/explosion_loc = get_turf(src)
-	qdel(src)
+	resolve()
 	explosion(explosion_loc,-1,-1,2)
 
 

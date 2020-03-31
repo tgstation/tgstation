@@ -32,7 +32,7 @@
 
 /datum/component/embedded
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	var/obj/item/bodypart/L
+	var/obj/item/bodypart/limb
 	var/obj/item/weapon
 
 	// all of this stuff is explained in _DEFINES/combat.dm
@@ -73,7 +73,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(part)
-		L = part
+		limb = part
 	src.embed_chance = embed_chance
 	src.fall_chance = fall_chance
 	src.pain_chance = pain_chance
@@ -132,25 +132,25 @@
 /datum/component/embedded/proc/initHuman()
 	START_PROCESSING(SSdcs, src)
 	var/mob/living/carbon/victim = parent
-	if(!L || !istype(L))
-		L = pick(victim.bodyparts)
+	if(!istype(limb))
+		limb = pick(victim.bodyparts)
 
-	L.embedded_objects |= weapon // on the inside... on the inside...
+	limb.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
 	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/byeItemHuman)
 
 	if(harmful)
-		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [L.name]!</span>",ignored_mobs=victim)
-		to_chat(victim, "<span class='userdanger'>[weapon] embeds itself in your [L.name]!</span>")
+		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [limb.name]!</span>",ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] embeds itself in your [limb.name]!</span>")
 		victim.throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
 		playsound(victim,'sound/weapons/bladeslice.ogg', 40)
 		weapon.add_mob_blood(victim)//it embedded itself in you, of course it's bloody!
 		var/damage = weapon.w_class * impact_pain_mult
-		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
 		SEND_SIGNAL(victim, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
 	else
-		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [L.name]!</span>",ignored_mobs=victim)
-		to_chat(victim, "<span class='userdanger'>[weapon] sticks itself to your [L.name]!</span>")
+		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [limb.name]!</span>",ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] sticks itself to your [limb.name]!</span>")
 
 /// Called every time a human with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the human is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
@@ -162,8 +162,8 @@
 
 	if(harmful && prob(chance))
 		var/damage = weapon.w_class * jostle_pain_mult
-		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
-		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [L.name] jostles and stings!</span>")
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] jostles and stings!</span>")
 
 
 /// Called when then item randomly falls out of a human. This handles the damage and descriptors, then calls safe_remove()
@@ -172,37 +172,37 @@
 
 	if(harmful)
 		var/damage = weapon.w_class * remove_pain_mult
-		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
-		victim.visible_message("<span class='danger'>[weapon] falls out of [victim.name]'s [L.name]!</span>", ignored_mobs=victim)
-		to_chat(victim, "<span class='userdanger'>[weapon] falls out of your [L.name]!</span>")
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		victim.visible_message("<span class='danger'>[weapon] falls out of [victim.name]'s [limb.name]!</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] falls out of your [limb.name]!</span>")
 	else
-		victim.visible_message("<span class='danger'>[weapon] falls off of [victim.name]'s [L.name]!</span>", ignored_mobs=victim)
-		to_chat(victim, "<span class='userdanger'>[weapon] falls off of your [L.name]!</span>")
+		victim.visible_message("<span class='danger'>[weapon] falls off of [victim.name]'s [limb.name]!</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] falls off of your [limb.name]!</span>")
 
 	safeRemoveHuman()
 
 
 /// Called when a human with an object embedded/stuck to them inspects themselves and clicks the appropriate link to begin ripping the item out. This handles the ripping attempt, descriptors, and dealing damage, then calls safe_remove()
 /datum/component/embedded/proc/ripOutHuman(datum/source, obj/item/I, obj/item/bodypart/limb)
-	if(I != weapon || limb != L)
+	if(I != weapon || limb != limb)
 		return
 
 	var/mob/living/carbon/victim = parent
 	var/time_taken = rip_time * weapon.w_class
 
-	victim.visible_message("<span class='warning'>[victim] attempts to remove [weapon] from [victim.p_their()] [L.name].</span>","<span class='notice'>You attempt to remove [weapon] from your [L.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
+	victim.visible_message("<span class='warning'>[victim] attempts to remove [weapon] from [victim.p_their()] [limb.name].</span>","<span class='notice'>You attempt to remove [weapon] from your [limb.name]... (It will take [DisplayTimeText(time_taken)].)</span>")
 	if(do_after(victim, time_taken, target = victim))
-		if(!weapon || !L || weapon.loc != victim || !(weapon in L.embedded_objects))
-			QDEL_NULL(src)
+		if(!weapon || !limb || weapon.loc != victim || !(weapon in limb.embedded_objects))
+			qdel(src)
 			return
 
 		if(harmful)
 			var/damage = weapon.w_class * remove_pain_mult
-			L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage) //It hurts to rip it out, get surgery you dingus.
+			limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage) //It hurts to rip it out, get surgery you dingus.
 			victim.emote("scream")
-			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] out of [victim.p_their()] [L.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [L.name].</span>")
+			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] out of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
 		else
-			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] off of [victim.p_their()] [L.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [L.name].</span>")
+			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] off of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
 
 		safeRemoveHuman(TRUE)
 
@@ -211,7 +211,7 @@
 /// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
 /datum/component/embedded/proc/safeRemoveHuman(to_hands)
 	var/mob/living/carbon/victim = parent
-	L.embedded_objects -= weapon
+	limb.embedded_objects -= weapon
 
 	if(!weapon)
 		if(!victim.has_embedded_objects())
@@ -245,13 +245,13 @@
 /// Something deleted or moved our weapon while it was embedded, how rude!
 /datum/component/embedded/proc/byeItemHuman()
 	var/mob/living/carbon/victim = parent
-	L.embedded_objects -= weapon
+	limb.embedded_objects -= weapon
 	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	weapon.unembedded()
 	weapon = null
 
 	if(victim)
-		to_chat(victim, "<span class='userdanger'>\The [weapon] that was embedded in your [L.name] disappears!</span>")
+		to_chat(victim, "<span class='userdanger'>\The [weapon] that was embedded in your [limb.name] disappears!</span>")
 		if(!victim.has_embedded_objects())
 			victim.clear_alert("embeddedobject")
 			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
@@ -263,7 +263,7 @@
 /datum/component/embedded/proc/processHuman()
 	var/mob/living/carbon/victim = parent
 
-	if(!victim || !L) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)
+	if(!victim || !limb) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)
 		weapon.forceMove(get_turf(weapon))
 		QDEL_NULL(src)
 
@@ -277,8 +277,8 @@
 		damage *= 0.7
 
 	if(harmful && prob(chance))
-		L.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
-		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [L.name] hurts!</span>")
+		limb.receive_damage(brute=(1-pain_stam_pct) * damage, stamina=pain_stam_pct * damage)
+		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts!</span>")
 
 	if(prob(fall_chance))
 		fallOutHuman()

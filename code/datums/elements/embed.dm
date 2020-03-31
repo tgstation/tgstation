@@ -63,7 +63,7 @@
 		RegisterSignal(target, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/checkEmbedProjectile)
 
 
-/datum/element/embed/Detach(obj/item/target)
+/datum/element/embed/Detach(obj/target)
 	. = ..()
 	if(isitem(target))
 		UnregisterSignal(target, list(COMSIG_MOVABLE_IMPACT_ZONE, COMSIG_ELEMENT_ATTACH, COMSIG_MOVABLE_IMPACT, COMSIG_PARENT_EXAMINE, COMSIG_EMBED_TRY_FORCE, COMSIG_ITEM_DISABLE_EMBED))
@@ -152,7 +152,7 @@
 		Detach(weapon)
 
 ///If we don't want to be embeddable anymore (deactivating an e-dagger for instance)
-/datum/element/embed/proc/detachFromWeapon(obj/item/weapon)
+/datum/element/embed/proc/detachFromWeapon(obj/weapon)
 	Detach(weapon)
 
 ///Someone inspected our embeddable item
