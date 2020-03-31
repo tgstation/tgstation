@@ -150,12 +150,14 @@ Difficulty: Hard
 			continue
 		possible_ends |= T
 	var/turf/end = pick(possible_ends)
-	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_FREE, forced = TRUE)
+	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 	SetRecoveryTime(20, 0)
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/disorienting_scream()
 	can_move = FALSE
 	playsound(src, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
+	animate(src, pixel_z = rand(5, 15), time = 1, loop = 6)
+	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src))
 		shake_camera(L, 120, 2)
 		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
