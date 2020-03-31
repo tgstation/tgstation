@@ -275,10 +275,23 @@
 	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, TRUE)
 	new /obj/effect/temp_visual/cult/sac(get_turf(S))
 
-/obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)
-	if(!isanimal(target) || target.stat)
+/obj/effect/proc_holder/spell/targeted/dominate/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(!.)
 		return FALSE
-	if("cult" in target.faction)
+	if(!isanimal(target))
+		if(!silent)
+			to_chat(user, "<span class='warning'>Target is not a lesser creature!</span>")
+		return FALSE
+
+	var/mob/living/simple_animal/animal = target
+	if(animal.stat)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Target is dead!</span>")
+		return FALSE
+	if("cult" in animal.faction)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Target is already serving Nar'Sie!</span>")
 		return FALSE
 	return TRUE
 
