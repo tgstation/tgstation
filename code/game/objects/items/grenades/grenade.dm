@@ -19,13 +19,20 @@
 	var/clumsy_check = GRENADE_CLUMSY_FUMBLE
 	var/sticky = FALSE
 	// I moved the explosion vars and behavior to base grenades because we want all grenades to call [/obj/item/grenade/proc/prime] so we can send COMSIG_GRENADE_PRIME
-	var/ex_dev = 0 ///how big of a devastation explosion radius on prime
-	var/ex_heavy = 0 ///how big of a heavy explosion radius on prime
-	var/ex_light = 0 ///how big of a light explosion radius on prime
-	var/ex_flame = 0 ///how big of a flame explosion radius on prime
+	///how big of a devastation explosion radius on prime
+	var/ex_dev = 0
+	///how big of a heavy explosion radius on prime
+	var/ex_heavy = 0
+	///how big of a light explosion radius on prime
+	var/ex_light = 0
+	///how big of a flame explosion radius on prime
+	var/ex_flame = 0
+
 	// dealing with creating a [/datum/component/pellet_cloud] on prime
-	var/shrapnel_type /// if set, will spew out projectiles of this type
-	var/shrapnel_radius /// the higher this number, the more projectiles are created as shrapnel
+	/// if set, will spew out projectiles of this type
+	var/shrapnel_type
+	/// the higher this number, the more projectiles are created as shrapnel
+	var/shrapnel_radius
 	var/shrapnel_initialized
 
 /obj/item/grenade/suicide_act(mob/living/carbon/user)
@@ -105,7 +112,7 @@
 
 	SEND_SIGNAL(src, COMSIG_GRENADE_PRIME)
 	if(ex_dev || ex_heavy || ex_light || ex_flame)
-		explosion(src.loc,ex_dev,ex_heavy,ex_light,flame_range = ex_flame)
+		explosion(loc, ex_dev, ex_heavy, ex_light, flame_range = ex_flame)
 
 /obj/item/grenade/proc/update_mob()
 	if(ismob(loc))

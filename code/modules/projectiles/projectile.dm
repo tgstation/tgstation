@@ -43,15 +43,25 @@
 	var/nondirectional_sprite = FALSE //Set TRUE to prevent projectiles from having their sprites rotated based on firing angle
 	var/spread = 0			//amount (in degrees) of projectile spread
 	animate_movement = NO_STEPS	//Use SLIDE_STEPS in conjunction with legacy
-	var/ricochets = 0 /// how many times we've ricochet'd so far (instance variable, not a stat)
-	var/ricochets_max = 0 /// how many times we can ricochet max
-	var/ricochet_chance = 0 /// 0-100, the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
-	var/ricochet_decay_chance = 0.7 /// 0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet
-	var/ricochet_decay_damage = 0.7 /// 0-1 (or more, I guess) multiplier, the projectile's damage is modified by multiplying this after each ricochet
-	var/ricochet_auto_aim_range = 0 /// On ricochet, if nonzero, we consider all mobs within this range of our projectile at the time of ricochet to home in on like Revolver Ocelot, as governed by ricochet_auto_aim_angle
-	var/ricochet_auto_aim_angle = 30 /// On ricochet, if ricochet_auto_aim_range is nonzero, we'll consider any mobs within this range of the normal angle of incidence to home in on, higher = more auto aim
-	var/ricochet_incidence_leeway = 40 /// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
-	var/force_hit = FALSE //If the object being hit can pass ths damage on to something else, it should not do it for this bullet.
+	/// how many times we've ricochet'd so far (instance variable, not a stat)
+	var/ricochets = 0
+	/// how many times we can ricochet max
+	var/ricochets_max = 0
+	/// 0-100, the base chance of ricocheting, before being modified by the atom we shoot and our chance decay
+	var/ricochet_chance = 0
+	/// 0-1 (or more, I guess) multiplier, the ricochet_chance is modified by multiplying this after each ricochet
+	var/ricochet_decay_chance = 0.7
+	/// 0-1 (or more, I guess) multiplier, the projectile's damage is modified by multiplying this after each ricochet
+	var/ricochet_decay_damage = 0.7
+	/// On ricochet, if nonzero, we consider all mobs within this range of our projectile at the time of ricochet to home in on like Revolver Ocelot, as governed by ricochet_auto_aim_angle
+	var/ricochet_auto_aim_range = 0
+	/// On ricochet, if ricochet_auto_aim_range is nonzero, we'll consider any mobs within this range of the normal angle of incidence to home in on, higher = more auto aim
+	var/ricochet_auto_aim_angle = 30
+	/// the angle of impact must be within this many degrees of the struck surface, set to 0 to allow any angle
+	var/ricochet_incidence_leeway = 40
+
+	///If the object being hit can pass ths damage on to something else, it should not do it for this bullet
+	var/force_hit = FALSE
 
 	//Hitscan
 	var/hitscan = FALSE		//Whether this is hitscan. If it is, speed is basically ignored.

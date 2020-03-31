@@ -93,11 +93,11 @@
 	if(!pass)
 		return
 
-	var/obj/item/bodypart/L = victim.get_bodypart(hit_zone) || pick(victim.bodyparts)
+	var/obj/item/bodypart/limb = victim.get_bodypart(hit_zone) || pick(victim.bodyparts)
 	victim.AddComponent(/datum/component/embedded,\
 		weapon,\
 		throwingdatum,\
-		part = L,\
+		part = limb,\
 		embed_chance = embed_chance,\
 		fall_chance = fall_chance,\
 		pain_chance = pain_chance,\
@@ -177,8 +177,8 @@
 	var/did_embed
 	if(iscarbon(hit))
 		var/mob/living/carbon/C = hit
-		var/obj/item/bodypart/L = C.get_bodypart(C.check_limb_hit(P.def_zone))
-		did_embed = payload.tryEmbed(L)
+		var/obj/item/bodypart/limb = C.get_bodypart(C.check_limb_hit(P.def_zone))
+		did_embed = payload.tryEmbed(limb)
 	else
 		did_embed = payload.tryEmbed(hit)
 
@@ -199,7 +199,7 @@
   * * forced- if we want this to succeed 100%
   */
 /datum/element/embed/proc/tryForceEmbed(obj/item/I, atom/target, hit_zone, forced=FALSE)
-	var/obj/item/bodypart/L
+	var/obj/item/bodypart/limb
 	var/mob/living/carbon/C
 	var/turf/closed/T
 
@@ -209,11 +209,11 @@
 	if(iscarbon(target))
 		C = target
 		if(!hit_zone)
-			L = pick(C.bodyparts)
-			hit_zone = L.body_zone
+			limb = pick(C.bodyparts)
+			hit_zone = limb.body_zone
 	else if(isbodypart(target))
-		L = target
-		C = L.owner
+		limb = target
+		C = limb.owner
 	else if(isclosedturf(target))
 		T = target
 

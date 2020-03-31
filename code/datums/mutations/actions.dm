@@ -371,7 +371,6 @@
 
 	var/obj/item/bodypart/L = spikey.checkembedded()
 
-	transfered.remove_embedded_object(spikey)
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
 	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")

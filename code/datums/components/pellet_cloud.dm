@@ -38,8 +38,7 @@
 
 	if(magnitude < 1)
 		stack_trace("Invalid magnitude [magnitude] < 1 on pellet_cloud, parent: [parent]")
-		qdel(src, TRUE)
-		return
+		magnitude = 1
 
 	src.projectile_type = projectile_type
 

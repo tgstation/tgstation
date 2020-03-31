@@ -78,14 +78,6 @@
 							break
 						M.dropItemToGround(item_to_retrieve)
 
-						if(iscarbon(M)) //Edge case housekeeping
-							var/mob/living/carbon/C = M
-							for(var/X in C.bodyparts)
-								var/obj/item/bodypart/part = X
-								if(item_to_retrieve in part.embedded_objects)
-									C.remove_embedded_object(item_to_retrieve)
-									break
-
 					else
 						if(istype(item_to_retrieve.loc, /obj/machinery/portable_atmospherics/)) //Edge cases for moved machinery
 							var/obj/machinery/portable_atmospherics/P = item_to_retrieve.loc

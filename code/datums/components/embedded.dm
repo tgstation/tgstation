@@ -3,12 +3,12 @@
 	and when it impacts and meets the requirements to stick into something, it instantiates an embedded component. Once the item falls out, the component is destroyed, while the
 	element survives to embed another day.
 
-	There are 2 different things that can be embedded presently: humans, and closed turfs (see: walls)
+	There are 2 different things that can be embedded presently: carbons, and closed turfs (see: walls)
 
-		- Human embedding has all the classical embedding behavior, and tracks more events and signals. The main behaviors and hooks to look for are:
+		- Carbon embedding has all the classical embedding behavior, and tracks more events and signals. The main behaviors and hooks to look for are:
 			-- Every process tick, there is a chance to randomly proc pain, controlled by pain_chance. There may also be a chance for the object to fall out randomly, per fall_chance
 			-- Every time the mob moves, there is a chance to proc jostling pain, controlled by jostle_chance (and only 50% as likely if the mob is walking or crawling)
-			-- Various signals hooking into human topic() and the embed removal surgery in order to handle removals.
+			-- Various signals hooking into carbon topic() and the embed removal surgery in order to handle removals.
 
 		- Turf embedding is much simpler. All we do here is draw an overlay of the item's inhand on the turf, hide the item, and create an HTML link in the turf's inspect
 		that allows you to rip the item out. There's nothing dynamic about this, so far less checks.
@@ -24,7 +24,7 @@
 		Stickables differ from embeds in the following ways:
 			-- Text descriptors use phrasing like "X is stuck to Y" rather than "X is embedded in Y"
 			-- There is no slicing sound on impact
-			-- All damage checks and bloodloss are skipped for humans
+			-- All damage checks and bloodloss are skipped for carbons
 			-- Pointy objects create sparks when embedding into a turf
 
 */
@@ -69,7 +69,7 @@
 			pain_stam_pct = EMBEDDED_PAIN_STAM_PCT,
 			embed_chance_turf_mod = EMBED_CHANCE_TURF_MOD)
 
-	if((!ishuman(parent) && !isclosedturf(parent)) || !isitem(I))
+	if((!iscarbon(parent) && !isclosedturf(parent)) || !isitem(I))
 		return COMPONENT_INCOMPATIBLE
 
 	if(part)
@@ -92,27 +92,26 @@
 	if(!weapon.isEmbedHarmless())
 		harmful = TRUE
 
-	if(ishuman(parent))
-		initHuman()
+	if(iscarbon(parent))
+		initCarbon()
 	else if(isclosedturf(parent))
 		initTurf(throwingdatum)
 
 /datum/component/embedded/RegisterWithParent()
-	if(ishuman(parent))
+	if(iscarbon(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/jostleCheck)
-		RegisterSignal(parent, COMSIG_HUMAN_EMBED_RIP, .proc/ripOutHuman)
-		RegisterSignal(parent, COMSIG_HUMAN_EMBED_REMOVAL, .proc/safeRemoveHuman)
-
+		RegisterSignal(parent, COMSIG_CARBON_EMBED_RIP, .proc/ripOutCarbon)
+		RegisterSignal(parent, COMSIG_CARBON_EMBED_REMOVAL, .proc/safeRemoveCarbon)
 	else if(isclosedturf(parent))
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examineTurf)
 		RegisterSignal(parent, COMSIG_PARENT_QDELETING, .proc/itemMoved)
 
 /datum/component/embedded/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_HUMAN_EMBED_RIP, COMSIG_HUMAN_EMBED_REMOVAL, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_CARBON_EMBED_RIP, COMSIG_CARBON_EMBED_REMOVAL, COMSIG_PARENT_EXAMINE))
 
 /datum/component/embedded/process()
-	if(ishuman(parent))
-		processHuman()
+	if(iscarbon(parent))
+		processCarbon()
 
 /datum/component/embedded/Destroy()
 	if(weapon)
@@ -128,8 +127,8 @@
 /////////////HUMAN PROCS////////////////
 ////////////////////////////////////////
 
-/// Set up an instance of embedding for a human. This is basically an extension of Initialize() so not much to say
-/datum/component/embedded/proc/initHuman()
+/// Set up an instance of embedding for a carbon. This is basically an extension of Initialize() so not much to say
+/datum/component/embedded/proc/initCarbon()
 	START_PROCESSING(SSdcs, src)
 	var/mob/living/carbon/victim = parent
 	if(!istype(limb))
@@ -137,7 +136,7 @@
 
 	limb.embedded_objects |= weapon // on the inside... on the inside...
 	weapon.forceMove(victim)
-	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/byeItemHuman)
+	RegisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), .proc/byeItemCarbon)
 
 	if(harmful)
 		victim.visible_message("<span class='danger'>[weapon] embeds itself in [victim]'s [limb.name]!</span>",ignored_mobs=victim)
@@ -152,7 +151,7 @@
 		victim.visible_message("<span class='danger'>[weapon] sticks itself to [victim]'s [limb.name]!</span>",ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[weapon] sticks itself to your [limb.name]!</span>")
 
-/// Called every time a human with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the human is crawling or walking.
+/// Called every time a carbon with a harmful embed moves, rolling a chance for the item to cause pain. The chance is halved if the carbon is crawling or walking.
 /datum/component/embedded/proc/jostleCheck()
 	var/mob/living/carbon/victim = parent
 
@@ -166,8 +165,8 @@
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] jostles and stings!</span>")
 
 
-/// Called when then item randomly falls out of a human. This handles the damage and descriptors, then calls safe_remove()
-/datum/component/embedded/proc/fallOutHuman()
+/// Called when then item randomly falls out of a carbon. This handles the damage and descriptors, then calls safe_remove()
+/datum/component/embedded/proc/fallOutCarbon()
 	var/mob/living/carbon/victim = parent
 
 	if(harmful)
@@ -179,12 +178,12 @@
 		victim.visible_message("<span class='danger'>[weapon] falls off of [victim.name]'s [limb.name]!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[weapon] falls off of your [limb.name]!</span>")
 
-	safeRemoveHuman()
+	safeRemoveCarbon()
 
 
-/// Called when a human with an object embedded/stuck to them inspects themselves and clicks the appropriate link to begin ripping the item out. This handles the ripping attempt, descriptors, and dealing damage, then calls safe_remove()
-/datum/component/embedded/proc/ripOutHuman(datum/source, obj/item/I, obj/item/bodypart/limb)
-	if(I != weapon || limb != limb)
+/// Called when a carbon with an object embedded/stuck to them inspects themselves and clicks the appropriate link to begin ripping the item out. This handles the ripping attempt, descriptors, and dealing damage, then calls safe_remove()
+/datum/component/embedded/proc/ripOutCarbon(datum/source, obj/item/I, obj/item/bodypart/limb)
+	if(I != weapon || src.limb != limb)
 		return
 
 	var/mob/living/carbon/victim = parent
@@ -204,14 +203,16 @@
 		else
 			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] off of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
 
-		safeRemoveHuman(TRUE)
+		safeRemoveCarbon(TRUE)
 
 
-/// This proc handles the final step and actual removal of an embedded/stuck item from a human, whether or not it was actually removed safely.
+/// This proc handles the final step and actual removal of an embedded/stuck item from a carbon, whether or not it was actually removed safely.
 /// Pass TRUE for to_hands if we want it to go to the victim's hands when they pull it out
-/datum/component/embedded/proc/safeRemoveHuman(to_hands)
+/datum/component/embedded/proc/safeRemoveCarbon(to_hands)
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
+
+	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING)) // have to unhook these here so they don't also register as having disappeared
 
 	if(!weapon)
 		if(!victim.has_embedded_objects())
@@ -220,15 +221,11 @@
 		qdel(src)
 		return
 
-	if(!victim)
-		weapon.forceMove(get_turf(weapon))
-		qdel(src)
-		return
-
-	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
-
 	if(weapon.unembedded()) // if it deleted itself
 		weapon = null
+		if(!victim.has_embedded_objects())
+			victim.clear_alert("embeddedobject")
+			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 		qdel(src)
 		return
 
@@ -244,23 +241,23 @@
 
 
 /// Something deleted or moved our weapon while it was embedded, how rude!
-/datum/component/embedded/proc/byeItemHuman()
+/datum/component/embedded/proc/byeItemCarbon()
 	var/mob/living/carbon/victim = parent
 	limb.embedded_objects -= weapon
 	UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
-	weapon = null
 
 	if(victim)
 		to_chat(victim, "<span class='userdanger'>\The [weapon] that was embedded in your [limb.name] disappears!</span>")
 		if(!victim.has_embedded_objects())
 			victim.clear_alert("embeddedobject")
 			SEND_SIGNAL(victim, COMSIG_CLEAR_MOOD_EVENT, "embedded")
+	weapon = null
 	qdel(src)
 
 
-/// Items embedded/stuck to humans both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
-/// Items harmfully embedded in humans have an additional check for random pain (if applicable)
-/datum/component/embedded/proc/processHuman()
+/// Items embedded/stuck to carbons both check whether they randomly fall out (if applicable), as well as if the target mob and limb still exists.
+/// Items harmfully embedded in carbons have an additional check for random pain (if applicable)
+/datum/component/embedded/proc/processCarbon()
 	var/mob/living/carbon/victim = parent
 
 	if(!victim || !limb) // in case the victim and/or their limbs exploded (say, due to a sticky bomb)
@@ -281,7 +278,8 @@
 		to_chat(victim, "<span class='userdanger'>[weapon] embedded in your [limb.name] hurts!</span>")
 
 	if(prob(fall_chance))
-		fallOutHuman()
+		fallOutCarbon()
+
 
 
 ////////////////////////////////////////
