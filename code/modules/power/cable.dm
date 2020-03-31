@@ -695,10 +695,8 @@ GLOBAL_LIST(cable_radial_layer_list)
 			"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
 			"Machinery" = image(icon = 'icons/obj/power.dmi', icon_state = "smes")
 			)
-	
-	var/list/layer_list = GLOB.cable_radial_layer_list
-	
-	var/layer_result = show_radial_menu(user, src, layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+
+	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	var/CL
