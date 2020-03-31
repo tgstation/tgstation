@@ -1,3 +1,4 @@
+
 /datum/computer_file/program/robocontrol
 	filename = "robocontrol"
 	filedesc = "Bot Remote Controller"
@@ -9,14 +10,26 @@
 	tgui_id = "ntos_robocontrol"
 	ui_x = 450
 	ui_y = 350
-
+///Number of simple robots on-station.
 	var/botcount = 0
 
+	var/bot_access_flags = 0 //Bit flags. Selection: SEC_BOT | MULE_BOT | FLOOR_BOT | CLEAN_BOT | MED_BOT | FIRE_BOT
 
 
 
 /datum/computer_file/program/robocontrol/ui_data(mob/user)
 	var/list/data = get_header_data()
+	var/turf/current_turf = get_turf(src)
+	var/zlevel = current_turf.z
+
+	data["bots"] = list()
+
+	for(var/B in GLOB.bots_list)
+		var/mob/living/simple_animal/bot/Bot = B
+		if(!Bot.on || Bot.z != zlevel || Bot.remote_disabled || !(bot_access_flags & Bot.bot_type)) //Only non-emagged bots on the same Z-level are detected!
+			continue //Also, the PDA must have access to the bot type.
+		data["bots"] += list(list("name" = Bot.name, "mode" = Bot.get_mode(), "model" = Bot.model, "location" = get_area(Bot)))
+		botcount++
 
 /datum/computer_file/program/robocontrol/ui_act(action, list/params)
 	if(..())
@@ -28,12 +41,11 @@
 
 
 
-	for(var/B in GLOB.bots_list) //Git da botz
-		var/mob/living/simple_animal/bot/Bot = B
 
 
 
 
+/*
 	if(active_bot)
 		menu += "<B>[active_bot]</B><BR> Status: (<A href='byond://?src=[REF(src)];op=control;bot=[REF(active_bot)]'>[PDAIMG(refresh)]<i>refresh</i></A>)<BR>"
 		menu += "Model: [active_bot.model]<BR>"
@@ -88,3 +100,4 @@
 			return
 
 	return menu
+*/
