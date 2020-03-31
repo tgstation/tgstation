@@ -93,7 +93,7 @@
 #define COLD_FIRE_SPREAD_RADIOSITY_SCALE		0.95
 #define COLD_FIRE_GROWTH_RATE					40000
 #define FREON_MAXIMUM_BURN_TEMPERATURE			293
-#define FREON_LOWER_TEMPERATURE					30 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
+#define FREON_LOWER_TEMPERATURE					60 //minimum temperature allowed for the burn to go, we would have negative pressure otherwise
 #define FREON_OXYGEN_FULLBURN					10
 
 //GASES

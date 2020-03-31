@@ -135,7 +135,7 @@
 	category = "Defensive"
 
 /datum/spellbook_entry/lightningPacket
-	name = "Lightning bolt!  Lightning bolt!"
+	name = "Thrown Lightning"
 	spell_type = /obj/effect/proc_holder/spell/targeted/conjure_item/spellpacket
 	category = "Defensive"
 
@@ -157,7 +157,7 @@
 
 /datum/spellbook_entry/mindswap
 	name = "Mindswap"
-	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spell_type = /obj/effect/proc_holder/spell/pointed/mind_transfer
 	category = "Mobility"
 
 /datum/spellbook_entry/forcewall
@@ -213,7 +213,7 @@
 /datum/spellbook_entry/lightningbolt
 	name = "Lightning Bolt"
 	spell_type = /obj/effect/proc_holder/spell/aimed/lightningbolt
-	cost = 3
+	cost = 1
 
 /datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/spellbook/book) //return TRUE on success
 	. = ..()
@@ -237,7 +237,7 @@
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
-	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell_type = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 
 /datum/spellbook_entry/charge
 	name = "Charge"
@@ -533,6 +533,8 @@
 /datum/spellbook_entry/summon/events
 	name = "Summon Events"
 	desc = "Give Murphy's law a little push and replace all events with special wizard ones that will confound and confuse everyone. Multiple castings increase the rate of these events."
+	cost = 2 
+	limit = 1
 	var/times = 0
 
 /datum/spellbook_entry/summon/events/IsAvailible()

@@ -232,7 +232,7 @@
 
 /obj/effect/proc_holder/horror
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/cult_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	var/datum/action/innate/cult/blood_spell/attached_action
 
 /obj/effect/proc_holder/horror/Destroy()
