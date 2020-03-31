@@ -7,40 +7,23 @@
 	ui_x = 375
 	ui_y = 700
 
-	var/obj/item/disk/nanite_program/disk
+	var/datum/nanite_program/data_on_disk
 	var/list/datum/nanite_cloud_backup/cloud_backups = list()
 	var/current_view = 0 //0 is the main menu, any other number is the page of the backup with that ID
 	var/new_backup_id = 1
 
+/obj/machinery/computer/nanite_cloud_controller/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/diskmachine, CALLBACK(src, .proc/diskcallback))
+
+/obj/machinery/computer/nanite_cloud_controller/proc/diskcallback(datum/disk_data)
+	data_on_disk = disk_data
+	if(SEND_SIGNAL(src, COMPONENT_HAS_DISK) & COMPONENT_DISK_INSERTED)
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+
 /obj/machinery/computer/nanite_cloud_controller/Destroy()
 	QDEL_LIST(cloud_backups) //rip backups
-	eject()
 	return ..()
-
-/obj/machinery/computer/nanite_cloud_controller/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/disk/nanite_program))
-		var/obj/item/disk/nanite_program/N = I
-		if (user.transferItemToLoc(N, src))
-			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
-			if(disk)
-				eject(user)
-			disk = N
-	else
-		..()
-
-/obj/machinery/computer/nanite_cloud_controller/AltClick(mob/user)
-	if(disk && user.canUseTopic(src, !issilicon(user)))
-		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
-		eject(user)
-	return
-
-/obj/machinery/computer/nanite_cloud_controller/proc/eject(mob/living/user)
-	if(!disk)
-		return
-	if(!istype(user) || !Adjacent(user) ||!user.put_in_active_hand(disk))
-		disk.forceMove(drop_location())
-	disk = null
 
 /obj/machinery/computer/nanite_cloud_controller/proc/get_backup(cloud_id)
 	for(var/I in cloud_backups)
@@ -68,10 +51,10 @@
 /obj/machinery/computer/nanite_cloud_controller/ui_data()
 	var/list/data = list()
 
-	if(disk)
+	if(SEND_SIGNAL(src, COMPONENT_HAS_DISK) & COMPONENT_DISK_INSERTED)
 		data["has_disk"] = TRUE
 		var/list/disk_data = list()
-		var/datum/nanite_program/P = disk.program
+		var/datum/nanite_program/P = data_on_disk
 		if(P)
 			data["has_program"] = TRUE
 			disk_data["name"] = P.name
@@ -168,7 +151,7 @@
 		return
 	switch(action)
 		if("eject")
-			eject(usr)
+			SEND_SIGNAL(src, COMPONENT_DISK_EJECT, usr)
 			. = TRUE
 		if("set_view")
 			current_view = text2num(params["view"])
@@ -191,13 +174,13 @@
 				investigate_log("[key_name(usr)] deleted the nanite cloud backup #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("upload_program")
-			if(disk && disk.program)
+			if(data_on_disk)
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
 				if(backup)
 					playsound(src, 'sound/machines/terminal_prompt.ogg', 50, FALSE)
 					var/datum/component/nanites/nanites = backup.nanites
-					nanites.add_program(null, disk.program.copy())
-					investigate_log("[key_name(usr)] uploaded program [disk.program.name] to cloud #[current_view]", INVESTIGATE_NANITES)
+					nanites.add_program(null, data_on_disk.copy())
+					investigate_log("[key_name(usr)] uploaded program [data_on_disk.name] to cloud #[current_view]", INVESTIGATE_NANITES)
 			. = TRUE
 		if("remove_program")
 			var/datum/nanite_cloud_backup/backup = get_backup(current_view)
@@ -209,8 +192,8 @@
 				qdel(P)
 			. = TRUE
 		if("add_rule")
-			if(disk && disk.program && istype(disk.program, /datum/nanite_program/sensor))
-				var/datum/nanite_program/sensor/rule_template = disk.program
+			if(istype(data_on_disk, /datum/nanite_program/sensor))
+				var/datum/nanite_program/sensor/rule_template = data_on_disk
 				if(!rule_template.can_rule)
 					return
 				var/datum/nanite_cloud_backup/backup = get_backup(current_view)
