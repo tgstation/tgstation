@@ -1386,9 +1386,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						"<span class='danger'>You block [user]'s shove!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, "<span class='warning'>Your shove at [target] was blocked!</span>")
 		return FALSE
-	if(attacker_style?.disarm_act(user,target))
+	if(attacker_style && attacker_style.disarm_act(user,target))
 		return TRUE
-	if(user.resting || user.IsKnockdown() || user.IsParalyzed(include_stamcrit = TRUE))
+	if(user.resting || user.IsKnockdown())
 		return FALSE
 	if(user == target)
 		return FALSE
