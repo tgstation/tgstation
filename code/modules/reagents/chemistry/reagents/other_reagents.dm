@@ -2081,7 +2081,8 @@
 	if(!metal_ref)
 		return
 	var/metal_amount = 0
-
+	if(istype(A,/obj/item/stack/sheet))
+		return
 	for(var/B in A.custom_materials) //list with what they're made of
 		metal_amount += A.custom_materials[B]
 

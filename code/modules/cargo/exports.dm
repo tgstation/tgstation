@@ -145,7 +145,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	var/amount = get_amount(O)
 	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
 	var/profit_ratio = 0
-
+	if(O.material_flags & MATERIAL_NO_EXPORT)//Anything and everything to prevent literal alchemy.
+		return FALSE
 	if(amount <=0 || the_cost <=0)
 		return FALSE
 	if(dry_run == FALSE)
@@ -222,6 +223,8 @@ GLOBAL_LIST_EMPTY(exports_list)
 	///Utilized in the pricetag component. Splits the object's profit when it has a pricetag by the specified amount.
 	var/profit_ratio = 0
 
+	if(sold_object.material_flags & MATERIAL_NO_EXPORT)
+		return FALSE
 	if(amount <= 0 || material_cost <= 0)
 		return FALSE
 	unit_name = "[sold_object.name]"
