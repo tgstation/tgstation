@@ -625,15 +625,6 @@ GLOBAL_LIST(cable_radial_layer_list)
 	return
 
 /obj/structure/cable/multilayer/update_icon()
-	var/R = 50
-	var/G = 50
-	var/B = 50
-
-	R += cable_layer & CABLE_LAYER_1 ? 150 : 0
-	G += cable_layer & CABLE_LAYER_2 ? 150 : 0
-	B += cable_layer & CABLE_LAYER_3 ? 150 : 0
-
-	color = rgb(R, G, B)
 
 	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
 	
