@@ -433,6 +433,7 @@
 	name = "Penthrite"
 	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. It reacts violently with other emergency medication."
 	color = "#F5F5F5"
+	overdose_threshold = 50
 
 /datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
 	. = ..()
@@ -452,9 +453,13 @@
 		H.adjustFireLoss(-2 * REM, 0)
 		H.adjustOxyLoss(-6 * REM, 0)
 
-		H.adjustOrganLoss(ORGAN_SLOT_HEART,max(1,volume/25)) // your heart is barely keeping up!
+		H.losebreath = 0
+
+		H.adjustOrganLoss(ORGAN_SLOT_HEART,max(1,volume/10)) // your heart is barely keeping up!
 
 		H.Jitter(rand(0,2))
+		H.Dizzy(rand(0,2))
+
 
 		if(prob(33))
 			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!")
@@ -473,6 +478,13 @@
 	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
 	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
 	. = ..()
+
+/datum/reagent/medicine/C2/penthrite/overdose_process(mob/living/carbon/human/H)
+	H.adjustStaminaLoss(10)
+	H.adjustOrganLoss(ORGAN_SLOT_HEART,10)
+	H.set_heartattack(TRUE)
+	H.reagents?.chem_temp +=(-10*REM) // your heart stopped pumping. You are getting colder dear friend
+
 
 /******NICHE******/
 //todo
