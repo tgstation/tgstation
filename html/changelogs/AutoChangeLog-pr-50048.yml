@@ -1,6 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - balance: "Failing unlacing someone's shoes and getting your hand stepped on is a bit more punishing"
-  - bugfix: "You can no longer untie and knot peoples' shoes from across the world, nor can you queue a bunch of unties to knot them quicker."
-  - bugfix: "Moving while your shoes are being tampered with will properly trigger stamping on the saboteur's hand"
