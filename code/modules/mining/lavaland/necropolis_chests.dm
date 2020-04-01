@@ -619,7 +619,7 @@
 			if(method == INGEST && show_message)
 				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
-		if(C.dna.species.HAS_INNATE_WINGS)
+		if(C.dna.species.has_innate_wings)
 			to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
 			C.dna.features["moth_wings"] = "None"
 		else
