@@ -540,6 +540,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						return
 					else
 						ttone = t
+						update_ringtone(sanitize(t), U)
 				else
 					U << browse(null, "window=pda")
 					return
