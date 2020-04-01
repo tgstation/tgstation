@@ -21,3 +21,12 @@
 	icon_state = "intern"
 	item_state = "g_suit"
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/centcom/pizza
+	name = "Pizza Delivery uniform"
+	desc = "The uniform worn by people bringing cheesy goodness."
+	icon = 'icons/obj/clothing/under/trek.dmi'	//It looks like a pizza man suit with a nametag and I cant sprite so might as well use it
+	mob_overlay_icon = 'icons/mob/clothing/under/trek.dmi'
+	icon_state = "trek_engsec"
+	item_state = "r_suit"
+	can_adjust = FALSE

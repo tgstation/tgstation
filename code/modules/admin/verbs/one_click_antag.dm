@@ -303,12 +303,20 @@
 	unset_busy_human_dummy(DUMMY_HUMAN_SLOT_ADMIN)
 	return preview_icon
 
-/datum/admins/proc/makeEmergencyresponseteam(var/datum/ert/ertemplate = null)
+/**
+  * Proc to create ERT teams
+  *
+  * Arguments:
+  * * erttemplate determines which template will be defaulted to, default is null(centcom inspector)
+  * * skippreview determines whether you want to create the team with custom specifications, by default false
+  */
+/datum/admins/proc/makeEmergencyresponseteam(var/datum/ert/ertemplate = null, var/skippreview = FALSE)
 	if (ertemplate)
 		ertemplate = new ertemplate
 	else
 		ertemplate = new /datum/ert/centcom_official
 
+	///settings for the custom ERT maker
 	var/list/settings = list(
 		"preview_callback" = CALLBACK(src, .proc/makeERTPreviewIcon),
 		"mainsettings" = list(
@@ -320,13 +328,21 @@
 		"open_armory" = list("desc" = "Open armory doors", "type" = "boolean", "value" = "[(ertemplate.opendoors ? "Yes" : "No")]"),
 		)
 	)
+	///creates a ERT once this is true
+	var/cancreate = FALSE
+	if(skippreview == FALSE)
 
-	var/list/prefreturn = presentpreflikepicker(usr,"Customize ERT", "Customize ERT", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
+		var/list/prefreturn = presentpreflikepicker(usr,"Customize ERT", "Customize ERT", Button1="Ok", width = 600, StealFocus = 1,Timeout = 0, settings=settings)
 
-	if (isnull(prefreturn))
-		return FALSE
+		if (isnull(prefreturn))
+			return FALSE
 
-	if (prefreturn["button"] == 1)
+		if (prefreturn["button"] == 1)
+			cancreate = TRUE
+	else
+		cancreate = TRUE
+
+	if (cancreate == TRUE)
 		var/list/prefs = settings["mainsettings"]
 
 		var/templtype = prefs["template"]["value"]

@@ -10680,6 +10680,7 @@
 	id = "XCCsec1";
 	name = "CC Shutter 1 Control";
 	pixel_y = -24
+	req_access_txt = "109"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 10

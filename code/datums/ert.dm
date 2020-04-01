@@ -80,3 +80,12 @@
 	mission = "Create entertainment for the crew."
 	polldesc = "a Code Rainbow Nanotrasen Emergency Response Party"
 	code = "Rainbow"
+
+/datum/ert/pizza
+	roles = list(/datum/antagonist/ert/pizza)
+	leader_role = /datum/antagonist/ert/pizza
+	opendoors = FALSE
+	rename_team = "Pizza Delivery Guy"
+	mission = "Deliver Pizza."
+	polldesc = "a pizza delivery guy"
+	code = "Pineapple"

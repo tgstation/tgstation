@@ -329,6 +329,20 @@
 				usr.log_message("has requested the nuclear codes from CentCom with reason \"[input]\"", LOG_SAY)
 				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/ai/commandreport.ogg')
 				CM.lastTimeUsed = world.time
+		if("pizza")	//OPERATION BREADSTICK IS A GO
+			if(authenticated)
+				var/input = stripped_input(usr, "Please enter the location for delivering the Pizza. Delivery not guaranteed.", "Pizza Request.","")
+				if(!input || !(usr in view(1,src)))
+					return
+				var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
+				if(D.account_balance <= 20000)	//so people dont spam pizzamen
+					to_chat(usr, "<span class='warning'>You don't have enough money to make a Pizza delivery!</span>")
+					return
+				D.adjust_money(-20000)
+				call(/datum/admins/proc/makeEmergencyresponseteam)(/datum/ert/pizza, TRUE)
+				usr.log_message("has ordered pizza to location \"[input]\"", LOG_SAY)
+				priority_announce("[usr] has ordered pizza to [input]. Delivery not guaranteed", "NanoTransen Pizza Delivery Division",'sound/ai/commandreport.ogg')
+
 
 
 		// AI interface
@@ -491,6 +505,7 @@
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=changeseclevel'>Change Alert Level</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=emergencyaccess'>Emergency Maintenance Access</A> \]"
 					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=nukerequest'>Request Nuclear Authentication Codes</A> \]"
+					dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=pizza'>Order Pizza</A> \]"
 					if(!(obj_flags & EMAGGED))
 						dat += "<BR>\[ <A HREF='?src=[REF(src)];operation=MessageCentCom'>Send Message to CentCom</A> \]"
 					else

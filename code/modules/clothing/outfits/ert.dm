@@ -420,3 +420,32 @@
 	backpack_contents = list(/obj/item/storage/box/survival/engineer=1,\
 		/obj/item/storage/box/fireworks=3,\
 		/obj/item/reagent_containers/food/snacks/store/cake/birthday=1)
+
+/datum/outfit/centcom/ert/pizza
+	name = "Pizza Delivery Guy"
+
+	id = /obj/item/card/id/centcom
+	uniform = /obj/item/clothing/under/rank/centcom/pizza
+	back = /obj/item/storage/backpack
+	head = /obj/item/clothing/head/soft/red
+	mask = null
+	gloves = /obj/item/clothing/gloves/color/black
+	ears = /obj/item/radio/headset/headset_cent
+	shoes = /obj/item/clothing/shoes/sneakers/red
+	belt = /obj/item/storage/belt/fannypack
+	r_pocket = /obj/item/assembly/flash
+	l_pocket = /obj/item/kitchen/knife
+	backpack_contents = list(/obj/item/storage/box/survival=1,\
+		/obj/item/pizzabox/infinite=1,
+		/obj/item/pizzabox/margherita=4)
+
+/datum/outfit/centcom/ert/pizza/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(visualsOnly)
+		return
+
+	var/obj/item/card/id/W = H.wear_id
+	W.access = get_centcom_access("CentCom Official")
+	W.access += ACCESS_WEAPONS
+	W.assignment = "Pizza Deivery Guy"
+	W.update_label()
+	..()
