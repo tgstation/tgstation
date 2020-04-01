@@ -278,7 +278,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	alpha = 150
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
-	value_per_unit = 0.9
-	beauty_modifier = 0.95
+	value_per_unit = 0.75
+	beauty_modifier = 0.75
 	strength_modifier = 1.2
 	armor_modifiers = list("melee" = 1.5, "bullet" = 1.5, "laser" = 1.5, "energy" = 1.5, "bomb" = 1.5, "bio" = 1.5, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
