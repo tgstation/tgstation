@@ -1,6 +1,6 @@
 /datum/surgery/advanced/bioware/cortex_imprint
 	name = "Cortex Imprint"
-	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, allowing the brain to regenerate by itself from brain damage."
+	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
 	steps = list(/datum/surgery_step/incise,
 				/datum/surgery_step/retract_skin,
 				/datum/surgery_step/clamp_bleeders,
@@ -49,12 +49,10 @@
 
 /datum/bioware/cortex_imprint
 	name = "Cortex Imprint"
-	desc = "The cerebral cortex has been reshaped into a redundant neural pattern, allowing the brain to regenerate by itself from brain damage."
+	desc = "The cerebral cortex has been reshaped into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
 	mod_type = BIOWARE_CORTEX
 	can_process = TRUE
 
 /datum/bioware/cortex_imprint/process()
-	owner.adjustOrganLoss(ORGAN_SLOT_BRAIN, -1)
-	if(prob(5))
-		owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
+	owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
 

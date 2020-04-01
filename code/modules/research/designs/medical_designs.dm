@@ -773,7 +773,7 @@
 
 /datum/design/surgery/cortex_imprint
 	name = "Cortex Imprint"
-	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, allowing the brain to regenerate by itself from brain damage."
+	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
 	id = "surgery_cortex_imprint"
 	surgery = /datum/surgery/advanced/bioware/cortex_imprint
 	research_icon_state = "surgery_head"
