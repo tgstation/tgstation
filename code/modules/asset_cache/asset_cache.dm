@@ -35,7 +35,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 
 		else
 			return FALSE
-	
+
 	var/list/unreceived = list()
 	var/list/sending = list()
 
@@ -43,9 +43,9 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		var/asset_file = SSassets.cache[asset_name]
 		if (!asset_file)
 			continue
-		
+
 		var/asset_md5 = md5(asset_file) || md5(fcopy_rsc(asset_file))
-		
+
 		if (client.sent_assets[asset_name] == asset_md5)
 			continue
 		if (client.sending_assets.Find(asset_name))
@@ -53,7 +53,7 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 				continue
 			sending += asset_name
 
-		
+
 		unreceived[asset_name] = asset_md5
 
 	var/t = 0
