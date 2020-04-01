@@ -196,7 +196,7 @@
 	var/new_demand_connects
 	var/new_supply_connects
 	var/new_dir = AM.dir
-	var/angle = 180 - dir2angle(new_dir)
+	var/angle = 270 - dir2angle(new_dir) //it's 270 because of the way ducts are oriented, sorry
 
 	if(new_dir == SOUTH)
 		demand_connects = initial(demand_connects)
