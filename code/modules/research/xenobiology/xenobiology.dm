@@ -17,7 +17,7 @@
 	var/list/activate_reagents = list() ///Reagents required for activation
 	var/recurring = FALSE
 	var/research ///Research point value for slime cores. These are defines stored in [/__DEFINES/research] - the actual values are updated there.
-	var/color_slime ///the color of the extract and the slime it came from
+
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
 	if(Uses > 1)
@@ -93,7 +93,7 @@
 	effectmod = "reproductive"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_0
-	color_slime = "grey"
+
 /obj/item/slime_extract/grey/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
@@ -119,7 +119,7 @@
 	effectmod = "symbiont"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_4
-	color_slime = "gold"
+
 /obj/item/slime_extract/gold/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
@@ -149,8 +149,7 @@
 	effectmod = "consuming"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_2
-	color_slime = "silver"
-	
+
 /obj/item/slime_extract/silver/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
@@ -176,7 +175,6 @@
 	effectmod = "industrial"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_1
-	color_slime = "metal"
 
 /obj/item/slime_extract/metal/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -202,7 +200,6 @@
 	effectmod = "regenerative"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_1
-	color_slime = purple
 
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -223,7 +220,6 @@
 	effectmod = "self-sustaining"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_2
-	color_slime = dark_purple
 
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -248,7 +244,6 @@
 	effectmod = "burning"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_1
-	color_slime = "orange"
 
 /obj/item/slime_extract/orange/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -270,7 +265,6 @@
 	effectmod = "charged"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_2
-	color_slime = "yellow"
 
 /obj/item/slime_extract/yellow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -295,7 +289,6 @@
 	effectmod = "sanguine"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_4
-	color_slime = "red"
 
 /obj/item/slime_extract/red/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -317,7 +310,6 @@
 	effectmod = "stabilized"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_1
-	color_slime = "blue"
 
 /obj/item/slime_extract/blue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -339,7 +331,6 @@
 	effectmod = "chilling"
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_2
-	color_slime = "darkblue"
 
 /obj/item/slime_extract/darkblue/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -364,7 +355,6 @@
 	effectmod = "gentle"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_4
-	color_slime = "pink"
 
 /obj/item/slime_extract/pink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -394,7 +384,6 @@
 	effectmod = "mutative"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/uranium/radium)
 	research = SLIME_RESEARCH_TIER_4
-	color_slime = "green"
 
 /obj/item/slime_extract/green/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -420,7 +409,6 @@
 	effectmod = "loyal"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_5
-	color_slime = "lightpink"
 
 /obj/item/slime_extract/lightpink/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -446,7 +434,6 @@
 	effectmod = "transformative"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_5
-	color_slime = "black"
 
 /obj/item/slime_extract/black/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -469,7 +456,6 @@
 	effectmod = "detonating"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_5
-	color_slime = "oil"
 
 /obj/item/slime_extract/oil/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -494,7 +480,6 @@
 	effectmod = "crystalline"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_5
-	color_slime = "adamantine"
 
 /obj/item/slime_extract/adamantine/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -529,7 +514,6 @@
 	var/teleport_y = 0
 	var/teleport_z = 0
 	research = SLIME_RESEARCH_TIER_3
-	color_slime = "bluespace"
 
 /obj/item/slime_extract/bluespace/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -563,7 +547,6 @@
 	effectmod = "prismatic"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_3
-	color_slime = "pyrite"
 
 /obj/item/slime_extract/pyrite/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -592,7 +575,6 @@
 	effectmod = "recurring"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_3
-	color_slime = "cerulean"
 
 /obj/item/slime_extract/cerulean/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -614,7 +596,6 @@
 	effectmod = "lengthened"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_3
-	color_slime = "sepia"
 
 /obj/item/slime_extract/sepia/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -638,7 +619,6 @@
 	effectmod = "hyperchromatic"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,"lesser plasma",/datum/reagent/toxin/slimejelly,"holy water and uranium") //Curse this snowflake reagent list.
 	research = SLIME_RESEARCH_TIER_RAINBOW
-	color_slime = "rainbow"
 
 /obj/item/slime_extract/rainbow/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
