@@ -70,6 +70,9 @@
 	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckling)
 		return
 
+	if(!A || !(isturf(A) || isturf(A.loc)))
+		return
+
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		to_chat(user, "<span class='warning'>You're too angry to remember how to tackle!</span>")
 		return
