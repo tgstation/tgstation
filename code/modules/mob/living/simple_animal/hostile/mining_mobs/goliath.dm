@@ -107,13 +107,6 @@
 	bonus_tame_chance = 5
 	var/saddled = FALSE
 
-/mob/living/simple_animal/hostile/asteroid/goliath/beast/tamed(whomst)
-	if(isliving(whomst))
-		var/mob/living/fren = whomst
-		friends = fren
-		faction = fren.faction.Copy()
-	..()
-
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/saddle) && !saddled)
 		if(tame && do_after(user,55,target=src))

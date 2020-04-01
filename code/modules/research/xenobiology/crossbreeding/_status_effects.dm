@@ -615,7 +615,7 @@ datum/status_effect/stabilized/blue/on_remove()
 	else if(istype(O, /obj/item/stack/sheet/hairlesshide))
 		to_chat(owner, "<span class='warning'>[linked_extract] kept your hands wet! It wets [O]!</span>")
 		var/obj/item/stack/sheet/hairlesshide/HH = O
-		new /obj/item/stack/sheet/wetleather(get_turf(HH), HH.amount)
+		new /obj/item/stack/sheet/wethide(get_turf(HH), HH.amount)
 		qdel(HH)
 	..()
 
@@ -750,11 +750,12 @@ datum/status_effect/stabilized/blue/on_remove()
 	colour = "red"
 
 /datum/status_effect/stabilized/red/on_apply()
-	owner.ignore_slowdown("slimestatus")
-	return ..()
+	. = ..()
+	owner.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
 
 /datum/status_effect/stabilized/red/on_remove()
-	owner.unignore_slowdown("slimestatus")
+	owner.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/equipment_speedmod)
+	return ..()
 
 /datum/status_effect/stabilized/green
 	id = "stabilizedgreen"

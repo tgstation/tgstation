@@ -227,13 +227,13 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(prob(severity) && istype(crosser) && !isvineimmune(holder))
+	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
+	if(prob(severity) && istype(hitter) && !isvineimmune(hitter))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
@@ -251,7 +251,7 @@
 	holder.obj_integrity = holder.max_integrity
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(I && I.get_sharpness())
+	if(I?.get_sharpness())
 		. = expected_damage * 0.5
 	else
 		. = expected_damage
@@ -540,8 +540,8 @@
 		return TRUE
 
 /proc/isvineimmune(atom/A)
-	. = FALSE
 	if(isliving(A))
 		var/mob/living/M = A
 		if(("vines" in M.faction) || ("plants" in M.faction))
-			. = TRUE
+			return TRUE
+	return FALSE
