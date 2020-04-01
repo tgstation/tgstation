@@ -12,22 +12,19 @@
 /turf/open/floor/plating,
 /area/shuttle/arrival)
 "d" = (
-/obj/effect/spawner/structure/window/shuttle,
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 8
+	},
 /turf/open/floor/plating,
-/area/shuttle/arrival)
-"e" = (
-/obj/structure/table,
-/obj/item/storage/firstaid/regular,
-/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "f" = (
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "g" = (
-/obj/machinery/computer/arcade,
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/closet/wardrobe/black,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "h" = (
@@ -35,7 +32,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "i" = (
-/obj/structure/closet/wardrobe/black,
+/obj/machinery/computer/arcade,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "j" = (
@@ -47,11 +44,6 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "l" = (
-/obj/machinery/requests_console{
-	department = "Arrival shuttle";
-	name = "Arrivals Shuttle console";
-	pixel_y = 30
-	},
 /obj/machinery/light{
 	dir = 1
 	},
@@ -72,27 +64,14 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"o" = (
-/obj/structure/window/shuttle,
-/obj/structure/grille,
-/turf/open/floor/plating,
-/area/shuttle/arrival)
-"p" = (
-/obj/structure/chair/comfy/shuttle,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
 "q" = (
-/obj/structure/chair/comfy/shuttle,
 /obj/machinery/light/small{
 	dir = 4
 	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"r" = (
-/obj/structure/chair/comfy/shuttle{
+/obj/structure/chair{
 	dir = 8
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "s" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -104,7 +83,7 @@
 /obj/machinery/door/airlock/titanium{
 	name = "Arrivals Shuttle Airlock"
 	},
-/turf/open/floor/mineral/titanium,
+/turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
 "u" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -113,34 +92,7 @@
 /obj/docking_port/mobile/arrivals,
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"v" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"w" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"x" = (
-/obj/structure/closet/emcloset,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
 "y" = (
-/obj/machinery/light,
-/turf/open/floor/mineral/titanium/blue,
-/area/shuttle/arrival)
-"z" = (
-/obj/item/radio/intercom{
-	name = "Station Intercom (General)";
-	pixel_y = -29
-	},
 /obj/machinery/light,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/arrival)
@@ -150,25 +102,46 @@
 	},
 /turf/open/floor/plating/airless,
 /area/shuttle/arrival)
-"S" = (
-/turf/open/floor/mineral/titanium,
+"E" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/arrival)
+"L" = (
+/obj/machinery/light,
+/obj/item/radio/intercom{
+	name = "Station Intercom (General)";
+	pixel_y = -29
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"Y" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/mineral/titanium/blue,
+/area/shuttle/arrival)
+"Z" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/shuttle/arrival)
 
 (1,1,1) = {"
 a
 b
-o
-d
-d
+b
+E
+b
 b
 a
 "}
 (2,1,1) = {"
 a
 b
-p
-S
-v
+b
+f
+b
 b
 a
 "}
@@ -176,8 +149,8 @@ a
 a
 b
 q
-S
-w
+f
+q
 b
 a
 "}
@@ -192,92 +165,92 @@ b
 "}
 (5,1,1) = {"
 b
-e
-S
-S
-S
-x
+b
+f
+f
+f
+b
 b
 "}
 (6,1,1) = {"
 c
 f
-r
-r
-r
+f
+f
+f
 f
 c
 "}
 (7,1,1) = {"
 b
 g
-f
-f
-f
-y
+Y
+Y
+Y
+L
 b
 "}
 (8,1,1) = {"
-d
+b
 h
-r
-r
-r
+Y
+Y
+Y
 f
-d
+b
 "}
 (9,1,1) = {"
 d
 i
 f
-f
+Y
 f
 f
 d
 "}
 (10,1,1) = {"
-d
+Z
 j
-r
-r
-r
+Y
+Y
+Y
 f
-d
+Z
 "}
 (11,1,1) = {"
-d
+b
 k
+Y
+Y
+Y
 f
-f
-f
-f
-d
+b
 "}
 (12,1,1) = {"
 b
 l
-r
-r
-r
-z
+Y
+Y
+Y
+y
 b
 "}
 (13,1,1) = {"
 c
 f
-S
-S
-S
+f
+f
+f
 f
 c
 "}
 (14,1,1) = {"
 b
+b
 m
 m
 m
-m
-m
+b
 b
 "}
 (15,1,1) = {"
