@@ -21,12 +21,8 @@
 	var/release_pressure = ONE_ATMOSPHERE
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
-	var/tier1heat = 5000
-	var/tier2heat = 500000
-	var/tier3heat = 1e12
-	var/tier1pressure = 50000
-	var/tier2pressure = 5e6
-	var/tier3pressure = 1e14
+	var/heat_limit = 5000
+	var/pressure_limit = 50000
 
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 50)
 	max_integrity = 250
@@ -173,6 +169,8 @@
 /obj/machinery/portable_atmospherics/canister/fusion_test
 	name = "fusion test canister"
 	desc = "Don't be a badmin."
+	heat_limit = 1e12
+	pressure_limit = 1e14
 	mode = CANISTER_TIER_3
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
@@ -217,6 +215,32 @@
 	gas_type = /datum/gas/oxygen
 	filled = 1
 	release_pressure = ONE_ATMOSPHERE*2
+
+/obj/machinery/portable_atmospherics/canister/tier_1
+	name = "Tier 1 canister"
+	heat_limit = 5000
+	pressure_limit = 50000
+	mode = CANISTER_TIER_1
+
+/obj/machinery/portable_atmospherics/canister/tier_2
+	name = "Tier 2 canister"
+	heat_limit = 500000
+	pressure_limit = 5e6
+	volume = 3000
+	max_integrity = 300
+	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
+	can_min_release_pressure = (ONE_ATMOSPHERE / 30)
+	mode = CANISTER_TIER_2
+
+/obj/machinery/portable_atmospherics/canister/tier_3
+	name = "Tier 3 canister"
+	heat_limit = 1e12
+	pressure_limit = 1e14
+	volume = 5000
+	max_integrity = 500
+	can_max_release_pressure = (ONE_ATMOSPHERE * 50)
+	can_min_release_pressure = (ONE_ATMOSPHERE / 50)
+	mode = CANISTER_TIER_3
 
 /obj/machinery/portable_atmospherics/canister/Initialize(mapload, datum/gas_mixture/existing_mixture)
 	. = ..()
@@ -361,13 +385,8 @@
 	update_icon()
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
-	if(mode == CANISTER_TIER_1 && (temperature > tier1heat || pressure > tier1pressure))
-		take_damage(10, BURN, 0)
-	else if(mode == CANISTER_TIER_2 && (temperature > tier2heat || pressure > tier2pressure))
-		take_damage(5, BURN, 0)
-	else if(mode == CANISTER_TIER_3 && (temperature > tier3heat || pressure > tier3pressure))
-		take_damage(3, BURN, 0)
-	else
+	if(temperature > heat_limit || pressure > pressure_limit)
+		take_damage(min(((temperature/heat_limit) * (pressure/pressure_limit)), 50), BURN, 0)
 		return
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
