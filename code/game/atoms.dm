@@ -80,6 +80,9 @@
 
 	var/list/alternate_appearances
 
+	///Mobs that are currently do_after'ing this atom, to be cleared from on Destroy()
+	var/list/targeted_by
+
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
@@ -145,6 +148,9 @@
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
+
+	if(loc)
+		SEND_SIGNAL(loc, COMSIG_ATOM_CREATED, src) /// Sends a signal that the new atom `src`, has been created at `loc`
 
 	//atom color stuff
 	if(color)
@@ -213,6 +219,11 @@
 	LAZYCLEARLIST(overlays)
 	LAZYCLEARLIST(priority_overlays)
 
+	for(var/i in targeted_by)
+		var/mob/M = i
+		LAZYREMOVE(M.do_afters, src)
+
+	targeted_by = null
 	QDEL_NULL(light)
 
 	return ..()
@@ -743,7 +754,7 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	while (do_after(user, 10, TRUE, src, FALSE, CALLBACK(STR, /datum/component/storage.proc/handle_mass_item_insertion, things, src_object, user, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	to_chat(user, "<span class='notice'>You dump as much of [src_object.parent]'s contents [STR.insert_preposition]to [src] as you can.</span>")
 	STR.orient2hud(user)
 	src_object.orient2hud(user)

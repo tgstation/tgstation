@@ -198,7 +198,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
-	value_per_unit = 0.06
+	value_per_unit = 0.01
 	beauty_modifier = 0.1
 	armor_modifiers = list("melee" = 1.1, "bullet" = 1.1, "laser" = 0.4, "energy" = 0.4, "bomb" = 1, "bio" = 0.2, "rad" = 0, "fire" = 0, "acid" = 0.3)
 
@@ -259,13 +259,13 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	alpha = 150
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/hot_ice
-	value_per_unit = 0.5
-	beauty_modifier = 0.5
+	value_per_unit = 0.75
+	beauty_modifier = 0.75
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300)
+	source.AddComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300)
 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
-	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300))
+	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300))
 	return ..()

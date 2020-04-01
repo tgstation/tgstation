@@ -7,7 +7,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel and the chief medical officer"
-	selection_color = "#dddddd"
+	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/psychologist
 
@@ -29,6 +29,8 @@
 	belt = /obj/item/pda/medical
 	pda_slot = ITEM_SLOT_BELT
 	l_hand = /obj/item/clipboard
+
+	backpack_contents = list(/obj/item/storage/pill_bottle/mannitol, /obj/item/storage/pill_bottle/psicodine, /obj/item/storage/pill_bottle/paxpsych, /obj/item/storage/pill_bottle/happinesspsych, /obj/item/storage/pill_bottle/lsdpsych)
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

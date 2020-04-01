@@ -1,0 +1,5 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - rscadd: "Added the Cortex Imprint experimental surgery; it causes the patient's brain to regenerate damage and mild traumas over time."
+  - rscadd: "Added the Cortex Folding experimental surgery; it increases the chance of obtaining special traumas instead of severe, and makes them require surgery to cure."

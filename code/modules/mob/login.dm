@@ -39,6 +39,8 @@
 	next_move = 1
 
 	..()
+	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+
 	if (client && key != client.key)
 		key = client.key
 	reset_perspective(loc)
