@@ -436,19 +436,22 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 		return FALSE
 	return TRUE
 
+GLOBAL_LIST(cable_radial_layer_list)
+
 /obj/item/stack/cable_coil/CtrlClick(mob/living/user)
 	if(loc!=user)
 		return ..()
 	if(!user)
 		return
-	var/list/layer_list = list(
+	if(!GLOB.cable_radial_layer_list)
+		GLOB.cable_radial_layer_list = list(
 		"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
 		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
 		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
 		"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
 		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable")		
 		)
-	var/layer_result = show_radial_menu(user, src, layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	switch(layer_result)
@@ -683,20 +686,20 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	. += "<span class='notice'>L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].</span>"
 	. += "<span class='notice'>M:[machinery_layer & MACHINERY_LAYER_1 ? "Connect" : "Disconnect"].</span>"
 
-GLOBAL_LIST(cable_radial_layer_list)
+GLOBAL_LIST(hub_radial_layer_list)
 
 /obj/structure/cable/multilayer/attack_hand(mob/living/user)
 	if(!user)
 		return
-	if(!GLOB.cable_radial_layer_list)
-		GLOB.cable_radial_layer_list = list(
+	if(!GLOB.hub_radial_layer_list)
+		GLOB.hub_radial_layer_list = list(
 			"Layer 1" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-red"),
 			"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
 			"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
 			"Machinery" = image(icon = 'icons/obj/power.dmi', icon_state = "smes")
 			)
 
-	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
+	var/layer_result = show_radial_menu(user, src, GLOB.hub_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
 		return
 	var/CL
