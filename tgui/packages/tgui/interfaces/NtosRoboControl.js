@@ -1,13 +1,27 @@
+import { multiline } from 'common/string';
+import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
+import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section, Tabs } from '../components';
 
 export const NtosRoboControl = props => {
   const { act, data } = useBackend(props);
   return (
-    <Section
-      title="Outbomb Cuban Pete Ultra"
-      textAlign="center">
-      <Box />
-    </Section>
+	<Fragment>
+		<Section
+		  title="Robot Control Console"
+		  textAlign="center">
+		  <Box>
+		  Bots detected in range:{data.botcount} 
+		  </Box>
+		  <Section>
+			{data.bots.map(robot => (
+				  <Box
+					key={robot.name}
+					color="black">
+				  </Box>
+				))}
+		  </Section>
+		</Section>
+	</Fragment>
   );
 };
