@@ -2940,6 +2940,8 @@
 #include "code\modules\surgery\advanced\viral_bonding.dm"
 #include "code\modules\surgery\advanced\bioware\bioware.dm"
 #include "code\modules\surgery\advanced\bioware\bioware_surgery.dm"
+#include "code\modules\surgery\advanced\bioware\cortex_folding.dm"
+#include "code\modules\surgery\advanced\bioware\cortex_imprint.dm"
 #include "code\modules\surgery\advanced\bioware\ligament_hook.dm"
 #include "code\modules\surgery\advanced\bioware\ligament_reinforcement.dm"
 #include "code\modules\surgery\advanced\bioware\muscled_veins.dm"

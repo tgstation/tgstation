@@ -176,6 +176,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NAIVE				"naive"
 #define TRAIT_PRIMITIVE			"primitive"
 #define TRAIT_GUNFLIP			"gunflip"
+#define TRAIT_SPECIAL_TRAUMA_BOOST	"special_trauma_boost" ///Increases chance of getting special traumas, makes them harder to cure
 #define TRAIT_BLOODCRAWL_EAT	"bloodcrawl_eat"
 #define TRAIT_SPACEWALK			"spacewalk"
 #define TRAIT_GAMERGOD			"gamer-god" //double arcade prizes

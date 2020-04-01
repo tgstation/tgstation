@@ -129,6 +129,7 @@
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
 #define BIOWARE_LIGAMENTS "ligaments"
+#define BIOWARE_CORTEX "cortex"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
