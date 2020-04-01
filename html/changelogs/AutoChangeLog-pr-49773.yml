@@ -1,0 +1,9 @@
+author: "Dennok"
+delete-after: True
+changes: 
+  - rscadd: "multiZlayer cable hub"
+  - rscadd: "Multilayer cable hub to connect different cable layers."
+  - code_imp: "Renamed connect_wire() to Connect_cable()"
+  - code_imp: "Create Disconnect_cable() inverse to Connect_cable()"
+  - code_imp: "separate machinery_layer flag to determine machinery connection"
+  - rscdel: "Removed old cable bridge, replaced by multilayer cable hub"
