@@ -1308,7 +1308,7 @@
 
 /datum/reagent/medicine/ldx
 	name = "LDX"
-	description = "A blood red thick liquid patented by NT in it's early years. It's primary purpose is to quickly remove any addctions from the patient, it accomplishes that goal very violently."
+	description = "A thick, blood red liquid patented by Nanotrasen in it's early years. It slowly removes addictions from the patient, but it accomplishes that goal very violently."
 	reagent_state = LIQUID
 	color = "#500000"
 	metabolization_rate = 0.25 //stays in your system for a loong time.
@@ -1346,4 +1346,3 @@
 	if(progress >= 10) //every 10 cycles after the 24th we cure 1 addiction.
 		M.reagents.remove_addiction(pick(M.reagents.addiction_list))
 		progress = 0
-

@@ -431,7 +431,7 @@
 /*Suffix: -rite*/
 /datum/reagent/medicine/C2/penthrite
 	name = "Penthrite"
-	description = "An expensive medication allowing you to temporarily survive without heart, sustaining damage that would otherwise kill you. It reacts violently with other less expensive emergency medication."
+	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. It reacts violently with other emergency medication."
 	color = "#F5F5F5"
 
 /datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
@@ -457,11 +457,11 @@
 		H.Jitter(rand(0,2))
 
 		if(prob(33))
-			to_chat(H,"<span class='danger'>Your body is giving up, but your heart is still beating!")
+			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!")
 
 	if(H.health <= H.crit_threshold) //certain death above this threshold
 		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart before we give him heart attack
-		to_chat(H,"<span class='danger'>Your feel something rupturing inside your chest!")
+		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!")
 		H.emote("scream")
 		H.set_heartattack(TRUE)
 		volume = 0

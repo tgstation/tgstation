@@ -115,11 +115,11 @@
 	required_temp = 550 + rand(-49,49)
 
 
-/datum/chemical_reaction/reagent_explosion/penthrite_explosion1
+/datum/chemical_reaction/reagent_explosion/penthrite_explosion_epinephrine
 	required_reagents = list(/datum/reagent/medicine/C2/penthrite = 1, /datum/reagent/medicine/epinephrine = 1)
 	strengthdiv = 5
 
-/datum/chemical_reaction/reagent_explosion/penthrite_explosion2
+/datum/chemical_reaction/reagent_explosion/penthrite_explosion_atropine
 	required_reagents = list(/datum/reagent/medicine/C2/penthrite = 1, /datum/reagent/medicine/atropine = 1)
 	strengthdiv = 5
 	modifier = 5
