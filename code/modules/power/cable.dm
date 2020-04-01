@@ -456,26 +456,31 @@ GLOBAL_LIST(cable_radial_layer_list)
 		return
 	switch(layer_result)
 		if("Layer 1")
+			name = "cable coil"
 			icon_state = "coil"
 			color = "red"
 			target_type = /obj/structure/cable/layer1
 			target_layer = CABLE_LAYER_1
 		if("Layer 2")
+			name = "cable coil"
 			icon_state = "coil"
 			color = "yellow"
 			target_type = /obj/structure/cable
 			target_layer = CABLE_LAYER_2
 		if("Layer 3")
+			name = "cable coil"
 			icon_state = "coil"
 			color = "blue"
 			target_type = /obj/structure/cable/layer3
 			target_layer = CABLE_LAYER_3
 		if("Multilayer cable hub")
+			name = "multilayer cable hub"
 			icon_state = "cable_bridge"
 			color = "white"
 			target_type = /obj/structure/cable/multilayer
 			target_layer = CABLE_LAYER_2
 		if("Multi Z layer cable hub")
+			name = "multi z layer cable hub"
 			icon_state = "cablerelay-broken-cable"
 			color = "white"
 			target_type = /obj/structure/cable/multilayer/multiz
@@ -502,18 +507,6 @@ GLOBAL_LIST(cable_radial_layer_list)
 		return
 	else
 		return ..()
-
-
-/obj/item/stack/cable_coil/update_icon()
-	if(icon_state == "cable_bridge")
-		name = "multilayer cable hub"
-		return
-	if(icon_state == "cablerelay-broken-cable")
-		name = "multi z layer cable hub"
-		return
-
-	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
-	name = "cable [amount < 3 ? "piece" : "coil"]"
 
 //add cables to the stack
 /obj/item/stack/cable_coil/proc/give(extra)
