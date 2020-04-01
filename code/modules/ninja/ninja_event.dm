@@ -69,7 +69,7 @@ Contents:
 	Mind.add_antag_datum(ninjadatum)
 
 	if(Ninja.mind != Mind)			//something has gone wrong!
-		throw EXCEPTION("Ninja created with incorrect mind")
+		CRASH("Ninja created with incorrect mind")
 
 	spawned_mobs += Ninja
 	message_admins("[ADMIN_LOOKUPFLW(Ninja)] has been made into a ninja by an event.")

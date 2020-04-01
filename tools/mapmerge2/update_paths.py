@@ -23,14 +23,14 @@ Old paths properties:
 """
 
 default_map_directory = "../../_maps"
-replacement_re = re.compile('\s*([^{]*)\s*(\{(.*)\})?')
+replacement_re = re.compile(r'\s*(?P<path>[^{]*)\s*(\{(?P<props>.*)\})?')
 
 #urgent todo: replace with actual parser, this is slow as janitor in crit
-split_re = re.compile('((?:[A-Za-z0-9_\-$]+)\s*=\s*(?:"(?:.+?)"|[^";]*)|@OLD)')
+split_re = re.compile(r'((?:[A-Za-z0-9_\-$]+)\s*=\s*(?:"(?:.+?)"|[^";]*)|@OLD)')
 
 
 def props_to_string(props):
-    return "{{{0}}}".format(";".join([k+" = "+props[k] for k in props]))
+    return "{{{}}}".format(";".join([f"{k} = {v}" for k, v in props.items()]))
 
 
 def string_to_props(propstring, verbose = False):
@@ -48,8 +48,8 @@ def string_to_props(propstring, verbose = False):
 def parse_rep_string(replacement_string, verbose = False):
     # translates /blah/blah {meme = "test",} into path,prop dictionary tuple
     match = re.match(replacement_re, replacement_string)
-    path = match.group(1)
-    props = match.group(3)
+    path = match['path']
+    props = match['props']
     if props:
         prop_dict = string_to_props(props, verbose)
     else:
@@ -65,9 +65,18 @@ def update_path(dmm_data, replacement_string, verbose=False):
         new_path, new_path_props = parse_rep_string(replacement_def, verbose)
         new_paths.append((new_path, new_path_props))
 
+    subtypes = ""
+    if old_path.endswith("/@SUBTYPES"):
+        old_path = old_path[:-len("/@SUBTYPES")]
+        if verbose:
+            print("Looking for subtypes of", old_path)
+        subtypes = r"(?:/\w+)*"
+
+    replacement_pattern = re.compile(rf"(?P<path>{re.escape(old_path)}{subtypes})\s*(:?{{(?P<props>.*)}})?$")
+
     def replace_def(match):
-        if match.group(2):
-            old_props = string_to_props(match.group(2), verbose)
+        if match['props']:
+            old_props = string_to_props(match['props'], verbose)
         else:
             old_props = dict()
         for filter_prop in old_path_props:
@@ -83,7 +92,10 @@ def update_path(dmm_data, replacement_string, verbose=False):
             print("Found match : {0}".format(match.group(0)))
         out_paths = []
         for new_path, new_props in new_paths:
-            out = new_path
+            if new_path == "@OLD":
+                out = match.group('path')
+            else:
+                out = new_path
             out_props = dict()
             for prop_name, prop_value in new_props.items():
                 if prop_name == "@OLD":
@@ -106,10 +118,9 @@ def update_path(dmm_data, replacement_string, verbose=False):
         return out_paths
 
     def get_result(element):
-        p = re.compile("{0}\s*({{(.*)}})?$".format(re.escape(old_path)))
-        match = p.match(element)
+        match = replacement_pattern.match(element)
         if match:
-            return replace_def(match) # = re.sub(p,replace_def,element)
+            return replace_def(match)
         else:
             return [element]
 
@@ -141,10 +152,12 @@ def update_all_maps(map_directory, updates, verbose=False):
 
 def main(args):
     if args.inline:
+        print("Using replacement:", args.update_source)
         updates = [args.update_source]
     else:
         with open(args.update_source) as f:
             updates = [line for line in f if line and not line.startswith("#") and not line.isspace()]
+        print(f"Using {len(updates)} replacements from file:", args.update_source)
 
     if args.map:
         update_map(args.map, updates, verbose=args.verbose)

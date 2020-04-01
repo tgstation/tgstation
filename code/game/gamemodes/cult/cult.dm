@@ -16,7 +16,7 @@
 	if(!istype(M))
 		return FALSE
 	if(M.mind)
-		if(ishuman(M) && (M.mind.assigned_role in list("Captain", "Chaplain")))
+		if(ishuman(M) && (M.mind.holy_role))
 			return FALSE
 		if(specific_cult && specific_cult.is_sacrifice_target(M.mind))
 			return FALSE
@@ -26,8 +26,8 @@
 			return FALSE
 	else
 		return FALSE
-	if(M.has_trait(TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || is_servant_of_ratvar(M) || !M.client)
-		return FALSE //can't convert machines, shielded, braindead, or ratvar's dogs
+	if(HAS_TRAIT(M, TRAIT_MINDSHIELD) || issilicon(M) || isbot(M) || isdrone(M) || !M.client)
+		return FALSE //can't convert machines, shielded, or braindead
 	return TRUE
 
 /datum/game_mode/cult
@@ -36,7 +36,7 @@
 	report_type = "cult"
 	antag_flag = ROLE_CULTIST
 	false_report_weight = 10
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	restricted_jobs = list("Prisoner","Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
 	protected_jobs = list()
 	required_players = 29
 	required_enemies = 4
@@ -83,6 +83,8 @@
 		log_game("[key_name(cultist)] has been selected as a cultist")
 
 	if(cultists_to_cult.len>=required_enemies)
+		for(var/antag in cultists_to_cult)
+			GLOB.pre_setup_antags += antag
 		return TRUE
 	else
 		setup_error = "Not enough cultist candidates"
@@ -94,6 +96,7 @@
 
 	for(var/datum/mind/cult_mind in cultists_to_cult)
 		add_cultist(cult_mind, 0, equip=TRUE, cult_team = main_cult)
+		GLOB.pre_setup_antags -= cult_mind
 
 	main_cult.setup_objectives() //Wait until all cultists are assigned to make sure none will be chosen as sacrifice.
 
@@ -117,20 +120,10 @@
 		if(!cult_datum)
 			return FALSE
 		cult_datum.silent = silent
-		cult_datum.on_removal()
+		cult_mind.remove_antag_datum(cult_datum)
 		if(stun)
 			cult_mind.current.Unconscious(100)
 		return TRUE
-
-/datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	var/datum/atom_hud/antag/culthud = GLOB.huds[ANTAG_HUD_CULT]
-	culthud.join_hud(cult_mind.current)
-	set_antag_hud(cult_mind.current, "cult")
-
-/datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	var/datum/atom_hud/antag/culthud = GLOB.huds[ANTAG_HUD_CULT]
-	culthud.leave_hud(cult_mind.current)
-	set_antag_hud(cult_mind.current, null)
 
 /datum/game_mode/cult/proc/check_cult_victory()
 	return main_cult.check_cult_victory()

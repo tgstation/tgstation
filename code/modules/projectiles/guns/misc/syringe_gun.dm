@@ -7,7 +7,7 @@
 	throw_speed = 3
 	throw_range = 7
 	force = 4
-	materials = list(MAT_METAL=2000)
+	custom_materials = list(/datum/material/iron=2000)
 	clumsy_check = 0
 	fire_sound = 'sound/items/syringeproj.ogg'
 	var/list/syringes = list()
@@ -35,8 +35,8 @@
 		recharge_newshot()
 
 /obj/item/gun/syringe/examine(mob/user)
-	..()
-	to_chat(user, "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining.")
+	. = ..()
+	. += "Can hold [max_syringes] syringe\s. Has [syringes.len] syringe\s remaining."
 
 /obj/item/gun/syringe/attack_self(mob/living/user)
 	if(!syringes.len)
@@ -107,3 +107,17 @@
 		else
 			to_chat(user, "<span class='warning'>[src] cannot hold more syringes!</span>")
 	return FALSE
+
+/obj/item/gun/syringe/blowgun
+	name = "blowgun"
+	desc = "Fire syringes at a short distance."
+	icon_state = "blowgun"
+	item_state = "blowgun"
+	fire_sound = 'sound/items/syringeproj.ogg'
+
+/obj/item/gun/syringe/blowgun/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
+	visible_message("<span class='danger'>[user] starts aiming with a blowgun!</span>")
+	if(do_after(user, 25, target = src))
+		user.adjustStaminaLoss(20)
+		user.adjustOxyLoss(20)
+		..()

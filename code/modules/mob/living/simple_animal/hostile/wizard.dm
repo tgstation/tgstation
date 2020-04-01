@@ -5,19 +5,17 @@
 	icon_state = "wizard"
 	icon_living = "wizard"
 	icon_dead = "wizard_dead"
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	speak_chance = 0
 	turns_per_move = 3
-	response_help = "pokes"
-	response_disarm = "shoves"
-	response_harm = "hits"
 	speed = 0
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
 	melee_damage_lower = 5
 	melee_damage_upper = 5
-	attacktext = "punches"
+	attack_verb_continuous = "punches"
+	attack_verb_simple = "punch"
 	attack_sound = 'sound/weapons/punch1.ogg'
 	a_intent = INTENT_HARM
 	atmos_requirements = list("min_oxy" = 5, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0)
@@ -37,7 +35,7 @@
 
 	var/next_cast = 0
 
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_SHOE
 
 /mob/living/simple_animal/hostile/wizard/Initialize()
 	. = ..()

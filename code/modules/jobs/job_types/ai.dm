@@ -1,6 +1,7 @@
 /datum/job/ai
 	title = "AI"
 	flag = AI_JF
+	auto_deadmin_role_flags = DEADMIN_POSITION_SILICON
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
@@ -16,6 +17,8 @@
 	var/do_special_check = TRUE
 
 /datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly, announce, latejoin, datum/outfit/outfit_override, client/preference_source = null)
+	if(visualsOnly)
+		CRASH("dynamic preview is unsupported")
 	. = H.AIize(latejoin,preference_source)
 
 /datum/job/ai/after_spawn(mob/H, mob/M, latejoin)

@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT(engineering_positions, list(
 GLOBAL_LIST_INIT(medical_positions, list(
 	"Chief Medical Officer",
 	"Medical Doctor",
-	"Geneticist",
+	"Paramedic",
 	"Virologist",
 	"Chemist"))
 
@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(medical_positions, list(
 GLOBAL_LIST_INIT(science_positions, list(
 	"Research Director",
 	"Scientist",
+	"Geneticist",
 	"Roboticist"))
 
 
@@ -34,16 +35,18 @@ GLOBAL_LIST_INIT(supply_positions, list(
 	"Shaft Miner"))
 
 
-GLOBAL_LIST_INIT(civilian_positions, list(
+GLOBAL_LIST_INIT(service_positions, list(
 	"Bartender",
 	"Botanist",
 	"Cook",
 	"Janitor",
 	"Curator",
+	"Psychologist",
 	"Lawyer",
 	"Chaplain",
 	"Clown",
 	"Mime",
+	"Prisoner",
 	"Assistant"))
 
 
@@ -59,8 +62,20 @@ GLOBAL_LIST_INIT(nonhuman_positions, list(
 	"Cyborg",
 	ROLE_PAI))
 
+// job categories for rendering the late join menu
+GLOBAL_LIST_INIT(position_categories, list(
+	EXP_TYPE_COMMAND = list("jobs" = command_positions, "color" = "#ccccff"),
+	EXP_TYPE_ENGINEERING = list("jobs" = engineering_positions, "color" = "#ffeeaa"),
+	EXP_TYPE_SUPPLY = list("jobs" = supply_positions, "color" = "#ddddff"),
+	EXP_TYPE_SILICON = list("jobs" = nonhuman_positions - "pAI", "color" = "#ccffcc"),
+	EXP_TYPE_SERVICE = list("jobs" = service_positions, "color" = "#bbe291"),
+	EXP_TYPE_MEDICAL = list("jobs" = medical_positions, "color" = "#ffddf0"),
+	EXP_TYPE_SCIENCE = list("jobs" = science_positions, "color" = "#ffddff"),
+	EXP_TYPE_SECURITY = list("jobs" = security_positions, "color" = "#ffdddd")
+))
+
 GLOBAL_LIST_INIT(exp_jobsmap, list(
-	EXP_TYPE_CREW = list("titles" = command_positions | engineering_positions | medical_positions | science_positions | supply_positions | security_positions | civilian_positions | list("AI","Cyborg")), // crew positions
+	EXP_TYPE_CREW = list("titles" = command_positions | engineering_positions | medical_positions | science_positions | supply_positions | security_positions | service_positions | list("AI","Cyborg")), // crew positions
 	EXP_TYPE_COMMAND = list("titles" = command_positions),
 	EXP_TYPE_ENGINEERING = list("titles" = engineering_positions),
 	EXP_TYPE_MEDICAL = list("titles" = medical_positions),
@@ -68,7 +83,7 @@ GLOBAL_LIST_INIT(exp_jobsmap, list(
 	EXP_TYPE_SUPPLY = list("titles" = supply_positions),
 	EXP_TYPE_SECURITY = list("titles" = security_positions),
 	EXP_TYPE_SILICON = list("titles" = list("AI","Cyborg")),
-	EXP_TYPE_SERVICE = list("titles" = civilian_positions),
+	EXP_TYPE_SERVICE = list("titles" = service_positions)
 ))
 
 GLOBAL_LIST_INIT(exp_specialmap, list(

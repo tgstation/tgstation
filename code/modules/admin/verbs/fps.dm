@@ -23,4 +23,4 @@
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Set Server FPS", "[new_fps]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 	CONFIG_SET(number/fps, new_fps)
-	world.fps = new_fps
+	world.change_fps(new_fps)

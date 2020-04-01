@@ -94,21 +94,17 @@
 		if(WIRE_POWER1, WIRE_POWER2) // Cut to loose power, repair all to gain power.
 			if(mend && !is_cut(WIRE_POWER1) && !is_cut(WIRE_POWER2))
 				A.regainMainPower()
-				if(usr)
-					A.shock(usr, 50)
 			else
 				A.loseMainPower()
-				if(usr)
-					A.shock(usr, 50)
+			if(isliving(usr))
+				A.shock(usr, 50)
 		if(WIRE_BACKUP1, WIRE_BACKUP2) // Cut to loose backup power, repair all to gain backup power.
 			if(mend && !is_cut(WIRE_BACKUP1) && !is_cut(WIRE_BACKUP2))
 				A.regainBackupPower()
-				if(usr)
-					A.shock(usr, 50)
 			else
 				A.loseBackupPower()
-				if(usr)
-					A.shock(usr, 50)
+			if(isliving(usr))
+				A.shock(usr, 50)
 		if(WIRE_BOLTS) // Cut to drop bolts, mend does nothing.
 			if(!mend)
 				A.bolt()
@@ -140,5 +136,5 @@
 			A.lights = mend
 			A.update_icon()
 		if(WIRE_ZAP1, WIRE_ZAP2) // Ouch.
-			if(usr)
+			if(isliving(usr))
 				A.shock(usr, 50)

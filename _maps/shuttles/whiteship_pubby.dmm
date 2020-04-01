@@ -85,7 +85,6 @@
 	name = "Shuttle Airlock"
 	},
 /obj/docking_port/mobile{
-	dheight = 0;
 	dir = 8;
 	dwidth = 4;
 	height = 9;
@@ -93,7 +92,6 @@
 	launch_status = 0;
 	name = "White Ship";
 	port_direction = 4;
-	preferred_direction = 1;
 	width = 9
 	},
 /turf/open/floor/plasteel/dark,

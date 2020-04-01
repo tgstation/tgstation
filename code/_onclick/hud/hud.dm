@@ -57,7 +57,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
-
+	var/obj/screen/wanted_lvl
+	var/obj/screen/spacesuit
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -80,6 +81,13 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
+	wanted_lvl = new /obj/screen()
+	wanted_lvl.icon = 'icons/obj/gang/wanted_160x32.dmi'
+	wanted_lvl.icon_state = "wanted_0"
+	wanted_lvl.screen_loc = ui_wanted_lvl
+	infodisplay += wanted_lvl
+	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
+
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
@@ -100,7 +108,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	healths = null
 	healthdoll = null
+	wanted_lvl = null
 	internals = null
+	spacesuit = null
 	lingchemdisplay = null
 	devilsouldisplay = null
 	lingstingdisplay = null
@@ -113,9 +123,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	mymob = null
 
 	return ..()
-
-/mob
-	var/hud_type = /datum/hud
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
@@ -192,7 +199,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
-	reorganize_alerts()
+	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 
@@ -253,9 +260,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	if(hud_used && client)
 		hud_used.show_hud() //Shows the next hud preset
-		to_chat(usr, "<span class ='info'>Switched HUD mode. Press F12 to toggle.</span>")
+		to_chat(usr, "<span class='info'>Switched HUD mode. Press F12 to toggle.</span>")
 	else
-		to_chat(usr, "<span class ='warning'>This mob type does not use a HUD.</span>")
+		to_chat(usr, "<span class='warning'>This mob type does not use a HUD.</span>")
 
 
 //(re)builds the hand ui slots, throwing away old ones

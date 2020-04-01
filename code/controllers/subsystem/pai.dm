@@ -27,8 +27,6 @@ SUBSYSTEM_DEF(pai)
 
 			card.setPersonality(pai)
 
-			SSticker.mode.update_cult_icons_removed(card.pai.mind)
-
 			candidates -= candidate
 			usr << browse(null, "window=findPai")
 
@@ -39,34 +37,34 @@ SUBSYSTEM_DEF(pai)
 
 		switch(option)
 			if("name")
-				t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
+				t = sanitize_name(stripped_input(usr, "Enter a name for your pAI", "pAI Name", candidate.name, MAX_NAME_LEN))
 				if(t)
-					candidate.name = copytext(sanitize(t),1,MAX_NAME_LEN)
+					candidate.name = t
 			if("desc")
-				t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
+				t = stripped_multiline_input(usr, "Enter a description for your pAI", "pAI Description", candidate.description, MAX_MESSAGE_LEN)
 				if(t)
-					candidate.description = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+					candidate.description = t
 			if("role")
-				t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
+				t = stripped_input(usr, "Enter a role for your pAI", "pAI Role", candidate.role, MAX_MESSAGE_LEN)
 				if(t)
-					candidate.role = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+					candidate.role = t
 			if("ooc")
-				t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
+				t = stripped_multiline_input(usr, "Enter any OOC comments", "pAI OOC Comments", candidate.comments, MAX_MESSAGE_LEN)
 				if(t)
-					candidate.comments = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+					candidate.comments = t
 			if("save")
 				candidate.savefile_save(usr)
 			if("load")
 				candidate.savefile_load(usr)
 				//In case people have saved unsanitized stuff.
 				if(candidate.name)
-					candidate.name = copytext(sanitize(candidate.name),1,MAX_NAME_LEN)
+					candidate.name = copytext_char(sanitize(candidate.name),1,MAX_NAME_LEN)
 				if(candidate.description)
-					candidate.description = copytext(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
+					candidate.description = copytext_char(sanitize(candidate.description),1,MAX_MESSAGE_LEN)
 				if(candidate.role)
-					candidate.role = copytext(sanitize(candidate.role),1,MAX_MESSAGE_LEN)
+					candidate.role = copytext_char(sanitize(candidate.role),1,MAX_MESSAGE_LEN)
 				if(candidate.comments)
-					candidate.comments = copytext(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
+					candidate.comments = copytext_char(sanitize(candidate.comments),1,MAX_MESSAGE_LEN)
 
 			if("submit")
 				if(candidate)
@@ -144,7 +142,7 @@ SUBSYSTEM_DEF(pai)
 	if(!ghost_spam)
 		ghost_spam = TRUE
 		for(var/mob/dead/observer/G in GLOB.player_list)
-			if(!G.key || !G.client)
+			if(!G.key)
 				continue
 			if(!(ROLE_PAI in G.client.prefs.be_special))
 				continue

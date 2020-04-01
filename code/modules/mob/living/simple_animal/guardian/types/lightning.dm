@@ -6,7 +6,8 @@
 /mob/living/simple_animal/hostile/guardian/beam
 	melee_damage_lower = 7
 	melee_damage_upper = 7
-	attacktext = "shocks"
+	attack_verb_continuous = "shocks"
+	attack_verb_simple = "shock"
 	melee_damage_type = BURN
 	attack_sound = 'sound/machines/defib_zap.ogg'
 	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 0.7, CLONE = 0.7, STAMINA = 0, OXY = 0.7)
@@ -15,6 +16,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Tesla, a shocking, lethal source of power.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Lightning modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Iron, a conductive master of lightning.</span>"
 	var/datum/beam/summonerchain
 	var/list/enemychains = list()
 	var/successfulshocks = 0
@@ -47,7 +49,7 @@
 				successfulshocks = 0
 			if(shockallchains())
 				successfulshocks++
-			sleep(3)
+			SLEEP_CHECK_DEATH(3)
 
 /mob/living/simple_animal/hostile/guardian/beam/Recall()
 	. = ..()
@@ -101,21 +103,11 @@
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
 				if(successfulshocks > 4)
-					if(iscarbon(L))
-						var/mob/living/carbon/C = L
-						if(ishuman(C))
-							var/mob/living/carbon/human/H = C
-							H.electrocution_animation(20)
-						C.jitteriness += 1000
-						C.do_jitter_animation(jitteriness)
-						C.stuttering += 1
-						spawn(20)
-							if(C)
-								C.jitteriness = max(C.jitteriness - 990, 10)
+					L.electrocute_act(0)
 					L.visible_message(
 						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \
-						"<span class='italics'>You hear a heavy electrical crack.</span>" \
+						"<span class='hear'>You hear a heavy electrical crack.</span>" \
 					)
 				L.adjustFireLoss(1.2) //adds up very rapidly
 				. = 1

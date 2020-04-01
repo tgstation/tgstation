@@ -9,10 +9,11 @@
 
 /obj/item/clothing/glasses/changeling
 	name = "flesh"
+	item_flags = DROPDEL
 
 /obj/item/clothing/glasses/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/glasses/changeling/attack_hand(mob/user)
@@ -24,10 +25,11 @@
 
 /obj/item/clothing/under/changeling
 	name = "flesh"
+	item_flags = DROPDEL
 
 /obj/item/clothing/under/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/under/changeling/attack_hand(mob/user)
@@ -40,10 +42,11 @@
 /obj/item/clothing/suit/changeling
 	name = "flesh"
 	allowed = list(/obj/item/changeling)
+	item_flags = DROPDEL
 
 /obj/item/clothing/suit/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/suit/changeling/attack_hand(mob/user)
@@ -55,10 +58,11 @@
 
 /obj/item/clothing/head/changeling
 	name = "flesh"
+	item_flags = DROPDEL
 
 /obj/item/clothing/head/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/head/changeling/attack_hand(mob/user)
@@ -70,10 +74,11 @@
 
 /obj/item/clothing/shoes/changeling
 	name = "flesh"
+	item_flags = DROPDEL
 
 /obj/item/clothing/shoes/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/shoes/changeling/attack_hand(mob/user)
@@ -85,10 +90,11 @@
 
 /obj/item/clothing/gloves/changeling
 	name = "flesh"
+	item_flags = DROPDEL
 
 /obj/item/clothing/gloves/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/gloves/changeling/attack_hand(mob/user)
@@ -100,10 +106,11 @@
 
 /obj/item/clothing/mask/changeling
 	name = "flesh"
+	item_flags = DROPDEL
 
 /obj/item/clothing/mask/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/clothing/mask/changeling/attack_hand(mob/user)
@@ -117,10 +124,11 @@
 	name = "flesh"
 	slot_flags = ALL
 	allowed = list(/obj/item/changeling)
+	item_flags = DROPDEL
 
 /obj/item/changeling/Initialize()
 	. = ..()
-	add_trait(TRAIT_NODROP, CHANGELING_TRAIT)
+	ADD_TRAIT(src, TRAIT_NODROP, CHANGELING_TRAIT)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/changeling/attack_hand(mob/user)
@@ -141,7 +149,7 @@
 	changeling_transform(user, chosen_prof)
 	return TRUE
 
-/datum/antagonist/changeling/proc/select_dna(var/prompt, var/title)
+/datum/antagonist/changeling/proc/select_dna(prompt, title)
 	var/mob/living/carbon/user = owner.current
 	if(!istype(user))
 		return
@@ -149,7 +157,7 @@
 	for(var/datum/changelingprofile/prof in stored_profiles)
 		names += "[prof.name]"
 
-	var/chosen_name = input(prompt, title, null) as null|anything in names
+	var/chosen_name = input(prompt, title, null) as null|anything in sortList(names)
 	if(!chosen_name)
 		return
 

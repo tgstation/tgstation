@@ -6,7 +6,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
 	log_prayer("[src.key]/([src.name]): [msg]")
@@ -25,8 +25,8 @@
 		cross.icon_state = "kingyellow"
 		font_color = "blue"
 		prayer_type = "CHAPLAIN PRAYER"
-		if(SSreligion.deity)
-			deity = SSreligion.deity
+		if(GLOB.deity)
+			deity = GLOB.deity
 	else if(iscultist(usr))
 		cross.icon_state = "tome"
 		font_color = "red"
@@ -34,7 +34,7 @@
 		deity = "Nar'Sie"
 	else if(isliving(usr))
 		var/mob/living/L = usr
-		if(L.has_trait(TRAIT_SPIRITUAL))
+		if(HAS_TRAIT(L, TRAIT_SPIRITUAL))
 			cross.icon_state = "holylight"
 			font_color = "blue"
 			prayer_type = "SPIRITUAL PRAYER"
@@ -54,21 +54,21 @@
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/CentCom_announce(text , mob/Sender)
-	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
+	var/msg = copytext_char(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>CENTCOM:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_CENTCOM_REPLY(Sender)]:</b> [msg]</span>"
 	to_chat(GLOB.admins, msg)
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()
 
 /proc/Syndicate_announce(text , mob/Sender)
-	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
+	var/msg = copytext_char(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=crimson>SYNDICATE:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_SYNDICATE_REPLY(Sender)]:</b> [msg]</span>"
 	to_chat(GLOB.admins, msg)
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)
 		C.overrideCooldown()
 
 /proc/Nuke_request(text , mob/Sender)
-	var/msg = copytext(sanitize(text), 1, MAX_MESSAGE_LEN)
+	var/msg = copytext_char(sanitize(text), 1, MAX_MESSAGE_LEN)
 	msg = "<span class='adminnotice'><b><font color=orange>NUKE CODE REQUEST:</font>[ADMIN_FULLMONTY(Sender)] [ADMIN_CENTCOM_REPLY(Sender)] [ADMIN_SET_SD_CODE]:</b> [msg]</span>"
 	to_chat(GLOB.admins, msg)
 	for(var/obj/machinery/computer/communications/C in GLOB.machines)

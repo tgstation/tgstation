@@ -26,11 +26,11 @@
 	ears = /obj/item/radio/headset/headset_cargo/mining
 	shoes = /obj/item/clothing/shoes/workboots/mining
 	gloves = /obj/item/clothing/gloves/color/black
-	uniform = /obj/item/clothing/under/rank/miner/lavaland
+	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
-	r_pocket = /obj/item/flashlight/seclite
+	r_pocket = /obj/item/storage/bag/ore	//causes issues if spawned in backpack
 	backpack_contents = list(
-		/obj/item/storage/bag/ore=1,\
+		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,\
 		/obj/item/mining_voucher=1,\
 		/obj/item/stack/marker_beacon/ten=1)
@@ -38,7 +38,7 @@
 	backpack = /obj/item/storage/backpack/explorer
 	satchel = /obj/item/storage/backpack/satchel/explorer
 	duffelbag = /obj/item/storage/backpack/duffelbag
-	box = /obj/item/storage/box/survival_mining
+	box = /obj/item/storage/box/survival/mining
 
 	chameleon_extras = /obj/item/gun/energy/kinetic_accelerator
 
@@ -48,9 +48,9 @@
 	mask = /obj/item/clothing/mask/gas/explorer
 	glasses = /obj/item/clothing/glasses/meson
 	suit_store = /obj/item/tank/internals/oxygen
-	internals_slot = SLOT_S_STORE
+	internals_slot = ITEM_SLOT_SUITSTORE
 	backpack_contents = list(
-		/obj/item/storage/bag/ore=1,
+		/obj/item/flashlight/seclite=1,\
 		/obj/item/kitchen/knife/combat/survival=1,
 		/obj/item/mining_voucher=1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser=1,
@@ -69,4 +69,3 @@
 	name = "Shaft Miner (Equipment + Hardsuit)"
 	suit = /obj/item/clothing/suit/space/hardsuit/mining
 	mask = /obj/item/clothing/mask/breath
-

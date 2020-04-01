@@ -5,7 +5,7 @@
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	cure_text = "Holy water or extensive rest."
 	spread_text = "A burst of unholy energy"
-	cures = list("holywater")
+	cures = list(/datum/reagent/water/holywater)
 	cure_chance = 50 //higher chance to cure, because revenants are assholes
 	agent = "Unholy Forces"
 	viable_mobtypes = list(/mob/living/carbon/human)
@@ -32,7 +32,7 @@
 		if(prob(stage*3))
 			to_chat(affected_mob, "<span class='revennotice'>You suddenly feel [pick("sick and tired", "disoriented", "tired and confused", "nauseated", "faint", "dizzy")]...</span>")
 			affected_mob.confused += 8
-			affected_mob.adjustStaminaLoss(8)
+			affected_mob.adjustStaminaLoss(20)
 			new /obj/effect/temp_visual/revenant(affected_mob.loc)
 		if(stagedamage < stage)
 			stagedamage++

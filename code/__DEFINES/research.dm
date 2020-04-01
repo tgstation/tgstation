@@ -1,9 +1,8 @@
-
+///Defines for the R&D console, see: [/modules/research/rdconsole][rdconsole]
 #define RDCONSOLE_UI_MODE_NORMAL 1
 #define RDCONSOLE_UI_MODE_EXPERT 2
 #define RDCONSOLE_UI_MODE_LIST 3
 
-//RDSCREEN screens
 #define RDSCREEN_MENU 0
 #define RDSCREEN_TECHDISK 1
 #define RDSCREEN_DESIGNDISK 20
@@ -27,6 +26,7 @@
 
 #define RDSCREEN_NOBREAK "<NO_HTML_BREAK>"
 
+///Sanity check defines for when these devices aren't connected or no disk is inserted
 #define RDSCREEN_TEXT_NO_PROTOLATHE "<div><h3>No Protolathe Linked!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_IMPRINTER "<div><h3>No Circuit Imprinter Linked!</h3></div><br>"
 #define RDSCREEN_TEXT_NO_DECONSTRUCT "<div><h3>No Destructive Analyzer Linked!</h3></div><br>"
@@ -43,12 +43,14 @@
 #define RDSCREEN_UI_SNODE_CHECK if(!selected_node) { return RDSCREEN_TEXT_NO_SNODE }
 #define RDSCREEN_UI_SDESIGN_CHECK if(!selected_design) { return RDSCREEN_TEXT_NO_SDESIGN }
 
+///Defines for the Protolathe screens, see: [/modules/research/machinery/protolathe][Protolathe]
 #define RESEARCH_FABRICATOR_SCREEN_MAIN 1
 #define RESEARCH_FABRICATOR_SCREEN_CHEMICALS 2
 #define RESEARCH_FABRICATOR_SCREEN_MATERIALS 3
 #define RESEARCH_FABRICATOR_SCREEN_SEARCH 4
 #define RESEARCH_FABRICATOR_SCREEN_CATEGORYVIEW 5
 
+///Department flags for techwebs. Defines which department can print what from each protolathe so Cargo can't print guns, etc.
 #define DEPARTMENTAL_FLAG_SECURITY		(1<<0)
 #define DEPARTMENTAL_FLAG_MEDICAL		(1<<1)
 #define DEPARTMENTAL_FLAG_CARGO			(1<<2)
@@ -56,20 +58,32 @@
 #define DEPARTMENTAL_FLAG_ENGINEERING	(1<<4)
 #define DEPARTMENTAL_FLAG_SERVICE		(1<<5)
 #define DEPARTMENTAL_FLAG_ALL			(1<<6)			//NO THIS DOESN'T ALLOW YOU TO PRINT EVERYTHING, IT'S FOR ALL DEPARTMENTS!
-//#define DEPARTMENTAL_FLAG_MINING		(1<<7)
+//#define DEPARTMENTAL_FLAG_MINING		(1<<7)			//I swear I'm actually going to use this eventually leave it here
 
-#define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
+#define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"			///For instances where we don't want a design showing up due to it being for debug/sanity purposes
 
 #define RESEARCH_MATERIAL_RECLAMATION_ID "__materials"
 
-//When adding new types, update the list below!
+///Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
+#define TECHWEB_POINT_TYPE_NANITES "Nanite Research"
 
 #define TECHWEB_POINT_TYPE_DEFAULT TECHWEB_POINT_TYPE_GENERIC
 
-//defined here so people don't forget to change this!
+///Associative names for techweb point values, see: [/modules/research/techweb/all_nodes][all_nodes]
 #define TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES list(\
-	TECHWEB_POINT_TYPE_GENERIC = "General Research"\
+	TECHWEB_POINT_TYPE_GENERIC = "General Research",\
+	TECHWEB_POINT_TYPE_NANITES = "Nanite Research"\
 	)
 
-#define TECHWEB_BOMB_POINTCAP		50000 //Adjust as needed; Stops toxins from nullifying RND progression mechanics. Current Value Cap Radius: 100
+///R&D point value for a maxcap bomb. Can be adjusted if need be. Current Value Cap Radius: 100
+#define TECHWEB_BOMB_POINTCAP		50000
+
+///Research point values for slime extracts, see: [/modules/research/xenobiology/xenobio_camera][xenobio_camera]
+#define SLIME_RESEARCH_TIER_0 100
+#define SLIME_RESEARCH_TIER_1 500
+#define SLIME_RESEARCH_TIER_2 1000
+#define SLIME_RESEARCH_TIER_3 1500
+#define SLIME_RESEARCH_TIER_4 2000
+#define SLIME_RESEARCH_TIER_5 2500
+#define SLIME_RESEARCH_TIER_RAINBOW 5000

@@ -23,15 +23,12 @@
 			var/mob/living/carbon/C = energyKatana.loc
 			C.transferItemToLoc(energyKatana, get_turf(energyKatana), TRUE)
 
-			//Somebody swollowed my sword, probably the clown doing a circus act.
-			if(energyKatana in C.stomach_contents)
-				C.stomach_contents -= energyKatana
 		else
 			energyKatana.forceMove(get_turf(energyKatana))
 
 		if(inview) //If we can see the katana, throw it towards ourselves, damaging people as we go.
 			energyKatana.spark_system.start()
-			playsound(H, "sparks", 50, 1)
+			playsound(H, "sparks", 50, TRUE)
 			H.visible_message("<span class='danger'>\the [energyKatana] flies towards [H]!</span>","<span class='warning'>You hold out your hand and \the [energyKatana] flies towards you!</span>")
 			energyKatana.throw_at(H, distance+1, energyKatana.throw_speed,H)
 

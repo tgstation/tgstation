@@ -1,13 +1,13 @@
 /datum/component/decal
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-
+	can_transfer = TRUE
 	var/cleanable
 	var/description
 	var/mutable_appearance/pic
 
 	var/first_dir // This only stores the dir arg from init
 
-/datum/component/decal/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_GOD, _color, _layer=TURF_LAYER, _description, _alpha=255)
+/datum/component/decal/Initialize(_icon, _icon_state, _dir, _cleanable=CLEAN_NEVER, _color, _layer=TURF_LAYER, _description, _alpha=255)
 	if(!isatom(parent) || !generate_appearance(_icon, _icon_state, _dir, _layer, _color, _alpha))
 		return COMPONENT_INCOMPATIBLE
 	first_dir = _dir
@@ -19,7 +19,7 @@
 /datum/component/decal/RegisterWithParent()
 	if(first_dir)
 		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, .proc/rotate_react)
-	if(cleanable)
+	if(cleanable != CLEAN_NEVER)
 		RegisterSignal(parent, COMSIG_COMPONENT_CLEAN_ACT, .proc/clean_react)
 	if(description)
 		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/examine)
@@ -71,5 +71,5 @@
 	if(strength >= cleanable)
 		qdel(src)
 
-/datum/component/decal/proc/examine(datum/source, mob/user)
-	to_chat(user, description)
+/datum/component/decal/proc/examine(datum/source, mob/user, list/examine_list)
+	examine_list += description

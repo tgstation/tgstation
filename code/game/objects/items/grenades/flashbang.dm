@@ -21,16 +21,21 @@
 /obj/item/grenade/flashbang/proc/bang(turf/T , mob/living/M)
 	if(M.stat == DEAD)	//They're dead!
 		return
-	M.show_message("<span class='warning'>BANG</span>", 2)
+	M.show_message("<span class='warning'>BANG</span>", MSG_AUDIBLE)
 	var/distance = max(0,get_dist(get_turf(src),T))
 
 //Flash
 	if(M.flash_act(affect_silicon = 1))
-		M.Paralyze(max(200/max(1,distance), 60))
+		M.Paralyze(max(20/max(1,distance), 5))
+		M.Knockdown(max(200/max(1,distance), 60))
+
 //Bang
 	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
-		M.Paralyze(200)
+		M.Paralyze(20)
+		M.Knockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
-
 	else
+		if(distance <= 1) // Adds more stun as to not prime n' pull (#45381)
+			M.Paralyze(5)
+			M.Knockdown(30)
 		M.soundbang_act(1, max(200/max(1,distance), 60), rand(0, 5))

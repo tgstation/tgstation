@@ -11,19 +11,18 @@
 	w_class = WEIGHT_CLASS_SMALL
 	var/obj/item/implantcase/case = null
 
-/obj/item/implantpad/update_icon()
+/obj/item/implantpad/update_icon_state()
 	icon_state = "implantpad-[!QDELETED(case)]"
 
 /obj/item/implantpad/examine(mob/user)
-	..()
-	var/is_adjacent = Adjacent(user)
-	if(is_adjacent)
-		to_chat(user, "It [case ? "contains \a [case]" : "is currently empty"].")
+	. = ..()
+	if(Adjacent(user))
+		. += "It [case ? "contains \a [case]" : "is currently empty"]."
 		if(case)
-			to_chat(user, "<span class='info'>Alt-click to remove [case].</span>")
+			. += "<span class='info'>Alt-click to remove [case].</span>"
 	else
 		if(case)
-			to_chat(user, "<span class='warning'>There seems to be something inside it, but you can't quite tell what from here...</span>")
+			. += "<span class='warning'>There seems to be something inside it, but you can't quite tell what from here...</span>"
 
 /obj/item/implantpad/handle_atom_del(atom/A)
 	if(A == case)

@@ -10,9 +10,9 @@
 	item_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
-	materials = list(MAT_GLASS=1000)
+	custom_materials = list(/datum/material/glass=1000)
 	w_class = WEIGHT_CLASS_SMALL
-	grind_results = list("silicon" = 20)
+	grind_results = list(/datum/reagent/silicon = 20)
 	var/build_path = null
 
 /obj/item/circuitboard/proc/apply_default_parts(obj/machinery/M)
@@ -56,7 +56,7 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 	M.RefreshParts()
 
 /obj/item/circuitboard/machine/examine(mob/user)
-	..()
+	. = ..()
 	if(LAZYLEN(req_components))
 		var/list/nice_list = list()
 		for(var/B in req_components)
@@ -64,4 +64,4 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			if(!ispath(A))
 				continue
 			nice_list += list("[req_components[A]] [initial(A.name)]")
-		to_chat(user,"<span class='notice'>Required components: [english_list(nice_list)].</span>")
+		. += "<span class='notice'>Required components: [english_list(nice_list)].</span>"

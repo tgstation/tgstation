@@ -1,4 +1,6 @@
 //Speech verbs.
+
+///Say verb
 /mob/verb/say_verb(message as text)
 	set name = "Say"
 	set category = "IC"
@@ -7,8 +9,8 @@
 		return
 	if(message)
 		say(message)
-
-
+	
+///Whisper verb
 /mob/verb/whisper_verb(message as text)
 	set name = "Whisper"
 	set category = "IC"
@@ -17,9 +19,11 @@
 		return
 	whisper(message)
 
+///whisper a message
 /mob/proc/whisper(message, datum/language/language=null)
 	say(message, language) //only living mobs actually whisper, everything else just talks
-
+	
+///The me emote verb
 /mob/verb/me_verb(message as text)
 	set name = "Me"
 	set category = "IC"
@@ -28,10 +32,11 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	usr.emote("me",1,message,TRUE)
 
+///Speak as a dead person (ghost etc)
 /mob/proc/say_dead(var/message)
 	var/name = real_name
 	var/alt_name = ""
@@ -40,7 +45,7 @@
 		to_chat(usr, "<span class='danger'>Speech is currently admin-disabled.</span>")
 		return
 
-	var/jb = is_banned_from(ckey, "OOC")
+	var/jb = is_banned_from(ckey, "Deadchat")
 	if(QDELETED(src))
 		return
 
@@ -69,33 +74,45 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/K
-
-	if(key)
-		K = src.key
-
-	var/spanned = src.say_quote(message, get_spans())
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] <span class='message'>[emoji_parse(spanned)]</span></span>"
+	var/spanned = say_quote(message)
+	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
+	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
-	deadchat_broadcast(rendered, follow_target = src, speaker_key = K)
+	if(SEND_SIGNAL(src, COMSIG_MOB_DEADSAY, message) & MOB_DEADSAY_SIGNAL_INTERCEPT)
+		return
+	deadchat_broadcast(rendered, source, follow_target = src, speaker_key = key)
 
-/mob/proc/check_emote(message)
-	if(copytext(message, 1, 2) == "*")
-		emote(copytext(message, 2), intentional = TRUE)
-		return 1
+///Check if this message is an emote
+/mob/proc/check_emote(message, forced)
+	if(message[1] == "*")
+		emote(copytext(message, length(message[1]) + 1), intentional = !forced)
+		return TRUE
 
+///Check if the mob has a hivemind channel
 /mob/proc/hivecheck()
 	return 0
 
+///Check if the mob has a ling hivemind
 /mob/proc/lingcheck()
 	return LINGHIVE_NONE
 
+/**
+  * Get the mode of a message
+  *
+  * Result can be
+  * * MODE_WHISPER (Quiet speech)
+  * * MODE_SING (Singing)
+  * * MODE_HEADSET (Common radio channel)
+  * * A department radio (lots of values here)
+  */
 /mob/proc/get_message_mode(message)
-	var/key = copytext(message, 1, 2)
+	var/key = message[1]
 	if(key == "#")
 		return MODE_WHISPER
+	else if(key == "%")
+		return MODE_SING
 	else if(key == ";")
 		return MODE_HEADSET
-	else if(length(message) > 2 && (key in GLOB.department_radio_prefixes))
-		var/key_symbol = lowertext(copytext(message, 2, 3))
+	else if((length(message) > (length(key) + 1)) && (key in GLOB.department_radio_prefixes))
+		var/key_symbol = lowertext(message[length(key) + 1])
 		return GLOB.department_radio_keys[key_symbol]

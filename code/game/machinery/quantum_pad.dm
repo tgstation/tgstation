@@ -30,12 +30,12 @@
 	return ..()
 
 /obj/machinery/quantumpad/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It is [ linked_pad ? "currently" : "not"] linked to another pad.</span>")
+	. = ..()
+	. += "<span class='notice'>It is [ linked_pad ? "currently" : "not"] linked to another pad.</span>"
 	if(!panel_open)
-		to_chat(user, "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device.</span>")
+		. += "<span class='notice'>The panel is <i>screwed</i> in, obstructing the linking device.</span>"
 	else
-		to_chat(user, "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.</span>")
+		. += "<span class='notice'>The <i>linking</i> device is now able to be <i>scanned<i> with a multitool.</span>"
 
 /obj/machinery/quantumpad/RefreshParts()
 	var/E = 0
@@ -77,7 +77,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is no quantum pad data saved in [I]'s buffer!</span>")
 			return TRUE
-			
+
 	else if(istype(I, /obj/item/quantum_keycard))
 		var/obj/item/quantum_keycard/K = I
 		if(K.qpad)
@@ -112,14 +112,14 @@
 		to_chat(user, "<span class='warning'>Target pad is busy. Please wait.</span>")
 		return
 
-	if(target_pad.stat & NOPOWER)
+	if(target_pad.machine_stat & NOPOWER)
 		to_chat(user, "<span class='warning'>Target pad is not responding to ping.</span>")
 		return
 	add_fingerprint(user)
 	doteleport(user, target_pad)
 
 /obj/machinery/quantumpad/proc/sparks()
-	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
+	var/datum/effect_system/spark_spread/quantum/s = new /datum/effect_system/spark_spread/quantum
 	s.set_up(5, 1, get_turf(src))
 	s.start()
 
@@ -134,18 +134,18 @@
 
 /obj/machinery/quantumpad/proc/doteleport(mob/user, obj/machinery/quantumpad/target_pad = linked_pad)
 	if(target_pad)
-		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, 1)
+		playsound(get_turf(src), 'sound/weapons/flash.ogg', 25, TRUE)
 		teleporting = TRUE
 
 		spawn(teleport_speed)
 			if(!src || QDELETED(src))
 				teleporting = FALSE
 				return
-			if(stat & NOPOWER)
+			if(machine_stat & NOPOWER)
 				to_chat(user, "<span class='warning'>[src] is unpowered!</span>")
 				teleporting = FALSE
 				return
-			if(!target_pad || QDELETED(target_pad) || target_pad.stat & NOPOWER)
+			if(!target_pad || QDELETED(target_pad) || target_pad.machine_stat & NOPOWER)
 				to_chat(user, "<span class='warning'>Linked pad is not responding to ping. Teleport aborted.</span>")
 				teleporting = FALSE
 				return
@@ -159,13 +159,13 @@
 			target_pad.sparks()
 
 			flick("qpad-beam", src)
-			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+			playsound(get_turf(src), 'sound/weapons/emitter2.ogg', 25, TRUE, extrarange = 3, falloff = 5)
 			flick("qpad-beam", target_pad)
-			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, 1, extrarange = 3, falloff = 5)
+			playsound(get_turf(target_pad), 'sound/weapons/emitter2.ogg', 25, TRUE, extrarange = 3, falloff = 5)
 			for(var/atom/movable/ROI in get_turf(src))
 				if(QDELETED(ROI))
 					continue //sleeps in CHECK_TICK
-				   
+
 				// if is anchored, don't let through
 				if(ROI.anchored)
 					if(isliving(ROI))

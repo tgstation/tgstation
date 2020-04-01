@@ -7,7 +7,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
-	selection_color = "#dddddd"
+	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/clown
 
@@ -28,7 +28,8 @@
 	jobtype = /datum/job/clown
 
 	belt = /obj/item/pda/clown
-	uniform = /obj/item/clothing/under/rank/clown
+	ears = /obj/item/radio/headset/headset_srv
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
 	l_pocket = /obj/item/bikehorn
@@ -55,4 +56,7 @@
 		return
 
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
+	ADD_TRAIT(H, TRAIT_NAIVE, JOB_TRAIT)
 	H.dna.add_mutation(CLOWNMUT)
+	for(var/datum/mutation/human/clumsy/M in H.dna.mutations)
+		M.mutadone_proof = TRUE

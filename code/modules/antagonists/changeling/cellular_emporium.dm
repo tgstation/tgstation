@@ -81,7 +81,7 @@
 	if(istype(our_target, /datum/cellular_emporium))
 		cellular_emporium = our_target
 	else
-		throw EXCEPTION("cellular_emporium action created with non emporium")
+		CRASH("cellular_emporium action created with non emporium")
 
 /datum/action/innate/cellular_emporium/Activate()
 	cellular_emporium.ui_interact(owner)

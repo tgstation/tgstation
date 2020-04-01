@@ -130,22 +130,6 @@
 	category = list("Teleportation Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/board/sleeper
-	name = "Machine Design (Sleeper Board)"
-	desc = "The circuit board for a sleeper."
-	id = "sleeper"
-	build_path = /obj/item/circuitboard/machine/sleeper
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL
-	category = list ("Medical Machinery")
-
-/datum/design/board/vr_sleeper
-	name = "Machine Design (VR Sleeper Board)"
-	desc = "The circuit board for a VR sleeper."
-	id = "vr_sleeper"
-	build_path = /obj/item/circuitboard/machine/vr_sleeper
-	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-	category = list ("Medical Machinery")
-
 /datum/design/board/cryotube
 	name = "Machine Design (Cryotube Board)"
 	desc = "The circuit board for a cryotube."
@@ -194,29 +178,21 @@
 	category = list ("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
-/datum/design/board/clonecontrol
-	name = "Computer Design (Cloning Machine Console)"
-	desc = "Allows for the construction of circuit boards used to build a new Cloning Machine console."
-	id = "clonecontrol"
-	build_path = /obj/item/circuitboard/computer/cloning
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	category = list("Medical Machinery")
-
-/datum/design/board/clonepod
-	name = "Machine Design (Clone Pod)"
-	desc = "Allows for the construction of circuit boards used to build a Cloning Pod."
-	id = "clonepod"
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	build_path = /obj/item/circuitboard/machine/clonepod
-	category = list("Medical Machinery")
-
-/datum/design/board/clonescanner
-	name = "Machine Design (Cloning Scanner)"
+/datum/design/board/dnascanner
+	name = "Machine Design (DNA Scanner)"
 	desc = "Allows for the construction of circuit boards used to build a Cloning Scanner."
-	id = "clonescanner"
+	id = "dnascanner"
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
-	build_path = /obj/item/circuitboard/machine/clonescanner
+	build_path = /obj/item/circuitboard/machine/dnascanner
 	category = list("Medical Machinery")
+
+/datum/design/board/hypnochair
+	name = "Machine Design (Enhanced Interrogation Chamber)"
+	desc = "Allows for the construction of circuit boards used to build an Enhanced Interrogation Chamber."
+	id = "hypnochair"
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+	build_path = /obj/item/circuitboard/machine/hypnochair
+	category = list("Misc. Machinery")
 
 /datum/design/board/biogenerator
 	name = "Machine Design (Biogenerator Board)"
@@ -247,6 +223,14 @@
 	desc = "The circuit board for an E.X.P.E.R.I-MENTOR."
 	id = "experimentor"
 	build_path = /obj/item/circuitboard/machine/experimentor
+	category = list("Research Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/bepis
+	name = "Machine Design (B.E.P.I.S. Board)"
+	desc = "The circuit board for a B.E.P.I.S."
+	id = "bepis"
+	build_path = /obj/item/circuitboard/machine/bepis
 	category = list("Research Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
@@ -416,8 +400,8 @@
 	id = "scanner_gate"
 	build_path = /obj/item/circuitboard/machine/scanner_gate
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL	
-	
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 /datum/design/board/holopad
 	name = "Machine Design (AI Holopad Board)"
 	desc = "The circuit board for a holopad."
@@ -438,7 +422,7 @@
 	name = "Machine Design (Weapon Recharger Board)"
 	desc = "The circuit board for a Weapon Recharger."
 	id = "recharger"
-	materials = list(MAT_GLASS = 1000, MAT_GOLD = 2000)
+	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
 	build_path = /obj/item/circuitboard/machine/recharger
 	category = list("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
@@ -584,5 +568,53 @@
 	desc = "The circuit board for a paystand."
 	id = "paystand"
 	build_path = /obj/item/circuitboard/machine/paystand
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
+/datum/design/board/fat_sucker
+	name = "Machine Design (Lipid Extractor)"
+	desc = "The circuit board for a lipid extractor."
+	id = "fat_sucker"
+	build_path = /obj/item/circuitboard/machine/fat_sucker
+	category = list ("Misc. Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/board/stasis
+	name = "Machine Design (Lifeform Stasis Unit)"
+	desc = "The circuit board for a stasis unit."
+	id = "stasis"
+	build_path = /obj/item/circuitboard/machine/stasis
+	category = list("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/spaceship_navigation_beacon
+	name = "Machine Design (Bluespace Navigation Gigabeacon)"
+	desc = "The circuit board for a Bluespace Navigation Gigabeacon."
+	id = "spaceship_navigation_beacon"
+	build_path = /obj/item/circuitboard/machine/spaceship_navigation_beacon
+	category = list ("Teleportation Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/medical_kiosk
+	name = "Machine Design (Medical Kiosk)"
+	desc = "The circuit board for a Medical Kiosk."
+	id = "medical_kiosk"
+	build_path = /obj/item/circuitboard/machine/medical_kiosk
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/medipen_refiller
+	name = "Machine Design (Medipen Refiller)"
+	desc = "The circuit board for a Medipen Refiller."
+	id = "medipen_refiller"
+	build_path = /obj/item/circuitboard/machine/medipen_refiller
+	category = list ("Medical Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/board/sheetifier
+	name = "Sheetifier"
+	desc = "This machine turns weird things into sheets."
+	id = "sheetifier"
+	build_path = /obj/item/circuitboard/machine/sheetifier
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ALL

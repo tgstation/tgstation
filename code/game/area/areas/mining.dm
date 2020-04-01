@@ -80,6 +80,7 @@
 	icon_state = "mining"
 	has_gravity = STANDARD_GRAVITY
 	flags_1 = NONE
+	blob_allowed = FALSE
 
 /area/lavaland/surface
 	name = "Lavaland"

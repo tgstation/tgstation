@@ -7,16 +7,14 @@
 	name = "terminal"
 	icon_state = "term"
 	desc = "It's an underfloor wiring terminal for power equipment."
-	level = 1
 	layer = WIRE_TERMINAL_LAYER //a bit above wires
 	var/obj/machinery/power/master = null
 
 
 /obj/machinery/power/terminal/Initialize()
 	. = ..()
-	var/turf/T = get_turf(src)
-	if(level == 1)
-		hide(T.intact)
+
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE, use_alpha = TRUE)
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)
@@ -24,27 +22,21 @@
 		master = null
 	return ..()
 
-/obj/machinery/power/terminal/hide(i)
-	if(i)
-		invisibility = INVISIBILITY_MAXIMUM
-		icon_state = "term-f"
-	else
-		invisibility = 0
-		icon_state = "term"
-
+/obj/machinery/power/terminal/should_have_node()
+	return TRUE
 
 /obj/machinery/power/proc/can_terminal_dismantle()
-	. = 0
+	. = FALSE
 
 /obj/machinery/power/apc/can_terminal_dismantle()
-	. = 0
+	. = FALSE
 	if(opened)
-		. = 1
+		. = TRUE
 
 /obj/machinery/power/smes/can_terminal_dismantle()
-	. = 0
+	. = FALSE
 	if(panel_open)
-		. = 1
+		. = TRUE
 
 
 /obj/machinery/power/terminal/proc/dismantle(mob/living/user, obj/item/I)
@@ -57,10 +49,10 @@
 	if(master && !master.can_terminal_dismantle())
 		return
 
-	user.visible_message("[user.name] dismantles the power terminal from [master].",
+	user.visible_message("<span class='notice'>[user.name] dismantles the power terminal from [master].</span>",
 		"<span class='notice'>You begin to cut the cables...</span>")
 
-	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, 1)
+	playsound(src.loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	if(I.use_tool(src, user, 50))
 		if(master && !master.can_terminal_dismantle())
 			return
@@ -74,5 +66,6 @@
 		qdel(src)
 
 /obj/machinery/power/terminal/wirecutter_act(mob/living/user, obj/item/I)
+	..()
 	dismantle(user, I)
 	return TRUE

@@ -3,14 +3,14 @@
 	max_stages = 4
 	spread_text = "Airborne"
 	cure_text = "Iron"
-	cures = list("iron")
+	cures = list(/datum/reagent/iron)
 	agent = "Fukkos Miracos"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	disease_flags = CAN_CARRY|CAN_RESIST|CURABLE
 	permeability_mod = 0.75
 	desc = "This disease disrupts the magnetic field of your body, making it act as if a powerful magnet. Injections of iron help stabilize the field."
 	severity = DISEASE_SEVERITY_MEDIUM
-	infectable_biotypes = list(MOB_ORGANIC, MOB_ROBOTIC)
+	infectable_biotypes = MOB_ORGANIC|MOB_ROBOTIC
 	process_dead = TRUE
 
 /datum/disease/magnitis/stage_act()

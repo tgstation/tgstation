@@ -1,6 +1,7 @@
 /datum/job/warden
 	title = "Warden"
 	flag = WARDEN
+	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
@@ -33,7 +34,7 @@
 
 	belt = /obj/item/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/warden
+	uniform = /obj/item/clothing/under/rank/security/warden
 	shoes = /obj/item/clothing/shoes/jackboots
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
@@ -41,13 +42,13 @@
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	r_pocket = /obj/item/assembly/flash/handheld
 	l_pocket = /obj/item/restraints/handcuffs
-	suit_store = /obj/item/gun/energy/e_gun/advtaser
+	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
 	duffelbag = /obj/item/storage/backpack/duffelbag/sec
-	box = /obj/item/storage/box/security
+	box = /obj/item/storage/box/survival/security
 
 	implants = list(/obj/item/implant/mindshield)
 

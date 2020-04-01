@@ -8,7 +8,7 @@
 	desc = "The basic construction for Nanotrasen-Always-Watching-You cameras."
 	icon = 'icons/obj/machines/camera.dmi'
 	icon_state = "cameracase"
-	materials = list(MAT_METAL=400, MAT_GLASS=250)
+	custom_materials = list(/datum/material/iron=400, /datum/material/glass=250)
 	result_path = /obj/structure/camera_assembly
 
 /obj/structure/camera_assembly
@@ -30,44 +30,44 @@
 	var/state = STATE_WRENCHED
 
 /obj/structure/camera_assembly/examine(mob/user)
-	..()
+	. = ..()
 	//upgrade messages
 	var/has_upgrades
 	if(emp_module)
-		to_chat(user, "It has electromagnetic interference shielding installed.")
+		. += "It has electromagnetic interference shielding installed."
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
-		to_chat(user, "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>")
+		. += "<span class='info'>It can be shielded against electromagnetic interference with some <b>plasma</b>.</span>"
 	if(xray_module)
-		to_chat(user, "It has an X-ray photodiode installed.")
+		. += "It has an X-ray photodiode installed."
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
-		to_chat(user, "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>")
+		. += "<span class='info'>It can be upgraded with an X-ray photodiode with an <b>analyzer</b>.</span>"
 	if(proxy_module)
-		to_chat(user, "It has a proximity sensor installed.")
+		. += "It has a proximity sensor installed."
 		has_upgrades = TRUE
 	else if(state == STATE_WIRED)
-		to_chat(user, "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>")
+		. += "<span class='info'>It can be upgraded with a <b>proximity sensor</b>.</span>"
 
 	//construction states
 	switch(state)
 		if(STATE_WRENCHED)
-			to_chat(user, "<span class='info'>You can secure it in place with a <b>welder</b>, or removed with a <b>wrench</b>.</span>")
+			. += "<span class='info'>You can secure it in place with a <b>welder</b>, or removed with a <b>wrench</b>.</span>"
 		if(STATE_WELDED)
-			to_chat(user, "<span class='info'>You can add <b>wires</b> to it, or <b>unweld</b> it from the wall.</span>")
+			. += "<span class='info'>You can add <b>wires</b> to it, or <b>unweld</b> it from the wall.</span>"
 		if(STATE_WIRED)
 			if(has_upgrades)
-				to_chat(user, "<span class='info'>You can remove the contained upgrades with a <b>crowbar</b>.</span>")
-			to_chat(user, "<span class='info'>You can complete it with a <b>screwdriver</b>, or <b>unwire</b> it to start removal.</span>")
+				. += "<span class='info'>You can remove the contained upgrades with a <b>crowbar</b>.</span>"
+			. += "<span class='info'>You can complete it with a <b>screwdriver</b>, or <b>unwire</b> it to start removal.</span>"
 		if(STATE_FINISHED)
-			to_chat(user, "<span class='boldwarning'>You shouldn't be seeing this, tell a coder!</span>")
+			. += "<span class='boldwarning'>You shouldn't be seeing this, tell a coder!</span>"
 
 /obj/structure/camera_assembly/Initialize(mapload, ndir, building)
 	. = ..()
 	if(building)
 		setDir(ndir)
 
-/obj/structure/camera_assembly/update_icon()
+/obj/structure/camera_assembly/update_icon_state()
 	icon_state = "[xray_module ? "xray" : null][initial(icon_state)]"
 
 /obj/structure/camera_assembly/handle_atom_del(atom/A)
@@ -201,7 +201,7 @@
 		droppable_parts += proxy_module
 	if(!droppable_parts.len)
 		return
-	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in droppable_parts
+	var/obj/item/choice = input(user, "Select a part to remove:", src) as null|obj in sortNames(droppable_parts)
 	if(!choice || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	to_chat(user, "<span class='notice'>You remove [choice] from [src].</span>")
@@ -239,8 +239,9 @@
 	return TRUE
 
 /obj/structure/camera_assembly/wirecutter_act(mob/user, obj/item/I)
+	. = ..()
 	if(state != STATE_WIRED)
-		return FALSE
+		return
 
 	new /obj/item/stack/cable_coil(drop_location(), 2)
 	I.play_tool_sound(src)
@@ -249,8 +250,9 @@
 	return TRUE
 
 /obj/structure/camera_assembly/wrench_act(mob/user, obj/item/I)
+	. = ..()
 	if(state != STATE_WRENCHED)
-		return FALSE
+		return
 	I.play_tool_sound(src)
 	to_chat(user, "<span class='notice'>You detach [src] from its place.</span>")
 	new /obj/item/wallframe/camera(drop_location())

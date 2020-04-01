@@ -12,23 +12,30 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
+	ui_x = 310
+	ui_y = 465
+
 	var/efficiency = 1
 	var/min_health = -25
 	var/list/available_chems
 	var/controls_inside = FALSE
 	var/list/possible_chems = list(
-		list("epinephrine", "morphine", "salbutamol", "bicaridine", "kelotane"),
-		list("oculine","inacusiate"),
-		list("antitoxin", "mutadone", "mannitol", "pen_acid"),
-		list("omnizine")
+		list(/datum/reagent/medicine/epinephrine, /datum/reagent/medicine/morphine, /datum/reagent/medicine/C2/convermol, /datum/reagent/medicine/C2/libital, /datum/reagent/medicine/C2/aiuri),
+		list(/datum/reagent/medicine/oculine,/datum/reagent/medicine/inacusiate),
+		list(/datum/reagent/medicine/C2/multiver, /datum/reagent/medicine/mutadone, /datum/reagent/medicine/mannitol, /datum/reagent/medicine/salbutamol, /datum/reagent/medicine/pen_acid),
+		list(/datum/reagent/medicine/omnizine)
 	)
-	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: antitoxin -> morphine
+	var/list/chem_buttons	//Used when emagged to scramble which chem is used, eg: mutadone -> morphine
 	var/scrambled_chems = FALSE //Are chem buttons scrambled? used as a warning
 	var/enter_message = "<span class='notice'><b>You feel cool air surround you. You go numb as your senses turn inward.</b></span>"
 	payment_department = ACCOUNT_MED
 	fair_market_price = 5
-/obj/machinery/sleeper/Initialize()
+
+/obj/machinery/sleeper/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		component_parts -= circuit
+		QDEL_NULL(circuit)
 	occupant_typecache = GLOB.typecache_living
 	update_icon()
 	reset_chem_buttons()
@@ -48,7 +55,7 @@
 		available_chems |= possible_chems[i]
 	reset_chem_buttons()
 
-/obj/machinery/sleeper/update_icon()
+/obj/machinery/sleeper/update_icon_state()
 	if(state_open)
 		icon_state = "[initial(icon_state)]-open"
 	else
@@ -111,10 +118,12 @@
 	return FALSE
 
 /obj/machinery/sleeper/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_change_direction_wrench(user, I))
 		return TRUE
 
 /obj/machinery/sleeper/crowbar_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(default_pry_open(I))
 		return TRUE
 	if(default_deconstruction_crowbar(I))
@@ -135,18 +144,20 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "sleeper", name, 375, 550, master_ui, state)
+		ui = new(user, src, ui_key, "sleeper", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/sleeper/AltClick(mob/user)
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
 	if(state_open)
 		close_machine()
 	else
 		open_machine()
 
 /obj/machinery/sleeper/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click [src] to [state_open ? "close" : "open"] it.</span>"
 
 /obj/machinery/sleeper/process()
 	..()
@@ -163,7 +174,7 @@
 	data["chems"] = list()
 	for(var/chem in available_chems)
 		var/datum/reagent/R = GLOB.chemical_reagents_list[chem]
-		data["chems"] += list(list("name" = R.name, "id" = R.id, "allowed" = chem_allowed(chem)))
+		data["chems"] += list(list("name" = R.name, "id" = R.type, "allowed" = chem_allowed(chem)))
 
 	data["occupant"] = list()
 	var/mob/living/mob_occupant = occupant
@@ -190,7 +201,7 @@
 		data["occupant"]["toxLoss"] = mob_occupant.getToxLoss()
 		data["occupant"]["fireLoss"] = mob_occupant.getFireLoss()
 		data["occupant"]["cloneLoss"] = mob_occupant.getCloneLoss()
-		data["occupant"]["brainLoss"] = mob_occupant.getBrainLoss()
+		data["occupant"]["brainLoss"] = mob_occupant.getOrganLoss(ORGAN_SLOT_BRAIN)
 		data["occupant"]["reagents"] = list()
 		if(mob_occupant.reagents && mob_occupant.reagents.reagent_list.len)
 			for(var/datum/reagent/R in mob_occupant.reagents.reagent_list)
@@ -210,10 +221,10 @@
 				open_machine()
 			. = TRUE
 		if("inject")
-			var/chem = params["chem"]
-			if(!is_operational() || !mob_occupant)
+			var/chem = text2path(params["chem"])
+			if(!is_operational() || !mob_occupant || isnull(chem))
 				return
-			if(mob_occupant.health < min_health && chem != "epinephrine")
+			if(mob_occupant.health < min_health && chem != /datum/reagent/medicine/epinephrine)
 				return
 			if(inject_chem(chem, usr))
 				. = TRUE
@@ -236,7 +247,7 @@
 	if(!mob_occupant || !mob_occupant.reagents)
 		return
 	var/amount = mob_occupant.reagents.get_reagent_amount(chem) + 10 <= 20 * efficiency
-	var/occ_health = mob_occupant.health > min_health || chem == "epinephrine"
+	var/occ_health = mob_occupant.health > min_health || chem == /datum/reagent/medicine/epinephrine
 	return amount && occ_health
 
 /obj/machinery/sleeper/proc/reset_chem_buttons()
@@ -259,7 +270,6 @@
 /obj/machinery/sleeper/syndie/fullupgrade/Initialize()
 	. = ..()
 	component_parts = list()
-	component_parts += new /obj/item/circuitboard/machine/sleeper(null)
 	component_parts += new /obj/item/stock_parts/matter_bin/bluespace(null)
 	component_parts += new /obj/item/stock_parts/manipulator/femto(null)
 	component_parts += new /obj/item/stack/sheet/glass(null)
@@ -267,21 +277,47 @@
 	component_parts += new /obj/item/stack/cable_coil(null)
 	RefreshParts()
 
-/obj/machinery/sleeper/clockwork
-	name = "soothing sleeper"
-	desc = "A large cryogenics unit built from brass. Its surface is pleasantly cool the touch."
-	icon_state = "sleeper_clockwork"
-	enter_message = "<span class='bold inathneq_small'>You hear the gentle hum and click of machinery, and are lulled into a sense of peace.</span>"
-	possible_chems = list(list("epinephrine", "salbutamol", "bicaridine", "kelotane", "oculine", "inacusiate", "mannitol"))
-
-/obj/machinery/sleeper/clockwork/process()
-	if(occupant && isliving(occupant))
-		var/mob/living/L = occupant
-		if(GLOB.clockwork_vitality) //If there's Vitality, the sleeper has passive healing
-			GLOB.clockwork_vitality = max(0, GLOB.clockwork_vitality - 1)
-			L.adjustBruteLoss(-1)
-			L.adjustFireLoss(-1)
-			L.adjustOxyLoss(-5)
-
 /obj/machinery/sleeper/old
 	icon_state = "oldpod"
+
+/obj/machinery/sleeper/party
+	name = "party pod"
+	desc = "'Sleeper' units were once known for their healing properties, until a lengthy investigation revealed they were also dosing patients with deadly lead acetate. This appears to be one of those old 'sleeper' units repurposed as a 'Party Pod'. It’s probably not a good idea to use it."
+	icon_state = "partypod"
+	idle_power_usage = 3000
+	circuit = /obj/item/circuitboard/machine/sleeper/party
+	var/leddit = FALSE //Get it like reddit and lead alright fine
+	ui_x = 310
+	ui_y = 400
+
+	controls_inside = TRUE
+	possible_chems = list(
+		list(/datum/reagent/consumable/ethanol/beer, /datum/reagent/consumable/laughter),
+		list(/datum/reagent/spraytan,/datum/reagent/barbers_aid),
+		list(/datum/reagent/colorful_reagent,/datum/reagent/hair_dye),
+		list(/datum/reagent/drug/space_drugs,/datum/reagent/baldium)
+	)//Exclusively uses non-lethal, "fun" chems. At an obvious downside.
+	var/spray_chems = list(
+		/datum/reagent/spraytan, /datum/reagent/hair_dye, /datum/reagent/baldium, /datum/reagent/barbers_aid
+	)//Chemicals that need to have a touch or vapor reaction to be applied, not the standard chamber reaction.
+	enter_message = "<span class='notice'><b>You're surrounded by some funky music inside the chamber. You zone out as you feel waves of krunk vibe within you.</b></span>"
+
+/obj/machinery/sleeper/party/inject_chem(chem, mob/user)
+	if(leddit)
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, 4) //You're injecting chemicals into yourself from a recalled, decrepit medical machine. What did you expect?
+	else if (prob(20))
+		occupant.reagents.add_reagent(/datum/reagent/toxin/leadacetate, rand(1,3))
+	if(chem in spray_chems)
+		var/datum/reagents/holder = new()
+		holder.add_reagent(chem_buttons[chem], 10) //I hope this is the correct way to do this.
+		holder.reaction(occupant, VAPOR, 0)
+		holder.trans_to(occupant, 10)
+		playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
+		if(user)
+			log_combat(user, occupant, "sprayed [chem] into", addition = "via [src]")
+		return TRUE
+	..()
+
+/obj/machinery/sleeper/party/emag_act(mob/user)
+	..()
+	leddit = TRUE

@@ -34,15 +34,15 @@
 	return
 
 /obj/effect/sound_emitter/examine(mob/user)
-	..()
+	. = ..()
 	if(!isobserver(user))
 		return
-	to_chat(user, "<span class='boldnotice'>Sound File:</span> [sound_file ? sound_file : "None chosen"]")
-	to_chat(user, "<span class='boldnotice'>Mode:</span> [motus_operandi]</span>")
-	to_chat(user, "<span class='boldnotice'>Range:</span> [emitter_range]</span>")
-	to_chat(user, "<b>Sound is playing at [sound_volume]% volume.</b>")
+	. += "<span class='boldnotice'>Sound File:</span> [sound_file ? sound_file : "None chosen"]"
+	. += "<span class='boldnotice'>Mode:</span> [motus_operandi]</span>"
+	. += "<span class='boldnotice'>Range:</span> [emitter_range]</span>"
+	. += "<b>Sound is playing at [sound_volume]% volume.</b>"
 	if(user.client.holder)
-		to_chat(user, "<b>Alt-click it to quickly activate it!</b>")
+		. += "<b>Alt-click it to quickly activate it!</b>"
 
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/sound_emitter/attack_ghost(mob/user)
@@ -93,7 +93,7 @@
 		var/new_volume = input(user, "Choose a volume.", "Sound Emitter", sound_volume) as null|num
 		if(isnull(new_volume))
 			return
-		new_volume = CLAMP(new_volume, 0, 100)
+		new_volume = clamp(new_volume, 0, 100)
 		sound_volume = new_volume
 		to_chat(user, "<span class='notice'>Volume set to [sound_volume]%.</span>")
 	if(href_list["edit_mode"])
@@ -116,7 +116,7 @@
 		var/new_radius = input(user, "Choose a radius.", "Sound Emitter", sound_volume) as null|num
 		if(isnull(new_radius))
 			return
-		new_radius = CLAMP(new_radius, 0, 127)
+		new_radius = clamp(new_radius, 0, 127)
 		play_radius = new_radius
 		to_chat(user, "<span class='notice'>Audible radius set to [play_radius].</span>")
 	if(href_list["play"])

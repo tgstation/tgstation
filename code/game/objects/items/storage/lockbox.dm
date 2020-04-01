@@ -15,7 +15,7 @@
 
 /obj/item/storage/lockbox/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 14
 	STR.max_items = 4
@@ -54,7 +54,7 @@
 		desc += "It appears to be broken."
 		icon_state = src.icon_broken
 		if(user)
-			visible_message("<span class='warning'>\The [src] has been broken by [user] with an electromagnetic card!</span>")
+			visible_message("<span class='warning'>\The [src] is broken by [user] with an electromagnetic card!</span>")
 			return
 
 /obj/item/storage/lockbox/Entered()
@@ -99,17 +99,16 @@
 
 /obj/item/storage/lockbox/medal/ComponentInitialize()
 	. = ..()
-	GET_COMPONENT(STR, /datum/component/storage)
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_SMALL
 	STR.max_items = 10
 	STR.max_combined_w_class = 20
-	STR.can_hold = typecacheof(list(/obj/item/clothing/accessory/medal))
+	STR.set_holdable(list(/obj/item/clothing/accessory/medal))
 
 /obj/item/storage/lockbox/medal/examine(mob/user)
-	..()
-	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
-	if(!locked)
-		to_chat(user, "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>")
+	. = ..()
+	if(!SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED))
+		. += "<span class='notice'>Alt-click to [open ? "close":"open"] it.</span>"
 
 /obj/item/storage/lockbox/medal/AltClick(mob/user)
 	if(user.canUseTopic(src, BE_CLOSE))
@@ -129,29 +128,34 @@
 	for(var/i in 1 to 3)
 		new /obj/item/clothing/accessory/medal/conduct(src)
 
-/obj/item/storage/lockbox/medal/update_icon()
-	cut_overlays()
+/obj/item/storage/lockbox/medal/update_icon_state()
 	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	if(locked)
 		icon_state = "medalbox+l"
-		open = FALSE
 	else
 		icon_state = "medalbox"
 		if(open)
 			icon_state += "open"
 		if(broken)
 			icon_state += "+b"
-		if(contents && open)
-			for (var/i in 1 to contents.len)
-				var/obj/item/clothing/accessory/medal/M = contents[i]
-				var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
-				if(i > 1 && i <= 5)
-					medalicon.pixel_x += ((i-1)*3)
-				else if(i > 5)
-					medalicon.pixel_y -= 7
-					medalicon.pixel_x -= 2
-					medalicon.pixel_x += ((i-6)*3)
-				add_overlay(medalicon)
+
+/obj/item/storage/lockbox/medal/update_overlays()
+	. = ..()
+	if(!contents || !open)
+		return
+	var/locked = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
+	if(locked)
+		return
+	for(var/i in 1 to contents.len)
+		var/obj/item/clothing/accessory/medal/M = contents[i]
+		var/mutable_appearance/medalicon = mutable_appearance(initial(icon), M.medaltype)
+		if(i > 1 && i <= 5)
+			medalicon.pixel_x += ((i-1)*3)
+		else if(i > 5)
+			medalicon.pixel_y -= 7
+			medalicon.pixel_x -= 2
+			medalicon.pixel_x += ((i-6)*3)
+		. += medalicon
 
 /obj/item/storage/lockbox/medal/sec
 	name = "security medal box"
@@ -169,6 +173,14 @@
 
 /obj/item/storage/lockbox/medal/cargo/PopulateContents()
 		new /obj/item/clothing/accessory/medal/ribbon/cargo(src)
+
+/obj/item/storage/lockbox/medal/service
+	name = "service award box"
+	desc = "A locked box used to store awards to be given to members of the service department."
+	req_access = list(ACCESS_HOP)
+
+/obj/item/storage/lockbox/medal/service/PopulateContents()
+		new /obj/item/clothing/accessory/medal/silver/excellence(src)
 
 /obj/item/storage/lockbox/medal/sci
 	name = "science medal box"

@@ -1,6 +1,7 @@
 /datum/job/officer
 	title = "Security Officer"
 	flag = OFFICER
+	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list("Head of Security")
 	department_flag = ENGSEC
 	faction = "Station"
@@ -61,7 +62,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			accessory = /obj/item/clothing/accessory/armband/engine
 		if(SEC_DEPT_MEDICAL)
 			ears = /obj/item/radio/headset/headset_sec/alt/department/med
-			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY, ACCESS_CLONING)
+			dep_access = list(ACCESS_MEDICAL, ACCESS_MORGUE, ACCESS_SURGERY)
 			destination = /area/security/checkpoint/medical
 			spawn_point = locate(/obj/effect/landmark/start/depsec/medical) in GLOB.department_security_spawns
 			accessory =  /obj/item/clothing/accessory/armband/medblue
@@ -78,7 +79,7 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 	if(ears)
 		if(H.ears)
 			qdel(H.ears)
-		H.equip_to_slot_or_del(new ears(H),SLOT_EARS)
+		H.equip_to_slot_or_del(new ears(H),ITEM_SLOT_EARS)
 
 	var/obj/item/card/id/W = H.wear_id
 	W.access |= dep_access
@@ -93,14 +94,13 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 			T = get_turf(spawn_point)
 			H.Move(T)
 		else
-			var/safety = 0
-			while(safety < 25)
-				T = safepick(get_area_turfs(destination))
-				if(T && !H.Move(T))
-					safety += 1
-					continue
-				else
+			var/list/possible_turfs = get_area_turfs(destination)
+			while (length(possible_turfs))
+				var/I = rand(1, possible_turfs.len)
+				var/turf/target = possible_turfs[I]
+				if (H.Move(target))
 					break
+				possible_turfs.Cut(I,I+1)
 	if(department)
 		to_chat(M, "<b>You have been assigned to [department]!</b>")
 	else
@@ -114,24 +114,24 @@ GLOBAL_LIST_INIT(available_depts, list(SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, S
 
 	belt = /obj/item/pda/security
 	ears = /obj/item/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/security
+	uniform = /obj/item/clothing/under/rank/security/officer
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/helmet/sec
 	suit = /obj/item/clothing/suit/armor/vest/alt
 	shoes = /obj/item/clothing/shoes/jackboots
 	l_pocket = /obj/item/restraints/handcuffs
 	r_pocket = /obj/item/assembly/flash/handheld
-	suit_store = /obj/item/gun/energy/e_gun/advtaser
+	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec
 	duffelbag = /obj/item/storage/backpack/duffelbag/sec
-	box = /obj/item/storage/box/security
+	box = /obj/item/storage/box/survival/security
 
 	implants = list(/obj/item/implant/mindshield)
 
-	chameleon_extras = list(/obj/item/gun/energy/e_gun/advtaser, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
+	chameleon_extras = list(/obj/item/gun/energy/disabler, /obj/item/clothing/glasses/hud/security/sunglasses, /obj/item/clothing/head/helmet)
 	//The helmet is necessary because /obj/item/clothing/head/helmet/sec is overwritten in the chameleon list by the standard helmet, which has the same name and icon state
 
 

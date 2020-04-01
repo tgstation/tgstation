@@ -17,7 +17,7 @@
 /datum/ntnet_service/proc/connect(datum/ntnet/net)
 	if(!istype(net))
 		return FALSE
-	GET_COMPONENT(interface, /datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/interface = GetComponent(/datum/component/ntnet_interface)
 	if(!interface.register_connection(net))
 		return FALSE
 	if(!net.register_service(src))
@@ -29,7 +29,7 @@
 /datum/ntnet_service/proc/disconnect(datum/ntnet/net, force = FALSE)
 	if(!istype(net) || (!net.unregister_service(src) && !force))
 		return FALSE
-	GET_COMPONENT(interface, /datum/component/ntnet_interface)
+	var/datum/component/ntnet_interface/interface = GetComponent(/datum/component/ntnet_interface)
 	interface.unregister_connection(net)
 	networks_by_id -= net.network_id
 	return TRUE

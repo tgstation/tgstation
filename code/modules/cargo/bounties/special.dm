@@ -3,7 +3,7 @@
 	description = "Nanotrasen is interested in studying Xenomorph biology. Ship a set of organs to be thoroughly compensated."
 	reward = 25000
 	required_count = 3
-	wanted_types = list(/obj/item/organ/brain/alien, /obj/item/organ/alien, /obj/item/organ/body_egg/alien_embryo)
+	wanted_types = list(/obj/item/organ/brain/alien, /obj/item/organ/alien, /obj/item/organ/body_egg/alien_embryo, /obj/item/organ/liver/alien, /obj/item/organ/tongue/alien, /obj/item/organ/eyes/night_vision/alien)
 
 /datum/bounty/item/syndicate_documents
 	name = "Syndicate Documents"
@@ -28,7 +28,7 @@
 
 /datum/bounty/item/trash
 	name = "Trash"
-	description = "Recently a group of janitors have run out of trash to clean up, without any trash Centcom wants to fire them to cut costs. Send a shipment of trash to keep them employed, and they'll give you a small compensation."
+	description = "Recently a group of janitors have run out of trash to clean up, without any trash CentCom wants to fire them to cut costs. Send a shipment of trash to keep them employed, and they'll give you a small compensation."
 	reward = 1000
 	required_count = 10
 	wanted_types = list(/obj/item/trash)

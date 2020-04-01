@@ -29,10 +29,10 @@
 
 
 /obj/structure/destructible/cult/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>")
+	. = ..()
+	. += "<span class='notice'>\The [src] is [anchored ? "":"not "]secured to the floor.</span>"
 	if((iscultist(user) || isobserver(user)) && cooldowntime > world.time)
-		to_chat(user, "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
+		. += "<span class='cult italic'>The magic in [src] is too weak, [p_they()] will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>"
 
 /obj/structure/destructible/cult/examine_status(mob/user)
 	if(iscultist(user) || isobserver(user))
@@ -64,14 +64,6 @@
 			icon_state = initial(icon_state)
 	else
 		return ..()
-
-/obj/structure/destructible/cult/ratvar_act()
-	if(take_damage(rand(25, 50), BURN) && src) //if we still exist
-		var/previouscolor = color
-		color = "#FAE48C"
-		animate(src, color = previouscolor, time = 8)
-		addtimer(CALLBACK(src, /atom/proc/update_atom_colour), 8)
-
 
 /obj/structure/destructible/cult/talisman
 	name = "altar"
@@ -210,20 +202,19 @@
 
 		last_corrupt = world.time + corrupt_delay
 
-		var/turf/T = safepick(validturfs)
-		if(T)
+		if(length(validturfs))
+			var/turf/T = pick(validturfs)
 			if(istype(T, /turf/open/floor/plating))
-				T.PlaceOnTop(/turf/open/floor/engine/cult)
+				T.PlaceOnTop(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
 			else
-				T.ChangeTurf(/turf/open/floor/engine/cult)
+				T.ChangeTurf(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
+		else if (length(cultturfs))
+			var/turf/open/floor/engine/cult/F = pick(cultturfs)
+			new /obj/effect/temp_visual/cult/turf/floor(F)
 		else
-			var/turf/open/floor/engine/cult/F = safepick(cultturfs)
-			if(F)
-				new /obj/effect/temp_visual/cult/turf/floor(F)
-			else
-				// Are we in space or something? No cult turfs or
-				// convertable turfs?
-				last_corrupt = world.time + corrupt_delay*2
+			// Are we in space or something? No cult turfs or
+			// convertable turfs?
+			last_corrupt = world.time + corrupt_delay*2
 
 /obj/structure/destructible/cult/tome
 	name = "archives"

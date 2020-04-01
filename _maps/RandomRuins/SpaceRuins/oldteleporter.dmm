@@ -64,7 +64,7 @@
 "n" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /turf/open/floor/plasteel/airless,
 /area/ruin/space/oldteleporter)

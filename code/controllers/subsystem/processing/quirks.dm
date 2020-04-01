@@ -1,3 +1,4 @@
+#define EXP_ASSIGN_WAYFINDER 1200
 //Used to process and handle roundstart quirks
 // - Quirk strings are used for faster checking in code
 // - Quirk datums are stored and hold different effects, as well as being a vector for applying trait string
@@ -17,7 +18,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	if(!quirks.len)
 		SetupQuirks()
 
-	quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic","Hypersensitive"),list("Ageusia","Vegetarian","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"),list("Alcohol Tolerance","Light Drinker"),list(list("Neat","NEET")))
+	quirk_blacklist = list(list("Blind","Nearsighted"),list("Jolly","Depression","Apathetic","Hypersensitive"),list("Ageusia","Vegetarian","Deviant Tastes"),list("Ananas Affinity","Ananas Aversion"),list("Alcohol Tolerance","Light Drinker"),list("Clown Fan","Mime Fan"))
 	return ..()
 
 /datum/controller/subsystem/processing/quirks/proc/SetupQuirks()
@@ -30,11 +31,18 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirk_points[initial(T.name)] = initial(T.value)
 
 /datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/cli, spawn_effects)
-	GenerateQuirks(cli)
-	for(var/V in cli.prefs.character_quirks)
-		user.add_quirk(V, spawn_effects)
+	var/badquirk = FALSE
+	for(var/V in cli.prefs.all_quirks)
+		var/datum/quirk/Q = quirks[V]
+		if(Q)
+			user.add_quirk(Q, spawn_effects)
+		else
+			stack_trace("Invalid quirk \"[V]\" in client [cli.ckey] preferences")
+			cli.prefs.all_quirks -= V
+			badquirk = TRUE
+	if(badquirk)
+		cli.prefs.save_character()
 
-/datum/controller/subsystem/processing/quirks/proc/GenerateQuirks(client/user)
-	if(user.prefs.character_quirks.len)
-		return
-	user.prefs.character_quirks = user.prefs.all_quirks
+	// Assign wayfinding pinpointer granting quirk if they're new
+	if(cli.get_exp_living(TRUE) < EXP_ASSIGN_WAYFINDER && !user.has_quirk(/datum/quirk/needswayfinder))
+		user.add_quirk(/datum/quirk/needswayfinder, TRUE)

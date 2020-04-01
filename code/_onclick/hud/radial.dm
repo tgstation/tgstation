@@ -213,7 +213,6 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	choices_icons.Cut()
 	choices_values.Cut()
 	current_page = 1
-	QDEL_NULL(custom_check_callback)
 
 /datum/radial_menu/proc/element_chosen(choice_id,mob/user)
 	selected_choice = choices_values[choice_id]
@@ -278,19 +277,24 @@ GLOBAL_LIST_EMPTY(radial_menus)
 /datum/radial_menu/Destroy()
 	Reset()
 	hide()
+	QDEL_NULL(custom_check_callback)
 	. = ..()
+
 /*
 	Presents radial menu to user anchored to anchor (or user if the anchor is currently in users screen)
 	Choices should be a list where list keys are movables or text used for element names and return value
 	and list values are movables/icons/images used for element icons
 */
-/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE)
+/proc/show_radial_menu(mob/user, atom/anchor, list/choices, uniqueid, radius, datum/callback/custom_check, require_near = FALSE, tooltips = FALSE, no_repeat_close = FALSE)
 	if(!user || !anchor || !length(choices))
 		return
 	if(!uniqueid)
 		uniqueid = "defmenu_[REF(user)]_[REF(anchor)]"
 
 	if(GLOB.radial_menus[uniqueid])
+		if(!no_repeat_close)
+			var/datum/radial_menu/menu = GLOB.radial_menus[uniqueid]
+			menu.finished = TRUE
 		return
 
 	var/datum/radial_menu/menu = new

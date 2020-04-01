@@ -9,10 +9,12 @@
 	flags_1 = CONDUCT_1
 	force = 3
 	throwforce = 10
+	var/acti_sound = 'sound/items/welderactivate.ogg'
+	var/deac_sound = 'sound/items/welderdeactivate.ogg'
 	throw_speed = 1
 	throw_range = 5
 	w_class = WEIGHT_CLASS_NORMAL
-	materials = list(MAT_METAL=500)
+	custom_materials = list(/datum/material/iron=500)
 	resistance_flags = FIRE_PROOF
 	var/status = FALSE
 	var/lit = FALSE	//on or off
@@ -26,6 +28,10 @@
 	var/create_with_tank = FALSE
 	var/igniter_type = /obj/item/assembly/igniter
 	trigger_guard = TRIGGER_GUARD_NORMAL
+
+/obj/item/flamethrower/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/flamethrower/Destroy()
 	if(weldtool)
@@ -49,21 +55,17 @@
 		igniter.flamethrower_process(location)
 
 
-/obj/item/flamethrower/update_icon()
-	cut_overlays()
+/obj/item/flamethrower/update_icon_state()
+	item_state = "flamethrower_[lit]"
+
+/obj/item/flamethrower/update_overlays()
+	. = ..()
 	if(igniter)
-		add_overlay("+igniter[status]")
+		. += "+igniter[status]"
 	if(ptank)
-		add_overlay("+ptank")
+		. += "+ptank"
 	if(lit)
-		add_overlay("+lit")
-		item_state = "flamethrower_1"
-	else
-		item_state = "flamethrower_0"
-	if(ismob(loc))
-		var/mob/M = loc
-		M.update_inv_hands()
-	return
+		. += "+lit"
 
 /obj/item/flamethrower/afterattack(atom/target, mob/user, flag)
 	. = ..()
@@ -129,10 +131,11 @@
 	else
 		return ..()
 
-/obj/item/flamethrower/analyzer_act(mob/living/user, obj/item/I)
+/obj/item/flamethrower/return_analyzable_air()
 	if(ptank)
-		ptank.analyzer_act(user, I)
-
+		return ptank.return_analyzable_air()
+	else
+		return null
 
 /obj/item/flamethrower/attack_self(mob/user)
 	toggle_igniter(user)
@@ -145,9 +148,9 @@
 		update_icon()
 
 /obj/item/flamethrower/examine(mob/user)
-	..()
+	. = ..()
 	if(ptank)
-		to_chat(user, "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>")
+		. += "<span class='notice'>\The [src] has \a [ptank] attached. Alt-click to remove it.</span>"
 
 /obj/item/flamethrower/proc/toggle_igniter(mob/user)
 	if(!ptank)
@@ -159,11 +162,15 @@
 	to_chat(user, "<span class='notice'>You [lit ? "extinguish" : "ignite"] [src]!</span>")
 	lit = !lit
 	if(lit)
+		set_light(1)
+		playsound(loc, acti_sound, 50, TRUE)
 		START_PROCESSING(SSobj, src)
 		if(!warned_admins)
 			message_admins("[ADMIN_LOOKUPFLW(user)] has lit a flamethrower.")
 			warned_admins = TRUE
 	else
+		set_light(0)
+		playsound(loc, deac_sound, 50, TRUE)
 		STOP_PROCESSING(SSobj,src)
 	update_icon()
 
@@ -234,10 +241,11 @@
 	create_with_tank = TRUE
 
 /obj/item/flamethrower/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
-	var/obj/item/projectile/P = hitby
+	var/obj/projectile/P = hitby
 	if(damage && attack_type == PROJECTILE_ATTACK && P.damage_type != STAMINA && prob(15))
 		owner.visible_message("<span class='danger'>\The [attack_text] hits the fueltank on [owner]'s [name], rupturing it! What a shot!</span>")
-		var/target_turf = get_turf(owner)
+		var/turf/target_turf = get_turf(owner)
+		log_game("A projectile ([hitby]) detonated a flamethrower tank held by [key_name(owner)] at [COORD(target_turf)]")
 		igniter.ignite_turf(src,target_turf, release_amount = 100)
 		qdel(ptank)
 		return 1 //It hit the flamethrower, not them

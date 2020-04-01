@@ -19,6 +19,7 @@ DROP TABLE IF EXISTS `SS13_admin`;
 CREATE TABLE `SS13_admin` (
   `ckey` varchar(32) NOT NULL,
   `rank` varchar(32) NOT NULL,
+  `feedback` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -320,6 +321,7 @@ CREATE TABLE `SS13_player` (
   `lastadminrank` varchar(32) NOT NULL DEFAULT 'Player',
   `accountjoindate` DATE DEFAULT NULL,
   `flags` smallint(5) unsigned DEFAULT '0' NOT NULL,
+  `discord_id` BIGINT(20) NULL DEFAULT NULL,
   PRIMARY KEY (`ckey`),
   KEY `idx_player_cid_ckey` (`computerid`,`ckey`),
   KEY `idx_player_ip_ckey` (`ip`,`ckey`)
@@ -462,6 +464,96 @@ $$
 CREATE TRIGGER `SS13_role_timeTlogdelete` AFTER DELETE ON `SS13_role_time` FOR EACH ROW BEGIN INSERT into SS13_role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
 END
 $$
+DELIMITER ;
+
+--
+-- Table structure for table `SS13_stickyban`
+--
+DROP TABLE IF EXISTS `SS13_stickyban`;
+CREATE TABLE `SS13_stickyban` (
+	`ckey` VARCHAR(32) NOT NULL,
+	`reason` VARCHAR(2048) NOT NULL,
+	`banning_admin` VARCHAR(32) NOT NULL,
+	`datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`ckey`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `SS13_stickyban_matched_ckey`
+--
+DROP TABLE IF EXISTS `SS13_stickyban_matched_ckey`;
+CREATE TABLE `SS13_stickyban_matched_ckey` (
+	`stickyban` VARCHAR(32) NOT NULL,
+	`matched_ckey` VARCHAR(32) NOT NULL,
+	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	`exempt` TINYINT(1) NOT NULL DEFAULT '0',
+	PRIMARY KEY (`stickyban`, `matched_ckey`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `SS13_stickyban_matched_ip`
+--
+DROP TABLE IF EXISTS `SS13_stickyban_matched_ip`;
+CREATE TABLE `SS13_stickyban_matched_ip` (
+	`stickyban` VARCHAR(32) NOT NULL,
+	`matched_ip` INT UNSIGNED NOT NULL,
+	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`stickyban`, `matched_ip`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `SS13_stickyban_matched_cid`
+--
+DROP TABLE IF EXISTS `SS13_stickyban_matched_cid`;
+CREATE TABLE `SS13_stickyban_matched_cid` (
+	`stickyban` VARCHAR(32) NOT NULL,
+	`matched_cid` VARCHAR(32) NOT NULL,
+	`first_matched` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`last_matched` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`stickyban`, `matched_cid`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `SS13_achievements`
+--
+DROP TABLE IF EXISTS `SS13_achievements`;
+CREATE TABLE `SS13_achievements` (
+	`ckey` VARCHAR(32) NOT NULL,
+	`achievement_key` VARCHAR(32) NOT NULL,
+	`value` INT NULL,
+	`last_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`ckey`,`achievement_key`)
+) ENGINE=InnoDB;
+
+DROP TABLE IF EXISTS `SS13_achievement_metadata`;
+CREATE TABLE `SS13_achievement_metadata` (
+	`achievement_key` VARCHAR(32) NOT NULL,
+	`achievement_version` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+	`achievement_type` enum('achievement','score','award') NULL DEFAULT NULL,
+	`achievement_name` VARCHAR(64) NULL DEFAULT NULL,
+	`achievement_description` VARCHAR(512) NULL DEFAULT NULL,
+	PRIMARY KEY (`achievement_key`)
+) ENGINE=InnoDB;
+
+--
+-- Table structure for table `SS13_ticket`
+--
+DROP TABLE IF EXISTS `SS13_ticket`;
+CREATE TABLE `SS13_ticket` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `server_ip` int(10) unsigned NOT NULL,
+  `server_port` smallint(5) unsigned NOT NULL,
+  `round_id` int(11) unsigned NOT NULL,
+  `ticket` smallint(11) unsigned NOT NULL,
+  `action` varchar(20) NOT NULL DEFAULT 'Message',
+  `message` text NOT NULL,
+  `timestamp` datetime NOT NULL,
+  `recipient` varchar(32) DEFAULT NULL,
+  `sender` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

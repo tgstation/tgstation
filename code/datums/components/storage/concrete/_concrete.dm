@@ -4,6 +4,7 @@
 // /mob/living/Move() in /modules/mob/living/living.dm - hiding storage boxes on mob movement
 
 /datum/component/storage/concrete
+	can_transfer = TRUE
 	var/drop_all_on_deconstruct = TRUE
 	var/drop_all_on_destroy = FALSE
 	var/transfer_contents_on_component_transfer = FALSE
@@ -124,7 +125,8 @@
 	if(ismob(parent.loc) && isitem(AM))
 		var/obj/item/I = AM
 		var/mob/M = parent.loc
-		I.dropped(M)
+		I.dropped(M, TRUE)
+		I.item_flags &= ~IN_STORAGE
 	if(new_location)
 		//Reset the items values
 		_removal_reset(AM)
@@ -172,6 +174,7 @@
 				I.forceMove(parent.drop_location())
 		return FALSE
 	I.on_enter_storage(master)
+	I.item_flags |= IN_STORAGE
 	refresh_mob_views()
 	I.mouse_opacity = MOUSE_OPACITY_OPAQUE //So you can click on the area around the item to equip it, instead of having to pixel hunt
 	if(M)

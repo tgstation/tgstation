@@ -174,7 +174,7 @@
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/transport)
 "aR" = (
-/obj/structure/chair/office/dark{
+/obj/structure/chair/office{
 	dir = 4
 	},
 /turf/open/floor/wood,
@@ -236,7 +236,7 @@
 /turf/open/floor/wood,
 /area/shuttle/transport)
 "bd" = (
-/obj/item/twohanded/required/kirbyplants/dead{
+/obj/item/kirbyplants/dead{
 	desc = "It doesn't look very healthy...";
 	name = "potted plant"
 	},

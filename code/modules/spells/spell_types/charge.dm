@@ -10,7 +10,7 @@
 	range = -1
 	cooldown_min = 400 //50 deciseconds reduction per rank
 	include_user = TRUE
-
+	action_icon_state = "charge"
 
 /obj/effect/proc_holder/spell/targeted/charge/cast(list/targets,mob/user = usr)
 	for(var/mob/living/L in targets)
@@ -97,7 +97,7 @@
 		if(!charged_item)
 			to_chat(L, "<span class='notice'>You feel magical power surging through your hands, but the feeling rapidly fades...</span>")
 		else if(burnt_out)
-			to_chat(L, "<span class='caution'>[charged_item] doesn't seem to be reacting to the spell...</span>")
+			to_chat(L, "<span class='warning'>[charged_item] doesn't seem to be reacting to the spell!</span>")
 		else
-			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, 1)
+			playsound(get_turf(L), 'sound/magic/charge.ogg', 50, TRUE)
 			to_chat(L, "<span class='notice'>[charged_item] suddenly feels very warm!</span>")

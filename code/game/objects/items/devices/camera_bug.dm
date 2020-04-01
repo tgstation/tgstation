@@ -39,7 +39,7 @@
 	get_cameras()
 	for(var/cam_tag in bugged_cameras)
 		var/obj/machinery/camera/camera = bugged_cameras[cam_tag]
-		if(camera.bug == src)
+		if(camera && camera.bug == src)
 			camera.bug = null
 	bugged_cameras = list()
 	if(tracking)
@@ -60,7 +60,7 @@
 	interact(user)
 
 /obj/item/camera_bug/check_eye(mob/user)
-	if ( loc != user || user.incapacitated() || user.eye_blind || !current )
+	if ( loc != user || user.incapacitated() || user.is_blind() || !current )
 		user.unset_machine()
 		return 0
 	var/turf/T_user = get_turf(user.loc)
@@ -78,7 +78,7 @@
 	if( world.time > (last_net_update + 100))
 		bugged_cameras = list()
 		for(var/obj/machinery/camera/camera in GLOB.cameranet.cameras)
-			if(camera.stat || !camera.can_use())
+			if(camera.machine_stat || !camera.can_use())
 				continue
 			if(length(list("ss13","mine", "rd", "labor", "toxins", "minisat")&camera.network))
 				bugged_cameras[camera.c_tag] = camera
@@ -95,6 +95,8 @@
 			html = "<h3>Select a camera:</h3> <a href='?src=[REF(src)];view'>\[Cancel camera view\]</a><hr><table>"
 			for(var/entry in cameras)
 				var/obj/machinery/camera/C = cameras[entry]
+				if(QDELETED(C))
+					continue
 				var/functions = ""
 				if(C.bug == src)
 					functions = " - <a href='?src=[REF(src)];monitor=[REF(C)]'>\[Monitor\]</a> <a href='?src=[REF(src)];emp=[REF(C)]'>\[Disable\]</a>"
@@ -243,7 +245,7 @@
 			if(!same_z_level(C))
 				return
 			if(!C.can_use())
-				to_chat(usr, "<span class='warning'>Something's wrong with that camera!  You can't get a feed.</span>")
+				to_chat(usr, "<span class='warning'>Something's wrong with that camera! You can't get a feed.</span>")
 				return
 			current = C
 			spawn(6)

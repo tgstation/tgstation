@@ -1,12 +1,14 @@
 //shuttle mode defines
 #define SHUTTLE_IDLE		"idle"
 #define SHUTTLE_IGNITING	"igniting"
-#define SHUTTLE_RECALL		"recall"
-#define SHUTTLE_CALL		"call"
+#define SHUTTLE_RECALL		"recalled"
+#define SHUTTLE_CALL		"called"
 #define SHUTTLE_DOCKED		"docked"
 #define SHUTTLE_STRANDED	"stranded"
 #define SHUTTLE_ESCAPE		"escape"
 #define SHUTTLE_ENDGAME		"endgame: game over"
+#define SHUTTLE_RECHARGING		"recharging"
+#define SHUTTLE_PREARRIVAL		"landing"
 
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
@@ -76,3 +78,7 @@
 //Shuttle defaults
 #define SHUTTLE_DEFAULT_SHUTTLE_AREA_TYPE /area/shuttle
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
+
+//Shuttle unlocks
+#define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
+#define SHUTTLE_UNLOCK_ALIENTECH "abductor"

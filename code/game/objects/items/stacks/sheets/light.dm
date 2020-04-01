@@ -11,7 +11,7 @@
 	throw_range = 7
 	flags_1 = CONDUCT_1
 	max_amount = 60
-	grind_results = list("silicon" = 20, "copper" = 5)
+	grind_results = list(/datum/reagent/silicon = 20, /datum/reagent/copper = 5)
 
 /obj/item/stack/light_w/attackby(obj/item/O, mob/user, params)
 	if(istype(O, /obj/item/stack/sheet/metal))
@@ -27,6 +27,7 @@
 		return ..()
 
 /obj/item/stack/light_w/wirecutter_act(mob/living/user, obj/item/I)
+	. = ..()
 	var/atom/Tsec = user.drop_location()
 	var/obj/item/stack/cable_coil/CC = new (Tsec, 5)
 	CC.add_fingerprint(user)

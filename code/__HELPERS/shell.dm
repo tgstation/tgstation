@@ -25,7 +25,10 @@
 			shelleo_ids[shelleo_id] = TRUE
 		out_file = "[SHELLEO_NAME][shelleo_id][SHELLEO_OUT]"
 		err_file = "[SHELLEO_NAME][shelleo_id][SHELLEO_ERR]"
-		errorcode = shell("[interpreter] \"[command]\" > [out_file] 2> [err_file]")
+		if(world.system_type == UNIX)
+			errorcode = shell("[interpreter] \"[replacetext(command, "\"", "\\\"")]\" > [out_file] 2> [err_file]")
+		else
+			errorcode = shell("[interpreter] \"[command]\" > [out_file] 2> [err_file]")
 		if(fexists(out_file))
 			stdout = file2text(out_file)
 			fdel(out_file)
@@ -52,6 +55,6 @@
 		if(bad_chars)
 			bad_match = url_encode(bad_chars_regex.match)
 			scrubbed_url += bad_match
-			last_good = bad_chars + length(bad_match)
+			last_good = bad_chars + length(bad_chars_regex.match)
 	while(bad_chars)
 	. = scrubbed_url
