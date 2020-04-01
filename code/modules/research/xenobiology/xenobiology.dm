@@ -202,7 +202,7 @@
 	effectmod = "regenerative"
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_1
-	color_slime = purple
+	color_slime = "purple"
 
 /obj/item/slime_extract/purple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
@@ -223,7 +223,7 @@
 	effectmod = "self-sustaining"
 	activate_reagents = list(/datum/reagent/toxin/plasma)
 	research = SLIME_RESEARCH_TIER_2
-	color_slime = dark_purple
+	color_slime = "dark_purple"
 
 /obj/item/slime_extract/darkpurple/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
