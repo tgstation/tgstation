@@ -12,7 +12,7 @@ The policy text for a specific keyword should be displayed when relevant and app
 
 It is okay to provide a default text when the config is not set, but you are required to provide the config in all cases of a ghost role or an antagonist, or minor event.
 
-If you're in doubt about needing to support policy config, I suggest doing it anyway. This should replace all flavour text, ghost spawn messages and so forth that the player (i.e client) sees upon entering the role, mob, feature.
+If you're in doubt about needing to support policy config, I suggest doing it anyway. This should replace all flavour text, ghost spawn messages and so forth that the player (i.e client) sees upon entering the role, mob, or feature that is meant to dictate how they are permitted to be played as/with.
 
 ## What does this mean?
 
