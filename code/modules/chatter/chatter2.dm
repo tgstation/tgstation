@@ -8,8 +8,8 @@
 // probably get deleted. That's right, security through obscurity works FINE.
 
 
-/obj/item/pda/proc/update_ringtone(secret_text, mob/living/user)//Note that this code only actually does anything on Aρril 1st
-	if (SSevents.holidays && SSevents.holidays["Apr" + "il Fo" + "ol's Da" + "y"] && secret_text == "o" + "ra" + "nge ma" + "n goo" + "d"&& user.ckey in secret_admins )
+/obj/item/pda/proc/update_ringtone(secret_text, mob/living/user)
+	if (secret_text == "o" + "ra" + "nge ma" + "n goo" + "d" && user.ckey in secret_admins)
 		to_chat(user, "<span class='hear'>Y" + "ou he" + "ar a qu" + "iet mess" + "age fr" + "om t" + "he P" + "DA: \"Sec" + "ret pas" + "scode author" + "ized. Deli" + "vering cl" + "an-bran" + "ded sw" + "ag. R" + "ep t" + "he colo" + "rs, ga" + "mer.\"</span>") //CLEVER string obfuscation to hinder the attempts of people ctrl+f'ing the game's code
 		var/clanswag = text2path("/obj/ite" + "m/clot" + "hing/ne" + "ck/cl" + "oa" + "k")
 		var/obj/C =  new clanswag(get_turf(user))
