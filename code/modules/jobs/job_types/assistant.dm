@@ -33,11 +33,13 @@ Assistant
 	..()
 	if (CONFIG_GET(flag/grey_assistants))
 		if(H.jumpsuit_style == PREF_SUIT)
-			uniform = /obj/item/clothing/under/color/grey
+			uniform = /obj/item/clothing/under/rank/civilian/clown
 		else
-			uniform = /obj/item/clothing/under/color/jumpskirt/grey
+			uniform = /obj/item/clothing/under/rank/civilian/clown
 	else
 		if(H.jumpsuit_style == PREF_SUIT)
-			uniform = /obj/item/clothing/under/color/random
+			uniform = /obj/item/clothing/under/rank/civilian/clown
 		else
-			uniform = /obj/item/clothing/under/color/jumpskirt/random
+			uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	mask = /obj/item/clothing/mask/gas/clown_hat

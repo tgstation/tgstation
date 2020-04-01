@@ -23,9 +23,9 @@
 	jobtype = /datum/job/paramedic
 
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/paramedic
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	head = /obj/item/clothing/head/soft/paramedic
-	shoes = /obj/item/clothing/shoes/sneakers/blue
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	suit =  /obj/item/clothing/suit/toggle/labcoat/paramedic
 	gloves = /obj/item/clothing/gloves/color/latex/nitrile
 	belt = /obj/item/storage/belt/medical/paramedic
@@ -34,6 +34,7 @@
 	suit_store = /obj/item/flashlight/pen
 	backpack_contents = list(/obj/item/roller=1)
 	pda_slot = ITEM_SLOT_LPOCKET
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

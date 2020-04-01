@@ -26,12 +26,13 @@
 
 	belt = /obj/item/pda/lawyer
 	ears = /obj/item/radio/headset/headset_srvsec
-	uniform = /obj/item/clothing/under/rank/civilian/lawyer/bluesuit
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	suit = /obj/item/clothing/suit/toggle/lawyer
-	shoes = /obj/item/clothing/shoes/laceup
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	l_hand = /obj/item/storage/briefcase/lawyer
 	l_pocket = /obj/item/laser_pointer
 	r_pocket = /obj/item/clothing/accessory/lawyers_badge
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 	chameleon_extras = /obj/item/stamp/law
 

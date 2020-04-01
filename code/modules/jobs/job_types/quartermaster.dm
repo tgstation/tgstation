@@ -25,10 +25,11 @@
 
 	belt = /obj/item/pda/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
-	uniform = /obj/item/clothing/under/rank/cargo/qm
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	glasses = /obj/item/clothing/glasses/sunglasses
 	l_hand = /obj/item/clipboard
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 	chameleon_extras = /obj/item/stamp/qm
 

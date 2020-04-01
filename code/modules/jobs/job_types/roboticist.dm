@@ -27,8 +27,10 @@
 	belt = /obj/item/storage/belt/utility/full
 	l_pocket = /obj/item/pda/roboticist
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/rnd/roboticist
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	suit = /obj/item/clothing/suit/toggle/labcoat
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox

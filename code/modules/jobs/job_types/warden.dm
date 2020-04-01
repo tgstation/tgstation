@@ -34,8 +34,8 @@
 
 	belt = /obj/item/pda/warden
 	ears = /obj/item/radio/headset/headset_sec/alt
-	uniform = /obj/item/clothing/under/rank/security/warden
-	shoes = /obj/item/clothing/shoes/jackboots
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	suit = /obj/item/clothing/suit/armor/vest/warden/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/warden
@@ -44,6 +44,7 @@
 	l_pocket = /obj/item/restraints/handcuffs
 	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 	backpack = /obj/item/storage/backpack/security
 	satchel = /obj/item/storage/backpack/satchel/sec

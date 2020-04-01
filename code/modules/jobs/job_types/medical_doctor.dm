@@ -24,11 +24,12 @@
 
 	belt = /obj/item/pda/medical
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/doctor
-	shoes = /obj/item/clothing/shoes/sneakers/white
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	suit =  /obj/item/clothing/suit/toggle/labcoat
 	l_hand = /obj/item/storage/firstaid/medical
 	suit_store = /obj/item/flashlight/pen
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

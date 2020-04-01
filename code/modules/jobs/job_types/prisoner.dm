@@ -17,8 +17,9 @@
 	name = "Prisoner"
 	jobtype = /datum/job/prisoner
 
-	uniform = /obj/item/clothing/under/rank/prisoner
-	shoes = /obj/item/clothing/shoes/sneakers/orange
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	mask = /obj/item/clothing/mask/gas/clown_hat
 	id = /obj/item/card/id/prisoner
 	ears = null
 	belt = null

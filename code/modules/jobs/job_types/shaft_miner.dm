@@ -24,10 +24,11 @@
 
 	belt = /obj/item/pda/shaftminer
 	ears = /obj/item/radio/headset/headset_cargo/mining
-	shoes = /obj/item/clothing/shoes/workboots/mining
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	gloves = /obj/item/clothing/gloves/color/black
-	uniform = /obj/item/clothing/under/rank/cargo/miner/lavaland
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
+	mask = /obj/item/clothing/mask/gas/clown_hat
 	r_pocket = /obj/item/storage/bag/ore	//causes issues if spawned in backpack
 	backpack_contents = list(
 		/obj/item/flashlight/seclite=1,\

@@ -22,13 +22,14 @@
 	name = "Curator"
 	jobtype = /datum/job/curator
 
-	shoes = /obj/item/clothing/shoes/laceup
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	belt = /obj/item/pda/curator
 	ears = /obj/item/radio/headset/headset_srv
-	uniform = /obj/item/clothing/under/rank/civilian/curator
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	l_hand = /obj/item/storage/bag/books
 	r_pocket = /obj/item/key/displaycase
 	l_pocket = /obj/item/laser_pointer
+	mask = /obj/item/clothing/mask/gas/clown_hat
 	accessory = /obj/item/clothing/accessory/pocketprotector/full
 	backpack_contents = list(
 		/obj/item/choice_beacon/hero = 1,

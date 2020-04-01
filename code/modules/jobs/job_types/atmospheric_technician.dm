@@ -27,7 +27,7 @@
 	belt = /obj/item/storage/belt/utility/atmostech
 	l_pocket = /obj/item/pda/atmos
 	ears = /obj/item/radio/headset/headset_eng
-	uniform = /obj/item/clothing/under/rank/engineering/atmospheric_technician
+	uniform = /obj/item/clothing/under/rank/civilian/clown
 	r_pocket = /obj/item/analyzer
 
 	backpack = /obj/item/storage/backpack/industrial
@@ -36,6 +36,8 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 	backpack_contents = list(/obj/item/modular_computer/tablet/preset/advanced=1)
+	shoes = /obj/item/clothing/shoes/clown_shoes
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 /datum/outfit/job/atmos/rig
 	name = "Atmospheric Technician (Hardsuit)"

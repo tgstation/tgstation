@@ -39,8 +39,8 @@
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt
-	uniform = /obj/item/clothing/under/rank/security/head_of_security
-	shoes = /obj/item/clothing/shoes/jackboots
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	suit = /obj/item/clothing/suit/armor/hos/trenchcoat
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/HoS/beret
@@ -48,6 +48,7 @@
 	suit_store = /obj/item/gun/energy/e_gun
 	r_pocket = /obj/item/assembly/flash/handheld
 	l_pocket = /obj/item/restraints/handcuffs
+	mask = /obj/item/clothing/mask/gas/clown_hat
 	backpack_contents = list(/obj/item/melee/baton/loaded=1)
 
 	backpack = /obj/item/storage/backpack/security

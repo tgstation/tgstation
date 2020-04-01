@@ -27,9 +27,10 @@
 
 	belt = /obj/item/pda/toxins
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/rnd/scientist
-	shoes = /obj/item/clothing/shoes/sneakers/white
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/tox

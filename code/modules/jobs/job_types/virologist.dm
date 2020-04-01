@@ -26,9 +26,9 @@
 
 	belt = /obj/item/pda/viro
 	ears = /obj/item/radio/headset/headset_med
-	uniform = /obj/item/clothing/under/rank/medical/virologist
-	mask = /obj/item/clothing/mask/surgical
-	shoes = /obj/item/clothing/shoes/sneakers/white
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	mask = /obj/item/clothing/mask/gas/clown_hat
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	suit =  /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store =  /obj/item/flashlight/pen
 

@@ -26,11 +26,12 @@
 
 	belt = /obj/item/pda/geneticist
 	ears = /obj/item/radio/headset/headset_sci
-	uniform = /obj/item/clothing/under/rank/rnd/geneticist
-	shoes = /obj/item/clothing/shoes/sneakers/white
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	suit =  /obj/item/clothing/suit/toggle/labcoat/genetics
 	suit_store =  /obj/item/flashlight/pen
 	l_pocket = /obj/item/sequence_scanner
+	mask = /obj/item/clothing/mask/gas/clown_hat
 
 	backpack = /obj/item/storage/backpack/genetics
 	satchel = /obj/item/storage/backpack/satchel/gen

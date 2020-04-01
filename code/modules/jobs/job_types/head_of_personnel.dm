@@ -44,9 +44,10 @@
 	id = /obj/item/card/id/silver
 	belt = /obj/item/pda/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
-	uniform = /obj/item/clothing/under/rank/civilian/head_of_personnel
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	uniform = /obj/item/clothing/under/rank/civilian/clown
+	shoes = /obj/item/clothing/shoes/clown_shoes
 	head = /obj/item/clothing/head/hopcap
+	mask = /obj/item/clothing/mask/gas/clown_hat
 	backpack_contents = list(/obj/item/storage/box/ids=1,\
 		/obj/item/melee/classic_baton/telescopic=1, /obj/item/modular_computer/tablet/preset/advanced = 1)
 
