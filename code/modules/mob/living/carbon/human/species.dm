@@ -49,6 +49,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/list/special_step_sounds //Sounds to override barefeet walkng
 	var/grab_sound //Special sound for grabbing
 	var/datum/outfit/outfit_important_for_life /// A path to an outfit that is important for species life e.g. plasmaman outfit
+	///Used to determine what description to give when using a potion of flight, if null it will describe them as growing new wings
+	var/HAS_INNATE_WINGS
 
 	var/flying_species = FALSE //is a flying species, just a check for some things
 	var/datum/action/innate/flight/fly //the actual flying ability given to flying species

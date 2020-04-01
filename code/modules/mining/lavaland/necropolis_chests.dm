@@ -615,11 +615,11 @@
 	if(iscarbon(M) && M.stat != DEAD)
 		var/mob/living/carbon/C = M
 		var/holycheck = ishumanbasic(C)
-		if(!(holycheck || islizard(C) || ismoth(C)) || C.dna.features["moth_wings"] == "Burnt Off" || reac_volume < 5 ) // implying xenohumans are holy //as with all things,
+		if(reac_volume < 5 || !(holycheck || islizard(C) || (ismoth(C) && C.dna.features["moth_wings"] != "Burnt Off"))) // implying xenohumans are holy //as with all things,
 			if(method == INGEST && show_message)
 				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
-		if(ismoth(C))
+		if(C.dna.species.HAS_INNATE_WINGS)
 			to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as your wings change shape!</span>")
 			C.dna.features["moth_wings"] = "None"
 		else
