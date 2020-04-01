@@ -357,10 +357,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 		paper.obj_flags |= UNIQUE_RENAME
 
 /datum/material/paper/on_removed_obj(obj/source, material_flags)
-	. = ..()
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/paper = source
 		paper.resistance_flags &= ~FLAMMABLE
+	return ..()
 
 /datum/material/cardboard
 	name = "cardboard"
@@ -374,11 +374,11 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = -0.1
 
 /datum/material/cardboard/on_applied_obj(obj/source, amount, material_flags)
-	. = ..()
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/cardboard = source
 		cardboard.resistance_flags |= FLAMMABLE
 		cardboard.obj_flags |= UNIQUE_RENAME
+	return ..()
 
 /datum/material/cardboard/on_removed_obj(obj/source, material_flags)
 	. = ..()

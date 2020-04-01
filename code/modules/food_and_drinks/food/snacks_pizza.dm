@@ -218,11 +218,11 @@
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/kitchen/rollingpin))
-		if(isturf(loc))
-			new /obj/item/stack/sheet/pizza(loc)
-			to_chat(user, "<span class='notice'>You smoosh the [src] into a sheet.</span>")
-			qdel(src)
-		else
+		if(!isturf(loc))
 			to_chat(user, "<span class='warning'>You need to put [src] on a surface to roll it out!</span>")
-	else
-		..()
+			return
+		new /obj/item/stack/sheet/pizza(loc)
+		to_chat(user, "<span class='notice'>You smoosh [src] into a cheesy sheet.</span>")
+		qdel(src)
+		return
+	return ..()
