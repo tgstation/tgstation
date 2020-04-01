@@ -10,39 +10,52 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	desc = "It just won't stay in place."
 	icon_state = "warping"
 	effect = "warping"
-	colour = "grey" ///default color of the crossbreed
-	var/obj/effect/warped_rune/runepath ///what runes will be drawn depending on the crossbreed color
-	var/warp_charge = 1 /// the number of "charge" a bluespace crossbreed start with
-	var/max_charge = 1 ///max number of charge, might be different depending on the crossbreed (all crossbreed have 1 max charge for now)
-	var/storing_time = 15 ///time it takes to store the rune back into the crossbreed
-	var/drawing_time = 15 ///time it takes to draw the rune
+	///default color of the crossbreed
+	colour = "grey" 
+	///what runes will be drawn depending on the crossbreed color
+	var/obj/effect/warped_rune/runepath 
+	/// the number of "charge" a bluespace crossbreed start with
+	var/warp_charge = 1 
+	///max number of charge, might be different depending on the crossbreed
+	var/max_charge = 1 
+	///time it takes to store the rune back into the crossbreed
+	var/storing_time = 15 
+	///time it takes to draw the rune
+	var/drawing_time = 15 
 
 /obj/effect/warped_rune
 	name = "warped rune"
 	desc = "An unstable rune born of the depths of bluespace"
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "greyspace_rune"
-	var/runepath = /obj/effect/warped_rune  ///serves as a way for some specific runes to identify themselves in the turf.TODO: you can just use src dumbass
-	var/storing_time = 5 ///is only used for bluespace crystal erasing as of now
+	move_resist = INFINITY  //here to avoid the rune being moved since it only sets it's turf once when it's drawn. doesn't include admin fuckery.
+	///serves as a way for some specific runes to identify themselves in the turf. TODO : use src instead
 	anchored = TRUE
 	layer = MID_TURF_LAYER
-	resistance_flags = FIRE_PROOF  //It's only fireproof because of the fire rune and because how do you burn a rune anyway.
-	var/turf/T //used on a LOT of runes, so we might as well put it here
-	var/cooldown = 0 //cooldown for the rune process() only applies to certain runes
+	resistance_flags = FIRE_PROOF  
+	var/runepath = /obj/effect/warped_rune  
+	///is only used for bluespace crystal erasing as of now
+	var/storing_time = 5 
+	///Nearly all runes needs to know which turf they are on
+	var/turf/T 
+	
+	var/cooldown = 0 
+	///cooldown for the rune process() only applies to certain runes
 	var/max_cooldown = 100
-	move_resist = INFINITY //here to avoid the rune being moved since it only sets it's turf once when it's drawn. doesn't include admin fuckery.
+	
+	
 
-///runes can also be deleted by bluespace crystals if the xenobiologist is fucking everyone up and you need a way to destroy the rune.
-/obj/effect/warped_rune/attackby(obj/item/stack/BC, mob/user)
-	if(!istype(BC,/obj/item/stack/sheet/bluespace_crystal) && !istype(BC,/obj/item/stack/ore/bluespace_crystal))
+///runes can also be deleted by bluespace crystals if the xenobiologist is fucking everyone up and you need a way to destroy the rune really fast.
+/obj/effect/warped_rune/attackby(obj/item/stack/space_crystal, mob/user)
+	if(!istype(space_crystal,/obj/item/stack/sheet/bluespace_crystal) && !istype(space_crystal,/obj/item/stack/ore/bluespace_crystal))
 		return
 	if(do_after(user, storing_time,target = src)) //the time it takes to nullify it depends on the rune too
 		to_chat(user, "<span class='notice'>You nullify the effects of the rune with the bluespace crystal!</span>")
 		qdel(src)
-		BC.amount--
+		space_crystal.amount--
 		playsound(src, 'sound/effects/phasein.ogg', 20, TRUE)
-		if(BC.amount <= 0)
-			qdel(BC)
+		if(space_crystal.amount <= 0)
+			qdel(space_crystal)
 
 
 
@@ -113,10 +126,11 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	name = "greyspace rune"
 	desc = "Death is merely a setback, anything can be rebuilt given the right components"
 	icon_state = "greyspace_rune"
-	var/i = 0 //number of slime extract currently absorbed by the rune
-	var/mob/living/simple_animal/slime/S //S stands for the slime that will be spawned
-	var/obj/item/slime_extract/extractype = 0 //extractype is used to remember the type of the extract on the rune
 	max_cooldown = 50
+	///number of slime extract currently absorbed by the rune
+	var/absorbed_extract = 0 
+	var/mob/living/simple_animal/slime/spawned_slime 
+	var/obj/item/slime_extract/extractype = 0 //extractype is used to remember the type of the extract on the rune
 
 
 /obj/effect/warped_rune/greyspace/Initialize()
@@ -129,27 +143,27 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		cooldown = world.time + max_cooldown
 		slimerevival()
 
-///Makes a slime of the color of extract that were put on the runes.can only take one type of extract between slime spawning.
+///Makes a slime of the color of the extract that was put on the rune.can only take one type of extract between slime spawning.
 /obj/effect/warped_rune/greyspace/proc/slimerevival()
-	if(i <! 8) // this shouldn't happen and will bring back the count to 7
-		i = 7
+	if(absorbed_extract <! 8) // this shouldn't happen and will bring back the count to 7
+		absorbed_extract = 7
 		return
 
-	for(var/obj/item/slime_extract/extr in T)
-		if( extr.color_slime != extractype && extractype != 0) //check if the extract is the first one or of the right color.
+	for(var/obj/item/slime_extract/extract in T)
+		if( extract.color_slime != extractype && extractype != 0) //check if the extract is the first one or of the right color.
 			return
-		extractype = extr.color_slime  //keep the slime extract color in storage
-		qdel(extr)    //vores the slime extract
+		extractype = extract.color_slime  //keep the slime extract color in storage
+		qdel(extract)    //vores the slime extract
 		playsound(T, 'sound/effects/splat.ogg', 20, TRUE)
-		i++
-		if (i != 8)
+		absorbed_extract++
+		if (absorbed_extract != 8)
 			return
 
 		playsound(T, 'sound/effects/splat.ogg', 20, TRUE)
-		S = new(T, extr.color_slime)  //spawn a slime from the extract's color
-		S.amount_grown = SLIME_EVOLUTION_THRESHOLD
-		S.Evolve() //slime starts as an adult
-		i = 0 
+		spawned_slime = new(T, extractype)  //spawn a slime from the extract's color
+		spawned_slime.amount_grown = SLIME_EVOLUTION_THRESHOLD
+		spawned_slime.Evolve() //slime starts as an adult
+		absorbed_extract = 0 
 		extractype = 0 // reset the type to allow a new extract type
 
 
@@ -180,10 +194,10 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	if(!locate(/obj/effect/hotspot) in T) //doesn't teleport items but put them on fire anyway for good measure.
 		new /obj/effect/hotspot(T)
 
-	for(var/mob/living/F in T)
-		do_teleport(F, T, 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		F.adjust_fire_stacks(10)
-		F.IgniteMob()
+	for(var/mob/living/on_fire in T)
+		do_teleport(on_fire, T, 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+		on_fire.adjust_fire_stacks(10)
+		on_fire.IgniteMob()
 
 
 
@@ -202,8 +216,8 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 /obj/effect/warped_rune/purplespace
 	desc = "When all that was left were plastic walls and the clothes on their back, they knew what they had to do."
 	icon_state = "purplespace"
-	var/obj/item/stack/medical/suture/S  
-	var/obj/item/stack/medical/mesh/M   
+	var/obj/item/stack/medical/suture/suture  
+	var/obj/item/stack/medical/mesh/regen_mesh 
 	max_cooldown = 30
 
 /obj/effect/warped_rune/purplespace/Initialize()
@@ -219,27 +233,27 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///""transforms"" cloth and plastic into suture and regenerative mesh
 /obj/effect/warped_rune/purplespace/proc/transmute_heal()
-	for(var/obj/item/stack/sheet/plastic/P in T)  //transmute Plastic into regenerative mesh
-		if(P.amount < 2)
+	for(var/obj/item/stack/sheet/plastic/plastic in T)  //transmute Plastic into regenerative mesh
+		if(plastic.amount < 2)
 			return
 
-		P.amount -= 2
-		M = new (T,1)
+		plastic.amount -= 2
+		regen_mesh = new (T,1)
 
 		playsound(T, 'sound/effects/splat.ogg', 20, TRUE)
-		if(P.amount <= 0)
-			qdel(P)
+		if(plastic.amount <= 0)
+			qdel(plastic)
 
-	for(var/obj/item/stack/sheet/cloth/C in T) //transmute cloth into suture
-		if(C.amount < 2)
+	for(var/obj/item/stack/sheet/cloth/cloth in T) //transmute cloth into suture
+		if(cloth.amount < 2)
 			return
-		C.amount -= 2
-		S = new(T, 1)
+		cloth.amount -= 2
+		suture = new(T, 1)
 
 
 		playsound(T, 'sound/effects/splat.ogg', 20, TRUE)
-		if(C.amount <= 0)
-			qdel(C)
+		if(cloth.amount <= 0)
+			qdel(cloth)
 
 
 
@@ -296,9 +310,6 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 
-
-
-
 /*  Yellow rune space acts as an infinite generator, works without power and anywhere, recharges the APC of the room it's in and any battery fueled things. */
 
 
@@ -314,7 +325,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 /obj/effect/warped_rune/yellowspace/Initialize()
 	.=..()
-	START_PROCESSING(SSmachines, src)
+	START_PROCESSING(SSprocessing, src)
 
 
 /obj/effect/warped_rune/yellowspace/process()
@@ -327,14 +338,14 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 /obj/effect/warped_rune/yellowspace/proc/apc_charge()
 
 	var/area/A = get_area(T)
-	for(var/obj/machinery/power/apc/P in A)
-		if(!P.cell)
+	for(var/obj/machinery/power/apc/area_apc in A)
+		if(!area_apc.cell)
 			return
-		if(P.cell.charge <! (P.cell.maxcharge))
+		if(area_apc.cell.charge <! (area_apc.cell.maxcharge))
 			return
-		P.cell.charge += P.cell.maxcharge/10 //will basically recharge 10% of the APC cell every 10 seconds.
-		if(P.cell.charge > P.cell.maxcharge)
-			P.cell.charge = P.cell.maxcharge //set the cell back to 100% if it goes overboard.
+		area_apc.cell.charge += area_apc.cell.maxcharge * 0.1 //will basically recharge 10% of the APC cell every 10 seconds.
+		if(area_apc.cell.charge > area_apc.cell.maxcharge)
+			area_apc.cell.charge = area_apc.cell.maxcharge //set the cell back to 100% if it goes overboard.
 
 
 ///charge whatever battery is put on the rune, is triggered whenever a battery/baton/energy gun is on the rune
@@ -342,21 +353,21 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 	for(var/obj/item/I in T) //check if there's even an item on there
 		if(istype(I, /obj/item/melee/baton))
-			var/obj/item/melee/baton/B = I
-			if(B.cell.charge < B.cell.maxcharge)
-				B.cell.charge += B.cell.maxcharge/5
-				B.update_icon()
-				if(B.cell.charge > B.cell.maxcharge)
-					B.cell.charge = B.cell.maxcharge
+			var/obj/item/melee/baton/prod = I
+			if(prod.cell.charge < prod.cell.maxcharge)
+				prod.cell.charge += prod.cell.maxcharge/5
+				prod.update_icon()
+				if(prod.cell.charge > prod.cell.maxcharge)
+					prod.cell.charge = prod.cell.maxcharge
 					return
 
 		if(istype(I,/obj/item/gun/energy)) //if they were all in the same subtype I could just use a proc for each of them but instead we got this shit
-			var/obj/item/gun/energy/E = I
-			if(E.cell.charge < E.cell.maxcharge)
-				E.cell.charge += E.cell.maxcharge/5
-				E.update_icon()
-				if(E.cell.charge > E.cell.maxcharge)
-					E.cell.charge = E.cell.maxcharge
+			var/obj/item/gun/energy/laser_gun = I
+			if(laser_gun.cell.charge < laser_gun.cell.maxcharge)
+				laser_gun.cell.charge += laser_gun.cell.maxcharge/5
+				laser_gun.update_icon()
+				if(laser_gun.cell.charge > laser_gun.cell.maxcharge)
+					laser_gun.cell.charge = laser_gun.cell.maxcharge
 
 		if(istype(I, /obj/item/stock_parts/cell))
 			var/obj/item/stock_parts/cell/C = I
@@ -366,12 +377,6 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 				if(C.charge > C.maxcharge)
 					C.charge = C.maxcharge
 					return
-
-
-
-
-
-
 
 
 
@@ -405,8 +410,8 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 /obj/effect/warped_rune/darkpurplespace/proc/dust_maker()
-	for(var/obj/item/reagent_containers/glass/RG in T)
-		RG.reagents.add_reagent(/datum/reagent/toxin/plasma,25)
+	for(var/obj/item/reagent_containers/glass/beaker in T)
+		beaker.reagents.add_reagent(/datum/reagent/toxin/plasma,25)
 
 
 
@@ -435,15 +440,13 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///it makes people that step on the tile very cold.
 /obj/effect/warped_rune/darkbluespace/proc/cold_tile()
-	for(var/mob/living/carbon/H in T)
-		H.adjust_bodytemperature(-1000) //Not enough to crit anyone not already weak to cold
+	for(var/mob/living/carbon/human in T)
+		human.adjust_bodytemperature(-1000) //Not enough to crit anyone not already weak to cold
 
 
 
 
-/* makes a rune that absorb food, whenever someone step on the rune the nutrition come back to them, not all of it of course.
-TODO : Improve it so it doesn't steal the spotlight of the chef but instead acts as a direct help to the chef to make his work more convenient
-*/
+/* makes a rune that absorb food, whenever someone step on the rune the nutrition come back to them, not all of it of course.*/
 
 
 /obj/item/slimecross/warping/silver
@@ -464,9 +467,9 @@ TODO : Improve it so it doesn't steal the spotlight of the chef but instead acts
 
 ///any food put on the rune with nutrients will have said nutrients absorbed by the rune. Then the nutrients will be redirected to the next stepping on the rune
 /obj/effect/warped_rune/silverspace/process()
-	for(var/obj/item/reagent_containers/food/F in T) //checks if there's snacks on the rune.and then vores the food
-		for(var/datum/reagent/consumable/nutriment/N in F.reagents.reagent_list)
-			F.reagents.remove_reagent(N.type,1) //take away exactly 1 nutrient from the food each time
+	for(var/obj/item/reagent_containers/food/nutriment_source in T) //checks if there's snacks on the rune.and then vores the food
+		for(var/datum/reagent/consumable/nutriment/nutr in nutriment_source.reagents.reagent_list)
+			nutriment_source.reagents.remove_reagent(nutr.type,1) //take away exactly 1 nutrient from the food each time
 			nutriment++
 			desc = "Feed me and I will feed you back, I currently hold [nutriment] units of nutrients."
 	for(var/mob/living/carbon/human/H in T)
@@ -488,32 +491,31 @@ obj/effect/warped_rune/bluespace
 	desc = "Everyone is everywhere at once, yet so far away from each other"
 	icon_state = "bluespace_rune"
 	runepath = /obj/effect/warped_rune/bluespace
-	var/mob/living/carbon/C // first person to run into the rune
-	var/mob/living/carbon/M //second person that run into the rune
-	var/count = 0
-	max_cooldown = 20 //only here to avoid spam lag
-
+	max_cooldown = 10 //only here to avoid spam lag
+	var/mob/living/carbon/first_person // first person to run into the rune
+	var/mob/living/carbon/second_person //second person that run into the rune
+	var/stepped_on = 0
 
 ///the first two person that stepped on the rune swap places after the second person stepped on it. TODO: fix the potential lag abyse
 obj/effect/warped_rune/bluespace/Crossed(atom/movable/AM)
-	..()
+	.=..()
 	if(cooldown > world.time) //checks if 2 seconds have passed to avoid spam.
 		return
 	cooldown = max_cooldown + world.time //sorry no constantly running into it with a frend for free lag.
 	if(!istype(AM,/mob/living/carbon/human))
 		return
 
-	if(count == 0)
+	if(stepped_on == 0)
 
-		C = AM //remember who stepped in so we can teleport them later.
-		count++
+		first_person = AM //remember who stepped in so we can teleport them later.
+		stepped_on++
 		return
-	if(AM == C)
+	if(AM == first_person)
 		return
-	M = AM
-	do_teleport(M, C, forceMove = TRUE)//swap both of their place.
-	do_teleport(C, T, forceMove = TRUE)
-	count--
+	second_person = AM
+	do_teleport(second_person, first_person, forceMove = TRUE)//swap both of their place.
+	do_teleport(first_person, T, forceMove = TRUE)
+	stepped_on--
 
 
 
@@ -534,16 +536,17 @@ obj/effect/warped_rune/bluespace/Crossed(atom/movable/AM)
 obj/effect/warped_rune/sepiaspace
 	icon_state = "time_space"
 	desc = "The clock is ticking, but in what direction?"
-	var/TS = /obj/effect/timestop //The timestop path here used during the timewarp() proc
+	///The timestop path here used during the timewarp() proc
+	var/timewarp = /obj/effect/timestop 
 
 
 
 ///stops time on a single tile for 5 seconds
 obj/effect/warped_rune/sepiaspace/Crossed()
-	..()
-	if(locate(TS) in T)//checks if there's already a timestop on the rune. here to avoid the effect triggering multiple time at the same time.
+	.=..()
+	if(locate(timewarp) in T)//checks if there's already a timestop on the rune. here to avoid the effect triggering multiple time at the same time.
 		return
-	new TS(T, 0, 50) //spawn a timestop for 5 seconds.
+	new timewarp(T, 0, 50) //spawn a timestop for 5 seconds.
 
 
 
@@ -558,7 +561,8 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 	runepath = /obj/effect/warped_rune/ceruleanspace
 	effect_desc = "Draws a rune creating a hologram of the last living thing that stepped on the tile. Can draw up to 6 runes."
 	max_charge = 6
-	warp_charge = 6 //it's not that powerful anyway so we might as well let them do a hologram museum
+	///it's not that powerful anyway so we might as well let them do a hologram museum
+	warp_charge = 6 
 
 
 /obj/effect/warped_rune/ceruleanspace
@@ -570,7 +574,7 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 
 ///makes a hologram of the mob stepping on the tile, any new person stepping in will replace it with a new hologram
 /obj/effect/warped_rune/ceruleanspace/Crossed(atom/movable/AM)
-	..()
+	.=..()
 	if(!istype(AM,/mob/living))
 		return
 	if(locate(holotile) in T)//here to both delete the previous hologram,
@@ -586,8 +590,8 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 
 ///destroys the hologram with the rune
 /obj/effect/warped_rune/ceruleanspace/Destroy()
-	..() //needed so the rune still gets stored by the crossbreed
 	qdel(holotile)
+	..()
 
 
 
@@ -605,7 +609,7 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 
 ///colors whoever steps on the rune randomly
 /obj/effect/warped_rune/pyritespace/Crossed(atom/movable/AM)
-	..()
+	.=..()
 	AM.color = rgb(rand(0,255),rand(0,255),rand(0,255))
 
 
@@ -620,38 +624,38 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 /obj/effect/warped_rune/redspace
 	desc = "Progress is made through adversity, power is obtained through violence"
 	icon_state = "rage_rune"
-	var/mob/living/carbon/human/H
+	var/mob/living/carbon/human/enraged
 
 
 ///boost up the unarmed damage of the person currently on the tile.
 /obj/effect/warped_rune/redspace/Crossed(atom/movable/AM)
-	..()
+	.=..()
 	if(!istype(AM,/mob/living/carbon/human))
 		return
-	H = AM
-	H.dna.species.punchstunthreshold += 20//we don't want them to insta stun everyone.
-	H.dna.species.punchdamagelow += 20
-	H.dna.species.punchdamagehigh += 20 //buffed up punch damage
-	to_chat(H, "<span class='warning'>You feel the urge to punch something really hard!</span>")
+	enraged = AM
+	enraged.dna.species.punchstunthreshold += 20//we don't want them to insta stun everyone.
+	enraged.dna.species.punchdamagelow += 20
+	enraged.dna.species.punchdamagehigh += 20 //buffed up punch damage
+	to_chat(enraged, "<span class='warning'>You feel the urge to punch something really hard!</span>")
 
 
 ///takes away the punch damage when you leave
 /obj/effect/warped_rune/redspace/Uncrossed(atom/movable/AM)
 	if(!istype(AM,/mob/living/carbon/human)) //checks if the person that just left is the same as the currently enraged person
 		return
-	H = AM
-	H.dna.species.punchstunthreshold -= 20
-	H.dna.species.punchdamagelow -= 20
-	H.dna.species.punchdamagehigh -= 20
+	enraged = AM
+	enraged.dna.species.punchstunthreshold -= 20
+	enraged.dna.species.punchdamagelow -= 20
+	enraged.dna.species.punchdamagehigh -= 20
 
 
 ///destroying the rune will also remove the punch force of the persons on the rune.
 /obj/effect/warped_rune/redspace/Destroy()
-	..()
-	for(var/mob/living/carbon/human/D in T) // takes away people's punch damage that are on the rune anyway.
-		H.dna.species.punchstunthreshold -= 20
-		H.dna.species.punchdamagelow -= 20
-		H.dna.species.punchdamagehigh -= 20.
+	for(var/mob/living/carbon/human/deraged in T) // takes away people's punch damage that are on the rune anyway..
+		deraged.dna.species.punchstunthreshold -= 20
+		deraged.dna.species.punchdamagelow -= 20
+		deraged.dna.species.punchdamagehigh -= 20.
+	return ..()
 
 
 
@@ -667,9 +671,8 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 /obj/effect/warped_rune/greenspace
 	icon_state = "xeno_rune"
 	desc = "We will build walls out of our fallen foes, they shall fear our very buildings."
-	var/obj/item/stack/sheet/xeno_resin/X
 	max_cooldown = 100
-
+	var/obj/item/stack/sheet/xeno_resin/resin
 
 
 /obj/item/stack/sheet/xeno_resin
@@ -691,11 +694,11 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 		transmute_resin()
 
 /obj/effect/warped_rune/greenspace/proc/transmute_resin()
-	for(var/obj/item/stack/sheet/mineral/plasma/P in T)
-		X = new(T)
-		P.amount--
-		if(P.amount <= 0)
-			qdel(P)
+	for(var/obj/item/stack/sheet/mineral/plasma/plasma_sheet in T)
+		resin = new(T)
+		plasma_sheet.amount--
+		if(plasma_sheet.amount <= 0)
+			qdel(plasma_sheet)
 
 //note : some of these can only be built ON resin weeds such as the resin nest.
 GLOBAL_LIST_INIT(resin_recipes, list ( \
@@ -731,7 +734,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 ///adds the jolly mood effect along with hug sound effect.
 /obj/effect/warped_rune/pinkspace/Crossed(atom/movable/AM)
-	..()
+	.=..()
 	if(istype(AM,/mob/living/carbon/human))
 		playsound(T, "sound/weapons/thudswoosh.ogg", 50, TRUE)
 		SEND_SIGNAL(AM, COMSIG_ADD_MOOD_EVENT,"jolly", /datum/mood_event/jolly)
@@ -762,24 +765,24 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		return
 	cooldown = world.time + max_cooldown
 
-	for(var/obj/item/stack/sheet/S in T)
-		if(istype(S,/obj/item/stack/sheet/mineral/gold)) //can't turn gold into gold
+	for(var/obj/item/stack/sheet/goldened in T)
+		if(istype(goldened,/obj/item/stack/sheet/mineral/gold)) //can't turn gold into gold
 			return
-		var/obj/item/stack/sheet/mineral/gold/G = new(T)
-		G.amount = S.amount //as broken as it sounds if you mass produce easy stacks.
-		qdel(S)
+		var/obj/item/stack/sheet/mineral/gold/gold_bar = new(T)
+		gold_bar.amount = goldened.amount //as broken as it sounds if you mass produce easy stacks.
+		qdel(goldened)
 		return //return so it only does one stack at a time
 
-	for(var/obj/item/I in T) //basically copied from the metalgen chem code with a few minor tweaks to make it gold.
+	for(var/obj/item/goldened in T) //basically copied from the metalgen chem code with a few minor tweaks to make it gold.
 		var/gold_amount = 0
-		for(var/B in I.custom_materials)
-			gold_amount += I.custom_materials[B]
+		for(var/mats in goldened.custom_materials)
+			gold_amount += goldened.custom_materials[mats]
 
 		if(!gold_amount)
 			gold_amount = 50 //if the item doesn't have any material it makes the item worth around 0.005 gold bars.
 
-		I.material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
-		I.set_custom_materials(list(/datum/material/gold=gold_amount))
+		goldened.material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+		goldened.set_custom_materials(list(/datum/material/gold=gold_amount))
 		return
 
 
@@ -807,9 +810,9 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		auto_mining()
 
 /obj/effect/warped_rune/adamantinespace/proc/auto_mining()
-	for(var/turf/closed/mineral/M in range(7,T)) //the range is pretty big to at least try to rival miners and their plasma cutters.
-		if(M.mineralType != null) //here to counter runtimes when the mineral type of the rock is null
-			new M.mineralType(T)
+	for(var/turf/closed/mineral/ores in range(7,T)) //the range is pretty big to at least try to rival miners and their plasma cutters.
+		if(ores.mineralType != null) //here to counter runtimes when the mineral type of the rock is null
+			new ores.mineralType(T)
 
 
 /* Lightpink rune. Revive suicided/soulless corpses by yeeting a willing soul into it */
@@ -826,31 +829,31 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	max_cooldown = 100 
 
 
-/obj/effect/warped_rune/lightpinkspace/attack_hand(mob/living/U)
+/obj/effect/warped_rune/lightpinkspace/attack_hand(mob/living/user)
 	if(cooldown > world.time)
-		to_chat(U, "<span class='warning'>The rune is still charging!</span>")
+		to_chat(user, "<span class='warning'>The rune is still charging!</span>")
 		return
 
-	for(var/mob/living/carbon/human/L in T)
-		if(!L.getorgan(/obj/item/organ/brain) || L.key || L.get_ghost(FALSE, TRUE)) //checks if the ghost and brain's there
-			to_chat(U, "<span class='warning'>This body can't be fixed by the rune in this state!</span>")
+	for(var/mob/living/carbon/human/host in T)
+		if(!host.getorgan(/obj/item/organ/brain) || host.key || host.get_ghost(FALSE, TRUE)) //checks if the ghost and brain's there
+			to_chat(user, "<span class='warning'>This body can't be fixed by the rune in this state!</span>")
 			return
 		cooldown = world.time + max_cooldown //only start the cooldown if there's an actual body on there and it can be resurrected.
-		to_chat(U, "<span class='warning'>The rune is trying to repair [L.name]'s soul!</span>")
-		var/list/candidates = pollCandidatesForMob("Do you want to replace the soul of [L.name]?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, L,POLL_IGNORE_SENTIENCE_POTION)//sentience flags because lightpink. 
+		to_chat(user, "<span class='warning'>The rune is trying to repair [host.name]'s soul!</span>")
+		var/list/candidates = pollCandidatesForMob("Do you want to replace the soul of [host.name]?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, host,POLL_IGNORE_SENTIENCE_POTION)//sentience flags because lightpink. 
 
 
 		if(LAZYLEN(candidates)) //check if anyone wanted to play as the dead person
-			var/mob/dead/observer/C = pick(candidates)
-			L.key = C.key
-			L.suiciding = 0 //turns off the suicide var just in case
-			L.revive(full_heal = TRUE, admin_revive = TRUE) //might as well go all the way
-			to_chat(L, "<span class='warning'>You may wear the skin of someone else, but you know who and what you are. Pretend to be the original owner of this body as best as you can.</span>")
-			to_chat(U, "<span class='notice'>[L.name] is slowly getting back up with an empty look in [L.p_their()] eyes. It...worked?</span>")
-			playsound(L, "sound/magic/castsummon.ogg", 50, TRUE)
+			var/mob/dead/observer/ghost = pick(candidates)
+			host.key = ghost.key
+			host.suiciding = 0 //turns off the suicide var just in case
+			host.revive(full_heal = TRUE, admin_revive = TRUE) //might as well go all the way
+			to_chat(host, "<span class='warning'>You may wear the skin of someone else, but you know who and what you are. Pretend to be the original owner of this body as best as you can.</span>")
+			to_chat(user, "<span class='notice'>[host.name] is slowly getting back up with an empty look in [host.p_their()] eyes. It...worked?</span>")
+			playsound(host, "sound/magic/castsummon.ogg", 50, TRUE)
 			return  
 		else
-			to_chat(U, "<span class='warning'>The rune failed! Maybe you should try again later.</span>")
+			to_chat(user, "<span class='warning'>The rune failed! Maybe you should try again later.</span>")
 
 
 
@@ -866,8 +869,8 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 /obj/effect/warped_rune/blackspace
 	icon_state = "cursed_rune" 
 	desc = "Your body is the problem, limited, so very very limited."
-	var/mob/living/carbon/human/H1
-	var/mob/living/carbon/human/H2
+	var/mob/living/carbon/human/first_person
+	var/mob/living/carbon/human/second_person
 	var/stepped_on = FALSE //here to check if someone already stepped on the rune
 
 /obj/effect/warped_rune/blackspace/Initialize()
@@ -883,16 +886,16 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	if(!istype(AM,/mob/living/carbon/human)) 
 		return
 	if(!stepped_on)
-		H1 = AM
+		first_person = AM
 		stepped_on = TRUE
 		return
-	if(AM == H1) 
+	if(AM == first_person) 
 		return
-	H2 = AM 
-	var/dna1 = H1.dna.species
-	var/dna2 = H2.dna.species
-	H2.set_species(dna1)  //swap the species 
-	H1.set_species(dna2)
+	second_person = AM 
+	var/first_dna = first_person.dna.species
+	var/second_dna = second_person.dna.species
+	second_person.set_species(first_dna)  //swap the species 
+	first_person.set_species(second_dna)
 	stepped_on = FALSE
 	cooldown = max_cooldown + world.time //the default max cooldown is of 10 seconds
 
