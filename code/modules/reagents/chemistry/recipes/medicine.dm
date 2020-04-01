@@ -170,6 +170,3 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/mesh/advanced(location)
 
-/datum/chemical_reaction/ldx
-	results = list(/datum/reagent/medicine/ldx = 3)
-	required_reagents = list( /datum/reagent/pentaerythritol = 2, /datum/reagent/medicine/C2/seiver = 1)
