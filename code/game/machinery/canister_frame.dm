@@ -30,6 +30,7 @@
 	name = "Tier 2 canister frame"
 	icon_state = "frame_2"
 
+///Proc to build the different tiers, if the sheet used is right, it will upgrade the frame or build the respective canister tier
 /obj/structure/canister_frame/machine/frame_tier_0/attackby(obj/item/S, mob/user, params)
 	if (istype(S, /obj/item/stack/sheet/metal))
 		var/obj/item/stack/ST = S
@@ -52,6 +53,7 @@
 	else
 		return ..()
 
+///Proc to build the different tiers, if the sheet used is right, it will upgrade the frame or build the respective canister tier
 /obj/structure/canister_frame/machine/frame_tier_1/attackby(obj/item/S, mob/user, params)
 	if (istype(S, /obj/item/stack/sheet/mineral/titanium))
 		var/obj/item/stack/ST = S
@@ -74,6 +76,7 @@
 	else
 		return ..()
 
+///Proc to build the different tiers, if the sheet used is right, it will upgrade the frame or build the respective canister tier
 /obj/structure/canister_frame/machine/frame_tier_2/attackby(obj/item/S, mob/user, params)
 	if (istype(S, /obj/item/stack/sheet/mineral/plastitanium))
 		var/obj/item/stack/ST = S

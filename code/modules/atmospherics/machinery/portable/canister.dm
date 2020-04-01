@@ -1,4 +1,5 @@
 #define CAN_DEFAULT_RELEASE_PRESSURE 	(ONE_ATMOSPHERE)
+///Used when setting the mode of the canisters, enabling us to switch the overlays
 #define CANISTER_TIER_1					1
 #define CANISTER_TIER_2					2
 #define CANISTER_TIER_3					3
@@ -21,7 +22,9 @@
 	var/release_pressure = ONE_ATMOSPHERE
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
+	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
 	var/heat_limit = 5000
+	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
 	var/pressure_limit = 50000
 
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 10, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 50)
@@ -39,6 +42,7 @@
 	var/maximum_timer_set = 300
 	var/timing = FALSE
 	var/restricted = FALSE
+	///Set the tier of the canister and overlay used
 	var/mode = CANISTER_TIER_1
 	req_access = list()
 
@@ -292,6 +296,7 @@
 		. += "can-o1"
 	else if(pressure >= 10)
 		. += "can-o0"
+	///Function is used to actually set the overlays
 	if(mode == CANISTER_TIER_1)
 		. += "tier1-o"
 	else if(mode == CANISTER_TIER_2)
@@ -385,6 +390,7 @@
 	update_icon()
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
+	///function used to check the limit of the canisters and also set the amount of damage that the canister can recieve, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
 		take_damage(min(((temperature/heat_limit) * (pressure/pressure_limit)), 50), BURN, 0)
 		return
