@@ -443,27 +443,27 @@
 	M.crit_threshold = M.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 
 
-/datum/reagent/medicine/C2/penthrite/on_mob_life(mob/living/M)
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
-	if(M.health <= HEALTH_THRESHOLD_CRIT && M.health > M.crit_threshold) //we cannot save someone above our raised crit threshold.
+/datum/reagent/medicine/C2/penthrite/on_mob_life(mob/living/carbon/human/H)
+	H.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
+	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > H.crit_threshold) //we cannot save someone above our raised crit threshold.
 
-		M.adjustToxLoss(-2 * REM, 0)
-		M.adjustBruteLoss(-2 * REM, 0)
-		M.adjustFireLoss(-2 * REM, 0)
-		M.adjustOxyLoss(-6 * REM, 0)
+		H.adjustToxLoss(-2 * REM, 0)
+		H.adjustBruteLoss(-2 * REM, 0)
+		H.adjustFireLoss(-2 * REM, 0)
+		H.adjustOxyLoss(-6 * REM, 0)
 
-		M.adjustOrganLoss(ORGAN_SLOT_HEART,max(1,volume/25)) // your heart is barely keeping up!
+		H.adjustOrganLoss(ORGAN_SLOT_HEART,max(1,volume/25)) // your heart is barely keeping up!
 
-		M.jitter(rand(0,2))
+		H.Jitter(rand(0,2))
 
 		if(prob(33))
-			to_chat(M,"<span class='danger'>Your body is giving up, but your heart is still beating!")
+			to_chat(H,"<span class='danger'>Your body is giving up, but your heart is still beating!")
 
-	if(M.health <= M.crit_threshold) //certain death above this threshold
-		REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
-		to_chat(M,"<span class='danger'>Your feel something rupturing inside your chest!")
-		M.emote("scream")
-		M.set_heartattack(TRUE)
+	if(H.health <= H.crit_threshold) //certain death above this threshold
+		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart before we give him heart attack
+		to_chat(H,"<span class='danger'>Your feel something rupturing inside your chest!")
+		H.emote("scream")
+		H.set_heartattack(TRUE)
 		volume = 0
 	. = ..()
 
