@@ -740,12 +740,15 @@
 
 /datum/brain_trauma/special/bluespace_prophet/phobetor/on_life()
 
+	var/turf/first_turf
+	var/turf/second_turf
+
 	// Make Next Portal
 	if(world.time > next_portal)
-		next_portal = world.time + 100
 
+/*
 		// Round One: Pick a Nearby Turf
-		var/list/turf/possible_turfs = return_valid_floor_in_range(owner, 6, 0, TRUE) // Source, Range, Has Floor
+		var/list/turf/possible_turfs = return_valid_floors_in_range(owner, 6, 0, TRUE) // Source, Range, Has Floor
 		if(!LAZYLEN(possible_turfs))
 			return
 		// First Pick:
@@ -754,7 +757,7 @@
 			return
 
 		// Round Two: Pick an even Further Turf
-		possible_turfs = return_valid_floor_in_range(first_turf, 20, 6, TRUE) // Source, Range, Has Floor
+		possible_turfs = return_valid_floors_in_range(first_turf, 20, 6, TRUE) // Source, Range, Has Floor
 		possible_turfs -= first_turf
 		if(!LAZYLEN(possible_turfs))
 			return
@@ -762,6 +765,22 @@
 		var/turf/second_turf = pick(possible_turfs)
 		if(!second_turf)
 			return
+*/
+
+		// Round One: Pick a Nearby Turf
+		first_turf = return_valid_floor_in_range(owner, 6, 0, TRUE)
+		if (!first_turf)
+			next_portal = world.time + 10
+			return
+
+		// Round Two: Pick an even Further Turf
+		second_turf = return_valid_floor_in_range(first_turf, 20, 6, TRUE)
+		if (!second_turf)
+			next_portal = world.time + 10
+			return
+
+		next_portal = world.time + 100
+
 
 		var/obj/effect/hallucination/simple/phobetor/first = new (first_turf, owner)
 		var/obj/effect/hallucination/simple/phobetor/second = new (second_turf, owner)
