@@ -133,12 +133,16 @@
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "phaseshift"
 	action_background_icon_state = "bg_demon"
-	jaunt_in_time = 12
+	jaunt_in_time = 6.4
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/jaunt_steam(mobloc)
 	return
+
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/angelic
+	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith/angelic
+	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out/angelic
 
 /obj/effect/proc_holder/spell/targeted/projectile/magic_missile/lesser
 	name = "Lesser Magic Missile"

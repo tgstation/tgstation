@@ -42,7 +42,7 @@
 	return ..()
 
 /obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/hostile/construct/builder))
+	if(istype(M, /mob/living/simple_animal/hostile/construct/artificer))
 		if(obj_integrity < max_integrity)
 			M.changeNext_move(CLICK_CD_MELEE)
 			obj_integrity = min(max_integrity, obj_integrity + 5)
@@ -65,6 +65,13 @@
 	else
 		return ..()
 
+/obj/structure/destructible/cult/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
+
 /obj/structure/destructible/cult/talisman
 	name = "altar"
 	desc = "A bloodstained altar dedicated to Nar'Sie."
@@ -84,7 +91,12 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You study the schematics etched into the altar...",,"Eldritch Whetstone","Construct Shell","Flask of Unholy Water")
+	var/list/items = list(
+		"Eldritch Whetstone" = image(icon = 'icons/obj/kitchen.dmi', icon_state = "cult_sharpener"),
+		"Construct Shell" = image(icon = 'icons/obj/wizard.dmi', icon_state = "construct_cult"),
+		"Flask of Unholy Water" = image(icon = 'icons/obj/drinks.dmi', icon_state = "holyflask")
+		)
+	var/choice = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Eldritch Whetstone")
@@ -120,11 +132,12 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice
-	if(user.mind.has_antag_datum(/datum/antagonist/cult/master))
-		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
-	else
-		choice = alert(user,"You study the schematics etched into the forge...",,"Shielded Robe","Flagellant's Robe","Mirror Shield")
+	var/list/items = list(
+		"Shielded Robe" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cult_armor"),
+		"Flagellant's Robe" = image(icon = 'icons/obj/clothing/suits.dmi', icon_state = "cultrobes"),
+		"Mirror Shield" = image(icon = 'icons/obj/shields.dmi', icon_state = "mirror_shield")
+		)
+	var/choice = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Shielded Robe")
@@ -237,7 +250,12 @@
 	if(cooldowntime > world.time)
 		to_chat(user, "<span class='cult italic'>The magic in [src] is weak, it will be ready to use again in [DisplayTimeText(cooldowntime - world.time)].</span>")
 		return
-	var/choice = alert(user,"You flip through the black pages of the archives...",,"Zealot's Blindfold","Shuttle Curse","Veil Walker Set")
+	var/list/items = list(
+		"Zealot's Blindfold" = image(icon = 'icons/obj/clothing/glasses.dmi', icon_state = "blindfold"),
+		"Shuttle Curse" = image(icon = 'icons/obj/cult.dmi', icon_state = "shuttlecurse"),
+		"Veil Walker Set" = image(icon = 'icons/obj/cult.dmi', icon_state = "shifter")
+		)
+	var/choice = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	var/list/pickedtype = list()
 	switch(choice)
 		if("Zealot's Blindfold")

@@ -2,6 +2,7 @@
 	name = "Nar'Sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
 	icon = 'icons/obj/magic_terror.dmi'
+	icon_state = "narsie"
 	pixel_x = -89
 	pixel_y = -85
 	density = FALSE
@@ -230,7 +231,7 @@
 	setDir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
-	sleep(11)
+	sleep(35)
 	move_self = 1
 	icon = initial(icon)
 
