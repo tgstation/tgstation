@@ -302,14 +302,14 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 // Powernets handling helpers
 //////////////////////////////////////////////
 
-/obj/structure/cable/proc/get_cable_connections(link_dirs = linked_dirs, check_layer = cable_layer)
+/obj/structure/cable/proc/get_cable_connections(powernetless_only)
 	. = list()
 	var/turf/T = get_turf(src)
 	for(var/check_dir in GLOB.cardinals)
-		if(link_dirs & check_dir)
+		if(linked_dirs & check_dir)
 			T = get_step(src, check_dir)
 			for(var/obj/structure/cable/C in T)
-				if(check_layer & C.cable_layer)
+				if(cable_layer & C.cable_layer)
 					. += C
 
 /obj/structure/cable/proc/get_all_cable_connections(powernetless_only)
@@ -588,7 +588,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 ///multilayer cable to connect different layers
 /obj/structure/cable/multilayer
 	name = "multilayer cable hub"
-	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty multilayer power transfer. Refuse direct connections to other hubs."
+	desc = "A flexible, superconducting insulated multilayer hub for heavy-duty multilayer power transfer."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "cable_bridge"
 	cable_layer = CABLE_LAYER_2
@@ -739,15 +739,4 @@ GLOBAL_LIST(hub_radial_layer_list)
 	to_chat(user, "<span class='warning'>You pust reset button.</span>")
 	addtimer(CALLBACK(src, .proc/Reload), 10, TIMER_UNIQUE) //spam protect
 
-/obj/structure/cable/multilayer/get_cable_connections(link_dirs = linked_dirs, check_layer = cable_layer)
-	. = list()
-	var/turf/T = get_turf(src)
-	for(var/check_dir in GLOB.cardinals)
-		if(link_dirs & check_dir)
-			T = get_step(src, check_dir)
-			for(var/obj/structure/cable/C in T)
-				if(istype(C,src))
-					continue
-				if(check_layer & C.cable_layer)
-					. += C
 
