@@ -10,11 +10,9 @@
 	src.temp_amount = temp_amount
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
-	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
 
-/datum/component/thermite/UnregisterFromParent()
+/datum/component/hot_ice/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
-	UnregisterSignal(parent, COMSIG_ATOM_FIRE_ACT)
 
 /datum/component/hot_ice/proc/hot_ice_melt(mob/user)
 	var/turf/open/T = get_turf(parent)
@@ -26,10 +24,6 @@
 		K.ScrapeAway(1, CHANGETURF_INHERIT_AIR)
 	else
 		qdel(parent)
-
-/datum/component/hot_ice/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		hot_ice_melt()
 
 /datum/component/hot_ice/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)
 	if(thing.get_temperature())
