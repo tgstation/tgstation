@@ -1305,3 +1305,45 @@
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.Dizzy(0)
 	L.Jitter(0)
+
+/datum/reagent/medicine/ldx
+	name = "LDX"
+	description = "A blood red thick liquid patented by NT in it's early years. It's primary purpose is to quickly remove any addctions from the patient, it accomplishes that goal very violently."
+	reagent_state = LIQUID
+	color = "#500000"
+	metabolization_rate = 0.25 //stays in your system for a loong time.
+	var/progress = 0
+
+
+/datum/reagent/medicine/ldx/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	switch(current_cycle) //ramp up effect, the longer it is in our system the more damage it deals
+		if(9)
+			M.Dizzy(pick(0,1,2))
+			M.Jitter(pick(0,1,2))
+			M.adjustToxLoss(0.5)
+
+		if(20 to 39)
+
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pain", /datum/mood_event/ldx_pain, name)
+			M.adjustToxLoss(1)
+			M.adjustBruteLoss(0.5)
+
+		if(40 to INFINITY)
+
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "pain", /datum/mood_event/ldx_pain_heavy, name)
+			M.adjustToxLoss(6*(current_cycle/40)) // the longer it takes the worse it gets
+			M.adjustBruteLoss(2)
+			M.adjustOrganLoss(ORGAN_SLOT_LIVER, current_cycle/40)
+			if(prob(10))
+				M.vomit()
+			progress += current_cycle/40 //the longer it is in your system the faster it cures
+
+	if(!M.reagents.addiction_list.len)
+		M.vomit()
+		return
+
+	if(progress >= 10) //every 10 cycles after the 24th we cure 1 addiction.
+		M.reagents.remove_addiction(pick(M.reagents.addiction_list))
+		progress = 0
+

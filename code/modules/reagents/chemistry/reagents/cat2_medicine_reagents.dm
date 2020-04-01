@@ -431,20 +431,47 @@
 /*Suffix: -rite*/
 /datum/reagent/medicine/C2/penthrite
 	name = "Penthrite"
-	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
+	description = "An expensive medication allowing you to temporarily survive without heart, sustaining damage that would otherwise kill you. It reacts violently with other less expensive emergency medication."
 	color = "#F5F5F5"
-	self_consuming = TRUE
 
 /datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
 	. = ..()
+	to_chat(M,"<span class='notice'>Your heart begins to beat with great force!")
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(M, TRAIT_NOHARDCRIT,type)
+	ADD_TRAIT(M, TRAIT_NOSOFTCRIT,type)
+	M.crit_threshold = M.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 
-/datum/reagent/medicine/C2/penthrite/on_mob_metabolize(mob/living/M)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_life(mob/living/M)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
+	if(M.health <= HEALTH_THRESHOLD_CRIT && M.health > M.crit_threshold) //we cannot save someone above our raised crit threshold.
+
+		M.adjustToxLoss(-2 * REM, 0)
+		M.adjustBruteLoss(-2 * REM, 0)
+		M.adjustFireLoss(-2 * REM, 0)
+		M.adjustOxyLoss(-6 * REM, 0)
+
+		M.adjustOrganLoss(ORGAN_SLOT_HEART,max(1,volume/25)) // your heart is barely keeping up!
+
+		M.jitter(rand(0,2))
+
+		if(prob(33))
+			to_chat(M,"<span class='danger'>Your body is giving up, but your heart is still beating!")
+
+	if(M.health <= M.crit_threshold) //certain death above this threshold
+		REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+		to_chat(M,"<span class='danger'>Your feel something rupturing inside your chest!")
+		M.emote("scream")
+		M.set_heartattack(TRUE)
+		volume = 0
 	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
 
 /datum/reagent/medicine/C2/penthrite/on_mob_end_metabolize(mob/living/M)
+	M.crit_threshold = M.crit_threshold - HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
+	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
 	. = ..()
 
 /******NICHE******/

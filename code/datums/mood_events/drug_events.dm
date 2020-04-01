@@ -78,3 +78,12 @@
 	description = "<span class='nicegreen'>Eh ah AAAAH! HA HA HA HA HAA! Uuuh.</span>\n"
 	mood_change = 6
 	timeout = 3 MINUTES
+
+/datum/mood_event/ldx_pain
+	description = "<span class='nicegreen'>I don't feel so good...</span>\n"
+	mood_change = -4
+
+/datum/mood_event/ldx_pain_heavy
+	description = "<span class='nicegreen'>MY WHOLE BODY IS BURNING FROM INSIDE OUT!</span>\n"
+	mood_change = -12
+
