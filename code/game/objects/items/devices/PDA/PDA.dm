@@ -534,13 +534,12 @@ GLOBAL_LIST_EMPTY(PDAs)
 				tnote = null
 			if("Ringtone")
 				var/t = stripped_input(U, "Please enter new ringtone", name, ttone, 20)
-				if(in_range(src, U) && loc == U && t)
+				if(in_range(src, U) && loc == U && t && update_ringtone(sanitize(t), U))
 					if(SEND_SIGNAL(src, COMSIG_PDA_CHANGE_RINGTONE, U, t) & COMPONENT_STOP_RINGTONE_CHANGE)
 						U << browse(null, "window=pda")
 						return
 					else
 						ttone = t
-						update_ringtone(sanitize(t), U)
 				else
 					U << browse(null, "window=pda")
 					return
