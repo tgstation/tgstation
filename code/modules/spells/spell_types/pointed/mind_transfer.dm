@@ -109,10 +109,10 @@
 
 	return TRUE
 
-/obj/effect/proc_holder/spell/pointed/mind_transfer/intercept_check(mob/user, atom/target)
+/obj/effect/proc_holder/spell/pointed/mind_transfer/can_target(atom/target, mob/user, silent)
 	. = ..()
 	if(!.)
 		return FALSE
-	if(!swap_check(user, target))
+	if(!swap_check(user, target, silent))
 		return FALSE
 	return TRUE

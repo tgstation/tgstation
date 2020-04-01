@@ -31540,7 +31540,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -31600,7 +31600,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsp" = (
 /obj/structure/closet,
@@ -31701,7 +31701,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsz" = (
 /obj/effect/turf_decal/tile/bar,
@@ -31734,7 +31734,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsC" = (
 /obj/structure/closet/crate{
@@ -31764,7 +31764,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsF" = (
 /obj/effect/mapping_helpers/airlock_note_placer{

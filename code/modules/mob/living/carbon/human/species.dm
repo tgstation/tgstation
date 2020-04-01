@@ -105,6 +105,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/datum/action/innate/flight/fly
 	///The icon used for the wings
 	var/wings_icon = "Angel"
+	///Used to determine what description to give when using a potion of flight, if false it will describe them as growing new wings
+	var/has_innate_wings = FALSE
 
 	/// The natural temperature for a body
 	var/bodytemp_normal = BODYTEMP_NORMAL
