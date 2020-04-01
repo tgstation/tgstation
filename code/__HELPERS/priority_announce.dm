@@ -1,8 +1,13 @@
-/proc/priority_announce(text, title = "", sound = 'sound/ai/attention.ogg', type , sender_override)
+/proc/priority_announce(text, title = "", sound, type, sender_override)
 	if(!text)
 		return
 
 	var/announcement
+	var/april_fools_replacer = FALSE
+	if(!sound)
+		sound = pick(APRILFOOLS_ALERTS)
+		april_fools_replacer = TRUE
+
 
 	if(type == "Priority")
 		announcement += "<h1 class='alert'>Priority Announcement</h1>"
@@ -25,8 +30,10 @@
 				GLOB.news_network.SubmitArticle(text, "Central Command Update", "Station Announcements", null)
 			else
 				GLOB.news_network.SubmitArticle(title + "<br><br>" + text, "Central Command", "Station Announcements", null)
-
-	announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"
+	if(april_fools_replacer)
+		announcement += "<br><span class='alert'>Please stand by for an important message from our new intern.</span><br>"
+	else
+		announcement += "<br><span class='alert'>[html_encode(text)]</span><br>"
 	announcement += "<br>"
 
 	var/s = sound(sound)
@@ -41,7 +48,7 @@
 		title = "Classified [command_name()] Update"
 
 	if(announce)
-		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/ai/commandreport.ogg')
+		priority_announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", pick(APRILFOOLS_CMD))
 
 	var/datum/comm_message/M  = new
 	M.title = title

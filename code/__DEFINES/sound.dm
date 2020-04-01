@@ -66,6 +66,31 @@
 
 #define REEBE list('sound/ambience/ambireebe1.ogg', 'sound/ambience/ambireebe2.ogg', 'sound/ambience/ambireebe3.ogg')
 
+#define APRILFOOLS_ALERTS list('sound/ai/alerts/1.ogg',\
+								'sound/ai/alerts/2.ogg',\
+								'sound/ai/alerts/3.ogg',\
+								'sound/ai/alerts/4.ogg',\
+								'sound/ai/alerts/5.ogg',\
+								'sound/ai/alerts/6.ogg',\
+								'sound/ai/alerts/7.ogg',\
+								'sound/ai/alerts/8.ogg',\
+								'sound/ai/alerts/9.ogg',\
+								'sound/ai/alerts/10.ogg',\
+								'sound/ai/alerts/11.ogg',\
+								'sound/ai/alerts/12.ogg',\
+								'sound/ai/alerts/13.ogg',\
+								'sound/ai/alerts/14.ogg')
+
+#define APRILFOOLS_WELCOME list('sound/ai/welcome/1.ogg',\
+								'sound/ai/welcome/2.ogg',\
+								'sound/ai/welcome/3.ogg',\
+								'sound/ai/welcome/4.ogg',\
+								'sound/ai/welcome/5.ogg',\
+								'sound/ai/welcome/6.ogg')
+
+#define APRILFOOLS_CMD list('sound/ai/commandreport/1.ogg',\
+								'sound/ai/commandreport/2.ogg',\
+								'sound/ai/commandreport/3.ogg')
 
 
 #define CREEPY_SOUNDS list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/heart_beat.ogg', 'sound/effects/screech.ogg',\
@@ -78,5 +103,5 @@
 #define INTERACTION_SOUND_RANGE_MODIFIER -3
 #define EQUIP_SOUND_VOLUME 30
 #define PICKUP_SOUND_VOLUME 15
-#define DROP_SOUND_VOLUME 20 
+#define DROP_SOUND_VOLUME 20
 #define YEET_SOUND_VOLUME 90
