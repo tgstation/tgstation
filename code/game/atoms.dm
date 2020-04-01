@@ -798,7 +798,8 @@
   */
 /atom/proc/setDir(newdir)
 	SHOULD_CALL_PARENT(TRUE)
-	playsound(src, 'sound/thisfolderhasthejohnnytestwhipcrack/JohnnyTestWhipcrack.ogg', 100)
+	if(newdir != dir)
+		playsound(src, 'sound/thisfolderhasthejohnnytestwhipcrack/JohnnyTestWhipcrack.ogg', 50)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
 
