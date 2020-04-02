@@ -1,8 +1,0 @@
-author: "trollbreeder"
-delete-after: True
-changes: 
-  - rscadd: "Nanotrasen has asked to return all first-aid kits produced before 2559 as they've been recalled due to potential risk of lead acetate poisoning."
-  - rscadd: "Medical doctors have been seen emotionally attached to these outdated first-aid kits."
-  - rscdel: "Nanotrasen reports fewer cases of necrophillia, as medical doctors no longer feel any emotions towards body bags."
-  - rscdel: "Nanotrasen also reports that medical doctors are no longer attached to 21st century heart listening devices."
-  - imageadd: "Ancient medkits are now properly ancient in design."
