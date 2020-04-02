@@ -87,6 +87,11 @@
 	proximity_monitor = new(src, 1)
 	materials = AddComponent(/datum/component/remote_materials, "stacking", mapload, FALSE, mapload && force_connect)
 
+/obj/machinery/mineral/stacking_machine/Destroy()
+	CONSOLE = null
+	materials = null
+	return ..()
+
 /obj/machinery/mineral/stacking_machine/HasProximity(atom/movable/AM)
 	if(istype(AM, /obj/item/stack/sheet) && AM.loc == get_step(src, input_dir))
 		process_sheet(AM)

@@ -1,8 +1,3 @@
-#define CURRENT_LIVING_PLAYERS	1
-#define CURRENT_LIVING_ANTAGS	2
-#define CURRENT_DEAD_PLAYERS	3
-#define CURRENT_OBSERVERS	    4
-
 #define ONLY_RULESET       1
 #define HIGHLANDER_RULESET 2
 #define TRAITOR_RULESET    4
@@ -73,14 +68,20 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	  * 0-6, 7-13, 14-20, 21-27, 28-34, 35-41, 42-48, 49-55, 56-62, 63+
 	  */
 	var/pop_per_requirement = 6
-	/// The requirement used for checking if a second rule should be selected.
+	/// The requirement used for checking if a second rule should be selected. Index based on pop_per_requirement.
 	var/list/second_rule_req = list(100, 100, 80, 70, 60, 50, 30, 20, 10, 0)
-	/// The requirement used for checking if a third rule should be selected.
+	/// The probability for a second ruleset with index being every ten threat.
+	var/list/second_rule_prob = list(0,0,60,80,80,80,100,100,100,100)
+	/// The requirement used for checking if a third rule should be selected. Index based on pop_per_requirement.
 	var/list/third_rule_req = list(100, 100, 100, 90, 80, 70, 60, 50, 40, 30)
+	/// The probability for a third ruleset with index being every ten threat.
+	var/list/third_rule_prob = list(0,0,0,0,60,60,80,90,100,100)
 	/// Threat requirement for a second ruleset when high pop override is in effect.
 	var/high_pop_second_rule_req = 40
 	/// Threat requirement for a third ruleset when high pop override is in effect.
 	var/high_pop_third_rule_req = 60
+	/// The amount of additional rulesets waiting to be picked.
+	var/extra_rulesets_amount = 0
 	/// Number of players who were ready on roundstart.
 	var/roundstart_pop_ready = 0
 	/// List of candidates used on roundstart rulesets.
@@ -89,8 +90,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/current_rules = list()
 	/// List of executed rulesets.
 	var/list/executed_rules = list()
-	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
-	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 	/// When world.time is over this number the mode tries to inject a latejoin ruleset.
 	var/latejoin_injection_cooldown = 0
 	/// When world.time is over this number the mode tries to inject a midround ruleset.
@@ -99,8 +98,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
-	/// When current_players was updated last time.
-	var/pop_last_updated = 0
 	/// How many percent of the rounds are more peaceful.
 	var/peaceful_percentage = 50
 	/// If a highlander executed.
@@ -109,9 +106,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/only_ruleset_executed = FALSE
 	/// Dynamic configuration, loaded on pre_setup
 	var/list/configuration = null
+	/// Antags rolled by rules so far, to keep track of and discourage scaling past a certain ratio of crew/antags especially on lowpop.
+	var/antags_rolled = 0
 
 /datum/game_mode/dynamic/admin_panel()
-	var/list/dat = list("<html><head><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
+	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
 	dat += "Dynamic Mode <a href='?_src_=vars;[HrefToken()];Vars=[REF(src)]'>\[VV\]</A><a href='?src=\ref[src];[HrefToken()]'>\[Refresh\]</A><BR>"
 	dat += "Threat Level: <b>[threat_level]</b><br/>"
 
@@ -155,8 +154,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return
 		if(threatadd > 0)
 			create_threat(threatadd)
+			threat_log += "[worldtime2text()]: [key_name(usr)] increased threat by [threatadd] threat."
 		else
 			spend_threat(-threatadd)
+			threat_log += "[worldtime2text()]: [key_name(usr)] decreased threat by [-threatadd] threat."
 	else if (href_list["injectlate"])
 		latejoin_injection_cooldown = 0
 		forced_injection = TRUE
@@ -188,7 +189,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(threat_level))
 		if(0 to 19)
-			update_playercounts()
 			if(!current_players[CURRENT_LIVING_ANTAGS].len)
 				. += "<b>Peaceful Waypoint</b></center><BR>"
 				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
@@ -280,10 +280,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		generate_threat()
 
 	var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-	latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+	latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
 	var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-	midround_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
+	midround_injection_cooldown = round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time
 	log_game("DYNAMIC: Dynamic Mode initialized with a Threat Level of... [threat_level]!")
 	return TRUE
 
@@ -292,6 +292,13 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		var/json_file = file("[global.config.directory]/dynamic.json")
 		if(fexists(json_file))
 			configuration = json_decode(file2text(json_file))
+			if(configuration["Dynamic"])
+				for(var/variable in configuration["Dynamic"])
+					if(!vars[variable])
+						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
+						continue
+					vars[variable] = configuration["dynamic"][variable]
+
 	for (var/rule in subtypesof(/datum/dynamic_ruleset))
 		var/datum/dynamic_ruleset/ruleset = new rule()
 		// Simple check if the ruleset should be added to the lists.
@@ -312,10 +319,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				continue
 			var/rule_conf = configuration[ruleset.ruletype][ruleset.name]
 			for(var/variable in rule_conf)
-				if(!ruleset.vars[variable])
-					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name]")
+				if(isnull(ruleset.vars[variable]))
+					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
+					continue
 				ruleset.vars[variable] = rule_conf[variable]
-
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -323,8 +330,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			candidates.Add(player)
 	log_game("DYNAMIC: Listing [roundstart_rules.len] round start rulesets, and [candidates.len] players ready.")
 	if (candidates.len <= 0)
+		log_game("DYNAMIC: [candidates.len] candidates.")
 		return TRUE
 	if (roundstart_rules.len <= 0)
+		log_game("DYNAMIC: [roundstart_rules.len] rules.")
 		return TRUE
 
 	if(GLOB.dynamic_forced_roundstart_ruleset.len > 0)
@@ -335,19 +344,14 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/starting_rulesets = ""
 	for (var/datum/dynamic_ruleset/roundstart/DR in executed_rules)
 		starting_rulesets += "[DR.name], "
+	log_game("DYNAMIC: Picked the following roundstart rules: [starting_rulesets]")
 	candidates.Cut()
 	return TRUE
 
 /datum/game_mode/dynamic/post_setup(report)
-	update_playercounts()
-
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
-		if(rule.delay > 0)
-			addtimer(CALLBACK(rule, /datum/dynamic_ruleset/roundstart.proc/execute), rule.delay)
-		else
-			if(!rule.execute())
-				stack_trace("The starting rule \"[rule.name]\" failed to execute.")
+		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
 	..()
 
 /// A simple roundstart proc used when dynamic_forced_roundstart_ruleset has rules in it.
@@ -358,6 +362,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("Drafting players for forced ruleset [rule.name].")
 		log_game("DYNAMIC: Drafting players for forced ruleset [rule.name].")
 		rule.mode = src
+		rule.acceptable(roundstart_pop_ready, threat_level)	// Assigns some vars in the modes, running it here for consistency
 		rule.candidates = candidates.Copy()
 		rule.trim_candidates()
 		if (rule.ready(TRUE))
@@ -376,7 +381,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				drafted_rules[rule] = rule.weight
 
 	var/indice_pop = min(10,round(roundstart_pop_ready/pop_per_requirement)+1)
-	var/extra_rulesets_amount = 0
+	extra_rulesets_amount = 0
 	if (GLOB.dynamic_classic_secret)
 		extra_rulesets_amount = 0
 	else
@@ -388,23 +393,27 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if (threat_level > high_pop_third_rule_req)
 					extra_rulesets_amount++
 		else
-			if (threat_level >= second_rule_req[indice_pop])
+			var/threat_indice = min(10, max(round(threat_level ? threat_level/10 : 1), 1))	// 0-9 threat = 1, 10-19 threat = 2 ...
+			if (threat_level >= second_rule_req[indice_pop] && prob(second_rule_prob[threat_indice]))
 				extra_rulesets_amount++
-				if (threat_level >= third_rule_req[indice_pop])
+				if (threat_level >= third_rule_req[indice_pop] && prob(third_rule_prob[threat_indice]))
 					extra_rulesets_amount++
+	log_game("DYNAMIC: Trying to roll [extra_rulesets_amount + 1] roundstart rulesets. Picking from [drafted_rules.len] eligible rulesets.")
 
 	if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-		if (extra_rulesets_amount > 0) // We've got enough population and threat for a second rulestart rule
+		log_game("DYNAMIC: First ruleset picked successfully. [extra_rulesets_amount] remaining.")
+		while(extra_rulesets_amount > 0 && drafted_rules.len > 0)	// We had enough threat for one or two more rulesets
 			for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
 				if (rule.cost > threat)
 					drafted_rules -= rule
-			if (drafted_rules.len > 0 && picking_roundstart_rule(drafted_rules))
-				if (extra_rulesets_amount > 1) // We've got enough population and threat for a third rulestart rule
-					for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
-						if (rule.cost > threat)
-							drafted_rules -= rule
-					picking_roundstart_rule(drafted_rules)
+			if(drafted_rules.len)
+				picking_roundstart_rule(drafted_rules)
+				extra_rulesets_amount--
+				log_game("DYNAMIC: Additional ruleset picked successfully, now [executed_rules.len] picked. [extra_rulesets_amount] remaining.")
 	else
+		if(threat >= 10)
+			message_admins("DYNAMIC: Picking first roundstart ruleset failed. You should report this.")
+		log_game("DYNAMIC: Picking first roundstart ruleset failed. drafted_rules.len = [drafted_rules.len] and threat = [threat]/[threat_level]")
 		return FALSE
 	return TRUE
 
@@ -412,54 +421,76 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 /datum/game_mode/dynamic/proc/picking_roundstart_rule(list/drafted_rules = list(), forced = FALSE)
 	var/datum/dynamic_ruleset/roundstart/starting_rule = pickweight(drafted_rules)
 	if(!starting_rule)
+		log_game("DYNAMIC: Couldn't pick a starting ruleset. No rulesets available")
 		return FALSE
 
 	if(!forced)
 		if(only_ruleset_executed)
+			log_game("DYNAMIC: Picking [starting_rule.name] failed due to only_ruleset_executed.")
 			return FALSE
 		// Check if a blocking ruleset has been executed.
-		else if(check_blocking(starting_rule.blocking_rules, executed_rules))
+		else if(check_blocking(starting_rule.blocking_rules, executed_rules))	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
 			drafted_rules -= starting_rule
 			if(drafted_rules.len <= 0)
+				log_game("DYNAMIC: Picking [starting_rule.name] failed due to blocking_rules and no more rulesets available. Report this.")
 				return FALSE
 			starting_rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
-		else if(starting_rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+		else if(starting_rule.flags & HIGHLANDER_RULESET)	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= starting_rule
 					if(drafted_rules.len <= 0)
+						log_game("DYNAMIC: Picking [starting_rule.name] failed due to no highlander stacking and no more rulesets available. Report this.")
 						return FALSE
 					starting_rule = pickweight(drafted_rules)
 		// With low pop and high threat there might be rulesets that get executed with no valid candidates.
-		else if(starting_rule.ready())
+		else if(!starting_rule.ready())	// Should already be filtered out, but making sure. Check filtering at end of proc if reported.
 			drafted_rules -= starting_rule
 			if(drafted_rules.len <= 0)
+				log_game("DYNAMIC: Picking [starting_rule.name] failed because there were not enough candidates and no more rulesets available. Report this.")
 				return FALSE
 			starting_rule = pickweight(drafted_rules)
 
-	log_game("DYNAMIC: Picking a ruleset [starting_rule.name]")
+	log_game("DYNAMIC: Picked a ruleset: [starting_rule.name]")
 
 	roundstart_rules -= starting_rule
 	drafted_rules -= starting_rule
 
 	starting_rule.trim_candidates()
-	if (starting_rule.pre_execute())
-		spend_threat(starting_rule.cost)
-		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost]"
+
+	var/added_threat = starting_rule.scale_up(extra_rulesets_amount, threat)
+	if(starting_rule.pre_execute())
+		spend_threat(starting_rule.cost + added_threat)
+		threat_log += "[worldtime2text()]: Roundstart [starting_rule.name] spent [starting_rule.cost + added_threat]. [starting_rule.scaling_cost ? "Scaled up[starting_rule.scaled_times]/3 times." : ""]"
 		if(starting_rule.flags & HIGHLANDER_RULESET)
 			highlander_executed = TRUE
 		else if(starting_rule.flags & ONLY_RULESET)
 			only_ruleset_executed = TRUE
 		executed_rules += starting_rule
-		if (starting_rule.persistent)
-			current_rules += starting_rule
-		for (var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
-			if (!rule.ready())
-				drafted_rules -= rule // And removing rules that are no longer elligible
+		for(var/datum/dynamic_ruleset/roundstart/rule in drafted_rules)
+			if(check_blocking(rule.blocking_rules, executed_rules))
+				drafted_rules -= rule
+			if(highlander_executed && rule.flags & HIGHLANDER_RULESET)
+				drafted_rules -= rule
+			if(!rule.ready())
+				drafted_rules -= rule // And removing rules that are no longer eligible
+
 		return TRUE
 	else
 		stack_trace("The starting rule \"[starting_rule.name]\" failed to pre_execute.")
+	return FALSE
+
+/// Mainly here to facilitate delayed rulesets. All roundstart rulesets are executed with a timered callback to this proc.
+/datum/game_mode/dynamic/proc/execute_roundstart_rule(sent_rule)
+	var/datum/dynamic_ruleset/rule = sent_rule
+	if(rule.execute())
+		if(rule.persistent)
+			current_rules += rule
+		return TRUE
+	rule.clean_up()	// Refund threat, delete teams and so on.
+	executed_rules -= rule
+	stack_trace("The starting rule \"[rule.name]\" failed to execute.")
 	return FALSE
 
 /// Picks a random midround OR latejoin rule from the list given as an argument and executes it.
@@ -480,7 +511,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			rule = pickweight(drafted_rules)
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					drafted_rules -= rule
 					if(drafted_rules.len <= 0)
@@ -490,29 +521,11 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(!rule.repeatable)
 		if(rule.ruletype == "Latejoin")
 			latejoin_rules = remove_from_list(latejoin_rules, rule.type)
-		else if(rule.type == "Midround")
+		else if(rule.ruletype == "Midround")
 			midround_rules = remove_from_list(midround_rules, rule.type)
 
-	if (rule.execute())
-		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
-		spend_threat(rule.cost)
-		threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
-		if(rule.flags & HIGHLANDER_RULESET)
-			highlander_executed = TRUE
-		else if(rule.flags & ONLY_RULESET)
-			only_ruleset_executed = TRUE
-		if(rule.ruletype == "Latejoin")
-			var/mob/M = pick(rule.candidates)
-			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
-		executed_rules += rule
-		rule.candidates.Cut()
-		if (rule.persistent)
-			current_rules += rule
-		return TRUE
-	else
-		stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
-	return FALSE
+	addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_midround_latejoin_rule, rule), rule.delay)
+	return TRUE
 
 /// An experimental proc to allow admins to call rules on the fly or have rules call other rules.
 /datum/game_mode/dynamic/proc/picking_specific_rule(ruletype, forced = FALSE)
@@ -535,11 +548,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			return FALSE
 		// Check if the ruleset is highlander and if a highlander ruleset has been executed
 		else if(new_rule.flags & HIGHLANDER_RULESET)
-			if(threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+			if(threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 				if(highlander_executed)
 					return FALSE
 
-	update_playercounts()
 	if ((forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= threat)))
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
@@ -559,11 +571,31 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			log_game("DYNAMIC: The ruleset [new_rule.name] couldn't be executed due to lack of elligible players.")
 	return FALSE
 
-/datum/game_mode/dynamic/process()
-	if (pop_last_updated < world.time - (60 SECONDS))
-		pop_last_updated = world.time
-		update_playercounts()
+/// Mainly here to facilitate delayed rulesets. All midround/latejoin rulesets are executed with a timered callback to this proc.
+/datum/game_mode/dynamic/proc/execute_midround_latejoin_rule(sent_rule)
+	var/datum/dynamic_ruleset/rule = sent_rule
+	spend_threat(rule.cost)
+	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
+	if (rule.execute())
+		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
+		if(rule.flags & HIGHLANDER_RULESET)
+			highlander_executed = TRUE
+		else if(rule.flags & ONLY_RULESET)
+			only_ruleset_executed = TRUE
+		if(rule.ruletype == "Latejoin")
+			var/mob/M = pick(rule.candidates)
+			message_admins("[key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
+			log_game("DYNAMIC: [key_name(M)] joined the station, and was selected by the [rule.name] ruleset.")
+		executed_rules += rule
+		rule.candidates.Cut()
+		if (rule.persistent)
+			current_rules += rule
+		return TRUE
+	rule.clean_up()
+	stack_trace("The [rule.ruletype] rule \"[rule.name]\" failed to execute.")
+	return FALSE
 
+/datum/game_mode/dynamic/process()
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
@@ -575,7 +607,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		// Somehow it managed to trigger midround multiple times so this was moved here.
 		// There is no way this should be able to trigger an injection twice now.
 		var/midround_injection_cooldown_middle = 0.5*(GLOB.dynamic_midround_delay_max + GLOB.dynamic_midround_delay_min)
-		midround_injection_cooldown = (round(CLAMP(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
+		midround_injection_cooldown = (round(clamp(EXP_DISTRIBUTION(midround_injection_cooldown_middle), GLOB.dynamic_midround_delay_min, GLOB.dynamic_midround_delay_max)) + world.time)
 
 		// Time to inject some threat into the round
 		if(EMERGENCY_ESCAPED_OR_ENDGAMED) // Unless the shuttle is gone
@@ -584,7 +616,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("DYNAMIC: Checking for midround injection.")
 		log_game("DYNAMIC: Checking for midround injection.")
 
-		update_playercounts()
 		if (get_injection_chance())
 			var/list/drafted_rules = list()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
@@ -597,27 +628,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						drafted_rules[rule] = rule.get_weight()
 			if (drafted_rules.len > 0)
 				picking_midround_latejoin_rule(drafted_rules)
-
-/// Updates current_players.
-/datum/game_mode/dynamic/proc/update_playercounts()
-	current_players[CURRENT_LIVING_PLAYERS] = list()
-	current_players[CURRENT_LIVING_ANTAGS] = list()
-	current_players[CURRENT_DEAD_PLAYERS] = list()
-	current_players[CURRENT_OBSERVERS] = list()
-	for (var/mob/M in GLOB.player_list)
-		if (istype(M, /mob/dead/new_player))
-			continue
-		if (M.stat != DEAD)
-			current_players[CURRENT_LIVING_PLAYERS].Add(M)
-			if (M.mind && (M.mind.special_role || M.mind.antag_datums?.len > 0))
-				current_players[CURRENT_LIVING_ANTAGS].Add(M)
-		else
-			if (istype(M,/mob/dead/observer))
-				var/mob/dead/observer/O = M
-				if (O.started_as_observer) // Observers
-					current_players[CURRENT_OBSERVERS].Add(M)
-					continue
-			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
 /// Gets the chance for latejoin and midround injection, the dry_run argument is only used for forced injection.
 /datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
@@ -675,8 +685,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
 		return
 
-	update_playercounts()
-
 	if (forced_latejoin_rule)
 		forced_latejoin_rule.candidates = list(newPlayer)
 		forced_latejoin_rule.trim_candidates()
@@ -692,8 +700,8 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				// Classic secret : only autotraitor/minor roles
 				if (GLOB.dynamic_classic_secret && !((rule.flags & TRAITOR_RULESET) || (rule.flags & MINOR_RULESET)))
 					continue
-				// No stacking : only one round-enter, unless > stacking_limit threat.
-				if (threat < GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
+				// No stacking : only one round-ender, unless threat level > stacking_limit.
+				if (threat_level > GLOB.dynamic_stacking_limit && GLOB.dynamic_no_stacking)
 					if(rule.flags & HIGHLANDER_RULESET && highlander_executed)
 						continue
 
@@ -704,7 +712,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 
 		if (drafted_rules.len > 0 && picking_midround_latejoin_rule(drafted_rules))
 			var/latejoin_injection_cooldown_middle = 0.5*(GLOB.dynamic_latejoin_delay_max + GLOB.dynamic_latejoin_delay_min)
-			latejoin_injection_cooldown = round(CLAMP(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
+			latejoin_injection_cooldown = round(clamp(EXP_DISTRIBUTION(latejoin_injection_cooldown_middle), GLOB.dynamic_latejoin_delay_min, GLOB.dynamic_latejoin_delay_max)) + world.time
 
 /// Refund threat, but no more than threat_level.
 /datum/game_mode/dynamic/proc/refund_threat(regain)

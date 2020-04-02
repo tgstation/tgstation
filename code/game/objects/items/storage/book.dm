@@ -17,11 +17,11 @@
 /obj/item/storage/book/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 
-GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light",  "The God Delusion", "Tome",        "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon","Insulationism"))
+GLOBAL_LIST_INIT(biblenames, list("Bible", "Quran", "Scrapbook", "Burning Bible", "Clown Bible", "Banana Bible", "Creeper Bible", "White Bible", "Holy Light", "The God Delusion", "Tome", "The King in Yellow", "Ithaqua", "Scientology", "Melted Bible", "Necronomicon", "Insulationism", "Guru Granth Sahib"))
 //If you get these two lists not matching in size, there will be runtimes and I will hurt you in ways you couldn't even begin to imagine
 // if your bible has no custom itemstate, use one of the existing ones
-GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon","insuls"))
-GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "kingyellow"))
+GLOBAL_LIST_INIT(biblestates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "insuls", "gurugranthsahib"))
+GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning", "honk1", "honk2", "creeper", "white", "holylight", "atheist", "tome", "kingyellow", "ithaqua", "scientology", "melted", "necronomicon", "kingyellow", "gurugranthsahib"))
 
 /mob/proc/bible_check() //The bible, if held, might protect against certain things
 	var/obj/item/storage/book/bible/B = locate() in src
@@ -55,8 +55,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 	if(!H.can_read(src))
 		return FALSE
 	// If H is the Chaplain, we can set the icon_state of the bible (but only once!)
-	if(!GLOB.bible_icon_state && H.job == "Chaplain")
-		var/dat = "<html><head><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
+	if(!GLOB.bible_icon_state && H.mind.holy_role == HOLY_ROLE_HIGHPRIEST)
+		var/dat = "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Pick Bible Style</title></head><body><center><h2>Pick a bible style</h2></center><table>"
 		for(var/i in 1 to GLOB.biblestates.len)
 			var/icon/bibleicon = icon('icons/obj/storage.dmi', GLOB.biblestates[i])
 			var/nicename = GLOB.biblenames[i]
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		if(icon_state == "honk1" || icon_state == "honk2")
 			var/mob/living/carbon/human/H = usr
 			H.dna.add_mutation(CLOWNMUT)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), SLOT_WEAR_MASK)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/clown_hat(H), ITEM_SLOT_MASK)
 		if(icon_state == "insuls")
 			var/mob/living/carbon/human/H =usr
 			var/obj/item/clothing/gloves/color/fyellow/insuls = new
@@ -91,7 +91,12 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		SSblackbox.record_feedback("text", "religion_book", 1, "[biblename]")
 		usr << browse(null, "window=editicon")
 
-/obj/item/storage/book/bible/proc/bless(mob/living/carbon/human/H, mob/living/user)
+/obj/item/storage/book/bible/proc/bless(mob/living/L, mob/living/user)
+	if(GLOB.religious_sect)
+		return GLOB.religious_sect.sect_bless(L,user)
+	if(!ishuman(L))
+		return
+	var/mob/living/carbon/human/H = L
 	for(var/X in H.bodyparts)
 		var/obj/item/bodypart/BP = X
 		if(BP.status == BODYPART_ROBOTIC)
@@ -125,7 +130,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		return
 
 	var/chaplain = 0
-	if(user.mind && (user.mind.isholy))
+	if(user.mind && (user.mind.holy_role))
 		chaplain = 1
 
 	if(!chaplain)
@@ -143,7 +148,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			to_chat(user, "<span class='warning'>You can't heal yourself!</span>")
 			return
 
-		if(ishuman(M) && prob(60) && bless(M, user))
+		if(prob(60) && bless(M, user))
 			smack = 0
 		else if(iscarbon(M))
 			var/mob/living/carbon/C = M
@@ -167,10 +172,10 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 		return
 	if(isfloorturf(A))
 		to_chat(user, "<span class='notice'>You hit the floor with the bible.</span>")
-		if(user.mind && (user.mind.isholy))
+		if(user.mind && (user.mind.holy_role))
 			for(var/obj/effect/rune/R in orange(2,user))
 				R.invisibility = 0
-	if(user.mind && (user.mind.isholy))
+	if(user?.mind?.holy_role)
 		if(A.reagents && A.reagents.has_reagent(/datum/reagent/water)) // blesses all the water in the holder
 			to_chat(user, "<span class='notice'>You bless [A].</span>")
 			var/water2holy = A.reagents.get_reagent_amount(/datum/reagent/water)
@@ -187,8 +192,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			B.name = name
 			B.icon_state = icon_state
 			B.item_state = item_state
-	if(istype(A, /obj/item/twohanded/required/cult_bastard) && !iscultist(user))
-		var/obj/item/twohanded/required/cult_bastard/sword = A
+	if(istype(A, /obj/item/cult_bastard) && !iscultist(user))
+		var/obj/item/cult_bastard/sword = A
 		to_chat(user, "<span class='notice'>You begin to exorcise [sword].</span>")
 		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
 		if(do_after(user, 40, target = sword))
@@ -202,9 +207,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 				SS.release_shades(user)
 				qdel(SS)
 			new /obj/item/nullrod/claymore(get_turf(sword))
-			user.visible_message("<span class='notice'>[user] has purified [sword]!</span>")
+			user.visible_message("<span class='notice'>[user] purifies [sword]!</span>")
 			qdel(sword)
-
 	else if(istype(A, /obj/item/soulstone) && !iscultist(user))
 		var/obj/item/soulstone/SS = A
 		if(SS.purified)
@@ -224,7 +228,21 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			for(var/mob/living/simple_animal/shade/EX in SS)
 				EX.icon_state = "ghost1"
 				EX.name = "Purified [initial(EX.name)]"
-			user.visible_message("<span class='notice'>[user] has purified [SS]!</span>")
+			user.visible_message("<span class='notice'>[user] purifies [SS]!</span>")
+	else if(istype(A, /obj/item/nullrod/scythe/talking))
+		var/obj/item/nullrod/scythe/talking/sword = A
+		to_chat(user, "<span class='notice'>You begin to exorcise [sword]...</span>")
+		playsound(src,'sound/hallucinations/veryfar_noise.ogg',40,TRUE)
+		if(do_after(user, 40, target = sword))
+			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
+			for(var/mob/living/simple_animal/shade/S in sword.contents)
+				to_chat(S, "<span class='userdanger'>You were destroyed by the exorcism!</span>")
+				qdel(S)
+			sword.possessed = FALSE //allows the chaplain (or someone else) to reroll a new spirit for their sword
+			sword.name = initial(sword.name)
+			REMOVE_TRAIT(sword, TRAIT_NODROP, HAND_REPLACEMENT_TRAIT) //in case the "sword" is a possessed dummy
+			user.visible_message("<span class='notice'>[user] exorcises [sword]!</span>", \
+								"<span class='notice'>You successfully exorcise [sword]!</span>")
 
 /obj/item/storage/book/bible/booze
 	desc = "To be applied to the head repeatedly."
@@ -247,7 +265,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 
 /obj/item/storage/book/bible/syndicate/attack_self(mob/living/carbon/human/H)
 	if (uses)
-		H.mind.isholy = TRUE
+		H.mind.holy_role = HOLY_ROLE_PRIEST
 		uses -= 1
 		to_chat(H, "<span class='userdanger'>You try to open the book AND IT BITES YOU!</span>")
 		playsound(src.loc, 'sound/effects/snap.ogg', 50, TRUE)

@@ -9,6 +9,7 @@
 					/obj/item/reagent_containers/syringe = 12,
 					/obj/item/reagent_containers/dropper = 3,
 					/obj/item/healthanalyzer = 4,
+					/obj/item/wrench/medical = 1,
 					/obj/item/reagent_containers/pill/patch/libital = 5,
 					/obj/item/reagent_containers/pill/patch/aiuri = 5,
 					/obj/item/reagent_containers/syringe/convermol = 2,
@@ -23,25 +24,28 @@
 					/obj/item/reagent_containers/syringe/antiviral = 6,
 					/obj/item/reagent_containers/medigel/libital = 2,
 					/obj/item/reagent_containers/medigel/aiuri = 2,
-					/obj/item/reagent_containers/medigel/sterilizine = 1,
-					/obj/item/sensor_device = 2,
-					/obj/item/pinpointer/crew = 2)
+					/obj/item/reagent_containers/medigel/sterilizine = 1)
 	contraband = list(/obj/item/reagent_containers/pill/tox = 3,
-		              /obj/item/reagent_containers/pill/morphine = 4,
-		              /obj/item/reagent_containers/pill/multiver = 6,
-		              /obj/item/storage/box/hug/medical = 1)
+						/obj/item/reagent_containers/pill/morphine = 4,
+						/obj/item/reagent_containers/pill/multiver = 6,
+						/obj/item/storage/box/gum/happiness = 3,
+						/obj/item/storage/box/hug/medical = 1)
 	premium = list(/obj/item/reagent_containers/medigel/instabitaluri = 2,
-		           /obj/item/storage/pill_bottle/psicodine = 2,
-		           /obj/item/reagent_containers/hypospray/medipen = 3,
-		           /obj/item/storage/belt/medical = 3,
-		           /obj/item/wrench/medical = 1,
-		           /obj/item/storage/firstaid/advanced = 2)
+					/obj/item/storage/pill_bottle/psicodine = 2,
+					/obj/item/reagent_containers/hypospray/medipen = 3,
+					/obj/item/storage/belt/medical = 3,
+					/obj/item/sensor_device = 2,
+					/obj/item/pinpointer/crew = 2,
+					/obj/item/storage/firstaid/advanced = 2,
+					/obj/item/shears = 1,
+					/obj/item/plunger/reinforced = 2)
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 	refill_canister = /obj/item/vending_refill/medical
-	default_price = 25
-	extra_price = 100
+	default_price = 250
+	extra_price = 500
 	payment_department = ACCOUNT_MED
+	light_mask = "med-light-mask"
 
 /obj/item/vending_refill/medical
 	machine_name = "NanoMed Plus"

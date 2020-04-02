@@ -3,6 +3,8 @@
 	show_in_antagpanel = TRUE
 	antagpanel_category = "Other"
 	job_rank = ROLE_OBSESSED
+	antag_hud_type = ANTAG_HUD_OBSESSED
+	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"
 	silent = TRUE //not actually silent, because greet will be called by the trauma anyway.
@@ -37,11 +39,11 @@
 
 /datum/antagonist/obsessed/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_obsession_icons_added(M)
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 
 /datum/antagonist/obsessed/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_obsession_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/obsessed/proc/forge_objectives(var/datum/mind/obsessionmind)
 	var/list/objectives_left = list("spendtime", "polaroid", "hug")
@@ -171,8 +173,8 @@
 		chosen_department = "science"
 	if(oldmind.assigned_role in GLOB.supply_positions)
 		chosen_department = "supply"
-	if(oldmind.assigned_role in GLOB.civilian_positions)
-		chosen_department = "civilian"
+	if(oldmind.assigned_role in GLOB.service_positions)
+		chosen_department = "service"
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
 		if(!H.mind)
 			continue
@@ -190,8 +192,8 @@
 			their_chosen_department = "science"
 		if(H.mind.assigned_role in GLOB.supply_positions)
 			their_chosen_department = "supply"
-		if(H.mind.assigned_role in GLOB.civilian_positions)
-			their_chosen_department = "civilian"
+		if(H.mind.assigned_role in GLOB.service_positions)
+			their_chosen_department = "service"
 		if(their_chosen_department != chosen_department)
 			continue
 		viable_coworkers += H.mind
@@ -273,13 +275,3 @@
 		explanation_text = "Steal [target.name]'s family heirloom, [steal_target] they cherish."
 	else
 		explanation_text = "Free Objective"
-
-/datum/antagonist/obsessed/proc/update_obsession_icons_added(var/mob/living/carbon/human/obsessed)
-	var/datum/atom_hud/antag/creephud = GLOB.huds[ANTAG_HUD_OBSESSED]
-	creephud.join_hud(obsessed)
-	set_antag_hud(obsessed, "obsessed")
-
-/datum/antagonist/obsessed/proc/update_obsession_icons_removed(var/mob/living/carbon/human/obsessed)
-	var/datum/atom_hud/antag/creephud = GLOB.huds[ANTAG_HUD_OBSESSED]
-	creephud.leave_hud(obsessed)
-	set_antag_hud(obsessed, null)

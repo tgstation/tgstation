@@ -22,7 +22,7 @@
 
 	if(turfs.len) //Pick a turf to spawn at if we can
 		var/turf/T = pick(turfs)
-		new /datum/spacevine_controller(T, event = src) //spawn a controller at turf
+		new /datum/spacevine_controller(T, list(pick(subtypesof(/datum/spacevine_mutation))), rand(10,100), rand(5,10), src) //spawn a controller at turf with randomized stats and a single random mutation
 
 
 /datum/spacevine_mutation
@@ -227,13 +227,13 @@
 	quality = NEGATIVE
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
-	if(prob(severity) && istype(crosser) && !isvineimmune(holder))
+	if(prob(severity) && istype(crosser) && !isvineimmune(crosser))
 		var/mob/living/M = crosser
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
 
 /datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(prob(severity) && istype(hitter) && !isvineimmune(holder))
+	if(prob(severity) && istype(hitter) && !isvineimmune(hitter))
 		var/mob/living/M = hitter
 		M.adjustBruteLoss(5)
 		to_chat(M, "<span class='alert'>You cut yourself on the thorny vines.</span>")
@@ -251,7 +251,7 @@
 	holder.obj_integrity = holder.max_integrity
 
 /datum/spacevine_mutation/woodening/on_hit(obj/structure/spacevine/holder, mob/living/hitter, obj/item/I, expected_damage)
-	if(I.get_sharpness())
+	if(I?.get_sharpness())
 		. = expected_damage * 0.5
 	else
 		. = expected_damage
@@ -350,10 +350,12 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/spacevine/Crossed(mob/crosser)
-	if(isliving(crosser))
-		for(var/datum/spacevine_mutation/SM in mutations)
-			SM.on_cross(src, crosser)
+/obj/structure/spacevine/Crossed(atom/movable/AM)
+	. = ..()
+	if(!isliving(AM))
+		return
+	for(var/datum/spacevine_mutation/SM in mutations)
+		SM.on_cross(src, AM)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/spacevine/attack_hand(mob/user)
@@ -418,7 +420,6 @@
 	if(muts && muts.len)
 		for(var/datum/spacevine_mutation/M in muts)
 			M.add_mutation_to_vinepiece(SV)
-		return
 	if(parent)
 		SV.mutations |= parent.mutations
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
@@ -533,15 +534,14 @@
 	if(!override)
 		qdel(src)
 
-/obj/structure/spacevine/CanPass(atom/movable/mover, turf/target)
+/obj/structure/spacevine/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(isvineimmune(mover))
-		. = TRUE
-	else
-		. = ..()
+		return TRUE
 
 /proc/isvineimmune(atom/A)
-	. = FALSE
 	if(isliving(A))
 		var/mob/living/M = A
 		if(("vines" in M.faction) || ("plants" in M.faction))
-			. = TRUE
+			return TRUE
+	return FALSE

@@ -32,6 +32,7 @@
 	move_force = MOVE_FORCE_VERY_STRONG
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
+	gender = MALE//lavaland elite goliath says that i'''' 't s female and i ''t s stronger because of sexual dimorphism, so normal goliaths should be male
 	var/pre_attack = 0
 	var/pre_attack_icon = "Goliath_preattack"
 	loot = list(/obj/item/stack/sheet/animalhide/goliath_hide)
@@ -49,9 +50,11 @@
 		return
 	icon_state = pre_attack_icon
 
-/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = 0, admin_revive = 0)
+/mob/living/simple_animal/hostile/asteroid/goliath/revive(full_heal = FALSE, admin_revive = FALSE)//who the fuck anchors mobs
 	if(..())
-		anchored = TRUE
+		move_force = MOVE_FORCE_VERY_STRONG
+		move_resist = MOVE_FORCE_VERY_STRONG
+		pull_force = MOVE_FORCE_VERY_STRONG
 		. = 1
 
 /mob/living/simple_animal/hostile/asteroid/goliath/death(gibbed)
@@ -99,6 +102,32 @@
 	loot = list()
 	stat_attack = UNCONSCIOUS
 	robust_searching = 1
+	food_type = list(/obj/item/reagent_containers/food/snacks/customizable/salad/ashsalad, /obj/item/reagent_containers/food/snacks/customizable/soup/ashsoup, /obj/item/reagent_containers/food/snacks/grown/ash_flora)//use lavaland plants to feed the lavaland monster
+	tame_chance = 10
+	bonus_tame_chance = 5
+	var/saddled = FALSE
+
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/saddle) && !saddled)
+		if(tame && do_after(user,55,target=src))
+			user.visible_message("<span class='notice'>You manage to put [O] on [src], you can now ride [p_them()].</span>")
+			qdel(O)
+			saddled = TRUE
+			can_buckle = TRUE
+			buckle_lying = FALSE
+			add_overlay("goliath_saddled")
+			var/datum/component/riding/D = LoadComponent(/datum/component/riding)
+			D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
+			D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
+			D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
+			D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
+			D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+			D.keytype = /obj/item/key/lasso
+			D.drive_verb = "ride"
+		else
+			user.visible_message("<span class='warning'>[src] is rocking around! You can't put the saddle on!</span>")
+		return
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/goliath/beast/random/Initialize()
 	. = ..()
@@ -202,3 +231,9 @@
 	icon_state = "Goliath_tentacle_retract"
 	deltimer(timerid)
 	timerid = QDEL_IN(src, 7)
+
+/obj/item/saddle
+	name = "saddle"
+	desc = "This saddle will solve all your problems with being killed by lava beasts!"
+	icon = 'icons/obj/items_and_weapons.dmi'
+	icon_state = "saddle"

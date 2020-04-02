@@ -87,7 +87,6 @@
 "am" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/freezer/surplus_limbs,
-/obj/item/reagent_containers/glass/beaker/instabitaluri,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/shuttle/abandoned/medbay)
@@ -336,12 +335,12 @@
 	locked = 0;
 	name = "fridge"
 	},
-/obj/item/reagent_containers/glass/waterbottle{
+/obj/item/reagent_containers/food/drinks/waterbottle{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle,
-/obj/item/reagent_containers/glass/waterbottle{
+/obj/item/reagent_containers/food/drinks/waterbottle,
+/obj/item/reagent_containers/food/drinks/waterbottle{
 	pixel_x = 3;
 	pixel_y = -3
 	},
@@ -529,25 +528,25 @@
 /obj/structure/closet/crate{
 	name = "food crate"
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = -5;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 2;
 	pixel_y = 3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = -2
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 1;
 	pixel_y = -3
 	},
-/obj/item/reagent_containers/glass/waterbottle/large{
+/obj/item/reagent_containers/food/drinks/waterbottle/large{
 	pixel_x = 8;
 	pixel_y = -3
 	},
@@ -1555,7 +1554,7 @@
 	pixel_y = 16
 	},
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},

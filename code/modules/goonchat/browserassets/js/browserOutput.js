@@ -29,7 +29,7 @@ var opts = {
 	'scrollSnapTolerance': 10, //If within x pixels of bottom
 	'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
 	'imageRetryDelay': 50, //how long between attempts to reload images (in ms)
-	'imageRetryLimit': 50, //how many attempts should we make? 
+	'imageRetryLimit': 50, //how many attempts should we make?
 	'popups': 0, //Amount of popups opened ever
 	'wasd': false, //Is the user in wasd mode?
 	'priorChatHeight': 0, //Thing for height-resizing detection
@@ -67,7 +67,7 @@ var opts = {
 	'updatedVolume': 0, //The volume level that is sent to the server
 	'musicStartAt': 0, //The position the music starts playing
 	'musicEndAt': 0, //The position the music... stops playing... if null, doesn't apply (so the music runs through)
-	
+
 	'defaultMusicVolume': 25,
 
 	'messageCombining': true,
@@ -77,12 +77,6 @@ var replaceRegexes = {};
 
 function clamp(val, min, max) {
 	return Math.max(min, Math.min(val, max))
-}
-
-function outerHTML(el) {
-    var wrap = document.createElement('div');
-    wrap.appendChild(el.cloneNode(true));
-    return wrap.innerHTML;
 }
 
 //Polyfill for fucking date now because of course IE8 and below don't support it
@@ -161,7 +155,7 @@ function byondDecode(message) {
 	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
 	// Marvelous.
 	message = message.replace(/\+/g, "%20");
-	try { 
+	try {
 		// This is a workaround for the above not always working when BYOND's shitty url encoding breaks. (byond bug id:2399401)
 		if (decodeURIComponent) {
 			message = decodeURIComponent(message);
@@ -183,57 +177,62 @@ function replaceRegex() {
 	$(this).removeAttr('replaceRegex');
 }
 
-//Actually turns the highlight term match into appropriate html
-function addHighlightMarkup(match) {
+// Get a highlight markup span
+function createHighlightMarkup() {
 	var extra = '';
 	if (opts.highlightColor) {
-		extra += ' style="background-color: '+opts.highlightColor+'"';
+		extra += ' style="background-color: ' + opts.highlightColor + '"';
 	}
-	return '<span class="highlight"'+extra+'>'+match+'</span>';
+	return '<span class="highlight"' + extra + '></span>';
 }
 
-//Highlights words based on user settings
+// Get all child text nodes that match a regex pattern
+function getTextNodes(elem, pattern) {
+	var result = $([]);
+	$(elem).contents().each(function(idx, child) {
+		if (child.nodeType === 3 && /\S/.test(child.nodeValue) && pattern.test(child.nodeValue)) {
+			result = result.add(child);
+		}
+		else {
+			result = result.add(getTextNodes(child, pattern));
+		}
+	});
+	return result;
+}
+
+// Highlight all text terms matching the registered regex patterns
 function highlightTerms(el) {
-	if (el.children.length > 0) {
-		for(var h = 0; h < el.children.length; h++){
-			highlightTerms(el.children[h]);
-		}
-	}
+	var pattern = new RegExp("(" + opts.highlightTerms.join('|') + ")", 'gi');
+	var nodes = getTextNodes(el, pattern);
 
-	var hasTextNode = false;
-	for (var node = 0; node < el.childNodes.length; node++)
-	{
-		if (el.childNodes[node].nodeType === 3)
-		{
-			hasTextNode = true;
-			break;
-		}
-	}
-
-	if (hasTextNode) { //If element actually has text
-		var newText = '';
-		for (var c = 0; c < el.childNodes.length; c++) { //Each child element
-			if (el.childNodes[c].nodeType === 3) { //Is it text only?
-				var words = el.childNodes[c].data.split(' ');
-				for (var w = 0; w < words.length; w++) { //Each word in the text
-					var newWord = null;
-					for (var i = 0; i < opts.highlightTerms.length; i++) { //Each highlight term
-						if (opts.highlightTerms[i] && words[w].toLowerCase().indexOf(opts.highlightTerms[i].toLowerCase()) > -1) { //If a match is found
-							newWord = words[w].replace("<", "&lt;").replace(new RegExp(opts.highlightTerms[i], 'gi'), addHighlightMarkup);
-							break;
-						}
-						if (window.console)
-							console.log(newWord)
-					}
-					newText += newWord || words[w].replace("<", "&lt;");
-					newText += w >= words.length ? '' : ' ';
-				}
-			} else { //Every other type of element
-				newText += outerHTML(el.childNodes[c]);
+	nodes.each(function (idx, node) {
+		var content = $(node).text();
+		var parent = $(node).parent();
+		var pre = $(node.previousSibling);
+		$(node).remove();
+		content.split(pattern).forEach(function (chunk) {
+			// Get our highlighted span/text node
+			var toInsert = null;
+			if (pattern.test(chunk)) {
+				var tmpElem = $(createHighlightMarkup());
+				tmpElem.text(chunk);
+				toInsert = tmpElem;
 			}
-		}
-		el.innerHTML = newText;
-	}
+			else {
+				toInsert = document.createTextNode(chunk);
+			}
+
+			// Insert back into our element
+			if (pre.length == 0) {
+				var result = parent.prepend(toInsert);
+				pre = $(result[0].firstChild);
+			}
+			else {
+				pre.after(toInsert);
+				pre = $(pre[0].nextSibling);
+			}
+		});
+	});
 }
 
 function iconError(E) {
@@ -421,7 +420,7 @@ function output(message, flag) {
 		//Actually do the snap
 		//Stuff we can do after the message shows can go here, in the interests of responsiveness
 		if (opts.highlightTerms && opts.highlightTerms.length > 0) {
-			highlightTerms(entry);
+			highlightTerms($(entry));
 		}
 	}
 
@@ -494,8 +493,8 @@ function handleClientData(ckey, ip, compid) {
 				return; //Record already exists
 			}
 		}
-
-		if (opts.clientData.length >= opts.clientDataLimit) {
+		//Lets make sure we obey our limit (can connect from server with higher limit)
+		while (opts.clientData.length >= opts.clientDataLimit) {
 			opts.clientData.shift();
 		}
 	} else {
@@ -756,15 +755,11 @@ $(function() {
 		internalOutput('<span class="internal boldnshit">Loaded ping display of: '+(opts.pingDisabled ? 'hidden' : 'visible')+'</span>', 'internal');
 	}
 	if (savedConfig.shighlightTerms) {
-		var savedTerms = $.parseJSON(savedConfig.shighlightTerms);
-		var actualTerms = '';
-		for (var i = 0; i < savedTerms.length; i++) {
-			if (savedTerms[i]) {
-				actualTerms += savedTerms[i] + ', ';
-			}
-		}
+		var savedTerms = $.parseJSON(savedConfig.shighlightTerms).filter(function (entry) {
+			return entry !== null && /\S/.test(entry);
+		});
+		var actualTerms = savedTerms.length != 0 ? savedTerms.join(', ') : null;
 		if (actualTerms) {
-			actualTerms = actualTerms.substring(0, actualTerms.length - 2);
 			internalOutput('<span class="internal boldnshit">Loaded highlight strings of: ' + actualTerms+'</span>', 'internal');
 			opts.highlightTerms = savedTerms;
 		}
@@ -784,7 +779,7 @@ $(function() {
 	else{
 		$('#adminMusic').prop('volume', opts.defaultMusicVolume / 100);
 	}
-	
+
 	if (savedConfig.smessagecombining) {
 		if (savedConfig.smessagecombining == 'false') {
 			opts.messageCombining = false;
@@ -1066,20 +1061,12 @@ $(function() {
 	$('body').on('submit', '#highlightTermForm', function(e) {
 		e.preventDefault();
 
-		var count = 0;
-		while (count < opts.highlightLimit) {
+		opts.highlightTerms = [];
+		for (var count = 0; count < opts.highlightLimit; count++) {
 			var term = $('#highlightTermInput'+count).val();
-			if (term) {
-				term = term.trim();
-				if (term === '') {
-					opts.highlightTerms[count] = null;
-				} else {
-					opts.highlightTerms[count] = term.toLowerCase();
-				}
-			} else {
-				opts.highlightTerms[count] = null;
+			if (term !== null && /\S/.test(term)) {
+				opts.highlightTerms.push(term.trim().toLowerCase());
 			}
-			count++;
 		}
 
 		var color = $('#highlightColor').val();
@@ -1100,7 +1087,7 @@ $(function() {
 		$messages.empty();
 		opts.messageCount = 0;
 	});
-	
+
 	$('#musicVolumeSpan').hover(function() {
 		$('#musicVolumeText').addClass('hidden');
 		$('#musicVolume').removeClass('hidden');
@@ -1127,9 +1114,9 @@ $(function() {
 	});
 
 	$('img.icon').error(iconError);
-	
-	
-		
+
+
+
 
 	/*****************************************
 	*

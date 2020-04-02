@@ -59,6 +59,42 @@
 	lose_text = "<span class='danger'>You feel isolated from others.</span>"
 	medical_record_text = "Patient is highly perceptive of and sensitive to social cues, or may possibly have ESP. Further testing needed."
 
+datum/quirk/fan_clown
+	name = "Clown Fan"
+	desc = "You enjoy clown antics and get a mood boost from wearing your clown pin."
+	value = 1
+	mob_trait = TRAIT_FAN_CLOWN
+	gain_text = "<span class='notice'>You are a big fan of clowns.</span>"
+	lose_text = "<span class='danger'>The clown doesn't seem so great.</span>"
+	medical_record_text = "Patient reports being a big fan of clowns."
+
+/datum/quirk/fan_clown/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/accessory/fan_clown_pin/B = new(get_turf(H))
+	var/list/slots = list (
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
+	)
+	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
+
+datum/quirk/fan_mime
+	name = "Mime Fan"
+	desc = "You enjoy mime antics and get a mood boost from wearing your mime pin."
+	value = 1
+	mob_trait = TRAIT_FAN_MIME
+	gain_text = "<span class='notice'>You are a big fan of the Mime.</span>"
+	lose_text = "<span class='danger'>The mime doesn't seem so great.</span>"
+	medical_record_text = "Patient reports being a big fan of mimes."
+
+/datum/quirk/fan_mime/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/clothing/accessory/fan_mime_pin/B = new(get_turf(H))
+	var/list/slots = list (
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
+	)
+	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
+
 /datum/quirk/freerunning
 	name = "Freerunning"
 	desc = "You're great at quick moves! You can climb tables more quickly."
@@ -92,12 +128,18 @@
 
 /datum/quirk/light_step
 	name = "Light Step"
-	desc = "You walk with a gentle step; stepping on sharp objects is quieter, less painful and you won't leave footprints behind you."
+	desc = "You walk with a gentle step; footsteps and stepping on sharp objects is quieter and less painful."
 	value = 1
 	mob_trait = TRAIT_LIGHT_STEP
 	gain_text = "<span class='notice'>You walk with a little more litheness.</span>"
 	lose_text = "<span class='danger'>You start tromping around like a barbarian.</span>"
 	medical_record_text = "Patient's dexterity belies a strong capacity for stealth."
+
+/datum/quirk/light_step/on_spawn()
+	var/datum/component/footstep/C = quirk_holder.GetComponent(/datum/component/footstep)
+	if(C)
+		C.volume *= 0.6
+		C.e_range -= 2
 
 /datum/quirk/musician
 	name = "Musician"
@@ -112,8 +154,8 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/choice_beacon/music/B = new(get_turf(H))
 	var/list/slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_HANDS,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
 
@@ -146,8 +188,8 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/storage/photo_album/photo_album = new(get_turf(H))
 	var/list/album_slots = list (
-		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_HANDS
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS
 	)
 	H.equip_in_one_of_slots(photo_album, album_slots , qdel_on_fail = TRUE)
 	photo_album.persistence_id = "personal_[H.mind.key]" // this is a persistent album, the ID is tied to the account's key to avoid tampering
@@ -155,11 +197,11 @@
 	photo_album.name = "[H.real_name]'s photo album"
 	var/obj/item/camera/camera = new(get_turf(H))
 	var/list/camera_slots = list (
-		"neck" = SLOT_NECK,
-		"left pocket" = SLOT_L_STORE,
-		"right pocket" = SLOT_R_STORE,
-		"backpack" = SLOT_IN_BACKPACK,
-		"hands" = SLOT_HANDS
+		"neck" = ITEM_SLOT_NECK,
+		"left pocket" = ITEM_SLOT_LPOCKET,
+		"right pocket" = ITEM_SLOT_RPOCKET,
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"hands" = ITEM_SLOT_HANDS
 	)
 	H.equip_in_one_of_slots(camera, camera_slots , qdel_on_fail = TRUE)
 	H.regenerate_icons()
@@ -189,8 +231,8 @@
 
 /datum/quirk/spiritual/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	H.equip_to_slot_or_del(new /obj/item/storage/fancy/candle_box(H), SLOT_IN_BACKPACK)
-	H.equip_to_slot_or_del(new /obj/item/storage/box/matches(H), SLOT_IN_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/fancy/candle_box(H), ITEM_SLOT_BACKPACK)
+	H.equip_to_slot_or_del(new /obj/item/storage/box/matches(H), ITEM_SLOT_BACKPACK)
 
 /datum/quirk/tagger
 	name = "Tagger"
@@ -205,7 +247,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/toy/crayon/spraycan/spraycan = new(get_turf(H))
 	H.put_in_hands(spraycan)
-	H.equip_to_slot(spraycan, SLOT_IN_BACKPACK)
+	H.equip_to_slot(spraycan, ITEM_SLOT_BACKPACK)
 	H.regenerate_icons()
 
 /datum/quirk/voracious

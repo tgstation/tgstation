@@ -79,7 +79,7 @@
 
 /obj/machinery/computer/holodeck/power_change()
 	. = ..()
-	toggle_power(!stat)
+	toggle_power(!machine_stat)
 
 /obj/machinery/computer/holodeck/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -109,7 +109,7 @@
 			if(!ispath(program_to_load))
 				return FALSE
 			var/valid = FALSE
-			var/list/checked = program_cache
+			var/list/checked = program_cache.Copy()
 			if(obj_flags & EMAGGED)
 				checked |= emag_programs
 			for(var/prog in checked)
@@ -124,10 +124,11 @@
 			if(A)
 				load_program(A)
 		if("safety")
-			obj_flags ^= EMAGGED
-			if((obj_flags & EMAGGED) && program && emag_programs[program.name])
+			if((obj_flags & EMAGGED) && program)
 				emergency_shutdown()
 			nerf(obj_flags & EMAGGED)
+			obj_flags ^= EMAGGED
+			say("Safeties restored. Restarting...")
 
 /obj/machinery/computer/holodeck/process()
 	if(damaged && prob(10))
@@ -285,7 +286,7 @@
 
 /obj/machinery/computer/holodeck/proc/derez(obj/O, silent = TRUE, forced = FALSE)
 	// Emagging a machine creates an anomaly in the derez systems.
-	if(O && (obj_flags & EMAGGED) && !stat && !forced)
+	if(O && (obj_flags & EMAGGED) && !machine_stat && !forced)
 		if((ismob(O) || ismob(O.loc)) && prob(50))
 			addtimer(CALLBACK(src, .proc/derez, O, silent), 50) // may last a disturbingly long time
 			return

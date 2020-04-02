@@ -29,6 +29,14 @@
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload)
 	RefreshParts()
 
+/obj/machinery/rnd/production/Destroy()
+	materials = null
+	cached_designs = null
+	matching_designs = null
+	QDEL_NULL(stored_research)
+	host_research = null
+	return ..()
+
 /obj/machinery/rnd/production/proc/update_research()
 	host_research.copy_research_to(stored_research, TRUE)
 	update_designs()
@@ -51,10 +59,6 @@
 	popup.set_content(generate_ui())
 	popup.open()
 
-/obj/machinery/rnd/production/Destroy()
-	QDEL_NULL(stored_research)
-	return ..()
-
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
 	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
@@ -69,7 +73,7 @@
 		materials.set_local_size(total_storage)
 	var/total_rating = 1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating = CLAMP(total_rating - (M.rating * 0.1), 0, 1)
+		total_rating = clamp(total_rating - (M.rating * 0.1), 0, 1)
 	if(total_rating == 0)
 		efficiency_coeff = INFINITY
 	else
@@ -132,7 +136,7 @@
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	var/power = 1000
-	amount = CLAMP(amount, 1, 50)
+	amount = clamp(amount, 1, 50)
 	for(var/M in D.materials)
 		power += round(D.materials[M] * amount / 35)
 	power = min(3000, power)

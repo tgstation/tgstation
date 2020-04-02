@@ -5,7 +5,7 @@
 /datum/game_mode/traitor/bros
 	name = "traitor+brothers"
 	config_tag = "traitorbro"
-	restricted_jobs = list("AI", "Cyborg")
+	restricted_jobs = list("Prisoner","AI", "Cyborg")
 
 	announce_span = "danger"
 	announce_text = "There are Syndicate agents and Blood Brothers on the station!\n\
@@ -65,13 +65,3 @@
 
 /datum/game_mode/traitor/bros/generate_report()
 	return "It's Syndicate recruiting season. Be alert for potential Syndicate infiltrators, but also watch out for disgruntled employees trying to defect. Unlike Nanotrasen, the Syndicate prides itself in teamwork and will only recruit pairs that share a brotherly trust."
-
-/datum/game_mode/proc/update_brother_icons_added(datum/mind/brother_mind)
-	var/datum/atom_hud/antag/brotherhud = GLOB.huds[ANTAG_HUD_BROTHER]
-	brotherhud.join_hud(brother_mind.current)
-	set_antag_hud(brother_mind.current, "brother")
-
-/datum/game_mode/proc/update_brother_icons_removed(datum/mind/brother_mind)
-	var/datum/atom_hud/antag/brotherhud = GLOB.huds[ANTAG_HUD_BROTHER]
-	brotherhud.leave_hud(brother_mind.current)
-	set_antag_hud(brother_mind.current, null)

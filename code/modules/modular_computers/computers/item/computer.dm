@@ -26,6 +26,7 @@
 	var/icon_state_unpowered = null							// Icon state when the computer is turned off.
 	var/icon_state_powered = null							// Icon state when the computer is turned on.
 	var/icon_state_menu = "menu"							// Icon state overlay when the computer is turned on, but no program is loaded that would override the screen.
+	var/display_overlays = TRUE								// If FALSE, don't draw overlays on this device at all
 	var/max_hardware_size = 0								// Maximal hardware w_class. Tablets/PDAs have 1, laptops 2, consoles 4.
 	var/steel_sheet_cost = 5								// Amount of steel sheets refunded when disassembling an empty frame of this computer.
 
@@ -157,6 +158,21 @@
 		return card_slot.GetID()
 	return ..()
 
+/obj/item/modular_computer/RemoveID()
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(!card_slot)
+		return
+	return card_slot.RemoveID()
+
+/obj/item/modular_computer/InsertID(obj/item/inserting_item)
+	var/obj/item/computer_hardware/card_slot/card_slot = all_components[MC_CARD]
+	if(!card_slot)
+		return FALSE
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return FALSE
+	return card_slot.try_insert(inserting_id)
+
 /obj/item/modular_computer/MouseDrop(obj/over_object, src_location, over_location)
 	var/mob/M = usr
 	if((!istype(over_object, /obj/screen)) && usr.canUseTopic(src, BE_CLOSE))
@@ -195,20 +211,25 @@
 
 	. += get_modular_computer_parts_examine(user)
 
-/obj/item/modular_computer/update_icon()
-	cut_overlays()
+/obj/item/modular_computer/update_icon_state()
 	if(!enabled)
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
+
+/obj/item/modular_computer/update_overlays()
+	. = ..()
+	if(!display_overlays)
+		return
+	if(enabled)
 		if(active_program)
-			add_overlay(active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu)
+			. += active_program.program_icon_state ? active_program.program_icon_state : icon_state_menu
 		else
-			add_overlay(icon_state_menu)
+			. += icon_state_menu
 
 	if(obj_integrity <= integrity_failure * max_integrity)
-		add_overlay("bsod")
-		add_overlay("broken")
+		. += "bsod"
+		. += "broken"
 
 
 // On-click handling. Turns on the computer if it's off and opens the GUI.
@@ -303,7 +324,7 @@
 				data["PC_batteryicon"] = "batt_20.gif"
 			else
 				data["PC_batteryicon"] = "batt_5.gif"
-		data["PC_batterypercent"] = "[round(battery_module.battery.percent())] %"
+		data["PC_batterypercent"] = "[round(battery_module.battery.percent())]%"
 		data["PC_showbatteryicon"] = 1
 	else
 		data["PC_batteryicon"] = "batt_5.gif"
@@ -392,7 +413,7 @@
 			to_chat(user, "<span class='warning'>Remove all components from \the [src] before disassembling it.</span>")
 			return
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), steel_sheet_cost )
-		physical.visible_message("<span class='notice'>\The [src] has been disassembled by [user].</span>")
+		physical.visible_message("<span class='notice'>\The [src] is disassembled by [user].</span>")
 		relay_qdel()
 		qdel(src)
 		return
@@ -420,7 +441,7 @@
 			var/obj/item/computer_hardware/H = all_components[h]
 			component_names.Add(H.name)
 
-		var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in component_names
+		var/choice = input(user, "Which component do you want to uninstall?", "Computer maintenance", null) as null|anything in sortList(component_names)
 
 		if(!choice)
 			return

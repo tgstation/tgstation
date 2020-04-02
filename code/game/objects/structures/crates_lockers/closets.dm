@@ -46,6 +46,11 @@
 	update_icon()
 	PopulateContents()
 
+	RegisterSignal(src, COMSIG_ATOM_CANREACH, .proc/canreach_react)
+
+/obj/structure/closet/proc/canreach_react(datum/source, list/next)
+	return COMPONENT_BLOCK_REACH //closed block, open have nothing inside.
+
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
 	return
@@ -55,27 +60,40 @@
 	return ..()
 
 /obj/structure/closet/update_icon()
-	cut_overlays()
+	. = ..()
 	if(!opened)
 		layer = OBJ_LAYER
-		if(icon_door)
-			add_overlay("[icon_door]_door")
-		else
-			add_overlay("[icon_state]_door")
-		if(welded)
-			add_overlay(icon_welded)
-		if(secure && !broken)
-			if(locked)
-				add_overlay("locked")
-			else
-				add_overlay("unlocked")
-
 	else
 		layer = BELOW_OBJ_LAYER
-		if(icon_door_override)
-			add_overlay("[icon_door]_open")
+
+/obj/structure/closet/update_overlays()
+	. = ..()
+	closet_update_overlays(.)
+
+/obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
+	. = new_overlays
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
+	if(!opened)
+		if(icon_door)
+			. += "[icon_door]_door"
 		else
-			add_overlay("[icon_state]_open")
+			. += "[icon_state]_door"
+		if(welded)
+			. += icon_welded
+		if(secure && !broken)
+			//Overlay is similar enough for both that we can use the same mask for both
+			luminosity = 1
+			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
+			if(locked)
+				. += "locked"
+			else
+				. += "unlocked"
+	else
+		if(icon_door_override)
+			. += "[icon_door]_open"
+		else
+			. += "[icon_state]_open"
 
 /obj/structure/closet/examine(mob/user)
 	. = ..()
@@ -92,10 +110,10 @@
 		if(HAS_TRAIT(L, TRAIT_SKITTISH))
 			. += "<span class='notice'>Ctrl-Shift-click [src] to jump inside.</span>"
 
-/obj/structure/closet/CanPass(atom/movable/mover, turf/target)
+/obj/structure/closet/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(wall_mounted)
 		return TRUE
-	return !density
 
 /obj/structure/closet/proc/can_open(mob/living/user)
 	if(welded || locked)
@@ -375,7 +393,7 @@
 /obj/structure/closet/container_resist(mob/living/user)
 	if(opened)
 		return
-	if(ismovableatom(loc))
+	if(ismovable(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/atom/movable/AM = loc
@@ -440,9 +458,10 @@
 
 /obj/structure/closet/emag_act(mob/user)
 	if(secure && !broken)
-		user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
-						"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
-						"<span class='hear'>You hear a faint electrical spark.</span>")
+		if(user)
+			user.visible_message("<span class='warning'>Sparks fly from [src]!</span>",
+							"<span class='warning'>You scramble [src]'s lock, breaking it open!</span>",
+							"<span class='hear'>You hear a faint electrical spark.</span>")
 		playsound(src, "sparks", 50, TRUE)
 		broken = TRUE
 		locked = FALSE

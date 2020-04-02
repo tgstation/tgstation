@@ -22,17 +22,18 @@
 	time = 50
 	chems_needed = list(/datum/reagent/toxin/zombiepowder, /datum/reagent/medicine/rezadone)
 	require_all_chems = FALSE
+	experience_given = MEDICAL_SKILL_ADVANCED
 
 /datum/surgery_step/bionecrosis/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(user, target, "<span class='notice'>You begin to grow a romerol tumor on [target]'s brain...</span>",
 		"<span class='notice'>[user] begins to tinker with [target]'s brain...</span>",
 		"<span class='notice'>[user] begins to perform surgery on [target]'s brain.</span>")
 
-/datum/surgery_step/bionecrosis/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/bionecrosis/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You succeed in growing a romerol tumor on [target]'s brain.</span>",
 		"<span class='notice'>[user] successfully grows a romerol tumor on [target]'s brain!</span>",
 		"<span class='notice'>[user] completes the surgery on [target]'s brain.</span>")
 	if(!target.getorganslot(ORGAN_SLOT_ZOMBIE))
 		var/obj/item/organ/zombie_infection/ZI = new()
 		ZI.Insert(target)
-	return TRUE
+	return ..()

@@ -30,11 +30,13 @@ BONUS
 	symptom_delay_min = 2
 	symptom_delay_max = 15
 	var/spread_range = 1
-	threshold_desc = "<b>Resistance 11:</b> The host will drop small items when coughing.<br>\
-					  <b>Resistance 15:</b> Occasionally causes coughing fits that stun the host. The extra coughs do not spread the virus.<br>\
-					  <b>Stage Speed 6:</b> Increases cough frequency.<br>\
-					  <b>Transmission 7:</b> Coughing will now infect bystanders up to 2 tiles away.<br>\
-					  <b>Stealth 4:</b> The symptom remains hidden until active."
+	threshold_descs = list(
+		"Resistance 11" = "The host will drop small items when coughing.",
+		"Resistance 15" = "Occasionally causes coughing fits that stun the host. The extra coughs do not spread the virus.",
+		"Stage Speed 6" = "Increases cough frequency.",
+		"Transmission 7" = "Coughing will now infect bystanders up to 2 tiles away.",
+		"Stealth 4" = "The symptom remains hidden until active.",
+	)
 
 /datum/symptom/cough/Start(datum/disease/advance/A)
 	if(!..())
@@ -54,6 +56,8 @@ BONUS
 	if(!..())
 		return
 	var/mob/living/M = A.affected_mob
+	if(HAS_TRAIT(M, TRAIT_SOOTHED_THROAT))
+		return
 	switch(A.stage)
 		if(1, 2, 3)
 			if(prob(base_message_chance) && !suppress_warning)

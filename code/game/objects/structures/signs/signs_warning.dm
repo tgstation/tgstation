@@ -90,3 +90,33 @@
 	name = "\improper HIGH EXPLOSIVES"
 	desc = "A warning sign which reads 'HIGH EXPLOSIVES'."
 	icon_state = "explosives2"
+
+/obj/structure/sign/warning/testchamber
+	name = "\improper TESTING AREA"
+	desc = "A sign that warns of high-power testing equipment in the area. That's either a really powerful laser... or a satellite landing on some person's head."
+	icon_state = "testchamber"
+
+/obj/structure/sign/warning/firingrange
+	name = "\improper FIRING RANGE"
+	desc = "A sign reminding you to remain behind the firing line, and to wear ear protection."
+	icon_state = "firingrange"
+
+/obj/structure/sign/warning/coldtemp
+	name = "\improper FREEZING AIR"
+	desc = "A sign that warns of extremely cold air in the vicinity."
+	icon_state = "cold"
+
+/obj/structure/sign/warning/hottemp
+	name = "\improper SUPERHEATED AIR"
+	desc = "A sign that warns of extremely hot air in the vicinity."
+	icon_state = "heat"
+
+/obj/structure/sign/warning/gasmask
+	name = "\improper CONTAMINATED AIR"
+	desc = "A sign that warns of dangerous particulates in the air, instructing you to wear a filtration device."
+	icon_state = "gasmask"
+
+/obj/structure/sign/warning/chemdiamond
+	name = "\improper REACTIVE CHEMICALS"
+	desc = "A sign that warns of potentially reactive chemicals nearby, be they explosive, flamable, or acidic."
+	icon_state = "chemdiamond"

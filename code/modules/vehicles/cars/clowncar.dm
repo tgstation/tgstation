@@ -41,7 +41,7 @@
 	if(return_controllers_with_flag(VEHICLE_CONTROL_KIDNAPPED).len >= 30)
 		for(var/i in return_drivers())
 			var/mob/voreman = i
-			SSmedals.UnlockMedal(MEDAL_CLOWNCARKING,voreman.client)
+			voreman.client.give_award(/datum/award/achievement/misc/round_and_full, voreman)
 
 /obj/vehicle/sealed/car/clowncar/attack_animal(mob/living/simple_animal/M)
 	if((M.loc != src) || M.environment_smash & (ENVIRONMENT_SMASH_WALLS|ENVIRONMENT_SMASH_RWALLS))
@@ -65,25 +65,25 @@
 		to_chat(user, "<span class='danger'>You use the [banana] to repair the [src]!</span>")
 		qdel(banana)
 
-/obj/vehicle/sealed/car/clowncar/Bump(atom/movable/M)
+/obj/vehicle/sealed/car/clowncar/Bump(atom/A)
 	. = ..()
-	if(isliving(M))
-		if(ismegafauna(M))
+	if(isliving(A))
+		if(ismegafauna(A))
 			return
-		var/mob/living/L = M
+		var/mob/living/L = A
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.Paralyze(40) //I play to make sprites go horizontal
 		L.visible_message("<span class='warning'>[src] rams into [L] and sucks [L.p_them()] up!</span>") //fuck off shezza this isn't ERP.
 		mob_forced_enter(L)
 		playsound(src, pick('sound/vehicles/clowncar_ram1.ogg', 'sound/vehicles/clowncar_ram2.ogg', 'sound/vehicles/clowncar_ram3.ogg'), 75)
-		log_combat(src, M, "sucked up")
-	else if(istype(M, /turf/closed))
-		visible_message("<span class='warning'>[src] rams into [M] and crashes!</span>")
+		log_combat(src, A, "sucked up")
+	else if(istype(A, /turf/closed))
+		visible_message("<span class='warning'>[src] rams into [A] and crashes!</span>")
 		playsound(src, pick('sound/vehicles/clowncar_crash1.ogg', 'sound/vehicles/clowncar_crash2.ogg'), 75)
 		playsound(src, 'sound/vehicles/clowncar_crashpins.ogg', 75)
 		DumpMobs(TRUE)
-		log_combat(src, M, "crashed into", null, "dumping all passengers")
+		log_combat(src, A, "crashed into", null, "dumping all passengers")
 
 /obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
@@ -92,7 +92,7 @@
 	to_chat(user, "<span class='danger'>You scramble \the [src]'s child safety lock, and a panel with six colorful buttons appears!</span>")
 	initialize_controller_action_type(/datum/action/vehicle/sealed/RollTheDice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/Cannon, VEHICLE_CONTROL_DRIVE)
-	AddComponent(/datum/component/waddling)
+	AddElement(/datum/element/waddling)
 
 /obj/vehicle/sealed/car/clowncar/Destroy()
   playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
@@ -173,7 +173,7 @@
 
 
 /obj/vehicle/sealed/car/clowncar/proc/EnterCannonMode()
-	mouse_pointer = 'icons/mecha/mecha_mouse.dmi'
+	mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse.dmi'
 	cannonmode = TRUE
 	cannonbusy = FALSE
 	for(var/mob/living/L in return_controllers_with_flag(VEHICLE_CONTROL_DRIVE))
@@ -201,4 +201,4 @@
 	if(thankscount >= 100)
 		for(var/i in return_drivers())
 			var/mob/busdriver = i
-			SSmedals.UnlockMedal(MEDAL_THANKSALOT,busdriver.client)
+			busdriver.client.give_award(/datum/award/achievement/misc/the_best_driver, busdriver)

@@ -24,8 +24,8 @@
 	var/total_message_count = 0
 	///Next tick to reset the total message counter
 	var/total_count_reset = 0
-	///Internal counter for clients sending irc relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
-	var/ircreplyamount = 0
+	///Internal counter for clients sending external (IRC/Discord) relay messages via ahelp to prevent spamming. Set to a number every time an admin reply is sent, decremented for every client send.
+	var/externalreplyamount = 0
 
 		/////////
 		//OTHER//
@@ -121,3 +121,20 @@
 	var/next_keysend_trip_reset = 0
 	///When set to true, user will be autokicked if they trip the keysends in a second limit again
 	var/keysend_tripped = FALSE
+	///custom movement keys for this client
+	var/list/movement_keys = list()
+
+	///Autoclick list of two elements, first being the clicked thing, second being the parameters.
+	var/list/atom/selected_target[2]
+	///Autoclick variable referencing the associated item.
+	var/obj/item/active_mousedown_item = null
+	///Used in MouseDrag to preserve the original mouse click parameters
+	var/mouseParams = ""
+	///Used in MouseDrag to preserve the last mouse-entered location.
+	var/mouseLocation = null
+	///Used in MouseDrag to preserve the last mouse-entered object.
+	var/mouseObject = null
+	//Middle-mouse-button click dragtime control for aimbot exploit detection.
+	var/middragtime = 0
+	//Middle-mouse-button clicked object control for aimbot exploit detection.
+	var/atom/middragatom

@@ -40,8 +40,14 @@
 	icon_state = "wrench_medical"
 	force = 2 //MEDICAL
 	throwforce = 4
+	attack_verb = list("healed", "medicaled", "tapped", "poked", "analyzed") //"cobbyed"
+	///var to hold the name of the person who suicided
+	var/suicider
 
-	attack_verb = list("wrenched", "medicaled", "tapped", "jabbed", "whacked")
+/obj/item/wrench/medical/examine(mob/user)
+	. = ..()
+	if(suicider)
+		. += "<span class='notice'>For some reason, it reminds you of [suicider].</span>"
 
 /obj/item/wrench/medical/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is praying to the medical wrench to take [user.p_their()] soul. It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -52,23 +58,14 @@
 	playsound(loc, 'sound/effects/pray.ogg', 50, TRUE, -1)
 
 	// Let the sound effect finish playing
+	add_fingerprint(user)
 	sleep(20)
-
 	if(!user)
 		return
-
 	for(var/obj/item/W in user)
 		user.dropItemToGround(W)
-
-	var/obj/item/wrench/medical/W = new /obj/item/wrench/medical(loc)
-	W.add_fingerprint(user)
-	W.desc += " For some reason, it reminds you of [user.name]."
-
-	if(!user)
-		return
-
+	suicider = user.real_name
 	user.dust()
-
 	return OXYLOSS
 
 /obj/item/wrench/cyborg
@@ -77,3 +74,46 @@
 	icon = 'icons/obj/items_cyborg.dmi'
 	icon_state = "wrench_cyborg"
 	toolspeed = 0.5
+
+/obj/item/wrench/combat
+	name = "combat wrench"
+	desc = "It's like a normal wrench but edgier. Can be found on the battlefield."
+	icon_state = "wrench_combat"
+	item_state = "wrench_combat"
+	attack_verb = list("devastated", "brutalized", "committed a war crime against", "obliterated", "humiliated")
+	tool_behaviour = null
+	toolspeed = null
+	var/on = FALSE
+
+/obj/item/wrench/combat/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/wrench/combat/attack_self(mob/living/user)
+	if(on)
+		on = FALSE
+		force = initial(force)
+		w_class = initial(w_class)
+		throwforce = initial(throwforce)
+		tool_behaviour = initial(tool_behaviour)
+		toolspeed = initial(toolspeed)
+		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
+		to_chat(user, "<span class='warning'>[src] can now be kept at bay.</span>")
+	else
+		on = TRUE
+		force = 6
+		w_class = WEIGHT_CLASS_NORMAL
+		throwforce = 8
+		tool_behaviour = TOOL_WRENCH
+		toolspeed = 1
+		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
+		to_chat(user, "<span class='warning'>[src] is now active. Woe onto your enemies!</span>")
+	update_icon()
+
+/obj/item/wrench/combat/update_icon_state()
+	if(on)
+		icon_state = "[initial(icon_state)]_on"
+		item_state = "[initial(item_state)]1"
+	else
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"

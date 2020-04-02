@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Mood HUD will now display the correct colors"

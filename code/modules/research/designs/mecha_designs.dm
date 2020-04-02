@@ -133,6 +133,22 @@
 	category = list("Exosuit Modules")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
+/datum/design/board/clarke_main
+	name = "\"Clarke\" Central Control module"
+	desc = "Allows for the construction of a \"Clarke\" Central Control module."
+	id = "clarke_main"
+	build_path = /obj/item/circuitboard/mecha/clarke/main
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/board/clarke_peri
+	name = "\"Clarke\" Peripherals Control module"
+	desc = "Allows for the construction of a  \"Clarke\" Peripheral Control module."
+	id = "clarke_peri"
+	build_path = /obj/item/circuitboard/mecha/clarke/peripherals
+	category = list("Exosuit Modules")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
 ////////////////////////////////////////
 /////////// Mecha Equpment /////////////
 ////////////////////////////////////////
@@ -320,6 +336,16 @@
 	build_path = /obj/item/mecha_parts/mecha_equipment/rcd
 	materials = list(/datum/material/iron=30000,/datum/material/gold=20000,/datum/material/plasma=25000,/datum/material/silver=20000)
 	construction_time = 1200
+	category = list("Exosuit Equipment")
+
+/datum/design/mech_thrusters
+	name = "Exosuit Module (RCS Thruster Package)"
+	desc = "A thruster package for exosuits. Expells gas from the internal life-support air tank to generate thrust."
+	id = "mech_thrusters"
+	build_type = MECHFAB
+	build_path = /obj/item/mecha_parts/mecha_equipment/thrusters/gas
+	materials = list(/datum/material/iron=25000,/datum/material/titanium=5000,/datum/material/silver=3000)
+	construction_time = 100
 	category = list("Exosuit Equipment")
 
 /datum/design/mech_gravcatapult

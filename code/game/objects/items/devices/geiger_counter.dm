@@ -18,6 +18,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
+	item_flags = NOBLUDGEON
 	custom_materials = list(/datum/material/iron = 150, /datum/material/glass = 150)
 
 	var/grace = RAD_GRACE_PERIOD
@@ -74,7 +75,7 @@
 		if(-INFINITY to RAD_LEVEL_NORMAL)
 			. += "<span class='notice'>Ambient radiation level count reports that all is well.</span>"
 		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
-			. += "<span class='disarm'>Ambient radiation levels slightly above average.</span>"
+			. += "<span class='alert'>Ambient radiation levels slightly above average.</span>"
 		if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
 			. += "<span class='warning'>Ambient radiation levels above average.</span>"
 		if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
@@ -86,27 +87,25 @@
 
 	. += "<span class='notice'>The last radiation amount detected was [last_tick_amount]</span>"
 
-/obj/item/geiger_counter/update_icon()
+/obj/item/geiger_counter/update_icon_state()
 	if(!scanning)
 		icon_state = "geiger_off"
-		return 1
-	if(obj_flags & EMAGGED)
+	else if(obj_flags & EMAGGED)
 		icon_state = "geiger_on_emag"
-		return 1
-	switch(radiation_count)
-		if(-INFINITY to RAD_LEVEL_NORMAL)
-			icon_state = "geiger_on_1"
-		if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
-			icon_state = "geiger_on_2"
-		if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
-			icon_state = "geiger_on_3"
-		if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
-			icon_state = "geiger_on_4"
-		if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
-			icon_state = "geiger_on_4"
-		if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
-			icon_state = "geiger_on_5"
-	..()
+	else
+		switch(radiation_count)
+			if(-INFINITY to RAD_LEVEL_NORMAL)
+				icon_state = "geiger_on_1"
+			if(RAD_LEVEL_NORMAL + 1 to RAD_LEVEL_MODERATE)
+				icon_state = "geiger_on_2"
+			if(RAD_LEVEL_MODERATE + 1 to RAD_LEVEL_HIGH)
+				icon_state = "geiger_on_3"
+			if(RAD_LEVEL_HIGH + 1 to RAD_LEVEL_VERY_HIGH)
+				icon_state = "geiger_on_4"
+			if(RAD_LEVEL_VERY_HIGH + 1 to RAD_LEVEL_CRITICAL)
+				icon_state = "geiger_on_4"
+			if(RAD_LEVEL_CRITICAL + 1 to INFINITY)
+				icon_state = "geiger_on_5"
 
 /obj/item/geiger_counter/proc/update_sound()
 	var/datum/looping_sound/geiger/loop = soundloop

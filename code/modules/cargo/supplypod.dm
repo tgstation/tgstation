@@ -15,6 +15,7 @@
 	armor = list("melee" = 30, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 100, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 80)
 	anchored = TRUE //So it cant slide around after landing
 	anchorable = FALSE
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	//*****NOTE*****: Many of these comments are similarly described in centcom_podlauncher.dm. If you change them here, please consider doing so in the centcom podlauncher code as well!
 	var/adminNamed = FALSE //Determines whether or not the pod has been named by an admin. If true, the pod's name will not get overridden when the style of the pod changes (changing the style of the pod normally also changes the name+desc)
 	var/bluespace = FALSE //If true, the pod deletes (in a shower of sparks) after landing
@@ -78,15 +79,15 @@
 	. = ..()
 	setStyle(style, TRUE) //Upon initialization, give the supplypod an iconstate, name, and description based on the "style" variable. This system is important for the centcom_podlauncher to function correctly
 
-/obj/structure/closet/supplypod/update_icon()
-	cut_overlays()
+/obj/structure/closet/supplypod/update_overlays()
+	. = ..()
 	if (style == STYLE_SEETHROUGH || style == STYLE_INVISIBLE) //If we're invisible, we dont bother adding any overlays
 		return
 	else
 		if (opened)
-			add_overlay("[icon_state]_open")
+			. += "[icon_state]_open"
 		else
-			add_overlay("[icon_state]_door")
+			. += "[icon_state]_door"
 
 /obj/structure/closet/supplypod/proc/setStyle(chosenStyle, duringInit = FALSE) //Used to give the sprite an icon state, name, and description
 	if (!duringInit && style == chosenStyle) //Check if the input style is already the same as the pod's style. This happens in centcom_podlauncher, and as such we set the style to STYLE_CENTCOM.
@@ -110,9 +111,6 @@
 
 /obj/structure/closet/supplypod/contents_explosion() //Supplypods also protect their contents from the harmful effects of fucking exploding.
 	return
-
-/obj/structure/closet/supplypod/prevent_content_explosion() //Useful for preventing epicenter explosions from damaging contents
-	return TRUE
 
 /obj/structure/closet/supplypod/toggle(mob/living/user) //Supplypods shouldn't be able to be manually opened under any circumstances, as the open() proc generates supply order datums
 	return
@@ -184,6 +182,7 @@
 	if (effectMissile) //If we are acting like a missile, then right after we land and finish fucking shit up w explosions, we should delete
 		opened = TRUE //We set opened to TRUE to avoid spending time trying to open (due to being deleted) during the Destroy() proc
 		qdel(src)
+		return
 	if (style == STYLE_GONDOLA) //Checks if we are supposed to be a gondola pod. If so, create a gondolapod mob, and move this pod to nullspace. I'd like to give a shout out, to my man oranges
 		var/mob/living/simple_animal/pet/gondola/gondolapod/benis = new(get_turf(src), src)
 		benis.contents |= contents //Move the contents of this supplypod into the gondolapod mob.

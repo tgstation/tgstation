@@ -31,7 +31,7 @@
 
 /obj/item/melee/synthetic_arm_blade
 	name = "synthetic arm blade"
-	desc = "A grotesque blade that on closer inspection seems made of synthetic flesh, it still feels like it would hurt very badly as a weapon."
+	desc = "A grotesque blade that on closer inspection seems to be made out of synthetic flesh, it still feels like it would hurt very badly as a weapon."
 	icon = 'icons/obj/changeling_items.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
@@ -165,7 +165,7 @@
 	name = "police baton"
 	desc = "A wooden truncheon for beating criminal scum."
 	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "baton"
+	icon_state = "classic_baton"
 	item_state = "classic_baton"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
@@ -240,7 +240,7 @@
 		to_chat(user, "<span class ='userdanger'>You hit yourself over the head!</span>")
 
 		user.Paralyze(knockdown_time_carbon * force)
-		user.adjustStaminaLoss(stamina_damage)
+		user.apply_damage(stamina_damage, STAMINA, BODY_ZONE_HEAD)
 
 		additional_effects_carbon(user) // user is the target here
 		if(ishuman(user))
@@ -292,7 +292,7 @@
 
 			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 			target.Knockdown(knockdown_time_carbon)
-			target.adjustStaminaLoss(stamina_damage)
+			target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
 			additional_effects_carbon(target, user)
 
 			log_combat(user, target, "stunned", src)
@@ -309,6 +309,13 @@
 			var/wait_desc = get_wait_description()
 			if (wait_desc)
 				to_chat(user, wait_desc)
+
+/obj/item/conversion_kit
+	name = "conversion kit"
+	desc = "A strange box containing wood working tools and an instruction paper to turn stun batons into something else."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "uk"
+	custom_price = 450
 
 /obj/item/melee/classic_baton/telescopic
 	name = "telescopic baton"
@@ -579,12 +586,10 @@
 		held_sausage = null
 	update_icon()
 
-/obj/item/melee/roastingstick/update_icon()
+/obj/item/melee/roastingstick/update_overlays()
 	. = ..()
-	cut_overlays()
 	if (held_sausage)
-		var/mutable_appearance/sausage = mutable_appearance(icon, "roastingstick_sausage")
-		add_overlay(sausage)
+		. += mutable_appearance(icon, "roastingstick_sausage")
 
 /obj/item/melee/roastingstick/proc/extend(user)
 	to_chat(user, "<span class='warning'>You extend [src].</span>")
@@ -642,7 +647,7 @@
 	item_state = "mace_greyscale"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR //Material type changes the prefix as well as the color.
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Material type changes the prefix as well as the color.
 	custom_materials = list(/datum/material/iron = 12000)  //Defaults to an Iron Mace.
 	slot_flags = ITEM_SLOT_BELT
 	force = 14

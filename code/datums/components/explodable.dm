@@ -5,15 +5,17 @@
 	var/light_impact_range = 2
 	var/flash_range = 3
 	var/equipped_slot //For items, lets us determine where things should be hit.
+	///wheter we always delete. useful for nukes turned plasma and such, so they don't default delete and can survive
+	var/always_delete
 
-/datum/component/explodable/Initialize(devastation_range_override, heavy_impact_range_override, light_impact_range_override, flash_range_override)
+/datum/component/explodable/Initialize(devastation_range_override, heavy_impact_range_override, light_impact_range_override, flash_range_override, _always_delete = TRUE)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/explodable_attack)
 	RegisterSignal(parent, COMSIG_TRY_STORAGE_INSERT, .proc/explodable_insert_item)
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, .proc/detonate)
-	if(ismovableatom(parent))
+	if(ismovable(parent))
 		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, .proc/explodable_impact)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, .proc/explodable_bump)
 		if(isitem(parent))
@@ -31,6 +33,7 @@
 		light_impact_range = light_impact_range_override
 	if(flash_range_override)
 		flash_range = flash_range_override
+	always_delete = _always_delete
 
 /datum/component/explodable/proc/explodable_insert_item(datum/source, obj/item/I, mob/M, silent = FALSE, force = FALSE)
 	check_if_detonate(I)
@@ -101,7 +104,11 @@
 /// Expldoe and remove the object
 /datum/component/explodable/proc/detonate()
 	var/atom/A = parent
-	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flash_range) //epic explosion time
-	qdel(A)
+	var/log = TRUE
+	if(light_impact_range < 1)
+		log = FALSE
+	explosion(A, devastation_range, heavy_impact_range, light_impact_range, flash_range, log) //epic explosion time
+	if(always_delete)
+		qdel(A)
 
 

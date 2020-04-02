@@ -87,14 +87,16 @@
 		var/mob/living/carbon/human/H = C
 		if(HAS_TRAIT(C, TRAIT_LIMBATTACHMENT))
 			if(!H.get_bodypart(body_zone) && !animal_origin)
+				user.temporarilyRemoveItemFromInventory(src, TRUE)
+				if(!attach_limb(C))
+					to_chat(user, "<span class='warning'>[H]'s body rejects [src]!</span>")
+					forceMove(H.loc)
 				if(H == user)
 					H.visible_message("<span class='warning'>[H] jams [src] into [H.p_their()] empty socket!</span>",\
 					"<span class='notice'>You force [src] into your empty socket, and it locks into place!</span>")
 				else
 					H.visible_message("<span class='warning'>[user] jams [src] into [H]'s empty socket!</span>",\
 					"<span class='notice'>[user] forces [src] into your empty socket, and it locks into place!</span>")
-				user.temporarilyRemoveItemFromInventory(src, TRUE)
-				attach_limb(C)
 				return
 	..()
 
@@ -183,7 +185,7 @@
 	burn_dam += burn
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
-	stamina_dam += round(CLAMP(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
+	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
 
 
 	if(owner && updating_health)
@@ -288,11 +290,12 @@
 		C = source
 		if(!original_owner)
 			original_owner = source
-	else if(original_owner && owner != original_owner) //Foreign limb
-		no_update = TRUE
 	else
 		C = owner
-		no_update = FALSE
+		if(original_owner && owner != original_owner) //Foreign limb
+			no_update = TRUE
+		else
+			no_update = FALSE
 
 	if(HAS_TRAIT(C, TRAIT_HUSK) && is_organic_limb())
 		species_id = "husk" //overrides species_id

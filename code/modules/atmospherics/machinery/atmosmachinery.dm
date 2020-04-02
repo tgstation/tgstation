@@ -26,8 +26,11 @@
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/pipe_flags = NONE
 
-	var/global/list/iconsetids = list()
-	var/global/list/pipeimages = list()
+	///This only works on pipes, because they have 1000 subtypes wich need to be visible and invisible under tiles, so we track this here
+	var/hide = TRUE
+
+	var/static/list/iconsetids = list()
+	var/static/list/pipeimages = list()
 
 	var/image/pipe_vision_img = null
 
@@ -63,6 +66,8 @@
 		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
+	if(SSair.currentpart == SSAIR_ATMOSMACHINERY)
+		SSair.currentrun -= src
 
 	dropContents()
 	if(pipe_vision_img)
@@ -183,11 +188,6 @@
 	if(!can_unwrench(user))
 		return ..()
 
-	var/turf/T = get_turf(src)
-	if (level==1 && isturf(T) && T.intact)
-		to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
-		return TRUE
-
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	add_fingerprint(user)
@@ -264,8 +264,6 @@
 		add_atom_colour(obj_color, FIXED_COLOUR_PRIORITY)
 		pipe_color = obj_color
 	setPipingLayer(set_layer)
-	var/turf/T = get_turf(src)
-	level = T.intact ? 2 : 1
 	atmosinit()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
@@ -299,7 +297,7 @@
 		if(target_move.can_crawl_through())
 			if(is_type_in_typecache(target_move, GLOB.ventcrawl_machinery))
 				user.forceMove(target_move.loc) //handle entering and so on.
-				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.")
+				user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.</span>")
 			else
 				var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
 				if(pipenetdiff.len)
@@ -311,7 +309,7 @@
 					playsound(src, 'sound/machines/ventcrawl.ogg', 50, TRUE, -3)
 	else if(is_type_in_typecache(src, GLOB.ventcrawl_machinery) && can_crawl_through()) //if we move in a way the pipe can connect, but doesn't - or we're in a vent
 		user.forceMove(loc)
-		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.")
+		user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>", "<span class='notice'>You climb out the ventilation system.</span>")
 
 	//PLACEHOLDER COMMENT FOR ME TO READD THE 1 (?) DS DELAY THAT WAS IMPLEMENTED WITH A... TIMER?
 

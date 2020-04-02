@@ -244,10 +244,33 @@
 /obj/item/clothing/under/costume/russian_officer
 	name = "\improper Russian officer's uniform"
 	desc = "The latest in fashionable russian outfits."
+	icon = 'icons/obj/clothing/under/security.dmi'
 	icon_state = "hostanclothes"
 	item_state = "hostanclothes"
+	mob_overlay_icon =  'icons/mob/clothing/under/security.dmi'
 	alt_covers_chest = TRUE
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 30)
 	strip_delay = 50
 	sensor_mode = SENSOR_COORDS
 	random_sensor = FALSE
+
+/obj/item/clothing/under/costume/jackbros
+	name = "jack bros outfit"
+	desc = "For when it's time to hee some hos."
+	icon_state = "JackFrostUniform"
+	item_state = "JackFrostUniform"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/yakuza
+	name = "tojo clan pants"
+	desc = "For those long nights under the traffic cone."
+	icon_state = "MajimaPants"
+	item_state = "MajimaPants"
+	can_adjust = FALSE
+
+/obj/item/clothing/under/costume/dutch
+	name = "dutch's suit"
+	desc = "You can feel a <b>god damn plan</b> coming on."
+	icon_state = "DutchUniform"
+	item_state = "DutchUniform"
+	can_adjust = FALSE

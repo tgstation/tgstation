@@ -17,16 +17,15 @@
 	burnmod = 0.5 // = 1/2x generic burn damage
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inherent_factions = list("slime")
+	species_language_holder = /datum/language_holder/jelly
 
 /datum/species/jelly/on_species_loss(mob/living/carbon/C)
 	if(regenerate_limbs)
 		regenerate_limbs.Remove(C)
-	C.remove_language(/datum/language/slime)
 	..()
 
 /datum/species/jelly/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	..()
-	C.grant_language(/datum/language/slime)
 	if(ishuman(C))
 		regenerate_limbs = new
 		regenerate_limbs.Grant(C)
@@ -116,6 +115,7 @@
 	say_mod = "says"
 	hair_color = "mutcolor"
 	hair_alpha = 150
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	var/datum/action/innate/split_body/slime_split
 	var/list/mob/living/carbon/bodies
 	var/datum/action/innate/swap_body/swap_body
@@ -606,12 +606,15 @@
 	var/datum/action/innate/linked_speech/action = new(src)
 	linked_actions.Add(action)
 	action.Grant(M)
+	RegisterSignal(M, COMSIG_MOB_DEATH , .proc/unlink_mob)
+	RegisterSignal(M, COMSIG_PARENT_QDELETING, .proc/unlink_mob)
 	return TRUE
 
 /datum/species/jelly/stargazer/proc/unlink_mob(mob/living/M)
 	var/link_id = linked_mobs.Find(M)
 	if(!(link_id))
 		return
+	UnregisterSignal(M, list(COMSIG_MOB_DEATH, COMSIG_PARENT_QDELETING))
 	var/datum/action/innate/linked_speech/action = linked_actions[link_id]
 	action.Remove(M)
 	to_chat(M, "<span class='notice'>You are no longer connected to [slimelink_owner.real_name]'s Slime Link.</span>")
@@ -644,18 +647,11 @@
 		Remove(H)
 		return
 
-	if(QDELETED(H) || H.stat == DEAD)
-		species.unlink_mob(H)
-		return
-
 	if(message)
 		var/msg = "<i><font color=#008CA2>\[[species.slimelink_owner.real_name]'s Slime Link\] <b>[H]:</b> [message]</font></i>"
 		log_directed_talk(H, species.slimelink_owner, msg, LOG_SAY, "slime link")
 		for(var/X in species.linked_mobs)
 			var/mob/living/M = X
-			if(QDELETED(M) || M.stat == DEAD)
-				species.unlink_mob(M)
-				continue
 			to_chat(M, msg)
 
 		for(var/X in GLOB.dead_mob_list)
@@ -681,7 +677,7 @@
 	var/list/options = list()
 	for(var/mob/living/Ms in oview(H))
 		options += Ms
-	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in options
+	var/mob/living/M = input("Select who to send your message to:","Send thought to?",null) as null|mob in sortNames(options)
 	if(!M)
 		return
 	if(M.anti_magic_check(FALSE, FALSE, TRUE, 0))

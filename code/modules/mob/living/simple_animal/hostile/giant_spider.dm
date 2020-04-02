@@ -10,10 +10,13 @@
 
 /mob/living/simple_animal/hostile/poison/AttackingTarget()
 	. = ..()
-	if(. && isliving(target))
-		var/mob/living/L = target
-		if(L.reagents)
-			L.reagents.add_reagent(poison_type, poison_per_bite)
+	if(.)
+		inject_poison(target)
+
+/// Handles injecting the poison after successful attack
+/mob/living/simple_animal/hostile/poison/proc/inject_poison(mob/living/L)
+	if(poison_type && istype(L) && L.reagents)
+		L.reagents.add_reagent(poison_type, poison_per_bite)
 
 //basic spider mob, these generally guard nests
 /mob/living/simple_animal/hostile/poison/giant_spider
@@ -163,8 +166,9 @@
 	health = 120
 	melee_damage_lower = 10
 	melee_damage_upper = 20
-	poison_per_bite = 5
+	poison_per_bite = 10
 	move_to_delay = 5
+	gold_core_spawnable = NO_SPAWN
 
 //vipers are the rare variant of the hunter, no IMMEDIATE damage but so much poison medical care will be needed fast.
 /mob/living/simple_animal/hostile/poison/giant_spider/hunter/viper
@@ -181,7 +185,6 @@
 	move_to_delay = 4
 	poison_type = /datum/reagent/toxin/venom //all in venom, glass cannon. you bite 5 times and they are DEFINITELY dead, but 40 health and you are extremely obvious. Ambush, maybe?
 	speed = 1
-	gold_core_spawnable = NO_SPAWN
 
 //tarantulas are really tanky, regenerating (maybe), hulky monster but are also extremely slow, so.
 /mob/living/simple_animal/hostile/poison/giant_spider/tarantula
@@ -206,10 +209,10 @@
 	. = ..()
 	if(slowed_by_webs)
 		if(!(locate(/obj/structure/spider/stickyweb) in loc))
-			remove_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB)
+			remove_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 			slowed_by_webs = FALSE
 	else if(locate(/obj/structure/spider/stickyweb) in loc)
-		add_movespeed_modifier(MOVESPEED_ID_TARANTULA_WEB, priority=100, multiplicative_slowdown=3)
+		add_movespeed_modifier(/datum/movespeed_modifier/tarantula_web)
 		slowed_by_webs = TRUE
 
 /mob/living/simple_animal/hostile/poison/giant_spider/ice //spiders dont usually like tempatures of 140 kelvin who knew
@@ -386,7 +389,7 @@
 	active = FALSE
 	datum/action/spell_action/action = null
 	desc = "Wrap something or someone in a cocoon. If it's a living being, you'll also consume them, allowing you to lay eggs."
-	ranged_mousepointer = 'icons/effects/wrap_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/wrap_target.dmi'
 	action_icon = 'icons/mob/actions/actions_animal.dmi'
 	action_icon_state = "wrap_0"
 	action_background_icon_state = "bg_alien"
@@ -546,8 +549,12 @@
 /mob/living/simple_animal/hostile/poison/giant_spider/handle_temperature_damage()
 	if(bodytemperature < minbodytemp)
 		adjustBruteLoss(20)
+		throw_alert("temp", /obj/screen/alert/cold, 3)
 	else if(bodytemperature > maxbodytemp)
 		adjustBruteLoss(20)
+		throw_alert("temp", /obj/screen/alert/hot, 3)
+	else
+		clear_alert("temp")
 
 #undef SPIDER_IDLE
 #undef SPINNING_WEB

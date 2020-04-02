@@ -70,22 +70,22 @@
 		com.target = null
 		visible_message("<span class='alert'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
-	if (ismovableatom(M))
+	if (ismovable(M))
 		if(do_teleport(M, com.target, channel = TELEPORT_CHANNEL_BLUESPACE))
 			use_power(5000)
 			if(!calibrated && prob(30 - ((accuracy) * 10))) //oh dear a problem
-				log_game("[M] ([key_name(M)]) was turned into a fly person")
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
 					if(human.dna && human.dna.species.id == "human")
 						to_chat(M, "<span class='hear'>You hear a buzzing in your ears.</span>")
 						human.set_species(/datum/species/fly)
+						log_game("[human] ([key_name(human)]) was turned into a fly person")
 
 					human.apply_effect((rand(120 - accuracy * 40, 180 - accuracy * 60)), EFFECT_IRRADIATE, 0)
 			calibrated = 0
 	return
 
-/obj/machinery/teleport/hub/update_icon()
+/obj/machinery/teleport/hub/update_icon_state()
 	if(panel_open)
 		icon_state = "tele-o"
 	else if(is_ready())
@@ -94,7 +94,7 @@
 		icon_state = "tele0"
 
 /obj/machinery/teleport/hub/proc/is_ready()
-	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
+	. = !panel_open && !(machine_stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.machine_stat & (BROKEN|NOPOWER))
 
 /obj/machinery/teleport/hub/syndicate/Initialize()
 	. = ..()
@@ -166,13 +166,13 @@
 		var/obj/item/multitool/M = W
 		if(panel_open)
 			M.buffer = src
-			to_chat(user, "<span class='caution'>You download the data to the [W.name]'s buffer.</span>")
+			to_chat(user, "<span class='notice'>You download the data to the [W.name]'s buffer.</span>")
 		else
 			if(M.buffer && istype(M.buffer, /obj/machinery/teleport/station) && M.buffer != src)
 				if(linked_stations.len < efficiency)
 					linked_stations.Add(M.buffer)
 					M.buffer = null
-					to_chat(user, "<span class='caution'>You upload the data from the [W.name]'s buffer.</span>")
+					to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 				else
 					to_chat(user, "<span class='alert'>This station can't hold more information, try to use better parts.</span>")
 		return
@@ -186,7 +186,7 @@
 	else if(W.tool_behaviour == TOOL_WIRECUTTER)
 		if(panel_open)
 			link_console_and_hub()
-			to_chat(user, "<span class='caution'>You reconnect the station to nearby machinery.</span>")
+			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return
 	else
 		return ..()
@@ -195,10 +195,10 @@
 	toggle(user)
 
 /obj/machinery/teleport/station/proc/toggle(mob/user)
-	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
+	if(machine_stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
 		return
 	if (teleporter_console.target)
-		if(teleporter_hub.panel_open || teleporter_hub.stat & (BROKEN|NOPOWER))
+		if(teleporter_hub.panel_open || teleporter_hub.machine_stat & (BROKEN|NOPOWER))
 			to_chat(user, "<span class='alert'>The teleporter hub isn't responding.</span>")
 		else
 			engaged = !engaged
@@ -215,10 +215,10 @@
 	if(teleporter_hub)
 		teleporter_hub.update_icon()
 
-/obj/machinery/teleport/station/update_icon()
+/obj/machinery/teleport/station/update_icon_state()
 	if(panel_open)
 		icon_state = "controller-o"
-	else if(stat & (BROKEN|NOPOWER))
+	else if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = "controller-p"
 	else if(teleporter_console && teleporter_console.calibrating)
 		icon_state = "controller-c"

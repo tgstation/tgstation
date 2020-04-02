@@ -182,7 +182,7 @@ GLOBAL_LIST_INIT(prglass_recipes, list ( \
 	singular_name = "reinforced plasma glass sheet"
 	icon_state = "sheet-prglass"
 	item_state = "sheet-prglass"
-	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT, /datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5,)
+	custom_materials = list(/datum/material/plasma=MINERAL_MATERIAL_AMOUNT * 0.5, /datum/material/glass=MINERAL_MATERIAL_AMOUNT, /datum/material/iron = MINERAL_MATERIAL_AMOUNT * 0.5)
 	armor = list("melee" = 20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	resistance_flags = ACID_PROOF
 	material_flags = MATERIAL_NO_EFFECTS
@@ -253,6 +253,7 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 	sharpness = IS_SHARP
 	var/icon_prefix
 	var/obj/item/stack/sheet/weld_material = /obj/item/stack/sheet/glass
+	embedding = list("embed_chance" = 65)
 
 
 /obj/item/shard/suicide_act(mob/user)
@@ -309,10 +310,21 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 			to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
 			M.apply_damage(force*0.5, BRUTE, hit_hand)
 
-
 /obj/item/shard/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/lightreplacer))
-		I.attackby(src, user)
+		var/obj/item/lightreplacer/L = I
+		L.attackby(src, user)
+	else if(istype(I, /obj/item/stack/sheet/cloth))
+		var/obj/item/stack/sheet/cloth/C = I
+		to_chat(user, "<span class='notice'>You begin to wrap the [C] around the [src]...</span>")
+		if(do_after(user, 35, target = src))
+			var/obj/item/kitchen/knife/shiv/S = new /obj/item/kitchen/knife/shiv
+			C.use(1)
+			to_chat(user, "<span class='notice'>You wrap the [C] around the [src] forming a makeshift weapon.</span>")
+			remove_item_from_storage(src)
+			qdel(src)
+			user.put_in_hands(S)
+
 	else
 		return ..()
 
@@ -330,12 +342,11 @@ GLOBAL_LIST_INIT(plastitaniumglass_recipes, list(
 		qdel(src)
 	return TRUE
 
-/obj/item/shard/Crossed(mob/living/L)
-	if(istype(L) && has_gravity(loc))
-		if(HAS_TRAIT(L, TRAIT_LIGHT_STEP))
-			playsound(loc, 'sound/effects/glass_step.ogg', 30, TRUE)
-		else
-			playsound(loc, 'sound/effects/glass_step.ogg', 50, TRUE)
+/obj/item/shard/Crossed(atom/movable/AM)
+	if(isliving(AM))
+		var/mob/living/L = AM
+		if(!(L.is_flying() || L.is_floating() || L.buckled))
+			playsound(src, 'sound/effects/glass_step.ogg', HAS_TRAIT(L, TRAIT_LIGHT_STEP) ? 30 : 50, TRUE)
 	return ..()
 
 /obj/item/shard/plasma

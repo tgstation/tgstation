@@ -259,7 +259,7 @@ a.popt {text-decoration: none;}
 .highlight {background: yellow;}
 
 h1, h2, h3, h4, h5, h6	{color: #a4bad6;font-family: Georgia, Verdana, sans-serif;}
-h1.alert, h2.alert		{color: #a4bad6;}
+h1.alert, h2.alert	{color: #a4bad6;}
 
 em						{font-style: normal;	font-weight: bold;}
 
@@ -274,12 +274,12 @@ em						{font-style: normal;	font-weight: bold;}
 
 .say					{}
 .deadsay				{color: #e2c1ff}
-.binarysay				{color: #20c20e;	background-color: #000000;	display: block;}
+.binarysay				{color: #1e90ff;}
 .binarysay a			{color: #00ff00;}
 .binarysay a:active, .binarysay a:visited {color: #88ff88;}
 .radio					{color: #1ecc43;}
 .sciradio				{color: #c68cfa;}
-.comradio				{color: #5177ff;}
+.comradio				{color: #fcdf03;}
 .secradio				{color: #dd3535;}
 .medradio				{color: #57b8f0;}
 .engradio				{color: #f37746;}
@@ -294,14 +294,8 @@ em						{font-style: normal;	font-weight: bold;}
 .yell					{					font-weight: bold;}
 
 .alert					{color: #d82020;}
-h1.alert, h2.alert		{color: #000000;}
 
 .emote					{					font-style: italic;}
-.selecteddna			{color: #ffffff;	background-color: #001B1B}
-
-.attack					{color: #e01c1c;}
-.disarm					{color: #b42525;}
-.passive				{color: #a00f0f;}
 
 .userdanger				{color: #c51e1e;	font-weight: bold;	font-size: 185%;}
 .danger					{color: #c51e1e;}
@@ -324,9 +318,8 @@ h1.alert, h2.alert		{color: #000000;}
 .red					{color: #FF0000}
 .blue					{color: #215cff}
 .nicegreen				{color: #059223;}
-.shadowling				{color: #8e8a99;}
-.cult					{color: #aa1c1c;}
 
+.cult					{color: #aa1c1c;}
 .cultitalic				{color: #aa1c1c;	font-style: italic;}
 .cultbold				{color: #aa1c1c;	font-style: italic;	font-weight: bold;}
 .cultboldtalic			{color: #aa1c1c;	font-weight: bold;	font-size: 185%;}
@@ -346,37 +339,15 @@ h1.alert, h2.alert		{color: #000000;}
 .revenminor				{color: #823abb}
 .revenwarning			{color: #760fbb;	font-style: italic;}
 .revendanger			{color: #760fbb;	font-weight: bold;	font-size: 185%;}
-.umbra					{color: #7c00e6;}
-.umbra_emphasis			{color: #7c00e6;	font-weight: bold;	font-style: italic;}
-.umbra_large			{color: #7c00e6;	font-size: 185%;	font-weight: bold;	font-style: italic;}
 
 .deconversion_message	{color: #a947ff;	font-size: 185%;	font-style: italic;}
 
-.nezbere_large			{color: #42474D;	font-size: 185%;	font-weight: bold;	font-style: italic;}
-.nezbere				{color: #42474D;	font-weight: bold;	font-style: italic;}
-.nezbere_small			{color: #42474D;}
-.sevtug_large			{color: #AF0AAF;	font-size: 185%;	font-weight: bold;	font-style: italic;}
-.sevtug					{color: #AF0AAF;	font-weight: bold;	font-style: italic;}
-.sevtug_small			{color: #AF0AAF;}
-.inathneq_large			{color: #1E8CE1;	font-size: 185%;	font-weight: bold;	font-style: italic;}
-.inathneq				{color: #1E8CE1;	font-weight: bold;	font-style: italic;}
-.inathneq_small			{color: #1E8CE1;}
-.nzcrentr_large			{color: #DAAA18;	font-size: 185%;	font-weight: bold;	font-style: italic;}
-.nzcrentr				{color: #DAAA18;	font-weight: bold;	font-style: italic;}
-.nzcrentr_small			{color: #DAAA18;}
-.neovgre_large			{color: #6E001A;	font-size: 185%;	font-weight: bold;	font-style: italic;}
-.neovgre				{color: #6E001A;	font-weight: bold;	font-style: italic;}
-.neovgre_small			{color: #6E001A;}
-
-.newscaster				{color: #c05d5d;}
 .ghostalert				{color: #6600ff;	font-style: italic;	font-weight: bold;}
 
 .alien					{color: #855d85;}
 .noticealien			{color: #059223;}
 .alertalien				{color: #059223;	font-weight: bold;}
 .changeling				{color: #059223;	font-style: italic;}
-.alertsyndie			{color: #FF0000;	font-size: 24px;	font-weight: bold;}
-.assimilator			{color: #059223;	font-size: 125%;	font-weight: bold;}
 .alertsyndie			{color: #FF0000;	font-size: 185%;	font-weight: bold;}
 
 .spider					{color: #8800ff;	font-weight: bold;	font-size: 185%;}
@@ -395,8 +366,9 @@ h1.alert, h2.alert		{color: #000000;}
 .greentext				{color: #059223;	font-size: 185%;}
 .redtext				{color: #c51e1e;	font-size: 185%;}
 .clown					{color: #ff70c1;	font-size: 160%;	font-family: "Comic Sans MS", cursive, sans-serif;	font-weight: bold;}
+.singing				{font-family: "Trebuchet MS", cursive, sans-serif; font-style: italic;}
 .his_grace				{color: #15D512;	font-family: "Courier New", cursive, sans-serif;	font-style: italic;}
-.hypnophrase			{color: #202020;	font-weight: bold;	animation: hypnocolor 1500ms infinite;}
+.hypnophrase			{color: #202020;	font-weight: bold;	animation: hypnocolor 1500ms infinite; animation-direction: alternate;}
 @keyframes hypnocolor {
 	0%		{color: #202020;}
 	25%		{color: #4b02ac;}
@@ -434,3 +406,6 @@ h1.alert, h2.alert		{color: #000000;}
 /* HELPER CLASSES */
 .text-normal {font-weight: normal;	font-style: normal;}
 .hidden {display: none;	visibility: hidden;}
+.ml-1 {margin-left: 1em;}
+.ml-2 {margin-left: 2em;}
+.ml-3 {margin-left: 3em;}

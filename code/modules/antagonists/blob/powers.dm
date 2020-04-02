@@ -318,7 +318,7 @@
 	if(!surrounding_turfs.len)
 		return
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
-		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
+		if(isturf(BS.loc) && get_dist(BS, T) <= 35 && !BS.key)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 
@@ -326,7 +326,7 @@
 	set category = "Blob"
 	set name = "Blob Broadcast"
 	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces."
-	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text|null
+	var/speak_text = stripped_input(src, "What would you like to say with your minions?", "Blob Broadcast", null)
 	if(!speak_text)
 		return
 	else
@@ -354,7 +354,7 @@
 		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
 		choices[initial(bs.name)] = bs
 
-	var/choice = input(usr, "Please choose a new strain","Strain") as anything in choices
+	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortList(choices, /proc/cmp_typepaths_asc)
 	if (choice && choices[choice] && !QDELETED(src))
 		var/datum/blobstrain/bs = choices[choice]
 		set_strain(bs)

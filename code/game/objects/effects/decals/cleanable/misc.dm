@@ -11,7 +11,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "ash"
 	mergeable_decal = FALSE
-	beauty = -50	
+	beauty = -50
 
 /obj/effect/decal/cleanable/ash/Initialize()
 	. = ..()
@@ -91,6 +91,11 @@
 /obj/effect/decal/cleanable/greenglow/filled/Initialize()
 	. = ..()
 	reagents.add_reagent(pick(/datum/reagent/uranium, /datum/reagent/uranium/radium), 5)
+
+/obj/effect/decal/cleanable/greenglow/ecto
+	name = "ectoplasmic puddle"
+	desc = "You know who to call."
+	light_power = 2
 
 /obj/effect/decal/cleanable/cobweb
 	name = "cobweb"
@@ -172,9 +177,11 @@
 	if(severity == 1) //so shreds created during an explosion aren't deleted by the explosion.
 		qdel(src)
 
-/obj/effect/decal/cleanable/shreds/Initialize()
+/obj/effect/decal/cleanable/shreds/Initialize(mapload, oldname)
 	pixel_x = rand(-10, 10)
 	pixel_y = rand(-10, 10)
+	if(!isnull(oldname))
+		desc = "The sad remains of what used to be [oldname]"
 	. = ..()
 
 /obj/effect/decal/cleanable/glitter
@@ -202,7 +209,7 @@
 	desc = "A puddle of stabilized plasma."
 	icon_state = "flour"
 	icon = 'icons/effects/tomatodecal.dmi'
-	color = "#C8A5DC"
+	color = "#2D2D2D"
 
 /obj/effect/decal/cleanable/insectguts
 	name = "insect guts"
@@ -217,3 +224,16 @@
 	icon = 'icons/effects/confetti_and_decor.dmi'
 	icon_state = "confetti"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT //the confetti itself might be annoying enough
+
+/obj/effect/decal/cleanable/plastic
+	name = "plastic shreds"
+	desc = "Bits of torn, broken, worthless plastic."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shards"
+	color = "#c6f4ff"
+
+/obj/effect/decal/cleanable/wrapping
+	name = "wrapping shreds"
+	desc = "Torn pieces of cardboard and paper, left over from a package."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "paper_shreds"

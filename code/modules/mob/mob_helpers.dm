@@ -51,134 +51,128 @@
 /**
   * Convert random parts of a passed in message to stars
   *
-  * * n - the string to convert
-  * * pr - probability any character gets changed
+  * * phrase - the string to convert
+  * * probability - probability any character gets changed
   *
   * This proc is dangerously laggy, avoid it or die
   */
-/proc/stars(n, pr)
-	n = html_encode(n)
-	if (pr == null)
-		pr = 25
-	if (pr <= 0)
-		return null
-	else
-		if (pr >= 100)
-			return n
-	var/te = n
-	var/t = ""
-	n = length(n)
-
-	for(var/p = 1 to min(n,MAX_BROADCAST_LEN))
-		if ((copytext(te, p, p + 1) == " " || prob(pr)))
-			t = text("[][]", t, copytext(te, p, p + 1))
+/proc/stars(phrase, probability = 25)
+	if(probability <= 0)
+		return phrase
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/char = ""
+	for(var/i = 1, i <= leng, i += length(char))
+		char = phrase[i]
+		if(char == " " || !prob(probability))
+			. += char
 		else
-			t = text("[]*", t)
-	if(n > MAX_BROADCAST_LEN)
-		t += "..." //signals missing text
-	return sanitize(t)
+			. += "*"
+	return sanitize(.)
+
 /**
   * Makes you speak like you're drunk
   */
-/proc/slur(n)
-	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,3)==3)
-			if(lowertext(newletter)=="o")
-				newletter="u"
-			if(lowertext(newletter)=="s")
-				newletter="ch"
-			if(lowertext(newletter)=="a")
-				newletter="ah"
-			if(lowertext(newletter)=="u")
-				newletter="oo"
-			if(lowertext(newletter)=="c")
-				newletter="k"
-		if(rand(1,20)==20)
-			if(newletter==" ")
-				newletter="...huuuhhh..."
-			if(newletter==".")
-				newletter=" *BURP*."
-		switch(rand(1,20))
+/proc/slur(phrase)
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/newletter = ""
+	var/rawchar = ""
+	for(var/i = 1, i <= leng, i += length(rawchar))
+		rawchar = newletter = phrase[i]
+		if(rand(1, 3) == 3)
+			var/lowerletter = lowertext(newletter)
+			if(lowerletter == "o")
+				newletter = "u"
+			else if(lowerletter == "s")
+				newletter = "ch"
+			else if(lowerletter == "a")
+				newletter = "ah"
+			else if(lowerletter == "u")
+				newletter = "oo"
+			else if(lowerletter == "c")
+				newletter = "k"
+		if(rand(1, 20) == 20)
+			if(newletter == " ")
+				newletter = "...huuuhhh..."
+			else if(newletter == ".")
+				newletter = " *BURP*."
+		switch(rand(1, 20))
 			if(1)
-				newletter+="'"
+				newletter += "'"
 			if(10)
-				newletter+="[newletter]"
+				newletter += "[newletter]"
 			if(20)
-				newletter+="[newletter][newletter]"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
+				newletter += "[newletter][newletter]"
+		. += "[newletter]"
+	return sanitize(.)
 
 /// Makes you talk like you got cult stunned, which is slurring but with some dark messages
-/proc/cultslur(n) // Inflicted on victims of a stun talisman
-	var/phrase = html_decode(n)
-	var/leng = lentext(phrase)
-	var/counter=lentext(phrase)
-	var/newphrase=""
-	var/newletter=""
-	while(counter>=1)
-		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
-		if(rand(1,2)==2)
-			if(lowertext(newletter)=="o")
-				newletter="u"
-			if(lowertext(newletter)=="t")
-				newletter="ch"
-			if(lowertext(newletter)=="a")
-				newletter="ah"
-			if(lowertext(newletter)=="u")
-				newletter="oo"
-			if(lowertext(newletter)=="c")
-				newletter=" NAR "
-			if(lowertext(newletter)=="s")
-				newletter=" SIE "
-		if(rand(1,4)==4)
-			if(newletter==" ")
-				newletter=" no hope... "
-			if(newletter=="H")
-				newletter=" IT COMES... "
+/proc/cultslur(phrase) // Inflicted on victims of a stun talisman
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/newletter = ""
+	var/rawchar = ""
+	for(var/i = 1, i <= leng, i += length(rawchar))
+		rawchar = newletter = phrase[i]
+		if(rand(1, 2) == 2)
+			var/lowerletter = lowertext(newletter)
+			if(lowerletter == "o")
+				newletter = "u"
+			else if(lowerletter == "t")
+				newletter = "ch"
+			else if(lowerletter == "a")
+				newletter = "ah"
+			else if(lowerletter == "u")
+				newletter = "oo"
+			else if(lowerletter == "c")
+				newletter = " NAR "
+			else if(lowerletter == "s")
+				newletter = " SIE "
+		if(rand(1, 4) == 4)
+			if(newletter == " ")
+				newletter = " no hope... "
+			else if(newletter == "H")
+				newletter = " IT COMES... "
 
-		switch(rand(1,15))
+		switch(rand(1, 15))
 			if(1)
-				newletter="'"
+				newletter = "'"
 			if(2)
-				newletter+="agn"
+				newletter += "agn"
 			if(3)
-				newletter="fth"
+				newletter = "fth"
 			if(4)
-				newletter="nglu"
+				newletter = "nglu"
 			if(5)
-				newletter="glor"
-		newphrase+="[newletter]";counter-=1
-	return newphrase
+				newletter = "glor"
+		. += newletter
+	return sanitize(.)
 
 ///Adds stuttering to the message passed in
-/proc/stutter(n)
-	var/te = html_decode(n)
-	var/t = ""//placed before the message. Not really sure what it's for.
-	n = length(n)//length of the entire word
-	var/p = null
-	p = 1//1 is the start of any word
-	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
-		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		if (prob(80) && (ckey(n_letter) in list("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")))
-			if (prob(10))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
+/proc/stutter(phrase)
+	phrase = html_decode(phrase)
+	var/leng = length(phrase)
+	. = ""
+	var/newletter = ""
+	var/rawchar = ""
+	var/static/regex/nostutter = regex(@@[aeiouAEIOU "'()[\]{}.!?,:;_`~-]@)
+	for(var/i = 1, i <= leng, i += length(rawchar))
+		rawchar = newletter = phrase[i]
+		if(prob(80) && !nostutter.Find(rawchar))
+			if(prob(10))
+				newletter = "[newletter]-[newletter]-[newletter]-[newletter]"
+			else if(prob(20))
+				newletter = "[newletter]-[newletter]-[newletter]"
+			else if (prob(5))
+				newletter = ""
 			else
-				if (prob(20))
-					n_letter = text("[n_letter]-[n_letter]-[n_letter]")
-				else
-					if (prob(5))
-						n_letter = null
-					else
-						n_letter = text("[n_letter]-[n_letter]")
-		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
-		p++//for each letter p is increased to find where the next letter will be.
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+				newletter = "[newletter]-[newletter]"
+		. += newletter
+	return sanitize(.)
 
 ///Convert a message to derpy speak
 /proc/derpspeech(message, stuttering)
@@ -204,48 +198,20 @@
   * text is the inputted message, replace_characters will cause original letters to be replaced and chance are the odds that a character gets modified.
   */
 /proc/Gibberish(text, replace_characters = FALSE, chance = 50)
+	text = html_decode(text)
 	. = ""
-	for(var/i in 1 to length(text))
-		var/letter = text[i]
+	var/rawchar = ""
+	var/letter = ""
+	var/lentext = length(text)
+	for(var/i = 1, i <= lentext, i += length(rawchar))
+		rawchar = letter = text[i]
 		if(prob(chance))
 			if(replace_characters)
 				letter = ""
 			for(var/j in 1 to rand(0, 2))
-				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+				letter += pick("#", "@", "*", "&", "%", "$", "/", "<", ">", ";", "*", "*", "*", "*", "*", "*", "*")
 		. += letter
-
-
-/**
-  * Convert a message into leet non gaijin speak
-  *
-  * The difference with stutter is that this proc can stutter more than 1 letter
-  *
-  * The issue here is that anything that does not have a space is treated as one word (in many instances). For instance, "LOOKING," is a word, including the comma.
-  *
-  * It's fairly easy to fix if dealing with single letters but not so much with compounds of letters./N
-  */
-/proc/ninjaspeak(n) //NINJACODE
-	var/te = html_decode(n)
-	var/t = ""
-	n = length(n)
-	var/p = 1
-	while(p <= n)
-		var/n_letter
-		var/n_mod = rand(1,4)
-		if(p+n_mod>n+1)
-			n_letter = copytext(te, p, n+1)
-		else
-			n_letter = copytext(te, p, p+n_mod)
-		if (prob(50))
-			if (prob(30))
-				n_letter = text("[n_letter]-[n_letter]-[n_letter]")
-			else
-				n_letter = text("[n_letter]-[n_letter]")
-		else
-			n_letter = text("[n_letter]")
-		t = text("[t][n_letter]")
-		p=p+n_mod
-	return copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+	return sanitize(.)
 
 ///Shake the camera of the person viewing the mob SO REAL!
 /proc/shake_camera(mob/M, duration, strength=1)
@@ -319,12 +285,10 @@
 	if(hud_used && hud_used.action_intent)
 		hud_used.action_intent.icon_state = "[a_intent]"
 
-///Checks if passed through item is blind
-/proc/is_blind(A)
-	if(ismob(A))
-		var/mob/B = A
-		return B.eye_blind
-	return FALSE
+///Checks if the mob is able to see or not. eye_blind is temporary blindness, the trait is if they're permanently blind.
+/mob/proc/is_blind()
+	SHOULD_BE_PURE(TRUE)
+	return eye_blind ? TRUE : HAS_TRAIT(src, TRAIT_BLIND)
 
 ///Is the mob hallucinating?
 /mob/proc/hallucinating()
@@ -410,7 +374,7 @@
 	for(var/mob/dead/observer/O in GLOB.player_list)
 		if(!notify_suiciders && (O in GLOB.suicided_mob_list))
 			continue
-		if (ignore_key && O.ckey in GLOB.poll_ignore[ignore_key])
+		if (ignore_key && (O.ckey in GLOB.poll_ignore[ignore_key]))
 			continue
 		var/orbit_link
 		if (source && action == NOTIFY_ORBIT)
@@ -450,7 +414,7 @@
 		if((brute_heal > 0 && affecting.brute_dam > 0) || (burn_heal > 0 && affecting.burn_dam > 0))
 			if(affecting.heal_damage(brute_heal, burn_heal, 0, BODYPART_ROBOTIC))
 				H.update_damage_overlays()
-			user.visible_message("<span class='notice'>[user] has fixed some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>", \
+			user.visible_message("<span class='notice'>[user] fixes some of the [dam ? "dents on" : "burnt wires in"] [H]'s [affecting.name].</span>", \
 			"<span class='notice'>You fix some of the [dam ? "dents on" : "burnt wires in"] [H == user ? "your" : "[H]'s"] [affecting.name].</span>")
 			return 1 //successful heal
 		else
@@ -504,11 +468,13 @@
 		return FALSE
 
 ///Is the mob a flying mob
-/mob/proc/is_flying(mob/M = src)
-	if(M.movement_type & FLYING)
-		return 1
-	else
-		return 0
+/mob/proc/is_flying()
+	return (movement_type & FLYING)
+
+///Is the mob a floating mob
+/mob/proc/is_floating()
+	return (movement_type & FLOATING)
+
 
 ///Clicks a random nearby mob with the source from this mob
 /mob/proc/click_random_mob()

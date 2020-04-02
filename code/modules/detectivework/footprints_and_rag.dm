@@ -1,7 +1,4 @@
 
-/mob
-	var/bloody_hands = 0
-
 /obj/item/clothing/gloves
 	var/transfer_blood = 0
 
@@ -33,15 +30,15 @@
 		var/log_object = "containing [reagentlist]"
 		if(user.a_intent == INTENT_HARM && !C.is_mouth_covered())
 			reagents.trans_to(C, reagents.total_volume, transfered_by = user, method = INGEST)
-			C.visible_message("<span class='danger'>[user] has smothered \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] has smothered you with \the [src]!</span>", "<span class='hear'>You hear some struggling and muffled cries of surprise.</span>")
+			C.visible_message("<span class='danger'>[user] smothers \the [C] with \the [src]!</span>", "<span class='userdanger'>[user] smothers you with \the [src]!</span>", "<span class='hear'>You hear some struggling and muffled cries of surprise.</span>")
 			log_combat(user, C, "smothered", src, log_object)
 		else
 			reagents.reaction(C, TOUCH)
 			reagents.clear_reagents()
-			C.visible_message("<span class='notice'>[user] has touched \the [C] with \the [src].</span>")
+			C.visible_message("<span class='notice'>[user] touches \the [C] with \the [src].</span>")
 			log_combat(user, C, "touched", src, log_object)
 
-	else if(istype(A) && src in user)
+	else if(istype(A) && (src in user))
 		user.visible_message("<span class='notice'>[user] starts to wipe down [A] with [src]!</span>", "<span class='notice'>You start to wipe down [A] with [src]...</span>")
 		if(do_after(user,30, target = A))
 			user.visible_message("<span class='notice'>[user] finishes wiping off [A]!</span>", "<span class='notice'>You finish wiping off [A].</span>")

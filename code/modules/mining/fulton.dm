@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	else
 		var/A
 
-		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in possible_beacons
+		A = input("Select a beacon to connect to", "Balloon Extraction Pack", A) as null|anything in sortNames(possible_beacons)
 
 		if(!A)
 			return

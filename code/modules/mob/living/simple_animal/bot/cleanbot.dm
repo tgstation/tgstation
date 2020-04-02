@@ -14,7 +14,7 @@
 	model = "Cleanbot"
 	bot_core_type = /obj/machinery/bot_core/cleanbot
 	window_id = "autoclean"
-	window_name = "Automatic Station Cleaner v1.3"
+	window_name = "Automatic Station Cleaner v1.4"
 	pass_flags = PASSMOB
 	path_image_color = "#993299"
 
@@ -33,14 +33,92 @@
 	var/next_dest
 	var/next_dest_loc
 
+	var/obj/item/weapon
+	var/weapon_orig_force = 0
+	var/chosen_name
+
+	var/list/stolen_valor
+
+	var/static/list/officers = list("Captain", "Head of Personnel", "Head of Security")
+	var/static/list/command = list("Captain" = "Cpt.","Head of Personnel" = "Lt.")
+	var/static/list/security = list("Head of Security" = "Maj.", "Warden" = "Sgt.", "Detective" =  "Det.", "Security Officer" = "Officer")
+	var/static/list/engineering = list("Chief Engineer" = "Chief Engineer", "Station Engineer" = "Engineer", "Atmospherics Technician" = "Technician")
+	var/static/list/medical = list("Chief Medical Officer" = "C.M.O.", "Medical Doctor" = "M.D.", "Chemist" = "Pharm.D.")
+	var/static/list/research = list("Research Director" = "Ph.D.", "Roboticist" = "M.S.", "Scientist" = "B.S.")
+	var/static/list/legal = list("Lawyer" = "Esq.")
+
+	var/list/prefixes
+	var/list/suffixes
+
+	var/ascended = FALSE // if we have all the top titles, grant achievements to living mobs that gaze upon our cleanbot god
+
+
+/mob/living/simple_animal/bot/cleanbot/proc/deputize(obj/item/W, mob/user)
+	if(in_range(src, user))
+		to_chat(user, "<span class='notice'>You attach \the [W] to \the [src].</span>")
+		user.transferItemToLoc(W, src)
+		weapon = W
+		weapon_orig_force = weapon.force
+		if(!emagged)
+			weapon.force = weapon.force / 2
+		add_overlay(image(icon=weapon.lefthand_file,icon_state=weapon.item_state))
+
+/mob/living/simple_animal/bot/cleanbot/proc/update_titles()
+	var/working_title = ""
+
+	ascended = TRUE
+
+	for(var/pref in prefixes)
+		for(var/title in pref)
+			if(title in stolen_valor)
+				working_title += pref[title] + " "
+				if(title in officers)
+					commissioned = TRUE
+				break
+			else
+				ascended = FALSE // we didn't have the first entry in the list if we got here, so we're not achievement worthy yet
+
+	working_title += chosen_name
+
+	for(var/suf in suffixes)
+		for(var/title in suf)
+			if(title in stolen_valor)
+				working_title += " " + suf[title]
+				break
+			else
+				ascended = FALSE
+
+	name = working_title
+
+/mob/living/simple_animal/bot/cleanbot/examine(mob/user)
+	. = ..()
+	if(weapon)
+		. += " <span class='warning'>Is that \a [weapon] taped to it...?</span>"
+
+		if(ascended && user.stat == CONSCIOUS && user.client)
+			user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
+
 /mob/living/simple_animal/bot/cleanbot/Initialize()
 	. = ..()
+
+	chosen_name = name
 	get_targets()
 	icon_state = "cleanbot[on]"
 
 	var/datum/job/janitor/J = new/datum/job/janitor
 	access_card.access += J.get_access()
 	prev_access = access_card.access
+	stolen_valor = list()
+
+	prefixes = list(command, security, engineering)
+	suffixes = list(research, medical, legal)
+
+/mob/living/simple_animal/bot/cleanbot/Destroy()
+	if(weapon)
+		var/atom/Tsec = drop_location()
+		weapon.force = weapon_orig_force
+		drop_part(weapon, Tsec)
+	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/turn_on()
 	..()
@@ -54,6 +132,8 @@
 
 /mob/living/simple_animal/bot/cleanbot/bot_reset()
 	..()
+	if(weapon && emagged == 2)
+		weapon.force = weapon_orig_force
 	ignore_list = list() //Allows the bot to clean targets it previously ignored due to being unreachable.
 	target = null
 	oldloc = null
@@ -62,6 +142,22 @@
 	text_hack = "You corrupt [name]'s cleaning software."
 	text_dehack = "[name]'s software has been reset!"
 	text_dehack_fail = "[name] does not seem to respond to your repair code!"
+
+/mob/living/simple_animal/bot/cleanbot/Crossed(atom/movable/AM)
+	. = ..()
+
+	zone_selected = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	if(weapon && has_gravity() && ismob(AM))
+		var/mob/living/carbon/C = AM
+		if(!istype(C))
+			return
+
+		if(!(C.job in stolen_valor))
+			stolen_valor += C.job
+		update_titles()
+
+		weapon.attack(C, src)
+		C.Knockdown(20)
 
 /mob/living/simple_animal/bot/cleanbot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/card/id)||istype(W, /obj/item/pda))
@@ -75,12 +171,19 @@
 				to_chat(user, "<span class='warning'>Please close the access panel before locking it.</span>")
 			else
 				to_chat(user, "<span class='notice'>\The [src] doesn't seem to respect your authority.</span>")
+	else if(istype(W, /obj/item/kitchen/knife) && user.a_intent != INTENT_HARM)
+		to_chat(user, "<span class='notice'>You start attaching \the [W] to \the [src]...</span>")
+		if(do_after(user, 25, target = src))
+			deputize(W, user)
 	else
 		return ..()
 
 /mob/living/simple_animal/bot/cleanbot/emag_act(mob/user)
 	..()
+
 	if(emagged == 2)
+		if(weapon)
+			weapon.force = weapon_orig_force
 		if(user)
 			to_chat(user, "<span class='danger'>[src] buzzes and beeps.</span>")
 
@@ -196,7 +299,7 @@
 		target_types += /obj/effect/decal/cleanable/trail_holder
 
 	if(pests)
-		target_types += /mob/living/simple_animal/cockroach
+		target_types += /mob/living/simple_animal/hostile/cockroach
 		target_types += /mob/living/simple_animal/mouse
 
 	if(drawn)
@@ -230,7 +333,7 @@
 		playsound(src, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 		A.acid_act(75, 10)
 		target = null
-	else if(istype(A, /mob/living/simple_animal/cockroach) || istype(A, /mob/living/simple_animal/mouse))
+	else if(istype(A, /mob/living/simple_animal/hostile/cockroach) || istype(A, /mob/living/simple_animal/mouse))
 		var/mob/living/simple_animal/M = target
 		if(!M.stat)
 			visible_message("<span class='danger'>[src] smashes [target] with its mop!</span>")
@@ -278,6 +381,11 @@
 	do_sparks(3, TRUE, src)
 	..()
 
+/mob/living/simple_animal/bot/cleanbot/medbay
+	name = "Scrubs, MD"
+	bot_core_type = /obj/machinery/bot_core/cleanbot/medbay
+	on = FALSE
+
 /obj/machinery/bot_core/cleanbot
 	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS)
 
@@ -312,3 +420,6 @@ Maintenance panel panel is [open ? "opened" : "closed"]"})
 				drawn = !drawn
 		get_targets()
 		update_controls()
+
+/obj/machinery/bot_core/cleanbot/medbay
+	req_one_access = list(ACCESS_JANITOR, ACCESS_ROBOTICS, ACCESS_MEDICAL)

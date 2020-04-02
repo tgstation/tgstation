@@ -136,7 +136,7 @@
 		/datum/reagent/medicine/diphenhydramine,\
 		/datum/reagent/drug/space_drugs,\
 		/datum/reagent/drug/crank,\
-		/datum/reagent/blackpowder,\
+		/datum/reagent/gunpowder,\
 		/datum/reagent/napalm,\
 		/datum/reagent/firefighting_foam,\
 		/datum/reagent/consumable/mayonnaise,\
@@ -188,3 +188,71 @@
 	name = wanted_reagent.name
 	description = "CentCom is paying premium for the chemical [name]. Ship a container of it to be rewarded."
 	reward += rand(0, 5) * 750 //6000 to 9750 credits
+
+/datum/bounty/pill
+	/// quantity of the pills needed, this value acts as minimum, gets randomized on new()
+	var/required_ammount = 80
+	/// counter for pills sent
+	var/shipped_ammount = 0
+	/// reagent requested
+	var/datum/reagent/wanted_reagent
+	/// minimum volume of chemical needed, gets randomized on new()
+	var/wanted_vol = 30
+
+/datum/bounty/pill/completion_string()
+	return {"[shipped_ammount]/[required_ammount] pills"}
+
+/datum/bounty/pill/can_claim()
+	return ..() && shipped_ammount >= required_ammount
+
+/datum/bounty/pill/applies_to(obj/O)
+	if(!istype(O, /obj/item/reagent_containers/pill))
+		return FALSE
+	if(O?.reagents.get_reagent_amount(wanted_reagent.type) >= wanted_vol)
+		return TRUE
+	return FALSE
+
+/datum/bounty/pill/ship(obj/O)
+	if(!applies_to(O))
+		return
+	shipped_ammount += 1
+	if(shipped_ammount > required_ammount)
+		shipped_ammount = required_ammount
+
+/datum/bounty/pill/compatible_with(other_bounty)
+	if(!istype(other_bounty, /datum/bounty/pill/simple_pill))
+		return TRUE
+	var/datum/bounty/pill/simple_pill/P = other_bounty
+	return (wanted_reagent.type == P.wanted_reagent.type) && (wanted_vol == P.wanted_vol)
+
+/datum/bounty/pill/simple_pill
+	name = "Simple Pill"
+	reward = 10000
+
+/datum/bounty/pill/simple_pill/New()
+	//reagent that are possible to be chem factory'd
+	var/static/list/possible_reagents = list(\
+		/datum/reagent/medicine/spaceacillin,\
+		/datum/reagent/medicine/C2/instabitaluri,\
+		/datum/reagent/medicine/pen_acid,\
+		/datum/reagent/medicine/atropine,\
+		/datum/reagent/medicine/cryoxadone,\
+		/datum/reagent/medicine/salbutamol,\
+		/datum/reagent/medicine/C2/hercuri,\
+		/datum/reagent/medicine/C2/probital,\
+		/datum/reagent/drug/methamphetamine,\
+		/datum/reagent/drug/crank,\
+		/datum/reagent/nitrous_oxide,\
+		/datum/reagent/barbers_aid,\
+		/datum/reagent/pax,\
+		/datum/reagent/flash_powder,\
+		/datum/reagent/phlogiston,\
+		/datum/reagent/firefighting_foam)
+
+	var/datum/reagent/reagent_type = pick(possible_reagents)
+	wanted_reagent = new reagent_type
+	name = "[wanted_reagent.name] pills"
+	required_ammount += rand(1,60)
+	wanted_vol += rand(1,20)
+	description = "CentCom requires [required_ammount] of [name] containing at least [wanted_vol] each. Ship a container of it to be rewarded."
+	reward += rand(1, 5) * 3000

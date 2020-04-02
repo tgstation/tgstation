@@ -41,6 +41,6 @@
 
 /obj/item/reagent_containers/pill/patch/instabitaluri
 	name = "instabitaluri patch"
-	desc = "Helps with brute and burn injuries."
+	desc = "Helps with brute and burn injuries. Slightly toxic."
 	list_reagents = list(/datum/reagent/medicine/C2/instabitaluri = 20)
 	icon_state = "bandaid_both"

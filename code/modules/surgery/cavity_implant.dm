@@ -31,7 +31,7 @@
 			"<span class='notice'>[user] checks for items in [target]'s [target_zone].</span>",
 			"<span class='notice'>[user] looks for something in [target]'s [target_zone].</span>")
 
-/datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/handle_cavity/success(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery = FALSE)
 	var/obj/item/bodypart/chest/CH = target.get_bodypart(BODY_ZONE_CHEST)
 	if(tool)
 		if(IC || tool.w_class > WEIGHT_CLASS_NORMAL || HAS_TRAIT(tool, TRAIT_NODROP) || istype(tool, /obj/item/organ))
@@ -43,7 +43,7 @@
 				"<span class='notice'>[user] stuffs [tool.w_class > WEIGHT_CLASS_SMALL ? tool : "something"] into [target]'s [target_zone].</span>")
 			user.transferItemToLoc(tool, target, TRUE)
 			CH.cavity_item = tool
-			return 1
+			return ..()
 	else
 		if(IC)
 			display_results(user, target, "<span class='notice'>You pull [IC] out of [target]'s [target_zone].</span>",
@@ -51,7 +51,7 @@
 				"<span class='notice'>[user] pulls [IC.w_class > WEIGHT_CLASS_SMALL ? IC : "something"] out of [target]'s [target_zone].</span>")
 			user.put_in_hands(IC)
 			CH.cavity_item = null
-			return 1
+			return ..()
 		else
 			to_chat(user, "<span class='warning'>You don't find anything in [target]'s [target_zone].</span>")
 			return 0

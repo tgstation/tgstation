@@ -1,7 +1,7 @@
 /obj/item/organ/stomach
 	name = "stomach"
 	icon_state = "stomach"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_SMALL
 	zone = BODY_ZONE_CHEST
 	slot = ORGAN_SLOT_STOMACH
 	attack_verb = list("gored", "squished", "slapped", "digested")
@@ -41,6 +41,9 @@
 		if(prob((damage/10) * Nutri.volume * Nutri.volume))
 			H.vomit(damage)
 			to_chat(H, "<span class='warning'>Your stomach reels in pain as you're incapable of holding down all that food!</span>")
+
+/obj/item/organ/stomach/get_availability(datum/species/S)
+	return !(NOSTOMACH in S.species_traits)
 
 /obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/H)
 	if(H.disgust)
@@ -124,4 +127,4 @@
 	to_chat(owner, "<span class='notice'>You absorb some of the shock into your body!</span>")
 
 /obj/item/organ/stomach/ethereal/proc/adjust_charge(amount)
-	crystal_charge = CLAMP(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_FULL)
+	crystal_charge = clamp(crystal_charge + amount, ETHEREAL_CHARGE_NONE, ETHEREAL_CHARGE_DANGEROUS)

@@ -28,6 +28,7 @@ Difficulty: Medium
 	icon_state = "miner"
 	icon_living = "miner"
 	icon = 'icons/mob/broadMobs.dmi'
+	health_doll_icon = "miner"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = "#E4C7C5"
 	movement_type = GROUND
@@ -45,7 +46,9 @@ Difficulty: Medium
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
 	gps_name = "Resonant Signal"
-	medal_type = BOSS_MEDAL_MINER
+	achievement_type = /datum/award/achievement/boss/blood_miner_kill
+	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
+	score_achievement_type = /datum/award/score/blood_miner_score
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE

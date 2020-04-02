@@ -50,7 +50,7 @@
 
 /obj/machinery/recharge_station/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)))
+	if(!(machine_stat & (BROKEN|NOPOWER)))
 		if(occupant && !(. & EMP_PROTECT_CONTENTS))
 			occupant.emp_act(severity)
 		if (!(. & EMP_PROTECT_SELF))
@@ -88,7 +88,7 @@
 		use_power = ACTIVE_POWER_USE //It always tries to charge, even if it can't.
 		add_fingerprint(occupant)
 
-/obj/machinery/recharge_station/update_icon()
+/obj/machinery/recharge_station/update_icon_state()
 	if(is_operational())
 		if(state_open)
 			icon_state = "borgcharger0"

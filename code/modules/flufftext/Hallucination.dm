@@ -134,6 +134,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	Show()
 
 /obj/effect/hallucination/simple/Moved(atom/OldLoc, Dir)
+	. = ..()
 	Show()
 
 /obj/effect/hallucination/simple/Destroy()
@@ -145,10 +146,18 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 #define FAKE_FLOOD_EXPAND_TIME 20
 #define FAKE_FLOOD_MAX_RADIUS 10
 
+/obj/effect/plasma_image_holder
+	icon_state = "nothing"
+	anchored = TRUE
+	layer = FLY_LAYER
+	plane = GAME_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
 /datum/hallucination/fake_flood
 	//Plasma starts flooding from the nearby vent
 	var/turf/center
 	var/list/flood_images = list()
+	var/list/flood_image_holders = list()
 	var/list/turf/flood_turfs = list()
 	var/image_icon = 'icons/effects/atmospherics.dmi'
 	var/image_state = "plasma"
@@ -166,10 +175,12 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		qdel(src)
 		return
 	feedback_details += "Vent Coords: [center.x],[center.y],[center.z]"
-	var/image/plasma_image = image(image_icon,center,image_state,FLY_LAYER)
+	var/obj/effect/plasma_image_holder/pih = new(center)
+	var/image/plasma_image = image(image_icon, pih, image_state, FLY_LAYER)
 	plasma_image.alpha = 50
 	plasma_image.plane = GAME_PLANE
 	flood_images += plasma_image
+	flood_image_holders += pih
 	flood_turfs += center
 	if(target.client)
 		target.client.images |= flood_images
@@ -195,10 +206,12 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 			var/turf/T = get_step(FT, dir)
 			if((T in flood_turfs) || !FT.CanAtmosPass(T))
 				continue
-			var/image/new_plasma = image(image_icon,T,image_state,FLY_LAYER)
+			var/obj/effect/plasma_image_holder/pih = new(T)
+			var/image/new_plasma = image(image_icon, pih, image_state, FLY_LAYER)
 			new_plasma.alpha = 50
 			new_plasma.plane = GAME_PLANE
 			flood_images += new_plasma
+			flood_image_holders += pih
 			flood_turfs += T
 	if(target.client)
 		target.client.images |= flood_images
@@ -211,6 +224,8 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		target.client.images.Remove(flood_images)
 	qdel(flood_images)
 	flood_images = list()
+	qdel(flood_image_holders)
+	flood_image_holders = list()
 	return ..()
 
 /obj/effect/hallucination/simple/xeno
@@ -411,7 +426,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 	..()
 	var/item
 	if(!item_type)
-		item = pick(list("esword","taser","ebow","baton","dual_esword","clockspear","ttv","flash","armblade"))
+		item = pick(list("esword","taser","ebow","baton","dual_esword","ttv","flash","armblade"))
 	else
 		item = item_type
 	feedback_details += "Item: [item]"
@@ -643,10 +658,10 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		target.playsound_local(get_turf(airlock), 'sound/machines/boltsup.ogg',30,0,3)
 	qdel(src)
 
-/obj/effect/hallucination/fake_door_lock/CanPass(atom/movable/mover, turf/_target)
+/obj/effect/hallucination/fake_door_lock/CanAllowThrough(atom/movable/mover, turf/_target)
+	. = ..()
 	if(mover == target && airlock.density)
 		return FALSE
-	return TRUE
 
 /datum/hallucination/chat
 
@@ -732,7 +747,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		if(close_other) //increase the odds
 			for(var/i in 1 to 5)
 				message_pool.Add("<span class='warning'>You feel a tiny prick!</span>")
-		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(SLOT_BACK)
+		var/obj/item/storage/equipped_backpack = other.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(equipped_backpack))
 			for(var/i in 1 to 5) //increase the odds
 				message_pool.Add("<span class='notice'>[other] puts the [pick(\
@@ -1082,6 +1097,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		target.client.images += image
 
 /obj/effect/hallucination/danger/lava/Crossed(atom/movable/AM)
+	. = ..()
 	if(AM == target)
 		target.adjustStaminaLoss(20)
 		new /datum/hallucination/fire(target)
@@ -1095,6 +1111,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		target.client.images += image
 
 /obj/effect/hallucination/danger/chasm/Crossed(atom/movable/AM)
+	. = ..()
 	if(AM == target)
 		if(istype(target, /obj/effect/dummy/phased_mob))
 			return
@@ -1124,6 +1141,7 @@ GLOBAL_LIST_INIT(hallucination_list, list(
 		target.client.images += image
 
 /obj/effect/hallucination/danger/anomaly/Crossed(atom/movable/AM)
+	. = ..()
 	if(AM == target)
 		new /datum/hallucination/shock(target)
 

@@ -143,7 +143,7 @@
 
 /obj/machinery/door/firedoor/attack_ai(mob/user)
 	add_fingerprint(user)
-	if(welded || operating || stat & NOPOWER)
+	if(welded || operating || machine_stat & NOPOWER)
 		return TRUE
 	if(density)
 		open()
@@ -168,16 +168,20 @@
 		if("closing")
 			flick("door_closing", src)
 
-/obj/machinery/door/firedoor/update_icon()
-	cut_overlays()
+/obj/machinery/door/firedoor/update_icon_state()
 	if(density)
 		icon_state = "door_closed"
-		if(welded)
-			add_overlay("welded")
 	else
 		icon_state = "door_open"
-		if(welded)
-			add_overlay("welded_open")
+
+/obj/machinery/door/firedoor/update_overlays()
+	. = ..()
+	if(!welded)
+		return
+	if(density)
+		. += "welded"
+	else
+		. += "welded_open"
 
 /obj/machinery/door/firedoor/open()
 	. = ..()
@@ -200,7 +204,7 @@
 
 
 /obj/machinery/door/firedoor/proc/latetoggle()
-	if(operating || stat & NOPOWER || !nextstate)
+	if(operating || machine_stat & NOPOWER || !nextstate)
 		return
 	switch(nextstate)
 		if(FIREDOOR_OPEN)
@@ -212,6 +216,7 @@
 
 /obj/machinery/door/firedoor/border_only
 	icon = 'icons/obj/doors/edge_Doorfire.dmi'
+	can_crush = FALSE
 	flags_1 = ON_BORDER_1
 	CanAtmosPass = ATMOS_PASS_PROC
 
@@ -220,12 +225,11 @@
 	opacity = TRUE
 	density = TRUE
 
-/obj/machinery/door/firedoor/border_only/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/door/firedoor/border_only/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return TRUE
-	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
-		return !density
-	else
+	if(!(get_dir(loc, target) == dir)) //Make sure looking at appropriate border
 		return TRUE
 
 /obj/machinery/door/firedoor/border_only/CheckExit(atom/movable/mover as mob|obj, turf/target)
@@ -253,7 +257,7 @@
 
 /obj/item/electronics/firelock
 	name = "firelock circuitry"
-	custom_price = 5
+	custom_price = 50
 	desc = "A circuit board used in construction of firelocks."
 	icon_state = "mainboard"
 
@@ -281,8 +285,7 @@
 		if(CONSTRUCTION_NOCIRCUIT)
 			. += "<span class='notice'>There are no <i>firelock electronics</i> in the frame. The frame could be <b>cut</b> apart.</span>"
 
-/obj/structure/firelock_frame/update_icon()
-	..()
+/obj/structure/firelock_frame/update_icon_state()
 	icon_state = "frame[constructionStep]"
 
 /obj/structure/firelock_frame/attackby(obj/item/C, mob/user)
@@ -449,7 +452,9 @@
 	return ..()
 
 /obj/structure/firelock_frame/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	if((constructionStep == CONSTRUCTION_NOCIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
+	else if((constructionStep == CONSTRUCTION_NOCIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
 		return list("mode" = RCD_UPGRADE_SIMPLE_CIRCUITS, "delay" = 20, "cost" = 1)
 	return FALSE
 
@@ -460,6 +465,10 @@
 			"<span class='notice'>You adapt a firelock circuit and slot it into the assembly.</span>")
 			constructionStep = CONSTRUCTION_GUTTED
 			update_icon()
+			return TRUE
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
+			qdel(src)
 			return TRUE
 	return FALSE
 

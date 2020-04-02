@@ -46,7 +46,7 @@
 /datum/quirk/blindness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/blindfold/white/B = new(get_turf(H))
-	if(!H.equip_to_slot_if_possible(B, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
+	if(!H.equip_to_slot_if_possible(B, ITEM_SLOT_EYES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
 		H.put_in_hands(B)
 	H.regenerate_icons()
 
@@ -77,12 +77,12 @@
 	value = -1
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
-	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
+	medical_record_text = "Patient has a mild mood disorder causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
 
 /datum/quirk/depression/on_process()
 	if(prob(0.05))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression", /datum/mood_event/depression)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
@@ -107,7 +107,7 @@
 			if("Mime")
 				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
 			if("Janitor")
-				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket)
+				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket, /obj/item/paper/fluff/stations/soap)
 			if("Cook")
 				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
 			if("Botanist")
@@ -125,6 +125,8 @@
 				heirloom_type = /obj/item/reagent_containers/food/drinks/flask/gold
 			if("Head of Security")
 				heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			if("Head of Personnel")
+				heirloom_type = /obj/item/reagent_containers/food/drinks/trophy/silver_cup
 			if("Warden")
 				heirloom_type = /obj/item/book/manual/wiki/security_space_law
 			if("Security Officer")
@@ -133,6 +135,8 @@
 				heirloom_type = /obj/item/reagent_containers/food/drinks/bottle/whiskey
 			if("Lawyer")
 				heirloom_type = pick(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
+			if("Prisoner")
+				heirloom_type = /obj/item/pen/blue
 			//RnD
 			if("Research Director")
 				heirloom_type = /obj/item/toy/plush/slimeplushie
@@ -140,17 +144,21 @@
 				heirloom_type = /obj/item/toy/plush/slimeplushie
 			if("Roboticist")
 				heirloom_type = pick(subtypesof(/obj/item/toy/prize)) //look at this nerd
+			if("Geneticist")
+				heirloom_type = /obj/item/clothing/under/shorts/purple
 			//Medical
 			if("Chief Medical Officer")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
 			if("Medical Doctor")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
+			if("Paramedic")
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
+			if("Psychologist")
+				heirloom_type = /obj/item/storage/pill_bottle
 			if("Chemist")
 				heirloom_type = /obj/item/book/manual/wiki/chemistry
 			if("Virologist")
 				heirloom_type = /obj/item/reagent_containers/syringe
-			if("Geneticist")
-				heirloom_type = /obj/item/clothing/under/shorts/purple
 			//Engineering
 			if("Chief Engineer")
 				heirloom_type = pick(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
@@ -173,9 +181,9 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
-		"in your left pocket" = SLOT_L_STORE,
-		"in your right pocket" = SLOT_R_STORE,
-		"in your backpack" = SLOT_IN_BACKPACK
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK
 	)
 	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
@@ -198,12 +206,6 @@
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
-
-/datum/quirk/family_heirloom/clone_data()
-	return heirloom
-
-/datum/quirk/family_heirloom/on_clone(data)
-	heirloom = data
 
 /datum/quirk/frail
 	name = "Frail"
@@ -266,7 +268,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
+	H.equip_to_slot(glasses, ITEM_SLOT_EYES)
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
 
 /datum/quirk/nyctophobia
@@ -477,9 +479,9 @@
 	if (accessory_type)
 		accessory_instance = new accessory_type(current_turf)
 	var/list/slots = list(
-		"in your left pocket" = SLOT_L_STORE,
-		"in your right pocket" = SLOT_R_STORE,
-		"in your backpack" = SLOT_IN_BACKPACK
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK
 	)
 	where_drug = H.equip_in_one_of_slots(drug_instance, slots, FALSE) || "at your feet"
 	if (accessory_instance)
@@ -499,7 +501,7 @@
 	if(world.time > next_process)
 		next_process = world.time + process_interval
 		if(!H.reagents.addiction_list.Find(reagent_instance))
-			if(!reagent_instance)
+			if(QDELETED(reagent_instance))
 				reagent_instance = new reagent_type()
 			else
 				reagent_instance.addiction_stage = 0
@@ -532,7 +534,7 @@
 /datum/quirk/junkie/smoker/on_process()
 	. = ..()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
+	var/obj/item/I = H.get_item_by_slot(ITEM_SLOT_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
 		var/obj/item/storage/fancy/cigarettes/C = drug_container_type
 		if(istype(I, initial(C.spawn_type)))

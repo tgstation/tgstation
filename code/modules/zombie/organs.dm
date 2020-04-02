@@ -84,7 +84,7 @@
 	owner.setOxyLoss(0, 0)
 	owner.heal_overall_damage(INFINITY, INFINITY, INFINITY, null, TRUE)
 
-	if(!owner.revive())
+	if(!owner.revive(full_heal = FALSE, admin_revive = FALSE))
 		return
 
 	owner.grab_ghost()

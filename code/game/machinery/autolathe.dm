@@ -48,22 +48,7 @@
 							)
 
 /obj/machinery/autolathe/Initialize()
-	AddComponent(/datum/component/material_container,
-	list(/datum/material/iron,
-	/datum/material/glass,
-	/datum/material/gold,
-	/datum/material/silver,
-	/datum/material/diamond,
-	/datum/material/uranium,
-	/datum/material/plasma,
-	/datum/material/bluespace,
-	/datum/material/bananium,
-	/datum/material/titanium,
-	/datum/material/runite,
-	/datum/material/plastic,
-	/datum/material/adamantine,
-	/datum/material/mythril
-	), 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
+	AddComponent(/datum/component/material_container, SSmaterials.materialtypes_by_category[MAT_CATEGORY_RIGID], 0, TRUE, null, null, CALLBACK(src, .proc/AfterMaterialInsert))
 	. = ..()
 
 	wires = new /datum/wires/autolathe(src)
@@ -79,7 +64,7 @@
 	if(!is_operational())
 		return
 
-	if(shocked && !(stat & NOPOWER))
+	if(shocked && !(machine_stat & NOPOWER))
 		shock(user,50)
 
 	var/dat
@@ -119,7 +104,7 @@
 	if(user.a_intent == INTENT_HARM) //so we can hit the machine
 		return ..()
 
-	if(stat)
+	if(machine_stat)
 		return TRUE
 
 	if(istype(O, /obj/item/disk/design_disk))
@@ -141,12 +126,12 @@
 /obj/machinery/autolathe/proc/AfterMaterialInsert(item_inserted, id_inserted, amount_inserted)
 	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
 		use_power(MINERAL_MATERIAL_AMOUNT / 10)
-	else if(custom_materials && custom_materials.len && custom_materials[getmaterialref(/datum/material/glass)])
+	else if(custom_materials && custom_materials.len && custom_materials[SSmaterials.GetMaterialRef(/datum/material/glass)])
 		flick("autolathe_r",src)//plays glass insertion animation by default otherwise
 	else
 		flick("autolathe_o",src)//plays metal insertion animation
-			
-				
+
+
 		use_power(min(1000, amount_inserted / 100))
 	updateUsrDialog()
 
@@ -172,7 +157,7 @@
 
 			var/multiplier = text2num(href_list["multiplier"])
 			var/is_stack = ispath(being_built.build_path, /obj/item/stack)
-			multiplier = CLAMP(multiplier,1,50)
+			multiplier = clamp(multiplier,1,50)
 
 			/////////////////
 
@@ -198,7 +183,7 @@
 						if(materials.materials[i] > 0)
 							list_to_show += i
 
-					used_material = input("Choose [used_material]", "Custom Material") as null|anything in list_to_show
+					used_material = input("Choose [used_material]", "Custom Material") as null|anything in sortList(list_to_show, /proc/cmp_typepaths_asc)
 					if(!used_material)
 						return //Didn't pick any material, so you can't build shit either.
 					custom_materials[used_material] += amount_needed
@@ -210,7 +195,7 @@
 				use_power(power)
 				icon_state = "autolathe_n"
 				var/time = is_stack ? 32 : (32 * coeff * multiplier) ** 0.8
-				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack), time)
+				addtimer(CALLBACK(src, .proc/make_item, power, materials_used, custom_materials, multiplier, coeff, is_stack, usr), time)
 			else
 				to_chat(usr, "<span class=\"alert\">Not enough materials for this operation.</span>")
 
@@ -229,7 +214,7 @@
 
 	return
 
-/obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/picked_materials, multiplier, coeff, is_stack)
+/obj/machinery/autolathe/proc/make_item(power, list/materials_used, list/picked_materials, multiplier, coeff, is_stack, mob/user)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/atom/A = drop_location()
 	use_power(power)
@@ -247,6 +232,10 @@
 
 			if(length(picked_materials))
 				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
+				for(var/x in picked_materials)
+					var/datum/material/M = x
+					if(!istype(M, /datum/material/glass) && !istype(M, /datum/material/iron))
+						user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
 
 
 	icon_state = "autolathe"
@@ -412,7 +401,7 @@
 				disabled = FALSE
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
-	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
+	if(machine_stat & (BROKEN|NOPOWER))		// unpowered, no shock
 		return FALSE
 	if(!prob(prb))
 		return FALSE

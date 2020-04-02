@@ -8,10 +8,12 @@
 	custom_materials = list(/datum/material/iron=400, /datum/material/glass=120)
 	wires = WIRE_RECEIVE | WIRE_PULSE | WIRE_RADIO_PULSE | WIRE_RADIO_RECEIVE
 	attachable = TRUE
-
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
+	var/ui_x = 280
+	var/ui_y = 132
 	var/code = DEFAULT_SIGNALER_CODE
 	var/frequency = FREQ_SIGNALER
-	var/delay = 0
 	var/datum/radio_frequency/radio_connection
 	///Holds the mind that commited suicide.
 	var/datum/mind/suicider
@@ -46,7 +48,6 @@
 	. = ..()
 	set_frequency(frequency)
 
-
 /obj/item/assembly/signaler/Destroy()
 	SSradio.remove_object(src,frequency)
 	suicider = null
@@ -63,62 +64,51 @@
 		holder.update_icon()
 	return
 
-/obj/item/assembly/signaler/ui_interact(mob/user, flag1)
-	. = ..()
+/obj/item/assembly/signaler/ui_status(mob/user)
 	if(is_secured(user))
-		var/t1 = "-------"
-		var/dat = {"
-<TT>
+		return ..()
+	return UI_CLOSE
 
-<A href='byond://?src=[REF(src)];send=1'>Send Signal</A><BR>
-<B>Frequency/Code</B> for signaler:<BR>
-Frequency:
-[format_frequency(src.frequency)]
-<A href='byond://?src=[REF(src)];set=freq'>Set</A><BR>
+/obj/item/assembly/signaler/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "signaler", name, ui_x, ui_y, master_ui, state)
+		ui.open()
 
-Code:
-[src.code]
-<A href='byond://?src=[REF(src)];set=code'>Set</A><BR>
-[t1]
-</TT>"}
-		user << browse(dat, "window=radio")
-		onclose(user, "radio")
+/obj/item/assembly/signaler/ui_data(mob/user)
+	var/list/data = list()
+	data["frequency"] = frequency
+	data["code"] = code
+	data["minFrequency"] = MIN_FREE_FREQ
+	data["maxFrequency"] = MAX_FREE_FREQ
+	return data
+
+/obj/item/assembly/signaler/ui_act(action, params)
+	if(..())
 		return
 
+	switch(action)
+		if("signal")
+			INVOKE_ASYNC(src, .proc/signal)
+			. = TRUE
+		if("freq")
+			frequency = unformat_frequency(params["freq"])
+			frequency = sanitize_frequency(frequency, TRUE)
+			set_frequency(frequency)
+			. = TRUE
+		if("code")
+			code = text2num(params["code"])
+			code = round(code)
+			. = TRUE
+		if("reset")
+			if(params["reset"] == "freq")
+				frequency = initial(frequency)
+			else
+				code = initial(code)
+			. = TRUE
 
-/obj/item/assembly/signaler/Topic(href, href_list)
-	..()
-
-	if(!usr.canUseTopic(src, BE_CLOSE))
-		usr << browse(null, "window=radio")
-		onclose(usr, "radio")
-		return
-
-	if (href_list["set"])
-
-		if(href_list["set"] == "freq")
-			var/new_freq = input(usr, "Input a new signalling frequency", "Remote Signaller Frequency", format_frequency(frequency)) as num|null
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			new_freq = unformat_frequency(new_freq)
-			new_freq = sanitize_frequency(new_freq, TRUE)
-			set_frequency(new_freq)
-
-		if(href_list["set"] == "code")
-			var/new_code = input(usr, "Input a new signalling code", "Remote Signaller Code", code) as num|null
-			if(!usr.canUseTopic(src, BE_CLOSE))
-				return
-			new_code = round(new_code)
-			new_code = CLAMP(new_code, 1, 100)
-			code = new_code
-
-	if(href_list["send"])
-		INVOKE_ASYNC(src, .proc/signal)
-
-	if(usr)
-		attack_self(usr)
-
-	return
+	update_icon()
 
 /obj/item/assembly/signaler/attackby(obj/item/W, mob/user, params)
 	if(issignaler(W))
@@ -141,9 +131,6 @@ Code:
 	if(usr)
 		GLOB.lastsignalers.Add("[time] <B>:</B> [usr.key] used [src] @ location ([T.x],[T.y],[T.z]) <B>:</B> [format_frequency(frequency)]/[code]")
 
-
-	return
-
 /obj/item/assembly/signaler/receive_signal(datum/signal/signal)
 	. = FALSE
 	if(!signal)
@@ -162,7 +149,6 @@ Code:
 			var/mob/LM = CHM
 			LM.playsound_local(get_turf(src), 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 	return TRUE
-
 
 /obj/item/assembly/signaler/proc/set_frequency(new_frequency)
 	SSradio.remove_object(src, frequency)
@@ -191,7 +177,6 @@ Code:
 	if(!on)
 		return
 	return ..(signal)
-
 
 // Embedded signaller used in anomalies.
 /obj/item/assembly/signaler/anomaly
@@ -225,6 +210,37 @@ Code:
 	if(I.tool_behaviour == TOOL_ANALYZER)
 		to_chat(user, "<span class='notice'>Analyzing... [src]'s stabilized field is fluctuating along frequency [format_frequency(frequency)], code [code].</span>")
 	..()
+
+//Anomaly cores
+/obj/item/assembly/signaler/anomaly/pyro
+	name = "\improper pyroclastic anomaly core"
+	desc = "The neutralized core of a pyroclastic anomaly. It feels warm to the touch. It'd probably be valuable for research."
+	icon_state = "pyro core"
+	anomaly_type = /obj/effect/anomaly/pyro
+
+/obj/item/assembly/signaler/anomaly/grav
+	name = "\improper gravitational anomaly core"
+	desc = "The neutralized core of a gravitational anomaly. It feels much heavier than it looks. It'd probably be valuable for research."
+	icon_state = "grav core"
+	anomaly_type = /obj/effect/anomaly/grav
+
+/obj/item/assembly/signaler/anomaly/flux
+	name = "\improper flux anomaly core"
+	desc = "The neutralized core of a flux anomaly. Touching it makes your skin tingle. It'd probably be valuable for research."
+	icon_state = "flux core"
+	anomaly_type = /obj/effect/anomaly/flux
+
+/obj/item/assembly/signaler/anomaly/bluespace
+	name = "\improper bluespace anomaly core"
+	desc = "The neutralized core of a bluespace anomaly. It keeps phasing in and out of view. It'd probably be valuable for research."
+	icon_state = "anomaly core"
+	anomaly_type = /obj/effect/anomaly/bluespace
+
+/obj/item/assembly/signaler/anomaly/vortex
+	name = "\improper vortex anomaly core"
+	desc = "The neutralized core of a vortex anomaly. It won't sit still, as if some invisible force is acting on it. It'd probably be valuable for research."
+	icon_state = "vortex core"
+	anomaly_type = /obj/effect/anomaly/bhole
 
 /obj/item/assembly/signaler/anomaly/attack_self()
 	return

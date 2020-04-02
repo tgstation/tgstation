@@ -22,6 +22,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Sentinel, an alien master of ranged combat.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Ranged combat modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one, it's a ranged carp. This fishy can watch people pee in the ocean.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Diamond, a powerful projectile thrower.</span>"
 	see_invisible = SEE_INVISIBLE_LIVING
 	see_in_dark = 8
 	toggle_button_type = /obj/screen/guardian/ToggleMode
@@ -29,7 +30,7 @@
 	var/toggle = FALSE
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleMode()
-	if(src.loc == summoner)
+	if(loc == summoner)
 		if(toggle)
 			ranged = initial(ranged)
 			melee_damage_lower = initial(melee_damage_lower)
@@ -57,8 +58,8 @@
 	. = ..()
 	if(istype(., /obj/projectile))
 		var/obj/projectile/P = .
-		if(namedatum)
-			P.color = namedatum.colour
+		if(guardiancolor)
+			P.color = guardiancolor
 
 /mob/living/simple_animal/hostile/guardian/ranged/ToggleLight()
 	var/msg
@@ -83,12 +84,12 @@
 	set name = "Set Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Set an invisible snare that will alert you when living creatures walk over it. Max of 5"
-	if(src.snares.len <6)
-		var/turf/snare_loc = get_turf(src.loc)
+	if(snares.len <6)
+		var/turf/snare_loc = get_turf(loc)
 		var/obj/effect/snare/S = new /obj/effect/snare(snare_loc)
 		S.spawner = src
 		S.name = "[get_area(snare_loc)] snare ([rand(1, 1000)])"
-		src.snares |= S
+		snares |= S
 		to_chat(src, "<span class='danger'><B>Surveillance snare deployed!</span></B>")
 	else
 		to_chat(src, "<span class='danger'><B>You have too many snares deployed. Remove some first.</span></B>")
@@ -97,9 +98,9 @@
 	set name = "Remove Surveillance Snare"
 	set category = "Guardian"
 	set desc = "Disarm unwanted surveillance snares."
-	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in src.snares
+	var/picked_snare = input(src, "Pick which snare to remove", "Remove Snare") as null|anything in sortNames(snares)
 	if(picked_snare)
-		src.snares -= picked_snare
+		snares -= picked_snare
 		qdel(picked_snare)
 		to_chat(src, "<span class='danger'><B>Snare disarmed.</span></B>")
 
@@ -111,6 +112,7 @@
 
 
 /obj/effect/snare/Crossed(AM as mob|obj)
+	. = ..()
 	if(isliving(AM) && spawner && spawner.summoner && AM != spawner && !spawner.hasmatchingsummoner(AM))
 		to_chat(spawner.summoner, "<span class='danger'><B>[AM] has crossed surveillance snare, [name].</span></B>")
 		var/list/guardians = spawner.summoner.hasparasites()

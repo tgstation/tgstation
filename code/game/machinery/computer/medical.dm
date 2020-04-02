@@ -55,7 +55,7 @@
 <tr>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=name'>Name</A></th>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=id'>ID</A></th>
-<th>Fingerprints (F) | DNA (D)</th>
+<th>Fingerprints (F) | DNA UE (D)</th>
 <th><A href='?src=[REF(src)];choice=Sorting;sort=bloodtype'>Blood Type</A></th>
 <th>Physical Status</th>
 <th>Mental Status</th>
@@ -535,7 +535,7 @@
 
 /obj/machinery/computer/med_data/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		for(var/datum/data/record/R in GLOB.data_core.medical)
 			if(prob(10/severity))
 				switch(rand(1,6))
@@ -564,7 +564,7 @@
 	if(user)
 		if(message)
 			if(authenticated)
-				if(user.canUseTopic(src, BE_CLOSE))
+				if(user.canUseTopic(src, !issilicon(user)))
 					if(!record1 || record1 == active1)
 						if(!record2 || record2 == active2)
 							return 1

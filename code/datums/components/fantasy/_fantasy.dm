@@ -37,17 +37,16 @@
 /datum/component/fantasy/UnregisterFromParent()
 	unmodify()
 
-/datum/component/fantasy/InheritComponent(datum/component/fantasy/newComp, original, list/arguments)
+/datum/component/fantasy/InheritComponent(datum/component/fantasy/newComp, original, quality, list/affixes, canFail, announce)
 	unmodify()
 	if(newComp)
-		quality += newComp.quality
-		canFail = newComp.canFail
-		announce = newComp.announce
+		src.quality += newComp.quality
+		src.canFail = newComp.canFail
+		src.announce = newComp.announce
 	else
-		arguments.len = 5 // This is done to replicate what happens when an arglist smaller than the necessary arguments is given
-		quality += arguments[1]
-		canFail = arguments[4] || canFail
-		announce = arguments[5] || announce
+		src.quality += quality
+		src.canFail = canFail || src.canFail
+		src.announce = announce || src.announce
 	modify()
 
 /datum/component/fantasy/proc/randomQuality()
@@ -73,7 +72,7 @@
 		alignment |= AFFIX_GOOD
 	if(quality <= 0)
 		alignment |= AFFIX_EVIL
-	
+
 	var/usedSlots = NONE
 	for(var/i in 1 to max(1, abs(quality))) // We want at least 1 affix applied
 		var/datum/fantasy_affix/affix = pickweight(affixListing)
@@ -88,7 +87,7 @@
 
 /datum/component/fantasy/proc/modify()
 	var/obj/item/master = parent
-	
+
 	master.force = max(0, master.force + quality)
 	master.throwforce = max(0, master.throwforce + quality)
 	master.armor = master.armor?.modifyAllRatings(quality)
@@ -103,7 +102,7 @@
 
 	if(canFail && prob((quality - 9)*10))
 		var/turf/place = get_turf(parent)
-		place.visible_message("<span class='danger'>[parent] <span class='inathneq_large'>violently glows blue</span> for a while, then evaporates.</span>")
+		place.visible_message("<span class='danger'>[parent] <span class='blue'>violently glows blue</span> for a while, then evaporates.</span>")
 		master.burn()
 		return
 	else if(announce)
@@ -135,6 +134,6 @@
 		effect_description = "<span class='heavy_brass'>shimmering golden glow</span>"
 	else
 		span = "<span class='danger'>"
-		effect_description = "<span class='umbra_emphasis'>mottled black glow</span>"
+		effect_description = "<span class='bold'>mottled black glow</span>"
 
 	location.visible_message("[span][originalName] is covered by a [effect_description] and then transforms into [parent]!</span>")

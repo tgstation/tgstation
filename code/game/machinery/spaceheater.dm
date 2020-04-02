@@ -58,15 +58,17 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Temperature range at <b>[settableTemperatureRange]°C</b>.<br>Heating power at <b>[heatingPower*0.001]kJ</b>.<br>Power consumption at <b>[(efficiency*-0.0025)+150]%</b>.</span>" //100%, 75%, 50%, 25%
 
-/obj/machinery/space_heater/update_icon()
+/obj/machinery/space_heater/update_icon_state()
 	if(on)
 		icon_state = "sheater-[mode]"
 	else
 		icon_state = "sheater-off"
 
-	cut_overlays()
+/obj/machinery/space_heater/update_overlays()
+	. = ..()
+
 	if(panel_open)
-		add_overlay("sheater-open")
+		. += "sheater-open"
 
 /obj/machinery/space_heater/process()
 	if(!on || !is_operational())
@@ -129,20 +131,22 @@
 	settableTemperatureRange = cap * 30
 	efficiency = (cap + 1) * 10000
 
-	targetTemperature = CLAMP(targetTemperature,
+	targetTemperature = clamp(targetTemperature,
 		max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 		settableTemperatureMedian + settableTemperatureRange)
 
 /obj/machinery/space_heater/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_CONTENTS)
 		return
 	if(cell)
 		cell.emp_act(severity)
 
 /obj/machinery/space_heater/attackby(obj/item/I, mob/user, params)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/stock_parts/cell))
+	if(default_unfasten_wrench(user, I))
+		return
+	else if(istype(I, /obj/item/stock_parts/cell))
 		if(panel_open)
 			if(cell)
 				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
@@ -217,20 +221,11 @@
 			if(!panel_open)
 				return
 			var/target = params["target"]
-			var/adjust = text2num(params["adjust"])
-			if(target == "input")
-				target = input("New target temperature:", name, round(targetTemperature - T0C, 1)) as num|null
-				if(!isnull(target) && !..())
-					target += T0C
-					. = TRUE
-			else if(adjust)
-				target = targetTemperature + adjust
-				. = TRUE
-			else if(text2num(target) != null)
+			if(text2num(target) != null)
 				target= text2num(target) + T0C
 				. = TRUE
 			if(.)
-				targetTemperature = CLAMP(round(target),
+				targetTemperature = clamp(round(target),
 					max(settableTemperatureMedian - settableTemperatureRange, TCMB),
 					settableTemperatureMedian + settableTemperatureRange)
 		if("eject")

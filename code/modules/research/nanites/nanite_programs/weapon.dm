@@ -73,21 +73,20 @@
 	. = ..()
 	to_chat(host_mob, "<span class='warning'>Your blood cools down, and the pain gradually fades.</span>")
 
-/datum/nanite_program/triggered/explosive
+/datum/nanite_program/explosive
 	name = "Chain Detonation"
 	desc = "Detonates all the nanites inside the host in a chain reaction when triggered."
+	can_trigger = TRUE
 	trigger_cost = 25 //plus every idle nanite left afterwards
 	trigger_cooldown = 100 //Just to avoid double-triggering
 	rogue_types = list(/datum/nanite_program/toxic)
 
-/datum/nanite_program/triggered/explosive/trigger()
-	if(!..())
-		return
+/datum/nanite_program/explosive/on_trigger(comm_message)
 	host_mob.visible_message("<span class='warning'>[host_mob] starts emitting a high-pitched buzzing, and [host_mob.p_their()] skin begins to glow...</span>",\
 							"<span class='userdanger'>You start emitting a high-pitched buzzing, and your skin begins to glow...</span>")
-	addtimer(CALLBACK(src, .proc/boom), CLAMP((nanites.nanite_volume * 0.35), 25, 150))
+	addtimer(CALLBACK(src, .proc/boom), clamp((nanites.nanite_volume * 0.35), 25, 150))
 
-/datum/nanite_program/triggered/explosive/proc/boom()
+/datum/nanite_program/explosive/proc/boom()
 	var/nanite_amount = nanites.nanite_volume
 	var/dev_range = FLOOR(nanite_amount/200, 1) - 1
 	var/heavy_range = FLOOR(nanite_amount/100, 1) - 1
@@ -97,16 +96,15 @@
 
 //TODO make it defuse if triggered again
 
-/datum/nanite_program/triggered/heart_stop
+/datum/nanite_program/heart_stop
 	name = "Heart-Stopper"
 	desc = "Stops the host's heart when triggered; restarts it if triggered again."
+	can_trigger = TRUE
 	trigger_cost = 12
 	trigger_cooldown = 10
 	rogue_types = list(/datum/nanite_program/nerve_decay)
 
-/datum/nanite_program/triggered/heart_stop/trigger()
-	if(!..())
-		return
+/datum/nanite_program/heart_stop/on_trigger(comm_message)
 	if(iscarbon(host_mob))
 		var/mob/living/carbon/C = host_mob
 		var/obj/item/organ/heart/heart = C.getorganslot(ORGAN_SLOT_HEART)
@@ -116,16 +114,16 @@
 			else
 				heart.Restart()
 
-/datum/nanite_program/triggered/emp
+/datum/nanite_program/emp
 	name = "Electromagnetic Resonance"
-	desc = "The nanites cause an elctromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
+	desc = "The nanites cause an electromagnetic pulse around the host when triggered. Will corrupt other nanite programs!"
+	can_trigger = TRUE
 	trigger_cost = 10
+	trigger_cooldown = 50
 	program_flags = NANITE_EMP_IMMUNE
 	rogue_types = list(/datum/nanite_program/toxic)
 
-/datum/nanite_program/triggered/emp/trigger()
-	if(!..())
-		return
+/datum/nanite_program/emp/on_trigger(comm_message)
 	empulse(host_mob, 1, 2)
 
 /datum/nanite_program/pyro/active_effect()
@@ -161,40 +159,33 @@
 /datum/nanite_program/cryo/active_effect()
 	host_mob.adjust_bodytemperature(-rand(15,25), 50)
 
-/datum/nanite_program/mind_control
+/datum/nanite_program/comm/mind_control
 	name = "Mind Control"
-	desc = "The nanites imprint an absolute directive onto the host's brain while they're active."
-	use_rate = 3
+	desc = "The nanites imprint an absolute directive onto the host's brain for one minute when triggered."
+	trigger_cost = 30
+	trigger_cooldown = 1800
 	rogue_types = list(/datum/nanite_program/brain_decay, /datum/nanite_program/brain_misfire)
 
-	extra_settings = list("Directive")
-	var/cooldown = 0 //avoids spam when nanites are running low
-	var/directive = "..."
+/datum/nanite_program/comm/mind_control/register_extra_settings()
+	. = ..()
+	extra_settings[NES_DIRECTIVE] = new /datum/nanite_extra_setting/text("...")
 
-/datum/nanite_program/mind_control/set_extra_setting(user, setting)
-	if(setting == "Directive")
-		var/new_directive = stripped_input(user, "Choose the directive to imprint with mind control.", "Directive", directive, MAX_MESSAGE_LEN)
-		if(!new_directive)
-			return
-		directive = new_directive
-
-/datum/nanite_program/mind_control/get_extra_setting(setting)
-	if(setting == "Directive")
-		return directive
-
-/datum/nanite_program/mind_control/copy_extra_settings_to(datum/nanite_program/mind_control/target)
-	target.directive = directive
-
-/datum/nanite_program/mind_control/enable_passive_effect()
-	if(world.time < cooldown)
+/datum/nanite_program/comm/mind_control/on_trigger(comm_message)
+	if(host_mob.stat == DEAD)
 		return
-	. = ..()
-	brainwash(host_mob, directive)
-	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[directive]'.")
+	var/sent_directive = comm_message
+	if(!comm_message)
+		var/datum/nanite_extra_setting/ES = extra_settings[NES_DIRECTIVE]
+		sent_directive = ES.get_value()
+	brainwash(host_mob, sent_directive)
+	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[sent_directive]'.")
+	addtimer(CALLBACK(src, .proc/end_brainwashing), 600)
 
-/datum/nanite_program/mind_control/disable_passive_effect()
-	. = ..()
+/datum/nanite_program/comm/mind_control/proc/end_brainwashing()
 	if(host_mob.mind && host_mob.mind.has_antag_datum(/datum/antagonist/brainwashed))
 		host_mob.mind.remove_antag_datum(/datum/antagonist/brainwashed)
 	log_game("[key_name(host_mob)] is no longer brainwashed by nanites.")
-	cooldown = world.time + 450
+
+/datum/nanite_program/comm/mind_control/disable_passive_effect()
+	. = ..()
+	end_brainwashing()

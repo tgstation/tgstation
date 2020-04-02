@@ -21,6 +21,16 @@
 	liked_food = VEGETABLES
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	outfit_important_for_life = /datum/outfit/plasmaman
+	species_language_holder = /datum/language_holder/skeleton
+
+	// Body temperature for Plasmen is much lower human as they can handle colder environments
+	bodytemp_normal = (BODYTEMP_NORMAL - 40)
+	// The minimum amount they stabilize per tick is reduced making hot areas harder to deal with
+	bodytemp_autorecovery_min = 2
+	// They are hurt at hot temps faster as it is harder to hold their form
+	bodytemp_heat_damage_limit = (BODYTEMP_HEAT_DAMAGE_LIMIT - 20) // about 40C
+	// This effects how fast body temp stabilizes, also if cold resit is lost on the mob
+	bodytemp_cold_damage_limit = (BODYTEMP_COLD_DAMAGE_LIMIT - 50) // about -50c
 
 /datum/species/plasmaman/spec_life(mob/living/carbon/human/H)
 	var/datum/gas_mixture/environment = H.loc.return_air()
@@ -30,7 +40,7 @@
 		var/obj/item/clothing/CH = H.head
 		if (CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
 			atmos_sealed = TRUE
-	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman)) && !atmos_sealed)
+	if((!istype(H.w_uniform, /obj/item/clothing/under/plasmaman) || !istype(H.head, /obj/item/clothing/head/helmet/space/plasmaman) || !istype(H.gloves, /obj/item/clothing/gloves)) && !atmos_sealed)
 		if(environment)
 			if(environment.total_moles())
 				if(environment.gases[/datum/gas/oxygen] && (environment.gases[/datum/gas/oxygen][MOLES]) >= 1) //Same threshhold that extinguishes fire
@@ -76,6 +86,9 @@
 		if("Cook")
 			O = new /datum/outfit/plasmaman/chef
 
+		if("Prisoner")
+			O = new /datum/outfit/plasmaman/prisoner
+
 		if("Security Officer")
 			O = new /datum/outfit/plasmaman/security
 
@@ -93,6 +106,9 @@
 
 		if("Medical Doctor")
 			O = new /datum/outfit/plasmaman/medical
+
+		if("Paramedic")
+			O = new /datum/outfit/plasmaman/paramedic
 
 		if("Chemist")
 			O = new /datum/outfit/plasmaman/chemist
@@ -140,8 +156,8 @@
 /datum/species/plasmaman/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
 	if(chem.type == /datum/reagent/consumable/milk)
-		if(chem.volume >= 6)
-			H.reagents.remove_reagent(chem.type, chem.volume - 5)
+		if(chem.volume > 10)
+			H.reagents.remove_reagent(chem.type, chem.volume - 10)
 			to_chat(H, "<span class='warning'>The excess milk is dripping off your bones!</span>")
 		H.heal_bodypart_damage(1.5,0, 0)
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
@@ -171,4 +187,4 @@
 					H.emote("sigh")
 		H.reagents.remove_reagent(chem.type, chem.metabolization_rate)
 		return TRUE
-		
+

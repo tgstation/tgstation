@@ -1,10 +1,17 @@
-#define ROULETTE_SINGLES_PAYOUT 35
+#define ROULETTE_SINGLES_PAYOUT 36
 #define ROULETTE_SIMPLE_PAYOUT 2
+#define ROULETTE_DOZ_COL_PAYOUT 3
 
 #define ROULETTE_BET_ODD "odd"
 #define ROULETTE_BET_EVEN "even"
 #define ROULETTE_BET_1TO18 "s1-18" //adds s to prevent text2num from working
 #define ROULETTE_BET_19TO36 "s19-36" //adds s to prevent text2num from working
+#define ROULETTE_BET_1TO12 "s1-12"
+#define ROULETTE_BET_13TO24 "s13-24"
+#define ROULETTE_BET_25TO36 "s25-36"
+#define ROULETTE_BET_2TO1_FIRST "s1st col"
+#define ROULETTE_BET_2TO1_SECOND "s2nd col"
+#define ROULETTE_BET_2TO1_THIRD "s3rd col"
 #define ROULETTE_BET_BLACK "black"
 #define ROULETTE_BET_RED "red"
 
@@ -22,6 +29,8 @@
 	idle_power_usage = 10
 	active_power_usage = 100
 	max_integrity = 500
+	ui_x = 603
+	ui_y = 475
 	armor = list("melee" = 45, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 10, "bio" = 30, "rad" = 30, "fire" = 30, "acid" = 30)
 	var/static/list/numbers = list("0" = "green", "1" = "red", "3" = "red", "5" = "red", "7" = "red", "9" = "red", "12" = "red", "14" = "red", "16" = "red",\
 	"18" = "red", "19" = "red", "21" = "red", "23" = "red", "25" = "red", "27" = "red", "30" = "red", "32" = "red", "34" = "red", "36" = "red",\
@@ -29,7 +38,7 @@
 	"22" = "black", "24" = "black", "26" = "black", "28" = "black", "29" = "black", "31" = "black", "33" = "black", "35" = "black")
 
 	var/chosen_bet_amount = 10
-	var/chosen_bet_type = 0
+	var/chosen_bet_type = "0"
 	var/last_anti_spam = 0
 	var/anti_spam_cooldown = 20
 	var/obj/item/card/id/my_card
@@ -39,8 +48,8 @@
 	var/static/list/coin_values = list(/obj/item/coin/diamond = 100, /obj/item/coin/gold = 25, /obj/item/coin/silver = 10, /obj/item/coin/iron = 1) //Make sure this is ordered from left to right.
 	var/list/coins_to_dispense = list()
 	var/datum/looping_sound/jackpot/jackpot_loop
-	var/datum/asset/spritesheet/simple/assets
 	var/on = TRUE
+	var/last_spin = 13
 
 /obj/machinery/roulette/Initialize()
 	. = ..()
@@ -52,13 +61,11 @@
 	. = ..()
 
 /obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	if(stat & MAINT)
+	if(machine_stat & MAINT)
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
-		assets.send(user)
-		ui = new(user, src, ui_key, "roulette", name, 455, 520, master_ui, state)
+		ui = new(user, src, ui_key, "roulette", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/roulette/ui_data(mob/user)
@@ -67,6 +74,8 @@
 	data["BetAmount"] = chosen_bet_amount
 	data["BetType"] = chosen_bet_type
 	data["HouseBalance"] = my_card?.registered_account.account_balance
+	data["LastSpin"] = last_spin
+	data["Spinning"] = playing
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/card/id/C = H.get_idcard(TRUE)
@@ -76,8 +85,6 @@
 			data["AccountBalance"] = 0
 		data["CanUnbolt"] = (H.get_idcard() == my_card)
 
-	if(!assets)
-		assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
 	return data
 
 /obj/machinery/roulette/ui_act(action, params)
@@ -88,24 +95,16 @@
 			anchored = !anchored
 			. = TRUE
 		if("ChangeBetAmount")
-			chosen_bet_amount = CLAMP(text2num(params["amount"]), 10, 500)
+			chosen_bet_amount = clamp(text2num(params["amount"]), 10, 500)
 			. = TRUE
-		if("ChangeBetAmountCustom")
-			var/amount = input(usr, "Bet amount between 10 and 500:") as num|null
-			if(amount)
-				chosen_bet_amount = CLAMP(amount, 10, 500)
 		if("ChangeBetType")
 			chosen_bet_type = params["type"]
 			. = TRUE
 	update_icon() // Not applicable to all objects.
 
-/obj/machinery/roulette/ui_base_html(html)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/roulette)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
-
 ///Handles setting ownership and the betting itself.
 /obj/machinery/roulette/attackby(obj/item/W, mob/user, params)
-	if(stat & MAINT && is_wire_tool(W))
+	if(machine_stat & MAINT && is_wire_tool(W))
 		wires.interact(user)
 		return
 	if(playing)
@@ -113,7 +112,7 @@
 	if(istype(W, /obj/item/card/id))
 		playsound(src, 'sound/machines/card_slide.ogg', 50, TRUE)
 
-		if(stat & MAINT || !on || locked)
+		if(machine_stat & MAINT || !on || locked)
 			to_chat(user, "<span class='notice'>The machine appears to be disabled.</span>")
 			return FALSE
 
@@ -126,7 +125,26 @@
 			if(!chosen_bet_amount || isnull(chosen_bet_type))
 				return FALSE
 
-			var/potential_payout = text2num(chosen_bet_type) ? chosen_bet_amount * ROULETTE_SINGLES_PAYOUT : chosen_bet_amount * ROULETTE_SIMPLE_PAYOUT
+			//double to nothing bets
+			var/list/doubles = list(
+				ROULETTE_BET_2TO1_FIRST,
+				ROULETTE_BET_2TO1_SECOND,
+				ROULETTE_BET_2TO1_THIRD,
+				ROULETTE_BET_1TO12,
+				ROULETTE_BET_13TO24,
+				ROULETTE_BET_25TO36
+			)
+			//result of text2num is null if text starts with a character, meaning it's not a singles bet
+			var/single = !isnull(text2num(chosen_bet_type))
+			var/potential_payout_mult
+			if (single)
+				potential_payout_mult = ROULETTE_SINGLES_PAYOUT
+			else
+				if (chosen_bet_type in doubles)
+					potential_payout_mult = ROULETTE_DOZ_COL_PAYOUT
+				else
+					potential_payout_mult = ROULETTE_SIMPLE_PAYOUT
+			var/potential_payout = chosen_bet_amount * potential_payout_mult
 
 			if(!check_bartender_funds(potential_payout))
 				return FALSE	 //bartender is too poor
@@ -181,6 +199,7 @@
 
 ///Ran after a while to check if the player won or not.
 /obj/machinery/roulette/proc/finish_play(obj/item/card/id/player_id, bet_type, bet_amount, potential_payout, rolled_number)
+	last_spin = rolled_number
 
 	var/is_winner = check_win(bet_type, bet_amount, rolled_number) //Predetermine if we won
 	var/color = numbers["[rolled_number]"] //Weird syntax, but dict uses strings.
@@ -275,8 +294,25 @@
 			return "black" == numbers["[rolled_number]"]//Check if our number is black in the numbers dict
 		if(ROULETTE_BET_RED)
 			return "red" == numbers["[rolled_number]"] //Check if our number is black in the numbers dict
-		if("0")
-			return "0" == "rolled_number" //Check if our number is 0
+		if(ROULETTE_BET_1TO12)
+			return (rolled_number >= 1 && rolled_number <= 12)
+		if(ROULETTE_BET_13TO24)
+			return (rolled_number >= 13 && rolled_number <= 24)
+		if(ROULETTE_BET_25TO36)
+			return (rolled_number >= 25 && rolled_number <= 36)
+		if(ROULETTE_BET_2TO1_FIRST)
+			//You could do this mathematically but w/e this is easy to understand
+			//numbers in the first column
+			var/list/winners = list(1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34)
+			return (rolled_number in winners)
+		if(ROULETTE_BET_2TO1_SECOND)
+			//numbers in the second column
+			var/list/winners = list(2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35)
+			return (rolled_number in winners)
+		if(ROULETTE_BET_2TO1_THIRD)
+			//numbers in the third column
+			var/list/winners = list(3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36)
+			return (rolled_number in winners)
 
 
 ///Returns TRUE if the owner has enough funds to payout
@@ -290,7 +326,7 @@
 /obj/machinery/roulette/update_icon(payout, color, rolled_number, is_winner = FALSE)
 	cut_overlays()
 
-	if(stat & MAINT)
+	if(machine_stat & MAINT)
 		return
 
 	if(playing)
@@ -330,17 +366,17 @@
 
 /obj/machinery/roulette/welder_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(stat & MAINT)
+	if(machine_stat & MAINT)
 		to_chat(user, "<span class='notice'>You start re-attaching the top section of [src]...</span>")
 		if(I.use_tool(src, user, 30, volume=50))
 			to_chat(user, "<span class='notice'>You re-attach the top section of [src].</span>")
-			stat &= ~MAINT
+			machine_stat &= ~MAINT
 			icon_state = "idle"
 	else
 		to_chat(user, "<span class='notice'>You start welding the top section from [src]...</span>")
 		if(I.use_tool(src, user, 30, volume=50))
 			to_chat(user, "<span class='notice'>You removed the top section of [src].</span>")
-			stat |= MAINT
+			machine_stat |= MAINT
 			icon_state = "open"
 
 /obj/machinery/roulette/proc/shock(mob/user, prb)

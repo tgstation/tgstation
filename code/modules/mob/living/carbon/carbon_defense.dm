@@ -164,8 +164,8 @@
 				if(M.powerlevel < 0)
 					M.powerlevel = 0
 
-				visible_message("<span class='danger'>The [M.name] has shocked [src]!</span>", \
-				"<span class='userdanger'>The [M.name] has shocked you!</span>")
+				visible_message("<span class='danger'>The [M.name] shocks [src]!</span>", \
+				"<span class='userdanger'>The [M.name] shocks you!</span>")
 
 				do_sparks(5, TRUE, src)
 				var/power = M.powerlevel + rand(0,3)
@@ -220,13 +220,22 @@
 	. = ..()
 	if(!.)
 		return
-	//Pulling
-	if(iscarbon(pulling) && !(flags & SHOCK_ILLUSION) && source != pulling)
-		var/mob/living/carbon/C = pulling
-		C.electrocute_act(shock_damage*0.75, src, flags)
-	if(iscarbon(pulledby) && !(flags & SHOCK_ILLUSION) && source != pulledby)
-		var/mob/living/carbon/C = pulledby
-		C.electrocute_act(shock_damage*0.75, src, flags)
+	//Propagation through pulling, fireman carry
+	if(!(flags & SHOCK_ILLUSION))
+		var/list/shocking_queue = list()
+		if(iscarbon(pulling) && source != pulling)
+			shocking_queue += pulling
+		if(iscarbon(pulledby) && source != pulledby)
+			shocking_queue += pulledby
+		if(iscarbon(buckled) && source != buckled)
+			shocking_queue += buckled
+		for(var/mob/living/carbon/carried in buckled_mobs)
+			if(source != carried)
+				shocking_queue += carried
+		//Found our victims, now lets shock them all
+		for(var/victim in shocking_queue)
+			var/mob/living/carbon/C = victim
+			C.electrocute_act(shock_damage*0.75, src, 1, flags)
 	//Stun
 	var/should_stun = (!(flags & SHOCK_TESLA) || siemens_coeff > 0.5) && !(flags & SHOCK_NOSTUN)
 	if(should_stun)
@@ -258,7 +267,26 @@
 	else
 		M.visible_message("<span class='notice'>[M] hugs [src] to make [p_them()] feel better!</span>", \
 					"<span class='notice'>You hug [src] to make [p_them()] feel better!</span>")
-		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
+
+		// Warm them up with hugs
+		share_bodytemperature(M)
+		if(bodytemperature > M.bodytemperature)
+			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug) // Reciver always gets a mood for being hugged
+		else
+			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/warmhug, M) // You got a warm hug
+
+		// Let people know if they hugged someone really warm or really cold
+		if(M.bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+			to_chat(src, "<span class='warning'>It feels like [M] is over heating as they hug you.</span>")
+		else if(M.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			to_chat(src, "<span class='warning'>It feels like [M] is freezing as they hug you.</span>")
+
+		if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
+			to_chat(M, "<span class='warning'>It feels like [src] is over heating as you hug them.</span>")
+		else if(bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			to_chat(M, "<span class='warning'>It feels like [src] is freezing as you hug them.</span>")
+
 		if(HAS_TRAIT(M, TRAIT_FRIENDLY))
 			var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
 			if (mood.sanity >= SANITY_GREAT)
@@ -314,7 +342,7 @@
 					become_nearsighted(EYE_DAMAGE)
 
 				else if(prob(eyes.damage - 25))
-					if(!HAS_TRAIT(src, TRAIT_BLIND))
+					if(!is_blind())
 						to_chat(src, "<span class='warning'>You can't see anything!</span>")
 					eyes.applyOrganDamage(eyes.maxHealth)
 

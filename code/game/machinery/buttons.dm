@@ -43,21 +43,22 @@
 
 	setup_device()
 
-
-/obj/machinery/button/update_icon()
-	cut_overlays()
+/obj/machinery/button/update_icon_state()
 	if(panel_open)
 		icon_state = "button-open"
-		if(device)
-			add_overlay("button-device")
-		if(board)
-			add_overlay("button-board")
-
+	else if(machine_stat & (NOPOWER|BROKEN))
+		icon_state = "[skin]-p"
 	else
-		if(stat & (NOPOWER|BROKEN))
-			icon_state = "[skin]-p"
-		else
-			icon_state = skin
+		icon_state = skin
+
+/obj/machinery/button/update_overlays()
+	. = ..()
+	if(!panel_open)
+		return
+	if(device)
+		. += "button-device"
+	if(board)
+		. += "button-board"
 
 /obj/machinery/button/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_SCREWDRIVER)
@@ -159,7 +160,7 @@
 			to_chat(user, "<span class='notice'>You change the button frame's front panel.</span>")
 		return
 
-	if((stat & (NOPOWER|BROKEN)))
+	if((machine_stat & (NOPOWER|BROKEN)))
 		return
 
 	if(device && device.next_activate > world.time)
@@ -175,6 +176,7 @@
 
 	if(device)
 		device.pulsed()
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
 
 	addtimer(CALLBACK(src, /atom/.proc/update_icon), 15)
 

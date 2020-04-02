@@ -12,6 +12,7 @@
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/monkey
 	gib_type = /obj/effect/decal/cleanable/blood/gibs
 	unique_name = TRUE
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	bodyparts = list(/obj/item/bodypart/chest/monkey, /obj/item/bodypart/head/monkey, /obj/item/bodypart/l_arm/monkey,
 					 /obj/item/bodypart/r_arm/monkey, /obj/item/bodypart/r_leg/monkey, /obj/item/bodypart/l_leg/monkey)
 	hud_type = /datum/hud/monkey
@@ -60,14 +61,13 @@
 
 /mob/living/carbon/monkey/on_reagent_change()
 	. = ..()
-	remove_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE)
 	var/amount
 	if(reagents.has_reagent(/datum/reagent/medicine/morphine))
 		amount = -1
 	if(reagents.has_reagent(/datum/reagent/consumable/nuka_cola))
 		amount = -1
 	if(amount)
-		add_movespeed_modifier(MOVESPEED_ID_MONKEY_REAGENT_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = amount)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_reagent_speedmod, TRUE, amount)
 
 /mob/living/carbon/monkey/updatehealth()
 	. = ..()
@@ -76,14 +76,14 @@
 		var/health_deficiency = (maxHealth - health)
 		if(health_deficiency >= 45)
 			slow += (health_deficiency / 25)
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_HEALTH_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_health_speedmod, TRUE, slow)
 
-/mob/living/carbon/monkey/adjust_bodytemperature(amount)
+/mob/living/carbon/monkey/adjust_bodytemperature(amount, min_temp=0, max_temp=INFINITY, use_insulation=FALSE, use_steps=FALSE)
 	. = ..()
 	var/slow = 0
 	if (bodytemperature < 283.222)
 		slow += ((283.222 - bodytemperature) / 10) * 1.75
-	add_movespeed_modifier(MOVESPEED_ID_MONKEY_TEMPERATURE_SPEEDMOD, TRUE, 100, override = TRUE, multiplicative_slowdown = slow)
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/monkey_temperature_speedmod, TRUE, slow)
 
 /mob/living/carbon/monkey/Stat()
 	..()
@@ -95,8 +95,6 @@
 			if(changeling)
 				stat("Chemical Storage", "[changeling.chem_charges]/[changeling.chem_storage]")
 				stat("Absorbed DNA", changeling.absorbedcount)
-	return
-
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
@@ -105,10 +103,16 @@
 	return
 
 
-/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys cant use advanced tools
+/mob/living/carbon/monkey/IsAdvancedToolUser()//Unless its monkey mode monkeys can't use advanced tools
 	if(mind && is_monkey(mind))
 		return TRUE
 	return FALSE
+
+/mob/living/carbon/monkey/can_use_guns(obj/item/G)
+	if(G.trigger_guard == TRIGGER_GUARD_NONE)
+		to_chat(src, "<span class='warning'>You are unable to fire this!</span>")
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/monkey/reagent_check(datum/reagent/R) //can metabolize all reagents
 	return FALSE
@@ -157,9 +161,6 @@
 		return 0
 	return 1
 
-/mob/living/carbon/monkey/can_use_guns(obj/item/G)
-	return TRUE
-
 /mob/living/carbon/monkey/angry
 	aggressive = TRUE
 
@@ -167,5 +168,5 @@
 	. = ..()
 	if(prob(10))
 		var/obj/item/clothing/head/helmet/justice/escape/helmet = new(src)
-		equip_to_slot_or_del(helmet,SLOT_HEAD)
+		equip_to_slot_or_del(helmet,ITEM_SLOT_HEAD)
 		helmet.attack_self(src) // todo encapsulate toggle

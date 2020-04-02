@@ -38,3 +38,4 @@
 	damage = 4
 	damage_type = BURN
 	flag = "energy"
+	temperature = -100 // closer to the old temp loss

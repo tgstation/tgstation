@@ -23,7 +23,7 @@
 	desc = "An advanced spacesuit equipped with time-bluespace teleportation and anti-compression technology."
 	icon_state = "chronosuit"
 	item_state = "chronosuit"
-	actions_types = list(/datum/action/item_action/toggle)
+	actions_types = list(/datum/action/item_action/toggle_spacesuit, /datum/action/item_action/toggle)
 	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 30, "bio" = 90, "rad" = 90, "fire" = 100, "acid" = 1000)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	var/list/chronosafe_items = list(/obj/item/chrono_eraser, /obj/item/gun/energy/chrono_gun)
@@ -119,7 +119,7 @@
 
 		teleport_now.UpdateButtonIcon()
 
-		var/list/nonsafe_slots = list(SLOT_BELT, SLOT_BACK)
+		var/list/nonsafe_slots = list(ITEM_SLOT_BELT, ITEM_SLOT_BACK)
 		var/list/exposed = list()
 		for(var/slot in nonsafe_slots)
 			var/obj/item/slot_item = user.get_item_by_slot(slot)
@@ -166,6 +166,7 @@
 		finish_chronowalk(user, to_turf)
 
 /obj/item/clothing/suit/space/chronos/process()
+	. = ..()
 	if(activated)
 		var/mob/living/carbon/human/user = src.loc
 		if(user && ishuman(user) && (user.wear_suit == src))
@@ -178,8 +179,6 @@
 						camera.remove_target_ui()
 			else
 				new_camera(user)
-	else
-		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/chronos/proc/activate()
 	if(!activating && !activated && !teleporting)
@@ -199,7 +198,6 @@
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Starting ui display driver")
 				to_chat(user, "\[ <span style='color: #00ff00;'>ok</span> \] Initializing chronowalk4-view")
 				new_camera(user)
-				START_PROCESSING(SSobj, src)
 				activated = 1
 			else
 				to_chat(user, "\[ <span style='color: #ff0000;'>fail</span> \] Mounting /dev/helm")
@@ -237,6 +235,9 @@
 			REMOVE_TRAIT(helmet, TRAIT_NODROP, CHRONOSUIT_TRAIT)
 			helmet.suit = null
 			helmet = null
+		user.reset_perspective()
+		user.set_machine()
+		user.remote_control = null
 		if(camera)
 			QDEL_NULL(camera)
 

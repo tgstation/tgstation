@@ -65,11 +65,11 @@
 
 	money++ //SPESSH MAJICKS
 
-/obj/machinery/computer/slot_machine/update_icon()
-	if(stat & NOPOWER)
+/obj/machinery/computer/slot_machine/update_icon_state()
+	if(machine_stat & NOPOWER)
 		icon_state = "slots0"
 
-	else if(stat & BROKEN)
+	else if(machine_stat & BROKEN)
 		icon_state = "slotsb"
 
 	else if(working)
@@ -177,7 +177,7 @@
 
 /obj/machinery/computer/slot_machine/emp_act(severity)
 	. = ..()
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 	if(prob(15 * severity))
 		return
@@ -227,9 +227,9 @@
 	updateDialog()
 
 /obj/machinery/computer/slot_machine/proc/can_spin(mob/user)
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		to_chat(user, "<span class='warning'>The slot machine has no power!</span>")
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		to_chat(user, "<span class='warning'>The slot machine is broken!</span>")
 	if(working)
 		to_chat(user, "<span class='warning'>You need to wait until the machine stops spinning before you can play again!</span>")

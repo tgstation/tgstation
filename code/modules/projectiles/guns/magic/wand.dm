@@ -1,6 +1,6 @@
 /obj/item/gun/magic/wand
-	name = "wand of nothing"
-	desc = "It's not just a stick, it's a MAGIC stick!"
+	name = "wand"
+	desc = "You shouldn't have this."
 	ammo_type = /obj/item/ammo_casing/magic
 	icon_state = "nothingwand"
 	item_state = "wand"
@@ -21,7 +21,7 @@
 	. = ..()
 	. += "Has [charges] charge\s remaining."
 
-/obj/item/gun/magic/wand/update_icon()
+/obj/item/gun/magic/wand/update_icon_state()
 	icon_state = "[initial(icon_state)][charges ? "" : "-drained"]"
 
 /obj/item/gun/magic/wand/attack(atom/target, mob/living/user)
@@ -67,11 +67,20 @@
 
 /obj/item/gun/magic/wand/death/zap_self(mob/living/user)
 	..()
-	to_chat(user, "<span class='warning'>You irradiate yourself with pure energy! \
+	charges--
+	if(user.anti_magic_check())
+		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
+		return
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.mob_biotypes & MOB_UNDEAD) //negative energy heals the undead
+			user.revive(full_heal = TRUE, admin_revive = TRUE)
+			to_chat(user, "<span class='notice'>You feel great!</span>")
+			return
+	to_chat(user, "<span class='warning'>You irradiate yourself with pure negative energy! \
 	[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
 	</span>")
-	user.adjustOxyLoss(500)
-	charges--
+	user.death(FALSE)
 
 /obj/item/gun/magic/wand/death/debug
 	desc = "In some obscure circles, this is known as the 'cloning tester's friend'."
@@ -99,11 +108,15 @@
 	if(user.anti_magic_check())
 		user.visible_message("<span class='warning'>[src] has no effect on [user]!</span>")
 		return
-	user.revive(full_heal = 1)
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		C.regenerate_limbs()
-		C.regenerate_organs()
+	if(isliving(user))
+		var/mob/living/L = user
+		if(L.mob_biotypes & MOB_UNDEAD) //positive energy harms the undead
+			to_chat(user, "<span class='warning'>You irradiate yourself with pure positive energy! \
+			[pick("Do not pass go. Do not collect 200 zorkmids.","You feel more confident in your spell casting skills.","You Die...","Do you want your possessions identified?")]\
+			</span>")
+			user.death(0)
+			return
+	user.revive(full_heal = TRUE, admin_revive = TRUE)
 	to_chat(user, "<span class='notice'>You feel great!</span>")
 
 /obj/item/gun/magic/wand/resurrection/debug //for testing
@@ -127,6 +140,7 @@
 
 /obj/item/gun/magic/wand/polymorph/zap_self(mob/living/user)
 	..() //because the user mob ceases to exists by the time wabbajack fully resolves
+
 	wabbajack(user)
 	charges--
 
@@ -213,3 +227,14 @@
 	..()
 	explosion(user.loc, -1, 0, 2, 3, 0, flame_range = 2)
 	charges--
+
+/////////////////////////////////////
+//WAND OF NOTHING
+/////////////////////////////////////
+
+/obj/item/gun/magic/wand/nothing
+	name = "wand of nothing"
+	desc = "It's not just a stick, it's a MAGIC stick?"
+	ammo_type = /obj/item/ammo_casing/magic/nothing
+
+

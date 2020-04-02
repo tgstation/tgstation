@@ -13,8 +13,8 @@
 		All sales are near instantaneous - please choose carefully"
 	icon_screen = "supply_express"
 	circuit = /obj/item/circuitboard/computer/cargo/express
-	ui_x = 1000
-	ui_y = 800
+	ui_x = 600
+	ui_y = 700
 	blockade_warning = "Bluespace instability detected. Delivery impossible."
 	req_access = list(ACCESS_QM)
 
@@ -59,8 +59,9 @@
 /obj/machinery/computer/cargo/express/emag_act(mob/living/user)
 	if(obj_flags & EMAGGED)
 		return
-	user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
-	"<span class='notice'>You change the routing protocols, allowing the Supply Pod to land anywhere on the station.</span>")
+	if(user)
+		user.visible_message("<span class='warning'>[user] swipes a suspicious card through [src]!</span>",
+		"<span class='notice'>You change the routing protocols, allowing the Supply Pod to land anywhere on the station.</span>")
 	obj_flags |= EMAGGED
 	// This also sets this on the circuit board
 	var/obj/item/circuitboard/computer/cargo/board = circuit

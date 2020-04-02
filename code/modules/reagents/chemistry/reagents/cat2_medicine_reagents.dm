@@ -6,32 +6,34 @@
 /******BRUTE******/
 /*Suffix: -bital*/
 
-/datum/reagent/medicine/C2/helbital //only REALLY a C2 if you heal the other damages but not being able to outright heal the other guys is close enough to damaging
+/datum/reagent/medicine/C2/helbital //kinda a C2 only if you're not in hardcrit.
 	name = "Helbital"
-	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Burns, toxins, and asphyxition will increase healing but these damages must be maintained while the drug is being metabolized or the drug will react negatively."
+	description = "Named after the norse goddess Hel, this medicine heals the patient's bruises the closer they are to death. Patients will find the medicine 'aids' their healing if not near death by causing asphyxiation."
 	color = "#9400D3"
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
 	var/helbent = FALSE
-	var/beginning_combo = 0
 	var/reaping = FALSE
-
-/datum/reagent/medicine/C2/helbital/on_mob_metabolize(mob/living/carbon/M)
-	beginning_combo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() //This DOES mean you can cure Tox/Oxy and then do burn to maintain the brute healing that way.
-	return ..()
 
 /datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
-	var/cccombo = M.getToxLoss() + M.getOxyLoss() + M.getFireLoss()
-	var/healed_this_iteration = FALSE
-	if(cccombo >= beginning_combo)
-		M.adjustBruteLoss(FLOOR(cccombo/-15,0.1)) //every 15 damage adds 1 per tick
-		healed_this_iteration = TRUE
-	else
-		M.adjustToxLoss((beginning_combo-cccombo)*0.1) //If you are just healing instead of converting the damage we'll KINDLY do it for you AND make it the most difficult!
+	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
+	var/thou_shall_heal = 0
+	var/good_kind_of_healing = FALSE
+	switch(M.stat)
+		if(CONSCIOUS) //bad
+			thou_shall_heal = death_is_coming/50
+			M.adjustOxyLoss(2, TRUE)
+		if(SOFT_CRIT) //meh convert
+			thou_shall_heal = round(death_is_coming/47,0.1)
+			M.adjustOxyLoss(1, TRUE)
+		else //no convert
+			thou_shall_heal = round(death_is_coming/45,0.1)
+			good_kind_of_healing = TRUE
+	M.adjustBruteLoss(-thou_shall_heal, FALSE)
 
-	if(healed_this_iteration && !reaping && prob(0.0001)) //janken with the grim reaper!
+	if(good_kind_of_healing && !reaping && prob(0.0001)) //janken with the grim reaper!
 		reaping = TRUE
 		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
 		if(M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING))
@@ -56,8 +58,8 @@
 			return
 		else //VICTORY ROYALE
 			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away as well as your wounds.</span>")
-			SSmedals.UnlockMedal(MEDAL_HELBITALJANKEN,M.client)
-			M.revive(TRUE)
+			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
+			M.revive(full_heal = TRUE, admin_revive = FALSE)
 			M.reagents.del_reagent(type)
 			return
 
@@ -89,33 +91,76 @@
 	..()
 	return TRUE
 
+/datum/reagent/medicine/C2/probital
+	name = "Probital"
+	description = "Originally developed as a prototype-gym supliment for those looking for quick workout turnover, this oral medication quickly repairs broken muscle tissue but causes lactic acid buildup, tiring the patient. Overdosing can cause extreme drowsiness. An Influx of nutrients promotes the muscle repair even further."
+	reagent_state = SOLID
+	color = "#FFFF6B"
+	overdose_threshold = 20
+
+/datum/reagent/medicine/C2/probital/on_mob_life(mob/living/carbon/M)
+	M.adjustBruteLoss(-2.25*REM, FALSE)
+	var/ooo_youaregettingsleepy = 3.5
+	switch(round(M.getStaminaLoss()))
+		if(10 to 40)
+			ooo_youaregettingsleepy = 3
+		if(41 to 60)
+			ooo_youaregettingsleepy = 2.5
+		if(61 to 200) //you really can only go to 120
+			ooo_youaregettingsleepy = 2
+	M.adjustStaminaLoss(ooo_youaregettingsleepy*REM, FALSE)
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/C2/probital/overdose_process(mob/living/M)
+	M.adjustStaminaLoss(3*REM, 0)
+	if(M.getStaminaLoss() >= 80)
+		M.drowsyness++
+	if(M.getStaminaLoss() >= 100)
+		to_chat(M,"<span class='warning'>You feel more tired than you usually do, perhaps if you rest your eyes for a bit...</span>")
+		M.adjustStaminaLoss(-100, TRUE)
+		M.Sleeping(10 SECONDS)
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/C2/probital/on_transfer(atom/A, method=INGEST, trans_volume)
+	if(method != INGEST || !iscarbon(A))
+		return
+
+	A.reagents.remove_reagent(/datum/reagent/medicine/C2/probital, trans_volume * 0.05)
+	A.reagents.add_reagent(/datum/reagent/medicine/metafactor, trans_volume * 0.25)
+
+	..()
+
 /******BURN******/
 /*Suffix: -uri*/
 /datum/reagent/medicine/C2/lenturi
 	name = "Lenturi"
 	description = "Used to treat burns. Makes you move slower while it is in your system. Applies stomach damage when it leaves your system."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#6171FF"
 	var/resetting_probability = 0
 	var/spammer = 0
 
 /datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
-		M.adjustFireLoss(-3 * REM)
-		M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
-		..()
-		return TRUE
-/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
-	M.add_movespeed_modifier(MOVESPEED_ID_LENTURI, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
-	. = ..()
-/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
-	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
+	M.adjustFireLoss(-3 * REM)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
+	..()
+	return TRUE
 
-	. = ..()
+/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
+/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
 	reagent_state = LIQUID
-	color = "#C8A5DC"
+	color = "#8C93FF"
 	var/resetting_probability = 0
 	var/message_cd = 0
 
@@ -124,6 +169,41 @@
 	M.adjustOrganLoss(ORGAN_SLOT_EYES,0.25*REM)
 	..()
 	return TRUE
+
+/datum/reagent/medicine/C2/hercuri
+	name = "Hercuri"
+	description = "Not to be confused with element Mercury, this medicine excels in reverting effects of dangerous high-temperature environments. Prolonged exposure can cause hypothermia."
+	reagent_state = LIQUID
+	color = "#F7FFA5"
+	overdose_threshold = 25
+	reagent_weight = 0.6
+
+/datum/reagent/medicine/C2/hercuri/on_mob_life(mob/living/carbon/M)
+	if(M.getFireLoss() > 50)
+		M.adjustFireLoss(-2*REM, FALSE)
+	else
+		M.adjustFireLoss(-1.25*REM, FALSE)
+	M.adjust_bodytemperature(rand(-25,-5)*(TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
+	M.reagents?.chem_temp +=(-10*REM)
+	M.adjust_fire_stacks(-1)
+	..()
+	. = TRUE
+
+/datum/reagent/medicine/C2/hercuri/reaction_mob(mob/living/carbon/M, method=VAPOR, reac_volume)
+	if(method != VAPOR)
+		return
+
+	M.adjust_bodytemperature(-reac_volume * TEMPERATURE_DAMAGE_COEFFICIENT, 50)
+	M.adjust_fire_stacks(-reac_volume / 2)
+	if(reac_volume >= metabolization_rate)
+		M.ExtinguishMob()
+
+	..()
+
+/datum/reagent/medicine/C2/hercuri/overdose_process(mob/living/carbon/M)
+	M.adjust_bodytemperature(-10*TEMPERATURE_DAMAGE_COEFFICIENT*REM,50) //chilly chilly
+	..()
+
 
 /******OXY******/
 /*Suffix: -mol*/
@@ -228,13 +308,14 @@
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
 	M.adjustToxLoss(-0.2 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 2.5/medibonus : 1)
-	for(var/datum/reagent/the_reagent2 in M.reagents.reagent_list)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 1.5/medibonus : 1)
+	for(var/r2 in M.reagents.reagent_list)
+		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
-		var/amount2purge = medibonus*0.1
-		if(istype(the_reagent2,/datum/reagent/toxin))
-			amount2purge *= 5 //very good antitox (well just removing them) for roundstart availability
+		var/amount2purge = 0.1
+		if(istype(the_reagent2,/datum/reagent/toxin) || istype(the_reagent2,/datum/reagent/consumable/ethanol/))
+			amount2purge *= (5*medibonus) //very good antitox and antidrink (well just removing them) for roundstart availability
 		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
@@ -324,24 +405,47 @@
 /*Suffix: Combo of healing, prob gonna get wack REAL fast*/
 /datum/reagent/medicine/C2/instabitaluri
 	name = "Synthflesh (Instabitaluri)"
-	description = "Has a 100% chance of instantly healing brute and burn damage at the cost of toxicity (75% of damage healed). Touch application only."
+	description = "Heals brute and burn damage at the cost of toxicity (66% of damage healed). Touch application only."
 	reagent_state = LIQUID
 	color = "#FFEBEB"
 
 /datum/reagent/medicine/C2/instabitaluri/reaction_mob(mob/living/M, method=TOUCH, reac_volume,show_message = 1)
 	if(iscarbon(M))
-		var/mob/living/carbon/Carbies = M
-		if (Carbies.stat == DEAD)
+		var/mob/living/carbon/carbies = M
+		if (carbies.stat == DEAD)
 			show_message = 0
 		if(method in list(PATCH, TOUCH))
-			var/harmies = min(Carbies.getBruteLoss(),Carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
-			var/burnies = min(Carbies.getFireLoss(),Carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
-			Carbies.adjustToxLoss((harmies+burnies)*0.66)
+			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
+			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
+			carbies.adjustToxLoss((harmies+burnies)*0.66)
 			if(show_message)
-				to_chat(Carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
-			SEND_SIGNAL(Carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+				to_chat(carbies, "<span class='danger'>You feel your burns and bruises healing! It stings like hell!</span>")
+			SEND_SIGNAL(carbies, COMSIG_ADD_MOOD_EVENT, "painful_medicine", /datum/mood_event/painful_medicine)
+			if(HAS_TRAIT_FROM(M, TRAIT_HUSK, "burn") && carbies.getFireLoss() < THRESHOLD_UNHUSK && (carbies.reagents.get_reagent_amount(/datum/reagent/medicine/C2/instabitaluri) + reac_volume >= 100))
+				carbies.cure_husk("burn")
+				carbies.visible_message("<span class='nicegreen'>A rubbery liquid coats [carbies]'s burns. [carbies] looks a lot healthier!") //we're avoiding using the phrases "burnt flesh" and "burnt skin" here because carbies could be a skeleton or a golem or something
 	..()
 	return TRUE
+
+/******ORGAN HEALING******/
+/*Suffix: -rite*/
+/datum/reagent/medicine/C2/penthrite
+	name = "Penthrite"
+	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
+	color = "#F5F5F5"
+	self_consuming = TRUE
+
+/datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
+	. = ..()
+	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_metabolize(mob/living/M)
+	. = ..()
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_end_metabolize(mob/living/M)
+	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	. = ..()
 
 /******NICHE******/
 //todo

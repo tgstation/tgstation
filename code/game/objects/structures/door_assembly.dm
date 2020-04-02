@@ -216,6 +216,17 @@
 									G.use(2)
 									var/mineralassembly = text2path("/obj/structure/door_assembly/door_assembly_[M]")
 									var/obj/structure/door_assembly/MA = new mineralassembly(loc)
+
+									if(MA.noglass && glass) //in case the new door doesn't support glass. prevents the new one from reverting to a normal airlock after being constructed.
+										var/obj/item/stack/sheet/dropped_glass
+										if(heat_proof_finished)
+											dropped_glass = new /obj/item/stack/sheet/rglass(drop_location())
+											heat_proof_finished = FALSE
+										else
+											dropped_glass = new /obj/item/stack/sheet/glass(drop_location())
+										glass = FALSE
+										to_chat(user, "<span class='notice'>As you finish, a [dropped_glass.singular_name] falls out of [MA]'s frame.</span>")
+
 									transfer_assembly_vars(src, MA, TRUE)
 							else
 								to_chat(user, "<span class='warning'>You need at least two sheets add a mineral cover!</span>")
@@ -259,13 +270,13 @@
 	update_name()
 	update_icon()
 
-/obj/structure/door_assembly/update_icon()
-	cut_overlays()
+/obj/structure/door_assembly/update_overlays()
+	. = ..()
 	if(!glass)
-		add_overlay(get_airlock_overlay("fill_construction", icon))
-	else if(glass)
-		add_overlay(get_airlock_overlay("glass_construction", overlays_file))
-	add_overlay(get_airlock_overlay("panel_c[state+1]", overlays_file))
+		. += get_airlock_overlay("fill_construction", icon)
+	else
+		. += get_airlock_overlay("glass_construction", overlays_file)
+	. += get_airlock_overlay("panel_c[state+1]", overlays_file)
 
 /obj/structure/door_assembly/proc/update_name()
 	name = ""
@@ -312,3 +323,17 @@
 			var/obj/item/stack/sheet/mineral/mineral_path = text2path("/obj/item/stack/sheet/mineral/[mineral]")
 			new mineral_path(T, 2)
 	qdel(src)
+
+
+/obj/structure/door_assembly/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+	if(the_rcd.mode == RCD_DECONSTRUCT)
+		return list("mode" = RCD_DECONSTRUCT, "delay" = 50, "cost" = 16)
+	return FALSE
+
+/obj/structure/door_assembly/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+	switch(passed_mode)
+		if(RCD_DECONSTRUCT)
+			to_chat(user, "<span class='notice'>You deconstruct [src].</span>")
+			qdel(src)
+			return TRUE
+	return FALSE

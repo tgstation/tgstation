@@ -351,7 +351,7 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ba" = (
 /obj/structure/destructible/cult/talisman,
-/obj/item/book/granter/martial/plasma_fist,
+/obj/item/book/granter/martial/plasma_fist/nobomb,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -392,49 +392,9 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
-"bi" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bj" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bk" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bl" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
 "bm" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bn" = (
-/obj/machinery/gateway{
-	dir = 4
 	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
@@ -447,28 +407,6 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
-"bp" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bq" = (
-/obj/machinery/gateway,
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"br" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
 "bs" = (
 /obj/structure/trap/stun{
 	desc = "A rune inscribed in the floor, the air feeling electrified around it.";
@@ -511,7 +449,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "by" = (
-/obj/item/twohanded/mjollnir,
+/obj/item/mjollnir,
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -58099,9 +58037,9 @@ ao
 ao
 ao
 bf
-bi
-bl
-bp
+ao
+ao
+ao
 aw
 ao
 bz
@@ -58356,9 +58294,9 @@ ao
 ao
 bf
 ap
-bj
+ao
 bm
-bq
+ao
 bf
 bw
 bA
@@ -58613,9 +58551,9 @@ ao
 ao
 ao
 bf
-bk
-bn
-br
+ao
+ao
+ao
 ao
 ao
 bz

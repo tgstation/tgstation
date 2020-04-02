@@ -25,6 +25,7 @@
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
 	max_integrity = 75
+	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
@@ -107,7 +108,7 @@
 	item_state = "buckler"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
@@ -128,6 +129,10 @@
 /obj/item/shield/riot/flash/Initialize()
 	. = ..()
 	embedded_flash = new(src)
+
+/obj/item/shield/riot/flash/ComponentInitialize()
+	. = .. ()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
 	. =  embedded_flash.attack(M, user)
@@ -168,7 +173,7 @@
 	embedded_flash.emp_act(severity)
 	update_icon()
 
-/obj/item/shield/riot/flash/update_icon()
+/obj/item/shield/riot/flash/update_icon_state()
 	if(!embedded_flash || embedded_flash.burnt_out)
 		icon_state = "riot"
 		item_state = "riot"
@@ -238,6 +243,7 @@
 	icon_state = "teleriot0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	custom_materials = list(/datum/material/iron = 3600, /datum/material/glass = 3600, /datum/material/silver = 270, /datum/material/titanium = 180)
 	slot_flags = null
 	force = 3
 	throwforce = 3

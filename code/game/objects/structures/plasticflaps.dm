@@ -1,6 +1,7 @@
 /obj/structure/plasticflaps
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps. Definitely can't get past those. No way."
+	gender = PLURAL
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plasticflaps"
 	armor = list("melee" = 100, "bullet" = 80, "laser" = 80, "energy" = 100, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 50, "acid" = 50)
@@ -68,7 +69,9 @@
 		return CanAStarPass(ID, to_dir, M.pulling)
 	return TRUE //diseases, stings, etc can pass
 
-/obj/structure/plasticflaps/CanPass(atom/movable/A, turf/T)
+/obj/structure/plasticflaps/CanAllowThrough(atom/movable/A, turf/T)
+	. = ..()
+
 	if(istype(A) && (A.pass_flags & PASSGLASS))
 		return prob(60)
 
@@ -92,7 +95,6 @@
 			return TRUE
 		if((M.mobility_flags & MOBILITY_STAND) && !M.ventcrawler && M.mob_size != MOB_SIZE_TINY)	//If your not laying down, or a ventcrawler or a small creature, no pass.
 			return FALSE
-	return ..()
 
 /obj/structure/plasticflaps/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

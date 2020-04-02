@@ -41,6 +41,8 @@
 		var/new_style = input(user, "Select a hairstyle", "Grooming")  as null|anything in GLOB.hairstyles_list
 		if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 			return	//no tele-grooming
+		if(HAS_TRAIT(H, TRAIT_BALD))
+			to_chat(H, "<span class='notice'>If only growing back hair were that easy for you...</span>")
 		if(new_style)
 			H.hairstyle = new_style
 
@@ -106,6 +108,7 @@
 			var/datum/species/S = speciestype
 			if(initial(S.changesource_flags) & MIRROR_MAGIC)
 				choosable_races += initial(S.id)
+		choosable_races = sortList(choosable_races)
 	..()
 
 /obj/structure/mirror/magic/lesser/New()
@@ -135,8 +138,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize_name(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
-
+			var/newname = sanitize_name(reject_bad_text(stripped_input(H, "Who are we again?", "Name change", H.name, MAX_NAME_LEN)))
 			if(!newname)
 				return
 			if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))

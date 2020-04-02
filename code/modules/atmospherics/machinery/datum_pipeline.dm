@@ -129,7 +129,6 @@
 	var/datum/pipeline/P = returnPipenet(A)
 	if(!P)
 		CRASH("null.addMember() called by [type] on [COORD(src)]")
-		return
 	P.addMember(A, src)
 
 
@@ -139,11 +138,7 @@
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
 		member.air_temporary.volume = member.volume
-		member.air_temporary.copy_from(air)
-		var/member_gases = member.air_temporary.gases
-
-		for(var/id in member_gases)
-			member_gases[id][MOLES] *= member.volume/air.volume
+		member.air_temporary.copy_from(air, member.volume/air.volume)
 
 		member.air_temporary.temperature = air.temperature
 
@@ -259,7 +254,4 @@
 		//Update individual gas_mixtures by volume ratio
 		for(var/i in GL)
 			var/datum/gas_mixture/G = i
-			G.copy_from(total_gas_mixture)
-			var/list/G_gases = G.gases
-			for(var/id in G_gases)
-				G_gases[id][MOLES] *= G.volume/total_gas_mixture.volume
+			G.copy_from(total_gas_mixture, G.volume/total_gas_mixture.volume)

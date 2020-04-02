@@ -90,7 +90,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		..()
 
 /obj/item/proc/help_light_cig(mob/living/M)
-	var/mask_item = M.get_item_by_slot(SLOT_WEAR_MASK)
+	var/mask_item = M.get_item_by_slot(ITEM_SLOT_MASK)
 	if(istype(mask_item, /obj/item/clothing/mask/cigarette))
 		return mask_item
 
@@ -101,6 +101,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	name = "firebrand"
 	desc = "An unlit firebrand. It makes you wonder why it's not just called a stick."
 	smoketime = 20 //40 seconds
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT)
 	grind_results = list(/datum/reagent/carbon = 2)
 
 /obj/item/match/firebrand/Initialize()
@@ -132,6 +133,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/chem_volume = 30
 	var/smoke_all = FALSE /// Should we smoke all of the chems in the cig before it runs out. Splits each puff to take a portion of the overall chems so by the end you'll always have consumed all of the chems inside.
 	var/list/list_reagents = list(/datum/reagent/drug/nicotine = 15)
+	var/lung_harm = 1 //How bad it is for you
 
 /obj/item/clothing/mask/cigarette/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is huffing [src] as quickly as [user.p_they()] can! It looks like [user.p_theyre()] trying to give [user.p_them()]self cancer.</span>")
@@ -144,7 +146,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		reagents.add_reagent_list(list_reagents)
 	if(starts_lit)
 		light()
-	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(SLOT_WEAR_MASK))//90% to knock off when wearing a mask
+	AddComponent(/datum/component/knockoff,90,list(BODY_ZONE_PRECISE_MOUTH),list(ITEM_SLOT_MASK))//90% to knock off when wearing a mask
 
 /obj/item/clothing/mask/cigarette/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -199,7 +201,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		qdel(src)
 		return
 	// allowing reagents to react after being lit
-	DISABLE_BITFIELD(reagents.flags, NO_REACT)
+	reagents.flags &= ~(NO_REACT)
 	reagents.handle_reactions()
 	icon_state = icon_on
 	item_state = icon_on
@@ -217,7 +219,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/clothing/mask/cigarette/extinguish()
 	if(!lit)
 		return
-	name = copytext(name,5,length(name)+1)
+	name = copytext_char(name, 5) //5 == length_char("lit ") + 1
 	attack_verb = null
 	hitsound = null
 	damtype = BRUTE
@@ -225,7 +227,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = icon_off
 	item_state = icon_off
 	STOP_PROCESSING(SSobj, src)
-	ENABLE_BITFIELD(reagents.flags, NO_REACT)
+	reagents.flags |= NO_REACT
 	lit = FALSE
 	if(ismob(loc))
 		var/mob/living/M = loc
@@ -248,6 +250,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					to_smoke = reagents.total_volume/((smoketime * 2) / (dragtime / 10))
 
 				reagents.reaction(C, INGEST, fraction)
+				var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
+				if(L && !(L.organ_flags & ORGAN_SYNTHETIC))
+					C.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm)
 				if(!reagents.trans_to(C, to_smoke))
 					reagents.remove_any(to_smoke)
 				return
@@ -307,10 +312,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	desc = "A Space Cigarette brand cigarette."
 
 /obj/item/clothing/mask/cigarette/dromedary
-	desc = "A DromedaryCo brand cigarette."
+	desc = "A DromedaryCo brand cigarette. Contrary to popular belief, does not contain Calomel, but is reported to have a watery taste."
+	list_reagents = list(/datum/reagent/drug/nicotine = 13, /datum/reagent/water = 5) //camel has water
 
 /obj/item/clothing/mask/cigarette/uplift
-	desc = "An Uplift Smooth brand cigarette."
+	desc = "An Uplift Smooth brand cigarette. Smells refreshing."
 	list_reagents = list(/datum/reagent/drug/nicotine = 13, /datum/reagent/consumable/menthol = 5)
 
 /obj/item/clothing/mask/cigarette/robust
@@ -321,7 +327,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	list_reagents = list(/datum/reagent/drug/nicotine = 15, /datum/reagent/gold = 3) // Just enough to taste a hint of expensive metal.
 
 /obj/item/clothing/mask/cigarette/carp
-	desc = "A Carp Classic brand cigarette."
+	desc = "A Carp Classic brand cigarette. A small label on its side indicates that it does NOT contain carpotoxin."
+
+/obj/item/clothing/mask/cigarette/carp/Initialize()
+    . = ..()
+    if(!prob(5))
+        return
+    reagents?.add_reagent(/datum/reagent/toxin/carpotoxin , 3) // They lied
 
 /obj/item/clothing/mask/cigarette/syndicate
 	desc = "An unknown brand cigarette."
@@ -370,6 +382,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie/mindbreaker
 	list_reagents = list(/datum/reagent/toxin/mindbreaker = 35, /datum/reagent/toxin/lipolicide = 15)
+
+/obj/item/clothing/mask/cigarette/candy
+	name = "Little Timmy's candy cigarette"
+	desc = "For all ages*! Doesn't contain any amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
+	smoketime = 120
+	icon_on = "candyon"
+	icon_off = "candyoff" //make sure to add positional sprites in icons/obj/cigarettes.dmi if you add more.
+	item_state = "candyoff"
+	icon_state = "candyoff"
+	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash
+	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10)
+
+/obj/item/clothing/mask/cigarette/candy/nicotine
+	desc = "For all ages*! Doesn't contain any* amount of nicotine. Health and safety risks can be read on the tip of the cigarette."
+	type_butt = /obj/item/reagent_containers/food/snacks/candy_trash/nicotine
+	list_reagents = list(/datum/reagent/consumable/sugar = 10, /datum/reagent/consumable/caramel = 10, /datum/reagent/drug/nicotine = 20) //oh no!
+	smoke_all = TRUE //timmy's not getting out of this one
 
 /obj/item/cigbutt/roach
 	name = "roach"
@@ -555,6 +584,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	resistance_flags = FIRE_PROOF
 	light_color = LIGHT_COLOR_FIRE
 	grind_results = list(/datum/reagent/iron = 1, /datum/reagent/fuel = 5, /datum/reagent/fuel/oil = 5)
+	custom_price = 55
 
 /obj/item/lighter/Initialize()
 	. = ..()
@@ -576,11 +606,15 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		user.visible_message("<span class='suicide'>[user] begins whacking [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 		return BRUTELOSS
 
-/obj/item/lighter/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
+/obj/item/lighter/update_overlays()
+	. = ..()
+	. += create_lighter_overlay()
+
+/obj/item/lighter/update_icon_state()
 	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
-	add_overlay(lighter_overlay)
+
+/obj/item/lighter/proc/create_lighter_overlay()
+	return mutable_appearance(icon, "lighter_overlay_[overlay_state][lit ? "-on" : ""]")
 
 /obj/item/lighter/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
@@ -702,12 +736,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lighter_color = pick(color_list)
 	update_icon()
 
-/obj/item/lighter/greyscale/update_icon()
-	cut_overlays()
-	var/mutable_appearance/lighter_overlay = mutable_appearance(icon,"lighter_overlay_[overlay_state][lit ? "-on" : ""]")
-	icon_state = "[initial(icon_state)][lit ? "-on" : ""]"
+/obj/item/lighter/greyscale/create_lighter_overlay()
+	var/mutable_appearance/lighter_overlay = ..()
 	lighter_overlay.color = lighter_color
-	add_overlay(lighter_overlay)
+	return lighter_overlay
 
 /obj/item/lighter/greyscale/ignition_effect(atom/A, mob/user)
 	if(get_temperature())
@@ -786,7 +818,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		if(!screw)
 			screw = TRUE
 			to_chat(user, "<span class='notice'>You open the cap on [src].</span>")
-			ENABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+			reagents.flags |= OPENCONTAINER
 			if(obj_flags & EMAGGED)
 				add_overlay("vapeopen_high")
 			else if(super)
@@ -796,7 +828,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		else
 			screw = FALSE
 			to_chat(user, "<span class='notice'>You close the cap on [src].</span>")
-			DISABLE_BITFIELD(reagents.flags, OPENCONTAINER)
+			reagents.flags &= ~(OPENCONTAINER)
 			cut_overlays()
 
 	if(O.tool_behaviour == TOOL_MULTITOOL)
@@ -841,18 +873,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/vape/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_WEAR_MASK)
+	if(slot == ITEM_SLOT_MASK)
 		if(!screw)
 			to_chat(user, "<span class='notice'>You start puffing on the vape.</span>")
-			DISABLE_BITFIELD(reagents.flags, NO_REACT)
+			reagents.flags &= ~(NO_REACT)
 			START_PROCESSING(SSobj, src)
 		else //it will not start if the vape is opened.
 			to_chat(user, "<span class='warning'>You need to close the cap first!</span>")
 
 /obj/item/clothing/mask/vape/dropped(mob/user)
 	. = ..()
-	if(user.get_item_by_slot(SLOT_WEAR_MASK) == src)
-		ENABLE_BITFIELD(reagents.flags, NO_REACT)
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
+		reagents.flags |= NO_REACT
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/vape/proc/hand_reagents()//had to rename to avoid duplicate error
@@ -866,7 +898,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 					reagents.remove_any(REAGENTS_METABOLISM)
 				if(reagents.get_reagent_amount(/datum/reagent/fuel))
 					//HOT STUFF
-					C.fire_stacks = 2
+					C.adjust_fire_stacks(2)
 					C.IgniteMob()
 
 				if(reagents.get_reagent_amount(/datum/reagent/toxin/plasma)) // the plasma explodes when exposed to fire

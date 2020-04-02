@@ -154,15 +154,11 @@
 			if(pressure == "max")
 				pressure = MAX_OUTPUT_PRESSURE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
-				if(!isnull(pressure) && !..())
-					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 		if("node1")
 			var/value = text2num(params["concentration"])
@@ -171,13 +167,13 @@
 			. = TRUE
 		if("node2")
 			var/value = text2num(params["concentration"])
-			adjust_node1_value(-value)
+			adjust_node1_value(100 - value)
 			investigate_log("was set to [node2_concentration] % on node 2 by [key_name(usr)]", INVESTIGATE_ATMOS)
 			. = TRUE
 	update_icon()
 
-/obj/machinery/atmospherics/components/trinary/mixer/proc/adjust_node1_value(delta)
-	node1_concentration = round(max(0, min(1, node1_concentration + delta)), 0.01)
+/obj/machinery/atmospherics/components/trinary/mixer/proc/adjust_node1_value(newValue)
+	node1_concentration = newValue / 100
 	node2_concentration = 1 - node1_concentration
 
 /obj/machinery/atmospherics/components/trinary/mixer/can_unwrench(mob/user)

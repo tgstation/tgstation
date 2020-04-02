@@ -11,17 +11,14 @@
 		AH.toggle_leap()
 
 /obj/screen/alien/plasma_display
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "power_display2"
 	name = "plasma stored"
+	icon_state = "power_display"
 	screen_loc = ui_alienplasmadisplay
 
-
 /obj/screen/alien/alien_queen_finder
-	icon = 'icons/mob/screen_alien.dmi'
-	icon_state = "queen_finder"
 	name = "queen sense"
 	desc = "Allows you to sense the general direction of your Queen."
+	icon_state = "queen_finder"
 	screen_loc = ui_alien_queen_finder
 
 /datum/hud/alien
@@ -118,7 +115,7 @@
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
-			inv_slots[inv.slot_id] = inv
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
 			inv.update_icon()
 
 /datum/hud/alien/persistent_inventory_update()

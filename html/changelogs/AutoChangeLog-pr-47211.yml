@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - rscadd: "Vault controller has been updated to tgui-next."

@@ -18,7 +18,9 @@
 	return !istype(S, /obj/item/seeds/sample) // Samples can't accept new genes
 
 /datum/plant_gene/proc/Copy()
-	return new type
+	var/datum/plant_gene/G = new type
+	G.mutability_flags = mutability_flags
+	return G
 
 /datum/plant_gene/proc/apply_vars(obj/item/seeds/S) // currently used for fire resist, can prob. be further refactored
 	return
@@ -297,9 +299,13 @@
 
 /datum/plant_gene/trait/glow/shadow
 	//makes plant emit slightly purple shadows
+	//adds -potency*(rate*0.2) light power to products
 	name = "Shadow Emission"
 	rate = 0.04
 	glow_color = "#AAD84B"
+
+/datum/plant_gene/trait/glow/shadow/glow_power(obj/item/seeds/S)
+	return -max(S.potency*(rate*0.2), 0.2)
 
 /datum/plant_gene/trait/glow/white
 	name = "White Bioluminescence"
@@ -424,6 +430,7 @@
 			G.reagents.reaction(L, INJECT, fraction)
 			G.reagents.trans_to(L, injecting_amount)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
+			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"

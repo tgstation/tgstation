@@ -14,7 +14,7 @@
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	deathsound = 'sound/voice/borg_deathsound.ogg'
 	speech_span = SPAN_ROBOT
-
+	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	var/datum/ai_laws/laws = null//Now... THEY ALL CAN ALL HAVE LAWS
 	var/last_lawchange_announce = 0
 	var/list/alarms_to_show = list()
@@ -74,9 +74,6 @@
 
 /mob/living/silicon/contents_explosion(severity, target)
 	return
-
-/mob/living/silicon/prevent_content_explosion()
-	return TRUE
 
 /mob/living/silicon/proc/cancelAlarm()
 	return
@@ -213,6 +210,9 @@
 	if (href_list["laws"]) // With how my law selection code works, I changed statelaws from a verb to a proc, and call it through my law selection panel. --NeoFite
 		statelaws()
 
+	if (href_list["printlawtext"]) // this is kinda backwards
+		to_chat(usr, href_list["printlawtext"])
+
 	return
 
 
@@ -331,7 +331,7 @@
 
 /mob/living/silicon/proc/ai_roster()
 	var/datum/browser/popup = new(src, "airoster", "Crew Manifest", 387, 420)
-	popup.set_content(GLOB.data_core.get_manifest())
+	popup.set_content(GLOB.data_core.get_manifest_html())
 	popup.open()
 
 /mob/living/silicon/proc/set_autosay() //For allowing the AI and borgs to set the radio behavior of auto announcements (state laws, arrivals).

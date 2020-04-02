@@ -11,8 +11,8 @@
 
 /client/proc/centcom_podlauncher() //Creates a verb for admins to open up the ui
 	set name = "Config/Launch Supplypod"
-	set desc = "Configure and launch a Centcom supplypod full of whatever your heart desires!"
-	set category = "Admin"
+	set desc = "Configure and launch a CentCom supplypod full of whatever your heart desires!"
+	set category = "Admin - Events"
 	var/datum/centcom_podlauncher/plaunch  = new(usr)//create the datum
 	plaunch.ui_interact(usr)//datum has a tgui component, here we open the window
 
@@ -24,6 +24,7 @@
 	var/client/holder //client of whoever is using this datum
 	var/area/bay //What bay we're using to launch shit from.
 	var/launchClone = FALSE //If true, then we don't actually launch the thing in the bay. Instead we call duplicateObject() and send the result
+	var/launchRandomItem = FALSE //If true, lauches a single random item instead of everything on a turf.
 	var/launchChoice = 1 //Determines if we launch all at once (0) , in order (1), or at random(2)
 	var/explosionChoice = 0 //Determines if there is no explosion (0), custom explosion (1), or just do a maxcap (2)
 	var/damageChoice = 0 //Determines if we do no damage (0), custom amnt of damage (1), or gib + 5000dmg (2)
@@ -65,6 +66,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	data["bayNumber"] = B //Holds the bay as a number. Useful for comparisons in centcom_podlauncher.ract
 	data["oldArea"] = (oldTurf ? get_area(oldTurf) : null) //Holds the name of the area that the user was in before using the teleportCentcom action
 	data["launchClone"] = launchClone //Do we launch the actual items in the bay or just launch clones of them?
+	data["launchRandomItem"] = launchRandomItem //Do we launch a single random item instead of everything on the turf?
 	data["launchChoice"] = launchChoice //Launch turfs all at once (0), ordered (1), or randomly(1)
 	data["explosionChoice"] = explosionChoice //An explosion that occurs when landing. Can be no explosion (0), custom explosion (1), or maxcap (2)
 	data["damageChoice"] = damageChoice //Damage that occurs to any mob under the pod when it lands. Can be no damage (0), custom damage (1), or gib+5000dmg (2)
@@ -127,10 +129,10 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			var/list/turfs = list()
 			for(var/turf/T in A)
 				turfs.Add(T) //Fill a list with turfs in the area
-			var/turf/T = safepick(turfs) //Only teleport if the list isn't empty
-			if(!T) //If the list is empty, error and cancel
+			if (!length(turfs)) //If the list is empty, error and cancel
 				to_chat(M, "Nowhere to jump to!")
-				return
+				return //Only teleport if the list isn't empty
+			var/turf/T = pick(turfs)
 			M.forceMove(T) //Perform the actual teleport
 			log_admin("[key_name(usr)] jumped to [AREACOORD(A)]")
 			message_admins("[key_name_admin(usr)] jumped to [AREACOORD(A)]")
@@ -149,6 +151,9 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 		if("launchClone") //Toggles the launchClone var. See variable declarations above for what this specifically means
 			launchClone = !launchClone
 			. = TRUE
+		if("launchRandomItem") //Pick random turfs from the supplypod bay at centcom to launch
+			launchRandomItem = !launchRandomItem
+			. = TRUE
 		if("launchOrdered") //Launch turfs (from the orderedArea list) one at a time in order, from the supplypod bay at centcom
 			if (launchChoice == 1) //launchChoice 1 represents ordered. If we push "ordered" and it already is, then we go to default value
 				launchChoice = 0
@@ -157,7 +162,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			launchChoice = 1
 			updateSelector()
 			. = TRUE
-		if("launchRandom") //Pick random turfs from the supplypod bay at centcom to launch
+		if("launchRandomTurf") //Pick random turfs from the supplypod bay at centcom to launch
 			if (launchChoice == 2)
 				launchChoice = 0
 				updateSelector()
@@ -440,8 +445,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 /datum/centcom_podlauncher/proc/updateCursor(var/launching) //Update the moues of the user
 	if (holder) //Check to see if we have a client
 		if (launching) //If the launching param is true, we give the user new mouse icons.
-			holder.mouse_up_icon = 'icons/effects/supplypod_target.dmi' //Icon for when mouse is released
-			holder.mouse_down_icon = 'icons/effects/supplypod_down_target.dmi' //Icon for when mouse is pressed
+			holder.mouse_up_icon = 'icons/effects/mouse_pointers/supplypod_target.dmi' //Icon for when mouse is released
+			holder.mouse_down_icon = 'icons/effects/mouse_pointers/supplypod_down_target.dmi' //Icon for when mouse is pressed
 			holder.mouse_pointer_icon = holder.mouse_up_icon //Icon for idle mouse (same as icon for when released)
 			holder.click_intercept = src //Create a click_intercept so we know where the user is clicking
 		else
@@ -471,7 +476,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			else
 				return //if target is null and we don't have a specific target, cancel
 			if (effectAnnounce)
-				deadchat_broadcast("A special package is being launched at the station!", turf_target = target)
+				deadchat_broadcast("A special package is being launched at the station!", turf_target = target, message_type=DEADCHAT_ANNOUNCEMENT)
 			var/list/bouttaDie = list()
 			for (var/mob/living/M in target)
 				bouttaDie.Add(M)
@@ -498,9 +503,8 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	if (isnull(A)) //If theres no supplypod bay mapped into centcom, throw an error
 		to_chat(holder.mob, "No /area/centcom/supplypod/loading/one (or /two or /three or /four) in the world! You can make one yourself (then refresh) for now, but yell at a mapper to fix this, today!")
 		CRASH("No /area/centcom/supplypod/loading/one (or /two or /three or /four) has been mapped into the centcom z-level!")
-		return
 	orderedArea = list()
-	if (!isemptylist(A.contents)) //Go through the area passed into the proc, and figure out the top left and bottom right corners by calculating max and min values
+	if (length(A.contents)) //Go through the area passed into the proc, and figure out the top left and bottom right corners by calculating max and min values
 		var/startX = A.contents[1].x //Create the four values (we do it off a.contents[1] so they have some sort of arbitrary initial value. They should be overwritten in a few moments)
 		var/endX = A.contents[1].x
 		var/startY = A.contents[1].y
@@ -528,7 +532,7 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 			numTurfs ++
 
 	launchList = list() //Anything in launchList will go into the supplypod when it is launched
-	if (!isemptylist(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We dont fill the supplypod if acceptableTurfs is empty, if the pod is going in reverse (effectReverse=true), or if the pod is acitng like a missile (effectMissile=true)
+	if (length(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We dont fill the supplypod if acceptableTurfs is empty, if the pod is going in reverse (effectReverse=true), or if the pod is acitng like a missile (effectMissile=true)
 		switch(launchChoice)
 			if(0) //If we are launching all the turfs at once
 				for (var/turf/T in acceptableTurfs)
@@ -552,19 +556,26 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 	var/shippingLane = GLOB.areas_by_type[/area/centcom/supplypod/flyMeToTheMoon]
 	toLaunch.forceMove(shippingLane)
 	if (launchClone) //We arent launching the actual items from the bay, rather we are creating clones and launching those
-		for (var/atom/movable/O in launchList)
-			DuplicateObject(O).forceMove(toLaunch) //Duplicate each atom/movable in launchList and forceMove them into the supplypod
-		new /obj/effect/DPtarget(A, toLaunch) //Create the DPTarget, which will eventually forceMove the temp_pod to it's location
+		if(launchRandomItem)
+			var/atom/movable/O = pick_n_take(launchList)
+			DuplicateObject(O).forceMove(toLaunch) //Duplicate a single atom/movable from launchList and forceMove it into the supplypod
+		else
+			for (var/atom/movable/O in launchList)
+				DuplicateObject(O).forceMove(toLaunch) //Duplicate each atom/movable in launchList and forceMove them into the supplypod
 	else
-		for (var/atom/movable/O in launchList) //If we aren't cloning the objects, just go through the launchList
+		if(launchRandomItem)
+			var/atom/movable/O = pick_n_take(launchList)
 			O.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
-		new /obj/effect/DPtarget(A, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to it's location
+		else
+			for (var/atom/movable/O in launchList) //If we aren't cloning the objects, just go through the launchList
+				O.forceMove(toLaunch) //and forceMove any atom/moveable into the supplypod
+	new /obj/effect/DPtarget(A, toLaunch) //Then, create the DPTarget effect, which will eventually forceMove the temp_pod to it's location
 	if (launchClone)
 		launchCounter++ //We only need to increment launchCounter if we are cloning objects.
 		//If we aren't cloning objects, taking and removing the first item each time from the acceptableTurfs list will inherently iterate through the list in order
 
 /datum/centcom_podlauncher/proc/updateSelector() //Ensures that the selector effect will showcase the next item if needed
-	if (launchChoice == 1 && !isemptylist(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We only show the selector if we are taking items from the bay
+	if (launchChoice == 1 && length(acceptableTurfs) && !temp_pod.reversing && !temp_pod.effectMissile) //We only show the selector if we are taking items from the bay
 		var/index = launchCounter + 1 //launchCounter acts as an index to the ordered acceptableTurfs list, so adding one will show the next item in the list
 		if (index > acceptableTurfs.len) //out of bounds check
 			index = 1
@@ -602,6 +613,6 @@ force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.adm
 
 	var/msg = "launched [podString] towards [whomString] [delayString][damageString][explosionString]"
 	message_admins("[key_name_admin(usr)] [msg] in [ADMIN_VERBOSEJMP(specificTarget)].")
-	if (!isemptylist(whoDyin))
+	if (length(whoDyin))
 		for (var/mob/living/M in whoDyin)
 			admin_ticket_log(M, "[key_name_admin(usr)] [msg]")

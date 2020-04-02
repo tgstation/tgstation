@@ -32,7 +32,7 @@
 	if(setdesc && P.picture_desc)
 		desc = P.picture_desc
 
-/obj/item/photo/update_icon()
+/obj/item/photo/update_icon_state()
 	if(!istype(picture) || !picture.picture_image)
 		return
 	var/icon/I = picture.get_small_icon(initial(icon_state))
@@ -55,9 +55,8 @@
 		if(!user.is_literate())
 			to_chat(user, "<span class='notice'>You scribble illegibly on [src]!</span>")
 			return
-		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text)
-		txt = copytext(txt, 1, 128)
-		if(user.canUseTopic(src, BE_CLOSE))
+		var/txt = stripped_input(user, "What would you like to write on the back?", "Photo Writing", "", 128)
+		if(txt && user.canUseTopic(src, BE_CLOSE))
 			scribble = txt
 	..()
 
@@ -74,7 +73,7 @@
 		to_chat(user, "<span class='warning'>[src] seems to be blank...</span>")
 		return
 	user << browse_rsc(picture.picture_image, "tmp_photo.png")
-	user << browse("<html><head><title>[name]</title></head>" \
+	user << browse("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='480' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
@@ -86,9 +85,9 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = copytext(sanitize(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text), 1, MAX_NAME_LEN)
+	var/n_name = stripped_input(usr, "What would you like to label the photo?", "Photo Labelling", "", MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if((loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
+	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated())
 		name = "photo[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(usr)
 

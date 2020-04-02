@@ -17,7 +17,6 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
-	weapon_weight = WEAPON_MEDIUM
 	semi_auto = FALSE
 	internal_magazine = TRUE
 	casing_ejector = FALSE
@@ -25,6 +24,8 @@
 	cartridge_wording = "shell"
 	tac_reloads = FALSE
 	weapon_weight = WEAPON_HEAVY
+
+	pb_knockback = 2
 
 /obj/item/gun/ballistic/shotgun/blow_up(mob/user)
 	. = 0
@@ -42,21 +43,23 @@
 	desc = "A sturdy shotgun with a longer magazine and a fixed tactical stock designed for non-lethal riot control."
 	icon_state = "riotshotgun"
 	item_state = "shotgun"
+	fire_delay = 7
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/riot
 	sawn_desc = "Come with me if you want to live."
 	can_be_sawn_off  = TRUE
 
 // Automatic Shotguns//
 
-/obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user as mob|obj)
+/obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
 	..()
-	src.rack()
+	rack()
 
 /obj/item/gun/ballistic/shotgun/automatic/combat
 	name = "combat shotgun"
 	desc = "A semi automatic shotgun with tactical furniture and a six-shell capacity underneath."
 	icon_state = "cshotgun"
 	item_state = "shotgun_combat"
+	fire_delay = 5
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
 
@@ -169,10 +172,11 @@
 	semi_auto = TRUE
 	bolt_type = BOLT_TYPE_NO_BOLT
 	can_be_sawn_off  = TRUE
+	pb_knockback = 3 // it's a super shotgun!
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
@@ -207,11 +211,19 @@
 		else
 			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon()
-	..()
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon_state()
+	. = ..()
 	if(slung)
-		add_overlay("ishotgunsling")
 		item_state = "ishotgunsling"
+	if(sawn_off)
+		item_state = "ishotgun_sawn"
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_overlays()
+	. = ..()
+	if(slung)
+		. += "ishotgunsling"
+	if(sawn_off)
+		. += "ishotgun_sawn"
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()

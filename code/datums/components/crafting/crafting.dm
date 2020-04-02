@@ -1,7 +1,6 @@
 /datum/component/personal_crafting/Initialize()
-	if(!ismob(parent))
-		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
+	if(ismob(parent))
+		RegisterSignal(parent, COMSIG_MOB_CLIENT_LOGIN, .proc/create_mob_button)
 
 /datum/component/personal_crafting/proc/create_mob_button(mob/user, client/CL)
 	var/datum/hud/H = user.hud_used
@@ -16,42 +15,38 @@
 	var/viewing_category = 1 //typical powergamer starting on the Weapons tab
 	var/viewing_subcategory = 1
 	var/list/categories = list(
-				CAT_WEAPONRY,
-				CAT_ROBOT,
-				CAT_MISC,
-				CAT_PRIMAL,
-				CAT_FOOD,
-				CAT_CLOTHING)
-	var/list/subcategories = list(
-						list(	//Weapon subcategories
-							CAT_WEAPON,
-							CAT_AMMO),
-						CAT_NONE, //Robot subcategories
-						CAT_NONE, //Misc subcategories
-						CAT_NONE, //Tribal subcategories
-						list(	//Food subcategories
-							CAT_BREAD,
-							CAT_BURGER,
-							CAT_CAKE,
-							CAT_EGG,
-							CAT_ICE,
-							CAT_MEAT,
-							CAT_MISCFOOD,
-							CAT_PASTRY,
-							CAT_PIE,
-							CAT_PIZZA,
-							CAT_SALAD,
-							CAT_SANDWICH,
-							CAT_SOUP,
-							CAT_SPAGHETTI),
-                        CAT_CLOTHING) //Clothing subcategories
+				CAT_WEAPONRY = list(
+					CAT_WEAPON,
+					CAT_AMMO,
+				),
+				CAT_ROBOT = CAT_NONE,
+				CAT_MISC = CAT_NONE,
+				CAT_PRIMAL = CAT_NONE,
+				CAT_FOOD = list(
+					CAT_BREAD,
+					CAT_BURGER,
+					CAT_CAKE,
+					CAT_EGG,
+					CAT_ICE,
+					CAT_MEAT,
+					CAT_MISCFOOD,
+					CAT_PASTRY,
+					CAT_PIE,
+					CAT_PIZZA,
+					CAT_SALAD,
+					CAT_SANDWICH,
+					CAT_SOUP,
+					CAT_SPAGHETTI,
+				),
+				CAT_DRINK = CAT_NONE,
+				CAT_CLOTHING = CAT_NONE,
+			)
 
+	var/cur_category = CAT_NONE
+	var/cur_subcategory = CAT_NONE
 	var/datum/action/innate/crafting/button
 	var/display_craftable_only = FALSE
 	var/display_compact = TRUE
-
-
-
 
 /*	This is what procs do:
 	get_environment - gets a list of things accessable for crafting by user
@@ -62,57 +57,72 @@
 	del_reqs - takes recipe and a user, loops over the recipes reqs var and tries to find everything in the list make by get_environment and delete it/add to parts list, then returns the said list
 */
 
-
-
-
-/datum/component/personal_crafting/proc/check_contents(datum/crafting_recipe/R, list/contents)
+/**
+  * Check that the contents of the recipe meet the requirements.
+  *
+  * user: The /mob that initated the crafting.
+  * R: The /datum/crafting_recipe being attempted.
+  * contents: List of items to search for R's reqs.
+  */
+/datum/component/personal_crafting/proc/check_contents(atom/a, datum/crafting_recipe/R, list/contents)
+	var/list/item_instances = contents["instances"]
 	contents = contents["other"]
-	main_loop:
-		for(var/A in R.reqs)
-			var/needed_amount = R.reqs[A]
-			for(var/B in contents)
-				if(ispath(B, A))
-					if (R.blacklist.Find(B))
-						continue
-					if(contents[B] >= R.reqs[A])
-						continue main_loop
-					else
-						needed_amount -= contents[B]
-						if(needed_amount <= 0)
-							continue main_loop
-						else
-							continue
-			return 0
-	for(var/A in R.chem_catalysts)
-		if(contents[A] < R.chem_catalysts[A])
-			return 0
-	return 1
 
-/datum/component/personal_crafting/proc/get_environment(mob/user)
+	var/list/requirements_list = list()
+
+	// Process all requirements
+	for(var/requirement_path in R.reqs)
+		// Check we have the appropriate amount available in the contents list
+		var/needed_amount = R.reqs[requirement_path]
+		for(var/content_item_path in contents)
+			// Right path and not blacklisted
+			if(!ispath(content_item_path, requirement_path) || R.blacklist.Find(content_item_path))
+				continue
+
+			needed_amount -= contents[content_item_path]
+			if(needed_amount <= 0)
+				break
+
+		if(needed_amount > 0)
+			return FALSE
+
+		// Store the instances of what we will use for R.check_requirements() for requirement_path
+		var/list/instances_list = list()
+		for(var/instance_path in item_instances)
+			if(ispath(instance_path, requirement_path))
+				instances_list += item_instances[instance_path]
+
+		requirements_list[requirement_path] = instances_list
+
+	for(var/requirement_path in R.chem_catalysts)
+		if(contents[requirement_path] < R.chem_catalysts[requirement_path])
+			return FALSE
+
+	return R.check_requirements(a, requirements_list)
+
+/datum/component/personal_crafting/proc/get_environment(atom/a, list/blacklist = null, radius_range = 1)
 	. = list()
-	for(var/obj/item/I in user.held_items)
-		. += I
-	if(!isturf(user.loc))
-		return
-	var/list/L = block(get_step(user, SOUTHWEST), get_step(user, NORTHEAST))
-	for(var/A in L)
-		var/turf/T = A
-		if(T.Adjacent(user))
-			for(var/B in T)
-				var/atom/movable/AM = B
-				if(AM.flags_1 & HOLOGRAM_1)
-					continue
-				. += AM
-	for(var/slot in list(SLOT_R_STORE, SLOT_L_STORE))
-		. += user.get_item_by_slot(slot)
 
-/datum/component/personal_crafting/proc/get_surroundings(mob/user)
+	if(!isturf(a.loc))
+		return
+
+	for(var/atom/movable/AM in range(radius_range, a))
+		if(AM.flags_1 & HOLOGRAM_1)
+			continue
+		. += AM
+
+/datum/component/personal_crafting/proc/get_surroundings(atom/a)
 	. = list()
 	.["tool_behaviour"] = list()
 	.["other"] = list()
-	for(var/obj/item/I in get_environment(user))
+	.["instances"] = list()
+	for(var/obj/item/I in get_environment(a))
 		if(I.flags_1 & HOLOGRAM_1)
 			continue
+		if(.["instances"][I.type])
+			.["instances"][I.type] += I
+		else
+			.["instances"][I.type] = list(I)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			.["other"][I.type] += S.amount
@@ -127,13 +137,13 @@
 						.["other"][A.type] += A.volume
 			.["other"][I.type] += 1
 
-/datum/component/personal_crafting/proc/check_tools(mob/user, datum/crafting_recipe/R, list/contents)
+/datum/component/personal_crafting/proc/check_tools(atom/a, datum/crafting_recipe/R, list/contents)
 	if(!R.tools.len)
 		return TRUE
 	var/list/possible_tools = list()
 	var/list/present_qualities = list()
 	present_qualities |= contents["tool_behaviour"]
-	for(var/obj/item/I in user.contents)
+	for(var/obj/item/I in a.contents)
 		if(istype(I, /obj/item/storage))
 			for(var/obj/item/SI in I.contents)
 				possible_tools += SI.type
@@ -158,29 +168,27 @@
 			return FALSE
 	return TRUE
 
-/datum/component/personal_crafting/proc/construct_item(mob/user, datum/crafting_recipe/R)
-	var/list/contents = get_surroundings(user)
+/datum/component/personal_crafting/proc/construct_item(atom/a, datum/crafting_recipe/R)
+	var/list/contents = get_surroundings(a)
 	var/send_feedback = 1
-	if(check_contents(R, contents))
-		if(check_tools(user, R, contents))
-			if(do_after(user, R.time, target = user))
-				contents = get_surroundings(user)
-				if(!check_contents(R, contents))
-					return ", missing component."
-				if(!check_tools(user, R, contents))
-					return ", missing tool."
-				var/list/parts = del_reqs(R, user)
-				var/atom/movable/I = new R.result (get_turf(user.loc))
-				I.CheckParts(parts, R)
-				if(isitem(I))
-					user.put_in_hands(I)
-				if(send_feedback)
-					SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
-				return 0
-			return "."
+	if(check_contents(a, R, contents))
+		if(check_tools(a, R, contents))
+			//If we're a mob we'll try a do_after; non mobs will instead instantly construct the item
+			if(ismob(a) && !do_after(a, R.time, target = a))
+				return "."
+			contents = get_surroundings(a)
+			if(!check_contents(a, R, contents))
+				return ", missing component."
+			if(!check_tools(a, R, contents))
+				return ", missing tool."
+			var/list/parts = del_reqs(R, a)
+			var/atom/movable/I = new R.result (get_turf(a.loc))
+			I.CheckParts(parts, R)
+			if(send_feedback)
+				SSblackbox.record_feedback("tally", "object_crafted", 1, I.type)
+			return I //Send the item back to whatever called this proc so it can handle whatever it wants to do with the new item
 		return ", missing tool."
 	return ", missing component."
-
 
 /*Del reqs works like this:
 
@@ -206,7 +214,7 @@
 	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */
 
-/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, mob/user)
+/datum/component/personal_crafting/proc/del_reqs(datum/crafting_recipe/R, atom/a)
 	var/list/surroundings
 	var/list/Deletion = list()
 	. = list()
@@ -215,7 +223,7 @@
 	main_loop:
 		for(var/A in R.reqs)
 			amt = R.reqs[A]
-			surroundings = get_environment(user)
+			surroundings = get_environment(a, R.blacklist)
 			surroundings -= Deletion
 			if(ispath(A, /datum/reagent))
 				var/datum/reagent/RG = new A
@@ -308,34 +316,29 @@
 	if(user == parent)
 		ui_interact(user)
 
+//For the UI related things we're going to assume the user is a mob rather than typesetting it to an atom as the UI isn't generated if the parent is an atom
 /datum/component/personal_crafting/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_turf_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+		cur_category = categories[1]
+		if(islist(categories[cur_category]))
+			var/list/subcats = categories[cur_category]
+			cur_subcategory = subcats[1]
+		else
+			cur_subcategory = CAT_NONE
 		ui = new(user, src, ui_key, "personal_crafting", "Crafting Menu", 700, 800, master_ui, state)
 		ui.open()
 
-
 /datum/component/personal_crafting/ui_data(mob/user)
 	var/list/data = list()
-	var/list/subs = list()
-	var/cur_subcategory = CAT_NONE
-	var/cur_category = categories[viewing_category]
-	if (islist(subcategories[viewing_category]))
-		subs = subcategories[viewing_category]
-		cur_subcategory = subs[viewing_subcategory]
 	data["busy"] = busy
-	data["prev_cat"] = categories[prev_cat()]
-	data["prev_subcat"] = subs[prev_subcat()]
 	data["category"] = cur_category
 	data["subcategory"] = cur_subcategory
-	data["next_cat"] = categories[next_cat()]
-	data["next_subcat"] = subs[next_subcat()]
 	data["display_craftable_only"] = display_craftable_only
 	data["display_compact"] = display_compact
 
 	var/list/surroundings = get_surroundings(user)
-	var/list/can_craft = list()
-	var/list/cant_craft = list()
+	var/list/craftability = list()
 	for(var/rec in GLOB.crafting_recipes)
 		var/datum/crafting_recipe/R = rec
 
@@ -344,83 +347,73 @@
 
 		if((R.category != cur_category) || (R.subcategory != cur_subcategory))
 			continue
-		if(check_contents(R, surroundings))
-			can_craft += list(build_recipe_data(R))
-		else
-			cant_craft += list(build_recipe_data(R))
-	data["can_craft"] = can_craft
-	data["cant_craft"] = cant_craft
+
+		craftability["[REF(R)]"] = check_contents(user, R, surroundings)
+
+	data["craftability"] = craftability
 	return data
 
+/datum/component/personal_crafting/ui_static_data(mob/user)
+	var/list/data = list()
+
+	var/list/crafting_recipes = list()
+	for(var/rec in GLOB.crafting_recipes)
+		var/datum/crafting_recipe/R = rec
+
+		if(R.name == "") //This is one of the invalid parents that sneaks in
+			continue
+
+		if(!R.always_availible && !(R.type in user?.mind?.learned_recipes)) //User doesn't actually know how to make this.
+			continue
+
+		if(isnull(crafting_recipes[R.category]))
+			crafting_recipes[R.category] = list()
+
+		if(R.subcategory == CAT_NONE)
+			crafting_recipes[R.category] += list(build_recipe_data(R))
+		else
+			if(isnull(crafting_recipes[R.category][R.subcategory]))
+				crafting_recipes[R.category][R.subcategory] = list()
+				crafting_recipes[R.category]["has_subcats"] = TRUE
+			crafting_recipes[R.category][R.subcategory] += list(build_recipe_data(R))
+
+	data["crafting_recipes"] = crafting_recipes
+	return data
 
 /datum/component/personal_crafting/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
 		if("make")
+			var/mob/user = usr
 			var/datum/crafting_recipe/TR = locate(params["recipe"]) in GLOB.crafting_recipes
 			busy = TRUE
-			ui_interact(usr)
-			var/fail_msg = construct_item(usr, TR)
-			if(!fail_msg)
-				to_chat(usr, "<span class='notice'>[TR.name] constructed.</span>")
+			ui_interact(user)
+			var/atom/movable/result = construct_item(user, TR)
+			if(!istext(result)) //We made an item and didn't get a fail message
+				if(ismob(user) && isitem(result)) //In case the user is actually possessing a non mob like a machine
+					user.put_in_hands(result)
+				else
+					result.forceMove(user.drop_location())
+				to_chat(user, "<span class='notice'>[TR.name] constructed.</span>")
 			else
-				to_chat(usr, "<span class='warning'>Construction failed[fail_msg]</span>")
+				to_chat(user, "<span class='warning'>Construction failed[result]</span>")
 			busy = FALSE
-		if("forwardCat") //Meow
-			viewing_category = next_cat(FALSE)
-			. = TRUE
-		if("backwardCat")
-			viewing_category = prev_cat(FALSE)
-			. = TRUE
-		if("forwardSubCat")
-			viewing_subcategory = next_subcat()
-			. = TRUE
-		if("backwardSubCat")
-			viewing_subcategory = prev_subcat()
-			. = TRUE
 		if("toggle_recipes")
 			display_craftable_only = !display_craftable_only
 			. = TRUE
 		if("toggle_compact")
 			display_compact = !display_compact
 			. = TRUE
-
-//Next works nicely with modular arithmetic
-/datum/component/personal_crafting/proc/next_cat(readonly = TRUE)
-	if (!readonly)
-		viewing_subcategory = 1
-	. = viewing_category % categories.len + 1
-
-/datum/component/personal_crafting/proc/next_subcat()
-	if(islist(subcategories[viewing_category]))
-		var/list/subs = subcategories[viewing_category]
-		. = viewing_subcategory % subs.len + 1
-
-
-//Previous can go fuck itself
-/datum/component/personal_crafting/proc/prev_cat(readonly = TRUE)
-	if (!readonly)
-		viewing_subcategory = 1
-	if(viewing_category == categories.len)
-		. = viewing_category-1
-	else
-		. = viewing_category % categories.len - 1
-	if(. <= 0)
-		. = categories.len
-
-/datum/component/personal_crafting/proc/prev_subcat()
-	if(islist(subcategories[viewing_category]))
-		var/list/subs = subcategories[viewing_category]
-		if(viewing_subcategory == subs.len)
-			. = viewing_subcategory-1
-		else
-			. = viewing_subcategory % subs.len - 1
-		if(. <= 0)
-			. = subs.len
-	else
-		. = null
-
+		if("set_category")
+			if(!isnull(params["category"]))
+				cur_category = params["category"]
+			if(!isnull(params["subcategory"]))
+				if(params["subcategory"] == "0")
+					cur_subcategory = ""
+				else
+					cur_subcategory = params["subcategory"]
+			. = TRUE
 
 /datum/component/personal_crafting/proc/build_recipe_data(datum/crafting_recipe/R)
 	var/list/data = list()

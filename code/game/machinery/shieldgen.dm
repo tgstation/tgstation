@@ -98,7 +98,7 @@
 
 	for(var/turf/target_tile in range(shield_range, src))
 		if(isspaceturf(target_tile) && !(locate(/obj/structure/emergency_shield) in target_tile))
-			if(!(stat & BROKEN) || prob(33))
+			if(!(machine_stat & BROKEN) || prob(33))
 				deployed_shields += new /obj/structure/emergency_shield(target_tile)
 
 /obj/machinery/shieldgen/proc/shields_down()
@@ -108,7 +108,7 @@
 	QDEL_LIST(deployed_shields)
 
 /obj/machinery/shieldgen/process()
-	if((stat & BROKEN) && active)
+	if((machine_stat & BROKEN) && active)
 		if(deployed_shields.len && prob(5))
 			qdel(pick(deployed_shields))
 
@@ -151,7 +151,7 @@
 			to_chat(user, "<span class='notice'>You open the panel and expose the wiring.</span>")
 		else
 			to_chat(user, "<span class='notice'>You close the panel.</span>")
-	else if(istype(W, /obj/item/stack/cable_coil) && (stat & BROKEN) && panel_open)
+	else if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
 		var/obj/item/stack/cable_coil/coil = W
 		if (coil.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of cable to repair [src]!</span>")
@@ -162,7 +162,7 @@
 				return
 			coil.use(1)
 			obj_integrity = max_integrity
-			stat &= ~BROKEN
+			machine_stat &= ~BROKEN
 			to_chat(user, "<span class='notice'>You repair \the [src].</span>")
 			update_icon()
 
@@ -203,11 +203,11 @@
 	playsound(src, "sparks", 100, TRUE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
-/obj/machinery/shieldgen/update_icon()
+/obj/machinery/shieldgen/update_icon_state()
 	if(active)
-		icon_state = (stat & BROKEN) ? "shieldonbr":"shieldon"
+		icon_state = (machine_stat & BROKEN) ? "shieldonbr":"shieldon"
 	else
-		icon_state = (stat & BROKEN) ? "shieldoffbr":"shieldoff"
+		icon_state = (machine_stat & BROKEN) ? "shieldoffbr":"shieldoff"
 
 #define ACTIVE_SETUPFIELDS 1
 #define ACTIVE_HASFIELDS 2
@@ -215,7 +215,7 @@
 	name = "shield wall generator"
 	desc = "A shield generator."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "Shield_Gen"
+	icon_state = "shield_wall_gen"
 	anchored = FALSE
 	density = TRUE
 	req_access = list(ACCESS_TELEPORTER)
@@ -225,8 +225,6 @@
 	active_power_usage = 50
 	max_integrity = 300
 	var/active = FALSE
-	var/power = 0
-	var/maximum_stored_power = 500
 	var/locked = TRUE
 	var/shield_range = 8
 	var/obj/structure/cable/attached // the attached cable
@@ -234,8 +232,10 @@
 /obj/machinery/power/shieldwallgen/xenobiologyaccess		//use in xenobiology containment
 	name = "xenobiology shield wall generator"
 	desc = "A shield generator meant for use in xenobiology."
-	icon_state = "Shield_Gen"
 	req_access = list(ACCESS_XENOBIOLOGY)
+
+/obj/machinery/power/shieldwallgen/anchored
+	anchored = TRUE
 
 /obj/machinery/power/shieldwallgen/Initialize()
 	. = ..()
@@ -452,11 +452,10 @@
 		if(gen_secondary) //using power may cause us to be destroyed
 			gen_secondary.add_load(drain_amount * 0.5)
 
-/obj/machinery/shieldwall/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/shieldwall/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return prob(20)
 	else
 		if(istype(mover, /obj/projectile))
 			return prob(10)
-		else
-			return !density

@@ -60,7 +60,7 @@
 	forceMove(holder)
 
 	// if we're not pulling anyone, or we can't eat anyone
-	if(!pullee || bloodcrawl != BLOODCRAWL_EAT)
+	if(!pullee || !HAS_TRAIT(src, TRAIT_BLOODCRAWL_EAT))
 		notransform = FALSE
 		return
 
@@ -126,7 +126,7 @@
 		return TRUE
 
 	to_chat(src, "<span class='danger'>You devour [victim]. Your health is fully restored.</span>")
-	revive(full_heal = TRUE)
+	revive(full_heal = TRUE, admin_revive = FALSE)
 
 	// No defib possible after laughter
 	victim.adjustBruteLoss(1000)

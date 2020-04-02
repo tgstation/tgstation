@@ -37,13 +37,13 @@
 	<HR>"}
 	for(var/i in 1 to held_items.len)
 		var/obj/item/I = get_item_for_held_index(i)
-		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=[REF(src)];item=[SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a>"
+		dat += "<BR><B>[get_held_index_name(i)]:</B><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDS];hand_index=[i]'>[(I && !(I.item_flags & ABSTRACT)) ? I : "<font color=grey>Empty</font>"]</a>"
 	dat += "<BR><A href='?src=[REF(src)];pouches=1'>Empty Pouches</A>"
 
 	if(handcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_HANDCUFFED]'>Handcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[ITEM_SLOT_HANDCUFFED]'>Handcuffed</A>"
 	if(legcuffed)
-		dat += "<BR><A href='?src=[REF(src)];item=[SLOT_LEGCUFFED]'>Legcuffed</A>"
+		dat += "<BR><A href='?src=[REF(src)];item=[ITEM_SLOT_LEGCUFFED]'>Legcuffed</A>"
 
 	dat += {"
 	<BR>
@@ -55,7 +55,7 @@
 
 /mob/living/carbon/alien/humanoid/Topic(href, href_list)
 	//strip panel
-	if(href_list["pouches"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(href_list["pouches"] && usr.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		visible_message("<span class='danger'>[usr] tries to empty [src]'s pouches.</span>", \
 						"<span class='userdanger'>[usr] tries to empty your pouches.</span>")
 		if(do_mob(usr, src, POCKET_STRIP_DELAY * 0.5))
@@ -114,3 +114,8 @@
 	if(breath && breath.total_moles() > 0 && !sneaking)
 		playsound(get_turf(src), pick('sound/voice/lowHiss2.ogg', 'sound/voice/lowHiss3.ogg', 'sound/voice/lowHiss4.ogg'), 50, FALSE, -5)
 	..()
+
+/mob/living/carbon/alien/humanoid/set_name()
+	if(numba)
+		name = "[name] ([numba])"
+		real_name = name

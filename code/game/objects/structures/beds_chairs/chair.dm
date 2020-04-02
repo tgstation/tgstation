@@ -4,7 +4,7 @@
 	icon = 'icons/obj/chairs.dmi'
 	icon_state = "chair"
 	anchored = TRUE
-	can_buckle = 1
+	can_buckle = TRUE
 	buckle_lying = 0 //you sit in a chair, not lay
 	resistance_flags = NONE
 	max_integrity = 250
@@ -18,8 +18,8 @@
 /obj/structure/chair/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
-	if(!has_buckled_mobs())
-		. += "<span class='notice'>Drag your sprite to sit in it.</span>"
+	if(!has_buckled_mobs() && can_buckle)
+		. += "<span class='notice'>While standing on [src], drag and drop your sprite onto [src] to buckle to it.</span>"
 
 /obj/structure/chair/Initialize()
 	. = ..()
@@ -124,7 +124,7 @@
 
 ///Material chair
 /obj/structure/chair/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	item_chair = /obj/item/chair/greyscale
 	buildstacktype = null //Custom mats handle this
 
@@ -227,7 +227,7 @@
 	name = "stool"
 	desc = "Apply butt."
 	icon_state = "stool"
-	can_buckle = 0
+	can_buckle = FALSE
 	buildstackamount = 1
 	item_chair = /obj/item/chair/stool
 
@@ -314,7 +314,7 @@
 	if(remaining_mats)
 		for(var/M=1 to remaining_mats)
 			new stack_type(get_turf(loc))
-	else if(custom_materials[getmaterialref(/datum/material/iron)])
+	else if(custom_materials[SSmaterials.GetMaterialRef(/datum/material/iron)])
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
@@ -340,7 +340,7 @@
 		smash(user)
 
 /obj/item/chair/greyscale
-	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 	origin_type = /obj/structure/chair/greyscale
 
 /obj/item/chair/stool
@@ -437,3 +437,47 @@
 
 /obj/structure/chair/mime/post_unbuckle_mob(mob/living/M)
 	M.pixel_y -= 5
+
+
+/obj/structure/chair/plastic
+	icon_state = "plastic_chair"
+	name = "folding plastic chair"
+	desc = "No matter how much you squirm, it'll still be uncomfortable."
+	resistance_flags = FLAMMABLE
+	max_integrity = 50
+	custom_materials = list(/datum/material/plastic = 2000)
+	buildstacktype = /obj/item/stack/sheet/plastic
+	buildstackamount = 2
+	item_chair = /obj/item/chair/plastic
+
+/obj/structure/chair/plastic/post_buckle_mob(mob/living/Mob)
+	Mob.pixel_y += 2
+	.=..()
+	if(iscarbon(Mob))
+		INVOKE_ASYNC(src, .proc/snap_check, Mob)
+
+/obj/structure/chair/plastic/post_unbuckle_mob(mob/living/Mob)
+	Mob.pixel_y -= 2
+
+/obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
+	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
+		to_chat(Mob, "<span class='warning'>The chair begins to pop and crack, you're too heavy!</span>")
+		if(do_after(Mob, 60, 1, Mob, 0))
+			Mob.visible_message("<span class='notice'>The plastic chair snaps under [Mob]'s weight!</span>")
+			new /obj/effect/decal/cleanable/plastic(loc)
+			qdel(src)
+
+/obj/item/chair/plastic
+	name = "folding plastic chair"
+	desc = "Somehow, you can always find one under the wrestling ring."
+	icon = 'icons/obj/chairs.dmi'
+	icon_state = "folded_chair"
+	item_state = "folded_chair"
+	lefthand_file = 'icons/mob/inhands/misc/chairs_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/chairs_righthand.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 7
+	throw_range = 5 //Lighter Weight --> Flies Farther.
+	custom_materials = list(/datum/material/plastic = 2000)
+	break_chance = 25
+	origin_type = /obj/structure/chair/plastic

@@ -63,55 +63,9 @@
 /obj/structure/destructible/cult/pylon,
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
-"ar" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"as" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"at" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"au" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
 "av" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"aw" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"ax" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"ay" = (
-/obj/machinery/gateway,
-/turf/open/floor/circuit/green/off,
-/area/awaymission/wildwest/vault)
-"az" = (
-/obj/machinery/gateway{
-	dir = 6
 	},
 /turf/open/floor/circuit/green/off,
 /area/awaymission/wildwest/vault)
@@ -716,7 +670,7 @@
 /area/awaymission/wildwest/mines)
 "cL" = (
 /obj/structure/table/wood,
-/obj/item/twohanded/dualsaber,
+/obj/item/dualsaber,
 /turf/open/floor/wood,
 /area/awaymission/wildwest/gov)
 "cM" = (
@@ -47405,9 +47359,9 @@ aa
 ab
 ab
 ab
-ar
-au
-ax
+ao
+ao
+ao
 ao
 ao
 ao
@@ -47662,9 +47616,9 @@ aa
 ab
 ab
 ab
-as
+ao
 av
-ay
+ao
 ao
 ao
 ao
@@ -47919,9 +47873,9 @@ aa
 aa
 ab
 ab
-at
-aw
-az
+ao
+ao
+ao
 ao
 ao
 ao

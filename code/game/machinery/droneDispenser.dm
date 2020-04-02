@@ -141,12 +141,12 @@
 
 /obj/machinery/droneDispenser/examine(mob/user)
 	. = ..()
-	if((mode == DRONE_RECHARGING) && !stat && recharging_text)
+	if((mode == DRONE_RECHARGING) && !machine_stat && recharging_text)
 		. += "<span class='warning'>[recharging_text]</span>"
 
 /obj/machinery/droneDispenser/process()
 	..()
-	if((stat & (NOPOWER|BROKEN)) || !anchored)
+	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
@@ -202,8 +202,8 @@
 		if(istype(a, dispense_type))
 			.++
 
-/obj/machinery/droneDispenser/update_icon()
-	if(stat & (BROKEN|NOPOWER))
+/obj/machinery/droneDispenser/update_icon_state()
+	if(machine_stat & (BROKEN|NOPOWER))
 		icon_state = icon_off
 	else if(mode == DRONE_RECHARGING)
 		icon_state = icon_recharging
@@ -220,7 +220,7 @@
 		to_chat(user, "<span class='notice'>You retrieve the materials from [src].</span>")
 
 	else if(I.tool_behaviour == TOOL_WELDER)
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			to_chat(user, "<span class='warning'>[src] doesn't need repairs.</span>")
 			return
 
@@ -238,7 +238,7 @@
 			"<span class='notice'>[user] fixes [src]!</span>",
 			"<span class='notice'>You restore [src] to operation.</span>")
 
-		stat &= ~BROKEN
+		machine_stat &= ~BROKEN
 		obj_integrity = max_integrity
 		update_icon()
 	else

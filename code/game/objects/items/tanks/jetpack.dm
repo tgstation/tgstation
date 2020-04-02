@@ -17,6 +17,7 @@
 /obj/item/tank/jetpack/Initialize()
 	. = ..()
 	ion_trail = new
+	ion_trail.auto_process = FALSE
 	ion_trail.set_up(src)
 
 /obj/item/tank/jetpack/populate_gas()
@@ -51,12 +52,15 @@
 
 
 /obj/item/tank/jetpack/proc/turn_on(mob/user)
+	if(!allow_thrust(0.01, user))
+		return
 	on = TRUE
 	icon_state = "[initial(icon_state)]-on"
 	ion_trail.start()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/move_react)
+	RegisterSignal(user, COMSIG_MOVABLE_PRE_MOVE, .proc/pre_move_react)
 	if(full_speed)
-		user.add_movespeed_modifier(MOVESPEED_ID_JETPACK, priority=100, multiplicative_slowdown=-0.25, movetypes=FLOATING, conflict=MOVE_CONFLICT_JETPACK)
+		user.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/turn_off(mob/user)
 	on = FALSE
@@ -64,14 +68,29 @@
 	icon_state = initial(icon_state)
 	ion_trail.stop()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
-	user.remove_movespeed_modifier(MOVESPEED_ID_JETPACK)
+	UnregisterSignal(user, COMSIG_MOVABLE_PRE_MOVE)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/fullspeed)
 
 /obj/item/tank/jetpack/proc/move_react(mob/user)
-	allow_thrust(0.01, user)
+	if(!on)//If jet dont work, it dont work
+		return
+	if(!user)//Don't allow jet self using
+		return
+	if(!isturf(user.loc))//You can't use jet in nowhere or from mecha/closet
+		return
+	if(!(user.is_flying() || user.is_floating()) || user.buckled)//You don't want use jet in gravity or while buckled.
+		return
+	if(user.pulledby)//You don't must use jet if someone pull you
+		return
+	if(user.throwing)//You don't must use jet if you thrown
+		return
+	if(length(user.client.keys_held & user.client.movement_keys))//You use jet when press keys. yes.
+		allow_thrust(0.01, user)
+
+/obj/item/tank/jetpack/proc/pre_move_react(mob/user)
+	ion_trail.oldposition = get_turf(src)
 
 /obj/item/tank/jetpack/proc/allow_thrust(num, mob/living/user)
-	if(!on)
-		return
 	if((num < 0.005 || air_contents.total_moles() < num))
 		turn_off(user)
 		return
@@ -83,6 +102,7 @@
 
 	var/turf/T = get_turf(user)
 	T.assume_air(removed)
+	ion_trail.generate_effect()
 
 	return TRUE
 
@@ -122,6 +142,7 @@
 
 	var/turf/T = get_turf(user)
 	T.assume_air(removed)
+	ion_trail.generate_effect()
 
 	return TRUE
 

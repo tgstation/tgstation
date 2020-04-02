@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(chat)
 	name = "Chat"
-	flags = SS_TICKER|SS_NO_INIT
+	flags = SS_TICKER
 	wait = 1
 	priority = FIRE_PRIORITY_CHAT
 	init_order = INIT_ORDER_CHAT
@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(chat)
 			return
 
 
-/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
+/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE, trailing_newline = TRUE)
 	if(!target || !message)
 		return
 
@@ -30,12 +30,14 @@ SUBSYSTEM_DEF(chat)
 		target = GLOB.clients
 
 	//Some macros remain in the string even after parsing and fuck up the eventual output
+	var/original_message = message
 	message = replacetext(message, "\improper", "")
 	message = replacetext(message, "\proper", "")
 	if(handle_whitespace)
 		message = replacetext(message, "\n", "<br>")
 		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
-	message += "<br>"
+	if (trailing_newline)
+		message += "<br>"
 
 
 	//url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
@@ -45,6 +47,12 @@ SUBSYSTEM_DEF(chat)
 	if(islist(target))
 		for(var/I in target)
 			var/client/C = CLIENT_FROM_VAR(I) //Grab us a client if possible
+
+			if(!C)
+				return
+
+			//Send it to the old style output window.
+			SEND_TEXT(C, original_message)
 
 			if(!C?.chatOutput || C.chatOutput.broken) //A player who hasn't updated his skin file.
 				continue
@@ -57,6 +65,12 @@ SUBSYSTEM_DEF(chat)
 
 	else
 		var/client/C = CLIENT_FROM_VAR(target) //Grab us a client if possible
+
+		if(!C)
+			return
+
+		//Send it to the old style output window.
+		SEND_TEXT(C, original_message)
 
 		if(!C?.chatOutput || C.chatOutput.broken) //A player who hasn't updated his skin file.
 			return

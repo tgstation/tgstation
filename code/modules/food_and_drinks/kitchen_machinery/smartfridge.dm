@@ -41,8 +41,10 @@
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: This unit can hold a maximum of <b>[max_n_of_items]</b> items.</span>"
 
-/obj/machinery/smartfridge/update_icon()
-	if(!stat)
+/obj/machinery/smartfridge/update_icon_state()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	if(!machine_stat)
+		SSvis_overlays.add_vis_overlay(src, icon, "smartfridge-light-mask", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 		if (visible_contents)
 			switch(contents.len)
 				if(0)
@@ -83,7 +85,7 @@
 		updateUsrDialog()
 		return
 
-	if(!stat)
+	if(!machine_stat)
 
 		if(contents.len >= max_n_of_items)
 			to_chat(user, "<span class='warning'>\The [src] is full!</span>")
@@ -91,7 +93,7 @@
 
 		if(accept_check(O))
 			load(O)
-			user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].</span>", "<span class='notice'>You add \the [O] to \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] adds \the [O] to \the [src].</span>", "<span class='notice'>You add \the [O] to \the [src].</span>")
 			updateUsrDialog()
 			if (visible_contents)
 				update_icon()
@@ -235,7 +237,7 @@
 // ----------------------------
 /obj/machinery/smartfridge/drying_rack
 	name = "drying rack"
-	desc = "A wooden contraption, used to dry plant products, food and leather."
+	desc = "A wooden contraption, used to dry plant products, food and hide."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "drying_rack"
 	use_power = IDLE_POWER_USE
@@ -294,13 +296,12 @@
 	..()
 	update_icon()
 
-/obj/machinery/smartfridge/drying_rack/update_icon()
-	..()
-	cut_overlays()
+/obj/machinery/smartfridge/drying_rack/update_overlays()
+	. = ..()
 	if(drying)
-		add_overlay("drying_rack_drying")
+		. += "drying_rack_drying"
 	if(contents.len)
-		add_overlay("drying_rack_filled")
+		. += "drying_rack_filled"
 
 /obj/machinery/smartfridge/drying_rack/process()
 	..()
@@ -314,7 +315,7 @@
 		var/obj/item/reagent_containers/food/snacks/S = O
 		if(S.dried_type)
 			return TRUE
-	if(istype(O, /obj/item/stack/sheet/wetleather/))
+	if(istype(O, /obj/item/stack/sheet/wethide))
 		return TRUE
 	return FALSE
 
@@ -338,7 +339,7 @@
 			new dried(drop_location())
 			qdel(S)
 		return TRUE
-	for(var/obj/item/stack/sheet/wetleather/WL in src)
+	for(var/obj/item/stack/sheet/wethide/WL in src)
 		new /obj/item/stack/sheet/leather(drop_location(), WL.amount)
 		qdel(WL)
 		return TRUE
@@ -402,7 +403,7 @@
 	var/repair_rate = 0
 
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
-	if(istype(O, /obj/item/organ))
+	if(isorgan(O) || isbodypart(O))
 		return TRUE
 	return FALSE
 
@@ -410,8 +411,9 @@
 	. = ..()
 	if(!.)	//if the item loads, clear can_decompose
 		return
-	var/obj/item/organ/organ = O
-	organ.organ_flags |= ORGAN_FROZEN
+	if(isorgan(O))
+		var/obj/item/organ/organ = O
+		organ.organ_flags |= ORGAN_FROZEN
 
 /obj/machinery/smartfridge/organ/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
@@ -425,10 +427,11 @@
 			return
 		O.applyOrganDamage(-repair_rate)
 
-/obj/machinery/smartfridge/organ/Exited(obj/item/organ/AM, atom/newLoc)
+/obj/machinery/smartfridge/organ/Exited(atom/movable/AM, atom/newLoc)
 	. = ..()
-	if(istype(AM))
-		AM.organ_flags &= ~ORGAN_FROZEN
+	if(isorgan(AM))
+		var/obj/item/organ/O = AM
+		O.organ_flags &= ~ORGAN_FROZEN
 
 // -----------------------------
 // Chemistry Medical Smartfridge

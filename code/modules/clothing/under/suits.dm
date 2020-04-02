@@ -1,13 +1,13 @@
 /obj/item/clothing/under/suit
 	icon = 'icons/obj/clothing/under/suits.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
+	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/white_on_white
 	name = "white suit"
 	desc = "A white suit, suitable for an excellent host."
 	icon_state = "scratch"
 	item_state = "scratch"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/white/skirt
 	name = "white suitskirt"
@@ -15,39 +15,35 @@
 	icon_state = "white_suit_skirt"
 	item_state = "scratch"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/suit/sl
 	desc = "It's a very amish looking suit."
 	name = "amish suit"
 	icon_state = "sl_suit"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/waiter
 	name = "waiter's outfit"
 	desc = "It's a very smart uniform with a special pocket for tip."
 	icon_state = "waiter"
 	item_state = "waiter"
-	can_adjust = FALSE
 
 /obj/item/clothing/under/suit/blacktwopiece
 	name = "black two piece suit"
 	desc = "A black suit and red tie. Very formal."
 	icon_state = "black_suit"
-	item_state = "bl_suit"
-	can_adjust = FALSE
+	item_state = "black_suit"
 
 /obj/item/clothing/under/suit/black
 	name = "black suit"
 	desc = "A professional looking black suit. Ready for some serious law."
 	icon_state = "blacksuit"
 	item_state = "blacksuit"
-	can_adjust = FALSE
+	can_adjust = TRUE
 
 /obj/item/clothing/under/suit/black/skirt
 	name = "black suitskirt"
-	desc = "A professional black suit. Nanotrasen Investigation Bureau approved!"
+	desc = "A professional black suitskirt. Nanotrasen Investigation Bureau approved!"
 	icon_state = "blacksuit_skirt"
 	item_state = "bar_suit"
 	alt_covers_chest = TRUE
@@ -57,16 +53,14 @@
 	name = "executive suit"
 	desc = "A formal black suit and red tie, intended for the station's finest."
 	icon_state = "really_black_suit"
-	item_state = "bl_suit"
-	can_adjust = FALSE
+	item_state = "really_black_suit"
 
 /obj/item/clothing/under/suit/black_really/skirt
 	name = "executive suitskirt"
 	desc = "A formal black suitskirt and red tie, intended for the station's finest."
 	icon_state = "really_black_suit_skirt"
-	item_state = "bl_suit"
+	item_state = "really_black_suit_skirt"
 	body_parts_covered = CHEST|GROIN|ARMS
-	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 
 /obj/item/clothing/under/suit/black/female
@@ -78,9 +72,10 @@
 /obj/item/clothing/under/suit/green
 	name = "green suit"
 	desc = "A green suit and yellow necktie. Baller."
+	icon = 'icons/obj/clothing/under/captain.dmi'
 	icon_state = "green_suit"
 	item_state = "dg_suit"
-	can_adjust = FALSE
+	mob_overlay_icon = 'icons/mob/clothing/under/captain.dmi'
 
 /obj/item/clothing/under/suit/red
 	name = "red suit"
@@ -123,3 +118,18 @@
 	desc = "A white suit and jacket with a blue shirt. You wanna play rough? OKAY!"
 	icon_state = "white_suit"
 	item_state = "white_suit"
+
+/obj/item/clothing/under/suit/beige
+	name = "beige suit"
+	desc = "An excellent light colored suit, experts in the field stress that it should not to be confused with the inferior tan suit."
+	icon_state = "beige_suit"
+	item_state = "beige_suit"
+/obj/item/clothing/under/suit/henchmen
+	name = "henchmen jumpsuit"
+	desc = "A very gaudy jumpsuit for a proper Henchman. Guild regulations, you understand."
+	icon = 'icons/obj/clothing/under/syndicate.dmi'
+	mob_overlay_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	icon_state = "henchmen"
+	item_state = "henchmen"
+	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS|HEAD
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEEARS|HIDEEYES|HIDEHAIR

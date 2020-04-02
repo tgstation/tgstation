@@ -237,3 +237,29 @@
 	description = "Mystery to be solved."
 	suffix = "lavaland_surface_puzzle.dmm"
 	cost = 5
+
+/datum/map_template/ruin/lavaland/elite_tumor
+	name = "Pulsating Tumor"
+	id = "tumor"
+	description = "A strange tumor which houses a powerful beast..."
+	suffix = "lavaland_surface_elite_tumor.dmm"
+	cost = 5
+	always_place = TRUE
+	allow_duplicates = TRUE
+
+/datum/map_template/ruin/lavaland/elephant_graveyard
+	name = "Elephant Graveyard"
+	id = "Graveyard"
+	description = "An abandoned graveyard, calling to those unable to continue."
+	suffix = "lavaland_surface_elephant_graveyard.dmm"
+	allow_duplicates = FALSE
+	cost = 10
+
+/datum/map_template/ruin/lavaland/king_goat_boss
+	name = "King Goat Boss Ruin"
+	id = "kinggoatboss"
+	description = "Abandon All Hope Ye Who Enter Here."
+	suffix = "kinggoatboss.dmm"
+	always_place = TRUE
+	allow_duplicates = FALSE
+	always_spawn_with = list(/datum/map_template/ruin/space/kinggoatarena = PLACE_ISOLATED)

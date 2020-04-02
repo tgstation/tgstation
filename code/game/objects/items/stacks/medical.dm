@@ -15,6 +15,7 @@
 	var/self_delay = 50
 	var/other_delay = 0
 	var/repeating = FALSE
+	var/experience_given = 1
 
 /obj/item/stack/medical/attack(mob/living/M, mob/user)
 	. = ..()
@@ -36,6 +37,7 @@
 			return
 
 	if(heal(M, user))
+		user?.mind.adjust_experience(/datum/skill/medical, experience_given)
 		log_combat(user, M, "healed", src.name)
 		use(1)
 		if(repeating && amount > 0)
@@ -49,15 +51,22 @@
 	if(!affecting) //Missing limb?
 		to_chat(user, "<span class='warning'>[C] doesn't have \a [parse_zone(user.zone_selected)]!</span>")
 		return
-	if(affecting.status == BODYPART_ORGANIC) //Limb must be organic to be healed - RR
-		if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-			user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
-			if(affecting.heal_damage(brute, burn))
-				C.update_damage_overlays()
-			return TRUE
-		to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
+	if(affecting.status != BODYPART_ORGANIC) //Limb must be organic to be healed - RR
+		to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
 		return
-	to_chat(user, "<span class='warning'>\The [src] won't work on a robotic limb!</span>")
+	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
+		user.visible_message("<span class='green'>[user] applies \the [src] on [C]'s [affecting.name].</span>", "<span class='green'>You apply \the [src] on [C]'s [affecting.name].</span>")
+		var/brute2heal = brute
+		var/burn2heal = burn
+		var/skill_mod = user?.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
+		if(skill_mod)
+			brute2heal *= (2-skill_mod)
+			burn2heal *= (2-skill_mod)
+		if(affecting.heal_damage(brute2heal, burn2heal))
+			C.update_damage_overlays()
+		return TRUE
+	to_chat(user, "<span class='warning'>[C]'s [affecting.name] can not be healed with \the [src]!</span>")
+
 
 /obj/item/stack/medical/bruise_pack
 	name = "bruise pack"
@@ -103,6 +112,10 @@
 	self_delay = 20
 	max_amount = 12
 	grind_results = list(/datum/reagent/cellulose = 2)
+	custom_price = 100
+
+/obj/item/stack/medical/gauze/twelve
+	amount = 12
 
 /obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
 	if(ishuman(M))
@@ -223,16 +236,16 @@
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 
 /obj/item/stack/medical/mesh/Initialize()
-	..()
+	. = ..()
 	if(amount == max_amount)	 //only seal full mesh packs
 		is_open = FALSE
-		icon_state = "regen_mesh_closed"
+		update_icon()
 
-
-/obj/item/stack/medical/mesh/update_icon()
+/obj/item/stack/medical/mesh/update_icon_state()
 	if(!is_open)
-		return
-	. = ..()
+		icon_state = "regen_mesh_closed"
+	else
+		return ..()
 
 /obj/item/stack/medical/mesh/heal(mob/living/M, mob/user)
 	. = ..()
@@ -268,7 +281,59 @@
 		to_chat(user, "<span class='notice'>You open the sterile mesh package.</span>")
 		update_icon()
 		playsound(src, 'sound/items/poster_ripped.ogg', 20, TRUE)
+		return
 	. = ..()
+
+/obj/item/stack/medical/mesh/advanced
+	name = "advanced regenerative mesh"
+	desc = "An advanced mesh made with aloe extracts and sterilizing chemicals, used to treat burns."
+
+	gender = PLURAL
+	singular_name = "advanced regenerative mesh"
+	icon_state = "aloe_mesh"
+	heal_burn = 15
+	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
+
+/obj/item/stack/medical/mesh/advanced/update_icon_state()
+	if(!is_open)
+		icon_state = "aloe_mesh_closed"
+	else
+		return ..()
+
+/obj/item/stack/medical/aloe
+	name = "aloe cream"
+	desc = "A healing paste you can apply on wounds."
+
+	icon_state = "aloe_paste"
+	self_delay = 20
+	other_delay = 10
+	novariants = TRUE
+	amount = 20
+	max_amount = 20
+	var/heal = 3
+	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
+
+/obj/item/stack/medical/aloe/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return FALSE
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal, heal)
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage(heal, heal)
+		return TRUE
+
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+
 
 	/*
 	The idea is for these medical devices to work like a hybrid of the old brute packs and tend wounds,
@@ -277,4 +342,3 @@
 
 	The interesting limb targeting mechanic is retained and i still believe they will be a viable choice, especially when healing others in the field.
 	 */
-

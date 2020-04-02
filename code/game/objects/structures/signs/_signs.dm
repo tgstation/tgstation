@@ -11,7 +11,7 @@
 
 /obj/structure/sign/basic
 	name = "blank sign"
-	desc = "How can signs be real if our eyes aren't real?"
+	desc = "How can signs be real if our eyes aren't real? Use a pen to change the decal."
 	icon_state = "backing"
 
 /obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -23,6 +23,12 @@
 				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
 			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
+
+/obj/structure/sign/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	user.examinate(src)
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && buildable_sign)
@@ -41,9 +47,9 @@
 		return
 	else if(istype(I, /obj/item/pen) && buildable_sign)
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
-		"Hydroponics", "Xenobiology")
+		"Hydroponics", "Xenobiology", "Test Chamber","Firing Range", "Extreme Cold", "Extreme Heat", "Gas Mask", "Nanites Lab", "Maintenance", "Reactive Chemicals")
 		var/obj/structure/sign/sign_type
-		switch(input(user, "Select a sign type.", "Sign Customization") as null|anything in sign_types)
+		switch(input(user, "Select a sign type.", "Sign Customization") as null|anything in sortList(sign_types))
 			if("Blank")
 				sign_type = /obj/structure/sign/basic
 			if("Secure Area")
@@ -62,6 +68,18 @@
 				sign_type = /obj/structure/sign/warning/fire
 			if("No Smoking")
 				sign_type = /obj/structure/sign/warning/nosmoking/circle
+			if("Test Chamber")
+				sign_type = /obj/structure/sign/warning/testchamber
+			if("Firing Range")
+				sign_type = /obj/structure/sign/warning/firingrange
+			if("Extreme Cold")
+				sign_type = /obj/structure/sign/warning/coldtemp
+			if("Extreme Heat")
+				sign_type = /obj/structure/sign/warning/hottemp
+			if("Gas Mask")
+				sign_type = /obj/structure/sign/warning/gasmask
+			if("Reactive Chemicals")
+				sign_type = /obj/structure/sign/warning/chemdiamond
 			if("Medbay")
 				sign_type = /obj/structure/sign/departments/medbay/alt
 			if("Science")
@@ -72,6 +90,10 @@
 				sign_type = /obj/structure/sign/departments/botany
 			if("Xenobiology")
 				sign_type = /obj/structure/sign/departments/xenobio
+			if("Nanites Lab")
+				sign_type = /obj/structure/sign/departments/nanites
+			if("Maintenance")
+				sign_type = /obj/structure/sign/departments/mait
 
 		//Make sure user is adjacent still
 		if(!Adjacent(user))
@@ -92,10 +114,11 @@
 
 /obj/item/sign_backing
 	name = "sign backing"
-	desc = "A sign with adhesive backing."
+	desc = "A sign with adhesive backing. Use a pen to change the decal once installed."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/plastic = 2000)
 	resistance_flags = FLAMMABLE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
@@ -121,11 +144,11 @@
 	setDir(turn(dir, 90))
 
 /obj/structure/sign/nanotrasen
-	name = "\improper Nanotrasen Logo"
-	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
+	name = "\improper Nanotrasen logo"
+	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
 
 /obj/structure/sign/logo
-	name = "nanotrasen logo"
+	name = "\improper Nanotrasen logo"
 	desc = "The Nanotrasen corporate logo."
 	icon_state = "nanotrasen_sign1"

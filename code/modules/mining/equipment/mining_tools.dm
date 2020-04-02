@@ -88,7 +88,7 @@
 	w_class = WEIGHT_CLASS_HUGE //the epitome of power(gamer)tools is CHUNCKY
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
-	desc = "Cracks rocks with sonic blasts, and doubles as a demolition power tool for smashing walls."
+	desc = "Cracks rocks with sonic blasts."
 
 /obj/item/shovel
 	name = "shovel"
@@ -131,3 +131,17 @@
 	force = 5
 	throwforce = 7
 	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/shovel/serrated
+	name = "serrated bone shovel"
+	desc = "A wicked tool that cleaves through dirt just as easily as it does flesh. The design was styled after ancient lavaland tribal designs."
+	icon_state = "shovel_bone"
+	item_state = "shovel_bone"
+	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
+	force = 15
+	throwforce = 12
+	w_class = WEIGHT_CLASS_NORMAL
+	toolspeed = 0.7
+	attack_verb = list("slashed", "impaled", "stabbed", "sliced")
+	sharpness = IS_SHARP

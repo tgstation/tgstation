@@ -14,6 +14,7 @@
 	///Bitflag. Determines the range of the equipment.
 	var/range = MECHA_MELEE
 	var/salvageable = 1
+	var/detachable = TRUE // Set to FALSE for built-in equipment that cannot be removed
 	var/selectable = 1	// Set to 0 for passive equipment such as mining scanner or armor plates
 	var/harmful = FALSE //Controls if equipment can be used to attack by a pacifist.
 	var/destroy_sound = 'sound/mecha/critdestr.ogg'
@@ -41,6 +42,8 @@
 		if(chassis.occupant)
 			chassis.occupant_message("<span class='danger'>[src] is destroyed!</span>")
 			chassis.occupant.playsound_local(chassis, destroy_sound, 50)
+		if(!detachable) //If we're a built-in nondetachable equipment, let's lock up the slot that we were in.
+			chassis.max_equip--
 		chassis = null
 	return ..()
 

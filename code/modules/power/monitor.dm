@@ -10,8 +10,9 @@
 	idle_power_usage = 20
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/computer/powermonitor
-	ui_x = 1200
-	ui_y = 1000
+	tgui_id = "power_monitor"
+	ui_x = 550
+	ui_y = 700
 
 	var/obj/structure/cable/attached_wire
 	var/obj/machinery/power/apc/local_apc
@@ -87,7 +88,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "power_monitor", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, tgui_id, name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/monitor/ui_data()

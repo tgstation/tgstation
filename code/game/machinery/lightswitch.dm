@@ -23,10 +23,14 @@
 
 	update_icon()
 
-/obj/machinery/light_switch/update_icon()
-	if(stat & NOPOWER)
+/obj/machinery/light_switch/update_icon_state()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
+	if(machine_stat & NOPOWER)
 		icon_state = "light-p"
 	else
+		luminosity = 1
+		SSvis_overlays.add_vis_overlay(src, icon, "light-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 		if(area.lightswitch)
 			icon_state = "light1"
 		else
@@ -56,5 +60,5 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(!(stat & (BROKEN|NOPOWER)))
+	if(!(machine_stat & (BROKEN|NOPOWER)))
 		power_change()

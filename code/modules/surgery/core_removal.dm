@@ -22,7 +22,7 @@
 		"<span class='notice'>[user] begins to extract a core from [target].</span>",
 		"<span class='notice'>[user] begins to extract a core from [target].</span>")
 
-/datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
+/datum/surgery_step/extract_core/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/mob/living/simple_animal/slime/slime = target
 	if(slime.cores > 0)
 		slime.cores--
@@ -34,9 +34,9 @@
 
 		if(slime.cores <= 0)
 			slime.icon_state = "[slime.colour] baby slime dead-nocore"
-			return 1
+			return ..()
 		else
 			return 0
 	else
 		to_chat(user, "<span class='warning'>There aren't any cores left in [target]!</span>")
-		return 1
+		return ..()

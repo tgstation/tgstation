@@ -20,6 +20,8 @@
 								 "exclusive",
 								 "recognizer",
 								 "voice sensor")
+	drop_sound = 'sound/items/handling/component_drop.ogg'
+	pickup_sound =  'sound/items/handling/component_pickup.ogg'
 
 /obj/item/assembly/voice/examine(mob/user)
 	. = ..()

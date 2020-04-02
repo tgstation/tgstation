@@ -8,10 +8,11 @@
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/shadow
 	species_traits = list(NOBLOOD,NOEYESPRITES)
-	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH, TRAIT_NOFLASH)
+	inherent_traits = list(TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_NOBREATH)
 	inherent_factions = list("faithless")
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC
 	mutanteyes = /obj/item/organ/eyes/night_vision
+	species_language_holder = /datum/language_holder/shadowpeople
 
 
 /datum/species/shadow/spec_life(mob/living/carbon/human/H)
@@ -34,12 +35,12 @@
 	id = "nightmare"
 	limbs_id = "shadow"
 	burnmod = 1.5
-	no_equip = list(SLOT_WEAR_MASK, SLOT_WEAR_SUIT, SLOT_GLOVES, SLOT_SHOES, SLOT_W_UNIFORM, SLOT_S_STORE)
+	no_equip = list(ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET, ITEM_SLOT_ICLOTHING, ITEM_SLOT_SUITSTORE)
 	species_traits = list(NOBLOOD,NO_UNDERWEAR,NO_DNA_COPY,NOTRANSSTING,NOEYESPRITES)
-	inherent_traits = list(TRAIT_NOFLASH, TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
+	inherent_traits = list(TRAIT_RESISTCOLD,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_CHUNKYFINGERS,TRAIT_RADIMMUNE,TRAIT_VIRUSIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_NOHUNGER)
 	mutanteyes = /obj/item/organ/eyes/night_vision/nightmare
-	mutant_organs = list(/obj/item/organ/heart/nightmare)
-	mutant_brain = /obj/item/organ/brain/nightmare
+	mutantheart = /obj/item/organ/heart/nightmare
+	mutantbrain = /obj/item/organ/brain/nightmare
 
 	var/info_text = "You are a <span class='danger'>Nightmare</span>. The ability <span class='warning'>shadow walk</span> allows unlimited, unrestricted movement in the dark while activated. \
 					Your <span class='warning'>light eater</span> will destroy any light producing objects you attack, as well as destroy any lights a living creature may be holding. You will automatically dodge gunfire and melee attacks when on a dark tile. If killed, you will eventually revive if left in darkness."
@@ -48,7 +49,7 @@
 	. = ..()
 	to_chat(C, "[info_text]")
 
-	C.fully_replace_character_name("[pick(GLOB.nightmare_names)]")
+	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
 
 /datum/species/shadow/nightmare/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
 	var/turf/T = H.loc
@@ -98,6 +99,10 @@
 	decay_factor = 0
 
 
+/obj/item/organ/heart/nightmare/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_blocker)
+
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
@@ -127,9 +132,6 @@
 /obj/item/organ/heart/nightmare/Stop()
 	return 0
 
-/obj/item/organ/heart/nightmare/update_icon()
-	return //always beating visually
-
 /obj/item/organ/heart/nightmare/on_death()
 	if(!owner)
 		return
@@ -140,7 +142,7 @@
 			respawn_progress++
 			playsound(owner,'sound/effects/singlebeat.ogg',40,TRUE)
 	if(respawn_progress >= HEART_RESPAWN_THRESHHOLD)
-		owner.revive(full_heal = TRUE)
+		owner.revive(full_heal = TRUE, admin_revive = FALSE)
 		if(!(owner.dna.species.id == "shadow" || owner.dna.species.id == "nightmare"))
 			var/mob/living/carbon/old_owner = owner
 			Remove(owner, HEART_SPECIAL_SHADOWIFY)
@@ -151,6 +153,11 @@
 		owner.visible_message("<span class='warning'>[owner] staggers to [owner.p_their()] feet!</span>")
 		playsound(owner, 'sound/hallucinations/far_noise.ogg', 50, TRUE)
 		respawn_progress = 0
+
+/obj/item/organ/heart/nightmare/get_availability(datum/species/S)
+	if(istype(S,/datum/species/shadow/nightmare))
+		return TRUE
+	return ..()
 
 //Weapon
 
@@ -185,7 +192,7 @@
 
 		if(iscyborg(AM))
 			var/mob/living/silicon/robot/borg = AM
-			if(!borg.lamp_cooldown)
+			if(borg.lamp_intensity)
 				borg.update_headlamp(TRUE, INFINITY)
 				to_chat(borg, "<span class='danger'>Your headlamp is fried! You'll need a human to help replace it.</span>")
 		else

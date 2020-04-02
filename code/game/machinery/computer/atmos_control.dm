@@ -42,8 +42,8 @@
 	name = "incinerator chamber gas sensor"
 	id_tag = ATMOS_GAS_MONITOR_SENSOR_INCINERATOR
 
-/obj/machinery/air_sensor/update_icon()
-		icon_state = "gsensor[on]"
+/obj/machinery/air_sensor/update_icon_state()
+	icon_state = "gsensor[on]"
 
 /obj/machinery/air_sensor/process_atmos()
 	if(on)
@@ -194,7 +194,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 	var/list/output_info
 
 	ui_x = 500
-	ui_y = 305
+	ui_y = 315
 
 /obj/machinery/computer/atmos_control/tank/oxygen_tank
 	name = "Oxygen Supply Control"
@@ -258,7 +258,7 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 		IO |= text[1]
 	if(!IO.len)
 		to_chat(user, "<span class='alert'>No machinery detected.</span>")
-	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in IO
+	var/S = input("Select the device set: ", "Selection", IO[1]) as anything in sortList(IO)
 	if(src)
 		src.input_tag = "[S]_in"
 		src.output_tag = "[S]_out"
@@ -305,18 +305,18 @@ GLOBAL_LIST_EMPTY(atmos_air_controllers)
 			signal.data += list("tag" = input_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("rate")
-			var/target = input("New target rate:", name, input_info ? input_info["volume_rate"] : 0) as num|null
-			if(!isnull(target) && !..())
-				target =  CLAMP(target, 0, MAX_TRANSFER_RATE)
+			var/target = text2num(params["rate"])
+			if(!isnull(target))
+				target = clamp(target, 0, MAX_TRANSFER_RATE)
 				signal.data += list("tag" = input_tag, "set_volume_rate" = target)
 				. = TRUE
 		if("output")
 			signal.data += list("tag" = output_tag, "power_toggle" = TRUE)
 			. = TRUE
 		if("pressure")
-			var/target = input("New target pressure:", name, output_info ? output_info["internal"] : 0) as num|null
-			if(!isnull(target) && !..())
-				target =  CLAMP(target, 0, 50 * ONE_ATMOSPHERE)
+			var/target = text2num(params["pressure"])
+			if(!isnull(target))
+				target = clamp(target, 0, 4500)
 				signal.data += list("tag" = output_tag, "set_internal_pressure" = target)
 				. = TRUE
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)

@@ -23,6 +23,8 @@
 		new /obj/item/stack/sheet/metal(newloc, round(steel_sheet_cost/2))
 		for(var/C in all_components)
 			var/obj/item/computer_hardware/H = all_components[C]
+			if(QDELETED(H))
+				continue
 			uninstall_component(H)
 			H.forceMove(newloc)
 			if(prob(25))

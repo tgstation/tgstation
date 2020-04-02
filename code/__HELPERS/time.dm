@@ -27,14 +27,6 @@
 	else
 		SSticker.gametime_offset = CEILING(SSticker.gametime_offset, 3600)
 
-/* Returns 1 if it is the selected month and day */
-/proc/isDay(month, day)
-	if(isnum(month) && isnum(day))
-		var/MM = text2num(time2text(world.timeofday, "MM")) // get the current month
-		var/DD = text2num(time2text(world.timeofday, "DD")) // get the current day
-		if(month == MM && day == DD)
-			return 1
-
 //returns timestamp in a sql and a not-quite-compliant ISO 8601 friendly format
 /proc/SQLtime(timevar)
 	return time2text(timevar || world.timeofday, "YYYY-MM-DD hh:mm:ss")
@@ -44,7 +36,8 @@ GLOBAL_VAR_INIT(midnight_rollovers, 0)
 GLOBAL_VAR_INIT(rollovercheck_last_timeofday, 0)
 /proc/update_midnight_rollover()
 	if (world.timeofday < GLOB.rollovercheck_last_timeofday) //TIME IS GOING BACKWARDS!
-		return GLOB.midnight_rollovers++
+		GLOB.midnight_rollovers++
+	GLOB.rollovercheck_last_timeofday = world.timeofday
 	return GLOB.midnight_rollovers
 
 /proc/weekdayofthemonth()

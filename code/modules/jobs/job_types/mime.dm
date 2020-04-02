@@ -7,7 +7,7 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
-	selection_color = "#dddddd"
+	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/mime
 
@@ -31,7 +31,7 @@
 	mask = /obj/item/clothing/mask/gas/mime
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/frenchberet
-	suit = /obj/item/clothing/suit/suspenders
+	suit = /obj/item/clothing/suit/toggle/suspenders
 	backpack_contents = list(/obj/item/book/mimery=1, /obj/item/reagent_containers/food/drinks/bottle/bottleofnothing=1)
 
 	backpack = /obj/item/storage/backpack/mime
@@ -46,7 +46,7 @@
 
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
-		H.mind.miming = 1
+		H.mind.miming = TRUE
 
 /obj/item/book/mimery
 	name = "Guide to Dank Mimery"

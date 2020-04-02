@@ -100,3 +100,7 @@
 	if(!force && occupant_amount() >= max_occupants)
 		return FALSE
 	return ..()
+
+/obj/vehicle/ridden/zap_act(zap_str, zap_flags, shocked_targets)
+	zap_buckle_check(zap_str)
+	. = ..()

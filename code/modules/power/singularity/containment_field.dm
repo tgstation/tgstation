@@ -11,14 +11,21 @@
 	use_power = NO_POWER_USE
 	interaction_flags_atom = NONE
 	interaction_flags_machine = NONE
+	CanAtmosPass = ATMOS_PASS_NO
 	light_range = 4
 	layer = ABOVE_OBJ_LAYER
 	var/obj/machinery/field/generator/FG1 = null
 	var/obj/machinery/field/generator/FG2 = null
 
+/obj/machinery/field/containment/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+
 /obj/machinery/field/containment/Destroy()
 	FG1.fields -= src
 	FG2.fields -= src
+	CanAtmosPass = ATMOS_PASS_YES
+	air_update_turf(TRUE)
 	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
@@ -55,14 +62,15 @@
 		FG1.calc_power(INFINITY) //rip that 'containment' field
 		M.adjustHealth(-M.obj_damage)
 	else
-		..()
+		return ..()
 
-/obj/machinery/field/containment/Crossed(mob/mover)
-	if(isliving(mover))
-		shock(mover)
+/obj/machinery/field/containment/Crossed(atom/movable/AM)
+	. = ..()
+	if(isliving(AM))
+		shock(AM)
 
-	if(ismachinery(mover) || isstructure(mover) || ismecha(mover))
-		bump_field(mover)
+	if(ismachinery(AM) || isstructure(AM) || ismecha(AM))
+		bump_field(AM)
 
 /obj/machinery/field/containment/proc/set_master(master1,master2)
 	if(!master1 || !master2)
@@ -99,10 +107,10 @@
 		return
 
 
-/obj/machinery/field/CanPass(atom/movable/mover, turf/target)
+/obj/machinery/field/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
 	if(hasShocked || isliving(mover) || ismachinery(mover) || isstructure(mover) || ismecha(mover))
 		return FALSE
-	return ..()
 
 /obj/machinery/field/proc/shock(mob/living/user)
 	var/shock_damage = min(rand(30,40),rand(30,40))
@@ -115,7 +123,7 @@
 		if(prob(20))
 			user.Stun(40)
 		user.take_overall_damage(0, shock_damage)
-		user.visible_message("<span class='danger'>[user.name] was shocked by the [src.name]!</span>", \
+		user.visible_message("<span class='danger'>[user.name] is shocked by the [src.name]!</span>", \
 		"<span class='userdanger'>Energy pulse detected, system damaged!</span>", \
 		"<span class='hear'>You hear an electrical crack.</span>")
 

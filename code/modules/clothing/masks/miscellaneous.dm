@@ -80,7 +80,7 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/pig/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 
 /obj/item/clothing/mask/pig/cursed
@@ -106,7 +106,7 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/frog/handle_speech(datum/source, list/speech_args) //whenever you speak
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
 			speech_args[SPEECH_MESSAGE] = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
 		else
@@ -135,7 +135,7 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/cowmask/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("Moooooooo!","Moo!","Moooo!")
 
 /obj/item/clothing/mask/cowmask/cursed
@@ -159,7 +159,7 @@
 	clothing_flags = VOICEBOX_TOGGLABLE
 
 /obj/item/clothing/mask/horsehead/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
 /obj/item/clothing/mask/horsehead/cursed
@@ -242,7 +242,7 @@
 	. = ..()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if((C.get_item_by_slot(SLOT_HEAD == src)) || (C.get_item_by_slot(SLOT_WEAR_MASK) == src))
+		if((C.get_item_by_slot(ITEM_SLOT_HEAD == src)) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src))
 			to_chat(user, "<span class='warning'>You can't tie [src] while wearing it!</span>")
 			return
 	if(slot_flags & ITEM_SLOT_HEAD)

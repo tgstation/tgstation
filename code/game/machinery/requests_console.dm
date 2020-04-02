@@ -69,8 +69,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	max_integrity = 300
 	armor = list("melee" = 70, "bullet" = 30, "laser" = 30, "energy" = 30, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 90, "acid" = 90)
 
-/obj/machinery/requests_console/update_icon()
-	if(stat & NOPOWER)
+/obj/machinery/requests_console/update_icon_state()
+	if(machine_stat & NOPOWER)
 		set_light(0)
 	else
 		set_light(1.4,0.7,"#34D352")//green light
@@ -79,7 +79,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 			icon_state="req_comp_open"
 		else
 			icon_state="req_comp_rewired"
-	else if(stat & NOPOWER)
+	else if(machine_stat & NOPOWER)
 		if(icon_state != "req_comp_off")
 			icon_state = "req_comp_off"
 	else
@@ -237,21 +237,21 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	usr.set_machine(src)
 	add_fingerprint(usr)
 
-	if(reject_bad_text(href_list["write"]))
-		to_department = ckey(href_list["write"]) //write contains the string of the receiving department's name
+	if(href_list["write"])
+		to_department = ckey(reject_bad_text(href_list["write"])) //write contains the string of the receiving department's name
 
-		var/new_message = (to_department in GLOB.req_console_ckey_departments) && copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
+		var/new_message = (to_department in GLOB.req_console_ckey_departments) && stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN)
 		if(new_message)
 			to_department = GLOB.req_console_ckey_departments[to_department]
 			message = new_message
 			screen = REQ_SCREEN_AUTHENTICATE
-			priority = CLAMP(text2num(href_list["priority"]), REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
+			priority = clamp(text2num(href_list["priority"]), REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = copytext(reject_bad_text(input(usr, "Write your message:", "Awaiting Input", "")),1,MAX_MESSAGE_LEN)
+		var/new_message = reject_bad_text(stripped_input(usr, "Write your message:", "Awaiting Input", "", MAX_MESSAGE_LEN))
 		if(new_message)
 			message = new_message
-			priority = CLAMP(text2num(href_list["priority"]) || REQ_NORMAL_MESSAGE_PRIORITY, REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
+			priority = clamp(text2num(href_list["priority"]) || REQ_NORMAL_MESSAGE_PRIORITY, REQ_NORMAL_MESSAGE_PRIORITY, REQ_EXTREME_MESSAGE_PRIORITY)
 		else
 			message = ""
 			announceAuth = FALSE
@@ -267,6 +267,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 		GLOB.news_network.SubmitArticle(message, department, "Station Announcements", null)
 		usr.log_talk(message, LOG_SAY, tag="station announcement from [src]")
 		message_admins("[ADMIN_LOOKUPFLW(usr)] has made a station announcement from [src] at [AREACOORD(usr)].")
+		deadchat_broadcast(" made a station announcement from <span class='name'>[get_area_name(usr, TRUE)]</span>.", "<span class='name'>[usr.real_name]</span>", usr, message_type=DEADCHAT_ANNOUNCEMENT)
 		announceAuth = FALSE
 		message = ""
 		screen = REQ_SCREEN_MAIN
@@ -323,7 +324,7 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 
 	//Handle screen switching
 	if(href_list["setScreen"])
-		var/set_screen = CLAMP(text2num(href_list["setScreen"]) || 0, REQ_SCREEN_MAIN, REQ_SCREEN_ANNOUNCE)
+		var/set_screen = clamp(text2num(href_list["setScreen"]) || 0, REQ_SCREEN_MAIN, REQ_SCREEN_ANNOUNCE)
 		switch(set_screen)
 			if(REQ_SCREEN_MAIN)
 				to_department = ""
@@ -343,9 +344,8 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	updateUsrDialog()
 
 /obj/machinery/requests_console/say_mod(input, message_mode)
-	var/ending = copytext(input, length(input) - 2)
-	if (ending == "!!!")
-		. = "blares"
+	if(spantext_char(input, "!", -3))
+		return "blares"
 	else
 		. = ..()
 

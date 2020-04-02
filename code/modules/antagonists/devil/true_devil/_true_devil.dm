@@ -16,7 +16,6 @@
 	pass_flags =  0
 	sight = (SEE_TURFS | SEE_OBJS)
 	status_flags = CANPUSH
-	spacewalk = TRUE
 	mob_size = MOB_SIZE_LARGE
 	held_items = list(null, null)
 	bodyparts = list(/obj/item/bodypart/chest/devil, /obj/item/bodypart/head/devil, /obj/item/bodypart/l_arm/devil,
@@ -29,8 +28,9 @@
 /mob/living/carbon/true_devil/Initialize()
 	create_bodyparts() //initialize bodyparts
 	create_internal_organs()
-	grant_all_languages(omnitongue=TRUE)
-	..()
+	grant_all_languages()
+	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 
 /mob/living/carbon/true_devil/create_internal_organs()
 	internal_organs += new /obj/item/organ/brain
@@ -45,7 +45,7 @@
 	health = maxHealth
 	icon_state = "arch_devil"
 
-/mob/living/carbon/true_devil/proc/set_name()
+/mob/living/carbon/true_devil/proc/set_devil_name()
 	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(/datum/antagonist/devil)
 	name = devilinfo.truename
 	real_name = name
@@ -57,7 +57,7 @@
 	mind.announce_objectives()
 
 /mob/living/carbon/true_devil/death(gibbed)
-	stat = DEAD
+	set_stat(DEAD)
 	..(gibbed)
 	drop_all_held_items()
 	INVOKE_ASYNC(mind.has_antag_datum(/datum/antagonist/devil), /datum/antagonist/devil/proc/beginResurrectionCheck, src)
@@ -93,7 +93,7 @@
 		visible_message("<span class='warning'>[src] easily breaks out of [p_their()] handcuffs!</span>", \
 					"<span class='notice'>With just a thought your handcuffs fall off.</span>")
 
-/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dextery=FALSE, no_tk=FALSE)
+/mob/living/carbon/true_devil/canUseTopic(atom/movable/M, be_close=FALSE, no_dexterity=FALSE, no_tk=FALSE)
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You can't do that right now!</span>")
 		return FALSE

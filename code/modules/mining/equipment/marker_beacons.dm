@@ -1,5 +1,5 @@
 /*****************Marker Beacons**************************/
-GLOBAL_LIST_INIT(marker_beacon_colors, list(
+GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
 "Random" = FALSE, //not a true color, will pick a random color
 "Burgundy" = LIGHT_COLOR_FLARE,
 "Bronze" = LIGHT_COLOR_ORANGE,
@@ -12,7 +12,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 "Indigo" = LIGHT_COLOR_DARK_BLUE,
 "Purple" = LIGHT_COLOR_PURPLE,
 "Violet" = LIGHT_COLOR_LAVENDER,
-"Fuchsia" = LIGHT_COLOR_PINK))
+"Fuchsia" = LIGHT_COLOR_PINK)))
 
 /obj/item/stack/marker_beacon
 	name = "marker beacon"
@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(marker_beacon_colors, list(
 	. += "<span class='notice'>Use in-hand to place a [singular_name].\n"+\
 	"Alt-click to select a color. Current color is [picked_color].</span>"
 
-/obj/item/stack/marker_beacon/update_icon()
+/obj/item/stack/marker_beacon/update_icon_state()
 	icon_state = "[initial(icon_state)][lowertext(picked_color)]"
 
 /obj/item/stack/marker_beacon/attack_self(mob/user)

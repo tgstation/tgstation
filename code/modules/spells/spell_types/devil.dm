@@ -5,7 +5,7 @@
 	include_user = TRUE
 	range = -1
 	clothes_req = FALSE
-	item_type = /obj/item/twohanded/pitchfork/demonic
+	item_type = /obj/item/pitchfork/demonic
 
 	school = "conjuration"
 	charge_max = 150
@@ -15,10 +15,10 @@
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/greater
-	item_type = /obj/item/twohanded/pitchfork/demonic/greater
+	item_type = /obj/item/pitchfork/demonic/greater
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/summon_pitchfork/ascended
-	item_type = /obj/item/twohanded/pitchfork/demonic/ascended
+	item_type = /obj/item/pitchfork/demonic/ascended
 
 /obj/effect/proc_holder/spell/targeted/conjure_item/violin
 	item_type = /obj/item/instrument/violin/golden
@@ -54,7 +54,7 @@
 					user.put_in_hands(contract)
 			else
 				var/obj/item/paper/contract/infernal/contract  // = new(user.loc, C.mind, contractType, user.mind)
-				var/contractTypeName = input(user, "What type of contract?") in list ("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship")
+				var/contractTypeName = input(user, "What type of contract?") in sortList(list("Power", "Wealth", "Prestige", "Magic", "Knowledge", "Friendship"))
 				switch(contractTypeName)
 					if("Power")
 						contract = new /obj/item/paper/contract/infernal/power(C.loc, C.mind, user.mind)

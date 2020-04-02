@@ -115,8 +115,8 @@
 				user.log_message("removed [O] ([reagent_list]) from [src]", LOG_GAME)
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
-			wires.detach_assembly(wires.get_wire(1))
 			return
+		wires.detach_assembly(wires.get_wire(1))
 		new /obj/item/stack/cable_coil(get_turf(src),1)
 		stage_change(GRENADE_EMPTY)
 		to_chat(user, "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>")
@@ -273,7 +273,7 @@
 		var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
 		if (newspread != null && user.canUseTopic(src, BE_CLOSE))
 			newspread = round(newspread)
-			unit_spread = CLAMP(newspread, 5, 100)
+			unit_spread = clamp(newspread, 5, 100)
 			to_chat(user, "<span class='notice'>You set the time release to [unit_spread] units per detonation.</span>")
 		if (newspread != unit_spread)
 			to_chat(user, "<span class='notice'>The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units.</span>")

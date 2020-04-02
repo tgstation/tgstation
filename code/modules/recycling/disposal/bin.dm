@@ -12,7 +12,7 @@
 	obj_flags = CAN_BE_HIT | USES_TGUI
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	ui_x = 300
-	ui_y = 200
+	ui_y = 180
 
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/full_pressure = FALSE
@@ -140,7 +140,7 @@
 		if(user == target)
 			user.visible_message("<span class='warning'>[user] climbs into [src].</span>", "<span class='notice'>You climb into [src].</span>")
 		else
-			target.visible_message("<span class='danger'>[user] has placed [target] in [src].</span>", "<span class='userdanger'>[user] has placed you in [src].</span>")
+			target.visible_message("<span class='danger'>[user] places [target] in [src].</span>", "<span class='userdanger'>[user] places you in [src].</span>")
 			log_combat(user, target, "stuffed", addition="into [src]")
 			target.LAssailant = user
 		update_icon()
@@ -164,7 +164,7 @@
 
 // monkeys and xenos can only pull the flush lever
 /obj/machinery/disposal/attack_paw(mob/user)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	flush = !flush
 	update_icon()
@@ -177,10 +177,6 @@
 		AM.forceMove(T)
 		AM.pipe_eject(0)
 	update_icon()
-
-// update the icon & overlays to reflect mode & status
-/obj/machinery/disposal/update_icon()
-	return
 
 /obj/machinery/disposal/proc/flush()
 	flushing = TRUE
@@ -285,7 +281,7 @@
 
 /obj/machinery/disposal/bin/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -349,30 +345,36 @@
 	pressure_charging = TRUE
 	update_icon()
 
-/obj/machinery/disposal/bin/update_icon()
-	cut_overlays()
-	if(stat & BROKEN)
-		pressure_charging = FALSE
-		flush = FALSE
+/obj/machinery/disposal/bin/update_overlays()
+	. = ..()
+
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
+
+	if(machine_stat & BROKEN)
 		return
 
 	//flush handle
 	if(flush)
-		add_overlay("dispover-handle")
+		. += "dispover-handle"
 
 	//only handle is shown if no power
-	if(stat & NOPOWER || panel_open)
+	if(machine_stat & NOPOWER || panel_open)
 		return
 
+	luminosity = 1
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
-		add_overlay("dispover-full")
+		. += "dispover-full"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 
 	//charging and ready light
 	if(pressure_charging)
-		add_overlay("dispover-charge")
+		. += "dispover-charge"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-charge-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 	else if(full_pressure)
-		add_overlay("dispover-ready")
+		. += "dispover-ready"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-ready-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE
@@ -381,7 +383,7 @@
 //timed process
 //charge the gas reservoir and perform flush if ready
 /obj/machinery/disposal/bin/process()
-	if(stat & BROKEN) //nothing can happen if broken
+	if(machine_stat & BROKEN) //nothing can happen if broken
 		return
 
 	flush_count++
@@ -396,7 +398,7 @@
 	if(flush && air_contents.return_pressure() >= SEND_PRESSURE) // flush can happen even without power
 		do_flush()
 
-	if(stat & NOPOWER) // won't charge if no power
+	if(machine_stat & NOPOWER) // won't charge if no power
 		return
 
 	use_power(100) // base power usage

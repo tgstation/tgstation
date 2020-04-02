@@ -160,5 +160,6 @@
 	name = "unattached transit tube pod"
 	icon = 'icons/obj/atmospherics/pipes/transit_tube.dmi'
 	icon_state = "pod"
+	desc = "Could probably be <b>dragged</b> into an open Transit Tube."
 	anchored = FALSE
 	density = FALSE

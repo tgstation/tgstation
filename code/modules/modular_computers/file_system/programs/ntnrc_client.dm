@@ -10,215 +10,225 @@
 	ui_header = "ntnrc_idle.gif"
 	available_on_ntnet = 1
 	tgui_id = "ntos_net_chat"
+	ui_x = 900
+	ui_y = 675
 
-	var/last_message = null				// Used to generate the toolbar icon
+	var/last_message				// Used to generate the toolbar icon
 	var/username
-	var/datum/ntnet_conversation/channel = null
-	var/operator_mode = 0		// Channel operator mode
-	var/netadmin_mode = 0		// Administrator mode (invisible to other users + bypasses passwords)
+	var/active_channel
+	var/list/channel_history = list()
+	var/operator_mode = FALSE		// Channel operator mode
+	var/netadmin_mode = FALSE		// Administrator mode (invisible to other users + bypasses passwords)
 
 /datum/computer_file/program/chatclient/New()
 	username = "DefaultUser[rand(100, 999)]"
 
 /datum/computer_file/program/chatclient/ui_act(action, params)
 	if(..())
-		return 1
+		return
 
+	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
+	var/authed = FALSE
+	if(channel && ((channel.operator == src) || netadmin_mode))
+		authed = TRUE
 	switch(action)
 		if("PRG_speak")
-			. = 1
-			if(!channel)
-				return 1
-			var/mob/living/user = usr
-			var/message = reject_bad_text(input(user, "Enter message or leave blank to cancel: "))
-			if(!message || !channel)
+			if(!channel || isnull(active_channel))
 				return
+			var/message = reject_bad_text(params["message"])
+			if(!message)
+				return
+			if(channel.password && !(src in channel.clients))
+				if(channel.password == message)
+					channel.add_client(src)
+					return TRUE
+
 			channel.add_message(message, username)
+			var/mob/living/user = usr
 			user.log_talk(message, LOG_CHAT, tag="as [username] to channel [channel.title]")
-
+			return TRUE
 		if("PRG_joinchannel")
-			. = 1
-			var/datum/ntnet_conversation/C
-			for(var/datum/ntnet_conversation/chan in SSnetworks.station_network.chat_channels)
-				if(chan.id == text2num(params["id"]))
-					C = chan
-					break
-
-			if(!C)
-				return 1
+			var/new_target = text2num(params["id"])
+			if(isnull(new_target) || new_target == active_channel)
+				return
 
 			if(netadmin_mode)
-				channel = C		// Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
-				return 1
+				active_channel = new_target // Bypasses normal leave/join and passwords. Technically makes the user invisible to others.
+				return TRUE
 
-			if(C.password)
-				var/mob/living/user = usr
-				var/password = reject_bad_text(input(user,"Access Denied. Enter password:"))
-				if(C && (password == C.password))
-					C.add_client(src)
-					channel = C
-				return 1
-			C.add_client(src)
-			channel = C
+			active_channel =  new_target
+			channel = SSnetworks.station_network.get_chat_channel_by_id(new_target)
+			if(!(src in channel.clients) && !channel.password)
+				channel.add_client(src)
+			return TRUE
 		if("PRG_leavechannel")
-			. = 1
 			if(channel)
 				channel.remove_client(src)
-			channel = null
+				active_channel = null
+				return TRUE
 		if("PRG_newchannel")
-			. = 1
-			var/mob/living/user = usr
-			var/channel_title = reject_bad_text(input(user,"Enter channel name or leave blank to cancel:"))
+			var/channel_title = reject_bad_text(params["new_channel_name"])
 			if(!channel_title)
 				return
-			var/datum/ntnet_conversation/C = new/datum/ntnet_conversation()
+			var/datum/ntnet_conversation/C = new /datum/ntnet_conversation()
 			C.add_client(src)
 			C.operator = src
-			channel = C
 			C.title = channel_title
+			active_channel = C.id
+			return TRUE
 		if("PRG_toggleadmin")
-			. = 1
 			if(netadmin_mode)
-				netadmin_mode = 0
+				netadmin_mode = FALSE
 				if(channel)
 					channel.remove_client(src) // We shouldn't be in channel's user list, but just in case...
-					channel = null
-				return 1
+				return TRUE
 			var/mob/living/user = usr
-			if(can_run(usr, 1, ACCESS_NETWORK))
-				if(channel)
-					var/response = alert(user, "Really engage admin-mode? You will be disconnected from your current channel!", "NTNRC Admin mode", "Yes", "No")
-					if(response == "Yes")
-						if(channel)
-							channel.remove_client(src)
-							channel = null
-					else
-						return
-				netadmin_mode = 1
+			if(can_run(user, TRUE, ACCESS_NETWORK))
+				for(var/C in SSnetworks.station_network.chat_channels)
+					var/datum/ntnet_conversation/chan = C
+					chan.remove_client(src)
+				netadmin_mode = TRUE
+				return TRUE
 		if("PRG_changename")
-			. = 1
-			var/mob/living/user = usr
-			var/newname = sanitize(input(user,"Enter new nickname or leave blank to cancel:"))
+			var/newname = sanitize(params["new_name"])
 			if(!newname)
-				return 1
-			if(channel)
-				channel.add_status_message("[username] is now known as [newname].")
+				return
+			for(var/C in SSnetworks.station_network.chat_channels)
+				var/datum/ntnet_conversation/chan = C
+				if(src in chan.clients)
+					chan.add_status_message("[username] is now known as [newname].")
 			username = newname
-
+			return TRUE
 		if("PRG_savelog")
-			. = 1
 			if(!channel)
 				return
-			var/mob/living/user = usr
-			var/logname = stripped_input(user,"Enter desired logfile name (.log) or leave blank to cancel:")
-			if(!logname || !channel)
-				return 1
-			var/datum/computer_file/data/logfile = new/datum/computer_file/data/logfile()
+			var/logname = stripped_input(params["log_name"])
+			if(!logname)
+				return
+			var/datum/computer_file/data/logfile = new /datum/computer_file/data/logfile()
 			// Now we will generate HTML-compliant file that can actually be viewed/printed.
 			logfile.filename = logname
 			logfile.stored_data = "\[b\]Logfile dump from NTNRC channel [channel.title]\[/b\]\[BR\]"
 			for(var/logstring in channel.messages)
-				logfile.stored_data += "[logstring]\[BR\]"
-			logfile.stored_data += "\[b\]Logfile dump completed.\[/b\]"
+				logfile.stored_data = "[logfile.stored_data][logstring]\[BR\]"
+			logfile.stored_data = "[logfile.stored_data]\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
 			var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 			if(!computer || !hard_drive || !hard_drive.store_file(logfile))
 				if(!computer)
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")
-					return 1
 				if(!hard_drive)
 					computer.visible_message("<span class='warning'>\The [computer] shows an \"I/O Error - Hard drive connection error\" warning.</span>")
 				else	// In 99.9% cases this will mean our HDD is full
 					computer.visible_message("<span class='warning'>\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning.</span>")
+			return TRUE
 		if("PRG_renamechannel")
-			. = 1
-			if(!operator_mode || !channel)
-				return 1
-			var/mob/living/user = usr
-			var/newname = reject_bad_text(input(user, "Enter new channel name or leave blank to cancel:"))
+			if(!authed)
+				return
+			var/newname = reject_bad_text(params["new_name"])
 			if(!newname || !channel)
 				return
 			channel.add_status_message("Channel renamed from [channel.title] to [newname] by operator.")
 			channel.title = newname
+			return TRUE
 		if("PRG_deletechannel")
-			. = 1
-			if(channel && ((channel.operator == src) || netadmin_mode))
+			if(authed)
 				qdel(channel)
-				channel = null
+				active_channel = null
+				return TRUE
 		if("PRG_setpassword")
-			. = 1
-			if(!channel || ((channel.operator != src) && !netadmin_mode))
-				return 1
+			if(!authed)
+				return
 
-			var/mob/living/user = usr
-			var/newpassword = sanitize(input(user, "Enter new password for this channel. Leave blank to cancel, enter 'nopassword' to remove password completely:"))
-			if(!channel || !newpassword || ((channel.operator != src) && !netadmin_mode))
-				return 1
+			var/new_password = sanitize(params["new_password"])
+			if(!authed)
+				return
 
-			if(newpassword == "nopassword")
-				channel.password = ""
-			else
-				channel.password = newpassword
+			channel.password = new_password
+			return TRUE
 
 /datum/computer_file/program/chatclient/process_tick()
-	..()
+	. = ..()
+	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
 	if(program_state != PROGRAM_STATE_KILLED)
 		ui_header = "ntnrc_idle.gif"
 		if(channel)
 			// Remember the last message. If there is no message in the channel remember null.
-			last_message = channel.messages.len ? channel.messages[channel.messages.len - 1] : null
+			last_message = length(channel.messages) ? channel.messages[length(channel.messages)] : null
 		else
 			last_message = null
-		return 1
-	if(channel && channel.messages && channel.messages.len)
-		ui_header = last_message == channel.messages[channel.messages.len - 1] ? "ntnrc_idle.gif" : "ntnrc_new.gif"
+		return TRUE
+	if(channel?.messages?.len)
+		ui_header = last_message == channel.messages[length(channel.messages)] ? "ntnrc_idle.gif" : "ntnrc_new.gif"
 	else
 		ui_header = "ntnrc_idle.gif"
 
 /datum/computer_file/program/chatclient/kill_program(forced = FALSE)
-	if(channel)
+	for(var/C in SSnetworks.station_network.chat_channels)
+		var/datum/ntnet_conversation/channel = C
 		channel.remove_client(src)
-		channel = null
 	..()
+
+/datum/computer_file/program/chatclient/ui_static_data(mob/user)
+	var/list/data = list()
+	data["can_admin"] = can_run(user, FALSE, ACCESS_NETWORK)
+	return data
 
 /datum/computer_file/program/chatclient/ui_data(mob/user)
 	if(!SSnetworks.station_network || !SSnetworks.station_network.chat_channels)
-		return
+		return list()
 
 	var/list/data = list()
 
 	data = get_header_data()
 
+	var/list/all_channels = list()
+	for(var/C in SSnetworks.station_network.chat_channels)
+		var/datum/ntnet_conversation/conv = C
+		if(conv && conv.title)
+			all_channels.Add(list(list(
+				"chan" = conv.title,
+				"id" = conv.id
+			)))
+	data["all_channels"] = all_channels
 
+	data["active_channel"] = active_channel
+	data["username"] = username
 	data["adminmode"] = netadmin_mode
+	var/datum/ntnet_conversation/channel = SSnetworks.station_network.get_chat_channel_by_id(active_channel)
 	if(channel)
 		data["title"] = channel.title
-		var/list/messages[0]
-		for(var/M in channel.messages)
-			messages.Add(list(list(
-				"msg" = M
-			)))
-		data["messages"] = messages
-		var/list/clients[0]
+		var/authed = FALSE
+		if(!channel.password)
+			authed = TRUE
+		if(netadmin_mode)
+			authed = TRUE
+		var/list/clients = list()
 		for(var/C in channel.clients)
+			if(C == src)
+				authed = TRUE
 			var/datum/computer_file/program/chatclient/cl = C
 			clients.Add(list(list(
 				"name" = cl.username
 			)))
-		data["clients"] = clients
-		operator_mode = (channel.operator == src) ? 1 : 0
-		data["is_operator"] = operator_mode || netadmin_mode
-
-	else // Channel selection screen
-		var/list/all_channels[0]
-		for(var/C in SSnetworks.station_network.chat_channels)
-			var/datum/ntnet_conversation/conv = C
-			if(conv && conv.title)
-				all_channels.Add(list(list(
-					"chan" = conv.title,
-					"id" = conv.id
+		data["authed"] = authed
+		//no fishing for ui data allowed
+		if(authed)
+			data["clients"] = clients
+			var/list/messages = list()
+			for(var/M in channel.messages)
+				messages.Add(list(list(
+					"msg" = M
 				)))
-		data["all_channels"] = all_channels
+			data["messages"] = messages
+			data["is_operator"] = (channel.operator == src) || netadmin_mode
+		else
+			data["clients"] = list()
+			data["messages"] = list()
+	else
+		data["clients"] = list()
+		data["authed"] = FALSE
+		data["messages"] = list()
 
 	return data

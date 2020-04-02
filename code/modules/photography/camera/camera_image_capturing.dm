@@ -1,13 +1,17 @@
 /obj/effect/appearance_clone
+	var/turn_angle = 0
 
 /obj/effect/appearance_clone/New(loc, atom/A)			//Intentionally not Initialize(), to make sure the clone assumes the intended appearance in time for the camera getFlatIcon.
 	if(istype(A))
 		appearance = A.appearance
 		dir = A.dir
-		if(ismovableatom(A))
+		if(ismovable(A))
 			var/atom/movable/AM = A
 			step_x = AM.step_x
 			step_y = AM.step_y
+			if(iscarbon(A))
+				var/mob/living/carbon/C = A
+				UNLINT(turn_angle = C.lying_angle) // this is the only place its okay to read lying directly
 	. = ..()
 
 /obj/item/camera/proc/camera_get_icon(list/turfs, turf/center, psize_x = 96, psize_y = 96, datum/turf_reservation/clone_area, size_x, size_y, total_x, total_y)
@@ -64,18 +68,30 @@
 	var/xcomp = FLOOR(psize_x / 2, 1) - 15
 	var/ycomp = FLOOR(psize_y / 2, 1) - 15
 
-
-	for(var/atom/A in sorted)
-		var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
-		var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
-		if(ismovableatom(A))
-			var/atom/movable/AM = A
-			xo += AM.step_x
-			yo += AM.step_y
-		var/icon/img = getFlatIcon(A)
-		if(img)
+	if(!skip_normal) //these are not clones
+		for(var/atom/A in sorted)
+			var/xo = (A.x - center.x) * world.icon_size + A.pixel_x + xcomp
+			var/yo = (A.y - center.y) * world.icon_size + A.pixel_y + ycomp
+			if(ismovable(A))
+				var/atom/movable/AM = A
+				xo += AM.step_x
+				yo += AM.step_y
+			var/icon/img = getFlatIcon(A)
 			res.Blend(img, blendMode2iconMode(A.blend_mode), xo, yo)
-		CHECK_TICK
+			CHECK_TICK
+	else
+		for(var/X in sorted) //these are clones
+			var/obj/effect/appearance_clone/clone = X
+			var/xo = (clone.x - center.x) * world.icon_size + clone.pixel_x + xcomp
+			var/yo = (clone.y - center.y) * world.icon_size + clone.pixel_y + ycomp
+			xo += clone.step_x
+			yo += clone.step_y
+			var/icon/img = getFlatIcon(clone)
+			if(img)
+				if(clone.turn_angle) //the cheapest (so best, considering cams don't need to be laggier) way of doing this, considering getFlatIcon doesn't give a snot about transforms.'
+					img.Turn(clone.turn_angle)
+				res.Blend(img, blendMode2iconMode(clone.blend_mode), xo, yo)
+			CHECK_TICK
 
 	if(!silent)
 		if(istype(custom_sound))				//This is where the camera actually finishes its exposure.

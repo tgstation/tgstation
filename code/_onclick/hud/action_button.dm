@@ -153,13 +153,12 @@
 	show_state = settings["toggle_show"]
 	update_icon()
 
-/obj/screen/movable/action_button/hide_toggle/update_icon()
-	cut_overlay(list(hide_appearance, show_appearance))
+/obj/screen/movable/action_button/hide_toggle/update_overlays()
+	. = ..()
 	if(hidden)
-		add_overlay(show_appearance)
+		. += show_appearance
 	else
-		add_overlay(hide_appearance)
-
+		. += hide_appearance
 
 /obj/screen/movable/action_button/MouseEntered(location,control,params)
 	if(!QDELETED(src))

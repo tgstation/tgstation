@@ -46,8 +46,8 @@
 
 	zone_select = new /obj/screen/zone_sel()
 	zone_select.icon = ui_style
-	zone_select.update_icon()
 	zone_select.hud = src
+	zone_select.update_icon()
 	static_inventory += zone_select
 
 	using = new /obj/screen/area_creator
@@ -60,7 +60,7 @@
 	for(var/obj/screen/inventory/inv in (static_inventory + toggleable_inventory))
 		if(inv.slot_id)
 			inv.hud = src
-			inv_slots[inv.slot_id] = inv
+			inv_slots[TOBITSHIFT(inv.slot_id) + 1] = inv
 			inv.update_icon()
 
 /datum/hud/dextrous/persistent_inventory_update()

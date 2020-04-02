@@ -137,7 +137,7 @@
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
-GLOBAL_LIST_INIT(skin_tones, list(
+GLOBAL_LIST_INIT(skin_tones, sortList(list(
 	"albino",
 	"caucasian1",
 	"caucasian2",
@@ -150,7 +150,7 @@ GLOBAL_LIST_INIT(skin_tones, list(
 	"indian",
 	"african1",
 	"african2"
-	))
+	)))
 
 GLOBAL_LIST_EMPTY(species_list)
 
@@ -177,14 +177,15 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			return "unknown"
 
-/proc/do_mob(mob/user , mob/target, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
+///Timed action involving two mobs, the user and the target.
+/proc/do_mob(mob/user , mob/target, time = 3 SECONDS, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || !target)
-		return 0
+		return FALSE
 	var/user_loc = user.loc
 
-	var/drifting = 0
+	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
+		drifting = TRUE
 
 	var/target_loc = target.loc
 
@@ -195,26 +196,26 @@ GLOBAL_LIST_EMPTY(species_list)
 
 	var/endtime = world.time+time
 	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
-		if (progress)
+		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 		if(QDELETED(user) || QDELETED(target))
-			. = 0
+			. = FALSE
 			break
 		if(uninterruptible)
 			continue
 
 		if(drifting && !user.inertia_dir)
-			drifting = 0
+			drifting = FALSE
 			user_loc = user.loc
 
 		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
-			. = 0
+			. = FALSE
 			break
-	if (progress)
-		qdel(progbar)
+	if(!QDELETED(progbar))
+		progbar.end_progress()
 
 
 //some additional checks as a callback for for do_afters that want to break on losing health or on the mob taking action
@@ -231,85 +232,101 @@ GLOBAL_LIST_EMPTY(species_list)
 		checked_health["health"] = health
 	return ..()
 
-/proc/do_after(mob/user, var/delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
+///Timed action involving one mob user. Target is optional.
+/proc/do_after(mob/user, var/delay, needhand = TRUE, atom/target = null, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user)
-		return 0
+		return FALSE
 	var/atom/Tloc = null
 	if(target && !isturf(target))
 		Tloc = target.loc
 
+	if(target)
+		LAZYADD(user.do_afters, target)
+		LAZYADD(target.targeted_by, user)
+
 	var/atom/Uloc = user.loc
 
-	var/drifting = 0
+	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
+		drifting = TRUE
 
 	var/holding = user.get_active_held_item()
 
-	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
+	var/holdingnull = TRUE //User's hand started out empty, check for an empty hand
 	if(holding)
-		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
+		holdingnull = FALSE //Users hand started holding something, check to see if it's still holding that
 
 	delay *= user.do_after_coefficent()
 
 	var/datum/progressbar/progbar
-	if (progress)
-		progbar = new(user, delay, target)
+	if(progress)
+		progbar = new(user, delay, target || user)
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag(1)
-		if (progress)
+		if(!QDELETED(progbar))
 			progbar.update(world.time - starttime)
 
 		if(drifting && !user.inertia_dir)
-			drifting = 0
+			drifting = FALSE
 			Uloc = user.loc
 
 		if(QDELETED(user) || user.stat || (!drifting && user.loc != Uloc) || (extra_checks && !extra_checks.Invoke()))
-			. = 0
+			. = FALSE
 			break
 
 		if(isliving(user))
 			var/mob/living/L = user
 			if(L.IsStun() || L.IsParalyzed())
-				. = 0
+				. = FALSE
 				break
 
 		if(!QDELETED(Tloc) && (QDELETED(target) || Tloc != target.loc))
 			if((Uloc != Tloc || Tloc != user) && !drifting)
-				. = 0
+				. = FALSE
 				break
+
+		if(target && !(target in user.do_afters))
+			. = FALSE
+			break
 
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to pull some item/tool out of the construction
 			if(!holdingnull)
 				if(!holding)
-					. = 0
+					. = FALSE
 					break
 			if(user.get_active_held_item() != holding)
-				. = 0
+				. = FALSE
 				break
-	if (progress)
-		qdel(progbar)
+	if(!QDELETED(progbar))
+		progbar.end_progress()
+
+	if(!QDELETED(target))
+		LAZYREMOVE(user.do_afters, target)
+		LAZYREMOVE(target.targeted_by, user)
 
 /mob/proc/do_after_coefficent() // This gets added to the delay on a do_after, default 1
 	. = 1
 	return
 
-/proc/do_after_mob(mob/user, list/targets, time = 30, uninterruptible = 0, progress = 1, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
-	if(!user || !targets)
-		return 0
+///Timed action involving at least one mob user and a list of targets.
+/proc/do_after_mob(mob/user, list/targets, time = 3 SECONDS, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks, required_mobility_flags = MOBILITY_STAND)
+	if(!user)
+		return FALSE
 	if(!islist(targets))
 		targets = list(targets)
+	if(!length(targets))
+		return FALSE
 	var/user_loc = user.loc
 
-	var/drifting = 0
+	var/drifting = FALSE
 	if(!user.Process_Spacemove(0) && user.inertia_dir)
-		drifting = 1
+		drifting = TRUE
 
 	var/list/originalloc = list()
 	for(var/atom/target in targets)
@@ -325,32 +342,32 @@ GLOBAL_LIST_EMPTY(species_list)
 	var/mob/living/L
 	if(isliving(user))
 		L = user
-	. = 1
+	. = TRUE
 	mainloop:
 		while(world.time < endtime)
 			stoplag(1)
-			if(progress)
+			if(!QDELETED(progbar))
 				progbar.update(world.time - starttime)
 			if(QDELETED(user) || !targets)
-				. = 0
+				. = FALSE
 				break
 			if(uninterruptible)
 				continue
 
 			if(drifting && !user.inertia_dir)
-				drifting = 0
+				drifting = FALSE
 				user_loc = user.loc
 
-			if(L && !CHECK_MULTIPLE_BITFIELDS(L.mobility_flags, required_mobility_flags))
-				. = 0
+			if(L && !((L.mobility_flags & required_mobility_flags) == required_mobility_flags))
+				. = FALSE
 				break
 
 			for(var/atom/target in targets)
 				if((!drifting && user_loc != user.loc) || QDELETED(target) || originalloc[target] != target.loc || user.get_active_held_item() != holding || user.incapacitated() || (extra_checks && !extra_checks.Invoke()))
-					. = 0
+					. = FALSE
 					break mainloop
-	if(progbar)
-		qdel(progbar)
+	if(!QDELETED(progbar))
+		progbar.end_progress()
 
 /proc/is_species(A, species_datum)
 	. = FALSE
@@ -412,30 +429,37 @@ GLOBAL_LIST_EMPTY(species_list)
 /proc/deadchat_broadcast(message, source=null, mob/follow_target=null, turf/turf_target=null, speaker_key=null, message_type=DEADCHAT_REGULAR)
 	message = "<span class='deadsay'>[source]<span class='linkify'>[message]</span></span>"
 	for(var/mob/M in GLOB.player_list)
-		var/datum/preferences/prefs
+		var/chat_toggles = TOGGLES_DEFAULT_CHAT
+		var/toggles = TOGGLES_DEFAULT
+		var/list/ignoring
 		if(M.client.prefs)
-			prefs = M.client.prefs
-		else
-			prefs = new
+			var/datum/preferences/prefs = M.client.prefs
+			chat_toggles = prefs.chat_toggles
+			toggles = prefs.toggles
+			ignoring = prefs.ignoring
+
 
 		var/override = FALSE
-		if(M.client.holder && (prefs.chat_toggles & CHAT_DEAD))
+		if(M.client.holder && (chat_toggles & CHAT_DEAD))
 			override = TRUE
-		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE))
+		if(HAS_TRAIT(M, TRAIT_SIXTHSENSE) && message_type == DEADCHAT_REGULAR)
 			override = TRUE
 		if(isnewplayer(M) && !override)
 			continue
 		if(M.stat != DEAD && !override)
 			continue
-		if(speaker_key && speaker_key in prefs.ignoring)
+		if(speaker_key && (speaker_key in ignoring))
 			continue
 
 		switch(message_type)
 			if(DEADCHAT_DEATHRATTLE)
-				if(prefs.toggles & DISABLE_DEATHRATTLE)
+				if(toggles & DISABLE_DEATHRATTLE)
 					continue
 			if(DEADCHAT_ARRIVALRATTLE)
-				if(prefs.toggles & DISABLE_ARRIVALRATTLE)
+				if(toggles & DISABLE_ARRIVALRATTLE)
+					continue
+			if(DEADCHAT_LAWCHANGE)
+				if(!(chat_toggles & CHAT_GHOSTLAWS))
 					continue
 
 		if(isobserver(M))
@@ -490,3 +514,15 @@ GLOBAL_LIST_EMPTY(species_list)
 	REMOVE_TRAIT(L, TRAIT_PASSTABLE, source)
 	if(!HAS_TRAIT(L, TRAIT_PASSTABLE))
 		L.pass_flags &= ~PASSTABLE
+
+/proc/dance_rotate(atom/movable/AM, datum/callback/callperrotate, set_original_dir=FALSE)
+	set waitfor = FALSE
+	var/originaldir = AM.dir
+	for(var/i in list(NORTH,SOUTH,EAST,WEST,EAST,SOUTH,NORTH,SOUTH,EAST,WEST,EAST,SOUTH))
+		if(!AM)
+			return
+		AM.setDir(i)
+		callperrotate?.Invoke()
+		sleep(1)
+	if(set_original_dir)
+		AM.setDir(originaldir)

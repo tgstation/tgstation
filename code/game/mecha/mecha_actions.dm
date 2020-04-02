@@ -6,9 +6,11 @@
 	if(enclosed)
 		internals_action.Grant(user, src)
 	cycle_action.Grant(user, src)
-	lights_action.Grant(user, src)
+	if(haslights)
+		lights_action.Grant(user, src)
 	stats_action.Grant(user, src)
-	strafing_action.Grant(user, src)
+	if(canstrafe)
+		strafing_action.Grant(user, src)
 
 
 /obj/mecha/proc/RemoveActions(mob/living/user, human_occupant = 0)
@@ -16,9 +18,11 @@
 		eject_action.Remove(user)
 	internals_action.Remove(user)
 	cycle_action.Remove(user)
-	lights_action.Remove(user)
+	if(haslights)
+		lights_action.Remove(user)
 	stats_action.Remove(user)
-	strafing_action.Remove(user)
+	if(canstrafe)
+		strafing_action.Remove(user)
 
 
 /datum/action/innate/mecha
@@ -150,19 +154,6 @@
 
 //////////////////////////////////////// Specific Ability Actions  ///////////////////////////////////////////////
 //Need to be granted by the mech type, Not default abilities.
-
-/datum/action/innate/mecha/mech_toggle_thrusters
-	name = "Toggle Thrusters"
-	button_icon_state = "mech_thrusters_off"
-
-/datum/action/innate/mecha/mech_toggle_thrusters/Activate()
-	if(!owner || !chassis || chassis.occupant != owner)
-		return
-	if(chassis.get_charge() > 0)
-		chassis.thrusters_active = !chassis.thrusters_active
-		button_icon_state = "mech_thrusters_[chassis.thrusters_active ? "on" : "off"]"
-		chassis.log_message("Toggled thrusters.", LOG_MECHA)
-		chassis.occupant_message("<font color='[chassis.thrusters_active ?"blue":"red"]'>Thrusters [chassis.thrusters_active ?"en":"dis"]abled.")
 
 /datum/action/innate/mecha/mech_defense_mode
 	name = "Toggle an energy shield that blocks all attacks from the faced direction at a heavy power cost."

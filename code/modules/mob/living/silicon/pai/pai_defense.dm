@@ -24,7 +24,7 @@
 			derpspeech = 1
 			to_chat(src, "<span class='danger'>Warning: Vocabulary databank corrupted.</span>")
 	if(prob(40))
-		mind.language_holder.selected_default_language = pick(mind.language_holder.languages)
+		mind.language_holder.selected_language = get_random_spoken_language()
 
 
 /mob/living/silicon/pai/ex_act(severity, target)
@@ -50,7 +50,7 @@
 			user.do_attack_animation(src)
 			if (user.name == master)
 				visible_message("<span class='notice'>Responding to its master's touch, [src] disengages its holochassis emitter, rapidly losing coherence.</span>")
-				spawn(10)
+				if(do_after(user, 1 SECONDS, TRUE, src))
 					fold_in()
 					if(user.put_in_hands(card))
 						user.visible_message("<span class='notice'>[user] promptly scoops up [user.p_their()] pAI's card.</span>")
@@ -74,7 +74,7 @@
 	return FALSE //No we're not flammable
 
 /mob/living/silicon/pai/proc/take_holo_damage(amount)
-	emitterhealth = CLAMP((emitterhealth - amount), -50, emittermaxhealth)
+	emitterhealth = clamp((emitterhealth - amount), -50, emittermaxhealth)
 	if(emitterhealth < 0)
 		fold_in(force = TRUE)
 	to_chat(src, "<span class='userdanger'>The impact degrades your holochassis!</span>")

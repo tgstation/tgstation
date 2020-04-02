@@ -27,7 +27,6 @@
 	. = ..()
 	if(.)
 		return
-
 	return parent_turret.attack_ai(user)
 
 
@@ -35,7 +34,6 @@
 	. = ..()
 	if(.)
 		return
-
 	return parent_turret.attack_hand(user)
 
 

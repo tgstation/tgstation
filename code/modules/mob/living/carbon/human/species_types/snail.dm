@@ -29,19 +29,19 @@
 
 /datum/species/snail/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	. = ..()
-	var/obj/item/storage/backpack/bag = C.get_item_by_slot(SLOT_BACK)
+	var/obj/item/storage/backpack/bag = C.get_item_by_slot(ITEM_SLOT_BACK)
 	if(!istype(bag, /obj/item/storage/backpack/snail))
 		if(C.dropItemToGround(bag)) //returns TRUE even if its null
-			C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), SLOT_BACK)
+			C.equip_to_slot_or_del(new /obj/item/storage/backpack/snail(C), ITEM_SLOT_BACK)
 	C.AddElement(/datum/element/snailcrawl)
 
 /datum/species/snail/on_species_loss(mob/living/carbon/C)
 	. = ..()
 	C.RemoveElement(/datum/element/snailcrawl)
-	var/obj/item/storage/backpack/bag = C.get_item_by_slot(SLOT_BACK)
+	var/obj/item/storage/backpack/bag = C.get_item_by_slot(ITEM_SLOT_BACK)
 	if(istype(bag, /obj/item/storage/backpack/snail))
 		bag.emptyStorage()
-		C.doUnEquip(bag, TRUE, no_move = TRUE)
+		C.temporarilyRemoveItemFromInventory(bag, TRUE)
 		qdel(bag)
 
 /obj/item/storage/backpack/snail

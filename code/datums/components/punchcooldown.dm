@@ -3,7 +3,7 @@
 	signals = list(COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
 	mobtype = /mob/living/carbon
 	proctype = .proc/reducecooldown
-	valid_slots = list(SLOT_GLOVES)
+	valid_slots = list(ITEM_SLOT_GLOVES)
 	///The warcry this generates
 	var/warcry = "AT"
 

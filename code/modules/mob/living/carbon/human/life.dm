@@ -37,10 +37,7 @@
 		if(stat != DEAD)
 			//heart attack stuff
 			handle_heart()
-
-		if(stat != DEAD)
-			//Stuff jammed in your limbs hurts
-			handle_embedded_objects()
+			handle_liver()
 
 		dna.species.spec_life(src) // for mutantraces
 
@@ -104,8 +101,29 @@
 			var/obj/item/organ/lungs/lun = L
 			lun.check_breath(breath,src)
 
+/// Environment handlers for species
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
+	// If we are in a cryo bed do not process life functions
+	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		return
+
 	dna.species.handle_environment(environment, src)
+	dna.species.handle_environment_pressure(environment, src)
+	dna.species.handle_body_temperature(src)
+
+/**
+ * get_body_temperature Returns the body temperature with any modifications applied
+ *
+ * This applies the result from proc/get_body_temp_normal_change() against the bodytemp_normal
+ * for the species and returns the result
+ *
+ * arguments:
+ * * apply_change (optional) Default True This applies the changes to body temperature normal
+ */
+/mob/living/carbon/human/get_body_temp_normal(apply_change=TRUE)
+	if(!apply_change)
+		return dna.species.bodytemp_normal
+	return dna.species.bodytemp_normal + get_body_temp_normal_change()
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()
@@ -173,10 +191,11 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_heat_protection(temperature) //Temperature is the temperature you're being exposed to.
+/mob/living/carbon/human/get_heat_protection(temperature)
 	var/thermal_protection_flags = get_heat_protection_flags(temperature)
+	var/thermal_protection = heat_protection
 
-	var/thermal_protection = 0
+	// Apply clothing items protection
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -201,8 +220,7 @@
 		if(thermal_protection_flags & HAND_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
-
-	return min(1,thermal_protection)
+	return min(1, thermal_protection)
 
 //See proc/get_heat_protection_flags(temperature) for the description of this proc.
 /mob/living/carbon/human/proc/get_cold_protection_flags(temperature)
@@ -230,11 +248,15 @@
 
 	return thermal_protection_flags
 
-/mob/living/carbon/human/proc/get_cold_protection(temperature)
-	temperature = max(temperature, 2.7) //There is an occasional bug where the temperature is miscalculated in ares with a small amount of gas on them, so this is necessary to ensure that that bug does not affect this calculation. Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
+/mob/living/carbon/human/get_cold_protection(temperature)
+	// There is an occasional bug where the temperature is miscalculated in areas with small amounts of gas.
+	// This is necessary to ensure that does not affect this calculation.
+	// Space's temperature is 2.7K and most suits that are intended to protect against any cold, protect down to 2.0K.
+	temperature = max(temperature, 2.7)
 	var/thermal_protection_flags = get_cold_protection_flags(temperature)
+	var/thermal_protection = cold_protection
 
-	var/thermal_protection = 0
+	// Apply clothing items protection
 	if(thermal_protection_flags)
 		if(thermal_protection_flags & HEAD)
 			thermal_protection += THERMAL_PROTECTION_HEAD
@@ -259,7 +281,7 @@
 		if(thermal_protection_flags & HAND_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
-	return min(1,thermal_protection)
+	return min(1, thermal_protection)
 
 /mob/living/carbon/human/handle_random_events()
 	//Puke if toxloss is too high
@@ -272,35 +294,17 @@
 
 
 /mob/living/carbon/human/has_smoke_protection()
-	if(wear_mask)
+	if(isclothing(wear_mask))
 		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(glasses)
+	if(isclothing(glasses))
 		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
-	if(head && istype(head, /obj/item/clothing))
+	if(isclothing(head))
 		var/obj/item/clothing/CH = head
 		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	return ..()
-
-
-/mob/living/carbon/human/proc/handle_embedded_objects()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
-		for(var/obj/item/I in BP.embedded_objects)
-			if(prob(I.embedding.embedded_pain_chance))
-				BP.receive_damage(I.w_class*I.embedding.embedded_pain_multiplier)
-				to_chat(src, "<span class='userdanger'>[I] embedded in your [BP.name] hurts!</span>")
-
-			if(prob(I.embedding.embedded_fall_chance))
-				BP.receive_damage(I.w_class*I.embedding.embedded_fall_pain_multiplier)
-				BP.embedded_objects -= I
-				I.forceMove(drop_location())
-				visible_message("<span class='danger'>[I] falls out of [name]'s [BP.name]!</span>","<span class='userdanger'>[I] falls out of your [BP.name]!</span>")
-				if(!has_embedded_objects())
-					clear_alert("embeddedobject")
-					SEND_SIGNAL(src, COMSIG_CLEAR_MOOD_EVENT, "embedded")
 
 /mob/living/carbon/human/proc/handle_heart()
 	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)

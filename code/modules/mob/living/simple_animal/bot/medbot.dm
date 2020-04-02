@@ -26,22 +26,35 @@
 	window_name = "Automatic Medical Unit v1.1"
 	data_hud_type = DATA_HUD_MEDICAL_ADVANCED
 	path_image_color = "#DDDDFF"
+/// drop determining variable
 	var/healthanalyzer = /obj/item/healthanalyzer
+/// drop determining variable
 	var/firstaid = /obj/item/storage/firstaid
-	var/skin = null //based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
-	var/mob/living/carbon/patient = null
-	var/mob/living/carbon/oldpatient = null
-	var/oldloc = null
+///based off medkit_X skins in aibots.dmi for your selection; X goes here IE medskin_tox means skin var should be "tox"
+	var/skin
+	var/mob/living/carbon/patient
+	var/mob/living/carbon/oldpatient
+	var/oldloc
 	var/last_found = 0
-	var/last_newpatient_speak = 0 //Don't spam the "HEY I'M COMING" messages
-	var/heal_amount = 2.5 //How much healing do we do at a time?
-	var/heal_threshold = 10 //Start healing when they have this much damage in a category
-	var/declare_crit = 1 //If active, the bot will transmit a critical patient alert to MedHUD users.
-	var/declare_cooldown = 0 //Prevents spam of critical patient alerts.
-	var/stationary_mode = 0 //If enabled, the Medibot will not move automatically.
-	//Setting which reagents to use to treat what by default. By id.
-	var/shut_up = 0 //self explanatory :)
+/// Don't spam the "HEY I'M COMING" messages
+	var/last_newpatient_speak = 0
+/// How much healing do we do at a time?
+	var/heal_amount = 2.5
+/// Start healing when they have this much damage in a category
+	var/heal_threshold = 10
+/// If active, the bot will transmit a critical patient alert to MedHUD users.
+	var/declare_crit = TRUE
+/// Prevents spam of critical patient alerts.
+	var/declare_cooldown = FALSE
+/// If enabled, the Medibot will not move automatically.
+	var/stationary_mode = FALSE
+
+/// silences the medbot if TRUE
+	var/shut_up = FALSE
+/// techweb linked to the medbot
 	var/datum/techweb/linked_techweb
+///Is the medbot currently tending wounds
+	var/tending = FALSE
 
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -240,7 +253,7 @@
 		patient = scan(/mob/living/carbon/human, oldpatient, scan_range)
 		oldpatient = patient
 
-	if(patient && (get_dist(src,patient) <= 1)) //Patient is next to us, begin treatment!
+	if(patient && (get_dist(src,patient) <= 1) && !tending) //Patient is next to us, begin treatment!
 		if(mode != BOT_HEALING)
 			mode = BOT_HEALING
 			update_icon()
@@ -329,7 +342,7 @@
 		return TRUE
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
-	if(iscarbon(A))
+	if(iscarbon(A) && !tending)
 		var/mob/living/carbon/C = A
 		patient = C
 		mode = BOT_HEALING
@@ -341,7 +354,7 @@
 
 /mob/living/simple_animal/bot/medbot/examinate(atom/A as mob|obj|turf in view())
 	..()
-	if(!is_blind(src))
+	if(!is_blind())
 		chemscan(src, A)
 
 /mob/living/simple_animal/bot/medbot/proc/medicate_patient(mob/living/carbon/C)
@@ -362,9 +375,9 @@
 		soft_reset()
 		return
 
-	var/tending = TRUE
+	tending = TRUE
 	while(tending)
-		var/treatment_method = null
+		var/treatment_method
 
 		if(C.getBruteLoss() >= heal_threshold)
 			treatment_method = BRUTE
@@ -413,10 +426,10 @@
 			else
 				tending = FALSE
 
+			update_icon()
 			if(!tending)
 				visible_message("[src] places its tools back into itself.")
-			update_icon()
-			soft_reset()
+				soft_reset()
 		else
 			tending = FALSE
 

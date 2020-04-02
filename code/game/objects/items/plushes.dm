@@ -22,6 +22,7 @@
 	var/heartbroken = FALSE
 	var/vowbroken = FALSE
 	var/young = FALSE
+///Prevents players from cutting stuffing out of a plushie if true
 	var/divine = FALSE
 	var/mood_message
 	var/list/love_message
@@ -216,6 +217,7 @@
 	else if(Kisser.partner == src && !plush_child)	//the one advancing does not take ownership of the child and we have a one child policy in the toyshop
 		user.visible_message("<span class='notice'>[user] is going to break [Kisser] and [src] by bashing them like that.</span>",
 									"<span class='notice'>[Kisser] passionately embraces [src] in your hands. Look away you perv!</span>")
+		user.client.give_award(/datum/award/achievement/misc/rule8, user)
 		if(plop(Kisser))
 			user.visible_message("<span class='notice'>Something drops at the feet of [user].</span>",
 							"<span class='notice'>The miracle of oh god did that just come out of [src]?!</span>")
@@ -542,3 +544,146 @@
 	attack_verb = list("stung")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+
+/obj/item/toy/plush/goatplushie
+	name = "strange goat plushie"
+	icon_state = "goat"
+	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
+
+/obj/item/toy/plush/goatplushie/angry
+	var/mob/living/carbon/target
+	throwforce = 6
+	var/cooldown = 0
+	var/cooldown_modifier = 20
+
+/obj/item/toy/plush/goatplushie/angry/Initialize()
+	. = ..()
+	START_PROCESSING(SSprocessing, src)
+
+/obj/item/toy/plush/goatplushie/angry/process()
+	if (prob(25) && !target)
+		var/list/targets_to_pick_from = list()
+		for(var/mob/living/carbon/C in view(7, src))
+			if(considered_alive(C.mind) && !faction_check(list("goat"), C.faction, FALSE))
+				targets_to_pick_from += C
+		if (!targets_to_pick_from.len)
+			return
+		target = pick(targets_to_pick_from)
+		visible_message("<span class='notice'>[src] stares at [target].</span>")
+	if (world.time > cooldown && target)
+		ram()
+
+/obj/item/toy/plush/goatplushie/angry/proc/ram()
+	if(prob(90) && isturf(loc) && considered_alive(target.mind) && !faction_check(list("goat"), target.faction, FALSE))
+		throw_at(target, 10, 10)
+		visible_message("<span class='danger'>[src] rams [target]!</span>")
+		cooldown = world.time + cooldown_modifier
+	target = null
+	visible_message("<span class='notice'>[src] looks disinterested.</span>")
+
+/obj/item/toy/plush/goatplushie/angry/Destroy()
+	STOP_PROCESSING(SSprocessing, src)
+	return ..()
+
+/obj/item/toy/plush/goatplushie
+	squeak_override = list('sound/items/goatsound.ogg'=1)
+
+/obj/item/toy/plush/goatplushie/angry/realgoat
+	name = "goat plushie"
+	icon_state = "realgoat"
+
+/obj/item/toy/plush/realgoat
+	name = "goat plushie"
+	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same... or at least it would if it wasn't a normal plushie."
+	icon_state = "realgoat"
+	squeak_override = list('sound/items/goatsound.ogg'=1)
+
+/obj/item/toy/plush/goatplushie/angry/kinggoat
+	name = "King Goat Plushie"
+	desc = "A plushie depicting the king of all goats."
+	icon_state = "kinggoat"
+	throwforce = 25
+	force = 25
+	attack_verb = list("chomped")
+	gender = MALE
+
+/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat
+	name = "Ascended King Goat Plushie"
+	desc = "A plushie depicting the god of all goats."
+	icon_state = "ascendedkinggoat"
+	throwforce = 30
+	force = 30
+	divine = TRUE
+
+/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat/attackby(obj/item/I,mob/living/user,params)
+	if(I.get_sharpness())
+		user.visible_message("<span class='notice'>[user] attempts to destroy [src]!</span>", "<span class='suicide'>[I] bounces off [src]'s back before breaking into millions of pieces... [src] glares at [user]!</span>") // You fucked up now son
+		I.play_tool_sound(src)
+		qdel(I)
+		user.gib()
+
+/obj/item/toy/plush/goatplushie/angry/kinggoat/attackby(obj/item/I,mob/living/user,params)
+	if(I.get_sharpness())
+		user.visible_message("<span class='notice'>[user] rips [src] to shreds!</span>", "<span class='notice'>[src]'s death has attracted the attention of the king goat plushie guards!</span>")
+		I.play_tool_sound(src)
+		qdel(src)
+		var/turf/location = get_turf(user)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
+		new/obj/item/toy/plush/goatplushie/angry/guardgoat(location)
+	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/cabbage))
+		user.visible_message("<span class='notice'>[user] watches as [src] takes a bite out of the cabbage!</span>", "<span class='notice'>[src]'s fur starts glowing. It seems they have ascended!</span>")
+		playsound(src, 'sound/items/eatfood.ogg', 50, 1)
+		qdel(I)
+		qdel(src)
+		var/turf/location = get_turf(user)
+		new/obj/item/toy/plush/goatplushie/angry/kinggoat/ascendedkinggoat(location)
+
+
+/obj/item/toy/plush/goatplushie/angry/guardgoat
+	name = "guard goat plushie"
+	desc = "A plushie depicting one of the King Goat's guards, tasked to protect the king at all costs."
+	icon_state = "guardgoat"
+	throwforce = 10
+
+/obj/item/toy/plush/goatplushie/angry/guardgoat/masterguardgoat
+	name = "royal guard goat plushie"
+	desc = "A plushie depicting one of the royal King Goat's guards, tasked to protecting the king at all costs and training new goat guards."
+	icon_state = "royalguardgoat"
+	throwforce = 15
+
+/obj/item/toy/plush/moth
+	name = "moth plushie"
+	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
+	icon_state = "moffplush"
+	item_state = "moffplush"
+	attack_verb = list("fluttered", "flapped")
+	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
+///Used to track how many people killed themselves with item/toy/plush/moth
+	var/suicide_count = 0
+
+/obj/item/toy/plush/moth/suicide_act(mob/living/user)
+	user.visible_message("<span class='suicide'>[user] stares deeply into the eyes of [src] and it begins consuming [user.p_them()]!  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	suicide_count++
+	if(suicide_count < 3)
+		desc = "A plushie depicting an unsettling mothperson. After killing [suicide_count] [suicide_count == 1 ? "person" : "people"] it's not looking so huggable now..."
+	else
+		desc = "A plushie depicting a creepy mothperson. It's killed [suicide_count] people! I don't think I want to hug it any more!"
+		divine = TRUE
+		resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
+	playsound(src, 'sound/hallucinations/wail.ogg', 50, TRUE, -1)
+	var/list/available_spots = get_adjacent_open_turfs(loc)
+	if(available_spots.len) //If the user is in a confined space the plushie will drop normally as the user dies, but in the open the plush is placed one tile away from the user to prevent squeak spam
+		var/turf/open/random_open_spot = pick(available_spots)
+		forceMove(random_open_spot)
+	user.dust(just_ash = FALSE, drop_items = TRUE)
+	return MANUAL_SUICIDE

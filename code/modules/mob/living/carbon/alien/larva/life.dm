@@ -20,12 +20,12 @@
 			return
 		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || health <= crit_threshold)
 			if(stat == CONSCIOUS)
-				stat = UNCONSCIOUS
+				set_stat(UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_BLIND)
 				update_mobility()
 		else
 			if(stat == UNCONSCIOUS)
-				stat = CONSCIOUS
+				set_stat(CONSCIOUS)
 				cure_blind(UNCONSCIOUS_BLIND)
 				set_resting(FALSE)
 	update_damage_hud()

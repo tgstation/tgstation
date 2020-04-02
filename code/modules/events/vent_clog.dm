@@ -15,7 +15,7 @@
 	var/reagentsAmount = 100
 	var/list/saferChems = list(/datum/reagent/water,/datum/reagent/carbon,/datum/reagent/consumable/flour,/datum/reagent/space_cleaner,/datum/reagent/consumable/nutriment,/datum/reagent/consumable/condensedcapsaicin,/datum/reagent/drug/mushroomhallucinogen,/datum/reagent/lube,/datum/reagent/glitter/pink,/datum/reagent/cryptobiolin,
 						 /datum/reagent/toxin/plantbgone,/datum/reagent/blood,/datum/reagent/medicine/C2/multiver,/datum/reagent/drug/space_drugs,/datum/reagent/medicine/morphine,/datum/reagent/water/holywater,/datum/reagent/consumable/ethanol,/datum/reagent/consumable/hot_coco,/datum/reagent/toxin/acid,/datum/reagent/toxin/mindbreaker,/datum/reagent/toxin/rotatium,/datum/reagent/bluespace,
-						 /datum/reagent/pax,/datum/reagent/consumable/laughter,/datum/reagent/concentrated_barbers_aid,/datum/reagent/colorful_reagent,/datum/reagent/peaceborg/confuse,/datum/reagent/peaceborg/tire,/datum/reagent/consumable/sodiumchloride,/datum/reagent/consumable/ethanol/beer,/datum/reagent/hair_dye,/datum/reagent/consumable/sugar,/datum/reagent/glitter/white,/datum/reagent/growthserum)
+						 /datum/reagent/pax,/datum/reagent/consumable/laughter,/datum/reagent/concentrated_barbers_aid,/datum/reagent/baldium,/datum/reagent/colorful_reagent,/datum/reagent/peaceborg/confuse,/datum/reagent/peaceborg/tire,/datum/reagent/consumable/sodiumchloride,/datum/reagent/consumable/ethanol/beer,/datum/reagent/hair_dye,/datum/reagent/consumable/sugar,/datum/reagent/glitter/white,/datum/reagent/growthserum)
 	//needs to be chemid unit checked at some point
 
 /datum/round_event/vent_clog/announce()
@@ -44,7 +44,7 @@
 
 			var/cockroaches = prob(33) ? 3 : 0
 			while(cockroaches)
-				new /mob/living/simple_animal/cockroach(get_turf(vent))
+				new /mob/living/simple_animal/hostile/cockroach(get_turf(vent))
 				cockroaches--
 		CHECK_TICK
 
@@ -95,7 +95,7 @@
 			R.my_atom = vent
 			R.add_reagent(/datum/reagent/consumable/ethanol/beer, reagentsAmount)
 
-			R.create_foam(200)
+			R.create_foam(/datum/effect_system/foam_spread,200)
 		CHECK_TICK
 
 /datum/round_event/vent_clog/plasma_decon/announce()

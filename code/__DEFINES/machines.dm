@@ -12,6 +12,9 @@
 #define IDLE_POWER_USE 1
 #define ACTIVE_POWER_USE 2
 
+/// Bitflags for a machine's preferences on when it should start processing. For use with machinery's `processing_flags` var.
+#define START_PROCESSING_ON_INIT	(1<<0) /// Indicates the machine will automatically start processing right after it's `Initialize()` is ran.
+#define START_PROCESSING_MANUALLY	(1<<1) /// Machines with this flag will not start processing when it's spawned. Use this if you want to manually control when a machine starts processing.
 
 //bitflags for door switches.
 #define OPEN	(1<<0)
@@ -94,6 +97,13 @@
 #define NUKESTATE_CORE_EXPOSED	1
 #define NUKESTATE_CORE_REMOVED	0
 
+#define NUKEUI_AWAIT_DISK 0
+#define NUKEUI_AWAIT_CODE 1
+#define NUKEUI_AWAIT_TIMER 2
+#define NUKEUI_AWAIT_ARM 3
+#define NUKEUI_TIMING 4
+#define NUKEUI_EXPLODED 5
+
 #define NUKE_OFF_LOCKED		0
 #define NUKE_OFF_UNLOCKED	1
 #define NUKE_ON_TIMING		2
@@ -102,10 +112,6 @@
 #define MACHINE_NOT_ELECTRIFIED 0
 #define MACHINE_ELECTRIFIED_PERMANENT -1
 #define MACHINE_DEFAULT_ELECTRIFY_TIME 30
-
-//cloning defines. These are flags.
-#define CLONING_SUCCESS (1<<0)
-#define CLONING_DELETE_RECORD (1<<1)
 
 //these flags are used to tell the DNA modifier if a plant gene cannot be extracted or modified.
 #define PLANT_GENE_REMOVABLE	(1<<0)

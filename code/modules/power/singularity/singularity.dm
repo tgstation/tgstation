@@ -27,6 +27,7 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 	var/consumedSupermatter = 0 //If the singularity has eaten a supermatter shard and can go to stage six
+	var/drifting_dir = 0 // Chosen direction to drift in
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	obj_flags = CAN_BE_HIT | DANGEROUS_POSSESSION
 
@@ -43,7 +44,8 @@
 		if(singubeacon.active)
 			target = singubeacon
 			break
-	return
+	AddElement(/datum/element/bsa_blocker)
+	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/bluespace_reaction)
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -52,6 +54,17 @@
 	return ..()
 
 /obj/singularity/Move(atom/newloc, direct)
+	var/turf/T = get_turf(src)
+	for(var/dir in GLOB.cardinals)
+		if(direct & dir)
+			T = get_step(T, dir)
+			if(!T)
+				break
+			// eat the stuff if we're going to move into it so it doesn't mess up our movement
+			for(var/atom/A in T.contents)
+				consume(A)
+			consume(T)
+
 	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
 		last_failed_movement = 0//Reset this because we moved
 		return ..()
@@ -119,8 +132,13 @@
 
 /obj/singularity/Bump(atom/A)
 	consume(A)
+	if(QDELETED(A)) // don't keep moving into objects that weren't destroyed infinitely
+		step(src, drifting_dir)
 	return
 
+/obj/singularity/Crossed(atom/A)
+	..()
+	consume(A)
 
 /obj/singularity/Bumped(atom/movable/AM)
 	consume(AM)
@@ -301,15 +319,15 @@
 	if(!move_self)
 		return 0
 
-	var/movement_dir = pick(GLOB.alldirs - last_failed_movement)
+	var/drifting_dir = pick(GLOB.alldirs - last_failed_movement)
 
 	if(force_move)
-		movement_dir = force_move
+		drifting_dir = force_move
 
 	if(target && prob(60))
-		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
+		drifting_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
 
-	step(src, movement_dir)
+	step(src, drifting_dir)
 
 /obj/singularity/proc/check_cardinals_range(steps, retry_with_move = FALSE)
 	. = length(GLOB.cardinals)			//Should be 4.
@@ -446,3 +464,18 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/singularity/proc/bluespace_reaction()
+	investigate_log("has been shot by bluespace artillery and destroyed.", INVESTIGATE_SINGULO)
+	qdel(src)
+
+/obj/singularity/deadchat_controlled
+	move_self = FALSE
+
+/obj/singularity/deadchat_controlled/Initialize(mapload, starting_energy)
+	. = ..()
+	AddComponent(/datum/component/deadchat_control, DEMOCRACY_MODE, list(
+	 "up" = CALLBACK(GLOBAL_PROC, .proc/_step, src, NORTH),
+	 "down" = CALLBACK(GLOBAL_PROC, .proc/_step, src, SOUTH),
+	 "left" = CALLBACK(GLOBAL_PROC, .proc/_step, src, WEST),
+	 "right" = CALLBACK(GLOBAL_PROC, .proc/_step, src, EAST)))

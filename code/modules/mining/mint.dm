@@ -9,6 +9,7 @@
 	input_dir = EAST
 	ui_x = 300
 	ui_y = 250
+	needs_item_input = TRUE
 
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
 	var/processing = FALSE
@@ -31,19 +32,22 @@
 		/datum/material/plastic,
 		/datum/material/runite
 	), MINERAL_MATERIAL_AMOUNT * 75, FALSE, /obj/item/stack)
-	chosen = getmaterialref(chosen)
+	chosen = SSmaterials.GetMaterialRef(chosen)
 
+
+/obj/machinery/mineral/mint/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	if(!istype(target, /obj/item/stack))
+		return
+
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/obj/item/stack/S = target
+
+	if(materials.insert_item(S))
+		qdel(S)
 
 /obj/machinery/mineral/mint/process()
-	var/turf/T = get_step(src, input_dir)
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-	
-	for(var/obj/item/stack/O in T)
-		var/inserted = materials.insert_item(O)
-		if(inserted)
-			qdel(O)
-
 	if(processing)
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/datum/material/M = chosen
 
 		if(!M)
@@ -59,7 +63,7 @@
 				for(var/coin_to_make in 1 to 5)
 					create_coins()
 					produced_coins++
-			else 
+			else
 				var/found_new = FALSE
 				for(var/datum/material/inserted_material in materials.materials)
 					var/amount = materials.get_material_amount(inserted_material)
@@ -67,10 +71,11 @@
 					if(amount)
 						chosen = inserted_material
 						found_new = TRUE
-				
+
 				if(!found_new)
 					processing = FALSE
 	else
+		end_processing()
 		icon_state = "coinpress0"
 
 /obj/machinery/mineral/mint/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
@@ -86,7 +91,7 @@
 
 	for(var/datum/material/inserted_material in materials.materials)
 		var/amount = materials.get_material_amount(inserted_material)
-		
+
 		if(!amount)
 			continue
 
@@ -104,13 +109,20 @@
 	return data;
 
 /obj/machinery/mineral/mint/ui_act(action, params, datum/tgui/ui)
+
+	. = ..()
+	if(.)
+		return
+
 	switch(action)
 		if ("startpress")
 			if (!processing)
 				produced_coins = 0
 			processing = TRUE
+			begin_processing()
 		if ("stoppress")
 			processing = FALSE
+			end_processing()
 		if ("changematerial")
 			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 			for(var/datum/material/mat in materials.materials)

@@ -47,7 +47,7 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/flasher/update_icon()
+/obj/machinery/flasher/update_icon_state()
 	if (powered())
 		if(bulb.burnt_out)
 			icon_state = "[base_state]1-p"
@@ -63,7 +63,7 @@
 		if (bulb)
 			user.visible_message("<span class='notice'>[user] begins to disconnect [src]'s flashbulb.</span>", "<span class='notice'>You begin to disconnect [src]'s flashbulb...</span>")
 			if(W.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message("<span class='notice'>[user] has disconnected [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
+				user.visible_message("<span class='notice'>[user] disconnects [src]'s flashbulb!</span>", "<span class='notice'>You disconnect [src]'s flashbulb.</span>")
 				bulb.forceMove(loc)
 				bulb = null
 				power_change()
@@ -128,7 +128,7 @@
 
 /obj/machinery/flasher/emp_act(severity)
 	. = ..()
-	if(!(stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
+	if(!(machine_stat & (BROKEN|NOPOWER)) && !(. & EMP_PROTECT_SELF))
 		if(bulb && prob(75/severity))
 			flash()
 			bulb.burn_out()

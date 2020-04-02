@@ -14,12 +14,17 @@
 	var/proj_piercing = 0 //does it pierce through thick clothes when shot with syringe gun
 	custom_materials = list(/datum/material/iron=10, /datum/material/glass=20)
 	reagent_flags = TRANSPARENT
+	custom_price = 150
 
 /obj/item/reagent_containers/syringe/Initialize()
 	. = ..()
 	if(list_reagents) //syringe starts in inject mode if its already got something inside
 		mode = SYRINGE_INJECT
 		update_icon()
+
+/obj/item/reagent_containers/syringe/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/reagent_containers/syringe/on_reagent_change(changetype)
 	update_icon()
@@ -150,29 +155,33 @@
 				mode = SYRINGE_DRAW
 				update_icon()
 
-
-/obj/item/reagent_containers/syringe/update_icon()
-	cut_overlays()
-	var/rounded_vol
-	if(reagents && reagents.total_volume)
-		rounded_vol = CLAMP(round((reagents.total_volume / volume * 15),5), 1, 15)
-		var/image/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
-		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
-		add_overlay(filling_overlay)
-	else
-		rounded_vol = 0
+/obj/item/reagent_containers/syringe/update_icon_state()
+	var/rounded_vol = get_rounded_vol()
 	icon_state = "[rounded_vol]"
 	item_state = "syringe_[rounded_vol]"
+
+/obj/item/reagent_containers/syringe/update_overlays()
+	. = ..()
+	var/rounded_vol = get_rounded_vol()
+	if(reagents && reagents.total_volume)
+		var/mutable_appearance/filling_overlay = mutable_appearance('icons/obj/reagentfillings.dmi', "syringe[rounded_vol]")
+		filling_overlay.color = mix_color_from_reagents(reagents.reagent_list)
+		. += filling_overlay
 	if(ismob(loc))
-		var/mob/M = loc
 		var/injoverlay
 		switch(mode)
 			if (SYRINGE_DRAW)
 				injoverlay = "draw"
 			if (SYRINGE_INJECT)
 				injoverlay = "inject"
-		add_overlay(injoverlay)
-		M.update_inv_hands()
+		. += injoverlay
+
+///Used by update_icon() and update_overlays()
+/obj/item/reagent_containers/syringe/proc/get_rounded_vol()
+	if(reagents && reagents.total_volume)
+		return clamp(round((reagents.total_volume / volume * 15),5), 1, 15)
+	else
+		return 0
 
 /obj/item/reagent_containers/syringe/epinephrine
 	name = "syringe (epinephrine)"
@@ -264,8 +273,8 @@
 	list_reagents = list(/datum/reagent/medicine/oxandrolone = 15)
 
 /obj/item/reagent_containers/syringe/salacid
-	name = "syringe (salicyclic acid)"
-	desc = "Contains salicyclic acid, used to treat severe brute damage."
+	name = "syringe (salicylic acid)"
+	desc = "Contains salicylic acid, used to treat severe brute damage."
 	list_reagents = list(/datum/reagent/medicine/sal_acid = 15)
 
 /obj/item/reagent_containers/syringe/penacid
@@ -277,3 +286,28 @@
 	name = "syringe (syriniver)"
 	desc = "Contains syriniver, used to treat toxins and purge chemicals.The tag on the syringe states 'Inject one time per minute'"
 	list_reagents = list(/datum/reagent/medicine/C2/syriniver = 15)
+
+/obj/item/reagent_containers/syringe/contraband
+	name = "unlabeled syringe"
+	desc = "A syringe containing some sort of unknown chemical cocktail."
+
+/obj/item/reagent_containers/syringe/contraband/space_drugs
+	list_reagents = list(/datum/reagent/drug/space_drugs = 15)
+
+/obj/item/reagent_containers/syringe/contraband/krokodil
+	list_reagents = list(/datum/reagent/drug/krokodil = 15)
+
+/obj/item/reagent_containers/syringe/contraband/crank
+	list_reagents = list(/datum/reagent/drug/crank = 15)
+
+/obj/item/reagent_containers/syringe/contraband/methamphetamine
+	list_reagents = list(/datum/reagent/drug/methamphetamine = 15)
+
+/obj/item/reagent_containers/syringe/contraband/bath_salts
+	list_reagents = list(/datum/reagent/drug/bath_salts = 15)
+
+/obj/item/reagent_containers/syringe/contraband/fentanyl
+	list_reagents = list(/datum/reagent/toxin/fentanyl = 15)
+
+/obj/item/reagent_containers/syringe/contraband/morphine
+	list_reagents = list(/datum/reagent/medicine/morphine = 15)

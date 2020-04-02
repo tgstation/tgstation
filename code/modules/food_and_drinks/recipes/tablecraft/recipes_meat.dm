@@ -1,4 +1,4 @@
-
+// see code/module/crafting/table.dm
 
 ////////////////////////////////////////////////KEBABS////////////////////////////////////////////////
 
@@ -38,7 +38,17 @@
 	result = /obj/item/reagent_containers/food/snacks/kebab/tail
 	subcategory = CAT_MEAT
 
-// see code/module/crafting/table.dm
+/datum/crafting_recipe/food/fiestaskewer
+	name = "Fiesta Skewer"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/reagent_containers/food/snacks/grown/chili = 1,
+		/obj/item/reagent_containers/food/snacks/meat/cutlet = 1,
+		/obj/item/reagent_containers/food/snacks/grown/corn = 1,
+		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/kebab/fiesta
+	subcategory = CAT_MEAT
 
 ////////////////////////////////////////////////FISH////////////////////////////////////////////////
 

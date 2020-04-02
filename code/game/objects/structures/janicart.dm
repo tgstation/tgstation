@@ -7,10 +7,11 @@
 	density = TRUE
 	//copypaste sorry
 	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
-	var/obj/item/storage/bag/trash/mybag	= null
-	var/obj/item/mop/mymop = null
-	var/obj/item/reagent_containers/spray/cleaner/myspray = null
-	var/obj/item/lightreplacer/myreplacer = null
+	var/obj/item/storage/bag/trash/mybag
+	var/obj/item/mop/mymop
+	var/obj/item/pushbroom/mybroom
+	var/obj/item/reagent_containers/spray/cleaner/myspray
+	var/obj/item/lightreplacer/myreplacer
 	var/signs = 0
 	var/const/max_signs = 4
 
@@ -50,7 +51,12 @@
 			m.janicart_insert(user, src)
 		else
 			to_chat(user, fail_msg)
-
+	else if(istype(I, /obj/item/pushbroom))
+		if(!mybroom)
+			var/obj/item/pushbroom/b=I
+			b.janicart_insert(user,src)
+		else
+			to_chat(user, fail_msg)
 	else if(istype(I, /obj/item/storage/bag/trash))
 		if(!mybag)
 			var/obj/item/storage/bag/trash/t=I
@@ -98,6 +104,8 @@
 		dat += "<a href='?src=[REF(src)];garbage=1'>[mybag.name]</a><br>"
 	if(mymop)
 		dat += "<a href='?src=[REF(src)];mop=1'>[mymop.name]</a><br>"
+	if(mybroom)
+		dat += "<a href='?src=[REF(src)];broom=1'>[mybroom.name]</a><br>"
 	if(myspray)
 		dat += "<a href='?src=[REF(src)];spray=1'>[myspray.name]</a><br>"
 	if(myreplacer)
@@ -125,6 +133,11 @@
 			user.put_in_hands(mymop)
 			to_chat(user, "<span class='notice'>You take [mymop] from [src].</span>")
 			mymop = null
+	if(href_list["broom"])
+		if(mybroom)
+			user.put_in_hands(mybroom)
+			to_chat(user, "<span class='notice'>You take [mybroom] from [src].</span>")
+			mybroom = null
 	if(href_list["spray"])
 		if(myspray)
 			user.put_in_hands(myspray)
@@ -150,17 +163,19 @@
 	updateUsrDialog()
 
 
-/obj/structure/janitorialcart/update_icon()
-	cut_overlays()
+/obj/structure/janitorialcart/update_overlays()
+	. = ..()
 	if(mybag)
-		add_overlay("cart_garbage")
+		. += "cart_garbage"
 	if(mymop)
-		add_overlay("cart_mop")
+		. += "cart_mop"
+	if(mybroom)
+		. += "cart_broom"
 	if(myspray)
-		add_overlay("cart_spray")
+		. += "cart_spray"
 	if(myreplacer)
-		add_overlay("cart_replacer")
+		. += "cart_replacer"
 	if(signs)
-		add_overlay("cart_sign[signs]")
+		. += "cart_sign[signs]"
 	if(reagents.total_volume > 0)
-		add_overlay("cart_water")
+		. += "cart_water"

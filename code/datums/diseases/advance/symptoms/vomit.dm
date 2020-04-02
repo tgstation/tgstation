@@ -34,9 +34,11 @@ Bonus
 	symptom_delay_max = 80
 	var/vomit_blood = FALSE
 	var/proj_vomit = 0
-	threshold_desc = "<b>Resistance 7:</b> Host will vomit blood, causing internal damage.<br>\
-					  <b>Transmission 7:</b> Host will projectile vomit, increasing vomiting range.<br>\
-					  <b>Stealth 4:</b> The symptom remains hidden until active."
+	threshold_descs = list(
+		"Resistance 7" =  "Host will vomit blood, causing internal damage.",
+		"Transmission 7" =  "Host will projectile vomit, increasing vomiting range.",
+		"Stealth 4" =  "The symptom remains hidden until active."
+	)
 
 /datum/symptom/vomit/Start(datum/disease/advance/A)
 	if(!..())

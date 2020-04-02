@@ -21,6 +21,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/prize/odysseus = 1,
 		/obj/item/toy/prize/phazon = 1,
 		/obj/item/toy/prize/reticence = 1,
+		/obj/item/toy/prize/clarke = 1,
 		/obj/item/toy/cards/deck = 2,
 		/obj/item/toy/nuke = 2,
 		/obj/item/toy/minimeteor = 2,
@@ -30,6 +31,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/coin/antagtoken = 2,
 		/obj/item/stack/tile/fakespace/loaded = 2,
 		/obj/item/stack/tile/fakepit/loaded = 2,
+		/obj/item/stack/tile/eighties/loaded = 2,
 		/obj/item/toy/toy_xeno = 2,
 		/obj/item/storage/box/actionfigure = 1,
 		/obj/item/restraints/handcuffs/fake = 2,
@@ -45,7 +47,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/card/emagfake = 1,
 		/obj/item/clothing/shoes/wheelys = 2,
 		/obj/item/clothing/shoes/kindleKicks = 2,
-		/obj/item/storage/belt/military/snack = 2))
+		/obj/item/toy/plush/goatplushie/angry/realgoat = 2,
+		/obj/item/toy/plush/moth = 2,
+		/obj/item/storage/belt/military/snack = 2,
+		/obj/item/toy/brokenradio = 2,
+		/obj/item/toy/braintoy = 2,
+		/obj/item/clothing/glasses/trickblindfold = 2))
 
 /obj/machinery/computer/arcade
 	name = "random arcade"
@@ -73,26 +80,28 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return INITIALIZE_HINT_QDEL
 	Reset()
 
-/obj/machinery/computer/arcade/proc/prizevend(mob/user)
-	SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
-	if(prob(0.0001)) //1 in a million
-		new /obj/item/gun/energy/pulse/prize(src)
-		visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
-		SSmedals.UnlockMedal(MEDAL_PULSE, user.client)
-		return
+/obj/machinery/computer/arcade/proc/prizevend(mob/user, prizes = 1)
+	if(user.mind?.get_skill_level(/datum/skill/gaming) >= SKILL_LEVEL_LEGENDARY && HAS_TRAIT(user, TRAIT_GAMERGOD))
+		visible_message("<span class='notice'>[user] inputs an intense cheat code!",\
+		"<span class='notice'>You hear a flurry of buttons being pressed.</span>")
+		say("CODE ACTIVATED: EXTRA PRIZES.")
+		prizes *= 2
+	for(var/i = 0, i < prizes, i++)
+		SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "arcade", /datum/mood_event/arcade)
+		if(prob(0.0001)) //1 in a million
+			new /obj/item/gun/energy/pulse/prize(src)
+			visible_message("<span class='notice'>[src] dispenses.. woah, a gun! Way past cool.</span>", "<span class='notice'>You hear a chime and a shot.</span>")
+			user.client.give_award(/datum/award/achievement/misc/pulse, user)
+			return
 
-	if(!contents.len)
 		var/prizeselect
 		if(prize_override)
 			prizeselect = pickweight(prize_override)
 		else
 			prizeselect = pickweight(GLOB.arcade_prize_pool)
-		new prizeselect(src)
-
-	var/atom/movable/the_prize = pick(contents)
-	visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
-
-	the_prize.forceMove(get_turf(src))
+		var/atom/movable/the_prize = new prizeselect(get_turf(src))
+		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
+		visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
 
 /obj/machinery/computer/arcade/emp_act(severity)
 	. = ..()
@@ -100,7 +109,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(prize_override)
 		override = TRUE
 
-	if(stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
+	if(machine_stat & (NOPOWER|BROKEN) || . & EMP_PROTECT_SELF)
 		return
 
 	var/empprize = null
@@ -118,6 +127,19 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
+/obj/machinery/computer/arcade/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/stack/arcadeticket))
+		var/obj/item/stack/arcadeticket/T = O
+		var/amount = T.get_amount()
+		if(amount <2)
+			to_chat(user, "<span class='warning'>You need 2 tickets to claim a prize!</span>")
+			return
+		prizevend(user)
+		T.pay_tickets()
+		T.update_icon()
+		O = T
+		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
+		return
 
 // ** BATTLE ** //
 
@@ -153,6 +175,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_xmas")
 		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_xmas")
 		weapons = strings(ARCADE_FILE, "rpg_weapon_xmas")
+	else if(SSevents.holidays && SSevents.holidays[VALENTINES])
+		name_action = pick_list(ARCADE_FILE, "rpg_action_valentines")
+		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective_valentines")
+		name_part2 = pick_list(ARCADE_FILE, "rpg_enemy_valentines")
+		weapons = strings(ARCADE_FILE, "rpg_weapon_valentines")
 	else
 		name_action = pick_list(ARCADE_FILE, "rpg_action")
 		name_part1 = pick_list(ARCADE_FILE, "rpg_adjective")
@@ -188,9 +215,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 
 	if (!blocked && !gameover)
+		var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
+		var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 		if (href_list["attack"])
 			blocked = TRUE
-			var/attackamt = rand(2,6)
+			var/attackamt = rand(2,6) + rand(0, gamerSkill)
 			var/weapon = pick(weapons)
 			temp = "You attack with a [weapon] for [attackamt] damage!"
 			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
@@ -204,8 +233,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if (href_list["heal"])
 			blocked = TRUE
-			var/pointamt = rand(1,3)
-			var/healamt = rand(6,8)
+			var/maxPointCost = 3
+			if(gamerSkillLevel >= SKILL_LEVEL_JOURNEYMAN)
+				maxPointCost = 2
+			var/pointamt = rand(1, maxPointCost)
+			var/healamt = rand(6,8) + rand(0, gamerSkill)
 			temp = "You use [pointamt] magic to heal for [healamt] damage!"
 			playsound(loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			updateUsrDialog()
@@ -220,7 +252,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if (href_list["charge"])
 			blocked = TRUE
-			var/chargeamt = rand(4,7)
+			var/chargeamt = rand(4,7) + rand(0, gamerSkill)
 			temp = "You regain [chargeamt] points."
 			playsound(loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 			player_mp += chargeamt
@@ -253,6 +285,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return
 
 /obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user)
+	var/xp_gained = 0
 	if ((enemy_mp <= 0) || (enemy_hp <= 0))
 		if(!gameover)
 			gameover = TRUE
@@ -266,8 +299,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				log_game("[key_name(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				Reset()
 				obj_flags &= ~EMAGGED
+				xp_gained += 100
 			else
 				prizevend(user)
+				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
 
 
@@ -309,10 +344,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		gameover = TRUE
 		temp = "You have been crushed! GAME OVER"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
+		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
 			usr.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 
+	user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 	blocked = FALSE
 	return
 
@@ -340,6 +377,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 // *** THE ORION TRAIL ** //
+
+/obj/item/gamer_pamphlet
+	name = "pamphlet - \'Violent Video Games and You\'"
+	desc = "A pamphlet encouraging the reader to maintain a balanced lifestyle and take care of their mental health, while still enjoying video games in a healthy way. You probably don't need this..."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "pamphlet"
+	item_state = "paper"
+	w_class = WEIGHT_CLASS_TINY
+
 
 #define ORION_TRAIL_WINTURN		9
 
@@ -397,6 +443,20 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/gameStatus = ORION_STATUS_START
 	var/canContinueEvent = 0
 
+	var/obj/item/radio/Radio
+	var/list/gamers = list()
+	var/killed_crew = 0
+
+
+/obj/machinery/computer/arcade/orion_trail/Initialize()
+	. = ..()
+	Radio = new /obj/item/radio(src)
+	Radio.listening = 0
+
+/obj/machinery/computer/arcade/orion_trail/Destroy()
+	QDEL_NULL(Radio)
+	return ..()
+
 /obj/machinery/computer/arcade/orion_trail/kobayashi
 	name = "Kobayashi Maru control computer"
 	desc = "A test for cadets"
@@ -438,11 +498,46 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	event = null
 	gameStatus = ORION_STATUS_NORMAL
 	lings_aboard = 0
+	killed_crew = 0
 
 	//spaceport junk
 	spaceport_raided = 0
 	spaceport_freebie = 0
 	last_spaceport_action = ""
+
+/obj/machinery/computer/arcade/orion_trail/proc/report_player(mob/gamer)
+	if(gamers[gamer] == -2)
+		return // enough harassing them
+
+	if(gamers[gamer] == -1)
+		say("WARNING: Continued antisocial behavior detected: Dispensing self-help literature.")
+		new /obj/item/gamer_pamphlet(get_turf(src))
+		gamers[gamer]--
+		return
+
+	if(!(gamer in gamers))
+		gamers[gamer] = 0
+
+	gamers[gamer]++ // How many times the player has 'prestiged' (massacred their crew)
+
+	if(gamers[gamer] > 2 && prob(20 * gamers[gamer]))
+
+		Radio.set_frequency(FREQ_SECURITY)
+		Radio.talk_into(src, "SECURITY ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please watch for violent behavior.", FREQ_SECURITY)
+
+		Radio.set_frequency(FREQ_MEDICAL)
+		Radio.talk_into(src, "PSYCH ALERT: Crewmember [gamer] recorded displaying antisocial tendencies in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
+
+		gamers[gamer] = -1
+
+		gamer.client.give_award(/datum/award/achievement/misc/gamer, gamer) // PSYCH REPORT NOTE: patient kept rambling about how they did it for an "achievement", recommend continued holding for observation
+		gamer.mind?.adjust_experience(/datum/skill/gaming, 50) // cheevos make u better
+
+		if(!isnull(GLOB.data_core.general))
+			for(var/datum/data/record/R in GLOB.data_core.general)
+				if(R.fields["name"] == gamer.name)
+					R.fields["m_stat"] = "*Unstable*"
+					return
 
 /obj/machinery/computer/arcade/orion_trail/ui_interact(mob/user)
 	. = ..()
@@ -478,6 +573,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			desc = "Learn how our ancestors got to Orion, and have fun in the process!"
 
 		dat += "<P ALIGN=Right><a href='byond://?src=[REF(src)];menu=1'>May They Rest In Peace</a></P>"
+		user?.mind?.adjust_experience(/datum/skill/gaming, 10)//learning from your mistakes is the first rule of roguelikes
+
 	else if(event)
 		dat = eventdat
 	else if(gameStatus == ORION_STATUS_NORMAL)
@@ -517,20 +614,25 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	busy = TRUE
 
+	var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
+	var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_PROBS_MODIFIER)
+	var/gamerSkillRands = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+	var/xp_gained = 0
 	if (href_list["continue"]) //Continue your travels
 		if(gameStatus == ORION_STATUS_NORMAL && !event && turns != 7)
 			if(turns >= ORION_TRAIL_WINTURN)
 				win(usr)
+				xp_gained += 34
 			else
 				food -= (alive+lings_aboard)*2
 				fuel -= 5
-				if(turns == 2 && prob(30))
+				if(turns == 2 && prob(30-gamerSkill))
 					event = ORION_TRAIL_COLLISION
 					event()
-				else if(prob(75))
+				else if(prob(75-gamerSkill))
 					event = pickweight(events)
 					if(lings_aboard)
-						if(event == ORION_TRAIL_LING || prob(55))
+						if(event == ORION_TRAIL_LING || prob(55-gamerSkill))
 							event = ORION_TRAIL_LING_ATTACK
 					event()
 				turns += 1
@@ -538,7 +640,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				var/mob/living/carbon/M = usr //for some vars
 				switch(event)
 					if(ORION_TRAIL_RAIDERS)
-						if(prob(50))
+						if(prob(50-gamerSkill))
 							to_chat(usr, "<span class='userdanger'>You hear battle shouts. The tramping of boots on cold metal. Screams of agony. The rush of venting air. Are you going insane?</span>")
 							M.hallucination += 30
 						else
@@ -546,7 +648,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							M.take_bodypart_damage(30)
 							playsound(loc, 'sound/weapons/genhit2.ogg', 100, TRUE)
 					if(ORION_TRAIL_ILLNESS)
-						var/severity = rand(1,3) //pray to RNGesus. PRAY, PIGS
+						var/maxSeverity = 3
+						if(gamerSkillLevel >= SKILL_LEVEL_EXPERT)
+							maxSeverity = 2 //part of gitting gud is rng mitigation
+						var/severity = rand(1,maxSeverity) //pray to RNGesus. PRAY, PIGS
 						if(severity == 1)
 							to_chat(M, "<span class='userdanger'>You suddenly feel slightly nauseated.</span>" )
 						if(severity == 2)
@@ -558,7 +663,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 							sleep(30)
 							M.vomit(10, distance = 5)
 					if(ORION_TRAIL_FLUX)
-						if(prob(75))
+						if(prob(75-gamerSkill))
 							M.Paralyze(60)
 							say("A sudden gust of powerful wind slams [M] into the floor!")
 							M.take_bodypart_damage(25)
@@ -566,7 +671,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 						else
 							to_chat(M, "<span class='userdanger'>A violent gale blows past you, and you barely manage to stay standing!</span>")
 					if(ORION_TRAIL_COLLISION) //by far the most damaging event
-						if(prob(90))
+						if(prob(90-gamerSkill))
 							playsound(loc, 'sound/effects/bang.ogg', 100, TRUE)
 							var/turf/open/floor/F
 							for(F in orange(1, src))
@@ -649,7 +754,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = null
 	else if(href_list["blackhole"]) //keep speed past a black hole
 		if(turns == 7)
-			if(prob(75))
+			if(prob(75-gamerSkill))
 				event = ORION_TRAIL_BLACKHOLE
 				event()
 				if(obj_flags & EMAGGED)
@@ -676,6 +781,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(gameStatus == ORION_STATUS_NORMAL || event == ORION_TRAIL_LING)
 			var/sheriff = remove_crewmember() //I shot the sheriff
 			playsound(loc,'sound/weapons/gun/pistol/shot.ogg', 100, TRUE)
+			killed_crew++
 
 			if(settlers.len == 0 || alive == 0)
 				say("The last crewmember [sheriff], shot themselves, GAME OVER!")
@@ -684,6 +790,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 					obj_flags &= EMAGGED
 				gameStatus = ORION_STATUS_GAMEOVER
 				event = null
+
+				if(killed_crew >= 4)
+					report_player(usr)
 			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)
 					say("The crew of the ship chose to kill [usr.name]!")
@@ -691,6 +800,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 			if(event == ORION_TRAIL_LING) //only ends the ORION_TRAIL_LING event, since you can do this action in multiple places
 				event = null
+				killed_crew-- // the kill was valid
 
 	//Spaceport specific interactions
 	//they get a header because most of them don't reset event (because it's a shop, you leave when you want to)
@@ -703,6 +813,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				fuel -= 10
 				food -= 10
 				event()
+				killed_crew-- // I mean not really but you know
 
 	else if(href_list["sellcrew"]) //sell a crewmember
 		if(gameStatus == ORION_STATUS_MARKET)
@@ -724,15 +835,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	else if(href_list["raid_spaceport"])
 		if(gameStatus == ORION_STATUS_MARKET)
 			if(!spaceport_raided)
-				var/success = min(15 * alive,100) //default crew (4) have a 60% chance
+				var/success = min(15 * alive + gamerSkill,100) //default crew (4) have a 60% chance
 				spaceport_raided = 1
 
 				var/FU = 0
 				var/FO = 0
 				if(prob(success))
-					FU = rand(5,15)
-					FO = rand(5,15)
+					FU = rand(5 + gamerSkillRands,15 + gamerSkillRands)
+					FO = rand(5 + gamerSkillRands,15 + gamerSkillRands)
 					last_spaceport_action = "You successfully raided the spaceport! You gained [FU] Fuel and [FO] Food! (+[FU]FU,+[FO]FO)"
+					xp_gained += 10
 				else
 					FU = rand(-5,-15)
 					FO = rand(-5,-15)
@@ -791,7 +903,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	add_fingerprint(usr)
 	updateUsrDialog()
 	busy = FALSE
-	return
+	usr?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)
 
 
 /obj/machinery/computer/arcade/orion_trail/proc/event()
@@ -1192,11 +1304,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		var/obj/item/bodypart/chopchop = c_user.get_bodypart(which_hand)
 		chopchop.dismember()
 		qdel(chopchop)
+		user.mind?.adjust_experience(/datum/skill/gaming, 100)
 		playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		for(var/i=1; i<=rand(3,5); i++)
-			prizevend(user)
+		prizevend(user, rand(3,5))
 	else
 		to_chat(c_user, "<span class='notice'>You (wisely) decide against putting your hand in the machine.</span>")
+
+/obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
+	name = "Mediborg's Festive Amputation Adventure"
+	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
+	prize_override = list(/obj/item/a_gift/anything = 1)
 
 #undef ORION_TRAIL_WINTURN
 #undef ORION_TRAIL_RAIDERS

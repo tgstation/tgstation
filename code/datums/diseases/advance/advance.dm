@@ -54,7 +54,7 @@
 										/datum/reagent/phenol, /datum/reagent/medicine/inacusiate, /datum/reagent/medicine/oculine, /datum/reagent/medicine/antihol
 									),
 									list(	// level 7
-										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/corazone
+										/datum/reagent/medicine/leporazine, /datum/reagent/toxin/mindbreaker, /datum/reagent/medicine/higadrite
 									),
 									list(	// level 8
 										/datum/reagent/pax, /datum/reagent/drug/happiness, /datum/reagent/medicine/ephedrine
@@ -106,7 +106,7 @@
 // Randomly pick a symptom to activate.
 /datum/disease/advance/stage_act()
 	..()
-	if(carrier)
+	if(carrier || QDELETED(src)) // Could be cured in parent call.
 		return
 
 	if(symptoms && symptoms.len)
@@ -178,7 +178,7 @@
 // Will generate new unique symptoms, use this if there are none. Returns a list of symptoms that were generated.
 /datum/disease/advance/proc/GenerateSymptoms(level_min, level_max, amount_get = 0)
 
-	var/list/generated = list() // Symptoms we generated.
+	. = list() // Symptoms we generated.
 
 	// Generate symptoms. By default, we only choose non-deadly symptoms.
 	var/list/possible_symptoms = list()
@@ -189,7 +189,7 @@
 				possible_symptoms += S
 
 	if(!possible_symptoms.len)
-		return generated
+		return
 
 	// Random chance to get more than one symptom
 	var/number_of = amount_get
@@ -199,9 +199,7 @@
 			number_of += 1
 
 	for(var/i = 1; number_of >= i && possible_symptoms.len; i++)
-		generated += pick_n_take(possible_symptoms)
-
-	return generated
+		. += pick_n_take(possible_symptoms)
 
 /datum/disease/advance/proc/Refresh(new_name = FALSE)
 	GenerateProperties()
@@ -248,9 +246,9 @@
 			SetSpread(DISEASE_SPREAD_CONTACT_FLUIDS)
 		else
 			SetSpread(DISEASE_SPREAD_BLOOD)
-		
+
 		permeability_mod = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-		cure_chance = 15 - CLAMP(properties["resistance"], -5, 5) // can be between 10 and 20
+		cure_chance = 15 - clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
 		GenerateCure(properties)
@@ -305,7 +303,7 @@
 // Will generate a random cure, the more resistance the symptoms have, the harder the cure.
 /datum/disease/advance/proc/GenerateCure()
 	if(properties && properties.len)
-		var/res = CLAMP(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
+		var/res = clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
 		if(res == oldres)
 			return
 		cures = list(pick(advance_cures[res]))
@@ -318,30 +316,30 @@
 /datum/disease/advance/proc/Evolve(min_level, max_level, ignore_mutable = FALSE)
 	if(!mutable && !ignore_mutable)
 		return
-	var/s = safepick(GenerateSymptoms(min_level, max_level, 1))
-	if(s)
-		AddSymptom(s)
+	var/list/generated_symptoms = GenerateSymptoms(min_level, max_level, 1)
+	if(length(generated_symptoms))
+		var/datum/symptom/S = pick(generated_symptoms)
+		AddSymptom(S)
 		Refresh(TRUE)
-	return
 
 // Randomly remove a symptom.
 /datum/disease/advance/proc/Devolve(ignore_mutable = FALSE)
 	if(!mutable && !ignore_mutable)
 		return
-	if(symptoms.len > 1)
-		var/s = safepick(symptoms)
-		if(s)
-			RemoveSymptom(s)
+	if(length(symptoms) > 1)
+		var/datum/symptom/S = pick(symptoms)
+		if(S)
+			RemoveSymptom(S)
 			Refresh(TRUE)
 
 // Randomly neuter a symptom.
 /datum/disease/advance/proc/Neuter(ignore_mutable = FALSE)
 	if(!mutable && !ignore_mutable)
 		return
-	if(symptoms.len)
-		var/s = safepick(symptoms)
-		if(s)
-			NeuterSymptom(s)
+	if(length(symptoms))
+		var/datum/symptom/S = pick(symptoms)
+		if(S)
+			NeuterSymptom(S)
 			Refresh(TRUE)
 
 // Name the disease.
@@ -419,7 +417,7 @@
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
 	var/datum/disease/advance/to_return = pick(diseases)
-	to_return.Refresh(1)
+	to_return.Refresh(TRUE)
 	return to_return
 
 /proc/SetViruses(datum/reagent/R, list/data)
@@ -447,7 +445,7 @@
 	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
-			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in symptoms
+			var/symptom = input(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom") in sortList(symptoms, /proc/cmp_typepaths_asc)
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))
@@ -455,7 +453,7 @@
 			else if(ispath(symptom))
 				var/datum/symptom/S = new symptom
 				if(!D.HasSymptom(S))
-					D.symptoms += S
+					D.AddSymptom(S)
 					i -= 1
 	while(i > 0)
 
@@ -464,21 +462,38 @@
 		var/new_name = stripped_input(user, "Name your new disease.", "New Name")
 		if(!new_name)
 			return
-		D.AssignName(new_name)
 		D.Refresh()
+		D.AssignName(new_name)	//Updates the master copy
+		D.name = new_name //Updates our copy
 
-		for(var/mob/living/carbon/human/H in shuffle(GLOB.alive_mob_list))
-			if(!is_station_level(H.z))
-				continue
-			if(!H.HasDisease(D))
+		var/list/targets = list("Random")
+		targets += sortNames(GLOB.human_list)
+		var/target = input(user, "Pick a viable human target for the disease.", "Disease Target") as null|anything in targets
+
+		var/mob/living/carbon/human/H
+		if(!target)
+			return
+		if(target == "Random")
+			for(var/human in shuffle(GLOB.human_list))
+				H = human
+				var/found = FALSE
+				if(!is_station_level(H.z))
+					continue
+				if(!H.HasDisease(D))
+					found = H.ForceContractDisease(D)
+					break
+				if(!found)
+					to_chat(user, "Could not find a valid target for the disease.")
+		else
+			H = target
+			if(istype(H) && D.infectable_biotypes & H.mob_biotypes)
 				H.ForceContractDisease(D)
-				break
+			else
+				to_chat(user, "Target could not be infected. Check mob biotype compatibility or resistances.")
+				return
 
-		var/list/name_symptoms = list()
-		for(var/datum/symptom/S in D.symptoms)
-			name_symptoms += S.name
-		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()]")
-		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()]!")
+		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.admin_details()] in [ADMIN_LOOKUPFLW(H)]")
+		log_virus("[key_name(user)] has triggered a custom virus outbreak of [D.admin_details()] in [H]!")
 
 
 /datum/disease/advance/proc/totalStageSpeed()

@@ -515,11 +515,11 @@
 
 /obj/effect/spawner/lootdrop/snowdin/dungeonheavy
 	name = "dungeon heavy"
-	loot = list(/obj/item/twohanded/singularityhammer = 25,
-				/obj/item/twohanded/mjollnir = 10,
-				/obj/item/twohanded/fireaxe = 25,
+	loot = list(/obj/item/singularityhammer = 25,
+				/obj/item/mjollnir = 10,
+				/obj/item/fireaxe = 25,
 				/obj/item/organ/brain/alien = 17,
-				/obj/item/twohanded/dualsaber = 15,
+				/obj/item/dualsaber = 15,
 				/obj/item/organ/heart/demon = 7,
 				/obj/item/gun/ballistic/automatic/c20r/unrestricted = 16,
 				/obj/item/gun/magic/wand/resurrection/inert = 15,
@@ -540,7 +540,7 @@
 	loot = list(/obj/item/stack/sheet/mineral/snow{amount = 25} = 10,
 				/obj/item/toy/snowball = 15,
 				/obj/item/shovel = 10,
-				/obj/item/twohanded/spear = 8,
+				/obj/item/spear = 8,
 				)
 
 //special items//--
@@ -590,8 +590,9 @@
 	death = FALSE
 	faction = ROLE_SYNDICATE
 	outfit = /datum/outfit/snowsyndie
-	flavour_text = "<span class='big bold'>You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \
-	disposed of swiftly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself.</span>"
+	short_desc = "You are a syndicate operative recently awoken from cryostasis in an underground outpost."
+	flavour_text = "You are a syndicate operative recently awoken from cryostasis in an underground outpost. Monitor Nanotrasen communications and record information. All intruders should be \
+	disposed of swiftly to assure no gathered information is stolen or lost. Try not to wander too far from the outpost as the caves can be a deadly place even for a trained operative such as yourself."
 
 /datum/outfit/snowsyndie
 	name = "Syndicate Snow Operative"

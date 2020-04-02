@@ -23,10 +23,14 @@
 	if(proximity_flag)
 		if(istype(target, /obj/item/gun))
 			var/obj/item/gun/G = target
-			if(G.pin && (force_replace || G.pin.pin_removeable))
-				G.pin.forceMove(get_turf(G))
-				G.pin.gun_remove(user)
-				to_chat(user, "<span class='notice'>You remove [G]'s old pin.</span>")
+			var/obj/item/firing_pin/old_pin = G.pin
+			if(old_pin && (force_replace || old_pin.pin_removeable))
+				to_chat(user, "<span class='notice'>You remove [old_pin] from [G].</span>")
+				if(Adjacent(user))
+					user.put_in_hands(old_pin)
+				else
+					old_pin.forceMove(G.drop_location())
+				old_pin.gun_remove(user)
 
 			if(!G.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
@@ -290,6 +294,21 @@
 					return FALSE
 		to_chat(user, "<span class='warning'>ERROR: User has no valid bank account to substract neccesary funds from!</span>")
 		return FALSE
+
+// Explorer Firing Pin- Prevents use on station Z-Level, so it's justifiable to give Explorers guns that don't suck.
+/obj/item/firing_pin/explorer
+	name = "outback firing pin"
+	desc = "A firing pin used by the austrailian defense force, retrofit to prevent weapon discharge on the station."
+	icon_state = "firing_pin_explorer"
+	fail_message = "<span class='warning'>CANNOT FIRE WHILE ON STATION, MATE!</span>"
+
+// This checks that the user isn't on the station Z-level.
+/obj/item/firing_pin/explorer/pin_auth(mob/living/user)
+	var/turf/station_check = get_turf(user)
+	if(!station_check||is_station_level(station_check.z))
+		to_chat(user, "<span class='warning'>You cannot use your weapon while on the station!</span>")
+		return FALSE
+	return TRUE
 
 // Laser tag pins
 /obj/item/firing_pin/tag

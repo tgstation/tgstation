@@ -116,7 +116,7 @@
 	name = "multiver pill"
 	desc = "Neutralizes many common toxins and scales with unique medicine in the system. Diluted with granibitaluri."
 	icon_state = "pill17"
-	list_reagents = list(/datum/reagent/medicine/C2/multiver = 2, /datum/reagent/medicine/granibitaluri = 8)
+	list_reagents = list(/datum/reagent/medicine/C2/multiver = 5, /datum/reagent/medicine/granibitaluri = 5)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/epinephrine
@@ -140,7 +140,7 @@
 	list_reagents = list(/datum/reagent/medicine/mutadone = 50)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/salicyclic
+/obj/item/reagent_containers/pill/salicylic
 	name = "salicylic acid pill"
 	desc = "Used to dull pain."
 	icon_state = "pill9"
@@ -188,7 +188,29 @@
 	desc = "I wouldn't eat this if I were you."
 	icon_state = "pill9"
 	color = "#454545"
-	list_reagents = list(/datum/reagent/mutationtoxin/shadow = 1)
+	list_reagents = list(/datum/reagent/mutationtoxin/shadow = 5)
+
+///////////////////////////////////////// Psychologist inventory pills
+/obj/item/reagent_containers/pill/happinesspsych
+	name = "mood stabilizer pill"
+	desc = "Used to temporarily alleviate anxiety and depression, take only as prescribed."
+	list_reagents = list(/datum/reagent/drug/happiness = 5)
+	icon_state = "pill_happy"
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/paxpsych
+	name = "pacification pill"
+	desc = "Used to temporarily suppress violent, homicidal, or suicidal behavior in patients."
+	list_reagents = list(/datum/reagent/pax = 5)
+	icon_state = "pill12"
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/lsdpsych
+	name = "antipsychotic pill"
+	desc = "Talk to your healthcare provider immediately if hallucinations worsen or new hallucinations emerge."
+	list_reagents = list(/datum/reagent/toxin/mindbreaker = 5)
+	icon_state = "pill14"
+	rename_with_volume = TRUE
 
 //////////////////////////////////////// drugs
 /obj/item/reagent_containers/pill/zoom
@@ -218,12 +240,6 @@
 	list_reagents = list(/datum/reagent/drug/aranesp = 10)
 	icon_state = "pill3"
 
-/obj/item/reagent_containers/pill/happiness
-	name = "happiness pill"
-	desc = "It has a creepy smiling face on it."
-	icon_state = "pill_happy"
-	list_reagents = list(/datum/reagent/drug/happiness = 10)
-
 /obj/item/reagent_containers/pill/floorpill
 	name = "floorpill"
 	desc = "A strange pill found in the depths of maintenance"
@@ -242,20 +258,20 @@
 /obj/item/reagent_containers/pill/potassiodide
 	name = "potassium iodide pill"
 	desc = "Used to reduce low radiation damage very effectively."
-	icon_state = "pill9"
+	icon_state = "pill11"
 	list_reagents = list(/datum/reagent/medicine/potass_iodide = 15)
 	rename_with_volume = TRUE
 
-/obj/item/reagent_containers/pill/trophazole
-	name = "trophazole pill"
-	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'."
-	icon_state = "pill9"
-	list_reagents = list(/datum/reagent/medicine/trophazole = 15)
+/obj/item/reagent_containers/pill/C2/probital
+	name = "Probital pill"
+	desc = "Used to treat brute damage of minor and moderate severity.The carving in the pill says 'Eat before ingesting'. Causes fatigue and diluted with granibitaluri."
+	icon_state = "pill12"
+	list_reagents = list(/datum/reagent/medicine/C2/probital = 5, /datum/reagent/medicine/granibitaluri = 10)
 	rename_with_volume = TRUE
 
 /obj/item/reagent_containers/pill/iron
 	name = "iron pill"
 	desc = "Used to reduce bloodloss slowly."
-	icon_state = "pill9"
+	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE

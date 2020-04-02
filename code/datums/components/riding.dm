@@ -21,8 +21,11 @@
 
 	var/del_on_unbuckle_all = FALSE
 
+	/// If the "vehicle" is a mob, respect MOBILITY_MOVE on said mob.
+	var/respect_mob_mobility = TRUE
+
 /datum/component/riding/Initialize()
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_BUCKLE, .proc/vehicle_mob_buckle)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNBUCKLE, .proc/vehicle_mob_unbuckle)
@@ -67,9 +70,22 @@
 		AM.unbuckle_mob(M)
 	return TRUE
 
-/datum/component/riding/proc/force_dismount(mob/living/M)
+/datum/component/riding/proc/force_dismount(mob/living/M, gentle = FALSE)
 	var/atom/movable/AM = parent
 	AM.unbuckle_mob(M)
+	if(isanimal(AM) || iscyborg(AM))
+		var/turf/target = get_edge_target_turf(AM, AM.dir)
+		var/turf/targetm = get_step(get_turf(AM), AM.dir)
+		M.Move(targetm)
+		if(gentle)
+			M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
+			"<span class='warning'>You're thrown clear of [AM]!</span>")
+			M.throw_at(target, 8, 3, AM, gentle = TRUE)
+		else
+			M.visible_message("<span class='warning'>[M] is thrown violently from [AM]!</span>", \
+			"<span class='warning'>You're thrown violently from [AM]!</span>")
+			M.throw_at(target, 14, 5, AM, gentle = FALSE)
+		M.Knockdown(3 SECONDS)
 
 /datum/component/riding/proc/handle_vehicle_offsets()
 	var/atom/movable/AM = parent
@@ -167,6 +183,10 @@
 			return
 		if(!Process_Spacemove(direction) || !isturf(AM.loc))
 			return
+		if(isliving(AM) && respect_mob_mobility)
+			var/mob/living/M = AM
+			if(!(M.mobility_flags & MOBILITY_MOVE))
+				return
 		step(AM, direction)
 
 		if((direction & (direction - 1)) && (AM.loc == next))		//moved diagonally
@@ -177,7 +197,7 @@
 		handle_vehicle_layer()
 		handle_vehicle_offsets()
 	else
-		to_chat(user, "<span class='warning'>You'll need the keys in one of your hands to [drive_verb] [AM].</span>")
+		to_chat(user, "<span class='warning'>You'll need a special item in one of your hands to [drive_verb] [AM].</span>")
 
 /datum/component/riding/proc/Unbuckle(atom/movable/M)
 	addtimer(CALLBACK(parent, /atom/movable/.proc/unbuckle_mob, M), 0, TIMER_UNIQUE)
@@ -203,14 +223,15 @@
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
-	H.remove_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING)
+	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	. = ..()
 
 /datum/component/riding/human/vehicle_mob_buckle(datum/source, mob/living/M, force = FALSE)
 	. = ..()
 	var/mob/living/carbon/human/H = parent
-	H.add_movespeed_modifier(MOVESPEED_ID_HUMAN_CARRYING, multiplicative_slowdown = HUMAN_CARRY_SLOWDOWN)
+	H.add_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 
 /datum/component/riding/human/proc/on_host_unarmed_melee(atom/target)
 	var/mob/living/carbon/human/H = parent
@@ -298,17 +319,6 @@
 			else
 				..()
 
-/datum/component/riding/cyborg/force_dismount(mob/living/M)
-	var/atom/movable/AM = parent
-	AM.unbuckle_mob(M)
-	var/turf/target = get_edge_target_turf(AM, AM.dir)
-	var/turf/targetm = get_step(get_turf(AM), AM.dir)
-	M.Move(targetm)
-	M.visible_message("<span class='warning'>[M] is thrown clear of [AM]!</span>", \
-					"<span class='warning'>You're thrown clear of [AM]!</span>")
-	M.throw_at(target, 14, 5, AM)
-	M.Paralyze(60)
-
 /datum/component/riding/proc/equip_buckle_inhands(mob/living/carbon/human/user, amount_required = 1, riding_target_override = null)
 	var/atom/movable/AM = parent
 	var/amount_equipped = 0
@@ -334,7 +344,6 @@
 	for(var/obj/item/riding_offhand/O in user.contents)
 		if(O.parent != AM)
 			CRASH("RIDING OFFHAND ON WRONG MOB")
-			continue
 		if(O.selfdeleting)
 			continue
 		else
@@ -368,3 +377,12 @@
 		if(rider in AM.buckled_mobs)
 			AM.unbuckle_mob(rider)
 	. = ..()
+
+/obj/item/riding_offhand/on_thrown(mob/living/carbon/user, atom/target)
+	if(rider == user)
+		return //Piggyback user.
+	user.unbuckle_mob(rider)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='notice'>You gently let go of [rider].</span>")
+		return
+	return rider

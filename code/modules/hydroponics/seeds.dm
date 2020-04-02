@@ -36,7 +36,7 @@
 	var/weed_rate = 1 //If the chance below passes, then this many weeds sprout during growth
 	var/weed_chance = 5 //Percentage chance per tray update to grow weeds
 
-/obj/item/seeds/Initialize(loc, nogenes = 0)
+/obj/item/seeds/Initialize(mapload, nogenes = 0)
 	. = ..()
 	pixel_x = rand(-8, 8)
 	pixel_y = rand(-8, 8)
@@ -207,7 +207,7 @@
 /// Setters procs ///
 /obj/item/seeds/proc/adjust_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		yield = CLAMP(yield + adjustamt, 0, 10)
+		yield = clamp(yield + adjustamt, 0, 10)
 
 		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
 			yield = 1 // Mushrooms always have a minimum yield of 1.
@@ -216,39 +216,39 @@
 			C.value = yield
 
 /obj/item/seeds/proc/adjust_lifespan(adjustamt)
-	lifespan = CLAMP(lifespan + adjustamt, 10, 100)
+	lifespan = clamp(lifespan + adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
 	if(C)
 		C.value = lifespan
 
 /obj/item/seeds/proc/adjust_endurance(adjustamt)
-	endurance = CLAMP(endurance + adjustamt, 10, 100)
+	endurance = clamp(endurance + adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
 	if(C)
 		C.value = endurance
 
 /obj/item/seeds/proc/adjust_production(adjustamt)
 	if(yield != -1)
-		production = CLAMP(production + adjustamt, 1, 10)
+		production = clamp(production + adjustamt, 1, 10)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
 		if(C)
 			C.value = production
 
 /obj/item/seeds/proc/adjust_potency(adjustamt)
 	if(potency != -1)
-		potency = CLAMP(potency + adjustamt, 0, 100)
+		potency = clamp(potency + adjustamt, 0, 100)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 		if(C)
 			C.value = potency
 
 /obj/item/seeds/proc/adjust_weed_rate(adjustamt)
-	weed_rate = CLAMP(weed_rate + adjustamt, 0, 10)
+	weed_rate = clamp(weed_rate + adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
 
 /obj/item/seeds/proc/adjust_weed_chance(adjustamt)
-	weed_chance = CLAMP(weed_chance + adjustamt, 0, 67)
+	weed_chance = clamp(weed_chance + adjustamt, 0, 67)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
@@ -257,7 +257,7 @@
 
 /obj/item/seeds/proc/set_yield(adjustamt)
 	if(yield != -1) // Unharvestable shouldn't suddenly turn harvestable
-		yield = CLAMP(adjustamt, 0, 10)
+		yield = clamp(adjustamt, 0, 10)
 
 		if(yield <= 0 && get_gene(/datum/plant_gene/trait/plant_type/fungal_metabolism))
 			yield = 1 // Mushrooms always have a minimum yield of 1.
@@ -266,39 +266,39 @@
 			C.value = yield
 
 /obj/item/seeds/proc/set_lifespan(adjustamt)
-	lifespan = CLAMP(adjustamt, 10, 100)
+	lifespan = clamp(adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/lifespan)
 	if(C)
 		C.value = lifespan
 
 /obj/item/seeds/proc/set_endurance(adjustamt)
-	endurance = CLAMP(adjustamt, 10, 100)
+	endurance = clamp(adjustamt, 10, 100)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/endurance)
 	if(C)
 		C.value = endurance
 
 /obj/item/seeds/proc/set_production(adjustamt)
 	if(yield != -1)
-		production = CLAMP(adjustamt, 1, 10)
+		production = clamp(adjustamt, 1, 10)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/production)
 		if(C)
 			C.value = production
 
 /obj/item/seeds/proc/set_potency(adjustamt)
 	if(potency != -1)
-		potency = CLAMP(adjustamt, 0, 100)
+		potency = clamp(adjustamt, 0, 100)
 		var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/potency)
 		if(C)
 			C.value = potency
 
 /obj/item/seeds/proc/set_weed_rate(adjustamt)
-	weed_rate = CLAMP(adjustamt, 0, 10)
+	weed_rate = clamp(adjustamt, 0, 10)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_rate)
 	if(C)
 		C.value = weed_rate
 
 /obj/item/seeds/proc/set_weed_chance(adjustamt)
-	weed_chance = CLAMP(adjustamt, 0, 67)
+	weed_chance = clamp(adjustamt, 0, 67)
 	var/datum/plant_gene/core/C = get_gene(/datum/plant_gene/core/weed_chance)
 	if(C)
 		C.value = weed_chance
@@ -398,31 +398,6 @@
 				return
 
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
-
-// Checks plants for broken tray icons. Use Advanced Proc Call to activate.
-// Maybe some day it would be used as unit test.
-/proc/check_plants_growth_stages_icons()
-	var/list/states = icon_states('icons/obj/hydroponics/growing.dmi')
-	states |= icon_states('icons/obj/hydroponics/growing_fruits.dmi')
-	states |= icon_states('icons/obj/hydroponics/growing_flowers.dmi')
-	states |= icon_states('icons/obj/hydroponics/growing_mushrooms.dmi')
-	states |= icon_states('icons/obj/hydroponics/growing_vegetables.dmi')
-	var/list/paths = typesof(/obj/item/seeds) - /obj/item/seeds - typesof(/obj/item/seeds/sample)
-
-	for(var/seedpath in paths)
-		var/obj/item/seeds/seed = new seedpath
-
-		for(var/i in 1 to seed.growthstages)
-			if("[seed.icon_grow][i]" in states)
-				continue
-			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_grow][i] icon!")
-
-		if(!(seed.icon_dead in states))
-			to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_dead] icon!")
-
-		if(seed.icon_harvest) // mushrooms have no grown sprites, same for items with no product
-			if(!(seed.icon_harvest in states))
-				to_chat(world, "[seed.name] ([seed.type]) lacks the [seed.icon_harvest] icon!")
 
 /obj/item/seeds/proc/randomize_stats()
 	set_lifespan(rand(25, 60))

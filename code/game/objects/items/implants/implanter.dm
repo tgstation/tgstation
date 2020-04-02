@@ -14,7 +14,7 @@
 	var/imp_type = null
 
 
-/obj/item/implanter/update_icon()
+/obj/item/implanter/update_icon_state()
 	if(imp)
 		icon_state = "implanter1"
 	else
@@ -35,7 +35,7 @@
 					if (M == user)
 						to_chat(user, "<span class='notice'>You implant yourself.</span>")
 					else
-						M.visible_message("<span class='notice'>[user] has implanted [M].</span>", "<span class='notice'>[user] implants you.</span>")
+						M.visible_message("<span class='notice'>[user] implants [M].</span>", "<span class='notice'>[user] implants you.</span>")
 					imp = null
 					update_icon()
 				else

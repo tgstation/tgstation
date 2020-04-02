@@ -9,7 +9,7 @@
 	r_pocket = /obj/item/flashlight
 	gloves = /obj/item/clothing/gloves/color/red
 
-	box = /obj/item/storage/box/engineer
+	box = /obj/item/storage/box/survival/engineer
 	backpack_contents = list(/obj/item/a_gift/anything = 5)
 
 /datum/outfit/santa/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)

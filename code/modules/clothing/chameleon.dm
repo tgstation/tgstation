@@ -63,8 +63,8 @@
 		// it's has TRAIT_NODROP
 		D.dropItemToGround(target, TRUE)
 		qdel(old_headgear)
-		// where is `SLOT_HEAD` defined? WHO KNOWS
-		D.equip_to_slot(new_headgear, SLOT_HEAD)
+		// where is `ITEM_SLOT_HEAD` defined? WHO KNOWS
+		D.equip_to_slot(new_headgear, ITEM_SLOT_HEAD)
 	return 1
 
 
@@ -182,7 +182,7 @@
 /datum/action/item_action/chameleon/change/proc/select_look(mob/user)
 	var/obj/item/picked_item
 	var/picked_name
-	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) as null|anything in chameleon_list
+	picked_name = input("Select [chameleon_name] to change into", "Chameleon [chameleon_name]", picked_name) as null|anything in sortList(chameleon_list, /proc/cmp_typepaths_asc)
 	if(!picked_name)
 		return
 	picked_item = chameleon_list[picked_name]
@@ -380,7 +380,7 @@
 	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/gloves/chameleon
-	desc = "These gloves will protect the wearer from electric shock."
+	desc = "These gloves provide protection against electric shock."
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
@@ -464,7 +464,7 @@
 	permeability_coefficient = 0.01
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 
-	var/vchange = 1
+	var/voice_change = 1 ///This determines if the voice changer is on or off.
 
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
@@ -487,15 +487,15 @@
 	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
-	vchange = !vchange
-	to_chat(user, "<span class='notice'>The voice changer is now [vchange ? "on" : "off"]!</span>")
+	voice_change = !voice_change
+	to_chat(user, "<span class='notice'>The voice changer is now [voice_change ? "on" : "off"]!</span>")
 
 
 /obj/item/clothing/mask/chameleon/drone
 	//Same as the drone chameleon hat, undroppable and no protection
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	// Can drones use the voice changer part? Let's not find out.
-	vchange = 0
+	voice_change = 0
 
 /obj/item/clothing/mask/chameleon/drone/Initialize()
 	. = ..()
@@ -651,25 +651,29 @@
 	. = ..()
 	chameleon_action.emp_randomise(INFINITY)
 
-/obj/item/clothing/neck/cloak/chameleon
+/obj/item/clothing/neck/chameleon
 	name = "black tie"
 	desc = "A neosilk clip-on tie."
 	icon_state = "blacktie"
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
-/obj/item/clothing/neck/cloak/chameleon
+/obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
-/obj/item/clothing/neck/cloak/chameleon/Initialize()
+/obj/item/clothing/neck/chameleon/Initialize()
 	. = ..()
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/clothing/neck
-	chameleon_action.chameleon_name = "Cloak"
+	chameleon_action.chameleon_name = "Neck Accessory"
 	chameleon_action.initialize_disguises()
 
-/obj/item/clothing/neck/cloak/chameleon/emp_act(severity)
+/obj/item/clothing/neck/chameleon/emp_act(severity)
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
 	chameleon_action.emp_randomise()
+
+/obj/item/clothing/neck/chameleon/broken/Initialize()
+	. = ..()
+	chameleon_action.emp_randomise(INFINITY)

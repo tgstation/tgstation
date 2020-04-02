@@ -1,9 +1,5 @@
 GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
-
-/atom
-	var/list/alternate_appearances
-
 /atom/proc/remove_alt_appearance(key)
 	if(alternate_appearances)
 		for(var/K in alternate_appearances)
@@ -178,7 +174,7 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	return FALSE
 
-datum/atom_hud/alternate_appearance/basic/onePerson
+/datum/atom_hud/alternate_appearance/basic/onePerson
 	var/mob/seer
 
 /datum/atom_hud/alternate_appearance/basic/onePerson/mobShouldSee(mob/M)

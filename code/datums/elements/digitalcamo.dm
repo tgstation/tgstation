@@ -8,7 +8,7 @@
 
 /datum/element/digitalcamo/Attach(datum/target)
 	. = ..()
-	if(!isliving(target) || target in attached_mobs)
+	if(!isliving(target) || (target in attached_mobs))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 	RegisterSignal(target, COMSIG_LIVING_CAN_TRACK, .proc/can_track)

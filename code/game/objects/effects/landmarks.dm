@@ -61,11 +61,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 // you are refactoring shitty landmark code.
 /obj/effect/landmark/start/assistant
 	name = "Assistant"
-	icon_state = "Assistant"
+	icon_state = "Assistant" //icon_state is case sensitive. why are all of these capitalized? because fuck you that's why
 
 /obj/effect/landmark/start/assistant/override
 	jobspawn_override = TRUE
 	delete_after_roundstart = FALSE
+
+/obj/effect/landmark/start/prisoner
+	name = "Prisoner"
+	icon_state = "Prisoner"
 
 /obj/effect/landmark/start/janitor
 	name = "Janitor"
@@ -151,6 +155,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Medical Doctor"
 	icon_state = "Medical Doctor"
 
+/obj/effect/landmark/start/paramedic
+	name = "Paramedic"
+	icon_state = "Paramedic"
+
 /obj/effect/landmark/start/scientist
 	name = "Scientist"
 	icon_state = "Scientist"
@@ -178,6 +186,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 /obj/effect/landmark/start/virologist
 	name = "Virologist"
 	icon_state = "Virologist"
+
+/obj/effect/landmark/start/psychologist
+	name = "Psychologist"
+	icon_state = "Psychologist"
 
 /obj/effect/landmark/start/chaplain
 	name = "Chaplain"
@@ -417,3 +429,9 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.ruin_landmarks -= src
 	ruin_template = null
 	. = ..()
+
+// handled in portals.dm, id connected to one-way portal
+/obj/effect/landmark/portal_exit
+	name = "portal exit"
+	icon_state = "portal_exit"
+	var/id

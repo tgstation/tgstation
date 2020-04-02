@@ -128,7 +128,7 @@
 		D.grabbedby(A, 1)
 		if(old_grab_state == GRAB_PASSIVE)
 			D.drop_all_held_items()
-			A.grab_state = GRAB_AGGRESSIVE //Instant agressive grab if on grab intent
+			A.setGrabState(GRAB_AGGRESSIVE) //Instant agressive grab if on grab intent
 			log_combat(A, D, "grabbed", addition="aggressively")
 			D.visible_message("<span class='warning'>[A] violently grabs [D]!</span>", \
 							"<span class='userdanger'>You're grabbed violently by [A]!</span>", "<span class='hear'>You hear sounds of aggressive fondling!</span>", COMBAT_MESSAGE_RANGE, A)
@@ -200,8 +200,8 @@
 		to_chat(A, "<span class='danger'>You put [D] into a chokehold!</span>")
 		D.SetSleeping(400)
 		restraining = FALSE
-		if(A.grab_state < GRAB_NECK)
-			A.grab_state = GRAB_NECK
+		if(A.grab_state < GRAB_NECK && !HAS_TRAIT(A, TRAIT_PACIFISM))
+			A.setGrabState(GRAB_NECK)
 	else
 		restraining = FALSE
 		return FALSE

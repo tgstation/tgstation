@@ -7,7 +7,8 @@
 	antagpanel_category = "Revolution"
 	job_rank = ROLE_REV
 	antag_moodlet = /datum/mood_event/revolution
-	var/hud_type = "rev"
+	antag_hud_type = ANTAG_HUD_REV
+	antag_hud_name = "rev"
 	var/datum/team/revolution/rev_team
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
@@ -22,11 +23,13 @@
 
 /datum/antagonist/rev/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_rev_icons_added(M)
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	handle_clown_mutation(M, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 
 /datum/antagonist/rev/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_rev_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
+	handle_clown_mutation(M, removing = FALSE)
 
 /datum/antagonist/rev/proc/equip_rev()
 	return
@@ -112,7 +115,7 @@
 
 /datum/antagonist/rev/head/proc/admin_take_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/handheld/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Deleting flash failed!</span>")
 		return
@@ -133,7 +136,7 @@
 
 /datum/antagonist/rev/head/proc/admin_repair_flash(mob/admin)
 	var/list/L = owner.current.get_contents()
-	var/obj/item/assembly/flash/flash = locate() in L
+	var/obj/item/assembly/flash/handheld/flash = locate() in L
 	if (!flash)
 		to_chat(admin, "<span class='danger'>Repairing flash failed!</span>")
 	else
@@ -147,23 +150,21 @@
 
 /datum/antagonist/rev/head
 	name = "Head Revolutionary"
-	hud_type = "rev_head"
+	antag_hud_name = "rev_head"
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
 	var/give_hud = TRUE
 
+/datum/antagonist/rev/head/on_removal()
+	if(give_hud)
+		var/mob/living/carbon/C = owner.current
+		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = C.getorganslot(ORGAN_SLOT_HUD)
+		if(S)
+			S.Remove(C)
+	return ..()
+
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"
-
-/datum/antagonist/rev/proc/update_rev_icons_added(mob/living/M)
-	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
-	revhud.join_hud(M)
-	set_antag_hud(M,hud_type)
-
-/datum/antagonist/rev/proc/update_rev_icons_removed(mob/living/M)
-	var/datum/atom_hud/antag/revhud = GLOB.huds[ANTAG_HUD_REV]
-	revhud.leave_hud(M)
-	set_antag_hud(M, null)
 
 /datum/antagonist/rev/proc/can_be_converted(mob/living/candidate)
 	if(!candidate.mind)
@@ -207,9 +208,20 @@
 		owner.current.visible_message("<span class='deconversion_message'>The frame beeps contentedly, purging the hostile memory engram from the MMI before initalizing it.</span>", null, null, null, owner.current)
 		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and deletes your neural reprogramming! You remember nothing but the name of the one who flashed you.</span>")
 
+/datum/antagonist/rev/head/farewell()
+	if((ishuman(owner.current) || ismonkey(owner.current)))
+		if(owner.current.stat != DEAD)
+			owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just remembered [owner.current.p_their()] real allegiance!</span>", null, null, null, owner.current)
+			to_chat(owner, "<span class ='deconversion_message bold'>You have given up your cause of overthrowing the command staff. You are no longer a Head Revolutionary.</span>")
+		else
+			to_chat(owner, "<span class ='deconversion_message bold'>The sweet release of death. You are no longer a Head Revolutionary.</span>")
+	else if(issilicon(owner.current))
+		owner.current.visible_message("<span class='deconversion_message'>The frame beeps contentedly, suppressing the disloyal personality traits from the MMI before initalizing it.</span>", null, null, null, owner.current)
+		to_chat(owner, "<span class='userdanger'>The frame's firmware detects and suppresses your unwanted personality traits! You feel more content with the leadership around these parts.</span>")
+
 //blunt trauma deconversions call this through species.dm spec_attacked_by()
 /datum/antagonist/rev/proc/remove_revolutionary(borged, deconverter)
-	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [key_name(deconverter)]!")
+	log_attack("[key_name(owner.current)] has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!")
 	if(borged)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	owner.special_role = null
@@ -219,40 +231,37 @@
 	owner.remove_antag_datum(type)
 
 /datum/antagonist/rev/head/remove_revolutionary(borged,deconverter)
-	if(!borged)
-		return
-	. = ..()
+	if(borged || deconverter == "gamemode")
+		. = ..()
 
 /datum/antagonist/rev/head/equip_rev()
-	var/mob/living/carbon/H = owner.current
-	if(!ishuman(H) && !ismonkey(H))
+	var/mob/living/carbon/C = owner.current
+	if(!ishuman(C) && !ismonkey(C))
 		return
 
-	if(remove_clumsy && owner.assigned_role == "Clown")
-		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		H.dna.remove_mutation(CLOWNMUT)
-
 	if(give_flash)
-		var/obj/item/assembly/flash/T = new(H)
+		var/obj/item/assembly/flash/handheld/T = new(C)
 		var/list/slots = list (
-			"backpack" = SLOT_IN_BACKPACK,
-			"left pocket" = SLOT_L_STORE,
-			"right pocket" = SLOT_R_STORE
+			"backpack" = ITEM_SLOT_BACKPACK,
+			"left pocket" = ITEM_SLOT_LPOCKET,
+			"right pocket" = ITEM_SLOT_RPOCKET
 		)
-		var/where = H.equip_in_one_of_slots(T, slots)
+		var/where = C.equip_in_one_of_slots(T, slots)
 		if (!where)
-			to_chat(H, "The Syndicate were unfortunately unable to get you a flash.")
+			to_chat(C, "The Syndicate were unfortunately unable to get you a flash.")
 		else
-			to_chat(H, "The flash in your [where] will help you to persuade the crew to join your cause.")
+			to_chat(C, "The flash in your [where] will help you to persuade the crew to join your cause.")
 
 	if(give_hud)
-		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new(H)
-		S.Insert(H, special = FALSE, drop_if_replaced = FALSE)
-		to_chat(H, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
+		var/obj/item/organ/cyberimp/eyes/hud/security/syndicate/S = new()
+		S.Insert(C)
+		to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 /datum/team/revolution
 	name = "Revolution"
 	var/max_headrevs = 3
+	var/list/ex_headrevs = list() // Dynamic removes revs on loss, used to keep a list for the roundend report.
+	var/list/ex_revs = list()
 
 /datum/team/revolution/proc/update_objectives(initial = FALSE)
 	var/untracked_heads = SSjob.get_all_heads()
@@ -302,9 +311,12 @@
 
 	addtimer(CALLBACK(src,.proc/update_heads),HEAD_UPDATE_PERIOD,TIMER_UNIQUE)
 
+/datum/team/revolution/proc/save_members()
+	ex_headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
+	ex_revs = get_antag_minds(/datum/antagonist/rev, TRUE)
 
 /datum/team/revolution/roundend_report()
-	if(!members.len)
+	if(!members.len && !ex_headrevs.len)
 		return
 
 	var/list/result = list()
@@ -324,8 +336,18 @@
 
 
 	var/list/targets = list()
-	var/list/datum/mind/headrevs = get_antag_minds(/datum/antagonist/rev/head)
-	var/list/datum/mind/revs = get_antag_minds(/datum/antagonist/rev,TRUE)
+	var/list/datum/mind/headrevs
+	var/list/datum/mind/revs
+	if(ex_headrevs.len)
+		headrevs = ex_headrevs
+	else
+		headrevs = get_antag_minds(/datum/antagonist/rev/head, TRUE)
+
+	if(ex_revs.len)
+		revs = ex_revs
+	else
+		revs = get_antag_minds(/datum/antagonist/rev, TRUE)
+
 	if(headrevs.len)
 		var/list/headrev_part = list()
 		headrev_part += "<span class='header'>The head revolutionaries were:</span>"

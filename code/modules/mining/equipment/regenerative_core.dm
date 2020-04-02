@@ -13,7 +13,7 @@
 	var/obj/item/organ/regenerative_core/C = M
 	if(!istype(C, /obj/item/organ/regenerative_core))
 		to_chat(user, "<span class='warning'>The stabilizer only works on certain types of monster organs, generally regenerative in nature.</span>")
-		return ..()
+		return
 
 	C.preserved()
 	to_chat(user, "<span class='notice'>You inject the [M] with the stabilizer. It will no longer go inert.</span>")
@@ -60,7 +60,7 @@
 	if(inert)
 		to_chat(owner, "<span class='notice'>[src] breaks down as it tries to activate.</span>")
 	else
-		owner.revive(full_heal = 1)
+		owner.revive(full_heal = TRUE, admin_revive = FALSE)
 	qdel(src)
 
 /obj/item/organ/regenerative_core/on_life()
@@ -110,9 +110,6 @@
 		go_inert()
 	return ..()
 
-/obj/item/organ/regenerative_core/prepare_eat()
-	return null
-
 /*************************Legion core********************/
 /obj/item/organ/regenerative_core/legion
 	desc = "A strange rock that crackles with power. It can be used to heal completely, but it will rapidly decay into uselessness."
@@ -122,14 +119,13 @@
 	. = ..()
 	update_icon()
 
-/obj/item/organ/regenerative_core/update_icon()
+/obj/item/organ/regenerative_core/update_icon_state()
 	icon_state = inert ? "legion_soul_inert" : "legion_soul"
-	cut_overlays()
+
+/obj/item/organ/regenerative_core/update_overlays()
+	. = ..()
 	if(!inert && !preserved)
-		add_overlay("legion_soul_crackle")
-	for(var/X in actions)
-		var/datum/action/A = X
-		A.UpdateButtonIcon()
+		. += "legion_soul_crackle"
 
 /obj/item/organ/regenerative_core/legion/go_inert()
 	..()

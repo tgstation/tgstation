@@ -1,5 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "the three skeleton-like races now get healed by milk properly (and get damaged by and overdose on bone hurting juice properly)"
-  - tweak: "makes a few minor edits to some of the messages from bone hurting juice"

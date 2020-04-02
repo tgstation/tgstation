@@ -16,6 +16,7 @@
 
 	var/port_x_offset
 	var/port_y_offset
+	var/extra_desc = ""
 
 /datum/map_template/shuttle/proc/prerequisites_met()
 	return TRUE
@@ -226,6 +227,7 @@
 	suffix = "luxury"
 	name = "Luxury Shuttle"
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
+	extra_desc = "This shuttle costs 500 credits to board."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
@@ -427,6 +429,10 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+/datum/map_template/shuttle/whiteship/kilo
+	suffix = "kilo"
+	name = "NT Mining Shuttle"
+
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
@@ -472,7 +478,7 @@
 	name = "Tr%nPo2r& Z3TA"
 	description = "A glitch appears on your monitor, flickering in and out of the options laid before you. \
 	It seems strange and alien, you may need a special technology to access the signal.."
-	admin_notes = "Has an on-board experimental cloner that creates copies of its user, alien surgery tools, and a void core that provides unlimited power."
+	admin_notes = "Has alien surgery tools, and a void core that provides unlimited power."
 	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
@@ -535,6 +541,10 @@
 /datum/map_template/shuttle/mining_common/meta
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
+
+/datum/map_template/shuttle/mining_common/kilo
+	suffix = "kilo"
+	name = "lavaland shuttle (Kilo)"
 
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"

@@ -24,6 +24,7 @@
 	ammo_x_offset = 3
 	ammo_y_offset = 3
 	modifystate = FALSE
+	charge_sections = 1
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/beam_rifle/hitscan)
@@ -69,9 +70,6 @@
 	var/zooming_angle
 	var/current_zoom_x = 0
 	var/current_zoom_y = 0
-
-	var/static/image/charged_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_charged")
-	var/static/image/drained_overlay = image(icon = 'icons/obj/guns/energy.dmi', icon_state = "esniper_empty")
 
 	var/datum/action/item_action/zoom_lock_action/zoom_lock_action
 	var/mob/listeningTo
@@ -148,14 +146,6 @@
 	current_zoom_x = 0
 	current_zoom_y = 0
 
-/obj/item/gun/energy/beam_rifle/update_icon()
-	cut_overlays()
-	var/obj/item/ammo_casing/energy/primary_ammo = ammo_type[1]
-	if(!QDELETED(cell) && (cell.charge >= primary_ammo.e_cost))
-		add_overlay(charged_overlay)
-	else
-		add_overlay(drained_overlay)
-
 /obj/item/gun/energy/beam_rifle/attack_self(mob/user)
 	projectile_setting_pierce = !projectile_setting_pierce
 	to_chat(user, "<span class='boldnotice'>You set \the [src] to [projectile_setting_pierce? "pierce":"impact"] mode.</span>")
@@ -190,7 +180,8 @@
 
 /obj/item/gun/energy/beam_rifle/proc/aiming_beam(force_update = FALSE)
 	var/diff = abs(aiming_lastangle - lastangle)
-	check_user()
+	if(!check_user())
+		return
 	if(diff < AIMING_BEAM_ANGLE_CHANGE_THRESHOLD && !force_update)
 		return
 	aiming_lastangle = lastangle
@@ -326,7 +317,7 @@
 		AC.sync_stats()
 
 /obj/item/gun/energy/beam_rifle/proc/delay_penalty(amount)
-	aiming_time_left = CLAMP(aiming_time_left + amount, 0, aiming_time)
+	aiming_time_left = clamp(aiming_time_left + amount, 0, aiming_time)
 
 /obj/item/ammo_casing/energy/beam_rifle
 	name = "particle acceleration lens"
@@ -377,11 +368,11 @@
 	HS_BB.stun = projectile_stun
 	HS_BB.impact_structure_damage = impact_structure_damage
 	HS_BB.aoe_mob_damage = aoe_mob_damage
-	HS_BB.aoe_mob_range = CLAMP(aoe_mob_range, 0, 15)				//Badmin safety lock
+	HS_BB.aoe_mob_range = clamp(aoe_mob_range, 0, 15)				//Badmin safety lock
 	HS_BB.aoe_fire_chance = aoe_fire_chance
 	HS_BB.aoe_fire_range = aoe_fire_range
 	HS_BB.aoe_structure_damage = aoe_structure_damage
-	HS_BB.aoe_structure_range = CLAMP(aoe_structure_range, 0, 15)	//Badmin safety lock
+	HS_BB.aoe_structure_range = clamp(aoe_structure_range, 0, 15)	//Badmin safety lock
 	HS_BB.wall_devastate = wall_devastate
 	HS_BB.wall_pierce_amount = wall_pierce_amount
 	HS_BB.structure_pierce_amount = structure_piercing
@@ -455,8 +446,6 @@
 			new /obj/effect/hotspot(T)
 	for(var/obj/O in range(aoe_structure_range, epicenter))
 		if(!isitem(O))
-			if(O.level == 1)	//Please don't break underfloor items!
-				continue
 			O.take_damage(aoe_structure_damage * get_damage_coeff(O), BURN, "laser", FALSE)
 
 /obj/projectile/beam/beam_rifle/proc/check_pierce(atom/target)
@@ -473,7 +462,7 @@
 				else
 					target.ex_act(EXPLODE_HEAVY)
 			return TRUE
-	if(ismovableatom(target))
+	if(ismovable(target))
 		var/atom/movable/AM = target
 		if(AM.density && !AM.CanPass(src, get_turf(target)) && !ismob(AM))
 			if(structure_pierce < structure_pierce_amount)

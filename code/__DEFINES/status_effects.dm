@@ -74,6 +74,8 @@
 
 #define STATUS_EFFECT_NECKSLICE /datum/status_effect/neck_slice //Creates the flavor messages for the neck-slice
 
+#define STATUS_EFFECT_CONVULSING /datum/status_effect/convulsing
+
 #define STATUS_EFFECT_NECROPOLIS_CURSE /datum/status_effect/necropolis_curse
 #define STATUS_EFFECT_HIVEMIND_CURSE /datum/status_effect/necropolis_curse/hivemind
 #define CURSE_BLINDING	1 //makes the edges of the target's screen obscured
@@ -93,7 +95,7 @@
 
 #define STATUS_EFFECT_GO_AWAY /datum/status_effect/go_away //makes you launch through walls in a single direction for a while
 
-#define STATUS_EFFECT_STASIS /datum/status_effect/incapacitating/stasis //Halts biological functions like bleeding, chemical processing, blood regeneration, walking, etc
+#define STATUS_EFFECT_STASIS /datum/status_effect/grouped/stasis //Halts biological functions like bleeding, chemical processing, blood regeneration, walking, etc
 
 #define STATUS_EFFECT_FAKE_VIRUS /datum/status_effect/fake_virus //gives you fluff messages for cough, sneeze, headache, etc but without an actual virus
 
@@ -113,12 +115,19 @@
 
 #define STATUS_EFFECT_BOUNTY /datum/status_effect/bounty //rewards the person who added this to the target with refreshed spells and a fair heal
 
+#define STATUS_EFFECT_HELDUP /datum/status_effect/heldup // someone is currently pointing a gun at you
+
+#define STATUS_EFFECT_HOLDUP /datum/status_effect/holdup // you are currently pointing a gun at someone
 /////////////
 //  SLIME  //
 /////////////
 
 #define STATUS_EFFECT_RAINBOWPROTECTION /datum/status_effect/rainbow_protection //Invulnerable and pacifistic
 #define STATUS_EFFECT_SLIMESKIN /datum/status_effect/slimeskin //Increased armor
+
+// Grouped effect sources, see also code/__DEFINES/traits.dm
+
+#define STASIS_MACHINE_EFFECT "stasis_machine"
 
 // Stasis helpers
 

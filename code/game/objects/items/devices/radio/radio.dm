@@ -111,7 +111,14 @@
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "radio", name, 370, 220 + channels.len * 22, master_ui, state)
+		var/ui_width = 360
+		var/ui_height = 106
+		if(subspace_transmission)
+			if (channels.len > 0)
+				ui_height += 6 + channels.len * 21
+			else
+				ui_height += 24
+		ui = new(user, src, ui_key, "radio", name, ui_width, ui_height, master_ui, state)
 		ui.open()
 
 /obj/item/radio/ui_data(mob/user)
@@ -143,16 +150,7 @@
 				return
 			var/tune = params["tune"]
 			var/adjust = text2num(params["adjust"])
-			if(tune == "input")
-				var/min = format_frequency(freerange ? MIN_FREE_FREQ : MIN_FREQ)
-				var/max = format_frequency(freerange ? MAX_FREE_FREQ : MAX_FREQ)
-				tune = input("Tune frequency ([min]-[max]):", name, format_frequency(frequency)) as null|num
-				if(!isnull(tune) && !..())
-					if (tune < MIN_FREE_FREQ && tune <= MAX_FREE_FREQ / 10)
-						// allow typing 144.7 to get 1447
-						tune *= 10
-					. = TRUE
-			else if(adjust)
+			if(adjust)
 				tune = frequency + adjust * 10
 				. = TRUE
 			else if(text2num(tune) != null)
@@ -191,7 +189,7 @@
 	if(!spans)
 		spans = list(M.speech_span)
 	if(!language)
-		language = M.get_default_language()
+		language = M.get_selected_language()
 	INVOKE_ASYNC(src, .proc/talk_into_impl, M, message, channel, spans.Copy(), language)
 	return ITALICS | REDUCE_RANGE
 

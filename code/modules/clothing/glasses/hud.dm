@@ -5,11 +5,11 @@
 	var/hud_type = null
 	///Used for topic calls. Just because you have a HUD display doesn't mean you should be able to interact with stuff.
 	var/hud_trait = null
-	
+
 
 /obj/item/clothing/glasses/hud/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if(slot != SLOT_GLASSES)
+	if(slot != ITEM_SLOT_EYES)
 		return
 	if(hud_type)
 		var/datum/atom_hud/H = GLOB.huds[hud_type]
@@ -73,6 +73,7 @@
 	desc = "A heads-up display capable of analyzing the integrity and status of robotics and exosuits."
 	icon_state = "diagnostichud"
 	hud_type = DATA_HUD_DIAGNOSTIC_BASIC
+	hud_trait = TRAIT_DIAGNOSTIC_HUD
 	glass_colour_type = /datum/client_colour/glass_colour/lightorange
 
 /obj/item/clothing/glasses/hud/diagnostic/night
@@ -223,3 +224,21 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	thermal_overload()
+
+/obj/item/clothing/glasses/hud/spacecop
+	name = "police aviators"
+	desc = "For thinking you look cool while brutalizing protestors and minorities."
+	icon_state = "bigsunglasses"
+	hud_type = ANTAG_HUD_GANGSTER
+	darkness_view = 1
+	flash_protect = FLASH_PROTECTION_FLASH
+	tint = 1
+	glass_colour_type = /datum/client_colour/glass_colour/gray
+
+
+/obj/item/clothing/glasses/hud/spacecop/hidden // for the undercover cop
+	name = "sunglasses"
+	desc = "These sunglasses are special, and let you view potential criminals."
+	icon_state = "sun"
+	item_state = "sunglasses"
+

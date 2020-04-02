@@ -66,23 +66,25 @@
 				return TRUE
 
 	var/turf/T = get_turf(patient)
-	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
-	if(table)
-		if(table.computer.stat & (NOPOWER|BROKEN))
-			return .
-		if(replaced_by in table.computer.advanced_surgeries)
-			return FALSE
-		if(type in table.computer.advanced_surgeries)
-			return TRUE
 
-	var/obj/machinery/stasis/the_stasis_bed = locate(/obj/machinery/stasis, T)
-	if(the_stasis_bed?.op_computer)
-		if(the_stasis_bed.op_computer.stat & (NOPOWER|BROKEN))
-			return .
-		if(replaced_by in the_stasis_bed.op_computer.advanced_surgeries)
-			return FALSE
-		if(type in the_stasis_bed.op_computer.advanced_surgeries)
-			return TRUE
+	//Get the relevant operating computer
+	var/obj/machinery/computer/operating/opcomputer
+	var/obj/structure/table/optable/table = locate(/obj/structure/table/optable, T)
+	if(table?.computer)
+		opcomputer = table.computer
+	else
+		var/obj/machinery/stasis/the_stasis_bed = locate(/obj/machinery/stasis, T)
+		if(the_stasis_bed?.op_computer)
+			opcomputer = the_stasis_bed.op_computer
+
+	if(!opcomputer)
+		return
+	if(opcomputer.machine_stat & (NOPOWER|BROKEN))
+		return .
+	if(replaced_by in opcomputer.advanced_surgeries)
+		return FALSE
+	if(type in opcomputer.advanced_surgeries)
+		return TRUE
 
 /datum/surgery/proc/next_step(mob/user, intent)
 	if(location != user.zone_selected)
@@ -99,7 +101,7 @@
 		var/obj/item/tool = user.get_active_held_item()
 		if(S.try_op(user, target, user.zone_selected, tool, src, try_to_fail))
 			return TRUE
-		if(tool?.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
+		if(tool && tool.item_flags & SURGICAL_TOOL) //Just because you used the wrong tool it doesn't mean you meant to whack the patient with it
 			to_chat(user, "<span class='warning'>This step requires a different tool!</span>")
 			return TRUE
 	return FALSE

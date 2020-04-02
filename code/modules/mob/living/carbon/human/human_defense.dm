@@ -24,7 +24,7 @@
 	if(!d_type)
 		return 0
 	var/protection = 0
-	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
 	for(var/bp in body_parts)
 		if(!bp)
 			continue
@@ -86,33 +86,40 @@
 			return BULLET_ACT_HIT
 
 	return ..(P, def_zone)
-
-/mob/living/carbon/human/proc/check_reflect(def_zone) //Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+///Reflection checks for anything in your l_hand, r_hand, or wear_suit based on the reflection chance of the object
+/mob/living/carbon/human/proc/check_reflect(def_zone)
 	if(wear_suit)
-		if(wear_suit.IsReflect(def_zone) == 1)
-			return 1
+		if(wear_suit.IsReflect(def_zone))
+			return TRUE
+	if(head)
+		if(head.IsReflect(def_zone))
+			return TRUE
 	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone) == 1)
-			return 1
-	return 0
+		if(I.IsReflect(def_zone))
+			return TRUE
+	return FALSE
 
 /mob/living/carbon/human/proc/check_shields(atom/AM, damage, attack_text = "the attack", attack_type = MELEE_ATTACK, armour_penetration = 0)
 	var/block_chance_modifier = round(damage / -3)
 
 	for(var/obj/item/I in held_items)
 		if(!istype(I, /obj/item/clothing))
-			var/final_block_chance = I.block_chance - (CLAMP((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
+			var/final_block_chance = I.block_chance - (clamp((armour_penetration-I.armour_penetration)/2,0,100)) + block_chance_modifier //So armour piercing blades can still be parried by other blades, for example
 			if(I.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 				return TRUE
 	if(wear_suit)
-		var/final_block_chance = wear_suit.block_chance - (CLAMP((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = wear_suit.block_chance - (clamp((armour_penetration-wear_suit.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(wear_suit.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
 	if(w_uniform)
-		var/final_block_chance = w_uniform.block_chance - (CLAMP((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
+		var/final_block_chance = w_uniform.block_chance - (clamp((armour_penetration-w_uniform.armour_penetration)/2,0,100)) + block_chance_modifier
 		if(w_uniform.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
 			return TRUE
-	return FALSE
+	if(wear_neck)
+		var/final_block_chance = wear_neck.block_chance - (clamp((armour_penetration-wear_neck.armour_penetration)/2,0,100)) + block_chance_modifier
+		if(wear_neck.hit_reaction(src, AM, attack_text, final_block_chance, damage, attack_type))
+			return TRUE
+  return FALSE
 
 /mob/living/carbon/human/proc/check_block()
 	if(mind)
@@ -136,20 +143,6 @@
 		hitpush = FALSE
 		skipcatch = TRUE
 		blocked = TRUE
-	else if(I)
-		if(((throwingdatum ? throwingdatum.speed : I.throw_speed) >= EMBED_THROWSPEED_THRESHOLD) || I.embedding.embedded_ignore_throwspeed_threshold)
-			if(can_embed(I))
-				if(prob(I.embedding.embed_chance) && !HAS_TRAIT(src, TRAIT_PIERCEIMMUNE))
-					throw_alert("embeddedobject", /obj/screen/alert/embeddedobject)
-					var/obj/item/bodypart/L = pick(bodyparts)
-					L.embedded_objects |= I
-					I.add_mob_blood(src)//it embedded itself in you, of course it's bloody!
-					I.forceMove(src)
-					L.receive_damage(I.w_class*I.embedding.embedded_impact_pain_multiplier)
-					visible_message("<span class='danger'>[I] embeds itself in [src]'s [L.name]!</span>","<span class='userdanger'>[I] embeds itself in your [L.name]!</span>")
-					SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "embedded", /datum/mood_event/embedded)
-					hitpush = FALSE
-					skipcatch = TRUE //can't catch the now embedded item
 
 	return ..()
 
@@ -186,7 +179,6 @@
 	var/hulk_verb = pick("smash","pummel")
 	if(check_shields(user, 15, "the [hulk_verb]ing"))
 		return
-	..()
 	playsound(loc, user.dna.species.attack_sound, 25, TRUE, -1)
 	visible_message("<span class='danger'>[user] [hulk_verb]ed [src]!</span>", \
 					"<span class='userdanger'>[user] [hulk_verb]ed [src]!</span>", "<span class='hear'>You hear a sickening sound of flesh hitting flesh!</span>", null, user)
@@ -383,10 +375,10 @@
 
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
-	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
+	if(TRAIT_BOMBIMMUNE in dna.species.species_traits)
 		return
 	..()
-	if (!severity)
+	if (!severity || QDELETED(src))
 		return
 	var/brute_loss = 0
 	var/burn_loss = 0
@@ -401,7 +393,8 @@
 			if(bomb_armor < EXPLODE_GIB_THRESHOLD) //gibs the mob if their bomb armor is lower than EXPLODE_GIB_THRESHOLD
 				for(var/I in contents)
 					var/atom/A = I
-					A.ex_act(severity)
+					if(!QDELETED(A))
+						A.ex_act(severity)
 				gib()
 				return
 			else
@@ -677,6 +670,9 @@
 		..()
 
 /mob/living/carbon/human/proc/check_self_for_injuries()
+	if(stat == DEAD || stat == UNCONSCIOUS)
+		return
+
 	visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
 		"<span class='notice'>You check yourself for injuries.</span>")
 
@@ -737,7 +733,10 @@
 		to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name][isdisabled][self_aware ? " has " : " is "][status].</span>")
 
 		for(var/obj/item/I in LB.embedded_objects)
-			to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
+			if(I.is_embed_harmless())
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
+			else
+				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
 
 	for(var/t in missing)
 		to_chat(src, "<span class='boldannounce'>Your [parse_zone(t)] is missing!</span>")
@@ -805,7 +804,7 @@
 			broken_plural = TRUE
 		else
 			var/holder = broken[1]	//our one and only element
-			if(holder[lentext(holder)] == "s")
+			if(holder[length(holder)] == "s")
 				broken_plural = TRUE
 		//Put the items in that list into a string of text
 		for(var/B in broken)
@@ -817,7 +816,7 @@
 			damaged_plural = TRUE
 		else
 			var/holder = damaged[1]
-			if(holder[lentext(holder)] == "s")
+			if(holder[length(holder)] == "s")
 				damaged_plural = TRUE
 		for(var/D in damaged)
 			damaged_message += D

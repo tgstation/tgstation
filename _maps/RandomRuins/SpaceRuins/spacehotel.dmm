@@ -93,7 +93,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "aD" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-02"
 	},
 /turf/open/floor/wood,
@@ -133,7 +133,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "aL" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
@@ -173,7 +173,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "aT" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-16"
 	},
 /turf/open/floor/wood,
@@ -213,7 +213,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_6)
 "bb" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-18"
 	},
 /turf/open/floor/wood,
@@ -412,7 +412,7 @@
 /area/ruin/space/has_grav/hotel)
 "bM" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -455,7 +455,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_3)
 "bS" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -498,7 +498,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_4)
 "bY" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -541,7 +541,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_5)
 "ce" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -937,7 +937,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "dm" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -969,7 +969,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_2)
 "dq" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
 /turf/open/floor/wood,
@@ -994,7 +994,7 @@
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "du" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -1026,7 +1026,7 @@
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel/guestroom/room_1)
 "dy" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-14"
 	},
 /turf/open/floor/wood,
@@ -1652,7 +1652,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/bar)
 "fI" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-02"
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -1698,7 +1698,7 @@
 /area/ruin/space/has_grav/hotel/dock)
 "fP" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -1832,7 +1832,7 @@
 	},
 /area/ruin/space/has_grav/hotel/dock)
 "gh" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-22"
 	},
 /turf/open/floor/wood,
@@ -2228,7 +2228,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/hotel)
 "hq" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-18"
 	},
 /turf/open/floor/plasteel/dark,
@@ -2744,7 +2744,7 @@
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/hotel/power)
 "iM" = (
-/obj/item/twohanded/required/kirbyplants,
+/obj/item/kirbyplants,
 /turf/open/floor/wood,
 /area/ruin/space/has_grav/hotel)
 "iN" = (
@@ -4352,7 +4352,7 @@
 /turf/open/floor/plasteel/dark,
 /area/ruin/space/has_grav/hotel/pool)
 "mD" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-25"
 	},
 /obj/effect/turf_decal/tile/neutral{

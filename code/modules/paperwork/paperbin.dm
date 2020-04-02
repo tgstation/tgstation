@@ -125,14 +125,16 @@
 		. += "It doesn't contain anything."
 
 
-/obj/item/paper_bin/update_icon()
+/obj/item/paper_bin/update_icon_state()
 	if(total_paper < 1)
 		icon_state = "paper_bin0"
 	else
 		icon_state = "[initial(icon_state)]"
-	cut_overlays()
+
+/obj/item/paper_bin/update_overlays()
+	. = ..()
 	if(bin_pen)
-		add_overlay(mutable_appearance(bin_pen.icon, bin_pen.icon_state))
+		. += mutable_appearance(bin_pen.icon, bin_pen.icon_state)
 
 /obj/item/paper_bin/construction
 	name = "construction paper bin"
@@ -172,3 +174,9 @@
 		qdel(src)
 	else
 		..()
+
+/obj/item/paper_bin/carbon
+	name = "carbon paper bin"
+	desc = "Contains all the paper you'll ever need, in duplicate!"
+	icon_state = "paper_bin_carbon"
+	papertype = /obj/item/paper/carbon

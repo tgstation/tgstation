@@ -49,7 +49,7 @@
 	dev_card = 0
 
 // Recalculates the price and optionally even fabricates the device.
-/obj/machinery/lapvend/proc/fabricate_and_recalc_price(fabricate = 0)
+/obj/machinery/lapvend/proc/fabricate_and_recalc_price(fabricate = FALSE)
 	total_price = 0
 	if(devtype == 1) 		// Laptop, generally cheaper to make it accessible for most station roles
 		var/obj/item/computer_hardware/battery/battery_module = null
@@ -163,7 +163,7 @@
 			if(fabricate)
 				fabricated_tablet.install_component(new/obj/item/computer_hardware/card_slot)
 		return total_price
-	return 0
+	return FALSE
 
 
 
@@ -171,80 +171,96 @@
 
 /obj/machinery/lapvend/ui_act(action, params)
 	if(..())
-		return 1
+		return TRUE
 
 	switch(action)
 		if("pick_device")
 			if(state) // We've already picked a device type
-				return 0
+				return FALSE
 			devtype = text2num(params["pick"])
 			state = 1
-			fabricate_and_recalc_price(0)
-			return 1
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
 		if("clean_order")
 			reset_order()
-			return 1
+			return TRUE
 		if("purchase")
 			try_purchase()
-			return 1
+			return TRUE
 	if((state != 1) && devtype) // Following IFs should only be usable when in the Select Loadout mode
-		return 0
+		return FALSE
 	switch(action)
 		if("confirm_order")
 			state = 2 // Wait for ID swipe for payment processing
-			fabricate_and_recalc_price(0)
-			return 1
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
 		if("hw_cpu")
 			dev_cpu = text2num(params["cpu"])
-			fabricate_and_recalc_price(0)
-			return 1
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
 		if("hw_battery")
 			dev_battery = text2num(params["battery"])
-			fabricate_and_recalc_price(0)
-			return 1
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
 		if("hw_disk")
 			dev_disk = text2num(params["disk"])
-			fabricate_and_recalc_price(0)
-			return 1
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
 		if("hw_netcard")
 			dev_netcard = text2num(params["netcard"])
-			fabricate_and_recalc_price(0)
-			return 1
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
 		if("hw_tesla")
 			dev_apc_recharger = text2num(params["tesla"])
-			fabricate_and_recalc_price(0)
-			return 1
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
 		if("hw_nanoprint")
 			dev_printer = text2num(params["print"])
-			fabricate_and_recalc_price(0)
-			return 1
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
 		if("hw_card")
 			dev_card = text2num(params["card"])
-			fabricate_and_recalc_price(0)
-			return 1
-	return 0
+			fabricate_and_recalc_price(FALSE)
+			return TRUE
+	return FALSE
 
 /obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	if(stat & (BROKEN | NOPOWER | MAINT))
+	if(machine_stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()
-		return 0
+		return FALSE
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
 		ui = new(user, src, ui_key, "computer_fabricator", "Personal Computer Vendor", ui_x, ui_y, state = state)
 		ui.open()
-		ui.set_autoupdate(state = 1)
 
-/obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/lapvend/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/spacecash))
 		var/obj/item/stack/spacecash/c = I
-
 		if(!user.temporarilyRemoveItemFromInventory(c))
 			return
 		credits += c.value
-		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into [src].</span>")
+		visible_message("<span class='info'><span class='name'>[user]</span> inserts [c.value] cr into [src].</span>")
 		qdel(c)
+		return
+	else if(istype(I, /obj/item/holochip))
+		var/obj/item/holochip/HC = I
+		credits += HC.credits
+		visible_message("<span class='info'>[user] inserts a [HC.credits] cr holocredit chip into [src].</span>")
+		qdel(HC)
+		return
+	else if(istype(I, /obj/item/card/id))
+		if(state != 2)
+			return
+		var/obj/item/card/id/ID = I
+		var/datum/bank_account/account = ID.registered_account
+		var/target_credits = total_price - credits
+		if(!account.adjust_money(-target_credits))
+			say("Insufficient credits on card to purchase!")
+			return
+		credits += target_credits
+		say("[target_credits] cr has been desposited from your account.")
 		return
 	return ..()
 
@@ -252,9 +268,9 @@
 /obj/machinery/lapvend/proc/process_payment()
 	if(total_price > credits)
 		say("Insufficient credits.")
-		return 0
+		return FALSE
 	else
-		return 1
+		return TRUE
 
 /obj/machinery/lapvend/ui_data(mob/user)
 
@@ -290,5 +306,6 @@
 			credits -= total_price
 			say("Enjoy your new product!")
 			state = 3
-			return 1
-		return 0
+			addtimer(CALLBACK(src, .proc/reset_order), 100)
+			return TRUE
+		return FALSE

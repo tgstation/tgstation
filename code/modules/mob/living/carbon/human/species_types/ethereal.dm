@@ -8,16 +8,25 @@
 	miss_sound = 'sound/weapons/etherealmiss.ogg'
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/ethereal
 	mutantstomach = /obj/item/organ/stomach/ethereal
+	mutanttongue = /obj/item/organ/tongue/ethereal
 	exotic_blood = /datum/reagent/consumable/liquidelectricity //Liquid Electricity. fuck you think of something better gamer
 	siemens_coeff = 0.5 //They thrive on energy
 	brutemod = 1.25 //They're weak to punches
 	attack_type = BURN //burn bish
 	damage_overlay_type = "" //We are too cool for regular damage overlays
-	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR)
+	species_traits = list(DYNCOLORS, AGENDER, NO_UNDERWEAR, HAIR)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
+	species_language_holder = /datum/language_holder/ethereal
 	inherent_traits = list(TRAIT_NOHUNGER)
 	sexes = FALSE //no fetish content allowed
 	toxic_food = NONE
+	// Body temperature for ethereals is much higher then humans as they like hotter environments
+	bodytemp_normal = (BODYTEMP_NORMAL + 50)
+	bodytemp_heat_damage_limit = FIRE_MINIMUM_TEMPERATURE_TO_SPREAD // about 150C
+	// Cold temperatures hurt faster as it is harder to move with out the heat energy
+	bodytemp_cold_damage_limit = (T20C - 10) // about 10c
+	hair_color = "fixedmutcolor"
+	hair_alpha = 140
 	var/current_color
 	var/EMPeffect = FALSE
 	var/emageffect = FALSE
@@ -28,7 +37,7 @@
 	var/static/g2 = 164
 	var/static/b2 = 149
 	//this is shit but how do i fix it? no clue.
-
+	var/drain_time = 0 //used to keep ethereals from spam draining power sources
 
 /datum/species/ethereal/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	.=..()
@@ -63,7 +72,7 @@
 		if(!emageffect)
 			current_color = rgb(r2 + ((r1-r2)*healthpercent), g2 + ((g1-g2)*healthpercent), b2 + ((b1-b2)*healthpercent))
 		H.set_light(1 + (2 * healthpercent), 1 + (1 * healthpercent), current_color)
-		fixed_mut_color = copytext(current_color, 2)
+		fixed_mut_color = copytext_char(current_color, 2)
 	else
 		H.set_light(0)
 		fixed_mut_color = rgb(128,128,128)
@@ -126,8 +135,43 @@
 		if(ETHEREAL_CHARGE_LOWPOWER to ETHEREAL_CHARGE_NORMAL)
 			H.throw_alert("ethereal_charge", /obj/screen/alert/etherealcharge, 1)
 			brutemod = 1.5
+		if(ETHEREAL_CHARGE_FULL to ETHEREAL_CHARGE_OVERLOAD)
+			H.throw_alert("ethereal_overcharge", /obj/screen/alert/ethereal_overcharge, 1)
+			apply_damage(0.2, TOX, null, null, H)
+			brutemod = 1.5
+		if(ETHEREAL_CHARGE_OVERLOAD to ETHEREAL_CHARGE_DANGEROUS)
+			H.throw_alert("ethereal_overcharge", /obj/screen/alert/ethereal_overcharge, 2)
+			apply_damage(0.65, TOX, null, null, H)
+			brutemod = 1.75
+			if(prob(10)) //10% each tick for ethereals to explosively release excess energy if it reaches dangerous levels
+				discharge_process(H)
 		else
 			H.clear_alert("ethereal_charge")
+			H.clear_alert("ethereal_overcharge")
+
+/datum/species/ethereal/proc/discharge_process(mob/living/carbon/human/H)
+	to_chat(H, "<span class='warning'>You begin to lose control over your charge!</span>")
+	H.visible_message("<span class='danger'>[H] begins to spark violently!</span>")
+	var/static/mutable_appearance/overcharge //shameless copycode from lightning spell
+	overcharge = overcharge || mutable_appearance('icons/effects/effects.dmi', "electricity", EFFECTS_LAYER)
+	H.add_overlay(overcharge)
+	if(do_mob(H, H, 50, 1))
+		H.flash_lighting_fx(5, 7, current_color)
+		var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
+		playsound(H, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
+		H.cut_overlay(overcharge)
+		tesla_zap(H, 2, stomach.crystal_charge*50, ZAP_OBJ_DAMAGE | ZAP_ALLOW_DUPLICATES)
+		if(istype(stomach))
+			stomach.adjust_charge(100 - stomach.crystal_charge)
+		to_chat(H, "<span class='warning'>You violently discharge energy!</span>")
+		H.visible_message("<span class='danger'>[H] violently discharges energy!</span>")
+		if(prob(10)) //chance of developing heart disease to dissuade overcharging oneself
+			var/datum/disease/D = new /datum/disease/heart_failure
+			H.ForceContractDisease(D)
+			to_chat(H, "<span class='userdanger'>You're pretty sure you just felt your heart stop for a second there..</span>")
+			H.playsound_local(H, 'sound/effects/singlebeat.ogg', 100, 0)
+		H.Paralyze(100)
+		return
 
 /datum/species/ethereal/proc/get_charge(mob/living/carbon/H) //this feels like it should be somewhere else. Eh?
 	var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)

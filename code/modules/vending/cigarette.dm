@@ -5,6 +5,7 @@
 	product_ads = "Probably not bad for you!;Don't believe the scientists!;It's good for you!;Don't quit, buy more!;Smoke!;Nicotine heaven.;Best cigarettes since 2150.;Award-winning cigs."
 	icon_state = "cigs"
 	products = list(/obj/item/storage/fancy/cigarettes = 5,
+					/obj/item/storage/fancy/cigarettes/cigpack_candy = 4,
 					/obj/item/storage/fancy/cigarettes/cigpack_uplift = 3,
 					/obj/item/storage/fancy/cigarettes/cigpack_robust = 3,
 					/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
@@ -14,18 +15,21 @@
 					/obj/item/storage/fancy/rollingpapers = 5)
 	contraband = list(/obj/item/clothing/mask/vape = 5)
 	premium = list(/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 3,
+				   /obj/item/storage/box/gum/nicotine = 2,
 				   /obj/item/lighter = 3,
 		           /obj/item/storage/fancy/cigarettes/cigars = 1,
 		           /obj/item/storage/fancy/cigarettes/cigars/havana = 1,
 		           /obj/item/storage/fancy/cigarettes/cigars/cohiba = 1)
 	refill_canister = /obj/item/vending_refill/cigarette
-	default_price = 10
-	extra_price = 50
+	default_price = 75
+	extra_price = 250
 	payment_department = ACCOUNT_SRV
+	light_mask = "cigs-light-mask"
 
 /obj/machinery/vending/cigarette/syndicate
 	products = list(/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7,
 					/obj/item/storage/fancy/cigarettes/cigpack_uplift = 3,
+					/obj/item/storage/fancy/cigarettes/cigpack_candy = 2,
 					/obj/item/storage/fancy/cigarettes/cigpack_robust = 2,
 					/obj/item/storage/fancy/cigarettes/cigpack_carp = 3,
 					/obj/item/storage/fancy/cigarettes/cigpack_midori = 1,

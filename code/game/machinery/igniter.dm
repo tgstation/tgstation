@@ -37,7 +37,7 @@
 	update_icon()
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
-	if (src.on && !(stat & NOPOWER) )
+	if (src.on && !(machine_stat & NOPOWER) )
 		var/turf/location = src.loc
 		if (isturf(location))
 			location.hotspot_expose(1000,500,1)
@@ -47,8 +47,8 @@
 	. = ..()
 	icon_state = "igniter[on]"
 
-/obj/machinery/igniter/update_icon()
-	if(stat & NOPOWER)
+/obj/machinery/igniter/update_icon_state()
+	if(machine_stat & NOPOWER)
 		icon_state = "igniter0"
 	else
 		icon_state = "igniter[on]"
@@ -82,7 +82,7 @@
 	QDEL_NULL(spark_system)
 	return ..()
 
-/obj/machinery/sparker/update_icon()
+/obj/machinery/sparker/update_icon_state()
 	if(disable)
 		icon_state = "[initial(icon_state)]-d"
 	else if(powered())
@@ -100,9 +100,9 @@
 		add_fingerprint(user)
 		src.disable = !src.disable
 		if (src.disable)
-			user.visible_message("<span class='notice'>[user] has disabled \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] disables \the [src]!</span>", "<span class='notice'>You disable the connection to \the [src].</span>")
 		if (!src.disable)
-			user.visible_message("<span class='notice'>[user] has reconnected \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
+			user.visible_message("<span class='notice'>[user] reconnects \the [src]!</span>", "<span class='notice'>You fix the connection to \the [src].</span>")
 		update_icon()
 	else
 		return ..()
@@ -134,5 +134,5 @@
 	. = ..()
 	if (. & EMP_PROTECT_SELF)
 		return
-	if(!(stat & (BROKEN|NOPOWER)))
+	if(!(machine_stat & (BROKEN|NOPOWER)))
 		ignite()

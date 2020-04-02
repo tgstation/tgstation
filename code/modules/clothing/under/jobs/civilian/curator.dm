@@ -29,8 +29,10 @@
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
+	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "black"
 	item_state = "bl_suit"
+	mob_overlay_icon = 'icons/mob/clothing/under/color.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02

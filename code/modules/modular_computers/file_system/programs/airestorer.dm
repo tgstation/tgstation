@@ -4,14 +4,14 @@
 	program_icon_state = "generic"
 	extended_desc = "This program is capable of reconstructing damaged AI systems. Requires direct AI connection via intellicard slot."
 	size = 12
-	requires_ntnet = 0
+	requires_ntnet = FALSE
 	usage_flags = PROGRAM_CONSOLE
 	transfer_access = ACCESS_HEADS
-	available_on_ntnet = 1
+	available_on_ntnet = TRUE
 	tgui_id = "ntos_ai_restorer"
-	ui_x = 600
+	ui_x = 370
 	ui_y = 400
-
+	/// Variable dictating if we are in the process of restoring the AI in the inserted intellicard
 	var/restoring = FALSE
 
 /datum/computer_file/program/aidiag/proc/get_ai(cardcheck)
@@ -30,11 +30,11 @@
 			if(ai_slot.stored_card.AI)
 				return ai_slot.stored_card.AI
 
-	return null
+	return
 
 /datum/computer_file/program/aidiag/ui_act(action, params)
 	if(..())
-		return TRUE
+		return
 
 	var/mob/living/silicon/ai/A = get_ai()
 	if(!A)
@@ -54,7 +54,7 @@
 					return TRUE
 
 /datum/computer_file/program/aidiag/process_tick()
-	..()
+	. = ..()
 	if(!restoring)	//Put the check here so we don't check for an ai all the time
 		return
 	var/obj/item/aicard/cardhold = get_ai(2)
@@ -74,13 +74,13 @@
 		restoring = FALSE
 		return
 	ai_slot.locked =TRUE
-	A.adjustOxyLoss(-1, 0)
-	A.adjustFireLoss(-1, 0)
-	A.adjustToxLoss(-1, 0)
-	A.adjustBruteLoss(-1, 0)
+	A.adjustOxyLoss(-5, 0)
+	A.adjustFireLoss(-5, 0)
+	A.adjustToxLoss(-5, 0)
+	A.adjustBruteLoss(-5, 0)
 	A.updatehealth()
 	if(A.health >= 0 && A.stat == DEAD)
-		A.revive()
+		A.revive(full_heal = FALSE, admin_revive = FALSE)
 	// Finished restoring
 	if(A.health >= 100)
 		ai_slot.locked = FALSE
@@ -91,14 +91,14 @@
 
 /datum/computer_file/program/aidiag/ui_data(mob/user)
 	var/list/data = get_header_data()
-	var/mob/living/silicon/ai/AI
-	// A shortcut for getting the AI stored inside the computer. The program already does necessary checks.
-	AI = get_ai()
+	var/mob/living/silicon/ai/AI = get_ai()
 
 	var/obj/item/aicard/aicard = get_ai(2)
 
+	data["ejectable"] = TRUE
+	data["AI_present"] = FALSE
+	data["error"] = null
 	if(!aicard)
-		data["nocard"] = TRUE
 		data["error"] = "Please insert an intelliCard."
 	else
 		if(!AI)
@@ -108,15 +108,15 @@
 			if(cardhold.flush)
 				data["error"] = "Flush in progress"
 			else
+				data["AI_present"] = TRUE
 				data["name"] = AI.name
 				data["restoring"] = restoring
-				data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
 				data["health"] = (AI.health + 100) / 2
 				data["isDead"] = AI.stat == DEAD
-				data["ai_laws"] = AI.laws.get_law_list(include_zeroth = 1)
+				data["laws"] = AI.laws.get_law_list(include_zeroth = 1)
 
 	return data
 
 /datum/computer_file/program/aidiag/kill_program(forced)
 	restoring = FALSE
-	return ..(forced)
+	return ..()

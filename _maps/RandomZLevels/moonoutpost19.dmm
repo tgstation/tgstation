@@ -181,45 +181,6 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "aG" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
-"aH" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
-"aI" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -270,47 +231,11 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"aO" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "aP" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
 	},
 /obj/structure/cable,
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
-"aQ" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
 /turf/open/floor/plasteel/dark{
 	heat_capacity = 1e+006
 	},
@@ -357,26 +282,7 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/syndicate)
-"aW" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark{
-	heat_capacity = 1e+006
-	},
-/area/awaymission/moonoutpost19/syndicate)
 "aX" = (
-/obj/machinery/gateway,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -393,9 +299,6 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "aY" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -2178,8 +2081,7 @@
 /area/awaymission/moonoutpost19/research)
 "ex" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 4;
-	level = 2
+	dir = 4
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
@@ -2969,7 +2871,7 @@
 /area/awaymission/moonoutpost19/research)
 "gr" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -3751,7 +3653,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "hS" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/urinal{
@@ -3940,7 +3842,7 @@
 /area/awaymission/moonoutpost19/arrivals)
 "ik" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/structure/mirror{
@@ -4222,7 +4124,7 @@
 /area/awaymission/moonoutpost19/research)
 "iN" = (
 /obj/structure/sink{
-	dir = 8;
+	dir = 4;
 	pixel_x = -12;
 	pixel_y = 2
 	},
@@ -4477,7 +4379,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "jq" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	desc = "A plastic potted plant.";
 	pixel_y = 3
 	},
@@ -6627,7 +6529,7 @@
 	},
 /area/awaymission/moonoutpost19/arrivals)
 "ob" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	desc = "A plastic potted plant.";
 	pixel_y = 3
 	},
@@ -41597,8 +41499,8 @@ ac
 at
 az
 aG
-aO
-aW
+aG
+aG
 aV
 br
 bB
@@ -41853,7 +41755,7 @@ ac
 ac
 at
 aA
-aH
+aG
 aP
 aX
 bg
@@ -42110,8 +42012,8 @@ ac
 ac
 at
 aB
-aI
-aQ
+aG
+aG
 aY
 bh
 bt

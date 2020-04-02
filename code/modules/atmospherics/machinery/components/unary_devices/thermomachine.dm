@@ -10,10 +10,10 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 30)
 	layer = OBJ_LAYER
 	circuit = /obj/item/circuitboard/machine/thermomachine
-	ui_x = 400
-	ui_y = 240
+	ui_x = 300
+	ui_y = 230
 
-	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
+	pipe_flags = PIPING_ONE_PER_TURF
 
 	var/icon_state_off = "freezer"
 	var/icon_state_on = "freezer_1"
@@ -29,8 +29,12 @@
 	. = ..()
 	initialize_directions = dir
 
-/obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
-	..(dir,dir)
+/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(obj_color, set_layer)
+	var/obj/item/circuitboard/machine/thermomachine/board = circuit
+	if(board)
+		piping_layer = board.pipe_layer
+		set_layer = piping_layer
+	..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
@@ -39,12 +43,16 @@
 	heat_capacity = 5000 * ((B - 1) ** 2)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon()
+	cut_overlays()
+
 	if(panel_open)
 		icon_state = icon_state_open
 	else if(on && is_operational())
 		icon_state = icon_state_on
 	else
 		icon_state = icon_state_off
+
+	add_overlay(getpipeimage(icon, "pipe", dir, , piping_layer))
 
 /obj/machinery/atmospherics/components/unary/thermomachine/update_icon_nopipes()
 	cut_overlays()
@@ -96,9 +104,11 @@
 	SetInitDirections()
 	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
-		node.disconnect(src)
+		if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+			node.disconnect(src)
 		nodes[1] = null
-	nullifyPipenet(parents[1])
+	if(parents[1])
+		nullifyPipenet(parents[1])
 
 	atmosinit()
 	node = nodes[1]
@@ -159,7 +169,7 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = CLAMP(target, min_temperature, max_temperature)
+				target_temperature = clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 	update_icon()

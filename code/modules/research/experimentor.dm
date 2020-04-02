@@ -466,7 +466,7 @@
 		ejectItem(TRUE)
 	////////////////////////////////////////////////////////////////////////////////////////////////
 	if(exp == FAIL)
-		var/a = pick("rumbles","shakes","vibrates","shudders")
+		var/a = pick("rumbles","shakes","vibrates","shudders","honks")
 		var/b = pick("crushes","spins","viscerates","smashes","insults")
 		visible_message("<span class='warning'>[exp_on] [a], and [b], the experiment was a failure.</span>")
 
@@ -474,6 +474,10 @@
 		visible_message("<span class='notice'>[src] scans the [exp_on], revealing its true nature!</span>")
 		playsound(src, 'sound/effects/supermatter.ogg', 50, 3, -1)
 		var/obj/item/relic/R = loaded_item
+		if (!R.revealed)
+			var/points = rand(3500,3750) // discovery reward
+			new /obj/item/research_notes(drop_location(src), points, "experimentation")
+			visible_message("<span class='notice'> This discovery netted [points] points for research.</span>")
 		R.reveal()
 		investigate_log("Experimentor has revealed a relic with <span class='danger'>[R.realProc]</span> effect.", INVESTIGATE_EXPERIMENTOR)
 		ejectItem()
@@ -513,18 +517,31 @@
 				new /mob/living/simple_animal/pet/cat(loc)
 				investigate_log("Experimentor failed to steal runtime, and instead spawned a new cat.", INVESTIGATE_EXPERIMENTOR)
 			ejectItem(TRUE)
-		if(globalMalf > 76)
+		if(globalMalf > 76 && globalMalf < 98)
 			visible_message("<span class='warning'>[src] begins to smoke and hiss, shaking violently!</span>")
 			use_power(500000)
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
+		if(globalMalf == 99)
+			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!</span>")
+			addtimer(CALLBACK(src, .proc/boom), 50)
+		if(globalMalf == 100)
+			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!</span>")
+			addtimer(CALLBACK(src, .proc/honk), 50)
 
 	addtimer(CALLBACK(src, .proc/reset_exp), resetTime)
+
+/obj/machinery/rnd/experimentor/proc/boom()
+	explosion(src, 1, 5, 10, 5, 1)
+
+/obj/machinery/rnd/experimentor/proc/honk()
+	playsound(src, 'sound/items/bikehorn.ogg', 500)
+	new /obj/item/grown/bananapeel(loc)
 
 /obj/machinery/rnd/experimentor/proc/reset_exp()
 	update_icon()
 	recentlyExperimented = FALSE
 
-/obj/machinery/rnd/experimentor/update_icon()
+/obj/machinery/rnd/experimentor/update_icon_state()
 	icon_state = "h_lathe"
 
 /obj/machinery/rnd/experimentor/proc/warn_admins(user, ReactionName)
@@ -553,7 +570,7 @@
 
 /obj/item/relic
 	name = "strange object"
-	desc = "What mysteries could this hold?"
+	desc = "What mysteries could this hold? Maybe Research & Development could find out."
 	icon = 'icons/obj/assemblies.dmi'
 	var/realName = "defined object"
 	var/revealed = FALSE
@@ -573,7 +590,7 @@
 	revealed = TRUE
 	name = realName
 	cooldownMax = rand(60,300)
-	realProc = pick("teleport","explode","rapidDupe","petSpray","flash","clean","corgicannon")
+	realProc = pick(.proc/teleport,.proc/explode,.proc/rapidDupe,.proc/petSpray,.proc/flash,.proc/clean,.proc/corgicannon)
 
 /obj/item/relic/attack_self(mob/user)
 	if(revealed)
@@ -583,9 +600,10 @@
 		else if(loc == user)
 			cooldown = TRUE
 			call(src,realProc)(user)
-			addtimer(CALLBACK(src, .proc/cd), cooldownMax)
+			if(!QDELETED(src))
+				addtimer(CALLBACK(src, .proc/cd), cooldownMax)
 	else
-		to_chat(user, "<span class='notice'>You aren't quite sure what to do with this yet.</span>")
+		to_chat(user, "<span class='notice'>You aren't quite sure what this is. Maybe R&D knows what to do with it?</span>")
 
 /obj/item/relic/proc/cd()
 	cooldown = FALSE

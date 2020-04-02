@@ -16,6 +16,7 @@
 	magic_fluff_string = "<span class='holoparasite'>..And draw the Tesla, a shocking, lethal source of power.</span>"
 	tech_fluff_string = "<span class='holoparasite'>Boot sequence complete. Lightning modules active. Holoparasite swarm online.</span>"
 	carp_fluff_string = "<span class='holoparasite'>CARP CARP CARP! Caught one! It's a lightning carp! Everyone else goes zap zap.</span>"
+	miner_fluff_string = "<span class='holoparasite'>You encounter... Iron, a conductive master of lightning.</span>"
 	var/datum/beam/summonerchain
 	var/list/enemychains = list()
 	var/successfulshocks = 0
@@ -102,17 +103,7 @@
 				if(hasmatchingsummoner(L)) //if the summoner matches don't hurt them
 					continue
 				if(successfulshocks > 4)
-					if(iscarbon(L))
-						var/mob/living/carbon/C = L
-						if(ishuman(C))
-							var/mob/living/carbon/human/H = C
-							H.electrocution_animation(20)
-						C.jitteriness += 1000
-						C.do_jitter_animation(jitteriness)
-						C.stuttering += 1
-						spawn(20)
-							if(C)
-								C.jitteriness = max(C.jitteriness - 990, 10)
+					L.electrocute_act(0)
 					L.visible_message(
 						"<span class='danger'>[L] was shocked by the lightning chain!</span>", \
 						"<span class='userdanger'>You are shocked by the lightning chain!</span>", \

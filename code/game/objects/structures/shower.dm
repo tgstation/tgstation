@@ -66,11 +66,10 @@
 	return TRUE
 
 
-/obj/machinery/shower/update_icon()
-	cut_overlays()
-
+/obj/machinery/shower/update_overlays()
+	. = ..()
 	if(on)
-		add_overlay(mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER))
+		. += mutable_appearance('icons/obj/watercloset.dmi', "water", ABOVE_MOB_LAYER)
 
 /obj/machinery/shower/proc/handle_mist()
 	// If there is no mist, and the shower was turned on (on a non-freezing temp): make mist in 5 seconds
@@ -99,101 +98,11 @@
 		wash_atom(AM)
 
 /obj/machinery/shower/proc/wash_atom(atom/A)
-	SEND_SIGNAL(A, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
+	A.washed(src)
 	reagents.reaction(A, TOUCH, reaction_volume)
 
-	if(isobj(A))
-		wash_obj(A)
-	else if(isturf(A))
-		wash_turf(A)
-	else if(isliving(A))
-		wash_mob(A)
+	if(isliving(A))
 		check_heat(A)
-
-	contamination_cleanse(A)
-
-/obj/machinery/shower/proc/wash_obj(obj/O)
-	. = SEND_SIGNAL(O, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-	O.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-
-
-/obj/machinery/shower/proc/wash_turf(turf/tile)
-	SEND_SIGNAL(tile, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-	tile.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	for(var/obj/effect/E in tile)
-		if(is_cleanable(E))
-			qdel(E)
-
-
-/obj/machinery/shower/proc/wash_mob(mob/living/L)
-	SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_WEAK)
-	L.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-	SEND_SIGNAL(L, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
-	if(iscarbon(L))
-		var/mob/living/carbon/M = L
-		. = TRUE
-
-		for(var/obj/item/I in M.held_items)
-			wash_obj(I)
-
-		if(M.back && wash_obj(M.back))
-			M.update_inv_back(0)
-
-		var/list/obscured = M.check_obscured_slots()
-
-		if(M.head && wash_obj(M.head))
-			M.update_inv_head()
-
-		if(M.glasses && !(SLOT_GLASSES in obscured) && wash_obj(M.glasses))
-			M.update_inv_glasses()
-
-		if(M.wear_mask && !(SLOT_WEAR_MASK in obscured) && wash_obj(M.wear_mask))
-			M.update_inv_wear_mask()
-
-		if(M.ears && !(HIDEEARS in obscured) && wash_obj(M.ears))
-			M.update_inv_ears()
-
-		if(M.wear_neck && !(SLOT_NECK in obscured) && wash_obj(M.wear_neck))
-			M.update_inv_neck()
-
-		if(M.shoes && !(HIDESHOES in obscured) && wash_obj(M.shoes))
-			M.update_inv_shoes()
-
-		var/washgloves = FALSE
-		if(M.gloves && !(HIDEGLOVES in obscured))
-			washgloves = TRUE
-
-		if(ishuman(M))
-			var/mob/living/carbon/human/H = M
-
-			if(H.wear_suit && wash_obj(H.wear_suit))
-				H.update_inv_wear_suit()
-			else if(H.w_uniform && wash_obj(H.w_uniform))
-				H.update_inv_w_uniform()
-
-			if(washgloves)
-				SEND_SIGNAL(H, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-
-			if(!H.is_mouth_covered())
-				H.lip_style = null
-				H.update_body()
-
-			if(H.belt && wash_obj(H.belt))
-				H.update_inv_belt()
-		else
-			SEND_SIGNAL(M, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-	else
-		SEND_SIGNAL(L, COMSIG_COMPONENT_CLEAN_ACT, CLEAN_STRENGTH_BLOOD)
-
-/obj/machinery/shower/proc/contamination_cleanse(atom/thing)
-	var/datum/component/radioactive/healthy_green_glow = thing.GetComponent(/datum/component/radioactive)
-	if(!healthy_green_glow || QDELETED(healthy_green_glow))
-		return
-	var/strength = healthy_green_glow.strength
-	if(strength <= RAD_BACKGROUND_RADIATION)
-		qdel(healthy_green_glow)
-		return
-	healthy_green_glow.strength -= max(0, (healthy_green_glow.strength - (RAD_BACKGROUND_RADIATION * 2)) * 0.2)
 
 /obj/machinery/shower/process()
 	if(on)

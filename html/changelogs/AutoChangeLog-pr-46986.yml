@@ -1,8 +1,0 @@
-author: "nianjiilical"
-delete-after: True
-changes: 
-  - rscadd: "Adds 5 new colored bioluminescence traits for plants."
-  - rscadd: "Holy melons, omega weed and moonflower now have colored bioluminescence."
-  - rscadd: "Adds a new bioluminescent mutation for cherries."
-  - rscadd: "Adds a new bioluminescent mutation for grass, with matching glowing astroturf tiles."
-  - tweak: "Tweaks glowberry and glowcap bioluminescence to be consistent with other types."

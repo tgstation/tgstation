@@ -217,7 +217,7 @@
 	var/list/rejections = list()
 	while(do_after(M, 10, TRUE, parent, FALSE, CALLBACK(src, .proc/handle_mass_pickup, things, I.loc, rejections, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 	to_chat(M, "<span class='notice'>You put everything you could [insert_preposition] [parent].</span>")
 
 /datum/component/storage/proc/handle_mass_item_insertion(list/things, datum/component/storage/src_object, mob/user, datum/progressbar/progress)
@@ -275,7 +275,7 @@
 	var/datum/progressbar/progress = new(M, length(things), T)
 	while (do_after(M, 10, TRUE, T, FALSE, CALLBACK(src, .proc/mass_remove_from_storage, T, things, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 
 /datum/component/storage/proc/mass_remove_from_storage(atom/target, list/things, datum/progressbar/progress, trigger_on_found = TRUE)
 	var/atom/real_location = real_location()
@@ -335,8 +335,8 @@
 		numbered_contents = _process_numerical_display()
 		adjusted_contents = numbered_contents.len
 
-	var/columns = CLAMP(max_items, 1, screen_max_columns)
-	var/rows = CLAMP(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
+	var/columns = clamp(max_items, 1, screen_max_columns)
+	var/rows = clamp(CEILING(adjusted_contents / columns, 1), 1, screen_max_rows)
 	standard_orient_objs(rows, columns, numbered_contents)
 
 //This proc draws out the inventory and places the items on it. It uses the standard position.
@@ -606,7 +606,7 @@
 			if(!stop_messages)
 				to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 			return FALSE
-	if(is_type_in_typecache(I, cant_hold)) //Check for specific items which this container can't hold.
+	if(is_type_in_typecache(I, cant_hold) || HAS_TRAIT(I, TRAIT_NO_STORAGE_INSERT)) //Items which this container can't hold.
 		if(!stop_messages)
 			to_chat(M, "<span class='warning'>[host] cannot hold [I]!</span>")
 		return FALSE
@@ -764,11 +764,9 @@
 			show_to(user)
 
 /datum/component/storage/proc/signal_on_pickup(datum/source, mob/user)
-	var/atom/A = parent
 	update_actions()
-	for(var/mob/M in range(1, A))
-		if(M.active_storage == src)
-			close(M)
+	for(var/mob/M in can_see_contents() - user)
+		close(M)
 
 /datum/component/storage/proc/signal_take_obj(datum/source, atom/movable/AM, new_loc, force = FALSE)
 	if(!(AM in real_location()))

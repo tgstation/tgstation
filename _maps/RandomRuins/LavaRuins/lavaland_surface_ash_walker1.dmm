@@ -275,7 +275,7 @@
 	dir = 8
 	},
 /obj/machinery/iv_drip,
-/obj/item/reagent_containers/glass/waterbottle/large,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "aR" = (
@@ -696,7 +696,7 @@
 /area/lavaland/surface/outdoors)
 "bP" = (
 /obj/structure/stone_tile/block,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -868,7 +868,7 @@
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
 "ck" = (
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/structure/stone_tile{
 	dir = 4
 	},
@@ -882,7 +882,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 8
 	},
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/effect/mapping_helpers/no_lava,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/lavaland/surface/outdoors)
@@ -986,7 +986,7 @@
 /obj/structure/stone_tile/cracked{
 	dir = 1
 	},
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,
 /area/ruin/unpowered/ash_walkers)
 "cA" = (
@@ -1029,7 +1029,7 @@
 	dir = 1
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/item/storage/belt,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
@@ -1072,7 +1072,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/item/scythe,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
@@ -1085,7 +1085,7 @@
 	dir = 8
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
 "cN" = (
@@ -1100,7 +1100,7 @@
 	dir = 4
 	},
 /obj/structure/table/wood,
-/obj/item/twohanded/spear,
+/obj/item/spear,
 /obj/item/clothing/head/helmet/roman/legionnaire,
 /turf/open/indestructible/boss,
 /area/ruin/unpowered/ash_walkers)
