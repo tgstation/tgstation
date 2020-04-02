@@ -1438,7 +1438,7 @@
 /area/ruin/powered/beach)
 "Ut" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/sun_kist{
+/obj/structure/sign/poster/contraband/starkist{
 	pixel_y = 32
 	},
 /turf/open/floor/plating/beach/sand,
