@@ -598,9 +598,9 @@
 				if(do_after(user, 90, target = candidate))
 					candidate.emp_act(EMP_HEAVY)
 					var/list/constructs = list(
-						"Juggernaut" = image(icon = 'icons/mob/mob.dmi', icon_state = "juggernaut"),
-						"Wraith" = image(icon = 'icons/mob/mob.dmi', icon_state = "wraith"),
-						"Artificer" = image(icon = 'icons/mob/mob.dmi', icon_state = "artificer")
+						"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
+						"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
+						"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
 						)
 					var/construct_class = show_radial_menu(user, src, constructs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 					if(!check_menu(user))
