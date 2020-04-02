@@ -47,7 +47,7 @@
 /obj/structure/railing/CanPass(atom/movable/mover, turf/target)
 	..()
 	if(get_dir(loc, target) & dir)
-		return !density
+		return !density || mover.movement_type & UNSTOPPABLE
 	return TRUE
 
 /obj/structure/railing/corner/CanPass()
