@@ -17,8 +17,8 @@ $include antag_rep.txt
 SERVERNAME Fulpstation
 
 ## Server Caption: Shows next to the server name in the BYOND hub.
-SERVERCAPTION Final Day! This server is SHUTTING DOWN!
-#SERVERCAPTION Pool's Closed Due to COVID-19
+#SERVERCAPTION Final Day! This server is SHUTTING DOWN!
+SERVERCAPTION Pool's Closed Due to COVID-19
 #SERVERCAPTION The Problems of the Future, Today!
 #SERVERCAPTION The Crew that Flies Together, Dies Together
 #SERVERCAPTION 100% Crash-Free since 2019!
