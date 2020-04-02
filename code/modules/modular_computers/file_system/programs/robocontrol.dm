@@ -9,7 +9,7 @@
 	network_destination = "robotics control network"
 	size = 12
 	tgui_id = "ntos_robocontrol"
-	ui_x = 450
+	ui_x = 550
 	ui_y = 550
 	///Number of simple robots on-station.
 	var/botcount = 0
@@ -41,9 +41,10 @@
 		if(card_slot)
 			id_card = card_slot.stored_card
 		data["has_id"] = !!id_card
+		data["id_owner"] = "No Card Inserted."
 		if(id_card)
-			data["id_owner"] = id_card.registered_name ? id_card.registered_name : "No Card Inserted"
 			data["access_on_card"] = id_card.access
+			data["id_owner"] = id_card.registered_name
 
 	botcount = 0
 	current_user = user
@@ -61,6 +62,9 @@
 		if(Bot.bot_type == MULE_BOT)
 			var/mob/living/simple_animal/bot/mulebot/MULE = Bot
 			mulelist += list(list("name" = MULE.name,"load" = MULE.load, "destination" = MULE.destination, "power" = MULE.cell, "home" = MULE.home_destination, "mule_ref" = REF(MULE)))
+			data["autoReturn"] = MULE.auto_return
+			data["autoPickup"] = MULE.auto_pickup
+			data["reportDelivery"] = MULE.report_delivery
 			mule_check = TRUE
 
 		botlist += list(list("name" = Bot.name, "mode" = Bot.get_mode_ui(), "model" = Bot.model, "locat" = get_area(Bot), "bot_ref" = REF(Bot), "mule_check" = mule_check))
@@ -79,7 +83,8 @@
 	var/obj/item/card/id/id_card
 	if(computer)
 		card_slot = computer.all_components[MC_CARD]
-		id_card = card_slot.stored_card
+		if(card_slot)
+			id_card = card_slot.stored_card
 
 	var/mob/living/simple_animal/bot/Bot = locate(params["robot"]) in GLOB.bots_list
 	//if(!Bot)
