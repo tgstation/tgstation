@@ -110,6 +110,9 @@
 	else
 		return "<span class='average'>[mode_name[mode]]</span>"
 
+/**
+  * Returns a status string about the bot's current status, if it's moving, manually controlled, or idle.
+  */
 /mob/living/simple_animal/bot/proc/get_mode_ui()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
 		if(paicard)
