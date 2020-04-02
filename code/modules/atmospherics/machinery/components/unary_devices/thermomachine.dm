@@ -175,7 +175,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!can_interact(user))
 		return
 	on = !on
 	update_icon()
