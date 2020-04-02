@@ -1,5 +1,5 @@
 import { classes, pureComponentHooks } from 'common/react';
-import { Box } from './Box';
+import { Box, unit } from './Box';
 
 export const computeFlexProps = props => {
   const {
@@ -39,6 +39,10 @@ export const computeFlexItemProps = props => {
     className,
     grow,
     order,
+    shrink,
+    // IE11: Always set basis to specified width, which fixes certain
+    // bugs when rendering tables inside the flex.
+    basis = props.width,
     align,
     ...rest
   } = props;
@@ -50,6 +54,8 @@ export const computeFlexItemProps = props => {
     style: {
       ...rest.style,
       'flex-grow': grow,
+      'flex-shrink': shrink,
+      'flex-basis': unit(basis),
       'order': order,
       'align-self': align,
     },

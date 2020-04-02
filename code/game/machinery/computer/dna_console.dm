@@ -1,16 +1,17 @@
 #define INJECTOR_TIMEOUT 100
 #define NUMBER_OF_BUFFERS 3
 #define SCRAMBLE_TIMEOUT 600
-#define JOKER_TIMEOUT 12000				//20 minutes
+#define JOKER_TIMEOUT 12000 // 20 minutes
 #define JOKER_UPGRADE 3000
 
 #define RADIATION_STRENGTH_MAX 15
-#define RADIATION_STRENGTH_MULTIPLIER 1			//larger has more range
+#define RADIATION_STRENGTH_MULTIPLIER 1 // larger has more range
 
 #define RADIATION_DURATION_MAX 30
-#define RADIATION_ACCURACY_MULTIPLIER 3			//larger is less accurate
+#define RADIATION_ACCURACY_MULTIPLIER 3 // larger is less accurate
 
-#define RADIATION_IRRADIATION_MULTIPLIER 1		//multiplier for how much radiation a test subject receives
+// multiplier for how much radiation a test subject receives
+#define RADIATION_IRRADIATION_MULTIPLIER 1
 
 #define SCANNER_ACTION_SE 1
 #define SCANNER_ACTION_UI 2
@@ -21,60 +22,6 @@
 #define SEARCH_STORED 2
 #define SEARCH_DISKETTE 4
 #define SEARCH_ADV_INJ 8
-
-//----------------------------------------------------------------------------//
-// START TGUI CONSOLE STATE DEFINES                                           //
-//----------------------------------------------------------------------------//
-// STATE IDENTIFIERS
-#define STATE_BASE 1
-#define STATE_ST 2
-#define STATE_STC 3
-#define STATE_STCM 4
-#define STATE_STCC 5
-#define STATE_STD 6
-#define STATE_STDM 7
-#define STATE_GS 8
-
-// BASE CONSOLE STATES
-// STORAGE
-#define TGUI_MODE_ST 1
-// SEQUENCER
-#define TGUI_MODE_SEQ 2
-// ENZYMES
-#define TGUI_MODE_ENZ 3
-// ADVANCED INJECTORS
-#define TGUI_MODE_ADV 4
-
-// STORAGE STATES
-// STORAGE > CONSOLE
-#define TGUI_ST_CO 1
-// STORAGE > DISK
-#define TGUI_ST_DI 2
-
-// STORAGE (CONSOLE/DISK) STATES
-// STORAGE > MUTATIONS
-#define TGUI_ST_MUT 1
-// STORAGE > CHROMOSOMES
-#define TGUI_ST_CHR 2
-// STORAGE > GENETICS
-#define TGUI_ST_GEN 3
-
-// STORAGE (MUTATIONS) STATES
-// STORAGE > MUTATIONS > INFO
-#define TGUI_ST_M_INFO 1
-// STORAGE > MUTATIONS > COMBINATION
-#define TGUI_ST_M_COMB 2
-// STORAGE > MUTATIONS > COMMANDS
-#define TGUI_ST_M_COMM 3
-
-// GENE SEQUENCER STATES
-#define TGUI_GS_INFO 1
-#define TGUI_GS_COMM 2
-
-
-//----------------------------------------------------------------------------//
-// END TGUI CONSOLE STATE DEFINES                                             //
-//----------------------------------------------------------------------------//
 
 
 /obj/machinery/computer/scan_consolenew
@@ -89,43 +36,6 @@
 	idle_power_usage = 10
 	active_power_usage = 400
 	light_color = LIGHT_COLOR_BLUE
-
-	// TGUI State stuff
-	// Console state
-	// state
-
-	// Console > Storage state
-	// state_st
-
-	// Console > Storage > Console state
-	// state_stc
-
-	// Console > Storage > Console > Mutation state
-	// state_stcm
-	// state_stcm_index
-
-	// Console > Storage > Console > Chromosome state
-	// state_stcc_index
-
-	// Console > Storage > Disk state
-	// state_std
-
-	// Console > Storage > Disk > Mutation state
-	// state_stdm
-	// state_stdm_index
-	var/list/list/state = list(
-		STATE_BASE = list("mode" = TGUI_MODE_ST),
-		STATE_ST = list("mode" = TGUI_ST_CO),
-		STATE_STC = list("mode" = TGUI_ST_MUT),
-		STATE_STCM = list("mode" = TGUI_ST_M_INFO, "index" = 1),
-		STATE_STCC = list("index" = 1),
-		STATE_STD = list("mode" = TGUI_ST_MUT),
-		STATE_STDM = list("mode" = TGUI_ST_M_INFO, "index" = 1),
-		STATE_GS = list("mode" = TGUI_GS_INFO, "index" = 1)
-	)
-
-	var/list/cheekystate
-	var/list/cheekystatelist
 
 	var/datum/techweb/stored_research
 	var/max_storage = 6
@@ -180,7 +90,12 @@
 	var/list/tgui_scanner_chromosomes = list()
 	var/list/tgui_genetic_makeup = list()
 	var/list/tgui_advinjector_mutations = list()
-	var/list/list/tgui_state = list()
+
+	/**
+	 * State of view, i.e. which tab is currently active, or which
+	 * genome we're currently looking at.
+	 */
+	var/list/list/tgui_view_state = list()
 
 /obj/machinery/computer/scan_consolenew/process()
 	. = ..()
@@ -252,20 +167,6 @@
 	scrambleready = world.time + SCRAMBLE_TIMEOUT
 	jokerready = world.time + JOKER_TIMEOUT
 
-	// Init default states
-	tgui_state = list(
-		"Storage" = list(
-			"Console" = list(
-				"Mutation" = list(),
-				"Chromo" = list()
-			),
-			"Disk" = list(
-				"Mutation" = list()
-			)
-		),
-		"Sequencer" = list()
-	)
-
 	// Link machine with research techweb. Used for discovering and accessing
 	//  already discovered mutations
 	stored_research = SSresearch.science_tech
@@ -304,7 +205,6 @@
 	// Populates various buffers for passing to tgui
 	build_mutation_list(can_modify_occ)
 	build_genetic_makeup_list()
-	build_state_list()
 
 	// Populate variables for passing to tgui interface
 	is_scramble_ready = (scrambleready < world.time)
@@ -329,36 +229,36 @@
 /obj/machinery/computer/scan_consolenew/ui_data(mob/user)
 	var/list/data = list()
 
-	data["State"] = tgui_state
+	data["view"] = tgui_view_state
 
 	// This block of code generates the huge data structure passed to the tgui
-	//  interface for displaying all the various bits of console/scanner data
+	// interface for displaying all the various bits of console/scanner data
 	// Should all be very self-explanatory
-	data["IsScannerConnected"] = can_use_scanner
+	data["isScannerConnected"] = can_use_scanner
 	if(can_use_scanner)
-		data["ScannerOpen"] = connected_scanner.state_open
-		data["ScannerLocked"] = connected_scanner.locked
-		data["RadStrength"] = radstrength
-		data["RadDuration"] = radduration
-		data["StdDevStr"] = radstrength*RADIATION_STRENGTH_MULTIPLIER
-		switch(RADIATION_ACCURACY_MULTIPLIER/(radduration + (connected_scanner.precision_coeff ** 2)))	//hardcoded values from a z-table for a normal distribution
+		data["scannerOpen"] = connected_scanner.state_open
+		data["scannerLocked"] = connected_scanner.locked
+		data["radStrength"] = radstrength
+		data["radDuration"] = radduration
+		data["stdDevStr"] = radstrength * RADIATION_STRENGTH_MULTIPLIER
+		switch(RADIATION_ACCURACY_MULTIPLIER / (radduration + (connected_scanner.precision_coeff ** 2)))	//hardcoded values from a z-table for a normal distribution
 			if(0 to 0.25)
-				data["StdDevAcc"] = ">95 %"
+				data["stdDevAcc"] = ">95 %"
 			if(0.25 to 0.5)
-				data["StdDevAcc"] = "68-95 %"
+				data["stdDevAcc"] = "68-95 %"
 			if(0.5 to 0.75)
-				data["StdDevAcc"] = "55-68 %"
+				data["stdDevAcc"] = "55-68 %"
 			else
-				data["StdDevAcc"] = "<38 %"
+				data["stdDevAcc"] = "<38 %"
 
-	data["IsViableSubject"] = is_viable_occupant
+	data["isViableSubject"] = is_viable_occupant
 	if(is_viable_occupant)
-		data["SubjectName"] = scanner_occupant.name
-		data["SubjectStatus"] = scanner_occupant.stat
-		data["SubjectHealth"] = scanner_occupant.health
-		data["SubjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
-		data["SubjectEnzymes"] = scanner_occupant.dna.unique_enzymes
-		data["IsMonkey"] = ismonkey(scanner_occupant)
+		data["subjectName"] = scanner_occupant.name
+		data["subjectStatus"] = scanner_occupant.stat
+		data["subjectHealth"] = scanner_occupant.health
+		data["subjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
+		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
+		data["isMonkey"] = ismonkey(scanner_occupant)
 
 		var/text_sequence = scanner_occupant.dna.uni_identity
 		var/list/list_sequence = list()
@@ -366,51 +266,51 @@
 		for(var/i in 1 to LAZYLEN(text_sequence))
 			list_sequence += text_sequence[i];
 
-		data["SubjectUNI"] = text_sequence
-		data["SubjectUNIList"] = list_sequence
-		data["SubjectMutations"] = tgui_occupant_mutations
+		data["subjectUNI"] = text_sequence
+		data["subjectUNIList"] = list_sequence
+		data["subjectMutations"] = tgui_occupant_mutations
 	else
-		data["SubjectName"] = null
-		data["SubjectStatus"] = null
-		data["SubjectHealth"] = null
-		data["SubjectRads"] = null
-		data["SubjectEnzymes"] = null
-		data["SubjectMutations"] = null
+		data["subjectName"] = null
+		data["subjectStatus"] = null
+		data["subjectHealth"] = null
+		data["subjectRads"] = null
+		data["subjectEnzymes"] = null
+		data["subjectMutations"] = null
 
-	data["HasDelayedAction"] = (delayed_action != null)
-	data["IsScrambleReady"] = is_scramble_ready
-	data["IsJokerReady"] = is_joker_ready
-	data["IsInjectorReady"] = is_injector_ready
-	data["ScrambleSeconds"] = time_to_scramble
-	data["JokerSeconds"] = time_to_joker
-	data["InjectorSeconds"] = time_to_injector
-	data["IsPulsingRads"] = is_pulsing_rads
-	data["RadPulseSeconds"] = time_to_pulse
+	data["hasDelayedAction"] = (delayed_action != null)
+	data["isScrambleReady"] = is_scramble_ready
+	data["isJokerReady"] = is_joker_ready
+	data["isInjectorReady"] = is_injector_ready
+	data["scrambleSeconds"] = time_to_scramble
+	data["jokerSeconds"] = time_to_joker
+	data["injectorSeconds"] = time_to_injector
+	data["isPulsingRads"] = is_pulsing_rads
+	data["radPulseSeconds"] = time_to_pulse
 
 	if(diskette != null)
-		data["HasDisk"] = TRUE
-		data["DiskCapacity"] = diskette.max_mutations - LAZYLEN(diskette.mutations)
-		data["DiskReadOnly"] = diskette.read_only
-		data["DiskMutations"] = tgui_diskette_mutations
-		data["DiskHasMakeup"] = (LAZYLEN(diskette.genetic_makeup_buffer) > 0)
-		data["DiskMakeupBuffer"] = diskette.genetic_makeup_buffer.Copy()
+		data["hasDisk"] = TRUE
+		data["diskCapacity"] = diskette.max_mutations - LAZYLEN(diskette.mutations)
+		data["diskReadOnly"] = diskette.read_only
+		data["diskMutations"] = tgui_diskette_mutations
+		data["diskHasMakeup"] = (LAZYLEN(diskette.genetic_makeup_buffer) > 0)
+		data["diskMakeupBuffer"] = diskette.genetic_makeup_buffer.Copy()
 	else
-		data["HasDisk"] = FALSE
-		data["DiskCapacity"] = 0
-		data["DiskReadOnly"] = TRUE
-		data["DiskMutations"] = null
-		data["DiskHasMakeup"] = FALSE
-		data["DiskMakeupBuffer"] = null
+		data["hasDisk"] = FALSE
+		data["diskCapacity"] = 0
+		data["diskReadOnly"] = TRUE
+		data["diskMutations"] = null
+		data["diskHasMakeup"] = FALSE
+		data["diskMakeupBuffer"] = null
 
-	data["MutationCapacity"] = max_storage - LAZYLEN(stored_mutations)
-	data["MutationStorage"] = tgui_scanner_mutations
-	data["ChromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
-	data["ChromoStorage"] = tgui_scanner_chromosomes
-	data["MakeupCapcity"] = NUMBER_OF_BUFFERS
-	data["MakeupStorage"] = tgui_genetic_makeup
+	data["mutationCapacity"] = max_storage - LAZYLEN(stored_mutations)
+	data["mutationStorage"] = tgui_scanner_mutations
+	data["chromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
+	data["chromoStorage"] = tgui_scanner_chromosomes
+	data["makeupCapcity"] = NUMBER_OF_BUFFERS
+	data["makeupStorage"] = tgui_genetic_makeup
 
-	data["AdvInjectors"] = tgui_advinjector_mutations
-	data["MaxAdvInjectors"] = max_injector_selections
+	data["advInjectors"] = tgui_advinjector_mutations
+	data["maxAdvInjectors"] = max_injector_selections
 
 	// These are effectively DEFINES/constants
 	data["CONSCIOUS"] = CONSCIOUS
@@ -1453,20 +1353,16 @@
 			qdel(HM)
 			return
 
-		// Sets a new tgui state
+		// Sets a new tgui view state
 		// ---------------------------------------------------------------------- //
 		// params["id"] - Key for the state to set
 		// params[...] - Every other element is used to set state variables
-		if("set_state")
-			// Get our state index the sanitise the param list, removing the id and
-			//  src elements which we won't use.
-			var/index = text2num(params["id"])
-			var/list/new_state = (params - "id") - "src"
-
-			for(var/key in new_state)
-				state[index][key] = text2num(new_state[key])
-
-			return
+		if("set_view")
+			for (var/key in params)
+				if(key == "src")
+					continue
+				tgui_view_state[key] = params[key]
+			return TRUE
 	return FALSE
 
 // Applies the type of a specific genetic makeup buffer to the current scanner
@@ -1875,31 +1771,6 @@
 
 	return chromosomes
 
-	/*
-	var/list/list/state = list(
-		STATE_BASE = list("mode" = TGUI_MODE_ST),
-		STATE_ST = list("mode" = TGUI_ST_CO),
-		STATE_STC = list("mode" = TGUI_ST_MUT),
-		STATE_STCM = list("mode" = TGUI_ST_M_INFO, "index" = 1),
-		STATE_STCC = list("index" = 1),
-		STATE_STD = list("mode" = TGUI_ST_MUT),
-		STATE_STDM = list("mode" = TGUI_ST_M_INFO, "index" = 1)
-	)
-	)*/
-
-// Builds the state list for the tgui interface
-/obj/machinery/computer/scan_consolenew/proc/build_state_list()
-	tgui_state["Mode"] = state[STATE_BASE]["mode"]
-	tgui_state["Storage"]["Mode"] = state[STATE_ST]["mode"]
-	tgui_state["Storage"]["Console"]["Mode"] = state[STATE_STC]["mode"]
-	tgui_state["Storage"]["Console"]["Mutation"]["Mode"] = state[STATE_STCM]["mode"]
-	tgui_state["Storage"]["Console"]["Mutation"]["Index"] = state[STATE_STCM]["index"]
-	tgui_state["Storage"]["Console"]["Chromo"]["Index"] = state[STATE_STCC]["index"]
-	tgui_state["Storage"]["Disk"]["Mode"] = state[STATE_STD]["mode"]
-	tgui_state["Storage"]["Disk"]["Mutation"]["Mode"] = state[STATE_STDM]["mode"]
-	tgui_state["Storage"]["Disk"]["Mutation"]["Index"] = state[STATE_STDM]["index"]
-	tgui_state["Sequencer"]["Mode"] = state[STATE_GS]["mode"]
-	tgui_state["Sequencer"]["Index"] = state[STATE_GS]["index"]
 
 // Checks wether
 /obj/machinery/computer/scan_consolenew/proc/check_discovery(alias)

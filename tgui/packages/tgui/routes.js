@@ -742,7 +742,7 @@ const ROUTES = {
   },
   scan_consolenew: {
     component: () => DnaConsole,
-    scrollable: false,
+    scrollable: true,
   },
 };
 
