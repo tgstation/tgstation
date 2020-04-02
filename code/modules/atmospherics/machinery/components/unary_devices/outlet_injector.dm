@@ -26,13 +26,13 @@
 	ui_x = 310
 	ui_y = 115
 	
-/obj/machinery/atmospherics/components/binary/volume_pump/CtrlClick(mob/user)
+/obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
 		update_icon()
 	return ..()
 
-/obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
+/obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
 	if(can_interact(user))
 		volume_rate = MAX_TRANSFER_RATE
 		update_icon()
