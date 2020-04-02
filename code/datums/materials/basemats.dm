@@ -257,7 +257,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	desc = "A weird kind of ice, feels warm to the touch"
 	color = "#88cdf1"
 	alpha = 150
-	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	categories = list(MAT_CATEGORY_NORECIPE = TRUE)
 	sheet_type = /obj/item/stack/sheet/hot_ice
 	value_per_unit = 0.75
 	beauty_modifier = 0.75

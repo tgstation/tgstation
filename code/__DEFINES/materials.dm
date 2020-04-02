@@ -4,6 +4,8 @@
 /// Hard materials, such as iron or metal
 #define MAT_CATEGORY_RIGID "rigid material"
 
+#define MAT_CATEGORY_NORECIPE "no recipes"
+
 /// Flag for atoms, this flag ensures it isn't re-colored by materials. Useful for snowflake icons such as default toolboxes.
 #define MATERIAL_COLOR (1<<0)
 #define MATERIAL_ADD_PREFIX (1<<1)
