@@ -18,7 +18,6 @@
 	///Access granted by the used to summon robots.
 	var/list/current_access = list()
 
-
 /datum/computer_file/program/robocontrol/ui_data(mob/user)
 	var/list/data = get_header_data()
 	var/turf/current_turf = get_turf(ui_host())
@@ -26,6 +25,26 @@
 	var/list/botlist = list()
 	var/list/mulelist = list()
 	var/mule_check
+
+	var/obj/item/computer_hardware/card_slot/card_slot
+
+	if(computer)
+		card_slot = computer.all_components[MC_CARD]
+
+	if(computer)
+		data["have_id_slot"] = !!card_slot
+	else
+		data["have_id_slot"] = FALSE
+
+	if(computer)
+		var/obj/item/card/id/id_card
+		if(card_slot)
+			id_card = card_slot.stored_card
+		data["has_id"] = !!id_card
+		if(id_card)
+			data["id_owner"] = id_card.registered_name ? id_card.registered_name : "No Card Inserted"
+			data["access_on_card"] = id_card.access
+
 	botcount = 0
 	current_user = user
 	/*if(user.get_idcard)
@@ -41,7 +60,7 @@
 
 		if(Bot.bot_type == MULE_BOT)
 			var/mob/living/simple_animal/bot/mulebot/MULE = Bot
-			mulelist += list(list("load" = MULE.load, "destination" = MULE.destination, "power" = MULE.cell, "home" = MULE.home_destination))
+			mulelist += list(list("name" = MULE.name,"load" = MULE.load, "destination" = MULE.destination, "power" = MULE.cell, "home" = MULE.home_destination, "mule_ref" = REF(MULE)))
 			mule_check = TRUE
 
 		botlist += list(list("name" = Bot.name, "mode" = Bot.get_mode_ui(), "model" = Bot.model, "locat" = get_area(Bot), "bot_ref" = REF(Bot), "mule_check" = mule_check))
@@ -56,6 +75,11 @@
 /datum/computer_file/program/robocontrol/ui_act(action, list/params)
 	if(..())
 		return TRUE
+	var/obj/item/computer_hardware/card_slot/card_slot
+	var/obj/item/card/id/id_card
+	if(computer)
+		card_slot = computer.all_components[MC_CARD]
+		id_card = card_slot.stored_card
 
 	var/mob/living/simple_animal/bot/Bot = locate(params["robot"]) in GLOB.bots_list
 	//if(!Bot)
@@ -66,10 +90,43 @@
 		if("patrolon")
 			Bot.bot_control(action, current_user, current_access)
 		if("summon")
+			if(id_card)
+				current_access = id_card.access
 			Bot.bot_control(action, current_user, current_access)
 		if("ejectpai")
 			Bot.bot_control(action, current_user, current_access)
+		//Mule Commands
+		if("stop")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("go")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("home")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("destination")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("setid")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("sethome")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("unload")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("autoret")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("autopick")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("report")
+			Bot.bot_control(action, current_user, current_access, TRUE)
+		if("ejectpai")
+			Bot.bot_control(action, current_user, current_access, TRUE)
 
+		if("ejectcard")
+			if(!computer || !card_slot)
+				return
+			if(id_card)
+				GLOB.data_core.manifest_modify(id_card.registered_name, id_card.assignment)
+				card_slot.try_eject(TRUE, current_user)
+			else
+				playsound(get_turf(ui_host()) , 'sound/machines/buzz-sigh.ogg', 25, FALSE)
 	return
 
 

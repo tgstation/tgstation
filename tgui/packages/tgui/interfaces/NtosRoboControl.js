@@ -6,11 +6,19 @@ import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section, Tabs } 
 export const NtosRoboControl = props => {
   const { act, data } = useBackend(props);
   const bots = data.bots || [];
+  const mules = data.mules || [];
   return (
     <Section
-      title="Robot Control Console">
+      title="Robot Control Console"
+      buttons={(
+        <Button
+          content="Eject ID"
+          onClick={() => act('ejectcard')} 
+        />
+      )}>
       <Box>
-        Bots detected in range:{data.botcount} 
+        Bots detected in range: {data.botcount} 
+		
       </Box>
       <Section>
         {bots.map(robot => (
@@ -29,10 +37,65 @@ export const NtosRoboControl = props => {
                 Status: {robot.mode}
               </Box>
             </Section>
-            {robot.mule_check === 1 && (
-              <Box>
-                Creeper? Aww man.
-              </Box>
+            {robot.mule_check === 1 &&(
+              mules.map(mulebot => (
+                {(robot.bot_ref === mulebot.mule_ref) &&(
+				<Box
+                  key={mulebot.mule_ref}
+                  backgroundColor="#a87b32">
+                  <Button
+                    content="Stop"
+                    onClick={() => act('stop', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="Go"
+                    onClick={() => act('go', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="Home"
+                    onClick={() => act('home', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="To Destination"
+                    onClick={() => act('destination', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="Set ID"
+                    onClick={() => act('setid', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="Set Home"
+                    onClick={() => act('sethome', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="Unload Cargo"
+                    onClick={() => act('unload', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="Toggle Auto Return"
+                    onClick={() => act('autoret', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="Toggle Auto Pickup"
+                    onClick={() => act('autopick', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                  <Button
+                    content="Report"
+                    onClick={() => act('report', {
+                      robot: mulebot.mule_ref,
+                    })} />
+                </Box>
+				)}
+              ))
             )}
             <Box m={1} />
             {robot.mule_check === 0 && (
