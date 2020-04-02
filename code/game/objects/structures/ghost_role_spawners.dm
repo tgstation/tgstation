@@ -658,7 +658,8 @@
 /obj/effect/mob_spawn/human/syndicatespace/Initialize(mapload)
 	. = ..()
 	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
-	important_info = policy || important_info
+	if(policy)
+		important_info = policy
 
 /datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -681,7 +682,8 @@
 /obj/effect/mob_spawn/human/syndicatespace/syndicaptain/Initialize(mapload)
 	. = ..()
 	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN_CAPTAIN)
-	important_info = policy || important_info
+	if(policy)
+		important_info = policy
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
