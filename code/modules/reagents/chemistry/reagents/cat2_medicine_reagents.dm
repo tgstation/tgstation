@@ -429,6 +429,16 @@
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
+/*
+*How this medicine works:
+*Penthrite if you are not in crit only stabilizes your heart.
+*As soon as you pass crit threshold it's special effects kick in. Penthrite forces your heart to beat preventing you from entering
+*soft and hard crit, but there is a catch. During this you will be healed and you will sustain
+*heart damage that will not imapct you as long as penthrite is in your system.
+*If you reach the threshold of -60 HP penthrite stops working and you get a heart attack, penthrite is flushed from your system in that very moment,
+*causing you to loose your soft crit, hard crit and heart stabilization effects.
+*Overdosing on penthrite also causes a heart failure.
+*/
 /datum/reagent/medicine/C2/penthrite
 	name = "Penthrite"
 	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. It reacts violently with other emergency medication."
