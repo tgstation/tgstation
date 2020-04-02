@@ -733,7 +733,6 @@
 	var/card_throw_speed = 3
 	var/card_throw_range = 7
 	var/list/card_attack_verb = list("attacked")
-	var/original_size = 52
 
 /obj/item/toy/cards/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!</span>")
@@ -799,11 +798,11 @@
 
 /obj/item/toy/cards/deck/update_icon_state()
 	switch(cards.len)
-		if(cards.len > original_size/2 to INFINITY)
+		if(27 to INFINITY)
 			icon_state = "deck_[deckstyle]_full"
-		if(cards.len > original_size/4 to cards.len > original_size/2)
+		if(11 to 27)
 			icon_state = "deck_[deckstyle]_half"
-		if(1 to cards.len > original_size/4)
+		if(1 to 11)
 			icon_state = "deck_[deckstyle]_low"
 		else
 			icon_state = "deck_[deckstyle]_empty"

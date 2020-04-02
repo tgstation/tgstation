@@ -4,7 +4,6 @@
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_uno_full"
 	deckstyle = "uno"
-	original_size = 108
 
 //Populate the deck.
 /obj/item/toy/cards/deck/uno/populate_deck()
