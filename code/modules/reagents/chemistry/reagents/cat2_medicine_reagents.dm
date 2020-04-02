@@ -480,7 +480,7 @@
 	. = ..()
 
 /datum/reagent/medicine/C2/penthrite/overdose_process(mob/living/carbon/human/H)
-	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(H, TRAIT_STABLEHEART, type)
 	H.adjustStaminaLoss(10)
 	H.adjustOrganLoss(ORGAN_SLOT_HEART,10)
 	H.set_heartattack(TRUE)
