@@ -34,7 +34,7 @@
 
 /obj/structure/spawner/ice_moon/polarbear
 	max_mobs = 1
-	spawn_time = 600 //60 seconds
+	spawn_time = 60 SECONDS
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/polarbear)
 
 /obj/structure/spawner/ice_moon/polarbear/clear_rock()
