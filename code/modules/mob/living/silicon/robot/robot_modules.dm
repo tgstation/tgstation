@@ -470,24 +470,31 @@
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-
-	var/list/iconstates = GLOB.service_robot_icons
-	for(var/option in iconstates)
-		iconstates[option] = image(icon = R.icon, icon_state = resolve_service_robot_icon(option))
-
-	var/service_robot_icon = show_radial_menu(R, R , iconstates, radius = 42)
-	if(!service_robot_icon)
-		return FALSE
-
-	cyborg_base_icon = resolve_service_robot_icon(service_robot_icon)
-	switch(cyborg_base_icon)
-		if("tophat")
-			special_light_key = null
-			hat_offset = INFINITY //He is already wearing a hat
-		if("kent")
+	var/list/service_icons = sortList(list(
+		"Waitress" = image(icon = R.icon, icon_state = "service_f"),
+		"Butler" = image(icon = R.icon, icon_state = "service_m"),
+		"Bro" = image(icon = R.icon, icon_state = "brobot"),
+		"Kent" = image(icon = R.icon, icon_state = "kent"),
+		"Tophat" = image(icon = R.icon, icon_state = "tophat")
+		))
+	var/service_robot_icon = show_radial_menu(R, R , service_icons, radius = 42, require_near = TRUE)
+	switch(service_robot_icon)
+		if("Waitress")
+			cyborg_base_icon = "service_f"
+		if("Butler")
+			cyborg_base_icon = "service_m"
+		if("Bro")
+			cyborg_base_icon = "brobot"
+		if("Kent")
+			cyborg_base_icon = "kent"
 			special_light_key = "medical"
 			hat_offset = 3
-
+		if("Tophat")
+			cyborg_base_icon = "tophat"
+			special_light_key = null
+			hat_offset = INFINITY //He is already wearing a hat
+		else
+			return FALSE
 	return ..()
 
 /obj/item/robot_module/miner
@@ -513,19 +520,22 @@
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-
-	var/list/iconstates = GLOB.miner_robot_icons
-	for(var/option in iconstates)
-		iconstates[option] = image(icon = R.icon, icon_state = resolve_miner_robot_icon(option))
-
-	var/miner_robot_icon = show_radial_menu(R, R , iconstates, radius = 42)
-	if(!miner_robot_icon)
-		return FALSE
-
-	cyborg_base_icon = resolve_miner_robot_icon(miner_robot_icon)
-	if(cyborg_base_icon == "minerOLD")
-		special_light_key = "miner"
-
+	var/list/miner_icons = sortList(list(
+		"Lavaland Miner" = image(icon = R.icon, icon_state = "miner"),
+		"Asteroid Miner" = image(icon = R.icon, icon_state = "minerOLD"),
+		"Spider Miner" = image(icon = R.icon, icon_state = "spidermin")
+		))
+	var/miner_robot_icon = show_radial_menu(R, R , miner_icons, radius = 42, require_near = TRUE)
+	switch(miner_robot_icon)
+		if("Lavaland Miner")
+			cyborg_base_icon = "miner"
+		if("Asteroid Miner")
+			cyborg_base_icon = "minerOLD"
+			special_light_key = "miner"
+		if("Spider Miner")
+			cyborg_base_icon = "spidermin"
+		else
+			return FALSE
 	return ..()
 
 /obj/item/robot_module/miner/rebuild_modules()

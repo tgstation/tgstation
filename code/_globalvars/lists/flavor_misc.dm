@@ -139,46 +139,6 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 			input = pick(GLOB.ai_core_display_screens - "Random")
 		return "ai-[lowertext(input)]"
 
-GLOBAL_LIST_INIT(miner_robot_icons, sortList(list(
-	"Lavaland Miner",
-	"Asteroid Miner",
-	"Spider Miner")))
-
-/proc/resolve_miner_robot_icon(input)
-	if(!input || !(input in GLOB.miner_robot_icons))
-		return "miner"
-	else
-		switch(input)
-			if("Lavaland Miner")
-				return "miner"
-			if("Asteroid Miner")
-				return "minerOLD"
-			if("Spider Miner")
-				return "spidermin"
-
-GLOBAL_LIST_INIT(service_robot_icons, sortList(list(
-	"Waitress",
-	"Butler",
-	"Bro",
-	"Kent",
-	"Tophat")))
-
-/proc/resolve_service_robot_icon(input)
-	if(!input || !(input in GLOB.service_robot_icons))
-		return "service_m"
-	else
-		switch(input)
-			if("Waitress")
-				return "service_f"
-			if("Butler")
-				return "service_m"
-			if("Bro")
-				return "brobot"
-			if("Kent")
-				return "kent"
-			if("Tophat")
-				return "tophat"
-
 GLOBAL_LIST_INIT(security_depts_prefs, sortList(list(SEC_DEPT_RANDOM, SEC_DEPT_NONE, SEC_DEPT_ENGINEERING, SEC_DEPT_MEDICAL, SEC_DEPT_SCIENCE, SEC_DEPT_SUPPLY)))
 
 	//Backpacks
