@@ -6,7 +6,7 @@
 
 /obj/machinery/door/firedoor
 	name = "firelock"
-	desc = "Apply crowbar."
+	desc = "Apply crowbar (or hands)."
 	icon = 'icons/obj/doors/Doorfireglass.dmi'
 	icon_state = "door_open"
 	opacity = FALSE
@@ -26,6 +26,7 @@
 	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
+	safety_mode = TRUE //you can open these with your bare hands
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()
