@@ -616,6 +616,8 @@
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, candidate, user, 0, T)
 						if("Artificer")
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, candidate, user, 0, T)
+						else
+							return
 					SEND_SOUND(user, sound('sound/effects/magic.ogg',0,1,25))
 					uses--
 					candidate.mmi = null

@@ -133,7 +133,7 @@
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_icon_state = "phaseshift"
 	action_background_icon_state = "bg_demon"
-	jaunt_in_time = 6.4
+	jaunt_in_time = 6
 	jaunt_in_type = /obj/effect/temp_visual/dir_setting/wraith
 	jaunt_out_type = /obj/effect/temp_visual/dir_setting/wraith/out
 

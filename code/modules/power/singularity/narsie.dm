@@ -231,7 +231,7 @@
 	setDir(SOUTH)
 	move_self = 0
 	flick("narsie_spawn_anim",src)
-	sleep(35)
+	sleep(34)
 	move_self = 1
 	icon = initial(icon)
 

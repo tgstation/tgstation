@@ -105,6 +105,8 @@
 			pickedtype += /obj/structure/constructshell
 		if("Flask of Unholy Water")
 			pickedtype += /obj/item/reagent_containers/glass/beaker/unholywater
+		else
+			return
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
@@ -146,6 +148,8 @@
 			pickedtype += /obj/item/clothing/suit/hooded/cultrobes/berserker
 		if("Mirror Shield")
 			pickedtype += /obj/item/shield/mirror
+		else
+			return
 	if(src && !QDELETED(src) && anchored && pickedtype && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)
@@ -265,6 +269,8 @@
 		if("Veil Walker Set")
 			pickedtype += /obj/item/cult_shift
 			pickedtype += /obj/item/flashlight/flare/culttorch
+		else
+			return
 	if(src && !QDELETED(src) && anchored && pickedtype.len && Adjacent(user) && !user.incapacitated() && iscultist(user) && cooldowntime <= world.time)
 		cooldowntime = world.time + 2400
 		for(var/N in pickedtype)

@@ -100,7 +100,7 @@
 	name = "shadow"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "phase_shift2"
-	duration = 64
+	duration = 6
 
 /obj/effect/temp_visual/dir_setting/wraith/angelic
 	icon_state = "phase_shift2_angelic"

@@ -112,7 +112,7 @@
 		A.cancel_camera()
 		if(purified)
 			icon_state = "purified_soulstone"
-			A.icon_state = "ghost1"
+			A.icon_state = "shade1"
 			A.name = "Purified [initial(A.name)]"
 		else
 			icon_state = "soulstone"
@@ -252,6 +252,8 @@
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/angelic, A, user, 0, T.loc)
 							else
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/noncult, A, user, 0, T.loc)
+					else
+						return
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
 						SSticker.mode.remove_cultist(A.mind)
