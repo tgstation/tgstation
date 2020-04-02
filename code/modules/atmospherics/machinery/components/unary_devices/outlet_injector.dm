@@ -34,7 +34,7 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump/AltClick(mob/user)
 	if(can_interact(user))
-		transfer_rate = MAX_TRANSFER_RATE
+		volume_rate = MAX_TRANSFER_RATE
 		update_icon()
 	return ..()
 
