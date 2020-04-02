@@ -462,11 +462,11 @@
 
 
 		if(prob(33))
-			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!")
+			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
 
 	if(H.health <= H.crit_threshold) //certain death above this threshold
 		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart before we give him heart attack
-		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!")
+		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!</span>")
 		H.emote("scream")
 		H.set_heartattack(TRUE)
 		volume = 0
