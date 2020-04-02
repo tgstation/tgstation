@@ -12,7 +12,7 @@
 	response_harm_continuous = "punches"
 	response_harm_simple = "punch"
 	speak_chance = 1
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/cult.dmi'
 	speed = 0
 	a_intent = INTENT_HARM
 	stop_automated_movement = 1

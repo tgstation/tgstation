@@ -112,7 +112,7 @@
 		A.cancel_camera()
 		if(purified)
 			icon_state = "purified_soulstone"
-			A.icon_state = "shade1"
+			A.icon_state = "shade_angelic"
 			A.name = "Purified [initial(A.name)]"
 		else
 			icon_state = "soulstone"
@@ -220,9 +220,9 @@
 			var/mob/living/simple_animal/shade/A = locate() in src
 			if(A)
 				var/list/constructs = list(
-					"Juggernaut" = image(icon = 'icons/mob/mob.dmi', icon_state = "juggernaut"),
-					"Wraith" = image(icon = 'icons/mob/mob.dmi', icon_state = "wraith"),
-					"Artificer" = image(icon = 'icons/mob/mob.dmi', icon_state = "artificer")
+					"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
+					"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
+					"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
 					)
 				var/construct_class = show_radial_menu(user, src, constructs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 				if(!T || !T.loc)
@@ -275,6 +275,7 @@
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	var/makeicon = newstruct.icon_state
 	var/holyness = newstruct.holy
+	playsound(newstruct, 'sound/creatures/construct.ogg', 50)
 	flick("make_[makeicon][holyness]", newstruct)
 	if(stoner)
 		newstruct.faction |= "[REF(stoner)]"
