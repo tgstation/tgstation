@@ -197,7 +197,6 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 ///Called when the obj is exposed to fire.
 /obj/fire_act(exposed_temperature, exposed_volume)
-	. = ..()
 	if(exposed_temperature && !(resistance_flags & FIRE_PROOF))
 		take_damage(clamp(0.02 * exposed_temperature, 0, 20), BURN, "fire", 0)
 	if(!(resistance_flags & ON_FIRE) && (resistance_flags & FLAMMABLE) && !(resistance_flags & FIRE_PROOF))
@@ -205,6 +204,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		SSfire_burning.processing[src] = src
 		add_overlay(GLOB.fire_overlay, TRUE)
 		return 1
+	. = ..()
 
 ///called when the obj is destroyed by fire
 /obj/proc/burn()
