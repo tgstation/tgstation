@@ -26,7 +26,6 @@
 	var/nextstate = null
 	var/boltslocked = TRUE
 	var/list/affecting_areas
-	safety_mode = TRUE //you can open these with your bare hands
 
 /obj/machinery/door/firedoor/Initialize()
 	. = ..()
@@ -68,29 +67,18 @@
 	affecting_areas.Cut()
 	return ..()
 
-/obj/machinery/door/firedoor/Bumped(atom/movable/AM)
-	if(panel_open || operating)
-		return
-	if(!density)
-		return ..()
+/obj/machinery/door/proc/firedoor/try_safety_unlock(mob/user)
+	if(density)
+		to_chat(user, "<span class='notice'>You try to pry open [src]...</span>")
+		if(do_after(user, 5 SECONDS, target = src) && density) //the extra density check is here in case the firedoor was opened while we were trying to pry it open
+			try_to_crowbar(null, user)
+			return TRUE
+		to_chat(user, "<span class='notice'>You fail to pry open [src].</span>")
 	return FALSE
-
 
 /obj/machinery/door/firedoor/power_change()
 	. = ..()
 	latetoggle()
-
-/obj/machinery/door/firedoor/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(operating || !density)
-		return
-	user.changeNext_move(CLICK_CD_MELEE)
-
-	user.visible_message("<span class='notice'>[user] bangs on \the [src].</span>", \
-						 "<span class='notice'>You bang on \the [src].</span>")
-	playsound(loc, 'sound/effects/glassknock.ogg', 10, FALSE, frequency = 32000)
 
 /obj/machinery/door/firedoor/attackby(obj/item/C, mob/user, params)
 	add_fingerprint(user)
