@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - admin: "posibrains now use get_policy for their laws"
