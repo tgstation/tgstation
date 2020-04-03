@@ -38,6 +38,7 @@ const SUBJECT_CONCIOUS = 0;
 const SUBJECT_SOFT_CRIT = 1;
 const SUBJECT_UNCONSCIOUS = 2;
 const SUBJECT_DEAD = 3;
+const SUBJECT_TRANSFORMING = 4;
 
 const GENES = ['A', 'T', 'C', 'G'];
 const GENE_COLORS = {
@@ -680,6 +681,10 @@ const DnaConsoleSequencer = props => {
       ) || (isMonkey && mutation?.Name !== 'Monkified') && (
         <Section color="bad">
           Genetic sequence corrupted. Subject diagnostic report: MONKEY.
+        </Section>
+      ) || (subjectStatus === SUBJECT_TRANSFORMING) && (
+        <Section color="bad">
+          Genetic sequence corrupted. Subject diagnostic report: TRANSFORMING.
         </Section>
       ) || (
         <Section

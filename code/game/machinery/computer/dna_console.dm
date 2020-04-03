@@ -10,6 +10,8 @@
 #define RADIATION_DURATION_MAX 30
 #define RADIATION_ACCURACY_MULTIPLIER 3 // larger is less accurate
 
+#define STATUS_TRANSFORMING 4
+
 // multiplier for how much radiation a test subject receives
 #define RADIATION_IRRADIATION_MULTIPLIER 1
 
@@ -245,12 +247,14 @@
 	data["isViableSubject"] = is_viable_occupant
 	if(is_viable_occupant)
 		data["subjectName"] = scanner_occupant.name
-		data["subjectStatus"] = scanner_occupant.stat
+		if(scanner_occupant.transformation_timer)
+			data["subjectStatus"] = STATUS_TRANSFORMING
+		else
+			data["subjectStatus"] = scanner_occupant.stat
 		data["subjectHealth"] = scanner_occupant.health
 		data["subjectRads"] = scanner_occupant.radiation/(RAD_MOB_SAFE/100)
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
 		data["isMonkey"] = ismonkey(scanner_occupant)
-
 		data["subjectUNI"] = scanner_occupant.dna.uni_identity
 		data["subjectMutations"] = tgui_occupant_mutations
 	else
@@ -419,6 +423,12 @@
 			// GUARD CHECK - Have we somehow cheekily swapped occupants? This is
 			//  unexpected.
 			if(!(scanner_occupant == connected_scanner.occupant))
+				return
+
+			// GUARD CHECK - Is the occupant currently undergoing some form of
+			//  transformation? If so, we don't want to be pulsing genes.
+			if(scanner_occupant.transformation_timer)
+				to_chat(usr,"<span class='warning'>Gene pulse failed: The scanner occupant undergoing a transformation.</span>")
 				return
 
 			// Resolve mutation's BYOND path from the alias
@@ -1819,6 +1829,8 @@
 #undef RADIATION_ACCURACY_MULTIPLIER
 
 #undef RADIATION_IRRADIATION_MULTIPLIER
+
+#undef STATUS_TRANSFORMING
 
 #undef SEARCH_OCCUPANT
 #undef SEARCH_STORED
