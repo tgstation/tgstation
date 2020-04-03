@@ -13,16 +13,10 @@
 // multiplier for how much radiation a test subject receives
 #define RADIATION_IRRADIATION_MULTIPLIER 1
 
-#define SCANNER_ACTION_SE 1
-#define SCANNER_ACTION_UI 2
-#define SCANNER_ACTION_UE 3
-#define SCANNER_ACTION_MIXED 4
-
 #define SEARCH_OCCUPANT 1
 #define SEARCH_STORED 2
 #define SEARCH_DISKETTE 4
 #define SEARCH_ADV_INJ 8
-
 
 /obj/machinery/computer/scan_consolenew
 	name = "DNA Console"
@@ -57,9 +51,6 @@
 	var/max_injector_mutations = 10
 	///the max instability of the advanced injector.
 	var/max_injector_instability = 50
-
-	var/list/genes = list("A","T","G","C","X")
-	var/list/reversegenes = list("X","C","G","T","A")
 
 	var/injectorready = 0	//world timer cooldown var
 	var/jokerready = 0
@@ -260,14 +251,7 @@
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
 		data["isMonkey"] = ismonkey(scanner_occupant)
 
-		var/text_sequence = scanner_occupant.dna.uni_identity
-		var/list/list_sequence = list()
-
-		for(var/i in 1 to LAZYLEN(text_sequence))
-			list_sequence += text_sequence[i];
-
-		data["subjectUNI"] = text_sequence
-		data["subjectUNIList"] = list_sequence
+		data["subjectUNI"] = scanner_occupant.dna.uni_identity
 		data["subjectMutations"] = tgui_occupant_mutations
 	else
 		data["subjectName"] = null
@@ -312,16 +296,6 @@
 	data["advInjectors"] = tgui_advinjector_mutations
 	data["maxAdvInjectors"] = max_injector_selections
 
-	// These are effectively DEFINES/constants
-	data["CONSCIOUS"] = CONSCIOUS
-	data["SOFT_CRIT"] = SOFT_CRIT
-	data["UNCONSCIOUS"] = UNCONSCIOUS
-	data["DEAD"] = DEAD
-	data["GENES"] = genes
-	data["REVERSEGENES"] = reversegenes
-	data["CHROMOSONE_NEVER"] = CHROMOSOME_NEVER
-	data["CHROMOSOME_NONE"] = CHROMOSOME_NONE
-	data["CHROMOSOME_USED"] = CHROMOSOME_USED
 	data["MUT_NORMAL"] = MUT_NORMAL
 	data["MUT_EXTRA"] = MUT_EXTRA
 	data["MUT_OTHER"] = MUT_OTHER
@@ -1383,33 +1357,33 @@
 			//  this catches that edge case
 			if(!buffer_slot["UI"])
 				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
-				return
+				return FALSE
 			scanner_occupant.dna.uni_identity = buffer_slot["UI"]
 			scanner_occupant.updateappearance(mutations_overlay_update=1)
 			scanner_occupant.radiation += rad_increase
 			scanner_occupant.domutcheck()
-			return
+			return TRUE
 		if("ue")
 			// GUARD CHECK - There's currently no way to save partial genetic data.
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
 				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
-				return
+				return FALSE
 			scanner_occupant.real_name = buffer_slot["name"]
 			scanner_occupant.name = buffer_slot["name"]
 			scanner_occupant.dna.unique_enzymes = buffer_slot["UE"]
 			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
 			scanner_occupant.radiation += rad_increase
 			scanner_occupant.domutcheck()
-			return
+			return TRUE
 		if("mixed")
 			// GUARD CHECK - There's currently no way to save partial genetic data.
 			//  However, if this is the case, we can't make a complete injector and
 			//  this catches that edge case
 			if(!buffer_slot["UI"] || !buffer_slot["name"] || !buffer_slot["UE"] || !buffer_slot["blood_type"])
 				to_chat(usr,"<span class='warning'>Genetic data corrupted, unable to apply genetic data.</span>")
-				return
+				return FALSE
 			scanner_occupant.dna.uni_identity = buffer_slot["UI"]
 			scanner_occupant.updateappearance(mutations_overlay_update=1)
 			scanner_occupant.real_name = buffer_slot["name"]
@@ -1418,7 +1392,9 @@
 			scanner_occupant.dna.blood_type = buffer_slot["blood_type"]
 			scanner_occupant.radiation += rad_increase
 			scanner_occupant.domutcheck()
-			return
+			return TRUE
+
+	return FALSE
 
 // Checks if there is a connected DNA Scanner that is operational
 /obj/machinery/computer/scan_consolenew/proc/scanner_operational()
@@ -1492,12 +1468,10 @@
 	// GUARD CHECK - Make sure we can modify the occupant, apply_genetic_makeup()
 	//  assumes we've already done this.
 	if(delayed_action && can_modify_occupant())
-		// TODO - This chat message can still trigger even if apply_genetic_makeup
-		// fails. This is not ideal.
-		to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
 		var/type = delayed_action["type"]
 		var/buffer_slot = delayed_action["buffer_slot"]
-		apply_genetic_makeup(type, buffer_slot)
+		if(apply_genetic_makeup(type, buffer_slot))
+			to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
 		delayed_action = null
 
 // Called by DNA Scanners when they open
@@ -1529,7 +1503,6 @@
 	tgui_advinjector_mutations.Cut()
 
   // ------------------------------------------------------------------------ //
-	var/index = 1
 	// GUARD CHECK - Can we genetically modify the occupant? This check will have
 	//  previously included checks to make sure the DNA Scanner is still
 	//  operational
@@ -1541,21 +1514,10 @@
 
 			var/list/mutation_data = list()
 			var/text_sequence = scanner_occupant.dna.mutation_index[mutation_type]
-			var/list/list_sequence = list()
-
-			// Convert the text sequence to a character array For easier tgui
-			//  manioulation.
-
-			// TODO: Use NodeJS methods in the tgui interface instead of doing it at
-			//  the BYOND level.
-			for(var/i in 1 to LAZYLEN(text_sequence))
-				list_sequence += text_sequence[i];
-
 			var/discovered = (stored_research && (mutation_type in stored_research.discovered_mutations))
 
 			mutation_data["Alias"] = HM.alias
 			mutation_data["Sequence"] = text_sequence
-			mutation_data["SeqList"] = list_sequence
 			mutation_data["Discovered"] = discovered
 
 			// We only want to pass this information along to the tgui interface if
@@ -1600,8 +1562,7 @@
 			else
 				mutation_data["Image"] = "dna_undiscovered.gif"
 
-			tgui_occupant_mutations["[index]"] = mutation_data
-			index++
+			tgui_occupant_mutations += list(mutation_data)
 
 		// ---------------------------------------------------------------------- //
 		// Now get additional/"extra" mutations that they shouldn't have by default
@@ -1614,12 +1575,6 @@
 
 			var/list/mutation_data = list()
 			var/text_sequence = GET_SEQUENCE(HM.type)
-			var/list/list_sequence = list()
-
-			// TODO: Use NodeJS methods in the tgui interface instead of doing it at
-			//  the BYOND level.
-			for(var/i in 1 to LAZYLEN(text_sequence))
-				list_sequence += text_sequence[i];
 
 			// These will all be active mutations. They're added by injector and their
 			//  sequencing code can't be changed. They can only be nullified, which
@@ -1628,7 +1583,6 @@
 
 			mutation_data["Alias"] = A.alias
 			mutation_data["Sequence"] = text_sequence
-			mutation_data["SeqList"] = list_sequence
 			mutation_data["Discovered"] = TRUE
 
 			mutation_data["Name"] = HM.name
@@ -1654,28 +1608,18 @@
 			else
 				mutation_data["Image"] = "dna_discovered.gif"
 
-			tgui_occupant_mutations["[index]"] = mutation_data
-			index++
+			tgui_occupant_mutations += list(mutation_data)
 
 	// ------------------------------------------------------------------------ //
 	// Build the list of mutations stored within the DNA Console
-	index = 1
 	for(var/datum/mutation/human/HM in stored_mutations)
 		var/list/mutation_data = list()
-
-		var/text_sequence = GET_SEQUENCE(HM.type)
-		var/list/list_sequence = list()
-
-		// TODO: Use NodeJS methods in the tgui interface instead of doing it at
-		//  the BYOND level.
-		for(var/i in 1 to LAZYLEN(text_sequence))
-			list_sequence += text_sequence[i];
 
 		var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
 
 		mutation_data["Alias"] = A.alias
-		mutation_data["SeqList"] = list_sequence
 		mutation_data["Name"] = HM.name
+		//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
 		mutation_data["Description"] = HM.desc
 		mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
 		mutation_data["ByondRef"] = REF(HM)
@@ -1687,39 +1631,27 @@
 			mutation_data["AppliedChromo"] = HM.chromosome_name
 			mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
 
-		tgui_scanner_mutations["[index]"] = mutation_data
-		index++
+		tgui_scanner_mutations += list(mutation_data)
 
-	index = 1
 	for(var/obj/item/chromosome/CM in stored_chromosomes)
 		var/list/chromo_data = list()
 
 		chromo_data["Name"] = CM.name
 		chromo_data["Description"] = CM.desc
 
-		tgui_scanner_chromosomes["[index]"] = chromo_data
-		index++
+		tgui_scanner_chromosomes += list(chromo_data)
 
 	// ------------------------------------------------------------------------ //
 	// Build the list of mutations stored on any inserted diskettes
-	index = 1
 	if(diskette)
 		for(var/datum/mutation/human/HM in diskette.mutations)
 			var/list/mutation_data = list()
 
-			var/text_sequence = GET_SEQUENCE(HM.type)
-			var/list/list_sequence = list()
-
-			// TODO: Use NodeJS methods in the tgui interface instead of doing it at
-			//  the BYOND level.
-			for(var/i in 1 to LAZYLEN(text_sequence))
-				list_sequence += text_sequence[i];
-
 			var/datum/mutation/human/A = GET_INITIALIZED_MUTATION(HM.type)
 
 			mutation_data["Alias"] = A.alias
-			mutation_data["SeqList"] = list_sequence
 			mutation_data["Name"] = HM.name
+			//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
 			mutation_data["Description"] = HM.desc
 			mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
 			mutation_data["ByondRef"] = REF(HM)
@@ -1731,10 +1663,7 @@
 				mutation_data["AppliedChromo"] = HM.chromosome_name
 				mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
 
-			tgui_diskette_mutations["[index]"] = mutation_data
-			index += 1
-
-	index = 1
+			tgui_diskette_mutations += list(mutation_data)
 
 	// ------------------------------------------------------------------------ //
 	// Build the list of mutations stored within any Advanced Injectors
@@ -1748,6 +1677,7 @@
 
 				mutation_data["Alias"] = A.alias
 				mutation_data["Name"] = HM.name
+				//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
 				mutation_data["Description"] = HM.desc
 				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
 				mutation_data["ByondRef"] = REF(HM)
@@ -1756,12 +1686,10 @@
 				if(HM.can_chromosome)
 					mutation_data["AppliedChromo"] = HM.chromosome_name
 
-				tgui_advinjector_mutations["[I]"]["[index]"] = mutation_data
-				index += 1
+				tgui_advinjector_mutations["[I]"] += list(mutation_data)
 
-
-// Builds a list of all chromosomes stored on in the console that can actually
-//  be applied to a given mutation
+// Builds a list of all chromosomes stored in the console that can actually be
+//  applied to a given mutation
 /obj/machinery/computer/scan_consolenew/proc/build_chrom_list(mutation)
 	var/list/chromosomes = list()
 
@@ -1772,7 +1700,8 @@
 	return chromosomes
 
 
-// Checks wether
+// Checks wether a given mutation's genetic sequence has been completed and
+//  discovers it if appropriate
 /obj/machinery/computer/scan_consolenew/proc/check_discovery(alias)
 	// Note - All code paths that call this have already done checks on the
 	//  current occupant to prevent cheese and other abuses. If you call this
@@ -1888,17 +1817,7 @@
 
 #undef RADIATION_IRRADIATION_MULTIPLIER
 
-#undef SCANNER_ACTION_SE
-#undef SCANNER_ACTION_UI
-#undef SCANNER_ACTION_UE
-#undef SCANNER_ACTION_MIXED
-
 #undef SEARCH_OCCUPANT
 #undef SEARCH_STORED
 #undef SEARCH_DISKETTE
 #undef SEARCH_ADV_INJ
-
-
-//#undef BAD_MUTATION_DIFFICULTY
-//#undef GOOD_MUTATION_DIFFICULTY
-//#undef OP_MUTATION_DIFFICULTY

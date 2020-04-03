@@ -1,8 +1,36 @@
-import { toArray } from 'common/collections';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Divider, Dropdown, Flex, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { createLogger } from '../logging';
+
+// NOTES:
+// Stored mutations can have metadata.
+// The following predicate tests if two mutations are functionally the same
+//  on the basis of their metadata.
+// Useful if your intent is to prevent "true" duplicates - i.e. mutations with
+//  identical metadata.
+/*
+function isDuplicateMutation(lhs, rhs) {
+  return((lhs.Alias === rhs.Alias) && (lhs.AppliedChromo === rhs.AppliedChromo))
+}
+*/
+
+// TODO: Chromosomes should only be applied from the genetic sequencer and not
+//  from any form of mutation storage.
+
+// TODO: Mutations that are not mut.Class === MUT_NORMAL should have a nullify
+//  button. They should not be able to be edited in the gene sequencer.
+//  MUT_EXTRAs are added by printing a Mutator to forcefuully add a mutation to
+//   a carbon.
+//  MUT_OTHER I don't even know. A MUT_OTHER is stated in _mutations.dm datum as
+//   "Cannot be interacted with by players through normal means.
+//   I.E. wizards mutate"
+//   Currently the only way to create this mutation class in DM is by creating
+//    an /obj/item/dnainjector/timed that applies mutations temporarily.
+//   There is currently no code path that does this. The only code path that
+//    uses timed injectors are the special injectors that change your genetic
+//    enzymes (looks, name, blood type) and these don't add any mutations.
+
 
 const logger = createLogger('DnaConsole');
 
@@ -330,8 +358,8 @@ const StorageMutations = props => {
   const { data, act } = useBackend(props);
   const isDisk = data.view.storageMode === STORAGE_MODE_DISK;
   const mutations = isDisk
-    ? toArray(data.diskMutations)
-    : toArray(data.mutationStorage);
+    ? (data.diskMutations ?? [])
+    : (data.mutationStorage ?? []);
   const mutationRef = String(data.view.storageMutationRef);
   const mutation = mutations
     .find(mutation => mutation.ByondRef === mutationRef);
@@ -377,7 +405,7 @@ const StorageMutations = props => {
 const StorageChromosomes = props => {
   const { state } = props;
   const { data, act } = useBackend(props);
-  const chromos = toArray(data.chromoStorage);
+  const chromos = data.chromoStorage ?? [];
   const chromoName = data.view.storageChromoName;
   const chromo = chromos.find(chromo => chromo.Name === chromoName);
   return (
@@ -447,8 +475,8 @@ const MutationInfo = props => {
     isInjectorReady,
     mutationCapacity,
   } = data;
-  const mutationStorage = toArray(data.mutationStorage);
-  const diskMutations = toArray(data.diskMutations);
+  const mutationStorage = data.mutationStorage ?? [];
+  const diskMutations = data.diskMutations ?? [];
   if (!mutation) {
     return (
       <Box color="label">
@@ -466,10 +494,10 @@ const MutationInfo = props => {
     );
   }
   const savedToConsole = mutationStorage.find(x => (
-    x.Alias === mutation.Alias
+    (x.Alias === mutation.Alias) && (x.AppliedChromo === mutation.AppliedChromo)
   ));
   const savedToDisk = diskMutations.find(x => (
-    x.Alias === mutation.Alias
+    (x.Alias === mutation.Alias) && (x.AppliedChromo === mutation.AppliedChromo)
   ));
   return (
     <Fragment>
@@ -515,7 +543,7 @@ const MutationInfo = props => {
       <br />
       <Button
         icon="save"
-        disabled={savedToConsole || mutationCapacity <= 0}
+        disabled={savedToConsole || mutationCapacity <= 0 || !mutation.Active}
         content="Save to Console"
         onClick={() => act('save_console', {
           mutref: mutation.ByondRef,
@@ -526,7 +554,8 @@ const MutationInfo = props => {
         disabled={savedToDisk
           || !hasDisk
           || diskCapacity <= 0
-          || diskReadOnly}
+          || diskReadOnly
+          || !mutation.Active}
         content="Save to Disk"
         onClick={() => act('save_disk', {
           mutref: mutation.ByondRef,
@@ -599,7 +628,7 @@ const ChromosomeInfo = props => {
 const DnaConsoleSequencer = props => {
   const { state } = props;
   const { data, act } = useBackend(props);
-  const mutations = toArray(data.subjectMutations);
+  const mutations = data.subjectMutations ?? [];
   const {
     isJokerReady,
     isMonkey,
