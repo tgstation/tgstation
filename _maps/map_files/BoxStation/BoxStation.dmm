@@ -5816,6 +5816,10 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"anM" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "anN" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -5882,6 +5886,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
+"anW" = (
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
+/obj/machinery/camera{
+	c_tag = "Hydroponics Storage"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "anX" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 5;
@@ -12469,18 +12486,6 @@
 /obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
-"aGt" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
-"aGu" = (
-/obj/machinery/door/firedoor,
-/obj/effect/turf_decal/tile/blue,
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
 "aGv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -14170,22 +14175,6 @@
 /obj/structure/closet/secure_closet/hydroponics,
 /turf/open/floor/plasteel,
 /area/hydroponics)
-"aKL" = (
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
-/obj/machinery/camera{
-	c_tag = "Hydroponics Storage"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
-/obj/structure/table,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "aKM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/bar,
@@ -14509,10 +14498,6 @@
 "aLE" = (
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
-"aLF" = (
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "aLG" = (
 /obj/machinery/power/apc{
 	areastring = "/area/hallway/primary/port";
@@ -14618,7 +14603,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/theatre)
 "aLT" = (
-/obj/machinery/door/firedoor,
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -15059,13 +15043,6 @@
 /area/hallway/primary/port)
 "aNl" = (
 /obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
-"aNp" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/port)
 "aNq" = (
@@ -15551,13 +15528,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"aOC" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/port)
 "aOD" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=QM";
@@ -20996,13 +20966,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/secondary/exit)
-"bdx" = (
-/obj/machinery/door/firedoor,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/starboard)
 "bdy" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -29925,25 +29888,6 @@
 	},
 /turf/open/floor/plating,
 /area/storage/tech)
-"bAN" = (
-/obj/machinery/door/firedoor,
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
-"bAO" = (
-/obj/structure/disposalpipe/segment,
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/tile/yellow{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
-"bAP" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/yellow,
-/turf/open/floor/plasteel,
-/area/hallway/primary/aft)
 "bAR" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/rxglasses,
@@ -49209,13 +49153,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
-"fGf" = (
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
-/obj/structure/table,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "fGg" = (
 /obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
@@ -71686,9 +71623,9 @@ vyA
 aHz
 aIS
 aKn
-aLF
-aLF
-aLF
+aLE
+aLE
+aLE
 aPz
 aQL
 aSg
@@ -79911,8 +79848,8 @@ aHL
 aJi
 aKB
 aLT
-aNp
-aOC
+aMS
+aOz
 aPQ
 nTU
 aTL
@@ -84532,7 +84469,7 @@ azZ
 azZ
 azZ
 azZ
-aGt
+azZ
 aHQ
 aJr
 aJq
@@ -84569,7 +84506,7 @@ bwa
 bAg
 bBq
 bCu
-bAO
+bFd
 bFd
 bFd
 bFj
@@ -84789,7 +84726,7 @@ anz
 anz
 anz
 anz
-apj
+anz
 aHP
 aJq
 aJq
@@ -84826,7 +84763,7 @@ bvW
 bAf
 bBp
 aHP
-bAN
+bQg
 bQg
 bQg
 bFh
@@ -85046,7 +84983,7 @@ aBu
 aAa
 aAa
 aAa
-aGu
+aAa
 aHR
 aJt
 aJq
@@ -85083,7 +85020,7 @@ bwh
 bAh
 bBs
 bzG
-bAP
+bFq
 bCp
 bDp
 bFq
@@ -89688,9 +89625,9 @@ aXi
 aQc
 baa
 aJC
-bcq
-bcq
-bcq
+aYV
+aYV
+aYV
 bfF
 nQI
 bio
@@ -96871,7 +96808,7 @@ aFp
 aGW
 anf
 aIp
-fGf
+anM
 aMA
 aIp
 aOX
@@ -97128,7 +97065,7 @@ aFo
 aGV
 aIp
 aIp
-aKL
+anW
 aMz
 aNQ
 aOX
@@ -103566,9 +103503,9 @@ aXz
 aZg
 aFz
 bbF
-bcq
-bdx
-bcq
+aYV
+aXq
+aYV
 bgc
 bgc
 biX

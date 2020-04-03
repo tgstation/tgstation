@@ -42,3 +42,12 @@
 	name = "7.12x82mm incendiary bullet"
 	damage = 20
 	fire_stacks = 3
+
+/obj/projectile/bullet/mm712x82_match
+	name = "7.12x82mm match bullet"
+	damage = 40
+	ricochets_max = 2
+	ricochet_chance = 60
+	ricochet_auto_aim_range = 4
+	ricochet_incidence_leeway = 35
+

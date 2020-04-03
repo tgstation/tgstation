@@ -10,6 +10,7 @@
 	maturation = 8
 	yield = 6
 	potency = 20
+	instability = 1 //Flowers have 1 instability, if you want to breed out instability, crossbreed with flowers.
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "poppy-grow"
@@ -69,6 +70,7 @@
 	genes = list(/datum/plant_gene/reagent/polypyr)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05)
 	rarity = 30
+	graft_gene = /datum/plant_gene/reagent/polypyr
 
 /obj/item/seeds/poppy/lily/trumpet/Initialize(mapload,nogenes)
 	. = ..()
@@ -115,10 +117,12 @@
 	production = 1
 	yield = 2
 	potency = 30
+	instability = 1
 	growthstages = 4
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
+	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/reagent_containers/food/snacks/grown/harebell
 	seed = /obj/item/seeds/harebell
@@ -141,6 +145,7 @@
 	endurance = 20
 	production = 2
 	yield = 2
+	instability = 1
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
@@ -183,6 +188,7 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/ethanol/moonshine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02)
 	rarity = 15
+	graft_gene = /datum/plant_gene/trait/glow/purple
 
 /obj/item/reagent_containers/food/snacks/grown/moonflower
 	seed = /obj/item/seeds/sunflower/moonflower

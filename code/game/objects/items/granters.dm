@@ -260,7 +260,7 @@
 	user.Paralyze(40)
 
 /obj/item/book/granter/spell/barnyard
-	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 	spellname = "barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
