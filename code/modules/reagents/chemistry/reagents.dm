@@ -195,9 +195,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
   * Can affect plant's health, stats, or cause the plant to react in certain ways.
   */
 /datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	if(!mytray || !chems)
+	if(!mytray)
 		return
-	return
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

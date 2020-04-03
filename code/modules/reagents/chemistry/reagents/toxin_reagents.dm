@@ -14,8 +14,8 @@
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 2))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
 	if(toxpwr)
@@ -249,9 +249,9 @@
 	// Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 10))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 6))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 10))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 6))
 		mytray.adjustWeeds(-rand(4,8))
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
@@ -280,8 +280,8 @@
 	//Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 0.5))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.5))
 		mytray.adjustWeeds(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller
@@ -293,8 +293,8 @@
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 0.5))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.5))
 		mytray.adjustPests(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -806,9 +806,9 @@
 // ...Why? I mean, clearly someone had to have done this and thought, well, acid doesn't hurt plants, but what brought us here, to this point?
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 1.5))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 1.5))
 		mytray.adjustWeeds(-rand(1,2))
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
@@ -845,9 +845,9 @@
 // SERIOUSLY
 /datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 2))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 3))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 2))
+		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 3))
 		mytray.adjustWeeds(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M)
@@ -972,3 +972,41 @@
 		to_chat(M, "<span class='notice'>Ah, what was that? You thought you heard something...</span>")
 		M.confused += 5
 	return ..()
+
+/datum/reagent/toxin/plantthinner
+	name = "Plant Thinner"
+	description = "Contains a chemical that can help in weeding out unwanted chemical traits in plants."
+	color = "#3b7269" // rgb: 127, 132, 0
+	toxpwr = 0.6
+	taste_description = "burnt grass"
+
+/datum/reagent/plantthinner/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.3)
+	M.confused += 1
+	return ..()
+
+//It's paint thinner, for plants!
+/datum/reagent/plantthinner/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(prob(40))
+		myseed.remove_random_reagents(1,1)
+	mytray.adjustToxic(3)
+
+/datum/reagent/toxin/plantthinner/trait
+	name = "Trait Thinner"
+	description = "Contains a stronger variant of plant thinner, capable of genetically stunting certain traits out of plants."
+	color = "#31100a" // rgb: 127, 132, 0
+	toxpwr = 1.5
+	taste_description = "burnt hair"
+
+/datum/reagent/plantthinner/trait/on_mob_life(mob/living/carbon/M)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 1.1)
+	M.confused += 3
+	return ..()
+
+//It's paint thinner, for plants!
+/datum/reagent/plantthinner/trait/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(prob(40))
+		myseed.remove_random_traits(1,1)
+	mytray.adjustToxic(6)

@@ -44,7 +44,7 @@
 	/// The type of plants that this plant can mutate into.
 	var/list/mutatelist
 	/// Plant genes are stored here, see plant_genes.dm for more info.
-	var/list/genes
+	var/list/genes = list()
 	/// A list of reagents to add to product.
 	var/list/reagents_add
 	// Format: "reagent_id" = potency multiplier
@@ -74,7 +74,6 @@
 		icon_harvest = "[species]-harvest"
 
 	if(!nogenes) // not used on Copy()
-		genes = list()
 		genes += new /datum/plant_gene/core/lifespan(lifespan)
 		genes += new /datum/plant_gene/core/endurance(endurance)
 		genes += new /datum/plant_gene/core/weed_rate(weed_rate)
@@ -531,3 +530,19 @@
 			genes += P
 		else
 			qdel(P)
+
+/obj/item/seeds/proc/remove_random_reagents(lower = 0, upper = 2)
+	var/amount_random_reagents = rand(lower, upper)
+	for(var/i in 1 to amount_random_reagents)
+		var/datum/reagent/chemical = pick(reagents_add)
+		qdel(chemical)
+
+/obj/item/seeds/proc/remove_random_traits(lower = 0, upper = 2)
+	var/list/genepool = list()
+	var/amount_random_traits = rand(lower, upper)
+	for(var/datum/plant_gene/trait in genes)
+		genepool += trait
+
+	for(var/i in 1 to amount_random_traits)
+		var/datum/plant_gene/planted_gene = pick(genepool)
+		qdel(planted_gene)

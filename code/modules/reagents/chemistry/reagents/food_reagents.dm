@@ -50,8 +50,8 @@
 
 /datum/reagent/consumable/nutriment/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src) * 0.2))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 0.2))
 
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/carbon/M)
 	if(prob(50))
@@ -171,7 +171,7 @@
 // Plants should not have sugar, they can't use it and it prevents them getting water/ nutients, it is good for mold though...
 /datum/reagent/consumable/sugar/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
+	if(chems.has_reagent(type, 1))
 		mytray.adjustWeeds(rand(1,2))
 		mytray.adjustPests(rand(1,2))
 
@@ -195,8 +195,8 @@
 	// Compost for EVERYTHING
 /datum/reagent/consumable/virus_food/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 0.5))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 0.5))
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -567,7 +567,7 @@
 	// On the other hand, honey has been known to carry pollen with it rarely. Can be used to take in a lot of plant qualities all at once, or harm the plant.
 /datum/reagent/consumable/honey/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
+	if(chems.has_reagent(type, 1))
 		if(myseed && prob(20))
 			mytray.pollinate(rand(1,3))
 		else
