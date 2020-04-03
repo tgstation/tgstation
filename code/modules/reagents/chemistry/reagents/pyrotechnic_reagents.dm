@@ -30,9 +30,9 @@
 
 	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
 /datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
 	if(myseed && chems.has_reagent(src, 1))
 		myseed.adjust_instability(-1)
-	..()
 
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
@@ -182,12 +182,12 @@
 
 	// why, just why
 /datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
 	if(chems.has_reagent(src, 1))
 		if(!(myseed.resistance_flags & FIRE_PROOF))
 			mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 6))
 			mytray.adjustToxic(round(chems.get_reagent_amount(src) * 7))
 		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
-	..()
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(1)
