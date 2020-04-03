@@ -51,7 +51,6 @@
 	hard_drive.store_file(new/datum/computer_file/program/ntnetmonitor())
 	hard_drive.store_file(new/datum/computer_file/program/chatclient())
 	hard_drive.store_file(new/datum/computer_file/program/aidiag())
-	hard_drive.store_file(new/datum/computer_file/program/robocontrol())
 
 
 // ===== COMMAND CONSOLE =====
