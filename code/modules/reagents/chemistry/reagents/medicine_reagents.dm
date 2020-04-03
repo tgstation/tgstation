@@ -36,12 +36,12 @@
 // The best stuff there is. For testing/debugging.
 /datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src.type, 1))
-		mytray.adjustWater(round(chems.get_reagent_amount(src.type) * 1))
-		mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 1))
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 1))
 		mytray.adjustPests(-rand(1,5))
 		mytray.adjustWeeds(-rand(1,5))
-	if(chems.has_reagent(src.type, 3))
+	if(chems.has_reagent(type, 3))
 		switch(rand(100))
 			if(66  to 100)
 				mytray.mutatespecie()
@@ -156,8 +156,8 @@
 // Healing
 /datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	mytray.adjustHealth(round(chems.get_reagent_amount(src.type) * 3))
-	mytray.adjustToxic(-round(chems.get_reagent_amount(src.type) * 3))
+	mytray.adjustHealth(round(chems.get_reagent_amount(type) * 3))
+	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 3))
 
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
@@ -749,7 +749,7 @@
 // FEED ME SEYMOUR
 /datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src.type, 1))
+	if(chems.has_reagent(type, 1))
 		mytray.spawnplant()
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)

@@ -168,7 +168,7 @@
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete at a constant rate, since new nutrients can boost stats far easier.
-			applyChemicals(reagents, lastuser)
+			apply_chemicals(lastuser)
 			reagents.remove_any(nutridrain)
 
 			// Lack of nutrients hurts non-weeds
@@ -578,7 +578,7 @@
 
 		for(var/obj/machinery/hydroponics/H in trays)
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
-			//This was originally in applyChemicals, but due to applyChemicals only holding nutrients, we handle it here now.
+			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
 				adjustWater(round(reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/trays.len))
 				reagent_source.reagents.remove_reagent(/datum/reagent/water, reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/trays.len)
