@@ -42,7 +42,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 ///runes can also be deleted by bluespace crystals if the xenobiologist is fucking everyone up and you need a way to destroy the rune really fast.
-/obj/effect/warped_rune/attackby(obj/item/used_item, mob/user)
+/obj/effect/warped_rune/attackby(obj/item/stack/used_item, mob/user)
 	if(!istype(used_item,/obj/item/stack/sheet/bluespace_crystal) && !istype(used_item,/obj/item/stack/ore/bluespace_crystal))
 		return
 
@@ -308,7 +308,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 /obj/item/slimecross/warping/yellow
 	colour = "yellow"
 	runepath = /obj/effect/warped_rune/yellowspace
-	effect_desc = "Draws a rune that infinitely recharge cell fueled things that are on it, it will also passively recharge the APC of the room"
+	effect_desc = "Draws a rune that infinitely recharge any items as long as they have a battery. It will also passively recharge the APC of the room"
 
 
 /obj/effect/warped_rune/yellowspace
@@ -322,54 +322,29 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 /obj/effect/warped_rune/yellowspace/process()
-	if(cooldown < world.time)
-		cooldown = world.time + max_cooldown
-		apc_charge()
-		electrivore()
+	if(cooldown > world.time)
+		return
+
+	var/area/rune_area = get_area(rune_turf)
+	cooldown = world.time + max_cooldown
+	for(var/obj/item/recharged in rune_turf) //recharges items on the rune
+		electrivore(recharged)
+	for(var/obj/machinery/power/apc/apc_recharged in rune_area) //recharges the APC of the room
+		electrivore(apc_recharged)
 
 
-///recharge the APC every 10 seconds by 10%
-/obj/effect/warped_rune/yellowspace/proc/apc_charge()
-	var/area/area = get_area(rune_turf)
-	for(var/obj/machinery/power/apc/area_apc in area)
-		if(!area_apc.cell)
+///charge the battery of an item by 20% every time it's called.
+/obj/effect/warped_rune/yellowspace/proc/electrivore(obj/recharged)
+	if(recharged.get_cell()) //check if the item has a cell
+		var/obj/item/stock_parts/cell/battery = recharged.get_cell()
+		if(battery.charge <! battery.maxcharge) //don't charge if the battery is full
 			return
 
-		if(area_apc.cell.charge <! (area_apc.cell.maxcharge))
-			return
-
-		area_apc.cell.charge += area_apc.cell.maxcharge * 0.1 //will basically recharge 10% of the APC cell every 10 seconds.
-		if(area_apc.cell.charge > area_apc.cell.maxcharge)
-			area_apc.cell.charge = area_apc.cell.maxcharge //set the cell back to 100% if it goes overboard.
-
-
-///charge whatever battery is put on the rune, is triggered whenever a battery/baton/energy gun is on the rune
-/obj/effect/warped_rune/yellowspace/proc/electrivore()
-
-	for(var/obj/item/item_on_rune in rune_turf)
-		if(istype(item_on_rune, /obj/item/melee/baton))
-			var/obj/item/melee/baton/prod = item_on_rune
-			if(prod.cell.charge < prod.cell.maxcharge)
-				prod.cell.charge += prod.cell.maxcharge * 0.05
-				prod.update_icon()
-				if(prod.cell.charge > prod.cell.maxcharge)
-					prod.cell.charge = prod.cell.maxcharge
-
-		if(istype(item_on_rune,/obj/item/gun/energy)) //if they were all in the same subtype I could just use a proc for each of them but instead we got this shit
-			var/obj/item/gun/energy/laser_gun = item_on_rune
-			if(laser_gun.cell.charge < laser_gun.cell.maxcharge)
-				laser_gun.cell.charge += laser_gun.cell.maxcharge * 0.05
-				laser_gun.update_icon()
-				if(laser_gun.cell.charge > laser_gun.cell.maxcharge)
-					laser_gun.cell.charge = laser_gun.cell.maxcharge
-
-		if(istype(item_on_rune, /obj/item/stock_parts/cell))
-			var/obj/item/stock_parts/cell/battery = item_on_rune
-			if(battery.charge < battery.maxcharge)
-				battery.charge += battery.maxcharge * 0.05
-				battery.update_icon()
-				if(battery.charge > battery.maxcharge)
-					battery.charge = battery.maxcharge
+		battery.charge += battery.maxcharge * 0.2
+		battery.update_icon()
+		recharged.update_icon()
+		if(battery.charge > battery.maxcharge)
+			battery.charge = battery.maxcharge
 
 
 /* Dark purple crossbreed, Fill up any beaker like container with 50 unit of plasma dust every 30 seconds  */
