@@ -278,7 +278,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	color = "#EDC9AF"
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/sandblock
-	value_per_unit = 0.0010
+	value_per_unit = 0.001
 	strength_modifier = 0.5
 	integrity_modifier = 0.1
 	armor_modifiers = list("melee" = 0.25, "bullet" = 0.25, "laser" = 1.25, "energy" = 0.25, "bomb" = 0.25, "bio" = 0.25, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
@@ -374,17 +374,17 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	beauty_modifier = -0.1
 
 /datum/material/cardboard/on_applied_obj(obj/source, amount, material_flags)
+	. = ..()
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/cardboard = source
 		cardboard.resistance_flags |= FLAMMABLE
 		cardboard.obj_flags |= UNIQUE_RENAME
-	return ..()
 
 /datum/material/cardboard/on_removed_obj(obj/source, material_flags)
-	. = ..()
 	if(material_flags & MATERIAL_AFFECT_STATISTICS)
 		var/obj/cardboard = source
 		cardboard.resistance_flags &= ~FLAMMABLE
+	return ..()
 
 /datum/material/bone
 	name = "bone"
