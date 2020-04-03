@@ -250,7 +250,7 @@
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 5))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 10))
 		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 6))
 		mytray.adjustWeeds(-rand(4,8))
 
