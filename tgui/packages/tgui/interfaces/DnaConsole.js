@@ -516,7 +516,7 @@ const MutationInfo = props => {
       <Dropdown
         width="240px"
         options={advInjectors}
-        disabled={advInjectors.length === 0}
+        disabled={advInjectors.length === 0 || !mutation.Active}
         selected="Add to advanced injector"
         onSelected={value => act('add_adv_mut', {
           mutref: mutation.ByondRef,
@@ -524,7 +524,7 @@ const MutationInfo = props => {
         })} />
       <Button
         icon="syringe"
-        disabled={!isInjectorReady}
+        disabled={!isInjectorReady || !mutation.Active}
         content="Print Activator"
         onClick={() => act('print_injector', {
           mutref: mutation.ByondRef,
@@ -533,7 +533,7 @@ const MutationInfo = props => {
         })} />
       <Button
         icon="syringe"
-        disabled={!isInjectorReady}
+        disabled={!isInjectorReady || !mutation.Active}
         content="Print Mutator"
         onClick={() => act('print_injector', {
           mutref: mutation.ByondRef,
