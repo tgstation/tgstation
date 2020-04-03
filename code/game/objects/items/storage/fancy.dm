@@ -137,6 +137,7 @@
 	spawn_type = /obj/item/clothing/mask/cigarette/space_cigarette
 	var/candy = FALSE //for cigarette overlay
 	custom_price = 75
+	age_restricted = TRUE
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
@@ -253,6 +254,7 @@
 	icon_type = "candy cigarette"
 	spawn_type = /obj/item/clothing/mask/cigarette/candy
 	candy = TRUE
+	age_restricted = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigpack_candy/Initialize()
 	. = ..()
