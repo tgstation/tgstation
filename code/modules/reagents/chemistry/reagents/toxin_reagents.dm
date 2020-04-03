@@ -14,8 +14,8 @@
 // Are you a bad enough dude to poison your own plants?
 /datum/reagent/toxin/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 2))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 2))
 
 /datum/reagent/toxin/on_mob_life(mob/living/carbon/M)
 	if(toxpwr)
@@ -249,9 +249,9 @@
 	// Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 10))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 6))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 10))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 6))
 		mytray.adjustWeeds(-rand(4,8))
 
 /datum/reagent/toxin/plantbgone/reaction_obj(obj/O, reac_volume)
@@ -280,8 +280,8 @@
 	//Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 0.5))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 0.5))
 		mytray.adjustWeeds(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller
@@ -293,8 +293,8 @@
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 0.5))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 0.5))
 		mytray.adjustPests(-rand(1,2))
 
 /datum/reagent/toxin/pestkiller/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
@@ -807,8 +807,8 @@
 /datum/reagent/toxin/acid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
 	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 1))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 1.5))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 1.5))
 		mytray.adjustWeeds(-rand(1,2))
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/carbon/C, method=TOUCH, reac_volume)
@@ -845,9 +845,9 @@
 // SERIOUSLY
 /datum/reagent/toxin/acid/fluacid/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	if(chems.has_reagent(src, 1))
-		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 2))
-		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 3))
+	if(chems.has_reagent(src.type, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src.type) * 2))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src.type) * 3))
 		mytray.adjustWeeds(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M)

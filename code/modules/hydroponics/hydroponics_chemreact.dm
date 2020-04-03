@@ -2,16 +2,15 @@
   *This is NOW the gradual affects that each chemical applies on every process() proc. Nutrients now use a more robust reagent holder in order to apply less insane
   * stat changes as opposed to 271 lines of individual statline effects. Shoutout to the original comments on chems, I just cleaned a few up.
   */
-/obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/S, mob/user)
+/obj/machinery/hydroponics/proc/applyChemicals(datum/reagents/tray_chems, mob/user)
 	///Contains the reagents within the tray.
-	var/datum/reagents/tray_chems = S
 	if(myseed)
 		myseed.on_chem_reaction(tray_chems) //In case seeds have some special interactions with special chems, currently only used by vines
 	//FINE WE'LL DO IT THIS WAY.
 	say("Applychems has begun")
 	for(var/c in tray_chems.reagent_list)
 		var/datum/reagent/chem = c
-		chem.on_hydroponics_apply(myseed, reagents, src, user)
+		chem.on_hydroponics_apply(myseed, tray_chems, src, user)
 		say("[chem] was applied")
 
 /obj/machinery/hydroponics/proc/mutation_roll(mob/user)
