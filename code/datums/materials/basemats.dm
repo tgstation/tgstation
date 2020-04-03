@@ -278,10 +278,10 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	alpha = 150
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
-	value_per_unit = 0.75
-	beauty_modifier = 0.75
+	value_per_unit = 0.35
+	beauty_modifier = 0.35
 	strength_modifier = 1.2
-	armor_modifiers = list("melee" = 1.5, "bullet" = 1.5, "laser" = 1.5, "energy" = 1.5, "bomb" = 1.5, "bio" = 1.5, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
+	armor_modifiers = list("melee" = 1.35, "bullet" = 1.3, "laser" = 1.3, "energy" = 1.25, "bomb" = 0.7, "bio" = 1, "rad" = 1, "fire" = 1.3, "acid" = 1)
 //I don't like sand. It's coarse, and rough, and irritating, and it gets everywhere.
 /datum/material/sand
 	name = "sand"
