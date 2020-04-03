@@ -1,0 +1,5 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Due to pressure from various organizations, Nanotrasen is implementing a new ban on the purchase of alcohol and tobacco products for crewmembers under the age of 20 onboard its Spinward space stations. Please remember that providing alcohol or tobacco products to underage crewmembers is against Space Law, and remember to check those cards bartenders!"
+  - rscadd: "Standard Nanotrasen IDs now display the registered age of the holder, which you can change at the HoP's access console."
