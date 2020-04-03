@@ -1,14 +1,14 @@
-/obj/item/toy/cards/deck/uno
-	name = "\improper UNO deck"
-	desc = "A deck of uno cards. House rules to argue over not included."
+/obj/item/toy/cards/deck/kotahi
+	name = "\improper KOTAHI deck"
+	desc = "A deck of kotahi cards. House rules to argue over not included."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "deck_uno_full"
-	deckstyle = "uno"
+	icon_state = "deck_kotahi_full"
+	deckstyle = "kotahi"
 
 //Populate the deck.
-/obj/item/toy/cards/deck/uno/populate_deck()
+/obj/item/toy/cards/deck/ukotahi/populate_deck()
 	for(var/colour in list("Red","Yellow","Green","Blue"))
-		cards += "[colour] 0" //Uno decks have only one colour of each 0, weird huh?
+		cards += "[colour] 0" //kotahi decks have only one colour of each 0, weird huh?
 		for(var/k in 0 to 1) //two of each colour of number
 			cards += "[colour] skip"
 			cards += "[colour] reverse"
