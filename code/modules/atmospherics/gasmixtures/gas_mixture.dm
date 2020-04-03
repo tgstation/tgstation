@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//Returns: bool indicating whether gases moved between the two mixes
 /datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
 	. = FALSE
-	if(abs(return_temperature() - other.return_temperature()) > 1)
+	if(abs(return_temperature() - other.return_temperature()) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
 		. = TRUE
 		var/self_heat_cap = heat_capacity()
 		var/other_heat_cap = other.heat_capacity()
@@ -221,13 +221,14 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		temperature = new_temp
 		other.temperature = new_temp
 
+	var/min_p_delta = 0.1
 	var/total_volume = volume + other.volume
 	var/list/gas_list = gases | other.gases
 	for(var/gas_id in gas_list)
 		assert_gas(gas_id)
 		other.assert_gas(gas_id)
 		//math is under the assumption temperatures are equal
-		if(abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > 0.1 / (R_IDEAL_GAS_EQUATION * temperature))
+		if(abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > min_p_delta / (R_IDEAL_GAS_EQUATION * temperature))
 			. = TRUE
 			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
 			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
