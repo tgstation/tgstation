@@ -22,10 +22,10 @@
 	pixel_y = rand(-3, 3) //randomize a little
 
 /obj/item/stack/tile/examine(mob/user)
-	..()
-	if(throwforce) //do not want to divide by zero
+	. = ..()
+	if(throwforce && !is_cyborg) //do not want to divide by zero or show the message to borgs who can't throw
 		var/verb
-		switch(CEILING(human_maxHealth / throwforce, 1)) //amount of throws to crit a human
+		switch(CEILING(human_maxHealth / throwforce, 1)) //throws to crit a human
 			if(1 to 3)
 				verb = "superb"
 			if(4 to 6)
@@ -38,7 +38,7 @@
 				verb = "mediocre"
 		if(!verb)
 			return
-		to_chat(user, "<span class='notice'>Those could work as a [verb] throwing weapon.</span>")
+		. += "<span class='notice'>Those could work as a [verb] throwing weapon.</span>"
 
 /obj/item/stack/tile/attackby(obj/item/W, mob/user, params)
 
@@ -328,6 +328,7 @@
 /obj/item/stack/tile/plasteel
 	name = "floor tile"
 	singular_name = "floor tile"
+	desc = "The ground you walk on."
 	icon_state = "tile"
 	item_state = "tile"
 	force = 6
@@ -340,7 +341,6 @@
 	resistance_flags = FIRE_PROOF
 
 /obj/item/stack/tile/plasteel/cyborg
-	desc = "The ground you walk on." //Not the usual floor tile desc as that refers to throwing, Cyborgs can't do that - RR
 	custom_materials = null // All other Borg versions of items have no Metal or Glass - RR
 	is_cyborg = 1
 	cost = 125
@@ -356,6 +356,7 @@
 /obj/item/stack/tile/material
 	name = "floor tile"
 	singular_name = "floor tile"
+	desc = "The ground you walk on."
 	throwforce = 10
 	icon_state = "material_tile"
 	turf_type = /turf/open/floor/material
