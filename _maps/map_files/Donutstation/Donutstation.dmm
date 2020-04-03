@@ -8849,6 +8849,19 @@
 /obj/item/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"aur" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/structure/table,
+/obj/machinery/firealarm{
+	pixel_y = 29
+	},
+/obj/item/reagent_containers/dropper,
+/obj/item/plant_analyzer,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aus" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/chair/office/light{
@@ -12407,20 +12420,6 @@
 /obj/structure/cable,
 /turf/open/space/basic,
 /area/space/nearstation)
-"aCv" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/structure/table,
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
-/obj/machinery/firealarm{
-	pixel_y = 29
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "aCw" = (
 /obj/machinery/telecomms/receiver/preset_right,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -34780,9 +34779,6 @@
 /area/quartermaster/qm)
 "byQ" = (
 /obj/structure/table,
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "byR" = (
@@ -84753,7 +84749,7 @@ aaT
 afa
 bDc
 afa
-aCv
+aur
 aGr
 aGG
 bup

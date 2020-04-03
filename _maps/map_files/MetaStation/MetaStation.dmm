@@ -1935,6 +1935,27 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/crew_quarters/heads/hos)
+"aeb" = (
+/obj/item/paper/guides/jobs/hydroponics,
+/obj/machinery/requests_console{
+	department = "Hydroponics";
+	departmentType = 2;
+	pixel_x = -31;
+	pixel_y = -2
+	},
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/green,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/green{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aec" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -2350,6 +2371,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aeR" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 5
+	},
+/obj/item/reagent_containers/food/snacks/grown/poppy/lily,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aeS" = (
 /obj/machinery/button/door{
 	id = "permacell2";
@@ -2394,6 +2426,17 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/prison)
+"aeV" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/obj/item/book/manual/hydroponics_pod_people,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aeW" = (
 /obj/machinery/button/door{
 	id = "permacell1";
@@ -45251,28 +45294,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"bYe" = (
-/obj/item/book/manual/hydroponics_pod_people,
-/obj/item/paper/guides/jobs/hydroponics,
-/obj/machinery/requests_console{
-	department = "Hydroponics";
-	departmentType = 2;
-	pixel_x = -31;
-	pixel_y = -2
-	},
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "bYf" = (
 /obj/item/stack/packageWrap,
 /obj/item/stack/packageWrap,
@@ -47410,19 +47431,6 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
-"ccz" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
@@ -65122,19 +65130,6 @@
 	},
 /turf/open/floor/circuit/telecomms,
 /area/science/xenobiology)
-"dbE" = (
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/obj/structure/table,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "dbF" = (
 /obj/structure/bookcase{
 	name = "Holy Bookcase"
@@ -111491,7 +111486,7 @@ bST
 bUf
 bVs
 bWL
-bYe
+aeb
 bZt
 caK
 ccs
@@ -113807,7 +113802,7 @@ qkD
 bYk
 qkD
 tQN
-dbE
+aeR
 bST
 diB
 cgq
@@ -114064,7 +114059,7 @@ bWU
 bYl
 bZv
 caP
-ccz
+aeV
 bST
 cff
 cgq

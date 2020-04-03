@@ -5816,6 +5816,10 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"anM" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "anN" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -5882,6 +5886,19 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/courtroom)
+"anW" = (
+/obj/machinery/airalarm{
+	pixel_y = 24
+	},
+/obj/machinery/camera{
+	c_tag = "Hydroponics Storage"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "anX" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 5;
@@ -14156,22 +14173,6 @@
 "aKK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/closet/secure_closet/hydroponics,
-/turf/open/floor/plasteel,
-/area/hydroponics)
-"aKL" = (
-/obj/machinery/airalarm{
-	pixel_y = 24
-	},
-/obj/machinery/camera{
-	c_tag = "Hydroponics Storage"
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
-/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "aKM" = (
@@ -49152,13 +49153,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
-"fGf" = (
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
-/obj/structure/table,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "fGg" = (
 /obj/effect/landmark/start/paramedic,
 /turf/open/floor/plasteel/white,
@@ -96814,7 +96808,7 @@ aFp
 aGW
 anf
 aIp
-fGf
+anM
 aMA
 aIp
 aOX
@@ -97071,7 +97065,7 @@ aFo
 aGV
 aIp
 aIp
-aKL
+anW
 aMz
 aNQ
 aOX
