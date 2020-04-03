@@ -10,6 +10,12 @@
 	glass_desc = "Are you sure this is tomato juice?"
 	shot_glass_icon_state = "shotglassred"
 
+	// FEED ME
+/datum/reagent/blood/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustPests(rand(2,3))
+
 /datum/reagent/blood/reaction_mob(mob/living/L, method=TOUCH, reac_volume)
 	if(data && data["viruses"])
 		for(var/thing in data["viruses"])
@@ -201,6 +207,15 @@
 	glass_name = "glass of holy water"
 	glass_desc = "A glass of holy water."
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
+
+	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases stability.
+/datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(src) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src) * 0.1))
+		if(myseed)
+			myseed.adjust_instability(round(chems.get_reagent_amount(src) * 0.15))
 
 /datum/reagent/water/holywater/on_mob_metabolize(mob/living/L)
 	..()
@@ -792,6 +807,18 @@
 	color = "#FFFB89" //pale yellow? let's make it light gray
 	taste_description = "chlorine"
 
+
+// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
+/datum/reagent/chlorine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 1))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 1.5))
+		mytray.adjustWater(-round(chems.get_reagent_amount(src) * 0.5))
+		mytray.adjustWeeds(-rand(1,3))
+		// White Phosphorous + water -> phosphoric acid. That's not a good thing really.
+
+
 /datum/reagent/chlorine/on_mob_life(mob/living/carbon/M)
 	M.take_bodypart_damage(1*REM, 0, 0, 0)
 	. = 1
@@ -803,6 +830,15 @@
 	reagent_state = GAS
 	color = "#808080" // rgb: 128, 128, 128
 	taste_description = "acid"
+
+// You're an idiot for thinking that one of the most corrosive and deadly gasses would be beneficial
+/datum/reagent/fluorine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 2))
+		mytray.adjustToxic(round(chems.get_reagent_amount(src) * 2.5))
+		mytray.adjustWater(-round(chems.get_reagent_amount(src) * 0.5))
+		mytray.adjustWeeds(-rand(1,4))
 
 /datum/reagent/fluorine/on_mob_life(mob/living/carbon/M)
 	M.adjustToxLoss(1*REM, 0)
@@ -822,6 +858,14 @@
 	reagent_state = SOLID
 	color = "#832828" // rgb: 131, 40, 40
 	taste_description = "vinegar"
+
+// Phosphoric salts are beneficial though. And even if the plant suffers, in the long run the tray gets some nutrients. The benefit isn't worth that much.
+/datum/reagent/phosphorus/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustHealth(-round(chems.get_reagent_amount(src) * 0.75))
+		mytray.adjustWater(-round(chems.get_reagent_amount(src) * 0.5))
+		mytray.adjustWeeds(-rand(1,2))
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -1189,9 +1233,9 @@
 	color = "#604030" // rgb: 96, 64, 48
 	taste_description = "iron"
 
+// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant. The new trade off is it culls stability.
 /datum/reagent/diethylamine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	. = ..()
-	// This is more bad ass, and pests get hurt by the corrosive nature of it, not the plant. The new trade off is it culls stability.
 	if(chems.has_reagent(src, 1))
 		mytray.adjustHealth(round(chems.get_reagent_amount(src) * 1))
 		mytray.adjustPests(-rand(1,2))
@@ -1634,6 +1678,13 @@
 	color = "#515151"
 	taste_description = "ash"
 
+// Ash is also used IRL in gardening, as a fertilizer enhancer and weed killer
+/datum/reagent/ash/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(src) * 1))
+		mytray.adjustWeeds(-1)
+
 /datum/reagent/acetone
 	name = "Acetone"
 	description = "A slick, slightly carcinogenic liquid. Has a multitude of mundane uses in everyday life."
@@ -1754,6 +1805,16 @@
 	reagent_state = LIQUID
 	color = "#60A584" // rgb: 96, 165, 132
 	taste_description = "cool salt"
+
+// Saltpetre is used for gardening IRL, to simplify highly, it speeds up growth and strengthens plants
+/datum/reagent/saltpetre/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(src, 1))
+		var/salt = chems.get_reagent_amount(src)
+		mytray.adjustHealth(round(salt * 0.18))
+		if(myseed)
+			myseed.adjust_production(-round(salt/10)-prob(salt%10))
+			myseed.adjust_potency(round(salt*1))
 
 /datum/reagent/lye
 	name = "Lye"
