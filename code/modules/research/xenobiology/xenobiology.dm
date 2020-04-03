@@ -11,13 +11,20 @@
 	throw_speed = 3
 	throw_range = 6
 	grind_results = list()
-	var/Uses = 1 ///uses before it goes inert
-	var/qdel_timer = null ///deletion timer, for delayed reactions
-	var/effectmod ///Which type of crossbred
-	var/list/activate_reagents = list() ///Reagents required for activation
+	///uses before it goes inert
+	var/Uses = 1
+	///deletion timer, for delayed reactions
+	var/qdel_timer = null
+	///Which type of crossbred
+	var/effectmod
+	///Reagents required for activation
+	var/list/activate_reagents = list()
 	var/recurring = FALSE
-	var/research ///Research point value for slime cores. These are defines stored in [/__DEFINES/research] - the actual values are updated there.
-	var/color_slime ///the color of the extract and the slime it came from
+	///Research point value for slime cores. These are defines stored in [/__DEFINES/research] - the actual values are updated there.
+	var/research
+	///the color of the extract and the slime it came from
+	var/color_slime
+
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
 	if(Uses > 1)
@@ -120,6 +127,7 @@
 	activate_reagents = list(/datum/reagent/blood,/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_4
 	color_slime = "gold"
+
 /obj/item/slime_extract/gold/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
@@ -150,7 +158,7 @@
 	activate_reagents = list(/datum/reagent/toxin/plasma,/datum/reagent/water)
 	research = SLIME_RESEARCH_TIER_2
 	color_slime = "silver"
-	
+
 /obj/item/slime_extract/silver/activate(mob/living/carbon/human/user, datum/species/jelly/luminescent/species, activation_type)
 	switch(activation_type)
 		if(SLIME_ACTIVATE_MINOR)
