@@ -955,12 +955,7 @@
 	cut_overlays()
 	var/overlay_cards = currenthand.len
 
-	var/k
-	if(overlay_cards == 2)
-		k = 1
-	else
-		k = overlay_cards - 2
-
+	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
 	for(var/i = k; i <= overlay_cards; i++)
 		var/card_overlay = image(icon=src.icon,icon_state="sc_[currenthand[i]]_[deckstyle]",pixel_x=(1-i+k)*3,pixel_y=(1-i+k)*3)
 		add_overlay(card_overlay)
