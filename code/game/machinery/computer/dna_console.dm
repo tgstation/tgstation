@@ -1620,6 +1620,7 @@
 		mutation_data["Alias"] = A.alias
 		mutation_data["Name"] = HM.name
 		//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
+		mutation_data["Active"] = TRUE
 		mutation_data["Description"] = HM.desc
 		mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
 		mutation_data["ByondRef"] = REF(HM)
@@ -1651,6 +1652,7 @@
 
 			mutation_data["Alias"] = A.alias
 			mutation_data["Name"] = HM.name
+			mutation_data["Active"] = TRUE
 			//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
 			mutation_data["Description"] = HM.desc
 			mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
@@ -1677,6 +1679,7 @@
 
 				mutation_data["Alias"] = A.alias
 				mutation_data["Name"] = HM.name
+				mutation_data["Active"] = TRUE
 				//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
 				mutation_data["Description"] = HM.desc
 				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
