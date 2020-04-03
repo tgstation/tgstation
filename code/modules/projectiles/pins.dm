@@ -139,7 +139,7 @@
 
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-	if(QDELETED(user))
+	if(QDELETED(user))  //how the hell...?
 		stack_trace("/obj/item/firing_pin/clown/ultra/pin_auth called with a [isnull(user) ? "null" : "invalid"] user.")
 		return TRUE
 	if(HAS_TRAIT(user, TRAIT_CLUMSY)) //clumsy
