@@ -1206,7 +1206,7 @@
 	)
 
 /obj/item/circuitboard/machine/explosion_inhibitor
-	name = "Explosion Inhibitor (Machine Board)"
+	name = "Enviro-kinetic dampener (Machine Board)"
 	icon_state = "security"
 	build_path = /obj/machinery/explosion_inhibitor
 	req_components = list(

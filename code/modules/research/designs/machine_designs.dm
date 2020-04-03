@@ -620,8 +620,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_ALL
 
 /datum/design/board/explosion_inhibitor
-	name = "Machine Design (Explosion Inhibitor)"
-	desc = "Circuitboard for explosion inhibitor."
+	name = "Machine Design (Enviro-kinetic dampener)"
+	desc = "Circuitboard for enviro-kinetic dampener."
 	id = "explosion_inhibitor"
 	build_path = /obj/item/circuitboard/machine/explosion_inhibitor
 	materials = list(/datum/material/glass = 1000, /datum/material/bluespace = 3000 , /datum/material/uranium = 3000)

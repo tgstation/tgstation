@@ -1,9 +1,11 @@
 #define INHIB_OFF 0
 #define INHIB_CHARGING 1
 #define INHIB_ACTIVE 2
+
+/// Explosion inhibitor machine, reduces explosion power in range when on
 /obj/machinery/explosion_inhibitor
-	name = "explosion inhibitor"
-	desc = "This machine suppresses nearby explosions using a disortion field."
+	name = "enviro-kinetic dampener"
+	desc = "This machine can detect and react to shockwaves by giving off a kinetic pulse to nullify the destructive effect of explosions."
 	icon = 'icons/obj/machines/inhibitor.dmi'
 	icon_state = "inhibitor-off"
 	density = TRUE
@@ -12,10 +14,26 @@
 	active_power_usage = 10000
 	max_integrity = 50
 
-	var/charge_timer //Id of charging timer
-	var/charge_time = 30 SECONDS // How long it takes to set up
+	/// Id of charging timer
+	var/charge_timer
+	/// How long it takes to set up after anchoring/repowering
+	var/charge_time = 30 SECONDS
 	var/state = INHIB_OFF
+	/// Range of dampening effect.
 	var/range = 7
+
+	// Explosion modifiers.
+
+	/// How much devastation range is reduced
+	var/devastation_mod = 1000
+	/// How much heavy range is reduced
+	var/heavy_mod = 10
+	/// How much light range is reduced
+	var/light_mod = 10
+	/// How much flash range is reduced - does not apply to explosion with epicenter beyond range
+	var/flash_mod = 10
+	/// How much flame range is reduced
+	var/flame_mod = 10
 
 /obj/machinery/explosion_inhibitor/Initialize()
 	. = ..()
@@ -102,11 +120,11 @@
 	if(get_dist(exd.epicenter,src) > range && exd.epicenter.z == z)
 		RegisterSignal(exd,COMSIG_EXPLOSION_TURF_BEFORE_EX_ACT, .proc/check_crosssection)
 	else
-		exd.devastation_range = 0
-		exd.heavy_impact_range = max(exd.heavy_impact_range - 10,0)
-		exd.light_impact_range = max(exd.light_impact_range - 10,0)
-		exd.flash_range = max(exd.flash_range - 10,0)
-		exd.flame_range = max(exd.flame_range - 10,0)
+		exd.devastation_range = max(exd.devastation_range - devastation_mod,0)
+		exd.heavy_impact_range = max(exd.heavy_impact_range - heavy_mod,0)
+		exd.light_impact_range = max(exd.light_impact_range - light_mod,0)
+		exd.flash_range = max(exd.flash_range - flash_mod,0)
+		exd.flame_range = max(exd.flame_range - flame_mod,0)
 
 //Check if afffected turf would fall into protected area and if so modify the result accordingly
 // T - turf we're going to explode
@@ -117,10 +135,10 @@
 		return
 	var/datum/explosion/exd = source
 
-	var/modified_devastation_range = 0
-	var/modified_heavy_impact_range = max(exd.heavy_impact_range - 10,0)
-	var/modified_light_impact_range = max(exd.light_impact_range - 10,0)
-	var/modified_flame_range = max(exd.flame_range - 10,0)
+	var/modified_devastation_range = max(exd.devastation_range - devastation_mod)
+	var/modified_heavy_impact_range = max(exd.heavy_impact_range - heavy_mod,0)
+	var/modified_light_impact_range = max(exd.light_impact_range - light_mod,0)
+	var/modified_flame_range = max(exd.flame_range - flame_mod,0)
 	//todo or maybe not: prevent flash and such on offrange explosions ?
 
 	var/dist = base_dist
