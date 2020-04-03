@@ -280,6 +280,16 @@
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
 
+/obj/item/storage/box/stingbangs
+	name = "box of stingbangs (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
+	icon_state = "secbox"
+	illustration = "flashbang"
+
+/obj/item/storage/box/stingbangs/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/stingbang(src)
+
 /obj/item/storage/box/flashes
 	name = "box of flashbulbs"
 	desc = "<B>WARNING: Flashes can cause serious eye damage, protective eyewear is required.</B>"
@@ -1250,7 +1260,7 @@
 		new/obj/item/sparkler(src)
 		new/obj/item/grenade/firecracker(src)
 	if(prob(20))
-		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+		new /obj/item/grenade/frag(src)
 	else
 		new /obj/item/toy/snappop(src)
 

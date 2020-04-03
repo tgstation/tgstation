@@ -639,9 +639,9 @@
 	screen_loc = ui_healthdoll
 
 /obj/screen/healthdoll/Click()
-	if (ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.check_self_for_injuries()
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.check_self_for_injuries()
 
 /obj/screen/healthdoll/living
 	icon_state = "fullhealth0"
