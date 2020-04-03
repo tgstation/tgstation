@@ -38,6 +38,20 @@
 		else
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
+	if(I.tool_behaviour == TOOL_WIRECUTTER && !anchored)
+		to_chat(user, "<span class='warning'>You cut apart the railing.</span>")
+		I.play_tool_sound(src, 100)
+		deconstruct()
+		return
+
+/obj/structure/railing/deconstruct(disassembled)
+	. = ..()
+	if(!loc) //quick check if it's qdeleted already.
+		return			return
+	if(!(flags_1 & NODECONSTRUCT_1))
+		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 3)
+		transfer_fingerprints_to(rod)
+		qdel(src)
 
 ///Implements behaviour that makes it possible to unanchor the railing.
 /obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
@@ -50,9 +64,7 @@
 		to_chat(user, "<span class='notice'>You [anchored ? "fasten the railing to":"unfasten the railing from"] the floor.</span>")
 	return TRUE
 
-/obj/structure/railing/proc/check_anchored(checked_anchored)
-	if(anchored == checked_anchored)
-		return TRUE
+
 
 /obj/structure/railing/CanPass(atom/movable/mover, turf/target)
 	..()
@@ -85,7 +97,9 @@
 		return FALSE
 	return TRUE
 
-
+/obj/structure/railing/proc/check_anchored(checked_anchored)
+	if(anchored == checked_anchored)
+		return TRUE
 
 /obj/structure/railing/proc/after_rotation(mob/user,rotation_type)
 	air_update_turf(1)
