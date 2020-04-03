@@ -7,10 +7,10 @@ export const NtosRoboControl = props => {
   const { act, data } = useBackend(props);
   const bots = data.bots || [];
   const mules = data.mules || [];
-  const {autoReturn,
+  const { autoReturn,
     autoPickup,
     reportDelivery = [],
-	} = data;
+  } = data;
   return (
     <Section
       title="Robot Control Console"
@@ -20,135 +20,135 @@ export const NtosRoboControl = props => {
           onClick={() => act('ejectcard')} 
         />
       )}>
-	  <Box>
-	   Id Card: {data.id_owner}
-	  </Box>
+      <Box>
+        Id Card: {data.id_owner}
+      </Box>
       <Box>
         Bots detected in range: {data.botcount} 
       </Box>
       <Section>
         {bots.map(robot => (
-		  <Grid>
-          <Grid.Column>
-          <Box
-            key={robot.name}
-            backgroundColor={robot.mule_check === 1 ? "#6e4b0e" : "#342963"}>
-            <Section
-              title={robot.name}>
-              <Box>
-                Model: {robot.model}
+          <Grid
+            key={robot.name}>
+            <Grid.Column>
+              <Box
+                backgroundColor={robot.mule_check === 1? "#6e4b0e" : "#342963"}>
+                <Section
+                  title={robot.name}>
+                  <Box>
+                    Model: {robot.model}
+                  </Box>
+                  <Box>
+                    Location: {robot.locat}
+                  </Box>
+                  <Box>
+                    Status: {robot.mode}
+                  </Box>
+                  {robot.mule_check === 1 &&(
+                    <Box>
+                      Loaded Cargo: {mules.load ? (mules.load) : "N/A"}
+                    </Box>
+                  )}
+                </Section>
               </Box>
+            </Grid.Column>
+            <Grid.Column>
               <Box>
-                Location: {robot.locat}
-              </Box>
-              <Box>
-                Status: {robot.mode}
-              </Box>
-			  {robot.mule_check === 1 &&(
-			  <Box>
-			  Loaded Cargo: {mules.load ? (mules.load) : "N/A"}
-			  </Box>
-			  )}
-            </Section>
-		  </Box>
-		  </Grid.Column>
-		  <Grid.Column>
-		  <Box>
-            {robot.mule_check === 1 &&(
-              mules.map(mulebot => (
-                (robot.bot_ref === mulebot.mule_ref) &&(
+                {robot.mule_check === 1 &&(
+                  mules.map(mulebot => (
+                    (robot.bot_ref === mulebot.mule_ref) &&(
+                      <Box
+                        key={mulebot.mule_ref}
+                        textAlign="center">
+                        <Button
+                          tooltip="Stop Moving."
+                          icon="pause"
+                          onClick={() => act('stop', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button
+                          tooltip="Go to Destination."
+                          icon="play"
+                          onClick={() => act('go', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button
+                          icon="home"
+                          tooltip="Travel Home."
+                          onClick={() => act('home', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button
+                          content="Set Destination"
+                          onClick={() => act('destination', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button
+                          content="Set ID"
+                          onClick={() => act('setid', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button
+                          content="Set Home"
+                          onClick={() => act('sethome', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button
+                          content="Unload Cargo"
+                          onClick={() => act('unload', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button.Checkbox
+                          content="Toggle Auto Return"
+                          checked={autoReturn}
+                          onClick={() => act('autoret', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button.Checkbox
+                          content="Toggle Auto Pickup"
+                          checked={autoPickup}
+                          onClick={() => act('autopick', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                        <Button.Checkbox
+                          content="Toggle Delivery Report"
+                          checked={reportDelivery}
+                          onClick={() => act('report', {
+                            robot: mulebot.mule_ref,
+                          })} />
+                      </Box>
+                    )
+                  ))
+                )}
+                <Box m={1} />
+                {robot.mule_check === 0 && (
                   <Box
-                    key={mulebot.mule_ref}
-					textAlign="center">
+                    textAlign="center">
                     <Button
-					  tooltip="Stop Moving."
-                      icon = "pause"
-                      onClick={() => act('stop', {
-                        robot: mulebot.mule_ref,
+                      content="Stop Patrol"
+                      onClick={() => act('patroloff', {
+                        robot: robot.bot_ref,
                       })} />
                     <Button
-					  tooltip="Go to Destination."
-					  icon = "play"
-                      onClick={() => act('go', {
-                        robot: mulebot.mule_ref,
+                      content="Start Patrol"
+                      onClick={() => act('patrolon', {
+                        robot: robot.bot_ref,
                       })} />
                     <Button
-					  icon = "home"
-                      tooltip="Travel Home."
-                      onClick={() => act('home', {
-                        robot: mulebot.mule_ref,
+                      content="Summon"
+                      onClick={() => act('summon', {
+                        robot: robot.bot_ref,
                       })} />
                     <Button
-                      content="Set Destination"
-                      onClick={() => act('destination', {
-                        robot: mulebot.mule_ref,
-                      })} />
-                    <Button
-                      content="Set ID"
-                      onClick={() => act('setid', {
-                        robot: mulebot.mule_ref,
-                      })} />
-                    <Button
-                      content="Set Home"
-                      onClick={() => act('sethome', {
-                        robot: mulebot.mule_ref,
-                      })} />
-                    <Button
-                      content="Unload Cargo"
-                      onClick={() => act('unload', {
-                        robot: mulebot.mule_ref,
-                      })} />
-                    <Button.Checkbox
-                      content="Toggle Auto Return"
-					  checked={autoReturn}
-                      onClick={() => act('autoret', {
-                        robot: mulebot.mule_ref,
-                      })} />
-                    <Button.Checkbox
-                      content="Toggle Auto Pickup"
-					  checked={autoPickup}
-                      onClick={() => act('autopick', {
-                        robot: mulebot.mule_ref,
-                      })} />
-                    <Button.Checkbox
-                      content="Toggle Delivery Report"
-					  checked={reportDelivery}
-                      onClick={() => act('report', {
-                        robot: mulebot.mule_ref,
+                      content="Eject PAi"
+                      onClick={() => act('ejectpai', {
+                        robot: robot.bot_ref,
                       })} />
                   </Box>
-                )
-              ))
-            )}
-            <Box m={1} />
-            {robot.mule_check === 0 && (
-              <Box
-			  textAlign="center">
-                <Button
-                  content="Stop Patrol"
-                  onClick={() => act('patroloff', {
-                    robot: robot.bot_ref,
-                  })} />
-                <Button
-                  content="Start Patrol"
-                  onClick={() => act('patrolon', {
-                    robot: robot.bot_ref,
-                  })} />
-                <Button
-                  content="Summon"
-                  onClick={() => act('summon', {
-                    robot: robot.bot_ref,
-                  })} />
-                <Button
-                  content="Eject PAi"
-                  onClick={() => act('ejectpai', {
-                    robot: robot.bot_ref,
-                  })} />
+                )}
               </Box>
-            )}
-          </Box>
-		  </Grid.Column>
-		  </Grid>
+            </Grid.Column>
+          </Grid>
         ))}
 		
       </Section>
