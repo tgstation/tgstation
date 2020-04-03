@@ -324,8 +324,8 @@
 
 // Antitoxin binds plants pretty well. So the tox goes significantly down
 /datum/reagent/medicine/C2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
-	. = ..()
 	mytray.adjustToxic(-round(chems.get_reagent_amount(src) * 2))
+	..()
 
 #define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/C2/syriniver) || istype(A,/datum/reagent/medicine/C2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 

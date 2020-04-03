@@ -8,9 +8,11 @@
 	if(myseed)
 		myseed.on_chem_reaction(tray_chems) //In case seeds have some special interactions with special chems, currently only used by vines
 	//FINE WE'LL DO IT THIS WAY.
+	say("Applychems has begun")
 	for(var/c in tray_chems.reagent_list)
 		var/datum/reagent/chem = c
-		chem.on_hydroponics_apply(myseed, reagents, src)
+		chem.on_hydroponics_apply(myseed, reagents, src, user)
+		say("[chem] was applied")
 
 /obj/machinery/hydroponics/proc/mutation_roll(mob/user)
 	switch(rand(100))
