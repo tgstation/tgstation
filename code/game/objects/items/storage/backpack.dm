@@ -49,16 +49,6 @@
 	resistance_flags = FIRE_PROOF
 	item_flags = NO_MAT_REDEMPTION
 	
-/obj/item/bag_of_holding_inert/attackby(obj/item/I, mob/user, params)
-	..()
-	if(istype(I, /obj/item/assembly/signaler/anomaly/bluespace))
-		var/obj/item/assembly/signaler/anomaly/bluespace/A = I
-		var/holdingbag = /obj/item/storage/backpack/holding
-		to_chat(user, "<span class='notice'>You insert [A] into the case, and the bluespace compartment opens.</span>")
-		new holdingbag(get_turf(src))
-		qdel(src)
-		qdel(A)
-
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
