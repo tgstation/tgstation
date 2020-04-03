@@ -6,7 +6,7 @@
 	deckstyle = "kotahi"
 
 //Populate the deck.
-/obj/item/toy/cards/deck/ukotahi/populate_deck()
+/obj/item/toy/cards/deck/kotahi/populate_deck()
 	for(var/colour in list("Red","Yellow","Green","Blue"))
 		cards += "[colour] 0" //kotahi decks have only one colour of each 0, weird huh?
 		for(var/k in 0 to 1) //two of each colour of number
