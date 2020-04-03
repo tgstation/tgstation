@@ -373,7 +373,10 @@
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
+	/// Itemstack that is dropped when a rock is mined with a pickaxe
 	var/obj/item/stack/mineResult = /obj/item/stack/ore/glass/basalt
+	/// Amount of the itemstack to drop
+	var/mineAmount = 20
 
 /obj/structure/flora/rock/Initialize()
 	. = ..()
@@ -387,7 +390,8 @@
 	to_chat(user, "<span class='notice'>You start mining...</span>")
 	if(W.use_tool(src, user, 40, volume=50))
 		to_chat(user, "<span class='notice'>You finish mining the rock.</span>")
-		new mineResult(get_turf(src), 20)
+		if(mineResult && mineAmount)
+			new mineResult(get_turf(src), mineAmount)
 		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
 		qdel(src)
 

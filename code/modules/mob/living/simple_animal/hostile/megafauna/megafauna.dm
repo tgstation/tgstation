@@ -28,18 +28,31 @@
 	layer = LARGE_MOB_LAYER //Looks weird with them slipping under mineral walls and cameras and shit otherwise
 	mouse_opacity = MOUSE_OPACITY_OPAQUE // Easier to click on in melee, they're giant targets anyway
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
+	/// Crusher loot dropped when the megafauna is killed with a crusher
 	var/list/crusher_loot
+	/// Achievement given to surrounding players when the megafauna is killed
 	var/achievement_type
+	/// Crusher achievement given to players when megafauna is killed
 	var/crusher_achievement_type
+	/// Score given to players when megafauna is killed
 	var/score_achievement_type
+	/// If the megafauna was actually killed (not just dying, then transforming into another type)
 	var/elimination = 0
+	/// Modifies attacks when at lower health
 	var/anger_modifier = 0
+	/// Name for the GPS signal of the megafauna
 	var/gps_name = null
+	/// Next time the megafauna can use a melee attack
 	var/recovery_time = 0
-	var/true_spawn = TRUE // if this is a megafauna that should grant achievements, or have a gps signal
+	/// If this is a megafauna that is real (has achievements, gps signal)
+	var/true_spawn = TRUE
+	/// Range the megafauna can move from their nest (if they have one
 	var/nest_range = 10
-	var/chosen_attack = 1 // chosen attack num
+	/// The chosen attack by the megafauna
+	var/chosen_attack = 1
+	/// Attack actions, sets chosen_attack to the number in the action
 	var/list/attack_action_types = list()
+	/// If there is a small sprite icon for players controlling the megafauna to use
 	var/small_sprite_type
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
@@ -83,6 +96,7 @@
 			SSblackbox.record_feedback("tally", tab, 1, "[initial(name)]")
 	return ..()
 
+/// Spawns crusher loot instead of normal loot
 /mob/living/simple_animal/hostile/megafauna/proc/spawn_crusher_loot()
 	loot = crusher_loot
 
@@ -110,6 +124,7 @@
 		else
 			devour(L)
 
+/// Devours a target and restores health to the megafauna
 /mob/living/simple_animal/hostile/megafauna/proc/devour(mob/living/L)
 	if(!L)
 		return FALSE
@@ -132,12 +147,14 @@
 		if (EXPLODE_LIGHT)
 			adjustBruteLoss(50)
 
+/// Sets the next time the megafauna can use a melee or ranged attack, in deciseconds
 /mob/living/simple_animal/hostile/megafauna/proc/SetRecoveryTime(buffer_time, ranged_buffer_time)
 	recovery_time = world.time + buffer_time
 	ranged_cooldown = world.time + buffer_time
 	if(ranged_buffer_time)
 		ranged_cooldown = world.time + ranged_buffer_time
 
+/// Grants medals and achievements to surrounding players
 /mob/living/simple_animal/hostile/megafauna/proc/grant_achievement(medaltype, scoretype, crusher_kill, list/grant_achievement = list())
 	if(!achievement_type || (flags_1 & ADMIN_SPAWNED_1) || !SSachievements.achievements_enabled) //Don't award medals if the medal type isn't set
 		return FALSE
@@ -195,6 +212,7 @@
 	see &= enemies // Remove all entries that aren't in enemies
 	return see
 
+/// Attacks enemies around the megafauna if they lose health
 /mob/living/simple_animal/hostile/megafauna/proc/Retaliate()
 	var/list/around = view(src, vision_range)
 

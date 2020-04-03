@@ -45,9 +45,13 @@ Difficulty: Hard
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
 							   /datum/action/innate/megafauna_attack/teleport,
 							   /datum/action/innate/megafauna_attack/disorienting_scream)
+	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
+	/// Range for wendigo stomping when it moves
 	var/stomp_range = 1
+	/// Stores directions the mob is moving, then calls that a move has fully ended when these directions are removed in moved
 	var/stored_move_dirs = 0
+	/// If the wendigo is allowed to move
 	var/can_move = TRUE
 
 /datum/action/innate/megafauna_attack/heavy_stomp
@@ -117,6 +121,7 @@ Difficulty: Hard
 	if(!stored_move_dirs)
 		INVOKE_ASYNC(src, .proc/ground_slam, stomp_range, 1)
 
+/// Slams the ground around the wendigo throwing back enemies caught nearby
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/ground_slam(range, delay)
 	var/turf/orgin = get_turf(src)
 	var/list/all_turfs = RANGE_TURFS(range, orgin)
@@ -137,12 +142,14 @@ Difficulty: Hard
 			all_turfs -= T
 		sleep(delay)
 
+/// Larger but slower ground stomp
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/heavy_stomp()
 	can_move = FALSE
 	ground_slam(5, 2)
 	SetRecoveryTime(0, 0)
 	can_move = TRUE
 
+/// Teleports to a location 4 turfs away from the enemy in view
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/teleport()
 	var/list/possible_ends = list()
 	for(var/turf/T in view(4, target.loc) - view(3, target.loc))
@@ -153,12 +160,13 @@ Difficulty: Hard
 	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 	SetRecoveryTime(20, 0)
 
+/// Shakes all nearby enemies screens and animates the wendigo shaking up and down
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/disorienting_scream()
 	can_move = FALSE
 	playsound(src, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
 	animate(src, pixel_z = rand(5, 15), time = 1, loop = 6)
 	animate(pixel_z = 0, time = 1)
-	for(var/mob/living/L in get_hearers_in_view(7, src))
+	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
 		shake_camera(L, 120, 2)
 		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
 	SetRecoveryTime(30, 0)

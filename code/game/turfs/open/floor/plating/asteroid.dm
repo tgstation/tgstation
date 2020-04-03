@@ -13,11 +13,16 @@
 	barefootstep = FOOTSTEP_SAND
 	clawfootstep = FOOTSTEP_SAND
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	/// Environment type for the turf
 	var/environment_type = "asteroid"
-	var/turf_type = /turf/open/floor/plating/asteroid //Because caves do whacky shit to revert to normal
-	var/floor_variance = 20 //probability floor has a different icon state
+	/// Base turf type to be created by the tunnel
+	var/turf_type = /turf/open/floor/plating/asteroid
+	/// Probability floor has a different icon state
+	var/floor_variance = 20
 	attachment_holes = FALSE
+	/// Itemstack to drop when dug by a shovel
 	var/obj/item/stack/digResult = /obj/item/stack/ore/glass/basalt
+	/// Whether the turf has been dug or not
 	var/dug
 
 /turf/open/floor/plating/asteroid/Initialize()
@@ -27,6 +32,7 @@
 	if(prob(floor_variance))
 		icon_state = "[environment_type][rand(0,12)]"
 
+/// Drops itemstack when dug and changes icon
 /turf/open/floor/plating/asteroid/proc/getDug()
 	new digResult(src, 5)
 	if(postdig_icon_change)
@@ -35,6 +41,7 @@
 			icon_state = "[environment_type]_dug"
 	dug = TRUE
 
+/// If the user can dig the turf
 /turf/open/floor/plating/asteroid/proc/can_dig(mob/user)
 	if(!dug)
 		return TRUE
@@ -138,18 +145,31 @@
 GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/megafauna/dragon = 4, /mob/living/simple_animal/hostile/megafauna/colossus = 2, /mob/living/simple_animal/hostile/megafauna/bubblegum = SPAWN_BUBBLEGUM))
 
 /turf/open/floor/plating/asteroid/airless/cave
+	/// Length of the tunnel
 	var/length = 100
+	/// Mobs that can spawn in the tunnel, weighted list
 	var/list/mob_spawn_list
+	/// Megafauna that can spawn in the tunnel, weighted list
 	var/list/megafauna_spawn_list
+	/// Flora that can spawn in the tunnel, weighted list
 	var/list/flora_spawn_list
+	/// Terrain that can spawn in the tunnel, weighted list
 	var/list/terrain_spawn_list
+	/// If the tunnel should keep being created
 	var/sanity = 1
+	/// Cave direction to move
 	var/forward_cave_dir = 1
+	/// Backwards cave direction for tracking
 	var/backward_cave_dir = 2
+	/// If the tunnel is moving backwards
 	var/going_backwards = TRUE
+	/// If this is a cave creating type
 	var/has_data = FALSE
+	/// The non-cave creating type
 	var/data_having_type = /turf/open/floor/plating/asteroid/airless/cave/has_data
+	/// Option tunnel width, weighted list
 	var/list/pick_tunnel_width
+	/// Optional turf types instead of turf_type, weighted list
 	var/list/choose_turf_type
 	turf_type = /turf/open/floor/plating/asteroid/airless
 
@@ -226,6 +246,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	if(!has_data)
 		produce_tunnel_from_data()
 
+/// Sets the tunnel length and direction
 /turf/open/floor/plating/asteroid/airless/cave/proc/get_cave_data(set_length, exclude_dir = -1)
 	// If set_length (arg1) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!set_length)
@@ -238,6 +259,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	// Get the opposite direction of our facing direction
 	backward_cave_dir = angle2dir(dir2angle(forward_cave_dir) + 180)
 
+/// Gets the tunnel length and direction then makes the tunnel
 /turf/open/floor/plating/asteroid/airless/cave/proc/produce_tunnel_from_data(tunnel_length, excluded_dir = -1)
 	get_cave_data(tunnel_length, excluded_dir)
 	// Make our tunnels
@@ -247,6 +269,14 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
 
+/**
+  * Makes the tunnel and spawns things inside of it
+  *
+  * Picks a tunnel width for the tunnel and then starts spawning turfs in the direction it moves in
+  * Can randomly change directions of the tunnel, stops if it hits the edge of the map, or a no tunnel area
+  * Can randomly make new tunnels out of itself
+  *
+  */
 /turf/open/floor/plating/asteroid/airless/cave/proc/make_tunnel(dir)
 	var/turf/closed/mineral/tunnel = src
 	var/next_angle = pick(45, -45)
@@ -300,6 +330,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			setDir(angle2dir(dir2angle(dir) )+ next_angle)
 
 
+/// Spawns the floor of the tunnel and any type of structure or mob it can have
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFloor(turf/T)
 	if(!T)
 		sanity = 0
@@ -321,6 +352,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 			SpawnMonster(T)
 	T.ChangeTurf(turf_type, null, CHANGETURF_IGNORE_AIR)
 
+/// Spawns a random mob or megafauna in the tunnel
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnMonster(turf/T)
 	if(!isarea(loc))
 		return
@@ -358,6 +390,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 #undef SPAWN_MEGAFAUNA
 #undef SPAWN_BUBBLEGUM
 
+/// Spawns a random flora in the tunnel, can spawn clumps of them
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnFlora(turf/T)
 	if(prob(12))
 		if(isarea(loc))
@@ -373,6 +406,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 		new randumb(T)
 		return TRUE
 
+/// Spawns a random terrain object in the tunnel
 /turf/open/floor/plating/asteroid/airless/cave/proc/SpawnTerrain(turf/T)
 	if(prob(1))
 		if(isarea(loc))

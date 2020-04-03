@@ -33,6 +33,7 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
+	/// Message for when the wolf decides to start running away
 	var/retreat_message_said = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/wolf/Move(atom/newloc)

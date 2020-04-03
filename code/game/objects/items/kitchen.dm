@@ -151,6 +151,7 @@
 	icon = 'icons/obj/ice_moon/artifacts.dmi'
 	icon_state = "bloodletter"
 	w_class = WEIGHT_CLASS_NORMAL
+	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
 /obj/item/kitchen/knife/bloodletter/attack(mob/living/M, mob/living/carbon/user)

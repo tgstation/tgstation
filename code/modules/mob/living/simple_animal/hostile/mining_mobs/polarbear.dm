@@ -32,6 +32,7 @@
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
+	/// Message for when the polar bear starts to attack faster
 	var/aggressive_message_said = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

@@ -33,8 +33,11 @@ Difficulty: Extremely Hard
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
+	/// Modifies the speed of the projectiles the demonic frost miner shoots out
 	var/projectile_speed_multiplier = 1
+	/// If the demonic frost miner is in its enraged state
 	var/enraged = FALSE
+	/// If the demonic frost miner is currently transforming to its enraged state
 	var/enraging = FALSE
 	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
@@ -162,6 +165,7 @@ Difficulty: Extremely Hard
 		return
 	return ..()
 
+/// Shoots out homing frost orbs that explode into ice blast projectiles after a couple seconds
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/frost_orbs(added_delay = 10, shoot_times = 8)
 	for(var/i in 1 to shoot_times)
 		var/turf/startloc = get_turf(src)
@@ -179,6 +183,7 @@ Difficulty: Extremely Hard
 		SLEEP_CHECK_DEATH(added_delay)
 	SetRecoveryTime(40, 60)
 
+/// Called when the orb is exploding, shoots out projectiles
 /obj/projectile/frost_orb/proc/orb_explosion(projectile_speed_multiplier)
 	var/list/spread = list(0, 60, 120, 180, 240, 300)
 	for(var/angle in spread)
@@ -195,6 +200,7 @@ Difficulty: Extremely Hard
 		P.fire()
 	qdel(src)
 
+/// Shoots out snowballs with a random spread
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/snowball_machine_gun(shots = 60, spread = 45)
 	for(var/i in 1 to shots)
 		var/turf/startloc = get_turf(src)
@@ -211,6 +217,7 @@ Difficulty: Extremely Hard
 		SLEEP_CHECK_DEATH(1)
 	SetRecoveryTime(15, 15)
 
+/// Shoots out ice blasts in a shotgun like pattern
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/ice_shotgun(shots = 5, list/patterns = list(list(-40, -20, 0, 20, 40), list(-30, -10, 10, 30)))
 	for(var/i in 1 to shots)
 		var/list/pattern = patterns[i % length(patterns) + 1] // alternating patterns
@@ -229,6 +236,7 @@ Difficulty: Extremely Hard
 		SLEEP_CHECK_DEATH(8)
 	SetRecoveryTime(15, 20)
 
+/// Checks if the demonic frost miner is ready to be enraged
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/proc/check_enraged()
 	if(enraged)
 		return
@@ -281,6 +289,7 @@ Difficulty: Extremely Hard
 	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
 	RegisterSignal(user, COMSIG_MOB_DEATH, .proc/resurrect)
 
+/// Resurrects the target when they die by cloning them into a new duplicate body and transferring their mind to the clone on a safe station turf
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
 	user.visible_message("<span class='notice'>You see [user]'s soul dragged out of their body!</span>", "<span class='notice'>You feel your soul dragged away to a fresh body!</span>")
 	var/typepath = user.type
@@ -347,6 +356,7 @@ Difficulty: Extremely Hard
 	owner.add_overlay(cube)
 	return ..()
 
+/// Blocks movement from the status effect owner
 /datum/status_effect/ice_block_talisman/proc/owner_moved()
 	return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
 

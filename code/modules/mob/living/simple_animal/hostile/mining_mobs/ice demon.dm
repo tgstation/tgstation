@@ -40,6 +40,7 @@
 	movement_type = FLYING
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
+	/// Distance the demon will teleport from the target
 	var/teleport_distance = 3
 
 /obj/projectile/temp/basilisk/ice

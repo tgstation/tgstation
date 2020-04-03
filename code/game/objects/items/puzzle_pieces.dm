@@ -42,7 +42,9 @@
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 100, "energy" = 100, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	damage_deflection = 70
-	var/puzzle_id = null	//Make sure that the key has the same puzzle_id as the keycard door!
+	/// Make sure that the key has the same puzzle_id as the keycard door!
+	var/puzzle_id = null
+	/// Message that occurs when the door is opened
 	var/open_message = "The door beeps, and slides opens."
 
 //Standard Expressions to make keycard doors basically un-cheeseable

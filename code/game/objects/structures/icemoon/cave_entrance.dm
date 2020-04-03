@@ -21,9 +21,17 @@
 	destroy_message()
 	return ..()
 
+/**
+  * Visible message created when the spawner is destroyed, used for formatting
+  *
+  */
 /obj/structure/spawner/ice_moon/proc/destroy_message()
 	visible_message("<span class='userdanger'>[src] collapses, sealing everything inside!</span>")
 
+/**
+  * Clears rocks around the spawner when it is created
+  *
+  */
 /obj/structure/spawner/ice_moon/proc/clear_rock()
 	for(var/turf/F in RANGE_TURFS(2, src))
 		if(abs(src.x - F.x) + abs(src.y - F.y) > 3)
