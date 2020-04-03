@@ -2424,6 +2424,7 @@
 #include "code\modules\modular_computers\file_system\programs\atmosscan.dm"
 #include "code\modules\modular_computers\file_system\programs\borg_monitor.dm"
 #include "code\modules\modular_computers\file_system\programs\card.dm"
+#include "code\modules\modular_computers\file_system\programs\cargoship.dm"
 #include "code\modules\modular_computers\file_system\programs\configurator.dm"
 #include "code\modules\modular_computers\file_system\programs\crewmanifest.dm"
 #include "code\modules\modular_computers\file_system\programs\file_browser.dm"
