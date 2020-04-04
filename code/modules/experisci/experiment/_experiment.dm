@@ -49,7 +49,7 @@
   * with some defined arguments
   */
 /datum/experiment/proc/do_action(...)
-	return
+	return actionable()
 
 /**
   * Checks if the experiment can be sabotaged

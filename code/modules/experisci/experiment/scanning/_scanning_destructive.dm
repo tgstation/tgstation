@@ -23,7 +23,7 @@
 /datum/experiment/scanning/destructive/is_complete()
 	. = TRUE
 	for (var/a in required_atoms)
-		if (!scanned[a] || scanned[a] != required_atoms[a])
+		if (!(a in scanned) || scanned[a] != required_atoms[a])
 			return FALSE
 
 /datum/experiment/scanning/destructive/check_progress()
@@ -31,7 +31,7 @@
 	var/required = 0
 	for (var/a in required_atoms)
 		required += required_atoms[a]
-		total_scanned += scanned[a] ? scanned[a] : 0
+		total_scanned += (a in scanned) ? scanned[a] : 0
 	return "Scanned [total_scanned] of [required] objects towards the goal."
 
 /**
@@ -43,8 +43,7 @@
   * Arguments:
   * * target - The atom to attempt to scan
   */
-/datum/experiment/scanning/destructive/scan_atom(atom/target)
-	. = FALSE
+/datum/experiment/scanning/destructive/do_action(atom/target)
 	var/idx = get_contributing_index(target)
 	if (idx)
 		scanned[idx]++
@@ -52,13 +51,11 @@
 		return TRUE
 
 /datum/experiment/scanning/destructive/get_contributing_index(atom/target)
-	. = null
 	for (var/a in required_atoms)
-		if (istype(target, a) && scanned[a] && scanned[a] < required_atoms[a])
+		if (istype(target, a) && (a in scanned) && scanned[a] < required_atoms[a])
 			return a
 
 /datum/experiment/scanning/destructive/sabotage()
-	. = FALSE
 	var/list/valid_targets = list()
 	for (var/a in scanned)
 		if (scanned[a] > 0)

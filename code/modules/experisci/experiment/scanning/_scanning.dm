@@ -60,12 +60,16 @@
   * Arguments:
   * * target - The atom to attempt to scan
   */
-/datum/experiment/scanning/proc/scan_atom(atom/target)
-	. = FALSE
+/datum/experiment/scanning/do_action(atom/target)
 	var/idx = get_contributing_index(target)
 	if (idx)
 		scanned[idx] += target
 		return TRUE
+
+/datum/experiment/scanning/actionable(atom/target)
+	. = ..()
+	if (.)
+		return !!get_contributing_index(target)
 
 /**
   * Attempts to get the typepath for an atom that would contribute to the experiment
@@ -76,7 +80,6 @@
   * * target - The atom to attempt to scan
   */
 /datum/experiment/scanning/proc/get_contributing_index(atom/target)
-	. = null
 	for (var/a in required_atoms)
 		var/list/seen = scanned[a]
 		if (istype(target, a) && seen && seen.len < required_atoms[a] && !(target in seen))
@@ -89,7 +92,6 @@
   * returns TRUE/FALSE based on the success of this operation.
   */
 /datum/experiment/scanning/sabotage()
-	. = FALSE
 	var/list/valid_targets = list()
 	for (var/a in scanned)
 		var/list/seen = scanned[a]

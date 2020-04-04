@@ -33,8 +33,8 @@
 	src.blacklisted_experiments = blacklisted_experiments
 
 	// Register signals for performing experiments
-	RegisterSignal(parent, COMSIG_EXPERIMENT_ACTION, .proc/action_experiment)
-	RegisterSignal(parent, COMSIG_EXPERIMENT_CHECK_ACTIONABLE, .proc/is_experiment_actionable)
+	RegisterSignal(parent, COMSIG_EXP_ACTION, .proc/action_experiment)
+	RegisterSignal(parent, COMSIG_EXP_CHECK_ACTIONABLE, .proc/is_experiment_actionable)
 
 	// Determine UI display mode
 	switch(config_mode)
@@ -43,7 +43,7 @@
 		if (EXPERIMENT_CONFIG_ALTCLICK)
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
 		if (EXPERIMENT_CONFIG_CUSTOMSIGNAL)
-			RegisterSignal(parent, COMSIG_EXPERIMENT_CONFIGURE, .proc/configure_experiment)
+			RegisterSignal(parent, COMSIG_EXP_CONFIGURE, .proc/configure_experiment)
 
 /**
   * Checks if the selected experiment is actionable given some arguments
@@ -51,10 +51,10 @@
 /datum/component/experiment_handler/proc/is_experiment_actionable(datum/source, ...)
 	// Check if an experiment is selected
 	if (selected_experiment == null)
-		return COMPONENT_EXPERIMENT_INACTIONABLE
+		return COMPONENT_EXP_INACTIONABLE
 
 	// Check if actionable
-	return selected_experiment.actionable(args.len > 1 ? args.Copy(1) : list()) ? COMPONENT_EXPERIMENT_ACTIONABLE : COMPONENT_EXPERIMENT_INACTIONABLE
+	return selected_experiment.actionable(arglist(args.len > 1 ? args.Copy(2) : list())) ? COMPONENT_EXP_ACTIONABLE : COMPONENT_EXP_INACTIONABLE
 
 /**
   * Attempts to perform the selected experiment given some arguments
@@ -62,14 +62,14 @@
 /datum/component/experiment_handler/proc/action_experiment(datum/source, ...)
 	// Check if an experiment is selected
 	if (selected_experiment == null)
-		return COMPONENT_EXPERIMENT_NO_SELECTION
+		return COMPONENT_EXP_NO_SELECTION
 
 	// Attempt to run
-	var/list/arguments = args.len > 1 ? args.Copy(1) : list()
-	if (!selected_experiment.actionable(arguments))
-		return COMPONENT_EXPERIMENT_NO_RESULT
+	var/list/arguments = args.len > 1 ? args.Copy(2) : list()
+	if (!selected_experiment.actionable(arglist(arguments)))
+		return COMPONENT_EXP_NO_RESULT
 	else
-		return selected_experiment.do_action(arguments) ? COMPONENT_EXPERIMENT_SUCCESS : COMPONENT_EXPERIMENT_FAIL
+		return selected_experiment.do_action(arglist(arguments)) ? COMPONENT_EXP_SUCCESS : COMPONENT_EXP_FAIL
 
 /**
   * Attempts to show the user the experiment configuration panel
