@@ -12,10 +12,6 @@
 
 /obj/item/experi_scanner/Initialize()
 	. = ..()
-	AddComponent(/datum/component/experiment_handler,
-		_allowedExperiments = list(/datum/experiment/scanning),
-		_blacklistedExperiments = list(/datum/experiment/scanning/destructive))
-
-/obj/item/experi_scanner/attack_self(mob/user)
-	. = ..()
-	SEND_SIGNAL(src, COMSIG_EXPERIMENT_CONFIGURE, user)
+	AddComponent(/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/scanning), \
+		blacklisted_experiments = list(/datum/experiment/scanning/destructive))

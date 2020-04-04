@@ -1,3 +1,7 @@
+#define EXPERIMENT_CONFIG_ATTACKSELF 	"experiment_config_attackself"
+#define EXPERIMENT_CONFIG_ALTCLICK 		"experiment_config_altclick"
+#define EXPERIMENT_CONFIG_CUSTOMSIGNAL	"experiment_config_customsignal"
+
 /**
   * # Experiment Handler
   *
@@ -17,14 +21,25 @@
   * Initializes a new instance of the experiment_handler component
   *
   * Arguments:
-  * * _allowedExperiments - The list of /datum/experiment types that can be performed with this component
-  * * _blackedlistedExperiments - The list of /datum/experiment types that explicitly cannot be performed with this component
+  * * allowed_experiments - The list of /datum/experiment types that can be performed with this component
+  * * blacklisted_experiments - The list of /datum/experiment types that explicitly cannot be performed with this component
+  * * config_mode - The define that determines how the experiment_handler should display the configuration UI
   */
-/datum/component/experiment_handler/Initialize(_allowedExperiments = list(), _blacklistedExperiments = list())
+/datum/component/experiment_handler/Initialize(allowed_experiments = list(),
+												blacklisted_experiments = list(),
+												config_mode = EXPERIMENT_CONFIG_ATTACKSELF)
 	. = ..()
-	allowed_experiments = _allowedExperiments
-	blacklisted_experiments = _blacklistedExperiments
-	RegisterSignal(parent, COMSIG_EXPERIMENT_CONFIGURE, .proc/configure_experiment)
+	src.allowed_experiments = allowed_experiments
+	src.blacklisted_experiments = blacklisted_experiments
+
+	// Determine UI display mode
+	switch(config_mode)
+		if (EXPERIMENT_CONFIG_ATTACKSELF)
+			RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/configure_experiment)
+		if (EXPERIMENT_CONFIG_ALTCLICK)
+			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
+		if (EXPERIMENT_CONFIG_CUSTOMSIGNAL)
+			RegisterSignal(parent, COMSIG_EXPERIMENT_CONFIGURE, .proc/configure_experiment)
 
 /**
   * Attempts to show the user the experiment configuration panel
