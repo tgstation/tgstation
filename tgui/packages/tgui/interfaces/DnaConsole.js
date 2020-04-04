@@ -82,6 +82,9 @@ export const DnaConsole = props => {
       {consoleMode === CONSOLE_MODE_SEQUENCER && (
         <DnaConsoleSequencer state={state} />
       )}
+      {consoleMode === CONSOLE_MODE_ENZYMES && (
+        <DnaConsoleEnzymes state={state} />
+      )}
     </Fragment>
   );
 };
@@ -520,7 +523,7 @@ const MutationInfo = props => {
         </LabeledList.Item>
       </LabeledList>
       <Divider />
-      {['occupant'].includes(mutation.Source) && (
+      {mutation.Source === 'occupant' && (
         <Dropdown
           width="240px"
           options={advInjectors}
@@ -615,17 +618,19 @@ const MutationInfo = props => {
             mutref: mutation.ByondRef,
           })} />
       )}
-      {(['occupant'].includes(mutation.Source)
-        && mutation.class === MUT_EXTRA && !mutation.Scrambled) && (
-        <Button
-          content={"Nullify"}
-          onClick={() => act("nullify", {
-            mutref: mutation.ByondRef,
-          })} />
-      )}
+      {mutation.Source === 'occupant'
+        && mutation.class === MUT_EXTRA
+        && !mutation.Scrambled
+        && (
+          <Button
+            content="Nullify"
+            onClick={() => act('nullify', {
+              mutref: mutation.ByondRef,
+            })} />
+        )}
       <Divider />
       <ChromosomeInfo
-        disabled={!['occupant'].includes(mutation.Source)}
+        disabled={mutation.Source !== 'occupant'}
         state={state}
         mutation={mutation} />
     </Fragment>
@@ -816,7 +821,7 @@ const GeneCycler = props => {
           return;
         }
         if (index === -1) {
-          onChange(GENES[0]);
+          onChange(e, GENES[0]);
           return;
         }
         const nextGene = GENES[(index + 1) % length];
@@ -936,5 +941,25 @@ const GenomeSequencer = props => {
         <b>Tip:</b> Ctrl+Click on the gene to set it to X.
       </Box>
     </Fragment>
+  );
+};
+
+const DnaConsoleEnzymes = props => {
+  const { state } = props;
+  const { data, act } = useBackend(props);
+  const {
+    isScannerConnected,
+  } = data;
+  if (!isScannerConnected) {
+    return (
+      <Section color="bad">
+        DNA Scanner is not connected.
+      </Section>
+    );
+  }
+  return (
+    <Section title="Unique Enzymes">
+      TODO
+    </Section>
   );
 };
