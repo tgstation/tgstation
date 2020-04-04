@@ -176,7 +176,7 @@
 	id = "reagentgrinder"
 	build_path = /obj/item/circuitboard/machine/reagentgrinder
 	category = list ("Medical Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/dnascanner
 	name = "Machine Design (DNA Scanner)"
@@ -328,7 +328,7 @@
 	id = "microwave"
 	build_path = /obj/item/circuitboard/machine/microwave
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/gibber
 	name = "Machine Design (Gibber Board)"
@@ -344,7 +344,7 @@
 	id = "smartfridge"
 	build_path = /obj/item/circuitboard/machine/smartfridge
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
@@ -392,7 +392,7 @@
 	id = "recycler"
 	build_path = /obj/item/circuitboard/machine/recycler
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/scanner_gate
 	name = "Machine Design (Scanner Gate)"
@@ -400,7 +400,7 @@
 	id = "scanner_gate"
 	build_path = /obj/item/circuitboard/machine/scanner_gate
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/holopad
 	name = "Machine Design (AI Holopad Board)"
@@ -408,7 +408,7 @@
 	id = "holopad"
 	build_path = /obj/item/circuitboard/machine/holopad
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/autolathe
 	name = "Machine Design (Autolathe Board)"
@@ -416,7 +416,7 @@
 	id = "autolathe"
 	build_path = /obj/item/circuitboard/machine/autolathe
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL		//Lets be honest here half the maps have public ones.
+
 
 /datum/design/board/recharger
 	name = "Machine Design (Weapon Recharger Board)"
@@ -425,7 +425,7 @@
 	materials = list(/datum/material/glass = 1000, /datum/material/gold = 2000)
 	build_path = /obj/item/circuitboard/machine/recharger
 	category = list("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/vendor
 	name = "Machine Design (Vendor Board)"
@@ -433,7 +433,7 @@
 	id = "vendor"
 	build_path = /obj/item/circuitboard/machine/vendor
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/ore_redemption
 	name = "Machine Design (Ore Redemption Board)"
@@ -521,7 +521,7 @@
 	id = "donksofttoyvendor"
 	build_path = /obj/item/circuitboard/machine/vending/donksofttoyvendor
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL			//Toys!!
+
 
 /datum/design/board/cell_charger
 	name = "Machine Design (Cell Charger Board)"
@@ -529,7 +529,7 @@
 	id = "cell_charger"
 	build_path = /obj/item/circuitboard/machine/cell_charger
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/dish_drive
 	name = "Machine Design (Dish Drive)"
@@ -569,7 +569,7 @@
 	id = "paystand"
 	build_path = /obj/item/circuitboard/machine/paystand
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/board/fat_sucker
 	name = "Machine Design (Lipid Extractor)"
@@ -617,4 +617,4 @@
 	id = "sheetifier"
 	build_path = /obj/item/circuitboard/machine/sheetifier
 	category = list ("Misc. Machinery")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+

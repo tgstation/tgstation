@@ -325,4 +325,3 @@
 	materials = list(/datum/material/iron=50, /datum/material/glass=10)
 	build_path = /obj/item/stock_parts/card_reader
 	category = list("Stock Parts")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
