@@ -475,9 +475,9 @@ const ROUTES = {
   },
   ntos_cyborg_monitor: {
     component: () => NtosCyborgRemoteMonitor,
-	wrapper: () => NtosWrapper,
+    wrapper: () => NtosWrapper,
     scrollable: true,
-	theme: 'ntos',
+    theme: 'ntos',
   },
   ntos_file_manager: {
     component: () => NtosFileManager,
