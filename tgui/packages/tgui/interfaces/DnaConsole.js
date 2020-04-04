@@ -797,27 +797,38 @@ const GeneCycler = props => {
       width="22px"
       color={color}
       onClick={e => {
+        e.preventDefault();
         if (!onChange) {
           return;
         }
         if (e.ctrlKey) {
           onChange('X');
-          e.preventDefault();
           return;
         }
         if (e.shiftKey) {
           onChange('?');
-          e.preventDefault();
+          return;
+        }
+        if (index === -1) {
+          onChange(GENES[0]);
           return;
         }
         const nextGene = GENES[(index + 1) % length];
         onChange(nextGene);
       }}
       oncontextmenu={e => {
+        e.preventDefault();
         if (!onChange) {
           return;
         }
-        e.preventDefault();
+        if (e.ctrlKey) {
+          onChange('X');
+          return;
+        }
+        if (index === -1) {
+          onChange(GENES[length - 1]);
+          return;
+        }
         const prevGene = GENES[(index - 1 + length) % length];
         onChange(prevGene);
       }}>
