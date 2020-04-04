@@ -16,48 +16,64 @@ RSF
 	item_flags = NOBLUDGEON
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	var/matter = 0
-	var/mode = 1
+	var/max_matter = 30
+	var/to_despense
 	w_class = WEIGHT_CLASS_NORMAL
+	var/list/cost_by_item = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 20,
+								/obj/item/paper = 10,
+								/obj/item/pen = 50,
+								/obj/item/storage/pill_bottle/dice = 200,
+								/obj/item/clothing/mask/cigarette = 10,
+								)
+	var/list/matter_by_item = list(/obj/item/rcd_ammo = 10,)
+
+/obj/item/rsf/Initialize()
+	. = ..()
+	to_despense = cost_by_item[1]
 
 /obj/item/rsf/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>It currently holds [matter]/30 fabrication-units.</span>"
+	. += "<span class='notice'>It currently holds [(matter/max_matter) * 100]% matter.</span>"
 
 /obj/item/rsf/cyborg
 	matter = 30
 
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/rcd_ammo))
-		if((matter + 10) > 30)
+	if(is_type_in_list(W,matter_by_item))
+		if(matter > max_matter)
 			to_chat(user, "<span class='warning'>The RSF can't hold any more matter!</span>")
 			return
 		qdel(W)
-		matter += 10
+		matter += matter_by_item[W.type]
+		if(matter > max_matter)
+			matter = max_matter
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
-		to_chat(user, "<span class='notice'>The RSF now holds [matter]/30 fabrication-units.</span>")
+		to_chat(user, "<span class='notice'>The RSF now holds [(matter/max_matter) * 100]% matter.</span>")
 		icon_state = "rsf"
 	else
 		return ..()
 
 /obj/item/rsf/attack_self(mob/user)
+	if(!user)
+		return
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
-	switch(mode)
-		if(5)
-			mode = 1
-			to_chat(user, "<span class='notice'>Changed dispensing mode to 'Drinking Glass'.</span>")
-		if(1)
-			mode = 2
-			to_chat(user, "<span class='notice'>Changed dispensing mode to 'Paper'.</span>")
-		if(2)
-			mode = 3
-			to_chat(user, "<span class='notice'>Changed dispensing mode to 'Pen'.</span>")
-		if(3)
-			mode = 4
-			to_chat(user, "<span class='notice'>Changed dispensing mode to 'Dice Pack'.</span>")
-		if(4)
-			mode = 5
-			to_chat(user, "<span class='notice'>Changed dispensing mode to 'Cigarette'.</span>")
+	var/list/item_list = list()
+	for(var/meme in cost_by_item)
+		message_admins(meme)
+		var/atom/test = new meme()
+		item_list[test.name] = image(icon = test.icon, icon_state = test.icon_state)
+	var/atom/item_result = show_radial_menu(user, src, item_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+	if(!check_menu(user))
+		return
+	to_despense = item_result
 	// Change mode
+
+/obj/item/rsf/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
 /obj/item/rsf/afterattack(atom/A, mob/user, proximity)
 	. = ..()
@@ -65,71 +81,51 @@ RSF
 		return
 	if (!(istype(A, /obj/structure/table) || isfloorturf(A)))
 		return
-
-	if(iscyborg(user))
-		var/mob/living/silicon/robot/R = user
-		if(!R.cell || R.cell.charge < 200)
-			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
-			icon_state = "rsf_empty"
-			return
-	else if (matter < 1)
-		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
-		icon_state = "rsf_empty"
-		return
-
-	var/turf/T = get_turf(A)
-	playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
-	switch(mode)
-		if(1)
-			to_chat(user, "<span class='notice'>Dispensing Drinking Glass...</span>")
-			new /obj/item/reagent_containers/food/drinks/drinkingglass(T)
-			use_matter(20, user)
-		if(2)
-			to_chat(user, "<span class='notice'>Dispensing Paper Sheet...</span>")
-			new /obj/item/paper(T)
-			use_matter(10, user)
-		if(3)
-			to_chat(user, "<span class='notice'>Dispensing Pen...</span>")
-			new /obj/item/pen(T)
-			use_matter(50, user)
-		if(4)
-			to_chat(user, "<span class='notice'>Dispensing Dice Pack...</span>")
-			new /obj/item/storage/pill_bottle/dice(T)
-			use_matter(200, user)
-		if(5)
-			to_chat(user, "<span class='notice'>Dispensing Cigarette...</span>")
-			new /obj/item/clothing/mask/cigarette(T)
-			use_matter(10, user)
+	message_admins("I'm in [to_despense] [cost_by_item[to_despense]]")
+	if(use_matter(cost_by_item[to_despense], user))
+		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
+		to_chat(user, "<span class='notice'>Dispensing [to_despense.name]...</span>")
+		var/atom/meme = new to_despense(get_turf(A))
 
 /obj/item/rsf/proc/use_matter(charge, mob/user)
-	if (iscyborg(user))
+	message_admins("Using [charge]")
+	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
-		R.cell.charge -= charge
+		var/end_charge = R.cell.charge - charge
+		if(end_charge >= 0)
+			R.cell.charge = end_charge
+			return TRUE
+		to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
 	else
-		matter--
-		to_chat(user, "<span class='notice'>The RSF now holds [matter]/30 fabrication-units.</span>")
+		if(matter - 1 >= 0)
+			matter--
+			to_chat(user, "<span class='notice'>The RSF now holds [(matter/max_matter) * 100]% matter.</span>")
+			return TRUE
+		to_chat(user, "<span class='warning'>\The [src] doesn't have enough matter left.</span>")
+	icon_state = "rsf_empty"
+	return FALSE
 
-/obj/item/cookiesynth
+/obj/item/rsf/cookiesynth
 	name = "Cookie Synthesizer"
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	var/matter = 10
-	var/toxin = 0
+	var/toxin = FALSE
 	var/cooldown = 0
 	var/cooldowndelay = 10
 	w_class = WEIGHT_CLASS_NORMAL
+	cost_by_item = list(/obj/item/reagent_containers/food/snacks/cookie = 100,)
 
-/obj/item/cookiesynth/examine(mob/user)
+/obj/item/rsf/cookiesynth/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>It currently holds [matter]/10 cookie-units.</span>"
 
-/obj/item/cookiesynth/attackby()
+/obj/item/rsf/cookiesynth/attackby()
 	return
 
-/obj/item/cookiesynth/emag_act(mob/user)
+/obj/item/rsf/cookiesynth/emag_act(mob/user)
 	obj_flags ^= EMAGGED
 	if(obj_flags & EMAGGED)
 		to_chat(user, "<span class='warning'>You short out [src]'s reagent safety checker!</span>")
@@ -137,7 +133,7 @@ RSF
 		to_chat(user, "<span class='warning'>You reset [src]'s reagent safety checker!</span>")
 		toxin = 0
 
-/obj/item/cookiesynth/attack_self(mob/user)
+/obj/item/rsf/cookiesynth/attack_self(mob/user)
 	var/mob/living/silicon/robot/P = null
 	if(iscyborg(user))
 		P = user
@@ -151,11 +147,11 @@ RSF
 		toxin = 0
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
 
-/obj/item/cookiesynth/process()
+/obj/item/rsf/cookiesynth/process()
 	if(matter < 10)
 		matter++
 
-/obj/item/cookiesynth/afterattack(atom/A, mob/user, proximity)
+/obj/item/rsf/cookiesynth/afterattack(atom/A, mob/user, proximity)
 	. = ..()
 	if(cooldown > world.time)
 		return
