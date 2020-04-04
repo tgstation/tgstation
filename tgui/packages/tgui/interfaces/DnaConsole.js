@@ -15,22 +15,8 @@ function isDuplicateMutation(lhs, rhs) {
 }
 */
 
-// TODO: Chromosomes should only be applied from the genetic sequencer and not
-//  from any form of mutation storage.
-
-// TODO: Mutations that are not mut.Class === MUT_NORMAL should have a nullify
-//  button. They should not be able to be edited in the gene sequencer.
-//  MUT_EXTRAs are added by printing a Mutator to forcefuully add a mutation to
-//   a carbon.
-//  MUT_OTHER I don't even know. A MUT_OTHER is stated in _mutations.dm datum as
-//   "Cannot be interacted with by players through normal means.
-//   I.E. wizards mutate"
-//   Currently the only way to create this mutation class in DM is by creating
-//    an /obj/item/dnainjector/timed that applies mutations temporarily.
-//   There is currently no code path that does this. The only code path that
-//    uses timed injectors are the special injectors that change your genetic
-//    enzymes (looks, name, blood type) and these don't add any mutations.
-
+// TODO - Combining mutations (E.g. Radioactive + Strength = Hulk)
+//  https://tgstation13.org/wiki/Guide_to_genetics#List_of_Mutations
 
 const logger = createLogger('DnaConsole');
 
@@ -591,6 +577,33 @@ const MutationInfo = props => {
             mutref: mutation.ByondRef,
             source: mutation.Source,
           })} />
+      )}
+      {['console', 'disk'].includes(mutation.Source) && (
+        
+      // TODO - MUTATION COMBINING LOGIC GOES HERE
+      //  1. Some way to select any mutation that isn't this mutation.
+      //    1.1. This mutation should be on the same storage medium - FOR NOW
+      //    1.2. DM code isn't set up to allow arbitrary mixing of mutations
+      //         between console and disk, but I plan to implement this
+      //         functionality in the future.
+      //    1.3. So ideally the mutation selection should be coded in a
+      //         flexible enough way to allow us to later just say "pick from
+      //         all mutations across disk and console"
+      //    1.4. Trim duplicate alias mutations. Combined mutations do not
+      //         inherit any metadata, so a list with no duplicate names is
+      //         also ideal.
+      //    1.5. 'this' mutation' should not be included in the list,
+      //         including mutations with the same alias as 'this'.
+
+      // 2. act(`combine_${mutation.Source}`, {
+      //      srctype: mutation.Type
+      //      desttype: selectedMutation.Type
+      //    })
+
+      // 3. disabled logic is the same as Save to Console/Disk as the action
+      //    requires the ability to save a new mutation to the storage medium
+
+        false
       )}
       {['console', 'disk', 'advinj'].includes(mutation.Source) && (
         <Button
