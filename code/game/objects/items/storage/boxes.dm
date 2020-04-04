@@ -1283,7 +1283,7 @@
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/storage/box/gum))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/chewable/bubblegum))
 	STR.max_items = 4
 
 /obj/item/storage/box/gum/PopulateContents()
