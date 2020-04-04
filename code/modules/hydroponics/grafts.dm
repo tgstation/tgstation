@@ -18,8 +18,8 @@ A new subsystem for hydroponics, as a way to share specific traits into plants, 
 /obj/item/graft/Initialize()
 	. = ..()
 	stored_trait = new /datum/plant_gene/trait/repeated_harvest //Default gene is repeated harvest.
-	icon_state = pick( \
-		10 ; "graft_types" , \
+	icon_state = pick(
+		10 ; "graft_plant" , \
 		5 ; "graft_flower" , \
 		4 ; "graft_mushroom" , \
 		1 ; "graft_doom" )
