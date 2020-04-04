@@ -500,7 +500,7 @@ const MutationInfo = props => {
     mutationCapacity,
   } = data;
   const diskMutations = data.diskMutations ?? [];
-  const mutationStorage = data.diskMutations ?? [];
+  const mutationStorage = data.mutationStorage ?? [];
   if (!mutation) {
     return (
       <Box color="label">
