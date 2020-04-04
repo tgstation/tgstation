@@ -1,34 +1,47 @@
-import { useBackend } from '../backend';
+import { multiline } from 'common/string';
 import { Fragment } from 'inferno';
-import { Section, LabeledList, Button, Input } from '../components';
+import { useBackend } from '../backend';
+import { Button, Input, LabeledList, Section } from '../components';
+
+const TOOLTIP_TEXT = multiline`
+  %PERSON will be replaced with their name.
+  %RANK with their job.
+`;
 
 export const AutomatedAnnouncement = props => {
   const { act, data } = useBackend(props);
+  const {
+    arrivalToggle,
+    arrival,
+    newheadToggle,
+    newhead,
+  } = data;
   return (
     <Fragment>
       <Section
         title="Arrival Announcement"
         buttons={(
           <Button
-            icon="power-off"
-            selected={data.arrivalToggle}
-            onClick={() => act('ArrivalToggle')}
-            content={data.arrivalToggle ? "On" : "Off"}
-          />
+            icon={arrivalToggle ? 'power-off' : 'times'}
+            selected={arrivalToggle}
+            content={arrivalToggle ? 'On' : 'Off'}
+            onClick={() => act('ArrivalToggle')} />
         )}>
         <LabeledList>
-          <LabeledList.Item label="Message">
+          <LabeledList.Item
+            label="Message"
+            buttons={(
+              <Button
+                icon="info"
+                tooltip={TOOLTIP_TEXT}
+                tooltipPosition="left" />
+            )}>
             <Input
-              value={data.arrival}
-              width="290px"
+              fluid
+              value={arrival}
               onChange={(e, value) => act('ArrivalText', {
                 newText: value,
               })} />
-            <Button
-              icon="info"
-              tooltip="%PERSON will be replaced with their name.\
-              %RANK with their job."
-            />
           </LabeledList.Item>
         </LabeledList>
       </Section>
@@ -36,25 +49,26 @@ export const AutomatedAnnouncement = props => {
         title="Departmental Head Announcement"
         buttons={(
           <Button
-            icon="power-off"
-            selected={data.newheadToggle}
-            onClick={() => act('NewheadToggle')}
-            content={data.newheadToggle ? "On" : "Off"}
-          />
+            icon={newheadToggle ? 'power-off' : 'times'}
+            selected={newheadToggle}
+            content={newheadToggle ? 'On' : 'Off'}
+            onClick={() => act('NewheadToggle')} />
         )}>
         <LabeledList>
-          <LabeledList.Item label="Message">
+          <LabeledList.Item
+            label="Message"
+            buttons={(
+              <Button
+                icon="info"
+                tooltip={TOOLTIP_TEXT}
+                tooltipPosition="left" />
+            )}>
             <Input
-              value={data.newhead}
-              width="290px"
+              fluid
+              value={newhead}
               onChange={(e, value) => act('NewheadText', {
                 newText: value,
               })} />
-            <Button
-              icon="info"
-              tooltip="%PERSON will be replaced with their name.\
-              %RANK with their job."
-            />
           </LabeledList.Item>
         </LabeledList>
       </Section>
