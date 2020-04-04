@@ -480,6 +480,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 			processing += A.contents
 			. += A
 
+//Gets all contents except those with the specified flag_1
 /atom/proc/GetAllContentsIgnoreFlag(var/T, flag)
 	var/list/processing_list = list(src)
 	if(T)
