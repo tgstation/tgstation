@@ -45,7 +45,7 @@
 	cached_designs.Cut()
 	for(var/i in stored_research.researched_designs)
 		var/datum/design/d = SSresearch.techweb_design_by_id(i)
-		if((isnull(allowed_department_flags) || (D.departmental_flags & ALL) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
+		if((isnull(allowed_department_flags) || (d.departmental_flags & ALL) || (d.departmental_flags & allowed_department_flags)) && (d.build_type & allowed_buildtypes))
 			cached_designs |= d
 
 /obj/machinery/rnd/production/RefreshParts()
