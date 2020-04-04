@@ -1,38 +1,26 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, LabeledList } from '../components';
+import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 
 export const NtosCyborgRemoteMonitor = props => {
-  const { state } = props;
   const { act, data } = useBackend(props);
   const {
     card,
     cyborgs = [],
   } = data;
 
-  return (
-    <Cyborgs state={state} cyborgs={cyborgs} card={card} />
-  );
-};
-
-const Cyborgs = props => {
-  const { state, cyborgs, card } = props;
-  const { act, data } = useBackend(props);
-  
   if (!cyborgs.length) {
     return (
-      <Section>
-        <NoticeBox textAlign="center">
-          No cyborg units detected.
-        </NoticeBox>
-      </Section>
+      <NoticeBox>
+        No cyborg units detected.
+      </NoticeBox>
     );
   }
 
   return (
     <Fragment>
       {!card && (
-        <NoticeBox textAlign="left">
+        <NoticeBox>
           Certain features require an ID card login.
         </NoticeBox>
       )}
@@ -42,21 +30,14 @@ const Cyborgs = props => {
             key={cyborg.ref}
             title={cyborg.name}
             buttons={(
-              !!card && (
-                <Button
-                  icon="terminal"
-                  content="Send Message"
-                  color="blue"
-                  onClick={() => act('messagebot', {
-                    ref: cyborg.ref,
-                  })} />
-              ) || (
-                <Button
-                  icon="terminal"
-                  content="Send Message"
-                  color="grey"
-                />
-              )
+              <Button
+                icon="terminal"
+                content="Send Message"
+                color="blue"
+                disabled={!card}
+                onClick={() => act('messagebot', {
+                  ref: cyborg.ref,
+                })} />
             )}>
             <LabeledList>
               <LabeledList.Item label="Status">
