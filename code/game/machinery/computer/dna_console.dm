@@ -452,6 +452,13 @@
 				newgene = truegenes[genepos]
 				jokerready = world.time + JOKER_TIMEOUT - (JOKER_UPGRADE * (connected_scanner.precision_coeff-1))
 
+			// If the gene is an X, we want to update the default genes with the new
+			//  X to allow highlighting logic to work on the tgui interface.
+			if(newgene == "X")
+				var/defaultseq = scanner_occupant.dna.default_mutation_genes[path]
+				defaultseq = copytext_char(defaultseq, 1, genepos) + newgene + copytext_char(defaultseq, genepos + 1)
+				scanner_occupant.dna.default_mutation_genes[path] = defaultseq
+
 			// Copy genome to scanner occupant and do some basic mutation checks as
 			//  we've increased the occupant rads
 			sequence = copytext_char(sequence, 1, genepos) + newgene + copytext_char(sequence, genepos + 1)
@@ -1547,10 +1554,12 @@
 
 			var/list/mutation_data = list()
 			var/text_sequence = scanner_occupant.dna.mutation_index[mutation_type]
+			var/default_sequence = scanner_occupant.dna.default_mutation_genes[mutation_type]
 			var/discovered = (stored_research && (mutation_type in stored_research.discovered_mutations))
 
 			mutation_data["Alias"] = HM.alias
 			mutation_data["Sequence"] = text_sequence
+			mutation_data["DefaultSeq"] = default_sequence
 			mutation_data["Discovered"] = discovered
 			mutation_data["Source"] = "occupant"
 

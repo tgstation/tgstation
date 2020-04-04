@@ -1,4 +1,5 @@
 import { Fragment } from 'inferno';
+import { classes } from 'common/react'
 import { useBackend } from '../backend';
 import { Box, Button, Divider, Dropdown, Flex, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { createLogger } from '../logging';
@@ -864,6 +865,7 @@ const GenomeSequencer = props => {
   }
   // Create gene cycler buttons
   const sequence = mutation.Sequence;
+  const defaultSeq = mutation.DefaultSeq;
   const buttons = [];
   for (let i = 0; i < sequence.length; i++) {
     const gene = sequence.charAt(i);
@@ -871,6 +873,13 @@ const GenomeSequencer = props => {
       <GeneCycler
         width="22px"
         textAlign="center"
+        className={
+          (defaultSeq.charAt(i) === 'X' && !mutation.Active)
+          ? classes([
+              "outline-solid",
+              "outline-color-orange",
+            ])
+          : false}
         gene={gene}
         onChange={(e, nextGene) => {
           if (e.ctrlKey) {
