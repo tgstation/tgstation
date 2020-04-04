@@ -12,7 +12,7 @@
 	/// A brief description of the experiment to be shown as details
 	var/description = "Base experiment"
 	/// A list of types that are allowed to experiment with this datum
-	var/allowed_experimentors = list()
+	var/list/allowed_experimentors
 
 /**
   * Checks if the experiment is complete
@@ -22,6 +22,7 @@
   */
 /datum/experiment/proc/is_complete()
 	return
+
 /**
   * Gets the current progress towards the goal of the experiment
   *

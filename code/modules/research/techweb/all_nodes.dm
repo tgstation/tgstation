@@ -68,7 +68,7 @@
 	design_ids = list("chem_heater", "chem_master", "chem_dispenser", "pandemic", "defibrillator", "defibmount", "operating", "soda_dispenser", "beer_dispenser", "healthanalyzer", "medigel","genescanner", "med_spray_bottle", "chem_pack", "blood_pack", "medical_kiosk", "crewpinpointerprox", "medipen_refiller")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
-	experiments = list(/datum/experiment/scanning/slimy)
+	experiments = list(/datum/experiment/scanning/slimy, /datum/experiment/scanning/destructive/ian)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"

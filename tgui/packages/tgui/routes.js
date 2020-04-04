@@ -125,6 +125,7 @@ import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Vending } from './interfaces/Vending';
 import { Wires } from './interfaces/Wires';
+import { ExperimentConfigure } from './interfaces/ExperimentConfigure';
 
 const ROUTES = {
   achievements: {
@@ -695,6 +696,10 @@ const ROUTES = {
   wires: {
     component: () => Wires,
     scrollable: false,
+  },
+  experiment_configure: {
+    component: () => ExperimentConfigure,
+    scrollable: true,
   },
 };
 
