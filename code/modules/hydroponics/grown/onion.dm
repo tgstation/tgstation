@@ -10,6 +10,7 @@
 	production = 4
 	yield = 6
 	endurance = 25
+	instability = 10
 	growthstages = 3
 	weed_chance = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'

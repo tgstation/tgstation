@@ -402,6 +402,12 @@
 	message = "yawns."
 	emote_type = EMOTE_AUDIBLE
 
+/datum/emote/living/gurgle
+	key = "gurgle"
+	key_third_person = "gurgles"
+	message = "makes an uncomfortable gurgle."
+	emote_type = EMOTE_AUDIBLE
+
 /datum/emote/living/custom
 	key = "me"
 	key_third_person = "custom"

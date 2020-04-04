@@ -385,6 +385,17 @@
 /obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/toilet)
+"aaX" = (
+/obj/structure/table,
+/turf/open/floor/plasteel,
+/area/hydroponics)
+"aaY" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/green{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "abf" = (
 /obj/structure/bed,
 /turf/open/floor/plating,
@@ -19358,16 +19369,6 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
-"aXW" = (
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
-/obj/structure/table,
-/obj/effect/turf_decal/tile/green{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -52516,13 +52517,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"kEW" = (
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
-/obj/structure/table,
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "kFm" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -86366,8 +86360,8 @@ aSG
 aTW
 aUW
 aRL
-kEW
-aXW
+aaX
+aaY
 aXS
 aZX
 bbd
