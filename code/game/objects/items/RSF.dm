@@ -29,7 +29,7 @@ RSF
 								)
 	var/list/matter_by_item = list(/obj/item/rcd_ammo = 10,)
 	var/list/allowed_surfaces = list(/turf/open/floor, /obj/structure/table)
-	var/discriptor = "matter"
+	var/discriptor = "fabrication-units"
 	var/action_type = "Dispensing"
 
 /obj/item/rsf/Initialize()
@@ -139,15 +139,11 @@ RSF
 /obj/item/rsf/cookiesynth
 	name = "Cookie Synthesizer"
 	desc = "A self-recharging device used to rapidly deploy cookies."
-	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcd"
 	spent_icon_state = "rcd"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	var/toxin = FALSE
 	var/cooldown = 0
 	var/cooldowndelay = 10
-	w_class = WEIGHT_CLASS_NORMAL
 	max_matter = 10
 	cost_by_item = list(/obj/item/reagent_containers/food/snacks/cookie = 100,)
 	discriptor = "cookie-units"
