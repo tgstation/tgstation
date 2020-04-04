@@ -26,6 +26,11 @@
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
+	if(target.anti_magic_check())
+		to_chat(user, "<span class='warning'>The spell had no effect!</span>")
+		target.visible_message("<span class='danger'>[target]'s face bursts into flames, which instantly burst outward, leaving [target] unharmed!</span>", \
+						"<span class='danger'>Your face starts burning up, but the flames are repulsed by your anti-magic protection!</span>")
+		return FALSE
 
 	var/list/masks = list(/obj/item/clothing/mask/pig/cursed, /obj/item/clothing/mask/cowmask/cursed, /obj/item/clothing/mask/horsehead/cursed)
 	var/choice = pick(masks)
@@ -45,13 +50,5 @@
 	if(!is_type_in_typecache(target, compatible_mobs_typecache))
 		if(!silent)
 			to_chat(user, "<span class='warning'>You are unable to curse [target]!</span>")
-		return FALSE
-
-	var/mob/living/carbon/victim = target
-	if(victim.anti_magic_check())
-		if(!silent)
-			to_chat(user, "<span class='warning'>The spell had no effect!</span>")
-			victim.visible_message("<span class='danger'>[victim]'s face bursts into flames, which instantly burst outward, leaving [victim] unharmed!</span>", \
-							"<span class='danger'>Your face starts burning up, but the flames are repulsed by your anti-magic protection!</span>")
 		return FALSE
 	return TRUE

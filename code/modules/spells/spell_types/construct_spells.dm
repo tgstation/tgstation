@@ -186,7 +186,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/abyssal_gaze_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_background_icon_state = "bg_demon"
 	action_icon_state = "abyssal_gaze"
@@ -200,6 +200,11 @@
 		return FALSE
 
 	var/mob/living/carbon/target = targets[1]
+	if(target.anti_magic_check(TRUE, TRUE))
+		to_chat(user, "<span class='warning'>The spell had no effect!</span>")
+		to_chat(target, "<span class='warning'>You feel a freezing darkness closing in on you, but it rapidly dissipates.</span>")
+		return FALSE
+
 	to_chat(target, "<span class='userdanger'>A freezing darkness surrounds you...</span>")
 	target.playsound_local(get_turf(target), 'sound/hallucinations/i_see_you1.ogg', 50, 1)
 	user.playsound_local(get_turf(user), 'sound/effects/ghost2.ogg', 50, 1)
@@ -245,7 +250,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/dominate_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_background_icon_state = "bg_demon"
 	action_icon_state = "dominate"
