@@ -1,9 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Plants can now Cross-Pollinate, via adjacency. This causes plant stats of average into each-other."
-  - rscadd: "Plants now have a new stat, Instability. Instability allows for gradual mutations to a plant's stats at certain thresholds, and a chance of mutation, or gaining new random traits at even higher thresholds."
-  - rscadd: "Plants can be grafted when ready to harvest, and grafts can be applied to plants in order to share unique traits, or share stat changes."
-  - rscdel: "The Plant DNA Manipulator is dead. Long Live the DNA manipulator."
-  - tweak: "Hydroponics trays now have their own internal beaker for holding chemical reagents. As such, chemical affects on plants are gradual, and slowly alter seed stats over generations."
-  - balance: "Several chemicals are adjusted to match the new system. Experiment!"

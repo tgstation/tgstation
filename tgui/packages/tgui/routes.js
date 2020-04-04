@@ -12,6 +12,7 @@ import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { AutomatedAnnouncement } from './interfaces/AutomatedAnnouncement';
 import { BankMachine } from './interfaces/BankMachine';
 import { Bepis } from './interfaces/Bepis';
 import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
@@ -177,6 +178,10 @@ const ROUTES = {
   },
   atmos_pump: {
     component: () => AtmosPump,
+    scrollable: false,
+  },
+  announcement_system: {
+    component: () => AutomatedAnnouncement,
     scrollable: false,
   },
   bepis: {
