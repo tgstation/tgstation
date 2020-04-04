@@ -424,4 +424,12 @@
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
 
 // /datum/experiment related signals
-#define COMSIG_EXPERIMENT_CONFIGURE "rnd_configure_experiment"
+#define COMSIG_EXPERIMENT_CONFIGURE "rnd_experiment_configure"	// For calling configuration UI from a custom source
+#define COMSIG_EXPERIMENT_ACTION "rnd_experiment_action"		// For actioning an experiment, datum/experiment/do_action(...)
+	#define COMPONENT_EXPERIMENT_NO_SELECTION 	0				// From response of datum/experiment/do_action(...) when no experiment is selected
+	#define COMPONENT_EXPERIMENT_SUCCESS		(1 << 0)		// From response of datum/experiment/do_action(...) when the action is successful
+	#define COMPONENT_EXPERIMENT_FAIL			(1 << 1)		// From response of datum/experiment/do_action(...) when the action fails
+	#define COMPONENT_EXPERIMENT_NO_RESULT		(1 << 2)		// From response of datum/experiment/do_action(...) when the action has no suitable success/fail result
+#define COMSIG_EXPERIMENT_CHECK_ACTIONABLE "rnd_experiment_actionable"	// For checking if an experiment is actionable with provided args, datum/experiment/actionable(...)
+	#define COMPONENT_EXPERIMENT_INACTIONABLE	0				// From response of datum/experiment/actionable(...) when the action would not be possible
+	#define COMPONENT_EXPERIMENT_ACTIONABLE		(1 << 0)		// From reseponse of datum/experiment/actionable(...) when the action would be possible

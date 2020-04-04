@@ -33,6 +33,25 @@
 	return
 
 /**
+  * Gets if the experiment is actionable provided some arguments
+  *
+  * This proc should be overridden such that the return value is a
+  * boolean value representing if the experiment could be actioned with
+  * the provided arguments.
+  */
+/datum/experiment/proc/actionable(...)
+	return !is_complete()
+
+/**
+  * Attempts to perform the action of the experiment provided some arguments
+  *
+  * This proc should be overridden such that the experiment will be actioned
+  * with some defined arguments
+  */
+/datum/experiment/proc/do_action(...)
+	return
+
+/**
   * Checks if the experiment can be sabotaged
   *
   * This proc should be overridden such that it returns TRUE/FALSE to

@@ -32,6 +32,10 @@
 	src.allowed_experiments = allowed_experiments
 	src.blacklisted_experiments = blacklisted_experiments
 
+	// Register signals for performing experiments
+	RegisterSignal(parent, COMSIG_EXPERIMENT_ACTION, .proc/action_experiment)
+	RegisterSignal(parent, COMSIG_EXPERIMENT_CHECK_ACTIONABLE, .proc/is_experiment_actionable)
+
 	// Determine UI display mode
 	switch(config_mode)
 		if (EXPERIMENT_CONFIG_ATTACKSELF)
@@ -40,6 +44,32 @@
 			RegisterSignal(parent, COMSIG_CLICK_ALT, .proc/configure_experiment)
 		if (EXPERIMENT_CONFIG_CUSTOMSIGNAL)
 			RegisterSignal(parent, COMSIG_EXPERIMENT_CONFIGURE, .proc/configure_experiment)
+
+/**
+  * Checks if the selected experiment is actionable given some arguments
+  */
+/datum/component/experiment_handler/proc/is_experiment_actionable(datum/source, ...)
+	// Check if an experiment is selected
+	if (selected_experiment == null)
+		return COMPONENT_EXPERIMENT_INACTIONABLE
+
+	// Check if actionable
+	return selected_experiment.actionable(args.len > 1 ? args.Copy(1) : list()) ? COMPONENT_EXPERIMENT_ACTIONABLE : COMPONENT_EXPERIMENT_INACTIONABLE
+
+/**
+  * Attempts to perform the selected experiment given some arguments
+  */
+/datum/component/experiment_handler/proc/action_experiment(datum/source, ...)
+	// Check if an experiment is selected
+	if (selected_experiment == null)
+		return COMPONENT_EXPERIMENT_NO_SELECTION
+
+	// Attempt to run
+	var/list/arguments = args.len > 1 ? args.Copy(1) : list()
+	if (!selected_experiment.actionable(arguments))
+		return COMPONENT_EXPERIMENT_NO_RESULT
+	else
+		return selected_experiment.do_action(arguments) ? COMPONENT_EXPERIMENT_SUCCESS : COMPONENT_EXPERIMENT_FAIL
 
 /**
   * Attempts to show the user the experiment configuration panel
