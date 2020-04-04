@@ -77,19 +77,6 @@ require only minor tweaks.
     ZTRAIT_LAVA_RUINS = TRUE, \
     ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
     ZTRAIT_BASETURF = /turf/open/lava/smooth/lava_land_surface)
-#define ZTRAITS_ICEMOON list(\
-    ZTRAIT_MINING = TRUE, \
-    ZTRAIT_ICE_RUINS_UNDERGROUND = TRUE, \
-    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-    ZTRAIT_UP = -1, \
-    ZTRAIT_DOWN = 1, \
-    ZTRAIT_BASETURF = /turf/open/openspace/icemoon)
-#define ZTRAITS_ICEMOON_UNDERGROUND list(\
-    ZTRAIT_MINING = TRUE, \
-    ZTRAIT_ICE_RUINS_UNDERGROUND = TRUE, \
-    ZTRAIT_BOMBCAP_MULTIPLIER = 2, \
-    ZTRAIT_UP = -1, \
-    ZTRAIT_BASETURF = /turf/open/lava/plasma/ice_moon)
 
 #define DL_NAME "name"
 #define DL_TRAITS "traits"

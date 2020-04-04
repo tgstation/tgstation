@@ -5,6 +5,22 @@
 "b" = (
 /turf/closed/mineral/random/snow/no_caves,
 /area/icemoon/underground/explored)
+"y" = (
+/mob/living/simple_animal/hostile/megafauna/dragon{
+	desc = "Hunted to extinction, the icey moon of lavaland is the final resting place for these creatures.";
+	name = "the last ash drake"
+	},
+/turf/open/floor/mineral/gold,
+/area/icemoon/underground/explored)
+"P" = (
+/turf/open/floor/mineral/silver,
+/area/icemoon/underground/explored)
+"R" = (
+/turf/open/floor/mineral/gold,
+/area/icemoon/underground/explored)
+"T" = (
+/turf/closed/mineral/random/no_caves,
+/area/icemoon/underground/explored)
 
 (1,1,1) = {"
 b
@@ -738,12 +754,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+T
+T
+T
+T
+T
+T
 a
 a
 a
@@ -780,12 +796,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+T
+R
+P
+P
+R
+T
 a
 a
 a
@@ -822,12 +838,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+T
+P
+R
+R
+P
+T
 a
 a
 a
@@ -864,12 +880,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+T
+P
+R
+y
+P
+T
 a
 a
 a
@@ -906,12 +922,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+T
+R
+P
+P
+R
+T
 a
 a
 a
@@ -948,12 +964,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
+T
+T
+T
+T
+T
+T
 a
 a
 a
