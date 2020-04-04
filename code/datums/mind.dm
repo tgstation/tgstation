@@ -67,6 +67,8 @@
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
+	///List of skills the user has ever leveled to legendary. Should not be used to keep track of currently known skills.
+	var/list/skills_leveled_to_legendary = list()
 	///Assoc list of skills - level
 	var/list/known_skills = list()
 	///Assoc list of skills - exp

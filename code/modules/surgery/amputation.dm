@@ -27,5 +27,5 @@
 		var/obj/item/bodypart/target_limb = surgery.operated_bodypart
 		target_limb.drop_limb()
 	if(user.mind)
-		user.mind.adjust_experience(/datum/skill/medical, experience_given)
+		user.mind.adjust_experience(/datum/skill/healing, experience_given)
 	return ..()

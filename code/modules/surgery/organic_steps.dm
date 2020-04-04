@@ -36,7 +36,7 @@
 		"<span class='notice'>[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)].</span>")
 
 /datum/surgery_step/incise/nobleed/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
-	user?.mind.adjust_experience(/datum/skill/medical, experience_given)
+	user?.mind.adjust_experience(/datum/skill/healing, experience_given)
 	return TRUE
 
 //clamp bleeders

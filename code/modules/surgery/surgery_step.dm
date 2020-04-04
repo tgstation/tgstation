@@ -78,7 +78,7 @@
 		implement_speed_mod = implements[implement_type] / 100.0
 
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod)
-	var/modded_time = time * speed_mod * user.mind.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
+	var/modded_time = time * speed_mod * user.mind.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
 
 
 	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
@@ -122,7 +122,7 @@
 		display_results(user, target, "<span class='notice'>You succeed.</span>",
 				"<span class='notice'>[user] succeeds!</span>",
 				"<span class='notice'>[user] finishes.</span>")
-	user?.mind.adjust_experience(/datum/skill/medical, round(experience_given))
+	user?.mind.adjust_experience(/datum/skill/healing, round(experience_given))
 	return TRUE
 
 /datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
