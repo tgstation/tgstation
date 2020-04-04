@@ -9,6 +9,7 @@
 /datum/experiment/scanning
 	name = "Scanning Experiment"
 	description = "Base experiment for scanning atoms"
+	exp_tag = "Scan"
 	allowed_experimentors = list(/obj/item/experi_scanner)
 	/// The typepaths and number of atoms that must be scanned
 	var/list/required_atoms = list()
@@ -44,13 +45,14 @@
   * have been scanned as well as the target number of atoms.
   */
 /datum/experiment/scanning/check_progress()
-	var/total_scanned = 0
-	var/required = 0
-	for (var/a in required_atoms)
+	var/list/status = list()
+	for (var/a_type in required_atoms)
+		var/atom/a = a_type
 		var/list/seen = scanned[a]
-		required += required_atoms[a]
-		total_scanned += seen ? seen.len : 0
-	return "Scanned [total_scanned] of [required] objects towards the goal."
+		var/remaining = required_atoms[a] - (seen ? seen.len : 0)
+		if (remaining)
+			status += " - Scan [remaining] more sample[remaining > 1 ? "s" : ""] of \a [initial(a.name)]"
+	return "The following items must be scanned:\n" + jointext(status, ", \n")
 
 /**
   * Attempts to scan an atom towards the experiment's goal

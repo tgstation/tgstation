@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Section, Box, Button, Flex } from '../components';
+import { Section, Box, Button, Flex, Dimmer } from '../components';
 
 export const ExperimentConfigure = props => {
   const { act, data } = useBackend(props);
@@ -71,13 +71,34 @@ export const ExperimentConfigure = props => {
                   onClick={() => exp.selected
                     ? act("clear_experiment")
                     : act("select_experiment", { "ref": exp.ref })}
-                  content={exp.name}
                   backgroundColor={exp.selected ? "good" : "#40628a"}
                   className="ExperimentConfigure__ExperimentName"
-                  disabled={!exp.selectable} />
-                <Box className="ExperimentConfigure__ExperimentContent">
+                  disabled={!exp.selectable}>
+                  <Flex align="center" justify="space-between">
+                    <Flex.Item
+                      color={exp.selectable
+                        ? "white"
+                        : "rgba(0, 0, 0, 0.6)"}>
+                      {exp.name}
+                    </Flex.Item>
+                    <Flex.Item
+                      color={exp.selectable
+                        ? "rgba(255, 255, 255, 0.5)"
+                        : "rgba(0, 0, 0, 0.5)"}>
+                      {exp.tag}
+                    </Flex.Item>
+                  </Flex>
+                </Button>
+                <Box className={"ExperimentConfigure__ExperimentContent"}>
                   {exp.description} <br /><br />
-                  {exp.progress}
+                  {exp.progress?.split("\n").map(line => {
+                    return (
+                      <Fragment>
+                        <span>{line}</span>
+                        <br />
+                      </Fragment>
+                    );
+                  })}
                 </Box>
               </Box>
             );

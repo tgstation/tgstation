@@ -193,6 +193,7 @@
 			var/list/data = list(
 				name = e.name,
 				description = e.description,
+				tag = e.exp_tag,
 				selectable = can_select_experiment(e),
 				selected = selected_experiment == e,
 				progress = e.check_progress(),

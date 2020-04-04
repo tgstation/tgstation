@@ -9,6 +9,7 @@
 /datum/experiment/scanning/destructive
 	name = "Destructive Scanning Experiment"
 	description = "Base experiment for destructively scanning atoms"
+	exp_tag = "Destructive Scan"
 
 /**
   * Initializes the scanned atoms lists
@@ -27,12 +28,13 @@
 			return FALSE
 
 /datum/experiment/scanning/destructive/check_progress()
-	var/total_scanned = 0
-	var/required = 0
-	for (var/a in required_atoms)
-		required += required_atoms[a]
-		total_scanned += (a in scanned) ? scanned[a] : 0
-	return "Scanned [total_scanned] of [required] objects towards the goal."
+	var/list/status = list()
+	for (var/a_type in required_atoms)
+		var/atom/a = a_type
+		var/remaining = required_atoms[a] - (scanned[a] ? scanned[a] : 0)
+		if (remaining)
+			status += " - Scan [remaining] more sample[remaining > 1 ? "s" : ""] of \a [initial(a.name)]"
+	return "The following items must be scanned:\n" + jointext(status, ", \n")
 
 /**
   * Attempts to scan an atom towards the experiment's goal

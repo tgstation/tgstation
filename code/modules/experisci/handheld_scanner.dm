@@ -25,5 +25,5 @@
 		var/outcome = SEND_SIGNAL(src, COMSIG_EXP_ACTION, target)
 		if (outcome & COMPONENT_EXP_SUCCESS == COMPONENT_EXP_SUCCESS)
 			playsound(user, 'sound/machines/ping.ogg', 25)
-			to_chat(user, "<span>You scan [target.name].</span>")
+			to_chat(user, "<span>You scan \the [target.name].</span>")
 
