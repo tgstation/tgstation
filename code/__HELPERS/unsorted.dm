@@ -480,6 +480,25 @@ Turf and target are separate in case you want to teleport some distance from a t
 			processing += A.contents
 			. += A
 
+/atom/proc/GetAllContentsIgnoreFlag(var/T, flag)
+	var/list/processing_list = list(src)
+	if(T)
+		. = list()
+		var/i = 0
+		while(i < length(processing_list))
+			var/atom/A = processing_list[++i]
+			if (!(A.flags_1 & flag))
+				processing_list += A.contents
+				if(istype(A,T))
+					. += A
+	else
+		var/i = 0
+		while(i < length(processing_list))
+			var/atom/A = processing_list[++i]
+			if (!(A.flags_1 & flag))
+				processing_list += A.contents
+		return processing_list
+
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
 	var/turf/current = get_turf(source)
