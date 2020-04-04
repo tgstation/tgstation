@@ -62,7 +62,7 @@
 /obj/machinery/hydroponics/Initialize()
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
-	create_reagents(10)
+	create_reagents(20)
 	. = ..()
 
 
@@ -79,7 +79,7 @@
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
 	maxnutri = tmp_capacity * 5 // Up to 30
-	reagents.maximum_volume = maxnutri
+	reagents.maximum_volume = maxnutri + 10
 	nutridrain = 1/rating
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
@@ -381,11 +381,11 @@
 	else
 		. += "<span class='info'>It's empty.</span>"
 
-	if(!self_sustaining)
+
 		. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
 		"<span class='info'>Nutrient: [reagents.total_volume]/[maxnutri].</span>"
-	else
-		. += "<span class='info'>It doesn't require any water or nutrients.</span>"
+	if(self_sustaining)
+		. += "<span class='info'>The tray's autogrow is active, protecting it from species mutations, weeds, and pests.</span>"
 
 	if(weedlevel >= 5)
 		to_chat(user, "<span class='warning'>It's filled with weeds!</span>")
@@ -650,7 +650,7 @@
 			to_chat(user, "<span class='notice'>This plant must be harvestable in order to be grafted.</span>")
 			return
 		else if(myseed.grafted)
-			to_chat(user, "<span class='notice'>This plant has already been grafted.</span>")
+			to_chat(user, "<span class='notice'>This plant has already had something sheared or grafted off from it.</span>")
 			return
 		else
 			user.visible_message("<span class='notice'>[user] grafts off a limb from [src].</span>", "<span class='notice'>You carefully graft off a portion of [src].</span>")
@@ -661,6 +661,37 @@
 			myseed.grafted = TRUE
 			adjustHealth(-5)
 			return
+
+	else if(istype(O, /obj/item/geneshears))
+		if(!myseed)
+			to_chat(user, "<span class='notice'>The tray is empty.</span>")
+			return
+
+		if(myseed.grafted)
+			to_chat(user, "<span class='notice'>This plant has already had something sheared or grafted off from it.</span>")
+			return
+
+		var/list/current_traits = list()
+		for(var/datum/plant_gene/gene in myseed.genes)
+			if(istype(gene, /datum/plant_gene/core) || (istype(gene,/datum/plant_gene/trait/plant_type)) || islist(gene))
+				continue
+			current_traits[gene.name] = gene
+		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sortList(current_traits))
+		if(removed_trait == null)
+			return
+		if(!user.canUseTopic(src, BE_CLOSE))
+				return
+		for(var/datum/plant_gene/gene in myseed.genes)
+			say("[gene.name] is gene name. [removed_trait] is removed trait.")
+			if(gene.name == removed_trait)
+				if(myseed.genes.Remove(gene))
+					qdel(gene)
+					break
+		myseed.reagents_from_genes()
+		myseed.grafted = TRUE
+		adjustHealth(-8)
+		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname].</span>")
+		return
 
 	else if(istype(O, /obj/item/graft))
 		var/obj/item/graft/snip = O
