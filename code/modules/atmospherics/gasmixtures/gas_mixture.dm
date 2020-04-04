@@ -6,7 +6,7 @@ What are the archived variables for?
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
 #define MOLAR_ACCURACY  1E-7
-#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY )))/*I feel the need to document what happens here. Basically this is used
+#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))/*I feel the need to document what happens here. Basically this is used
 															to catch most rounding errors, however its previous value made it so that
                                                             once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
 															counts would get rounded away. Thus, we lowered it a few orders of magnitude
