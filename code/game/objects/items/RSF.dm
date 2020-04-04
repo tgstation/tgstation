@@ -145,7 +145,8 @@ RSF
 	var/cooldown = 0
 	var/cooldowndelay = 10
 	max_matter = 10
-	cost_by_item = list(/obj/item/reagent_containers/food/snacks/cookie = 100,)
+	cost_by_item = list()
+	despense_cost = 100
 	discriptor = "cookie-units"
 	action_type = "Fabricates"
 
@@ -171,13 +172,13 @@ RSF
 	var/mob/living/silicon/robot/P = null
 	if(iscyborg(user))
 		P = user
-	if(((obj_flags & EMAGGED) || (P && P.emagged)) && toxin)
+	if(((obj_flags & EMAGGED) || (P && P.emagged)) && !toxin)
 		toxin = TRUE
-		cost_by_item = list(/obj/item/reagent_containers/food/snacks/cookie/sleepy = 100,)
+		to_despense = /obj/item/reagent_containers/food/snacks/cookie/sleepy
 		to_chat(user, "<span class='alert'>Cookie Synthesizer hacked.</span>")
 	else
 		toxin = FALSE
-		cost_by_item = list(/obj/item/reagent_containers/food/snacks/cookie = 100,)
+		to_despense = /obj/item/reagent_containers/food/snacks/cookie
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
 
 /obj/item/rsf/cookiesynth/process()

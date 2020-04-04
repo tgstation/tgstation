@@ -561,7 +561,7 @@
 	AddElement(/datum/element/dunkable, 10)
 
 /obj/item/reagent_containers/food/snacks/cookie/sleepy
-	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/chloralhydrate, 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/toxin/chloralhydrate = 10)
 
 /obj/item/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
