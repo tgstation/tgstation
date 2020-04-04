@@ -252,16 +252,23 @@
 
 //This is where stability mutations exist now.
 			switch(myseed.instability)
+<<<<<<< HEAD
 				if(100 to 80)
 					mutate(0, 0, 0, 0, 0, 0, 0, 5, 0) //Exceedingly low odds of gaining a trait.
 				if(79 to 60)
+=======
+				if(80 to 100)
+					if(prob(20))
+						mutate(0, 0, 0, 0, 0, 0, 0, 10, 0) //Exceedingly low odds of gaining a trait.
+				if(60 to 79)
+>>>>>>> upstream/master
 					if(prob((myseed.instability)/2) && !self_sustaining)
 						mutatespecie()
 						myseed.instability = myseed.instability/2
-				if(59 to 40)
+				if(40 to 59)
 					if(prob(40))
 						hardmutate()
-				if(39 to 20)
+				if(20 to 39)
 					if(prob(40))
 						mutate()
 
@@ -507,6 +514,7 @@
 				var/datum/plant_gene/reagent/reagent_gene = new /datum/plant_gene/reagent(picked_reagent, 0.05) //I cannot figure out how to copy over the keyed value from the reagents_add list so for now this works, skog you'll want to fix this before merge
 				if(reagent_gene.can_add(myseed))
 					myseed.genes += reagent_gene
+					myseed.reagents_from_genes()
 					return
 
 
