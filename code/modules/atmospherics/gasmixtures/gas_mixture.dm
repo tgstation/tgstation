@@ -165,7 +165,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//Returns: 1 if any reaction took place; 0 otherwise
 
 /datum/gas_mixture/archive()
-	garbage_collect()
 	var/list/cached_gases = gases
 
 	temperature_archived = temperature
