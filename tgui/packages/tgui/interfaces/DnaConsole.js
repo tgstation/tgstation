@@ -814,36 +814,24 @@ const GeneCycler = props => {
         if (!onChange) {
           return;
         }
-        if (e.ctrlKey) {
-          onChange('X');
-          return;
-        }
-        if (e.shiftKey) {
-          onChange('?');
-          return;
-        }
         if (index === -1) {
           onChange(GENES[0]);
           return;
         }
         const nextGene = GENES[(index + 1) % length];
-        onChange(nextGene);
+        onChange(e, nextGene);
       }}
       oncontextmenu={e => {
         e.preventDefault();
         if (!onChange) {
           return;
         }
-        if (e.ctrlKey) {
-          onChange('X');
-          return;
-        }
         if (index === -1) {
-          onChange(GENES[length - 1]);
+          onChange(e, GENES[length - 1]);
           return;
         }
         const prevGene = GENES[(index - 1 + length) % length];
-        onChange(prevGene);
+        onChange(e, prevGene);
       }}>
       {gene}
     </Button>
@@ -878,7 +866,23 @@ const GenomeSequencer = props => {
         width="22px"
         textAlign="center"
         gene={gene}
-        onChange={nextGene => {
+        onChange={(e, nextGene) => {
+          if (e.ctrlKey) {
+            act('pulse_gene', {
+              pos: i + 1,
+              gene: 'X',
+              alias: mutation.Alias,
+            });
+            return;
+          }
+          if (e.shiftKey) {
+            act('pulse_gene', {
+              pos: i + 1,
+              gene: '?',
+              alias: mutation.Alias,
+            });
+            return;
+          }
           // We are using true as a string, because currently act()
           // can only send strings. We set this variable in act(),
           // therefore it's also a string.
