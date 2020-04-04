@@ -76,6 +76,7 @@ import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
+import { NtosAtmos } from './interfaces/NtosAtmos';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
@@ -449,6 +450,12 @@ const ROUTES = {
   },
   ntos_ai_restorer: {
     component: () => AiRestorer,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_atmos: {
+    component: () => NtosAtmos,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
