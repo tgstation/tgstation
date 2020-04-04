@@ -186,7 +186,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/abyssal_gaze_target.dmi'
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_background_icon_state = "bg_demon"
 	action_icon_state = "abyssal_gaze"
@@ -224,12 +224,13 @@
 		return FALSE
 	if(!iscarbon(target))
 		if(!silent)
-			to_chat(target, "<span class='warning'>You can only target carbon based lifeforms!</span>")
+			to_chat(user, "<span class='warning'>You can only target carbon based lifeforms!</span>")
 		return FALSE
 
 	var/mob/living/carbon/victim = target
 	if(victim.anti_magic_check(TRUE, TRUE))
 		if(!silent)
+			to_chat(user, "<span class='warning'>The spell had no effect!</span>")
 			to_chat(victim, "<span class='warning'>You feel a freezing darkness closing in on you, but it rapidly dissipates.</span>")
 		return FALSE
 	return TRUE
@@ -244,7 +245,7 @@
 	clothes_req = FALSE
 	invocation = "none"
 	invocation_type = "none"
-	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/dominate_target.dmi'
 	action_icon = 'icons/mob/actions/actions_cult.dmi'
 	action_background_icon_state = "bg_demon"
 	action_icon_state = "dominate"
