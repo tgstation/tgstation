@@ -1,5 +1,5 @@
 import { Fragment } from 'inferno';
-import { classes } from 'common/react'
+import { classes } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Button, Divider, Dropdown, Flex, Icon, LabeledList, ProgressBar, Section } from '../components';
 import { createLogger } from '../logging';
@@ -875,11 +875,12 @@ const GenomeSequencer = props => {
         textAlign="center"
         className={
           (defaultSeq.charAt(i) === 'X' && !mutation.Active)
-          ? classes([
+            ? classes([
               "outline-solid",
               "outline-color-orange",
             ])
-          : false}
+            : false
+        }
         gene={gene}
         onChange={(e, nextGene) => {
           if (e.ctrlKey) {
