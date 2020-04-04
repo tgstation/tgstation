@@ -1,6 +1,6 @@
 /datum/computer_file/program/atmosscan
 	filename = "atmosscan"
-	filedesc = "Atmospherics Scanner"
+	filedesc = "Atmospheric Scanner"
 	program_icon_state = "air"
 	extended_desc = "A small built-in sensor reads out the atmospheric conditions around the device."
 	network_destination = "atmos scan"
