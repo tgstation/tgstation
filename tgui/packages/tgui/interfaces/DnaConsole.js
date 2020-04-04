@@ -66,6 +66,20 @@ const CHROMOSOME_NEVER = 0;
 const CHROMOSOME_NONE = 1;
 const CHROMOSOME_USED = 2;
 
+const MUT_NORMAL = 1;
+const MUT_EXTRA = 2;
+const MUT_OTHER = 3;
+
+// __DEFINES/DNA.dm - Mutation "Quality"
+const POSITIVE = 1;
+const NEGATIVE = 2;
+const MINOR_NEGATIVE = 4;
+const MUT_COLORS = {
+  1: 'good',
+  2: 'bad',
+  4: 'average',
+};
+
 export const DnaConsole = props => {
   const { state } = props;
   const { data, act } = useBackend(props);
@@ -173,6 +187,11 @@ const SubjectStatus = props => {
       <Box inline color="bad">Dead</Box>
     );
   }
+  if (status === SUBJECT_TRANSFORMING) {
+    return (
+      <Box inline color="bad">Transforming</Box>
+    );
+  }
   return (
     <Box inline>Unknown</Box>
   );
@@ -260,12 +279,14 @@ export const DnaConsoleCommands = props => {
             })} />
           <Button
             content="Sequencer"
+            disabled={!data.isViableSubject}
             selected={consoleMode === CONSOLE_MODE_SEQUENCER}
             onClick={() => act('set_view', {
               consoleMode: CONSOLE_MODE_SEQUENCER,
             })} />
           <Button
             content="Enzymes"
+            disabled={!data.isViableSubject}
             selected={consoleMode === CONSOLE_MODE_ENZYMES}
             onClick={() => act('set_view', {
               consoleMode: CONSOLE_MODE_ENZYMES,
@@ -395,8 +416,7 @@ const StorageMutations = props => {
           level={2}>
           <MutationInfo
             state={state}
-            mutation={mutation}
-            source={isDisk ? 'disk' : 'console'} />
+            mutation={mutation} />
         </Section>
       </Flex.Item>
     </Flex>
@@ -466,7 +486,7 @@ const StorageChromosomes = props => {
 };
 
 const MutationInfo = props => {
-  const { state, mutation, source } = props;
+  const { state, mutation } = props;
   const { data, act } = useBackend(props);
   const {
     advInjectors,
@@ -485,7 +505,7 @@ const MutationInfo = props => {
       </Box>
     );
   }
-  if (source === 'sequencer' && !mutation.Discovered) {
+  if (mutation.Source === 'occupant' && !mutation.Discovered) {
     return (
       <LabeledList>
         <LabeledList.Item label="Name">
@@ -504,7 +524,7 @@ const MutationInfo = props => {
     <Fragment>
       <LabeledList>
         <LabeledList.Item label="Name">
-          {mutation.Name}
+          <Box inline color={MUT_COLORS[mutation.Quality]}>{mutation.Name}</Box>
         </LabeledList.Item>
         <LabeledList.Item label="Description">
           {mutation.Description}
@@ -514,65 +534,84 @@ const MutationInfo = props => {
         </LabeledList.Item>
       </LabeledList>
       <Divider />
-      <Dropdown
-        width="240px"
-        options={advInjectors}
-        disabled={advInjectors.length === 0 || !mutation.Active}
-        selected="Add to advanced injector"
-        onSelected={value => act('add_adv_mut', {
-          mutref: mutation.ByondRef,
-          advinj: value,
-        })} />
-      <Button
-        icon="syringe"
-        disabled={!isInjectorReady || !mutation.Active}
-        content="Print Activator"
-        onClick={() => act('print_injector', {
-          mutref: mutation.ByondRef,
-          is_activator: 1,
-          source,
-        })} />
-      <Button
-        icon="syringe"
-        disabled={!isInjectorReady || !mutation.Active}
-        content="Print Mutator"
-        onClick={() => act('print_injector', {
-          mutref: mutation.ByondRef,
-          is_activator: 0,
-          source,
-        })} />
+      {['occupant'].includes(mutation.Source) && (
+        <Dropdown
+          width="240px"
+          options={advInjectors}
+          disabled={advInjectors.length === 0 || !mutation.Active}
+          selected="Add to advanced injector"
+          onSelected={value => act('add_advinj_mut', {
+            mutref: mutation.ByondRef,
+            advinj: value,
+          })} />
+      )}
+      {['occupant', 'disk', 'console'].includes(mutation.Source) && (
+        <Fragment>
+          <Button
+            icon="syringe"
+            disabled={!isInjectorReady || !mutation.Active}
+            content="Print Activator"
+            onClick={() => act('print_injector', {
+              mutref: mutation.ByondRef,
+              is_activator: 1,
+              source: mutation.Source,
+            })} />
+          <Button
+            icon="syringe"
+            disabled={!isInjectorReady || !mutation.Active}
+            content="Print Mutator"
+            onClick={() => act('print_injector', {
+              mutref: mutation.ByondRef,
+              is_activator: 0,
+              source: mutation.Source,
+            })} />
+        </Fragment>
+      )}
       <br />
-      <Button
-        icon="save"
-        disabled={savedToConsole || mutationCapacity <= 0 || !mutation.Active}
-        content="Save to Console"
-        onClick={() => act('save_console', {
-          mutref: mutation.ByondRef,
-          source,
-        })} />
-      <Button
-        icon="save"
-        disabled={savedToDisk
-          || !hasDisk
-          || diskCapacity <= 0
-          || diskReadOnly
-          || !mutation.Active}
-        content="Save to Disk"
-        onClick={() => act('save_disk', {
-          mutref: mutation.ByondRef,
-          source,
-        })} />
-      {['console', 'disk'].includes(source) && (
+      {['disk', 'occupant'].includes(mutation.Source) && (
+        <Button
+          icon="save"
+          disabled={savedToConsole || mutationCapacity <= 0 || !mutation.Active}
+          content="Save to Console"
+          onClick={() => act('save_console', {
+            mutref: mutation.ByondRef,
+            source: mutation.Source,
+          })} />
+      )}
+      {['console', 'occupant'].includes(mutation.Source) && (
+        <Button
+          icon="save"
+          disabled={savedToDisk
+            || !hasDisk
+            || diskCapacity <= 0
+            || diskReadOnly
+            || !mutation.Active}
+          content="Save to Disk"
+          onClick={() => act('save_disk', {
+            mutref: mutation.ByondRef,
+            source: mutation.Source,
+          })} />
+      )}
+      {['console', 'disk', 'advinj'].includes(mutation.Source) && (
         <Button
           icon="times"
           color="red"
           content="Delete"
-          onClick={() => act(`delete_${source}_mut`, {
+          onClick={() => act(`delete_${mutation.Source}_mut`, {
+            mutref: mutation.ByondRef,
+          })} />
+      )}
+      {(['occupant'].includes(mutation.Source)
+        && mutation.class === MUT_EXTRA && !mutation.Scrambled) && (
+        <Button
+          content={"Nullify"}
+          onClick={() => act("nullify", {
             mutref: mutation.ByondRef,
           })} />
       )}
       <Divider />
       <ChromosomeInfo
+        disabled={!['occupant'].includes(mutation.Source)}
         state={state}
         mutation={mutation} />
     </Fragment>
@@ -669,8 +708,7 @@ const DnaConsoleSequencer = props => {
             minHeight="100%">
             <MutationInfo
               state={state}
-              mutation={mutation}
-              source="sequencer" />
+              mutation={mutation} />
           </Section>
         </Flex.Item>
       </Flex>
@@ -796,6 +834,13 @@ const GenomeSequencer = props => {
     return (
       <Box color="average">
         No genome selected for sequencing.
+      </Box>
+    );
+  }
+  if (mutation.Scrambled) {
+    return (
+      <Box color="average">
+        Sequence unreadable due to unpredictable mutation.
       </Box>
     );
   }

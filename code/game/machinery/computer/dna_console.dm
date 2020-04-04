@@ -517,7 +517,7 @@
 		//  then gets converted to a number.
 		// params["source"] - The source the request came from.
 		//	Expected results:
-		//   "sequencer" - From genetic sequencer
+		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		//   "disk" - From inserted diskette
 		if("print_injector")
@@ -536,7 +536,7 @@
 			var/search_flags = 0
 
 			switch(params["source"])
-				if("sequencer")
+				if("occupant")
 					// GUARD CHECK - Make sure we can modify the occupant before we
 					//  attempt to search them for any given mutation refs. This could
 					//  lead to no search flags being passed to get_mut_by_ref and this
@@ -591,13 +591,13 @@
 		// params["mutref"] - ATOM Ref of specific mutation to store
 		// params["source"] - The source the request came from.
 		//	Expected results:
-		//   "sequencer" - From genetic sequencer
+		//   "occupant" - From genetic sequencer
 		//   "disk" - From inserted diskette
 		if("save_console")
 			var/search_flags = 0
 
 			switch(params["source"])
-				if("sequencer")
+				if("occupant")
 					// GUARD CHECK - Make sure we can modify the occupant before we
 					//  attempt to search them for any given mutation refs. This could
 					//  lead to no search flags being passed to get_mut_by_ref and this
@@ -630,7 +630,7 @@
 		// params["mutref"] - ATOM Ref of specific mutation to store
 		// params["source"] - The source the request came from
 		//	Expected results:
-		//   "sequencer" - From genetic sequencer
+		//   "occupant" - From genetic sequencer
 		//   "console" - From DNA Console storage
 		if("save_disk")
 			// GUARD CHECK - This code shouldn't even be callable without a diskette
@@ -652,7 +652,7 @@
 			var/search_flags = 0
 
 			switch(params["source"])
-				if("sequencer")
+				if("occupant")
 					// GUARD CHECK - Make sure we can modify the occupant before we
 					//  attempt to search them for any given mutation refs. This could
 					//  lead to no search flags being passed to get_mut_by_ref and this
@@ -1263,7 +1263,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to add to the injector
 		// params["advinj"] - Name of the advanced injector to add the mutation to
-		if("add_adv_mut")
+		if("add_advinj_mut")
 			// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 			//  operational guard checks.
 			// 	This is needed because this operation can only be completed from the
@@ -1318,14 +1318,7 @@
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to del from the injector
 		// params["advinj"] - Name of the advanced injector to del the mutation from
-		if("del_adv_mut")
-			var/adv_inj = params["advinj"]
-
-			// GUARD CHECK - Make sure our advanced injector actually exists. This
-			//  should not be possible. Unexpected result
-			if(!(adv_inj in injector_selection))
-				return
-
+		if("del_advinj_mut")
 			var/bref = params["mutref"]
 			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_ADV_INJ)
 
@@ -1333,8 +1326,12 @@
 			if(!HM)
 				return
 
-			injector_selection[adv_inj].Remove(HM)
-			qdel(HM)
+			// Check Advanced Injectors to find and remove the mutation
+			for(var/I in injector_selection)
+				if(injector_selection["[I]"].Remove(HM))
+					qdel(HM)
+					return
+
 			return
 
 		// Sets a new tgui view state
@@ -1529,6 +1526,7 @@
 			mutation_data["Alias"] = HM.alias
 			mutation_data["Sequence"] = text_sequence
 			mutation_data["Discovered"] = discovered
+			mutation_data["Source"] = "occupant"
 
 			// We only want to pass this information along to the tgui interface if
 			//  the mutation has been discovered. Prevents people being able to cheese
@@ -1537,6 +1535,7 @@
 				mutation_data["Name"] = HM.name
 				mutation_data["Description"] = HM.desc
 				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
+				mutation_data["Quality"] = HM.quality
 
 			// Assume the mutation is normal unless assigned otherwise.
 			var/mut_class = MUT_NORMAL
@@ -1594,6 +1593,8 @@
 			mutation_data["Alias"] = A.alias
 			mutation_data["Sequence"] = text_sequence
 			mutation_data["Discovered"] = TRUE
+			mutation_data["Quality"] = HM.quality
+			mutation_data["Source"] = "occupant"
 
 			mutation_data["Name"] = HM.name
 			mutation_data["Description"] = HM.desc
@@ -1630,6 +1631,7 @@
 		mutation_data["Alias"] = A.alias
 		mutation_data["Name"] = HM.name
 		//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
+		mutation_data["Source"] = "console"
 		mutation_data["Active"] = TRUE
 		mutation_data["Description"] = HM.desc
 		mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
@@ -1664,6 +1666,7 @@
 			mutation_data["Name"] = HM.name
 			mutation_data["Active"] = TRUE
 			//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
+			mutation_data["Source"] = "disk"
 			mutation_data["Description"] = HM.desc
 			mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
 			mutation_data["ByondRef"] = REF(HM)
@@ -1691,6 +1694,7 @@
 				mutation_data["Name"] = HM.name
 				mutation_data["Active"] = TRUE
 				//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
+				mutation_data["Source"] = "advinj"
 				mutation_data["Description"] = HM.desc
 				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
 				mutation_data["ByondRef"] = REF(HM)
