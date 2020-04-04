@@ -603,7 +603,7 @@
 		if(!direct_target)
 			var/checking = NONE
 			if(!hit_stunned_targets)
-			var/checking = MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE
+				var/checking = MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE
 			if(!(L.mobility_flags & checking) || L.stat == DEAD)		// If target not able to use items, move and stand - or if they're just dead, pass over.
 				return FALSE
 	return TRUE
