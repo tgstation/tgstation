@@ -680,9 +680,8 @@
 		if(removed_trait == null)
 			return
 		if(!user.canUseTopic(src, BE_CLOSE))
-				return
+			return
 		for(var/datum/plant_gene/gene in myseed.genes)
-			say("[gene.name] is gene name. [removed_trait] is removed trait.")
 			if(gene.name == removed_trait)
 				if(myseed.genes.Remove(gene))
 					qdel(gene)
