@@ -78,7 +78,7 @@
 	for (var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
-	maxnutri = tmp_capacity * 5 // Up to 30
+	maxnutri = (tmp_capacity * 5) +10 // Up to 30
 	reagents.maximum_volume = maxnutri + 10
 	nutridrain = 1/rating
 
