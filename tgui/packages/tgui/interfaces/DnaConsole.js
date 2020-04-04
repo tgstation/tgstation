@@ -1,23 +1,11 @@
-import { Fragment } from 'inferno';
 import { classes } from 'common/react';
+import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section, Dimmer } from '../components';
+import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section, Tabs } from '../components';
 import { createLogger } from '../logging';
 
-// NOTES:
-// Stored mutations can have metadata.
-// The following predicate tests if two mutations are functionally the same
-//  on the basis of their metadata.
-// Useful if your intent is to prevent "true" duplicates - i.e. mutations with
-//  identical metadata.
-/*
-function isDuplicateMutation(lhs, rhs) {
-  return((lhs.Alias === rhs.Alias) && (lhs.AppliedChromo === rhs.AppliedChromo))
-}
-*/
-
-// TODO - Combining mutations (E.g. Radioactive + Strength = Hulk)
-//  https://tgstation13.org/wiki/Guide_to_genetics#List_of_Mutations
+// TODO: Combining mutations (E.g. Radioactive + Strength = Hulk)
+// https://tgstation13.org/wiki/Guide_to_genetics#List_of_Mutations
 
 const logger = createLogger('DnaConsole');
 
@@ -34,7 +22,6 @@ const GENE_COLORS = {
   G: 'blue',
   C: 'blue',
   X: 'grey',
-  '?': 'yellow',
 };
 
 const CONSOLE_MODE_STORAGE = 'storage';
@@ -47,7 +34,6 @@ const STORAGE_MODE_DISK = 'disk';
 
 const STORAGE_SUBMODE_MUTATIONS = 'mutations';
 const STORAGE_SUBMODE_CHROMOSOMES = 'chromosomes';
-const STORAGE_SUBMODE_GENETICS = 'genetics';
 
 const CHROMOSOME_NEVER = 0;
 const CHROMOSOME_NONE = 1;
@@ -67,6 +53,16 @@ const MUT_COLORS = {
   4: 'average',
 };
 
+/**
+ * The following predicate tests if two mutations are functionally
+ * the same on the basis of their metadata. Useful if your intent is
+ * to prevent "true" duplicates - i.e. mutations with identical metadata.
+ */
+const isSameMutation = (a, b) => {
+  return a.Alias === b.Alias
+    && a.AppliedChromo === b.AppliedChromo;
+};
+
 export const DnaConsole = props => {
   const { state } = props;
   const { data, act } = useBackend(props);
@@ -74,9 +70,7 @@ export const DnaConsole = props => {
     isPulsingRads,
     radPulseSeconds,
   } = data;
-  const {
-    consoleMode = CONSOLE_MODE_STORAGE,
-  } = data.view;
+  const { consoleMode } = data.view;
   return (
     <Fragment>
       {!!isPulsingRads && (
@@ -102,6 +96,9 @@ export const DnaConsole = props => {
       )}
       {consoleMode === CONSOLE_MODE_ENZYMES && (
         <DnaConsoleEnzymes state={state} />
+      )}
+      {consoleMode === CONSOLE_MODE_INJECTORS && (
+        <DnaConsoleAdvancedInjectors state={state} />
       )}
     </Fragment>
   );
@@ -389,7 +386,7 @@ const StorageMutations = props => {
   const mutations = isDisk
     ? (data.diskMutations ?? [])
     : (data.mutationStorage ?? []);
-  const mutationRef = String(data.view.storageMutationRef);
+  const mutationRef = data.view.storageMutationRef;
   const mutation = mutations
     .find(mutation => mutation.ByondRef === mutationRef);
   return (
@@ -431,7 +428,6 @@ const StorageMutations = props => {
 };
 
 const StorageChromosomes = props => {
-  const { state } = props;
   const { data, act } = useBackend(props);
   const chromos = data.chromoStorage ?? [];
   const chromoName = data.view.storageChromoName;
@@ -503,8 +499,8 @@ const MutationInfo = props => {
     isInjectorReady,
     mutationCapacity,
   } = data;
-  const mutationStorage = data.mutationStorage ?? [];
   const diskMutations = data.diskMutations ?? [];
+  const mutationStorage = data.diskMutations ?? [];
   if (!mutation) {
     return (
       <Box color="label">
@@ -521,12 +517,10 @@ const MutationInfo = props => {
       </LabeledList>
     );
   }
-  const savedToConsole = mutationStorage.find(x => (
-    (x.Alias === mutation.Alias) && (x.AppliedChromo === mutation.AppliedChromo)
-  ));
-  const savedToDisk = diskMutations.find(x => (
-    (x.Alias === mutation.Alias) && (x.AppliedChromo === mutation.AppliedChromo)
-  ));
+  const savedToConsole = mutationStorage
+    .find(x => isSameMutation(x, mutation));
+  const savedToDisk = diskMutations
+    .find(x => isSameMutation(x, mutation));
   return (
     <Fragment>
       <LabeledList>
@@ -541,44 +535,47 @@ const MutationInfo = props => {
         </LabeledList.Item>
       </LabeledList>
       <Divider />
-      {mutation.Source === 'occupant' && (
-        <Dropdown
-          width="240px"
-          options={advInjectors}
-          disabled={advInjectors.length === 0 || !mutation.Active}
-          selected="Add to advanced injector"
-          onSelected={value => act('add_advinj_mut', {
-            mutref: mutation.ByondRef,
-            advinj: value,
-          })} />
-      )}
-      {['occupant', 'disk', 'console'].includes(mutation.Source) && (
-        <Fragment>
-          <Button
-            icon="syringe"
-            disabled={!isInjectorReady || !mutation.Active}
-            content="Print Activator"
-            onClick={() => act('print_injector', {
+      <Box>
+        {mutation.Source === 'occupant' && (
+          <Dropdown
+            width="240px"
+            options={advInjectors.map(injector => injector.name)}
+            disabled={advInjectors.length === 0 || !mutation.Active}
+            selected="Add to advanced injector"
+            onSelected={value => act('add_advinj_mut', {
               mutref: mutation.ByondRef,
-              is_activator: 1,
-              source: mutation.Source,
+              advinj: value,
             })} />
-          <Button
-            icon="syringe"
-            disabled={!isInjectorReady || !mutation.Active}
-            content="Print Mutator"
-            onClick={() => act('print_injector', {
-              mutref: mutation.ByondRef,
-              is_activator: 0,
-              source: mutation.Source,
-            })} />
-        </Fragment>
-      )}
-      <br />
+        )}
+        {['occupant', 'disk', 'console'].includes(mutation.Source) && (
+          <Fragment>
+            <Button
+              icon="syringe"
+              disabled={!isInjectorReady || !mutation.Active}
+              content="Print Activator"
+              onClick={() => act('print_injector', {
+                mutref: mutation.ByondRef,
+                is_activator: 1,
+                source: mutation.Source,
+              })} />
+            <Button
+              icon="syringe"
+              disabled={!isInjectorReady || !mutation.Active}
+              content="Print Mutator"
+              onClick={() => act('print_injector', {
+                mutref: mutation.ByondRef,
+                is_activator: 0,
+                source: mutation.Source,
+              })} />
+          </Fragment>
+        )}
+      </Box>
       {['disk', 'occupant'].includes(mutation.Source) && (
         <Button
           icon="save"
-          disabled={savedToConsole || mutationCapacity <= 0 || !mutation.Active}
+          disabled={savedToConsole
+            || mutationCapacity <= 0
+            || !mutation.Active}
           content="Save to Console"
           onClick={() => act('save_console', {
             mutref: mutation.ByondRef,
@@ -600,38 +597,33 @@ const MutationInfo = props => {
           })} />
       )}
       {['console', 'disk'].includes(mutation.Source) && (
-
-      // TODO - MUTATION COMBINING LOGIC GOES HERE
-      //  1. Some way to select any mutation that isn't this mutation.
-      //    1.1. DM code is now set up to allow combining of mutations across
-      //         both console and disk.
-      //    1.2. Build a list of all mutations across both console and disk
-      //    1.3. Trim duplicate alias mutations. Combined mutations do not
-      //         inherit any metadata, so a list with no duplicate names is
-      //         also ideal.
-      //    1.5. 'this' mutation' should not be included in the list,
-      //         including mutations with the same alias as 'this'.
-
-      // 2. act(`combine_${mutation.Source}`, {
-      //      firstref: mutation.ByondRef
-      //      secondref: selectedMutation.ByondRef
-      //    })
-
-      // 3. disabled logic is the same as Save to Console/Disk as the action
-      //    requires the ability to save a new mutation to the storage medium
-
-      // 4. Minor edge case - If this is the list of possible mutations to
-      //    combine this mutation with has a length of zero. This will occur
-      //    when the DNA Console/Disk only has a single Alias of mutation, so
-      //    the list of eligible mutations for combination will be empty.
-
+        // TODO: MUTATION COMBINING LOGIC GOES HERE
+        //  1. Some way to select any mutation that isn't this mutation.
+        //    1.1. DM code is now set up to allow combining of mutations across
+        //         both console and disk.
+        //    1.2. Build a list of all mutations across both console and disk
+        //    1.3. Trim duplicate alias mutations. Combined mutations do not
+        //         inherit any metadata, so a list with no duplicate names is
+        //         also ideal.
+        //    1.5. 'this' mutation' should not be included in the list,
+        //         including mutations with the same alias as 'this'.
+        // 2. act(`combine_${mutation.Source}`, {
+        //      firstref: mutation.ByondRef
+        //      secondref: selectedMutation.ByondRef
+        //    })
+        // 3. disabled logic is the same as Save to Console/Disk as the action
+        //    requires the ability to save a new mutation to the storage medium
+        // 4. Minor edge case - If this is the list of possible mutations to
+        //    combine this mutation with has a length of zero. This will occur
+        //    when the DNA Console/Disk only has a single Alias of mutation, so
+        //    the list of eligible mutations for combination will be empty.
         false
       )}
       {['console', 'disk', 'advinj'].includes(mutation.Source) && (
         <Button
           icon="times"
           color="red"
-          content="Delete"
+          content="Delete from storage"
           onClick={() => act(`delete_${mutation.Source}_mut`, {
             mutref: mutation.ByondRef,
           })} />
@@ -721,7 +713,7 @@ const DnaConsoleSequencer = props => {
       <Flex spacing={1} mb={1}>
         <Flex.Item width="154px">
           <Section
-            title="Genomes"
+            title="Sequences"
             minHeight="100%">
             {mutations.map(mutation => (
               <GenomeImage
@@ -741,7 +733,7 @@ const DnaConsoleSequencer = props => {
         </Flex.Item>
         <Flex.Item grow={1} basis={0}>
           <Section
-            title="Genome Info"
+            title="Sequence Info"
             minHeight="100%">
             <MutationInfo
               state={state}
@@ -763,7 +755,7 @@ const DnaConsoleSequencer = props => {
         </Section>
       ) || (
         <Section
-          title="Genome Sequencer"
+          title="Genome Sequencer™"
           buttons={(
             !isJokerReady && (
               <Box
@@ -771,7 +763,7 @@ const DnaConsoleSequencer = props => {
                 color="label">
                 Joker on cooldown ({jokerSeconds}s)
               </Box>
-            ) || jokerActive === 'true' && (
+            ) || jokerActive && (
               <Fragment>
                 <Box
                   mr={1}
@@ -782,7 +774,7 @@ const DnaConsoleSequencer = props => {
                 <Button
                   content="Cancel Joker"
                   onClick={() => act('set_view', {
-                    jokerActive: 'false',
+                    jokerActive: '',
                   })} />
               </Fragment>
             ) || (
@@ -791,7 +783,7 @@ const DnaConsoleSequencer = props => {
                 color="purple"
                 content="Use Joker"
                 onClick={() => act('set_view', {
-                  jokerActive: 'true',
+                  jokerActive: '1',
                 })} />
             )
           )}>
@@ -908,25 +900,14 @@ const GenomeSequencer = props => {
             });
             return;
           }
-          if (e.shiftKey) {
-            act('pulse_gene', {
-              pos: i + 1,
-              gene: '?',
-              alias: mutation.Alias,
-            });
-            return;
-          }
-          // We are using true as a string, because currently act()
-          // can only send strings. We set this variable in act(),
-          // therefore it's also a string.
-          if (jokerActive === 'true') {
+          if (jokerActive) {
             act('pulse_gene', {
               pos: i + 1,
               gene: 'J',
               alias: mutation.Alias,
             });
             act('set_view', {
-              jokerActive: 'false',
+              jokerActive: '',
             });
             return;
           }
@@ -987,27 +968,28 @@ const DnaConsoleEnzymes = props => {
     );
   }
   return (
-    <Flex spacing={1}>
-      <Flex.Item width="155px">
-        <RadiationEmitter state={state} />
-      </Flex.Item>
-      <Flex.Item width="140px">
-        <RadiationEmitterProbs state={state} />
-      </Flex.Item>
-      <Flex.Item grow={1} basis={0}>
-        <RadiationEmitterPulseBoard state={state} />
-      </Flex.Item>
-    </Flex>
+    <Fragment>
+      <Flex spacing={1} mb={1}>
+        <Flex.Item width="155px">
+          <RadiationEmitterSettings state={state} />
+        </Flex.Item>
+        <Flex.Item width="140px">
+          <RadiationEmitterProbs state={state} />
+        </Flex.Item>
+        <Flex.Item grow={1} basis={0}>
+          <RadiationEmitterPulseBoard state={state} />
+        </Flex.Item>
+      </Flex>
+      <GeneticMakeupBuffers state={state} />
+    </Fragment>
   );
 };
 
-const RadiationEmitter = props => {
+const RadiationEmitterSettings = props => {
   const { data, act } = useBackend(props);
   const {
     radStrength,
     radDuration,
-    stdDevAcc,
-    stdDevStr,
     RADIATION_STRENGTH_MAX,
     RADIATION_DURATION_MAX,
   } = data;
@@ -1117,6 +1099,246 @@ const RadiationEmitterPulseBoard = props => {
       position="relative">
       <Box mx="-1px">
         {blocks}
+      </Box>
+    </Section>
+  );
+};
+
+const GeneticMakeupBuffers = props => {
+  const { state } = props;
+  const { data, act } = useBackend(props);
+  const {
+    diskHasMakeup,
+    hasDisk,
+    isViableSubject,
+    makeupCapacity = 3,
+    makeupStorage,
+  } = data;
+  const elements = [];
+  for (let i = 1; i <= makeupCapacity; i++) {
+    const makeup = makeupStorage[i];
+    const element = (
+      <Collapsible
+        title={makeup
+          ? (makeup.label || makeup.name)
+          : `Slot ${i}`}
+        buttons={
+          <Fragment>
+            {!!(hasDisk && diskHasMakeup) && (
+              <Button
+                mr={1}
+                disabled={!hasDisk || !diskHasMakeup}
+                content="Import from disk"
+                onClick={() => act('load_makeup_disk', {
+                  index: i,
+                })} />
+            )}
+            <Button
+              disabled={!isViableSubject}
+              content="Save"
+              onClick={() => act('save_makeup_console', {
+                index: i,
+              })} />
+            <Button
+              ml={1}
+              icon="times"
+              color="red"
+              disabled={!makeup}
+              onClick={() => act('del_makeup_console', {
+                index: i,
+              })} />
+          </Fragment>
+        }>
+        <GeneticMakeupBufferInfo
+          state={state}
+          index={i}
+          makeup={makeup} />
+      </Collapsible>
+    );
+    elements.push(element);
+  }
+  return (
+    <Section title="Genetic Makeup Buffers">
+      {elements}
+    </Section>
+  );
+};
+
+const GeneticMakeupBufferInfo = props => {
+  const { index, makeup } = props;
+  const { act, data } = useBackend(props);
+  const {
+    isViableSubject,
+    hasDisk,
+    diskReadOnly,
+  } = data;
+  // Type of the action for applying makeup
+  const ACTION_MAKEUP_APPLY = isViableSubject
+    ? 'makeup_apply'
+    : 'makeup_delay';
+  if (!makeup) {
+    return (
+      <Box color="average">
+        No stored subject data.
+      </Box>
+    );
+  }
+  return (
+    <Fragment>
+      <LabeledList>
+        <LabeledList.Item label="Subject">
+          {makeup.name || 'None'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Blood Type">
+          {makeup.blood_type || 'None'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Unique Enzyme">
+          {makeup.UE || 'None'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Unique Identifier">
+          {makeup.UI || 'None'}
+        </LabeledList.Item>
+      </LabeledList>
+      <Divider />
+      <Box bold color="label" mb={1}>
+        Makeup Actions
+      </Box>
+      <LabeledList>
+        <LabeledList.Item label="Enzymes">
+          <Button
+            icon="syringe"
+            content="Print"
+            onClick={() => act('makeup_injector', {
+              index,
+              type: 'ue',
+            })} />
+          <Button
+            icon="exchange-alt"
+            onClick={() => act(ACTION_MAKEUP_APPLY, {
+              index,
+              type: 'ue',
+            })}>
+            Transfer
+            {!isViableSubject && ' (Delayed)'}
+          </Button>
+        </LabeledList.Item>
+        <LabeledList.Item label="Identity">
+          <Button
+            icon="syringe"
+            content="Print"
+            onClick={() => act('makeup_injector', {
+              index,
+              type: 'ui',
+            })} />
+          <Button
+            icon="exchange-alt"
+            onClick={() => act(ACTION_MAKEUP_APPLY, {
+              index,
+              type: 'ui',
+            })}>
+            Transfer
+            {!isViableSubject && ' (Delayed)'}
+          </Button>
+        </LabeledList.Item>
+        <LabeledList.Item label="Full Makeup">
+          <Button
+            icon="syringe"
+            content="Print"
+            onClick={() => act('makeup_injector', {
+              index,
+              type: 'mixed',
+            })} />
+          <Button
+            icon="exchange-alt"
+            onClick={() => act(ACTION_MAKEUP_APPLY, {
+              index,
+              type: 'mixed',
+            })}>
+            Transfer
+            {!isViableSubject && ' (Delayed)'}
+          </Button>
+        </LabeledList.Item>
+        <LabeledList.Item>
+          <Button
+            icon="save"
+            disabled={!hasDisk || diskReadOnly}
+            content="Export To Disk"
+            onClick={() => act('save_makeup_disk', {
+              index,
+            })} />
+        </LabeledList.Item>
+      </LabeledList>
+    </Fragment>
+  );
+};
+
+const DnaConsoleAdvancedInjectors = props => {
+  const { state } = props;
+  const { act, data } = useBackend(props);
+  const {
+    advInjectors = [],
+  } = data;
+  return (
+    <Section title="Advanced Injectors">
+      {advInjectors.map(injector => (
+        <Collapsible
+          key={injector.name}
+          title={injector.name}
+          buttons={(
+            <Fragment>
+              <Button
+                icon="syringe"
+                content="Print"
+                onClick={() => act('print_adv_inj', {
+                  name: injector.name,
+                })} />
+              <Button
+                ml={1}
+                color="red"
+                icon="times"
+                onClick={() => act('del_adv_inj', {
+                  name: injector.name,
+                })} />
+            </Fragment>
+          )}>
+          {injector.mutations.length === 0 && (
+            <Box color="average">
+              No mutations stored in this injector.
+            </Box>
+          ) || (
+            <Tabs vertical>
+              {injector.mutations.map(mutation => (
+                <Tabs.Tab
+                  key={mutation.ByondRef}
+                  label={mutation.Name}>
+                  {() => (
+                    <Fragment>
+                      <MutationInfo
+                        state={state}
+                        mutation={mutation} />
+                      <Button
+                        color="red"
+                        icon="times"
+                        content="Delete from advanced injector"
+                        onClick={() => act('del_adv_mut', {
+                          advinj: injector.name,
+                          mutref: mutation.ByondRef,
+                        })} />
+                    </Fragment>
+                  )}
+                </Tabs.Tab>
+              ))}
+            </Tabs>
+          )}
+        </Collapsible>
+      ))}
+      <Box mt={2}>
+        <Button.Input
+          minWidth="200px"
+          content="Create new injector"
+          onCommit={(e, value) => act('new_adv_inj', {
+            name: value,
+          })} />
       </Box>
     </Section>
   );

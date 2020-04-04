@@ -216,7 +216,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "scan_consolenew", name, 660, 800, master_ui, state)
+		ui = new(user, src, ui_key, "scan_consolenew", name, 515, 710, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/scan_consolenew/ui_data(mob/user)
@@ -294,7 +294,7 @@
 	data["mutationStorage"] = tgui_scanner_mutations
 	data["chromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
 	data["chromoStorage"] = tgui_scanner_chromosomes
-	data["makeupCapcity"] = NUMBER_OF_BUFFERS
+	data["makeupCapacity"] = NUMBER_OF_BUFFERS
 	data["makeupStorage"] = tgui_genetic_makeup
 
 	data["advInjectors"] = tgui_advinjector_mutations
@@ -1719,7 +1719,7 @@
 	// Build the list of mutations stored within any Advanced Injectors
 	if(LAZYLEN(injector_selection))
 		for(var/I in injector_selection)
-			tgui_advinjector_mutations["[I]"] = list()
+			var/list/mutations = list()
 			for(var/datum/mutation/human/HM in injector_selection[I])
 				var/list/mutation_data = list()
 
@@ -1738,7 +1738,11 @@
 				if(HM.can_chromosome)
 					mutation_data["AppliedChromo"] = HM.chromosome_name
 
-				tgui_advinjector_mutations["[I]"] += list(mutation_data)
+				mutations += list(mutation_data)
+			tgui_advinjector_mutations += list(list(
+				"name" = "[I]",
+				"mutations" = mutations,
+			))
 
 // Builds a list of all chromosomes stored in the console that can actually be
 //  applied to a given mutation
