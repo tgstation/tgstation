@@ -437,9 +437,9 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(client && !(A in view(client.view, src)))
-		return FALSE
 	if(!src || !isturf(src.loc))
+		return FALSE
+	if(client && !(A in view(client.view, src)))
 		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE
