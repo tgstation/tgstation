@@ -253,8 +253,7 @@
 //This is where stability mutations exist now.
 			switch(myseed.instability)
 				if(100 to 80)
-					if(prob(20))
-						mutate(0, 0, 0, 0, 0, 0, 0, 10, 0) //Exceedingly low odds of gaining a trait.
+					mutate(0, 0, 0, 0, 0, 0, 0, 5, 0) //Exceedingly low odds of gaining a trait.
 				if(79 to 60)
 					if(prob((myseed.instability)/2) && !self_sustaining)
 						mutatespecie()
@@ -534,6 +533,10 @@
 		if(!reagent_source.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[reagent_source] is empty!</span>")
 			return 1
+
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, "<span class='notice'>[src] is full.</span>")
+			return
 
 		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc
 		var/target = myseed ? myseed.plantname : src
