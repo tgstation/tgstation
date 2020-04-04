@@ -1,8 +1,8 @@
 GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/storage/box/figurines = 4,
 		/obj/item/storage/box/decorations = 3,
-		/obj/item/storage/box/pranks = 2,
-		/obj/item/storage/box/gamergear = 1))
+		/obj/effect/spawner/lootdrop/prank = 2,
+		/obj/effect/spawner/lootdrop/gamergear = 1))
 
 /obj/machinery/computer/arcade
 	name = "random arcade"

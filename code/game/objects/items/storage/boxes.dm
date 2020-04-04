@@ -869,11 +869,15 @@
 	icon_state = "box"
 
 /obj/item/storage/box/figurines/PopulateContents()
-	for(var/i in 1 to 4)
-		var/randomFigure = pick(pick(subtypesof(/obj/item/toy/figure)),
+	for(var/i in 1 to 3)
+		var/randomFigure = pick(
+			pick(subtypesof(/obj/item/toy/figure)),
+			pick(subtypesof(/obj/item/toy/figure)),
+			pick(subtypesof(/obj/item/toy/figure)),
 			pick(subtypesof(/obj/item/toy/prize)),
-			pick((subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas))),
-			pick((subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/kinggoat))))
+			pick(subtypesof(/obj/item/toy/prize)),
+			pick((subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/))),
+			pick((subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas))))
 		new randomFigure(src)
 
 /obj/item/storage/box/decorations
@@ -882,12 +886,13 @@
 	icon_state = "box"
 
 /obj/item/storage/box/decorations/PopulateContents()
-	var/randomDecoration = pick(/obj/item/storage/crayons,
-		/obj/item/stack/tile/fakespace/loaded,
-		/obj/item/stack/tile/fakepit/loaded,
-		/obj/item/stack/tile/eighties/loaded,
-		pick(subtypesof(/obj/item/grenade/chem_grenade/glitter)))
-	new randomDecoration(src)
+	for(var/i in 1 to 2)
+		var/randomDecoration = pick(/obj/item/storage/crayons,
+			/obj/item/stack/tile/fakespace/loaded,
+			/obj/item/stack/tile/fakepit/loaded,
+			/obj/item/stack/tile/eighties/loaded,
+			pick(subtypesof(/obj/item/grenade/chem_grenade/glitter)))
+		new randomDecoration(src)
 
 /obj/item/storage/box/gamergear
 	name = "box of gamer gear"
