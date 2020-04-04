@@ -23,11 +23,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/fail_message = "<span class='notice'>The positronic brain buzzes quietly, and the golden lights fade away. Perhaps you could try again?</span>"
 	///Role assigned to the newly created mind
 	var/new_role = "Positronic Brain"
-	///Message sent to the player possessing the brain
-	var/welcome_message = "<span class='warning'>ALL PAST LIVES ARE FORGOTTEN.</span>\n\
-	<b>You are a positronic brain, brought into existence aboard Space Station 13.\n\
-	As a synthetic intelligence, you answer to all crewmembers and the AI.\n\
-	Remember, the purpose of your existence is to serve the crew and the station. Above all else, do no harm.</b>"
 	///Visible message sent when a player possesses the brain
 	var/new_mob_message = "<span class='notice'>The positronic brain chimes quietly.</span>"
 	///Examine message when the posibrain has no mob
@@ -149,7 +144,9 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	else
 		brainmob.ckey = candidate.ckey
 	name = "[initial(name)] ([brainmob.name])"
-	to_chat(brainmob, welcome_message)
+	var/policy = get_policy(ROLE_POSIBRAIN)
+	if(policy)
+		to_chat(brainmob, policy)
 	brainmob.mind.assigned_role = new_role
 	brainmob.set_stat(CONSCIOUS)
 	brainmob.remove_from_dead_mob_list()

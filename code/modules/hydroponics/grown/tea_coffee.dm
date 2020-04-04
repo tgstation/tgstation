@@ -58,6 +58,7 @@
 	maturation = 5
 	production = 5
 	yield = 5
+	instability = 20
 	growthstages = 5
 	icon_dead = "coffee-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)

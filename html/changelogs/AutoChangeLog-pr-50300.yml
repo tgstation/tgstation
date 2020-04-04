@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes: 
-  - rscadd: "The spraycan color input can now be triggered with ctrl-click while it's on your person."

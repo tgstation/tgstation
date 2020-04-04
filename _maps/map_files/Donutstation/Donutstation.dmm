@@ -3749,8 +3749,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "ajl" = (
@@ -6299,8 +6298,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "aoI" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "aoJ" = (
@@ -8851,6 +8849,19 @@
 /obj/item/rcl/pre_loaded,
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
+"aur" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/structure/table,
+/obj/machinery/firealarm{
+	pixel_y = 29
+	},
+/obj/item/reagent_containers/dropper,
+/obj/item/plant_analyzer,
+/turf/open/floor/plasteel,
+/area/hydroponics)
 "aus" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/chair/office/light{
@@ -12409,20 +12420,6 @@
 /obj/structure/cable,
 /turf/open/space/basic,
 /area/space/nearstation)
-"aCv" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/structure/table,
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
-/obj/machinery/firealarm{
-	pixel_y = 29
-	},
-/turf/open/floor/plasteel,
-/area/hydroponics)
 "aCw" = (
 /obj/machinery/telecomms/receiver/preset_right,
 /turf/open/floor/circuit/green/telecomms/mainframe,
@@ -14450,8 +14447,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aGT" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aGU" = (
@@ -15199,8 +15195,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "aIH" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/aisat_interior)
 "aII" = (
@@ -22901,8 +22896,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plasteel,
 /area/maintenance/port/fore)
 "bac" = (
@@ -25048,8 +25042,7 @@
 /obj/effect/turf_decal/trimline/yellow/filled/corner{
 	dir = 1
 	},
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plasteel,
 /area/maintenance/aft)
 "beW" = (
@@ -26110,8 +26103,7 @@
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "bhg" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable/layer1,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bhi" = (
@@ -26657,8 +26649,7 @@
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
 "bin" = (
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plasteel/dark,
 /area/engine/engine_room)
 "bip" = (
@@ -31534,13 +31525,12 @@
 /turf/closed/wall,
 /area/tcommsat/computer)
 "bsi" = (
-/obj/structure/cable,
-/obj/machinery/power/deck_relay,
+/obj/structure/cable/multilayer/multiz,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
@@ -31600,7 +31590,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsp" = (
 /obj/structure/closet,
@@ -31701,7 +31691,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsz" = (
 /obj/effect/turf_decal/tile/bar,
@@ -31734,7 +31724,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsC" = (
 /obj/structure/closet/crate{
@@ -31764,7 +31754,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/turf/open/floor/plasteel/dark/telecomms,
+/turf/open/floor/plasteel/dark,
 /area/tcommsat/computer)
 "bsF" = (
 /obj/effect/mapping_helpers/airlock_note_placer{
@@ -34789,9 +34779,6 @@
 /area/quartermaster/qm)
 "byQ" = (
 /obj/structure/table,
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
 "byR" = (
@@ -40745,8 +40732,7 @@
 /area/security/prison/visit)
 "bLd" = (
 /obj/machinery/light/small,
-/obj/machinery/power/deck_relay,
-/obj/structure/cable,
+/obj/structure/cable/multilayer/multiz,
 /turf/open/floor/plating,
 /area/security/prison)
 "bLi" = (
@@ -84763,7 +84749,7 @@ aaT
 afa
 bDc
 afa
-aCv
+aur
 aGr
 aGG
 bup
