@@ -4,7 +4,7 @@
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
 	requires_ntnet = TRUE
-	transfer_access = null
+	transfer_access = ACCESS_ROBOTICS
 	network_destination = "cyborg remote monitoring"
 	size = 5
 	tgui_id = "ntos_cyborg_monitor"
