@@ -302,9 +302,7 @@
 		return
 	if(!poll || !href_list)
 		return
-	if(usr != src)
-		if(!usr || !src)
-			return
+	if(IsAdminAdvancedProcCall())
 		log_game("[key_name(usr)] attempted to rig the vote by voting as [key]")
 		message_admins("[key_name_admin(usr)] attempted to rig the vote by voting as [key]")
 		to_chat(usr, "<span class='danger'>You don't seem to be [key].</span>")
@@ -364,6 +362,8 @@
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
+	if(IsAdminAdvancedProcCall())
+		return
 	if(vote_id)
 		vote_id = "[sanitizeSQL(vote_id)]"
 	else
@@ -390,6 +390,8 @@
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
+	if(IsAdminAdvancedProcCall())
+		return
 	if(vote_id)
 		vote_id = "[sanitizeSQL(vote_id)]"
 	else
@@ -414,6 +416,8 @@
 /mob/dead/new_player/proc/vote_on_poll_rating(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
+		return
+	if(IsAdminAdvancedProcCall())
 		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	var/list/votes = list()
@@ -448,6 +452,8 @@
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
 		return
+	if(IsAdminAdvancedProcCall())
+		return
 	var/sql_ckey = sanitizeSQL(ckey)
 	if(length(href_list) > 2)
 		href_list.Cut(1,3) //first two values aren't options
@@ -481,6 +487,8 @@
 /mob/dead/new_player/proc/vote_on_poll_irv(datum/poll_question/poll, list/href_list, admin_rank, sql_poll_id)
 	if(!SSdbcore.Connect())
 		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
+		return
+	if(IsAdminAdvancedProcCall())
 		return
 	var/list/votelist = splittext(href_list["IRVdata"], ",")
 	if(!length(votelist))
