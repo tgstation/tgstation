@@ -754,8 +754,8 @@
 
 		// Combines two mutations from the console to try and create a new mutation
 		// ---------------------------------------------------------------------- //
-		// params["srctype"] - Text string of the BYOND type path for first mutation
-		// params["desttype"] - Text string of the BYOND type path for the second
+		// params["firstref"] -  ATOM Ref of first mutation for combination
+		// params["secondref"] -  ATOM Ref of second mutation for combination
 		//  mutation
 		if("combine_console")
 			// GUaRD CHECK - Make sure mutation storage isn't full. If it is, we won't
@@ -765,20 +765,33 @@
 				return
 
 			// GUARD CHECK - We're running a research-type operation. If, for some
-			// reason, somehow the DNA Console has been disconnected from the research
-			// network - Or was never in it to begin with - don't proceed
+			//  reason, somehow the DNA Console has been disconnected from the research
+			//  network - Or was never in it to begin with - don't proceed
 			if(!stored_research)
 				return
 
+			var/first_bref = params["firstref"]
+			var/second_bref = params["secondref"]
+
+			// GUARD CHECK - Find the source and destination mutations on the console
+			// and make sure they actually exist.
+			var/datum/mutation/human/source_mut = get_mut_by_ref(first_bref, SEARCH_STORED | SEARCH_DISKETTE)
+			if(!source_mut)
+				return
+
+			var/datum/mutation/human/dest_mut = get_mut_by_ref(second_bref, SEARCH_STORED | SEARCH_DISKETTE)
+			if(!dest_mut)
+				return
+
 			// Attempt to mix the two mutations to get a new type
-			var/result_path = get_mixed_mutation(params["srctype"], params["desttype"])
+			var/result_path = get_mixed_mutation(source_mut.type, dest_mut.type)
 
 			if(!result_path)
 				return
 
 			// If we got a new type, add it to our storage
 			stored_mutations += new result_path()
-			to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to storage</span>")
+			to_chat(usr, "<span class='boldnotice'>Success! New mutation has been added to console storage.</span>")
 
 			// If it's already discovered, end here. Otherwise, add it to the list of
 			//  discovered mutations.
@@ -791,8 +804,8 @@
 
 		// Combines two mutations from the disk to try and create a new mutation
 		// ---------------------------------------------------------------------- //
-		// params["srctype"] - Text string of the BYOND type path for first mutation
-		// params["desttype"] - Text string of the BYOND type path for the second
+		// params["firstref"] -  ATOM Ref of first mutation for combination
+		// params["secondref"] -  ATOM Ref of second mutation for combination
 		//  mutation
 		if("combine_disk")
 			// GUARD CHECK - This code shouldn't even be callable without a diskette
@@ -817,8 +830,21 @@
 			if(!stored_research)
 				return
 
+			var/first_bref = params["firstref"]
+			var/second_bref = params["secondref"]
+
+			// GUARD CHECK - Find the source and destination mutations on the console
+			// and make sure they actually exist.
+			var/datum/mutation/human/source_mut = get_mut_by_ref(first_bref, SEARCH_STORED | SEARCH_DISKETTE)
+			if(!source_mut)
+				return
+
+			var/datum/mutation/human/dest_mut = get_mut_by_ref(second_bref, SEARCH_STORED | SEARCH_DISKETTE)
+			if(!dest_mut)
+				return
+
 			// Attempt to mix the two mutations to get a new type
-			var/result_path = get_mixed_mutation(params["srctype"], params["desttype"])
+			var/result_path = get_mixed_mutation(source_mut.type, dest_mut.type)
 
 			if(!result_path)
 				return
