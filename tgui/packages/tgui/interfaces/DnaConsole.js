@@ -1,7 +1,7 @@
 import { Fragment } from 'inferno';
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Dropdown, Flex, Icon, LabeledList, ProgressBar, Section } from '../components';
+import { Box, Button, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section, Dimmer } from '../components';
 import { createLogger } from '../logging';
 
 // NOTES:
@@ -71,10 +71,27 @@ export const DnaConsole = props => {
   const { state } = props;
   const { data, act } = useBackend(props);
   const {
+    isPulsingRads,
+    radPulseSeconds,
+  } = data;
+  const {
     consoleMode = CONSOLE_MODE_STORAGE,
   } = data.view;
   return (
     <Fragment>
+      {!!isPulsingRads && (
+        <Dimmer
+          fontSize="14px"
+          textAlign="center">
+          <Icon
+            mr={1}
+            name="spinner"
+            spin />
+          Radiation pulse in progress...
+          <Box mt={1} />
+          {radPulseSeconds}s
+        </Dimmer>
+      )}
       <DnaScanner state={state} />
       <DnaConsoleCommands state={state} />
       {consoleMode === CONSOLE_MODE_STORAGE && (
@@ -959,6 +976,8 @@ const DnaConsoleEnzymes = props => {
   const { data, act } = useBackend(props);
   const {
     isScannerConnected,
+    stdDevAcc,
+    stdDevStr,
   } = data;
   if (!isScannerConnected) {
     return (
@@ -968,8 +987,137 @@ const DnaConsoleEnzymes = props => {
     );
   }
   return (
-    <Section title="Unique Enzymes">
-      TODO
+    <Flex spacing={1}>
+      <Flex.Item width="155px">
+        <RadiationEmitter state={state} />
+      </Flex.Item>
+      <Flex.Item width="140px">
+        <RadiationEmitterProbs state={state} />
+      </Flex.Item>
+      <Flex.Item grow={1} basis={0}>
+        <RadiationEmitterPulseBoard state={state} />
+      </Flex.Item>
+    </Flex>
+  );
+};
+
+const RadiationEmitter = props => {
+  const { data, act } = useBackend(props);
+  const {
+    radStrength,
+    radDuration,
+    stdDevAcc,
+    stdDevStr,
+    RADIATION_STRENGTH_MAX,
+    RADIATION_DURATION_MAX,
+  } = data;
+  return (
+    <Section
+      title="Radiation Emitter"
+      minHeight="100%">
+      <LabeledList>
+        <LabeledList.Item label="Output level">
+          <NumberInput
+            animated
+            width="32px"
+            stepPixelSize={10}
+            value={radStrength}
+            minValue={1}
+            maxValue={RADIATION_STRENGTH_MAX}
+            onDrag={(e, value) => act('set_pulse_strength', {
+              val: value,
+            })} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Pulse duration">
+          <NumberInput
+            animated
+            width="32px"
+            stepPixelSize={10}
+            value={radDuration}
+            minValue={1}
+            maxValue={RADIATION_DURATION_MAX}
+            onDrag={(e, value) => act('set_pulse_duration', {
+              val: value,
+            })} />
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+
+const RadiationEmitterProbs = props => {
+  const { data } = useBackend(props);
+  const {
+    stdDevAcc,
+    stdDevStr,
+  } = data;
+  return (
+    <Section
+      title="Probabilities"
+      minHeight="100%">
+      <LabeledList>
+        <LabeledList.Item
+          label="Accuracy"
+          textAlign="right">
+          {stdDevAcc}
+        </LabeledList.Item>
+        <LabeledList.Item
+          label={`P(±${stdDevStr})`}
+          textAlign="right">
+          68 %
+        </LabeledList.Item>
+        <LabeledList.Item
+          label={`P(±${stdDevStr * 2})`}
+          textAlign="right">
+          95 %
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
+};
+
+const RadiationEmitterPulseBoard = props => {
+  const { data, act } = useBackend(props);
+  const {
+    subjectUNI,
+  } = data;
+  // Build blocks of buttons of unique enzymes
+  const blocks = [];
+  let buffer = [];
+  for (let i = 0; i < subjectUNI.length; i++) {
+    const char = subjectUNI.charAt(i);
+    // Push a button into the buffer
+    const button = (
+      <Button
+        fluid
+        key={i}
+        textAlign="center"
+        content={char}
+        onClick={() => act('makeup_pulse', {
+          index: i,
+        })} />
+    );
+    buffer.push(button);
+    // Create a block from the current buffer
+    if (buffer.length >= 3) {
+      const block = (
+        <Box inline width="22px" mx="1px">
+          {buffer}
+        </Box>
+      );
+      blocks.push(block);
+      // Clear the buffer
+      buffer = [];
+    }
+  }
+  return (
+    <Section
+      title="Unique Enzymes"
+      minHeight="100%"
+      position="relative">
+      <Box mx="-1px">
+        {blocks}
+      </Box>
     </Section>
   );
 };
