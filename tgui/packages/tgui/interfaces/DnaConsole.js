@@ -801,13 +801,13 @@ const GenomeImage = props => {
 };
 
 const GeneCycler = props => {
-  const { gene, onChange } = props;
+  const { gene, onChange, ...rest } = props;
   const length = GENES.length;
   const index = GENES.indexOf(gene);
   const color = GENE_COLORS[gene];
   return (
     <Button
-      width="22px"
+      {...rest}
       color={color}
       onClick={e => {
         e.preventDefault();
@@ -875,6 +875,8 @@ const GenomeSequencer = props => {
     const gene = sequence.charAt(i);
     const button = (
       <GeneCycler
+        width="22px"
+        textAlign="center"
         gene={gene}
         onChange={nextGene => {
           // We are using true as a string, because currently act()
@@ -907,10 +909,14 @@ const GenomeSequencer = props => {
       <Box
         key={i}
         inline
-        m={0.5}
-        textAlign="center">
+        m={0.5}>
         {buttons[i]}
-        <Box mt="-5px" mb="-1px" color="label" content="|" />
+        <Box
+          mt="-2px"
+          ml="10px"
+          width="2px"
+          height="8px"
+          backgroundColor="label" />
         {buttons[i + 1]}
       </Box>
     );
