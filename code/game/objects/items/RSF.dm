@@ -8,6 +8,7 @@ RSF
 	desc = "A device used to rapidly deploy service items."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rsf"
+	///The icon state to revert to when the tool is empty
 	var/spent_icon_state = "rsf_empty"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -16,20 +17,29 @@ RSF
 	anchored = FALSE
 	item_flags = NOBLUDGEON
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	///The current matter count
 	var/matter = 0
+	///The max amount of matter in the device
 	var/max_matter = 30
+	///The type of the object we are going to despense
 	var/to_despense
+	///The cost of the object we are going to despense
 	var/despense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
+	///An associated list of atoms and charge costs. This can contain a seperate list, as long as it's associated item is an object
 	var/list/cost_by_item = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 20,
 								/obj/item/paper = 10,
 								/obj/item/storage/pill_bottle/dice = 200,
 								/obj/item/pen = 50,
 								/obj/item/clothing/mask/cigarette = 10,
 								)
+	///An associated list of fuel and it's value
 	var/list/matter_by_item = list(/obj/item/rcd_ammo = 10,)
+	///A list of surfaces that we are allowed to place things on.
 	var/list/allowed_surfaces = list(/turf/open/floor, /obj/structure/table)
+	///The unit of mesure of the matter, for use in text
 	var/discriptor = "fabrication-units"
+	///The verb that describes what we're doing, for use in text
 	var/action_type = "Dispensing"
 
 /obj/item/rsf/Initialize()
@@ -44,17 +54,17 @@ RSF
 	matter = 30
 
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
-	if(is_type_in_list(W,matter_by_item))
+	if(is_type_in_list(W,matter_by_item))//If the thing we got hit by is in our matter list
 		if(matter > max_matter)
 			to_chat(user, "<span class='warning'>\The [src] can't hold any more [discriptor]!</span>")
 			return
 		qdel(W)
-		matter += matter_by_item[W.type]
+		matter += matter_by_item[W.type]//We add its value
 		if(matter > max_matter)
 			matter = max_matter
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] [discriptor].</span>")
-		icon_state = initial(icon_state)
+		icon_state = initial(icon_state)//and set the icon state to the initial value it had
 	else
 		return ..()
 
@@ -65,32 +75,35 @@ RSF
 	var/list/item_list
 	var/atom/target = cost_by_item
 	var/cost = 0
-	while(istype(target, /list/))
+	//Warning, prepare for bodgecode
+	while(istype(target, /list/))//While target is a list we continue the loop
 		item_list = list()
-		for(var/meme in target)
+		for(var/meme in target)//We iterate through all of targets entrys
 			var/atom/test
 			if(istype(meme, /list/))//If it's a list let's use its associated object
 				var/temp = target[meme]
 				test = new temp()
 			else
 				test = new meme()
+			//We then add their data into the radial menu
 			item_list[test.name] = image(icon = test.icon, icon_state = test.icon_state)
 			qdel(test)
 		var/picked = show_radial_menu(user, src, item_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 		if(!check_menu(user) || picked == null)
 			return
-		for(var/emem in target)
+		for(var/emem in target)//Back through target agian
 			var/atom/test
 			if(istype(emem, /list/))
 				var/temp = target[emem]//If it's a list we should use its associated object
 				test = new temp()
 			else
 				test = new emem()
-			if(picked == test.name)
-				cost = target[emem]
+			if(picked == test.name)//We try and find the entry that matches the radial selection
+				cost = target[emem]//We cash the cost
 				target = emem
 				break
 			qdel(test)
+		//If we found a list we start it all again, this time looking through its contents.
 	to_despense = target
 	despense_cost = cost
 	// Change mode
@@ -108,11 +121,12 @@ RSF
 		return
 	if(!is_allowed(A))
 		return
-	if(use_matter(despense_cost, user))
+	if(use_matter(despense_cost, user))//If we can charge that amount of charge, we do so and return true
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		var/atom/meme = new to_despense(get_turf(A))
 		to_chat(user, "<span class='notice'>[action_type] [meme.name]...</span>")
 
+///A helper proc. checks to see if we can afford the amount of charge that is passed, and if we can docs the charge from our base, and returns TRUE. If we can't we return FALSE
 /obj/item/rsf/proc/use_matter(charge, mob/user)
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
@@ -130,6 +144,7 @@ RSF
 	icon_state = spent_icon_state
 	return FALSE
 
+///Helper proc that iterates through all the things we are allowed to spawn on, and sees if the passed atom is one of them
 /obj/item/rsf/proc/is_allowed(atom/to_check)
 	for(var/sort in allowed_surfaces)
 		if(istype(to_check, sort))
