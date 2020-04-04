@@ -296,7 +296,7 @@ Nothing else in the console has ID requirements.
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category)|| !(D.build_type & PROTOLATHE))
 			continue
-		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
+		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & ALL) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
@@ -350,7 +350,7 @@ Nothing else in the console has ID requirements.
 	l += ui_protolathe_header()
 	for(var/id in matching_design_ids)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
+		if(!(isnull(linked_lathe.allowed_department_flags) || (D.departmental_flags & ALL) || (D.departmental_flags & linked_lathe.allowed_department_flags)))
 			continue
 		var/temp_material
 		var/c = 50
@@ -450,7 +450,7 @@ Nothing else in the console has ID requirements.
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
 		if(!(selected_category in D.category) || !(D.build_type & IMPRINTER))
 			continue
-		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
+		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & ALL) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
@@ -482,7 +482,7 @@ Nothing else in the console has ID requirements.
 
 	for(var/id in matching_design_ids)
 		var/datum/design/D = SSresearch.techweb_design_by_id(id)
-		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
+		if(!(isnull(linked_imprinter.allowed_department_flags) || (D.departmental_flags & ALL) || (D.departmental_flags & linked_imprinter.allowed_department_flags)))
 			continue
 		var/temp_materials
 		var/check_materials = TRUE
