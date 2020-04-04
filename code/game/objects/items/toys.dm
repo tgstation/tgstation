@@ -180,6 +180,51 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
+/obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/human/user)
+	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(!myhead)
+		user.visible_message("<span class='suicide'>[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!</span>") // and i must scream
+		return SHAME
+	user.visible_message("<span class='suicide'>[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicicide!</span>")
+	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
+	user.adjust_nutrition(50) // mmmm delicious
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), (3SECONDS))
+	return MANUAL_SUICIDE
+
+/**
+  * Internal function used in the toy singularity suicide
+  *
+  * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
+  * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
+  * Throwing the singularity away will cause the user to start choking themself to death.
+  * Arguments:
+  * * user - Whoever is doing the suiciding
+  */
+/obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
+	if(!user)
+		return
+	if(!user.is_holding(src)) // Half digestion? Start choking to death
+		user.visible_message("<span class='suicide'>[user] panics and starts choking [user.p_them()]self to death!</span>")
+		user.adjustOxyLoss(200)
+		user.death(FALSE) // unfortunately you have to handle the suiciding yourself with a manual suicide
+		user.ghostize(FALSE) // get the fuck out of our body
+		return
+	var/obj/item/bodypart/chest/CH = user.get_bodypart(BODY_ZONE_CHEST)
+	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
+		user.visible_message("<span class='danger'>[user] regurgitates [src]!</span>") // I swear i dont have a fetish
+		user.vomit(100, TRUE, distance = 0)
+		user.adjustOxyLoss(120)
+		user.dropItemToGround(src) // incase the crit state doesn't drop the singulo to the floor
+		user.set_suicide(FALSE)
+		return
+	user.transferItemToLoc(src, user, TRUE)
+	CH.cavity_item = src // The mother came inside and found Andy, dead with a HUGE belly full of toys
+	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
+	user.death(FALSE)
+	user.ghostize(FALSE)
+
+
+
 /*
  * Toy gun: Why isnt this an /obj/item/gun?
  */
@@ -503,64 +548,68 @@
 
 /obj/item/toy/prize/ripley
 	name = "toy Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 1/12."
+	desc = "Mini-Mecha action figure! Collect them all! 1/13."
 
 /obj/item/toy/prize/fireripley
 	name = "toy firefighting Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 2/12."
+	desc = "Mini-Mecha action figure! Collect them all! 2/13."
 	icon_state = "fireripleytoy"
 
 /obj/item/toy/prize/deathripley
 	name = "toy deathsquad Ripley"
-	desc = "Mini-Mecha action figure! Collect them all! 3/12."
+	desc = "Mini-Mecha action figure! Collect them all! 3/13."
 	icon_state = "deathripleytoy"
 
 /obj/item/toy/prize/gygax
 	name = "toy Gygax"
-	desc = "Mini-Mecha action figure! Collect them all! 4/12."
+	desc = "Mini-Mecha action figure! Collect them all! 4/13."
 	icon_state = "gygaxtoy"
 
 /obj/item/toy/prize/durand
 	name = "toy Durand"
-	desc = "Mini-Mecha action figure! Collect them all! 5/12."
-	icon_state = "durandprize"
+	desc = "Mini-Mecha action figure! Collect them all! 5/13."
+	icon_state = "durandtoy"
 
 /obj/item/toy/prize/honk
 	name = "toy H.O.N.K."
-	desc = "Mini-Mecha action figure! Collect them all! 6/12."
-	icon_state = "honkprize"
+	desc = "Mini-Mecha action figure! Collect them all! 6/13."
+	icon_state = "honktoy"
 
 /obj/item/toy/prize/marauder
 	name = "toy Marauder"
-	desc = "Mini-Mecha action figure! Collect them all! 7/12."
-	icon_state = "marauderprize"
+	desc = "Mini-Mecha action figure! Collect them all! 7/13."
+	icon_state = "maraudertoy"
 
 /obj/item/toy/prize/seraph
 	name = "toy Seraph"
-	desc = "Mini-Mecha action figure! Collect them all! 8/12."
-	icon_state = "seraphprize"
+	desc = "Mini-Mecha action figure! Collect them all! 8/13."
+	icon_state = "seraphtoy"
 
 /obj/item/toy/prize/mauler
 	name = "toy Mauler"
-	desc = "Mini-Mecha action figure! Collect them all! 9/12."
-	icon_state = "maulerprize"
+	desc = "Mini-Mecha action figure! Collect them all! 9/13."
+	icon_state = "maulertoy"
 
 /obj/item/toy/prize/odysseus
 	name = "toy Odysseus"
-	desc = "Mini-Mecha action figure! Collect them all! 10/12."
-	icon_state = "odysseusprize"
+	desc = "Mini-Mecha action figure! Collect them all! 10/13."
+	icon_state = "odysseustoy"
 
 /obj/item/toy/prize/phazon
 	name = "toy Phazon"
-	desc = "Mini-Mecha action figure! Collect them all! 11/12."
-	icon_state = "phazonprize"
+	desc = "Mini-Mecha action figure! Collect them all! 11/13."
+	icon_state = "phazontoy"
 
 /obj/item/toy/prize/reticence
 	name = "toy Reticence"
-	desc = "Mini-Mecha action figure! Collect them all! 12/12."
-	icon_state = "reticenceprize"
+	desc = "Mini-Mecha action figure! Collect them all! 12/13."
+	icon_state = "reticencetoy"
 	quiet = 1
 
+/obj/item/toy/prize/clarke
+	name = "toy Clarke"
+	desc = "Mini-Mecha action figure! Collect them all! 13/13."
+	icon_state = "clarketoy"
 
 /obj/item/toy/talking
 	name = "talking action figure"

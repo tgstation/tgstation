@@ -7,7 +7,7 @@
 
 * **Website:** https://www.tgstation13.org
 * **Code:** https://github.com/tgstation/tgstation
-* **Wiki** https://tgstation13.org/wiki/Main_Page
+* **Wiki:** https://tgstation13.org/wiki/Main_Page
 * **Codedocs:** https://codedocs.tgstation13.org/
 * **/tg/station Discord:** https://tgstation13.org/phpBB/viewforum.php?f=60
 * **Coderbus Discord:** https://discord.gg/Vh8TJp9
@@ -28,6 +28,8 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 [Guidelines for Contributors](.github/CONTRIBUTING.md)
 
 [Documenting your code](.github/AUTODOC_GUIDE.md)
+
+[Policy configuration system](.github/POLICYCONFIG.md)
 
 ## LICENSE
 

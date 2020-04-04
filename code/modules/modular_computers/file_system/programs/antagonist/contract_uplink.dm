@@ -72,7 +72,7 @@
 					error = "Either both you or your target aren't at the dropoff location, or the pod hasn't got a valid place to land. Clear space, or make sure you're both inside."
 			else
 				user.playsound_local(user, 'sound/machines/uplinkerror.ogg', 50)
-				error = "Already extracting... Place the target into the pod. If the pod was destroyed, you will need to cancel this contract."
+				error = "Already extracting... Place the target into the pod. If the pod was destroyed, this contract is no longer possible."
 
 			return TRUE
 		if("PRG_contract_abort")

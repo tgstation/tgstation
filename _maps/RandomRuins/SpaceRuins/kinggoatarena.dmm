@@ -15,10 +15,8 @@
 /turf/open/indestructible/diamond,
 /area/ruin/powered/kinggoat_arena)
 "e" = (
-/obj/effect/portal/permanent/one_way/destroy{
-	id = "king goat arena";
-	name = "king goat arena portal";
-	teleport_channel = "free"
+/obj/effect/landmark/portal_exit{
+	id = "king goat arena"
 	},
 /turf/open/indestructible/diamond,
 /area/ruin/powered/kinggoat_arena)
@@ -51,7 +49,7 @@
 /turf/open/indestructible/gold,
 /area/ruin/powered/kinggoat_arena)
 "j" = (
-/obj/effect/portal/permanent/one_way/keep{
+/obj/effect/portal/permanent/one_way{
 	id = "king goat arena";
 	name = "king goat arena portal";
 	teleport_channel = "free"

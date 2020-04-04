@@ -22,7 +22,7 @@
   * * send signal COMSIG_MOB_CLIENT_LOGIN
   */
 /mob/Login()
-	GLOB.player_list |= src
+	add_to_player_list()
 	lastKnownIP	= client.address
 	computer_id	= client.computer_id
 	log_access("Mob Login: [key_name(src)] was assigned to a [type]")
@@ -39,6 +39,8 @@
 	next_move = 1
 
 	..()
+	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+
 	if (client && key != client.key)
 		key = client.key
 	reset_perspective(loc)

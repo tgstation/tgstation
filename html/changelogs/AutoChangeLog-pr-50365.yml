@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "The PDA Atmos Scanner can now be downloaded and used on modular computers."

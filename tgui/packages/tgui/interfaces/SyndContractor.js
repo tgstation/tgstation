@@ -266,6 +266,13 @@ export const SyndPane = props => {
   const contractor_hub_items = data.contractor_hub_items || [];
   const contracts = data.contracts || [];
 
+  const CONTRACT_STATUS_INACTIVE = 1;
+  const CONTRACT_STATUS_ACTIVE = 2;
+  const CONTRACT_STATUS_BOUNTY_CONSOLE_ACTIVE = 3;
+  const CONTRACT_STATUS_EXTRACTING = 4;
+  const CONTRACT_STATUS_COMPLETE = 5;
+  const CONTRACT_STATUS_ABORTED = 6;
+
   return (
     <Fragment>
       <StatusPane state={props.state} />
@@ -280,14 +287,21 @@ export const SyndPane = props => {
                 onClick={() => act('PRG_call_extraction')} />
             )}>
             {contracts.map(contract => {
-              const active = (contract.status > 1);
-              if (contract.status >= 5) {
+              if (data.ongoing_contract
+                && contract.status !== CONTRACT_STATUS_ACTIVE) {
+                return;
+              }
+
+              const active = (contract.status > CONTRACT_STATUS_INACTIVE);
+              if (contract.status >= CONTRACT_STATUS_COMPLETE) {
                 return;
               }
               return (
                 <Section
                   key={contract.target}
-                  title={`${contract.target} (${contract.target_rank})`}
+                  title={contract.target
+                    ? `${contract.target} (${contract.target_rank})`
+                    : "Invalid Target"}
                   level={active ? 1 : 2}
                   buttons={(
                     <Fragment>
@@ -327,8 +341,16 @@ export const SyndPane = props => {
               );
             })}
           </Section>
+          <Section
+            title="Dropoff Locator"
+            textAlign="center"
+            opacity={data.ongoing_contract ? 100 : 0}>
+            <Box bold>
+              {data.dropoff_direction}
+            </Box>
+          </Section>
         </Tabs.Tab>
-        <Tabs.Tab label="Uplink">
+        <Tabs.Tab label="Hub">
           <Section>
             {contractor_hub_items.map(item => {
               const repInfo = item.cost ? (item.cost + ' Rep') : 'FREE';

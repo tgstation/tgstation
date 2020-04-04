@@ -487,7 +487,10 @@
 
 // DISCORD ROLE STUFFS
 // Using strings for everything because BYOND does not like numbers this big
+// (exception to the above is required living hours haha)
 /datum/config_entry/flag/enable_discord_autorole
+
+/datum/config_entry/number/required_living_hours
 
 /datum/config_entry/string/discord_token
 
