@@ -48,23 +48,23 @@
 		var/mob/living/brain/B = M.brainmob
 		hud.add_hud_to(B)
 
-/obj/mecha/working/clarke/play_stepsound(direction)
-	if(prob(30))
-		floor_damage()
-	return ..()
+/obj/mecha/working/clarke/domove(direction)
+	. = ..()
+	if (.)
+		if(prob(30))
+			crush_floor()
 
 /obj/mecha/working/clarke/mechturn(direction)
 	if(prob(80))
-		floor_damage()
+		crush_floor()
 	return ..()
 
-/obj/mecha/working/clarke/proc/floor_damage()
+///Damages floor tiles and plating as the Clarke moves over them with its tracks. Damage is superficial, will not create hull breaches.
+/obj/mecha/working/clarke/proc/crush_floor()
 	var/turf/open/floor/tile = get_turf(src)
 	if(!istype(tile, /turf/open/floor))
 		return
-	if(tile.icon_plating == "basalt") //Find me a better way to tell a tile is basalt, and I'll use it
-		return
-	tile.break_tile()
+	tile.crush()
 
 //Ore Box Controls
 
