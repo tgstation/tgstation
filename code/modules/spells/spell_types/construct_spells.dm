@@ -231,13 +231,6 @@
 		if(!silent)
 			to_chat(user, "<span class='warning'>You can only target carbon based lifeforms!</span>")
 		return FALSE
-
-	var/mob/living/carbon/victim = target
-	if(victim.anti_magic_check(TRUE, TRUE))
-		if(!silent)
-			to_chat(user, "<span class='warning'>The spell had no effect!</span>")
-			to_chat(victim, "<span class='warning'>You feel a freezing darkness closing in on you, but it rapidly dissipates.</span>")
-		return FALSE
 	return TRUE
 
 /obj/effect/proc_holder/spell/pointed/dominate
