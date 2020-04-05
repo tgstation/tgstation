@@ -21,9 +21,9 @@
 	if (!proximity)
 		return
 	var/actionable = SEND_SIGNAL(src, COMSIG_EXP_CHECK_ACTIONABLE, target)
-	if (actionable & COMPONENT_EXP_ACTIONABLE == COMPONENT_EXP_ACTIONABLE && do_after(user, 10, target = target))
+	if ((actionable & COMPONENT_EXP_ACTIONABLE) && do_after(user, 10, target = target))
 		var/outcome = SEND_SIGNAL(src, COMSIG_EXP_ACTION, target)
-		if (outcome & COMPONENT_EXP_SUCCESS == COMPONENT_EXP_SUCCESS)
+		if (outcome & COMPONENT_EXP_SUCCESS)
 			playsound(user, 'sound/machines/ping.ogg', 25)
 			to_chat(user, "<span>You scan \the [target.name].</span>")
 

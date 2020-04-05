@@ -96,10 +96,10 @@
 		messages += "Theoretical: Epicenter radius: [orig_dev_range]. Outer radius: [orig_heavy_range]. Shockwave radius: [orig_light_range]."
 
 	var/outcome = SEND_SIGNAL(src, COMSIG_EXP_ACTION, devastation_range, heavy_impact_range, light_impact_range)
-	if (outcome & COMPONENT_EXP_SUCCESS == COMPONENT_EXP_SUCCESS)
+	if (outcome & COMPONENT_EXP_SUCCESS)
 		playsound(src, 'sound/machines/ping.ogg', 25)
 		messages += "Completed experiment."
-	else if (outcome & COMPONENT_EXP_FAIL == COMPONENT_EXP_FAIL)
+	else if (outcome & COMPONENT_EXP_FAIL)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
 		messages += "Insufficient explosion to contribute to current experiment."
 
