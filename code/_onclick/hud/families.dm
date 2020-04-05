@@ -4,7 +4,9 @@
 	icon = 'icons/obj/gang/wanted_160x32.dmi'
 	icon_state = "wanted_0"
 	screen_loc = ui_wanted_lvl
+	///Wanted level, affects the hud icon.
 	var/level
+	///Boolean, have the cops arrived? If so, the icon stops changing and remains the same.
 	var/cops_arrived
 
 /obj/screen/wanted/Initialize()
@@ -23,4 +25,3 @@
 /obj/screen/wanted/update_icon_state()
 	. = ..()
 	icon_state = "wanted_[level][cops_arrived ? "_active" : ""]"
-
