@@ -198,6 +198,15 @@
 	new /obj/item/clothing/suit/det_suit/noir(src)
 	new /obj/item/clothing/head/fedora(src)
 	new /obj/item/clothing/shoes/laceup(src)
+	new /obj/item/clothing/suit/det_suit/disco(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
+	new /obj/item/clothing/suit/det_suit/disco/aerostatic(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
+	new /obj/item/clothing/under/rank/security/detective/disco(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
+	new /obj/item/clothing/under/rank/security/detective/disco/aerostatic(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
+	new /obj/item/clothing/neck/tie/detective/disco_necktie(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
+	new /obj/item/clothing/gloves/color/black/aerostatic_gloves(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
+	new /obj/item/clothing/shoes/sneakers/disco(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
+	new /obj/item/clothing/shoes/jackboots/aerostatic(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
+	new /obj/item/clothing/glasses/sunglasses/disco(src) //FULPSTATION DISCO ELYSIUM DETECTIVE WEAR by Surrealistik and D4n0w4r APR 2020
 	new /obj/item/storage/box/evidence(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/detective_scanner(src)
