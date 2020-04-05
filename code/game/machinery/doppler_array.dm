@@ -123,7 +123,7 @@
 
 /obj/machinery/doppler_array/research
 	name = "tachyon-doppler research array"
-	desc = "A specialized tachyon-doppler bomb detection array that uses the results of the highest yield of explosions for research."
+	desc = "A specialized tachyon-doppler bomb detection array that uses complex on-board software to record data for experiments."
 	var/datum/techweb/linked_techweb
 
 /obj/machinery/doppler_array/research/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,

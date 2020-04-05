@@ -12,9 +12,9 @@
 	var/measured = list("devastation" = 0, "heavy" = 0, "light" = 0)
 
 /datum/experiment/explosion/is_complete()
-	return required_devastation >= measured["devastation"] \
-		&& required_heavy >= measured["heavy"] \
-		&& required_light >= measured["light"]
+	return required_devastation < measured["devastation"] \
+		&& required_heavy < measured["heavy"] \
+		&& required_light < measured["light"]
 
 /datum/experiment/explosion/check_progress()
 	return "The maximum witnessed explosion had ranges of [measured["devastation"]] \
