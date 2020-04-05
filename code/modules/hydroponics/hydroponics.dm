@@ -622,8 +622,6 @@
 			var/list/text_string = myseed.get_analyzer_text()
 			if(text_string)
 				to_chat(user, text_string)
-			return
-		else
 			to_chat(user, "<B>No plant found.</B>")
 		to_chat(user, "- Weed level: <span class='notice'>[weedlevel] / 10</span>")
 		to_chat(user, "- Pest level: <span class='notice'>[pestlevel] / 10</span>")
@@ -667,9 +665,8 @@
 		if(!myseed)
 			to_chat(user, "<span class='notice'>The tray is empty.</span>")
 			return
-
-		if(myseed.grafted)
-			to_chat(user, "<span class='notice'>This plant has already had something sheared or grafted off from it.</span>")
+		if(plant_health <= 15)
+			to_chat(user, "<span class='notice'>This plant looks too unhealty to be sheared right now.</span>")
 			return
 
 		var/list/current_traits = list()
@@ -688,9 +685,8 @@
 					qdel(gene)
 					break
 		myseed.reagents_from_genes()
-		myseed.grafted = TRUE
-		adjustHealth(-8)
-		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname].</span>")
+		adjustHealth(-15)
+		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], but leaving the plant looking a bit weak.</span>")
 		return
 
 	else if(istype(O, /obj/item/graft))
