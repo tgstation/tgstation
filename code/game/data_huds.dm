@@ -221,10 +221,10 @@
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudfan_no"
-	if(U.Attached_accessory != "fan_clown_pin" || "fan_mime_pin")
+	if(U.attached_accessory != "fan_clown_pin" || "fan_mime_pin")
 		holder.icon_state = "hudfan_no"
 	else
-		holder.icon_state = "U.Attached_accessory"
+		holder.icon_state = "U.attached_accessory"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
