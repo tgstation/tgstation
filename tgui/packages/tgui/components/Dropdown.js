@@ -65,6 +65,7 @@ export class Dropdown extends Component {
       width,
       onClick,
       selected,
+      disabled,
       ...boxProps
     } = props;
     const {
@@ -97,21 +98,24 @@ export class Dropdown extends Component {
             'Dropdown__control',
             'Button',
             'Button--color--' + color,
+            disabled && 'Button--disabled',
             className,
           ])}
           {...rest}
-          onClick={e => {
+          onClick={() => {
+            if (disabled && !this.state.open) {
+              return;
+            }
             this.setOpen(!this.state.open);
           }}>
           <span className="Dropdown__selected-text">
             {this.state.selected}
           </span>
-          { nochevron
-            ? (false)
-            : (
-              <span className="Dropdown__arrow-button">
-                <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
-              </span>)}
+          {!!nochevron || (
+            <span className="Dropdown__arrow-button">
+              <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
+            </span>
+          )}
         </Box>
         {menu}
       </div>
