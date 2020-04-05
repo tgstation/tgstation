@@ -113,6 +113,10 @@
 	var/instability = 0
 	var/amount = 0
 
+/** Seed Pile Creation.
+ *  Takes a seed's name, core stats, and amount when creating a seed pile datum.
+ *  This is read by the HTML Ui for display in-game.
+ **/
 /datum/seed_pile/New(name, life, endur, matur, prod, yie, poten, insta, am = 1)
 	src.name = name
 	src.lifespan = life
@@ -177,6 +181,10 @@
 	src.updateUsrDialog()
 	return
 
+/** Add Seeds Proc.
+ *  Takes a seed into the machine, and breaks it down into it's core stats.
+ *  These core stats are then passed to the machine UI for display in-game through a seed pile datum..
+ **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
 		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
