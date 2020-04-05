@@ -17,6 +17,9 @@
 /obj/machinery/doppler_array/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
+	AddComponent(/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/explosion), \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK)
 
 /obj/machinery/doppler_array/ui_interact(mob/user)
 	. = ..()
@@ -91,6 +94,14 @@
 	// If the bomb was capped, say its theoretical size.
 	if(devastation_range < orig_dev_range || heavy_impact_range < orig_heavy_range || light_impact_range < orig_light_range)
 		messages += "Theoretical: Epicenter radius: [orig_dev_range]. Outer radius: [orig_heavy_range]. Shockwave radius: [orig_light_range]."
+
+	var/outcome = SEND_SIGNAL(src, COMSIG_EXP_ACTION, devastation_range, heavy_impact_range, light_impact_range)
+	if (outcome & COMPONENT_EXP_SUCCESS == COMPONENT_EXP_SUCCESS)
+		playsound(src, 'sound/machines/ping.ogg', 25)
+		messages += "Completed experiment."
+	else if (outcome & COMPONENT_EXP_FAIL == COMPONENT_EXP_FAIL)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		messages += "Insufficient explosion to contribute to current experiment."
 
 	for(var/message in messages)
 		say(message)

@@ -71,7 +71,9 @@
 	experiments = list(/datum/experiment/scanning/random/slime/easy,
 						/datum/experiment/scanning/random/slime/moderate,
 						/datum/experiment/scanning/random/slime/hard,
-						/datum/experiment/scanning/destructive/ian)
+						/datum/experiment/scanning/destructive/ian,
+						/datum/experiment/explosion/calibration,
+						/datum/experiment/explosion/maxcap)
 
 /datum/techweb_node/adv_biotech
 	id = "adv_biotech"

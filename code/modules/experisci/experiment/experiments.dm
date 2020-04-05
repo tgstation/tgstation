@@ -40,3 +40,19 @@
 	name = "Ian's Connundrum"
 	description = "Central Command seems to have lost its backup of Ian's DNA, could you get a copy for us?"
 	required_atoms = list(/mob/living/simple_animal/pet/dog/corgi/Ian = 1)
+
+/datum/experiment/explosion/calibration
+	name = "Is This Thing On?"
+	description = "The engineers from last shift left a notice for us that the doppler array seemed to be malfunctioning. \
+					Could you check that it is still working? Any explosion will do!"
+	required_light = 1
+
+/datum/experiment/explosion/maxcap
+	name = "Mother of God"
+	description = "A recent outbreak of a blood-cult in a nearby sector necessitates the development of a large explosive. \
+					Create a large enough explosion to prove your bomb, we'll be watching."
+
+/datum/experiment/explosion/maxcap/New()
+	required_devastation = GLOB.MAX_EX_DEVESTATION_RANGE
+	required_heavy = GLOB.MAX_EX_HEAVY_RANGE
+	required_light = GLOB.MAX_EX_LIGHT_RANGE
