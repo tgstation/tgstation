@@ -1,4 +1,5 @@
-import { uniqBy } from 'common/collections';
+import { filter, uniqBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
@@ -556,11 +557,13 @@ const MutationInfo = props => {
   const diskMutations = data.storage.disk ?? [];
   const mutationStorage = data.storage.console ?? [];
   const advInjectors = data.storage.injectors ?? [];
-  const combinedMutations = uniqBy(mutation => mutation.Name)([
+  const combinedMutations = flow([
+    uniqBy(mutation => mutation.Name),
+    filter(x => x.Name !== mutation.Name),
+  ])([
     ...diskMutations,
     ...mutationStorage,
   ]);
-
   if (!mutation) {
     return (
       <Box color="label">
