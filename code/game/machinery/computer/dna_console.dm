@@ -1790,7 +1790,9 @@
 	if(M.scrambled)
 		return FALSE
 	if(stored_research && !(path in stored_research.discovered_mutations))
+		var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(path)
 		stored_research.discovered_mutations += path
+		say("Successfully discovered [HM.name].")
 		return TRUE
 
 	return FALSE
@@ -1868,10 +1870,10 @@
 	return
 
 /obj/machinery/computer/scan_consolenew/proc/set_default_state()
-	tgui_view_state["consoleMode"] = "console"
+	tgui_view_state["consoleMode"] = "storage"
+	tgui_view_state["storageMode"] = "console"
 	tgui_view_state["storageConsSubMode"] = "mutations"
 	tgui_view_state["storageDiskSubMode"] = "mutations"
-
 
 /////////////////////////// DNA MACHINES
 #undef INJECTOR_TIMEOUT
