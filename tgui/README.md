@@ -418,7 +418,7 @@ Props:
 
 ### `Divider`
 
-Draws a horizontal or vertical line, diving a section into groups.
+Draws a horizontal or vertical line, dividing a section into groups.
 Works like the good old `<hr>` element, but it's fancier.
 
 Props:
