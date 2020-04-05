@@ -1,0 +1,4 @@
+author: "Tetr4 and Dennok"
+delete-after: True
+changes: 
+  - tweak: "Passive vents now transfer based on each individual gases partial pressure, i.e. they will now mix gases internally and externally if internal and external pressures are the same."
