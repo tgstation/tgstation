@@ -1,7 +1,7 @@
 /datum/computer_file/program/shipping
 	filename = "shipping"
 	filedesc = "Nanotrasen Ship Scanner"
-	program_icon_state = "tags"
+	program_icon_state = "shipping"
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
 	network_destination = "ship scanner"
 	size = 6
@@ -17,18 +17,22 @@
 /datum/computer_file/program/shipping/ui_data(mob/user)
 	var/list/data = get_header_data()
 	var/obj/item/computer_hardware/card_slot/card_slot
+	var/card_name = "No Card Inserted."
+	var/current_user = "N/A"
 
 	if(computer)
 		var/obj/item/card/id/id_card
 		card_slot = computer.all_components[MC_CARD]
-		data["have_id_slot"] = card_slot
+		card_name = id_card.registered_name
+		data["have_id_slot"] = card_slot ? TRUE : FALSE
 		if(card_slot)
 			id_card = card_slot.stored_card
-		data["has_id"] = !!id_card
-		data["card_owner"] = id_card.registered_name ? id_card.registered_name : "No Card Inserted."
 	if(payments_acc)
-		data["logged_user"] = payments_acc.account_holder ? payments_acc.account_holder : "N/A"
+		current_user = payments_acc.account_holder
+		data["has_id"] = !!id_card
+	data["card_owner"] = card_name
 
+	data["current_user"] = current_user
 	return data
 
 /datum/computer_file/program/shipping/ui_act(action, list/params)
