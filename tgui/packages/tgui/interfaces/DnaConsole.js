@@ -480,8 +480,8 @@ const StorageMutations = props => {
 const StorageChromosomes = props => {
   const { data, act } = useBackend(props);
   const chromos = data.chromoStorage ?? [];
-  const chromoName = data.view.storageChromoName;
-  const chromo = chromos.find(chromo => chromo.Name === chromoName);
+  const chromoIndex = parseInt(data.view.storageChromoIndex);
+  const chromo = chromos.find(chromo => chromo.Index === chromoIndex);
   return (
     <Flex>
       <Flex.Item width="140px">
@@ -490,14 +490,14 @@ const StorageChromosomes = props => {
           level={2}>
           {chromos.map(chromo => (
             <Button
-              key={chromo.Name}
+              key={chromo.Index}
               fluid
               ellipsis
               color="transparent"
-              selected={chromo.Name === chromoName}
+              selected={chromo.Index === chromoIndex}
               content={chromo.Name}
               onClick={() => act('set_view', {
-                storageChromoName: chromo.Name,
+                storageChromoIndex: chromo.Index,
               })} />
           ))}
         </Section>
@@ -622,19 +622,17 @@ const MutationInfo = props => {
             mutations={buildCombineArray()}
             source={mutation} />
         )}
-        {mutation.Source === 'occupant' && (
-          <Dropdown
-            width="240px"
-            options={advInjectors.map(injector => injector.name)}
-            disabled={advInjectors.length === 0 || !mutation.Active}
-            selected="Add to advanced injector"
-            onSelected={value => act('add_advinj_mut', {
-              mutref: mutation.ByondRef,
-              advinj: value,
-            })} />
-        )}
         {['occupant', 'disk', 'console'].includes(mutation.Source) && (
           <Fragment>
+            <Dropdown
+              width="240px"
+              options={advInjectors.map(injector => injector.name)}
+              disabled={advInjectors.length === 0 || !mutation.Active}
+              selected="Add to advanced injector"
+              onSelected={value => act('add_advinj_mut', {
+                mutref: mutation.ByondRef,
+                advinj: value,
+              })} />
             <Button
               icon="syringe"
               disabled={!isInjectorReady || !mutation.Active}

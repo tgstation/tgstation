@@ -809,7 +809,9 @@
 			if(result_path in stored_research.discovered_mutations)
 				return
 
+			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(result_path)
 			stored_research.discovered_mutations += result_path
+			say("Successfully mutated [HM.name].")
 			return
 
 		// Combines two mutations from the disk to try and create a new mutation
@@ -869,7 +871,9 @@
 			if(result_path in stored_research.discovered_mutations)
 				return
 
+			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(result_path)
 			stored_research.discovered_mutations += result_path
+			say("Successfully mutated [HM.name].")
 			return
 
 		// Sets the Genetic Makeup pulse strength.
@@ -1684,13 +1688,18 @@
 
 		tgui_scanner_mutations += list(mutation_data)
 
+	// ------------------------------------------------------------------------ //
+	// Build the list of chromosomes stored within the DNA Console
+	var/chrom_index = 1
 	for(var/obj/item/chromosome/CM in stored_chromosomes)
 		var/list/chromo_data = list()
 
 		chromo_data["Name"] = CM.name
 		chromo_data["Description"] = CM.desc
+		chromo_data["Index"] = chrom_index
 
 		tgui_scanner_chromosomes += list(chromo_data)
+		++chrom_index
 
 	// ------------------------------------------------------------------------ //
 	// Build the list of mutations stored on any inserted diskettes
