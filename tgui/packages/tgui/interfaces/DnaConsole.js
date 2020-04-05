@@ -291,7 +291,6 @@ export const DnaConsoleCommands = props => {
             })} />
           <Button
             content="Enzymes"
-            disabled={!data.isViableSubject}
             selected={consoleMode === CONSOLE_MODE_ENZYMES}
             onClick={() => act('set_view', {
               consoleMode: CONSOLE_MODE_ENZYMES,
@@ -1011,6 +1010,7 @@ const GenomeSequencer = props => {
       </Box>
       <Box color="label" mt={1}>
         <b>Tip:</b> Ctrl+Click on the gene to set it to X.
+        Right Click to cycle in reverse.
       </Box>
     </Fragment>
   );
@@ -1125,7 +1125,7 @@ const RadiationEmitterProbs = props => {
 const RadiationEmitterPulseBoard = props => {
   const { data, act } = useBackend(props);
   const {
-    subjectUNI,
+    subjectUNI = [],
   } = data;
   // Build blocks of buttons of unique enzymes
   const blocks = [];

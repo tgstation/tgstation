@@ -310,13 +310,6 @@
 	data["storage"]["injector"] = tgui_advinjector_mutations
 	data["maxAdvInjectors"] = max_injector_selections
 
-	data["MUT_NORMAL"] = MUT_NORMAL
-	data["MUT_EXTRA"] = MUT_EXTRA
-	data["MUT_OTHER"] = MUT_OTHER
-	data["RADIATION_DURATION_MAX"] = RADIATION_DURATION_MAX
-	data["RADIATION_STRENGTH_MAX"] = RADIATION_STRENGTH_MAX
-	data["DNA_BLOCK_SIZE"] = DNA_BLOCK_SIZE
-
 	return data
 
 /obj/machinery/computer/scan_consolenew/ui_act(action, var/list/params)
