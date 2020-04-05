@@ -1,10 +1,10 @@
+import { uniqBy } from 'common/collections';
 import { classes } from 'common/react';
+import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section, Tabs } from '../components';
+import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 import { createLogger } from '../logging';
-import { capitalize } from 'common/string';
-import { uniqBy } from 'common/collections';
 
 // TODO: Combining mutations (E.g. Radioactive + Strength = Hulk)
 // https://tgstation13.org/wiki/Guide_to_genetics#List_of_Mutations

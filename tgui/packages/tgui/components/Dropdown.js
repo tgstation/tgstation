@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { Component } from 'inferno';
 import { Box } from './Box';
 import { Icon } from './Icon';
 
@@ -46,7 +46,7 @@ export class Dropdown extends Component {
       <div
         key={option}
         className="Dropdown__menuentry"
-        onClick={e => {
+        onClick={() => {
           this.setSelected(option);
         }}>
         {option}
@@ -83,7 +83,7 @@ export class Dropdown extends Component {
           'width': width,
         }}
         className={classes([
-          (noscroll && 'Dropdown__menu-noscroll') || ('Dropdown__menu'),
+          noscroll && 'Dropdown__menu-noscroll' || 'Dropdown__menu',
           over && 'Dropdown__over',
         ])}>
         {this.buildMenu()}

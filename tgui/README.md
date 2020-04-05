@@ -416,6 +416,17 @@ Props:
 
 - See inherited props: [Box](#box)
 
+### `Divider`
+
+Draws a horizontal or vertical line, diving a section into groups.
+Works like the good old `<hr>` element, but it's fancier.
+
+Props:
+
+- `vertical: boolean` - Divide content vertically.
+- `hidden: boolean` - Divider can divide content without creating a dividing
+line.
+
 ### `Dropdown`
 
 A simple dropdown box component. Lets the user select from a list of options
