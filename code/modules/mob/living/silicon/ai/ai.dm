@@ -301,6 +301,9 @@
 		to_chat(usr, "<span class='warning'>Wireless control is disabled!</span>")
 		return
 
+	if(!SSshuttle.canEvac(src))
+		return
+
 	var/reason = input(src, "What is the nature of your emergency? ([CALL_SHUTTLE_REASON_LENGTH] characters required.)", "Confirm Shuttle Call") as null|text
 
 	if(incapacitated())
@@ -788,7 +791,7 @@
 /mob/living/silicon/ai/can_buckle()
 	return 0
 
-/mob/living/silicon/ai/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE, ignore_stasis = FALSE)
+/mob/living/silicon/ai/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
 	if(aiRestorePowerRoutine)
 		return TRUE
 	return ..()
@@ -1011,3 +1014,6 @@
 	. = ..()
 	if(.)
 		end_multicam()
+
+/mob/living/silicon/ai/zMove(dir, feedback = FALSE)
+	. = eyeobj.zMove(dir, feedback)

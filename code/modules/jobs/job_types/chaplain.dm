@@ -7,14 +7,14 @@
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"
-	selection_color = "#dddddd"
+	selection_color = "#bbe291"
 
 	outfit = /datum/outfit/job/chaplain
 
 	access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 	minimal_access = list(ACCESS_MORGUE, ACCESS_CHAPEL_OFFICE, ACCESS_CREMATORIUM, ACCESS_THEATRE)
 	paycheck = PAYCHECK_EASY
-	paycheck_department = ACCOUNT_CIV
+	paycheck_department = ACCOUNT_SRV
 
 	display_order = JOB_DISPLAY_ORDER_CHAPLAIN
 
@@ -52,7 +52,6 @@
 
 	B.deity_name = new_deity
 
-
 	switch(lowertext(new_religion))
 		if("christianity") // DEFAULT_RELIGION
 			B.name = pick("The Holy Bible","The Dead Sea Scrolls")
@@ -89,6 +88,8 @@
 			B.name = "The Holy Piby"
 		if("satanism")
 			B.name = "The Unholy Bible"
+		if("sikhism")
+			B.name = "Guru Granth Sahib"
 		if("science")
 			B.name = pick("Principle of Relativity", "Quantum Enigma: Physics Encounters Consciousness", "Programming the Universe", "Quantum Physics and Theology", "String Theory for Dummies", "How To: Build Your Own Warp Drive", "The Mysteries of Bluespace", "Playing God: Collector's Edition")
 		if("scientology")

@@ -28,6 +28,12 @@
 	color = "#FFFF00"
 	taste_description = "metal"
 
+	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
+/datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(myseed && chems.has_reagent(type, 1))
+		myseed.adjust_instability(-1)
+
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
@@ -173,6 +179,15 @@
 	color = "#FA00AF"
 	taste_description = "burning"
 	self_consuming = TRUE
+
+	// why, just why
+/datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		if(!(myseed.resistance_flags & FIRE_PROOF))
+			mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 6))
+			mytray.adjustToxic(round(chems.get_reagent_amount(type) * 7))
+		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(1)

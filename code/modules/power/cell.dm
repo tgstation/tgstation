@@ -151,6 +151,9 @@
 /obj/item/stock_parts/cell/attack_self(mob/user)
 	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
+		var/datum/species/ethereal/E = H.dna.species
+		if(E.drain_time > world.time)
+			return
 		if(charge < 100)
 			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
 			return
@@ -159,7 +162,8 @@
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return
 		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
-		if(do_after(user, 5, target = src))
+		E.drain_time = world.time + 20
+		if(do_after(user, 20, target = src))
 			if((charge < 100) || (stomach.crystal_charge > 146))
 				return
 			if(istype(stomach))
@@ -220,6 +224,14 @@
 	. = ..()
 	charge = 0
 	update_icon()
+
+/obj/item/stock_parts/cell/mini_egun
+	name = "miniature energy gun power cell"
+	maxcharge = 600
+
+/obj/item/stock_parts/cell/hos_gun
+	name = "X-01 multiphase energy gun power cell"
+	maxcharge = 1200
 
 /obj/item/stock_parts/cell/pulse //200 pulse shots
 	name = "pulse rifle power cell"

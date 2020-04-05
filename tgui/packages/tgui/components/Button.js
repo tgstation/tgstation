@@ -1,14 +1,12 @@
 import { classes, pureComponentHooks } from 'common/react';
-import { tridentVersion, act } from '../byond';
+import { Component, createRef } from 'inferno';
+import { tridentVersion } from '../byond';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { createLogger } from '../logging';
 import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
-import { Input } from './Input';
-import { Component, createRef } from 'inferno';
-import { Grid } from './Grid';
 
 const logger = createLogger('Button');
 
