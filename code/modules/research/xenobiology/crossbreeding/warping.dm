@@ -95,11 +95,15 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 			desc = "It just won't stay in place. it has [src.warp_charge] charge left"
 			return
 
-	if(!isturf(target) || isspaceturf(target))
+	if(!istype(target,/turf/open))
 		return
 
-	if(locate(/turf/closed) in target || locate(/obj/structure) in target) // check if there's a wall or a structure in the way
-		to_chat(user, "<span class='warning'>something is in the way of the rune!</span>")
+	if(isspaceturf(target))
+		to_chat(user, "<span class='warning'>you cannot draw a rune in space!</span>")
+		return
+
+	if((istype(target,/turf/open/lava)) || (locate(/obj/structure) in target) || (istype(target,/turf/open/chasm))) // check if there's a wall or a structure in the way
+		to_chat(user, "<span class='warning'>You can't draw the rune here!</span>")
 		return
 
 	if(warp_charge > 0 && do_after(user, drawing_time,target = target)) //spawns the right rune if you have charge(s) left
