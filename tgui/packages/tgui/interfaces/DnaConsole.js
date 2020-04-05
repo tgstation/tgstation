@@ -480,7 +480,7 @@ const StorageMutations = props => {
 const StorageChromosomes = props => {
   const { data, act } = useBackend(props);
   const chromos = data.chromoStorage ?? [];
-  const chromoIndex = parseInt(data.view.storageChromoIndex);
+  const chromoIndex = parseInt(data.view.storageChromoIndex, 10);
   const chromo = chromos.find(chromo => chromo.Index === chromoIndex);
   return (
     <Flex>
