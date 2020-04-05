@@ -2340,6 +2340,7 @@
 #include "code\modules\mob\living\simple_animal\hostile\nanotrasen.dm"
 #include "code\modules\mob\living\simple_animal\hostile\netherworld.dm"
 #include "code\modules\mob\living\simple_animal\hostile\pirate.dm"
+#include "code\modules\mob\living\simple_animal\hostile\regalrat.dm"
 #include "code\modules\mob\living\simple_animal\hostile\russian.dm"
 #include "code\modules\mob\living\simple_animal\hostile\skeleton.dm"
 #include "code\modules\mob\living\simple_animal\hostile\space_dragon.dm"
@@ -2417,7 +2418,11 @@
 #include "code\modules\modular_computers\file_system\programs\airestorer.dm"
 #include "code\modules\modular_computers\file_system\programs\alarm.dm"
 #include "code\modules\modular_computers\file_system\programs\arcade.dm"
+<<<<<<< HEAD
 #include "code\modules\modular_computers\file_system\programs\borg_monitor.dm"
+=======
+#include "code\modules\modular_computers\file_system\programs\atmosscan.dm"
+>>>>>>> upstream/master
 #include "code\modules\modular_computers\file_system\programs\card.dm"
 #include "code\modules\modular_computers\file_system\programs\configurator.dm"
 #include "code\modules\modular_computers\file_system\programs\crewmanifest.dm"

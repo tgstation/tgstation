@@ -75,7 +75,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	//PV = nRT
 
 	///joules per kelvin
-/datum/gas_mixture/proc/heat_capacity(data = MOLES) 
+/datum/gas_mixture/proc/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
 	/// Same as above except vacuums return HEAT_CAPACITY_VACUUM
-/datum/gas_mixture/turf/heat_capacity(data = MOLES) 
+/datum/gas_mixture/turf/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
@@ -191,6 +191,49 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	garbage_collect()
 
 	return removed
+
+	///Removes a amount of a specific gas from the gas_mixture.
+	///Returns: gas_mixture with the gas removed
+/datum/gas_mixture/proc/remove_specific(gas_id, amount)
+	var/list/cached_gases = gases
+	amount = min(amount, cached_gases[gas_id][MOLES])
+	if(amount <= 0)
+		return null
+	var/datum/gas_mixture/removed = new type
+	var/list/removed_gases = removed.gases
+	removed.temperature = temperature
+	ADD_GAS(gas_id, removed.gases)
+	removed_gases[gas_id][MOLES] = amount
+	cached_gases[gas_id][MOLES] -= amount
+
+	garbage_collect(list(gas_id))
+	return removed
+
+	///Distributes the contents of two mixes equally between themselves
+	//Returns: bool indicating whether gases moved between the two mixes
+/datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
+	. = FALSE
+	if(abs(return_temperature() - other.return_temperature()) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+		. = TRUE
+		var/self_heat_cap = heat_capacity()
+		var/other_heat_cap = other.heat_capacity()
+		var/new_temp = (temperature * self_heat_cap + other.temperature * other_heat_cap) / (self_heat_cap + other_heat_cap)
+		temperature = new_temp
+		other.temperature = new_temp
+
+	var/min_p_delta = 0.1
+	var/total_volume = volume + other.volume
+	var/list/gas_list = gases | other.gases
+	for(var/gas_id in gas_list)
+		assert_gas(gas_id)
+		other.assert_gas(gas_id)
+		//math is under the assumption temperatures are equal
+		if(abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > min_p_delta / (R_IDEAL_GAS_EQUATION * temperature))
+			. = TRUE
+			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
+			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
+			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
+
 
 	///Creates new, identical gas mixture
 	///Returns: duplicate gas mixture
