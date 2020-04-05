@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - rscadd: "Mining and service borgs now use a radial menu to select their module skins."
