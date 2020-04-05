@@ -222,8 +222,8 @@
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudfan_no"
 	if(U.Attached_accessory != "fan_clown_pin" || "fan_mime_pin")
-		Return
-	Else
+		holder.icon_state = "hudfan_no"
+	else
 		holder.icon_state = "U.Attached_accessory"
 
 /***********************************************
