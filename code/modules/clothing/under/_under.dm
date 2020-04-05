@@ -84,6 +84,7 @@
 	if(attached_accessory && slot != ITEM_SLOT_HANDS && ishuman(user))
 		var/mob/living/carbon/human/H = user
 		attached_accessory.on_uniform_equip(src, user)
+		user.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
 			H.update_inv_wear_suit()
 
@@ -92,6 +93,7 @@
 		attached_accessory.on_uniform_dropped(src, user)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
+			user.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
 				H.update_inv_wear_suit()
 
@@ -117,6 +119,8 @@
 			if(user && notifyAttach)
 				to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
 
+			user.fan_hud_set_fandom()
+
 			var/accessory_color = attached_accessory.icon_state
 			accessory_overlay = mutable_appearance('icons/mob/clothing/accessories.dmi', "[accessory_color]")
 			accessory_overlay.alpha = attached_accessory.alpha
@@ -138,6 +142,7 @@
 	if(attached_accessory)
 		var/obj/item/clothing/accessory/A = attached_accessory
 		attached_accessory.detach(src, user)
+		user.fan_hud_set_fandom()
 		if(user.put_in_hands(A))
 			to_chat(user, "<span class='notice'>You detach [A] from [src].</span>")
 		else

@@ -48,6 +48,9 @@
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/mime/speak(null))
 		H.mind.miming = TRUE
 
+	var/datum/atom_hud/fan = GLOB.huds[FAN_HUD]
+	fan.add_hud_to(H)
+
 /obj/item/book/mimery
 	name = "Guide to Dank Mimery"
 	desc = "A primer on basic pantomime."

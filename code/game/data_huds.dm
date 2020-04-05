@@ -211,6 +211,22 @@
 
 
 /***********************************************
+ FAN HUDs! For identifying other fans on-sight.
+************************************************/
+
+//HOOKS
+
+/mob/living/carbon/human/proc/fan_hud_set_fandom(obj/item/clothing/under/U, user)
+	var/image/holder = hud_list[FAN_HUD]
+	var/icon/I = icon(icon, icon_state, dir)
+	holder.pixel_y = I.Height() - world.icon_size
+	holder.icon_state = "hudfan_no"
+	if(U.Attached_accessory != "fan_clown_pin" || "fan_mime_pin")
+		Return
+	Else
+		holder.icon_state = "U.Attached_accessory"
+
+/***********************************************
  Security HUDs! Basic mode shows only the job.
 ************************************************/
 
