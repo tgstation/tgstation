@@ -771,10 +771,11 @@ const DnaConsoleSequencer = props => {
   return (
     <Fragment>
       <Flex spacing={1} mb={1}>
-        <Flex.Item width="154px">
+        <Flex.Item width={mutations.length <= 8 && "154px" || "174px"}>
           <Section
             title="Sequences"
-            minHeight="100%">
+            height="214px"
+            overflowY={mutations.length > 8 && "scroll"}>
             {mutations.map(mutation => (
               <GenomeImage
                 key={mutation.Alias}
