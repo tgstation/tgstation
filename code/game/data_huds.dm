@@ -218,15 +218,18 @@
 
 //HOOKS
 
-/mob/living/carbon/human/proc/fan_hud_set_fandom(obj/item/clothing/under/U, user)
-	var/image/holder = hud_list[DATA_HUD_FAN]
+/mob/living/carbon/human/proc/fan_hud_set_fandom()
+	var/image/holder = hud_list[FAN_HUD]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudfan_no"
-	if(U.attached_accessory != "fan_clown_pin" || "fan_mime_pin")
-		holder.icon_state = "hudfan_no"
+	var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	if(U && istype(U.attached_accessory, /obj/item/clothing/accessory/fan_mime_pin))
+		holder.icon_state = "fan_mime_pin"
+	else if (U && istype(U.attached_accessory, /obj/item/clothing/accessory/fan_clown_pin))
+		holder.icon_state = "fan_clown_pin"
 	else
-		holder.icon_state = "U.attached_accessory"
+		holder.icon_state = "hudfan_no"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
