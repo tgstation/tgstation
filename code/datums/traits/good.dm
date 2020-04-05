@@ -76,7 +76,7 @@ datum/quirk/fan_clown
 		"hands" = ITEM_SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
-	var/datum/atom_hud/fan = GLOB.huds[FAN_HUD]
+	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.add_hud_to(src)
 
 datum/quirk/fan_mime
@@ -96,7 +96,7 @@ datum/quirk/fan_mime
 		"hands" = ITEM_SLOT_HANDS,
 	)
 	H.equip_in_one_of_slots(B, slots , qdel_on_fail = TRUE)
-	var/datum/atom_hud/fan = GLOB.huds[FAN_HUD]
+	var/datum/atom_hud/fan = GLOB.huds[DATA_HUD_FAN]
 	fan.add_hud_to(src)
 
 /datum/quirk/freerunning

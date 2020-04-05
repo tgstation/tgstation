@@ -49,6 +49,8 @@
 /datum/atom_hud/data/human/security/advanced
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD, NANITE_HUD)
 
+/datum/atom_hud/data/human/fan_hud
+
 /datum/atom_hud/data/diagnostic
 
 /datum/atom_hud/data/diagnostic/basic
@@ -217,7 +219,7 @@
 //HOOKS
 
 /mob/living/carbon/human/proc/fan_hud_set_fandom(obj/item/clothing/under/U, user)
-	var/image/holder = hud_list[FAN_HUD]
+	var/image/holder = hud_list[DATA_HUD_FAN]
 	var/icon/I = icon(icon, icon_state, dir)
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudfan_no"
