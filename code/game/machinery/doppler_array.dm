@@ -4,10 +4,10 @@
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "tdoppler"
 	density = TRUE
+	verb_say = "states coldly"
 	var/cooldown = 10
 	var/next_announce = 0
 	var/max_dist = 150
-	verb_say = "states coldly"
 	var/list/message_log = list()
 
 /obj/machinery/doppler_array/Initialize()
@@ -17,9 +17,6 @@
 /obj/machinery/doppler_array/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE,null,null,CALLBACK(src,.proc/rot_message))
-	AddComponent(/datum/component/experiment_handler, \
-		allowed_experiments = list(/datum/experiment/explosion), \
-		config_mode = EXPERIMENT_CONFIG_ALTCLICK)
 
 /obj/machinery/doppler_array/ui_interact(mob/user)
 	. = ..()
@@ -79,12 +76,7 @@
 		return FALSE
 	next_announce = world.time + cooldown
 
-	var/distance = get_dist(epicenter, zone)
-	var/direct = get_dir(zone, epicenter)
-
-	if(distance > max_dist)
-		return FALSE
-	if(!(direct & dir))
+	if((get_dist(epicenter, zone) > max_dist) || !(get_dir(zone, epicenter) & dir))
 		return FALSE
 
 	var/list/messages = list("Explosive disturbance detected.",
@@ -95,36 +87,30 @@
 	if(devastation_range < orig_dev_range || heavy_impact_range < orig_heavy_range || light_impact_range < orig_light_range)
 		messages += "Theoretical: Epicenter radius: [orig_dev_range]. Outer radius: [orig_heavy_range]. Shockwave radius: [orig_light_range]."
 
-	var/outcome = SEND_SIGNAL(src, COMSIG_EXP_ACTION, devastation_range, heavy_impact_range, light_impact_range)
-	if (outcome & COMPONENT_EXP_SUCCESS)
-		playsound(src, 'sound/machines/ping.ogg', 25)
-		messages += "Completed experiment."
-	else if (outcome & COMPONENT_EXP_FAIL)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
-		messages += "Insufficient explosion to contribute to current experiment."
-
 	for(var/message in messages)
 		say(message)
 	LAZYADD(message_log, messages.Join(" "))
 	return TRUE
 
 /obj/machinery/doppler_array/powered()
-	if(!anchored)
-		return FALSE
-	return ..()
+	return anchored ? ..() : FALSE
 
 /obj/machinery/doppler_array/update_icon_state()
 	if(machine_stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
-	else if(powered())
-		icon_state = initial(icon_state)
 	else
-		icon_state = "[initial(icon_state)]-off"
+		icon_state = "[initial(icon_state)][powered() ? "" : "-off"]"
 
 /obj/machinery/doppler_array/research
 	name = "tachyon-doppler research array"
 	desc = "A specialized tachyon-doppler bomb detection array that uses complex on-board software to record data for experiments."
 	var/datum/techweb/linked_techweb
+
+/obj/machinery/doppler_array/research/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/experiment_handler, \
+		allowed_experiments = list(/datum/experiment/explosion), \
+		config_mode = EXPERIMENT_CONFIG_ALTCLICK)
 
 /obj/machinery/doppler_array/research/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
 		took, orig_dev_range, orig_heavy_range, orig_light_range) //probably needs a way to ignore admin explosives later on
@@ -132,8 +118,17 @@
 	if(!.)
 		return
 	if(!istype(linked_techweb))
-		say("Warning: No linked research system!")
+		say("Warning: no linked research system!")
 		return
+
+	// Check for experiment contributions
+	var/outcome = SEND_SIGNAL(src, COMSIG_EXP_ACTION, devastation_range, heavy_impact_range, light_impact_range)
+	if (outcome & COMPONENT_EXP_SUCCESS)
+		playsound(src, 'sound/machines/ping.ogg', 25)
+		say("Completed experiment.")
+	else if (outcome & COMPONENT_EXP_FAIL)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 25)
+		say("Insufficient explosion to contribute to current experiment.")
 
 	var/point_gain = 0
 
@@ -161,11 +156,9 @@
 		if(D)
 			D.adjust_money(point_gain)
 			say("Explosion details and mixture analyzed and sold to the highest bidder for [point_gain] cr.")
-
 	else //you've made smaller bombs
 		say("Data already captured. Aborting.")
 		return
-
 
 /obj/machinery/doppler_array/research/science/Initialize()
 	. = ..()

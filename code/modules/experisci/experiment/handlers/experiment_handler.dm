@@ -167,7 +167,8 @@
 												datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "experiment_configure", "Experiment Configuration", 650, 525, master_ui, state)
+		var/atom/p_atom = parent
+		ui = new(user, src, ui_key, "experiment_configure", "[p_atom ? "[p_atom.name] | " : ""]Experiment Configuration", 650, 525, master_ui, state)
 		ui.open()
 
 /datum/component/experiment_handler/ui_data(mob/user)
