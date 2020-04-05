@@ -496,9 +496,16 @@
 	alpha = 255
 	opaque_closed = TRUE
 
-/obj/structure/curtain/fancy
-	icon_type = "cur_fancy"
-	icon_state = "cur_fancy-open"
+/obj/structure/curtain/cloth/
 	color = null
 	alpha = 255
 	opaque_closed = TRUE
+
+/obj/structure/curtain/cloth/deconstruct(disassembled = TRUE)
+	new /obj/item/stack/sheet/cloth (loc, 4)
+	new /obj/item/stack/rods (loc, 1)
+	qdel(src)
+
+/obj/structure/curtain/cloth/fancy
+	icon_type = "cur_fancy"
+	icon_state = "cur_fancy-open"
