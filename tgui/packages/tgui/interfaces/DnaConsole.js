@@ -537,15 +537,15 @@ const MutationInfo = props => {
   const { state, mutation } = props;
   const { data, act } = useBackend(props);
   const {
-    advInjectors,
     diskCapacity,
     diskReadOnly,
     hasDisk,
     isInjectorReady,
     mutationCapacity,
   } = data;
-  const diskMutations = data.diskMutations ?? [];
-  const mutationStorage = data.mutationStorage ?? [];
+  const diskMutations = data.storage.disk ?? [];
+  const mutationStorage = data.storage.console ?? [];
+  const advInjectors = data.storage.injectors ?? [];
   if (!mutation) {
     return (
       <Box color="label">
@@ -741,7 +741,7 @@ const ChromosomeInfo = props => {
 const DnaConsoleSequencer = props => {
   const { state } = props;
   const { data, act } = useBackend(props);
-  const mutations = data.subjectMutations ?? [];
+  const mutations = data.storage?.occupant ?? [];
   const {
     isJokerReady,
     isMonkey,

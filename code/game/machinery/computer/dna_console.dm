@@ -268,7 +268,8 @@
 		data["subjectHealth"] = null
 		data["subjectRads"] = null
 		data["subjectEnzymes"] = null
-		data["subjectMutations"] = null
+		//data["subjectMutations"] = null
+		data["storage"]["occupant"] = null
 
 	data["hasDelayedAction"] = (delayed_action != null)
 	data["isScrambleReady"] = is_scramble_ready
@@ -284,7 +285,7 @@
 		data["hasDisk"] = TRUE
 		data["diskCapacity"] = diskette.max_mutations - LAZYLEN(diskette.mutations)
 		data["diskReadOnly"] = diskette.read_only
-		data["diskMutations"] = tgui_diskette_mutations
+		//data["diskMutations"] = tgui_diskette_mutations
 		data["storage"]["disk"] = tgui_diskette_mutations
 		data["diskHasMakeup"] = (LAZYLEN(diskette.genetic_makeup_buffer) > 0)
 		data["diskMakeupBuffer"] = diskette.genetic_makeup_buffer.Copy()
@@ -292,7 +293,8 @@
 		data["hasDisk"] = FALSE
 		data["diskCapacity"] = 0
 		data["diskReadOnly"] = TRUE
-		data["diskMutations"] = null
+		//data["diskMutations"] = null
+		data["storage"]["disk"] = null
 		data["diskHasMakeup"] = FALSE
 		data["diskMakeupBuffer"] = null
 
@@ -1560,6 +1562,8 @@
 		for(var/mutation_type in scanner_occupant.dna.mutation_index)
 			var/datum/mutation/human/HM = GET_INITIALIZED_MUTATION(mutation_type)
 
+			to_chat(usr, "Processing MUT_NORMAL [HM]")
+
 			var/list/mutation_data = list()
 			var/text_sequence = scanner_occupant.dna.mutation_index[mutation_type]
 			var/default_sequence = scanner_occupant.dna.default_mutation_genes[mutation_type]
@@ -1619,11 +1623,14 @@
 		// ---------------------------------------------------------------------- //
 		// Now get additional/"extra" mutations that they shouldn't have by default
 		for(var/datum/mutation/human/HM in scanner_occupant.dna.mutations)
+			to_chat(usr, "Checking MUT_EXTRA [HM]")
 			// If it's in the mutation index array, we've already catalogued this
 			//  mutation and can safely skip over it. It really shouldn't be, but this
 			//  will catch any weird edge cases
 			if(HM.type in scanner_occupant.dna.mutation_index)
-				break
+				continue
+
+			to_chat(usr, "Checking MUT_EXTRA [HM] - Not in mutation_index")
 
 			var/list/mutation_data = list()
 			var/text_sequence = GET_SEQUENCE(HM.type)
@@ -1661,6 +1668,8 @@
 				mutation_data["Image"] = "dna_extra.gif"
 			else
 				mutation_data["Image"] = "dna_discovered.gif"
+
+			to_chat(usr, "Adding MUT_EXTRA [HM] to the list.")
 
 			tgui_occupant_mutations += list(mutation_data)
 
