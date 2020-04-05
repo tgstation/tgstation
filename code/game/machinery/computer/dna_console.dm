@@ -160,6 +160,9 @@
 	scrambleready = world.time + SCRAMBLE_TIMEOUT
 	jokerready = world.time + JOKER_TIMEOUT
 
+	// Set the default tgui state
+	set_default_state()
+
 	// Link machine with research techweb. Used for discovering and accessing
 	//  already discovered mutations
 	stored_research = SSresearch.science_tech
@@ -223,6 +226,7 @@
 	var/list/data = list()
 
 	data["view"] = tgui_view_state
+	data["storage"] = list()
 
 	// This block of code generates the huge data structure passed to the tgui
 	// interface for displaying all the various bits of console/scanner data
@@ -256,7 +260,8 @@
 		data["subjectEnzymes"] = scanner_occupant.dna.unique_enzymes
 		data["isMonkey"] = ismonkey(scanner_occupant)
 		data["subjectUNI"] = scanner_occupant.dna.uni_identity
-		data["subjectMutations"] = tgui_occupant_mutations
+		data["storage"]["occupant"] = tgui_occupant_mutations
+		//data["subjectMutations"] = tgui_occupant_mutations
 	else
 		data["subjectName"] = null
 		data["subjectStatus"] = null
@@ -280,6 +285,7 @@
 		data["diskCapacity"] = diskette.max_mutations - LAZYLEN(diskette.mutations)
 		data["diskReadOnly"] = diskette.read_only
 		data["diskMutations"] = tgui_diskette_mutations
+		data["storage"]["disk"] = tgui_diskette_mutations
 		data["diskHasMakeup"] = (LAZYLEN(diskette.genetic_makeup_buffer) > 0)
 		data["diskMakeupBuffer"] = diskette.genetic_makeup_buffer.Copy()
 	else
@@ -291,13 +297,15 @@
 		data["diskMakeupBuffer"] = null
 
 	data["mutationCapacity"] = max_storage - LAZYLEN(stored_mutations)
-	data["mutationStorage"] = tgui_scanner_mutations
+	//data["mutationStorage"] = tgui_scanner_mutations
+	data["storage"]["console"] = tgui_scanner_mutations
 	data["chromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
 	data["chromoStorage"] = tgui_scanner_chromosomes
 	data["makeupCapacity"] = NUMBER_OF_BUFFERS
 	data["makeupStorage"] = tgui_genetic_makeup
 
-	data["advInjectors"] = tgui_advinjector_mutations
+	//data["advInjectors"] = tgui_advinjector_mutations
+	data["storage"]["injector"] = tgui_advinjector_mutations
 	data["maxAdvInjectors"] = max_injector_selections
 
 	data["MUT_NORMAL"] = MUT_NORMAL
@@ -1350,9 +1358,9 @@
 		// Deletes a mutation from an advanced injector
 		// ---------------------------------------------------------------------- //
 		// params["mutref"] - ATOM Ref of specific mutation to del from the injector
-		// params["advinj"] - Name of the advanced injector to del the mutation from
-		if("del_advinj_mut")
+		if("delete_injector_mut")
 			var/bref = params["mutref"]
+
 			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_ADV_INJ)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
@@ -1729,7 +1737,7 @@
 				mutation_data["Name"] = HM.name
 				mutation_data["Active"] = TRUE
 				//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
-				mutation_data["Source"] = "advinj"
+				mutation_data["Source"] = "injector"
 				mutation_data["Description"] = HM.desc
 				mutation_data["Instability"] = HM.instability * GET_MUTATION_STABILIZER(HM)
 				mutation_data["ByondRef"] = REF(HM)
@@ -1856,6 +1864,11 @@
 
 	rad_pulse_index = 0
 	return
+
+/obj/machinery/computer/scan_consolenew/proc/set_default_state()
+	tgui_view_state["consoleMode"] = "console"
+	tgui_view_state["storageConsSubMode"] = "mutations"
+	tgui_view_state["storageDiskSubMode"] = "mutations"
 
 
 /////////////////////////// DNA MACHINES

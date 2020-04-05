@@ -3,6 +3,7 @@ import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section, Tabs } from '../components';
 import { createLogger } from '../logging';
+import { capitalize } from 'common/string'
 
 // TODO: Combining mutations (E.g. Radioactive + Strength = Hulk)
 // https://tgstation13.org/wiki/Guide_to_genetics#List_of_Mutations
@@ -31,9 +32,12 @@ const CONSOLE_MODE_INJECTORS = 'injectors';
 
 const STORAGE_MODE_CONSOLE = 'console';
 const STORAGE_MODE_DISK = 'disk';
+const STORAGE_MODE_ADVINJ = 'injector'
 
-const STORAGE_SUBMODE_MUTATIONS = 'mutations';
-const STORAGE_SUBMODE_CHROMOSOMES = 'chromosomes';
+const STORAGE_CONS_SUBMODE_MUTATIONS = 'mutations';
+const STORAGE_CONS_SUBMODE_CHROMOSOMES = 'chromosomes';
+const STORAGE_DISK_SUBMODE_MUTATIONS = 'mutations';
+const STORAGE_DISK_SUBMODE_ENZYMES = 'diskenzymes'
 
 const CHROMOSOME_NEVER = 0;
 const CHROMOSOME_NONE = 1;
@@ -70,7 +74,7 @@ export const DnaConsole = props => {
     isPulsingRads,
     radPulseSeconds,
   } = data;
-  const { consoleMode } = data.view;
+  const { consoleMode } = data.view
   return (
     <Fragment>
       {!!isPulsingRads && (
@@ -96,9 +100,6 @@ export const DnaConsole = props => {
       )}
       {consoleMode === CONSOLE_MODE_ENZYMES && (
         <DnaConsoleEnzymes state={state} />
-      )}
-      {consoleMode === CONSOLE_MODE_INJECTORS && (
-        <DnaConsoleAdvancedInjectors state={state} />
       )}
     </Fragment>
   );
@@ -295,12 +296,6 @@ export const DnaConsoleCommands = props => {
             onClick={() => act('set_view', {
               consoleMode: CONSOLE_MODE_ENZYMES,
             })} />
-          <Button
-            content="Advanced Injectors"
-            selected={consoleMode === CONSOLE_MODE_INJECTORS}
-            onClick={() => act('set_view', {
-              consoleMode: CONSOLE_MODE_INJECTORS,
-            })} />
         </LabeledList.Item>
         {!!hasDisk && (
           <LabeledList.Item label="Disk">
@@ -323,29 +318,48 @@ export const DnaConsoleCommands = props => {
 const StorageButtons = props => {
   const { data, act } = useBackend(props);
   const { hasDisk } = data;
-  const { storageMode, storageSubMode } = data.view;
+  const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view
   return (
     <Fragment>
-      <Button
-        selected={storageSubMode === STORAGE_SUBMODE_MUTATIONS}
-        content="Mutations"
-        onClick={() => act('set_view', {
-          storageSubMode: STORAGE_SUBMODE_MUTATIONS,
-        })} />
-      <Button
-        selected={storageSubMode === STORAGE_SUBMODE_CHROMOSOMES}
-        disabled={storageMode !== STORAGE_MODE_CONSOLE}
-        content="Chromosomes"
-        onClick={() => act('set_view', {
-          storageSubMode: STORAGE_SUBMODE_CHROMOSOMES,
-        })} />
+      {storageMode === STORAGE_MODE_CONSOLE && (
+        <Fragment>
+          <Button
+            selected={storageConsSubMode === STORAGE_CONS_SUBMODE_MUTATIONS}
+            content="Mutations"
+            onClick={() => act('set_view', {
+              storageConsSubMode: STORAGE_CONS_SUBMODE_MUTATIONS,
+            })} />
+          <Button
+            selected={storageConsSubMode === STORAGE_CONS_SUBMODE_CHROMOSOMES}
+            content="Chromosomes"
+            onClick={() => act('set_view', {
+              storageConsSubMode: STORAGE_CONS_SUBMODE_CHROMOSOMES,
+            })} />
+        </Fragment>
+      )}
+      {storageMode === STORAGE_MODE_DISK && (
+        <Fragment>
+          <Button
+            selected={storageDiskSubMode === STORAGE_CONS_SUBMODE_MUTATIONS}
+            content="Mutations"
+            onClick={() => act('set_view', {
+              storageDiskSubMode: STORAGE_CONS_SUBMODE_MUTATIONS,
+            })} />
+          <Button
+            selected={storageDiskSubMode === STORAGE_DISK_SUBMODE_ENZYMES}
+            content="Enzymes"
+            onClick={() => act('set_view', {
+              storageDiskSubMode: STORAGE_DISK_SUBMODE_ENZYMES,
+            })} />
+        </Fragment>
+      )}
       <Box inline mr={1} />
       <Button
         content="Console"
         selected={storageMode === STORAGE_MODE_CONSOLE}
         onClick={() => act('set_view', {
           storageMode: STORAGE_MODE_CONSOLE,
-          storageSubMode: STORAGE_SUBMODE_MUTATIONS,
+          storageConsSubMode: STORAGE_CONS_SUBMODE_MUTATIONS ?? storageConsSubMode,
         })} />
       <Button
         content="Disk"
@@ -353,7 +367,13 @@ const StorageButtons = props => {
         selected={storageMode === STORAGE_MODE_DISK}
         onClick={() => act('set_view', {
           storageMode: STORAGE_MODE_DISK,
-          storageSubMode: STORAGE_SUBMODE_MUTATIONS,
+          storageDiskSubMode: STORAGE_DISK_SUBMODE_MUTATIONS ?? storageDiskSubMode,
+        })} />
+      <Button
+        content="Adv. Injector"
+        selected={storageMode === STORAGE_MODE_ADVINJ}
+        onClick={() => act('set_view', {
+          storageMode: STORAGE_MODE_ADVINJ,
         })} />
     </Fragment>
   );
@@ -362,40 +382,63 @@ const StorageButtons = props => {
 const DnaConsoleStorage = props => {
   const { state } = props;
   const { data, act } = useBackend(props);
-  const { storageSubMode } = data.view;
+  const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
+  const { diskMakeupBuffer, diskHasMakeup } = data;
+  const mutations = data.storage[storageMode];
   return (
     <Section
       title="Storage"
       buttons={(
         <StorageButtons state={state} />
       )}>
-      {storageSubMode === STORAGE_SUBMODE_MUTATIONS && (
-        <StorageMutations state={state} />
+      {storageMode === STORAGE_MODE_CONSOLE && storageConsSubMode === STORAGE_CONS_SUBMODE_MUTATIONS && (
+        <StorageMutations state={state} mutations={mutations} />
       )}
-      {storageSubMode === STORAGE_SUBMODE_CHROMOSOMES && (
+      {storageMode === STORAGE_MODE_CONSOLE && storageConsSubMode === STORAGE_CONS_SUBMODE_CHROMOSOMES && (
         <StorageChromosomes state={state} />
+      )}
+      {storageMode === STORAGE_MODE_DISK && storageDiskSubMode === STORAGE_DISK_SUBMODE_MUTATIONS && (
+        <StorageMutations state={state} mutations={mutations} />
+      )}
+      {storageMode === STORAGE_MODE_DISK && storageDiskSubMode === STORAGE_DISK_SUBMODE_ENZYMES && (
+        <Fragment>
+          <GeneticMakeupInfo makeup={diskMakeupBuffer} />
+          <Button
+            icon="times"
+            color="red"
+            disabled={!diskHasMakeup}
+            content={'Delete'}
+            onClick={() => act('del_makeup_disk')} />
+        </Fragment>
+      )}
+      {storageMode === STORAGE_MODE_ADVINJ && (
+        <DnaConsoleAdvancedInjectors state={state} />
       )}
     </Section>
   );
 };
 
 const StorageMutations = props => {
-  const { state } = props;
+  const { state, mutations, customMode = '' } = props;
   const { data, act } = useBackend(props);
-  const isDisk = data.view.storageMode === STORAGE_MODE_DISK;
-  const mutations = isDisk
-    ? (data.diskMutations ?? [])
-    : (data.mutationStorage ?? []);
-  const mutationRef = data.view.storageMutationRef;
-  const mutation = mutations
-    .find(mutation => mutation.ByondRef === mutationRef);
+  const mode = data.view.storageMode + customMode;
+
+  let mutationRef = data.view[`storage${mode}MutationRef`];
+  let mutation = mutations
+    .find(mutation => mutation.ByondRef === mutationRef)
+
+  // If no mutation is selected but there are stored mutations, pick the first
+  // mutation and set that as the currently showed one.
+  if(!mutation && mutations.length > 0) {
+    mutation = mutations[0];
+    mutationRef = mutation.ByondRef;
+  }
+
   return (
     <Flex>
       <Flex.Item width="140px">
         <Section
-          title={isDisk
-            ? "Disk Storage"
-            : "Console Storage"}
+          title={`${capitalize(data.view.storageMode)} Storage`}
           level={2}>
           {mutations.map(mutation => (
             <Button
@@ -405,9 +448,11 @@ const StorageMutations = props => {
               color="transparent"
               selected={mutation.ByondRef === mutationRef}
               content={mutation.Name}
-              onClick={() => act('set_view', {
-                storageMutationRef: mutation.ByondRef,
-              })} />
+              onClick={() => {
+                act('set_view', {
+                  [`storage${mode}MutationRef`]: mutation.ByondRef,
+                })
+              }} />
           ))}
         </Section>
       </Flex.Item>
@@ -619,18 +664,17 @@ const MutationInfo = props => {
         //    the list of eligible mutations for combination will be empty.
         false
       )}
-      {['console', 'disk', 'advinj'].includes(mutation.Source) && (
+      {['console', 'disk', 'injector'].includes(mutation.Source) && (
         <Button
           icon="times"
           color="red"
-          content="Delete from storage"
+          content={`Delete from ${mutation.Source}`}
           onClick={() => act(`delete_${mutation.Source}_mut`, {
             mutref: mutation.ByondRef,
           })} />
       )}
-      {mutation.Source === 'occupant'
-        && mutation.class === MUT_EXTRA
-        && !mutation.Scrambled
+      {(mutation.Class === MUT_EXTRA || !!mutation.Scrambled
+        && mutation.Source === 'occupant')
         && (
           <Button
             content="Nullify"
@@ -817,10 +861,10 @@ const GenomeImage = props => {
 };
 
 const GeneCycler = props => {
-  const { gene, onChange, ...rest } = props;
+  const { gene, onChange, disabled, ...rest } = props;
   const length = GENES.length;
   const index = GENES.indexOf(gene);
-  const color = GENE_COLORS[gene];
+  const color = (disabled && GENE_COLORS['X']) || GENE_COLORS[gene];
   return (
     <Button
       {...rest}
@@ -882,8 +926,9 @@ const GenomeSequencer = props => {
       <GeneCycler
         width="22px"
         textAlign="center"
+        disabled={!!mutation.Scrambled || mutation.Class !== MUT_NORMAL}
         className={
-          (defaultSeq.charAt(i) === 'X' && !mutation.Active)
+          (defaultSeq?.charAt(i) === 'X' && !mutation.Active)
             ? classes([
               "outline-solid",
               "outline-color-orange",
@@ -1164,6 +1209,29 @@ const GeneticMakeupBuffers = props => {
   );
 };
 
+const GeneticMakeupInfo = props => {
+  const { makeup } = props;
+
+  return (
+    <Section title="Enzyme Information">
+      <LabeledList>
+        <LabeledList.Item label="Name">
+          {makeup.name || 'None'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Blood Type">
+          {makeup.blood_type || 'None'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Unique Enzyme">
+          {makeup.UE || 'None'}
+        </LabeledList.Item>
+        <LabeledList.Item label="Unique Identifier">
+          {makeup.UI || 'None'}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  )
+}
+
 const GeneticMakeupBufferInfo = props => {
   const { index, makeup } = props;
   const { act, data } = useBackend(props);
@@ -1185,20 +1253,7 @@ const GeneticMakeupBufferInfo = props => {
   }
   return (
     <Fragment>
-      <LabeledList>
-        <LabeledList.Item label="Subject">
-          {makeup.name || 'None'}
-        </LabeledList.Item>
-        <LabeledList.Item label="Blood Type">
-          {makeup.blood_type || 'None'}
-        </LabeledList.Item>
-        <LabeledList.Item label="Unique Enzyme">
-          {makeup.UE || 'None'}
-        </LabeledList.Item>
-        <LabeledList.Item label="Unique Identifier">
-          {makeup.UI || 'None'}
-        </LabeledList.Item>
-      </LabeledList>
+      <GeneticMakeupInfo makeup={makeup} />
       <Divider />
       <Box bold color="label" mb={1}>
         Makeup Actions
@@ -1276,8 +1331,9 @@ const DnaConsoleAdvancedInjectors = props => {
   const { state } = props;
   const { act, data } = useBackend(props);
   const {
-    advInjectors = [],
+    maxAdvInjectors
   } = data;
+  const advInjectors = data.storage.injector ?? [];
   return (
     <Section title="Advanced Injectors">
       {advInjectors.map(injector => (
@@ -1301,41 +1357,17 @@ const DnaConsoleAdvancedInjectors = props => {
                 })} />
             </Fragment>
           )}>
-          {injector.mutations.length === 0 && (
-            <Box color="average">
-              No mutations stored in this injector.
-            </Box>
-          ) || (
-            <Tabs vertical>
-              {injector.mutations.map(mutation => (
-                <Tabs.Tab
-                  key={mutation.ByondRef}
-                  label={mutation.Name}>
-                  {() => (
-                    <Fragment>
-                      <MutationInfo
-                        state={state}
-                        mutation={mutation} />
-                      <Button
-                        color="red"
-                        icon="times"
-                        content="Delete from advanced injector"
-                        onClick={() => act('del_adv_mut', {
-                          advinj: injector.name,
-                          mutref: mutation.ByondRef,
-                        })} />
-                    </Fragment>
-                  )}
-                </Tabs.Tab>
-              ))}
-            </Tabs>
-          )}
+          <StorageMutations
+            state={state}
+            mutations={injector.mutations}
+            customMode={`advinj${advInjectors.findIndex(e => injector.name === e.name)}`} />
         </Collapsible>
       ))}
       <Box mt={2}>
         <Button.Input
           minWidth="200px"
           content="Create new injector"
+          disabled={advInjectors.length >= maxAdvInjectors}
           onCommit={(e, value) => act('new_adv_inj', {
             name: value,
           })} />
