@@ -539,7 +539,7 @@
 				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
 
 		adjustOxyLoss(-20, TRUE)
-		adjustToxLoss(-20, TRUE) //slime friendly
+		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
 		updatehealth()
 		grab_ghost()
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
