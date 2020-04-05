@@ -4,6 +4,7 @@ import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section, Tabs } from '../components';
 import { createLogger } from '../logging';
 import { capitalize } from 'common/string';
+import { uniqBy } from 'common/collections';
 
 // TODO: Combining mutations (E.g. Radioactive + Strength = Hulk)
 // https://tgstation13.org/wiki/Guide_to_genetics#List_of_Mutations
@@ -453,11 +454,9 @@ const StorageMutations = props => {
               color="transparent"
               selected={mutation.ByondRef === mutationRef}
               content={mutation.Name}
-              onClick={() => {
-                act('set_view', {
-                  [`storage${mode}MutationRef`]: mutation.ByondRef,
-                });
-              }} />
+              onClick={() => act('set_view', {
+                [`storage${mode}MutationRef`]: mutation.ByondRef,
+              })} />
           ))}
         </Section>
       </Flex.Item>
@@ -480,24 +479,25 @@ const StorageMutations = props => {
 const StorageChromosomes = props => {
   const { data, act } = useBackend(props);
   const chromos = data.chromoStorage ?? [];
-  const chromoIndex = parseInt(data.view.storageChromoIndex, 10);
-  const chromo = chromos.find(chromo => chromo.Index === chromoIndex);
+  const uniqueChromos = uniqBy(chromo => chromo.Name)(chromos);
+  const chromoName = data.view.storageChromoName;
+  const chromo = chromos.find(chromo => chromo.Name === chromoName);
   return (
     <Flex>
       <Flex.Item width="140px">
         <Section
           title="Console Storage"
           level={2}>
-          {chromos.map(chromo => (
+          {uniqueChromos.map(chromo => (
             <Button
               key={chromo.Index}
               fluid
               ellipsis
               color="transparent"
-              selected={chromo.Index === chromoIndex}
+              selected={chromo.Name === chromoName}
               content={chromo.Name}
               onClick={() => act('set_view', {
-                storageChromoIndex: chromo.Index,
+                storageChromoName: chromo.Name,
               })} />
           ))}
         </Section>
@@ -521,6 +521,11 @@ const StorageChromosomes = props => {
                 </LabeledList.Item>
                 <LabeledList.Item label="Description">
                   {chromo.Description}
+                </LabeledList.Item>
+                <LabeledList.Item label="Amount">
+                  {chromos
+                    .filter(x => x.Name === chromo.Name)
+                    .length}
                 </LabeledList.Item>
               </LabeledList>
               <Button
@@ -551,25 +556,10 @@ const MutationInfo = props => {
   const diskMutations = data.storage.disk ?? [];
   const mutationStorage = data.storage.console ?? [];
   const advInjectors = data.storage.injectors ?? [];
-
-  const buildCombineArray = props => {
-    // TODO - Better solution for this question mark?
-    let nameList = [];
-
-    const filterByName = name => {
-      if (mutation.Name === name)
-      { return false; }
-
-      if (nameList.find(e => e === name))
-      { return false; }
-
-      nameList.push(name);
-      return true;
-    };
-
-    return diskMutations.concat(mutationStorage)
-      .filter(e => filterByName(e.Name));
-  };
+  const combinedMutations = uniqBy(mutation => mutation.Name)([
+    ...diskMutations,
+    ...mutationStorage,
+  ]);
 
   if (!mutation) {
     return (
@@ -612,14 +602,14 @@ const MutationInfo = props => {
               || diskCapacity <= 0
               || diskReadOnly}
             state={state}
-            mutations={buildCombineArray()}
+            mutations={combinedMutations}
             source={mutation} />
         )}
         {mutation.Source === 'console' && (
           <MutationCombiner
             state={state}
             disabled={mutationCapacity <= 0}
-            mutations={buildCombineArray()}
+            mutations={combinedMutations}
             source={mutation} />
         )}
         {['occupant', 'disk', 'console'].includes(mutation.Source) && (

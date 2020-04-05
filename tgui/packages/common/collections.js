@@ -187,6 +187,49 @@ export const reduce = (reducerFn, initialValue) => array => {
 };
 
 /**
+ * Creates a duplicate-free version of an array, using SameValueZero for
+ * equality comparisons, in which only the first occurrence of each element
+ * is kept. The order of result values is determined by the order they occur
+ * in the array.
+ *
+ * It accepts iteratee which is invoked for each element in array to generate
+ * the criterion by which uniqueness is computed. The order of result values
+ * is determined by the order they occur in the array. The iteratee is
+ * invoked with one argument: value.
+ */
+export const uniqBy = iterateeFn => array => {
+  const { length } = array;
+  const result = [];
+  const seen = iterateeFn ? [] : result;
+  let index = -1;
+  outer:
+  while (++index < length) {
+    let value = array[index];
+    const computed = iterateeFn ? iterateeFn(value) : value;
+    value = value !== 0 ? value : 0;
+    if (computed === computed) {
+      let seenIndex = seen.length;
+      while (seenIndex--) {
+        if (seen[seenIndex] === computed) {
+          continue outer;
+        }
+      }
+      if (iterateeFn) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+    else if (!seen.includes(computed)) {
+      if (seen !== result) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+  }
+  return result;
+};
+
+/**
  * Creates an array of grouped elements, the first of which contains
  * the first elements of the given arrays, the second of which contains
  * the second elements of the given arrays, and so on.
