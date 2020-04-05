@@ -115,10 +115,7 @@
   */
 /mob/living/simple_animal/bot/proc/get_mode_ui()
 	if(client) //Player bots do not have modes, thus the override. Also an easy way for PDA users/AI to know when a bot is a player.
-		if(paicard)
-			return "pAI Controlled"
-		else
-			return "Autonomous"
+		return paicard ? "pAI Controlled" : "Autonomous"
 	else if(!on)
 		return "Inactive"
 	else if(!mode)
