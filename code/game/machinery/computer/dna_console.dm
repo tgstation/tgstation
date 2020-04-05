@@ -1869,6 +1869,7 @@
 	rad_pulse_index = 0
 	return
 
+// Sets the default state for the tgui interface.
 /obj/machinery/computer/scan_consolenew/proc/set_default_state()
 	tgui_view_state["consoleMode"] = "storage"
 	tgui_view_state["storageMode"] = "console"

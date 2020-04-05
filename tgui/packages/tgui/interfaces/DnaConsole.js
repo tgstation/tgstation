@@ -359,7 +359,8 @@ const StorageButtons = props => {
         selected={storageMode === STORAGE_MODE_CONSOLE}
         onClick={() => act('set_view', {
           storageMode: STORAGE_MODE_CONSOLE,
-          storageConsSubMode: STORAGE_CONS_SUBMODE_MUTATIONS ?? storageConsSubMode,
+          storageConsSubMode: STORAGE_CONS_SUBMODE_MUTATIONS
+            ?? storageConsSubMode,
         })} />
       <Button
         content="Disk"
@@ -367,7 +368,8 @@ const StorageButtons = props => {
         selected={storageMode === STORAGE_MODE_DISK}
         onClick={() => act('set_view', {
           storageMode: STORAGE_MODE_DISK,
-          storageDiskSubMode: STORAGE_DISK_SUBMODE_MUTATIONS ?? storageDiskSubMode,
+          storageDiskSubMode: STORAGE_DISK_SUBMODE_MUTATIONS
+            ?? storageDiskSubMode,
         })} />
       <Button
         content="Adv. Injector"
@@ -391,16 +393,20 @@ const DnaConsoleStorage = props => {
       buttons={(
         <StorageButtons state={state} />
       )}>
-      {storageMode === STORAGE_MODE_CONSOLE && storageConsSubMode === STORAGE_CONS_SUBMODE_MUTATIONS && (
+      {storageMode === STORAGE_MODE_CONSOLE
+        && storageConsSubMode === STORAGE_CONS_SUBMODE_MUTATIONS && (
         <StorageMutations state={state} mutations={mutations} />
       )}
-      {storageMode === STORAGE_MODE_CONSOLE && storageConsSubMode === STORAGE_CONS_SUBMODE_CHROMOSOMES && (
+      {storageMode === STORAGE_MODE_CONSOLE
+        && storageConsSubMode === STORAGE_CONS_SUBMODE_CHROMOSOMES && (
         <StorageChromosomes state={state} />
       )}
-      {storageMode === STORAGE_MODE_DISK && storageDiskSubMode === STORAGE_DISK_SUBMODE_MUTATIONS && (
+      {storageMode === STORAGE_MODE_DISK
+        && storageDiskSubMode === STORAGE_DISK_SUBMODE_MUTATIONS && (
         <StorageMutations state={state} mutations={mutations} />
       )}
-      {storageMode === STORAGE_MODE_DISK && storageDiskSubMode === STORAGE_DISK_SUBMODE_ENZYMES && (
+      {storageMode === STORAGE_MODE_DISK
+        && storageDiskSubMode === STORAGE_DISK_SUBMODE_ENZYMES && (
         <Fragment>
           <GeneticMakeupInfo makeup={diskMakeupBuffer} />
           <Button
@@ -546,6 +552,26 @@ const MutationInfo = props => {
   const diskMutations = data.storage.disk ?? [];
   const mutationStorage = data.storage.console ?? [];
   const advInjectors = data.storage.injectors ?? [];
+
+  const buildCombineArray = props => {
+    // TODO - Better solution for this question mark?
+    let nameList = [];
+
+    const filterByName = name => {
+      if (mutation.Name === name)
+      { return false; }
+
+      if (nameList.find(e => e === name))
+      { return false; }
+
+      nameList.push(name);
+      return true;
+    };
+
+    return diskMutations.concat(mutationStorage)
+      .filter(e => filterByName(e.Name));
+  };
+
   if (!mutation) {
     return (
       <Box color="label">
@@ -581,6 +607,22 @@ const MutationInfo = props => {
       </LabeledList>
       <Divider />
       <Box>
+        {mutation.Source === 'disk' && (
+          <MutationCombiner
+            disabled={!hasDisk
+              || diskCapacity <= 0
+              || diskReadOnly}
+            state={state}
+            mutations={buildCombineArray()}
+            source={mutation} />
+        )}
+        {mutation.Source === 'console' && (
+          <MutationCombiner
+            state={state}
+            disabled={mutationCapacity <= 0}
+            mutations={buildCombineArray()}
+            source={mutation} />
+        )}
         {mutation.Source === 'occupant' && (
           <Dropdown
             width="240px"
@@ -640,29 +682,6 @@ const MutationInfo = props => {
             mutref: mutation.ByondRef,
             source: mutation.Source,
           })} />
-      )}
-      {['console', 'disk'].includes(mutation.Source) && (
-        // TODO: MUTATION COMBINING LOGIC GOES HERE
-        //  1. Some way to select any mutation that isn't this mutation.
-        //    1.1. DM code is now set up to allow combining of mutations across
-        //         both console and disk.
-        //    1.2. Build a list of all mutations across both console and disk
-        //    1.3. Trim duplicate alias mutations. Combined mutations do not
-        //         inherit any metadata, so a list with no duplicate names is
-        //         also ideal.
-        //    1.5. 'this' mutation' should not be included in the list,
-        //         including mutations with the same alias as 'this'.
-        // 2. act(`combine_${mutation.Source}`, {
-        //      firstref: mutation.ByondRef
-        //      secondref: selectedMutation.ByondRef
-        //    })
-        // 3. disabled logic is the same as Save to Console/Disk as the action
-        //    requires the ability to save a new mutation to the storage medium
-        // 4. Minor edge case - If this is the list of possible mutations to
-        //    combine this mutation with has a length of zero. This will occur
-        //    when the DNA Console/Disk only has a single Alias of mutation, so
-        //    the list of eligible mutations for combination will be empty.
-        false
       )}
       {['console', 'disk', 'injector'].includes(mutation.Source) && (
         <Button
@@ -1360,7 +1379,8 @@ const DnaConsoleAdvancedInjectors = props => {
           <StorageMutations
             state={state}
             mutations={injector.mutations}
-            customMode={`advinj${advInjectors.findIndex(e => injector.name === e.name)}`} />
+            customMode={`advinj${advInjectors.findIndex(
+              e => injector.name === e.name)}`} />
         </Collapsible>
       ))}
       <Box mt={2}>
@@ -1373,5 +1393,29 @@ const DnaConsoleAdvancedInjectors = props => {
           })} />
       </Box>
     </Section>
+  );
+};
+
+const MutationCombiner = props => {
+  const { state, mutations, source } = props;
+  const { act, data } = useBackend(props);
+
+  const brefFromName = name => {
+    return mutations.find(mutation => mutation.Name === name)?.ByondRef;
+  };
+
+  return (
+    <Dropdown
+      key={source.ByondRef}
+      width="240px"
+      options={mutations.map(mutation => mutation.Name)}
+      disabled={mutations.length === 0}
+      selected="Combine mutations"
+      onSelected={value => {
+        act(`combine_${source.Source}`, {
+          firstref: brefFromName(value),
+          secondref: source.ByondRef,
+        });
+      }} />
   );
 };
