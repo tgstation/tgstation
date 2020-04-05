@@ -50,6 +50,7 @@
 	hud_icons = list(ID_HUD, IMPTRACK_HUD, IMPLOYAL_HUD, IMPCHEM_HUD, WANTED_HUD, NANITE_HUD)
 
 /datum/atom_hud/data/human/fan_hud
+	hud_icons = list(FAN_HUD)
 
 /datum/atom_hud/data/diagnostic
 
@@ -228,8 +229,6 @@
 		holder.icon_state = "fan_mime_pin"
 	else if (U && istype(U.attached_accessory, /obj/item/clothing/accessory/fan_clown_pin))
 		holder.icon_state = "fan_clown_pin"
-	else
-		holder.icon_state = "hudfan_no"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
