@@ -75,7 +75,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 ///using the extract on the floor will "draw" the rune.
-/obj/item/slimecross/warping/afterattack(turf/target, mob/user, proximity)
+/obj/item/slimecross/warping/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
 
