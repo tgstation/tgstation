@@ -240,7 +240,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 	else if (newlevel < wanted_level)
 		on_lower_wanted_level(newlevel)
-	for(var/mob/M in GLOB.player_list)
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
 		if(!M.hud_used)
 			continue
 		var/datum/hud/H = M.hud_used
