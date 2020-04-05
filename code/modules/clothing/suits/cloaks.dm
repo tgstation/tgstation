@@ -91,7 +91,7 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
 /obj/item/clothing/neck/cloak/skill_reward
-	var/associated_skill_path
+	var/associated_skill_path = /datum/skill
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE
 
 /obj/item/clothing/neck/cloak/skill_reward/examine(mob/user)
