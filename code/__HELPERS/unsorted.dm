@@ -449,7 +449,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents(var/T)
+/atom/proc/GetAllContents(var/T, ignore_flag)
 	var/list/processing_list = list(src)
 	if(T)
 		. = list()
@@ -458,14 +458,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 			var/atom/A = processing_list[++i]
 			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 			//This is also why we don't need to check against assembled as we go along
-			processing_list += A.contents
-			if(istype(A,T))
-				. += A
+			if (!(A.flags_1 & ignore_flag))
+				processing_list += A.contents
+				if(istype(A,T))
+					. += A
 	else
 		var/i = 0
 		while(i < length(processing_list))
 			var/atom/A = processing_list[++i]
-			processing_list += A.contents
+			if (!(A.flags_1 & ignore_flag))
+				processing_list += A.contents
 		return processing_list
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
@@ -479,26 +481,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 		if(!ignore_typecache[A.type])
 			processing += A.contents
 			. += A
-
-//Gets all contents of contents but ignores those of atoms with the specified flag_1 (ex. atoms that protect their contents from explosions)
-/atom/proc/GetAllContentsIgnoreFlag(var/T, flag)
-	var/list/processing_list = list(src)
-	if(T)
-		. = list()
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			if (!(A.flags_1 & flag))
-				processing_list += A.contents
-				if(istype(A,T))
-					. += A
-	else
-		var/i = 0
-		while(i < length(processing_list))
-			var/atom/A = processing_list[++i]
-			if (!(A.flags_1 & flag))
-				processing_list += A.contents
-		return processing_list
 
 //Step-towards method of determining whether one atom can see another. Similar to viewers()
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
