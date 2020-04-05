@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(explosions)
 			for(var/I in T)
 				var/atom/A = I
 				if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1))
-					items += A.GetAllContents(ignore_flag = PREVENT_CONTENTS_EXPLOSION_1)
+					items += A.GetAllContents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
 			for(var/O in items)
 				var/atom/A = O
 				if(!QDELETED(A))
