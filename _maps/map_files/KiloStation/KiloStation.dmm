@@ -2617,6 +2617,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/bridge)
+"aen" = (
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
 "aeo" = (
 /obj/structure/lattice,
 /obj/structure/grille,
@@ -12592,6 +12600,20 @@
 	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/science/genetics)
+"auc" = (
+/obj/structure/table/glass,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/hydroponics)
 "aud" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
@@ -42835,17 +42857,6 @@
 /obj/machinery/status_display/evac,
 /turf/closed/wall,
 /area/hydroponics)
-"bmG" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/plantgenes{
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel/dark,
-/area/hydroponics)
 "bmH" = (
 /obj/effect/turf_decal/delivery,
 /obj/effect/turf_decal/tile/red{
@@ -45587,23 +45598,6 @@
 /mob/living/simple_animal/hostile/asteroid/hivelord,
 /turf/open/floor/plating,
 /area/quartermaster/warehouse)
-"bqG" = (
-/obj/structure/table/glass,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/plantgenes{
-	pixel_y = 5
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/hydroponics)
 "bqH" = (
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
@@ -74275,9 +74269,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/cable,
-/obj/structure/cable_bridge,
-/obj/structure/cable/layer3,
+/obj/structure/cable/multilayer{
+	cable_layer = 6
+	},
 /turf/open/floor/engine,
 /area/ai_monitored/storage/satellite)
 "cic" = (
@@ -128131,7 +128125,7 @@ boA
 aGr
 bkF
 bjn
-bmG
+aen
 bsu
 bny
 bnJ
@@ -128645,7 +128639,7 @@ boD
 aGM
 boV
 bjn
-bqG
+auc
 bsu
 bny
 bnJ

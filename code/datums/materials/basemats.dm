@@ -198,7 +198,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
-	value_per_unit = 0.06
+	value_per_unit = 0.01
 	beauty_modifier = 0.1
 	armor_modifiers = list("melee" = 1.1, "bullet" = 1.1, "laser" = 0.4, "energy" = 0.4, "bomb" = 1, "bio" = 0.2, "rad" = 0, "fire" = 0, "acid" = 0.3)
 
@@ -259,13 +259,153 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	alpha = 150
 	categories = list(MAT_CATEGORY_RIGID = TRUE)
 	sheet_type = /obj/item/stack/sheet/hot_ice
-	value_per_unit = 0.5
-	beauty_modifier = 0.5
+	value_per_unit = 0.75
+	beauty_modifier = 0.75
 
 /datum/material/hot_ice/on_applied(atom/source, amount, material_flags)
 	. = ..()
-	source.AddComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300)
+	source.AddComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300)
 
 /datum/material/hot_ice/on_removed(atom/source, amount, material_flags)
-	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*50, amount*20+300))
+	qdel(source.GetComponent(/datum/component/hot_ice, "plasma", amount*150, amount*20+300))
 	return ..()
+
+//I don't like sand. It's coarse, and rough, and irritating, and it gets everywhere.
+/datum/material/sand
+	name = "sand"
+	id = "sand"
+	desc = "You know, it's amazing just how structurally sound sand can be."
+	color = "#EDC9AF"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/sandblock
+	value_per_unit = 0.001
+	strength_modifier = 0.5
+	integrity_modifier = 0.1
+	armor_modifiers = list("melee" = 0.25, "bullet" = 0.25, "laser" = 1.25, "energy" = 0.25, "bomb" = 0.25, "bio" = 0.25, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
+	beauty_modifier = 0.25
+	turf_sound_override = FOOTSTEP_SAND
+	texture_layer_icon_state = "sand"
+
+//And now for our lavaland dwelling friends, sand, but in stone form! Truly revolutionary.
+/datum/material/sandstone
+	name = "sandstone"
+	id = "sandstone"
+	desc = "Bialtaakid 'ant taerif ma hdha."
+	color = "#B77D31"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/sandstone
+	value_per_unit = 0.0025
+	armor_modifiers = list("melee" = 0.5, "bullet" = 0.5, "laser" = 1.25, "energy" = 0.5, "bomb" = 0.5, "bio" = 0.25, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
+	beauty_modifier = 0.3
+	turf_sound_override = FOOTSTEP_WOOD
+	texture_layer_icon_state = "brick"
+
+/datum/material/snow
+	name = "snow"
+	id = "snow"
+	desc = "There's no business like snow business."
+	color = "#FFFFFF"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/snow
+	value_per_unit = 0.0025
+	armor_modifiers = list("melee" = 0.25, "bullet" = 0.25, "laser" = 0.25, "energy" = 0.25, "bomb" = 0.25, "bio" = 0.25, "rad" = 1.5, "fire" = 0.25, "acid" = 1.5)
+	beauty_modifier = 0.3
+	turf_sound_override = FOOTSTEP_SAND
+	texture_layer_icon_state = "sand"
+
+/datum/material/runedmetal
+	name = "runed metal"
+	id = "runed metal"
+	desc = "Mir'ntrath barhah Nar'sie."
+	color = "#3C3434"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/runed_metal
+	value_per_unit = 0.75
+	armor_modifiers = list("melee" = 1.2, "bullet" = 1.2, "laser" = 1, "energy" = 1, "bomb" = 1.2, "bio" = 1.2, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
+	beauty_modifier = -0.15
+	texture_layer_icon_state = "runed"
+
+/datum/material/bronze
+	name = "bronze"
+	id = "bronze"
+	desc = "Clock Cult? Never heard of it."
+	color = "#92661A"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/tile/bronze
+	value_per_unit = 0.025
+	armor_modifiers = list("melee" = 1, "bullet" = 1, "laser" = 1, "energy" = 1, "bomb" = 1, "bio" = 1, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
+	beauty_modifier = 0.2
+
+/datum/material/paper
+	name = "paper"
+	id = "paper"
+	desc = "Ten thousand folds of pure starchy power."
+	color = "#E5DCD5"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/paperframes
+	value_per_unit = 0.0025
+	armor_modifiers = list("melee" = 0.1, "bullet" = 0.1, "laser" = 0.1, "energy" = 0.1, "bomb" = 0.1, "bio" = 0.1, "rad" = 1.5, "fire" = 0, "acid" = 1.5)
+	beauty_modifier = 0.3
+	turf_sound_override = FOOTSTEP_SAND
+	texture_layer_icon_state = "paper"
+
+/datum/material/paper/on_applied_obj(obj/source, amount, material_flags)
+	. = ..()
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/paper = source
+		paper.resistance_flags |= FLAMMABLE
+		paper.obj_flags |= UNIQUE_RENAME
+
+/datum/material/paper/on_removed_obj(obj/source, material_flags)
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/paper = source
+		paper.resistance_flags &= ~FLAMMABLE
+	return ..()
+
+/datum/material/cardboard
+	name = "cardboard"
+	id = "cardboard"
+	desc = "They say cardboard is used by hobos to make incredible things."
+	color = "#5F625C"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/cardboard
+	value_per_unit = 0.003
+	armor_modifiers = list("melee" = 0.25, "bullet" = 0.25, "laser" = 0.25, "energy" = 0.25, "bomb" = 0.25, "bio" = 0.25, "rad" = 1.5, "fire" = 0, "acid" = 1.5)
+	beauty_modifier = -0.1
+
+/datum/material/cardboard/on_applied_obj(obj/source, amount, material_flags)
+	. = ..()
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/cardboard = source
+		cardboard.resistance_flags |= FLAMMABLE
+		cardboard.obj_flags |= UNIQUE_RENAME
+
+/datum/material/cardboard/on_removed_obj(obj/source, material_flags)
+	if(material_flags & MATERIAL_AFFECT_STATISTICS)
+		var/obj/cardboard = source
+		cardboard.resistance_flags &= ~FLAMMABLE
+	return ..()
+
+/datum/material/bone
+	name = "bone"
+	id = "bone"
+	desc = "Man, building with this will make you the coolest caveman on the block."
+	color = "#e3dac9"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/bone
+	value_per_unit = 0.05
+	armor_modifiers = list("melee" = 1.2, "bullet" = 0.75, "laser" = 0.75, "energy" = 1.2, "bomb" = 1, "bio" = 1, "rad" = 1.5, "fire" = 1.5, "acid" = 1.5)
+	beauty_modifier = -0.2
+
+/datum/material/bamboo
+	name = "bamboo"
+	id = "bamboo"
+	desc = "If it's good enough for pandas, it's good enough for you."
+	color = "#339933"
+	categories = list(MAT_CATEGORY_RIGID = TRUE)
+	sheet_type = /obj/item/stack/sheet/mineral/bamboo
+	value_per_unit = 0.0025
+	armor_modifiers = list("melee" = 0.5, "bullet" = 0.5, "laser" = 0.5, "energy" = 0.5, "bomb" = 0.5, "bio" = 0.51, "rad" = 1.5, "fire" = 0.5, "acid" = 1.5)
+	beauty_modifier = 0.2
+	turf_sound_override = FOOTSTEP_WOOD
+	texture_layer_icon_state = "bamboo"

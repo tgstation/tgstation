@@ -123,3 +123,18 @@
 	var/keysend_tripped = FALSE
 	///custom movement keys for this client
 	var/list/movement_keys = list()
+
+	///Autoclick list of two elements, first being the clicked thing, second being the parameters.
+	var/list/atom/selected_target[2]
+	///Autoclick variable referencing the associated item.
+	var/obj/item/active_mousedown_item = null
+	///Used in MouseDrag to preserve the original mouse click parameters
+	var/mouseParams = ""
+	///Used in MouseDrag to preserve the last mouse-entered location.
+	var/mouseLocation = null
+	///Used in MouseDrag to preserve the last mouse-entered object.
+	var/mouseObject = null
+	//Middle-mouse-button click dragtime control for aimbot exploit detection.
+	var/middragtime = 0
+	//Middle-mouse-button clicked object control for aimbot exploit detection.
+	var/atom/middragatom

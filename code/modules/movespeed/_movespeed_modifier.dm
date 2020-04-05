@@ -199,7 +199,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()
-	. = movespeed_modification
+	. = LAZYCOPY(movespeed_modification)
 	for(var/id in movespeed_mod_immunities)
 		. -= id
 

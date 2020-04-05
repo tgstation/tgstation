@@ -3,9 +3,47 @@
 /**********************Mineral processing unit console**************************/
 
 /obj/machinery/mineral
+	processing_flags = START_PROCESSING_MANUALLY
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
+	/// The current direction of `input_turf`, in relation to the machine.
 	var/input_dir = NORTH
+	/// The current direction, in relation to the machine, that items will be output to.
 	var/output_dir = SOUTH
+	/// The turf the machines listens to for items to pick up. Calls the `pickup_item()` proc.
+	var/turf/input_turf = null
+	/// Determines if this machine needs to pick up items. Used to avoid registering signals to `/mineral` machines that don't pickup items.
+	var/needs_item_input = FALSE
 
+/obj/machinery/mineral/Initialize(mapload)
+	. = ..()
+	if(needs_item_input)
+		register_input_turf()
+
+/// Gets the turf in the `input_dir` direction adjacent to the machine, and registers signals for ATOM_ENTERED and ATOM_CREATED. Calls the `pickup_item()` proc when it recieves these signals.
+/obj/machinery/mineral/proc/register_input_turf()
+	input_turf = get_step(src, input_dir)
+	if(input_turf) // make sure there is actually a turf
+		RegisterSignal(input_turf, list(COMSIG_ATOM_CREATED, COMSIG_ATOM_ENTERED), .proc/pickup_item)
+
+/// Unregisters signals that are registered the machine's input turf, if it has one.
+/obj/machinery/mineral/proc/unregister_input_turf()
+	if(input_turf)
+		UnregisterSignal(input_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_CREATED))
+
+/**
+	Base proc for all `/mineral` subtype machines to use. Place your item pickup behavior in this proc when you override it for your specific machine.
+
+	Called when the COMSIG_ATOM_ENTERED and COMSIG_ATOM_CREATED signals are sent.
+
+	Arguments:
+	* source - the turf that is listening for the signals.
+	* target - the atom that just moved onto the `source` turf.
+	* oldLoc - the old location that `target` was at before moving onto `source`.
+*/
+/obj/machinery/mineral/proc/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	return
+
+/// Generic unloading proc. Takes an atom as an argument and forceMove's it to the turf adjacent to this machine in the `output_dir` direction.
 /obj/machinery/mineral/proc/unload_mineral(atom/movable/S)
 	S.forceMove(drop_location())
 	var/turf/T = get_step(src,output_dir)
@@ -19,7 +57,6 @@
 	density = TRUE
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
-	speed_process = TRUE
 
 /obj/machinery/mineral/processing_unit_console/Initialize()
 	. = ..()
@@ -58,6 +95,7 @@
 
 	if(href_list["set_on"])
 		machine.on = (href_list["set_on"] == "on")
+		machine.begin_processing()
 
 	updateUsrDialog()
 	return
@@ -75,6 +113,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "furnace"
 	density = TRUE
+	needs_item_input = TRUE
 	var/obj/machinery/mineral/CONSOLE = null
 	var/on = FALSE
 	var/datum/material/selected_material = null
@@ -92,10 +131,6 @@
 	CONSOLE = null
 	QDEL_NULL(stored_research)
 	return ..()
-
-/obj/machinery/mineral/processing_unit/HasProximity(atom/movable/AM)
-	if(istype(AM, /obj/item/stack/ore) && AM.loc == get_step(src, input_dir))
-		process_ore(AM)
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
@@ -142,8 +177,12 @@
 
 	return dat
 
+/obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, atom/oldLoc)
+	if(istype(target, /obj/item/stack/ore))
+		process_ore(target)
+
 /obj/machinery/mineral/processing_unit/process()
-	if (on)
+	if(on)
 		if(selected_material)
 			smelt_ore()
 
@@ -153,6 +192,8 @@
 
 		if(CONSOLE)
 			CONSOLE.updateUsrDialog()
+	else
+		end_processing()
 
 /obj/machinery/mineral/processing_unit/proc/smelt_ore()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
