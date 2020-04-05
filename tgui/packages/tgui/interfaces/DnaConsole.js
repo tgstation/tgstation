@@ -59,6 +59,9 @@ const MUT_COLORS = {
   4: 'average',
 };
 
+const RADIATION_STRENGTH_MAX = 15;
+const RADIATION_DURATION_MAX = 30;
+
 /**
  * The following predicate tests if two mutations are functionally
  * the same on the basis of their metadata. Useful if your intent is
@@ -1046,8 +1049,6 @@ const RadiationEmitterSettings = props => {
   const {
     radStrength,
     radDuration,
-    RADIATION_STRENGTH_MAX,
-    RADIATION_DURATION_MAX,
   } = data;
   return (
     <Section
@@ -1132,7 +1133,7 @@ const RadiationEmitterPulseBoard = props => {
         textAlign="center"
         content={char}
         onClick={() => act('makeup_pulse', {
-          index: i,
+          index: i + 1,
         })} />
     );
     buffer.push(button);
