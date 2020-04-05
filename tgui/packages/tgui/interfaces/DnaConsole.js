@@ -3,7 +3,7 @@ import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section, Tabs } from '../components';
 import { createLogger } from '../logging';
-import { capitalize } from 'common/string'
+import { capitalize } from 'common/string';
 
 // TODO: Combining mutations (E.g. Radioactive + Strength = Hulk)
 // https://tgstation13.org/wiki/Guide_to_genetics#List_of_Mutations
@@ -32,12 +32,12 @@ const CONSOLE_MODE_INJECTORS = 'injectors';
 
 const STORAGE_MODE_CONSOLE = 'console';
 const STORAGE_MODE_DISK = 'disk';
-const STORAGE_MODE_ADVINJ = 'injector'
+const STORAGE_MODE_ADVINJ = 'injector';
 
 const STORAGE_CONS_SUBMODE_MUTATIONS = 'mutations';
 const STORAGE_CONS_SUBMODE_CHROMOSOMES = 'chromosomes';
 const STORAGE_DISK_SUBMODE_MUTATIONS = 'mutations';
-const STORAGE_DISK_SUBMODE_ENZYMES = 'diskenzymes'
+const STORAGE_DISK_SUBMODE_ENZYMES = 'diskenzymes';
 
 const CHROMOSOME_NEVER = 0;
 const CHROMOSOME_NONE = 1;
@@ -74,7 +74,7 @@ export const DnaConsole = props => {
     isPulsingRads,
     radPulseSeconds,
   } = data;
-  const { consoleMode } = data.view
+  const { consoleMode } = data.view;
   return (
     <Fragment>
       {!!isPulsingRads && (
@@ -318,7 +318,7 @@ export const DnaConsoleCommands = props => {
 const StorageButtons = props => {
   const { data, act } = useBackend(props);
   const { hasDisk } = data;
-  const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view
+  const { storageMode, storageConsSubMode, storageDiskSubMode } = data.view;
   return (
     <Fragment>
       {storageMode === STORAGE_MODE_CONSOLE && (
@@ -425,11 +425,11 @@ const StorageMutations = props => {
 
   let mutationRef = data.view[`storage${mode}MutationRef`];
   let mutation = mutations
-    .find(mutation => mutation.ByondRef === mutationRef)
+    .find(mutation => mutation.ByondRef === mutationRef);
 
   // If no mutation is selected but there are stored mutations, pick the first
   // mutation and set that as the currently showed one.
-  if(!mutation && mutations.length > 0) {
+  if (!mutation && mutations.length > 0) {
     mutation = mutations[0];
     mutationRef = mutation.ByondRef;
   }
@@ -451,7 +451,7 @@ const StorageMutations = props => {
               onClick={() => {
                 act('set_view', {
                   [`storage${mode}MutationRef`]: mutation.ByondRef,
-                })
+                });
               }} />
           ))}
         </Section>
@@ -1229,8 +1229,8 @@ const GeneticMakeupInfo = props => {
         </LabeledList.Item>
       </LabeledList>
     </Section>
-  )
-}
+  );
+};
 
 const GeneticMakeupBufferInfo = props => {
   const { index, makeup } = props;
@@ -1331,7 +1331,7 @@ const DnaConsoleAdvancedInjectors = props => {
   const { state } = props;
   const { act, data } = useBackend(props);
   const {
-    maxAdvInjectors
+    maxAdvInjectors,
   } = data;
   const advInjectors = data.storage.injector ?? [];
   return (
