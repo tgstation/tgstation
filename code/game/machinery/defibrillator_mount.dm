@@ -159,7 +159,12 @@
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 /obj/machinery/defibrillator_mount/charging/process()
-	if(defib?.cell?.charge < defib.cell.maxcharge && is_operational())
+	// Checks if there's both a defib and a cell. If one is null, we yeet outta
+	// here.
+	if(!(defib?.cell))
+		return
+
+	if(defib.cell.charge < defib.cell.maxcharge && is_operational())
 		use_power(100)
 		defib.cell.give(80)
 		update_icon()
