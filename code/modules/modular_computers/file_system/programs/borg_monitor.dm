@@ -1,6 +1,7 @@
 /datum/computer_file/program/borg_monitor
 	filename = "cyborgmonitor"
 	filedesc = "Cyborg Remote Monitoring"
+	ui_header = "borg_mon.gif"
 	program_icon_state = "generic"
 	extended_desc = "This program allows for remote monitoring of station cyborgs."
 	requires_ntnet = TRUE
@@ -53,6 +54,8 @@
 	switch(action)
 		if("messagebot")
 			var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
+			if(!istype(R))
+				return
 			var/obj/item/card/id/ID = computer.GetID()
 			if(!ID)
 				return
