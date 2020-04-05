@@ -87241,7 +87241,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
+	req_one_access_txt = "5;12"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -89915,6 +89915,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -113455,7 +113458,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
+	req_one_access_txt = "5;12"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
