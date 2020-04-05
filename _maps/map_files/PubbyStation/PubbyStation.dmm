@@ -42516,9 +42516,9 @@
 	},
 /area/chapel/main/monastery)
 "cbN" = (
-/obj/structure/table/wood,
 /obj/item/storage/book/bible,
 /obj/structure/cable,
+/obj/structure/altar_of_gods,
 /turf/open/floor/carpet,
 /area/chapel/main/monastery)
 "cbO" = (

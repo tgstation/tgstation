@@ -63089,7 +63089,7 @@
 /area/chapel/main)
 "cQG" = (
 /obj/item/storage/book/bible,
-/obj/structure/table/wood,
+/obj/structure/altar_of_gods,
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "cQH" = (
