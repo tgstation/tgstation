@@ -579,11 +579,11 @@
 	category = list ("Misc. Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
-/datum/design/board/stasis
-	name = "Machine Design (Lifeform Stasis Unit)"
-	desc = "The circuit board for a stasis unit."
-	id = "stasis"
-	build_path = /obj/item/circuitboard/machine/stasis
+/datum/design/board/life_support
+	name = "Machine Design (Basic Life Support Unit)"
+	desc = "The circuit board for a life support unit."
+	id = "life_support"
+	build_path = /obj/item/circuitboard/machine/life_support
 	category = list("Medical Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 

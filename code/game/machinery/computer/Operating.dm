@@ -27,10 +27,6 @@
 		table = locate(/obj/structure/table/optable, get_step(src, direction))
 		if(table && table.computer == src)
 			table.computer = null
-		else
-			sbed = locate(/obj/machinery/stasis, get_step(src, direction))
-			if(sbed && sbed.op_computer == src)
-				sbed.op_computer = null
 	. = ..()
 
 /obj/machinery/computer/operating/attackby(obj/item/O, mob/user, params)
@@ -57,11 +53,6 @@
 		if(table)
 			table.computer = src
 			break
-		else
-			sbed = locate(/obj/machinery/stasis, get_step(src, direction))
-			if(sbed)
-				sbed.op_computer = src
-				break
 
 /obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -86,16 +77,6 @@
 			return data
 		data["patient"] = list()
 		patient = table.patient
-	else
-		if(sbed)
-			data["table"] = sbed
-			if(!sbed.check_patient())
-				return data
-			data["patient"] = list()
-			patient = sbed.occupant
-		else
-			data["patient"] = null
-			return data
 
 	switch(patient.stat)
 		if(CONSCIOUS)

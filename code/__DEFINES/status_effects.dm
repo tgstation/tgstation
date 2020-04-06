@@ -97,6 +97,8 @@
 
 #define STATUS_EFFECT_STASIS /datum/status_effect/grouped/stasis //Halts biological functions like bleeding, chemical processing, blood regeneration, walking, etc
 
+#define STATUS_EFFECT_LIFE_SUPPORT /datum/status_effect/grouped/life_support //Prevents someone from dying. Doesn't halt any other biological functions.
+
 #define STATUS_EFFECT_FAKE_VIRUS /datum/status_effect/fake_virus //gives you fluff messages for cough, sneeze, headache, etc but without an actual virus
 
 /////////////

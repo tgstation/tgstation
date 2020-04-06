@@ -7,7 +7,6 @@
 	density = FALSE
 	can_buckle = TRUE
 	buckle_lying = 90
-	circuit = /obj/item/circuitboard/machine/stasis
 	idle_power_usage = 40
 	active_power_usage = 340
 	fair_market_price = 10
@@ -146,7 +145,7 @@
 	if(stasis_running())
 		if(!IS_IN_STASIS(L_occupant))
 			chill_out(L_occupant)
-	else if(IS_IN_STASIS(L_occupant))
+	else if(IS_IN_STASIS(L_occupant) || L_occupant.health < HEALTH_THRESHOLD_FULLCRIT)
 		thaw_them(L_occupant)
 
 /obj/machinery/stasis/screwdriver_act(mob/living/user, obj/item/I)

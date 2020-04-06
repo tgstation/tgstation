@@ -129,6 +129,44 @@
 	name = "Asleep"
 	desc = "You've fallen asleep. Wait a bit and you should wake up. Unless you don't, considering how helpless you are."
 	icon_state = "asleep"
+//LIFE SUPPORT
+/datum/status_effect/grouped/life_support
+	id = "life_support"
+	duration = -1
+	tick_interval = 10
+	alert_type = /obj/screen/alert/status_effect/life_support
+	var/last_dead_time
+
+/datum/status_effect/grouped/life_support/proc/update_time_of_death()
+	if(last_dead_time)
+		var/delta = world.time - last_dead_time
+		var/new_timeofdeath = owner.timeofdeath + delta
+		owner.timeofdeath = new_timeofdeath
+		owner.tod = station_time_timestamp(wtime=new_timeofdeath)
+		last_dead_time = null
+	if(owner.stat == DEAD)
+		last_dead_time = world.time
+
+/datum/status_effect/grouped/life_support/on_creation(mob/living/new_owner, set_duration, updating_canmove)
+	. = ..()
+	if(.)
+		update_time_of_death()
+		ADD_TRAIT(owner,TRAIT_NOCRITDAMAGE,"life_support")
+		ADD_TRAIT(owner,TRAIT_NODEATH,"life_support")
+
+/datum/status_effect/grouped/life_support/tick()
+	update_time_of_death()
+
+/datum/status_effect/grouped/life_support/on_remove()
+	REMOVE_TRAIT(attached,TRAIT_NOCRITDAMAGE,"life_support")
+	REMOVE_TRAIT(attached,TRAIT_NODEATH,"life_support")
+	update_time_of_death()
+	return ..()
+
+/obj/screen/alert/status_effect/life_support
+	name = "Life support"
+	desc = "You are in a state of life suspension, you will not die. Pray someone doesnt pull the cord."
+	icon_state = "stasis"
 
 //STASIS
 /datum/status_effect/grouped/stasis
