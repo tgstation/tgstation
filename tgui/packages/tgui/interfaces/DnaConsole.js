@@ -275,10 +275,18 @@ const DnaScannerContent = props => {
 
 export const DnaConsoleCommands = props => {
   const { data, act } = useBackend(props);
-  const { hasDisk } = data;
+  const { hasDisk, isInjectorReady, injectorSeconds } = data;
   const { consoleMode } = data.view;
   return (
-    <Section title="DNA Console">
+    <Section
+      title="DNA Console"
+      buttons={!isInjectorReady && (
+        <Box
+          lineHeight="20px"
+          color="label">
+          Injector on cooldown ({injectorSeconds}s)
+        </Box>
+      )}>
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button
@@ -1252,6 +1260,7 @@ const GeneticMakeupBufferInfo = props => {
     isViableSubject,
     hasDisk,
     diskReadOnly,
+    isInjectorReady,
   } = data;
   // Type of the action for applying makeup
   const ACTION_MAKEUP_APPLY = isViableSubject
@@ -1275,6 +1284,7 @@ const GeneticMakeupBufferInfo = props => {
         <LabeledList.Item label="Enzymes">
           <Button
             icon="syringe"
+            disabled={!isInjectorReady}
             content="Print"
             onClick={() => act('makeup_injector', {
               index,
@@ -1293,6 +1303,7 @@ const GeneticMakeupBufferInfo = props => {
         <LabeledList.Item label="Identity">
           <Button
             icon="syringe"
+            disabled={!isInjectorReady}
             content="Print"
             onClick={() => act('makeup_injector', {
               index,
@@ -1311,6 +1322,7 @@ const GeneticMakeupBufferInfo = props => {
         <LabeledList.Item label="Full Makeup">
           <Button
             icon="syringe"
+            disabled={!isInjectorReady}
             content="Print"
             onClick={() => act('makeup_injector', {
               index,
@@ -1345,6 +1357,7 @@ const DnaConsoleAdvancedInjectors = props => {
   const { act, data } = useBackend(props);
   const {
     maxAdvInjectors,
+    isInjectorReady,
   } = data;
   const advInjectors = data.storage.injector ?? [];
   return (
@@ -1357,6 +1370,7 @@ const DnaConsoleAdvancedInjectors = props => {
             <Fragment>
               <Button
                 icon="syringe"
+                disabled={!isInjectorReady}
                 content="Print"
                 onClick={() => act('print_adv_inj', {
                   name: injector.name,
