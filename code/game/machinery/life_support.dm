@@ -1,3 +1,4 @@
+
 /obj/machinery/life_support
 	name = "Basic Life Support Unit"
 	desc = "Bulky table with a lot of diodes installed and a small monitor that checks the users health."
@@ -11,9 +12,13 @@
 	active_power_usage = 500
 	fair_market_price = 10
 	payment_department = ACCOUNT_MED
+	///Whos is attached to the life support.
 	var/mob/living/carbon/attached
+	///Maximum damage someone can have and still live while hooked up
 	var/health_treshold = -200
+	///Overlays
 	var/mutable_appearance/monitor_overlay
+	///Determines if this is active or not.
 	var/active = TRUE
 
 /obj/machinery/life_support/Initialize()
@@ -77,13 +82,16 @@
 /obj/machinery/life_support/proc/deactivate()
 	attached.remove_status_effect(STATUS_EFFECT_LIFE_SUPPORT, STASIS_MACHINE_EFFECT)
 	attached.update_stat()
-	use_power = POWER_IDLE
+	use_power = IDLE_POWER_USE
 
 /obj/machinery/life_support/process()
 	update_overlays()
 	update_icon()
 
 	if(!attached || !active)
+		return PROCESS_KILL
+	if(NOPOWER || BROKEN)
+		deactivate()
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))

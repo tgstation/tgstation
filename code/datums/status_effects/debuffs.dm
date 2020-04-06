@@ -158,8 +158,8 @@
 	update_time_of_death()
 
 /datum/status_effect/grouped/life_support/on_remove()
-	REMOVE_TRAIT(attached,TRAIT_NOCRITDAMAGE,"life_support")
-	REMOVE_TRAIT(attached,TRAIT_NODEATH,"life_support")
+	REMOVE_TRAIT(owner,TRAIT_NOCRITDAMAGE,"life_support")
+	REMOVE_TRAIT(owner,TRAIT_NODEATH,"life_support")
 	update_time_of_death()
 	return ..()
 
