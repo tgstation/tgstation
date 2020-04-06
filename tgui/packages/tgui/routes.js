@@ -81,6 +81,7 @@ import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosCyborgRemoteMonitor } from './interfaces/NtosCyborgRemoteMonitor';
 import { NtosFileManager } from './interfaces/NtosFileManager';
 import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
@@ -480,6 +481,12 @@ const ROUTES = {
   },
   ntos_crew_manifest: {
     component: () => NtosCrewManifest,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_cyborg_monitor: {
+    component: () => NtosCyborgRemoteMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
