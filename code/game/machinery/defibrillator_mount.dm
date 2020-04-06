@@ -46,7 +46,7 @@
 
 	if(defib.powered)
 		. += (defib.safety ? "online" : "emagged")
-		var/ratio = defib.cell.charge / defib.cell.maxcharge
+		var/ratio = defib.get_cell().charge / defib.get_cell().maxcharge
 		ratio = CEILING(ratio * 4, 1) * 25
 		. += "charge[ratio]"
 
@@ -76,7 +76,7 @@
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		var/obj/item/defibrillator/new_defib = I
-		if(!new_defib.cell)
+		if(!new_defib.get_cell())
 			to_chat(user, "<span class='warning'>Only defibrilators containing a cell can be hooked up to [src]!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
@@ -167,9 +167,9 @@
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 /obj/machinery/defibrillator_mount/charging/process()
-	if(defib.cell.charge < defib.cell.maxcharge && is_operational())
+	if(defib.get_cell().charge < defib.get_cell().maxcharge && is_operational())
 		use_power(100)
-		defib.cell.give(80)
+		defib.get_cell().give(80)
 		update_icon()
 
 //wallframe, for attaching the mounts easily
