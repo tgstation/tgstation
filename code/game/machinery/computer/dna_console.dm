@@ -123,7 +123,7 @@
 	/// Used for setting tgui data - List of diskette stored mutations
 	var/list/tgui_diskette_mutations = list()
 	/// Used for setting tgui data - List of DNA Console chromosomes
-	var/list/tgui_scanner_chromosomes = list()
+	var/list/tgui_console_chromosomes = list()
 	/// Used for setting tgui data - List of occupant mutations
 	var/list/tgui_genetic_makeup = list()
 	/// Used for setting tgui data - List of occupant mutations
