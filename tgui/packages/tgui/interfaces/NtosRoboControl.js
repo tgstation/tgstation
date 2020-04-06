@@ -1,4 +1,3 @@
-import { multiline } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section, Tabs } from '../components';
@@ -17,14 +16,14 @@ export const NtosRoboControl = props => {
       buttons={(
         <Button
           content="Eject ID"
-          onClick={() => act('ejectcard')} 
+          onClick={() => act('ejectcard')}
         />
       )}>
       <Box>
         Id Card: {data.id_owner}
       </Box>
       <Box>
-        Bots detected in range: {data.botcount} 
+        Bots detected in range: {data.botcount}
       </Box>
       <Section>
         {bots.map(robot => (
@@ -32,7 +31,8 @@ export const NtosRoboControl = props => {
             key={robot.name}>
             <Grid.Column>
               <Box
-                backgroundColor={robot.mule_check === 1? "#6e4b0e" : "#342963"}>
+                backgroundColor={robot.mule_check === 1? "#6e4b0e" : "#342963"}
+                m={1}>
                 <Section
                   title={robot.name}>
                   <Box>
@@ -45,15 +45,37 @@ export const NtosRoboControl = props => {
                     Status: {robot.mode}
                   </Box>
                   {robot.mule_check === 1 &&(
-                    <Box>
-                      Loaded Cargo: {mules.load ? (mules.load) : "N/A"}
-                    </Box>
-                  )}
+                    mules.map(mulebot => (
+                      (robot.bot_ref === mulebot.mule_ref) &&(
+                        <Section
+                          key={mulebot.mule_ref}>
+                          <Box>
+                            Loaded Cargo: {data.load ? (data.load) : "N/A"}
+                          </Box>
+                          <Box>
+                            Home: {mulebot.home}
+                          </Box>
+                          <Box>
+                            Destination: {mulebot.dest ? mulebot.dest: "N/A"}
+                          </Box>
+                          <ProgressBar
+                            value={mulebot.power}
+                            minValue={0}
+                            maxValue={100}
+                            ranges={{
+                              good: [60, Infinity],
+                              average: [20, 59],
+                              bad: [-Infinity, 19],
+                            }}>
+                            Power at {mulebot.power}%
+                          </ProgressBar>
+                        </Section>
+                      ))))}
                 </Section>
               </Box>
             </Grid.Column>
             <Grid.Column>
-              <Box>
+              <Box m={1}>
                 {robot.mule_check === 1 &&(
                   mules.map(mulebot => (
                     (robot.bot_ref === mulebot.mule_ref) &&(
@@ -100,19 +122,19 @@ export const NtosRoboControl = props => {
                           })} />
                         <Button.Checkbox
                           content="Toggle Auto Return"
-                          checked={autoReturn}
+                          checked={mulebot.autoReturn ? true : false}
                           onClick={() => act('autoret', {
                             robot: mulebot.mule_ref,
                           })} />
                         <Button.Checkbox
                           content="Toggle Auto Pickup"
-                          checked={autoPickup}
+                          checked={mulebot.autoPickup ? true : false}
                           onClick={() => act('autopick', {
                             robot: mulebot.mule_ref,
                           })} />
                         <Button.Checkbox
                           content="Toggle Delivery Report"
-                          checked={reportDelivery}
+                          checked={mulebot.reportDelivery ? true : false}
                           onClick={() => act('report', {
                             robot: mulebot.mule_ref,
                           })} />
@@ -120,7 +142,7 @@ export const NtosRoboControl = props => {
                     )
                   ))
                 )}
-                <Box m={1} />
+                <Box />
                 {robot.mule_check === 0 && (
                   <Box
                     textAlign="center">
@@ -150,7 +172,7 @@ export const NtosRoboControl = props => {
             </Grid.Column>
           </Grid>
         ))}
-		
+
       </Section>
     </Section>
   );
