@@ -1,0 +1,5 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - bugfix: "A maintenance door in Delta's Service Hall has been changed from general maintenance access, to service job access, and renamed accordingly."
+  - tweak: "On Delta, the door leading to the Service Hall from the theater is now labeled \"Service Hall\" instead of \"Theater Backstage\", and all of service is now able to use it."
