@@ -363,7 +363,7 @@
 
 		if(C && R)
 			if(C.reagent_check(R) != TRUE)
-				if((liverless && !R.self_consuming) || R.overrides_processing) //need to be metabolized or we're specifically overriding it's processing.
+				if((liverless && !R.self_consuming) || R.overrides_processing) //need to be metabolized or we're specifically overriding its processing.
 					continue
 				if(!R.metabolizing)
 					R.metabolizing = TRUE

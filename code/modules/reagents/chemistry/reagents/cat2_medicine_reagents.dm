@@ -297,7 +297,7 @@
 	..()
 	return TRUE
 
-#define MULTIVER_TOXINBTFO	3 //magic number that thresholds toxin shutdown.
+#define MULTIVER_TOXINBTFO	5 //magic number that thresholds toxin shutdown.
 
 /datum/reagent/medicine/C2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
@@ -314,26 +314,25 @@
 		if(istype(the_reagent, /datum/reagent/medicine))
 			multibonus += 1
 		else if(istype(the_reagent, /datum/reagent/toxin))
-			multibonus += 0.5
+			multibonus += 0.2
 		else
 			multibonus += 0.1
 
 	M.adjustToxLoss(-0.1 * multibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, max(2-(multibonus*0.5), 0.5))
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, max(3-multibonus, 0.5))
 
 	// purging magic
 	for(var/r2 in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
-		var/amount2purge = 0.1
+		var/amount2purge = 0.1*multibonus
 		if(istype(the_reagent2,/datum/reagent/toxin))
-			amount2purge *= (2*multibonus) //very good antitox
+			amount2purge *= 2
 			if(multibonus >= MULTIVER_TOXINBTFO)
 				the_reagent2.overrides_processing = TRUE
 				LAZYOR(inhibited_toxins, the_reagent2)
-
-		else if(multibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
+		else if(istype(the_reagent2, /datum/reagent/medicine) && multibonus >= (MULTIVER_TOXINBTFO*1.5)) // we don't purge meds unless we have a TON of uniques in our system
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
 
