@@ -102,6 +102,12 @@
 	else
 		return ..()
 
+/** Seed Pile
+ *  Takes stats from the seed, as dictated by the New proc, and assigned them to the datum's vars.
+ *  Name is the Seed's name.
+ *  All stats are taken from the seed's core stats.
+ *  Amount is the number of seeds present of that specific type.
+ **/
 /datum/seed_pile
 	var/name = ""
 	var/lifespan = 0	//Saved stats
