@@ -1,23 +1,37 @@
+/// Base timeout for creating mutation activators and other injectors
 #define INJECTOR_TIMEOUT 100
+/// Maximum number of genetic makeup storage slots in DNA Console
 #define NUMBER_OF_BUFFERS 3
+/// Timeout for DNA Scramble in DNA Consoles
 #define SCRAMBLE_TIMEOUT 600
-#define JOKER_TIMEOUT 12000 // 20 minutes
+/// Timeout for using the Joker feature to solve a gene in DNA Console
+#define JOKER_TIMEOUT 12000
+/// How much time DNA Scanner upgrade tiers remove from JOKER_TIMEOUT
 #define JOKER_UPGRADE 3000
 
+/// Maximum value for radiaton strength when pulsing enzymes
 #define RADIATION_STRENGTH_MAX 15
-#define RADIATION_STRENGTH_MULTIPLIER 1 // larger has more range
+/// Larger multipliers will affect the range of values when pulsing enzymes
+#define RADIATION_STRENGTH_MULTIPLIER 1
 
+/// Maximum value for the radiation pulse duration when pulsing enzymes
 #define RADIATION_DURATION_MAX 30
-#define RADIATION_ACCURACY_MULTIPLIER 3 // larger is less accurate
+/// Large values reduce pulse accuracy and may pulse other enzymes than selected
+#define RADIATION_ACCURACY_MULTIPLIER 3
 
+/// Special status indicating a scanner occupant is transforming eg. from monkey to human
 #define STATUS_TRANSFORMING 4
 
-// multiplier for how much radiation a test subject receives
+/// Multiplier for how much radiation received from DNA Console functionality
 #define RADIATION_IRRADIATION_MULTIPLIER 1
 
+/// Flag for the mutation ref search system. Search will include scanner occupant
 #define SEARCH_OCCUPANT 1
+/// Flag for the mutation ref search system. Search will include console storage
 #define SEARCH_STORED 2
+/// Flag for the mutation ref search system. Search will include diskette storage
 #define SEARCH_DISKETTE 4
+/// Flag for the mutation ref search system. Search will include advanced injector mutations
 #define SEARCH_ADV_INJ 8
 
 /obj/machinery/computer/scan_consolenew
@@ -33,61 +47,90 @@
 	active_power_usage = 400
 	light_color = LIGHT_COLOR_BLUE
 
+	/// Link to the techweb's stored research. Used to retrieve stored mutations
 	var/datum/techweb/stored_research
+	/// Maximum number of mutations that DNA Consoles are able to store
 	var/max_storage = 6
-	var/combine
+	/// Duration for enzyme radiation pulses
 	var/radduration = 2
+	/// Strength for enzyme radiation pulses
 	var/radstrength = 1
+	/// Maximum number of chromosomes that DNA Consoles are able to store.
 	var/max_chromosomes = 6
-	///Amount of UI/UEs we can store
+	/// Maximum number of enzymes we can store
 	var/list/genetic_makeup_buffer[NUMBER_OF_BUFFERS]
-	///mutations we have stored
+	/// List of all mutations stored on the DNA Console
 	var/list/stored_mutations = list()
-	///chromosomes we have stored
+	/// List of all chromosomes stored in the DNA Console
 	var/list/stored_chromosomes = list()
-	///combinations of injectors for the 'injector selection'. format is list("Elsa" = list(Cryokinesis, Geladikinesis), "The Hulk" = list(Hulk, Gigantism), etc) Glowy and the gang being an initialized datum
+	/// Assoc list of all advanced injectors. Keys are injector names. Values are lists of mutations.
 	var/list/list/injector_selection = list()
-	///max amount of selections you can make
+	/// Maximum number of advanced injectors that DNA Consoles store
 	var/max_injector_selections = 2
-	///hard-cap on the advanced dna injector
+	/// Maximum number of mutation that an advanced injector can store
 	var/max_injector_mutations = 10
-	///the max instability of the advanced injector.
+	/// Maximum total instability of all combined mutations allowed on an advanced injector
 	var/max_injector_instability = 50
 
-	var/injectorready = 0	//world timer cooldown var
+	/// World time when injectors are ready to be printed
+	var/injectorready = 0
+	/// World time when JOKER algorithm can be used in DNA Consoles
 	var/jokerready = 0
+	/// World time when Scramble can be used in DNA Consoles
 	var/scrambleready = 0
 
+	/// Currently stored genetic data diskette
 	var/obj/item/disk/data/diskette = null
 
+	/// Current delayed action, used for delayed enzyme transfer on scanner door close
 	var/list/delayed_action = null
 
+	/// Index of the enzyme being modified during delayed enzyme pulse operations
 	var/rad_pulse_index = 0
+	/// World time when the enzyme pulse should complete
 	var/rad_pulse_timer = 0
 
+	/// Used for setting tgui data - Whether the connected DNA Scanner is usable
 	var/can_use_scanner = FALSE
+	/// Used for setting tgui data - Whether the current DNA Scanner occupant is viable for genetic modification
 	var/is_viable_occupant = FALSE
+	/// Used for setting tgui data - Whether Scramble DNA is ready
 	var/is_scramble_ready = FALSE
+	/// Used for setting tgui data - Whether JOKER algorithm is ready
 	var/is_joker_ready = FALSE
+	/// Used for setting tgui data - Whether injectors are ready to be printed
 	var/is_injector_ready = FALSE
+	/// Used for setting tgui data - Wheher an enzyme pulse operation is ongoing
 	var/is_pulsing_rads = FALSE
+	/// Used for setting tgui data - Time until scramble is ready
 	var/time_to_scramble = 0
+	/// Used for setting tgui data - Time until joker is ready
 	var/time_to_joker = 0
+	/// Used for setting tgui data - Time until injectors are ready
 	var/time_to_injector = 0
+	/// Used for setting tgui data - Time until the enzyme pulse is complete
 	var/time_to_pulse = 0
+
+	/// Currently connected DNA Scanner
 	var/obj/machinery/dna_scannernew/connected_scanner = null
+	/// Current DNA Scanner occupant
 	var/mob/living/carbon/scanner_occupant = null
+
+	/// Used for setting tgui data - List of occupant mutations
 	var/list/tgui_occupant_mutations = list()
-	var/list/tgui_scanner_mutations = list()
+	/// Used for setting tgui data - List of DNA Console stored mutations
+	var/list/tgui_console_mutations = list()
+	/// Used for setting tgui data - List of diskette stored mutations
 	var/list/tgui_diskette_mutations = list()
+	/// Used for setting tgui data - List of DNA Console chromosomes
 	var/list/tgui_scanner_chromosomes = list()
+	/// Used for setting tgui data - List of occupant mutations
 	var/list/tgui_genetic_makeup = list()
+	/// Used for setting tgui data - List of occupant mutations
 	var/list/tgui_advinjector_mutations = list()
 
-	/**
-	 * State of view, i.e. which tab is currently active, or which
-	 * genome we're currently looking at.
-	 */
+
+	/// State of tgui view, i.e. which tab is currently active, or which genome we're currently looking at.
 	var/list/list/tgui_view_state = list()
 
 /obj/machinery/computer/scan_consolenew/process()
@@ -98,9 +141,6 @@
 	if((rad_pulse_index > 0) && (rad_pulse_timer <= world.time))
 		rad_pulse()
 		return
-
-	// TODO - Periodically check the connected DNA Scanner. Is it still there?
-	//  Is it still operational? Should we disconnect from it for any reason?
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	// Store chromosomes in the console if there's room
@@ -178,8 +218,6 @@
 	// We can also do some general state processing here too as it's a good
 	//  indication that a player is using the console.
 
-	// EFFICIENCY - Memory/performance tradeoff. Declaring some early vars for
-	//  commonly used checks.
 	var/scanner_op = scanner_operational()
 	var/can_modify_occ = can_modify_occupant()
 
@@ -299,10 +337,10 @@
 		data["diskMakeupBuffer"] = null
 
 	data["mutationCapacity"] = max_storage - LAZYLEN(stored_mutations)
-	//data["mutationStorage"] = tgui_scanner_mutations
-	data["storage"]["console"] = tgui_scanner_mutations
+	//data["mutationStorage"] = tgui_console_mutations
+	data["storage"]["console"] = tgui_console_mutations
 	data["chromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
-	data["chromoStorage"] = tgui_scanner_chromosomes
+	data["chromoStorage"] = tgui_console_chromosomes
 	data["makeupCapacity"] = NUMBER_OF_BUFFERS
 	data["makeupStorage"] = tgui_genetic_makeup
 
@@ -962,28 +1000,6 @@
 			diskette.genetic_makeup_buffer.Cut()
 			return
 
-		// UNUSED
-		/*
-		// Modifies the label of a genetic makeup buffer entry
-		// ---------------------------------------------------------------------- //
-		// params["index"] - The BYOND index of the console genetic makeup buffer to
-		//  modify the label of. Expected as text string, converted to number later
-		// params["label"] - The new label to apply
-		if("set_makeup_label")
-			var/buffer_index = text2num(params["index"])
-			buffer_index = clamp(buffer_index, 1, NUMBER_OF_BUFFERS)
-
-			var/list/buffer_slot = genetic_makeup_buffer[buffer_index]
-
-			// GUARD CHECK - This shouldn't be possible to execute this on a null
-			//  buffer. Unexpected resut
-			if(!istype(buffer_slot))
-				return
-
-			buffer_slot[buffer_index]["label"] = trim(sanitize(params["label"]))
-			return
-		*/
-
 		// Saves the scanner occupant's genetic makeup to a given console buffer
 		// ---------------------------------------------------------------------- //
 		// params["index"] - The BYOND index of the console genetic makeup buffer to
@@ -1206,6 +1222,7 @@
 			var/len = length_char(scanner_occupant.dna.uni_identity)
 			rad_pulse_timer = world.time + (radduration*10)
 			rad_pulse_index = WRAP(text2num(params["index"]), 1, len+1)
+			begin_processing()
 			return
 
 		// Cancels the delayed action - In this context it is not the radiation
@@ -1400,8 +1417,16 @@
 			return TRUE
 	return FALSE
 
-// Applies the type of a specific genetic makeup buffer to the current scanner
-//  occupant
+/**
+  * Applies the enzyme buffer to the current scanner occupant
+  *
+  * Applies the type of a specific genetic makeup buffer to the current scanner
+	* occupant
+	*
+  * Arguments:
+  * * type - "ui"/"ue"/"mixed" - Which part of the enzyme buffer to apply
+  * * buffer_slot - Index of the enzyme buffer to apply
+  */
 /obj/machinery/computer/scan_consolenew/proc/apply_genetic_makeup(type, buffer_slot)
 	// Note - This proc is only called from code that has already performed the
 	//  necessary occupant guard checks. If you call this code yourself, please
@@ -1456,17 +1481,22 @@
 			return TRUE
 
 	return FALSE
-
-// Checks if there is a connected DNA Scanner that is operational
+/**
+  * Checks if there is a connected DNA Scanner that is operational
+  */
 /obj/machinery/computer/scan_consolenew/proc/scanner_operational()
 	if(!connected_scanner)
 		return FALSE
 
 	return (connected_scanner && connected_scanner.is_operational())
 
-// Checks if there is a valid subject in the DNA Scanner that can be genetically
-//  modified. Will set the scanner occupant var as part of this check.
-// Requires that the scanner can be operated and will return early if it can't
+/**
+  * Checks if there is a valid DNA Scanner occupant for genetic modification
+  *
+	* Checks if there is a valid subject in the DNA Scanner that can be genetically
+	* modified. Will set the scanner occupant var as part of this check.
+	* Requires that the scanner can be operated and will return early if it can't
+  */
 /obj/machinery/computer/scan_consolenew/proc/can_modify_occupant()
 	// GUARD CHECK - We always want to perform the scanner operational check as
 	//  part of checking if we can modify the occupant.
@@ -1490,7 +1520,13 @@
 
 	return FALSE
 
-// Checks for adjacent DNA scanners and connects when it finds a viable one
+/**
+  * Checks for adjacent DNA scanners and connects when it finds a viable one
+  *
+	* Seearches cardinal directions in order. Stops when it finds a viable DNA Scanner.
+	* Will connect to a broken scanner if no functional scanner is available.
+	* Links itself to the DNA Scanner to receive door open and close events.
+  */
 /obj/machinery/computer/scan_consolenew/proc/connect_to_scanner()
 	var/obj/machinery/dna_scannernew/test_scanner = null
 	var/obj/machinery/dna_scannernew/broken_scanner = null
@@ -1515,7 +1551,12 @@
 		connected_scanner = broken_scanner
 		connected_scanner.linked_console = src
 
-// DNA Scanners call this code on their connected DNA Console when they close
+/**
+  * Called by connected DNA Scanners when their doors close.
+  *
+	* Sets the new scanner occupant and completes delayed enzyme transfer if one
+	* is queued.
+  */
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_close()
 	// Set the appropriate occupant now the scanner is closed
 	if(connected_scanner.occupant)
@@ -1535,15 +1576,23 @@
 			to_chat(connected_scanner.occupant, "<span class='notice'>[src] activates!</span>")
 		delayed_action = null
 
-// Called by DNA Scanners when they open
+/**
+  * Called by connected DNA Scanners when their doors open.
+  *
+	* Clears enzyme pulse operations, stops processing and nulls the current
+	* scanner occupant var.
+  */
 /obj/machinery/computer/scan_consolenew/proc/on_scanner_open()
 	// If we had a radiation pulse action ongoing, we want to stop this.
 	// Imagine it being like a microwave stopping when you open the door.
 	rad_pulse_index = 0
 	rad_pulse_timer = 0
+	end_processing()
 	scanner_occupant = null
 
-// Builds the genetic makeup list which will be sent to tgui interface
+/**
+  * Builds the genetic makeup list which will be sent to tgui interface.
+  */
 /obj/machinery/computer/scan_consolenew/proc/build_genetic_makeup_list()
 	// No code will ever null this list, we can safely Cut it.
 	tgui_genetic_makeup.Cut()
@@ -1554,13 +1603,19 @@
 		else
 			tgui_genetic_makeup["[i]"] = null
 
-// Builds all the genetic mutation information that is sent to tgui interface
+/**
+  * Builds the genetic makeup list which will be sent to tgui interface.
+	*
+	* Will iterate over the connected scanner occupant, DNA Console, inserted
+	* diskette and chromosomes and any advanced injectors, building the main data
+	* structures which get passed to the tgui interface.
+  */
 /obj/machinery/computer/scan_consolenew/proc/build_mutation_list(can_modify_occ)
 	// No code will ever null these lists. We can safely Cut them.
 	tgui_occupant_mutations.Cut()
 	tgui_diskette_mutations.Cut()
-	tgui_scanner_mutations.Cut()
-	tgui_scanner_chromosomes.Cut()
+	tgui_console_mutations.Cut()
+	tgui_console_chromosomes.Cut()
 	tgui_advinjector_mutations.Cut()
 
   // ------------------------------------------------------------------------ //
@@ -1686,7 +1741,6 @@
 
 		mutation_data["Alias"] = A.alias
 		mutation_data["Name"] = HM.name
-		//mutation_data["Sequence"] = GET_SEQUENCE(HM.type)
 		mutation_data["Source"] = "console"
 		mutation_data["Active"] = TRUE
 		mutation_data["Description"] = HM.desc
@@ -1700,7 +1754,7 @@
 			mutation_data["AppliedChromo"] = HM.chromosome_name
 			mutation_data["ValidStoredChromos"] = build_chrom_list(HM)
 
-		tgui_scanner_mutations += list(mutation_data)
+		tgui_console_mutations += list(mutation_data)
 
 	// ------------------------------------------------------------------------ //
 	// Build the list of chromosomes stored within the DNA Console
@@ -1712,7 +1766,7 @@
 		chromo_data["Description"] = CM.desc
 		chromo_data["Index"] = chrom_index
 
-		tgui_scanner_chromosomes += list(chromo_data)
+		tgui_console_chromosomes += list(chromo_data)
 		++chrom_index
 
 	// ------------------------------------------------------------------------ //
@@ -1770,8 +1824,16 @@
 				"mutations" = mutations,
 			))
 
-// Builds a list of all chromosomes stored in the console that can actually be
-//  applied to a given mutation
+/**
+  * Takes any given chromosome and calculates chromosome compatibility
+	*
+	* Will iterate over the stored chromosomes in the DNA Console and will check
+	* whether it can be applied to the supplied mutation. Then returns a list of
+	* names of chromosomes that were compatible.
+	*
+	* Arguments:
+  * * mutation - The mutation to check chromosome compatibility with
+  */
 /obj/machinery/computer/scan_consolenew/proc/build_chrom_list(mutation)
 	var/list/chromosomes = list()
 
@@ -1781,9 +1843,15 @@
 
 	return chromosomes
 
-
-// Checks wether a given mutation's genetic sequence has been completed and
-//  discovers it if appropriate
+/**
+  * Checks whether a mutation alias has been discovered
+	*
+	* Checks whether a given mutation's genetic sequence has been completed and
+	* discovers it if appropriate
+	*
+	* Arguments:
+  * * alias - Alias of the mutation to check (ie "Mutation 51" or "Mutation 12")
+  */
 /obj/machinery/computer/scan_consolenew/proc/check_discovery(alias)
 	// Note - All code paths that call this have already done checks on the
 	//  current occupant to prevent cheese and other abuses. If you call this
@@ -1813,8 +1881,16 @@
 
 	return FALSE
 
-// Takes an ATOM Ref and searches the appropriate mutation buffers and storage
-//  vars to try and find the associated mutation.
+/**
+  * Find a mutation from various storage locations via ATOM ref
+	*
+	* Takes an ATOM Ref and searches the appropriate mutation buffers and storage
+	* vars to try and find the associated mutation.
+	*
+	* Arguments:
+  * * ref - ATOM ref of the mutation to locate
+	* * target_flags - Flags for storage mediums to search, see #defines
+  */
 /obj/machinery/computer/scan_consolenew/proc/get_mut_by_ref(ref, target_flags)
 	var/mutation
 
@@ -1843,16 +1919,30 @@
 
 	return null
 
-// Randomises the pulse accuracy based on the pulse duration for genetic makeup
-//  modification
-// This is donor code from the old DNA Console.
+/**
+  * Creates a randomised accuracy value for the enzyme pulse functionality.
+	*
+	* Donor code from previous DNA Console iteration.
+	*
+	* Arguments:
+  * * position - Index of the intended enzyme element to pulse
+	* * radduration - Duration of intended radiation pulse
+	* * number_of_blocks - Number of individual data blocks in the pulsed enzyme
+  */
 /obj/machinery/computer/scan_consolenew/proc/randomize_radiation_accuracy(position, radduration, number_of_blocks)
 	var/val = round(gaussian(0, RADIATION_ACCURACY_MULTIPLIER/radduration) + position, 1)
 	return WRAP(val, 1, number_of_blocks+1)
 
-// Scrambles a Unique Identifier element as part of genetic makeup modification
-// This is donor code from the old DNA Console.
-/obj/machinery/computer/scan_consolenew/proc/scramble(input,rs,rd) //hexadecimal genetics. dont confuse with scramble button
+/**
+  * Scrambles an enzyme element value for the enzyme pulse functionality.
+	*
+	* Donor code from previous DNA Console iteration.
+	*
+	* Arguments:
+  * * input - Enzyme identity element to scramble, expected hex value
+	* * rs - Strength of radiation pulse, increases the range of possible outcomes
+  */
+/obj/machinery/computer/scan_consolenew/proc/scramble(input,rs)
 	var/length = length(input)
 	var/ran = gaussian(0, rs*RADIATION_STRENGTH_MULTIPLIER)
 	if(ran == 0)
@@ -1863,15 +1953,19 @@
 		ran = -round(-ran)	//positive, so ceiling it
 	return num2hex(WRAP(hex2num(input)+ran, 0, 16**length), length)
 
-// Performs the radiation pulse procedure for modifying Unique Identifiers as a
-//  part of genetic makeup.
-// This is donor code from the old DNA Console.
+	/**
+	  * Performs the enzyme radiation pulse.
+		*
+		* Donor code from previous DNA Console iteration. Called from process() when
+		* there is a radiation pulse in progress. Ends processing.
+	  */
 /obj/machinery/computer/scan_consolenew/proc/rad_pulse()
 	// GUARD CHECK - Can we genetically modify the occupant? Includes scanner
 	//  operational guard checks.
 	// If we can't, abort the procedure.
 	if(!can_modify_occupant())
 		rad_pulse_index = 0
+		end_processing()
 		return
 
 	var/len = length_char(scanner_occupant.dna.uni_identity)
@@ -1883,16 +1977,19 @@
 	scanner_occupant.updateappearance(mutations_overlay_update=1)
 
 	rad_pulse_index = 0
+	end_processing()
 	return
 
-// Sets the default state for the tgui interface.
+/**
+  * Sets the default state for the tgui interface.
+  */
 /obj/machinery/computer/scan_consolenew/proc/set_default_state()
 	tgui_view_state["consoleMode"] = "storage"
 	tgui_view_state["storageMode"] = "console"
 	tgui_view_state["storageConsSubMode"] = "mutations"
 	tgui_view_state["storageDiskSubMode"] = "mutations"
 
-/////////////////////////// DNA MACHINES
+
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS
 #undef SCRAMBLE_TIMEOUT
