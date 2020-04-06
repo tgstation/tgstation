@@ -80,6 +80,7 @@
 		auto_deadmin_on_login()
 
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
+	SSdemo.write_event_line("setmob [client.ckey] \ref[src]")
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 
 /**
