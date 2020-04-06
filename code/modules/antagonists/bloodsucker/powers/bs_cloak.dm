@@ -49,16 +49,16 @@
 		return FALSE
 	// Must be CONSCIOUS
 	if (user.stat > CONSCIOUS)
-		to_chat(owner, "<span class='warning'>DEBUG: FAIL STAT </span>")
+		//to_chat(owner, "<span class='warning'>DEBUG: FAIL STAT </span>")
 		return FALSE
 	// Must be SAME LOCATION
 	var/turf/T = owner.loc
 	if (!upgrade_canMove && T != remember_start_loc)
-		to_chat(owner, "<span class='warning'>DEBUG: FAIL MOVE [T] vs [remember_start_loc] </span>")
+		//to_chat(owner, "<span class='warning'>DEBUG: FAIL MOVE [T] vs [remember_start_loc] </span>")
 		return FALSE
 	// Must be DARK
 	if(istype(T) && T.get_lumcount() > light_min)
-		to_chat(owner, "<span class='warning'>DEBUG: FAIL DARK</span>")
+		//to_chat(owner, "<span class='warning'>DEBUG: FAIL DARK</span>")
 		return FALSE
 	return TRUE
 
