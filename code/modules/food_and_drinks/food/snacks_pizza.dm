@@ -220,3 +220,12 @@
 	filling_color = "#FFFFFF"
 	foodtype = GRAIN | VEGETABLES
 
+/obj/item/reagent_containers/food/snacks/pizzaslice/moldy
+	name = "moldy pizza slice"
+	desc = "This was once a perfectly good slice of pizza pie, but now it lies here, rancid and bursting with spores. What a bummer! But we should not dwell on the past, only look towards the future."
+	icon_state = "moldy_slice"
+	filling_color = "#e9d075"
+	bitesize = 4
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/peptides = 3, /datum/reagent/consumable/tomatojuice = 1, /datum/reagent/toxin/amatoxin = 2)
+	tastes = list("stale crust" = 1, "rancid cheese" = 2, "mushroom" = 1)
+	foodtype = GRAIN | VEGETABLES | DAIRY | GROSS

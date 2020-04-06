@@ -5601,8 +5601,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "ane" = (
@@ -6504,7 +6503,6 @@
 /area/construction/mining/aux_base)
 "apL" = (
 /obj/structure/table,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
 /obj/item/stock_parts/capacitor,
 /turf/open/floor/plasteel,
@@ -7495,8 +7493,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "asP" = (
-/obj/structure/chair/stool,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "asQ" = (
@@ -8864,13 +8861,15 @@
 /area/maintenance/starboard/fore)
 "awE" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awF" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/structure/closet,
+/obj/effect/spawner/lootdrop/maintenance{
+	lootcount = 2;
+	name = "2maintenance loot spawner"
+	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "awG" = (
@@ -10229,9 +10228,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aAr" = (
-/obj/structure/closet,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
 "aAs" = (
@@ -20401,9 +20398,9 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "bbt" = (
-/obj/structure/closet/crate,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "bbu" = (
@@ -23388,11 +23385,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bji" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bjk" = (
@@ -24488,6 +24484,7 @@
 /area/crew_quarters/dorms)
 "blV" = (
 /obj/machinery/light/small,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "blW" = (
@@ -31047,16 +31044,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/science/storage)
-"bDg" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/three,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
-"bDh" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "bDi" = (
 /obj/structure/sign/warning/docking{
 	pixel_y = 32
@@ -31605,11 +31592,6 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/turf/open/floor/plating,
-/area/maintenance/starboard)
-"bEF" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/four,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "bEG" = (
@@ -32420,6 +32402,7 @@
 "bGW" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bGX" = (
@@ -33891,7 +33874,6 @@
 /area/quartermaster/sorting)
 "bKQ" = (
 /obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
@@ -38506,8 +38488,7 @@
 /turf/open/floor/engine/plasma,
 /area/engine/atmos)
 "bXZ" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bYa" = (
@@ -39063,19 +39044,20 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bZR" = (
 /obj/machinery/airalarm{
 	pixel_y = 23
 	},
-/obj/item/wrench,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bZS" = (
@@ -39873,11 +39855,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/airless/solarpanel,
 /area/solar/port/aft)
-"ccd" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "cce" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -42031,11 +42008,6 @@
 /obj/structure/cable,
 /turf/open/space/basic,
 /area/solar/port/aft)
-"cjI" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "cjJ" = (
 /turf/closed/wall/r_wall,
 /area/engine/engine_smes)
@@ -45566,7 +45538,6 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table_frame,
 /obj/item/wirerod,
-/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "cwz" = (
@@ -46798,6 +46769,13 @@
 /obj/machinery/deepfryer,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"cCt" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "cCB" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 10
@@ -50469,6 +50447,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/security/courtroom)
+"jjD" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/starboard/fore)
 "jly" = (
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
@@ -53437,8 +53419,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "ryM" = (
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "rAt" = (
@@ -53846,11 +53827,10 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "sLv" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
 "sNJ" = (
@@ -54239,6 +54219,10 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/kitchen)
+"tMo" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/starboard)
 "tPW" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "xenobio7";
@@ -54384,6 +54368,10 @@
 /obj/structure/rack,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
+"uip" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/port/aft)
 "ujh" = (
 /obj/machinery/button/door{
 	id = "xenobio1";
@@ -70559,7 +70547,7 @@ aaa
 aaa
 alU
 aoT
-amC
+wWp
 aqO
 arG
 asc
@@ -73393,7 +73381,7 @@ amC
 arN
 alU
 avW
-amC
+wWp
 ayx
 atO
 aAL
@@ -73677,7 +73665,7 @@ bbO
 aPA
 bdM
 aPz
-bgt
+uNv
 bhS
 bjk
 aPz
@@ -74160,7 +74148,7 @@ aoV
 ali
 amC
 alU
-arN
+wWp
 atU
 alU
 atU
@@ -76037,7 +76025,7 @@ bCq
 cgD
 bUt
 bHE
-cjI
+uip
 bLv
 aaa
 aaa
@@ -76721,7 +76709,7 @@ aaa
 aaa
 aaa
 ali
-aKY
+vzU
 amC
 anp
 amC
@@ -76797,7 +76785,7 @@ bVF
 bWA
 bXy
 bYx
-bWz
+cCt
 bCq
 bHE
 bCq
@@ -77056,7 +77044,7 @@ bHE
 bHE
 bLu
 bCq
-bLu
+uip
 bCq
 cdb
 bSs
@@ -77560,7 +77548,7 @@ aaH
 aaH
 bCq
 bHE
-bRg
+bHE
 bTx
 bCq
 bHE
@@ -79354,7 +79342,7 @@ bCq
 bHD
 bJe
 bCq
-bLu
+uip
 bHE
 bHE
 bHE
@@ -79897,7 +79885,7 @@ bRg
 bCq
 tgF
 bPZ
-ccd
+uip
 bCq
 swV
 cqL
@@ -83732,7 +83720,7 @@ cjL
 cCb
 bNI
 bEP
-bLu
+uip
 bVJ
 bVJ
 bVJ
@@ -94215,7 +94203,7 @@ arj
 anf
 anf
 anf
-awD
+jjD
 alP
 aGB
 aIf
@@ -95237,7 +95225,7 @@ alO
 awD
 anf
 anf
-awD
+anf
 anf
 aoP
 alP
@@ -96315,7 +96303,7 @@ bFG
 bCY
 bFP
 bBN
-bKQ
+bKT
 bJs
 bNd
 bOt
@@ -97297,7 +97285,7 @@ awH
 arr
 alP
 aAr
-anf
+jjD
 alP
 aaa
 aFq
@@ -97554,7 +97542,7 @@ aoP
 arr
 azr
 anf
-atw
+anf
 alP
 alP
 aFo
@@ -98058,7 +98046,7 @@ aaa
 aaa
 aaa
 apC
-anf
+jjD
 anf
 alP
 atx
@@ -98572,7 +98560,7 @@ aaf
 aaf
 aaf
 apC
-arA
+anf
 anf
 asx
 anf
@@ -101493,7 +101481,7 @@ mtK
 mtK
 cmn
 cmn
-cmn
+ryM
 cOT
 aaa
 aaa
@@ -102685,7 +102673,7 @@ alP
 anf
 apE
 anf
-anf
+jjD
 asB
 asB
 asB
@@ -102942,7 +102930,7 @@ alP
 aoQ
 alP
 aqE
-arA
+anf
 asB
 atG
 auL
@@ -105561,8 +105549,8 @@ ink
 pSN
 ddy
 bon
+tMo
 btp
-bEF
 bky
 bEO
 bGK
@@ -107103,7 +107091,7 @@ bvQ
 bxt
 cNT
 bCm
-bDh
+btp
 bEs
 bGd
 bHv
@@ -107112,7 +107100,7 @@ bKe
 bLm
 bEs
 rmX
-xIa
+cdV
 vxh
 cNW
 aaa
@@ -107360,7 +107348,7 @@ brG
 cNR
 brG
 brG
-bDg
+tMo
 bEs
 bGc
 bGc

@@ -6601,14 +6601,6 @@
 /obj/item/storage/toolbox/emergency,
 /turf/open/floor/plating,
 /area/security/prison)
-"aps" = (
-/obj/structure/disposalpipe/segment,
-/obj/effect/spawner/lootdrop/crate_spawner,
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
-/turf/open/floor/plating,
-/area/maintenance/department/security)
 "apt" = (
 /obj/structure/table,
 /obj/item/book/manual/wiki/cooking_to_serve_man,
@@ -7229,15 +7221,10 @@
 /area/security/warden)
 "aqN" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/closet/crate,
 /obj/structure/cable,
-/obj/item/relic,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "aqO" = (
@@ -7274,11 +7261,7 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aqQ" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aqR" = (
@@ -9817,6 +9800,7 @@
 /obj/structure/disposalpipe/trunk/multiz{
 	dir = 8
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "awC" = (
@@ -12640,10 +12624,6 @@
 /area/ai_monitored/turret_protected/aisat/hallway)
 "aCU" = (
 /obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
 /obj/item/binoculars,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
@@ -18517,11 +18497,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/genetics)
-"aQE" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/plating,
-/area/maintenance/fore)
 "aQF" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/yellow{
@@ -32928,12 +32903,8 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "buu" = (
-/obj/structure/closet/crate,
 /obj/effect/decal/cleanable/cobweb,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "buv" = (
@@ -33436,9 +33407,8 @@
 /turf/open/floor/wood,
 /area/library)
 "bvv" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance/two,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
 "bvw" = (
@@ -41008,14 +40978,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/security)
-"bLQ" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bLR" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
@@ -41988,31 +41950,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"bQN" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
 "bQO" = (
-/obj/structure/closet/crate,
 /obj/effect/turf_decal/bot,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/starboard)
-"bQQ" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port)
 "bQR" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -42416,11 +42358,7 @@
 /area/maintenance/fore)
 "bSa" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "bSb" = (
@@ -43071,12 +43009,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bTT" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
 /obj/structure/cable,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bTU" = (
@@ -43095,14 +43032,6 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
-"bTX" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/starboard)
 "bTY" = (
 /obj/machinery/power/apc{
 	areastring = "/area/medical/patients_rooms/room_a";
@@ -43636,14 +43565,9 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bWL" = (
-/obj/structure/closet/crate,
-/obj/item/book/manual/wiki/grenades,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
-/area/maintenance/port/fore)
+/area/space)
 "bWM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
@@ -43695,11 +43619,6 @@
 /obj/structure/closet/crate{
 	icon_state = "crateopen"
 	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"bWX" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "bWY" = (
@@ -43880,13 +43799,7 @@
 /area/maintenance/port/aft)
 "bXS" = (
 /obj/effect/decal/cleanable/cobweb/cobweb2,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 2;
-	name = "2maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bXT" = (
@@ -44002,8 +43915,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bZg" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bZi" = (
@@ -44020,12 +43932,8 @@
 "bZj" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/rack,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
 /obj/structure/cable,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bZk" = (
@@ -44033,15 +43941,6 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"bZm" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 8;
-	name = "8maintenance loot spawner"
-	},
-/obj/item/wrench,
-/turf/open/floor/plating,
-/area/maintenance/port/aft)
 "bZo" = (
 /obj/structure/closet/cardboard,
 /obj/effect/spawner/lootdrop/maintenance{
@@ -44074,20 +43973,12 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
 /obj/structure/cable,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bZr" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/department/security)
 "bZs" = (
@@ -44114,11 +44005,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bZv" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bZw" = (
@@ -45037,10 +44924,6 @@
 /obj/structure/closet,
 /obj/item/storage/box/lights/mixed,
 /obj/item/storage/box/lights/mixed,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
@@ -45381,20 +45264,7 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "cdU" = (
-/obj/structure/closet,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
-/turf/open/floor/plating,
-/area/maintenance/port/fore)
-"cec" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 8;
-	name = "8maintenance loot spawner"
-	},
-/obj/item/storage/box/lights/mixed,
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ced" = (
@@ -47035,15 +46905,10 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
-"giq" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 8;
-	name = "8maintenance loot spawner"
-	},
-/obj/item/relic,
+"gjn" = (
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
-/area/maintenance/aft)
+/area/maintenance/fore)
 "goF" = (
 /obj/structure/closet/crate/trashcart,
 /obj/item/trash/plate,
@@ -47074,6 +46939,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
+"grg" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/aft)
 "grn" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -47264,14 +47133,10 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "hnA" = (
-/obj/structure/closet/crate,
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 3;
-	name = "3maintenance loot spawner"
-	},
 /obj/structure/sign/warning/vacuum{
 	pixel_y = -32
 	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "hnC" = (
@@ -49561,13 +49426,7 @@
 	pixel_x = 4
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/crate{
-	icon_state = "crateopen"
-	},
-/obj/effect/spawner/lootdrop/maintenance{
-	lootcount = 4;
-	name = "4maintenance loot spawner"
-	},
+/obj/effect/loot_site_spawner,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "pjJ" = (
@@ -50359,6 +50218,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"rZl" = (
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/disposal)
 "rZp" = (
 /obj/structure/sign/warning/pods{
 	pixel_y = -32
@@ -51651,6 +51514,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
+"vYU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/loot_site_spawner,
+/turf/open/floor/plating,
+/area/maintenance/department/security)
 "vZj" = (
 /obj/machinery/atmospherics/components/unary/portables_connector{
 	dir = 1
@@ -68308,7 +68178,7 @@ bbI
 bTU
 aeS
 bWZ
-cec
+cdU
 aeS
 aaa
 aaa
@@ -69321,7 +69191,7 @@ aeS
 bQW
 bbq
 rxd
-bWX
+cdU
 cdT
 ano
 izK
@@ -72382,7 +72252,7 @@ mDH
 mDH
 mDH
 pNd
-bQN
+cdU
 acb
 ach
 ach
@@ -76298,7 +76168,7 @@ oWU
 bdC
 ash
 rEa
-bLQ
+bZg
 acB
 dom
 vDr
@@ -76555,7 +76425,7 @@ bMs
 bfq
 acB
 rEa
-bQQ
+bZg
 acB
 qmL
 caV
@@ -80162,7 +80032,7 @@ aBx
 aBx
 aUi
 vbf
-bZm
+bZv
 azH
 aaa
 aaa
@@ -81112,7 +80982,7 @@ aRA
 bQr
 aBC
 aJM
-aTA
+gjn
 bQr
 bQr
 bfS
@@ -83685,7 +83555,7 @@ bRE
 bRE
 bRE
 aGx
-bmx
+gjn
 acf
 aas
 aay
@@ -85750,7 +85620,7 @@ anH
 dNx
 bEZ
 aaT
-aQE
+gjn
 bQr
 aBC
 aaT
@@ -87364,7 +87234,7 @@ bRd
 bXu
 aAc
 bXv
-bXv
+grg
 bXv
 acj
 acj
@@ -89178,7 +89048,7 @@ bPb
 pjJ
 bPb
 bSE
-giq
+grg
 pwG
 aaa
 aaa
@@ -92265,7 +92135,7 @@ gaj
 bDv
 uqX
 ccI
-ccJ
+rZl
 sMp
 aal
 aal
@@ -93278,7 +93148,7 @@ lBd
 cav
 gdk
 bXv
-bXv
+grg
 bXv
 bXv
 bXv
@@ -94036,7 +93906,7 @@ aOP
 aOP
 bye
 aOp
-bXv
+grg
 biu
 big
 big
@@ -96032,7 +95902,7 @@ aTl
 bzD
 aak
 bta
-bTX
+aqQ
 abv
 aca
 btv
@@ -99433,7 +99303,7 @@ bgF
 bgH
 bgT
 acQ
-bGi
+vYU
 anZ
 aTE
 aaa
@@ -100203,7 +100073,7 @@ bfX
 aoB
 aoB
 aoB
-aps
+aoB
 aqN
 arN
 aQK
