@@ -1360,8 +1360,8 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "adu" = (
-/obj/structure/table/wood,
 /obj/item/storage/book/bible,
+/obj/structure/altar_of_gods,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
