@@ -603,8 +603,8 @@
 		if(!direct_target)
 			var/checking = NONE
 			if(!hit_stunned_targets)
-				checking = MOBILITY_USE | MOBILITY_MOVE | MOBILITY_STAND
-			if(!((L.mobility_flags & checking) == checking) || !(L.stat == CONSCIOUS))		//If they're able to 1. stand or 2. use items or 3. move, AND they are not softcrit,  they are not stunned enough to dodge projectiles passing over.
+				checking = MOBILITY_USE | MOBILITY_STAND | MOBILITY_MOVE
+			if(!(L.mobility_flags & checking) || L.stat == DEAD)		// If target not able to use items, move and stand - or if they're just dead, pass over.
 				return FALSE
 	return TRUE
 

@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - tweak: "Weapons should now spawn chambered and with full magazines."

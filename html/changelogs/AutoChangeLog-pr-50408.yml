@@ -1,0 +1,4 @@
+author: "ArcaneDefence"
+delete-after: True
+changes: 
+  - bugfix: "Strange reagent no longer deals toxin damage to slimepeople when reviving them. That was strange!"
