@@ -297,30 +297,65 @@
 	..()
 	return TRUE
 
+#define MULTIVER_TOXINBTFO	3 //magic number that thresholds toxin shutdown.
+
 /datum/reagent/medicine/C2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
-	description = "A chem-purger that becomes more effective the more unique medicines present. Slightly heals toxicity but causes lung damage (mitigatable by unique medicines)."
+	description = "A chem-purger that becomes more effective and less damaging the more unique reagents (preferably medicines) present in the bloodstream, but incurs lung damage. Having several reagents in the system act as a catalyst for Multiver to actively inhibit toxins, dissallowing their effects to manifest."
+	///List of chems currently being shut off by multiver
+	var/list/inhibited_toxins
 
 /datum/reagent/medicine/C2/multiver/on_mob_life(mob/living/carbon/human/M)
-	var/medibonus = 0 //it will always have itself which makes it REALLY start @ 1
+	var/multibonus = 0 //it will always have itself which makes it REALLY start @ 1
+
+	// calculate multibonus and do non purging items
 	for(var/r in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
-			medibonus += 1
-	M.adjustToxLoss(-0.2 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 1.5/medibonus : 1)
+			multibonus += 1
+		else if(istype(the_reagent, /datum/reagent/toxin))
+			multibonus += 0.5
+		else
+			multibonus += 0.1
+
+	M.adjustToxLoss(-0.1 * multibonus)
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, max(3-multibonus, 0.3))
+
+	// purging magic
 	for(var/r2 in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 0.1
-		if(istype(the_reagent2,/datum/reagent/toxin) || istype(the_reagent2,/datum/reagent/consumable/ethanol/))
-			amount2purge *= (5*medibonus) //very good antitox and antidrink (well just removing them) for roundstart availability
-		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
+		if(istype(the_reagent2,/datum/reagent/toxin))
+			amount2purge *= (2*multibonus) //very good antitox
+			if(multibonus >= MULTIVER_TOXINBTFO)
+				the_reagent2.overrides_processing = TRUE
+				LAZYOR(inhibited_toxins, the_reagent2)
+
+		else if(multibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
+
+	//shut off inhibition
+	if(multibonus < MULTIVER_TOXINBTFO)
+		stop_inhibition()
 	..()
 	return TRUE
+
+/datum/reagent/medicine/C2/multiver/on_mob_delete(mob/living/carbon/human/M)
+	stop_inhibition()
+	return ..()
+
+/**
+  * Handles removal of toxins added to the inhibition list. Proc'd since it's repeated across a couple of procs.
+  */
+/datum/reagent/medicine/C2/multiver/proc/stop_inhibition()
+	for(var/xx in inhibited_toxins)
+		var/datum/reagent/toxin/release_me = xx
+		if(!QDELETED(release_me))
+			release_me.overrides_processing = FALSE
+		LAZYREMOVE(inhibited_toxins, release_me)
 
 // Antitoxin binds plants pretty well. So the tox goes significantly down
 /datum/reagent/medicine/C2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)

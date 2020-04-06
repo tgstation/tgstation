@@ -50,8 +50,8 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 	var/can_synth = TRUE
 	///how fast the reagent is metabolized by the mob
 	var/metabolization_rate = REAGENTS_METABOLISM
-	/// appears unused
-	var/overrides_metab = 0
+	/// Overrides processing, preventing on_mob_life and on_mob_metabolize from occurring
+	var/overrides_processing = FALSE
 	/// above this overdoses happen
 	var/overdose_threshold = 0
 	/// above this amount addictions start
