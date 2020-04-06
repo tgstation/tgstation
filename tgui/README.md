@@ -105,6 +105,24 @@ with the console:
 > We prefer to keep it version controlled, so that people could build the
 > game just by using Dream Maker.
 
+## Troubleshooting
+
+**Development server doesn't find my BYOND cache!**
+
+This happens if your Documents folder in Windows has a custom location, for
+example in `E:\Libraries\Documents`. Development server has no knowledge
+of these non-standard locations, therefore you have to run the dev server
+with an additional environmental variable, with a full path to BYOND cache.
+
+```
+export BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
+bin/tgui --dev
+```
+
+Note that in Windows, you have to go through Advanced System Settings,
+System Properties and then open Environment Variables window to do the
+same thing. You may need to reboot after this.
+
 ## Project structure
 
 - `/packages` - Each folder here represents a self-contained Node module.
@@ -415,6 +433,17 @@ Dims surrounding area to emphasize content placed inside.
 Props:
 
 - See inherited props: [Box](#box)
+
+### `Divider`
+
+Draws a horizontal or vertical line, dividing a section into groups.
+Works like the good old `<hr>` element, but it's fancier.
+
+Props:
+
+- `vertical: boolean` - Divide content vertically.
+- `hidden: boolean` - Divider can divide content without creating a dividing
+line.
 
 ### `Dropdown`
 
