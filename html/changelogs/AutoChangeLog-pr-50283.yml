@@ -1,0 +1,5 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "Families wanted stars now only show up when you are involved in it, and announcements for wanted level changes"
+  - rscadd: "hovering over wanted stars tells you what they are through a tooltip"
