@@ -1,19 +1,23 @@
+GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
+						 			   /obj/item/stack/ore/iron = 100,
+						 			   /obj/item/stack/ore/plasma = 75,
+						 			   /obj/item/stack/ore/silver = 50,
+						 			   /obj/item/stack/ore/gold = 50,
+						 			   /obj/item/stack/ore/diamond = 25,
+						 			   /obj/item/stack/ore/bananium = 5,
+						 			   /obj/item/stack/ore/titanium = 75))
+
 /obj/structure/spawner/ice_moon
 	name = "cave entrance"
 	desc = "A hole in the ground, filled with monsters ready to defend it."
-
 	icon = 'icons/mob/nest.dmi'
 	icon_state = "hole"
-
 	faction = list("mining")
 	max_mobs = 3
 	max_integrity = 250
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/wolf)
-
 	move_resist = INFINITY
 	anchored = TRUE
-	/// If the tendril has already been destroyed / is being destroyed
-	var/destroying = FALSE
 
 /obj/structure/spawner/ice_moon/Initialize()
 	. = ..()
@@ -32,9 +36,6 @@
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 
 /obj/structure/spawner/ice_moon/deconstruct(disassembled)
-	if(destroying)
-		return
-	destroying = TRUE
 	destroy_effect()
 	drop_loot()
 	return ..()
@@ -53,17 +54,8 @@
   *
   */
 /obj/structure/spawner/ice_moon/proc/drop_loot()
-	// types with probability chance to appear out of 100
-	var/ore_types = list(/obj/item/stack/ore/uranium = 50,
-						 /obj/item/stack/ore/iron = 100,
-						 /obj/item/stack/ore/plasma = 75,
-						 /obj/item/stack/ore/silver = 50,
-						 /obj/item/stack/ore/gold = 50,
-						 /obj/item/stack/ore/diamond = 25,
-						 /obj/item/stack/ore/bananium = 5,
-						 /obj/item/stack/ore/titanium = 75)
-	for(var/type in ore_types)
-		var/chance = ore_types[type]
+	for(var/type in GLOB.ore_probability)
+		var/chance = GLOB.ore_probability[type]
 		if(!prob(chance))
 			continue
 		new type(loc, rand(5, 10))
@@ -82,18 +74,10 @@
 /obj/structure/spawner/ice_moon/demonic_portal
 	name = "demonic portal"
 	desc = "A portal that goes to another world, normal creatures couldn't survive there."
-
 	icon_state = "nether"
 	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_demon)
-	light_range = 3
+	light_range = 1
 	light_color = LIGHT_COLOR_RED
-
-/obj/structure/spawner/ice_moon/demonic_portal/destroy_effect()
-	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
-	visible_message("<span class='boldannounce'>[src] begins to collapse, cutting it off from this world!</span>")
-	animate(src, transform = matrix().Scale(0, 1), alpha = 50, time = 50)
-	sleep(50)
-	visible_message("<span class='warning'>Something slips out of [src]!</span>")
 
 /obj/structure/spawner/ice_moon/demonic_portal/clear_rock()
 	for(var/turf/F in RANGE_TURFS(3, src))
@@ -103,7 +87,36 @@
 			var/turf/closed/mineral/M = F
 			M.ScrapeAway(null, CHANGETURF_IGNORE_AIR)
 
+/obj/structure/spawner/ice_moon/demonic_portal/destroy_effect()
+	new /obj/effect/collapsing_demonic_portal(loc)
+
 /obj/structure/spawner/ice_moon/demonic_portal/drop_loot()
+	return
+
+/obj/structure/spawner/ice_moon/demonic_portal/ice_whelp
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_whelp)
+
+/obj/structure/spawner/ice_moon/demonic_portal/snowlegion
+	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow)
+
+/obj/effect/collapsing_demonic_portal
+	name = "collapsing demonic portal"
+	desc = "It's slowly fading!"
+	layer = TABLE_LAYER
+	icon = 'icons/mob/nest.dmi'
+	icon_state = "nether"
+	anchored = TRUE
+	density = TRUE
+
+/obj/effect/collapsing_demonic_portal/Initialize()
+	. = ..()
+	playsound(loc,'sound/effects/tendril_destroyed.ogg', 200, FALSE, 50, TRUE, TRUE)
+	visible_message("<span class='boldannounce'>[src] begins to collapse, cutting it off from this world!</span>")
+	animate(src, transform = matrix().Scale(0, 1), alpha = 50, time = 50)
+	addtimer(CALLBACK(src, .proc/collapse), 50)
+
+/obj/effect/collapsing_demonic_portal/proc/collapse()
+	visible_message("<span class='warning'>Something slips out of [src]!</span>")
 	var/loot = rand(1, 28)
 	switch(loot)
 		if(1)
@@ -164,9 +177,3 @@
 			new /obj/item/book/granter/spell/sacredflame(loc)
 		if(28)
 			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
-
-/obj/structure/spawner/ice_moon/demonic_portal/ice_whelp
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_whelp)
-
-/obj/structure/spawner/ice_moon/demonic_portal/snowlegion
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow)

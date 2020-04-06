@@ -185,8 +185,8 @@ Difficulty: Extremely Hard
 
 /// Called when the orb is exploding, shoots out projectiles
 /obj/projectile/frost_orb/proc/orb_explosion(projectile_speed_multiplier)
-	var/list/spread = list(0, 60, 120, 180, 240, 300)
-	for(var/angle in spread)
+	for(var/i in 0 to 5)
+		var/angle = i * 60
 		var/turf/startloc = get_turf(src)
 		var/turf/endloc = get_turf(original)
 		if(!startloc || !endloc)
@@ -306,7 +306,7 @@ Difficulty: Extremely Hard
 /obj/item/clothing/shoes/winterboots/ice_boots/speedy
 	name = "cursed ice hiking boots"
 	desc = "A pair of winter boots contractually made by a devil, they cannot be taken off once put on."
-	slowdown = SHOES_SLOWDOWN - 1
+	slowdown = SHOES_SPEED_SLIGHT
 
 /obj/item/clothing/shoes/winterboots/ice_boots/speedy/Initialize()
 	. = ..()
@@ -339,6 +339,7 @@ Difficulty: Extremely Hard
 	duration = 25
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
+	/// Stored icon overlay for the hit mob, removed when effect is removed
 	var/icon/cube
 
 /obj/screen/alert/status_effect/ice_block_talisman

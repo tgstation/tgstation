@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aaa" = (
 /turf/closed/mineral/random/snow/more_caves,
-/area/icemoon/surface/outdoors/unexplored/rivers)
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters)
 "aab" = (
 /obj/machinery/firealarm{
 	dir = 8;

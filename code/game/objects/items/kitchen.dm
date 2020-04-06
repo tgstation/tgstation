@@ -156,7 +156,7 @@
 
 /obj/item/kitchen/knife/bloodletter/attack(mob/living/M, mob/living/carbon/user)
 	. = ..()
-	if(!istype(M) || !(M.mob_biotypes & MOB_ORGANIC))
+	if(!. || !istype(M) || !(M.mob_biotypes & MOB_ORGANIC))
 		return
 	var/datum/status_effect/stacking/saw_bleed/bloodletting/B = M.has_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting)
 	if(!B)

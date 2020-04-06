@@ -265,7 +265,7 @@ Difficulty: Medium
 	dragon_fire_line(src, turfs)
 
 //fire line keeps going even if dragon is deleted
-/proc/dragon_fire_line(source, list/turfs)
+/proc/dragon_fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
@@ -273,7 +273,7 @@ Difficulty: Medium
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 		for(var/mob/living/L in T.contents)
-			if(L in hit_list || L == source)
+			if(L in hit_list || istype(L, source.type))
 				continue
 			hit_list += L
 			L.adjustFireLoss(20)

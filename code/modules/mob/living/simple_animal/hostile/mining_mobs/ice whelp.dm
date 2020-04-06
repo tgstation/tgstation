@@ -37,7 +37,7 @@
 	robust_searching = TRUE
 	footstep_type = FOOTSTEP_MOB_CLAW
 	/// How far the whelps fire can go
-	var/fire_range = 3
+	var/fire_range = 4
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/OpenFire()
 	var/turf/T = get_ranged_target_turf_direct(src, target, fire_range)
@@ -46,8 +46,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/Life()
 	. = ..()
-	if(target == null)
-		adjustHealth(-maxHealth*0.025)
+	if(!. || target)
+		return
+	adjustHealth(-maxHealth*0.025)
 
 /mob/living/simple_animal/hostile/asteroid/ice_whelp/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

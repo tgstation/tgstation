@@ -23,9 +23,9 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 	var/mob/living/L = thing
 	if(!L.client)
 		return
-	if(L.mind in GLOB.cursed_minds)
+	if(GLOB.cursed_minds[L.mind])
 		return
-	GLOB.cursed_minds += L.mind
+	GLOB.cursed_minds[L.mind] = TRUE
 	var/random_choice = pick("Mob", "Appearance")
 	switch(random_choice)
 		if("Mob")

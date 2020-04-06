@@ -64,8 +64,9 @@
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/Life()
 	. = ..()
-	if(target == null)
-		adjustHealth(-maxHealth*0.025)
+	if(!. || target)
+		return
+	adjustHealth(-maxHealth*0.025)
 
 /mob/living/simple_animal/hostile/asteroid/ice_demon/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

@@ -47,9 +47,10 @@
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/Life()
 	. = ..()
-	if(target == null)
-		adjustHealth(-maxHealth*0.025)
-		aggressive_message_said = FALSE
+	if(!. || target)
+		return
+	adjustHealth(-maxHealth*0.025)
+	aggressive_message_said = FALSE
 
 /mob/living/simple_animal/hostile/asteroid/polarbear/death(gibbed)
 	move_force = MOVE_FORCE_DEFAULT

@@ -25,6 +25,13 @@
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_surface_hotsprings.dmm"
 
+/datum/map_template/ruin/icemoon/fountain
+	name = "Fountain Hall"
+	id = "fountain"
+	description = "The fountain has a warning on the side. DANGER: May have undeclared side effects that only become obvious when implemented."
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "fountain_hall.dmm"
+
 // above and below ground together
 
 /datum/map_template/ruin/icemoon/mining_site
@@ -89,3 +96,11 @@
 	description = "Into the jaws of the beast."
 	suffix = "icemoon_underground_wendigo_cave.dmm"
 
+/datum/map_template/ruin/icemoon/underground/free_golem
+	name = "Free Golem Ship"
+	id = "golem-ship"
+	description = "Lumbering humanoids, made out of precious metals, move inside this ship. They frequently leave to mine more minerals, which they somehow turn into more of them. \
+	Seem very intent on research and individual liberty, and also geology-based naming?"
+	prefix = "_maps/RandomRuins/AnywhereRuins/"
+	suffix = "golem_ship.dmm"
+	allow_duplicates = FALSE

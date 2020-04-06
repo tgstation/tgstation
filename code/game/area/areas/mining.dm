@@ -177,6 +177,10 @@
 	name = "Icemoon Wastes"
 	outdoors = TRUE
 
+/area/icemoon/surface/outdoors/labor_camp
+	name = "Icemoon Labor Camp"
+	flora_allowed = FALSE
+
 /area/icemoon/surface/outdoors/unexplored //monsters and ruins spawn here
 	icon_state = "unexplored"
 	tunnel_allowed = TRUE
@@ -185,6 +189,5 @@
 /area/icemoon/surface/outdoors/unexplored/rivers // rivers spawn here
 	icon_state = "danger"
 
-/area/icemoon/surface/outdoors/explored
-	name = "Icemoon Labor Camp"
-	flora_allowed = FALSE
+/area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
+	mob_spawn_allowed = FALSE
