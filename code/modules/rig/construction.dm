@@ -1,4 +1,5 @@
 /obj/item/rig/construction
+	desc = "A part used in RIG construction."
 
 /obj/item/rig/construction/helmet
 	name = "RIG helmet"
@@ -19,10 +20,12 @@
 /obj/item/rig/construction/shell
 	name = "RIG shell"
 	icon_state = "rig-shell"
+	desc = "An empty RIG shell."
 
 /obj/item/rig/construction/core
 	name = "RIG core"
 	icon_state = "rig-core"
+	desc = "A mystical crystal able to convert cell power into energy usable by RIGs."
 
 /obj/item/rig/themed/armor
 	name = "RIG external armor"

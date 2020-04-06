@@ -32,7 +32,7 @@
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	///If the suit interface is broken
 	var/interface_break = FALSE
-	///How much part complexity can this RIG carry
+	///How much modules can this RIG carry without malfunctioning
 	var/complexity_max = 15
 	///If the RIG is really strong and you don't want it to be upgraded/has modules that shouldn't be obtainable by taking them out/has an infinite battery this prevents putting new parts in or old parts out
 	var/no_customization = FALSE
@@ -41,12 +41,12 @@
 	///RIG battery
 	var/obj/item/stock_parts/cell/cell
 
-/obj/item/rig/control/Initialize()
+/obj/item/rig/themed/control/Initialize()
 	..()
 	icon_state = "[theme]-module"
 	wires = new /datum/wires/rig(src)
 
-/obj/item/rig/control/Destroy()
+/obj/item/rig/themed/control/Destroy()
 	..()
 	QDEL_NULL(wires)
 
