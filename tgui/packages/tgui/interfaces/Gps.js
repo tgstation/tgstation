@@ -48,11 +48,10 @@ export const Gps = props => {
         )}>
         <LabeledList>
           <LabeledList.Item label="Tag">
-            <Input
-              value={tag}
-              onChange={(e, value) => act('rename', {
-                name: value,
-              })} />
+            <Button
+              icon="pencil-alt"
+              content={tag}
+              onClick={() => act('rename')} />
           </LabeledList.Item>
           <LabeledList.Item label="Scan Mode">
             <Button
