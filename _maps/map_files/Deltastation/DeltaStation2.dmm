@@ -20813,8 +20813,8 @@
 "aRW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	name = "Theatre Backstage";
-	req_access_txt = "46"
+	name = "Service Hall";
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -25205,8 +25205,8 @@
 /area/maintenance/port/fore)
 "aYz" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	name = "Service Hallway Maintenance Hatch";
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
