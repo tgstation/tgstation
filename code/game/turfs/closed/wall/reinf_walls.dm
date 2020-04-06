@@ -3,8 +3,8 @@
 	desc = "A huge chunk of reinforced metal used to separate rooms."
 	icon = 'icons/turf/walls/reinforced_wall.dmi'
 	icon_state = "r_wall"
-	turf_integrity = 200
-	max_integrity = 200
+	turf_heat_resistance = 100
+	turf_max_heat_resistance = 100
 	heat_capacity = 60000
 	thermal_conductivity = 0.0
 	opacity = 1
