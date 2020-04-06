@@ -8571,7 +8571,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/dorms)
 "avS" = (
-/obj/item/circuitboard/machine/stasis,
 /obj/item/wrench,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -28171,13 +28170,11 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "bwC" = (
-/obj/machinery/computer/med_data{
-	dir = 4
-	},
+/obj/machinery/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bwD" = (
-/obj/machinery/stasis,
+/obj/machinery/computer/med_data,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bwE" = (
@@ -28581,14 +28578,8 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/auxiliary)
 "bxN" = (
-/obj/structure/sink{
-	dir = 4;
-	pixel_x = -12;
-	pixel_y = 2
-	},
-/obj/structure/mirror{
-	pixel_x = -28
-	},
+/obj/structure/bed/pod,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bxO" = (
@@ -29197,9 +29188,8 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/machinery/shower{
-	dir = 4
-	},
+/obj/structure/bed/pod,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bzf" = (
@@ -29644,7 +29634,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "bAp" = (
-/obj/structure/closet/secure_closet/medical1,
 /obj/machinery/light{
 	dir = 8
 	},
@@ -29652,6 +29641,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/machinery/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bAq" = (
@@ -29660,7 +29650,16 @@
 	dir = 8;
 	network = list("ss13","medbay")
 	},
-/obj/machinery/stasis,
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 11
+	},
+/obj/structure/mirror{
+	pixel_x = 28
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bAr" = (
@@ -55592,8 +55591,7 @@
 	areastring = "/area/hallway/primary/central";
 	dir = 8;
 	name = "Central Hall APC";
-	pixel_x = -25;
-	pixel_y = 0
+	pixel_x = -25
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,

@@ -50399,13 +50399,13 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/stasis,
 /obj/machinery/defibrillator_mount{
 	pixel_y = 32
 	},
 /obj/machinery/light{
 	dir = 1
 	},
+/obj/structure/bed/pod,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cjD" = (
@@ -70285,6 +70285,20 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"gmZ" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/life_support,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "gna" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -98131,7 +98145,7 @@ cse
 cdj
 cgL
 cev
-cjB
+gmZ
 cjB
 gHf
 cnr
@@ -100187,14 +100201,14 @@ cev
 cfK
 cgT
 cev
-cjB
+gmZ
 cjB
 jxb
 cny
 coL
 cqg
 cjB
-cjB
+gmZ
 pqM
 cum
 nIa

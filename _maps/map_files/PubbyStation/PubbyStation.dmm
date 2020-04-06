@@ -30505,7 +30505,7 @@
 	dir = 4;
 	network = list("ss13","medbay")
 	},
-/obj/machinery/stasis,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bzQ" = (
@@ -30997,6 +30997,8 @@
 /area/medical/virology)
 "bBb" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/bed/pod,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bBc" = (
@@ -31551,12 +31553,9 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bCi" = (
-/obj/structure/table/glass,
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
-/obj/item/book/manual/wiki/medicine,
-/obj/item/stack/medical/gauze,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
@@ -31567,6 +31566,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/life_support,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCj" = (
@@ -31580,7 +31580,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/obj/machinery/stasis,
+/obj/structure/table/glass,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCk" = (
@@ -31604,6 +31604,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bCm" = (
@@ -51443,6 +51444,8 @@
 /obj/item/radio/intercom{
 	pixel_y = -28
 	},
+/obj/structure/bed/pod,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "ipj" = (

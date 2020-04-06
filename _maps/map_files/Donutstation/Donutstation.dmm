@@ -14999,10 +14999,10 @@
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "aIh" = (
-/obj/structure/table,
 /obj/machinery/light,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/bed/pod,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "aIi" = (
@@ -18305,7 +18305,7 @@
 	dir = 1;
 	network = list("ss13","Medical")
 	},
-/obj/machinery/stasis,
+/obj/machinery/life_support,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "aQi" = (
@@ -19743,7 +19743,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aTD" = (
-/obj/machinery/stasis,
+/obj/machinery/life_support,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "aTE" = (
@@ -22139,7 +22139,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/stasis,
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "aYp" = (
@@ -24485,6 +24485,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer3{
 	dir = 4
 	},
+/obj/structure/bed/pod,
 /turf/open/floor/plasteel/white/side,
 /area/medical/sleeper)
 "bdJ" = (
@@ -24522,6 +24523,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/bed/pod,
 /turf/open/floor/plasteel/white/side{
 	dir = 1
 	},
@@ -44312,7 +44314,6 @@
 	empty = 1;
 	name = "First-Aid (empty)"
 	},
-/obj/item/circuitboard/machine/stasis,
 /obj/item/storage/firstaid/toxin,
 /obj/machinery/light/small{
 	dir = 1;
@@ -47175,7 +47176,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
 "gVB" = (
-/obj/machinery/computer/med_data,
 /obj/machinery/power/apc{
 	areastring = "/area/medical/sleeper";
 	dir = 1;
@@ -47183,6 +47183,7 @@
 	pixel_y = 23
 	},
 /obj/structure/cable,
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "gVF" = (
@@ -51860,10 +51861,10 @@
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
 "wMM" = (
-/obj/machinery/stasis,
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
+/obj/machinery/life_support,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "wMX" = (

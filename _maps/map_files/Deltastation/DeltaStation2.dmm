@@ -83002,6 +83002,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
 	},
+/obj/machinery/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cXX" = (
@@ -84929,6 +84930,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
+/obj/machinery/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "dbr" = (
@@ -85986,7 +85988,6 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 26
 	},
-/obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -85997,6 +85998,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/bed/pod,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "ddh" = (
@@ -112691,7 +112694,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "hFL" = (
-/obj/machinery/stasis,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -112703,6 +112705,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/bed/pod,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "hFX" = (
@@ -116208,13 +116212,7 @@
 /area/science/nanite)
 "wXT" = (
 /obj/effect/turf_decal/trimline/blue/filled/line,
-/obj/structure/sink{
-	dir = 8;
-	pixel_x = 11
-	},
-/obj/structure/mirror{
-	pixel_x = 26
-	},
+/obj/machinery/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "wZq" = (
@@ -116305,7 +116303,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "xAi" = (
-/obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
@@ -116313,6 +116310,8 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/structure/bed/pod,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "xAW" = (
