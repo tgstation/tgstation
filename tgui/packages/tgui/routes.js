@@ -43,6 +43,7 @@ import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
+import { DnaConsole } from './interfaces/DnaConsole';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
 import { Electrolyzer } from './interfaces/Electrolyzer';
@@ -743,6 +744,10 @@ const ROUTES = {
   wires: {
     component: () => Wires,
     scrollable: false,
+  },
+  scan_consolenew: {
+    component: () => DnaConsole,
+    scrollable: true,
   },
 };
 

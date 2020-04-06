@@ -101,13 +101,9 @@ export const PersonalCrafting = props => {
 
   // Shows an overlay when crafting an item
   const busyBox = !!busy && (
-    <Dimmer
-      fontSize="40px"
-      textAlign="center">
-      <Box mt={30}>
-        <Icon name="cog" spin={1} />
-        {' Crafting...'}
-      </Box>
+    <Dimmer fontSize="32px">
+      <Icon name="cog" spin={1} />
+      {' Crafting...'}
     </Dimmer>
   );
 

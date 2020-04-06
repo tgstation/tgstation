@@ -1,0 +1,5 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - tweak: "DNA Consoles have received hardware upgrades and have a shiny new interface as a result."
+  - tweak: "New hardware has dropped legacy support for reading the genetic sequences of the dead and has only limited support for reading the genetic sequences of monkeys."

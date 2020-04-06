@@ -7,6 +7,7 @@ export { Chart } from './Chart';
 export { Collapsible } from './Collapsible';
 export { ColorBox } from './ColorBox';
 export { Dimmer } from './Dimmer';
+export { Divider } from './Divider';
 export { Dropdown } from './Dropdown';
 export { Flex } from './Flex';
 export { Grid } from './Grid';
