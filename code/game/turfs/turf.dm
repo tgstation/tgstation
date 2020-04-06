@@ -571,6 +571,9 @@
 	if(to_be_destroyed && !changing_turf)
 		damage_amount = min((temperature - heat_capacity)/10000, 15)
 		turf_take_damage(damage_amount, damage_type = BURN, damage_flag = "fire", sound_effect = TRUE, armour_penetration = 0)
+	else
+		to_be_destroyed = FALSE
+		max_fire_temperature_sustained = 0
 
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
