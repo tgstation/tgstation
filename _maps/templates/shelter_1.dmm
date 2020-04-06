@@ -27,15 +27,15 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
 "g" = (
-/obj/machinery/stasis/survival_pod,
+/obj/machinery/life_support,
 /turf/open/floor/pod,
 /area/survivalpod)
 "h" = (
 /turf/open/floor/pod,
 /area/survivalpod)
 "i" = (
-/obj/structure/bed/pod,
 /obj/item/bedsheet/black,
+/obj/structure/bed/pod,
 /turf/open/floor/pod,
 /area/survivalpod)
 "j" = (
@@ -49,10 +49,10 @@
 /turf/open/floor/pod,
 /area/survivalpod)
 "l" = (
-/obj/structure/tubes,
 /obj/structure/chair/comfy/black{
 	dir = 8
 	},
+/obj/structure/tubes,
 /turf/open/floor/pod,
 /area/survivalpod)
 "m" = (
