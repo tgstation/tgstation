@@ -12,7 +12,7 @@
 	var/heavyfootstep = null
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	resistance_flags = INDESTRUCTIBLE
+	thermal_conductivity = 0.0
 
 /turf/open/ComponentInitialize()
 	. = ..()

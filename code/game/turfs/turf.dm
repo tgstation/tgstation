@@ -17,7 +17,7 @@
 	var/turf_heat_resistance = 100
 	var/turf_max_heat_resistance = 100
 	var/damage_amount = 0
-	var/resistance_flags = NONE
+	var/mutable_appearance/crack_overlay
 
 	var/blocks_air = FALSE
 
@@ -117,7 +117,7 @@
 		. += "<span class='warning'>The remaining integrity is at [dam]%</span>"
 
 /turf/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_GRAB)
 		if(turf_heat_resistance < turf_max_heat_resistance)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -569,6 +569,7 @@
 	if(to_be_destroyed && !changing_turf)
 		damage_amount = min((temperature - heat_capacity)/10000, 15)
 		turf_take_damage(damage_amount)
+		heat_capacity = max(heat_capacity - (damage_amount * 10), 0)
 	else
 		to_be_destroyed = FALSE
 		max_fire_temperature_sustained = 0
@@ -580,8 +581,24 @@
 	if(turf_heat_resistance <= 0)
 		return
 	turf_heat_resistance = max(turf_heat_resistance - damage_amount, 0)
+	update_overlays()
 	if(turf_heat_resistance <= 0)
 		Melt()
+
+/turf/update_overlays()
+	. = ..()
+	var/ratio = turf_heat_resistance / turf_max_heat_resistance
+	ratio = CEILING(ratio*4, 1) * 25
+	if(ratio >= 75)
+		return
+	if(ratio < 25)
+		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_25")
+	else if(ratio < 50)
+		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_50")
+	else if(ratio < 75)
+		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_75")
+	return
+
 
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)

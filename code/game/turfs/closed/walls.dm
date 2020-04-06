@@ -9,6 +9,8 @@
 
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 	heat_capacity = 1000
+	turf_heat_resistance = 100
+	turf_max_heat_resistance = 100
 
 	baseturfs = /turf/open/floor/plating
 
