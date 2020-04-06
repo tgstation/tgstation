@@ -699,23 +699,30 @@ Nothing else in the console has ID requirements.
 	if (stored_research.hidden_nodes[node.id])
 		return l
 	var/display_name = node.display_name
+	var/list/experiment_description = list()
+	if (node.experiments && node.experiments.len)
+		experiment_description += "<br />Required experiments:<ul>"
+		for (var/e_type in node.experiments)
+			var/datum/experiment/e = e_type
+			experiment_description += "<li>[initial(e.name)]</li>"
+		experiment_description += "</ul><br />"
 	if (selflink)
 		display_name = "<A href='?src=[REF(src)];view_node=[node.id];back_screen=[screen]'>[display_name]</A>"
 	l += "<div class='statusDisplay technode'><b>[display_name]</b> [RDSCREEN_NOBREAK]"
 	if(minimal)
-		l += "<br>[node.description]"
+		l += "<br>[node.description]<br>[experiment_description.Join("")]"
 	else
 		if(stored_research.researched_nodes[node.id])
 			l += "<span class='linkOff'>Researched</span>"
 		else if(stored_research.available_nodes[node.id])
-			if(stored_research.can_afford(node.get_price(stored_research)))
+			if(stored_research.can_afford(node.get_price(stored_research)) && stored_research.have_experiments_for_node(node))
 				l += "<BR><A href='?src=[REF(src)];research_node=[node.id]'>[node.price_display(stored_research)]</A>"
 			else
-				l += "<BR><span class='linkOff'>[node.price_display(stored_research)]</span>"  // gray - too expensive
+				l += "<BR><span class='linkOff'>[node.price_display(stored_research)]</span>"  // gray - too expensive / missing experiments
 		else
 			l += "<BR><span class='linkOff bad'>[node.price_display(stored_research)]</span>"  // red - missing prereqs
 		if(ui_mode == RDCONSOLE_UI_MODE_NORMAL)
-			l += "[node.description]"
+			l += "[node.description]<br>[experiment_description.Join("")]"
 			for(var/i in node.design_ids)
 				var/datum/design/D = SSresearch.techweb_design_by_id(i)
 				l += "<span data-tooltip='[D.name]' onclick='location=\"?src=[REF(src)];view_design=[i];back_screen=[screen]\"'>[D.icon_html(usr)]</span>[RDSCREEN_NOBREAK]"
