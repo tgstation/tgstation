@@ -301,7 +301,7 @@
 
 /datum/reagent/medicine/C2/multiver //enhanced with MULTIple medicines
 	name = "Multiver"
-	description = "A chem-purger that becomes more effective and less damaging the more unique reagents (preferably medicines) present in the bloodstream, but incurs lung damage. Having several reagents in the system act as a catalyst for Multiver to actively inhibit toxins, dissallowing their effects to manifest."
+	description = "A chem-purger that becomes more effective the more unique reagents (preferably medicines) present in the bloodstream, but incurs lung damage relative to efficacy. Having several reagents in the system act as a catalyst for Multiver to actively inhibit toxins, dissallowing their effects to manifest."
 	///List of chems currently being shut off by multiver
 	var/list/inhibited_toxins
 
@@ -319,7 +319,7 @@
 			multibonus += 0.1
 
 	M.adjustToxLoss(-0.1 * multibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, max(3-multibonus, 0.5))
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, min(CEILING(multibonus*0.3,0.1),1)
 
 	// purging magic
 	for(var/r2 in M.reagents.reagent_list)
