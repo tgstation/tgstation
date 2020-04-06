@@ -1,30 +1,36 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
+import { Fragment } from 'inferno';
+import { act } from '../byond';
+import { Box, Button, LabeledList, Section } from '../components';
 
 export const NtosShipping = props => {
   const { act, data } = useBackend(props);
   return (
-    <Section
-      title="NTOS Shipping Hub."
-      buttons={(
-        <Button
-          icon="eject"
-          content="Eject Id"
-          onClick={() => act('ejectid', {
-          })} />
-      )}>
-      <Box>
-        Current User: {data.current_user ? data.current_user : "N/A"}
-      </Box>
-      <Box my={1}>
-        Inserted Card: {data.card_owner ? data.card_owner : "N/A"}
-      </Box>
-      <Box my={1}>
-        Available Paper: {data.has_printer?data.paperamt:"No printer detected."}
-      </Box>
-      <Box>
-        Profit on Sale: {data.barcode_split}%
-      </Box>
+    <Fragment>
+      <Section
+        title="NTOS Shipping Hub."
+        buttons={(
+          <Button
+            icon="eject"
+            content="Eject Id"
+            onClick={() => act('ejectid', {
+            })} />
+        )}>
+        <LabeledList>
+          <LabeledList.Item label="Current User">
+            {data.current_user ? data.current_user : "N/A"}
+          </LabeledList.Item>
+          <LabeledList.Item label="Inserted Card">
+            {data.card_owner ? data.card_owner : "N/A"}
+          </LabeledList.Item>
+          <LabeledList.Item label="Available Paper">
+            {data.has_printer?data.paperamt:"N/A"}
+          </LabeledList.Item>
+          <LabeledList.Item label="Profit on Sale">
+            {data.barcode_split}%
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
       <Section title="Shipping Options">
         <Box>
           <Button
@@ -57,6 +63,6 @@ export const NtosShipping = props => {
             })} />
         </Box>
       </Section>
-    </Section>
+    </Fragment>
   );
 };
