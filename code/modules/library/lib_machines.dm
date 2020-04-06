@@ -25,7 +25,6 @@
 	var/title
 	var/category = "Any"
 	var/author
-	var/SQLsearch
 	var/search_page = 0
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
@@ -43,11 +42,17 @@
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else if(QDELETED(user))
 				return
-			else if(!SQLsearch)
-				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
 			else
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
+				author = sanitizeSQL(author)
+				title = sanitizeSQL(title)
+				category = sanitizeSQL(category)
+				var/SQLsearch = "isnull(deleted) AND "
+				if(category == "Any")
+					SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
+				else
+					SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
 				var/bookcount = 0
 				var/booksperpage = 20
 				var/datum/DBQuery/query_library_count_books = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("library")] WHERE [SQLsearch]")
@@ -62,10 +67,11 @@
 					var/pagecount = 1
 					var/list/pagelist = list()
 					while(bookcount > 0)
-						pagelist += "<a href='?src=[REF(src)];bookpagecount=[pagecount - 1]'>[pagecount == search_page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+						pagelist += "<a href='?src=[REF(src)];bookpagecount=[pagecount - 1]'>[pagecount == search_page + 1 ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
 						bookcount -= booksperpage
 						pagecount++
 					dat += pagelist.Join(" | ")
+				search_page = text2num(sanitizeSQL(search_page))
 				var/limit = " LIMIT [booksperpage * search_page], [booksperpage]"
 				var/datum/DBQuery/query_library_list_books = SSdbcore.NewQuery("SELECT author, title, category, id FROM [format_table_name("library")] WHERE [SQLsearch][limit]")
 				if(!query_library_list_books.Execute())
@@ -100,27 +106,19 @@
 			title = sanitize(newtitle)
 		else
 			title = null
-		title = sanitizeSQL(title)
 	if(href_list["setcategory"])
 		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
 		if(newcategory)
 			category = sanitize(newcategory)
 		else
 			category = "Any"
-		category = sanitizeSQL(category)
 	if(href_list["setauthor"])
 		var/newauthor = input("Enter an author to search for:") as text|null
 		if(newauthor)
 			author = sanitize(newauthor)
 		else
 			author = null
-		author = sanitizeSQL(author)
 	if(href_list["search"])
-		SQLsearch = "isnull(deleted) AND "
-		if(category == "Any")
-			SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
-		else
-			SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
 		screenstate = 1
 
 	if(href_list["bookpagecount"])
