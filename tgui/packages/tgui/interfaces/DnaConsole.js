@@ -559,7 +559,7 @@ const MutationInfo = props => {
   } = data;
   const diskMutations = data.storage.disk ?? [];
   const mutationStorage = data.storage.console ?? [];
-  const advInjectors = data.storage.injectors ?? [];
+  const advInjectors = data.storage.injector ?? [];
   if (!mutation) {
     return (
       <Box color="label">
@@ -628,6 +628,7 @@ const MutationInfo = props => {
               onSelected={value => act('add_advinj_mut', {
                 mutref: mutation.ByondRef,
                 advinj: value,
+                source: mutation.Source,
               })} />
             <Button
               icon="syringe"

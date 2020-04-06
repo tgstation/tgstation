@@ -1323,10 +1323,24 @@
 				to_chat(usr,"<span class='warning'>Advanced injector mutation storage is full.</span>")
 				return
 
+			var/mut_source = params["source"]
+			var/search_flag = 0
+
+			switch(mut_source)
+				if("disk")
+					search_flag = SEARCH_DISKETTE
+				if("occupant")
+					search_flag = SEARCH_OCCUPANT
+				if("console")
+					search_flag = SEARCH_STORED
+
+			if(!search_flag)
+				return
+
 			var/bref = params["mutref"]
 			// We've already made sure we can modify the occupant, so this is safe to
 			//  call
-			var/datum/mutation/human/HM = get_mut_by_ref(bref, SEARCH_OCCUPANT)
+			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flag)
 
 			// GUARD CHECK - This should not be possible. Unexpected result
 			if(!HM)
