@@ -132,10 +132,13 @@ GLOBAL_LIST_EMPTY(GPS_list)
 		return
 	switch(action)
 		if("rename")
-			var/new_name = html_encode(params["name"])
 			var/atom/parentasatom = parent
+			var/a = stripped_input(usr, "Please enter desired tag.", parentasatom.name, gpstag, 20)
 
-			gpstag = copytext_char(new_name, 0, 20)
+			if (!a)
+				return
+
+			gpstag = a
 			. = TRUE
 			parentasatom.name = "global positioning system ([gpstag])"
 
