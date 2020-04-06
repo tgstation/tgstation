@@ -18,12 +18,20 @@
 	package_spawner.my_gang_datum = src
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	if(M.hud_used)
+		var/datum/hud/H = M.hud_used
+		H.wanted_lvl = new /obj/screen/wanted
+		H.infodisplay += H.wanted_lvl
 
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
 	package_spawner.Remove(owner.current)
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
+	if(M.hud_used)
+		var/datum/hud/H = M.hud_used
+		H.infodisplay -= H.wanted_lvl
+		QDEL_NULL(H.wanted_lvl)
 	..()
 
 
