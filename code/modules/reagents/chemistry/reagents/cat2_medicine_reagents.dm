@@ -362,6 +362,7 @@
 	. = ..()
 	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 2))
 
+#undef MULTIVER_TOXINBTFO
 #define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/C2/syriniver) || istype(A,/datum/reagent/medicine/C2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 
 /datum/reagent/medicine/C2/syriniver //Inject >> SYRINge
