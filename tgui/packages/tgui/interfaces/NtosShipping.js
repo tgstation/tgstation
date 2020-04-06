@@ -6,17 +6,57 @@ export const NtosShipping = props => {
   return (
     <Section
       title="NTOS Shipping Hub."
-	  buttons={(
+      buttons={(
         <Button
-          icon="arrow-left"
+          icon="eject"
           content="Eject Id"
-		  disabled={data.has_id === 0 || data.has_id === 1}
-          onClick={() => act(ref, 'ejectid', {
-		  })} />
+          onClick={() => act('ejectid', {
+          })} />
       )}>
-		<Box>
-		{data.card_owner}
-		</Box>
+      <Box>
+        Current User: {data.current_user ? data.current_user : "N/A"}
+      </Box>
+      <Box my={1}>
+        Inserted Card: {data.card_owner ? data.card_owner : "N/A"}
+      </Box>
+      <Box my={1}>
+        Available Paper: {data.has_printer?data.paperamt:"No printer detected."}
+      </Box>
+      <Box>
+        Profit on Sale: {data.barcode_split}%
+      </Box>
+      <Section title="Shipping Options">
+        <Box>
+        <Button
+          icon="id-card"
+          tooltip="The currently inserted ID card will become the current user."
+          disabled={data.has_id === 0}
+          onClick={() => act('selectid')}
+          content="Set Current ID" />
+		  </Box>
+		  <Box>
+        <Button
+          icon="print"
+          tooltip="Print a barcode to use on a wrapped package."
+          disabled={!data.has_printer || !data.current_user}
+          onClick={() => act('print')}
+          content="Print Barcode" />
+		  </Box>
+		  <Box>
+        <Button
+          icon="tags"
+          tooltip="Set how much profit you'd like on your package."
+          onClick={() => act('setsplit')}
+          content="Set Profit Margin" />
+		  </Box>
+		  <Box>
+		  <Button
+        icon="sync-alt"
+        content="Reset ID"
+        onClick={() => act('resetid', {
+        })} />
+		  </Box>
+      </Section>
     </Section>
   );
 };
