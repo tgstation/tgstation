@@ -85,8 +85,11 @@
 	return return_air()
 
 /turf/temperature_expose()
+	if(temperature > max_fire_temperature_sustained)
+		max_fire_temperature_sustained = temperature
 	if(temperature > heat_capacity)
 		to_be_destroyed = TRUE
+		set_damage_amount(temperature)
 
 /turf/proc/archive()
 	temperature_archived = temperature

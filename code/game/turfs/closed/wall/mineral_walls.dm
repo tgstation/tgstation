@@ -12,6 +12,9 @@
 	desc = "A wall with gold plating. Swag!"
 	icon = 'icons/turf/walls/gold_wall.dmi'
 	icon_state = "gold"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	explosion_block = 0 //gold is a soft metal you dingus.
 	canSmoothWith = list(/turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold)
@@ -21,6 +24,9 @@
 	desc = "A wall with silver plating. Shiny!"
 	icon = 'icons/turf/walls/silver_wall.dmi'
 	icon_state = "silver"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	canSmoothWith = list(/turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver)
 
@@ -29,6 +35,9 @@
 	desc = "A wall with diamond plating. You monster."
 	icon = 'icons/turf/walls/diamond_wall.dmi'
 	icon_state = "diamond"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
 	explosion_block = 3
@@ -39,6 +48,9 @@
 	desc = "A wall with bananium plating. Honk!"
 	icon = 'icons/turf/walls/bananium_wall.dmi'
 	icon_state = "bananium"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium)
 
@@ -47,6 +59,9 @@
 	desc = "A wall with sandstone plating. Rough."
 	icon = 'icons/turf/walls/sandstone_wall.dmi'
 	icon_state = "sandstone"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	explosion_block = 0
 	canSmoothWith = list(/turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
@@ -57,6 +72,9 @@
 	desc = "A wall with uranium plating. This is probably a bad idea."
 	icon = 'icons/turf/walls/uranium_wall.dmi'
 	icon_state = "uranium"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	canSmoothWith = list(/turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium)
 
@@ -89,6 +107,9 @@
 	desc = "A wall with plasma plating. This is definitely a bad idea."
 	icon = 'icons/turf/walls/plasma_wall.dmi'
 	icon_state = "plasma"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
@@ -127,6 +148,9 @@
 	desc = "A wall with wooden plating. Stiff."
 	icon = 'icons/turf/walls/wood_wall.dmi'
 	icon_state = "wood"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
@@ -153,6 +177,9 @@
 	desc = "A wall with rough metal plating."
 	icon = 'icons/turf/walls/iron_wall.dmi'
 	icon_state = "iron"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/rods
 	canSmoothWith = list(/turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron)
 
@@ -161,6 +188,9 @@
 	desc = "A wall made of densely packed snow blocks."
 	icon = 'icons/turf/walls/snow_wall.dmi'
 	icon_state = "snow"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	hardness = 80
 	explosion_block = 0
 	slicing_duration = 30
@@ -175,6 +205,9 @@
 	desc = "A wall with alien alloy plating."
 	icon = 'icons/turf/walls/abductor_wall.dmi'
 	icon_state = "abductor"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	smooth = SMOOTH_TRUE|SMOOTH_DIAGONAL
 	sheet_type = /obj/item/stack/sheet/mineral/abductor
 	slicing_duration = 200   //alien wall takes twice as much time to slice
@@ -188,6 +221,9 @@
 	desc = "A light-weight titanium wall used in shuttles."
 	icon = 'icons/turf/walls/shuttle_wall.dmi'
 	icon_state = "map-shuttle"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	explosion_block = 3
 	flags_1 = CAN_BE_DIRTY_1
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
@@ -236,6 +272,9 @@
 	desc = "An easily-compressable wall used for temporary shelter."
 	icon = 'icons/turf/walls/survival_pod_walls.dmi'
 	icon_state = "smooth"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
 	canSmoothWith = list(/turf/closed/wall/mineral/titanium/survival, /obj/machinery/door/airlock, /obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/shuttle, /obj/structure/shuttle/engine)
 
@@ -252,6 +291,9 @@
 	desc = "A durable wall made of an alloy of plasma and titanium."
 	icon = 'icons/turf/walls/plastitanium_wall.dmi'
 	icon_state = "map-shuttle"
+	turf_integrity = 100
+	max_integrity = 100
+	heat_capacity = 2000
 	explosion_block = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL

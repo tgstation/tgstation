@@ -10,6 +10,9 @@
 	var/barefootstep = null
 	var/clawfootstep = null
 	var/heavyfootstep = null
+	turf_integrity = 100
+	max_integrity = 100
+	resistance_flags = INDESTRUCTIBLE
 
 /turf/open/ComponentInitialize()
 	. = ..()

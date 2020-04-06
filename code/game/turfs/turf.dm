@@ -14,6 +14,13 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
+	var/turf_integrity = 100
+	var/max_integrity = 100
+	var/integrity_failure = 0 //0 if we have no special broken behavior, otherwise is a percentage of at what point the obj breaks. 0.5 being 50%
+	///Damage under this value will be completely ignored
+	var/damage_amount = 0
+
+	var/resistance_flags = NONE
 	var/blocks_air = FALSE
 
 	flags_1 = CAN_BE_DIRTY_1
@@ -102,6 +109,28 @@
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CALCULATE_ADJACENT_TURFS(src)
+
+/turf/examine(mob/user)
+	. += ..()
+	if(!damage_amount)
+		. += "<span class='notice'>It looks fully intact.</span>"
+	else
+		var/dam = round((turf_integrity/max_integrity)* 100, 1)
+		. += "<span class='warning'>The remaining integrity is at [dam]%</span>"
+
+/turf/attackby(obj/item/I, mob/living/user, params)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
+		if(turf_integrity < max_integrity)
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			if(I.use_tool(src, user, 40, volume=50))
+				turf_integrity = max_integrity
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
+		else
+			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+		return
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -538,10 +567,18 @@
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
+/turf/proc/set_damage_amount(temperature)
+	if(to_be_destroyed && !changing_turf)
+		damage_amount = min((temperature - heat_capacity)/10000, 15)
+		turf_take_damage(damage_amount, damage_type = BURN, damage_flag = "fire", sound_effect = TRUE, armour_penetration = 0)
+
 //Whatever happens after high temperature fire dies out or thermite reaction works.
 //Should return new turf
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+
+/turf/proc/deconstruct()
+	return
 
 /turf/bullet_act(obj/projectile/P)
 	. = ..()

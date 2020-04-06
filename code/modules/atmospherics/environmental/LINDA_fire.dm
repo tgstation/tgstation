@@ -208,7 +208,7 @@
 		location.to_be_destroyed = TRUE
 	return TRUE
 
-/obj/effect/hotspot/Destroy()
+/*/obj/effect/hotspot/Destroy()
 	set_light(0)
 	SSair.hotspots -= src
 	var/turf/open/T = loc
@@ -220,17 +220,7 @@
 /obj/effect/hotspot/proc/DestroyTurf()
 	if(isturf(loc))
 		var/turf/T = loc
-		if(T.to_be_destroyed && !T.changing_turf)
-			var/chance_of_deletion
-			if (T.heat_capacity) //beware of division by zero
-				chance_of_deletion = T.max_fire_temperature_sustained / T.heat_capacity * 8 //there is no problem with prob(23456), min() was redundant --rastaf0
-			else
-				chance_of_deletion = 100
-			if(prob(chance_of_deletion))
-				T.Melt()
-			else
-				T.to_be_destroyed = FALSE
-				T.max_fire_temperature_sustained = 0
+		T.set_damage_amount(temperature)*/
 
 /obj/effect/hotspot/Crossed(atom/movable/AM, oldLoc)
 	..()
