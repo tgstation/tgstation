@@ -38,9 +38,9 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 /obj/machinery/spaceship_navigation_beacon/multitool_act(mob/living/user, obj/item/multitool/I)
 	..()
 	if(panel_open)
-		var/new_name = "Beacon_[input("Enter the custom name for this beacon", "It be Beacon ..your input..") as text|null]"
+		var/new_name = stripped_input(usr, "Enter the custom codename for this beacon", "Beacon Rename")
 		if(new_name && Adjacent(user))
-			name = new_name
+			name = "Beacon [new_name]"
 			to_chat(user, "<span class='notice'>You change beacon name to [name].</span>")
 	else
 		locked =!locked
