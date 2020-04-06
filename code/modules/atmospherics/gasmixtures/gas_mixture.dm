@@ -40,33 +40,32 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 //listmos procs
 //use the macros in performance intensive areas. for their definitions, refer to code/__DEFINES/atmospherics.dm
 
-	//assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
+	///assert_gas(gas_id) - used to guarantee that the gas list for this id exists in gas_mixture.gases.
 	//Must be used before adding to a gas. May be used before reading from a gas.
 /datum/gas_mixture/proc/assert_gas(gas_id)
 	ASSERT_GAS(gas_id, src)
 
-	//assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
+	///assert_gases(args) - shorthand for calling ASSERT_GAS() once for each gas type.
 /datum/gas_mixture/proc/assert_gases(...)
 	for(var/id in args)
 		ASSERT_GAS(id, src)
 
-	//add_gas(gas_id) - similar to assert_gas(), but does not check for an existing
-		//gas list for this id. This can clobber existing gases.
-	//Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
+	///add_gas(gas_id) - similar to assert_gas(), but does not check for an existing gas list for this id. This can clobber existing gases.
+	///Used instead of assert_gas() when you know the gas does not exist. Faster than assert_gas().
 /datum/gas_mixture/proc/add_gas(gas_id)
 	ADD_GAS(gas_id, gases)
 
-	//add_gases(args) - shorthand for calling add_gas() once for each gas_type.
+	///add_gases(args) - shorthand for calling add_gas() once for each gas_type.
 /datum/gas_mixture/proc/add_gases(...)
 	var/cached_gases = gases
 	for(var/id in args)
 		ADD_GAS(id, cached_gases)
 
-	//garbage_collect() - removes any gas list which is empty.
-	//If called with a list as an argument, only removes gas lists with IDs from that list.
-	//Must be used after subtracting from a gas. Must be used after assert_gas()
-		//if assert_gas() was called only to read from the gas.
-	//By removing empty gases, processing speed is increased.
+	///garbage_collect() - removes any gas list which is empty.
+	///If called with a list as an argument, only removes gas lists with IDs from that list.
+	///Must be used after subtracting from a gas. Must be used after assert_gas()
+		///if assert_gas() was called only to read from the gas.
+	///By removing empty gases, processing speed is increased.
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
@@ -75,14 +74,16 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	//PV = nRT
 
-/datum/gas_mixture/proc/heat_capacity(data = MOLES) //joules per kelvin
+	///joules per kelvin
+/datum/gas_mixture/proc/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
 		var/gas_data = cached_gases[id]
 		. += gas_data[data] * gas_data[GAS_META][META_GAS_SPECIFIC_HEAT]
 
-/datum/gas_mixture/turf/heat_capacity(data = MOLES) // Same as above except vacuums return HEAT_CAPACITY_VACUUM
+	/// Same as above except vacuums return HEAT_CAPACITY_VACUUM
+/datum/gas_mixture/turf/heat_capacity(data = MOLES)
 	var/list/cached_gases = gases
 	. = 0
 	for(var/id in cached_gases)
@@ -91,11 +92,13 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(!.)
 		. += HEAT_CAPACITY_VACUUM //we want vacuums in turfs to have the same heat capacity as space
 
+	/// Calculate moles
 /datum/gas_mixture/proc/total_moles()
 	var/cached_gases = gases
 	TOTAL_MOLES(cached_gases, .)
 
-/datum/gas_mixture/proc/return_pressure() //kilopascals
+	/// Calculate pressure in kilopascals
+/datum/gas_mixture/proc/return_pressure()
 	if(volume > 0) // to prevent division by zero
 		var/cached_gases = gases
 		TOTAL_MOLES(cached_gases, .)
@@ -103,64 +106,20 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		return
 	return 0
 
-/datum/gas_mixture/proc/return_temperature() //kelvins
+	/// Calculate temperature in kelvins
+/datum/gas_mixture/proc/return_temperature()
 	return temperature
 
-/datum/gas_mixture/proc/return_volume() //liters
+	/// Calculate volume in liters
+/datum/gas_mixture/proc/return_volume()
 	return max(0, volume)
 
-/datum/gas_mixture/proc/thermal_energy() //joules
+	/// Calculate thermal energy in joules
+/datum/gas_mixture/proc/thermal_energy()
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
 
+	///Update archived versions of variables. Returns: 1 in all cases
 /datum/gas_mixture/proc/archive()
-	//Update archived versions of variables
-	//Returns: 1 in all cases
-
-/datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
-	//Merges all air from giver into self. Deletes giver.
-	//Returns: 1 if we are mutable, 0 otherwise
-
-/datum/gas_mixture/proc/remove(amount)
-	//Proportionally removes amount of gas from the gas_mixture
-	//Returns: gas_mixture with the gases removed
-
-/datum/gas_mixture/proc/remove_ratio(ratio)
-	//Proportionally removes amount of gas from the gas_mixture
-	//Returns: gas_mixture with the gases removed
-
-/datum/gas_mixture/proc/copy()
-	//Creates new, identical gas mixture
-	//Returns: duplicate gas mixture
-
-/datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
-	//Copies variables from sample
-	//Returns: 1 if we are mutable, 0 otherwise
-
-/datum/gas_mixture/proc/copy_from_turf(turf/model)
-	//Copies all gas info from the turf into the gas list along with temperature
-	//Returns: 1 if we are mutable, 0 otherwise
-
-/datum/gas_mixture/proc/parse_gas_string(gas_string)
-	//Copies variables from a particularly formatted string.
-	//Returns: 1 if we are mutable, 0 otherwise
-
-/datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
-	//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
-	//Returns: amount of gas exchanged (+ if sharer received)
-
-/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-	//Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
-	//Returns: new temperature of the sharer
-
-/datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
-	//Compares sample to self to see if within acceptable ranges that group processing may be enabled
-	//Returns: a string indicating what check failed, or "" if check passes
-
-/datum/gas_mixture/proc/react(turf/open/dump_location)
-	//Performs various reactions such as combustion or fusion (LOL)
-	//Returns: 1 if any reaction took place; 0 otherwise
-
-/datum/gas_mixture/archive()
 	var/list/cached_gases = gases
 
 	temperature_archived = temperature
@@ -169,7 +128,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return 1
 
-/datum/gas_mixture/merge(datum/gas_mixture/giver)
+	///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
+/datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
 		return 0
 
@@ -190,7 +150,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return 1
 
-/datum/gas_mixture/remove(amount)
+	///Proportionally removes amount of gas from the gas_mixture.
+	///Returns: gas_mixture with the gases removed
+/datum/gas_mixture/proc/remove(amount)
 	var/sum
 	var/list/cached_gases = gases
 	TOTAL_MOLES(cached_gases, sum)
@@ -209,7 +171,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return removed
 
-/datum/gas_mixture/remove_ratio(ratio)
+	///Proportionally removes amount of gas from the gas_mixture.
+	///Returns: gas_mixture with the gases removed
+/datum/gas_mixture/proc/remove_ratio(ratio)
 	if(ratio <= 0)
 		return null
 	ratio = min(ratio, 1)
@@ -228,7 +192,52 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return removed
 
-/datum/gas_mixture/copy()
+	///Removes a amount of a specific gas from the gas_mixture.
+	///Returns: gas_mixture with the gas removed
+/datum/gas_mixture/proc/remove_specific(gas_id, amount)
+	var/list/cached_gases = gases
+	amount = min(amount, cached_gases[gas_id][MOLES])
+	if(amount <= 0)
+		return null
+	var/datum/gas_mixture/removed = new type
+	var/list/removed_gases = removed.gases
+	removed.temperature = temperature
+	ADD_GAS(gas_id, removed.gases)
+	removed_gases[gas_id][MOLES] = amount
+	cached_gases[gas_id][MOLES] -= amount
+
+	garbage_collect(list(gas_id))
+	return removed
+
+	///Distributes the contents of two mixes equally between themselves
+	//Returns: bool indicating whether gases moved between the two mixes
+/datum/gas_mixture/proc/equalize(datum/gas_mixture/other)
+	. = FALSE
+	if(abs(return_temperature() - other.return_temperature()) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
+		. = TRUE
+		var/self_heat_cap = heat_capacity()
+		var/other_heat_cap = other.heat_capacity()
+		var/new_temp = (temperature * self_heat_cap + other.temperature * other_heat_cap) / (self_heat_cap + other_heat_cap)
+		temperature = new_temp
+		other.temperature = new_temp
+
+	var/min_p_delta = 0.1
+	var/total_volume = volume + other.volume
+	var/list/gas_list = gases | other.gases
+	for(var/gas_id in gas_list)
+		assert_gas(gas_id)
+		other.assert_gas(gas_id)
+		//math is under the assumption temperatures are equal
+		if(abs(gases[gas_id][MOLES] / volume - other.gases[gas_id][MOLES] / other.volume) > min_p_delta / (R_IDEAL_GAS_EQUATION * temperature))
+			. = TRUE
+			var/total_moles = gases[gas_id][MOLES] + other.gases[gas_id][MOLES]
+			gases[gas_id][MOLES] = total_moles * (volume/total_volume)
+			other.gases[gas_id][MOLES] = total_moles * (other.volume/total_volume)
+
+
+	///Creates new, identical gas mixture
+	///Returns: duplicate gas mixture
+/datum/gas_mixture/proc/copy()
 	var/list/cached_gases = gases
 	var/datum/gas_mixture/copy = new type
 	var/list/copy_gases = copy.gases
@@ -240,22 +249,25 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return copy
 
-
-/datum/gas_mixture/copy_from(datum/gas_mixture/sample)
+	///Copies variables from sample, moles multiplicated by partial
+	///Returns: 1 if we are mutable, 0 otherwise
+/datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample, partial = 1)
 	var/list/cached_gases = gases //accessing datum vars is slower than proc vars
 	var/list/sample_gases = sample.gases
-
-	temperature = sample.temperature
-	for(var/id in sample_gases)
-		ASSERT_GAS(id,src)
-		cached_gases[id][MOLES] = sample_gases[id][MOLES]
 
 	//remove all gases not in the sample
 	cached_gases &= sample_gases
 
+	temperature = sample.temperature
+	for(var/id in sample_gases)
+		ASSERT_GAS(id,src)
+		cached_gases[id][MOLES] = sample_gases[id][MOLES] * partial
+
 	return 1
 
-/datum/gas_mixture/copy_from_turf(turf/model)
+	///Copies all gas info from the turf into the gas list along with temperature
+	///Returns: 1 if we are mutable, 0 otherwise
+/datum/gas_mixture/proc/copy_from_turf(turf/model)
 	parse_gas_string(model.initial_gas_mix)
 
 	//acounts for changes in temperature
@@ -265,7 +277,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return 1
 
-/datum/gas_mixture/parse_gas_string(gas_string)
+	///Copies variables from a particularly formatted string.
+	///Returns: 1 if we are mutable, 0 otherwise
+/datum/gas_mixture/proc/parse_gas_string(gas_string)
 	gas_string = SSair.preprocess_gas_string(gas_string)
 
 	var/list/gases = src.gases
@@ -282,8 +296,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		gases[path][MOLES] = text2num(gas[id])
 	return 1
 
-/datum/gas_mixture/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
-
+	///Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
+	///Returns: amount of gas exchanged (+ if sharer received)
+/datum/gas_mixture/proc/share(datum/gas_mixture/sharer, atmos_adjacent_turfs = 4)
 	var/list/cached_gases = gases
 	var/list/sharer_gases = sharer.gases
 
@@ -356,7 +371,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 		TOTAL_MOLES(sharer_gases,their_moles)
 		return (temperature_archived*(our_moles + moved_moles) - sharer.temperature_archived*(their_moles - moved_moles)) * R_IDEAL_GAS_EQUATION / volume
 
-/datum/gas_mixture/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
+	///Performs temperature sharing calculations (via conduction) between two gas_mixtures assuming only 1 boundary length
+	///Returns: new temperature of the sharer
+/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient, sharer_temperature, sharer_heat_capacity)
 	//transfer of thermal energy (via conduction) between self and sharer
 	if(sharer)
 		sharer_temperature = sharer.temperature_archived
@@ -378,7 +395,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	return sharer_temperature
 	//thermal energy of the system (self and sharer) is unchanged
 
-/datum/gas_mixture/compare(datum/gas_mixture/sample)
+	///Compares sample to self to see if within acceptable ranges that group processing may be enabled
+	///Returns: a string indicating what check failed, or "" if check passes
+/datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	var/list/sample_gases = sample.gases //accessing datum vars is slower than proc vars
 	var/list/cached_gases = gases
 
@@ -404,7 +423,9 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return ""
 
-/datum/gas_mixture/react(datum/holder)
+	///Performs various reactions such as combustion or fusion (LOL)
+	///Returns: 1 if any reaction took place; 0 otherwise
+/datum/gas_mixture/proc/react(datum/holder)
 	. = NO_REACTION
 	var/list/cached_gases = gases
 	if(!length(cached_gases))
@@ -442,23 +463,23 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	if(.)
 		garbage_collect()
 
-//Takes the amount of the gas you want to PP as an argument
-//So I don't have to do some hacky switches/defines/magic strings
-//eg:
-//Tox_PP = get_partial_pressure(gas_mixture.toxins)
-//O2_PP = get_partial_pressure(gas_mixture.oxygen)
+///Takes the amount of the gas you want to PP as an argument
+///So I don't have to do some hacky switches/defines/magic strings
+///eg:
+///Tox_PP = get_partial_pressure(gas_mixture.toxins)
+///O2_PP = get_partial_pressure(gas_mixture.oxygen)
 
 /datum/gas_mixture/proc/get_breath_partial_pressure(gas_pressure)
 	return (gas_pressure * R_IDEAL_GAS_EQUATION * temperature) / BREATH_VOLUME
-//inverse
+///inverse
 /datum/gas_mixture/proc/get_true_breath_pressure(partial_pressure)
 	return (partial_pressure * BREATH_VOLUME) / (R_IDEAL_GAS_EQUATION * temperature)
 
-//Mathematical proofs:
-/*
+///Mathematical proofs:
+/**
 get_breath_partial_pressure(gas_pp) --> gas_pp/total_moles()*breath_pp = pp
 get_true_breath_pressure(pp) --> gas_pp = pp/breath_pp*total_moles()
 
 10/20*5 = 2.5
 10 = 2.5/5*20
-*/
+**/

@@ -200,12 +200,13 @@
 	user.blind_eyes(10)
 
 /obj/item/book/granter/spell/mindswap
-	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spell = /obj/effect/proc_holder/spell/pointed/mind_transfer
 	spellname = "mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
-	var/mob/stored_swap //Used in used book recoils to store an identity for mindswaps
 	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
+	/// Mob used in book recoils to store an identity for mindswaps
+	var/mob/living/stored_swap
 
 /obj/item/book/granter/spell/mindswap/onlearned()
 	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
@@ -224,8 +225,8 @@
 	if(stored_swap == user)
 		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
-	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
-	if(swapper.cast(list(stored_swap), user, TRUE, TRUE))
+	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
+	if(swapper.cast(list(stored_swap), user, TRUE))
 		to_chat(user,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
 		to_chat(stored_swap,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
 	else
@@ -259,7 +260,7 @@
 	user.Paralyze(40)
 
 /obj/item/book/granter/spell/barnyard
-	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 	spellname = "barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."

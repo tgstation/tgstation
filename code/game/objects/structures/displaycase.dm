@@ -439,7 +439,11 @@
 			//Setting the object's price.
 			if(INTENT_GRAB)
 				var/new_price_input = input(user,"Set the sale price for this vend-a-tray.","new price",0) as num|null
-				if(isnull(new_price_input) || !user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) || (payments_acc != potential_acc.registered_account))
+				if(isnull(new_price_input) || (payments_acc != potential_acc.registered_account))
+					to_chat(user, "<span class='warning'>The vend-a-tray rejects your new price.</span>")
+					return
+				if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) )
+					to_chat(user, "<span class='warning'>You need to get closer!</span>")
 					return
 				new_price_input = clamp(round(new_price_input, 1), 10, 1000)
 				sale_price = new_price_input

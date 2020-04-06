@@ -424,8 +424,13 @@
 	required_reagents = list(/datum/reagent/monkey_powder = 30, /datum/reagent/water = 1)
 
 /datum/chemical_reaction/monkey/on_reaction(datum/reagents/holder, created_volume)
-	var/location = get_turf(holder.my_atom)
-	new /mob/living/carbon/monkey(location)
+	var/obj/item/reagent_containers/food/snacks/monkeycube/cube = holder.my_atom
+	if(istype(cube))
+		cube.Expand()
+	else
+		var/location = get_turf(holder.my_atom)
+		new /mob/living/carbon/monkey(location)
+
 //water electrolysis
 /datum/chemical_reaction/electrolysis
 	results = list(/datum/reagent/oxygen = 10, /datum/reagent/hydrogen = 20)

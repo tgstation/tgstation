@@ -23,11 +23,13 @@
   * Returns QDEL_HINT_HARDDEL (don't change this)
   */
 /mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	GLOB.mob_list -= src
-	GLOB.dead_mob_list -= src
-	GLOB.alive_mob_list -= src
-	GLOB.mob_directory -= tag
+	remove_from_mob_list()
+	remove_from_dead_mob_list()
+	remove_from_alive_mob_list()
 	focus = null
+	if(length(progressbars))
+		stack_trace("[src] destroyed with elements in its progressbars list")
+		progressbars = null
 	for (var/alert in alerts)
 		clear_alert(alert, TRUE)
 	if(observers && observers.len)
@@ -60,12 +62,11 @@
   */
 /mob/Initialize()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_CREATED, src)
-	GLOB.mob_list += src
-	GLOB.mob_directory[tag] = src
+	add_to_mob_list()
 	if(stat == DEAD)
-		GLOB.dead_mob_list += src
+		add_to_dead_mob_list()
 	else
-		GLOB.alive_mob_list += src
+		add_to_alive_mob_list()
 	set_focus(src)
 	prepare_huds()
 	for(var/v in GLOB.active_alternate_appearances)
@@ -437,7 +438,9 @@
 	set name = "Point To"
 	set category = "Object"
 
-	if(!src || !isturf(src.loc) || !(A in view(client.view, src)))
+	if(!src || !isturf(src.loc))
+		return FALSE
+	if(client && !(A in view(client.view, src)))
 		return FALSE
 	if(istype(A, /obj/effect/temp_visual/point))
 		return FALSE

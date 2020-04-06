@@ -267,7 +267,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		temperature_scale = 0
 	else
 		temperature_scale = (FREON_MAXIMUM_BURN_TEMPERATURE - temperature)/(FREON_MAXIMUM_BURN_TEMPERATURE - FREON_LOWER_TEMPERATURE) //calculate the scale based on the temperature
-	if(temperature_scale > 0)
+	if(temperature_scale >= 0)
 		oxygen_burn_rate = OXYGEN_BURN_RATE_BASE - temperature_scale
 		if(cached_gases[/datum/gas/oxygen][MOLES] > cached_gases[/datum/gas/freon][MOLES]*FREON_OXYGEN_FULLBURN)
 			freon_burn_rate = (cached_gases[/datum/gas/freon][MOLES]*temperature_scale)/FREON_BURN_RATE_DELTA
@@ -281,7 +281,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 			ASSERT_GAS(/datum/gas/carbon_dioxide,air)
 			cached_gases[/datum/gas/carbon_dioxide][MOLES] += freon_burn_rate
 
-			if(temperature < 150 && temperature > 130 && prob(2))
+			if(temperature < 160 && temperature > 120 && prob(2))
 				new /obj/item/stack/sheet/hot_ice(location)
 
 			energy_released += FIRE_FREON_ENERGY_RELEASED * (freon_burn_rate)
@@ -458,7 +458,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		/datum/gas/plasma = 40,
 		/datum/gas/carbon_dioxide = 20,
 		/datum/gas/bz = 20,
-		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
+		"TEMP" = FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100
 		)
 
 /datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
@@ -472,7 +472,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		return NO_REACTION
 	cached_gases[/datum/gas/plasma][MOLES] -= heat_efficency * 5
 	cached_gases[/datum/gas/carbon_dioxide][MOLES] -= heat_efficency
-	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.5
+	cached_gases[/datum/gas/bz][MOLES] -= heat_efficency * 0.25
 	cached_gases[/datum/gas/freon][MOLES] += heat_efficency * 2
 
 	if(energy_used > 0)

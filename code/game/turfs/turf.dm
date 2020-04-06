@@ -370,7 +370,7 @@
 	var/datum/progressbar/progress = new(user, things.len, src)
 	while (do_after(usr, 10, TRUE, src, FALSE, CALLBACK(src_object, /datum/component/storage.proc/mass_remove_from_storage, src, things, progress)))
 		stoplag(1)
-	qdel(progress)
+	progress.end_progress()
 
 	return TRUE
 
@@ -486,9 +486,7 @@
 /turf/proc/acid_melt()
 	return
 
-/turf/handle_fall(mob/faller, forced)
-	if(!forced)
-		return
+/turf/handle_fall(mob/faller)
 	if(has_gravity(src))
 		playsound(src, "bodyfall", 50, TRUE)
 	faller.drop_all_held_items()

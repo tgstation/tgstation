@@ -163,8 +163,8 @@
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.set_stat(CONSCIOUS)
-				GLOB.dead_mob_list -= mmi.brainmob
-				GLOB.alive_mob_list += mmi.brainmob
+				mmi.brainmob.remove_from_dead_mob_list()
+				mmi.brainmob.add_to_alive_mob_list()
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
@@ -188,6 +188,12 @@
 	eye_lights = null
 	cell = null
 	return ..()
+
+/mob/living/silicon/robot/Topic(href, href_list)
+	. = ..()
+	//Show alerts window if user clicked on "Show alerts" in chat
+	if (href_list["showalerts"])
+		robot_alerts()
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/robot_module)

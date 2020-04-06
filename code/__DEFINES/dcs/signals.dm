@@ -47,6 +47,7 @@
 #define COMSIG_ELEMENT_DETACH "element_detach"
 
 // /atom signals
+#define COMSIG_ATOM_CREATED "atom_created"						///from base of atom/proc/Initialize(): sent any time a new atom is created
 #define COMSIG_PARENT_ATTACKBY "atom_attackby"			        ///from base of atom/attackby(): (/obj/item, /mob/living, params)
 	#define COMPONENT_NO_AFTERATTACK 1								//Return this in response if you don't want afterattack to be called
 #define COMSIG_ATOM_HULK_ATTACK "hulk_attack"					///from base of atom/attack_hulk(): (/mob/living/carbon/human)
@@ -172,6 +173,8 @@
 #define COMSIG_MOVABLE_DISPOSING "movable_disposing"			//called when the movable is added to a disposal holder object for disposal movement: (obj/structure/disposalholder/holder, obj/machinery/disposal/source)
 
 // /mob signals
+#define COMSIG_MOB_LOGIN "mob_login"							//from base of /mob/Login(): ()
+#define COMSIG_MOB_LOGOUT "mob_logout"							//from base of /mob/Logout(): ()
 #define COMSIG_MOB_DEATH "mob_death"							//from base of mob/death(): (gibbed)
 #define COMSIG_MOB_STATCHANGE "mob_statchange"					//from base of mob/set_stat(): (new_stat)
 #define COMSIG_MOB_CLICKON "mob_clickon"						//from base of mob/clickon(): (atom/A, params)
@@ -241,6 +244,8 @@
 #define COMSIG_CARBON_LOSE_ORGAN "carbon_lose_organ"				//from /item/organ/proc/Remove() (/obj/item/organ/)
 #define COMSIG_CARBON_EQUIP_HAT "carbon_equip_hat"					//from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_UNEQUIP_HAT "carbon_unequip_hat"				//from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
+#define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"						// defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
+#define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"		// called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
 
 // /mob/living/simple_animal/hostile signals
 #define COMSIG_HOSTILE_ATTACKINGTARGET "hostile_attackingtarget"
@@ -284,13 +289,18 @@
 	#define COMPONENT_BLOCK_SHARPEN_MAXED 8
 #define COMSIG_TOOL_IN_USE "tool_in_use"						///from base of [/obj/item/proc/tool_check_callback]: (mob/living/user)
 #define COMSIG_TOOL_START_USE "tool_start_use"					///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
+#define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"			///from [/obj/item/proc/disableEmbedding]:
+#define COMSIG_MINE_TRIGGERED "minegoboom"						///from [/obj/effect/mine/proc/triggermine]:
 
 // /obj/item signals for economy
 #define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
+#define COMSIG_ITEM_SOLD_MATERIAL "item_sold_material"			//called when an item is sold by the exports subsystem using material datums.
 #define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"		//called when a wrapped up structure is opened by hand
 #define COMSIG_ITEM_UNWRAPPED "item_unwrapped"					//called when a wrapped up item is opened by hand
 	#define COMSIG_ITEM_SPLIT_VALUE  1
 #define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"			//Called when getting the item's exact ratio for cargo's profit.
+#define COMSIG_ITEM_SPLIT_PROFIT_DRY "item_split_profits_dry"			//Called when getting the item's exact ratio for cargo's profit, without selling the item.
+#define COMSIG_ITEM_SPLIT_PROFIT_MATERIAL "item_split_material_profits"	//Called when getting an item's profit ratio, but when calculating wealth from material datums.
 
 
 // /obj/item/clothing signals
@@ -323,11 +333,20 @@
 // /obj/item/gun signals
 #define COMSIG_MOB_FIRED_GUN "mob_fired_gun"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
 
+// /obj/item/grenade signals
+#define COMSIG_GRENADE_PRIME "grenade_prime"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
+#define COMSIG_GRENADE_ARMED "grenade_armed"					//called in /obj/item/gun/process_fire (user, target, params, zone_override)
+
 // /obj/projectile signals (sent to the firer)
+#define COMSIG_PROJECTILE_SELF_ON_HIT "projectile_self_on_hit"			// from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_ON_HIT "projectile_on_hit"			// from base of /obj/projectile/proc/on_hit(): (atom/movable/firer, atom/target, Angle)
 #define COMSIG_PROJECTILE_BEFORE_FIRE "projectile_before_fire" 			// from base of /obj/projectile/proc/fire(): (obj/projectile, atom/original_target)
 #define COMSIG_PROJECTILE_FIRE "projectile_fire"				// from the base of /obj/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"				// sent to targets during the process_hit proc of projectiles
+#define COMSIG_PROJECTILE_RANGE_OUT "projectile_range_out"				// sent to targets during the process_hit proc of projectiles
+#define COMSIG_EMBED_TRY_FORCE "item_try_embed"					// sent when trying to force an embed (mainly for projectiles, only used in the embed element)
+
+#define COMSIG_PELLET_CLOUD_INIT "pellet_cloud_init"				// sent to targets during the process_hit proc of projectiles
 
 // /obj/mecha signals
 #define COMSIG_MECHA_ACTION_ACTIVATE "mecha_action_activate"	//sent from mecha action buttons to the mecha they're linked to
@@ -338,8 +357,6 @@
 #define COMSIG_HUMAN_MELEE_UNARMED_ATTACKBY "human_melee_unarmed_attackby"		//from mob/living/carbon/human/UnarmedAttack(): (mob/living/carbon/human/attacker)
 #define COMSIG_HUMAN_DISARM_HIT	"human_disarm_hit"	//Hit by successful disarm attack (mob/living/carbon/human/attacker,zone_targeted)
 #define COMSIG_JOB_RECEIVED "job_received"										//Whenever EquipRanked is called, called after job is set
-#define COMSIG_HUMAN_EMBED_RIP "item_embed_removing"		// called on human when said human tries to rip out this embedded item (mob/living/carbon/human/target, /obj/item, /obj/item/bodypart/L)
-#define COMSIG_HUMAN_EMBED_REMOVAL "item_embed_remove_surgery"	// called on human from /datum/surgery_step/remove_object/success (mob/living/carbon/human/target, /obj/item, /obj/item/bodypart/L)
 
 // /datum/species signals
 #define COMSIG_SPECIES_GAIN "species_gain"						//from datum/species/on_species_gain(): (datum/species/new_species, datum/species/old_species)

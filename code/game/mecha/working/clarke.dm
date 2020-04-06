@@ -48,13 +48,32 @@
 		var/mob/living/brain/B = M.brainmob
 		hud.add_hud_to(B)
 
+/obj/mecha/working/clarke/domove(direction)
+	. = ..()
+	if (.)
+		if(prob(30))
+			crush_floor()
+
+/obj/mecha/working/clarke/mechturn(direction)
+	if(prob(80))
+		crush_floor()
+	return ..()
+
+///Damages floor tiles and plating as the Clarke moves over them with its tracks. Damage is superficial, will not create hull breaches.
+/obj/mecha/working/clarke/proc/crush_floor()
+	var/turf/open/floor/tile = get_turf(src)
+	if(!istype(tile, /turf/open/floor))
+		return
+	tile.crush()
+
 //Ore Box Controls
 
 ///Special equipment for the Clarke mech, handles moving ore without giving the mech a hydraulic clamp and cargo compartment.
 /obj/item/mecha_parts/mecha_equipment/orebox_manager
 	name = "ore storage module"
 	desc = "An automated ore box management device."
-	icon_state = "mecha_clamp" //None of this should matter, this shouldn't ever exist outside a mech anyway.
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "bin"
 	selectable = FALSE
 	detachable = FALSE
 	salvageable = FALSE

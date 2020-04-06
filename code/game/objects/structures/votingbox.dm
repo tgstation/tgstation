@@ -114,7 +114,7 @@
 		to_chat(user,"<span class='notice'>You cast your vote.</span>")
 
 /obj/structure/votebox/proc/valid_vote(obj/item/paper/I)
-	if(length_char(text) > VOTE_TEXT_LIMIT || findtext(text,"<h1>Voting Results:</h1><hr><ol>"))
+	if(length_char(I.info) > VOTE_TEXT_LIMIT || findtext(I.info,"<h1>Voting Results:</h1><hr><ol>"))
 		return FALSE
 	return TRUE
 

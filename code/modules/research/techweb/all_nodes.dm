@@ -49,7 +49,7 @@
 	display_name = "Basic Tools"
 	description = "Basic mechanical, electronic, surgical and botanical tools."
 	design_ids = list("screwdriver", "wrench", "wirecutters", "crowbar", "multitool", "welding_tool", "tscanner", "analyzer", "cable_coil", "pipe_painter", "airlock_painter",
-					"cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "mop", "plunger")
+					"cultivator", "plant_analyzer", "shovel", "spade", "hatchet", "secateurs", "mop", "plunger")
 
 /datum/techweb_node/basic_medical
 	id = "basic_medical"
@@ -112,7 +112,7 @@
 	display_name = "Experimental Surgery"
 	description = "When evolution isn't fast enough."
 	prereq_ids = list("adv_surgery")
-	design_ids = list("surgery_pacify","surgery_vein_thread","surgery_muscled_veins","surgery_nerve_splice","surgery_nerve_ground","surgery_ligament_hook","surgery_ligament_reinforcement","surgery_viral_bond", "surgery_heal_combo_upgrade", "surgery_exp_dissection")
+	design_ids = list("surgery_pacify","surgery_vein_thread","surgery_muscled_veins","surgery_nerve_splice","surgery_nerve_ground","surgery_ligament_hook","surgery_ligament_reinforcement","surgery_cortex_imprint","surgery_cortex_folding","surgery_viral_bond", "surgery_heal_combo_upgrade", "surgery_exp_dissection")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 	export_price = 5000
 
@@ -290,9 +290,9 @@
 /datum/techweb_node/adv_robotics
 	id = "adv_robotics"
 	display_name = "Advanced Robotics Research"
-	description = "It can even do the dishes!"
-	prereq_ids = list("robotics")
-	design_ids = list("borg_upgrade_diamonddrill", "borg_upgrade_trashofholding", "borg_upgrade_advancedmop")
+	description = "Machines using actual neural networks to simulate human lives."
+	prereq_ids = list("neural_programming", "robotics")
+	design_ids = list("mmi_posi")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
@@ -304,30 +304,21 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
-/datum/techweb_node/posibrain
-	id = "posibrain"
-	display_name = "Positronic Brain"
-	description = "Applied usage of neural technology allowing for autonomous AI units based on special metallic cubes with conductive and processing circuits."
-	prereq_ids = list("neural_programming")
-	design_ids = list("mmi_posi")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	export_price = 5000
-
 /datum/techweb_node/cyborg_upg_util
 	id = "cyborg_upg_util"
 	display_name = "Cyborg Upgrades: Utility"
 	description = "Utility upgrades for cyborgs."
-	prereq_ids = list("engineering")
-	design_ids = list("borg_upgrade_holding", "borg_upgrade_lavaproof", "borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand")
+	prereq_ids = list("adv_robotics")
+	design_ids = list("borg_upgrade_thrusters", "borg_upgrade_selfrepair", "borg_upgrade_expand", "borg_upgrade_disablercooler", "borg_upgrade_trashofholding", "borg_upgrade_advancedmop")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
-/datum/techweb_node/cyborg_upg_engi
-	id = "cyborg_upg_engi"
-	display_name = "Cyborg Upgrades: Engineering"
-	description = "Engineering upgrades for cyborgs."
-	prereq_ids = list("engineering")
-	design_ids = list("borg_upgrade_rped", "borg_upgrade_circuitapp")
+/datum/techweb_node/cyborg_upg_engiminer
+	id = "cyborg_upg_engiminer"
+	display_name = "Cyborg Upgrades: Engineering & Mining"
+	description = "Engineering and Mining upgrades for cyborgs."
+	prereq_ids = list("adv_engi", "basic_mining")
+	design_ids = list("borg_upgrade_rped", "borg_upgrade_circuitapp", "borg_upgrade_diamonddrill", "borg_upgrade_lavaproof", "borg_upgrade_holding")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
@@ -340,20 +331,11 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
-/datum/techweb_node/cyborg_upg_combat
-	id = "cyborg_upg_combat"
-	display_name = "Cyborg Upgrades: Combat"
-	description = "Military grade upgrades for cyborgs."
-	prereq_ids = list("adv_robotics", "adv_engi" , "weaponry")
-	design_ids = list("borg_upgrade_disablercooler")
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
-	export_price = 5000
-
 /datum/techweb_node/ai
 	id = "ai"
 	display_name = "Artificial Intelligence"
 	description = "AI unit research."
-	prereq_ids = list("robotics", "posibrain")
+	prereq_ids = list("adv_robotics")
 	design_ids = list("aifixer", "aicore", "safeguard_module", "onehuman_module", "protectstation_module", "quarantine_module", "oxygen_module", "freeform_module",
 	"reset_module", "purge_module", "remove_module", "freeformcore_module", "asimov_module", "paladin_module", "tyrant_module", "overlord_module", "corporate_module",
 	"default_module", "borg_ai_control", "mecha_tracking_ai_control", "aiupload", "intellicard")
@@ -573,7 +555,7 @@
 	display_name = "Botanical Engineering"
 	description = "Botanical tools"
 	prereq_ids = list("adv_engi", "biotech")
-	design_ids = list("diskplantgene", "portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
+	design_ids = list("portaseeder", "plantgenes", "flora_gun", "hydro_tray", "biogenerator", "seed_extractor")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	export_price = 5000
 
