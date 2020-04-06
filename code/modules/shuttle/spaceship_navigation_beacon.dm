@@ -40,7 +40,7 @@ obj/machinery/spaceship_navigation_beacon/emp_act()
 	if(panel_open)
 		var/new_name = stripped_input(usr, "Enter the custom codename for this beacon", "Beacon Rename")
 		if(new_name && Adjacent(user))
-			name = "Beacon [new_name]"
+			name = "Beacon_[new_name]"
 			to_chat(user, "<span class='notice'>You change beacon name to [name].</span>")
 	else
 		locked =!locked
