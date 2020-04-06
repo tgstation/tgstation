@@ -45,7 +45,7 @@
 	. += "defib"
 
 	if(defib.powered)
-		var/obj/item/stock_parts/cell/C = defib.get_cell()
+		var/obj/item/stock_parts/cell/C = get_cell()
 		. += (defib.safety ? "online" : "emagged")
 		var/ratio = C.charge / C.maxcharge
 		ratio = CEILING(ratio * 4, 1) * 25
@@ -168,7 +168,7 @@
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 /obj/machinery/defibrillator_mount/charging/process()
-	var/obj/item/stock_parts/cell/C = defib.get_cell()
+	var/obj/item/stock_parts/cell/C = get_cell()
 	if(C.charge < C.maxcharge && is_operational())
 		use_power(100)
 		C.give(80)
