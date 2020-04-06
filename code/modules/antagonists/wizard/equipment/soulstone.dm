@@ -275,8 +275,8 @@
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
 	var/makeicon = newstruct.icon_state
 	var/holyness = newstruct.holy
-	playsound(newstruct, 'sound/effects/constructform.ogg', 50)
 	flick("make_[makeicon][holyness]", newstruct)
+	playsound(newstruct, 'sound/effects/constructform.ogg', 50)
 	if(stoner)
 		newstruct.faction |= "[REF(stoner)]"
 		newstruct.master = stoner
