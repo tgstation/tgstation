@@ -25,11 +25,12 @@
 	var/title
 	var/category = "Any"
 	var/author
-	var/SQLquery
+	var/SQLsearch
+	var/search_page = 0
 
 /obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	. = ..()
-	var/dat = "" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
+	var/list/dat = list() // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
 			dat += "<h2>Search Settings</h2><br>"
@@ -42,13 +43,31 @@
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
 			else if(QDELETED(user))
 				return
-			else if(!SQLquery)
+			else if(!SQLsearch)
 				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
 			else
 				dat += "<table>"
 				dat += "<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"
-
-				var/datum/DBQuery/query_library_list_books = SSdbcore.NewQuery(SQLquery)
+				var/bookcount = 0
+				var/booksperpage = 20
+				var/datum/DBQuery/query_library_count_books = SSdbcore.NewQuery("SELECT COUNT(id) FROM [format_table_name("library")] WHERE [SQLsearch]")
+				if(!query_library_count_books.warn_execute())
+					qdel(query_library_count_books)
+					return
+				if(query_library_count_books.NextRow())
+					bookcount = text2num(query_library_count_books.item[1])
+				qdel(query_library_count_books)
+				if(bookcount > booksperpage)
+					dat += "<b>Page: </b>"
+					var/pagecount = 1
+					var/list/pagelist = list()
+					while(bookcount > 0)
+						pagelist += "<a href='?src=[REF(src)];bookpagecount=[pagecount - 1]'>[pagecount == search_page ? "<b>\[[pagecount]\]</b>" : "\[[pagecount]\]"]</a>"
+						bookcount -= booksperpage
+						pagecount++
+					dat += pagelist.Join(" | ")
+				var/limit = " LIMIT [booksperpage * search_page], [booksperpage]"
+				var/datum/DBQuery/query_library_list_books = SSdbcore.NewQuery("SELECT author, title, category, id FROM [format_table_name("library")] WHERE [SQLsearch][limit]")
 				if(!query_library_list_books.Execute())
 					dat += "<font color=red><b>ERROR</b>: Unable to retrieve book listings. Please contact your system administrator for assistance.</font><BR>"
 				else
@@ -64,7 +83,7 @@
 				dat += "</table><BR>"
 			dat += "<A href='?src=[REF(src)];back=1'>\[Go Back\]</A><BR>"
 	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
-	popup.set_content(dat)
+	popup.set_content(jointext(dat, ""))
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
 
@@ -97,12 +116,15 @@
 			author = null
 		author = sanitizeSQL(author)
 	if(href_list["search"])
-		SQLquery = "SELECT author, title, category, id FROM [format_table_name("library")] WHERE isnull(deleted) AND "
+		SQLsearch = "isnull(deleted) AND "
 		if(category == "Any")
-			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
+			SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
 		else
-			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
+			SQLsearch += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
 		screenstate = 1
+
+	if(href_list["bookpagecount"])
+		search_page = text2num(href_list["bookpagecount"])
 
 	if(href_list["back"])
 		screenstate = 0
