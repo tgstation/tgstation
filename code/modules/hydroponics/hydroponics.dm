@@ -382,9 +382,8 @@
 	else
 		. += "<span class='info'>It's empty.</span>"
 
-
-		. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
-		"<span class='info'>Nutrient: [reagents.total_volume]/[maxnutri].</span>"
+	. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
+	"<span class='info'>Nutrient: [reagents.total_volume]/[maxnutri].</span>"
 	if(self_sustaining)
 		. += "<span class='info'>The tray's autogrow is active, protecting it from species mutations, weeds, and pests.</span>"
 
@@ -688,6 +687,7 @@
 		myseed.reagents_from_genes()
 		adjustHealth(-15)
 		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], but leaving the plant looking a bit weak.</span>")
+		update_icon()
 		return
 
 	else if(istype(O, /obj/item/graft))
@@ -798,6 +798,8 @@
 	self_sustaining = !self_sustaining
 	idle_power_usage = self_sustaining ? 5000 : 0
 	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
+	if(!self_sustaining)
+		RefreshParts()
 	update_icon()
 
 /obj/machinery/hydroponics/AltClick(mob/user)
