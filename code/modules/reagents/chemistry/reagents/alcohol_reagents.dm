@@ -2239,3 +2239,13 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /datum/reagent/consumable/ethanol/pruno/on_mob_life(mob/living/carbon/M)
 	M.adjust_disgust(5)
 	..()
+
+/datum/reagent/consumable/ethanol/brass_monkey
+	name = "Brass Monkey"
+	color = "#e9e357"
+	description = "An ancient beverage supposedly invented by a bunch of monkeys trying to join a failing steampunk cult. Traditionally served in a clockwork mug."
+	boozepwr = 85
+	taste_description = "steam-powered bananas"
+	glass_icon_state = "brass_monkey"
+	glass_name = "glass of Brass Monkey"
+	glass_desc = "coolin' by the lockers, getting kind of funky, me and the crew, we're drinking Brass Monkey."

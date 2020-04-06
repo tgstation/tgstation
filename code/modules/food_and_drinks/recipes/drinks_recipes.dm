@@ -572,3 +572,7 @@
 /datum/chemical_reaction/mauna_loa
 	results = list(/datum/reagent/consumable/ethanol/mauna_loa = 5)
 	required_reagents = list(/datum/reagent/consumable/capsaicin = 2, /datum/reagent/consumable/ethanol/kahlua = 1, /datum/reagent/consumable/ethanol/bahama_mama = 2)
+
+/datum/chemical_reaction/brass_monkey
+	results = list(/datum/reagent/consumable/ethanol/brass_monkey = 10)
+	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey/kong = 5, /datum/reagent/consumable/banana = 5, /datum/reagent/copper = 1, /datum/reagent/iron = 1)
