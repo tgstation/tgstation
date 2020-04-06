@@ -90,6 +90,7 @@
 
 	if(!attached || !active)
 		return PROCESS_KILL
+
 	if(NOPOWER || BROKEN)
 		deactivate()
 		return PROCESS_KILL
@@ -117,6 +118,7 @@
 	name = "Advanced Life Support Unit"
 	desc = "Miracle of space engineering, allows you to indefinately suspend someone without them dying. It uses massive amounts of electricity to acomplish that goal."
 	icon_state = "advanced"
+	circuit = /obj/item/circuitboard/machine/life_support/advanced
 	idle_power_usage = 250
 	active_power_usage = 1000
 	fair_market_price = 50
@@ -126,8 +128,9 @@
 	name = "Mobile Life Support Unit"
 	desc = "Miracle of space engineering, allows you to suspend someone in a state like coma, wherever you go!"
 	icon_state = "mobile"
-	idle_power_usage = 0
-	active_power_usage = 100
+	circuit = /obj/item/circuitboard/machine/life_support/mobile
+	idle_power_usage = 50
+	active_power_usage = 200
 	anchored = FALSE
 	active = TRUE
 

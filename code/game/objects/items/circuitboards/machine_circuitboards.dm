@@ -756,7 +756,22 @@
 	req_components = list(
 		/obj/item/stack/cable_coil = 3,
 		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/capacitor = 1)
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/life_support/mobile
+	name = "Mobile Life Support Unit (Machine Board)"
+	build_path = /obj/machinery/life_support/mobile
+
+/obj/item/circuitboard/machine/life_support/advanced
+	name = "Advanced Life Support Unit (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/life_support/advanced
+	req_components = list(
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 2,
+		/obj/item/stack/sheet/glass = 2)
 
 /obj/item/circuitboard/machine/medipen_refiller
 	name = "Medipen Refiller (Machine Board)"
