@@ -5,8 +5,14 @@ What are the archived variables for?
 */
 #define MINIMUM_HEAT_CAPACITY	0.0003
 #define MINIMUM_MOLE_COUNT		0.01
-#define QUANTIZE(variable)		(round(variable,0.0000001))/*I feel the need to document what happens here. Basically this is used to catch most rounding errors, however it's previous value made it so that
-															once gases got hot enough, most procedures wouldnt occur due to the fact that the mole counts would get rounded away. Thus, we lowered it a few orders of magnititude */
+#define MOLAR_ACCURACY  1E-7
+#define QUANTIZE(variable) (round((variable), (MOLAR_ACCURACY)))/*I feel the need to document what happens here. Basically this is used
+															to catch most rounding errors, however its previous value made it so that
+                                                            once gases got hot enough, most procedures wouldn't occur due to the fact that the mole
+															counts would get rounded away. Thus, we lowered it a few orders of magnitude
+                                                            Edit: As far as I know this might have a bug caused by round(). When it has a second arg it will round up.
+                                                            So for instance round(0.5, 1) == 1. Trouble is I haven't found any instances of it causing a bug,
+                                                            and any attempts to fix it just killed atmos. I leave this to a greater man then I*/
 GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
@@ -69,7 +75,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 /datum/gas_mixture/proc/garbage_collect(list/tocheck)
 	var/list/cached_gases = gases
 	for(var/id in (tocheck || cached_gases))
-		if(QUANTIZE(cached_gases[id][MOLES]) <= 0 && QUANTIZE(cached_gases[id][ARCHIVE]) <= 0)
+		if(QUANTIZE(cached_gases[id][MOLES]) <= 0)
 			cached_gases -= id
 
 	//PV = nRT
@@ -359,11 +365,8 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 				if(abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 					temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
 
-	if(length(cached_gases ^ sharer_gases)) //if all gases were present in both mixtures, we know that no gases are 0
-		garbage_collect(cached_gases - sharer_gases) //any gases the sharer had, we are guaranteed to have. gases that it didn't have we are not.
-		sharer.garbage_collect(sharer_gases - cached_gases) //the reverse is equally true
-	if (initial(sharer.gc_share))
-		sharer.garbage_collect()
+	garbage_collect()
+	sharer.garbage_collect()
 	if(temperature_delta > MINIMUM_TEMPERATURE_TO_MOVE || abs(moved_moles) > MINIMUM_MOLES_DELTA_TO_MOVE)
 		var/our_moles
 		TOTAL_MOLES(cached_gases,our_moles)
