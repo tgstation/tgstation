@@ -2248,4 +2248,5 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	taste_description = "steam-powered bananas"
 	glass_icon_state = "brass_monkey"
 	glass_name = "Brass Monkey"
-	glass_desc = "coolin' by the lockers, getting kind of funky, me and the crew, we're drinking Brass Monkey."
+	glass_desc = "Coolin' by the lockers, getting kind of funky, me and the crew, we're drinking Brass Monkey."
+	
