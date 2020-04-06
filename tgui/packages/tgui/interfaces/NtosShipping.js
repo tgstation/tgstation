@@ -27,35 +27,35 @@ export const NtosShipping = props => {
       </Box>
       <Section title="Shipping Options">
         <Box>
-        <Button
-          icon="id-card"
-          tooltip="The currently inserted ID card will become the current user."
-          disabled={data.has_id === 0}
-          onClick={() => act('selectid')}
-          content="Set Current ID" />
-		  </Box>
-		  <Box>
-        <Button
-          icon="print"
-          tooltip="Print a barcode to use on a wrapped package."
-          disabled={!data.has_printer || !data.current_user}
-          onClick={() => act('print')}
-          content="Print Barcode" />
-		  </Box>
-		  <Box>
-        <Button
-          icon="tags"
-          tooltip="Set how much profit you'd like on your package."
-          onClick={() => act('setsplit')}
-          content="Set Profit Margin" />
-		  </Box>
-		  <Box>
-		  <Button
-        icon="sync-alt"
-        content="Reset ID"
-        onClick={() => act('resetid', {
-        })} />
-		  </Box>
+          <Button
+            icon="id-card"
+            tooltip="The currently ID card will become the current user."
+            disabled={data.has_id === 0}
+            onClick={() => act('selectid')}
+            content="Set Current ID" />
+        </Box>
+        <Box>
+          <Button
+            icon="print"
+            tooltip="Print a barcode to use on a wrapped package."
+            disabled={!data.has_printer || !data.current_user}
+            onClick={() => act('print')}
+            content="Print Barcode" />
+        </Box>
+        <Box>
+          <Button
+            icon="tags"
+            tooltip="Set how much profit you'd like on your package."
+            onClick={() => act('setsplit')}
+            content="Set Profit Margin" />
+        </Box>
+        <Box>
+          <Button
+            icon="sync-alt"
+            content="Reset ID"
+            onClick={() => act('resetid', {
+            })} />
+        </Box>
       </Section>
     </Section>
   );
