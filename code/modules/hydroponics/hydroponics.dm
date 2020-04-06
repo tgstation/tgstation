@@ -254,7 +254,7 @@
 //This is where stability mutations exist now.
 			switch(myseed.instability)
 				if(100 to 80)
-					mutate(0, 0, 0, 0, 0, 0, 0, 5, 0) //Exceedingly low odds of gaining a trait.
+					mutate(0, 0, 0, 0, 0, 0, 0, 2, 0) //Exceedingly low odds of gaining a trait.
 				if(79 to 60)
 					if(prob((myseed.instability)/2) && !self_sustaining)
 						mutatespecie()
