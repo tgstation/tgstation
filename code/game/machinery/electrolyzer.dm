@@ -15,8 +15,11 @@
 	ui_x = 400
 	ui_y = 305
 
+	///used to check if there is a cell in the machine
 	var/obj/item/stock_parts/cell/cell
+	///check if the machine is on or off
 	var/on = FALSE
+	///check what mode the machine should be (WORKING, STANDBY)
 	var/mode = ELECTROLYZER_MODE_STANDBY
 	///Increase the amount of moles worked on, changed by upgrading the laser tier
 	var/workingPower = 1
@@ -32,8 +35,7 @@
 	update_icon()
 
 /obj/machinery/electrolyzer/on_construction()
-	qdel(cell)
-	cell = null
+	QDEL_NULL(cell)
 	panel_open = TRUE
 	update_icon()
 	return ..()
@@ -63,9 +65,9 @@
 		. += "electrolyzer-open"
 
 /obj/machinery/electrolyzer/process()
-	if(!on || !is_operational())
-		if (on) // If it's broken, turn it off too
-			on = FALSE
+	if(!is_operational() && on)
+		on = FALSE
+	if(!on)
 		return PROCESS_KILL
 
 	if(cell && cell.charge > 0)

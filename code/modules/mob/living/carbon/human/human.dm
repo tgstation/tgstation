@@ -966,7 +966,7 @@
 
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/target, mob/living/user)
-	if(pulling != target || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS || a_intent != INTENT_GRAB)
+	if(pulling != target || grab_state != GRAB_AGGRESSIVE || stat != CONSCIOUS || a_intent != INTENT_GRAB)
 		return ..()
 
 	//If they dragged themselves and we're currently aggressively grabbing them try to piggyback

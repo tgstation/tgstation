@@ -12,7 +12,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, .proc/attackby_react)
 	RegisterSignal(parent, COMSIG_ATOM_FIRE_ACT, .proc/flame_react)
 
-/datum/component/thermite/UnregisterFromParent()
+/datum/component/hot_ice/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
 	UnregisterSignal(parent, COMSIG_ATOM_FIRE_ACT)
 
@@ -28,7 +28,7 @@
 		qdel(parent)
 
 /datum/component/hot_ice/proc/flame_react(datum/source, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
+	if(exposed_temperature > T0C + 100)
 		hot_ice_melt()
 
 /datum/component/hot_ice/proc/attackby_react(datum/source, obj/item/thing, mob/user, params)

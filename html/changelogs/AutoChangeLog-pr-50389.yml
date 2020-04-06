@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - rscadd: "A cyborg remote monitor program is now available for modular computer devices (including tablets)."
