@@ -319,7 +319,7 @@
 			multibonus += 0.1
 
 	M.adjustToxLoss(-0.1 * multibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, max(3-multibonus, 0.5))
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, max(2-(multibonus*0.5), 0.5))
 
 	// purging magic
 	for(var/r2 in M.reagents.reagent_list)
