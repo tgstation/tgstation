@@ -1,8 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - balance: "Clown ops are no longer clumsy by default."
-  - balance: "Clown ops now spawn with a clumsiness injector and a box of ultra hilarious firing pins in their backpack."
-  - rscadd: "Ultra hilarious firing pins and super ultra hilarious firing pins have been added to the list of clown op and traitor clown items."
-  - rscadd: "Clumsiness injectors have been added as a 1 TC traitor clown (and clown op) item for traitor clowns who wish to become clumsy again."
-  - balance: "Clown ops can no longer buy traitor syndi-kits, miniature energy crossbows, sleepy pens, or infiltrator cases."
