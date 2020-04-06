@@ -1,6 +1,7 @@
 #define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
 #define YIELD_WEED_MINIMUM 3
 #define YIELD_WEED_MAXIMUM 10
+#define STATIC_NUTRIENT_CAPACITY 10
 
 
 /obj/machinery/hydroponics
@@ -78,8 +79,8 @@
 	for (var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
-	maxnutri = (tmp_capacity * 5) +10 // Up to 30
-	reagents.maximum_volume = maxnutri + 10
+	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
+	reagents.maximum_volume = maxnutri
 	nutridrain = 1/rating
 
 /obj/machinery/hydroponics/constructable/examine(mob/user)
@@ -649,7 +650,7 @@
 			to_chat(user, "<span class='notice'>This plant must be harvestable in order to be grafted.</span>")
 			return
 		else if(myseed.grafted)
-			to_chat(user, "<span class='notice'>This plant has already had something sheared or grafted off from it.</span>")
+			to_chat(user, "<span class='notice'>This plant has already been grafted.</span>")
 			return
 		else
 			user.visible_message("<span class='notice'>[user] grafts off a limb from [src].</span>", "<span class='notice'>You carefully graft off a portion of [src].</span>")

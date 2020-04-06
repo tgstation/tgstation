@@ -6,10 +6,8 @@
 	///Contains the reagents within the tray.
 	if(myseed)
 		myseed.on_chem_reaction(reagents) //In case seeds have some special interactions with special chems, currently only used by vines
-	//FINE WE'LL DO IT THIS WAY.
-	for(var/datum/reagent/chem in reagents.reagent_list)
-		if(chem)
-			chem.on_hydroponics_apply(myseed, reagents, src, user)
+	for(var/chem in reagents.reagent_list)
+		chem.on_hydroponics_apply(myseed, reagents, src, user)
 
 /obj/machinery/hydroponics/proc/mutation_roll(mob/user)
 	switch(rand(100))
