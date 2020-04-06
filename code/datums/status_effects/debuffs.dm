@@ -164,8 +164,8 @@
 	return ..()
 
 /obj/screen/alert/status_effect/life_support
-	name = "Life support"
-	desc = "You are in a state of life suspension, you will not die. Pray someone doesnt pull the cord."
+	name = "Life Support"
+	desc = "You are in a state of life suspension, and you can't die. Pray that someone doesn't pull the cord."
 	icon_state = "stasis"
 
 //STASIS

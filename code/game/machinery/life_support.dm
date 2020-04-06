@@ -1,7 +1,7 @@
 
 /obj/machinery/life_support
 	name = "Basic Life Support Unit"
-	desc = "Bulky table with a lot of diodes installed and a small monitor that checks the users health."
+	desc = "A bulky table with a lot of blinking lights installed and a small monitor that checks the users health."
 	icon = 'icons/obj/machines/life_support.dmi'
 	icon_state = "basic"
 	density = TRUE
@@ -116,7 +116,7 @@
 
 /obj/machinery/life_support/advanced
 	name = "Advanced Life Support Unit"
-	desc = "Miracle of space engineering, allows you to indefinately suspend someone without them dying. It uses massive amounts of electricity to acomplish that goal."
+	desc = "A miracle of space engineering, this machine allows you to indefinitely suspend someone without them dying, but uses up massive amounts of electricity to do so."
 	icon_state = "advanced"
 	circuit = /obj/item/circuitboard/machine/life_support/advanced
 	idle_power_usage = 250
@@ -126,7 +126,7 @@
 
 /obj/machinery/life_support/mobile
 	name = "Mobile Life Support Unit"
-	desc = "Miracle of space engineering, allows you to suspend someone in a state like coma, wherever you go!"
+	desc = "A miracle of space engineering, allows you to suspend someone in a state like coma, wherever you go!"
 	icon_state = "mobile"
 	circuit = /obj/item/circuitboard/machine/life_support/mobile
 	idle_power_usage = 50
