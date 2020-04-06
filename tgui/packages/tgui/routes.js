@@ -43,6 +43,7 @@ import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
+import { DnaConsole } from './interfaces/DnaConsole';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
 import { Electropack } from './interfaces/Electropack';
@@ -81,6 +82,7 @@ import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosCyborgRemoteMonitor } from './interfaces/NtosCyborgRemoteMonitor';
 import { NtosFileManager } from './interfaces/NtosFileManager';
 import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
@@ -484,6 +486,12 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_cyborg_monitor: {
+    component: () => NtosCyborgRemoteMonitor,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_file_manager: {
     component: () => NtosFileManager,
     wrapper: () => NtosWrapper,
@@ -731,6 +739,10 @@ const ROUTES = {
   wires: {
     component: () => Wires,
     scrollable: false,
+  },
+  scan_consolenew: {
+    component: () => DnaConsole,
+    scrollable: true,
   },
 };
 

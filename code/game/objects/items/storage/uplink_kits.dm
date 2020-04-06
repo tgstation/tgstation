@@ -346,6 +346,13 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/syringe/bioterror(src)
 
+/obj/item/storage/box/syndie_kit/clownpins
+	name = "ultra hilarious firing pin box"
+
+/obj/item/storage/box/syndie_kit/clownpins/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/firing_pin/clown/ultra(src)
+
 /obj/item/storage/box/syndie_kit/imp_adrenal
 	name = "adrenal implant box"
 

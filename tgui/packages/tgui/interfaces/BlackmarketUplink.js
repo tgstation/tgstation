@@ -12,15 +12,13 @@ export const BlackmarketUplink = props => {
   const items = data.items || {};
 
   const shipmentSelector = !!data.buying && (
-    <Dimmer
-      textAlign="center">
-      <Grid mt={20}>
+    <Dimmer textAlign="center">
+      <Grid>
         {map(deliveryMethod => {
           const name = deliveryMethod.name;
           if (name === "LTSRBT" && !data.ltsrbt_built) {
             return null;
           }
-
           return (
             <Grid.Column
               textAlign="center"

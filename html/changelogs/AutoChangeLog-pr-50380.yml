@@ -1,0 +1,4 @@
+author: "LemonInTheDark, with thanks to: Hugbug for helping me reproduce and test untold times, Dennok for brainstorming the round() issue, duncathan for guiding me through QUANTIZE changes, Ghilker for helping me test the more arcane atmos stuff, as334 for assisting with debugging. Thank you all."
+delete-after: True
+changes: 
+  - bugfix: "Outlaws negative molar counts from the atmos system."

@@ -128,7 +128,9 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 		add_overlay(cooloverlay)
 
 /mob/living/simple_animal/hostile/guardian/Login() //if we have a mind, set its name to ours when it logs in
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	if(mind)
 		mind.name = "[real_name]"
 	if(!summoner)

@@ -166,7 +166,9 @@
 	return ..()
 
 /mob/living/simple_animal/drone/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	check_laws()
 
 	if(flavortext)
