@@ -217,7 +217,7 @@
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
 		H.infodisplay -= H.wanted_lvl
-		qdel(H.wanted_lvl)
+		QDEL_NULL(H.wanted_lvl)
 	..()
 
 /datum/antagonist/ert/families/greet()
