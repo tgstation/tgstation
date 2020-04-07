@@ -40,9 +40,15 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	///duration of the cooldown for the rune only applies to certain runes
 	var/max_cooldown = 100
 
+/obj/item/slimecross/warping/Initialize()
+	. = ..()
+	desc = "It just won't stay in place. it has [warp_charge] charge left"
 
-///runes can also be deleted by bluespace crystals if the xenobiologist is fucking everyone up and you need a way to destroy the rune really fast.
-/obj/effect/warped_rune/attackby(obj/item/stack/used_item, mob/user)
+
+
+///runes can also be deleted by bluespace crystals relatively fast as an alternative to cleaning them.
+/obj/effect/warped_rune/attackby(obj/item/used_item, mob/user)
+	. = ..()
 	if(!istype(used_item,/obj/item/stack/sheet/bluespace_crystal) && !istype(used_item,/obj/item/stack/ore/bluespace_crystal))
 		return
 
@@ -57,6 +63,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 /obj/effect/warped_rune/acid_act()
+	. = ..()
 	visible_message("<span class='warning'>[src] has been dissolved by the acid</span>")
 	playsound(src, 'sound/items/welder.ogg', 150, TRUE)
 	qdel(src)
@@ -85,14 +92,14 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 	if(istype(target, runepath))       //checks if the target is a rune and then if you can store it
 		if(warp_charge >= max_charge)
-			to_chat(user, "<span class='warning'>Your [src] is already full!</span>")
+			to_chat(user, "<span class='warning'>[src] is already full!</span>")
 			return
 
 		if(do_after(user, storing_time,target = target) && warp_charge < max_charge)
 			to_chat(user, "<span class='notice'>You store the rune in [src].</span>")
 			qdel(target)
 			warp_charge++
-			desc = "It just won't stay in place. it has [src.warp_charge] charge left"
+			desc = "It just won't stay in place. it has [warp_charge] charge left"
 			return
 
 	if(!istype(target,/turf/open))
@@ -102,20 +109,25 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		to_chat(user, "<span class='warning'>you cannot draw a rune in space!</span>")
 		return
 
-	if((istype(target,/turf/open/lava)) || (locate(/obj/structure) in target) || (istype(target,/turf/open/chasm))) // check if there's a wall or a structure in the way
+	if((istype(target,/turf/open/lava)) || (istype(target,/turf/open/chasm))) // check if there's a wall or a structure in the way
 		to_chat(user, "<span class='warning'>You can't draw the rune here!</span>")
 		return
 
-	if(warp_charge > 0 && do_after(user, drawing_time,target = target)) //spawns the right rune if you have charge(s) left
-		if(warp_charge <= 0) //this is only here to fix a bug where the user can draw multiple runes at once if they spam click
-			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+	if(warp_charge <= 0) //spawns the right rune if you have charge(s) left
+		to_chat(user, "<span class='warning'>[src] is empty!</span>")
+		return
+
+	if(do_after(user, drawing_time,target = target))
+		if(warp_charge <= 0) //In case the state has changed since we started the do_after
 			return
 
 		playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
 		warp_charge--
-		desc = "It just won't stay in place. it has [src.warp_charge] charge left"
+		desc = "It just won't stay in place. it has [warp_charge] charge left"
 		new runepath(target)
 		to_chat(user, "<span class='notice'>You carefully draw the rune with [src].</span>")
+
+
 
 
 /obj/item/slimecross/warping/grey
@@ -131,11 +143,11 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	icon_state = "greyspace_rune"
 	max_cooldown = 50
 	///number of slime extract currently absorbed by the rune
-	var/absorbed_extract = 0
+	var/absorbed_extracts = 0
 	///mob path of the slime spawned by the rune
 	var/mob/living/simple_animal/slime/spawned_slime
 	///extractype is used to remember the type of the extract on the rune
-	var/extractype = 0
+	var/extractype = FALSE
 
 
 /obj/effect/warped_rune/greyspace/Initialize()
@@ -151,27 +163,37 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///Makes a slime of the color of the extract that was put on the rune.can only take one type of extract between slime spawning.
 /obj/effect/warped_rune/greyspace/proc/slimerevival()
-	if(absorbed_extract <! 8) // this shouldn't happen and will bring back the count to 7
-		absorbed_extract = 7
+	if(absorbed_extracts <! 8) // this shouldn't happen and will bring back the count to 7
+		absorbed_extracts = 7
 		return
 
 	for(var/obj/item/slime_extract/extract in rune_turf)
-		if( extract.color_slime != extractype && extractype != 0) //check if the extract is the first one or of the right color.
+		if(extract.color_slime != extractype && extractype) //check if the extract is the first one or of the right color.
 			return
 
 		extractype = extract.color_slime
 		qdel(extract)    //vores the slime extract
 		playsound(rune_turf, 'sound/effects/splat.ogg', 20, TRUE)
-		absorbed_extract++
-		if (absorbed_extract != 8)
+		absorbed_extracts++
+		if (absorbed_extracts != 8)
 			return
 
 		playsound(rune_turf, 'sound/effects/splat.ogg', 20, TRUE)
 		spawned_slime = new(rune_turf, extractype)  //spawn a slime from the extract's color
 		spawned_slime.amount_grown = SLIME_EVOLUTION_THRESHOLD
 		spawned_slime.Evolve() //slime starts as an adult
-		absorbed_extract = 0
-		extractype = 0 // reset the type to allow a new extract type
+		absorbed_extracts = 0
+		extractype = FALSE // reset the type to allow a new extract type
+		RegisterSignal(spawned_slime, COMSIG_PARENT_QDELETING, .proc/delete_slime)
+
+
+/obj/effect/warped_rune/greyspace/proc/delete_slime()
+	spawned_slime = null
+
+
+/obj/effect/warped_rune/greyspace/Destroy()
+	absorbed_extracts = null
+	return ..()
 
 
 /*The orange rune warp basically ignites whoever walks on it,the fire will teleport you at random as long as you are on fire*/
@@ -283,7 +305,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///Spawn lube on the tile the rune is on every process, Cannot lube a non open turf
 /obj/effect/warped_rune/cyanspace/proc/slippery_rune(turf/open/lube_turf)
-	lube_turf.MakeSlippery(TURF_WET_LUBE,min_wet_time = 10 SECONDS, wet_time_to_add = 5 SECONDS)
+	lube_turf.MakeSlippery(TURF_WET_LUBE,min_wet_time = 10 SECONDS, wet_time_to_add = 2 SECONDS)
 
 
 /*Metal rune : makes an invisible wall. actually I lied, the rune is the wall.*/
@@ -449,6 +471,9 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		nutriment--
 		desc = "Feed me and I will feed you back, I currently hold [nutriment] units of nutrients."
 
+/obj/effect/warped_rune/silverspace/Destroy()
+	nutriment = null
+	return ..()
 
 /* Bluespace rune,reworked so that the last person that walked on the rune will swap place with the next person stepping on it*/
 
@@ -495,6 +520,11 @@ obj/effect/warped_rune/bluespace/Crossed(atom/movable/crossing)
 	stepped_on--
 
 
+obj/effect/warped_rune/bluespace/Destroy()
+	first_person = null
+	second_person = null
+	return ..()
+
 /* basically a timestop trap, activate when ANYTHING goes over it, that includes projectiles and what not.*/
 
 
@@ -529,8 +559,7 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 	runepath = /obj/effect/warped_rune/ceruleanspace
 	effect_desc = "Draws a rune creating a hologram of the last living thing that stepped on the tile. Can draw up to 6 runes."
 	max_charge = 6
-	///it's not that powerful anyway so we might as well let them do a hologram museum
-	warp_charge = 6
+	warp_charge = 6 //it's not that powerful anyway so we might as well let them do a hologram museum
 
 
 /obj/effect/warped_rune/ceruleanspace
@@ -563,7 +592,9 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 ///destroys the hologram with the rune
 /obj/effect/warped_rune/ceruleanspace/Destroy()
 	qdel(holotile)
-	..()
+	holotile = null
+	holo_host = null
+	return ..()
 
 
 /obj/item/slimecross/warping/pyrite
@@ -627,7 +658,7 @@ obj/effect/warped_rune/sepiaspace/Crossed()
 	for(var/mob/living/carbon/human/deraged in rune_turf) // takes away people's punch damage that are on the rune anyway..
 		deraged.dna.species.punchstunthreshold -= 20
 		deraged.dna.species.punchdamagelow -= 20
-		deraged.dna.species.punchdamagehigh -= 20.
+		deraged.dna.species.punchdamagehigh -= 20
 	return ..()
 
 
@@ -883,27 +914,140 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	stepped_on = FALSE
 	cooldown = max_cooldown + world.time //the default max cooldown is of 10 seconds
 
+/obj/effect/warped_rune/blackspace/Destroy()
+	first_person = null
+	second_person = null
+	return ..()
 
-/*
-Anything after this is in """progress""" and isn't part of the actual code
 
-
-/*Any explosion over the rune will convert anything in the range of the explosion to SLIME, not people because even I'm not that evil */
+/*Acts as a bunker making anything into the rune immune to outside explosions and gas leaks. doesn't work if the epicenter of the explosion is IN the rune */
 
 
 /obj/item/slimecross/warping/oil
 	colour = "oil"
 	runepath = /obj/effect/warped_rune/oilspace
+	effect_desc = "protects anything on the rune from explosions unless the rune is in the center of the explosion."
 
 
 /obj/effect/warped_rune/oilspace
-	desc = "haha bomb machine go boom"
+	///used to remember the oilspace_bunker specific to this rune
+	var/list/bunker_list = list()
+	icon_state = "oil_rune"
+	desc = "The world is ending, but we have one last trick up our sleeve, we will survive."
+	explosion_block = INFINITY
+
+
+/obj/effect/oilspace_bunker //we'll surround the rune with these so it "blocks" nearby explosions. Although only the rune itself is 100% protected
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	invisibility = TRUE //no one can see those
+	anchored = TRUE
+	explosion_block = INFINITY
+	CanAtmosPass = ATMOS_PASS_NO //will also try to stop gas from exiting the rune to keep the pressure and air of the tile.
+	move_resist = INFINITY //we need it to stay in the same place until it's deleted.
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/effect/warped_rune/oilspace/Initialize()
+	. = ..()
+	for(var/turf/bunker_turf in range(1,rune_turf))
+		var/obj/effect/oilspace_bunker/bunker_wall = new /obj/effect/oilspace_bunker(bunker_turf)
+		bunker_list += bunker_wall
+
+
+/obj/effect/warped_rune/oilspace/Destroy()
+	for(var/obj/effect/oilspace_bunker/bunker_wall in range(1,rune_turf))
+		if(bunker_wall in bunker_list)
+			bunker_list -= bunker_wall
+			qdel(bunker_wall)
+		if(!LAZYLEN(bunker_list))
+			bunker_list = null //no need to keep an empty list around
+			return ..()
+
+
+
 
 
 /* May be used to lead to a unique room like hilbert's hotel. */
 
-
 /obj/item/slimecross/warping/rainbow
 	colour = "rainbow"
+	effect_desc = "draws a rune that will teleport anything above it "
 	runepath = /obj/effect/warped_rune/rainbowspace
-*/
+
+
+/obj/effect/warped_rune/rainbowspace
+	///current x,y,z location of the reserved space for the rune room
+	var/datum/turf_reservation/room_reservation
+	///the template of the warped_room map
+	var/datum/map_template/warped_room/rune_room
+	var/list/customer_list = list()
+	icon_state = "rainbow_rune"
+	desc = "This is where I go when I want to be alone. Yet they keep clawing at the walls until they inevitable get in."
+
+
+/obj/effect/warped_room_exit
+	///where the rune will teleport you back.
+	var/turf/exit_turf
+	///rune linked to the exit rune
+	var/obj/effect/warped_rune/rainbowspace/enter_rune
+	name = "warped_rune"
+	icon = 'icons/obj/slimecrossing.dmi'
+	icon_state = "rainbow_rune"
+	desc = "Use this rune if you want to leave this place. You will have to leave eventually."
+	move_resist = INFINITY
+	anchored = TRUE
+
+
+/datum/map_template/warped_room
+	name = "Warped room"
+	mappath = '_maps/templates/warped_room.dmm'
+
+
+/area/warped_room
+	icon_state = "warped_room"
+	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
+	requires_power = FALSE
+	has_gravity = TRUE
+	noteleport = TRUE
+
+
+/obj/effect/warped_rune/rainbowspace/Initialize()
+	. = ..()
+	rune_room = new()
+	room_reservation = SSmapping.RequestBlockReservation(rune_room.width, rune_room.height)
+	rune_room.load(locate(room_reservation.bottom_left_coords[1], room_reservation.bottom_left_coords[2], room_reservation.bottom_left_coords[3]))
+	var/obj/effect/warped_room_exit/exit_rune = new(locate(room_reservation.bottom_left_coords[1] + 4, room_reservation.bottom_left_coords[2] + 5, room_reservation.bottom_left_coords[3]))
+	exit_rune.exit_turf = rune_turf
+	exit_rune.enter_rune = src
+
+
+/obj/effect/warped_rune/rainbowspace/attack_hand(mob/living/user)
+	. = ..()
+	for(var/mob/living/customer in rune_turf)
+		customer.forceMove(locate(room_reservation.bottom_left_coords[1] + 5, room_reservation.bottom_left_coords[2] + 8, room_reservation.bottom_left_coords[3]))
+		customer_list += customer
+		do_sparks(3, FALSE, rune_turf)
+
+///teleport all customers in the room back to the rune when the rune is destroyed
+/obj/effect/warped_rune/rainbowspace/Destroy()
+	if(!LAZYLEN(customer_list))
+		customer_list = null
+		qdel(room_reservation)
+	return ..()
+
+
+///anyone stepping on the "exit rune" will be teleported back on the original rune
+/obj/effect/warped_room_exit/Crossed(atom/movable/customer)
+	. = ..()
+	if(customer in enter_rune.customer_list) //only people in the customers list are allowed to leave, no bluespace bodybag smuggling in MY hotel
+		customer.forceMove(exit_turf)
+		enter_rune.customer_list -= customer
+		do_sparks(3, FALSE, get_turf(src))
+	else
+		to_chat(customer, "<span class='warning'>The rune doesn't recognise you and won't allow you to leave!</span>")
+		return
+
+	if(!LAZYLEN(enter_rune.customer_list) && !locate(enter_rune) in exit_turf) //deletes the room if the rune doesn't exist anymore and all customers have left
+		enter_rune.customer_list = null
+		qdel(enter_rune.room_reservation)
+		qdel(src)
+		return ..()
