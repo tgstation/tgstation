@@ -8,6 +8,8 @@
 #define GIRDER_REINF 2
 #define GIRDER_DISPLACED 3
 #define GIRDER_DISASSEMBLED 4
+#define GIRDER_POWERED 5
+#define GIRDER_UNPOWERED 6
 
 //rwall construction states
 #define INTACT 0

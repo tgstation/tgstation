@@ -1,24 +1,36 @@
-/turf/closed/wall/r_wall
-	name = "reinforced wall"
-	desc = "A huge chunk of reinforced metal used to separate rooms."
-	icon = 'icons/turf/walls/reinforced_wall.dmi'
-	icon_state = "r_wall"
+/turf/closed/wall/sh_wall
+	name = "shielded wall"
+	desc = "A huge chunk of reinforced and shielded metal used to separate rooms and provide insulation from heat when powered."
+	icon = 'icons/turf/walls/shielded_wall.dmi'
+	icon_state = "sh_wall"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
 	heat_capacity = 60000
-	thermal_conductivity = 0.1
+	thermal_conductivity = 0.0
 	opacity = 1
 	density = TRUE
 
 	var/d_state = INTACT
+	var/powered = FALSE
 	hardness = 10
 	sheet_type = /obj/item/stack/sheet/plasteel
 	sheet_amount = 1
-	girder_type = /obj/structure/girder/reinforced
+	girder_type = /obj/structure/girder/cabled
 	explosion_block = 2
-	rad_insulation = RAD_HEAVY_INSULATION
+	rad_insulation = RAD_EXTREME_INSULATION
 
-/turf/closed/wall/r_wall/deconstruction_hints(mob/user)
+/turf/closed/wall/sh_wall/Initialize()
+	. = ..()
+	check_power()
+
+/turf/closed/wall/sh_wall/examine(mob/user)
+	. = ..()
+	if(powered == TRUE)
+		. += "<span class='notice'>The shield is powered and functional.</span>"
+	else
+		. += "<span class='notice'>The shield has no power.</span>"
+
+/turf/closed/wall/sh_wall/deconstruction_hints(mob/user)
 	switch(d_state)
 		if(INTACT)
 			return "<span class='notice'>The outer <b>grille</b> is fully intact.</span>"
@@ -35,11 +47,11 @@
 		if(SHEATH)
 			return "<span class='notice'>The support rods have been <i>sliced through</i>, and the outer sheath is <b>connected loosely</b> to the girder.</span>"
 
-/turf/closed/wall/r_wall/devastate_wall()
+/turf/closed/wall/sh_wall/devastate_wall()
 	new sheet_type(src, sheet_amount)
 	new /obj/item/stack/sheet/metal(src, 2)
 
-/turf/closed/wall/r_wall/attack_animal(mob/living/simple_animal/M)
+/turf/closed/wall/sh_wall/attack_animal(mob/living/simple_animal/M)
 	M.changeNext_move(CLICK_CD_MELEE)
 	M.do_attack_animation(src)
 	if(!M.environment_smash)
@@ -51,13 +63,15 @@
 		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		to_chat(M, "<span class='warning'>This wall is far too strong for you to destroy.</span>")
 
-/turf/closed/wall/r_wall/try_decon(obj/item/W, mob/user, turf/T)
+/turf/closed/wall/sh_wall/try_decon(obj/item/W, mob/user, turf/T)
 	//DECONSTRUCTION
 	switch(d_state)
 		if(INTACT)
 			if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
 				d_state = SUPPORT_LINES
+				powered = FALSE
+				thermal_conductivity = 0.1
 				update_icon()
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
 				return 1
@@ -66,7 +80,7 @@
 			if(W.tool_behaviour == TOOL_SCREWDRIVER)
 				to_chat(user, "<span class='notice'>You begin unsecuring the support lines...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_LINES)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != SUPPORT_LINES)
 						return 1
 					d_state = COVER
 					update_icon()
@@ -76,6 +90,7 @@
 			else if(W.tool_behaviour == TOOL_WIRECUTTER)
 				W.play_tool_sound(src, 100)
 				d_state = INTACT
+				check_power()
 				update_icon()
 				to_chat(user, "<span class='notice'>You repair the outer grille.</span>")
 				return 1
@@ -86,7 +101,7 @@
 					return
 				to_chat(user, "<span class='notice'>You begin slicing through the metal cover...</span>")
 				if(W.use_tool(src, user, 60, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != COVER)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != COVER)
 						return 1
 					d_state = CUT_COVER
 					update_icon()
@@ -107,7 +122,7 @@
 			if(W.tool_behaviour == TOOL_CROWBAR)
 				to_chat(user, "<span class='notice'>You struggle to pry off the cover...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != CUT_COVER)
 						return 1
 					d_state = ANCHOR_BOLTS
 					update_icon()
@@ -119,7 +134,7 @@
 					return
 				to_chat(user, "<span class='notice'>You begin welding the metal cover back to the frame...</span>")
 				if(W.use_tool(src, user, 60, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != CUT_COVER)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != CUT_COVER)
 						return TRUE
 					d_state = COVER
 					update_icon()
@@ -130,7 +145,7 @@
 			if(W.tool_behaviour == TOOL_WRENCH)
 				to_chat(user, "<span class='notice'>You start loosening the anchoring bolts which secure the support rods to their frame...</span>")
 				if(W.use_tool(src, user, 40, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != ANCHOR_BOLTS)
 						return 1
 					d_state = SUPPORT_RODS
 					update_icon()
@@ -140,7 +155,7 @@
 			if(W.tool_behaviour == TOOL_CROWBAR)
 				to_chat(user, "<span class='notice'>You start to pry the cover back into place...</span>")
 				if(W.use_tool(src, user, 20, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != ANCHOR_BOLTS)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != ANCHOR_BOLTS)
 						return 1
 					d_state = CUT_COVER
 					update_icon()
@@ -153,7 +168,7 @@
 					return
 				to_chat(user, "<span class='notice'>You begin slicing through the support rods...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != SUPPORT_RODS)
 						return 1
 					d_state = SHEATH
 					update_icon()
@@ -164,7 +179,7 @@
 				to_chat(user, "<span class='notice'>You start tightening the bolts which secure the support rods to their frame...</span>")
 				W.play_tool_sound(src, 100)
 				if(W.use_tool(src, user, 40))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SUPPORT_RODS)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != SUPPORT_RODS)
 						return 1
 					d_state = ANCHOR_BOLTS
 					update_icon()
@@ -175,7 +190,7 @@
 			if(W.tool_behaviour == TOOL_CROWBAR)
 				to_chat(user, "<span class='notice'>You struggle to pry off the outer sheath...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SHEATH)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != SHEATH)
 						return 1
 					to_chat(user, "<span class='notice'>You pry off the outer sheath.</span>")
 					dismantle_wall()
@@ -186,7 +201,7 @@
 					return
 				to_chat(user, "<span class='notice'>You begin welding the support rods back together...</span>")
 				if(W.use_tool(src, user, 100, volume=100))
-					if(!istype(src, /turf/closed/wall/r_wall) || d_state != SHEATH)
+					if(!istype(src, /turf/closed/wall/sh_wall) || d_state != SHEATH)
 						return TRUE
 					d_state = SUPPORT_RODS
 					update_icon()
@@ -194,58 +209,51 @@
 				return 1
 	return 0
 
-/turf/closed/wall/r_wall/update_icon()
+/turf/closed/wall/sh_wall/update_icon()
 	. = ..()
 	if(d_state != INTACT)
 		smooth = SMOOTH_FALSE
 		clear_smooth_overlays()
+		update_overlays()
 	else
-		smooth = SMOOTH_TRUE
-		queue_smooth_neighbors(src)
-		queue_smooth(src)
+		update_overlays()
 
-/turf/closed/wall/r_wall/update_icon_state()
+/turf/closed/wall/sh_wall/update_overlays()
+	. = ..()
+	if(powered == TRUE && d_state == INTACT)
+		overlays += image('icons/effects/effects.dmi', icon_state = "wave2")
+	else
+		overlays = image('icons/effects/effects.dmi', icon_state = "nothing")
+
+
+/turf/closed/wall/sh_wall/check_power()
+	var/turf/T = get_turf(src)
+	var/obj/structure/cable/C = T.get_cable_node()
+	if(C && d_state == INTACT)
+		powered = TRUE
+		thermal_conductivity = 0.0
+		update_overlays()
+	else
+		powered = FALSE
+		thermal_conductivity = 0.1
+		update_overlays()
+
+/turf/closed/wall/sh_wall/update_icon_state()
 	if(d_state != INTACT)
-		icon_state = "r_wall-[d_state]"
+		icon_state = "sh_wall-[d_state]"
 	else
-		icon_state = "r_wall"
+		icon_state = "sh_wall"
 
-/turf/closed/wall/r_wall/wall_singularity_pull(current_size)
+/turf/closed/wall/sh_wall/wall_singularity_pull(current_size)
 	if(current_size >= STAGE_FIVE)
 		if(prob(30))
 			dismantle_wall()
 
-/turf/closed/wall/r_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
+/turf/closed/wall/sh_wall/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.canRturf)
 		return ..()
 
 
-/turf/closed/wall/r_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
+/turf/closed/wall/sh_wall/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	if(the_rcd.canRturf)
 		return ..()
-
-/turf/closed/wall/r_wall/syndicate
-	name = "hull"
-	desc = "The armored hull of an ominous looking ship."
-	icon = 'icons/turf/walls/plastitanium_wall.dmi'
-	icon_state = "map-shuttle"
-	explosion_block = 20
-	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
-	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL
-	canSmoothWith = list(/turf/closed/wall/r_wall/syndicate, /turf/closed/wall/mineral/plastitanium, /obj/machinery/door/airlock/shuttle, /obj/machinery/door/airlock, /obj/structure/window/plasma/reinforced/plastitanium, /obj/structure/shuttle/engine, /obj/structure/falsewall/plastitanium)
-
-/turf/closed/wall/r_wall/syndicate/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
-	return FALSE
-
-/turf/closed/wall/r_wall/syndicate/nodiagonal
-	smooth = SMOOTH_MORE
-	icon_state = "map-shuttle_nd"
-
-/turf/closed/wall/r_wall/syndicate/nosmooth
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
-	smooth = SMOOTH_FALSE
-
-/turf/closed/wall/r_wall/syndicate/overspace
-	icon_state = "map-overspace"
-	fixed_underlay = list("space"=1)

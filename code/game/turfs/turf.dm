@@ -582,6 +582,7 @@
 		return
 	turf_heat_resistance = max(turf_heat_resistance - damage_amount, 0)
 	update_overlays()
+	check_power()
 	if(turf_heat_resistance <= 0)
 		Melt()
 
@@ -599,6 +600,8 @@
 		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_75")
 	return
 
+/turf/proc/check_power()
+	return
 
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)

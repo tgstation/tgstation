@@ -26,6 +26,10 @@
 			. += "<span class='notice'>The bolts are <i>loosened</i>, but the <b>screws</b> are holding [src] together.</span>"
 		if(GIRDER_DISASSEMBLED)
 			. += "<span class='notice'>[src] is disassembled! You probably shouldn't be able to see this examine message.</span>"
+		if(GIRDER_POWERED)
+			. += "<span class='notice'>The bluespace core is inside the [src]! There are <b>wires</b> connecting it to the [src]"
+		if(GIRDER_UNPOWERED)
+			. += "<span class='notice'>The bluespace core is inside the [src]! The <i>wires</i> have been removed, and it seems <b>connected loosely</b> to the girder"
 
 /obj/structure/girder/attackby(obj/item/W, mob/user, params)
 	var/platingmodifier = 1
@@ -54,6 +58,23 @@
 		if (locate(/obj/structure/falsewall) in src.loc.contents)
 			to_chat(user, "<span class='warning'>There is already a false wall present!</span>")
 			return
+
+		if(istype(W, /obj/item/stack/cable_coil))
+			var/obj/item/stack/rods/S = W
+			if(state == GIRDER_UNPOWERED)
+				if(S.get_amount() < 5)
+					to_chat(user, "<span class='warning'>You need at least five cables to connect the crystal!</span>")
+					return
+				to_chat(user, "<span class='notice'>You start connecting the crystal to the girder...</span>")
+				if(do_after(user, 20, target = src))
+					if(S.get_amount() < 5)
+						return
+					S.use(5)
+					to_chat(user, "<span class='notice'>You connected the crystal to the girder.</span>")
+					var/obj/structure/girder/cabled/CA = new (loc)
+					transfer_fingerprints_to(CA)
+					qdel(src)
+				return
 
 		if(istype(W, /obj/item/stack/rods))
 			var/obj/item/stack/rods/S = W
@@ -149,6 +170,21 @@
 						transfer_fingerprints_to(T)
 						qdel(src)
 					return
+				else if(state == GIRDER_POWERED)
+					if(S.get_amount() < 1)
+						return
+					to_chat(user, "<span class='notice'>You start finalizing the shielded wall...</span>")
+					if(do_after(user, 60*platingmodifier, target = src))
+						if(S.get_amount() < 1)
+							return
+						S.use(1)
+						to_chat(user, "<span class='notice'>You finalize the shielded wall.</span>")
+						var/turf/T = get_turf(src)
+						T.PlaceOnTop(/turf/closed/wall/sh_wall)
+						T.check_power()
+						transfer_fingerprints_to(T)
+						qdel(src)
+					return
 				else
 					if(S.get_amount() < 1)
 						return
@@ -162,6 +198,21 @@
 						transfer_fingerprints_to(R)
 						qdel(src)
 					return
+
+		if(istype(S, /obj/item/stack/sheet/bluespace_crystal))
+			if(state == GIRDER_REINF)
+				if(S.get_amount() < 1)
+					return
+				to_chat(user, "<span class='notice'>You start placing the crystal in the girder...</span>")
+				if(do_after(user, 50*platingmodifier, target = src))
+					if(S.get_amount() < 1)
+						return
+					S.use(1)
+					to_chat(user, "<span class='notice'>You insert the crystal in the girder.</span>")
+					var/obj/structure/girder/crystal/CR = new (loc)
+					transfer_fingerprints_to(CR)
+					qdel(src)
+				return
 
 		if(S.sheettype != "runed")
 			var/M = S.sheettype
@@ -264,6 +315,27 @@
 			transfer_fingerprints_to(G)
 			qdel(src)
 		return TRUE
+	else if(state == GIRDER_POWERED)
+		to_chat(user, "<span class='notice'>You start disconnecting the crystal from the girder...</span>")
+		if(tool.use_tool(src, user, 40, volume=100))
+			to_chat(user, "<span class='notice'>You disconnect the crystal.</span>")
+			new /obj/item/stack/cable_coil (loc, 5)
+			var/obj/structure/girder/crystal/CR = new (loc)
+			transfer_fingerprints_to(CR)
+			qdel(src)
+		return TRUE
+
+/obj/structure/girder/crowbar_act(mob/user, obj/item/tool)
+	. = ..()
+	if(state == GIRDER_UNPOWERED)
+		to_chat(user, "<span class='notice'>You start removing the crystal from the girder...</span>")
+		if(tool.use_tool(src, user, 40, volume=100))
+			to_chat(user, "<span class='notice'>You remove the crystal.</span>")
+			new /obj/item/stack/sheet/bluespace_crystal(loc, 1)
+			var/obj/structure/girder/reinforced/R = new (loc)
+			transfer_fingerprints_to(R)
+			qdel(src)
+		return TRUE
 
 /obj/structure/girder/wrench_act(mob/user, obj/item/tool)
 	. = ..()
@@ -322,6 +394,22 @@
 	state = GIRDER_REINF
 	girderpasschance = 0
 	max_integrity = 350
+
+/obj/structure/girder/crystal
+	name = "crystal girder"
+	icon_state = "crystal"
+	state = GIRDER_UNPOWERED
+	girderpasschance = 0
+	max_integrity = 350
+
+/obj/structure/girder/cabled
+	name = "cabled girder"
+	icon_state = "cabled"
+	state = GIRDER_POWERED
+	girderpasschance = 0
+	max_integrity = 350
+
+
 
 
 
