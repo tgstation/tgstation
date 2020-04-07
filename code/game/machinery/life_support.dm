@@ -21,6 +21,7 @@
 
 /obj/machinery/life_support/Initialize()
 	. = ..()
+	START_PROCESSING(SSmachines, src)
 	update_overlays()
 
 /obj/machinery/life_support/update_overlays()
@@ -76,14 +77,14 @@
 		attached = target
 		update_overlays()
 		update_icon()
-		START_PROCESSING(SSmachines, src)
+
 
 
 /**
   * Properly gets rid of status effects from the attached
   *
   * Internal function, you really shouldn't be calling this since , unlike the name suggests it doesn't change the active var
-  * , but instead gets rid of all relevant status effects from the attached.
+  * , but instead gets rid of all relevant status effects from the attached, and changes the power use.
   */
 /obj/machinery/life_support/proc/deactivate()
 	attached.remove_status_effect(STATUS_EFFECT_LIFE_SUPPORT, STASIS_MACHINE_EFFECT)
@@ -95,19 +96,21 @@
 	update_icon()
 
 	if(!attached || !active)
-		return PROCESS_KILL
+		use_power = IDLE_POWER_USE
+		return
 
-	if(NOPOWER || BROKEN)
+	if(machine_stat && (NOPOWER|BROKEN))
 		deactivate()
-		return PROCESS_KILL
+		return
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
 		to_chat(attached, "<span class='userdanger'>The life support lines are ripped out of you!</span>")
+		attached.apply_damage(20, BRUTE, BODY_ZONE_CHEST)
 		attached.apply_damage(15, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 		deactivate()
 		attached = null
 		update_icon()
-		return PROCESS_KILL
+		return
 
 	if(attached.health < health_treshold)
 		deactivate()
