@@ -16,8 +16,6 @@
 	var/mob/living/carbon/attached
 	///Maximum damage someone can have and still live while hooked up
 	var/health_treshold = -200
-	///Overlays
-	var/mutable_appearance/monitor_overlay
 	///Determines if this is active or not.
 	var/active = TRUE
 
@@ -27,6 +25,7 @@
 
 /obj/machinery/life_support/update_overlays()
 	. = ..()
+	var/mutable_appearance/monitor_overlay
 	if(machine_stat && (NOPOWER|BROKEN))
 		monitor_overlay = mutable_appearance(icon,"nopower")
 		. += monitor_overlay
@@ -123,7 +122,7 @@
 
 /obj/machinery/life_support/advanced
 	name = "Advanced Life Support Unit"
-	desc = "A miracle of space engineering, this machine allows you to indefinitely suspend someone without them dying, but uses up massive amounts of electricity to do so."
+	desc = "A miracle of space engineering, this machine allows you to indefinitely suspend someone in a stasis like state, but uses up massive amounts of electricity to do so."
 	icon_state = "advanced"
 	circuit = /obj/item/circuitboard/machine/life_support/advanced
 	idle_power_usage = 250
