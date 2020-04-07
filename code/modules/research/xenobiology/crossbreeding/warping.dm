@@ -1004,7 +1004,8 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 
 /area/warped_room
-	icon_state = "warped_room"
+	name = "warped room"
+	icon_state = "yellow"
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
 	has_gravity = TRUE
