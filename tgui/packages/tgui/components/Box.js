@@ -144,7 +144,6 @@ export const computeBoxClassName = props => {
   const color = props.textColor || props.color;
   const backgroundColor = props.backgroundColor;
   return classes([
-    props.className,
     isColorClass(color) && 'color-' + color,
     isColorClass(backgroundColor) && 'color-bg-' + backgroundColor,
   ]);
@@ -161,7 +160,9 @@ export const Box = props => {
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
   }
-  const computedClassName = computeBoxClassName(props);
+  const computedClassName = typeof className === 'string'
+    ? className + ' ' + computeBoxClassName(rest)
+    : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
   // Render a wrapper element
   return createVNode(

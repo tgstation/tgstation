@@ -18,6 +18,7 @@ export { NoticeBox } from './NoticeBox';
 export { NumberInput } from './NumberInput';
 export { ProgressBar } from './ProgressBar';
 export { Section } from './Section';
+export { Slider } from './Slider';
 export { Table } from './Table';
 export { Tabs } from './Tabs';
 export { TitleBar } from './TitleBar';

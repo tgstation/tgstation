@@ -13,7 +13,8 @@ export const Table = props => {
       className={classes([
         'Table',
         collapsing && 'Table--collapsing',
-        computeBoxClassName(props),
+        className,
+        computeBoxClassName(rest),
       ])}
       {...computeBoxProps(rest)}>
       <tbody>

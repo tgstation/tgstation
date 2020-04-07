@@ -123,8 +123,9 @@ const KitchenSinkButton = props => {
           <Box inline
             mx="7px"
             key={color}
-            color={color}
-            content={color} />
+            color={color}>
+            {color}
+          </Box>
         ))}
       </Box>
     </Box>

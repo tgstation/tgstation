@@ -2,7 +2,7 @@ import { clamp, keyOfMatchingRange, toFixed } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 
-export const ProgressBar = props => {
+export const Slider = props => {
   const {
     className,
     value,
@@ -40,5 +40,3 @@ export const ProgressBar = props => {
     </div>
   );
 };
-
-ProgressBar.defaultHooks = pureComponentHooks;
