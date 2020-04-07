@@ -82,7 +82,8 @@
 	switch(light_mood)
 		if(0 to light_mood_threshold * 0.5)
 			SEND_SIGNAL(parent, COMSIG_ADD_MOOD_EVENT, "missing_the_light", /datum/mood_event/missing_the_light_a_lot)
-		if(light_mood_threshold/2 to light_mood_threshold)
+		if((light_mood_threshold * 0.5) to light_mood_threshold)
+
 			SEND_SIGNAL(parent, COMSIG_ADD_MOOD_EVENT, "missing_the_light", /datum/mood_event/missing_the_light)
 
 	if(light_mood >= light_mood_threshold)
