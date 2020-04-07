@@ -51,7 +51,7 @@
 
 /obj/machinery/life_support/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	anchored = anchored == TRUE ? FALSE : TRUE
+	anchored = !anchored
 	active = anchored
 	return
 
@@ -68,7 +68,7 @@
 		return
 
 	if(!target.has_dna())
-		to_chat(usr, "<span class='danger'>The drip beeps: Warning, incompatible creature!</span>")
+		to_chat(usr, "<span class='danger'>The drip beeps: \"warning, incompatible creature!\"</span>")
 		return
 
 	if(Adjacent(target) && usr.Adjacent(target))
@@ -96,7 +96,7 @@
 		return PROCESS_KILL
 
 	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
-		to_chat(attached, "<span class='userdanger'>The life support lines is ripped out of you!</span>")
+		to_chat(attached, "<span class='userdanger'>The life support lines are ripped out of you!</span>")
 		attached.apply_damage(15, BRUTE, pick(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM))
 		deactivate()
 		attached = null
@@ -126,13 +126,12 @@
 
 /obj/machinery/life_support/mobile
 	name = "Mobile Life Support Unit"
-	desc = "A miracle of space engineering, allows you to suspend someone in a state like coma, wherever you go!"
+	desc = "A miracle of space engineering, allows you to suspend someone in a coma-like state, wherever you go!"
 	icon_state = "mobile"
 	circuit = /obj/item/circuitboard/machine/life_support/mobile
 	idle_power_usage = 50
 	active_power_usage = 200
 	anchored = FALSE
-	active = TRUE
 
 /obj/machinery/life_support/mobile/wrench_act(mob/living/user, obj/item/I) //unewrenchable
 	return
