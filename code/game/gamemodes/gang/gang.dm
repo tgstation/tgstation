@@ -236,9 +236,9 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang/proc/update_wanted_level(newlevel)
 	if(newlevel > wanted_level)
 		on_gain_wanted_level(newlevel)
-
 	else if (newlevel < wanted_level)
 		on_lower_wanted_level(newlevel)
+	wanted_level = newlevel
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
 		if(!M.hud_used?.wanted_lvl)
