@@ -979,6 +979,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	var/datum/turf_reservation/room_reservation
 	///the template of the warped_room map
 	var/datum/map_template/warped_room/rune_room
+	///list of people that teleported into the rune_room
 	var/list/customer_list = list()
 	icon_state = "rainbow_rune"
 	desc = "This is where I go when I want to be alone. Yet they keep clawing at the walls until they inevitable get in."
@@ -1026,6 +1027,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		customer.forceMove(locate(room_reservation.bottom_left_coords[1] + 5, room_reservation.bottom_left_coords[2] + 8, room_reservation.bottom_left_coords[3]))
 		customer_list += customer
 		do_sparks(3, FALSE, rune_turf)
+
 
 ///teleport all customers in the room back to the rune when the rune is destroyed
 /obj/effect/warped_rune/rainbowspace/Destroy()
