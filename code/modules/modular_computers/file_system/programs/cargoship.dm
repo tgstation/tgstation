@@ -15,49 +15,37 @@
 
 /datum/computer_file/program/shipping/ui_data(mob/user)
 	var/list/data = get_header_data()
-	var/obj/item/computer_hardware/card_slot/card_slot
-	var/obj/item/computer_hardware/printer/printer
-	var/card_name = "No Card Inserted."
-	var/current_user
-	var/obj/item/card/id/id_card
 
-	card_slot = computer.all_components[MC_CARD]
-	printer = computer.all_components[MC_PRINT]
-	data["has_id_slot"] = card_slot ? TRUE : FALSE
-	data["has_printer"] = printer ? TRUE : FALSE
-	if(card_slot)
-		id_card = card_slot.stored_card
-		if(id_card)
-			card_name = id_card.registered_name
-	if(printer)
-		data["paperamt"] = "[printer.stored_paper] / [printer.max_paper]"
-	if(payments_acc)
-		current_user = payments_acc.account_holder
-	data["card_owner"] = card_name
-	data["current_user"] = current_user
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
+	data["has_id_slot"] = !!card_slot
+	data["has_printer"] = !!printer
+    data["paperamt"] = printer ? "[printer.stored_paper] / [printer.max_paper]" : null
+	data["card_owner"] = card_slot && card_slot.stored_card ? id_card.registered_name : "No Card Inserted."
+	data["current_user"] = payments_acc ? payments_acc.account_holder : null
 	data["barcode_split"] = percent_cut
 	return data
 
 /datum/computer_file/program/shipping/ui_act(action, list/params)
 	if(..())
 		return TRUE
-	var/obj/item/computer_hardware/card_slot/card_slot
-	var/obj/item/computer_hardware/printer/printer
-	var/mob/user = usr
-	if(computer)
-		card_slot = computer.all_components[MC_CARD]
-		printer = computer.all_components[MC_PRINT]
-		if(!card_slot || !printer) //We need both to successfully use this app.
+	if(!computer)
+		return
+	
+	// Get components
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
+	var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
+	if(!card_slot || !printer) //We need both to successfully use this app.
 			return
-	var/obj/item/card/id/id_card = card_slot.stored_card
 
 	switch(action)
 		if("ejectid")
-			if(!computer || !card_slot)
-				return
 			if(id_card)
-				card_slot.try_eject(TRUE, user)
+				card_slot.try_eject(TRUE, usr)
 		if("selectid")
+			if(!id_card)
+				return
 			if(!id_card.registered_account)
 				playsound(get_turf(ui_host()), 'sound/machines/buzz-sigh.ogg', 50, TRUE, -1)
 				return
@@ -67,9 +55,7 @@
 			payments_acc = null
 		if("setsplit")
 			var/potential_cut = input("How much would you like to payout to the registered card?","Percentage Profit") as num|null
-			if(!potential_cut)
-				percent_cut = 20
-			percent_cut = clamp(round(potential_cut, 1), 1, 50)
+			percent_cut = potential_cut ? clamp(round(potential_cut, 1), 1, 50) : 20
 		if("print")
 			if(!printer)
 				to_chat(usr, "<span class='notice'>Hardware error: A printer is required to print barcodes.</span>")
@@ -83,6 +69,5 @@
 			var/obj/item/barcode/barcode = new /obj/item/barcode(get_turf(ui_host()))
 			barcode.payments_acc = payments_acc
 			barcode.percent_cut = percent_cut
-			printer.stored_paper -= 1
+			printer.stored_paper--
 			to_chat(usr, "<span class='notice'>The computer prints out a barcode.</span>")
-	return

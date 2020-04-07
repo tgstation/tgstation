@@ -13,18 +13,17 @@ export const NtosShipping = props => {
           <Button
             icon="eject"
             content="Eject Id"
-            onClick={() => act('ejectid', {
-            })} />
+            onClick={() => act('ejectid')} />
         )}>
         <LabeledList>
           <LabeledList.Item label="Current User">
-            {data.current_user ? data.current_user : "N/A"}
+            {data.current_user || "N/A"}
           </LabeledList.Item>
           <LabeledList.Item label="Inserted Card">
-            {data.card_owner ? data.card_owner : "N/A"}
+            {data.card_owner || "N/A"}
           </LabeledList.Item>
           <LabeledList.Item label="Available Paper">
-            {data.has_printer?data.paperamt:"N/A"}
+            {data.has_printer ? data.paperamt : "N/A"}
           </LabeledList.Item>
           <LabeledList.Item label="Profit on Sale">
             {data.barcode_split}%
@@ -59,8 +58,7 @@ export const NtosShipping = props => {
           <Button
             icon="sync-alt"
             content="Reset ID"
-            onClick={() => act('resetid', {
-            })} />
+            onClick={() => act('resetid')} />
         </Box>
       </Section>
     </Fragment>
