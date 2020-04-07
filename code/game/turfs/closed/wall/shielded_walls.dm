@@ -5,7 +5,7 @@
 	icon_state = "sh_wall"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 60000
+	heat_capacity = 25000
 	thermal_conductivity = 0.0
 	opacity = 1
 	density = TRUE
@@ -72,6 +72,8 @@
 				d_state = SUPPORT_LINES
 				powered = FALSE
 				thermal_conductivity = 0.1
+				var/area/a = get_area(src)
+				a.addStaticPower(-25, STATIC_ENVIRON)
 				update_icon()
 				to_chat(user, "<span class='notice'>You cut the outer grille.</span>")
 				return 1
@@ -225,18 +227,20 @@
 	else
 		overlays = image('icons/effects/effects.dmi', icon_state = "nothing")
 
-
 /turf/closed/wall/sh_wall/check_power()
 	var/turf/T = get_turf(src)
 	var/obj/structure/cable/C = T.get_cable_node()
+	var/area/a = get_area(src)
 	if(C && d_state == INTACT)
 		powered = TRUE
 		thermal_conductivity = 0.0
 		update_overlays()
+		a.addStaticPower(25, STATIC_ENVIRON)
 	else
 		powered = FALSE
 		thermal_conductivity = 0.1
 		update_overlays()
+		a.addStaticPower(-25, STATIC_ENVIRON)
 
 /turf/closed/wall/sh_wall/update_icon_state()
 	if(d_state != INTACT)
