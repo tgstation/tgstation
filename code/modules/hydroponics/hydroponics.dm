@@ -151,7 +151,6 @@
 		update_icon()
 
 	else if(self_sustaining)
-		nutridrain = min(0.5, nutridrain) //By just upgrading your trays you will outpace your trays sustainability.
 		adjustWater(rand(1,2))
 		adjustWeeds(-1)
 		adjustPests(-1)
@@ -170,7 +169,10 @@
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete at a constant rate, since new nutrients can boost stats far easier.
 			apply_chemicals(lastuser)
-			reagents.remove_any(nutridrain)
+			if(self_sustaining)
+				reagents.remove_any(min(0.5, nutridrain))
+			else
+				reagents.remove_any(nutridrain)
 
 			// Lack of nutrients hurts non-weeds
 			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -816,8 +818,6 @@
 	self_sustaining = !self_sustaining
 	idle_power_usage = self_sustaining ? 5000 : 0
 	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
-	if(!self_sustaining)
-		RefreshParts()
 	update_icon()
 
 /obj/machinery/hydroponics/AltClick(mob/user)
