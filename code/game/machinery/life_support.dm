@@ -79,6 +79,13 @@
 		update_icon()
 		START_PROCESSING(SSmachines, src)
 
+
+/**
+  * Properly gets rid of status effects from the attached
+  *
+  * Internal function, you really shouldn't be calling this since , unlike the name suggests it doesn't change the active var
+  * , but instead gets rid of all relevant status effects from the attached.
+  */
 /obj/machinery/life_support/proc/deactivate()
 	attached.remove_status_effect(STATUS_EFFECT_LIFE_SUPPORT, STASIS_MACHINE_EFFECT)
 	attached.update_stat()

@@ -135,8 +135,14 @@
 	duration = -1
 	tick_interval = 10
 	alert_type = /obj/screen/alert/status_effect/life_support
+	///last time the poor fucker was dead
 	var/last_dead_time
 
+/**
+  * Updates the time of death
+  *
+  * Replaces the incorrect time of death with the actual time they died.
+  */
 /datum/status_effect/grouped/life_support/proc/update_time_of_death()
 	if(last_dead_time)
 		var/delta = world.time - last_dead_time
