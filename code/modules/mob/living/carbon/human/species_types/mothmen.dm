@@ -26,7 +26,9 @@
 
 /datum/species/moth/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
-	qdel(C.GetComponent(/datum/component/lightdrawn))
+	var/lamp = C.GetComponent(/datum/component/lightdrawn)
+	if(lamp)
+		qdel(lamp)
 
 /datum/species/moth/regenerate_organs(mob/living/carbon/C,datum/species/old_species,replace_current=TRUE,list/excluded_zones)
 	. = ..()
