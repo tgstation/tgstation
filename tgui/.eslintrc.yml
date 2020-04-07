@@ -625,7 +625,7 @@ rules:
   ## Prevent invalid characters from appearing in markup
   react/no-unescaped-entities: error
   ## Prevent usage of unknown DOM property (fixable)
-  react/no-unknown-property: error
+  # react/no-unknown-property: error
   ## Prevent usage of unsafe lifecycle methods
   react/no-unsafe: error
   ## Prevent definitions of unused prop types
