@@ -20,6 +20,7 @@
 	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	isGlass = TRUE
 	foodtype = ALCOHOL
+	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
 
 /obj/item/reagent_containers/food/drinks/bottle/update_overlays()
 	. = ..()
@@ -197,6 +198,7 @@
 	icon_state = "bottleofnothing"
 	list_reagents = list(/datum/reagent/consumable/nothing = 100)
 	foodtype = NONE
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
@@ -362,6 +364,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/orangejuice = 100)
 	foodtype = FRUIT | BREAKFAST
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
@@ -374,6 +377,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/cream = 100)
 	foodtype = DAIRY
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
@@ -386,6 +390,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/tomatojuice = 100)
 	foodtype = VEGETABLES
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
@@ -398,6 +403,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
 	foodtype = FRUIT
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
 	name = "pineapple juice"
@@ -410,6 +416,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/pineapplejuice = 100)
 	foodtype = FRUIT | PINEAPPLE
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
@@ -430,6 +437,7 @@
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
 	foodtype = FRUIT
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"
@@ -537,3 +545,62 @@
 		to_chat(user, "<span class='info'>You snuff out the flame on [src].</span>")
 		cut_overlay(GLOB.fire_overlay)
 		active = 0
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno
+	name = "pruno mix"
+	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "trashbag"
+	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
+	var/fermentation_time = 30 SECONDS /// time it takes to ferment
+	var/fermentation_time_remaining /// for partial fermentation
+	var/fermentation_timer 	/// store the timer id of fermentation
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/check_fermentation)
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno/Destroy()
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	return ..()
+
+// Checks to see if the pruno can ferment, i.e. is it inside a structure (e.g. toilet), or a machine (e.g. washer)?
+// TODO: make it so the washer spills reagents if a reagent container is in there, for now, you can wash pruno
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno/proc/check_fermentation()
+	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure)))
+		if(fermentation_timer)
+			fermentation_time_remaining = timeleft(fermentation_timer)
+			deltimer(fermentation_timer)
+			fermentation_timer = null
+		return
+	if(fermentation_timer)
+		return
+	if(!fermentation_time_remaining)
+		fermentation_time_remaining = fermentation_time
+	fermentation_timer = addtimer(CALLBACK(src, .proc/do_fermentation), fermentation_time_remaining, TIMER_UNIQUE|TIMER_STOPPABLE)
+	fermentation_time_remaining = null
+
+// actually ferment
+
+/obj/item/reagent_containers/food/drinks/bottle/pruno/proc/do_fermentation()
+	fermentation_time_remaining = null
+	fermentation_timer = null
+	if(prob(10))
+		reagents.add_reagent(/datum/reagent/toxin/bad_food, 15) // closest thing we have to botulism
+		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 35)
+	else
+		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, 50)
+	name = "bag of pruno"
+	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
+	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
+	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
+		to_chat(M, "<span class='info'>A pungent smell emanates from [src], like fruit puking out its guts.</span>")
+		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
+
+/obj/item/reagent_containers/food/drinks/colocup/lean
+	name = "lean"
+	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
+	icon_state = "lean"
+	list_reagents = list(/datum/reagent/consumable/lean = 50)
+	random_sprite = FALSE

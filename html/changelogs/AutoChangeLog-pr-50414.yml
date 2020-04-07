@@ -1,0 +1,4 @@
+author: "XDTM"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Cortex Folding surgery having the same effect as Cortex Imprint."

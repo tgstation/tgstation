@@ -163,13 +163,24 @@
 
 /datum/design/defibrillator_mount
 	name = "Defibrillator Wall Mount"
-	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables."
-	id = "defibmount"
+	desc = "A mounted frame for holding defibrillators, providing easy security."
+	id = "defibmountdefault"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/wallframe/defib_mount
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/defibrillator_mount_charging
+	name = "PENLITE Defibrillator Wall Mount"
+	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables. The PENLITE version also allows for slow recharging of the defib's battery."
+	id = "defibmount"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 500)
+	build_path = /obj/item/wallframe/defib_mount/charging
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 
 /datum/design/defibrillator_compact
 	name = "Compact Defibrillator"
@@ -709,13 +720,6 @@
 	surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
 
-/datum/design/surgery/revival
-	name = "Revival"
-	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
-	id = "surgery_revival"
-	surgery = /datum/surgery/advanced/revival
-	research_icon_state = "surgery_head"
-
 /datum/design/surgery/brainwashing
 	name = "Brainwashing"
 	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
@@ -766,6 +770,20 @@
 	id = "surgery_ligament_reinforcement"
 	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/cortex_imprint
+	name = "Cortex Imprint"
+	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
+	id = "surgery_cortex_imprint"
+	surgery = /datum/surgery/advanced/bioware/cortex_imprint
+	research_icon_state = "surgery_head"
+
+/datum/design/surgery/cortex_folding
+	name = "Cortex Folding"
+	desc = "A surgical procedure which modifies the cerebral cortex into a complex fold, giving space to non-standard neural patterns."
+	id = "surgery_cortex_folding"
+	surgery = /datum/surgery/advanced/bioware/cortex_folding
+	research_icon_state = "surgery_head"
 
 /datum/design/surgery/necrotic_revival
 	name = "Necrotic Revival"

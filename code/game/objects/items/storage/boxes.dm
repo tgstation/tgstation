@@ -105,15 +105,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
 
-
-/obj/item/storage/box/disks_plantgene
-	name = "plant data disks box"
-	illustration = "disk_kit"
-
-/obj/item/storage/box/disks_plantgene/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/plantgene(src)
-
 /obj/item/storage/box/disks_nanite
 	name = "nanite program disks box"
 	illustration = "disk_kit"
@@ -171,6 +162,10 @@
 /obj/item/storage/box/survival/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
+
+// Medical survival box
+/obj/item/storage/box/survival/medical
+	mask_type = /obj/item/clothing/mask/breath/medical
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -284,6 +279,16 @@
 /obj/item/storage/box/flashbangs/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
+
+/obj/item/storage/box/stingbangs
+	name = "box of stingbangs (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
+	icon_state = "secbox"
+	illustration = "flashbang"
+
+/obj/item/storage/box/stingbangs/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/stingbang(src)
 
 /obj/item/storage/box/flashes
 	name = "box of flashbulbs"
@@ -935,6 +940,13 @@
 				return 0
 	return ..()
 
+/obj/item/storage/box/papersack/meat
+	desc = "It's slightly moist and smells like a slaughterhouse."
+
+/obj/item/storage/box/papersack/meat/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/food/snacks/meat/slab(src)
+
 #undef NODESIGN
 #undef NANOTRASEN
 #undef SYNDI
@@ -1248,7 +1260,7 @@
 		new/obj/item/sparkler(src)
 		new/obj/item/grenade/firecracker(src)
 	if(prob(20))
-		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+		new /obj/item/grenade/frag(src)
 	else
 		new /obj/item/toy/snappop(src)
 
@@ -1270,3 +1282,72 @@
 /obj/item/storage/box/sparklers/PopulateContents()
 	for(var/i in 1 to 7)
 		new/obj/item/sparkler(src)
+
+/obj/item/storage/box/gum
+	name = "bubblegum packet"
+	desc = "The packaging is entirely in japanese, apparently. You can't make out a single word of it."
+	icon_state = "bubblegum_generic"
+	w_class = WEIGHT_CLASS_TINY
+	illustration = null
+	foldable = null
+	custom_price = 120
+
+/obj/item/storage/box/gum/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/chewable/bubblegum))
+	STR.max_items = 4
+
+/obj/item/storage/box/gum/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum(src)
+
+/obj/item/storage/box/gum/nicotine
+	name = "nicotine gum packet"
+	desc = "Designed to help with nicotine addiction and oral fixation all at once without destroying your lungs in the process. Mint flavored!"
+	icon_state = "bubblegum_nicotine"
+	custom_premium_price = 275
+
+/obj/item/storage/box/gum/nicotine/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine(src)
+
+/obj/item/storage/box/gum/happiness
+	name = "HP+ gum packet"
+	desc = "A seemingly homemade packaging with an odd smell. It has a weird drawing of a smiling face sticking out its tongue."
+	icon_state = "bubblegum_happiness"
+	custom_price = 300
+	custom_premium_price = 300
+
+/obj/item/storage/box/gum/happiness/Initialize()
+	. = ..()
+	if (prob(25))
+		desc += "You can faintly make out the word 'Hemopagopril' was once scribbled on it."
+
+/obj/item/storage/box/gum/happiness/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness(src)
+
+/obj/item/storage/box/gum/bubblegum
+	name = "bubblegum gum packet"
+	desc = "The packaging is entirely in Demonic, apparently. You feel like even opening this would be a sin."
+	icon_state = "bubblegum_bubblegum"
+
+/obj/item/storage/box/gum/bubblegum/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum(src)
+
+/obj/item/storage/box/shipping
+	name = "box of shipping supplies"
+	desc = "Contains several scanners and labelers for shipping things. Wrapping Paper not included."
+	illustration = "shipping"
+
+/obj/item/storage/box/shipping/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/destTagger=1,\
+		/obj/item/sales_tagger=1,\
+		/obj/item/export_scanner=1,\
+		/obj/item/stack/packageWrap/small=2,\
+		/obj/item/stack/wrapping_paper/small=1
+		)
+	generate_items_inside(items_inside,src)

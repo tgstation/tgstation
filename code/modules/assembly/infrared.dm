@@ -189,7 +189,7 @@
 	return UI_CLOSE
 
 /obj/item/assembly/infra/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "infrared_emitter", name, ui_x, ui_y, master_ui, state)
@@ -228,6 +228,7 @@
 	var/obj/item/assembly/infra/master
 
 /obj/effect/beam/i_beam/Crossed(atom/movable/AM as mob|obj)
+	. = ..()
 	if(istype(AM, /obj/effect/beam))
 		return
 	if (isitem(AM))

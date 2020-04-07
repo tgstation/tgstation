@@ -44,8 +44,6 @@
 	for(var/obj/machinery/atmospherics/pipe/pipe in loc)
 		if(pipe.piping_layer == target_layer)
 			candidate = pipe
-			if(pipe.level == 2)
-				break
 	if(candidate)
 		target = candidate
 		setAttachLayer(candidate.piping_layer)

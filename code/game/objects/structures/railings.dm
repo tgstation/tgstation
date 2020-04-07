@@ -13,6 +13,7 @@
 	climbable = FALSE
 
 /obj/structure/railing/attackby(obj/item/I, mob/living/user, params)
+	..()
 	add_fingerprint(user)
 
 	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_HELP)
@@ -28,13 +29,16 @@
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 		return
 
-	if(!(flags_1&NODECONSTRUCT_1))
-		if(I.tool_behaviour == TOOL_WRENCH)
-			to_chat(user, "<span class='notice'>You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor...</span>")
-			if(I.use_tool(src, user, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
-				setAnchored(!anchored)
-				to_chat(user, "<span class='notice'>You [anchored ? "fasten the railing to":"unfasten the railing from"] the floor.</span>")
-			return
+///Implements behaviour that makes it possible to unanchor the railing.
+/obj/structure/railing/wrench_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(flags_1&NODECONSTRUCT_1)
+		return
+	to_chat(user, "<span class='notice'>You begin to [anchored ? "unfasten the railing from":"fasten the railing to"] the floor...</span>")
+	if(I.use_tool(src, user, volume = 75, extra_checks = CALLBACK(src, .proc/check_anchored, anchored)))
+		setAnchored(!anchored)
+		to_chat(user, "<span class='notice'>You [anchored ? "fasten the railing to":"unfasten the railing from"] the floor.</span>")
+	return TRUE
 
 /obj/structure/railing/proc/check_anchored(checked_anchored)
 	if(anchored == checked_anchored)
@@ -53,8 +57,8 @@
 /obj/structure/railing/CheckExit(atom/movable/O, turf/target)
 	..()
 	if(get_dir(loc, target) & dir)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /obj/structure/railing/corner/CheckExit()
-	return 1
+	return TRUE

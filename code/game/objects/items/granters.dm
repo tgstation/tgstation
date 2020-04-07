@@ -188,7 +188,7 @@
 			user.set_nutrition(0)
 
 /obj/item/book/granter/spell/blind
-	spell = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	spell = /obj/effect/proc_holder/spell/pointed/trigger/blind
 	spellname = "blind"
 	icon_state ="bookblind"
 	desc = "This book looks blurry, no matter how you look at it."
@@ -200,12 +200,13 @@
 	user.blind_eyes(10)
 
 /obj/item/book/granter/spell/mindswap
-	spell = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	spell = /obj/effect/proc_holder/spell/pointed/mind_transfer
 	spellname = "mindswap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
-	var/mob/stored_swap //Used in used book recoils to store an identity for mindswaps
 	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
+	/// Mob used in book recoils to store an identity for mindswaps
+	var/mob/living/stored_swap
 
 /obj/item/book/granter/spell/mindswap/onlearned()
 	spellname = pick("fireball","smoke","blind","forcewall","knock","barnyard","charge")
@@ -224,8 +225,8 @@
 	if(stored_swap == user)
 		to_chat(user,"<span class='notice'>You stare at the book some more, but there doesn't seem to be anything else to learn...</span>")
 		return
-	var/obj/effect/proc_holder/spell/targeted/mind_transfer/swapper = new
-	if(swapper.cast(list(stored_swap), user, TRUE, TRUE))
+	var/obj/effect/proc_holder/spell/pointed/mind_transfer/swapper = new
+	if(swapper.cast(list(stored_swap), user, TRUE))
 		to_chat(user,"<span class='warning'>You're suddenly somewhere else... and someone else?!</span>")
 		to_chat(stored_swap,"<span class='warning'>Suddenly you're staring at [src] again... where are you, who are you?!</span>")
 	else
@@ -259,7 +260,7 @@
 	user.Paralyze(40)
 
 /obj/item/book/granter/spell/barnyard
-	spell = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	spell = /obj/effect/proc_holder/spell/pointed/barnyardcurse
 	spellname = "barnyard"
 	icon_state ="bookhorses"
 	desc = "This book is more horse than your mind has room for."
@@ -365,10 +366,11 @@
 	martialname = "sleeping carp"
 	desc = "A scroll filled with strange markings. It seems to be drawings of some sort of martial art."
 	greet = "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! Your hand-to-hand combat has become much more effective, and you are now able to deflect any projectiles \
-	directed toward you. However, you are also unable to use any ranged weaponry. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
+	directed toward you while in Throw Mode. Your body is also honed to protect you from damage and punctures, and even briefly survive space. \
+	However, you are also unable to use any ranged weaponry, and some medical supplies will prove useless to you. You can learn more about your newfound art by using the Recall Teachings verb in the Sleeping Carp tab.</span>"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
-	remarks = list("I must prove myself worthy to the masters of the sleeping carp...", "Stance means everything...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Grab them first so they don't retaliate...", "I must prove myself worthy of this power...")
+	remarks = list("Wait, a high protein diet is really all it takes to become bulletproof...?", "Overwhelming force, immovable object...", "Focus... And you'll be able to incapacitate any foe in seconds...", "I must pierce armor for maximum damage...", "I don't think this would combine with other martial arts...", "Become one with the carp...", "Glub...")
 
 /obj/item/book/granter/martial/carp/onlearned(mob/living/carbon/user)
 	..()

@@ -115,7 +115,7 @@
 	update_icon()
 
 /obj/item/instrument/piano_synth/headphones/spacepods
-	name = "nanotrasen space pods"
+	name = "\improper Nanotrasen space pods"
 	desc = "Flex your money, AND ignore what everyone else says, all at once!"
 	icon_state = "spacepods"
 	item_state = "spacepods"
@@ -136,7 +136,7 @@
 
 /obj/item/instrument/guitar
 	name = "guitar"
-	desc = "It's made of wood and has bronze strings."
+	desc = "It's made out of wood and has bronze strings."
 	icon_state = "guitar"
 	item_state = "guitar"
 	instrumentExt = "ogg"
@@ -173,14 +173,14 @@
 	name = "trumpet"
 	desc = "To announce the arrival of the king!"
 	icon_state = "trumpet"
-	item_state = "trombone"
+	item_state = "trumpet"
 	instrumentId = "trombone"
 
 /obj/item/instrument/trumpet/spectral
 	name = "spectral trumpet"
 	desc = "Things are about to get spooky!"
-	icon_state = "trumpet"
-	item_state = "trombone"
+	icon_state = "spectral_trumpet"
+	item_state = "spectral_trumpet"
 	force = 0
 	instrumentId = "trombone"
 	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")

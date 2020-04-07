@@ -518,7 +518,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 		toggle_on(user)
 
 	if(iscyborg(target))
-		if(BATON_STUN)
+		if(mode == BATON_STUN)
 			..()
 		return FALSE
 
@@ -568,7 +568,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 								"<span class='userdanger'>You feel a strange wave of heavy drowsiness wash over you, but your tinfoil protection deflects most of it!</span>")
 			L.drowsyness += 2
 			return
-		L.visible_message("<span class='danger'>[user] has induced sleep in [L] with [src]!</span>", \
+		L.visible_message("<span class='danger'>[user] induces sleep in [L] with [src]!</span>", \
 							"<span class='userdanger'>You suddenly feel very drowsy!</span>")
 		L.Sleeping(sleep_time)
 		log_combat(user, L, "put to sleep")

@@ -2,7 +2,7 @@
 	///Name of the achievement, If null it wont show up in the achievement browser. (Handy for inheritance trees)
 	var/name
 	var/desc = "You did it."
-	///Found in /datum/asset/spritesheet/simple/achievements
+	///Found in UI_Icons/Achievements
 	var/icon = "default"
 	var/category = "Normal"
 

@@ -66,7 +66,7 @@
 				dat += "</tr>"
 			dat += "</table>"
 
-			dat += "<br>Minor Crimes:"
+			dat += "<br>Crimes:"
 			dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
 			<tr>
 			<th>Crime</th>
@@ -74,23 +74,7 @@
 			<th>Author</th>
 			<th>Time Added</th>
 			</tr>"}
-			for(var/datum/data/crime/c in current.fields["mi_crim"])
-				dat += {"<tr><td>[c.crimeName]</td>
-				<td>[c.crimeDetails]</td>
-				<td>[c.author]</td>
-				<td>[c.time]</td>
-				</tr>"}
-			dat += "</table>"
-
-			dat += "<br>Major Crimes:"
-			dat +={"<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-			<tr>
-			<th>Crime</th>
-			<th>Details</th>
-			<th>Author</th>
-			<th>Time Added</th>
-			</tr>"}
-			for(var/datum/data/crime/c in current.fields["ma_crim"])
+			for(var/datum/data/crime/c in current.fields["crim"])
 				dat += {"<tr><td>[c.crimeName]</td>
 				<td>[c.crimeDetails]</td>
 				<td>[c.author]</td>

@@ -89,7 +89,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("floodlight frame", /obj/structure/floodlight_frame, 5, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("voting box", /obj/structure/votebox, 15, time = 50), \
-	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50)
+	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
+	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 50)
 ))
 
 /obj/item/stack/sheet/metal
@@ -155,7 +156,7 @@ GLOBAL_LIST_INIT(plasteel_recipes, list ( \
 	singular_name = "plasteel sheet"
 	desc = "This sheet is an alloy of iron and plasma."
 	icon_state = "sheet-plasteel"
-	item_state = "sheet-metal"
+	item_state = "sheet-plasteel"
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT, /datum/material/plasma=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 10
 	flags_1 = CONDUCT_1
@@ -193,6 +194,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/crate/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("book case", /obj/structure/bookcase, 4, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("drying rack", /obj/machinery/smartfridge/drying_rack, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("wooden barrel", /obj/structure/fermenting_barrel, 8, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dog bed", /obj/structure/bed/dogbed, 10, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("dresser", /obj/structure/dresser, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("picture frame", /obj/item/wallframe/picture, 1, time = 10),\
@@ -234,6 +236,7 @@ GLOBAL_LIST_INIT(wood_recipes, list ( \
 	novariants = TRUE
 	material_type = /datum/material/wood
 	grind_results = list(/datum/reagent/cellulose = 20) //no lignocellulose or lignin reagents yet,
+	walltype = /turf/closed/wall/mineral/wood
 
 /obj/item/stack/sheet/mineral/wood/get_main_recipes()
 	. = ..()
@@ -258,11 +261,13 @@ GLOBAL_LIST_INIT(bamboo_recipes, list ( \
 	icon_state = "sheet-bamboo"
 	item_state = "sheet-bamboo"
 	icon = 'icons/obj/stack_objects.dmi'
+	custom_materials = list(/datum/material/bamboo = MINERAL_MATERIAL_AMOUNT)
 	throwforce = 15
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	resistance_flags = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/mineral/bamboo
 	grind_results = list(/datum/reagent/cellulose = 10)
+	material_type = /datum/material/bamboo
 
 /obj/item/stack/sheet/mineral/bamboo/get_main_recipes()
 	. = ..()
@@ -439,12 +444,14 @@ GLOBAL_LIST_INIT(cardboard_recipes, list (														\
 	singular_name = "cardboard sheet"
 	icon_state = "sheet-card"
 	item_state = "sheet-card"
+	custom_materials = list(/datum/material/cardboard = MINERAL_MATERIAL_AMOUNT)
 	resistance_flags = FLAMMABLE
 	force = 0
 	throwforce = 0
 	merge_type = /obj/item/stack/sheet/cardboard
 	novariants = TRUE
 	grind_results = list(/datum/reagent/cellulose = 10)
+	material_type = /datum/material/cardboard
 
 /obj/item/stack/sheet/cardboard/get_main_recipes()
 	. = ..()
@@ -485,10 +492,12 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list ( \
 	icon_state = "sheet-runed"
 	item_state = "sheet-runed"
 	icon = 'icons/obj/stack_objects.dmi'
+	custom_materials = list(/datum/material/runedmetal = MINERAL_MATERIAL_AMOUNT)
 	sheettype = "runed"
 	merge_type = /obj/item/stack/sheet/runed_metal
 	novariants = TRUE
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/blood = 15)
+	material_type = /datum/material/runedmetal
 
 /obj/item/stack/sheet/runed_metal/attack_self(mob/living/user)
 	if(!iscultist(user))
@@ -540,7 +549,11 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	icon_state = "sheet-brass"
 	item_state = "sheet-brass"
 	icon = 'icons/obj/stack_objects.dmi'
+	custom_materials = list(/datum/material/bronze = MINERAL_MATERIAL_AMOUNT)
+	lefthand_file = 'icons/mob/inhands/misc/sheets_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/misc/sheets_righthand.dmi'
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	force = 5
 	throwforce = 10
 	max_amount = 50
 	throw_speed = 1
@@ -550,6 +563,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	grind_results = list(/datum/reagent/iron = 5, /datum/reagent/copper = 3) //we have no "tin" reagent so this is the closest thing
 	merge_type = /obj/item/stack/tile/bronze
 	tableVariant = /obj/structure/table/bronze
+	material_type = /datum/material/bronze
 
 /obj/item/stack/tile/bronze/get_main_recipes()
 	. = ..()
@@ -591,6 +605,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "bone"
 	item_state = "sheet-bone"
+	custom_materials = list(/datum/material/bone = MINERAL_MATERIAL_AMOUNT)
 	singular_name = "bone"
 	desc = "Someone's been drinking their milk."
 	force = 7
@@ -601,6 +616,7 @@ GLOBAL_LIST_INIT(bronze_recipes, list ( \
 	throw_range = 3
 	grind_results = list(/datum/reagent/carbon = 10)
 	merge_type = /obj/item/stack/sheet/bone
+	material_type = /datum/material/bone
 
 GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("plastic floor tile", /obj/item/stack/tile/plastic, 1, 4, 20), \
@@ -620,6 +636,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	item_state = "sheet-plastic"
 	custom_materials = list(/datum/material/plastic=MINERAL_MATERIAL_AMOUNT)
 	throwforce = 7
+	material_type = /datum/material/plastic
 	merge_type = /obj/item/stack/sheet/plastic
 
 /obj/item/stack/sheet/plastic/fifty
@@ -642,9 +659,11 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	singular_name = "paper frame"
 	icon_state = "sheet-paper"
 	item_state = "sheet-paper"
+	custom_materials = list(/datum/material/paper = MINERAL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/sheet/paperframes
 	resistance_flags = FLAMMABLE
 	grind_results = list(/datum/reagent/cellulose = 20)
+	material_type = /datum/material/paper
 
 /obj/item/stack/sheet/paperframes/get_main_recipes()
 	. = ..()
@@ -667,3 +686,55 @@ new /datum/stack_recipe("paper frame door", /obj/structure/mineral_door/paperfra
 	desc = "A source of raw socialism, capable of bringing forth the prophesized Soviet Golem."
 	icon_state = "sheet-stalinium"
 	merge_type = /obj/item/stack/sheet/stalinium
+
+/obj/item/stack/sheet/meat
+	name = "meat sheets"
+	desc = "Something's bloody meat compressed into a nice solid sheet."
+	singular_name = "meat sheet"
+	icon_state = "sheet-meat"
+	material_flags = MATERIAL_COLOR
+	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/meat
+	material_type = /datum/material/meat
+	material_modifier = 1 //None of that wussy stuff
+
+/obj/item/stack/sheet/meat/fifty
+	amount = 50
+/obj/item/stack/sheet/meat/twenty
+	amount = 20
+/obj/item/stack/sheet/meat/five
+	amount = 5
+
+/obj/item/stack/sheet/pizza
+	name = "pepperoni sheetzzas"
+	desc = "It's a delicious pepperoni sheetzza!"
+	singular_name = "pepperoni sheetzza"
+	icon_state = "sheet-pizza"
+	custom_materials = list(/datum/material/pizza = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/pizza
+	material_type = /datum/material/pizza
+	material_modifier = 1
+
+/obj/item/stack/sheet/pizza/fifty
+	amount = 50
+/obj/item/stack/sheet/pizza/twenty
+	amount = 20
+/obj/item/stack/sheet/pizza/five
+	amount = 5
+
+/obj/item/stack/sheet/sandblock
+	name = "blocks of sand"
+	desc = "You're too old to be playing with sandcastles. Now you build... sandstations."
+	singular_name = "block of sand"
+	icon_state = "sheet-sandstone"
+	custom_materials = list(/datum/material/sand = MINERAL_MATERIAL_AMOUNT)
+	merge_type = /obj/item/stack/sheet/sandblock
+	material_type = /datum/material/sand
+	material_modifier = 1
+
+/obj/item/stack/sheet/sandblock/fifty
+	amount = 50
+/obj/item/stack/sheet/sandblock/twenty
+	amount = 20
+/obj/item/stack/sheet/sandblock/five
+	amount = 5

@@ -9,6 +9,7 @@
 	maturation = 10
 	production = 1
 	yield = 5
+	instability = 15
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	mutatelist = list(/obj/item/seeds/carrot/parsnip)
@@ -28,7 +29,7 @@
 /obj/item/reagent_containers/food/snacks/grown/carrot/attackby(obj/item/I, mob/user, params)
 	if(I.get_sharpness())
 		to_chat(user, "<span class='notice'>You sharpen the carrot into a shiv with [I].</span>")
-		var/obj/item/kitchen/knife/carrotshiv/Shiv = new /obj/item/kitchen/knife/carrotshiv
+		var/obj/item/kitchen/knife/shiv/carrot/Shiv = new /obj/item/kitchen/knife/shiv/carrot
 		remove_item_from_storage(user)
 		qdel(src)
 		user.put_in_hands(Shiv)
@@ -69,6 +70,7 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
+	instability = 10
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	mutatelist = list(/obj/item/seeds/redbeet)
@@ -95,10 +97,12 @@
 	lifespan = 60
 	endurance = 50
 	yield = 6
+	instability = 15
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	genes = list(/datum/plant_gene/trait/maxchem)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
+	graft_gene = /datum/plant_gene/trait/maxchem
 
 /obj/item/reagent_containers/food/snacks/grown/redbeet
 	seed = /obj/item/seeds/redbeet

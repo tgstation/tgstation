@@ -54,9 +54,10 @@
 		var/old_target = tracking_target
 		possible = list()
 		var/list/prints = sniffed.return_fingerprints()
-		for(var/mob/living/carbon/C in GLOB.carbon_list)
-			if(prints[md5(C.dna.uni_identity)])
-				possible |= C
+		if(prints)
+			for(var/mob/living/carbon/C in GLOB.carbon_list)
+				if(prints[md5(C.dna.uni_identity)])
+					possible |= C
 		if(!length(possible))
 			to_chat(user,"<span class='warning'>Despite your best efforts, there are no scents to be found on [sniffed]...</span>")
 			return
@@ -370,14 +371,9 @@
 
 	var/obj/item/bodypart/L = spikey.checkembedded()
 
-	L.embedded_objects -= spikey
 	//this is where it would deal damage, if it transfers chems it removes itself so no damage
 	spikey.forceMove(get_turf(L))
 	transfered.visible_message("<span class='notice'>[spikey] falls out of [transfered]!</span>")
-	if(!transfered.has_embedded_objects())
-		transfered.clear_alert("embeddedobject")
-		SEND_SIGNAL(transfered, COMSIG_CLEAR_MOOD_EVENT, "embedded")
-	spikey.unembedded()
 
 //spider webs
 /datum/mutation/human/webbing
@@ -397,19 +393,19 @@
 	action_icon = 'icons/mob/actions/actions_genetic.dmi'
 	action_icon_state = "lay_web"
 
-/obj/effect/proc_holder/spell/self/lay_genetic_web/cast_check(skipcharge = 0,mob/user = usr)
-	. = ..()
+/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(list/targets, mob/user = usr)
+	var/failed = FALSE
 	if(!isturf(user.loc))
 		to_chat(user, "<span class='warning'>You can't lay webs here!</span>")
-		return FALSE
+		failed = TRUE
 	var/turf/T = get_turf(user)
 	var/obj/structure/spider/stickyweb/genetic/W = locate() in T
 	if(W)
 		to_chat(user, "<span class='warning'>There's already a web here!</span>")
+		failed = TRUE
+	if(failed)
+		revert_cast(user)
 		return FALSE
-
-/obj/effect/proc_holder/spell/self/lay_genetic_web/cast(list/targets, mob/user = usr)
-	var/turf/T = get_turf(user)
 
 	user.visible_message("<span class='notice'>[user] begins to secrete a sticky substance.</span>","<span class='notice'>You begin to lay a web.</span>")
 	if(!do_after(user, 4 SECONDS, target = T))
