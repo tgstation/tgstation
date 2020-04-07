@@ -60,7 +60,7 @@
 /obj/machinery/biogenerator/on_reagent_change(changetype)			//When the reagents change, change the icon as well.
 	update_icon()
 
-/obj/machinery/biogenerator/update_icon()
+/obj/machinery/biogenerator/update_icon_state()
 	if(panel_open)
 		icon_state = "biogen-empty-o"
 	else if(!src.beaker)
@@ -69,7 +69,6 @@
 		icon_state = "biogen-stand"
 	else
 		icon_state = "biogen-work"
-	return
 
 /obj/machinery/biogenerator/attackby(obj/item/O, mob/user, params)
 	if(user.a_intent == INTENT_HARM)
@@ -153,7 +152,7 @@
 		to_chat(user, "<span class='warning'>You cannot put this in [src.name]!</span>")
 
 /obj/machinery/biogenerator/ui_interact(mob/user)
-	if(stat & BROKEN || panel_open)
+	if(machine_stat & BROKEN || panel_open)
 		return
 	. = ..()
 	var/dat
@@ -195,7 +194,7 @@
 						dat += "<A href='?src=[REF(src)];create=[D.id];amount=5'>x5</A>"
 					if(ispath(D.build_path, /obj/item/stack))
 						dat += "<A href='?src=[REF(src)];create=[D.id];amount=10'>x10</A>"
-					dat += "([D.materials[getmaterialref(/datum/material/biomass)]/efficiency])<br>"
+					dat += "([D.materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]/efficiency])<br>"
 				dat += "</div>"
 		else
 			dat += "<div class='statusDisplay'>No container inside, please insert container.</div>"
@@ -204,10 +203,15 @@
 	popup.set_content(dat)
 	popup.open()
 
+/obj/machinery/biogenerator/AltClick(mob/living/user)
+	. = ..()
+	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && can_interact(user))
+		detach(user)
+
 /obj/machinery/biogenerator/proc/activate()
 	if (usr.stat != CONSCIOUS)
 		return
-	if (src.stat != NONE) //NOPOWER etc
+	if (src.machine_stat != NONE) //NOPOWER etc
 		return
 	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
@@ -232,14 +236,14 @@
 		menustat = "void"
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
-	if(materials.len != 1 || materials[1] != getmaterialref(/datum/material/biomass))
+	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
 		return FALSE
-	if (materials[getmaterialref(/datum/material/biomass)]*multiplier/efficiency > points)
+	if (materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency > points)
 		menustat = "nopoints"
 		return FALSE
 	else
 		if(remove_points)
-			points -= materials[getmaterialref(/datum/material/biomass)]*multiplier/efficiency
+			points -= materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency
 		update_icon()
 		updateUsrDialog()
 		return TRUE
@@ -287,9 +291,12 @@
 	update_icon()
 	return .
 
-/obj/machinery/biogenerator/proc/detach()
+/obj/machinery/biogenerator/proc/detach(mob/living/user)
 	if(beaker)
-		beaker.forceMove(drop_location())
+		if(can_interact(user))
+			user.put_in_hands(beaker)
+		else
+			beaker.drop_location(get_turf(src))
 		beaker = null
 		update_icon()
 
@@ -304,13 +311,13 @@
 		updateUsrDialog()
 
 	else if(href_list["detach"])
-		detach()
+		detach(usr)
 		updateUsrDialog()
 
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
 		//Can't be outside these (if you change this keep a sane limit)
-		amount = CLAMP(amount, 1, 10)
+		amount = clamp(amount, 1, 10)
 		var/id = href_list["create"]
 		if(!stored_research.researched_designs.Find(id))
 			//naughty naughty

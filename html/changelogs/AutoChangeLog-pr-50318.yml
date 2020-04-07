@@ -1,0 +1,4 @@
+author: "Krysonism"
+delete-after: True
+changes: 
+  - imageadd: "The hazard cone has a new object sprite."

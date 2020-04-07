@@ -114,7 +114,7 @@
 	generate_items_inside(items_inside,src)
 
 /obj/item/storage/firstaid/ancient
-	icon_state = "firstaid"
+	icon_state = "oldfirstaid"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
 /obj/item/storage/firstaid/ancient/PopulateContents()
@@ -125,6 +125,10 @@
 		/obj/item/stack/medical/bruise_pack = 3,
 		/obj/item/stack/medical/ointment= 3)
 	generate_items_inside(items_inside,src)
+
+/obj/item/storage/firstaid/ancient/heirloom
+	desc = "A first aid kit with the ability to heal common types of injuries. You start thinking of the good old days just by looking at it."
+	empty = TRUE // long since been ransacked by hungry powergaming assistants breaking into med storage
 
 /obj/item/storage/firstaid/fire
 	name = "burn treatment kit"
@@ -146,7 +150,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/aiuri = 3,
-		/obj/item/reagent_containers/spray/rhigoxane = 1,
+		/obj/item/reagent_containers/spray/hercuri = 1,
 		/obj/item/reagent_containers/hypospray/medipen/oxandrolone = 1,
 		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
@@ -222,7 +226,7 @@
 	var/static/items_inside = list(
 		/obj/item/reagent_containers/pill/patch/libital = 3,
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/storage/pill_bottle/trophazole = 1,
+		/obj/item/storage/pill_bottle/C2/probital = 1,
 		/obj/item/reagent_containers/hypospray/medipen/salacid = 1)
 	generate_items_inside(items_inside,src)
 
@@ -354,13 +358,13 @@
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/pill/potassiodide(src)
 
-/obj/item/storage/pill_bottle/trophazole
-	name = "bottle of trophazole pills"
-	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting'."
+/obj/item/storage/pill_bottle/C2/probital
+	name = "bottle of probital pills"
+	desc = "Contains pills used to treat brute damage.The tag in the bottle states 'Eat before ingesting, may cause fatigue'."
 
-/obj/item/storage/pill_bottle/trophazole/PopulateContents()
+/obj/item/storage/pill_bottle/C2/probital/PopulateContents()
 	for(var/i in 1 to 4)
-		new /obj/item/reagent_containers/pill/trophazole(src)
+		new /obj/item/reagent_containers/pill/C2/probital(src)
 
 /obj/item/storage/pill_bottle/iron
 	name = "bottle of iron pills"
@@ -435,14 +439,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/psicodine(src)
 
-/obj/item/storage/pill_bottle/happiness
-	name = "happiness pill bottle"
-	desc = "The label is long gone, in its place an 'H' written with a marker."
-
-/obj/item/storage/pill_bottle/happiness/PopulateContents()
-	for(var/i in 1 to 5)
-		new /obj/item/reagent_containers/pill/happiness(src)
-
 /obj/item/storage/pill_bottle/penacid
 	name = "bottle of pentetic acid pills"
 	desc = "Contains pills to expunge radiation and toxins."
@@ -476,3 +472,28 @@
 /obj/item/storage/pill_bottle/floorpill/full/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/pill/floorpill(src)
+
+///////////////////////////////////////// Psychologist inventory pillbottles
+/obj/item/storage/pill_bottle/happinesspsych
+	name = "happiness pills"
+	desc = "Contains pills used as a last resort means to temporarily stabilize depression and anxiety. WARNING: side effects may include slurred speech, drooling, and severe addiction."
+
+/obj/item/storage/pill_bottle/happinesspsych/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/happinesspsych(src)
+
+/obj/item/storage/pill_bottle/lsdpsych
+	name = "mindbreaker toxin pills"
+	desc = "!FOR THERAPEUTIC USE ONLY! Contains pills used to alleviate the symptoms of Reality Dissociation Syndrome."
+
+/obj/item/storage/pill_bottle/lsdpsych/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/lsdpsych(src)
+
+/obj/item/storage/pill_bottle/paxpsych
+	name = "pax pills"
+	desc = "Contains pills used to temporarily pacify patients that are deemed a harm to themselves or others."
+
+/obj/item/storage/pill_bottle/paxpsych/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/reagent_containers/pill/paxpsych(src)

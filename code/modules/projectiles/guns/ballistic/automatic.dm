@@ -24,12 +24,12 @@
 /obj/item/gun/ballistic/automatic/proto/unrestricted
 	pin = /obj/item/firing_pin
 
-/obj/item/gun/ballistic/automatic/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/update_overlays()
+	. = ..()
 	if(!select)
-		add_overlay("[initial(icon_state)]_semi")
+		. += "[initial(icon_state)]_semi"
 	if(select == 1)
-		add_overlay("[initial(icon_state)]_burst")
+		. += "[initial(icon_state)]_burst"
 
 /obj/item/gun/ballistic/automatic/ui_action_click(mob/user, actiontype)
 	if(istype(actiontype, /datum/action/item_action/toggle_firemode))
@@ -147,16 +147,15 @@
 	else
 		..()
 
-/obj/item/gun/ballistic/automatic/m90/update_icon()
-	..()
+/obj/item/gun/ballistic/automatic/m90/update_overlays()
+	. = ..()
 	switch(select)
 		if(0)
-			add_overlay("[initial(icon_state)]_semi")
+			. += "[initial(icon_state)]_semi"
 		if(1)
-			add_overlay("[initial(icon_state)]_burst")
+			. += "[initial(icon_state)]_burst"
 		if(2)
-			add_overlay("[initial(icon_state)]_gren")
-	return
+			. += "[initial(icon_state)]_gren"
 
 /obj/item/gun/ballistic/automatic/m90/burst_select()
 	var/mob/living/carbon/human/user = usr
@@ -246,9 +245,9 @@
 	update_icon()
 
 
-/obj/item/gun/ballistic/automatic/l6_saw/update_icon()
+/obj/item/gun/ballistic/automatic/l6_saw/update_overlays()
 	. = ..()
-	add_overlay("l6_door_[cover_open ? "open" : "closed"]")
+	. += "l6_door_[cover_open ? "open" : "closed"]"
 
 
 /obj/item/gun/ballistic/automatic/l6_saw/afterattack(atom/target as mob|obj|turf, mob/living/user as mob|obj, flag, params)

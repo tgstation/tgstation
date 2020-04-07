@@ -5,7 +5,7 @@
 	var/static/cookieoffset = rand(1, 9999) //to force cookies to reset after the round.
 
 	if(!usr.client || !usr.client.holder)		//This is usr because admins can call the proc on other clients, even if they're not admins, to show them VVs.
-		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>")
+		to_chat(usr, "<span class='danger'>You need to be an administrator to access this.</span>", confidential = TRUE)
 		return
 
 	if(!D)
@@ -92,6 +92,7 @@
 	var/html = {"
 <html>
 	<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 		<title>[title]</title>
 		<style>
 			body {

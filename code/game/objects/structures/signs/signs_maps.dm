@@ -45,3 +45,14 @@
 	name = "command department"
 	desc = "A direction sign, pointing out which way the Command department is."
 	icon_state = "direction_bridge"
+
+/obj/structure/sign/directions/vault
+	name = "vault directions"
+	desc = "A direction sign, pointing out which way the station's Vault is."
+	icon_state = "direction_vault"
+
+/obj/structure/sign/directions/upload
+	name = "upload directions"
+	desc = "A direction sign, pointing out which way the station's AI Upload is."
+	icon_state = "direction_upload"
+

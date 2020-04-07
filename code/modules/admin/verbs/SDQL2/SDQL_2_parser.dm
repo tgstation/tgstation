@@ -63,7 +63,7 @@
 
 /datum/SDQL_parser/proc/parse_error(error_message)
 	error = 1
-	to_chat(usr, "<span class='warning'>SQDL2 Parsing Error: [error_message]</span>")
+	to_chat(usr, "<span class='warning'>SQDL2 Parsing Error: [error_message]</span>", confidential = TRUE)
 	return query.len + 1
 
 /datum/SDQL_parser/proc/parse()
@@ -260,7 +260,7 @@
 		node += "*"
 		i++
 
-	else if (copytext(token(i), 1, 2) == "/")
+	else if(token(i)[1] == "/")
 		i = object_type(i, node)
 
 	else
@@ -391,7 +391,7 @@
 //object_type:	<type path>
 /datum/SDQL_parser/proc/object_type(i, list/node)
 
-	if (copytext(token(i), 1, 2) != "/")
+	if(token(i)[1] != "/")
 		return parse_error("Expected type, but it didn't begin with /")
 
 	var/path = text2path(token(i))
@@ -430,7 +430,7 @@
 //string:	''' <some text> ''' | '"' <some text > '"'
 /datum/SDQL_parser/proc/string(i, list/node)
 
-	if(copytext(token(i), 1, 2) in list("'", "\""))
+	if(token(i)[1] in list("'", "\""))
 		node += token(i)
 
 	else
@@ -441,7 +441,7 @@
 //array:	'[' expression_list ']'
 /datum/SDQL_parser/proc/array(i, list/node)
 	// Arrays get turned into this: list("[", list(exp_1a = exp_1b, ...), ...), "[" is to mark the next node as an array.
-	if(copytext(token(i), 1, 2) != "\[")
+	if(token(i)[1] != "\[")
 		parse_error("Expected an array but found '[token(i)]'")
 		return i + 1
 
@@ -481,14 +481,6 @@
 
 			temp_expression_list = list()
 			i = expression(i, temp_expression_list)
-
-#if MIN_COMPILER_VERSION > 512
-#warn Remove this outdated workaround
-#elif DM_BUILD < 1467
-			// http://www.byond.com/forum/post/2445083
-			var/dummy = src.type
-			dummy = dummy
-#endif
 
 		while(token(i) && token(i) != "]")
 
@@ -613,7 +605,7 @@
 		node += "null"
 		i++
 
-	else if(lowertext(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))
+	else if(lowertext(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))//3 == length("0x") + 1
 		node += hex2num(copytext(token(i), 3))
 		i++
 
@@ -621,16 +613,16 @@
 		node += text2num(token(i))
 		i++
 
-	else if(copytext(token(i), 1, 2) in list("'", "\""))
+	else if(token(i)[1] in list("'", "\""))
 		i = string(i, node)
 
-	else if(copytext(token(i), 1, 2) == "\[") // Start a list.
+	else if(token(i)[1] == "\[") // Start a list.
 		i = array(i, node)
 
-	else if(copytext(token(i), 1, 3) == "@\[")
+	else if(copytext(token(i), 1, 3) == "@\[")//3 == length("@\[") + 1
 		i = selectors_array(i, node)
 
-	else if(copytext(token(i), 1, 2) == "/")
+	else if(token(i)[1] == "/")
 		i = object_type(i, node)
 
 	else

@@ -28,6 +28,18 @@ Passive gate is similar to the regular pump except:
 
 	ui_x = 335
 	ui_y = 115
+	
+/obj/machinery/atmospherics/components/binary/passive_gate/CtrlClick(mob/user)
+	if(can_interact(user))
+		on = !on
+		update_icon()
+	return ..()
+	
+/obj/machinery/atmospherics/components/binary/passive_gate/AltClick(mob/user)
+	if(can_interact(user))
+		target_pressure = MAX_OUTPUT_PRESSURE
+		update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -117,15 +129,11 @@ Passive gate is similar to the regular pump except:
 			if(pressure == "max")
 				pressure = MAX_OUTPUT_PRESSURE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New output pressure (0-[MAX_OUTPUT_PRESSURE] kPa):", name, target_pressure) as num|null
-				if(!isnull(pressure) || !..())
-					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				target_pressure = CLAMP(pressure, 0, MAX_OUTPUT_PRESSURE)
+				target_pressure = clamp(pressure, 0, MAX_OUTPUT_PRESSURE)
 				investigate_log("was set to [target_pressure] kPa by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 
@@ -147,7 +155,7 @@ Passive gate is similar to the regular pump except:
 		on = !on
 
 	if("set_output_pressure" in signal.data)
-		target_pressure = CLAMP(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
+		target_pressure = clamp(text2num(signal.data["set_output_pressure"]),0,ONE_ATMOSPHERE*50)
 
 	if(on != old_on)
 		investigate_log("was turned [on ? "on" : "off"] by a remote signal", INVESTIGATE_ATMOS)

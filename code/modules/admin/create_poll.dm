@@ -1,10 +1,10 @@
 /client/proc/create_poll()
 	set name = "Create Poll"
-	set category = "Special Verbs"
+	set category = "Admin"
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(src, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/polltype = input("Choose poll type.","Poll Type") as null|anything in list("Single Option","Text Reply","Rating","Multiple Choice", "Instant Runoff Voting")
 	var/choice_amount = 0
@@ -20,7 +20,7 @@
 			choice_amount = input("How many choices should be allowed?","Select choice amount") as num|null
 			switch(choice_amount)
 				if(0)
-					to_chat(src, "Multiple choice poll must have at least one choice allowed.")
+					to_chat(src, "Multiple choice poll must have at least one choice allowed.", confidential = TRUE)
 					return
 				if(1)
 					polltype = POLLTYPE_OPTION
@@ -42,7 +42,7 @@
 	if(query_validate_time.NextRow())
 		var/checktime = text2num(query_validate_time.item[1])
 		if(!checktime)
-			to_chat(src, "Datetime entered is improperly formatted or not later than current server time.")
+			to_chat(src, "Datetime entered is improperly formatted or not later than current server time.", confidential = TRUE)
 			qdel(query_validate_time)
 			return
 		endtime = query_validate_time.item[1]
@@ -100,7 +100,7 @@
 				if(maxval)
 					maxval = sanitizeSQL(maxval)
 				if(minval >= maxval)
-					to_chat(src, "Maximum rating value can't be less than or equal to minimum rating value")
+					to_chat(src, "Maximum rating value can't be less than or equal to minimum rating value", confidential = TRUE)
 					continue
 				else if(maxval == null)
 					return

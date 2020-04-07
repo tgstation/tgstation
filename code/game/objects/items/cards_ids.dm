@@ -119,6 +119,7 @@
 	var/obj/machinery/paystand/my_store
 	var/uses_overlays = TRUE
 	var/icon/cached_flat_icon
+	var/registered_age = 13 // default age for ss13 players
 
 /obj/item/card/id/Initialize(mapload)
 	. = ..()
@@ -135,14 +136,17 @@
 
 /obj/item/card/id/attack_self(mob/user)
 	if(Adjacent(user))
-		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name].</span>", "<span class='notice'>You show \the [src.name].</span>")
+		var/minor
+		if(registered_name && registered_age && registered_age < AGE_MINOR)
+			minor = " <b>(MINOR)</b>"
+		user.visible_message("<span class='notice'>[user] shows you: [icon2html(src, viewers(user))] [src.name][minor].</span>", "<span class='notice'>You show \the [src.name][minor].</span>")
 	add_fingerprint(user)
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
 	if(.)
 		switch(var_name)
-			if("assignment","registered_name")
+			if("assignment","registered_name","registered_age")
 				update_label()
 
 /obj/item/card/id/attackby(obj/item/W, mob/user, params)
@@ -274,6 +278,8 @@
 
 /obj/item/card/id/examine(mob/user)
 	. = ..()
+	if(registered_age)
+		. += "The card indicates that the holder is [registered_age] years old. [(registered_age < AGE_MINOR) ? "There's a holographic stripe that reads <b><span class='danger'>'MINOR: DO NOT SERVE ALCOHOL OR TOBACCO'</span></b> along the bottom of the card." : ""]"
 	if(mining_points)
 		. += "There's [mining_points] mining equipment redemption point\s loaded onto this card."
 	if(registered_account)
@@ -398,33 +404,26 @@ update_label()
 		if(user.incapacitated())
 			return
 		if(popup_input == "Forge/Reset" && !forged)
-			var/input_text = input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name))as text | null
-
-			if (isnull(input_text))
-				return
-
-			var/target_name = copytext(sanitize(input_text), 1, 26)
-			if(!target_name || target_name == "Unknown" || target_name == "floor" || target_name == "wall" || target_name == "r-wall") //Same as mob/dead/new_player/preferences.dm
-				if (ishuman(user))
-					var/mob/living/carbon/human/human_agent = user
-
-					// Invalid/blank names give a randomly generated one.
-					if (human_agent.gender == "male")
-						registered_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-					else if (human_agent.gender == "female")
-						registered_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
-					else
-						registered_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
+			var/input_name = stripped_input(user, "What name would you like to put on this card? Leave blank to randomise.", "Agent card name", registered_name ? registered_name : (ishuman(user) ? user.real_name : user.name), MAX_NAME_LEN)
+			input_name = reject_bad_name(input_name)
+			if(!input_name)
+				// Invalid/blank names give a randomly generated one.
+				if(user.gender == MALE)
+					input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+				else if(user.gender == FEMALE)
+					input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
 				else
-					alert ("Invalid name.")
-					return
-			else
-				registered_name = target_name
+					input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
 
-			var/target_occupation = copytext(sanitize(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant") as text | null),1,MAX_MESSAGE_LEN)
+			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
 			if(!target_occupation)
-				registered_name = ""
 				return
+
+			var/newAge = input(user, "Choose the ID's age:\n([AGE_MIN]-[AGE_MAX])", "Agent card age") as num|null
+			if(newAge)
+				registered_age = max(round(text2num(newAge)), 0)
+
+			registered_name = input_name
 			assignment = target_occupation
 			update_label()
 			forged = TRUE
@@ -472,6 +471,27 @@ update_label()
 	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE)
 	uses_overlays = FALSE
+	registered_age = null
+
+/obj/item/card/id/syndicate_command/crew_id
+	name = "syndicate ID card"
+	id_type_name = "syndicate ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Operative"
+	icon_state = "syndie"
+	access = list(ACCESS_SYNDICATE)
+	uses_overlays = FALSE
+
+/obj/item/card/id/syndicate_command/captain_id
+	name = "syndicate captain ID card"
+	id_type_name = "syndicate captain ID card"
+	desc = "An ID straight from the Syndicate."
+	registered_name = "Syndicate"
+	assignment = "Syndicate Ship Captain"
+	icon_state = "syndie"
+	access = list(ACCESS_SYNDICATE)
+	uses_overlays = FALSE
 
 /obj/item/card/id/captains_spare
 	name = "captain's spare ID"
@@ -483,6 +503,7 @@ update_label()
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	registered_name = "Captain"
 	assignment = "Captain"
+	registered_age = null
 
 /obj/item/card/id/captains_spare/Initialize()
 	var/datum/job/captain/J = new/datum/job/captain
@@ -505,6 +526,7 @@ update_label()
 	registered_name = "Central Command"
 	assignment = "Central Command"
 	uses_overlays = FALSE
+	registered_age = null
 
 /obj/item/card/id/centcom/Initialize()
 	access = get_all_centcom_access()
@@ -518,6 +540,7 @@ update_label()
 	registered_name = "Emergency Response Team Commander"
 	assignment = "Emergency Response Team Commander"
 	uses_overlays = FALSE
+	registered_age = null
 
 /obj/item/card/id/ert/Initialize()
 	access = get_all_accesses()+get_ert_access("commander")-ACCESS_CHANGE_IDS
@@ -611,6 +634,7 @@ update_label()
 	uses_overlays = FALSE
 	var/goal = 0 //How far from freedom?
 	var/points = 0
+	registered_age = null
 
 /obj/item/card/id/prisoner/attack_self(mob/user)
 	to_chat(usr, "<span class='notice'>You have accumulated [points] out of the [goal] points you need for freedom.</span>")
@@ -660,6 +684,7 @@ update_label()
 	access = list(ACCESS_AWAY_GENERAL)
 	icon_state = "retro"
 	uses_overlays = FALSE
+	registered_age = null
 
 /obj/item/card/id/away/hotel
 	name = "Staff ID"
@@ -707,6 +732,7 @@ update_label()
 	uses_overlays = FALSE
 	var/department_ID = ACCOUNT_CIV
 	var/department_name = ACCOUNT_CIV_NAME
+	registered_age = null
 
 /obj/item/card/id/departmental_budget/Initialize()
 	. = ..()

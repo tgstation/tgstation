@@ -55,16 +55,13 @@
 		down.update_icon()
 	up = down = null
 
-/obj/structure/ladder/update_icon()
+/obj/structure/ladder/update_icon_state()
 	if(up && down)
 		icon_state = "ladder11"
-
 	else if(up)
 		icon_state = "ladder10"
-
 	else if(down)
 		icon_state = "ladder01"
-
 	else	//wtf make your ladders properly assholes
 		icon_state = "ladder00"
 
@@ -91,8 +88,13 @@
 	if (!is_ghost && !in_range(src, user))
 		return
 
+	var/list/tool_list = list(
+		"Up" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
+		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+		)
+
 	if (up && down)
-		var/result = alert("Go up or down [src]?", "Ladder", "Up", "Down", "Cancel")
+		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 		if (!is_ghost && !in_range(src, user))
 			return  // nice try
 		switch(result)
@@ -111,6 +113,11 @@
 
 	if(!is_ghost)
 		add_fingerprint(user)
+
+/obj/structure/ladder/proc/check_menu(mob/user)
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
 /obj/structure/ladder/attack_hand(mob/user)
 	. = ..()

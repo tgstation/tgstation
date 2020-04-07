@@ -107,7 +107,6 @@
 #define INIT_ORDER_INPUT			85
 #define INIT_ORDER_VIS				80
 #define INIT_ORDER_ACHIEVEMENTS		77
-#define INIT_ORDER_MATERIALS		76
 #define INIT_ORDER_RESEARCH			75
 #define INIT_ORDER_EVENTS			70
 #define INIT_ORDER_JOBS				65
@@ -135,6 +134,7 @@
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
 #define INIT_ORDER_PERSISTENCE		-95
+#define INIT_ORDER_DEMO				-99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
 
 // Subsystem fire priority, from lowest to highest priority
@@ -206,4 +206,15 @@
 			}\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
+		if(isturf(A)){SSdemo.mark_turf(A);}\
+		else if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
 	}
+
+// Air subsystem subtasks
+#define SSAIR_PIPENETS 1
+#define SSAIR_ATMOSMACHINERY 2
+#define SSAIR_ACTIVETURFS 3
+#define SSAIR_EXCITEDGROUPS 4
+#define SSAIR_HIGHPRESSURE 5
+#define SSAIR_HOTSPOTS 6
+#define SSAIR_SUPERCONDUCTIVITY 7

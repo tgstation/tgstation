@@ -214,7 +214,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			you will receive. May contain discontinued and/or exotic items."
 	item = /obj/item/storage/box/syndicate/bundle_A
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/bundles_TC/bundle_B
 	name = "Syndi-kit Special"
@@ -222,7 +222,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			In Syndi-kit Special, you will recieve items used by famous syndicate agents of the past. Collectively worth more than 20 telecrystals, the syndicate loves a good throwback."
 	item = /obj/item/storage/box/syndicate/bundle_B
 	cost = 20
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/bundles_TC/surplus
 	name = "Syndicate Surplus Crate"
@@ -350,6 +350,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 
+/datum/uplink_item/dangerous/clownoppin
+	name = "Ultra Hilarious Firing Pin"
+	desc = "A firing pin that, when inserted into a gun, makes that gun only useable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
+	cost = 1 //much cheaper for clown ops than for clowns
+	item = /obj/item/firing_pin/clown/ultra
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	illegal_tech = FALSE
+
+/datum/uplink_item/dangerous/clownopsuperpin
+	name = "Super Ultra Hilarious Firing Pin"
+	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
+	cost = 4 //much cheaper for clown ops than for clowns
+	item = /obj/item/firing_pin/clown/ultra/selfdestruct
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	illegal_tech = FALSE
+
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
 	desc = "A handheld chemical sprayer that allows a wide dispersal of selected chemicals. Especially tailored by the Tiger \
@@ -390,7 +406,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
 			all energy projectiles, but requires two hands to wield."
-	item = /obj/item/twohanded/dualsaber
+	item = /obj/item/dualsaber
 	player_minimum = 25
 	cost = 16
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -569,7 +585,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/stealthy_weapons/martialarts
 	name = "Martial Arts Scroll"
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, \
-			deflecting all ranged weapon fire, but you also refuse to use dishonorable ranged weaponry."
+			gain skin as hard as steel and swat bullets from the air, but you also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
 	cost = 17
 	surplus = 0
@@ -587,7 +603,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	player_minimum = 25
 	cost = 10
 	surplus = 50
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_weapons/origami_kit
 	name = "Boxed Origami Kit"
@@ -622,7 +638,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Suppressor"
@@ -631,6 +647,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 3
 	surplus = 10
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/stealthy_weapons/holster
+	name = "Syndicate Holster"
+	desc = "A useful little device that allows for inconspicuous carrying of guns using chameleon technology. It also allows for badass gun-spinning."
+	item = /obj/item/storage/belt/holster/chameleon
+	cost = 1
 
 // Ammunition
 /datum/uplink_item/ammo
@@ -795,6 +817,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			mixture that'll ignite anyone struck by the bullet. Some men just want to watch the world burn."
 	item = /obj/item/ammo_box/magazine/mm712x82/incen
 
+/datum/uplink_item/ammo/machinegun/match
+	name = "7.12x82mm (Match) Box Magazine"
+	desc = "A 50-round magazine of 7.12x82mm ammunition for use in the L6 SAW; you didn't know there was a demand for match grade \
+			precision bullet hose ammo, but these rounds are finely tuned and perfect for ricocheting off walls all fancy-like."
+	item = /obj/item/ammo_box/magazine/mm712x82/match
+	cost = 10
+
 /datum/uplink_item/ammo/rocket
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -841,10 +870,10 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/ammo/dark_gygax/bag
-	name = "Dark Gygax Ammo Bag"
-	desc = "A duffel bag containing ammo for three full reloads of the incendiary carbine and flash bang launcher that are equipped on a standard Dark Gygax exosuit."
-	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/dark_gygax
+/datum/uplink_item/ammo/mech/bag
+	name = "Mech Support Kit Bag"
+	desc = "A duffel bag containing ammo for four full reloads of the scattershotm which is equipped on standard Dark Gygax and Mauler exosuits. Also comes with some support equipment for maintaining the mech, including tools and an inducer."
+	item = /obj/item/storage/backpack/duffelbag/syndie/ammo/mech
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -1122,7 +1151,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Due to budget cuts, the shoes don't provide protection against slipping."
 	item = /obj/item/storage/box/syndie_kit/chameleon
 	cost = 2
-	exclude_modes = list(/datum/game_mode/nuclear)
+	exclude_modes = list(/datum/game_mode/nuclear) //clown ops are allowed to buy this kit, since it's basically a costume
 
 /datum/uplink_item/stealthy_tools/chameleon_proj
 	name = "Chameleon Projector"
@@ -1200,6 +1229,16 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	category = "Space Suits"
 	surplus = 40
 
+/datum/uplink_item/suits/infiltrator_bundle
+	name = "Infiltrator Case"
+	desc = "Developed by Roseus Galactic in conjunction with the Gorlex Marauders to produce a functional suit for urban operations, \
+			this suit proves to be cheaper than your standard issue hardsuit, with none of the movement restrictions of the outdated spacesuits employed by the company. \
+			Comes with a armor vest, helmet, sneaksuit, sneakboots, specialized combat gloves and a high-tech balaclava. The case is also rather useful as a storage container."
+	item = /obj/item/storage/toolbox/infiltrator
+	cost = 6
+	limited_stock = 1 //you only get one so you don't end up with too many gun cases
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
 /datum/uplink_item/suits/space_suit
 	name = "Syndicate Space Suit"
 	desc = "This red and black Syndicate space suit is less encumbering than Nanotrasen variants, \
@@ -1217,7 +1256,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Nanotrasen crew who spot these suits are known to panic."
 	item = /obj/item/clothing/suit/space/hardsuit/syndi
 	cost = 8
-	exclude_modes = list(/datum/game_mode/nuclear) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
+	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
@@ -1363,6 +1402,12 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/assembly/flash/hypnotic
 	cost = 7
 
+/datum/uplink_item/device_tools/hypnotic_grenade
+	name = "Hypnotic Grenade"
+	desc = "A modified flashbang grenade able to hypnotize targets. The sound portion of the flashbang causes hallucinations, and will allow the flash to induce a hypnotic trance to viewers."
+	item = /obj/item/grenade/hypnotic
+	cost = 12
+
 /datum/uplink_item/device_tools/medgun
 	name = "Medbeam Gun"
 	desc = "A wonder of Syndicate engineering, the Medbeam gun, or Medi-Gun enables a medic to keep his fellow \
@@ -1465,7 +1510,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	restricted = TRUE
 
-
 /datum/uplink_item/device_tools/suspiciousphone
 	name = "Protocol CRAB-17 Phone"
 	desc = "The Protocol CRAB-17 Phone, a phone borrowed from an unknown third party, it can be used to crash the space market, funneling the losses of the crew to your bank account.\
@@ -1474,6 +1518,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	restricted = TRUE
 	cost = 7
 	limited_stock = 1
+
+/datum/uplink_item/device_tools/guerillagloves
+	name = "Guerilla Gloves"
+	desc = "A pair of highly robust combat gripper gloves that excels at performing takedowns at close range, with an added lining of insulation. Careful not to hit a wall!"
+	item = /obj/item/clothing/gloves/tackler/combat/insulated
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+	cost = 2
 
 // Implants
 /datum/uplink_item/implants
@@ -1491,7 +1542,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/implants/antistun
 	name = "CNS Rebooter Implant"
 	desc = "This implant will help you get back up on your feet faster after being stunned. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/anti_stun
+	item = /obj/item/autosurgeon/syndicate/anti_stun
 	cost = 12
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1532,7 +1583,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/implants/reviver
 	name = "Reviver Implant"
 	desc = "This implant will attempt to revive and heal you if you lose consciousness. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/reviver
+	item = /obj/item/autosurgeon/syndicate/reviver
 	cost = 8
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1554,7 +1605,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/implants/thermals
 	name = "Thermal Eyes"
 	desc = "These cybernetic eyes will give you thermal vision. Comes with a free autosurgeon."
-	item = /obj/item/autosurgeon/thermal_eyes
+	item = /obj/item/autosurgeon/syndicate/thermal_eyes
 	cost = 8
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1572,7 +1623,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/implants/xray
 	name = "X-ray Vision Implant"
 	desc = "These cybernetic eyes will give you X-ray vision. Comes with an autosurgeon."
-	item = /obj/item/autosurgeon/xray_eyes
+	item = /obj/item/autosurgeon/syndicate/xray_eyes
 	cost = 10
 	surplus = 0
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1659,6 +1710,13 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 15
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/clumsinessinjector //clown ops can buy this too, but it's in the pointless badassery section for them
+	name = "Clumsiness Injector"
+	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clowns who wish to reconnect with their former clownish nature or for clowns who wish to torment and play with their prey before killing them."
+	item = /obj/item/dnainjector/clumsymut
+	cost = 1
+	restricted_roles = list("Clown")
+	illegal_tech = FALSE
 
 /datum/uplink_item/role_restricted/spider_injector
 	name = "Australicus Slime Mutator"
@@ -1786,6 +1844,29 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/box/hug/reverse_revolver
 	restricted_roles = list("Clown")
 
+/datum/uplink_item/role_restricted/clownpin
+	name = "Ultra Hilarious Firing Pin"
+	desc = "A firing pin that, when inserted into a gun, makes that gun only usable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
+	cost = 4
+	item = /obj/item/firing_pin/clown/ultra
+	restricted_roles = list("Clown")
+	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/clownsuperpin
+	name = "Super Ultra Hilarious Firing Pin"
+	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
+	cost = 7
+	item = /obj/item/firing_pin/clown/ultra/selfdestruct
+	restricted_roles = list("Clown")
+	illegal_tech = FALSE
+
+/datum/uplink_item/role_restricted/laser_arm
+	name = "Laser Arm Implant"
+	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
+	cost = 10
+	item = /obj/item/autosurgeon/syndicate/laser_arm
+	restricted_roles = list("Roboticist")
+
 // Pointless
 /datum/uplink_item/badass
 	category = "(Pointless) Badassery"
@@ -1847,3 +1928,20 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
 	cost = 2
 	illegal_tech = FALSE
+
+/datum/uplink_item/badass/clownopclumsinessinjector //clowns can buy this too, but it's in the role-restricted items section for them
+	name = "Clumsiness Injector"
+	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clown operatives who wish to reconnect with their former clownish nature or for clown operatives who wish to torment and play with their prey before killing them."
+	item = /obj/item/dnainjector/clumsymut
+	cost = 1
+	include_modes = list(/datum/game_mode/nuclear/clown_ops)
+	illegal_tech = FALSE
+ 
+/datum/uplink_item/badass/tactical_naptime
+	name = "Sleepy Time Pajama Bundle"
+	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
+	item = /obj/item/storage/box/syndie_kit/sleepytime
+	cost = 4
+	limited_stock = 1
+	cant_discount = TRUE
+	include_modes = list(/datum/game_mode/nuclear)

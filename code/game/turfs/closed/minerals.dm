@@ -17,8 +17,6 @@
 	var/turf/open/floor/plating/turf_type = /turf/open/floor/plating/asteroid/airless
 	var/obj/item/stack/ore/mineralType = null
 	var/mineralAmt = 3
-	var/spread = 0 //will the seam spread?
-	var/spreadChance = 0 //the percentual chance of an ore spreading to the neighbouring tiles
 	var/last_act = 0
 	var/scan_state = "" //Holder for the image we display when we're pinged by a mining scanner
 	var/defer_change = 0
@@ -31,12 +29,24 @@
 	transform = M
 	icon = smooth_icon
 	. = ..()
-	if (mineralType && mineralAmt && spread && spreadChance)
+
+/turf/closed/mineral/proc/Spread_Vein()
+	var/spreadChance = initial(mineralType.spreadChance)
+	if(spreadChance)
 		for(var/dir in GLOB.cardinals)
 			if(prob(spreadChance))
 				var/turf/T = get_step(src, dir)
-				if(istype(T, /turf/closed/mineral/random))
-					Spread(T)
+				var/turf/closed/mineral/random/M = T
+				if(istype(M) && !M.mineralType)
+					M.Change_Ore(mineralType)
+
+/turf/closed/mineral/proc/Change_Ore(var/ore_type, random = 0)
+	if(random)
+		mineralAmt = rand(1, 5)
+	if(ispath(ore_type, /obj/item/stack/ore)) //If it has a scan_state, switch to it
+		var/obj/item/stack/ore/the_ore = ore_type
+		scan_state = initial(the_ore.scan_state) // I SAID. SWITCH. TO. IT.
+		mineralType = ore_type // Everything else assumes that this is typed correctly so don't set it to non-ores thanks.
 
 /turf/closed/mineral/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	if(turf_type)
@@ -134,48 +144,50 @@
 			gets_drilled(null, FALSE)
 	return
 
-/turf/closed/mineral/Spread(turf/T)
-	T.ChangeTurf(type)
-
 /turf/closed/mineral/random
-	var/list/mineralSpawnChanceList = list(/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
-		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40, /turf/closed/mineral/titanium = 11,
-		/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 2, /turf/closed/mineral/bscrystal = 1)
+	var/list/mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,
+		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40, /obj/item/stack/ore/titanium = 11,
+		/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 2, /obj/item/stack/ore/bluespace_crystal = 1)
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
-	var/display_icon_state = "rock"
 
 /turf/closed/mineral/random/Initialize()
 
 	mineralSpawnChanceList = typelist("mineralSpawnChanceList", mineralSpawnChanceList)
 
-	if (display_icon_state)
-		icon_state = display_icon_state
 	. = ..()
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
-		var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
+		if(ispath(path, /turf))
+			var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
 
-		if(T && ismineralturf(T))
-			var/turf/closed/mineral/M = T
-			M.mineralAmt = rand(1, 5)
-			M.environment_type = src.environment_type
-			M.turf_type = src.turf_type
-			M.baseturfs = src.baseturfs
-			src = M
-			M.levelupdate()
+			T.baseturfs = src.baseturfs
+			if(ismineralturf(T))
+				var/turf/closed/mineral/M = T
+				M.turf_type = src.turf_type
+				M.mineralAmt = rand(1, 5)
+				M.environment_type = src.environment_type
+				src = M
+				M.levelupdate()
+			else
+				src = T
+				T.levelupdate()
+
+		else
+			Change_Ore(path, 1)
+			Spread_Vein(path)
 
 /turf/closed/mineral/random/no_caves
-	mineralSpawnChanceList = list(/turf/closed/mineral/uranium = 5, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 10,
-		/turf/closed/mineral/silver = 12, /turf/closed/mineral/plasma = 20, /turf/closed/mineral/iron = 40, /turf/closed/mineral/titanium = 11,
-		/turf/closed/mineral/gibtonite = 4, /turf/closed/mineral/bscrystal = 1)
+	mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,
+		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40, /obj/item/stack/ore/titanium = 11,
+		/turf/closed/mineral/gibtonite = 4, /obj/item/stack/ore/bluespace_crystal = 1)
 
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 35, /turf/closed/mineral/diamond = 30, /turf/closed/mineral/gold = 45, /turf/closed/mineral/titanium = 45,
-		/turf/closed/mineral/silver = 50, /turf/closed/mineral/plasma = 50, /turf/closed/mineral/bscrystal = 20)
+		/obj/item/stack/ore/uranium = 35, /obj/item/stack/ore/diamond = 30, /obj/item/stack/ore/gold = 45, /obj/item/stack/ore/titanium = 45,
+		/obj/item/stack/ore/silver = 50, /obj/item/stack/ore/plasma = 50, /obj/item/stack/ore/bluespace_crystal = 20)
 
 /turf/closed/mineral/random/high_chance/volcanic
 	environment_type = "basalt"
@@ -184,18 +196,17 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = 1
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/volcanic = 35, /turf/closed/mineral/diamond/volcanic = 30, /turf/closed/mineral/gold/volcanic = 45, /turf/closed/mineral/titanium/volcanic = 45,
-		/turf/closed/mineral/silver/volcanic = 50, /turf/closed/mineral/plasma/volcanic = 50, /turf/closed/mineral/bscrystal/volcanic = 20)
-
+		/obj/item/stack/ore/uranium = 35, /obj/item/stack/ore/diamond = 30, /obj/item/stack/ore/gold = 45, /obj/item/stack/ore/titanium = 45,
+		/obj/item/stack/ore/silver = 50, /obj/item/stack/ore/plasma = 50, /obj/item/stack/ore/bluespace_crystal)
 
 
 /turf/closed/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 6
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 2, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 4, /turf/closed/mineral/titanium = 4,
-		/turf/closed/mineral/silver = 6, /turf/closed/mineral/plasma = 15, /turf/closed/mineral/iron = 40,
-		/turf/closed/mineral/gibtonite = 2, /turf/closed/mineral/bscrystal = 1)
+		/obj/item/stack/ore/uranium = 2, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 4, /obj/item/stack/ore/titanium = 4,
+		/obj/item/stack/ore/silver = 6, /obj/item/stack/ore/plasma = 15, /obj/item/stack/ore/iron = 40,
+		/turf/closed/mineral/gibtonite = 2, /obj/item/stack/ore/bluespace_crystal = 1)
 
 
 /turf/closed/mineral/random/volcanic
@@ -207,15 +218,15 @@
 
 	mineralChance = 10
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/volcanic = 5, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 10, /turf/closed/mineral/titanium/volcanic = 11,
-		/turf/closed/mineral/silver/volcanic = 12, /turf/closed/mineral/plasma/volcanic = 20, /turf/closed/mineral/iron/volcanic = 40,
-		/turf/closed/mineral/gibtonite/volcanic = 4, /turf/open/floor/plating/asteroid/airless/cave/volcanic = 1, /turf/closed/mineral/bscrystal/volcanic = 1)
+		/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10, /obj/item/stack/ore/titanium = 11,
+		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40,
+		/turf/closed/mineral/gibtonite/volcanic = 4, /turf/open/floor/plating/asteroid/airless/cave/volcanic = 1, /obj/item/stack/ore/bluespace_crystal = 1)
 
 
 /turf/closed/mineral/random/labormineral
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium = 3, /turf/closed/mineral/diamond = 1, /turf/closed/mineral/gold = 8, /turf/closed/mineral/titanium = 8,
-		/turf/closed/mineral/silver = 20, /turf/closed/mineral/plasma = 30, /turf/closed/mineral/iron = 95,
+		/obj/item/stack/ore/uranium = 3, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 8, /obj/item/stack/ore/titanium = 8,
+		/obj/item/stack/ore/silver = 20, /obj/item/stack/ore/plasma = 30, /obj/item/stack/ore/iron = 95,
 		/turf/closed/mineral/gibtonite = 2)
 	icon_state = "rock_labor"
 
@@ -227,16 +238,14 @@
 	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	defer_change = 1
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/volcanic = 3, /turf/closed/mineral/diamond/volcanic = 1, /turf/closed/mineral/gold/volcanic = 8, /turf/closed/mineral/titanium/volcanic = 8,
-		/turf/closed/mineral/silver/volcanic = 20, /turf/closed/mineral/plasma/volcanic = 30, /turf/closed/mineral/bscrystal/volcanic = 1, /turf/closed/mineral/gibtonite/volcanic = 2,
-		/turf/closed/mineral/iron/volcanic = 95)
+		/obj/item/stack/ore/uranium = 3, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 8, /obj/item/stack/ore/titanium = 8,
+		/obj/item/stack/ore/silver = 20, /obj/item/stack/ore/plasma = 30, /obj/item/stack/ore/bluespace_crystal = 1, /turf/closed/mineral/gibtonite/volcanic = 2,
+		/obj/item/stack/ore/iron = 95)
 
-
+// Subtypes for mappers placing ores manually.
 
 /turf/closed/mineral/iron
 	mineralType = /obj/item/stack/ore/iron
-	spreadChance = 20
-	spread = 1
 	scan_state = "rock_Iron"
 
 /turf/closed/mineral/iron/volcanic
@@ -258,8 +267,6 @@
 
 /turf/closed/mineral/uranium
 	mineralType = /obj/item/stack/ore/uranium
-	spreadChance = 5
-	spread = 1
 	scan_state = "rock_Uranium"
 
 /turf/closed/mineral/uranium/volcanic
@@ -272,8 +279,6 @@
 
 /turf/closed/mineral/diamond
 	mineralType = /obj/item/stack/ore/diamond
-	spreadChance = 0
-	spread = 1
 	scan_state = "rock_Diamond"
 
 /turf/closed/mineral/diamond/volcanic
@@ -295,8 +300,6 @@
 
 /turf/closed/mineral/gold
 	mineralType = /obj/item/stack/ore/gold
-	spreadChance = 5
-	spread = 1
 	scan_state = "rock_Gold"
 
 /turf/closed/mineral/gold/volcanic
@@ -309,8 +312,6 @@
 
 /turf/closed/mineral/silver
 	mineralType = /obj/item/stack/ore/silver
-	spreadChance = 5
-	spread = 1
 	scan_state = "rock_Silver"
 
 /turf/closed/mineral/silver/volcanic
@@ -323,8 +324,6 @@
 
 /turf/closed/mineral/titanium
 	mineralType = /obj/item/stack/ore/titanium
-	spreadChance = 5
-	spread = 1
 	scan_state = "rock_Titanium"
 
 /turf/closed/mineral/titanium/volcanic
@@ -337,8 +336,6 @@
 
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/stack/ore/plasma
-	spreadChance = 8
-	spread = 1
 	scan_state = "rock_Plasma"
 
 /turf/closed/mineral/plasma/volcanic
@@ -362,16 +359,12 @@
 /turf/closed/mineral/bananium
 	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
-	spreadChance = 0
-	spread = 0
 	scan_state = "rock_Bananium"
 
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
 	mineralAmt = 1
-	spreadChance = 0
-	spread = 0
 	scan_state = "rock_BScrystal"
 
 /turf/closed/mineral/bscrystal/volcanic
@@ -435,8 +428,6 @@
 
 /turf/closed/mineral/gibtonite
 	mineralAmt = 1
-	spreadChance = 0
-	spread = 0
 	scan_state = "rock_Gibtonite"
 	var/det_time = 8 //Countdown till explosion, but also rewards the player for how close you were to detonation when you defuse it
 	var/stage = GIBTONITE_UNSTRUCK //How far into the lifecycle of gibtonite we are
@@ -461,7 +452,7 @@
 		name = "gibtonite deposit"
 		desc = "An active gibtonite reserve. Run!"
 		stage = GIBTONITE_ACTIVE
-		visible_message("<span class='danger'>There was gibtonite inside! It's going to explode!</span>")
+		visible_message("<span class='danger'>There's gibtonite inside! It's going to explode!</span>")
 
 		var/notify_admins = 0
 		if(z != 5)
@@ -495,7 +486,7 @@
 		stage = GIBTONITE_STABLE
 		if(det_time < 0)
 			det_time = 0
-		visible_message("<span class='notice'>The chain reaction was stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
+		visible_message("<span class='notice'>The chain reaction stopped! The gibtonite had [det_time] reactions left till the explosion!</span>")
 
 /turf/closed/mineral/gibtonite/gets_drilled(mob/user, triggered_by_explosion = 0)
 	if(stage == GIBTONITE_UNSTRUCK && mineralAmt >= 1) //Gibtonite deposit is activated
@@ -508,7 +499,7 @@
 		stage = GIBTONITE_DETONATE
 		explosion(bombturf,1,2,5, adminlog = 0)
 	if(stage == GIBTONITE_STABLE) //Gibtonite deposit is now benign and extractable. Depending on how close you were to it blowing up before defusing, you get better quality ore.
-		var/obj/item/twohanded/required/gibtonite/G = new (src)
+		var/obj/item/gibtonite/G = new (src)
 		if(det_time <= 0)
 			G.quality = 3
 			G.icon_state = "Gibtonite ore 3"

@@ -5,6 +5,7 @@
 	speech_verb = "crackles"
 	ask_verb = "pops"
 	exclaim_verb = "thunders"
+	sing_verb = "synthesizes"
 	key = "v"
 	space_chance = 20
 	syllables = list(

@@ -39,6 +39,11 @@
 
 /datum/config_entry/flag/hub	// if the game appears on the hub or not
 
+/datum/config_entry/number/max_hub_pop //At what pop to take hub off the server
+	config_entry_value = 0 //0 means disabled
+	integer = TRUE
+	min_val = 0
+
 /datum/config_entry/flag/log_ooc	// log OOC channel
 
 /datum/config_entry/flag/log_access	// log login/logout
@@ -284,12 +289,6 @@
 
 /datum/config_entry/flag/maprotation
 
-/datum/config_entry/number/maprotatechancedelta
-	config_entry_value = 0.75
-	min_val = 0
-	max_val = 1
-	integer = FALSE
-
 /datum/config_entry/number/soft_popcap
 	config_entry_value = null
 	min_val = 0
@@ -490,3 +489,16 @@
 /datum/config_entry/flag/reopen_roundstart_suicide_roles_command_report
 
 /datum/config_entry/flag/auto_profile
+
+// DISCORD ROLE STUFFS
+// Using strings for everything because BYOND does not like numbers this big
+// (exception to the above is required living hours haha)
+/datum/config_entry/flag/enable_discord_autorole
+
+/datum/config_entry/number/required_living_hours
+
+/datum/config_entry/string/discord_token
+
+/datum/config_entry/string/discord_guildid
+
+/datum/config_entry/string/discord_roleid

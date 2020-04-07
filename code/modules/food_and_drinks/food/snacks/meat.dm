@@ -1,6 +1,8 @@
 /obj/item/reagent_containers/food/snacks/meat
 	var/subjectname = ""
 	var/subjectjob = null
+	custom_materials = list(/datum/material/meat = MINERAL_MATERIAL_AMOUNT * 4)
+	material_flags = MATERIAL_NO_EFFECTS //Remove this once we refactor food, prevents meat literaly being eaten twice
 
 /obj/item/reagent_containers/food/snacks/meat/slab
 	name = "meat"
@@ -210,7 +212,7 @@
 
 /obj/item/reagent_containers/food/snacks/meat/slab/spider
 	name = "spider meat"
-	desc = "A slab of spider meat."
+	desc = "A slab of spider meat. That is so Kafkaesque."
 	icon_state = "spidermeat"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/toxin = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#7CFC00"

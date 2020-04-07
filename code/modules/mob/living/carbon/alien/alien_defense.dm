@@ -21,6 +21,8 @@ In all, this is a lot like the monkey code. /N
 	switch(M.a_intent)
 
 		if ("help")
+			if(M == src && check_self_for_injuries())
+				return
 			set_resting(FALSE)
 			AdjustStun(-60)
 			AdjustKnockdown(-60)

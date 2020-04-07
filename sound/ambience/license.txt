@@ -8,3 +8,5 @@ title0.ogg is Endless Space by Solus. It has been licensed under CC-BY 3.0 licen
 title1.ogg is Flip-Flap created by Jakub "AceMan" Szeląg and taken from http://www.modules.pl/?id=module&mod=453
 title2.ogg is Robocop Theme (gameboy) remixed by Eric Schumacker
 title3.ogg is Tintin On The Moon remixed by Cuboos https://tgstation13.org/phpBB/viewtopic.php?f=10&t=2157 (assumed CC under allowing it to be submitted to the github, see thread)
+
+CC-BY 3.0: http://creativecommons.org/licenses/by/3.0/

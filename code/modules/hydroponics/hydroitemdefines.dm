@@ -71,12 +71,16 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("slashed", "sliced", "bashed", "clawed")
 	hitsound = null
-	custom_materials = null
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 1.5)
 	flags_1 = NONE
 	resistance_flags = FLAMMABLE
 
-/obj/item/cultivator/rake/Crossed(mob/living/carbon/human/H)
-	if(istype(H) && has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
+/obj/item/cultivator/rake/Crossed(atom/movable/AM)
+	. = ..()
+	if(!ishuman(AM))
+		return
+	var/mob/living/carbon/human/H = AM
+	if(has_gravity(loc) && HAS_TRAIT(H, TRAIT_CLUMSY) && !H.resting)
 		H.confused = max(H.confused, 10)
 		H.Stun(20)
 		playsound(src, 'sound/weapons/punch4.ogg', 50, TRUE)
@@ -164,6 +168,23 @@
 	swiping = FALSE
 	return TRUE
 
+/obj/item/secateurs
+	name = "secateurs"
+	desc = "It's a tool for cutting grafts off plants."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "secateurs"
+	item_state = "secateurs"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	flags_1 = CONDUCT_1
+	force = 5
+	throwforce = 6
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT
+	custom_materials = list(/datum/material/iron=4000)
+	attack_verb = list("slashed", "sliced", "cut", "clawed")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
 // *************************************
 // Nutrient defines for hydroponics
 // *************************************
@@ -183,17 +204,17 @@
 
 /obj/item/reagent_containers/glass/bottle/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
-	desc = "Contains a fertilizer that causes mild mutations with each harvest."
+	desc = "Contains a fertilizer that causes mild mutations and gradual plant growth with each harvest."
 	list_reagents = list(/datum/reagent/plantnutriment/eznutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/l4z
 	name = "bottle of Left 4 Zed"
-	desc = "Contains a fertilizer that limits plant yields to no more than one and causes significant mutations in plants."
+	desc = "Contains a fertilizer that lightly heals the plant but causes significant mutations in plants over generations."
 	list_reagents = list(/datum/reagent/plantnutriment/left4zednutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/rh
 	name = "bottle of Robust Harvest"
-	desc = "Contains a fertilizer that increases the yield of a plant by 30% while causing no mutations."
+	desc = "Contains a fertilizer that increases the yield of a plant while gradually preventing mutations."
 	list_reagents = list(/datum/reagent/plantnutriment/robustharvestnutriment = 50)
 
 /obj/item/reagent_containers/glass/bottle/nutrient/empty

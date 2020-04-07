@@ -31,16 +31,11 @@
 	trigger_species = SStraumas.phobia_species[phobia_type]
 	..()
 
-
-/datum/brain_trauma/mild/phobia/on_clone()
-	if(clonable)
-		return new type(phobia_type)
-
 /datum/brain_trauma/mild/phobia/on_life()
 	..()
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	if(is_blind(owner))
+	if(owner.is_blind())
 		return
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 50

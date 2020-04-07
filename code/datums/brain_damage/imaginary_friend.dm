@@ -77,7 +77,9 @@
 	var/datum/action/innate/imaginary_hide/hide
 
 /mob/camera/imaginary_friend/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	greet()
 	Show()
 
@@ -152,7 +154,7 @@
 	to_chat(src, compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode))
 
 /mob/camera/imaginary_friend/proc/friend_talk(message)
-	message = capitalize(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
+	message = capitalize(trim(copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if(!message)
 		return

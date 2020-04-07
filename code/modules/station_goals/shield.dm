@@ -114,14 +114,16 @@
 		to_chat(user, "<span class='notice'>You [active ? "deactivate": "activate"] [src].</span>")
 	active = !active
 	if(active)
+		begin_processing()
 		animate(src, pixel_y = 2, time = 10, loop = -1)
 		anchored = TRUE
 	else
+		end_processing()
 		animate(src, pixel_y = 0, time = 10)
 		anchored = FALSE
 	update_icon()
 
-/obj/machinery/satellite/update_icon()
+/obj/machinery/satellite/update_icon_state()
 	icon_state = active ? "sat_active" : "sat_inactive"
 
 /obj/machinery/satellite/multitool_act(mob/living/user, obj/item/I)
@@ -133,7 +135,8 @@
 	name = "\improper Meteor Shield Satellite"
 	desc = "A meteor point-defense satellite."
 	mode = "M-SHIELD"
-	speed_process = TRUE
+	processing_flags = START_PROCESSING_MANUALLY
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	var/kill_range = 14
 
 /obj/machinery/satellite/meteor_shield/proc/space_los(meteor)

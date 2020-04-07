@@ -9,6 +9,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	layer = BELOW_OPEN_DOOR_LAYER
+	processing_flags = START_PROCESSING_MANUALLY
+	subsystem_type = /datum/controller/subsystem/processing/fastprocess
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -18,7 +20,6 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/list/affecting	// the list of all items that will be moved this ptick
 	var/id = ""			// the control ID	- must match controller ID
 	var/verted = 1		// Inverts the direction the conveyor belt moves.
-	speed_process = TRUE
 	var/conveying = FALSE
 
 /obj/machinery/conveyor/centcom_auto
@@ -110,38 +111,41 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		movedir = backwards
 	update()
 
-/obj/machinery/conveyor/update_icon()
-	if(stat & BROKEN)
+/obj/machinery/conveyor/update_icon_state()
+	if(machine_stat & BROKEN)
 		icon_state = "conveyor-broken"
 	else
 		icon_state = "conveyor[operating * verted]"
 
 /obj/machinery/conveyor/proc/update()
-	if(stat & BROKEN || !operable || stat & NOPOWER)
+	if(machine_stat & BROKEN || !operable || machine_stat & NOPOWER)
 		operating = FALSE
 		update_icon()
 		return FALSE
 	return TRUE
 
-	// machine process
-	// move items to the target location
+// machine process
+// move items to the target location
 /obj/machinery/conveyor/process()
-	if(stat & (BROKEN | NOPOWER))
+	if(machine_stat & (BROKEN | NOPOWER))
 		return
+
 	//If the conveyor is broken or already moving items
 	if(!operating || conveying)
 		return
+
 	use_power(6)
+
 	//get the first 30 items in contents
 	affecting = list()
 	var/i = 0
-	for(var/item in loc.contents)
-		if(item == src)
-			continue
+	var/list/items = loc.contents - src
+	for(var/item in items)
 		i++ // we're sure it's a real target to move at this point
 		if(i >= MAX_CONVEYOR_ITEMS_MOVE)
 			break
 		affecting.Add(item)
+
 	conveying = TRUE
 	addtimer(CALLBACK(src, .proc/convey, affecting), 1)
 
@@ -159,21 +163,21 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		user.visible_message("<span class='notice'>[user] struggles to pry up \the [src] with \the [I].</span>", \
 		"<span class='notice'>You struggle to pry up \the [src] with \the [I].</span>")
 		if(I.use_tool(src, user, 40, volume=40))
-			if(!(stat & BROKEN))
+			if(!(machine_stat & BROKEN))
 				var/obj/item/stack/conveyor/C = new /obj/item/stack/conveyor(loc, 1, TRUE, id)
 				transfer_fingerprints_to(C)
 			to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 			qdel(src)
 
 	else if(I.tool_behaviour == TOOL_WRENCH)
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			I.play_tool_sound(src)
 			setDir(turn(dir,-45))
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You rotate [src].</span>")
 
 	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
-		if(!(stat & BROKEN))
+		if(!(machine_stat & BROKEN))
 			verted = verted * -1
 			update_move_direction()
 			to_chat(user, "<span class='notice'>You reverse [src]'s direction.</span>")
@@ -231,11 +235,10 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	speed_process = TRUE
+	processing_flags = START_PROCESSING_MANUALLY
 
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
-	var/operated = 1			// true if just operated
 	var/oneway = FALSE			// if the switch only operates the conveyor belts in a single direction.
 	var/invert_icon = FALSE		// If the level points the opposite direction when it's turned on.
 
@@ -263,7 +266,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 // update the icon depending on the position
 
-/obj/machinery/conveyor_switch/update_icon()
+/obj/machinery/conveyor_switch/update_icon_state()
 	if(position<0)
 		if(invert_icon)
 			icon_state = "switch-fwd"
@@ -277,24 +280,28 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	else
 		icon_state = "switch-off"
 
-
-// timed process
-// if the switch changed, update the linked conveyors
-
-/obj/machinery/conveyor_switch/process()
-	if(!operated)
-		return
-	operated = 0
-
+/// Updates all conveyor belts that are linked to this switch, and tells them to start processing.
+/obj/machinery/conveyor_switch/proc/update_linked_conveyors()
 	for(var/obj/machinery/conveyor/C in GLOB.conveyors_by_id[id])
 		C.operating = position
 		C.update_move_direction()
 		C.update_icon()
+		if(C.operating)
+			C.begin_processing()
+		else
+			C.end_processing()
 		CHECK_TICK
 
-// attack with hand, switch position
-/obj/machinery/conveyor_switch/interact(mob/user)
-	add_fingerprint(user)
+/// Finds any switches with same `id` as this one, and set their position and icon to match us.
+/obj/machinery/conveyor_switch/proc/update_linked_switches()
+	for(var/obj/machinery/conveyor_switch/S in GLOB.conveyors_by_id[id])
+		S.invert_icon = invert_icon
+		S.position = position
+		S.update_icon()
+		CHECK_TICK
+
+/// Updates the switch's `position` and `last_pos` variable. Useful so that the switch can properly cycle between the forwards, backwards and neutral positions.
+/obj/machinery/conveyor_switch/proc/update_position()
 	if(position == 0)
 		if(oneway)   //is it a oneway switch
 			position = oneway
@@ -309,15 +316,14 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		last_pos = position
 		position = 0
 
-	operated = 1
+/// Called when a user clicks on this switch with an open hand.
+/obj/machinery/conveyor_switch/interact(mob/user)
+	add_fingerprint(user)
+	update_position()
 	update_icon()
+	update_linked_conveyors()
+	update_linked_switches()
 
-	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in GLOB.conveyors_by_id[id])
-		S.invert_icon = invert_icon
-		S.position = position
-		S.update_icon()
-		CHECK_TICK
 
 /obj/machinery/conveyor_switch/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_CROWBAR)

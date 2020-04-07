@@ -30,6 +30,8 @@ GLOBAL_LIST_INIT(simple_animals, list(list(),list(),list(),list())) // One for e
 GLOBAL_LIST_EMPTY(spidermobs)				//all sentient spider mobs
 GLOBAL_LIST_EMPTY(bots_list)
 GLOBAL_LIST_EMPTY(aiEyes)
+///underages who have been reported to security for trying to buy things they shouldn't, so they can't spam
+GLOBAL_LIST_EMPTY(narcd_underages)
 
 GLOBAL_LIST_EMPTY(language_datum_instances)
 GLOBAL_LIST_EMPTY(all_languages)
@@ -64,12 +66,16 @@ GLOBAL_LIST_EMPTY(emote_list)
 	. = list()
 	for(var/path in subtypesof(/datum/emote))
 		var/datum/emote/E = new path()
-		if(!.[E.key])
-			.[E.key] = list(E)
-		else
-			.[E.key] += E
-		
-		if(!.[E.key_third_person])
-			.[E.key_third_person] = list(E)
-		else
-			.[E.key_third_person] |= E
+		if(E.key)
+			if(!.[E.key])
+				.[E.key] = list(E)
+			else
+				.[E.key] += E
+		else if(E.message) //Assuming all non-base emotes have this
+			stack_trace("Keyless emote: [E.type]")
+
+		if(E.key_third_person) //This one is optional
+			if(!.[E.key_third_person])
+				.[E.key_third_person] = list(E)
+			else
+				.[E.key_third_person] |= E

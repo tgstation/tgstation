@@ -20,7 +20,7 @@
 
 /obj/machinery/doppler_array/ui_interact(mob/user)
 	. = ..()
-	if(stat)
+	if(machine_stat)
 		return FALSE
 
 	var/list/dat = list()
@@ -66,7 +66,7 @@
 
 /obj/machinery/doppler_array/proc/sense_explosion(datum/source, turf/epicenter, devastation_range, heavy_impact_range, light_impact_range,
 			took, orig_dev_range, orig_heavy_range, orig_light_range)
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return FALSE
 	var/turf/zone = get_turf(src)
 	if(zone.z != epicenter.z)
@@ -103,7 +103,7 @@
 	return ..()
 
 /obj/machinery/doppler_array/update_icon_state()
-	if(stat & BROKEN)
+	if(machine_stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
 	else if(powered())
 		icon_state = initial(icon_state)
