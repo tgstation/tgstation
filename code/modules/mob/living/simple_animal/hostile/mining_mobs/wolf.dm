@@ -44,7 +44,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/wolf/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(health > maxHealth*0.1)
+	if(stat == DEAD || health > maxHealth*0.1)
 		retreat_distance = initial(retreat_distance)
 		return
 	if(!retreat_message_said && target)

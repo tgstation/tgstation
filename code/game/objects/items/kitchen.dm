@@ -154,9 +154,12 @@
 	/// Bleed stacks applied when an organic mob target is hit
 	var/bleed_stacks_per_hit = 3
 
-/obj/item/kitchen/knife/bloodletter/attack(mob/living/M, mob/living/carbon/user)
+/obj/item/kitchen/knife/bloodletter/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!. || !istype(M) || !(M.mob_biotypes & MOB_ORGANIC))
+	if(!isliving(target) || !proximity_flag)
+		return
+	var/mob/living/M = target
+	if(!(M.mob_biotypes & MOB_ORGANIC))
 		return
 	var/datum/status_effect/stacking/saw_bleed/bloodletting/B = M.has_status_effect(/datum/status_effect/stacking/saw_bleed/bloodletting)
 	if(!B)

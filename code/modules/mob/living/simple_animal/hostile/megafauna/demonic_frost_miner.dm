@@ -33,12 +33,6 @@ Difficulty: Extremely Hard
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
-	/// Modifies the speed of the projectiles the demonic frost miner shoots out
-	var/projectile_speed_multiplier = 1
-	/// If the demonic frost miner is in its enraged state
-	var/enraged = FALSE
-	/// If the demonic frost miner is currently transforming to its enraged state
-	var/enraging = FALSE
 	achievement_type = /datum/award/achievement/boss/demonic_miner_kill
 	crusher_achievement_type = /datum/award/achievement/boss/demonic_miner_crusher
 	score_achievement_type = /datum/award/score/demonic_miner_score
@@ -48,6 +42,12 @@ Difficulty: Extremely Hard
 	attack_action_types = list(/datum/action/innate/megafauna_attack/frost_orbs,
 							   /datum/action/innate/megafauna_attack/snowball_machine_gun,
 							   /datum/action/innate/megafauna_attack/ice_shotgun)
+	/// Modifies the speed of the projectiles the demonic frost miner shoots out
+	var/projectile_speed_multiplier = 1
+	/// If the demonic frost miner is in its enraged state
+	var/enraged = FALSE
+	/// If the demonic frost miner is currently transforming to its enraged state
+	var/enraging = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Initialize()
 	. = ..()
@@ -77,7 +77,7 @@ Difficulty: Extremely Hard
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/OpenFire()
 	check_enraged()
-	projectile_speed_multiplier = 1 + enraged * 0.5
+	projectile_speed_multiplier = 1 - enraged * 0.25
 	SetRecoveryTime(100, 100)
 
 	if(client)
@@ -148,7 +148,6 @@ Difficulty: Extremely Hard
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/ex_act(severity, target)
 	adjustBruteLoss(30 * severity - 120)
 	visible_message("<span class='danger'>[src] absorbs the explosion!</span>", "<span class='userdanger'>You absorb the explosion!</span>")
-	return
 
 /mob/living/simple_animal/hostile/megafauna/demonic_frost_miner/Goto(target, delay, minimum_distance)
 	if(enraging)
@@ -172,7 +171,7 @@ Difficulty: Extremely Hard
 		var/turf/endloc = get_turf(target)
 		if(!endloc)
 			break
-		var/obj/projectile/frost_orb/P = new /obj/projectile/frost_orb(startloc)
+		var/obj/projectile/frost_orb/P = new(startloc)
 		P.preparePixelProjectile(endloc, startloc)
 		P.firer = src
 		if(target)
@@ -191,8 +190,8 @@ Difficulty: Extremely Hard
 		var/turf/endloc = get_turf(original)
 		if(!startloc || !endloc)
 			break
-		var/obj/projectile/P = new /obj/projectile/ice_blast(startloc)
-		P.speed /= projectile_speed_multiplier
+		var/obj/projectile/ice_blast/P = new(startloc)
+		P.speed *= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, angle + rand(-10, 10))
 		P.firer = firer
 		if(original)
@@ -208,7 +207,7 @@ Difficulty: Extremely Hard
 		if(!endloc)
 			break
 		var/obj/projectile/P = new /obj/projectile/snowball(startloc)
-		P.speed /= projectile_speed_multiplier
+		P.speed *= projectile_speed_multiplier
 		P.preparePixelProjectile(endloc, startloc, null, rand(-spread, spread))
 		P.firer = src
 		if(target)
@@ -227,7 +226,7 @@ Difficulty: Extremely Hard
 			if(!endloc)
 				break
 			var/obj/projectile/P = new /obj/projectile/ice_blast(startloc)
-			P.speed /= projectile_speed_multiplier
+			P.speed *= projectile_speed_multiplier
 			P.preparePixelProjectile(endloc, startloc, null, spread)
 			P.firer = src
 			if(target)
