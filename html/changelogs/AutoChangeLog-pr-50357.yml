@@ -1,5 +1,0 @@
-author: "TiviPlus"
-delete-after: True
-changes: 
-  - rscadd: "New \"Kotahi\" card game now available in fun vendors"
-  - rscadd: "Cards stacks will now display the top 3 cards in your hand instead of a static image"

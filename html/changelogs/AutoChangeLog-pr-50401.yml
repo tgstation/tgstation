@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "Opaque curtains now block view when closed"
-  - tweak: "Added crafting recipe for cloth curtains"
