@@ -1,0 +1,35 @@
+"a" = (/turf/closed/indestructible/hotelwall,/area/warped_room)
+"b" = (/turf/open/indestructible/hotelwood,/area/warped_room)
+"c" = (/obj/structure/table/wood,/turf/open/indestructible/hotelwood,/area/warped_room)
+"d" = (/obj/machinery/door/window/northleft,/turf/open/indestructible/hotelwood,/area/warped_room)
+"e" = (/obj/structure/table/wood,/obj/item/flashlight/lamp,/turf/open/indestructible/hotelwood,/area/warped_room)
+"f" = (/obj/structure/bed,/obj/item/bedsheet/random,/turf/open/indestructible/hotelwood,/area/warped_room)
+"g" = (/obj/machinery/light{dir = 1},/turf/open/indestructible/hotelwood,/area/warped_room)
+"h" = (/obj/structure/table/wood,/obj/effect/spawner/lootdrop/three_course_meal,/turf/open/indestructible/hotelwood,/area/warped_room)
+"i" = (/obj/machinery/smartfridge/food,/turf/open/indestructible/hotelwood,/area/warped_room)
+"j" = (/obj/machinery/light{dir = 8},/turf/open/indestructible/hotelwood,/area/warped_room)
+"k" = (/obj/structure/closet/cabinet,/turf/open/indestructible/hotelwood,/area/warped_room)
+"l" = (/obj/machinery/light,/turf/open/indestructible/hotelwood,/area/warped_room)
+"m" = (/obj/structure/chair/wood{dir = 1},/turf/open/indestructible/hotelwood,/area/warped_room)
+"n" = (/obj/structure/mineral_door/wood,/turf/open/indestructible/hotelwood,/area/warped_room)
+"o" = (/obj/structure/chair/wood,/turf/open/indestructible/hotelwood,/area/warped_room)
+"p" = (/obj/structure/table/wood,/obj/structure/showcase/machinery/microwave,/turf/open/indestructible/hotelwood,/area/warped_room)
+"q" = (/obj/structure/sink{dir = 4; pixel_x = -12; pixel_y = 2},/turf/open/indestructible/hotelwood,/area/warped_room)
+"r" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/bottle,/turf/open/indestructible/hotelwood,/area/warped_room)
+"s" = (/obj/machinery/processor,/turf/open/indestructible/hotelwood,/area/warped_room)
+"t" = (/obj/structure/table/wood,/obj/machinery/chem_dispenser/drinks/beer{dir = 1},/turf/open/indestructible/hotelwood,/area/warped_room)
+"u" = (/obj/structure/table/wood,/obj/item/reagent_containers/food/drinks/soda_cans/random,/turf/open/indestructible/hotelwood,/area/warped_room)
+"v" = (/obj/machinery/light{dir = 4},/turf/open/indestructible/hotelwood,/area/warped_room)
+
+(1,1,1) = {"
+aaaaaaaaaa
+acebbgagka
+ambbbbabfa
+abbbbbnbba
+ajbbbbaaaa
+abbbbbooba
+ahpdebccva
+aqbbrbccba
+aistulmmba
+aaaaaaaaaa
+"}
