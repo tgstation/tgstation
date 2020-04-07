@@ -35,7 +35,8 @@ export const NtosShipping = props => {
           <Button
             icon="id-card"
             tooltip="The currently ID card will become the current user."
-            disabled={data.has_id === 0}
+            tooltipPosition="right"
+            disabled={!data.has_id_slot}
             onClick={() => act('selectid')}
             content="Set Current ID" />
         </Box>
@@ -43,6 +44,7 @@ export const NtosShipping = props => {
           <Button
             icon="print"
             tooltip="Print a barcode to use on a wrapped package."
+            tooltipPosition="right"
             disabled={!data.has_printer || !data.current_user}
             onClick={() => act('print')}
             content="Print Barcode" />
@@ -51,6 +53,7 @@ export const NtosShipping = props => {
           <Button
             icon="tags"
             tooltip="Set how much profit you'd like on your package."
+            tooltipPosition="right"
             onClick={() => act('setsplit')}
             content="Set Profit Margin" />
         </Box>

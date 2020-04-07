@@ -18,9 +18,10 @@
 
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
+	var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
 	data["has_id_slot"] = !!card_slot
 	data["has_printer"] = !!printer
-    data["paperamt"] = printer ? "[printer.stored_paper] / [printer.max_paper]" : null
+	data["paperamt"] = printer ? "[printer.stored_paper] / [printer.max_paper]" : null
 	data["card_owner"] = card_slot && card_slot.stored_card ? id_card.registered_name : "No Card Inserted."
 	data["current_user"] = payments_acc ? payments_acc.account_holder : null
 	data["barcode_split"] = percent_cut
@@ -31,13 +32,13 @@
 		return TRUE
 	if(!computer)
 		return
-	
+
 	// Get components
 	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
 	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
 	var/obj/item/card/id/id_card = card_slot ? card_slot.stored_card : null
 	if(!card_slot || !printer) //We need both to successfully use this app.
-			return
+		return
 
 	switch(action)
 		if("ejectid")
