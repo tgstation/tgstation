@@ -123,8 +123,8 @@
 	if(enemies[L])
 		return TRUE
 
-	// target non-monkey mobs when aggressive, with a small probability of monkey v monkey
-	if(aggressive && (!istype(L, /mob/living/carbon/monkey/) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
+	// target non-jungle mobs when aggressive, with a small probability of monkey v monkey
+	if(aggressive && (!faction_check_mob(L, 0) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
 		return TRUE
 
 	return FALSE
