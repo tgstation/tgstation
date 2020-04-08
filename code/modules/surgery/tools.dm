@@ -91,6 +91,13 @@
 	w_class = WEIGHT_CLASS_SMALL
 	toolspeed = 0.5
 
+/obj/item/surgicaldrill/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+			M = user
+		return eyestab(M,user)
+	else
+		return ..()
 
 /obj/item/scalpel
 	name = "scalpel"
@@ -126,6 +133,13 @@
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] [pick("wrists", "throat", "stomach")] with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return (BRUTELOSS)
 
+/obj/item/scalpel/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
+			M = user
+		return eyestab(M,user)
+	else
+		return ..()
 
 /obj/item/circular_saw
 	name = "circular saw"
