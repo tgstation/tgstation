@@ -482,6 +482,12 @@
 	result = /obj/item/stack/tile/carpet/black/fifty
 	category = CAT_MISC
 
+/datum/crafting_recipe/curtain
+	name = "Curtains"
+	reqs = 	list(/obj/item/stack/sheet/cloth = 4, /obj/item/stack/rods = 1)
+	result = /obj/structure/curtain/cloth
+	category = CAT_MISC
+
 /datum/crafting_recipe/showercurtain
 	name = "Shower Curtains"
 	reqs = 	list(/obj/item/stack/sheet/cloth = 2, /obj/item/stack/sheet/plastic = 2, /obj/item/stack/rods = 1)
@@ -811,4 +817,12 @@
             /obj/item/clothing/gloves/fingerless = 1,
             /obj/item/stack/sticky_tape = 1)
 	result = /obj/item/clothing/gloves/tackler/offbrand
+	category = CAT_CLOTHING
+
+/datum/crafting_recipe/boh
+	name = "Bag of Holding"
+	reqs = list(
+            /obj/item/bag_of_holding_inert = 1,
+            /obj/item/assembly/signaler/anomaly/bluespace = 1)
+	result = /obj/item/storage/backpack/holding
 	category = CAT_CLOTHING

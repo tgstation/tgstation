@@ -105,6 +105,24 @@ with the console:
 > We prefer to keep it version controlled, so that people could build the
 > game just by using Dream Maker.
 
+## Troubleshooting
+
+**Development server doesn't find my BYOND cache!**
+
+This happens if your Documents folder in Windows has a custom location, for
+example in `E:\Libraries\Documents`. Development server has no knowledge
+of these non-standard locations, therefore you have to run the dev server
+with an additional environmental variable, with a full path to BYOND cache.
+
+```
+export BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
+bin/tgui --dev
+```
+
+Note that in Windows, you have to go through Advanced System Settings,
+System Properties and then open Environment Variables window to do the
+same thing. You may need to reboot after this.
+
 ## Project structure
 
 - `/packages` - Each folder here represents a self-contained Node module.
@@ -343,6 +361,45 @@ defocuses the input or presses enter
 blank when hitting enter or defocusing. If left undefined, will cancel the
 change on a blank defocus/enter
 
+### `ByondUi`
+
+Displays a BYOND UI element on top of the browser, and leverages browser's
+layout engine to position it just like any other HTML element. It is
+especially useful if you want to display a secondary game map in your
+interface.
+
+Example (button):
+
+```
+<ByondUi
+  params={{
+    id: 'test_button', // optional, can be auto-generated
+    parent: config.window,
+    type: 'button',
+    text: 'Hello, world!',
+  }} />
+```
+
+Example (map):
+
+```
+<ByondUi
+  params={{
+    id: 'test_map',
+    parent: config.window,
+    type: 'map',
+  }} />
+```
+
+It supports a full set of `Box` properties for layout purposes.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `params: any` - An object with parameters, which are directly passed to
+the `winset` proc call. You can find a full reference of these parameters
+in [BYOND controls and parameters guide](https://secure.byond.com/docs/ref/skinparams.html).
+
 ### `Collapsible`
 
 Displays contents when open, acts as a fluid button when closed. Click to
@@ -376,6 +433,17 @@ Dims surrounding area to emphasize content placed inside.
 Props:
 
 - See inherited props: [Box](#box)
+
+### `Divider`
+
+Draws a horizontal or vertical line, dividing a section into groups.
+Works like the good old `<hr>` element, but it's fancier.
+
+Props:
+
+- `vertical: boolean` - Divide content vertically.
+- `hidden: boolean` - Divider can divide content without creating a dividing
+line.
 
 ### `Dropdown`
 

@@ -93,7 +93,7 @@
 	icon_state = "gangtool-blue"
 	region_access = 3
 
-/obj/item/door_remote/civillian
+/obj/item/door_remote/civilian
 	name = "civilian door remote"
 	icon_state = "gangtool-white"
 	region_access = 1

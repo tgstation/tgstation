@@ -52,7 +52,8 @@
 		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
-		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma
+		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
+		"freon" = /obj/machinery/portable_atmospherics/canister/freon
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -112,7 +113,7 @@
 /obj/machinery/portable_atmospherics/canister/nob
 	name = "hyper-noblium canister"
 	desc = "Hyper-Noblium. More noble than all other gases."
-	icon_state = "freon"
+	icon_state = "nob"
 	gas_type = /datum/gas/hypernoblium
 
 /obj/machinery/portable_atmospherics/canister/nitryl
@@ -145,6 +146,13 @@
 	desc = "Miasma. Makes you wish your nose were blocked."
 	icon_state = "miasma"
 	gas_type = /datum/gas/miasma
+	filled = 1
+
+/obj/machinery/portable_atmospherics/canister/freon
+	name = "freon canister"
+	desc = "Freon. Can absorb heat"
+	icon_state = "freon"
+	gas_type = /datum/gas/freon
 	filled = 1
 
 /obj/machinery/portable_atmospherics/canister/fusion_test

@@ -245,7 +245,7 @@
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/list/error_state = list()
 	var/new_poll = FALSE
@@ -309,9 +309,9 @@
 		error_state += "This poll type requires at least one option."
 	if(error_state.len)
 		if(poll.edit_ready)
-			to_chat(usr, "<span class='danger'>Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]</span>")
+			to_chat(usr, "<span class='danger'>Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
 		else
-			to_chat(usr, "<span class='danger'>Poll not [new_poll ? "initialized" : "submitted"] because the following errors were present:\n[error_state.Join("\n")]</span>")
+			to_chat(usr, "<span class='danger'>Poll not [new_poll ? "initialized" : "submitted"] because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
 			if(new_poll)
 				qdel(poll)
 		return
@@ -354,7 +354,7 @@
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/datum/DBQuery/query_delete_poll = SSdbcore.NewQuery("CALL set_poll_deleted('[sanitizeSQL(poll_id)]')")
 	if(!query_delete_poll.warn_execute())
@@ -380,7 +380,7 @@
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/poll_id_sql = "[sanitizeSQL(poll_id)]"
 	var/new_poll = FALSE
@@ -448,7 +448,7 @@
   */
 /datum/poll_question/proc/save_all_options()
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	for(var/o in options)
 		var/datum/poll_option/option = o
@@ -469,7 +469,7 @@
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/table = "poll_vote"
 	if(poll_type == POLLTYPE_TEXT)
@@ -480,7 +480,7 @@
 		return
 	qdel(query_clear_poll_votes)
 	poll_votes = 0
-	to_chat(usr, "<span class='danger'>Poll [poll_type == POLLTYPE_TEXT ? "responses" : "votes"] cleared.</span>")
+	to_chat(usr, "<span class='danger'>Poll [poll_type == POLLTYPE_TEXT ? "responses" : "votes"] cleared.</span>", confidential = TRUE)
 
 /**
   * Show the options for creating a poll option or editing its parameters.
@@ -549,7 +549,7 @@
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/list/error_state = list()
 	var/new_option = FALSE
@@ -607,10 +607,10 @@
 			option.desc_max = null
 	if(error_state.len)
 		if(new_option)
-			to_chat(usr, "<span class='danger'>Option not added because the following errors were present:\n[error_state.Join("\n")]</span>")
+			to_chat(usr, "<span class='danger'>Option not added because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
 			qdel(option)
 		else
-			to_chat(usr, "<span class='danger'>Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]</span>")
+			to_chat(usr, "<span class='danger'>Not all edits were applied because the following errors were present:\n[error_state.Join("\n")]</span>", confidential = TRUE)
 		return
 	if(new_option)
 		poll.options += option
@@ -647,7 +647,7 @@
 	if(!check_rights(R_POLL))
 		return
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/list/columns = list("text", "default_percentage_calc", "pollid", "id")
 	var/list/values = list("'[sanitizeSQL(text)]'", "[sanitizeSQL(default_percentage_calc)]", "[sanitizeSQL(parent_poll.poll_id)]")
@@ -693,7 +693,7 @@
 	. = parent_poll
 	if(option_id)
 		if(!SSdbcore.Connect())
-			to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+			to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 			return
 		var/datum/DBQuery/query_delete_poll_option = SSdbcore.NewQuery("UPDATE [format_table_name("poll_option")] AS o INNER JOIN [format_table_name("poll_vote")] AS v ON o.id = v.optionid SET o.deleted = 1, v.deleted = 1 WHERE o.id = [sanitizeSQL(option_id)]")
 		if(!query_delete_poll_option.warn_execute())
@@ -708,7 +708,7 @@
   */
 /proc/load_poll_data()
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/datum/DBQuery/query_load_polls = SSdbcore.NewQuery("SELECT id, polltype, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, dontshow, allow_revoting, IF(polltype='TEXT',(SELECT COUNT(ckey) FROM [format_table_name("poll_textreply")] AS t WHERE t.pollid = q.id AND deleted = 0), (SELECT COUNT(DISTINCT ckey) FROM [format_table_name("poll_vote")] AS v WHERE v.pollid = q.id AND deleted = 0)), IFNULL((SELECT byond_key FROM [format_table_name("player")] AS p WHERE p.ckey = q.createdby_ckey), createdby_ckey), IF(starttime > NOW(), 1, 0) FROM [format_table_name("poll_question")] AS q WHERE NOW() < endtime AND deleted = 0")
 	if(!query_load_polls.Execute())

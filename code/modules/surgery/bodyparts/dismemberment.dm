@@ -17,7 +17,7 @@
 
 	var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
 	affecting.receive_damage(clamp(brute_dam/2 * affecting.body_damage_coeff, 15, 50), clamp(burn_dam/2 * affecting.body_damage_coeff, 0, 50)) //Damage the chest based on limb's existing damage
-	C.visible_message("<span class='danger'><B>[C]'s [src.name] has been violently dismembered!</B></span>")
+	C.visible_message("<span class='danger'><B>[C]'s [src.name] is violently dismembered!</B></span>")
 	C.emote("scream")
 	SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "dismembered", /datum/mood_event/dismembered)
 	drop_limb()
@@ -90,8 +90,11 @@
 	C.bodyparts -= src
 
 	if(held_index)
-		C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
-		C.hand_bodyparts[held_index] = null
+		if(C.hand_bodyparts[held_index] == src)
+			// We only want to do this if the limb being removed is the active hand part.
+			// This catches situations where limbs are "hot-swapped" such as augmentations and roundstart prosthetics.
+			C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
+			C.hand_bodyparts[held_index] = null
 
 	owner = null
 

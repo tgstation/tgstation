@@ -44,6 +44,7 @@
 	var/synchronizer_coeff = -1 //makes the mutation hurt the user less
 	var/power_coeff = -1 //boosts mutation strength
 	var/energy_coeff = -1 //lowers mutation cooldown
+	var/list/valid_chrom_list = list() //List of strings of valid chromosomes this mutation can accept.
 
 /datum/mutation/human/New(class_ = MUT_OTHER, timer, datum/mutation/human/copymut)
 	. = ..()
@@ -53,6 +54,7 @@
 		timed = TRUE
 	if(copymut && istype(copymut, /datum/mutation/human))
 		copy_mutation(copymut)
+	update_valid_chromosome_list()
 
 /datum/mutation/human/proc/on_acquiring(mob/living/carbon/human/H)
 	if(!H || !istype(H) || H.stat == DEAD || (src in H.dna.mutations))
@@ -148,6 +150,7 @@
 	energy_coeff = HM.energy_coeff
 	mutadone_proof = HM.mutadone_proof
 	can_chromosome = HM.can_chromosome
+	valid_chrom_list = HM.valid_chrom_list
 
 /datum/mutation/human/proc/remove_chromosome()
 	stabilizer_coeff = initial(stabilizer_coeff)
@@ -173,3 +176,23 @@
 	power.panel = "Genetic"
 	owner.AddSpell(power)
 	return TRUE
+
+// Runs through all the coefficients and uses this to determine which chromosomes the
+// mutation can take. Stores these as text strings in a list.
+/datum/mutation/human/proc/update_valid_chromosome_list()
+	valid_chrom_list.Cut()
+
+	if(can_chromosome == CHROMOSOME_NEVER)
+		valid_chrom_list += "none"
+		return
+
+	valid_chrom_list += "Reinforcement"
+
+	if(stabilizer_coeff != -1)
+		valid_chrom_list += "Stabilizer"
+	if(synchronizer_coeff != -1)
+		valid_chrom_list += "Synchronizer"
+	if(power_coeff != -1)
+		valid_chrom_list += "Power"
+	if(energy_coeff != -1)
+		valid_chrom_list += "Energetic"
