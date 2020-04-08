@@ -57,6 +57,7 @@
 		update_overlays()
 		update_icon()
 		return
+
 	attached.apply_status_effect(STATUS_EFFECT_LIFE_SUPPORT, STASIS_MACHINE_EFFECT)
 	attached.update_stat()
 	return

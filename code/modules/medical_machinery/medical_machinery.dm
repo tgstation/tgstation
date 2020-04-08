@@ -15,7 +15,7 @@
 
 /obj/machinery/medical/Initialize()
 	. = ..()
-	START_PROCESSING(SSmachines, src)
+
 
 /obj/machinery/medical/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -41,6 +41,7 @@
 		usr.visible_message("<span class='warning'>[usr] attaches [src] to [target].</span>", "<span class='notice'>You attach [src] to [target].</span>")
 		add_fingerprint(usr)
 		attached = target
+		START_PROCESSING(SSmachines, src)
 		update_overlays()
 
 /obj/machinery/medical/process()
@@ -50,7 +51,7 @@
 
 	if(!attached)
 		use_power = IDLE_POWER_USE
-		return
+		return PROCESS_KILL
 
 	if(machine_stat && (NOPOWER|BROKEN))
 		clear_status()
@@ -67,7 +68,6 @@
 	use_power = ACTIVE_POWER_USE
 
 	return
-
 /**
   * Properly gets rid of status effects from the attached
   *
