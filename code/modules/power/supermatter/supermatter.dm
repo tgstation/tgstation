@@ -564,7 +564,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/zap_count = 0
 		//Deal with power zaps
 		switch(power)
-			if(POWER_PENALTY_THRESHOLD to SEVERE_POWER_PENALTY_THRESHOLD)
+			if(0 to SEVERE_POWER_PENALTY_THRESHOLD)
 				zap_icon = DEFAULT_ZAP_ICON_STATE
 				zap_count = 2
 			if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
