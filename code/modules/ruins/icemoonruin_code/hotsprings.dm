@@ -52,4 +52,4 @@ GLOBAL_LIST_EMPTY(cursed_minds)
   *
   */
 /turf/open/water/cursed_spring/proc/remove_from_cursed(datum/mind/M)
-	GLOB.cursed_minds[M] = null
+	GLOB.cursed_minds -= M
