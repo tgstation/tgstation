@@ -87,6 +87,10 @@
 	. += "<span class='notice'>Use <b>Ctrl-Click</b> to activate autogrow. <b>Alt-Click</b> to empty the tray's nutrients.</span>"
 	if(in_range(user, src) || isobserver(user))
 		. += "<span class='notice'>The status display reads: Tray efficiency at <b>[rating*100]%</b>.</span>"
+	if(myseed.reagents_add && user.can_see_reagents())
+		. += "<span class='notice'>- Plant Reagents -</span>"
+		for(var/datum/plant_gene/reagent/G in myseed.genes)
+			. += "<span class='notice'>- [G.get_name()] -</span>"
 
 
 /obj/machinery/hydroponics/Destroy()

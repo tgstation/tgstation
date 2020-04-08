@@ -97,6 +97,10 @@
 /obj/item/seeds/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
+	if(reagents_add && user.can_see_reagents())
+		. += "<span class='notice'>- Plant Reagents -</span>"
+		for(var/datum/plant_gene/reagent/G in genes)
+			. += "<span class='notice'>- [G.get_name()] -</span>"
 
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/S = new type(null, 1)
