@@ -12,6 +12,7 @@ import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { AutomatedAnnouncement } from './interfaces/AutomatedAnnouncement';
 import { BankMachine } from './interfaces/BankMachine';
 import { Bepis } from './interfaces/Bepis';
 import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
@@ -42,6 +43,7 @@ import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
+import { DnaConsole } from './interfaces/DnaConsole';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
 import { Electropack } from './interfaces/Electropack';
@@ -75,10 +77,12 @@ import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
+import { NtosAtmos } from './interfaces/NtosAtmos';
 import { NtosArcade } from './interfaces/NtosArcade';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosCyborgRemoteMonitor } from './interfaces/NtosCyborgRemoteMonitor';
 import { NtosFileManager } from './interfaces/NtosFileManager';
 import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
@@ -176,6 +180,10 @@ const ROUTES = {
   },
   atmos_pump: {
     component: () => AtmosPump,
+    scrollable: false,
+  },
+  announcement_system: {
+    component: () => AutomatedAnnouncement,
     scrollable: false,
   },
   bepis: {
@@ -448,6 +456,12 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_atmos: {
+    component: () => NtosAtmos,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_arcade: {
     component: () => NtosArcade,
     wrapper: () => NtosWrapper,
@@ -468,6 +482,12 @@ const ROUTES = {
   },
   ntos_crew_manifest: {
     component: () => NtosCrewManifest,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_cyborg_monitor: {
+    component: () => NtosCyborgRemoteMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -719,6 +739,10 @@ const ROUTES = {
   wires: {
     component: () => Wires,
     scrollable: false,
+  },
+  scan_consolenew: {
+    component: () => DnaConsole,
+    scrollable: true,
   },
 };
 

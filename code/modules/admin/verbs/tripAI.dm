@@ -3,12 +3,12 @@
 	set name = "Toggle AI Triumvirate"
 
 	if(SSticker.current_state > GAME_STATE_PREGAME)
-		to_chat(usr, "This option is currently only usable during pregame. This may change at a later date.")
+		to_chat(usr, "This option is currently only usable during pregame. This may change at a later date.", confidential = TRUE)
 		return
 
 	var/datum/job/job = SSjob.GetJob("AI")
 	if(!job)
-		to_chat(usr, "Unable to locate the AI job")
+		to_chat(usr, "Unable to locate the AI job", confidential = TRUE)
 		return
 	if(SSticker.triai)
 		SSticker.triai = FALSE

@@ -20,6 +20,7 @@
 
 ///Here we generate some smoke and also damage blobs??? for some reason. Honestly not sure why we do that.
 /obj/item/grenade/smokebomb/prime()
+	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	var/datum/effect_system/smoke_spread/bad/smoke = new
@@ -29,4 +30,4 @@
 	for(var/obj/structure/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.take_damage(damage, BURN, "melee", 0)
-	qdel(src)
+	resolve()

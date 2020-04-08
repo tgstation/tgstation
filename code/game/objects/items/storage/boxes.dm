@@ -105,15 +105,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
 
-
-/obj/item/storage/box/disks_plantgene
-	name = "plant data disks box"
-	illustration = "disk_kit"
-
-/obj/item/storage/box/disks_plantgene/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/plantgene(src)
-
 /obj/item/storage/box/disks_nanite
 	name = "nanite program disks box"
 	illustration = "disk_kit"
@@ -171,6 +162,10 @@
 /obj/item/storage/box/survival/security/radio/PopulateContents()
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
+
+// Medical survival box
+/obj/item/storage/box/survival/medical
+	mask_type = /obj/item/clothing/mask/breath/medical
 
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
@@ -284,6 +279,16 @@
 /obj/item/storage/box/flashbangs/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
+
+/obj/item/storage/box/stingbangs
+	name = "box of stingbangs (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
+	icon_state = "secbox"
+	illustration = "flashbang"
+
+/obj/item/storage/box/stingbangs/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/stingbang(src)
 
 /obj/item/storage/box/flashes
 	name = "box of flashbulbs"
@@ -1255,7 +1260,7 @@
 		new/obj/item/sparkler(src)
 		new/obj/item/grenade/firecracker(src)
 	if(prob(20))
-		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+		new /obj/item/grenade/frag(src)
 	else
 		new /obj/item/toy/snappop(src)
 
@@ -1290,7 +1295,7 @@
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/storage/box/gum))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/chewable/bubblegum))
 	STR.max_items = 4
 
 /obj/item/storage/box/gum/PopulateContents()

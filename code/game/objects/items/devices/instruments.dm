@@ -136,7 +136,7 @@
 
 /obj/item/instrument/guitar
 	name = "guitar"
-	desc = "It's made of wood and has bronze strings."
+	desc = "It's made out of wood and has bronze strings."
 	icon_state = "guitar"
 	item_state = "guitar"
 	instrumentExt = "ogg"

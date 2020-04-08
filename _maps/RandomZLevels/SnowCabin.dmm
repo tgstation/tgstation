@@ -3731,14 +3731,6 @@
 	name = "soviet floor"
 	},
 /area/awaymission/cabin/caves/sovietcave)
-"jL" = (
-/obj/structure/table/wood,
-/obj/machinery/plantgenes{
-	name = "tree DNA manipulator";
-	pixel_y = 5
-	},
-/turf/open/floor/wood/cold,
-/area/awaymission/cabin/lumbermill)
 "jM" = (
 /obj/machinery/space_heater,
 /turf/open/floor/wood/cold,
@@ -39070,7 +39062,7 @@ ad
 af
 af
 ak
-jL
+ak
 af
 kd
 kc

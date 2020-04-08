@@ -105,6 +105,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	var/datum/action/innate/flight/fly
 	///The icon used for the wings
 	var/wings_icon = "Angel"
+	///Used to determine what description to give when using a potion of flight, if false it will describe them as growing new wings
+	var/has_innate_wings = FALSE
 
 	/// The natural temperature for a body
 	var/bodytemp_normal = BODYTEMP_NORMAL
@@ -405,7 +407,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = C.dna.mutation_index.Find(inert_mutation)
 		C.dna.mutation_index[location] = new_species.inert_mutation
+		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
 	if(inherent_factions)
 		for(var/i in inherent_factions)

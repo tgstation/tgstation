@@ -685,11 +685,6 @@
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 /obj/item/reagent_containers/food/snacks/grown/ambrosia/vulgaris,
 /obj/machinery/light,
-/obj/item/disk/plantgene,
-/obj/item/disk/plantgene,
-/obj/item/disk/plantgene,
-/obj/item/disk/plantgene,
-/obj/item/disk/plantgene,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/powered/beach)
 "tg" = (
@@ -1010,9 +1005,8 @@
 /area/ruin/powered/beach)
 "EN" = (
 /obj/structure/table/reinforced,
-/obj/machinery/plantgenes{
-	pixel_y = 6
-	},
+/obj/item/secateurs,
+/obj/item/reagent_containers/glass/bottle/nutrient/ez,
 /turf/open/floor/pod/light,
 /area/ruin/powered/beach)
 "ER" = (
@@ -1438,7 +1432,7 @@
 /area/ruin/powered/beach)
 "Ut" = (
 /obj/effect/turf_decal/sand,
-/obj/structure/sign/poster/contraband/sun_kist{
+/obj/structure/sign/poster/contraband/starkist{
 	pixel_y = 32
 	},
 /turf/open/floor/plating/beach/sand,
