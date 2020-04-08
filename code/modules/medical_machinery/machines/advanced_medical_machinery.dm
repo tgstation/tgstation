@@ -6,8 +6,10 @@
 	var/purge_amount = 3
 
 /obj/machinery/medical/dialysis/RefreshParts()
+	var/change = 0
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		purge_amount = initial(purge_amount) * C.rating
+		change += C.rating
+	purge_amount = initial(purge_amount) * change
 	return
 
 /obj/machinery/medical/dialysis/process()
@@ -25,8 +27,10 @@
 	active_power_usage = 1500
 
 /obj/machinery/medical/plasmic_stabilizer/RefreshParts()
+	var/change = 0
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
-		active_power_usage = initial(active_power_usage) / ML.rating
+		 change + ML.rating
+	active_power_usage = initial(active_power_usage) / change
 	return
 
 /obj/machinery/medical/plasmic_stabilizer/clear_status()
@@ -63,8 +67,10 @@
 	var/stabilization_rate = 10
 
 /obj/machinery/medical/thermal/RefreshParts()
+	var/change = 0
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
-		stabilization_rate = initial(stabilization_rate) * ML.rating
+		change += ML.rating
+	stabilization_rate = initial(stabilization_rate) * change
 	return
 
 /obj/machinery/medical/thermal/process()
