@@ -640,6 +640,7 @@
 			var/list/text_string = myseed.get_analyzer_text()
 			if(text_string)
 				to_chat(user, text_string)
+		else
 			to_chat(user, "<B>No plant found.</B>")
 		to_chat(user, "- Weed level: <span class='notice'>[weedlevel] / 10</span>")
 		to_chat(user, "- Pest level: <span class='notice'>[pestlevel] / 10</span>")
@@ -691,6 +692,8 @@
 		for(var/datum/plant_gene/gene in myseed.genes)
 			if(istype(gene, /datum/plant_gene/core) || (istype(gene,/datum/plant_gene/trait/plant_type)) || islist(gene))
 				continue
+			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE) || !(gene.mutability_flags & PLANT_GENE_EXTRACTABLE))
+				continue //No bypassing unextractable or essential genes.
 			current_traits[gene.name] = gene
 		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sortList(current_traits))
 		if(removed_trait == null)
