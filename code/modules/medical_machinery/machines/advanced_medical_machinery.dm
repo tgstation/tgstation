@@ -29,7 +29,7 @@
 /obj/machinery/medical/plasmic_stabilizer/RefreshParts()
 	var/change = 0
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
-		change + ML.rating
+		change += ML.rating
 	active_power_usage = initial(active_power_usage) / change
 	return
 
