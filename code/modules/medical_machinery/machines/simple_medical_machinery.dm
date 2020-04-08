@@ -10,7 +10,8 @@
 
 /obj/machinery/medical/simple/process()
 	..()
-	ADD_TRAIT(attached,status,"mechanical")
+	if(attached)
+		ADD_TRAIT(attached,status,"mechanical")
 	return
 
 /obj/machinery/medical/simple/RefreshParts()

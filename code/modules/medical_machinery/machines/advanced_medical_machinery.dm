@@ -7,14 +7,15 @@
 
 /obj/machinery/medical/dialysis/RefreshParts()
 	for(var/obj/item/stock_parts/capacitor/C in component_parts)
-		purge_amount *= C.rating
+		purge_amount = inital(purge_amount) * C.rating
 	return
 
 /obj/machinery/medical/dialysis/process()
-	..()
-	for(var/R in attached.reagents.reagent_list)
-		var/datum/reagent/r1 = R
-		attached.reagents.remove_reagent(r1.type, purge_amount)
+	. = ..()
+	if(attached)
+		for(var/R in attached.reagents.reagent_list)
+			var/datum/reagent/r1 = R
+			attached.reagents.remove_reagent(r1.type, purge_amount)
 	return
 
 /obj/machinery/medical/plasmic_stabilizer
@@ -25,7 +26,7 @@
 
 /obj/machinery/medical/plasmic_stabilizer/RefreshParts()
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
-		active_power_usage /= ML.rating
+		active_power_usage = inital(active_power_usage) / CML.rating
 	return
 
 /obj/machinery/medical/plasmic_stabilizer/clear_status()
@@ -34,9 +35,9 @@
 	return
 
 /obj/machinery/medical/plasmic_stabilizer/process()
-	..()
+	. = ..()
 
-	if(!isplasmaman(attached))
+	if(!isplasmaman(attached) || !attached)
 		attached = null
 		return
 
@@ -46,7 +47,7 @@
 /obj/machinery/medical/plasmic_stabilizer/defunct
 	name = "Old Inorganic Lifeform Stabilizer"
 	desc = "Stabilizes free plasma particles in inorganic bodies, causing them to not burn. Uses massive amounts of electricity.This model seems to be very old."
-	icon_state = "plasmic_stabilizer_scrap"
+	icon_state = "plasmic_stabilizer_defunct"
 	active_power_usage = 2000 //very old inefficient model
 
 /obj/machinery/medical/plasmic_stabilizer/defunct/process()
@@ -59,23 +60,24 @@
 	name = "Thermal Stabilizer"
 	desc = "Stabilizes free plasma particles in inorganic bodies, causing them to not burn. Uses massive amounts of electricity.This model seems to be very old."
 	icon_state = "thermal_stabilizer"
-	var/stabilization_rate = 15
+	var/stabilization_rate = 10
 
 /obj/machinery/medical/thermal/RefreshParts()
 	for(var/obj/item/stock_parts/micro_laser/ML in component_parts)
-		stabilization_rate *= ML.rating
+		stabilization_rate = inital(stabilization_rate) * ML.rating
 	return
 
 /obj/machinery/medical/thermal/process()
-	..()
-	var/tempdiff = attached.get_body_temp_normal() - attached.bodytemperature
-	switch(tempdiff)
-		if(stabilization_rate to INFINITY)
-			attached.adjust_bodytemperature(stabilization_rate)
-		if(1 to stabilization_rate)
-			attached.adjust_bodytemperature(tempdiff)
-		if(-1 to -stabilization_rate)
-			attached.adjust_bodytemperature(-tempdiff)
-		if(-INFINITY to -stabilization_rate)
-			attached.adjust_bodytemperature(-stabilization_rate)
+	. = ..()
+	if(attached)
+		var/tempdiff = attached.get_body_temp_normal() - attached.bodytemperature
+		switch(tempdiff)
+			if(stabilization_rate to INFINITY)
+				attached.adjust_bodytemperature(stabilization_rate)
+			if(1 to stabilization_rate)
+				attached.adjust_bodytemperature(tempdiff)
+			if(-1 to -stabilization_rate)
+				attached.adjust_bodytemperature(-tempdiff)
+			if(-INFINITY to -stabilization_rate)
+				attached.adjust_bodytemperature(-stabilization_rate)
 	return
