@@ -16,7 +16,7 @@
 	ui_y = 305
 
 	///used to check if there is a cell in the machine
-	var/obj/item/stock_parts/cell/cell
+	var/obj/item/stock_parts/cell/cell = null
 	///check if the machine is on or off
 	var/on = FALSE
 	///check what mode the machine should be (WORKING, STANDBY)
@@ -31,13 +31,11 @@
 
 /obj/machinery/electrolyzer/Initialize()
 	. = ..()
-	cell = new(src)
+	cell = new cell(src)
 	update_icon()
 
-/obj/machinery/electrolyzer/on_construction()
+/obj/machinery/electrolyzer/Destroy()
 	QDEL_NULL(cell)
-	panel_open = TRUE
-	update_icon()
 	return ..()
 
 /obj/machinery/electrolyzer/on_deconstruction()
