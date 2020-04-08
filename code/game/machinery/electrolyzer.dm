@@ -4,7 +4,7 @@
 /obj/machinery/electrolyzer
 	anchored = FALSE
 	density = TRUE
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_WIRES_IF_OPEN
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "electrolyzer-off"
 	name = "space electrolyzer"
@@ -133,10 +133,12 @@
 		else
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
-	else if(I.tool_behaviour == TOOL_SCREWDRIVER)
+		return
+	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].</span>", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
+		return
 	if(default_deconstruction_crowbar(I))
 		return
 	return ..()
