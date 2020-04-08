@@ -9,7 +9,7 @@
 	return
 
 /obj/machinery/medical/simple/process()
-	. = ..()
+	..()
 	ADD_TRAIT(attached,status,"mechanical")
 	return
 

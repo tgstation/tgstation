@@ -49,6 +49,9 @@
 
 /obj/machinery/medical/life_support/process()
 	. = ..()
+	if(!active)
+		return
+
 	if(attached.health < health_treshold)
 		clear_status()
 		update_overlays()
