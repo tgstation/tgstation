@@ -51,6 +51,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=power'>Make all areas powered</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=quickpower'>Power all SMES</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=anon_name'>Anonymous Names (needs to be used in the lobby)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=traitor_all'>Everyone is the traitor</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=guns'>Summon Guns</A><BR>
@@ -303,6 +304,12 @@
 				for(var/i in GLOB.human_list)
 					var/mob/living/carbon/human/H = i
 					H.set_species(newtype)
+
+		if("anon_name")
+			if(!check_rights(R_FUN))
+				return
+			usr.client.anon_names()
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
 
 		if("tripleAI")
 			if(!check_rights(R_FUN))

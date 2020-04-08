@@ -1283,6 +1283,7 @@
 #include "code\modules\admin\verbs\adminjump.dm"
 #include "code\modules\admin\verbs\adminpm.dm"
 #include "code\modules\admin\verbs\adminsay.dm"
+#include "code\modules\admin\verbs\anonymousnames.dm"
 #include "code\modules\admin\verbs\atmosdebug.dm"
 #include "code\modules\admin\verbs\beakerpanel.dm"
 #include "code\modules\admin\verbs\bluespacearty.dm"
