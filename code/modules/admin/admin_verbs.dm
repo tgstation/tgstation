@@ -648,8 +648,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	holder.deactivate()
 
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
-	log_admin("[src] deadmined themselves.")
-	message_admins("[src] deadmined themselves.")
+	log_admin("[src] deadminned themselves.")
+	message_admins("[src] deadminned themselves.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Deadmin")
 
 /client/proc/readmin()
