@@ -14,7 +14,7 @@
 
 /obj/machinery/medical/dialysis/process()
 	. = ..()
-	if(!attached)
+	if(!attached || !attached.reagents)
 		return
 	for(var/R in attached.reagents.reagent_list)
 		var/datum/reagent/r1 = R
