@@ -27,7 +27,7 @@
 /turf/closed/wall/mineral/titanium/survival/pod,
 /area/survivalpod)
 "g" = (
-/obj/machinery/life_support,
+/obj/machinery/medical/life_support,
 /turf/open/floor/pod,
 /area/survivalpod)
 "h" = (
