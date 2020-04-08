@@ -30,6 +30,12 @@
 
 	var/list/dent_decals
 
+/turf/closed/wall/Initialize(mapload)
+	..()
+	if(is_station_level(z))
+		GLOB.station_turfs += src
+
+
 /turf/closed/wall/examine(mob/user)
 	. += ..()
 	. += deconstruction_hints(user)
