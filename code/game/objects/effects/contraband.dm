@@ -57,6 +57,7 @@
 	var/poster_item_name = "hypothetical poster"
 	var/poster_item_desc = "This hypothetical poster item should not exist, let's be honest here."
 	var/poster_item_icon_state = "rolled_poster"
+	var/poster_item_type = /obj/item/poster
 
 /obj/structure/sign/poster/Initialize()
 	. = ..()
@@ -66,8 +67,8 @@
 		original_name = name // can't use initial because of random posters
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
-	
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 300), 0)
+
+	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 300)), 0)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -116,7 +117,7 @@
 /obj/structure/sign/poster/proc/roll_and_drop(loc)
 	pixel_x = 0
 	pixel_y = 0
-	var/obj/item/poster/P = new(loc, src)
+	var/obj/item/poster/P = new poster_item_type(loc, src)
 	forceMove(P)
 	return P
 
@@ -130,7 +131,7 @@
 	if (smooth & SMOOTH_DIAGONAL)
 		for (var/O in overlays)
 			var/image/I = O
-			if (copytext(I.icon_state, 1, 3) == "d-")
+			if(copytext(I.icon_state, 1, 3) == "d-") //3 == length("d-") + 1
 				return
 
 	var/stuff_on_wall = 0
@@ -385,8 +386,8 @@
 	desc = "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
 	icon_state = "poster39"
 
-/obj/structure/sign/poster/contraband/sun_kist
-	name = "Sun-kist"
+/obj/structure/sign/poster/contraband/starkist
+	name = "Star-kist"
 	desc = "Drink the stars!"
 	icon_state = "poster40"
 
@@ -439,7 +440,7 @@
 	icon_state = "poster1_legit"
 
 /obj/structure/sign/poster/official/nanotrasen_logo
-	name = "Nanotrasen Logo"
+	name = "\improper Nanotrasen logo"
 	desc = "A poster depicting the Nanotrasen logo."
 	icon_state = "poster2_legit"
 

@@ -27,6 +27,8 @@
 	var/real_explosion_block	//ignore this, just use explosion_block
 	var/breaksound = "shatter"
 	var/hitsound = 'sound/effects/Glasshit.ogg'
+	flags_ricochet = RICOCHET_HARD
+	ricochet_chance_mod = 0.4
 
 
 /obj/structure/window/examine(mob/user)
@@ -307,7 +309,8 @@
 		queue_smooth_neighbors(src)
 
 //merges adjacent full-tile windows into one
-/obj/structure/window/update_icon()
+/obj/structure/window/update_overlays()
+	. = ..()
 	if(!QDELETED(src))
 		if(!fulltile)
 			return
@@ -322,7 +325,7 @@
 		if(ratio > 75)
 			return
 		crack_overlay = mutable_appearance('icons/obj/structures.dmi', "damage[ratio]", -(layer+0.1))
-		add_overlay(crack_overlay)
+		. += crack_overlay
 
 /obj/structure/window/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 
@@ -369,6 +372,7 @@
 	state = RWINDOW_SECURE
 	glass_type = /obj/item/stack/sheet/rglass
 	rad_insulation = RAD_HEAVY_INSULATION
+	ricochet_chance_mod = 0.8
 
 //this is shitcode but all of construction is shitcode and needs a refactor, it works for now
 //If you find this like 4 years later and construction still hasn't been refactored, I'm so sorry for this
@@ -633,7 +637,6 @@
 	smooth = SMOOTH_TRUE
 	state = RWINDOW_SECURE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
-	level = 3
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/unanchored
@@ -648,7 +651,6 @@
 	flags_1 = PREVENT_CLICK_UNDER_1
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
-	level = 3
 	glass_amount = 2
 
 /obj/structure/window/reinforced/fulltile/ice
@@ -656,7 +658,6 @@
 	icon_state = "ice_window"
 	max_integrity = 150
 	canSmoothWith = list(/obj/structure/window/fulltile, /obj/structure/window/reinforced/fulltile, /obj/structure/window/reinforced/tinted/fulltile, /obj/structure/window/plasma/fulltile, /obj/structure/window/plasma/reinforced/fulltile)
-	level = 3
 	glass_amount = 2
 
 /obj/structure/window/shuttle
@@ -675,9 +676,9 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 3
-	level = 3
 	glass_type = /obj/item/stack/sheet/titaniumglass
 	glass_amount = 2
+	ricochet_chance_mod = 0.9
 
 /obj/structure/window/shuttle/narsie_act()
 	add_atom_colour("#3C3434", FIXED_COLOUR_PRIORITY)
@@ -703,8 +704,7 @@
 	smooth = SMOOTH_TRUE
 	canSmoothWith = null
 	explosion_block = 3
-	damage_deflection = 11 //The same as normal reinforced windows.
-	level = 3
+	damage_deflection = 11 //The same as normal reinforced windows.3
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_amount = 2
 	rad_insulation = RAD_HEAVY_INSULATION

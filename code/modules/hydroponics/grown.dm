@@ -6,6 +6,7 @@
 // Base type. Subtypes are found in /grown dir. Lavaland-based subtypes can be found in mining/ash_flora.dm
 /obj/item/reagent_containers/food/snacks/grown
 	icon = 'icons/obj/hydroponics/harvest.dmi'
+	name = "fresh produce" // so recipe text doesn't say 'snack'
 	var/obj/item/seeds/seed = null // type path, gets converted to item on New(). It's safe to assume it's always a seed item.
 	var/plantname = ""
 	var/bitesize_mod = 0
@@ -113,7 +114,7 @@
 	if(trash)
 		generate_trash(T)
 
-	visible_message("<span class='warning'>[src] has been squashed.</span>","<span class='hear'>You hear a smack.</span>")
+	visible_message("<span class='warning'>[src] is squashed.</span>","<span class='hear'>You hear a smack.</span>")
 	if(seed)
 		for(var/datum/plant_gene/trait/trait in seed.genes)
 			trait.on_squash(src, target)

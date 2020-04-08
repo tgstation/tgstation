@@ -283,7 +283,15 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/choose_targets(mob/user = usr) //depends on subtype - /targeted or /aoe_turf
 	return
 
-/obj/effect/proc_holder/spell/proc/can_target(mob/living/target)
+/**
+  * can_target: Checks if we are allowed to cast the spell on a target.
+  *
+  * Arguments:
+  * * target The atom that is being targeted by the spell.
+  * * user The mob using the spell.
+  * * silent If the checks should not give any feedback messages.
+  */
+/obj/effect/proc_holder/spell/proc/can_target(atom/target, mob/user, silent = FALSE)
 	return TRUE
 
 /obj/effect/proc_holder/spell/proc/start_recharge()
@@ -415,7 +423,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	switch(max_targets)
 		if(0) //unlimited
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
-				if(!can_target(target))
+				if(!can_target(target, user, TRUE))
 					continue
 				targets += target
 		if(1) //single target can be picked
@@ -427,7 +435,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 				for(var/mob/living/M in view_or_range(range, user, selection_type))
 					if(!include_user && user == M)
 						continue
-					if(!can_target(M))
+					if(!can_target(M, user, TRUE))
 						continue
 					possible_targets += M
 
@@ -455,7 +463,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		else
 			var/list/possible_targets = list()
 			for(var/mob/living/target in view_or_range(range, user, selection_type))
-				if(!can_target(target))
+				if(!can_target(target, user, TRUE))
 					continue
 				possible_targets += target
 			for(var/i=1,i<=max_targets,i++)
@@ -476,11 +484,12 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		return
 
 	perform(targets,user=user)
+
 /obj/effect/proc_holder/spell/aoe_turf/choose_targets(mob/user = usr)
 	var/list/targets = list()
 
 	for(var/turf/target in view_or_range(range,user,selection_type))
-		if(!can_target(target))
+		if(!can_target(target, user, TRUE))
 			continue
 		if(!(target in view_or_range(inner_radius,user,selection_type)))
 			targets += target
@@ -552,7 +561,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 	school = "restoration"
 	sound = 'sound/magic/staff_healing.ogg'
 
-/obj/effect/proc_holder/spell/self/basic_heal/cast(mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
+/obj/effect/proc_holder/spell/self/basic_heal/cast(list/targets, mob/living/carbon/human/user) //Note the lack of "list/targets" here. Instead, use a "user" var depending on mob requirements.
 	//Also, notice the lack of a "for()" statement that looks through the targets. This is, again, because the spell can only have a single target.
 	user.visible_message("<span class='warning'>A wreath of gentle light passes over [user]!</span>", "<span class='notice'>You wreath yourself in healing light!</span>")
 	user.adjustBruteLoss(-10)

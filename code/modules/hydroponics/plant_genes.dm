@@ -89,6 +89,12 @@
 /datum/plant_gene/core/potency/apply_stat(obj/item/seeds/S)
 	S.potency = value
 
+/datum/plant_gene/core/instability
+	name = "Stability"
+	value = 10
+
+/datum/plant_gene/core/instability/apply_stat(obj/item/seeds/S)
+	S.instability = value
 
 /datum/plant_gene/core/weed_rate
 	name = "Weed Growth Rate"
@@ -430,6 +436,7 @@
 			G.reagents.reaction(L, INJECT, fraction)
 			G.reagents.trans_to(L, injecting_amount)
 			to_chat(target, "<span class='danger'>You are pricked by [G]!</span>")
+			log_combat(G, L, "pricked and attempted to inject reagents from [G] to [L]. Last touched by: [G.fingerprintslast].")
 
 /datum/plant_gene/trait/smoke
 	name = "Gaseous Decomposition"

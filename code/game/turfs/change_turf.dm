@@ -132,6 +132,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 		for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 			S.update_starlight()
+	SSdemo.mark_turf(W)
 
 	return W
 
@@ -257,9 +258,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	if(depth)
 		var/list/target_baseturfs
 		if(length(copytarget.baseturfs))
-			// with default inputs this would be Copy(CLAMP(2, -INFINITY, baseturfs.len))
+			// with default inputs this would be Copy(clamp(2, -INFINITY, baseturfs.len))
 			// Don't forget a lower index is lower in the baseturfs stack, the bottom is baseturfs[1]
-			target_baseturfs = copytarget.baseturfs.Copy(CLAMP(1 + ignore_bottom, 1 + copytarget.baseturfs.len - depth, copytarget.baseturfs.len))
+			target_baseturfs = copytarget.baseturfs.Copy(clamp(1 + ignore_bottom, 1 + copytarget.baseturfs.len - depth, copytarget.baseturfs.len))
 		else if(!ignore_bottom)
 			target_baseturfs = list(copytarget.baseturfs)
 		if(target_baseturfs)

@@ -58,7 +58,7 @@
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
-	new /obj/item/door_remote/civillian(src)
+	new /obj/item/door_remote/civilian(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
 	new /obj/item/storage/photo_album/HoP(src)
 
@@ -200,9 +200,9 @@
 	new /obj/item/holosign_creator/security(src)
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
-	new /obj/item/storage/belt/holster/full(src)
+	new /obj/item/storage/belt/holster/detective/full(src)
 	new /obj/item/pinpointer/crew(src)
-	new /obj/item/twohanded/binoculars(src)
+	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"

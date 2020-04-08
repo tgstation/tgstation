@@ -137,7 +137,7 @@
 /obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
 	//Hacks
 	var/message = speech_args[SPEECH_MESSAGE]
-	var/mob/living/carbon/human/user = usr
+	var/mob/living/carbon/human/user = source
 	var/rendered = "<span class='abductor'><b>[user.real_name]:</b> [message]</span>"
 	user.log_talk(message, LOG_SAY, tag="abductor")
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
@@ -169,7 +169,7 @@
 		var/insertpos = rand(1, message_list.len - 1)
 		var/inserttext = message_list[insertpos]
 
-		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
+		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
 			message_list[insertpos] = inserttext + "..."
 
 		if(prob(20) && message_list.len > 3)
@@ -248,6 +248,7 @@
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
 	status = ORGAN_ROBOTIC
+	organ_flags = NONE
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")

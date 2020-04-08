@@ -107,7 +107,7 @@
 			if("Mime")
 				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
 			if("Janitor")
-				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket)
+				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket, /obj/item/paper/fluff/stations/soap)
 			if("Cook")
 				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
 			if("Botanist")
@@ -125,6 +125,8 @@
 				heirloom_type = /obj/item/reagent_containers/food/drinks/flask/gold
 			if("Head of Security")
 				heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			if("Head of Personnel")
+				heirloom_type = /obj/item/reagent_containers/food/drinks/trophy/silver_cup
 			if("Warden")
 				heirloom_type = /obj/item/book/manual/wiki/security_space_law
 			if("Security Officer")
@@ -133,6 +135,8 @@
 				heirloom_type = /obj/item/reagent_containers/food/drinks/bottle/whiskey
 			if("Lawyer")
 				heirloom_type = pick(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
+			if("Prisoner")
+				heirloom_type = /obj/item/pen/blue
 			//RnD
 			if("Research Director")
 				heirloom_type = /obj/item/toy/plush/slimeplushie
@@ -140,19 +144,21 @@
 				heirloom_type = /obj/item/toy/plush/slimeplushie
 			if("Roboticist")
 				heirloom_type = pick(subtypesof(/obj/item/toy/prize)) //look at this nerd
+			if("Geneticist")
+				heirloom_type = /obj/item/clothing/under/shorts/purple
 			//Medical
 			if("Chief Medical Officer")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
 			if("Medical Doctor")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
 			if("Paramedic")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
+			if("Psychologist")
+				heirloom_type = /obj/item/storage/pill_bottle
 			if("Chemist")
 				heirloom_type = /obj/item/book/manual/wiki/chemistry
 			if("Virologist")
 				heirloom_type = /obj/item/reagent_containers/syringe
-			if("Geneticist")
-				heirloom_type = /obj/item/clothing/under/shorts/purple
 			//Engineering
 			if("Chief Engineer")
 				heirloom_type = pick(/obj/item/clothing/head/hardhat/white, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
@@ -200,12 +206,6 @@
 	else
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
-
-/datum/quirk/family_heirloom/clone_data()
-	return heirloom
-
-/datum/quirk/family_heirloom/on_clone(data)
-	heirloom = data
 
 /datum/quirk/frail
 	name = "Frail"
@@ -501,7 +501,7 @@
 	if(world.time > next_process)
 		next_process = world.time + process_interval
 		if(!H.reagents.addiction_list.Find(reagent_instance))
-			if(!reagent_instance)
+			if(QDELETED(reagent_instance))
 				reagent_instance = new reagent_type()
 			else
 				reagent_instance.addiction_stage = 0

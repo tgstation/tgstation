@@ -5,8 +5,8 @@ on:
     branches:
       - 'master'
     paths:
-      - 'tgui-next/**.js'
-      - 'tgui-next/**.scss'
+      - 'tgui/**.js'
+      - 'tgui/**.scss'
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
           node-version: '>=12.13'
       - name: Build TGUI
         run: bin/tgui --ci
-        working-directory: ./tgui-next
+        working-directory: ./tgui
       - name: Commit Artifacts
         run: |
           git config --local user.email "action@github.com"
@@ -32,5 +32,7 @@ jobs:
           git commit -m "Automatic TGUI Rebuild [ci skip]" -a || true
       - name: Push Artifacts
         uses: ad-m/github-push-action@master
+        env:
+          GITHUB_ACTOR: comfyorange
         with:
           github_token: ${{ secrets.GITHUB_MASTER_KEY }}

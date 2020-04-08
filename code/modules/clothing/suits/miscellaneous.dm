@@ -76,6 +76,7 @@
 	icon_state = "justice"
 	item_state = "justice"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	armor = list("melee" = 35, "bullet" = 30, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 
 
 /obj/item/clothing/suit/judgerobe
@@ -504,7 +505,33 @@
 	attack_verb = list("warned", "cautioned", "smashed")
 	armor = list("melee" = 5, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
+/obj/item/clothing/suit/changshan_red
+	name = "red changshan"
+	desc = "A gorgeously embroidered silk shirt."
+	icon_state = "changshan_red"
+	item_state = "changshan_red"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
+/obj/item/clothing/suit/changshan_blue
+	name = "blue changshan"
+	desc = "A gorgeously embroidered silk shirt."
+	icon_state = "changshan_blue"
+	item_state = "changshan_blue"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+
+/obj/item/clothing/suit/cheongsam_red
+	name = "red cheongsam"
+	desc = "A gorgeously embroidered silk dress."
+	icon_state = "cheongsam_red"
+	item_state = "cheongsam_red"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
+
+/obj/item/clothing/suit/cheongsam_blue
+	name = "blue cheongsam"
+	desc = "A gorgeously embroidered silk dress."
+	icon_state = "cheongsam_blue"
+	item_state = "cheongsam_blue"
+	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 
 // WINTER COATS
 
@@ -527,6 +554,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	flags_inv = HIDEHAIR|HIDEEARS
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/suit/hooded/wintercoat/captain
 	name = "captain's winter coat"
@@ -541,6 +569,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/captain
 	icon_state = "winterhood_captain"
+	armor = list("melee" = 25, "bullet" = 30, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 50)
 
 /obj/item/clothing/suit/hooded/wintercoat/security
 	name = "security winter coat"
@@ -555,6 +584,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/security
 	icon_state = "winterhood_security"
+	armor = list("melee" = 25, "bullet" = 15, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
 
 /obj/item/clothing/suit/hooded/wintercoat/medical
 	name = "medical winter coat"
@@ -566,6 +596,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/medical
 	icon_state = "winterhood_medical"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 50, "rad" = 0, "fire" = 0, "acid" = 45)
 
 /obj/item/clothing/suit/hooded/wintercoat/science
 	name = "science winter coat"
@@ -577,6 +608,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/science
 	icon_state = "winterhood_science"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 10, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/suit/hooded/wintercoat/engineering
 	name = "engineering winter coat"
@@ -588,6 +620,7 @@
 
 /obj/item/clothing/head/hooded/winterhood/engineering
 	icon_state = "winterhood_engineer"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 20, "fire" = 30, "acid" = 45)
 
 /obj/item/clothing/suit/hooded/wintercoat/engineering/atmos
 	name = "atmospherics winter coat"
@@ -625,6 +658,10 @@
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/miner
 
+/obj/item/clothing/head/hooded/winterhood/miner
+	icon_state = "winterhood_miner"
+	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+
 /obj/item/clothing/head/hooded/ablative
 	name = "ablative hood"
 	desc = "Hood hopefully belonging to an ablative trenchcoat. Includes a visor for cool-o-vision."
@@ -648,7 +685,7 @@
 	H.remove_hud_from(user)
 
 /obj/item/clothing/head/hooded/ablative/IsReflect(def_zone)
-	if(!(def_zone in BODY_ZONE_HEAD)) //If not shot where ablative is covering you, you don't get the reflection bonus!
+	if(def_zone != BODY_ZONE_HEAD) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return FALSE
 	if (prob(hit_reflect_chance))
 		return TRUE
@@ -674,9 +711,6 @@
 		return FALSE
 	if (prob(hit_reflect_chance))
 		return TRUE
-
-/obj/item/clothing/head/hooded/winterhood/miner
-	icon_state = "winterhood_miner"
 
 /obj/item/clothing/suit/spookyghost
 	name = "spooky ghost"
@@ -740,3 +774,24 @@
 	icon_state = "capformal"
 	item_state = "capspacesuit"
 	armor = list("melee" = 25, "bullet" = 15, "laser" = 25, "energy" = 35, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+
+/obj/item/clothing/suit/hawaiian
+	name = "hawaiian overshirt"
+	desc = "A cool shirt for chilling on the beach."
+	icon_state = "hawaiian_blue"
+	item_state = "hawaiian_blue"
+
+/obj/item/clothing/suit/yakuza
+	name = "tojo clan jacket"
+	desc = "The jacket of a mad dog."
+	icon_state = "MajimaJacket"
+	item_state = "MajimaJacket"
+	body_parts_covered = ARMS
+
+/obj/item/clothing/suit/dutch
+	name = "dutch's jacket"
+	desc = "For those long nights on the beach in Tahiti."
+	icon_state = "DutchJacket"
+	item_state = "DutchJacket"
+	body_parts_covered = ARMS
+

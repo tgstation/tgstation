@@ -38,14 +38,13 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/rnd/server/update_icon()
-	if (stat & EMPED || stat & NOPOWER)
+/obj/machinery/rnd/server/update_icon_state()
+	if(machine_stat & EMPED || machine_stat & NOPOWER)
 		icon_state = "RD-server-off"
-		return
-	if (research_disabled)
+	else if(research_disabled)
 		icon_state = "RD-server-halt"
-		return
-	icon_state = "RD-server-on"
+	else
+		icon_state = "RD-server-on"
 
 /obj/machinery/rnd/server/power_change()
 	. = ..()
@@ -53,7 +52,7 @@
 	return
 
 /obj/machinery/rnd/server/proc/refresh_working()
-	if(stat & EMPED || research_disabled || stat & NOPOWER)
+	if(machine_stat & EMPED || research_disabled || machine_stat & NOPOWER)
 		working = FALSE
 	else
 		working = TRUE
@@ -63,12 +62,12 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	stat |= EMPED
+	machine_stat |= EMPED
 	addtimer(CALLBACK(src, .proc/unemp), 600)
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/unemp()
-	stat &= ~EMPED
+	machine_stat &= ~EMPED
 	refresh_working()
 
 /obj/machinery/rnd/server/proc/toggle_disable()
@@ -88,7 +87,7 @@
 	return 0
 
 /obj/machinery/rnd/server/proc/produce_heat(heat_amt)
-	if(!(stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
+	if(!(machine_stat & (NOPOWER|BROKEN))) //Blatently stolen from space heater.
 		var/turf/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
@@ -166,7 +165,7 @@
 	dat += "<b>Connected Servers:</b>"
 	dat += "<table><tr><td style='width:25%'><b>Server</b></td><td style='width:25%'><b>Operating Temp</b></td><td style='width:25%'><b>Status</b></td>"
 	for(var/obj/machinery/rnd/server/S in GLOB.machines)
-		dat += "<tr><td style='width:25%'>[S.name]</td><td style='width:25%'>[S.current_temp]</td><td style='width:25%'>[S.stat & EMPED || stat & NOPOWER?"Offline":"<A href='?src=[REF(src)];toggle=[REF(S)]'>([S.research_disabled? "<font color=red>Disabled" : "<font color=lightgreen>Online"]</font>)</A>"]</td><BR>"
+		dat += "<tr><td style='width:25%'>[S.name]</td><td style='width:25%'>[S.current_temp]</td><td style='width:25%'>[S.machine_stat & EMPED || machine_stat & NOPOWER?"Offline":"<A href='?src=[REF(src)];toggle=[REF(S)]'>([S.research_disabled? "<font color=red>Disabled" : "<font color=lightgreen>Online"]</font>)</A>"]</td><BR>"
 	dat += "</table></br>"
 
 	dat += "<b>Research Log</b></br>"

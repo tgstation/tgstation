@@ -61,12 +61,12 @@
 	sleep(10)
 	return (BRUTELOSS)
 
-/obj/item/paperplane/update_icon()
-	cut_overlays()
+/obj/item/paperplane/update_overlays()
+	. = ..()
 	var/list/stamped = internalPaper.stamped
 	if(stamped)
 		for(var/S in stamped)
-			add_overlay("paperplane_[S]")
+			. += "paperplane_[S]"
 
 /obj/item/paperplane/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You unfold [src].</span>")

@@ -4,7 +4,7 @@
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
-		param = copytext(act, custom_param + 1, length(act) + 1)
+		param = copytext(act, custom_param + length(act[custom_param]))
 		act = copytext(act, 1, custom_param)
 
 	var/list/key_emotes = GLOB.emote_list[act]
@@ -75,7 +75,11 @@
 			var/mob/living/L = user
 			var/datum/component/riding/riding_datum = L.GetComponent(/datum/component/riding)
 			if(riding_datum)
-				for(var/mob/M in L.buckled_mobs)
-					riding_datum.force_dismount(M)
+				if(L.a_intent == INTENT_HELP)
+					for(var/mob/M in L.buckled_mobs)
+						riding_datum.force_dismount(M, TRUE)
+				else
+					for(var/mob/M in L.buckled_mobs)
+						riding_datum.force_dismount(M)
 			else
 				L.unbuckle_all_mobs()

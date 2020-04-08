@@ -1,4 +1,0 @@
-author: "TheChosenEvilOne"
-delete-after: True
-changes: 
-  - bugfix: "fixed SM arcs using the old icon as it was accidentally reverted in a recent change."

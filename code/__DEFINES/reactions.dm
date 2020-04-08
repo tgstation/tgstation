@@ -10,6 +10,9 @@
 #define FIRE_PLASMA_ENERGY_RELEASED			3000000	//Amount of heat released per mole of burnt plasma into the tile
 //General assmos defines.
 #define WATER_VAPOR_FREEZE					200
+//freon reaction
+#define FREON_BURN_RATE_DELTA				4
+#define FIRE_FREON_ENERGY_RELEASED			-300000 //amount of heat absorbed per mole of burnt freon in the tile
 
 #define N2O_DECOMPOSITION_MIN_ENERGY		1400
 #define N2O_DECOMPOSITION_ENERGY_RELEASED	200000
@@ -33,7 +36,6 @@
 #define NOBLIUM_RESEARCH_AMOUNT				1000
 #define BZ_RESEARCH_SCALE					4
 #define BZ_RESEARCH_MAX_AMOUNT				400
-#define MIASMA_RESEARCH_AMOUNT				40
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction

@@ -44,6 +44,7 @@ Difficulty: Hard
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
 	icon_state = "hierophant"
 	icon_living = "hierophant"
+	health_doll_icon = "hierophant"
 	friendly_verb_continuous = "stares down"
 	friendly_verb_simple = "stare down"
 	icon = 'icons/mob/lavaland/hierophant_new.dmi'
@@ -484,7 +485,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/proc/calculate_rage() //how angry we are overall
 	did_reset = FALSE //oh hey we're doing SOMETHING, clearly we might need to heal if we recall
-	anger_modifier = CLAMP(((maxHealth - health) / 42),0,50)
+	anger_modifier = clamp(((maxHealth - health) / 42),0,50)
 	burst_range = initial(burst_range) + round(anger_modifier * 0.08)
 	beam_range = initial(beam_range) + round(anger_modifier * 0.12)
 

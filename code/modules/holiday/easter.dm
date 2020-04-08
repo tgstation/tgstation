@@ -102,6 +102,13 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
+//Bunny bag!
+/obj/item/storage/backpack/satchel/bunnysatchel
+	name = "Easter Bunny Satchel"
+	desc = "Good for your eyes."
+	icon_state = "satchel_carrot"
+	item_state = "satchel_carrot"
+
 //Egg prizes and egg spawns!
 /obj/item/reagent_containers/food/snacks/egg
 	var/containsPrize = FALSE
@@ -117,16 +124,34 @@
 /obj/item/reagent_containers/food/snacks/egg/proc/dispensePrize(turf/where)
 	var/won = pick(/obj/item/clothing/head/bunnyhead,
 	/obj/item/clothing/suit/bunnysuit,
+	/obj/item/storage/backpack/satchel/bunnysatchel,
 	/obj/item/reagent_containers/food/snacks/grown/carrot,
-	/obj/item/reagent_containers/food/snacks/chocolateegg,
 	/obj/item/toy/balloon,
 	/obj/item/toy/gun,
 	/obj/item/toy/sword,
+	/obj/item/toy/talking/AI,
+	/obj/item/toy/talking/owl,
+	/obj/item/toy/talking/griffin,
+	/obj/item/toy/minimeteor,
+	/obj/item/toy/clockwork_watch,
+	/obj/item/toy/toy_xeno,
 	/obj/item/toy/foamblade,
 	/obj/item/toy/prize/ripley,
+	/obj/item/toy/prize/fireripley,
+	/obj/item/toy/prize/deathripley,
+	/obj/item/toy/prize/gygax,
+	/obj/item/toy/prize/durand,
+	/obj/item/toy/prize/marauder,
+	/obj/item/toy/prize/seraph,
+	/obj/item/toy/prize/mauler,
+	/obj/item/toy/prize/odysseus,
+	/obj/item/toy/prize/phazon,
+	/obj/item/toy/prize/reticence,
 	/obj/item/toy/prize/honk,
+	/obj/item/toy/prize/clarke,
 	/obj/item/toy/plush/carpplushie,
 	/obj/item/toy/redbutton,
+	/obj/item/toy/windupToolbox,
 	/obj/item/clothing/head/collectable/rabbitears)
 	new won(where)
 	new/obj/item/reagent_containers/food/snacks/chocolateegg(where)
@@ -153,7 +178,7 @@
 		/datum/reagent/consumable/sugar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/hotcrossbun
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 
 /obj/item/reagent_containers/food/snacks/store/cake/brioche
@@ -177,7 +202,7 @@
 		/datum/reagent/consumable/sugar = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/store/cake/brioche
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /obj/item/reagent_containers/food/snacks/scotchegg
 	name = "scotch egg"
@@ -197,7 +222,7 @@
 		/obj/item/reagent_containers/food/snacks/faggot = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/scotchegg
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /obj/item/reagent_containers/food/snacks/soup/mammi
 	name = "Mammi"
@@ -214,7 +239,7 @@
 		/datum/reagent/consumable/milk = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/soup/mammi
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD
 
 /obj/item/reagent_containers/food/snacks/chocolatebunny
 	name = "chocolate bunny"
@@ -231,4 +256,4 @@
 		/obj/item/reagent_containers/food/snacks/chocolatebar = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/chocolatebunny
-	category = CAT_MISCFOOD
+	subcategory = CAT_MISCFOOD

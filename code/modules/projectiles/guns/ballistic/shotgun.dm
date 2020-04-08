@@ -17,7 +17,6 @@
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BACK
 	mag_type = /obj/item/ammo_box/magazine/internal/shot
-	weapon_weight = WEAPON_MEDIUM
 	semi_auto = FALSE
 	internal_magazine = TRUE
 	casing_ejector = FALSE
@@ -212,11 +211,19 @@
 		else
 			to_chat(user, "<span class='warning'>You need at least ten lengths of cable if you want to make a sling!</span>")
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon()
-	..()
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_icon_state()
+	. = ..()
 	if(slung)
-		add_overlay("ishotgunsling")
 		item_state = "ishotgunsling"
+	if(sawn_off)
+		item_state = "ishotgun_sawn"
+
+/obj/item/gun/ballistic/shotgun/doublebarrel/improvised/update_overlays()
+	. = ..()
+	if(slung)
+		. += "ishotgunsling"
+	if(sawn_off)
+		. += "ishotgun_sawn"
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/improvised/sawoff(mob/user)
 	. = ..()

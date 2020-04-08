@@ -8,11 +8,12 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	throwforce = 0
 
 /mob/dead/Initialize()
+	SHOULD_CALL_PARENT(FALSE)
 	if(flags_1 & INITIALIZED_1)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 	tag = "mob_[next_mob_id++]"
-	GLOB.mob_list += src
+	add_to_mob_list()
 
 	prepare_huds()
 
@@ -70,7 +71,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	set desc= "Jump to the other server"
 	if(notransform)
 		return
-	var/list/csa = CONFIG_GET(keyed_list/cross_server)
+	var/list/our_id = CONFIG_GET(string/cross_comms_name)
+	var/list/csa = CONFIG_GET(keyed_list/cross_server) - our_id
 	var/pick
 	switch(csa.len)
 		if(0)
@@ -117,6 +119,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/Login()
 	. = ..()
+	if(!. || !client)
+		return FALSE
 	var/turf/T = get_turf(src)
 	if (isturf(T))
 		update_z(T.z)

@@ -1,26 +1,8 @@
+#define TRANSFORMATION_DURATION 22
+
 /mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
-	if (notransform)
+	if (notransform || transformation_timer)
 		return
-	//Handle items on mob
-
-	//first implants & organs
-	var/list/stored_implants = list()
-	var/list/int_organs = list()
-
-	if (tr_flags & TR_KEEPIMPLANTS)
-		for(var/X in implants)
-			var/obj/item/implant/IMP = X
-			stored_implants += IMP
-			IMP.removed(src, 1, 1)
-
-	var/list/missing_bodyparts_zones = get_missing_limbs()
-
-	var/obj/item/cavity_object
-
-	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
-	if(CH.cavity_item)
-		cavity_object = CH.cavity_item
-		CH.cavity_item = null
 
 	if(tr_flags & TR_KEEPITEMS)
 		var/Itemlist = get_equipped_items(TRUE)
@@ -30,19 +12,42 @@
 
 	//Make mob invisible and spawn animation
 	notransform = TRUE
-	Paralyze(22, ignore_canstun = TRUE)
+	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_MAXIMUM
 
 	new /obj/effect/temp_visual/monkeyify(loc)
-	sleep(22)
+
+	transformation_timer = addtimer(CALLBACK(src, .proc/finish_monkeyize, tr_flags), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+
+/mob/living/carbon/proc/finish_monkeyize(tr_flags)
+	transformation_timer = null
+
+	var/list/missing_bodyparts_zones = get_missing_limbs()
+
+	var/list/stored_implants = list()
+
+	if (tr_flags & TR_KEEPIMPLANTS)
+		for(var/X in implants)
+			var/obj/item/implant/IMP = X
+			stored_implants += IMP
+			IMP.removed(src, 1, 1)
+
+	var/list/int_organs = list()
+	var/obj/item/cavity_object
+
+	var/obj/item/bodypart/chest/CH = get_bodypart(BODY_ZONE_CHEST)
+	if(CH.cavity_item)
+		cavity_object = CH.cavity_item
+		CH.cavity_item = null
+
 	var/mob/living/carbon/monkey/O = new /mob/living/carbon/monkey( loc )
 
 	// hash the original name?
 	if(tr_flags & TR_HASHNAME)
-		O.name = "monkey ([copytext(md5(real_name), 2, 6)])"
-		O.real_name = "monkey ([copytext(md5(real_name), 2, 6)])"
+		O.name = "monkey ([copytext_char(md5(real_name), 2, 6)])"
+		O.real_name = "monkey ([copytext_char(md5(real_name), 2, 6)])"
 
 	//handle DNA and other attributes
 	dna.transfer_identity(O)
@@ -50,6 +55,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.mutation_index = dna.mutation_index
+		O.dna.default_mutation_genes = dna.default_mutation_genes
 		O.dna.set_se(1, GET_INITIALIZED_MUTATION(RACEMUT))
 
 	if(suiciding)
@@ -163,11 +169,32 @@
 //Could probably be merged with monkeyize but other transformations got their own procs, too
 
 /mob/living/carbon/proc/humanize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
-	if (notransform)
+	if (notransform || transformation_timer)
 		return
-	//Handle items on mob
 
-	//first implants & organs
+	//now the rest
+	if (tr_flags & TR_KEEPITEMS)
+		var/Itemlist = get_equipped_items(TRUE)
+		Itemlist += held_items
+		for(var/obj/item/W in Itemlist)
+			dropItemToGround(W, TRUE)
+			if (client)
+				client.screen -= W
+
+	//Make mob invisible and spawn animation
+	notransform = TRUE
+	Paralyze(TRANSFORMATION_DURATION, ignore_canstun = TRUE)
+
+	icon = null
+	cut_overlays()
+	invisibility = INVISIBILITY_MAXIMUM
+	new /obj/effect/temp_visual/monkeyify/humanify(loc)
+
+	transformation_timer = addtimer(CALLBACK(src, .proc/finish_humanize, tr_flags), TRANSFORMATION_DURATION, TIMER_UNIQUE)
+
+/mob/living/carbon/proc/finish_humanize(tr_flags)
+	transformation_timer = null
+
 	var/list/stored_implants = list()
 	var/list/int_organs = list()
 
@@ -186,27 +213,6 @@
 		cavity_object = CH.cavity_item
 		CH.cavity_item = null
 
-	//now the rest
-	if (tr_flags & TR_KEEPITEMS)
-		var/Itemlist = get_equipped_items(TRUE)
-		Itemlist += held_items
-		for(var/obj/item/W in Itemlist)
-			dropItemToGround(W, TRUE)
-			if (client)
-				client.screen -= W
-
-
-
-	//Make mob invisible and spawn animation
-	notransform = TRUE
-	Paralyze(22, ignore_canstun = TRUE)
-
-	icon = null
-	cut_overlays()
-	invisibility = INVISIBILITY_MAXIMUM
-	new /obj/effect/temp_visual/monkeyify/humanify(loc)
-	sleep(22)
-
 	var/mob/living/carbon/human/O = new( loc )
 	for(var/obj/item/C in O.loc)
 		if(C.anchored)
@@ -216,7 +222,7 @@
 	dna.transfer_identity(O)
 	O.updateappearance(mutcolor_update=1)
 
-	if(cmptext("monkey",copytext(O.dna.real_name,1,7)))
+	if(findtext(O.dna.real_name, "monkey", 1, 7)) //7 == length("monkey") + 1
 		O.real_name = random_unique_name(O.gender)
 		O.dna.generate_unique_enzymes(O)
 	else
@@ -225,6 +231,7 @@
 
 	if(tr_flags & TR_KEEPSE)
 		O.dna.mutation_index = dna.mutation_index
+		O.dna.default_mutation_genes = dna.default_mutation_genes
 		O.dna.set_se(0, GET_INITIALIZED_MUTATION(RACEMUT))
 		O.domutcheck()
 
@@ -640,3 +647,5 @@
 
 	//Not in here? Must be untested!
 	return 0
+
+#undef TRANSFORMATION_DURATION

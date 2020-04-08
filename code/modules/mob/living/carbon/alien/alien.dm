@@ -124,6 +124,9 @@ Des: Removes all infected images from the alien.
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
 	new_xeno.setDir(dir)
+	if(numba && unique_name)
+		new_xeno.numba = numba
+		new_xeno.set_name()
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name

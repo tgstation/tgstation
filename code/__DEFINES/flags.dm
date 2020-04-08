@@ -4,16 +4,6 @@
 #define ALL (~0) //For convenience.
 #define NONE 0
 
-//for convenience
-#define ENABLE_BITFIELD(variable, flag) (variable |= (flag))
-#define DISABLE_BITFIELD(variable, flag) (variable &= ~(flag))
-#define CHECK_BITFIELD(variable, flag) (variable & (flag))
-#define TOGGLE_BITFIELD(variable, flag) (variable ^= (flag))
-
-
-//check if all bitflags specified are present
-#define CHECK_MULTIPLE_BITFIELDS(flagvar, flags) (((flagvar) & (flags)) == (flags))
-
 GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768))
 
 // for /datum/var/datum_flags
@@ -25,8 +15,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 
 /// This flag is what recursive_hear_check() uses to determine wether to add an item to the hearer list or not.
 #define HEAR_1						(1<<3)
-/// Projectiels will check ricochet on things impacted that have this.
-#define CHECK_RICOCHET_1			(1<<4)
 /// conducts electricity (metal etc.)
 #define CONDUCT_1					(1<<5)
 /// For machines and structures that should not break into parts, eg, holodeck stuff
@@ -47,6 +35,11 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// should not get harmed if this gets caught by an explosion?
 #define PREVENT_CONTENTS_EXPLOSION_1 (1<<16)
 
+
+/// If the thing can reflect light (lasers/energy)
+#define RICOCHET_SHINY			(1<<0)
+/// If the thing can reflect matter (bullets/bomb shrapnel)
+#define RICOCHET_HARD			(1<<1)
 
 //turf-only flags
 #define NOJAUNT_1					(1<<0)
@@ -102,10 +95,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_OBJ_DAMAGE			(1<<2)
 #define ZAP_MOB_DAMAGE			(1<<3)
 #define ZAP_MOB_STUN			(1<<4)
-#define ZAP_IS_TESLA			(1<<5)
 
 #define ZAP_DEFAULT_FLAGS ALL
-#define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN | ZAP_IS_TESLA
+#define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS NONE
 
 //EMP protection
@@ -139,3 +131,18 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 //alternate appearance flags
 #define AA_TARGET_SEE_APPEARANCE (1<<0)
 #define AA_MATCH_TARGET_OVERLAYS (1<<1)
+
+#define KEEP_TOGETHER_ORIGINAL "keep_together_original"
+
+//setter for KEEP_TOGETHER to allow for multiple sources to set and unset it
+#define ADD_KEEP_TOGETHER(x, source)\
+	if ((x.appearance_flags & KEEP_TOGETHER) && !HAS_TRAIT(x, TRAIT_KEEP_TOGETHER)) ADD_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL); \
+	ADD_TRAIT(x, TRAIT_KEEP_TOGETHER, source);\
+	x.appearance_flags |= KEEP_TOGETHER
+
+#define REMOVE_KEEP_TOGETHER(x, source)\
+	REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, source);\
+	if(HAS_TRAIT_FROM_ONLY(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL))\
+		REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL);\
+	else if(!HAS_TRAIT(x, TRAIT_KEEP_TOGETHER))\
+	 	x.appearance_flags &= ~KEEP_TOGETHER

@@ -1,5 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Simple mobs will now receive an alert about being in too hot/cold environment."
-  - rscadd: "Simple mobs will now receive an alert about choking to death."
