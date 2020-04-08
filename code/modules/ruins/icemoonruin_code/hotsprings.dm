@@ -26,6 +26,7 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 	if(GLOB.cursed_minds[L.mind])
 		return
 	GLOB.cursed_minds[L.mind] = TRUE
+	RegisterSignal(L.mind, COMSIG_PARENT_QDELETING, .proc/remove_from_cursed)
 	var/random_choice = pick("Mob", "Appearance")
 	switch(random_choice)
 		if("Mob")
@@ -45,3 +46,10 @@ GLOBAL_LIST_EMPTY(cursed_minds)
 	var/turf/T = find_safe_turf()
 	L.forceMove(T)
 	to_chat(L, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
+
+/**
+  * Deletes minds from the cursed minds list after their deletion
+  *
+  */
+/turf/open/water/cursed_spring/proc/remove_from_cursed(datum/mind/M)
+	GLOB.cursed_minds[M] = null
