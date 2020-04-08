@@ -66,8 +66,11 @@
 	var/medium_burn_msg = "blistered"
 	var/heavy_burn_msg = "peeling away"
 
+	/// The wounds currently afflicting this body part
 	var/list/wounds
+	/// Our current stored interaction efficiency multiplier
 	var/wound_interaction_efficiency = 1
+	/// Our current stored wound damage multiplier
 	var/wound_damage_multiplier = 1
 
 /obj/item/bodypart/examine(mob/user)
@@ -167,23 +170,28 @@
 	brute = max(0, brute - brute_reduction)
 	burn = max(0, burn - burn_reduction)
 	//No stamina scaling.. for now..
-
+	// remind me to actually apply wound damage mults
 	if(!brute && !burn && !stamina)
 		return FALSE
 
-	var/injury_roll = rand(brute + burn_dam, 100)
-	testing("Injury roll- ([brute + (burn_dam + brute_dam)**2], 100): [injury_roll]")
+	//TODO: do this better
+	var/injury_roll = rand(brute + brute_dam, 100)
+	testing("Injury roll- ([brute + brute_dam], 100): [injury_roll]")
 	switch(injury_roll)
 		if(-INFINITY to 50)
 			testing("No injury")
 
-		if(51 to 84)
+		if(51 to 74)
 			testing("Moderate")
 			suffer_wound(BRUTE, WOUND_SEVERITY_MODERATE)
 
-		if(85 to 100)
+		if(75 to 90)
 			testing("Severe")
 			suffer_wound(BRUTE, WOUND_SEVERITY_SEVERE)
+
+		if(91 to INFINITY)
+			testing("Critical")
+			suffer_wound(BRUTE, WOUND_SEVERITY_CRITICAL)
 
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
@@ -461,12 +469,13 @@
 	drop_organs()
 	qdel(src)
 
+/// Get whatever wound of the given damage type is currently attached to this limb, if any
 /obj/item/bodypart/proc/get_wound(damtype)
 	if(isnull(wounds))
 		return
 
 	var/to_check
-	if(damtype == BRUTE)
+	if(damtype == BRUTE) // TODO: gonna need to do actual standard handling for this, so we don't have these checks
 		to_check = /datum/wound/brute
 	else if(damtype == BURN)
 		to_check = /datum/wound/burn
@@ -476,15 +485,13 @@
 		if(istype(W, to_check))
 			return W
 
-//obj/item/bodypart/proc/generate_wound(damtype, severity)
-
-
+/// Our limb has suffered enough damage to gain a wound of a given damage type and severity, afflict it if we don't already have one of equal or greater severity here.
 /obj/item/bodypart/proc/suffer_wound(damtype, severity)
 	LAZYINITLIST(wounds)
 	var/datum/wound/preexisting_wound = get_wound(damtype)
 	if(preexisting_wound)
 		if(preexisting_wound.severity >= severity)
-			testing("[src] already suffering wound sev [preexisting_wound.severity]/[preexisting_wound.damtype] (ignored wound sev/type: [severity]/[damtype]")
+			testing("[src] already suffering wound sev [preexisting_wound.severity]/[preexisting_wound.damtype] (ignored wound sev/type: [severity]/[damtype])")
 			return
 		else
 			testing("Promoting injury of sev/type [preexisting_wound.severity]/[preexisting_wound.damtype] to sev: [severity]")
@@ -492,19 +499,23 @@
 
 	var/wound_type
 
-	if(damtype == BRUTE)
+	if(damtype == BRUTE)// TODO: gonna need to do actual standard handling for this, so we don't have these checks
 		if(severity == WOUND_SEVERITY_MODERATE)
 			wound_type = /datum/wound/brute/dislocation
 		else if(severity == WOUND_SEVERITY_SEVERE)
 			wound_type = /datum/wound/brute/hairline_fracture
+		else if(severity == WOUND_SEVERITY_CRITICAL)
+			wound_type = /datum/wound/brute/compound_fracture
 
 	var/datum/wound/new_wound = new wound_type
 	new_wound.apply_wound(src)
 
+/// very rough start for updating efficiency and other stats on a body part whenever a wound is gained/lost
 /obj/item/bodypart/proc/update_wound()
 	var/int_eff = 1 //initial(wound_interaction_efficiency)
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
 
+	// we can only have one wound per type, but remember there's multiple types
 	for(var/datum/wound/W in wounds)
 		int_eff *= W.interaction_efficiency_penalty
 		dam_mul *= W.damage_mulitplier_penalty

@@ -645,7 +645,6 @@
 #include "code\datums\wires\tesla_coil.dm"
 #include "code\datums\wires\vending.dm"
 #include "code\datums\wounds\_wounds.dm"
-#include "code\datums\wounds\brute_wounds.dm"
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"

@@ -225,6 +225,10 @@
 		burn = round(burn - (burn_was - picked.burn_dam), DAMAGE_PRECISION)
 		stamina = round(stamina - (stamina_was - picked.stamina_dam), DAMAGE_PRECISION)
 
+		for(var/w in picked.wounds)
+			var/datum/wound/W = w
+			W.remove_wound()
+
 		parts -= picked
 	if(updating_health)
 		updatehealth()
