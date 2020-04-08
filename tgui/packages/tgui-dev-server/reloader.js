@@ -9,6 +9,8 @@ const logger = createLogger('reloader');
 
 const HOME = os.homedir();
 const SEARCH_LOCATIONS = [
+  // Custom location
+  process.env.BYOND_CACHE,
   // Windows
   `${HOME}/*/BYOND/cache`,
   // Wine
@@ -28,6 +30,9 @@ export const findCacheRoot = async () => {
   logger.log('looking for byond cache');
   // Find BYOND cache folders
   for (let pattern of SEARCH_LOCATIONS) {
+    if (!pattern) {
+      continue;
+    }
     const paths = await resolveGlob(pattern);
     if (paths.length > 0) {
       cacheRoot = paths[0];

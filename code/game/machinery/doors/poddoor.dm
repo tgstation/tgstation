@@ -87,6 +87,7 @@
 		icon_state = "closed"
 	else
 		icon_state = "open"
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/poddoor/try_to_activate_door(mob/user)
 	return

@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { Component } from 'inferno';
 import { Box } from './Box';
 import { Icon } from './Icon';
 
@@ -46,7 +46,7 @@ export class Dropdown extends Component {
       <div
         key={option}
         className="Dropdown__menuentry"
-        onClick={e => {
+        onClick={() => {
           this.setSelected(option);
         }}>
         {option}
@@ -60,9 +60,12 @@ export class Dropdown extends Component {
     const {
       color = 'default',
       over,
+      noscroll,
+      nochevron,
       width,
       onClick,
       selected,
+      disabled,
       ...boxProps
     } = props;
     const {
@@ -80,7 +83,7 @@ export class Dropdown extends Component {
           'width': width,
         }}
         className={classes([
-          'Dropdown__menu',
+          noscroll && 'Dropdown__menu-noscroll' || 'Dropdown__menu',
           over && 'Dropdown__over',
         ])}>
         {this.buildMenu()}
@@ -95,18 +98,24 @@ export class Dropdown extends Component {
             'Dropdown__control',
             'Button',
             'Button--color--' + color,
+            disabled && 'Button--disabled',
             className,
           ])}
           {...rest}
-          onClick={e => {
+          onClick={() => {
+            if (disabled && !this.state.open) {
+              return;
+            }
             this.setOpen(!this.state.open);
           }}>
           <span className="Dropdown__selected-text">
             {this.state.selected}
           </span>
-          <span className="Dropdown__arrow-button">
-            <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
-          </span>
+          {!!nochevron || (
+            <span className="Dropdown__arrow-button">
+              <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
+            </span>
+          )}
         </Box>
         {menu}
       </div>

@@ -84,7 +84,7 @@ export const NtosSupermatterMonitor = props => {
           </LabeledList>
         </Section>
       </Flex.Item>
-      <Flex.Item grow={1}>
+      <Flex.Item grow={1} basis={0}>
         <Section
           title="Gases"
           buttons={(
@@ -93,23 +93,21 @@ export const NtosSupermatterMonitor = props => {
               content="Back"
               onClick={() => act('PRG_clear')} />
           )}>
-          <Box.Forced height={gases.length * 24 + 'px'}>
-            <LabeledList>
-              {gases.map(gas => (
-                <LabeledList.Item
-                  key={gas.name}
-                  label={getGasLabel(gas.name)}>
-                  <ProgressBar
-                    color={getGasColor(gas.name)}
-                    value={gas.amount}
-                    minValue={0}
-                    maxValue={gasMaxAmount}>
-                    {toFixed(gas.amount, 2) + '%'}
-                  </ProgressBar>
-                </LabeledList.Item>
-              ))}
-            </LabeledList>
-          </Box.Forced>
+          <LabeledList>
+            {gases.map(gas => (
+              <LabeledList.Item
+                key={gas.name}
+                label={getGasLabel(gas.name)}>
+                <ProgressBar
+                  color={getGasColor(gas.name)}
+                  value={gas.amount}
+                  minValue={0}
+                  maxValue={gasMaxAmount}>
+                  {toFixed(gas.amount, 2) + '%'}
+                </ProgressBar>
+              </LabeledList.Item>
+            ))}
+          </LabeledList>
         </Section>
       </Flex.Item>
     </Flex>
