@@ -46,7 +46,7 @@
 /obj/machinery/medical/plasmic_stabilizer/defunct
 	name = "Old Inorganic Lifeform Stabilizer"
 	desc = "Stabilizes free plasma particles in inorganic bodies, causing them to not burn. Uses massive amounts of electricity.This model seems to be very old."
-	icon_state = "plasmic_stabilizer_defunct"
+	icon_state = "plasmic_stabilizer_scrap"
 	active_power_usage = 2000 //very old inefficient model
 
 /obj/machinery/medical/plasmic_stabilizer/defunct/process()

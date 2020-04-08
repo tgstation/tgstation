@@ -26,7 +26,7 @@
 /obj/machinery/medical/simple/lung
 	name = "Automatic Breath Rejuvanator"
 	desc = "Stabilizes the lungs at the cost of a lot of electricity. Better parts lessen the strain on the power network."
-	icon_state = "mechanical_lung"
+	icon_state = "mechanical_lungs"
 	status = TRAIT_STABLELUNG
 
 /obj/machinery/medical/simple/heart

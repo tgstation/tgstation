@@ -17471,7 +17471,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 22
 	},
-/obj/structure/closet/wardrobe/pjs,
+/obj/machinery/medical/simple/liver,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aBB" = (
@@ -24988,7 +24988,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/wardrobe/pjs,
+/obj/machinery/medical/simple/heart,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aNw" = (
@@ -25424,6 +25424,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/machinery/medical/thermal,
 /turf/open/floor/plasteel/dark,
 /area/medical/cryo)
 "aOk" = (
@@ -26274,7 +26275,6 @@
 /turf/open/floor/plasteel/showroomfloor,
 /area/crew_quarters/heads/cmo)
 "aPr" = (
-/obj/structure/closet/wardrobe/pjs,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -26288,6 +26288,7 @@
 	},
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/bot,
+/obj/machinery/medical/dialysis,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aPs" = (
@@ -28899,7 +28900,7 @@
 /area/security/main)
 "aSW" = (
 /obj/effect/turf_decal/tile/neutral,
-/obj/machinery/life_support,
+/obj/machinery/medical/life_support,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "aSX" = (
@@ -30869,7 +30870,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/machinery/medical/simple/lung,
 /turf/open/floor/plasteel/dark,
 /area/medical/storage)
 "aVL" = (
@@ -93770,7 +93771,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/box,
-/obj/machinery/life_support,
+/obj/machinery/medical/life_support,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
 "thU" = (

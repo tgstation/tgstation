@@ -47056,6 +47056,7 @@
 	dir = 8;
 	pixel_x = 24
 	},
+/obj/machinery/medical/dialysis,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "cbQ" = (
@@ -48760,6 +48761,7 @@
 /obj/item/radio/intercom{
 	pixel_x = 28
 	},
+/obj/machinery/medical/thermal,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "cfP" = (
@@ -59006,6 +59008,7 @@
 	pixel_x = 26;
 	pixel_y = -26
 	},
+/obj/machinery/medical/plasmic_stabilizer/defunct,
 /turf/open/floor/plasteel/white,
 /area/medical/abandoned)
 "cGH" = (
@@ -70168,6 +70171,20 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"gap" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/medical/simple/liver,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "gaS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -70296,7 +70313,6 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/machinery/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "gna" = (
@@ -71171,6 +71187,20 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
+"iif" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/effect/turf_decal/tile/blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue{
+	dir = 1
+	},
+/obj/machinery/medical/simple/heart,
+/turf/open/floor/plasteel/white,
+/area/medical/sleeper)
 "iiB" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -76644,6 +76674,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/machinery/medical/simple/lung,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "uTI" = (
@@ -98152,7 +98183,7 @@ cnr
 coD
 uiO
 cjB
-cjB
+iif
 cev
 gmp
 dyj
@@ -100208,7 +100239,7 @@ cny
 coL
 cqg
 cjB
-gmZ
+gap
 pqM
 cum
 nIa

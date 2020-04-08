@@ -6432,7 +6432,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/closet/wardrobe/pjs,
+/obj/machinery/medical/simple/liver,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "apA" = (
@@ -22435,6 +22435,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/machinery/medical/plasmic_stabilizer/defunct,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "bhr" = (
@@ -26274,7 +26275,7 @@
 /area/medical/psychology)
 "brb" = (
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/table,
+/obj/machinery/medical/dialysis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "brc" = (
@@ -27751,8 +27752,7 @@
 /area/medical/medbay/zone2)
 "bvs" = (
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/bedsheetbin,
-/obj/structure/table,
+/obj/machinery/medical/thermal,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "bvu" = (
@@ -28170,7 +28170,7 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/sleeper)
 "bwC" = (
-/obj/machinery/life_support,
+/obj/machinery/medical/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bwD" = (
@@ -29641,7 +29641,7 @@
 	dir = 4;
 	pixel_x = -24
 	},
-/obj/machinery/life_support,
+/obj/machinery/medical/life_support,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bAq" = (
@@ -49399,8 +49399,7 @@
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "gFW" = (
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
+/obj/machinery/medical/simple/lung,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "gGJ" = (
@@ -52171,6 +52170,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"nYt" = (
+/obj/effect/turf_decal/tile/blue,
+/obj/structure/bed,
+/turf/open/floor/plasteel/white,
+/area/medical/medbay/zone2)
 "nYU" = (
 /obj/machinery/door/window/northleft{
 	dir = 4;
@@ -52497,7 +52501,6 @@
 /area/maintenance/starboard/aft)
 "pdB" = (
 /obj/effect/turf_decal/tile/blue,
-/obj/structure/table,
 /obj/machinery/light,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
@@ -54540,8 +54543,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 1
 	},
-/obj/structure/bed,
-/obj/item/bedsheet/medical,
+/obj/machinery/medical/simple/heart,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "uGz" = (
@@ -95379,7 +95381,7 @@ tiO
 uFy
 bum
 vhn
-bye
+nYt
 bua
 bBL
 bhh

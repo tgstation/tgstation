@@ -14296,6 +14296,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/medical/dialysis,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "aGB" = (
@@ -15266,9 +15267,9 @@
 /turf/open/floor/plasteel/grimy,
 /area/ai_monitored/turret_protected/aisat/foyer)
 "aIQ" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/machinery/medical/thermal,
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "aIR" = (
@@ -18305,7 +18306,7 @@
 	dir = 1;
 	network = list("ss13","Medical")
 	},
-/obj/machinery/life_support,
+/obj/machinery/medical/life_support,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "aQi" = (
@@ -19743,7 +19744,7 @@
 /turf/open/floor/plating,
 /area/maintenance/starboard)
 "aTD" = (
-/obj/machinery/life_support,
+/obj/machinery/medical/life_support,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "aTE" = (
@@ -33273,7 +33274,6 @@
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/storage/eva)
 "bvf" = (
-/obj/structure/table,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
@@ -33283,7 +33283,7 @@
 	dir = 1;
 	network = list("ss13","Medical")
 	},
-/obj/structure/bedsheetbin,
+/obj/machinery/medical/simple/lung,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "bvg" = (
@@ -33781,15 +33781,11 @@
 /turf/open/floor/plating,
 /area/maintenance/port)
 "bwo" = (
-/obj/structure/table,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/item/paper{
-	info = "Too many bodies, not enough bags? Throw 'em down the chute! Out of sight - Out of mind!";
-	name = "Why can't I hold all these corpses? - Proper Corpse Disposal 101"
-	},
+/obj/machinery/medical/simple/liver,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "bwp" = (
@@ -33815,7 +33811,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/closet/secure_closet/personal/patient,
+/obj/machinery/medical/simple/lung,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/zone2)
 "bwr" = (
@@ -47745,7 +47741,6 @@
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "iHE" = (
-/obj/structure/table/glass,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 7;
 	pixel_y = 1
@@ -47757,6 +47752,7 @@
 /obj/item/radio/intercom{
 	pixel_y = 29
 	},
+/obj/structure/table/glass,
 /turf/open/floor/plasteel,
 /area/medical/cryo)
 "iJC" = (
@@ -50959,6 +50955,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
+"ufv" = (
+/obj/machinery/medical/plasmic_stabilizer/defunct,
+/turf/open/floor/plating,
+/area/maintenance/port)
 "ufN" = (
 /obj/machinery/photocopier,
 /obj/machinery/airalarm{
@@ -51864,7 +51864,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 25
 	},
-/obj/machinery/life_support,
+/obj/machinery/medical/life_support,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "wMX" = (
@@ -74463,7 +74463,7 @@ bXf
 bXO
 bRh
 bXQ
-bMs
+ufv
 bMs
 jJa
 aFN
