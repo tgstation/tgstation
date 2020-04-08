@@ -1,6 +1,7 @@
 #define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
 #define YIELD_WEED_MINIMUM 3
 #define YIELD_WEED_MAXIMUM 10
+#define STATIC_NUTRIENT_CAPACITY 10
 
 
 /obj/machinery/hydroponics
@@ -62,7 +63,7 @@
 /obj/machinery/hydroponics/Initialize()
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
-	create_reagents(10)
+	create_reagents(20)
 	. = ..()
 
 
@@ -78,7 +79,7 @@
 	for (var/obj/item/stock_parts/manipulator/M in component_parts)
 		rating = M.rating
 	maxwater = tmp_capacity * 50 // Up to 300
-	maxnutri = tmp_capacity * 5 // Up to 30
+	maxnutri = (tmp_capacity * 5) + STATIC_NUTRIENT_CAPACITY // Up to 50 Maximum
 	reagents.maximum_volume = maxnutri
 	nutridrain = 1/rating
 
@@ -150,7 +151,6 @@
 		update_icon()
 
 	else if(self_sustaining)
-		nutridrain = min(0.5, nutridrain) //By just upgrading your trays you will outpace your trays sustainability.
 		adjustWater(rand(1,2))
 		adjustWeeds(-1)
 		adjustPests(-1)
@@ -169,7 +169,10 @@
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete at a constant rate, since new nutrients can boost stats far easier.
 			apply_chemicals(lastuser)
-			reagents.remove_any(nutridrain)
+			if(self_sustaining)
+				reagents.remove_any(min(0.5, nutridrain))
+			else
+				reagents.remove_any(nutridrain)
 
 			// Lack of nutrients hurts non-weeds
 			if(reagents.total_volume <= 0 && !myseed.get_gene(/datum/plant_gene/trait/plant_type/weed_hardy))
@@ -252,10 +255,9 @@
 
 //This is where stability mutations exist now.
 			switch(myseed.instability)
-				if(80 to 100)
-					if(prob(20))
-						mutate(0, 0, 0, 0, 0, 0, 0, 10, 0) //Exceedingly low odds of gaining a trait.
-				if(60 to 79)
+				if(100 to 80)
+					mutate(0, 0, 0, 0, 0, 0, 0, 2, 0) //Exceedingly low odds of gaining a trait.
+				if(79 to 60)
 					if(prob((myseed.instability)/2) && !self_sustaining)
 						mutatespecie()
 						myseed.instability = myseed.instability/2
@@ -382,11 +384,10 @@
 	else
 		. += "<span class='info'>It's empty.</span>"
 
-	if(!self_sustaining)
-		. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
-		"<span class='info'>Nutrient: [reagents.total_volume]/[maxnutri].</span>"
-	else
-		. += "<span class='info'>It doesn't require any water or nutrients.</span>"
+	. += "<span class='info'>Water: [waterlevel]/[maxwater].</span>\n"+\
+	"<span class='info'>Nutrient: [reagents.total_volume]/[maxnutri].</span>"
+	if(self_sustaining)
+		. += "<span class='info'>The tray's autogrow is active, protecting it from species mutations, weeds, and pests.</span>"
 
 	if(weedlevel >= 5)
 		to_chat(user, "<span class='warning'>It's filled with weeds!</span>")
@@ -394,8 +395,11 @@
 		to_chat(user, "<span class='warning'>It's filled with tiny worms!</span>")
 	to_chat(user, "" )
 
-
-/obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
+/**
+  * What happens when a tray's weeds grow too large.
+  * Plants a new weed in an empty tray, then resets the tray.
+  */
+/obj/machinery/hydroponics/proc/weedinvasion()
 	dead = FALSE
 	var/oldPlantName
 	if(myseed) // In case there's nothing in the tray beforehand
@@ -487,8 +491,11 @@
 	else
 		to_chat(usr, "<span class='warning'>The few weeds in [src] seem to react, but only for a moment...</span>")
 
-
-/obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
+/**
+  * Plant Death Proc.
+  * Cleans up various stats for the plant upon death, including pests, harvestability, and plant health.
+  */
+/obj/machinery/hydroponics/proc/plantdies()
 	plant_health = 0
 	harvest = FALSE
 	pestlevel = 0 // Pests die
@@ -497,6 +504,12 @@
 		update_icon()
 		dead = TRUE
 
+/**
+  * Plant Cross-Pollination.
+  * Checks all plants in the tray's oview range, then averages out the seed's potency, instability, and yield values.
+  * If the seed's instability is >= 20, the seed donates one of it's reagents to that nearby plant.
+  * * Range - The Oview range of trays to which to look for plants to donate reagents.
+  */
 /obj/machinery/hydroponics/proc/pollinate(var/range = 1)
 	for(var/obj/machinery/hydroponics/T in oview(src, range))
 		if(T.myseed && !T.dead)
@@ -509,9 +522,13 @@
 				if(reagent_gene.can_add(myseed))
 					myseed.genes += reagent_gene
 					myseed.reagents_from_genes()
-					return
+					continue
 
-
+/**
+  * Pest Mutation Proc.
+  * When a tray is mutated with high pest values, it will spawn spiders.
+  * * User - Person who last added chemicals to the tray for logging purposes.
+  */
 /obj/machinery/hydroponics/proc/mutatepest(mob/user)
 	if(pestlevel > 5)
 		message_admins("[ADMIN_LOOKUPFLW(user)] last altered a hydro tray's contents which spawned spiderlings")
@@ -535,6 +552,10 @@
 		if(!reagent_source.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[reagent_source] is empty!</span>")
 			return 1
+
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, "<span class='notice'>[src] is full.</span>")
+			return
 
 		var/list/trays = list(src)//makes the list just this in cases of syringes and compost etc
 		var/target = myseed ? myseed.plantname : src
@@ -619,7 +640,6 @@
 			var/list/text_string = myseed.get_analyzer_text()
 			if(text_string)
 				to_chat(user, text_string)
-			return
 		else
 			to_chat(user, "<B>No plant found.</B>")
 		to_chat(user, "- Weed level: <span class='notice'>[weedlevel] / 10</span>")
@@ -659,6 +679,37 @@
 			myseed.grafted = TRUE
 			adjustHealth(-5)
 			return
+
+	else if(istype(O, /obj/item/geneshears))
+		if(!myseed)
+			to_chat(user, "<span class='notice'>The tray is empty.</span>")
+			return
+		if(plant_health <= 15)
+			to_chat(user, "<span class='notice'>This plant looks too unhealty to be sheared right now.</span>")
+			return
+
+		var/list/current_traits = list()
+		for(var/datum/plant_gene/gene in myseed.genes)
+			if(istype(gene, /datum/plant_gene/core) || (istype(gene,/datum/plant_gene/trait/plant_type)) || islist(gene))
+				continue
+			if(!(gene.mutability_flags & PLANT_GENE_REMOVABLE) || !(gene.mutability_flags & PLANT_GENE_EXTRACTABLE))
+				continue //No bypassing unextractable or essential genes.
+			current_traits[gene.name] = gene
+		var/removed_trait = (input(user, "Select a trait to remove from the [myseed.plantname].", "Plant Trait Removal") as null|anything in sortList(current_traits))
+		if(removed_trait == null)
+			return
+		if(!user.canUseTopic(src, BE_CLOSE))
+			return
+		for(var/datum/plant_gene/gene in myseed.genes)
+			if(gene.name == removed_trait)
+				if(myseed.genes.Remove(gene))
+					qdel(gene)
+					break
+		myseed.reagents_from_genes()
+		adjustHealth(-15)
+		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], but leaving the plant looking a bit weak.</span>")
+		update_icon()
+		return
 
 	else if(istype(O, /obj/item/graft))
 		var/obj/item/graft/snip = O
@@ -765,6 +816,8 @@
 	if(!powered())
 		to_chat(user, "<span class='warning'>[name] has no power.</span>")
 		return
+	if(!anchored)
+		return
 	self_sustaining = !self_sustaining
 	idle_power_usage = self_sustaining ? 5000 : 0
 	to_chat(user, "<span class='notice'>You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""].")
@@ -777,6 +830,13 @@
 		reagents.clear_reagents()
 		to_chat(user, "<span class='warning'>You empty [src]'s nutrient tank.</span>")
 
+/**
+  * Update Tray Proc
+  * Handles plant harvesting on the tray side, by clearing the sead, names, description, and dead stat.
+  * Shuts off autogrow if enabled.
+  * Sends messages to the cleaer about plants harvested, or if nothing was harvested at all.
+  * * User - The mob who clears the tray.
+  */
 /obj/machinery/hydroponics/proc/update_tray(mob/user)
 	harvest = FALSE
 	lastproduce = age
@@ -798,36 +858,60 @@
 			self_sustaining = FALSE
 	update_icon()
 
-/// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
+/// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.
+/**
+  * Adjust water.
+  * Raises or lowers tray water values by a set value. Adding water will dillute toxicity from the tray.
+  * * adjustamt - determines how much water the tray will be adjusted upwards or downwards.
+  */
 /obj/machinery/hydroponics/proc/adjustWater(adjustamt)
 	waterlevel = clamp(waterlevel + adjustamt, 0, maxwater)
 
 	if(adjustamt>0)
 		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
+/**
+  * Adjust Health.
+  * Raises the tray's plant_health stat by a given amount, with total health determined by the seed's endurance.
+  * * adjustamt - Determines how much the plant_health will be adjusted upwards or downwards.
+  */
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(myseed && !dead)
 		plant_health = clamp(plant_health + adjustamt, 0, myseed.endurance)
 
+/**
+  * Adjust Health.
+  * Raises the plant's plant_health stat by a given amount, with total health determined by the seed's endurance.
+  * * adjustamt - Determines how much the plant_health will be adjusted upwards or downwards.
+  */
 /obj/machinery/hydroponics/proc/adjustToxic(adjustamt)
 	toxic = clamp(toxic + adjustamt, 0, 100)
 
+/**
+  * Adjust Pests.
+  * Raises the tray's pest level stat by a given amount.
+  * * adjustamt - Determines how much the pest level will be adjusted upwards or downwards.
+  */
 /obj/machinery/hydroponics/proc/adjustPests(adjustamt)
 	pestlevel = clamp(pestlevel + adjustamt, 0, 10)
 
+/**
+  * Adjust Weeds.
+  * Raises the plant's weed level stat by a given amount.
+  * * adjustamt - Determines how much the weed level will be adjusted upwards or downwards.
+  */
 /obj/machinery/hydroponics/proc/adjustWeeds(adjustamt)
 	weedlevel = clamp(weedlevel + adjustamt, 0, 10)
 
+/**
+  * Spawn Plant.
+  * Upon using strange reagent on a tray, it will spawn a killer tomato or killer tree at random.
+  */
 /obj/machinery/hydroponics/proc/spawnplant() // why would you put strange reagent in a hydro tray you monster I bet you also feed them blood
 	var/list/livingplants = list(/mob/living/simple_animal/hostile/tree, /mob/living/simple_animal/hostile/killertomato)
 	var/chosen = pick(livingplants)
 	var/mob/living/simple_animal/hostile/C = new chosen
 	C.faction = list("plants")
-
-/obj/machinery/hydroponics/proc/become_self_sufficient() // Ambrosia Gaia effect
-	visible_message("<span class='boldnotice'>[src] begins to glow with a beautiful light!</span>")
-	self_sustaining = TRUE
-	update_icon()
 
 //////////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/irrigated	//Pre-Irrigated trays! Maybe map a couple on each map, just so they get used?
