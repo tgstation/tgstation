@@ -54023,6 +54023,7 @@
 	},
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/stamp/cmo,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "crA" = (
