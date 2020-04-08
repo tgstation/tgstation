@@ -49,7 +49,7 @@
 
 /obj/machinery/medical/life_support/process()
 	. = ..()
-	if(!active)
+	if(!active || !attached)
 		return
 
 	if(attached.health < health_treshold)

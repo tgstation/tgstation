@@ -14,6 +14,8 @@
 
 /obj/machinery/medical/dialysis/process()
 	. = ..()
+	if(!attached)
+		return
 	for(var/R in attached.reagents.reagent_list)
 		var/datum/reagent/r1 = R
 		attached.reagents.remove_reagent(r1.type, purge_amount)
@@ -39,7 +41,8 @@
 
 /obj/machinery/medical/plasmic_stabilizer/process()
 	. = ..()
-
+	if(!attached)
+		return
 	if(!isplasmaman(attached))
 		attached = null
 		return
@@ -74,7 +77,8 @@
 
 /obj/machinery/medical/thermal/process()
 	. = ..()
-
+	if(!attached)
+		return
 	var/tempdiff = attached.get_body_temp_normal() - attached.bodytemperature
 	switch(tempdiff)
 		if(stabilization_rate to INFINITY)
