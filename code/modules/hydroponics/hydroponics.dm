@@ -644,14 +644,10 @@
 			var/list/text_string = myseed.get_analyzer_text()
 			if(text_string)
 				to_chat(user, text_string)
-<<<<<<< HEAD
 			if(myseed.reagents_add)
-				to_chat(user, "- Plant Reagents -")
+				to_chat(user, "- <B>Plant Reagents</B> -")
 				for(var/datum/plant_gene/reagent/G in myseed.genes)
-					to_chat(user, "- [G.get_name()] -")
-			return
-=======
->>>>>>> upstream/master
+					to_chat(user, "<span class='notice'>- [G.get_name()] -</span>")
 		else
 			to_chat(user, "<B>No plant found.</B>")
 		to_chat(user, "- Weed level: <span class='notice'>[weedlevel] / 10</span>")
