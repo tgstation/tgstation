@@ -16,7 +16,7 @@
 	ui_y = 305
 
 	///used to check if there is a cell in the machine
-	var/obj/item/stock_parts/cell/cell = null
+	var/obj/item/stock_parts/cell/cell
 	///check if the machine is on or off
 	var/on = FALSE
 	///check what mode the machine should be (WORKING, STANDBY)
@@ -31,7 +31,6 @@
 
 /obj/machinery/electrolyzer/Initialize()
 	. = ..()
-	cell = new cell(src)
 	update_icon()
 
 /obj/machinery/electrolyzer/Destroy()
