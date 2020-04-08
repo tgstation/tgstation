@@ -54,12 +54,7 @@
 	if(iscarbon(parent))
 		var/mob/living/carbon/C = parent
 		var/totaltint = 0
-		if(C?.glasses)
-			totaltint += C.glasses.tint
-			brightness_mult = min(1, (2 - C.glasses.darkness_view) * 0.33)
-		var/obj/item/organ/eyes/eye = C.getorganslot(ORGAN_SLOT_EYES)
-		if(eye?.tint)
-			totaltint += eye.tint
+		totaltint = C.get_total_tint
 		tint_factor = 1/(1 + totaltint)
 
 	///The actual brightness we "see"
