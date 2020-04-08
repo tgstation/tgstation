@@ -1,0 +1,9 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Botany can now print shears capable of removing plant genes, after researching the botany node."
+  - rscadd: "Uranium can now be solidified in a chemical reaction, similar to gold and plasma."
+  - rscdel: "Removed Plant Thinner and Trait Thinner chemicals (Unused)"
+  - tweak: "Hydroponics trays now have a starting chemical capacity of 20."
+  - bugfix: "Using a beaker on a hydroponics tray while the tray is full no longer acts like it's transferring reagents."
+  - tweak: "Ctrl-Clicking a tray will only enable autogrow when it's anchored."
