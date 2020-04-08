@@ -1154,9 +1154,9 @@
 	inherent_traits = list(TRAIT_NOFLASH, TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTHIGHPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_NODISMEMBER,TRAIT_CHUNKYFINGERS)
 
 /datum/species/golem/mhydrogen/on_species_gain(mob/living/carbon/C, datum/species/old_species)
-	..()
+	. = ..()
 	ADD_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
 
 /datum/species/golem/mhydrogen/on_species_loss(mob/living/carbon/C)
 	REMOVE_TRAIT(C, TRAIT_ANTIMAGIC, SPECIES_TRAIT)
-	..()
+	return ..()

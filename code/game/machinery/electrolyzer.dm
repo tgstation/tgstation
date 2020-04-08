@@ -69,40 +69,40 @@
 	if(!on)
 		return PROCESS_KILL
 
-	if(cell && cell.charge > 0)
-		var/turf/L = loc
-		if(!istype(L))
-			if(mode != ELECTROLYZER_MODE_STANDBY)
-				mode = ELECTROLYZER_MODE_STANDBY
-				update_icon()
-			return
-
-		var/datum/gas_mixture/env = L.return_air() //get air from the turf
-		var/datum/gas_mixture/removed = env.remove(0.1 * env.total_moles())
-		removed.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
-		var/proportion = min(removed.gases[/datum/gas/water_vapor][MOLES], 5)//Works on 5 mols at a time.
-		removed.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * workingPower
-		removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower
-		removed.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * workingPower
-		env.merge(removed) //put back the new gases in the turf
-		air_update_turf()
-
-		var/newMode = ELECTROLYZER_MODE_STANDBY
-		if(on)
-			newMode = ELECTROLYZER_MODE_WORKING //change the mode to working if the machine is on
-
-		if(mode != newMode) //check if the mode is set correctly
-			mode = newMode
-			update_icon()
-
-		if(mode == ELECTROLYZER_MODE_STANDBY)
-			return
-
-		cell.use(workingPower / (efficiency + workingPower))
-	else
+	if(!cell || cell.charge <= 0)
 		on = FALSE
 		update_icon()
 		return PROCESS_KILL
+
+	var/turf/L = loc
+	if(!istype(L))
+		if(mode != ELECTROLYZER_MODE_STANDBY)
+			mode = ELECTROLYZER_MODE_STANDBY
+			update_icon()
+		return
+
+	var/datum/gas_mixture/env = L.return_air() //get air from the turf
+	var/datum/gas_mixture/removed = env.remove(0.1 * env.total_moles())
+	removed.assert_gases(/datum/gas/water_vapor, /datum/gas/oxygen, /datum/gas/hydrogen)
+	var/proportion = min(removed.gases[/datum/gas/water_vapor][MOLES], 5)//Works on 5 mols at a time.
+	removed.gases[/datum/gas/water_vapor][MOLES] -= proportion * 2 * workingPower
+	removed.gases[/datum/gas/oxygen][MOLES] += proportion * workingPower
+	removed.gases[/datum/gas/hydrogen][MOLES] += proportion * 2 * workingPower
+	env.merge(removed) //put back the new gases in the turf
+	air_update_turf()
+
+	var/newMode = ELECTROLYZER_MODE_STANDBY
+	if(on)
+		newMode = ELECTROLYZER_MODE_WORKING //change the mode to working if the machine is on
+
+	if(mode != newMode) //check if the mode is set correctly
+		mode = newMode
+		update_icon()
+
+	if(mode == ELECTROLYZER_MODE_STANDBY)
+		return
+
+	cell.use(workingPower / (efficiency + workingPower))
 
 /obj/machinery/electrolyzer/RefreshParts()
 	var/laser = 0
@@ -120,12 +120,12 @@
 	add_fingerprint(user)
 	if(default_unfasten_wrench(user, I))
 		return
-	else if(istype(I, /obj/item/stock_parts/cell))
+	if(istype(I, /obj/item/stock_parts/cell))
 		if(panel_open)
 			if(cell)
 				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
 				return
-			else if(!user.transferItemToLoc(I, src))
+			if(!user.transferItemToLoc(I, src))
 				return
 			cell = I
 			I.add_fingerprint(usr)
@@ -139,10 +139,9 @@
 		panel_open = !panel_open
 		user.visible_message("<span class='notice'>\The [user] [panel_open ? "opens" : "closes"] the hatch on \the [src].</span>", "<span class='notice'>You [panel_open ? "open" : "close"] the hatch on \the [src].</span>")
 		update_icon()
-	else if(default_deconstruction_crowbar(I))
+	if(default_deconstruction_crowbar(I))
 		return
-	else
-		return ..()
+	return ..()
 
 /obj/machinery/electrolyzer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
@@ -155,13 +154,14 @@
 	var/list/data = list()
 	data["open"] = panel_open
 	data["on"] = on
-	data["hasPowercell"] = !!cell
+	data["hasPowercell"] = !isnull(cell)
 	if(cell)
 		data["powerLevel"] = round(cell.percent(), 1)
 	return data
 
 /obj/machinery/electrolyzer/ui_act(action, params)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	switch(action)
 		if("power")
