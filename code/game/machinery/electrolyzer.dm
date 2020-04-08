@@ -31,6 +31,8 @@
 
 /obj/machinery/electrolyzer/Initialize()
 	. = ..()
+	if(ispath(cell))
+		cell = new cell(src)
 	update_icon()
 
 /obj/machinery/electrolyzer/Destroy()
