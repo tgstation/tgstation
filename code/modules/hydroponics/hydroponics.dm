@@ -619,7 +619,7 @@
 			var/list/text_string = myseed.get_analyzer_text()
 			if(text_string)
 				to_chat(user, text_string)
-			if(myseed.reagents_add.len)
+			if(myseed.reagents_add)
 				to_chat(user, "- Plant Reagents -")
 				for(var/datum/plant_gene/reagent/G in myseed.genes)
 					to_chat(user, "- [G.get_name()] -")
