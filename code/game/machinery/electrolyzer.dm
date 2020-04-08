@@ -36,7 +36,8 @@
 	update_icon()
 
 /obj/machinery/electrolyzer/Destroy()
-	QDEL_NULL(cell)
+	if(cell)
+		QDEL_NULL(cell)
 	return ..()
 
 /obj/machinery/electrolyzer/on_deconstruction()
