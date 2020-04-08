@@ -439,7 +439,10 @@
 		var/text = get_analyzer_text()
 		if(text)
 			to_chat(user, "<span class='notice'>[text]</span>")
-
+		if(reagents_add)
+			to_chat(user, "<span class='notice'>- Plant Reagents -</span>")
+			for(var/datum/plant_gene/reagent/G in genes)
+				to_chat(user, "<span class='notice'>- [G.get_name()] -</span>")
 		return
 
 	if(istype(O, /obj/item/pen))
