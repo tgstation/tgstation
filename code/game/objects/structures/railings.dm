@@ -47,7 +47,7 @@
 /obj/structure/railing/deconstruct(disassembled)
 	. = ..()
 	if(!loc) //quick check if it's qdeleted already.
-		return			return
+		return
 	if(!(flags_1 & NODECONSTRUCT_1))
 		var/obj/item/stack/rods/rod = new /obj/item/stack/rods(drop_location(), 3)
 		transfer_fingerprints_to(rod)
