@@ -576,19 +576,19 @@
 			visible_message("<span class='notice'>[visi_msg].</span>")
 
 		var/split = round(transfer_amount/trays.len)
-
+		say("[trays.len] for reference")
 		for(var/obj/machinery/hydroponics/H in trays)
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
-				adjustWater(round(reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/trays.len))
-				reagent_source.reagents.remove_reagent(/datum/reagent/water, reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/trays.len)
+				H.adjustWater(round(reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/(trays.len)))
 			else
-				reagent_source.reagents.trans_to(reagents, split, transfered_by = user)
+				reagent_source.reagents.trans_to(H.reagents, split, transfered_by = user)
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				lastuser = user
 			H.update_icon()
+		reagent_source.reagents.remove_reagent(/datum/reagent/water, reagent_source.reagents.get_reagent_amount(/datum/reagent/water))
 		if(reagent_source) // If the source wasn't composted and destroyed
 			reagent_source.update_icon()
 		return 1
