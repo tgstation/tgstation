@@ -119,20 +119,20 @@
 	if(default_unfasten_wrench(user, I))
 		return
 	if(istype(I, /obj/item/stock_parts/cell))
-		if(panel_open)
-			if(cell)
-				to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
-				return
-			if(!user.transferItemToLoc(I, src))
-				return
-			cell = I
-			I.add_fingerprint(usr)
-
-			user.visible_message("<span class='notice'>\The [user] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
-			SStgui.update_uis(src)
-		else
+		if(!panel_open)
 			to_chat(user, "<span class='warning'>The hatch must be open to insert a power cell!</span>")
 			return
+		if(cell)
+			to_chat(user, "<span class='warning'>There is already a power cell inside!</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			return
+		cell = I
+		I.add_fingerprint(usr)
+
+		user.visible_message("<span class='notice'>\The [user] inserts a power cell into \the [src].</span>", "<span class='notice'>You insert the power cell into \the [src].</span>")
+		SStgui.update_uis(src)
+
 		return
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		panel_open = !panel_open
