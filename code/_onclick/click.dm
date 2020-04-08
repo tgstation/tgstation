@@ -29,6 +29,20 @@
 		adj += S.nextmove_adjust()
 	next_move = world.time + ((num + adj)*mod)
 
+/mob/living/carbon/changeNext_move(num)
+	var/mod = next_move_modifier
+	var/adj = next_move_adjust
+	for(var/i in status_effects)
+		var/datum/status_effect/S = i
+		mod *= S.nextmove_modifier()
+		adj += S.nextmove_adjust()
+	var/obj/item/bodypart/active_arm = get_active_hand()
+
+	if(active_arm)
+		testing("Extended delay [((num + adj)*mod)] ([mod]) by * [active_arm.wound_interaction_efficiency]")
+		mod *= active_arm.wound_interaction_efficiency
+	next_move = world.time + ((num + adj)*mod)
+
 /**
   * Before anything else, defer these calls to a per-mobtype handler.  This allows us to
   * remove istype() spaghetti code, but requires the addition of other handler procs to simplify it.

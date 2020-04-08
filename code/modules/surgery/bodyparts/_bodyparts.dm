@@ -67,6 +67,8 @@
 	var/heavy_burn_msg = "peeling away"
 
 	var/list/wounds
+	var/wound_interaction_efficiency = 1
+	var/wound_damage_multiplier = 1
 
 /obj/item/bodypart/examine(mob/user)
 	. = ..()
@@ -169,6 +171,20 @@
 	if(!brute && !burn && !stamina)
 		return FALSE
 
+	var/injury_roll = rand(brute + burn_dam, 100)
+	testing("Injury roll- ([brute + (burn_dam + brute_dam)**2], 100): [injury_roll]")
+	switch(injury_roll)
+		if(-INFINITY to 50)
+			testing("No injury")
+
+		if(51 to 84)
+			testing("Moderate")
+			suffer_wound(BRUTE, WOUND_SEVERITY_MODERATE)
+
+		if(85 to 100)
+			testing("Severe")
+			suffer_wound(BRUTE, WOUND_SEVERITY_SEVERE)
+
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
@@ -211,6 +227,10 @@
 	brute_dam	= round(max(brute_dam - brute, 0), DAMAGE_PRECISION)
 	burn_dam	= round(max(burn_dam - burn, 0), DAMAGE_PRECISION)
 	stamina_dam = round(max(stamina_dam - stamina, 0), DAMAGE_PRECISION)
+	if(brute_dam == 0)
+		for(var/wo in wounds)
+			var/datum/wound/W = wo
+			W.remove_wound()
 	if(owner && updating_health)
 		owner.updatehealth()
 	consider_processing()
@@ -445,7 +465,16 @@
 	if(isnull(wounds))
 		return
 
-	return wounds[damtype]
+	var/to_check
+	if(damtype == BRUTE)
+		to_check = /datum/wound/brute
+	else if(damtype == BURN)
+		to_check = /datum/wound/burn
+
+	for(var/wo in wounds)
+		var/datum/wound/W = wo // TODO: make less bad
+		if(istype(W, to_check))
+			return W
 
 //obj/item/bodypart/proc/generate_wound(damtype, severity)
 
@@ -459,6 +488,26 @@
 			return
 		else
 			testing("Promoting injury of sev/type [preexisting_wound.severity]/[preexisting_wound.damtype] to sev: [severity]")
+			preexisting_wound.remove_wound()
 
-	var/datum/wound/new_wound
+	var/wound_type
 
+	if(damtype == BRUTE)
+		if(severity == WOUND_SEVERITY_MODERATE)
+			wound_type = /datum/wound/brute/dislocation
+		else if(severity == WOUND_SEVERITY_SEVERE)
+			wound_type = /datum/wound/brute/hairline_fracture
+
+	var/datum/wound/new_wound = new wound_type
+	new_wound.apply_wound(src)
+
+/obj/item/bodypart/proc/update_wound()
+	var/int_eff = 1 //initial(wound_interaction_efficiency)
+	var/dam_mul = 1 //initial(wound_damage_multiplier)
+
+	for(var/datum/wound/W in wounds)
+		int_eff *= W.interaction_efficiency_penalty
+		dam_mul *= W.damage_mulitplier_penalty
+
+	wound_interaction_efficiency = int_eff
+	wound_damage_multiplier = dam_mul
