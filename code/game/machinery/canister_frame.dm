@@ -66,13 +66,13 @@
 			ST.use(5)
 	else if (istype(S, /obj/item/stack/sheet/bluespace_crystal))
 		var/obj/item/stack/ST = S
-		if (ST.get_amount() < 5)
-			to_chat(user, "<span class='warning'>You need at least five sheets for that!</span>")
+		if (ST.get_amount() < 1)
+			to_chat(user, "<span class='warning'>You need at least one crystal for that!</span>")
 			return
 		if (do_after(user,15, target = src))
 			new /obj/structure/canister_frame/machine/frame_tier_2(drop_location())
 			qdel(src)
-			ST.use(5)
+			ST.use(1)
 	else
 		return ..()
 
