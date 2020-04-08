@@ -668,7 +668,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				dat += "<h2>Deadmin While Playing</h2>"
 				var/timegate = CONFIG_GET(number/auto_deadmin_timegate)
 				if(timegate)
-					dat += "<b>Noted roles will automatically deadmin during the first [FLOOR(timegate / 600, 1)] minutes of the round, and will defer to individual preferences after.</b>"
+					dat += "<b>Noted roles will automatically deadmin during the first [FLOOR(timegate / 600, 1)] minutes of the round, and will defer to individual preferences after.</b><br>"
 
 				if(CONFIG_GET(flag/auto_deadmin_players) && !timegate)
 					dat += "<b>Always Deadmin:</b> FORCED</a><br>"
