@@ -44,7 +44,6 @@
 		update_overlays()
 
 /obj/machinery/medical/process()
-
 	update_overlays()
 	update_icon()
 
@@ -78,5 +77,4 @@
 	update_overlays()
 	use_power = IDLE_POWER_USE
 	return
-
 
