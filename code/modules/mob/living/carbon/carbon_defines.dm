@@ -72,3 +72,5 @@
 
 	/// Timer id of any transformation
 	var/transformation_timer
+
+	var/list/all_wounds
