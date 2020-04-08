@@ -576,7 +576,6 @@
 			visible_message("<span class='notice'>[visi_msg].</span>")
 
 		var/split = round(transfer_amount/trays.len)
-		say("[trays.len] for reference")
 		for(var/obj/machinery/hydroponics/H in trays)
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
