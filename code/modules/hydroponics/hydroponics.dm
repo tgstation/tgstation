@@ -619,6 +619,10 @@
 			var/list/text_string = myseed.get_analyzer_text()
 			if(text_string)
 				to_chat(user, text_string)
+			if(myseed.reagents_add.len)
+				to_chat(user, "- Plant Reagents -")
+				for(var/datum/plant_gene/reagent/G in myseed.genes)
+					to_chat(user, "- [G.get_name()] -")
 			return
 		else
 			to_chat(user, "<B>No plant found.</B>")
@@ -627,6 +631,7 @@
 		to_chat(user, "- Toxicity level: <span class='notice'>[toxic] / 100</span>")
 		to_chat(user, "- Water level: <span class='notice'>[waterlevel] / [maxwater]</span>")
 		to_chat(user, "- Nutrition level: <span class='notice'>[reagents.total_volume] / [maxnutri]</span>")
+
 		to_chat(user, "")
 		return
 
