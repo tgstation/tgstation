@@ -72,27 +72,27 @@
   * Honestly this is mostly just a rehash of [/obj/item/ammo_casing/proc/fire_casing()] for pellet counts > 1, except this lets us tamper with the pellets and hook onto them for tracking purposes.
   * The arguments really don't matter, this proc is triggered by COMSIG_PELLET_CLOUD_INIT which is only for this really, it's just a big mess of the state vars we need for doing the stuff over here.
   */
-/datum/component/pellet_cloud/proc/create_casing_pellets(obj/item/ammo_casing/A, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro)
+/datum/component/pellet_cloud/proc/create_casing_pellets(obj/item/ammo_casing/shell, atom/target, mob/living/user, fired_from, randomspread, spread, zone_override, params, distro)
 	shooter = user
 	var/targloc = get_turf(target)
 	if(!zone_override)
 		zone_override = shooter.zone_selected
 
 	for(var/i in 1 to num_pellets)
-		A.ready_proj(target, user, SUPPRESSED_VERY, zone_override, fired_from)
+		shell.ready_proj(target, user, SUPPRESSED_VERY, zone_override, fired_from)
 		if(distro)
 			if(randomspread)
 				spread = round((rand() - 0.5) * distro)
 			else //Smart spread
 				spread = round((i / num_pellets - 0.5) * distro)
 
-		RegisterSignal(A.BB, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
-		RegisterSignal(A.BB, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
-		pellets += A.BB
-		if(!A.throw_proj(target, targloc, shooter, params, spread))
+		RegisterSignal(shell.BB, COMSIG_PROJECTILE_SELF_ON_HIT, .proc/pellet_hit)
+		RegisterSignal(shell.BB, list(COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PARENT_QDELETING), .proc/pellet_range)
+		pellets += shell.BB
+		if(!shell.throw_proj(target, targloc, shooter, params, spread))
 			return
 		if(i != num_pellets)
-			A.newshot()
+			shell.newshot()
 
 /**
   * create_blast_pellets() is for when we have a central point we want to shred the surroundings of with a ring of shrapnel, namely frag grenades and landmines.
@@ -208,7 +208,7 @@
 			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s!</span>")
 		else
 			target.visible_message("<span class='danger'>[target] is hit by a [proj_name]!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
-			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s!</span>")
+			to_chat(target, "<span class='userdanger'>You're hit by a [proj_name]!</span>")
 
 	for(var/M in purple_hearts)
 		var/mob/living/martyr = M
