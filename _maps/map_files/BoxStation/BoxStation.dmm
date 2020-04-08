@@ -28424,6 +28424,9 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "bxi" = (
+/obj/machinery/computer/aifixer{
+	dir = 8
+	},
 /obj/machinery/requests_console{
 	announcementConsole = 1;
 	department = "Research Director's Desk";
@@ -28435,9 +28438,6 @@
 	},
 /obj/structure/window/reinforced{
 	dir = 4
-	},
-/obj/machinery/computer/rdconsole/core{
-	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
@@ -55596,7 +55596,8 @@
 	areastring = "/area/hallway/primary/central";
 	dir = 8;
 	name = "Central Hall APC";
-	pixel_x = -25
+	pixel_x = -25;
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,

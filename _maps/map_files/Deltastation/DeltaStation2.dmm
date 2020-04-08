@@ -94254,13 +94254,13 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "duM" = (
+/obj/machinery/computer/aifixer{
+	dir = 4
+	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/computer/rdconsole/core{
-	dir = 4
-	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "duN" = (
