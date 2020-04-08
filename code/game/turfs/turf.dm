@@ -272,8 +272,6 @@
 
 /turf/Entered(atom/movable/AM)
 	..()
-	if(explosion_level && AM.ex_check(explosion_id))
-		AM.ex_act(explosion_level)
 
 	// If an opaque movable atom moves around we need to potentially update visibility.
 	if (AM.opacity)
