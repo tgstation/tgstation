@@ -752,7 +752,7 @@
 /obj/item/circuitboard/machine/life_support
 	name = "Basic Life Support Unit (Machine Board)"
 	icon_state = "medical"
-	build_path = /obj/machinery/life_support
+	build_path = /obj/machinery/medical/life_support
 	req_components = list(
 		/obj/item/stack/cable_coil = 3,
 		/obj/item/stock_parts/manipulator = 1,
@@ -761,12 +761,12 @@
 
 /obj/item/circuitboard/machine/life_support/mobile
 	name = "Mobile Life Support Unit (Machine Board)"
-	build_path = /obj/machinery/life_support/mobile
+	build_path = /obj/machinery/medical/life_support/mobile
 
 /obj/item/circuitboard/machine/life_support/advanced
 	name = "Advanced Life Support Unit (Machine Board)"
 	icon_state = "medical"
-	build_path = /obj/machinery/life_support/advanced
+	build_path = /obj/machinery/medical/life_support/advanced
 	req_components = list(
 		/obj/item/stack/cable_coil = 3,
 		/obj/item/stock_parts/manipulator = 2,
