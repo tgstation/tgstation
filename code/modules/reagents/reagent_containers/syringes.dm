@@ -252,7 +252,7 @@
 
 /obj/item/reagent_containers/syringe/noreact
 	name = "cryo syringe"
-	desc = "An advanced syringe that stops reagents inside from reacting. It can only hold  to 10 units."
+	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 10 units."
 	volume = 10
 	reagent_flags = TRANSPARENT | NO_REACT
 
