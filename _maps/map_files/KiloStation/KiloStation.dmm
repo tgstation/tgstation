@@ -10150,6 +10150,12 @@
 	dir = 8
 	},
 /obj/structure/flora/ausbushes/leafybush,
+/obj/machinery/camera{
+	c_tag = "Genetics Monkey Pen";
+	dir = 4;
+	name = "science camera";
+	network = list("ss13","rd")
+	},
 /turf/open/floor/grass,
 /area/science/genetics)
 "aqr" = (
@@ -31692,7 +31698,6 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/structure/flora/ausbushes/fernybush,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/grass,
 /area/science/genetics)
@@ -35982,6 +35987,7 @@
 	name = "Monkey Pen";
 	req_access_txt = "9, 7"
 	},
+/obj/structure/flora/ausbushes/fernybush,
 /turf/open/floor/grass,
 /area/science/genetics)
 "bdc" = (
@@ -36008,11 +36014,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bde" = (
-/obj/machinery/camera{
-	c_tag = "Genetics Monkey Pen";
-	name = "science camera";
-	network = list("ss13","rd")
-	},
 /obj/structure/window/reinforced{
 	dir = 1
 	},
