@@ -21,10 +21,10 @@ RSF
 	var/matter = 0
 	///The max amount of matter in the device
 	var/max_matter = 30
-	///The type of the object we are going to despense
-	var/to_despense
-	///The cost of the object we are going to despense
-	var/despense_cost = 0
+	///The type of the object we are going to dispense
+	var/to_dispense
+	///The cost of the object we are going to dispense
+	var/dispense_cost = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	///An associated list of atoms and charge costs. This can contain a seperate list, as long as it's associated item is an object
 	var/list/cost_by_item = list(/obj/item/reagent_containers/food/drinks/drinkingglass = 20,
@@ -44,7 +44,7 @@ RSF
 
 /obj/item/rsf/Initialize()
 	. = ..()
-	to_despense = cost_by_item[1]
+	to_dispense = cost_by_item[1]
 
 /obj/item/rsf/examine(mob/user)
 	. = ..()
@@ -55,13 +55,12 @@ RSF
 
 /obj/item/rsf/attackby(obj/item/W, mob/user, params)
 	if(is_type_in_list(W,matter_by_item))//If the thing we got hit by is in our matter list
-		if(matter > max_matter)
+		var/tempMatter = matter_by_item[W.type] + matter
+		if(tempMatter > max_matter)
 			to_chat(user, "<span class='warning'>\The [src] can't hold any more [discriptor]!</span>")
 			return
 		qdel(W)
-		matter += matter_by_item[W.type]//We add its value
-		if(matter > max_matter)
-			matter = max_matter
+		matter = tempMatter //We add its value
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
 		to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] [discriptor].</span>")
 		icon_state = initial(icon_state)//and set the icon state to the initial value it had
@@ -77,36 +76,38 @@ RSF
 	var/cost = 0
 	//Warning, prepare for bodgecode
 	while(istype(target, /list/))//While target is a list we continue the loop
-		item_list = list()
-		for(var/meme in target)//We iterate through all of targets entrys
-			var/atom/test
-			if(istype(meme, /list/))//If it's a list let's use its associated object
-				var/temp = target[meme]
-				test = new temp()
-			else
-				test = new meme()
-			//We then add their data into the radial menu
-			item_list[test.name] = image(icon = test.icon, icon_state = test.icon_state)
-			qdel(test)
-		var/picked = show_radial_menu(user, src, item_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+		var/picked = show_radial_menu(user, src, formRadial(target), custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 		if(!check_menu(user) || picked == null)
 			return
 		for(var/emem in target)//Back through target agian
-			var/atom/test
-			if(istype(emem, /list/))
-				var/temp = target[emem]//If it's a list we should use its associated object
-				test = new temp()
-			else
-				test = new emem()
+			var/atom/test = extractObject(target, emem)
 			if(picked == test.name)//We try and find the entry that matches the radial selection
 				cost = target[emem]//We cash the cost
 				target = emem
 				break
 			qdel(test)
 		//If we found a list we start it all again, this time looking through its contents.
-	to_despense = target
-	despense_cost = cost
+	to_dispense = target
+	dispense_cost = cost
 	// Change mode
+
+/obj/item/rsf/proc/extractObject(from, input)
+	var/atom/test
+	if(istype(input, /list/))
+		var/temp = target[input]//If it's a list we should use its associated object
+		test = new temp()
+	else
+		test = new input()
+	return test
+
+/obj/item/rsf/proc/formRadial(from)
+	radial_list = list()
+	for(var/meme in from)//We iterate through all of targets entrys
+		var/atom/test = extractObject(from, meme)
+		//We then add their data into the radial menu
+		radial_list[test.name] = image(icon = test.icon, icon_state = test.icon_state)
+		qdel(test)
+	return radial_list
 
 /obj/item/rsf/proc/check_menu(mob/user)
 	if(!istype(user))
@@ -121,9 +122,9 @@ RSF
 		return
 	if(!is_allowed(A))
 		return
-	if(use_matter(despense_cost, user))//If we can charge that amount of charge, we do so and return true
+	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
 		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
-		var/atom/meme = new to_despense(get_turf(A))
+		var/atom/meme = new to_dispense(get_turf(A))
 		to_chat(user, "<span class='notice'>[action_type] [meme.name]...</span>")
 
 ///A helper proc. checks to see if we can afford the amount of charge that is passed, and if we can docs the charge from our base, and returns TRUE. If we can't we return FALSE
@@ -161,7 +162,7 @@ RSF
 	var/cooldowndelay = 10
 	max_matter = 10
 	cost_by_item = list()
-	despense_cost = 100
+	dispense_cost = 100
 	discriptor = "cookie-units"
 	action_type = "Fabricates"
 
@@ -189,16 +190,15 @@ RSF
 		P = user
 	if(((obj_flags & EMAGGED) || (P && P.emagged)) && !toxin)
 		toxin = TRUE
-		to_despense = /obj/item/reagent_containers/food/snacks/cookie/sleepy
+		to_dispense = /obj/item/reagent_containers/food/snacks/cookie/sleepy
 		to_chat(user, "<span class='alert'>Cookie Synthesizer hacked.</span>")
 	else
 		toxin = FALSE
-		to_despense = /obj/item/reagent_containers/food/snacks/cookie
+		to_dispense = /obj/item/reagent_containers/food/snacks/cookie
 		to_chat(user, "<span class='notice'>Cookie Synthesizer reset.</span>")
 
 /obj/item/rsf/cookiesynth/process()
-	if(matter < max_matter)
-		matter++
+	matter = min(matter + 1, max_matter) //We add 1 up to a point
 
 /obj/item/rsf/cookiesynth/afterattack(atom/A, mob/user, proximity)
 	if(cooldown > world.time)
