@@ -149,10 +149,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/freoncomp = 0
 
 	var/pluoxiumbonus = 0
-	var/h2obonus = 0 //used when calculating if the heat resitance from h2o is applied
-	var/freonbonus = 1 //it allows us to remove the power generation while freon is inside the chamber
-	var/h2omalus = 1 //used when calculating if the h2o "malus" is applied, the malus is an increase in power, waste gases and heat (wich is bad if not ready) also now used when calculating amount of radiations
-	var/h2ofixed = 0.5 //fix for the heat penalty, making it work differently at different %
+	///used when calculating if the heat resitance from h2o is applied
+	var/h2obonus = 0
+	///it allows us to remove the power generation while freon is inside the chamber
+	var/freonbonus = 1
+	///used when calculating if the h2o "malus" is applied, the malus is an increase in power, waste gases and heat (wich is bad if not ready) also now used when calculating amount of radiations
+	var/h2omalus = 1
+	///fix for the heat penalty, making it work differently at different %
+	var/h2ofixed = 0.5
 
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
