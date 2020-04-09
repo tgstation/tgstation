@@ -1,9 +1,9 @@
-import { clamp01, keyOfMatchingRange, scale } from 'common/math';
+import { keyOfMatchingRange, scale } from 'common/math';
 import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { DraggableControl } from './DraggableControl';
 
-export const Slider = props => {
+export const Knob = props => {
   const {
     // Draggable props (passthrough)
     animated,
@@ -19,16 +19,18 @@ export const Slider = props => {
     value,
     // Own props
     className,
+    style,
     fillValue,
     color,
     ranges = {},
+    size,
+    bipolar,
     children,
     ...rest
   } = props;
-  const hasContent = children !== undefined;
   return (
     <DraggableControl
-      dragMatrix={[1, 0]}
+      dragMatrix={[0, -1]}
       {...{
         animated,
         format,
@@ -52,12 +54,6 @@ export const Slider = props => {
           inputElement,
           handleDragStart,
         } = control;
-        const hasFillValue = fillValue !== undefined
-          && fillValue !== null;
-        const scaledValue = scale(
-          value,
-          minValue,
-          maxValue);
         const scaledFillValue = scale(
           fillValue ?? displayValue,
           minValue,
@@ -69,50 +65,60 @@ export const Slider = props => {
         const effectiveColor = color
           || keyOfMatchingRange(fillValue ?? value, ranges)
           || 'default';
+        const rotation = (scaledDisplayValue - 0.5) * 270;
         return (
           <div
             className={classes([
-              'Slider',
-              'ProgressBar',
-              'ProgressBar--color--' + effectiveColor,
+              'Knob',
+              'Knob--color--' + effectiveColor,
+              bipolar && 'Knob--bipolar',
               className,
               computeBoxClassName(rest),
             ])}
+            style={{
+              'font-size': size + 'rem',
+              ...style,
+            }}
             {...computeBoxProps(rest)}
             onMouseDown={handleDragStart}>
-            <div
-              className={classes([
-                'ProgressBar__fill',
-                hasFillValue && 'ProgressBar__fill--animated',
-              ])}
-              style={{
-                width: clamp01(scaledFillValue) * 100 + '%',
-                opacity: 0.4,
-              }} />
-            <div
-              className="ProgressBar__fill"
-              style={{
-                width: clamp01(Math.min(scaledFillValue, scaledDisplayValue))
-                  * 100 + '%',
-              }} />
-            <div
-              className="Slider__cursorOffset"
-              style={{
-                width: clamp01(scaledDisplayValue) * 100 + '%',
-              }}>
-              <div className="Slider__cursor" />
-              <div className="Slider__pointer" />
-              {dragging && (
-                <div className="Slider__popupValue">
-                  {displayElement}
-                </div>
-              )}
+            <div className="Knob__circle">
+              <div
+                className="Knob__cursorBox"
+                style={{
+                  transform: `rotate(${rotation}deg)`,
+                }}>
+                <div className="Knob__cursor" />
+              </div>
             </div>
-            <div className="ProgressBar__content">
-              {hasContent
-                ? children
-                : displayElement}
-            </div>
+            {dragging && (
+              <div className="Knob__popupValue">
+                {displayElement}
+              </div>
+            )}
+            <svg
+              className="Knob__ring Knob__ringTrackPivot"
+              viewBox="0 0 100 100">
+              <circle
+                className="Knob__ringTrack"
+                cx="50"
+                cy="50"
+                r="50" />
+            </svg>
+            <svg
+              className="Knob__ring Knob__ringFillPivot"
+              viewBox="0 0 100 100">
+              <circle
+                className="Knob__ringFill"
+                style={{
+                  'stroke-dashoffset': (
+                    ((bipolar ? 2.75 : 2.00) - scaledFillValue * 1.5)
+                      * Math.PI * 50
+                  ),
+                }}
+                cx="50"
+                cy="50"
+                r="50" />
+            </svg>
             {inputElement}
           </div>
         );

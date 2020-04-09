@@ -191,12 +191,13 @@ const PackagingControlsItem = props => {
         minValue={1}
         maxValue={10}
         onChange={onChangeAmount} />
-      <Button ml={1}
+      <Button
+        ml={1}
         content="Create"
         onClick={onCreate} />
-      <Box inline ml={1}
-        color="label"
-        content={sideNote} />
+      <Box inline ml={1} color="label">
+        {sideNote}
+      </Box>
     </LabeledList.Item>
   );
 };

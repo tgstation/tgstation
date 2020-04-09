@@ -11,8 +11,9 @@ export const ColorBox = props => {
       ])}
       color={content ? null : 'transparent'}
       backgroundColor={color}
-      content={content || '.'}
-      {...rest} />
+      {...rest}>
+      {content || '.'}
+    </Box>
   );
 };
 

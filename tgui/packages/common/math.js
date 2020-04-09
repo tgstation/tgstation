@@ -1,8 +1,20 @@
 /**
  * Limits a number to the range between 'min' and 'max'.
  */
-export const clamp = (value, min = 0, max = 1) => {
+export const clamp = (value, min, max) => {
   return Math.max(min, Math.min(value, max));
+};
+
+/**
+ * Limits a number between 0 and 1.
+ */
+export const clamp01 = value => clamp(value, 0, 1);
+
+/**
+ * Scales a number to fit into the range between min and max.
+ */
+export const scale = (value, min, max) => {
+  return (value - min) / (max - min);
 };
 
 /**
@@ -15,7 +27,7 @@ export const round = value => Math.round(value);
  * Returns a string representing a number in fixed point notation.
  */
 export const toFixed = (value, fractionDigits = 0) => {
-  return Number(value).toFixed(fractionDigits);
+  return Number(value).toFixed(Math.max(fractionDigits, 0));
 };
 
 /**

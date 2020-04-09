@@ -24,8 +24,9 @@ export const Canister = props => {
           </LabeledList.Item>
           <LabeledList.Item
             label="Port"
-            color={data.portConnected ? 'good' : 'average'}
-            content={data.portConnected ? 'Connected' : 'Not Connected'} />
+            color={data.portConnected ? 'good' : 'average'}>
+            {data.portConnected ? 'Connected' : 'Not Connected'}
+          </LabeledList.Item>
           {!!data.isPrototype && (
             <LabeledList.Item label="Access">
               <Button

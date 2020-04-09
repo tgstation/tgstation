@@ -25,6 +25,7 @@
 @include meta.load-css('./components/FatalError.scss');
 @include meta.load-css('./components/Flex.scss');
 @include meta.load-css('./components/Input.scss');
+@include meta.load-css('./components/Knob.scss');
 @include meta.load-css('./components/LabeledList.scss');
 @include meta.load-css('./components/Layout.scss');
 @include meta.load-css('./components/NoticeBox.scss');
@@ -35,6 +36,7 @@
 @include meta.load-css('./components/ProgressBar.scss');
 @include meta.load-css('./components/Roulette.scss');
 @include meta.load-css('./components/Section.scss');
+@include meta.load-css('./components/Slider.scss');
 @include meta.load-css('./components/Table.scss');
 @include meta.load-css('./components/Tabs.scss');
 @include meta.load-css('./components/TitleBar.scss');

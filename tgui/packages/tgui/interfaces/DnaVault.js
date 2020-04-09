@@ -22,18 +22,21 @@ export const DnaVault = props => {
         <LabeledList>
           <LabeledList.Item label="Human DNA">
             <ProgressBar
-              value={dna / dna_max}
-              content={dna + ' / ' + dna_max + ' Samples'} />
+              value={dna / dna_max}>
+              {dna + ' / ' + dna_max + ' Samples'}
+            </ProgressBar>
           </LabeledList.Item>
           <LabeledList.Item label="Plant DNA">
             <ProgressBar
-              value={plants / plants_max}
-              content={plants + ' / ' + plants_max + ' Samples'} />
+              value={plants / plants_max}>
+              {plants + ' / ' + plants_max + ' Samples'}
+            </ProgressBar>
           </LabeledList.Item>
           <LabeledList.Item label="Animal DNA">
             <ProgressBar
-              value={animals / animals}
-              content={animals + ' / ' + animals_max + ' Samples'} />
+              value={animals / animals}>
+              {animals + ' / ' + animals_max + ' Samples'}
+            </ProgressBar>
           </LabeledList.Item>
         </LabeledList>
       </Section>
