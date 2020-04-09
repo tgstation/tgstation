@@ -15,6 +15,7 @@
 	//probiscis-blocker handling
 	if(iscarbon(hit))
 		var/mob/living/carbon/victim = hit
+		message_admins("[victim.head] [istype(victim.head, /obj/item/clothing/head/headcrab)]")
 		if(victim.head && istype(victim.head, /obj/item/clothing/head/headcrab))
 			return NOTNOTLIVE
 		if(ishuman(hit))
@@ -50,7 +51,7 @@
 	else if(istype(hit, /mob/living/carbon))
 		var/mob/living/carbon/humies = hit
 		//Make this permanent
-		humies.become_blind(EYES_COVERED)
+		humies.become_blind(HEAD_COVERED)
 		//Make this effect the head
 		humies.adjustBruteLoss(20)
 
