@@ -75,8 +75,8 @@
 		if (display_error)
 			to_chat(owner, "<span class='warning'>You must be facing your victim.</span>")
 		return FALSE
-	// Check: Target facing me?
-	if (!target.lying && !is_A_facing_B(target,owner))
+	// Check: Target facing me? (On the floor, they're facing everyone)
+	if ((target.mobility_flags & MOBILITY_STAND) && !is_A_facing_B(target,owner))
 		if (display_error)
 			to_chat(owner, "<span class='warning'>Your victim must be facing you to see into your eyes.</span>")
 		return FALSE

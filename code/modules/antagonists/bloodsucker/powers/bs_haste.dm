@@ -65,7 +65,7 @@
 		// Did I get knocked down?
 		if (owner && owner.incapacitated(ignore_restraints=TRUE,ignore_grab=TRUE,check_immobilized=TRUE))// owner.incapacitated())
 			// We're gonna cancel. But am I on the ground? Spin me!
-			if (user.lying)
+			if (!(user.mobility_flags & MOBILITY_STAND))
 				var/send_dir = get_dir(owner, T)
 				new /datum/forced_movement(owner, get_ranged_target_turf(owner, send_dir, 1), 1, FALSE)
 				owner.spin(10)
