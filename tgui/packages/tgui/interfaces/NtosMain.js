@@ -15,6 +15,7 @@ const PROGRAM_ICONS = {
   powermonitor: 'plug',
   job_manage: 'address-book',
   crewmani: 'clipboard-list',
+  robocontrol: 'robot',
 };
 
 export const NtosMain = props => {

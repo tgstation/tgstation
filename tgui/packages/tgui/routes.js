@@ -91,6 +91,7 @@ import { NtosNetDos } from './interfaces/NtosNetDos';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosNetMonitor } from './interfaces/NtosNetMonitor';
 import { NtosRevelation } from './interfaces/NtosRevelation';
+import { NtosRoboControl } from './interfaces/NtosRoboControl';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
 import { NuclearBomb } from './interfaces/NuclearBomb';
@@ -545,6 +546,12 @@ const ROUTES = {
     wrapper: () => NtosWrapper,
     scrollable: false,
     theme: 'syndicate',
+  },
+  ntos_robocontrol: {
+    component: () => NtosRoboControl,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
   },
   ntos_station_alert: {
     component: () => StationAlertConsole,
