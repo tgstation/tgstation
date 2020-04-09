@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, NoticeBox, ProgressBar, Section, Flex, Knob } from '../components';
+import { AnimatedNumber, Box, Button, Flex, Knob, LabeledList, NoticeBox, Section } from '../components';
 
 export const Canister = props => {
   const { act, data } = useBackend(props);
