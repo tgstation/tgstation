@@ -11,20 +11,19 @@
 		SSticker.anonymousnames = ANON_DISABLED
 		to_chat(usr, "Disabled anonymous names.")
 		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disabled anonymous names.</span>")
-	else
-		var/list/names = list("Cancel", ANON_RANDOMNAMES, ANON_EMPLOYEENAMES)
-		var/result = input(usr, "Choose an anonymous theme","going dark") as null|anything in names
-		if(!usr || !result || result == "Cancel")
-			return
-		if(SSticker.current_state > GAME_STATE_PREGAME)
-			to_chat(usr, "You took too long! The game has started.")
-			return
+		return
+	var/list/names = list("Cancel", ANON_RANDOMNAMES, ANON_EMPLOYEENAMES)
+	var/result = input(usr, "Choose an anonymous theme","going dark") as null|anything in names
+	if(!usr || !result || result == "Cancel")
+		return
+	if(SSticker.current_state > GAME_STATE_PREGAME)
+		to_chat(usr, "You took too long! The game has started.")
+		return
 
-		SSticker.anonymousnames = result
-		to_chat(usr, "Enabled anonymous names. THEME: [SSticker.anonymousnames].")
-		message_admins("<span class='adminnotice'>[key_name_admin(usr)] has enabled anonymous names. THEME: [SSticker.anonymousnames].</span>")
-	to_chat(usr, "Disabled anonymous names.")
-	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has disabled anonymous names.</span>")
+	SSticker.anonymousnames = result
+	to_chat(usr, "Enabled anonymous names. THEME: [SSticker.anonymousnames].")
+	message_admins("<span class='adminnotice'>[key_name_admin(usr)] has enabled anonymous names. THEME: [SSticker.anonymousnames].</span>")
+
 /**
   * anonymous_name: generates a corporate random name. used in admin event tool anonymous names
   *
@@ -37,7 +36,7 @@
 /proc/anonymous_name(mob/M)
 	switch(SSticker.anonymousnames)
 		if(ANON_RANDOMNAMES)
-			return = M.client.prefs.pref_species.random_name(M.gender,1)
+			return M.client.prefs.pref_species.random_name(M.gender,1)
 		if(ANON_EMPLOYEENAMES)
 			var/name = "Employee "
 
@@ -60,7 +59,7 @@
 /proc/anonymous_ai_name(is_ai = FALSE)
 	switch(SSticker.anonymousnames)
 		if(ANON_RANDOMNAMES)
-			return = pick(GLOB.ai_names)
+			return pick(GLOB.ai_names)
 		if(ANON_EMPLOYEENAMES)
 			var/verbs = capitalize(pick(GLOB.ing_verbs))
 			var/phonetic = pick(GLOB.phonetic_alphabet)
