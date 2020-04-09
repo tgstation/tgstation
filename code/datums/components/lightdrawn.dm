@@ -120,8 +120,8 @@
 
 	if(!brightest)
 		return // no valid light to go to but their mood is still rising
-
-	step_to(living_parent, brightest.source_turf)
+	if(living_parent.client)
+		living_parent.client.Move(living_parent, brightest.source_turf)
 
 	if(next_message < world.time)
 		to_chat(living_parent, "<span class='hypnophrase'>...LÄMP...</span>")
