@@ -71,7 +71,6 @@ RSF
 	if(!user)
 		return
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/list/item_list
 	var/atom/target = cost_by_item
 	var/cost = 0
 	//Warning, prepare for bodgecode
@@ -91,17 +90,19 @@ RSF
 	dispense_cost = cost
 	// Change mode
 
+///Extracts the related object from a associated list of objects and values, or lists and objects.
 /obj/item/rsf/proc/extractObject(from, input)
 	var/atom/test
 	if(istype(input, /list/))
-		var/temp = target[input]//If it's a list we should use its associated object
+		var/temp = from[input]//If it's a list we should use its associated object
 		test = new temp()
 	else
 		test = new input()
 	return test
 
+///Forms a radial menu based off an object in a list, or a list's associated object
 /obj/item/rsf/proc/formRadial(from)
-	radial_list = list()
+	var/list/radial_list = list()
 	for(var/meme in from)//We iterate through all of targets entrys
 		var/atom/test = extractObject(from, meme)
 		//We then add their data into the radial menu
