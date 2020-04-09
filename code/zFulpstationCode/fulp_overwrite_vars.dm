@@ -356,3 +356,42 @@
 //** Lets medical and engineering syndiborgs choose a disguise from a list.
 //** Also tweaks the medical syndiborg, removing emag and granting more med items
 //***************************************************************************
+
+
+
+//************************************************************
+//** Improved Sec Starter Gear by Surrealistik Oct 2019 BEGINS
+//************************************************************
+/datum/outfit/job/security
+	backpack_contents = list() //Start with stun baton in belt.
+	r_pocket = /obj/item/pda/security
+	belt = /obj/item/storage/belt/security/fulp_starter_full
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	box = /obj/item/storage/box/security/improved
+	pda_slot = ITEM_SLOT_RPOCKET
+
+/datum/outfit/job/warden
+	backpack_contents = list() //Start with stun baton in belt.
+	r_pocket = /obj/item/pda/security
+	belt = /obj/item/storage/belt/security/fulp_starter_full
+	box = /obj/item/storage/box/security/improved
+	pda_slot = ITEM_SLOT_RPOCKET
+
+/datum/outfit/job/hos
+	backpack_contents = list() //Start with stun baton in belt.
+	r_pocket = /obj/item/pda/security
+	belt = /obj/item/storage/belt/security/fulp_starter_full
+	box = /obj/item/storage/box/security/improved
+	pda_slot = ITEM_SLOT_RPOCKET
+
+/obj/machinery/vending/wardrobe/sec_wardrobe
+	req_access = list(ACCESS_SECURITY) //We can now vend armor and helmets, so we need to protect the contents.
+
+/obj/structure/closet/secure_closet/security/PopulateContents()
+	..()
+	for(var/atom/movable/AM in src) //Empty to reduce locker bloat due to better on-spawn gear and expanded protolathe options; let the grand purge begin.
+		qdel(AM)
+
+//************************************************************
+//** Improved Sec Starter Gear by Surrealistik Oct 2019 ENDS
+//************************************************************
