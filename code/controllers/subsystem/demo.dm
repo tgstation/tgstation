@@ -324,65 +324,7 @@ SUBSYSTEM_DEF(demo)
 	while(appearance_list[appearance_list.len] == "" && appearance_list.len > 0)
 		appearance_list.len--
 
-	var/undiffed_string = "{[jointext(appearance_list, ";")]}"
-
-	if(diff_appearance)
-		var/overlays_identical = TRUE
-		if(diff_remove_overlays)
-			overlays_identical = (appearance.overlays.len == 0)
-		else if(appearance.overlays.len != diff_appearance.overlays.len)
-			overlays_identical = FALSE
-		else
-			for(var/i in 1 to appearance.overlays.len)
-				if(appearance.overlays[i] != diff_appearance.overlays[i])
-					overlays_identical = FALSE
-					break
-
-		var/underlays_identical = TRUE
-		if(diff_remove_overlays)
-			underlays_identical = (appearance.underlays.len == 0)
-		else if(appearance.underlays.len != diff_appearance.underlays.len)
-			underlays_identical = FALSE
-		else
-			for(var/i in 1 to appearance.underlays.len)
-				if(appearance.underlays[i] != diff_appearance.underlays[i])
-					underlays_identical = FALSE
-					break
-
-		var/diff_transform_string = "i"
-		if(diff_appearance.transform)
-			var/matrix/M = diff_appearance.transform
-			diff_transform_string = "[M.a],[M.b],[M.c],[M.d],[M.e],[M.f]"
-			if(diff_transform_string == "1,0,0,0,1,0")
-				diff_transform_string = "i"
-
-		var/list/diffed_appearance_list = list(
-			json_encode(cached_icon),
-			json_encode(cached_icon_state),
-			json_encode(cached_name),
-			appearance.appearance_flags == diff_appearance.appearance_flags ? "" : appearance.appearance_flags,
-			appearance.layer == diff_appearance.layer ? "" : appearance.layer,
-			appearance.plane == diff_appearance.plane ? "" : appearance.plane,
-			appearance.dir == diff_appearance.dir ? "" : appearance.dir,
-			appearance.color == diff_appearance.color ? "" : color_string,
-			appearance.alpha == diff_appearance.alpha ? "" : appearance.alpha,
-			appearance.pixel_x == diff_appearance.pixel_x ? "" : appearance.pixel_x,
-			appearance.pixel_y == diff_appearance.pixel_y ? "" : appearance.pixel_y,
-			appearance.blend_mode == diff_appearance.blend_mode ? "" : appearance.blend_mode,
-			appearance_transform_string == diff_transform_string ? "" : appearance_transform_string,
-			appearance:invisibility == diff_appearance:invisibility ? "" : appearance:invisibility, // colon because dreamchecker is too dumb
-			appearance.pixel_w == diff_appearance.pixel_w ? "" : appearance.pixel_w,
-			appearance.pixel_z == diff_appearance.pixel_z ? "" : appearance.pixel_z,
-			overlays_identical ? "" : overlays_string,
-			underlays_identical ? "" :underlays_string
-			)
-		while(diffed_appearance_list[diffed_appearance_list.len] == "" && diffed_appearance_list.len > 0)
-			diffed_appearance_list.len--
-
-		var/diffed_string = "~{[jointext(diffed_appearance_list, ";")]}"
-		if(length(diffed_string) < length(undiffed_string))
-			return diffed_string
-	return undiffed_string
+	return "{[jointext(appearance_list, ";")]}"
 
 /datum/controller/subsystem/demo/stat_entry(msg)
 	msg += "Remaining: {"
