@@ -78,8 +78,8 @@ import { NaniteProgrammer } from './interfaces/NaniteProgrammer';
 import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
-import { NtosAtmos } from './interfaces/NtosAtmos';
 import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosAtmos } from './interfaces/NtosAtmos';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
@@ -92,6 +92,8 @@ import { NtosNetDos } from './interfaces/NtosNetDos';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosNetMonitor } from './interfaces/NtosNetMonitor';
 import { NtosRevelation } from './interfaces/NtosRevelation';
+import { NtosRoboControl } from './interfaces/NtosRoboControl';
+import { NtosShipping } from './interfaces/NtosShipping';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
 import { NuclearBomb } from './interfaces/NuclearBomb';
@@ -550,6 +552,18 @@ const ROUTES = {
     wrapper: () => NtosWrapper,
     scrollable: false,
     theme: 'syndicate',
+  },
+  ntos_robocontrol: {
+    component: () => NtosRoboControl,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_shipping: {
+    component: () => NtosShipping,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
   },
   ntos_station_alert: {
     component: () => StationAlertConsole,

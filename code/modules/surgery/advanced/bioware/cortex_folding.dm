@@ -6,7 +6,7 @@
 				/datum/surgery_step/clamp_bleeders,
 				/datum/surgery_step/incise,
 				/datum/surgery_step/incise,
-				/datum/surgery_step/imprint_cortex,
+				/datum/surgery_step/fold_cortex,
 				/datum/surgery_step/close)
 	possible_locs = list(BODY_ZONE_HEAD)
 	target_mobtypes = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
