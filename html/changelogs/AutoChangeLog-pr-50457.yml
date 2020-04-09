@@ -1,0 +1,6 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - bugfix: "Fixes announcement spam in Families."
+  - bugfix: "Fixes the stars not showing up in Families for Cops and Gangsters.
+experimental: Space Cops now arrive earlier the higher the wanted level gets."
