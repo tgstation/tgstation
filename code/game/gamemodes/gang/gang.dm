@@ -30,6 +30,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	protected_jobs = list()
 	var/check_counter = 0
 	var/endtime = null
+	var/start_time = null
 	var/fuckingdone = FALSE
 	var/time_to_end = 60 MINUTES
 	var/gangs_to_generate = 3
@@ -68,6 +69,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		antag_candidates.Remove(gangbanger)
 	for(var/j = 0, j < gangs_to_generate, j++)
+		if(!antag_candidates.len)
+			break
 		var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
 		pigs += one_eight_seven_on_an_undercover_cop
 		undercover_cops += one_eight_seven_on_an_undercover_cop
@@ -75,6 +78,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		log_game("[key_name(one_eight_seven_on_an_undercover_cop)] has been selected as a starting undercover cop!")
 		antag_candidates.Remove(one_eight_seven_on_an_undercover_cop)
 	endtime = world.time + time_to_end
+	start_time = world.time
 	return TRUE
 
 /datum/game_mode/gang/post_setup()
@@ -228,17 +232,15 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				new_wanted_level = 4
 			if(FIVE_STARS_LOW to INFINITY)
 				new_wanted_level = 5
-	if(wanted_level == new_wanted_level) //Same shit, dont care.
-		return
 	update_wanted_level(new_wanted_level)
 
 ///Updates the icon states for everyone and sends outs announcements regarding the police.
 /datum/game_mode/gang/proc/update_wanted_level(newlevel)
 	if(newlevel > wanted_level)
 		on_gain_wanted_level(newlevel)
-
 	else if (newlevel < wanted_level)
 		on_lower_wanted_level(newlevel)
+	wanted_level = newlevel
 	for(var/i in GLOB.player_list)
 		var/mob/M = i
 		if(!M.hud_used?.wanted_lvl)
@@ -252,26 +254,34 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/announcement_message
 	switch(newlevel)
 		if(2)
-			announcement_message = "Small amount of police vehicles have been spotted en route towards [station_name()]."
+			announcement_message = "Small amount of police vehicles have been spotted en route towards [station_name()]. They will arrive at the 50 minute mark."
+			endtime = start_time + 50 MINUTES
 		if(3)
-			announcement_message = "A large detachment police vehicles have been spotted en route towards [station_name()]."
+			announcement_message = "A large detachment police vehicles have been spotted en route towards [station_name()]. They will arrive at the 40 minute mark."
+			endtime = start_time + 40 MINUTES
 		if(4)
-			announcement_message = "A detachment of top-trained agents has been spotted on their way to [station_name()]."
+			announcement_message = "A detachment of top-trained agents has been spotted on their way to [station_name()]. They will arrive at the 35 minute mark."
+			endtime = start_time + 35 MINUTES
 		if(5)
-			announcement_message = "The fleet enroute to [station_name()] now consists of national guard personnel."
+			announcement_message = "The fleet enroute to [station_name()] now consists of national guard personnel. They will arrive at the 30 minute mark."
+			endtime = start_time + 30 MINUTES
 	priority_announce(announcement_message, "Station Spaceship Detection Systems")
 
 /datum/game_mode/gang/proc/on_lower_wanted_level(newlevel)
 	var/announcement_message
 	switch(newlevel)
 		if(1)
-			announcement_message = "There are now only a few police vehicle headed towards [station_name()]."
+			announcement_message = "There are now only a few police vehicle headed towards [station_name()]. They will arrive at the 60 minute mark."
+			endtime = start_time + 60 MINUTES
 		if(2)
-			announcement_message = "There seem to be fewer police vehicles headed towards [station_name()]."
+			announcement_message = "There seem to be fewer police vehicles headed towards [station_name()]. They will arrive at the 50 minute mark."
+			endtime = start_time + 50 MINUTES
 		if(3)
-			announcement_message = "There are no longer top-trained agents in the fleet headed towards [station_name()]."
+			announcement_message = "There are no longer top-trained agents in the fleet headed towards [station_name()]. They will arrive at the 40 minute mark."
+			endtime = start_time + 40 MINUTES
 		if(4)
-			announcement_message = "The convoy enroute to [station_name()] seems to no longer consist of national guard personnel."
+			announcement_message = "The convoy enroute to [station_name()] seems to no longer consist of national guard personnel. They will arrive at the 35 minute mark."
+			endtime = start_time + 35 MINUTES
 	priority_announce(announcement_message, "Station Spaceship Detection Systems")
 
 /datum/game_mode/gang/proc/send_in_the_fuzz()
