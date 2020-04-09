@@ -225,9 +225,9 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
     var/obj/item/hilbertshotel/parentSphere
 
 /turf/open/space/bluespace/Entered(atom/movable/A)
-    . = ..()
-    A.forceMove(get_turf(parentSphere))
-    do_sparks(3, FALSE, get_turf(A))
+	. = ..()
+	if(parentSphere && A.forceMove(get_turf(parentSphere)))
+		do_sparks(3, FALSE, get_turf(A))
 
 /turf/closed/indestructible/hoteldoor
     name = "Hotel Door"

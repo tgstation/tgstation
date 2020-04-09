@@ -244,7 +244,7 @@ If you're feeling frisky, examine yourself and click the underlined item to pull
 
 /obj/screen/alert/embeddedobject/Click()
 	if(isliving(usr) && usr == owner)
-		var/mob/living/carbon/human/M = usr
+		var/mob/living/carbon/M = usr
 		return M.help_shake_act(M)
 
 /obj/screen/alert/weightless

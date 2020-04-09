@@ -1,9 +1,14 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armour_penetration, penetrated_text)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, silent=FALSE, armour_penetration, penetrated_text)
 	var/armor = getarmor(def_zone, attack_flag)
 
+	if(armor <= 0)
+		return armor
+	if(silent)
+		return max(0, armor - armour_penetration)
+
 	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armor > 0 && armour_penetration)
+	if(armour_penetration)
 		armor = max(0, armor - armour_penetration)
 		if(penetrated_text)
 			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
@@ -14,13 +19,12 @@
 			to_chat(src, "<span class='notice'>[absorb_text]</span>")
 		else
 			to_chat(src, "<span class='notice'>Your armor absorbs the blow!</span>")
-	else if(armor > 0)
+	else
 		if(soften_text)
 			to_chat(src, "<span class='warning'>[soften_text]</span>")
 		else
 			to_chat(src, "<span class='warning'>Your armor softens the blow!</span>")
 	return armor
-
 
 /mob/living/proc/getarmor(def_zone, type)
 	return 0

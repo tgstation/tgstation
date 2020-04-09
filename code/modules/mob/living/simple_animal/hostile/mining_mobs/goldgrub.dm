@@ -48,24 +48,24 @@
 	burrow = new
 	spit.Grant(src)
 	burrow.Grant(src)
-	
+
 /datum/action/innate/goldgrub
 	background_icon_state = "bg_default"
-	
+
 /datum/action/innate/goldgrub/spitore
 	name = "Spit Ore"
 	desc = "Vomit out all of your consumed ores."
-	
+
 /datum/action/innate/goldgrub/spitore/Activate()
 	var/mob/living/simple_animal/hostile/asteroid/goldgrub/G = owner
 	if(G.stat == DEAD || G.is_burrowed)
 		return
 	G.barf_contents()
-	
+
 /datum/action/innate/goldgrub/burrow
 	name = "Burrow"
 	desc = "Burrow under soft ground, evading predators and increasing your speed."
-	
+
 /obj/effect/dummy/phased_mob/goldgrub
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
@@ -75,7 +75,7 @@
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/canmove = TRUE
-	
+
 /obj/effect/dummy/phased_mob/goldgrub/relaymove(mob/user, direction)
 	forceMove(get_step(src,direction))
 
@@ -87,7 +87,7 @@
 
 /obj/effect/dummy/phased_mob/goldgrub/singularity_act()
 	return
-	
+
 /datum/action/innate/goldgrub/burrow/Activate()
 	var/mob/living/simple_animal/hostile/asteroid/goldgrub/G = owner
 	var/obj/effect/dummy/phased_mob/goldgrub/holder = null
@@ -113,7 +113,7 @@
 		holder = new /obj/effect/dummy/phased_mob/goldgrub(T)
 		G.forceMove(holder)
 		G.is_burrowed = TRUE
-	
+
 /mob/living/simple_animal/hostile/asteroid/goldgrub/GiveTarget(new_target)
 	target = new_target
 	if(target != null)
@@ -132,7 +132,7 @@
 		EatOre(target)
 		return
 	return ..()
-	
+
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/EatOre(atom/movable/targeted_ore)
 	if(targeted_ore && targeted_ore.loc != src)
 		targeted_ore.forceMove(src)
@@ -142,20 +142,20 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub/death(gibbed)
 	barf_contents()
 	return ..()
-	
+
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/barf_contents()
 	visible_message("<span class='danger'>[src] spits out its consumed ores!</span>")
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
 	for(var/atom/movable/AM in src)
 		AM.forceMove(loc)
-	
+
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!stat)
 		visible_message("<span class='danger'>The [name] buries into the ground, vanishing from sight!</span>")
 		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/bullet_act(obj/projectile/P)
-	visible_message("<span class='danger'>The [P.name] was repelled by [name]'s girth!</span>")
+	visible_message("<span class='danger'>The [P.name] is repelled by [name]'s girth!</span>")
 	return BULLET_ACT_BLOCK
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/adjustHealth(amount, updating_health = TRUE, forced = FALSE)

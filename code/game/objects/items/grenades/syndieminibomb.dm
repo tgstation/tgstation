@@ -4,27 +4,44 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "syndicate"
 	item_state = "flashbang"
-
+	ex_dev = 1
+	ex_heavy = 2
+	ex_light = 4
+	ex_flame = 2
 
 /obj/item/grenade/syndieminibomb/prime()
+	. = ..()
 	update_mob()
-	explosion(src.loc,1,2,4,flame_range = 2)
-	qdel(src)
+	resolve()
 
 /obj/item/grenade/syndieminibomb/concussion
 	name = "HE Grenade"
 	desc = "A compact shrapnel grenade meant to devastate nearby organisms and cause some damage in the process. Pull pin and throw opposite direction."
 	icon_state = "concussion"
+	ex_heavy = 2
+	ex_light = 3
+	ex_flame = 3
 
-/obj/item/grenade/syndieminibomb/concussion/prime()
-	update_mob()
-	explosion(src.loc,0,2,3,flame_range = 3)
-	qdel(src)
-
-/obj/item/grenade/syndieminibomb/concussion/frag
+/obj/item/grenade/frag
 	name = "frag grenade"
-	desc = "Fire in the hole."
+	desc = "An anti-personnel fragmentation grenade, this weapon excels at killing soft targets by shredding them with metal shrapnel."
 	icon_state = "frag"
+	shrapnel_type = /obj/projectile/bullet/shrapnel
+	shrapnel_radius = 4
+	ex_heavy = 1
+	ex_light = 3
+	ex_flame = 4
+
+/obj/item/grenade/frag/mega
+	name = "FRAG grenade"
+	desc = "An anti-everything fragmentation grenade, this weapon excels at killing anything any everything by shredding them with metal shrapnel."
+	shrapnel_type = /obj/projectile/bullet/shrapnel/mega
+	shrapnel_radius = 12
+
+/obj/item/grenade/frag/prime()
+	. = ..()
+	update_mob()
+	resolve()
 
 /obj/item/grenade/gluon
 	desc = "An advanced grenade that releases a harmful stream of gluons inducing radiation in those nearby. These gluon streams will also make victims feel exhausted, and induce shivering. This extreme coldness will also likely wet any nearby floors."
@@ -37,6 +54,7 @@
 	var/stamina_damage = 30
 
 /obj/item/grenade/gluon/prime()
+	. = ..()
 	update_mob()
 	playsound(loc, 'sound/effects/empulse.ogg', 50, TRUE)
 	radiation_pulse(src, rad_damage)
@@ -47,4 +65,4 @@
 			for(var/mob/living/carbon/L in T)
 				L.adjustStaminaLoss(stamina_damage)
 				L.adjust_bodytemperature(-230)
-	qdel(src)
+	resolve()

@@ -29,15 +29,12 @@
 	RegisterSignal(parent, list(COMSIG_MOVABLE_MOVED,COMSIG_PARENT_PREQDELETED), .proc/disable)
 	RegisterSignal(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), .proc/toggle_active)
 	RegisterSignal(parent, list(COMSIG_OBJ_HIDE), .proc/hide)
-	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays)
+	RegisterSignal(parent, list(COMSIG_ATOM_UPDATE_OVERLAYS), .proc/create_overlays) //called by lateinit on startup
 
 	if(start)
 		//timer 0 so it can finish returning initialize, after which we're added to the parent.
 		//Only then can we tell the duct next to us they can connect, because only then is the component really added. this was a fun one
 		addtimer(CALLBACK(src, .proc/enable), 0)
-
-	if(use_overlays)
-		create_overlays()
 
 /datum/component/plumbing/process()
 	if(!demand_connects || !reagents)
@@ -101,16 +98,16 @@
 		reagents.trans_to(target.parent, amount, round_robin = TRUE)//we deal with alot of precise calculations so we round_robin=TRUE. Otherwise we get floating point errors, 1 != 1 and 2.5 + 2.5 = 6
 
 ///We create our luxurious piping overlays/underlays, to indicate where we do what. only called once if use_overlays = TRUE in Initialize()
-/datum/component/plumbing/proc/create_overlays(atom/A, list/overlays)
+/datum/component/plumbing/proc/create_overlays(atom/movable/AM, list/overlays)
 	if(tile_covered || !use_overlays)
 		return
 
 	for(var/D in GLOB.cardinals)
 		var/color
 		var/direction
-		if(D & demand_connects)
+		if(D & initial(demand_connects))
 			color = "red" //red because red is mean and it takes
-		else if(D & supply_connects)
+		else if(D & initial(supply_connects))
 			color = "blue" //blue is nice and gives
 		else
 			continue
@@ -126,9 +123,10 @@
 					direction = "east"
 				if(WEST)
 					direction = "west"
-			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = A.layer - 1)
+			I = image('icons/obj/plumbing/plumbers.dmi', "[direction]-[color]", layer = AM.layer - 1)
+
 		else
-			I = image('icons/obj/plumbing/plumbers.dmi', color, layer = A.layer - 1) //color is not color as in the var, it's just the name
+			I = image('icons/obj/plumbing/plumbers.dmi', color,layer = AM.layer - 1) //color is not color as in the var, it's just the name of the icon_state
 			I.dir = D
 		overlays += I
 

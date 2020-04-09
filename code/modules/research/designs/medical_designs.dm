@@ -771,6 +771,20 @@
 	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
 	research_icon_state = "surgery_chest"
 
+/datum/design/surgery/cortex_imprint
+	name = "Cortex Imprint"
+	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
+	id = "surgery_cortex_imprint"
+	surgery = /datum/surgery/advanced/bioware/cortex_imprint
+	research_icon_state = "surgery_head"
+
+/datum/design/surgery/cortex_folding
+	name = "Cortex Folding"
+	desc = "A surgical procedure which modifies the cerebral cortex into a complex fold, giving space to non-standard neural patterns."
+	id = "surgery_cortex_folding"
+	surgery = /datum/surgery/advanced/bioware/cortex_folding
+	research_icon_state = "surgery_head"
+
 /datum/design/surgery/necrotic_revival
 	name = "Necrotic Revival"
 	desc = "An experimental surgical procedure that stimulates the growth of a Romerol tumor inside the patient's brain. Requires zombie powder or rezadone."

@@ -100,7 +100,7 @@
 		mood_change = 2
 
 /datum/mood_event/table_headsmash
-	description = "<span class='warning'>My fucking head, that hurt...</span>"
+	description = "<span class='warning'>My fucking head, that hurts...</span>"
 	mood_change = -3
 	timeout = 3 MINUTES
 
@@ -241,3 +241,7 @@
 
 /datum/mood_event/nanite_sadness/add_effects(message)
 	description = "<span class='warning robot'>+++++++[message]+++++++</span>\n"
+
+/datum/mood_event/bald
+	description ="<span class='warning'>I need something to cover my head...</span>\n"
+	mood_change = -3

@@ -18,7 +18,7 @@ This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
 Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
 
 ## DOWNLOADING
-[Downloading](.github/CONTRIBUTING.md)
+[Downloading](.github/DOWNLOADING.md)
 
 [Running on the server](.github/RUNNING_A_SERVER.md)
 
@@ -27,7 +27,11 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 ## Requirements for contributors
 [Guidelines for Contributors](.github/CONTRIBUTING.md)
 
+[/tg/station HACKMD account](https://hackmd.io/@tgstation) - Design documentation here
+
 [Documenting your code](.github/AUTODOC_GUIDE.md)
+
+[Policy configuration system](.github/POLICYCONFIG.md)
 
 ## LICENSE
 

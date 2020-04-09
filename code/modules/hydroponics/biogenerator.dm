@@ -293,7 +293,10 @@
 
 /obj/machinery/biogenerator/proc/detach(mob/living/user)
 	if(beaker)
-		user.put_in_hands(beaker)
+		if(can_interact(user))
+			user.put_in_hands(beaker)
+		else
+			beaker.drop_location(get_turf(src))
 		beaker = null
 		update_icon()
 
