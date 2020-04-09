@@ -27,7 +27,7 @@ SUBSYSTEM_DEF(ticker)
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
 	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
 
-	var/anonymousnames = FALSE				//Do people spawn with anonymous names?
+	var/anonymousnames = ANON_DISABLED		//Do people spawn with anonymous names? If not ANON_DISABLED then people spawn with a themed anon name (see anonymousnames.dm)
 	var/triai = FALSE						//Global holder for Triumvirate
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?

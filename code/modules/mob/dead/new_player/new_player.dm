@@ -487,7 +487,7 @@
 
 	if(admin_anon_names)//overrides random name because it achieves the same effect and is an admin enabled event tool
 		client.prefs.random_character()
-		client.prefs.real_name = anonymous_name()
+		client.prefs.real_name = anonymous_name(src)
 
 	var/is_antag
 	if(mind in GLOB.pre_setup_antags)
