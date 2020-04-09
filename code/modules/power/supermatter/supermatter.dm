@@ -189,8 +189,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/last_accent_sound = 0
 	///Var that increases from 0 to one when a psycologist is nearby, and decreases in the same way
 	var/psyCoeff = 1
+	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
 	var/obj/overlay/psy/psyOverlay = new /obj/overlay/psy/
-	///Overlay
+	///A list of active overlays, we use this to update .overlays more cleanly
 	var/active_overlays = list()
 	blend_mode = BLEND_OVERLAY
 
@@ -444,7 +445,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		n2ocomp += clamp(max(removed.gases[/datum/gas/nitrous_oxide][MOLES]/combined_gas, 0) - n2ocomp, -1, gas_change_rate)
 		n2comp += clamp(max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0) - n2comp, -1, gas_change_rate)
 		freoncomp += clamp(max(removed.gases[/datum/gas/freon][MOLES]/combined_gas, 0) - freoncomp, -1, gas_change_rate)
-		
+
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		if(pluoxiumcomp >= 0.15)
 			pluoxiumbonus = 1    //makes pluoxium only work at 15%+
@@ -547,7 +548,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Makes em go mad and accumulate rads.
 	var/toAdd = -0.05
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
-		if(l.mind && l.mind.assigned_role == "Psychologist")
+		if(l.job == "Psychologist")
 			toAdd = 0.05
 		else if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
@@ -1078,7 +1079,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	layer = FLOAT_LAYER - 1
 
 /obj/overlay/psy/shard
-	icon_state = "shard"
+	icon_state = "psy_shard"
 #undef HALLUCINATION_RANGE
 #undef GRAVITATIONAL_ANOMALY
 #undef FLUX_ANOMALY
