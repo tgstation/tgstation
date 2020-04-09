@@ -7,11 +7,15 @@ $fg-map: colors.$fg-map !default;
 $ring-color: #6a96c9 !default;
 $knob-color: #333333 !default;
 
+$inner-padding: 0.1em;
+
 .Knob {
   position: relative;
   font-size: 1rem;
-  width: 2.5em;
-  height: 2.5em;
+  width: 2.6em;
+  height: 2.6em;
+  margin: 0 auto;
+  margin-bottom: -0.2em;
   cursor: n-resize;
 
   // Adjusts a baseline in a way, that makes knob middle-aligned
@@ -25,10 +29,10 @@ $knob-color: #333333 !default;
 
 .Knob__circle {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: $inner-padding;
+  bottom: $inner-padding;
+  left: $inner-padding;
+  right: $inner-padding;
   margin: 0.3em;
   background-color: $knob-color;
   background-image: linear-gradient(to bottom,
@@ -73,6 +77,7 @@ $knob-color: #333333 !default;
   bottom: 0;
   left: 0;
   right: 0;
+  padding: $inner-padding;
 }
 
 $pi: 3.1416;
