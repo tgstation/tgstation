@@ -32,7 +32,6 @@
   * Arguments:
   * * M - mob for preferences and gender
   */
-
 /proc/anonymous_name(mob/M)
 	switch(SSticker.anonymousnames)
 		if(ANON_RANDOMNAMES)
@@ -55,7 +54,6 @@
   * Arguments:
   * * is_ai - boolean to decide whether the name has "Core" (AI) or "Assistant" (Cyborg)
   */
-
 /proc/anonymous_ai_name(is_ai = FALSE)
 	switch(SSticker.anonymousnames)
 		if(ANON_RANDOMNAMES)
