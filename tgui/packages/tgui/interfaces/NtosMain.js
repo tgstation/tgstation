@@ -16,6 +16,8 @@ const PROGRAM_ICONS = {
   job_manage: 'address-book',
   crewmani: 'clipboard-list',
   robocontrol: 'robot',
+  atmosscan: 'thermometer-half',
+  shipping: 'tags',
 };
 
 export const NtosMain = props => {
