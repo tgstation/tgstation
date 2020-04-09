@@ -19703,7 +19703,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Medbay Sleepers";
+	c_tag = "Medbay Stasis Beds";
 	name = "medical camera";
 	network = list("ss13","medical")
 	},
@@ -36008,11 +36008,8 @@
 /turf/open/floor/plasteel/dark,
 /area/science/robotics/lab)
 "bde" = (
-/obj/structure/sign/warning/fire{
-	pixel_y = 32
-	},
 /obj/machinery/camera{
-	c_tag = "Experimenter Chamber";
+	c_tag = "Genetics Monkey Pen";
 	name = "science camera";
 	network = list("ss13","rd")
 	},
@@ -38275,7 +38272,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Experimenter Lab";
+	c_tag = "Genetics Lab";
 	dir = 8;
 	name = "science camera";
 	network = list("ss13","rd")
