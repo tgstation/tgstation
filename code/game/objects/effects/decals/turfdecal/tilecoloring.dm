@@ -4,6 +4,11 @@
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 
+/obj/effect/turf_decal/tile/Initialize()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		color = "#[random_short_color()]"
+	. = ..()
+
 /obj/effect/turf_decal/tile/blue
 	name = "blue corner"
 	color = "#52B4E9"
@@ -38,10 +43,24 @@
 	color = "#D4D4D4"
 	alpha = 50
 
+/obj/effect/turf_decal/tile/random // so many colors
+	name = "colorful corner"
+	color = "#E300FF" //bright pink as default for mapping
+
+/obj/effect/turf_decal/tile/random/Initialize()
+	color = "#[random_short_color()]"
+	. = ..()
+
+
 /obj/effect/turf_decal/trimline
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
 	icon_state = "trimline_box"
+
+/obj/effect/turf_decal/trimline/Initialize()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		color = "#[random_short_color()]"
+	. = ..()
 
 /obj/effect/turf_decal/trimline/white
 	color = "#FFFFFF"

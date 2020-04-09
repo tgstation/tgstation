@@ -101,3 +101,13 @@
 	desc = "You were a little too ambitious, but hey, I guess you're still alive?"
 	database_id = MEDAL_SNAIL
 	icon = "snail"
+
+/datum/award/achievement/misc/lookoutsir
+	name = "Look Out, Sir!"
+	desc = "Either awarded for making the ultimate sacrifice for your comrades, or a really dumb attempt at grenade jumping."
+	database_id = MEDAL_LOOKOUTSIR
+
+/datum/award/achievement/misc/gottem
+	name = "HA, GOTTEM"
+	desc = "Made you look!"
+	database_id = MEDAL_GOTTEM

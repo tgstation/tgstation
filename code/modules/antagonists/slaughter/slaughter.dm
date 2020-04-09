@@ -67,9 +67,8 @@
 
 /mob/living/simple_animal/slaughter/phasein()
 	. = ..()
-	add_movespeed_modifier(MOVESPEED_ID_SLAUGHTER, update=TRUE, priority=100, multiplicative_slowdown=-1)
-	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, MOVESPEED_ID_SLAUGHTER, TRUE), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
-
+	add_movespeed_modifier(/datum/movespeed_modifier/slaughter)
+	addtimer(CALLBACK(src, .proc/remove_movespeed_modifier, /datum/movespeed_modifier/slaughter), 6 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
 //The loot from killing a slaughter demon - can be consumed to allow the user to blood crawl
 /obj/item/organ/heart/demon
@@ -150,6 +149,11 @@
 	them; but don't worry! When you die, everyone you hugged will be \
 	released and fully healed, because in the end it's just a jape, \
 	sibling!</B>"
+
+/mob/living/simple_animal/slaughter/laughter/Initialize()
+	. = ..()
+	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
+		icon_state = "honkmon"
 
 /mob/living/simple_animal/slaughter/laughter/Destroy()
 	release_friends()

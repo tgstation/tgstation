@@ -31,13 +31,13 @@
 	ui_y = 115
 
 /obj/machinery/atmospherics/components/binary/pump/CtrlClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(can_interact(user))
 		on = !on
 		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/pump/AltClick(mob/user)
-	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
+	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		update_icon()
 	return ..()

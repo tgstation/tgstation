@@ -70,6 +70,9 @@
 	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckling)
 		return
 
+	if(!A || !(isturf(A) || isturf(A.loc)))
+		return
+
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		to_chat(user, "<span class='warning'>You're too angry to remember how to tackle!</span>")
 		return
@@ -86,7 +89,7 @@
 		to_chat(user, "<span class='warning'>You're not ready to tackle!</span>")
 		return
 
-	if(user.has_movespeed_modifier(MOVESPEED_ID_SHOVE)) // can't tackle if you just got shoved
+	if(user.has_movespeed_modifier(/datum/movespeed_modifier/shove)) // can't tackle if you just got shoved
 		to_chat(user, "<span class='warning'>You're too off balance to tackle!</span>")
 		return
 
@@ -167,8 +170,8 @@
 			to_chat(target, "<span class='userdanger'>[user] lands a weak tackle on you, briefly knocking you off-balance!</span>")
 
 			user.Knockdown(30)
-			if(ishuman(target) && !T.has_movespeed_modifier(MOVESPEED_ID_SHOVE))
-				T.add_movespeed_modifier(MOVESPEED_ID_SHOVE, multiplicative_slowdown = SHOVE_SLOWDOWN_STRENGTH) // maybe define a slightly more severe/longer slowdown for this
+			if(ishuman(target) && !T.has_movespeed_modifier(/datum/movespeed_modifier/shove))
+				T.add_movespeed_modifier(/datum/movespeed_modifier/shove) // maybe define a slightly more severe/longer slowdown for this
 				addtimer(CALLBACK(T, /mob/living/carbon/human/proc/clear_shove_slowdown), SHOVE_SLOWDOWN_LENGTH)
 
 		if(-1 to 0) // decent hit, both parties are about equally inconvenienced
@@ -421,10 +424,10 @@
 		for(var/i = 0, i < speed, i++)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
 			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
-			shard.AddElement(/datum/element/embed, shard.embedding)
+			shard.updateEmbedding()
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 			shard.embedding = list()
-			shard.AddElement(/datum/element/embed, shard.embedding)
+			shard.updateEmbedding()
 		W.obj_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(30)

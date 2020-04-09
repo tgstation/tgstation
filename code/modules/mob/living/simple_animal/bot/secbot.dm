@@ -295,9 +295,10 @@ Auto Patrol: []"},
 	log_combat(src,C,"stunned")
 	if(declare_arrests)
 		secbot_declare_arrest_completion(C, threat) //FULPSTATION IMPROVED RECORD SECURITY PR -Surrealistik Oct 2019; this makes a record of the arrest, including timestamp and location.
-
-	C.visible_message("<span class='danger'>[src] has stunned [C]!</span>",\
-							"<span class='userdanger'>[src] has stunned you!</span>")
+		//var/area/location = get_area(src) // FULP REMOVE
+		//speak("[arrest_type ? "Detaining" : "Arresting"] level [threat] scumbag <b>[C]</b> in [location].", radio_channel)  // FULP REMOVE
+	C.visible_message("<span class='danger'>[src] stuns [C]!</span>",\
+							"<span class='userdanger'>[src] stuns you!</span>")
 
 /mob/living/simple_animal/bot/secbot/handle_automated_action()
 	if(!..())

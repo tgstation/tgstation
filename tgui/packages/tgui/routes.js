@@ -1,3 +1,6 @@
+// routes.js
+// Tip: Press Shift+Alt+O in VSCode to organize these imports.
+
 import { Achievements } from './interfaces/Achievements';
 import { AiAirlock } from './interfaces/AiAirlock';
 import { AirAlarm } from './interfaces/AirAlarm';
@@ -9,12 +12,14 @@ import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { AutomatedAnnouncement } from './interfaces/AutomatedAnnouncement';
 import { BankMachine } from './interfaces/BankMachine';
+import { Bepis } from './interfaces/Bepis';
 import { BlackmarketUplink } from './interfaces/BlackmarketUplink';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
-import { Bepis } from './interfaces/Bepis';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
+import { CameraConsole, CameraConsoleWrapper } from './interfaces/CameraConsole';
 import { Canister } from './interfaces/Canister';
 import { Canvas } from './interfaces/Canvas';
 import { Cargo, CargoExpress } from './interfaces/Cargo';
@@ -38,16 +43,18 @@ import { CrewConsole } from './interfaces/CrewConsole';
 import { Cryo } from './interfaces/Cryo';
 import { DecalPainter } from './interfaces/DecalPainter';
 import { DisposalUnit } from './interfaces/DisposalUnit';
+import { DnaConsole } from './interfaces/DnaConsole';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
 import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
 import { ExosuitControlConsole } from './interfaces/ExosuitControlConsole';
+import { Gateway } from './interfaces/Gateway';
 import { Gps } from './interfaces/Gps';
 import { GravityGenerator } from './interfaces/GravityGenerator';
-import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { GulagItemReclaimer } from './interfaces/GulagItemReclaimer';
+import { GulagTeleporterConsole } from './interfaces/GulagTeleporterConsole';
 import { Holodeck } from './interfaces/Holodeck';
 import { HypnoChair } from './interfaces/HypnoChair';
 import { ImplantChair } from './interfaces/ImplantChair';
@@ -57,11 +64,11 @@ import { KeycardAuth } from './interfaces/KeycardAuth';
 import { LaborClaimConsole } from './interfaces/LaborClaimConsole';
 import { LanguageMenu } from './interfaces/LanguageMenu';
 import { LaunchpadConsole, LaunchpadRemote } from './interfaces/Launchpad';
+import { MalfunctionModulePicker } from './interfaces/MalfunctionModulePicker';
 import { MechBayPowerConsole } from './interfaces/MechBayPowerConsole';
 import { MedicalKiosk } from './interfaces/MedicalKiosk';
 import { MiningVendor } from './interfaces/MiningVendor';
 import { Mint } from './interfaces/Mint';
-import { MalfunctionModulePicker } from './interfaces/MalfunctionModulePicker';
 import { Mule } from './interfaces/Mule';
 import { NaniteChamberControl } from './interfaces/NaniteChamberControl';
 import { NaniteCloudControl } from './interfaces/NaniteCloudControl';
@@ -71,9 +78,11 @@ import { NaniteRemote } from './interfaces/NaniteRemote';
 import { NotificationPreferences } from './interfaces/NotificationPreferences';
 import { NtnetRelay } from './interfaces/NtnetRelay';
 import { NtosArcade } from './interfaces/NtosArcade';
+import { NtosAtmos } from './interfaces/NtosAtmos';
 import { NtosCard } from './interfaces/NtosCard';
 import { NtosConfiguration } from './interfaces/NtosConfiguration';
 import { NtosCrewManifest } from './interfaces/NtosCrewManifest';
+import { NtosCyborgRemoteMonitor } from './interfaces/NtosCyborgRemoteMonitor';
 import { NtosFileManager } from './interfaces/NtosFileManager';
 import { NtosJobManager } from './interfaces/NtosJobManager';
 import { NtosMain } from './interfaces/NtosMain';
@@ -82,6 +91,8 @@ import { NtosNetDos } from './interfaces/NtosNetDos';
 import { NtosNetDownloader } from './interfaces/NtosNetDownloader';
 import { NtosNetMonitor } from './interfaces/NtosNetMonitor';
 import { NtosRevelation } from './interfaces/NtosRevelation';
+import { NtosRoboControl } from './interfaces/NtosRoboControl';
+import { NtosShipping } from './interfaces/NtosShipping';
 import { NtosSupermatterMonitor } from './interfaces/NtosSupermatterMonitor';
 import { NtosWrapper } from './interfaces/NtosWrapper';
 import { NuclearBomb } from './interfaces/NuclearBomb';
@@ -91,15 +102,15 @@ import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
 import { Pandemic } from './interfaces/Pandemic';
 import { ParticleAccelerator } from './interfaces/ParticleAccelerator';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
-import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
+import { PortableGenerator } from './interfaces/PortableGenerator';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { ProximitySensor } from './interfaces/ProximitySensor';
 import { Radio } from './interfaces/Radio';
 import { RadioactiveMicrolaser } from './interfaces/RadioactiveMicrolaser';
+import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { RemoteRobotControl } from './interfaces/RemoteRobotControl';
 import { RoboticsControlConsole } from './interfaces/RoboticsControlConsole';
-import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
 import { Roulette } from './interfaces/Roulette';
 import { SatelliteControl } from './interfaces/SatelliteControl';
 import { ScannerGate } from './interfaces/ScannerGate';
@@ -173,6 +184,10 @@ const ROUTES = {
     component: () => AtmosPump,
     scrollable: false,
   },
+  announcement_system: {
+    component: () => AutomatedAnnouncement,
+    scrollable: false,
+  },
   bepis: {
     component: () => Bepis,
     scrollable: false,
@@ -197,6 +212,11 @@ const ROUTES = {
   bsa: {
     component: () => BluespaceArtillery,
     scrollable: false,
+  },
+  camera_console: {
+    component: () => CameraConsole,
+    wrapper: () => CameraConsoleWrapper,
+    scrollable: true,
   },
   canister: {
     component: () => Canister,
@@ -318,6 +338,10 @@ const ROUTES = {
     component: () => ExosuitControlConsole,
     scrollable: true,
   },
+  gateway: {
+    component: () => Gateway,
+    scrollable: true,
+  },
   gps: {
     component: () => Gps,
     scrollable: true,
@@ -434,6 +458,12 @@ const ROUTES = {
     scrollable: true,
     theme: 'ntos',
   },
+  ntos_atmos: {
+    component: () => NtosAtmos,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
   ntos_arcade: {
     component: () => NtosArcade,
     wrapper: () => NtosWrapper,
@@ -454,6 +484,12 @@ const ROUTES = {
   },
   ntos_crew_manifest: {
     component: () => NtosCrewManifest,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_cyborg_monitor: {
+    component: () => NtosCyborgRemoteMonitor,
     wrapper: () => NtosWrapper,
     scrollable: true,
     theme: 'ntos',
@@ -511,6 +547,18 @@ const ROUTES = {
     wrapper: () => NtosWrapper,
     scrollable: false,
     theme: 'syndicate',
+  },
+  ntos_robocontrol: {
+    component: () => NtosRoboControl,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
+  },
+  ntos_shipping: {
+    component: () => NtosShipping,
+    wrapper: () => NtosWrapper,
+    scrollable: true,
+    theme: 'ntos',
   },
   ntos_station_alert: {
     component: () => StationAlertConsole,
@@ -705,6 +753,10 @@ const ROUTES = {
   wires: {
     component: () => Wires,
     scrollable: false,
+  },
+  scan_consolenew: {
+    component: () => DnaConsole,
+    scrollable: true,
   },
 };
 

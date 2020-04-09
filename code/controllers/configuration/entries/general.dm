@@ -41,6 +41,11 @@
 
 /datum/config_entry/flag/hub	// if the game appears on the hub or not
 
+/datum/config_entry/number/max_hub_pop //At what pop to take hub off the server
+	config_entry_value = 0 //0 means disabled
+	integer = TRUE
+	min_val = 0
+
 /datum/config_entry/flag/log_ooc	// log OOC channel
 
 /datum/config_entry/flag/log_access	// log login/logout
@@ -492,7 +497,10 @@
 
 // DISCORD ROLE STUFFS
 // Using strings for everything because BYOND does not like numbers this big
+// (exception to the above is required living hours haha)
 /datum/config_entry/flag/enable_discord_autorole
+
+/datum/config_entry/number/required_living_hours
 
 /datum/config_entry/string/discord_token
 

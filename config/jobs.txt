@@ -36,6 +36,7 @@ Paramedic=4,2
 Chemist=4,2
 Geneticist=4,2
 Virologist=2,1
+Psychologist=2,1
 
 Scientist=10,3
 Roboticist=5,2

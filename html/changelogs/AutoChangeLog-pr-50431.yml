@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Crew can now download the Shipping Scanner app, allowing them to print barcodes, identically to a sales tagger."

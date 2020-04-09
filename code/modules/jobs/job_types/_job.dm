@@ -227,6 +227,8 @@
 		C.registered_name = H.real_name
 		C.assignment = J.title
 		C.linkedJobType = J.type // FULP: We remember our job type. We don't need a reference to the exact instance inside SSjob. Just the type will do. *** ALSO LOCATED IN card.dm
+		if(H.age)
+			C.registered_age = H.age
 		C.update_label()
 		for(var/A in SSeconomy.bank_accounts)
 			var/datum/bank_account/B = A

@@ -479,7 +479,7 @@
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/empgrenade = 1,
 		/obj/item/grenade/empgrenade = 1,
-		/obj/item/grenade/syndieminibomb/concussion/frag = 10,
+		/obj/item/grenade/frag = 10,
 		/obj/item/grenade/gluon = 4,
 		/obj/item/grenade/chem_grenade/incendiary = 2,
 		/obj/item/grenade/chem_grenade/facid = 1,

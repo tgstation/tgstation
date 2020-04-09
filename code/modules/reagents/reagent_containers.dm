@@ -92,8 +92,8 @@
 			reagents.total_volume *= rand(5,10) * 0.1 //Not all of it makes contact with the target
 		var/mob/M = target
 		var/R
-		target.visible_message("<span class='danger'>[M] has been splashed with something!</span>", \
-						"<span class='userdanger'>[M] has been splashed with something!</span>")
+		target.visible_message("<span class='danger'>[M] is splashed with something!</span>", \
+						"<span class='userdanger'>[M] is splashed with something!</span>")
 		for(var/datum/reagent/A in reagents.reagent_list)
 			R += "[A.type]  ([num2text(A.volume)]),"
 

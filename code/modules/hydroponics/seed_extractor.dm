@@ -102,6 +102,12 @@
 	else
 		return ..()
 
+/** Seed Pile
+ *  Takes stats from the seed, as dictated by the New proc, and assigned them to the datum's vars.
+ *  Name is the Seed's name.
+ *  All stats are taken from the seed's core stats.
+ *  Amount is the number of seeds present of that specific type.
+ **/
 /datum/seed_pile
 	var/name = ""
 	var/lifespan = 0	//Saved stats
@@ -110,9 +116,14 @@
 	var/production = 0
 	var/yield = 0
 	var/potency = 0
+	var/instability = 0
 	var/amount = 0
 
-/datum/seed_pile/New(name, life, endur, matur, prod, yie, poten, am = 1)
+/** Seed Pile Creation.
+ *  Takes a seed's name, core stats, and amount when creating a seed pile datum.
+ *  This is read by the HTML Ui for display in-game.
+ **/
+/datum/seed_pile/New(name, life, endur, matur, prod, yie, poten, insta, am = 1)
 	src.name = name
 	src.lifespan = life
 	src.endurance = endur
@@ -120,6 +131,7 @@
 	src.production = prod
 	src.yield = yie
 	src.potency = poten
+	src.instability = insta
 	src.amount = am
 
 /obj/machinery/seed_extractor/ui_interact(mob/user)
@@ -132,11 +144,11 @@
 	if (contents.len == 0)
 		dat += "<font color='red'>No seeds</font>"
 	else
-		dat += "<table cellpadding='3' style='text-align:center;'><tr><td>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td>Stock</td></tr>"
+		dat += "<table cellpadding='3' style='text-align:center;'><tr><td>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td>Instability</td><td>Stock</td></tr>"
 		for (var/datum/seed_pile/O in piles)
 			dat += "<tr><td>[O.name]</td><td>[O.lifespan]</td><td>[O.endurance]</td><td>[O.maturation]</td>"
-			dat += "<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>"
-			dat += "<a href='byond://?src=[REF(src)];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency]'>Vend</a> ([O.amount] left)</td></tr>"
+			dat += "<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>[O.instability]</td><td>"
+			dat += "<a href='byond://?src=[REF(src)];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency];ist=[O.instability]'>Vend</a> ([O.amount] left)</td></tr>"
 		dat += "</table>"
 	var/datum/browser/popup = new(user, "seed_ext", name, 700, 400)
 	popup.set_content(dat)
@@ -154,9 +166,10 @@
 	href_list["pr"] = text2num(href_list["pr"])
 	href_list["yi"] = text2num(href_list["yi"])
 	href_list["pot"] = text2num(href_list["pot"])
+	href_list["ist"] = text2num(href_list["ist"])
 
 	for (var/datum/seed_pile/N in piles)//Find the pile we need to reduce...
-		if (href_list["name"] == N.name && href_list["li"] == N.lifespan && href_list["en"] == N.endurance && href_list["ma"] == N.maturation && href_list["pr"] == N.production && href_list["yi"] == N.yield && href_list["pot"] == N.potency)
+		if (href_list["name"] == N.name && href_list["li"] == N.lifespan && href_list["en"] == N.endurance && href_list["ma"] == N.maturation && href_list["pr"] == N.production && href_list["yi"] == N.yield && href_list["pot"] == N.potency && href_list["ist"] == N.instability)
 			if(N.amount <= 0)
 				return
 			N.amount = max(N.amount - 1, 0)
@@ -167,13 +180,17 @@
 
 	for (var/obj/T in contents)//Now we find the seed we need to vend
 		var/obj/item/seeds/O = T
-		if (O.plantname == href_list["name"] && O.lifespan == href_list["li"] && O.endurance == href_list["en"] && O.maturation == href_list["ma"] && O.production == href_list["pr"] && O.yield == href_list["yi"] && O.potency == href_list["pot"])
+		if (O.plantname == href_list["name"] && O.lifespan == href_list["li"] && O.endurance == href_list["en"] && O.maturation == href_list["ma"] && O.production == href_list["pr"] && O.yield == href_list["yi"] && O.potency == href_list["pot"] && O.instability == href_list["ist"])
 			O.forceMove(drop_location())
 			break
 
 	src.updateUsrDialog()
 	return
 
+/** Add Seeds Proc.
+ *  Takes a seed into the machine, and breaks it down into it's core stats.
+ *  These core stats are then passed to the machine UI for display in-game through a seed pile datum..
+ **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
 		to_chat(usr, "<span class='notice'>\The [src] is full.</span>")
@@ -190,8 +207,8 @@
 
 	. = TRUE
 	for (var/datum/seed_pile/N in piles)
-		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency)
+		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency && O.instability == N.instability)
 			++N.amount
 			return
 
-	piles += new /datum/seed_pile(O.plantname, O.lifespan, O.endurance, O.maturation, O.production, O.yield, O.potency)
+	piles += new /datum/seed_pile(O.plantname, O.lifespan, O.endurance, O.maturation, O.production, O.yield, O.potency, O.instability)
