@@ -850,6 +850,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/engine
 	is_main_engine = TRUE
 
+/obj/machinery/power/supermatter_crystal/syndicate
+	radio_key = /obj/item/encryptionkey/syndicate
+	engineering_channel = "Syndicate"
+	common_channel = "Syndicate"
+
 /obj/machinery/power/supermatter_crystal/shard
 	name = "supermatter shard"
 	desc = "A strangely translucent and iridescent crystal that looks like it used to be part of a larger structure."

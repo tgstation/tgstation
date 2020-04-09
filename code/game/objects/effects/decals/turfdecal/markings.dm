@@ -180,3 +180,33 @@
 
 /obj/effect/turf_decal/raven/nine
 	icon_state = "RAVEN9"
+
+/obj/effect/turf_decal/starfury/one
+	icon_state = "SBC1"
+
+/obj/effect/turf_decal/starfury/two
+	icon_state = "SBC2"
+
+/obj/effect/turf_decal/starfury/three
+	icon_state = "SBC3"
+
+/obj/effect/turf_decal/starfury/four
+	icon_state = "SBC4"
+
+/obj/effect/turf_decal/starfury/five
+	icon_state = "SBC5"
+
+/obj/effect/turf_decal/starfury/six
+	icon_state = "SBC6"
+
+/obj/effect/turf_decal/starfury/seven
+	icon_state = "SBC7"
+
+/obj/effect/turf_decal/starfury/eight
+	icon_state = "SBC8"
+
+/obj/effect/turf_decal/starfury/nine
+	icon_state = "SBC9"
+
+/obj/effect/turf_decal/starfury/ten
+	icon_state = "SBC10"

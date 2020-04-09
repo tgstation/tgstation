@@ -461,6 +461,9 @@
 	outfit = /datum/outfit/syndicate_empty
 	assignedrole = "Space Syndicate"	//I know this is really dumb, but Syndicate operative is nuke ops
 
+/obj/effect/mob_spawn/human/syndicate/special(mob/living/new_spawn)
+	new_spawn.mind.add_antag_datum(/datum/antagonist/starfuryop)
+
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
 	uniform = /obj/item/clothing/under/syndicate

@@ -1,0 +1,321 @@
+"aa" = (/turf/open/space/basic,/area/space)
+"ab" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/shuttle/sbc_starfury)
+"ac" = (/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ad" = (/obj/effect/turf_decal/starfury/seven,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ae" = (/obj/effect/turf_decal/starfury/one,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"af" = (/obj/effect/turf_decal/starfury/three,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ag" = (/obj/effect/turf_decal/starfury/five,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ah" = (/obj/effect/turf_decal/starfury/nine,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ai" = (/obj/effect/turf_decal/starfury/ten,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"aj" = (/obj/effect/turf_decal/starfury/two,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ak" = (/obj/effect/turf_decal/starfury/four,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"al" = (/obj/effect/turf_decal/starfury/six,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"am" = (/obj/effect/turf_decal/starfury/eight,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"an" = (/obj/structure/window/reinforced{icon_state = "rwindow"; dir = 4},/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ao" = (/turf/closed/wall/r_wall/syndicate,/area/shuttle/sbc_starfury)
+"ap" = (/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 9},/area/shuttle/sbc_starfury)
+"aq" = (/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 1},/area/shuttle/sbc_starfury)
+"ar" = (/obj/structure/window/reinforced,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"as" = (/obj/machinery/door/window/brigdoor/security{name = "Bridge Access"; req_access_txt = "150"},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"at" = (/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"au" = (/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 5},/area/shuttle/sbc_starfury)
+"av" = (/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 8},/area/shuttle/sbc_starfury)
+"aw" = (/obj/structure/window/reinforced{icon_state = "rwindow"; dir = 8},/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ax" = (/turf/open/floor/plasteel/white/corner{icon_state = "whitecorner"; dir = 4},/area/shuttle/sbc_starfury)
+"ay" = (/obj/machinery/door/airlock/hatch{name = "Medbay - Storage"; req_access_txt = "150"},/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"az" = (/obj/machinery/stasis,/obj/machinery/defibrillator_mount/loaded{pixel_x = 32},/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 5},/area/shuttle/sbc_starfury)
+"aA" = (/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 10},/area/shuttle/sbc_starfury)
+"aB" = (/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 6},/area/shuttle/sbc_starfury)
+"aC" = (/turf/open/floor/plasteel/white/side,/area/shuttle/sbc_starfury)
+"aD" = (/obj/machinery/door/airlock/hatch{name = "Medbay"; req_access_txt = "150"},/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"aE" = (/obj/structure/cable,/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"aF" = (/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aG" = (/obj/machinery/door/poddoor{id = "starfurybcleftbaydoor"; name = "bay door"},/turf/open/space/basic,/area/shuttle/sbc_starfury)
+"aH" = (/obj/machinery/door/poddoor{id = "starfurybcrightbaydoor"; name = "bay door"},/turf/open/space/basic,/area/shuttle/sbc_starfury)
+"aI" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"aJ" = (/obj/effect/turf_decal/stripes/line{dir = 9},/obj/machinery/light/floor,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aK" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"aL" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aM" = (/obj/machinery/door/airlock/hatch{name = "Bridge Access"; req_access_txt = "150"},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"aN" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/trimline/red/warning,/obj/machinery/light/floor,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aO" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 8},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aP" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 4},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aQ" = (/obj/effect/turf_decal/stripes/line{dir = 5},/obj/machinery/light/floor,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aR" = (/obj/effect/turf_decal/stripes/line,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aS" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 8},/obj/machinery/light/floor,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aT" = (/obj/structure/table/reinforced,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"aU" = (/obj/effect/mob_spawn/human/syndicate/battlecruiser/captain,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"aV" = (/turf/open/space/basic,/area/shuttle/sbc_starfury)
+"aW" = (/obj/effect/turf_decal/stripes/line{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"aX" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"aY" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"aZ" = (/obj/machinery/shower{pixel_y = 26},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ba" = (/obj/effect/turf_decal/trimline/red/filled/line{icon_state = "trimline_fill"; dir = 9},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bb" = (/obj/effect/turf_decal/trimline/red/filled/line{icon_state = "trimline_fill"; dir = 1},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bc" = (/obj/effect/turf_decal/trimline/red/filled/line{icon_state = "trimline_fill"; dir = 5},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bd" = (/obj/effect/turf_decal/trimline/red/filled/line{icon_state = "trimline_fill"; dir = 8},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"be" = (/obj/effect/turf_decal/trimline/red/filled/line{icon_state = "trimline_fill"; dir = 4},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bf" = (/obj/effect/turf_decal/trimline/red/filled/line{icon_state = "trimline_fill"; dir = 10},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bg" = (/obj/effect/turf_decal/trimline/red/filled/line,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bh" = (/obj/effect/turf_decal/trimline/red/filled/line{icon_state = "trimline_fill"; dir = 6},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bi" = (/obj/effect/turf_decal/trimline/yellow/line{icon_state = "trimline"; dir = 9},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bj" = (/obj/effect/turf_decal/trimline/yellow/line{icon_state = "trimline"; dir = 1},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bk" = (/obj/effect/turf_decal/trimline/yellow/line{icon_state = "trimline"; dir = 5},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bl" = (/obj/effect/turf_decal/trimline/yellow/line{icon_state = "trimline"; dir = 8},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bm" = (/obj/effect/turf_decal/trimline/yellow/line{icon_state = "trimline"; dir = 4},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bn" = (/obj/effect/turf_decal/trimline/yellow/line{icon_state = "trimline"; dir = 10},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bo" = (/obj/effect/turf_decal/trimline/yellow/line,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bp" = (/obj/effect/turf_decal/trimline/yellow/line{icon_state = "trimline"; dir = 6},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bq" = (/obj/effect/turf_decal/stripes/line{dir = 1},/obj/effect/turf_decal/trimline/red/warning,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"br" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 8},/obj/effect/turf_decal/trimline/red/warning{icon_state = "trimline_warn"; dir = 4},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bs" = (/obj/effect/turf_decal/trimline/red/warning{icon_state = "trimline_warn"; dir = 8},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bt" = (/obj/effect/turf_decal/trimline/red/warning{icon_state = "trimline_warn"; dir = 4},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bu" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 4},/obj/effect/turf_decal/trimline/red/warning{icon_state = "trimline_warn"; dir = 8},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bv" = (/obj/effect/turf_decal/trimline/red/warning{icon_state = "trimline_warn"; dir = 1},/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"bw" = (/obj/structure/toilet,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bx" = (/turf/open/floor/plasteel/grimy,/area/shuttle/sbc_starfury)
+"by" = (/obj/structure/table/reinforced,/obj/item/grenade/c4,/obj/item/grenade/c4,/obj/item/grenade/c4,/obj/item/grenade/c4,/obj/item/grenade/c4,/obj/item/grenade/c4,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bz" = (/obj/structure/table/reinforced,/obj/item/grenade/syndieminibomb,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bA" = (/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bB" = (/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bC" = (/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc_starfury)
+"bD" = (/obj/structure/table/reinforced,/obj/item/grenade/smokebomb{pixel_x = -4; pixel_y = -3},/obj/item/grenade/flashbang{pixel_x = 3; pixel_y = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bE" = (/obj/structure/table/reinforced,/obj/item/grenade/smokebomb,/obj/item/grenade/flashbang{pixel_x = 8; pixel_y = -6},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bF" = (/obj/structure/bed,/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc_starfury)
+"bG" = (/obj/machinery/door/airlock/hatch{name = "Restroom"; req_access_txt = "150"},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bH" = (/obj/machinery/door/airlock/hatch{name = "Cabin"; req_access_txt = "150"},/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"bI" = (/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,/turf/open/floor/plating,/area/shuttle/sbc_starfury)
+"bJ" = (/obj/machinery/door/window/brigdoor/security/holding/southleft{id = "starfuryholdingcell1"; name = "Cell 1"},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc_starfury)
+"bK" = (/obj/machinery/door/window/brigdoor/security/holding/southleft{id = "starfuryholdingcell2"; name = "Cell 2"},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc_starfury)
+"bL" = (/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/bar,/obj/effect/turf_decal/tile/bar{dir = 1},/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"bM" = (/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bN" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bO" = (/obj/effect/turf_decal/tile/red{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bP" = (/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bQ" = (/obj/structure/sign/directions/medical{dir = 1; icon_state = "direction_med"; pixel_x = -32; pixel_y = 6},/obj/structure/sign/directions/supply{dir = 1; icon_state = "direction_supply"; pixel_x = -32; pixel_y = -1},/obj/structure/sign/directions/command{dir = 1; icon_state = "direction_bridge"; pixel_x = -32; pixel_y = -8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bR" = (/obj/effect/turf_decal/stripes/red/line{icon_state = "warningline_red"; dir = 1},/obj/effect/turf_decal/trimline/red/filled/line{icon_state = "trimline_fill"; dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bS" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 1},/obj/machinery/suit_storage_unit/syndicate,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bT" = (/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bU" = (/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bV" = (/obj/effect/turf_decal/tile/red,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bW" = (/obj/structure/rack,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bX" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/machinery/suit_storage_unit/syndicate,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"bY" = (/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/bar,/obj/effect/turf_decal/tile/bar{dir = 1},/obj/structure/sign/departments/restroom{pixel_y = 32},/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"bZ" = (/obj/structure/table/reinforced,/obj/item/ammo_box/c45,/obj/item/ammo_box/magazine/smgm45,/obj/item/ammo_box/magazine/smgm45,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ca" = (/obj/structure/table/reinforced,/obj/item/ammo_box/c10mm,/obj/item/ammo_box/magazine/m10mm,/obj/item/ammo_box/magazine/m10mm,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cb" = (/obj/structure/chair/stool/bar,/obj/effect/turf_decal/tile/bar,/obj/effect/turf_decal/tile/bar{dir = 1},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/effect/turf_decal/tile/neutral{dir = 4},/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"cc" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cd" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ce" = (/obj/docking_port/mobile{callTime = 200; dwidth = 36; height = 71; id = "sbcmain"; movement_force = list("KNOCKDOWN" = 0, "THROW" = 0); name = "Syndicate Starfury Battle Cruiser"; width = 35},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cf" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/machinery/suit_storage_unit/syndicate,/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cg" = (/obj/structure/rack,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ch" = (/obj/structure/bed,/obj/item/bedsheet/syndie,/obj/effect/mob_spawn/human/syndicate/battlecruiser{icon_state = "sleeper_s"; dir = 8},/obj/machinery/light/small{dir = 1},/turf/open/floor/plasteel/grimy,/area/shuttle/sbc_starfury)
+"ci" = (/obj/machinery/door/window/brigdoor/northright{name = "Bar Access"; req_access_txt = "150"},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cj" = (/obj/machinery/door/airlock/engineering{name = "Engineering"; req_access_txt = "150"},/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"ck" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/machinery/door/airlock/engineering{name = "Engineering"; req_access_txt = "150"},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cl" = (/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red,/obj/machinery/door/airlock/engineering{name = "Engineering"; req_access_txt = "150"},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cm" = (/obj/structure/table/reinforced,/obj/item/gun/ballistic/automatic/c20r,/obj/item/gun/ballistic/automatic/c20r,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cn" = (/obj/structure/table/reinforced,/obj/item/gun/ballistic/automatic/pistol,/obj/item/gun/ballistic/automatic/pistol,/obj/item/gun/ballistic/automatic/pistol,/obj/item/gun/ballistic/automatic/pistol,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"co" = (/obj/structure/rack,/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cp" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cq" = (/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cr" = (/obj/machinery/door/poddoor/shutters/preopen{id = "starfurybcsupermatter"},/obj/structure/cable,/turf/open/floor/plating,/area/shuttle/sbc_starfury)
+"cs" = (/obj/machinery/power/rad_collector/anchored/delta,/obj/structure/cable,/turf/open/floor/circuit/green,/area/shuttle/sbc_starfury)
+"ct" = (/obj/effect/spawner/structure/window/plasma/reinforced,/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 6},/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cu" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 8; external_pressure_bound = 5000; name = "engine vent"},/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cv" = (/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cw" = (/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 4; icon_state = "scrub_map_on-2"; name = "siphon machine"; scrubbing = 0},/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cx" = (/obj/effect/spawner/structure/window/plasma/reinforced,/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 10},/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cy" = (/obj/machinery/door/poddoor/shutters/preopen{id = "starfurybcsupermatter"},/turf/open/floor/plating,/area/shuttle/sbc_starfury)
+"cz" = (/obj/effect/spawner/structure/window/plasma/reinforced,/obj/machinery/atmospherics/pipe/manifold/green/visible{icon_state = "manifold-2"; dir = 8},/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cA" = (/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cB" = (/obj/effect/spawner/structure/window/plasma/reinforced,/obj/machinery/atmospherics/pipe/manifold/orange/visible{icon_state = "manifold-2"; dir = 4},/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cC" = (/obj/structure/cable,/turf/closed/wall/r_wall/syndicate,/area/shuttle/sbc_starfury)
+"cD" = (/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 5},/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"cE" = (/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 10},/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"cF" = (/obj/machinery/door/airlock/engineering/glass/critical{name = "Supermatter Chamber"; req_access_txt = "150"},/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cG" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 6},/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"cH" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 9},/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"cI" = (/obj/machinery/atmospherics/components/binary/volume_pump{icon_state = "volpump_map-2"; dir = 1},/obj/structure/cable,/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cJ" = (/obj/structure/cable,/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cK" = (/obj/machinery/atmospherics/components/binary/volume_pump,/obj/structure/cable,/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+"cL" = (/obj/machinery/atmospherics/pipe/simple/green/visible,/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"cM" = (/obj/machinery/atmospherics/pipe/simple/orange/visible,/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"cN" = (/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 6},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cO" = (/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cP" = (/obj/structure/cable,/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/yellow,/obj/structure/sign/warning/radiation/rad_area{pixel_y = 32},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cQ" = (/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/structure/sign/warning/radiation/rad_area{pixel_y = 32},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cR" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cS" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 10},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cT" = (/obj/machinery/atmospherics/pipe/simple/green/visible,/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cU" = (/obj/machinery/power/emitter/welded{icon_state = "emitter"; dir = 4},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cV" = (/obj/structure/reflector/box/anchored{icon_state = "reflector_map"; dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cW" = (/obj/machinery/power/emitter/welded{icon_state = "emitter"; dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cX" = (/obj/effect/mob_spawn/human/syndicate,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"cY" = (/obj/machinery/door/airlock/external{req_access_txt = "150"},/turf/open/floor/plating,/area/shuttle/sbc_starfury)
+"cZ" = (/turf/open/floor/plating,/area/shuttle/sbc_starfury)
+"da" = (/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 5},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"db" = (/obj/machinery/atmospherics/pipe/manifold/green/visible{icon_state = "manifold-2"; dir = 1},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dc" = (/obj/machinery/atmospherics/pipe/manifold/orange/visible{icon_state = "manifold-2"; dir = 1},/obj/machinery/power/emitter/welded{icon_state = "emitter"; dir = 1},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dd" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 8},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"de" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 9},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"df" = (/obj/machinery/portable_atmospherics/canister/nitrogen,/obj/machinery/atmospherics/components/unary/portables_connector/visible{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dg" = (/obj/machinery/atmospherics/components/unary/thermomachine/freezer{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dh" = (/obj/machinery/door/airlock/engineering{name = "Engineering"; req_access_txt = "150"},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"di" = (/obj/machinery/vending/boozeomat/syndicate_access,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dj" = (/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dk" = (/obj/machinery/chem_dispenser/drinks/fullupgrade,/obj/structure/table/reinforced,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dl" = (/obj/structure/cable,/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dm" = (/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dn" = (/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"do" = (/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dp" = (/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dq" = (/obj/structure/cable,/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/yellow,/obj/structure/closet/radiation,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dr" = (/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ds" = (/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 4},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dt" = (/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 4},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"du" = (/obj/machinery/atmospherics/pipe/simple/green/visible{icon_state = "pipe11-2"; dir = 9},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dv" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 5},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dw" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 8},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dx" = (/obj/machinery/atmospherics/pipe/simple/orange/visible{icon_state = "pipe11-2"; dir = 8},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dy" = (/obj/machinery/power/smes/engineering,/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dz" = (/obj/structure/tank_dispenser/oxygen,/turf/open/floor/plating,/area/shuttle/sbc_starfury)
+"dA" = (/obj/machinery/light/small{dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dB" = (/obj/machinery/door/airlock/engineering{name = "Engineering"; req_access_txt = "150"},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dC" = (/obj/machinery/airalarm/syndicate{name = "Starfury Battle Cruiser air alarm"; pixel_y = 28},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dD" = (/obj/machinery/atmospherics/pipe/simple/orange/visible,/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dE" = (/obj/structure/closet/crate/secure/gear,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"dF" = (/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"dG" = (/obj/structure/rack,/obj/item/storage/toolbox/syndicate,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dH" = (/obj/structure/cable,/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 8},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/structure/closet/radiation,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dI" = (/obj/structure/sign/warning/explosives{pixel_y = 32},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dJ" = (/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 1},/obj/structure/sign/departments/security{pixel_y = 32},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dK" = (/obj/structure/sign/warning/vacuum/external{pixel_x = -32},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dL" = (/obj/structure/sign/warning/vacuum/external{pixel_x = 32},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dM" = (/obj/structure/sign/directions/security{pixel_x = 32; pixel_y = 6},/obj/structure/sign/directions/engineering{pixel_x = 32; pixel_y = -2},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dN" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc_starfury)
+"dO" = (/obj/structure/sign/departments/engineering{pixel_x = -32},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dP" = (/obj/structure/sign/departments/engineering{pixel_x = 32},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dQ" = (/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dR" = (/obj/machinery/computer/operating{icon_state = "computer"; dir = 4},/turf/open/floor/plasteel/white,/area/shuttle/sbc_starfury)
+"dS" = (/obj/item/storage/backpack/duffelbag/syndie/surgery,/obj/structure/table/reinforced,/turf/open/floor/plasteel/white,/area/shuttle/sbc_starfury)
+"dT" = (/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"dU" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/white,/area/shuttle/sbc_starfury)
+"dV" = (/obj/machinery/vending/medical/syndicate_access,/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 5},/area/shuttle/sbc_starfury)
+"dW" = (/obj/structure/table/reinforced,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 9},/area/shuttle/sbc_starfury)
+"dX" = (/obj/structure/table/reinforced,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/bruise_pack,/obj/item/stack/medical/ointment,/obj/item/stack/medical/ointment,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 1},/area/shuttle/sbc_starfury)
+"dY" = (/obj/structure/table/reinforced,/obj/item/clothing/under/rank/medical/doctor,/obj/item/clothing/under/rank/medical/doctor,/turf/open/floor/plasteel/white/side{icon_state = "whitehall"; dir = 1},/area/shuttle/sbc_starfury)
+"dZ" = (/obj/structure/rack,/obj/item/analyzer,/obj/item/analyzer,/obj/item/analyzer,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ea" = (/obj/structure/rack,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/obj/item/stack/cable_coil,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"eb" = (/obj/structure/rack,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/plasteel/fifty,/obj/item/stack/sheet/mineral/titanium/fifty,/obj/item/stack/sheet/mineral/plastitanium{amount = 50},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ec" = (/obj/structure/rack,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/sheet/plasmaglass/fifty,/obj/item/stack/sheet/plastitaniumglass{amount = 50},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ed" = (/obj/structure/tank_dispenser/plasma,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ee" = (/obj/machinery/power/smes,/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ef" = (/obj/machinery/power/terminal{icon_state = "term"; dir = 1},/obj/structure/cable,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"eg" = (/obj/structure/cable,/obj/machinery/power/port_gen/pacman/super,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"eh" = (/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/starfurybc,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ei" = (/obj/machinery/computer/shuttle/starfurybc,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ej" = (/obj/structure/closet/crate/radiation,/obj/item/stack/sheet/mineral/uranium{amount = 10},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"ek" = (/obj/structure/window/reinforced/tinted,/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc_starfury)
+"el" = (/obj/structure/shuttle/engine/heater,/turf/open/space/basic,/area/shuttle/sbc_starfury)
+"em" = (/obj/structure/shuttle/engine/huge,/turf/open/space/basic,/area/shuttle/sbc_starfury)
+"eB" = (/obj/structure/curtain/cloth,/turf/open/floor/plasteel/grimy,/area/shuttle/sbc_starfury)
+"eC" = (/obj/structure/dresser,/turf/open/floor/plasteel/grimy,/area/shuttle/sbc_starfury)
+"eD" = (/obj/item/storage/secure/safe{pixel_x = 6; pixel_y = 32},/turf/open/floor/plasteel/grimy,/area/shuttle/sbc_starfury)
+"eE" = (/obj/item/storage/secure/safe{pixel_x = 6; pixel_y = -32},/turf/open/floor/plasteel/grimy,/area/shuttle/sbc_starfury)
+"eF" = (/turf/closed/wall/r_wall/syndicate/nodiagonal{rad_insulation = 1},/area/shuttle/sbc_starfury)
+"eG" = (/obj/structure/closet/syndicate/personal,/turf/open/floor/plasteel/grimy,/area/shuttle/sbc_starfury)
+"eJ" = (/obj/effect/mob_spawn/human/syndicate/battlecruiser/assault,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"eK" = (/obj/machinery/power/apc/syndicate{dir = 1; name = "Starfury Battle Cruiser APC"; pixel_y = 28; req_access = null; req_access_txt = "150"},/obj/structure/cable,/obj/effect/mob_spawn/human/syndicate,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"eL" = (/obj/structure/cable,/obj/effect/mob_spawn/human/syndicate,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"eM" = (/obj/structure/table/optable,/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/white,/area/shuttle/sbc_starfury)
+"eN" = (/obj/machinery/light,/turf/open/floor/plasteel/white/side,/area/shuttle/sbc_starfury)
+"eO" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 4},/obj/machinery/light/floor,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"eP" = (/obj/effect/turf_decal/stripes/line{dir = 10},/obj/machinery/light/floor,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"eQ" = (/obj/effect/turf_decal/stripes/line,/obj/machinery/light/floor,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"eR" = (/obj/effect/turf_decal/stripes/line{dir = 6},/obj/machinery/light/floor,/turf/open/floor/pod,/area/shuttle/sbc_starfury)
+"eS" = (/obj/structure/bed,/obj/item/bedsheet/syndie,/obj/effect/mob_spawn/human/syndicate/battlecruiser{icon_state = "sleeper_s"; dir = 8},/obj/machinery/light/small,/turf/open/floor/plasteel/grimy,/area/shuttle/sbc_starfury)
+"eU" = (/obj/machinery/light{dir = 1},/turf/open/floor/plasteel,/area/shuttle/sbc_starfury)
+"eV" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"eW" = (/obj/effect/turf_decal/tile/red{dir = 8},/obj/effect/turf_decal/tile/red{dir = 1},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"eZ" = (/obj/structure/cable,/obj/effect/mob_spawn/human/syndicate,/obj/machinery/light{dir = 1},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"fa" = (/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 4},/obj/effect/turf_decal/tile/yellow,/obj/machinery/light{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"fb" = (/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 1},/obj/effect/turf_decal/tile/yellow{icon_state = "tile_corner"; dir = 8},/obj/machinery/light{dir = 8},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"fc" = (/obj/machinery/light,/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"fd" = (/obj/machinery/light/small{dir = 4},/turf/open/floor/plasteel/dark,/area/shuttle/sbc_starfury)
+"fe" = (/obj/machinery/suit_storage_unit/syndicate,/obj/machinery/light/small,/turf/open/floor/plating,/area/shuttle/sbc_starfury)
+"fg" = (/obj/machinery/power/supermatter_crystal/syndicate{name = "syndicate supermatter crystal"},/turf/open/floor/engine,/area/shuttle/sbc_starfury)
+
+(1,1,1) = {"
+aaaaaaaaaoaaaaaaaaaaaaaaaaaaaaabababababaaaaaaaaaaaaaaaaaaaaaoaaaaaaaa
+aaaaaaaoaoaoaaaaaaaaaaabababababeheiacabababababaaaaaaaaaaaoaoaoaaaaaa
+aaaaaoaoacaoaoaaaaaaababacacaKaKacacacaKaKacacababaaaaaaaoaoacaoaoaaaa
+aaaaaoacacacaoaaaaaaabacacacacaeafagadahacacacacabaaaaaaaoacacacaoaaaa
+aaaoaoacacacaoaaaaaaabacacacacajakalamaiacacacacabaaaaaaaoacacacaoaoaa
+aoaoacacacacaoaaaaaaabacacacacarasarararacacacacabaaaaaaaoacacacacaoao
+aoacacacacacaoaaaaaaaocAacacacawacacaKanacacacdTaoaaaaaaaoacacacacacao
+aoacacacacaoaoaoaoaoaoacacacacawacacacanacacacacaoaoaoaoaoaoacacacacao
+aoacacacacaoacacacacacacacacacawacacaUanacacacacacacacacacaoacacacacao
+aoacacacacaoacacacacacacacacaoaoaoaMaoaoaoacacacacacacacacaoacacacacao
+aoacacacacacacacacacaoaoayaoaodWdXatdYdVaoaoaDaoaoacacacacacacacacacao
+aoaoacacacaoacacacaoaodUatdUaoavatatataxaqaqatauaoaoacacacaoacacacaoao
+aaaoaoaoacaoacacacaodSapatauaoavatatatatatatataxazaoacacacaoacaoaoaoaa
+aaaaaaaoaoaoacacacaoeMatatatayatatatatatatatatatazaoacacacaoaoaoaaaaaa
+aaaaaaaaaoaoacacacaodRaAataBaoaAaCaCaCeNaCaCaCaCazaoacacacaoaoaaaaaaaa
+aaaaaaaaaaaoaIaIaIdFaoaoaoaoaoaobIbIbIaoaoaoaoaoaodFaIaIaIaoaaaaaaaaaa
+aaaaaaaaaoaoacacacaoaTaTaTaTaTaTacacacaTaTaTaTaTaTaoacacacaoaoaaaaaaaa
+aaaaaaaaaoacacacacacacacacacacacacacacacacacacacacacacacacacaoaaaaaaaa
+aaaaaaaaaGacacacacacacacacacacacacacacacacacacacacacacacacacaHaaaaaaaa
+aaaaaaaaaGacacaJbqbqbqbqbqaLaLbqbqaNbqbqbqbqbqbqbqbqbqaQacacaHaaaaaaaa
+aaaaaaaaaGacacbrbabbbbbbbcbsbtbabbbbbbbbbbbbbbbbbbbbbcbuacacaHaaaaaaaa
+aaaaaaaaaGacacbrbdaFaFaFbebsbtbdaFaFaFaFaFaFaFaFaFaFbebuacacaHaaaaaaaa
+aaaaaaaaaGacacbrbdaFaFaFbebsbtbdaFaFaFaFaFaFaFaFaFaFbebuacacaHaaaaaaaa
+aaaaaaaaaGacacbrbdaFaFaFbebsbtbdaFaFaFaFaFaFaFaFaFaFbebuacacaHaaaaaaaa
+aaaaaaaaaGacacbrbdaFaFaFbebsbtbdaFaFaFaFaFaFaFaFaFaFbebuacacaHaaaaaaaa
+aaaaaaaaaGacacbrbfbgbgbgbhbsbtbfbgbgbgbgbgbgbgbgbgbgbhbuacacaHaaaaaaaa
+aaaaaaaaaGacacaSbvbvbvbvbvaFaFbvbvbvbvbvbvbvbvbvbvbvbveOacacaHaaaaaaaa
+aaaaaaaaaGacacaObibjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbjbkaPacacaHaaaaaaaa
+aaaaaaaaaGacacaOblbidEbkaFbiaFaFbkaFbiaFaFbkaFbiaFbkbmaPacacaHaaaaaaaa
+aaaaaaaaaGacacaOblaFaFdEaFaFdEaFaFaFaFdEaFaFaFaFdEaFbmaPacacaHaaaaaaaa
+aaaaaaaaaGacacaOblaFdEaFaFaFaFdEaFaFaFdEdEaFaFaFaFaFbmaPacacaHaaaaaaaa
+aaaaaaaaaGacacaOblaFdEdEaFaFdEaFaFaFaFaFaFaFaFaFdEaFbmaPacacaHaaaaaaaa
+aaaaaaaaaGacacaOblbnaFbpaFbnaFaFbpaFbnaFaFbpaFbnaFbpbmaPacacaHaaaaaaaa
+aaaaaaaaaGacacaObnbobobobobobobobobobobobobobobobobobpaPacacaHaaaaaaaa
+aaaaaaaaaGacacePaRaRaRaRaRaRaRaRaReQaRaRaRaRaRaRaRaRaReRacacaHaaaaaaaa
+aaaaaaaaaGacacacacacacacacacacacacacacacacacacacacacacacacacaHaaaaaaaa
+aaaaaaaaaoacacacacacacacacacacacacceacacacacacacacacacacacacaoaaaaaaaa
+aaaaaaaaaoaoacacacacacacacacacacacacacacacacacacacacacacacaoaoaaaaaaaa
+aaaaaaaaaaaoacacacaobQdMaoacacacacacacacacacaobQdMaoacacacaoaaaaaaaaaa
+aaaoaoaoaoaoaoaoaoaoaWaWaoaoaoaoaoaoaoaoaoaoaoaXaYdFaoaoaodFaoaoaodFaa
+aaaoaZaobwaochbxbxaoacacaocheBeDeBchaobydIbzaobAbBaobCdNbCaobCdNbCaoaa
+aaaodAaodAaoeGbxbxaoatataoeCeBbxeBeCaobDdQbEaobAbBaobFbCbCaobFbCbCaoaa
+aoaobGaobGaoaoaobHaoatataoaoaobHaoaoaobzdQaKaobAbBdFbIbIbJdFbIbIbKdFao
+aobLbLbYbLbLeUatatatatatateUatatatbMbNbNbNbNeVbObPdJbNbNbRbNbNbNbRbSao
+aobLbLbLbLbLatatatatatatatatatatatbMbTbTbTbTbTbUbVbTbUbWeJaceJbWacbXao
+aocbcbcbbLaoaoaobHaoatataoaoaobHaoaoaobZdQcaaobAbBaoeWbWeJaceJbWaccfao
+aoaKaKaKciaoeGbxbxaoatataoeCeBbxeBeCaobZdQcaaobAbBaocccdcdcdcdbUaccoao
+aodiacacfcaoeSbxbxaoatataoeSeBeEeBeSaobZdQcaaobAbBaoaoaoaoaocgcccdcoao
+aoaodjdkaoaoaoaoaoaocjcjaoaoaoaoaoaoaoaoaoaoaockclaocXeKdCaoaocmcnaoao
+aaaoaoaoaodycpeZeLcCcqcqcPaoeFeFeFeFeFeFeFaocQacacaoaccqacdTaoaoaoaoaa
+aaaaaaaoedcqacacacaodOacdlcrcsctcucvcwcxcscydmacdPaoaccqacacebaoaaaaaa
+aaaaaaaoaccqacacacdhacacdncycsczcufgcwcBcscydmcqcqdBcqcqacacecaoaaaaaa
+aaaaaaaoaocqcqcqcqcCcqacdncycsczcucvcwcBcscydmcqacaoacacdZeaaoaoaaaaaa
+aaaaaaaaaoaoaoacacaocqacfadFaEcDcEcFcGcHaEdFfbcqacaodGdGaoaoaoaaaaaaaa
+aaaaaaaaaaaaaoaoaoaocqacdodpdqaEcIcJcKaEdHdpdrcqacaoaoaoaoaaaaaaaaaaaa
+aaaaaaaaaaaaaaaoacaccqacacacdndFcLcFcMdFdmacaccqacacacaoaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaoacaccqacaccNdsdtduacdvdwdxcSaccqacacacaoaaaaaaaaaaaaaa
+aaaaaaaoaoaoaoaodAaccqcqcqcTcqcqcUcVcWcqcqdDcqcqacacfdaoaoaoaoaoaaaaaa
+aaaaaacYcZcZcZcYacacacaccqdacOdbcOdcddcRcRdecqacacacaccYcZcZcZcYaaaaaa
+aaaaaaaodzfecZaodKacacaccqacfcdfacdgacacfcaccqacacacdLaocZfedzaoaaaaaa
+aaaaaoaoaoaoaodFaoaoaoaodBaoaoaoaoaoaoaoaoaodBaoaoaoaodFaoaoaoaoaoaaaa
+aaaoaoeecCcqcqcqcqcqcqcqcqacacacacacacacacaccqcqcqcqcqcqcqcqcCeeaoaoaa
+aoaocqefdhacacacacacacacacacacacacacacacacacacacacacacacacacdhefcqaoao
+aoaoegejaoacacacacacacacacacacacacacacacacacacacacacacacacacaoejegaoao
+dFekekekdFacacacacacacacacacacacacacacacacacacacacacacacacacdFekekekdF
+aoeleleldFekekekdFacacacdFekekekdFdFdFekekekdFacacacdFekekekdFelelelao
+aoaVaVaVaoeleleldFekekekdFelelelaoaoaoeleleldFekekekdFelelelaoaVaVaVao
+aoaVaVaVaoaVaVaVaoelelelaoaVaVaVaVaVaVaVaVaVaoelelelaoaVaVaVaoaVaVaVao
+aaemaVaVaoaVaVaVaoaVaVaVaoaVaVaVaVaVaVaVaVaVaoaVaVaVaoaVaVaVaoemaVaVaa
+aaaaaaaaaaemaVaVaoaVaVaVaoemaVaVaVaVaVemaVaVaoaVaVaVaoemaVaVaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaemaVaVaaaaaaaaaaaaaaaaaaaaaaemaVaVaaaaaaaaaaaaaaaaaa
+"}
