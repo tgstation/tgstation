@@ -2,10 +2,10 @@ import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { tridentVersion } from '../byond';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
+import { refocusLayout } from '../layouts';
 import { createLogger } from '../logging';
 import { Box } from './Box';
 import { Icon } from './Icon';
-import { refocusLayout } from './Layout';
 import { Tooltip } from './Tooltip';
 
 const logger = createLogger('Button');

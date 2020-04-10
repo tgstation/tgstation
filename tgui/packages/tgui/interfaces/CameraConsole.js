@@ -4,7 +4,7 @@ import { classes } from 'common/react';
 import { Component, Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, ByondUi, Input, Section } from '../components';
-import { refocusLayout } from '../components/Layout';
+import { refocusLayout } from '../layouts';
 
 /**
  * Returns previous and next camera names relative to the currently

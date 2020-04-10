@@ -27,10 +27,6 @@ export const getRoutedComponent = state => {
 //     component: () => AiAirlock,
 //     scrollable: false,
 //   },
-//   airalarm: {
-//     component: () => AirAlarm,
-//     scrollable: true,
-//   },
 //   ai_restorer: {
 //     component: () => AiRestorer,
 //     scrollable: true,
@@ -479,10 +475,6 @@ export const getRoutedComponent = state => {
 //   personal_crafting: {
 //     component: () => PersonalCrafting,
 //     scrollable: true,
-//   },
-//   portable_generator: {
-//     component: () => PortableGenerator,
-//     scrollable: false,
 //   },
 //   portable_pump: {
 //     component: () => PortablePump,

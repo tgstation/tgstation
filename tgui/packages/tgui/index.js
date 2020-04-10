@@ -107,7 +107,11 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept(['./components', './routes'], () => {
+    module.hot.accept([
+      './components',
+      './layouts',
+      './routes',
+    ], () => {
       renderLayout();
     });
   }

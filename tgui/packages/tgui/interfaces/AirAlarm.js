@@ -2,19 +2,17 @@ import { toFixed } from 'common/math';
 import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Layout, NumberInput, Section } from '../components';
+import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { getGasLabel } from '../constants';
-import { createLogger } from '../logging';
+import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-
-const logger = createLogger('AirAlarm');
 
 export const AirAlarm = (props, context) => {
   const { act, data } = useBackend(context);
   const locked = data.locked && !data.siliconUser;
   return (
-    <Layout resizable>
-      <Layout.Content scrollable>
+    <Window resizable>
+      <Window.Content scrollable>
         <InterfaceLockNoticeBox
           siliconUser={data.siliconUser}
           locked={data.locked}
@@ -23,8 +21,8 @@ export const AirAlarm = (props, context) => {
         {!locked && (
           <AirAlarmControl />
         )}
-      </Layout.Content>
-    </Layout>
+      </Window.Content>
+    </Window>
   );
 };
 
