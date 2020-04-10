@@ -8,7 +8,7 @@
 	requires_ntnet = TRUE
 	network_destination = "robotics control network"
 	size = 12
-	tgui_id = "ntos_robocontrol"
+	tgui_id = "NtosRoboControl"
 	ui_x = 550
 	ui_y = 550
 	///Number of simple robots on-station.
