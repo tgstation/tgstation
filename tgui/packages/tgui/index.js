@@ -12,7 +12,8 @@ import { backendUpdate } from './backend';
 import { tridentVersion } from './byond';
 import { setupDrag } from './drag';
 import { createLogger } from './logging';
-import { createStore } from './store';
+import { createStore, StoreProvider } from './store';
+import { getRoutedComponent } from './routes';
 
 const logger = createLogger();
 const store = createStore();
@@ -35,8 +36,12 @@ const renderLayout = () => {
       setupDrag(state);
     }
     // Start rendering
-    const { Layout } = require('./layout');
-    const element = <Layout state={state} dispatch={store.dispatch} />;
+    const Component = getRoutedComponent(state);
+    const element = (
+      <StoreProvider store={store}>
+        <Component />
+      </StoreProvider>
+    );
     render(element, reactRoot);
   }
   catch (err) {
@@ -101,7 +106,7 @@ const setupApp = () => {
   // Enable hot module reloading
   if (module.hot) {
     setupHotReloading();
-    module.hot.accept(['./layout', './routes'], () => {
+    module.hot.accept(['./components', './routes'], () => {
       renderLayout();
     });
   }

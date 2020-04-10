@@ -1,8 +1,10 @@
 import { flow } from 'common/fp';
 import { applyMiddleware, createStore as createReduxStore } from 'common/redux';
+import { Component } from 'inferno';
 import { backendReducer } from './backend';
 import { hotKeyMiddleware, hotKeyReducer } from './hotkeys';
 import { createLogger } from './logging';
+import { act } from './byond';
 
 const logger = createLogger('store');
 
@@ -26,3 +28,14 @@ export const createStore = () => {
   ];
   return createReduxStore(reducer, applyMiddleware(...middleware));
 };
+
+export class StoreProvider extends Component {
+  getChildContext() {
+    const { store } = this.props;
+    return { store };
+  }
+
+  render() {
+    return this.props.children;
+  }
+}

@@ -1,5 +1,5 @@
+import { act } from './byond';
 import { UI_DISABLED, UI_INTERACTIVE } from './constants';
-import { tridentVersion, act as _act } from './byond';
 
 /**
  * This file provides a clear separation layer between backend updates
@@ -83,13 +83,20 @@ export const backendReducer = (state, action) => {
  *   act: (action: string, params?: object) => void,
  * }}
  */
-export const useBackend = props => {
+export const useBackend = context => {
   // TODO: Dispatch "act" calls as Redux actions
-  const { state, dispatch } = props;
+  const { store } = context;
+  // Obsolete bits
+  const {
+    state = store.getState(),
+    dispatch = store.dispatch,
+  } = context;
   const ref = state.config.ref;
-  const act = (action, params = {}) => _act(ref, action, params);
+  const boundAct = (action, params = {}) => {
+    act(ref, action, params);
+  };
   return {
     ...state,
-    act,
+    act: boundAct,
   };
 };
