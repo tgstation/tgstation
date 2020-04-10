@@ -1,14 +1,15 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Layout } from '../components';
+import { Box, Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
 export const Wires = (props, context) => {
   const { act, data } = useBackend(context);
   const wires = data.wires || [];
   const statuses = data.status || [];
   return (
-    <Layout>
-      <Layout.Content>
+    <Window>
+      <Window.Content>
         <Section>
           <LabeledList>
             {wires.map(wire => (
@@ -55,7 +56,7 @@ export const Wires = (props, context) => {
             ))}
           </Section>
         )}
-      </Layout.Content>
-    </Layout>
+      </Window.Content>
+    </Window>
   );
 };
