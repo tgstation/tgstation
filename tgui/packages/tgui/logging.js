@@ -42,3 +42,10 @@ export const createLogger = ns => {
     error: (...args) => log(LEVEL_ERROR, ns, ...args),
   };
 };
+
+/**
+ * A generic instance of a logger.
+ *
+ * Does not have a namespace associated with it.
+ */
+export const logger = createLogger();

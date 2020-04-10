@@ -46,6 +46,7 @@ const renderLayout = () => {
   }
   catch (err) {
     logger.error('rendering error', err);
+    throw err;
   }
   // Report rendering time
   if (process.env.NODE_ENV !== 'production') {
