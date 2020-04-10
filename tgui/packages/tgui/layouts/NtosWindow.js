@@ -1,6 +1,7 @@
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
-import { Layout, refocusLayout } from './Layout';
+import { refocusLayout } from './Layout';
+import { Window } from './Window';
 
 export const NtosWindow = (props, context) => {
   const { children } = props;
@@ -16,7 +17,7 @@ export const NtosWindow = (props, context) => {
     PC_showexitprogram,
   } = data;
   return (
-    <Layout theme="ntos">
+    <Window theme="ntos">
       <div className="NtosWindow">
         <div
           className="NtosWindow__header NtosHeader"
@@ -104,14 +105,14 @@ export const NtosWindow = (props, context) => {
         </div>
         {children}
       </div>
-    </Layout>
+    </Window>
   );
 };
 
 const NtosWindowContent = props => {
   return (
     <div className="NtosWindow__content">
-      <Layout.Content {...props} />
+      <Window.Content {...props} />
     </div>
   );
 };

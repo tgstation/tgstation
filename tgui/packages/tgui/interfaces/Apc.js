@@ -1,10 +1,21 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
-export const Apc = props => {
-  const { act, data } = useBackend(props);
+export const Apc = (props, context) => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <ApcContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+const ApcContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const locked = data.locked && !data.siliconUser;
   const powerStatusMap = {
     2: {
