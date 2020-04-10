@@ -15,7 +15,6 @@ export { Icon } from './Icon';
 export { Input } from './Input';
 export { Knob } from './Knob';
 export { LabeledList } from './LabeledList';
-export { Layout } from './Layout';
 export { NoticeBox } from './NoticeBox';
 export { NumberInput } from './NumberInput';
 export { ProgressBar } from './ProgressBar';
