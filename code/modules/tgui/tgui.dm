@@ -69,7 +69,7 @@
 	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]" // DO NOT replace with \ref here. src_object could potentially be tagged
 	src.custom_browser_id = browser_id ? TRUE : FALSE
 
-	set_interface(interface)
+	src.interface = interface
 
 	if(title)
 		src.title = sanitize(title)
@@ -149,7 +149,7 @@
  **/
 /datum/tgui/proc/reinitialize(interface, list/data, list/static_data)
 	if(interface)
-		set_interface(interface) // Set a new interface.
+		src.interface = interface
 	if(data)
 		initial_data = data
 	if(static_data)
@@ -181,16 +181,6 @@
  **/
 /datum/tgui/proc/set_style(style)
 	src.style = lowertext(style)
-
- /**
-  * public
-  *
-  * Set the interface (template) for this UI.
-  *
-  * required interface string The new UI interface.
- **/
-/datum/tgui/proc/set_interface(interface)
-	src.interface = lowertext(interface)
 
  /**
   * public
