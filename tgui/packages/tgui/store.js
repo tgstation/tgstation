@@ -3,16 +3,6 @@ import { applyMiddleware, createStore as createReduxStore } from 'common/redux';
 import { Component } from 'inferno';
 import { backendReducer } from './backend';
 import { hotKeyMiddleware, hotKeyReducer } from './hotkeys';
-import { createLogger } from './logging';
-import { act } from './byond';
-
-const logger = createLogger('store');
-
-// const loggingMiddleware = store => next => action => {
-//   const { type, payload } = action;
-//   logger.log('dispatching', type);
-//   next(action);
-// };
 
 export const createStore = () => {
   const reducer = flow([
