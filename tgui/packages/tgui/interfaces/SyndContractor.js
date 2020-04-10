@@ -1,6 +1,7 @@
 import { Box, Button, Section, Dimmer, Table, Icon, NoticeBox, Tabs, Grid, LabeledList } from "../components";
 import { useBackend } from "../backend";
 import { Fragment, Component } from "inferno";
+import { Window } from "../layouts";
 
 export class FakeTerminal extends Component {
   constructor(props) {
@@ -53,8 +54,20 @@ export class FakeTerminal extends Component {
   }
 }
 
-export const SyndContractor = props => {
-  const { data, act } = useBackend(props);
+export const SyndContractor = (props, context) => {
+  return (
+    <Window
+      theme="syndicate"
+      resizable>
+      <Window.Content scrollable>
+        <SyndContractorContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const SyndContractorContent = (props, context) => {
+  const { data, act } = useBackend(context);
 
   const terminalMessages = [
     "Recording biometric data...",
@@ -198,13 +211,13 @@ export const SyndContractor = props => {
   return (
     <Fragment>
       {errorPane}
-      <SyndPane state={props.state} />
+      <SyndPane />
     </Fragment>
   );
 };
 
-export const StatusPane = props => {
-  const { act, data } = useBackend(props);
+export const StatusPane = (props, context) => {
+  const { act, data } = useBackend(context);
 
   return (
     <Section
@@ -257,8 +270,8 @@ export const StatusPane = props => {
   );
 };
 
-export const SyndPane = props => {
-  const { act, data } = useBackend(props);
+export const SyndPane = (props, context) => {
+  const { act, data } = useBackend(context);
 
   const contractor_hub_items = data.contractor_hub_items || [];
   const contracts = data.contracts || [];

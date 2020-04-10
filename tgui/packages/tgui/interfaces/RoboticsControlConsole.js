@@ -1,10 +1,10 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Section, Tabs, LabeledList } from '../components';
+import { Window } from '../layouts';
 
-export const RoboticsControlConsole = props => {
-  const { state } = props;
-  const { act, data } = useBackend(props);
+export const RoboticsControlConsole = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     can_hack,
     cyborgs = [],
@@ -12,32 +12,36 @@ export const RoboticsControlConsole = props => {
   } = data;
 
   return (
-    <Tabs>
-      <Tabs.Tab
-        key="cyborgs"
-        label={"Cyborgs " + `(${cyborgs.length})`}
-        icon="list"
-        lineHeight="23px">
-        {() => (
-          <Cyborgs state={state} cyborgs={cyborgs} can_hack={can_hack} />
-        )}
-      </Tabs.Tab>
-      <Tabs.Tab
-        key="drones"
-        label={"Drones " + `(${drones.length})`}
-        icon="list"
-        lineHeight="23px">
-        {() => (
-          <Drones state={state} drones={drones} />
-        )}
-      </Tabs.Tab>
-    </Tabs>
+    <Window resizable>
+      <Window.Content scrollable>
+        <Tabs>
+          <Tabs.Tab
+            key="cyborgs"
+            label={"Cyborgs " + `(${cyborgs.length})`}
+            icon="list"
+            lineHeight="23px">
+            {() => (
+              <Cyborgs cyborgs={cyborgs} can_hack={can_hack} />
+            )}
+          </Tabs.Tab>
+          <Tabs.Tab
+            key="drones"
+            label={"Drones " + `(${drones.length})`}
+            icon="list"
+            lineHeight="23px">
+            {() => (
+              <Drones drones={drones} />
+            )}
+          </Tabs.Tab>
+        </Tabs>
+      </Window.Content>
+    </Window>
   );
 };
 
-const Cyborgs = props => {
-  const { state, cyborgs, can_hack } = props;
-  const { act, data } = useBackend(props);
+const Cyborgs = (props, context) => {
+  const { cyborgs, can_hack } = props;
+  const { act, data } = useBackend(context);
 
   if (!cyborgs.length) {
     return (
@@ -120,9 +124,9 @@ const Cyborgs = props => {
   });
 };
 
-const Drones = props => {
-  const { state, drones } = props;
-  const { act, data } = useBackend(props);
+const Drones = (props, context) => {
+  const { drones } = props;
+  const { act } = useBackend(context);
 
   if (!drones.length) {
     return (
