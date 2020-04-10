@@ -44,7 +44,7 @@ export const createLogger = ns => {
 };
 
 /**
- * A generic instance of a logger.
+ * A generic instance of the logger.
  *
  * Does not have a namespace associated with it.
  */

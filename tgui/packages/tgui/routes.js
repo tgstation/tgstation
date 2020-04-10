@@ -19,24 +19,8 @@ export const getRoutedComponent = state => {
 };
 
 // const ROUTES = {
-//   achievements: {
-//     component: () => Achievements,
-//     scrollable: true,
-//   },
-//   ai_airlock: {
-//     component: () => AiAirlock,
-//     scrollable: false,
-//   },
-//   ai_restorer: {
-//     component: () => AiRestorer,
-//     scrollable: true,
-//   },
 //   airlock_electronics: {
 //     component: () => AirlockElectronics,
-//     scrollable: false,
-//   },
-//   apc: {
-//     component: () => Apc,
 //     scrollable: false,
 //   },
 //   atmos_alert: {
@@ -92,10 +76,6 @@ export const getRoutedComponent = state => {
 //     component: () => CameraConsole,
 //     wrapper: () => CameraConsoleWrapper,
 //     scrollable: true,
-//   },
-//   canister: {
-//     component: () => Canister,
-//     scrollable: false,
 //   },
 //   canvas: {
 //     component: () => Canvas,
@@ -327,12 +307,6 @@ export const getRoutedComponent = state => {
 //     component: () => NtnetRelay,
 //     scrollable: false,
 //   },
-//   ntos_ai_restorer: {
-//     component: () => AiRestorer,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
 //   ntos_atmos: {
 //     component: () => NtosAtmos,
 //     wrapper: () => NtosWrapper,
@@ -369,20 +343,8 @@ export const getRoutedComponent = state => {
 //     scrollable: true,
 //     theme: 'ntos',
 //   },
-//   ntos_file_manager: {
-//     component: () => NtosFileManager,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
 //   ntos_job_manager: {
 //     component: () => NtosJobManager,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_main: {
-//     component: () => NtosMain,
 //     wrapper: () => NtosWrapper,
 //     scrollable: true,
 //     theme: 'ntos',
@@ -399,24 +361,6 @@ export const getRoutedComponent = state => {
 //     scrollable: false,
 //     theme: 'syndicate',
 //   },
-//   ntos_net_downloader: {
-//     component: () => NtosNetDownloader,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_net_monitor: {
-//     component: () => NtosNetMonitor,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_power_monitor: {
-//     component: () => PowerMonitor,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
 //   ntos_revelation: {
 //     component: () => NtosRevelation,
 //     wrapper: () => NtosWrapper,
@@ -431,12 +375,6 @@ export const getRoutedComponent = state => {
 //   },
 //   ntos_shipping: {
 //     component: () => NtosShipping,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_station_alert: {
-//     component: () => StationAlertConsole,
 //     wrapper: () => NtosWrapper,
 //     scrollable: true,
 //     theme: 'ntos',
@@ -483,10 +421,6 @@ export const getRoutedComponent = state => {
 //   portable_scrubber: {
 //     component: () => PortableScrubber,
 //     scrollable: false,
-//   },
-//   power_monitor: {
-//     component: () => PowerMonitor,
-//     scrollable: true,
 //   },
 //   proximity_sensor: {
 //     component: () => ProximitySensor,
@@ -546,10 +480,6 @@ export const getRoutedComponent = state => {
 //     component: () => SmartVend,
 //     scrollable: true,
 //   },
-//   smes: {
-//     component: () => Smes,
-//     scrollable: false,
-//   },
 //   smoke_machine: {
 //     component: () => SmokeMachine,
 //     scrollable: false,
@@ -566,10 +496,6 @@ export const getRoutedComponent = state => {
 //     component: () => SpawnersMenu,
 //     scrollable: true,
 //   },
-//   station_alert: {
-//     component: () => StationAlertConsole,
-//     scrollable: true,
-//   },
 //   suit_storage_unit: {
 //     component: () => SuitStorageUnit,
 //     scrollable: false,
@@ -579,51 +505,6 @@ export const getRoutedComponent = state => {
 //     wrapper: () => NtosWrapper,
 //     scrollable: true,
 //     theme: 'syndicate',
-//   },
-//   tanks: {
-//     component: () => Tank,
-//     scrollable: false,
-//   },
-//   tank_dispenser: {
-//     component: () => TankDispenser,
-//     scrollable: false,
-//   },
-//   teleporter: {
-//     component: () => Teleporter,
-//     scrollable: false,
-//   },
-//   thermomachine: {
-//     component: () => ThermoMachine,
-//     scrollable: false,
-//   },
-//   timer: {
-//     component: () => Timer,
-//     scrollable: false,
-//   },
-//   transfer_valve: {
-//     component: () => TransferValve,
-//     scrollable: false,
-//   },
-//   turbine_computer: {
-//     component: () => TurbineComputer,
-//     scrollable: false,
-//   },
-//   uplink: {
-//     component: () => Uplink,
-//     scrollable: true,
-//     theme: 'syndicate',
-//   },
-//   vault_controller: {
-//     component: () => VaultController,
-//     scrollable: false,
-//   },
-//   vending: {
-//     component: () => Vending,
-//     scrollable: true,
-//   },
-//   wires: {
-//     component: () => Wires,
-//     scrollable: false,
 //   },
 //   scan_consolenew: {
 //     component: () => DnaConsole,

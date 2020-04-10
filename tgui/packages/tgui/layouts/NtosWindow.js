@@ -4,7 +4,11 @@ import { refocusLayout } from './Layout';
 import { Window } from './Window';
 
 export const NtosWindow = (props, context) => {
-  const { children } = props;
+  const {
+    resizable,
+    theme = 'ntos',
+    children,
+  } = props;
   const { act, data } = useBackend(context);
   const {
     PC_batteryicon,
@@ -17,7 +21,9 @@ export const NtosWindow = (props, context) => {
     PC_showexitprogram,
   } = data;
   return (
-    <Window theme="ntos">
+    <Window
+      theme={theme}
+      resizable={resizable}>
       <div className="NtosWindow">
         <div
           className="NtosWindow__header NtosHeader"
