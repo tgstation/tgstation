@@ -325,7 +325,6 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "Launchpad", "Briefcase Launchpad Remote", 300, 240, master_ui, state) //width, height
-		ui.set_style("syndicate")
 		ui.open()
 
 	ui.set_autoupdate(TRUE)

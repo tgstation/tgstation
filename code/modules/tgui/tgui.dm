@@ -22,8 +22,6 @@
 	var/width = 0
 	/// The window height
 	var/height = 0
-	/// The style to be used for this UI.
-	var/style = "nanotrasen"
 	/// The interface (template) to be used for this UI.
 	var/interface
 	/// Update the UI every MC tick.
@@ -121,7 +119,6 @@
 	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
 	// be tagged, so this is an effective unwrap
 	html = replacetextEx(html, "\[ref]", "\ref[src]")
-	html = replacetextEx(html, "\[style]", style)
 
 	// Open the window.
 	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]")
@@ -175,16 +172,6 @@
  /**
   * public
   *
-  * Set the style for this UI.
-  *
-  * required style string The new UI style.
- **/
-/datum/tgui/proc/set_style(style)
-	src.style = lowertext(style)
-
- /**
-  * public
-  *
   * Enable/disable auto-updating of the UI.
   *
   * required state bool Enable/disable auto-updating.
@@ -207,7 +194,6 @@
 		"title" = title,
 		"status" = status,
 		"screen" = ui_screen,
-		"style" = style,
 		"interface" = interface,
 		"fancy" = user.client.prefs.tgui_fancy,
 		"locked" = user.client.prefs.tgui_lock && !custom_browser_id,

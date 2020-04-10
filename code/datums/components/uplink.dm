@@ -127,7 +127,6 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "Uplink", name, 620, 580, master_ui, state)
 		ui.set_autoupdate(FALSE) // This UI is only ever opened by one person, and never is updated outside of user input.
-		ui.set_style("syndicate")
 		ui.open()
 
 /datum/component/uplink/ui_data(mob/user)
