@@ -6,12 +6,27 @@ import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { dragStartHandler, resizeStartHandler } from '../drag';
 import { releaseHeldKeys } from '../hotkeys';
 import { createLogger } from '../logging';
-import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { useBackend } from '../backend';
 
 const logger = createLogger('Layout');
+
+/**
+ * Brings Layout__content DOM element back to focus.
+ *
+ * Commonly used to keep the content scrollable in IE.
+ */
+export const refocusLayout = () => {
+  // IE8: Focus method is seemingly fucked.
+  if (tridentVersion <= 4) {
+    return;
+  }
+  const element = document.getElementById('Layout__content');
+  if (element) {
+    element.focus();
+  }
+};
 
 export class Layout extends Component {
   componentDidMount() {

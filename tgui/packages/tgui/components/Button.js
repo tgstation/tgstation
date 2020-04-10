@@ -3,9 +3,9 @@ import { Component, createRef } from 'inferno';
 import { tridentVersion } from '../byond';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { createLogger } from '../logging';
-import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
+import { refocusLayout } from './Layout';
 import { Tooltip } from './Tooltip';
 
 const logger = createLogger('Button');
