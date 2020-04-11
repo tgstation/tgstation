@@ -1,9 +1,11 @@
-import { decodeHtmlEntities } from 'common/string';
+import { decodeHtmlEntities, createSearch } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Input, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 import { useGlobal } from '../store';
+
+const MAX_SEARCH_RESULTS = 25;
 
 // It's a class because we need to store state in the form of the current
 // hovered item, and current search terms
@@ -23,6 +25,9 @@ export const Uplink = (props, context) => {
     searchText,
     setSearchText,
   ] = useGlobal(context, 'searchText', '');
+  const testSearch = createSearch(searchText, item => {
+    return item.name + item.desc;
+  });
   return (
     <Window
       theme="syndicate"
@@ -57,26 +62,18 @@ export const Uplink = (props, context) => {
             </Fragment>
           )}>
           {searchText.length > 0 ? (
-            <table className="Table">
-              <ItemList
-                compact
-                items={categories
-                  .flatMap(category => {
-                    return category.items || [];
-                  })
-                  .filter(item => {
-                    const searchTerm = searchText.toLowerCase();
-                    const searchableString = String(item.name + item.desc)
-                      .toLowerCase();
-                    return searchableString.includes(searchTerm);
-                  })}
-                hoveredItem={hoveredItem}
-                onBuyMouseOver={item => setHoveredItem(item)}
-                onBuyMouseOut={item => setHoveredItem({})}
-                onBuy={item => act('buy', {
-                  item: item.name,
-                })} />
-            </table>
+            <ItemList
+              compact
+              items={categories
+                .flatMap(category => category.items || [])
+                .filter(testSearch)
+                .filter((item, i) => i < MAX_SEARCH_RESULTS)}
+              hoveredItem={hoveredItem}
+              onBuyMouseOver={item => setHoveredItem(item)}
+              onBuyMouseOut={item => setHoveredItem({})}
+              onBuy={item => act('buy', {
+                item: item.name,
+              })} />
           ) : (
             <Tabs vertical>
               {categories.map(category => {

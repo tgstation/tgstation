@@ -42,36 +42,6 @@ export const getRoutedComponent = state => {
 };
 
 // const ROUTES = {
-//   bepis: {
-//     component: () => Bepis,
-//     scrollable: false,
-//   },
-//   blackmarket_uplink: {
-//     component: () => BlackmarketUplink,
-//     scrollable: true,
-//     theme: 'hackerman',
-//   },
-//   borgopanel: {
-//     component: () => BorgPanel,
-//     scrollable: true,
-//   },
-//   brig_timer: {
-//     component: () => BrigTimer,
-//     scrollable: false,
-//   },
-//   bsa: {
-//     component: () => BluespaceArtillery,
-//     scrollable: false,
-//   },
-//   camera_console: {
-//     component: () => CameraConsole,
-//     wrapper: () => CameraConsoleWrapper,
-//     scrollable: true,
-//   },
-//   canvas: {
-//     component: () => Canvas,
-//     scrollable: false,
-//   },
 //   cargo: {
 //     component: () => Cargo,
 //     scrollable: true,
