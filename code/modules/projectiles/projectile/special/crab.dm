@@ -15,23 +15,25 @@
 	//probiscis-blocker handling
 	if(iscarbon(hit))
 		var/mob/living/carbon/victim = hit
-		message_admins("[victim.head] [istype(victim.head, /obj/item/clothing/head/headcrab)]")
-		if(victim.head && istype(victim.head, /obj/item/clothing/head/headcrab))
-			return NOTNOTLIVE
 		if(ishuman(hit))
+			message_admins("Passed human")
 			var/mob/living/carbon/human/H = hit
 			if(H.is_mouth_covered(head_only = 1))
+				message_admins("Covered")
 				H.visible_message("<span class='danger'>[src] smashes against [H]'s [H.head]!</span>", \
 									"<span class='userdanger'>[src] smashes against your [H.head]!</span>")
 				return NOTNOTDEAD
 		if(victim.head)
+			message_admins("Nother hat")
 			var/obj/item/clothing/W = victim.head
 			if(victim.dropItemToGround(W))
+				message_admins("Drop it")
 				victim.visible_message("<span class='danger'>[src] knocks [W] off of [victim]'s head!</span>", \
 									"<span class='userdanger'>[src] knocks [W] off of your head!</span>")
 		var/obj/item/clothing/head/headcrab/creb = new /obj/item/clothing/head/headcrab
 		obj_integrity = obj_integrity - (obj_integrity-takenHealth)
 		victim.equip_to_slot_if_possible(creb, ITEM_SLOT_HEAD, 0, 1, 1)
+		message_admins("Hat")
 		return HAT
 	return NOTNOTLIVE
 
@@ -62,6 +64,7 @@
 	item_state = "headcrab"
 	clothing_flags = SNUG_FIT
 	flags_inv = HIDEEARS|HIDEHAIR
+	flags_cover = HEADCOVERSMOUTH
 	block_chance = 1000
 	obj_integrity = 25
 	var/datum/species/oldHat
