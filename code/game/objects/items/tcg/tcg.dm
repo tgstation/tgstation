@@ -107,10 +107,16 @@ var/list/cardTypeLookup = list("name" = 0,
 	var/list/toReturn = list()
 	var/list/cards = list()
 	for(var/card in 1 to cardCount)
-		//Some number between 1 and the final value of the table
-		var/rarity = rand(1, rarityTable[rarityTable.len])
-		for(var/bracket in rarityTable.len)
-			if(rarity <= rarityTable[bracket])
+		var/rarity = 0
+		//Some number between 1 and the sum of all values in the list
+		var/weight = 0
+		for(var/chance in rarityTable)
+			weight += chance
+		var/random = rand(weight)
+		for(var/bracket in 1 to rarityTable.len)
+			//Steals blatently from pickweight(), sorry buddy I need the index
+			random -= rarityTable[bracket]
+			if(random <= 0)
 				rarity = bracket
 				break
 		cards = extractAllMatchingCards("rarity", rarity, cardList)
