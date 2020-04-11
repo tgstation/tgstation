@@ -28,8 +28,7 @@
     'border-color': #910101,
   ));
   @include meta.load-css('../components/NoticeBox.scss', $with: (
-    'color-first': #1a3f57,
-    'color-second': #1a3f57,
+    'color-background': #1a3f57,
   ));
   @include meta.load-css('../components/NumberInput.scss', $with: (
     'border-color': #910101,

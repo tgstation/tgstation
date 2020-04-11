@@ -5,11 +5,7 @@ import { capitalize } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section } from '../components';
-import { createLogger } from '../logging';
 import { Window } from '../layouts';
-
-// IN CASE OF DEBUGGING, BREAK GLASS.
-// const logger = createLogger('DnaConsole');
 
 const SUBJECT_CONCIOUS = 0;
 const SUBJECT_SOFT_CRIT = 1;
@@ -72,7 +68,6 @@ const isSameMutation = (a, b) => {
 };
 
 export const DnaConsole = (props, context) => {
-  const { state } = props;
   const { data, act } = useBackend(context);
   const {
     isPulsingRads,
@@ -81,20 +76,20 @@ export const DnaConsole = (props, context) => {
   const { consoleMode } = data.view;
   return (
     <Window resizable>
+      {!!isPulsingRads && (
+        <Dimmer
+          fontSize="14px"
+          textAlign="center">
+          <Icon
+            mr={1}
+            name="spinner"
+            spin />
+          Radiation pulse in progress...
+          <Box mt={1} />
+          {radPulseSeconds}s
+        </Dimmer>
+      )}
       <Window.Content scrollable>
-        {!!isPulsingRads && (
-          <Dimmer
-            fontSize="14px"
-            textAlign="center">
-            <Icon
-              mr={1}
-              name="spinner"
-              spin />
-            Radiation pulse in progress...
-            <Box mt={1} />
-            {radPulseSeconds}s
-          </Dimmer>
-        )}
         <DnaScanner />
         <DnaConsoleCommands />
         {consoleMode === CONSOLE_MODE_STORAGE && (
@@ -1013,7 +1008,6 @@ const GenomeSequencer = (props, context) => {
     }
 
     pairs.push(pair);
-
   }
   return (
     <Fragment>
