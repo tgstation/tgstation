@@ -81,11 +81,12 @@
 
 
 //limb removal. The "special" argument is used for swapping a limb with a new one without the effects of losing a limb kicking in.
-/obj/item/bodypart/proc/drop_limb(special)
+/obj/item/bodypart/proc/drop_limb(special, dismembered)
 	if(!owner)
 		return
 	var/atom/Tsec = owner.drop_location()
 	var/mob/living/carbon/C = owner
+	SEND_SIGNAL(C, COMSIG_LIVING_REMOVE_LIMB, src, dismembered)
 	update_limb(1)
 	C.bodyparts -= src
 

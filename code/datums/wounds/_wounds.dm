@@ -39,6 +39,8 @@
 	///TODO: damage per interaction with the affected limb & ability to alternate movespeed slowdowns to simulate one leg limping
 
 	var/process_dead = FALSE //if this ticks while the host is dead
+	var/limp_slowdown = 0
+	var/sound_effect
 
 /datum/wound/Destroy()
 	. = ..()
@@ -56,6 +58,9 @@
 	LAZYADD(limb.wounds, src)
 	limb.update_wound()
 
+	if(sound_effect)
+		playsound(L.owner, sound_effect, 60 + 20 * severity, TRUE)
+
 /// Remove the wound from whatever it's afflicting
 /datum/wound/proc/remove_wound()
 	if(victim)
@@ -69,6 +74,17 @@
 // TODO: well, a lot really, but i'd kill to get overlays and a bonebreaking effect like Blitz: The League, similar to electric shock skeletons
 /datum/wound/brute
 	damtype = BRUTE
+	sound_effect = 'sound/effects/crack1.ogg'
+
+/datum/wound/brute/apply_wound(obj/item/bodypart/L)
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
+		return
+
+	. = ..()
+
+	if(L.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		var/mob/living/carbon/C = L.owner
+		C.AddComponent(/datum/component/limp)
 
 /datum/wound/brute/dislocation
 	name = "Joint Dislocation"
@@ -77,6 +93,8 @@
 	examine_desc = "is awkwardly jammed out of place"
 	severity = WOUND_SEVERITY_MODERATE
 	interaction_efficiency_penalty = 1.5
+	limp_slowdown = 4
+
 
 /datum/wound/brute/hairline_fracture
 	name = "Hairline Fracture"
@@ -85,6 +103,7 @@
 	examine_desc = "appears bruised and grotesquely swollen"
 	severity = WOUND_SEVERITY_SEVERE
 	interaction_efficiency_penalty = 2
+	limp_slowdown = 7
 
 /datum/wound/brute/compound_fracture
 	name = "Compound Fracture"
@@ -93,11 +112,14 @@
 	examine_desc = "has a cracked bone sticking out of it"
 	severity = WOUND_SEVERITY_CRITICAL
 	interaction_efficiency_penalty = 4
+	limp_slowdown = 12
+	sound_effect = 'sound/effects/crack2.ogg'
 
 
 // TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
 /datum/wound/burn
 	damtype = BURN
+	sound_effect = 'sound/effects/sizzle1.ogg'
 
 // we don't even care about first degree burns
 /datum/wound/burn/second_deg
@@ -123,3 +145,4 @@
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
 	severity = WOUND_SEVERITY_CRITICAL
 	damage_mulitplier_penalty = 2
+	sound_effect = 'sound/effects/sizzle2.ogg'
