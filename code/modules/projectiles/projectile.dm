@@ -129,6 +129,12 @@
 	///If TRUE, hit mobs even if they're on the floor and not our target
 	var/hit_stunned_targets = FALSE
 
+	/// how strong this projectile is at breaking bones
+	var/wound_power_brute = 0
+	/// how strong this projectile is at searing flesh
+	var/wound_power_burn = 0
+
+
 /obj/projectile/Initialize()
 	. = ..()
 	permutated = list()

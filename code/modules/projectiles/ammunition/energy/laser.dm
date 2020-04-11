@@ -2,6 +2,10 @@
 	projectile_type = /obj/projectile/beam/laser
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/laser/plaser
+	projectile_type = /obj/projectile/beam/laser/plaser
+	select_name = "plase"
+
 /obj/item/ammo_casing/energy/lasergun
 	projectile_type = /obj/projectile/beam/laser
 	e_cost = 83

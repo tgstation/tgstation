@@ -22,6 +22,8 @@
 	var/treat_text = ""
 	var/examine_desc = ""
 
+	var/occur_text = ""
+
 	var/severity = WOUND_SEVERITY_MODERATE
 	var/damtype = BRUTE
 
@@ -58,6 +60,10 @@
 	LAZYADD(limb.wounds, src)
 	limb.update_wound()
 
+	var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
+	if(severity == WOUND_SEVERITY_CRITICAL)
+		msg = "<b>[msg]</b>"
+	victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>")
 	if(sound_effect)
 		playsound(L.owner, sound_effect, 60 + 20 * severity, TRUE)
 
@@ -91,16 +97,17 @@
 	desc = "Patient's bone has been unset from socket, causing pain and reduced motor function."
 	treat_text = "Recommended application of bonesetter to affected limb, though manual relocation may suffice."
 	examine_desc = "is awkwardly jammed out of place"
+	occur_text = "jerks violently and becomes unseated"
 	severity = WOUND_SEVERITY_MODERATE
 	interaction_efficiency_penalty = 1.5
 	limp_slowdown = 4
-
 
 /datum/wound/brute/hairline_fracture
 	name = "Hairline Fracture"
 	desc = "Patient's bone has suffered a crack in the foundation, causing serious pain and reduced limb functionality."
 	treat_text = "Recommended light surgical application of bone gel, though splinting will prevent worsening situation."
 	examine_desc = "appears bruised and grotesquely swollen"
+	occur_text = "sprays chips of bone and develops a nasty looking bruise"
 	severity = WOUND_SEVERITY_SEVERE
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 7
@@ -110,6 +117,7 @@
 	desc = "Patient's bones have suffered multiple gruesome fractures, causing significant pain and near uselessness of limb."
 	treat_text = "Immediate binding of affected limb, followed by surgical intervention ASAP."
 	examine_desc = "has a cracked bone sticking out of it"
+	occur_text = "cracks apart, exposing broken bones to open air"
 	severity = WOUND_SEVERITY_CRITICAL
 	interaction_efficiency_penalty = 4
 	limp_slowdown = 12
@@ -127,6 +135,7 @@
 	desc = "Patient is suffering considerable burns with mild skin penetration, creating a risk of infection and increased burning sensations."
 	treat_text = "Recommended application of disinfectant and salve to affected limb, followed by bandaging."
 	examine_desc = "is badly burned and breaking out in blisters"
+	occur_text = "breaks out with violent red burns"
 	severity = WOUND_SEVERITY_MODERATE
 	damage_mulitplier_penalty = 1.25
 
@@ -135,6 +144,7 @@
 	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
 	treat_text = "Recommended immediate disinfection and excision of ruined skin, followed by bandaging."
 	examine_desc = "appears seriously charred, with aggressive red splotches"
+	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
 	severity = WOUND_SEVERITY_SEVERE
 	damage_mulitplier_penalty = 1.5
 
@@ -143,6 +153,7 @@
 	desc = "Patient is suffering near complete loss of tissue and significantly charred muscle and bone, creating life-threatening risk of infection and negligible limb integrity."
 	treat_text = "Immediate surgical debriding of ruined skin, followed by potent tissue regeneration formula and bandaging."
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
+	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
 	severity = WOUND_SEVERITY_CRITICAL
 	damage_mulitplier_penalty = 2
 	sound_effect = 'sound/effects/sizzle2.ogg'

@@ -42,6 +42,10 @@
 	///These are armor values that protect the clothing, taken from its armor datum. List updates on examine because it's currently only used to print armor ratings to chat in Topic().
 	var/list/durability_list = list()
 
+	var/list/damage_by_parts
+	///How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if body_parts_covered has more than one value)
+	var/limb_integrity = 50
+
 /obj/item/clothing/Initialize()
 	if((clothing_flags & VOICEBOX_TOGGLABLE))
 		actions_types += /datum/action/item_action/toggle_voice_box
@@ -88,6 +92,49 @@
 		return 1
 	return ..()
 
+/obj/item/clothing/proc/take_damage_zone(def_zone, damage_amount, damage_type, armour_penetration)
+	//testing("tdz on [src] [def_zone] | [damage_amount] | [damage_type] | [armour_penetration]")
+	if(!def_zone || (body_parts_covered in GLOB.bitflags)) //|| !(body_parts_covered && body_parts_covered & def_zone))
+		return
+
+	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered)
+	if(!(def_zone in covered_limbs))
+		//testing("[src] does not cover [def_zone]")
+		return
+
+	// only worry about dealing damage at all with this if there's actually limb damage
+	var/damage_dealt = take_damage(damage_amount * 0.1, damage_type, armour_penetration) * 10 // only deal 10% of the damage to the general integrity damage, then multiply it by 10 so we know how much to deal to limb
+	LAZYINITLIST(damage_by_parts)
+	damage_by_parts[def_zone] += damage_dealt
+	//testing("Damaged [src]'s [parse_zone(def_zone)] by [damage_dealt], remaining integrity [limb_integrity - damage_by_parts[def_zone]]/[limb_integrity]")
+	if(damage_by_parts[def_zone] > limb_integrity)
+		disable_zone(def_zone, damage_dealt, damage_type)
+
+
+
+/obj/item/clothing/proc/disable_zone(def_zone, damage_amount, damage_type)
+	if(!def_zone)
+		return
+
+	var/list/covered_limbs = body_parts_covered2organ_names(body_parts_covered)
+	if(!(def_zone in covered_limbs))
+		testing("[src] does not cover [def_zone]")
+		return
+
+	var/zone_name = parse_zone(def_zone)
+	var/break_verb = "torn" // assume it's brute first
+	if(damage_type == BURN)
+		break_verb = "burned"
+
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
+		C.visible_message("<span class='danger'>The [zone_name] on [C]'s [src.name] is [break_verb] away!</span>", "<span class='userdanger'>The [zone_name] on your [src.name] is [break_verb] away!</span>")
+	else
+		visible_message("<span class='danger'>[src]'s [zone_name] is [break_verb] away!</span>")
+
+	for(var/i in zone2body_parts_covered(def_zone))
+		body_parts_covered &= ~i
+
 /obj/item/clothing/Destroy()
 	user_vars_remembered = null //Oh god somebody put REFERENCES in here? not to worry, we'll clean it up
 	return ..()
@@ -125,6 +172,19 @@
 			. += "[src] offers the wearer robust protection from fire."
 	if(damaged_clothes)
 		. += "<span class='warning'>It looks damaged!</span>"
+
+	for(var/damaged_zone in damage_by_parts)
+		//TODO: burnt/torn
+		var/pct_damage_part = damage_by_parts[damaged_zone] / limb_integrity * 100
+		//testing("[src] | [damaged_zone] | [pct_damage_part]")
+		switch(pct_damage_part)
+			if(100 to INFINITY)
+				. += "<span class='warning'><b>The [damaged_zone] is destroyed!</b></span>"
+			if(60 to 99)
+				. += "<span class='warning'>The [damaged_zone] is heavily shredded!</span>"
+			if(30 to 59)
+				. += "<span class='danger'>The [damaged_zone] is partially shredded.</span>"
+
 	var/datum/component/storage/pockets = GetComponent(/datum/component/storage)
 	if(pockets)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")

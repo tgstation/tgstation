@@ -19,6 +19,8 @@
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
+	wound_power_burn = 40
+	wound_armor_penetration = -40
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -35,6 +37,15 @@
 		M.IgniteMob()
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
+
+/obj/projectile/beam/laser/plaser
+	name = "plaser"
+	icon_state = "heavylaser"
+	tracer_type = /obj/effect/projectile/tracer/heavy_laser
+	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
+	impact_type = /obj/effect/projectile/impact/heavy_laser
+	wound_power_burn = 70
+	wound_armor_penetration = -30
 
 /obj/projectile/beam/weak
 	damage = 15

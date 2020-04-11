@@ -1,6 +1,6 @@
 
 
-/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE)
+/mob/living/carbon/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked = FALSE, forced = FALSE, spread_damage = FALSE, wound_power = 0)
 	SEND_SIGNAL(src, COMSIG_MOB_APPLY_DAMGE, damage, damagetype, def_zone)
 	var/hit_percent = (100-blocked)/100
 	if(!damage || (!forced && hit_percent <= 0))
@@ -21,13 +21,13 @@
 	switch(damagetype)
 		if(BRUTE)
 			if(BP)
-				if(BP.receive_damage(damage_amount, 0))
+				if(BP.receive_damage(damage_amount, 0, wound_power = wound_power))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
 				adjustBruteLoss(damage_amount, forced = forced)
 		if(BURN)
 			if(BP)
-				if(BP.receive_damage(0, damage_amount))
+				if(BP.receive_damage(0, damage_amount, wound_power = wound_power))
 					update_damage_overlays()
 			else
 				adjustFireLoss(damage_amount, forced = forced)

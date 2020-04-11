@@ -7,6 +7,8 @@
 
 	var/damtype = BRUTE
 	var/force = 0
+	/// higher values can cause wounds through armor, negative values are stopped by even plain clothes
+	var/wound_armor_penetration = 0
 
 	var/datum/armor/armor
 	var/obj_integrity	//defaults to max_integrity

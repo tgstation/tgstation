@@ -153,7 +153,7 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null)
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null, wound_power=0) //wound_power is a bad name, it's used mostly for how much armor ablates it, so come up with better name/use
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn && !stamina) || hit_percent <= 0)
 		return FALSE
@@ -174,25 +174,6 @@
 	if(!brute && !burn && !stamina)
 		return FALSE
 
-	//TODO: do this better
-	var/injury_roll = rand(brute + brute_dam, 100)
-	testing("Injury roll- ([brute + brute_dam], 100): [injury_roll]")
-	switch(injury_roll)
-		if(-INFINITY to 50)
-			testing("No injury")
-
-		if(51 to 74)
-			testing("Moderate")
-			suffer_wound(BRUTE, WOUND_SEVERITY_MODERATE)
-
-		if(75 to 90)
-			testing("Severe")
-			suffer_wound(BRUTE, WOUND_SEVERITY_SEVERE)
-
-		if(91 to INFINITY)
-			testing("Critical")
-			suffer_wound(BRUTE, WOUND_SEVERITY_CRITICAL)
-
 	switch(animal_origin)
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
@@ -207,8 +188,47 @@
 		brute = round(brute * (can_inflict / total_damage),DAMAGE_PRECISION)
 		burn = round(burn * (can_inflict / total_damage),DAMAGE_PRECISION)
 
+	var/sig_damtype = (brute > burn ? BRUTE : BURN)
+	var/sig_dam_prev = (brute > burn ? brute_dam : burn_dam)
+	var/sig_dam_new = max(brute, burn)
+
 	brute_dam += brute
 	burn_dam += burn
+
+	var/armor_ablation = 0
+	// damage clothes if applicable, part of wounds
+	if(owner && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/list/clothing = H.clothingonpart(src)
+		for(var/c in clothing)
+			var/obj/item/clothing/C = c
+			armor_ablation -= wound_power //signs!!
+			//testing("[H]'s [C.name] ablated [wound_power] for running total [armor_ablation] (wound_power = [wound_power])")
+			if(brute)
+				C.take_damage_zone(body_zone, brute, BRUTE, armour_penetration)
+			if(burn)
+				C.take_damage_zone(body_zone, burn, BURN, armour_penetration)
+
+	//TODO: do this better
+	// actually roll wounds if applicable
+	var/injury_roll = rand(sig_dam_prev * 0.75 + sig_dam_new, 100)
+	//testing("Injury roll- ([brute + brute_dam], 100): [injury_roll]")
+	injury_roll -= armor_ablation
+	switch(injury_roll)
+		//if(-INFINITY to 60)
+			//testing("No injury")
+
+		if(61 to 80)
+			//testing("Moderate")
+			suffer_wound(sig_damtype, WOUND_SEVERITY_MODERATE)
+
+		if(81 to 92)
+			//testing("Severe")
+			suffer_wound(sig_damtype, WOUND_SEVERITY_SEVERE)
+
+		if(93 to INFINITY)
+			//testing("Critical")
+			suffer_wound(sig_damtype, WOUND_SEVERITY_CRITICAL)
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
@@ -491,10 +511,10 @@
 	var/datum/wound/preexisting_wound = get_wound(damtype)
 	if(preexisting_wound)
 		if(preexisting_wound.severity >= severity)
-			testing("[src] already suffering wound sev [preexisting_wound.severity]/[preexisting_wound.damtype] (ignored wound sev/type: [severity]/[damtype])")
+			//testing("[src] already suffering wound sev [preexisting_wound.severity]/[preexisting_wound.damtype] (ignored wound sev/type: [severity]/[damtype])")
 			return
 		else
-			testing("Promoting injury of sev/type [preexisting_wound.severity]/[preexisting_wound.damtype] to sev: [severity]")
+			//testing("Promoting injury of sev/type [preexisting_wound.severity]/[preexisting_wound.damtype] to sev: [severity]")
 			preexisting_wound.remove_wound()
 
 	var/wound_type
@@ -506,6 +526,13 @@
 			wound_type = /datum/wound/brute/hairline_fracture
 		else if(severity == WOUND_SEVERITY_CRITICAL)
 			wound_type = /datum/wound/brute/compound_fracture
+	else if(damtype == BURN)// TODO: gonna need to do actual standard handling for this, so we don't have these checks
+		if(severity == WOUND_SEVERITY_MODERATE)
+			wound_type = /datum/wound/burn/second_deg
+		else if(severity == WOUND_SEVERITY_SEVERE)
+			wound_type = /datum/wound/burn/third_deg
+		else if(severity == WOUND_SEVERITY_CRITICAL)
+			wound_type = /datum/wound/burn/fourth_deg
 
 	var/datum/wound/new_wound = new wound_type
 	new_wound.apply_wound(src)

@@ -35,6 +35,19 @@
 	protection += physiology.armor.getRating(d_type)
 	return protection
 
+///Get all the clothing on a specific def_zone
+/mob/living/carbon/human/proc/clothingonpart(obj/item/bodypart/def_zone)
+	var/list/covering_part = list()
+	var/list/body_parts = list(head, wear_mask, wear_suit, w_uniform, back, gloves, shoes, belt, s_store, glasses, ears, wear_id, wear_neck) //Everything but pockets. Pockets are l_store and r_store. (if pockets were allowed, putting something armored, gloves or hats for example, would double up on the armor)
+	for(var/bp in body_parts)
+		if(!bp)
+			continue
+		if(bp && istype(bp , /obj/item/clothing))
+			var/obj/item/clothing/C = bp
+			if(C.body_parts_covered & def_zone.body_part)
+				covering_part += C
+	return covering_part
+
 /mob/living/carbon/human/on_hit(obj/projectile/P)
 	if(dna && dna.species)
 		dna.species.on_hit(P, src)
