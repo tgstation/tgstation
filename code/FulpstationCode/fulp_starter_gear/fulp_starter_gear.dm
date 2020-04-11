@@ -10,8 +10,11 @@
 	new /obj/item/melee/baton/loaded(src)
 	update_icon()
 
-/obj/item/storage/box/security/improved/PopulateContents()
-	..() // we want the regular stuff too; crowbar for latejoins into depowered situations
+/obj/item/storage/box/survival/security/improved/PopulateContents()
+	..() // we want the regular stuff too; crowbar and glowsticks for latejoins into depowered situations
+	new /obj/item/flashlight/glowstick(src)
+	new /obj/item/flashlight/glowstick(src)
+	new /obj/item/flashlight/glowstick(src)
 	new /obj/item/crowbar/red(src)
 
 /obj/item/radio/off/security

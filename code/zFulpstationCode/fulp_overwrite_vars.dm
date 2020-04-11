@@ -367,21 +367,21 @@
 	r_pocket = /obj/item/pda/security
 	belt = /obj/item/storage/belt/security/fulp_starter_full
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
-	box = /obj/item/storage/box/security/improved
+	box = /obj/item/storage/box/survival/security/improved
 	pda_slot = ITEM_SLOT_RPOCKET
 
 /datum/outfit/job/warden
 	backpack_contents = list() //Start with stun baton in belt.
 	r_pocket = /obj/item/pda/security
 	belt = /obj/item/storage/belt/security/fulp_starter_full
-	box = /obj/item/storage/box/security/improved
+	box = /obj/item/storage/box/survival/security/improved
 	pda_slot = ITEM_SLOT_RPOCKET
 
 /datum/outfit/job/hos
 	backpack_contents = list() //Start with stun baton in belt.
 	r_pocket = /obj/item/pda/security
 	belt = /obj/item/storage/belt/security/fulp_starter_full
-	box = /obj/item/storage/box/security/improved
+	box = /obj/item/storage/box/survival/security/improved
 	pda_slot = ITEM_SLOT_RPOCKET
 
 /obj/machinery/vending/wardrobe/sec_wardrobe
