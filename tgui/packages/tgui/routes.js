@@ -1,3 +1,20 @@
+import { Window } from './layouts';
+
+const routingError = (type, name) => () => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        {type === 'notFound' && (
+          <div>Interface <b>{name}</b> was not found.</div>
+        )}
+        {type === 'missingExport' && (
+          <div>Interface <b>{name}</b> is missing an export.</div>
+        )}
+      </Window.Content>
+    </Window>
+  );
+};
+
 export const getRoutedComponent = state => {
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
@@ -7,52 +24,26 @@ export const getRoutedComponent = state => {
     }
   }
   const name = state.config?.interface;
-  if (!name) {
-    throw new Error('Interface is undefined.');
+  let esModule;
+  try {
+    esModule = require(`./interfaces/${name}.js`);
   }
-  const esModule = require(`./interfaces/${name}.js`);
+  catch (err) {
+    if (err.code === 'MODULE_NOT_FOUND') {
+      return routingError('notFound', name);
+    }
+    throw err;
+  }
   const Component = esModule[name];
   if (!Component) {
-    throw new Error(`Interface "${name}" is missing an export.`);
+    return routingError('missingExport', name);
   }
   return Component;
 };
 
 // const ROUTES = {
-//   airlock_electronics: {
-//     component: () => AirlockElectronics,
-//     scrollable: false,
-//   },
-//   atmos_alert: {
-//     component: () => AtmosAlertConsole,
-//     scrollable: true,
-//   },
-//   atmos_control: {
-//     component: () => AtmosControlConsole,
-//     scrollable: true,
-//   },
-//   atmos_filter: {
-//     component: () => AtmosFilter,
-//     scrollable: false,
-//   },
-//   atmos_mixer: {
-//     component: () => AtmosMixer,
-//     scrollable: false,
-//   },
-//   atmos_pump: {
-//     component: () => AtmosPump,
-//     scrollable: false,
-//   },
-//   announcement_system: {
-//     component: () => AutomatedAnnouncement,
-//     scrollable: false,
-//   },
 //   bepis: {
 //     component: () => Bepis,
-//     scrollable: false,
-//   },
-//   bank_machine: {
-//     component: () => BankMachine,
 //     scrollable: false,
 //   },
 //   blackmarket_uplink: {

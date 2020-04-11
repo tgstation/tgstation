@@ -14,48 +14,50 @@ export const Apc = (props, context) => {
   );
 };
 
+const powerStatusMap = {
+  2: {
+    color: 'good',
+    externalPowerText: 'External Power',
+    chargingText: 'Fully Charged',
+  },
+  1: {
+    color: 'average',
+    externalPowerText: 'Low External Power',
+    chargingText: 'Charging',
+  },
+  0: {
+    color: 'bad',
+    externalPowerText: 'No External Power',
+    chargingText: 'Not Charging',
+  },
+};
+
+const malfMap = {
+  1: {
+    icon: 'terminal',
+    content: 'Override Programming',
+    action: 'hack',
+  },
+  2: {
+    icon: 'caret-square-down',
+    content: 'Shunt Core Process',
+    action: 'occupy',
+  },
+  3: {
+    icon: 'caret-square-left',
+    content: 'Return to Main Core',
+    action: 'deoccupy',
+  },
+  4: {
+    icon: 'caret-square-down',
+    content: 'Shunt Core Process',
+    action: 'occupy',
+  },
+};
+
 const ApcContent = (props, context) => {
   const { act, data } = useBackend(context);
   const locked = data.locked && !data.siliconUser;
-  const powerStatusMap = {
-    2: {
-      color: 'good',
-      externalPowerText: 'External Power',
-      chargingText: 'Fully Charged',
-    },
-    1: {
-      color: 'average',
-      externalPowerText: 'Low External Power',
-      chargingText: 'Charging',
-    },
-    0: {
-      color: 'bad',
-      externalPowerText: 'No External Power',
-      chargingText: 'Not Charging',
-    },
-  };
-  const malfMap = {
-    1: {
-      icon: 'terminal',
-      content: 'Override Programming',
-      action: 'hack',
-    },
-    2: {
-      icon: 'caret-square-down',
-      content: 'Shunt Core Process',
-      action: 'occupy',
-    },
-    3: {
-      icon: 'caret-square-left',
-      content: 'Return to Main Core',
-      action: 'deoccupy',
-    },
-    4: {
-      icon: 'caret-square-down',
-      content: 'Shunt Core Process',
-      action: 'occupy',
-    },
-  };
   const externalPowerStatus = powerStatusMap[data.externalPower]
     || powerStatusMap[0];
   const chargingStatus = powerStatusMap[data.chargingStatus]
@@ -63,7 +65,6 @@ const ApcContent = (props, context) => {
   const channelArray = data.powerChannels || [];
   const malfStatus = malfMap[data.malfStatus] || malfMap[0];
   const adjustedCellChange = data.powerCellStatus / 100;
-
   if (data.failTime > 0) {
     return (
       <NoticeBox>

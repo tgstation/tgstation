@@ -1,7 +1,7 @@
-import { Box, Button, Section, Dimmer, Table, Icon, NoticeBox, Tabs, Grid, LabeledList } from "../components";
-import { useBackend } from "../backend";
-import { Fragment, Component } from "inferno";
-import { Window } from "../layouts";
+import { Component, Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Box, Button, Dimmer, Grid, Icon, LabeledList, NoticeBox, Section, Table, Tabs } from '../components';
+import { Window } from '../layouts';
 
 export class FakeTerminal extends Component {
   constructor(props) {

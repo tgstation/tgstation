@@ -10,14 +10,13 @@ export const RoboticsControlConsole = (props, context) => {
     cyborgs = [],
     drones = [],
   } = data;
-
   return (
     <Window resizable>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
             key="cyborgs"
-            label={"Cyborgs " + `(${cyborgs.length})`}
+            label={`Cyborgs (${cyborgs.length})`}
             icon="list"
             lineHeight="23px">
             {() => (
@@ -26,7 +25,7 @@ export const RoboticsControlConsole = (props, context) => {
           </Tabs.Tab>
           <Tabs.Tab
             key="drones"
-            label={"Drones " + `(${drones.length})`}
+            label={`Drones (${drones.length})`}
             icon="list"
             lineHeight="23px">
             {() => (
@@ -42,7 +41,6 @@ export const RoboticsControlConsole = (props, context) => {
 const Cyborgs = (props, context) => {
   const { cyborgs, can_hack } = props;
   const { act, data } = useBackend(context);
-
   if (!cyborgs.length) {
     return (
       <Section>
@@ -52,7 +50,6 @@ const Cyborgs = (props, context) => {
       </Section>
     );
   }
-
   return cyborgs.map(cyborg => {
     return (
       <Section

@@ -1,7 +1,9 @@
 import { Component } from 'inferno';
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, ByondUi, Collapsible, Input, LabeledList, NumberInput, ProgressBar, Section, Tabs, Tooltip, Slider, Icon, Knob } from '../components';
+import { BlockQuote, Box, Button, ByondUi, Collapsible, Icon, Input, Knob, LabeledList, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../components';
 import { DraggableControl } from '../components/DraggableControl';
+import { Window } from '../layouts';
+import { useGlobal } from '../store';
 
 const COLORS_ARBITRARY = [
   'red',
@@ -48,7 +50,7 @@ const PAGES = [
     component: () => KitchenSinkTooltip,
   },
   {
-    title: 'Input / Slider',
+    title: 'Input / Control',
     component: () => KitchenSinkInput,
   },
   {
@@ -63,26 +65,37 @@ const PAGES = [
     title: 'ByondUi',
     component: () => KitchenSinkByondUi,
   },
+  {
+    title: 'Themes',
+    component: () => KitchenSinkThemes,
+  },
 ];
 
-export const KitchenSink = props => {
+export const KitchenSink = (props, context) => {
+  const [theme] = useGlobal(context, 'kitchenSinkTheme');
   return (
-    <Section>
-      <Tabs vertical>
-        {PAGES.map(page => (
-          <Tabs.Tab
-            key={page.title}
-            label={page.title}>
-            {() => {
-              const Component = page.component();
-              return (
-                <Component {...props} />
-              );
-            }}
-          </Tabs.Tab>
-        ))}
-      </Tabs>
-    </Section>
+    <Window
+      theme={theme}
+      resizable>
+      <Window.Content scrollable>
+        <Section>
+          <Tabs vertical>
+            {PAGES.map(page => (
+              <Tabs.Tab
+                key={page.title}
+                label={page.title}>
+                {() => {
+                  const Component = page.component();
+                  return (
+                    <Component {...props} />
+                  );
+                }}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };
 
@@ -438,8 +451,8 @@ const KitchenSinkBlockQuote = props => {
   );
 };
 
-const KitchenSinkByondUi = props => {
-  const { config } = useBackend(props);
+const KitchenSinkByondUi = (props, context) => {
+  const { config } = useBackend(context);
   return (
     <Box>
       <Section
@@ -452,6 +465,22 @@ const KitchenSinkByondUi = props => {
             text: 'Button',
           }} />
       </Section>
+    </Box>
+  );
+};
+
+const KitchenSinkThemes = (props, context) => {
+  const [theme, setTheme] = useGlobal(context, 'kitchenSinkTheme');
+  return (
+    <Box>
+      <LabeledList>
+        <LabeledList.Item label="Use theme">
+          <Input
+            placeholder="theme_name"
+            value={theme}
+            onInput={(e, value) => setTheme(value)} />
+        </LabeledList.Item>
+      </LabeledList>
     </Box>
   );
 };

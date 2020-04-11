@@ -13,7 +13,6 @@ import { tridentVersion } from './byond';
 import { setupDrag } from './drag';
 import { createLogger } from './logging';
 import { createStore, StoreProvider } from './store';
-import { getRoutedComponent } from './routes';
 
 const logger = createLogger();
 const store = createStore();
@@ -36,6 +35,7 @@ const renderLayout = () => {
       setupDrag(state);
     }
     // Start rendering
+    const { getRoutedComponent } = require('./routes');
     const Component = getRoutedComponent(state);
     const element = (
       <StoreProvider store={store}>

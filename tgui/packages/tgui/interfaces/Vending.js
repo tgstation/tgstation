@@ -1,18 +1,15 @@
 import { classes } from 'common/react';
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-export const VendingRow = (props, context) => {
+const VendingRow = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     product,
     productStock,
     custom,
   } = props;
-
   const free = (
     !data.onstation
     || product.price === 0
@@ -23,7 +20,6 @@ export const VendingRow = (props, context) => {
       && data.department === data.user.department
     )
   );
-
   return (
     <Table.Row>
       <Table.Cell collapsing>
@@ -72,12 +68,10 @@ export const VendingRow = (props, context) => {
           <Button
             disabled={(
               productStock === 0
-                        || (
-                          !free && (
-                            !data.user
-                            || product.price > data.user.cash
-                          )
-                        )
+              || !free && (
+                !data.user
+                || product.price > data.user.cash
+              )
             )}
             content={free ? 'FREE' : product.price + ' cr'}
             onClick={() => act('vend', {
@@ -117,7 +111,7 @@ export const Vending = (props, context) => {
               <Box>
                 Welcome, <b>{data.user.name}</b>,
                 {' '}
-                <b>{data.user.job || "Unemployed"}</b>!
+                <b>{data.user.job || 'Unemployed'}</b>!
                 <br />
                 Your balance is <b>{data.user.cash} credits</b>.
               </Box>
@@ -136,8 +130,7 @@ export const Vending = (props, context) => {
                 key={product.name}
                 custom={custom}
                 product={product}
-                productStock={data.stock[product.name]}
-              />
+                productStock={data.stock[product.name]} />
             ))}
           </Table>
         </Section>
