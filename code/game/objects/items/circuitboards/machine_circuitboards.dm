@@ -749,6 +749,36 @@
 		/obj/item/stock_parts/cell = 1)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/medical_lung
+	name = "Automatic Breath Rejuvanator (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medical/simple/lung
+	req_components = list(
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/medical_heart
+	name = "Emergency Heart Stabilizer (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medical/simple/heart
+	req_components = list(
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/sheet/glass = 1)
+
+/obj/item/circuitboard/machine/medical_liver
+	name = "Automated Liver Support System (Machine Board)"
+	icon_state = "medical"
+	build_path = /obj/machinery/medical/simple/liver
+	req_components = list(
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/sheet/glass = 1)
+
 /obj/item/circuitboard/machine/life_support
 	name = "Basic Life Support Unit (Machine Board)"
 	icon_state = "medical"
