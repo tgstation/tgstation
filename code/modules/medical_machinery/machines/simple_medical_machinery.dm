@@ -16,7 +16,7 @@
 	. = ..()
 	REMOVE_TRAIT(attached,status,"mechanical")
 
-	if(!organ_slot || attached.stat == DEAD)
+	if(!organ_slot)
 		return
 
 	attached.adjustOrganLoss(organ_slot,max_boost) //No spamming buckle unbuckle to heal instantly
@@ -29,7 +29,7 @@
 		return
 	ADD_TRAIT(attached,status,"mechanical")
 
-	if(!organ_slot || attached.stat == DEAD)
+	if(!organ_slot)
 		return
 
 	organ_damage = attached.getOrganLoss(organ_slot)
