@@ -100,46 +100,4 @@ export const getRoutedComponent = state => {
 //     component: () => NtnetRelay,
 //     scrollable: false,
 //   },
-//   ntos_atmos: {
-//     component: () => NtosAtmos,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_arcade: {
-//     component: () => NtosArcade,
-//     wrapper: () => NtosWrapper,
-//     scrollable: false,
-//     theme: 'ntos',
-//   },
-//   ntos_card: {
-//     component: () => NtosCard,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_configuration: {
-//     component: () => NtosConfiguration,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_crew_manifest: {
-//     component: () => NtosCrewManifest,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_cyborg_monitor: {
-//     component: () => NtosCyborgRemoteMonitor,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
-//   ntos_job_manager: {
-//     component: () => NtosJobManager,
-//     wrapper: () => NtosWrapper,
-//     scrollable: true,
-//     theme: 'ntos',
-//   },
 // };

@@ -3,9 +3,20 @@ import { useBackend } from '../backend';
 import { Button, NoticeBox, Section, Tabs, Input } from '../components';
 import { AccessList } from './common/AccessList';
 import { map } from 'common/collections';
+import { NtosWindow } from '../layouts';
 
-export const NtosCard = props => {
-  const { act, data } = useBackend(props);
+export const NtosCard = (props, context) => {
+  return (
+    <NtosWindow resizable>
+      <NtosWindow.Content scrollable>
+        <NtosCardContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+export const NtosCardContent = (props, context) => {
+  const { act, data } = useBackend(context);
 
   const {
     authenticated,
