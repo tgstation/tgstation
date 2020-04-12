@@ -399,7 +399,7 @@
 				dna.remove_mutation(HM.type)
 
 	radiation -= min(radiation, RAD_LOSS_PER_TICK)
-	if(radiation > RAD_MOB_SAFE)
+	if(radiation > RAD_MOB_SAFE && !HAS_TRAIT(src,TRAIT_STABLERADS))
 		adjustToxLoss(log(radiation-RAD_MOB_SAFE)*RAD_TOX_COEFFICIENT)
 
 
