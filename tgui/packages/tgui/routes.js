@@ -63,32 +63,4 @@ export const getRoutedComponent = state => {
 //     component: () => Mule,
 //     scrollable: false,
 //   },
-//   nanite_chamber_control: {
-//     component: () => NaniteChamberControl,
-//     scrollable: true,
-//   },
-//   nanite_cloud_control: {
-//     component: () => NaniteCloudControl,
-//     scrollable: true,
-//   },
-//   nanite_program_hub: {
-//     component: () => NaniteProgramHub,
-//     scrollable: true,
-//   },
-//   nanite_programmer: {
-//     component: () => NaniteProgrammer,
-//     scrollable: true,
-//   },
-//   nanite_remote: {
-//     component: () => NaniteRemote,
-//     scrollable: true,
-//   },
-//   notificationpanel: {
-//     component: () => NotificationPreferences,
-//     scrollable: true,
-//   },
-//   ntnet_relay: {
-//     component: () => NtnetRelay,
-//     scrollable: false,
-//   },
 // };
