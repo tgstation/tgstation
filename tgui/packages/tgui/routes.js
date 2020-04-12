@@ -54,11 +54,6 @@ export const getRoutedComponent = state => {
 //     component: () => Mint,
 //     scrollable: false,
 //   },
-//   malfunction_module_picker: {
-//     component: () => MalfunctionModulePicker,
-//     scrollable: true,
-//     theme: 'malfunction',
-//   },
 //   mulebot: {
 //     component: () => Mule,
 //     scrollable: false,

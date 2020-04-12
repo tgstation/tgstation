@@ -1,4 +1,4 @@
-import { decodeHtmlEntities, createSearch } from 'common/string';
+import { createSearch, decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Input, Section, Table, Tabs } from '../components';
@@ -7,8 +7,6 @@ import { useGlobal } from '../store';
 
 const MAX_SEARCH_RESULTS = 25;
 
-// It's a class because we need to store state in the form of the current
-// hovered item, and current search terms
 export const Uplink = (props, context) => {
   const { act, data } = useBackend(context);
   const {

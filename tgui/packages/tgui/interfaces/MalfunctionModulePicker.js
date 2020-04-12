@@ -1,117 +1,105 @@
-import { decodeHtmlEntities } from 'common/string';
-import { Component, Fragment } from 'inferno';
-import { act } from '../byond';
+import { createSearch, decodeHtmlEntities } from 'common/string';
+import { Fragment } from 'inferno';
+import { useBackend } from '../backend';
 import { Box, Button, Input, Section, Table, Tabs } from '../components';
+import { Window } from '../layouts';
+import { useGlobal } from '../store';
 
-// It's a class because we need to store state in the form of the current
-// hovered item, and current search terms
-export class MalfunctionModulePicker extends Component {
-  constructor() {
-    super();
-    this.state = {
-      hoveredItem: {},
-      currentSearch: '',
-    };
-  }
+const MAX_SEARCH_RESULTS = 25;
 
-  setHoveredItem(hoveredItem) {
-    this.setState({
-      hoveredItem,
-    });
-  }
-
-  setSearchText(currentSearch) {
-    this.setState({
-      currentSearch,
-    });
-  }
-
-  render() {
-    const { state } = this.props;
-    const { config, data } = state;
-    const { ref } = config;
-    const {
-      compact_mode,
-      processing_time,
-      categories = [],
-    } = data;
-    const { hoveredItem, currentSearch } = this.state;
-    return (
-      <Section
-        title={(
-          <Box
-            inline
-            color={processing_time > 0 ? 'good' : 'bad'}>
-            {processing_time} Processing Time
-          </Box>
-        )}
-        buttons={(
-          <Fragment>
-            Search
-            <Input
-              value={currentSearch}
-              onInput={(e, value) => this.setSearchText(value)}
-              ml={1}
-              mr={1} />
-            <Button
-              icon={compact_mode ? 'list' : 'info'}
-              content={compact_mode ? 'Compact' : 'Detailed'}
-              onClick={() => act(ref, 'compact_toggle')} />
-          </Fragment>
-        )}>
-        {currentSearch.length > 0 ? (
-          <table className="Table">
-            <ItemList
-              compact
-              items={categories
-                .flatMap(category => {
-                  return category.items || [];
-                })
-                .filter(item => {
-                  const searchTerm = currentSearch.toLowerCase();
-                  const searchableString = String(item.name + item.desc)
-                    .toLowerCase();
-                  return searchableString.includes(searchTerm);
-                })}
-              hoveredItem={hoveredItem}
-              onBuyMouseOver={item => this.setHoveredItem(item)}
-              onBuyMouseOut={item => this.setHoveredItem({})}
-              onBuy={item => act(ref, 'buy', {
-                ref: item.ref,
-              })} />
-          </table>
-        ) : (
-          <Tabs vertical>
-            {categories.map(category => {
-              const { name, items } = category;
-              if (items === null) {
-                return;
-              }
-              return (
-                <Tabs.Tab
-                  key={name}
-                  label={`${name} (${items.length})`}>
-                  {() => (
-                    <ItemList
-                      compact={compact_mode}
-                      items={items}
-                      hoveredItem={hoveredItem}
-                      processing_time={processing_time}
-                      onBuyMouseOver={item => this.setHoveredItem(item)}
-                      onBuyMouseOut={item => this.setHoveredItem({})}
-                      onBuy={item => act(ref, 'buy', {
-                        ref: item.ref,
-                      })} />
-                  )}
-                </Tabs.Tab>
-              );
-            })}
-          </Tabs>
-        )}
-      </Section>
-    );
-  }
-}
+export const MalfunctionModulePicker = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    compact_mode,
+    processing_time,
+    categories = [],
+  } = data;
+  const [
+    hoveredItem,
+    setHoveredItem,
+  ] = useGlobal(context, 'hoveredItem', {});
+  const [
+    searchText,
+    setSearchText,
+  ] = useGlobal(context, 'searchText', '');
+  const testSearch = createSearch(searchText, item => {
+    return item.name + item.desc;
+  });
+  return (
+    <Window
+      theme="malfunction"
+      resizable>
+      <Window.Content scrollable>
+        <Section
+          title={(
+            <Box
+              inline
+              color={processing_time > 0 ? 'good' : 'bad'}>
+              {processing_time} Processing Time
+            </Box>
+          )}
+          buttons={(
+            <Fragment>
+              Search
+              <Input
+                value={searchText}
+                onInput={(e, value) => setSearchText(value)}
+                ml={1}
+                mr={1} />
+              <Button
+                icon={compact_mode ? 'list' : 'info'}
+                content={compact_mode ? 'Compact' : 'Detailed'}
+                onClick={() => act('compact_toggle')} />
+            </Fragment>
+          )}>
+          {searchText.length > 0 ? (
+            <table className="Table">
+              <ItemList
+                compact
+                items={categories
+                  .flatMap(category => category.items || [])
+                  .filter(testSearch)
+                  .filter((item, i) => i < MAX_SEARCH_RESULTS)}
+                hoveredItem={hoveredItem}
+                onBuyMouseOver={item => setHoveredItem(item)}
+                onBuyMouseOut={item => setHoveredItem({})}
+                onBuy={item => act('buy', {
+                  ref: item.ref,
+                })} />
+            </table>
+          ) : (
+            <Tabs vertical>
+              {categories.map(category => {
+                const { name, items } = category;
+                if (items === null) {
+                  return;
+                }
+                return (
+                  <Tabs.Tab
+                    key={name}
+                    label={`${name} (${items.length})`}>
+                    {() => (
+                      <ItemList
+                        compact={compact_mode}
+                        items={items}
+                        hoveredItem={hoveredItem}
+                        processing_time={processing_time}
+                        onBuyMouseOver={item => setHoveredItem(item)}
+                        onBuyMouseOut={item => setHoveredItem({})}
+                        onBuy={item => act('buy', {
+                          ref: item.ref,
+                        })} />
+                    )}
+                  </Tabs.Tab>
+                );
+              })}
+            </Tabs>
+          )}
+        </Section>
+      </Window.Content>
+    </Window>
+  );
+};
 
 const ItemList = props => {
   const {
@@ -141,8 +129,9 @@ const ItemList = props => {
               <Table.Cell collapsing textAlign="right">
                 <Button
                   fluid
-                  content={item.cost + " PT"}
-                  disabled={processing_time < item.cost || disabledDueToHovered}
+                  content={item.cost + ' PT'}
+                  disabled={processing_time < item.cost
+                    || disabledDueToHovered}
                   tooltip={item.desc}
                   tooltipPosition="left"
                   onmouseover={() => onBuyMouseOver(item)}
