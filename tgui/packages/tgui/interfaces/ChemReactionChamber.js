@@ -2,6 +2,7 @@ import { map } from 'common/collections';
 import { classes } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 import { useGlobal } from '../store';
 
 export const ChemReactionChamber = (props, context) => {
