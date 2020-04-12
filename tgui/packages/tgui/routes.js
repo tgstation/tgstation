@@ -42,15 +42,6 @@ export const getRoutedComponent = state => {
 };
 
 // const ROUTES = {
-//   launchpad_console: {
-//     component: () => LaunchpadConsole,
-//     scrollable: true,
-//   },
-//   launchpad_remote: {
-//     component: () => LaunchpadRemote,
-//     scrollable: false,
-//     theme: 'syndicate',
-//   },
 //   mech_bay_power_console: {
 //     component: () => MechBayPowerConsole,
 //     scrollable: false,
