@@ -17,12 +17,12 @@ export const GravityGenerator = (props, context) => {
           </NoticeBox>
         )}
         {!!operational && charging_state !== 0 && (
-          <NoticeBox>
+          <NoticeBox danger>
             WARNING - Radiation detected
           </NoticeBox>
         )}
         {!!operational && charging_state === 0 && (
-          <NoticeBox color="label">
+          <NoticeBox success>
             No radiation detected
           </NoticeBox>
         )}

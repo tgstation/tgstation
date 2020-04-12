@@ -765,6 +765,10 @@ A notice box, which warns you about something very important.
 Props:
 
 - See inherited props: [Box](#box)
+- `info: boolean` - Info box
+- `success: boolean` - Success box
+- `warning: bolean` - Warning box
+- `danger: boolean` - Danger box
 
 ### `NumberInput`
 
