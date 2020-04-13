@@ -390,3 +390,32 @@
 //************************************************************
 //** Improved Sec Starter Gear by Surrealistik Oct 2019 ENDS
 //************************************************************
+//***********************************************************
+//**** Detective Expanded Kit BEGINS - Surrealistik, Oct 2019
+//***********************************************************
+
+/datum/outfit/job/detective
+	glasses = /obj/item/clothing/glasses/detective
+
+/obj/item/cartridge/detective
+	access = CART_SECURITY | CART_MEDICAL | CART_MANIFEST | CART_REAGENT_SCANNER | CART_ATMOS
+
+/datum/techweb_node/integrated_HUDs
+	design_ids = list("health_hud", "security_hud", "diagnostic_hud", "scigoggles", "detective_glasses")
+
+/datum/design/detective_scanner
+	desc = "Used to remotely scan objects and biomass for DNA and fingerprints, and has an integrated health and reagent analyzer. Can print a report of its findings."
+
+/obj/item/detective_scanner
+	desc = "Used to remotely scan objects and biomass for DNA and fingerprints, and has an integrated health and reagent analyzer. Can print a report of its findings."
+
+/obj/item/detective_scanner
+	var/mode
+	var/advanced = TRUE
+	icon = 'icons/Fulpicons/Surreal_stuff/detective_obs.dmi'
+	icon_state = "forensicnew-0"
+
+
+//***********************************************************
+//**** Detective Expanded Kit ENDS - Surrealistik, Oct 2019
+//***********************************************************

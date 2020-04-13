@@ -30,12 +30,14 @@
 		scanner.displayDetectiveScanResults(usr)
 
 /obj/item/detective_scanner/attack_self(mob/user)
+	/*
 	if(log.len && !scanning)
 		scanning = 1
 		to_chat(user, "<span class='notice'>Printing report, please wait...</span>")
 		addtimer(CALLBACK(src, .proc/PrintReport), 100)
 	else
-		to_chat(user, "<span class='notice'>The scanner has no logs or is in use.</span>")
+		to_chat(user, "<span class='notice'>The scanner has no logs or is in use.</span>")*/
+	self_mode(user) //FULPSTATION EXPANDED DETECTIVE TOOLS PR Surrealistik Oct 2019
 
 /obj/item/detective_scanner/attack(mob/living/M, mob/user)
 	return
@@ -66,7 +68,8 @@
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
 	. = ..()
-	scan(A, user)
+	//scan(A, user)
+	attack_mode(A, user) //FULPSTATION EXPANDED DETECTIVE TOOLS PR Surrealistik Oct 2019
 	return FALSE
 
 /obj/item/detective_scanner/proc/scan(atom/A, mob/user)
@@ -126,7 +129,7 @@
 
 		// Fingerprints
 		if(length(fingerprints))
-			sleep(30)
+			//sleep(30) //FULPSTATION EXPANDED DETECTIVE TOOLS PR Surrealistik Oct 2019; eliminating needless delays.
 			add_log("<span class='info'><B>Prints:</B></span>")
 			for(var/finger in fingerprints)
 				add_log("[finger]")
@@ -134,7 +137,7 @@
 
 		// Blood
 		if (length(blood))
-			sleep(30)
+			//sleep(30) //FULPSTATION EXPANDED DETECTIVE TOOLS PR Surrealistik Oct 2019
 			add_log("<span class='info'><B>Blood:</B></span>")
 			found_something = 1
 			for(var/B in blood)
@@ -142,7 +145,7 @@
 
 		//Fibers
 		if(length(fibers))
-			sleep(30)
+			//sleep(30) //FULPSTATION EXPANDED DETECTIVE TOOLS PR Surrealistik Oct 2019
 			add_log("<span class='info'><B>Fibers:</B></span>")
 			for(var/fiber in fibers)
 				add_log("[fiber]")
@@ -150,7 +153,7 @@
 
 		//Reagents
 		if(length(reagents))
-			sleep(30)
+			//sleep(30) //FULPSTATION EXPANDED DETECTIVE TOOLS PR Surrealistik Oct 2019
 			add_log("<span class='info'><B>Reagents:</B></span>")
 			for(var/R in reagents)
 				add_log("Reagent: <font color='red'>[R]</font> Volume: <font color='red'>[reagents[R]]</font>")

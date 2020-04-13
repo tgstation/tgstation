@@ -37,9 +37,14 @@
 	head = /obj/item/clothing/head/fedora/det_hat
 	l_pocket = /obj/item/toy/crayon/white
 	r_pocket = /obj/item/lighter
-	backpack_contents = list(/obj/item/storage/box/evidence=1,\
-		/obj/item/detective_scanner=1,\
-		/obj/item/melee/classic_baton=1)
+	backpack_contents = list(/obj/item/storage/box/evidence=1,
+	/obj/item/detective_scanner=1,
+	/obj/item/melee/classic_baton=1,
+	/obj/item/taperecorder=1, //FULPSTATION EXPANDED DETECTIVE KIT by Surrealistik Mar 2020
+	/obj/item/camera/detective=1, //FULPSTATION EXPANDED DETECTIVE KIT by Surrealistik Mar 2020
+	/obj/item/sensor_device=1, //FULPSTATION EXPANDED DETECTIVE KIT by Surrealistik Mar 2020
+	/obj/item/pinpointer/crew=1) //FULPSTATION EXPANDED DETECTIVE KIT by Surrealistik Mar 2020
+
 	mask = /obj/item/clothing/mask/cigarette
 
 	implants = list(/obj/item/implant/mindshield)

@@ -1,7 +1,7 @@
 /obj/machinery/vending/dic
-	name = "\improper SecTech"
-	desc = "A security equipment vendor."
-	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
+	name = "\improper DicTech"
+	desc = "A fashion and essentials vendor for the discerning detective."
+	product_ads = "Just one more question: Are you ready to look swag?; Upgrade your LA Noir threads today!;Evidence bags? Cigs? Matches? We got it all!;Get your fix of cheap cigs and burnt coffee!;Stogies here to complete that classic noir look!;Stylish apparel here! Crack your case in style!;Fedoras for her tipping pleasure.;Why not have a donut?"
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "det"
 	icon_deny = "det-deny"
@@ -15,17 +15,36 @@
 					/obj/item/clothing/shoes/sneakers/disco = 4,
 					/obj/item/clothing/shoes/jackboots/aerostatic = 4,
 					/obj/item/clothing/glasses/sunglasses/disco = 4,
-					/obj/item/assembly/flash/handheld = 5,
-					/obj/item/reagent_containers/food/snacks/donut = 12,
-					/obj/item/storage/box/evidence = 6,
-					/obj/item/flashlight/seclite = 4)
+					/obj/item/clothing/under/rank/security/detective = 4,
+					/obj/item/clothing/under/rank/security/detective/skirt = 4,
+					/obj/item/clothing/suit/det_suit = 4,
+					/obj/item/clothing/head/fedora/det_hat = 4,
+					/obj/item/clothing/gloves/color/black = 4,
+					/obj/item/clothing/under/rank/security/detective/grey = 4,
+					/obj/item/clothing/under/rank/security/detective/grey/skirt = 4,
+					/obj/item/clothing/accessory/waistcoat = 4,
+					/obj/item/clothing/suit/det_suit/grey = 4,
+					/obj/item/clothing/suit/det_suit/noir = 4,
+					/obj/item/clothing/head/fedora = 4,
+					/obj/item/clothing/shoes/laceup = 4,
+					/obj/item/assembly/flash/handheld = 4,
+					/obj/item/flashlight/seclite = 4,
+					/obj/item/storage/box/evidence = 12,
+					/obj/item/storage/box/matches = 12,
+					/obj/item/storage/fancy/cigarettes/cigars = 12,
+					/obj/item/reagent_containers/food/drinks/coffee = 12,
+					/obj/item/reagent_containers/food/snacks/donut = 12)
 	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,
 					  /obj/item/storage/fancy/donut_box = 2)
 	premium = list(/obj/item/storage/belt/security/webbing = 5,
-				   /obj/item/coin/antagtoken = 1,
-				   /obj/item/clothing/head/helmet/blueshirt = 1,
-				   /obj/item/clothing/suit/armor/vest/blueshirt = 1,
-				   /obj/item/clothing/gloves/tackler = 5)
+					/obj/item/coin/antagtoken = 1,
+					/obj/item/storage/fancy/cigarettes/cigpack_robustgold = 4,
+					/obj/item/storage/box/gum/nicotine = 2,
+					/obj/item/lighter = 4,
+					/obj/item/clothing/mask/cigarette/pipe = 4,
+					/obj/item/storage/fancy/cigarettes/cigars/havana = 12,
+					/obj/item/storage/fancy/cigarettes/cigars/cohiba = 12)
+
 	refill_canister = /obj/item/vending_refill/detective
 	default_price = 650
 	extra_price = 700
@@ -51,28 +70,32 @@
 	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "jamrock_blazer"
-	item_state = "g_suit"
+	item_state = "jamrock_blazer_held"
+	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
+	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 
 /obj/item/clothing/suit/det_suit/disco/aerostatic
 	name = "aerostatic bomber jacket"
-	desc = "Unquestionably gaudy and peculiar yet also curiously flattering; emanates a strange air of authority."
+	desc = "An unquestionably gaudy and peculiar yet also curiously flattering bomber jacket. It emanates a strange air of authority."
 	icon_state = "aerostatic_bomber_jacket"
-	item_state = "suit-orange"
+	item_state = "aerostatic_bomber_jacket_held"
 
 /obj/item/clothing/under/rank/security/detective/disco
 	name = "jamrock suit"
-	desc = "An... interesting looking ensemble consisting of golden-brown flare cut trousers and a hard worn white satin shirt."
+	desc = "An 'interesting' looking ensemble consisting of golden-brown flare cut trousers and an obviously hard worn white satin shirt."
 	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "jamrock_suit"
-	item_state = "lb_suit"
+	item_state = "jamrock_suit_held"
+	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
+	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/rank/security/detective/disco/aerostatic
 	name = "aerostatic suit"
 	desc = "A crisp and well-pressed suit; professional, comfortable and curiously authoritative."
-	item_state = "aerostatic_suit"
-	icon_state = "lb_suit"
+	icon_state = "aerostatic_suit"
+	item_state = "aerostatic_suit_held"
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/shoes/sneakers/disco
@@ -81,7 +104,9 @@
 	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "lizardskin_shoes"
-	item_state = "bl_shoes"
+	item_state = "lizardskin_shoes_held"
+	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
+	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 
 /obj/item/clothing/shoes/jackboots/aerostatic
 	name = "aerostatic boots"
@@ -89,15 +114,19 @@
 	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "aerostatic_boots"
-	item_state = "magboots"
+	item_state = "aerostatic_boots_held"
+	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
+	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 
 /obj/item/clothing/gloves/color/black/aerostatic_gloves
-	desc = "Vivid red gloves that exude mysterious style."
+	desc = "Vivid red gloves that exude a mysterious style."
 	name = "aerostatic_gloves"
 	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "aerostatic_gloves"
-	item_state = "redgloves"
+	item_state = "aerostatic_gloves_held"
+	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
+	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 	can_be_cut = FALSE
 
 /obj/item/clothing/neck/tie/detective/disco_necktie
@@ -106,7 +135,9 @@
 	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "eldritch_tie"
-	item_state = "greenbandana"
+	item_state = "eldritch_tie_held"
+	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
+	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 	var/possessed
 
 /obj/item/clothing/neck/tie/detective/disco_necktie/relaymove(mob/user)
@@ -181,4 +212,6 @@
 	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "binoclard_lenses"
-	item_state = "glasses"
+	item_state = "binoclard_lenses_held"
+	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
+	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
