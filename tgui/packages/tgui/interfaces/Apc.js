@@ -85,10 +85,7 @@ const ApcContent = (props, context) => {
 
   return (
     <Fragment>
-      <InterfaceLockNoticeBox
-        siliconUser={data.siliconUser}
-        locked={data.locked}
-        onLockStatusChange={() => act('lock')} />
+      <InterfaceLockNoticeBox />
       <Section title="Power Status">
         <LabeledList>
           <LabeledList.Item

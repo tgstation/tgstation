@@ -11,9 +11,6 @@ export const CargoExpress = (props, context) => {
     <Window resizable>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox
-          siliconUser={data.siliconUser}
-          locked={data.locked}
-          onLockStatusChange={() => act('lock')}
           accessText="a QM-level ID card" />
         {!data.locked && (
           <CargoExpressContent />

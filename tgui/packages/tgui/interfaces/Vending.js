@@ -60,12 +60,14 @@ const VendingRow = (props, context) => {
       <Table.Cell collapsing textAlign="center">
         {custom && (
           <Button
+            fluid
             content={data.access ? 'FREE' : product.price + ' cr'}
             onClick={() => act('dispense', {
               'item': product.name,
             })} />
         ) || (
           <Button
+            fluid
             disabled={(
               productStock === 0
               || !free && (

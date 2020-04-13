@@ -13,10 +13,7 @@ export const AirAlarm = (props, context) => {
   return (
     <Window resizable>
       <Window.Content scrollable>
-        <InterfaceLockNoticeBox
-          siliconUser={data.siliconUser}
-          locked={data.locked}
-          onLockStatusChange={() => act('lock')} />
+        <InterfaceLockNoticeBox />
         <AirAlarmStatus />
         {!locked && (
           <AirAlarmControl />

@@ -40,22 +40,3 @@ export const getRoutedComponent = state => {
   }
   return Component;
 };
-
-// const ROUTES = {
-//   mech_bay_power_console: {
-//     component: () => MechBayPowerConsole,
-//     scrollable: false,
-//   },
-//   mining_vendor: {
-//     component: () => MiningVendor,
-//     scrollable: true,
-//   },
-//   mint: {
-//     component: () => Mint,
-//     scrollable: false,
-//   },
-//   mulebot: {
-//     component: () => Mule,
-//     scrollable: false,
-//   },
-// };

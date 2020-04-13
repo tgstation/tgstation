@@ -74,7 +74,6 @@ export const ScannerGate = (props, context) => {
     <Window resizable>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox
-          locked={data.locked}
           onLockedStatusChange={() => act('toggle_lock')} />
         {!data.locked && (
           <ScannerGateControl />
