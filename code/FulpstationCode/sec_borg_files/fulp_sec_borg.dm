@@ -522,6 +522,15 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
+/datum/techweb_node/cyborg_upg_combat
+	id = "cyborg_upg_med"
+	display_name = "Cyborg Upgrades: Combat"
+	description = "Combat upgrades for cyborgs."
+	prereq_ids = list("cyborg_upg_sec", "weaponry")
+	design_ids = list("borg_upgrade_e_gun_cooler", "borg_upgrade_e_gun_kill")
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	export_price = 5000
+
 /mob/proc/check_for_item(typepath)
 	if(locate(typepath) in src)
 		return (locate(typepath) in src)

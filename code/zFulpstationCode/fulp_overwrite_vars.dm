@@ -387,11 +387,6 @@
 /obj/machinery/vending/wardrobe/sec_wardrobe
 	req_access = list(ACCESS_SECURITY) //We can now vend armor and helmets, so we need to protect the contents.
 
-/obj/structure/closet/secure_closet/security/PopulateContents()
-	..()
-	for(var/atom/movable/AM in src) //Empty to reduce locker bloat due to better on-spawn gear and expanded protolathe options; let the grand purge begin.
-		qdel(AM)
-
 //************************************************************
 //** Improved Sec Starter Gear by Surrealistik Oct 2019 ENDS
 //************************************************************

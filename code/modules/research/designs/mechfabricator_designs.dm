@@ -633,6 +633,7 @@
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
+/* //FULPSTATION FIX PACK by Surrealistik April 2020
 /datum/design/borg_upgrade_disablercooler
 	name = "Cyborg Upgrade (Rapid Disabler Cooling Module)"
 	id = "borg_upgrade_disablercooler"
@@ -640,7 +641,7 @@
 	build_path = /obj/item/borg/upgrade/disablercooler
 	materials = list(/datum/material/iron = 20000 , /datum/material/glass = 6000, /datum/material/gold = 2000, /datum/material/diamond = 2000)
 	construction_time = 120
-	category = list("Cyborg Upgrade Modules")
+	category = list("Cyborg Upgrade Modules")*/ //FULPSTATION FIX PACK by Surrealistik April 2020
 
 /datum/design/borg_upgrade_diamonddrill
 	name = "Cyborg Upgrade (Diamond Drill)"

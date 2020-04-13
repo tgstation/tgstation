@@ -195,7 +195,7 @@
 		return
 	spark_setup()
 	user.say(pick("It's treason then!", "So be it... Jedi.", "NO. NO. NO... <i>YOU</i> WILL DIE!!", "You underestimate the power of the Dark Side!", "My hate has made me powerful...","I AM THE SENATE!!", "If you will not be turned... you will be destroyed!!", "You will pay the price for your lack of vision!!", "Young fool, only now, at the end, do you understand.", "Your feeble skills are no match for the power of the Dark Side!", "POWAAHHH!!", "UNNNNLIMITEDDDD POWAHHHH!!", "And now, young Skywalker, you will die."))
-	var/mob/living/carbon/target = targets[1]
+	var/mob/living/target = targets[1]
 	if(get_dist(user,target)>range)
 		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
 		return
@@ -212,12 +212,10 @@
 
 	Bolt(user, target,damage,max_bounces,range, user)
 
-/obj/effect/proc_holder/spell/targeted/force_lightning/proc/Bolt(mob/origin,mob/target,bolt_energy,bounces,bolt_range,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/force_lightning/proc/Bolt(mob/origin, mob/target, bolt_energy, bounces, bolt_range, mob/user = usr)
 
 	if(bolt_energy < 1) //Stop if we would do no damage.
 		return
-
-
 
 	origin.Beam(target,icon_state="lightning[rand(1,12)]",time=5)
 	var/mob/living/current = target
@@ -245,6 +243,8 @@
 		current.visible_message("<span class='warning'>[current] absorbs the [src], remaining unharmed!</span>", "<span class='userdanger'>You absorb the [src], remaining unharmed!</span>")
 	else
 		current.electrocute_act(bolt_energy,"Force Lightning",1,bolt_flags)
+		if(!iscarbon(current)) //So we affect borgs and simple mobs properly.
+			current.adjustFireLoss(bolt_energy)
 		spark_system.attach(target)
 		spark_system.start()
 

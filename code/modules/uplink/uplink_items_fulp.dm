@@ -27,8 +27,7 @@
 
 /datum/uplink_item/role_restricted/mech_firing_pin
 	name = "Concealed Weapon Bay (Mech Firing Pin Included)"
-	desc = "A handy firing pin that can only be installed into mech weapons. \
-			It also hides the equipped weapon from plain sight. \
+	desc = "A concealed weapon bay that hides an equipped mech weapon from plain sight. \
 			Only one can fit on a mecha. \
 			This one comes complete with a handy firing pin that can only be installed into mech weapons."
 	item = /obj/item/storage/box/syndicate/bundle_mech
