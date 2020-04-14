@@ -1,8 +1,8 @@
- /**
-  * tgui state: notcontained_state
-  *
-  * Checks that the user is not inside src_object, and then makes the default checks.
- **/
+/**
+ * tgui state: notcontained_state
+ *
+ * Checks that the user is not inside src_object, and then makes the default checks.
+ */
 
 GLOBAL_DATUM_INIT(notcontained_state, /datum/ui_state/notcontained_state, new)
 

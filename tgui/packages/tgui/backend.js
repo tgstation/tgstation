@@ -86,11 +86,7 @@ export const backendReducer = (state, action) => {
 export const useBackend = context => {
   // TODO: Dispatch "act" calls as Redux actions
   const { store } = context;
-  // Obsolete bits
-  const {
-    state = store.getState(),
-    dispatch = store.dispatch,
-  } = context;
+  const state = store.getState();
   const ref = state.config.ref;
   const boundAct = (action, params = {}) => {
     act(ref, action, params);

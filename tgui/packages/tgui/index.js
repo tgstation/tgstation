@@ -62,7 +62,7 @@ const renderLayout = () => {
         window.__inception__, enteredBundleAt));
       logger.debug('initialized in', timeDiff(
         enteredBundleAt, startedAt));
-      logger.debug('rendered in', timeDiff(
+      logger.log('rendered in', timeDiff(
         startedAt, finishedAt));
       logger.log('fully loaded in', timeDiff(
         window.__inception__, finishedAt));
@@ -146,7 +146,6 @@ const setupApp = () => {
   loadCSS('font-awesome.css');
 };
 
-// IE8: Wait for DOM to properly load
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', setupApp);
 }

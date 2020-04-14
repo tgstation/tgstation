@@ -57,7 +57,7 @@ export const callByond = (path, params = {}) => {
  * a promise, which (if endpoint has a callback parameter) resolves
  * with the return value of that call.
  */
-export const callByondAsync = (url, params = {}) => {
+export const callByondAsync = (path, params = {}) => {
   // Abort BYOND calls when we're running in a normal browser
   if (!IS_BYOND) {
     return new Promise(() => {});
@@ -71,7 +71,7 @@ export const callByondAsync = (url, params = {}) => {
     window.__callbacks__.push(resolve);
   });
   // Call BYOND client
-  window.location.href = createByondUrl(url, {
+  callByond(path, {
     ...params,
     callback: `__callbacks__[${callbackIndex}]`,
   });
@@ -92,19 +92,19 @@ export const act = (src, action, params = {}) => {
 };
 
 /**
- * Calls 'winget' on window, retrieving value by the 'key'.
+ * Calls 'winget' on a BYOND skin element, retrieving value by the 'key'.
  */
-export const winget = async (win, key) => {
+export const winget = async (id, key) => {
   const obj = await callByondAsync('winget', {
-    id: win,
+    id,
     property: key,
   });
   return obj[key];
 };
 
 /**
- * Calls 'winset' on window, setting 'key' to 'value'.
+ * Calls 'winset' on a BYOND skin element, setting 'key' to 'value'.
  */
-export const winset = (win, key, value) => callByond('winset', {
-  [`${win}.${key}`]: value,
+export const winset = (id, key, value) => callByond('winset', {
+  [`${id}.${key}`]: value,
 });
