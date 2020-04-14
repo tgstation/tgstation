@@ -9,14 +9,16 @@ import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate } from './backend';
-import { tridentVersion } from './byond';
+import { IS_IE8 } from './byond';
 import { setupDrag } from './drag';
 import { createLogger } from './logging';
 import { createStore, StoreProvider } from './store';
 
+const enteredBundleAt = Date.now();
+
 const logger = createLogger();
 const store = createStore();
-const reactRoot = document.getElementById('react-root');
+let reactRoot;
 
 let initialRender = true;
 
@@ -42,6 +44,9 @@ const renderLayout = () => {
         <Component />
       </StoreProvider>
     );
+    if (!reactRoot) {
+      reactRoot = document.getElementById('react-root');
+    }
     render(element, reactRoot);
   }
   catch (err) {
@@ -51,18 +56,30 @@ const renderLayout = () => {
   // Report rendering time
   if (process.env.NODE_ENV !== 'production') {
     const finishedAt = Date.now();
-    const diff = finishedAt - startedAt;
-    const diffFrames = (diff / 16.6667).toFixed(2);
-    logger.debug(`rendered in ${diff}ms (${diffFrames} frames)`);
     if (initialRender) {
-      const diff = finishedAt - window.__inception__;
-      const diffFrames = (diff / 16.6667).toFixed(2);
-      logger.log(`fully loaded in ${diff}ms (${diffFrames} frames)`);
+      logger.debug('serving from:', location.href);
+      logger.debug('bundle entered in', timeDiff(
+        window.__inception__, enteredBundleAt));
+      logger.debug('initialized in', timeDiff(
+        enteredBundleAt, startedAt));
+      logger.debug('rendered in', timeDiff(
+        startedAt, finishedAt));
+      logger.log('fully loaded in', timeDiff(
+        window.__inception__, finishedAt));
+    }
+    else {
+      logger.debug('rendered in', timeDiff(startedAt, finishedAt));
     }
   }
   if (initialRender) {
     initialRender = false;
   }
+};
+
+const timeDiff = (startedAt, finishedAt) => {
+  const diff = finishedAt - startedAt;
+  const diffFrames = (diff / 16.6667).toFixed(2);
+  return `${diff}ms (${diffFrames} frames)`;
 };
 
 // Parse JSON and report all abnormal JSON strings coming from BYOND
@@ -77,7 +94,7 @@ const parseStateJson = json => {
   };
   // IE8: No reviver for you!
   // See: https://stackoverflow.com/questions/1288962
-  if (tridentVersion <= 4) {
+  if (IS_IE8) {
     reviver = undefined;
   }
   try {
@@ -130,7 +147,7 @@ const setupApp = () => {
 };
 
 // IE8: Wait for DOM to properly load
-if (tridentVersion <= 4 && document.readyState === 'loading') {
+if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', setupApp);
 }
 else {

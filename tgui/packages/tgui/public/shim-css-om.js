@@ -7,7 +7,7 @@
 (function(Proto) {
 
   function toAttr(prop) {
-    return prop.replace(/-[a-z]/g, function(bit) {
+    return prop.replace(/-[a-z]/g, function (bit) {
       return bit[1].toUpperCase();
     });
   }

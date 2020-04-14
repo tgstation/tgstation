@@ -1,8 +1,8 @@
 import { map, zipWith } from 'common/collections';
-import { Component, createRef } from 'inferno';
-import { Box } from './Box';
 import { pureComponentHooks } from 'common/react';
-import { tridentVersion } from '../byond';
+import { Component, createRef } from 'inferno';
+import { IS_IE8 } from '../byond';
+import { Box } from './Box';
 
 const normalizeData = (data, scale, rangeX, rangeY) => {
   if (data.length === 0) {
@@ -117,5 +117,5 @@ const Stub = props => null;
 
 // IE8: No inline svg support
 export const Chart = {
-  Line: tridentVersion <= 4 ? Stub : LineChart,
+  Line: IS_IE8 ? Stub : LineChart,
 };

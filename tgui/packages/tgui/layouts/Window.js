@@ -2,7 +2,7 @@ import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { runCommand, tridentVersion, winset } from '../byond';
+import { IS_IE8, runCommand, winset } from '../byond';
 import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { dragStartHandler, resizeStartHandler } from '../drag';
@@ -134,7 +134,7 @@ const TitleBar = props => {
           // IE8: Use a plain character instead of a unicode symbol.
           // eslint-disable-next-line react/no-unknown-property
           onclick={onClose}>
-          {tridentVersion <= 4 ? 'x' : '×'}
+          {IS_IE8 ? 'x' : '×'}
         </div>
       )}
     </div>

@@ -8,15 +8,33 @@ import { buildQueryString } from 'common/string';
  *
  * @return An integer number or 'null' if this is not a trident engine.
  */
-export const tridentVersion = (() => {
-  const { userAgent } = navigator;
-  const groups = userAgent.match(/Trident\/(\d+).+?;/i);
+const tridentVersion = (() => {
+  const groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
+  if (!groups) {
+    return null;
+  }
   const majorVersion = groups[1];
   if (!majorVersion) {
     return null;
   }
   return parseInt(majorVersion, 10);
 })();
+
+/**
+ * True if browser is an Internet Explorer 8 or lower.
+ */
+export const IS_IE8 = tridentVersion !== null
+  && tridentVersion <= 4;
+
+/**
+ * True if browser is a BYOND browser.
+ */
+// We're currently just checking, whether we're running on a localhost
+// with a path similar to a BYOND cache. I couldn't find a better/faster
+// non-invasive method of doing this.
+export const IS_BYOND = tridentVersion !== null
+  && location.hostname === '127.0.0.1'
+  && location.pathname.startsWith('/tmp');
 
 /**
  * Helper to generate a BYOND href given 'params' as an object
@@ -27,6 +45,10 @@ const createByondUrl = (path, params = {}) => {
 };
 
 export const callByond = (path, params = {}) => {
+  // Abort BYOND calls when we're running in a normal browser
+  if (!IS_BYOND) {
+    return;
+  }
   location.href = createByondUrl(path, params);
 };
 
@@ -36,6 +58,10 @@ export const callByond = (path, params = {}) => {
  * with the return value of that call.
  */
 export const callByondAsync = (url, params = {}) => {
+  // Abort BYOND calls when we're running in a normal browser
+  if (!IS_BYOND) {
+    return new Promise(() => {});
+  }
   // Create a callback array if it doesn't exist yet
   window.__callbacks__ = window.__callbacks__ || [];
   // Create a Promise and push its resolve function into callback array

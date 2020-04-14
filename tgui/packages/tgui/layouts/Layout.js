@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { tridentVersion } from '../byond';
+import { IS_IE8 } from '../byond';
 
 /**
  * Brings Layout__content DOM element back to focus.
@@ -8,7 +8,7 @@ import { tridentVersion } from '../byond';
  */
 export const refocusLayout = () => {
   // IE8: Focus method is seemingly fucked.
-  if (tridentVersion <= 4) {
+  if (IS_IE8) {
     return;
   }
   const element = document.getElementById('Layout__content');

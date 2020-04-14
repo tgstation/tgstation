@@ -1,6 +1,6 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
-import { tridentVersion } from '../byond';
+import { IS_IE8 } from '../byond';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
 import { refocusLayout } from '../layouts';
 import { createLogger } from '../logging';
@@ -55,7 +55,7 @@ export const Button = props => {
         className,
       ])}
       tabIndex={!disabled && '0'}
-      unselectable={tridentVersion <= 4}
+      unselectable={IS_IE8}
       onclick={e => {
         refocusLayout();
         if (!disabled && onClick) {
