@@ -100,59 +100,122 @@ not auto-update, as otherwise the user will never see their change.
 
 ### Frontend
 
-Finally, you have to make a UI component. This is also a source of
-confusion for many new users. If you got some basic javascript and HTML
-knowledge, that should ease the learning process, although we recommend
-getting yourself introduced to
+Finally, you have to make a React Component for your interface. This is also
+a source of confusion for many new users. If you got some basic javascript
+and HTML knowledge, that should ease the learning process, although we
+recommend getting yourself introduced to
 [React and JSX](https://reactjs.org/docs/introducing-jsx.html).
 
-A component is not a regular HTML. A component is a pure function, which
-accepts a `props` object (it contains properties passed to a component),
-and outputs an HTML-like structure consisting of regular HTML elements and
-other UI components.
+A React component is not a regular HTML template. A component is a
+javascript function, which accepts a `props` object (that contains
+properties passed to a component) and a `context` object (which is
+necessary to access UI data) as arguments, and outputs an HTML-like
+structure consisting of regular HTML elements and other UI elements
+(both types are called React elements).
 
-Interface component will always receive 1 prop which is called `state`.
-This object contains a few special values:
+Here are the key things you're going to use inside of a UI component:
 
-- `config` is always the same and is part of core tgui
-(it will be explained later),
-- `data` is the data returned from `ui_data`
+- `config` is part of core tgui. It contains meta-information about the
+interface and who uses it, BYOND refs to various objects, and so forth.
+You are rarely going to use it, but sometimes it can be used to your
+advantage when doing complex UIs.
+- `data` is the data returned from `ui_data` and `ui_static_data` procs in
+your DM code. Pretty straight forward.
+  - Note, that javascript doesn't have associative arrays, so when you
+  return an associative array from DM, it will be available in `data` as a
+  javascript object instead of an array. You can access it normally
+  like so: `object.key`, so it's not a problem if it's representing a
+  structure, but common `Array` methods, such as `array.map(item => ...)`,
+  are not available on it. Always prefer returning clean arrays from your
+  code, since arrays are easier to work with in javascript!
+- `act(name, params)` is a function, which you can call to dispatch an action
+to your DM code. It will be processed in `ui_act` proc. Action name will be
+available in `params["action"]`, mixed together with the rest of parameters
+you have passed in `params` object.
+
+You can access these things via the `useBackend(context)` function.
+
+So let's create our first React Component. Create a file with a name
+`SampleInterface.js` (or any other name you want), and copy this code
+snippet (make sure component name matches the file name):
 
 ```jsx
 import { useBackend } from '../backend';
-import { Section, LabeledList } from '../components';
+import { Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
-export const SampleInterface = props => {
-  const { act, data } = useBackend(props);
+export const SampleInterface = (props, context) => {
+  const { act, data } = useBackend(context);
+  // Extract `health` and `color` variables from the `data` object.
+  const {
+    health,
+    color,
+  } = data;
   return (
-    <Section title="Health status">
-      <LabeledList>
-        <LabeledList.Item label="Health">
-          {data.health}
-        </LabeledList.Item>
-        <LabeledList.Item label="Color">
-          {data.color}
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
+    <Window resizable>
+      <Window.Content scrollable>
+        <Section title="Health status">
+          <LabeledList>
+            <LabeledList.Item label="Health">
+              {health}
+            </LabeledList.Item>
+            <LabeledList.Item label="Color">
+              {color}
+            </LabeledList.Item>
+            <LabeledList.Item label="Button">
+              <Button
+                content="Dispatch a 'test' action"
+                onClick={() => act('test')}>
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };
 ```
 
-This syntax can be very confusing at first, but it is very important to
-realize that this is just a natural extension of javascript. Here's a few
-examples of this syntax:
+This html-in-javascript syntax can be very confusing and look ugly at first.
+This syntax is called JSX, which was made with a specific purpose to make
+UI code easier to read and follow by non-programmers. It is a very simple
+extension to the core javascript language, which maps these html-like
+structures (React elements) to the series of nested function calls.
 
-Return a different element based on a condition:
+Let me demonstrate this on a very simple example.
+Here is a typical JSX code you could write:
 
 ```jsx
-if (condition) {
-  return <Foo />;
-}
-return <Bar />;
+<div className={'color-' + status}>
+  You are in {status} condition!
+</div>
 ```
 
-Conditionally render a element inside of another element:
+After compiling the code above, this is what it becomes:
+```js
+createElement('div',
+  { className: 'color-' + status },
+  'You are in ',
+  status,
+  ' condition!');
+```
+
+These function calls return plain javascript objects, that describe how
+your UI should look. So, naturally, as a result of the above, you can work
+with React elements just like with any other javascript objects.
+
+Unlike other templating languages (such as Ractive, Vue or doT.js) which
+reinvent language concepts like "scope" and "control structures" and replace
+them with their own crippled variants, React utilizes existing javascript
+syntax and concepts to let you program the desired UI logic.
+
+Here's a few examples of what you can do:
+
+**Render an element inside of another element if `showProgress` is true.**
+
+This example uses the `&&` (the logical AND) operator, which returns
+the first operand if it evaluates the `false`, otherwise it returns the
+second operand. In our case, if `showProgress` is a truthy value,
+`<ProgressBar />` element will be returned.
 
 ```jsx
 <Box>
@@ -162,35 +225,81 @@ Conditionally render a element inside of another element:
 </Box>
 ```
 
-Looping over the array to make an element for each item:
+**Loop over the array to map every item to a corresponding React element.**
+
+`Array.map()` is a method on all arrays, that calls an iteratee
+provided as an argument (for example an arrow function), and builds a new
+array based on what was returned by that function.
+
+- Arrow function (short form): `argument => returnValue`.
+- Arrow function (full form): `(a, b) => { return a + b; }`.
 
 ```jsx
 <LabeledList>
   {items.map(item => (
-    <LabeledList.Item key={item.id} label={item.label}>
+    <LabeledList.Item
+      key={item.id}
+      label={item.label}>
       {item.content}
     </LabeledList.Item>
   ))}
 </LabeledList>
 ```
 
-### Routing table
+If you need more examples of syntactic features javascript offers, see the
+[interface conversion guide](docs/converting-old-tgui-interfaces.md).
 
-Once you finished creating your interface, you must add a route entry to
-the large `ROUTES` object, otherwise tgui won't know when and how to render
-your interface. Key of this `ROUTES` object corresponds to the interface
-name you use in DM code.
+#### Splitting UIs into smaller, modular components
 
-```js
-import { SampleInterface } from './interfaces/SampleInterface';
+You interface will eventually get really, really big. The easiest thing
+you can do in this situation, is divide and conquer. Grab a chunk of your
+JSX code, and wrap it into a self-contained UI element.
 
-const ROUTES = {
-  sample_interface: {
-    component: () => SampleInterface,
-    scrollable: true,
-  },
+Here's an example of how you can do it (it's quite simple):
+
+```jsx
+import { useBackend } from '../backend';
+import { Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
+
+export const SampleInterface = (props, context) => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <HealthStatus user="Jerry" />
+      </Window.Content>
+    </Window>
+  );
+};
+
+const HealthStatus = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    user,
+  } = props;
+  const {
+    health,
+    color,
+  } = data;
+  return (
+    <Section title={"Health status of: " + user}>
+      <LabeledList>
+        <LabeledList.Item label="Health">
+          {health}
+        </LabeledList.Item>
+        <LabeledList.Item label="Color">
+          {color}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
+  );
 };
 ```
+
+Notice, that we can pass a property `user` to our component, and access it
+via the `props` object. You can leverage this feature to write highly
+reusable components, and then use them in your UI with various props
+passed to them.
 
 ## Copypasta
 
@@ -213,11 +322,12 @@ upon code review):
 /obj/copypasta/ui_act(action, params)
   if(..())
     return
-  if(action == "copypasta")
-    var/newvar = params["var"]
-    // A demo of proper input sanitation.
-    var = CLAMP(newvar, min_val, max_val)
-    return TRUE
+  switch(action)
+    if("copypasta")
+      var/newvar = params["var"]
+      // A demo of proper input sanitation.
+      var = CLAMP(newvar, min_val, max_val)
+      . = TRUE
   update_icon() // Not applicable to all objects.
 ```
 
@@ -225,18 +335,36 @@ And the template:
 
 ```jsx
 import { useBackend } from '../backend';
-import { Section, LabeledList } from '../components';
+import { Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
-export const SampleInterface = props => {
-  const { act, data } = useBackend(props);
+export const SampleInterface = (props, context) => {
+  const { act, data } = useBackend(context);
+  // Extract `health` and `color` variables from the `data` object.
+  const {
+    health,
+    color,
+  } = data;
   return (
-    <Section title="Section name">
-      <LabeledList>
-        <LabeledList.Item label="Variable">
-          {data.var}
-        </LabeledList.Item>
-      </LabeledList>
-    </Section>
+    <Window resizable>
+      <Window.Content scrollable>
+        <Section title="Health status">
+          <LabeledList>
+            <LabeledList.Item label="Health">
+              {health}
+            </LabeledList.Item>
+            <LabeledList.Item label="Color">
+              {color}
+            </LabeledList.Item>
+            <LabeledList.Item label="Button">
+              <Button
+                content="Dispatch a 'test' action"
+                onClick={() => act('test')}>
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };
 ```
