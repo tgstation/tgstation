@@ -3,18 +3,20 @@
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
-<meta id="tgui:ref" content="[ref]">
+
+<!-- Inlined data -->
+<meta id="tgui:ref" content="[tgui:ref]">
 
 <!-- Early setup -->
 <script type="text/javascript">
 // Mark the beginning of initialization
 window.__inception__ = new Date().getTime();
-// Make window ref global
+// Read tgui object ref into a global
 window.__ref__ = document
   .getElementById('tgui:ref')
   .getAttribute('content');
-// Null the ref if it wasn't replaced by the BYOND
-if (window.__ref__.indexOf('ref') >= 0) {
+// Null if template marker was not replaced
+if (window.__ref__ === '[' + 'tgui:ref' + ']') {
   window.__ref__ = null;
 }
 // Global error handling
@@ -48,13 +50,13 @@ window.onerror = function (msg, url, line, col, error) {
     + '&log=' + encodeURIComponent(stack);
   // Short-circuit further updates
   window.__updateQueue__ = [];
-  window.update = window.initialize = function () {};
+  window.update = function () {};
   // Prevent default action
   return true;
 };
 // Early initialization
 window.__updateQueue__ = [];
-window.update = window.initialize = function (stateJson) {
+window.update = function (stateJson) {
   window.__updateQueue__.push(stateJson);
 };
 location.href = 'byond://?src=' + window.__ref__

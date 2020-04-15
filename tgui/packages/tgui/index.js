@@ -115,16 +115,12 @@ const setupApp = () => {
   });
 
   // Subscribe for bankend updates
-  window.update = window.initialize = stateJson => {
+  window.update = stateJson => {
     // NOTE: stateJson can be an object only if called manually from console.
     // This is useful for debugging tgui in proper browsers, like Chrome.
     const state = typeof stateJson === 'string'
       ? parseStateJson(stateJson)
       : stateJson;
-    // Set window ref if it was not defined inline on the page
-    if (!window.__ref__) {
-      window.__ref__ = state?.config?.ref;
-    }
     // Backend update dispatches a store action
     store.dispatch(backendUpdate(state));
   };

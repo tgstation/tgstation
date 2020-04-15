@@ -32,6 +32,8 @@
 	var/list/initial_data
 	/// The static data used to initialize the UI.
 	var/list/initial_static_data
+	/// Holder for the json string, that is sent during the initial update
+	var/_initial_update
 	/// The status/visibility of the UI.
 	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
@@ -118,7 +120,7 @@
 	// Replace template tokens with important UI data
 	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
 	// be tagged, so this is an effective unwrap
-	html = replacetextEx(html, "\[ref]", "\ref[src]")
+	html = replacetextEx(html, "\[tgui:ref]", "\ref[src]")
 
 	// Open the window.
 	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]")
@@ -128,10 +130,17 @@
 	// be tagged, so this is an effective unwrap
 	winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
 
-	if(!initial_data)
+	// Pre-fetch initial state while browser is still loading in
+	// another thread
+	if(!initial_data) {
 		initial_data = src_object.ui_data(user)
-	if(!initial_static_data)
+	}
+	if(!initial_static_data) {
 		initial_static_data = src_object.ui_static_data(user)
+	}
+	_initial_update = url_encode(get_json(
+		initial_data,
+		initial_static_data))
 
 	SStgui.on_open(src)
 
@@ -232,9 +241,7 @@
 
 	switch(action)
 		if("tgui:initialize")
-			user << output(
-				url_encode(get_json(initial_data, initial_static_data)),
-				"[window_id].browser:initialize")
+			user << output(_initial_update, "[window_id].browser:update")
 			initialized = TRUE
 		if("tgui:view")
 			if(params["screen"])
