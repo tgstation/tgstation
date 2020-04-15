@@ -5,7 +5,7 @@
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "det"
 	icon_deny = "det-deny"
-	req_access = list(ACCESS_SEC_DOORS, ACCESS_FORENSICS_LOCKERS)
+	req_access = list(ACCESS_FORENSICS_LOCKERS)
 	products = list(/obj/item/clothing/suit/det_suit/disco = 4,
 					/obj/item/clothing/suit/det_suit/disco/aerostatic = 4,
 					/obj/item/clothing/under/rank/security/detective/disco = 4,
@@ -54,8 +54,7 @@
 					/obj/item/storage/fancy/cigarettes/cigars/cohiba = 12)
 
 	refill_canister = /obj/item/vending_refill/detective
-	default_price = 650
-	extra_price = 700
+	extra_price = 100
 	payment_department = ACCOUNT_SEC
 
 /obj/machinery/vending/dic/pre_throw(obj/item/I)
