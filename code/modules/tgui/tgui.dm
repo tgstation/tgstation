@@ -40,7 +40,7 @@
 	var/datum/tgui/master_ui
 	/// Children of this UI.
 	var/list/datum/tgui/children = list()
-	var/custom_browser_id = FALSE
+	// TODO: Remove in favor of useGlobal
 	var/ui_screen = "home"
 
 /**
@@ -60,13 +60,12 @@
  *
  * return datum/tgui The requested UI.
  */
-/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state, browser_id = null)
+/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
-	src.window_id = browser_id ? browser_id : "[REF(src_object)]-[ui_key]" // DO NOT replace with \ref here. src_object could potentially be tagged
-	src.custom_browser_id = browser_id ? TRUE : FALSE
-
+	// DO NOT replace with \ref here. src_object could potentially be tagged
+	src.window_id = "[REF(src_object)]-[ui_key]"
 	src.interface = interface
 
 	if(title)
@@ -97,8 +96,9 @@
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
+	// If we have a width and height, use them.
 	var/window_size
-	if(width && height) // If we have a width and height, use them.
+	if(width && height)
 		window_size = "size=[width]x[height];"
 	else
 		window_size = ""
@@ -122,11 +122,11 @@
 
 	// Open the window.
 	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]")
-	if (!custom_browser_id)
-		// Instruct the client to signal UI when the window is closed.
-		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
-		// be tagged, so this is an effective unwrap
-		winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
+
+	// Instruct the client to signal UI when the window is closed.
+	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+	// be tagged, so this is an effective unwrap
+	winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
 
 	if(!initial_data)
 		initial_data = src_object.ui_data(user)
@@ -196,7 +196,7 @@
 		"screen" = ui_screen,
 		"interface" = interface,
 		"fancy" = user.client.prefs.tgui_fancy,
-		"locked" = user.client.prefs.tgui_lock && !custom_browser_id,
+		"locked" = user.client.prefs.tgui_lock,
 		"observer" = isobserver(user),
 		"window" = window_id,
 		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
@@ -232,7 +232,9 @@
 
 	switch(action)
 		if("tgui:initialize")
-			user << output(url_encode(get_json(initial_data, initial_static_data)), "[custom_browser_id ? window_id : "[window_id].browser"]:initialize")
+			user << output(
+				url_encode(get_json(initial_data, initial_static_data)),
+				"[window_id].browser:initialize")
 			initialized = TRUE
 		if("tgui:view")
 			if(params["screen"])
@@ -291,8 +293,9 @@
 	if(status <= UI_DISABLED && !force)
 		return
 	// Send the new JSON to the update() Javascript function.
-	user << output(url_encode(get_json(data, static_data)), \
-		"[custom_browser_id ? window_id : "[window_id].browser"]:update")
+	user << output(
+		url_encode(get_json(data, static_data)),
+		"[window_id].browser:update")
 
 /**
  * private
