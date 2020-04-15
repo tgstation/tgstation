@@ -452,6 +452,7 @@
 	implants = list(/obj/item/implant/mindshield) //No revolutionaries, he's MY friend.
 	id = /obj/item/card/id
 
+// Syndicate Battle Cruiser event spawners
 /obj/effect/mob_spawn/human/syndicate
 	name = "Syndicate Operative"
 	roundstart = FALSE
@@ -463,6 +464,7 @@
 
 /obj/effect/mob_spawn/human/syndicate/special(mob/living/new_spawn)
 	new_spawn.mind.add_antag_datum(/datum/antagonist/starfuryop)
+	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 
 /datum/outfit/syndicate_empty
 	name = "Syndicate Operative Empty"
@@ -472,7 +474,7 @@
 	ears = /obj/item/radio/headset/syndicate/alt
 	back = /obj/item/storage/backpack
 	implants = list(/obj/item/implant/weapons_auth)
-	id = /obj/item/card/id/syndicate
+	id = /obj/item/card/id/syndicate_command/crew_id
 
 /datum/outfit/syndicate_empty/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -480,15 +482,52 @@
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
 	short_desc = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
-	flavour_text = "Your job is to follow your captain's orders, maintain the ship, and keep the engine running. If you are not familiar with how the supermatter engine functions: do not attempt to start it."
-	important_info = "The armory is not a candy store, and your role is not to assault the station directly, leave that work to the assault operatives."
+	flavour_text = "Your job is to follow your higher-ranking operatives' orders, assisting in pretty much anything that might need your help."
+	important_info = "While you don't have strict role, you are supposed to obey orders given by anyone on the ship, including medical, engineering and assault operatives."
 	outfit = /datum/outfit/syndicate_empty/SBC
+	roundstart = FALSE
+	death = FALSE
+	anchored = TRUE
+	density = FALSE
 
 /datum/outfit/syndicate_empty/SBC
 	name = "Syndicate Battlecruiser Ship Operative"
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol
 	r_pocket = /obj/item/kitchen/knife/combat/survival
-	belt = /obj/item/storage/belt/military/assault
+	id = /obj/item/card/id/syndicate_command/crew_id
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser/engineering
+	name = "Syndicate Battlecruiser Ship Engineer"
+	short_desc = "You are an engineer aboard the syndicate flagship: the SBC Starfury."
+	flavour_text = "Your job is to maintain the ship, and keep the engine running. If you are not familiar with how the supermatter engine functions: do not attempt to start it."
+	important_info = "Your role is not to assault the station, but to maintain your own flagship in a working state."
+	outfit = /datum/outfit/syndicate_empty/SBC/engi
+
+/datum/outfit/syndicate_empty/SBC/engi
+	name = "Syndicate Battlecruiser Ship Engineer"
+	glasses = /obj/item/clothing/glasses/meson/night
+	r_pocket = /obj/item/analyzer
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	belt = /obj/item/storage/belt/utility/syndicate
+	back = /obj/item/storage/backpack/industrial
+	id = /obj/item/card/id/syndicate_command/crew_id/engi
+
+/obj/effect/mob_spawn/human/syndicate/battlecruiser/medical
+	name = "Syndicate Battlecruiser Ship Medical Doctor"
+	short_desc = "You are a medical doctor aboard the syndicate flagship: the SBC Starfury."
+	flavour_text = "Your job is to maintain crew physical health and keep your comrades alive at all cost."
+	important_info = "The armory has nothing to help you with your job, and your role is to assist assault operatives, not to do their work for them."
+	outfit = /datum/outfit/syndicate_empty/SBC/med
+
+/datum/outfit/syndicate_empty/SBC/med
+	name = "Syndicate Battlecruiser Ship Medical Doctor"
+	glasses = /obj/item/clothing/glasses/hud/health/night
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol
+	r_pocket = /obj/item/kitchen/knife/combat/survival
+	belt = /obj/item/defibrillator/compact/combat/loaded
+	back = /obj/item/storage/backpack/medic
+	r_hand = /obj/item/gun/medbeam
+	id = /obj/item/card/id/syndicate_command/crew_id/med
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
@@ -502,11 +541,13 @@
 	uniform = /obj/item/clothing/under/syndicate/combat
 	l_pocket = /obj/item/ammo_box/magazine/m10mm
 	r_pocket = /obj/item/kitchen/knife/combat/survival
+	glasses = /obj/item/clothing/glasses/night
 	belt = /obj/item/storage/belt/military
 	suit = /obj/item/clothing/suit/armor/vest
 	suit_store = /obj/item/gun/ballistic/automatic/pistol
 	back = /obj/item/storage/backpack/security
 	mask = /obj/item/clothing/mask/gas/syndicate
+	id = /obj/item/card/id/syndicate_command/crew_id/sec
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/captain
 	name = "Syndicate Battlecruiser Captain"
@@ -525,7 +566,8 @@
 	back = /obj/item/storage/backpack/satchel/leather
 	head = /obj/item/clothing/head/HoS/syndicate
 	mask = /obj/item/clothing/mask/cigarette/cigar/havana
-	glasses = /obj/item/clothing/glasses/thermal/eyepatch
+	glasses = /obj/item/clothing/glasses/hud/eyepatch/admiral
+	id = /obj/item/card/id/syndicate_command/crew_id/cap
 
 //Ancient cryogenic sleepers. Players become NT crewmen from a hundred year old space station, now on the verge of collapse.
 /obj/effect/mob_spawn/human/oldsec

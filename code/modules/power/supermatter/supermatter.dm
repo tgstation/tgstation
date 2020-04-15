@@ -850,10 +850,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/engine
 	is_main_engine = TRUE
 
+GLOBAL_DATUM(syndicate_supermatter_engine, /obj/machinery/power/supermatter_crystal/syndicate)
+
 /obj/machinery/power/supermatter_crystal/syndicate
 	radio_key = /obj/item/encryptionkey/syndicate
 	engineering_channel = "Syndicate"
 	common_channel = "Syndicate"
+
+/obj/machinery/power/supermatter_crystal/syndicate/Initialize()
+	. = ..()
+	GLOB.syndicate_supermatter_engine = src
 
 /obj/machinery/power/supermatter_crystal/shard
 	name = "supermatter shard"

@@ -395,6 +395,17 @@
 	icon_state = "eyepatch"
 	item_state = "eyepatch"
 
+/obj/item/clothing/glasses/hud/eyepatch/admiral
+	name = "optical thermal eyepatch"
+	desc = "An eyepatch with built-in thermal optics."
+	icon_state = "eyepatch"
+	item_state = "eyepatch"
+	vision_flags = SEE_MOBS
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	glass_colour_type = /datum/client_colour/glass_colour/red
+	hud_type = DATA_HUD_SECURITY_ADVANCED
+	hud_trait = TRAIT_SECURITY_HUD
+
 /obj/item/clothing/glasses/cold
 	name = "cold goggles"
 	desc = "A pair of goggles meant for low temperatures."
