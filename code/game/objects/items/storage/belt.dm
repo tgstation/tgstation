@@ -115,7 +115,7 @@
 	new /obj/item/screwdriver/nuke(src)
 	new /obj/item/wrench/combat(src)
 	new /obj/item/weldingtool/largetank(src)
-	new /obj/item/crowbar(src)
+	new /obj/item/crowbar/combat(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
 	new /obj/item/inducer/syndicate(src)

@@ -1,0 +1,25 @@
+"a" = (/turf/open/space/basic,/area/space)
+"b" = (/obj/machinery/porta_turret/syndicate/energy/heavy{dir = 1},/obj/machinery/camera/xray{c_tag = "Front Side"; dir = 1; icon_state = "xraycamera"; name = "shuttle camera"; network = list("SBC_Fighter1"); pixel_x = 11; pixel_y = 32},/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/shuttle/sbc/fighter1)
+"c" = (/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/shuttle/sbc/fighter1)
+"d" = (/obj/machinery/porta_turret/syndicate/energy{dir = 9},/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/shuttle/sbc/fighter1)
+"e" = (/obj/machinery/computer/shuttle{icon_keyboard = "syndie_key"; icon_screen = "syndishuttle"; light_color = "#FA8282"; name = "Syndicate Fighter Console"; possible_destinations = "sbcfighter_BAY;sbcfighter_custom;syndicate_nw"; req_access = 150; shuttleId = "sbcfighter"},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc/fighter1)
+"f" = (/obj/machinery/porta_turret/syndicate/energy{dir = 5},/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/shuttle/sbc/fighter1)
+"g" = (/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate/starfurybc{dir = 4; jumpto_ports = list("sbcfighter_BAY" = 1, "syndicate_nw" = 1); name = "Syndicate Fighter Navigation Console"; shuttleId = "sbcfighter"; shuttlePortId = "sbcfighter_custom"; view_range = 12; x_offset = 0; y_offset = 3},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc/fighter1)
+"h" = (/obj/structure/chair{dir = 1},/obj/machinery/turretid{ailock = 1; desc = "A specially designed set of turret controls. Looks to be covered in protective casing to prevent AI interfacing."; icon_state = "control_kill"; lethal = 1; name = "Ship Turret Control"; pixel_x = -32; pixel_y = 26; req_access = 150},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc/fighter1)
+"i" = (/obj/machinery/computer/security{dir = 8; network = list("SBC_Fighter1")},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc/fighter1)
+"j" = (/obj/structure/rack,/obj/item/storage/toolbox/mechanical,/obj/item/multitool,/obj/machinery/light/small{brightness = 3; dir = 8},/obj/machinery/power/apc{dir = 2; pixel_y = -28},/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc/fighter1)
+"k" = (/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc/fighter1)
+"l" = (/obj/structure/rack,/obj/item/clothing/mask/gas/syndicate,/obj/item/tank/internals/emergency_oxygen/engi,/obj/machinery/light/small{dir = 4},/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc/fighter1)
+"m" = (/obj/structure/shuttle/engine/propulsion/burst,/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/shuttle/sbc/fighter1)
+"n" = (/obj/machinery/button/door{id = "SBC_fighter1_bolt"; name = "Bolt Control"; normaldoorcontrol = 1; pixel_x = 25; specialfunctions = 4},/obj/structure/cable,/turf/open/floor/mineral/plastitanium/red,/area/shuttle/sbc/fighter1)
+"o" = (/obj/machinery/door/airlock/external{id_tag = "SBC_fighter1_bolt"; name = "Syndicate Fighter Airlock"; req_access_txt = "150"},/obj/docking_port/mobile{dwidth = 2; height = 6; id = "sbcfighter"; movement_force = list("KNOCKDOWN" = 1, "THROW" = 0); name = "Syndicate Fighter"; width = 5},/obj/structure/cable,/turf/open/floor/plating,/area/shuttle/sbc/fighter1)
+
+(1,1,1) = {"
+aabaa
+accca
+dcecf
+cghic
+cjklc
+mcncm
+amoma
+"}

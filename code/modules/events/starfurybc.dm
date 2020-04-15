@@ -13,28 +13,29 @@
 	return ..()
 
 /datum/round_event/ghost_role/starfurybc
-	minimum_required = 5
+	minimum_required = 1
 	var/shuttle_spawned = FALSE
-	var/preptime = 8 MINUTES
+	var/preptime = 1 MINUTES
 	var/announcetime = 4 MINUTES
 
 /datum/round_event/ghost_role/starfurybc/start()
+	if(SSshuttle.emergency.mode == SHUTTLE_CALL)
+		var/delaytime = 8400
+		var/timer = SSshuttle.emergency.timeLeft(1) + delaytime
+		var/security_num = seclevel2num(get_security_level())
+		var/set_coefficient = 1
+		switch(security_num)
+			if(SEC_LEVEL_GREEN)
+				set_coefficient = 2
+			if(SEC_LEVEL_BLUE)
+				set_coefficient = 1
+			else
+				set_coefficient = 0.5
+		var/recalld = timer - (SSshuttle.emergencyCallTime * set_coefficient)
+		SSshuttle.emergency.setTimer(timer)
+		if(recalld > 0)
+			SSshuttle.block_recall(recalld)
 	priority_announce("Syndicate Battle Cruiser detected on long range scanners. ETA 8 Minutes. Emergency Shuttle will be delayed by 14 minutes.")
-	var/delaytime = 8400
-	var/timer = SSshuttle.emergency.timeLeft(1) + delaytime
-	var/security_num = seclevel2num(get_security_level())
-	var/set_coefficient = 1
-	switch(security_num)
-		if(SEC_LEVEL_GREEN)
-			set_coefficient = 2
-		if(SEC_LEVEL_BLUE)
-			set_coefficient = 1
-		else
-			set_coefficient = 0.5
-	var/recalld = timer - (SSshuttle.emergencyCallTime * set_coefficient)
-	SSshuttle.emergency.setTimer(timer)
-	if(recalld > 0)
-		SSshuttle.block_recall(recalld)
 	sleep(preptime)
 	spawn_shuttle()
 
@@ -43,7 +44,7 @@
 
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for syndicate battlecruiser crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
-	if(candidates.len < 5)
+	if(candidates.len < minimum_required)
 		return NOT_ENOUGH_PLAYERS
 
 	var/datum/map_template/shuttle/syndicate/starfury/ship = new

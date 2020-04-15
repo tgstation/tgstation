@@ -1,0 +1,33 @@
+"a" = (/turf/open/space/basic,/area/space)
+"b" = (/obj/machinery/porta_turret/syndicate/energy/heavy{dir = 1},/turf/closed/wall/mineral/plastitanium/nodiagonal,/area/shuttle/sbc/corvette)
+"c" = (/obj/effect/spawner/structure/window/plasma/reinforced/plastitanium,/obj/structure/cable,/turf/open/floor/plating,/area/shuttle/sbc/corvette)
+"d" = (/turf/closed/wall/r_wall/syndicate/nodiagonal,/area/shuttle/sbc/corvette)
+"e" = (/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"f" = (/obj/machinery/power/apc/syndicate{dir = 2; pixel_x = 0; pixel_y = -28},/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"g" = (/obj/structure/shuttle/engine/propulsion,/turf/open/space/basic,/area/shuttle/sbc/corvette)
+"h" = (/obj/structure/chair/comfy/shuttle{icon_state = "shuttle_chair"; dir = 4},/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"i" = (/obj/structure/chair/comfy/shuttle{icon_state = "shuttle_chair"; dir = 8},/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"j" = (/obj/structure/chair/comfy/shuttle,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"k" = (/obj/structure/chair/comfy/shuttle,/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"l" = (/obj/machinery/computer/camera_advanced/shuttle_docker/syndicate{dir = 1; icon_state = "computer"; jumpto_ports = list("sbcfighter_BAY2" = 1, "syndicate_nw" = 1); name = "Syndicate Corvette Navigation Console"; shuttleId = "sbccorvette"; shuttlePortId = "sbccorvette_custom"; view_range = 14},/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"m" = (/obj/machinery/computer/shuttle/syndicate{dir = 1; icon_state = "computer"; name = "Syndicate Corvette Console"; possible_destinations = "sbcfighter_BAY2;sbccorvette_custom;syndicate_nw"; shuttleId = "sbccorvette"},/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"n" = (/obj/structure/table/reinforced,/obj/item/binoculars,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"o" = (/obj/structure/table/reinforced,/obj/item/storage/toolbox/mechanical,/obj/item/multitool,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"p" = (/obj/structure/table/reinforced,/obj/item/tank/internals/emergency_oxygen/engi,/obj/item/tank/internals/emergency_oxygen/engi,/obj/item/tank/internals/emergency_oxygen/engi,/obj/item/tank/internals/emergency_oxygen/engi,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/mask/gas/syndicate,/obj/item/clothing/mask/gas/syndicate,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"q" = (/obj/structure/table/reinforced,/obj/item/storage/fancy/donut_box,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"r" = (/obj/structure/table/reinforced,/obj/item/storage/fancy/cigarettes/cigpack_syndicate,/obj/item/lighter{pixel_x = 6},/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"s" = (/obj/machinery/door/airlock/external{id_tag = "sbc_corvette_bolt"; name = "Syndicate Corvette Airlock"; req_access_txt = "150"},/obj/structure/cable,/obj/docking_port/mobile{dwidth = 2; height = 6; id = "sbccorvette"; movement_force = list("KNOCKDOWN" = 1, "THROW" = 0); name = "Syndicate Corvette"; width = 12},/turf/open/floor/plating,/area/shuttle/sbc/corvette)
+"t" = (/obj/machinery/door/airlock/external{id_tag = "sbc_corvette_bolt"; name = "Syndicate Corvette Airlock"; req_access_txt = "150"},/turf/open/floor/plating,/area/shuttle/sbc/corvette)
+"u" = (/obj/structure/table/reinforced,/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"v" = (/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"w" = (/obj/structure/chair/comfy/shuttle{icon_state = "shuttle_chair"; dir = 8},/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+"x" = (/obj/structure/chair/comfy/shuttle{icon_state = "shuttle_chair"; dir = 4},/obj/structure/cable,/turf/open/floor/mineral/plastitanium,/area/shuttle/sbc/corvette)
+
+(1,1,1) = {"
+adccbccbccda
+bdjkrnuqkjdb
+chevvvvvvvwc
+cxvvfeeeeeic
+bodsdlmdtdpb
+gdgagddgagdg
+"}

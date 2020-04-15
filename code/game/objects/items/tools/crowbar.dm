@@ -112,3 +112,48 @@
 	usesound = 'sound/items/jaws_pry.ogg'
 	force = 10
 	toolspeed = 0.5
+
+/obj/item/crowbar/combat
+	name = "combat crowbar"
+	desc = "Advanced crowbar 'borrowed' from combined alliance."
+	icon_state = "crowbar_combat"
+	item_state = "crowbar_combat"
+	attack_verb = list("devastated", "brutalized", "crowbared")
+	tool_behaviour = null
+	toolspeed = null
+	var/on = FALSE
+
+/obj/item/crowbar/combat/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+
+/obj/item/crowbar/combat/attack_self(mob/living/user)
+	if(on)
+		on = FALSE
+		force = initial(force)
+		w_class = initial(w_class)
+		throwforce = initial(throwforce)
+		tool_behaviour = initial(tool_behaviour)
+		toolspeed = initial(toolspeed)
+		hitsound = "swing_hit"
+		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
+		to_chat(user, "<span class='warning'>[src] is now concealed.</span>")
+	else
+		on = TRUE
+		force = 18
+		w_class = WEIGHT_CLASS_NORMAL
+		throwforce = 10
+		tool_behaviour = TOOL_CROWBAR
+		toolspeed = 0.5
+		hitsound = 'sound/weapons/blade1.ogg'
+		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
+		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+	update_icon()
+
+/obj/item/crowbar/combat/update_icon_state()
+	if(on)
+		icon_state = "[initial(icon_state)]_on"
+		item_state = "[initial(item_state)]1"
+	else
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
