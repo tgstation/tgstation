@@ -1,20 +1,19 @@
 import { map } from 'common/collections';
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
-import { useGlobal } from '../store';
 
 export const ChemReactionChamber = (props, context) => {
   const { act, data } = useBackend(context);
   const [
     reagentName,
     setReagentName,
-  ] = useGlobal(context, 'reagentName', '');
+  ] = useLocalState(context, 'reagentName', '');
   const [
     reagentQuantity,
     setReagentQuantity,
-  ] = useGlobal(context, 'reagentQuantity', 1);
+  ] = useLocalState(context, 'reagentQuantity', 1);
   const emptying = data.emptying;
   const reagents = data.reagents || [];
   return (

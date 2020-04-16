@@ -42,8 +42,6 @@
 	var/datum/tgui/master_ui
 	/// Children of this UI.
 	var/list/datum/tgui/children = list()
-	// TODO: Remove in favor of useGlobal
-	var/ui_screen = "home"
 
 /**
  * public
@@ -197,7 +195,6 @@
 	json_data["config"] = list(
 		"title" = title,
 		"status" = status,
-		"screen" = ui_screen,
 		"interface" = interface,
 		"fancy" = user.client.prefs.tgui_fancy,
 		"locked" = user.client.prefs.tgui_lock,
@@ -212,6 +209,10 @@
 		json_data["data"] = data
 	if(!isnull(static_data))
 		json_data["static_data"] = static_data
+
+	// Send shared states
+	if(src_object.tgui_shared_states)
+		json_data["shared"] = src_object.tgui_shared_states
 
 	// Generate the JSON.
 	var/json = json_encode(json_data)
@@ -238,9 +239,12 @@
 		if("tgui:initialize")
 			user << output(_initial_update, "[window_id].browser:update")
 			initialized = TRUE
-		if("tgui:view")
-			if(params["screen"])
-				ui_screen = params["screen"]
+		if("tgui:setSharedState")
+			var/key = params["key"]
+			var/value = params["value"]
+			if(!src_object.tgui_shared_states)
+				src_object.tgui_shared_states = list()
+			src_object.tgui_shared_states[key] = value
 			SStgui.update_uis(src_object)
 		if("tgui:log")
 			// Force window to show frills on fatal errors
@@ -249,14 +253,13 @@
 			log_message(params["log"])
 		if("tgui:link")
 			user << link(params["url"])
-		if("tgui:fancy")
-			user.client.prefs.tgui_fancy = TRUE
-		if("tgui:nofrills")
-			user.client.prefs.tgui_fancy = FALSE
 		else
-			update_status(push = FALSE) // Update the window state.
-			if(src_object.ui_act(action, params, src, state)) // Call ui_act() on the src_object.
-				SStgui.update_uis(src_object) // Update if the object requested it.
+			// Update the window state.
+			update_status(push = FALSE)
+			// Call ui_act() on the src_object.
+			if(src_object.ui_act(action, params, src, state))
+				// Update if the object requested it.
+				SStgui.update_uis(src_object)
 
 /**
  * private

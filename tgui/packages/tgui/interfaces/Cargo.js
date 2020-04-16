@@ -1,13 +1,12 @@
 import { toArray } from 'common/collections';
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, Divider, Flex, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
-import { useGlobal } from '../store';
 
 export const Cargo = (props, context) => {
   const { act, data } = useBackend(context);
-  const [tab, setTab] = useGlobal(context, 'tab', 'catalog');
+  const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
   const {
     requestonly,
   } = data;
@@ -125,7 +124,7 @@ export const CargoCatalog = (props, context) => {
   const [
     activeSupplyName,
     setActiveSupplyName,
-  ] = useGlobal(context, 'supply', supplies[0]?.name);
+  ] = useSharedState(context, 'supply', supplies[0]?.name);
   const activeSupply = supplies.find(supply => {
     return supply.name === activeSupplyName;
   });

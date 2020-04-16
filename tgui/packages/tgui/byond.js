@@ -1,12 +1,12 @@
-import { buildQueryString } from 'common/string';
+// Reference a global Byond object
+const { Byond } = window;
 
 /**
  * Version of Trident engine used in Internet Explorer.
+ * An integer number or `null` if this is not a trident engine.
  *
  * - IE 8 - Trident 4.0
  * - IE 11 - Trident 7.0
- *
- * @return An integer number or 'null' if this is not a trident engine.
  */
 const tridentVersion = (() => {
   const groups = navigator.userAgent.match(/Trident\/(\d+).+?;/i);
@@ -27,41 +27,23 @@ export const IS_IE8 = tridentVersion !== null
   && tridentVersion <= 4;
 
 /**
- * True if browser is a BYOND browser.
+ * Makes a BYOND call.
+ *
+ * If path is empty, this will trigger a Topic call.
+ * You can reference a specific object by setting the "src" parameter.
+ *
+ * See: https://secure.byond.com/docs/ref/skinparams.html
  */
-// We're currently just checking, whether we're running on a localhost
-// with a path similar to a BYOND cache. I couldn't find a better/faster
-// non-invasive method of doing this.
-export const IS_BYOND = tridentVersion !== null
-  && location.hostname === '127.0.0.1'
-  && location.pathname.startsWith('/tmp');
-
-/**
- * Helper to generate a BYOND href given 'params' as an object
- * (with an optional 'url' for eg winset).
- */
-const createByondUrl = (path, params = {}) => {
-  return 'byond://' + path + '?' + buildQueryString(params);
-};
-
 export const callByond = (path, params = {}) => {
-  // Abort BYOND calls when we're running in a normal browser
-  if (!IS_BYOND) {
-    return;
-  }
-  location.href = createByondUrl(path, params);
+  Byond.call(path, params);
 };
 
 /**
- * A high-level abstraction of BYJAX. Makes a call to BYOND and returns
+ * A high-level abstraction of BYOND calls. Makes a BYOND call and returns
  * a promise, which (if endpoint has a callback parameter) resolves
  * with the return value of that call.
  */
 export const callByondAsync = (path, params = {}) => {
-  // Abort BYOND calls when we're running in a normal browser
-  if (!IS_BYOND) {
-    return new Promise(() => {});
-  }
   // Create a callback array if it doesn't exist yet
   window.__callbacks__ = window.__callbacks__ || [];
   // Create a Promise and push its resolve function into callback array
@@ -71,7 +53,7 @@ export const callByondAsync = (path, params = {}) => {
     window.__callbacks__.push(resolve);
   });
   // Call BYOND client
-  callByond(path, {
+  Byond.call(path, {
     ...params,
     callback: `__callbacks__[${callbackIndex}]`,
   });
@@ -79,17 +61,11 @@ export const callByondAsync = (path, params = {}) => {
 };
 
 /**
- * Literally types a command on the client.
+ * Runs a BYOND skin command
+ *
+ * See: https://secure.byond.com/docs/ref/skinparams.html
  */
 export const runCommand = command => callByond('winset', { command });
-
-/**
- * Helper to make a BYOND ui_act() call on the UI 'src' given an 'action'
- * and optional 'params'.
- */
-export const act = (src, action, params = {}) => {
-  return callByond('', { src, action, ...params });
-};
 
 /**
  * Calls 'winget' on a BYOND skin element, retrieving value by the 'key'.

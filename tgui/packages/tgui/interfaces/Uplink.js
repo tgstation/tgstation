@@ -1,9 +1,8 @@
 import { createSearch, decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Input, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
-import { useGlobal } from '../store';
 
 const MAX_SEARCH_RESULTS = 25;
 
@@ -18,11 +17,11 @@ export const Uplink = (props, context) => {
   const [
     hoveredItem,
     setHoveredItem,
-  ] = useGlobal(context, 'hoveredItem', {});
+  ] = useLocalState(context, 'hoveredItem', {});
   const [
     searchText,
     setSearchText,
-  ] = useGlobal(context, 'searchText', '');
+  ] = useLocalState(context, 'searchText', '');
   const testSearch = createSearch(searchText, item => {
     return item.name + item.desc;
   });

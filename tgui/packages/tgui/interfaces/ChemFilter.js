@@ -1,8 +1,7 @@
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Button, Flex, Input, Section } from '../components';
 import { Window } from '../layouts';
-import { useGlobal } from '../store';
 
 export const ChemFilterPane = (props, context) => {
   const { act } = useBackend(context);
@@ -48,8 +47,8 @@ export const ChemFilter = (props, context) => {
     left = [],
     right = [],
   } = data;
-  const [leftName, setLeftName] = useGlobal(context, 'leftName', '');
-  const [rightName, setRightName] = useGlobal(context, 'rightName', '');
+  const [leftName, setLeftName] = useLocalState(context, 'leftName', '');
+  const [rightName, setRightName] = useLocalState(context, 'rightName', '');
   return (
     <Window resizable>
       <Window.Content scrollable>

@@ -11,15 +11,12 @@ import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate } from './backend';
 import { IS_IE8 } from './byond';
 import { setupDrag } from './drag';
-import { createLogger } from './logging';
+import { logger } from './logging';
 import { createStore, StoreProvider } from './store';
 
 const enteredBundleAt = Date.now();
-
-const logger = createLogger();
 const store = createStore();
 let reactRoot;
-
 let initialRender = true;
 
 const renderLayout = () => {
@@ -117,7 +114,7 @@ const setupApp = () => {
   // Subscribe for bankend updates
   window.update = stateJson => {
     // NOTE: stateJson can be an object only if called manually from console.
-    // This is useful for debugging tgui in proper browsers, like Chrome.
+    // This is useful for debugging tgui in external browsers, like Chrome.
     const state = typeof stateJson === 'string'
       ? parseStateJson(stateJson)
       : stateJson;

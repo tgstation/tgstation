@@ -1,8 +1,7 @@
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
-import { useGlobal } from '../store';
 
 export const ChemMaster = (props, context) => {
   const { data } = useBackend(context);
@@ -221,19 +220,19 @@ const PackagingControls = (props, context) => {
   const [
     pillAmount,
     setPillAmount,
-  ] = useGlobal(context, 'pillAmount', 1);
+  ] = useSharedState(context, 'pillAmount', 1);
   const [
     patchAmount,
     setPatchAmount,
-  ] = useGlobal(context, 'patchAmount', 1);
+  ] = useSharedState(context, 'patchAmount', 1);
   const [
     bottleAmount,
     setBottleAmount,
-  ] = useGlobal(context, 'bottleAmount', 1);
+  ] = useSharedState(context, 'bottleAmount', 1);
   const [
     packAmount,
     setPackAmount,
-  ] = useGlobal(context, 'packAmount', 1);
+  ] = useSharedState(context, 'packAmount', 1);
   const {
     condi,
     chosenPillStyle,

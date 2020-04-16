@@ -110,6 +110,14 @@
 /**
  * global
  *
+ * Associative list of JSON-encoded shared states that were set by
+ * tgui clients.
+ */
+/datum/var/list/tgui_shared_states
+
+/**
+ * global
+ *
  * Used to track UIs for a mob.
  */
 /mob/var/list/open_uis = list()

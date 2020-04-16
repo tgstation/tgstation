@@ -1,5 +1,5 @@
 import { sendLogEntry } from 'tgui-dev-server/link/client';
-import { act } from './byond';
+import { callByond } from './byond';
 
 const LEVEL_DEBUG = 0;
 const LEVEL_LOG = 1;
@@ -27,7 +27,9 @@ const log = (level, ns, ...args) => {
       .filter(value => value)
       .join(' ')
       + '\nUser Agent: ' + navigator.userAgent;
-    act(window.__ref__, 'tgui:log', {
+    callByond({
+      src: window.__ref__,
+      action: 'tgui:log',
       log: logEntry,
     });
   }

@@ -1,7 +1,7 @@
 import { toFixed } from 'common/math';
 import { decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { getGasLabel } from '../constants';
 import { Window } from '../layouts';
@@ -114,19 +114,17 @@ const AIR_ALARM_ROUTES = {
 };
 
 const AirAlarmControl = (props, context) => {
-  const { act, config } = useBackend(context);
-  const route = AIR_ALARM_ROUTES[config.screen] || AIR_ALARM_ROUTES.home;
+  const [screen, setScreen] = useLocalState(context, 'screen');
+  const route = AIR_ALARM_ROUTES[screen] || AIR_ALARM_ROUTES.home;
   const Component = route.component();
   return (
     <Section
       title={route.title}
-      buttons={config.screen !== 'home' && (
+      buttons={screen && (
         <Button
           icon="arrow-left"
           content="Back"
-          onClick={() => act('tgui:view', {
-            screen: 'home',
-          })} />
+          onClick={() => setScreen()} />
       )}>
       <Component />
     </Section>
@@ -139,6 +137,7 @@ const AirAlarmControl = (props, context) => {
 
 const AirAlarmControlHome = (props, context) => {
   const { act, data } = useBackend(context);
+  const [screen, setScreen] = useLocalState(context, 'screen');
   const {
     mode,
     atmos_alarm,
@@ -166,30 +165,22 @@ const AirAlarmControlHome = (props, context) => {
       <Button
         icon="sign-out-alt"
         content="Vent Controls"
-        onClick={() => act('tgui:view', {
-          screen: 'vents',
-        })} />
+        onClick={() => setScreen('vents')} />
       <Box mt={1} />
       <Button
         icon="filter"
         content="Scrubber Controls"
-        onClick={() => act('tgui:view', {
-          screen: 'scrubbers',
-        })} />
+        onClick={() => setScreen('scrubbers')} />
       <Box mt={1} />
       <Button
         icon="cog"
         content="Operating Mode"
-        onClick={() => act('tgui:view', {
-          screen: 'modes',
-        })} />
+        onClick={() => setScreen('modes')} />
       <Box mt={1} />
       <Button
         icon="chart-bar"
         content="Alarm Thresholds"
-        onClick={() => act('tgui:view', {
-          screen: 'thresholds',
-        })} />
+        onClick={() => setScreen('thresholds')} />
     </Fragment>
   );
 };

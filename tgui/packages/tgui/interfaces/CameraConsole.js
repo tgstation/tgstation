@@ -3,10 +3,9 @@ import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Button, ByondUi, Input, Section } from '../components';
 import { refocusLayout, Window } from '../layouts';
-import { useGlobal } from '../store';
 
 /**
  * Returns previous and next camera names relative to the currently
@@ -95,7 +94,7 @@ export const CameraConsoleContent = (props, context) => {
   const [
     searchText,
     setSearchText,
-  ] = useGlobal(context, 'searchText', '');
+  ] = useLocalState(context, 'searchText', '');
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
   return (

@@ -1,9 +1,8 @@
 import { Component } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Box, Button, ByondUi, Collapsible, Icon, Input, Knob, LabeledList, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../components';
 import { DraggableControl } from '../components/DraggableControl';
 import { Window } from '../layouts';
-import { useGlobal } from '../store';
 
 const COLORS_ARBITRARY = [
   'red',
@@ -72,7 +71,7 @@ const PAGES = [
 ];
 
 export const KitchenSink = (props, context) => {
-  const [theme] = useGlobal(context, 'kitchenSinkTheme');
+  const [theme] = useLocalState(context, 'kitchenSinkTheme');
   return (
     <Window
       theme={theme}
@@ -470,7 +469,7 @@ const KitchenSinkByondUi = (props, context) => {
 };
 
 const KitchenSinkThemes = (props, context) => {
-  const [theme, setTheme] = useGlobal(context, 'kitchenSinkTheme');
+  const [theme, setTheme] = useLocalState(context, 'kitchenSinkTheme');
   return (
     <Box>
       <LabeledList>
