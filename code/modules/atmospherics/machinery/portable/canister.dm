@@ -5,8 +5,8 @@
 	desc = "A canister for the storage of gas."
 	icon_state = "yellow"
 	density = TRUE
-	ui_x = 420
-	ui_y = 405
+	ui_x = 346
+	ui_y = 268
 
 	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/passive_gate/pump

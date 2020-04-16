@@ -51,8 +51,9 @@ export const SolarControl = props => {
                   }}
                   minValue={0}
                   maxValue={1}
-                  value={generated_ratio}
-                  content={generated + ' W'} />
+                  value={generated_ratio}>
+                  {generated + ' W'}
+                </ProgressBar>
               </LabeledList.Item>
             </LabeledList>
           </Grid.Column>

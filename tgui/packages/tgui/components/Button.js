@@ -41,7 +41,7 @@ export const Button = props => {
   // IE8: Use a lowercase "onclick" because synthetic events are fucked.
   // IE8: Use an "unselectable" prop because "user-select" doesn't work.
   return (
-    <Box as="span"
+    <Box
       className={classes([
         'Button',
         fluid && 'Button--fluid',
