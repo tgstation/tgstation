@@ -28,19 +28,19 @@
 	max_occurrences = 0
 
 /datum/round_event/portal_storm/portal_storm_mesa
-	boss_types = list(/mob/living/simple_animal/hostile/jungle/leaper = 3, \
-						/mob/living/simple_animal/hostile/jungle/mega_arachnid = 3, \
-						/mob/living/simple_animal/hostile/asteroid/hivelord = 3)
+	boss_types = list(/mob/living/simple_animal/hostile/jungle/leaper = 4, \
+						/mob/living/simple_animal/hostile/jungle/mega_arachnid = 6, \
+						/mob/living/simple_animal/hostile/asteroid/hivelord = 5)
 	hostile_types = list(/mob/living/carbon/alien/larva = 2, \
-						/mob/living/simple_animal/hostile/netherworld = 4, \
-						/mob/living/simple_animal/hostile/asteroid/fugu = 5, \
-						/mob/living/simple_animal/hostile/asteroid/basilisk = 3, \
-						/mob/living/simple_animal/hostile/asteroid/gutlunch = 4, \
-						/mob/living/simple_animal/hostile/statue = 4, \
-						/mob/living/simple_animal/hostile/zombie = 6, \
-						/mob/living/simple_animal/hostile/netherworld/migo = 4, \
-						/mob/living/simple_animal/hostile/netherworld/blankbody = 3, \
-						/mob/living/simple_animal/hostile/headcrustation = 7
+						/mob/living/simple_animal/hostile/netherworld = 8, \
+						/mob/living/simple_animal/hostile/asteroid/fugu = 7, \
+						/mob/living/simple_animal/hostile/asteroid/basilisk = 8, \
+						/mob/living/simple_animal/hostile/asteroid/gutlunch = 7, \
+						/mob/living/simple_animal/hostile/statue = 6, \
+						/mob/living/simple_animal/hostile/zombie = 12, \
+						/mob/living/simple_animal/hostile/netherworld/migo = 10, \
+						/mob/living/simple_animal/hostile/netherworld/blankbody = 6, \
+						/mob/living/simple_animal/hostile/headcrustation = 9
 						)
 
 /datum/round_event/portal_storm
@@ -74,10 +74,10 @@
 		number_of_hostiles += hostile_types[hostile]
 
 	while(number_of_bosses > boss_spawn.len)
-		boss_spawn += get_random_station_turf()
+		boss_spawn += get_safe_random_station_turf()
 
 	while(number_of_hostiles > hostiles_spawn.len)
-		hostiles_spawn += get_random_station_turf()
+		hostiles_spawn += get_safe_random_station_turf()
 
 	next_boss_spawn = startWhen + CEILING(2 * number_of_hostiles / number_of_bosses, 1)
 

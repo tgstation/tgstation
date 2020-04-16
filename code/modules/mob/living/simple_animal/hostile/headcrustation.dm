@@ -35,11 +35,3 @@
 	. = ..()
 	if(W.tool_behaviour == TOOL_CROWBAR && user.a_intent != INTENT_HELP)
 		adjustHealth(10) //You get it
-
-/obj/item/clothing/head/headcrab
-	name = "Headcrab"
-	desc = "WIP, god is in pain"
-	icon_state = "headcrab"
-	item_state = "headcrab"
-	clothing_flags = SNUG_FIT
-	flags_inv = HIDEEARS|HIDEHAIR
