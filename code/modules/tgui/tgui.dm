@@ -98,19 +98,16 @@
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
+	// Build window options
+	var/window_options = "can_minimize=0;auto_format=0;"
 	// If we have a width and height, use them.
-	var/window_size
 	if(width && height)
-		window_size = "size=[width]x[height];"
-	else
-		window_size = ""
-
+		window_options += "size=[width]x[height];"
 	// Remove titlebar and resize handles for a fancy window
-	var/have_title_bar
 	if(user.client.prefs.tgui_fancy)
-		have_title_bar = "titlebar=0;can_resize=0;"
+		window_options += "titlebar=0;can_resize=0;"
 	else
-		have_title_bar = "titlebar=1;can_resize=1;"
+		window_options += "titlebar=1;can_resize=1;"
 
 	// Generate page html
 	var/html
@@ -123,7 +120,7 @@
 	html = replacetextEx(html, "\[tgui:ref]", "\ref[src]")
 
 	// Open the window.
-	user << browse(html, "window=[window_id];can_minimize=0;auto_format=0;[window_size][have_title_bar]")
+	user << browse(html, "window=[window_id];[window_options]")
 
 	// Instruct the client to signal UI when the window is closed.
 	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
@@ -138,9 +135,7 @@
 	if(!initial_static_data) {
 		initial_static_data = src_object.ui_static_data(user)
 	}
-	_initial_update = url_encode(get_json(
-		initial_data,
-		initial_static_data))
+	_initial_update = url_encode(get_json(initial_data, initial_static_data))
 
 	SStgui.on_open(src)
 
