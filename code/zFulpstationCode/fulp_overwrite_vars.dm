@@ -390,6 +390,7 @@
 //************************************************************
 //** Improved Sec Starter Gear by Surrealistik Oct 2019 ENDS
 //************************************************************
+
 //***********************************************************
 //**** Detective Expanded Kit BEGINS - Surrealistik, Oct 2019
 //***********************************************************
@@ -410,10 +411,13 @@
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints, and has an integrated health and reagent analyzer. Can print a report of its findings."
 
 /obj/item/detective_scanner
-	var/mode
-	var/advanced = TRUE
 	icon = 'icons/Fulpicons/Surreal_stuff/detective_obs.dmi'
 	icon_state = "forensicnew-0"
+	req_one_access = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS) //Checked when trying to purge laws or use data disks with the scanner.
+	var/mode
+	var/advanced = TRUE
+	var/print_time_stamp
+	var/print_cooldown = 30 //3 second cooldown between prints.
 
 
 //***********************************************************

@@ -60,10 +60,10 @@
 	if(ismob(loc))
 		var/mob/M = loc
 		M.put_in_hands(P)
-		to_chat(M, "<span class='notice'>Report printed. Log cleared.</span>")
+		to_chat(M, "<span class='notice'>Report printed.</span>") //FULPSTATION DETECTIVE LOCKER PR Surrealistik April 2020
 
 	// Clear the logs
-	log = list()
+	//log = list() //FULPSTATION DETECTIVE LOCKER PR Surrealistik April 2020
 	scanning = 0
 
 /obj/item/detective_scanner/afterattack(atom/A, mob/user, params)
