@@ -40,6 +40,7 @@
 					/obj/item/pinpointer/crew = 1,
 					/obj/item/binoculars = 1,
 					/obj/item/storage/box/rxglasses/spyglasskit = 1,
+					/obj/item/folder = 4,
 					/obj/item/storage/box/evidence = 12,
 					/obj/item/storage/box/matches = 12,
 					/obj/item/storage/fancy/cigarettes/cigars = 12,
