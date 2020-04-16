@@ -80,3 +80,11 @@
 	var/turf/T = get_turf(src)
 	new /obj/machinery/vending/dic(T)
 	qdel(src)
+
+
+/datum/supply_pack/security/vending/detective
+	name = "DicTech Supply Crate"
+	desc = "Did the other detectives snatch all the good outfits and gear? Regain your swag with this!"
+	cost = 1500
+	contains = list(/obj/item/vending_refill/detective)
+	crate_name = "DicTech supply crate"
