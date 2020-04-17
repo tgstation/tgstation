@@ -46,6 +46,7 @@ import { DisposalUnit } from './interfaces/DisposalUnit';
 import { DnaConsole } from './interfaces/DnaConsole';
 import { DnaVault } from './interfaces/DnaVault';
 import { EightBallVote } from './interfaces/EightBallVote';
+import { Electrolyzer } from './interfaces/Electrolyzer';
 import { Electropack } from './interfaces/Electropack';
 import { EmergencyShuttleConsole } from './interfaces/EmergencyShuttleConsole';
 import { EngravedMessage } from './interfaces/EngravedMessage';
@@ -320,6 +321,10 @@ const ROUTES = {
   },
   eightball: {
     component: () => EightBallVote,
+    scrollable: false,
+  },
+  electrolyzer: {
+    component: () => Electrolyzer,
     scrollable: false,
   },
   electropack: {

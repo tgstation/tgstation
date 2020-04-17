@@ -163,6 +163,13 @@ GLOBAL_LIST_INIT(nonreactive_gases, typecacheof(list(/datum/gas/oxygen, /datum/g
 	fusion_power = -5
 	rarity = 10
 
+/datum/gas/hydrogen
+	id = "hydrogen"
+	specific_heat = 30 //same as co2 otherwise fusion wont work
+	name = "Hydrogen"
+	dangerous = TRUE
+	rarity = 700 //same reason as specific_heat
+
 /obj/effect/overlay/gas
 	icon = 'icons/effects/atmospherics.dmi'
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
