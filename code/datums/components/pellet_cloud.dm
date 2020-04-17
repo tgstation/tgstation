@@ -126,6 +126,12 @@
   * Note we track anyone who's alive and client'd when they get shredded in var/list/purple_hearts, for achievement checking later
   */
 /datum/component/pellet_cloud/proc/handle_martyrs()
+	var/obj/temp_parent = parent
+	var/mob/living/idiot_holding_grenade = temp_parent.loc
+	if(istype(idiot_holding_grenade))
+		for(var/i in 1 to radius * 2)
+			pew(idiot_holding_grenade) // free shrapnel if it goes off in your hand, and it doesn't even count towards the absorbed. fun!
+
 	var/list/martyrs = list()
 	for(var/mob/living/body in get_turf(parent))
 		if(!(body in bodies))

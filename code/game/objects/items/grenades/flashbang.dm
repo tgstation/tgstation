@@ -58,14 +58,15 @@
 	shrapnel_radius = 12
 
 /obj/item/grenade/stingbang/prime()
-	if(iscarbon(loc))
-		var/mob/living/carbon/C = loc
+	var/atom/initial_loc = loc
+	. = ..()
+	if(iscarbon(initial_loc))
+		var/mob/living/carbon/C = initial_loc
 		var/obj/item/bodypart/B = C.get_holding_bodypart_of_item(src)
 		if(B)
 			C.visible_message("<b><span class='danger'>[src] goes off in [C]'s hand, blowing [C.p_their()] [B.name] to bloody shreds!</span></b>", "<span class='userdanger'>[src] goes off in your hand, blowing your [B.name] to bloody shreds!</span>")
 			B.dismember()
 
-	. = ..()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)
@@ -88,7 +89,7 @@
 		M.Knockdown(max(100/max(1,distance), 60))
 
 //Bang
-	if(!distance || loc == M || loc == M.loc)	//Stop allahu akbarring rooms with this.
+	if(!distance || loc == M || loc == M.loc)
 		M.Paralyze(20)
 		M.Knockdown(200)
 		M.soundbang_act(1, 200, 10, 15)
