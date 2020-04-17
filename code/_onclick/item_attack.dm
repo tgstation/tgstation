@@ -87,7 +87,7 @@
 		to_chat(user, "<span class='warning'>You don't want to harm other living beings!</span>")
 		return
 
-	if(user.zone_selected == BODY_ZONE_PRECISE_EYES && eyestab == 1)
+	if(user.zone_selected == BODY_ZONE_PRECISE_EYES && can_eyestab == TRUE)
 		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 			M = user
 		return eyestab(M,user)

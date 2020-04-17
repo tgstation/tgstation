@@ -74,7 +74,7 @@
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("drilled")
-	eyestab = 1
+	can_eyestab = TRUE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 1
 
@@ -112,7 +112,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
-	eyestab = 1
+	can_eyestab = TRUE
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
 
