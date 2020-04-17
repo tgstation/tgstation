@@ -431,7 +431,10 @@ const DnaConsoleStorage = (props, context) => {
 };
 
 const StorageMutations = (props, context) => {
-  const { mutations, customMode = '' } = props;
+  const {
+    mutations = [],
+    customMode = '',
+  } = props;
   const { data, act } = useBackend(context);
   const mode = data.view.storageMode + customMode;
 
@@ -1402,7 +1405,10 @@ const DnaConsoleAdvancedInjectors = (props, context) => {
 };
 
 const MutationCombiner = (props, context) => {
-  const { mutations, source } = props;
+  const {
+    mutations = [],
+    source,
+  } = props;
   const { act, data } = useBackend(context);
 
   const brefFromName = name => {
@@ -1416,11 +1422,9 @@ const MutationCombiner = (props, context) => {
       options={mutations.map(mutation => mutation.Name)}
       disabled={mutations.length === 0}
       selected="Combine mutations"
-      onSelected={value => {
-        act(`combine_${source.Source}`, {
-          firstref: brefFromName(value),
-          secondref: source.ByondRef,
-        });
-      }} />
+      onSelected={value => act(`combine_${source.Source}`, {
+        firstref: brefFromName(value),
+        secondref: source.ByondRef,
+      })} />
   );
 };
