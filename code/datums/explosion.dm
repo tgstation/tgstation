@@ -198,8 +198,8 @@ GLOBAL_LIST_EMPTY(explosions)
 			var/list/items = list()
 			for(var/I in T)
 				var/atom/A = I
-				if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
-					items += A.GetAllContents()
+				if (!(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1))
+					items += A.GetAllContents(ignore_flag_1 = PREVENT_CONTENTS_EXPLOSION_1)
 			for(var/O in items)
 				var/atom/A = O
 				if(!QDELETED(A))
