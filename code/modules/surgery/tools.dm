@@ -74,7 +74,6 @@
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("drilled")
-	can_eyestab = TRUE
 	tool_behaviour = TOOL_DRILL
 	toolspeed = 1
 
@@ -84,6 +83,10 @@
 	user.SpinAnimation(3, 10)
 	playsound(user, 'sound/machines/juicer.ogg', 20, TRUE)
 	return (MANUAL_SUICIDE)
+
+/obj/item/surgicaldrill/Initialize()
+	. = ..()
+	AddElement(/datum/element/eyestab)
 
 /obj/item/surgicaldrill/augment
 	desc = "Effectively a small power drill contained within your arm, edges dulled to prevent tissue damage. May or may not pierce the heavens."
@@ -112,13 +115,13 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP_ACCURATE
-	can_eyestab = TRUE
 	tool_behaviour = TOOL_SCALPEL
 	toolspeed = 1
 
 /obj/item/scalpel/Initialize()
 	. = ..()
 	AddComponent(/datum/component/butchering, 80 * toolspeed, 100, 0)
+	AddElement(/datum/element/eyestab)
 
 /obj/item/scalpel/augment
 	desc = "Ultra-sharp blade attached directly to your bone for extra-accuracy."

@@ -27,7 +27,6 @@
 	flags_1 = CONDUCT_1
 	attack_verb = list("attacked", "stabbed", "poked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
-	can_eyestab = TRUE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
 	var/datum/reagent/forkload //used to eat omelette
 
@@ -35,6 +34,10 @@
 	user.visible_message("<span class='suicide'>[user] stabs \the [src] into [user.p_their()] chest! It looks like [user.p_theyre()] trying to take a bite out of [user.p_them()]self!</span>")
 	playsound(src, 'sound/items/eatfood.ogg', 50, TRUE)
 	return BRUTELOSS
+
+/obj/item/kitchen/fork/Initialize()
+	. = ..()
+	AddElement(/datum/element/eyestab)
 
 /obj/item/kitchen/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
 	if(!istype(M))
@@ -85,7 +88,6 @@
 	custom_materials = list(/datum/material/iron=12000)
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP_ACCURATE
-	can_eyestab = TRUE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/bayonet = FALSE	//Can this be attached to a gun?
 	custom_price = 250
@@ -93,6 +95,10 @@
 /obj/item/kitchen/knife/ComponentInitialize()
 	. = ..()
 	set_butchering()
+
+/obj/item/kitchen/knife/Initialize()
+	. = ..()
+	AddElement(/datum/element/eyestab)
 
 ///Adds the butchering component, used to override stats for special cases
 /obj/item/kitchen/knife/proc/set_butchering()
