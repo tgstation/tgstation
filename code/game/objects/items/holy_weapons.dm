@@ -233,7 +233,8 @@
 			display_names[initial(rodtype.name)] = rodtype
 			nullrod_icons += list(initial(rodtype.name) = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state)))
 
-	var/choice = show_radial_menu(M, src , sortList(nullrod_icons), custom_check = CALLBACK(src, .proc/check_menu, M), radius = 42, require_near = TRUE)
+	nullrod_icons = sortList(nullrod_icons)
+	var/choice = show_radial_menu(M, src , nullrod_icons, custom_check = CALLBACK(src, .proc/check_menu, M), radius = 42, require_near = TRUE)
 	if(!choice || !check_menu(M))
 		return
 
