@@ -58,14 +58,15 @@
 	shrapnel_radius = 12
 
 /obj/item/grenade/stingbang/prime()
-	var/atom/initial_loc = loc
-	. = ..()
-	if(iscarbon(initial_loc))
-		var/mob/living/carbon/C = initial_loc
+	if(iscarbon(loc))
+		var/mob/living/carbon/C = loc
 		var/obj/item/bodypart/B = C.get_holding_bodypart_of_item(src)
 		if(B)
+			forceMove(get_turf(C))
 			C.visible_message("<b><span class='danger'>[src] goes off in [C]'s hand, blowing [C.p_their()] [B.name] to bloody shreds!</span></b>", "<span class='userdanger'>[src] goes off in your hand, blowing your [B.name] to bloody shreds!</span>")
 			B.dismember()
+
+	. = ..()
 
 	update_mob()
 	var/flashbang_turf = get_turf(src)

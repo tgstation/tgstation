@@ -27,6 +27,7 @@
 	var/list/bodies /// For grenades, any /mob/living's the grenade is moved onto, see [/datum/component/pellet_cloud/proc/handle_martyrs()]
 	var/list/purple_hearts /// For grenades, tracking people who die covering a grenade for achievement purposes, see [/datum/component/pellet_cloud/proc/handle_martyrs()]
 
+	var/pellet_delta /// For grenades, tracking how many pellets are removed due to martyrs and how many pellets are added due to the last person to touch it being on top of it
 	var/terminated /// how many pellets ranged out without hitting anything
 	var/hits /// how many pellets impacted something
 
@@ -101,16 +102,15 @@
   */
 /datum/component/pellet_cloud/proc/create_blast_pellets()
 	var/atom/A = parent
-	var/total_pellets_absorbed = 0
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
-		total_pellets_absorbed = handle_martyrs() // note that we can modify radius in this proc
+		handle_martyrs() // note that we can modify radius in this proc
 
 	if(radius < 1)
 		return
 
 	var/list/all_the_turfs_were_gonna_lacerate = RANGE_TURFS(radius, A) - RANGE_TURFS(radius-1, A)
-	num_pellets = all_the_turfs_were_gonna_lacerate.len + total_pellets_absorbed
+	num_pellets = all_the_turfs_were_gonna_lacerate.len + pellet_delta
 
 	for(var/T in all_the_turfs_were_gonna_lacerate)
 		var/turf/shootat_turf = T
@@ -126,19 +126,16 @@
   * Note we track anyone who's alive and client'd when they get shredded in var/list/purple_hearts, for achievement checking later
   */
 /datum/component/pellet_cloud/proc/handle_martyrs()
-	var/obj/temp_parent = parent
-	var/mob/living/idiot_holding_grenade = temp_parent.loc
-	if(istype(idiot_holding_grenade))
-		for(var/i in 1 to radius * 2)
-			pew(idiot_holding_grenade) // free shrapnel if it goes off in your hand, and it doesn't even count towards the absorbed. fun!
+	var/magnitude_absorbed
 
 	var/list/martyrs = list()
 	for(var/mob/living/body in get_turf(parent))
-		if(!(body in bodies))
+		if(body == shooter)
+			pellet_delta = radius * 3
+			for(var/i in 1 to radius * 3)
+				pew(body) // free shrapnel if it goes off in your hand, and it doesn't even count towards the absorbed. fun!
+		else if(!(body in bodies))
 			martyrs += body // promoted from a corpse to a hero
-
-	var/magnitude_absorbed
-	var/total_pellets_absorbed
 
 	for(var/M in martyrs)
 		var/mob/living/martyr = M
@@ -154,7 +151,7 @@
 
 		var/pellets_absorbed = (radius ** 2) - ((radius - magnitude_absorbed - 1) ** 2)
 		radius -= magnitude_absorbed
-		total_pellets_absorbed += round(pellets_absorbed/2)
+		pellet_delta -= round(pellets_absorbed/2)
 
 		if(martyr.stat != DEAD && martyr.client)
 			LAZYADD(purple_hearts, martyr)
@@ -164,8 +161,6 @@
 
 		if(radius < 1)
 			break
-
-	return total_pellets_absorbed
 
 ///One of our pellets hit something, record what it was and check if we're done (terminated == num_pellets)
 /datum/component/pellet_cloud/proc/pellet_hit(obj/projectile/P, atom/movable/firer, atom/target, Angle)
@@ -225,10 +220,18 @@
 	qdel(src)
 
 /// Look alive, we're armed! Now we start watching to see if anyone's covering us
-/datum/component/pellet_cloud/proc/grenade_armed()
+/datum/component/pellet_cloud/proc/grenade_armed(obj/item/nade)
+	if(ismob(nade.loc))
+		shooter = nade.loc
 	LAZYINITLIST(bodies)
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_MOVABLE_MOVED), .proc/grenade_moved)
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/grenade_dropped)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/grenade_moved)
 	RegisterSignal(parent, COMSIG_MOVABLE_UNCROSSED, .proc/grenade_uncrossed)
+
+/// Someone dropped the grenade, so set them to the shooter in case they're on top of it when it goes off
+/datum/component/pellet_cloud/proc/grenade_dropped(obj/item/nade, mob/living/slick_willy)
+	shooter = slick_willy
+	grenade_moved()
 
 /// Our grenade has moved, reset var/list/bodies so we're "on top" of any mobs currently on the tile
 /datum/component/pellet_cloud/proc/grenade_moved()
