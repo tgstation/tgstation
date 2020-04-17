@@ -1,0 +1,7 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "Added 3 tiers to the canisters"
+  - rscadd: "added canister frames (also tiered)"
+  - rscadd: "canisters rupture if there is too much pressure or heat inside (higher tiers have higher thresholds)"
+  - imageadd: "added images for frames and overlays"
