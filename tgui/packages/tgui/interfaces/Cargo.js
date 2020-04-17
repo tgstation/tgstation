@@ -1,7 +1,8 @@
 import { toArray } from 'common/collections';
 import { Fragment } from 'inferno';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Divider, Flex, LabeledList, Section, Table } from '../components';
+import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
+import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
 export const Cargo = (props, context) => {
@@ -16,40 +17,34 @@ export const Cargo = (props, context) => {
     <Window resizable>
       <Window.Content scrollable>
         <CargoStatus />
-        <Box mb={0.5}>
-          <Button
+        <Tabs>
+          <Tabs.Tab
             icon="list"
-            color="transparent"
-            lineHeight="23px"
             selected={tab === 'catalog'}
             onClick={() => setTab('catalog')}>
             Catalog
-          </Button>
-          <Button
+          </Tabs.Tab>
+          <Tabs.Tab
             icon="envelope"
-            color="transparent"
             textColor={tab !== 'requests'
               && requests.length > 0
               && 'yellow'}
-            lineHeight="23px"
             selected={tab === 'requests'}
             onClick={() => setTab('requests')}>
             Requests ({requests.length})
-          </Button>
+          </Tabs.Tab>
           {!requestonly && (
-            <Button
+            <Tabs.Tab
               icon="shopping-cart"
-              color="transparent"
               textColor={tab !== 'cart'
                 && cart.length > 0
                 && 'yellow'}
-              lineHeight="23px"
               selected={tab === 'cart'}
               onClick={() => setTab('cart')}>
               Checkout ({cart.length})
-            </Button>
+            </Tabs.Tab>
           )}
-        </Box>
+        </Tabs>
         {tab === 'catalog' && (
           <CargoCatalog />
         )}
@@ -81,7 +76,10 @@ const CargoStatus = (props, context) => {
       title="Cargo"
       buttons={(
         <Box inline bold>
-          <AnimatedNumber value={Math.round(points)} /> credits
+          <AnimatedNumber
+            value={points}
+            format={value => formatMoney(value)} />
+          {' credits'}
         </Box>
       )}>
       <LabeledList>
@@ -143,19 +141,16 @@ export const CargoCatalog = (props, context) => {
       )}>
       <Flex>
         <Flex.Item>
-          {supplies.map(supply => (
-            <Button
-              fluid
-              key={supply.name}
-              color="transparent"
-              selected={supply.name === activeSupplyName}
-              onClick={() => setActiveSupplyName(supply.name)}>
-              {supply.name} ({supply.packs.length})
-            </Button>
-          ))}
-        </Flex.Item>
-        <Flex.Item mr={1}>
-          <Divider vertical />
+          <Tabs vertical>
+            {supplies.map(supply => (
+              <Tabs.Tab
+                key={supply.name}
+                selected={supply.name === activeSupplyName}
+                onClick={() => setActiveSupplyName(supply.name)}>
+                {supply.name} ({supply.packs.length})
+              </Tabs.Tab>
+            ))}
+          </Tabs>
         </Flex.Item>
         <Flex.Item grow={1} basis={0}>
           <Table>
@@ -190,9 +185,9 @@ export const CargoCatalog = (props, context) => {
                       onClick={() => act('add', {
                         id: pack.id,
                       })}>
-                      {self_paid
+                      {formatMoney(self_paid
                         ? Math.round(pack.cost * 1.1)
-                        : pack.cost}
+                        : pack.cost)}
                       {' cr'}
                     </Button>
                   </Table.Cell>
@@ -247,7 +242,7 @@ const CargoRequests = (props, context) => {
                 <i>{request.reason}</i>
               </Table.Cell>
               <Table.Cell collapsing textAlign="right">
-                {request.cost} cr.
+                {formatMoney(request.cost)} cr
               </Table.Cell>
               {!requestonly && (
                 <Table.Cell collapsing>
@@ -290,7 +285,7 @@ const CargoCartButtons = (props, context) => {
         {cart.length === 1 && '1 item'}
         {cart.length >= 2 && cart.length + ' items'}
         {' '}
-        {total > 0 && `(${total} cr)`}
+        {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
       <Button
         icon="times"
@@ -339,7 +334,7 @@ const CargoCart = (props, context) => {
                 )}
               </Table.Cell>
               <Table.Cell collapsing textAlign="right">
-                {entry.cost} cr.
+                {formatMoney(entry.cost)} cr
               </Table.Cell>
               <Table.Cell collapsing>
                 <Button

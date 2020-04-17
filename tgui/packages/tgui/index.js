@@ -3,7 +3,11 @@ import 'core-js/web/immediate';
 import 'core-js/web/queue-microtask';
 import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
-import './polyfills';
+
+// This one is necessary for Inferno.
+if (!window.Int32Array) {
+  window.Int32Array = Array;
+}
 
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';

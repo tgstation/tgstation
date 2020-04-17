@@ -1,6 +1,6 @@
 import { Component } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, ByondUi, Collapsible, Icon, Input, Knob, LabeledList, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../components';
+import { BlockQuote, Box, Button, ByondUi, Collapsible, Icon, Input, Knob, LabeledList, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip, Flex } from '../components';
 import { DraggableControl } from '../components/DraggableControl';
 import { Window } from '../layouts';
 
@@ -72,26 +72,31 @@ const PAGES = [
 
 export const KitchenSink = (props, context) => {
   const [theme] = useLocalState(context, 'kitchenSinkTheme');
+  const [pageIndex, setPageIndex] = useLocalState(context, 'pageIndex', 0);
+  const PageComponent = PAGES[pageIndex].component();
   return (
     <Window
       theme={theme}
       resizable>
       <Window.Content scrollable>
         <Section>
-          <Tabs vertical>
-            {PAGES.map(page => (
-              <Tabs.Tab
-                key={page.title}
-                label={page.title}>
-                {() => {
-                  const Component = page.component();
-                  return (
-                    <Component {...props} />
-                  );
-                }}
-              </Tabs.Tab>
-            ))}
-          </Tabs>
+          <Flex>
+            <Flex.Item>
+              <Tabs vertical>
+                {PAGES.map((page, i) => (
+                  <Tabs.Tab
+                    key={i}
+                    selected={i === pageIndex}
+                    onClick={() => setPageIndex(i)}>
+                    {page.title}
+                  </Tabs.Tab>
+                ))}
+              </Tabs>
+            </Flex.Item>
+            <Flex.Item grow={1} basis={0}>
+              <PageComponent />
+            </Flex.Item>
+          </Flex>
         </Section>
       </Window.Content>
     </Window>
@@ -216,46 +221,39 @@ class KitchenSinkProgressBar extends Component {
   }
 }
 
-class KitchenSinkTabs extends Component {
-  constructor() {
-    super();
-    this.state = {
-      vertical: true,
-    };
-  }
-
-  render() {
-    const { vertical } = this.state;
-    const TAB_KEYS = [1, 2, 3, 4, 5].map(x => 'tab_' + x);
-    return (
-      <Box>
-        {'Vertical: '}
-        <Button
+const KitchenSinkTabs = (props, context) => {
+  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
+  const [vertical, setVertical] = useLocalState(context, 'tabVert');
+  const [altSelection, setAltSelection] = useLocalState(context, 'tabAlt');
+  const TAB_RANGE = [1, 2, 3, 4, 5];
+  return (
+    <Box>
+      <Box mb={2}>
+        <Button.Checkbox
           inline
-          content={String(vertical)}
-          onClick={() => this.setState(prevState => ({
-            vertical: !prevState.vertical,
-          }))} />
-        <Box mb={2} />
-        <Tabs vertical={vertical}>
-          {TAB_KEYS.map(key => (
-            <Tabs.Tab
-              key={key}
-              label={'Label ' + key}>
-              {() => (
-                <Box>
-                  {'Active tab: '}
-                  <Box inline color="green">{key}</Box>
-                  <BoxOfSampleText mt={2} />
-                </Box>
-              )}
-            </Tabs.Tab>
-          ))}
-        </Tabs>
+          content="vertical"
+          checked={vertical}
+          onClick={() => setVertical(!vertical)} />
+        <Button.Checkbox
+          inline
+          content="altSelection"
+          checked={altSelection}
+          onClick={() => setAltSelection(!altSelection)} />
       </Box>
-    );
-  }
-}
+      <Tabs vertical={vertical}>
+        {TAB_RANGE.map((number, i) => (
+          <Tabs.Tab
+            key={i}
+            altSelection={altSelection}
+            selected={i === tabIndex}
+            onClick={() => setTabIndex(i)}>
+            Tab #{number}
+          </Tabs.Tab>
+        ))}
+      </Tabs>
+    </Box>
+  );
+};
 
 const KitchenSinkTooltip = props => {
   const positions = [
@@ -421,13 +419,13 @@ const KitchenSinkCollapsible = props => {
         <Button icon="cog" />
       )}>
       <Section>
-        <BoxOfSampleText />
+        <BoxWithSampleText />
       </Section>
     </Collapsible>
   );
 };
 
-const BoxOfSampleText = props => {
+const BoxWithSampleText = props => {
   return (
     <Box {...props}>
       <Box italic>
@@ -445,7 +443,7 @@ const BoxOfSampleText = props => {
 const KitchenSinkBlockQuote = props => {
   return (
     <BlockQuote>
-      <BoxOfSampleText />
+      <BoxWithSampleText />
     </BlockQuote>
   );
 };

@@ -1,4 +1,4 @@
-import { clamp, toFixed } from 'common/math';
+import { clamp, round, toFixed } from 'common/math';
 
 const SI_SYMBOLS = [
   'f', // femto
@@ -53,4 +53,13 @@ const formatSiUnit = (value, minBase1000 = -SI_BASE_INDEX, unit = '') => {
 
 export const formatPower = (value, minBase1000 = 0) => {
   return formatSiUnit(value, minBase1000, 'W');
+};
+
+export const formatMoney = (value, precision = 0) => {
+  return round(value, precision)
+    .toLocaleString('en', {
+      minimumFractionDigits: precision,
+    })
+    // Thin space
+    .replace(/,/g, '\u2009');
 };
