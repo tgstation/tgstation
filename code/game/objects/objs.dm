@@ -7,8 +7,11 @@
 
 	var/damtype = BRUTE
 	var/force = 0
-	/// higher values can cause wounds through armor, negative values are stopped by even plain clothes
-	var/wound_armor_penetration = 0
+
+	/// How good a given object is at causing wounds on carbons. Higher values equal better shots at creating serious wounds.
+	var/wound_bonus = 0
+	/// If this attacks a human with no wound armor on the affected body part, add this to the wound mod. Some attacks may be significantly worse at wounding if there's even a slight layer of armor to absorb some of it vs bare flesh
+	var/bare_wound_bonus = 0
 
 	var/datum/armor/armor
 	var/obj_integrity	//defaults to max_integrity

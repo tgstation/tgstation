@@ -92,7 +92,7 @@
 		return 1
 	return ..()
 
-/obj/item/clothing/proc/take_damage_zone(def_zone, damage_amount, damage_type, armour_penetration)
+/obj/item/clothing/proc/take_damage_zone(def_zone, damage_amount, wounding_type, armour_penetration)
 	//testing("tdz on [src] [def_zone] | [damage_amount] | [damage_type] | [armour_penetration]")
 	if(!def_zone || (body_parts_covered in GLOB.bitflags)) //|| !(body_parts_covered && body_parts_covered & def_zone))
 		return
@@ -102,8 +102,11 @@
 		//testing("[src] does not cover [def_zone]")
 		return
 
+	var/damage_type = BRUTE
+	if(wounding_type == WOUND_BURN)
+		damage_type = BURN
 	// only worry about dealing damage at all with this if there's actually limb damage
-	var/damage_dealt = take_damage(damage_amount * 0.1, damage_type, armour_penetration) * 10 // only deal 10% of the damage to the general integrity damage, then multiply it by 10 so we know how much to deal to limb
+	var/damage_dealt = take_damage(damage_amount * 0.1, damage_type, armour_penetration, FALSE) * 10 // only deal 10% of the damage to the general integrity damage, then multiply it by 10 so we know how much to deal to limb
 	LAZYINITLIST(damage_by_parts)
 	damage_by_parts[def_zone] += damage_dealt
 	//testing("Damaged [src]'s [parse_zone(def_zone)] by [damage_dealt], remaining integrity [limb_integrity - damage_by_parts[def_zone]]/[limb_integrity]")

@@ -19,8 +19,8 @@
 	tracer_type = /obj/effect/projectile/tracer/laser
 	muzzle_type = /obj/effect/projectile/muzzle/laser
 	impact_type = /obj/effect/projectile/impact/laser
-	wound_power_burn = 40
-	wound_armor_penetration = -40
+	wound_bonus = -30
+	bare_wound_bonus = 40
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -44,8 +44,7 @@
 	tracer_type = /obj/effect/projectile/tracer/heavy_laser
 	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
 	impact_type = /obj/effect/projectile/impact/heavy_laser
-	wound_power_burn = 70
-	wound_armor_penetration = -30
+	wound_bonus = -10
 
 /obj/projectile/beam/weak
 	damage = 15

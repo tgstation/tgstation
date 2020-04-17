@@ -23,34 +23,54 @@
 	var/examine_desc = ""
 
 	var/occur_text = ""
+	/// This sound will be played upon the wound being applied
+	var/sound_effect
 
+	/// Either WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL
 	var/severity = WOUND_SEVERITY_MODERATE
+	/// What damage type can allow this wound to be rolled, currently either BRUTE or BURN
 	var/damtype = BRUTE
 
-	//Other
-	//var/list/viable_mobtypes = list(mob/living/carbon) //typepaths of viable mobs
-	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG) //which body parts we can affect
+	/// What body zones can we affect
+	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
+	/// The bodypart we're parented to
 	var/obj/item/bodypart/limb = null
 
-	/// Interaction times (do_after's) and click cooldowns with the affected limb will have their duration multiplied by this (mostly busted limbs).
+	/// Specific items such as bandages or sutures that can try directly treating this wound
+	var/list/treatable_by
+	/// Tools with the specified tool flag will also be able to try directly treating this wound
+	var/treatable_tool
+	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
+	var/base_treat_time = 5 SECONDS
+
+	/// Using this limb in a do_after interaction will multiply the length by this duration (arms)
 	var/interaction_efficiency_penalty = 1
 	/// Incoming damage on this limb will be multiplied by this, to simulate tenderness and vulnerability (mostly burns).
 	var/damage_mulitplier_penalty = 1
+	/// If set and this wound is applied to a leg,
+	var/limp_slowdown
 
-	///TODO: damage per interaction with the affected limb & ability to alternate movespeed slowdowns to simulate one leg limping
+	/// If we currently need to process each life tick
+	var/processes = FALSE
+	/// How much we're contributing to this limb's bleed_rate
+	var/blood_flow
 
-	var/process_dead = FALSE //if this ticks while the host is dead
-	var/limp_slowdown = 0
-	var/sound_effect
+	/// The list of wounds it belongs in, WOUND_TYPE_BONE, WOUND_TYPE_CUT, or WOUND_TYPE_BURN
+	var/wound_type
+
+	/// The minimum we need to roll on [/obj/item/bodypart/proc/receive_damage()] to begin suffering this wound, the roll is 0-100 +/- modifiers, see receive_damage() for more
+	var/threshold_minimum
+	/// How much having this wound will add to future receive_damage() rolls on this limb, to allow progression to worse injuries with repeated damage
+	var/threshold_penalty
 
 /datum/wound/Destroy()
 	. = ..()
 	remove_wound()
-	qdel(src)
 
 /// Apply whatever wound we've created to the specified limb
-/datum/wound/proc/apply_wound(obj/item/bodypart/L)
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, special_arg = NONE)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
 		return
 
@@ -60,100 +80,79 @@
 	LAZYADD(limb.wounds, src)
 	limb.update_wound()
 
-	var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
-	if(severity == WOUND_SEVERITY_CRITICAL)
-		msg = "<b>[msg]</b>"
-	victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>")
-	if(sound_effect)
-		playsound(L.owner, sound_effect, 60 + 20 * severity, TRUE)
+	if(!silent)
+		var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
+		if(severity == WOUND_SEVERITY_CRITICAL)
+			msg = "<b>[msg]</b>"
+		victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>")
+		if(sound_effect)
+			playsound(L.owner, sound_effect, 60 + 20 * severity, TRUE)
+
+	wound_injury()
+	second_wind()
 
 /// Remove the wound from whatever it's afflicting
 /datum/wound/proc/remove_wound()
 	if(victim)
 		LAZYREMOVE(victim.all_wounds, src)
 		victim = null
+
 	if(limb)
 		limb.update_wound()
 		LAZYREMOVE(limb.wounds, src)
 		limb = null
 
-// TODO: well, a lot really, but i'd kill to get overlays and a bonebreaking effect like Blitz: The League, similar to electric shock skeletons
+/datum/wound/proc/replace_wound(new_type, special_arg)
+	var/datum/wound/new_wound = new new_type
+	var/obj/item/bodypart/temp_limb = limb // since we're about to null it
+	remove_wound()
+	new_wound.apply_wound(temp_limb, silent = TRUE, special_arg = special_arg)
+	qdel(src)
+
+
+/// The immediate negative effects faced as a result of the wound
+/datum/wound/proc/wound_injury()
+	return
+
+/// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
+/datum/wound/proc/second_wind()
+	return
+
+/// Someone is using something that might be used for treating the wound on this limb
+/datum/wound/proc/try_treating(obj/item/I, mob/user)
+	if(!limb)
+		testing("No limb")
+		return FALSE
+
+	if(limb.body_zone != user.zone_selected)
+		return FALSE
+
+	if(!(I.type in treatable_by) && (I.tool_behaviour != treatable_tool) && !(treatable_tool == TOOL_CAUTERY && I.get_temperature() > 300))
+		testing("Nope")
+		return FALSE
+
+	if(INTERACTING_WITH(user, victim))
+		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
+		return TRUE
+
+	if(user == victim)
+		treat_self(I, user)
+	else
+		treat(I, user)
+
+	return TRUE
+
+/// Someone is using something that might be used for treating the wound on this limb
+/datum/wound/proc/treat_self(obj/item/I, mob/user)
+	return treat(I, user)
+
+/// Someone is using something that might be used for treating the wound on this limb
+/datum/wound/proc/treat(obj/item/I, mob/user)
+	return
+
+/// If var/processing is TRUE, this is run on each life tick
+/datum/wound/proc/handle_process()
+	return
+
 /datum/wound/brute
 	damtype = BRUTE
-	sound_effect = 'sound/effects/crack1.ogg'
-
-/datum/wound/brute/apply_wound(obj/item/bodypart/L)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
-		return
-
-	. = ..()
-
-	if(L.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		var/mob/living/carbon/C = L.owner
-		C.AddComponent(/datum/component/limp)
-
-/datum/wound/brute/dislocation
-	name = "Joint Dislocation"
-	desc = "Patient's bone has been unset from socket, causing pain and reduced motor function."
-	treat_text = "Recommended application of bonesetter to affected limb, though manual relocation may suffice."
-	examine_desc = "is awkwardly jammed out of place"
-	occur_text = "jerks violently and becomes unseated"
-	severity = WOUND_SEVERITY_MODERATE
-	interaction_efficiency_penalty = 1.5
-	limp_slowdown = 4
-
-/datum/wound/brute/hairline_fracture
-	name = "Hairline Fracture"
-	desc = "Patient's bone has suffered a crack in the foundation, causing serious pain and reduced limb functionality."
-	treat_text = "Recommended light surgical application of bone gel, though splinting will prevent worsening situation."
-	examine_desc = "appears bruised and grotesquely swollen"
-	occur_text = "sprays chips of bone and develops a nasty looking bruise"
-	severity = WOUND_SEVERITY_SEVERE
-	interaction_efficiency_penalty = 2
-	limp_slowdown = 7
-
-/datum/wound/brute/compound_fracture
-	name = "Compound Fracture"
-	desc = "Patient's bones have suffered multiple gruesome fractures, causing significant pain and near uselessness of limb."
-	treat_text = "Immediate binding of affected limb, followed by surgical intervention ASAP."
-	examine_desc = "has a cracked bone sticking out of it"
-	occur_text = "cracks apart, exposing broken bones to open air"
-	severity = WOUND_SEVERITY_CRITICAL
-	interaction_efficiency_penalty = 4
-	limp_slowdown = 12
-	sound_effect = 'sound/effects/crack2.ogg'
-
-
-// TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
-/datum/wound/burn
-	damtype = BURN
-	sound_effect = 'sound/effects/sizzle1.ogg'
-
-// we don't even care about first degree burns
-/datum/wound/burn/second_deg
-	name = "Second Degree Burns"
-	desc = "Patient is suffering considerable burns with mild skin penetration, creating a risk of infection and increased burning sensations."
-	treat_text = "Recommended application of disinfectant and salve to affected limb, followed by bandaging."
-	examine_desc = "is badly burned and breaking out in blisters"
-	occur_text = "breaks out with violent red burns"
-	severity = WOUND_SEVERITY_MODERATE
-	damage_mulitplier_penalty = 1.25
-
-/datum/wound/burn/third_deg
-	name = "Third Degree Burns"
-	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
-	treat_text = "Recommended immediate disinfection and excision of ruined skin, followed by bandaging."
-	examine_desc = "appears seriously charred, with aggressive red splotches"
-	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
-	severity = WOUND_SEVERITY_SEVERE
-	damage_mulitplier_penalty = 1.5
-
-/datum/wound/burn/fourth_deg
-	name = "Catastrophic Burns"
-	desc = "Patient is suffering near complete loss of tissue and significantly charred muscle and bone, creating life-threatening risk of infection and negligible limb integrity."
-	treat_text = "Immediate surgical debriding of ruined skin, followed by potent tissue regeneration formula and bandaging."
-	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
-	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
-	severity = WOUND_SEVERITY_CRITICAL
-	damage_mulitplier_penalty = 2
-	sound_effect = 'sound/effects/sizzle2.ogg'

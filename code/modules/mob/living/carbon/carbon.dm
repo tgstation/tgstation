@@ -61,6 +61,12 @@
 			if((S.self_operable || user != src) && (user.a_intent == INTENT_HELP || user.a_intent == INTENT_DISARM))
 				if(S.next_step(user,user.a_intent))
 					return 1
+
+	for(var/datum/wound/W in all_wounds)
+		if(user.a_intent == INTENT_HELP || user == src)
+			if(W.try_treating(I, user))
+				return 1
+
 	return ..()
 
 /mob/living/carbon/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)

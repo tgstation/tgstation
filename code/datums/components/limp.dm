@@ -2,10 +2,11 @@
 	Limping is a component to be attached to carbons for when they have a disparity in leg speed (such as when one of your legs is grievously wounded), so that one step has
 	a longer delay than the other. This is handled as a component rather than being inherent in bodypart code so that we're not constantly tracking footsteps if we don't need to
 
+	TODO: handle both legs being crippled
 */
 
 /datum/component/limp
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
 	var/obj/item/bodypart/l_leg/left
 	var/obj/item/bodypart/r_leg/right

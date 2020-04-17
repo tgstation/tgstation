@@ -73,6 +73,12 @@
 	/// Our current stored wound damage multiplier
 	var/wound_damage_multiplier = 1
 
+	/// This number is subtracted from all wound rolls on this bodypart, higher numbers mean more defense, negative means easier to wound
+	var/wound_resistance = 0
+	/// When this bodypart hits max damage, this number is added to all wound rolls. Obviously only relevant for bodyparts that have damage caps.
+	var/disabled_wound_penalty = 10
+
+
 /obj/item/bodypart/examine(mob/user)
 	. = ..()
 	if(brute_dam > DAMAGE_PRECISION)
@@ -153,7 +159,7 @@
 //Applies brute and burn damage to the organ. Returns 1 if the damage-icon states changed at all.
 //Damage will not exceed max_damage using this proc
 //Cannot apply negative damage
-/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null, wound_power=0) //wound_power is a bad name, it's used mostly for how much armor ablates it, so come up with better name/use
+/obj/item/bodypart/proc/receive_damage(brute = 0, burn = 0, stamina = 0, blocked = 0, updating_health = TRUE, required_status = null, wound_bonus = 0, bare_wound_bonus = 0, sharpness = FALSE) // maybe separate BRUTE_SHARP and BRUTE_OTHER eventually somehow hmm
 	var/hit_percent = (100-blocked)/100
 	if((!brute && !burn && !stamina) || hit_percent <= 0)
 		return FALSE
@@ -178,61 +184,31 @@
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
+
+	// i know this is effectively the same check as above but i don't know if those can null the damage by rounding and want to be safe
+	if(brute || burn)
+		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
+		var/wounding_type = (brute > burn ? WOUND_BRUTE : WOUND_BURN)
+		var/wounding_dmg = max(brute, burn)
+		if(wounding_type == WOUND_BRUTE && sharpness)
+			wounding_type = WOUND_SHARP
+		// handle all our wounding stuff
+		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+
 	var/can_inflict = max_damage - get_damage()
-	if(can_inflict <= 0)
-		return FALSE
-
 	var/total_damage = brute + burn
-
 	if(total_damage > can_inflict)
 		brute = round(brute * (can_inflict / total_damage),DAMAGE_PRECISION)
 		burn = round(burn * (can_inflict / total_damage),DAMAGE_PRECISION)
 
-	var/sig_damtype = (brute > burn ? BRUTE : BURN)
-	var/sig_dam_prev = (brute > burn ? brute_dam : burn_dam)
-	var/sig_dam_new = max(brute, burn)
+	if(can_inflict <= 0)
+		return FALSE
 
 	brute_dam += brute
 	burn_dam += burn
 
-	var/armor_ablation = 0
-	// damage clothes if applicable, part of wounds
-	if(owner && ishuman(owner))
-		var/mob/living/carbon/human/H = owner
-		var/list/clothing = H.clothingonpart(src)
-		for(var/c in clothing)
-			var/obj/item/clothing/C = c
-			armor_ablation -= wound_power //signs!!
-			//testing("[H]'s [C.name] ablated [wound_power] for running total [armor_ablation] (wound_power = [wound_power])")
-			if(brute)
-				C.take_damage_zone(body_zone, brute, BRUTE, armour_penetration)
-			if(burn)
-				C.take_damage_zone(body_zone, burn, BURN, armour_penetration)
-
-	//TODO: do this better
-	// actually roll wounds if applicable
-	var/injury_roll = rand(sig_dam_prev * 0.75 + sig_dam_new, 100)
-	//testing("Injury roll- ([brute + brute_dam], 100): [injury_roll]")
-	injury_roll -= armor_ablation
-	switch(injury_roll)
-		//if(-INFINITY to 60)
-			//testing("No injury")
-
-		if(61 to 80)
-			//testing("Moderate")
-			suffer_wound(sig_damtype, WOUND_SEVERITY_MODERATE)
-
-		if(81 to 92)
-			//testing("Severe")
-			suffer_wound(sig_damtype, WOUND_SEVERITY_SEVERE)
-
-		if(93 to INFINITY)
-			//testing("Critical")
-			suffer_wound(sig_damtype, WOUND_SEVERITY_CRITICAL)
-
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
-
 
 	if(owner && updating_health)
 		owner.updatehealth()
@@ -243,6 +219,84 @@
 	consider_processing()
 	update_disabled()
 	return update_bodypart_damage_state() || .
+
+
+/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
+	// damage clothes if applicable, part of wounds
+
+	//TODO: do this better
+	// actually roll wounds if applicable
+	var/injury_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
+	testing("Init roll| (1, [round(damage ** WOUND_DAMAGE_EXPONENT)]): [injury_roll]")
+	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
+	testing("Final roll: [injury_roll]")
+	var/list/wounds_checking
+
+	switch(woundtype)
+		if(WOUND_SHARP)
+			wounds_checking = WOUND_TYPE_CUT
+		if(WOUND_BRUTE)
+			wounds_checking = WOUND_TYPE_BONE
+		if(WOUND_BURN)
+			wounds_checking = WOUND_TYPE_BURN
+
+	//var/datum/wound/W
+	for(var/PW in wounds_checking)
+		var/datum/wound/possible_wound = PW
+		var/datum/wound/replaced_wound
+		for(var/datum/wound/existing_wound in wounds)
+			if(existing_wound.type in wounds_checking)
+				if(existing_wound.severity >= initial(possible_wound.severity))
+					return
+				else
+					replaced_wound = existing_wound
+
+		if(initial(possible_wound.threshold_minimum) < injury_roll)
+			if(replaced_wound)
+				replaced_wound.remove_wound()
+			var/datum/wound/W = new possible_wound
+			W.apply_wound(src)
+			return
+
+
+/obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
+	var/armor_ablation = 0
+	var/injury_mod = 0
+
+	var/bwb = 0
+
+	if(owner && ishuman(owner))
+		var/mob/living/carbon/human/H = owner
+		var/list/clothing = H.clothingonpart(src)
+		for(var/c in clothing)
+			var/obj/item/clothing/C = c
+			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
+			armor_ablation += C.armor.getRating("wound")
+			if(wounding_type in list(WOUND_SHARP, WOUND_BURN))
+				C.take_damage_zone(body_zone, damage, wounding_type, armour_penetration)
+
+		if(!armor_ablation)
+			injury_mod += bare_wound_bonus
+			bwb = bare_wound_bonus
+
+	injury_mod -= armor_ablation
+	injury_mod += wound_bonus
+
+	var/tp = 0
+	for(var/thing in wounds)
+		var/datum/wound/W = thing
+		tp += W.threshold_penalty
+		injury_mod += W.threshold_penalty
+
+	var/part_mod = -wound_resistance
+	if(is_disabled())
+		part_mod += disabled_wound_penalty
+		//injury_mod += disabled_wound_penalty
+
+	injury_mod += part_mod
+	testing("Mods| TOTAL: [injury_mod] | Armor: -[armor_ablation] | Wound Bonus: [wound_bonus] | BWB: [bwb] | Existing wounds: [tp] | Limb: [part_mod]")
+
+	return injury_mod
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.
 //Damage cannot go below zero.
@@ -255,10 +309,6 @@
 	brute_dam	= round(max(brute_dam - brute, 0), DAMAGE_PRECISION)
 	burn_dam	= round(max(burn_dam - burn, 0), DAMAGE_PRECISION)
 	stamina_dam = round(max(stamina_dam - stamina, 0), DAMAGE_PRECISION)
-	if(brute_dam == 0)
-		for(var/wo in wounds)
-			var/datum/wound/W = wo
-			W.remove_wound()
 	if(owner && updating_health)
 		owner.updatehealth()
 	consider_processing()
@@ -290,6 +340,7 @@
 		return BODYPART_NOT_DISABLED
 
 /obj/item/bodypart/proc/set_disabled(new_disabled)
+	return//TODO: UNDO
 	if(disabled == new_disabled)
 		return
 	disabled = new_disabled
@@ -505,38 +556,6 @@
 		if(istype(W, to_check))
 			return W
 
-/// Our limb has suffered enough damage to gain a wound of a given damage type and severity, afflict it if we don't already have one of equal or greater severity here.
-/obj/item/bodypart/proc/suffer_wound(damtype, severity)
-	LAZYINITLIST(wounds)
-	var/datum/wound/preexisting_wound = get_wound(damtype)
-	if(preexisting_wound)
-		if(preexisting_wound.severity >= severity)
-			//testing("[src] already suffering wound sev [preexisting_wound.severity]/[preexisting_wound.damtype] (ignored wound sev/type: [severity]/[damtype])")
-			return
-		else
-			//testing("Promoting injury of sev/type [preexisting_wound.severity]/[preexisting_wound.damtype] to sev: [severity]")
-			preexisting_wound.remove_wound()
-
-	var/wound_type
-
-	if(damtype == BRUTE)// TODO: gonna need to do actual standard handling for this, so we don't have these checks
-		if(severity == WOUND_SEVERITY_MODERATE)
-			wound_type = /datum/wound/brute/dislocation
-		else if(severity == WOUND_SEVERITY_SEVERE)
-			wound_type = /datum/wound/brute/hairline_fracture
-		else if(severity == WOUND_SEVERITY_CRITICAL)
-			wound_type = /datum/wound/brute/compound_fracture
-	else if(damtype == BURN)// TODO: gonna need to do actual standard handling for this, so we don't have these checks
-		if(severity == WOUND_SEVERITY_MODERATE)
-			wound_type = /datum/wound/burn/second_deg
-		else if(severity == WOUND_SEVERITY_SEVERE)
-			wound_type = /datum/wound/burn/third_deg
-		else if(severity == WOUND_SEVERITY_CRITICAL)
-			wound_type = /datum/wound/burn/fourth_deg
-
-	var/datum/wound/new_wound = new wound_type
-	new_wound.apply_wound(src)
-
 /// very rough start for updating efficiency and other stats on a body part whenever a wound is gained/lost
 /obj/item/bodypart/proc/update_wound()
 	var/int_eff = 1 //initial(wound_interaction_efficiency)
@@ -549,3 +568,21 @@
 
 	wound_interaction_efficiency = int_eff
 	wound_damage_multiplier = dam_mul
+
+/obj/item/bodypart/proc/get_bleed_rate()
+	if(status != BODYPART_ORGANIC) // maybe in the future we can bleed oil from aug parts, but not now
+		return
+
+	var/bleed_rate = 0
+
+	//We want an accurate reading of .len
+	listclearnulls(embedded_objects)
+	for(var/obj/item/embeddies in embedded_objects)
+		if(!embeddies.isEmbedHarmless())
+			bleed_rate += 0.5
+
+	for(var/thing in wounds)
+		var/datum/wound/W = thing
+		bleed_rate += W.blood_flow
+
+	return bleed_rate
