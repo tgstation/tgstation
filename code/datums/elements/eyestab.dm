@@ -1,13 +1,19 @@
-// It an item has the eyestab element, when you hit someone while targetting their eyes it stabs them in the eyes
+/// It an item has the eyestab element, when you hit someone while targetting their eyes it stabs them in the eyes
+/datum/element/eyestab
+
+///Register the attack signal to call eyestab()
 /datum/element/eyestab/Attach(datum/target)
 	if(!isatom(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_ITEM_ATTACK, .proc/eyestab)
 
+
+///Unregister the attack signal
 /datum/element/dunkable/Detach(datum/target)
 	. = ..()
 	UnregisterSignal(target, COMSIG_ITEM_ATTACK)
 
+///Check if the victim's eyes can be stabbed, and if so stab them
 /datum/element/eyestab/proc/eyestab(obj/item/source, mob/living/carbon/M, mob/living/carbon/user)
 	if(user.zone_selected != BODY_ZONE_PRECISE_EYES)
 		return
