@@ -217,7 +217,7 @@
 		reskin_holy_weapon(user)
 
 /**
-  * reskin_holy_weapon: Shows the user a list of available nullrod reskins and based on his choice replaces the nullrod with a reskin version
+  * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
   *
   * Arguments:
   * * M The mob choosing a nullrod reskin
@@ -233,7 +233,7 @@
 			display_names[initial(rodtype.name)] = rodtype
 			nullrod_icons += list(initial(rodtype.name) = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state)))
 
-	var/choice = show_radial_menu(M, src , nullrod_icons, custom_check = CALLBACK(src, .proc/check_menu, M), radius = 42, require_near = TRUE)
+	var/choice = show_radial_menu(M, src , sortList(nullrod_icons), custom_check = CALLBACK(src, .proc/check_menu, M), radius = 42, require_near = TRUE)
 	if(!choice || !check_menu(M))
 		return
 
