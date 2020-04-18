@@ -137,9 +137,10 @@
 	else if(istype(Proj , /obj/projectile/energy/florayield))
 		return myseed.bullet_act(Proj)
 	else if(istype(Proj , /obj/projectile/energy/florarevolution))
-		mutatespecie()
 		if(myseed)
-			myseed.instability = (myseed.instability/2)
+			if(myseed.mutatelist.len > 0)
+				myseed.instability = (myseed.instability/2)
+		mutatespecie()
 	else
 		return ..()
 
@@ -726,7 +727,7 @@
 					break
 		myseed.reagents_from_genes()
 		adjustHealth(-15)
-		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], but leaving the plant looking a bit weak.</span>")
+		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], leaving the plant looking weaker.</span>")
 		update_icon()
 		return
 

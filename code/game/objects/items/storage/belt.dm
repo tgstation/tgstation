@@ -697,4 +697,5 @@
 		/obj/item/graft,
 		/obj/item/secateurs,
 		/obj/item/geneshears
+		/obj/item/shovel/spade
 		))
