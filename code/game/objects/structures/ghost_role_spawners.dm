@@ -515,7 +515,7 @@
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/medical
 	name = "Syndicate Battlecruiser Ship Medical Doctor"
 	short_desc = "You are a medical doctor aboard the syndicate flagship: the SBC Starfury."
-	flavour_text = "Your job is to maintain crew physical health and keep your comrades alive at all cost."
+	flavour_text = "Your job is to maintain the crew's physical health and keep your comrades alive at all cost."
 	important_info = "The armory has nothing to help you with your job, and your role is to assist assault operatives, not to do their work for them."
 	outfit = /datum/outfit/syndicate_empty/SBC/med
 
