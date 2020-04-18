@@ -90,6 +90,14 @@
 	creation_time = 0
 	max_signs = 3
 
+/obj/item/holosign_creator/powered_shielding
+	name = "Power shield projector"
+	desc = "A holographic projector that creates a Power shield that "
+	icon_state = "signmaker_atmos"
+	holosign_type = /obj/structure/holosign/barrier/power_shield
+	creation_time = 0
+	max_signs = 20
+
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"
 	desc = "A holographic projector that creates PENLITE holobarriers. Useful during quarantines since they halt those with malicious diseases."

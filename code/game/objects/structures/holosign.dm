@@ -104,6 +104,45 @@
 	. = ..()
 	air_update_turf(TRUE)
 
+/obj/structure/holosign/barrier/power_shield
+	name = "powered shield"
+	desc = "etc"
+	icon_state = "holo_firelock"
+	density = FALSE
+	anchored = TRUE
+	CanAtmosPass = ATMOS_PASS_NO
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
+	var/stored_conductivity = 0
+	var/power_consumption = 5000
+
+/obj/structure/holosign/barrier/power_shield/Initialize()
+	. = ..()
+	air_update_turf(TRUE)
+	var/area/a = get_area(src)
+	a.addStaticPower(power_consumption, STATIC_ENVIRON)
+	check_power()
+
+/obj/structure/holosign/barrier/power_shield/Destroy()
+	var/turf/T = loc
+	T.thermal_conductivity = stored_conductivity
+	var/area/a = get_area(src)
+	a.addStaticPower(-power_consumption, STATIC_ENVIRON)
+	. = ..()
+
+/obj/structure/holosign/barrier/power_shield/proc/shield_turf()
+	var/turf/T = loc
+	if(isturf(loc))
+		stored_conductivity = T.thermal_conductivity
+		T.thermal_conductivity = 0.0
+
+/obj/structure/holosign/barrier/power_shield/proc/check_power()
+	var/area/a = get_area(src)
+	if(a.power_environ == TRUE)
+		shield_turf()
+	else
+		Destroy()
+
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"
 	desc = "A fragile energy field that blocks movement. Excels at blocking lethal projectiles."

@@ -58,6 +58,7 @@
 		/obj/item/clothing/gloves,
 		/obj/item/holosign_creator/atmos,
 		/obj/item/holosign_creator/engineering,
+		/obj/item/holosign_creator/powered_shielding,
 		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler,
 		/obj/item/lightreplacer,
