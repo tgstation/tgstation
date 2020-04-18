@@ -438,7 +438,7 @@
 		else
 			if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 				var/mob/living/carbon/C = L
-				to_chat(user, "<span class='cultitalic'>Their mind was stronger than exected, but you still managed to do some damage!</span>")
+				to_chat(user, "<span class='cultitalic'>Their mind was stronger than expected, but you still managed to do some damage!</span>")
 				C.stuttering += 8
 				C.dizziness += 30
 				C.Jitter(8)
