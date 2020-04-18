@@ -1004,9 +1004,10 @@ const GenomeSequencer = props => {
       </Box>
     );
 
-    if (((i % 8) === 0) && (i !== 0)) {
+    if ((i % 8 === 0) && (i !== 0)) {
       pairs.push(
         <Box
+          key={`${i}_divider`}
           inline
           position="relative"
           top="-17px"
