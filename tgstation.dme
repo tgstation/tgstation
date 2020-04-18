@@ -38,6 +38,7 @@
 #include "code\__DEFINES\construction.dm"
 #include "code\__DEFINES\contracts.dm"
 #include "code\__DEFINES\cult.dm"
+#include "code\__DEFINES\demo.dm"
 #include "code\__DEFINES\diseases.dm"
 #include "code\__DEFINES\DNA.dm"
 #include "code\__DEFINES\dye_keys.dm"

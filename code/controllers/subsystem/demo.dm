@@ -254,23 +254,6 @@ SUBSYSTEM_DEF(demo)
 	if(appearance == diff_appearance)
 		return "="
 
-	var/icon_txt = "[appearance.icon]"
-	var/cached_icon = icon_cache[icon_txt] || icon_txt
-	var/list/icon_state_cache
-	if(!isnum(cached_icon))
-		icon_cache[icon_txt] = icon_cache.len + 1
-		icon_state_cache = (icon_state_caches[++icon_state_caches.len] = list())
-	else
-		icon_state_cache = icon_state_caches[cached_icon]
-
-	var/list/cached_icon_state = icon_state_cache[appearance.icon_state] || appearance.icon_state
-	if(!isnum(cached_icon_state))
-		icon_state_cache[appearance.icon_state] = icon_state_cache.len + 1
-
-	var/cached_name = name_cache[appearance.name] || appearance.name
-	if(!isnum(cached_name))
-		name_cache[appearance.name] = name_cache.len + 1
-
 	var/color_string = appearance.color || "w"
 	if(islist(color_string))
 		var/list/old_list = appearance.color
@@ -280,19 +263,19 @@ SUBSYSTEM_DEF(demo)
 			inted[i] += round(old_list[i] * 255)
 		color_string = jointext(inted, ",")
 	var/overlays_string = "\[]"
-	if(appearance.overlays.len)
+	if(length(appearance.overlays))
 		var/list/overlays_list = list()
-		for(var/i in 1 to appearance.overlays.len)
+		for(var/i in 1 to length(appearance.overlays))
 			var/image/overlay = appearance.overlays[i]
-			overlays_list += encode_appearance(overlay, appearance, TRUE)
+			overlays_list += FAST_APPEARANCE_ENCODE(overlay)
 		overlays_string = "\[[jointext(overlays_list, ",")]]"
 
 	var/underlays_string = "\[]"
-	if(appearance.underlays.len)
+	if(length(appearance.underlays))
 		var/list/underlays_list = list()
-		for(var/i in 1 to appearance.underlays.len)
+		for(var/i in 1 to length(appearance.underlays))
 			var/image/underlay = appearance.underlays[i]
-			underlays_list += encode_appearance(underlay, appearance, TRUE)
+			underlays_list += FAST_APPEARANCE_ENCODE(underlay)
 		underlays_string = "\[[jointext(underlays_list, ",")]]"
 
 	var/appearance_transform_string = "i"
@@ -302,9 +285,9 @@ SUBSYSTEM_DEF(demo)
 		if(appearance_transform_string == "1,0,0,0,1,0")
 			appearance_transform_string = "i"
 	var/list/appearance_list = list(
-		json_encode(cached_icon),
-		json_encode(cached_icon_state),
-		json_encode(cached_name),
+		"\"[appearance.icon]\"",
+		"\"[appearance.icon_state]\"",
+		"\"[appearance.name]\"",
 		appearance.appearance_flags,
 		appearance.layer,
 		appearance.plane == -32767 ? "" : appearance.plane,
@@ -321,7 +304,7 @@ SUBSYSTEM_DEF(demo)
 		appearance.overlays.len ? overlays_string : "",
 		appearance.underlays.len ? underlays_string : ""
 		)
-	while(appearance_list[appearance_list.len] == "" && appearance_list.len > 0)
+	while(appearance_list[length(appearance_list)] == "" && length(appearance_list) > 0)
 		appearance_list.len--
 
 	return "{[jointext(appearance_list, ";")]}"
