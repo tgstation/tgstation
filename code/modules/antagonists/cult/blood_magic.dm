@@ -443,6 +443,7 @@
 				C.dizziness += 30
 				C.Jitter(8)
 				C.drop_all_held_items()
+				C.bleed(40)
 			else
 				to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
 				L.Paralyze(160)
