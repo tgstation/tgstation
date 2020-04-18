@@ -912,9 +912,26 @@
 	color = "#E78108"
 	description = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
 	taste_description = "garbage"
-	glass_icon_state = "glass_orange"
+	glass_icon_state = "pruno_mix"
 	glass_name = "glass of pruno mixture"
 	glass_desc = "Fruit, sugar, yeast, and water pulped together into a pungent slurry."
+
+/datum/reagent/consumable/prunomix/on_mob_life(mob/living/carbon/M)
+	M.adjust_disgust(0.5)
+	..()
+
+/datum/reagent/consumable/prunomixfermented
+	name = "fermented pruno mixture"
+	color = "#E78108"
+	description = "The disgusting byproduct of making alcohol in the most desperate way possible. Often drunk alongside the actual drink straight from the bag."
+	taste_description = "a mass grave for fruit"
+	glass_icon_state = "pruno_mix_fermented"
+	glass_name = "glass of fermented pruno mixture"
+	glass_desc = "The disgusting byproduct of making alcohol in the most desperate way possible. Often drunk alongside the actual drink straight from the bag."
+
+/datum/reagent/consumable/prunomixfermented/on_mob_life(mob/living/carbon/M)
+	M.adjust_disgust(1)
+	..()
 
 /datum/reagent/consumable/aloejuice
 	name = "Aloe Juice"

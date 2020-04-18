@@ -570,8 +570,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/pruno/proc/check_fermentation()
 	if ((!reagents) || (!reagents.has_reagent(/datum/reagent/consumable/prunomix)))
 		//did you know that until 04/17/20 pruno bags were able to make pruno out of thin air
-		for (var/mob/living/M in view(2, get_turf(src)))
-			to_chat(M, "<span class='info'>no mix in bag.</span>")
 		return
 	if (!(istype(loc, /obj/machinery) || istype(loc, /obj/structure)))
 		if(fermentation_timer)
@@ -592,14 +590,14 @@
 	fermentation_time_remaining = null
 	fermentation_timer = null
 	var/prunobulk = min(reagents.get_reagent_amount(/datum/reagent/consumable/prunomix), 50)
-	reagents.clear_reagents()
+	reagents.remove_reagent(/datum/reagent/consumable/prunomix, prunobulk, TRUE)
 	if(prob(10))
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, prunobulk)
 		reagents.add_reagent(/datum/reagent/toxin/bad_food, prunobulk * 0.3) // closest thing we have to botulism
-		reagents.add_reagent(/datum/reagent/consumable/prunomix, prunobulk * 0.7)
+		reagents.add_reagent(/datum/reagent/consumable/prunomixfermented, prunobulk * 0.7)
 	else
 		reagents.add_reagent(/datum/reagent/consumable/ethanol/pruno, prunobulk)
-		reagents.add_reagent(/datum/reagent/consumable/prunomix, prunobulk)
+		reagents.add_reagent(/datum/reagent/consumable/prunomixfermented, prunobulk)
 	desc = "Fermented prison wine made from fruit, sugar, and despair. You probably shouldn't drink this around Security."
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
