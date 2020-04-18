@@ -14,6 +14,10 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
+	var/turf_heat_resistance = 100
+	var/turf_max_heat_resistance = 100
+	var/damage_amount = 0
+
 	var/blocks_air = FALSE
 
 	flags_1 = CAN_BE_DIRTY_1
@@ -102,6 +106,28 @@
 
 /turf/proc/Initalize_Atmos(times_fired)
 	CALCULATE_ADJACENT_TURFS(src)
+
+/turf/examine(mob/user)
+	. += ..()
+	if(!damage_amount)
+		. += "<span class='notice'>It looks fully intact.</span>"
+	else
+		var/dam = round((turf_heat_resistance/turf_max_heat_resistance)* 100, 1)
+		. += "<span class='warning'>The remaining integrity is at [dam]%</span>"
+
+/turf/attackby(obj/item/I, mob/living/user, params)
+	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_GRAB)
+		if(turf_heat_resistance < turf_max_heat_resistance)
+			if(!I.tool_start_check(user, amount=0))
+				return
+
+			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+			if(I.use_tool(src, user, 40, volume=50))
+				turf_heat_resistance = turf_max_heat_resistance
+				to_chat(user, "<span class='notice'>You repair [src].</span>")
+		else
+			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
+		return
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -538,8 +564,41 @@
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
-//Whatever happens after high temperature fire dies out or thermite reaction works.
-//Should return new turf
+/turf/proc/set_damage_amount(temperature)
+	if(to_be_destroyed && !changing_turf)
+		damage_amount = min((temperature - heat_capacity)/10000, 15)
+		turf_take_damage(damage_amount)
+		heat_capacity = max(heat_capacity - (damage_amount * 10), 0)
+	else
+		to_be_destroyed = FALSE
+		max_fire_temperature_sustained = 0
+
+/turf/proc/turf_take_damage(damage_amount)
+	if(QDELETED(src))
+		stack_trace("[src] taking damage after deletion")
+		return
+	if(turf_heat_resistance <= 0)
+		return
+	turf_heat_resistance = max(turf_heat_resistance - damage_amount, 0)
+	update_overlays()
+	if(turf_heat_resistance <= 0)
+		Melt()
+
+/turf/update_overlays()
+	. = ..()
+	var/ratio = turf_heat_resistance / turf_max_heat_resistance
+	ratio = CEILING(ratio*4, 1) * 25
+	if(ratio >= 75)
+		return
+	if(ratio < 25)
+		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_25")
+	else if(ratio < 50)
+		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_50")
+	else if(ratio < 75)
+		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_75")
+	return
+
+
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 

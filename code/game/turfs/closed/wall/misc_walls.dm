@@ -3,6 +3,9 @@
 	desc = "A cold metal wall engraved with indecipherable symbols. Studying them causes your head to pound."
 	icon = 'icons/turf/walls/cult_wall.dmi'
 	icon_state = "cult"
+	turf_heat_resistance = 100
+	turf_max_heat_resistance = 100
+	heat_capacity = 2000
 	canSmoothWith = null
 	smooth = SMOOTH_MORE
 	sheet_type = /obj/item/stack/sheet/runed_metal
@@ -45,6 +48,9 @@
 	icon = 'icons/turf/walls/icedmetal_wall.dmi'
 	icon_state = "iced"
 	desc = "A wall covered in a thick sheet of ice."
+	turf_heat_resistance = 100
+	turf_max_heat_resistance = 100
+	heat_capacity = 2000
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
@@ -54,12 +60,18 @@
 	name = "rusted wall"
 	desc = "A rusted metal wall."
 	icon = 'icons/turf/walls/rusty_wall.dmi'
+	turf_heat_resistance = 100
+	turf_max_heat_resistance = 100
+	heat_capacity = 2000
 	hardness = 45
 
 /turf/closed/wall/r_wall/rust
 	name = "rusted reinforced wall"
 	desc = "A huge chunk of rusted reinforced metal."
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
+	turf_heat_resistance = 100
+	turf_max_heat_resistance = 100
+	heat_capacity = 2000
 	hardness = 15
 
 /turf/closed/wall/mineral/bronze
@@ -67,6 +79,9 @@
 	desc = "A huge chunk of bronze, decorated like gears and cogs."
 	icon = 'icons/turf/walls/clockwork_wall.dmi'
 	icon_state = "clockwork_wall"
+	turf_heat_resistance = 100
+	turf_max_heat_resistance = 100
+	heat_capacity = 2000
 	sheet_type = /obj/item/stack/tile/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze

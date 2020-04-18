@@ -10,6 +10,9 @@
 	var/barefootstep = null
 	var/clawfootstep = null
 	var/heavyfootstep = null
+	turf_heat_resistance = 100
+	turf_max_heat_resistance = 100
+	thermal_conductivity = 0.0
 
 /turf/open/ComponentInitialize()
 	. = ..()
