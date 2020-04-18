@@ -27,7 +27,13 @@
 	icon_state = "rig-core"
 	desc = "A mystical crystal able to convert cell power into energy usable by RIGs."
 
-/obj/item/rig/themed/armor
+/obj/item/rig/armor
 	name = "RIG external armor"
-	icon_state = "engi-armor"
-	theme = "engi"
+	icon_state = "coder-armor"
+	item_state = "armor"
+	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
+	var/theme = "coder"
+
+/obj/item/rig/armor/Initialize()
+	icon_state  = "[theme]-armor"

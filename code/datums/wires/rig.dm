@@ -1,5 +1,5 @@
 /datum/wires/rig
-	holder_type = /obj/item/rig/themed/control
+	holder_type = /obj/item/rig/control
 	proper_name = "RIG control module"
 
 /datum/wires/rig/New(atom/holder)
@@ -8,7 +8,7 @@
 	..()
 
 /datum/wires/rig/interactable(mob/user)
-	var/obj/item/rig/themed/control/RIG = holder
+	var/obj/item/rig/control/RIG = holder
 	if(!issilicon(user) && RIG.seconds_electrified && RIG.shock(user, 100))
 		return FALSE
 	if(RIG == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
@@ -18,7 +18,7 @@
 		return TRUE
 
 /datum/wires/rig/get_status()
-	var/obj/item/rig/themed/control/RIG = holder
+	var/obj/item/rig/control/RIG = holder
 	var/list/status = list()
 	status += "The orange light is [RIG.seconds_electrified ? "on" : "off"]."
 	status += "The red light is [RIG.malfunctioning ? "off" : "blinking"]."
@@ -27,7 +27,7 @@
 	return status
 
 /datum/wires/rig/on_pulse(wire)
-	var/obj/item/rig/themed/control/RIG = holder
+	var/obj/item/rig/control/RIG = holder
 	switch(wire)
 		if(WIRE_HACK)
 			RIG.locked = !RIG.locked
@@ -39,7 +39,7 @@
 			RIG.interface_break = !RIG.interface_break
 
 /datum/wires/rig/on_cut(wire, mend)
-	var/obj/item/rig/themed/control/RIG = holder
+	var/obj/item/rig/control/RIG = holder
 	switch(wire)
 		if(WIRE_HACK)
 			RIG.locked = !mend
