@@ -105,7 +105,7 @@ export const BlackmarketUplink = props => {
                     </Table.Cell>
                     <Table.Cell collapsing textAlign="right">
                       <Button
-                        content={'Buy'}
+                        content="Buy"
                         disabled={!item.amount || item.cost > data.money}
                         onClick={() => act('select', {
                           item: item.id,

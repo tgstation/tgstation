@@ -475,6 +475,7 @@ update_label()
 
 /obj/item/card/id/syndicate_command/crew_id
 	assignment = "Syndicate Operative"
+	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 
 /obj/item/card/id/syndicate_command/crew_id/med
 	assignment = "Syndicate Medical Doctor"
@@ -492,6 +493,7 @@ update_label()
 	name = "syndicate captain ID card"
 	id_type_name = "syndicate captain ID card"
 	assignment = "Syndicate Ship Captain"
+	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 
 /obj/item/card/id/captains_spare
 	name = "captain's spare ID"
