@@ -544,11 +544,12 @@
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
-	var/mob/living/carbon/human/M = locate(/mob/living/carbon/human, loc)
+	var/mob/living/carbon/M = locate(/mob/living/carbon, loc)
 	if(M)
 		if(M.resting)
 			patient = M
-			return TRUE
+			if(ishuman(M) ||  ismonkey(M))
+				return TRUE
 	else
 		patient = null
 		return FALSE

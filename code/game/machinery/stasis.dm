@@ -127,7 +127,7 @@
 	update_icon()
 
 /obj/machinery/stasis/proc/check_patient()
-	if(occupant)
+	if(ishuman(occupant) ||  ismonkey(occupant))
 		return TRUE
 	else
 		return FALSE
