@@ -737,7 +737,7 @@
 
 /obj/machinery/light/zap_act(power, zap_flags)
 	if(zap_flags & ZAP_MACHINE_EXPLOSIVE)
-		explosion(src,0,0,0,flame_range = 5, adminlog = 0)
+		explosion(src,0,0,0,flame_range = 5, adminlog = FALSE)
 		qdel(src)
 	else
 		return ..()

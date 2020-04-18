@@ -752,6 +752,14 @@
 	return FALSE
 
 /**
+  * Respond to a electric bolt action on our item
+  *
+  * Default behaviour is to return, we define here to allow for cleaner code later on
+  */
+/atom/proc/zap_act(power, zap_flags, shocked_targets)
+	return
+
+/**
   * Implement the behaviour for when a user click drags a storage object to your atom
   *
   * This behaviour is usually to mass transfer, but this is no longer a used proc as it just
