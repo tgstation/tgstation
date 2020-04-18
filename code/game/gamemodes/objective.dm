@@ -1143,7 +1143,4 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	explanation_text = "Keep the supermatter engine onboard the cruiser intact."
 
 /datum/objective/syndicatesupermatter/check_completion()
-	if(GLOB.syndicate_supermatter_engine)
-		return TRUE
-	else
-		return FALSE
+	return !!GLOB.syndicate_supermatter_engine
