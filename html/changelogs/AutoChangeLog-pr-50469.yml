@@ -1,4 +1,0 @@
-author: "TheVekter"
-delete-after: True
-changes: 
-  - bugfix: "Anomalies should no longer spawn at the toxins testing range."
