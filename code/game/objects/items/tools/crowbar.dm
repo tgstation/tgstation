@@ -128,26 +128,15 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/crowbar/combat/attack_self(mob/living/user)
-	if(on)
-		on = FALSE
-		force = initial(force)
-		w_class = initial(w_class)
-		throwforce = initial(throwforce)
-		tool_behaviour = initial(tool_behaviour)
-		toolspeed = initial(toolspeed)
-		hitsound = "swing_hit"
-		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
-		to_chat(user, "<span class='warning'>[src] is now concealed.</span>")
-	else
-		on = TRUE
-		force = 18
-		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 10
-		tool_behaviour = TOOL_CROWBAR
-		toolspeed = 0.5
-		hitsound = 'sound/weapons/blade1.ogg'
-		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
-		to_chat(user, "<span class='warning'>[src] is now active.</span>")
+	on = !on
+	force = on ? 18 : initial(force)
+	w_class = on ? WEIGHT_CLASS_NORMAL : initial(w_class)
+	throwforce = on ? 10 : initial(throwforce)
+	tool_behaviour = on ? TOOL_CROWBAR : initial(tool_behaviour)
+	toolspeed = on ? 0.5 : initial(toolspeed)
+	hitsound = on ? 'sounds/weapons/blade1.ogg' : 'swing_hit'
+	playsound(user, on ? 'sounds/weapons/saberon.ogg' : 'sounds/weapons/saberoff.ogg', 5, TRUE)
+	to_chat(user, "<span class='warning'>[src] is now [on ? "active" : "concealed"].</span>")
 	update_icon()
 
 /obj/item/crowbar/combat/update_icon_state()
