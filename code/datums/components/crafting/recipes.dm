@@ -375,14 +375,14 @@
 	result = /obj/item/clothing/head/lizard
 	time = 10
 	reqs = list(/obj/item/organ/tail/lizard = 1)
-	category = CAT_MISC
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/lizardhat_alternate
 	name = "Lizard Cloche Hat"
 	result = /obj/item/clothing/head/lizard
 	time = 10
 	reqs = list(/obj/item/stack/sheet/animalhide/lizard = 1)
-	category = CAT_MISC
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/kittyears
 	name = "Kitty Ears"
@@ -390,7 +390,7 @@
 	time = 10
 	reqs = list(/obj/item/organ/tail/cat = 1,
 				/obj/item/organ/ears/cat = 1)
-	category = CAT_MISC
+	category = CAT_CLOTHING
 
 /datum/crafting_recipe/skateboard
 	name = "Skateboard"
@@ -826,3 +826,12 @@
             /obj/item/assembly/signaler/anomaly/bluespace = 1)
 	result = /obj/item/storage/backpack/holding
 	category = CAT_CLOTHING
+
+/datum/crafting_recipe/ipickaxe
+	name = "Improvised Pickaxe"
+	reqs = list(
+           /obj/item/crowbar = 1,
+           /obj/item/kitchen/knife = 1,
+           /obj/item/stack/sticky_tape = 1)
+	result = /obj/item/pickaxe/improvised
+	category = CAT_MISC
