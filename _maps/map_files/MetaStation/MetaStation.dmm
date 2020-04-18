@@ -69088,7 +69088,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/item/chair/greyscale,
+/obj/item/chair,
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
 "exA" = (
