@@ -475,9 +475,7 @@ update_label()
 
 /obj/item/card/id/syndicate_command/crew_id
 	assignment = "Syndicate Operative"
-  icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	uses_overlays = FALSE
 
 /obj/item/card/id/syndicate_command/crew_id/med
 	assignment = "Syndicate Medical Doctor"
@@ -495,9 +493,7 @@ update_label()
 	name = "syndicate captain ID card"
 	id_type_name = "syndicate captain ID card"
 	assignment = "Syndicate Ship Captain"
-	icon_state = "syndie"
 	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
-	uses_overlays = FALSE
 
 /obj/item/card/id/captains_spare
 	name = "captain's spare ID"
