@@ -1237,7 +1237,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/suits/hardsuit/cybersun
 	name = "Cybersun Hardsuit"
-	desc = "The long forgotten hardsuit made by Cybersun industries. \
+	desc = "A long forgotten hardsuit made by Cybersun industries. \
 			Offers ROBUST protection against laser-based weapons, while still giving somewhat good chances \
 			to survive assault with toolbox or shotgun. \
 			Not to mention, it doesn't slow you down and contains integrated jetpack that runs on standard tanks. \
