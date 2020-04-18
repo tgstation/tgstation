@@ -5,9 +5,9 @@
 	name = "RIG helmet"
 	icon_state = "rig-helmet"
 
-/obj/item/rig/construction/suit
-	name = "RIG suit"
-	icon_state = "rig-suit"
+/obj/item/rig/construction/chestplate
+	name = "RIG chestplate"
+	icon_state = "rig-chestplate"
 
 /obj/item/rig/construction/gauntlets
 	name = "RIG gauntlets"

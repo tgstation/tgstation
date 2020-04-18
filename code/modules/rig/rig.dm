@@ -17,7 +17,6 @@
 	slot_flags = ITEM_SLOT_BACK
 	req_access = list()
 	slowdown = 1
-	theme = "engi"
 	///If the suit is deployed and turned on
 	var/active = FALSE
 	///If the suit wire/module hatch is open
@@ -39,7 +38,15 @@
 	///How much battery power the RIG uses per tick
 	var/cell_usage = 0
 	///RIG battery
-	var/obj/item/stock_parts/cell/cell
+	var/cell_type = /obj/item/stock_parts/cell/high
+	///RIG helmet
+	var/helmet_type = /obj/item/clothing/head/helmet/space/rig
+	///RIG chestplate
+	var/chestplate_type = /obj/item/clothing/suit/space/rig
+	///RIG gauntlets
+	var/gauntlet_type = /obj/item/clothing/gloves/rig
+	///RIG boots
+	var/boot_type = /obj/item/clothing/shoes/rig
 
 /obj/item/rig/themed/control/Initialize()
 	..()
@@ -55,5 +62,4 @@
 		seconds_electrified--
 	if(cell.charge > 0)
 		cell.charge -= cell_usage
-
 
