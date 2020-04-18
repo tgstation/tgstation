@@ -347,7 +347,7 @@
 	name = "Flat Top (Big)"
 	icon_state = "hair_bigflattop"
 
-/datum/sprite_accessory/hair/fag
+/datum/sprite_accessory/hair/flow_hair
 	name = "Flow Hair"
 	icon_state = "hair_f"
 
@@ -1715,6 +1715,23 @@
 /datum/sprite_accessory/wings_open/dragon
 	name = "Dragon"
 	icon_state = "dragon"
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+
+/datum/sprite_accessory/wings/megamoth
+	name = "Megamoth"
+	icon_state = "megamoth"
+	color_src = 0
+	dimension_x = 96
+	center = TRUE
+	dimension_y = 32
+	locked = TRUE
+
+/datum/sprite_accessory/wings_open/megamoth
+	name = "Megamoth"
+	icon_state = "megamoth"
+	color_src = 0
 	dimension_x = 96
 	center = TRUE
 	dimension_y = 32

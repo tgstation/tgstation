@@ -31,6 +31,8 @@
 			return							//gravity checking only our parent would prevent us from triggering they're using magboots / other gravity assisting items that would cause them to still touch us.
 		if(H.buckled) //if they're buckled to something, that something should be checked instead.
 			return
+		if(!(H.mobility_flags & MOBILITY_STAND)) //if were not standing we cant step on the caltrop
+			return
 
 		var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)

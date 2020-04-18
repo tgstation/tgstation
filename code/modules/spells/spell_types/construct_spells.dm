@@ -2,14 +2,11 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
-	action_icon = 'icons/mob/actions/actions_cult.dmi'
-	action_icon_state = "artificer"
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
 	clothes_req = TRUE
 	charge_max = 2500
-
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion
 	name = "Area Conversion"
@@ -275,10 +272,23 @@
 	playsound(get_turf(S), 'sound/effects/ghost.ogg', 100, TRUE)
 	new /obj/effect/temp_visual/cult/sac(get_turf(S))
 
-/obj/effect/proc_holder/spell/targeted/dominate/can_target(mob/living/target)
-	if(!isanimal(target) || target.stat)
+/obj/effect/proc_holder/spell/targeted/dominate/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(!.)
 		return FALSE
-	if("cult" in target.faction)
+	if(!isanimal(target))
+		if(!silent)
+			to_chat(user, "<span class='warning'>Target is not a lesser creature!</span>")
+		return FALSE
+
+	var/mob/living/simple_animal/animal = target
+	if(animal.stat)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Target is dead!</span>")
+		return FALSE
+	if("cult" in animal.faction)
+		if(!silent)
+			to_chat(user, "<span class='warning'>Target is already serving Nar'Sie!</span>")
 		return FALSE
 	return TRUE
 

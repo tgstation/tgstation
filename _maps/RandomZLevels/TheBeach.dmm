@@ -224,63 +224,13 @@
 /mob/living/simple_animal/crab,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
-"aL" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 9
-	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
-"aM" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 1
-	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
-"aN" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 5
-	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
 "aO" = (
 /obj/effect/baseturf_helper/beach/sand,
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
-"aP" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 8
-	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
 "aQ" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/away,
 /obj/effect/turf_decal/sand,
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
-"aR" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 4
-	},
 /turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aS" = (
@@ -294,32 +244,6 @@
 /turf/open/floor/plating/beach/coastline_t/sandwater_inner{
 	dir = 8
 	},
-/area/awaymission/beach)
-"aU" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 10
-	},
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
-"aV" = (
-/obj/machinery/gateway,
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line,
-/turf/open/floor/plating/beach/sand,
-/area/awaymission/beach)
-"aW" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/obj/effect/turf_decal/sand,
-/obj/effect/turf_decal/stripes/asteroid/line{
-	dir = 6
-	},
-/turf/open/floor/plating/beach/sand,
 /area/awaymission/beach)
 "aX" = (
 /turf/closed/wall/mineral/sandstone,
@@ -6908,9 +6832,9 @@ ak
 ak
 ak
 ak
-aL
-aP
-aU
+bf
+bp
+bx
 ak
 ak
 ba
@@ -7015,9 +6939,9 @@ ak
 ak
 ak
 ak
-aM
+bg
 aQ
-aV
+by
 ba
 ba
 ba
@@ -7122,9 +7046,9 @@ ak
 ak
 ak
 ak
-aN
-aR
-aW
+bh
+br
+bz
 ak
 ak
 ak

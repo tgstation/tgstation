@@ -105,15 +105,6 @@
 	for(var/i in 1 to 7)
 		new /obj/item/disk/data(src)
 
-
-/obj/item/storage/box/disks_plantgene
-	name = "plant data disks box"
-	illustration = "disk_kit"
-
-/obj/item/storage/box/disks_plantgene/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/disk/plantgene(src)
-
 /obj/item/storage/box/disks_nanite
 	name = "nanite program disks box"
 	illustration = "disk_kit"
@@ -172,6 +163,10 @@
 	..() // we want the regular stuff too
 	new /obj/item/radio/off(src)
 
+// Medical survival box
+/obj/item/storage/box/survival/medical
+	mask_type = /obj/item/clothing/mask/breath/medical
+
 /obj/item/storage/box/gloves
 	name = "box of latex gloves"
 	desc = "Contains sterile latex gloves."
@@ -205,7 +200,6 @@
 /obj/item/storage/box/syringes/variety/PopulateContents()
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/syringe/lethal(src)
-	new /obj/item/reagent_containers/syringe/noreact(src)
 	new /obj/item/reagent_containers/syringe/piercing(src)
 	new /obj/item/reagent_containers/syringe/bluespace(src)
 
@@ -284,6 +278,16 @@
 /obj/item/storage/box/flashbangs/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/grenade/flashbang(src)
+
+/obj/item/storage/box/stingbangs
+	name = "box of stingbangs (WARNING)"
+	desc = "<B>WARNING: These devices are extremely dangerous and can cause severe injuries or death in repeated use.</B>"
+	icon_state = "secbox"
+	illustration = "flashbang"
+
+/obj/item/storage/box/stingbangs/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/grenade/stingbang(src)
 
 /obj/item/storage/box/flashes
 	name = "box of flashbulbs"
@@ -935,6 +939,13 @@
 				return 0
 	return ..()
 
+/obj/item/storage/box/papersack/meat
+	desc = "It's slightly moist and smells like a slaughterhouse."
+
+/obj/item/storage/box/papersack/meat/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/food/snacks/meat/slab(src)
+
 #undef NODESIGN
 #undef NANOTRASEN
 #undef SYNDI
@@ -990,7 +1001,7 @@
 /obj/item/storage/box/ingredients/italian/PopulateContents()
 	for(var/i in 1 to 3)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
-		new /obj/item/reagent_containers/food/snacks/faggot(src)
+		new /obj/item/reagent_containers/food/snacks/meatball(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/wine(src)
 
 /obj/item/storage/box/ingredients/vegetarian
@@ -1013,7 +1024,7 @@
 		new /obj/item/reagent_containers/food/snacks/grown/potato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/tomato(src)
 		new /obj/item/reagent_containers/food/snacks/grown/corn(src)
-	new /obj/item/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/storage/box/ingredients/fruity
 	theme_name = "fruity"
@@ -1069,7 +1080,7 @@
 	new /obj/item/reagent_containers/food/snacks/carpmeat(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/xeno(src)
 	new /obj/item/reagent_containers/food/snacks/meat/slab/corgi(src)
-	new /obj/item/reagent_containers/food/snacks/faggot(src)
+	new /obj/item/reagent_containers/food/snacks/meatball(src)
 
 /obj/item/storage/box/ingredients/exotic
 	theme_name = "exotic"
@@ -1248,7 +1259,7 @@
 		new/obj/item/sparkler(src)
 		new/obj/item/grenade/firecracker(src)
 	if(prob(20))
-		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
+		new /obj/item/grenade/frag(src)
 	else
 		new /obj/item/toy/snappop(src)
 
@@ -1283,7 +1294,7 @@
 /obj/item/storage/box/gum/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.set_holdable(list(/obj/item/storage/box/gum))
+	STR.set_holdable(list(/obj/item/reagent_containers/food/snacks/chewable/bubblegum))
 	STR.max_items = 4
 
 /obj/item/storage/box/gum/PopulateContents()
@@ -1315,6 +1326,15 @@
 /obj/item/storage/box/gum/happiness/PopulateContents()
 	for(var/i in 1 to 4)
 		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness(src)
+
+/obj/item/storage/box/gum/bubblegum
+	name = "bubblegum gum packet"
+	desc = "The packaging is entirely in Demonic, apparently. You feel like even opening this would be a sin."
+	icon_state = "bubblegum_bubblegum"
+
+/obj/item/storage/box/gum/bubblegum/PopulateContents()
+	for(var/i in 1 to 4)
+		new/obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum(src)
 
 /obj/item/storage/box/shipping
 	name = "box of shipping supplies"

@@ -88,6 +88,11 @@
 
 	refill()
 
+/obj/item/toy/crayon/examine(mob/user)
+	. = ..()
+	if(can_change_colour)
+		. += "<span class='notice'>Ctrl-click [src] while it's on your person to quickly recolour it.</span>"
+
 /obj/item/toy/crayon/proc/refill()
 	if(charges == -1)
 		charges_left = 100
@@ -154,6 +159,12 @@
 			is_capped = !is_capped
 			to_chat(user, "<span class='notice'>The cap on [src] is now [is_capped ? "on" : "off"].</span>")
 			update_icon()
+
+/obj/item/toy/crayon/CtrlClick(mob/user)
+	if(can_change_colour && !isturf(loc) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		select_colour(user)
+	else
+		return ..()
 
 /obj/item/toy/crayon/proc/staticDrawables()
 
@@ -232,14 +243,7 @@
 			else
 				paint_mode = PAINT_NORMAL
 		if("select_colour")
-			if(can_change_colour)
-				var/chosen_colour = input(usr,"","Choose Color",paint_color) as color|null
-
-				if (!isnull(chosen_colour))
-					paint_color = chosen_colour
-					. = TRUE
-				else
-					. = FALSE
+			. = can_change_colour && select_colour(usr)
 		if("enter_text")
 			var/txt = stripped_input(usr,"Choose what to write.",
 				"Scribbles",default = text_buffer)
@@ -248,6 +252,13 @@
 			paint_mode = PAINT_NORMAL
 			drawtype = "a"
 	update_icon()
+
+/obj/item/toy/crayon/proc/select_colour(mob/user)
+	var/chosen_colour = input(user, "", "Choose Color", paint_color) as color|null
+	if (!isnull(chosen_colour) && user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
+		paint_color = chosen_colour
+		return TRUE
+	return FALSE
 
 /obj/item/toy/crayon/proc/crayon_text_strip(text)
 	var/static/regex/crayon_r = new /regex(@"[^\w!?,.=%#&+\/\-]")

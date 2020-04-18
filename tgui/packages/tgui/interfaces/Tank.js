@@ -9,12 +9,13 @@ export const Tank = props => {
         <LabeledList.Item label="Pressure">
           <ProgressBar
             value={data.tankPressure / 1013}
-            content={data.tankPressure + ' kPa'}
             ranges={{
               good: [0.35, Infinity],
               average: [0.15, 0.35],
               bad: [-Infinity, 0.15],
-            }} />
+            }}>
+            {data.tankPressure + ' kPa'}
+          </ProgressBar>
         </LabeledList.Item>
         <LabeledList.Item label="Pressure Regulator">
           <Button

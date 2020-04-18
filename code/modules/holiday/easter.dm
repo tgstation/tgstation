@@ -148,6 +148,7 @@
 	/obj/item/toy/prize/phazon,
 	/obj/item/toy/prize/reticence,
 	/obj/item/toy/prize/honk,
+	/obj/item/toy/prize/clarke,
 	/obj/item/toy/plush/carpplushie,
 	/obj/item/toy/redbutton,
 	/obj/item/toy/windupToolbox,
@@ -218,7 +219,7 @@
 		/datum/reagent/consumable/sodiumchloride = 1,
 		/datum/reagent/consumable/blackpepper = 1,
 		/obj/item/reagent_containers/food/snacks/boiledegg = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1
+		/obj/item/reagent_containers/food/snacks/meatball = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/scotchegg
 	subcategory = CAT_MISCFOOD

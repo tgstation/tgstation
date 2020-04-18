@@ -28,6 +28,7 @@
 #define ROLE_OVERTHROW			"Syndicate Mutineer"		//Role removed, left here for safety.
 #define ROLE_HIVE				"Hivemind Host"				//Role removed, left here for safety.
 #define ROLE_OBSESSED				"Obsessed"
+#define ROLE_SPACE_DRAGON		"Space Dragon"
 #define ROLE_SENTIENCE			"Sentience Potion Spawn"
 #define ROLE_PYROCLASTIC_SLIME 	"Pyroclastic Anomaly Slime"
 #define ROLE_MIND_TRANSFER		"Mind Transfer Potion"
@@ -37,6 +38,8 @@
 #define ROLE_LAVALAND			"Lavaland"
 #define ROLE_INTERNAL_AFFAIRS	"Internal Affairs Agent"
 #define ROLE_FAMILIES			"Familes Antagonists"
+#define ROLE_SYNDICATE_CYBERSUN			"Cybersun Space Syndicate"		//Ghost role syndi from Forgottenship ruin
+#define ROLE_SYNDICATE_CYBERSUN_CAPTAIN	"Cybersun Space Syndicate Captain"		//Forgottenship captain syndie
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough
@@ -55,6 +58,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_BLOB,
 	ROLE_NINJA,
 	ROLE_OBSESSED,
+	ROLE_SPACE_DRAGON,
 	ROLE_MONKEY = /datum/game_mode/monkey,
 	ROLE_REVENANT,
 	ROLE_ABDUCTOR,

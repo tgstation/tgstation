@@ -70,6 +70,9 @@
 	if(!user.in_throw_mode || user.get_active_held_item() || user.pulling || user.buckling)
 		return
 
+	if(!A || !(isturf(A) || isturf(A.loc)))
+		return
+
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		to_chat(user, "<span class='warning'>You're too angry to remember how to tackle!</span>")
 		return
@@ -421,10 +424,10 @@
 		for(var/i = 0, i < speed, i++)
 			var/obj/item/shard/shard = new /obj/item/shard(get_turf(user))
 			shard.embedding = list(embed_chance = 100, ignore_throwspeed_threshold = TRUE, impact_pain_mult=3, pain_chance=5)
-			shard.AddElement(/datum/element/embed, shard.embedding)
+			shard.updateEmbedding()
 			user.hitby(shard, skipcatch = TRUE, hitpush = FALSE)
 			shard.embedding = list()
-			shard.AddElement(/datum/element/embed, shard.embedding)
+			shard.updateEmbedding()
 		W.obj_destruction()
 		user.adjustStaminaLoss(10 * speed)
 		user.Paralyze(30)

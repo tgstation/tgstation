@@ -6892,20 +6892,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/centcom/supplypod/loading/ert)
-"pE" = (
-/obj/machinery/plantgenes/seedvault,
-/obj/effect/turf_decal/tile/green{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/green,
-/obj/effect/turf_decal/tile/green{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/green{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
-/area/centcom/holding)
 "pF" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Auxillary Dock";
@@ -43776,7 +43762,7 @@ aa
 aa
 aa
 Nd
-pE
+PY
 NJ
 SW
 PY

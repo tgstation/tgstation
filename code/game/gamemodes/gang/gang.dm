@@ -30,6 +30,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	protected_jobs = list()
 	var/check_counter = 0
 	var/endtime = null
+	var/start_time = null
 	var/fuckingdone = FALSE
 	var/time_to_end = 60 MINUTES
 	var/gangs_to_generate = 3
@@ -41,10 +42,9 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/gangs_still_alive = 0
 	var/sent_announcement = FALSE
 	var/list/gang_locations = list()
-	var/lock_stars = FALSE
 	var/cops_arrived = FALSE
 	var/gang_balance_cap = 5
-	var/current_stars = "wanted_0"
+	var/wanted_level = 0
 
 /datum/game_mode/gang/warriors
 	name = "Warriors"
@@ -69,6 +69,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		antag_candidates.Remove(gangbanger)
 	for(var/j = 0, j < gangs_to_generate, j++)
+		if(!antag_candidates.len)
+			break
 		var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
 		pigs += one_eight_seven_on_an_undercover_cop
 		undercover_cops += one_eight_seven_on_an_undercover_cop
@@ -76,6 +78,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		log_game("[key_name(one_eight_seven_on_an_undercover_cop)] has been selected as a starting undercover cop!")
 		antag_candidates.Remove(one_eight_seven_on_an_undercover_cop)
 	endtime = world.time + time_to_end
+	start_time = world.time
 	return TRUE
 
 /datum/game_mode/gang/post_setup()
@@ -112,7 +115,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	for(var/datum/mind/undercover_cop in undercover_cops)
 		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
 		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
-		undercover_cop.current.playsound_local(undercover_cop.current, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	for(var/datum/mind/gangbanger in gangbangers)
 		var/gang_to_use = pick_n_take(gangs_to_use)
@@ -188,44 +190,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	return FALSE
 
 /datum/game_mode/gang/process()
-	if(sent_announcement)
-		for(var/mob/M in GLOB.player_list)
-			if(M.hud_used && !istype(M, /mob/dead/new_player))
-				var/datum/hud/H = M.hud_used
-				var/icon_state_to_use = "wanted_1"
-				if(lock_stars)
-					H.wanted_lvl.icon_state = current_stars
-					continue
-				if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
-					switch(GLOB.deaths_during_shift)
-						if(0 to TWO_STARS_HIGHPOP-1)
-							icon_state_to_use = "wanted_1"
-						if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
-							icon_state_to_use = "wanted_2"
-						if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
-							icon_state_to_use = "wanted_3"
-						if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
-							icon_state_to_use = "wanted_4"
-						if(FIVE_STARS_HIGHPOP to INFINITY)
-							icon_state_to_use = "wanted_5"
-				else
-					switch(GLOB.deaths_during_shift)
-						if(0 to TWO_STARS_LOW-1)
-							icon_state_to_use = "wanted_1"
-						if(TWO_STARS_LOW to THREE_STARS_LOW-1)
-							icon_state_to_use = "wanted_2"
-						if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
-							icon_state_to_use = "wanted_3"
-						if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
-							icon_state_to_use = "wanted_4"
-						if(FIVE_STARS_LOW to INFINITY)
-							icon_state_to_use = "wanted_5"
-				if(cops_arrived)
-					icon_state_to_use += "_active"
-					lock_stars = TRUE
-				current_stars = icon_state_to_use
-				H.wanted_lvl.icon_state = icon_state_to_use
-
+	check_wanted_level()
 	check_counter++
 	if(check_counter >= 5)
 		if (world.time > endtime && !fuckingdone)
@@ -238,61 +203,142 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		check_gang_clothes()
 		check_rollin_with_crews()
 
+///Checks if our wanted level has changed. Only actually does something post the initial announcement and until the cops are here. After that its locked.
+/datum/game_mode/gang/proc/check_wanted_level()
+	if(!sent_announcement || cops_arrived)
+		return
+	var/new_wanted_level
+	if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
+		switch(GLOB.deaths_during_shift)
+			if(0 to TWO_STARS_HIGHPOP-1)
+				new_wanted_level = 1
+			if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
+				new_wanted_level = 2
+			if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
+				new_wanted_level = 3
+			if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
+				new_wanted_level = 4
+			if(FIVE_STARS_HIGHPOP to INFINITY)
+				new_wanted_level = 5
+	else
+		switch(GLOB.deaths_during_shift)
+			if(0 to TWO_STARS_LOW-1)
+				new_wanted_level = 1
+			if(TWO_STARS_LOW to THREE_STARS_LOW-1)
+				new_wanted_level = 2
+			if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
+				new_wanted_level = 3
+			if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
+				new_wanted_level = 4
+			if(FIVE_STARS_LOW to INFINITY)
+				new_wanted_level = 5
+	update_wanted_level(new_wanted_level)
+
+///Updates the icon states for everyone and sends outs announcements regarding the police.
+/datum/game_mode/gang/proc/update_wanted_level(newlevel)
+	if(newlevel > wanted_level)
+		on_gain_wanted_level(newlevel)
+	else if (newlevel < wanted_level)
+		on_lower_wanted_level(newlevel)
+	wanted_level = newlevel
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
+		if(!M.hud_used?.wanted_lvl)
+			continue
+		var/datum/hud/H = M.hud_used
+		H.wanted_lvl.level = newlevel
+		H.wanted_lvl.cops_arrived = cops_arrived
+		H.wanted_lvl.update_icon()
+
+/datum/game_mode/gang/proc/on_gain_wanted_level(newlevel)
+	var/announcement_message
+	switch(newlevel)
+		if(2)
+			announcement_message = "Small amount of police vehicles have been spotted en route towards [station_name()]. They will arrive at the 50 minute mark."
+			endtime = start_time + 50 MINUTES
+		if(3)
+			announcement_message = "A large detachment police vehicles have been spotted en route towards [station_name()]. They will arrive at the 40 minute mark."
+			endtime = start_time + 40 MINUTES
+		if(4)
+			announcement_message = "A detachment of top-trained agents has been spotted on their way to [station_name()]. They will arrive at the 35 minute mark."
+			endtime = start_time + 35 MINUTES
+		if(5)
+			announcement_message = "The fleet enroute to [station_name()] now consists of national guard personnel. They will arrive at the 30 minute mark."
+			endtime = start_time + 30 MINUTES
+	priority_announce(announcement_message, "Station Spaceship Detection Systems")
+
+/datum/game_mode/gang/proc/on_lower_wanted_level(newlevel)
+	var/announcement_message
+	switch(newlevel)
+		if(1)
+			announcement_message = "There are now only a few police vehicle headed towards [station_name()]. They will arrive at the 60 minute mark."
+			endtime = start_time + 60 MINUTES
+		if(2)
+			announcement_message = "There seem to be fewer police vehicles headed towards [station_name()]. They will arrive at the 50 minute mark."
+			endtime = start_time + 50 MINUTES
+		if(3)
+			announcement_message = "There are no longer top-trained agents in the fleet headed towards [station_name()]. They will arrive at the 40 minute mark."
+			endtime = start_time + 40 MINUTES
+		if(4)
+			announcement_message = "The convoy enroute to [station_name()] seems to no longer consist of national guard personnel. They will arrive at the 35 minute mark."
+			endtime = start_time + 35 MINUTES
+	priority_announce(announcement_message, "Station Spaceship Detection Systems")
+
 /datum/game_mode/gang/proc/send_in_the_fuzz()
 	var/team_size
 	var/cops_to_send
 	var/announcement_message = "PUNK ASS BALLA BITCH"
 	var/announcer = "Spinward Stellar Coalition"
 	if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
-		switch(GLOB.deaths_during_shift)
-			if(0 to TWO_STARS_HIGHPOP-1)
+		switch(wanted_level)
+			if(1)
 				team_size = 8
 				cops_to_send = /datum/antagonist/ert/families/beatcop
 				announcement_message = "Hello, crewmembers of [station_name()]! We've received a few calls about some potential violent gang activity on board your station, so we're sending some beat cops to check things out. Nothing extreme, just a courtesy call. However, while they check things out for about 10 minutes, we're going to have to ask that you keep your escape shuttle parked.\n\nHave a pleasant day!"
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
+			if(2)
 				team_size = 9
 				cops_to_send = /datum/antagonist/ert/families/beatcop/armored
 				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of violent gang activity from your station. We are dispatching some armed officers to help keep the peace and investigate matters. Do not get in their way, and comply with any and all requests from them. We have blockaded the local warp gate, and your shuttle cannot depart for another 10 minutes.\n\nHave a secure day."
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
+			if(3)
 				team_size = 10
 				cops_to_send = /datum/antagonist/ert/families/beatcop/swat
 				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of extreme gang activity from your station resulting in heavy civilian casualties. The Spinward Stellar Coalition does not tolerate abuse towards our citizens, and we will be responding in force to keep the peace and reduce civilian casualties. We have your station surrounded, and all gangsters must drop their weapons and surrender peacefully.\n\nHave a secure day."
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
+			if(4)
 				team_size = 11
 				cops_to_send = /datum/antagonist/ert/families/beatcop/fbi
 				announcement_message = "We are dispatching our top agents to [station_name()] at the request of the Spinward Stellar Coalition government due to an extreme terrorist level threat against this Nanotrasen owned station. All gangsters must surrender IMMEDIATELY. Failure to comply can and will result in death. We have blockaded your warp gates and will not allow any escape until the situation is resolved within our standard response time of 10 minutes.\n\nSurrender now or face the consequences of your actions."
 				announcer = "Federal Bureau of Investigation"
-			if(FIVE_STARS_HIGHPOP to INFINITY)
+			if(5)
 				team_size = 12
 				cops_to_send = /datum/antagonist/ert/families/beatcop/military
 				announcement_message = "Due to an insane level of civilian casualties aboard [station_name()], we have dispatched the National Guard to curb any and all gang activity on board the station. We have heavy cruisers watching the shuttle. Attempt to leave before we allow you to, and we will obliterate your station and your escape shuttle.\n\nYou brought this on yourselves by murdering so many civilians."
 				announcer = "Spinward Stellar Coalition National Guard"
 	else
-		switch(GLOB.deaths_during_shift)
-			if(0 to TWO_STARS_LOW-1)
+		switch(wanted_level)
+			if(1)
 				team_size = 5
 				cops_to_send = /datum/antagonist/ert/families/beatcop
 				announcement_message = "Hello, crewmembers of [station_name()]! We've received a few calls about some potential violent gang activity on board your station, so we're sending some beat cops to check things out. Nothing extreme, just a courtesy call. However, while they check things out for about 10 minutes, we're going to have to ask that you keep your escape shuttle parked.\n\nHave a pleasant day!"
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(TWO_STARS_LOW to THREE_STARS_LOW-1)
+			if(2)
 				team_size = 6
 				cops_to_send = /datum/antagonist/ert/families/beatcop/armored
 				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of violent gang activity from your station. We are dispatching some armed officers to help keep the peace and investigate matters. Do not get in their way, and comply with any and all requests from them. We have blockaded the local warp gate, and your shuttle cannot depart for another 10 minutes.\n\nHave a secure day."
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
+			if(3)
 				team_size = 7
 				cops_to_send = /datum/antagonist/ert/families/beatcop/swat
 				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of extreme gang activity from your station resulting in heavy civilian casualties. The Spinward Stellar Coalition does not tolerate abuse towards our citizens, and we will be responding in force to keep the peace and reduce civilian casualties. We have your station surrounded, and all gangsters must drop their weapons and surrender peacefully.\n\nHave a secure day."
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
+			if(4)
 				team_size = 8
 				cops_to_send = /datum/antagonist/ert/families/beatcop/fbi
 				announcement_message = "We are dispatching our top agents to [station_name()] at the request of the Spinward Stellar Coalition government due to an extreme terrorist level threat against this Nanotrasen owned station. All gangsters must surrender IMMEDIATELY. Failure to comply can and will result in death. We have blockaded your warp gates and will not allow any escape until the situation is resolved within our standard response time of 10 minutes.\n\nSurrender now or face the consequences of your actions."
 				announcer = "Federal Bureau of Investigation"
-			if(FIVE_STARS_LOW to INFINITY)
+			if(5)
 				team_size = 10
 				cops_to_send = /datum/antagonist/ert/families/beatcop/military
 				announcement_message = "Due to an insane level of civilian casualties aboard [station_name()], we have dispatched the National Guard to curb any and all gang activity on board the station. We have heavy cruisers watching the shuttle. Attempt to leave before we allow you to, and we will obliterate your station and your escape shuttle.\n\nYou brought this on yourselves by murdering so many civilians."
@@ -333,6 +379,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")
 			numagents--
 	cops_arrived = TRUE
+	update_wanted_level() //Will make sure our icon updates properly
 	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
 	return TRUE
 

@@ -449,7 +449,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents(var/T)
+/atom/proc/GetAllContents(var/T, ignore_flag_1)
 	var/list/processing_list = list(src)
 	if(T)
 		. = list()
@@ -458,14 +458,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 			var/atom/A = processing_list[++i]
 			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 			//This is also why we don't need to check against assembled as we go along
-			processing_list += A.contents
-			if(istype(A,T))
-				. += A
+			if (!(A.flags_1 & ignore_flag_1))
+				processing_list += A.contents
+				if(istype(A,T))
+					. += A
 	else
 		var/i = 0
 		while(i < length(processing_list))
 			var/atom/A = processing_list[++i]
-			processing_list += A.contents
+			if (!(A.flags_1 & ignore_flag_1))
+				processing_list += A.contents
 		return processing_list
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
@@ -727,22 +729,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			return loc
 		loc = loc.loc
 	return null
-
-
-//For objects that should embed, but make no sense being is_sharp or is_pointed()
-//e.g: rods
-GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
-	/obj/item/stack/rods,
-	/obj/item/pipe)))
-
-/proc/can_embed(obj/item/W)
-	if(W.get_sharpness())
-		return 1
-	if(is_pointed(W))
-		return 1
-
-	if(is_type_in_typecache(W, GLOB.can_embed_types))
-		return 1
 
 
 /*

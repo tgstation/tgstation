@@ -1,5 +1,7 @@
 import { Component } from 'inferno';
-import { BlockQuote, Box, Button, Collapsible, Input, LabeledList, NumberInput, ProgressBar, Section, Tabs, Tooltip } from '../components';
+import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, ByondUi, Collapsible, Input, LabeledList, NumberInput, ProgressBar, Section, Tabs, Tooltip, Slider, Icon, Knob } from '../components';
+import { DraggableControl } from '../components/DraggableControl';
 
 const COLORS_ARBITRARY = [
   'red',
@@ -46,7 +48,7 @@ const PAGES = [
     component: () => KitchenSinkTooltip,
   },
   {
-    title: 'Input',
+    title: 'Input / Slider',
     component: () => KitchenSinkInput,
   },
   {
@@ -56,6 +58,10 @@ const PAGES = [
   {
     title: 'BlockQuote',
     component: () => KitchenSinkBlockQuote,
+  },
+  {
+    title: 'ByondUi',
+    component: () => KitchenSinkByondUi,
   },
 ];
 
@@ -70,7 +76,7 @@ export const KitchenSink = props => {
             {() => {
               const Component = page.component();
               return (
-                <Component />
+                <Component {...props} />
               );
             }}
           </Tabs.Tab>
@@ -94,7 +100,7 @@ const KitchenSinkButton = props => {
         <Button fluid content="Fluid" />
         <Button
           my={1}
-          lineHeight={4}
+          lineHeight={2}
           minWidth={30}
           textAlign="center"
           content="With Box props" />
@@ -118,8 +124,9 @@ const KitchenSinkButton = props => {
           <Box inline
             mx="7px"
             key={color}
-            color={color}
-            content={color} />
+            color={color}>
+            {color}
+          </Box>
         ))}
       </Box>
     </Box>
@@ -129,14 +136,30 @@ const KitchenSinkButton = props => {
 const KitchenSinkBox = props => {
   return (
     <Box>
-      <Box bold content="bold" />
-      <Box italic content="italic" />
-      <Box opacity={0.5} content="opacity 0.5" />
-      <Box opacity={0.25} content="opacity 0.25" />
-      <Box m={2} content="m: 2" />
-      <Box textAlign="left" content="left" />
-      <Box textAlign="center" content="center" />
-      <Box textAlign="right" content="right" />
+      <Box bold>
+        bold
+      </Box>
+      <Box italic>
+        italic
+      </Box>
+      <Box opacity={0.5}>
+        opacity 0.5
+      </Box>
+      <Box opacity={0.25}>
+        opacity 0.25
+      </Box>
+      <Box m={2}>
+        m: 2
+      </Box>
+      <Box textAlign="left">
+        left
+      </Box>
+      <Box textAlign="center">
+        center
+      </Box>
+      <Box textAlign="right">
+        right
+      </Box>
     </Box>
   );
 };
@@ -161,8 +184,9 @@ class KitchenSinkProgressBar extends Component {
           }}
           minValue={-1}
           maxValue={1}
-          value={progress}
-          content={`value: ${Number(progress).toFixed(1)}`} />
+          value={progress}>
+          Value: {Number(progress).toFixed(1)}
+        </ProgressBar>
         <Box mt={1}>
           <Button
             content="-0.1"
@@ -194,7 +218,8 @@ class KitchenSinkTabs extends Component {
     return (
       <Box>
         {'Vertical: '}
-        <Button inline
+        <Button
+          inline
           content={String(vertical)}
           onClick={() => this.setState(prevState => ({
             vertical: !prevState.vertical,
@@ -268,7 +293,21 @@ class KitchenSinkInput extends Component {
     return (
       <Box>
         <LabeledList>
-          <LabeledList.Item label="NumberInput">
+          <LabeledList.Item label="Input (onChange)">
+            <Input
+              value={text}
+              onChange={(e, value) => this.setState({
+                text: value,
+              })} />
+          </LabeledList.Item>
+          <LabeledList.Item label="Input (onInput)">
+            <Input
+              value={text}
+              onInput={(e, value) => this.setState({
+                text: value,
+              })} />
+          </LabeledList.Item>
+          <LabeledList.Item label="NumberInput (onChange)">
             <NumberInput
               animated
               width={10}
@@ -280,6 +319,8 @@ class KitchenSinkInput extends Component {
               onChange={(e, value) => this.setState({
                 number: value,
               })} />
+          </LabeledList.Item>
+          <LabeledList.Item label="NumberInput (onDrag)">
             <NumberInput
               animated
               width={10}
@@ -292,17 +333,67 @@ class KitchenSinkInput extends Component {
                 number: value,
               })} />
           </LabeledList.Item>
-          <LabeledList.Item label="Input">
-            <Input
-              value={text}
-              onChange={(e, value) => this.setState({
-                text: value,
+          <LabeledList.Item label="Slider (onDrag)">
+            <Slider
+              step={1}
+              stepPixelSize={5}
+              value={number}
+              minValue={-100}
+              maxValue={100}
+              onDrag={(e, value) => this.setState({
+                number: value,
               })} />
-            <Input
-              value={text}
-              onInput={(e, value) => this.setState({
-                text: value,
+          </LabeledList.Item>
+          <LabeledList.Item label="Knob (onDrag)">
+            <Knob
+              inline
+              size={1}
+              step={1}
+              stepPixelSize={2}
+              value={number}
+              minValue={-100}
+              maxValue={100}
+              onDrag={(e, value) => this.setState({
+                number: value,
               })} />
+            <Knob
+              ml={1}
+              inline
+              bipolar
+              size={1}
+              step={1}
+              stepPixelSize={2}
+              value={number}
+              minValue={-100}
+              maxValue={100}
+              onDrag={(e, value) => this.setState({
+                number: value,
+              })} />
+          </LabeledList.Item>
+          <LabeledList.Item label="Rotating Icon">
+            <Box inline position="relative">
+              <DraggableControl
+                value={number}
+                minValue={-100}
+                maxValue={100}
+                dragMatrix={[0, -1]}
+                step={1}
+                stepPixelSize={5}
+                onDrag={(e, value) => this.setState({
+                  number: value,
+                })}>
+                {control => (
+                  <Box onMouseDown={control.handleDragStart}>
+                    <Icon
+                      size={4}
+                      color="yellow"
+                      name="times"
+                      rotation={control.displayValue * 4} />
+                    {control.inputElement}
+                  </Box>
+                )}
+              </DraggableControl>
+            </Box>
           </LabeledList.Item>
         </LabeledList>
       </Box>
@@ -333,7 +424,7 @@ const BoxOfSampleText = props => {
       <Box mt={1} bold>
         The wide electrification of the southern
         provinces will give a powerful impetus to the
-        growth of soviet agriculture.
+        growth of agriculture.
       </Box>
     </Box>
   );
@@ -344,5 +435,23 @@ const KitchenSinkBlockQuote = props => {
     <BlockQuote>
       <BoxOfSampleText />
     </BlockQuote>
+  );
+};
+
+const KitchenSinkByondUi = props => {
+  const { config } = useBackend(props);
+  return (
+    <Box>
+      <Section
+        title="Button"
+        level={2}>
+        <ByondUi
+          params={{
+            type: 'button',
+            parent: config.window,
+            text: 'Button',
+          }} />
+      </Section>
+    </Box>
   );
 };

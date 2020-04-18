@@ -18,6 +18,7 @@
 //  Generic non-item
 /obj/item/storage/bag
 	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/storage/bag/ComponentInitialize()
 	. = ..()
@@ -38,8 +39,6 @@
 	item_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-
-	w_class = WEIGHT_CLASS_BULKY
 	var/insertable = TRUE
 
 /obj/item/storage/bag/trash/ComponentInitialize()
@@ -196,7 +195,6 @@
 	name = "plant bag"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbag"
-	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/plants/ComponentInitialize()
@@ -210,7 +208,6 @@
 		/obj/item/seeds,
 		/obj/item/grown,
 		/obj/item/reagent_containers/honeycomb,
-		/obj/item/disk/plantgene
 		))
 ////////
 
@@ -241,7 +238,6 @@
 	icon_state = "sheetsnatcher"
 
 	var/capacity = 300; //the number of sheets it can carry.
-	w_class = WEIGHT_CLASS_NORMAL
 	component_type = /datum/component/storage/concrete/stack
 
 /obj/item/storage/bag/sheetsnatcher/ComponentInitialize()
@@ -281,7 +277,6 @@
 	desc = "A bag for books."
 	icon = 'icons/obj/library.dmi'
 	icon_state = "bookbag"
-	w_class = WEIGHT_CLASS_BULKY //Bigger than a book because physics
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/books/ComponentInitialize()
@@ -309,7 +304,6 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_BULKY
 	flags_1 = CONDUCT_1
 	custom_materials = list(/datum/material/iron=3000)
 
@@ -374,7 +368,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bag"
 	desc = "A bag for storing pills, patches, and bottles."
-	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/chemistry/ComponentInitialize()
@@ -403,7 +396,6 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "biobag"
 	desc = "A bag for the safe transportation and disposal of biowaste and other biological materials."
-	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/bio/ComponentInitialize()
@@ -435,7 +427,6 @@
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "construction_bag"
 	desc = "A bag for storing small construction components."
-	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
 
 /obj/item/storage/bag/construction/ComponentInitialize()

@@ -77,13 +77,15 @@ export class NumberInput extends Component {
           // Give it some headroom (by increasing clamp range by 1 step)
           state.internalValue = clamp(
             state.internalValue + offset * step / stepPixelSize,
-            minValue - step, maxValue + step);
+            minValue - step,
+            maxValue + step);
           // Clamp the final value
           state.value = clamp(
             state.internalValue
               - state.internalValue % step
               + stepOffset,
-            minValue, maxValue);
+            minValue,
+            maxValue);
           state.origin = e.screenY;
         }
         else if (Math.abs(offset) > 4) {
