@@ -134,8 +134,8 @@
 	throwforce = on ? 10 : initial(throwforce)
 	tool_behaviour = on ? TOOL_CROWBAR : initial(tool_behaviour)
 	toolspeed = on ? 0.5 : initial(toolspeed)
-	hitsound = on ? 'sounds/weapons/blade1.ogg' : 'swing_hit'
-	playsound(user, on ? 'sounds/weapons/saberon.ogg' : 'sounds/weapons/saberoff.ogg', 5, TRUE)
+	hitsound = on ? "sounds/weapons/blade1.ogg" : "swing_hit"
+	playsound(user, on ? "sounds/weapons/saberon.ogg" : "sounds/weapons/saberoff.ogg", 5, TRUE)
 	to_chat(user, "<span class='warning'>[src] is now [on ? "active" : "concealed"].</span>")
 	update_icon()
 
