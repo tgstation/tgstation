@@ -2232,7 +2232,7 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	description = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
 	boozepwr = 85
 	taste_description = "your tastebuds being individually shanked"
-	glass_icon_state = "glass_orange"
+	glass_icon_state = "pruno"
 	glass_name = "glass of pruno"
 	glass_desc = "Fermented prison wine made from fruit, sugar, and despair. Security loves to confiscate this, which is the only kind thing Security has ever done."
 
