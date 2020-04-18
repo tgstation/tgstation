@@ -1,4 +1,5 @@
 #define C2NAMEREAGENT	"[initial(reagent.name)] (Has Side-Effects)"
+#define CHEMEFFECT "[initial(reagent.name)][reagent_desc[reagent]] [initial(reagent.harmful) ? "(Has side effects)" : ""]"
 /*
 Contains:
 Borg Hypospray
@@ -32,7 +33,7 @@ Borg Hypospray
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
 	var/list/reagent_names = list()
-
+	var/list/reagent_desc = list(/datum/reagent/medicine/C2/convermol = " [Heals Oxygen]", /datum/reagent/medicine/C2/libital = " [Heals Brute]", /datum/reagent/medicine/C2/multiver = " [Heals Toxin]", /datum/reagent/medicine/C2/aiuri = " [Heals Burn]", /datum/reagent/medicine/epinephrine = " [Stabilizes Critical Patients]", /datum/reagent/medicine/spaceacillin = " [Anti-Viral]", /datum/reagent/medicine/salglu_solution = " [Temp. Blood Replacement]")
 
 /obj/item/reagent_containers/borghypo/Initialize()
 	. = ..()
@@ -68,18 +69,11 @@ Borg Hypospray
 	R.add_reagent(reagent, 30)
 
 	modes[reagent] = modes.len + 1
-
-	if(initial(reagent.harmful))
-		reagent_names[C2NAMEREAGENT] = reagent
-	else
-		reagent_names[initial(reagent.name)] = reagent
+	reagent_names[CHEMEFFECT] = reagent
 
 /obj/item/reagent_containers/borghypo/proc/del_reagent(datum/reagent/reagent)
 	reagent_ids -= reagent
-	if(istype(reagent, /datum/reagent/medicine/C2))
-		reagent_names -= C2NAMEREAGENT
-	else
-		reagent_names -= initial(reagent.name)
+	reagent_names -= CHEMEFFECT
 	var/datum/reagents/RG
 	var/datum/reagents/TRG
 	for(var/i in 1 to reagent_ids.len)
@@ -209,15 +203,14 @@ Borg Shaker
 	/datum/reagent/consumable/nothing, /datum/reagent/consumable/orangejuice, /datum/reagent/consumable/peachjuice,
 	/datum/reagent/consumable/sodawater, /datum/reagent/consumable/space_cola, /datum/reagent/consumable/spacemountainwind,
 	/datum/reagent/consumable/pwr_game, /datum/reagent/consumable/shamblers, /datum/reagent/consumable/soymilk,
-	/datum/reagent/consumable/space_up, /datum/reagent/consumable/sugar, /datum/reagent/consumable/tea,
-	/datum/reagent/consumable/tomatojuice, /datum/reagent/consumable/tonic, /datum/reagent/water,
-	/datum/reagent/consumable/pineapplejuice, /datum/reagent/consumable/sol_dry,
+	/datum/reagent/consumable/space_up, /datum/reagent/consumable/tea, /datum/reagent/consumable/tomatojuice,
+	/datum/reagent/consumable/tonic, /datum/reagent/water,
 	/datum/reagent/consumable/ethanol/ale, /datum/reagent/consumable/ethanol/applejack, /datum/reagent/consumable/ethanol/beer,
-	/datum/reagent/consumable/ethanol/champagne, /datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_menthe,
+	/datum/reagent/consumable/ethanol/cognac, /datum/reagent/consumable/ethanol/creme_de_menthe,
 	/datum/reagent/consumable/ethanol/creme_de_cacao, /datum/reagent/consumable/ethanol/gin, /datum/reagent/consumable/ethanol/kahlua,
 	/datum/reagent/consumable/ethanol/rum, /datum/reagent/consumable/ethanol/sake, /datum/reagent/consumable/ethanol/tequila,
-	/datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth, /datum/reagent/consumable/ethanol/vodka,
-	/datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine, /datum/reagent/consumable/ethanol/creme_de_coconut)
+	/datum/reagent/consumable/ethanol/triple_sec, /datum/reagent/consumable/ethanol/vermouth,
+	/datum/reagent/consumable/ethanol/whiskey, /datum/reagent/consumable/ethanol/wine)
 
 /obj/item/reagent_containers/borghypo/borgshaker/attack(mob/M, mob/user)
 	return //Can't inject stuff with a shaker, can we? //not with that attitude
@@ -289,4 +282,5 @@ Borg Shaker
 	reagent_ids = list(/datum/reagent/medicine/epinephrine)
 	accepts_reagent_upgrades = FALSE
 
+#undef CHEMEFFECT
 #undef C2NAMEREAGENT
