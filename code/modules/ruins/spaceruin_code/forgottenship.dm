@@ -15,7 +15,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 
 /obj/machinery/vending/medical/syndicate_access/cybersun
 	name = "\improper CyberMed ++"
-	desc = "Advanced vendor dispensing medical drugs."
+	desc = "An advanced vendor that dispenses medical drugs, both recreational and medicinal."
 	products = list(/obj/item/reagent_containers/syringe = 4,
 					/obj/item/healthanalyzer = 4,
 					/obj/item/reagent_containers/pill/patch/libital = 5,
