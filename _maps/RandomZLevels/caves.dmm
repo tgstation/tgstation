@@ -637,7 +637,7 @@
 	},
 /obj/item/pickaxe{
 	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
+	desc = "A pickaxe that's been left to rust.";
 	force = 1;
 	name = "rusty pickaxe";
 	pixel_x = 5;
@@ -897,7 +897,7 @@
 "cQ" = (
 /obj/item/pickaxe{
 	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
+	desc = "A pickaxe that's been left to rust.";
 	force = 1;
 	name = "rusty pickaxe";
 	pixel_x = 5;
@@ -1099,7 +1099,7 @@
 /obj/structure/closet/secure_closet/personal,
 /obj/item/pickaxe{
 	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
+	desc = "A pickaxe that's been left to rust.";
 	force = 1;
 	name = "rusty pickaxe";
 	pixel_x = 5;
@@ -1494,7 +1494,7 @@
 /obj/structure/table,
 /obj/item/pickaxe{
 	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
+	desc = "A pickaxe that's been left to rust.";
 	force = 1;
 	name = "rusty pickaxe";
 	pixel_x = 5;
@@ -1502,7 +1502,7 @@
 	},
 /obj/item/pickaxe{
 	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
+	desc = "A pickaxe that's been left to rust.";
 	force = 1;
 	name = "rusty pickaxe";
 	pixel_x = 5;
@@ -1874,7 +1874,7 @@
 	},
 /obj/item/pickaxe{
 	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
+	desc = "A pickaxe that's been left to rust.";
 	force = 1;
 	name = "rusty pickaxe";
 	pixel_x = 5;
