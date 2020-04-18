@@ -60,9 +60,7 @@
 	add_objective(new/datum/objective/syndicatesupermatter, TRUE)
 
 /datum/team/starfuryop/roundend_report()
-	var/list/parts = list()
-
-	parts += "<span class='header'>The crew of syndicate battle cruiser were:</span>"
+	var/list/parts = list("<span class='header'>The crew of syndicate battle cruiser were:</span>")
 	for(var/datum/mind/M in members)
 		parts += printplayer(M)
 	var/win = TRUE
