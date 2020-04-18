@@ -48,6 +48,11 @@
 		pump.airs[2] = null
 		return
 
+	var/temp = air_contents.temperature
+	if(temp > 5000)
+		Destroy()
+		return
+
 	var/turf/T = get_turf(src)
 	if(direction == PUMP_OUT) // Hook up the internal pump.
 		pump.airs[1] = holding ? holding.air_contents : air_contents
