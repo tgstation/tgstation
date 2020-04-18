@@ -104,7 +104,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 					"The Cybersun ship is a restricted area for anyone except Cybersun operatives.",\
 					"Cybersun Captain can designate new Operatives as long as they belong to another Syndicate faction that isn't hostile towards Cybersun.",\
 					"You must follow orders given by Cybersun Captain or Crew Members as long as it doesn't conflict with Captain's orders or your laws.",\
-					"Enemies of Cybersun are to be executed on spot. Those, who aren't hostile must be detained and contained in designated area as prisoners.")
+					"Enemies of Cybersun are to be executed on spot. Those who aren't hostile must be detained and contained in the designated prison area as prisoners.")
 
 ///////////	forgottenship areas
 
