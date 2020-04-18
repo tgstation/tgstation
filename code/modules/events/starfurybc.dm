@@ -13,10 +13,10 @@
 	return ..()
 
 /datum/round_event/ghost_role/starfurybc
-	minimum_required = 1
+	minimum_required = 6
 	var/shuttle_spawned = FALSE
 	var/started = FALSE
-	var/preptime = 1 MINUTES
+	var/preptime = 8 MINUTES
 	var/announcetime = 4 MINUTES
 
 /datum/round_event/ghost_role/starfurybc/start()
@@ -25,6 +25,7 @@
 	sleep(preptime)
 	spawn_shuttle()
 
+/*
 /datum/round_event/ghost_role/starfurybc/process()
 	if((SSshuttle.emergency.mode == SHUTTLE_CALL) && started)
 		started = FALSE
@@ -43,6 +44,7 @@
 		SSshuttle.emergency.setTimer(timer)
 		if(recalld > 0)
 			SSshuttle.block_recall(recalld)
+*/
 
 /datum/round_event/ghost_role/starfurybc/proc/spawn_shuttle()
 	shuttle_spawned = TRUE

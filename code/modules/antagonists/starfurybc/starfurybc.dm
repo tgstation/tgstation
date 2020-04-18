@@ -58,8 +58,6 @@
 
 /datum/team/starfuryop/proc/forge_objectives()
 	add_objective(new/datum/objective/syndicatesupermatter, TRUE)
-	//add_objective(new/datum/objective/assassinate.find_target_by_role(role = ROLE_CAPTAIN, role_type = TRUE, invert = FALSE))
-	add_objective(new/datum/objective/protect/find_target_by_role(role = ROLE_TRAITOR, role_type=TRUE, invert=FALSE))
 
 /datum/team/starfuryop/roundend_report()
 	var/list/parts = list()
