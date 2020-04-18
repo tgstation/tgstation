@@ -50,6 +50,7 @@
 	var/list/candidates = pollGhostCandidates("Do you wish to be considered for syndicate battlecruiser crew?", ROLE_TRAITOR)
 	shuffle_inplace(candidates)
 	if(candidates.len < minimum_required)
+		deadchat_broadcast("Starfury Battle Cruiser event did not get enough candidates ([minimum_required]) to spawn.", message_type=DEADCHAT_ANNOUNCEMENT)
 		return NOT_ENOUGH_PLAYERS
 
 	var/datum/map_template/shuttle/syndifury/starfury/ship = new
