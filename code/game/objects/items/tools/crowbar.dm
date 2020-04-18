@@ -140,9 +140,5 @@
 	update_icon()
 
 /obj/item/crowbar/combat/update_icon_state()
-	if(on)
-		icon_state = "[initial(icon_state)]_on"
-		item_state = "[initial(item_state)]1"
-	else
-		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
+	icon_state = "[initial(icon_state)][on ? "_on" : ""]"
+	item_state = "[initial(item_state)][on ? "1" : ""]"
