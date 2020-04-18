@@ -90,6 +90,16 @@
 /obj/item/rig/control/equipped(mob/user)
 	wearer = user
 
+/obj/item/rig/control/proc/shock(mob/living/user)
+	if(!istype(wearer) || cell.charge < 1)
+		return FALSE
+	do_sparks(5, TRUE, src)
+	var/check_range = TRUE
+	if(electrocute_mob(wearer, get_area(src), src, 0.7, check_range))
+		return TRUE
+	else
+		return FALSE
+
 /obj/item/rig/control/proc/install()
 	return
 

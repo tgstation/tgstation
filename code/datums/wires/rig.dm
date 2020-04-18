@@ -9,7 +9,7 @@
 
 /datum/wires/rig/interactable(mob/user)
 	var/obj/item/rig/control/RIG = holder
-	if(!issilicon(user) && RIG.seconds_electrified && RIG.shock(user, 100))
+	if(!issilicon(user) && RIG.seconds_electrified && RIG.shock(user))
 		return FALSE
 	if(RIG == user.get_item_by_slot(ITEM_SLOT_OCLOTHING))
 		to_chat(user, "<span class='warning'>You cannot access the [RIG] control panel while wearing it!</span>")
