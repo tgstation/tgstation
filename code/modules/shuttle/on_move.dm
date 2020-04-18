@@ -105,6 +105,8 @@ All ShuttleMove procs go here
 
 	loc = newT
 
+	SSdemo.mark_dirty(src)
+
 	return TRUE
 
 // Called on atoms after everything has been moved

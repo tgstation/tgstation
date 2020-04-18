@@ -20813,8 +20813,8 @@
 "aRW" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock{
-	name = "Theatre Backstage";
-	req_access_txt = "46"
+	name = "Service Hall";
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -25205,8 +25205,8 @@
 /area/maintenance/port/fore)
 "aYz" = (
 /obj/machinery/door/airlock/maintenance_hatch{
-	name = "Maintenance Hatch";
-	req_access_txt = "12"
+	name = "Service Hallway Maintenance Hatch";
+	req_one_access_txt = "22;25;26;28;35;37;38;46;70"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -87241,7 +87241,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
+	req_one_access_txt = "5;12"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -89915,6 +89915,9 @@
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
+	},
+/obj/structure/chair{
+	dir = 4
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
@@ -94251,13 +94254,13 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "duM" = (
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/computer/rdconsole/core{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "duN" = (
@@ -109361,9 +109364,9 @@
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "ebi" = (
-/obj/structure/table/wood/fancy,
 /obj/item/storage/book/bible,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/altar_of_gods,
 /turf/open/floor/plasteel/grimy,
 /area/chapel/main)
 "ebj" = (
@@ -113455,7 +113458,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/door/airlock/maintenance_hatch{
-	req_access_txt = "12"
+	req_one_access_txt = "5;12"
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1

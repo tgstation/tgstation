@@ -58,7 +58,7 @@
 			<A href='?src=[REF(src)];[HrefToken()];secrets=events'>Summon Events (Toggle)</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=onlyone'>There can only be one!</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=delayed_onlyone'>There can only be one! (40-second delay)</A><BR>
-			<A href='?src=[REF(src)];[HrefToken()];secrets=retardify'>Make all players retarded</A><BR>
+			<A href='?src=[REF(src)];[HrefToken()];secrets=massbraindamage'>Make all players brain damaged</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=eagles'>Egalitarian Station Mode</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=ancap'>Anarcho-Capitalist Station Mode</A><BR>
 			<A href='?src=[REF(src)];[HrefToken()];secrets=blackout'>Break all lights</A><BR>
@@ -237,7 +237,7 @@
 				message_admins("[key_name_admin(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 				log_admin("[key_name(usr)] [new_perma ? "stopped" : "started"] the arrivals shuttle")
 			else
-				to_chat(usr, "<span class='admin'>There is no arrivals shuttle.</span>")
+				to_chat(usr, "<span class='admin'>There is no arrivals shuttle.</span>", confidential = TRUE)
 		if("showailaws")
 			if(!check_rights(R_ADMIN))
 				return
@@ -420,7 +420,7 @@
 						if(droptype == "Yes")
 							ADD_TRAIT(I, TRAIT_NODROP, ADMIN_TRAIT)
 				else
-					to_chat(H, "<span class='warning'>You're not kawaii enough for this!</span>")
+					to_chat(H, "<span class='warning'>You're not kawaii enough for this!</span>", confidential = TRUE)
 
 		if("whiteout")
 			if(!check_rights(R_FUN))
@@ -450,14 +450,14 @@
 					DO.virus_type = virus
 					E = DO
 
-		if("retardify")
+		if("massbraindamage")
 			if(!check_rights(R_FUN))
 				return
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Mass Braindamage"))
 			for(var/mob/living/carbon/human/H in GLOB.player_list)
-				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>")
+				to_chat(H, "<span class='boldannounce'>You suddenly feel stupid.</span>", confidential = TRUE)
 				H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 60, 80)
-			message_admins("[key_name_admin(usr)] made everybody retarded")
+			message_admins("[key_name_admin(usr)] made everybody brain damaged")
 
 		if("eagles")//SCRAW
 			if(!check_rights(R_FUN))
@@ -642,7 +642,7 @@
 				var/list/prefs = settings["mainsettings"]
 
 				if (prefs["amount"]["value"] < 1 || prefs["portalnum"]["value"] < 1)
-					to_chat(usr, "<span class='warning'>Number of portals and mobs to spawn must be at least 1.</span>")
+					to_chat(usr, "<span class='warning'>Number of portals and mobs to spawn must be at least 1.</span>", confidential = TRUE)
 					return
 
 				var/mob/pathToSpawn = prefs["typepath"]["value"]
@@ -650,7 +650,7 @@
 					pathToSpawn = text2path(pathToSpawn)
 
 				if (!ispath(pathToSpawn))
-					to_chat(usr, "<span class='notice'>Invalid path [pathToSpawn].</span>")
+					to_chat(usr, "<span class='notice'>Invalid path [pathToSpawn].</span>", confidential = TRUE)
 					return
 
 				var/list/candidates = list()
@@ -699,7 +699,7 @@
 	if (usr)
 		log_admin("[key_name(usr)] used secret [item]")
 		if (ok)
-			to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))
+			to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key), confidential = TRUE)
 
 /proc/portalAnnounce(announcement, playlightning)
 	set waitfor = 0

@@ -15,7 +15,7 @@ People come to tgui from different backgrounds and with different
 learning styles. Whether you prefer a more theoretical or a practical
 approach, we hope you’ll find this section helpful.
 
-### Practical tutorial
+### Practical Tutorial
 
 If you are completely new to frontend and prefer to **learn by doing**,
 start with our [practical tutorial](docs/tutorial-and-examples.md).
@@ -105,7 +105,44 @@ with the console:
 > We prefer to keep it version controlled, so that people could build the
 > game just by using Dream Maker.
 
-## Project structure
+## Troubleshooting
+
+**Development server doesn't find my BYOND cache!**
+
+This happens if your Documents folder in Windows has a custom location, for
+example in `E:\Libraries\Documents`. Development server has no knowledge
+of these non-standard locations, therefore you have to run the dev server
+with an additional environmental variable, with a full path to BYOND cache.
+
+```
+export BYOND_CACHE="E:/Libraries/Documents/BYOND/cache"
+bin/tgui --dev
+```
+
+Note that in Windows, you have to go through Advanced System Settings,
+System Properties and then open Environment Variables window to do the
+same thing. You may need to reboot after this.
+
+## Developer Tools
+
+When developing with `tgui-dev-server`, you will have access to certain
+development only features.
+
+**Debug Logs.**
+When running server via `bin/tgui --dev --debug`, server will print debug
+logs and time spent on rendering. Use this information to optimize your
+code, and try to keep re-renders below 16ms.
+
+**Kitchen Sink.**
+Press `Ctrl+Alt+=` to open the KitchenSink interface. This interface is a
+playground to test various tgui components.
+
+**Layout Debugger.**
+Press `Ctrl+Alt+-` to toggle the *layout debugger*. It will show outlines of
+all tgui elements, which makes it easy to understand how everything comes
+together, and can reveal certain layout bugs which are not normally visible.
+
+## Project Structure
 
 - `/packages` - Each folder here represents a self-contained Node module.
 - `/packages/common` - Helper functions
@@ -120,17 +157,17 @@ interfaces, otherwise they simply won't load.
 window elements, like the titlebar, buttons, resize handlers. Calls
 `routes.js` to decide which component to render.
 - `/packages/tgui/styles/main.scss` - CSS entry point.
-- `/packages/tgui/styles/atomic.scss` - Atomic CSS classes.
+- `/packages/tgui/styles/atomic` - Atomic CSS classes.
 These are very simple, tiny, reusable CSS classes which you can use and
 combine to change appearance of your elements. Keep them small.
-- `/packages/tgui/styles/components.scss` - CSS classes which are used
+- `/packages/tgui/styles/components` - CSS classes which are used
 in UI components, and most of the stylesheets referenced here are located
 in `/packages/tgui/components`. These stylesheets closely follow the
 [BEM](https://en.bem.info/methodology/) methodology.
 - `/packages/tgui/styles/functions.scss` - Useful SASS functions.
 Stuff like `lighten`, `darken`, `luminance` are defined here.
 
-## Component reference
+## Component Reference
 
 > Notice: This documentation might be out of date, so always check the source
 > code to see the most up-to-date information.
@@ -144,17 +181,14 @@ it is used a lot in this framework.
 
 There are a few important semantics you need to know about:
 
-- `content` prop is a synonym to a `children` prop.
+- Some elements support a `content` prop, which is a synonym to a
+`children` prop.
   - `content` is better used when your element is a self-closing tag
   (like `<Button content="Hello" />`), and when content is small and simple
   enough to fit in a prop. Keep in mind, that this prop is **not** native
-  to React, and is a feature of this component system.
-  - `children` is better used when your element is a full tag (like
-  `<Button>Hello</Button>`), and when content is long and complex. This is
-  a native React prop (unlike `content`), and contains all elements you
-  defined between the opening and the closing tag of an element.
-  - You should never use both on a same element.
+  to React, and is only available on these components: `Button`, `Tooltip`.
   - You should never use `children` explicitly as a prop on an element.
+  Instead open a full tag, and place children or text inside the tag.
 - Inferno supports both camelcase (`onClick`) and lowercase (`onclick`)
 event names.
   - Camel case names are what's called "synthetic" events, and are the
@@ -165,8 +199,8 @@ event names.
   - Lower case names are native browser events and should be used sparingly,
   for example when you need an explicit IE8 support. **DO NOT** use
   lowercase event handlers unless you really know what you are doing.
-  - [Button](#button) component straight up does not support lowercase event
-  handlers. Use the camel case `onClick` instead.
+  - [Button](#button) component does not support lowercase `onclick` event.
+  Use the camel case `onClick` instead.
 
 ### `AnimatedNumber`
 
@@ -412,9 +446,22 @@ Props:
 
 Dims surrounding area to emphasize content placed inside.
 
+Content is automatically centered inside the dimmer.
+
 Props:
 
 - See inherited props: [Box](#box)
+
+### `Divider`
+
+Draws a horizontal or vertical line, dividing a section into groups.
+Works like the good old `<hr>` element, but it's fancier.
+
+Props:
+
+- `vertical: boolean` - Divide content vertically.
+- `hidden: boolean` - Divider can divide content without creating a dividing
+line.
 
 ### `Dropdown`
 
@@ -469,6 +516,8 @@ Props:
 (1 unit - 0.5em). Does not directly relate to a flex css property
 (adds a modifier class under the hood), and only integer numbers are
 supported.
+- `inline: boolean` - Makes flexbox container inline, with similar behavior
+to an `inline` property on a `Box`.
 - `direction: string` - This establishes the main-axis, thus defining the
 direction flex items are placed in the flex container.
   - `row` (default) - left to right.
@@ -520,13 +569,21 @@ item should take up. This number is unit-less and is relative to other
 siblings.
 - `shrink: number` - This defines the ability for a flex item to shrink
 if necessary. Inverse of `grow`.
-- `basis: string` - This defines the default size of an element before the
-remaining space is distributed. It can be a length (e.g. `20%`, `5rem`, etc.),
+- `basis: string` - This defines the default size of an element before any
+flex-related calculations are done. Has to be a length (e.g. `20%`, `5rem`),
 an `auto` or `content` keyword.
+  - **Important:** IE11 flex is buggy, and auto width/height calculations
+  can sometimes end up in a circular dependency. This usually happens, when
+  working with tables inside flex (they have wacky internal widths and such).
+  Setting basis to `0` breaks the loop and fixes all of the problems.
 - `align: string` - This allows the default alignment (or the one specified by
 align-items) to be overridden for individual flex items. See: [Flex](#flex).
 
 ### `Grid`
+
+> **Deprecated:** This component is no longer recommended due to the variety
+> of bugs that come with table-based layouts.
+> We recommend using [Flex](#flex) instead.
 
 Helps you to divide horizontal space into two or more equal sections.
 It is essentially a single-row `Table`, but with some extra features.
@@ -536,10 +593,14 @@ Example:
 ```jsx
 <Grid>
   <Grid.Column>
-    <Section title="Section 1" content="Hello world!" />
+    <Section title="Section 1">
+      Hello world!
+    </Section>
   </Grid.Column>
   <Grid.Column size={2}>
-    <Section title="Section 2" content="Hello world!" />
+    <Section title="Section 2">
+      Hello world!
+    </Section>
   </Grid.Column>
 </Grid>
 ```
@@ -597,6 +658,44 @@ when this happens. Useful for things like chat inputs.
 - `onChange: (e, value) => void` - An event, which fires when you commit
 the text by either unfocusing the input box, or by pressing the Enter key.
 - `onInput: (e, value) => void` - An event, which fires on every keypress.
+
+### `Knob`
+
+A radial control, which allows dialing in precise values by dragging it
+up and down.
+
+Single click opens an input box to manually type in a number.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `animated: boolean` - Animates the value if it was changed externally.
+- `bipolar: boolean` - Knob can be bipolar or unipolar.
+- `size: number` - Relative size of the knob. `1` is normal size, `2` is two
+times bigger. Fractional numbers are supported.
+- `color: string` - Color of the outer ring around the knob.
+- `value: number` - Value itself, controls the position of the cursor.
+- `unit: string` - Unit to display to the right of value.
+- `minValue: number` - Lowest possible value.
+- `maxValue: number` - Highest possible value.
+- `fillValue: number` - If set, this value will be used to set the fill
+percentage of the outer ring independently of the main value.
+- `ranges: { color: [from, to] }` - Applies a `color` to the outer ring around
+the knob based on whether the value lands in the range between `from` and `to`.
+See an example of this prop in [ProgressBar](#progressbar).
+- `step: number` (default: 1) - Adjust value by this amount when
+dragging the input.
+- `stepPixelSize: number` (default: 1) - Screen distance mouse needs
+to travel to adjust value by one `step`.
+- `format: value => value` - Format value using this function before
+displaying it.
+- `suppressFlicker: number` - A number in milliseconds, for which the input
+will hold off from updating while events propagate through the backend.
+Default is about 250ms, increase it if you still see flickering.
+- `onChange: (e, value) => void` - An event, which fires when you release
+the input, or successfully enter a number.
+- `onDrag: (e, value) => void` - An event, which fires about every 500ms
+when you drag the input up and down, on release and on manual editing.
 
 ### `LabeledList`
 
@@ -765,6 +864,41 @@ If you want to have a button on the right side of an section title
 means deeper level of nesting. Must be an integer number.
 - `buttons: any` - Buttons to render aside the section title.
 - `content/children: any` - Content of this section.
+
+### `Slider`
+
+A horizontal, [ProgressBar](#progressbar)-like control, which allows dialing
+in precise values by dragging it left and right.
+
+Single click opens an input box to manually type in a number.
+
+Props:
+
+- See inherited props: [Box](#box)
+- `animated: boolean` - Animates the value if it was changed externally.
+- `color: string` - Color of the slider.
+- `value: number` - Value itself, controls the position of the cursor.
+- `unit: string` - Unit to display to the right of value.
+- `minValue: number` - Lowest possible value.
+- `maxValue: number` - Highest possible value.
+- `fillValue: number` - If set, this value will be used to set the fill
+percentage of the progress bar filler independently of the main value.
+- `ranges: { color: [from, to] }` - Applies a `color` to the slider
+based on whether the value lands in the range between `from` and `to`.
+See an example of this prop in [ProgressBar](#progressbar).
+- `step: number` (default: 1) - Adjust value by this amount when
+dragging the input.
+- `stepPixelSize: number` (default: 1) - Screen distance mouse needs
+to travel to adjust value by one `step`.
+- `format: value => value` - Format value using this function before
+displaying it.
+- `suppressFlicker: number` - A number in milliseconds, for which the input
+will hold off from updating while events propagate through the backend.
+Default is about 250ms, increase it if you still see flickering.
+- `onChange: (e, value) => void` - An event, which fires when you release
+the input, or successfully enter a number.
+- `onDrag: (e, value) => void` - An event, which fires about every 500ms
+when you drag the input up and down, on release and on manual editing.
 
 ### `Table`
 

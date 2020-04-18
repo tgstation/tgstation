@@ -36,7 +36,7 @@ export const Teleporter = props => {
             buttons={(
               <Button
                 icon="tools"
-                content={"Set Target"}
+                content="Set Target"
                 onClick={() => act('settarget')} />
             )}>
             {target}
@@ -45,7 +45,7 @@ export const Teleporter = props => {
             buttons={(
               <Button
                 icon="tools"
-                content={"Calibrate Hub"}
+                content="Calibrate Hub"
                 onClick={() => act('calibrate')} />
             )}>
             {calibrating && (

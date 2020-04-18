@@ -95,7 +95,7 @@
 		return
 	if (!magazine)
 		magazine = new mag_type(src)
-	chamber_round()
+	chamber_round(TRUE)
 	update_icon()
 
 /obj/item/gun/ballistic/update_icon_state()

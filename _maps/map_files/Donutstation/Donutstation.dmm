@@ -1360,8 +1360,8 @@
 /turf/open/floor/plasteel/dark,
 /area/bridge)
 "adu" = (
-/obj/structure/table/wood,
 /obj/item/storage/book/bible,
+/obj/structure/altar_of_gods,
 /turf/open/floor/plasteel/chapel{
 	dir = 1
 	},
@@ -46493,12 +46493,12 @@
 /obj/item/radio/intercom{
 	pixel_y = 29
 	},
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "Research - Research Director's Office";
 	network = list("ss13","Research")
+	},
+/obj/machinery/computer/rdconsole/core{
+	dir = 4
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/heads/hor)
