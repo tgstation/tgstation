@@ -78,6 +78,7 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 /obj/structure/fluff/empty_sleeper/syndicate/captain
 	icon_state = "sleeper_s-open"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	deconstructible = FALSE
 
 /obj/structure/fluff/empty_sleeper/syndicate/captain/ComponentInitialize()
 	. = ..()
