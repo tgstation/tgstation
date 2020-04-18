@@ -27,15 +27,16 @@ export const Cryo = props => {
     <Fragment>
       <Section title="Occupant">
         <LabeledList>
-          <LabeledList.Item
-            label="Occupant"
-            content={data.occupant.name ? data.occupant.name : "No Occupant"} />
+          <LabeledList.Item label="Occupant">
+            {data.occupant.name || 'No Occupant'}
+          </LabeledList.Item>
           {!!data.hasOccupant && (
             <Fragment>
               <LabeledList.Item
                 label="State"
-                content={data.occupant.stat}
-                color={data.occupant.statstate} />
+                color={data.occupant.statstate}>
+                {data.occupant.stat}
+              </LabeledList.Item>
               <LabeledList.Item
                 label="Temperature"
                 color={data.occupant.temperaturestatus}>
@@ -44,7 +45,7 @@ export const Cryo = props => {
               <LabeledList.Item label="Health">
                 <ProgressBar
                   value={data.occupant.health / data.occupant.maxHealth}
-                  color={(data.occupant.health > 0) ? "good" : "average"}>
+                  color={data.occupant.health > 0 ? 'good' : 'average'}>
                   <AnimatedNumber value={data.occupant.health} />
                 </ProgressBar>
               </LabeledList.Item>
@@ -64,17 +65,15 @@ export const Cryo = props => {
       </Section>
       <Section title="Cell">
         <LabeledList>
-          <LabeledList.Item
-            label="Power"
-            content={(
-              <Button
-                icon={data.isOperating ? "power-off" : "times"}
-                disabled={data.isOpen}
-                onClick={() => act('power')}
-                color={data.isOperating && ("green")}>
-                {data.isOperating ? "On" : "Off"}
-              </Button>
-            )} />
+          <LabeledList.Item label="Power">
+            <Button
+              icon={data.isOperating ? "power-off" : "times"}
+              disabled={data.isOpen}
+              onClick={() => act('power')}
+              color={data.isOperating && 'green'}>
+              {data.isOperating ? "On" : "Off"}
+            </Button>
+          </LabeledList.Item>
           <LabeledList.Item label="Temperature">
             <AnimatedNumber value={data.cellTemperature} /> K
           </LabeledList.Item>

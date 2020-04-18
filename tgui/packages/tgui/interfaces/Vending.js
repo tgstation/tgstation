@@ -1,12 +1,10 @@
-import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { Section, Box, Button, Table } from '../components';
 import { classes } from 'common/react';
+import { Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Box, Button, Section, Table } from '../components';
 
 export const Vending = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+  const { act, data } = useBackend(props);
   let inventory;
   let custom = false;
   if (data.vending_machine_input) {
@@ -59,7 +57,7 @@ export const Vending = props => {
             );
             return (
               <Table.Row key={product.name}>
-                <Table.Cell>
+                <Table.Cell collapsing>
                   {product.base64 ? (
                     <img
                       src={`data:image/jpeg;base64,${product.img}`}
@@ -69,30 +67,36 @@ export const Vending = props => {
                       }} />
                   ) : (
                     <span
-                      className={classes(['vending32x32', product.path])}
+                      className={classes([
+                        'vending32x32',
+                        product.path,
+                      ])}
                       style={{
                         'vertical-align': 'middle',
                         'horizontal-align': 'middle',
                       }} />
                   )}
-                  <b>{product.name}</b>
                 </Table.Cell>
-                <Table.Cell>
-                  <Box color={custom
-                    ? 'good'
-                    : data.stock[product.name] <= 0
-                      ? 'bad'
-                      : data.stock[product.name] <= (product.max_amount / 2)
-                        ? 'average'
-                        : 'good'}>
+                <Table.Cell bold>
+                  {product.name}
+                </Table.Cell>
+                <Table.Cell collapsing textAlign="center">
+                  <Box
+                    color={custom
+                      ? 'good'
+                      : data.stock[product.name] <= 0
+                        ? 'bad'
+                        : data.stock[product.name] <= (product.max_amount / 2)
+                          ? 'average'
+                          : 'good'}>
                     {data.stock[product.name]} in stock
                   </Box>
                 </Table.Cell>
-                <Table.Cell>
+                <Table.Cell collapsing textAlign="center">
                   {custom && (
                     <Button
                       content={data.access ? 'FREE' : product.price + ' cr'}
-                      onClick={() => act(ref, 'dispense', {
+                      onClick={() => act('dispense', {
                         'item': product.name,
                       })} />
                   ) || (
@@ -100,15 +104,14 @@ export const Vending = props => {
                       disabled={(
                         data.stock[product.namename] === 0
                         || (
-                          !free
-                          && (
+                          !free && (
                             !data.user
                             || product.price > data.user.cash
                           )
                         )
                       )}
                       content={free ? 'FREE' : product.price + ' cr'}
-                      onClick={() => act(ref, 'vend', {
+                      onClick={() => act('vend', {
                         'ref': product.ref,
                       })} />
                   )}

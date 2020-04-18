@@ -185,6 +185,25 @@
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 
+/obj/item/geneshears
+	name = "Botanogenetic Plant Shears"
+	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
+	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon_state = "genesheers"
+	item_state = "secateurs"
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	flags_1 = CONDUCT_1
+	force = 10
+	throwforce = 8
+	w_class = WEIGHT_CLASS_SMALL
+	slot_flags = ITEM_SLOT_BELT
+	material_flags = MATERIAL_NO_EFFECTS
+	custom_materials = list(/datum/material/iron=4000, /datum/material/uranium=1500, /datum/material/gold=500)
+	attack_verb = list("slashed", "sliced", "cut")
+	hitsound = 'sound/weapons/bladeslice.ogg'
+
+
 // *************************************
 // Nutrient defines for hydroponics
 // *************************************

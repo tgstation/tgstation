@@ -23,7 +23,6 @@
 #define CHAMELEON	/datum/mutation/human/chameleon
 #define WACKY		/datum/mutation/human/wacky
 #define MUT_MUTE	/datum/mutation/human/mute
-#define SMILE		/datum/mutation/human/smile
 #define STONER		/datum/mutation/human/stoner
 #define UNINTELLIGIBLE		/datum/mutation/human/unintelligible
 #define SWEDISH		/datum/mutation/human/swedish

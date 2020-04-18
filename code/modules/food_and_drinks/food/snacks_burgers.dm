@@ -364,7 +364,7 @@
 
 /obj/item/reagent_containers/food/snacks/burger/chicken
 	name = "chicken sandwich" //Apparently the proud people of Americlapstan object to this thing being called a burger. Apparently McDonald's just calls it a burger in Europe as to not scare and confuse us.
-	desc = "A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize homosexuality on the space frontier."
+	desc = "A delicious chicken sandwich, it is said the proceeds from this treat helps criminalize disarming people on the space frontier."
 	icon_state = "chickenburger"
 	tastes = list("bun" = 2, "chicken" = 4, "God's covenant" = 1)
 	bonus_reagents = list(/datum/reagent/consumable/mayonnaise = 3, /datum/reagent/consumable/cooking_oil = 2, /datum/reagent/consumable/nutriment = 2)
