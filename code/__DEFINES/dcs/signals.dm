@@ -294,13 +294,11 @@
 
 // /obj/item signals for economy
 #define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
-#define COMSIG_ITEM_SOLD_MATERIAL "item_sold_material"			//called when an item is sold by the exports subsystem using material datums.
 #define COMSIG_STRUCTURE_UNWRAPPED "structure_unwrapped"		//called when a wrapped up structure is opened by hand
 #define COMSIG_ITEM_UNWRAPPED "item_unwrapped"					//called when a wrapped up item is opened by hand
 	#define COMSIG_ITEM_SPLIT_VALUE  1
 #define COMSIG_ITEM_SPLIT_PROFIT "item_split_profits"			//Called when getting the item's exact ratio for cargo's profit.
 #define COMSIG_ITEM_SPLIT_PROFIT_DRY "item_split_profits_dry"			//Called when getting the item's exact ratio for cargo's profit, without selling the item.
-#define COMSIG_ITEM_SPLIT_PROFIT_MATERIAL "item_split_material_profits"	//Called when getting an item's profit ratio, but when calculating wealth from material datums.
 
 
 // /obj/item/clothing signals
