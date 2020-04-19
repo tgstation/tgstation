@@ -3,6 +3,7 @@
 	name = "Ooze"
 	icon = 'icons/mob/vatgrowing.dmi'
 	icon_state = "gelatinous"
+	icon_dead = "gelatinous_dead"
 	mob_biotypes = MOB_ORGANIC
 	pass_flags = PASSTABLE | PASSGRILLE
 	ventcrawler = VENTCRAWLER_ALWAYS
@@ -93,7 +94,11 @@
 ///Updates the display that shows the mobs nutrition
 /mob/living/simple_animal/hostile/ooze/proc/updateNutritionDisplay()
 	if(hud_used) //clientless oozes
-		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(getPlasma())]</font></div>"
+		hud_used.alien_plasma_display.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='green'>[round(ooze_nutrition)]</font></div>"
+
+
+///* Gelatinious Ooze code below *\\\\
+
 
 ///Child of the ooze mob which is fast and is more suited for assassin esque behavior.
 /mob/living/simple_animal/hostile/ooze/gelatinous
@@ -101,9 +106,9 @@
 	desc = "It's a gummy cube, it's a gummy cube, it's a gummy gummy gummy gummy gummy cube."
 	speed = 1
 	///The ability to give yourself a metabolic speed boost which raises heat
-	var/datum/action/innate/metabolicboost/boost
+	var/datum/action/cooldown/metabolicboost/boost
 	///The ability to consume mobs
-	var/obj/effect/proc_holder/consume/consume
+	var/datum/action/consume/consume
 
 ///Initializes the mobs abilities and gives them to the mob
 /mob/living/simple_animal/hostile/ooze/gelatinous/Initialize()
@@ -111,19 +116,30 @@
 	boost = new
 	boost.Grant(src)
 	consume = new
-	AddAbility(consume)
+	consume.Grant(src)
 
+///If this mob gets resisted by something, its trying to escape consumption.
+/mob/living/simple_animal/hostile/ooze/gelatinous/resist_act(mob/living/user)
+	. = ..()
+	if(!do_after(user, 60)) //6 second struggle
+		return FALSE
+	consume.stop_consuming()
+
+///This ability lets the gelatinious ooze speed up for a little bit
 /datum/action/cooldown/metabolicboost
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
 	cooldown_time = 240
-	var/nutrition_cost
+	var/nutrition_cost = 10
 
+
+///Mob needs to have enough nutrition
 /datum/action/cooldown/metabolicboost/IsAvailable()
 	. = ..()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	if(. && ooze.ooze_nutrition >= 10)
+	if(. && ooze.ooze_nutrition >= nutrition_cost)
 		return TRUE
 
+///Give the mob a speed boost, heat it up every second, and end the ability in 6 seconds
 /datum/action/cooldown/metabolicboost/Trigger()
 	. = ..()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
@@ -132,70 +148,77 @@
 	addtimer(CALLBACK(ooze, .proc/FinishSpeedup, timerid), 6 SECONDS)
 	ooze.adjust_ooze_nutrition(-10)
 
+///Heat up the mob a little
 /datum/action/cooldown/metabolicboost/proc/HeatUp()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	ooze.increase_temperature(5)
+	ooze.adjust_bodytemperature(5)
 
+///Remove the speed modifier and delete the timer for heating up
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.remove_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	deltimer(timerid)
 
 
+///This action lets you consume the mob you're currently pulling. I'M GONNA CONSUUUUUME (this is considered one of the funny memes in the 2019-2020 era)
+/datum/action/consume
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	///The mob thats being consumed by this creature
+	var/mob/living/vored_mob
 
-/obj/effect/proc_holder/consume
-	name = "Consume"
-	panel = "Spider"
-	active = FALSE
-	datum/action/spell_action/action = null
-	desc = "Consume your target to get some nutrition"
-	ranged_mousepointer = 'icons/effects/wrap_target.dmi'
-	action_icon = 'icons/mob/actions/actions_animal.dmi'
-	action_icon_state = "wrap_0"
-	action_background_icon_state = "bg_alien"
-
-/obj/effect/proc_holder/consume/Initialize()
+///Register for owner death
+/datum/action/consume/New(Target)
 	. = ..()
-	action = new(src)
+	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/on_owner_death)
 
-/obj/effect/proc_holder/consume/update_icon()
-	action.button_icon_state = "wrap_[active]"
-	action.UpdateButtonIcon()
-
-/obj/effect/proc_holder/consume/Click()
-	if(!istype(usr, /mob/living/carbon))
+///Do we have a pulled mob?
+/datum/action/consume/IsAvailable()
+	. = ..()
+	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
+	if(!ooze.pulling)
 		return FALSE
-	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/user = usr
-	activate(user)
-	return TRUE
+	if(!isliving(ooze.pulling))
+		return FALSE
+	if(vored_mob)
+		return FALSE
 
-/obj/effect/proc_holder/wrap/proc/activate(mob/living/user)
-	var/message
-	if(active)
-		message = "<span class='notice'>You no longer prepare to wrap something in a cocoon.</span>"
-		remove_ranged_ability(message)
-	else
-		message = "<span class='notice'>You prepare to wrap something in a cocoon. <B>Left-click your target to start wrapping!</B></span>"
-		add_ranged_ability(user, message, TRUE)
-		return 1
+///Try to consume the pulled mob
+/datum/action/consume/Trigger()
+	. = ..()
+	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
+	if(!do_after(ooze, 15, target = ooze.pulling))
+		return FALSE
+	var/mob/living/target = ooze.pulling
 
-/obj/effect/proc_holder/wrap/InterceptClickOn(mob/living/caller, params, atom/target)
-	if(..())
-		return
-	if(ranged_ability_user.incapacitated() || !istype(ranged_ability_user, /mob/living/simple_animal/hostile/poison/giant_spider/nurse))
-		remove_ranged_ability()
-		return
+	if(!(target.mob_biotypes & MOB_ORGANIC))
+		return FALSE
 
-	var/mob/living/simple_animal/hostile/poison/giant_spider/nurse/user = ranged_ability_user
+///Start allowing this datum to process to handle the damage done to  this mob.
+/datum/action/consume/proc/start_consuming(mob/living/target)
+	vored_mob = target
+	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!! VORE!!!!
+	START_PROCESSING(SSprocessing, src)
 
-	if(user.Adjacent(target) && (ismob(target) || isobj(target)))
-		var/atom/movable/target_atom = target
-		if(target_atom.anchored)
-			return
-		user.cocoon_target = target_atom
-		INVOKE_ASYNC(user, /mob/living/simple_animal/hostile/poison/giant_spider/nurse/.proc/cocoon)
-		remove_ranged_ability()
-		return TRUE
+///Stop consuming the mob; dump them on the floor
+/datum/action/consume/proc/stop_consuming()
+	STOP_PROCESSING(SSprocessing, src)
+	vored_mob.forceMove(get_turf(owner))
+	vored_mob = null
+	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
 
-/obj/effect/proc_holder/wrap/on_lose(mob/living/carbon/user)
-	remove_ranged_ability()
+///Gain health for the consumption and dump some clone loss on the target.
+/datum/action/consume/process()
+	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
+	vored_mob.adjustCloneLoss(12)
+	ooze.heal_ordered_damage((ooze.maxHealth * 0.06), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
+
+	///Dump em at 200 cloneloss.
+	if(vored_mob.getCloneLoss() >= 200)
+		stop_consuming()
+
+///On owner death dump the current vored mob
+/datum/action/consume/proc/on_owner_death()
+	stop_consuming()
+
+
+///* Gelatinious Grapes code below *\\\\
