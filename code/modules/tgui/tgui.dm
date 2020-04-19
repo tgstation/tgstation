@@ -240,12 +240,21 @@
 			user << output(_initial_update, "[window_id].browser:update")
 			initialized = TRUE
 		if("tgui:setSharedState")
+			// Update the window state.
+			update_status(push = FALSE)
+			// Bail if UI is not interactive or usr calling Topic
+			// is not the UI user.
+			if(status != UI_INTERACTIVE)
+				return
 			var/key = params["key"]
 			var/value = params["value"]
 			if(!src_object.tgui_shared_states)
 				src_object.tgui_shared_states = list()
 			src_object.tgui_shared_states[key] = value
 			SStgui.update_uis(src_object)
+		if("tgui:setFancy")
+			var/value = text2num(params["value"])
+			user.client.prefs.tgui_fancy = value
 		if("tgui:log")
 			// Force window to show frills on fatal errors
 			if(params["fatal"])
