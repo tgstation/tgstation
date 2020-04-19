@@ -39,8 +39,8 @@ GLOBAL_VAR(buildable_sign_types)
 		var/obj/structure/sign/potential_sign = s
 		if(!initial(potential_sign.is_buildable))
 			continue
-		GLOB.buildable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign ///sign_change_name is an alternate title for signs, that only appears in the list when you use a pen on a sign backing.
-	GLOB.buildable_sign_types = sortList(GLOB.buildable_sign_types)
+		GLOB.buildable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign //sign_change_name is an alternate title for signs, that only appears in the list when you use a pen on a sign backing.
+	GLOB.buildable_sign_types = sortList(GLOB.buildable_sign_types) //Alphabetizes the results.
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && buildable_sign)
@@ -116,8 +116,10 @@ GLOBAL_VAR(buildable_sign_types)
 
 /obj/structure/sign/nanotrasen
 	name = "\improper Nanotrasen logo"
+	sign_change_name = "Corporate Logo - Nanotrasen"
 	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
+	is_buildable = TRUE
 
 /obj/structure/sign/logo
 	name = "\improper Nanotrasen logo"

@@ -83,7 +83,8 @@
 
 /obj/structure/sign/warning/nosmoking/circle
 	name = "\improper NO SMOKING"
-	sign_change_name = "Warning - No Smoking (Alt. Design)"
+	sign_change_name = "Warning - No Smoking Alt"
+	desc = "A warning sign which reads 'NO SMOKING'."
 	icon_state = "nosmoking"
 	is_buildable = TRUE
 
@@ -110,7 +111,7 @@
 
 /obj/structure/sign/warning/enginesafety
 	name = "\improper ENGINEERING SAFETY"
-	sign_change_name = "Warning - Engineering Safety Poster"
+	sign_change_name = "Warning - Engineering Safety Protocols"
 	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
 	icon_state = "safety"
 	is_buildable = TRUE
@@ -124,7 +125,7 @@
 
 /obj/structure/sign/warning/explosives/alt
 	name = "\improper HIGH EXPLOSIVES"
-	sign_change_name = "Warning - Explosives (Alt. Design)"
+	sign_change_name = "Warning - Explosives Alt"
 	desc = "A warning sign which reads 'HIGH EXPLOSIVES'."
 	icon_state = "explosives2"
 	is_buildable = TRUE

@@ -13,7 +13,8 @@
 
 /obj/structure/sign/departments/medbay/alt
 	name = "\improper MEDBAY"
-	sign_change_name = "Department - Medbay (Alt. Design)"
+	sign_change_name = "Department - Medbay Alt"
+	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
 	icon_state = "bluecross2"
 	is_buildable = TRUE
 
@@ -56,25 +57,18 @@
 
 ///////SCIENCE
 
-/obj/structure/sign/departments/science1
+/obj/structure/sign/departments/science
 	name = "\improper SCIENCE"
 	sign_change_name = "Department - Science"
 	desc = "A sign labelling an area where research and science is performed."
 	icon_state = "science1"
 	is_buildable = TRUE
 
-/obj/structure/sign/departments/science2
+/obj/structure/sign/departments/science/alt
 	name = "\improper SCIENCE"
-	sign_change_name = "Department - Science (Alt. Design 1)"
+	sign_change_name = "Department - Science Alt"
 	desc = "A sign labelling an area where research and science is performed."
 	icon_state = "science2"
-	is_buildable = TRUE
-
-/obj/structure/sign/departments/science3
-	name = "\improper SCIENCE"
-	sign_change_name = "Department - Science (Alt. Design 2)"
-	desc = "A sign labelling an area where research and science is performed."
-	icon_state = "science3"
 	is_buildable = TRUE
 
 /obj/structure/sign/departments/xenobio
@@ -150,7 +144,8 @@
 
 /obj/structure/sign/departments/mait/alt
 	name = "\improper MAINTENANCE TUNNEL"
-	sign_change_name = "Location - Maintenance (Alt. Design)"
+	sign_change_name = "Location - Maintenance Alt"
+	desc = "A sign labelling an area where the departments of the station are linked together."
 	icon_state = "mait2"
 	is_buildable = TRUE
 
