@@ -903,10 +903,8 @@
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
-		if(!check_menu(user))
-			return FALSE
-		var/choice = show_radial_menu(user, src , papersack_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 42, require_near = TRUE)
-		if(!check_menu(user))
+		var/choice = show_radial_menu(user, src , papersack_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+		if(!choice)
 			return FALSE
 		if(design == choice)
 			return FALSE
@@ -947,14 +945,18 @@
   *
   * Arguments:
   * * user The mob interacting with a menu
+  * * P The pen used to interact with a menu
   */
-/obj/item/storage/box/papersack/proc/check_menu(mob/user)
+/obj/item/storage/box/papersack/proc/check_menu(mob/user, /obj/item/pen/P)
 	if(!istype(user))
 		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
+	if(user.incapacitated())
 		return FALSE
 	if(contents.len)
 		to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
+		return FALSE
+	if(!P || !user.is_holding(P))
+		to_chat(user, "<span class='warning'>You need a pen to modify [src]!</span>")
 		return FALSE
 	return TRUE
 
