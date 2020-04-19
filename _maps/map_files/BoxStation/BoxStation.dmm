@@ -8505,6 +8505,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 6
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "awl" = (
@@ -8525,14 +8528,19 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "awn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore/secondary)
 "awo" = (
@@ -8952,12 +8960,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/fore)
-"axB" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 6
-	},
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
 "axC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/blue{
@@ -8965,23 +8967,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"axD" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
-/turf/closed/wall,
-/area/maintenance/fore/secondary)
 "axE" = (
 /obj/effect/turf_decal/tile/blue,
-/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
-"axF" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/open/floor/plating,
-/area/maintenance/fore/secondary)
 "axG" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
@@ -55566,7 +55556,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "vyA" = (
@@ -85734,7 +85724,7 @@ oEV
 oEV
 oEV
 awk
-axB
+wcy
 wcy
 wcy
 wcy
@@ -86248,7 +86238,7 @@ ahn
 ahn
 ahn
 awm
-axD
+ahn
 ahn
 ahn
 ahn
@@ -86505,7 +86495,7 @@ wLh
 wLh
 wLh
 awn
-axF
+anF
 anF
 anF
 anF
