@@ -49,8 +49,8 @@
 			M.reagents.add_reagent(forkload.type, 1)
 		icon_state = "fork"
 		forkload = null
-
-	return ..()
+	else
+		return ..()
 
 /obj/item/kitchen/fork/plastic
 	name = "plastic fork"
