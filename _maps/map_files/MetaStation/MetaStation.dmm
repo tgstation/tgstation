@@ -16422,7 +16422,10 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/open/floor/plating,
+/obj/structure/cable,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
 /area/maintenance/port/fore)
 "aLn" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -20964,7 +20967,10 @@
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;63;48;50"
 	},
-/turf/open/floor/plating,
+/obj/structure/cable,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
 /area/maintenance/port/fore)
 "aVU" = (
 /obj/structure/closet/firecloset,
@@ -21694,7 +21700,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/structure/cable,
 /obj/machinery/firealarm{
 	pixel_y = 32
 	},
@@ -23065,6 +23070,11 @@
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
+	},
+/obj/machinery/door/window/westleft{
+	dir = 2;
+	name = "Crate Security Door";
+	req_access_txt = "50"
 	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
@@ -28497,7 +28507,7 @@
 /turf/closed/wall,
 /area/quartermaster/sorting)
 "bmm" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "bmn" = (
@@ -68291,7 +68301,7 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "dCx" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/warehouse)
 "dCz" = (
@@ -69774,6 +69784,12 @@
 	},
 /turf/open/floor/circuit,
 /area/science/misc_lab/range)
+"fVm" = (
+/obj/structure/cable,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/port/fore)
 "fVx" = (
 /obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
@@ -73484,10 +73500,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "nMU" = (
-/obj/effect/spawner/structure/window,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/construction/storage_wing)
 "nOl" = (
@@ -73495,6 +73511,10 @@
 /obj/structure/chair/office/light,
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
+"nOZ" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/quartermaster/qm)
 "nPC" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -74365,10 +74385,10 @@
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_c)
 "pHd" = (
-/obj/effect/spawner/structure/window,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/quartermaster/sorting)
 "pKP" = (
@@ -77524,6 +77544,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"wnR" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/structure/rack,
+/turf/open/floor/plating{
+	icon_state = "platingdmg3"
+	},
+/area/maintenance/port/fore)
 "woz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -95646,7 +95673,7 @@ dmH
 dmH
 luZ
 bgG
-biE
+nOZ
 bkg
 lDf
 bnV
@@ -95903,7 +95930,7 @@ dmH
 bdi
 beV
 bgH
-biE
+nOZ
 bkh
 lDf
 boc
@@ -97186,8 +97213,8 @@ aYO
 dmH
 dmH
 dmH
-biE
-biE
+nOZ
+nOZ
 dmH
 dmH
 dmH
@@ -101537,7 +101564,7 @@ aaa
 aaa
 aaa
 anb
-aRG
+doA
 doJ
 dne
 aJR
@@ -101794,7 +101821,7 @@ aaa
 aaa
 aaa
 anb
-aRG
+wnR
 doJ
 dne
 aJN
@@ -102053,18 +102080,18 @@ aaa
 anb
 doJ
 doJ
-aRG
-aRG
+doJ
+doJ
 aLm
-aRG
-aRG
-aRG
-aRG
-aRG
-aRG
-aRG
+doJ
+doJ
+doJ
+fVm
+doJ
+doJ
+doJ
 aVT
-aXC
+aXD
 gsF
 baJ
 rrB
@@ -102311,13 +102338,13 @@ dne
 doJ
 aio
 anb
-aip
+anb
 aLn
 aio
 aio
 aio
 aio
-aip
+anb
 anb
 aio
 aio
