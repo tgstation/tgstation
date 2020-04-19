@@ -3,7 +3,7 @@
 	var/optiontext
 
 /mob/dead/new_player/proc/handle_player_polling()
-	if(!SSdbcore.IsConnected())
+	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
 		return
 	var/datum/DBQuery/query_poll_get = SSdbcore.NewQuery("SELECT id, question FROM [format_table_name("poll_question")] WHERE Now() BETWEEN starttime AND endtime [(client.holder ? "" : "AND adminonly = false")]")
