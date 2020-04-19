@@ -149,12 +149,11 @@
 	addtimer(CALLBACK(src, .proc/start_stopped, pod), 5)
 
 /obj/structure/transit_tube/station/proc/start_stopped(obj/structure/transit_tube_pod/pod)
-	spawn(5)
-		if(reverse_launch)
-			pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
-		launch_cooldown = world.time + cooldown_delay
-		open_animation()
-		addtimer(CALLBACK(src, .proc/finish_stopped, pod), OPEN_DURATION + 2)
+	if(reverse_launch)
+		pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
+	launch_cooldown = world.time + cooldown_delay
+	open_animation()
+	addtimer(CALLBACK(src, .proc/finish_stopped, pod), OPEN_DURATION + 2)
 
 /obj/structure/transit_tube/station/proc/finish_stopped(obj/structure/transit_tube_pod/pod)
 	pod_moving = FALSE
