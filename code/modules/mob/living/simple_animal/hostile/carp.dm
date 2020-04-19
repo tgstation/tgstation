@@ -104,7 +104,7 @@
 
 /mob/living/simple_animal/hostile/carp/proc/chomp_plastic()
 	var/obj/item/storage/cans/tasty_plastic = locate(/obj/item/storage/cans) in view(1, src)
-	if(tasty_plastic)
+	if(tasty_plastic && Adjacent(tasty_plastic))
 		visible_message("<span class='notice'>[src] gets its head stuck in [tasty_plastic], and gets cut breaking free from it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... Ow! It cuts the inside of your mouth!</span>")
 
 		new /obj/effect/decal/cleanable/plastic(loc)
