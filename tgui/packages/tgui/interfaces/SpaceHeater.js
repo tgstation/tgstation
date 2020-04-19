@@ -30,12 +30,13 @@ export const SpaceHeater = props => {
             {data.hasPowercell && (
               <ProgressBar
                 value={data.powerLevel / 100}
-                content={data.powerLevel + '%'}
                 ranges={{
                   good: [0.6, Infinity],
                   average: [0.3, 0.6],
                   bad: [-Infinity, 0.3],
-                }} />
+                }}>
+                {data.powerLevel + '%'}
+              </ProgressBar>
             ) || 'None'}
           </LabeledList.Item>
         </LabeledList>

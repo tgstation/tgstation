@@ -853,8 +853,8 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cK" = (
 /obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'HOLY SHIT NIGGA WHAT ARE YOU DOING'.";
-	name = "\improper HOLY SHIT NIGGA WHAT ARE YOU DOING"
+	desc = "A warning sign which reads 'HOLY SHIT SWAGMAN WHAT ARE YOU DOING'.";
+	name = "\improper HOLY SHIT SWAGMAN WHAT ARE YOU DOING"
 	},
 /turf/closed/wall,
 /area/awaymission/caves/BMP_asteroid/level_two)

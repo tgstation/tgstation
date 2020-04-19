@@ -251,6 +251,13 @@ export const hotKeyReducer = (state, action) => {
         showKitchenSink: !state.showKitchenSink,
       };
     }
+    // Toggle layout debugger
+    if (ctrlKey && altKey && keyCode === KEY_MINUS) {
+      return {
+        ...state,
+        debugLayout: !state.debugLayout,
+      };
+    }
     return state;
   }
   return state;

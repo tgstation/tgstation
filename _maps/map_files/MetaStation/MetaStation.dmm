@@ -54023,6 +54023,7 @@
 	},
 /obj/item/folder/white,
 /obj/item/pen,
+/obj/item/stamp/cmo,
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
 "crA" = (
@@ -54692,7 +54693,7 @@
 	pixel_y = 30;
 	receive_ore_updates = 1
 	},
-/obj/machinery/modular_computer/console/preset/research{
+/obj/machinery/computer/rdconsole/core{
 	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
@@ -55903,13 +55904,15 @@
 	},
 /area/crew_quarters/heads/hor)
 "cwU" = (
-/obj/structure/filingcabinet/chestdrawer,
 /obj/machinery/airalarm{
 	dir = 8;
 	pixel_x = 24
 	},
 /obj/item/radio/intercom{
 	pixel_y = -29
+	},
+/obj/machinery/modular_computer/console/preset/research{
+	dir = 8
 	},
 /turf/open/floor/plasteel/cafeteria{
 	dir = 5

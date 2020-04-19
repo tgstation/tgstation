@@ -2,14 +2,11 @@
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser
 	charge_max = 1800
-	action_icon = 'icons/mob/actions/actions_cult.dmi'
-	action_icon_state = "artificer"
 	action_background_icon_state = "bg_demon"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/construct/lesser/cult
 	clothes_req = TRUE
 	charge_max = 2500
-
 
 /obj/effect/proc_holder/spell/aoe_turf/area_conversion
 	name = "Area Conversion"

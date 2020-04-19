@@ -123,11 +123,16 @@ export const computeBoxProps = props => {
     }
   }
   // Concatenate styles
-  Object.assign(computedStyles, props.style);
   let style = '';
   for (let attrName of Object.keys(computedStyles)) {
     const attrValue = computedStyles[attrName];
     style += attrName + ':' + attrValue + ';';
+  }
+  if (props.style) {
+    for (let attrName of Object.keys(props.style)) {
+      const attrValue = props.style[attrName];
+      style += attrName + ':' + attrValue + ';';
+    }
   }
   if (style.length > 0) {
     computedProps.style = style;
@@ -135,31 +140,36 @@ export const computeBoxProps = props => {
   return computedProps;
 };
 
+export const computeBoxClassName = props => {
+  const color = props.textColor || props.color;
+  const backgroundColor = props.backgroundColor;
+  return classes([
+    isColorClass(color) && 'color-' + color,
+    isColorClass(backgroundColor) && 'color-bg-' + backgroundColor,
+  ]);
+};
+
 export const Box = props => {
   const {
     as = 'div',
     className,
-    content,
     children,
     ...rest
   } = props;
-  const color = props.textColor || props.color;
-  const backgroundColor = props.backgroundColor;
   // Render props
   if (typeof children === 'function') {
     return children(computeBoxProps(props));
   }
+  const computedClassName = typeof className === 'string'
+    ? className + ' ' + computeBoxClassName(rest)
+    : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
   // Render a wrapper element
   return createVNode(
     VNodeFlags.HtmlElement,
     as,
-    classes([
-      className,
-      isColorClass(color) && 'color-' + color,
-      isColorClass(backgroundColor) && 'color-bg-' + backgroundColor,
-    ]),
-    content || children,
+    computedClassName,
+    children,
     ChildFlags.UnknownChildren,
     computedProps);
 };
