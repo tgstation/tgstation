@@ -9,6 +9,7 @@
 	var/buildable_sign = 1 //unwrenchable and modifiable
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	var/is_buildable = FALSE //This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
+	var/sign_change_name = "Sign - Blank" //sign_change_name is used to make nice look, alphebetized and categorized names when you use a pen on a sign backing. It's an alternate title.
 
 /obj/structure/sign/basic
 	name = "blank sign"
@@ -38,7 +39,7 @@ GLOBAL_VAR(buildable_sign_types)
     var/obj/structure/sign/potential_sign = s
     if(!initial(potential_sign.is_buildable))
       continue
-    GLOB.buildable_sign_types[initial(potential_sign.name)] = potential_sign
+    GLOB.buildable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign ///sign_change_name is an alternate title for signs, that only appears in the list when you use a pen on a sign backing.
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && buildable_sign)
