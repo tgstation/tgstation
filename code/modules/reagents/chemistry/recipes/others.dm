@@ -532,6 +532,17 @@
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/slime_extract/grey(location)
 
+/datum/chemical_reaction/metalgen_imprint
+	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)
+	results = list(/datum/reagent/metalgen = 1)
+
+/datum/chemical_reaction/metalgen_imprint/on_reaction(datum/reagents/holder, created_volume)
+	var/datum/reagent/metalgen/MM = holder.get_reagent(/datum/reagent/metalgen)
+	for(var/datum/reagent/R in holder.reagent_list)
+		if(R.material && R.volume >= 40)
+			MM.data["material"] = R.material
+			holder.remove_reagent(R.type, 40)
+
 /datum/chemical_reaction/gravitum
 	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/sorium = 10)
 	results = list(/datum/reagent/gravitum = 10)
