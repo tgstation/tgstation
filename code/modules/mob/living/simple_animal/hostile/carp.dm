@@ -107,7 +107,8 @@
 	if(tasty_plastic)
 		visible_message("<span class='notice'>[src] gets its head stuck in [tasty_plastic], and gets cut breaking free from it!</span>", "<span class='notice'>You try to avoid [tasty_plastic], but it looks so... delicious... Ow! It cuts the inside of your mouth!</span>")
 
-		new /obj/effect/decal/cleanable/plastic(src.loc)
+		new /obj/effect/decal/cleanable/plastic(loc)
+
 		adjustBruteLoss(5)
 		qdel(tasty_plastic)
 
