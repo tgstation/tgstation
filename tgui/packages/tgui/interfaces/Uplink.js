@@ -1,7 +1,7 @@
 import { createSearch, decodeHtmlEntities } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, Section, Table, Tabs } from '../components';
+import { Box, Button, Flex, Input, Section, Table, Tabs, NoticeBox } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -54,7 +54,9 @@ export const GenericUplink = (props, context) => {
     // Select a category and show all items in it
     || categories
       .find(category => category.name === selectedCategory)
-      ?.items;
+      ?.items
+    // If none of that results in a list, return an empty list
+    || [];
   return (
     <Section
       title={(
@@ -99,6 +101,13 @@ export const GenericUplink = (props, context) => {
           </Flex.Item>
         )}
         <Flex.Item grow={1} basis={0}>
+          {items.length === 0 && (
+            <NoticeBox>
+              {searchText.length === 0
+                ? 'No items in this category.'
+                : 'No results found.'}
+            </NoticeBox>
+          )}
           <ItemList
             compactMode={searchText.length > 0 || compactMode}
             currencyAmount={currencyAmount}
