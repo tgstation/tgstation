@@ -17,9 +17,3 @@
 	name = "Chime"
 	id = "chime"
 	real_samples = list("79"='sound/machines/chime.ogg')
-
-/datum/instrument/fun/nya
-	name = "NYA NYA NYA"
-	id = "nyanyanya"
-	real_samples = list("79" = 'modular_citadel/sound/voice/nya.ogg')
-	admin_only = TRUE

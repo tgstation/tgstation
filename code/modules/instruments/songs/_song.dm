@@ -178,7 +178,7 @@
 	if(istype(I))
 		using_instrument = I
 		I.songs_using += src
-		var/instrument_legacy = CHECK_BITFIELD(I.instrument_flags, INSTRUMENT_LEGACY)
+		var/instrument_legacy = (I.instrument_flags & INSTRUMENT_LEGACY)
 		if(instrument_legacy)
 			cached_legacy_ext = I.legacy_instrument_ext
 			cached_legacy_dir = I.legacy_instrument_path
@@ -216,7 +216,7 @@
 	if(!debug_mode)
 		compiled_chords = null
 	STOP_PROCESSING(SSinstruments, src)
-	SEND_SIGNAL(parent, COMSIG_SONG_STOP)
+	SEND_SIGNAL(parent, COMSIG_SONG_END)
 	terminate_all_sounds(TRUE)
 	hearing_mobs.len = 0
 	updateDialog()

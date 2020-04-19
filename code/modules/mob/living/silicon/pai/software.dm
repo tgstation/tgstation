@@ -298,8 +298,6 @@
 			if("loudness")
 				if(subscreen == 1) // Open Instrument
 					internal_instrument.interact(src)
-				if(subscreen == 2) // Change Instrument type
-					internal_instrument.selectInstrument()
 
 		paiInterface()
 
