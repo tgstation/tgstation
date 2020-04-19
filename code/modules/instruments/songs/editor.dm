@@ -236,7 +236,7 @@
 	else if(href_list["setnoteshift"])
 		var/amount = input(usr, "Set note shift", "Note Shift") as null|num
 		if(!isnull(amount))
-			note_shift = CLAMP(amount, note_shift_min, note_shift_max)
+			note_shift = clamp(amount, note_shift_min, note_shift_max)
 
 	else if(href_list["setsustainmode"])
 		var/choice = input(usr, "Choose a sustain mode", "Sustain Mode") as null|anything in list("Linear", "Exponential")
