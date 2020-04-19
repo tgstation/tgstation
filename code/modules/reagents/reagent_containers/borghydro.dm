@@ -1,4 +1,3 @@
-#define C2NAMEREAGENT	"[initial(reagent.name)] (Has Side-Effects)"
 #define CHEMEFFECT "[initial(reagent.name)][(reagent in reagent_desc) ? reagent_desc[reagent] : ""] [initial(reagent.harmful) ? "(Has side effects)" : ""]"
 /*
 Contains:
@@ -289,4 +288,3 @@ Borg Shaker
 	accepts_reagent_upgrades = FALSE
 
 #undef CHEMEFFECT
-#undef C2NAMEREAGENT
