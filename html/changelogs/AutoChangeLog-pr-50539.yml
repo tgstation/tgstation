@@ -1,0 +1,4 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - bugfix: "Peacekeeper cyborgs have had an update to their firmware which corrects dampening fields remaining active after severe damage or death."
