@@ -8,8 +8,8 @@
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/buildable_sign = 1 //unwrenchable and modifiable
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	var/is_buildable = FALSE //This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
-	var/sign_change_name = "Sign - Blank" //sign_change_name is used to make nice look, alphebetized and categorized names when you use a pen on a sign backing. It's an alternate title.
+	var/is_editable = FALSE //This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
+	var/sign_change_name = "Sign - Blank" //sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
 
 /obj/structure/sign/basic
 	name = "blank sign"
@@ -37,7 +37,7 @@ GLOBAL_VAR(buildable_sign_types)
 	GLOB.buildable_sign_types = list()
 	for(var/s in subtypesof(/obj/structure/sign))
 		var/obj/structure/sign/potential_sign = s
-		if(!initial(potential_sign.is_buildable))
+		if(!initial(potential_sign.is_editable))
 			continue
 		GLOB.buildable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign //sign_change_name is an alternate title for signs, that only appears in the list when you use a pen on a sign backing.
 	GLOB.buildable_sign_types = sortList(GLOB.buildable_sign_types) //Alphabetizes the results.
@@ -57,7 +57,7 @@ GLOBAL_VAR(buildable_sign_types)
 			SB.setDir(dir)
 			qdel(src)
 		return
-	else if(istype(I, /obj/item/pen) && buildable_sign)
+	else if(istype(I, /obj/item/pen) && is_editable)
 		if(!length(GLOB.buildable_sign_types))
 			populate_buildable_sign_types()
 			if(!length(GLOB.buildable_sign_types))
@@ -119,7 +119,7 @@ GLOBAL_VAR(buildable_sign_types)
 	sign_change_name = "Corporate Logo - Nanotrasen"
 	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
-	is_buildable = TRUE
+	is_editable = TRUE
 
 /obj/structure/sign/logo
 	name = "\improper Nanotrasen logo"
