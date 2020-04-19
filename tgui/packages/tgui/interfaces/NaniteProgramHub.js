@@ -16,8 +16,10 @@ export const NaniteProgramHub = (props, context) => {
   const [
     selectedCategory,
     setSelectedCategory,
-  ] = useSharedState(context, 'category', Object.keys(programs)[0]);
-  const programsInCategory = programs[selectedCategory] || [];
+  ] = useSharedState(context, 'category');
+  const programsInCategory = programs
+    && programs[selectedCategory]
+    || [];
   return (
     <Window resizable>
       <Window.Content scrollable>
