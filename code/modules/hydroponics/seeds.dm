@@ -536,13 +536,3 @@
 	for(var/i in 1 to amount_random_reagents)
 		var/datum/reagent/chemical = pick(reagents_add)
 		qdel(chemical)
-
-/obj/item/seeds/proc/remove_random_traits(lower = 0, upper = 2)
-	var/list/genepool = list()
-	var/amount_random_traits = rand(lower, upper)
-	for(var/datum/plant_gene/trait in genes)
-		genepool += trait
-
-	for(var/i in 1 to amount_random_traits)
-		var/datum/plant_gene/planted_gene = pick(genepool)
-		qdel(planted_gene)

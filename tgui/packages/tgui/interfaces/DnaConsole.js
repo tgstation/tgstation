@@ -7,10 +7,8 @@ import { useBackend } from '../backend';
 import { Box, Button, Collapsible, Dimmer, Divider, Dropdown, Flex, Icon, LabeledList, NumberInput, ProgressBar, Section } from '../components';
 import { createLogger } from '../logging';
 
-// TODO: Combining mutations (E.g. Radioactive + Strength = Hulk)
-// https://tgstation13.org/wiki/Guide_to_genetics#List_of_Mutations
-
-const logger = createLogger('DnaConsole');
+// IN CASE OF DEBUGGING, BREAK GLASS.
+// const logger = createLogger('DnaConsole');
 
 const SUBJECT_CONCIOUS = 0;
 const SUBJECT_SOFT_CRIT = 1;
@@ -1005,7 +1003,23 @@ const GenomeSequencer = props => {
         {buttons[i + 1]}
       </Box>
     );
+
+    if ((i % 8 === 0) && (i !== 0)) {
+      pairs.push(
+        <Box
+          key={`${i}_divider`}
+          inline
+          position="relative"
+          top="-17px"
+          left="-1px"
+          width="8px"
+          height="2px"
+          backgroundColor="label" />,
+      );
+    }
+
     pairs.push(pair);
+
   }
   return (
     <Fragment>

@@ -32238,14 +32238,14 @@
 	dir = 4;
 	pixel_x = -23
 	},
-/obj/machinery/computer/rdconsole{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
+	},
+/obj/machinery/computer/rdconsole/core{
+	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hor)
