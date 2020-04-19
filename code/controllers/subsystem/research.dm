@@ -20,26 +20,33 @@ SUBSYSTEM_DEF(research)
 
 	var/list/obj/machinery/rnd/server/servers = list()
 
-	var/list/techweb_nodes_starting = list()	//associative id = TRUE
-	var/list/techweb_categories = list()		//category name = list(node.id = TRUE)
-	var/list/techweb_boost_items = list()		//associative double-layer path = list(id = list(point_type = point_discount))
-	var/list/techweb_nodes_hidden = list()		//Node ids that should be hidden by default.
+	var/list/techweb_nodes_starting = list()		//associative id = TRUE
+	var/list/techweb_categories = list()			//category name = list(node.id = TRUE)
+	var/list/techweb_boost_items = list()			//associative double-layer path = list(id = list(point_type = point_discount))
+	var/list/techweb_nodes_hidden = list()			//Node ids that should be hidden by default.
 	var/list/techweb_nodes_experimental = list()	//Node ids that are exclusive to the BEPIS.
-	var/list/techweb_point_items = list(		//path = list(point type = value)
-	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
+	var/list/techweb_point_items = list(			//path = list(point type = value)
+	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_SCIENCE = 10000)
 	)
 	var/list/errored_datums = list()
 	var/list/point_types = list()				//typecache style type = TRUE list
-	var/list/slime_already_researched = list() 	//Slime cores that have already been researched
+	var/list/slime_already_researched = list() 	///Slime cores that have already been researched
 	//----------------------------------------------
-	var/list/single_server_income = list(TECHWEB_POINT_TYPE_GENERIC = 52.3)
+
+	/*Values for how many research points should be allotted per second. In general Science should get more than other departments.
+	The math looks something like this:
+	[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
+	Around 450000 points max
+	THIS WILL CHANGE WHEN TECHNODES UPDATE IS DONE. For now use it as a general guide.*/
+	var/list/single_server_income = list(TECHWEB_POINT_TYPE_SCIENCE = 50,
+		TECHWEB_POINT_TYPE_CARGO = 45,
+		TECHWEB_POINT_TYPE_ENGINEERING = 45,
+		TECHWEB_POINT_TYPE_MEDICAL = 45,
+		TECHWEB_POINT_TYPE_SECURITY = 45,
+		TECHWEB_POINT_TYPE_SERVICE = 45)
+
 	var/multiserver_calculation = FALSE
 	var/last_income
-	//^^^^^^^^ ALL OF THESE ARE PER SECOND! ^^^^^^^^
-
-	//Aiming for 1.5 hours to max R&D
-	//[88nodes * 5000points/node] / [1.5hr * 90min/hr * 60s/min]
-	//Around 450000 points max???
 
 /datum/controller/subsystem/research/Initialize()
 	point_types = TECHWEB_POINT_TYPE_LIST_ASSOCIATIVE_NAMES
@@ -47,6 +54,7 @@ SUBSYSTEM_DEF(research)
 	initialize_all_techweb_nodes()
 	science_tech = new /datum/techweb/science
 	admin_tech = new /datum/techweb/admin
+
 	autosort_categories()
 	error_design = new
 	error_node = new
