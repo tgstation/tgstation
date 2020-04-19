@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - rscadd: "The h2o interactions have been polished and readded. Fucking global variables."

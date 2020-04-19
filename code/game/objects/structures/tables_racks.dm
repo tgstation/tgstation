@@ -526,7 +526,7 @@
 
 /obj/structure/table/optable/Initialize()
 	. = ..()
-	for(var/direction in GLOB.cardinals)
+	for(var/direction in GLOB.alldirs)
 		computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
 		if(computer)
 			computer.table = src

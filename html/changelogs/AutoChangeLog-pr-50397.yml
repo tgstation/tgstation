@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Being at the epicenter of explosions no longer damage the contents of storage that is meant to prevent it (most commonly photos inside photo albums)"
