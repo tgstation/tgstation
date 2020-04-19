@@ -21646,9 +21646,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
@@ -21659,9 +21656,6 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
@@ -21670,9 +21664,6 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
 "aXy" = (
@@ -21697,9 +21688,6 @@
 /area/quartermaster/storage)
 "aXz" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/machinery/firealarm{
 	pixel_y = 32
 	},
@@ -23147,9 +23135,6 @@
 /area/hallway/primary/port)
 "baF" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/effect/turf_decal/trimline/brown/filled/corner{
 	dir = 8
 	},
@@ -69026,9 +69011,6 @@
 /area/medical/virology)
 "enV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
@@ -101577,7 +101559,7 @@ caA
 aTe
 aUs
 aJO
-aXC
+aXR
 qHJ
 muk
 rrB
