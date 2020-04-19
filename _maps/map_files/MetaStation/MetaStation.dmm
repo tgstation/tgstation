@@ -9603,7 +9603,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "atG" = (
 /obj/structure/disposalpipe/segment{
@@ -9642,7 +9644,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "atK" = (
 /obj/machinery/computer/prisoner/gulag_teleporter_computer{
@@ -51500,7 +51504,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/engine,
+/turf/open/floor/engine{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cme" = (
 /obj/item/stack/rods{
@@ -51881,7 +51887,9 @@
 	pixel_y = -32
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cnf" = (
 /obj/structure/sign/warning/vacuum/external{
@@ -51890,7 +51898,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
 	dir = 1
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cng" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
@@ -53886,7 +53896,9 @@
 /area/space/nearstation)
 "cre" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "crf" = (
 /obj/machinery/door/poddoor/incinerator_atmos_main,
@@ -58308,7 +58320,9 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "cEu" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -58604,12 +58618,16 @@
 	},
 /area/science/research)
 "cFn" = (
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "cFo" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
-/turf/open/floor/engine,
+/turf/open/floor/engine{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "cFp" = (
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/incinerator_toxmix,
@@ -58891,7 +58909,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "cGk" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -61752,7 +61772,9 @@
 	luminosity = 2
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cNx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -61987,7 +62009,9 @@
 /obj/machinery/power/turbine{
 	luminosity = 2
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cOb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
@@ -72252,6 +72276,11 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"kQn" = (
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
+/area/science/mixing/chamber)
 "kQx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral,
@@ -72700,6 +72729,14 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"lOU" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
+/area/science/server)
 "lSe" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
@@ -75881,6 +75918,14 @@
 /mob/living/carbon/monkey,
 /turf/open/floor/grass,
 /area/science/genetics)
+"sSl" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
+/area/science/mixing/chamber)
 "sUG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -75992,6 +76037,12 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
+"tfP" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
+/area/maintenance/disposal/incinerator)
 "tgQ" = (
 /obj/structure/sink/puddle,
 /obj/structure/flora/junglebush/large{
@@ -76293,9 +76344,16 @@
 /obj/item/storage/bag/money,
 /turf/open/floor/circuit,
 /area/science/misc_lab/range)
+"tXw" = (
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
+/area/maintenance/disposal/incinerator)
 "tXK" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "tYi" = (
 /obj/machinery/vending/wardrobe/viro_wardrobe,
@@ -77042,7 +77100,9 @@
 /area/maintenance/port/aft)
 "vIO" = (
 /obj/machinery/igniter/incinerator_toxmix,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "vKx" = (
 /obj/effect/turf_decal/stripes/line{
@@ -109974,11 +110034,11 @@ czt
 cAy
 cBt
 cCu
-wQA
+kQn
 cEr
 cEr
 cEr
-cHe
+lOU
 cIb
 cIV
 cJS
@@ -110231,11 +110291,11 @@ fIp
 cAz
 cBu
 cCv
-wQA
+kQn
 cEs
 vIO
 cFn
-cHe
+lOU
 cIc
 cIW
 cJT
@@ -110488,11 +110548,11 @@ ffD
 dDA
 cBv
 cCw
-wQA
+kQn
 atJ
 tXK
 cGj
-cHe
+lOU
 cId
 cIX
 cJU
@@ -110745,11 +110805,11 @@ mom
 cAz
 cBs
 onu
-wQA
-cEu
+kQn
+sSl
 cFo
-cEu
-cHe
+sSl
+lOU
 cIe
 cIY
 cIe
@@ -117667,9 +117727,9 @@ cfq
 aov
 cgz
 atC
-cgz
-cgz
-cgz
+tXw
+tXw
+tXw
 cpN
 crd
 ack
@@ -117924,10 +117984,10 @@ aju
 apP
 cjb
 ckD
-cjb
+tfP
 atF
-cgz
-cgz
+tXw
+tXw
 cre
 aaa
 ack
@@ -118438,10 +118498,10 @@ czH
 cLC
 cjb
 ckF
-cjb
+tfP
 cnf
-cgz
-cgz
+tXw
+tXw
 cre
 aaa
 ack
@@ -118695,9 +118755,9 @@ pOP
 pOP
 pOP
 gXY
-cgz
+tXw
 cng
-cgz
+tXw
 cpP
 ack
 ack

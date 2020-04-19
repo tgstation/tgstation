@@ -34158,7 +34158,9 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "bMu" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
@@ -34174,7 +34176,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "bMx" = (
 /obj/machinery/airlock_sensor/incinerator_toxmix{
@@ -34471,12 +34475,16 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bNt" = (
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "bNu" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
-/turf/open/floor/engine,
+/turf/open/floor/engine{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "bNv" = (
 /obj/effect/mapping_helpers/airlock/locked,
@@ -34875,7 +34883,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "bOF" = (
 /obj/structure/sign/warning/fire{
@@ -42711,7 +42721,9 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
 	dir = 1
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cor" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -42720,7 +42732,9 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cou" = (
 /obj/machinery/space_heater,
@@ -42940,7 +42954,9 @@
 	luminosity = 2
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cpP" = (
 /obj/structure/lattice,
@@ -43138,7 +43154,9 @@
 /area/hallway/secondary/entry)
 "cqs" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall,
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "cqt" = (
 /obj/machinery/door/poddoor/incinerator_atmos_main,
@@ -46110,7 +46128,9 @@
 "cBE" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "cBF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
@@ -48456,7 +48476,9 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "dGF" = (
-/turf/closed/wall/r_wall,
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "dMb" = (
 /obj/effect/turf_decal/tile/brown{
@@ -50144,6 +50166,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
+"iPO" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 4
+	},
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
+/area/science/mixing/chamber)
 "iQF" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -52105,6 +52135,12 @@
 /obj/item/radio/headset/headset_med,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
+"nRA" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
+/area/maintenance/disposal/incinerator)
 "nRB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -52267,7 +52303,9 @@
 	id = "Incinerator"
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "olh" = (
 /obj/machinery/holopad,
@@ -53145,7 +53183,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/engine,
+/turf/open/floor/engine{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "qdV" = (
 /obj/effect/turf_decal/tile/blue{
@@ -53250,7 +53290,9 @@
 	luminosity = 2
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/maintenance/disposal/incinerator)
 "qrU" = (
 /obj/machinery/disposal/bin,
@@ -54506,6 +54548,11 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
+"ueA" = (
+/turf/closed/wall/r_wall{
+	thermal_conductivity = 0
+	},
+/area/maintenance/disposal/incinerator)
 "ueE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -54741,7 +54788,9 @@
 /area/maintenance/disposal/incinerator)
 "uSD" = (
 /obj/machinery/igniter/incinerator_toxmix,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/vacuum{
+	thermal_conductivity = 0
+	},
 /area/science/mixing/chamber)
 "uTi" = (
 /obj/structure/disposalpipe/segment{
@@ -93798,9 +93847,9 @@ lcA
 ckg
 cmb
 wHz
-cmd
+ueA
 cpQ
-cmd
+ueA
 nXv
 nXv
 nXv
@@ -94055,10 +94104,10 @@ nHw
 csq
 cme
 uEq
-cme
+nRA
 cop
-cmd
-cmd
+ueA
+ueA
 cqs
 aaa
 aag
@@ -94569,10 +94618,10 @@ clj
 ckk
 cme
 hfX
-cme
+nRA
 cor
-cmd
-cmd
+ueA
+ueA
 cqs
 aaa
 aag
@@ -94826,9 +94875,9 @@ clf
 qMk
 cmd
 cmZ
-cmd
-cmd
-cmd
+ueA
+ueA
+ueA
 nXv
 nXv
 nXv
@@ -104050,9 +104099,9 @@ bzL
 bxZ
 bCi
 dGF
-bMv
+iPO
 bNu
-bMv
+iPO
 dGF
 nEP
 mPh
