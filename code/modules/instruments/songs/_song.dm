@@ -202,7 +202,7 @@
 	//wrap the rest of the stuff to ensure stop_playing() is called.
 	last_process_decay = world.time
 	START_PROCESSING(SSinstruments, src)
-	SEND_SIGNAL(instrumentObj, COMSIG_SONG_START)
+	SEND_SIGNAL(parent, COMSIG_SONG_START)
 	. = do_play_lines(user)
 	stop_playing()
 
@@ -216,7 +216,7 @@
 	if(!debug_mode)
 		compiled_chords = null
 	STOP_PROCESSING(SSinstruments, src)
-	SEND_SIGNAL(instrumentObj, COMSIG_SONG_STOP)
+	SEND_SIGNAL(parent, COMSIG_SONG_STOP)
 	terminate_all_sounds(TRUE)
 	hearing_mobs.len = 0
 	updateDialog()

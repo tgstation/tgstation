@@ -137,7 +137,7 @@
 /**
   * Called by a component signal when our song stops playing.
   */
-/obj/item/instrument/piano_synth/headphones/stop_playing()
+/obj/item/instrument/piano_synth/headphones/proc/stop_playing()
 	icon_state = "[initial(icon_state)]"
 	update_icon()
 
