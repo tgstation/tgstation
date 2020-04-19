@@ -242,7 +242,7 @@
 	pressure_limit = 1e14
 	volume = 5000
 	max_integrity = 500
-	can_max_release_pressure = (ONE_ATMOSPHERE * 50)
+	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
 	can_min_release_pressure = (ONE_ATMOSPHERE / 50)
 	mode = CANISTER_TIER_3
 
