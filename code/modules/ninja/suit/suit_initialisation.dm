@@ -68,9 +68,9 @@ GLOBAL_LIST_INIT(ninja_deinitialize_messages, list(
 		if (NINJA_ICON_GENERATE_PHASE)
 			lockIcons(U)//Check for icons.
 			U.regenerate_icons()
-		if (NINJA_INIT_COMPLETE_PHASE - 1)
+		if (NINJA_COMPLETE_PHASE - 1)
 			message += "<B>[DisplayEnergy(cell.charge)]</B>."
-		if (NINJA_INIT_COMPLETE_PHASE)
+		if (NINJA_COMPLETE_PHASE)
 			message += "[U.real_name]."
 			s_initialized = TRUE
 			s_busy = FALSE
