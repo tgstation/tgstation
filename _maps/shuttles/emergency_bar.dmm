@@ -177,7 +177,7 @@
 /turf/open/floor/plasteel,
 /area/shuttle/escape)
 "aF" = (
-/obj/structure/piano{
+/obj/structure/musician/piano{
 	icon_state = "piano"
 	},
 /turf/open/floor/plasteel/grimy,

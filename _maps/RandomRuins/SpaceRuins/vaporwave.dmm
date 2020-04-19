@@ -28,7 +28,7 @@
 /turf/open/floor/holofloor/beach,
 /area/ruin/space/has_grav/powered/aesthetic)
 "i" = (
-/obj/structure/piano,
+/obj/structure/musician/piano,
 /obj/structure/window{
 	dir = 8
 	},
