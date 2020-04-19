@@ -2131,7 +2131,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "aet" = (
 /obj/structure/table/wood,
 /obj/machinery/newscaster/security_unit{
@@ -2180,7 +2180,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "aey" = (
 /turf/closed/wall,
 /area/security/range)
@@ -2570,14 +2570,14 @@
 	dir = 5
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "afh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "afi" = (
 /obj/structure/closet/secure_closet/hos,
 /obj/machinery/light{
@@ -3010,16 +3010,10 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/obj/machinery/power/apc/highcap/five_k{
-	areastring = "/area/security/warden";
-	dir = 8;
-	name = "Gear Room APC";
-	pixel_x = -25
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/secequipment,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "afZ" = (
 /obj/structure/table,
 /obj/item/storage/box/evidence,
@@ -3482,7 +3476,7 @@
 "agS" = (
 /obj/structure/lattice,
 /turf/closed/wall/r_wall,
-/area/security/warden)
+/area/security/main)
 "agT" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -3732,8 +3726,11 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ahB" = (
-/turf/closed/wall,
-/area/security/warden)
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plating,
+/area/security/main)
 "ahC" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
@@ -4598,7 +4595,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "ajt" = (
 /obj/structure/closet{
 	name = "Evidence Closet 5"
@@ -4674,7 +4671,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "ajA" = (
 /obj/structure/table,
 /obj/machinery/recharger{
@@ -4688,7 +4685,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "ajB" = (
 /obj/machinery/computer/secure_data,
 /obj/effect/turf_decal/tile/neutral{
@@ -5368,7 +5365,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "akJ" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red{
@@ -5379,7 +5376,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "akK" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
@@ -6062,7 +6059,7 @@
 	req_one_access_txt = "1;4"
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "alY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/red{
@@ -6107,7 +6104,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "amd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -6124,12 +6121,12 @@
 "ame" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "amf" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/supply/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "amg" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -6764,7 +6761,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "anv" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/camera{
@@ -7291,7 +7288,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "aoB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/red{
@@ -7848,7 +7845,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "apR" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/reagent_dispensers/peppertank{
@@ -8409,7 +8406,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "arh" = (
 /obj/item/reagent_containers/glass/bottle/toxin{
 	pixel_x = 4;
@@ -8434,7 +8431,7 @@
 	req_one_access_txt = "1;4"
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "arj" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red,
@@ -8443,11 +8440,11 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "ark" = (
 /obj/machinery/newscaster/security_unit,
 /turf/closed/wall,
-/area/security/warden)
+/area/security/main)
 "arl" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
@@ -8989,7 +8986,7 @@
 "asv" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/closed/wall/r_wall,
-/area/security/warden)
+/area/security/main)
 "asx" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 1
@@ -10526,6 +10523,11 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
+/obj/machinery/firealarm{
+	dir = 2;
+	pixel_x = 27;
+	pixel_y = 26
+	},
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "awh" = (
@@ -10944,7 +10946,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "axm" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -13565,7 +13567,7 @@
 	},
 /obj/effect/turf_decal/tile/blue,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "aDH" = (
 /obj/structure/closet/secure_closet/brig,
 /turf/open/floor/plasteel/dark,
@@ -14119,7 +14121,7 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "aEX" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel/dark,
@@ -68592,7 +68594,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "dCg" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/landmark/event_spawn,
@@ -68623,13 +68625,16 @@
 	pixel_y = 7
 	},
 /obj/item/key/security,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 28
-	},
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/power/apc/highcap/five_k{
+	areastring = "/area/security/warden";
+	dir = 4;
+	name = "Brig Control APC";
+	pixel_x = 25
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/showroomfloor,
 /area/security/warden)
 "dCi" = (
@@ -69334,7 +69339,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "ejE" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -69406,7 +69411,7 @@
 /obj/effect/turf_decal/tile/blue,
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "eqG" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -71219,7 +71224,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "iyU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -74098,7 +74103,7 @@
 	dir = 6
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "oZg" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -74402,7 +74407,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "pKP" = (
 /obj/machinery/power/apc/highcap/five_k{
 	areastring = "/area/medical/virology";
@@ -75009,7 +75014,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "qTc" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -75856,7 +75861,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "sxS" = (
 /obj/machinery/door/airlock/maintenance{
 	req_one_access_txt = "12;5;39"
@@ -76232,7 +76237,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "tBJ" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
@@ -76957,7 +76962,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/dark,
-/area/security/warden)
+/area/security/main)
 "vug" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -106142,8 +106147,8 @@ aaa
 aaf
 lMJ
 agS
-ajx
-ajx
+aiD
+aiD
 agS
 aeq
 qUE
@@ -106397,7 +106402,7 @@ aaa
 aaa
 aaa
 aaf
-adY
+aqa
 agS
 aDG
 eph
@@ -106411,7 +106416,7 @@ amb
 afY
 amf
 dCf
-alV
+ahB
 asu
 atS
 ama
@@ -106654,7 +106659,7 @@ aaa
 aaa
 aaa
 aaf
-ajx
+aiD
 axl
 ajs
 akI
@@ -106911,12 +106916,12 @@ aaa
 aaa
 aaa
 aaf
-adY
+aqa
 agS
 aEW
 ixj
 qRr
-adY
+aqa
 aex
 sxb
 ajA
@@ -106925,7 +106930,7 @@ afh
 anu
 aoz
 apQ
-ajx
+aiD
 asz
 ahP
 anB
@@ -107170,18 +107175,18 @@ aaa
 aaf
 lMJ
 agS
-ajx
-ajx
+aiD
+aiD
 agS
-adY
-adY
-adY
-adY
-ajx
+aqa
+aqa
+aqa
+aqa
+aiD
 alX
-ahB
-ajx
-ahB
+ajD
+aiD
+ajD
 ark
 aiD
 ajD
