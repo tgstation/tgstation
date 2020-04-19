@@ -22,7 +22,7 @@
 /obj/machinery/stasis/Initialize()
 	. = ..()
 	for(var/direction in GLOB.cardinals)
-		op_computer = locate(/obj/machinery/computer/operating, get_step(src, direction))
+		op_computer = locate(/obj/machinery/computer/operating) in get_step(src, direction)
 		if(op_computer)
 			op_computer.sbed = src
 			break

@@ -24,11 +24,11 @@
 
 /obj/machinery/computer/operating/Destroy()
 	for(var/direction in GLOB.cardinals)
-		table = locate(/obj/structure/table/optable, get_step(src, direction))
+		table = locate(/obj/structure/table/optable) in get_step(src, direction)
 		if(table && table.computer == src)
 			table.computer = null
 		else
-			sbed = locate(/obj/machinery/stasis, get_step(src, direction))
+			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
 			if(sbed && sbed.op_computer == src)
 				sbed.op_computer = null
 	. = ..()
@@ -53,12 +53,12 @@
 
 /obj/machinery/computer/operating/proc/find_table()
 	for(var/direction in GLOB.cardinals)
-		table = locate(/obj/structure/table/optable, get_step(src, direction))
+		table = locate(/obj/structure/table/optable) in get_step(src, direction)
 		if(table)
 			table.computer = src
 			break
 		else
-			sbed = locate(/obj/machinery/stasis, get_step(src, direction))
+			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
 			if(sbed)
 				sbed.op_computer = src
 				break
