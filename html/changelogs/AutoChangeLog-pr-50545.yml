@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - code_imp: "carps now dont look for 9 tiles around them every process to locate a single piece of plastic that they can only interact with if they're next to it. They're also able to see plastic under them, such advanced creatures."

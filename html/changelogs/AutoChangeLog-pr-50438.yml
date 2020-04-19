@@ -1,0 +1,4 @@
+author: "ominousgrace"
+delete-after: True
+changes: 
+  - bugfix: "Mad Scientist Wormhole Projector no longer requires an anomaly core."
