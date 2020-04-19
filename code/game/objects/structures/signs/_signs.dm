@@ -65,21 +65,24 @@ GLOBAL_VAR(buildable_sign_types)
 		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.buildable_sign_types
 		if(!choice)
 			return
-		var/sign_type = GLOB.buildable_sign_types[choice]
-		//Make sure user is adjacent still
-		if(!Adjacent(user))
-			return
-
-		if(!sign_type)
-			return
-
-		//It's import to clone the pixel layout information
-		//Otherwise signs revert to being on the turf and
-		//move jarringly
-		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
-		newsign.pixel_x = pixel_x
-		newsign.pixel_y = pixel_y
-		qdel(src)
+		user.visible_message("<span class='notice'>[user] begins changing [src].</span>", \
+							 "<span class='notice'>You begin changing [src].</span>")
+		if(do_after(user, 40, target = src))
+			var/sign_type = GLOB.buildable_sign_types[choice]
+			//Make sure user is adjacent still
+			if(!Adjacent(user))
+				return
+			if(!sign_type)
+				return
+			//It's import to clone the pixel layout information
+			//Otherwise signs revert to being on the turf and
+			//move jarringly
+			var/obj/structure/sign/newsign = new sign_type(get_turf(src))
+			newsign.pixel_x = pixel_x
+			newsign.pixel_y = pixel_y
+			qdel(src)
+			user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
+						 "<span class='notice'>You finish changing the sign.</span>")
 	else
 		return ..()
 

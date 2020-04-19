@@ -62,15 +62,18 @@
 		var/descriptionchoice = input(user, "Engrave this plaque's text.", "Plaque Customization")
 		if(!descriptionchoice)
 			return
-		//Make sure user is adjacent still
-		if(!Adjacent(user))
-			to_chat(user, "<span class='warning'>You have to stand next to the plaque to engrave it!</span>")
-			return
-		name = namechoice
-		desc = descriptionchoice
-		unengraved = FALSE
-		user.visible_message("<span class='notice'>[user] engraves [src].</span>", \
-							 "<span class='notice'>You engrave [src].</span>")
+		user.visible_message("<span class='notice'>[user] begins engraving [src].</span>", \
+							 "<span class='notice'>You begin engraving [src].</span>")
+		if(do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a sign, and adds a delay so somebody could stun or push them if they don't want them to.
+			//Make sure user is adjacent still
+			if(!Adjacent(user))
+				to_chat(user, "<span class='warning'>You have to stand next to the plaque to engrave it!</span>")
+				return
+			name = namechoice
+			desc = descriptionchoice
+			unengraved = FALSE
+			user.visible_message("<span class='notice'>[user] engraves [src].</span>", \
+								 "<span class='notice'>You engrave [src].</span>")
 	else if(istype(I, /obj/item/pen) && unengraved)
 		to_chat(user, "<span class='warning'>Your pen isn't fancy enough to engrave this! Find a fountain pen.</span>")
 	else
