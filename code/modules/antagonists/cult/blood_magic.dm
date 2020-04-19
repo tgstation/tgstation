@@ -444,6 +444,7 @@
 				C.Jitter(8)
 				C.drop_all_held_items()
 				C.bleed(40)
+				C.apply_damage(60, STAMINA, BODY_ZONE_CHEST)
 			else
 				to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
 				L.Paralyze(160)
