@@ -10910,7 +10910,7 @@
 	pixel_x = -8;
 	pixel_y = 27
 	},
-/obj/structure/filingcabinet/security,
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aCo" = (
@@ -48894,6 +48894,10 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
+"cPL" = (
+/obj/structure/filingcabinet/security,
+/turf/open/floor/carpet,
+/area/security/detectives_office)
 "cPO" = (
 /obj/item/chair/stool,
 /turf/open/floor/wood{
@@ -81975,7 +81979,7 @@ aCn
 aDt
 aEq
 aFp
-aFn
+cPL
 oEA
 uoS
 uoS
