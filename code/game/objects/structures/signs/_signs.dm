@@ -40,7 +40,7 @@ GLOBAL_VAR(buildable_sign_types)
 		if(!initial(potential_sign.is_buildable))
 			continue
 		GLOB.buildable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign ///sign_change_name is an alternate title for signs, that only appears in the list when you use a pen on a sign backing.
-	sortList(GLOB.buildable_sign_types)
+	GLOB.buildable_sign_types = sortList(GLOB.buildable_sign_types)
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && buildable_sign)
