@@ -56,7 +56,7 @@
 
 /obj/item/clothing/head/headcrab
 	name = "Headcrab"
-	desc = "WIP, god is in pain"
+	desc = "It reminds of you of calculus class"
 	icon_state = "headcrab"
 	item_state = "headcrab"
 	clothing_flags = SNUG_FIT

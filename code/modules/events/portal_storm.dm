@@ -22,7 +22,7 @@
 						/mob/living/simple_animal/hostile/construct/wraith/hostile = 6)
 
 /datum/round_event_control/portal_storm_mesa
-	name = "Test do not mergies"
+	name = "Portal Storm: Mesa"
 	typepath = /datum/round_event/portal_storm/portal_storm_mesa
 	weight = 0
 	max_occurrences = 0
@@ -41,6 +41,23 @@
 						/mob/living/simple_animal/hostile/netherworld/migo = 10, \
 						/mob/living/simple_animal/hostile/netherworld/blankbody = 6, \
 						/mob/living/simple_animal/hostile/headcrustation = 9
+						)
+
+/datum/round_event_control/portal_storm_mesa/clown_storm
+	name = "Portal Storm: Clown"
+	typepath = /datum/round_event/portal_storm/portal_storm_mesa/clown_storm
+
+/datum/round_event/portal_storm/portal_storm_mesa/clown_storm
+	boss_types = list(/mob/living/simple_animal/hostile/retaliate/clown/clownhulk = 3, \
+						/mob/living/simple_animal/hostile/retaliate/clown/fleshclown = 3, \
+						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/chlown = 3, \
+						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/destroyer = 3, \
+						/mob/living/simple_animal/hostile/retaliate/clown/clownhulk/honcmunculus = 3)
+	hostile_types = list(/mob/living/simple_animal/hostile/retaliate/clown = 8, \
+						/mob/living/simple_animal/hostile/retaliate/clown/honkling = 12, \
+						/mob/living/simple_animal/hostile/retaliate/clown/longface = 6, \
+						/mob/living/simple_animal/hostile/retaliate/clown/banana = 5, \
+						/mob/living/simple_animal/hostile/retaliate/clown/lube = 8
 						)
 
 /datum/round_event/portal_storm
