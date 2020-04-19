@@ -41,7 +41,7 @@
 	if(!attach_accessory(I, user))
 		return ..()
 
-/obj/item/clothing/under/update_clothes_damaged_state(damaging = TRUE)
+/obj/item/clothing/under/update_clothes_damaged_state()
 	..()
 	if(ismob(loc))
 		var/mob/M = loc

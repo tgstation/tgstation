@@ -272,8 +272,10 @@
 			var/obj/item/clothing/C = c
 			// unlike normal armor checks, we tabluate these piece-by-piece manually so we can also pass on appropriate damage the clothing's limbs if necessary
 			armor_ablation += C.armor.getRating("wound")
-			if(wounding_type in list(WOUND_SHARP, WOUND_BURN))
-				C.take_damage_zone(body_zone, damage, wounding_type, armour_penetration)
+			if(wounding_type == WOUND_SHARP)
+				C.take_damage_zone(body_zone, damage, BRUTE, armour_penetration)
+			else if(wounding_type == WOUND_BURN)
+				C.take_damage_zone(body_zone, damage, BURN, armour_penetration)
 
 		if(!armor_ablation)
 			injury_mod += bare_wound_bonus

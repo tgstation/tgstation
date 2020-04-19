@@ -35,7 +35,7 @@
 			if(prob(20))
 				victim.adjustToxLoss(infestation * 0.1)
 				if(prob(10))
-					to_chat(victim, "<span class='warning'>Your [limb.name] feels numb...</span>")
+					to_chat(victim, "<span class='warning'>The blisters on your [limb.name] ooze a strange pus...</span>")
 		if(0.5 to 0.7)
 			if(prob(30))
 				victim.adjustToxLoss(infestation * 0.2)
@@ -44,8 +44,8 @@
 		if(0.7 to 1)
 			if(prob(30))
 				victim.adjustToxLoss(infestation * 0.3)
-				if(prob(6))
-					to_chat(victim, "<span class='warning'>Your [limb.name] festers, oozing from its blisters...</span>")
+				if(prob(15))
+					to_chat(victim, "<span class='warning'>Your [limb.name] festers, turning more discolored by the second...</span>")
 
 
 
@@ -123,3 +123,14 @@
 	sound_effect = 'sound/effects/sizzle2.ogg'
 	threshold_minimum = 140
 	threshold_penalty = 80
+
+	max_infestation = 9
+	/// If we have max infestation and we fail this many checks, we lose our whole damn limb assuming it's, y'know, a limb
+	var/strikes_to_lose_limb = 3
+	/// How many checks we've failed
+	var/strikes
+
+/datum/wound/burn/critical/handle_process()
+	. = ..()
+
+//	if(infestation >= max_infestation)
