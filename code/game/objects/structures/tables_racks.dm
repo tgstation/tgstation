@@ -544,7 +544,7 @@
 	check_patient()
 
 /obj/structure/table/optable/proc/check_patient()
-	var/mob/living/carbon/M = locate(/mob/living/carbon, loc)
+	var/mob/living/carbon/M = locate(/mob/living/carbon) in loc
 	if(M)
 		if(M.resting)
 			patient = M

@@ -126,12 +126,6 @@
 		chill_out(L)
 	update_icon()
 
-/obj/machinery/stasis/proc/check_patient()
-	if(ishuman(occupant) ||  ismonkey(occupant))
-		return TRUE
-	else
-		return FALSE
-
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
 	if(L == occupant)
