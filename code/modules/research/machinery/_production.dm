@@ -7,6 +7,7 @@
 	var/list/categories = list()
 	var/datum/component/remote_materials/materials
 	var/allowed_department_flags = ALL
+	var/allowed_research_flags = ALL 		//What research consoles can this be researched at?
 	var/production_animation				//What's flick()'d on print.
 	var/allowed_buildtypes = NONE
 	var/list/datum/design/cached_designs

@@ -23,6 +23,7 @@ Nothing else in the console has ID requirements.
 	var/obj/item/disk/tech_disk/t_disk	//Stores the technology disk.
 	var/obj/item/disk/design_disk/d_disk	//Stores the design disk.
 	circuit = /obj/item/circuitboard/computer/rdconsole
+	var/department_research = DEPARTMENTAL_FLAG_SCIENCE //Which department's research shows up on this screen
 
 	var/obj/machinery/rnd/destructive_analyzer/linked_destroy	//Linked Destructive Analyzer
 	var/obj/machinery/rnd/production/protolathe/linked_lathe				//Linked Protolathe
@@ -115,7 +116,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user, params)
 	if(istype(D, /obj/item/research_notes))
 		var/obj/item/research_notes/R = D
-		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = R.value))
+		SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_SCIENCE = R.value))
 		playsound(src,'sound/machines/copier.ogg', 100, TRUE)
 		qdel(R)
 		return TRUE
@@ -1153,3 +1154,14 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/experiment
 	name = "E.X.P.E.R.I-MENTOR R&D Console"
+
+/obj/machinery/computer/rdconsole/department
+	name = "department research console"
+	desc = "A special research console designed to permit each department to research technology without the assistance of the Science department."
+	icon_screen = "rdcomp"
+	icon_keyboard = "rd_key"
+	circuit = /obj/item/circuitboard/computer/rdconsole/department
+
+/obj/machinery/computer/rdconsole/department/engineering
+	name = "Department research console (Engineering)"
+	department_research = DEPARTMENTAL_FLAG_ENGINEERING

@@ -334,6 +334,36 @@
 	name = "R&D Console Production Only (Computer Board)"
 	build_path = /obj/machinery/computer/rdconsole/production
 
+/obj/item/circuitboard/computer/rdconsole/department
+	name = "Departmental Protolathe (Machine Board)"
+	icon_state = "generic"
+	build_path = /obj/machinery/computer/rdconsole/department
+
+/obj/item/circuitboard/computer/rdconsole/department/engineering
+	name = "Departmental Protolathe (Machine Board) - Engineering"
+	icon_state = "engineering"
+	build_path = /obj/machinery/computer/rdconsole/department/engineering
+
+/obj/item/circuitboard/computer/rdconsole/department/cargo
+	name = "Departmental Protolathe (Machine Board) - Cargo"
+	icon_state = "cargo"
+	build_path = /obj/machinery/computer/rdconsole/department/cargo
+
+/obj/item/circuitboard/computer/rdconsole/department/medical
+	name = "Departmental Protolathe (Machine Board) - Medical"
+	icon_state = "medical"
+	build_path = /obj/machinery/computer/rdconsole/department/medical
+
+/obj/item/circuitboard/computer/rdconsole/department/service
+	name = "Departmental Protolathe (Machine Board) - Service"
+	icon_state = "service"
+	build_path = /obj/machinery/computer/rdconsole/department/service
+
+/obj/item/circuitboard/computer/rdconsole/department/security
+	name = "Departmental Protolathe (Machine Board) - Security"
+	icon_state = "security"
+	build_path = /obj/machinery/computer/rdconsole/department/security
+
 /obj/item/circuitboard/computer/rdservercontrol
 	name = "R&D Server Control (Computer Board)"
 	icon_state = "science"

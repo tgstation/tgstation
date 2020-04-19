@@ -523,10 +523,10 @@ All effects don't start immediately, but rather get worse over time; the rate is
 						ballmer_percent = (-abs(drunkenness - 13.35) / 0.9) + 1
 					if(prob(5))
 						say(pick_list_replacements(VISTA_FILE, "ballmer_good_msg"), forced = "ballmer")
-					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS * ballmer_percent))
+					SSresearch.science_tech.add_point_list(list(TECHWEB_POINT_TYPE_SCIENCE = BALLMER_POINTS * ballmer_percent))
 				if(drunkenness > 26) // by this point you're into windows ME territory
 					if(prob(5))
-						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_GENERIC = BALLMER_POINTS))
+						SSresearch.science_tech.remove_point_list(list(TECHWEB_POINT_TYPE_SCIENCE = BALLMER_POINTS))
 						say(pick_list_replacements(VISTA_FILE, "ballmer_windows_me_msg"), forced = "ballmer")
 
 		if(drunkenness >= 41)
