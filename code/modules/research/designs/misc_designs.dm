@@ -437,7 +437,7 @@
 /datum/design/holosignpower_shield
 	name = "Power Shielding Projector"
 	desc = "A holographic projector that creates powered barriers that prevent the spread of heat and the change of atmospheric conditions."
-	id = "holosignatmos"
+	id = "holosignshield"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 8000, /datum/material/glass = 3000, /datum/material/gold = 3000, /datum/material/silver = 3000, /datum/material/bluespace = 1000)
 	build_path = /obj/item/holosign_creator/powered_shielding

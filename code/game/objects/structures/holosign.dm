@@ -107,7 +107,6 @@
 /obj/structure/holosign/barrier/power_shield
 	name = "powered shield"
 	desc = "etc"
-	icon_state = "holo_firelock"
 	density = FALSE
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
@@ -142,6 +141,34 @@
 		shield_turf()
 	else
 		Destroy()
+
+/obj/structure/holosign/barrier/power_shield/wall
+	name = "Shield Wall"
+	desc = "etc"
+	icon_state = "powershield_wall"
+	density = TRUE
+	anchored = TRUE
+	CanAtmosPass = ATMOS_PASS_NO
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
+	stored_conductivity = 0
+	power_consumption = 5000
+
+/obj/structure/holosign/barrier/power_shield/floor
+	name = "Shield Floor"
+	desc = "etc"
+	icon_state = "powershield_floor"
+	density = FALSE
+	anchored = TRUE
+	CanAtmosPass = ATMOS_PASS_YES
+	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	rad_insulation = RAD_LIGHT_INSULATION
+	stored_conductivity = 0
+	power_consumption = 5000
+	layer = TURF_PLATING_DECAL_LAYER
+	plane = FLOOR_PLANE
+	resistance_flags = INDESTRUCTIBLE
+
 
 /obj/structure/holosign/barrier/cyborg
 	name = "Energy Field"

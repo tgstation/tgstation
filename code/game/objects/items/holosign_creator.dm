@@ -92,11 +92,22 @@
 
 /obj/item/holosign_creator/powered_shielding
 	name = "Power shield projector"
-	desc = "A holographic projector that creates a Power shield that "
-	icon_state = "signmaker_atmos"
-	holosign_type = /obj/structure/holosign/barrier/power_shield
+	desc = "A holographic projector that creates a Power shield that stops the spread of heat and atmosphere changes"
+	icon_state = "signmaker_powersh"
+	holosign_type = /obj/structure/holosign/barrier/power_shield/wall
 	creation_time = 0
-	max_signs = 20
+	max_signs = 25
+
+/obj/item/holosign_creator/powered_shielding/attack_self(mob/user)
+	toggle_item(user)
+
+/obj/item/holosign_creator/powered_shielding/proc/toggle_item(mob/user)
+	if(holosign_type == /obj/structure/holosign/barrier/power_shield/wall)
+		holosign_type = /obj/structure/holosign/barrier/power_shield/floor
+		to_chat(user, "<span class='notice'>You change the projector to shielded floors.</span>")
+	else
+		holosign_type = /obj/structure/holosign/barrier/power_shield/wall
+		to_chat(user, "<span class='notice'>You change the projector to shielded walls.</span>")
 
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"
