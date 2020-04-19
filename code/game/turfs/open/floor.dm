@@ -13,7 +13,7 @@
 
 	var/icon_regular_floor = "floor" //used to remember what icon the tile should have by default
 	var/icon_plating = "plating"
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.04
 	heat_capacity = 2500
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100

@@ -566,7 +566,7 @@
 
 /turf/proc/set_damage_amount(temperature)
 	if(to_be_destroyed && !changing_turf)
-		damage_amount = min((temperature - heat_capacity)/10000, 15)
+		damage_amount = clamp((temperature - heat_capacity)/10000, 1, 15)
 		turf_take_damage(damage_amount)
 		heat_capacity = max(heat_capacity - (damage_amount * 10), 0)
 	else

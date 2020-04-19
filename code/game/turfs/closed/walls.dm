@@ -7,8 +7,8 @@
 	icon_state = "wall"
 	explosion_block = 1
 
-	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 1000
+	thermal_conductivity = 0.25
+	heat_capacity = 3000
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
 
