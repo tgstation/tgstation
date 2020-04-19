@@ -2,7 +2,7 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
-	desc = "A blank plaque. Use a fancy pen to engrave it, use a wrench to take it off the wall."
+	desc = "A blank plaque. Use a fancy pen to engrave it, use a wrench to detatch it from the wall."
 	anchored = TRUE
 	opacity = 0
 	density = FALSE
@@ -16,18 +16,17 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
-	desc = "A blank plaque. Place it on a wall and use a fancy pen to engrave it, use a wrench to take it off the wall."
+	desc = "A blank plaque. Place it on a wall and use a fancy pen to engrave it, use a wrench to detatch it from the wall."
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/gold = 2000)
-//	resistance_flags = FLAMMABLE
-	var/sign_path = /obj/structure/customplaque //the type of sign that will be created when placed on a turf
+	var/plaque_path = /obj/structure/customplaque
 	var/unengraved = TRUE
 
 /obj/structure/customplaque/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, TRUE)
+				playsound(src.loc, 'sound/weapons/smash.ogg', 80, TRUE)
 			else
 				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
@@ -65,10 +64,15 @@
 			return
 		//Make sure user is adjacent still
 		if(!Adjacent(user))
+			to_chat(user, "<span class='warning'>You have to stand next to the plaque to engrave it!</span>")
 			return
 		name = namechoice
 		desc = descriptionchoice
 		unengraved = FALSE
+		user.visible_message("<span class='notice'>[user] engraves [src].</span>", \
+							 "<span class='notice'>You engrave [src].</span>")
+	else if(istype(I, /obj/item/pen) && unengraved)
+		to_chat(user, "<span class='warning'>Your pen isn't fancy enough to engrave this! Find a fountain pen.</span>")
 	else
 		return ..()
 
@@ -77,9 +81,9 @@
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-							 "<span class='notice'>You attach the sign to [T].</span>")
+							 "<span class='notice'>You attach [src] to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
-		var/obj/structure/customplaque/S = new sign_path(T)
+		var/obj/structure/customplaque/S = new plaque_path(T)
 		S.name = name
 		S.desc = desc
 		S.unengraved = unengraved
@@ -87,7 +91,7 @@
 		qdel(src)
 
 /obj/item/customplaque/Move(atom/new_loc, direct = 0)
-	// pulling, throwing, or conveying a sign backing does not rotate it
+	// pulling, throwing, or conveying a plaque does not rotate it
 	var/old_dir = dir
 	. = ..()
 	setDir(old_dir)
