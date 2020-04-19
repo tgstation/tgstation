@@ -5932,7 +5932,7 @@
 /obj/machinery/camera{
 	c_tag = "Detective's Office"
 	},
-/obj/machinery/vending/wardrobe/det_wardrobe,
+/obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aod" = (
@@ -6061,7 +6061,9 @@
 /obj/structure/cable,
 /obj/machinery/power/apc{
 	areastring = "/area/security/processing";
+	dir = 2;
 	name = "Labor Shuttle Dock APC";
+	pixel_x = 0;
 	pixel_y = -23
 	},
 /turf/open/floor/plasteel,
@@ -6555,11 +6557,11 @@
 	name = "Privacy Shutters";
 	pixel_y = 24
 	},
+/obj/item/storage/briefcase,
 /obj/structure/rack,
 /obj/machinery/light_switch{
 	pixel_x = 27
 	},
-/obj/item/storage/briefcase,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aqc" = (
@@ -7904,9 +7906,6 @@
 	},
 /obj/machinery/light/small,
 /obj/item/camera/detective,
-/obj/item/hand_labeler{
-	pixel_x = 5
-	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "auj" = (
@@ -10776,6 +10775,7 @@
 	areastring = "/area/crew_quarters/theatre";
 	dir = 1;
 	name = "Theatre APC";
+	pixel_x = 0;
 	pixel_y = 23
 	},
 /obj/structure/cable,
@@ -11690,8 +11690,10 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/hydroponics/garden";
+	dir = 2;
 	name = "Garden APC";
-	pixel_x = -23
+	pixel_x = -23;
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -13348,7 +13350,9 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/construction/mining/aux_base";
+	dir = 2;
 	name = "Auxillary Base Construction APC";
+	pixel_x = 0;
 	pixel_y = -23
 	},
 /obj/structure/cable,
@@ -31668,7 +31672,9 @@
 /obj/item/bedsheet/medical,
 /obj/machinery/power/apc{
 	areastring = "/area/medical/sleeper";
+	dir = 2;
 	name = "Treatment Center APC";
+	pixel_x = 0;
 	pixel_y = -23
 	},
 /obj/structure/cable,
@@ -32133,7 +32139,8 @@
 	areastring = "/area/crew_quarters/heads/cmo";
 	dir = 4;
 	name = "CM Office APC";
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel/cafeteria,
@@ -47455,7 +47462,9 @@
 	},
 /obj/machinery/power/apc{
 	areastring = "/area/science/robotics/mechbay";
+	dir = 2;
 	name = "Mech Bay APC";
+	pixel_x = 0;
 	pixel_y = -23
 	},
 /obj/structure/cable,
@@ -48352,6 +48361,7 @@
 "dyN" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/table/wood,
+/obj/item/taperecorder,
 /obj/machinery/light/small{
 	brightness = 3;
 	dir = 8
@@ -48359,8 +48369,6 @@
 /obj/item/storage/secure/safe{
 	pixel_x = -23
 	},
-/obj/item/taperecorder,
-/obj/item/storage/box/evidence,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "dBu" = (
@@ -48752,7 +48760,8 @@
 	areastring = "/area/crew_quarters/locker";
 	dir = 4;
 	name = "Locker Room APC";
-	pixel_x = 24
+	pixel_x = 24;
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -49038,10 +49047,14 @@
 /area/security/prison)
 "fBs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/table/wood,
+/obj/item/hand_labeler{
+	pixel_x = 5
+	},
+/obj/item/storage/box/evidence,
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -30
 	},
-/obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "fGg" = (
@@ -49075,7 +49088,8 @@
 	areastring = "/area/lawoffice";
 	dir = 4;
 	name = "Law Office APC";
-	pixel_x = 23
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -51736,7 +51750,8 @@
 	areastring = "/area/storage/art";
 	dir = 4;
 	name = "Art Storage";
-	pixel_x = 23
+	pixel_x = 23;
+	pixel_y = 0
 	},
 /obj/structure/cable,
 /turf/open/floor/plasteel,
