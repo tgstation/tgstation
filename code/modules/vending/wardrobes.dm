@@ -436,7 +436,7 @@
 
 /obj/machinery/vending/wardrobe/det_wardrobe
 	name = "\improper DetDrobe"
-	desc = "A mechine for all your detective needs, as long as you need clothes."
+	desc = "A machine for all your detective needs, as long as you need clothes."
 	icon_state = "detdrobe"
 	product_ads = "Apply your brilliant deductive methods in style!"
 	vend_reply = "Thank you for using the DetDrobe!"
