@@ -128,7 +128,7 @@
 		on = !on
 
 	if("inject" in signal.data)
-		spawn inject()
+		INVOKE_ASYNC(src, .proc/inject)
 		return
 
 	if("set_volume_rate" in signal.data)

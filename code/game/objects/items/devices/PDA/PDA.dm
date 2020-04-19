@@ -1081,9 +1081,11 @@ GLOBAL_LIST_EMPTY(PDAs)
 		for(var/atom/A in src)
 			A.emp_act(severity)
 	if (!(. & EMP_PROTECT_SELF))
-		emped += 1
-		spawn(200 * severity)
-			emped -= 1
+		emped++
+		addtimer(CALLBACK(src, .proc/emp_end), 200 * severity)
+
+/obj/item/pda/proc/emp_end()
+	emped--
 
 /proc/get_viewable_pdas(sort_by_job = FALSE)
 	. = list()
