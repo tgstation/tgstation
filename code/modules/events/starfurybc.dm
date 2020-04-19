@@ -1,10 +1,10 @@
 /datum/round_event_control/starfurybc
 	name = "Starfury Battle Cruiser"
 	typepath = /datum/round_event/ghost_role/starfurybc
-	weight = 6
+	weight = 8
 	max_occurrences = 1
 	min_players = 40
-	earliest_start = 70 MINUTES
+	earliest_start = 60 MINUTES
 	gamemode_blacklist = list("nuclear")
 
 /datum/round_event_control/starfurybc/preRunEvent()

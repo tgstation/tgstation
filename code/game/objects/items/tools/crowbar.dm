@@ -115,10 +115,10 @@
 
 /obj/item/crowbar/combat
 	name = "combat crowbar"
-	desc = "Advanced crowbar 'borrowed' from combined alliance."
+	desc = "An advanced crowbar 'borrowed' from the combined alliance."
 	icon_state = "crowbar_combat"
 	item_state = "crowbar_combat"
-	attack_verb = list("devastated", "brutalized", "crowbared")
+	attack_verb = list("devastated", "brutalized", "crowbarred")
 	tool_behaviour = null
 	toolspeed = null
 	var/on = FALSE
@@ -134,8 +134,8 @@
 	throwforce = on ? 10 : initial(throwforce)
 	tool_behaviour = on ? TOOL_CROWBAR : initial(tool_behaviour)
 	toolspeed = on ? 0.5 : initial(toolspeed)
-	hitsound = on ? "sounds/weapons/blade1.ogg" : "swing_hit"
-	playsound(user, on ? "sounds/weapons/saberon.ogg" : "sounds/weapons/saberoff.ogg", 5, TRUE)
+	hitsound = on ? 'sound/weapons/blade1.ogg' : "swing_hit"
+	playsound(user, on ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 5, TRUE)
 	to_chat(user, "<span class='warning'>[src] is now [on ? "active" : "concealed"].</span>")
 	update_icon()
 

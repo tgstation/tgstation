@@ -90,30 +90,16 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/wrench/combat/attack_self(mob/living/user)
-	if(on)
-		on = FALSE
-		force = initial(force)
-		w_class = initial(w_class)
-		throwforce = initial(throwforce)
-		tool_behaviour = initial(tool_behaviour)
-		toolspeed = initial(toolspeed)
-		playsound(user, 'sound/weapons/saberoff.ogg', 5, TRUE)
-		to_chat(user, "<span class='warning'>[src] can now be kept at bay.</span>")
-	else
-		on = TRUE
-		force = 6
-		w_class = WEIGHT_CLASS_NORMAL
-		throwforce = 10
-		tool_behaviour = TOOL_WRENCH
-		toolspeed = 0.5
-		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
-		to_chat(user, "<span class='warning'>[src] is now active. Woe onto your enemies!</span>")
+	on = !on
+	force = on ? 8 : initial(force)
+	w_class = on ? WEIGHT_CLASS_NORMAL : initial(w_class)
+	throwforce =  on ? 10 : initial(throwforce)
+	toolspeed = on ? 0.5 : initial(toolspeed)
+	hitsound = on ? 'sound/weapons/blade1.ogg' : "swing_hit"
+	playsound(user, on ? 'sound/weapons/saberoff.ogg' : 'sound/weapons/saberon.ogg', 5, TRUE)
+	to_chat(user, "<span class='warning'>[src] is now [on ? "active" : "concealed"].</span>")
 	update_icon()
 
 /obj/item/wrench/combat/update_icon_state()
-	if(on)
-		icon_state = "[initial(icon_state)]_on"
-		item_state = "[initial(item_state)]1"
-	else
-		icon_state = "[initial(icon_state)]"
-		item_state = "[initial(item_state)]"
+	icon_state = "[initial(icon_state)][on ? "_on" : ""]"
+	item_state = "[initial(item_state)][on ? "1" : ""]"

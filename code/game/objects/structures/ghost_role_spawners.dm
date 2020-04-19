@@ -481,9 +481,9 @@
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser
 	name = "Syndicate Battlecruiser Ship Operative"
-	short_desc = "You are a crewmember aboard the syndicate flagship: the SBC Starfury."
+	short_desc = "You are a crewmember aboard the Syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to follow your higher-ranking operatives' orders, assisting in pretty much anything that might need your help."
-	important_info = "While you don't have strict role, you are supposed to obey orders given by anyone on the ship, including medical, engineering and assault operatives."
+	important_info = "While you don't have a strict role, you are supposed to obey orders given by anyone on the ship, including medical, engineering and assault operatives."
 	outfit = /datum/outfit/syndicate_empty/SBC
 	roundstart = FALSE
 	death = FALSE
@@ -498,9 +498,9 @@
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/engineering
 	name = "Syndicate Battlecruiser Ship Engineer"
-	short_desc = "You are an engineer aboard the syndicate flagship: the SBC Starfury."
-	flavour_text = "Your job is to maintain the ship, and keep the engine running. If you are unfamiliar with how the supermatter engine functions do not attempt to start it alone; ask a fellow crewman for help."
-	important_info = "Your role is not to assault the station, but to maintain your own flagship in a working state."
+	short_desc = "You are an engineer aboard the Syndicate flagship: the SBC Starfury."
+	flavour_text = "Your job is to maintain the ship, and keep the engine running. If you are unfamiliar with how the supermatter engine functions, do not attempt to start it alone; ask a fellow crewman for help."
+	important_info = "While your role means you can help in the assault with your tools, first of all you must keep the cruiser and engine in a working state."
 	outfit = /datum/outfit/syndicate_empty/SBC/engi
 
 /datum/outfit/syndicate_empty/SBC/engi
@@ -514,7 +514,7 @@
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/medical
 	name = "Syndicate Battlecruiser Ship Medical Doctor"
-	short_desc = "You are a medical doctor aboard the syndicate flagship: the SBC Starfury."
+	short_desc = "You are a medical doctor aboard the Syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to maintain the crew's physical health and keep your comrades alive at all cost."
 	important_info = "The armory has nothing to help you with your job, and your role is to assist assault operatives, not to do their work for them."
 	outfit = /datum/outfit/syndicate_empty/SBC/med
@@ -531,7 +531,7 @@
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/assault
 	name = "Syndicate Battlecruiser Assault Operative"
-	short_desc = "You are an assault operative aboard the syndicate flagship: the SBC Starfury."
+	short_desc = "You are an assault operative aboard the Syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to follow your captain's orders, keep intruders out of the ship, and assault Space Station 13. There is an armory, multiple assault ships, and beam cannons to attack the station with."
 	important_info = "Work as a team with your fellow operatives and work out a plan of attack. If you are overwhelmed, escape back to your ship!"
 	outfit = /datum/outfit/syndicate_empty/SBC/assault
@@ -551,7 +551,7 @@
 
 /obj/effect/mob_spawn/human/syndicate/battlecruiser/captain
 	name = "Syndicate Battlecruiser Captain"
-	short_desc = "You are the captain aboard the syndicate flagship: the SBC Starfury."
+	short_desc = "You are the captain aboard the Syndicate flagship: the SBC Starfury."
 	flavour_text = "Your job is to oversee your crew, defend the ship, and destroy Space Station 13. The ship has an armory, multiple ships, beam cannons, and multiple crewmembers to accomplish this goal."
 	important_info = "As the captain, this whole operation falls on your shoulders. You do not need to nuke the station, causing sufficient damage and preventing your ship from being destroyed will be enough."
 	outfit = /datum/outfit/syndicate_empty/SBC/assault/captain

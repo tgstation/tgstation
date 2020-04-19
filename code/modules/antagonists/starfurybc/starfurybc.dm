@@ -5,7 +5,7 @@
 	job_rank = ROLE_TRAITOR
 	antag_hud_type = ANTAG_HUD_OPS
 	antag_hud_name = "synd"
-	antag_moodlet = /datum/mood_event/badass_antag //focused
+	antag_moodlet = /datum/mood_event/focused
 	var/datum/team/starfuryop/sbccrew
 	can_hijack = HIJACK_HIJACKER
 
@@ -18,7 +18,7 @@
 	remove_antag_hud(antag_hud_type, M)
 
 /datum/antagonist/starfuryop/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0) //temporary
 	owner.announce_objectives()
 
 /datum/antagonist/starfuryop/get_team()
@@ -32,10 +32,9 @@
 			if(P.sbccrew)
 				sbccrew = P.sbccrew
 				return
-		if(!new_team)
-			sbccrew = new /datum/team/starfuryop
-			sbccrew.forge_objectives()
-			return
+		sbccrew = new /datum/team/starfuryop
+		sbccrew.forge_objectives()
+		return
 	if(!istype(new_team))
 		stack_trace("Wrong team type passed to [type] initialization.")
 	sbccrew = new_team
@@ -60,7 +59,7 @@
 	add_objective(new/datum/objective/syndicatesupermatter, TRUE)
 
 /datum/team/starfuryop/roundend_report()
-	var/list/parts = list("<span class='header'>The crew of syndicate battle cruiser were:</span>")
+	var/list/parts = list("<span class='header'>The crew of the Syndicate battle cruiser were:</span>")
 	for(var/datum/mind/M in members)
 		parts += printplayer(M)
 	var/win = TRUE
@@ -73,8 +72,8 @@
 			win = FALSE
 		objective_count++
 	if(win)
-		parts += "<span class='greentext'>Crew of syndicate battle cruiser were successful!</span>"
+		parts += "<span class='greentext'>Crew of the Syndicate battle cruiser were successful!</span>"
 	else
-		parts += "<span class='redtext'>Crew of syndicate battle cruiser have failed!</span>"
+		parts += "<span class='redtext'>Crew of the Syndicate battle cruiser have failed!</span>"
 
 	return "<div class='panel redborder'>[parts.Join("<br>")]</div>"
