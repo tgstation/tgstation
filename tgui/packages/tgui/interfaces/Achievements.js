@@ -1,7 +1,6 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Icon, Table, Tabs } from '../components';
+import { Box, Flex, Icon, Table, Tabs } from '../components';
 import { Window } from '../layouts';
-import { Fragment } from 'inferno';
 
 export const Achievements = (props, context) => {
   const { data } = useBackend(context);
@@ -63,11 +62,11 @@ const Achievement = props => {
     score,
   } = achievement;
   return (
-    <tr key={name}>
-      <td style={{ 'padding': '6px' }}>
-        <Box className={icon_class} />
-      </td>
-      <td style={{ 'vertical-align': 'top' }}>
+    <Table.Row key={name}>
+      <Table.Cell collapsing>
+        <Box m={1} className={icon_class} />
+      </Table.Cell>
+      <Table.Cell verticalAlign="top">
         <h1>{name}</h1>
         {desc}
         {score && (
@@ -79,8 +78,8 @@ const Achievement = props => {
             {value ? 'Unlocked' : 'Locked'}
           </Box>
         )}
-      </td>
-    </tr>
+      </Table.Cell>
+    </Table.Row>
   );
 };
 
@@ -105,54 +104,58 @@ const HighScoreTable = (props, context) => {
       value: highscore.scores[key],
     }));
   return (
-    <Fragment>
-      <Tabs vertical>
-        {highscores.map((highscore, i) => (
-          <Tabs.Tab
-            key={highscore.name}
-            selected={highScoreIndex === i}
-            onClick={() => setHighScoreIndex(i)}>
-            {highscore.name}
-          </Tabs.Tab>
-        ))}
-      </Tabs>
-      <Table>
-        <Table.Row className="candystripe">
-          <Table.Cell color="label" textAlign="center">
-            #
-          </Table.Cell>
-          <Table.Cell color="label" textAlign="center">
-            Key
-          </Table.Cell>
-          <Table.Cell color="label" textAlign="center">
-            Score
-          </Table.Cell>
-        </Table.Row>
-        {scores.map((score, i) => (
-          <Table.Row
-            key={score.ckey}
-            className="candystripe"
-            m={2}>
-            <Table.Cell color="label" textAlign="center">
-              {i + 1}
-            </Table.Cell>
-            <Table.Cell
-              color={score.ckey === user_ckey && 'green'}
-              textAlign="center">
-              {i === 0 && (
-                <Icon name="crown" color="gold" mr={2} />
-              )}
-              {score.ckey}
-              {i === 0 && (
-                <Icon name="crown" color="gold" ml={2} />
-              )}
+    <Flex>
+      <Flex.Item>
+        <Tabs vertical>
+          {highscores.map((highscore, i) => (
+            <Tabs.Tab
+              key={highscore.name}
+              selected={highScoreIndex === i}
+              onClick={() => setHighScoreIndex(i)}>
+              {highscore.name}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
+      </Flex.Item>
+      <Flex.Item grow={1} basis={0}>
+        <Table>
+          <Table.Row header>
+            <Table.Cell textAlign="center">
+              #
             </Table.Cell>
             <Table.Cell textAlign="center">
-              {score.value}
+              Key
+            </Table.Cell>
+            <Table.Cell textAlign="center">
+              Score
             </Table.Cell>
           </Table.Row>
-        ))}
-      </Table>
-    </Fragment>
+          {scores.map((score, i) => (
+            <Table.Row
+              key={score.ckey}
+              className="candystripe"
+              m={2}>
+              <Table.Cell color="label" textAlign="center">
+                {i + 1}
+              </Table.Cell>
+              <Table.Cell
+                color={score.ckey === user_ckey && 'green'}
+                textAlign="center">
+                {i === 0 && (
+                  <Icon name="crown" color="yellow" mr={2} />
+                )}
+                {score.ckey}
+                {i === 0 && (
+                  <Icon name="crown" color="yellow" ml={2} />
+                )}
+              </Table.Cell>
+              <Table.Cell textAlign="center">
+                {score.value}
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
+      </Flex.Item>
+    </Flex>
   );
 };

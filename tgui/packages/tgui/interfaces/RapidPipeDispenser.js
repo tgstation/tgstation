@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ColorBox, Flex, LabeledList, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
@@ -64,6 +64,13 @@ export const RapidPipeDispenser = (props, context) => {
     mode,
   } = data;
   const previews = data.preview_rows.flatMap(row => row.previews);
+  const [
+    categoryName,
+    setCategoryName,
+  ] = useLocalState(context, 'categoryName');
+  const shownCategory = categories
+    .find(category => category.cat_name === categoryName)
+    || categories[0];
   return (
     <Window resizable>
       <Window.Content scrollable>
@@ -161,28 +168,30 @@ export const RapidPipeDispenser = (props, context) => {
           <Flex.Item m={0.5} grow={1}>
             <Section>
               <Tabs>
-                {categories.map(category => (
+                {categories.map((category, i) => (
                   <Tabs.Tab
                     fluid
                     key={category.cat_name}
                     icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
-                    label={category.cat_name}>
-                    {() => category.recipes.map(recipe => (
-                      <Button.Checkbox
-                        key={recipe.pipe_index}
-                        fluid
-                        ellipsis
-                        checked={recipe.selected}
-                        content={recipe.pipe_name}
-                        title={recipe.pipe_name}
-                        onClick={() => act('pipe_type', {
-                          pipe_type: recipe.pipe_index,
-                          category: category.cat_name,
-                        })} />
-                    ))}
+                    selected={category.cat_name === shownCategory.cat_name}
+                    onClick={() => setCategoryName(category.cat_name)}>
+                    {category.cat_name}
                   </Tabs.Tab>
                 ))}
               </Tabs>
+              {shownCategory?.recipes.map(recipe => (
+                <Button.Checkbox
+                  key={recipe.pipe_index}
+                  fluid
+                  ellipsis
+                  checked={recipe.selected}
+                  content={recipe.pipe_name}
+                  title={recipe.pipe_name}
+                  onClick={() => act('pipe_type', {
+                    pipe_type: recipe.pipe_index,
+                    category: shownCategory.cat_name,
+                  })} />
+              ))}
             </Section>
           </Flex.Item>
         </Flex>

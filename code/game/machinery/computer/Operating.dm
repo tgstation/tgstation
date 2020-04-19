@@ -96,7 +96,6 @@
 		else
 			data["patient"] = null
 			return data
-
 	switch(patient.stat)
 		if(CONSCIOUS)
 			data["patient"]["stat"] = "Conscious"
@@ -118,8 +117,8 @@
 	data["patient"]["fireLoss"] = patient.getFireLoss()
 	data["patient"]["toxLoss"] = patient.getToxLoss()
 	data["patient"]["oxyLoss"] = patient.getOxyLoss()
+	data["procedures"] = list()
 	if(patient.surgeries.len)
-		data["procedures"] = list()
 		for(var/datum/surgery/procedure in patient.surgeries)
 			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
 			var/chems_needed = surgery_step.get_chem_list()

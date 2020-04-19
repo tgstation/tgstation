@@ -1,10 +1,11 @@
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, Tabs, LabeledList } from '../components';
+import { useBackend, useSharedState } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const RoboticsControlConsole = (props, context) => {
   const { act, data } = useBackend(context);
+  const [tab, setTab] = useSharedState(context, 'tab', 1);
   const {
     can_hack,
     cyborgs = [],
@@ -15,24 +16,26 @@ export const RoboticsControlConsole = (props, context) => {
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
-            key="cyborgs"
-            label={`Cyborgs (${cyborgs.length})`}
             icon="list"
-            lineHeight="23px">
-            {() => (
-              <Cyborgs cyborgs={cyborgs} can_hack={can_hack} />
-            )}
+            lineHeight="23px"
+            selected={tab === 1}
+            onClick={() => setTab(1)}>
+            Cyborgs ({cyborgs.length})
           </Tabs.Tab>
           <Tabs.Tab
-            key="drones"
-            label={`Drones (${drones.length})`}
             icon="list"
-            lineHeight="23px">
-            {() => (
-              <Drones drones={drones} />
-            )}
+            lineHeight="23px"
+            selected={tab === 2}
+            onClick={() => setTab(2)}>
+            Drones ({drones.length})
           </Tabs.Tab>
         </Tabs>
+        {tab === 1 && (
+          <Cyborgs cyborgs={cyborgs} can_hack={can_hack} />
+        )}
+        {tab === 2 && (
+          <Drones drones={drones} />
+        )}
       </Window.Content>
     </Window>
   );
@@ -43,11 +46,9 @@ const Cyborgs = (props, context) => {
   const { act, data } = useBackend(context);
   if (!cyborgs.length) {
     return (
-      <Section>
-        <NoticeBox textAlign="center">
-          No cyborg units detected within access parameters
-        </NoticeBox>
-      </Section>
+      <NoticeBox>
+        No cyborg units detected within access parameters
+      </NoticeBox>
     );
   }
   return cyborgs.map(cyborg => {
@@ -127,11 +128,9 @@ const Drones = (props, context) => {
 
   if (!drones.length) {
     return (
-      <Section>
-        <NoticeBox textAlign="center">
-          No drone units detected within access parameters
-        </NoticeBox>
-      </Section>
+      <NoticeBox>
+        No drone units detected within access parameters
+      </NoticeBox>
     );
   }
 

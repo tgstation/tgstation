@@ -171,6 +171,13 @@ all available horizontal space.
 - `mb: number` - Bottom margin.
 - `ml: number` - Left margin.
 - `mr: number` - Right margin.
+- `p: number` - Padding on all sides.
+- `px: number` - Horizontal padding.
+- `py: number` - Vertical padding.
+- `pt: number` - Top padding.
+- `pb: number` - Bottom padding.
+- `pl: number` - Left padding.
+- `pr: number` - Right padding.
 - `opacity: number` - Opacity, from 0 to 1.
 - `bold: boolean` - Make text bold.
 - `italic: boolean` - Make text italic.
@@ -848,55 +855,47 @@ Here is an example of how you would construct a simple tabbed view:
 
 ```jsx
 <Tabs>
-  <Tabs.Tab label="Item one">
-    Content for Item one.
+  <Tabs.Tab
+    selected={tabIndex === 1}
+    onClick={() => setTabIndex(1)}>
+    Tab one
   </Tabs.Tab>
-  <Tabs.Tab label="Item two">
-    Content for Item two.
+  <Tabs.Tab
+    selected={tabIndex === 2}
+    onClick={() => setTabIndex(2)}>
+    Tab two
   </Tabs.Tab>
 </Tabs>
+<Box>
+  Tab selected: {tabIndex}
+</Box>
 ```
 
-This is a rather simple example. In the real world, you might be
-constructing very complex tabbed views which can tax UI performance.
-This is because your tabs are being rendered regardless of their
-visibility status!
+Notice that tabs do not contain state. It is your job to track the selected
+tab, handle clicks and place tab content where you need it. In return, you get
+a lot of flexibility in regards to how you can layout your tabs.
 
-There is a simple fix however. Tabs accept functions as children, which
-will be called to retrieve content only when the tab is visible:
+Tabs also support a vertical configuration. This is usually paired with a
+[Flex](#flex) component to render tab content to the right.
 
 ```jsx
-<Tabs>
-  <Tabs.Tab key="tab_1" label="Item one">
-    {() => (
-      <Fragment>
-        Content for Item one.
-      </Fragment>
-    )}
-  </Tabs.Tab>
-  <Tabs.Tab key="tab_2" label="Item two">
-    {() => (
-      <Fragment>
-        Content for Item two.
-      </Fragment>
-    )}
-  </Tabs.Tab>
-</Tabs>
+<Flex>
+  <Flex.Item>
+    <Tabs vertical>
+      ...
+    </Tabs>
+  </Flex.Item>
+  <Flex.Item grow={1} basis={0}>
+    Tab content.
+  </Flex.Item>
+</Flex>
 ```
-
-You might not always need this, but it is highly recommended to always
-use this method. Notice the `key` prop on tabs - it uniquely identifies
-the tab and is used for determining which tab is currently active. It can
-be either explicitly provided as a `key` prop, or if omitted, it will be
-implicitly derived from the tab's `label` prop.
 
 Props:
 
-- `vertical: boolean` - Use a vertical configuration, where tabs will appear
-stacked on the left side of the container.
-- `altSelection` - Whether the tab buttons select via standard select (color
-change) or by adding a white indicator to the selected tab.
-Intended for usage on interfaces where tab color has relevance.
+- See inherited props: [Box](#box)
+- `vertical: boolean` - Use a vertical configuration, where tabs will be
+stacked vertically.
 - `children: Tab[]` - This component only accepts tabs as its children.
 
 ### `Tabs.Tab`
@@ -907,10 +906,11 @@ a lot of `Button` props.
 Props:
 
 - See inherited props: [Button](#button)
-- `key: string` - A unique identifier for the tab.
-- `label: string` - Tab label.
+- `altSelection` - Whether the tab buttons select via standard select (color
+change) or by adding a white indicator to the selected tab.
+Intended for usage on interfaces where tab color has relevance.
 - `icon: string` - Tab icon.
-- `content/children: any` - Content to render inside the tab.
+- `children: any` - Tab text.
 - `onClick: function` - Called when element is clicked.
 
 ### `Tooltip`

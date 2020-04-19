@@ -135,8 +135,7 @@
 	var/list/data = list()
 	data["telecrystals"] = telecrystals
 	data["lockable"] = lockable
-	data["compact_mode"] = compact_mode
-
+	data["compactMode"] = compact_mode
 	return data
 
 /datum/component/uplink/ui_static_data(mob/user)

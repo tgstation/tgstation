@@ -1,13 +1,23 @@
+// Polyfills
 import 'core-js/es';
 import 'core-js/web/immediate';
 import 'core-js/web/queue-microtask';
 import 'core-js/web/timers';
 import 'regenerator-runtime/runtime';
+import './polyfills/html5shiv';
+import './polyfills/ie8';
+import './polyfills/dom4';
+import './polyfills/css-om';
+import './polyfills/inferno';
 
-// This one is necessary for Inferno.
-if (!window.Int32Array) {
-  window.Int32Array = Array;
-}
+// Themes
+import './styles/main.scss';
+import './styles/themes/cardtable.scss';
+import './styles/themes/malfunction.scss';
+import './styles/themes/ntos.scss';
+import './styles/themes/hackerman.scss';
+import './styles/themes/retro.scss';
+import './styles/themes/syndicate.scss';
 
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';

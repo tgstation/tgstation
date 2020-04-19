@@ -32,7 +32,8 @@ $border-radius: base.$border-radius !default;
   .Tabs__tab {
     // Force display block because Button theme overrides it via cascading.
     display: block !important;
-    margin-right: 0;
+    // Override to stop themed buttons from taking priority over it.
+    margin-right: 0 !important;
     margin-bottom: 0;
     padding: 1px 9px 0px 6px;
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);

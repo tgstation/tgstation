@@ -1,129 +1,150 @@
-import { map } from 'common/collections';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Box, Button, Flex, Modal, Section, Table, Tabs } from '../components';
+import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
-export const BlackmarketUplink = (props, context) => {
+export const BlackMarketUplink = (props, context) => {
   const { act, data } = useBackend(context);
-  const categories = data.categories || [];
-  const deliveryMethods = data.delivery_methods || [];
-  const deliveryMethodDesc = data.delivery_method_description || [];
-  const markets = data.markets || {};
-  const items = data.items || {};
+  const {
+    categories = [],
+    markets = [],
+    items = [],
+    money,
+    viewing_market,
+    viewing_category,
+  } = data;
+  return (
+    <Window
+      theme="hackerman"
+      resizable>
+      <ShipmentSelector />
+      <Window.Content scrollable>
+        <Section
+          title="Black Market Uplink"
+          buttons={(
+            <Box inline bold>
+              <AnimatedNumber
+                value={money}
+                format={value => formatMoney(value) + ' cr'} />
+            </Box>
+          )} />
+        <Tabs>
+          {markets.map(market => (
+            <Tabs.Tab
+              key={market.id}
+              selected={market.id === viewing_market}
+              onClick={() => act('set_market', {
+                market: market.id,
+              })}>
+              {market.name}
+            </Tabs.Tab>
+          ))}
+        </Tabs>
+        <Flex>
+          <Flex.Item>
+            <Tabs vertical>
+              {categories.map(category => (
+                <Tabs.Tab
+                  key={category}
+                  height={4}
+                  mt={0.5}
+                  selected={viewing_category === category}
+                  onClick={() => act('set_category', {
+                    category: category,
+                  })}>
+                  {category}
+                </Tabs.Tab>
+              ))}
+            </Tabs>
+          </Flex.Item>
+          <Flex.Item grow={1} basis={0}>
+            {items.map(item => (
+              <Box
+                key={item.name}
+                className="candystripe"
+                p={1}
+                pb={2}>
+                <Flex spacing={1} align="baseline">
+                  <Flex.Item bold grow={1}>
+                    {item.name}
+                  </Flex.Item>
+                  <Flex.Item color="label">
+                    {item.amount
+                      ? item.amount + " in stock"
+                      : "Out of stock"}
+                  </Flex.Item>
+                  <Flex.Item>
+                    {formatMoney(item.cost) + ' cr'}
+                  </Flex.Item>
+                  <Flex.Item>
+                    <Button
+                      content="Buy"
+                      disabled={!item.amount || item.cost > money}
+                      onClick={() => act('select', {
+                        item: item.id,
+                      })} />
+                  </Flex.Item>
+                </Flex>
+                {item.desc}
+              </Box>
+            ))}
+          </Flex.Item>
+        </Flex>
+      </Window.Content>
+    </Window>
+  );
+};
 
-  const shipmentSelector = !!data.buying && (
+const ShipmentSelector = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    buying,
+    ltsrbt_built,
+    money,
+  } = data;
+  if (!buying) {
+    return null;
+  }
+  const deliveryMethods = data.delivery_methods.map(method => {
+    const description = data.delivery_method_description[method.name];
+    return {
+      ...method,
+      description,
+    };
+  });
+  return (
     <Modal textAlign="center">
       <Flex mb={1}>
-        {map(deliveryMethod => {
-          const name = deliveryMethod.name;
-          if (name === "LTSRBT" && !data.ltsrbt_built) {
+        {deliveryMethods.map(method => {
+          if (method.name === 'LTSRBT' && !ltsrbt_built) {
             return null;
           }
           return (
             <Flex.Item
-              key={name}
+              key={method.name}
               mx={1}
               width="250px">
               <Box fontSize="30px">
-                {name}
+                {method.name}
               </Box>
               <Box mt={1}>
-                {deliveryMethodDesc[name]}
+                {method.description}
               </Box>
               <Button
                 mt={2}
-                content={deliveryMethod.price+' cr'}
-                disabled={data.money < deliveryMethod.price}
+                content={formatMoney(method.price) + ' cr'}
+                disabled={money < method.price}
                 onClick={() => act('buy', {
-                  method: name,
+                  method: method.name,
                 })} />
             </Flex.Item>
           );
-        })(deliveryMethods)}
+        })}
       </Flex>
       <Button
         content="Cancel"
         color="bad"
         onClick={() => act('cancel')} />
     </Modal>
-  );
-
-  return (
-    <Window
-      theme="hackerman"
-      resizable>
-      {shipmentSelector}
-      <Window.Content scrollable>
-        <Section
-          title="Black Market Uplink"
-          buttons={(
-            <Box inline bold>
-              <AnimatedNumber value={Math.round(data.money)} /> cr
-            </Box>
-          )} />
-        <Tabs
-          activeTab={data.viewing_market}>
-          {map(market => {
-            const id = market.id;
-            const name = market.name;
-            return (
-              <Tabs.Tab
-                key={id}
-                label={name}
-                onClick={() => act('set_market', {
-                  market: id,
-                })} />
-            );
-          })(markets)}
-        </Tabs>
-        <Box>
-          <Tabs vertical
-            activeTab={data.viewing_category}>
-            {categories.map(category => (
-              <Tabs.Tab
-                key={category}
-                label={category}
-                height={4}
-                mt={0.5}
-                onClick={() => act('set_category', {
-                  category: category,
-                })}>
-                {items.map(item => (
-                  <Table
-                    key={item.name}
-                    mt={1}
-                    className="candystripe">
-                    <Table.Row>
-                      <Table.Cell bold>
-                        {item.name}
-                      </Table.Cell>
-                      <Table.Cell collapsing textAlign="right">
-                        {item.amount ? item.amount+" in stock" : "Out of stock"}
-                      </Table.Cell>
-                      <Table.Cell collapsing textAlign="right">
-                        {item.cost+'cr'}
-                      </Table.Cell>
-                      <Table.Cell collapsing textAlign="right">
-                        <Button
-                          content="Buy"
-                          disabled={!item.amount || item.cost > data.money}
-                          onClick={() => act('select', {
-                            item: item.id,
-                          })} />
-                      </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.Cell>
-                        {item.desc}
-                      </Table.Cell>
-                    </Table.Row>
-                  </Table>
-                ))}
-              </Tabs.Tab>
-            ))}
-          </Tabs>
-        </Box>
-      </Window.Content>
-    </Window>
   );
 };

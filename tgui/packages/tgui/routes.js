@@ -1,5 +1,7 @@
 import { Window } from './layouts';
 
+const requireInterface = require.context('./interfaces', false, /\.js$/);
+
 const routingError = (type, name) => () => {
   return (
     <Window resizable>
@@ -19,14 +21,13 @@ export const getRoutedComponent = state => {
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
     if (state.showKitchenSink) {
-      const { KitchenSink } = require('./interfaces/KitchenSink');
-      return KitchenSink;
+      return require('./interfaces/manually-routed/KitchenSink').KitchenSink;
     }
   }
   const name = state.config?.interface;
   let esModule;
   try {
-    esModule = require(`./interfaces/${name}.js`);
+    esModule = requireInterface(`./${name}.js`);
   }
   catch (err) {
     if (err.code === 'MODULE_NOT_FOUND') {

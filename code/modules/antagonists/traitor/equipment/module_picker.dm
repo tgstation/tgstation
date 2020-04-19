@@ -39,8 +39,8 @@
 
 /datum/module_picker/ui_data(mob/user)
 	var/list/data = list()
-	data["processing_time"] = processing_time
-	data["compact_mode"] = compact_mode
+	data["processingTime"] = processing_time
+	data["compactMode"] = compact_mode
 	return data
 
 /datum/module_picker/ui_static_data(mob/user)
