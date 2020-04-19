@@ -187,13 +187,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// cooldown tracker for accent sounds,
 	var/last_accent_sound = 0
-	///Var that increases from 0 to one when a psycologist is nearby, and decreases in the same way
-	var/psyCoeff = 1
+	///Var that increases from 0 to 1 when a psycologist is nearby, and decreases in the same way
+	var/psyCoeff = 0
 	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
 	var/obj/overlay/psy/psyOverlay = new /obj/overlay/psy/
 	///A list of active overlays, we use this to update .overlays more cleanly
 	var/active_overlays = list()
-	blend_mode = BLEND_OVERLAY
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -402,7 +401,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(takes_damage)
 			//causing damage
 			//Due to DAMAGE_INCREASE_MULTIPLIER, we only deal one 4th of the damage the statements otherwise would cause
-			//Git? you good buddy?
 
 			//((((some value between 0.5 and 1 * temp - ((273.15 + 40) * some values between 1 and 6)) * some number between 0.25 and knock your socks off / 150) * 0.25
 			//Heat and mols account for each other, a lot of hot mols are more damaging then a few
@@ -416,8 +414,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//There might be a way to integrate healing and hurting via heat
 			//healing damage
 			if(combined_gas < MOLE_PENALTY_THRESHOLD)
-				//Only heals damage when the temp is below 313.15, heals up to 2 damage
-				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (300 * psyCoeff)), 0) / 150 ), 0)
+				//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
+				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
 			//caps damage rate
 
@@ -521,8 +519,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(bzcomp >= 0.4 && prob(30 * bzcomp))
 			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
 
-		//Power * 0.55
-		var/device_energy = power * REACTION_POWER_MODIFIER * (psyCoeff == 1 ? 0.5 : 1)
+		//Power * 0.55 * a value between 1 and 0.8
+		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
 
 		//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
 		//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
@@ -555,14 +553,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
 			l.hallucination = clamp(l.hallucination, 0, 200)
-	psyCoeff = max(min(toAdd + psyCoeff, 1),0)
+	psyCoeff = clamp(psyCoeff + toAdd, 0, 1)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
-	power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (psyCoeff > 0 ? 1 - psyCoeff + 0.5 : 1),0)
+	power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (1 - (0.2 * psyCoeff)),0)
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
