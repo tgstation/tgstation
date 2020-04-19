@@ -27,7 +27,7 @@ const log = (level, ns, ...args) => {
       .filter(value => value)
       .join(' ')
       + '\nUser Agent: ' + navigator.userAgent;
-    callByond({
+    callByond('', {
       src: window.__ref__,
       action: 'tgui:log',
       log: logEntry,

@@ -432,10 +432,10 @@ const DnaConsoleStorage = (props, context) => {
 
 const StorageMutations = (props, context) => {
   const {
-    mutations = [],
     customMode = '',
   } = props;
   const { data, act } = useBackend(context);
+  const mutations = props.mutations || [];
   const mode = data.view.storageMode + customMode;
 
   let mutationRef = data.view[`storage${mode}MutationRef`];
