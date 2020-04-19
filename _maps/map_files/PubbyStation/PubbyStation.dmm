@@ -10910,15 +10910,15 @@
 	pixel_x = -8;
 	pixel_y = 27
 	},
-/obj/structure/filingcabinet/security,
+/obj/structure/closet/secure_closet/detective,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aCo" = (
-/obj/structure/closet/secure_closet/detective,
-/obj/item/hand_labeler,
 /obj/machinery/airalarm{
 	pixel_y = 22
 	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aCp" = (
@@ -55751,6 +55751,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
+"rsV" = (
+/obj/structure/filingcabinet/security,
+/turf/open/floor/carpet,
+/area/security/detectives_office)
 "rsZ" = (
 /obj/machinery/camera/motion{
 	c_tag = "Telecomms External Access";
@@ -81975,7 +81979,7 @@ aCn
 aDt
 aEq
 aFp
-aFn
+rsV
 oEA
 uoS
 uoS
