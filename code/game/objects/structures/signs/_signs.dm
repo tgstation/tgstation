@@ -34,12 +34,13 @@
 
 GLOBAL_VAR(buildable_sign_types)
 /obj/structure/sign/proc/populate_buildable_sign_types() //This generates a global list of all the signs that you can set a sign backing to with a pen, the first time a pen is used on a sign.
-  GLOB.buildable_sign_types = list()
-  for(var/s in subtypesof(/obj/structure/sign))
-    var/obj/structure/sign/potential_sign = s
-    if(!initial(potential_sign.is_buildable))
-      continue
-    GLOB.buildable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign ///sign_change_name is an alternate title for signs, that only appears in the list when you use a pen on a sign backing.
+	GLOB.buildable_sign_types = list()
+	for(var/s in subtypesof(/obj/structure/sign))
+		var/obj/structure/sign/potential_sign = s
+		if(!initial(potential_sign.is_buildable))
+			continue
+		GLOB.buildable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign ///sign_change_name is an alternate title for signs, that only appears in the list when you use a pen on a sign backing.
+	sortList(GLOB.buildable_sign_types, /proc/cmp_sign_changename)
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && buildable_sign)

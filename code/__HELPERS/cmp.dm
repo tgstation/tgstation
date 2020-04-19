@@ -127,3 +127,6 @@ GLOBAL_VAR_INIT(cmp_field, "name")
 
 /proc/cmp_pdajob_asc(obj/item/pda/A, obj/item/pda/B)
 	return sorttext(B.ownjob, A.ownjob)
+
+/proc/cmp_sign_changename(obj/structure/sign/A, obj/structure/sign/B)
+    return sorttext("[B.sign_change_name]", "[A.sign_change_name]")
