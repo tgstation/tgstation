@@ -83,6 +83,11 @@ const MedicalKioskScanButton = (props, context) => {
   const paid = data[`active_status_${index}`];
   return (
     <Flex spacing={1} align="baseline">
+      <Flex.Item width="16px" textAlign="center">
+        <Icon
+          name={paid ? 'check' : 'dollar-sign'}
+          color={paid ? 'green' : 'grey'} />
+      </Flex.Item>
       <Flex.Item grow={1}>
         <Button
           fluid
@@ -95,11 +100,6 @@ const MedicalKioskScanButton = (props, context) => {
             act(`beginScan_${index}`);
             setScanIndex(index);
           }} />
-      </Flex.Item>
-      <Flex.Item width="16px" textAlign="center">
-        <Icon
-          name={paid ? 'check' : 'dollar-sign'}
-          color={paid ? 'green' : 'grey'} />
       </Flex.Item>
     </Flex>
   );

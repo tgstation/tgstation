@@ -1,7 +1,7 @@
 import { Component, Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Grid, Icon, LabeledList, Modal, NoticeBox, Section, Table, Tabs } from '../components';
-import { Window } from '../layouts';
+import { NtosWindow } from '../layouts';
 
 const CONTRACT_STATUS_INACTIVE = 1;
 const CONTRACT_STATUS_ACTIVE = 2;
@@ -63,13 +63,13 @@ export class FakeTerminal extends Component {
 
 export const SyndContractor = (props, context) => {
   return (
-    <Window
+    <NtosWindow
       theme="syndicate"
       resizable>
-      <Window.Content scrollable>
+      <NtosWindow.Content scrollable>
         <SyndContractorContent />
-      </Window.Content>
-    </Window>
+      </NtosWindow.Content>
+    </NtosWindow>
   );
 };
 
