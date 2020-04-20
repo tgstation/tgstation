@@ -94,7 +94,7 @@
 	force = on ? 8 : initial(force)
 	w_class = on ? WEIGHT_CLASS_NORMAL : initial(w_class)
 	throwforce =  on ? 10 : initial(throwforce)
-	toolspeed = on ? 0.5 : initial(toolspeed)
+	toolspeed = on ? 0.7 : initial(toolspeed)
 	hitsound = on ? 'sound/weapons/blade1.ogg' : "swing_hit"
 	playsound(user, on ? 'sound/weapons/saberoff.ogg' : 'sound/weapons/saberon.ogg', 5, TRUE)
 	to_chat(user, "<span class='warning'>[src] is now [on ? "active" : "concealed"].</span>")
