@@ -379,11 +379,10 @@
 	taste_description = "acid"
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/M)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.type,2.5)
+	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.type,3)
 	if(M.health > 20)
-		M.adjustToxLoss(2.5*REM, 0)
+		M.adjustToxLoss(1*REM, 0)
 		. = 1
 	..()
 
