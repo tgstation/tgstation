@@ -11,7 +11,7 @@ export const AtmosControlConsole = (props, context) => {
     <Window resizable>
       <Window.Content scrollable>
         <Section
-          title={!!data.tank && sensors[0].long_name}>
+          title={!!data.tank && sensors[0]?.long_name}>
           {sensors.map(sensor => {
             const gases = sensor.gases || {};
             return (
