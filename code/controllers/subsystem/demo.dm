@@ -6,9 +6,6 @@ SUBSYSTEM_DEF(demo)
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 
 	var/list/pre_init_lines = list() // stuff like chat before the init
-	var/list/icon_cache = list()
-	var/list/icon_state_caches = list()
-	var/list/name_cache = list()
 
 	var/list/marked_dirty = list()
 	var/list/marked_new = list()
