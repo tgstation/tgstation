@@ -88,7 +88,7 @@
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		if(HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
+		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
