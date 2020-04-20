@@ -56,7 +56,7 @@
 			qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
 		return
 	else if(istype(I, /obj/item/pen/fountain) && unengraved)
-		var/namechoice = input(user, "Title this plaque.", "Plaque Customization")
+		var/namechoice = input(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization")
 		if(!namechoice)
 			return
 		var/descriptionchoice = input(user, "Engrave this plaque's text.", "Plaque Customization")
@@ -68,8 +68,8 @@
 			if(!Adjacent(user)) //Make sure user is adjacent still
 				to_chat(user, "<span class='warning'>You have to stand next to the plaque to engrave it!</span>")
 				return
-			name = namechoice
-			desc = descriptionchoice
+			name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
+			desc = "The plaque reads: '[descriptionchoice]'"
 			unengraved = FALSE //The plaque now has a name, description, and can't be altered again.
 			user.visible_message("<span class='notice'>[user] engraves [src].</span>", \
 								 "<span class='notice'>You engrave [src].</span>")
@@ -86,7 +86,7 @@
 							 "<span class='notice'>You attach [src] to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
 		var/obj/structure/customplaque/S = new plaque_path(T)
-		S.name = name //The opposite of the above in attackby; make sure the plaque item's name, description, and if it's engraved or not transfers to the strucutre.
+		S.name = name //The opposite of the above in attackby; make sure the plaque item's name, description, and if it's engraved or not transfers to the structure.
 		S.desc = desc
 		S.unengraved = unengraved
 		S.setDir(dir)

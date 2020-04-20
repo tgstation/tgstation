@@ -20,7 +20,7 @@
 /obj/structure/sign/departments/examroom
 	name = "\improper Exam Room sign"
 	sign_change_name = "Department - Medbay: Exam Room"
-	desc = "A guidance sign which reads 'EXAM ROOM'."
+	desc = "A guidance sign which reads 'Exam Room'."
 	icon_state = "examroom"
 	is_editable = TRUE
 
