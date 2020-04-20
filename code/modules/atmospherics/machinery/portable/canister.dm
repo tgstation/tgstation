@@ -242,7 +242,7 @@
 	pressure_limit = 1e14
 	volume = 5000
 	max_integrity = 500
-	can_max_release_pressure = (ONE_ATMOSPHERE * 50)
+	can_max_release_pressure = (ONE_ATMOSPHERE * 30)
 	can_min_release_pressure = (ONE_ATMOSPHERE / 50)
 	mode = CANISTER_TIER_3
 
@@ -392,7 +392,7 @@
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can recieve, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(min(((temperature/heat_limit) * (pressure/pressure_limit)), 50), BURN, 0)
+		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
 		return
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
