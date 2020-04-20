@@ -120,3 +120,4 @@
 /obj/item/customplaque/attack_self(mob/user)
 	. = ..()
 	setDir(turn(dir, 90))
+	
