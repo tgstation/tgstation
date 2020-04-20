@@ -117,13 +117,13 @@ GLOBAL_VAR(editable_sign_types)
 	setDir(turn(dir, 90))
 
 /obj/structure/sign/nanotrasen
-	name = "\improper Nanotrasen logo"
+	name = "\improper Nanotrasen logo sign"
 	sign_change_name = "Corporate Logo - Nanotrasen"
 	desc = "A sign with the Nanotrasen logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
 	is_editable = TRUE
 
 /obj/structure/sign/logo
-	name = "\improper Nanotrasen logo"
+	name = "\improper Nanotrasen logo sign"
 	desc = "The Nanotrasen corporate logo."
 	icon_state = "nanotrasen_sign1"
