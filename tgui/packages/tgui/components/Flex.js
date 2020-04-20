@@ -1,4 +1,5 @@
 import { classes, pureComponentHooks } from 'common/react';
+import { IS_IE8 } from '../byond';
 import { Box, unit } from './Box';
 
 export const computeFlexProps = props => {
@@ -8,12 +9,15 @@ export const computeFlexProps = props => {
     wrap,
     align,
     justify,
+    inline,
     spacing = 0,
     ...rest
   } = props;
   return {
     className: classes([
       'Flex',
+      IS_IE8 && 'Flex--ie8',
+      inline && 'Flex--inline',
       spacing > 0 && 'Flex--spacing--' + spacing,
       className,
     ]),
@@ -49,6 +53,7 @@ export const computeFlexItemProps = props => {
   return {
     className: classes([
       'Flex__item',
+      IS_IE8 && 'Flex__item--ie8',
       className,
     ]),
     style: {

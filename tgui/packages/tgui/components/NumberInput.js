@@ -1,7 +1,7 @@
 import { clamp } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
-import { tridentVersion } from '../byond';
+import { IS_IE8 } from '../byond';
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
 
@@ -77,13 +77,15 @@ export class NumberInput extends Component {
           // Give it some headroom (by increasing clamp range by 1 step)
           state.internalValue = clamp(
             state.internalValue + offset * step / stepPixelSize,
-            minValue - step, maxValue + step);
+            minValue - step,
+            maxValue + step);
           // Clamp the final value
           state.value = clamp(
             state.internalValue
               - state.internalValue % step
               + stepOffset,
-            minValue, maxValue);
+            minValue,
+            maxValue);
           state.origin = e.screenY;
         }
         else if (Math.abs(offset) > 4) {
@@ -160,7 +162,7 @@ export class NumberInput extends Component {
     const renderContentElement = value => (
       <div
         className="NumberInput__content"
-        unselectable={tridentVersion <= 4}>
+        unselectable={IS_IE8}>
         {value + (unit ? ' ' + unit : '')}
       </div>
     );

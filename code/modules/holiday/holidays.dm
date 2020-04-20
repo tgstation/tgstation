@@ -1,5 +1,5 @@
 /datum/holiday
-	var/name = "Bugsgiving"
+	var/name = "If you see this the holiday calendar code is broken"
 
 	var/begin_day = 1
 	var/begin_month = 0
@@ -622,7 +622,7 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	return "Happy National Hot Dog Day!"
 
 /datum/holiday/hebrew
-	name = "Jewish Bugsgiving"
+	name = "If you see this the Hebrew holiday calendar code is broken"
 
 /datum/holiday/hebrew/shouldCelebrate(dd, mm, yy, ww, ddd)
 	var/datum/hebrew_calendar/cal = new /datum/hebrew_calendar()

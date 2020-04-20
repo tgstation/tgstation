@@ -278,6 +278,9 @@
 		p_blue = P
 	crosslink()
 
+/obj/item/gun/energy/wormhole_projector/core_inserted
+    firing_core = TRUE
+
 /* 3d printer 'pseudo guns' for borgs */
 
 /obj/item/gun/energy/printer

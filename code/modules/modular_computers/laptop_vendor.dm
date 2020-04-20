@@ -232,7 +232,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "computer_fabricator", "Personal Computer Vendor", ui_x, ui_y, state = state)
+		ui = new(user, src, ui_key, "ComputerFabricator", "Personal Computer Vendor", ui_x, ui_y, state = state)
 		ui.open()
 
 /obj/machinery/lapvend/attackby(obj/item/I, mob/user)

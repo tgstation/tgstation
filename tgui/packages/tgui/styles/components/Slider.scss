@@ -1,0 +1,41 @@
+.Slider {
+  cursor: e-resize;
+}
+
+.Slider__cursorOffset {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transition: none !important;
+}
+
+.Slider__cursor {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  width: 0;
+  border-left: 2px solid #fff;
+}
+
+.Slider__pointer {
+  position: absolute;
+  right: -5px;
+  bottom: -4px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #fff;
+}
+
+.Slider__popupValue {
+  position: absolute;
+  right: 0;
+  top: -22px;
+  padding: 2px 4px;
+  background-color: #000;
+  transform: translateX(50%);
+  white-space: nowrap;
+}

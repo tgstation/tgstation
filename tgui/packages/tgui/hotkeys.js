@@ -1,5 +1,5 @@
+import { callByond, IS_IE8 } from './byond';
 import { createLogger } from './logging';
-import { callByond, tridentVersion } from './byond';
 
 const logger = createLogger('hotkeys');
 
@@ -223,13 +223,13 @@ export const hotKeyMiddleware = store => {
   subscribeToKeyPresses((e, eventType) => {
     // IE8: Can't determine the focused element, so by extension it passes
     // keypresses when inputs are focused.
-    if (tridentVersion > 4) {
+    if (!IS_IE8) {
       handlePassthrough(e, eventType);
     }
     handleHotKey(e, eventType, dispatch);
   });
   // IE8: focusin/focusout only available on IE9+
-  if (tridentVersion > 4) {
+  if (!IS_IE8) {
     // Clean up when browser window completely loses focus
     subscribeToLossOfFocus(() => {
       releaseHeldKeys();
@@ -249,6 +249,13 @@ export const hotKeyReducer = (state, action) => {
       return {
         ...state,
         showKitchenSink: !state.showKitchenSink,
+      };
+    }
+    // Toggle layout debugger
+    if (ctrlKey && altKey && keyCode === KEY_MINUS) {
+      return {
+        ...state,
+        debugLayout: !state.debugLayout,
       };
     }
     return state;
