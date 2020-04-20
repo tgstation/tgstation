@@ -2264,15 +2264,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/mine/laborcamp)
-"op" = (
-/obj/machinery/door/airlock/external{
-	glass = 1;
-	name = "Mining External Airlock";
-	opacity = 0;
-	req_access_txt = "54"
-	},
-/turf/open/floor/plasteel,
-/area/mine/eva)
 "oB" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/blue{
@@ -3596,16 +3587,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
-"Rf" = (
-/obj/effect/turf_decal/tile/brown{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/brown{
-	dir = 1
-	},
-/obj/machinery/light/small,
-/turf/open/floor/plasteel,
-/area/mine/eva)
 "Rx" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -24251,7 +24232,7 @@ bg
 bX
 bg
 bf
-op
+bt
 bq
 dd
 bP
@@ -24508,7 +24489,7 @@ bJ
 bY
 cs
 bt
-Rf
+bt
 bq
 de
 dv
@@ -24763,9 +24744,9 @@ ah
 bf
 bK
 bW
-bt
 Ur
 Al
+bt
 bq
 df
 dw

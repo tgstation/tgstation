@@ -7592,7 +7592,9 @@
 /turf/open/floor/engine{
 	name = "Holodeck Projector Floor"
 	},
-/area/holodeck/rec_center)
+/area/holodeck/rec_center{
+	dynamic_lighting = 1
+	})
 "arp" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32

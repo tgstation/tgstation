@@ -19,7 +19,7 @@
 /turf/open/floor/mineral/gold,
 /area/icemoon/underground/explored)
 "T" = (
-/turf/closed/mineral/random/no_caves,
+/turf/closed/mineral/random/volcanic/no_caves,
 /area/icemoon/underground/explored)
 
 (1,1,1) = {"

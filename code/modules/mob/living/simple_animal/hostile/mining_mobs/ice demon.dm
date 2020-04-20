@@ -32,7 +32,7 @@
 	move_resist = MOVE_FORCE_VERY_STRONG
 	pull_force = MOVE_FORCE_VERY_STRONG
 	del_on_death = TRUE
-	loot = list(/obj/item/stack/ore/bluespace_crystal = 3)
+	loot = list()
 	crusher_loot = /obj/item/crusher_trophy/watcher_wing/ice_wing
 	deathmessage = "fades as the energies that tied it to this world dissipate."
 	deathsound = 'sound/magic/demon_dies.ogg'
@@ -72,7 +72,7 @@
 	move_force = MOVE_FORCE_DEFAULT
 	move_resist = MOVE_RESIST_DEFAULT
 	pull_force = PULL_FORCE_DEFAULT
-	var/turf/T = get_turf(src)
-	if(T && prob(5))
-		new /obj/item/assembly/signaler/anomaly/bluespace(T)
+	new /obj/item/stack/ore/bluespace_crystal(loc, 3)
+	if(prob(5))
+		new /obj/item/assembly/signaler/anomaly/bluespace(loc)
 	return ..()

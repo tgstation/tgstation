@@ -28,6 +28,10 @@
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
 			return 0
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || A && !A.blob_allowed)
+			to_chat(src, "<span class='warning'>You cannot place your core here!</span>")
+			return 0
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))

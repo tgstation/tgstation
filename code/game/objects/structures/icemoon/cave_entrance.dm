@@ -114,7 +114,19 @@ GLOBAL_LIST_INIT(ore_probability, list(/obj/item/stack/ore/uranium = 50,
 	animate(src, transform = matrix().Scale(0, 1), alpha = 50, time = 5 SECONDS)
 	addtimer(CALLBACK(src, .proc/collapse), 5 SECONDS)
 
+/**
+  * Handles portal deletion
+  *
+  */
 /obj/effect/collapsing_demonic_portal/proc/collapse()
+	drop_loot()
+	qdel(src)
+
+/**
+  * Drops loot from the portal
+  *
+  */
+/obj/effect/collapsing_demonic_portal/proc/drop_loot()
 	visible_message("<span class='warning'>Something slips out of [src]!</span>")
 	var/loot = rand(1, 28)
 	switch(loot)

@@ -5,30 +5,109 @@
 "b" = (
 /turf/closed/mineral/random/high_chance/snow,
 /area/icemoon/underground/unexplored/rivers)
+"c" = (
+/turf/open/floor/plasteel/dark,
+/area/mine/eva)
 "d" = (
 /obj/structure/ladder,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
-"e" = (
-/obj/structure/grille,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
-"h" = (
-/turf/closed/wall,
-/area/icemoon/underground/explored)
-"N" = (
-/obj/structure/grille/broken,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
-"O" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
-"T" = (
-/obj/item/flashlight/lantern{
-	on = 1
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"g" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"i" = (
+/obj/effect/turf_decal/tile/brown,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
 	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"l" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"m" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"o" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/mine/eva)
+"s" = (
+/obj/structure/ore_box,
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"v" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"y" = (
+/turf/closed/wall,
+/area/mine/eva)
+"z" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/mine/eva)
+"A" = (
+/obj/machinery/telecomms/relay/preset/mining,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/mine/eva)
+"B" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"C" = (
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"K" = (
+/turf/open/floor/circuit,
+/area/mine/eva)
+"Q" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Mining Station Maintenance";
+	req_access_txt = "48"
+	},
+/turf/open/floor/plating,
+/area/mine/eva)
+"V" = (
+/turf/open/floor/plating,
+/area/mine/eva)
+"X" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Mining Station Communications";
+	req_access_txt = "48"
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"Y" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plasteel,
+/area/mine/eva)
 
 (1,1,1) = {"
 a
@@ -18422,19 +18501,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+y
+y
+y
+y
+y
+Y
+m
+Y
+y
+y
+y
+y
+y
 a
 a
 a
@@ -18679,19 +18758,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+y
+o
+V
+V
+y
+C
+l
+C
+y
+y
+y
+y
+y
 a
 a
 a
@@ -18936,19 +19015,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+y
+z
+V
+V
+y
+C
+C
+C
+y
+y
+y
+y
+y
 a
 a
 a
@@ -19193,19 +19272,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+y
+V
+V
+V
+Q
+C
+C
+C
+y
+y
+y
+y
+y
 a
 a
 a
@@ -19450,19 +19529,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-h
-e
-O
-e
-h
-a
-a
-a
-a
+y
+y
+y
+y
+y
+C
+C
+C
+y
+y
+y
+y
+y
 a
 a
 a
@@ -19707,19 +19786,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-e
-O
-O
-O
-e
-a
-a
-a
-a
+Y
+g
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+Y
 a
 a
 a
@@ -19964,19 +20043,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-O
-O
+m
+v
+C
+C
+C
+C
 d
-O
-O
-a
-a
-a
-a
+C
+C
+C
+C
+B
+m
 a
 a
 a
@@ -20221,19 +20300,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-e
-T
-O
-O
-e
-a
-a
-a
-a
+Y
+s
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
+Y
 a
 a
 a
@@ -20478,19 +20557,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-h
-N
-O
-e
-h
-a
-a
-a
-a
+y
+y
+y
+y
+y
+C
+C
+C
+y
+y
+y
+y
+y
 a
 a
 a
@@ -20735,19 +20814,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+y
+c
+K
+K
+X
+C
+C
+C
+y
+y
+y
+y
+y
 a
 a
 a
@@ -20992,19 +21071,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+y
+A
+c
+K
+y
+C
+C
+C
+y
+y
+y
+y
+y
 a
 a
 a
@@ -21249,19 +21328,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+y
+c
+K
+K
+y
+C
+i
+C
+y
+y
+y
+y
+y
 a
 a
 a
@@ -21506,19 +21585,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+y
+y
+y
+y
+y
+Y
+m
+Y
+y
+y
+y
+y
+y
 a
 a
 a

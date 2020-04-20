@@ -31,8 +31,8 @@ Difficulty: Hard
 	pixel_x = -16
 	loot = list()
 	butcher_results = list()
-	guaranteed_butcher_results = list(/obj/item/wendigo_blood)
-	crusher_loot = list(/obj/item/wendigo_blood, /obj/item/crusher_trophy/demon_claws)
+	guaranteed_butcher_results = list(/obj/item/wendigo_blood = 1)
+	crusher_loot = list(/obj/item/crusher_trophy/demon_claws)
 	wander = FALSE
 	del_on_death = FALSE
 	blood_volume = BLOOD_VOLUME_NORMAL
@@ -53,6 +53,8 @@ Difficulty: Hard
 	var/stored_move_dirs = 0
 	/// If the wendigo is allowed to move
 	var/can_move = TRUE
+	/// Stores the last scream time so it doesn't spam it
+	var/last_scream = 0
 
 /datum/action/innate/megafauna_attack/heavy_stomp
 	name = "Heavy Stomp"
@@ -100,7 +102,10 @@ Difficulty: Hard
 				disorienting_scream()
 		return
 
-	chosen_attack = rand(1, 3)
+	if(world.time > last_scream + 60)
+		chosen_attack = rand(1, 3)
+	else
+		chosen_attack = rand(1, 2)
 	switch(chosen_attack)
 		if(1)
 			heavy_stomp()
@@ -163,11 +168,12 @@ Difficulty: Hard
 /// Shakes all nearby enemies screens and animates the wendigo shaking up and down
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/disorienting_scream()
 	can_move = FALSE
+	last_scream = world.time
 	playsound(src, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
 	animate(src, pixel_z = rand(5, 15), time = 1, loop = 6)
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
-		shake_camera(L, 120, 2)
+		L.woozy_eyes(4)
 		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
 	SetRecoveryTime(30, 0)
 	SLEEP_CHECK_DEATH(12)

@@ -14,9 +14,9 @@
 	database_id = MINER_SCORE
 
 /datum/award/score/demonic_miner_score
-	name = "Blood-Drunk Miners Killed"
+	name = "Demonic-Frost Miners Killed"
 	desc = "You've killed HOW many?"
-	database_id = MINER_SCORE
+	database_id = FROST_MINER_SCORE
 
 /datum/award/score/bubblegum_score
 	name = "Bubblegums Killed"

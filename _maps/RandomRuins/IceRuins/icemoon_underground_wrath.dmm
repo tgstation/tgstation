@@ -9,6 +9,26 @@
 /obj/structure/spawner/nether,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"n" = (
+/obj/item/stack/sheet/mineral/runite{
+	amount = 2
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"p" = (
+/obj/item/wisp_lantern,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"L" = (
+/obj/item/stack/ore/bluespace_crystal,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
+"X" = (
+/obj/item/stack/sheet/mineral/runite{
+	amount = 3
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/underground/explored)
 
 (1,1,1) = {"
 b
@@ -52,7 +72,7 @@ b
 b
 a
 a
-a
+L
 a
 a
 b
@@ -65,12 +85,12 @@ b
 b
 b
 b
+L
 a
 a
 a
 a
-a
-a
+L
 a
 a
 a
@@ -83,14 +103,14 @@ b
 b
 b
 a
+L
+a
+L
 a
 a
 a
 a
-a
-a
-a
-a
+L
 b
 b
 b
@@ -104,9 +124,9 @@ a
 a
 a
 a
+L
 a
-a
-a
+L
 a
 a
 b
@@ -115,13 +135,13 @@ b
 (7,1,1) = {"
 b
 b
+L
 a
 a
+L
 a
 a
-a
-a
-a
+X
 a
 a
 a
@@ -136,11 +156,11 @@ a
 a
 a
 a
-a
+p
 e
 a
 a
-a
+L
 a
 a
 b
@@ -151,28 +171,28 @@ b
 b
 a
 a
+L
+a
+a
+n
 a
 a
 a
 a
-a
-a
-a
-a
-a
+L
 b
 b
 "}
 (10,1,1) = {"
 b
 b
+L
 a
 a
 a
+L
 a
-a
-a
-a
+L
 a
 a
 a
@@ -191,7 +211,7 @@ a
 a
 a
 a
-a
+L
 a
 b
 b
@@ -203,13 +223,13 @@ b
 b
 a
 a
+L
+a
+L
 a
 a
 a
-a
-a
-a
-a
+L
 b
 b
 b
@@ -224,7 +244,7 @@ a
 a
 a
 a
-a
+L
 b
 b
 b
