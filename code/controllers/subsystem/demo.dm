@@ -261,7 +261,7 @@ SUBSYSTEM_DEF(demo)
 		color_string = jointext(inted, ",")
 	var/overlays_string = "\[]"
 	if(length(appearance.overlays))
-		if(length(appearance.overlays > 40))
+		if(length(appearance.overlays) > 40)
 			log_runtime("Excessively high amount of overlays found. If this trips other checks need to be implemented.")
 		var/list/overlays_list = list()
 		for(var/i in 1 to length(appearance.overlays))
