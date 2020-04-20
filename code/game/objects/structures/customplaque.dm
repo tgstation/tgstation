@@ -1,4 +1,4 @@
-/obj/structure/customplaque
+/obj/structure/customplaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen. They must be on a wall to do this.
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
@@ -7,10 +7,10 @@
 	opacity = 0
 	density = FALSE
 	layer = SIGN_LAYER
-	max_integrity = 200
+	max_integrity = 200 //Twice as durable as regular signs.
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	var/unengraved = TRUE
+	var/unengraved = TRUE //Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 
 /obj/item/customplaque
 	icon = 'icons/obj/decals.dmi'
@@ -19,7 +19,7 @@
 	desc = "A blank plaque. Place it on a wall and use a fancy pen to engrave it, use a wrench to detatch it from the wall."
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/gold = 2000)
-	var/plaque_path = /obj/structure/customplaque
+	var/plaque_path = /obj/structure/customplaque //This points the item to make the proper structure when placed on a wall.
 	var/unengraved = TRUE
 
 /obj/structure/customplaque/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -49,11 +49,11 @@
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 								 "<span class='notice'>You unfasten [src].</span>")
 			var/obj/item/customplaque/CP = new (get_turf(user))
-			CP.name = name
+			CP.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
 			CP.desc = desc
 			CP.unengraved = unengraved
 			CP.setDir(dir)
-			qdel(src)
+			qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
 		return
 	else if(istype(I, /obj/item/pen/fountain) && unengraved)
 		var/namechoice = input(user, "Title this plaque.", "Plaque Customization")
@@ -64,18 +64,17 @@
 			return
 		user.visible_message("<span class='notice'>[user] begins engraving [src].</span>", \
 							 "<span class='notice'>You begin engraving [src].</span>")
-		if(do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a sign, and adds a delay so somebody could stun or push them if they don't want them to.
-			//Make sure user is adjacent still
-			if(!Adjacent(user))
+		if(do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a sign, then has a delay.
+			if(!Adjacent(user)) //Make sure user is adjacent still
 				to_chat(user, "<span class='warning'>You have to stand next to the plaque to engrave it!</span>")
 				return
 			name = namechoice
 			desc = descriptionchoice
-			unengraved = FALSE
+			unengraved = FALSE //The plaque now has a name, description, and can't be altered again.
 			user.visible_message("<span class='notice'>[user] engraves [src].</span>", \
 								 "<span class='notice'>You engrave [src].</span>")
 	else if(istype(I, /obj/item/pen) && unengraved)
-		to_chat(user, "<span class='warning'>Your pen isn't fancy enough to engrave this! Find a fountain pen.</span>")
+		to_chat(user, "<span class='warning'>Your pen isn't fancy enough to engrave this! Find a fountain pen.</span>") //Go steal the Curator's.
 	else
 		return ..()
 
@@ -87,7 +86,7 @@
 							 "<span class='notice'>You attach [src] to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
 		var/obj/structure/customplaque/S = new plaque_path(T)
-		S.name = name
+		S.name = name //The opposite of the above in attackby; make sure the plaque item's name, description, and if it's engraved or not transfers to the strucutre.
 		S.desc = desc
 		S.unengraved = unengraved
 		S.setDir(dir)

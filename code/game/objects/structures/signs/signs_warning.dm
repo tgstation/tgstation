@@ -1,5 +1,4 @@
 //warning signs
-//sign_change_name is an alternate name for a sign that only shows up in the list you see when you use a pen on a sign backing.
 
 
 ///////DANGEROUS THINGS

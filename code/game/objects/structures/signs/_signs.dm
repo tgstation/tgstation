@@ -6,9 +6,9 @@
 	layer = SIGN_LAYER
 	max_integrity = 100
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	var/buildable_sign = 1 //unwrenchable and modifiable
+	var/buildable_sign = 1 //unwrenchable
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	var/is_editable = FALSE //This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
+	var/is_editable = FALSE //This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign subtype to override.
 	var/sign_change_name = "Sign - Blank" //sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
 
 /obj/structure/sign/basic
@@ -32,15 +32,15 @@
 		return
 	user.examinate(src)
 
-GLOBAL_VAR(buildable_sign_types)
-/obj/structure/sign/proc/populate_buildable_sign_types() //This generates a global list of all the signs that you can set a sign backing to with a pen, the first time a pen is used on a sign.
-	GLOB.buildable_sign_types = list()
+GLOBAL_VAR(editable_sign_types)
+/obj/structure/sign/proc/populate_editable_sign_types() //The first time a pen is used on any sign, this populates the above, a global list of all the signs that you can set a sign backing to with a pen.
+	GLOB.editable_sign_types = list()
 	for(var/s in subtypesof(/obj/structure/sign))
 		var/obj/structure/sign/potential_sign = s
 		if(!initial(potential_sign.is_editable))
 			continue
-		GLOB.buildable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign //sign_change_name is an alternate title for signs, that only appears in the list when you use a pen on a sign backing.
-	GLOB.buildable_sign_types = sortList(GLOB.buildable_sign_types) //Alphabetizes the results.
+		GLOB.editable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign
+	GLOB.editable_sign_types = sortList(GLOB.editable_sign_types) //Alphabetizes the results.
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH && buildable_sign)
@@ -52,25 +52,24 @@ GLOBAL_VAR(buildable_sign_types)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 								 "<span class='notice'>You unfasten [src].</span>")
 			var/obj/item/sign_backing/SB = new (get_turf(user))
-			SB.icon_state = icon_state
+			SB.icon_state = icon_state //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
 			SB.sign_path = type
 			SB.setDir(dir)
-			qdel(src)
+			qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 		return
 	else if(istype(I, /obj/item/pen) && is_editable)
-		if(!length(GLOB.buildable_sign_types))
-			populate_buildable_sign_types()
-			if(!length(GLOB.buildable_sign_types))
-				CRASH("GLOB.buildable_sign_types failed to populate")
-		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.buildable_sign_types
+		if(!length(GLOB.editable_sign_types))
+			populate_editable_sign_types()
+			if(!length(GLOB.editable_sign_types))
+				CRASH("GLOB.editable_sign_types failed to populate")
+		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
 		if(!choice)
 			return
 		user.visible_message("<span class='notice'>[user] begins changing [src].</span>", \
 							 "<span class='notice'>You begin changing [src].</span>")
-		if(do_after(user, 40, target = src))
-			var/sign_type = GLOB.buildable_sign_types[choice]
-			//Make sure user is adjacent still
-			if(!Adjacent(user))
+		if(do_after(user, 40, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
+			var/sign_type = GLOB.editable_sign_types[choice]
+			if(!Adjacent(user)) //Make sure user is adjacent still.
 				return
 			if(!sign_type)
 				return
@@ -94,7 +93,7 @@ GLOBAL_VAR(buildable_sign_types)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/plastic = 2000)
 	resistance_flags = FLAMMABLE
-	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
+	var/sign_path = /obj/structure/sign/basic //The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	. = ..()
