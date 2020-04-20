@@ -53,6 +53,8 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/Connect()
 	if(!CONFIG_GET(flag/sql_enabled))
 		return FALSE
+	if(SSdbcore.IsConnected())
+		return TRUE
 	var/user = CONFIG_GET(string/feedback_login)
 	var/pass = CONFIG_GET(string/feedback_password)
 	var/db = CONFIG_GET(string/feedback_database)
@@ -66,6 +68,20 @@ SUBSYSTEM_DEF(dbcore)
 			return TRUE
 		else
 			message_admins("WARNING! Database connection failed! Status: [connection_status]")
+			log_sql("WARNING! Database connection failed! Status: [connection_status]")
+			return FALSE
+
+/datum/controller/subsystem/dbcore/proc/IsConnected()
+	var/list/connection_results = json_decode(rustg_sql_connected())
+	switch(connection_results["status"])
+		if("online")
+			return TRUE
+		if("offline")
+			return FALSE
+		if("err")
+			var/error_data = connection_results["data"]
+			message_admins("SQL error occured in IsConnected! Error: [error_data]")
+			log_sql("SQL error occured in IsConnected! Error: [error_data]")
 			return FALSE
 
 #warn "REMOVE THIS SHIT BEFORE SHIPPING I SWEAR TO GOD"
@@ -77,7 +93,7 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/proc/CheckSchemaVersion()
 	if(CONFIG_GET(flag/sql_enabled))
-		if(rustg_sql_connected())
+		if(Connect())
 			log_world("Database connection established.")
 			var/datum/DBQuery/query_db_version = NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1", "{}")
 			query_db_version.Execute()
@@ -94,7 +110,7 @@ SUBSYSTEM_DEF(dbcore)
 		log_sql("Database is not enabled in configuration.")
 
 /datum/controller/subsystem/dbcore/proc/SetRoundID()
-	if(!rustg_sql_connected())
+	if(!SSdbcore.IsConnected())
 		return
 	var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
 	query_round_initialize.Execute(async = FALSE)
@@ -106,14 +122,14 @@ SUBSYSTEM_DEF(dbcore)
 	qdel(query_round_last_id)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundStart()
-	if(!rustg_sql_connected())
+	if(!SSdbcore.IsConnected())
 		return
 	var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = [GLOB.round_id]")
 	query_round_start.Execute()
 	qdel(query_round_start)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundEnd()
-	if(!rustg_sql_connected())
+	if(!SSdbcore.IsConnected())
 		return
 	var/sql_station_name = sanitizeSQL(station_name())
 	var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
@@ -241,7 +257,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/list/item
 	var/last_error
 
-/datum/DBQuery/New(sql_query, sql_parameters)
+/datum/DBQuery/New(sql_query, sql_parameters = "{}")
 	SSdbcore.active_queries[src] = TRUE
 	sql = sql_query
 	parameters = sql_parameters
@@ -279,14 +295,12 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	in_progress = TRUE
 	if(async)
 		query_results = rustg_sql_query_async(sql, parameters)
-		world.log << query_results
 		var/done = 0
 		while(!done)
 			var/x = rustg_sql_check_query(query_results)
-			world.log << x
 			switch(x)
 				if(RUSTG_JOB_NO_RESULTS_YET)
-					CHECK_TICK
+					sleep(5)
 					continue
 				if(RUSTG_JOB_NO_SUCH_JOB)
 					world.log << "wtf job [query_results] not made?"
@@ -295,6 +309,11 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 					world.log << "job [query_results] errored?"
 				else
 					world.log << "QUERY FINISHED, RESULT: [x]"
+					var/list/results = json_decode(x)
+					if(results["status"] == "err")
+						var/error_d = results["data"]
+						log_sql("SQL Error Occured! Query was [sql], parameters were [parameters]. Error: [error_d]")
+						message_admins("SQL Error Occured! Query was [sql], parameters were [parameters]. Error: [error_d]")
 					query_results = x
 					done = 1
 					break
