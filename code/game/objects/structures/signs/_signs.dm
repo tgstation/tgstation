@@ -16,11 +16,11 @@
 	desc = "How can signs be real if our eyes aren't real? Use a pen to change the decal."
 	icon_state = "backing"
 
-/obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, TRUE)
+				playsound(loc, 'sound/weapons/slash.ogg', 80, TRUE)
 			else
 				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
