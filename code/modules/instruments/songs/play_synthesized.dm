@@ -89,7 +89,7 @@
 	last_channel_played = channel_text
 	for(var/i in hearing_mobs)
 		var/mob/M = i
-		if(user?.has_trait(TRAIT_MUSICIAN) && isliving(M))
+		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
 			var/mob/living/L = M
 			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
 		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
