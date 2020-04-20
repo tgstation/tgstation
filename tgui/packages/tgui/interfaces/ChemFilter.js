@@ -10,7 +10,7 @@ export const ChemFilterPane = (props, context) => {
   return (
     <Section
       title={title}
-      minHeight={40}
+      minHeight="120px"
       buttons={(
         <Fragment>
           <Input
