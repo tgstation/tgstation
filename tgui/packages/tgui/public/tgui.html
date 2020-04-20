@@ -4,13 +4,68 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta charset="utf-8">
 
+<!-- Inlined data -->
+<meta id="tgui:ref" content="[tgui:ref]">
+
 <!-- Early setup -->
-<script id="data" type="application/json" data-ref="[ref]">{}</script>
 <script type="text/javascript">
 // Mark the beginning of initialization
 window.__inception__ = new Date().getTime();
-// Make window ref global
-window.__ref__ = document.getElementById('data').getAttribute('data-ref');
+// Read tgui object ref into a global
+window.__ref__ = document
+  .getElementById('tgui:ref')
+  .getAttribute('content');
+// Null if template marker was not replaced
+if (window.__ref__ === '[' + 'tgui:ref' + ']') {
+  window.__ref__ = null;
+}
+// BYOND API object
+window.Byond = (function () {
+  var Byond = {};
+  // Utility functions
+  var hasOwn = Object.prototype.hasOwnProperty;
+  // Basic checks to detect whether this page runs in BYOND
+  var isByond = !!navigator.userAgent.match(/Trident\/(\d+).+?;/i)
+    && location.hostname === '127.0.0.1'
+    && location.pathname.indexOf('/tmp') === 0;
+  // Makes a BYOND call.
+  // See: https://secure.byond.com/docs/ref/skinparams.html
+  Byond.call = function (path, params) {
+    // Not running in BYOND, abort.
+    if (!isByond) {
+      return;
+    }
+    // Build the URL
+    var url = (path || '') + '?';
+    var i = 0;
+    if (params) {
+      for (var key in params) {
+        if (hasOwn.call(params, key)) {
+          if (i++ > 0) {
+            url += '&';
+          }
+          var value = params[key];
+          if (value === null || value === undefined) {
+            value = '';
+          }
+          url += encodeURIComponent(key)
+            + '=' + encodeURIComponent(value)
+        }
+      }
+    }
+    // Perform a standard call via location.href
+    if (url.length < 2048) {
+      location.href = 'byond://' + url;
+      return;
+    }
+    // Send an HTTP request to DreamSeeker's HTTP server.
+    // Allows sending much bigger payloads.
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.send();
+  };
+  return Byond;
+})();
 // Global error handling
 window.onerror = function (msg, url, line, col, error) {
   // Proper stacktrace
@@ -36,23 +91,28 @@ window.onerror = function (msg, url, line, col, error) {
       errorStack.textContent = stack;
     }
   }
-  // Send to the backend
-  location.href = 'byond://?src=' + window.__ref__
-    + '&action=tgui:log&fatal=1'
-    + '&log=' + encodeURIComponent(stack);
+  // Send logs to the server
+  Byond.call('', {
+    src: window.__ref__,
+    action: 'tgui:log',
+    fatal: '1',
+    log: stack,
+  });
   // Short-circuit further updates
   window.__updateQueue__ = [];
-  window.update = window.initialize = function () {};
+  window.update = function () {};
   // Prevent default action
   return true;
 };
 // Early initialization
 window.__updateQueue__ = [];
-window.update = window.initialize = function (stateJson) {
+window.update = function (stateJson) {
   window.__updateQueue__.push(stateJson);
 };
-location.href = 'byond://?src=' + window.__ref__
-  + '&action=tgui:initialize';
+Byond.call('', {
+  src: window.__ref__,
+  action: 'tgui:initialize',
+});
 </script>
 
 <!-- Styles -->
@@ -63,10 +123,6 @@ location.href = 'byond://?src=' + window.__ref__
 <!--customheadhtml-->
 
 <!-- Scripts -->
-<script type="text/javascript" defer src="shim-html5shiv.js"></script>
-<script type="text/javascript" defer src="shim-ie8.js"></script>
-<script type="text/javascript" defer src="shim-dom4.js"></script>
-<script type="text/javascript" defer src="shim-css-om.js"></script>
 <script type="text/javascript" defer src="tgui.bundle.js"></script>
 
 </head>

@@ -2,9 +2,10 @@ import { toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, NumberInput, Section, Table } from '../components';
+import { Window } from '../layouts';
 
-export const OreRedemptionMachine = props => {
-  const { act, data } = useBackend(props);
+export const OreRedemptionMachine = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     unclaimedPoints,
     materials,
@@ -13,85 +14,87 @@ export const OreRedemptionMachine = props => {
     hasDisk,
   } = data;
   return (
-    <Fragment>
-      <Section>
-        <BlockQuote mb={1}>
-          This machine only accepts ore.<br />
-          Gibtonite and Slag are not accepted.
-        </BlockQuote>
-        <Box>
-          <Box inline color="label" mr={1}>
-            Unclaimed points:
-          </Box>
-          {unclaimedPoints}
-          <Button
-            ml={2}
-            content="Claim"
-            disabled={unclaimedPoints === 0}
-            onClick={() => act('Claim')} />
-        </Box>
-      </Section>
-      <Section>
-        {hasDisk && (
-          <Fragment>
-            <Box mb={1}>
-              <Button
-                icon="eject"
-                content="Eject design disk"
-                onClick={() => act('diskEject')} />
+    <Window resizable>
+      <Window.Content scrollable>
+        <Section>
+          <BlockQuote mb={1}>
+            This machine only accepts ore.<br />
+            Gibtonite and Slag are not accepted.
+          </BlockQuote>
+          <Box>
+            <Box inline color="label" mr={1}>
+              Unclaimed points:
             </Box>
-            <Table>
-              {diskDesigns.map(design => (
-                <Table.Row key={design.index}>
-                  <Table.Cell>
-                    File {design.index}: {design.name}
-                  </Table.Cell>
-                  <Table.Cell collapsing>
-                    <Button
-                      disabled={!design.canupload}
-                      content="Upload"
-                      onClick={() => act('diskUpload', {
-                        design: design.index,
-                      })} />
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table>
-          </Fragment>
-        ) || (
-          <Button
-            icon="save"
-            content="Insert design disk"
-            onClick={() => act('diskInsert')} />
-        )}
-      </Section>
-      <Section title="Materials">
-        <Table>
-          {materials.map(material => (
-            <MaterialRow
-              key={material.id}
-              material={material}
-              onRelease={amount => act('Release', {
-                id: material.id,
-                sheets: amount,
-              })} />
-          ))}
-        </Table>
-      </Section>
-      <Section title="Alloys">
-        <Table>
-          {alloys.map(material => (
-            <MaterialRow
-              key={material.id}
-              material={material}
-              onRelease={amount => act('Smelt', {
-                id: material.id,
-                sheets: amount,
-              })} />
-          ))}
-        </Table>
-      </Section>
-    </Fragment>
+            {unclaimedPoints}
+            <Button
+              ml={2}
+              content="Claim"
+              disabled={unclaimedPoints === 0}
+              onClick={() => act('Claim')} />
+          </Box>
+        </Section>
+        <Section>
+          {hasDisk && (
+            <Fragment>
+              <Box mb={1}>
+                <Button
+                  icon="eject"
+                  content="Eject design disk"
+                  onClick={() => act('diskEject')} />
+              </Box>
+              <Table>
+                {diskDesigns.map(design => (
+                  <Table.Row key={design.index}>
+                    <Table.Cell>
+                      File {design.index}: {design.name}
+                    </Table.Cell>
+                    <Table.Cell collapsing>
+                      <Button
+                        disabled={!design.canupload}
+                        content="Upload"
+                        onClick={() => act('diskUpload', {
+                          design: design.index,
+                        })} />
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table>
+            </Fragment>
+          ) || (
+            <Button
+              icon="save"
+              content="Insert design disk"
+              onClick={() => act('diskInsert')} />
+          )}
+        </Section>
+        <Section title="Materials">
+          <Table>
+            {materials.map(material => (
+              <MaterialRow
+                key={material.id}
+                material={material}
+                onRelease={amount => act('Release', {
+                  id: material.id,
+                  sheets: amount,
+                })} />
+            ))}
+          </Table>
+        </Section>
+        <Section title="Alloys">
+          <Table>
+            {alloys.map(material => (
+              <MaterialRow
+                key={material.id}
+                material={material}
+                onRelease={amount => act('Smelt', {
+                  id: material.id,
+                  sheets: amount,
+                })} />
+            ))}
+          </Table>
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };
 
