@@ -22,7 +22,7 @@
 	var/plaque_path = /obj/structure/customplaque //This points the item to make the proper structure when placed on a wall.
 	var/unengraved = TRUE
 
-/obj/structure/customplaque/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
+/obj/structure/customplaque/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
