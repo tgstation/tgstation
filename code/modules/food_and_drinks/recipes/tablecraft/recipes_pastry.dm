@@ -588,7 +588,7 @@ datum/crafting_recipe/food/donut/meat
 	result = /obj/item/reagent_containers/food/snacks/honeybun
 	subcategory = CAT_PASTRY
 
-	/datum/crafting_recipe/food/cannoli
+/datum/crafting_recipe/food/cannoli
 	name = "Cannoli"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
