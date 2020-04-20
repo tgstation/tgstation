@@ -1,8 +1,8 @@
- /**
-  * tgui state: observer_state
-  *
-  * Checks that the user is an observer/ghost.
- **/
+/**
+ * tgui state: observer_state
+ *
+ * Checks that the user is an observer/ghost.
+ */
 
 GLOBAL_DATUM_INIT(observer_state, /datum/ui_state/observer_state, new)
 

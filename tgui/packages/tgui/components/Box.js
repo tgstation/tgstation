@@ -82,13 +82,33 @@ const styleMapperByPropName = {
   italic: mapBooleanPropTo('font-style', 'italic'),
   nowrap: mapBooleanPropTo('white-space', 'nowrap'),
   // Margins
-  m: mapDirectionalUnitPropTo('margin', ['top', 'bottom', 'left', 'right']),
-  mx: mapDirectionalUnitPropTo('margin', ['left', 'right']),
-  my: mapDirectionalUnitPropTo('margin', ['top', 'bottom']),
+  m: mapDirectionalUnitPropTo('margin', [
+    'top', 'bottom', 'left', 'right',
+  ]),
+  mx: mapDirectionalUnitPropTo('margin', [
+    'left', 'right',
+  ]),
+  my: mapDirectionalUnitPropTo('margin', [
+    'top', 'bottom',
+  ]),
   mt: mapUnitPropTo('margin-top'),
   mb: mapUnitPropTo('margin-bottom'),
   ml: mapUnitPropTo('margin-left'),
   mr: mapUnitPropTo('margin-right'),
+  // Margins
+  p: mapDirectionalUnitPropTo('padding', [
+    'top', 'bottom', 'left', 'right',
+  ]),
+  px: mapDirectionalUnitPropTo('padding', [
+    'left', 'right',
+  ]),
+  py: mapDirectionalUnitPropTo('padding', [
+    'top', 'bottom',
+  ]),
+  pt: mapUnitPropTo('padding-top'),
+  pb: mapUnitPropTo('padding-bottom'),
+  pl: mapUnitPropTo('padding-left'),
+  pr: mapUnitPropTo('padding-right'),
   // Color props
   color: mapColorPropTo('color'),
   textColor: mapColorPropTo('color'),

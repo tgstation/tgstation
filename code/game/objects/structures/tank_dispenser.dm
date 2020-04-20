@@ -71,7 +71,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "tank_dispenser", name, 275, 103, master_ui, state)
+		ui = new(user, src, ui_key, "TankDispenser", name, 275, 103, master_ui, state)
 		ui.open()
 
 /obj/structure/tank_dispenser/ui_data(mob/user)
