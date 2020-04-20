@@ -1,5 +1,0 @@
-author: "tralezab"
-delete-after: True
-changes: 
-  - admin: "new secrets button, anonymous names (roundstart required)"
-  - refactor: "things are a bit cleaner in the AI Triumvirate code"

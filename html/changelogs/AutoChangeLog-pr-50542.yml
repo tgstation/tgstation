@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "Added heat and pressure limit to portable pumps and scrubbers"
-  - tweak: "changed the damage calculation from a max() to a clamp() between 5 and 50"
-  - tweak: "reduced max pressure output of t3 canisters to the same as t2"
