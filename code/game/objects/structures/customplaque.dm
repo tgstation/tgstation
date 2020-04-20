@@ -1,4 +1,4 @@
-/obj/structure/customplaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen. They must be on a wall to do this.
+/obj/structure/customplaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen.
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
@@ -64,7 +64,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] begins engraving [src].</span>", \
 							 "<span class='notice'>You begin engraving [src].</span>")
-		if(do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a sign, then has a delay.
+		if(do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			if(!Adjacent(user)) //Make sure user is adjacent still
 				to_chat(user, "<span class='warning'>You have to stand next to the plaque to engrave it!</span>")
 				return
@@ -78,6 +78,25 @@
 	else
 		return ..()
 
+/obj/item/customplaque/attackby(obj/item/I, mob/user, params) //Same as part of the above, except for the item in hand instead of the structure.
+	if(istype(I, /obj/item/pen/fountain) && unengraved)
+		var/namechoice = input(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization")
+		if(!namechoice)
+			return
+		var/descriptionchoice = input(user, "Engrave this plaque's text.", "Plaque Customization")
+		if(!descriptionchoice)
+			return
+		user.visible_message("<span class='notice'>[user] begins engraving [src].</span>", \
+							 "<span class='notice'>You begin engraving [src].</span>")
+		if(do_after(user, 40, target = src))
+			name = "\improper [namechoice]"
+			desc = "The plaque reads: '[descriptionchoice]'"
+			unengraved = FALSE
+			user.visible_message("<span class='notice'>[user] engraves [src].</span>", \
+								 "<span class='notice'>You engrave [src].</span>")
+	else if(istype(I, /obj/item/pen) && unengraved)
+		to_chat(user, "<span class='warning'>Your pen isn't fancy enough to engrave this! Find a fountain pen.</span>")
+
 /obj/item/customplaque/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(isturf(target) && proximity)
@@ -86,14 +105,14 @@
 							 "<span class='notice'>You attach [src] to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
 		var/obj/structure/customplaque/S = new plaque_path(T)
-		S.name = name //The opposite of the above in attackby; make sure the plaque item's name, description, and if it's engraved or not transfers to the structure.
+		S.name = name
 		S.desc = desc
 		S.unengraved = unengraved
 		S.setDir(dir)
 		qdel(src)
 
 /obj/item/customplaque/Move(atom/new_loc, direct = 0)
-	// pulling, throwing, or conveying a plaque does not rotate it
+	// Pulling, throwing, or conveying a plaque does not rotate it.
 	var/old_dir = dir
 	. = ..()
 	setDir(old_dir)

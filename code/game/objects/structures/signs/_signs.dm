@@ -73,9 +73,9 @@ GLOBAL_VAR(editable_sign_types)
 				return
 			if(!sign_type)
 				return
-			//It's import to clone the pixel layout information
+			//It's import to clone the pixel layout information.
 			//Otherwise signs revert to being on the turf and
-			//move jarringly
+			//move jarringly.
 			var/obj/structure/sign/newsign = new sign_type(get_turf(src))
 			newsign.pixel_x = pixel_x
 			newsign.pixel_y = pixel_y
@@ -107,7 +107,7 @@ GLOBAL_VAR(editable_sign_types)
 		qdel(src)
 
 /obj/item/sign_backing/Move(atom/new_loc, direct = 0)
-	// pulling, throwing, or conveying a sign backing does not rotate it
+	// Pulling, throwing, or conveying a sign backing does not rotate it.
 	var/old_dir = dir
 	. = ..()
 	setDir(old_dir)
