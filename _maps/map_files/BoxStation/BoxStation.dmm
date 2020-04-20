@@ -20191,7 +20191,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -20553,7 +20553,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -21051,7 +21051,7 @@
 "bey" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel/white/corner{
 	dir = 8
@@ -21076,7 +21076,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -47818,7 +47818,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/white,
@@ -47992,7 +47992,7 @@
 "dGV" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -48869,7 +48869,7 @@
 /obj/machinery/atmospherics/pipe/simple/yellow/visible,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
@@ -48917,7 +48917,7 @@
 "ghw" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel/white,
 /area/science/robotics/lab)
@@ -49288,7 +49288,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -49781,7 +49781,7 @@
 "iqq" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/closed/wall,
 /area/maintenance/aft)
@@ -49973,7 +49973,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/disposal/incinerator)
@@ -50600,7 +50600,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -51132,7 +51132,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
@@ -53269,7 +53269,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
@@ -53638,7 +53638,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -55259,7 +55259,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -56304,7 +56304,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
@@ -57106,7 +57106,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4;
-	step_x = 0
+	
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
