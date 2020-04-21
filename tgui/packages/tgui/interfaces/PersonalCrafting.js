@@ -22,7 +22,11 @@ export const PersonalCrafting = (props, context) => {
           continue;
         }
         // Push category
-        categories.push(subcategory);
+        categories.push({
+          name: subcategory,
+          category,
+          subcategory,
+        });
         // Push recipes
         const _recipes = subcategories[subcategory];
         for (let recipe of _recipes) {
@@ -35,7 +39,10 @@ export const PersonalCrafting = (props, context) => {
       continue;
     }
     // Push category
-    categories.push(category);
+    categories.push({
+      name: category,
+      category,
+    });
     // Push recipes
     const _recipes = crafting_recipes[category];
     for (let recipe of _recipes) {
@@ -46,7 +53,8 @@ export const PersonalCrafting = (props, context) => {
     }
   }
   // Sort out the tab state
-  const [tab, setTab] = useLocalState(context, 'tab', categories[0]);
+  const [tab, setTab] = useLocalState(
+    context, 'tab', categories[0]?.name);
   const shownRecipes = recipes
     .filter(recipe => recipe.category === tab);
   return (
@@ -77,10 +85,17 @@ export const PersonalCrafting = (props, context) => {
               <Tabs vertical>
                 {categories.map(category => (
                   <Tabs.Tab
-                    key={category}
-                    selected={category === tab}
-                    onClick={() => setTab(category)}>
-                    {category}
+                    key={category.name}
+                    selected={category.name === tab}
+                    onClick={() => {
+                      setTab(category.name);
+                      // Backend expects `0` or '' to indicate no subcategory
+                      act('set_category', {
+                        category: category.category,
+                        subcategory: category.subcategory,
+                      });
+                    }}>
+                    {category.name}
                   </Tabs.Tab>
                 ))}
               </Tabs>

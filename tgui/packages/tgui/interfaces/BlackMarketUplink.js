@@ -46,7 +46,6 @@ export const BlackMarketUplink = (props, context) => {
               {categories.map(category => (
                 <Tabs.Tab
                   key={category}
-                  height={4}
                   mt={0.5}
                   selected={viewing_category === category}
                   onClick={() => act('set_category', {
