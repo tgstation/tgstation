@@ -252,6 +252,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	switch(prefs.clientfps)
+		if("Silky(125 FPS)")
+			fps = 125
+			tick_lag = CLIENTSIDE_TICK_LAG_SILKY
 		if("Creamy(67 FPS)")
 			fps = 67
 			tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
@@ -261,6 +264,9 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		if("Chunky(25 FPS)")
 			fps = 25
 			tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
+		if("Classic(10 FPS)")
+			fps = 10
+			tick_lag = CLIENTSIDE_TICK_LAG_CLASSIC
 
 	if(fexists(roundend_report_file()))
 		verbs += /client/proc/show_previous_roundend_report

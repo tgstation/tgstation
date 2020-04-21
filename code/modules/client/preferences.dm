@@ -1468,10 +1468,13 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
-					var/list/framerate_options = list("Creamy(67 FPS)", "Smooth(40 FPS)", "Chunky(25 FPS)")
+					var/list/framerate_options = list("Silky(125 FPS)", "Creamy(67 FPS)", "Smooth(40 FPS)", "Chunky(25 FPS)", "Classic(10 FPS)")
 					var/desiredfps = input(user, "Choose your desired fps.", "Character Preference")  as null|anything in framerate_options
 					if (!isnull(desiredfps))
 						switch(desiredfps)
+							if("Silky(125 FPS)")
+								parent.fps = 125
+								parent.tick_lag = CLIENTSIDE_TICK_LAG_SILKY
 							if("Creamy(67 FPS)")
 								parent.fps = 67
 								parent.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
@@ -1481,6 +1484,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							if("Chunky(25 FPS)")
 								parent.fps = 25
 								parent.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
+							if("Classic(10 FPS)")
+								parent.fps = 10
+								parent.tick_lag = CLIENTSIDE_TICK_LAG_CLASSIC
 						clientfps = desiredfps
 				if("ui")
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
