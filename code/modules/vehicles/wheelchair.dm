@@ -11,6 +11,7 @@
 	density = FALSE		//Thought I couldn't fix this one easily, phew
 	// Run speed delay is multiplied with this for vehicle move delay.
 	var/delay_multiplier = 6.7
+	var/overlay_icon = "wheelchair_overlay"
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -119,6 +120,7 @@
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
 	desc = "Damn, he's been through a lot."
 	icon_state = "gold_wheelchair"
+	overlay_icon = "gold_wheelchair_overlay"
 	max_integrity = 200
 	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 40)
 	custom_materials = list(/datum/material/gold = 10000)
