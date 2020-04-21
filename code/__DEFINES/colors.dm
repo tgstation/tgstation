@@ -73,7 +73,7 @@
 		return rgb(val, val, val)
 	hue %= 360
 	hue /= 60
-	var/i = FLOOR(hue, 1)
+	var/i = round(hue)
 	var/f = hue - i
 	var/p = val * (1 - sat)
 	var/q = val * (1 - sat * f)
