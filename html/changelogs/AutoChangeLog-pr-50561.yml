@@ -1,0 +1,4 @@
+author: "Arkatos"
+delete-after: True
+changes: 
+  - tweak: "Radial menu options will now always be clearly visible to the user."
