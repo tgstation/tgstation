@@ -120,4 +120,5 @@
 	desc = "Damn, he's been through a lot."
 	icon_state = "gold_wheelchair"
 	max_integrity = 200
-	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 40)	//Wheelchairs aren't super tough yo
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 40)
+	custom_materials = list(/datum/material/gold = 10000)
