@@ -5,11 +5,12 @@ import { vecLength, vecSubtract } from 'common/vector';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
+import { Window } from '../layouts';
 
 const coordsToVec = coords => map(parseFloat)(coords.split(', '));
 
-export const Gps = props => {
-  const { act, data } = useBackend(props);
+export const Gps = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     currentArea,
     currentCoords,
@@ -36,87 +37,89 @@ export const Gps = props => {
       signal => signal.entrytag),
   ])(data.signals || []);
   return (
-    <Fragment>
-      <Section
-        title="Control"
-        buttons={(
-          <Button
-            icon="power-off"
-            content={power ? "On" : "Off"}
-            selected={power}
-            onClick={() => act('power')} />
-        )}>
-        <LabeledList>
-          <LabeledList.Item label="Tag">
+    <Window resizable>
+      <Window.Content scrollable>
+        <Section
+          title="Control"
+          buttons={(
             <Button
-              icon="pencil-alt"
-              content={tag}
-              onClick={() => act('rename')} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Scan Mode">
-            <Button
-              icon={updating ? "unlock" : "lock"}
-              content={updating ? "AUTO" : "MANUAL"}
-              color={!updating && "bad"}
-              onClick={() => act('updating')} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Range">
-            <Button
-              icon="sync"
-              content={globalmode ? "MAXIMUM" : "LOCAL"}
-              selected={!globalmode}
-              onClick={() => act('globalmode')} />
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
-      {!!power && (
-        <Fragment>
-          <Section title="Current Location">
-            <Box fontSize="18px">
-              {currentArea} ({currentCoords})
-            </Box>
-          </Section>
-          <Section title="Detected Signals">
-            <Table>
-              <Table.Row bold>
-                <Table.Cell content="Name" />
-                <Table.Cell collapsing content="Direction" />
-                <Table.Cell collapsing content="Coordinates" />
-              </Table.Row>
-              {signals.map(signal => (
-                <Table.Row
-                  key={signal.entrytag + signal.coords + signal.index}
-                  className="candystripe">
-                  <Table.Cell bold color="label">
-                    {signal.entrytag}
-                  </Table.Cell>
-                  <Table.Cell
-                    collapsing
-                    opacity={signal.dist !== undefined && (
-                      clamp(
-                        1.2 / Math.log(Math.E + signal.dist / 20),
-                        0.4, 1)
-                    )}>
-                    {signal.degrees !== undefined && (
-                      <Icon
-                        mr={1}
-                        size={1.2}
-                        name="arrow-up"
-                        rotation={signal.degrees} />
-                    )}
-                    {signal.dist !== undefined && (
-                      signal.dist + 'm'
-                    )}
-                  </Table.Cell>
-                  <Table.Cell collapsing>
-                    {signal.coords}
-                  </Table.Cell>
+              icon="power-off"
+              content={power ? "On" : "Off"}
+              selected={power}
+              onClick={() => act('power')} />
+          )}>
+          <LabeledList>
+            <LabeledList.Item label="Tag">
+              <Button
+                icon="pencil-alt"
+                content={tag}
+                onClick={() => act('rename')} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Scan Mode">
+              <Button
+                icon={updating ? "unlock" : "lock"}
+                content={updating ? "AUTO" : "MANUAL"}
+                color={!updating && "bad"}
+                onClick={() => act('updating')} />
+            </LabeledList.Item>
+            <LabeledList.Item label="Range">
+              <Button
+                icon="sync"
+                content={globalmode ? "MAXIMUM" : "LOCAL"}
+                selected={!globalmode}
+                onClick={() => act('globalmode')} />
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        {!!power && (
+          <Fragment>
+            <Section title="Current Location">
+              <Box fontSize="18px">
+                {currentArea} ({currentCoords})
+              </Box>
+            </Section>
+            <Section title="Detected Signals">
+              <Table>
+                <Table.Row bold>
+                  <Table.Cell content="Name" />
+                  <Table.Cell collapsing content="Direction" />
+                  <Table.Cell collapsing content="Coordinates" />
                 </Table.Row>
-              ))}
-            </Table>
-          </Section>
-        </Fragment>
-      )}
-    </Fragment>
+                {signals.map(signal => (
+                  <Table.Row
+                    key={signal.entrytag + signal.coords + signal.index}
+                    className="candystripe">
+                    <Table.Cell bold color="label">
+                      {signal.entrytag}
+                    </Table.Cell>
+                    <Table.Cell
+                      collapsing
+                      opacity={signal.dist !== undefined && (
+                        clamp(
+                          1.2 / Math.log(Math.E + signal.dist / 20),
+                          0.4, 1)
+                      )}>
+                      {signal.degrees !== undefined && (
+                        <Icon
+                          mr={1}
+                          size={1.2}
+                          name="arrow-up"
+                          rotation={signal.degrees} />
+                      )}
+                      {signal.dist !== undefined && (
+                        signal.dist + 'm'
+                      )}
+                    </Table.Cell>
+                    <Table.Cell collapsing>
+                      {signal.coords}
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+              </Table>
+            </Section>
+          </Fragment>
+        )}
+      </Window.Content>
+    </Window>
   );
 };

@@ -91905,7 +91905,6 @@
 "dpg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "dph" = (
@@ -94254,13 +94253,13 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "duM" = (
-/obj/machinery/computer/aifixer{
-	dir = 4
-	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/computer/rdconsole/core{
+	dir = 4
+	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "duN" = (
@@ -115153,7 +115152,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/surgery/room_b)
 "rOf" = (
@@ -116222,7 +116220,6 @@
 /area/medical/sleeper)
 "wZq" = (
 /obj/effect/landmark/start/medical_doctor,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)

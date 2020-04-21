@@ -1,19 +1,27 @@
 import { classes, pureComponentHooks } from 'common/react';
-import { Box } from './Box';
+import { computeBoxClassName, computeBoxProps } from './Box';
 
 export const ColorBox = props => {
-  const { color, content, className, ...rest } = props;
+  const {
+    content,
+    children,
+    className,
+    color,
+    backgroundColor,
+    ...rest
+  } = props;
+  rest.color = content ? null : 'transparent';
+  rest.backgroundColor = color || backgroundColor;
   return (
-    <Box
+    <div
       className={classes([
         'ColorBox',
         className,
+        computeBoxClassName(rest),
       ])}
-      color={content ? null : 'transparent'}
-      backgroundColor={color}
-      {...rest}>
+      {...computeBoxProps(rest)}>
       {content || '.'}
-    </Box>
+    </div>
   );
 };
 

@@ -281,7 +281,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "particle_accelerator", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ParticleAccelerator", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/particle_accelerator/control_box/ui_data(mob/user)
