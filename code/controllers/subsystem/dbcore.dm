@@ -325,7 +325,14 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
 
 /datum/DBQuery/proc/NextRow(async = TRUE)
-	return // todo: replace this
+	UNTIL(!in_progress)
+	var/list/results = json_decode(query_results)
+	. = results["rows"] != null
+
+	item.Cut()
+	//populate item array
+	for(var/I in results)
+		item += results[I]
 
 /datum/DBQuery/proc/IsFinished()
 	return rustg_sql_check_query(query_results) != RUSTG_JOB_NO_RESULTS_YET
