@@ -1,0 +1,14 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Botanical Toolbelts can now be made at the biogenerator, and holds most botanical tools."
+  - rscadd: "The Floral Somatoray has been given a new, 3rd mode, able to mutate plant species."
+  - rscadd: "Using a Somatoray on a tray enables you to lock in a specific mutation if a plant has multiple mutations, at the cost of plant endurance."
+  - tweak: "Plant Analyzers now have a toggle-able mode to scan either the chemical traits or the plant stats, to cut down on chat spam."
+  - tweak: "Plant Trays and dirt patches now start with 10 units of EZ Nutrient."
+  - tweak: "Mutagen has been made slightly less toxic overall."
+  - balance: "Plant trays now passively decrease their toxicity based on the tray's parts, without randomness."
+  - tweak: "Science goggles, or any other reagent scanning equipment will enable you to see plant reagent traits on examine."
+  - balance: "Instability now affects plants with lower instability tiers. (100 instability would have the effects of the 20, 40, 60,and 80+ instability tiers)."
+  - bugfix: "Irrigation now works properly again."
+  - bugfix: "Plant trays with full nutrient tanks can be watered again."
