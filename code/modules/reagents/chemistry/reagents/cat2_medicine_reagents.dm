@@ -307,8 +307,8 @@
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
-	M.adjustToxLoss(-0.5 * min(medibonus, 3)) //It ain't great at healing, but if you've got nothing else it'll work
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //Kills at 40u
+	M.adjustToxLoss(-0.5 * min(medibonus, 3)) //not great at healing but if you have nothing else it will work
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //kills at 40u
 	for(var/r2 in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
