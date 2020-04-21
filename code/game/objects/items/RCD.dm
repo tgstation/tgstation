@@ -204,12 +204,8 @@ RLD
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
 	var/delay_mod = 1
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
-	/// List of all granted accesses for the newly built airlocks
-	var/list/accesses = list()
-	/// If the airlock should require ALL or only ONE of the listed accesses.
-	var/one_access = FALSE
-	/// Unrestricted sides, or sides of the airlock that will open regardless of access
-	var/unres_sides = 0
+	/// Integrated airlock electronics for setting access to a newly built airlocks
+	var/obj/item/electronics/airlock/airlock_electronics
 
 /obj/item/construction/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
@@ -245,79 +241,6 @@ RLD
 		to_chat(user, "<span class='notice'>You change \the [src]'s storage link state: [silo_link ? "ON" : "OFF"].</span>")
 	else
 		to_chat(user, "<span class='warning'>\the [src] dont have remote storage connection.</span>")
-
-/obj/item/construction/rcd/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
-	if(!ui)
-		ui = new(user, src, ui_key, "AirlockElectronics", name, 420, 485, master_ui, state)
-		ui.open()
-
-/obj/item/construction/rcd/ui_static_data(mob/user)
-	var/list/data = list()
-	var/list/regions = list()
-	for(var/i in 1 to 7)
-		var/list/accesses = list()
-		for(var/access in get_region_accesses(i))
-			if(get_access_desc(access))
-				accesses += list(list(
-					"desc" = replacetext(get_access_desc(access), "&nbsp", " "),
-					"ref" = access,
-				))
-
-		regions += list(list(
-			"name" = get_region_accesses_name(i),
-			"regid" = i,
-			"accesses" = accesses
-		))
-
-	data["regions"] = regions
-	return data
-
-/obj/item/construction/rcd/ui_data()
-	var/list/data = list()
-	data["accesses"] = accesses
-	data["oneAccess"] = one_access
-	data["unres_direction"] = unres_sides
-	return data
-
-/obj/item/construction/rcd/ui_act(action, params)
-	if(..())
-		return
-	switch(action)
-		if("clear_all")
-			accesses = list()
-			one_access = 0
-			. = TRUE
-		if("grant_all")
-			accesses = get_all_accesses()
-			. = TRUE
-		if("one_access")
-			one_access = !one_access
-			. = TRUE
-		if("set")
-			var/access = text2num(params["access"])
-			if (!(access in accesses))
-				accesses += access
-			else
-				accesses -= access
-			. = TRUE
-		if("direc_set")
-			var/unres_direction = text2num(params["unres_direction"])
-			unres_sides ^= unres_direction //XOR, toggles only the bit that was clicked
-			. = TRUE
-		if("grant_region")
-			var/region = text2num(params["region"])
-			if(isnull(region))
-				return
-			accesses |= get_region_accesses(region)
-			. = TRUE
-		if("deny_region")
-			var/region = text2num(params["region"])
-			if(isnull(region))
-				return
-			accesses -= get_region_accesses(region)
-			. = TRUE
 
 /obj/item/construction/rcd/proc/get_airlock_image(airlock_type)
 	var/obj/machinery/door/airlock/proto = airlock_type
@@ -500,9 +423,12 @@ RLD
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
+	airlock_electronics = new(src)
+	airlock_electronics.holder = src
 	GLOB.rcd_list += src
 
 /obj/item/construction/rcd/Destroy()
+	QDEL_NULL(airlock_electronics)
 	GLOB.rcd_list -= src
 	. = ..()
 
@@ -551,7 +477,7 @@ RLD
 			change_computer_dir(user)
 			return
 		if("Change Access")
-			ui_interact(user)
+			airlock_electronics.ui_interact(user)
 			return
 		if("Change Airlock Type")
 			change_airlock_setting(user)
