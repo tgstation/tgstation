@@ -56,7 +56,7 @@
 ///Go through all quirks that can be used in hardcore mode and select some based on a random budget.
 /datum/preferences/proc/select_hardcore_quirks()
 
-	var/quirk_budget = rand(8, 30)
+	var/quirk_budget = rand(8, 35)
 
 
 	all_quirks = list() //empty it out

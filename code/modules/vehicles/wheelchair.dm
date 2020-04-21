@@ -113,3 +113,11 @@
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
 		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / user.get_num_arms()
 	return ..()
+
+
+/obj/vehicle/ridden/wheelchair/gold
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	desc = "Damn, he's been through a lot."
+	icon_state = "gold_wheelchair"
+	max_integrity = 200
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 40)	//Wheelchairs aren't super tough yo
