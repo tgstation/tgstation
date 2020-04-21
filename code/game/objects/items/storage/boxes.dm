@@ -881,7 +881,7 @@
 	illustration = null
 	resistance_flags = FLAMMABLE
 	foldable = null
-	// A list of all available papersack reskins as an images
+	/// A list of all available papersack reskins as an images
 	var/list/papersack_designs = list()
 
 /obj/item/storage/box/papersack/Initialize(mapload)
