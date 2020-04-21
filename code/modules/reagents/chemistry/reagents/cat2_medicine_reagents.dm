@@ -307,14 +307,14 @@
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
-	M.adjustToxLoss(-0.5 * min(medibonus, 3))
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5)
+	M.adjustToxLoss(-0.5 * min(medibonus, 3)) //It ain't great at healing, but if you've got nothing else it'll work
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //Kills at 40u
 	for(var/r2 in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
 		var/amount2purge = 3
-		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (3+multiver) will make it not purge medicines
+		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
 	..()
