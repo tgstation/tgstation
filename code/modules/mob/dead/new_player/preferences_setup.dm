@@ -88,7 +88,6 @@
 			continue
 
 		all_quirks += initial(T.name)
-		message_admins("this dude got [initial(T.name)] quirk")
 		quirk_budget -= available_hardcore_quirks[T]
 		hardcore_survival_score += available_hardcore_quirks[T]
 		available_hardcore_quirks -= T
