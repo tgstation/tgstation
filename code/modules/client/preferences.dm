@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-	var/clientfps = 0
+	var/clientfps = 60 // it is 2020
 
 	var/parallax
 
@@ -559,7 +559,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Income Updates:</b> <a href='?_src_=prefs;preference=income_pings'>[(chat_toggles & CHAT_BANKCARD) ? "Allowed" : "Muted"]</a><br>"
 			dat += "<br>"
 
-			dat += "<b>FPS:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+			dat += "<b>Framerate:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
 
 			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 			switch (parallax)
@@ -1468,10 +1468,20 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						preferred_map = maplist[pickedmap]
 
 				if ("clientfps")
-					var/desiredfps = input(user, "Choose your desired fps. (0 = synced with server tick rate (currently:[world.fps]))", "Character Preference", clientfps)  as null|num
+					var/list/framerate_options = list("Creamy(67 FPS)", "Smooth(40 FPS)", "Chunky(25 FPS)")
+					var/desiredfps = input(user, "Choose your desired fps.", "Character Preference")  as null|anything in framerate_options
 					if (!isnull(desiredfps))
+						switch(desiredfps)
+							if("Creamy(67 FPS)")
+								parent.fps = 67
+								parent.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+							if("Smooth(40 FPS)")
+								parent.fps = 40
+								parent.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
+							if("Chunky(25 FPS)")
+								parent.fps = 25
+								parent.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 						clientfps = desiredfps
-						parent.fps = desiredfps
 				if("ui")
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
 					if(pickedui)

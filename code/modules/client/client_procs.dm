@@ -251,7 +251,16 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	fps = prefs.clientfps
+	switch(prefs.clientfps)
+		if("Creamy(67 FPS)")
+			fps = 67
+			tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+		if("Smooth(40 FPS)")
+			fps = 40
+			tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
+		if("Chunky(25 FPS)")
+			fps = 25
+			tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 
 	if(fexists(roundend_report_file()))
 		verbs += /client/proc/show_previous_roundend_report
@@ -853,7 +862,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		'html/browser/playeroptions.css',
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
-		
+
 		//load info on what assets the client has
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
 
