@@ -39,7 +39,6 @@
 	var/obj/item/bodypart/active_arm = get_active_hand()
 
 	if(active_arm)
-		//testing("Extended delay [((num + adj)*mod)] ([mod]) by * [active_arm.wound_interaction_efficiency]")
 		mod *= active_arm.wound_interaction_efficiency
 	next_move = world.time + ((num + adj)*mod)
 

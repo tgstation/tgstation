@@ -2285,3 +2285,41 @@
 	color = "#623301"
 	taste_mult = 1.2
 
+/datum/reagent/determination
+	name = "Determination"
+	description = "For when you need to push on a little more. Do NOT allow near plants."
+	reagent_state = LIQUID
+	color = "#D2FFFA"
+	metabolization_rate = 0.75 * REAGENTS_METABOLISM // 5u (WOUND_DETERMINATION_CRITICAL) will last for ~17 ticks
+	/// Whether we've had at least WOUND_DETERMINATION_SEVERE (2.5u) of determination at any given time. No damage slowdown immunity or indication we're having a second wind if it's just a single moderate wound
+	var/significant = FALSE
+
+/datum/reagent/determination/on_mob_end_metabolize(mob/living/carbon/M)
+	if(significant)
+		to_chat(M, "<span class='warning'><b>Your adrenaline rush dies off, and the pain from your wounds come aching back in...</b></span>")
+		var/stam_crash = 3 * LAZYLEN(M.all_wounds) // spike of 3 stam damage per wound when the determination wears off if it was a combat rush
+		M.adjustStaminaLoss(stam_crash)
+	M.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+	..()
+
+/datum/reagent/determination/on_mob_life(mob/living/carbon/M)
+	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
+		significant = TRUE
+		M.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
+		to_chat(M, "<span class='notice'><b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b></span>")
+
+	for(var/thing in M.all_wounds)
+		var/datum/wound/W = thing
+		var/obj/item/bodypart/wounded_part = W.limb
+		if(wounded_part)
+			wounded_part.heal_damage(0.25, 0.25)
+		M.adjustStaminaLoss(-0.25*REM) // the more wounds, the more stamina regen
+	..()
+
+/datum/reagent/determination/overdose_process(mob/living/M)
+	if(prob(33))
+		M.adjustStaminaLoss(2.5*REM, 0)
+		M.adjustToxLoss(1*REM, 0)
+		M.losebreath++
+		. = 1
+	..()

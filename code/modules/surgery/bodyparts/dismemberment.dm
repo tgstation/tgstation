@@ -86,7 +86,7 @@
 		return
 	var/atom/Tsec = owner.drop_location()
 	var/mob/living/carbon/C = owner
-	SEND_SIGNAL(C, COMSIG_LIVING_REMOVE_LIMB, src, dismembered)
+	SEND_SIGNAL(C, COMSIG_CARBON_REMOVE_LIMB, src, dismembered)
 	update_limb(1)
 	C.bodyparts -= src
 
@@ -279,7 +279,7 @@
 		O.drop_limb(1)
 
 /obj/item/bodypart/proc/attach_limb(mob/living/carbon/C, special)
-	if(SEND_SIGNAL(C, COMSIG_LIVING_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
+	if(SEND_SIGNAL(C, COMSIG_CARBON_ATTACH_LIMB, src, special) & COMPONENT_NO_ATTACH)
 		return FALSE
 	. = TRUE
 	moveToNullspace()

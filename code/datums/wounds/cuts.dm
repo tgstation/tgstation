@@ -21,48 +21,50 @@
 	treatable_by = list(/obj/item/stack/medical/suture, /obj/item/stack/medical/gauze, /obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY
 
-/datum/wound/brute/cut/apply_wound(obj/item/bodypart/L, silent = FALSE, special_arg = NONE)
+	var/cauterized
+
+	var/bandaged
+
+	var/stitched
+
+/datum/wound/brute/cut/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/brute/cut/old_wound = NONE, special_arg = NONE)
 	. = ..()
-	if(special_arg)
-		blood_flow = special_arg
-	else
-		blood_flow = initial_flow
+	blood_flow = initial_flow
+	if(old_wound)
+		blood_flow = old_wound.blood_flow
 
 
 /datum/wound/brute/cut/handle_process()
 	blood_flow -= clot_rate
 	if(blood_flow < minimum_flow)
 		if(demotes_to)
-			replace_wound(demotes_to, blood_flow)
+			replace_wound(demotes_to)
 		else
 			remove_wound()
 
 /datum/wound/brute/cut/treat_self(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
 		self_las_cauterize(I, user)
-		return
-	if(I.tool_behaviour == TOOL_CAUTERY)
+	else if(I.tool_behaviour == TOOL_CAUTERY)
 		self_tool_cauterize(I, user)
-		return
+	else if(istype(I, /obj/item/stack/medical/gauze))
+		self_bandage(I, user)
 
 /datum/wound/brute/cut/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
 		las_cauterize(I, user)
-		return
-	if(I.tool_behaviour == TOOL_CAUTERY)
+	else if(I.tool_behaviour == TOOL_CAUTERY)
 		tool_cauterize(I, user)
-		return
+	else if(istype(I, /obj/item/stack/medical/gauze))
+		bandage(I, user)
 
 /datum/wound/brute/cut/proc/self_las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
-	if(!lasgun.chambered)
-		to_chat(user, "<span class='warning'>[lasgun] has no charge!</span>")
-		return
-
 	victim.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim.p_their()] own [limb.name]...</span>", "<span class='userdanger'>You begin aiming [lasgun] directly at your [limb.name]...</span>")
 	if(do_after(user, base_treat_time * 1.5, target=victim))
+		if(QDELETED(src) || !limb)
+			return
 		var/damage = lasgun.chambered.BB.damage
-		lasgun.chambered.BB.wound_bonus -= 20
-		lasgun.chambered.BB.bare_wound_bonus -= 20
+		lasgun.chambered.BB.wound_bonus -= 30
 		lasgun.chambered.BB.damage *= 1.5
 		lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone)
 		victim.emote("scream")
@@ -71,15 +73,12 @@
 
 
 /datum/wound/brute/cut/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
-	if(!lasgun.chambered)
-		to_chat(user, "<span class='warning'>[lasgun] has no charge!</span>")
-		return
-
 	victim.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>[user] begins aiming [lasgun] directly at your [limb.name]...</span>")
-	if(do_after(user, 30, target=victim))
+	if(do_after(user, base_treat_time, target=victim))
+		if(QDELETED(src) || !limb)
+			return
 		var/damage = lasgun.chambered.BB.damage
-		lasgun.chambered.BB.wound_bonus -= 20
-		lasgun.chambered.BB.bare_wound_bonus -= 20
+		lasgun.chambered.BB.wound_bonus -= 40
 		lasgun.chambered.BB.damage *= 1.5
 		lasgun.process_fire(victim, user, TRUE, null, limb.body_zone)
 		victim.emote("scream")
@@ -94,7 +93,7 @@
 		if(QDELETED(src) || !limb)
 			return
 		to_chat(victim, "<span class='green'>You cauterize some of the bleeding on your [limb.name].<b>It hurts!</b></span>")
-		limb.receive_damage(burn = 3 + severity, wound_bonus = -100)
+		limb.receive_damage(burn = 3 + severity, wound_bonus = CANT_WOUND)
 		if(prob(70))
 			victim.emote("scream")
 		blood_flow -= 0.4
@@ -111,7 +110,7 @@
 		if(QDELETED(src) || !limb)
 			return
 		user.visible_message("<span class='green'>[user] cauterizes some of the bleeding on [victim].</span>", "<span class='green'>You cauterize some of the bleeding on [victim].</span>")
-		limb.receive_damage(burn = 2 + severity, wound_bonus = -100)
+		limb.receive_damage(burn = 2 + severity, wound_bonus = CANT_WOUND)
 		if(prob(30))
 			victim.emote("scream")
 		blood_flow -= 0.5
@@ -120,6 +119,35 @@
 		else
 			to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
 			to_chat(victim,"<span class='green'>The cuts on [victim]'s [limb.name] scar over!</span>")
+
+
+/datum/wound/brute/cut/proc/self_bandage(obj/item/I, mob/user)
+	user.visible_message("<span class='warning'>[user] begins wrapping [victim]'s [limb.name] with [I]...</span>", "<span class='userdanger'>[user] begins wrapping your [limb.name] with [I]...</span>")
+	if(do_after(user, base_treat_time * 1.5, target=victim))
+		if(QDELETED(src) || !limb)
+			return
+		user.visible_message("<span class='green'>[user] bandages some of the.</span>", "<span class='green'>You bandage some of the bleeding on [victim].</span>")
+		blood_flow -= 0.5
+		if(blood_flow > minimum_flow)
+			try_treating(I, user)
+		else
+			to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
+			to_chat(victim,"<span class='green'>The bleeding on your [limb.name] drops off!</span>")
+
+
+/datum/wound/brute/cut/proc/bandage(obj/item/I, mob/user)
+	victim.visible_message("<span class='warning'>[user] begins wrapping [victim]'s [limb.name] with [I]...</span>", "<span class='userdanger'>[user] begins wrapping your [limb.name] with [I]...</span>")
+	if(do_after(user, base_treat_time, target=victim))
+		if(QDELETED(src) || !limb)
+			return
+		user.visible_message("<span class='green'>[user] bandages some of the bleeding on [victim].</span>", "<span class='green'>You bandage some of the bleeding on [victim].</span>")
+		blood_flow -= 0.5
+		if(blood_flow > minimum_flow)
+			try_treating(I, user)
+		else
+			to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
+			to_chat(victim,"<span class='green'>The bleeding on your [limb.name] drops off!</span>")
+
 
 
 

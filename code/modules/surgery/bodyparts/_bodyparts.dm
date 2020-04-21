@@ -186,7 +186,7 @@
 
 
 	// i know this is effectively the same check as above but i don't know if those can null the damage by rounding and want to be safe
-	if(brute || burn)
+	if((brute || burn) && wound_bonus != CANT_WOUND)
 		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
 		var/wounding_type = (brute > burn ? WOUND_BRUTE : WOUND_BURN)
 		var/wounding_dmg = max(brute, burn)
@@ -542,24 +542,18 @@
 	drop_organs()
 	qdel(src)
 
-/// Get whatever wound of the given damage type is currently attached to this limb, if any
-/obj/item/bodypart/proc/get_wound(damtype)
+/// Get whatever wound of the given type is currently attached to this limb, if any
+/obj/item/bodypart/proc/get_wound_type(checking_type)
 	if(isnull(wounds))
 		return
 
-	var/to_check
-	if(damtype == BRUTE) // TODO: gonna need to do actual standard handling for this, so we don't have these checks
-		to_check = /datum/wound/brute
-	else if(damtype == BURN)
-		to_check = /datum/wound/burn
-
-	for(var/wo in wounds)
-		var/datum/wound/W = wo // TODO: make less bad
-		if(istype(W, to_check))
+	for(var/thing in wounds)
+		var/datum/wound/W = thing
+		if(istype(W, checking_type))
 			return W
 
 /// very rough start for updating efficiency and other stats on a body part whenever a wound is gained/lost
-/obj/item/bodypart/proc/update_wound()
+/obj/item/bodypart/proc/update_wounds()
 	var/int_eff = 1 //initial(wound_interaction_efficiency)
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
 

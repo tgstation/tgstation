@@ -12,25 +12,42 @@
 	/// If a bone wound is applied to a leg, we store the limp component here so we can delete it when removed
 	var/datum/component/limp/current_limp
 	wound_type = WOUND_TYPE_BONE
+	/// How effective various item types are at splinting these injuries. Checks from left to right, subpaths are accepted, so put specific subtypes before general ones
+	var/list/splint_items = list(/obj/item/stack/medical/gauze = 0.25, /obj/item/stack/sticky_tape/surgical = 0.4, /obj/item/stack/sticky_tape/super = 0.6, /obj/item/stack/sticky_tape = 0.75)
+	/// A coefficient for how much of the wound's negative effects like limping we can ignore thanks to splints, lower the better
+	var/splint_factor
 
-/datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, special_arg=NONE)
+/datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = NONE, special_arg=NONE)
 	. = ..()
+	update_inefficiencies()
 
-	if(L.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-		var/mob/living/carbon/C = L.owner
-		if(!(C.get_bodypart(BODY_ZONE_L_LEG) && C.get_bodypart(BODY_ZONE_R_LEG))) // can't limp with one leg
-			return
-		current_limp = C.AddComponent(/datum/component/limp)
-		RegisterSignal(current_limp, COMSIG_PARENT_QDELETING, .proc/remove_limp)
-
+// TODO: limps are unique so if we fix one of two broken legs i think they'll be limp free, look into this
 /datum/wound/brute/bone/remove_wound()
 	if(current_limp)
 		QDEL_NULL(current_limp)
+	interaction_efficiency_penalty = 1 // also the ordering and such of this
 	. = ..()
 
-/// In case we're limping and we lose a leg
-/datum/wound/brute/bone/proc/remove_limp()
-	current_limp = null
+/datum/wound/brute/bone/proc/check_splint_factor(obj/item/I)
+	for(var/item_path in splint_items)
+		if(istype(I, item_path))
+			return splint_items[item_path]
+
+/datum/wound/brute/bone/proc/update_inefficiencies()
+	if(limb.body_zone in list(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+		if(splint_factor)
+			limp_slowdown = initial(limp_slowdown) * splint_factor
+		else
+			limp_slowdown = initial(limp_slowdown)
+		current_limp = victim.AddComponent(/datum/component/limp)
+	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+		if(splint_factor)
+			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * splint_factor)
+		else
+			interaction_efficiency_penalty = interaction_efficiency_penalty
+
+	limb.update_wounds()
+
 
 /datum/wound/brute/bone/moderate
 	name = "joint dislocation"
@@ -45,10 +62,72 @@
 	threshold_penalty = 15
 	treatable_tool = TOOL_BONESET
 
+/datum/wound/brute/bone/moderate/try_handling(mob/living/carbon/human/user)
+	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
+		return FALSE
+
+	if(user.grab_state == GRAB_PASSIVE)
+		to_chat(user, "<span class='warning'>You must have [victim] in an aggressive grab to manipulate [victim.p_their()] [src]!</span>")
+		return TRUE
+
+	if(user.grab_state >= GRAB_AGGRESSIVE)
+		user.visible_message("<span class='danger'>[user] begins twisting and straining [victim]'s dislocated [limb.name]!</span>", "<span class='notice'>You begin twisting and straining [victim]'s dislocated [limb.name]...</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[user] begins twisting and straining your dislocated [limb.name]!</span>")
+		if(user.a_intent == INTENT_HELP)
+			chiropract(user)
+		else
+			malpractice(user)
+		return TRUE
+
+/datum/wound/brute/bone/moderate/proc/chiropract(mob/living/carbon/human/user)
+	var/time = base_treat_time
+	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
+	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_PROBS_MODIFIER)
+	if(time_mod)
+		time *= time_mod
+
+	if(do_after(user, time, TRUE, victim))
+		if(QDELETED(src) || !limb)
+			return
+		if(prob(65 + prob_mod))
+			user.visible_message("<span class='danger'>[user] snaps [victim]'s dislocated [limb.name] back into place!</span>", "<span class='notice'>You snap [victim]'s dislocated [limb.name] back into place!</span>", ignored_mobs=victim)
+			to_chat(victim, "<span class='userdanger'>[user] snaps your dislocated [limb.name] back into place!</span>")
+			victim.emote("scream")
+			limb.receive_damage(brute=20, wound_bonus=CANT_WOUND)
+			remove_wound()
+		else
+			user.visible_message("<span class='danger'>[user] wrenches [victim]'s dislocated [limb.name] around painfully!</span>", "<span class='danger'>You wrench [victim]'s dislocated [limb.name] around painfully!</span>", ignored_mobs=victim)
+			to_chat(victim, "<span class='userdanger'>[user] wrenches your dislocated [limb.name] around painfully!</span>")
+			limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
+			chiropract(user)
+
+/datum/wound/brute/bone/moderate/proc/malpractice(mob/living/carbon/human/user)
+	var/time = base_treat_time
+	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
+	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_PROBS_MODIFIER)
+	if(time_mod)
+		time *= time_mod
+
+	if(do_after(user, time, TRUE, victim))
+		if(QDELETED(src) || !limb)
+			return
+		if(prob(25 + prob_mod))
+			user.visible_message("<span class='danger'>[user] snaps [victim]'s dislocated [limb.name] with a sickening crack!</span>", "<span class='danger'>You snap [victim]'s dislocated [limb.name] with a sickening crack!</span>", ignored_mobs=victim)
+			to_chat(victim, "<span class='userdanger'>[user] snaps your dislocated [limb.name] with a sickening crack!</span>")
+			victim.emote("scream")
+			limb.receive_damage(brute=25, wound_bonus=30 + prob_mod * 3)
+		else
+			user.visible_message("<span class='danger'>[user] wrenches [victim]'s dislocated [limb.name] around painfully!</span>", "<span class='danger'>You wrench [victim]'s dislocated [limb.name] around painfully!</span>", ignored_mobs=victim)
+			to_chat(victim, "<span class='userdanger'>[user] wrenches your dislocated [limb.name] around painfully!</span>")
+			limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
+			malpractice(user)
+
 
 /datum/wound/brute/bone/moderate/treat_self(obj/item/I, mob/user)
 	victim.visible_message("<span class='danger'>[user] begins resetting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin resetting your [limb.name] with [I]...</span>")
-	if(do_after(user, 75 * I.toolspeed, target = victim))
+	if(do_after(user, base_treat_time * I.toolspeed * 1.5, target = victim))
+		if(QDELETED(src) || !limb)
+			return
 		victim.visible_message("<span class='danger'>[user] finishes resetting [victim.p_their()] [limb.name]!</span>", "<span class='userdanger'>You reset your [limb.name]!</span>")
 		victim.emote("scream")
 		remove_wound()
@@ -56,13 +135,17 @@
 /datum/wound/brute/bone/moderate/treat(obj/item/I, mob/user)
 	user.visible_message("<span class='danger'>[user] begins resetting [victim]'s [limb.name] with [I].</span>", "<span class='notice'>You begin resetting [victim]'s [limb.name] with [I]...</span>", victim)
 	to_chat(victim, "<span class='warning'>[user] begins resetting your [limb.name] with [I].</span>")
-	if(do_after(user, 50 * I.toolspeed, target = victim))
+	if(do_after(user, base_treat_time * I.toolspeed, target = victim))
+		if(QDELETED(src) || !limb)
+			return
 		user.visible_message("<span class='danger'>[user] finishes resetting [victim]'s [limb.name]!</span>", "<span class='nicegreen'>You finish resetting [victim]'s [limb.name]!</span>", victim)
 		to_chat(victim, "<span class='userdanger'>[user] resets your [limb.name]!</span>")
 		victim.emote("scream")
 		remove_wound()
 
-
+/*
+	Severe (Hairline Fracture)
+*/
 
 /datum/wound/brute/bone/severe
 	name = "hairline fracture"
@@ -75,6 +158,35 @@
 	limp_slowdown = 7
 	threshold_minimum = 55
 	threshold_penalty = 30
+	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
+
+
+/datum/wound/brute/bone/severe/try_treating(obj/item/I, mob/user)
+	var/splint_check = check_splint_factor(I)
+	if(!splint_check || (splint_check >= splint_factor))
+		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
+		return TRUE
+	return ..()
+
+/datum/wound/brute/bone/severe/treat_self(obj/item/I, mob/user)
+	victim.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting your [limb.name] with [I]...</span>")
+	if(do_after(user, base_treat_time * 1.5, target = victim))
+		if(QDELETED(src) || !limb)
+			return
+		victim.visible_message("<span class='notice'>[user] finishes splinting [victim.p_their()] [limb.name]!</span>", "<span class='nicegreen'>You finish splinting your [limb.name]!</span>")
+		splint_factor = check_splint_factor(I)
+		update_inefficiencies()
+
+/datum/wound/brute/bone/severe/treat(obj/item/I, mob/user)
+	user.visible_message("<span class='notice'>[user] begins splinting [victim]'s [limb.name] with [I].</span>", "<span class='notice'>You begin splinting [victim]'s [limb.name] with [I]...</span>", victim)
+	to_chat(victim, "<span class='notice'>[user] begins splinting your [limb.name] with [I].</span>")
+	if(do_after(user, base_treat_time, target = victim))
+		if(QDELETED(src) || !limb)
+			return
+		user.visible_message("<span class='notice'>[user] finishes splinting [victim]'s [limb.name]!</span>", "<span class='nicegreen'>You finish splinting [victim]'s [limb.name]!</span>", victim)
+		to_chat(victim, "<span class='nicegreen'>[user] splints your [limb.name]!</span>")
+		splint_factor = check_splint_factor(I)
+		update_inefficiencies()
 
 /datum/wound/brute/bone/critical
 	name = "compound fracture"
@@ -88,6 +200,6 @@
 	sound_effect = 'sound/effects/crack2.ogg'
 	threshold_minimum = 110
 	threshold_penalty = 50
-
+	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
 
 

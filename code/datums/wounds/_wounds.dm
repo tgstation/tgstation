@@ -70,7 +70,7 @@
 	remove_wound()
 
 /// Apply whatever wound we've created to the specified limb
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, special_arg = NONE)
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = NONE, special_arg = NONE)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
 		return
 
@@ -78,27 +78,37 @@
 	limb = L
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
-	limb.update_wound()
+	limb.update_wounds()
+	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
+	var/demoted
+	if(old_wound)
+		demoted = (severity <= old_wound.severity)
 
-	if(!silent)
+	if(!(silent || demoted))
 		var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
-		if(severity == WOUND_SEVERITY_CRITICAL)
+		var/vis_dist = COMBAT_MESSAGE_RANGE
+
+		if(severity != WOUND_SEVERITY_MODERATE)
 			msg = "<b>[msg]</b>"
-		victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>")
+			vis_dist = DEFAULT_MESSAGE_RANGE
+
+		victim.visible_message(msg, "<span class='userdanger'>Your [limb.name] [occur_text]!</span>", vision_distance = vis_dist)
 		if(sound_effect)
 			playsound(L.owner, sound_effect, 60 + 20 * severity, TRUE)
 
-	wound_injury()
-	second_wind()
+	if(!demoted)
+		wound_injury()
+		second_wind()
 
 /// Remove the wound from whatever it's afflicting
 /datum/wound/proc/remove_wound()
 	if(victim)
+		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 		LAZYREMOVE(victim.all_wounds, src)
 		victim = null
 
 	if(limb)
-		limb.update_wound()
+		limb.update_wounds()
 		LAZYREMOVE(limb.wounds, src)
 		limb = null
 
@@ -106,7 +116,7 @@
 	var/datum/wound/new_wound = new new_type
 	var/obj/item/bodypart/temp_limb = limb // since we're about to null it
 	remove_wound()
-	new_wound.apply_wound(temp_limb, silent = TRUE, special_arg = special_arg)
+	new_wound.apply_wound(temp_limb, silent = TRUE, old_wound = src)
 	qdel(src)
 
 
@@ -116,19 +126,24 @@
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
 /datum/wound/proc/second_wind()
-	return
+	switch(severity)
+		if(WOUND_SEVERITY_MODERATE)
+			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_MODERATE)
+		if(WOUND_SEVERITY_SEVERE)
+			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_SEVERE)
+		if(WOUND_SEVERITY_CRITICAL)
+			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_CRITICAL)
+
+
+/// Someone is using something that might be used for treating the wound on this limb
+/datum/wound/proc/try_handling(mob/living/carbon/human/user)
+	return FALSE
 
 /// Someone is using something that might be used for treating the wound on this limb
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
-	if(!limb)
-		testing("No limb")
-		return FALSE
-
 	if(limb.body_zone != user.zone_selected)
 		return FALSE
-
 	if(!(I.type in treatable_by) && (I.tool_behaviour != treatable_tool) && !(treatable_tool == TOOL_CAUTERY && I.get_temperature() > 300))
-		testing("Nope")
 		return FALSE
 
 	if(INTERACTING_WITH(user, victim))
@@ -139,7 +154,6 @@
 		treat_self(I, user)
 	else
 		treat(I, user)
-
 	return TRUE
 
 /// Someone is using something that might be used for treating the wound on this limb

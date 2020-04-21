@@ -96,7 +96,7 @@
 		return TRUE
 	if(iscarbon(M))
 		return heal_carbon(M, user, heal_brute, 0)
-	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
 /obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -172,7 +172,7 @@
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, 0, heal_burn)
-	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
 	user.visible_message("<span class='suicide'>[user] is squeezing \the [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?</span>")
@@ -218,7 +218,7 @@
 		M.heal_bodypart_damage(heal_brute)
 		return TRUE
 
-	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
 /obj/item/stack/medical/mesh
 	name = "regenerative mesh"
@@ -254,7 +254,7 @@
 		return
 	if(iscarbon(M))
 		return heal_carbon(M, user, 0, heal_burn)
-	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
 
 /obj/item/stack/medical/mesh/try_heal(mob/living/M, mob/user, silent = FALSE)
@@ -332,7 +332,7 @@
 		M.heal_bodypart_damage(heal, heal)
 		return TRUE
 
-	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
+	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
 
 
 	/*
@@ -342,3 +342,41 @@
 
 	The interesting limb targeting mechanic is retained and i still believe they will be a viable choice, especially when healing others in the field.
 	 */
+
+/obj/item/stack/medical/bone_gel
+	name = "bone gel"
+	singular_name = "bone gel"
+	desc = "A therapeutic gel pack and bandages designed to treat blunt-force trauma."
+
+	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
+	icon_state = "medigel_blue"
+	item_state = "spraycan"
+
+	current_skin = "medigel_blue"
+	var/heal_brute = 40
+	self_delay = 20
+	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
+
+/obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage((heal_brute/2))
+		return TRUE
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal_brute, 0)
+	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
+
+/obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
+	user.visible_message("<span class='suicide'>[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	return (BRUTELOSS)
