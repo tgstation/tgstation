@@ -43,7 +43,7 @@ export const Electropack = (props, context) => {
                 maxValue={maxFrequency / 10}
                 value={frequency / 10}
                 format={value => toFixed(value, 1)}
-                width={13}
+                width="80px"
                 onDrag={(e, value) => act('freq', {
                   freq: value,
                 })} />
@@ -65,7 +65,7 @@ export const Electropack = (props, context) => {
                 minValue={1}
                 maxValue={100}
                 value={code}
-                width={13}
+                width="80px"
                 onDrag={(e, value) => act('code', {
                   code: value,
                 })} />

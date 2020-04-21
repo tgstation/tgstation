@@ -69,7 +69,7 @@ export const NtosArcade = (props, context) => {
                 <Box m={1} />
                 <Section
                   inline
-                  width={26}
+                  width="156px"
                   textAlign="center">
                   <img src={data.BossID} />
                 </Section>

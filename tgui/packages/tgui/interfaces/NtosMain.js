@@ -64,7 +64,7 @@ export const NtosMain = (props, context) => {
                       name: program.name,
                     })} />
                 </Table.Cell>
-                <Table.Cell collapsing width={3}>
+                <Table.Cell collapsing width="18px">
                   {!!program.running && (
                     <Button
                       lineHeight="24px"

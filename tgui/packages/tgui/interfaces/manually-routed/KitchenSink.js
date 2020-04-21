@@ -117,8 +117,8 @@ const KitchenSinkButton = props => {
         <Button fluid content="Fluid" />
         <Button
           my={1}
-          lineHeight={2}
-          minWidth={30}
+          lineHeight={1}
+          minWidth={15}
           textAlign="center"
           content="With Box props" />
       </Box>
@@ -320,7 +320,7 @@ class KitchenSinkInput extends Component {
           <LabeledList.Item label="NumberInput (onChange)">
             <NumberInput
               animated
-              width={10}
+              width="30px"
               step={1}
               stepPixelSize={5}
               value={number}
@@ -333,7 +333,7 @@ class KitchenSinkInput extends Component {
           <LabeledList.Item label="NumberInput (onDrag)">
             <NumberInput
               animated
-              width={10}
+              width="30px"
               step={1}
               stepPixelSize={5}
               value={number}
