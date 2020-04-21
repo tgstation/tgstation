@@ -113,27 +113,3 @@ $bg-map: colors.$bg-map !default;
 .Button--selected {
   @include button-color($color-selected);
 }
-
-.Button--altSelected--bottom::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background-color: colors.$white;
-  border-radius: $border-radius;
-}
-
-.Button--altSelected--right::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  height: 100%;
-  width: 3px;
-  background-color: colors.$white;
-  border-radius: $border-radius;
-}

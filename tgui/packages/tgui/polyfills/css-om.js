@@ -5,14 +5,15 @@
 
 /* eslint-disable */
 (function(Proto) {
-
-  function toAttr(prop) {
-    return prop.replace(/-[a-z]/g, function(bit) {
-      return bit[1].toUpperCase();
-    });
-  }
+  'use strict';
 
   if (typeof Proto.setAttribute !== 'undefined') {
+    function toAttr(prop) {
+      return prop.replace(/-[a-z]/g, function (bit) {
+        return bit[1].toUpperCase();
+      });
+    }
+
     Proto.setProperty = function (prop, value) {
       var attr = toAttr(prop);
       if (!value) {

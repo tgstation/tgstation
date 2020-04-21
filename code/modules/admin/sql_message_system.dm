@@ -106,6 +106,7 @@
 	var/text
 	var/user_key_name = key_name(usr)
 	var/user_name_admin = key_name_admin(usr)
+	var/deleted_by_ckey = sanitizeSQL(usr.ckey)
 	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_del_message.warn_execute())
 		qdel(query_find_del_message)
@@ -115,7 +116,7 @@
 		target_key = query_find_del_message.item[2]
 		text = query_find_del_message.item[3]
 	qdel(query_find_del_message)
-	var/datum/DBQuery/query_del_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET deleted = 1 WHERE id = [message_id]")
+	var/datum/DBQuery/query_del_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET deleted = 1, deleted_ckey = '[deleted_by_ckey]' WHERE id = [message_id]")
 	if(!query_del_message.warn_execute())
 		qdel(query_del_message)
 		return

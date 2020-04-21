@@ -1,11 +1,8 @@
 import { classes } from "common/react";
 import { useBackend } from "../backend";
 import { Box, Button, Grid, NumberInput } from "../components";
-import { createLogger } from "../logging";
-import { Fragment, Component } from "inferno";
-import { act } from "../byond";
-
-const logger = createLogger('Roulette');
+import { Component } from "inferno";
+import { Window } from "../layouts";
 
 const getNumberColor = number => {
   if (number === 0) {
@@ -31,9 +28,9 @@ const getNumberColor = number => {
   return (oddRed ? isOdd : !isOdd) ? 'red' : 'black';
 };
 
-export const RouletteNumberButton = props => {
+export const RouletteNumberButton = (props, context) => {
   const { number } = props;
-  const { act } = useBackend(props);
+  const { act } = useBackend(context);
 
   return (
     <Button
@@ -51,9 +48,8 @@ export const RouletteNumberButton = props => {
   );
 };
 
-export const RouletteBoard = props => {
-  const { state } = props;
-  const { act } = useBackend(props);
+export const RouletteBoard = (props, context) => {
+  const { act } = useBackend(context);
 
   const firstRow = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36];
   const secondRow = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35];
@@ -82,7 +78,7 @@ export const RouletteBoard = props => {
           <td
             key={number}
             className="Roulette__board-cell Table__cell-collapsing">
-            <RouletteNumberButton state={state} number={number} />
+            <RouletteNumberButton number={number} />
           </td>
         ))}
         <td className="Roulette__board-cell">
@@ -101,7 +97,7 @@ export const RouletteBoard = props => {
           <td
             key={number}
             className="Roulette__board-cell Table__cell-collapsing">
-            <RouletteNumberButton state={state} number={number} />
+            <RouletteNumberButton number={number} />
           </td>
         ))}
         <td className="Roulette__board-cell">
@@ -120,7 +116,7 @@ export const RouletteBoard = props => {
           <td
             key={number}
             className="Roulette__board-cell Table__cell-collapsing">
-            <RouletteNumberButton state={state} number={number} />
+            <RouletteNumberButton number={number} />
           </td>
         ))}
         <td className="Roulette__board-cell">
@@ -249,7 +245,7 @@ export class RouletteBetTable extends Component {
   }
 
   render() {
-    const { act, data } = useBackend(this.props);
+    const { act, data } = useBackend(this.context);
 
     let {
       BetType,
@@ -391,11 +387,13 @@ export class RouletteBetTable extends Component {
   }
 }
 
-export const Roulette = props => {
+export const Roulette = (props, context) => {
   return (
-    <Fragment>
-      <RouletteBoard state={props.state} />
-      <RouletteBetTable state={props.state} />
-    </Fragment>
+    <Window theme="cardtable">
+      <Window.Content>
+        <RouletteBoard />
+        <RouletteBetTable />
+      </Window.Content>
+    </Window>
   );
 };

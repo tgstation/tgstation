@@ -1,6 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "N2O formation reaction (n2 + o2 + bz as catalyst + cold = n2o)"
-  - rscadd: "N2O toxic behaviour (if you inhale it you can die in your sleep)
-changed: NO2 Formation reaction (n2 + o2 + bz + heat = no2)"

@@ -95,7 +95,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "chem_heater", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ChemHeater", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/chem_heater/ui_data()

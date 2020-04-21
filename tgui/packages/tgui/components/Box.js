@@ -3,7 +3,7 @@ import { createVNode } from 'inferno';
 import { ChildFlags, VNodeFlags } from 'inferno-vnode-flags';
 import { CSS_COLORS } from '../constants';
 
-const UNIT_PX = 6;
+const UNIT_PX = 12;
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
@@ -14,6 +14,18 @@ export const unit = value => {
   }
   if (typeof value === 'number') {
     return (value * UNIT_PX) + 'px';
+  }
+};
+
+/**
+ * Same as `unit`, but half the size for integers numbers.
+ */
+export const halfUnit = value => {
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (typeof value === 'number') {
+    return (value * UNIT_PX * 0.5) + 'px';
   }
 };
 
@@ -28,7 +40,7 @@ const mapRawPropTo = attrName => (style, value) => {
   }
 };
 
-const mapUnitPropTo = attrName => (style, value) => {
+const mapUnitPropTo = (attrName, unit) => (style, value) => {
   if (!isFalsy(value)) {
     style[attrName] = unit(value);
   }
@@ -40,7 +52,7 @@ const mapBooleanPropTo = (attrName, attrValue) => (style, value) => {
   }
 };
 
-const mapDirectionalUnitPropTo = (attrName, dirs) => (style, value) => {
+const mapDirectionalUnitPropTo = (attrName, unit, dirs) => (style, value) => {
   if (!isFalsy(value)) {
     for (let i = 0; i < dirs.length; i++) {
       style[attrName + '-' + dirs[i]] = unit(value);
@@ -60,17 +72,17 @@ const styleMapperByPropName = {
   overflow: mapRawPropTo('overflow'),
   overflowX: mapRawPropTo('overflow-x'),
   overflowY: mapRawPropTo('overflow-y'),
-  top: mapUnitPropTo('top'),
-  bottom: mapUnitPropTo('bottom'),
-  left: mapUnitPropTo('left'),
-  right: mapUnitPropTo('right'),
-  width: mapUnitPropTo('width'),
-  minWidth: mapUnitPropTo('min-width'),
-  maxWidth: mapUnitPropTo('max-width'),
-  height: mapUnitPropTo('height'),
-  minHeight: mapUnitPropTo('min-height'),
-  maxHeight: mapUnitPropTo('max-height'),
-  fontSize: mapUnitPropTo('font-size'),
+  top: mapUnitPropTo('top', unit),
+  bottom: mapUnitPropTo('bottom', unit),
+  left: mapUnitPropTo('left', unit),
+  right: mapUnitPropTo('right', unit),
+  width: mapUnitPropTo('width', unit),
+  minWidth: mapUnitPropTo('min-width', unit),
+  maxWidth: mapUnitPropTo('max-width', unit),
+  height: mapUnitPropTo('height', unit),
+  minHeight: mapUnitPropTo('min-height', unit),
+  maxHeight: mapUnitPropTo('max-height', unit),
+  fontSize: mapUnitPropTo('font-size', unit),
   fontFamily: mapRawPropTo('font-family'),
   lineHeight: mapRawPropTo('line-height'),
   opacity: mapRawPropTo('opacity'),
@@ -82,13 +94,33 @@ const styleMapperByPropName = {
   italic: mapBooleanPropTo('font-style', 'italic'),
   nowrap: mapBooleanPropTo('white-space', 'nowrap'),
   // Margins
-  m: mapDirectionalUnitPropTo('margin', ['top', 'bottom', 'left', 'right']),
-  mx: mapDirectionalUnitPropTo('margin', ['left', 'right']),
-  my: mapDirectionalUnitPropTo('margin', ['top', 'bottom']),
-  mt: mapUnitPropTo('margin-top'),
-  mb: mapUnitPropTo('margin-bottom'),
-  ml: mapUnitPropTo('margin-left'),
-  mr: mapUnitPropTo('margin-right'),
+  m: mapDirectionalUnitPropTo('margin', halfUnit, [
+    'top', 'bottom', 'left', 'right',
+  ]),
+  mx: mapDirectionalUnitPropTo('margin', halfUnit, [
+    'left', 'right',
+  ]),
+  my: mapDirectionalUnitPropTo('margin', halfUnit, [
+    'top', 'bottom',
+  ]),
+  mt: mapUnitPropTo('margin-top', halfUnit),
+  mb: mapUnitPropTo('margin-bottom', halfUnit),
+  ml: mapUnitPropTo('margin-left', halfUnit),
+  mr: mapUnitPropTo('margin-right', halfUnit),
+  // Margins
+  p: mapDirectionalUnitPropTo('padding', halfUnit, [
+    'top', 'bottom', 'left', 'right',
+  ]),
+  px: mapDirectionalUnitPropTo('padding', halfUnit, [
+    'left', 'right',
+  ]),
+  py: mapDirectionalUnitPropTo('padding', halfUnit, [
+    'top', 'bottom',
+  ]),
+  pt: mapUnitPropTo('padding-top', halfUnit),
+  pb: mapUnitPropTo('padding-bottom', halfUnit),
+  pl: mapUnitPropTo('padding-left', halfUnit),
+  pr: mapUnitPropTo('padding-right', halfUnit),
   // Color props
   color: mapColorPropTo('color'),
   textColor: mapColorPropTo('color'),

@@ -1,4 +1,4 @@
-.NtosWrapper__header {
+.NtosWindow__header {
   position: absolute;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   -ms-user-select: none;
 }
 
-.NtosWrapper__content .Layout__content {
+.NtosWindow__content .Layout__content {
   margin-top: 28px;
   font-family: Consolas, monospace;
   font-size: 14px;
