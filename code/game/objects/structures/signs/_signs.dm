@@ -4,16 +4,18 @@
 	opacity = 0
 	density = FALSE
 	layer = SIGN_LAYER
+	custom_materials = list(/datum/material/plastic = 2000)
 	max_integrity = 100
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	var/buildable_sign = 1 //unwrenchable
+	var/buildable_sign = TRUE //unwrenchable
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
+	resistance_flags = FLAMMABLE
 	var/is_editable = FALSE //This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign subtype to override.
 	var/sign_change_name = "Sign - Blank" //sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
 
 /obj/structure/sign/basic
-	name = "blank sign"
-	desc = "How can signs be real if our eyes aren't real? Use a pen to change the decal."
+	name = "sign backing"
+	desc = "A plastic sign with adhesive backing, use a pen to change the decal. It can be detached from the wall with a wrench."
 	icon_state = "backing"
 
 /obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
@@ -33,7 +35,7 @@
 	user.examinate(src)
 
 GLOBAL_VAR(editable_sign_types)
-/obj/structure/sign/proc/populate_editable_sign_types() //The first time a pen is used on any sign, this populates the above, a global list of all the signs that you can set a sign backing to with a pen.
+/proc/populate_editable_sign_types() //The first time a pen is used on any sign, this populates the above, a global list of all the signs that you can set a sign backing to with a pen.
 	GLOB.editable_sign_types = list()
 	for(var/s in subtypesof(/obj/structure/sign))
 		var/obj/structure/sign/potential_sign = s
@@ -42,22 +44,27 @@ GLOBAL_VAR(editable_sign_types)
 		GLOB.editable_sign_types[initial(potential_sign.sign_change_name)] = potential_sign
 	GLOB.editable_sign_types = sortList(GLOB.editable_sign_types) //Alphabetizes the results.
 
+/obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
+	. = ..()
+	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
+						 "<span class='notice'>You start unfastening [src].</span>")
+	I.play_tool_sound(src)
+	if(I.use_tool(src, user, 40))
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>")
+		var/obj/item/sign_backing/SB = new (get_turf(user))
+		SB.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
+		SB.desc = "[desc] It can be placed on a wall."
+		SB.icon_state = icon_state
+		SB.obj_integrity = obj_integrity //Transfer how damaged it is.
+		SB.sign_path = type
+		SB.setDir(dir)
+		qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
+	return TRUE
+
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH && buildable_sign)
-		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-							 "<span class='notice'>You start unfastening [src].</span>")
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 40))
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-								 "<span class='notice'>You unfasten [src].</span>")
-			var/obj/item/sign_backing/SB = new (get_turf(user))
-			SB.icon_state = icon_state //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
-			SB.sign_path = type
-			SB.setDir(dir)
-			qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
-		return
-	else if(istype(I, /obj/item/pen) && is_editable)
+	if(istype(I, /obj/item/pen) && is_editable)
 		if(!length(GLOB.editable_sign_types))
 			populate_editable_sign_types()
 			if(!length(GLOB.editable_sign_types))
@@ -79,32 +86,63 @@ GLOBAL_VAR(editable_sign_types)
 			var/obj/structure/sign/newsign = new sign_type(get_turf(src))
 			newsign.pixel_x = pixel_x
 			newsign.pixel_y = pixel_y
+			newsign.obj_integrity = obj_integrity
 			qdel(src)
 			user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
 						 "<span class='notice'>You finish changing the sign.</span>")
-	else
-		return ..()
+		return
+	return ..()
+
+/obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/pen) && is_editable)
+		if(!length(GLOB.editable_sign_types))
+			populate_editable_sign_types()
+			if(!length(GLOB.editable_sign_types))
+				CRASH("GLOB.editable_sign_types failed to populate")
+		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
+		if(!choice)
+			return
+		user.visible_message("<span class='notice'>You begin changing [src].</span>")
+		if(do_after(user, 40, target = src))
+			var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
+			if(!Adjacent(user)) //Make sure user is adjacent still.
+				return
+			if(!sign_type)
+				return
+			name = initial(sign_type.name)
+			desc = "[initial(sign_type.desc)] It can be placed on a wall."
+			icon_state = initial(sign_type.icon_state)
+			sign_path = sign_type
+			
+			user.visible_message("<span class='notice'>You finish changing the sign.</span>")
+		return
+	return ..()
 
 /obj/item/sign_backing
 	name = "sign backing"
-	desc = "A plastic sign with adhesive backing. Use a pen to change the decal once installed."
+	desc = "A plastic sign with adhesive backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/plastic = 2000)
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	resistance_flags = FLAMMABLE
+	max_integrity = 100
 	var/sign_path = /obj/structure/sign/basic //The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
+	var/is_editable = TRUE
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(isturf(target) && proximity)
+	if(iswallturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 							 "<span class='notice'>You attach the sign to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
 		var/obj/structure/sign/S = new sign_path(T)
+		S.obj_integrity = obj_integrity
 		S.setDir(dir)
 		qdel(src)
+	return ..()
 
 /obj/item/sign_backing/Move(atom/new_loc, direct = 0)
 	// Pulling, throwing, or conveying a sign backing does not rotate it.

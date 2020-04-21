@@ -2,11 +2,12 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
-	desc = "A blank plaque. Use a fancy pen to engrave it, use a wrench to detatch it from the wall."
+	desc = "A blank plaque, use a fancy pen to engrave it. It can be detatched from the wall with a wrench."
 	anchored = TRUE
 	opacity = 0
 	density = FALSE
 	layer = SIGN_LAYER
+	custom_materials = list(/datum/material/gold = 2000)
 	max_integrity = 200 //Twice as durable as regular signs.
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
@@ -16,9 +17,11 @@
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
-	desc = "A blank plaque. Place it on a wall and use a fancy pen to engrave it, use a wrench to detatch it from the wall."
+	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/gold = 2000)
+	max_integrity = 200
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	var/plaque_path = /obj/structure/customplaque //This points the item to make the proper structure when placed on a wall.
 	var/unengraved = TRUE
 
@@ -38,24 +41,26 @@
 		return
 	user.examinate(src)
 
+/obj/structure/customplaque/wrench_act(mob/living/user, obj/item/wrench/I)
+	. = ..()
+	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
+						 "<span class='notice'>You start unfastening [src].</span>")
+	I.play_tool_sound(src)
+	if(I.use_tool(src, user, 40))
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>")
+		var/obj/item/customplaque/CP = new (get_turf(user))
+		CP.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
+		CP.desc = desc
+		CP.unengraved = unengraved
+		CP.obj_integrity = obj_integrity
+		CP.setDir(dir)
+		qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
+	return TRUE
 
 /obj/structure/customplaque/attackby(obj/item/I, mob/user, params)
-	if(I.tool_behaviour == TOOL_WRENCH)
-		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
-							 "<span class='notice'>You start unfastening [src].</span>")
-		I.play_tool_sound(src)
-		if(I.use_tool(src, user, 40))
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-								 "<span class='notice'>You unfasten [src].</span>")
-			var/obj/item/customplaque/CP = new (get_turf(user))
-			CP.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
-			CP.desc = desc
-			CP.unengraved = unengraved
-			CP.setDir(dir)
-			qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
-		return
-	else if(istype(I, /obj/item/pen/fountain) && unengraved)
+	if(istype(I, /obj/item/pen/fountain) && unengraved)
 		var/namechoice = input(user, "Title this plaque. (e.g. 'Best HoP Award', 'Great Ashwalker War Memorial')", "Plaque Customization")
 		if(!namechoice)
 			return
@@ -66,17 +71,24 @@
 							 "<span class='notice'>You begin engraving [src].</span>")
 		if(do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			if(!Adjacent(user)) //Make sure user is adjacent still
-				to_chat(user, "<span class='warning'>You have to stand next to the plaque to engrave it!</span>")
+				to_chat(user, "<span class='warning'>You need to stand next to the plaque to engrave it!</span>")
 				return
 			name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 			desc = "The plaque reads: '[descriptionchoice]'"
 			unengraved = FALSE //The plaque now has a name, description, and can't be altered again.
 			user.visible_message("<span class='notice'>[user] engraves [src].</span>", \
 								 "<span class='notice'>You engrave [src].</span>")
-	else if(istype(I, /obj/item/pen) && unengraved)
+			return
+	if(istype(I, /obj/item/pen/fountain) && !unengraved)
+		to_chat(user, "<span class='warning'>This plaque has already been engraved.</span>")
+		return
+	if(istype(I, /obj/item/pen) && unengraved)
 		to_chat(user, "<span class='warning'>Your pen isn't fancy enough to engrave this! Find a fountain pen.</span>") //Go steal the Curator's.
-	else
-		return ..()
+		return
+	if(istype(I, /obj/item/pen) && !unengraved)
+		to_chat(user, "<span class='warning'>This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen.</span>")
+		return
+	return ..()
 
 /obj/item/customplaque/attackby(obj/item/I, mob/user, params) //Same as part of the above, except for the item in hand instead of the structure.
 	if(istype(I, /obj/item/pen/fountain) && unengraved)
@@ -94,8 +106,17 @@
 			unengraved = FALSE
 			user.visible_message("<span class='notice'>[user] engraves [src].</span>", \
 								 "<span class='notice'>You engrave [src].</span>")
-	else if(istype(I, /obj/item/pen) && unengraved)
-		to_chat(user, "<span class='warning'>Your pen isn't fancy enough to engrave this! Find a fountain pen.</span>")
+		return
+	if(istype(I, /obj/item/pen/fountain) && !unengraved)
+		to_chat(user, "<span class='warning'>This plaque has already been engraved.</span>")
+		return
+	if(istype(I, /obj/item/pen) && unengraved)
+		to_chat(user, "<span class='warning'>Your pen isn't fancy enough to engrave this! Find a fountain pen.</span>") //Go steal the Curator's.
+		return
+	if(istype(I, /obj/item/pen) && !unengraved)
+		to_chat(user, "<span class='warning'>This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen.</span>")
+		return
+	return ..()
 
 /obj/item/customplaque/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -108,8 +129,10 @@
 		S.name = name
 		S.desc = desc
 		S.unengraved = unengraved
+		S.obj_integrity = obj_integrity
 		S.setDir(dir)
 		qdel(src)
+	return ..()
 
 /obj/item/customplaque/Move(atom/new_loc, direct = 0)
 	// Pulling, throwing, or conveying a plaque does not rotate it.
