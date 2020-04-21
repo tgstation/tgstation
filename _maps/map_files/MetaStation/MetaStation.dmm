@@ -65674,11 +65674,6 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/on{
 	dir = 4
 	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Lab - Pen #5";
-	dir = 4;
-	network = list("ss13","rd","xeno")
-	},
 /turf/open/floor/plating/airless,
 /area/science/xenobiology)
 "dcG" = (
@@ -68234,6 +68229,10 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"dur" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/maintenance/department/science/xenobiology)
 "dux" = (
 /turf/closed/wall,
 /area/maintenance/port/aft)
@@ -69234,6 +69233,11 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /turf/open/floor/plasteel/white,
 /area/science/misc_lab/range)
+"dHj" = (
+/obj/machinery/power/shieldwallgen/xenobiologyaccess,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "dHo" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -69514,17 +69518,6 @@
 /obj/structure/closet/l3closet,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"enH" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio7";
-	name = "Xenobio Pen 7 Blast Door"
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "enV" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -69904,6 +69897,9 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"fgv" = (
+/turf/closed/wall/r_wall,
+/area/space/nearstation)
 "fha" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -70032,6 +70028,16 @@
 	},
 /turf/open/floor/plasteel/kitchen_coldroom/freezerfloor,
 /area/crew_quarters/kitchen/coldroom)
+"fwP" = (
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/structure/table,
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "fxT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
@@ -70132,6 +70138,9 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"fGk" = (
+/turf/closed/wall/r_wall,
+/area/space)
 "fGz" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -70300,22 +70309,20 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
-"geP" = (
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
-/obj/structure/table,
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
 "geT" = (
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
+"gfP" = (
+/obj/structure/table,
+/obj/item/stack/sheet/metal{
+	amount = 10
+	},
+/obj/item/electropack,
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "gjC" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/disposalpipe/segment,
@@ -70787,13 +70794,6 @@
 /obj/structure/closet/emcloset,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
-"heb" = (
-/obj/structure/disposaloutlet,
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "hev" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/mecha_wreckage/ripley,
@@ -70999,17 +70999,6 @@
 	},
 /turf/open/floor/plating,
 /area/security/prison)
-"hzJ" = (
-/obj/machinery/door/window/southleft{
-	name = "Maximum Security Test Chamber";
-	req_access_txt = "55"
-	},
-/obj/machinery/door/poddoor/preopen{
-	id = "Xenolab";
-	name = "test chamber blast door"
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "hzY" = (
 /obj/structure/chair/office/light{
 	dir = 8
@@ -71041,16 +71030,6 @@
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
-"hBN" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Test Chamber Maintenance";
-	req_access_txt = "47"
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plating,
-/area/science/xenobiology)
 "hDr" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/light{
@@ -71064,9 +71043,22 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"hDM" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "hEd" = (
 /turf/open/floor/plasteel/white,
 /area/medical/paramedic)
+"hEA" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/maintenance/department/science/xenobiology)
 "hEP" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 4
@@ -71108,6 +71100,17 @@
 /obj/item/reagent_containers/glass/rag,
 /turf/open/floor/plasteel/white,
 /area/medical/abandoned)
+"hGk" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio7";
+	name = "Xenobio Pen 7 Blast Door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "hGB" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/lootdrop/maintenance/three,
@@ -71297,6 +71300,17 @@
 	},
 /turf/open/floor/wood,
 /area/vacant_room/office)
+"ikD" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "Xenobiology Lab - Pen #7";
+	dir = 8;
+	network = list("ss13","rd","xeno")
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "imI" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box/white{
@@ -71387,6 +71401,20 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
+"iyu" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/button/door{
+	id = "xenobio6";
+	layer = 3.3;
+	name = "Xenobio Pen 6 Blast Doors";
+	pixel_y = 4;
+	req_access_txt = "55"
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/science/xenobiology)
 "iyU" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -71431,6 +71459,16 @@
 	icon_state = "platingdmg1"
 	},
 /area/medical/abandoned)
+"iFM" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible,
+/obj/machinery/door/poddoor/preopen{
+	id = "Xenolab";
+	name = "test chamber blast door"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "iHk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -71487,6 +71525,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
+"iUB" = (
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
 "iVX" = (
 /obj/structure/rack,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -71624,9 +71666,6 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"jnY" = (
-/turf/closed/wall/r_wall,
-/area/space)
 "jpq" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
@@ -72126,14 +72165,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
-"kps" = (
-/obj/structure/table,
-/obj/item/stack/sheet/metal{
-	amount = 10
-	},
-/obj/item/electropack,
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "kqz" = (
 /obj/structure/sign/warning/docking,
 /turf/closed/wall,
@@ -72303,9 +72334,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"kIb" = (
-/turf/closed/wall/r_wall,
-/area/space/nearstation)
 "kIL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/yellow{
@@ -72392,10 +72420,6 @@
 /obj/effect/spawner/lootdrop/maintenance/two,
 /turf/open/floor/plating,
 /area/maintenance/port)
-"kQk" = (
-/obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/plating,
-/area/maintenance/department/science/xenobiology)
 "kQx" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/neutral,
@@ -72473,6 +72497,17 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"kYy" = (
+/obj/machinery/door/window/southleft{
+	name = "Maximum Security Test Chamber";
+	req_access_txt = "55"
+	},
+/obj/machinery/door/poddoor/preopen{
+	id = "Xenolab";
+	name = "test chamber blast door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "lal" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -73024,10 +73059,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
-"mdi" = (
-/obj/structure/sign/warning/electricshock,
-/turf/closed/wall/r_wall,
-/area/science/xenobiology)
 "mdG" = (
 /obj/effect/turf_decal/delivery/white{
 	color = "#52B4E9"
@@ -73158,10 +73189,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
-"moN" = (
-/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "mqo" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "maintwarehouse"
@@ -73254,6 +73281,13 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
+"mEO" = (
+/obj/structure/disposaloutlet,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "mGS" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -73282,14 +73316,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/checker,
 /area/engine/storage_shared)
-"mJN" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/preopen{
-	id = "xenobio6";
-	name = "Xenobio Pen 6 Blast Door"
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "mKb" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -73397,6 +73423,14 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"mWb" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "xenobio6";
+	name = "Xenobio Pen 6 Blast Door"
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "mWg" = (
 /obj/structure/girder,
 /obj/structure/grille,
@@ -73443,18 +73477,6 @@
 	},
 /turf/open/floor/grass,
 /area/medical/virology)
-"njG" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	pixel_y = 26
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel/white,
-/area/science/xenobiology)
 "njJ" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -73485,6 +73507,16 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
+"nlP" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Test Chamber Maintenance";
+	req_access_txt = "47"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "nmr" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -73533,6 +73565,13 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"nsm" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/item/cigbutt,
+/turf/open/floor/plating,
+/area/maintenance/department/science/xenobiology)
 "nsN" = (
 /obj/structure/statue/snow/snowman,
 /turf/open/floor/grass/snow/safe,
@@ -73604,6 +73643,14 @@
 /obj/structure/fluff/broken_flooring,
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"nDN" = (
+/obj/machinery/camera{
+	c_tag = "Xenobiology Lab - Test Chamber";
+	dir = 1;
+	network = list("ss13","rd","xeno")
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "nDT" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -73965,20 +74012,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"oqM" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/button/door{
-	id = "xenobio6";
-	layer = 3.3;
-	name = "Xenobio Pen 6 Blast Doors";
-	pixel_y = 4;
-	req_access_txt = "55"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
 "ore" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -74530,6 +74563,10 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
+"pGL" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall/r_wall,
+/area/science/xenobiology)
 "pGY" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -75079,13 +75116,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"qJM" = (
-/obj/structure/chair{
-	dir = 4
-	},
-/obj/item/cigbutt,
-/turf/open/floor/plating,
-/area/maintenance/department/science/xenobiology)
 "qLf" = (
 /obj/structure/table/wood,
 /obj/item/storage/photo_album/library,
@@ -75150,6 +75180,18 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
+"qSo" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	pixel_y = 26
+	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "qTc" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -75267,6 +75309,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"rlC" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/space)
 "rmY" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -75480,14 +75526,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"rHN" = (
-/obj/machinery/door/airlock/hatch{
-	name = "Test Chamber Maintenance";
-	req_access_txt = "47"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/science/xenobiology)
 "rJm" = (
 /obj/structure/cable,
 /obj/structure/table/glass,
@@ -75621,11 +75659,6 @@
 /obj/effect/turf_decal/loading_area,
 /turf/open/floor/plasteel/dark/corner,
 /area/hallway/primary/starboard)
-"rUU" = (
-/obj/machinery/power/shieldwallgen/xenobiologyaccess,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/science/xenobiology)
 "rVd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 10
@@ -75733,11 +75766,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/warning,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"scq" = (
-/obj/structure/grille/broken,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "scY" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
@@ -76012,6 +76040,13 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/port/aft)
+"sAs" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/disposaloutlet,
+/turf/open/floor/plating/airless,
+/area/space/nearstation)
 "sEG" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -76203,13 +76238,6 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/hallway/secondary/entry)
-"tdh" = (
-/obj/structure/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/structure/disposaloutlet,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "tgQ" = (
 /obj/structure/sink/puddle,
 /obj/structure/flora/junglebush/large{
@@ -76236,6 +76264,14 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/mixing/chamber)
+"tkW" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Test Chamber Maintenance";
+	req_access_txt = "47"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/science/xenobiology)
 "tmp" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/yellow{
@@ -76257,6 +76293,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
+"tmJ" = (
+/obj/effect/spawner/lootdrop/two_percent_xeno_egg_spawner,
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "tpc" = (
 /obj/structure/fans/tiny/invisible,
 /obj/docking_port/stationary{
@@ -76430,10 +76470,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/engine/engineering)
-"tKI" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/space)
 "tNc" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/effect/turf_decal/tile/blue{
@@ -76579,10 +76615,6 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"ueS" = (
-/obj/machinery/light/small,
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "ugf" = (
 /obj/structure/table/optable,
 /obj/effect/turf_decal/tile/blue{
@@ -76775,11 +76807,6 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/dark,
 /area/medical/medbay/central)
-"uKo" = (
-/obj/structure/grille,
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "uLp" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -76866,16 +76893,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
-"uSQ" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/obj/machinery/door/poddoor/preopen{
-	id = "Xenolab";
-	name = "test chamber blast door"
-	},
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/science/xenobiology)
 "uTI" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 8
@@ -76941,17 +76958,11 @@
 	},
 /turf/open/floor/wood,
 /area/maintenance/port/aft)
-"vae" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "Xenobiology Lab - Pen #7";
-	dir = 8;
-	network = list("ss13","rd","xeno")
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
+"uZs" = (
+/obj/structure/grille/broken,
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
 "vaY" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -77007,6 +77018,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"viS" = (
+/obj/structure/grille,
+/obj/structure/lattice,
+/turf/open/space,
+/area/space)
 "vjc" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -77025,14 +77041,6 @@
 /obj/effect/spawner/structure/window/reinforced/tinted,
 /turf/open/floor/plating,
 /area/medical/break_room)
-"vlz" = (
-/obj/machinery/camera{
-	c_tag = "Xenobiology Lab - Test Chamber";
-	dir = 1;
-	network = list("ss13","rd","xeno")
-	},
-/turf/open/floor/engine,
-/area/science/xenobiology)
 "vml" = (
 /obj/machinery/door/window/westleft{
 	name = "monkey pen";
@@ -77422,13 +77430,6 @@
 /obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel,
 /area/security/prison)
-"vWd" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 10
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/science/xenobiology)
 "vWK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/line{
@@ -77908,12 +77909,6 @@
 	},
 /turf/closed/wall,
 /area/medical/sleeper)
-"wUl" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/maintenance/department/science/xenobiology)
 "wVo" = (
 /obj/structure/cable,
 /turf/open/floor/plating{
@@ -78208,6 +78203,10 @@
 /obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/security/checkpoint/customs)
+"xzt" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "xAp" = (
 /obj/structure/chair/comfy,
 /obj/machinery/power/apc/auto_name/north,
@@ -78305,10 +78304,6 @@
 "xVl" = (
 /turf/closed/wall,
 /area/hallway/secondary/service)
-"xVs" = (
-/obj/structure/lattice,
-/turf/open/space,
-/area/space)
 "xVP" = (
 /obj/structure/sign/poster/official/random{
 	pixel_y = -32
@@ -110298,12 +110293,12 @@ aaf
 aaa
 aaf
 aaf
-xVs
+iUB
 lAu
 aaf
 aaf
 aai
-uKo
+viS
 aaa
 aaa
 aaa
@@ -110558,10 +110553,10 @@ aaa
 aaa
 aaa
 lAu
-xVs
+iUB
 lAu
 aag
-uKo
+viS
 aaa
 aaa
 aaa
@@ -110815,10 +110810,10 @@ dlV
 dlV
 dlV
 dlV
-jnY
+fGk
 aaa
 lAu
-scq
+uZs
 aaa
 aaa
 aaa
@@ -111062,7 +111057,7 @@ cSn
 cSn
 cRi
 cTn
-wUl
+hEA
 cTC
 cTC
 cTC
@@ -111071,11 +111066,11 @@ cTC
 cTC
 cTC
 bIx
-kQk
-kIb
+dur
+fgv
 aaf
 aaf
-uKo
+viS
 aaa
 aaa
 aaa
@@ -111319,7 +111314,7 @@ cSn
 cSn
 cRi
 cRi
-hBN
+nlP
 cRi
 cRi
 cRi
@@ -111329,11 +111324,11 @@ cRi
 dlV
 cLE
 cTA
-jnY
+fGk
 aaa
 lAu
 aaf
-uKo
+viS
 aaa
 aaa
 aaa
@@ -111573,24 +111568,24 @@ dbo
 dcU
 cTc
 dcX
-mJN
+mWb
 cRi
 ddk
 cTj
 cTD
-rUU
+dHj
 cRi
 daF
 cSn
-moN
+tmJ
 dlV
 ddz
 dlV
 dlV
 dlV
-jnY
+fGk
 lAu
-scq
+uZs
 aaa
 aaa
 aaa
@@ -111830,13 +111825,13 @@ dbv
 ddh
 cTb
 cST
-oqM
+iyu
 cRi
 cVa
 cTr
 cRY
 daC
-mdi
+pGL
 cSn
 cSn
 cSn
@@ -111845,9 +111840,9 @@ ddz
 dlV
 cZv
 cTp
-kIb
+fgv
 aaf
-uKo
+viS
 aaa
 aaa
 aaa
@@ -112092,7 +112087,7 @@ cSk
 ddl
 cTk
 cTm
-uSQ
+iFM
 daB
 daG
 cSn
@@ -112101,8 +112096,8 @@ dlV
 ddz
 dlV
 cTA
-qJM
-tKI
+nsm
+rlC
 aaa
 aaa
 aaa
@@ -112349,19 +112344,19 @@ cYT
 ddm
 cTt
 daA
-hzJ
+kYy
 cSn
 cSn
 cSn
-ueS
+xzt
 dlV
 ddA
 daS
 cTC
 cTT
 ddC
-tdh
-xVs
+sAs
+iUB
 aaa
 aaa
 aaa
@@ -112607,18 +112602,18 @@ ddn
 cTz
 ddu
 daD
-heb
+mEO
 daH
 cSn
-vlz
+nDN
 dlV
 cTA
 dlV
 cTA
 cTA
-tKI
+rlC
 lAu
-xVs
+iUB
 aaa
 aaa
 aaa
@@ -112860,11 +112855,11 @@ cTe
 dmr
 dcV
 cRi
-njG
+qSo
 cTz
-geP
+fwP
 daC
-mdi
+pGL
 cSn
 cSn
 cSn
@@ -112873,9 +112868,9 @@ cTA
 dlV
 dbw
 cTn
-jnY
+fGk
 lAu
-uKo
+viS
 aaa
 aaa
 aaa
@@ -113115,24 +113110,24 @@ ddf
 dcW
 cTg
 ddb
-enH
+hGk
 cRi
 ddo
 dds
-vWd
-rUU
+hDM
+dHj
 cRi
 daI
 daM
-kps
+gfP
 dlV
 cTA
 dlV
 dlV
 dlV
-kIb
+fgv
 aaf
-uKo
+viS
 aaa
 aaa
 aaa
@@ -113375,7 +113370,7 @@ cSn
 cSg
 cRi
 cRi
-rHN
+tkW
 cRi
 cRi
 cRi
@@ -113384,12 +113379,12 @@ cRi
 cRi
 dlV
 cTA
-kIb
-xVs
+fgv
+iUB
 aaa
 lAu
 aaf
-uKo
+viS
 aaa
 aaa
 aaa
@@ -113641,11 +113636,11 @@ cTA
 cTA
 cTA
 cTn
-kIb
+fgv
 aaf
-xVs
+iUB
 lAu
-scq
+uZs
 aaa
 aaa
 aaa
@@ -113885,7 +113880,7 @@ dbt
 ddg
 dbp
 dbt
-vae
+ikD
 dbp
 cRi
 ddr
@@ -113898,11 +113893,11 @@ dlV
 dlV
 dlV
 dlV
-kIb
-xVs
+fgv
+iUB
 aaa
 lAu
-uKo
+viS
 aaa
 aaa
 aaa
@@ -114154,13 +114149,13 @@ aaf
 aaf
 aaf
 aaf
-xVs
+iUB
 lAu
 aaf
 aaf
 aag
 aag
-xVs
+iUB
 aaa
 aaa
 aaa
@@ -114415,7 +114410,7 @@ aaa
 aaa
 aaa
 lAu
-scq
+uZs
 aaa
 aaa
 aaa
