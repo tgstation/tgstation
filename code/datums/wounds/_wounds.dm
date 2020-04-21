@@ -141,10 +141,17 @@
 
 /// Someone is using something that might be used for treating the wound on this limb
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
-	if(limb.body_zone != user.zone_selected || I.force && user.a_intent != INTENT_HELP)
+	if(limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
 		return FALSE
-	if(!(I.type in treatable_by) && (I.tool_behaviour != treatable_tool) && !(treatable_tool == TOOL_CAUTERY && I.get_temperature() > 300))
-		return FALSE
+
+	if((I.tool_behaviour != treatable_tool) && !(treatable_tool == TOOL_CAUTERY && I.get_temperature() > 300))
+		var/allowed = FALSE
+		for(var/allowed_type in treatable_by)
+			if(istype(I, allowed_type))
+				allowed = TRUE
+				break
+		if(!allowed)
+			return FALSE
 
 	if(INTERACTING_WITH(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")

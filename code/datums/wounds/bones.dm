@@ -152,6 +152,7 @@
 	desc = "Patient's bone has suffered a crack in the foundation, causing serious pain and reduced limb functionality."
 	treat_text = "Recommended light surgical application of bone gel, though splinting will prevent worsening situation."
 	examine_desc = "appears bruised and grotesquely swollen"
+	var/splint_examine_desc = "is fastened in a splint of "
 	occur_text = "sprays chips of bone and develops a nasty looking bruise"
 	severity = WOUND_SEVERITY_SEVERE
 	interaction_efficiency_penalty = 2
@@ -163,20 +164,21 @@
 
 /datum/wound/brute/bone/severe/treat_self(obj/item/I, mob/user)
 	var/splint_check = check_splint_factor(I)
-	if(!splint_check || (splint_check >= splint_factor))
+	if(splint_factor && splint_check >= splint_factor)
 		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
 		return
 	victim.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting your [limb.name] with [I]...</span>")
 	if(do_after(user, base_treat_time * 1.5, target = victim))
 		if(QDELETED(src) || !limb)
 			return
+		examine_desc = splint_examine_desc + I.name
 		victim.visible_message("<span class='notice'>[user] finishes splinting [victim.p_their()] [limb.name]!</span>", "<span class='nicegreen'>You finish splinting your [limb.name]!</span>")
 		splint_factor = splint_check
 		update_inefficiencies()
 
 /datum/wound/brute/bone/severe/treat(obj/item/I, mob/user)
 	var/splint_check = check_splint_factor(I)
-	if(!splint_check || (splint_check >= splint_factor))
+	if(splint_factor && splint_check >= splint_factor)
 		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
 		return
 	user.visible_message("<span class='notice'>[user] begins splinting [victim]'s [limb.name] with [I].</span>", "<span class='notice'>You begin splinting [victim]'s [limb.name] with [I]...</span>", victim)
@@ -184,6 +186,7 @@
 	if(do_after(user, base_treat_time, target = victim))
 		if(QDELETED(src) || !limb)
 			return
+		examine_desc = splint_examine_desc + I.name
 		user.visible_message("<span class='notice'>[user] finishes splinting [victim]'s [limb.name]!</span>", "<span class='nicegreen'>You finish splinting [victim]'s [limb.name]!</span>", victim)
 		to_chat(victim, "<span class='nicegreen'>[user] splints your [limb.name]!</span>")
 		splint_factor = check_splint_factor(I)

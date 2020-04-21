@@ -241,6 +241,24 @@ SUBSYSTEM_DEF(shuttle)
 
 	var/area/A = get_area(user)
 
+	if(iscarbon(user) && security_num != SEC_LEVEL_DELTA)
+		var/mob/living/carbon/comdom = user
+		var/stub_chance = 2
+		var/minutes_into_shift = round((world.time - SSticker.round_start_time) / 60)
+		stub_chance += 40 - minutes_into_shift
+		switch(security_num)
+			if(SEC_LEVEL_GREEN)
+				stub_chance *= 1.5
+			if(SEC_LEVEL_BLUE)
+				stub_chance *= 1.25
+
+		if(prob(stub_chance))
+			var/obj/item/bodypart/leg = comdom.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
+			if(leg)
+				var/datum/wound/brute/stubbed_toe/stub = new
+				comdom.visible_message("<span class='danger'>[comdom] stubs [comdom.p_their()] toe on the communications console, justifying the shuttle call!</span>", "<span class='danger'><b>Ow! You stubbed your toe on the communications console!</b></span>")
+				stub.apply_wound(leg, silent=TRUE)
+
 	log_shuttle("[key_name(user)] has called the emergency shuttle.")
 	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
 	if(call_reason)

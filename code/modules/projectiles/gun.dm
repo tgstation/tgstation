@@ -195,6 +195,11 @@
 				return
 			user.AddComponent(/datum/component/gunpoint, target, src)
 			return
+		if(iscarbon(target) && user.a_intent == INTENT_HELP)
+			var/mob/living/carbon/C = target
+			for(var/datum/wound/W in C.all_wounds)
+				if(istype(W, /datum/wound/brute/stubbed_toe) && W.try_treating(src, user))
+					return // another coward cured!
 
 	if(istype(user))//Check if the user can use the gun, if the user isn't alive(turrets) assume it can.
 		var/mob/living/L = user

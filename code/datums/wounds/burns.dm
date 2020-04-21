@@ -56,7 +56,7 @@
 			return
 		user.visible_message("<span class='green'>[user] applies [I] to [victim].</span>", "<span class='green'>You apply [I] to [victim]'s [limb.name].</span>")
 		I.use(1)
-		limb.heal_damage(burn = 5) // just a lil
+		limb.heal_damage(burn = 3) // just a lil
 
 		sanitization += 4 // make vars for this later
 

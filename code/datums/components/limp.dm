@@ -3,6 +3,7 @@
 	a longer delay than the other. This is handled as a component rather than being inherent in bodypart code so that we're not constantly tracking footsteps if we don't need to
 
 	TODO: handle both legs being crippled
+	still have some edge cases i gotta figure out with removing this while having multiple limps
 */
 
 /datum/component/limp
@@ -58,8 +59,6 @@
 	for(var/thing in right.wounds)
 		var/datum/wound/W = thing
 		slowdown_right += W.limp_slowdown
-
-	testing("Limp slowdowns: [slowdown_left]/[slowdown_right]")
 
 /// Take a step, apply limp cooldown to our move delay if that leg is gimped
 /datum/component/limp/proc/check_limp(mob/living/carbon/owner)
