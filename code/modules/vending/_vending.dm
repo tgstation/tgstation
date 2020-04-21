@@ -819,6 +819,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 				var/datum/bank_account/D = SSeconomy.get_dep_account(payment_department)
 				if(D)
 					D.adjust_money(price_to_use)
+					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
 				say("Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS
@@ -1050,6 +1051,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 						var/datum/bank_account/owner = private_a
 						if(owner)
 							owner.adjust_money(S.custom_price)
+							SSblackbox.record_feedback("amount", "vending_spent", S.custom_price)
 						vending_machine_input[N] = max(vending_machine_input[N] - 1, 0)
 						S.forceMove(drop_location())
 						loaded_items--

@@ -43,6 +43,7 @@
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
 	if(from.has_money(amount))
 		adjust_money(amount)
+		SSblackbox.record_feedback("amount", "credits_transferred", amount)
 		from.adjust_money(-amount)
 		return TRUE
 	return FALSE
@@ -51,6 +52,7 @@
 	var/money_to_transfer = account_job.paycheck * amt_of_paychecks
 	if(free)
 		adjust_money(money_to_transfer)
+		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)

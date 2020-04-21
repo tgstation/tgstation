@@ -141,3 +141,4 @@
 			B = new /obj/item/storage/bag/money(src)
 			unload_mineral(B)
 		O.forceMove(B)
+		SSblackbox.record_feedback("amount", "coins_minted", 1)
