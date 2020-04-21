@@ -294,8 +294,51 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 		if(M.client)
 			speech_bubble_recipients.Add(M.client)
 	var/image/I = image('icons/mob/talk.dmi', src, "[bubble_type][say_test(message)]", FLY_LAYER)
-	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	INVOKE_ASYNC(GLOBAL_PROC, /.proc/show_speech_text, message, message_language, src, speech_bubble_recipients, 40)
 	INVOKE_ASYNC(GLOBAL_PROC, /.proc/flick_overlay, I, speech_bubble_recipients, 30)
+
+/proc/show_speech_text(message, message_language, mob/living/L, var/list/show_to, duration)
+	if(!istype(L))
+		return
+
+	message = copytext(message, 1, 160) // no super long messages
+
+	var/image/speech_text/S = new // create invisible object, bind it to speaking mob
+	S.loc = L
+	S.layer = FLY_LAYER
+
+	if(L.name != L.last_heard_name) // generate color based on name, skip if already generated
+		var/num = hex2num(copytext(md5(L.name), 1, 7))
+		L.last_used_color = hsv2rgb(num % 360, (num / 360) % 10 / 100 + 0.18, num / 360 / 10 % 15 / 100 + 0.85)
+		L.last_heard_name = L.name
+
+	S.maptext = "<span class='pixel c ol' style='color: [L.last_used_color]'>[message]</span>"
+	S.pixel_x = -1.5 * L.bound_width
+	S.pixel_y = L.bound_height
+
+	for(var/client/C in show_to)
+		if(C.prefs.runescapechat && C.mob.can_hear() && C.mob.has_language(message_language))
+			C.images += S
+
+	L.chattext.chats += S
+	for(var/image/I in L.chattext.chats)
+		if(I != S)
+			var/client/who = null // we need a client to run MeasureText, don't ask me why
+			if(length(GLOB.clients))
+				who = GLOB.clients[1]
+				var/new_y = I.pixel_y + text2num(splittext(who.MeasureText(S.maptext, width = S.maptext_width), "x")[2])
+				animate(I, pixel_y = new_y, time=2)
+
+	animate(S, alpha = 255, time=1)
+	spawn(duration)
+		var/new_y = S.pixel_y + 10
+		animate(S, alpha = 0, pixel_y = new_y, time = 4)
+		spawn(4)
+			for(var/client/C in show_to)
+				if(C.prefs.runescapechat && C.mob.can_hear() && C.mob.has_language(message_language))
+					C.images -= S
+			L.chattext.chats -= S
+			qdel(S)
 
 /mob/proc/binarycheck()
 	return FALSE

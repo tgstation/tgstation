@@ -136,3 +136,18 @@
 	var/icon/held_rh = 'icons/mob/pets_held_rh.dmi'
 	var/icon/head_icon = 'icons/mob/pets_held.dmi'//what it looks like on your head
 	var/held_state = ""//icon state for the above
+
+	// Vars used for Runescape-Style Chat
+	/// Stores the current visible chats
+	var/obj/chattext/chattext = new
+	/// Stores the last name heard
+	var/last_heard_name = null
+	/// Stores the last used color
+	var/last_used_color = null
+
+/obj/chattext
+	var/list/chats = list()
+
+/image/speech_text
+	maptext_width = (32 * 4)
+	alpha = 0

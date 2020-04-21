@@ -146,6 +146,7 @@ window "mapwindow"
 		is-default = true
 		saved-params = "icon-size"
 		zoom-mode = distort
+	style = "body { font-family: 'Verdana'; font-size: 7px; }\n.vga { font-family: 'PxPlus IBM VGA9'; font-size: 12px; } .ps2p { font-family: 'Press Start 2P'; font-size: 6px; }\n.pixel { font-family: 'Small Fonts'; font-size: 7px; }\n.ol{ -dm-text-outline: 1px black; }\n.sh { text-shadow: 1px 1px 0 black; }\n.l { text-align: left; }\n.c { text-align: center; }\n.r { text-align: right; }\n.vt { vertical-align: top; }\n.vm { vertical-align: middle; }\n.vb { vertical-align: bottom; }\n.reliq { font-family: 'Inhuman BB'; font-size: 12px; }"
 
 window "infowindow"
 	elem "infowindow"

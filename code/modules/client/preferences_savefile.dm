@@ -5,7 +5,7 @@
 //	You do not need to raise this if you are adding new values that have sane defaults.
 //	Only raise this value when changing the meaning/format/name/layout of an existing value
 //	where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX	33
+#define SAVEFILE_VERSION_MAX	34
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -55,6 +55,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	if(current_version < 33)
 		toggles |= SOUND_ENDOFROUND
+
+	if(current_version < 34)
+		runescapechat = TRUE
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 19)
@@ -164,6 +167,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
+	S["runescapechat"]		>> runescapechat
 	S["hotkeys"]			>> hotkeys
 	S["tgui_fancy"]			>> tgui_fancy
 	S["tgui_lock"]			>> tgui_lock
@@ -247,6 +251,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["ooccolor"], ooccolor)
 	WRITE_FILE(S["lastchangelog"], lastchangelog)
 	WRITE_FILE(S["UI_style"], UI_style)
+	WRITE_FILE(S["runescapechat"], runescapechat)
 	WRITE_FILE(S["hotkeys"], hotkeys)
 	WRITE_FILE(S["tgui_fancy"], tgui_fancy)
 	WRITE_FILE(S["tgui_lock"], tgui_lock)
