@@ -46,37 +46,52 @@
 	if(randomise[RANDOM_NAME])
 		real_name = pref_species.random_name(gender,1)
 
-/datum/preferences/proc/hardcore_random_setup()
+///Setup a hardcore random character and calculate their hardcore random score
+/datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character, antagonist)
+	random_character(TRUE, antagonist)
+	select_hardcore_quirks()
+	hardcore_survival_score = hardcore_survival_score ** 1.2 //30 points would be about 60 score
+	character.hardcore_survival_score = hardcore_survival_score
 
-/datum/preferences/proc/random_quirks()
-	var/list/available_quirks = SSquirks.quirks
-	for(var/V in SSquirks.quirks)
-			var/datum/quirk/T = SSquirks.quirks[V]
-			var/quirk_name = initial(T.name)
-			var/has_quirk
-			var/quirk_cost = initial(T.value) * -1
-			var/lock_reason = "This trait is unavailable."
-			var/quirk_conflict = FALSE
-			for(var/_V in all_quirks)
-				if(_V == quirk_name)
-					has_quirk = TRUE
-			if(initial(T.mood_quirk) && CONFIG_GET(flag/disable_human_mood))
-				lock_reason = "Mood is disabled."
-				quirk_conflict = TRUE
-			if(has_quirk)
-				if(quirk_conflict)
-					all_quirks -= quirk_name
-					has_quirk = FALSE
-				else
-					quirk_cost *= -1 //invert it back, since we'd be regaining this amount
-			if(quirk_cost > 0)
-				quirk_cost = "+[quirk_cost]"
-			var/font_color = "#AAAAFF"
-			if(initial(T.value) != 0)
-				font_color = initial(T.value) > 0 ? "#AAFFAA" : "#FFAAAA"
-			if(quirk_conflict)
-				dat += "<font color='[font_color]'>[quirk_name]</font> - [initial(T.desc)] \
-				<font color='red'><b>LOCKED: [lock_reason]</b></font><br>"
+///Go through all quirks that can be used in hardcore mode and select some based on a random budget.
+/datum/preferences/proc/select_hardcore_quirks()
+
+	var/quirk_budget = rand(8, 30)
+
+
+	all_quirks = list() //empty it out
+
+	var/list/available_hardcore_quirks = SSquirks.hardcore_quirks.Copy()
+
+	while(quirk_budget > 0)
+		for(var/i in available_hardcore_quirks) //Remove from available quirks if its too expensive.
+			var/datum/quirk/T = i
+			if(available_hardcore_quirks[T] > quirk_budget)
+				available_hardcore_quirks -= T
+
+		var/datum/quirk/T = pick(available_hardcore_quirks)
+
+		for(var/V in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted. V is a list
+			var/list/L = V
+			for(var/Q in all_quirks)
+				if((T in L) && (Q in L) && !(Q == T)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+					available_hardcore_quirks -= T
+					continue
+
+		for(var/_V in all_quirks)//Check for dupes
+			if(_V == T)
+				available_hardcore_quirks -= T
+				continue
+
+		if(initial(T.mood_quirk) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
+			available_hardcore_quirks -= T
+			continue
+
+		all_quirks += initial(T.name)
+		message_admins("this dude got [initial(T.name)] quirk")
+		quirk_budget -= available_hardcore_quirks[T]
+		hardcore_survival_score += available_hardcore_quirks[T]
+		available_hardcore_quirks -= T
 
 /datum/preferences/proc/update_preview_icon()
 	// Determine what job is marked as 'High' priority, and dress them up as such.

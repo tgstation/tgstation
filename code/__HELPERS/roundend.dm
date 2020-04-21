@@ -198,6 +198,12 @@
 		C.playtitlemusic(40)
 		if(speed_round)
 			C.give_award(/datum/award/achievement/misc/speed_round, C.mob)
+		if(!ishuman(C.mob))
+			continue
+		var/mob/living/carbon/human/H = C.mob
+		if(!H.hardcore_survival_score || !H.onCentCom()) ///gotta escape nerd
+			continue
+		C.give_award(/datum/award/score/hardcore_random, H, round(H.hardcore_survival_score))
 
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
@@ -279,6 +285,8 @@
 
 	//Antagonists
 	parts += antag_report()
+
+	parts += hardcore_random_report()
 
 	CHECK_TICK
 	//Medals
@@ -434,6 +442,21 @@
 			parts += com
 		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
 	return ""
+
+///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
+/datum/controller/subsystem/ticker/proc/hardcore_random_report()
+	var/list/parts = list()
+	parts += "<span class='header'>The following people made it out as a random hardcore character:</span>"
+	parts += "<ul class='playerlist'>"
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
+		if(!H.hardcore_survival_score || !H.onCentCom()) ///gotta escape nerd
+			continue
+		if(!H.mind)
+			continue
+		parts += "<li>[printplayer(H.mind)] with a hardcore random score of [round(H.hardcore_survival_score)]</li>"
+	parts += "</ul>"
+	return parts
 
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()
