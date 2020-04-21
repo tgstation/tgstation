@@ -337,7 +337,7 @@
 /obj/effect/mob_spawn/human/doctor
 	name = "Doctor"
 	outfit = /datum/outfit/job/doctor
-	icon_state = "corpsedoctorjohnson"
+	icon_state = "corpsedoctor"
 
 
 /obj/effect/mob_spawn/human/doctor/alive
@@ -374,12 +374,12 @@
 /obj/effect/mob_spawn/human/scientist
 	name = "Scientist"
 	outfit = /datum/outfit/job/scientist
-	icon_state = "corpsescienceman"
+	icon_state = "corpsescientist"
 
 /obj/effect/mob_spawn/human/miner
 	name = "Shaft Miner"
 	outfit = /datum/outfit/job/miner
-	icon_state = "corpsepowergamingminer"
+	icon_state = "corpseminer"
 
 /obj/effect/mob_spawn/human/miner/rig
 	outfit = /datum/outfit/job/miner/equipped/hardsuit
