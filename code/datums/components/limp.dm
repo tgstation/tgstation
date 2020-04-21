@@ -63,12 +63,15 @@
 
 /// Take a step, apply limp cooldown to our move delay if that leg is gimped
 /datum/component/limp/proc/check_limp(mob/living/carbon/owner)
-	if(!owner.client || (owner.mobility_flags & ~MOBILITY_STAND))
+	if(!owner.client || !(owner.mobility_flags & MOBILITY_STAND))
 		return
+	var/determined_mod = 1
+	if(owner.has_status_effect(/datum/status_effect/determined))
+		determined_mod = 0.25
 	if(next_leg == left)
-		owner.client.move_delay += slowdown_left
+		owner.client.move_delay += slowdown_left * determined_mod
 		next_leg = right
 	else
-		owner.client.move_delay += slowdown_right
+		owner.client.move_delay += slowdown_right * determined_mod
 		next_leg = left
 

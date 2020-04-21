@@ -112,13 +112,13 @@
 		LAZYREMOVE(limb.wounds, src)
 		limb = null
 
+/// When you want to swap out one wound for another (typically a promotion or demotion in the same type)
 /datum/wound/proc/replace_wound(new_type, special_arg)
 	var/datum/wound/new_wound = new new_type
 	var/obj/item/bodypart/temp_limb = limb // since we're about to null it
 	remove_wound()
 	new_wound.apply_wound(temp_limb, silent = TRUE, old_wound = src)
 	qdel(src)
-
 
 /// The immediate negative effects faced as a result of the wound
 /datum/wound/proc/wound_injury()
@@ -135,13 +135,13 @@
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_CRITICAL)
 
 
-/// Someone is using something that might be used for treating the wound on this limb
+/// Someone is using their hands on us, we can check to see if we want to let them treat us by hand
 /datum/wound/proc/try_handling(mob/living/carbon/human/user)
 	return FALSE
 
 /// Someone is using something that might be used for treating the wound on this limb
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
-	if(limb.body_zone != user.zone_selected)
+	if(limb.body_zone != user.zone_selected || I.force && user.a_intent != INTENT_HELP)
 		return FALSE
 	if(!(I.type in treatable_by) && (I.tool_behaviour != treatable_tool) && !(treatable_tool == TOOL_CAUTERY && I.get_temperature() > 300))
 		return FALSE

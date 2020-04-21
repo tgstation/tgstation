@@ -57,7 +57,7 @@
 	occur_text = "jerks violently and becomes unseated"
 	severity = WOUND_SEVERITY_MODERATE
 	interaction_efficiency_penalty = 1.5
-	limp_slowdown = 4
+	limp_slowdown = 3
 	threshold_minimum = 35
 	threshold_penalty = 15
 	treatable_tool = TOOL_BONESET
@@ -74,12 +74,12 @@
 		user.visible_message("<span class='danger'>[user] begins twisting and straining [victim]'s dislocated [limb.name]!</span>", "<span class='notice'>You begin twisting and straining [victim]'s dislocated [limb.name]...</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] begins twisting and straining your dislocated [limb.name]!</span>")
 		if(user.a_intent == INTENT_HELP)
-			chiropract(user)
+			chiropractice(user)
 		else
 			malpractice(user)
 		return TRUE
 
-/datum/wound/brute/bone/moderate/proc/chiropract(mob/living/carbon/human/user)
+/datum/wound/brute/bone/moderate/proc/chiropractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
 	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_PROBS_MODIFIER)
@@ -99,7 +99,7 @@
 			user.visible_message("<span class='danger'>[user] wrenches [victim]'s dislocated [limb.name] around painfully!</span>", "<span class='danger'>You wrench [victim]'s dislocated [limb.name] around painfully!</span>", ignored_mobs=victim)
 			to_chat(victim, "<span class='userdanger'>[user] wrenches your dislocated [limb.name] around painfully!</span>")
 			limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
-			chiropract(user)
+			chiropractice(user)
 
 /datum/wound/brute/bone/moderate/proc/malpractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
@@ -155,29 +155,30 @@
 	occur_text = "sprays chips of bone and develops a nasty looking bruise"
 	severity = WOUND_SEVERITY_SEVERE
 	interaction_efficiency_penalty = 2
-	limp_slowdown = 7
+	limp_slowdown = 6
 	threshold_minimum = 55
 	threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
 
 
-/datum/wound/brute/bone/severe/try_treating(obj/item/I, mob/user)
+/datum/wound/brute/bone/severe/treat_self(obj/item/I, mob/user)
 	var/splint_check = check_splint_factor(I)
 	if(!splint_check || (splint_check >= splint_factor))
 		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
-		return TRUE
-	return ..()
-
-/datum/wound/brute/bone/severe/treat_self(obj/item/I, mob/user)
+		return
 	victim.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting your [limb.name] with [I]...</span>")
 	if(do_after(user, base_treat_time * 1.5, target = victim))
 		if(QDELETED(src) || !limb)
 			return
 		victim.visible_message("<span class='notice'>[user] finishes splinting [victim.p_their()] [limb.name]!</span>", "<span class='nicegreen'>You finish splinting your [limb.name]!</span>")
-		splint_factor = check_splint_factor(I)
+		splint_factor = splint_check
 		update_inefficiencies()
 
 /datum/wound/brute/bone/severe/treat(obj/item/I, mob/user)
+	var/splint_check = check_splint_factor(I)
+	if(!splint_check || (splint_check >= splint_factor))
+		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
+		return
 	user.visible_message("<span class='notice'>[user] begins splinting [victim]'s [limb.name] with [I].</span>", "<span class='notice'>You begin splinting [victim]'s [limb.name] with [I]...</span>", victim)
 	to_chat(victim, "<span class='notice'>[user] begins splinting your [limb.name] with [I].</span>")
 	if(do_after(user, base_treat_time, target = victim))
@@ -196,7 +197,7 @@
 	occur_text = "cracks apart, exposing broken bones to open air"
 	severity = WOUND_SEVERITY_CRITICAL
 	interaction_efficiency_penalty = 4
-	limp_slowdown = 12
+	limp_slowdown = 9
 	sound_effect = 'sound/effects/crack2.ogg'
 	threshold_minimum = 110
 	threshold_penalty = 50
