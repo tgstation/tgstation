@@ -4,7 +4,7 @@
  */
 
 /* eslint-disable */
-;(function(window, document) {
+(function(window, document) {
 /*jshint evil:true */
   /** version */
   var version = '3.7.3';
@@ -326,4 +326,4 @@
     module.exports = html5;
   }
 
-}(typeof window !== "undefined" ? window : this, document));
+}(window, document));

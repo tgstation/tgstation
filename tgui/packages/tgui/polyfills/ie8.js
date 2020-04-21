@@ -832,4 +832,4 @@
       this._start = node;
     };
   }());
-}(this.window || global));
+}(window));

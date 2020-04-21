@@ -41,6 +41,13 @@ const deserializeObject = str => {
       if (value.__number__) {
         return parseFloat(value.__number__);
       }
+      if (value.__undefined__) {
+        // NOTE: You should not rely on deserialized object's undefined,
+        // this is purely for inspection purposes.
+        return {
+          [inspect.custom]: () => undefined,
+        };
+      }
       return value;
     }
     return value;

@@ -1,10 +1,9 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Grid, Box, Input, NoticeBox, Table, NumberInput } from '../components';
+import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
-export const LaunchpadButtonPad = props => {
-  const { act } = useBackend(props);
-
+const LaunchpadButtonPad = (props, context) => {
+  const { act } = useBackend(context);
   return (
     <Grid width="1px">
       <Grid.Column>
@@ -89,17 +88,15 @@ export const LaunchpadButtonPad = props => {
   );
 };
 
-export const LaunchpadControl = props => {
+export const LaunchpadControl = (props, context) => {
   const { topLevel } = props;
-  const { act, data } = useBackend(props);
-
+  const { act, data } = useBackend(context);
   const {
     x,
     y,
     pad_name,
     range,
   } = data;
-
   return (
     <Section
       title={(
@@ -108,8 +105,7 @@ export const LaunchpadControl = props => {
           width="170px"
           onChange={(e, value) => act('rename', {
             name: value,
-          })}
-        />
+          })} />
       )}
       level={topLevel ? 1 : 2}
       buttons={(
@@ -122,7 +118,7 @@ export const LaunchpadControl = props => {
       <Grid>
         <Grid.Column>
           <Section title="Controls" level={2}>
-            <LaunchpadButtonPad state={props.state} />
+            <LaunchpadButtonPad />
           </Section>
         </Grid.Column>
         <Grid.Column>
@@ -146,8 +142,7 @@ export const LaunchpadControl = props => {
                   stepPixelSize={10}
                   onChange={(e, value) => act('set_pos', {
                     x: value,
-                  })}
-                />
+                  })} />
               </Box>
               <Box>
                 <Box
@@ -167,8 +162,7 @@ export const LaunchpadControl = props => {
                   height="30px"
                   onChange={(e, value) => act('set_pos', {
                     y: value,
-                  })}
-                />
+                  })} />
               </Box>
             </Box>
           </Section>
@@ -196,83 +190,52 @@ export const LaunchpadControl = props => {
   );
 };
 
-export const LaunchpadRemote = props => {
-  const { data } = useBackend(props);
-
-  const {
-    has_pad,
-    pad_closed,
-  } = data;
-
-  if (!has_pad) {
-    return (
-      <NoticeBox>
-        No Launchpad Connected
-      </NoticeBox>
-    );
-  }
-
-  if (pad_closed) {
-    return (
-      <NoticeBox>
-        Launchpad Closed
-      </NoticeBox>
-    );
-  }
-
-  return (
-    <LaunchpadControl topLevel state={props.state} />
-  );
-};
-
-export const LaunchpadConsole = props => {
-  const { act, data } = useBackend(props);
-
+export const LaunchpadConsole = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     launchpads = [],
     selected_id,
   } = data;
-
-  if (launchpads.length <= 0) {
-    return (
-      <NoticeBox>
-        No Pads Connected
-      </NoticeBox>
-    );
-  }
-
   return (
-    <Section>
-      <Grid>
-        <Grid.Column size={0.6}>
-          <Box
-            style={{
-              'border-right': '2px solid rgba(255, 255, 255, 0.1)',
-            }}
-            minHeight="190px"
-            mr={1}>
-            {launchpads.map(launchpad => (
-              <Button
-                fluid
-                key={launchpad.name}
-                content={launchpad.name}
-                selected={selected_id === launchpad.id}
-                color="transparent"
-                onClick={() => act('select_pad', { id: launchpad.id })}
-              />
-            ))}
-          </Box>
-        </Grid.Column>
-        <Grid.Column>
-          {selected_id ? (
-            <LaunchpadControl state={props.state} />
-          ) : (
-            <Box>
-              Please select a pad
-            </Box>
-          )}
-        </Grid.Column>
-      </Grid>
-    </Section>
+    <Window resizable>
+      <Window.Content scrollable>
+        {launchpads.length === 0 && (
+          <NoticeBox>
+            No Pads Connected
+          </NoticeBox>
+        ) || (
+          <Section>
+            <Flex minHeight="190px">
+              <Flex.Item width="140px" minHeight="190px">
+                {launchpads.map(launchpad => (
+                  <Button
+                    fluid
+                    ellipsis
+                    key={launchpad.name}
+                    content={launchpad.name}
+                    selected={selected_id === launchpad.id}
+                    color="transparent"
+                    onClick={() => act('select_pad', {
+                      id: launchpad.id,
+                    })} />
+                ))}
+              </Flex.Item>
+              <Flex.Item minHeight="100%">
+                <Divider vertical />
+              </Flex.Item>
+              <Flex.Item grow={1} basis={0} minHeight="100%">
+                {selected_id && (
+                  <LaunchpadControl />
+                ) || (
+                  <Box>
+                    Please select a pad
+                  </Box>
+                )}
+              </Flex.Item>
+            </Flex>
+          </Section>
+        )}
+      </Window.Content>
+    </Window>
   );
 };
