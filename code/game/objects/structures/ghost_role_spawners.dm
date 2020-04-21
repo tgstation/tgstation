@@ -647,6 +647,7 @@
 	name = "Syndicate Ship Crew Member"
 	roundstart = FALSE
 	death = FALSE
+	show_flavour = FALSE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	short_desc = "You are a syndicate operative on old ship, stuck in hostile space."
@@ -655,35 +656,28 @@
 	outfit = /datum/outfit/syndicatespace/syndicrew
 	assignedrole = "Cybersun Crewmember"
 
-/obj/effect/mob_spawn/human/syndicatespace/Initialize(mapload)
-	. = ..()
-	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
-	if(policy)
-		important_info = policy
-
 /datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
+	if(policy)
+		to_chat(new_spawn, "<span class='warning'>[policy]</span>")
 
 /obj/effect/mob_spawn/human/syndicatespace/captain
 	name = "Syndicate Ship Captain"
-	roundstart = FALSE
-	death = FALSE
-	icon = 'icons/obj/machines/sleeper.dmi'
-	icon_state = "sleeper_s"
 	short_desc = "You are the captain of an old ship, stuck in hostile space."
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Command your crew and turn your ship into the most protected fortress."
-	important_info = "Protect the ship and secret documents in your backpack with your own life. DO NOT let the ship fall into enemy hands."
+	important_info = "Protect the ship and secret documents in your backpack with your own life."
 	outfit = /datum/outfit/syndicatespace/syndicaptain
 	assignedrole = "Cybersun Captain"
 
-/obj/effect/mob_spawn/human/syndicatespace/syndicaptain/Initialize(mapload)
-	. = ..()
+/obj/effect/mob_spawn/human/syndicatespace/captain/special(mob/living/new_spawn)
+	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN_CAPTAIN)
 	if(policy)
-		important_info = policy
+		to_chat(new_spawn, "<span class='warning'>[policy]</span>")
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
