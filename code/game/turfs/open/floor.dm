@@ -256,9 +256,9 @@
 
 			A.electronics = new/obj/item/electronics/airlock(A)
 
-			if(the_rcd.conf_access)
-				A.electronics.accesses = the_rcd.conf_access.Copy()
-			A.electronics.one_access = the_rcd.use_one_access
+			if(the_rcd.accesses)
+				A.electronics.accesses = the_rcd.accesses.Copy()
+			A.electronics.one_access = the_rcd.one_access
 
 			if(A.electronics.one_access)
 				A.req_one_access = A.electronics.accesses
