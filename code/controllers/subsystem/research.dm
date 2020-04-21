@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(research)
 	priority = FIRE_PRIORITY_RESEARCH
 	wait = 10
 	init_order = INIT_ORDER_RESEARCH
-	wait_for_explosions = TRUE
 	//TECHWEB STATIC
 	var/list/techweb_nodes = list()				//associative id = node datum
 	var/list/techweb_designs = list()			//associative id = node datum

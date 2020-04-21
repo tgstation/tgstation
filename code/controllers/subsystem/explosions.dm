@@ -8,7 +8,6 @@ SUBSYSTEM_DEF(explosions)
 	wait = 1
 	flags = SS_TICKER|SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-	wait_for_explosions = FALSE
 
 
 	var/cost_lowturf = 0

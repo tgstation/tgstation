@@ -2,7 +2,6 @@ SUBSYSTEM_DEF(sun)
 	name = "Sun"
 	wait = 1 MINUTES
 	flags = SS_NO_TICK_CHECK
-	wait_for_explosions = TRUE
 
 	var/azimuth = 0 ///clockwise, top-down rotation from 0 (north) to 359
 	var/azimuth_mod = 1 ///multiplier against base_rotation

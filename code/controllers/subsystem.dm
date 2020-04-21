@@ -83,9 +83,6 @@
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
 
-	// Does this subsystem process while explosions are going?
-	var/wait_for_explosions = FALSE
-
 
 //Do not override
 ///datum/controller/subsystem/New()
@@ -101,11 +98,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	set waitfor = 0
 	. = SS_SLEEPING
-	if(!wait_for_explosions)
-		fire(resumed)
-	else
-		if(!SSexplosions.is_exploding())
-			fire(resumed)
+	fire(resumed)
 	. = state
 	if (state == SS_SLEEPING)
 		state = SS_IDLE

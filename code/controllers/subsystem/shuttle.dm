@@ -6,7 +6,6 @@ SUBSYSTEM_DEF(shuttle)
 	init_order = INIT_ORDER_SHUTTLE
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK
 	runlevels = RUNLEVEL_SETUP | RUNLEVEL_GAME
-	wait_for_explosions = TRUE
 
 	var/list/mobile = list()
 	var/list/stationary = list()
