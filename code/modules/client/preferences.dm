@@ -94,7 +94,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-	var/clientfps = 60 // it is 2020
+	var/clientfps = 0 // it is 2020
+	var/client_fps_new = "Smooth(40 FPS)"
 
 	var/parallax
 
@@ -559,7 +560,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Income Updates:</b> <a href='?_src_=prefs;preference=income_pings'>[(chat_toggles & CHAT_BANKCARD) ? "Allowed" : "Muted"]</a><br>"
 			dat += "<br>"
 
-			dat += "<b>Framerate:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[clientfps]</a><br>"
+			dat += "<b>Framerate:</b> <a href='?_src_=prefs;preference=clientfps;task=input'>[client_fps_new]</a><br>"
 
 			dat += "<b>Parallax (Fancy Space):</b> <a href='?_src_=prefs;preference=parallaxdown' oncontextmenu='window.location.href=\"?_src_=prefs;preference=parallaxup\";return false;'>"
 			switch (parallax)
@@ -1487,7 +1488,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 							if("Classic(10 FPS)")
 								parent.fps = 10
 								parent.tick_lag = CLIENTSIDE_TICK_LAG_CLASSIC
-						clientfps = desiredfps
+						client_fps_new = desiredfps
 				if("ui")
 					var/pickedui = input(user, "Choose your UI style.", "Character Preference", UI_style)  as null|anything in sortList(GLOB.available_ui_styles)
 					if(pickedui)

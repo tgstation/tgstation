@@ -251,7 +251,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		GLOB.preferences_datums[ckey] = prefs
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
-	switch(prefs.clientfps)
+	switch(prefs.client_fps_new)
 		if("Silky(125 FPS)")
 			fps = 125
 			tick_lag = CLIENTSIDE_TICK_LAG_SILKY
