@@ -518,7 +518,7 @@
 /obj/machinery/hydroponics/proc/pollinate(var/range = 1)
 	for(var/obj/machinery/hydroponics/T in oview(src, range))
 		//Here is where we check for window blocking.
-		if(!Adjacent(T))
+		if(!Adjacent(T) && range <= 1)
 			continue
 		if(T.myseed && !T.dead)
 			T.myseed.potency =  round(clamp((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency)),0,100))
@@ -613,13 +613,14 @@
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
 				H.adjustWater(round(reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/(trays.len)))
-			else
-				reagent_source.reagents.trans_to(H.reagents, split, transfered_by = user)
+				reagent_source.reagents.remove_reagent(/datum/reagent/water, reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/(trays.len))
+			reagent_source.reagents.trans_to(H.reagents, split, transfered_by = user)
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				lastuser = user
+				H.update_icon()
+				return 1
 			H.update_icon()
-		reagent_source.reagents.remove_reagent(/datum/reagent/water, reagent_source.reagents.get_reagent_amount(/datum/reagent/water))
 		if(reagent_source) // If the source wasn't composted and destroyed
 			reagent_source.update_icon()
 		return 1
