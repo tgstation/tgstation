@@ -59,7 +59,8 @@
 
 /datum/reagent/toxin/mutagen/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
 	mytray.mutation_roll(user)
-	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustToxic(3) //It is still toxic, mind you, but not to the same degree.
 
 #define	LIQUID_PLASMA_BP (50+T0C)
 
