@@ -881,12 +881,11 @@
 	illustration = null
 	resistance_flags = FLAMMABLE
 	foldable = null
-	var/design = "None"
-	var/list/papersack_icons = list()
+	var/list/papersack_designs = list()
 
 /obj/item/storage/box/papersack/Initialize(mapload)
 	. = ..()
-	papersack_icons = sortList(list(
+	papersack_designs = sortList(list(
 		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
 		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
 		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),
@@ -902,10 +901,10 @@
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
-		var/choice = show_radial_menu(user, src , papersack_icons, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, .proc/check_menu, user, W), radius = 36, require_near = TRUE)
 		if(!choice)
 			return FALSE
-		if(design == choice)
+		if(icon_state == "paperbag_[choice]")
 			return FALSE
 		switch(choice)
 			if("None")
@@ -921,7 +920,6 @@
 			else
 				return FALSE
 		to_chat(user, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
-		design = choice
 		icon_state = "paperbag_[choice]"
 		item_state = "paperbag_[choice]"
 		return FALSE
@@ -946,7 +944,7 @@
   * * user The mob interacting with a menu
   * * P The pen used to interact with a menu
   */
-/obj/item/storage/box/papersack/proc/check_menu(mob/user, /obj/item/pen/P)
+/obj/item/storage/box/papersack/proc/check_menu(mob/user, obj/item/pen/P)
 	if(!istype(user))
 		return FALSE
 	if(user.incapacitated())
