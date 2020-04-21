@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(augury)
 	name = "Augury"
 	flags = SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait_for_explosions = TRUE
 
 	var/list/watchers = list()
 	var/list/doombringers = list()

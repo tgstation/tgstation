@@ -2,6 +2,7 @@ SUBSYSTEM_DEF(nightshift)
 	name = "Night Shift"
 	wait = 600
 	flags = SS_NO_TICK_CHECK
+	wait_for_explosions = TRUE
 
 	var/nightshift_active = FALSE
 	var/nightshift_start_time = 702000		//7:30 PM, station time
@@ -35,7 +36,7 @@ SUBSYSTEM_DEF(nightshift)
 			if(!emergency)
 				announce("Restoring night lighting configuration to normal operation.")
 			else
-				announce("Disabling night lighting: Station is in a state of emergency.")  
+				announce("Disabling night lighting: Station is in a state of emergency.")
 	if(emergency)
 		night_time = FALSE
 	if(nightshift_active != night_time)

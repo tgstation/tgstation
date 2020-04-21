@@ -5,6 +5,7 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	stat_tag = "NET"
 	flags = SS_KEEP_TIMING
 	init_order = INIT_ORDER_NETWORKS
+	wait_for_explosions = TRUE
 	var/datum/ntnet/station/station_network
 	var/assignment_hardware_id = HID_RESTRICTED_END
 	var/list/networks_by_id = list()				//id = network

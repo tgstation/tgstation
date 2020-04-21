@@ -3,6 +3,7 @@ SUBSYSTEM_DEF(npcpool)
 	flags = SS_POST_FIRE_TIMING|SS_NO_INIT|SS_BACKGROUND
 	priority = FIRE_PRIORITY_NPC
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
+	wait_for_explosions = TRUE // experimental, remove if AI locks up too much
 
 	var/list/currentrun = list()
 

@@ -211,7 +211,7 @@
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.machine_stat = 0
-	pump.build_network()
+	SSair.add_to_rebuild_queue(pump)
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
 	qdel(pump)

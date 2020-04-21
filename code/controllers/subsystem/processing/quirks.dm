@@ -8,6 +8,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	flags = SS_BACKGROUND
 	wait = 10
 	runlevels = RUNLEVEL_GAME
+	wait_for_explosions = TRUE
 
 	var/list/quirks = list()		//Assoc. list of all roundstart quirk datum types; "name" = /path/
 	var/list/quirk_points = list()	//Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
