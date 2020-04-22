@@ -108,12 +108,12 @@
 	key_third_person = "winks"
 	message = "winks."
 
-/datum/emote/living/circle/carbon
+/datum/emote/living/carbon/circle
 	key = "circle"
 	key_third_person = "circles"
 	restraint_check = TRUE
 
-/datum/emote/living/circle/carbon/run_emote(mob/user, params, type_override, intentional)
+/datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
 	var/obj/item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
