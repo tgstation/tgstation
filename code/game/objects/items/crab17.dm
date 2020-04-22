@@ -20,6 +20,12 @@
 		var/turf/targetturf = get_safe_random_station_turf()
 		if (!targetturf)
 			return FALSE
+		var/list/accounts_to_rob = SSeconomy.bank_accounts.Copy()
+		var/mob/living/carbon/human/H = user
+		accounts_to_rob -= H.get_bank_account()
+		for(var/i in accounts_to_rob)
+			var/datum/bank_account/B = i
+			B.being_dumped = TRUE
 		new /obj/effect/dumpeetTarget(targetturf, user)
 		dumped = TRUE
 
