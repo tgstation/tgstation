@@ -117,6 +117,8 @@
 	switch(action)
 		if ("startpress")
 			if (!processing)
+				if(produced_coins > 0)
+					log_econ("[produced_coins] coins were created by [src] in the last cycle.")
 				produced_coins = 0
 			processing = TRUE
 			begin_processing()

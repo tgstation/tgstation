@@ -115,6 +115,9 @@ LOG_PRAYER
 ## log lawchanges
 LOG_LAW
 
+## log economy actions
+LOG_ECON
+
 ## log crew manifest to seperate file
 LOG_MANIFEST
 
