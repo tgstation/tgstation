@@ -9,12 +9,6 @@
 	/// Messages currently seen by this client
 	var/list/seen_messages = list()
 
-/atom
-	/// Last name used to calculate a color for the chatmessage overlays
-	var/chat_color_name
-	/// Last color calculated for the the chatmesage overlays
-	var/chat_color
-
 /**
   * # Chat Message Overlay
   *
@@ -96,6 +90,22 @@
   */
 /datum/chatmessage/proc/end_of_life()
 	animate(message, alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+
+/**
+  * Creates a message overlay at a defined location for a given speaker
+  *
+  * Arguments:
+  * * speaker - The atom who is saying this message
+  * * message_language - The language that the message is said in
+  * * raw_message - The text content of the message
+  * * spans - Additional classes to be added to the message
+  */
+/mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans)
+	if (!client || !client.prefs.chat_on_map)
+		return
+	// Display visual above source
+	new /datum/chatmessage(lang_treat(speaker, message_language, raw_message, spans, null, TRUE), speaker, src, spans)
+
 
 // Tweak these defines to change the available color ranges
 #define CM_COLOR_SAT_MIN	0.33
