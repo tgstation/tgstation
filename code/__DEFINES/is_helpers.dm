@@ -215,8 +215,4 @@ GLOBAL_LIST_INIT(glass_sheet_types, typecacheof(list(
 
 #define isshuttleturf(T) (length(T.baseturfs) && (/turf/baseturf_skipover/shuttle in T.baseturfs))
 
-#if DM_VERSION < 513
-#define ismovableatom(A) (istype(A, /atom/movable))
-#else
 #define ismovableatom(A) ismovable(A)
-#endif
