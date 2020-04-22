@@ -273,7 +273,7 @@
 		return FALSE
 
 	var/mob/living/simple_animal/S = target
-	if(S.ckey)
+	if(S.mind)
 		if(!silent)
 			to_chat(user, "<span class='warning'>[S] is too intelligent to dominate!</span>")
 		return FALSE
