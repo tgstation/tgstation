@@ -314,7 +314,7 @@ GLOBAL_LIST_EMPTY(radial_menus)
 	GLOB.radial_menus -= uniqueid
 	if(require_near && !in_range(anchor, user))
 		return
-	if(menu.custom_check_callback)
-		if(!menu.custom_check_callback.Invoke())
+	if(istype(custom_check))
+		if(!custom_check.Invoke())
 			return
 	return answer
