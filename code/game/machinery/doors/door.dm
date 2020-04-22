@@ -39,6 +39,7 @@
 	var/unres_sides = 0 //Unrestricted sides. A bitflag for which direction (if any) can open the door with no access
 	var/safety_mode = FALSE ///Whether or not the airlock can be opened with bare hands while unpowered
 	var/can_crush = TRUE /// Whether or not the door can crush mobs.
+	var/heat_capacity = 1500
 
 /obj/machinery/door/examine(mob/user)
 	. = ..()
@@ -418,3 +419,7 @@
 	. = ..()
 	if(. && !(machine_stat & NOPOWER))
 		autoclose_in(rand(0.5 SECONDS, 3 SECONDS))
+
+/obj/machinery/door/proc/adjacent_fire_act(temperature)
+	if(temperature > heat_capacity)
+		take_damage(clamp((temperature - heat_capacity)/10, 1, 15), BURN, 0, 0)

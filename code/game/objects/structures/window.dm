@@ -14,6 +14,7 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	rad_flags = RAD_PROTECT_CONTENTS
+	var/heat_capacity = 1000
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
@@ -332,6 +333,10 @@
 	if(exposed_temperature > (T0C + heat_resistance))
 		take_damage(round(exposed_volume / 100), BURN, 0, 0)
 	..()
+
+/obj/structure/window/proc/adjacent_fire_act(temperature)
+	if(temperature > heat_capacity)
+		take_damage(clamp((temperature - heat_capacity)/10, 1, 15), BURN, 0, 0)
 
 /obj/structure/window/get_dumping_location(obj/item/storage/source,mob/user)
 	return null

@@ -565,6 +565,12 @@
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 /turf/proc/set_damage_amount(temperature)
+	var/obj/structure/window/W = locate() in range(1, src)
+	if(W)
+		W.adjacent_fire_act(temperature)
+	var/obj/machinery/door/D = locate() in range(1, src)
+	if(D)
+		D.adjacent_fire_act(temperature)
 	if(to_be_destroyed && !changing_turf)
 		damage_amount = clamp((temperature - heat_capacity)/10000, 1, 15)
 		turf_take_damage(damage_amount)
