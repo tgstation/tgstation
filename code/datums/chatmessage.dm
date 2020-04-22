@@ -62,8 +62,7 @@
 			animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
 
 	// Build message image
-	message = image(loc = message_loc)
-	message.plane = ABOVE_ALL_MOB_LAYER
+	message = image(loc = message_loc, layer = FLY_LAYER)
 	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	message.alpha = 0
 	message.pixel_y = owner.bound_height * 0.95
