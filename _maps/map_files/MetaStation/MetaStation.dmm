@@ -68249,10 +68249,6 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
-"dCl" = (
-/obj/structure/cable,
-/turf/open/space/basic,
-/area/maintenance/port/fore)
 "dCn" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -98264,7 +98260,7 @@ aAN
 aDl
 aEv
 doJ
-dCl
+doJ
 aRG
 dnZ
 aHm
