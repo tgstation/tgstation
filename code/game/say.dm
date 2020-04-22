@@ -41,6 +41,19 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		var/atom/movable/AM = _AM
 		AM.Hear(rendered, src, message_language, message, , spans, message_mode)
 
+/**
+  * Creates a message overlay at a defined location for a given speaker
+  *
+  * Arguments:
+  * * speaker - The atom who is saying this message
+  * * message_language - The language that the message is said in
+  * * raw_message - The text content of the message
+  * * spans - Additional classes to be added to the message
+  */
+/atom/movable/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans)
+	// Display visual above source
+	new /datum/chatmessage(lang_treat(speaker, message_language, raw_message, spans, null, TRUE), speaker, src, spans)
+
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, message_mode, face_name = FALSE)
 	//This proc uses text() because it is faster than appending strings. Thanks BYOND.
 	//Basic span
@@ -94,21 +107,21 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/spanned = attach_spans(input, spans)
 	return "[say_mod(input, message_mode)], \"[spanned]\""
 
-/atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode)
+/atom/movable/proc/lang_treat(atom/movable/speaker, datum/language/language, raw_message, list/spans, message_mode, no_quote = FALSE)
 	if(has_language(language))
 		var/atom/movable/AM = speaker.GetSource()
 		if(AM) //Basically means "if the speaker is virtual"
-			return AM.say_quote(raw_message, spans, message_mode)
+			return no_quote ? raw_message : AM.say_quote(raw_message, spans, message_mode)
 		else
-			return speaker.say_quote(raw_message, spans, message_mode)
+			return no_quote ? raw_message : speaker.say_quote(raw_message, spans, message_mode)
 	else if(language)
 		var/atom/movable/AM = speaker.GetSource()
 		var/datum/language/D = GLOB.language_datum_instances[language]
 		raw_message = D.scramble(raw_message)
 		if(AM)
-			return AM.say_quote(raw_message, spans, message_mode)
+			return no_quote ? raw_message : AM.say_quote(raw_message, spans, message_mode)
 		else
-			return speaker.say_quote(raw_message, spans, message_mode)
+			return no_quote ? raw_message : speaker.say_quote(raw_message, spans, message_mode)
 	else
 		return "makes a strange sound."
 
