@@ -1,8 +1,8 @@
- /**
-  * tgui state: physical_state
-  *
-  * Short-circuits the default state to only check physical distance.
- **/
+/**
+ * tgui state: physical_state
+ *
+ * Short-circuits the default state to only check physical distance.
+ */
 
 GLOBAL_DATUM_INIT(physical_state, /datum/ui_state/physical, new)
 
@@ -24,11 +24,11 @@ GLOBAL_DATUM_INIT(physical_state, /datum/ui_state/physical, new)
 	return UI_UPDATE // AIs are not physical.
 
 
- /**
-  * tgui state: physical_obscured_state
-  *
-  * Short-circuits the default state to only check physical distance, being in view doesn't matter
- **/
+/**
+ * tgui state: physical_obscured_state
+ *
+ * Short-circuits the default state to only check physical distance, being in view doesn't matter
+ */
 
 GLOBAL_DATUM_INIT(physical_obscured_state, /datum/ui_state/physical_obscured_state, new)
 

@@ -32,15 +32,44 @@ export const multiline = str => {
 };
 
 /**
+ * Creates a glob pattern matcher.
+ *
  * Matches strings with wildcards.
- * Example: testGlobPattern('*@domain')('user@domain') === true
+ *
+ * Example: createGlobPattern('*@domain')('user@domain') === true
  */
-export const testGlobPattern = pattern => {
+export const createGlobPattern = pattern => {
   const escapeString = str => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
   const regex = new RegExp('^'
     + pattern.split(/\*+/).map(escapeString).join('.*')
     + '$');
   return str => regex.test(str);
+};
+
+/**
+ * Creates a search terms matcher.
+ *
+ * Returns true if given string matches the search text.
+ *
+ * @template T
+ * @param {string} searchText
+ * @param {(obj: T) => string} stringifier
+ * @returns {(obj: T) => boolean}
+ */
+export const createSearch = (searchText, stringifier) => {
+  const preparedSearchText = searchText.toLowerCase().trim();
+  return obj => {
+    if (!preparedSearchText) {
+      return true;
+    }
+    const str = stringifier ? stringifier(obj) : obj;
+    if (!str) {
+      return false;
+    }
+    return str
+      .toLowerCase()
+      .includes(preparedSearchText);
+  };
 };
 
 export const capitalize = str => {

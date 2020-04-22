@@ -2,14 +2,24 @@ import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
+import { Button, Flex, LabeledList, ProgressBar, Section, Table } from '../components';
 import { getGasColor, getGasLabel } from '../constants';
+import { NtosWindow } from '../layouts';
 
 const logScale = value => Math.log2(16 + Math.max(0, value)) - 4;
 
-export const NtosSupermatterMonitor = props => {
-  const { state } = props;
-  const { act, data } = useBackend(props);
+export const NtosSupermatterMonitor = (props, context) => {
+  return (
+    <NtosWindow resizable>
+      <NtosWindow.Content scrollable>
+        <NtosSupermatterMonitorContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+export const NtosSupermatterMonitorContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     active,
     SM_integrity,
@@ -19,7 +29,7 @@ export const NtosSupermatterMonitor = props => {
   } = data;
   if (!active) {
     return (
-      <SupermatterList state={state} />
+      <SupermatterList />
     );
   }
   const gases = flow([
@@ -114,8 +124,8 @@ export const NtosSupermatterMonitor = props => {
   );
 };
 
-const SupermatterList = props => {
-  const { act, data } = useBackend(props);
+const SupermatterList = (props, context) => {
+  const { act, data } = useBackend(context);
   const { supermatters = [] } = data;
   return (
     <Section
