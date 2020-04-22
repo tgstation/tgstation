@@ -400,93 +400,57 @@ SUBSYSTEM_DEF(explosions)
 /datum/controller/subsystem/explosions/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
 	if(currentpart == SSEXPLOSIONS_TURFS)
-		src.currentrun = lowturf.Copy()
-		//cache for sanic speed (lists are references anyways)
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/atom/thing = currentrun[currentrun.len]
-			currentrun.len--
+		var/list/low_turf = lowturf
+		var/list/med_turf = medturf
+		var/list/high_turf = highturf
+		for(var/thing in low_turf)
 			if(thing)
 				var/turf/T = thing
 				T.explosion_level = max(T.explosion_level, EXPLODE_LIGHT)
 				T.ex_act(EXPLODE_LIGHT)
-				lowturf.Remove(T)
-			else
-				lowturf.Remove(thing)
 		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		src.currentrun = medturf.Copy()
-		//cache for sanic speed (lists are references anyways)
-		currentrun = src.currentrun
-		while(currentrun.len)
-			var/atom/thing = currentrun[currentrun.len]
-			currentrun.len--
+		for(var/thing in med_turf)
 			if(thing)
 				var/turf/T = thing
 				T.explosion_level = max(T.explosion_level, EXPLODE_HEAVY)
 				T.ex_act(EXPLODE_HEAVY)
-				medturf.Remove(T)
-			else
-				medturf.Remove(thing)
 		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		src.currentrun = highturf.Copy()
-		//cache for sanic speed (lists are references anyways)
-		currentrun = src.currentrun
-		while(currentrun.len)
-			var/atom/thing = currentrun[currentrun.len]
-			currentrun.len--
+		for(var/thing in high_turf)
 			if(thing)
 				var/turf/T = thing
 				T.explosion_level = max(T.explosion_level, EXPLODE_DEVASTATE)
 				T.ex_act(EXPLODE_DEVASTATE)
-				highturf.Remove(T)
-			else
-				highturf.Remove(thing)
 		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		lowturf.Cut()
+		medturf.Cut()
+		highturf.Cut()
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
 		currentpart = SSEXPLOSIONS_OBJECTS
 
 	if(currentpart == SSEXPLOSIONS_OBJECTS)
-		src.currentrun = highobj.Copy()
-		//cache for sanic speed (lists are references anyways)
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/atom/thing = currentrun[currentrun.len]
-			currentrun.len--
+		var/list/low_obj = lowobj
+		var/list/med_obj = medobj
+		var/list/high_obj = highobj
+		for(var/thing in high_obj)
 			if(thing)
 				var/obj/O = thing
 				O.ex_act(EXPLODE_DEVASTATE)
-				highobj.Remove(O)
-			else
-				highobj.Remove(thing)
 		cost_highobj = MC_AVERAGE(cost_highobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		src.currentrun = medobj.Copy()
-		//cache for sanic speed (lists are references anyways)
-		currentrun = src.currentrun
-		while(currentrun.len)
-			var/atom/thing = currentrun[currentrun.len]
-			currentrun.len--
+		for(var/thing in med_obj)
 			if(thing)
 				var/obj/O = thing
 				O.ex_act(EXPLODE_HEAVY)
-				medobj.Remove(O)
-			else
-				medobj.Remove(thing)
 		cost_medobj = MC_AVERAGE(cost_medobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		src.currentrun = lowobj.Copy()
-		//cache for sanic speed (lists are references anyways)
-		currentrun = src.currentrun
-		while(currentrun.len)
-			var/atom/thing = currentrun[currentrun.len]
-			currentrun.len--
+		for(var/thing in low_obj)
 			if(thing)
 				var/obj/O = thing
 				O.ex_act(EXPLODE_LIGHT)
-				lowobj.Remove(O)
-			else
-				lowobj.Remove(thing)
 		cost_lowobj = MC_AVERAGE(cost_lowobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		lowobj.Cut()
+		medobj.Cut()
+		highobj.Cut()
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
