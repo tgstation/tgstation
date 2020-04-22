@@ -524,7 +524,7 @@
 			T.myseed.potency =  round(clamp((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency)),0,100))
 			T.myseed.instability =  round(clamp((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability)),0,100))
 			T.myseed.yield =  round(clamp((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield)),0,10))
-			if(myseed.instability >= 20 && prob(70) && T.myseed.reagents_add)
+			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
 				var/list/datum/plant_gene/reagent/possible_reagents = list()
 				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
 					possible_reagents += reag
