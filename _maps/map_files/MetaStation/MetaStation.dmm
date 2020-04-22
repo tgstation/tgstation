@@ -22393,11 +22393,6 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
-/obj/machinery/door/window/westleft{
-	dir = 2;
-	name = "Cargo Desk";
-	req_access_txt = "50"
-	},
 /obj/machinery/door/window/southright{
 	name = "Cargo Desk";
 	req_access_txt = "50"
