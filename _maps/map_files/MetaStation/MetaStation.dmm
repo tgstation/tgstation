@@ -13001,11 +13001,7 @@
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 8
 	},
-/obj/item/dice/d6{
-	pixel_y = 5;
-	pixel_x = 7
-	},
-/obj/item/dice/d6,
+/obj/item/storage/pill_bottle/dice,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "aBZ" = (
@@ -98260,7 +98256,7 @@ aAN
 aDl
 aEv
 doJ
-doJ
+aRG
 aRG
 dnZ
 aHm
