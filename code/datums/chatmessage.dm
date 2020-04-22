@@ -102,6 +102,11 @@
 /mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans)
 	if (!client || !client.prefs.chat_on_map)
 		return
+
+	if (istype(speaker, /atom/movable/virtualspeaker))
+		var/atom/movable/virtualspeaker/v = speaker
+		speaker = v.source
+		spans |= "virtual-speaker"
 	// Display visual above source
 	new /datum/chatmessage(lang_treat(speaker, message_language, raw_message, spans, null, TRUE), speaker, src, spans)
 
