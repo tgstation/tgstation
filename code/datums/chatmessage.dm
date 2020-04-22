@@ -1,6 +1,6 @@
-#define CHAT_MESSAGE_SPAWN_TIME		1  // 0.1 second
-#define CHAT_MESSAGE_LIFESPAN		50 // 5 seconds
-#define CHAT_MESSAGE_EOL_FADE		10 // 1 second
+#define CHAT_MESSAGE_SPAWN_TIME		0.2 SECONDS
+#define CHAT_MESSAGE_LIFESPAN		5 SECONDS
+#define CHAT_MESSAGE_EOL_FADE		1 SECONDS
 #define CHAT_MESSAGE_WIDTH			96 // pixels
 #define CHAT_MESSAGE_MAX_LENGTH		110 // characters
 #define WXH_TO_HEIGHT(x)			text2num(copytext((x), findtextEx((x), "x") + 1)) // thanks lummox
@@ -35,15 +35,15 @@
 /datum/chatmessage/New(text, atom/target, mob/owner, list/extra_classes = null, lifespan = CHAT_MESSAGE_LIFESPAN)
 	. = ..()
 	if (!istype(target))
-		EXCEPTION("Invalid target given for chatmessage")
+		CRASH("Invalid target given for chatmessage")
 	if(QDELETED(owner) || !istype(owner) || !owner.client)
 		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
 		qdel(src)
 		return
 
 	// Clip message
-	if (length(text) > CHAT_MESSAGE_MAX_LENGTH)
-		text = copytext(text, 1, CHAT_MESSAGE_MAX_LENGTH) + "..."
+	if (length_char(text) > CHAT_MESSAGE_MAX_LENGTH)
+		text = copytext_char(text, 1, CHAT_MESSAGE_MAX_LENGTH) + "..."
 
 	// Approximate text height
 	owned_by = owner.client
