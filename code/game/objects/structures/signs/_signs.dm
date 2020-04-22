@@ -115,8 +115,7 @@ GLOBAL_VAR(editable_sign_types)
 			return
 		if(!choice)
 			return
-		user.visible_message("<span class='notice'>[user] begins changing [src].</span>", \
-							 "<span class='notice'>You begin changing [src].</span>")
+		user.visible_message("<span class='notice'>You begin changing [src].</span>")
 		if(!do_after(user, 40, target = src))
 			return
 		var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
@@ -124,8 +123,7 @@ GLOBAL_VAR(editable_sign_types)
 		desc = "[initial(sign_type.desc)] It can be placed on a wall."
 		icon_state = initial(sign_type.icon_state)
 		sign_path = sign_type	
-		user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
-					 "<span class='notice'>You finish changing the sign.</span>")
+		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()
 
