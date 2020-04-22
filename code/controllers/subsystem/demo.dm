@@ -61,6 +61,11 @@ SUBSYSTEM_DEF(demo)
 	last_chat_message = text
 
 /datum/controller/subsystem/demo/Initialize()
+	if(!CONFIG_GET(flag/demos_enabled))
+		flags |= SS_NO_FIRE
+		can_fire = FALSE
+		return ..()
+
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "demo version 1\n") // increment this if you change the format
 	if(GLOB.revdata)
 		WRITE_LOG_NO_FORMAT(GLOB.demo_log, "commit [GLOB.revdata.originmastercommit || GLOB.revdata.commit]\n")
