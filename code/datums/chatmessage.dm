@@ -9,6 +9,12 @@
 	/// Messages currently seen by this client
 	var/list/seen_messages = list()
 
+/atom
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmesage overlays
+	var/chat_color
+
 /**
   * # Chat Message Overlay
   *
@@ -45,9 +51,14 @@
 	if (length_char(text) > CHAT_MESSAGE_MAX_LENGTH)
 		text = copytext_char(text, 1, CHAT_MESSAGE_MAX_LENGTH) + "..."
 
+	// Calculate target color if not already present
+	if (!target.chat_color || target.chat_color_name != target.name)
+		target.chat_color = colorize_string(target.name)
+		target.chat_color_name = target.name
+
 	// Approximate text height
 	owned_by = owner.client
-	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]'>[text]</span>"
+	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]' style='color: [target.chat_color]'>[text]</span>"
 	var/mheight = max(WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH)), 14)
 
 	// Translate any existing messages upwards
@@ -85,3 +96,46 @@
   */
 /datum/chatmessage/proc/end_of_life()
 	animate(message, alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+
+// Tweak these defines to change the available color ranges
+#define CM_COLOR_SAT_MIN	0.33
+#define CM_COLOR_SAT_MAX	0.6
+#define CM_COLOR_LUM_MIN	0.6
+#define CM_COLOR_LUM_MAX	0.7
+
+/**
+  * Gets a color for a name, will return the same color for a given string consistently within a round.atom
+  *
+  * Note that this proc aims to produce pastel-ish colors using the HSL colorspace. These seem to be favorable for displaying on the map.
+  *
+  * Arguments:
+  * * name - The name to generate a color for
+  */
+/datum/chatmessage/proc/colorize_string(name)
+	// get hsl using the first 6 characters of the md5 hash
+	var/hash = md5(name + GLOB.round_id)
+	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
+	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
+	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
+
+	// convert to rgb
+	var/h_int = round(h/60) // mapping each section of H to 60 degree sections
+	var/c = (1 - abs(2 * l - 1)) * s
+	var/x = c * (1 - abs((h / 60) % 2 - 1))
+	var/m = l - c * 0.5
+	x = (x + m) * 255
+	c = (c + m) * 255
+	m *= 255
+	switch(h_int)
+		if(0)
+			return "#[num2hex(c, 2)][num2hex(x, 2)][num2hex(m, 2)]"
+		if(1)
+			return "#[num2hex(x, 2)][num2hex(c, 2)][num2hex(m, 2)]"
+		if(2)
+			return "#[num2hex(m, 2)][num2hex(c, 2)][num2hex(x, 2)]"
+		if(3)
+			return "#[num2hex(m, 2)][num2hex(x, 2)][num2hex(c, 2)]"
+		if(4)
+			return "#[num2hex(x, 2)][num2hex(m, 2)][num2hex(c, 2)]"
+		if(5)
+			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
