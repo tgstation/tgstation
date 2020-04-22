@@ -7,7 +7,6 @@
 	custom_materials = list(/datum/material/plastic = 2000)
 	max_integrity = 100
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	var/buildable_sign = TRUE //unwrenchable
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
@@ -116,7 +115,8 @@ GLOBAL_VAR(editable_sign_types)
 			return
 		if(!choice)
 			return
-		user.visible_message("<span class='notice'>You begin changing [src].</span>")
+		user.visible_message("<span class='notice'>[user] begins changing [src].</span>", \
+							 "<span class='notice'>You begin changing [src].</span>")
 		if(!do_after(user, 40, target = src))
 			return
 		var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
@@ -124,7 +124,8 @@ GLOBAL_VAR(editable_sign_types)
 		desc = "[initial(sign_type.desc)] It can be placed on a wall."
 		icon_state = initial(sign_type.icon_state)
 		sign_path = sign_type	
-		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
+		user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
+					 "<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()
 
