@@ -94,7 +94,7 @@
 	name = "Power shield projector"
 	desc = "A holographic projector that creates a Power shield that stops the spread of heat and atmosphere changes"
 	icon_state = "signmaker_powersh"
-	holosign_type = /obj/structure/holosign/barrier/power_shield/wall
+	holosign_type = /obj/machinery/holosign/barrier/power_shield/wall
 	creation_time = 0
 	max_signs = 25
 
@@ -102,11 +102,11 @@
 	toggle_item(user)
 
 /obj/item/holosign_creator/powered_shielding/proc/toggle_item(mob/user)
-	if(holosign_type == /obj/structure/holosign/barrier/power_shield/wall)
-		holosign_type = /obj/structure/holosign/barrier/power_shield/floor
+	if(holosign_type == /obj/machinery/holosign/barrier/power_shield/wall)
+		holosign_type = /obj/machinery/holosign/barrier/power_shield/floor
 		to_chat(user, "<span class='notice'>You change the projector to shielded floors.</span>")
 	else
-		holosign_type = /obj/structure/holosign/barrier/power_shield/wall
+		holosign_type = /obj/machinery/holosign/barrier/power_shield/wall
 		to_chat(user, "<span class='notice'>You change the projector to shielded walls.</span>")
 
 /obj/item/holosign_creator/medical

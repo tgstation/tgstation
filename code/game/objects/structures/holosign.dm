@@ -104,9 +104,10 @@
 	. = ..()
 	air_update_turf(TRUE)
 
-/obj/structure/holosign/barrier/power_shield
+/obj/machinery/holosign/barrier/power_shield
 	name = "powered shield"
 	desc = "etc"
+	icon = 'icons/effects/effects.dmi'
 	density = FALSE
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
@@ -115,34 +116,34 @@
 	var/stored_conductivity = 0
 	var/power_consumption = 5000
 
-/obj/structure/holosign/barrier/power_shield/Initialize()
+/obj/machinery/holosign/barrier/power_shield/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
 	var/area/a = get_area(src)
-	a.addStaticPower(power_consumption, STATIC_ENVIRON)
-	check_power()
+	a.addStaticPower(power_consumption, STATIC_EQUIP)
+	if(a.power_environ == TRUE)
+		shield_turf()
+	else
+		qdel()
 
-/obj/structure/holosign/barrier/power_shield/Destroy()
+/obj/machinery/holosign/barrier/power_shield/Destroy()
 	var/turf/T = loc
 	T.thermal_conductivity = stored_conductivity
 	var/area/a = get_area(src)
-	a.addStaticPower(-power_consumption, STATIC_ENVIRON)
-	. = ..()
+	a.addStaticPower(-power_consumption, STATIC_EQUIP)
+	return ..()
 
-/obj/structure/holosign/barrier/power_shield/proc/shield_turf()
+/obj/machinery/holosign/barrier/power_shield/proc/shield_turf()
 	var/turf/T = loc
 	if(isturf(loc))
 		stored_conductivity = T.thermal_conductivity
 		T.thermal_conductivity = 0.0
 
-/obj/structure/holosign/barrier/power_shield/proc/check_power()
-	var/area/a = get_area(src)
-	if(a.power_environ == TRUE)
-		shield_turf()
-	else
-		Destroy()
+/obj/machinery/holosign/barrier/power_shield/process()
+	if(machine_stat & NOPOWER)
+		qdel()
 
-/obj/structure/holosign/barrier/power_shield/wall
+/obj/machinery/holosign/barrier/power_shield/wall
 	name = "Shield Wall"
 	desc = "etc"
 	icon_state = "powershield_wall"
@@ -154,7 +155,7 @@
 	stored_conductivity = 0
 	power_consumption = 5000
 
-/obj/structure/holosign/barrier/power_shield/floor
+/obj/machinery/holosign/barrier/power_shield/floor
 	name = "Shield Floor"
 	desc = "etc"
 	icon_state = "powershield_floor"
