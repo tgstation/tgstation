@@ -462,36 +462,27 @@
 /datum/holiday/moth/getStationPrefix()
 	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
 
-/datum/holiday/ramadan
+/datum/holiday/islamic
+	name = "Islamic calendar code broken"
+
+/datum/holiday/islamic/shouldCelebrate(dd, mm, yy, ww, ddd)
+	var/datum/foreign_calendar/islamic/cal = new
+	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
+
+/datum/holiday/islamic/ramadan
 	name = "Start of Ramadan"
-
-/*
-
-For anyone who stumbles on this some time in the future: this was calibrated to 2017
-Calculated based on the start and end of Ramadan in 2000 (First year of the Gregorian Calendar supported by BYOND)
-This is going to be accurate for at least a decade, likely a lot longer
-Since the date fluctuates, it may be inaccurate one year and then accurate for several after
-Inaccuracies will never be by more than one day for at least a hundred years
-Finds the number of days since the day in 2000 and gets the modulo of that and the average length of a Muslim year since the first one (622 AD, Gregorian)
-Since Ramadan is an entire month that lasts 29.5 days on average, the start and end are holidays and are calculated from the two dates in 2000
-
-*/
-
-/datum/holiday/ramadan/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if (round(((world.realtime - 285984000) / 864000) % 354.373435326843) == 0)
-		return TRUE
-	return FALSE
+	begin_month = 9
+	begin_day = 1
+	end_day = 3
 
 /datum/holiday/ramadan/getStationPrefix()
-	return pick("Harm","Halaal","Jihad","Muslim")
+	return pick("Haram","Halaal","Jihad","Muslim")
 
 /datum/holiday/ramadan/end
 	name = "End of Ramadan"
-
-/datum/holiday/ramadan/end/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if (round(((world.realtime - 312768000) / 864000) % 354.373435326843) == 0)
-		return TRUE
-	return FALSE
+	end_month = 10
+	begin_day = 28
+	end_day = 1
 
 /datum/holiday/lifeday
 	name = "Life Day"
@@ -625,7 +616,7 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 	name = "If you see this the Hebrew holiday calendar code is broken"
 
 /datum/holiday/hebrew/shouldCelebrate(dd, mm, yy, ww, ddd)
-	var/datum/hebrew_calendar/cal = new /datum/hebrew_calendar()
+	var/datum/foreign_calendar/hebrew/cal = new
 	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
 
 /datum/holiday/hebrew/hanukkah
