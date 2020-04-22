@@ -1,19 +1,18 @@
+import { classes } from 'common/react';
 import { Box } from './Box';
 
 export const Dimmer = props => {
-  const { style, ...rest } = props;
+  const { className, children, ...rest } = props;
   return (
     <Box
-      style={{
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        'background-color': 'rgba(0, 0, 0, 0.75)',
-        'z-index': 1,
-        ...style,
-      }}
-      {...rest} />
+      className={classes([
+        'Dimmer',
+        ...className,
+      ])}
+      {...rest}>
+      <div className="Dimmer__inner">
+        {children}
+      </div>
+    </Box>
   );
 };

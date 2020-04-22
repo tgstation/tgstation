@@ -407,7 +407,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		//keep it at the right spot, so we can't have people taking shortcuts
 		var/location = C.dna.mutation_index.Find(inert_mutation)
 		C.dna.mutation_index[location] = new_species.inert_mutation
+		C.dna.default_mutation_genes[location] = C.dna.mutation_index[location]
 		C.dna.mutation_index[new_species.inert_mutation] = create_sequence(new_species.inert_mutation)
+		C.dna.default_mutation_genes[new_species.inert_mutation] = C.dna.mutation_index[new_species.inert_mutation]
 
 	if(inherent_factions)
 		for(var/i in inherent_factions)
@@ -894,7 +896,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	// handles the equipping of species-specific gear
 	return
 
-/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE)
+/datum/species/proc/can_equip(obj/item/I, slot, disable_warning, mob/living/carbon/human/H, bypass_equip_delay_self = FALSE, swap = FALSE)
 	if(slot in no_equip)
 		if(!I.species_exception || !is_type_in_list(src, I.species_exception))
 			return FALSE
@@ -908,7 +910,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return TRUE
 			return FALSE
 		if(ITEM_SLOT_MASK)
-			if(H.wear_mask)
+			if(H.wear_mask && !swap)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_MASK))
 				return FALSE
@@ -916,25 +918,25 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_NECK)
-			if(H.wear_neck)
+			if(H.wear_neck && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_NECK) )
 				return FALSE
 			return TRUE
 		if(ITEM_SLOT_BACK)
-			if(H.back)
+			if(H.back && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_BACK) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_OCLOTHING)
-			if(H.wear_suit)
+			if(H.wear_suit && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_OCLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_GLOVES)
-			if(H.gloves)
+			if(H.gloves && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_GLOVES) )
 				return FALSE
@@ -942,7 +944,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_FEET)
-			if(H.shoes)
+			if(H.shoes && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_FEET) )
 				return FALSE
@@ -954,7 +956,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_BELT)
-			if(H.belt)
+			if(H.belt && !swap)
 				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
@@ -967,7 +969,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_EYES)
-			if(H.glasses)
+			if(H.glasses && !swap)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_EYES))
 				return FALSE
@@ -978,7 +980,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_HEAD)
-			if(H.head)
+			if(H.head && !swap)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_HEAD))
 				return FALSE
@@ -986,7 +988,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_EARS)
-			if(H.ears)
+			if(H.ears && !swap)
 				return FALSE
 			if(!(I.slot_flags & ITEM_SLOT_EARS))
 				return FALSE
@@ -994,13 +996,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ICLOTHING)
-			if(H.w_uniform)
+			if(H.w_uniform && !swap)
 				return FALSE
 			if( !(I.slot_flags & ITEM_SLOT_ICLOTHING) )
 				return FALSE
 			return equip_delay_self_check(I, H, bypass_equip_delay_self)
 		if(ITEM_SLOT_ID)
-			if(H.wear_id)
+			if(H.wear_id && !swap)
 				return FALSE
 
 			var/obj/item/bodypart/O = H.get_bodypart(BODY_ZONE_CHEST)
@@ -1043,7 +1045,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(ITEM_SLOT_SUITSTORE)
 			if(HAS_TRAIT(I, TRAIT_NODROP))
 				return FALSE
-			if(H.s_store)
+			if(H.s_store && !swap)
 				return FALSE
 			if(!H.wear_suit)
 				if(!disable_warning)
@@ -1691,6 +1693,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(/obj/projectile/energy/floramut) // overwritten by plants/pods
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 		if(/obj/projectile/energy/florayield)
+			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
+		if(/obj/projectile/energy/florarevolution)
 			H.show_message("<span class='notice'>The radiation beam dissipates harmlessly through your body.</span>")
 
 /datum/species/proc/bullet_act(obj/projectile/P, mob/living/carbon/human/H)

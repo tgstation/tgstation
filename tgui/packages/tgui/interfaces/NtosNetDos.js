@@ -2,11 +2,20 @@ import { Section, Button, LabeledList, Box, NoticeBox } from "../components";
 import { useBackend } from "../backend";
 import { createLogger } from "../logging";
 import { Fragment } from "inferno";
+import { NtosWindow } from "../layouts";
 
-const logger = createLogger('NetDos');
+export const NtosNetDos = (props, context) => {
+  return (
+    <NtosWindow theme="syndicate">
+      <NtosWindow.Content>
+        <NtosNetDosContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
 
-export const NtosNetDos = props => {
-  const { act, data } = useBackend(props);
+export const NtosNetDosContent = (props, context) => {
+  const { act, data } = useBackend(context);
 
   const {
     relays = [],

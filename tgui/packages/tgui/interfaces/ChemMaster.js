@@ -1,11 +1,26 @@
-import { Component, Fragment } from 'inferno';
-import { act } from '../byond';
+import { Fragment } from 'inferno';
+import { useBackend, useSharedState } from '../backend';
 import { AnimatedNumber, Box, Button, ColorBox, LabeledList, NumberInput, Section, Table } from '../components';
+import { Window } from '../layouts';
 
-export const ChemMaster = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
+export const ChemMaster = (props, context) => {
+  const { data } = useBackend(context);
+  const { screen } = data;
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        {screen === 'analyze' && (
+          <AnalysisResults />
+        ) || (
+          <ChemMasterContent />
+        )}
+      </Window.Content>
+    </Window>
+  );
+};
+
+const ChemMasterContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     screen,
     beakerContents = [],
@@ -18,7 +33,7 @@ export const ChemMaster = props => {
     pillBottleMaxAmount,
   } = data;
   if (screen === 'analyze') {
-    return <AnalysisResults state={state} />;
+    return <AnalysisResults />;
   }
   return (
     <Fragment>
@@ -35,7 +50,7 @@ export const ChemMaster = props => {
             <Button
               icon="eject"
               content="Eject"
-              onClick={() => act(ref, 'eject')} />
+              onClick={() => act('eject')} />
           </Fragment>
         )}>
         {!isBeakerLoaded && (
@@ -52,7 +67,6 @@ export const ChemMaster = props => {
           {beakerContents.map(chemical => (
             <ChemicalBufferEntry
               key={chemical.id}
-              state={state}
               chemical={chemical}
               transferTo="buffer" />
           ))}
@@ -69,7 +83,7 @@ export const ChemMaster = props => {
               color={data.mode ? 'good' : 'bad'}
               icon={data.mode ? 'exchange-alt' : 'times'}
               content={data.mode ? 'Transfer' : 'Destroy'}
-              onClick={() => act(ref, 'toggleMode')} />
+              onClick={() => act('toggleMode')} />
           </Fragment>
         )}>
         {bufferContents.length === 0 && (
@@ -81,7 +95,6 @@ export const ChemMaster = props => {
           {bufferContents.map(chemical => (
             <ChemicalBufferEntry
               key={chemical.id}
-              state={state}
               chemical={chemical}
               transferTo="beaker" />
           ))}
@@ -89,7 +102,7 @@ export const ChemMaster = props => {
       </Section>
       <Section
         title="Packaging">
-        <PackagingControls state={state} />
+        <PackagingControls />
       </Section>
       {!!isPillBottleLoaded && (
         <Section
@@ -102,7 +115,7 @@ export const ChemMaster = props => {
               <Button
                 icon="eject"
                 content="Eject"
-                onClick={() => act(ref, 'ejectPillBottle')} />
+                onClick={() => act('ejectPillBottle')} />
             </Fragment>
           )} />
       )}
@@ -112,9 +125,9 @@ export const ChemMaster = props => {
 
 const ChemicalBuffer = Table;
 
-const ChemicalBufferEntry = props => {
-  const { state, chemical, transferTo } = props;
-  const { ref } = state.config;
+const ChemicalBufferEntry = (props, context) => {
+  const { act } = useBackend(context);
+  const { chemical, transferTo } = props;
   return (
     <Table.Row key={chemical.id}>
       <Table.Cell color="label">
@@ -126,28 +139,28 @@ const ChemicalBufferEntry = props => {
       <Table.Cell collapsing>
         <Button
           content="1"
-          onClick={() => act(ref, 'transfer', {
+          onClick={() => act('transfer', {
             id: chemical.id,
             amount: 1,
             to: transferTo,
           })} />
         <Button
           content="5"
-          onClick={() => act(ref, 'transfer', {
+          onClick={() => act('transfer', {
             id: chemical.id,
             amount: 5,
             to: transferTo,
           })} />
         <Button
           content="10"
-          onClick={() => act(ref, 'transfer', {
+          onClick={() => act('transfer', {
             id: chemical.id,
             amount: 10,
             to: transferTo,
           })} />
         <Button
           content="All"
-          onClick={() => act(ref, 'transfer', {
+          onClick={() => act('transfer', {
             id: chemical.id,
             amount: 1000,
             to: transferTo,
@@ -155,7 +168,7 @@ const ChemicalBufferEntry = props => {
         <Button
           icon="ellipsis-h"
           title="Custom amount"
-          onClick={() => act(ref, 'transfer', {
+          onClick={() => act('transfer', {
             id: chemical.id,
             amount: -1,
             to: transferTo,
@@ -163,7 +176,7 @@ const ChemicalBufferEntry = props => {
         <Button
           icon="question"
           title="Analyze"
-          onClick={() => act(ref, 'analyze', {
+          onClick={() => act('analyze', {
             id: chemical.id,
           })} />
       </Table.Cell>
@@ -183,7 +196,7 @@ const PackagingControlsItem = props => {
   return (
     <LabeledList.Item label={label}>
       <NumberInput
-        width={14}
+        width="84px"
         unit={amountUnit}
         step={1}
         stepPixelSize={15}
@@ -191,142 +204,129 @@ const PackagingControlsItem = props => {
         minValue={1}
         maxValue={10}
         onChange={onChangeAmount} />
-      <Button ml={1}
+      <Button
+        ml={1}
         content="Create"
         onClick={onCreate} />
-      <Box inline ml={1}
-        color="label"
-        content={sideNote} />
+      <Box inline ml={1} color="label">
+        {sideNote}
+      </Box>
     </LabeledList.Item>
   );
 };
 
-class PackagingControls extends Component {
-  constructor() {
-    super();
-    this.state = {
-      pillAmount: 1,
-      patchAmount: 1,
-      bottleAmount: 1,
-      packAmount: 1,
-    };
-  }
+const PackagingControls = (props, context) => {
+  const { act, data } = useBackend(context);
+  const [
+    pillAmount,
+    setPillAmount,
+  ] = useSharedState(context, 'pillAmount', 1);
+  const [
+    patchAmount,
+    setPatchAmount,
+  ] = useSharedState(context, 'patchAmount', 1);
+  const [
+    bottleAmount,
+    setBottleAmount,
+  ] = useSharedState(context, 'bottleAmount', 1);
+  const [
+    packAmount,
+    setPackAmount,
+  ] = useSharedState(context, 'packAmount', 1);
+  const {
+    condi,
+    chosenPillStyle,
+    pillStyles = [],
+  } = data;
+  return (
+    <LabeledList>
+      {!condi && (
+        <LabeledList.Item label="Pill type">
+          {pillStyles.map(pill => (
+            <Button
+              key={pill.id}
+              width="30px"
+              selected={pill.id === chosenPillStyle}
+              textAlign="center"
+              color="transparent"
+              onClick={() => act('pillStyle', { id: pill.id })}>
+              <Box mx={-1} className={pill.className} />
+            </Button>
+          ))}
+        </LabeledList.Item>
+      )}
+      {!condi && (
+        <PackagingControlsItem
+          label="Pills"
+          amount={pillAmount}
+          amountUnit="pills"
+          sideNote="max 50u"
+          onChangeAmount={(e, value) => setPillAmount(value)}
+          onCreate={() => act('create', {
+            type: 'pill',
+            amount: pillAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!condi && (
+        <PackagingControlsItem
+          label="Patches"
+          amount={patchAmount}
+          amountUnit="patches"
+          sideNote="max 40u"
+          onChangeAmount={(e, value) => setPatchAmount(value)}
+          onCreate={() => act('create', {
+            type: 'patch',
+            amount: patchAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!condi && (
+        <PackagingControlsItem
+          label="Bottles"
+          amount={bottleAmount}
+          amountUnit="bottles"
+          sideNote="max 30u"
+          onChangeAmount={(e, value) => setBottleAmount(value)}
+          onCreate={() => act('create', {
+            type: 'bottle',
+            amount: bottleAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!!condi && (
+        <PackagingControlsItem
+          label="Packs"
+          amount={packAmount}
+          amountUnit="packs"
+          sideNote="max 10u"
+          onChangeAmount={(e, value) => setPackAmount(value)}
+          onCreate={() => act('create', {
+            type: 'condimentPack',
+            amount: packAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!!condi && (
+        <PackagingControlsItem
+          label="Bottles"
+          amount={bottleAmount}
+          amountUnit="bottles"
+          sideNote="max 50u"
+          onChangeAmount={(e, value) => setBottleAmount(value)}
+          onCreate={() => act('create', {
+            type: 'condimentBottle',
+            amount: bottleAmount,
+            volume: 'auto',
+          })} />
+      )}
+    </LabeledList>
+  );
+};
 
-  render() {
-    const { state, props } = this;
-    const { ref } = props.state.config;
-    const {
-      pillAmount,
-      patchAmount,
-      bottleAmount,
-      packAmount,
-    } = this.state;
-    const {
-      condi,
-      chosenPillStyle,
-      pillStyles = [],
-    } = props.state.data;
-    return (
-      <LabeledList>
-        {!condi && (
-          <LabeledList.Item label="Pill type">
-            {pillStyles.map(pill => (
-              <Button
-                key={pill.id}
-                width={5}
-                selected={pill.id === chosenPillStyle}
-                textAlign="center"
-                color="transparent"
-                onClick={() => act(ref, 'pillStyle', { id: pill.id })}>
-                <Box mx={-1} className={pill.className} />
-              </Button>
-            ))}
-          </LabeledList.Item>
-        )}
-        {!condi && (
-          <PackagingControlsItem
-            label="Pills"
-            amount={pillAmount}
-            amountUnit="pills"
-            sideNote="max 50u"
-            onChangeAmount={(e, value) => this.setState({
-              pillAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'pill',
-              amount: pillAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!condi && (
-          <PackagingControlsItem
-            label="Patches"
-            amount={patchAmount}
-            amountUnit="patches"
-            sideNote="max 40u"
-            onChangeAmount={(e, value) => this.setState({
-              patchAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'patch',
-              amount: patchAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!condi && (
-          <PackagingControlsItem
-            label="Bottles"
-            amount={bottleAmount}
-            amountUnit="bottles"
-            sideNote="max 30u"
-            onChangeAmount={(e, value) => this.setState({
-              bottleAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'bottle',
-              amount: bottleAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!!condi && (
-          <PackagingControlsItem
-            label="Packs"
-            amount={packAmount}
-            amountUnit="packs"
-            sideNote="max 10u"
-            onChangeAmount={(e, value) => this.setState({
-              packAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'condimentPack',
-              amount: packAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!!condi && (
-          <PackagingControlsItem
-            label="Bottles"
-            amount={bottleAmount}
-            amountUnit="bottles"
-            sideNote="max 50u"
-            onChangeAmount={(e, value) => this.setState({
-              bottleAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'condimentBottle',
-              amount: bottleAmount,
-              volume: 'auto',
-            })} />
-        )}
-      </LabeledList>
-    );
-  }
-}
-
-const AnalysisResults = props => {
-  const { state } = props;
-  const { ref } = state.config;
-  const { analyzeVars } = state.data;
+const AnalysisResults = (props, context) => {
+  const { act, data } = useBackend(context);
+  const { analyzeVars } = data;
   return (
     <Section
       title="Analysis Results"
@@ -334,7 +334,7 @@ const AnalysisResults = props => {
         <Button
           icon="arrow-left"
           content="Back"
-          onClick={() => act(ref, 'goScreen', {
+          onClick={() => act('goScreen', {
             screen: 'home',
           })} />
       )}>

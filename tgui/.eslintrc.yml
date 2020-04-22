@@ -305,7 +305,13 @@ rules:
   ## Enforce or disallow capitalization of the first letter of a comment
   # capitalized-comments: error
   ## Require or disallow trailing commas
-  comma-dangle: [error, always-multiline]
+  comma-dangle: [error, {
+    arrays: always-multiline,
+    objects: always-multiline,
+    imports: always-multiline,
+    exports: always-multiline,
+    functions: only-multiline, ## Optional on functions
+  }]
   ## Enforce consistent spacing before and after commas
   comma-spacing: [error, { before: false, after: true }]
   ## Enforce consistent comma style
@@ -625,7 +631,7 @@ rules:
   ## Prevent invalid characters from appearing in markup
   react/no-unescaped-entities: error
   ## Prevent usage of unknown DOM property (fixable)
-  react/no-unknown-property: error
+  # react/no-unknown-property: error
   ## Prevent usage of unsafe lifecycle methods
   react/no-unsafe: error
   ## Prevent definitions of unused prop types
@@ -705,7 +711,7 @@ rules:
   ## Validate JSX has key prop when in array or iterator
   react/jsx-key: error
   ## Validate JSX maximum depth
-  react/jsx-max-depth: [error, { max: 6 }] ## Generous
+  react/jsx-max-depth: [error, { max: 10 }] ## Generous
   ## Limit maximum of props on a single line in JSX (fixable)
   # react/jsx-max-props-per-line: error
   ## Prevent usage of .bind() and arrow functions in JSX props

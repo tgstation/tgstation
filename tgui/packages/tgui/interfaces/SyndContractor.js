@@ -1,6 +1,14 @@
-import { Box, Button, Section, Dimmer, Table, Icon, NoticeBox, Tabs, Grid, LabeledList } from "../components";
-import { useBackend } from "../backend";
-import { Fragment, Component } from "inferno";
+import { Component, Fragment } from 'inferno';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Flex, Grid, Icon, LabeledList, Modal, NoticeBox, Section, Table, Tabs } from '../components';
+import { NtosWindow } from '../layouts';
+
+const CONTRACT_STATUS_INACTIVE = 1;
+const CONTRACT_STATUS_ACTIVE = 2;
+const CONTRACT_STATUS_BOUNTY_CONSOLE_ACTIVE = 3;
+const CONTRACT_STATUS_EXTRACTING = 4;
+const CONTRACT_STATUS_COMPLETE = 5;
+const CONTRACT_STATUS_ABORTED = 6;
 
 export class FakeTerminal extends Component {
   constructor(props) {
@@ -53,8 +61,20 @@ export class FakeTerminal extends Component {
   }
 }
 
-export const SyndContractor = props => {
-  const { data, act } = useBackend(props);
+export const SyndContractor = (props, context) => {
+  return (
+    <NtosWindow
+      theme="syndicate"
+      resizable>
+      <NtosWindow.Content scrollable>
+        <SyndContractorContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+export const SyndContractorContent = (props, context) => {
+  const { data, act } = useBackend(context);
 
   const terminalMessages = [
     "Recording biometric data...",
@@ -110,39 +130,29 @@ export const SyndContractor = props => {
   ];
 
   const errorPane = !!data.error && (
-    <Dimmer>
-      <Box
-        backgroundColor="red"
-        minHeight="150px"
-        mt={30}
-        ml={15}
-        mr={15}>
-        <Table m={1}>
-          <Table.Row>
-            <Table.Cell collapsing fontSize="100px">
-              <Icon
-                name="exclamation-triangle"
-                mt={4}
-                ml={2} />
-            </Table.Cell>
-            <Table.Cell
-              verticalAlign="top"
-              textAlign="center">
-              <Box
-                m={1}
-                textAlign="left"
-                width="100%"
-                minHeight="110px">
-                {data.error}
-              </Box>
-              <Button
-                content="Dismiss"
-                onClick={() => act('PRG_clear_error')} />
-            </Table.Cell>
-          </Table.Row>
-        </Table>
-      </Box>
-    </Dimmer>
+    <Modal backgroundColor="red">
+      <Flex align="center">
+        <Flex.Item mr={2}>
+          <Icon
+            size={4}
+            name="exclamation-triangle" />
+        </Flex.Item>
+        <Flex.Item
+          mr={2}
+          grow={1}
+          textAlign="center">
+          <Box
+            width="260px"
+            textAlign="left"
+            minHeight="80px">
+            {data.error}
+          </Box>
+          <Button
+            content="Dismiss"
+            onClick={() => act('PRG_clear_error')} />
+        </Flex.Item>
+      </Flex>
+    </Modal>
   );
 
   if (!data.logged_in) {
@@ -201,13 +211,13 @@ export const SyndContractor = props => {
   return (
     <Fragment>
       {errorPane}
-      <SyndPane state={props.state} />
+      <SyndPane />
     </Fragment>
   );
 };
 
-export const StatusPane = props => {
-  const { act, data } = useBackend(props);
+export const StatusPane = (props, context) => {
+  const { act, data } = useBackend(context);
 
   return (
     <Section
@@ -260,123 +270,161 @@ export const StatusPane = props => {
   );
 };
 
-export const SyndPane = props => {
-  const { act, data } = useBackend(props);
-
-  const contractor_hub_items = data.contractor_hub_items || [];
-  const contracts = data.contracts || [];
-
+export const SyndPane = (props, context) => {
+  const [tab, setTab] = useLocalState(context, 'tab', 1);
   return (
     <Fragment>
       <StatusPane state={props.state} />
       <Tabs>
-        <Tabs.Tab label="Contracts">
-          <Section
-            title="Availible Contracts"
-            buttons={(
-              <Button
-                content="Call Extraction"
-                disabled={!data.ongoing_contract || data.extraction_enroute}
-                onClick={() => act('PRG_call_extraction')} />
-            )}>
-            {contracts.map(contract => {
-              const active = (contract.status > 1);
-              if (contract.status >= 5) {
-                return;
-              }
-              return (
-                <Section
-                  key={contract.target}
-                  title={`${contract.target} (${contract.target_rank})`}
-                  level={active ? 1 : 2}
-                  buttons={(
-                    <Fragment>
-                      <Box
-                        inline
-                        bold
-                        mr={1}>
-                        {contract.payout} (+{contract.payout_bonus}) TC
-                      </Box>
-                      <Button
-                        content={active ? "Abort" : "Accept"}
-                        disabled={contract.extraction_enroute}
-                        color={active && "bad"}
-                        onClick={() => act(
-                          'PRG_contract' + (active ? '_abort' : '-accept'),
-                          {
-                            contract_id: contract.id,
-                          })} />
-                    </Fragment>
-                  )}>
-                  <Grid>
-                    <Grid.Column>
-                      {contract.message}
-                    </Grid.Column>
-                    <Grid.Column size={0.5}>
-                      <Box
-                        bold
-                        mb={1}>
-                        Dropoff Location:
-                      </Box>
-                      <Box>
-                        {contract.dropoff}
-                      </Box>
-                    </Grid.Column>
-                  </Grid>
-                </Section>
-              );
-            })}
-          </Section>
+        <Tabs.Tab
+          selected={tab === 1}
+          onClick={() => setTab(1)}>
+          Contracts
         </Tabs.Tab>
-        <Tabs.Tab label="Uplink">
-          <Section>
-            {contractor_hub_items.map(item => {
-              const repInfo = item.cost ? (item.cost + ' Rep') : 'FREE';
-              const limited = (item.limited !== -1);
-              return (
-                <Section
-                  key={item.name}
-                  title={item.name + ' - ' + repInfo}
-                  level={2}
-                  buttons={(
-                    <Fragment>
-                      {limited && (
-                        <Box
-                          inline
-                          bold
-                          mr={1}>
-                          {item.limited} remaining
-                        </Box>
-                      )}
-                      <Button
-                        content="Purchase"
-                        disabled={data.contract_rep < item.cost
-                          || (limited && item.limited <= 0)}
-                        onClick={() => act('buy_hub', {
-                          item: item.name,
-                          cost: item.cost,
-                        })} />
-                    </Fragment>
-                  )}>
-                  <Table>
-                    <Table.Row>
-                      <Table.Cell>
-                        <Icon
-                          fontSize="60px"
-                          name={item.item_icon} />
-                      </Table.Cell>
-                      <Table.Cell
-                        verticalAlign="top">
-                        {item.desc}
-                      </Table.Cell>
-                    </Table.Row>
-                  </Table>
-                </Section>
-              );
-            })}
-          </Section>
+        <Tabs.Tab
+          selected={tab === 2}
+          onClick={() => setTab(2)}>
+          Hub
         </Tabs.Tab>
       </Tabs>
+      {tab === 1 && (
+        <ContractsTab />
+      )}
+      {tab === 2 && (
+        <HubTab />
+      )}
     </Fragment>
+  );
+};
+
+const ContractsTab = (props, context) => {
+  const { act, data } = useBackend(context);
+  const contracts = data.contracts || [];
+  return (
+    <Fragment>
+      <Section
+        title="Availible Contracts"
+        buttons={(
+          <Button
+            content="Call Extraction"
+            disabled={!data.ongoing_contract || data.extraction_enroute}
+            onClick={() => act('PRG_call_extraction')} />
+        )}>
+        {contracts.map(contract => {
+          if (data.ongoing_contract
+            && contract.status !== CONTRACT_STATUS_ACTIVE) {
+            return;
+          }
+          const active = (contract.status > CONTRACT_STATUS_INACTIVE);
+          if (contract.status >= CONTRACT_STATUS_COMPLETE) {
+            return;
+          }
+          return (
+            <Section
+              key={contract.target}
+              title={contract.target
+                ? `${contract.target} (${contract.target_rank})`
+                : "Invalid Target"}
+              level={active ? 1 : 2}
+              buttons={(
+                <Fragment>
+                  <Box
+                    inline
+                    bold
+                    mr={1}>
+                    {contract.payout} (+{contract.payout_bonus}) TC
+                  </Box>
+                  <Button
+                    content={active ? "Abort" : "Accept"}
+                    disabled={contract.extraction_enroute}
+                    color={active && "bad"}
+                    onClick={() => act(
+                      'PRG_contract' + (active ? '_abort' : '-accept'),
+                      {
+                        contract_id: contract.id,
+                      })} />
+                </Fragment>
+              )}>
+              <Grid>
+                <Grid.Column>
+                  {contract.message}
+                </Grid.Column>
+                <Grid.Column size={0.5}>
+                  <Box
+                    bold
+                    mb={1}>
+                    Dropoff Location:
+                  </Box>
+                  <Box>
+                    {contract.dropoff}
+                  </Box>
+                </Grid.Column>
+              </Grid>
+            </Section>
+          );
+        })}
+      </Section>
+      <Section
+        title="Dropoff Locator"
+        textAlign="center"
+        opacity={data.ongoing_contract ? 100 : 0}>
+        <Box bold>
+          {data.dropoff_direction}
+        </Box>
+      </Section>
+    </Fragment>
+  );
+};
+
+const HubTab = (props, context) => {
+  const { act, data } = useBackend(context);
+  const contractor_hub_items = data.contractor_hub_items || [];
+  return (
+    <Section>
+      {contractor_hub_items.map(item => {
+        const repInfo = item.cost ? (item.cost + ' Rep') : 'FREE';
+        const limited = (item.limited !== -1);
+        return (
+          <Section
+            key={item.name}
+            title={item.name + ' - ' + repInfo}
+            level={2}
+            buttons={(
+              <Fragment>
+                {limited && (
+                  <Box
+                    inline
+                    bold
+                    mr={1}>
+                    {item.limited} remaining
+                  </Box>
+                )}
+                <Button
+                  content="Purchase"
+                  disabled={data.contract_rep < item.cost
+                    || (limited && item.limited <= 0)}
+                  onClick={() => act('buy_hub', {
+                    item: item.name,
+                    cost: item.cost,
+                  })} />
+              </Fragment>
+            )}>
+            <Table>
+              <Table.Row>
+                <Table.Cell>
+                  <Icon
+                    fontSize="60px"
+                    name={item.item_icon} />
+                </Table.Cell>
+                <Table.Cell
+                  verticalAlign="top">
+                  {item.desc}
+                </Table.Cell>
+              </Table.Row>
+            </Table>
+          </Section>
+        );
+      })}
+    </Section>
   );
 };

@@ -866,7 +866,7 @@
 	name = "hand of cards"
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "nanotrasen_hand2"
+	icon_state = "none"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/currenthand = list()
 	var/choice = null
@@ -875,6 +875,7 @@
 /obj/item/toy/cards/cardhand/attack_self(mob/user)
 	user.set_machine(src)
 	interact(user)
+
 
 /obj/item/toy/cards/cardhand/ui_interact(mob/user)
 	. = ..()
@@ -886,7 +887,6 @@
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.set_content(dat)
 	popup.open()
-
 
 /obj/item/toy/cards/cardhand/Topic(href, href_list)
 	if(..())
@@ -910,12 +910,7 @@
 			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
 
 			interact(cardUser)
-			if(src.currenthand.len < 3)
-				src.icon_state = "[deckstyle]_hand2"
-			else if(src.currenthand.len < 4)
-				src.icon_state = "[deckstyle]_hand3"
-			else if(src.currenthand.len < 5)
-				src.icon_state = "[deckstyle]_hand4"
+			update_sprite()
 			if(src.currenthand.len == 1)
 				var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(src.loc)
 				N.parentdeck = src.parentdeck
@@ -935,12 +930,7 @@
 			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			qdel(C)
 			interact(user)
-			if(currenthand.len > 4)
-				src.icon_state = "[deckstyle]_hand5"
-			else if(currenthand.len > 3)
-				src.icon_state = "[deckstyle]_hand4"
-			else if(currenthand.len > 2)
-				src.icon_state = "[deckstyle]_hand3"
+			update_sprite(src)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
 	else
@@ -949,7 +939,7 @@
 /obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj,obj/item/toy/cards/sourceobj)
 	..()
 	newobj.deckstyle = sourceobj.deckstyle
-	newobj.icon_state = "[deckstyle]_hand2" // Another dumb hack, without this the hand is invisible (or has the default deckstyle) until another card is added.
+	update_sprite()
 	newobj.card_hitsound = sourceobj.card_hitsound
 	newobj.card_force = sourceobj.card_force
 	newobj.card_throwforce = sourceobj.card_throwforce
@@ -957,6 +947,18 @@
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
 	newobj.resistance_flags = sourceobj.resistance_flags
+
+/**
+  * This proc updates the sprite for when you create a hand of cards
+  */
+/obj/item/toy/cards/cardhand/proc/update_sprite()
+	cut_overlays()
+	var/overlay_cards = currenthand.len
+
+	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
+	for(var/i = k; i <= overlay_cards; i++)
+		var/card_overlay = image(icon=src.icon,icon_state="sc_[currenthand[i]]_[deckstyle]",pixel_x=(1-i+k)*3,pixel_y=(1-i+k)*3)
+		add_overlay(card_overlay)
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -1024,12 +1026,7 @@
 			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>You add the [cardname] to your hand.</span>")
 			qdel(src)
 			H.interact(user)
-			if(H.currenthand.len > 4)
-				H.icon_state = "[deckstyle]_hand5"
-			else if(H.currenthand.len > 3)
-				H.icon_state = "[deckstyle]_hand4"
-			else if(H.currenthand.len > 2)
-				H.icon_state = "[deckstyle]_hand3"
+			H.update_sprite()
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
 	else

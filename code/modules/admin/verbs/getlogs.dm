@@ -31,5 +31,5 @@
 			src << ftp(file(path))
 		else
 			return
-	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.")
+	to_chat(src, "Attempting to send [path], this may take a fair few minutes if the file is very large.", confidential = TRUE)
 	return

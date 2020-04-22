@@ -8,6 +8,10 @@
 /datum/config_entry/flag/auto_deadmin_players
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/number/auto_deadmin_timegate
+	config_entry_value = null
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/auto_deadmin_antagonists
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -38,6 +42,11 @@
 	min_val = 0
 
 /datum/config_entry/flag/hub	// if the game appears on the hub or not
+
+/datum/config_entry/number/max_hub_pop //At what pop to take hub off the server
+	config_entry_value = 0 //0 means disabled
+	integer = TRUE
+	min_val = 0
 
 /datum/config_entry/flag/log_ooc	// log OOC channel
 

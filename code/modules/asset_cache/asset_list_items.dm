@@ -4,10 +4,6 @@
 	assets = list(
 		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
-		"shim-html5shiv.js" = 'tgui/packages/tgui/public/shim-html5shiv.js',
-		"shim-ie8.js" = 'tgui/packages/tgui/public/shim-ie8.js',
-		"shim-dom4.js" = 'tgui/packages/tgui/public/shim-dom4.js',
-		"shim-css-om.js" = 'tgui/packages/tgui/public/shim-css-om.js',
 	)
 
 /datum/asset/group/tgui
@@ -43,7 +39,8 @@
 		"smmon_3.gif" 				= 'icons/program_icons/smmon_3.gif',
 		"smmon_4.gif" 				= 'icons/program_icons/smmon_4.gif',
 		"smmon_5.gif" 				= 'icons/program_icons/smmon_5.gif',
-		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif'
+		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif',
+		"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
 	)
 
 /datum/asset/spritesheet/simple/pda

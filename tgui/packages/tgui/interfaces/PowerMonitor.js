@@ -4,6 +4,8 @@ import { toFixed } from 'common/math';
 import { pureComponentHooks } from 'common/react';
 import { Component, Fragment } from 'inferno';
 import { Box, Button, Chart, ColorBox, Flex, Icon, LabeledList, ProgressBar, Section, Table } from '../components';
+import { Window } from '../layouts';
+import { useBackend } from '../backend';
 
 const PEAK_DRAW = 500000;
 
@@ -12,7 +14,17 @@ const powerRank = str => {
   return ['w', 'kw', 'mw', 'gw'].indexOf(unit);
 };
 
-export class PowerMonitor extends Component {
+export const PowerMonitor = () => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <PowerMonitorContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export class PowerMonitorContent extends Component {
   constructor() {
     super();
     this.state = {
@@ -21,8 +33,7 @@ export class PowerMonitor extends Component {
   }
 
   render() {
-    const { state } = this.props;
-    const { data } = state;
+    const { data } = useBackend(this.context);
     const { history } = data;
     const { sortByField } = this.state;
     const supply = history.supply[history.supply.length - 1] || 0;
@@ -57,16 +68,18 @@ export class PowerMonitor extends Component {
                     value={supply}
                     minValue={0}
                     maxValue={maxValue}
-                    color="teal"
-                    content={toFixed(supply / 1000) + ' kW'} />
+                    color="teal">
+                    {toFixed(supply / 1000) + ' kW'}
+                  </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item label="Draw">
                   <ProgressBar
                     value={demand}
                     minValue={0}
                     maxValue={maxValue}
-                    color="pink"
-                    content={toFixed(demand / 1000) + ' kW'} />
+                    color="pink">
+                    {toFixed(demand / 1000) + ' kW'}
+                  </ProgressBar>
                 </LabeledList.Item>
               </LabeledList>
             </Section>

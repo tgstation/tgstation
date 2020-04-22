@@ -2,50 +2,66 @@ import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { AnimatedNumber, Button, LabeledList, ProgressBar, Section } from '../components';
 import { BeakerContents } from './common/BeakerContents';
+import { Window } from '../layouts';
 
-export const Cryo = props => {
-  const { act, data } = useBackend(props);
-  const damageTypes = [
-    {
-      label: "Brute",
-      type: "bruteLoss",
-    },
-    {
-      label: "Respiratory",
-      type: "oxyLoss",
-    },
-    {
-      label: "Toxin",
-      type: "toxLoss",
-    },
-    {
-      label: "Burn",
-      type: "fireLoss",
-    },
-  ];
+const damageTypes = [
+  {
+    label: "Brute",
+    type: "bruteLoss",
+  },
+  {
+    label: "Respiratory",
+    type: "oxyLoss",
+  },
+  {
+    label: "Toxin",
+    type: "toxLoss",
+  },
+  {
+    label: "Burn",
+    type: "fireLoss",
+  },
+];
+
+export const Cryo = () => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <CryoContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+const CryoContent = (props, context) => {
+  const { act, data } = useBackend(context);
   return (
     <Fragment>
       <Section title="Occupant">
         <LabeledList>
-          <LabeledList.Item
-            label="Occupant"
-            content={data.occupant.name ? data.occupant.name : "No Occupant"} />
+          <LabeledList.Item label="Occupant">
+            {data.occupant.name || 'No Occupant'}
+          </LabeledList.Item>
           {!!data.hasOccupant && (
             <Fragment>
               <LabeledList.Item
                 label="State"
-                content={data.occupant.stat}
-                color={data.occupant.statstate} />
+                color={data.occupant.statstate}>
+                {data.occupant.stat}
+              </LabeledList.Item>
               <LabeledList.Item
                 label="Temperature"
                 color={data.occupant.temperaturestatus}>
-                <AnimatedNumber value={data.occupant.bodyTemperature} /> K
+                <AnimatedNumber
+                  value={data.occupant.bodyTemperature} />
+                {' K'}
               </LabeledList.Item>
               <LabeledList.Item label="Health">
                 <ProgressBar
                   value={data.occupant.health / data.occupant.maxHealth}
-                  color={(data.occupant.health > 0) ? "good" : "average"}>
-                  <AnimatedNumber value={data.occupant.health} />
+                  color={data.occupant.health > 0 ? 'good' : 'average'}>
+                  <AnimatedNumber
+                    value={data.occupant.health} />
                 </ProgressBar>
               </LabeledList.Item>
               {(damageTypes.map(damageType => (
@@ -54,7 +70,8 @@ export const Cryo = props => {
                   label={damageType.label}>
                   <ProgressBar
                     value={data.occupant[damageType.type]/100}>
-                    <AnimatedNumber value={data.occupant[damageType.type]} />
+                    <AnimatedNumber
+                      value={data.occupant[damageType.type]} />
                   </ProgressBar>
                 </LabeledList.Item>
               )))}
@@ -64,17 +81,15 @@ export const Cryo = props => {
       </Section>
       <Section title="Cell">
         <LabeledList>
-          <LabeledList.Item
-            label="Power"
-            content={(
-              <Button
-                icon={data.isOperating ? "power-off" : "times"}
-                disabled={data.isOpen}
-                onClick={() => act('power')}
-                color={data.isOperating && ("green")}>
-                {data.isOperating ? "On" : "Off"}
-              </Button>
-            )} />
+          <LabeledList.Item label="Power">
+            <Button
+              icon={data.isOperating ? "power-off" : "times"}
+              disabled={data.isOpen}
+              onClick={() => act('power')}
+              color={data.isOperating && 'green'}>
+              {data.isOperating ? "On" : "Off"}
+            </Button>
+          </LabeledList.Item>
           <LabeledList.Item label="Temperature">
             <AnimatedNumber value={data.cellTemperature} /> K
           </LabeledList.Item>

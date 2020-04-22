@@ -14,7 +14,7 @@
 	ui_y = 630
 	available_on_ntnet = 0
 	requires_ntnet = 0
-	tgui_id = "ntos_configuration"
+	tgui_id = "NtosConfiguration"
 
 	var/obj/item/modular_computer/movable = null
 

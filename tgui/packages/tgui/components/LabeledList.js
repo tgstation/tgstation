@@ -1,5 +1,6 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { Box, unit } from './Box';
+import { Divider } from './Divider';
 
 export const LabeledList = props => {
   const { children } = props;
@@ -18,6 +19,7 @@ export const LabeledListItem = props => {
     label,
     labelColor = 'label',
     color,
+    textAlign,
     buttons,
     content,
     children,
@@ -34,11 +36,13 @@ export const LabeledListItem = props => {
         className={classes([
           'LabeledList__cell',
           'LabeledList__label',
-        ])}
-        content={label + ':'} />
+        ])}>
+        {label ? label + ':' : null}
+      </Box>
       <Box
         as="td"
         color={color}
+        textAlign={textAlign}
         className={classes([
           'LabeledList__cell',
           'LabeledList__content',
@@ -59,12 +63,19 @@ export const LabeledListItem = props => {
 LabeledListItem.defaultHooks = pureComponentHooks;
 
 export const LabeledListDivider = props => {
-  const { size = 1 } = props;
+  const padding = props.size
+    ? unit(Math.max(0, props.size - 1))
+    : 0;
   return (
     <tr className="LabeledList__row">
-      <td style={{
-        'padding-bottom': unit(size),
-      }} />
+      <td
+        colSpan={3}
+        style={{
+          'padding-top': padding,
+          'padding-bottom': padding,
+        }}>
+        <Divider />
+      </td>
     </tr>
   );
 };

@@ -39,6 +39,8 @@
 	id = /obj/item/card/id/syndicate
 	backpack_contents = list(/obj/item/storage/box/survival/syndie=1,\
 		/obj/item/kitchen/knife/combat/survival,
+		/obj/item/dnainjector/clumsymut, //in case you want to be clumsy for the memes
+		/obj/item/storage/box/syndie_kit/clownpins, //for any guns that you get your grubby little clown op mitts on
 		/obj/item/reagent_containers/spray/waterflower/lube)
 	implants = list(/obj/item/implant/sad_trombone)
 
@@ -47,15 +49,8 @@
 /datum/outfit/syndicate/clownop/no_crystals
 	tc = 0
 
-/datum/outfit/syndicate/clownop/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	..()
-	if(visualsOnly)
-		return
-	H.dna.add_mutation(CLOWNMUT)
-
 /datum/outfit/syndicate/clownop/leader
 	name = "Clown Operative Leader - Basic"
 	id = /obj/item/card/id/syndicate/nuke_leader
 	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
-	r_hand = /obj/item/nuclear_challenge/clownops
 	command_radio = TRUE
