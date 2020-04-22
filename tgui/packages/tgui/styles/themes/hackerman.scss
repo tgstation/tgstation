@@ -25,9 +25,13 @@
   @include meta.load-css('../components/Input.scss', $with: (
     'border-color': colors.$primary,
   ));
-  @include meta.load-css('../components/Layout.scss');
+  @include meta.load-css('../components/Modal.scss');
   @include meta.load-css('../components/Section.scss');
-  @include meta.load-css('../components/TitleBar.scss', $with: (
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
     'color-background': #223d22,
   ));
 

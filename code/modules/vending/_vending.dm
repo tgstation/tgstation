@@ -685,7 +685,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 	if(!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/vending)
 		assets.send(user)
-		ui = new(user, src, ui_key, "vending", ui_key, 450, 600, master_ui, state)
+		ui = new(user, src, ui_key, "Vending", ui_key, 450, 600, master_ui, state)
 		ui.open()
 
 /obj/machinery/vending/ui_static_data(mob/user)

@@ -8,6 +8,10 @@
 /datum/config_entry/flag/auto_deadmin_players
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/number/auto_deadmin_timegate
+	config_entry_value = null
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/auto_deadmin_antagonists
 	protection = CONFIG_ENTRY_LOCKED
 
