@@ -4,8 +4,6 @@
 //This shouldn't be higher than the icon size, and generally you shouldn't be changing this, but it's here just in case.
 #define MAX_GLIDE_SIZE 32
 
-// Originally a really stupid /tg/ var that sucked and was really bad and caused it to look horrible. Now it's a way of compensating for time dilation
-GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 
 // Credit to the Goon coder MBC for figuring this out!
 //Define clientside tick lag seperately from world.tick_lag
@@ -32,4 +30,4 @@ GLOBAL_VAR_INIT(glide_size_multiplier, 1.0)
 /// Then that's multiplied by the global glide size multiplier. 1.25 by default feels pretty close to spot on. This is just to try to get byond to behave.
 /// The whole result is then clamped to within the range above.
 /// Not very readable but it works
-#define DELAY_TO_GLIDE_SIZE(delay) (CLAMP(((32 / max((delay) / world.tick_lag, 1)) * GLOB.glide_size_multiplier), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
+#define DELAY_TO_GLIDE_SIZE(delay) (CLAMP(((32 / max((delay) / world.tick_lag, 1)) * 1), MIN_GLIDE_SIZE, MAX_GLIDE_SIZE))
