@@ -135,5 +135,6 @@
 	if(user.put_in_hands(N))
 		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
 	else
+		qdel(N)
 		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
 
