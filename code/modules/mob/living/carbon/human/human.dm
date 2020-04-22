@@ -39,6 +39,13 @@
 	GLOB.human_list -= src
 	return ..()
 
+/mob/living/carbon/human/ZImpactDamage(turf/T, levels)
+	if(dna.species.flying_species || (ismoth(src) && dna.features["moth_wings"] != "Burnt Off"))
+		visible_message("<span class='danger'>[src] softly lands on [T].</span>", \
+						"<span class='userdanger'>You softly land on [T].</span>")
+		Knockdown(levels * 50)
+		return
+	. = ..()
 
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...

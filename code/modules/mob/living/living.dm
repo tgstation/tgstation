@@ -51,16 +51,10 @@
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
-	Knockdown(levels * 50)
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if(H.dna.species.flying_species || (ismoth(H) && H.dna.features["moth_wings"] != "Burnt Off"))
-			visible_message("<span class='danger'>[src] softly lands on [T].</span>", \
-							"<span class='userdanger'>You softly land on [T].</span>")
-			return
 	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>", \
 					"<span class='userdanger'>You crash into [T] with a sickening noise!</span>")
 	adjustBruteLoss((levels * 5) ** 1.5)
+	Knockdown(levels * 50)
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A)
