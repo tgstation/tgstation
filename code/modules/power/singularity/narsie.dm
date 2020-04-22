@@ -227,7 +227,6 @@
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
-	icon = 'icons/obj/narsie_spawn_anim.dmi'
 	setDir(SOUTH)
 	move_self = FALSE
 	flick("narsie_spawn_anim",src)
@@ -235,4 +234,3 @@
 
 /obj/singularity/narsie/proc/narsie_spawn_animation_end()
 	move_self = TRUE
-	icon = initial(icon)
