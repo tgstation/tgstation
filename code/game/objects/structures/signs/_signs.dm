@@ -54,11 +54,12 @@ GLOBAL_VAR(editable_sign_types)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 							 "<span class='notice'>You unfasten [src].</span>")
 		var/obj/item/sign_backing/SB = new (get_turf(user))
-		SB.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
-		SB.desc = "[desc] It can be placed on a wall."
-		SB.icon_state = icon_state
+		if(type != /obj/structure/sign/basic) //If it's still just a basic sign backing, we can skip some of the below variable transfers.
+			SB.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
+			SB.desc = "[desc] It can be placed on a wall."
+			SB.icon_state = icon_state
+			SB.sign_path = type
 		SB.obj_integrity = obj_integrity //Transfer how damaged it is.
-		SB.sign_path = type
 		SB.setDir(dir)
 		qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 	return TRUE
@@ -130,6 +131,12 @@ GLOBAL_VAR(editable_sign_types)
 	max_integrity = 100
 	var/sign_path = /obj/structure/sign/basic //The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
 	var/is_editable = TRUE
+
+/obj/item/sign_backing/Initialize() //Signs not attached to walls are always rotated so they look like they're laying horizontal.
+	. = ..()
+	var/matrix/M = matrix()
+	M.Turn(90)
+	transform = M
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	. = ..()
