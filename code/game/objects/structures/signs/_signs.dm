@@ -10,8 +10,10 @@
 	var/buildable_sign = TRUE //unwrenchable
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	resistance_flags = FLAMMABLE
-	var/is_editable = FALSE //This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign subtype to override.
-	var/sign_change_name = "Sign - Blank" //sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
+	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
+	var/is_editable = FALSE
+	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
+	var/sign_change_name = "Sign - Blank" 
 
 /obj/structure/sign/basic
 	name = "sign backing"
@@ -34,7 +36,13 @@
 		return
 	user.examinate(src)
 
+///This is a global list of all signs you can change an existing sign or new sign backing to, when using a pen on them.
 GLOBAL_VAR(editable_sign_types)
+/**
+   * This proc populates GLOBAL_VAR(editable_sign_types)
+   *
+   * The first time a pen is used on any sign, this populates GLOBAL_VAR(editable_sign_types), a global list of all the signs that you can set a sign backing to with a pen.
+   */
 /proc/populate_editable_sign_types() //The first time a pen is used on any sign, this populates the above, a global list of all the signs that you can set a sign backing to with a pen.
 	GLOB.editable_sign_types = list()
 	for(var/s in subtypesof(/obj/structure/sign))
@@ -54,7 +62,7 @@ GLOBAL_VAR(editable_sign_types)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 							 "<span class='notice'>You unfasten [src].</span>")
 		var/obj/item/sign_backing/SB = new (get_turf(user))
-		if(type != /obj/structure/sign/basic) //If it's still just a basic sign backing, we can skip some of the below variable transfers.
+		if(type != /obj/structure/sign/basic) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 			SB.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
 			SB.desc = "[desc] It can be placed on a wall."
 			SB.icon_state = icon_state
@@ -65,7 +73,7 @@ GLOBAL_VAR(editable_sign_types)
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/pen) && is_editable)
+	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			populate_editable_sign_types()
 			if(!length(GLOB.editable_sign_types))
@@ -73,29 +81,29 @@ GLOBAL_VAR(editable_sign_types)
 		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
 		if(!choice)
 			return
+		if(!Adjacent(user)) //Make sure user is adjacent still.
+			to_chat(user, "<span class='warning'>You need to stand next to the sign to change it!</span>")
+			return
 		user.visible_message("<span class='notice'>[user] begins changing [src].</span>", \
 							 "<span class='notice'>You begin changing [src].</span>")
-		if(do_after(user, 40, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
-			var/sign_type = GLOB.editable_sign_types[choice]
-			if(!Adjacent(user)) //Make sure user is adjacent still.
-				return
-			if(!sign_type)
-				return
-			//It's import to clone the pixel layout information.
-			//Otherwise signs revert to being on the turf and
-			//move jarringly.
-			var/obj/structure/sign/newsign = new sign_type(get_turf(src))
-			newsign.pixel_x = pixel_x
-			newsign.pixel_y = pixel_y
-			newsign.obj_integrity = obj_integrity
-			qdel(src)
-			user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
-						 "<span class='notice'>You finish changing the sign.</span>")
+		if(!do_after(user, 40, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
+			return
+		var/sign_type = GLOB.editable_sign_types[choice]
+		//It's import to clone the pixel layout information.
+		//Otherwise signs revert to being on the turf and
+		//move jarringly.
+		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
+		newsign.pixel_x = pixel_x
+		newsign.pixel_y = pixel_y
+		newsign.obj_integrity = obj_integrity
+		qdel(src)
+		user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
+					 "<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()
 
 /obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/pen) && is_editable)
+	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			populate_editable_sign_types()
 			if(!length(GLOB.editable_sign_types))
@@ -103,19 +111,20 @@ GLOBAL_VAR(editable_sign_types)
 		var/choice = input(user, "Select a sign type.", "Sign Customization") as null|anything in GLOB.editable_sign_types
 		if(!choice)
 			return
+		if(!Adjacent(user)) //Make sure user is adjacent still.
+			to_chat(user, "<span class='warning'>You need to stand next to the sign to change it!</span>")
+			return
+		if(!choice)
+			return
 		user.visible_message("<span class='notice'>You begin changing [src].</span>")
-		if(do_after(user, 40, target = src))
-			var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
-			if(!Adjacent(user)) //Make sure user is adjacent still.
-				return
-			if(!sign_type)
-				return
-			name = initial(sign_type.name)
-			desc = "[initial(sign_type.desc)] It can be placed on a wall."
-			icon_state = initial(sign_type.icon_state)
-			sign_path = sign_type
-			
-			user.visible_message("<span class='notice'>You finish changing the sign.</span>")
+		if(!do_after(user, 40, target = src))
+			return
+		var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
+		name = initial(sign_type.name)
+		desc = "[initial(sign_type.desc)] It can be placed on a wall."
+		icon_state = initial(sign_type.icon_state)
+		sign_path = sign_type	
+		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()
 
@@ -140,15 +149,16 @@ GLOBAL_VAR(editable_sign_types)
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	. = ..()
-	if(iswallturf(target) && proximity)
-		var/turf/T = target
-		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-							 "<span class='notice'>You attach the sign to [T].</span>")
-		playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
-		var/obj/structure/sign/S = new sign_path(T)
-		S.obj_integrity = obj_integrity
-		S.setDir(dir)
-		qdel(src)
+	if(!iswallturf(target) || !proximity)
+		return
+	var/turf/T = target
+	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
+						 "<span class='notice'>You attach the sign to [T].</span>")
+	playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
+	var/obj/structure/sign/S = new sign_path(T)
+	S.obj_integrity = obj_integrity
+	S.setDir(dir)
+	qdel(src)
 	return ..()
 
 /obj/item/sign_backing/Move(atom/new_loc, direct = 0)
