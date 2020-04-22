@@ -108,7 +108,6 @@
 		return FALSE
 	if(!check_menu(user, crayon))
 		return FALSE
-
 	user.visible_message("<span class='notice'>[user] gives [src] a new look.</span>", "<span class='notice'>Voila! You give [src] a new look.</span>")
 	crayon.use_charges(1)
 	crayon.check_empty(user)
@@ -211,10 +210,10 @@
 /obj/item/cardboard_cutout/proc/check_menu(mob/living/user, obj/item/toy/crayon/crayon)
 	if(!istype(user))
 		return FALSE
+	if(user.incapacitated())
+		return FALSE
 	if(pushed_over)
 		to_chat(user, "<span class='warning'>Right [src] first!</span>")
-		return FALSE
-	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	if(!crayon || !user.is_holding(crayon))
 		return FALSE
