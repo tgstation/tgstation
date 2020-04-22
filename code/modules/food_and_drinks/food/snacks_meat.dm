@@ -316,9 +316,12 @@
 	icon_state = "meatclown"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/banana = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
-	tastes = list("meat" = 3, "clown" = 1)
+	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
 	foodtype = MEAT
 
+/obj/item/reagent_containers/food/snacks/meatclown/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 30)
 
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
