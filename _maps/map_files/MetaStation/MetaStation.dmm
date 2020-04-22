@@ -15046,6 +15046,11 @@
 	dir = 8
 	},
 /obj/item/kirbyplants/random,
+/obj/machinery/camera{
+	c_tag = "Outer Vault";
+	dir = 4;
+	name = "storage wing camera"
+	},
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
 "aHq" = (
