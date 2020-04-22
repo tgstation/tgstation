@@ -1,7 +1,7 @@
 import { shallowDiffers } from 'common/react';
 import { debounce } from 'common/timer';
 import { Component, createRef } from 'inferno';
-import { callByond, tridentVersion } from '../byond';
+import { callByond, IS_IE8 } from '../byond';
 import { createLogger } from '../logging';
 import { computeBoxProps } from './Box';
 
@@ -95,7 +95,7 @@ export class ByondUi extends Component {
 
   componentDidMount() {
     // IE8: It probably works, but fuck you anyway.
-    if (tridentVersion <= 4) {
+    if (IS_IE8) {
       return;
     }
     window.addEventListener('resize', this.handleResize);
@@ -104,7 +104,7 @@ export class ByondUi extends Component {
 
   componentDidUpdate() {
     // IE8: It probably works, but fuck you anyway.
-    if (tridentVersion <= 4) {
+    if (IS_IE8) {
       return;
     }
     const {
@@ -121,7 +121,7 @@ export class ByondUi extends Component {
 
   componentWillUnmount() {
     // IE8: It probably works, but fuck you anyway.
-    if (tridentVersion <= 4) {
+    if (IS_IE8) {
       return;
     }
     window.removeEventListener('resize', this.handleResize);

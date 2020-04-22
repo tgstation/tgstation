@@ -35,7 +35,7 @@
 /obj/item/graft/proc/get_graft_text()
 	var/text = "- Plant Graft -\n"
 	if(parent_seed)
-		text += "- Parent Plant Name:[parent_seed.plantname] -\n"
+		text += "- Parent Plant: [parent_seed.plantname] -\n"
 	if(stored_trait)
-		text += "- Graftable Traits:[stored_trait.get_name()] -\n"
+		text += "- Graftable Traits: [stored_trait.get_name()] -\n"
 	return text

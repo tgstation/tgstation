@@ -1,8 +1,9 @@
 import { useBackend } from '../backend';
 import { Section, Button } from '../components';
+import { Window } from '../layouts';
 
-export const NotificationPreferences = props => {
-  const { act, data } = useBackend(props);
+export const NotificationPreferences = (props, context) => {
+  const { act, data } = useBackend(context);
 
   const ignoresPreSort = data.ignore || [];
   const ignores = ignoresPreSort.sort((a, b) => {
@@ -18,16 +19,20 @@ export const NotificationPreferences = props => {
   });
 
   return (
-    <Section title="Ghost Role Notifications">
-      {ignores.map(ignore => (
-        <Button
-          fluid
-          key={ignore.key}
-          icon={ignore.enabled ? 'times' : 'check'}
-          content={ignore.desc}
-          color={ignore.enabled ? 'bad' : 'good'}
-          onClick={() => act('toggle_ignore', { key: ignore.key })} />
-      ))}
-    </Section>
+    <Window resizable>
+      <Window.Content scrollable>
+        <Section title="Ghost Role Notifications">
+          {ignores.map(ignore => (
+            <Button
+              fluid
+              key={ignore.key}
+              icon={ignore.enabled ? 'times' : 'check'}
+              content={ignore.desc}
+              color={ignore.enabled ? 'bad' : 'good'}
+              onClick={() => act('toggle_ignore', { key: ignore.key })} />
+          ))}
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };

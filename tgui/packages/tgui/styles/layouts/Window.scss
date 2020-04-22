@@ -2,7 +2,7 @@
 @use '../base.scss';
 @use '../functions.scss' as *;
 
-.Layout {
+.Window {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -15,7 +15,7 @@
     base.$color-bg-end 100%);
 }
 
-.Layout__titleBar {
+.Window__titleBar {
   position: fixed;
   z-index: 1;
   top: 0;
@@ -25,7 +25,7 @@
 }
 
 // Everything after the title bar
-.Layout__rest {
+.Window__rest {
   position: fixed;
   top: 32px;
   bottom: 0;
@@ -33,46 +33,7 @@
   right: 0;
 }
 
-.Layout__content {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  margin-bottom: -6px;
-
-  // Fancy scrollbar
-  scrollbar-base-color: color.scale(
-    base.$color-bg,
-    $lightness: -25%);
-  scrollbar-face-color: color.scale(
-    base.$color-bg,
-    $lightness: 10%);
-  scrollbar-3dlight-color: color.scale(
-    base.$color-bg,
-    $lightness: 0%);
-  scrollbar-highlight-color: color.scale(
-    base.$color-bg,
-    $lightness: 0%);
-  scrollbar-track-color: color.scale(
-    base.$color-bg,
-    $lightness: -25%);
-  scrollbar-arrow-color: color.scale(
-    base.$color-bg,
-    $lightness: 50%);
-  scrollbar-shadow-color: color.scale(
-    base.$color-bg,
-    $lightness: 10%);
-}
-
-.Layout__content--scrollable {
-  overflow-y: scroll;
-  margin-bottom: 0;
-}
-
-.Layout__dimmer {
+.Window__dimmer {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -82,7 +43,7 @@
   pointer-events: none;
 }
 
-.Layout__toast {
+.Window__toast {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -95,7 +56,7 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-.Layout__resizeHandle__se {
+.Window__resizeHandle__se {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -104,7 +65,7 @@
   cursor: se-resize;
 }
 
-.Layout__resizeHandle__s {
+.Window__resizeHandle__s {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -113,7 +74,7 @@
   cursor: s-resize;
 }
 
-.Layout__resizeHandle__e {
+.Window__resizeHandle__e {
   position: fixed;
   top: 0;
   bottom: 0;

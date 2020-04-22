@@ -1,4 +1,0 @@
-author: "ShizCalev"
-delete-after: True
-changes: 
-  - bugfix: "Food can no longer be grilled repeatedly to the point of breaking their name with an endless string."
