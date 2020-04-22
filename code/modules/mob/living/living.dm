@@ -51,9 +51,13 @@
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
-	visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>", \
-					"<span class='userdanger'>You crash into [T] with a sickening noise!</span>")
-	adjustBruteLoss((levels * 5) ** 1.5)
+	if(HAS_TRAIT(src, TRAIT_SOFTLANDING))
+		visible_message("<span class='danger'>[src] softly lands on [T].</span>", \
+				"<span class='userdanger'>You softly land on [T].</span>")
+	else
+		visible_message("<span class='danger'>[src] crashes into [T] with a sickening noise!</span>", \
+						"<span class='userdanger'>You crash into [T] with a sickening noise!</span>")
+		adjustBruteLoss((levels * 5) ** 1.5)
 	Knockdown(levels * 50)
 
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
