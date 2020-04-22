@@ -111,27 +111,10 @@
 	. = ..()
 	if(.)
 		return
-<<<<<<< HEAD
-
-	switch(action)
-		if ("startpress")
-			if (!processing)
-				if(produced_coins > 0)
-					log_econ("[produced_coins] coins were created by [src] in the last cycle.")
-				produced_coins = 0
-			processing = TRUE
-			begin_processing()
-		if ("stoppress")
-			processing = FALSE
-			end_processing()
-		if ("changematerial")
-			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			for(var/datum/material/mat in materials.materials)
-				if (params["material_name"] == mat.name)
-					chosen = mat
-=======
 	if(action == "startpress")
 		if (!processing)
+			if(produced_coins > 0)
+				log_econ("[produced_coins] coins were created by [src] in the last cycle.")
 			produced_coins = 0
 		processing = TRUE
 		begin_processing()
@@ -146,7 +129,6 @@
 			if (params["material_name"] == mat.name)
 				chosen = mat
 		return TRUE
->>>>>>> upstream/master
 
 /obj/machinery/mineral/mint/proc/create_coins()
 	var/turf/T = get_step(src,output_dir)
