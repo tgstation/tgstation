@@ -310,6 +310,16 @@
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtype = MEAT
 
+/obj/item/reagent_containers/food/snacks/meatclown
+	name = "meat clown"
+	desc = "A delicious, round piece of meat clown. How horrifying."
+	icon_state = "meatclown"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/banana = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	tastes = list("meat" = 3, "clown" = 1)
+	foodtype = MEAT
+
+
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/kebab
