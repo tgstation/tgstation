@@ -5,11 +5,11 @@
 
 	suite = text2num(version_bits[1])
 	if(version_bits.len > 1)
-		major = text2num(version_bits[2])
+		minor = text2num(version_bits[2])
 		if(version_bits.len > 2)
-			minor = text2num(version_bits[3])
+			patch = text2num(version_bits[3])
 			if(version_bits.len == 4)
-				patch = text2num(version_bits[4])
+				deprecated_patch = text2num(version_bits[4])
 
 /datum/tgs_version/proc/Valid(allow_wildcards = FALSE)
 	if(suite == null)
@@ -19,4 +19,4 @@
 	return !Wildcard()
 
 /datum/tgs_version/Wildcard()
-	return major == null || minor == null || patch == null
+	return minor == null || patch == null

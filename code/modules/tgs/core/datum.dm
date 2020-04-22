@@ -8,7 +8,7 @@ TGS_DEFINE_AND_SET_GLOBAL(tgs, null)
 	src.version = version
 
 /datum/tgs_api/latest
-	parent_type = /datum/tgs_api/v4
+	parent_type = /datum/tgs_api/v5
 
 TGS_PROTECT_DATUM(/datum/tgs_api)
 
