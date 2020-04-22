@@ -41,7 +41,7 @@
 	circuit = /obj/item/circuitboard/computer/aiupload
 
 /obj/machinery/computer/upload/ai/interact(mob/user)
-	current = select_active_ai(user)
+	current = select_active_ai(user, z)
 
 	if (!current)
 		to_chat(user, "<span class='alert'>No active AIs detected!</span>")

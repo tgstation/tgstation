@@ -526,3 +526,63 @@ GLOBAL_LIST_EMPTY(species_list)
 		sleep(1)
 	if(set_original_dir)
 		AM.setDir(originaldir)
+
+///////////////////////
+///Silicon Mob Procs///
+///////////////////////
+
+//Returns a list of unslaved cyborgs
+/proc/active_free_borgs()
+	. = list()
+	for(var/mob/living/silicon/robot/R in GLOB.alive_mob_list)
+		if(R.connected_ai || R.shell)
+			continue
+		if(R.stat == DEAD)
+			continue
+		if(R.emagged || R.scrambledcodes)
+			continue
+		. += R
+
+//Returns a list of AI's
+/proc/active_ais(check_mind=FALSE, var/z = null)
+	. = list()
+	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
+		if(A.stat == DEAD)
+			continue
+		if(A.control_disabled)
+			continue
+		if(check_mind)
+			if(!A.mind)
+				continue
+		if(z && !(z == A.z) && (!is_station_level(z) || !is_station_level(A.z))) //if a Z level was specified, AND the AI is not on the same level, AND either is off the station...
+			continue
+		. += A
+	return .
+
+//Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
+/proc/select_active_ai_with_fewest_borgs(var/z)
+	var/mob/living/silicon/ai/selected
+	var/list/active = active_ais(FALSE, z)
+	for(var/mob/living/silicon/ai/A in active)
+		if(!selected || (selected.connected_robots.len > A.connected_robots.len))
+			selected = A
+
+	return selected
+
+/proc/select_active_free_borg(mob/user)
+	var/list/borgs = active_free_borgs()
+	if(borgs.len)
+		if(user)
+			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sortList(borgs)
+		else
+			. = pick(borgs)
+	return .
+
+/proc/select_active_ai(mob/user, var/z = null)
+	var/list/ais = active_ais(FALSE, z)
+	if(ais.len)
+		if(user)
+			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sortList(ais)
+		else
+			. = pick(ais)
+	return .
