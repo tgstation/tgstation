@@ -1,7 +1,7 @@
 /obj/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
 	name = "Nar'Sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-	icon = 'icons/obj/narsiesmall.dmi'
+	icon = 'icons/obj/narsie_small.dmi'
 	icon_state = "narsie"
 	pixel_x = -89
 	pixel_y = -85
