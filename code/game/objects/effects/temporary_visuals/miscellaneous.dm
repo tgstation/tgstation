@@ -97,13 +97,19 @@
 	icon_state = "phaseout"
 
 /obj/effect/temp_visual/dir_setting/wraith
-	name = "blood"
+	name = "shadow"
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "phase_shift2"
-	duration = 12
+	duration = 6
+
+/obj/effect/temp_visual/dir_setting/wraith/angelic
+	icon_state = "phase_shift2_angelic"
 
 /obj/effect/temp_visual/dir_setting/wraith/out
 	icon_state = "phase_shift"
+
+/obj/effect/temp_visual/dir_setting/wraith/out/angelic
+	icon_state = "phase_shift_angelic"
 
 /obj/effect/temp_visual/dir_setting/tailsweep
 	icon_state = "tailsweep"

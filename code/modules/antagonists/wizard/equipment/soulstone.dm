@@ -112,7 +112,7 @@
 		A.cancel_camera()
 		if(purified)
 			icon_state = "purified_soulstone"
-			A.icon_state = "ghost1"
+			A.icon_state = "shade_angelic"
 			A.name = "Purified [initial(A.name)]"
 		else
 			icon_state = "soulstone"
@@ -127,7 +127,7 @@
 /obj/structure/constructshell
 	name = "empty shell"
 	icon = 'icons/obj/wizard.dmi'
-	icon_state = "construct-cult"
+	icon_state = "construct_cult"
 	desc = "A wicked machine used by those skilled in magical arts. It is inactive."
 
 /obj/structure/constructshell/examine(mob/user)
@@ -219,18 +219,23 @@
 			var/obj/structure/constructshell/T = target
 			var/mob/living/simple_animal/shade/A = locate() in src
 			if(A)
-				var/construct_class = alert(user, "Please choose which type of construct you wish to create.",,"Juggernaut","Wraith","Artificer")
+				var/list/constructs = list(
+					"Juggernaut" = image(icon = 'icons/mob/cult.dmi', icon_state = "juggernaut"),
+					"Wraith" = image(icon = 'icons/mob/cult.dmi', icon_state = "wraith"),
+					"Artificer" = image(icon = 'icons/mob/cult.dmi', icon_state = "artificer")
+					)
+				var/construct_class = show_radial_menu(user, src, constructs, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 				if(!T || !T.loc)
 					return
 				switch(construct_class)
 					if("Juggernaut")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut, A, user, 0, T.loc)
 						else
 							if(purified)
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/angelic, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/angelic, A, user, 0, T.loc)
 							else
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/armored/noncult, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/juggernaut/noncult, A, user, 0, T.loc)
 					if("Wraith")
 						if(iscultist(user) || iswizard(user))
 							makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith, A, user, 0, T.loc)
@@ -241,12 +246,14 @@
 								makeNewConstruct(/mob/living/simple_animal/hostile/construct/wraith/noncult, A, user, 0, T.loc)
 					if("Artificer")
 						if(iscultist(user) || iswizard(user))
-							makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder, A, user, 0, T.loc)
+							makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer, A, user, 0, T.loc)
 						else
 							if(purified)
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/angelic, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/angelic, A, user, 0, T.loc)
 							else
-								makeNewConstruct(/mob/living/simple_animal/hostile/construct/builder/noncult, A, user, 0, T.loc)
+								makeNewConstruct(/mob/living/simple_animal/hostile/construct/artificer/noncult, A, user, 0, T.loc)
+					else
+						return
 				for(var/datum/mind/B in SSticker.mode.cult)
 					if(B == A.mind)
 						SSticker.mode.remove_cultist(A.mind)
@@ -255,11 +262,21 @@
 			else
 				to_chat(user, "<span class='userdanger'>Creation failed!</span>: The soul stone is empty! Go kill someone!")
 
+/obj/item/soulstone/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
 /proc/makeNewConstruct(mob/living/simple_animal/hostile/construct/ctype, mob/target, mob/stoner = null, cultoverride = 0, loc_override = null)
 	if(QDELETED(target))
 		return
 	var/mob/living/simple_animal/hostile/construct/newstruct = new ctype((loc_override) ? (loc_override) : (get_turf(target)))
+	var/makeicon = newstruct.icon_state
+	var/holyness = newstruct.holy
+	flick("make_[makeicon][holyness]", newstruct)
+	playsound(newstruct, 'sound/effects/constructform.ogg', 50)
 	if(stoner)
 		newstruct.faction |= "[REF(stoner)]"
 		newstruct.master = stoner
