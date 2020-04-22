@@ -20166,9 +20166,6 @@
 	icon_state = "map-left-MS";
 	pixel_y = 32
 	},
-/obj/item/stack/packageWrap{
-	pixel_y = 2
-	},
 /turf/open/floor/plasteel,
 /area/construction/storage_wing)
 "aUk" = (
