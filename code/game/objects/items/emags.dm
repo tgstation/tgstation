@@ -56,7 +56,7 @@
 	if(istype(I, /obj/item/stack/telecrystal))
 		var/obj/item/stack/telecrystal/TC = I
 		charges ++
-		TC.change_stack(user, 1)
+		TC.add(-1)
 		to_chat(user, "<span class='notice'>You slot [TC] into [src]. It now has [charges] charges.</span>")
 
 /obj/item/card/emag/doormag/examine(mob/user)
@@ -77,14 +77,16 @@
 	A.emag_act(user, src)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
-	if (!(target in type_blacklist))
+	if (target.type in type_blacklist)
 		to_chat(user, "<span class='warning'>The [target] cannot be affected by the [src]! A more specialized hacking device is required.</span>")
+		return FALSE
+	return TRUE
 
 /obj/item/card/emag/doormag/can_emag(atom/target, mob/user)
 	if (charges <= 0)
 		to_chat(user, "<span class='warning'>[src] has insufficient charge. Raw telecrystals can be inserted to regain charges.</span>")
 		return FALSE
-	if (!(target in type_whitelist))
+	if (!(target.type in type_whitelist))
 		to_chat(user, "<span class='warning'>[src] is unable to interface with this. It only seems to fit into airlock electronics.</span>")
 		return FALSE
 	return TRUE
