@@ -1,4 +1,0 @@
-author: "EgorDinamit"
-delete-after: True
-changes: 
-  - bugfix: "captain's empty sleeper, on cybersun ship space ruin, cannot be deconstructed with a wrench now."
