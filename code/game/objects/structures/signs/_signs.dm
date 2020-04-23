@@ -53,19 +53,20 @@ GLOBAL_VAR(editable_sign_types)
 	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 						 "<span class='notice'>You start unfastening [src].</span>")
 	I.play_tool_sound(src)
-	if(I.use_tool(src, user, 4 SECONDS))
-		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
-							 "<span class='notice'>You unfasten [src].</span>")
-		var/obj/item/sign_backing/SB = new (get_turf(user))
-		if(type != /obj/structure/sign/basic) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
-			SB.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
-			SB.desc = "[desc] It can be placed on a wall."
-			SB.icon_state = icon_state
-			SB.sign_path = type
-		SB.obj_integrity = obj_integrity //Transfer how damaged it is.
-		SB.setDir(dir)
-		qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
+	if(!I.use_tool(src, user, 4 SECONDS))
+		return TRUE
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+						 "<span class='notice'>You unfasten [src].</span>")
+	var/obj/item/sign_backing/SB = new (get_turf(user))
+	if(type != /obj/structure/sign/basic) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
+		SB.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
+		SB.desc = "[desc] It can be placed on a wall."
+		SB.icon_state = icon_state
+		SB.sign_path = type
+	SB.obj_integrity = obj_integrity //Transfer how damaged it is.
+	SB.setDir(dir)
+	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
