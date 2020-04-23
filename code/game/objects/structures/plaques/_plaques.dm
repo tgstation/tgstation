@@ -135,13 +135,13 @@
 	S.setDir(dir)
 	qdel(src)
 
-/obj/item/customplaque/Move(atom/new_loc, direct = 0)
+/obj/item/plaque/Move(atom/new_loc, direct = 0)
 	// Pulling, throwing, or conveying a plaque does not rotate it.
 	var/old_dir = dir
 	. = ..()
 	setDir(old_dir)
 
-/obj/item/customplaque/attack_self(mob/user)
+/obj/item/plaque/attack_self(mob/user)
 	. = ..()
 	setDir(turn(dir, 90))
 	
