@@ -36,10 +36,7 @@
 		var/datum/status_effect/S = i
 		mod *= S.nextmove_modifier()
 		adj += S.nextmove_adjust()
-	var/obj/item/bodypart/active_arm = get_active_hand()
 
-	if(active_arm)
-		mod *= active_arm.wound_interaction_efficiency
 	next_move = world.time + ((num + adj)*mod)
 
 /**

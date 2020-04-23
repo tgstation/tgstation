@@ -68,8 +68,6 @@
 
 	/// The wounds currently afflicting this body part
 	var/list/wounds
-	/// Our current stored interaction efficiency multiplier
-	var/wound_interaction_efficiency = 1
 	/// Our current stored wound damage multiplier
 	var/wound_damage_multiplier = 1
 
@@ -197,7 +195,7 @@
 
 	var/can_inflict = max_damage - get_damage()
 	var/total_damage = brute + burn
-	if(total_damage > can_inflict)
+	if(total_damage > can_inflict && total_damage > 0) // TODO: the second part of this check should be removed once disabling is all done
 		brute = round(brute * (can_inflict / total_damage),DAMAGE_PRECISION)
 		burn = round(burn * (can_inflict / total_damage),DAMAGE_PRECISION)
 
@@ -554,15 +552,12 @@
 
 /// very rough start for updating efficiency and other stats on a body part whenever a wound is gained/lost
 /obj/item/bodypart/proc/update_wounds()
-	var/int_eff = 1 //initial(wound_interaction_efficiency)
 	var/dam_mul = 1 //initial(wound_damage_multiplier)
 
 	// we can only have one wound per type, but remember there's multiple types
 	for(var/datum/wound/W in wounds)
-		int_eff *= W.interaction_efficiency_penalty
 		dam_mul *= W.damage_mulitplier_penalty
 
-	wound_interaction_efficiency = int_eff
 	wound_damage_multiplier = dam_mul
 
 /obj/item/bodypart/proc/get_bleed_rate()

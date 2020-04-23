@@ -2301,13 +2301,13 @@
 			var/datum/wound/W = thing
 			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 3, severe = 6, critical = 9) when the determination wears off if it was a combat rush
 		M.adjustStaminaLoss(stam_crash)
-	M.remove_status_effect(/datum/status_effect/determined)
+	M.remove_status_effect(STATUS_EFFECT_DETERMINED)
 	..()
 
 /datum/reagent/determination/on_mob_life(mob/living/carbon/M)
 	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
 		significant = TRUE
-		M.apply_status_effect(/datum/status_effect/determined)
+		M.apply_status_effect(STATUS_EFFECT_DETERMINED)
 
 	for(var/thing in M.all_wounds)
 		var/datum/wound/W = thing

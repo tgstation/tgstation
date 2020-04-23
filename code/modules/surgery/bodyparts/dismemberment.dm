@@ -97,6 +97,11 @@
 			C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 			C.hand_bodyparts[held_index] = null
 
+	for(var/thing in wounds)
+		var/datum/wound/W = thing
+		W.victim = null
+		LAZYREMOVE(C.all_wounds, W)
+
 	owner = null
 
 	for(var/X in C.surgeries) //if we had an ongoing surgery on that limb, we stop it.

@@ -163,6 +163,7 @@
 	clot_rate = 0.15
 	threshold_minimum = 20
 	threshold_penalty = 10
+	status_effect_type = /datum/status_effect/wound/cut/moderate
 
 /datum/wound/brute/cut/severe
 	name = "open laceration"
@@ -177,6 +178,7 @@
 	threshold_minimum = 50
 	threshold_penalty = 25
 	demotes_to = /datum/wound/brute/cut/moderate
+	status_effect_type = /datum/status_effect/wound/cut/severe
 
 /datum/wound/brute/cut/critical
 	name = "weeping avulsion"
@@ -191,3 +193,4 @@
 	threshold_minimum = 80
 	threshold_penalty = 40
 	demotes_to = /datum/wound/brute/cut/severe
+	status_effect_type = /datum/status_effect/wound/cut/critical

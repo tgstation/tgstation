@@ -92,17 +92,18 @@
 /obj/item/clothing/attackby(obj/item/W, mob/user, params)
 	if(damaged_clothes && istype(W, repairable_by))
 		var/obj/item/stack/S = W
-		if(damaged_clothes == CLOTHING_DAMAGED)
-			S.use(1)
-			repair(user, params)
-		else if(damaged_clothes == CLOTHING_SHREDDED)
-			if(S.amount < 3)
-				to_chat(user, "<span class='warning'>You require 3 [S.name] to repair [src].</span>")
-				return
-			to_chat(user, "<span class='notice'>You begin fixing the damage to [src] with [S]...</span>")
-			if(do_after(user, 6 SECONDS, TRUE, src))
-				if(S.use(3))
-					repair(user, params)
+		switch(damaged_clothes)
+			if(CLOTHING_DAMAGED)
+				S.use(1)
+				repair(user, params)
+			if(CLOTHING_SHREDDED)
+				if(S.amount < 3)
+					to_chat(user, "<span class='warning'>You require 3 [S.name] to repair [src].</span>")
+					return
+				to_chat(user, "<span class='notice'>You begin fixing the damage to [src] with [S]...</span>")
+				if(do_after(user, 6 SECONDS, TRUE, src))
+					if(S.use(3))
+						repair(user, params)
 		return 1
 	return ..()
 

@@ -9,9 +9,8 @@
 
 /datum/wound/brute/bone
 	sound_effect = 'sound/effects/crack1.ogg'
-	/// If a bone wound is applied to a leg, we store the limp component here so we can delete it when removed
-	var/datum/component/limp/current_limp
 	wound_type = WOUND_TYPE_BONE
+
 	/// How effective various item types are at splinting these injuries. Checks from left to right, subpaths are accepted, so put specific subtypes before general ones
 	var/list/splint_items = list(/obj/item/stack/medical/gauze = 0.25, /obj/item/stack/sticky_tape/surgical = 0.4, /obj/item/stack/sticky_tape/super = 0.6, /obj/item/stack/sticky_tape = 0.75)
 	/// A coefficient for how much of the wound's negative effects like limping we can ignore thanks to splints, lower the better
@@ -20,13 +19,6 @@
 /datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = NONE, special_arg=NONE)
 	. = ..()
 	update_inefficiencies()
-
-// TODO: limps are unique so if we fix one of two broken legs i think they'll be limp free, look into this
-/datum/wound/brute/bone/remove_wound()
-	if(current_limp)
-		QDEL_NULL(current_limp)
-	interaction_efficiency_penalty = 1 // also the ordering and such of this
-	. = ..()
 
 /datum/wound/brute/bone/proc/check_splint_factor(obj/item/I)
 	for(var/item_path in splint_items)
@@ -39,7 +31,7 @@
 			limp_slowdown = initial(limp_slowdown) * splint_factor
 		else
 			limp_slowdown = initial(limp_slowdown)
-		current_limp = victim.AddComponent(/datum/component/limp)
+		victim.apply_status_effect(STATUS_EFFECT_LIMP)
 	else if(limb.body_zone in list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 		if(splint_factor)
 			interaction_efficiency_penalty = 1 + ((interaction_efficiency_penalty - 1) * splint_factor)
@@ -61,6 +53,7 @@
 	threshold_minimum = 35
 	threshold_penalty = 15
 	treatable_tool = TOOL_BONESET
+	status_effect_type = /datum/status_effect/wound/bone/moderate
 
 /datum/wound/brute/bone/moderate/try_handling(mob/living/carbon/human/user)
 	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
@@ -160,6 +153,7 @@
 	threshold_minimum = 55
 	threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
+	status_effect_type = /datum/status_effect/wound/bone/severe
 
 
 /datum/wound/brute/bone/severe/treat_self(obj/item/I, mob/user)
@@ -205,5 +199,6 @@
 	threshold_minimum = 110
 	threshold_penalty = 50
 	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
+	status_effect_type = /datum/status_effect/wound/bone/critical
 
 

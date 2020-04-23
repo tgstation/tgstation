@@ -98,6 +98,7 @@
 	damage_mulitplier_penalty = 1.25
 	threshold_minimum = 40
 	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
+	status_effect_type = /datum/status_effect/wound/burn/moderate
 
 
 
@@ -111,6 +112,7 @@
 	damage_mulitplier_penalty = 1.5
 	threshold_minimum = 80
 	threshold_penalty = 40
+	status_effect_type = /datum/status_effect/wound/burn/severe
 
 /datum/wound/burn/critical
 	name = "catastrophic burns"
@@ -123,6 +125,7 @@
 	sound_effect = 'sound/effects/sizzle2.ogg'
 	threshold_minimum = 140
 	threshold_penalty = 80
+	status_effect_type = /datum/status_effect/wound/burn/critical
 
 	max_infestation = 9
 	/// If we have max infestation and we fail this many checks, we lose our whole damn limb assuming it's, y'know, a limb

@@ -65,6 +65,11 @@
 	/// How much having this wound will add to future receive_damage() rolls on this limb, to allow progression to worse injuries with repeated damage
 	var/threshold_penalty
 
+	///
+	var/status_effect_type
+
+	var/datum/status_effect/linked_status_effect
+
 /datum/wound/Destroy()
 	. = ..()
 	remove_wound()
@@ -79,10 +84,15 @@
 	LAZYADD(victim.all_wounds, src)
 	LAZYADD(limb.wounds, src)
 	limb.update_wounds()
+	if(status_effect_type)
+		linked_status_effect = victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
 	var/demoted
 	if(old_wound)
 		demoted = (severity <= old_wound.severity)
+
+	if(severity == WOUND_SEVERITY_TRIVIAL)
+		return
 
 	if(!(silent || demoted))
 		var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
@@ -102,15 +112,14 @@
 
 /// Remove the wound from whatever it's afflicting
 /datum/wound/proc/remove_wound()
-	if(victim)
-		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
-		LAZYREMOVE(victim.all_wounds, src)
-		victim = null
-
 	if(limb)
 		limb.update_wounds()
 		LAZYREMOVE(limb.wounds, src)
 		limb = null
+	if(victim)
+		LAZYREMOVE(victim.all_wounds, src)
+		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
+		victim = null
 
 /// When you want to swap out one wound for another (typically a promotion or demotion in the same type)
 /datum/wound/proc/replace_wound(new_type, special_arg)
