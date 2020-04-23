@@ -1,4 +1,4 @@
-/obj/structure/customplaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen.
+/obj/structure/plaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen.
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
@@ -11,10 +11,10 @@
 	max_integrity = 200 //Twice as durable as regular signs.
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
+	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE 
 
-/obj/item/customplaque
+/obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
 	name = "blank plaque"
@@ -24,17 +24,17 @@
 	max_integrity = 200
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	///This points the item to make the proper structure when placed on a wall.
-	var/plaque_path = /obj/structure/customplaque
+	var/plaque_path = /obj/structure/plaque
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
 
-/obj/structure/customplaque/attack_hand(mob/user)
+/obj/structure/plaque/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
 	user.examinate(src)
 
-/obj/structure/customplaque/wrench_act(mob/living/user, obj/item/wrench/I)
+/obj/structure/plaque/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
 	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 						 "<span class='notice'>You start unfastening [src].</span>")
@@ -44,7 +44,7 @@
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 						 "<span class='notice'>You unfasten [src].</span>")
-	var/obj/item/customplaque/CP = new (get_turf(user))
+	var/obj/item/plaque/CP = new (get_turf(user))
 	if(engraved) //If it's still just a basic unengraved plaque, we can (and should) skip some of the below variable transfers.
 		CP.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
 		CP.desc = desc
@@ -54,7 +54,7 @@
 	qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
 	return TRUE
 
-/obj/structure/customplaque/attackby(obj/item/I, mob/user, params)
+/obj/structure/plaque/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/pen/fountain))
 		if(engraved)
 			to_chat(user, "<span class='warning'>This plaque has already been engraved.</span>")
@@ -86,7 +86,7 @@
 		return
 	return ..()
 
-/obj/item/customplaque/attackby(obj/item/I, mob/user, params) //Same as part of the above, except for the item in hand instead of the structure.
+/obj/item/plaque/attackby(obj/item/I, mob/user, params) //Same as part of the above, except for the item in hand instead of the structure.
 	if(istype(I, /obj/item/pen/fountain))
 		if(engraved)
 			to_chat(user, "<span class='warning'>This plaque has already been engraved.</span>")
@@ -118,7 +118,7 @@
 		return
 	return ..()
 
-/obj/item/customplaque/afterattack(atom/target, mob/user, proximity)
+/obj/item/plaque/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!iswallturf(target) || !proximity)
 		return
@@ -126,7 +126,7 @@
 	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 						 "<span class='notice'>You attach [src] to [T].</span>")
 	playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
-	var/obj/structure/customplaque/S = new plaque_path(T)
+	var/obj/structure/plaque/S = new plaque_path(T)
 	if(engraved)
 		S.name = name
 		S.desc = desc

@@ -12123,7 +12123,7 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "aBK" = (
-/obj/structure/sign/plaques/atmos{
+/obj/structure/plaque/static_plaque/atmos{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -27051,7 +27051,7 @@
 	},
 /obj/effect/turf_decal/tile/red,
 /obj/effect/landmark/start/security_officer,
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_y = -32
 	},
 /turf/open/floor/plasteel,
@@ -50082,7 +50082,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "rhZ" = (
-/obj/structure/sign/plaques/golden/captain{
+/obj/structure/plaque/static_plaque/golden/captain{
 	pixel_y = 32
 	},
 /obj/machinery/camera{

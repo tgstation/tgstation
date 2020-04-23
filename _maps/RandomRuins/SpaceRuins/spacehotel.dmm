@@ -3601,7 +3601,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/sign/plaques/atmos{
+/obj/structure/plaque/static_plaque/atmos{
 	pixel_y = 32
 	},
 /turf/open/floor/plating,
@@ -3626,7 +3626,7 @@
 "lb" = (
 /obj/structure/table,
 /obj/machinery/recharger,
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_x = -32
 	},
 /obj/effect/turf_decal/tile/red{

@@ -1830,7 +1830,7 @@
 	id = "TheRealSecretPlace";
 	name = "\improper Tear In The Fabric of Reality"
 	},
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	desc = "Holding the record for about 500 years now.";
 	name = "The Most Annoying Organization Ever";
 	pixel_y = 32

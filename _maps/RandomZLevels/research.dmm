@@ -2375,7 +2375,7 @@
 /turf/open/floor/plasteel/white,
 /area/awaymission/research/interior/security)
 "fv" = (
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_x = 32
 	},
 /obj/effect/turf_decal/tile/red{
