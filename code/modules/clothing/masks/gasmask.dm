@@ -90,8 +90,8 @@
 	clownmask_designs = list(
 		"True Form" = image(icon = src.icon, icon_state = "clown"),
 		"The Feminist" = image(icon = src.icon, icon_state = "sexyclown"),
-		"The Madman" = image(icon = src.icon, icon_state = "joker"),
 		"The Jester" = image(icon = src.icon, icon_state = "chaos"),
+		"The Madman" = image(icon = src.icon, icon_state = "joker"),
 		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow")
 		)
 
