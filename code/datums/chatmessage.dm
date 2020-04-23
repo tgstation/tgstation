@@ -47,7 +47,26 @@
 		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
 		qdel(src)
 		return
+	INVOKE_ASYNC(src, .proc/generate_image, text, target, owner, extra_classes, lifespan)
 
+/datum/chatmessage/Destroy()
+	if (owned_by && owned_by.seen_messages)
+		if (owned_by.seen_messages)
+			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
+		owned_by.images -= message
+	return ..()
+
+/**
+  * Generates a chat message image representation
+  *
+  * Arguments:
+  * * text - The text content of the overlay
+  * * target - The target atom to display the overlay at
+  * * owner - The mob that owns this overlay, only this mob will be able to view it
+  * * extra_classes - Extra classes to apply to the span that holds the text
+  * * lifespan - The lifespan of the message in deciseconds
+  */
+/datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, list/extra_classes, lifespan)
 	// Clip message
 	if (length_char(text) > CHAT_MESSAGE_MAX_LENGTH)
 		text = copytext_char(text, 1, CHAT_MESSAGE_MAX_LENGTH) + "..."
@@ -108,13 +127,6 @@
 	// Prepare for destruction
 	scheduled_destruction = world.time + (lifespan - CHAT_MESSAGE_EOL_FADE)
 	addtimer(CALLBACK(src, .proc/end_of_life), lifespan - CHAT_MESSAGE_EOL_FADE, TIMER_UNIQUE|TIMER_OVERRIDE)
-
-/datum/chatmessage/Destroy()
-	if (owned_by && owned_by.seen_messages)
-		if (owned_by.seen_messages)
-			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
-		owned_by.images -= message
-	return ..()
 
 /**
   * Applies final animations to overlay CHAT_MESSAGE_EOL_FADE deciseconds prior to message deletion
