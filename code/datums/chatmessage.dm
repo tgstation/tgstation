@@ -50,10 +50,23 @@
 		target.chat_color = colorize_string(target.name)
 		target.chat_color_name = target.name
 
+	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
+	var/static/regex/url_scheme = new(@"[A-Za-z][A-Za-z0-9+-\.]*:\/\/", "g")
+	text = replacetext(text, url_scheme, "")
+
+	// Reject whitespace
+	var/static/regex/whitespace = new(@"^\s*$")
+	if (whitespace.Find(text))
+		qdel(src)
+		return
+
 	// Approximate text height
+	// Note we have to replace HTML encoded metacharacters otherwise MeasureText will return a zero height
+	// BYOND Bug #2563917
 	owned_by = owner.client
+	var/static/regex/html_metachars = new(@"&[A-Za-z]{1,7};", "g")
 	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]' style='color: [target.chat_color]'>[text]</span>"
-	var/mheight = max(WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH)), 14)
+	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(replacetext(complete_text, html_metachars, "m"), null, CHAT_MESSAGE_WIDTH))
 
 	// Translate any existing messages upwards
 	message_loc = target
@@ -79,8 +92,9 @@
 	QDEL_IN(src, lifespan)
 
 /datum/chatmessage/Destroy()
-	LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
-	if (owned_by)
+	if (owned_by && owned_by.seen_messages)
+		if (owned_by.seen_messages)
+			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
 		owned_by.images -= message
 	return ..()
 
