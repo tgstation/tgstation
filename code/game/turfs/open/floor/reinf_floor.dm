@@ -4,7 +4,7 @@
 	desc = "Extremely sturdy."
 	icon_state = "engine"
 	thermal_conductivity = 0.025
-	heat_capacity = INFINITY
+	heat_capacity = 9000
 	floor_tile = /obj/item/stack/rods
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT

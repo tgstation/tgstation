@@ -17,6 +17,7 @@
 	clawfootstep = FOOTSTEP_WOOD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	heat_capacity = 500
 
 /turf/open/floor/wood/examine(mob/user)
 	. = ..()
@@ -82,6 +83,7 @@
 	var/ore_type = /obj/item/stack/ore/glass
 	var/turfverb = "uproot"
 	tiled_dirt = FALSE
+	heat_capacity = 500
 
 /turf/open/floor/grass/Initialize()
 	. = ..()
@@ -186,6 +188,7 @@
 	clawfootstep = FOOTSTEP_CARPET_BAREFOOT
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_dirt = FALSE
+	heat_capacity = 500
 
 /turf/open/floor/carpet/examine(mob/user)
 	. = ..()

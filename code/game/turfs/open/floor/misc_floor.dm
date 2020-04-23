@@ -4,10 +4,12 @@
 	desc = "\"This is a plaque in honour of our comrades on the G4407 Stations. Hopefully TG4407 model can live up to your fame and fortune.\" Scratched in beneath that is a crude image of a meteor and a spaceman. The spaceman is laughing. The meteor is exploding."
 	floor_tile = /obj/item/stack/tile/plasteel
 	tiled_dirt = FALSE
+	heat_capacity = 1500
 
 /turf/open/floor/vault
 	icon_state = "rockvault"
 	floor_tile = /obj/item/stack/tile/plasteel
+	heat_capacity = 1500
 
 //Circuit flooring, glows a little
 /turf/open/floor/circuit
@@ -17,6 +19,7 @@
 	light_color = LIGHT_COLOR_CYAN
 	floor_tile = /obj/item/stack/tile/circuit
 	var/on = TRUE
+	heat_capacity = 1000
 
 /turf/open/floor/circuit/Initialize()
 	SSmapping.nuke_tiles += src
@@ -106,6 +109,7 @@
 	icon_state = "podfloor"
 	icon_regular_floor = "podfloor"
 	floor_tile = /obj/item/stack/tile/pod
+	heat_capacity = 900
 
 /turf/open/floor/pod/light
 	icon_state = "podfloor_light"
@@ -125,6 +129,7 @@
 	broken_states = list("noslip-damaged1","noslip-damaged2","noslip-damaged3")
 	burnt_states = list("noslip-scorched1","noslip-scorched2")
 	slowdown = -0.3
+	heat_capacity = 1500
 
 /turf/open/floor/noslip/MakeSlippery(wet_setting, min_wet_time, wet_time_to_add, max_wet_time, permanent)
 	return
@@ -133,12 +138,14 @@
 	icon = 'icons/turf/shuttleold.dmi'
 	icon_state = "floor"
 	floor_tile = /obj/item/stack/tile/plasteel
+	heat_capacity = 1500
 
 /turf/open/floor/bluespace
 	slowdown = -1
 	icon_state = "bluespace"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	floor_tile = /obj/item/stack/tile/bluespace
+	heat_capacity = 800
 
 
 /turf/open/floor/sepia
@@ -146,6 +153,7 @@
 	icon_state = "sepia"
 	desc = "Time seems to flow very slowly around these tiles."
 	floor_tile = /obj/item/stack/tile/sepia
+	heat_capacity = 1500
 
 
 /turf/open/floor/bronze
@@ -154,15 +162,18 @@
 	icon = 'icons/obj/clockwork_objects.dmi'
 	icon_state = "clockwork_floor"
 	floor_tile = /obj/item/stack/tile/bronze
+	heat_capacity = 1500
 
 /turf/open/floor/white
 	name = "white floor"
 	desc = "A tile in a pure white color."
 	icon_state = "pure_white"
+	heat_capacity = 1500
 
 /turf/open/floor/black
 	name = "black floor"
 	icon_state = "black"
+	heat_capacity = 1500
 
 /turf/open/floor/plastic
 	name = "plastic floor"

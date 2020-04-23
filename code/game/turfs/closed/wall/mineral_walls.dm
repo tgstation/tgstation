@@ -14,7 +14,7 @@
 	icon_state = "gold"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 1100
 	sheet_type = /obj/item/stack/sheet/mineral/gold
 	explosion_block = 0 //gold is a soft metal you dingus.
 	canSmoothWith = list(/turf/closed/wall/mineral/gold, /obj/structure/falsewall/gold)
@@ -26,7 +26,7 @@
 	icon_state = "silver"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 1000
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	canSmoothWith = list(/turf/closed/wall/mineral/silver, /obj/structure/falsewall/silver)
 
@@ -37,7 +37,7 @@
 	icon_state = "diamond"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 5000
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
 	slicing_duration = 200   //diamond wall takes twice as much time to slice
 	explosion_block = 3
@@ -50,7 +50,7 @@
 	icon_state = "bananium"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 10000
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
 	canSmoothWith = list(/turf/closed/wall/mineral/bananium, /obj/structure/falsewall/bananium)
 
@@ -61,7 +61,7 @@
 	icon_state = "sandstone"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 1500
 	sheet_type = /obj/item/stack/sheet/mineral/sandstone
 	explosion_block = 0
 	canSmoothWith = list(/turf/closed/wall/mineral/sandstone, /obj/structure/falsewall/sandstone)
@@ -74,7 +74,7 @@
 	icon_state = "uranium"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 1200
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
 	canSmoothWith = list(/turf/closed/wall/mineral/uranium, /obj/structure/falsewall/uranium)
 
@@ -109,7 +109,7 @@
 	icon_state = "plasma"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 3000
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
 	thermal_conductivity = 0.04
 	canSmoothWith = list(/turf/closed/wall/mineral/plasma, /obj/structure/falsewall/plasma)
@@ -150,7 +150,7 @@
 	icon_state = "wood"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 500
 	sheet_type = /obj/item/stack/sheet/mineral/wood
 	hardness = 70
 	explosion_block = 0
@@ -179,7 +179,7 @@
 	icon_state = "iron"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 1600
 	sheet_type = /obj/item/stack/rods
 	canSmoothWith = list(/turf/closed/wall/mineral/iron, /obj/structure/falsewall/iron)
 
@@ -190,7 +190,7 @@
 	icon_state = "snow"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 300
 	hardness = 80
 	explosion_block = 0
 	slicing_duration = 30
@@ -223,7 +223,7 @@
 	icon_state = "map-shuttle"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 1700
 	explosion_block = 3
 	flags_1 = CAN_BE_DIRTY_1
 	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
@@ -293,7 +293,7 @@
 	icon_state = "map-shuttle"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 2500
 	explosion_block = 4
 	sheet_type = /obj/item/stack/sheet/mineral/plastitanium
 	smooth = SMOOTH_MORE|SMOOTH_DIAGONAL

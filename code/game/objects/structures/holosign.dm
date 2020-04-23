@@ -107,13 +107,12 @@
 ///this is a machinery to make it possible to check on the APC power to shut it down in case of an outage
 /obj/machinery/holosign/barrier/power_shield
 	name = "powered shield"
-	desc = "etc"
+	desc = "A shield to prevent changes of atmospheric and heat transfer"
 	icon = 'icons/effects/effects.dmi'
 	density = FALSE
 	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_NO
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	rad_insulation = RAD_LIGHT_INSULATION
+	resistance_flags = FIRE_PROOF
 	///store the conductivity value of the turf is applyed so that it can be restored on removal
 	var/stored_conductivity = 0
 	///power drain from the apc, in W (so 5000 is 5 kW), per each holosign placed
@@ -127,7 +126,7 @@
 	if(a.power_environ == TRUE)
 		shield_turf()
 	else
-		qdel()
+		Destroy()
 
 /obj/machinery/holosign/barrier/power_shield/Destroy()
 	var/turf/T = loc
@@ -144,34 +143,21 @@
 
 /obj/machinery/holosign/barrier/power_shield/process()
 	if(machine_stat & NOPOWER)
-		qdel()
+		Destroy()
 
 /obj/machinery/holosign/barrier/power_shield/wall
 	name = "Shield Wall"
-	desc = "etc"
+	desc = "A powered wall to stop changes in atmospheric and the spread of heat"
 	icon_state = "powershield_wall"
-	density = TRUE
-	anchored = TRUE
-	CanAtmosPass = ATMOS_PASS_NO
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	rad_insulation = RAD_LIGHT_INSULATION
-	stored_conductivity = 0
-	power_consumption = 5000
 
 /obj/machinery/holosign/barrier/power_shield/floor
 	name = "Shield Floor"
-	desc = "etc"
+	desc = "A powered floor to stop the heat from melting the floors under it"
 	icon_state = "powershield_floor"
-	density = FALSE
-	anchored = TRUE
 	CanAtmosPass = ATMOS_PASS_YES
-	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
-	rad_insulation = RAD_LIGHT_INSULATION
-	stored_conductivity = 0
-	power_consumption = 5000
+	power_consumption = 2500
 	layer = TURF_PLATING_DECAL_LAYER
 	plane = FLOOR_PLANE
-	resistance_flags = INDESTRUCTIBLE
 
 
 /obj/structure/holosign/barrier/cyborg

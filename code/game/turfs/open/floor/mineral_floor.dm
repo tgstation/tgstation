@@ -37,6 +37,7 @@
 	icon_state = "plasma"
 	floor_tile = /obj/item/stack/tile/mineral/plasma
 	icons = list("plasma","plasma_dam")
+	heat_capacity = 1500
 
 /turf/open/floor/mineral/plasma/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
@@ -66,6 +67,7 @@
 	icon_state = "gold"
 	floor_tile = /obj/item/stack/tile/mineral/gold
 	icons = list("gold","gold_dam")
+	heat_capacity = 1500
 
 //SILVER
 
@@ -74,6 +76,7 @@
 	icon_state = "silver"
 	floor_tile = /obj/item/stack/tile/mineral/silver
 	icons = list("silver","silver_dam")
+	heat_capacity = 1500
 
 //TITANIUM (shuttle)
 
@@ -82,6 +85,7 @@
 	icon_state = "titanium"
 	floor_tile = /obj/item/stack/tile/mineral/titanium
 	broken_states = list("titanium_dam1","titanium_dam2","titanium_dam3","titanium_dam4","titanium_dam5")
+	heat_capacity = 2500
 
 /turf/open/floor/mineral/titanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -116,6 +120,7 @@
 	icon_state = "plastitanium"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium
 	broken_states = list("plastitanium_dam1","plastitanium_dam2","plastitanium_dam3","plastitanium_dam4","plastitanium_dam5")
+	heat_capacity = 3500
 
 /turf/open/floor/mineral/plastitanium/airless
 	initial_gas_mix = AIRLESS_ATMOS
@@ -137,6 +142,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/bananium
 	icons = list("bananium","bananium_dam")
 	var/spam_flag = 0
+	heat_capacity = 10500
 
 /turf/open/floor/mineral/bananium/Entered(atom/movable/AM)
 	.=..()
@@ -179,6 +185,7 @@
 	icon_state = "diamond"
 	floor_tile = /obj/item/stack/tile/mineral/diamond
 	icons = list("diamond","diamond_dam")
+	heat_capacity = 5500
 
 //URANIUM
 
@@ -190,6 +197,7 @@
 	icons = list("uranium","uranium_dam")
 	var/last_event = 0
 	var/active = null
+	heat_capacity = 1500
 
 /turf/open/floor/mineral/uranium/Entered(atom/movable/AM)
 	.=..()
@@ -230,6 +238,7 @@
 	floor_tile = /obj/item/stack/tile/mineral/abductor
 	icons = list("alienpod1", "alienpod2", "alienpod3", "alienpod4", "alienpod5", "alienpod6", "alienpod7", "alienpod8", "alienpod9")
 	baseturfs = /turf/open/floor/plating/abductor2
+	heat_capacity = 1500
 
 /turf/open/floor/mineral/abductor/Initialize()
 	. = ..()

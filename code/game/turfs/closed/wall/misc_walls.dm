@@ -50,7 +50,7 @@
 	desc = "A wall covered in a thick sheet of ice."
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 300
 	canSmoothWith = null
 	hardness = 35
 	slicing_duration = 150 //welding through the ice+metal
@@ -62,7 +62,7 @@
 	icon = 'icons/turf/walls/rusty_wall.dmi'
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 900
 	hardness = 45
 
 /turf/closed/wall/r_wall/rust
@@ -71,7 +71,7 @@
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 900
 	hardness = 15
 
 /turf/closed/wall/mineral/bronze
@@ -81,7 +81,7 @@
 	icon_state = "clockwork_wall"
 	turf_heat_resistance = 100
 	turf_max_heat_resistance = 100
-	heat_capacity = 2000
+	heat_capacity = 1000
 	sheet_type = /obj/item/stack/tile/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
