@@ -61,7 +61,7 @@
  * ID CARDS
  */
 /obj/item/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
+	desc = "It's a card with a magnetic strip attached to some circuitry. Will require time to recalibrate itself if used very frequently."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
@@ -69,12 +69,37 @@
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	var/prox_check = TRUE //If the emag requires you to be in range
+	var/max_charges = 4
+	var/charges = 4
+	var/charge_tick = 0
 
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
 	prox_check = FALSE
+
+/obj/item/card/emag/elite
+	name = "advaced cryptographic sequencer"
+	desc = "Used by top syndicate agents and operatives. Only the highest quality nano-electromagnets allow it to be used frequently without recalibrating."
+	max_charges = 100
+	charges = 100
+
+/obj/item/card/emag/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/card/emag/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/card/emag/process()
+	charge_tick++
+	if(charge_tick < 10)
+		return FALSE
+	charge_tick = 0
+	charges = min(charges+1, max_charges)
+	return TRUE
 
 /obj/item/card/emag/attack()
 	return
@@ -84,8 +109,13 @@
 	var/atom/A = target
 	if(!proximity && prox_check)
 		return
-	log_combat(user, A, "attempted to emag")
-	A.emag_act(user)
+	if(charges > 0)
+		charges -= 1
+		log_combat(user, A, "attempted to emag")
+		A.emag_act(user)
+	else
+		to_chat(user, "<span class='warning'>\The [src] needs time to recalibrate!</span>")
+		return
 
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
