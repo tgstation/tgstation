@@ -1,0 +1,6 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "you can now craft an improvised pickaxe with a crowbar, a knife and some sticky tape"
+  - balance: "the jackhammer is now bulky instead of huge"
+  - bugfix: "some clothing recipes are now in clothing category"
