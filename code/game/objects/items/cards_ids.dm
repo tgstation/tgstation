@@ -61,7 +61,7 @@
  * ID CARDS
  */
 /obj/item/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry. Will require time to recalibrate itself if used very frequently."
+	desc = "It's a card with a magnetic strip attached to some circuitry. It will require time to recalibrate itself if used very frequently."
 	name = "cryptographic sequencer"
 	icon_state = "emag"
 	item_state = "card-id"
