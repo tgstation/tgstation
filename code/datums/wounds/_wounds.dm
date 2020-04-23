@@ -22,6 +22,9 @@
 	var/treat_text = ""
 	var/examine_desc = ""
 
+	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burs"
+	var/a_or_from = "a"
+
 	var/occur_text = ""
 	/// This sound will be played upon the wound being applied
 	var/sound_effect

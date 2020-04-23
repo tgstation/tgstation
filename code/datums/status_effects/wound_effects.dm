@@ -96,10 +96,9 @@
 
 // wound alert base
 /obj/screen/alert/status_effect/wound
-	var/datum/wound/linked_wound
 
 /obj/screen/alert/status_effect/wound/proc/update_text()
-	name = "[name] [linked_wound.limb.name]"
+	name = "[name]"
 
 // wound status effect base
 /datum/status_effect/wound
@@ -108,6 +107,15 @@
 	var/obj/item/bodypart/linked_limb
 	var/datum/wound/linked_wound
 
+/datum/status_effect/wound/Destroy()
+	STOP_PROCESSING(SSfastprocess, src)
+	if(owner)
+		if(LAZYLEN(owner.has_status_effect_list(id)) <= 1)
+			owner.clear_alert(id)
+		LAZYREMOVE(owner.status_effects, src)
+		on_remove()
+		owner = null
+/*
 /datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
 	..()
 	var/datum/wound/W = incoming_wound
@@ -117,8 +125,27 @@
 		var/obj/screen/alert/status_effect/wound/wound_alert = linked_alert
 		if(!istype(wound_alert))
 			return
-		wound_alert.linked_wound = linked_wound
-		wound_alert.update_text()
+*/
+/datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
+	if(new_owner)
+		owner = new_owner
+	if(owner)
+		LAZYADD(owner.status_effects, src)
+	if(!owner || !on_apply())
+		qdel(src)
+		return
+	if(duration != -1)
+		duration = world.time + duration
+	tick_interval = world.time + tick_interval
+	if(alert_type && !owner.alerts[id])
+		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
+		A.attached_effect = src //so the alert can reference us, if it needs to
+		linked_alert = A //so we can reference the alert, if we need to
+	START_PROCESSING(SSfastprocess, src)
+	var/datum/wound/W = incoming_wound
+	linked_wound = W
+	linked_limb = linked_wound.limb
+	return TRUE
 
 /datum/status_effect/wound/on_remove()
 	linked_wound = null

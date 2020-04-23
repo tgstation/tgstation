@@ -3,6 +3,7 @@
 
 // TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
 /datum/wound/burn
+	a_or_from = "from"
 	damtype = BURN
 	wound_type = WOUND_TYPE_BURN
 	processes = TRUE
