@@ -128,7 +128,6 @@
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	var/dir = get_dir(userT, T)
 	switch(dir)
-	switch(dir)
 		if(NORTH)
 			S.pixel_y = 32
 		if(SOUTH)
