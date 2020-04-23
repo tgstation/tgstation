@@ -1,6 +1,9 @@
 #define CHAT_MESSAGE_SPAWN_TIME		0.2 SECONDS
 #define CHAT_MESSAGE_LIFESPAN		5 SECONDS
-#define CHAT_MESSAGE_EOL_FADE		1 SECONDS
+#define CHAT_MESSAGE_EOL_FADE		0.7 SECONDS
+#define CHAT_MESSAGE_EXP_DECAY		0.7 // Messages decay at pow(factor, idx in stack)
+#define CHAT_MESSAGE_HEIGHT_DECAY	0.9 // Increase message decay based on the height of the message
+#define CHAT_MESSAGE_APPROX_LHEIGHT	11 // Approximate height in pixels of an 'average' line, used for height decay
 #define CHAT_MESSAGE_WIDTH			96 // pixels
 #define CHAT_MESSAGE_MAX_LENGTH		110 // characters
 #define WXH_TO_HEIGHT(x)			text2num(copytext((x), findtextEx((x), "x") + 1)) // thanks lummox
@@ -21,6 +24,10 @@
 	var/atom/message_loc
 	/// The client who heard this message
 	var/client/owned_by
+	/// Contains the scheduled destruction time
+	var/scheduled_destruction
+	/// Contains the approximate amount of lines for height decay
+	var/approx_lines
 
 /**
   * Constructs a chat message overlay
@@ -67,12 +74,21 @@
 	var/static/regex/html_metachars = new(@"&[A-Za-z]{1,7};", "g")
 	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]' style='color: [target.chat_color]'>[text]</span>"
 	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(replacetext(complete_text, html_metachars, "m"), null, CHAT_MESSAGE_WIDTH))
+	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
-	// Translate any existing messages upwards
+	// Translate any existing messages upwards, apply exponential decay factors to timers
 	message_loc = target
 	if (owned_by.seen_messages)
+		var/idx = 1
+		var/combined_height = approx_lines
 		for(var/datum/chatmessage/m in owned_by.seen_messages[message_loc])
 			animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
+			combined_height += m.approx_lines
+			var/sched_remaining = m.scheduled_destruction - world.time
+			if (sched_remaining > CHAT_MESSAGE_SPAWN_TIME)
+				var/remaining_time = (sched_remaining) * (CHAT_MESSAGE_EXP_DECAY ** idx++) * (CHAT_MESSAGE_HEIGHT_DECAY ** combined_height)
+				m.scheduled_destruction = world.time + remaining_time
+				addtimer(CALLBACK(m, .proc/end_of_life), remaining_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	// Build message image
 	message = image(loc = message_loc, layer = FLY_LAYER)
@@ -88,8 +104,10 @@
 	LAZYADDASSOC(owned_by.seen_messages, message_loc, src)
 	owned_by.images |= message
 	animate(message, alpha = 255, time = CHAT_MESSAGE_SPAWN_TIME)
-	addtimer(CALLBACK(src, .proc/end_of_life), lifespan - CHAT_MESSAGE_EOL_FADE)
-	QDEL_IN(src, lifespan)
+
+	// Prepare for destruction
+	scheduled_destruction = world.time + (lifespan - CHAT_MESSAGE_EOL_FADE)
+	addtimer(CALLBACK(src, .proc/end_of_life), lifespan - CHAT_MESSAGE_EOL_FADE, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 /datum/chatmessage/Destroy()
 	if (owned_by && owned_by.seen_messages)
@@ -101,8 +119,9 @@
 /**
   * Applies final animations to overlay CHAT_MESSAGE_EOL_FADE deciseconds prior to message deletion
   */
-/datum/chatmessage/proc/end_of_life()
-	animate(message, alpha = 0, time = CHAT_MESSAGE_EOL_FADE)
+/datum/chatmessage/proc/end_of_life(fadetime = CHAT_MESSAGE_EOL_FADE)
+	animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
+	QDEL_IN(src, fadetime)
 
 /**
   * Creates a message overlay at a defined location for a given speaker
