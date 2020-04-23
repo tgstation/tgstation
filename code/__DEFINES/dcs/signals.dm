@@ -246,7 +246,7 @@
 #define COMSIG_CARBON_UNEQUIP_HAT "carbon_unequip_hat"				//from /mob/living/carbon/doUnEquip(obj/item/I, force, newloc, no_move, invdrop, silent)
 #define COMSIG_CARBON_EMBED_RIP "item_embed_start_rip"						// defined twice, in carbon and human's topics, fired when interacting with a valid embedded_object to pull it out (mob/living/carbon/target, /obj/item, /obj/item/bodypart/L)
 #define COMSIG_CARBON_EMBED_REMOVAL "item_embed_remove_safe"		// called when removing a given item from a mob, from mob/living/carbon/remove_embedded_object(mob/living/carbon/target, /obj/item)
-#define COMSIG_CARBON_WASHED "carbon_washed"						///from /mob/living/carbon/washed(): (sourceofwash)
+#define COMSIG_CARBON_WASHED "carbon_washed"						///from [/mob/living/carbon/washed]: ()
 	#define COMPONENT_HATES_WATER 1
 
 // /mob/living/simple_animal/hostile signals
@@ -293,6 +293,7 @@
 #define COMSIG_TOOL_START_USE "tool_start_use"					///from base of [/obj/item/proc/tool_start_check]: (mob/living/user)
 #define COMSIG_ITEM_DISABLE_EMBED "item_disable_embed"			///from [/obj/item/proc/disableEmbedding]:
 #define COMSIG_MINE_TRIGGERED "minegoboom"						///from [/obj/effect/mine/proc/triggermine]:
+#define COMSIG_TOWEL_ACT "towel_act"							///from [/obj/item/towel/afterattack]: (mob/living/user)
 
 // /obj/item signals for economy
 #define COMSIG_ITEM_SOLD "item_sold"							//called when an item is sold by the exports subsystem
