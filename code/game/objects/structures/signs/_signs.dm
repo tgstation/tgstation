@@ -53,7 +53,7 @@ GLOBAL_VAR(editable_sign_types)
 	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 						 "<span class='notice'>You start unfastening [src].</span>")
 	I.play_tool_sound(src)
-	if(I.use_tool(src, user, 40))
+	if(I.use_tool(src, user, 4 SECONDS))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 							 "<span class='notice'>You unfasten [src].</span>")
@@ -82,7 +82,7 @@ GLOBAL_VAR(editable_sign_types)
 			return
 		user.visible_message("<span class='notice'>[user] begins changing [src].</span>", \
 							 "<span class='notice'>You begin changing [src].</span>")
-		if(!do_after(user, 40, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
+		if(!do_after(user, 4 SECONDS, target = src)) //Small delay for changing signs instead of it being instant, so somebody could be shoved or stunned to prevent them from doing so.
 			return
 		var/sign_type = GLOB.editable_sign_types[choice]
 		//It's import to clone the pixel layout information.
@@ -113,7 +113,7 @@ GLOBAL_VAR(editable_sign_types)
 		if(!choice)
 			return
 		user.visible_message("<span class='notice'>You begin changing [src].</span>")
-		if(!do_after(user, 40, target = src))
+		if(!do_after(user, 4 SECONDS, target = src))
 			return
 		var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
 		name = initial(sign_type.name)
@@ -155,7 +155,6 @@ GLOBAL_VAR(editable_sign_types)
 	S.obj_integrity = obj_integrity
 	S.setDir(dir)
 	qdel(src)
-	return ..()
 
 /obj/structure/sign/nanotrasen
 	name = "\improper Nanotrasen logo sign"

@@ -39,7 +39,7 @@
 	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 						 "<span class='notice'>You start unfastening [src].</span>")
 	I.play_tool_sound(src)
-	if(I.use_tool(src, user, 40))
+	if(I.use_tool(src, user, 4 SECONDS))
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 							 "<span class='notice'>You unfasten [src].</span>")
@@ -69,7 +69,7 @@
 			return
 		user.visible_message("<span class='notice'>[user] begins engraving [src].</span>", \
 							 "<span class='notice'>You begin engraving [src].</span>")
-		if(!do_after(user, 40, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
+		if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 			return
 		name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
 		desc = "The plaque reads: '[descriptionchoice]'"
@@ -133,4 +133,3 @@
 	S.obj_integrity = obj_integrity
 	S.setDir(dir)
 	qdel(src)
-	return ..()
