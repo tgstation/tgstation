@@ -93,7 +93,7 @@ RSF
 ///Extracts the related object from a associated list of objects and values, or lists and objects.
 /obj/item/rsf/proc/extractObject(from, input)
 	var/atom/test
-	if(istype(input, /list/))
+	if(islist(input))
 		var/temp = from[input]//If it's a list we should use its associated object
 		test = new temp()
 	else
