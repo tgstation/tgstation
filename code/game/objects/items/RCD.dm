@@ -424,6 +424,7 @@ RLD
 /obj/item/construction/rcd/Initialize()
 	. = ..()
 	airlock_electronics = new(src)
+	airlock_electronics.name = "Access Control"
 	airlock_electronics.holder = src
 	GLOB.rcd_list += src
 
