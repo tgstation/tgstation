@@ -1365,7 +1365,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Airlock Authentication Override Card"
 	desc = "It's a specialized cryptographic sequencer specifically designed to override station airlock access codes. \
 			Seems to crack airlock encryption algorithms by using raw telecrystals."
-	item = /obj/item/card/emag
+	item = /obj/item/card/emag/doormag
 	cost = 3
 
 /datum/uplink_item/device_tools/fakenucleardisk

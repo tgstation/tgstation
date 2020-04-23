@@ -46,11 +46,11 @@
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
-	type_blacklist = subtypesof(/obj/machinery/door/airlock) //list of all typepaths that require a specialized emag to hack.
+	type_blacklist = list(subtypesof(/obj/machinery/door/airlock), subtypesof(/obj/machinery/door/window/)) //list of all typepaths that require a specialized emag to hack.
 
 /obj/item/card/emag/doormag/Initialize(mapload)
 	. = ..()
-	type_whitelist = subtypesof(/obj/machinery/door/airlock) //list of all acceptable typepaths that this device can affect
+	type_whitelist = list(subtypesof(/obj/machinery/door/airlock), subtypesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
 
 /obj/item/card/emag/doormag/proc/use_charge(mob/user)
 	charges --
