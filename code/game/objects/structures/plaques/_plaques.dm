@@ -128,6 +128,7 @@
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
 	var/dir = get_dir(userT, T)
 	switch(dir)
+	switch(dir)
 		if(NORTH)
 			S.pixel_y = 32
 		if(SOUTH)
@@ -136,10 +137,18 @@
 			S.pixel_x = 32
 		if(WEST)
 			S.pixel_x = -32
-		else //Plaques cannot be placed diagonally.
-			to_chat(user, "<span class='warning'>Your reach is unsteady, stand directly in front of the wall you wish to place a plaque on")
-			qdel(S)
-			return 
+		if(NORTHEAST)
+			S.pixel_y = 32
+			S.pixel_x = 32
+		if(NORTHWEST)
+			S.pixel_y = 32
+			S.pixel_x = -32
+		if(SOUTHEAST)
+			S.pixel_y = -32
+			S.pixel_x = 32
+		if(SOUTHWEST)
+			S.pixel_y = -32
+			S.pixel_x = -32
 	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 						 "<span class='notice'>You attach [src] to [T].</span>")
 	playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)

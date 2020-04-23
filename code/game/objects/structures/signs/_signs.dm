@@ -162,10 +162,18 @@ GLOBAL_VAR(editable_sign_types)
 			S.pixel_x = 32
 		if(WEST)
 			S.pixel_x = -32
-		else //Signs cannot be placed diagonally.
-			to_chat(user, "<span class='warning'>Your reach is unsteady, stand directly in front of the wall you wish to place a sign on")
-			qdel(S)
-			return 
+		if(NORTHEAST)
+			S.pixel_y = 32
+			S.pixel_x = 32
+		if(NORTHWEST)
+			S.pixel_y = 32
+			S.pixel_x = -32
+		if(SOUTHEAST)
+			S.pixel_y = -32
+			S.pixel_x = 32
+		if(SOUTHWEST)
+			S.pixel_y = -32
+			S.pixel_x = -32
 	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 						 "<span class='notice'>You attach the sign to [T].</span>")
 	playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
