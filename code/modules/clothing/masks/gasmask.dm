@@ -219,7 +219,16 @@
 	max_integrity = 100
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = null
+	var/list/tikimask_designs = list()
 
+/obj/item/clothing/mask/gas/tiki_mask/Initialize(mapload)
+	.=..()
+	tikimask_designs = list(
+		"Original Tiki" = image(icon = src.icon, icon_state = "tiki_eyebrow"),
+		"Happy Tiki" = image(icon = src.icon, icon_state = "tiki_happy"),
+		"Confused Tiki" = image(icon = src.icon, icon_state = "tiki_confused"),
+		"Angry Tiki" = image(icon = src.icon, icon_state = "tiki_angry")
+		)
 
 /obj/item/clothing/mask/gas/tiki_mask/ui_action_click(mob/user)
 	var/mob/M = usr
@@ -229,7 +238,9 @@
 	options["Confused Tiki"] = "tiki_confused"
 	options["Angry Tiki"] ="tiki_angry"
 
-	var/choice = input(M,"To what form do you wish to change this mask?","Morph Mask") in sortList(options)
+	var/choice = show_radial_menu(user,src, tikimask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+	if(!choice)
+		return FALSE
 
 	if(src && choice && !M.stat && in_range(M,src))
 		icon_state = options[choice]
