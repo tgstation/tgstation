@@ -1,5 +1,0 @@
-author: "That REALLY Good Soda Flavor"
-delete-after: True
-changes: 
-  - bugfix: "Fix Ramadan so it won't be a week off anymore."
-  - refactor: "Replaced Hebrew calendar datum with a more generic foreign calendar datum. New calendar types can easily be added."
