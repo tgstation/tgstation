@@ -79,11 +79,11 @@
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
 	for(var/word in trigger_words)
-		var/regex/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
+		var/regex/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "gi")
 
 		if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
 			addtimer(CALLBACK(src, .proc/freak_out, null, word), 10) //to react AFTER the chat message
-			hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='phobia'>$1</span>")
+			hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='phobia'>$0</span>")
 			break
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
