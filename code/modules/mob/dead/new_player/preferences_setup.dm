@@ -51,7 +51,6 @@
 	random_character(TRUE, antagonist)
 	select_hardcore_quirks()
 	hardcore_survival_score = hardcore_survival_score ** 1.2 //30 points would be about 60 score
-	character.hardcore_survival_score = hardcore_survival_score
 
 ///Go through all quirks that can be used in hardcore mode and select some based on a random budget.
 /datum/preferences/proc/select_hardcore_quirks()
