@@ -1,0 +1,4 @@
+author: "Cartographer-D"
+delete-after: True
+changes: 
+  - bugfix: "Maintenance will not be depressurized above cargo on MetaStation"
