@@ -1,0 +1,4 @@
+author: "Qustinnus"
+delete-after: True
+changes: 
+  - rscadd: "PKA now gets exp and benefits of/for the mining skill again"
