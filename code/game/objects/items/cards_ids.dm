@@ -81,7 +81,6 @@
 
 /obj/item/card/emag/elite
 	name = "advanced cryptographic sequencer"
-
 	desc = "Used by top syndicate agents and operatives. Only the highest quality nano-electromagnets allow it to be used frequently without recalibrating."
 	max_charges = 100
 	charges = 100
