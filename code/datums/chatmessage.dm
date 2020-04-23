@@ -8,10 +8,6 @@
 #define CHAT_MESSAGE_MAX_LENGTH		110 // characters
 #define WXH_TO_HEIGHT(x)			text2num(copytext((x), findtextEx((x), "x") + 1)) // thanks lummox
 
-/client
-	/// Messages currently seen by this client
-	var/list/seen_messages = list()
-
 /**
   * # Chat Message Overlay
   *
@@ -100,7 +96,8 @@
 	if (owned_by.seen_messages)
 		var/idx = 1
 		var/combined_height = approx_lines
-		for(var/datum/chatmessage/m in owned_by.seen_messages[message_loc])
+		for(var/msg in owned_by.seen_messages[message_loc])
+			var/datum/chatmessage/m = msg
 			animate(m.message, pixel_y = m.message.pixel_y + mheight, time = CHAT_MESSAGE_SPAWN_TIME)
 			combined_height += m.approx_lines
 			var/sched_remaining = m.scheduled_destruction - world.time
@@ -110,8 +107,8 @@
 				addtimer(CALLBACK(m, .proc/end_of_life), remaining_time, TIMER_UNIQUE|TIMER_OVERRIDE)
 
 	// Build message image
-	message = image(loc = message_loc, layer = FLY_LAYER)
-	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+	message = image(loc = message_loc, layer = CHAT_LAYER)
+	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | RESET_TRANSFORM
 	message.alpha = 0
 	message.pixel_y = owner.bound_height * 0.95
 	message.maptext_width = CHAT_MESSAGE_WIDTH
@@ -146,7 +143,7 @@
   * * message_mode - Bitflags relating to the mode of the message
   */
 /mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, message_mode)
-	if (!client || !client.prefs.chat_on_map)
+	if (!client?.prefs.chat_on_map)
 		return
 
 	if (istype(speaker, /atom/movable/virtualspeaker))
