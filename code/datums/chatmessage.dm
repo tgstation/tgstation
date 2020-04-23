@@ -46,7 +46,7 @@
 	INVOKE_ASYNC(src, .proc/generate_image, text, target, owner, extra_classes, lifespan)
 
 /datum/chatmessage/Destroy()
-	if (owned_by && owned_by.seen_messages)
+	if (owned_by)
 		if (owned_by.seen_messages)
 			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
 		owned_by.images -= message
@@ -108,7 +108,8 @@
 
 	// Build message image
 	message = image(loc = message_loc, layer = CHAT_LAYER)
-	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | RESET_TRANSFORM
+	message.plane = GAME_PLANE
+	message.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA | KEEP_APART
 	message.alpha = 0
 	message.pixel_y = owner.bound_height * 0.95
 	message.maptext_width = CHAT_MESSAGE_WIDTH
