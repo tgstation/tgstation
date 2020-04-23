@@ -399,14 +399,14 @@ SUBSYSTEM_DEF(demo)
 	..(msg)
 
 /datum/controller/subsystem/demo/proc/mark_turf(turf/T)
-	if(!CONFIG_GET(flag/demos_enabled))
+	if(!can_fire)
 		return
 	if(!isturf(T))
 		return
 	marked_turfs[T] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_new(atom/movable/M)
-	if(!CONFIG_GET(flag/demos_enabled))
+	if(!can_fire)
 		return
 	if(!isobj(M) && !ismob(M))
 		return
@@ -418,7 +418,7 @@ SUBSYSTEM_DEF(demo)
 
 // I can't wait for when TG ports this and they make this a #define macro.
 /datum/controller/subsystem/demo/proc/mark_dirty(atom/movable/M)
-	if(!CONFIG_GET(flag/demos_enabled))
+	if(!can_fire)
 		return
 	if(!isobj(M) && !ismob(M))
 		return
@@ -428,7 +428,7 @@ SUBSYSTEM_DEF(demo)
 		marked_dirty[M] = TRUE
 
 /datum/controller/subsystem/demo/proc/mark_destroyed(atom/movable/M)
-	if(!CONFIG_GET(flag/demos_enabled))
+	if(!can_fire)
 		return
 	if(!isobj(M) && !ismob(M))
 		return
