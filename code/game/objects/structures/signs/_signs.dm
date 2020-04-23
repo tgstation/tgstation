@@ -149,10 +149,26 @@ GLOBAL_VAR(editable_sign_types)
 	if(!iswallturf(target) || !proximity)
 		return
 	var/turf/T = target
+	var/turf/userT = get_turf(user)
+	var/obj/structure/sign/S = new sign_path(userT) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
+	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
+	var/dir = get_dir(userT, T)
+	switch(dir)
+		if(NORTH)
+			S.pixel_y = 32
+		if(SOUTH)
+			S.pixel_y = -32
+		if(EAST)
+			S.pixel_x = 32
+		if(WEST)
+			S.pixel_x = -32
+		else //Signs cannot be placed diagonally.
+			to_chat(user, "<span class='warning'>Your reach is unsteady, stand directly in front of the wall you wish to place a sign on")
+			qdel(S)
+			return 
 	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 						 "<span class='notice'>You attach the sign to [T].</span>")
 	playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
-	var/obj/structure/sign/S = new sign_path(T)
 	S.obj_integrity = obj_integrity
 	S.setDir(dir)
 	qdel(src)

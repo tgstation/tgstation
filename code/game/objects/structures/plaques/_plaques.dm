@@ -123,10 +123,26 @@
 	if(!iswallturf(target) || !proximity)
 		return
 	var/turf/T = target
+	var/turf/userT = get_turf(user)
+	var/obj/structure/plaque/S = new plaque_path(userT) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
+	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
+	var/dir = get_dir(userT, T)
+	switch(dir)
+		if(NORTH)
+			S.pixel_y = 32
+		if(SOUTH)
+			S.pixel_y = -32
+		if(EAST)
+			S.pixel_x = 32
+		if(WEST)
+			S.pixel_x = -32
+		else //Plaques cannot be placed diagonally.
+			to_chat(user, "<span class='warning'>Your reach is unsteady, stand directly in front of the wall you wish to place a plaque on")
+			qdel(S)
+			return 
 	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
 						 "<span class='notice'>You attach [src] to [T].</span>")
 	playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
-	var/obj/structure/plaque/S = new plaque_path(T)
 	if(engraved)
 		S.name = name
 		S.desc = desc
