@@ -96,6 +96,7 @@
 	icon_state = "signmaker_powersh"
 	holosign_type = /obj/machinery/holosign/barrier/power_shield/wall
 	creation_time = 0
+	///25 so that you can make a 5x5 room with walls and floors
 	max_signs = 25
 
 /obj/item/holosign_creator/powered_shielding/attack_self(mob/user)

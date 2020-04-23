@@ -104,6 +104,7 @@
 	. = ..()
 	air_update_turf(TRUE)
 
+///this is a machinery to make it possible to check on the APC power to shut it down in case of an outage
 /obj/machinery/holosign/barrier/power_shield
 	name = "powered shield"
 	desc = "etc"
@@ -113,7 +114,9 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_LIGHT_INSULATION
+	///store the conductivity value of the turf is applyed so that it can be restored on removal
 	var/stored_conductivity = 0
+	///power drain from the apc, in W (so 5000 is 5 kW), per each holosign placed
 	var/power_consumption = 5000
 
 /obj/machinery/holosign/barrier/power_shield/Initialize()
@@ -137,7 +140,7 @@
 	var/turf/T = loc
 	if(isturf(loc))
 		stored_conductivity = T.thermal_conductivity
-		T.thermal_conductivity = 0.0
+		T.thermal_conductivity = 0
 
 /obj/machinery/holosign/barrier/power_shield/process()
 	if(machine_stat & NOPOWER)

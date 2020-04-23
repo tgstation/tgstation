@@ -115,8 +115,9 @@
 		var/dam = round((turf_heat_resistance/turf_max_heat_resistance)* 100, 1)
 		. += "<span class='warning'>The remaining integrity is at [dam]%</span>"
 
-/turf/attackby(obj/item/I, mob/living/user, params)
-	if(I.tool_behaviour == TOOL_WELDER && user.a_intent == INTENT_GRAB)
+/turf/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(user.a_intent == INTENT_GRAB)
 		if(turf_heat_resistance < turf_max_heat_resistance)
 			if(!I.tool_start_check(user, amount=0))
 				return
@@ -564,7 +565,7 @@
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
-/turf/proc/set_damage_amount(temperature)
+/turf/proc/set_heat_damage_amount(temperature)
 	var/obj/structure/window/W = locate() in range(1, src)
 	if(W)
 		W.adjacent_fire_act(temperature)
@@ -573,13 +574,13 @@
 		D.adjacent_fire_act(temperature)
 	if(to_be_destroyed && !changing_turf)
 		damage_amount = clamp((temperature - heat_capacity)/10000, 1, 15)
-		turf_take_damage(damage_amount)
+		turf_take_heat_damage(damage_amount)
 		heat_capacity = max(heat_capacity - (damage_amount * 10), 0)
 	else
 		to_be_destroyed = FALSE
 		max_fire_temperature_sustained = 0
 
-/turf/proc/turf_take_damage(damage_amount)
+/turf/proc/turf_take_heat_damage(damage_amount)
 	if(QDELETED(src))
 		stack_trace("[src] taking damage after deletion")
 		return
