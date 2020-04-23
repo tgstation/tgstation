@@ -50,6 +50,9 @@
 		if (owned_by.seen_messages)
 			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
 		owned_by.images -= message
+	owned_by = null
+	message_loc = null
+	message = null
 	return ..()
 
 /**
