@@ -64,6 +64,9 @@ SUBSYSTEM_DEF(demo)
 	if(!CONFIG_GET(flag/demos_enabled))
 		flags |= SS_NO_FIRE
 		can_fire = FALSE
+		marked_dirty.Cut()
+		marked_new.Cut()
+		marked_turfs.Cut()
 		return ..()
 
 	WRITE_LOG_NO_FORMAT(GLOB.demo_log, "demo version 1\n") // increment this if you change the format
