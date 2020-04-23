@@ -24,6 +24,11 @@
 	color = rgb(40, 130, 255)
 	prox_check = FALSE
 
+/obj/item/card/emag/halloween
+	name = "hack-o'-lantern"
+	desc = "It's a pumpkin with a cryptographic sequencer sticking out."
+	icon_state = "hack_o_lantern"
+
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
 	name = "cryptographic sequencer"

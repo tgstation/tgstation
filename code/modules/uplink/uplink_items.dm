@@ -1359,14 +1359,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
 			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
 	item = /obj/item/card/emag
-	cost = 6
+	cost = 4
 
 /datum/uplink_item/device_tools/doormag
 	name = "Airlock Authentication Override Card"
 	desc = "It's a specialized cryptographic sequencer specifically designed to override station airlock access codes. \
 			Seems to crack airlock encryption algorithms by using raw telecrystals."
 	item = /obj/item/card/emag
-	cost = 6
+	cost = 3
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
