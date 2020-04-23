@@ -20,6 +20,7 @@
 	name = "The Most Robust Captain Award for Robustness"
 
 //These are plaques that aren't made of metal, so we'll just consider them signs. Those are made of plastic, not gold.
+//See: code>game>objects>structures>signs>_signs.dm
 
 /obj/structure/sign/plaques/kiddie
 	name = "\improper AI developers plaque"
