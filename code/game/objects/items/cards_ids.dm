@@ -69,12 +69,15 @@
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	var/prox_check = TRUE //If the emag requires you to be in range
+	///The amount of uses this emag has.
+	var/uses = 15 //12 is my lucky number
 
 /obj/item/card/emag/bluespace
 	name = "bluespace cryptographic sequencer"
 	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
 	color = rgb(40, 130, 255)
 	prox_check = FALSE
+	uses = 5000
 
 /obj/item/card/emag/attack()
 	return
@@ -86,6 +89,15 @@
 		return
 	log_combat(user, A, "attempted to emag")
 	A.emag_act(user)
+	uses--
+	if(uses <= 0)
+		to_chat(user, "<span class='notice'The cryptographic sequencer short-circuits in your hand.</span>")
+
+///Tells the user how many uses are left on the emag.
+/obj/item/card/emag/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>It has <b>[uses] uses</b> left before it will break.</span>"
+
 
 /obj/item/card/emagfake
 	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
