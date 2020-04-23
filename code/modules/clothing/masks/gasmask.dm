@@ -83,6 +83,17 @@
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
 	dog_fashion = /datum/dog_fashion/head/clown
+	var/list/clownmask_designs = list()
+
+/obj/item/clothing/mask/gas/clown_hat/Initialize(mapload)
+	.=..()
+	clownmask_designs = list(
+		"True Form" = image(icon = src.icon, icon_state = "clown"),
+		"The Feminist" = image(icon = src.icon, icon_state = "sexyclown"),
+		"The Madman" = image(icon = src.icon, icon_state = "joker"),
+		"The Rainbow Color" = image(icon = src.icon, icon_state = "rainbow"),
+		"The Jester" = image(icon = src.icon, icon_state = "chaos")
+		)
 
 /obj/item/clothing/mask/gas/clown_hat/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
@@ -95,7 +106,9 @@
 	options["The Rainbow Color"] ="rainbow"
 	options["The Jester"] ="chaos" //Nepeta33Leijon is holding me captive and forced me to help with this please send help
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in sortList(options)
+	var/choice = show_radial_menu(user,src, clownmask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+	if(!choice)
+		return FALSE
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -104,7 +117,7 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(user, "<span class='notice'>Your Clown Mask has now morphed into [choice], all praise the Honkmother!</span>")
-		return 1
+		return TRUE
 
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
@@ -125,7 +138,16 @@
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	actions_types = list(/datum/action/item_action/adjust)
+	var/list/mimemask_designs = list()
 
+/obj/item/clothing/mask/gas/mime/Initialize(mapload)
+	.=..()
+	mimemask_designs = list(
+		"Blanc" = image(icon = src.icon, icon_state = "mime"),
+		"Excité" = image(icon = src.icon, icon_state = "sexymime"),
+		"Triste" = image(icon = src.icon, icon_state = "sadmime"),
+		"Effrayé" = image(icon = src.icon, icon_state = "scaredmime")
+		)
 
 /obj/item/clothing/mask/gas/mime/ui_action_click(mob/user)
 	if(!istype(user) || user.incapacitated())
@@ -137,7 +159,9 @@
 	options["Effrayé"] = "scaredmime"
 	options["Excité"] ="sexymime"
 
-	var/choice = input(user,"To what form do you wish to Morph this mask?","Morph Mask") in sortList(options)
+	var/choice = show_radial_menu(user,src, mimemask_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+	if(!choice)
+		return FALSE
 
 	if(src && choice && !user.incapacitated() && in_range(user,src))
 		icon_state = options[choice]
@@ -146,7 +170,7 @@
 			var/datum/action/A = X
 			A.UpdateButtonIcon()
 		to_chat(user, "<span class='notice'>Your Mime Mask has now morphed into [choice]!</span>")
-		return 1
+		return TRUE
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
