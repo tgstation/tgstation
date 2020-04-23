@@ -147,10 +147,15 @@
 	if (!client?.prefs.chat_on_map)
 		return
 
+	var/atom/movable/originalSpeaker = speaker
 	if (istype(speaker, /atom/movable/virtualspeaker))
 		var/atom/movable/virtualspeaker/v = speaker
 		speaker = v.source
 		spans |= "virtual-speaker"
+
+	// Ignore virtual speaker (most often radio messages) from ourself
+	if (originalSpeaker != src && speaker == src)
+		return
 
 	// Display visual above source
 	new /datum/chatmessage(lang_treat(speaker, message_language, raw_message, spans, null, TRUE), speaker, src, spans)
