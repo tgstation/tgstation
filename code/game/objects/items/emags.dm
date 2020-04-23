@@ -42,7 +42,7 @@
 	name = "airlock authentication override card"
 	icon_state = "doormag"
 	var/type_whitelist //List of types 
-	var/charges = 5
+	var/charges = 6
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
@@ -60,7 +60,7 @@
 	. = ..()
 	if(istype(I, /obj/item/stack/telecrystal))
 		var/obj/item/stack/telecrystal/TC = I
-		charges ++
+		charges += 2
 		TC.add(-1)
 		to_chat(user, "<span class='notice'>You slot [TC] into [src]. It now has [charges] charges.</span>")
 
