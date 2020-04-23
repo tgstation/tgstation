@@ -28,16 +28,6 @@
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
 
-/obj/structure/customplaque/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
-	switch(damage_type)
-		if(BRUTE)
-			if(damage_amount)
-				playsound(loc, 'sound/weapons/smash.ogg', 80, TRUE)
-			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
-		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
-
 /obj/structure/customplaque/attack_hand(mob/user)
 	. = ..()
 	if(.)

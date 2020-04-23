@@ -21,15 +21,10 @@
 	desc = "A plastic sign with adhesive backing, use a pen to change the decal. It can be detached from the wall with a wrench."
 	icon_state = "backing"
 
-/obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
-	switch(damage_type)
-		if(BRUTE)
-			if(damage_amount)
-				playsound(loc, 'sound/weapons/slash.ogg', 80, TRUE)
-			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, TRUE)
-		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, TRUE)
+obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
+	if(damage_type == BRUTE)
+		if(damage_amount)
+			playsound(loc, 'sound/weapons/slash.ogg', 80, TRUE)
 
 /obj/structure/sign/attack_hand(mob/user)
 	. = ..()
