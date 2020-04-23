@@ -44,7 +44,12 @@
 		mutant_bodyparts |= "tail_human"
 	H.update_body()
 
+/datum/species/human/felinid/proc/washed(mob/living/carbon/source, washedby)
+	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, washedby, /datum/mood_event/got_drenched)
+	return COMPONENT_HATES_WATER
+
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
+	RegisterSignal(C, COMSIG_CARBON_WASHED, .proc/washed)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(!pref_load)			//Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
@@ -62,6 +67,10 @@
 			tail.Insert(H, drop_if_replaced = FALSE)
 		else
 			mutant_organs = list()
+	return ..()
+
+/datum/species/human/felinid/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	UnregisterSignal(C, COMSIG_CARBON_WASHED)
 	return ..()
 
 /proc/mass_purrbation()

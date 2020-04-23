@@ -1048,7 +1048,8 @@
 
 /mob/living/carbon/washed(var/atom/washer)
 	. = ..()
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
+	if(!(SEND_SIGNAL(src, COMSIG_CARBON_WASHED, "shower") & COMPONENT_HATES_WATER))
+		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "shower", /datum/mood_event/nice_shower)
 
 	for(var/obj/item/I in held_items)
 		I.washed(washer)
