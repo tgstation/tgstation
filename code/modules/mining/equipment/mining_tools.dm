@@ -92,10 +92,21 @@
 	icon_state = "jackhammer"
 	item_state = "jackhammer"
 	toolspeed = 0.1 //the epitome of powertools. extremely fast mining
-	w_class = WEIGHT_CLASS_HUGE //the epitome of power(gamer)tools is CHUNCKY
 	usesound = 'sound/weapons/sonic_jackhammer.ogg'
 	hitsound = 'sound/weapons/sonic_jackhammer.ogg'
 	desc = "Cracks rocks with sonic blasts."
+
+/obj/item/pickaxe/improvised
+	name = "improvised pickaxe"
+	desc = "A pickaxe made with a knife and crowbar taped together, how does it not break?"
+	icon_state = "ipickaxe"
+	item_state = "ipickaxe"
+	force = 10
+	throwforce = 7
+	toolspeed = 3 //3 times slower than a normal pickaxe
+	slot_flags = ITEM_SLOT_BELT
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/iron=12050) //metal needed for a crowbar and for a knife, why the FUCK does a knife cost 6 metal sheets while a crowbar costs 0.025 sheets? shit makes no sense fuck this
 
 /obj/item/shovel
 	name = "shovel"
