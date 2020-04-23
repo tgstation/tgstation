@@ -24,6 +24,13 @@
 	user.visible_message("<span class='suicide'>[user] couldn't do it!</span>")
 	return SHAME
 
+/obj/item/pickaxe/rusted
+	name = "rusty pickaxe"
+	desc = "A pickaxe that's been left to rust."
+	attack_verb = list("ineffectively hit")
+	force = 1
+	throwforce = 1
+
 /obj/item/pickaxe/mini
 	name = "compact pickaxe"
 	desc = "A smaller, compact version of the standard pickaxe."
