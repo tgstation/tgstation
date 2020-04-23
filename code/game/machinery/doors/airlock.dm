@@ -1159,22 +1159,6 @@
 //Airlock is passable if it is open (!density), bot has access, and is not bolted shut or powered off)
 	return !density || (check_access(ID) && !locked && hasPower())
 
-/obj/machinery/door/airlock/emag_act(mob/user)
-	if(!operating && density && hasPower() && !(obj_flags & EMAGGED))
-		operating = TRUE
-		update_icon(AIRLOCK_EMAG, 1)
-		sleep(6)
-		if(QDELETED(src))
-			return
-		operating = FALSE
-		if(!open())
-			update_icon(AIRLOCK_CLOSED, 1)
-		obj_flags |= EMAGGED
-		lights = FALSE
-		locked = TRUE
-		loseMainPower()
-		loseBackupPower()
-
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(isElectrified())
 		add_fingerprint(user)
