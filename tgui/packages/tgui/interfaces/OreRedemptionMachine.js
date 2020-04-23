@@ -1,6 +1,6 @@
 import { toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Box, Button, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
 
@@ -98,50 +98,45 @@ export const OreRedemptionMachine = (props, context) => {
   );
 };
 
-class MaterialRow extends Component {
-  constructor() {
-    super();
-    this.state = {
-      amount: 1,
-    };
-  }
 
-  render() {
-    const { amount } = this.state;
-    const { material, onRelease } = this.props;
-    const amountAvailable = Math.floor(material.amount);
-    return (
-      <Table.Row>
-        <Table.Cell>
-          {toTitleCase(material.name).replace('Alloy', '')}
-        </Table.Cell>
-        <Table.Cell collapsing textAlign="right">
-          <Box mr={2} color="label" inline>
-            {material.value && material.value + ' cr'}
-          </Box>
-        </Table.Cell>
-        <Table.Cell collapsing textAlign="right">
-          <Box mr={2} color="label" inline>
-            {amountAvailable} sheets
-          </Box>
-        </Table.Cell>
-        <Table.Cell collapsing>
-          <NumberInput
-            width="32px"
-            step={1}
-            stepPixelSize={5}
-            minValue={1}
-            maxValue={50}
-            value={amount}
-            onChange={(e, value) => this.setState({
-              amount: value,
-            })} />
-          <Button
-            disabled={amountAvailable < 1}
-            content="Release"
-            onClick={() => onRelease(amount)} />
-        </Table.Cell>
-      </Table.Row>
-    );
-  }
-}
+const MaterialRow = (props, context) => {
+  const { material, onRelease } = props;
+
+  const [
+    amount,
+    setAmount,
+  ] = useLocalState(context, "amount" + material.name, 1);
+
+  const amountAvailable = Math.floor(material.amount);
+  return (
+    <Table.Row>
+      <Table.Cell>
+        {toTitleCase(material.name).replace('Alloy', '')}
+      </Table.Cell>
+      <Table.Cell collapsing textAlign="right">
+        <Box mr={2} color="label" inline>
+          {material.value && material.value + ' cr'}
+        </Box>
+      </Table.Cell>
+      <Table.Cell collapsing textAlign="right">
+        <Box mr={2} color="label" inline>
+          {amountAvailable} sheets
+        </Box>
+      </Table.Cell>
+      <Table.Cell collapsing>
+        <NumberInput
+          width="32px"
+          step={1}
+          stepPixelSize={5}
+          minValue={1}
+          maxValue={50}
+          value={amount}
+          onChange={(e, value) => setAmount(value)} />
+        <Button
+          disabled={amountAvailable < 1}
+          content="Release"
+          onClick={() => onRelease(amount)} />
+      </Table.Cell>
+    </Table.Row>
+  );
+};
