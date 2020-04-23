@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - code_imp: "Added logging to the most common interactions for economy."
