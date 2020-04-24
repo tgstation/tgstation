@@ -247,7 +247,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 
 	// Create map text prior to modifying message for goonchat
 	if (client?.prefs.chat_on_map && can_hear())
-		create_chat_message(speaker, message_language, raw_message, spans?.Copy(), message_mode)
+		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
 
 	// Recompose message for AI hrefs, language incomprehension.
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)

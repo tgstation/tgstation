@@ -164,8 +164,8 @@
   * * message_mode - Bitflags relating to the mode of the message
   */
 /mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, message_mode)
-	if (!client?.prefs.chat_on_map)
-		return
+	// Ensure the list we are using, if present, is a copy so we don't modify the list provided to us
+	spans = spans?.Copy()
 
 	// Check for virtual speakers (aka hearing a message through a radio)
 	var/atom/movable/originalSpeaker = speaker
