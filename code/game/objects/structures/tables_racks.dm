@@ -541,18 +541,22 @@
 	pushed_mob.forceMove(loc)
 	pushed_mob.set_resting(TRUE, TRUE)
 	visible_message("<span class='notice'>[user] lays [pushed_mob] on [src].</span>")
-	check_patient()
+	get_patient()
 
-/obj/structure/table/optable/proc/check_patient()
+/obj/structure/table/optable/proc/get_patient()
 	var/mob/living/carbon/M = locate(/mob/living/carbon) in loc
 	if(M)
 		if(M.resting)
 			patient = M
-			if(ishuman(M) ||  ismonkey(M))
-				return TRUE
 	else
 		patient = null
-		return FALSE
+
+/obj/structure/table/optable/proc/check_eligible_patient()
+	get_patient()
+	if(patient)
+		if(ishuman(patient) ||  ismonkey(patient))
+			return TRUE
+	return FALSE
 
 /*
  * Racks

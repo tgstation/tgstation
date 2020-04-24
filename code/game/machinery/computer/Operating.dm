@@ -82,7 +82,7 @@
 	data["patient"] = null
 	if(table)
 		data["table"] = table
-		if(!table.check_patient())
+		if(!table.check_eligible_patient())
 			return data
 		data["patient"] = list()
 		patient = table.patient
