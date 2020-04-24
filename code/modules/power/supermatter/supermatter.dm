@@ -190,9 +190,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Var that increases from 0 to 1 when a psycologist is nearby, and decreases in the same way
 	var/psyCoeff = 0
 	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
-	var/psyOverlay = /obj/overlay/psy
+	var/obj/overlay/psy/psyOverlay = /obj/overlay/psy
 	///A list of active overlays, we use this to update .overlays more cleanly
-	var/list/active_overlays = list()
+	var/list/active_overlays
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -390,10 +390,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		// Pass all the gas related code an empty gas container
 		removed = new()
-	active_overlays = list()
+	LAZYCLEARLIST(active_overlays)
 	if(psyCoeff > 0)
 		psyOverlay.alpha = psyCoeff * 255
-		active_overlays += psyOverlay
+		LAZYADD(active_overlays, psyOverlay)
 	overlays = active_overlays
 	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
