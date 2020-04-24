@@ -45,8 +45,8 @@
 			new /obj/structure/canister_frame/machine/frame_tier_1(drop_location())
 			qdel(src)
 			ST.use(5)
-	else
-		return ..()
+		return
+	return ..()
 
 ///Proc to build the different tiers, if the sheet used is right, it will upgrade the frame or build the respective canister tier
 /obj/structure/canister_frame/machine/frame_tier_1/attackby(obj/item/S, mob/user, params)
