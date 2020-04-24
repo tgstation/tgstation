@@ -31,3 +31,5 @@
 	if(!(crossed.mobility_flags & MOBILITY_STAND) && !crossed.buckle_lying)
 		if(istype(I, /obj/item/clothing/shoes/clown_shoes))
 			Slip(source, AM)
+			return
+		to_chat(user, "<span class='warning'>My PDA fails to slip anyone. Perhaps I shouldn't have abandoned my legacy....</span>"
