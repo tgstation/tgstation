@@ -230,6 +230,7 @@
 			holder.icon_state = "fan_mime_pin"
 		else if (istype(U.attached_accessory, /obj/item/clothing/accessory/fan_clown_pin))
 			holder.icon_state = "fan_clown_pin"
+			holder.icon_state = "fan_clown_pin"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
