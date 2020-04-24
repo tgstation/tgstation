@@ -3,6 +3,8 @@ CONTAINS:
 RSF
 
 */
+///Extracts the related object from a associated list of objects and values, or lists and objects.
+#define OBJECT_OR_LIST_ELEMENT(from, input) (islist(input) ? from[input] : input)
 /obj/item/rsf
 	name = "\improper Rapid-Service-Fabricator"
 	desc = "A device used to rapidly deploy service items."
@@ -69,38 +71,30 @@ RSF
 
 /obj/item/rsf/attack_self(mob/user)
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
-	var/atom/target = cost_by_item
+	var/target = cost_by_item
 	var/cost = 0
 	//Warning, prepare for bodgecode
-	while(istype(target, /list/))//While target is a list we continue the loop
+	while(islist(target))//While target is a list we continue the loop
 		var/picked = show_radial_menu(user, src, formRadial(target), custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
 		if(!check_menu(user) || picked == null)
 			return
 		for(var/emem in target)//Back through target agian
-			var/atom/test = extractObject(target, emem)
+			var/atom/test = OBJECT_OR_LIST_ELEMENT(target, emem)
 			if(picked == initial(test.name))//We try and find the entry that matches the radial selection
 				cost = target[emem]//We cash the cost
 				target = emem
 				break
-			qdel(test)
 		//If we found a list we start it all again, this time looking through its contents.
 		//This allows for sublists
 	to_dispense = target
 	dispense_cost = cost
 	// Change mode
 
-///Extracts the related object from a associated list of objects and values, or lists and objects.
-/obj/item/rsf/proc/extractObject(from, input)
-	if(islist(input))
-		return from[input]//If it's a list we should use its associated object
-	else
-		return input
-
 ///Forms a radial menu based off an object in a list, or a list's associated object
 /obj/item/rsf/proc/formRadial(from)
 	var/list/radial_list = list()
 	for(var/meme in from)//We iterate through all of targets entrys
-		var/atom/temp = extractObject(from, meme)
+		var/atom/temp = OBJECT_OR_LIST_ELEMENT(from, meme)
 		//We then add their data into the radial menu
 		radial_list[initial(temp.name)] = image(icon = initial(temp.icon), icon_state = initial(temp.icon_state))
 	return radial_list
