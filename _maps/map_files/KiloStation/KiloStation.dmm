@@ -1253,6 +1253,7 @@
 	pixel_y = 5
 	},
 /obj/item/restraints/handcuffs/cable/zipties,
+/obj/item/flashlight/seclite,
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "acj" = (
@@ -6768,18 +6769,12 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral,
-/obj/structure/table,
-/obj/item/book/manual/wiki/detective{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/taperecorder,
-/obj/item/flashlight/seclite,
 /obj/effect/decal/cleanable/cobweb,
 /obj/machinery/airalarm{
 	dir = 4;
 	pixel_x = -22
 	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "ale" = (
@@ -73137,6 +73132,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/item/book/manual/wiki/detective,
 /turf/open/floor/wood,
 /area/security/detectives_office)
 "cgk" = (
@@ -93072,6 +93068,7 @@
 /obj/structure/table/wood,
 /obj/item/paper_bin,
 /obj/item/hand_labeler,
+/obj/item/taperecorder,
 /turf/open/floor/carpet/green,
 /area/security/detectives_office)
 "cNz" = (
