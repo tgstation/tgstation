@@ -229,9 +229,11 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	if(changed_name == "" && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
-		if(apply_pref_name("cyborg", C))
-			return //built in camera handled in proc
+	if(SSticker.anonymousnames) //only robotic renames will allow for anything other than the anonymous one
+		changed_name = anonymous_ai_name(is_ai = FALSE)
+	if(!changed_name && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
+		apply_pref_name("cyborg", C)
+		return //built in camera handled in proc
 	if(!changed_name)
 		changed_name = get_standard_name()
 

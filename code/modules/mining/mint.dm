@@ -82,24 +82,23 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "mint", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Mint", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/mineral/mint/ui_data()
 	var/list/data = list()
-	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	data["inserted_materials"] = list()
+	data["chosen_material"] = null
 
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	for(var/datum/material/inserted_material in materials.materials)
 		var/amount = materials.get_material_amount(inserted_material)
-
 		if(!amount)
 			continue
-
 		data["inserted_materials"] += list(list(
 			"material" = inserted_material.name,
-			"amount" = amount
+			"amount" = amount,
 		))
-
 		if(chosen == inserted_material)
 			data["chosen_material"] = inserted_material.name
 
@@ -109,25 +108,27 @@
 	return data;
 
 /obj/machinery/mineral/mint/ui_act(action, params, datum/tgui/ui)
-
 	. = ..()
 	if(.)
 		return
-
-	switch(action)
-		if ("startpress")
-			if (!processing)
-				produced_coins = 0
-			processing = TRUE
-			begin_processing()
-		if ("stoppress")
-			processing = FALSE
-			end_processing()
-		if ("changematerial")
-			var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-			for(var/datum/material/mat in materials.materials)
-				if (params["material_name"] == mat.name)
-					chosen = mat
+	if(action == "startpress")
+		if (!processing)
+			if(produced_coins > 0)
+				log_econ("[produced_coins] coins were created by [src] in the last cycle.")
+			produced_coins = 0
+		processing = TRUE
+		begin_processing()
+		return TRUE
+	if (action == "stoppress")
+		processing = FALSE
+		end_processing()
+		return TRUE
+	if (action == "changematerial")
+		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+		for(var/datum/material/mat in materials.materials)
+			if (params["material_name"] == mat.name)
+				chosen = mat
+		return TRUE
 
 /obj/machinery/mineral/mint/proc/create_coins()
 	var/turf/T = get_step(src,output_dir)
@@ -141,3 +142,4 @@
 			B = new /obj/item/storage/bag/money(src)
 			unload_mineral(B)
 		O.forceMove(B)
+		SSblackbox.record_feedback("amount", "coins_minted", 1)

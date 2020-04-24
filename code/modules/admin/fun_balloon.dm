@@ -108,7 +108,7 @@
 /obj/effect/forcefield/arena_shuttle
 	name = "portal"
 	timeleft = 0
-	var/list/warp_points
+	var/list/warp_points = list()
 
 /obj/effect/forcefield/arena_shuttle/Initialize()
 	. = ..()

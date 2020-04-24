@@ -1,30 +1,44 @@
-import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, Icon, ProgressBar } from '../components';
 import { Fragment } from 'inferno';
+import { useBackend } from '../backend';
+import { Box, Button, Icon, NoticeBox, ProgressBar, Section } from '../components';
+import { Window } from '../layouts';
 
-export const Gateway = props => {
-  const { act, data } = useBackend(props);
+export const Gateway = () => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <GatewayContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+const GatewayContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     gateway_present = false,
     gateway_status = false,
     current_target = null,
     destinations = [],
   } = data;
-
   if (!gateway_present) {
     return (
       <Section>
-        <NoticeBox textAlign="center">
+        <NoticeBox>
           No linked gateway
         </NoticeBox>
-        <Button fluid onClick={() => act("linkup")}>Linkup</Button>
+        <Button
+          fluid
+          onClick={() => act('linkup')}>
+          Linkup
+        </Button>
       </Section>
     );
   }
-
   if (current_target) {
     return (
-      <Section title={current_target.name} textAlign="center">
+      <Section
+        title={current_target.name}>
         <Icon name="rainbow" size={4} color="green" />
         <Button
           fluid
@@ -34,7 +48,6 @@ export const Gateway = props => {
       </Section>
     );
   }
-
   if (!destinations.length) {
     return (
       <Section>
@@ -42,42 +55,6 @@ export const Gateway = props => {
       </Section>
     );
   }
-
-  const renderGatewayDest = dest => {
-    if (dest.availible) {
-      return (
-        <Section
-          key={dest.ref}
-          title={dest.name}
-          textAlign="center">
-          <Button
-            fluid
-            onClick={() => act('activate', {
-              destination: dest.ref,
-            })}>
-            Activate
-          </Button>
-        </Section>
-      );
-    }
-    return (
-      <Section
-        textAlign="center"
-        key={dest.ref}
-        title={dest.name}>
-        <Box m={1} textColor="bad">
-          {dest.reason}
-        </Box>
-        {!!dest.timeout && (
-          <ProgressBar
-            value={dest.timeout}>
-            Calibrating...
-          </ProgressBar>
-        )}
-      </Section>
-    );
-  };
-
   return (
     <Fragment>
       {!gateway_status && (
@@ -85,7 +62,33 @@ export const Gateway = props => {
           Gateway Unpowered
         </NoticeBox>
       )}
-      {destinations.map(renderGatewayDest)}
+      {destinations.map(dest => (
+        <Section
+          key={dest.ref}
+          title={dest.name}>
+          {dest.availible && (
+            <Button
+              fluid
+              onClick={() => act('activate', {
+                destination: dest.ref,
+              })}>
+              Activate
+            </Button>
+          ) || (
+            <Fragment>
+              <Box m={1} textColor="bad">
+                {dest.reason}
+              </Box>
+              {!!dest.timeout && (
+                <ProgressBar
+                  value={dest.timeout}>
+                  Calibrating...
+                </ProgressBar>
+              )}
+            </Fragment>
+          )}
+        </Section>
+      ))}
     </Fragment>
   );
 };

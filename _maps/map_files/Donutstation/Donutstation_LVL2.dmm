@@ -4717,7 +4717,6 @@
 /area/ai_monitored/turret_protected/ai)
 "kq" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},

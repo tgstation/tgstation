@@ -1,4 +1,0 @@
-author: "Akrilla"
-delete-after: True
-changes: 
-  - rscadd: "Equipment swapping, defaulted to V. Allows you to equip items while swapping out what you're already wearing after a small delay."

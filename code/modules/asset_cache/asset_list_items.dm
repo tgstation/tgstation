@@ -4,10 +4,6 @@
 	assets = list(
 		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
-		"shim-html5shiv.js" = 'tgui/packages/tgui/public/shim-html5shiv.js',
-		"shim-ie8.js" = 'tgui/packages/tgui/public/shim-ie8.js',
-		"shim-dom4.js" = 'tgui/packages/tgui/public/shim-dom4.js',
-		"shim-css-om.js" = 'tgui/packages/tgui/public/shim-css-om.js',
 	)
 
 /datum/asset/group/tgui
@@ -93,7 +89,11 @@
 		"stamp-rd" = 'icons/stamp_icons/large_stamp-rd.png',
 		"stamp-cap" = 'icons/stamp_icons/large_stamp-cap.png',
 		"stamp-qm" = 'icons/stamp_icons/large_stamp-qm.png',
-		"stamp-law" = 'icons/stamp_icons/large_stamp-law.png'
+		"stamp-law" = 'icons/stamp_icons/large_stamp-law.png',
+		"stamp-chap" = 'icons/stamp_icons/large_stamp-chap.png',
+		"stamp-mime" = 'icons/stamp_icons/large_stamp-mime.png',
+		"stamp-centcom" = 'icons/stamp_icons/large_stamp-centcom.png',
+		"stamp-syndicate" = 'icons/stamp_icons/large_stamp-syndicate.png'
 	)
 
 

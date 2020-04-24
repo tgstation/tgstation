@@ -1,12 +1,22 @@
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Button, NoticeBox, Section, Tabs, Input } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Flex, Input, NoticeBox, Section, Tabs } from '../components';
+import { NtosWindow } from '../layouts';
 import { AccessList } from './common/AccessList';
-import { map } from 'common/collections';
 
-export const NtosCard = props => {
-  const { act, data } = useBackend(props);
+export const NtosCard = (props, context) => {
+  return (
+    <NtosWindow resizable>
+      <NtosWindow.Content scrollable>
+        <NtosCardContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
 
+export const NtosCardContent = (props, context) => {
+  const { act, data } = useBackend(context);
+  const [tab, setTab] = useLocalState(context, 'tab', 1);
   const {
     authenticated,
     regions = [],
@@ -19,7 +29,10 @@ export const NtosCard = props => {
     have_id_slot,
     id_name,
   } = data;
-
+  const [
+    selectedDepartment,
+    setSelectedDepartment,
+  ] = useLocalState(context, 'department', Object.keys(jobs)[0]);
   if (!have_id_slot) {
     return (
       <NoticeBox>
@@ -27,7 +40,7 @@ export const NtosCard = props => {
       </NoticeBox>
     );
   }
-
+  const departmentJobs = jobs[selectedDepartment] || [];
   return (
     <Fragment>
       <Section
@@ -64,8 +77,20 @@ export const NtosCard = props => {
           onClick={() => act('PRG_eject')} />
       </Section>
       {(!!has_id && !!authenticated) && (
-        <Tabs>
-          <Tabs.Tab label="Access">
+        <Box>
+          <Tabs>
+            <Tabs.Tab
+              selected={tab === 1}
+              onClick={() => setTab(1)}>
+              Access
+            </Tabs.Tab>
+            <Tabs.Tab
+              selected={tab === 2}
+              onClick={() => setTab(2)}>
+              Jobs
+            </Tabs.Tab>
+          </Tabs>
+          {tab === 1 && (
             <AccessList
               accesses={regions}
               selectedList={access_on_card}
@@ -80,8 +105,8 @@ export const NtosCard = props => {
               denyDep={dep => act('PRG_denyregion', {
                 region: dep,
               })} />
-          </Tabs.Tab>
-          <Tabs.Tab label="Jobs">
+          )}
+          {tab === 2 && (
             <Section
               title={id_rank}
               buttons={(
@@ -98,29 +123,34 @@ export const NtosCard = props => {
                   assign_target: 'Custom',
                   custom_name: value,
                 })} />
-              <Tabs vertical>
-                {map((jobs_param, department) => {
-                  const jobs = jobs_param || [];
-                  return (
-                    <Tabs.Tab
-                      key={department}
-                      label={department}>
-                      {jobs.map(job => (
-                        <Button
-                          fluid
-                          key={job.job}
-                          content={job.display_name}
-                          onClick={() => act('PRG_assign', {
-                            assign_target: job.job,
-                          })} />
-                      ))}
-                    </Tabs.Tab>
-                  );
-                })(jobs)}
-              </Tabs>
+              <Flex>
+                <Flex.Item>
+                  <Tabs vertical>
+                    {Object.keys(jobs).map(department => (
+                      <Tabs.Tab
+                        key={department}
+                        selected={department === selectedDepartment}
+                        onClick={() => setSelectedDepartment(department)}>
+                        {department}
+                      </Tabs.Tab>
+                    ))}
+                  </Tabs>
+                </Flex.Item>
+                <Flex.Item grow={1}>
+                  {departmentJobs.map(job => (
+                    <Button
+                      fluid
+                      key={job.job}
+                      content={job.display_name}
+                      onClick={() => act('PRG_assign', {
+                        assign_target: job.job,
+                      })} />
+                  ))}
+                </Flex.Item>
+              </Flex>
             </Section>
-          </Tabs.Tab>
-        </Tabs>
+          )}
+        </Box>
       )}
     </Fragment>
   );

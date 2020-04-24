@@ -653,17 +653,19 @@
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Fix the ship, find a way to power it and follow your captain's orders."
 	important_info = "Obey orders given by your captain. DO NOT let the ship fall into enemy hands."
 	outfit = /datum/outfit/syndicatespace/syndicrew
+	assignedrole = "Cybersun Crewmember"
+
+/obj/effect/mob_spawn/human/syndicatespace/Initialize(mapload)
+	. = ..()
+	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
+	if(policy)
+		important_info = policy
 
 /datum/outfit/syndicatespace/syndicrew/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
 
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
-
-/obj/effect/mob_spawn/human/syndicatespace/Destroy()
-	new/obj/structure/fluff/empty_sleeper/syndicate(get_turf(src))
-	return ..()
-
 
 /obj/effect/mob_spawn/human/syndicatespace/captain
 	name = "Syndicate Ship Captain"
@@ -674,8 +676,14 @@
 	short_desc = "You are the captain of an old ship, stuck in hostile space."
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Command your crew and turn your ship into the most protected fortress."
 	important_info = "Protect the ship and secret documents in your backpack with your own life. DO NOT let the ship fall into enemy hands."
-	mob_gender = "male"
 	outfit = /datum/outfit/syndicatespace/syndicaptain
+	assignedrole = "Cybersun Captain"
+
+/obj/effect/mob_spawn/human/syndicatespace/syndicaptain/Initialize(mapload)
+	. = ..()
+	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN_CAPTAIN)
+	if(policy)
+		important_info = policy
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
@@ -706,7 +714,7 @@
 	glasses = /obj/item/clothing/glasses/night
 	mask = /obj/item/clothing/mask/gas/syndicate
 	head = /obj/item/clothing/head/HoS/beret/syndicate
-	ears = /obj/item/radio/headset/syndicate/alt
+	ears = /obj/item/radio/headset/syndicate/alt/leader
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack

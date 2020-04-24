@@ -7,7 +7,7 @@
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	undeletable = TRUE
-	tgui_id = "ntos_file_manager"
+	tgui_id = "NtosFileManager"
 
 	var/open_file
 	var/error

@@ -8,7 +8,7 @@
 	transfer_access = ACCESS_ROBOTICS
 	network_destination = "cyborg remote monitoring"
 	size = 5
-	tgui_id = "ntos_cyborg_monitor"
+	tgui_id = "NtosCyborgRemoteMonitor"
 	ui_x = 600
 	ui_y = 800
 
