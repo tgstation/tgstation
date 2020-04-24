@@ -11471,6 +11471,13 @@
 /turf/closed/wall,
 /area/quartermaster/miningoffice)
 "ayk" = (
+/obj/machinery/power/apc{
+	areastring = "/area/quartermaster/miningoffice";
+	dir = 1;
+	name = "Mining APC";
+	pixel_x = -30;
+	pixel_y = 3
+	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/closet/crate,
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -12081,6 +12088,15 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = -24
+	},
+/obj/structure/rack,
+/obj/item/storage/briefcase{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/storage/secure/briefcase{
+	pixel_x = 2;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
@@ -13668,15 +13684,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aDN" = (
-/obj/structure/rack,
-/obj/item/storage/briefcase{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/storage/secure/briefcase{
-	pixel_x = 2;
-	pixel_y = -2
-	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aDO" = (
@@ -14955,6 +14963,13 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "aHh" = (
+/obj/machinery/power/apc{
+	areastring = "/area/security/checkpoint/supply";
+	dir = 1;
+	name = "Security Post - Cargo Bay APC";
+	pixel_x = 27;
+	pixel_y = 5
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/disposalpipe/segment,
@@ -16288,8 +16303,7 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/table,
 /obj/machinery/microwave{
-	pixel_y = 6;
-	pixel_x = 0
+	pixel_y = 6
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
 /obj/effect/turf_decal/stripes/red/corner{
@@ -18501,8 +18515,7 @@
 	pixel_y = 15
 	},
 /obj/item/stack/cable_coil{
-	pixel_y = 18;
-	pixel_x = 0
+	pixel_y = 18
 	},
 /obj/machinery/requests_console{
 	department = "Tool Storage";
@@ -20092,6 +20105,29 @@
 /obj/machinery/vending/assist,
 /turf/open/floor/plasteel/dark,
 /area/storage/primary)
+"aUr" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/color/fyellow{
+	pixel_y = 9
+	},
+/obj/machinery/cell_charger{
+	pixel_x = -3
+	},
+/obj/item/stock_parts/cell/high{
+	charge = 100;
+	maxcharge = 15000;
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/plasteel/dark,
+/area/storage/primary)
 "aUs" = (
 /obj/structure/table,
 /obj/item/storage/firstaid/regular{
@@ -20109,8 +20145,7 @@
 	pixel_x = -8
 	},
 /obj/item/assembly/prox_sensor{
-	pixel_y = 12;
-	pixel_x = 0
+	pixel_y = 12
 	},
 /obj/machinery/light{
 	dir = 4
@@ -20820,8 +20855,12 @@
 /obj/item/clothing/gloves/color/fyellow{
 	pixel_y = 6
 	},
-/obj/item/clothing/gloves/color/fyellow{
-	pixel_x = 0
+/obj/item/clothing/gloves/color/fyellow,
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
@@ -22199,6 +22238,12 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aYR" = (
+/obj/machinery/power/apc{
+	areastring = "/area/quartermaster/storage";
+	dir = 4;
+	name = "Cargo Bay APC";
+	pixel_x = 28
+	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
@@ -24291,9 +24336,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/disposal/deliveryChute{
-	dir = 2
-	},
+/obj/machinery/disposal/deliveryChute,
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
 	},
@@ -25751,7 +25794,6 @@
 	pixel_y = 9
 	},
 /obj/item/cartridge/quartermaster{
-	pixel_y = 0;
 	pixel_x = 9
 	},
 /obj/item/cartridge/quartermaster{
@@ -26719,7 +26761,6 @@
 /area/quartermaster/sorting)
 "biI" = (
 /obj/machinery/firealarm{
-	pixel_y = 0;
 	pixel_x = 30
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -27421,7 +27462,6 @@
 "bku" = (
 /obj/machinery/disposal/bin,
 /obj/machinery/firealarm{
-	pixel_y = 0;
 	pixel_x = -31
 	},
 /obj/machinery/light{
@@ -45545,6 +45585,18 @@
 	pixel_x = 5;
 	pixel_y = 3
 	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/storage/primary";
+	name = "Tool Storage APC";
+	pixel_x = 31;
+	pixel_y = 1
+	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel/dark,
@@ -63207,14 +63259,11 @@
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
 "cSF" = (
-/obj/structure/closet/secure_closet/miner,
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/machinery/camera{
-	c_tag = "Mining Dock";
-	dir = 2
+/obj/structure/window/reinforced{
+	dir = 1
 	},
-/turf/open/floor/plasteel,
-/area/quartermaster/miningoffice)
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "cSG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/stripes/corner{
@@ -63537,11 +63586,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/xenobiology)
 "cTs" = (
-/obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "31; 48"
-	},
-/turf/open/floor/plating,
-/area/quartermaster/warehouse)
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "cTt" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -71092,16 +71140,6 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
-"jfb" = (
-/obj/structure/rack,
-/obj/item/storage/box/shipping{
-	pixel_x = -6
-	},
-/obj/item/storage/box/lights/mixed{
-	pixel_x = 9
-	},
-/turf/open/floor/plasteel/dark,
-/area/storage/primary)
 "jgL" = (
 /obj/machinery/door/airlock/hatch{
 	name = "Test Chamber Maintenance";
@@ -72290,6 +72328,12 @@
 /turf/open/floor/plasteel/dark,
 /area/medical/morgue)
 "luZ" = (
+/obj/machinery/power/apc{
+	areastring = "/area/quartermaster/qm";
+	dir = 1;
+	name = "Quartermaster's Office APC";
+	pixel_y = 30
+	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4

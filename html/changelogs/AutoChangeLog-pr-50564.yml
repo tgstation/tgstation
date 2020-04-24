@@ -1,0 +1,4 @@
+author: "SomeoneYouProbablyKnow"
+delete-after: True
+changes: 
+  - rscadd: "The detective now has all his extra clothes in a vendor and not their locker."

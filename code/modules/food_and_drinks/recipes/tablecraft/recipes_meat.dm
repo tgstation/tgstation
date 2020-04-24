@@ -201,7 +201,7 @@
 	subcategory = CAT_MEAT
 
 /datum/crafting_recipe/food/ricepork
-	name = "Rice and pork"
+	name = "Rice and Pork"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1,
 		/obj/item/reagent_containers/food/snacks/meat/cutlet = 2
@@ -217,4 +217,13 @@
 		/obj/item/stack/rods = 2
 	)
 	result = /obj/item/reagent_containers/food/snacks/bbqribs
+	subcategory = CAT_MEAT
+
+/datum/crafting_recipe/food/meatclown
+	name = "Meat Clown"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/meat/steak/plain = 1,
+		/obj/item/reagent_containers/food/snacks/grown/banana = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/meatclown
 	subcategory = CAT_MEAT

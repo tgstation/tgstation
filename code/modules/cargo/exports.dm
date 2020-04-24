@@ -82,7 +82,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	..()
 	SSprocessing.processing += src
 	init_cost = cost
-	export_types = typecacheof(export_types)
+	export_types = typecacheof(export_types, FALSE, !include_subtypes)
 	exclude_types = typecacheof(exclude_types)
 
 /datum/export/Destroy()
@@ -115,9 +115,9 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 /datum/export/proc/applies_to(obj/O, allowed_categories = NONE, apply_elastic = TRUE)
 	if((allowed_categories & export_category) != export_category)
 		return FALSE
-	if(!include_subtypes && !(O.type in export_types))
+	if(!is_type_in_typecache(O, export_types))
 		return FALSE
-	if(include_subtypes && (!is_type_in_typecache(O, export_types) || is_type_in_typecache(O, exclude_types)))
+	if(include_subtypes && is_type_in_typecache(O, exclude_types))
 		return FALSE
 	if(!get_cost(O, allowed_categories , apply_elastic))
 		return FALSE
