@@ -190,9 +190,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Var that increases from 0 to 1 when a psycologist is nearby, and decreases in the same way
 	var/psyCoeff = 0
 	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
-	var/obj/overlay/psy/psyOverlay = new /obj/overlay/psy/
+	var/psyOverlayType = /obj/overlay/psy
+	var/overlay/psy/psyOverlay
 	///A list of active overlays, we use this to update .overlays more cleanly
-	var/active_overlays = list()
+	var/list/active_overlays = list()
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -213,6 +214,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
 
 	soundloop = new(list(src), TRUE)
+	psyOverlay = new psyOverlayType()
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
@@ -873,7 +875,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
 	moveable = TRUE
-	psyOverlay = new /obj/overlay/psy/shard/
+	psyOverlayType = /obj/overlay/psy/shard
 
 /obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
