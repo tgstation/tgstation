@@ -87,7 +87,7 @@
 		return
 
 	// Non mobs speakers can be small
-	if (!istype(target, /mob))
+	if (!ismob(target))
 		extra_classes += "small"
 
 	// Append radio icon if from a virtual speaker
