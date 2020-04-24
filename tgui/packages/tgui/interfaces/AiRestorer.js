@@ -1,9 +1,20 @@
 import { Fragment } from 'inferno';
-import { useBackend } from "../backend";
-import { Section, Box, Button, NoticeBox, ProgressBar, LabeledList } from "../components";
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { Window } from '../layouts';
 
-export const AiRestorer = props => {
-  const { act, data } = useBackend(props);
+export const AiRestorer = () => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <AiRestorerContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const AiRestorerContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     AI_present,
     error,
@@ -14,7 +25,6 @@ export const AiRestorer = props => {
     health,
     ejectable,
   } = data;
-
   return (
     <Fragment>
       {error && (
@@ -28,8 +38,7 @@ export const AiRestorer = props => {
           icon="eject"
           content={AI_present ? name : "----------"}
           disabled={!AI_present}
-          onClick={() => act('PRG_eject')}
-        />
+          onClick={() => act('PRG_eject')} />
       )}
       {!!AI_present && (
         <Section
@@ -71,8 +80,7 @@ export const AiRestorer = props => {
             content="Begin Reconstruction"
             disabled={restoring}
             mt={1}
-            onClick={() => act('PRG_beginReconstruction')}
-          />
+            onClick={() => act('PRG_beginReconstruction')} />
           <Section title="Laws" level={2}>
             {laws.map(law => (
               <Box key={law} className="candystripe">

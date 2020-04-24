@@ -99,7 +99,7 @@ GLOBAL_LIST_EMPTY(announcement_systems)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "announcement_system", "Automated Announcement System", 500, 225, master_ui, state)
+		ui = new(user, src, ui_key, "AutomatedAnnouncement", "Automated Announcement System", 500, 225, master_ui, state)
 		ui.open()
 
 /obj/machinery/announcement_system/ui_data()
