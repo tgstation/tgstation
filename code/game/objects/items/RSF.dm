@@ -78,7 +78,7 @@ RSF
 			return
 		for(var/emem in target)//Back through target agian
 			var/atom/test = extractObject(target, emem)
-			if(picked == test.name)//We try and find the entry that matches the radial selection
+			if(picked == initial(test.name))//We try and find the entry that matches the radial selection
 				cost = target[emem]//We cash the cost
 				target = emem
 				break
@@ -91,20 +91,18 @@ RSF
 
 ///Extracts the related object from a associated list of objects and values, or lists and objects.
 /obj/item/rsf/proc/extractObject(from, input)
-	if(istype(input, /list/))
-		var/temp = from[input]//If it's a list we should use its associated object
-		return new temp()
+	if(islist(input))
+		return from[input]//If it's a list we should use its associated object
 	else
-		return new input()
+		return input
 
 ///Forms a radial menu based off an object in a list, or a list's associated object
 /obj/item/rsf/proc/formRadial(from)
 	var/list/radial_list = list()
 	for(var/meme in from)//We iterate through all of targets entrys
-		var/atom/test = extractObject(from, meme)
+		var/atom/temp = extractObject(from, meme)
 		//We then add their data into the radial menu
-		radial_list[test.name] = image(icon = test.icon, icon_state = test.icon_state)
-		qdel(test)
+		radial_list[initial(temp.name)] = image(icon = initial(temp.icon), icon_state = initial(temp.icon_state))
 	return radial_list
 
 /obj/item/rsf/proc/check_menu(mob/user)
@@ -128,18 +126,20 @@ RSF
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/R = user
 		var/end_charge = R.cell.charge - charge
-		if(end_charge >= 0)
-			R.cell.charge = end_charge
-			return TRUE
-		to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
+		if(end_charge < 0)
+			to_chat(user, "<span class='warning'>You do not have enough power to use [src].</span>")
+			icon_state = spent_icon_state
+			return FALSE
+		R.cell.charge = end_charge
+		return TRUE
 	else
-		if(matter - 1 >= 0)
-			matter--
-			to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] [discriptor].</span>")
-			return TRUE
-		to_chat(user, "<span class='warning'>\The [src] doesn't have enough [discriptor] left.</span>")
-	icon_state = spent_icon_state
-	return FALSE
+		if(matter - 1 < 0)
+			to_chat(user, "<span class='warning'>\The [src] doesn't have enough [discriptor] left.</span>")
+			icon_state = spent_icon_state
+			return FALSE
+		matter--
+		to_chat(user, "<span class='notice'>\The [src] now holds [matter]/[max_matter] [discriptor].</span>")
+		return TRUE
 
 ///Helper proc that iterates through all the things we are allowed to spawn on, and sees if the passed atom is one of them
 /obj/item/rsf/proc/is_allowed(atom/to_check)
@@ -153,14 +153,17 @@ RSF
 	desc = "A self-recharging device used to rapidly deploy cookies."
 	icon_state = "rcd"
 	spent_icon_state = "rcd"
-	var/toxin = FALSE
-	var/cooldown = 0
-	var/cooldowndelay = 10
 	max_matter = 10
 	cost_by_item = list()
 	dispense_cost = 100
 	discriptor = "cookie-units"
 	action_type = "Fabricates"
+	///Tracks whether or not the cookiesynth is about to print a poisoned cookie
+	var/toxin = FALSE //This might be better suited to some initialize fuckery, but I don't have a good "poisoned" sprite
+	///Holds a copy of world.time taken the last time the synth gained a charge. Used with cooldowndelay to track when the next charge should be gained
+	var/cooldown = 0
+	///The period between recharges
+	var/cooldowndelay = 10
 
 /obj/item/rsf/cookiesynth/Initialize()
 	. = ..()
