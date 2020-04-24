@@ -191,7 +191,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/psyCoeff = 0
 	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
 	var/psyOverlayType = /obj/overlay/psy
-	var/overlay/psy/psyOverlay
+	var/obj/overlay/psy/psyOverlay
 	///A list of active overlays, we use this to update .overlays more cleanly
 	var/list/active_overlays = list()
 
