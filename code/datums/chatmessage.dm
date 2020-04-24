@@ -167,10 +167,6 @@
 	if (!client?.prefs.chat_on_map)
 		return
 
-	// Copy spans list before we do anything to it
-	if (spans)
-		spans = spans.Copy()
-
 	// Check for virtual speakers (aka hearing a message through a radio)
 	var/atom/movable/originalSpeaker = speaker
 	if (istype(speaker, /atom/movable/virtualspeaker))

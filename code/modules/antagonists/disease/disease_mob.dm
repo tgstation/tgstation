@@ -130,7 +130,7 @@ the new instance inside the host to be updated to the template's stats.
 		link = ""
 	// Create map text prior to modifying message for goonchat
 	if (client?.prefs.chat_on_map)
-		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
+		create_chat_message(speaker, message_language, raw_message, spans?.Copy(), message_mode)
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	to_chat(src, "[link] [message]")
