@@ -96,7 +96,7 @@
 	icon_state = "signmaker_powersh"
 	holosign_type = /obj/machinery/holosign/barrier/power_shield/wall
 	creation_time = 0
-	///25 so that you can make a 5x5 room with walls and floors
+	//25 so that you can make a 5x5 room with walls and floors
 	max_signs = 25
 
 /obj/item/holosign_creator/powered_shielding/attack_self(mob/user)
@@ -110,30 +110,26 @@
 		holosign_type = /obj/machinery/holosign/barrier/power_shield/wall
 		to_chat(user, "<span class='notice'>You change the projector to shielded walls.</span>")
 
-/obj/item/holosign_creator/powered_shielding/afterattack(atom/target, mob/user, flag)
-	var/turf/T = get_turf(target)
-	var/obj/structure/holosign/H = locate(holosign_type) in T
-	if(H)
-		to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
-		qdel(H)
-	else
-		if(holocreator_busy)
-			to_chat(user, "<span class='notice'>[src] is busy creating a hologram.</span>")
+/obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
+	if(flag)
+		if(!check_allowed_items(target, 1))
 			return
-		if(signs.len < max_signs)
-			playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
-			if(creation_time)
-				holocreator_busy = TRUE
-				if(!do_after(user, creation_time, target = target))
-					holocreator_busy = FALSE
-					return
-				holocreator_busy = FALSE
-				if(signs.len >= max_signs)
-					return
-			H = new holosign_type(get_turf(target), src)
-			to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
+		var/turf/T = get_turf(target)
+		var/obj/machinery/holosign/H = locate(holosign_type) in T
+		if(H)
+			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
+			qdel(H)
 		else
-			to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+			var/area/a = get_area(target)
+			if(a.power_equip == FALSE)
+				to_chat(user, "<span class='notice'>[src] doesn't have enough power in the grid to create a shield!</span>")
+				return
+			if(signs.len >= max_signs)
+				to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+			else
+				playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
+				H = new holosign_type(get_turf(target), src)
+				to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
 
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"

@@ -117,22 +117,29 @@
 	var/stored_conductivity = 0
 	///power drain from the apc, in W (so 5000 is 5 kW), per each holosign placed
 	var/power_consumption = 5000
+	var/obj/item/holosign_creator/shield_projector
+
+/obj/machinery/holosign/barrier/power_shield/New(loc, source_projector)
+	if(source_projector)
+		shield_projector = source_projector
+		shield_projector.signs += src
+	..()
 
 /obj/machinery/holosign/barrier/power_shield/Initialize()
 	. = ..()
 	air_update_turf(TRUE)
 	var/area/a = get_area(src)
 	a.addStaticPower(power_consumption, STATIC_EQUIP)
-	if(a.power_environ == TRUE)
-		shield_turf()
-	else
-		Destroy()
+	shield_turf()
 
 /obj/machinery/holosign/barrier/power_shield/Destroy()
 	var/turf/T = loc
 	T.thermal_conductivity = stored_conductivity
 	var/area/a = get_area(src)
 	a.addStaticPower(-power_consumption, STATIC_EQUIP)
+	if(shield_projector)
+		shield_projector.signs -= src
+		shield_projector = null
 	return ..()
 
 /obj/machinery/holosign/barrier/power_shield/proc/shield_turf()
@@ -143,12 +150,13 @@
 
 /obj/machinery/holosign/barrier/power_shield/process()
 	if(machine_stat & NOPOWER)
-		Destroy()
+		qdel(src)
 
 /obj/machinery/holosign/barrier/power_shield/wall
 	name = "Shield Wall"
 	desc = "A powered wall to stop changes in atmospheric and the spread of heat"
 	icon_state = "powershield_wall"
+	layer = ABOVE_MOB_LAYER
 
 /obj/machinery/holosign/barrier/power_shield/floor
 	name = "Shield Floor"

@@ -118,17 +118,15 @@
 /turf/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(user.a_intent == INTENT_GRAB)
-		if(turf_heat_resistance < turf_max_heat_resistance)
-			if(!I.tool_start_check(user, amount=0))
-				return
-
-			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
-			if(I.use_tool(src, user, 40, volume=50))
-				turf_heat_resistance = turf_max_heat_resistance
-				to_chat(user, "<span class='notice'>You repair [src].</span>")
-		else
+		if(turf_heat_resistance >= turf_max_heat_resistance)
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
-		return
+			return
+		if(!I.tool_start_check(user, amount=0))
+			return
+		to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
+		if(I.use_tool(src, user, 4 SECONDS, volume=50))
+			turf_heat_resistance = turf_max_heat_resistance
+			to_chat(user, "<span class='notice'>You repair [src].</span>")
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -597,14 +595,13 @@
 	ratio = CEILING(ratio*4, 1) * 25
 	if(ratio >= 75)
 		return
-	if(ratio < 25)
-		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_25")
-	else if(ratio < 50)
-		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_50")
-	else if(ratio < 75)
-		overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_75")
-	return
-
+	switch(ratio)
+		if(-INFINITY to 24)
+			overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_25")
+		if(24 to 49)
+			overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_50")
+		if(49 to 74)
+			overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_75")
 
 /turf/proc/Melt()
 	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
