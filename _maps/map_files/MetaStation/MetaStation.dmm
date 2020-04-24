@@ -17908,7 +17908,6 @@
 /obj/machinery/power/apc/highcap/ten_k{
 	name = "Engine Room APC";
 	dir = 8;
-	step_x = 1;
 	pixel_x = -25;
 	areastring = "/area/engine/engineering"
 	},
@@ -64004,8 +64003,6 @@
 /obj/machinery/power/apc/highcap/ten_k{
 	name = "Engine Room APC";
 	dir = 8;
-	step_x = 24;
-	step_y = -24;
 	pixel_x = -25;
 	areastring = "/area/engine/supermatter"
 	},
