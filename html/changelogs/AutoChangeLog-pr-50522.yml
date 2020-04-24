@@ -1,4 +1,0 @@
-author: "Archanial"
-delete-after: True
-changes: 
-  - balance: "Cult stun no longer stuns mindshielded personnel. Instead it makes them drop items they are currently holding, applies a dizziness effect and does some stamina damage."
