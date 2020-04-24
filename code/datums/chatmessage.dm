@@ -165,10 +165,10 @@
 
 
 // Tweak these defines to change the available color ranges
-#define CM_COLOR_SAT_MIN	0.33
-#define CM_COLOR_SAT_MAX	0.6
-#define CM_COLOR_LUM_MIN	0.6
-#define CM_COLOR_LUM_MAX	0.7
+#define CM_COLOR_SAT_MIN	0.6
+#define CM_COLOR_SAT_MAX	0.7
+#define CM_COLOR_LUM_MIN	0.65
+#define CM_COLOR_LUM_MAX	0.75
 
 /**
   * Gets a color for a name, will return the same color for a given string consistently within a round.atom
@@ -179,8 +179,11 @@
   * * name - The name to generate a color for
   */
 /datum/chatmessage/proc/colorize_string(name)
-	// get hsl using the first 6 characters of the md5 hash
-	var/hash = md5(name + GLOB.round_id)
+	// seed to help randomness
+	var/static/rseed = rand(1,26)
+
+	// get hsl using the selected 6 characters of the md5 hash
+	var/hash = copytext(md5(name + GLOB.round_id), rseed, rseed + 6)
 	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
 	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
 	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
