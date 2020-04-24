@@ -73,6 +73,7 @@
 	// Calculate target color if not already present
 	if (!target.chat_color || target.chat_color_name != target.name)
 		target.chat_color = colorize_string(target.name)
+		target.chat_color_darkened = colorize_string(target.name, 0.85, 0.85)
 		target.chat_color_name = target.name
 
 	// Get rid of any URL schemes that might cause BYOND to automatically wrap something in an anchor tag
@@ -85,12 +86,25 @@
 		qdel(src)
 		return
 
+	// Non mobs speakers can be small
+	if (!istype(target, /mob))
+		extra_classes += "small"
+
+	// Append radio icon if from a virtual speaker
+	if (extra_classes.Find("virtual-speaker"))
+		var/image/r_icon = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
+		text =  "\icon[r_icon]&nbsp;" + text
+
+	// We dim italicized text to make it more distinguishable from regular text
+	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
+
 	// Approximate text height
 	// Note we have to replace HTML encoded metacharacters otherwise MeasureText will return a zero height
 	// BYOND Bug #2563917
+	// Construct text
 	owned_by = owner.client
 	var/static/regex/html_metachars = new(@"&[A-Za-z]{1,7};", "g")
-	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]' style='color: [target.chat_color]'>[text]</span>"
+	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]' style='color: [tgt_color]'>[text]</span>"
 	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(replacetext(complete_text, html_metachars, "m"), null, CHAT_MESSAGE_WIDTH))
 	approx_lines = max(1, mheight / CHAT_MESSAGE_APPROX_LHEIGHT)
 
@@ -177,8 +191,10 @@
   *
   * Arguments:
   * * name - The name to generate a color for
+  * * sat_shift - A value between 0 and 1 that will be multiplied against the saturation
+  * * lum_shift - A value between 0 and 1 that will be multiplied against the luminescence
   */
-/datum/chatmessage/proc/colorize_string(name)
+/datum/chatmessage/proc/colorize_string(name, sat_shift = 1, lum_shift = 1)
 	// seed to help randomness
 	var/static/rseed = rand(1,26)
 
@@ -187,6 +203,10 @@
 	var/h = hex2num(copytext(hash, 1, 3)) * (360 / 255)
 	var/s = (hex2num(copytext(hash, 3, 5)) >> 2) * ((CM_COLOR_SAT_MAX - CM_COLOR_SAT_MIN) / 63) + CM_COLOR_SAT_MIN
 	var/l = (hex2num(copytext(hash, 5, 7)) >> 2) * ((CM_COLOR_LUM_MAX - CM_COLOR_LUM_MIN) / 63) + CM_COLOR_LUM_MIN
+
+	// adjust for shifts
+	s *= clamp(sat_shift, 0, 1)
+	l *= clamp(lum_shift, 0, 1)
 
 	// convert to rgb
 	var/h_int = round(h/60) // mapping each section of H to 60 degree sections
