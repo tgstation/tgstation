@@ -553,10 +553,10 @@
 
 /obj/structure/table/optable/proc/check_eligible_patient()
 	get_patient()
-	if(patient)
-		if(ishuman(patient) ||  ismonkey(patient))
-			return TRUE
-	return FALSE
+	if(!patient)
+		return FALSE
+	else if(ishuman(patient) ||  ismonkey(patient))
+		return TRUE
 
 /*
  * Racks
