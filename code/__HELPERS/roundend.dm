@@ -188,7 +188,8 @@
 	if(H.mind && (H.mind.special_role || H.mind.antag_datums?.len > 0))
 		var/didthegamerwin = TRUE
 		for(var/datum/antagonist/A in H.mind.antag_datums)
-			for(var/O in A.objectives)
+			for(var/i in A.objectives)
+				var/datum/objective/O = i
 				if(!O.check_completion())
 					didthegamerwin = FALSE
 		if(!didthegamerwin)
