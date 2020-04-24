@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - balance: "Cyborgs can no longer be synced to an AI on another Z level (except if both Z levels are part of the station as would be the case for multi-Z stations)."
