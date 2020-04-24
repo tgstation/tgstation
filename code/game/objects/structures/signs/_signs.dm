@@ -27,15 +27,12 @@
 		return
 	user.examinate(src)
 
-///This is a global list of all signs you can change an existing sign or new sign backing to, when using a pen on them.
-GLOBAL_VAR(editable_sign_types)
 /**
-   * This proc populates GLOBAL_VAR(editable_sign_types)
-   *
-   * The first time a pen is used on any sign, this populates GLOBAL_VAR(editable_sign_types), a global list of all the signs that you can set a sign backing to with a pen.
-   */
-/proc/populate_editable_sign_types() //The first time a pen is used on any sign, this populates the above, a global list of all the signs that you can set a sign backing to with a pen.
-	GLOB.editable_sign_types = list()
+  * This proc populates GLOBAL_LIST_EMPTY(editable_sign_types)
+  *
+  * The first time a pen is used on any sign, this populates GLOBAL_LIST_EMPTY(editable_sign_types), creating a global list of all the signs that you can set a sign backing to with a pen.
+  */
+/proc/populate_editable_sign_types()
 	for(var/s in subtypesof(/obj/structure/sign))
 		var/obj/structure/sign/potential_sign = s
 		if(!initial(potential_sign.is_editable))
