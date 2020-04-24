@@ -191,8 +191,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/psyCoeff = 0
 	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
 	var/obj/overlay/psy/psyOverlay = /obj/overlay/psy
-	///A list of active overlays, we use this to update .overlays more cleanly
-	var/list/active_overlays
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -215,6 +213,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	soundloop = new(list(src), TRUE)
 	if(ispath(psyOverlay))
 		psyOverlay = new psyOverlay()
+	else
+		stack_trace("Supermatter created with non-path psyOverlay variable. This can break things, please fix.")
+		psyOverlay = new()
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
@@ -225,6 +226,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
 	QDEL_NULL(soundloop)
+	if(psyOverlay)
+		QDEL_NULL(psyOverlay)
 	return ..()
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
@@ -390,11 +393,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		// Pass all the gas related code an empty gas container
 		removed = new()
-	LAZYCLEARLIST(active_overlays)
+	overlays.Cut()
 	if(psyCoeff > 0)
 		psyOverlay.alpha = psyCoeff * 255
-		LAZYADD(active_overlays, psyOverlay)
-	overlays = active_overlays
+		overlays += psyOverlay
 	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
