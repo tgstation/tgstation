@@ -322,6 +322,7 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
 	export_price = 5000
 
+/* //FULPSTATION MEDBORG UPGRADE TECHWEB FIX by Surrealistik April 2020. Added the entry to fulp_medborg_updates. Don't ask me why this is necessary; it doesn't appear in the techweb otherwise.
 /datum/techweb_node/cyborg_upg_med
 	id = "cyborg_upg_med"
 	display_name = "Cyborg Upgrades: Medical"
@@ -329,7 +330,7 @@
 	prereq_ids = list("adv_biotech")
 	design_ids = list("borg_upgrade_piercinghypospray", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor", "borg_upgrade_beakerapp", "borg_upgrade_medbeam") //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
-	export_price = 5000
+	export_price = 5000*/
 
 /datum/techweb_node/ai
 	id = "ai"

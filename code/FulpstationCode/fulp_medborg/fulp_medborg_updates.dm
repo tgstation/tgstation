@@ -1,3 +1,12 @@
+/datum/techweb_node/cyborg_upg_med
+	id = "cyborg_upg_med"
+	display_name = "Cyborg Upgrades: Medical"
+	description = "Medical upgrades for cyborgs."
+	prereq_ids = list("adv_biotech")
+	design_ids = list("borg_upgrade_piercinghypospray", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor", "borg_upgrade_beakerapp", "borg_upgrade_medbeam") //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	export_price = 5000
+
 /datum/design/borg_upgrade_medbeam
 	name = "Cyborg Upgrade (Heal Beam)"
 	id = "borg_upgrade_medbeam"
@@ -9,12 +18,10 @@
 
 /obj/item/borg/upgrade/medbeam
 	name = "medical cyborg heal beam"
-	desc = "An upgrade to the Medical module, installing a built-in \
-		healing beam."
+	desc = "An upgrade to the Medical module, installing a built-in healing beam."
 	icon_state = "cyborg_upgrade3"
 	require_module = 1
 	module_type = list(/obj/item/robot_module/medical)
-	var/backpack = FALSE //True if we get the defib from a physical backpack unit rather than an upgrade card, so that we can return that upon deactivate()
 
 /obj/item/borg/upgrade/medbeam/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
