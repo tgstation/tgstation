@@ -51,7 +51,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		cli.prefs.save_character()
 
 	if(ishuman(user))
-		var/mob/living/carbon/human = user
+		var/mob/living/carbon/human/human = user
 		human.hardcore_survival_score = cli.prefs.hardcore_survival_score //Only do this if we actually asign quirks, to prevent sillicons etc from getting the points.
 
 	// Assign wayfinding pinpointer granting quirk if they're new
