@@ -110,26 +110,27 @@
 		holosign_type = /obj/machinery/holosign/barrier/power_shield/wall
 		to_chat(user, "<span class='notice'>You change the projector to shielded walls.</span>")
 
-/obj/item/holosign_creator/afterattack(atom/target, mob/user, flag)
-	if(flag)
-		if(!check_allowed_items(target, 1))
-			return
-		var/turf/T = get_turf(target)
-		var/obj/machinery/holosign/H = locate(holosign_type) in T
-		if(H)
-			to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
-			qdel(H)
-		else
-			var/area/a = get_area(target)
-			if(a.power_equip == FALSE)
-				to_chat(user, "<span class='notice'>[src] doesn't have enough power in the grid to create a shield!</span>")
-				return
-			if(signs.len >= max_signs)
-				to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
-			else
-				playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
-				H = new holosign_type(get_turf(target), src)
-				to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
+/obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
+	if(!proximity_flag)
+		return
+	if(!check_allowed_items(target, 1))
+		return
+	var/turf/T = get_turf(target)
+	var/obj/machinery/holosign/H = locate(holosign_type) in T
+	if(H)
+		to_chat(user, "<span class='notice'>You use [src] to deactivate [H].</span>")
+		qdel(H)
+		return
+	var/area/a = get_area(target)
+	if(a.power_equip == FALSE)
+		to_chat(user, "<span class='notice'>[src] can't draw enough power from the grid to create a shield!</span>")
+		return
+	if(signs.len >= max_signs)
+		to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
+		return
+	playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
+	H = new holosign_type(get_turf(target), src)
+	to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
 
 /obj/item/holosign_creator/medical
 	name = "\improper PENLITE barrier projector"

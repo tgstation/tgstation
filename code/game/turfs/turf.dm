@@ -593,8 +593,6 @@
 	. = ..()
 	var/ratio = turf_heat_resistance / turf_max_heat_resistance
 	ratio = CEILING(ratio*4, 1) * 25
-	if(ratio >= 75)
-		return
 	switch(ratio)
 		if(-INFINITY to 24)
 			overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_25")

@@ -180,3 +180,11 @@
 
 /obj/effect/turf_decal/raven/nine
 	icon_state = "RAVEN9"
+
+/obj/effect/turf_decal/middle/arrow/white
+	icon_state = "middle_arrow_white"
+
+/obj/effect/turf_decal/middle/white/stripe
+	icon_state = "middle_stripe_white"
+/obj/effect/turf_decal/middle/white/manifold
+	icon_state = "middle_manifold_white"

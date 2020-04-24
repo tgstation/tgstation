@@ -119,14 +119,11 @@
 	var/power_consumption = 5000
 	var/obj/item/holosign_creator/shield_projector
 
-/obj/machinery/holosign/barrier/power_shield/New(loc, source_projector)
+/obj/machinery/holosign/barrier/power_shield/Initialize(loc, source_projector)
+	. = ..()
 	if(source_projector)
 		shield_projector = source_projector
 		shield_projector.signs += src
-	..()
-
-/obj/machinery/holosign/barrier/power_shield/Initialize()
-	. = ..()
 	air_update_turf(TRUE)
 	var/area/a = get_area(src)
 	a.addStaticPower(power_consumption, STATIC_EQUIP)
