@@ -920,7 +920,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(zap_str < zap_cutoff)
 		return
 	var/atom/target
-	var/target_type = 0
+	var/target_type = LOWEST
 	var/list/arctargets = list()
 	//Making a new copy so additons further down the recursion do not mess with other arcs
 	//Lets put this ourself into the do not hit list, so we don't curve back to hit the same thing twice with one arc
