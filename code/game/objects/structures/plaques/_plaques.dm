@@ -65,7 +65,7 @@
 		return TRUE
 	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
 						 "<span class='notice'>You start repairing [src].</span>")
-	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
+	if(!I.use_tool(src, user, 4 SECONDS, volume = 50))
 		return TRUE
 	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
 						 "<span class='notice'>You finish repairing [src].</span>")
@@ -83,7 +83,7 @@
 		return TRUE
 	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
 						 "<span class='notice'>You start repairing [src].</span>")
-	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
+	if(!I.use_tool(src, user, 4 SECONDS, volume = 50))
 		return TRUE
 	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
 						 "<span class='notice'>You finish repairing [src].</span>")
