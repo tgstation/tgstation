@@ -335,7 +335,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
 			to_chat(M, "<span class='boldannounce'>You feel reality distort for a moment...</span>")
 			SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "delam", /datum/mood_event/delam)
-	if(!T)//If something fucks up we just end it. This fix is 4 years old and none ever said why it's here. help.
+	if(QDELETED(src))//If something fucks up we just end it.
 		return
 	if(combined_gas > MOLE_PENALTY_THRESHOLD && power > CRITICAL_POWER_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a resonance cascade.", INVESTIGATE_SUPERMATTER)
@@ -345,7 +345,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			subtle_i_know = new /datum/round_event_control/portal_storm_mesa/clown_storm()
 		subtle_i_know.runEvent()
-		sleep(10)
 	else if(combined_gas > MOLE_PENALTY_THRESHOLD)
 		investigate_log("has collapsed into a singularity.", INVESTIGATE_SUPERMATTER)
 		var/obj/singularity/S = new(T)

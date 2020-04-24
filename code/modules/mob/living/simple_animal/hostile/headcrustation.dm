@@ -22,7 +22,6 @@
 	ranged = TRUE
 	ranged_message = "Leaps"
 	projectiletype = /obj/projectile/crab
-	var/datum/mind/origin
 
 /mob/living/simple_animal/hostile/headcrustation/Shoot(atom/targeted_atom)
 	. = ..()
@@ -31,7 +30,6 @@
 		creb.takenHealth = bruteloss
 	qdel(src)
 
-/mob/living/simple_animal/hostile/headcrustation/attackby(obj/item/W, mob/living/user, params)
+/mob/living/simple_animal/hostile/headcrustation/crowbar_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(W.tool_behaviour == TOOL_CROWBAR && user.a_intent != INTENT_HELP)
-		adjustHealth(10) //You get it
+	adjustHealth(10) //You get it
