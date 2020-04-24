@@ -4,7 +4,7 @@
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be detatched from the wall with a wrench."
 	anchored = TRUE
-	opacity = 0
+	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
 	custom_materials = list(/datum/material/gold = 2000)
