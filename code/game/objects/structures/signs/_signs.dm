@@ -21,11 +21,6 @@
 	desc = "A plastic sign with adhesive backing, use a pen to change the decal. It can be detached from the wall with a wrench."
 	icon_state = "backing"
 
-obj/structure/sign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = NONE)
-	if(damage_type == BRUTE)
-		if(damage_amount)
-			playsound(loc, 'sound/weapons/slash.ogg', 80, TRUE)
-
 /obj/structure/sign/attack_hand(mob/user)
 	. = ..()
 	if(.)
@@ -67,6 +62,42 @@ GLOBAL_VAR(editable_sign_types)
 	SB.obj_integrity = obj_integrity //Transfer how damaged it is.
 	SB.setDir(dir)
 	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
+	return TRUE
+
+/obj/structure/sign/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+	if(obj_integrity == max_integrity)
+		to_chat(user, "<span class='warning'>This sign is already in perfect condition.</span>")
+		return TRUE
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
+						 "<span class='notice'>You start repairing [src].</span>")
+	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
+		return TRUE
+	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
+						 "<span class='notice'>You finish repairing [src].</span>")
+	obj_integrity = max_integrity
+	return TRUE
+
+/obj/item/sign_backing/welder_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(user.a_intent == INTENT_HARM)
+		return FALSE
+	if(obj_integrity == max_integrity)
+		to_chat(user, "<span class='warning'>This sign is already in perfect condition.</span>")
+		return TRUE
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+	user.visible_message("<span class='notice'>[user] starts repairing [src]...</span>", \
+						 "<span class='notice'>You start repairing [src].</span>")
+	if(!I.use_tool(src, user, 4 SECONDS, volume =50 ))
+		return TRUE
+	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
+						 "<span class='notice'>You finish repairing [src].</span>")
+	obj_integrity = max_integrity
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
