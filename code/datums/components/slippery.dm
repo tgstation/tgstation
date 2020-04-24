@@ -21,5 +21,7 @@
 
 
 /datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/AM, mob/living/crossed)
+	var/obj/item/I = crossed.get_item_by_slot(ITEM_SLOT_FEET)
 	if(!(crossed.mobility_flags & MOBILITY_STAND) && !crossed.buckle_lying)
-		Slip(source, AM)
+		if (istype(I, /obj/item/clothing/shoes/clown_shoes))
+			Slip(source, AM)
