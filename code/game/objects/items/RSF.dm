@@ -119,7 +119,7 @@ RSF
 	if(!is_allowed(A))
 		return
 	if(use_matter(dispense_cost, user))//If we can charge that amount of charge, we do so and return true
-		playsound(src.loc, 'sound/machines/click.ogg', 10, TRUE)
+		playsound(loc, 'sound/machines/click.ogg', 10, TRUE)
 		var/atom/meme = new to_dispense(get_turf(A))
 		to_chat(user, "<span class='notice'>[action_type] [meme.name]...</span>")
 
