@@ -88,7 +88,7 @@
 
 	// Non mobs speakers can be small
 	if (!ismob(target))
-		extra_classes += "small"
+		extra_classes |= "small"
 
 	// Append radio icon if from a virtual speaker
 	if (extra_classes.Find("virtual-speaker"))
@@ -98,11 +98,14 @@
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
 
+	// Register client who owns this message
+	owned_by = owner.client
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/qdel, src)
+
 	// Approximate text height
 	// Note we have to replace HTML encoded metacharacters otherwise MeasureText will return a zero height
 	// BYOND Bug #2563917
 	// Construct text
-	owned_by = owner.client
 	var/static/regex/html_metachars = new(@"&[A-Za-z]{1,7};", "g")
 	var/complete_text = "<span class='center maptext [extra_classes != null ? extra_classes.Join(" ") : ""]' style='color: [tgt_color]'>[text]</span>"
 	var/mheight = WXH_TO_HEIGHT(owned_by.MeasureText(replacetext(complete_text, html_metachars, "m"), null, CHAT_MESSAGE_WIDTH))
@@ -164,6 +167,11 @@
 	if (!client?.prefs.chat_on_map)
 		return
 
+	// Copy spans list before we do anything to it
+	if (spans)
+		spans = spans.Copy()
+
+	// Check for virtual speakers (aka hearing a message through a radio)
 	var/atom/movable/originalSpeaker = speaker
 	if (istype(speaker, /atom/movable/virtualspeaker))
 		var/atom/movable/virtualspeaker/v = speaker
