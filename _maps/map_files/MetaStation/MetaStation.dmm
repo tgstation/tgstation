@@ -11861,7 +11861,6 @@
 	dir = 9
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/effect/turf_decal/trimline/brown/filled/line,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "azk" = (
@@ -12938,9 +12937,6 @@
 	},
 /obj/item/pickaxe{
 	pixel_x = 5
-	},
-/obj/effect/turf_decal/trimline/brown/filled/line{
-	dir = 1
 	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
