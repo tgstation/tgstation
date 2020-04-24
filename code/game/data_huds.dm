@@ -225,10 +225,11 @@
 	holder.pixel_y = I.Height() - world.icon_size
 	holder.icon_state = "hudfan_no"
 	var/obj/item/clothing/under/U = get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	if(U && istype(U.attached_accessory, /obj/item/clothing/accessory/fan_mime_pin))
-		holder.icon_state = "fan_mime_pin"
-	else if (U && istype(U.attached_accessory, /obj/item/clothing/accessory/fan_clown_pin))
-		holder.icon_state = "fan_clown_pin"
+	if(U)
+		if(istype(U.attached_accessory, /obj/item/clothing/accessory/fan_mime_pin))
+			holder.icon_state = "fan_mime_pin"
+		else if(istype(U.attached_accessory, /obj/item/clothing/accessory/fan_clown_pin))
+			holder.icon_state = "fan_clown_pin"
 
 /***********************************************
  Security HUDs! Basic mode shows only the job.
