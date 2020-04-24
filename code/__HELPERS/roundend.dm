@@ -177,6 +177,27 @@
 		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
 	WRITE_FILE(json_file, json_encode(file_data))
 
+///Handles random hardcore point rewarding if it applies.
+/datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/C)
+	if(!ishuman(C.mob))
+		return FALSE
+	var/mob/living/carbon/human/H = C.mob
+	if(!H.hardcore_survival_score) ///no score no glory
+		return FALSE
+
+	if(player.mind && (player.mind.special_role || player.mind.antag_datums?.len > 0))
+		var/didthegamerwin = TRUE
+		for(var/datum/antagonist/A in H.mind.antag_datums)
+			for(var/O in A.objectives)
+				if(!O.check_completion())
+					didthegamerwin = FALSE
+		if(!didthegamerwin)
+			return FALSE
+		C.give_award(/datum/award/score/hardcore_random, H, round(H.hardcore_survival_score))
+	else if(H.onCentCom())
+		C.give_award(/datum/award/score/hardcore_random, H, round(H.hardcore_survival_score))
+
+
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
@@ -198,12 +219,7 @@
 		C.playtitlemusic(40)
 		if(speed_round)
 			C.give_award(/datum/award/achievement/misc/speed_round, C.mob)
-		if(!ishuman(C.mob))
-			continue
-		var/mob/living/carbon/human/H = C.mob
-		if(!H.hardcore_survival_score || !H.onCentCom()) ///gotta escape nerd
-			continue
-		C.give_award(/datum/award/score/hardcore_random, H, round(H.hardcore_survival_score))
+		HandleRandomHardcoreScore(C)
 
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
