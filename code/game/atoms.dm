@@ -119,7 +119,6 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
-	SSdemo.mark_new(src)
 
 /**
   * The primary method that objects are setup in SS13 with
@@ -560,7 +559,6 @@
 			add_overlay(new_overlays)
 		. = TRUE
 
-	SSdemo.mark_dirty(src)
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
 
 /// Updates the icon state of the atom
@@ -837,7 +835,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
-	SSdemo.mark_dirty(src)
 
 ///Handle melee attack by a mech
 /atom/proc/mech_melee_attack(obj/mecha/M)
