@@ -207,11 +207,6 @@
 	if((visual_update_tick++ % 7) == 0)
 		update_color()
 
-/*	if(temperature > location.max_fire_temperature_sustained)
-		location.max_fire_temperature_sustained = temperature
-
-	if(location.heat_capacity && temperature > location.heat_capacity)
-		location.to_be_destroyed = TRUE*/
 	return TRUE
 
 /obj/effect/hotspot/Destroy()

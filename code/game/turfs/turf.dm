@@ -14,8 +14,8 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
-	var/turf_heat_resistance = 100
-	var/turf_max_heat_resistance = 100
+	var/heat_integrity = 100
+	var/max_heat_integrity = 100
 	var/damage_amount = 0
 
 	var/blocks_air = FALSE
@@ -112,21 +112,22 @@
 	if(!damage_amount)
 		. += "<span class='notice'>It looks fully intact.</span>"
 	else
-		var/dam = round((turf_heat_resistance/turf_max_heat_resistance)* 100, 1)
+		var/dam = round((heat_integrity/max_heat_integrity)* 100, 1)
 		. += "<span class='warning'>The remaining integrity is at [dam]%</span>"
 
 /turf/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(user.a_intent == INTENT_GRAB)
-		if(turf_heat_resistance >= turf_max_heat_resistance)
+		if(heat_integrity >= max_heat_integrity)
 			to_chat(user, "<span class='warning'>[src] is already in good condition!</span>")
 			return
 		if(!I.tool_start_check(user, amount=0))
 			return
 		to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 		if(I.use_tool(src, user, 4 SECONDS, volume=50))
-			turf_heat_resistance = turf_max_heat_resistance
+			heat_integrity = max_heat_integrity
 			to_chat(user, "<span class='notice'>You repair [src].</span>")
+	return TRUE
 
 /turf/Destroy(force)
 	. = QDEL_HINT_IWILLGC
@@ -564,12 +565,12 @@
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 /turf/proc/set_heat_damage_amount(temperature)
-	var/obj/structure/window/W = locate() in range(1, src)
-	if(W)
-		W.adjacent_fire_act(temperature)
-	var/obj/machinery/door/D = locate() in range(1, src)
-	if(D)
-		D.adjacent_fire_act(temperature)
+	var/obj/structure/window/Window
+	for(Window in range(1, src))
+		Window.adjacent_fire_act(temperature)
+	var/obj/machinery/door/Door
+	for(Door in range(1, src))
+		Door.adjacent_fire_act(temperature)
 	if(to_be_destroyed && !changing_turf)
 		damage_amount = clamp((temperature - heat_capacity)/10000, 1, 15)
 		turf_take_heat_damage(damage_amount)
@@ -582,16 +583,16 @@
 	if(QDELETED(src))
 		stack_trace("[src] taking damage after deletion")
 		return
-	if(turf_heat_resistance <= 0)
+	if(heat_integrity <= 0)
 		return
-	turf_heat_resistance = max(turf_heat_resistance - damage_amount, 0)
+	heat_integrity = max(heat_integrity - damage_amount, 0)
 	update_overlays()
-	if(turf_heat_resistance <= 0)
+	if(heat_integrity <= 0)
 		Melt()
 
 /turf/update_overlays()
 	. = ..()
-	var/ratio = turf_heat_resistance / turf_max_heat_resistance
+	var/ratio = heat_integrity / max_heat_integrity
 	ratio = CEILING(ratio*4, 1) * 25
 	switch(ratio)
 		if(-INFINITY to 24)

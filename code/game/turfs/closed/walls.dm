@@ -9,8 +9,8 @@
 
 	thermal_conductivity = 0.25
 	heat_capacity = 3000
-	turf_heat_resistance = 100
-	turf_max_heat_resistance = 100
+	heat_integrity = 100
+	max_heat_integrity = 100
 
 	baseturfs = /turf/open/floor/plating
 

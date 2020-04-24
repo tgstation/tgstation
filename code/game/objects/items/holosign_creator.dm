@@ -128,7 +128,7 @@
 	if(signs.len >= max_signs)
 		to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
 		return
-	playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
+	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	H = new holosign_type(get_turf(target), src)
 	to_chat(user, "<span class='notice'>You create \a [H] with [src].</span>")
 

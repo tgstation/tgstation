@@ -121,11 +121,14 @@
 
 /obj/machinery/holosign/barrier/power_shield/Initialize(loc, source_projector)
 	. = ..()
+	var/area/a = get_area(src)
+	if(a.power_equip == FALSE)
+		stack_trace("Power shield created without power avaiable")
+		qdel(src)
 	if(source_projector)
 		shield_projector = source_projector
 		shield_projector.signs += src
 	air_update_turf(TRUE)
-	var/area/a = get_area(src)
 	a.addStaticPower(power_consumption, STATIC_EQUIP)
 	shield_turf()
 

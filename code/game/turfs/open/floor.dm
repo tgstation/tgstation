@@ -15,8 +15,8 @@
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.06
 	heat_capacity = 500
-	turf_heat_resistance = 100
-	turf_max_heat_resistance = 100
+	heat_integrity = 100
+	max_heat_integrity = 100
 	intact = 1
 	var/broken = 0
 	var/burnt = 0
