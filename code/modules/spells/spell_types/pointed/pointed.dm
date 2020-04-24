@@ -8,6 +8,8 @@
 	var/active_msg = "You prepare to use the spell on a target..."
 	/// Variable dictating if the user is allowed to cast a spell on himself.
 	var/self_castable = FALSE
+	/// Variable dictating if the spell will use turf based aim assist
+	var/aim_assist = TRUE
 
 /obj/effect/proc_holder/spell/pointed/Click()
 	var/mob/living/user = usr
@@ -66,7 +68,16 @@
 /obj/effect/proc_holder/spell/pointed/InterceptClickOn(mob/living/caller, params, atom/target)
 	if(..())
 		return TRUE
+	if(aim_assist && isturf(target))
+		var/list/possible_targets = list()
+		for(var/A in target)
+			if(intercept_check(caller, A, TRUE))
+				possible_targets += A
+		if(possible_targets.len == 1)
+			target = possible_targets[1]
 	if(!intercept_check(caller, target))
+		return TRUE
+	if(!cast_check(FALSE, caller))
 		return TRUE
 	perform(list(target), user = caller)
 	remove_ranged_ability()
@@ -78,16 +89,17 @@
   * Arguments:
   * * user The mob using the ranged spell via intercept.
   * * target The atom that is being targeted by the spell via intercept.
+  * * silent If the checks should produce not any feedback messages for the user.
   */
-/obj/effect/proc_holder/spell/pointed/proc/intercept_check(mob/user, atom/target)
+/obj/effect/proc_holder/spell/pointed/proc/intercept_check(mob/user, atom/target, silent = FALSE)
 	if(!self_castable && target == user)
-		to_chat(user, "<span class='warning'>You cannot cast the spell on yourself!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>You cannot cast the spell on yourself!</span>")
 		return FALSE
 	if(!(target in view_or_range(range, user, selection_type)))
-		to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
+		if(!silent)
+			to_chat(user, "<span class='warning'>[target.p_theyre(TRUE)] too far away!</span>")
 		return FALSE
-	if(!can_target(target, user))
-		return FALSE
-	if(!cast_check(FALSE, user))
+	if(!can_target(target, user, silent))
 		return FALSE
 	return TRUE

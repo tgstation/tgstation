@@ -323,7 +323,16 @@
 		if(!(machine_stat & BROKEN))
 			canister_break()
 		if(disassembled)
-			new /obj/item/stack/sheet/metal (loc, 10)
+			switch(mode)
+				if(CANISTER_TIER_1)
+					new /obj/item/stack/sheet/metal (loc, 10)
+				if(CANISTER_TIER_2)
+					new /obj/item/stack/sheet/metal (loc, 10)
+					new /obj/item/stack/sheet/plasteel (loc, 5)
+				if(CANISTER_TIER_3)
+					new /obj/item/stack/sheet/metal (loc, 10)
+					new /obj/item/stack/sheet/plasteel (loc, 5)
+					new /obj/item/stack/sheet/bluespace_crystal (loc, 1)
 		else
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
@@ -333,14 +342,16 @@
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
-	if(machine_stat & BROKEN)
-		if(!I.tool_start_check(user, amount=0))
-			return TRUE
-		to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
-		if(I.use_tool(src, user, 30, volume=50))
-			deconstruct(TRUE)
-	else
-		to_chat(user, "<span class='warning'>You cannot slice [src] apart when it isn't broken!</span>")
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+	var/pressure = air_contents.return_pressure()
+	if(pressure > 300)
+		to_chat(user, "<span class='alert'>The [src] meter shows high pressure inside!</span>")
+		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
+		log_game("[src] deconstructed by [key_name(user)]")
+	to_chat(user, "<span class='notice'>You begin cutting the[src] apart...</span>")
+	if(I.use_tool(src, user, 30, volume=50))
+		deconstruct(TRUE)
 
 	return TRUE
 
