@@ -209,16 +209,6 @@
 	S.setDir(dir)
 	qdel(src)
 
-/obj/item/sign_backing/Move(atom/new_loc, direct = 0)
-	// Pulling, throwing, or conveying a sign backing does not rotate it.
-	var/old_dir = dir
-	. = ..()
-	setDir(old_dir)
-
-/obj/item/sign_backing/attack_self(mob/user)
-	. = ..()
-	setDir(turn(dir, 90))
-
 /obj/structure/sign/nanotrasen
 	name = "\improper Nanotrasen logo sign"
 	sign_change_name = "Corporate Logo - Nanotrasen"
