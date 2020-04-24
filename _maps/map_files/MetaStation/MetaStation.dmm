@@ -12098,6 +12098,15 @@
 	dir = 4;
 	pixel_x = -24
 	},
+/obj/structure/rack,
+/obj/item/storage/briefcase{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/storage/secure/briefcase{
+	pixel_x = 2;
+	pixel_y = -2
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "azS" = (
@@ -13706,15 +13715,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aDN" = (
-/obj/structure/rack,
-/obj/item/storage/briefcase{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/item/storage/secure/briefcase{
-	pixel_x = 2;
-	pixel_y = -2
-	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aDO" = (
