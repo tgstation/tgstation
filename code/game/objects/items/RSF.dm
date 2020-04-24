@@ -68,8 +68,6 @@ RSF
 		return ..()
 
 /obj/item/rsf/attack_self(mob/user)
-	if(!user)
-		return
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, FALSE)
 	var/atom/target = cost_by_item
 	var/cost = 0
@@ -86,19 +84,18 @@ RSF
 				break
 			qdel(test)
 		//If we found a list we start it all again, this time looking through its contents.
+		//This allows for sublists
 	to_dispense = target
 	dispense_cost = cost
 	// Change mode
 
 ///Extracts the related object from a associated list of objects and values, or lists and objects.
 /obj/item/rsf/proc/extractObject(from, input)
-	var/atom/test
 	if(istype(input, /list/))
 		var/temp = from[input]//If it's a list we should use its associated object
-		test = new temp()
+		return new temp()
 	else
-		test = new input()
-	return test
+		return new input()
 
 ///Forms a radial menu based off an object in a list, or a list's associated object
 /obj/item/rsf/proc/formRadial(from)
@@ -111,8 +108,6 @@ RSF
 	return radial_list
 
 /obj/item/rsf/proc/check_menu(mob/user)
-	if(!istype(user))
-		return FALSE
 	if(user.incapacitated() || !user.Adjacent(src))
 		return FALSE
 	return TRUE
@@ -200,9 +195,13 @@ RSF
 
 /obj/item/rsf/cookiesynth/process()
 	matter = min(matter + 1, max_matter) //We add 1 up to a point
+	if(matter >= max_matter)
+		STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/rsf/cookiesynth/afterattack(atom/A, mob/user, proximity)
 	if(cooldown > world.time)
 		return
 	. = ..()
 	cooldown = world.time + cooldowndelay
+	if(!(datum_flags & DF_ISPROCESSING))
+		START_PROCESSING(SSprocessing, src)
