@@ -94,7 +94,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/list/ignoring = list()
 
-	var/clientfps = 0 // it is 2020
+	var/clientfps = 0 // deprecated
 	var/client_fps_new = "Smooth(40 FPS)"
 
 	var/parallax
