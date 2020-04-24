@@ -14989,16 +14989,10 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "aHh" = (
-/obj/machinery/power/apc{
-	name = "Security Post - Cargo Bay APC";
-	pixel_y = 5;
-	areastring = "/area/security/checkpoint/supply";
-	dir = 1;
-	pixel_x = 27
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/structure/disposalpipe/segment,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/supply)
 "aHj" = (
@@ -16893,6 +16887,7 @@
 /obj/effect/turf_decal/arrows/red{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aMw" = (
@@ -16902,6 +16897,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aMy" = (
@@ -17473,6 +17469,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aNJ" = (
@@ -19164,12 +19161,6 @@
 "aRL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/watertank,
-/obj/machinery/power/apc{
-	areastring = "/area/quartermaster/warehouse";
-	dir = 4;
-	name = "Warehouse APC";
-	pixel_x = 24
-	},
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 1
 	},
@@ -19177,6 +19168,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/east,
 /turf/open/floor/plasteel,
 /area/quartermaster/warehouse)
 "aRQ" = (
@@ -19691,6 +19683,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aTh" = (
@@ -19701,6 +19694,7 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aTi" = (
@@ -20282,6 +20276,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aUu" = (
@@ -20291,6 +20286,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aUv" = (
@@ -23051,6 +23047,7 @@
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bal" = (
@@ -23058,6 +23055,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "bao" = (
@@ -68310,6 +68308,7 @@
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "dCC" = (
@@ -69876,13 +69875,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/maintenance/department/science)
-"gci" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "gcj" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -70348,6 +70340,16 @@
 "gQV" = (
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
+"gWX" = (
+/obj/structure/closet/secure_closet/miner,
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/obj/machinery/camera{
+	c_tag = "Mining Dock";
+	dir = 2
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/miningoffice)
 "gXi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -70800,6 +70802,13 @@
 /obj/structure/closet/crate,
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
+"hLN" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "hMx" = (
 /obj/structure/table,
 /obj/effect/turf_decal/tile/purple{
@@ -71105,12 +71114,6 @@
 	icon_state = "platingdmg1"
 	},
 /area/medical/abandoned)
-"iEX" = (
-/obj/machinery/door/airlock/maintenance{
-	req_one_access_txt = "12;63;48;50"
-	},
-/turf/open/floor/plating,
-/area/quartermaster/warehouse)
 "iHk" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
@@ -71245,6 +71248,7 @@
 	},
 /obj/effect/spawner/lootdrop/maintenance,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/bot_white,
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "jiz" = (
@@ -71615,6 +71619,12 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/engine,
 /area/engine/engineering)
+"jQl" = (
+/obj/machinery/door/airlock/maintenance{
+	req_one_access_txt = "31; 48"
+	},
+/turf/open/floor/plating,
+/area/quartermaster/warehouse)
 "jQO" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -73467,6 +73477,13 @@
 /obj/effect/landmark/start/medical_doctor,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"nKd" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "nLi" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/purple{
@@ -75587,16 +75604,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark/corner,
 /area/engine/storage_shared)
-"rWU" = (
-/obj/structure/closet/secure_closet/miner,
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/obj/machinery/camera{
-	c_tag = "Mining Dock";
-	dir = 2
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/miningoffice)
 "rXb" = (
 /obj/machinery/holopad,
 /obj/effect/turf_decal/box/white{
@@ -77449,13 +77456,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"waW" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 5
-	},
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "wbF" = (
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/tile/yellow{
@@ -95718,7 +95718,7 @@ aRH
 aRH
 aUf
 kiy
-waW
+nKd
 aYK
 doJ
 dmH
@@ -95957,7 +95957,7 @@ dqe
 dne
 dne
 ayj
-rWU
+gWX
 aAC
 aBV
 aDi
@@ -95975,7 +95975,7 @@ nvH
 aSQ
 aSQ
 aSQ
-gci
+hLN
 aUe
 dmH
 dmH
@@ -96490,7 +96490,7 @@ aXh
 dCB
 xAO
 aXi
-gci
+hLN
 bap
 hpn
 hpn
@@ -99049,7 +99049,7 @@ aaa
 dne
 dnk
 nIb
-iEX
+jQl
 aLc
 aNR
 aNQ
