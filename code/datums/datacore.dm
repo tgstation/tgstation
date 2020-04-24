@@ -260,15 +260,14 @@
 		M.fields["name"]		= H.real_name
 		M.fields["blood_type"]	= H.dna.blood_type
 		M.fields["b_dna"]		= H.dna.unique_enzymes
-		M.fields["mi_dis"]		= "None"
-		M.fields["mi_dis_d"]	= "No minor disabilities have been declared."
-		M.fields["ma_dis"]		= "None"
-		M.fields["ma_dis_d"]	= "No major disabilities have been diagnosed."
-		M.fields["alg"]			= "None"
-		M.fields["alg_d"]		= "No allergies have been detected in this patient."
+		M.fields["mi_dis"]		= H.get_trait_string(!medical, 2)
+		M.fields["mi_dis_d"]	= H.get_trait_string(medical, 2)
+		M.fields["ma_dis"]		= H.get_trait_string(!medical, 3)
+		M.fields["ma_dis_d"]	= H.get_trait_string(medical, 3)
 		M.fields["cdi"]			= "None"
 		M.fields["cdi_d"]		= "No diseases have been diagnosed at the moment."
-		M.fields["notes"]		= H.get_trait_string(medical)
+		M.fields["notes"]		= H.get_trait_string(!medical, 1)
+		M.fields["notes_d"]		= H.get_trait_string(medical, 1)
 		medical += M
 
 		//Security Record

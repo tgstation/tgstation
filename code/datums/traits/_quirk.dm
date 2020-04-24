@@ -65,22 +65,78 @@
 		return
 	on_process()
 
-/mob/living/proc/get_trait_string(medical) //helper string. gets a string of all the traits the mob has
+/mob/living/proc/get_trait_string(medical, category) //helper string. gets a string of all the traits the mob has
 	var/list/dat = list()
-	if(!medical)
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			dat += T.name
-		if(!dat.len)
-			return "None"
-		return dat.Join(", ")
-	else
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			dat += T.medical_record_text
-		if(!dat.len)
-			return "None"
-		return dat.Join("<br>")
+	switch(category)
+		if(0)
+			if(!medical)
+				for(var/V in roundstart_quirks)
+					var/datum/quirk/T = V
+					dat += T.name
+				if(!dat.len)
+					return "None"
+				return dat.Join(", ")
+			else
+				for(var/V in roundstart_quirks)
+					var/datum/quirk/T = V
+					dat += T.medical_record_text
+				if(!dat.len)
+					return "None"
+				return dat.Join("<br>")
+		//Major Disabilities
+		if(3)
+			if(!medical)
+				for(var/V in roundstart_quirks)
+					var/datum/quirk/T = V
+					if(T.value < -1)
+						dat += T.name
+				if(!dat.len)
+					return "None"
+				return dat.Join(", ")
+			else
+				for(var/V in roundstart_quirks)
+					var/datum/quirk/T = V
+					if(T.value < -1)
+						dat += T.medical_record_text
+					if(!dat.len)
+						return "No major disabilities have been declared."
+				return dat.Join("<br>")
+		//Minor Disabilities
+		if(2)
+			if(!medical)
+				for(var/V in roundstart_quirks)
+					var/datum/quirk/T = V
+					if(T.value == -1)
+						dat += T.name
+					if(!dat.len)
+						return "None"
+				return dat.Join(",")
+			else
+				for(var/V in roundstart_quirks)
+					var/datum/quirk/T = V
+					if(T.value == -1)
+						dat += T.medical_record_text
+					if(!dat.len)
+						return "No minor disabilities have been declared."
+				return dat.Join("<br>")
+		//Neutral and Positive quirks
+		if(1)
+			if(!medical)
+				for(var/V in roundstart_quirks)
+					var/datum/quirk/T = V
+					if(T.value > -1)
+						dat += T.name
+					if(!dat.len)
+						return "None"
+				return dat.Join(", ")
+			else
+				for(var/V in roundstart_quirks)
+					var/datum/quirk/T = V
+					if(T.value > -1)
+						dat += T.medical_record_text
+					if(!dat.len)
+						return "None"
+				return dat.Join("<br>")
 
 /mob/living/proc/cleanse_trait_datums() //removes all trait datums
 	for(var/V in roundstart_quirks)
