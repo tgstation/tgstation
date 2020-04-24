@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "cargo exports no longer include subtypes when they shouldn't"

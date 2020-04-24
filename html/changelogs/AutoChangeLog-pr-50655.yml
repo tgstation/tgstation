@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Railings can now be crafted with metal rods, and deconstructed with wirecutters when unwrenched."
-  - tweak: "Railings can now be rotated with Alt Click."

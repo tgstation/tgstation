@@ -1,8 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - tweak: "Beat cop in families now spawn with a cop dufflebag"
-  - bugfix: "box of beanbags now has its correct icon instead of a generic box"
-  - bugfix: "Shambler's Vendor now has correctly coloured ominous glow"
-  - bugfix: "serving trays are no longer hidden from the autolathe"
-  - code_imp: "removed some instances of duplicate variables being defined in types"
