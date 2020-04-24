@@ -1,0 +1,5 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - rscadd: "Quirky Fans can now identify clown/mime pins on-sight"
+  - tweak: "Fan pins no longer show over exosuits"
