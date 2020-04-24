@@ -555,8 +555,9 @@
 	get_patient()
 	if(!patient)
 		return FALSE
-	else if(ishuman(patient) ||  ismonkey(patient))
+	if(ishuman(patient) ||  ismonkey(patient))
 		return TRUE
+	return FALSE
 
 /*
  * Racks
