@@ -91,8 +91,3 @@
 	description = "<span class='nicegreen'>There's nothing like the feeling of a freshly laundered jumpsuit.</span>\n"
 	mood_change = 2
 	timeout = 10 MINUTES
-
-/datum/mood_event/got_drenched
-	description = "<span class='warning'>I hate getting wet.</span>\n"
-	mood_change = -6
-	timeout = 5 MINUTES

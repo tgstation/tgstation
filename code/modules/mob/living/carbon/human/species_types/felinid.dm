@@ -44,16 +44,28 @@
 		mutant_bodyparts |= "tail_human"
 	H.update_body()
 
+/// Callback proc for [COMSIG_CARBON_WASHED]
 /datum/species/human/felinid/proc/washed(mob/living/carbon/source)
 	SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "wet", /datum/mood_event/got_drenched)
 	return COMPONENT_HATES_WATER
 
+/// Callback proc for [COMSIG_TOWEL_ACT]
 /datum/species/human/felinid/proc/dried(mob/living/carbon/source, mob/living/user)
 	SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "wet")
+	SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "sprayed")
+
+/// Callback proc for [COMSIG_LIVING_WATER_ACT]
+/datum/species/human/felinid/proc/sprayed(datum/source, mob/living/carbon/C, method)
+	if(method != TOUCH && method != VAPOR)
+		return
+	if(C.on_fire)
+		return
+	SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "sprayed", /datum/mood_event/sadcat)
 
 /datum/species/human/felinid/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
 	RegisterSignal(C, COMSIG_CARBON_WASHED, .proc/washed)
 	RegisterSignal(C, COMSIG_TOWEL_ACT, .proc/dried)
+	RegisterSignal(C, COMSIG_LIVING_WATER_ACT, .proc/sprayed)
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		if(!pref_load)			//Hah! They got forcefully purrbation'd. Force default felinid parts on them if they have no mutant parts in those areas!
@@ -74,7 +86,7 @@
 	return ..()
 
 /datum/species/human/felinid/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
-	UnregisterSignal(C, list(COMSIG_CARBON_WASHED, COMSIG_TOWEL_ACT))
+	UnregisterSignal(C, list(COMSIG_CARBON_WASHED, COMSIG_TOWEL_ACT, COMSIG_LIVING_WATER_ACT))
 	return ..()
 
 /proc/mass_purrbation()

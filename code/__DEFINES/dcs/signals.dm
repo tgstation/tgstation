@@ -237,6 +237,7 @@
 	#define COMPONENT_NO_STUN 1			//For all of them
 #define COMSIG_LIVING_CAN_TRACK "mob_cantrack"					//from base of /mob/living/can_track(): (mob/user)
 	#define COMPONENT_CANT_TRACK 1
+#define COMSIG_LIVING_WATER_ACT "living_water_act"				///from [/datum/reagent/water/reaction_mob]: (mob/living/M, method)
 
 // /mob/living/carbon signals
 #define COMSIG_CARBON_SOUNDBANG "carbon_soundbang"					//from base of mob/living/carbon/soundbang_act(): (list(intensity))
