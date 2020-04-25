@@ -640,9 +640,6 @@
 	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
-"abz" = (
-/turf/open/floor/plasteel/grimy,
-/area/security/detectives_office)
 "abA" = (
 /turf/open/floor/carpet,
 /area/security/detectives_office)
@@ -47211,13 +47208,10 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "hlK" = (
-/obj/structure/closet/secure_closet/detective,
-/obj/item/camera_film,
-/obj/item/camera_film,
 /obj/item/radio/intercom{
 	pixel_y = 25
 	},
-/obj/item/book/manual/wiki/detective,
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "hlS" = (
@@ -47646,6 +47640,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port)
+"imE" = (
+/obj/structure/closet/secure_closet/detective,
+/obj/item/book/manual/wiki/detective,
+/obj/item/camera_film,
+/obj/item/camera_film,
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "imZ" = (
 /obj/machinery/button/door{
 	id = "Ferry_Bridge";
@@ -96280,7 +96281,7 @@ btA
 btC
 btE
 btJ
-abz
+bre
 agl
 aiO
 aiO
@@ -96794,7 +96795,7 @@ abA
 amd
 atl
 byO
-bre
+imE
 agl
 aKq
 aKy

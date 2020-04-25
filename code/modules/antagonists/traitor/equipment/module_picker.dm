@@ -57,7 +57,6 @@
 				"name" = AM.name,
 				"cost" = AM.cost,
 				"desc" = AM.description,
-				"ref" = REF(AM),
 			))
 		data["categories"] += list(cat)
 
@@ -68,24 +67,23 @@
 		return
 	if(!isAI(usr))
 		return
-
 	switch(action)
 		if("buy")
-			var/list/buyable_modules = list()
+			var/item_name = params["name"]
+			var/list/buyable_items = list()
 			for(var/category in possible_modules)
-				buyable_modules += possible_modules[category]
-			var/module = locate(params["ref"]) in buyable_modules
-			if(!module || !(module in buyable_modules))
-				return
-			var/datum/AI_Module/AM = module
-			purchase_module(usr, AM)
-			. = TRUE
+				buyable_items += possible_modules[category]
+			for(var/key in buyable_items)
+				var/datum/AI_Module/AM = buyable_items[key]
+				if(AM.name == item_name)
+					purchase_module(usr, AM)
+					return TRUE
 		if("select")
 			selected_cat = params["category"]
-			. = TRUE
+			return TRUE
 		if("compact_toggle")
 			compact_mode = !compact_mode
-			. = TRUE
+			return TRUE
 
 /datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/AI_Module/AM)
 	if(!istype(AM))

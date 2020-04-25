@@ -5932,7 +5932,7 @@
 /obj/machinery/camera{
 	c_tag = "Detective's Office"
 	},
-/obj/machinery/computer/secure_data,
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aod" = (
@@ -7906,6 +7906,9 @@
 	},
 /obj/machinery/light/small,
 /obj/item/camera/detective,
+/obj/item/hand_labeler{
+	pixel_x = 5
+	},
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "auj" = (
@@ -48389,6 +48392,7 @@
 /obj/item/storage/secure/safe{
 	pixel_x = -23
 	},
+/obj/item/storage/box/evidence,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "dBu" = (
@@ -49069,14 +49073,10 @@
 /area/security/prison)
 "fBs" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/table/wood,
-/obj/item/hand_labeler{
-	pixel_x = 5
-	},
-/obj/item/storage/box/evidence,
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -30
 	},
+/obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "fGg" = (
