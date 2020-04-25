@@ -169,10 +169,13 @@
 		to_chat(usr, "<span class='warning'>\The robe's internal magic supply is still recharging!</span>")
 		return
 
-	usr.say("Rise, my creation! Off your page into this realm!", forced = "stickman summoning")
+	usr.say("Rise, my creation! Off of your page and into this realm!", forced = "stickman summoning")
 	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
 	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
-	var/list/factions = usr.faction
+	var/list/factions = usr.faction.Copy()
+	for(var/F in factions)
+		if(F == "neutral")
+			factions -= F //this is so that they'll attack other players and NPCs and stuff, but still won't attack the person who made them or each other
 	M.faction = factions
 	src.robe_charge = FALSE
 	sleep(30)
