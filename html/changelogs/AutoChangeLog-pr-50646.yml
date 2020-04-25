@@ -1,0 +1,7 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - rscadd: "RSF's now have a radial menu"
+  - balance: "You can now kill yourself by dispensing cookies"
+  - refactor: "RSF's are now modular"
+  - refactor: "Subtypes of RSFs can now have sublists. Hope it's helpful."
