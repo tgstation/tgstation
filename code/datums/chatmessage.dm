@@ -66,9 +66,14 @@
   * * lifespan - The lifespan of the message in deciseconds
   */
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, list/extra_classes, lifespan)
+	// Register client who owns this message
+	owned_by = owner.client
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/qdel, src)
+
 	// Clip message
-	if (length_char(text) > CHAT_MESSAGE_MAX_LENGTH)
-		text = copytext_char(text, 1, CHAT_MESSAGE_MAX_LENGTH) + "..."
+	var/maxlen = owned_by.prefs.max_chat_length
+	if (length_char(text) > maxlen)
+		text = copytext_char(text, 1, maxlen + 1) + "..." // BYOND index moment
 
 	// Calculate target color if not already present
 	if (!target.chat_color || target.chat_color_name != target.name)
@@ -97,10 +102,6 @@
 
 	// We dim italicized text to make it more distinguishable from regular text
 	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
-
-	// Register client who owns this message
-	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/qdel, src)
 
 	// Approximate text height
 	// Note we have to replace HTML encoded metacharacters otherwise MeasureText will return a zero height
