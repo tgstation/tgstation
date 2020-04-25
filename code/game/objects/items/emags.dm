@@ -5,7 +5,7 @@
 
 
 /*
- * EMAG AND DOORMAGS
+ * EMAG AND SUBTYPES
  */
 /obj/item/card/emag
 	desc = "It's a card with a magnetic strip attached to some circuitry."
@@ -37,36 +37,13 @@
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
-/obj/item/card/emag/doormag
-	desc = "It's a specialized cryptographic sequencer specifically designed to override station airlock access codes. Seems to crack airlock encryption algorithms by using raw telecrystals."
-	name = "airlock authentication override card"
-	icon_state = "doormag"
-	var/type_whitelist //List of types 
-	var/charges = 6
+/obj/item/card/emagfake/afterattack()
+	. = ..()
+	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/card/emag/Initialize(mapload)
 	. = ..()
 	type_blacklist = list(subtypesof(/obj/machinery/door/airlock), subtypesof(/obj/machinery/door/window/)) //list of all typepaths that require a specialized emag to hack.
-
-/obj/item/card/emag/doormag/Initialize(mapload)
-	. = ..()
-	type_whitelist = list(subtypesof(/obj/machinery/door/airlock), subtypesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
-
-/obj/item/card/emag/doormag/proc/use_charge(mob/user)
-	charges --
-	to_chat(user, "<span class='notice'>You use [src]. It now has [charges] charges remaining. Raw telecrystals can be inserted to regain charges.</span>")
-
-/obj/item/card/emag/doormag/attackby(obj/item/I, mob/user, params)
-	. = ..()
-	if(istype(I, /obj/item/stack/telecrystal))
-		var/obj/item/stack/telecrystal/TC = I
-		charges += 2
-		TC.add(-1)
-		to_chat(user, "<span class='notice'>You slot [TC] into [src]. It now has [charges] charges.</span>")
-
-/obj/item/card/emag/doormag/examine(mob/user)
-	. = ..()
-	. += "The [src] has the ability to hack [charges] airlocks."
 
 /obj/item/card/emag/attack()
 	return
@@ -87,15 +64,59 @@
 		return FALSE
 	return TRUE
 
+/*
+ * DOORMAG
+ */
+/obj/item/card/emag/doormag
+	desc = "It's a specialized cryptographic sequencer specifically designed to override station airlock access codes. Seems to crack airlock encryption algorithms by using raw telecrystals."
+	name = "airlock authentication override card"
+	icon_state = "doormag"
+	var/type_whitelist //List of types 
+	var/charges = 3
+	var/max_charges = 3
+	var/charge_tick = 0
+
+
+/obj/item/card/emag/doormag/Initialize(mapload)
+	. = ..()
+	type_whitelist = list(subtypesof(/obj/machinery/door/airlock), subtypesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
+
+/obj/item/card/emag/doormag/New()
+	..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/card/emag/doormag/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	. = ..()
+
+/obj/item/card/emag/doormag/process()
+	charge_tick++
+	if(charge_tick < 10)
+		return FALSE
+	charge_tick = 0
+	charges = min(charges+1, max_charges)
+	return TRUE
+
+/obj/item/card/emag/doormag/proc/use_charge(mob/user)
+	charges --
+	to_chat(user, "<span class='notice'>You use [src]. It now has [charges] charges remaining.</span>")
+
+/obj/item/card/emag/doormag/examine(mob/user)
+	. = ..()
+	. += "The [src] has the ability to hack [charges] airlocks."
+
+
+
+
+
+
+
 /obj/item/card/emag/doormag/can_emag(atom/target, mob/user)
 	if (charges <= 0)
-		to_chat(user, "<span class='warning'>[src] has insufficient charge. Raw telecrystals can be inserted to regain charges.</span>")
+		to_chat(user, "<span class='warning'>[src] is recharging!</span>")
 		return FALSE
 	if (!(target.type in type_whitelist))
 		to_chat(user, "<span class='warning'>[src] is unable to interface with this. It only seems to fit into airlock electronics.</span>")
 		return FALSE
 	return TRUE
 
-/obj/item/card/emagfake/afterattack()
-	. = ..()
-	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
