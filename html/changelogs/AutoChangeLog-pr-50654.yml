@@ -1,5 +1,0 @@
-author: "Cartographer-D"
-delete-after: True
-changes: 
-  - bugfix: "Meta Cargo Mining's APC is actually wired"
-  - bugfix: "More small fixes for Meta Cargo"
