@@ -3394,15 +3394,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
-"agC" = (
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/turret_protected/ai";
-	dir = 1;
-	name = "AI Chamber APC";
-	pixel_y = 23
-	},
-/turf/open/floor/circuit,
-/area/ai_monitored/turret_protected/ai)
 "agD" = (
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = 32
@@ -133315,7 +133306,7 @@ aTV
 agm
 aTV
 aTV
-agC
+aWN
 bgk
 blE
 bjQ
