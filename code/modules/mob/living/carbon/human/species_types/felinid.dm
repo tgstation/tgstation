@@ -46,12 +46,10 @@
 
 /// Callback proc for [COMSIG_CARBON_WASHED]
 /datum/species/human/felinid/proc/washed(mob/living/carbon/source)
-	SEND_SIGNAL(source, COMSIG_ADD_MOOD_EVENT, "wet", /datum/mood_event/got_drenched)
-	return COMPONENT_HATES_WATER
+	return SPECIES_HATES_WATER
 
 /// Callback proc for [COMSIG_TOWEL_ACT]
 /datum/species/human/felinid/proc/dried(mob/living/carbon/source, mob/living/user)
-	SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "wet")
 	SEND_SIGNAL(source, COMSIG_CLEAR_MOOD_EVENT, "sprayed")
 
 /// Callback proc for [COMSIG_LIVING_WATER_ACT]
