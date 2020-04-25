@@ -1,4 +1,0 @@
-author: "TetraK1"
-delete-after: True
-changes: 
-  - tweak: "Possibility of calling shuttle is now checked before entering shuttle reason"

@@ -22,7 +22,7 @@
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
 	ui_x = 340
-	ui_y = 440
+	ui_y = 350
 
 	var/capacity = 5e6 // maximum charge
 	var/charge = 0 // actual charge
@@ -140,7 +140,7 @@
 				return
 			if(!terminal)
 				C.use(10)
-				user.visible_message("<span class='notice'>[user.name] has built a power terminal.</span>",\
+				user.visible_message("<span class='notice'>[user.name] builds a power terminal.</span>",\
 					"<span class='notice'>You build the power terminal.</span>")
 
 				//build the terminal and link it to the network
@@ -322,28 +322,26 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "smes", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Smes", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/smes/ui_data()
 	var/list/data = list(
-		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"capacity" = capacity,
+		"capacityPercent" = round(100*charge/capacity, 0.1),
 		"charge" = charge,
-
 		"inputAttempt" = input_attempt,
 		"inputting" = inputting,
 		"inputLevel" = input_level,
 		"inputLevel_text" = DisplayPower(input_level),
 		"inputLevelMax" = input_level_max,
-		"inputAvailable" = DisplayPower(input_available),
-
+		"inputAvailable" = input_available,
 		"outputAttempt" = output_attempt,
 		"outputting" = outputting,
 		"outputLevel" = output_level,
 		"outputLevel_text" = DisplayPower(output_level),
 		"outputLevelMax" = output_level_max,
-		"outputUsed" = DisplayPower(output_used)
+		"outputUsed" = output_used,
 	)
 	return data
 

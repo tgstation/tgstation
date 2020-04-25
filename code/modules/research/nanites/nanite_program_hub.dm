@@ -31,11 +31,11 @@
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
-		if(disk)
-			eject(user)
 		if(user.transferItemToLoc(N, src))
 			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
 			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			if(disk)
+				eject(user)
 			disk = N
 	else
 		..()
@@ -47,10 +47,16 @@
 		disk.forceMove(drop_location())
 	disk = null
 
+/obj/machinery/nanite_program_hub/AltClick(mob/user)
+	if(disk && user.canUseTopic(src, !issilicon(user)))
+		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
+		eject(user)
+	return
+
 /obj/machinery/nanite_program_hub/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_program_hub", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "NaniteProgramHub", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/nanite_program_hub/ui_data()

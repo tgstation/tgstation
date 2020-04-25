@@ -70,7 +70,7 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 	custom_materials = list(/datum/material/iron=10000, /datum/material/glass=6000)
 	flags_1 = CONDUCT_1
-	item_flags = SURGICAL_TOOL
+	item_flags = SURGICAL_TOOL | EYE_STAB
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("drilled")
@@ -101,7 +101,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	item_state = "scalpel"
 	flags_1 = CONDUCT_1
-	item_flags = SURGICAL_TOOL
+	item_flags = SURGICAL_TOOL | EYE_STAB
 	force = 10
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 5

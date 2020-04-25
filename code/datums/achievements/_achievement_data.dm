@@ -66,6 +66,8 @@
 	var/datum/award/A = SSachievements.awards[achievement_type]
 	get_data(achievement_type) //Get the current status first if necessary
 	if(istype(A, /datum/award/achievement))
+		if(data[achievement_type]) //You already unlocked it so don't bother running the unlock proc
+			return
 		data[achievement_type] = TRUE
 		A.on_unlock(user) //Only on default achievement, as scores keep going up.
 	else if(istype(A, /datum/award/score))
@@ -95,7 +97,7 @@
 	if(!ui)
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
 		assets.send(user)
-		ui = new(user, src, ui_key, "achievements", "Achievements Menu", 800, 1000, master_ui, state)
+		ui = new(user, src, ui_key, "Achievements", "Achievements Menu", 540, 680, master_ui, state)
 		ui.open()
 
 /datum/achievement_data/ui_data(mob/user)

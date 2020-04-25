@@ -22,6 +22,8 @@
 #define MEDAL_RULE8				"Rule 8"
 #define MEDAL_LONGSHIFT			"longshift"
 #define MEDAL_SNAIL				"KKKiiilll mmmeee"
+#define MEDAL_LOOKOUTSIR		"Look Out, Sir!"
+#define MEDAL_GOTTEM			"GOTTEM"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER		"Legendary Miner"

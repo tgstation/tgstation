@@ -60,6 +60,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	jobs["Mime"] = 67
 	jobs["Janitor"] = 68
 	jobs["Lawyer"] = 69
+	jobs["Psychologist"] = 70
 	jobs["Admiral"] = 200
 	jobs["CentCom Commander"] = 210
 	jobs["Custodian"] = 211
@@ -80,7 +81,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "crew", "crew monitor", 800, 600 , master_ui, state)
+		ui = new(user, src, ui_key, "CrewConsole", "crew monitor", 800, 600 , master_ui, state)
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)

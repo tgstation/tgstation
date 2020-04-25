@@ -17,10 +17,11 @@
 /datum/round_event/shuttle_loan
 	announceWhen = 1
 	endWhen = 500
-	var/dispatched = 0
+	var/dispatched = FALSE
 	var/dispatch_type = 0
 	var/bonus_points = 10000
 	var/thanks_msg = "The cargo shuttle should return in five minutes. Have some supply points for your trouble."
+	var/loan_type //for logging
 
 /datum/round_event/shuttle_loan/setup()
 	dispatch_type = pick(HIJACK_SYNDIE, RUSKY_PARTY, SPIDER_GIFT, DEPARTMENT_RESUPPLY, ANTIDOTE_NEEDED, PIZZA_DELIVERY, ITS_HIP_TO, MY_GOD_JC)
@@ -36,13 +37,13 @@
 			priority_announce("Cargo: The Spider Clan has sent us a mysterious gift. Can we ship it to you to see what's inside?","CentCom Diplomatic Corps")
 		if(DEPARTMENT_RESUPPLY)
 			priority_announce("Cargo: Seems we've ordered doubles of our department resupply packages this month. Can we send them to you?","CentCom Supply Department")
-			thanks_msg = "The cargo shuttle should return in 5 minutes."
+			thanks_msg = "The cargo shuttle should return in five minutes."
 			bonus_points = 0
 		if(ANTIDOTE_NEEDED)
 			priority_announce("Cargo: Your station has been chosen for an epidemiological research project. Send us your cargo shuttle to receive your research samples.", "CentCom Research Initiatives")
 		if(PIZZA_DELIVERY)
 			priority_announce("Cargo: It looks like a neighbouring station accidentally delivered their pizza to you instead.", "CentCom Spacepizza Division")
-			thanks_msg = "The cargo shuttle should return in 5 minutes."
+			thanks_msg = "The cargo shuttle should return in five minutes."
 			bonus_points = 0
 		if(ITS_HIP_TO)
 			priority_announce("Cargo: One of our freighters carrying a bee shipment has been attacked by eco-terrorists. Can you clean up the mess for us?", "CentCom Janitorial Division")
@@ -55,7 +56,7 @@
 /datum/round_event/shuttle_loan/proc/loan_shuttle()
 	priority_announce(thanks_msg, "Cargo shuttle commandeered by CentCom.")
 
-	dispatched = 1
+	dispatched = TRUE
 	var/datum/bank_account/D = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(D)
 		D.adjust_money(bonus_points)
@@ -68,20 +69,30 @@
 	switch(dispatch_type)
 		if(HIJACK_SYNDIE)
 			SSshuttle.centcom_message += "Syndicate hijack team incoming."
+			loan_type = "Syndicate boarding party"
 		if(RUSKY_PARTY)
 			SSshuttle.centcom_message += "Partying Russians incoming."
+			loan_type = "Russian party squad"
 		if(SPIDER_GIFT)
 			SSshuttle.centcom_message += "Spider Clan gift incoming."
+			loan_type = "Shuttle full of spiders"
 		if(DEPARTMENT_RESUPPLY)
 			SSshuttle.centcom_message += "Department resupply incoming."
+			loan_type = "Resupply packages"
 		if(ANTIDOTE_NEEDED)
 			SSshuttle.centcom_message += "Virus samples incoming."
+			loan_type = "Virus shuttle"
 		if(PIZZA_DELIVERY)
 			SSshuttle.centcom_message += "Pizza delivery for [station_name()]"
+			loan_type = "Pizza delivery"
 		if(ITS_HIP_TO)
 			SSshuttle.centcom_message += "Biohazard cleanup incoming."
+			loan_type = "Shuttle full of bees"
 		if(MY_GOD_JC)
 			SSshuttle.centcom_message += "Live explosive ordnance incoming. Exercise extreme caution."
+			loan_type = "Shuttle with a ticking bomb"
+
+	log_game("Shuttle loan event firing with type '[loan_type]'.")
 
 /datum/round_event/shuttle_loan/tick()
 	if(dispatched)

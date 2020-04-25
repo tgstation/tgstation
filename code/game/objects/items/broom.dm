@@ -49,6 +49,8 @@
 			target = A.loc
 	else
 		target = user.loc
+	if (!isturf(target))
+		return
 	if (locate(/obj/structure/table) in target.contents)
 		return
 	var/i = 0

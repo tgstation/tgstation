@@ -205,15 +205,24 @@
 	..()
 	var/mob/living/M = mob_override || owner.current
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
+	if(M.hud_used)
+		var/datum/hud/H = M.hud_used
+		H.wanted_lvl = new /obj/screen/wanted
+		H.infodisplay += H.wanted_lvl
 
 
 /datum/antagonist/ert/families/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
 	remove_antag_hud(antag_hud_type, M)
+	if(M.hud_used)
+		var/datum/hud/H = M.hud_used
+		H.infodisplay -= H.wanted_lvl
+		QDEL_NULL(H.wanted_lvl)
 	..()
 
 /datum/antagonist/ert/families/greet()
 	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
+	to_chat(owner, "<B><font size=3 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>")
 
 	var/missiondesc = "After an uptick in gang violence on [station_name()], you are responding to emergency calls from the station for immediate SSC Police assistance!\n"
 	missiondesc += "<BR><B>Your Mission</B>:"
@@ -223,6 +232,11 @@
 	missiondesc += "<BR> <B>3.</B> If Security is found to be violating the rights of citizens, detain them as per your authority as Spinward Stellar Coalition officers."
 	missiondesc += "<BR> <B>4.</B> If the situation demands it, evacuate the station. Otherwise, remain on station and keep the peace."
 	to_chat(owner,missiondesc)
+	var/policy = get_policy(ROLE_FAMILIES)
+	if(policy)
+		to_chat(owner, policy)
+	var/mob/living/M = owner.current
+	M.playsound_local(M, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/ert/families/undercover_cop
 	name = "Undercover Cop"
@@ -253,6 +267,7 @@
 
 /datum/antagonist/ert/families/undercover_cop/greet()
 	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
+	to_chat(owner, "<B><font size=3 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>")
 
 	var/missiondesc = "You are an undercover police officer on board [station_name()]. You've been sent here by the Spinward Stellar Coalition because of suspected abusive behavior by the security department, and to keep tabs on a potential criminal organization operation."
 	missiondesc += "<BR><B>Your Mission</B>:"

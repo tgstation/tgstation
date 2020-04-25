@@ -109,9 +109,10 @@ obj/item/grenade/firecracker/preprime(mob/user, delayoverride, msg = TRUE, volum
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
 /obj/item/grenade/firecracker/prime()
+	. = ..()
 	update_mob()
 	var/explosion_loc = get_turf(src)
-	qdel(src)
+	resolve()
 	explosion(explosion_loc,-1,-1,2)
 
 

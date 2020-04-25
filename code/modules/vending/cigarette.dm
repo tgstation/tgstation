@@ -24,6 +24,7 @@
 	default_price = 75
 	extra_price = 250
 	payment_department = ACCOUNT_SRV
+	light_mask = "cigs-light-mask"
 
 /obj/machinery/vending/cigarette/syndicate
 	products = list(/obj/item/storage/fancy/cigarettes/cigpack_syndicate = 7,

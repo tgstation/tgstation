@@ -7,7 +7,7 @@
 
 * **Website:** https://www.tgstation13.org
 * **Code:** https://github.com/tgstation/tgstation
-* **Wiki** https://tgstation13.org/wiki/Main_Page
+* **Wiki:** https://tgstation13.org/wiki/Main_Page
 * **Codedocs:** https://codedocs.tgstation13.org/
 * **/tg/station Discord:** https://tgstation13.org/phpBB/viewforum.php?f=60
 * **Coderbus Discord:** https://discord.gg/Vh8TJp9
@@ -18,7 +18,7 @@ This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
 Space Station 13 is a paranoia-laden round-based roleplaying game set against the backdrop of a nonsensical, metal death trap masquerading as a space station, with charming spritework designed to represent the sci-fi setting and its dangerous undertones. Have fun, and survive!
 
 ## DOWNLOADING
-[Downloading](.github/CONTRIBUTING.md)
+[Downloading](.github/DOWNLOADING.md)
 
 [Running on the server](.github/RUNNING_A_SERVER.md)
 
@@ -27,7 +27,11 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 ## Requirements for contributors
 [Guidelines for Contributors](.github/CONTRIBUTING.md)
 
+[/tg/station HACKMD account](https://hackmd.io/@tgstation) - Design documentation here
+
 [Documenting your code](.github/AUTODOC_GUIDE.md)
+
+[Policy configuration system](.github/POLICYCONFIG.md)
 
 ## LICENSE
 
@@ -38,9 +42,6 @@ All code before [commit 333c566b88108de218d882840e61928a9b759d8f on 2014/31/12 a
 
 See LICENSE and GPLv3.txt for more details.
 
-tgui clientside is licensed as a subproject under the MIT license.
-Font Awesome font files, used by tgui, are licensed under the SIL Open Font License v1.1
-tgui assets are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
 The TGS3 API is licensed as a subproject under the MIT license.
 
 See the footers of code/\_\_DEFINES/server\_tools.dm, code/modules/server\_tools/st\_commands.dm, and code/modules/server\_tools/st\_inteface.dm for the MIT license.

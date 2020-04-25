@@ -1,24 +1,34 @@
 import { useBackend } from '../backend';
 import { Box, Button, Grid, Section, NoticeBox } from '../components';
 import { toTitleCase } from 'common/string';
+import { Window } from '../layouts';
 
-export const EightBallVote = props => {
-  const { act, data } = useBackend(props);
+export const EightBallVote = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    shaking,
+  } = data;
+  return (
+    <Window>
+      <Window.Content>
+        {!shaking && (
+          <NoticeBox>
+            No question is currently being asked.
+          </NoticeBox>
+        ) || (
+          <EightBallVoteQuestion />
+        )}
+      </Window.Content>
+    </Window>
+  );
+};
 
+const EightBallVoteQuestion = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     question,
-    shaking,
     answers = [],
   } = data;
-
-  if (!shaking) {
-    return (
-      <NoticeBox>
-        No question is currently being asked.
-      </NoticeBox>
-    );
-  }
-
   return (
     <Section>
       <Box

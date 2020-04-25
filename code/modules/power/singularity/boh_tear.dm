@@ -16,13 +16,19 @@
 	allowed_size = STAGE_SIX
 	var/ghosts = list()
 	var/old_loc
+	var/start_time = 0
 
 /obj/singularity/boh_tear/Initialize()
 	. = ..()
 	old_loc = loc
+	start_time = world.time
 	QDEL_IN(src, 5 SECONDS) // vanishes after 5 seconds
 
 /obj/singularity/boh_tear/process()
+	//Backup to catch timerss errors
+	if(start_time + (10 SECONDS) < world.time)
+		stack_trace("The timer subsytem isn't firing properly, yell at your local coders posthaste")
+		qdel(src)
 	eat()
 
 /obj/singularity/boh_tear/consume(atom/A)

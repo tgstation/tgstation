@@ -4,7 +4,6 @@
   * A grouping of tiles into a logical space, mostly used by map editors
   */
 /area
-	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"

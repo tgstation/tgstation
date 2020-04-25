@@ -65,6 +65,16 @@
 	if(!O.plunger_act(src, user, reinforced))
 		return ..()
 
+/obj/item/plunger/throw_impact(atom/hit_atom, datum/thrownthing/tt)
+	. = ..()
+	if(tt.target_zone != BODY_ZONE_HEAD)
+		return
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/H = hit_atom
+		if(!H.wear_mask)
+			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
+			H.visible_message("<span class='warning'>The plunger slams into [H]'s face!</span>", "<span class='warning'>The plunger suctions to your face!</span>")
+
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
 	desc = "It's an M. 7 Reinforced Plunger© for heavy duty plunging."

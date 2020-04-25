@@ -140,3 +140,8 @@
 	icon_state = "clownplasma"
 	item_state = "clownplasma"
 
+/obj/item/clothing/gloves/combat/wizard
+	name = "enchanted gloves"
+	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
+	icon_state = "wizard"
+	item_state = "purplegloves"

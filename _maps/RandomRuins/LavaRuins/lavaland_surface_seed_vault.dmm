@@ -262,16 +262,11 @@
 /area/ruin/powered/seedvault)
 "aL" = (
 /obj/structure/table/wood,
-/obj/item/storage/box/disks_plantgene,
-/obj/item/storage/box/disks_plantgene,
-/obj/item/storage/box/disks_plantgene,
+/obj/item/secateurs,
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aM" = (
 /obj/structure/table/wood,
-/obj/machinery/smartfridge/disks{
-	pixel_y = 2
-	},
 /turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aN" = (
@@ -289,13 +284,6 @@
 	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
-/area/ruin/powered/seedvault)
-"aP" = (
-/obj/machinery/plantgenes/seedvault{
-	pixel_y = 6
-	},
-/obj/structure/table/wood,
-/turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt,
@@ -1064,7 +1052,7 @@ aX
 aE
 aA
 aA
-aP
+aL
 ac
 bm
 br

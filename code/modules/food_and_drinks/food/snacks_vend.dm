@@ -25,6 +25,7 @@
 	filling_color = "#e4d4b7"
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtype = JUNKFOOD | RAW | GROSS
+	custom_premium_price = 800
 	var/revelation = FALSE
 
 /obj/item/reagent_containers/food/snacks/candy/bronx/On_Consume(mob/living/eater)

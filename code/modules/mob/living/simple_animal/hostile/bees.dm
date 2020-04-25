@@ -32,7 +32,6 @@
 	response_harm_simple = "squash"
 	maxHealth = 10
 	health = 10
-	spacewalk = TRUE
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0
@@ -62,6 +61,7 @@
 
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	generate_bee_visuals()
 	AddComponent(/datum/component/swarming)
 

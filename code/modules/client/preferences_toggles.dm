@@ -144,6 +144,21 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggletitlemusic)()
 	return C.prefs.toggles & SOUND_LOBBY
 
 
+TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, toggleendofroundsounds)()
+	set name = "Hear/Silence End of Round Sounds"
+	set category = "Preferences"
+	set desc = "Hear Round End Sounds"
+	usr.client.prefs.toggles ^= SOUND_ENDOFROUND
+	usr.client.prefs.save_preferences()
+	if(usr.client.prefs.toggles & SOUND_ENDOFROUND)
+		to_chat(usr, "You will now hear sounds played before the server restarts.")
+	else
+		to_chat(usr, "You will no longer hear sounds played before the server restarts.")
+	SSblackbox.record_feedback("nested tally", "preferences_verb", 1, list("Toggle End of Round Sounds", "[usr.client.prefs.toggles & SOUND_ENDOFROUND ? "Enabled" : "Disabled"]"))
+/datum/verbs/menu/Settings/Sound/toggleendofroundsounds/Get_checked(client/C)
+	return C.prefs.toggles & SOUND_ENDOFROUND
+
+
 TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Sound, togglemidis)()
 	set name = "Hear/Silence Midis"
 	set category = "Preferences"

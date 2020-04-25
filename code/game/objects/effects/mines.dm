@@ -28,6 +28,7 @@
 	s.set_up(3, 1, src)
 	s.start()
 	mineEffect(victim)
+	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED)
 	triggered = 1
 	qdel(src)
 
@@ -42,10 +43,21 @@
 /obj/effect/mine/explosive/mineEffect(mob/victim)
 	explosion(loc, range_devastation, range_heavy, range_light, range_flash)
 
-
 /obj/effect/mine/stun
 	name = "stun mine"
 	var/stun_time = 80
+
+/obj/effect/mine/shrapnel
+	name = "shrapnel mine"
+	var/shrapnel_type = /obj/projectile/bullet/shrapnel
+	var/shrapnel_magnitude = 3
+
+/obj/effect/mine/shrapnel/mineEffect(mob/victim)
+	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
+
+/obj/effect/mine/shrapnel/sting
+	name = "stinger mine"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball
 
 /obj/effect/mine/stun/mineEffect(mob/living/victim)
 	if(isliving(victim))
@@ -177,7 +189,7 @@
 	if(!victim.client || !istype(victim))
 		return
 	to_chat(victim, "<span class='notice'>You feel fast!</span>")
-	victim.add_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB, update=TRUE, priority=100, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
+	victim.add_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	sleep(duration)
-	victim.remove_movespeed_modifier(MOVESPEED_ID_YELLOW_ORB)
+	victim.remove_movespeed_modifier(/datum/movespeed_modifier/yellow_orb)
 	to_chat(victim, "<span class='notice'>You slow down.</span>")

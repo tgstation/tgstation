@@ -463,8 +463,8 @@
 	if(!req_defib && !combat)
 		return
 	busy = TRUE
-	M.visible_message("<span class='danger'>[user] has touched [M] with [src]!</span>", \
-			"<span class='userdanger'>[user] has touched [M] with [src]!</span>")
+	M.visible_message("<span class='danger'>[user] touches [M] with [src]!</span>", \
+			"<span class='userdanger'>[user] touches [M] with [src]!</span>")
 	M.adjustStaminaLoss(60)
 	M.Knockdown(75)
 	M.Jitter(50)

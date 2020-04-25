@@ -11,6 +11,12 @@
 	if(HAS_TRAIT(user, TRAIT_MINDSHIELD))
 		to_chat(user, "You attended a seminar on not signing up for a gang, and are not interested.")
 		return
+	if(user.mind.has_antag_datum(/datum/antagonist/ert/families))
+		to_chat(user, "As a police officer, you can't join this family. However, you pretend to accept it to keep your cover up.")
+		for(var/threads in team_to_use.free_clothes)
+			new threads(get_turf(user))
+		qdel(src)
+		return
 	var/datum/antagonist/gang/is_gangster = user.mind.has_antag_datum(/datum/antagonist/gang)
 	if(is_gangster && is_gangster.starter_gangster)
 		to_chat(user, "You started your family. You can't turn your back on it now.")
@@ -21,7 +27,11 @@
 	var/datum/game_mode/gang/F = SSticker.mode
 	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
 	user.mind.add_antag_datum(swappin_sides)
+	var/policy = get_policy(ROLE_FAMILIES)
+	if(policy)
+		to_chat(user, policy)
 	swappin_sides.my_gang = team_to_use
+	user.playsound_local(user, 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
 		new threads(get_turf(user))

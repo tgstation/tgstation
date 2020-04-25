@@ -13,6 +13,17 @@
 	tastes = list("ice cream" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
 
+/obj/item/reagent_containers/food/snacks/strawberryicecreamsandwich
+	name = "strawberry ice cream sandwich"
+	desc = "Portable ice-cream in its own packaging of the strawberry variety."
+	icon = 'icons/obj/food/frozen_treats.dmi'
+	icon_state = "strawberryicecreamsandwich"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ice = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/ice = 2)
+	tastes = list("ice cream" = 2, "berry" = 2)
+	foodtype = FRUIT | DAIRY | SUGAR
+
+
 /obj/item/reagent_containers/food/snacks/spacefreezy
 	name = "space freezy"
 	desc = "The best icecream in space."

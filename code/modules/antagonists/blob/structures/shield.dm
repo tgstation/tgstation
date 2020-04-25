@@ -38,21 +38,8 @@
 	desc = "A solid wall of slightly twitching tendrils with a reflective glow."
 	damaged_desc = "A wall of twitching tendrils with a reflective glow."
 	icon_state = "blob_glow"
-	flags_1 = CHECK_RICOCHET_1
+	flags_ricochet = RICOCHET_SHINY
 	point_return = 8
 	max_integrity = 100
 	brute_resist = 0.5
 	explosion_block = 2
-
-/obj/structure/blob/shield/reflective/handle_ricochet(obj/projectile/P)
-	var/turf/p_turf = get_turf(P)
-	var/face_direction = get_dir(src, p_turf)
-	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (P.Angle + 180))
-	if(abs(incidence_s) > 90 && abs(incidence_s) < 270)
-		return FALSE
-	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
-	P.setAngle(new_angle_s)
-	if(!(P.reflectable & REFLECT_FAKEPROJECTILE))
-		visible_message("<span class='warning'>[P] reflects off [src]!</span>")
-	return TRUE

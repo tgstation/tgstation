@@ -498,6 +498,21 @@
 		/obj/item/stack/cable_coil = 3)
 	needs_anchored = FALSE
 
+/obj/item/circuitboard/machine/electrolyzer
+	name = "Electrolyzer (Machine Board)"
+	icon_state = "generic"
+	build_path = /obj/machinery/electrolyzer
+	req_components = list(
+		/obj/item/stock_parts/micro_laser = 2,
+		/obj/item/stock_parts/capacitor = 1,
+		/obj/item/stack/cable_coil = 3,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/sheet/mineral/gold = 1,
+		/obj/item/stack/sheet/mineral/silver = 1)
+
+	needs_anchored = FALSE
+
+
 /obj/item/circuitboard/machine/techfab
 	name = "\improper Techfab (Machine Board)"
 	icon_state = "generic"
@@ -1054,16 +1069,6 @@
 		/obj/item/stack/sheet/glass = 2)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/plantgenes
-	name = "Plant DNA Manipulator (Machine Board)"
-	icon_state = "service"
-	build_path = /obj/machinery/plantgenes
-	req_components = list(
-		/obj/item/stock_parts/manipulator = 1,
-		/obj/item/stock_parts/micro_laser = 1,
-		/obj/item/stack/sheet/glass = 1,
-		/obj/item/stock_parts/scanning_module = 1)
-
 /obj/item/circuitboard/machine/processor
 	name = "Food Processor (Machine Board)"
 	icon_state = "service"
@@ -1180,6 +1185,7 @@
 	req_components = list(
 		/obj/item/stock_parts/manipulator = 2,
 		/obj/item/stock_parts/matter_bin = 2)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/abductor
 	name = "alien board (Report This)"
@@ -1195,15 +1201,6 @@
 	def_components = list(
 		/obj/item/stock_parts/capacitor = /obj/item/stock_parts/capacitor/quadratic,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra)
-
-/obj/item/circuitboard/machine/plantgenes/vault
-	name = "alien board (Plant DNA Manipulator)"
-	icon_state = "abductor_mod"
-	// It wasn't made by actual abductors race, so no abductor tech here.
-	def_components = list(
-		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
-		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
-		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
 
 /obj/item/circuitboard/machine/hypnochair
 	name = "Enhanced Interrogation Chamber (Machine Board)"

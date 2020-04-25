@@ -42,6 +42,7 @@
 
 	target.do_alert_animation(target)
 	target.playsound_local(target.loc, 'sound/machines/chime.ogg', 50, TRUE)
+	SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gunpoint", /datum/mood_event/gunpoint)
 
 	addtimer(CALLBACK(src, .proc/update_stage, 2), GUNPOINT_DELAY_STAGE_2)
 
@@ -97,6 +98,7 @@
 		cancel()
 
 /datum/component/gunpoint/proc/trigger_reaction()
+	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	if(point_of_no_return)
 		return
 	point_of_no_return = TRUE
@@ -124,6 +126,7 @@
 	shooter.visible_message("<span class='danger'>[shooter] breaks [shooter.p_their()] aim on [target]!</span>", \
 		"<span class='danger'>You are no longer aiming [weapon] at [target].</span>", target)
 	to_chat(target, "<span class='userdanger'>[shooter] breaks [shooter.p_their()] aim on you!</span>")
+	SEND_SIGNAL(target, COMSIG_CLEAR_MOOD_EVENT, "gunpoint")
 	qdel(src)
 
 /datum/component/gunpoint/proc/flinch(attacker, damage, damagetype, def_zone)

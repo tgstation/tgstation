@@ -9,7 +9,6 @@
 	anchored = FALSE
 	density = FALSE
 	pressure_resistance = 5*ONE_ATMOSPHERE
-	level = 2
 	max_integrity = 200
 	var/obj/pipe_type = /obj/structure/disposalpipe/segment
 	var/pipename
@@ -34,6 +33,8 @@
 
 	update_icon()
 
+	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
+
 /obj/structure/disposalconstruct/Move()
 	var/old_dir = dir
 	..()
@@ -45,10 +46,8 @@
 	if(is_pipe())
 		icon_state = "con[icon_state]"
 		if(anchored)
-			level = initial(pipe_type.level)
 			layer = initial(pipe_type.layer)
 		else
-			level = initial(level)
 			layer = initial(layer)
 
 	else if(ispath(pipe_type, /obj/machinery/disposal/bin))
@@ -57,13 +56,6 @@
 			icon_state = "disposal"
 		else
 			icon_state = "condisposal"
-
-
-// hide called by levelupdate if turf intact status changes
-// change visibility status and force update of icon
-/obj/structure/disposalconstruct/hide(var/intact)
-	invisibility = (intact && level==1) ? INVISIBILITY_MAXIMUM: 0	// hide if floor is intact
-	update_icon()
 
 /obj/structure/disposalconstruct/proc/get_disposal_dir()
 	if(!is_pipe())

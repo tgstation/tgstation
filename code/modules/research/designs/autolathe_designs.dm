@@ -384,7 +384,7 @@
 	build_path = /obj/item/storage/bag/tray
 	category = list("initial","Dinnerware")
 
-/datum/design/tray
+/datum/design/cafeteria_tray
 	name = "Cafeteria Tray"
 	id = "foodtray"
 	build_type = AUTOLATHE
@@ -466,6 +466,15 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 15000)
 	build_path = /obj/item/hatchet
+	category = list("initial","Misc", "Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/secateurs
+	name = "Secateurs"
+	id = "secateurs"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/item/secateurs
 	category = list("initial","Misc", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -917,19 +926,21 @@
 /datum/design/conveyor_belt
 	name = "Conveyor Belt"
 	id = "conveyor_belt"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 3000)
 	build_path = /obj/item/stack/conveyor
-	category = list("initial", "Construction")
+	category = list("initial", "Construction", "Electronics")
 	maxstack = 30
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/conveyor_switch
 	name = "Conveyor Belt Switch"
 	id = "conveyor_switch"
-	build_type = AUTOLATHE
+	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 450, /datum/material/glass = 190)
 	build_path = /obj/item/conveyor_switch_construct
-	category = list("initial", "Construction")
+	category = list("initial", "Construction", "Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/laptop
 	name = "Laptop Frame"

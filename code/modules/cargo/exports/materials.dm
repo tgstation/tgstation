@@ -101,3 +101,15 @@
 	material_id = /datum/material/glass
 	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
 		/obj/item/shard)
+
+/datum/export/material/hot_ice
+	cost = 400
+	message = "cm3 of Hot Ice"
+	material_id = /datum/material/hot_ice
+	export_types = /obj/item/stack/sheet/hot_ice
+
+/datum/export/material/metal_hydrogen
+	cost = 550
+	unit_name = "of metallic hydrogen"
+	material_id = /datum/material/metalhydrogen
+	export_types = /obj/item/stack/sheet/mineral/metal_hydrogen

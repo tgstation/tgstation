@@ -15,4 +15,4 @@
 /obj/item/throwing_star/ninja
 	name = "ninja throwing star"
 	throwforce = 30
-	embedding = list("pain_mult" = 6, "embed_chance" = 100, "fall_chance" = 0)
+	embedding = list("pain_mult" = 6, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 15)

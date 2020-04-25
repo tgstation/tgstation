@@ -12,6 +12,8 @@
 
 	baseturfs = /turf/open/floor/plating
 
+	flags_ricochet = RICOCHET_HARD
+
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through. Also, (hardness - 40) is used as a modifier for objects trying to embed in this (hardness of 30 results in a -10% chance)
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -39,17 +41,6 @@
 
 /turf/closed/wall/attack_tk()
 	return
-
-/turf/closed/wall/handle_ricochet(obj/projectile/P)			//A huge pile of shitcode!
-	var/turf/p_turf = get_turf(P)
-	var/face_direction = get_dir(src, p_turf)
-	var/face_angle = dir2angle(face_direction)
-	var/incidence_s = GET_ANGLE_OF_INCIDENCE(face_angle, (P.Angle + 180))
-	if(abs(incidence_s) > 90 && abs(incidence_s) < 270)
-		return FALSE
-	var/new_angle_s = SIMPLIFY_DEGREES(face_angle + incidence_s)
-	P.setAngle(new_angle_s)
-	return TRUE
 
 /turf/closed/wall/proc/dismantle_wall(devastated=0, explode=0)
 	if(devastated)

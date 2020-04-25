@@ -456,18 +456,6 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 		message_admins("Loading [away_name] failed!")
 		return
 
-
-	if(GLOB.the_gateway)
-		//Link any found away gate with station gate
-		var/obj/machinery/gateway/centeraway/new_gate
-		for(var/obj/machinery/gateway/centeraway/G in GLOB.machines)
-			if(G.z == away_level.z_value) //I'll have to refactor gateway shitcode before multi-away support.
-				new_gate = G
-				break
-		//Link station gate with away gate and remove wait time.
-		GLOB.the_gateway.awaygate = new_gate
-		GLOB.the_gateway.wait = world.time
-
 /datum/controller/subsystem/mapping/proc/RequestBlockReservation(width, height, z, type = /datum/turf_reservation, turf_type_override)
 	UNTIL((!z || reservation_ready["[z]"]) && !clearing_reserved_turfs)
 	var/datum/turf_reservation/reserve = new type

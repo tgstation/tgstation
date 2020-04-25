@@ -170,6 +170,7 @@
 	endurance = 50
 	yield = 5
 	potency = 20
+	instability = 64
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "lime-grow"
 	icon_dead = "lime-dead"

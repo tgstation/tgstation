@@ -143,17 +143,19 @@
 	var/spammer = 0
 
 /datum/reagent/medicine/C2/lenturi/on_mob_life(mob/living/carbon/M)
-		M.adjustFireLoss(-3 * REM)
-		M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
-		..()
-		return TRUE
-/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
-	M.add_movespeed_modifier(MOVESPEED_ID_LENTURI, update=TRUE, priority=100, multiplicative_slowdown=1.50, blacklisted_movetypes=(FLYING|FLOATING))
-	. = ..()
-/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
-	M.remove_movespeed_modifier(MOVESPEED_ID_LENTURI)
+	M.adjustFireLoss(-3 * REM)
+	M.adjustOrganLoss(ORGAN_SLOT_STOMACH, 0.4 * REM)
+	..()
+	return TRUE
 
-	. = ..()
+/datum/reagent/medicine/C2/lenturi/on_mob_metabolize(mob/living/carbon/M)
+	M.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
+/datum/reagent/medicine/C2/lenturi/on_mob_end_metabolize(mob/living/carbon/M)
+	M.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
+	return ..()
+
 /datum/reagent/medicine/C2/aiuri
 	name = "Aiuri"
 	description = "Used to treat burns. Does minor eye damage."
@@ -319,6 +321,11 @@
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
 	..()
 	return TRUE
+
+// Antitoxin binds plants pretty well. So the tox goes significantly down
+/datum/reagent/medicine/C2/multiver/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 2))
 
 #define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/C2/syriniver) || istype(A,/datum/reagent/medicine/C2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
 

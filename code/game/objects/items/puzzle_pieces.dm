@@ -116,9 +116,10 @@
 	var/reward = /obj/item/reagent_containers/food/snacks/cookie
 	var/claimed = FALSE
 
-/obj/item/pressure_plate/hologrid/hide(yes)
+/obj/item/pressure_plate/hologrid/Initialize()
 	. = ..()
-	anchored = TRUE
+
+	AddElement(/datum/element/undertile, tile_overlay = tile_overlay) //we remove use_anchor here, so it ALWAYS stays anchored
 
 /obj/item/pressure_plate/hologrid/examine(mob/user)
 	. = ..()

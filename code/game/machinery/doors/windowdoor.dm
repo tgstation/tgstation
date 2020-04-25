@@ -54,6 +54,7 @@
 		icon_state = base_state
 	else
 		icon_state = "[base_state]open"
+	SSdemo.mark_dirty(src)
 
 /obj/machinery/door/window/proc/open_and_close()
 	if(!open())

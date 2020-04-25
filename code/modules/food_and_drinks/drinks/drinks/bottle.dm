@@ -20,6 +20,7 @@
 	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	isGlass = TRUE
 	foodtype = ALCOHOL
+	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
 
 /obj/item/reagent_containers/food/drinks/bottle/update_overlays()
 	. = ..()
@@ -197,6 +198,7 @@
 	icon_state = "bottleofnothing"
 	list_reagents = list(/datum/reagent/consumable/nothing = 100)
 	foodtype = NONE
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
@@ -362,6 +364,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/orangejuice = 100)
 	foodtype = FRUIT | BREAKFAST
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
@@ -374,6 +377,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/cream = 100)
 	foodtype = DAIRY
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
@@ -386,6 +390,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/tomatojuice = 100)
 	foodtype = VEGETABLES
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
@@ -398,6 +403,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
 	foodtype = FRUIT
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
 	name = "pineapple juice"
@@ -410,6 +416,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/pineapplejuice = 100)
 	foodtype = FRUIT | PINEAPPLE
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
@@ -430,6 +437,7 @@
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
 	foodtype = FRUIT
+	age_restricted = FALSE
 
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"
@@ -589,3 +597,10 @@
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		to_chat(M, "<span class='info'>A pungent smell emanates from [src], like fruit puking out its guts.</span>")
 		playsound(get_turf(src), 'sound/effects/bubbles2.ogg', 25, TRUE)
+
+/obj/item/reagent_containers/food/drinks/colocup/lean
+	name = "lean"
+	desc = "A cup of that purple drank, the stuff that makes you go WHEEZY BABY."
+	icon_state = "lean"
+	list_reagents = list(/datum/reagent/consumable/lean = 50)
+	random_sprite = FALSE

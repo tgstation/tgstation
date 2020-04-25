@@ -386,8 +386,8 @@
 	desc = "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
 	icon_state = "poster39"
 
-/obj/structure/sign/poster/contraband/sun_kist
-	name = "Sun-kist"
+/obj/structure/sign/poster/contraband/starkist
+	name = "Star-kist"
 	desc = "Drink the stars!"
 	icon_state = "poster40"
 

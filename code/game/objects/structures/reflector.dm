@@ -105,7 +105,7 @@
 								"<span class='hear'>You hear welding.</span>")
 			if(W.use_tool(src, user, 40, volume=40))
 				obj_integrity = max_integrity
-				user.visible_message("<span class='notice'>[user] has repaired [src].</span>", \
+				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
 									"<span class='notice'>You finish repairing [src].</span>")
 
 		else if(!anchored)

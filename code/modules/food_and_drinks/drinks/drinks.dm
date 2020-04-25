@@ -513,12 +513,15 @@
 	volume = 20
 	amount_per_transfer_from_this = 5
 	isGlass = FALSE
+	/// Allows the lean sprite to display upon crafting
+	var/random_sprite = TRUE
 
 /obj/item/reagent_containers/food/drinks/colocup/Initialize()
 	.=..()
-	icon_state = "colocup[rand(0, 6)]"
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
+	if (random_sprite)
+		icon_state = "colocup[rand(0, 6)]"
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
@@ -573,6 +576,9 @@
 	spillable = FALSE
 	isGlass = FALSE
 	custom_price = 45
+	var/pierced = FALSE
+	obj_flags = CAN_BE_HIT
+
 
 /obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize()
 	..()
@@ -612,7 +618,25 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 		return TRUE
+	var/chugged = reagents.total_volume
 	. = ..()
+	if(is_drainable() && pierced && chugged)
+		M.changeNext_move(CLICK_CD_RAPID)
+		if(iscarbon(M))
+			var/mob/living/carbon/broh = M
+			broh.adjustOxyLoss(2)
+			broh.losebreath++
+			switch(broh.losebreath)
+				if(-INFINITY to 0)
+				if(1 to 2)
+					if(prob(30))
+						user.visible_message("<b>[broh]</b>'s eyes water as [broh.p_they()] chug the can of [src]!")
+				if(3 to 6)
+					if(prob(20))
+						user.visible_message("<b>[broh]</b> makes \an [pick(list("uncomfortable", "gross", "troubling"))] gurgling noise as [broh.p_they()] chug the can of [src]!")
+				if(9 to INFINITY)
+					broh.vomit(2, stun=FALSE)
+
 
 /obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/projectile/P)
 	. = ..()
@@ -634,6 +658,24 @@
 	if(!is_drainable())
 		open_soda(user)
 	return ..()
+
+/obj/item/reagent_containers/food/drinks/soda_cans/attacked_by(obj/item/I, mob/living/user)
+	if(I.sharpness && !pierced && user && user.a_intent != INTENT_HARM)
+		user.visible_message("<b>[user]</b> pierces [src] with [I].", "<span class='notice'>You pierce \the [src] with [I].</span>")
+		playsound(src, "can_open", 50, TRUE)
+		pierced = TRUE
+		return
+	else if(I.force)
+		user.visible_message("<b>[user]</b> crushes [src] with [I]! Party foul!", "<span class='warning'>You crush \the [src] with [I]! Party foul!</span>")
+		playsound(src, "can_open", 50, TRUE)
+		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+		crushed_can.icon_state = icon_state
+		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
+		crushed_can.throw_at(throw_target, rand(1,3), 7)
+		qdel(src)
+		return
+
+	. = ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"

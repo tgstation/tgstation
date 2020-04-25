@@ -56,7 +56,7 @@
 		if(initial(RI.favor_cost))
 			name_entry += " ([initial(RI.favor_cost)] favor)"
 
-		. += list(name_entry = i)
+		. += list("[name_entry]" = i)
 
 /// Activates once selected
 /datum/religion_sect/proc/on_select()

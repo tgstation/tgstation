@@ -1,16 +1,16 @@
- /**
-  * tgui state: not_incapacitated_state
-  *
-  * Checks that the user isn't incapacitated
- **/
+/**
+ * tgui state: not_incapacitated_state
+ *
+ * Checks that the user isn't incapacitated
+ */
 
 GLOBAL_DATUM_INIT(not_incapacitated_state, /datum/ui_state/not_incapacitated_state, new)
 
- /**
-  * tgui state: not_incapacitated_turf_state
-  *
-  * Checks that the user isn't incapacitated and that their loc is a turf
- **/
+/**
+ * tgui state: not_incapacitated_turf_state
+ *
+ * Checks that the user isn't incapacitated and that their loc is a turf
+ */
 
 GLOBAL_DATUM_INIT(not_incapacitated_turf_state, /datum/ui_state/not_incapacitated_state, new(no_turfs = TRUE))
 

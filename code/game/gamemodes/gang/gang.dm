@@ -18,11 +18,11 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang
 	name = "Families"
 	config_tag = "families"
-	antag_flag = ROLE_TRAITOR
+	antag_flag = ROLE_FAMILIES
 	false_report_weight = 5
-	required_players = 0
-	required_enemies = 1
-	recommended_enemies = 4
+	required_players = 40
+	required_enemies = 6
+	recommended_enemies = 6
 	announce_span = "danger"
 	announce_text = "Grove For Lyfe!"
 	reroll_friendly = FALSE
@@ -30,26 +30,27 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	protected_jobs = list()
 	var/check_counter = 0
 	var/endtime = null
+	var/start_time = null
 	var/fuckingdone = FALSE
 	var/time_to_end = 60 MINUTES
 	var/gangs_to_generate = 3
 	var/list/gangs_to_use
 	var/list/datum/mind/gangbangers = list()
 	var/list/datum/mind/pigs = list()
-	var/datum/mind/undercover_cop
+	var/list/datum/mind/undercover_cops = list()
 	var/list/gangs = list()
 	var/gangs_still_alive = 0
 	var/sent_announcement = FALSE
 	var/list/gang_locations = list()
-	var/lock_stars = FALSE
 	var/cops_arrived = FALSE
 	var/gang_balance_cap = 5
-	var/current_stars = "wanted_0"
+	var/wanted_level = 0
 
 /datum/game_mode/gang/warriors
 	name = "Warriors"
 	config_tag = "warriors"
 	announce_text = "Can you survive this onslaught?"
+	gangs_to_generate = 11
 	gang_balance_cap = 3
 
 /datum/game_mode/gang/warriors/pre_setup()
@@ -67,18 +68,22 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		gangbanger.restricted_roles = restricted_jobs
 		log_game("[key_name(gangbanger)] has been selected as a starting gangster!")
 		antag_candidates.Remove(gangbanger)
-	if(antag_candidates.len)
+	for(var/j = 0, j < gangs_to_generate, j++)
+		if(!antag_candidates.len)
+			break
 		var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
 		pigs += one_eight_seven_on_an_undercover_cop
-		undercover_cop = one_eight_seven_on_an_undercover_cop
-		undercover_cop.restricted_roles = restricted_jobs
+		undercover_cops += one_eight_seven_on_an_undercover_cop
+		one_eight_seven_on_an_undercover_cop.restricted_roles = restricted_jobs
 		log_game("[key_name(one_eight_seven_on_an_undercover_cop)] has been selected as a starting undercover cop!")
 		antag_candidates.Remove(one_eight_seven_on_an_undercover_cop)
 	endtime = world.time + time_to_end
+	start_time = world.time
 	return TRUE
 
 /datum/game_mode/gang/post_setup()
 	var/replacement_gangsters = 0
+	var/replacement_cops = 0
 	for(var/datum/mind/gangbanger in gangbangers)
 		if(!ishuman(gangbanger.current))
 			gangbangers.Remove(gangbanger)
@@ -92,19 +97,24 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			var/datum/mind/gangbanger = antag_pick(antag_candidates)
 			gangbangers += gangbanger
 			log_game("[key_name(gangbanger)] has been selected as a replacement gangster!")
-	if(undercover_cop && !ishuman(undercover_cop.current))
-		pigs.Remove(undercover_cop)
-		log_game("[undercover_cop] was not a human, and thus has lost their undercover cop role.")
-		if(!antag_candidates.len)
-			var/datum/mind/one_eight_seven_on_an_undercover_cop = antag_pick(antag_candidates)
-			pigs += one_eight_seven_on_an_undercover_cop
-			undercover_cop = one_eight_seven_on_an_undercover_cop
-		else
-			log_game("Unable to find a replacement undercover cop.")
-	if(undercover_cop)
+	for(var/datum/mind/undercover_cop in undercover_cops)
+		if(!ishuman(undercover_cop.current))
+			undercover_cops.Remove(undercover_cop)
+			pigs.Remove(undercover_cop)
+			log_game("[undercover_cop] was not a human, and thus has lost their undercover cop role.")
+			replacement_cops++
+	if(replacement_cops)
+		for(var/j = 0, j < replacement_cops, j++)
+			if(!antag_candidates.len)
+				log_game("Unable to find more replacement undercover cops. Not all of the gangs will spawn.")
+				break
+			var/datum/mind/undercover_cop = antag_pick(antag_candidates)
+			undercover_cops += undercover_cop
+			pigs += undercover_cop
+			log_game("[key_name(undercover_cop)] has been selected as a replacement undercover cop!")
+	for(var/datum/mind/undercover_cop in undercover_cops)
 		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
 		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
-		undercover_cop.current.playsound_local(undercover_cop.current, 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
 
 	for(var/datum/mind/gangbanger in gangbangers)
 		var/gang_to_use = pick_n_take(gangs_to_use)
@@ -138,6 +148,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		to_chat(gangbanger.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	addtimer(CALLBACK(src, .proc/five_minute_warning), time_to_end - 5 MINUTES)
+	SSshuttle.registerHostileEnvironment(src)
 	gamemode_ready = TRUE
 	..()
 
@@ -147,7 +158,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		var/datum/team/gang/G = GG
 		readable_gang_names += "[G.name]"
 	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah? Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait an hour. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 	sent_announcement = TRUE
 
 /datum/game_mode/gang/proc/five_minute_warning()
@@ -179,44 +190,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	return FALSE
 
 /datum/game_mode/gang/process()
-	if(sent_announcement)
-		for(var/mob/M in GLOB.player_list)
-			if(M.hud_used && !istype(M, /mob/dead/new_player))
-				var/datum/hud/H = M.hud_used
-				var/icon_state_to_use = "wanted_1"
-				if(lock_stars)
-					H.wanted_lvl.icon_state = current_stars
-					continue
-				if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
-					switch(GLOB.deaths_during_shift)
-						if(0 to TWO_STARS_HIGHPOP-1)
-							icon_state_to_use = "wanted_1"
-						if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
-							icon_state_to_use = "wanted_2"
-						if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
-							icon_state_to_use = "wanted_3"
-						if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
-							icon_state_to_use = "wanted_4"
-						if(FIVE_STARS_HIGHPOP to INFINITY)
-							icon_state_to_use = "wanted_5"
-				else
-					switch(GLOB.deaths_during_shift)
-						if(0 to TWO_STARS_LOW-1)
-							icon_state_to_use = "wanted_1"
-						if(TWO_STARS_LOW to THREE_STARS_LOW-1)
-							icon_state_to_use = "wanted_2"
-						if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
-							icon_state_to_use = "wanted_3"
-						if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
-							icon_state_to_use = "wanted_4"
-						if(FIVE_STARS_LOW to INFINITY)
-							icon_state_to_use = "wanted_5"
-				if(cops_arrived)
-					icon_state_to_use += "_active"
-					lock_stars = TRUE
-				current_stars = icon_state_to_use
-				H.wanted_lvl.icon_state = icon_state_to_use
-
+	check_wanted_level()
 	check_counter++
 	if(check_counter >= 5)
 		if (world.time > endtime && !fuckingdone)
@@ -229,61 +203,142 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		check_gang_clothes()
 		check_rollin_with_crews()
 
+///Checks if our wanted level has changed. Only actually does something post the initial announcement and until the cops are here. After that its locked.
+/datum/game_mode/gang/proc/check_wanted_level()
+	if(!sent_announcement || cops_arrived)
+		return
+	var/new_wanted_level
+	if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
+		switch(GLOB.deaths_during_shift)
+			if(0 to TWO_STARS_HIGHPOP-1)
+				new_wanted_level = 1
+			if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
+				new_wanted_level = 2
+			if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
+				new_wanted_level = 3
+			if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
+				new_wanted_level = 4
+			if(FIVE_STARS_HIGHPOP to INFINITY)
+				new_wanted_level = 5
+	else
+		switch(GLOB.deaths_during_shift)
+			if(0 to TWO_STARS_LOW-1)
+				new_wanted_level = 1
+			if(TWO_STARS_LOW to THREE_STARS_LOW-1)
+				new_wanted_level = 2
+			if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
+				new_wanted_level = 3
+			if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
+				new_wanted_level = 4
+			if(FIVE_STARS_LOW to INFINITY)
+				new_wanted_level = 5
+	update_wanted_level(new_wanted_level)
+
+///Updates the icon states for everyone and sends outs announcements regarding the police.
+/datum/game_mode/gang/proc/update_wanted_level(newlevel)
+	if(newlevel > wanted_level)
+		on_gain_wanted_level(newlevel)
+	else if (newlevel < wanted_level)
+		on_lower_wanted_level(newlevel)
+	wanted_level = newlevel
+	for(var/i in GLOB.player_list)
+		var/mob/M = i
+		if(!M.hud_used?.wanted_lvl)
+			continue
+		var/datum/hud/H = M.hud_used
+		H.wanted_lvl.level = newlevel
+		H.wanted_lvl.cops_arrived = cops_arrived
+		H.wanted_lvl.update_icon()
+
+/datum/game_mode/gang/proc/on_gain_wanted_level(newlevel)
+	var/announcement_message
+	switch(newlevel)
+		if(2)
+			announcement_message = "Small amount of police vehicles have been spotted en route towards [station_name()]. They will arrive at the 50 minute mark."
+			endtime = start_time + 50 MINUTES
+		if(3)
+			announcement_message = "A large detachment police vehicles have been spotted en route towards [station_name()]. They will arrive at the 40 minute mark."
+			endtime = start_time + 40 MINUTES
+		if(4)
+			announcement_message = "A detachment of top-trained agents has been spotted on their way to [station_name()]. They will arrive at the 35 minute mark."
+			endtime = start_time + 35 MINUTES
+		if(5)
+			announcement_message = "The fleet enroute to [station_name()] now consists of national guard personnel. They will arrive at the 30 minute mark."
+			endtime = start_time + 30 MINUTES
+	priority_announce(announcement_message, "Station Spaceship Detection Systems")
+
+/datum/game_mode/gang/proc/on_lower_wanted_level(newlevel)
+	var/announcement_message
+	switch(newlevel)
+		if(1)
+			announcement_message = "There are now only a few police vehicle headed towards [station_name()]. They will arrive at the 60 minute mark."
+			endtime = start_time + 60 MINUTES
+		if(2)
+			announcement_message = "There seem to be fewer police vehicles headed towards [station_name()]. They will arrive at the 50 minute mark."
+			endtime = start_time + 50 MINUTES
+		if(3)
+			announcement_message = "There are no longer top-trained agents in the fleet headed towards [station_name()]. They will arrive at the 40 minute mark."
+			endtime = start_time + 40 MINUTES
+		if(4)
+			announcement_message = "The convoy enroute to [station_name()] seems to no longer consist of national guard personnel. They will arrive at the 35 minute mark."
+			endtime = start_time + 35 MINUTES
+	priority_announce(announcement_message, "Station Spaceship Detection Systems")
+
 /datum/game_mode/gang/proc/send_in_the_fuzz()
 	var/team_size
 	var/cops_to_send
 	var/announcement_message = "PUNK ASS BALLA BITCH"
 	var/announcer = "Spinward Stellar Coalition"
 	if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
-		switch(GLOB.deaths_during_shift)
-			if(0 to TWO_STARS_HIGHPOP-1)
+		switch(wanted_level)
+			if(1)
 				team_size = 8
 				cops_to_send = /datum/antagonist/ert/families/beatcop
 				announcement_message = "Hello, crewmembers of [station_name()]! We've received a few calls about some potential violent gang activity on board your station, so we're sending some beat cops to check things out. Nothing extreme, just a courtesy call. However, while they check things out for about 10 minutes, we're going to have to ask that you keep your escape shuttle parked.\n\nHave a pleasant day!"
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
+			if(2)
 				team_size = 9
 				cops_to_send = /datum/antagonist/ert/families/beatcop/armored
 				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of violent gang activity from your station. We are dispatching some armed officers to help keep the peace and investigate matters. Do not get in their way, and comply with any and all requests from them. We have blockaded the local warp gate, and your shuttle cannot depart for another 10 minutes.\n\nHave a secure day."
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(THREE_STARS_HIGHPOP to FOUR_STARS_HIGHPOP-1)
+			if(3)
 				team_size = 10
 				cops_to_send = /datum/antagonist/ert/families/beatcop/swat
 				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of extreme gang activity from your station resulting in heavy civilian casualties. The Spinward Stellar Coalition does not tolerate abuse towards our citizens, and we will be responding in force to keep the peace and reduce civilian casualties. We have your station surrounded, and all gangsters must drop their weapons and surrender peacefully.\n\nHave a secure day."
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(FOUR_STARS_HIGHPOP to FIVE_STARS_HIGHPOP-1)
+			if(4)
 				team_size = 11
 				cops_to_send = /datum/antagonist/ert/families/beatcop/fbi
 				announcement_message = "We are dispatching our top agents to [station_name()] at the request of the Spinward Stellar Coalition government due to an extreme terrorist level threat against this Nanotrasen owned station. All gangsters must surrender IMMEDIATELY. Failure to comply can and will result in death. We have blockaded your warp gates and will not allow any escape until the situation is resolved within our standard response time of 10 minutes.\n\nSurrender now or face the consequences of your actions."
 				announcer = "Federal Bureau of Investigation"
-			if(FIVE_STARS_HIGHPOP to INFINITY)
+			if(5)
 				team_size = 12
 				cops_to_send = /datum/antagonist/ert/families/beatcop/military
 				announcement_message = "Due to an insane level of civilian casualties aboard [station_name()], we have dispatched the National Guard to curb any and all gang activity on board the station. We have heavy cruisers watching the shuttle. Attempt to leave before we allow you to, and we will obliterate your station and your escape shuttle.\n\nYou brought this on yourselves by murdering so many civilians."
 				announcer = "Spinward Stellar Coalition National Guard"
 	else
-		switch(GLOB.deaths_during_shift)
-			if(0 to TWO_STARS_LOW-1)
+		switch(wanted_level)
+			if(1)
 				team_size = 5
 				cops_to_send = /datum/antagonist/ert/families/beatcop
 				announcement_message = "Hello, crewmembers of [station_name()]! We've received a few calls about some potential violent gang activity on board your station, so we're sending some beat cops to check things out. Nothing extreme, just a courtesy call. However, while they check things out for about 10 minutes, we're going to have to ask that you keep your escape shuttle parked.\n\nHave a pleasant day!"
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(TWO_STARS_LOW to THREE_STARS_LOW-1)
+			if(2)
 				team_size = 6
 				cops_to_send = /datum/antagonist/ert/families/beatcop/armored
 				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of violent gang activity from your station. We are dispatching some armed officers to help keep the peace and investigate matters. Do not get in their way, and comply with any and all requests from them. We have blockaded the local warp gate, and your shuttle cannot depart for another 10 minutes.\n\nHave a secure day."
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(THREE_STARS_LOW to FOUR_STARS_LOW-1)
+			if(3)
 				team_size = 7
 				cops_to_send = /datum/antagonist/ert/families/beatcop/swat
 				announcement_message = "Crewmembers of [station_name()]. We have received confirmed reports of extreme gang activity from your station resulting in heavy civilian casualties. The Spinward Stellar Coalition does not tolerate abuse towards our citizens, and we will be responding in force to keep the peace and reduce civilian casualties. We have your station surrounded, and all gangsters must drop their weapons and surrender peacefully.\n\nHave a secure day."
 				announcer = "Spinward Stellar Coalition Police Department"
-			if(FOUR_STARS_LOW to FIVE_STARS_LOW-1)
+			if(4)
 				team_size = 8
 				cops_to_send = /datum/antagonist/ert/families/beatcop/fbi
 				announcement_message = "We are dispatching our top agents to [station_name()] at the request of the Spinward Stellar Coalition government due to an extreme terrorist level threat against this Nanotrasen owned station. All gangsters must surrender IMMEDIATELY. Failure to comply can and will result in death. We have blockaded your warp gates and will not allow any escape until the situation is resolved within our standard response time of 10 minutes.\n\nSurrender now or face the consequences of your actions."
 				announcer = "Federal Bureau of Investigation"
-			if(FIVE_STARS_LOW to INFINITY)
+			if(5)
 				team_size = 10
 				cops_to_send = /datum/antagonist/ert/families/beatcop/military
 				announcement_message = "Due to an insane level of civilian casualties aboard [station_name()], we have dispatched the National Guard to curb any and all gang activity on board the station. We have heavy cruisers watching the shuttle. Attempt to leave before we allow you to, and we will obliterate your station and your escape shuttle.\n\nYou brought this on yourselves by murdering so many civilians."
@@ -324,7 +379,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			log_game("[key_name(cop)] has been selected as an [ert_antag.name]")
 			numagents--
 	cops_arrived = TRUE
-	SSshuttle.registerHostileEnvironment(src)
+	update_wanted_level() //Will make sure our icon updates properly
 	addtimer(CALLBACK(src, .proc/end_hostile_sit), 10 MINUTES)
 	return TRUE
 
@@ -381,7 +436,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 
 /datum/game_mode/gang/generate_report()
-	return "Something something grove street home at least until I fucked everything up idk nobody reads these reports."
+	return "Potential violent criminal activity has been detected on board your station, and we believe the Spinward Stellar Coalition may be conducting an audit of us. Keep an eye out for tagging of turf, color coordination, and suspicious people asking you to say things a little closer to their chest."
 
 /datum/game_mode/gang/send_intercept(report = 0)
 	return

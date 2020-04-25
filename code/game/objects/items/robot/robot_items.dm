@@ -25,8 +25,8 @@
 	M.Paralyze(100)
 	M.apply_effect(EFFECT_STUTTER, 5)
 
-	M.visible_message("<span class='danger'>[user] has prodded [M] with [src]!</span>", \
-					"<span class='userdanger'>[user] has prodded you with [src]!</span>")
+	M.visible_message("<span class='danger'>[user] prods [M] with [src]!</span>", \
+					"<span class='userdanger'>[user] prods you with [src]!</span>")
 
 	playsound(loc, 'sound/weapons/egloves.ogg', 50, TRUE, -1)
 
@@ -631,6 +631,10 @@
 /obj/item/borg/projectile_dampen/equipped()
 	. = ..()
 	host = loc
+
+/obj/item/borg/projectile_dampen/cyborg_unequip(mob/user)
+	deactivate_field()
+	. = ..()
 
 /obj/item/borg/projectile_dampen/on_mob_death()
 	deactivate_field()

@@ -344,6 +344,11 @@ Contains:
 	if (user.head == src)
 		user.faction -= "carp"
 
+/obj/item/clothing/suit/space/hardsuit/carp/old
+	name = "battered carp space suit"
+	desc = "It's covered in bite marks and scratches, yet seems to be still perfectly functional."
+	slowdown = 1
+
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	name = "paranormal response team helmet"
 	desc = "A helmet worn by those who deal with paranormal threats for a living."

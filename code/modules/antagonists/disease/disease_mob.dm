@@ -78,7 +78,9 @@ the new instance inside the host to be updated to the template's stats.
 			S.overmind = null
 
 /mob/camera/disease/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	if(freemove)
 		to_chat(src, "<span class='warning'>You have [DisplayTimeText(freemove_end - world.time)] to select your first host. Click on a human to select your host.</span>")
 

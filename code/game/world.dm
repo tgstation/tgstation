@@ -140,6 +140,8 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
 	GLOB.discord_api_log = "[GLOB.log_directory]/discord_api_log.log"
 
+	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
+
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")
 	start_log(GLOB.test_log)

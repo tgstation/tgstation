@@ -33,6 +33,10 @@
 	if(href_list["create_area"])
 		if(in_use)
 			return
+		var/area/A = get_area(usr)
+		if(A.noteleport)
+			to_chat(usr, "<span class='warning'>You cannot edit restricted areas.</span>")
+			return
 		in_use = TRUE
 		create_area(usr)
 		in_use = FALSE

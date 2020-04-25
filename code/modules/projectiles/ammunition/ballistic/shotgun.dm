@@ -128,16 +128,6 @@
 /obj/item/ammo_casing/shotgun/dart/attackby()
 	return
 
-/obj/item/ammo_casing/shotgun/dart/noreact
-	name = "cryostasis shotgun dart"
-	desc = "A dart for use in shotguns, using similar technology as cryostatis beakers to keep internal reagents from reacting. Can be injected with up to 10 units of any chemical."
-	icon_state = "cnrshell"
-	reagent_amount = 10
-
-/obj/item/ammo_casing/shotgun/dart/noreact/Initialize()
-	. = ..()
-	reagents.flags |= NO_REACT
-
 /obj/item/ammo_casing/shotgun/dart/bioterror
 	desc = "A shotgun dart filled with deadly toxins."
 

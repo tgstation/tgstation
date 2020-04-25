@@ -24,16 +24,6 @@
 	return
 
 
-/client
-	var/list/atom/selected_target[2]
-	var/obj/item/active_mousedown_item = null
-	var/mouseParams = ""
-	var/mouseLocation = null
-	var/mouseObject = null
-	var/mouseControlObject = null
-	var/middragtime = 0
-	var/atom/middragatom
-
 /client/MouseDown(object, location, control, params)
 	if (mouse_down_icon)
 		mouse_pointer_icon = mouse_down_icon
@@ -108,7 +98,6 @@
 	mouseParams = params
 	mouseLocation = over_location
 	mouseObject = over_object
-	mouseControlObject = over_control
 	if(selected_target[1] && over_object && over_object.IsAutoclickable())
 		selected_target[1] = over_object
 		selected_target[2] = params

@@ -115,6 +115,9 @@ LOG_PRAYER
 ## log lawchanges
 LOG_LAW
 
+## log economy actions
+LOG_ECON
+
 ## log crew manifest to seperate file
 LOG_MANIFEST
 
@@ -140,8 +143,11 @@ LOG_VIRUS
 ## log cloning actions
 LOG_CLONING
 
-# log shuttle actions
+## log shuttle actions
 LOG_SHUTTLE
+
+## Enable the demo subsystem
+# DEMOS_ENABLED
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA
@@ -507,6 +513,9 @@ DEFAULT_VIEW_SQUARE 15x15
 
 ## Uncomment to enable discord auto-roling when users link their BYOND and Discord accounts
 #ENABLE_DISCORD_AUTOROLE
+
+## Set to a value greater than zero to require a user to have at least this many hours of living role time to be assigned the role
+REQUIRED_LIVING_HOURS 0
 
 ## Add your discord bot token here. Make sure it has the ability to manage roles
 #DISCORD_TOKEN someDiscordToken

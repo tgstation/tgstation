@@ -436,23 +436,23 @@
 				if (has_electronics == APC_ELECTRONICS_INSTALLED)
 					has_electronics = APC_ELECTRONICS_MISSING
 					if (machine_stat & BROKEN)
-						user.visible_message("<span class='notice'>[user.name] has broken the power control board inside [src.name]!</span>",\
+						user.visible_message("<span class='notice'>[user.name] breaks the power control board inside [src.name]!</span>",\
 							"<span class='notice'>You break the charred power control board and remove the remains.</span>",
 							"<span class='hear'>You hear a crack.</span>")
 						return
 					else if (obj_flags & EMAGGED)
 						obj_flags &= ~EMAGGED
-						user.visible_message("<span class='notice'>[user.name] has discarded an emagged power control board from [src.name]!</span>",\
+						user.visible_message("<span class='notice'>[user.name] discards an emagged power control board from [src.name]!</span>",\
 							"<span class='notice'>You discard the emagged power control board.</span>")
 						return
 					else if (malfhack)
-						user.visible_message("<span class='notice'>[user.name] has discarded a strangely programmed power control board from [src.name]!</span>",\
+						user.visible_message("<span class='notice'>[user.name] discards a strangely programmed power control board from [src.name]!</span>",\
 							"<span class='notice'>You discard the strangely programmed board.</span>")
 						malfai = null
 						malfhack = 0
 						return
 					else
-						user.visible_message("<span class='notice'>[user.name] has removed the power control board from [src.name]!</span>",\
+						user.visible_message("<span class='notice'>[user.name] removes the power control board from [src.name]!</span>",\
 							"<span class='notice'>You remove the power control board.</span>")
 						new /obj/item/electronics/apc(loc)
 						return
@@ -529,11 +529,11 @@
 		if(W.use_tool(src, user, 50, volume=50, amount=3))
 			if ((machine_stat & BROKEN) || opened==APC_COVER_REMOVED)
 				new /obj/item/stack/sheet/metal(loc)
-				user.visible_message("<span class='notice'>[user.name] has cut [src] apart with [W].</span>",\
+				user.visible_message("<span class='notice'>[user.name] cuts [src] apart with [W].</span>",\
 					"<span class='notice'>You disassembled the broken APC frame.</span>")
 			else
 				new /obj/item/wallframe/apc(loc)
-				user.visible_message("<span class='notice'>[user.name] has cut [src] from the wall with [W].</span>",\
+				user.visible_message("<span class='notice'>[user.name] cuts [src] from the wall with [W].</span>",\
 					"<span class='notice'>You cut the APC frame from the wall.</span>")
 			qdel(src)
 			return TRUE
@@ -554,7 +554,7 @@
 			if(!user.transferItemToLoc(W, src))
 				return
 			cell = W
-			user.visible_message("<span class='notice'>[user.name] has inserted the power cell to [src.name]!</span>",\
+			user.visible_message("<span class='notice'>[user.name] inserts the power cell to [src.name]!</span>",\
 				"<span class='notice'>You insert the power cell.</span>")
 			chargecount = 0
 			update_icon()
@@ -795,7 +795,8 @@
 
 	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
-		if(H.a_intent == INTENT_HARM)
+		var/datum/species/ethereal/E = H.dna.species
+		if((H.a_intent == INTENT_HARM) && (E.drain_time < world.time))
 			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldnt drain it
 				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
 				return
@@ -803,6 +804,7 @@
 			if(stomach.crystal_charge > 145)
 				to_chat(H, "<span class='warning'>Your charge is full!</span>")
 				return
+			E.drain_time = world.time + 75
 			to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
 			if(do_after(user, 75, target = src))
 				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > 145))
@@ -814,7 +816,7 @@
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
 			return
-		if(H.a_intent == INTENT_GRAB)
+		if((H.a_intent == INTENT_GRAB) && (E.drain_time < world.time))
 			if(cell.charge == cell.maxcharge)
 				to_chat(H, "<span class='warning'>The APC is full!</span>")
 				return
@@ -822,6 +824,7 @@
 			if(stomach.crystal_charge < 10)
 				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
 				return
+			E.drain_time = world.time + 75
 			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
 			if(do_after(user, 75, target = src))
 				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
@@ -851,7 +854,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "apc", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Apc", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)

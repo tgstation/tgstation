@@ -34,10 +34,10 @@
 	H.quick_equip()
 
 /obj/screen/devil
+	icon = 'icons/mob/screen_devil.dmi'
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/devil/soul_counter
-	icon = 'icons/mob/screen_gen.dmi'
 	name = "souls owned"
 	icon_state = "Devil-6"
 	screen_loc = ui_devilsouldisplay
@@ -63,6 +63,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/ling
+	icon = 'icons/mob/screen_changeling.dmi'
 	invisibility = INVISIBILITY_ABSTRACT
 
 /obj/screen/ling/sting
@@ -82,7 +83,6 @@
 
 /datum/hud/human/New(mob/living/carbon/human/owner)
 	..()
-	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
 
 	var/widescreen_layout = FALSE
 	if(owner.client?.prefs?.widescreenpref)

@@ -25,7 +25,7 @@
 
 			var/mob/M = locate(href_list["rename"]) in GLOB.mob_list
 			if(!istype(M))
-				to_chat(usr, "This can only be used on instances of type /mob")
+				to_chat(usr, "This can only be used on instances of type /mob", confidential = TRUE)
 				return
 
 			var/new_name = stripped_input(usr,"What would you like to name this mob?","Input a name",M.real_name,MAX_NAME_LEN)
@@ -43,7 +43,7 @@
 
 			var/atom/A = locate(href_list["rotatedatum"])
 			if(!istype(A))
-				to_chat(usr, "This can only be done to instances of type /atom")
+				to_chat(usr, "This can only be done to instances of type /atom", confidential = TRUE)
 				return
 
 			switch(href_list["rotatedir"])
@@ -60,13 +60,13 @@
 
 			var/mob/living/carbon/monkey/Mo = locate(href_list["makehuman"]) in GLOB.mob_list
 			if(!istype(Mo))
-				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/monkey")
+				to_chat(usr, "This can only be done to instances of type /mob/living/carbon/monkey", confidential = TRUE)
 				return
 
 			if(alert("Confirm mob type change?",,"Transform","Cancel") != "Transform")
 				return
 			if(!Mo)
-				to_chat(usr, "Mob doesn't exist anymore")
+				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
 				return
 			holder.Topic(href, list("humanone"=href_list["makehuman"]))
 
@@ -86,7 +86,7 @@
 				return
 
 			if(!L)
-				to_chat(usr, "Mob doesn't exist anymore")
+				to_chat(usr, "Mob doesn't exist anymore", confidential = TRUE)
 				return
 
 			var/newamt
@@ -113,7 +113,7 @@
 					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
 				else
-					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]")
+					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
 					return
 
 			if(amount != 0)
