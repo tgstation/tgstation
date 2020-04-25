@@ -432,9 +432,7 @@
 			continue
 		all_traits += " [traits.get_name()]"
 	text += "- Plant Traits:[all_traits]\n"
-
 	text += "*---------*"
-
 	return text
 
 /obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems
@@ -445,11 +443,11 @@
 		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
 		var/text
 		var/obj/item/plant_analyzer/P_analyzer = O
-		if(P_analyzer.scan_mode == 0)
+		if(P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
 			text = get_analyzer_text()
 			if(text)
 				to_chat(user, "<span class='notice'>[text]</span>")
-		if(reagents_add && P_analyzer.scan_mode == 1)
+		if(reagents_add && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
 			to_chat(user, "<span class='notice'>- Plant Reagents -</span>")
 			to_chat(user, "<span class='notice'>*---------*</span>")
 			for(var/datum/plant_gene/reagent/G in genes)
