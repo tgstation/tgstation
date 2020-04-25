@@ -47,7 +47,7 @@ Bonus
 		return
 	var/mob/living/carbon/M = A.affected_mob
 	var/list/healthy_messages = list("Your lungs feel great.", "You realize you haven't been breathing.", "You don't feel the need to breathe.",\
-					"Your eyes feel great.", "You are now blinking manually.", "You don't feel the need to blink.")
+					"Your eyes feel great.", "Your ears feel great.", "You don't feel the need to blink.")
 	switch(A.stage)
 		if(1, 2)
 			if(prob(base_message_chance))
