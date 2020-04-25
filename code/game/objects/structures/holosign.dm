@@ -125,6 +125,7 @@
 	if(a.power_equip == FALSE)
 		stack_trace("Power shield created without power avaiable")
 		qdel(src)
+		return
 	if(source_projector)
 		shield_projector = source_projector
 		shield_projector.signs += src
