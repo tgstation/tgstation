@@ -1,0 +1,4 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "Fixed Malf AI module picker, you can now buy modules."
