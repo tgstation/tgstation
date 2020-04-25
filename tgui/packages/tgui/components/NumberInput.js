@@ -1,7 +1,7 @@
 import { clamp } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
-import { tridentVersion } from '../byond';
+import { IS_IE8 } from '../byond';
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
 
@@ -162,7 +162,7 @@ export class NumberInput extends Component {
     const renderContentElement = value => (
       <div
         className="NumberInput__content"
-        unselectable={tridentVersion <= 4}>
+        unselectable={IS_IE8}>
         {value + (unit ? ' ' + unit : '')}
       </div>
     );

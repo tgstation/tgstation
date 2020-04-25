@@ -53,5 +53,4 @@
 	name = "Clown Operative Leader - Basic"
 	id = /obj/item/card/id/syndicate/nuke_leader
 	gloves = /obj/item/clothing/gloves/krav_maga/combatglovesplus
-	r_hand = /obj/item/nuclear_challenge/clownops
 	command_radio = TRUE

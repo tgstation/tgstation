@@ -179,6 +179,13 @@ LINEN BINS
 	item_state = "sheetqm"
 	dream_messages = list("a grey ID", "a shuttle", "a crate", "a sloth", "the quartermaster")
 
+/obj/item/bedsheet/chaplain
+	name = "chaplain's blanket"
+	desc = "A blanket woven with the hearts of gods themselves... Wait, that's just linen."
+	icon_state = "sheetchap"
+	item_state = "sheetchap"
+	dream_messages = list("a grey ID", "the gods", "a fulfilled prayer", "a cult", "the chaplain")
+
 /obj/item/bedsheet/brown
 	icon_state = "sheetbrown"
 	item_state = "sheetbrown"

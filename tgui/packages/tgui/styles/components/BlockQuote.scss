@@ -7,4 +7,9 @@ $color-default: colors.fg(colors.$label) !default;
   color: $color-default;
   border-left: 2px solid $color-default;
   padding-left: 6px;
+  margin-bottom: 6px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }

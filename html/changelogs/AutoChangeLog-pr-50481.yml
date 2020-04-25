@@ -1,4 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - bugfix: "Fixed botanists dropping their heirlooms on the ground. Plant bag is no longer a heirloom option."

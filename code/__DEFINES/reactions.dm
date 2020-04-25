@@ -3,6 +3,7 @@
 //Plasma fire properties
 #define OXYGEN_BURN_RATE_BASE				1.4
 #define PLASMA_BURN_RATE_DELTA				9
+#define HYDROGEN_BURN_RATE_DELTA			8
 #define PLASMA_MINIMUM_OXYGEN_NEEDED		2
 #define PLASMA_MINIMUM_OXYGEN_PLASMA_RATIO	30
 #define FIRE_CARBON_ENERGY_RELEASED			100000	//Amount of heat released per mole of burnt carbon into the tile
@@ -19,11 +20,23 @@
 
 #define NITRYL_FORMATION_ENERGY				100000
 #define NITROUS_FORMATION_ENERGY			10000
+//tritium reaction
 #define TRITIUM_BURN_OXY_FACTOR				100
 #define TRITIUM_BURN_TRIT_FACTOR			10
 #define TRITIUM_BURN_RADIOACTIVITY_FACTOR	50000 	//The neutrons gotta go somewhere. Completely arbitrary number.
 #define TRITIUM_MINIMUM_RADIATION_ENERGY	0.1  	//minimum 0.01 moles trit or 10 moles oxygen to start producing rads
 #define MINIMUM_TRIT_OXYBURN_ENERGY 		2000000	//This is calculated to help prevent singlecap bombs(Overpowered tritium/oxygen single tank bombs)
+//hydrogen reaction
+#define HYDROGEN_BURN_OXY_FACTOR			100
+#define HYDROGEN_BURN_H2_FACTOR				10
+#define MINIMUM_H2_OXYBURN_ENERGY 			2000000	//This is calculated to help prevent singlecap bombs(Overpowered hydrogen/oxygen single tank bombs)
+//ammonia reaction
+#define AMMONIA_FORMATION_FACTOR			250
+#define AMMONIA_FORMATION_ENERGY			1000
+//metal hydrogen
+#define METAL_HYDROGEN_MINIMUM_HEAT			1e7
+#define METAL_HYDROGEN_MINIMUM_PRESSURE		1e7
+#define METAL_HYDROGEN_FORMATION_ENERGY		20000000
 #define SUPER_SATURATION_THRESHOLD			96
 #define STIMULUM_HEAT_SCALE					100000
 #define STIMULUM_FIRST_RISE					0.65
@@ -37,6 +50,7 @@
 #define NOBLIUM_RESEARCH_AMOUNT				1000
 #define BZ_RESEARCH_SCALE					4
 #define BZ_RESEARCH_MAX_AMOUNT				400
+#define METAL_HYDROGEN_RESEARCH_MAX_AMOUNT	3000
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction

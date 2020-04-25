@@ -46155,9 +46155,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "bJg" = (
-/obj/structure/table/wood,
-/obj/item/clipboard,
-/obj/item/toy/figure/detective,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
@@ -46171,6 +46168,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "bJh" = (
@@ -50907,6 +50905,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/paper_bin/carbon,
 /obj/item/pen,
+/obj/item/toy/figure/detective,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bRk" = (
@@ -91905,7 +91904,6 @@
 "dpg" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/medical/chemistry)
 "dph" = (
@@ -115153,7 +115151,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/medical/surgery/room_b)
 "rOf" = (
@@ -116222,7 +116219,6 @@
 /area/medical/sleeper)
 "wZq" = (
 /obj/effect/landmark/start/medical_doctor,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)

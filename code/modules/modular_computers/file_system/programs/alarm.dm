@@ -7,7 +7,7 @@
 	requires_ntnet = 1
 	network_destination = "alarm monitoring network"
 	size = 5
-	tgui_id = "ntos_station_alert"
+	tgui_id = "NtosStationAlertConsole"
 	ui_x = 315
 	ui_y = 500
 

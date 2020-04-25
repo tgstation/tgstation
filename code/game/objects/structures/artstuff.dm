@@ -80,7 +80,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "canvas", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Canvas", name, ui_x, ui_y, master_ui, state)
 		ui.set_autoupdate(FALSE)
 		ui.open()
 

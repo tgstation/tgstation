@@ -384,7 +384,7 @@
 	build_path = /obj/item/storage/bag/tray
 	category = list("initial","Dinnerware")
 
-/datum/design/tray
+/datum/design/cafeteria_tray
 	name = "Cafeteria Tray"
 	id = "foodtray"
 	build_type = AUTOLATHE
