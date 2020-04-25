@@ -1369,11 +1369,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
-/datum/uplink_item/device_tools/doormag
+/datum/uplink_item/device_tools/doorjack
 	name = "Airlock Authentication Override Card"
 	desc = "A specialized cryptographic sequencer specifically designed to override station airlock access codes. \
 			After hacking a certain number of airlocks, the device will require some time to recharge."
-	item = /obj/item/card/emag/doormag
+	item = /obj/item/card/emag/doorjack
 	cost = 3
 
 /datum/uplink_item/device_tools/fakenucleardisk

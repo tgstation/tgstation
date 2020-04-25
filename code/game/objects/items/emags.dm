@@ -59,64 +59,56 @@
 	A.emag_act(user, src)
 
 /obj/item/card/emag/proc/can_emag(atom/target, mob/user)
-	if (target.type in type_blacklist)
-		to_chat(user, "<span class='warning'>The [target] cannot be affected by the [src]! A more specialized hacking device is required.</span>")
-		return FALSE
+	for (var/subtypelist in type_blacklist)
+		if (target.type in subtypelist)
+			to_chat(user, "<span class='warning'>The [target] cannot be affected by the [src]! A more specialized hacking device is required.</span>")
+			return FALSE
 	return TRUE
 
 /*
  * DOORMAG
  */
-/obj/item/card/emag/doormag
-	desc = "It's a specialized cryptographic sequencer specifically designed to override station airlock access codes. Seems to crack airlock encryption algorithms by using raw telecrystals."
+/obj/item/card/emag/doorjack
+	desc = "Commonly known as a \"doorjack\", this device is a specialized cryptographic sequencer specifically designed to override station airlock access codes. Uses self-refilling charges to hack airlocks."
 	name = "airlock authentication override card"
-	icon_state = "doormag"
+	icon_state = "doorjack"
 	var/type_whitelist //List of types 
 	var/charges = 3
 	var/max_charges = 3
-	var/charge_tick = 0
+	var/list/charge_timers = list()
+	var/charge_time = 1800 //three minutes
 
-
-/obj/item/card/emag/doormag/Initialize(mapload)
+/obj/item/card/emag/doorjack/Initialize(mapload)
 	. = ..()
 	type_whitelist = list(subtypesof(/obj/machinery/door/airlock), subtypesof(/obj/machinery/door/window/)) //list of all acceptable typepaths that this device can affect
 
-/obj/item/card/emag/doormag/New()
-	..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/card/emag/doormag/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	. = ..()
-
-/obj/item/card/emag/doormag/process()
-	charge_tick++
-	if(charge_tick < 10)
-		return FALSE
-	charge_tick = 0
-	charges = min(charges+1, max_charges)
-	return TRUE
-
-/obj/item/card/emag/doormag/proc/use_charge(mob/user)
+/obj/item/card/emag/doorjack/proc/use_charge(mob/user)
 	charges --
 	to_chat(user, "<span class='notice'>You use [src]. It now has [charges] charges remaining.</span>")
+	charge_timers.Add(addtimer(CALLBACK(src, .proc/recharge), charge_time, TIMER_STOPPABLE))
 
-/obj/item/card/emag/doormag/examine(mob/user)
+/obj/item/card/emag/doorjack/proc/recharge(mob/user)
+	charges = min(charges+1, max_charges)
+	playsound(src,'sound/machines/twobeep.ogg',10,TRUE)
+	charge_timers.Remove(charge_timers[1])
+
+/obj/item/card/emag/doorjack/examine(mob/user)
 	. = ..()
-	. += "The [src] has the ability to hack [charges] airlocks."
+	. += "<span class='notice'>It has [charges] charges remaining.</span>"
+	if (length(charge_timers))
+		. += "<span class='notice'><b>A small display on the back reads:</span></b>"
+	for (var/i in 1 to length(charge_timers))
+		var/timeleft = timeleft(charge_timers[i])
+		var/loadingbar = num2loadingbar(timeleft/charge_time)
+		. += "<span class='notice'><b>CHARGE #[i]: [loadingbar] ([timeleft*0.1]s)</b></span>"
 
-
-
-
-
-
-
-/obj/item/card/emag/doormag/can_emag(atom/target, mob/user)
+/obj/item/card/emag/doorjack/can_emag(atom/target, mob/user)
 	if (charges <= 0)
 		to_chat(user, "<span class='warning'>[src] is recharging!</span>")
 		return FALSE
-	if (!(target.type in type_whitelist))
-		to_chat(user, "<span class='warning'>[src] is unable to interface with this. It only seems to fit into airlock electronics.</span>")
-		return FALSE
-	return TRUE
+	for (var/list/subtypelist in type_whitelist)
+		if (target.type in subtypelist)
+			return TRUE
+	to_chat(user, "<span class='warning'>[src] is unable to interface with this. It only seems to fit into airlock electronics.</span>")
+	return FALSE
 
