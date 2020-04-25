@@ -245,3 +245,8 @@
 /datum/mood_event/bald
 	description ="<span class='warning'>I need something to cover my head...</span>\n"
 	mood_change = -3
+
+/datum/mood_event/sadcat
+	description = "<span class='warning'>I've been a bad cat...</span>\n"
+	mood_change = -15
+	timeout = 10 SECONDS

@@ -196,6 +196,8 @@
 /datum/reagent/water/reaction_mob(mob/living/M, method=TOUCH, reac_volume)//Splashing people with water can help put them out!
 	if(!istype(M))
 		return
+	if(isfelinid(M) && !(M.on_fire) && (method == TOUCH || method == VAPOR)) //if someone sprays you with water while you're on fire, they're not trying to reprimand you, they're trying to save your life
+		SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "water", /datum/mood_event/sadcat) //Cats don't like being sprayed (or splashed) with water! Showers and the like are an exception to this, however, since washing yourself off in them is usually voluntary.
 	if(method == TOUCH)
 		M.adjust_fire_stacks(-(reac_volume / 10))
 		M.ExtinguishMob()
