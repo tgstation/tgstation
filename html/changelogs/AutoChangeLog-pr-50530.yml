@@ -1,0 +1,6 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - bugfix: "Fixes teslas not containing properly sometimes"
+  - bugfix: "Maybe makes tesla coil power output more sane, not totally sure myself"
+  - refactor: "Refactored tesla code a bit"
