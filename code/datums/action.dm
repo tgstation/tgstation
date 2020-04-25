@@ -667,8 +667,15 @@
 
 //Stickmemes
 /datum/action/item_action/stickmen
-	name = "Summon Stick Minions"
-	desc = "Allows you to summon faithful stickmen allies to aide you in battle."
+	name = "Summon Stick Minion"
+	desc = "Allows you to summon a faithful stickman ally to aide you in battle."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "art_summon"
+
+//More Stickmemes
+/datum/action/item_action/evilstick
+	name = "Toggle Stick Minion Aggressiveness"
+	desc = "Toggles whether or not the stickmen you summon will attack 'neutral' creatures and people. Doesn't affect the stickmen you've already created."
 	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
 	button_icon_state = "art_summon"
 
