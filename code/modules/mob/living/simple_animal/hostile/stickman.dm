@@ -31,6 +31,10 @@
 	var/datum/action/boss/wizard_summon_minions/changesummons = /datum/action/boss/wizard_summon_minions
 	var/summoned_by_wizard = 0
 
+/mob/living/simple_animal/hostile/stickman/paperrobe
+	maxHealth = 50
+	health = 50 //you can spam these guys out everywhere, so let's not make them super tough to kill, yeah?
+
 /mob/living/simple_animal/hostile/stickman/ranged
 	ranged = 1
 	retreat_distance = 5

@@ -171,7 +171,7 @@
 
 	usr.say("Rise, my creation! Off of your page and into this realm!", forced = "stickman summoning")
 	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman(get_turf(usr))
+	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman/paperrobe(get_turf(usr))
 	var/list/factions = usr.faction.Copy()
 	for(var/F in factions)
 		if(F == "neutral")
