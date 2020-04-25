@@ -1,3 +1,8 @@
+#define EXPOSED_VOLUME 1000
+#define ROOM_TEMP 293
+#define MIN_FREEZE_TEMP 50
+#define MAX_FREEZE_TEMP 1000000
+
 /obj/item/assembly/igniter
 	name = "igniter"
 	desc = "A small electronic device able to ignite combustible substances."
@@ -30,7 +35,7 @@
 		return FALSE//Cooldown check
 	var/turf/location = get_turf(loc)
 	if(location)
-		location.hotspot_expose(1000,1000)
+		location.hotspot_expose(heat, EXPOSED_VOLUME)
 	sparks.start()
 	return TRUE
 
@@ -42,3 +47,21 @@
 	. = "<span class='notice'>[user] fiddles with [src], and manages to light [A].</span>"
 	activate()
 	add_fingerprint(user)
+
+//For the Condenser, which functions like the igniter but makes things cold.
+/obj/item/assembly/igniter/freezer
+	name = "freezer"
+	desc = "A small electronic device able to chill the surroundings."
+	icon_state = "freezer"
+	custom_materials = list(/datum/material/iron=250, /datum/material/glass=300)
+	heat = 200
+
+/obj/item/assembly/igniter/condenser/activate()
+	if(!..())
+		return FALSE//Cooldown check
+	var/turf/location = get_turf(loc)
+	if(location)
+		var/datum/gas_mixture/enviro = location.return_air()
+		enviro.temperature = clamp(min(ROOM_TEMP, enviro.temperature*0.85),MIN_FREEZE_TEMP,MAX_FREEZE_TEMP)
+	sparks.start()
+	return TRUE
