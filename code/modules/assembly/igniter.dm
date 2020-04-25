@@ -56,7 +56,7 @@
 	custom_materials = list(/datum/material/iron=250, /datum/material/glass=300)
 	heat = 200
 
-/obj/item/assembly/igniter/condenser/activate()
+/obj/item/assembly/igniter/freezer/activate()
 	if(!..())
 		return FALSE//Cooldown check
 	var/turf/location = get_turf(loc)
