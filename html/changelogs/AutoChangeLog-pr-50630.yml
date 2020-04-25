@@ -1,0 +1,8 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - tweak: "Snake phobia now includes snake plushie"
+  - tweak: "Lizard phobia now includes lizard shoes, lizard boots"
+  - tweak: "Strangers phobia triggers have been expanded"
+  - bugfix: "Heard phobia words no longer drop out"
+  - bugfix: "Phobia words can show up multiple times within a phrase"
