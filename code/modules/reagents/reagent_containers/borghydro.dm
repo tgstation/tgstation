@@ -32,7 +32,7 @@ Borg Hypospray
 	var/list/modes = list() //Basically the inverse of reagent_ids. Instead of having numbers as "keys" and strings as values it has strings as keys and numbers as values.
 								//Used as list for input() in shakers.
 	var/list/reagent_names = list()
-	var/list/reagent_desc = list(/datum/reagent/medicine/C2/convermol = " (Heals Oxygen)", /datum/reagent/medicine/C2/libital = " (Heals Brute)", /datum/reagent/medicine/C2/multiver = " (Heals Toxin)", /datum/reagent/medicine/C2/aiuri = " (Heals Burn)", /datum/reagent/medicine/epinephrine = " (Stabilizes Critical Patients)", /datum/reagent/medicine/spaceacillin = " (Anti-Viral)", /datum/reagent/medicine/salglu_solution = " (Temp. Blood Replacement)")
+	var/static/list/reagent_desc = list(/datum/reagent/medicine/C2/convermol = " (Heals Oxygen)", /datum/reagent/medicine/C2/libital = " (Heals Brute)", /datum/reagent/medicine/C2/multiver = " (Heals Toxin)", /datum/reagent/medicine/C2/aiuri = " (Heals Burn)", /datum/reagent/medicine/epinephrine = " (Stabilizes Critical Patients)", /datum/reagent/medicine/spaceacillin = " (Anti-Viral)", /datum/reagent/medicine/salglu_solution = " (Temp. Blood Replacement)")
 
 /obj/item/reagent_containers/borghypo/Initialize()
 	. = ..()
