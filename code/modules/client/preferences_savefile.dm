@@ -138,8 +138,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			S["hair_style_name"]	>> hairstyle
 		if(S["facial_style_name"])
 			S["facial_style_name"]	>> facial_hairstyle
-	if(current_version < 33)
-		randomise[RANDOM_HARDCORE] = FALSE
 
 
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")

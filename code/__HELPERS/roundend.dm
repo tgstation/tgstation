@@ -466,9 +466,11 @@
 	. = list()
 	parts += "<span class='header'>The following people made it out as a random hardcore character:</span>"
 	parts += "<ul class='playerlist'>"
-	for(var/i in GLOB.human_list)
+	for(var/i in GLOB.player_list)
+		if(!ishuman(i))
+			continue
 		var/mob/living/carbon/human/H = i
-		if(!H.hardcore_survival_score || !H.onCentCom()) ///gotta escape nerd
+		if(!H.hardcore_survival_score || !H.onCentCom() || H.stat = DEAD) ///gotta escape nerd
 			continue
 		if(!H.mind)
 			continue
