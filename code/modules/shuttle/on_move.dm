@@ -105,7 +105,6 @@ All ShuttleMove procs go here
 
 	loc = newT
 
-	SSdemo.mark_dirty(src)
 
 	return TRUE
 
