@@ -7,11 +7,11 @@
 	broken_states = list("light_broken")
 	var/on = TRUE
 	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
-	var/list/coloredlights = list("w", "r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
-	var/currentcolor = 1
+	var/list/coloredlights = list("r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
+	var/currentcolor = "b"
 	var/can_modify_colour = TRUE
 	tiled_dirt = FALSE
-
+	var/list/lighttile_designs = list()
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()
@@ -20,6 +20,19 @@
 /turf/open/floor/light/Initialize()
 	. = ..()
 	update_icon()
+	lighttile_designs = list(
+		"r" = image(icon = src.icon, icon_state = "light_on-r"),
+		"o" = image(icon = src.icon, icon_state = "light_on-o"),
+		"y" = image(icon = src.icon, icon_state = "light_on-y"),
+		"g" = image(icon = src.icon, icon_state = "light_on-g"),
+		"b" = image(icon = src.icon, icon_state = "light_on-b"),
+		"i" = image(icon = src.icon, icon_state = "light_on-i"),
+		"v" = image(icon = src.icon, icon_state = "light_on-v"),
+		"w" = image(icon = src.icon, icon_state = "light_on-w"),
+		"blk" = image(icon = src.icon, icon_state = "light_on-blk"),
+		"s" = image(icon = src.icon, icon_state = "light_on-s"),
+		"z" = image(icon = src.icon, icon_state = "light_on-z")
+		)
 
 /turf/open/floor/light/break_tile()
 	..()
@@ -31,7 +44,7 @@
 	if(on)
 		switch(state)
 			if(0)
-				icon_state = "light_on-[coloredlights[currentcolor]]"
+				icon_state = "light_on-[currentcolor]"
 				set_light(1)
 			if(1)
 				var/num = pick("1","2","3","4")
@@ -59,14 +72,10 @@
 			return
 		if(!can_modify_colour)
 			return
-		if(!on)
-			on = TRUE
-			currentcolor = 1
-			return
-		else
-			currentcolor++
-		if(currentcolor > coloredlights.len)
-			on = FALSE
+		var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+		if(!choice)
+			return FALSE
+		currentcolor = choice
 		update_icon()
 
 /turf/open/floor/light/attack_ai(mob/user)
