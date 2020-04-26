@@ -394,7 +394,13 @@
 				for(var/I in contents)
 					var/atom/A = I
 					if(!QDELETED(A))
-						A.ex_act(severity)
+						switch(severity)
+							if(EXPLODE_DEVASTATE)
+								SSexplosions.highobj += A
+							if(EXPLODE_HEAVY)
+								SSexplosions.medobj += A
+							if(EXPLODE_LIGHT)
+								SSexplosions.lowobj += A
 				gib()
 				return
 			else

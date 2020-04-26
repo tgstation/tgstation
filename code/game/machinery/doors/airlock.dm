@@ -1091,7 +1091,7 @@
 
 	var/obj/structure/window/killthis = (locate(/obj/structure/window) in get_turf(src))
 	if(killthis)
-		killthis.ex_act(EXPLODE_HEAVY)//Smashin windows
+		SSexplosions.medobj += killthis
 
 	operating = TRUE
 	update_icon(AIRLOCK_CLOSING, 1)
