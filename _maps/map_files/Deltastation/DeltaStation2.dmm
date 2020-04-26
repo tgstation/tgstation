@@ -668,6 +668,122 @@
 /obj/structure/table,
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"abx" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/newscaster/security_unit{
+	dir = 4;
+	pixel_x = -26;
+	pixel_y = 6
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"aby" = (
+/obj/machinery/turretid{
+	icon_state = "control_stun";
+	name = "AI Chamber turret control";
+	pixel_x = 3;
+	pixel_y = -23
+	},
+/obj/machinery/door/window{
+	base_state = "leftsecure";
+	dir = 8;
+	icon_state = "leftsecure";
+	name = "Primary AI Core Access";
+	req_access_txt = "16"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/power/apc{
+	areastring = "/area/ai_monitored/turret_protected/ai";
+	dir = 1;
+	name = "AI Chamber APC";
+	pixel_y = 23
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"abz" = (
+/obj/machinery/requests_console{
+	department = "AI";
+	departmentType = 5;
+	name = "AI RC";
+	pixel_x = 30;
+	pixel_y = 30
+	},
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/obj/machinery/flasher{
+	id = "AI";
+	pixel_x = 23;
+	pixel_y = -23
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"abA" = (
+/obj/machinery/door/window{
+	base_state = "rightsecure";
+	dir = 4;
+	icon_state = "rightsecure";
+	name = "Primary AI Core Access";
+	req_access_txt = "16"
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"abB" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
 "abC" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -718,6 +834,51 @@
 	},
 /turf/open/floor/plasteel,
 /area/construction/mining/aux_base)
+"abI" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai)
+"abJ" = (
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai)
+"abK" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
+	dir = 4
+	},
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai)
+"abL" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/turret_protected/ai)
+"abM" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai)
+"abN" = (
+/obj/machinery/ai_slipper{
+	uses = 10
+	},
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai)
+"abO" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/circuit/green,
+/area/ai_monitored/turret_protected/ai)
 "abP" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -43108,84 +43269,6 @@
 /obj/structure/cable,
 /turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
-"bEi" = (
-/obj/machinery/turretid{
-	icon_state = "control_stun";
-	name = "AI Chamber turret control";
-	pixel_x = 3;
-	pixel_y = -23
-	},
-/obj/machinery/door/window{
-	base_state = "leftsecure";
-	dir = 8;
-	icon_state = "leftsecure";
-	name = "Primary AI Core Access";
-	req_access_txt = "16"
-	},
-/obj/machinery/newscaster/security_unit{
-	pixel_x = 4;
-	pixel_y = 33
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bEj" = (
-/obj/machinery/requests_console{
-	department = "AI";
-	departmentType = 5;
-	name = "AI RC";
-	pixel_x = 30;
-	pixel_y = 30
-	},
-/obj/machinery/ai_slipper{
-	uses = 10
-	},
-/obj/machinery/flasher{
-	id = "AI";
-	pixel_x = 23;
-	pixel_y = -23
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bEk" = (
-/obj/machinery/door/window{
-	base_state = "rightsecure";
-	dir = 4;
-	icon_state = "rightsecure";
-	name = "Primary AI Core Access";
-	req_access_txt = "16"
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
 "bEl" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -46155,9 +46238,6 @@
 /turf/open/floor/plasteel,
 /area/maintenance/starboard)
 "bJg" = (
-/obj/structure/table/wood,
-/obj/item/clipboard,
-/obj/item/toy/figure/detective,
 /obj/structure/sign/poster/official/report_crimes{
 	pixel_y = 32
 	},
@@ -46171,6 +46251,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/dark,
 /area/security/detectives_office)
 "bJh" = (
@@ -46474,13 +46555,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"bJG" = (
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/circuit/green,
-/area/ai_monitored/turret_protected/ai)
 "bJH" = (
 /obj/machinery/airalarm{
 	pixel_y = 22
@@ -46515,29 +46589,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
-"bJJ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
-/obj/machinery/power/apc{
-	areastring = "/area/ai_monitored/turret_protected/ai";
-	dir = 1;
-	name = "AI Chamber APC";
-	pixel_y = 23
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
 "bJK" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
@@ -46551,13 +46602,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bJL" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bJM" = (
 /obj/structure/chair/office{
@@ -47568,11 +47612,6 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/turret_protected/ai)
-"bLB" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/turf/open/floor/circuit/green,
 /area/ai_monitored/turret_protected/ai)
 "bLD" = (
 /obj/structure/window/reinforced,
@@ -50907,6 +50946,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/item/paper_bin/carbon,
 /obj/item/pen,
+/obj/item/toy/figure/detective,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bRk" = (
@@ -123761,7 +123801,7 @@ btH
 bxv
 byT
 bAz
-bCq
+abx
 bEg
 bCq
 bCq
@@ -124020,10 +124060,10 @@ byU
 bAA
 bCr
 bEh
-bCr
-bCr
-bJG
-bCr
+abI
+abI
+abK
+abI
 bNv
 bPD
 bRE
@@ -124276,11 +124316,11 @@ bxx
 byV
 bAB
 bCq
-bCq
+bxy
 bFS
 bCq
 bCq
-bCu
+abJ
 bNw
 bPC
 bRF
@@ -124533,11 +124573,11 @@ bxy
 byW
 bAB
 btH
-bEi
+aby
 btH
 btH
 bJH
-bCu
+abJ
 bNx
 bPE
 bRG
@@ -124790,11 +124830,11 @@ bxz
 byX
 bAC
 bCt
-bEj
+abz
 bFT
 btH
 bJI
-bEl
+abN
 bEg
 bPF
 bRH
@@ -125047,11 +125087,11 @@ bxy
 byW
 bAB
 btH
-bEk
+abA
 btH
 btH
-bJJ
-bLB
+abL
+abO
 bxA
 bPG
 bRI
@@ -125304,11 +125344,11 @@ bxA
 byZ
 bAD
 bxA
-bxA
+abB
 bFU
 bxA
 bJK
-bCu
+abJ
 bCq
 bPH
 bRF
@@ -125562,10 +125602,10 @@ bza
 bAE
 bCu
 bEl
-bCu
-bCu
-bJL
-bCu
+abJ
+abJ
+abM
+abJ
 bNA
 bPI
 bRE
