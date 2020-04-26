@@ -462,7 +462,7 @@
 
 ///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
 /datum/controller/subsystem/ticker/proc/hardcore_random_report()
-	var/list/parts = list()
+	. = list()
 	parts += "<span class='header'>The following people made it out as a random hardcore character:</span>"
 	parts += "<ul class='playerlist'>"
 	for(var/i in GLOB.human_list)
