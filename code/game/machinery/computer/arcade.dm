@@ -1,51 +1,48 @@
 //these lists comprise the figurine category, a frequent drop due to it's many unique entries
-GLOBAL_LIST_INIT(toy_figures, subtypesof(/obj/item/toy/figure)) //The many action figures
-GLOBAL_LIST_INIT(toy_plushes, (subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/)) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)) //The safe plushes, these should be the rarest of their category
-GLOBAL_LIST_INIT(toy_mechs, subtypesof(/obj/item/toy/prize)) //The mechas
-GLOBAL_LIST_INIT(toy_talking, subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas)) //The Owl, Griffin, and AI
-
+GLOBAL_LIST_INIT("toy_figures" = subtypesof(/obj/item/toy/figure),
+				"toy_plushes" = (subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)),
+				"toy_mechs" = subtypesof(/obj/item/toy/prize),
+				"toy_talking" = subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas),
 //these lists comprise the "decoration" category, things that are both consumable and used to add visual difference to a space
-GLOBAL_LIST_INIT(toy_grenades, subtypesof(/obj/item/grenade/chem_grenade/glitter)) //We're seperating this so we can balance its odds within the deocoration category
-GLOBAL_LIST_INIT(toy_decorations, list(
-		/obj/item/storage/crayons,
-		/obj/item/stack/tile/fakespace/loaded,
-		/obj/item/stack/tile/fakepit/loaded,
-		/obj/item/stack/tile/eighties/loaded))
-
+				"toy_grenades" = subtypesof(/obj/item/grenade/chem_grenade/glitter),
+				"toy_decorations" = list(
+					/obj/item/storage/crayons,
+					/obj/item/stack/tile/fakespace/loaded,
+					/obj/item/stack/tile/fakepit/loaded,
+					/obj/item/stack/tile/eighties/loaded)
 //this is the clothing list, clothes are pretty dank, while there are a few flukes in here it's all pretty decent
-GLOBAL_LIST_INIT(toy_gamergear, list(
-		/obj/item/storage/box/fakesyndiesuit,
-        /obj/item/storage/belt/military/snack,
-        /obj/item/clothing/under/syndicate/tacticool,
-        /obj/item/clothing/shoes/wheelys,
-        /obj/item/clothing/shoes/kindleKicks,
-        /obj/item/clothing/glasses/trickblindfold))
-
+				"toy_gamergear" = list(
+					/obj/item/storage/box/fakesyndiesuit,
+					/obj/item/storage/belt/military/snack,
+					/obj/item/clothing/under/syndicate/tacticool,
+					/obj/item/clothing/shoes/wheelys,
+					/obj/item/clothing/shoes/kindleKicks,
+					/obj/item/clothing/glasses/trickblindfold)
 //most of these simulate an antag or event, these are preferred as rare spawns as they quickly clutter up a space which also devalues their potential
-GLOBAL_LIST_INIT(toy_pranks, list(
-		/obj/item/toy/talking/codex_gigas,
-		/obj/item/coin/antagtoken,
-		/obj/item/hot_potato/harmless/toy,
-		/obj/item/card/emagfake,
-		/obj/item/gun/ballistic/shotgun/toy/crossbow,
-		/obj/item/restraints/handcuffs/fake,
-		/obj/item/extendohand/acme,
-		/obj/item/storage/box/snappops,
-		/obj/item/toy/braintoy,
-		/obj/item/toy/brokenradio,
-		/obj/item/toy/cards/deck,
-		/obj/item/toy/clockwork_watch,
-		/obj/item/toy/eightball,
-		/obj/item/toy/gun,
-		/obj/item/toy/minimeteor,
-		/obj/item/toy/nuke,
-		/obj/item/toy/redbutton,
-		/obj/item/toy/spinningtoy,
-		/obj/item/toy/sword,
-		/obj/item/toy/toy_dagger,
-		/obj/item/toy/toy_xeno,
-		/obj/item/toy/windupToolbox))
-
+				"toy_pranks", list(
+					/obj/item/toy/talking/codex_gigas,
+					/obj/item/coin/antagtoken,
+					/obj/item/hot_potato/harmless/toy,
+					/obj/item/card/emagfake,
+					/obj/item/gun/ballistic/shotgun/toy/crossbow,
+					/obj/item/restraints/handcuffs/fake,
+					/obj/item/extendohand/acme,
+					/obj/item/storage/box/snappops,
+					/obj/item/toy/braintoy,
+					/obj/item/toy/brokenradio,
+					/obj/item/toy/cards/deck,
+					/obj/item/toy/clockwork_watch,
+					/obj/item/toy/eightball,
+					/obj/item/toy/gun,
+					/obj/item/toy/minimeteor,
+					/obj/item/toy/nuke,
+					/obj/item/toy/redbutton,
+					/obj/item/toy/spinningtoy,
+					/obj/item/toy/sword,
+					/obj/item/toy/toy_dagger,
+					/obj/item/toy/toy_xeno,
+					/obj/item/toy/windupToolbox)
+				)
 /obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
