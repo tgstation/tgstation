@@ -5881,7 +5881,7 @@
 /obj/machinery/camera{
 	c_tag = "Detective's Office"
 	},
-/obj/machinery/computer/secure_data,
+/obj/machinery/vending/wardrobe/det_wardrobe,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "aof" = (
@@ -6789,7 +6789,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "arb" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
@@ -7021,12 +7021,6 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/lawoffice)
-"arV" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/open/floor/plasteel/grimy,
-/area/security/detectives_office)
 "arX" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
@@ -7689,6 +7683,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aug" = (
@@ -7720,6 +7717,7 @@
 	},
 /obj/machinery/light/small,
 /obj/item/camera/detective,
+/obj/item/hand_labeler,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "auj" = (
@@ -8069,6 +8067,7 @@
 "avh" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avj" = (
@@ -8445,14 +8444,12 @@
 /area/maintenance/fore)
 "awh" = (
 /obj/effect/landmark/blobstart,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
 	sortType = 30
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awj" = (
@@ -19382,7 +19379,7 @@
 	req_access_txt = "4"
 	},
 /obj/machinery/navbeacon/wayfinding,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "baX" = (
@@ -47075,6 +47072,7 @@
 /obj/item/storage/secure/safe{
 	pixel_x = -23
 	},
+/obj/item/storage/box/evidence,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "dzp" = (
@@ -47976,14 +47974,10 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "fBs" = (
-/obj/structure/table/wood,
-/obj/item/hand_labeler{
-	pixel_x = 5
-	},
-/obj/item/storage/box/evidence,
 /obj/machinery/newscaster/security_unit{
 	pixel_x = -30
 	},
+/obj/machinery/computer/secure_data,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "fCe" = (
@@ -50601,12 +50595,6 @@
 	dir = 8
 	},
 /area/science/research)
-"kYb" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 9
-	},
-/turf/open/floor/plasteel/grimy,
-/area/security/detectives_office)
 "kZO" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel,
@@ -52236,10 +52224,6 @@
 	},
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai_upload)
-"oou" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/turf/open/floor/plasteel/grimy,
-/area/security/detectives_office)
 "ooY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold4w/scrubbers/hidden,
@@ -52640,6 +52624,9 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 9
+	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "piD" = (
@@ -55264,15 +55251,6 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/science/xenobiology)
-"uBJ" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kanyewest";
-	name = "privacy shutters"
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plating,
-/area/security/detectives_office)
 "uCq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -55712,6 +55690,9 @@
 	dir = 6
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 6
+	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "vsr" = (
@@ -55974,6 +55955,7 @@
 	pixel_x = -25
 	},
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "vLc" = (
@@ -56352,12 +56334,6 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/turf/open/floor/plasteel,
-/area/hallway/primary/fore)
-"wAv" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 1
-	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "wBr" = (
@@ -84514,7 +84490,7 @@ kup
 apd
 aob
 bLE
-arV
+bLE
 vKX
 pgP
 apd
@@ -84767,11 +84743,11 @@ alx
 amQ
 anw
 anz
-xlt
-uBJ
-enf
-enf
-kYb
+kup
+bON
+bLE
+bLE
+bLE
 qGZ
 klg
 apd
@@ -85023,10 +84999,10 @@ alw
 ami
 amQ
 anw
-ukc
-mzW
+anz
+xlt
 baV
-oou
+enf
 arb
 pvj
 atc
@@ -85280,7 +85256,7 @@ agj
 agj
 aiX
 any
-rNw
+anz
 kup
 apd
 aqb
@@ -85537,7 +85513,7 @@ aly
 amj
 amQ
 anw
-rNw
+anz
 kup
 apd
 apd
@@ -85794,7 +85770,7 @@ aww
 alx
 amQ
 anw
-wAv
+ukc
 mzW
 apk
 bVw
