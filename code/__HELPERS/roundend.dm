@@ -185,7 +185,7 @@
 	if(!H.hardcore_survival_score) ///no score no glory
 		return FALSE
 
-	if(H.mind && (H.mind.special_role || H.mind.antag_datums?.len > 0))
+	if(H.mind && (H.mind.special_role || length(H.mind.antag_datums) > 0))
 		var/didthegamerwin = TRUE
 		for(var/a in H.mind.antag_datums)
 			var/datum/antagonist/A = a
