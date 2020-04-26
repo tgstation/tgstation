@@ -6791,7 +6791,7 @@
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "arb" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 1
 	},
 /turf/open/floor/plasteel/grimy,
@@ -7023,6 +7023,12 @@
 /obj/structure/cable,
 /turf/open/floor/wood,
 /area/lawoffice)
+"arV" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "arX" = (
 /obj/structure/table/wood,
 /obj/item/folder/blue,
@@ -7685,9 +7691,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
-	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "aug" = (
@@ -8071,7 +8074,6 @@
 "avh" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "avj" = (
@@ -8448,12 +8450,14 @@
 /area/maintenance/fore)
 "awh" = (
 /obj/effect/landmark/blobstart,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
+	dir = 4
+	},
 /obj/structure/disposalpipe/sorting/mail/flip{
 	dir = 4;
 	sortType = 30
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden,
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "awj" = (
@@ -19355,7 +19359,7 @@
 	req_access_txt = "4"
 	},
 /obj/machinery/navbeacon/wayfinding,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "baX" = (
@@ -47297,6 +47301,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"efR" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 9
+	},
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "egr" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
 	dir = 6
@@ -49764,6 +49774,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
+"jFY" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/turf/open/floor/plasteel/grimy,
+/area/security/detectives_office)
 "jHt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/disposalpipe/segment{
@@ -52475,6 +52489,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"peG" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/hallway/primary/fore)
 "pfj" = (
 /obj/machinery/power/apc{
 	areastring = "/area/storage/tools";
@@ -52518,9 +52538,6 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
-	},
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "piD" = (
@@ -55650,9 +55667,6 @@
 	dir = 6
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 6
-	},
 /turf/open/floor/plating,
 /area/maintenance/fore)
 "vul" = (
@@ -55893,7 +55907,6 @@
 	pixel_x = -25
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plasteel/grimy,
 /area/security/detectives_office)
 "vLc" = (
@@ -56022,6 +56035,15 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"vWk" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kanyewest";
+	name = "privacy shutters"
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/turf/open/floor/plating,
+/area/security/detectives_office)
 "vWX" = (
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
@@ -84493,7 +84515,7 @@ vLk
 apd
 aob
 bLE
-bLE
+arV
 vKX
 pgP
 apd
@@ -84746,11 +84768,11 @@ alx
 amQ
 anw
 anz
-vLk
-bON
-bLE
-bLE
-bLE
+ott
+vWk
+hpr
+hpr
+efR
 qGZ
 klg
 apd
@@ -85002,10 +85024,10 @@ alw
 ami
 amQ
 anw
-anz
-ott
+mAD
+lsv
 baV
-hpr
+jFY
 arb
 pvj
 atc
@@ -85259,7 +85281,7 @@ agj
 agj
 aiX
 any
-anz
+txo
 vLk
 apd
 aqb
@@ -85516,7 +85538,7 @@ aly
 amj
 amQ
 anw
-anz
+txo
 vLk
 apd
 apd
@@ -85773,7 +85795,7 @@ aww
 alx
 amQ
 anw
-mAD
+peG
 lsv
 apk
 pxF
