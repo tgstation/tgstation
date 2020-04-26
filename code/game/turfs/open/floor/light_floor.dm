@@ -1,13 +1,13 @@
 /turf/open/floor/light
 	name = "light floor"
-	desc = "A wired glass tile embedded into the floor."
+	desc = "A wired glass tile embedded into the floor. Modify the color with a Multitool."
 	light_range = 5
 	icon_state = "light_on"
 	floor_tile = /obj/item/stack/tile/light
 	broken_states = list("light_broken")
 	var/on = TRUE
 	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
-	var/list/coloredlights = list("g", "r", "y", "b", "p", "w", "s","o","g")
+	var/list/coloredlights = list("w", "r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
 	var/currentcolor = 1
 	var/can_modify_colour = TRUE
 	tiled_dirt = FALSE
@@ -52,21 +52,22 @@
 	set_light(0)
 	return ..()
 
-/turf/open/floor/light/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(!can_modify_colour)
-		return
-	if(!on)
-		on = TRUE
-		currentcolor = 1
-		return
-	else
-		currentcolor++
-	if(currentcolor > coloredlights.len)
-		on = FALSE
-	update_icon()
+/turf/open/floor/light/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		. = ..()
+		if(.)
+			return
+		if(!can_modify_colour)
+			return
+		if(!on)
+			on = TRUE
+			currentcolor = 1
+			return
+		else
+			currentcolor++
+		if(currentcolor > coloredlights.len)
+			on = FALSE
+		update_icon()
 
 /turf/open/floor/light/attack_ai(mob/user)
 	return attack_hand(user)
