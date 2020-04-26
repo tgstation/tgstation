@@ -19,15 +19,11 @@
 	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_JUNK
-=======
 
 /obj/item/reagent_containers/food/snacks/breadslice/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/store/bread/plain
 	name = "bread"

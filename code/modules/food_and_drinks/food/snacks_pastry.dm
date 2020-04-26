@@ -586,15 +586,11 @@
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1)
 	foodtype = GRAIN | SUGAR
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_WORTHLESS
-=======
 
 /obj/item/reagent_containers/food/snacks/cookie/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/fortunecookie
 	name = "fortune cookie"
@@ -694,15 +690,11 @@
 	filling_color = "#CD853F"
 	tastes = list("sweetness" = 1)
 	foodtype = GRAIN | JUNKFOOD | SUGAR
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_FAST
-=======
 
 /obj/item/reagent_containers/food/snacks/sugarcookie/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/chococornet
 	name = "chocolate cornet"
@@ -724,15 +716,11 @@
 	filling_color = "#D2691E"
 	tastes = list("cookie" = 2, "oat" = 1)
 	foodtype = GRAIN
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_RARE
-=======
 
 /obj/item/reagent_containers/food/snacks/oatmealcookie/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/raisincookie
 	name = "raisin cookie"
@@ -743,15 +731,11 @@
 	filling_color = "#F0E68C"
 	tastes = list("cookie" = 1, "raisins" = 1)
 	foodtype = GRAIN | FRUIT
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_RARE
-=======
 
 /obj/item/reagent_containers/food/snacks/raisincookie/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/cherrycupcake
 	name = "cherry cupcake"

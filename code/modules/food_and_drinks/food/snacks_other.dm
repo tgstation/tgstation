@@ -115,15 +115,11 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_JUNK
-=======
 
 /obj/item/reagent_containers/food/snacks/fries/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/tatortot
 	name = "tator tot"
@@ -133,15 +129,11 @@
 	filling_color = "FFD700"
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_JUNK
-=======
 
 /obj/item/reagent_containers/food/snacks/tatortot/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/soydope
 	name = "soy dope"
@@ -164,15 +156,11 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN | DAIRY
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_FAST
-=======
 
 /obj/item/reagent_containers/food/snacks/cheesyfries/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/badrecipe
 	name = "burned mess"
@@ -192,15 +180,11 @@
 	filling_color = "#FFA500"
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtype = VEGETABLES
-<<<<<<< HEAD
-	dunkable = TRUE
 	value = FOOD_JUNK
-=======
 
 /obj/item/reagent_containers/food/snacks/carrotfries/Initialize()
 	. = ..()
 	AddElement(/datum/element/dunkable, 10)
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 /obj/item/reagent_containers/food/snacks/candiedapple
 	name = "candied apple"
@@ -486,23 +470,13 @@
 
 /obj/item/reagent_containers/food/snacks/chewable
 	slot_flags = ITEM_SLOT_MASK
+	value = FOOD_WORTHLESS
 	///How long it lasts before being deleted
 	var/succ_dur = 180
 	///The delay between each time it will handle reagents
 	var/succ_int = 100
 	///Stores the time set for the next handle_reagents
 	var/next_succ = 0
-<<<<<<< HEAD
-	tastes = list("candy" = 1)
-	foodtype = JUNKFOOD | SUGAR
-	value = FOOD_WORTHLESS
-
-/obj/item/reagent_containers/food/snacks/lollipop/Initialize()
-	. = ..()
-	head = mutable_appearance('icons/obj/lollipop.dmi', "lollipop_head")
-	change_head_color(rgb(rand(0, 255), rand(0, 255), rand(0, 255)))
-=======
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
 
 	//makes snacks actually wearable as masks and still edible the old fashioned way.
 /obj/item/reagent_containers/food/snacks/chewable/proc/handle_reagents()
@@ -839,8 +813,4 @@
 	filling_color = "#ECA735"
 	tastes = list("fried corn" = 1)
 	foodtype = JUNKFOOD | FRIED
-<<<<<<< HEAD
 	value = FOOD_JUNK
-=======
-
->>>>>>> 8a77f43db62636a7f5e68a04cece8a0cfa387187
