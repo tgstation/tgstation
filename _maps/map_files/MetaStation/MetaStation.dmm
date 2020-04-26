@@ -70019,6 +70019,12 @@
 /obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"hqd" = (
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/open/floor/engine,
+/area/science/xenobiology)
 "hql" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westleft{
@@ -113236,10 +113242,10 @@ cRi
 cSn
 cSn
 cSg
-cSF
+hqd
 cSn
 cSg
-cSF
+hqd
 cSn
 cSg
 cRi
@@ -113493,10 +113499,10 @@ cRi
 cSn
 cSn
 cSg
-cSF
+hqd
 cSn
 cSg
-cSF
+hqd
 cSn
 cSg
 dlV
@@ -113750,10 +113756,10 @@ cRi
 cSn
 aiI
 dbp
-cSF
+hqd
 ddh
 dbp
-cSF
+hqd
 xYl
 dbp
 dlV
