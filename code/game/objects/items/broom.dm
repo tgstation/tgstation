@@ -1,4 +1,4 @@
-#define BROOM_PUSH_LIMIT 20
+#define BROOM_PUSH_LIMIT 20 // Max number of atoms a broom can sweep at once
 
 /obj/item/pushbroom
 	name = "push broom"
