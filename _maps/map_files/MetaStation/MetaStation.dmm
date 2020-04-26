@@ -15885,6 +15885,16 @@
 "aJu" = (
 /turf/open/floor/plating,
 /area/engine/engineering)
+"aJv" = (
+/obj/structure/cable,
+/obj/structure/cable,
+/obj/effect/turf_decal/box/white,
+/obj/machinery/power/proto_sh_emitter{
+	icon_state = "proto_sh_emitter";
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/engine/supermatter)
 "aJB" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/warning/vacuum/external,
@@ -120579,7 +120589,7 @@ aFC
 aGZ
 daY
 aKG
-aGZ
+aJv
 aKG
 daY
 aGZ
