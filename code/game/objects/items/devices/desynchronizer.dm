@@ -38,7 +38,7 @@
 	var/new_duration = input(user, "Set the duration (5-300):", "Desynchronizer", duration / 10) as null|num
 	if(new_duration)
 		new_duration = new_duration SECONDS
-		new_duration = CLAMP(new_duration, 50, max_duration)
+		new_duration = clamp(new_duration, 50, max_duration)
 		duration = new_duration
 		to_chat(user, "<span class='notice'>You set the duration to [DisplayTimeText(duration)].</span>")
 

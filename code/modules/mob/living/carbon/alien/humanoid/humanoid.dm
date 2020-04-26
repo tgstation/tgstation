@@ -116,5 +116,6 @@
 	..()
 
 /mob/living/carbon/alien/humanoid/set_name()
-	name = "[name] ([numba])"
-	real_name = name
+	if(numba)
+		name = "[name] ([numba])"
+		real_name = name

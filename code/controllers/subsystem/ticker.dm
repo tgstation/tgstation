@@ -27,7 +27,11 @@ SUBSYSTEM_DEF(ticker)
 	var/admin_delay_notice = ""				//a message to display to anyone who tries to restart the world after a delay
 	var/ready_for_reboot = FALSE			//all roundend preparation done with, all that's left is reboot
 
-	var/triai = 0							//Global holder for Triumvirate
+	///If not set to ANON_DISABLED then people spawn with a themed anon name (see anonymousnames.dm)
+	var/anonymousnames = ANON_DISABLED
+	///Boolean to see if the game needs to set up a triumvirate ai (see tripAI.dm)
+	var/triai = FALSE
+
 	var/tipped = 0							//Did we broadcast the tip of the day yet?
 	var/selected_tip						// What will be the tip of the day?
 
@@ -472,6 +476,7 @@ SUBSYSTEM_DEF(ticker)
 
 	delay_end = SSticker.delay_end
 
+	anonymousnames = SSticker.anonymousnames
 	triai = SSticker.triai
 	tipped = SSticker.tipped
 	selected_tip = SSticker.selected_tip
@@ -540,6 +545,10 @@ SUBSYSTEM_DEF(ticker)
 			news_message = "The burst of energy released near [station_name()] has been confirmed as merely a test of a new weapon. However, due to an unexpected mechanical error, their communications system has been knocked offline."
 		if(SHUTTLE_HIJACK)
 			news_message = "During routine evacuation procedures, the emergency shuttle of [station_name()] had its navigation protocols corrupted and went off course, but was recovered shortly after."
+		if(GANG_OPERATING)
+			news_message = "The company would like to state that any rumors of criminal organizing on board stations such as [station_name()] are falsehoods, and not to be emulated."
+		if(GANG_DESTROYED)
+			news_message = "The crew of [station_name()] would like to thank the Spinward Stellar Coalition Police Department for quickly resolving a minor terror threat to the station."
 
 	if(news_message)
 		send2otherserver(news_source, news_message,"News_Report")
@@ -639,6 +648,10 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/scrunglartiy.ogg',
 		'sound/roundend/petersondisappointed.ogg'\
 		)
+	///The reference to the end of round sound that we have chosen.
+	var/sound/end_of_round_sound_ref = sound(round_end_sound)
+	for(var/mob/M in GLOB.player_list)
+		if(M.client.prefs?.toggles & SOUND_ENDOFROUND)
+			SEND_SOUND(M.client, end_of_round_sound_ref)
 
-	SEND_SOUND(world, sound(round_end_sound))
 	text2file(login_music, "data/last_round_lobby_music.txt")

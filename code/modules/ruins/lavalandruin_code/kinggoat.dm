@@ -1,5 +1,6 @@
 /turf/open/indestructible/gold
 	name = "gold floor"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/gold
 	icon_state = "gold"
 	tiled_dirt = FALSE
@@ -7,6 +8,7 @@
 
 /turf/open/indestructible/diamond
 	name = "diamond floor"
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
 	baseturfs = /turf/open/indestructible/diamond
 	icon_state = "diamond"
 	tiled_dirt = FALSE
@@ -34,7 +36,7 @@
 /obj/item/gun/energy/goatgun
 	name = "goat gun"
 	desc = "Whoever you fire this at is gonna be in for a baaaaaaad surprise." //ha ha I am funny man please laugh HAHAHAHAHAHAHAHA
-	icon_state = "meteor_gun"
+	icon_state = "goat_gun"
 	item_state = "c20r"
 	w_class = WEIGHT_CLASS_BULKY
 	ammo_type = list(/obj/item/ammo_casing/energy/goat)

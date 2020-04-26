@@ -1338,7 +1338,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/abandoned/crew)
 "cr" = (
-/obj/item/twohanded/required/kirbyplants{
+/obj/item/kirbyplants{
 	icon_state = "plant-17";
 	pixel_x = 8;
 	pixel_y = 3

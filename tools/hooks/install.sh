@@ -12,7 +12,7 @@ for f in *.merge; do
 done
 
 echo "Installing tgui hooks"
-../../tgui-next/bin/tgui --install-git-hooks
+../../tgui/bin/tgui --install-git-hooks
 
 echo "Installing Python dependencies"
 ./python.sh -m pip install -r ../mapmerge2/requirements.txt

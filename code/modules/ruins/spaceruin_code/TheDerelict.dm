@@ -76,7 +76,7 @@
 
 ///Tries to charge from powernet excess, no upper limit except max charge.
 /obj/machinery/computer/vaultcontroller/proc/attempt_siphon()
-	var/surpluspower = CLAMP(attached_cable.surplus(), 0, (siphon_max - siphoned_power))
+	var/surpluspower = clamp(attached_cable.surplus(), 0, (siphon_max - siphoned_power))
 	if(surpluspower)
 		attached_cable.add_load(surpluspower)
 		siphoned_power += surpluspower
@@ -133,7 +133,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "vault_controller", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "VaultController", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 

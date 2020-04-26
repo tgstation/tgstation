@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - tweak: "Blood dripping frequency now scales with blood loss"
-  - bugfix: "Fixed blood decals occasionally containing more blood than they should"

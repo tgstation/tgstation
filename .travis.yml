@@ -17,6 +17,11 @@ matrix:
             - python3-pip
             - python3-setuptools
             - pcregrep
+            - rustc
+            - cargo
+      cache:
+        directories:
+          - $HOME/SpacemanDMM
       install:
         - tools/travis/install_build_tools.sh
         - tools/travis/install_spaceman_dmm.sh dreamchecker
@@ -24,7 +29,7 @@ matrix:
         - tools/travis/check_filedirs.sh tgstation.dme
         - tools/travis/check_changelogs.sh
         - find . -name "*.php" -print0 | xargs -0 -n1 php -l
-        - find . -name "*.json" -not -path "./tgui/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
+        - find . -name "*.json" -not -path "*/node_modules/*" -print0 | xargs -0 python3 ./tools/json_verifier.py
         - tools/travis/build_tgui.sh
         - tools/travis/check_grep.sh
         - ~/dreamchecker

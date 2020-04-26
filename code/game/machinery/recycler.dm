@@ -90,66 +90,76 @@
 	eat(AM)
 	. = ..()
 
-/obj/machinery/recycler/proc/eat(atom/AM0, sound=TRUE)
+/obj/machinery/recycler/proc/eat(atom/movable/AM0, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER))
 		return
 	if(safety_mode)
 		return
+	if(!isturf(AM0.loc))
+		return //I don't know how you called Crossed() but stop it.
 
-	var/list/to_eat
-	if(istype(AM0, /obj/item))
-		to_eat = AM0.GetAllContents()
-	else
-		to_eat = list(AM0)
+	var/list/to_eat = AM0.GetAllContents()
 
-	var/items_recycled = 0
+	var/living_detected = FALSE //technically includes silicons as well but eh
+	var/list/nom = list()
+	var/list/crunchy_nom = list() //Mobs have to be handled differently so they get a different list instead of checking them multiple times.
 
 	for(var/i in to_eat)
 		var/atom/movable/AM = i
-		var/obj/item/bodypart/head/as_head = AM
-		var/obj/item/mmi/as_mmi = AM
-		if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || isbrain(AM) || istype(AM, /obj/item/dullahan_relay))
-			emergency_stop(AM)
+		if(istype(AM, /obj/item))
+			var/obj/item/bodypart/head/as_head = AM
+			var/obj/item/mmi/as_mmi = AM
+			if(istype(AM, /obj/item/organ/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(AM, /obj/item/dullahan_relay))
+				living_detected = TRUE
+			nom += AM
 		else if(isliving(AM))
-			if(obj_flags & EMAGGED)
-				crush_living(AM)
-			else
-				emergency_stop(AM)
-		else if(istype(AM, /obj/item))
-			recycle_item(AM)
-			items_recycled++
-		else
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-	if(items_recycled && sound)
-		playsound(src, item_recycle_sound, 50, TRUE)
+			living_detected = TRUE
+			crunchy_nom += AM
+	var/not_eaten = to_eat.len - nom.len - crunchy_nom.len
+	if(living_detected) // First, check if we have any living beings detected.
+		if(obj_flags & EMAGGED)
+			for(var/CRUNCH in crunchy_nom) // Eat them and keep going because we don't care about safety.
+				if(isliving(CRUNCH)) // MMIs and brains will get eaten like normal items
+					crush_living(CRUNCH)
+		else // Stop processing right now without eating anything.
+			emergency_stop()
+			return
+	for(var/nommed in nom)
+		recycle_item(nommed)
+	if(nom.len && sound)
+		playsound(src, item_recycle_sound, (50 + nom.len*5), TRUE, nom.len, ignore_walls = (nom.len - 10)) // As a substitute for playing 50 sounds at once.
+	if(not_eaten)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', (50 + not_eaten*5), FALSE, not_eaten, ignore_walls = (not_eaten - 10)) // Ditto.
+	if(!ismob(AM0))
+		AM0.moveToNullspace()
+		qdel(AM0)
+	else // Lets not move a mob to nullspace and qdel it, yes?
+		for(var/i in AM0.contents)
+			var/atom/movable/content = i
+			content.moveToNullspace()
+			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/I)
 
-	I.forceMove(loc)
 	var/obj/item/grown/log/L = I
 	if(istype(L))
 		var/seed_modifier = 0
 		if(L.seed)
 			seed_modifier = round(L.seed.potency / 25)
-		new L.plank_type(src.loc, 1 + seed_modifier)
-		qdel(L)
-		return
+		new L.plank_type(loc, 1 + seed_modifier)
 	else
 		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 		var/material_amount = materials.get_item_material_amount(I)
 		if(!material_amount)
-			qdel(I)
 			return
 		materials.insert_item(I, multiplier = (amount_produced / 100))
-		qdel(I)
 		materials.retrieve_all()
 
 
-/obj/machinery/recycler/proc/emergency_stop(mob/living/L)
+/obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 	safety_mode = TRUE
 	update_icon()
-	L.forceMove(loc)
 	addtimer(CALLBACK(src, .proc/reboot), SAFETY_COOLDOWN)
 
 /obj/machinery/recycler/proc/reboot()
@@ -174,12 +184,6 @@
 	if(!blood && !issilicon(L))
 		blood = TRUE
 		update_icon()
-
-	// Remove and recycle the equipped items
-	if(eat_victim_items)
-		for(var/obj/item/I in L.get_equipped_items(TRUE))
-			if(L.dropItemToGround(I))
-				eat(I, sound=FALSE)
 
 	// Instantly lie down, also go unconscious from the pain, before you die.
 	L.Unconscious(100)

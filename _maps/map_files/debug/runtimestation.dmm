@@ -1111,6 +1111,7 @@
 /obj/structure/table,
 /obj/machinery/light,
 /obj/item/storage/firstaid/regular,
+/obj/item/healthanalyzer/advanced,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dP" = (
@@ -2242,6 +2243,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"sH" = (
+/obj/structure/table,
+/obj/item/storage/box/shipping,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "tG" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -7852,7 +7858,7 @@ dJ
 dJ
 dJ
 dJ
-dN
+sH
 cS
 fU
 gb

@@ -33,7 +33,7 @@
 
 			to_chat(user, "<span class='notice'>You begin repairing [src]...</span>")
 			if(I.use_tool(src, user, 40, volume=40))
-				obj_integrity = CLAMP(obj_integrity + 20, 0, max_integrity)
+				obj_integrity = clamp(obj_integrity + 20, 0, max_integrity)
 	else
 		return ..()
 
@@ -168,6 +168,7 @@
 	to_chat(user, "<span class='notice'>[src] is now in [mode] mode.</span>")
 
 /obj/item/grenade/barrier/prime()
+	. = ..()
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)
 		if(VERTICAL)

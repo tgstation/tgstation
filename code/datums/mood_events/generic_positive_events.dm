@@ -19,6 +19,11 @@
 /datum/mood_event/besthug/add_effects(mob/friend)
 	description = "<span class='nicegreen'>[friend.name] is great to be around, [friend.p_they()] makes me feel so happy!</span>\n"
 
+/datum/mood_event/warmhug
+	description = "<span class='nicegreen'>Warm cozy hugs are the best!</span>\n"
+	mood_change = 1
+	timeout = 2 MINUTES
+
 /datum/mood_event/arcade
 	description = "<span class='nicegreen'>I beat the arcade game!</span>\n"
 	mood_change = 3
@@ -74,7 +79,7 @@
 	hidden = TRUE
 
 /datum/mood_event/badass_antag
-	description = "<span class='greentext'>I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of me around.</span>\n"
+	description = "<span class='greentext'>I'm a fucking badass and everyone around me knows it. Just look at them; they're all fucking shaking at the mere thought of having me around.</span>\n"
 	mood_change = 7
 	hidden = TRUE
 	special_screen_obj = "badass_sun"
@@ -157,7 +162,7 @@
 	timeout = 5 MINUTES
 
 /datum/mood_event/pet_borg
-	description = "<span class='nicegreen'>I just love my robotical friends!</span>\n"
+	description = "<span class='nicegreen'>I just love my robotic friends!</span>\n"
 	mood_change = 3
 	timeout = 5 MINUTES
 
@@ -165,11 +170,11 @@
 	description = "<span class='nicegreen'>The bottle landing like that was satisfying.</span>\n"
 	mood_change = 2
 	timeout = 3 MINUTES
-  
+
 /datum/mood_event/hope_lavaland
 	description = "<span class='nicegreen'>What a peculiar emblem.  It makes me feel hopeful for my future.</span>\n"
 	mood_change = 5
-  
+
 /datum/mood_event/nanite_happiness
 	description = "<span class='nicegreen robot'>+++++++HAPPINESS ENHANCEMENT+++++++</span>\n"
 	mood_change = 7
@@ -184,3 +189,7 @@
 /datum/mood_event/area/add_effects(_mood_change, _description)
 	mood_change = _mood_change
 	description = _description
+
+/datum/mood_event/confident_mane
+	description = "<span class='nicegreen'>I'm feeling confident with a head full of hair.</span>\n"
+	mood_change = 2

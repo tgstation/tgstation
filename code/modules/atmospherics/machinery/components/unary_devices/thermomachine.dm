@@ -29,11 +29,12 @@
 	. = ..()
 	initialize_directions = dir
 
-/obj/machinery/atmospherics/components/unary/thermomachine/on_construction()
+/obj/machinery/atmospherics/components/unary/thermomachine/on_construction(obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
 	if(board)
 		piping_layer = board.pipe_layer
-	..(dir, piping_layer)
+		set_layer = piping_layer
+	..()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/RefreshParts()
 	var/B
@@ -103,9 +104,11 @@
 	SetInitDirections()
 	var/obj/machinery/atmospherics/node = nodes[1]
 	if(node)
-		node.disconnect(src)
+		if(src in node.nodes) //Only if it's actually connected. On-pipe version would is one-sided.
+			node.disconnect(src)
 		nodes[1] = null
-	nullifyPipenet(parents[1])
+	if(parents[1])
+		nullifyPipenet(parents[1])
 
 	atmosinit()
 	node = nodes[1]
@@ -124,7 +127,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "thermomachine", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ThermoMachine", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_data(mob/user)
@@ -166,13 +169,13 @@
 				target = text2num(target)
 				. = TRUE
 			if(.)
-				target_temperature = CLAMP(target, min_temperature, max_temperature)
+				target_temperature = clamp(target, min_temperature, max_temperature)
 				investigate_log("was set to [target_temperature] K by [key_name(usr)]", INVESTIGATE_ATMOS)
 
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!can_interact(user))
 		return
 	on = !on
 	update_icon()
@@ -211,7 +214,7 @@
 	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB) //73.15K with T1 stock parts
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!can_interact(user))
 		return
 	target_temperature = min_temperature
 
@@ -237,6 +240,6 @@
 	max_temperature = T20C + (initial(max_temperature) * L) //573.15K with T1 stock parts
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/AltClick(mob/living/user)
-	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE))
+	if(!can_interact(user))
 		return
 	target_temperature = max_temperature

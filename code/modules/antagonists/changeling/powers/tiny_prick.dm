@@ -20,7 +20,6 @@
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	changeling.chosen_sting = src
 
-	user.hud_used.lingstingdisplay.icon = icon_icon
 	user.hud_used.lingstingdisplay.icon_state = button_icon_state
 	user.hud_used.lingstingdisplay.invisibility = 0
 

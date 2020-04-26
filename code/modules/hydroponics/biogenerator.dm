@@ -293,7 +293,10 @@
 
 /obj/machinery/biogenerator/proc/detach(mob/living/user)
 	if(beaker)
-		user.put_in_hands(beaker)
+		if(can_interact(user))
+			user.put_in_hands(beaker)
+		else
+			beaker.drop_location(get_turf(src))
 		beaker = null
 		update_icon()
 
@@ -314,7 +317,7 @@
 	else if(href_list["create"])
 		var/amount = (text2num(href_list["amount"]))
 		//Can't be outside these (if you change this keep a sane limit)
-		amount = CLAMP(amount, 1, 10)
+		amount = clamp(amount, 1, 10)
 		var/id = href_list["create"]
 		if(!stored_research.researched_designs.Find(id))
 			//naughty naughty

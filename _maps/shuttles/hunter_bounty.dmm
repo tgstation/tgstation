@@ -155,7 +155,7 @@
 /area/shuttle/hunter)
 "E" = (
 /obj/structure/table,
-/obj/item/twohanded/binoculars,
+/obj/item/binoculars,
 /turf/open/floor/pod/dark,
 /area/shuttle/hunter)
 "F" = (

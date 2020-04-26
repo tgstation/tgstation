@@ -5,7 +5,6 @@
 
 /datum/keybinding/mob/face_north
 	hotkey_keys = list("CtrlW", "CtrlNorth")
-	classic_keys = list("CtrlNorth")
 	name = "face_north"
 	full_name = "Face North"
 	description = ""
@@ -18,7 +17,6 @@
 
 /datum/keybinding/mob/face_east
 	hotkey_keys = list("CtrlD", "CtrlEast")
-	classic_keys = list("CtrlEast")
 	name = "face_east"
 	full_name = "Face East"
 	description = ""
@@ -31,7 +29,6 @@
 
 /datum/keybinding/mob/face_south
 	hotkey_keys = list("CtrlS", "CtrlSouth")
-	classic_keys = list("CtrlSouth")
 	name = "face_south"
 	full_name = "Face South"
 	description = ""
@@ -43,7 +40,6 @@
 
 /datum/keybinding/mob/face_west
 	hotkey_keys = list("CtrlA", "CtrlWest")
-	classic_keys = list("CtrlWest")
 	name = "face_west"
 	full_name = "Face West"
 	description = ""
@@ -55,7 +51,6 @@
 
 /datum/keybinding/mob/stop_pulling
 	hotkey_keys = list("H", "Delete")
-	classic_keys = list("Delete")
 	name = "stop_pulling"
 	full_name = "Stop pulling"
 	description = ""
@@ -91,8 +86,7 @@
 	return TRUE
 
 /datum/keybinding/mob/swap_hands
-	hotkey_keys = list("X")
-	classic_keys = list("Northeast") // PAGEUP
+	hotkey_keys = list("X", "Northeast") // PAGEUP
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
@@ -103,8 +97,7 @@
 	return TRUE
 
 /datum/keybinding/mob/activate_inhand
-	hotkey_keys = list("Z")
-	classic_keys = list("Southeast") // PAGEDOWN
+	hotkey_keys = list("Z", "Southeast") // PAGEDOWN
 	name = "activate_inhand"
 	full_name = "Activate in-hand"
 	description = "Uses whatever item you have inhand"

@@ -63,7 +63,7 @@
 
 /datum/SDQL_parser/proc/parse_error(error_message)
 	error = 1
-	to_chat(usr, "<span class='warning'>SQDL2 Parsing Error: [error_message]</span>")
+	to_chat(usr, "<span class='warning'>SQDL2 Parsing Error: [error_message]</span>", confidential = TRUE)
 	return query.len + 1
 
 /datum/SDQL_parser/proc/parse()
@@ -481,14 +481,6 @@
 
 			temp_expression_list = list()
 			i = expression(i, temp_expression_list)
-
-#if MIN_COMPILER_VERSION > 512
-#warn Remove this outdated workaround
-#elif DM_BUILD < 1467
-			// http://www.byond.com/forum/post/2445083
-			var/dummy = src.type
-			dummy = dummy
-#endif
 
 		while(token(i) && token(i) != "]")
 

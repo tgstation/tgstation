@@ -13,7 +13,7 @@
 
 	circuit = /obj/item/circuitboard/machine/tesla_coil
 
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_IS_TESLA
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 	var/power_loss = 2
 	var/input_power_multiplier = 1
 	var/zap_cooldown = 100
@@ -94,11 +94,9 @@
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		zap_buckle_check(power)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		if(!(zap_flags & ZAP_IS_TESLA))
-			return power_produced
-		tesla_zap(src, 5, power_produced, zap_flags, shocked_targets)
+		return power_produced
 	else
-		..()
+		. = ..()
 
 /obj/machinery/power/tesla_coil/proc/zap()
 	if((last_zap + zap_cooldown) > world.time || !powernet)
@@ -134,11 +132,9 @@
 		addtimer(CALLBACK(src, .proc/reset_shocked), 10)
 		zap_buckle_check(power)
 		playsound(src.loc, 'sound/magic/lightningshock.ogg', 100, TRUE, extrarange = 5)
-		if(!(zap_flags & ZAP_IS_TESLA))
-			return power_produced
-		tesla_zap(src, 5, power_produced, zap_flags, shocked_targets)
+		return power_produced
 	else
-		..()
+		. = ..()
 
 /obj/machinery/power/tesla_coil/research/default_unfasten_wrench(mob/user, obj/item/wrench/W, time = 20)
 	. = ..()
@@ -193,5 +189,6 @@
 	if(anchored && !panel_open)
 		flick("grounding_rodhit", src)
 		zap_buckle_check(power)
+		return 0
 	else
-		..()
+		. = ..()

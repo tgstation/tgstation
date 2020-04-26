@@ -38,7 +38,7 @@
 	if (!light_power || !light_range) // We won't emit light anyways, destroy the light source.
 		QDEL_NULL(light)
 	else
-		if (!ismovableatom(loc)) // We choose what atom should be the top atom of the light here.
+		if (!ismovable(loc)) // We choose what atom should be the top atom of the light here.
 			. = src
 		else
 			. = loc

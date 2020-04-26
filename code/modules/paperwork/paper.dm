@@ -292,7 +292,7 @@
 	if(resistance_flags & ON_FIRE)
 		return
 
-	if(is_blind(user))
+	if(user.is_blind())
 		return
 
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))

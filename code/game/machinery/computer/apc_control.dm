@@ -152,7 +152,7 @@
 			return
 		log_activity("changed greater than charge filter to \"[new_filter]\"")
 		if(new_filter)
-			new_filter = CLAMP(new_filter, 0, 100)
+			new_filter = clamp(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 		result_filters["Charge Above"] = new_filter
 	if(href_list["below_filter"])
@@ -162,7 +162,7 @@
 			return
 		log_activity("changed lesser than charge filter to \"[new_filter]\"")
 		if(new_filter)
-			new_filter = CLAMP(new_filter, 0, 100)
+			new_filter = clamp(new_filter, 0, 100)
 		playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, FALSE)
 		result_filters["Charge Below"] = new_filter
 	if(href_list["access_filter"])

@@ -28,6 +28,7 @@
 	attack_verb = list("attacked", "stabbed", "poked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	item_flags = EYE_STAB
 	var/datum/reagent/forkload //used to eat omelette
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
@@ -48,11 +49,6 @@
 			M.reagents.add_reagent(forkload.type, 1)
 		icon_state = "fork"
 		forkload = null
-
-	else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-			M = user
-		return eyestab(M,user)
 	else
 		return ..()
 
@@ -89,20 +85,17 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP_ACCURATE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	item_flags = EYE_STAB
 	var/bayonet = FALSE	//Can this be attached to a gun?
 	custom_price = 250
 
-/obj/item/kitchen/knife/Initialize()
+/obj/item/kitchen/knife/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
+	set_butchering()
 
-/obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-			M = user
-		return eyestab(M,user)
-	else
-		return ..()
+///Adds the butchering component, used to override stats for special cases
+/obj/item/kitchen/knife/proc/set_butchering()
+	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
 
 /obj/item/kitchen/knife/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
@@ -153,11 +146,20 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = 600
 
+/obj/item/kitchen/knife/hunting
+	name = "hunting knife"
+	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
+	item_state = "huntingknife"
+	icon_state = "huntingknife"
+
+/obj/item/kitchen/knife/hunting/set_butchering()
+	AddComponent(/datum/component/butchering, 80 - force, 100, force + 10)
+
 /obj/item/kitchen/knife/combat
 	name = "combat knife"
 	icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 65, "embedded_fall_chance" = 10, "embedded_ignore_throwspeed_threshold" = TRUE)
+	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
 	force = 20
 	throwforce = 20
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "cut")
@@ -166,7 +168,7 @@
 /obj/item/kitchen/knife/combat/survival
 	name = "survival knife"
 	icon_state = "survivalknife"
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 35, "embedded_fall_chance" = 10)
+	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	desc = "A hunting grade survival knife."
 	force = 15
 	throwforce = 15
@@ -179,7 +181,7 @@
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	desc = "A sharpened bone. The bare minimum in survival."
-	embedding = list("embedded_pain_multiplier" = 4, "embed_chance" = 35, "embedded_fall_chance" = 10)
+	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	force = 15
 	throwforce = 15
 	custom_materials = null
@@ -190,20 +192,29 @@
 	icon_state = "knife_cyborg"
 	desc = "A cyborg-mounted plasteel knife. Extremely sharp and durable."
 
-/obj/item/kitchen/knife/carrotshiv
+/obj/item/kitchen/knife/shiv
+	name = "glass shiv"
+	icon = 'icons/obj/shards.dmi'
+	icon_state = "shiv"
+	item_state = "shiv"
+	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	desc = "A makeshift glass shiv."
+	force = 8
+	throwforce = 12
+	attack_verb = list("shanked", "shivved")
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
+	custom_materials = list(/datum/material/glass=400)
+
+/obj/item/kitchen/knife/shiv/carrot
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
 	item_state = "carrotshiv"
-	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
+	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
-	force = 8
-	throwforce = 12//fuck git
 	custom_materials = null
-	attack_verb = list("shanked", "shivved")
-	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
-/obj/item/kitchen/knife/carrotshiv/suicide_act(mob/living/carbon/user)
+/obj/item/kitchen/knife/shiv/carrot/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] forcefully drives \the [src] into [user.p_their()] eye! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 

@@ -301,7 +301,7 @@ Burning extracts:
 
 /obj/item/slimecross/burning/adamantine/do_effect(mob/user)
 	user.visible_message("<span class='notice'>[src] crystallizes into a large shield!</span>")
-	new /obj/item/twohanded/required/adamantineshield(get_turf(user))
+	new /obj/item/shield/adamantineshield(get_turf(user))
 	..()
 
 /obj/item/slimecross/burning/rainbow

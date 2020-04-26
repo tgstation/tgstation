@@ -50,4 +50,5 @@
 #define WIRE_ZAP2 "High Voltage Circuit 2"
 #define WIRE_PRIZEVEND "Emergency Prize Vend"
 #define WIRE_RESETOWNER "Reset Owner"
+#define WIRE_AGELIMIT "Age Limit"
 

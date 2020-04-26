@@ -76,8 +76,6 @@
 					"<span class='userdanger'>You force open the padlock!</span>", "<i>You hear a single, pronounced click!</i>")
 					REMOVE_TRAIT(src, TRAIT_NODROP, REVERSE_BEAR_TRAP_TRAIT)
 				struggling = FALSE
-			else
-				..()
 			return
 	..()
 

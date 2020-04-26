@@ -259,6 +259,8 @@
 /datum/symptom/heal/coma/End(datum/disease/advance/A)
 	if(!..())
 		return
+	if(active_coma)
+		uncoma()
 	REMOVE_TRAIT(A.affected_mob, TRAIT_NOCRITDAMAGE, DISEASE_TRAIT)
 
 /datum/symptom/heal/coma/CanHeal(datum/disease/advance/A)
@@ -415,12 +417,12 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>You feel yourself absorbing plasma inside and around you...</span>")
 
-	if(M.bodytemperature > BODYTEMP_NORMAL)
-		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,BODYTEMP_NORMAL)
+	if(M.bodytemperature > M.get_body_temp_normal())
+		M.adjust_bodytemperature(-20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT, M.get_body_temp_normal())
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel less hot.</span>")
-	else if(M.bodytemperature < (BODYTEMP_NORMAL + 1))
-		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0,BODYTEMP_NORMAL)
+	else if(M.bodytemperature < (M.get_body_temp_normal() + 1))
+		M.adjust_bodytemperature(20 * temp_rate * TEMPERATURE_DAMAGE_COEFFICIENT,0, M.get_body_temp_normal())
 		if(prob(5))
 			to_chat(M, "<span class='notice'>You feel warmer.</span>")
 

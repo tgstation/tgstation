@@ -21,20 +21,20 @@
 	var/phaser = TRUE
 	var/datum/action/innate/creature/teleport/teleport
 	var/is_phased = FALSE
-	
+
 /mob/living/simple_animal/hostile/netherworld/Initialize()
 	. = ..()
 	if(phaser)
 		teleport = new
 		teleport.Grant(src)
-	
+
 /datum/action/innate/creature
 	background_icon_state = "bg_default"
-	
+
 /datum/action/innate/creature/teleport
 	name = "Teleport"
 	desc = "Teleport to wherever you want, as long as you aren't seen."
-	
+
 /obj/effect/dummy/phased_mob/creature
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
@@ -44,7 +44,7 @@
 	invisibility = 60
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/canmove = TRUE
-	
+
 /obj/effect/dummy/phased_mob/creature/relaymove(mob/user, direction)
 	forceMove(get_step(src,direction))
 
@@ -56,7 +56,7 @@
 
 /obj/effect/dummy/phased_mob/creature/singularity_act()
 	return
-	
+
 /datum/action/innate/creature/teleport/Activate()
 	var/mob/living/simple_animal/hostile/netherworld/N = owner
 	var/obj/effect/dummy/phased_mob/creature/holder = null
@@ -80,7 +80,7 @@
 		holder = new /obj/effect/dummy/phased_mob/creature(T)
 		N.forceMove(holder)
 		N.is_phased = TRUE
-		
+
 /mob/living/simple_animal/hostile/netherworld/proc/can_be_seen(turf/location)
 	// Check for darkness
 	if(location && location.lighting_object)
@@ -96,14 +96,14 @@
 	for(var/atom/check in check_list)
 		for(var/mob/living/M in viewers(world.view + 1, check) - src)
 			if(M.client && CanAttack(M) && !M.has_unlimited_silicon_privilege)
-				if(!M.eye_blind)
+				if(!M.is_blind())
 					return M
 		for(var/obj/mecha/M in view(world.view + 1, check)) //assuming if you can see them they can see you
 			if(M.occupant && M.occupant.client)
-				if(!M.occupant.eye_blind)
+				if(!M.occupant.is_blind())
 					return M.occupant
 	return null
-	
+
 /mob/living/simple_animal/hostile/netherworld/migo
 	name = "mi-go"
 	desc = "A pinkish, fungoid crustacean-like creature with numerous pairs of clawed appendages and a head covered with waving antennae."

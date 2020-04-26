@@ -235,7 +235,7 @@
 						if(brain.force_replace_ai_name)
 							A.fully_replace_character_name(A.name, brain.replacement_ai_name())
 						SSblackbox.record_feedback("amount", "ais_created", 1)
-						deadchat_broadcast(" has been brought online at <b>[get_area_name(A, TRUE)]</b>.", "<span class='name'>[A]</span>", follow_target=A)
+						deadchat_broadcast(" has been brought online at <b>[get_area_name(A, TRUE)]</b>.", "<span class='name'>[A]</span>", follow_target=A, message_type=DEADCHAT_ANNOUNCEMENT)
 						qdel(src)
 					else
 						state = AI_READY_CORE

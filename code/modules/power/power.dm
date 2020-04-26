@@ -15,6 +15,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
+	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -47,7 +48,7 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
@@ -63,7 +64,7 @@
 
 /obj/machinery/power/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
@@ -138,7 +139,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
 		if(!term || !term.powernet)
@@ -292,6 +293,7 @@
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)
+				SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 				return 0		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
@@ -352,13 +354,12 @@
 // Misc.
 ///////////////////////////////////////////////
 
-// return a cable if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node()
+// return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
+/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
 	if(!can_have_cabling())
 		return null
-	var/obj/structure/cable_bridge/B = locate() in src
 	for(var/obj/structure/cable/C in src)
-		if(C.cable_layer == CABLE_LAYER_2 || B)
+		if(C.machinery_layer & machinery_layer)
 			C.update_icon()
 			return C
 	return null

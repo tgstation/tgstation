@@ -8,7 +8,7 @@
 	anchored = TRUE
 	light_range = 3
 	var/movechance = 70
-	var/obj/item/assembly/signaler/anomaly/aSignal
+	var/obj/item/assembly/signaler/anomaly/aSignal = /obj/item/assembly/signaler/anomaly
 	var/area/impact_area
 
 	var/lifespan = 990
@@ -26,8 +26,7 @@
 	if (!impact_area)
 		return INITIALIZE_HINT_QDEL
 
-	aSignal = new(src)
-	aSignal.name = "[name] core"
+	aSignal = new aSignal(src)
 	aSignal.code = rand(1,100)
 	aSignal.anomaly_type = type
 
@@ -88,6 +87,7 @@
 	icon_state = "shield2"
 	density = FALSE
 	var/boing = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/grav
 
 /obj/effect/anomaly/grav/anomalyEffect()
 	..()
@@ -107,6 +107,7 @@
 				O.throw_at(target, 5, 10)
 
 /obj/effect/anomaly/grav/Crossed(atom/movable/AM)
+	. = ..()
 	gravShock(AM)
 
 /obj/effect/anomaly/grav/Bump(atom/A)
@@ -142,6 +143,7 @@
 	name = "flux wave anomaly"
 	icon_state = "electricity2"
 	density = TRUE
+	aSignal = /obj/item/assembly/signaler/anomaly/flux
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
@@ -153,6 +155,7 @@
 		mobShock(M)
 
 /obj/effect/anomaly/flux/Crossed(atom/movable/AM)
+	. = ..()
 	mobShock(AM)
 
 /obj/effect/anomaly/flux/Bump(atom/A)
@@ -180,6 +183,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bluespace"
 	density = TRUE
+	aSignal = /obj/item/assembly/signaler/anomaly/bluespace
 
 /obj/effect/anomaly/bluespace/anomalyEffect()
 	..()
@@ -252,6 +256,7 @@
 	name = "pyroclastic anomaly"
 	icon_state = "mustard"
 	var/ticks = 0
+	aSignal = /obj/item/assembly/signaler/anomaly/pyro
 
 /obj/effect/anomaly/pyro/anomalyEffect()
 	..()
@@ -276,11 +281,17 @@
 	S.rabid = TRUE
 	S.amount_grown = SLIME_EVOLUTION_THRESHOLD
 	S.Evolve()
+	var/datum/action/innate/slime/reproduce/A = new
+	A.Grant(S)
 
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_PAI, null, null, 100, S, POLL_IGNORE_PYROSLIME)
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a pyroclastic anomaly slime?", ROLE_SENTIENCE, null, null, 100, S, POLL_IGNORE_PYROSLIME)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/chosen = pick(candidates)
 		S.key = chosen.key
+		S.mind.special_role = ROLE_PYROCLASTIC_SLIME
+		var/policy = get_policy(ROLE_PYROCLASTIC_SLIME)
+		if (policy)
+			to_chat(S, policy)
 		log_game("[key_name(S.key)] was made into a slime by pyroclastic anomaly at [AREACOORD(T)].")
 
 /////////////////////
@@ -289,6 +300,7 @@
 	name = "vortex anomaly"
 	icon_state = "bhole3"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
+	aSignal = /obj/item/assembly/signaler/anomaly/vortex
 
 /obj/effect/anomaly/bhole/anomalyEffect()
 	..()

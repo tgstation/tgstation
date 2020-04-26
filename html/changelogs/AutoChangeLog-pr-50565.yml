@@ -1,0 +1,7 @@
+author: "Ghilker"
+delete-after: True
+changes: 
+  - rscadd: "New frame subtype (tier 3)"
+  - rscadd: "Added the ability to deconstruct the canisters (receive items back)"
+  - tweak: "Changed the way canisters are made"
+  - imageadd: "Added canister frame tier 0 sprite"

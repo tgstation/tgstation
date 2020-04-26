@@ -11,6 +11,12 @@
 	ui_x = 300
 	ui_y = 315
 
+	max_integrity = 250
+	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
+	var/heat_limit = 5000
+	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
+	var/pressure_limit = 50000
+
 	var/on = FALSE
 	var/direction = PUMP_OUT
 	var/obj/machinery/atmospherics/components/binary/pump/pump
@@ -43,6 +49,14 @@
 
 /obj/machinery/portable_atmospherics/pump/process_atmos()
 	..()
+
+	var/pressure = air_contents.return_pressure()
+	var/temperature = air_contents.return_temperature()
+	///function used to check the limit of the pumps and also set the amount of damage that the pump can recieve, if the heat and pressure are way higher than the limit the more damage will be done
+	if(temperature > heat_limit || pressure > pressure_limit)
+		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+		return
+
 	if(!on)
 		pump.airs[1] = null
 		pump.airs[2] = null
@@ -87,7 +101,7 @@
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_pump", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "PortablePump", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/pump/ui_data()
@@ -143,15 +157,11 @@
 			else if(pressure == "max")
 				pressure = PUMP_MAX_PRESSURE
 				. = TRUE
-			else if(pressure == "input")
-				pressure = input("New release pressure ([PUMP_MIN_PRESSURE]-[PUMP_MAX_PRESSURE] kPa):", name, pump.target_pressure) as num|null
-				if(!isnull(pressure) && !..())
-					. = TRUE
 			else if(text2num(pressure) != null)
 				pressure = text2num(pressure)
 				. = TRUE
 			if(.)
-				pump.target_pressure = CLAMP(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
+				pump.target_pressure = clamp(round(pressure), PUMP_MIN_PRESSURE, PUMP_MAX_PRESSURE)
 				investigate_log("was set to [pump.target_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
 		if("eject")
 			if(holding)

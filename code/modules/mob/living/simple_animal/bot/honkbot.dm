@@ -210,8 +210,8 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 			log_combat(src,C,"honked")
 
-			C.visible_message("<span class='danger'>[src] has honked [C]!</span>",\
-					"<span class='userdanger'>[src] has honked you!</span>")
+			C.visible_message("<span class='danger'>[src] honks [C]!</span>",\
+					"<span class='userdanger'>[src] honks you!</span>")
 		else
 			C.stuttering = 20
 			C.Paralyze(80)

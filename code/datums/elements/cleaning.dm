@@ -1,6 +1,6 @@
 /datum/element/cleaning/Attach(datum/target)
 	. = ..()
-	if(!ismovableatom(target))
+	if(!ismovable(target))
 		return ELEMENT_INCOMPATIBLE
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/Clean)
 

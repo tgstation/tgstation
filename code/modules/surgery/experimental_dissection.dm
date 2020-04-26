@@ -87,7 +87,7 @@
 	target.apply_damage(80, BRUTE, L)
 	ADD_TRAIT(target, TRAIT_DISSECTED, "[surgery.name]")
 	repeatable = FALSE
-	experience_given = 1+(points_earned/(BASE_HUMAN_REWARD/10))//if BHR = 500, 10 XP on base surgery
+	experience_given = max(points_earned/(BASE_HUMAN_REWARD/MEDICAL_SKILL_MEDIUM),1)
 	return ..()
 
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

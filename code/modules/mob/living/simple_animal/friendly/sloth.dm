@@ -25,6 +25,7 @@
 	maxHealth = 50
 	speed = 10
 	glide_size = 2
+	held_state = "sloth"
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 

@@ -1,7 +1,7 @@
 /*
 	The receiver idles and receives messages from subspace-compatible radio equipment;
-	primarily headsets. They then just relay this information to all linked devices,
-	which can would probably be network hubs.
+	primarily headsets. Then they just relay this information to all linked devices,
+	which would probably be network hubs.
 
 	Link to Processor Units in case receiver can't send to bus units.
 */

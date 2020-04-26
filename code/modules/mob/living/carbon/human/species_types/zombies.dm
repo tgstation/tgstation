@@ -37,8 +37,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 /// Zombies do not stabilize body temperature they are the walking dead and are cold blooded
-/datum/species/zombie/natural_bodytemperature_stabilization(mob/living/carbon/human/H)
-	return 0
+/datum/species/zombie/natural_bodytemperature_stabilization(datum/gas_mixture/environment, mob/living/carbon/human/H)
+	return
 
 /datum/species/zombie/infectious/check_roundstart_eligible()
 	return FALSE
@@ -67,7 +67,7 @@
 		playsound(C, pick(spooks), 50, TRUE, 10)
 
 //Congrats you somehow died so hard you stopped being a zombie
-/datum/species/zombie/infectious/spec_death(mob/living/carbon/C)
+/datum/species/zombie/infectious/spec_death(gibbed, mob/living/carbon/C)
 	. = ..()
 	var/obj/item/organ/zombie_infection/infection
 	infection = C.getorganslot(ORGAN_SLOT_ZOMBIE)

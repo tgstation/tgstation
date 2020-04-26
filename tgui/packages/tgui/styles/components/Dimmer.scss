@@ -1,0 +1,16 @@
+.Dimmer {
+  // Align everything in the middle.
+  // A fat middle finger for anything less than IE11.
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // Fill positioned parent
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  // Dim everything around it
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 1;
+}

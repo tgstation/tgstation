@@ -25,7 +25,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "gulag_console", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "GulagTeleporterConsole", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/prisoner/gulag_teleporter_computer/ui_data(mob/user)
@@ -97,7 +97,7 @@
 				return
 			if(!new_goal)
 				new_goal = default_goal
-			contained_id.goal = CLAMP(new_goal, 0, 1000) //maximum 1000 points
+			contained_id.goal = clamp(new_goal, 0, 1000) //maximum 1000 points
 			return TRUE
 		if("toggle_open")
 			if(teleporter.locked)

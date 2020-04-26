@@ -15,11 +15,13 @@
 
 	stuck_zlevel = L.z
 
-/datum/component/stationstuck/InheritComponent(datum/component/stationstuck/newc, original, list/arguments)
-	if(original)
-		if(istype(newc))
-			murder = newc.murder
-			message = newc.message
+/datum/component/stationstuck/InheritComponent(datum/component/stationstuck/newc, original, _murder, _message)
+	if(newc)
+		murder = newc.murder
+		message = newc.message
+	else
+		murder = _murder
+		message = _message
 
 /datum/component/stationstuck/proc/punish()
 	var/mob/living/L = parent

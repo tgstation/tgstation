@@ -2,6 +2,7 @@
     "map_name": "Kilo Station",
     "map_path": "map_files/KiloStation",
     "map_file": "KiloStation.dmm",
+    "space_ruin_levels": 4,
     "shuttles": {
 	    "emergency": "emergency_kilo",
 	    "ferry": "ferry_kilo",

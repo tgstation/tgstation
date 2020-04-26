@@ -4,7 +4,7 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5, 10, 15, 20, 25, 30, 50)
 	volume = 50
-	reagent_flags = OPENCONTAINER
+	reagent_flags = OPENCONTAINER | DUNKABLE
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 
@@ -286,6 +286,7 @@
 /obj/item/pestle
 	name = "pestle"
 	desc = "An ancient, simple tool used in conjunction with a mortar to grind or juice items."
+	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "pestle"
 	force = 7

@@ -522,10 +522,10 @@
 			use_power(500000)
 			investigate_log("Experimentor has drained power from its APC", INVESTIGATE_EXPERIMENTOR)
 		if(globalMalf == 99)
-			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!")
+			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!</span>")
 			addtimer(CALLBACK(src, .proc/boom), 50)
 		if(globalMalf == 100)
-			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!")
+			visible_message("<span class='warning'>[src] begins to glow and vibrate. It's going to blow!</span>")
 			addtimer(CALLBACK(src, .proc/honk), 50)
 
 	addtimer(CALLBACK(src, .proc/reset_exp), resetTime)

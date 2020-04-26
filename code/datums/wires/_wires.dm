@@ -172,6 +172,7 @@
 		S.forceMove(holder.drop_location())
 		return S
 
+/// Called from [/atom/proc/emp_act]
 /datum/wires/proc/emp_pulse()
 	var/list/possible_wires = shuffle(wires)
 	var/remaining_pulses = MAXIMUM_EMP_WIRES
@@ -218,7 +219,7 @@
 							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "wires", "[holder.name] Wires", 350, 150 + wires.len * 30, master_ui, state)
+		ui = new(user, src, ui_key, "Wires", "[holder.name] Wires", 350, 150 + wires.len * 30, master_ui, state)
 		ui.open()
 
 /datum/wires/ui_data(mob/user)

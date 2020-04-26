@@ -1,17 +1,8 @@
 GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't really work on borgos
 	/obj/item/clothing/head/helmet/space,
 	/obj/item/clothing/head/welding,
-	/obj/item/clothing/head/mob_holder, //I am so very upset that this breaks things
 	/obj/item/clothing/head/chameleon/broken \
 	)))
-
-/mob/living/silicon/robot/attack_robot(mob/user)
-	. = ..()
-	if(user == src && has_buckled_mobs() && user.a_intent == INTENT_HELP)
-		for(var/i in buckled_mobs)
-			var/mob/buckmob = i
-			unbuckle_mob(buckmob)
-
 
 /mob/living/silicon/robot/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WELDER && (user.a_intent != INTENT_HARM || user == src))
@@ -29,7 +20,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		adjustBruteLoss(-30)
 		updatehealth()
 		add_fingerprint(user)
-		visible_message("<span class='notice'>[user] has fixed some of the dents on [src].</span>")
+		visible_message("<span class='notice'>[user] fixes some of the dents on [src].</span>")
 		return
 
 	if(istype(W, /obj/item/stack/cable_coil) && wiresexposed)
@@ -44,7 +35,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				adjustFireLoss(-30)
 				adjustToxLoss(-30)
 				updatehealth()
-				user.visible_message("<span class='notice'>[user] has fixed some of the burnt wires on [src].</span>", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
+				user.visible_message("<span class='notice'>[user] fixes some of the burnt wires on [src].</span>", "<span class='notice'>You fix some of the burnt wires on [src].</span>")
 			else
 				to_chat(user, "<span class='warning'>You need more cable to repair [src]!</span>")
 		else
@@ -255,8 +246,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 				Stun(40)
 				step(src,get_dir(M,src))
 				log_combat(M, src, "pushed")
-				visible_message("<span class='danger'>[M] has forced back [src]!</span>", \
-					"<span class='userdanger'>[M] has forced back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
+				visible_message("<span class='danger'>[M] forces back [src]!</span>", \
+					"<span class='userdanger'>[M] forces back [src]!</span>", null, COMBAT_MESSAGE_RANGE)
 			playsound(loc, 'sound/weapons/pierce.ogg', 50, TRUE, -1)
 	else
 		..()

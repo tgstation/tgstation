@@ -1,0 +1,48 @@
+@use 'sass:color';
+@use 'sass:meta';
+
+@use '../colors.scss' with (
+  $primary: #000000,
+  $fg-map-keys: (),
+  $bg-map-keys: (),
+);
+@use '../base.scss' with (
+  $color-bg: #117039,
+  $color-bg-grad-spread: 0%,
+  $border-radius: 0px,
+);
+
+//Made for the roulette table, probably requires a bunch of manual hacks to work for anything else
+.theme-cardtable {
+  // Atomic classes
+  @include meta.load-css('../atomic/color.scss');
+
+  // Components
+  @include meta.load-css('../components/Button.scss', $with: (
+    'color-default': #117039,
+    'color-disabled': #363636,
+    'color-selected': #9d0808,
+    'color-caution': #be6209,
+    'color-danger': #9a9d00,
+  ));
+  @include meta.load-css('../components/NumberInput.scss', $with: (
+    'border-color': #FFFFFF,
+  ));
+  @include meta.load-css('../components/ProgressBar.scss', $with: (
+    'color-background': rgba(0, 0, 0, 0.5),
+  ));
+  @include meta.load-css('../components/Section.scss');
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'color-background': #381608,
+  ));
+
+  .Button {
+    border-color: #FFFFFF;
+    border-width: 2px;
+    border-style: solid;
+  }
+}

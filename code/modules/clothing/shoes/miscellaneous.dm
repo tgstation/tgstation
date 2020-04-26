@@ -17,7 +17,25 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 12 SECONDS
 
+/obj/item/clothing/shoes/combat/sneakboots
+	name = "sneakboots"
+	desc = "These boots have special noise cancelling soles. Perfect for stealth, if it wasn't for the color scheme."
+	icon_state = "sneakboots"
+	item_state = "sneakboots"
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
+/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		ADD_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
+
+/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/living/carbon/human/user)
+	REMOVE_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
+	return ..()
+	
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
@@ -33,6 +51,7 @@
 	strip_delay = 5
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -58,6 +77,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
 	can_be_bloody = FALSE
 	custom_price = 600
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -76,6 +96,7 @@
 	slowdown = SHOES_SLOWDOWN+1
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
 	var/enabled_waddle = TRUE
+	lace_time = 20 SECONDS // how the hell do these laces even work??
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -125,6 +146,7 @@
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -140,6 +162,7 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
@@ -152,6 +175,7 @@
 	strip_delay = 20
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -168,6 +192,7 @@
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/cult/alt
 	name = "cultist boots"
@@ -199,6 +224,7 @@
 	strip_delay = 100
 	equip_delay_other = 100
 	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -206,6 +232,7 @@
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"
@@ -256,6 +283,7 @@
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/bronze/Initialize()
 	. = ..()
@@ -332,6 +360,7 @@
 	icon_state = "rus_shoes"
 	item_state = "rus_shoes"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/cowboy
 	name = "cowboy boots"
@@ -342,6 +371,7 @@
 	custom_price = 60
 	var/list/occupants = list()
 	var/max_occupants = 4
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
@@ -419,3 +449,16 @@
 	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
 	name = "grilling sandals"
 	icon_state = "cookflops"
+	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/yakuza
+	name = "tojo clan shoes"
+	desc = "Steel-toed and intimidating."
+	icon_state = "MajimaShoes"
+	item_state = "MajimaShoes_worn"
+
+/obj/item/clothing/shoes/jackbros
+	name = "frosty boots"
+	desc = "For when you're stepping on up to the plate."
+	icon_state = "JackFrostShoes"
+	item_state = "JackFrostShoes_worn"

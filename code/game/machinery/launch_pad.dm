@@ -102,9 +102,9 @@
 	if(teleporting)
 		return
 	if(!isnull(x))
-		x_offset = CLAMP(x, -range, range)
+		x_offset = clamp(x, -range, range)
 	if(!isnull(y))
-		y_offset = CLAMP(y, -range, range)
+		y_offset = clamp(y, -range, range)
 	update_indicator()
 
 /obj/machinery/launchpad/proc/doteleport(mob/user, sending)
@@ -324,8 +324,7 @@
 /obj/item/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "launchpad_remote", "Briefcase Launchpad Remote", 300, 240, master_ui, state) //width, height
-		ui.set_style("syndicate")
+		ui = new(user, src, ui_key, "LaunchpadRemote", "Briefcase Launchpad Remote", 300, 240, master_ui, state) //width, height
 		ui.open()
 
 	ui.set_autoupdate(TRUE)

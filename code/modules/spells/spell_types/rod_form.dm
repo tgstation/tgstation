@@ -16,6 +16,9 @@
 	if(istype(A, /area/wizard_station))
 		to_chat(user, "<span class='warning'>You know better than to trash Wizard Federation property. Best wait until you leave to use [src].</span>")
 		return
+	else if(istype(A, /area/ruin/powered/kinggoat_arena))
+		to_chat(user, "<span class='warning'>Some foul goat based magic is preventing you from using rod form here!. You must beat the king goat or escape the arena somehow before you can use [src].</span>")
+		return
 	for(var/mob/living/M in targets)
 		var/turf/start = get_turf(M)
 		var/obj/effect/immovablerod/wizard/W = new(start, get_ranged_target_turf(start, M.dir, (15 + spell_level * 3)))

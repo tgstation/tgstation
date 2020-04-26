@@ -129,7 +129,7 @@
 		if(burn_time_remaining() < MAXIMUM_BURN_TIMER)
 			flame_expiry_timer = world.time + MAXIMUM_BURN_TIMER
 	else
-		fuel_added = CLAMP(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
+		fuel_added = clamp(fuel_added + amount, 0, MAXIMUM_BURN_TIMER)
 
 /obj/structure/fireplace/proc/burn_time_remaining()
 	if(lit)

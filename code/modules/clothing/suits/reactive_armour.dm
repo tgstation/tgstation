@@ -153,7 +153,7 @@
 	siemens_coefficient = -1
 	var/zap_power = 25000
 	var/zap_range = 20
-	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_IS_TESLA
+	var/zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
 /obj/item/clothing/suit/armor/reactive/tesla/dropped(mob/user)
 	..()

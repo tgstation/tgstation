@@ -114,7 +114,6 @@
 					/obj/item/clothing/head/cueball = 1,
 					/obj/item/clothing/under/suit/white_on_white = 1,
 					/obj/item/clothing/under/costume/sailor = 1,
-					/obj/item/clothing/ears/headphones = 2,
 					/obj/item/clothing/head/delinquent = 1,
 					/obj/item/clothing/head/wig/random = 3,
 					/obj/item/clothing/head/shrine_wig = 1,
@@ -126,7 +125,7 @@
 					/obj/item/gohei = 1)
 	contraband = list(/obj/item/clothing/suit/judgerobe = 1,
 					  /obj/item/clothing/head/powdered_wig = 1,
-					  /obj/item/gun/magic/wand = 2,
+					  /obj/item/gun/magic/wand/nothing = 2,
 					  /obj/item/clothing/glasses/sunglasses/garb = 2,
 					  /obj/item/clothing/glasses/blindfold = 1,
 					  /obj/item/clothing/mask/muzzle = 2)
@@ -146,6 +145,7 @@
 	default_price = 180
 	extra_price = 360
 	payment_department = ACCOUNT_SRV
+	light_mask="theater-light-mask"
 
 /obj/machinery/vending/autodrobe/canLoadItem(obj/item/I,mob/user)
 	return (I.type in products)

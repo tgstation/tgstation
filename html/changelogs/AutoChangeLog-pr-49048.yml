@@ -1,4 +1,0 @@
-author: "Denton"
-delete-after: True
-changes: 
-  - tweak: "Constructed display cases no longer spawn with an alarm that bolts all nearby doors."

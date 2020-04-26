@@ -6,7 +6,7 @@
 	transfer_access = ACCESS_HEADS
 	requires_ntnet = FALSE
 	size = 4
-	tgui_id = "ntos_crew_manifest"
+	tgui_id = "NtosCrewManifest"
 	ui_x = 400
 	ui_y = 480
 

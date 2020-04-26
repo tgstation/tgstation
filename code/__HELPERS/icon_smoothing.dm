@@ -61,7 +61,7 @@
 	var/adjacencies = 0
 
 	var/atom/movable/AM
-	if(ismovableatom(A))
+	if(ismovable(A))
 		AM = A
 		if(AM.can_be_unanchored && !AM.anchored)
 			return 0

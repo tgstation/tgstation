@@ -40,9 +40,8 @@
 		. = ..()
 
 /obj/item/modular_computer/laptop/update_overlays()
-	. = ..()
 	if(screen_on)
-		..()
+		return ..()
 	else
 		cut_overlays()
 		icon_state = icon_state_closed

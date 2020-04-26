@@ -30,6 +30,6 @@
 		var/F = file("broken_icons.txt")
 		fdel(F)
 		WRITE_FILE(F, text)
-		to_chat(world, "Completely successfully and written to [F]")
+		to_chat(world, "Completely successfully and written to [F]", confidential = TRUE)
 
 

@@ -1,5 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes: 
-  - balance: "It is now possible to use an actual defibrillator unit as a stand-in for the borg defib upgrade, allowing medical borgs to revive crew without cloning at shift start."
-  - spellcheck: "Borgs now get a message when receiving any upgrade."

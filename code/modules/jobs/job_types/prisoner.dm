@@ -7,6 +7,7 @@
 	total_positions = 0
 	spawn_positions = 2
 	supervisors = "the security team"
+	selection_color = "#ffe1c3"
 
 	outfit = /datum/outfit/job/prisoner
 

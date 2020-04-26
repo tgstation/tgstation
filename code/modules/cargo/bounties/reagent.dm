@@ -238,8 +238,8 @@
 		/datum/reagent/medicine/atropine,\
 		/datum/reagent/medicine/cryoxadone,\
 		/datum/reagent/medicine/salbutamol,\
-		/datum/reagent/medicine/rhigoxane,\
-		/datum/reagent/medicine/trophazole,\
+		/datum/reagent/medicine/C2/hercuri,\
+		/datum/reagent/medicine/C2/probital,\
 		/datum/reagent/drug/methamphetamine,\
 		/datum/reagent/drug/crank,\
 		/datum/reagent/nitrous_oxide,\

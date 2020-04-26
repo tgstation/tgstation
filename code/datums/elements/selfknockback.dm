@@ -14,12 +14,12 @@ clamping the Knockback_Force value below. */
 		RegisterSignal(target, COMSIG_ITEM_AFTERATTACK, .proc/Item_SelfKnockback)
 	else if(isprojectile(target))
 		RegisterSignal(target, COMSIG_PROJECTILE_FIRE, .proc/Projectile_SelfKnockback)
-	else	
+	else
 		return ELEMENT_INCOMPATIBLE
-	
+
 	override_throw_val = throw_amount
 	override_speed_val = speed_amount
-	
+
 /datum/element/selfknockback/Detach(datum/source, force)
 	. = ..()
 	UnregisterSignal(source, list(COMSIG_ITEM_AFTERATTACK, COMSIG_PROJECTILE_FIRE))
@@ -40,8 +40,8 @@ clamping the Knockback_Force value below. */
 	if(isturf(attacktarget) && !attacktarget.density)
 		return
 	if(proximity_flag || (get_dist(attacktarget, usertarget) <= I.reach))
-		var/knockback_force = Get_Knockback_Force(CLAMP(CEILING((I.force / 10), 1), 1, 5))
-		var/knockback_speed = Get_Knockback_Speed(CLAMP(knockback_force, 1, 5))
+		var/knockback_force = Get_Knockback_Force(clamp(CEILING((I.force / 10), 1), 1, 5))
+		var/knockback_speed = Get_Knockback_Speed(clamp(knockback_force, 1, 5))
 
 		var/target_angle = Get_Angle(attacktarget, usertarget)
 		var/move_target = get_ranged_target_turf(usertarget, angle2dir(target_angle), knockback_force)
@@ -52,8 +52,8 @@ clamping the Knockback_Force value below. */
 	if(!P.firer)
 		return
 
-	var/knockback_force = Get_Knockback_Force(CLAMP(CEILING((P.damage / 10), 1), 1, 5))
-	var/knockback_speed = Get_Knockback_Speed(CLAMP(knockback_force, 1, 5))
+	var/knockback_force = Get_Knockback_Force(clamp(CEILING((P.damage / 10), 1), 1, 5))
+	var/knockback_speed = Get_Knockback_Speed(clamp(knockback_force, 1, 5))
 
 	var/atom/movable/knockback_target = P.firer
 	var/move_target = get_edge_target_turf(knockback_target, angle2dir(P.original_angle+180))

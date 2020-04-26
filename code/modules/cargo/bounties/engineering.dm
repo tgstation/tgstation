@@ -19,6 +19,11 @@
 	description = "The non-human staff of Station 88 has been volunteered to test performance enhancing drugs. Ship them a tank full of Nitryl so they can get started."
 	gas_type = /datum/gas/nitryl
 
+/datum/bounty/item/engineering/gas/freon_tank
+	name = "Full Tank of Freon"
+	description = "The Supermatter of station 33 has started the delamination process. Deliver a tank of Freon gas to help them stop it!"
+	gas_type = /datum/gas/freon
+
 /datum/bounty/item/engineering/gas/tritium_tank
 	name = "Full Tank of Tritium"
 	description = "Station 49 is looking to kickstart their research program. Ship them a tank full of Tritium."

@@ -13,9 +13,9 @@
 	owner.grant_language(/datum/language/slime, TRUE, TRUE, LANGUAGE_GLAND)
 
 /obj/item/organ/heart/gland/slime/Remove(mob/living/carbon/M, special = 0)
-	..()
 	owner.faction -= "slime"
 	owner.remove_language(/datum/language/slime, TRUE, TRUE, LANGUAGE_GLAND)
+	..()
 
 /obj/item/organ/heart/gland/slime/activate()
 	to_chat(owner, "<span class='warning'>You feel nauseated!</span>")

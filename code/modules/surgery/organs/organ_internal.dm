@@ -135,7 +135,7 @@
 		return
 	if(maximum < damage)
 		return
-	damage = CLAMP(damage + d, 0, maximum)
+	damage = clamp(damage + d, 0, maximum)
 	var/mess = check_damage_thresholds(owner)
 	prev_damage = damage
 	if(mess && owner)
@@ -203,3 +203,15 @@
 		if(!getorganslot(ORGAN_SLOT_EARS))
 			var/obj/item/organ/ears/ears = new()
 			ears.Insert(src)
+
+
+/** get_availability
+  * returns whether the species should innately have this organ.
+  *
+  * regenerate organs works with generic organs, so we need to get whether it can accept certain organs just by what this returns.
+  * This is set to return true or false, depending on if a species has a specific organless trait. stomach for example checks if the species has NOSTOMACH and return based on that.
+  * Arguments:
+  * S - species, needed to return whether the species has an organ specific trait
+  */
+/obj/item/organ/proc/get_availability(datum/species/S)
+	return TRUE

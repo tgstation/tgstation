@@ -233,7 +233,7 @@
 	if(!isliving(mover)) //No stowaways
 		return FALSE
 
-/obj/machinery/scanner_gate/luxury_shuttle/Crossed(atom/movable/AM)
+/obj/machinery/scanner_gate/luxury_shuttle/auto_scan(atom/movable/AM)
 	return
 
 /obj/machinery/scanner_gate/luxury_shuttle/attackby(obj/item/W, mob/user, params)

@@ -32,6 +32,13 @@
 	required_count = 3
 	wanted_types = list(/obj/item/reagent_containers/food/snacks/icecreamsandwich)
 
+/datum/bounty/item/chef/strawberryicecreamsandwich
+	name = " Strawberry Ice Cream Sandwiches"
+	description = "Upper management has been screaming non-stop for more flavourful ice cream. Please send some."
+	reward = 5000
+	required_count = 3
+	wanted_types = list(/obj/item/reagent_containers/food/snacks/strawberryicecreamsandwich)
+
 /datum/bounty/item/chef/bread
 	name = "Bread"
 	description = "Problems with central planning have led to bread prices skyrocketing. Ship some bread to ease tensions."

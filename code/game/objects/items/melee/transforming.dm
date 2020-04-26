@@ -22,6 +22,8 @@
 	else
 		if(attack_verb_off.len)
 			attack_verb = attack_verb_off
+		if(embedding)
+			updateEmbedding()
 	if(sharpness)
 		AddComponent(/datum/component/butchering, 50, 100, 0, hitsound)
 
@@ -53,6 +55,8 @@
 			attack_verb = attack_verb_on
 		icon_state = icon_state_on
 		w_class = w_class_on
+		if(embedding)
+			updateEmbedding()
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
@@ -62,6 +66,9 @@
 			attack_verb = attack_verb_off
 		icon_state = initial(icon_state)
 		w_class = initial(w_class)
+		if(embedding)
+			disableEmbedding()
+
 	transform_messages(user, supress_message_text)
 	add_fingerprint(user)
 	return TRUE

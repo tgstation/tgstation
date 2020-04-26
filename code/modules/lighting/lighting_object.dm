@@ -144,6 +144,9 @@
 /atom/movable/lighting_object/onTransitZ()
 	return
 
+/atom/movable/lighting_object/washed(var/washer)
+	return
+
 // Override here to prevent things accidentally moving around overlays.
 /atom/movable/lighting_object/forceMove(atom/destination, no_tp=FALSE, harderforce = FALSE)
 	if(harderforce)

@@ -1055,6 +1055,7 @@
 /obj/machinery/power/terminal{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/BMPship/Aft)
 "ed" = (

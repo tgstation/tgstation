@@ -70,13 +70,9 @@
 /obj/item/clothing/suit/space/hostile_environment/Initialize()
 	. = ..()
 	AddComponent(/datum/component/spraycan_paintable)
-	START_PROCESSING(SSobj, src)
-
-/obj/item/clothing/suit/space/hostile_environment/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
 
 /obj/item/clothing/suit/space/hostile_environment/process()
+	. = ..()
 	var/mob/living/carbon/C = loc
 	if(istype(C) && prob(2)) //cursed by bubblegum
 		if(prob(15))

@@ -1,7 +1,7 @@
 /datum/disease/gastrolosis
 	name = "Invasive Gastrolosis"
 	max_stages = 4
-	spread_text = "Degenerative Virus"
+	spread_text = "Unknown"
 	spread_flags = DISEASE_SPREAD_SPECIAL
 	cure_text = "Salt and mutadone"
 	agent = "Agent S and DNA restructuring"
@@ -56,6 +56,7 @@
 				return
 			if(shell && eyes && tongue && prob(5))
 				affected_mob.set_species(/datum/species/snail)
+				affected_mob.client?.give_award(/datum/award/achievement/misc/snail, affected_mob)
 				affected_mob.visible_message("<span class='warning'>[affected_mob] turns into a snail!</span>", \
 				"<span class='boldnotice'>You turned into a snail person! You feel an urge to cccrrraaawwwlll...</span>")
 				cure()
@@ -68,7 +69,7 @@
 
 /datum/disease/gastrolosis/cure()
 	. = ..()
-	if(!is_species(affected_mob, /datum/species/snail)) //undo all the snail fuckening
+	if(affected_mob && !is_species(affected_mob, /datum/species/snail)) //undo all the snail fuckening
 		var/mob/living/carbon/human/H = affected_mob
 		var/obj/item/organ/tongue/tongue = locate(/obj/item/organ/tongue/snail) in H.internal_organs
 		if(tongue)
@@ -81,5 +82,5 @@
 		var/obj/item/storage/backpack/bag = H.get_item_by_slot(ITEM_SLOT_BACK)
 		if(istype(bag, /obj/item/storage/backpack/snail))
 			bag.emptyStorage()
-			H.doUnEquip(bag, TRUE, no_move = TRUE)
+			H.temporarilyRemoveItemFromInventory(bag, TRUE)
 			qdel(bag)

@@ -239,7 +239,7 @@
 
 /obj/effect/proc_holder/cultmark
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/cult_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/cult_target.dmi'
 	var/datum/action/innate/cult/master/cultmark/attached_action
 
 /obj/effect/proc_holder/cultmark/Destroy()
@@ -272,7 +272,7 @@
 		var/area/A = get_area(target)
 		attached_action.cooldown = world.time + attached_action.base_cooldown
 		addtimer(CALLBACK(attached_action.owner, /mob.proc/update_action_buttons_icon), attached_action.base_cooldown)
-		C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+		C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
 		C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
 		C.cult_team.blood_target_image.pixel_x = -target.pixel_x
 		C.cult_team.blood_target_image.pixel_y = -target.pixel_y
@@ -351,7 +351,7 @@
 	var/area/A = get_area(target)
 	cooldown = world.time + base_cooldown
 	addtimer(CALLBACK(owner, /mob.proc/update_action_buttons_icon), base_cooldown)
-	C.cult_team.blood_target_image = image('icons/effects/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
+	C.cult_team.blood_target_image = image('icons/effects/mouse_pointers/cult_target.dmi', target, "glow", ABOVE_MOB_LAYER)
 	C.cult_team.blood_target_image.appearance_flags = RESET_COLOR
 	C.cult_team.blood_target_image.pixel_x = -target.pixel_x
 	C.cult_team.blood_target_image.pixel_y = -target.pixel_y
@@ -412,7 +412,7 @@
 
 /obj/effect/proc_holder/pulse
 	active = FALSE
-	ranged_mousepointer = 'icons/effects/throw_target.dmi'
+	ranged_mousepointer = 'icons/effects/mouse_pointers/throw_target.dmi'
 	var/datum/action/innate/cult/master/pulse/attached_action
 
 /obj/effect/proc_holder/pulse/Destroy()

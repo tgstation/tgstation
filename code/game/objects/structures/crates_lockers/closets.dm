@@ -72,6 +72,8 @@
 
 /obj/structure/closet/proc/closet_update_overlays(list/new_overlays)
 	. = new_overlays
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
 	if(!opened)
 		if(icon_door)
 			. += "[icon_door]_door"
@@ -80,6 +82,9 @@
 		if(welded)
 			. += icon_welded
 		if(secure && !broken)
+			//Overlay is similar enough for both that we can use the same mask for both
+			luminosity = 1
+			SSvis_overlays.add_vis_overlay(src, icon, "locked", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 			if(locked)
 				. += "locked"
 			else
@@ -388,7 +393,7 @@
 /obj/structure/closet/container_resist(mob/living/user)
 	if(opened)
 		return
-	if(ismovableatom(loc))
+	if(ismovable(loc))
 		user.changeNext_move(CLICK_CD_BREAKOUT)
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		var/atom/movable/AM = loc

@@ -68,7 +68,7 @@
 		name = "poster - [name]"
 		desc = "A large piece of space-resistant printed paper. [desc]"
 
-	addtimer(CALLBACK(src, /datum.proc/AddComponent, /datum/component/beauty, 300), 0)
+	addtimer(CALLBACK(src, /datum.proc/_AddComponent, list(/datum/component/beauty, 300)), 0)
 
 /obj/structure/sign/poster/proc/randomise(base_type)
 	var/list/poster_types = subtypesof(base_type)
@@ -386,8 +386,8 @@
 	desc = "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
 	icon_state = "poster39"
 
-/obj/structure/sign/poster/contraband/sun_kist
-	name = "Sun-kist"
+/obj/structure/sign/poster/contraband/starkist
+	name = "Star-kist"
 	desc = "Drink the stars!"
 	icon_state = "poster40"
 
@@ -440,7 +440,7 @@
 	icon_state = "poster1_legit"
 
 /obj/structure/sign/poster/official/nanotrasen_logo
-	name = "Nanotrasen Logo"
+	name = "\improper Nanotrasen logo"
 	desc = "A poster depicting the Nanotrasen logo."
 	icon_state = "poster2_legit"
 

@@ -81,7 +81,7 @@
 //Gets the topmost teleportable container
 /obj/item/swapper/proc/get_teleportable_container()
 	var/atom/movable/teleportable = src
-	while(ismovableatom(teleportable.loc))
+	while(ismovable(teleportable.loc))
 		var/atom/movable/AM = teleportable.loc
 		if(AM.anchored)
 			break

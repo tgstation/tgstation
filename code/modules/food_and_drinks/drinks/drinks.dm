@@ -8,16 +8,12 @@
 	icon_state = null
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
-	reagent_flags = OPENCONTAINER
+	reagent_flags = OPENCONTAINER | DUNKABLE
 	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,15,20,25,30,50)
 	volume = 50
 	resistance_flags = NONE
 	var/isGlass = TRUE //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
-
-/obj/item/reagent_containers/food/drinks/on_reagent_change(changetype)
-	. = ..()
-	gulp_size = max(round(reagents.total_volume / 5), 5)
 
 /obj/item/reagent_containers/food/drinks/attack(mob/living/M, mob/user, def_zone)
 
@@ -284,6 +280,7 @@
 	if(cap_on)
 		spillable = FALSE
 		add_overlay(cap_overlay, TRUE)
+		update_icon()
 
 /obj/item/reagent_containers/food/drinks/waterbottle/examine(mob/user)
 	. = ..()
@@ -328,11 +325,19 @@
 		return FALSE
 	. = ..()
 
-/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/M, mob/user, obj/target)
-	if(cap_on && reagents.total_volume && istype(M))
-		to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+/obj/item/reagent_containers/food/drinks/waterbottle/attack(mob/target, mob/user, def_zone)
+	if(!target)
 		return
-	. = ..()
+
+	if(user.a_intent != INTENT_HARM)
+		if(cap_on && reagents.total_volume && istype(target))
+			to_chat(user, "<span class='warning'>You must remove the cap before you can do that!</span>")
+			return
+
+		return ..()
+
+	if(!cap_on)
+		SplashReagents(target)
 
 /obj/item/reagent_containers/food/drinks/waterbottle/afterattack(obj/target, mob/user, proximity)
 	if(cap_on && (target.is_refillable() || target.is_drainable() || (reagents.total_volume && user.a_intent == INTENT_HARM)))
@@ -508,12 +513,15 @@
 	volume = 20
 	amount_per_transfer_from_this = 5
 	isGlass = FALSE
+	/// Allows the lean sprite to display upon crafting
+	var/random_sprite = TRUE
 
 /obj/item/reagent_containers/food/drinks/colocup/Initialize()
 	.=..()
-	icon_state = "colocup[rand(0, 6)]"
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
+	if (random_sprite)
+		icon_state = "colocup[rand(0, 6)]"
 
 //////////////////////////drinkingglass and shaker//
 //Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
@@ -568,6 +576,15 @@
 	spillable = FALSE
 	isGlass = FALSE
 	custom_price = 45
+	var/pierced = FALSE
+	obj_flags = CAN_BE_HIT
+
+
+/obj/item/reagent_containers/food/drinks/soda_cans/random/Initialize()
+	..()
+	var/T = pick(subtypesof(/obj/item/reagent_containers/food/drinks/soda_cans) - /obj/item/reagent_containers/food/drinks/soda_cans/random)
+	new T(loc)
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/reagent_containers/food/drinks/soda_cans/suicide_act(mob/living/carbon/human/H)
 	if(!reagents.total_volume)
@@ -601,7 +618,25 @@
 		crushed_can.icon_state = icon_state
 		qdel(src)
 		return TRUE
+	var/chugged = reagents.total_volume
 	. = ..()
+	if(is_drainable() && pierced && chugged)
+		M.changeNext_move(CLICK_CD_RAPID)
+		if(iscarbon(M))
+			var/mob/living/carbon/broh = M
+			broh.adjustOxyLoss(2)
+			broh.losebreath++
+			switch(broh.losebreath)
+				if(-INFINITY to 0)
+				if(1 to 2)
+					if(prob(30))
+						user.visible_message("<b>[broh]</b>'s eyes water as [broh.p_they()] chug the can of [src]!")
+				if(3 to 6)
+					if(prob(20))
+						user.visible_message("<b>[broh]</b> makes \an [pick(list("uncomfortable", "gross", "troubling"))] gurgling noise as [broh.p_they()] chug the can of [src]!")
+				if(9 to INFINITY)
+					broh.vomit(2, stun=FALSE)
+
 
 /obj/item/reagent_containers/food/drinks/soda_cans/bullet_act(obj/projectile/P)
 	. = ..()
@@ -623,6 +658,24 @@
 	if(!is_drainable())
 		open_soda(user)
 	return ..()
+
+/obj/item/reagent_containers/food/drinks/soda_cans/attacked_by(obj/item/I, mob/living/user)
+	if(I.sharpness && !pierced && user && user.a_intent != INTENT_HARM)
+		user.visible_message("<b>[user]</b> pierces [src] with [I].", "<span class='notice'>You pierce \the [src] with [I].</span>")
+		playsound(src, "can_open", 50, TRUE)
+		pierced = TRUE
+		return
+	else if(I.force)
+		user.visible_message("<b>[user]</b> crushes [src] with [I]! Party foul!", "<span class='warning'>You crush \the [src] with [I]! Party foul!</span>")
+		playsound(src, "can_open", 50, TRUE)
+		var/obj/item/trash/can/crushed_can = new /obj/item/trash/can(src.loc)
+		crushed_can.icon_state = icon_state
+		var/atom/throw_target = get_edge_target_turf(crushed_can, pick(GLOB.alldirs))
+		crushed_can.throw_at(throw_target, rand(1,3), 7)
+		qdel(src)
+		return
+
+	. = ..()
 
 /obj/item/reagent_containers/food/drinks/soda_cans/cola
 	name = "Space Cola"
@@ -658,7 +711,7 @@
 /obj/item/reagent_containers/food/drinks/soda_cans/sol_dry
 	name = "Sol Dry"
 	desc = "Maybe this will help your tummy feel better. Maybe not."
-	icon_state = "ginger_ale"
+	icon_state = "sol_dry"
 	list_reagents = list(/datum/reagent/consumable/sol_dry = 30)
 	foodtype = SUGAR
 
@@ -699,7 +752,7 @@
 
 /obj/item/reagent_containers/food/drinks/soda_cans/pwr_game
 	name = "Pwr Game"
-	desc = "The only drink with the PWR that true gamers crave."
+	desc = "The only drink with the PWR that true gamers crave. When a gamer talks about gamerfuel, this is what they're literally referring to."
 	icon_state = "purple_can"
 	list_reagents = list(/datum/reagent/consumable/pwr_game = 30)
 

@@ -5,24 +5,22 @@
 	desc = "Yell at coderbrush."
 	icon = null
 	icon_state = ""
-	item_flags = DROPDEL
+	slot_flags = NONE
 	var/mob/living/held_mob
-	var/can_head = TRUE
 	var/destroying = FALSE
 
-/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, _worn_state, head_icon, lh_icon, rh_icon, _can_head = TRUE)
+/obj/item/clothing/head/mob_holder/Initialize(mapload, mob/living/M, worn_state, head_icon, lh_icon, rh_icon, worn_slot_flags = NONE)
 	. = ..()
-	can_head = _can_head
 	if(head_icon)
 		mob_overlay_icon = head_icon
-	if(_worn_state)
-		item_state = _worn_state
+	if(worn_state)
+		item_state = worn_state
 	if(lh_icon)
 		lefthand_file = lh_icon
 	if(rh_icon)
 		righthand_file = rh_icon
-	if(!can_head)
-		slot_flags = NONE
+	if(worn_slot_flags)
+		slot_flags = worn_slot_flags
 	deposit(M)
 
 /obj/item/clothing/head/mob_holder/Destroy()
@@ -44,6 +42,11 @@
 
 /obj/item/clothing/head/mob_holder/proc/update_visuals(mob/living/L)
 	appearance = L.appearance
+
+/obj/item/clothing/head/mob_holder/dropped()
+	..()
+	if(held_mob && isturf(loc))
+		release()
 
 /obj/item/clothing/head/mob_holder/proc/release(del_on_release = TRUE)
 	if(!held_mob)
@@ -81,4 +84,4 @@
 	if(!D)
 		return ..()
 	icon = 'icons/mob/drone.dmi'
-	icon_state = "[D.visualAppearence]_hat"
+	icon_state = "[D.visualAppearance]_hat"

@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Dynamic revs runtime and infinite loss announcement fixed."

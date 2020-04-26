@@ -1,0 +1,41 @@
+@use 'sass:color';
+@use '../base.scss';
+
+.Layout__content {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  margin-bottom: -6px;
+
+  // Fancy scrollbar
+  scrollbar-base-color: color.scale(
+    base.$color-bg,
+    $lightness: -25%);
+  scrollbar-face-color: color.scale(
+    base.$color-bg,
+    $lightness: 10%);
+  scrollbar-3dlight-color: color.scale(
+    base.$color-bg,
+    $lightness: 0%);
+  scrollbar-highlight-color: color.scale(
+    base.$color-bg,
+    $lightness: 0%);
+  scrollbar-track-color: color.scale(
+    base.$color-bg,
+    $lightness: -25%);
+  scrollbar-arrow-color: color.scale(
+    base.$color-bg,
+    $lightness: 50%);
+  scrollbar-shadow-color: color.scale(
+    base.$color-bg,
+    $lightness: 10%);
+}
+
+.Layout__content--scrollable {
+  overflow-y: scroll;
+  margin-bottom: 0;
+}
