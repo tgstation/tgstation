@@ -292,7 +292,7 @@ SUBSYSTEM_DEF(explosions)
 			var/list/items = list()
 			for(var/I in T)
 				var/atom/A = I
-				if (A.contents && A.contents.len && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
+				if (length(A.contents) && !(A.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) //The atom/contents_explosion() proc returns null if the contents ex_acting has been handled by the atom, and TRUE if it hasn't.
 					items += A.GetAllContents()
 			for(var/O in items)
 				var/atom/A = O

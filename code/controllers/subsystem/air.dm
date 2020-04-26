@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(air)
 		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		if(state != SS_RUNNING)
 			return
-		resumed = 0
+		resumed = FALSE
 		currentpart = oldpart
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
