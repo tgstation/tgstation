@@ -1,4 +1,0 @@
-author: "bobbahbrown"
-delete-after: True
-changes: 
-  - rscadd: "Added a new chat message overlay system; now you can see all those wacky messages people are shouting at you with ease! Welcome to the Runechat era."
