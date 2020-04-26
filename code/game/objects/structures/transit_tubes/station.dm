@@ -149,6 +149,8 @@
 	addtimer(CALLBACK(src, .proc/start_stopped, pod), 5)
 
 /obj/structure/transit_tube/station/proc/start_stopped(obj/structure/transit_tube_pod/pod)
+	if(QDELETED(pod))
+		return
 	if(reverse_launch)
 		pod.setDir(tube_dirs[1]) //turning the pod around for next launch.
 	launch_cooldown = world.time + cooldown_delay

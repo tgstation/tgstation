@@ -153,7 +153,7 @@
 	entry_vent = null
 
 /obj/structure/spider/spiderling/proc/vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
-	if(!exit_vent || exit_vent.welded)
+	if(QDELETED(exit_vent) || exit_vent.welded)
 		cancel_vent_move()
 		return
 
@@ -162,7 +162,7 @@
 	addtimer(CALLBACK(src, .proc/do_vent_move, exit_vent, travel_time), travel_time)
 
 /obj/structure/spider/spiderling/proc/do_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent, travel_time)
-	if(!exit_vent || exit_vent.welded)
+	if(QDELETED(exit_vent) || exit_vent.welded)
 		cancel_vent_move()
 		return
 
@@ -172,7 +172,7 @@
 	addtimer(CALLBACK(src, .proc/finish_vent_move, exit_vent), travel_time)
 
 /obj/structure/spider/spiderling/proc/finish_vent_move(obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
-	if(!exit_vent || exit_vent.welded)
+	if(QDELETED(exit_vent) || exit_vent.welded)
 		cancel_vent_move()
 		return
 	forceMove(exit_vent.loc)

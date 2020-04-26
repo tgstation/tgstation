@@ -190,7 +190,7 @@
 		..()
 
 /mob/living/simple_animal/cow/proc/cow_tipped(mob/living/carbon/M)
-	if(!M || stat)
+	if(QDELETED(M) || stat)
 		return
 	icon_state = icon_living
 	var/external

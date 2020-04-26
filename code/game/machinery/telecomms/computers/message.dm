@@ -444,8 +444,11 @@
 	return attack_hand(usr)
 
 /obj/machinery/computer/message_monitor/proc/finish_bruteforce(mob/user)
-	if(user)
+	if(!QDELETED(user))
 		BruteForce(user)
+		return
+	hacking = FALSE
+	screen = MSG_MON_SCREEN_MAIN
 
 #undef MSG_MON_SCREEN_MAIN
 #undef MSG_MON_SCREEN_LOGS

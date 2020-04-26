@@ -96,7 +96,7 @@ effective or pretty fucking useless.
 		to_chat(user, "<span class='warning'>The radioactive microlaser is still recharging.</span>")
 
 /obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M)
-	if(!M)
+	if(QDELETED(M))
 		return
 	if(intensity >= 5)
 		M.apply_effect(round(intensity/0.075), EFFECT_UNCONSCIOUS)

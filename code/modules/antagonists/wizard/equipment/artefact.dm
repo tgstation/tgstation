@@ -356,7 +356,7 @@
 		cooldown = world.time + cooldown_time
 
 /obj/item/voodoo/proc/reset(mob/user)
-	if(!user)
+	if(QDELETED(user))
 		return
 	user.reset_perspective(null)
 	user.unset_machine()
