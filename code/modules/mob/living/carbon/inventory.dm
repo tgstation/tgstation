@@ -155,3 +155,35 @@
 /mob/living/carbon/proc/get_holding_bodypart_of_item(obj/item/I)
 	var/index = get_held_index_of_item(I)
 	return index && hand_bodyparts[index]
+
+/mob/living/carbon/proc/give()
+	var/obj/item/receiving = get_active_held_item()
+	if(!receiving)
+		return
+	visible_message("<span class='notice'>[src] is offering [receiving]</span>", "<span class='notice'You offer [receiving]</span>", null, 2)
+	for(var/mob/living/carbon/C in orange(1, src))
+		var/obj/screen/alert/give/G = C.throw_alert("Give", /obj/screen/alert/give)
+		if(!G)
+			return
+		G.name = "[src] is offering [receiving]"
+		G.desc = "[src] is offering you [receiving]. Click this alert to accept it."
+		G.icon_state = "template"
+		G.cut_overlays()
+		G.add_overlay(receiving)
+		G.receiving = receiving
+		G.giver = src
+		addtimer(CALLBACK(C, .proc/clear_alert, "Give"), 50)
+
+/mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
+	if(get_dist(src, giver) > 1)
+		to_chat(src, "<span class='warning'>[giver] has gone out of range! </span>")
+		return
+	if(!I || giver.get_active_held_item() != I)
+		to_chat(src, "<span class='warning'>[giver] is no longer holding the item they wanted to give you! </span>")
+		return
+	if(!get_empty_held_indexes())
+		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
+		return
+	giver.dropItemToGround(I)
+	put_in_hands(I)
+
