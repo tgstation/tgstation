@@ -8,8 +8,11 @@
 	max_integrity = 350
 	integrity_failure = 0.2
 	circuit = /obj/item/circuitboard/machine/proto_sh_emitter
+	///Store the powered shields placed in the world, used when turned off to removed them
 	var/list/signs = list()
+	///Check if the machine is turned on or off
 	var/is_on = FALSE
+	///Check if the machine is locked
 	var/locked = FALSE
 
 /obj/machinery/power/proto_sh_emitter/ComponentInitialize()
@@ -91,7 +94,7 @@
 		log_game("Prototype Shield Emitter turned on at [AREACOORD(Turf)]")
 		is_on = TRUE
 		update_icon_state()
-		switch(dir)
+		switch(dir) //this part check the direction of the machine and create the block in front of it
 			if(NORTH)
 				for(T in block(locate(src.x - 2, src.y + 1, src.z), locate(src.x + 2, src.y + 5, src.z)))
 					outline += T

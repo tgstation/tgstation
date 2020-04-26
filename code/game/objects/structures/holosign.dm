@@ -143,6 +143,7 @@
 		shield_projector = null
 	return ..()
 
+///Proc that takes the thermal conductivity of the turf its on and store it inside a variable
 /obj/machinery/holosign/barrier/power_shield/proc/shield_turf()
 	var/turf/T = loc
 	if(isturf(loc))

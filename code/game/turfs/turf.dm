@@ -14,8 +14,11 @@
 	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
+	///How much health the turf has
 	var/heat_integrity = 100
+	///Maximum health the turf can have
 	var/max_heat_integrity = 100
+	///Variable to store the damage done to a turf
 	var/damage_amount = 0
 
 	var/blocks_air = FALSE
@@ -564,6 +567,7 @@
 			if(nutri_check.nutriment_factor >0)
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
+///Prot to set the damage of the turf, also used to call the windows and doors adjacent_fire_act()
 /turf/proc/set_heat_damage_amount(temperature)
 	var/obj/structure/window/Window
 	for(Window in range(1, src))
@@ -579,6 +583,7 @@
 		to_be_destroyed = FALSE
 		max_fire_temperature_sustained = 0
 
+///Take the damage_amount from the set_heat_damage_amount() and apply it to the turf
 /turf/proc/turf_take_heat_damage(damage_amount)
 	if(QDELETED(src))
 		stack_trace("[src] taking damage after deletion")
