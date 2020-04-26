@@ -1,0 +1,5 @@
+author: "stylemistake"
+delete-after: True
+changes: 
+  - bugfix: "Fixed lighting on Camera Console"
+  - bugfix: "Fixed lighting on Spy Bug (spy glasses in detective's spy glass kit)"
