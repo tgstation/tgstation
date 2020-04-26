@@ -27,12 +27,24 @@
 /obj/item/pushbroom/update_icon_state()
 	icon_state = "broom0"
 
-/// triggered on wield of two handed item
+/**
+  * Handles registering the sweep proc when the broom is wielded
+  *
+  * Arguments:
+  * * source - The source of the on_wield proc call
+  * * user - The user which is wielding the broom
+  */
 /obj/item/pushbroom/proc/on_wield(obj/item/source, mob/user)
 	to_chat(user, "<span class='notice'>You brace the [src] against the ground in a firm sweeping stance.</span>")
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/sweep)
 
-/// triggered on unwield of two handed item
+/**
+  * Handles unregistering the sweep proc when the broom is unwielded
+  *
+  * Arguments:
+  * * source - The source of the on_unwield proc call
+  * * user - The user which is unwielding the broom
+  */
 /obj/item/pushbroom/proc/on_unwield(obj/item/source, mob/user)
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
@@ -42,6 +54,14 @@
 		return
 	sweep(user, A, FALSE)
 
+/**
+  * Attempts to push up to BROOM_PUSH_LIMIT atoms from a given location the user's faced direction
+  *
+  * Arguments:
+  * * user - The user of the pushbroom
+  * * A - The atom which is located at the location to push atoms from
+  * * moving - Boolean argument declaring if the sweep is from generated from movement or not
+  */
 /obj/item/pushbroom/proc/sweep(mob/user, atom/A, moving = TRUE)
 	var/turf/target = moving ? user.loc : isturf(A) ? A : A.loc
 	if (!isturf(target))
@@ -66,6 +86,13 @@
 			to_chat(user, "<span class='notice'>You sweep the pile of garbage into [target_bin].</span>")
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 30, TRUE, -1)
 
+/**
+  * Attempts to insert the push broom into a janicart
+  *
+  * Arguments:
+  * * user - The user of the push broom
+  * * J - The janicart to insert into
+  */
 /obj/item/pushbroom/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J) //bless you whoever fixes this copypasta
 	J.put_in_cart(src, user)
 	J.mybroom=src
