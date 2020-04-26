@@ -11,12 +11,14 @@
 	tgui_id = "NtosCyborgRemoteMonitor"
 	ui_x = 600
 	ui_y = 800
+	var/theme = "ntos" ///theme of the window (syndicate version overrides this)
 
 /datum/computer_file/program/borg_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()
+	data["theme"] = theme
 
 	data["card"] = FALSE
-	if(computer.GetID())
+	if(checkID())
 		data["card"] = TRUE
 
 	data["cyborgs"] = list()
@@ -67,7 +69,7 @@
 				SEND_SOUND(R.connected_ai, 'sound/machines/twobeep_high.ogg')
 			usr.log_talk(message, LOG_PDA, tag="Cyborg Monitor Program: ID name \"[ID]\" to [R]")
 
-///This proc is used to determin if a borg should be shown in the list (based on the borg's scambled_codes var). Syndicate version overrides this to show only syndicate borgs.
+///This proc is used to determin if a borg should be shown in the list (based on the borg's scrambledcodes var). Syndicate version overrides this to show only syndicate borgs.
 /datum/computer_file/program/borg_monitor/proc/evaluate_borg(mob/living/silicon/robot/R)
 	if((get_turf(computer)).z != (get_turf(R)).z)
 		return FALSE
@@ -75,7 +77,7 @@
 		return FALSE
 	return TRUE
 
-///Get's the ID's name, if one is inserted into the console. This is a seperate proc solely to be overridden by the syndicate version of the app.
+///Gets the ID's name, if one is inserted into the device. This is a seperate proc solely to be overridden by the syndicate version of the app.
 /datum/computer_file/program/borg_monitor/proc/checkID()
 	var/obj/item/card/id/ID = computer.GetID()
 	if(!ID)
@@ -93,7 +95,8 @@
 	available_on_syndinet = TRUE
 	transfer_access = null
 	network_destination = "cyborg remote monitoring"
-	tgui_id = "NtosSyndiCyborgRemoteMonitor"
+//	tgui_id = "NtosSyndiCyborgRemoteMonitor"
+	theme = "syndicate"
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
 	if((get_turf(computer)).z != (get_turf(R)).z)
@@ -103,4 +106,4 @@
 	return TRUE
 
 /datum/computer_file/program/borg_monitor/syndicate/checkID()
-	return "\[CLASSIFIED\]"
+	return "\[CLASSIFIED\]" //no ID is needed for the syndicate version's message function, and the borg will see "[CLASSIFIED]" as the message sender.
