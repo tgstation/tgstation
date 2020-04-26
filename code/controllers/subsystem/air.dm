@@ -33,7 +33,7 @@ SUBSYSTEM_DEF(air)
 
 
 	var/list/currentrun = list()
-	var/currentpart = SSAIR_PIPENETS
+	var/currentpart = SSAIR_REBUILD_PIPENETS
 
 	var/map_loading = TRUE
 	var/list/queued_for_activation
@@ -71,24 +71,18 @@ SUBSYSTEM_DEF(air)
 /datum/controller/subsystem/air/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
 
-	if(pipenets_needing_rebuilt.len) // always do this nonsense first
-		var/oldpart = currentpart
-		src.currentrun = pipenets_needing_rebuilt.Copy()
-		//cache for sanic speed (lists are references anyways)
-		var/list/currentrun = src.currentrun
-		while(currentrun.len)
-			var/obj/machinery/atmospherics/thing = currentrun[currentrun.len]
-			currentrun.len--
-			if(thing && istype(thing, /obj/machinery/atmospherics)) // for some reason some pipenet datums keep making it into the queue and i'm not sure how, since its gated by an istype already
-				thing.build_network()
-				pipenets_needing_rebuilt.Remove(thing)
-			else
-				pipenets_needing_rebuilt.Remove(thing)
+	if(currentpart == SSAIR_REBUILD_PIPENETS)
+		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
+		for(var/thing in pipenet_rebuilds)
+			if(thing)
+				var/obj/machinery/atmospherics/AT = thing
+				AT.build_network()
 		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+		pipenets_needing_rebuilt.Cut()
 		if(state != SS_RUNNING)
 			return
 		resumed = FALSE
-		currentpart = oldpart
+		currentpart = SSAIR_PIPENETS
 
 	if(currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
@@ -150,7 +144,7 @@ SUBSYSTEM_DEF(air)
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
-	currentpart = SSAIR_PIPENETS
+	currentpart = SSAIR_REBUILD_PIPENETS
 
 
 
