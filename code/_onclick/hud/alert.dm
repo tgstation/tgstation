@@ -284,8 +284,8 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/obj/item/receiving
 
 /obj/screen/alert/give/proc/removeAlert()
-	to_chat(owner, "<span class='warning'> You moved out of range of [giver]!</span>")
-	owner.clear_alert(giver)
+	to_chat(owner, "<span class='warning'>[giver] moved out of range of you!</span>")
+	owner.clear_alert("[giver]")
 
 /obj/screen/alert/give/Click(location, control, params)
 	. = ..()
