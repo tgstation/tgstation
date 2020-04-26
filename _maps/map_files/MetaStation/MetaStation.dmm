@@ -71569,6 +71569,11 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"kFd" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/turf/open/floor/plasteel/white,
+/area/science/xenobiology)
 "kIL" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/yellow{
@@ -112479,7 +112484,7 @@ dmr
 ddd
 cTa
 ddn
-cTs
+kFd
 ddu
 daD
 ixE
@@ -112736,7 +112741,7 @@ iFy
 dcV
 cRi
 jcz
-cTs
+kFd
 kbl
 daC
 jhK
