@@ -26,6 +26,7 @@
 #include "code\__DEFINES\atmospherics.dm"
 #include "code\__DEFINES\atom_hud.dm"
 #include "code\__DEFINES\blackmarket.dm"
+#include "code\__DEFINES\botany.dm"
 #include "code\__DEFINES\bsql.config.dm"
 #include "code\__DEFINES\bsql.dm"
 #include "code\__DEFINES\callbacks.dm"
