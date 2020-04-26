@@ -1,3 +1,5 @@
+#define BROOM_PUSH_LIMIT 20
+
 /obj/item/pushbroom
 	name = "push broom"
 	desc = "This is my BROOMSTICK! It can be used manually or braced with two hands to sweep items as you move. It has a telescopic handle for compact storage."
@@ -41,19 +43,12 @@
 	sweep(user, A, FALSE)
 
 /obj/item/pushbroom/proc/sweep(mob/user, atom/A, moving = TRUE)
-	var/turf/target
-	if (!moving)
-		if (isturf(A))
-			target = A
-		else
-			target = A.loc
-	else
-		target = user.loc
+	var/turf/target = moving ? user.loc : isturf(A) ? A : A.loc
 	if (!isturf(target))
 		return
 	if (locate(/obj/structure/table) in target.contents)
 		return
-	var/i = 0
+	var/i = 1
 	var/turf/target_turf = get_step(target, user.dir)
 	var/obj/machinery/disposal/bin/target_bin = locate(/obj/machinery/disposal/bin) in target_turf.contents
 	for(var/obj/item/garbage in target.contents)
@@ -63,9 +58,9 @@
 			else
 				garbage.Move(target_turf, user.dir)
 			i++
-		if(i > 19)
+		if(i > BROOM_PUSH_LIMIT)
 			break
-	if(i > 0)
+	if(i > 1)
 		if (target_bin)
 			target_bin.update_icon()
 			to_chat(user, "<span class='notice'>You sweep the pile of garbage into [target_bin].</span>")
@@ -75,3 +70,10 @@
 	J.put_in_cart(src, user)
 	J.mybroom=src
 	J.update_icon()
+
+/obj/item/pushbroom/cyborg
+	name = "robotic push broom"
+
+/obj/item/pushbroom/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
+	to_chat(user, "<span class='notice'>You cannot place your [src] into the [J]</span>")
+	return FALSE
