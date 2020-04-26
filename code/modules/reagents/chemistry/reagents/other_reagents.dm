@@ -1055,6 +1055,10 @@
 	color = "#A5F0EE" // rgb: 165, 240, 238
 	taste_description = "sourness"
 	reagent_weight = 0.6 //so it sprays further
+	
+/datum/reagent/space_cleaner/on_mob_life(mob/living/carbon/M)
+	M.adjustToxLoss(5)
+	..()
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
 	if(istype(O, /obj/effect/decal/cleanable))
