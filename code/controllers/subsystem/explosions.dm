@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(explosions)
 	wait = 1
 	flags = SS_TICKER|SS_NO_INIT
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
-
+	critical_subsystem = TRUE
 
 	var/cost_lowturf = 0
 	var/cost_medturf = 0
@@ -399,6 +399,11 @@ SUBSYSTEM_DEF(explosions)
 
 /datum/controller/subsystem/explosions/fire(resumed = 0)
 	var/timer = TICK_USAGE_REAL
+	if(is_exploding())
+		for(var/S in Master.subsystems)
+			var/datum/controller/subsystem/SS = S
+			if(!SS.critical_subsystem)
+				SS.postpone()
 	if(currentpart == SSEXPLOSIONS_TURFS)
 		var/list/low_turf = lowturf
 		var/list/med_turf = medturf

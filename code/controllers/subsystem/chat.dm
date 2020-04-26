@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(chat)
 	wait = 1
 	priority = FIRE_PRIORITY_CHAT
 	init_order = INIT_ORDER_CHAT
+	critical_subsystem = TRUE
 
 	var/list/payload = list()
 

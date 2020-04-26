@@ -83,6 +83,9 @@
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
 
+	// Critical subsystem, don't pause this during explosions.
+	var/critical_subsystem = FALSE
+
 
 //Do not override
 ///datum/controller/subsystem/New()
