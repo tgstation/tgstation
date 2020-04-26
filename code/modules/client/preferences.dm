@@ -1731,7 +1731,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
 
-	if((randomise[RANDOM_SPECIES] || randomise[RANDOM_HARDCORE])&& !character_setup)
+	if((randomise[RANDOM_SPECIES] || randomise[RANDOM_HARDCORE]) && !character_setup)
+
 		random_species()
 
 	if(((randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
