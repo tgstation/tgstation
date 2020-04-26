@@ -110,7 +110,7 @@
 		holosign_type = /obj/machinery/holosign/barrier/power_shield/wall
 		to_chat(user, "<span class='notice'>You change the projector to shielded walls.</span>")
 
-/obj/item/holosign_creator/afterattack(atom/target, mob/user, proximity_flag)
+/obj/item/holosign_creator/powered_shielding/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
 		return
 	if(!check_allowed_items(target, 1))
