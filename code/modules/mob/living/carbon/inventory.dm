@@ -162,7 +162,7 @@
 		return
 	visible_message("<span class='notice'>[src] is offering [receiving]</span>", "<span class='notice'You offer [receiving]</span>", null, 2)
 	for(var/mob/living/carbon/C in orange(1, src))
-		var/obj/screen/alert/give/G = C.throw_alert("Give", /obj/screen/alert/give)
+		var/obj/screen/alert/give/G = C.throw_alert(src, /obj/screen/alert/give)
 		if(!G)
 			return
 		G.name = "[src] is offering [receiving]"
@@ -172,7 +172,7 @@
 		G.add_overlay(receiving)
 		G.receiving = receiving
 		G.giver = src
-		addtimer(CALLBACK(C, .proc/clear_alert, "Give"), 50)
+		RegisterSignal(G, COMSIG_MOVABLE_MOVED, /obj/screen/alert/give/.proc/removeAlert)
 
 /mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
 	if(get_dist(src, giver) > 1)

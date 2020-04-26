@@ -278,10 +278,14 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(L.mobility_flags & MOBILITY_MOVE)
 		return L.resist_fire() //I just want to start a flame in your hearrrrrrtttttt.
 
-/obj/screen/alert/give // information set when the given status effect is made
+/obj/screen/alert/give // information set when the give alert is made
 	icon_state = "default"
 	var/mob/living/carbon/giver
 	var/obj/item/receiving
+
+/obj/screen/alert/give/proc/removeAlert()
+	to_chat(owner, "<span class='warning'> You moved out of range of [giver]!</span>")
+	owner.clear_alert(giver)
 
 /obj/screen/alert/give/Click(location, control, params)
 	. = ..()
