@@ -14,9 +14,6 @@ SUBSYSTEM_DEF(dbcore)
 	var/last_error
 	var/list/active_queries = list()
 
-	var/datum/BSQL_Connection/connection
-	var/datum/BSQL_Operation/connectOperation
-
 /datum/controller/subsystem/dbcore/Initialize()
 	//We send warnings to the admins during subsystem init, as the clients will be New'd and messages
 	//will queue properly with goonchat
@@ -30,7 +27,7 @@ SUBSYSTEM_DEF(dbcore)
 
 /datum/controller/subsystem/dbcore/fire()
 	for(var/I in active_queries)
-		var/datum/DBQuery/Q = I
+		var/datum/query_result/Q = I
 		if(world.time - Q.last_activity_time > (5 MINUTES))
 			message_admins("Found undeleted query, please check the server logs and notify coders.")
 			log_sql("Undeleted query: \"[Q.sql]\" LA: [Q.last_activity] LAT: [Q.last_activity_time]")
@@ -38,28 +35,16 @@ SUBSYSTEM_DEF(dbcore)
 		if(MC_TICK_CHECK)
 			return
 
-/datum/controller/subsystem/dbcore/Recover()
-	connection = SSdbcore.connection
-	connectOperation = SSdbcore.connectOperation
-
 /datum/controller/subsystem/dbcore/Shutdown()
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
-		var/datum/DBQuery/query_round_shutdown = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = '[sanitizeSQL(SSticker.end_state)]' WHERE id = [GLOB.round_id]")
-		query_round_shutdown.Execute()
-		qdel(query_round_shutdown)
+		SSdbcore.Query("UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = ? WHERE id = ?", list(SSticker.end_state, GLOB.round_id))
 	if(IsConnected())
 		Disconnect()
-	world.BSQL_Shutdown()
 
 //nu
 /datum/controller/subsystem/dbcore/can_vv_get(var_name)
-	return var_name != NAMEOF(src, connection) && var_name != NAMEOF(src, active_queries) && var_name != NAMEOF(src, connectOperation) && ..()
-
-/datum/controller/subsystem/dbcore/vv_edit_var(var_name, var_value)
-	if(var_name == NAMEOF(src, connection) || var_name == NAMEOF(src, connectOperation))
-		return FALSE
-	return ..()
+	return var_name != NAMEOF(src, active_queries) && ..()
 
 /datum/controller/subsystem/dbcore/proc/Connect()
 	if(IsConnected())
@@ -80,36 +65,31 @@ SUBSYSTEM_DEF(dbcore)
 	var/db = CONFIG_GET(string/feedback_database)
 	var/address = CONFIG_GET(string/address)
 	var/port = CONFIG_GET(number/port)
+	var/timeout = CONFIG_GET(number/query_timeout)
+	var/min_threads = CONFIG_GET(number/min_threads)
+	var/max_threads = CONFIG_GET(number/max_threads)
 
-	connection = new /datum/BSQL_Connection(BSQL_CONNECTION_TYPE_MARIADB, CONFIG_GET(number/async_query_timeout), CONFIG_GET(number/blocking_query_timeout), CONFIG_GET(number/bsql_thread_limit))
-	var/error
-	if(QDELETED(connection))
-		connection = null
-		error = last_error
-	else
-		SSdbcore.last_error = null
-		connectOperation = connection.BeginConnect(address, port, user, pass, db)
-		if(SSdbcore.last_error)
-			CRASH(SSdbcore.last_error)
-		UNTIL(connectOperation.IsComplete())
-		error = connectOperation.GetError()
-	. = !error
-	if (!.)
-		last_error = error
-		log_sql("Connect() failed | [error]")
-		++failed_connections
-		QDEL_NULL(connection)
-		QDEL_NULL(connectOperation)
+	var/list/connection_result = json_decode(rustg_sql_connect_pool(address, port, user, pass, db, timeout, min_threads, max_threads))
+	if(!connection_result)
+		failed_connections++
+		return FALSE
+	if(connection_result["status"] != "ok")
+		failed_connections++
+		if(connection_result["data"])
+			log_sql("SQL connection errored: [connection_result["data"]]")
+			message_admins("SQL connection errored: [connection_result["data"]]")
+			CRASH(connection_result["data"])
+		return FALSE
+	return TRUE
 
 /datum/controller/subsystem/dbcore/proc/CheckSchemaVersion()
 	if(CONFIG_GET(flag/sql_enabled))
 		if(Connect())
 			log_world("Database connection established.")
-			var/datum/DBQuery/query_db_version = NewQuery("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
-			query_db_version.Execute()
-			if(query_db_version.NextRow())
-				db_major = text2num(query_db_version.item[1])
-				db_minor = text2num(query_db_version.item[2])
+			var/datum/query_result/query_db_version = Query("SELECT major, minor FROM [format_table_name("schema_revision")] ORDER BY date DESC LIMIT 1")
+			if(!query_db_version.error)
+				db_major = text2num(query_db_version.rows[1][1])
+				db_minor = text2num(query_db_version.rows[1][2])
 				if(db_major != DB_MAJOR_VERSION || db_minor != DB_MINOR_VERSION)
 					schema_mismatch = 1 // flag admin message about mismatch
 					log_sql("Database schema ([db_major].[db_minor]) doesn't match the latest schema version ([DB_MAJOR_VERSION].[DB_MINOR_VERSION]), this may lead to undefined behaviour or errors")
@@ -125,47 +105,43 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/SetRoundID()
 	if(!Connect())
 		return
-	var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
-	query_round_initialize.Execute(async = FALSE)
-	qdel(query_round_initialize)
-	var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-	query_round_last_id.Execute(async = FALSE)
-	if(query_round_last_id.NextRow(async = FALSE))
-		GLOB.round_id = query_round_last_id.item[1]
-	qdel(query_round_last_id)
+	SSdbcore.Query("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF(? LIKE '', '0', ?)), ?)", list(world.internet_address, world.internet_address, world.port), async = FALSE)
+	var/datum/query_result/query_round_last_id = SSdbcore.Query("SELECT LAST_INSERT_ID()", async = FALSE)
+	if(!query_round_last_id.error)
+		GLOB.round_id = query_round_last_id.rows[1][1]
 
 /datum/controller/subsystem/dbcore/proc/SetRoundStart()
 	if(!Connect())
 		return
-	var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = [GLOB.round_id]")
-	query_round_start.Execute()
-	qdel(query_round_start)
+	SSdbcore.Query("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = ?", list(GLOB.round_id))
 
 /datum/controller/subsystem/dbcore/proc/SetRoundEnd()
 	if(!Connect())
 		return
 	var/sql_station_name = sanitizeSQL(station_name())
-	var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
-	query_round_end.Execute()
-	qdel(query_round_end)
+	SSdbcore.Query("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = ?, station_name = ? WHERE id = ?", list(SSticker.mode_result, station_name(), GLOB.round_id))
 
 /datum/controller/subsystem/dbcore/proc/Disconnect()
 	failed_connections = 0
-	QDEL_NULL(connectOperation)
-	QDEL_NULL(connection)
+	var/list/disconnect_result = rustg_sql_disconnect_pool()
+	if(!disconnect_result)
+		return FALSE
+	if(disconnect_result["status"] == "err")
+		log_sql("SQL status check errored: [disconnect_result["data"]]")
+		message_admins("SQL status check errored: [disconnect_result["data"]]")
+	return disconnect_result["status"] == "success"
 
 /datum/controller/subsystem/dbcore/proc/IsConnected()
 	if(!CONFIG_GET(flag/sql_enabled))
 		return FALSE
-	//block until any connect operations finish
-	var/datum/BSQL_Connection/_connection = connection
-	var/datum/BSQL_Operation/op = connectOperation
-	UNTIL(QDELETED(_connection) || op.IsComplete())
-	return !QDELETED(connection) && !op.GetError()
+	var/list/connected_result = json_decode(rustg_sql_connected())
+	if(!connected_result)
+		return FALSE
+	if(connected_result["status"] == "err")
+		log_sql("SQL status check errored: [connected_result["data"]]")
+		message_admins("SQL status check errored: [connected_result["data"]]")
+	return connected_result["status"] == "online"
 
-/datum/controller/subsystem/dbcore/proc/Quote(str)
-	if(connection)
-		return connection.Quote(str)
 
 /datum/controller/subsystem/dbcore/proc/ErrorMsg()
 	if(!CONFIG_GET(flag/sql_enabled))
@@ -175,12 +151,34 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/ReportError(error)
 	last_error = error
 
-/datum/controller/subsystem/dbcore/proc/NewQuery(sql_query)
+/datum/controller/subsystem/dbcore/proc/Query(sql_query, list/params, async = TRUE)
 	if(IsAdminAdvancedProcCall())
 		log_admin_private("ERROR: Advanced admin proc call led to sql query: [sql_query]. Query has been blocked")
 		message_admins("ERROR: Advanced admin proc call led to sql query. Query has been blocked")
 		return FALSE
-	return new /datum/DBQuery(sql_query, connection)
+	var/qr
+	if(async)
+		var/job = rustg_sql_query_async(sql_query, LAZYLEN(params) ? json_encode(params) : "")
+		while(!qr)
+			var/list/query = rustg_sql_check_query(job)
+			if(!query)
+				return FALSE
+			switch(query)
+				if(RUSTG_JOB_NO_SUCH_JOB)
+					return FALSE
+				if(RUSTG_JOB_ERROR)
+					log_sql("Job [job] errored (query '[sql_query]', params [json_encode(params)])")
+					message_admins("Job [job] errored (query '[sql_query]', params [json_encode(params)])")
+					return FALSE
+				if(RUSTG_JOB_NO_RESULTS_YET)
+					stoplag()
+					continue
+				else
+					qr = query
+					break
+	else
+		qr = rustg_sql_query_blocking(sql_query, LAZYLEN(params) ? json_encode(params) : "")
+	return new /datum/query_result(qr)
 
 /datum/controller/subsystem/dbcore/proc/QuerySelect(list/querys, warn = FALSE, qdel = FALSE)
 	if (!islist(querys))
@@ -270,7 +268,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		. = Query.Execute(async)
 	qdel(Query)
 
-/datum/DBQuery
+/datum/sql_query
 	var/sql // The sql query being executed.
 	var/list/item  //list of data values populated by NextRow()
 
@@ -283,113 +281,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/datum/BSQL_Connection/connection
 	var/datum/BSQL_Operation/Query/query
 
-/datum/DBQuery/New(sql_query, datum/BSQL_Connection/connection)
-	SSdbcore.active_queries[src] = TRUE
-	Activity("Created")
-	item = list()
-	src.connection = connection
-	sql = sql_query
-
-/datum/DBQuery/Destroy()
-	Close()
-	SSdbcore.active_queries -= src
-	return ..()
-
-/datum/DBQuery/CanProcCall(proc_name)
-	//fuck off kevinz
-	return FALSE
-
-/datum/DBQuery/proc/SetQuery(new_sql)
-	if(in_progress)
-		CRASH("Attempted to set new sql while waiting on active query")
-	Close()
-	sql = new_sql
-
-/datum/DBQuery/proc/Activity(activity)
-	last_activity = activity
-	last_activity_time = world.time
-
-/datum/DBQuery/proc/warn_execute(async = TRUE)
-	. = Execute(async)
-	if(!.)
-		to_chat(usr, "<span class='danger'>A SQL error occurred during this operation, check the server logs.</span>")
-
-/datum/DBQuery/proc/Execute(async = TRUE, log_error = TRUE)
-	Activity("Execute")
-	if(in_progress)
-		CRASH("Attempted to start a new query while waiting on the old one")
-
-	if(QDELETED(connection))
-		last_error = "No connection!"
-		return FALSE
-
-	var/start_time
-	var/timed_out
-	if(!async)
-		start_time = REALTIMEOFDAY
-	Close()
-	timed_out = run_query(async)
-	if(query.GetErrorCode() == 2006) //2006 is the return code for "MySQL server has gone away" time-out error, meaning the connection has been lost to the server (if it's still alive)
-		log_sql("Executing query encountered returned a lost database connection (2006).")
-		SSdbcore.Disconnect()
-		if(SSdbcore.Connect()) //connection was restablished, reattempt the query
-			log_sql("Connection restablished")
-			timed_out = run_query(async)
-		else
-			log_sql("Executing query failed to restablish database connection.")
-	skip_next_is_complete = TRUE
-	var/error = QDELETED(query) ? "Query object deleted!" : query.GetError()
-	last_error = error
-	. = !error
-	if(!. && log_error)
-		log_sql("[error] | Query used: [sql]")
-	if(!async && timed_out)
-		log_query_debug("Query execution started at [start_time]")
-		log_query_debug("Query execution ended at [REALTIMEOFDAY]")
-		log_query_debug("Slow query timeout detected.")
-		log_query_debug("Query used: [sql]")
-		slow_query_check()
-
-/datum/DBQuery/proc/run_query(async)
-	query = connection.BeginQuery(sql)
-	if(!async)
-		. = !query.WaitForCompletion()
-	else
-		in_progress = TRUE
-		UNTIL(query.IsComplete())
-		in_progress = FALSE
-
-/datum/DBQuery/proc/slow_query_check()
-	message_admins("HEY! A database query timed out. Did the server just hang? <a href='?_src_=holder;[HrefToken()];slowquery=yes'>\[YES\]</a>|<a href='?_src_=holder;[HrefToken()];slowquery=no'>\[NO\]</a>")
-
-/datum/DBQuery/proc/NextRow(async = TRUE)
-	Activity("NextRow")
-	UNTIL(!in_progress)
-	if(!skip_next_is_complete)
-		if(!async)
-			query.WaitForCompletion()
-		else
-			in_progress = TRUE
-			UNTIL(query.IsComplete())
-			in_progress = FALSE
-	else
-		skip_next_is_complete = FALSE
-
-	last_error = query.GetError()
-	var/list/results = query.CurrentRow()
-	. = results != null
-
-	item.Cut()
-	//populate item array
-	for(var/I in results)
-		item += results[I]
-
-/datum/DBQuery/proc/ErrorMsg()
-	return last_error
-
-/datum/DBQuery/proc/Close()
-	item.Cut()
-	QDEL_NULL(query)
 
 /world/BSQL_Debug(message)
 	if(!CONFIG_GET(flag/bsql_debug))
@@ -400,3 +291,26 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		message = "OpenConnection CENSORED"
 
 	log_sql("BSQL_DEBUG: [message]")
+
+/datum/query_result
+	var/affected = 0
+	var/error = null
+	var/list/rows = list()
+
+/datum/query_result/New(data)
+	if(!data)
+		stack_trace("/datum/query_result created with null data!")
+	var/list/json
+	if(islist(data))
+		json = data
+	else
+		json = json_decode(data)
+		if(!json || !islist(json))
+			stack_trace("/datum/query_result created with invalid JSON!")
+	switch(json["status"])
+		if("ok")
+			affected = "affected" in json ? json["affected"] : affected
+			rows = "rows" in json ? json["rows"] : rows
+		if("err")
+			error = json["data"]
+			log_world(error) // TODO: remove this once I'm done

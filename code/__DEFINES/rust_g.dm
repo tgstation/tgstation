@@ -25,3 +25,10 @@
 #define rustg_http_request_blocking(method, url, body, headers) call(RUST_G, "http_request_blocking")(method, url, body, headers)
 #define rustg_http_request_async(method, url, body, headers) call(RUST_G, "http_request_async")(method, url, body, headers)
 #define rustg_http_check_request(req_id) call(RUST_G, "http_check_request")(req_id)
+
+#define rustg_sql_connect_pool(host, port, user, pass, db, timeout, min_threads, max_threads) call(RUST_G, "sql_connect_pool")(host, "[port]", user, pass, db, "[timeout]", "[min_threads]", "[max_threads]")
+#define rustg_sql_query_async(query, params) call(RUST_G, "sql_query_async")(query, params)
+#define rustg_sql_query_blocking(query, params) call(RUST_G, "sql_query_blocking")(query, params)
+/proc/rustg_sql_connected() return call(RUST_G, "sql_connected")()
+/proc/rustg_sql_disconnect_pool() return call(RUST_G, "sql_disconnect_pool")()
+#define rustg_sql_check_query(job_id) call(RUST_G, "sql_check_query")("[job_id]")

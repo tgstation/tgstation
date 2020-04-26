@@ -34,17 +34,16 @@
 /datum/config_entry/number/query_debug_log_timeout/DeprecationUpdate(value)
 	return value
 
-/datum/config_entry/number/async_query_timeout
+/datum/config_entry/number/query_timeout
 	config_entry_value = 10
 	min_val = 0
 	protection = CONFIG_ENTRY_LOCKED
 
-/datum/config_entry/number/blocking_query_timeout
+/datum/config_entry/number/min_threads
 	config_entry_value = 5
-	min_val = 0
-	protection = CONFIG_ENTRY_LOCKED
+	min_val = 1
 
-/datum/config_entry/number/bsql_thread_limit
+/datum/config_entry/number/max_threads
 	config_entry_value = 50
 	min_val = 1
 
