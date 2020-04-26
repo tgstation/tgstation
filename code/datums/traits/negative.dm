@@ -338,7 +338,7 @@
 	var/obj/structure/chair/spawn_chair = locate() in T
 
 	var/obj/vehicle/ridden/wheelchair/wheels
-	if(quirk_holder.client.get_award_status(HARDCORE_RANDOM_SCORE) >= 5000) //More than 5k score? you unlock the gamer wheelchair.
+	if(quirk_holder.client?.get_award_status(HARDCORE_RANDOM_SCORE) >= 5000) //More than 5k score? you unlock the gamer wheelchair.
 		wheels = new /obj/vehicle/ridden/wheelchair/gold(T)
 	else
 		wheels = new(T)
