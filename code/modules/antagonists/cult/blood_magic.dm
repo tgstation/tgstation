@@ -403,7 +403,7 @@
 //Stun
 /obj/item/melee/blood_magic/stun
 	name = "Stunning Aura"
-	desc = "Will stun and mute a victim on contact."
+	desc = "Will stun and mute a weak-minded victim on contact."
 	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin!"
 
@@ -434,19 +434,30 @@
 			else
 				target.visible_message("<span class='warning'>[L] starts to glow in a halo of light!</span>", \
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
+
 		else
-			to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
-			L.Paralyze(160)
-			L.flash_act(1,1)
-			if(issilicon(target))
-				var/mob/living/silicon/S = L
-				S.emp_act(EMP_HEAVY)
-			else if(iscarbon(target))
+			if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
 				var/mob/living/carbon/C = L
-				C.silent += 6
-				C.stuttering += 15
-				C.cultslurring += 15
-				C.Jitter(15)
+				to_chat(user, "<span class='cultitalic'>Their mind was stronger than expected, but you still managed to do some damage!</span>")
+				C.stuttering += 8
+				C.dizziness += 30
+				C.Jitter(8)
+				C.drop_all_held_items()
+				C.bleed(40)
+				C.apply_damage(60, STAMINA, BODY_ZONE_CHEST)
+			else
+				to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
+				L.Paralyze(160)
+				L.flash_act(1,1)
+				if(issilicon(target))
+					var/mob/living/silicon/S = L
+					S.emp_act(EMP_HEAVY)
+				else if(iscarbon(target))
+					var/mob/living/carbon/C = L
+					C.silent += 6
+					C.stuttering += 15
+					C.cultslurring += 15
+					C.Jitter(15)
 		uses--
 	..()
 

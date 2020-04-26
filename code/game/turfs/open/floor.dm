@@ -253,17 +253,17 @@
 				return FALSE
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/A = new the_rcd.airlock_type(src)
-
-			A.electronics = new/obj/item/electronics/airlock(A)
-
-			if(the_rcd.conf_access)
-				A.electronics.accesses = the_rcd.conf_access.Copy()
-			A.electronics.one_access = the_rcd.use_one_access
-
+			A.electronics = new /obj/item/electronics/airlock(A)
+			if(the_rcd.airlock_electronics)
+				A.electronics.accesses = the_rcd.airlock_electronics.accesses.Copy()
+				A.electronics.one_access = the_rcd.airlock_electronics.one_access
+				A.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
 			if(A.electronics.one_access)
 				A.req_one_access = A.electronics.accesses
 			else
 				A.req_access = A.electronics.accesses
+			if(A.electronics.unres_sides)
+				A.unres_sides = A.electronics.unres_sides
 			A.autoclose = TRUE
 			return TRUE
 		if(RCD_DECONSTRUCT)

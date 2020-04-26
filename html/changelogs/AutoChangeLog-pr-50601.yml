@@ -1,4 +1,0 @@
-author: "Cartographer-D"
-delete-after: True
-changes: 
-  - bugfix: "Fixed several issues with the new cargo layout."

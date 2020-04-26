@@ -1,6 +1,0 @@
-author: "Arkatos"
-delete-after: True
-changes: 
-  - rscadd: "Dominate is now a cursor-guided spell."
-  - rscadd: "Abyssal Gaze is now a cursor-guided spell."
-  - tweak: "Pointed spells now have aim assist. If there is a single valid target on a turf user has clicked on, the spell will be automatically redirected to the valid target."

@@ -119,7 +119,7 @@
 	materials = list(/datum/material/iron = 4000, /datum/material/plasma = 1000)
 	build_path = /obj/item/extinguisher_refill
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/crewpinpointer
 	name = "Crew Pinpointer"
@@ -493,7 +493,7 @@
 	materials = list(/datum/material/glass = 500, /datum/material/bananium = 500)
 	build_path = /obj/item/implantcase/sad_trombone
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL		//if you get bananium you get the sad trombones.
+
 
 /datum/design/implant_chem
 	name = "Chemical Implant Case"

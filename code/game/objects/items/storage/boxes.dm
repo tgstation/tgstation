@@ -435,18 +435,15 @@
 		new /obj/item/reagent_containers/food/drinks/sillycup( src )
 
 /obj/item/storage/box/donkpockets
-    var/donktype = /obj/item/reagent_containers/food/snacks/donkpocket
-
-/obj/item/storage/box/donkpockets/PopulateContents()
-    for(var/i in 1 to 6)
-        new donktype(src)
-
-/obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket
+	var/donktype = /obj/item/reagent_containers/food/snacks/donkpocket
+
+/obj/item/storage/box/donkpockets/PopulateContents()
+    for(var/i in 1 to 6)
+        new donktype(src)
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
@@ -856,7 +853,7 @@
 /obj/item/storage/box/beanbag
 	name = "box of beanbags"
 	desc = "A box full of beanbag shells."
-	illustration = "rubbershot_box"
+	icon_state = "rubbershot_box"
 	illustration = null
 
 /obj/item/storage/box/beanbag/PopulateContents()

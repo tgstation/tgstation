@@ -635,13 +635,8 @@
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
 	},
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -895,13 +890,8 @@
 	},
 /area/awaymission/caves/research)
 "cQ" = (
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -1097,13 +1087,8 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "ds" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/BMP_asteroid/level_two)
@@ -1492,21 +1477,11 @@
 /area/awaymission/caves/listeningpost)
 "eP" = (
 /obj/structure/table,
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
@@ -1872,13 +1847,8 @@
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
 	},
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /obj/item/stack/sheet/mineral/adamantine{
 	amount = 15
