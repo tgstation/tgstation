@@ -19,12 +19,8 @@
 /datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
 	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
-	switch(M.stat)
-		if(CONSCIOUS) //bad
-			M.adjustOxyLoss(2, TRUE)
-		if(SOFT_CRIT) //meh convert
-			M.adjustOxyLoss(1, TRUE)
-	//no (further) oxyloss damage if you're not conscious or in soft crit
+	if(!(M.stat)) //deals oxyloss to you if you're conscious
+		M.adjustOxyLoss(2, TRUE)
 	M.adjustBruteLoss(-(round(death_is_coming/50,0.1)+0.5), FALSE) //heals you more the closer you are to death
 
 	if(M.stat && !reaping && prob(0.1)) //janken with the grim reaper!
