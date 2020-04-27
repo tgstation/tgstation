@@ -54,7 +54,7 @@
 	if(iscarbon(parent))
 		var/mob/living/carbon/C = parent
 		var/totaltint = 0
-		totaltint = C.get_total_tint
+		totaltint = C.get_total_tint()
 		tint_factor = 1/(1 + totaltint)
 
 	///The actual brightness we "see"
