@@ -37,7 +37,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "teleporter", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Teleporter", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/teleporter/ui_data(mob/user)
@@ -90,15 +90,17 @@
 			say("Processing hub calibration to target...")
 			calibrating = TRUE
 			power_station.update_icon()
-			spawn(50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
-				calibrating = FALSE
-				if(check_hub_connection())
-					power_station.teleporter_hub.calibrated = TRUE
-					say("Calibration complete.")
-				else
-					say("Error: Unable to detect hub.")
-				power_station.update_icon()
+			addtimer(CALLBACK(src, .proc/finish_calibration), 50 * (3 - power_station.teleporter_hub.accuracy)) //Better parts mean faster calibration
 			. = TRUE
+
+/obj/machinery/computer/teleporter/proc/finish_calibration()
+	calibrating = FALSE
+	if(check_hub_connection())
+		power_station.teleporter_hub.calibrated = TRUE
+		say("Calibration complete.")
+	else
+		say("Error: Unable to detect hub.")
+	power_station.update_icon()
 
 /obj/machinery/computer/teleporter/proc/check_hub_connection()
 	if(!power_station)

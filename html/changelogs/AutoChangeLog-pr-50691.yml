@@ -1,0 +1,5 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - rscadd: "A syndicate cyborg monitor program for modular computers, showing the status of syndicate borgs, is now available from syndicate repositories."
+  - admin: "Clients that send a message to a borg using either of the monitor programs will now have it logged under Comms_Log, the same place as PDA logging is located."

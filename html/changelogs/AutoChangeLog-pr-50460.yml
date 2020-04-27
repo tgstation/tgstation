@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - config: "Added AUTO_DEADMIN_TIMEGATE which allows config force deadmin settings to only apply for the first X seconds in a round. Starts disabled"
-  - admin: "New preference to ignore being summoned as a cult ghost while admin'd, starts disabled"

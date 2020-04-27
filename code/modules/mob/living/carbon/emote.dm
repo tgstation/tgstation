@@ -107,3 +107,34 @@
 	key = "wink"
 	key_third_person = "winks"
 	message = "winks."
+
+/datum/emote/living/carbon/circle
+	key = "circle"
+	key_third_person = "circles"
+	restraint_check = TRUE
+
+/datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	var/obj/item/circlegame/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
+	else
+		qdel(N)
+		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
+
+/datum/emote/living/carbon/slap
+	key = "slap"
+	key_third_person = "slaps"
+	restraint_check = TRUE
+
+/datum/emote/living/carbon/slap/run_emote(mob/user, params, type_override, intentional)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/slapper/N = new(user)
+	if(user.put_in_hands(N))
+		to_chat(user, "<span class='notice'>You ready your slapping hand.</span>")
+	else
+		qdel(N)
+		to_chat(user, "<span class='warning'>You're incapable of slapping in your current state.</span>")
+
