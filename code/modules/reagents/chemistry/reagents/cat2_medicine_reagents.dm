@@ -13,8 +13,8 @@
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
-	var/reaping = FALSE
 	var/helbent = FALSE
+	var/reaping = FALSE
 
 /datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
