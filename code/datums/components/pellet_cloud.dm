@@ -30,6 +30,7 @@
 	var/pellet_delta /// For grenades, tracking how many pellets are removed due to martyrs and how many pellets are added due to the last person to touch it being on top of it
 	var/terminated /// how many pellets ranged out without hitting anything
 	var/hits /// how many pellets impacted something
+	var/queued_delete = FALSE
 
 	var/mob/living/shooter /// for if we're an ammo casing being fired
 
@@ -56,6 +57,7 @@
 	return ..()
 
 /datum/component/pellet_cloud/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_PARENT_PREQDELETED, .proc/nullspace_parent)
 	if(isammocasing(parent))
 		RegisterSignal(parent, COMSIG_PELLET_CLOUD_INIT, .proc/create_casing_pellets)
 	else if(isgrenade(parent))
@@ -65,7 +67,7 @@
 		RegisterSignal(parent, COMSIG_MINE_TRIGGERED, .proc/create_blast_pellets)
 
 /datum/component/pellet_cloud/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(COMSIG_PARENT_PREQDELETED, COMSIG_PELLET_CLOUD_INIT, COMSIG_GRENADE_PRIME, COMSIG_GRENADE_ARMED, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UNCROSSED, COMSIG_MINE_TRIGGERED, COMSIG_ITEM_DROPPED))
 
 /**
   * create_casing_pellets() is for directed pellet clouds for ammo casings that have multiple pellets (buckshot and scatter lasers for instance)
@@ -100,11 +102,11 @@
   *
   * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, while landmines do not (obviously, it's a landmine!). See [/datum/component/pellet_cloud/proc/handle_martyrs()]
   */
-/datum/component/pellet_cloud/proc/create_blast_pellets()
+/datum/component/pellet_cloud/proc/create_blast_pellets(mob/living/lanced_by=NONE)
 	var/atom/A = parent
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
-		handle_martyrs() // note that we can modify radius in this proc
+		handle_martyrs(lanced_by) // note that we can modify radius in this proc
 
 	if(radius < 1)
 		return
@@ -125,10 +127,15 @@
   *
   * Note we track anyone who's alive and client'd when they get shredded in var/list/purple_hearts, for achievement checking later
   */
-/datum/component/pellet_cloud/proc/handle_martyrs()
+/datum/component/pellet_cloud/proc/handle_martyrs(mob/living/lanced_by)
 	var/magnitude_absorbed
 
 	var/list/martyrs = list()
+	if(lanced_by && prob(60))
+		to_chat(lanced_by, "<span class='warning'>Your plan to whack someone with a grenade on a stick backfires on you, literally!</span>")
+		for(var/i in 1 to radius * 4)
+			pew(lanced_by) // thought you could be tricky and lance someone with no ill effects!!
+
 	for(var/mob/living/body in get_turf(parent))
 		if(body == shooter)
 			pellet_delta = radius * 3
@@ -136,6 +143,8 @@
 				pew(body) // free shrapnel if it goes off in your hand, and it doesn't even count towards the absorbed. fun!
 		else if(!(body in bodies))
 			martyrs += body // promoted from a corpse to a hero
+
+
 
 	for(var/M in martyrs)
 		var/mob/living/martyr = M
@@ -215,8 +224,9 @@
 		var/mob/living/martyr = M
 		if(martyr.stat == DEAD && martyr.client)
 			martyr.client.give_award(/datum/award/achievement/misc/lookoutsir, martyr)
-
-	qdel(parent)
+	UnregisterSignal(parent, COMSIG_PARENT_PREQDELETED)
+	if(queued_delete)
+		qdel(parent)
 	qdel(src)
 
 /// Look alive, we're armed! Now we start watching to see if anyone's covering us
@@ -242,4 +252,11 @@
 /// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
 /datum/component/pellet_cloud/proc/grenade_uncrossed(datum/source, atom/movable/AM)
 	bodies -= AM
+
+/// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
+/datum/component/pellet_cloud/proc/nullspace_parent()
+	var/atom/movable/AM = parent
+	AM.moveToNullspace()
+	queued_delete = TRUE
+	return TRUE
 

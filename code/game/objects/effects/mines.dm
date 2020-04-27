@@ -6,8 +6,6 @@
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "uglymine"
 	var/triggered = FALSE
-	/// whether we're deleting ourself or if we're just nullspacing ourself and letting something else delete us (shrapnel mines)
-	var/del_self = TRUE
 
 /obj/effect/mine/proc/mineEffect(mob/victim)
 	to_chat(victim, "<span class='danger'>*click*</span>")
@@ -36,10 +34,7 @@
 	mineEffect(victim)
 	triggered = TRUE
 	SEND_SIGNAL(src, COMSIG_MINE_TRIGGERED)
-	if(del_self)
-		qdel(src)
-	else
-		moveToNullspace()
+	qdel(src)
 
 /obj/effect/mine/explosive
 	name = "explosive mine"
@@ -59,7 +54,6 @@
 	name = "shrapnel mine"
 	var/shrapnel_type = /obj/projectile/bullet/shrapnel
 	var/shrapnel_magnitude = 3
-	del_self = FALSE
 
 /obj/effect/mine/shrapnel/mineEffect(mob/victim)
 	AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_magnitude)
