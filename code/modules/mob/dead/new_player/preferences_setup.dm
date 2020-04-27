@@ -68,28 +68,28 @@
 			if(available_hardcore_quirks[T] > quirk_budget)
 				available_hardcore_quirks -= T
 
-		var/datum/quirk/T = pick(available_hardcore_quirks)
+		var/datum/quirk/picked_quirk = pick(available_hardcore_quirks)
 
-		for(var/V in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted. V is a list
-			var/list/L = V
-			for(var/Q in all_quirks)
-				if((T in L) && (Q in L) && !(Q == T)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
-					available_hardcore_quirks -= T
+		for(var/bl in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted. V is a list
+			var/list/blacklist = bl
+			for(var/iterator_quirk in all_quirks)
+				if((picked_quirk in blacklist) && (iterator_quirk in blacklist) && !(iterator_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+					available_hardcore_quirks -= picked_quirk
 					continue
 
-		for(var/_V in all_quirks)//Check for dupes
-			if(_V == T)
-				available_hardcore_quirks -= T
+		for(var/iterator_quirk in all_quirks)//Check for dupes
+			if(iterator_quirk == picked_quirk)
+				available_hardcore_quirks -= picked_quirk
 				continue
 
-		if(initial(T.mood_quirk) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
-			available_hardcore_quirks -= T
+		if(initial(picked_quirk.mood_quirk) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
+			available_hardcore_quirks -= picked_quirk
 			continue
 
-		all_quirks += initial(T.name)
-		quirk_budget -= available_hardcore_quirks[T]
-		hardcore_survival_score += available_hardcore_quirks[T]
-		available_hardcore_quirks -= T
+		all_quirks += initial(picked_quirk.name)
+		quirk_budget -= available_hardcore_quirks[picked_quirk]
+		hardcore_survival_score += available_hardcore_quirks[picked_quirk]
+		available_hardcore_quirks -= picked_quirk
 
 /datum/preferences/proc/update_preview_icon()
 	// Determine what job is marked as 'High' priority, and dress them up as such.

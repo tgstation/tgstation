@@ -464,19 +464,18 @@
 ///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
 /datum/controller/subsystem/ticker/proc/hardcore_random_report()
 	. = list()
-	parts += "<span class='header'>The following people made it out as a random hardcore character:</span>"
-	parts += "<ul class='playerlist'>"
+	. += "<span class='header'>The following people made it out as a random hardcore character:</span>"
+	. += "<ul class='playerlist'>"
 	for(var/i in GLOB.player_list)
 		if(!ishuman(i))
 			continue
 		var/mob/living/carbon/human/H = i
-		if(!H.hardcore_survival_score || !H.onCentCom() || H.stat = DEAD) ///gotta escape nerd
+		if(!H.hardcore_survival_score || !H.onCentCom() || H.stat == DEAD) ///gotta escape nerd
 			continue
 		if(!H.mind)
 			continue
-		parts += "<li>[printplayer(H.mind)] with a hardcore random score of [round(H.hardcore_survival_score)]</li>"
-	parts += "</ul>"
-	return parts
+		. += "<li>[printplayer(H.mind)] with a hardcore random score of [round(H.hardcore_survival_score)]</li>"
+	. += "</ul>"
 
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()

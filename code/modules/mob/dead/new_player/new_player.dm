@@ -493,7 +493,7 @@
 	if(mind in GLOB.pre_setup_antags)
 		is_antag = TRUE
 
-	client.prefs.copy_to(H, antagonist = is_antag)
+	client.prefs.copy_to(H, antagonist = is_antag, mind = mind)
 	H.dna.update_dna_identity()
 	if(mind)
 		if(transfer_after)
