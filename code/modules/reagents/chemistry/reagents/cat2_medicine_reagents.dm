@@ -63,6 +63,7 @@
 
 /datum/reagent/medicine/C2/helbital/overdose_process(mob/living/carbon/M)
 	if(!helbent)
+		to_chat(M, "<span class='hierophant'>Malevolent spirits swirl around you, searing your flesh and impeding your vision!</span>")
 		M.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
 		helbent = TRUE
 	..()
