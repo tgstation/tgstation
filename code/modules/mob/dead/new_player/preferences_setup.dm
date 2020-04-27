@@ -64,9 +64,9 @@
 
 	while(quirk_budget > 0)
 		for(var/i in available_hardcore_quirks) //Remove from available quirks if its too expensive.
-			var/datum/quirk/T = i
-			if(available_hardcore_quirks[T] > quirk_budget)
-				available_hardcore_quirks -= T
+			var/datum/quirk/available_quirk = i
+			if(available_hardcore_quirks[available_quirk] > quirk_budget)
+				available_hardcore_quirks -= available_quirk
 
 		var/datum/quirk/picked_quirk = pick(available_hardcore_quirks)
 
