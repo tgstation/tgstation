@@ -1,0 +1,5 @@
+author: "Couls"
+delete-after: True
+changes: 
+  - rscadd: "more islamic prefixes"
+  - bugfix: "end of ramadan now follows the islamic calendar"
