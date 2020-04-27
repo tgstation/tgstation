@@ -1,21 +1,4 @@
 /**
-  * Gets a list of ids of all subtypes of a given typepath of instrument datum.
-  */
-/proc/path_to_instrument_ids(path)
-	if(!ispath(path))
-		path = text2path(path)
-		if(!ispath(path))
-			return
-	if(!ispath(path, /datum/instrument))
-		return
-	. = list()
-	for(var/i in typesof(path))
-		var/datum/instrument/I = i
-		var/init_id = initial(I.id)
-		if(init_id)
-			. |= init_id
-
-/**
   * Get all non admin_only instruments as a list of text ids.
   */
 /proc/get_allowed_instrument_ids()

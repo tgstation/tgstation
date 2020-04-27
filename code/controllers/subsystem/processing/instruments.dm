@@ -4,16 +4,26 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 	init_order = INIT_ORDER_INSTRUMENTS
 	flags = SS_KEEP_TIMING
 	priority = FIRE_PRIORITY_INSTRUMENTS
-	var/static/list/datum/instrument/instrument_data = list()		//id = datum
+	/// List of all instrument data, associative id = datum
+	var/static/list/datum/instrument/instrument_data = list()
+	/// List of all song datums.
 	var/static/list/datum/song/songs = list()
+	/// Max lines in songs
 	var/static/musician_maxlines = 600
+	/// Max characters per line in songs
 	var/static/musician_maxlinechars = 300
+	/// Deciseconds between hearchecks. Too high and instruments seem to lag when people are moving around in terms of who can hear it. Too low and the server lags from this.
 	var/static/musician_hearcheck_mindelay = 5
+	/// Maximum instrument channels total instruments are allowed to use. This is so you don't have instruments deadlocking all sound channels.
 	var/static/max_instrument_channels = MAX_INSTRUMENT_CHANNELS
+	/// Current number of channels allocated for instruments
 	var/static/current_instrument_channels = 0
+	/// Single cached list for synthesizer instrument ids, so you don't have to have a new list with every synthesizer.
+	var/static/list/synthesizer_instrument_ids
 
 /datum/controller/subsystem/processing/instruments/Initialize()
 	initialize_instrument_data()
+	synthesizer_instrument_ids = get_allowed_instrument_ids()
 	return ..()
 
 /datum/controller/subsystem/processing/instruments/proc/on_song_new(datum/song/S)

@@ -103,9 +103,9 @@
 	item_state = "synth"
 	allowed_instrument_ids = "piano"
 
-/obj/item/instrument/piano_synth/Initialize()
+/obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
-	song.allowed_instrument_ids = get_allowed_instrument_ids()
+	song.allowed_instrument_ids = SSinstruments.synthesizer_instrument_ids
 
 /obj/item/instrument/piano_synth/headphones
 	name = "headphones"
