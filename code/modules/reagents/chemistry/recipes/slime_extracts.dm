@@ -58,6 +58,48 @@
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
 
+/datum/chemical_reaction/slime/slimemoth
+	results = list(/datum/reagent/mutationtoxin/moth = 1)
+	required_reagents = list(/datum/reagent/ash = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimeplasma
+	results = list(/datum/reagent/mutationtoxin/plasma = 1)
+	required_reagents = list(/datum/reagent/stable_plasma = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimefly
+	results = list(/datum/reagent/mutationtoxin/fly = 1)
+	required_reagents = list(/datum/reagent/consumable/enzyme = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimefelinid
+	results = list(/datum/reagent/mutationtoxin/felinid = 1)
+	required_reagents = list(/datum/reagent/consumable/cream = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimepod
+	results = list(/datum/reagent/mutationtoxin/fly = 1)
+	required_reagents = list(/datum/reagent/plantnutriment/eznutriment = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimegolem
+	results = list(/datum/reagent/mutationtoxin/golem = 1)
+	required_reagents = list(/datum/reagent/iron = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
+/datum/chemical_reaction/slime/slimeabductor
+	results = list(/datum/reagent/mutationtoxin/abductor = 1)
+	required_reagents = list(/datum/reagent/toxin/mutetoxin = 1)
+	required_other = TRUE
+	required_container = /obj/item/slime_extract/green
+
 //Metal
 /datum/chemical_reaction/slime/slimemetal
 	required_reagents = list(/datum/reagent/toxin/plasma = 1)
