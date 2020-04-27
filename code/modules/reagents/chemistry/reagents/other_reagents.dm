@@ -1057,7 +1057,7 @@
 	reagent_weight = 0.6 //so it sprays further
 	
 /datum/reagent/space_cleaner/on_mob_life(mob/living/carbon/M)
-	M.adjustToxLoss(5)
+	M.adjustToxLoss(0.25)
 	..()
 
 /datum/reagent/space_cleaner/reaction_obj(obj/O, reac_volume)
@@ -2252,4 +2252,3 @@
 	taste_description = "gravy"
 	color = "#623301"
 	taste_mult = 1.2
-
