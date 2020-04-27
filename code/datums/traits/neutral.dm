@@ -22,13 +22,13 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	H.add_blocked_language(/datum/language/common)
 	if(ishuman(H) || isfelinid(H))
-		H.grant_language(/datum/language/beachbum)
+		H.grant_language(/datum/language/uncommon)
 
 /datum/quirk/foreigner/remove()
 	var/mob/living/carbon/human/H = quirk_holder
 	H.remove_blocked_language(/datum/language/common)
 	if(ishuman(H) || isfelinid(H))
-		H.remove_language(/datum/language/beachbum)
+		H.remove_language(/datum/language/uncommon)
 
 /datum/quirk/vegetarian
 	name = "Vegetarian"
