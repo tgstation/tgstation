@@ -41,9 +41,6 @@
 	using.hud = src
 	static_inventory += using
 
-/datum/hud/dextrous/guardian
-	ui_style = 'icons/mob/guardian.dmi'
-
 /datum/hud/dextrous/guardian/New(mob/living/simple_animal/hostile/guardian/owner) //for a dextrous guardian
 	..()
 	var/obj/screen/using
@@ -72,7 +69,7 @@
 		static_inventory += using
 
 	pull_icon = new /obj/screen/pull()
-	pull_icon.icon = ui_style
+	pull_icon.icon = 'icons/mob/guardian.dmi'
 	pull_icon.update_icon()
 	pull_icon.screen_loc = ui_living_pull
 	pull_icon.hud = src
