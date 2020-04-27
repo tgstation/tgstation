@@ -139,7 +139,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		if(S["facial_style_name"])
 			S["facial_style_name"]	>> facial_hairstyle
 
-
 /datum/preferences/proc/load_path(ckey,filename="preferences.sav")
 	if(!ckey)
 		return
