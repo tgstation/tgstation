@@ -11,11 +11,9 @@
 	tgui_id = "NtosCyborgRemoteMonitor"
 	ui_x = 600
 	ui_y = 800
-	var/theme = "ntos" ///theme of the window (syndicate version overrides this)
 
 /datum/computer_file/program/borg_monitor/ui_data(mob/user)
 	var/list/data = get_header_data()
-	data["theme"] = theme
 
 	data["card"] = FALSE
 	if(checkID())
@@ -95,8 +93,7 @@
 	available_on_syndinet = TRUE
 	transfer_access = null
 	network_destination = "cyborg remote monitoring"
-//	tgui_id = "NtosSyndiCyborgRemoteMonitor"
-	theme = "syndicate"
+	tgui_id = "NtosCyborgRemoteMonitorSyndicate"
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
 	if((get_turf(computer)).z != (get_turf(R)).z)
