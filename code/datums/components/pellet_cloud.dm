@@ -17,22 +17,34 @@
 */
 
 /datum/component/pellet_cloud
-	var/projectile_type /// What's the projectile path of the shrapnel we're shooting?
+	/// What's the projectile path of the shrapnel we're shooting?
+	var/projectile_type
 
-	var/num_pellets /// How many shrapnel projectiles are we responsible for tracking? May be reduced for grenades if someone dives on top of it. Defined by ammo casing for casings, derived from magnitude otherwise
-	var/radius = 4 /// For grenades/landmines, how big is the radius of turfs we're targeting? Note this does not effect the projectiles range, only how many we generate
+	/// How many shrapnel projectiles are we responsible for tracking? May be reduced for grenades if someone dives on top of it. Defined by ammo casing for casings, derived from magnitude otherwise
+	var/num_pellets
+	/// For grenades/landmines, how big is the radius of turfs we're targeting? Note this does not effect the projectiles range, only how many we generate
+	var/radius = 4
 
-	var/list/pellets = list() /// The list of pellets we're responsible for tracking, once these are all accounted for, we finalize.
-	var/list/targets_hit = list() /// An associated list with the atom hit as the key and how many pellets they've eaten for the value, for printing aggregate messages
-	var/list/bodies /// For grenades, any /mob/living's the grenade is moved onto, see [/datum/component/pellet_cloud/proc/handle_martyrs()]
-	var/list/purple_hearts /// For grenades, tracking people who die covering a grenade for achievement purposes, see [/datum/component/pellet_cloud/proc/handle_martyrs()]
+	/// The list of pellets we're responsible for tracking, once these are all accounted for, we finalize.
+	var/list/pellets = list()
+	/// An associated list with the atom hit as the key and how many pellets they've eaten for the value, for printing aggregate messages
+	var/list/targets_hit = list()
+	/// For grenades, any /mob/living's the grenade is moved onto, see [/datum/component/pellet_cloud/proc/handle_martyrs()]
+	var/list/bodies
+	/// For grenades, tracking people who die covering a grenade for achievement purposes, see [/datum/component/pellet_cloud/proc/handle_martyrs()]
+	var/list/purple_hearts
 
-	var/pellet_delta /// For grenades, tracking how many pellets are removed due to martyrs and how many pellets are added due to the last person to touch it being on top of it
-	var/terminated /// how many pellets ranged out without hitting anything
-	var/hits /// how many pellets impacted something
+	/// For grenades, tracking how many pellets are removed due to martyrs and how many pellets are added due to the last person to touch it being on top of it
+	var/pellet_delta = 0
+	/// how many pellets ranged out without hitting anything
+	var/terminated
+	/// how many pellets impacted something
+	var/hits
+	/// If the parent tried deleting and we're not done yet, we send it to nullspace then delete it after
 	var/queued_delete = FALSE
 
-	var/mob/living/shooter /// for if we're an ammo casing being fired
+	/// for if we're an ammo casing being fired
+	var/mob/living/shooter
 
 /datum/component/pellet_cloud/Initialize(projectile_type=/obj/item/shrapnel, magnitude=5)
 	if(!isammocasing(parent) && !isgrenade(parent) && !islandmine(parent))
@@ -102,7 +114,7 @@
   *
   * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, while landmines do not (obviously, it's a landmine!). See [/datum/component/pellet_cloud/proc/handle_martyrs()]
   */
-/datum/component/pellet_cloud/proc/create_blast_pellets(mob/living/lanced_by=NONE)
+/datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/lanced_by=NONE)
 	var/atom/A = parent
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
@@ -129,22 +141,24 @@
   */
 /datum/component/pellet_cloud/proc/handle_martyrs(mob/living/lanced_by)
 	var/magnitude_absorbed
-
 	var/list/martyrs = list()
+
+	var/self_harm_radius_mult = 3
+
 	if(lanced_by && prob(60))
-		to_chat(lanced_by, "<span class='warning'>Your plan to whack someone with a grenade on a stick backfires on you, literally!</span>")
-		for(var/i in 1 to radius * 4)
+		to_chat(lanced_by, "<span class='userdanger'>Your plan to whack someone with a grenade on a stick backfires on you, literally!</span>")
+		self_harm_radius_mult = 1 // we'll still give the guy who got hit some extra shredding, but not 3*radius
+		pellet_delta += radius
+		for(var/i in 1 to radius)
 			pew(lanced_by) // thought you could be tricky and lance someone with no ill effects!!
 
 	for(var/mob/living/body in get_turf(parent))
 		if(body == shooter)
-			pellet_delta = radius * 3
-			for(var/i in 1 to radius * 3)
+			pellet_delta += radius * self_harm_radius_mult
+			for(var/i in 1 to radius * self_harm_radius_mult)
 				pew(body) // free shrapnel if it goes off in your hand, and it doesn't even count towards the absorbed. fun!
 		else if(!(body in bodies))
 			martyrs += body // promoted from a corpse to a hero
-
-
 
 	for(var/M in martyrs)
 		var/mob/living/martyr = M
@@ -160,12 +174,12 @@
 
 		var/pellets_absorbed = (radius ** 2) - ((radius - magnitude_absorbed - 1) ** 2)
 		radius -= magnitude_absorbed
-		pellet_delta -= round(pellets_absorbed/2)
+		pellet_delta -= round(pellets_absorbed * 0.5)
 
 		if(martyr.stat != DEAD && martyr.client)
 			LAZYADD(purple_hearts, martyr)
 
-		for(var/i in 1 to round(pellets_absorbed/2))
+		for(var/i in 1 to round(pellets_absorbed * 0.5))
 			pew(martyr)
 
 		if(radius < 1)
