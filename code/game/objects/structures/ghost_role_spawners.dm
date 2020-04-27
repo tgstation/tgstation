@@ -663,7 +663,7 @@
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN)
 	if(policy)
-		to_chat(new_spawn, "<span class='warning'>[policy]</span>")
+		to_chat(new_spawn, "<span class='bold'>[policy]</span>")
 
 /obj/effect/mob_spawn/human/syndicatespace/captain
 	name = "Syndicate Ship Captain"
@@ -677,7 +677,7 @@
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
 	var/policy = get_policy(ROLE_SYNDICATE_CYBERSUN_CAPTAIN)
 	if(policy)
-		to_chat(new_spawn, "<span class='warning'>[policy]</span>")
+		to_chat(new_spawn, "<span class='bold'>[policy]</span>")
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
