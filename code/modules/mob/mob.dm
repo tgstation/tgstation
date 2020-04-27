@@ -397,6 +397,16 @@
 /mob/proc/show_inv(mob/user)
 	return
 
+/mob/verb/giveitem(atom/A as mob in range(1))
+	set name = "Give"
+	set category = "IC"
+	if(!iscarbon(src))
+		to_chat(src, "<span class='warning'>You can't give items!</span>")
+		return
+	if(A && A != src && get_dist(src, A) < 2)
+		var/mob/living/carbon/C = src
+		C.give_specific(A)
+
 /**
   * Examine a mob
   *

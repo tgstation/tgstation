@@ -156,9 +156,15 @@
 	var/index = get_held_index_of_item(I)
 	return index && hand_bodyparts[index]
 
+/**
+  * Proc called when giving an item to another player
+  *
+  * This handles creating an alert and adding an overlay to it
+  */
 /mob/living/carbon/proc/give()
 	var/obj/item/receiving = get_active_held_item()
 	if(!receiving)
+		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
 		return
 	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
 					"<span class='notice'>You offer [receiving]</span>", null, 2)
@@ -177,6 +183,44 @@
 		G.giver = src
 		G.RegisterSignal(src, COMSIG_MOVABLE_MOVED, /obj/screen/alert/give/.proc/removeAlert)
 
+/**
+  * Specific variant of the give proc
+  *
+  * A target is passed to this version of the give proc
+  * Arguments:
+  * * C - The carbon that the item is specifically being given to
+  */
+/mob/living/carbon/proc/give_specific(mob/living/carbon/C)
+	var/obj/item/receiving = get_active_held_item()
+	if(!receiving)
+		to_chat(src, "<span class='warning'>You're not holding anything to give!</span>")
+		return
+	visible_message("<span class='notice'>[src] is offering [receiving]</span>", \
+					"<span class='notice'>You offer [receiving]</span>", null, 2)
+	if(!CanReach(C))
+		return
+	var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
+	if(!G)
+		return
+	G.name = "[src] is offering [receiving]"
+	G.desc = "[src] is offering you [receiving]. Click this alert to accept it."
+	G.icon_state = "template"
+	G.cut_overlays()
+	G.add_overlay(receiving)
+	G.receiving = receiving
+	G.giver = src
+	G.RegisterSignal(src, COMSIG_MOVABLE_MOVED, /obj/screen/alert/give/.proc/removeAlert)
+
+
+/**
+  * Proc called when the player clicks the give alert
+  *
+  * Handles checking if the player taking the item has open slots and is in range of the giver
+  * Also deals with the actual transferring of the item to the players hands
+  * Arguments:
+  * * giver - The person giving the original item
+  * * I - The item being given by the giver
+  */
 /mob/living/carbon/proc/take(mob/living/carbon/giver, obj/item/I)
 	clear_alert("[giver]")
 	if(get_dist(src, giver) > 1)
