@@ -11,8 +11,6 @@
 	var/datum/song/handheld/song
 	/// Our allowed list of instrument ids. This is nulled on initialize.
 	var/list/allowed_instrument_ids
-	/// How many deciseconds of tuning we have left.
-	var/tune_time_left = 0
 	/// How far away our song datum can be heard.
 	var/instrument_range = 15
 
@@ -23,27 +21,10 @@
 
 /obj/item/instrument/Destroy()
 	QDEL_NULL(song)
-	if(tune_time_left)
-		STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 /obj/item/instrument/proc/should_stop_playing(mob/user)
 	return !user.CanReach(src) || !user.canUseTopic(src, FALSE, TRUE, FALSE, FALSE)
-
-/obj/item/instrument/process(wait)
-	if(is_tuned())
-		if (song.playing)
-			for (var/mob/living/M in song.hearing_mobs)
-				M.dizziness = max(0,M.dizziness-2)
-				M.jitteriness = max(0,M.jitteriness-2)
-				M.confused = max(M.confused-1)
-				SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "goodmusic", /datum/mood_event/goodmusic)
-		tune_time_left -= wait
-	else
-		tune_time_left = 0
-		if (song.playing)
-			loc.visible_message("<span class='warning'>[src] starts sounding a little off...</span>")
-		STOP_PROCESSING(SSprocessing, src)
 
 /obj/item/instrument/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] begins to play 'Gloomy Sunday'! It looks like [user.p_theyre()] trying to commit suicide!</span>")
@@ -54,22 +35,6 @@
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return TRUE
 	interact(user)
-
-/obj/item/instrument/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/musicaltuner))
-		var/mob/living/carbon/human/H = user
-		if (HAS_TRAIT(H, TRAIT_MUSICIAN))
-			if (!is_tuned())
-				H.visible_message("[H] tunes the [src] to perfection!", "<span class='notice'>You tune the [src] to perfection!</span>")
-				tune_time_left = 600 SECONDS
-				START_PROCESSING(SSprocessing, src)
-			else
-				to_chat(H, "<span class='notice'>[src] is already well tuned!</span>")
-		else
-			to_chat(H, "<span class='warning'>You have no idea how to use this.</span>")
-
-/obj/item/instrument/proc/is_tuned()
-	return tune_time_left > 0
 
 /obj/item/instrument/interact(mob/user)
 	ui_interact(user)
@@ -308,17 +273,6 @@
 	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
 	hitsound = 'sound/weapons/banjoslap.ogg'
 	allowed_instrument_ids = "banjo"
-
-/obj/item/musicaltuner
-	name = "musical tuner"
-	desc = "A device for tuning musical instruments both manual and electronic alike."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "musicaltuner"
-	slot_flags = ITEM_SLOT_BELT
-	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
-	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
 /obj/item/choice_beacon/music
 	name = "instrument delivery beacon"

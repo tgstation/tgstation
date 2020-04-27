@@ -155,8 +155,6 @@
 	hearing_mobs.len = 0
 	var/turf/source = get_turf(parent)
 	for(var/mob/M in get_hearers_in_view(instrument_range, source))
-		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
-			continue
 		hearing_mobs[M] = get_dist(M, source)
 	var/list/exited = old - hearing_mobs
 	for(var/i in exited)

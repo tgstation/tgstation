@@ -33,7 +33,7 @@
 									cur_acc[cur_note] = "#" // so shift is never required
 							else
 								cur_oct[cur_note] = text2num(ni)
-						playnote_legacy(cur_note, cur_acc[cur_note], cur_oct[cur_note])
+						playnote_legacy(cur_note, cur_acc[cur_note], cur_oct[cur_note], user)
 				if(notes.len >= 2 && text2num(notes[2]))
 					sleep(sanitize_tempo(tempo / text2num(notes[2])))
 				else
@@ -52,7 +52,7 @@
   * * acc is either "b", "n", or "#"
   * * oct is 1-8 (or 9 for C)
   */
-/datum/song/proc/playnote_legacy(note, acc as text, oct)
+/datum/song/proc/playnote_legacy(note, acc as text, oct, mob/user)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)
@@ -88,5 +88,10 @@
 	var/sound/music_played = sound(soundfile)
 	for(var/i in hearing_mobs)
 		var/mob/M = i
+		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
+			var/mob/living/L = M
+			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
+		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
+			continue
 		M.playsound_local(source, null, volume * using_instrument.volume_multiplier, falloff = 5, S = music_played)
 		// Could do environment and echo later but not for now

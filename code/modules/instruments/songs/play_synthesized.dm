@@ -14,7 +14,7 @@
 			var/tempodiv = chord[chord.len]
 			for(var/i in 1 to chord.len - 1)
 				var/key = chord[i]
-				if(!playkey_synth(key))
+				if(!playkey_synth(key, user))
 					if(!warned)
 						warned = TRUE
 						to_chat(user, "<span class='boldwarning'>Your instrument has ran out of channels. You might be playing your song too fast or be setting sustain to too high of a value. This warning will be suppressed for the rest of this cycle.</span>")
@@ -69,7 +69,7 @@
   * Plays a specific numerical key from our instrument to anyone who can hear us.
   * Does a hearing check if enough time has passed.
   */
-/datum/song/proc/playkey_synth(key)
+/datum/song/proc/playkey_synth(key, mob/user)
 	if(can_noteshift)
 		key = clamp(key + note_shift, key_min, key_max)
 	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
@@ -89,6 +89,11 @@
 	last_channel_played = channel_text
 	for(var/i in hearing_mobs)
 		var/mob/M = i
+		if(user && HAS_TRAIT(user, TRAIT_MUSICIAN) && isliving(M))
+			var/mob/living/L = M
+			L.apply_status_effect(STATUS_EFFECT_GOOD_MUSIC)
+		if(!(M?.client?.prefs?.toggles & SOUND_INSTRUMENTS))
+			continue
 		M.playsound_local(get_turf(parent), null, volume, FALSE, K.frequency, INSTRUMENT_DISTANCE_NO_FALLOFF, channel, null, copy, distance_multiplier = INSTRUMENT_DISTANCE_FALLOFF_BUFF)
 		// Could do environment and echo later but not for now
 
