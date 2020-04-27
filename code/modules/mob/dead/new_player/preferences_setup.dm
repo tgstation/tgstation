@@ -70,7 +70,7 @@
 
 		var/datum/quirk/picked_quirk = pick(available_hardcore_quirks)
 
-		for(var/bl in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted. V is a list
+		for(var/bl in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted. quirk_blacklist is a list of lists.
 			var/list/blacklist = bl
 			for(var/iterator_quirk in all_quirks)
 				if((picked_quirk in blacklist) && (iterator_quirk in blacklist) && !(iterator_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
