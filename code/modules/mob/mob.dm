@@ -405,7 +405,7 @@
 		return
 	if(A && A != src && get_dist(src, A) < 2)
 		var/mob/living/carbon/C = src
-		C.give_specific(A)
+		C.give()
 
 /**
   * Examine a mob
