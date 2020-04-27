@@ -673,12 +673,6 @@
 	outfit = /datum/outfit/syndicatespace/syndicaptain
 	assignedrole = ROLE_SYNDICATE_CYBERSUN_CAPTAIN
 
-/obj/effect/mob_spawn/human/syndicatespace/captain/special(mob/living/new_spawn)
-	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
-	var/policy = get_policy(assignedrole)
-	if(policy)
-		to_chat(new_spawn, "<span class='bold'>[policy]</span>")
-
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
 
@@ -703,18 +697,9 @@
 
 /datum/outfit/syndicatespace/syndicaptain
 	name = "Syndicate Ship Captain"
-	uniform = /obj/item/clothing/under/syndicate/combat
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
-	glasses = /obj/item/clothing/glasses/night
-	mask = /obj/item/clothing/mask/gas/syndicate
 	head = /obj/item/clothing/head/HoS/beret/syndicate
 	ears = /obj/item/radio/headset/syndicate/alt/leader
-	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
-	back = /obj/item/storage/backpack
 	l_pocket = /obj/item/gun/ballistic/automatic/pistol/APS
-	r_pocket = /obj/item/kitchen/knife/combat/survival
-	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/syndicate_command/captain_id
 	backpack_contents = list(/obj/item/documents/syndicate/red, /obj/item/paper/fluff/ruins/forgottenship/password)
-	implants = list(/obj/item/implant/weapons_auth)
