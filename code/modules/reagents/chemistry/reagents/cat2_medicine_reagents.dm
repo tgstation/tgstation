@@ -65,9 +65,9 @@
 	..()
 	return TRUE
 
-/datum/reagent/medicine/C2/helbital/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/medicine/C2/helbital/on_mob_end_metabolize(mob/living/carbon/M)
 	if(overdosed) //the spirits will bother to remove your curses if they gave you one earlier, but if they didn't, your curses are YOUR problem, not theirs (this also keeps people from curing their own curses with just 0.1u of helbital; you gotta WORK for that shit)
-		L.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //this will remove existing curses, but there's not much I can really do to get around it. consider it a feature instead of a bug, since we don't really have many other ways to remove curses right now (other than just waiting them out).
+		M.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //this will remove existing curses, but there's not much I can really do to get around it. consider it a feature instead of a bug, since we don't really have many other ways to remove curses right now (other than just waiting them out).
 	..()
 
 /datum/reagent/medicine/C2/libital //messes with your liber
