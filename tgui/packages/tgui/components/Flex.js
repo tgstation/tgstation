@@ -16,7 +16,11 @@ export const computeFlexProps = props => {
   return {
     className: classes([
       'Flex',
-      IS_IE8 && 'Flex--ie8',
+      IS_IE8 && (
+        direction === 'column'
+          ? 'Flex--ie8--column'
+          : 'Flex--ie8'
+      ),
       inline && 'Flex--inline',
       spacing > 0 && 'Flex--spacing--' + spacing,
       className,
