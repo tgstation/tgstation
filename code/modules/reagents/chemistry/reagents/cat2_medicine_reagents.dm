@@ -25,7 +25,7 @@
 		if(SOFT_CRIT) //meh convert
 			M.adjustOxyLoss(1, TRUE)
 	//no (further) oxyloss damage if you're not conscious or in soft crit
-	M.adjustBruteLoss(-(round(death_is_coming/50,0.1)+1), FALSE) //heals you more the closer you are to death
+	M.adjustBruteLoss(-(round(death_is_coming/50,0.1)+0.5), FALSE) //heals you more the closer you are to death
 
 	if(M.stat && !reaping && prob(0.1)) //janken with the grim reaper!
 		reaping = TRUE
