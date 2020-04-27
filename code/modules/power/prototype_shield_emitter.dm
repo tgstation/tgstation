@@ -95,8 +95,8 @@
 		log_game("[src] turned off at [AREACOORD(Turf)]")
 
 /obj/machinery/power/proto_sh_emitter/interact(mob/user)
-	var/turf/T = /turf
-	var/turf/Turf = get_turf(src)
+	var/turf/ShieldedTurf = /turf
+	var/turf/EmitterTurf = get_turf(src)
 	var/list/outline = list()
 	var/list/internal = list()
 	var/area/a = get_area(src)
@@ -112,67 +112,67 @@
 		return
 	if(is_on == TRUE)
 		to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
-		if(do_after(user, 35, target = src))
+		if(do_after(user, 3.5 SECONDS, target = src))
 			to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
-			message_admins("Prototype Shield Emitter turned off at [ADMIN_VERBOSEJMP(Turf)]")
-			log_game("Prototype Shield Emitter turned off at [AREACOORD(Turf)]")
+			message_admins("Prototype Shield Emitter turned off at [ADMIN_VERBOSEJMP(EmitterTurf)]")
+			log_game("Prototype Shield Emitter turned off at [AREACOORD(EmitterTurf)]")
 			is_on = FALSE
-			for(var/H in signs)
-				qdel(H)
+			for(var/h in signs)
+				qdel(h)
 			update_icon_state()
-	else
-		to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
-		if(do_after(user, 15, target = src))
-			to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
-			message_admins("Prototype Shield Emitter turned on at [ADMIN_VERBOSEJMP(Turf)]")
-			log_game("Prototype Shield Emitter turned on at [AREACOORD(Turf)]")
-			is_on = TRUE
-			update_icon_state()
-			switch(dir) //this part check the direction of the machine and create the block in front of it
-				if(NORTH)
-					for(T in block(locate(src.x - 2, src.y + 1, src.z), locate(src.x + 2, src.y + 5, src.z)))
-						outline += T
-					for(T in block(locate(src.x - 1, src.y + 2, src.z), locate(src.x + 1, src.y + 4, src.z)))
-						outline -= T
-						internal += T
-					for(T in outline)
-						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-					for(T in internal)
-						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-				if(SOUTH)
-					for(T in block(locate(src.x - 2, src.y - 1, src.z), locate(src.x + 2, src.y - 5, src.z)))
-						outline += T
-					for(T in block(locate(src.x - 1, src.y - 2, src.z), locate(src.x + 1, src.y - 4, src.z)))
-						outline -= T
-						internal += T
-					for(T in outline)
-						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-					for(T in internal)
-						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-				if(EAST)
-					for(T in block(locate(src.x +1, src.y -2, src.z), locate(src.x +5, src.y +2, src.z)))
-						outline += T
-					for(T in block(locate(src.x +2, src.y -1, src.z), locate(src.x +4, src.y +1, src.z)))
-						outline -= T
-						internal += T
-					for(T in outline)
-						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-					for(T in internal)
-						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-				if(WEST)
-					for(T in block(locate(src.x -1, src.y -2, src.z), locate(src.x -5, src.y +2, src.z)))
-						outline += T
-					for(T in block(locate(src.x -2, src.y -1, src.z), locate(src.x -4, src.y +1, src.z)))
-						outline -= T
-						internal += T
-					for(T in outline)
-						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-					for(T in internal)
-						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
+			return
+	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
+	if(do_after(user, 1.5 SECONDS, target = src))
+		to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
+		message_admins("Prototype Shield Emitter turned on at [ADMIN_VERBOSEJMP(EmitterTurf)]")
+		log_game("Prototype Shield Emitter turned on at [AREACOORD(EmitterTurf)]")
+		is_on = TRUE
+		update_icon_state()
+		switch(dir) //this part check the direction of the machine and create the block in front of it
+			if(NORTH)
+				for(ShieldedTurf in block(locate(src.x - 2, src.y + 1, src.z), locate(src.x + 2, src.y + 5, src.z)))
+					outline += ShieldedTurf
+				for(ShieldedTurf in block(locate(src.x - 1, src.y + 2, src.z), locate(src.x + 1, src.y + 4, src.z)))
+					outline -= ShieldedTurf
+					internal += ShieldedTurf
+				for(ShieldedTurf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
+				for(ShieldedTurf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+			if(SOUTH)
+				for(ShieldedTurf in block(locate(src.x - 2, src.y - 1, src.z), locate(src.x + 2, src.y - 5, src.z)))
+					outline += ShieldedTurf
+				for(ShieldedTurf in block(locate(src.x - 1, src.y - 2, src.z), locate(src.x + 1, src.y - 4, src.z)))
+					outline -= ShieldedTurf
+					internal += ShieldedTurf
+				for(ShieldedTurf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
+				for(ShieldedTurf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+			if(EAST)
+				for(ShieldedTurf in block(locate(src.x +1, src.y -2, src.z), locate(src.x +5, src.y +2, src.z)))
+					outline += ShieldedTurf
+				for(ShieldedTurf in block(locate(src.x +2, src.y -1, src.z), locate(src.x +4, src.y +1, src.z)))
+					outline -= ShieldedTurf
+					internal += ShieldedTurf
+				for(ShieldedTurf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
+				for(ShieldedTurf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+			if(WEST)
+				for(ShieldedTurf in block(locate(src.x -1, src.y -2, src.z), locate(src.x -5, src.y +2, src.z)))
+					outline += ShieldedTurf
+				for(ShieldedTurf in block(locate(src.x -2, src.y -1, src.z), locate(src.x -4, src.y +1, src.z)))
+					outline -= ShieldedTurf
+					internal += ShieldedTurf
+				for(ShieldedTurf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
+				for(ShieldedTurf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
 
 /obj/machinery/power/proto_sh_emitter/small/interact(mob/user)
-	var/turf/T = /turf
-	var/turf/Turf = get_turf(src)
+	var/turf/ShieldedTurf = /turf
+	var/turf/EmitterTurf = get_turf(src)
 	var/list/outline = list()
 	var/list/internal = list()
 	var/area/a = get_area(src)
@@ -188,60 +188,60 @@
 		return
 	if(is_on == TRUE)
 		to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
-		if(do_after(user, 35, target = src))
+		if(do_after(user, 3.5 SECONDS, target = src))
 			to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
-			message_admins("Small Prototype Shield Emitter turned off at [ADMIN_VERBOSEJMP(Turf)]")
-			log_game("Small Prototype Shield Emitter turned off at [AREACOORD(Turf)]")
+			message_admins("Small Prototype Shield Emitter turned off at [ADMIN_VERBOSEJMP(EmitterTurf)]")
+			log_game("Small Prototype Shield Emitter turned off at [AREACOORD(EmitterTurf)]")
 			is_on = FALSE
-			for(var/H in signs)
-				qdel(H)
+			for(var/h in signs)
+				qdel(h)
 			update_icon_state()
-	else
-		to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
-		if(do_after(user, 15, target = src))
-			to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
-			message_admins("Small Prototype Shield Emitter turned on at [ADMIN_VERBOSEJMP(Turf)]")
-			log_game("Small Prototype Shield Emitter turned on at [AREACOORD(Turf)]")
-			is_on = TRUE
-			update_icon_state()
-			switch(dir) //this part check the direction of the machine and create the block in front of it
-				if(NORTH)
-					for(T in block(locate(src.x - 1, src.y + 1, src.z), locate(src.x + 3, src.y + 4, src.z)))
-						outline += T
-					for(T in block(locate(src.x, src.y + 2, src.z), locate(src.x + 2, src.y + 3, src.z)))
-						outline -= T
-						internal += T
-					for(T in outline)
-						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-					for(T in internal)
-						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-				if(SOUTH)
-					for(T in block(locate(src.x - 3, src.y - 1, src.z), locate(src.x + 1, src.y - 4, src.z)))
-						outline += T
-					for(T in block(locate(src.x - 2, src.y - 2, src.z), locate(src.x, src.y - 3, src.z)))
-						outline -= T
-						internal += T
-					for(T in outline)
-						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-					for(T in internal)
-						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-				if(EAST)
-					for(T in block(locate(src.x +1, src.y -3, src.z), locate(src.x +4, src.y +1, src.z)))
-						outline += T
-					for(T in block(locate(src.x +2, src.y -2, src.z), locate(src.x +3, src.y, src.z)))
-						outline -= T
-						internal += T
-					for(T in outline)
-						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-					for(T in internal)
-						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-				if(WEST)
-					for(T in block(locate(src.x -1, src.y -1, src.z), locate(src.x -4, src.y +3, src.z)))
-						outline += T
-					for(T in block(locate(src.x -2, src.y, src.z), locate(src.x -3, src.y +2, src.z)))
-						outline -= T
-						internal += T
-					for(T in outline)
-						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-					for(T in internal)
-						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
+			return
+	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
+	if(do_after(user, 1.5 SECONDS, target = src))
+		to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
+		message_admins("Small Prototype Shield Emitter turned on at [ADMIN_VERBOSEJMP(EmitterTurf)]")
+		log_game("Small Prototype Shield Emitter turned on at [AREACOORD(EmitterTurf)]")
+		is_on = TRUE
+		update_icon_state()
+		switch(dir) //this part check the direction of the machine and create the block in front of it
+			if(NORTH)
+				for(ShieldedTurf in block(locate(src.x - 1, src.y + 1, src.z), locate(src.x + 3, src.y + 4, src.z)))
+					outline += ShieldedTurf
+				for(ShieldedTurf in block(locate(src.x, src.y + 2, src.z), locate(src.x + 2, src.y + 3, src.z)))
+					outline -= ShieldedTurf
+					internal += ShieldedTurf
+				for(ShieldedTurf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
+				for(ShieldedTurf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+			if(SOUTH)
+				for(ShieldedTurf in block(locate(src.x - 3, src.y - 1, src.z), locate(src.x + 1, src.y - 4, src.z)))
+					outline += ShieldedTurf
+				for(ShieldedTurf in block(locate(src.x - 2, src.y - 2, src.z), locate(src.x, src.y - 3, src.z)))
+					outline -= ShieldedTurf
+					internal += ShieldedTurf
+				for(ShieldedTurf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
+				for(ShieldedTurf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+			if(EAST)
+				for(ShieldedTurf in block(locate(src.x +1, src.y -3, src.z), locate(src.x +4, src.y +1, src.z)))
+					outline += ShieldedTurf
+				for(ShieldedTurf in block(locate(src.x +2, src.y -2, src.z), locate(src.x +3, src.y, src.z)))
+					outline -= ShieldedTurf
+					internal += ShieldedTurf
+				for(ShieldedTurf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
+				for(ShieldedTurf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+			if(WEST)
+				for(ShieldedTurf in block(locate(src.x -1, src.y -1, src.z), locate(src.x -4, src.y +3, src.z)))
+					outline += ShieldedTurf
+				for(ShieldedTurf in block(locate(src.x -2, src.y, src.z), locate(src.x -3, src.y +2, src.z)))
+					outline -= ShieldedTurf
+					internal += ShieldedTurf
+				for(ShieldedTurf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
+				for(ShieldedTurf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
