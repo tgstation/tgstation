@@ -64,10 +64,20 @@
 	icon_state = "engineering"
 	build_path = /obj/machinery/power/proto_sh_emitter
 	req_components = list(
-		/obj/item/stack/ore/bluespace_crystal = 1,
+		/obj/item/stack/ore/bluespace_crystal = 3,
 		/obj/item/stock_parts/capacitor = 4,
 		/obj/item/stock_parts/manipulator = 4,
 		/obj/item/stack/cable_coil = 5)
+
+/obj/item/circuitboard/machine/proto_sh_emitter_small
+	name = "Small Prototype Shield Emitter (Machine Board)"
+	icon_state = "engineering"
+	build_path = /obj/machinery/power/proto_sh_emitter/small
+	req_components = list(
+		/obj/item/stack/ore/bluespace_crystal = 2,
+		/obj/item/stock_parts/capacitor = 3,
+		/obj/item/stock_parts/manipulator = 3,
+		/obj/item/stack/cable_coil = 4)
 
 
 /obj/item/circuitboard/machine/telecomms/broadcaster

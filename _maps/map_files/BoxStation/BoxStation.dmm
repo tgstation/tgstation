@@ -32920,9 +32920,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = 32
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bMu" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
@@ -32938,9 +32936,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bMx" = (
 /obj/machinery/airlock_sensor/incinerator_toxmix{
@@ -33239,16 +33235,12 @@
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
 "bNt" = (
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bNu" = (
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine,
 /area/science/mixing/chamber)
 "bNv" = (
 /obj/effect/mapping_helpers/airlock/locked,
@@ -33653,9 +33645,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bOF" = (
 /obj/structure/sign/warning/fire{
@@ -33665,6 +33655,11 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/power/proto_sh_emitter/small/anchored{
+	icon_state = "proto_sh_emitter";
+	dir = 8
+	},
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "bOG" = (
@@ -41308,9 +41303,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
 	dir = 1
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "cor" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -41319,9 +41312,7 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_y = -32
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "cou" = (
 /obj/machinery/space_heater,
@@ -41543,9 +41534,7 @@
 	luminosity = 2
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "cpP" = (
 /obj/structure/lattice,
@@ -41743,9 +41732,7 @@
 /area/hallway/secondary/entry)
 "cqs" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "cqt" = (
 /obj/machinery/door/poddoor/incinerator_atmos_main,
@@ -44742,9 +44729,7 @@
 "cBE" = (
 /obj/effect/landmark/event_spawn,
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "cBF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
@@ -45415,6 +45400,7 @@
 /area/engine/supermatter)
 "cEz" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "cEA" = (
@@ -45778,6 +45764,8 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/effect/turf_decal/box/white,
+/obj/machinery/power/proto_sh_emitter,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "cGj" = (
@@ -47198,9 +47186,7 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "dGF" = (
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
+/turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "dGP" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -49477,14 +49463,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/xenobiology)
-"iPO" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/science/mixing/chamber)
 "iPV" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -51992,12 +51970,6 @@
 /obj/item/radio/headset/headset_med,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
-"nRA" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/maintenance/disposal/incinerator)
 "nRB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/white/line{
@@ -52210,9 +52182,7 @@
 	id = "Incinerator"
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "okO" = (
 /obj/structure/closet/crate/coffin,
@@ -53325,9 +53295,7 @@
 	dir = 1
 	},
 /obj/structure/cable,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "qdV" = (
 /obj/effect/turf_decal/tile/blue{
@@ -53447,9 +53415,7 @@
 	luminosity = 2
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "qrU" = (
 /obj/machinery/disposal/bin,
@@ -55122,11 +55088,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
-"ueA" = (
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/maintenance/disposal/incinerator)
 "ueE" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -55335,6 +55296,8 @@
 	pixel_x = 8;
 	pixel_y = 24
 	},
+/obj/machinery/power/proto_sh_emitter/small/anchored,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "uES" = (
@@ -55417,9 +55380,7 @@
 /area/maintenance/disposal/incinerator)
 "uSD" = (
 /obj/machinery/igniter/incinerator_toxmix,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "uTi" = (
 /obj/structure/disposalpipe/segment{
@@ -94902,9 +94863,9 @@ lcA
 ckg
 cmb
 wHz
-ueA
+cmd
 cpQ
-ueA
+cmd
 nXv
 nXv
 nXv
@@ -95159,10 +95120,10 @@ nHw
 csq
 cme
 uEq
-nRA
+cme
 cop
-ueA
-ueA
+cmd
+cmd
 cqs
 aaa
 aag
@@ -95673,10 +95634,10 @@ clj
 ckk
 cme
 hfX
-nRA
+cme
 cor
-ueA
-ueA
+cmd
+cmd
 cqs
 aaa
 aag
@@ -95930,9 +95891,9 @@ clf
 qMk
 cmd
 cmZ
-ueA
-ueA
-ueA
+cmd
+cmd
+cmd
 nXv
 nXv
 nXv
@@ -105154,9 +105115,9 @@ bzL
 bxZ
 bCi
 dGF
-iPO
+bMv
 bNu
-iPO
+bMv
 dGF
 nEP
 mPh

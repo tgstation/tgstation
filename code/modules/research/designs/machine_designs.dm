@@ -490,6 +490,14 @@
 	category = list ("Engineering Machinery")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
+/datum/design/board/proto_sh_emitter_small
+	name = "Machine Design (Small Prototype Shield Emitter Board)"
+	desc = "The circuit board for a Small Prototype Shield Emitter."
+	id = "proto_sh_emitter_small"
+	build_path = /obj/item/circuitboard/machine/proto_sh_emitter_small
+	category = list ("Engineering Machinery")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/board/ntnet_relay
 	name = "Machine Design (NTNet Relay Board)"
 	desc = "The circuit board for a wireless network relay."

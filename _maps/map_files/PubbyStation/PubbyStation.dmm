@@ -35355,6 +35355,8 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
+/obj/machinery/power/proto_sh_emitter/small/anchored,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "bJT" = (
@@ -35851,9 +35853,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine,
 /area/science/mixing/chamber)
 "bLh" = (
 /obj/structure/window/reinforced{
@@ -36320,23 +36320,17 @@
 /obj/structure/sign/warning/vacuum/external{
 	pixel_x = -32
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bMm" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bMn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bMp" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
@@ -36825,9 +36819,7 @@
 /turf/open/floor/engine/vacuum,
 /area/engine/atmos)
 "bNp" = (
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "bNq" = (
 /obj/structure/lattice/catwalk,
@@ -37256,9 +37248,7 @@
 /area/engine/atmos)
 "bOs" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
+/turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "bOt" = (
 /obj/machinery/door/poddoor/incinerator_toxmix,
@@ -42024,6 +42014,11 @@
 /obj/machinery/airlock_sensor/incinerator_atmos{
 	pixel_y = 22
 	},
+/obj/machinery/power/proto_sh_emitter/small/anchored{
+	icon_state = "proto_sh_emitter";
+	dir = 4
+	},
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "bZT" = (
@@ -42036,9 +42031,7 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/incinerator_input{
 	dir = 8
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "bZY" = (
 /turf/closed/wall,
@@ -42281,9 +42274,7 @@
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door/airlock/public/glass/incinerator/atmos_exterior,
 /obj/structure/cable,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "caO" = (
 /obj/machinery/igniter/incinerator_atmos,
@@ -42292,9 +42283,7 @@
 	pixel_y = -32
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "caP" = (
 /obj/machinery/power/compressor{
@@ -42307,9 +42296,7 @@
 	network = list("turbine")
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "caQ" = (
 /obj/machinery/power/turbine{
@@ -42317,9 +42304,7 @@
 	luminosity = 2
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "caS" = (
 /turf/closed/wall,
@@ -42517,9 +42502,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "cbG" = (
 /obj/structure/window/reinforced/fulltile,
@@ -49239,9 +49222,7 @@
 /area/science/xenobiology)
 "dxo" = (
 /obj/machinery/igniter/incinerator_toxmix,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "dye" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
@@ -49890,6 +49871,8 @@
 	dir = 1;
 	network = list("ss13","engine")
 	},
+/obj/machinery/power/proto_sh_emitter,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/engine/engineering)
 "fhM" = (
@@ -51750,9 +51733,7 @@
 /turf/open/floor/plating,
 /area/maintenance/department/security/brig)
 "iUX" = (
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
+/turf/closed/wall/r_wall,
 /area/science/mixing/chamber)
 "iVJ" = (
 /obj/effect/spawner/lootdrop/organ_spawner,
@@ -52994,6 +52975,7 @@
 	},
 /obj/item/wrench,
 /obj/structure/cable,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "lBP" = (
@@ -53182,11 +53164,6 @@
 	},
 /turf/open/floor/plating,
 /area/engine/engineering)
-"lZL" = (
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/maintenance/disposal/incinerator)
 "mal" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -53744,6 +53721,7 @@
 	name = "supermatter shielding"
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/plating,
 /area/engine/supermatter)
 "nmx" = (
@@ -55439,9 +55417,7 @@
 /area/engine/engineering)
 "qFJ" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "qHc" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -55876,12 +55852,6 @@
 	},
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
-"ryk" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/science/mixing/chamber)
 "rzp" = (
 /obj/structure/table,
 /obj/item/stack/sheet/metal/fifty,
@@ -57310,14 +57280,6 @@
 /obj/item/clothing/glasses/sunglasses,
 /turf/open/floor/carpet,
 /area/lawoffice)
-"uBb" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/maintenance/disposal/incinerator)
 "uBs" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/general/visible,
@@ -98801,11 +98763,11 @@ bWe
 bWT
 bJP
 mZE
-lZL
-uBb
+bYw
+bZT
 caN
-uBb
-lZL
+bZT
+bYw
 jcB
 bYw
 abI
@@ -99058,7 +99020,7 @@ bWf
 bVo
 bJP
 aht
-lZL
+bYw
 bZU
 caO
 cbF
@@ -99315,11 +99277,11 @@ bWg
 bVo
 bJP
 oex
-lZL
-lZL
+bYw
+bYw
 caP
-lZL
-lZL
+bYw
+bYw
 aaa
 aaa
 aaa
@@ -99573,9 +99535,9 @@ bJP
 bJP
 mZE
 mZE
-lZL
+bYw
 caQ
-lZL
+bYw
 aaa
 aaa
 aaa
@@ -101354,7 +101316,7 @@ bGt
 bHz
 bIM
 bJQ
-ryk
+bIM
 bMl
 bNp
 bOt
@@ -101868,7 +101830,7 @@ bGv
 bHA
 bIM
 bJS
-ryk
+bIM
 bMn
 bNp
 bOt

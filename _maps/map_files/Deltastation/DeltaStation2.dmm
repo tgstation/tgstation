@@ -10119,6 +10119,7 @@
 /area/engine/supermatter)
 "axw" = (
 /obj/structure/cable,
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/engine/supermatter)
 "axx" = (
@@ -15750,9 +15751,7 @@
 	pixel_y = -32
 	},
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aIl" = (
 /obj/machinery/power/compressor{
@@ -15762,9 +15761,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aIm" = (
 /obj/machinery/igniter/incinerator_atmos,
@@ -15773,9 +15770,7 @@
 	pixel_x = -32;
 	pixel_y = 32
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aIn" = (
 /obj/effect/mapping_helpers/airlock/locked,
@@ -15785,9 +15780,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aIo" = (
 /obj/effect/decal/cleanable/dirt,
@@ -16426,6 +16419,11 @@
 	},
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/power/proto_sh_emitter/small/anchored{
+	icon_state = "proto_sh_emitter";
+	dir = 8
+	},
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/maintenance/disposal/incinerator)
 "aJH" = (
@@ -17905,17 +17903,13 @@
 /area/security/execution/education)
 "aMt" = (
 /obj/structure/sign/warning/fire,
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
+/turf/closed/wall/r_wall,
 /area/maintenance/disposal/incinerator)
 "aMu" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aMv" = (
 /obj/machinery/atmospherics/pipe/simple/general/visible{
@@ -19586,9 +19580,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/maintenance/disposal/incinerator)
 "aPy" = (
 /obj/structure/sign/warning/fire,
@@ -112107,9 +112099,7 @@
 /area/maintenance/department/science)
 "exE" = (
 /obj/machinery/air_sensor/atmos/toxins_mixing_tank,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "eAM" = (
 /obj/effect/decal/cleanable/dirt,
@@ -112451,6 +112441,11 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/machinery/power/proto_sh_emitter/small/anchored{
+	icon_state = "proto_sh_emitter";
+	dir = 1
+	},
+/obj/effect/turf_decal/box/white,
 /turf/open/floor/engine,
 /area/science/mixing/chamber)
 "gmj" = (
@@ -112814,11 +112809,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
-"hSW" = (
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/maintenance/disposal/incinerator)
 "hVS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -112945,9 +112935,7 @@
 /obj/structure/sign/warning/vacuum{
 	pixel_x = 32
 	},
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "iAW" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -113001,12 +112989,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/dark/telecomms,
 /area/tcommsat/server)
-"iIH" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible,
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/science/mixing/chamber)
 "iLj" = (
 /obj/structure/table/glass,
 /obj/effect/turf_decal/tile/blue{
@@ -113375,11 +113357,6 @@
 /obj/structure/cable,
 /turf/open/space,
 /area/maintenance/solars/port/fore)
-"kgL" = (
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/crew_quarters/heads/hor)
 "kma" = (
 /obj/effect/turf_decal/tile/brown{
 	dir = 1
@@ -114478,9 +114455,7 @@
 "oIE" = (
 /obj/machinery/door/airlock/research/glass/incinerator/toxmix_exterior,
 /obj/effect/mapping_helpers/airlock/locked,
-/turf/open/floor/engine{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine,
 /area/science/mixing/chamber)
 "oKQ" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
@@ -114579,9 +114554,7 @@
 /area/science/research)
 "oYI" = (
 /obj/machinery/igniter/incinerator_toxmix,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "oZC" = (
 /obj/machinery/door/firedoor,
@@ -114899,9 +114872,7 @@
 /area/medical/chemistry)
 "qnx" = (
 /obj/machinery/atmospherics/components/unary/outlet_injector/atmos/toxins_mixing_input,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "qob" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -115331,9 +115302,7 @@
 /area/science/mixing)
 "sfo" = (
 /obj/effect/decal/remains/xeno,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "sfN" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -115409,11 +115378,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"sNX" = (
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/science/mixing/chamber)
 "sOi" = (
 /obj/structure/plasticflaps/opaque,
 /obj/machinery/navbeacon{
@@ -115653,15 +115617,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
-"uer" = (
-/obj/structure/sign/warning/fire,
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/maintenance/disposal/incinerator)
 "ugX" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 10
@@ -116223,14 +116178,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/maintenance/department/science)
-"wCo" = (
-/obj/machinery/atmospherics/pipe/simple/general/visible{
-	dir = 4
-	},
-/turf/closed/wall/r_wall{
-	thermal_conductivity = 0
-	},
-/area/maintenance/disposal/incinerator)
 "wEq" = (
 /obj/item/retractor,
 /obj/item/hemostat,
@@ -116375,6 +116322,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"xmE" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/bot,
+/obj/machinery/power/proto_sh_emitter,
+/obj/effect/turf_decal/box/white,
+/turf/open/floor/plasteel,
+/area/engine/atmospherics_engine)
 "xsF" = (
 /obj/effect/turf_decal/tile/blue,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -116513,9 +116469,7 @@
 /area/science/mixing/chamber)
 "xXn" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
-/turf/open/floor/engine/vacuum{
-	thermal_conductivity = 0
-	},
+/turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "xZM" = (
 /obj/structure/fans/tiny/invisible,
@@ -136430,9 +136384,9 @@ ajr
 aaa
 vQz
 hZA
-hSW
+aFr
 aIk
-hSW
+aFr
 mIc
 aFp
 aNP
@@ -136686,11 +136640,11 @@ aad
 ajr
 aad
 eOB
-hSW
-hSW
+aFr
+aFr
 aIl
-hSW
-hSW
+aFr
+aFr
 aFp
 aNQ
 aFp
@@ -136947,7 +136901,7 @@ aRo
 aMu
 aIm
 aPx
-hSW
+aFr
 nxG
 aNR
 whP
@@ -137200,11 +137154,11 @@ aaa
 aad
 aaa
 eOB
-hSW
-wCo
+aFr
+aMv
 aIn
-uer
-hSW
+aPy
+aFr
 ruy
 aNS
 aJF
@@ -144387,7 +144341,7 @@ aaa
 alT
 asC
 aua
-avj
+xmE
 avj
 axG
 ayP
@@ -149107,10 +149061,10 @@ cQM
 gPv
 cOR
 cOR
-sNX
-sNX
-sNX
-sNX
+xdD
+xdD
+xdD
+xdD
 xRb
 xdD
 fno
@@ -149367,7 +149321,7 @@ qYo
 svv
 sfo
 qnx
-iIH
+eJc
 gbV
 eJc
 mkm
@@ -149881,7 +149835,7 @@ qYo
 svv
 ixL
 xXn
-iIH
+eJc
 mWZ
 eJc
 juf
@@ -150135,10 +150089,10 @@ dia
 oUW
 dlD
 dlE
-kgL
-kgL
-kgL
-kgL
+dlE
+dlE
+dlE
+dlE
 kvf
 dlE
 dlE
