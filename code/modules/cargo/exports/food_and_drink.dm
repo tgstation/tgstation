@@ -5,7 +5,7 @@
 /datum/export/food
 	cost = 10 // Default cost, Because something WILL get missed somewhere. Perhaps out of active ignorance or not.
 	unit_name = "serving"
-	message = "of food."
+	message = "of food"
 	export_types = list(/obj/item/reagent_containers/food/snacks)
 	include_subtypes = TRUE
 	exclude_types = list(/obj/item/reagent_containers/food/snacks/grown)
@@ -13,4 +13,6 @@
 /datum/export/food/get_cost(obj/O, allowed_categories, apply_elastic)
 	. = ..()
 	var/obj/item/reagent_containers/food/snacks/sold_food = O
+	if(sold_food.silver_spawned)
+		return FOOD_WORTHLESS
 	return sold_food.value
