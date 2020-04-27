@@ -182,10 +182,14 @@
 		/obj/item/shears
 		))
 
+/obj/item/storage/belt/medical/paramedic/
+	name = "triage belt"
+	desc = "A medical belt "
+
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	new /obj/item/sensor_device(src)
 	new /obj/item/pinpointer/crew/prox(src)
-	new /obj/item/stack/medical/gauze/twelve(src)
+	new /obj/item/stack/medical/gauze/eight(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
 	new /obj/item/reagent_containers/glass/bottle/calomel(src)

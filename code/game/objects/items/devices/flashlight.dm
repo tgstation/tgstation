@@ -170,6 +170,14 @@
 	brightness_on = 2
 	var/holo_cooldown = 0
 
+/obj/item/flashlight/pen/surgical
+	name = "surgical penlight"
+	desc = "A high-powered UV penlight with enough strength to significantly weaken ."
+	icon_state = "penlight"
+	item_state = ""
+	flags_1 = CONDUCT_1
+	brightness_on = 2
+
 /obj/item/flashlight/pen/afterattack(atom/target, mob/user, proximity_flag)
 	. = ..()
 	if(!proximity_flag)

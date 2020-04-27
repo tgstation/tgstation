@@ -108,23 +108,19 @@
 	gender = PLURAL
 	singular_name = "medical gauze"
 	icon_state = "gauze"
-	var/stop_bleeding = 1800
 	self_delay = 20
-	max_amount = 12
+	max_amount = 8
+	amount = 4
 	grind_results = list(/datum/reagent/cellulose = 2)
 	custom_price = 100
+	absorption_rate = 0.25
+	absorption_capacity = 5
+
+/obj/item/stack/medical/gauze/eight
+	amount = 8
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
-
-/obj/item/stack/medical/gauze/heal(mob/living/M, mob/user)
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(!H.bleedsuppress && H.bleed_rate) //so you can't stack bleed suppression
-			H.suppress_bloodloss(stop_bleeding)
-			to_chat(user, "<span class='notice'>You stop the bleeding of [M]!</span>")
-			return TRUE
-	to_chat(user, "<span class='warning'>You can not use \the [src] on [M]!</span>")
 
 /obj/item/stack/medical/gauze/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER || I.get_sharpness())
@@ -147,7 +143,8 @@
 	name = "improvised gauze"
 	singular_name = "improvised gauze"
 	desc = "A roll of cloth roughly cut from something that can stop bleeding, but does not heal wounds."
-	stop_bleeding = 900
+	absorption_rate = 0.15
+	absorption_capacity = 4
 
 /obj/item/stack/medical/gauze/cyborg
 	custom_materials = null
@@ -162,7 +159,7 @@
 	icon_state = "ointment"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	var/heal_burn = 40
+	var/heal_burn = 10
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
 
@@ -180,7 +177,7 @@
 
 /obj/item/stack/medical/suture
 	name = "suture"
-	desc = "Sterile sutures used to seal up cuts and lacerations."
+	desc = "Basic sterile sutures used to seal up cuts and lacerations and stop bleeding."
 	gender = PLURAL
 	singular_name = "suture"
 	icon_state = "suture"
@@ -189,14 +186,16 @@
 	amount = 15
 	max_amount = 15
 	repeating = TRUE
-	var/heal_brute = 10
+	var/heal_brute = 5
+	var/stop_bleeding = 0.5
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
 	icon_state = "suture_purp"
 	desc = "A suture infused with drugs that speed up wound healing of the treated laceration."
-	heal_brute = 15
+	heal_brute = 10
+	stop_bleeding = 0.75
 	grind_results = list(/datum/reagent/medicine/polypyr = 2)
 
 /obj/item/stack/medical/suture/heal(mob/living/M, mob/user)
@@ -346,37 +345,28 @@
 /obj/item/stack/medical/bone_gel
 	name = "bone gel"
 	singular_name = "bone gel"
-	desc = "A therapeutic gel pack and bandages designed to treat blunt-force trauma."
+	desc = "A potent medical gel that, when applied to a damaged bone, triggers an intense melding reaction to repair the wound. Like plastic glue, but for people instead!"
 
-	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
-	icon_state = "medigel_blue"
-	item_state = "spraycan"
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "bone-gel"
+	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
-	current_skin = "medigel_blue"
-	var/heal_brute = 40
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
 
-/obj/item/stack/medical/bruise_pack/heal(mob/living/M, mob/user)
-	if(M.stat == DEAD)
-		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
-		return
-	if(isanimal(M))
-		var/mob/living/simple_animal/critter = M
-		if (!(critter.healable))
-			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
-			return FALSE
-		else if (critter.health == critter.maxHealth)
-			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
-			return FALSE
-		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
-		M.heal_bodypart_damage((heal_brute/2))
-		return TRUE
-	if(iscarbon(M))
-		return heal_carbon(M, user, heal_brute, 0)
-	to_chat(user, "<span class='warning'>You can't heal [M] with \the [src]!</span>")
+/obj/item/stack/medical/bone_gel/suicide_act(mob/user)
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.visible_message("<span class='suicide'>[C] is squirting all of \the [src] into [C.p_their()] mouth! That's not proper procedure! [C.p_they(TRUE)] must be trying to commit suicide!</span>")
+		if(do_after(C, 2 SECONDS))
+			for(var/i in C.bodyparts)
+				var/obj/item/bodypart/bone = i
+				bone.receive_damage(brute=999, wound_bonus=100)
+				var/datum/wound/brute/bone/critical/oof_ouch = new
+				oof_ouch.apply_wound(bone)
+				return (BRUTELOSS)
+		else
+			C.visible_message("<span class='suicide'>[C] screws up like an idiot and still dies anyway!</span>")
+			return (SHAME)
 
-/obj/item/stack/medical/bruise_pack/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is bludgeoning [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	return (BRUTELOSS)

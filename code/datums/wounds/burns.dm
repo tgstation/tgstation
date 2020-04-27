@@ -20,12 +20,26 @@
 	/// Our current level of sanitization (anti-infection)
 	var/sanitization = 0
 
+	var/flesh_damage
+	var/flesh_healing = 0
+	var/mortification = 0
+
 // TODO: flesh out (haha flesh)
 /datum/wound/burn/handle_process()
 	. = ..()
 	if(sanitization > 0)
 		infestation = max(0, infestation - sanitization)
 		sanitization = max(0, sanitization - 0.2)
+		return
+
+
+	if(flesh_healing > 0)
+		flesh_damage--
+		flesh_healing--
+
+	if(flesh_damage <= 0 && infestation <= 0)
+		to_chat(victim, "<span class='green'>The burns on your [limb.name] have cleared up!</span>")
+		remove_wound()
 		return
 
 	if(infestation < max_infestation)
@@ -50,34 +64,46 @@
 
 
 
+
+/datum/wound/burn/proc/ointment(obj/item/stack/medical/ointment/I, mob/user)
+	victim.visible_message("<span class='green'>[user] begins applying [I] to [victim]'s [limb.name]...</span>", "<span class='green'>[user] begins applying [I] to your [limb.name]...</span>")
+	if(!do_after(user, base_treat_time, extra_checks = CALLBACK(src, .proc/still_exists)))
+		return
+
+	user.visible_message("<span class='green'>[user] applies [I] to [victim].</span>", "<span class='green'>You apply [I] to [victim]'s [limb.name].</span>")
+	I.use(1)
+	infestation -= 3
+	limb.heal_damage(burn = 3) // just a lil
+	sanitization += 4 // make vars for this later
+
 /datum/wound/burn/proc/bandage(obj/item/stack/medical/gauze/I, mob/user)
 	victim.visible_message("<span class='green'>[user] begins wrapping [victim]'s [limb.name] with [I]...</span>", "<span class='green'>[user] begins wrapping your [limb.name] with [I]...</span>")
-	if(do_after(user, base_treat_time, target=victim))
-		if(QDELETED(src) || !limb)
-			return
-		user.visible_message("<span class='green'>[user] applies [I] to [victim].</span>", "<span class='green'>You apply [I] to [victim]'s [limb.name].</span>")
-		I.use(1)
-		limb.heal_damage(burn = 3) // just a lil
+	if(!do_after(user, base_treat_time, extra_checks = CALLBACK(src, .proc/still_exists)))
+		return
 
-		sanitization += 4 // make vars for this later
+	user.visible_message("<span class='green'>[user] applies [I] to [victim].</span>", "<span class='green'>You apply [I] to [victim]'s [limb.name].</span>")
+	I.use(1)
+	limb.heal_damage(burn = 3) // just a lil
+
+	sanitization += 4 // make vars for this later
 
 /datum/wound/burn/proc/self_bandage(obj/item/stack/medical/gauze/I, mob/user)
 	victim.visible_message("<span class='green'>[victim] begins wrapping [victim.p_their()] [limb.name] with [I]...</span>", "<span class='green'>You begin wrapping your [limb.name] with [I]...</span>")
-	if(do_after(victim, base_treat_time))
-		if(QDELETED(src) || !limb)
-			return
-		victim.visible_message("<span class='green'>[victim] sloppily applies [I] to [victim.p_their()] [limb].</span>", "<span class='green'>You sloppily apply [I] to your [limb.name].</span>")
-		I.use(1)
-		// no heal for self bandage, less sanitization too
+	if(!do_after(victim, base_treat_time))
+		return
 
-		sanitization += 2 // make vars for this later
+	victim.visible_message("<span class='green'>[victim] sloppily applies [I] to [victim.p_their()] [limb].</span>", "<span class='green'>You sloppily apply [I] to your [limb.name].</span>")
+	I.use(1)
+	// no heal for self bandage, less sanitization too
+
+	sanitization += 2 // make vars for this later
 
 /datum/wound/burn/treat_self(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/gauze))
 		self_bandage(I, user)
 		return
 	if(istype(I, /obj/item/stack/medical/ointment))
-		//self_ointment(I, user)
+		ointment(I, user)
 		return
 
 /datum/wound/burn/treat(obj/item/I, mob/user)
@@ -85,13 +111,16 @@
 		bandage(I, user)
 		return
 	if(istype(I, /obj/item/stack/medical/ointment))
-		//ointment(I, user)
+		ointment(I, user)
 		return
+
+/datum/wound/burn/proc/regenerate_flesh(amount)
+	flesh_healing += amount
 
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/moderate
-	name = "second degree burns"
-	desc = "Patient is suffering considerable burns with mild skin penetration, creating a risk of infection and increased burning sensations."
+	name = "Second Degree Burns"
+	desc = "Patient is suffering considerable burns with mild skin penetration, weakening limb integrity and increased burning sensations."
 	treat_text = "Recommended application of disinfectant and salve to affected limb, followed by bandaging."
 	examine_desc = "is badly burned and breaking out in blisters"
 	occur_text = "breaks out with violent red burns"
@@ -100,11 +129,12 @@
 	threshold_minimum = 40
 	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
 	status_effect_type = /datum/status_effect/wound/burn/moderate
+	flesh_damage = 15
 
 
 
 /datum/wound/burn/severe
-	name = "third degree burns"
+	name = "Third Degree Burns"
 	desc = "Patient is suffering extreme burns with full skin penetration, creating serious risk of infection and greatly reduced limb integrity."
 	treat_text = "Recommended immediate disinfection and excision of ruined skin, followed by bandaging."
 	examine_desc = "appears seriously charred, with aggressive red splotches"
@@ -115,8 +145,11 @@
 	threshold_penalty = 40
 	status_effect_type = /datum/status_effect/wound/burn/severe
 
+	flesh_damage = 30
+	mortification = 4
+
 /datum/wound/burn/critical
-	name = "catastrophic burns"
+	name = "Catastrophic Burns"
 	desc = "Patient is suffering near complete loss of tissue and significantly charred muscle and bone, creating life-threatening risk of infection and negligible limb integrity."
 	treat_text = "Immediate surgical debriding of ruined skin, followed by potent tissue regeneration formula and bandaging."
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
@@ -127,6 +160,9 @@
 	threshold_minimum = 140
 	threshold_penalty = 80
 	status_effect_type = /datum/status_effect/wound/burn/critical
+
+	flesh_damage = 60
+	mortification = 6
 
 	max_infestation = 9
 	/// If we have max infestation and we fail this many checks, we lose our whole damn limb assuming it's, y'know, a limb

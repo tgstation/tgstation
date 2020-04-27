@@ -95,57 +95,39 @@
 /////////////////////////
 
 // wound alert base
+// TODO: have this update to show the worst severity you currently have of all your wounds whenever one is gained/lost
 /obj/screen/alert/status_effect/wound
+	name = "Wounded"
+	desc = "Your body has sustained serious damage, click here to inspect yourself." // TODO: do the self inspect on click im going to bed in a sec
 
-/obj/screen/alert/status_effect/wound/proc/update_text()
-	name = "[name]"
+/obj/screen/alert/status_effect/wound/Click()
+	var/mob/living/carbon/C = usr
+	C.check_self_for_injuries()
 
 // wound status effect base
 /datum/status_effect/wound
 	id = "wound"
+	var/alert_id = "wound"
 	status_type = STATUS_EFFECT_MULTIPLE
 	var/obj/item/bodypart/linked_limb
 	var/datum/wound/linked_wound
+	alert_type = NONE
 
 /datum/status_effect/wound/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	if(owner)
-		if(LAZYLEN(owner.has_status_effect_list(id)) <= 1)
-			owner.clear_alert(id)
+		if(LAZYLEN(owner.has_status_effect_list(alert_id)) <= 1) // basically if we have no wounds
+			owner.clear_alert(alert_id)
 		LAZYREMOVE(owner.status_effects, src)
 		on_remove()
 		owner = null
-/*
+	return ..()
+
 /datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
 	..()
 	var/datum/wound/W = incoming_wound
 	linked_wound = W
 	linked_limb = linked_wound.limb
-	if(linked_alert)
-		var/obj/screen/alert/status_effect/wound/wound_alert = linked_alert
-		if(!istype(wound_alert))
-			return
-*/
-/datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
-	if(new_owner)
-		owner = new_owner
-	if(owner)
-		LAZYADD(owner.status_effects, src)
-	if(!owner || !on_apply())
-		qdel(src)
-		return
-	if(duration != -1)
-		duration = world.time + duration
-	tick_interval = world.time + tick_interval
-	if(alert_type && !owner.alerts[id])
-		var/obj/screen/alert/status_effect/A = owner.throw_alert(id, alert_type)
-		A.attached_effect = src //so the alert can reference us, if it needs to
-		linked_alert = A //so we can reference the alert, if we need to
-	START_PROCESSING(SSfastprocess, src)
-	var/datum/wound/W = incoming_wound
-	linked_wound = W
-	linked_limb = linked_wound.limb
-	return TRUE
 
 /datum/status_effect/wound/on_remove()
 	linked_wound = null
@@ -176,83 +158,28 @@
 
 /datum/status_effect/wound/bone/moderate
 	id = "disjoint"
-	alert_type = /obj/screen/alert/status_effect/wound/bone/moderate
-
-/obj/screen/alert/status_effect/wound/bone/moderate
-	name = "Disjointed"
-	desc = "One of your limbs is disjointed, you should get that popped back into place."
-
-
 /datum/status_effect/wound/bone/severe
 	id = "hairline"
-	alert_type = /obj/screen/alert/status_effect/wound/bone/severe
-
-/obj/screen/alert/status_effect/wound/bone/severe
-	name = "Hairline Fractured"
-	desc = "One of your limbs has a hairline fracture, you should get that treated, or at least splinted."
-
 
 /datum/status_effect/wound/bone/critical
 	id = "compound"
-	alert_type = /obj/screen/alert/status_effect/wound/bone/critical
-
-/obj/screen/alert/status_effect/wound/bone/critical
-	name = "Compound Fractured"
-	desc = "One of your limbs has a compound fracture, you should get that treated, or at least splinted."
-
-
 
 // cuts
 /datum/status_effect/wound/cut/moderate
 	id = "abrasion"
-	alert_type = /obj/screen/alert/status_effect/wound/cut/moderate
-
-/obj/screen/alert/status_effect/wound/cut/moderate
-	name = "Abraised"
-	desc = "One of your limbs has an open cut, you should get that stitched, wrapped, or at least cauterized."
-
 
 /datum/status_effect/wound/cut/severe
 	id = "laceration"
-	alert_type = /obj/screen/alert/status_effect/wound/cut/severe
-
-/obj/screen/alert/status_effect/wound/cut/severe
-	name = "Lacerated"
-	desc = "One of your limbs has a serious laceration, you should get that stitched, wrapped, or at least cauterized."
-
 
 /datum/status_effect/wound/cut/critical
 	id = "avulsion"
-	alert_type = /obj/screen/alert/status_effect/wound/cut/critical
-
-/obj/screen/alert/status_effect/wound/cut/critical
-	name = "Avulsed"
-	desc = "One of your limbs has a really bad tear, you should get that stitched, wrapped, or at least cauterized."
-
 
 // burns
 /datum/status_effect/wound/burn/moderate
 	id = "seconddeg"
-	alert_type = /obj/screen/alert/status_effect/wound/burn/moderate
-
-/obj/screen/alert/status_effect/wound/burn/moderate
-	name = "Lightly Singed"
-	desc = "One of your limbs has an open cut, you should get that stitched, wrapped, or at least cauterized."
-
 
 /datum/status_effect/wound/burn/severe
 	id = "thirddeg"
-	alert_type = /obj/screen/alert/status_effect/wound/burn/severe
-
-/obj/screen/alert/status_effect/wound/burn/severe
-	name = "Badly Burned"
-	desc = "One of your limbs has a serious laceration, you should get that stitched, wrapped, or at least cauterized."
-
 
 /datum/status_effect/wound/burn/critical
 	id = "fourthdeg"
-	alert_type = /obj/screen/alert/status_effect/wound/burn/critical
-
-/obj/screen/alert/status_effect/wound/burn/critical
-	name = "Critically Charred"
-	desc = "One of your limbs has a really bad tear, you should get that stitched, wrapped, or at least cauterized."

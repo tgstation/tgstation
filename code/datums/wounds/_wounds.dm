@@ -71,6 +71,9 @@
 	///
 	var/status_effect_type
 
+	/// If having this wound makes the parent bodypart unusable
+	var/disabling
+
 	var/datum/status_effect/linked_status_effect
 
 /datum/wound/Destroy()
@@ -82,6 +85,12 @@
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
 		return
 
+	for(var/i in L.wounds)
+		var/datum/wound/prexisting_wound = i
+		if(prexisting_wound.type == type)
+			qdel(src)
+			return
+
 	victim = L.owner
 	limb = L
 	LAZYADD(victim.all_wounds, src)
@@ -90,6 +99,9 @@
 	if(status_effect_type)
 		linked_status_effect = victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
+	if(!victim.alerts["wound"])
+		victim.throw_alert("wound", /obj/screen/alert/status_effect/wound)
+
 	var/demoted
 	if(old_wound)
 		demoted = (severity <= old_wound.severity)
@@ -116,11 +128,13 @@
 /// Remove the wound from whatever it's afflicting
 /datum/wound/proc/remove_wound()
 	if(limb)
-		limb.update_wounds()
 		LAZYREMOVE(limb.wounds, src)
+		limb.update_wounds()
 		limb = null
 	if(victim)
 		LAZYREMOVE(victim.all_wounds, src)
+		if(!victim.all_wounds)
+			victim.clear_alert("wound")
 		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 		victim = null
 
@@ -183,9 +197,27 @@
 /datum/wound/proc/treat(obj/item/I, mob/user)
 	return
 
+/// Someone is using something that might be used for treating the wound on this limb
+/datum/wound/proc/applied_reagents( mob/user)
+	return
+
 /// If var/processing is TRUE, this is run on each life tick
 /datum/wound/proc/handle_process()
 	return
+
+/datum/wound/proc/still_exists()
+	return (!QDELETED(src) && limb)
+
+/datum/wound/proc/severity_text()
+	switch(severity)
+		if(WOUND_SEVERITY_TRIVIAL)
+			return "Trivial"
+		if(WOUND_SEVERITY_MODERATE)
+			return "Moderate"
+		if(WOUND_SEVERITY_SEVERE)
+			return "Severe"
+		if(WOUND_SEVERITY_CRITICAL)
+			return "Critical"
 
 /datum/wound/brute
 	damtype = BRUTE

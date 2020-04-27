@@ -217,7 +217,7 @@
 
 /datum/quirk/frail
 	name = "Frail"
-	desc = "Your bones might as well be made of glass! Your limbs can take less damage before they become disabled."
+	desc = "Your bones might as well be made of glass! You suffer from wounds much easier than most."
 	value = -2
 	mob_trait = TRAIT_EASYLIMBDISABLE
 	gain_text = "<span class='danger'>You feel frail.</span>"

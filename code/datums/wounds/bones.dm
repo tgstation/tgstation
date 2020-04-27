@@ -18,6 +18,11 @@
 
 /datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = NONE, special_arg=NONE)
 	. = ..()
+	if(L.held_index && victim.get_item_for_held_index(L.held_index) && prob(30 * severity))
+		var/obj/item/I = victim.get_item_for_held_index(L.held_index)
+		if(victim.dropItemToGround(I))
+			victim.visible_message("<span class='danger'>[victim] drops [I] in shock!</span>", "<span class='warning'><b>The force on your [L.name] causes you to drop [I]!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
+
 	update_inefficiencies()
 
 /datum/wound/brute/bone/proc/check_splint_factor(obj/item/I)
@@ -38,11 +43,14 @@
 		else
 			interaction_efficiency_penalty = interaction_efficiency_penalty
 
+	if(disabling && splint_factor)
+		disabling = FALSE
+
 	limb.update_wounds()
 
 
 /datum/wound/brute/bone/moderate
-	name = "joint dislocation"
+	name = "Joint Dislocation"
 	desc = "Patient's bone has been unset from socket, causing pain and reduced motor function."
 	treat_text = "Recommended application of bonesetter to affected limb, though manual relocation may suffice."
 	examine_desc = "is awkwardly jammed out of place"
@@ -79,9 +87,8 @@
 	if(time_mod)
 		time *= time_mod
 
-	if(do_after(user, time, TRUE, victim))
-		if(QDELETED(src) || !limb)
-			return
+	if(!do_after(user, time, TRUE, victim))
+
 		if(prob(65 + prob_mod))
 			user.visible_message("<span class='danger'>[user] snaps [victim]'s dislocated [limb.name] back into place!</span>", "<span class='notice'>You snap [victim]'s dislocated [limb.name] back into place!</span>", ignored_mobs=victim)
 			to_chat(victim, "<span class='userdanger'>[user] snaps your dislocated [limb.name] back into place!</span>")
@@ -101,9 +108,8 @@
 	if(time_mod)
 		time *= time_mod
 
-	if(do_after(user, time, TRUE, victim))
-		if(QDELETED(src) || !limb)
-			return
+	if(!do_after(user, time, TRUE, victim))
+
 		if(prob(25 + prob_mod))
 			user.visible_message("<span class='danger'>[user] snaps [victim]'s dislocated [limb.name] with a sickening crack!</span>", "<span class='danger'>You snap [victim]'s dislocated [limb.name] with a sickening crack!</span>", ignored_mobs=victim)
 			to_chat(victim, "<span class='userdanger'>[user] snaps your dislocated [limb.name] with a sickening crack!</span>")
@@ -118,9 +124,8 @@
 
 /datum/wound/brute/bone/moderate/treat_self(obj/item/I, mob/user)
 	victim.visible_message("<span class='danger'>[user] begins resetting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin resetting your [limb.name] with [I]...</span>")
-	if(do_after(user, base_treat_time * I.toolspeed * 1.5, target = victim))
-		if(QDELETED(src) || !limb)
-			return
+	if(!do_after(user, base_treat_time * I.toolspeed * 1.5, target = victim, extra_checks=.proc/still_exists))
+
 		victim.visible_message("<span class='danger'>[user] finishes resetting [victim.p_their()] [limb.name]!</span>", "<span class='userdanger'>You reset your [limb.name]!</span>")
 		victim.emote("scream")
 		remove_wound()
@@ -128,9 +133,8 @@
 /datum/wound/brute/bone/moderate/treat(obj/item/I, mob/user)
 	user.visible_message("<span class='danger'>[user] begins resetting [victim]'s [limb.name] with [I].</span>", "<span class='notice'>You begin resetting [victim]'s [limb.name] with [I]...</span>", victim)
 	to_chat(victim, "<span class='warning'>[user] begins resetting your [limb.name] with [I].</span>")
-	if(do_after(user, base_treat_time * I.toolspeed, target = victim))
-		if(QDELETED(src) || !limb)
-			return
+	if(!do_after(user, base_treat_time * I.toolspeed, target = victim, extra_checks=.proc/still_exists))
+
 		user.visible_message("<span class='danger'>[user] finishes resetting [victim]'s [limb.name]!</span>", "<span class='nicegreen'>You finish resetting [victim]'s [limb.name]!</span>", victim)
 		to_chat(victim, "<span class='userdanger'>[user] resets your [limb.name]!</span>")
 		victim.emote("scream")
@@ -141,7 +145,7 @@
 */
 
 /datum/wound/brute/bone/severe
-	name = "hairline fracture"
+	name = "Hairline Fracture"
 	desc = "Patient's bone has suffered a crack in the foundation, causing serious pain and reduced limb functionality."
 	treat_text = "Recommended light surgical application of bone gel, though splinting will prevent worsening situation."
 	examine_desc = "appears bruised and grotesquely swollen"
@@ -162,9 +166,8 @@
 		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
 		return
 	victim.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting your [limb.name] with [I]...</span>")
-	if(do_after(user, base_treat_time * 1.5, target = victim))
-		if(QDELETED(src) || !limb)
-			return
+	if(!do_after(user, base_treat_time * 1.5, target = victim, extra_checks=.proc/still_exists))
+
 		examine_desc = splint_examine_desc + I.name
 		victim.visible_message("<span class='notice'>[user] finishes splinting [victim.p_their()] [limb.name]!</span>", "<span class='nicegreen'>You finish splinting your [limb.name]!</span>")
 		splint_factor = splint_check
@@ -177,9 +180,8 @@
 		return
 	user.visible_message("<span class='notice'>[user] begins splinting [victim]'s [limb.name] with [I].</span>", "<span class='notice'>You begin splinting [victim]'s [limb.name] with [I]...</span>", victim)
 	to_chat(victim, "<span class='notice'>[user] begins splinting your [limb.name] with [I].</span>")
-	if(do_after(user, base_treat_time, target = victim))
-		if(QDELETED(src) || !limb)
-			return
+	if(!do_after(user, base_treat_time, target = victim, extra_checks=.proc/still_exists))
+
 		examine_desc = splint_examine_desc + I.name
 		user.visible_message("<span class='notice'>[user] finishes splinting [victim]'s [limb.name]!</span>", "<span class='nicegreen'>You finish splinting [victim]'s [limb.name]!</span>", victim)
 		to_chat(victim, "<span class='nicegreen'>[user] splints your [limb.name]!</span>")
@@ -187,7 +189,7 @@
 		update_inefficiencies()
 
 /datum/wound/brute/bone/critical
-	name = "compound fracture"
+	name = "Compound Fracture"
 	desc = "Patient's bones have suffered multiple gruesome fractures, causing significant pain and near uselessness of limb."
 	treat_text = "Immediate binding of affected limb, followed by surgical intervention ASAP."
 	examine_desc = "has a cracked bone sticking out of it"
@@ -198,6 +200,7 @@
 	sound_effect = 'sound/effects/crack2.ogg'
 	threshold_minimum = 110
 	threshold_penalty = 50
+	disabling = TRUE
 	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
 	status_effect_type = /datum/status_effect/wound/bone/critical
 

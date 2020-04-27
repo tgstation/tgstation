@@ -174,7 +174,7 @@
 	brute = max(0, brute - brute_reduction)
 	burn = max(0, burn - burn_reduction)
 	//No stamina scaling.. for now..
-	// remind me to actually apply wound damage mults
+
 	if(!brute && !burn && !stamina)
 		return FALSE
 
@@ -224,6 +224,9 @@
 
 	//TODO: do this better
 	// actually roll wounds if applicable
+	if(HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE))
+		damage *= 1.5
+
 	var/injury_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	testing("Init roll| (1, [round(damage ** WOUND_DAMAGE_EXPONENT)]): [injury_roll]")
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
@@ -291,7 +294,6 @@
 	var/part_mod = -wound_resistance
 	if(is_disabled())
 		part_mod += disabled_wound_penalty
-		//injury_mod += disabled_wound_penalty
 
 	injury_mod += part_mod
 	testing("Mods| TOTAL: [injury_mod] | Armor: -[armor_ablation] | Wound Bonus: [wound_bonus] | BWB: [bwb] | Existing wounds: [tp] | Limb: [part_mod]")
@@ -332,15 +334,21 @@
 		return BODYPART_DISABLED_PARALYSIS
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
-		if((get_damage(TRUE) >= max_damage) || (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) && (get_damage(TRUE) >= (max_damage * 0.6)))) //Easy limb disable disables the limb at 40% health instead of 0%
-			return BODYPART_DISABLED_DAMAGE
-		if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
+		if(is_organic_limb())
+			for(var/i in wounds)
+				var/datum/wound/W = i
+				if(W.disabling)
+					return BODYPART_DISABLED_WOUND
 			return BODYPART_NOT_DISABLED
+		else
+			if((get_damage(TRUE) >= max_damage) || (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) && (get_damage(TRUE) >= (max_damage * 0.6)))) //Easy limb disable disables the limb at 40% health instead of 0%
+				return BODYPART_DISABLED_DAMAGE
+			if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
+				return BODYPART_NOT_DISABLED
 	else
 		return BODYPART_NOT_DISABLED
 
 /obj/item/bodypart/proc/set_disabled(new_disabled)
-	return//TODO: UNDO
 	if(disabled == new_disabled)
 		return
 	disabled = new_disabled
@@ -559,6 +567,7 @@
 		dam_mul *= W.damage_mulitplier_penalty
 
 	wound_damage_multiplier = dam_mul
+	update_disabled()
 
 /obj/item/bodypart/proc/get_bleed_rate()
 	if(status != BODYPART_ORGANIC) // maybe in the future we can bleed oil from aug parts, but not now
