@@ -21,14 +21,11 @@
 	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
 	switch(M.stat)
 		if(CONSCIOUS) //bad
-			thou_shall_heal = death_is_coming/50
 			M.adjustOxyLoss(2, TRUE)
 		if(SOFT_CRIT) //meh convert
-			thou_shall_heal = round(death_is_coming/47,0.1)
 			M.adjustOxyLoss(1, TRUE)
-		else //no convert
-			thou_shall_heal = round(death_is_coming/45,0.1)
-	M.adjustBruteLoss(-thou_shall_heal, FALSE)
+	//no (further) oxyloss damage if you're not conscious or in soft crit
+	M.adjustBruteLoss(-(round(death_is_coming/50,0.1)+1), FALSE) //heals you more the closer you are to death
 
 	if(M.stat && !reaping && prob(0.1)) //janken with the grim reaper!
 		reaping = TRUE
@@ -47,13 +44,17 @@
 		if(grim == RPSchoice) //You Tied!
 			to_chat(M, "<span class='hierophant'>You tie, and the malevolent spirits disappear... for now.</span>")
 			reaping = FALSE
+			if(helbent)
+				M.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //they disappeared, so they're no longer causing the OD effect
 		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
 			to_chat(M, "<span class='hierophant'>You lose, and the malevolent spirits smirk eerily as they surround your body.</span>")
 			M.dust()
 			return
 		else //VICTORY ROYALE
-			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away as well as your wounds.</span>")
+			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away... and so do your wounds!</span>")
 			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
+			if(helbent)
+				M.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //they faded away, so they're no longer causing the OD effect
 			M.revive(full_heal = TRUE, admin_revive = FALSE)
 			M.reagents.del_reagent(type)
 			return
