@@ -13,14 +13,12 @@
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
-	var/helbent = FALSE
 	var/reaping = FALSE
+	var/helbent = FALSE
 
 /datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
 	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
-	var/thou_shall_heal = 0
-	var/good_kind_of_healing = FALSE
 	switch(M.stat)
 		if(CONSCIOUS) //bad
 			thou_shall_heal = death_is_coming/50
@@ -30,17 +28,14 @@
 			M.adjustOxyLoss(1, TRUE)
 		else //no convert
 			thou_shall_heal = round(death_is_coming/45,0.1)
-			good_kind_of_healing = TRUE
 	M.adjustBruteLoss(-thou_shall_heal, FALSE)
 
-	if(good_kind_of_healing && !reaping && prob(0.0001)) //janken with the grim reaper!
+	if(M.stat && !reaping && prob(0.1)) //janken with the grim reaper!
 		reaping = TRUE
 		var/list/RockPaperScissors = list("rock" = "paper", "paper" = "scissors", "scissors" = "rock") //choice = loses to
-		if(M.apply_status_effect(/datum/status_effect/necropolis_curse,CURSE_BLINDING))
-			helbent = TRUE
 		to_chat(M, "<span class='hierophant'>Malevolent spirits appear before you, bartering your life in a 'friendly' game of rock, paper, scissors. Which do you choose?</span>")
 		var/timeisticking = world.time
-		var/RPSchoice = input(M, "Janken Time! You have 60 Seconds to Choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
+		var/RPSchoice = input(M, "Janken time! You have 60 seconds to choose!", "Rock Paper Scissors",null) as null|anything in RockPaperScissors
 		if(QDELETED(M) || (timeisticking+(1.1 MINUTES) < world.time))
 			reaping = FALSE
 			return //good job, you ruined it
