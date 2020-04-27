@@ -81,64 +81,64 @@
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return
 	if(is_on == TRUE)
-		to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
-		message_admins("Prototype Shield Emitter turned off at [ADMIN_VERBOSEJMP(Turf)]")
-		log_game("Prototype Shield Emitter turned off at [AREACOORD(Turf)]")
-		is_on = FALSE
-		for(var/H in signs)
-			qdel(H)
-		update_icon_state()
+		to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
+		if(do_after(user, 35, target = src))
+			to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
+			message_admins("Prototype Shield Emitter turned off at [ADMIN_VERBOSEJMP(Turf)]")
+			log_game("Prototype Shield Emitter turned off at [AREACOORD(Turf)]")
+			is_on = FALSE
+			for(var/H in signs)
+				qdel(H)
+			update_icon_state()
 	else
-		to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
-		message_admins("Prototype Shield Emitter turned on at [ADMIN_VERBOSEJMP(Turf)]")
-		log_game("Prototype Shield Emitter turned on at [AREACOORD(Turf)]")
-		is_on = TRUE
-		update_icon_state()
-		switch(dir) //this part check the direction of the machine and create the block in front of it
-			if(NORTH)
-				for(T in block(locate(src.x - 2, src.y + 1, src.z), locate(src.x + 2, src.y + 5, src.z)))
-					outline += T
-				for(T in block(locate(src.x - 1, src.y + 2, src.z), locate(src.x + 1, src.y + 4, src.z)))
-					outline -= T
-				for(T in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-				for(T in block(locate(src.x - 1, src.y + 2, src.z), locate(src.x + 1, src.y + 4, src.z)))
-					internal += T
-				for(T in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-			if(SOUTH)
-				for(T in block(locate(src.x - 2, src.y - 1, src.z), locate(src.x + 2, src.y - 5, src.z)))
-					outline += T
-				for(T in block(locate(src.x - 1, src.y - 2, src.z), locate(src.x + 1, src.y - 4, src.z)))
-					outline -= T
-				for(T in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-				for(T in block(locate(src.x - 1, src.y - 2, src.z), locate(src.x + 1, src.y - 4, src.z)))
-					internal += T
-				for(T in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-			if(EAST)
-				for(T in block(locate(src.x +1, src.y -2, src.z), locate(src.x +5, src.y +2, src.z)))
-					outline += T
-				for(T in block(locate(src.x +2, src.y -1, src.z), locate(src.x +4, src.y +1, src.z)))
-					outline -= T
-				for(T in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-				for(T in block(locate(src.x +2, src.y -1, src.z), locate(src.x +4, src.y +1, src.z)))
-					internal += T
-				for(T in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
-			if(WEST)
-				for(T in block(locate(src.x -1, src.y -2, src.z), locate(src.x -5, src.y +2, src.z)))
-					outline += T
-				for(T in block(locate(src.x -2, src.y -1, src.z), locate(src.x -4, src.y +1, src.z)))
-					outline -= T
-				for(T in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
-				for(T in block(locate(src.x -2, src.y -1, src.z), locate(src.x -4, src.y +1, src.z)))
-					internal += T
-				for(T in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
+		to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
+		if(do_after(user, 15, target = src))
+			to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
+			message_admins("Prototype Shield Emitter turned on at [ADMIN_VERBOSEJMP(Turf)]")
+			log_game("Prototype Shield Emitter turned on at [AREACOORD(Turf)]")
+			is_on = TRUE
+			update_icon_state()
+			switch(dir) //this part check the direction of the machine and create the block in front of it
+				if(NORTH)
+					for(T in block(locate(src.x - 2, src.y + 1, src.z), locate(src.x + 2, src.y + 5, src.z)))
+						outline += T
+					for(T in block(locate(src.x - 1, src.y + 2, src.z), locate(src.x + 1, src.y + 4, src.z)))
+						outline -= T
+						internal += T
+					for(T in outline)
+						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
+					for(T in internal)
+						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
+				if(SOUTH)
+					for(T in block(locate(src.x - 2, src.y - 1, src.z), locate(src.x + 2, src.y - 5, src.z)))
+						outline += T
+					for(T in block(locate(src.x - 1, src.y - 2, src.z), locate(src.x + 1, src.y - 4, src.z)))
+						outline -= T
+						internal += T
+					for(T in outline)
+						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
+					for(T in internal)
+						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
+				if(EAST)
+					for(T in block(locate(src.x +1, src.y -2, src.z), locate(src.x +5, src.y +2, src.z)))
+						outline += T
+					for(T in block(locate(src.x +2, src.y -1, src.z), locate(src.x +4, src.y +1, src.z)))
+						outline -= T
+						internal += T
+					for(T in outline)
+						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
+					for(T in internal)
+						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
+				if(WEST)
+					for(T in block(locate(src.x -1, src.y -2, src.z), locate(src.x -5, src.y +2, src.z)))
+						outline += T
+					for(T in block(locate(src.x -2, src.y -1, src.z), locate(src.x -4, src.y +1, src.z)))
+						outline -= T
+						internal += T
+					for(T in outline)
+						new /obj/machinery/holosign/barrier/power_shield/wall(T, src)
+					for(T in internal)
+						new /obj/machinery/holosign/barrier/power_shield/floor(T, src)
 
 /obj/machinery/power/proto_sh_emitter/attackby(obj/item/I, mob/user, params)
 	if(I.GetID())
@@ -151,3 +151,13 @@
 		else
 			to_chat(user, "<span class='danger'>Access denied.</span>")
 		return
+
+/obj/machinery/power/proto_sh_emitter/crowbar_act(mob/living/user, obj/item/I)
+	default_deconstruction_crowbar(I)
+	return TRUE
+
+/obj/machinery/power/proto_sh_emitter/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+	default_deconstruction_screwdriver(user, "proto_sh_emitter-open", "proto_sh_emitter", I)
+	return TRUE
