@@ -49,14 +49,14 @@
 	add_fingerprint(user)
 
 //For the Condenser, which functions like the igniter but makes things cold.
-/obj/item/assembly/igniter/freezer
-	name = "freezer"
-	desc = "A small electronic device able to chill the surroundings."
+/obj/item/assembly/igniter/condenser
+	name = "condenser"
+	desc = "A small electronic device able to chill their surroundings."
 	icon_state = "freezer"
 	custom_materials = list(/datum/material/iron=250, /datum/material/glass=300)
 	heat = 200
 
-/obj/item/assembly/igniter/freezer/activate()
+/obj/item/assembly/igniter/condenser/activate()
 	if(!..())
 		return FALSE//Cooldown check
 	var/turf/location = get_turf(loc)
