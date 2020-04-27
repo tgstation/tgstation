@@ -72,7 +72,7 @@
 /obj/item/antag_spawner/contract/spawn_antag(client/C, turf/T, kind ,datum/mind/user)
 	new /obj/effect/particle_effect/smoke(T)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.copy_to(M, mind = user)
+	C.prefs.copy_to(M)
 	M.key = C.key
 	var/datum/mind/app_mind = M.mind
 
@@ -132,7 +132,7 @@
 
 /obj/item/antag_spawner/nuke_ops/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.copy_to(M, mind = user)
+	C.prefs.copy_to(M)
 	M.key = C.key
 
 	var/datum/antagonist/nukeop/new_op = new()
@@ -151,7 +151,7 @@
 
 /obj/item/antag_spawner/nuke_ops/clown/spawn_antag(client/C, turf/T, kind, datum/mind/user)
 	var/mob/living/carbon/human/M = new/mob/living/carbon/human(T)
-	C.prefs.copy_to(M, mind = user)
+	C.prefs.copy_to(M)
 	M.key = C.key
 
 	var/datum/antagonist/nukeop/clownop/new_op = new /datum/antagonist/nukeop/clownop()

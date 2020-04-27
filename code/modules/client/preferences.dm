@@ -1727,7 +1727,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, datum/mind/mind)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE)
 
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
 
@@ -1743,8 +1743,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		slot_randomized = TRUE
 		real_name = pref_species.random_name(gender)
 
-	if(randomise[RANDOM_HARDCORE] && mind && !character_setup)
-		if(can_be_random_hardcore(mind))
+	if(randomise[RANDOM_HARDCORE] && parent.mob.mind && !character_setup)
+		if(can_be_random_hardcore())
 			hardcore_random_setup(character, antagonist)
 
 	if(roundstart_checks)
@@ -1802,10 +1802,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_hair()
 		character.update_body_parts()
 
-/datum/preferences/proc/can_be_random_hardcore(datum/mind/mind)
-	if(mind.assigned_role in GLOB.command_positions) //No command staff
+/datum/preferences/proc/can_be_random_hardcore()
+	if(parent.mob.mind.assigned_role in GLOB.command_positions) //No command staff
 		return FALSE
-	for(var/A in mind.antag_datums)
+	for(var/A in parent.mob.mind.antag_datums)
 		var/datum/antagonist/antag
 		if(antag.get_team()) //No team antags
 			return FALSE
