@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - code_imp: "phobias use less regular expressions and don't instantiate them all the time"
