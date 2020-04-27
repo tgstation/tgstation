@@ -407,7 +407,7 @@
 	name = "bonesetter"
 	desc = "For setting things right."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "bone_setter"
+	icon_state = "bone setter"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	custom_materials = list(/datum/material/iron=5000, /datum/material/glass=2500)

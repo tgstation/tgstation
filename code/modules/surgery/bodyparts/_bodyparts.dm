@@ -182,14 +182,13 @@
 		if(ALIEN_BODYPART,LARVA_BODYPART) //aliens take double burn //nothing can burn with so much snowflake code around
 			burn *= 2
 
-
+	var/wounding_type = (brute > burn ? WOUND_BRUTE : WOUND_BURN)
+	var/wounding_dmg = max(brute, burn)
+	if(wounding_type == WOUND_BRUTE && sharpness)
+		wounding_type = WOUND_SHARP
 	// i know this is effectively the same check as above but i don't know if those can null the damage by rounding and want to be safe
 	if((brute || burn) && wound_bonus != CANT_WOUND)
 		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
-		var/wounding_type = (brute > burn ? WOUND_BRUTE : WOUND_BURN)
-		var/wounding_dmg = max(brute, burn)
-		if(wounding_type == WOUND_BRUTE && sharpness)
-			wounding_type = WOUND_SHARP
 		// handle all our wounding stuff
 		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
@@ -204,6 +203,10 @@
 
 	brute_dam += brute
 	burn_dam += burn
+
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		W.receive_damage(wounding_type, wounding_dmg)
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
@@ -228,9 +231,9 @@
 		damage *= 1.5
 
 	var/injury_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
-	testing("Init roll| (1, [round(damage ** WOUND_DAMAGE_EXPONENT)]): [injury_roll]")
+	//testing("Init roll| (1, [round(damage ** WOUND_DAMAGE_EXPONENT)]): [injury_roll]")
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
-	testing("Final roll: [injury_roll]")
+	//testing("Final roll: [injury_roll]")
 	var/list/wounds_checking
 
 	switch(woundtype)
@@ -296,7 +299,7 @@
 		part_mod += disabled_wound_penalty
 
 	injury_mod += part_mod
-	testing("Mods| TOTAL: [injury_mod] | Armor: -[armor_ablation] | Wound Bonus: [wound_bonus] | BWB: [bwb] | Existing wounds: [tp] | Limb: [part_mod]")
+	//testing("Mods| TOTAL: [injury_mod] | Armor: -[armor_ablation] | Wound Bonus: [wound_bonus] | BWB: [bwb] | Existing wounds: [tp] | Limb: [part_mod]")
 
 	return injury_mod
 
@@ -352,6 +355,8 @@
 	if(disabled == new_disabled)
 		return
 	disabled = new_disabled
+	if(disabled && owner.get_item_for_held_index(held_index))
+		owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	owner.update_health_hud() //update the healthdoll
 	owner.update_body()
 	owner.update_mobility()

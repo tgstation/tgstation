@@ -22,6 +22,18 @@
 	wound_bonus = -30
 	bare_wound_bonus = 40
 
+/obj/projectile/beam/laser/hellfire
+	name = "hellfire laser"
+	tracer_type = /obj/effect/projectile/tracer/laser
+	muzzle_type = /obj/effect/projectile/muzzle/laser
+	impact_type = /obj/effect/projectile/impact/laser
+	wound_bonus = -20
+	bare_wound_bonus = 50
+
+/obj/projectile/beam/laser/hellfire/Initialize()
+	. = ..()
+	transform *= 1.5
+
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
 	icon_state = "heavylaser"
@@ -37,14 +49,6 @@
 		M.IgniteMob()
 	else if(isturf(target))
 		impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser/wall
-
-/obj/projectile/beam/laser/plaser
-	name = "plaser"
-	icon_state = "heavylaser"
-	tracer_type = /obj/effect/projectile/tracer/heavy_laser
-	muzzle_type = /obj/effect/projectile/muzzle/heavy_laser
-	impact_type = /obj/effect/projectile/impact/heavy_laser
-	wound_bonus = -10
 
 /obj/projectile/beam/weak
 	damage = 15

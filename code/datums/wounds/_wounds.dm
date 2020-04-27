@@ -29,9 +29,9 @@
 	/// This sound will be played upon the wound being applied
 	var/sound_effect
 
-	/// Either WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL
+	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// What damage type can allow this wound to be rolled, currently either BRUTE or BURN
+	/// What damage type can allow this wound to be rolled, currently either BRUTE or BURN, not actually really used rn
 	var/damtype = BRUTE
 
 	/// What body zones can we affect
@@ -52,7 +52,7 @@
 	var/interaction_efficiency_penalty = 1
 	/// Incoming damage on this limb will be multiplied by this, to simulate tenderness and vulnerability (mostly burns).
 	var/damage_mulitplier_penalty = 1
-	/// If set and this wound is applied to a leg,
+	/// If set and this wound is applied to a leg, we take this many deciseconds extra per step on this leg
 	var/limp_slowdown
 
 	/// If we currently need to process each life tick
@@ -63,15 +63,18 @@
 	/// The list of wounds it belongs in, WOUND_TYPE_BONE, WOUND_TYPE_CUT, or WOUND_TYPE_BURN
 	var/wound_type
 
-	/// The minimum we need to roll on [/obj/item/bodypart/proc/receive_damage()] to begin suffering this wound, the roll is 0-100 +/- modifiers, see receive_damage() for more
+	/// The minimum we need to roll on [/obj/item/bodypart/proc/check_wounding()] to begin suffering this wound, see check_wounding_mods() for more
 	var/threshold_minimum
-	/// How much having this wound will add to future receive_damage() rolls on this limb, to allow progression to worse injuries with repeated damage
+	/// How much having this wound will add to all future check_wounding() rolls on this limb, to allow progression to worse injuries with repeated damage
 	var/threshold_penalty
 
-	///
+	/// What status effect we assign on application
 	var/status_effect_type
+	/// If TRUE and an item that can treat multiple different types of coexisting wounds (gauze can be used to splint broken bones, staunch bleeding, and cover burns), we get first dibs if we come up first for it, then become nonpriority.
+	/// Otherwise, if no untreated wound claims the item, we cycle through the non priority wounds and pick a random one who can use that item.
+	var/treat_priority = FALSE
 
-	/// If having this wound makes the parent bodypart unusable
+	/// If having this wound makes currently makes the parent bodypart unusable
 	var/disabling
 
 	var/datum/status_effect/linked_status_effect
@@ -80,11 +83,21 @@
 	. = ..()
 	remove_wound()
 
-/// Apply whatever wound we've created to the specified limb
+/**
+  * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
+  *
+  *
+  * Arguments:
+  * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
+  * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
+  * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
+  * * special_arg: Pretty sure this is obsolete, i'll remove this shortly
+  */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = NONE, special_arg = NONE)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
 		return
 
+	// we accept promotions and demotions, but no point in redundancy
 	for(var/i in L.wounds)
 		var/datum/wound/prexisting_wound = i
 		if(prexisting_wound.type == type)
@@ -99,7 +112,7 @@
 	if(status_effect_type)
 		linked_status_effect = victim.apply_status_effect(status_effect_type, src)
 	SEND_SIGNAL(victim, COMSIG_CARBON_GAIN_WOUND, src, limb)
-	if(!victim.alerts["wound"])
+	if(!victim.alerts["wound"]) // only one alert is shared between all of the wounds
 		victim.throw_alert("wound", /obj/screen/alert/status_effect/wound)
 
 	var/demoted
@@ -125,7 +138,7 @@
 		wound_injury()
 		second_wind()
 
-/// Remove the wound from whatever it's afflicting
+/// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times
 /datum/wound/proc/remove_wound()
 	if(limb)
 		LAZYREMOVE(limb.wounds, src)
@@ -138,7 +151,7 @@
 		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
 		victim = null
 
-/// When you want to swap out one wound for another (typically a promotion or demotion in the same type)
+/// When you want to swap out one wound for another (typically a promotion or demotion in the same wound type). First we remove the old one, then we apply the new one with a reference to the old one, then we qdel the old one fully
 /datum/wound/proc/replace_wound(new_type, special_arg)
 	var/datum/wound/new_wound = new new_type
 	var/obj/item/bodypart/temp_limb = limb // since we're about to null it
@@ -160,12 +173,16 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_CRITICAL)
 
-
-/// Someone is using their hands on us, we can check to see if we want to let them treat us by hand
-/datum/wound/proc/try_handling(mob/living/carbon/human/user)
-	return FALSE
-
-/// Someone is using something that might be used for treating the wound on this limb
+/**
+  * try_treating() is an intercept run from [/mob/living/carbon/attackby()] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.
+  *
+  * This proc leads into [/datum/wound/proc/treat()] and its sister proc [/datum/wound/proc/treat_self()] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
+  * with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().
+  *
+  * Arguments:
+  * * I: The item we're trying to use
+  * * user: The mob trying to use it on us
+  */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
 	if(limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
 		return FALSE
@@ -189,7 +206,11 @@
 		treat(I, user)
 	return TRUE
 
-/// Someone is using something that might be used for treating the wound on this limb
+/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice.
+/datum/wound/proc/try_handling(mob/living/carbon/human/user)
+	return FALSE
+
+/// We're trying to use a valid item on ourself. If in doubt, just treat it like normal.
 /datum/wound/proc/treat_self(obj/item/I, mob/user)
 	return treat(I, user)
 
@@ -197,16 +218,32 @@
 /datum/wound/proc/treat(obj/item/I, mob/user)
 	return
 
-/// Someone is using something that might be used for treating the wound on this limb
-/datum/wound/proc/applied_reagents( mob/user)
+/// Someone is using something that might be used for treating the wound on this limb. not really complete
+/datum/wound/proc/applied_reagents(mob/user)
 	return
 
 /// If var/processing is TRUE, this is run on each life tick
 /datum/wound/proc/handle_process()
 	return
 
+/// For use in do_after callback checks
 /datum/wound/proc/still_exists()
 	return (!QDELETED(src) && limb)
+
+/// When our parent bodypart is hurt
+/datum/wound/proc/receive_damage(wounding_type, wounding_dmg)
+	return
+
+/**
+  * get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.
+  *
+  * Return the full string line you want to show, note that we're already dealing with the 'warning' span at this point, and that \n is already appended for you in the place this is called from
+  *
+  * Arguments:
+  * * mob/user: The user examining the wound's owner, if that matters
+  */
+/datum/wound/proc/get_examine_description(mob/user)
+	return "<B>[victim.p_their(TRUE)] [limb.name] [examine_desc]!</B>"
 
 /datum/wound/proc/severity_text()
 	switch(severity)

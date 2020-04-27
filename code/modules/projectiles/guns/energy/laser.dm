@@ -37,6 +37,7 @@
 	force = 10
 	ammo_x_offset = 3
 	selfcharge = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/gun/energy/laser/captain/scattershot
@@ -100,20 +101,6 @@
 	..()
 	damage += 7
 	transform *= 1 + ((damage/7) * 0.2)//20% larger per tile
-
-///Plaser Gun
-/obj/item/gun/energy/plaser
-	name = "plaser cannon"
-	desc = "A bulky cannon that fires very heavy laser beams powered by plasma."
-	icon_state = "lasercannon"
-	item_state = "laser"
-	w_class = WEIGHT_CLASS_BULKY
-	force = 10
-	flags_1 =  CONDUCT_1
-	slot_flags = ITEM_SLOT_BACK
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/plaser)
-	ammo_x_offset = 3
-
 
 ///X-ray gun
 /obj/item/gun/energy/xray

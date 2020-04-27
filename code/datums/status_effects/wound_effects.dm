@@ -148,6 +148,15 @@
 // bones
 /datum/status_effect/wound/bone
 
+/datum/status_effect/wound/bone/interact_speed_modifier()
+	var/mob/living/carbon/C = owner
+
+	if(C.get_active_hand() == linked_limb)
+		to_chat(C, "<span class='warning'>The [lowertext(linked_wound)] in your [linked_limb.name] slows your progress!</span>")
+		return linked_wound.interaction_efficiency_penalty
+	else
+		return 1
+
 /datum/status_effect/wound/bone/nextmove_modifier()
 	var/mob/living/carbon/C = owner
 

@@ -49,7 +49,7 @@
 	/// How much clothing damage has been dealt to each of the limbs of the clothing, assuming it covers more than one limb
 	var/list/damage_by_parts
 	/// How much integrity is in a specific limb before that limb is disabled (for use in [/obj/item/clothing/proc/take_damage_zone], and only if we cover multiple zones.) Set to 0 to disable shredding.
-	var/limb_integrity = 30
+	var/limb_integrity = 0
 	/// How many zones (body parts, not precise) we have disabled so far, for naming purposes
 	var/zones_disabled
 

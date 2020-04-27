@@ -7,10 +7,13 @@
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
 	wound_type = WOUND_TYPE_CUT
+	treatable_by = list(/obj/item/stack/medical/suture, /obj/item/stack/medical/gauze, /obj/item/gun/energy/laser)
+	treatable_tool = TOOL_CAUTERY
+	treat_priority = TRUE
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
-	/// When we have less than this amount of flow, either from treatment or clotting, we demote to a lower cut or are healed
+	/// When we have less than this amount of flow, either from treatment or clotting, we demote to a lower cut or are healed of the wound
 	var/minimum_flow
 	/// How fast our blood flow will naturally decrease per tick, not only do larger cuts bleed more faster, they clot slower
 	var/clot_rate
@@ -18,9 +21,7 @@
 	/// Once the blood flow drops below minimum_flow, we demote it to this type of wound. If there's none, we're all better
 	var/demotes_to
 
-	treatable_by = list(/obj/item/stack/medical/suture, /obj/item/stack/medical/gauze, /obj/item/gun/energy/laser)
-	treatable_tool = TOOL_CAUTERY
-	/// How much staunching per type (cautery, suturing, bandaging) you can have before that type is no longer effective for this cut
+	/// How much staunching per type (cautery, suturing, bandaging) you can have before that type is no longer effective for this cut NOT IMPLEMENTED
 	var/max_per_type
 	/// The maximum flow we've had so far
 	var/highest_flow
@@ -29,7 +30,10 @@
 	/// How much flow we've already sutured
 	var/sutured
 
+	/// The current bandage we have
 	var/obj/item/stack/current_bandage
+
+
 
 /datum/wound/brute/cut/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/brute/cut/old_wound = NONE, special_arg = NONE)
 	. = ..()
@@ -41,6 +45,25 @@
 	QDEL_NULL(current_bandage)
 	..()
 
+
+/datum/wound/brute/cut/get_examine_description(mob/user)
+	if(!current_bandage)
+		return ..()
+
+	var/bandage_condition = ""
+	// how much life we have left in these bandages
+	switch(current_bandage.absorption_capacity)
+		if(0 to 1.25)
+			bandage_condition = "nearly ruined "
+		if(1.25 to 2.75)
+			bandage_condition = "badly worn "
+		if(2.75 to 4)
+			bandage_condition = "slightly bloodied "
+		if(4 to INFINITY)
+			bandage_condition = "pristine "
+	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [current_bandage.name]!</B>"
+
+
 /datum/wound/brute/cut/handle_process()
 	if(current_bandage)
 		if(clot_rate > 0)
@@ -48,8 +71,10 @@
 		blood_flow -= current_bandage.absorption_rate
 		current_bandage.absorption_capacity -= current_bandage.absorption_rate
 		if(current_bandage.absorption_capacity < 0)
-			victim.visible_message("<span class='danger'>Blood seeps through \the [current_bandage] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood seeps through \the [current_bandage] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message("<span class='danger'>Blood soaks through \the [current_bandage] on [victim]'s [limb.name].</span>", "<span class='warning'>Blood soaks through \the [current_bandage] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 			QDEL_NULL(current_bandage)
+			examine_desc = initial(examine_desc)
+			treat_priority = TRUE
 	else
 		blood_flow -= clot_rate
 
@@ -62,6 +87,8 @@
 		else
 			to_chat(victim, "<span class='green'>The cut on your [limb.name] has stopped bleeding!</span>")
 			remove_wound()
+
+/* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 
 /datum/wound/brute/cut/treat_self(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
@@ -170,13 +197,13 @@
 
 /datum/wound/brute/cut/proc/bandage(obj/item/stack/I, mob/user)
 	if(current_bandage)
-		if(current_bandage.absorption_capacity > I.absorption_capacity)
+		if(current_bandage.absorption_capacity > I.absorption_capacity + 1)
 			to_chat(user, "<span class='warning'>The [current_bandage] on [victim]'s [limb.name] is still in better condition than your [I.name]!</span>")
 			return
 		else
-			victim.visible_message("<span class='warning'>[user] begins topping off the wrapping on [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>[user] begins topping off the wrapping on your [limb.name] with [I]...</span>")
+			user.visible_message("<span class='warning'>[user] begins rewrapping the cuts on [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>You begin rewrapping the cuts on [victim]'s [limb.name] with [I]...</span>")
 	else
-		victim.visible_message("<span class='warning'>[user] begins wrapping [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>[user] begins wrapping your [limb.name] with [I]...</span>")
+		user.visible_message("<span class='warning'>[user] begins wrapping the cuts on [victim]'s [limb.name] with [I]...</span>", "<span class='warning'>You begin wrapping the cuts on [victim]'s [limb.name] with [I]...</span>")
 	if(!do_after(user, base_treat_time, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
@@ -184,6 +211,8 @@
 	QDEL_NULL(current_bandage)
 	current_bandage = new I.type(limb)
 	current_bandage.amount = 1
+	//examine_desc = bandaged_examine_desc + " [current_bandage.name]"
+	treat_priority = FALSE
 	I.use(1)
 
 

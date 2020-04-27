@@ -22,3 +22,10 @@
 #define WOUND_TYPE_CUT		list(/datum/wound/brute/cut/critical, /datum/wound/brute/cut/severe, /datum/wound/brute/cut/moderate)
 #define WOUND_TYPE_BURN		list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate)
 #define WOUND_TYPE_SPECIAL	list(/datum/wound/brute/stubbed_toe)
+
+// Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse
+#define WOUND_INFECTION_MODERATE	4 // below this has no ill effects from infection
+#define WOUND_INFECTION_SEVERE		8 // then below here, you ooze some pus and suffer minor tox damage, but nothing serious
+#define WOUND_INFECTION_CRITICAL	12 // then below here, your limb occasionally locks up from damage and infection and briefly becomes disabled. Things are getting really bad
+#define WOUND_INFECTION_SEPTIC		20 // below here, your skin is almost entirely falling off and your limb locks up more frequently. You are within a stone's throw of septic paralysis and losing the limb
+// above WOUND_INFECTION_SEPTIC, your limb is completely putrid and you start rolling to lose the entire limb by way of paralyzation. After 3 failed rolls (~4-5% each probably), the limb is paralyzed

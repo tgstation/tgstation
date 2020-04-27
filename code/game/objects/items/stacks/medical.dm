@@ -115,6 +115,7 @@
 	custom_price = 100
 	absorption_rate = 0.25
 	absorption_capacity = 5
+	splint_factor = 0.25
 
 /obj/item/stack/medical/gauze/eight
 	amount = 8
@@ -348,12 +349,14 @@
 	desc = "A potent medical gel that, when applied to a damaged bone, triggers an intense melding reaction to repair the wound. Like plastic glue, but for people instead!"
 
 	icon = 'icons/obj/surgery.dmi'
+	item_state = ""
 	icon_state = "bone-gel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
+	novariants = TRUE
 
 /obj/item/stack/medical/bone_gel/suicide_act(mob/user)
 	if(iscarbon(user))
@@ -361,11 +364,13 @@
 		C.visible_message("<span class='suicide'>[C] is squirting all of \the [src] into [C.p_their()] mouth! That's not proper procedure! [C.p_they(TRUE)] must be trying to commit suicide!</span>")
 		if(do_after(C, 2 SECONDS))
 			for(var/i in C.bodyparts)
+				C.emote("scream")
 				var/obj/item/bodypart/bone = i
-				bone.receive_damage(brute=999, wound_bonus=100)
 				var/datum/wound/brute/bone/critical/oof_ouch = new
 				oof_ouch.apply_wound(bone)
-				return (BRUTELOSS)
+				bone.receive_damage(brute=50)
+			use(1)
+			return (BRUTELOSS)
 		else
 			C.visible_message("<span class='suicide'>[C] screws up like an idiot and still dies anyway!</span>")
 			return (SHAME)
