@@ -13,8 +13,8 @@
 	taste_description = "cold and lifeless"
 	overdose_threshold = 35
 	reagent_state = SOLID
-	var/helbent = FALSE
-	var/reaping = FALSE
+	var/mercy = FALSE //have the spirits left us?
+	var/reaping = FALSE //are we in the middle of a game?
 
 /datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
@@ -40,8 +40,8 @@
 		if(grim == RPSchoice) //You Tied!
 			to_chat(M, "<span class='hierophant'>You tie, and the malevolent spirits disappear... for now.</span>")
 			reaping = FALSE
-			if(helbent)
-				M.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //they disappeared, so they're no longer causing the OD effect
+			M.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //they disappeared, so they're no longer causing the OD effect
+			mercy = TRUE //so the curse from the OD effect doesn't immediately get reapplied
 		else if(RockPaperScissors[RPSchoice] == grim) //You lost!
 			to_chat(M, "<span class='hierophant'>You lose, and the malevolent spirits smirk eerily as they surround your body.</span>")
 			M.dust()
@@ -49,8 +49,8 @@
 		else //VICTORY ROYALE
 			to_chat(M, "<span class='hierophant'>You win, and the malevolent spirits fade away... and so do your wounds!</span>")
 			M.client.give_award(/datum/award/achievement/misc/helbitaljanken, M)
-			if(helbent)
-				M.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //they faded away, so they're no longer causing the OD effect
+			M.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //they faded away, so they're no longer causing the OD effect
+			mercy = TRUE //so the curse from the OD effect doesn't immediately get reapplied
 			M.revive(full_heal = TRUE, admin_revive = FALSE)
 			M.reagents.del_reagent(type)
 			return
@@ -59,16 +59,15 @@
 	return
 
 /datum/reagent/medicine/C2/helbital/overdose_process(mob/living/carbon/M)
-	if(!helbent)
-		to_chat(M, "<span class='hierophant'>Malevolent spirits swirl around you, searing your flesh and impeding your vision!</span>")
+	if(!(mercy || M.has_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE))) //as a side effect of this check and how necropolis curses work, helbital's OD won't try to curse you until your existing curse(s) expire, but the effects of later curses will stack onto helbital's curse for up to like 15 minutes (or until the helbital stops metabolizing), and y'know what, they're space curses, I ain't gotta explain shit
+		to_chat(M, "<span class='hierophant'>Malevolent spirits swirl around you, searing your flesh and impeding your vision!</span>") //I guess what I'm trying to say is: necropolis curses are janky as FUCK
 		M.apply_necropolis_curse(CURSE_WASTING | CURSE_BLINDING)
-		helbent = TRUE
 	..()
 	return TRUE
 
-/datum/reagent/medicine/C2/helbital/on_mob_delete(mob/living/L)
-	if(helbent)
-		L.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE)
+/datum/reagent/medicine/C2/helbital/on_mob_end_metabolize(mob/living/L)
+	if(overdosed) //the spirits will bother to remove your curses if they gave you one earlier, but if they didn't, your curses are YOUR problem, not theirs (this also keeps people from curing their own curses with just 0.1u of helbital; you gotta WORK for that shit)
+		L.remove_status_effect(STATUS_EFFECT_NECROPOLIS_CURSE) //this will remove existing curses, but there's not much I can really do to get around it. consider it a feature instead of a bug, since we don't really have many other ways to remove curses right now (other than just waiting them out).
 	..()
 
 /datum/reagent/medicine/C2/libital //messes with your liber
