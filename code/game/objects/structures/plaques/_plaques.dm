@@ -158,26 +158,26 @@
 	. = ..()
 	if(!iswallturf(target) || !proximity)
 		return
-	var/turf/T = target
-	var/turf/userT = get_turf(user)
-	var/obj/structure/plaque/S = new plaque_path(userT) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
+	var/turf/target_turf = target
+	var/turf/user_turf = get_turf(user)
+	var/obj/structure/plaque/placed_plaque = new plaque_path(user_turf) //We place the plaque on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
-	var/dir = get_dir(userT, T)
+	var/dir = get_dir(user_turf, target_turf)
 	if(dir & NORTH)
-		S.pixel_y = 32
+		placed_plaque.pixel_y = 32
 	else if(dir & SOUTH)
-		S.pixel_y = -32
+		placed_plaque.pixel_y = -32
 	if(dir & EAST)
-		S.pixel_x = 32
+		placed_plaque.pixel_x = 32
 	else if(dir & WEST)
-		S.pixel_x = -32
-	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-						 "<span class='notice'>You attach [src] to [T].</span>")
-	playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
+		placed_plaque.pixel_x = -32
+	user.visible_message("<span class='notice'>[user] fastens [src] to [target_turf].</span>", \
+						 "<span class='notice'>You attach [src] to [target_turf].</span>")
+	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
 	if(engraved)
-		S.name = name
-		S.desc = desc
-		S.engraved = engraved
-	S.obj_integrity = obj_integrity
-	S.setDir(dir)
+		placed_plaque.name = name
+		placed_plaque.desc = desc
+		placed_plaque.engraved = engraved
+	placed_plaque.obj_integrity = obj_integrity
+	placed_plaque.setDir(dir)
 	qdel(src)

@@ -176,24 +176,24 @@
 	. = ..()
 	if(!iswallturf(target) || !proximity)
 		return
-	var/turf/T = target
-	var/turf/userT = get_turf(user)
-	var/obj/structure/sign/S = new sign_path(userT) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
+	var/turf/target_turf = target
+	var/turf/user_turf = get_turf(user)
+	var/obj/structure/sign/placed_sign = new sign_path(user_turf) //We place the sign on the turf the user is standing, and pixel shift it to the target wall, as below.
 	//This is to mimic how signs and other wall objects are usually placed by mappers, and so they're only visible from one side of a wall.
-	var/dir = get_dir(userT, T)
+	var/dir = get_dir(user_turf, target_turf)
 	if(dir & NORTH)
-		S.pixel_y = 32
+		placed_sign.pixel_y = 32
 	else if(dir & SOUTH)
-		S.pixel_y = -32
+		placed_sign.pixel_y = -32
 	if(dir & EAST)
-		S.pixel_x = 32
+		placed_sign.pixel_x = 32
 	else if(dir & WEST)
-		S.pixel_x = -32
-	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
-						 "<span class='notice'>You attach the sign to [T].</span>")
-	playsound(T, 'sound/items/deconstruct.ogg', 50, TRUE)
-	S.obj_integrity = obj_integrity
-	S.setDir(dir)
+		placed_sign.pixel_x = -32
+	user.visible_message("<span class='notice'>[user] fastens [src] to [target_turf].</span>", \
+						 "<span class='notice'>You attach the sign to [target_turf].</span>")
+	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
+	placed_sign.obj_integrity = obj_integrity
+	placed_sign.setDir(dir)
 	qdel(src)
 
 /obj/structure/sign/nanotrasen
