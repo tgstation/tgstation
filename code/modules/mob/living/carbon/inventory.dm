@@ -175,7 +175,7 @@
 		if(!G)
 			return
 		G.name = "[src] is offering [receiving]"
-		G.desc = "[src] is offering you [receiving]. Click this alert to accept it."
+		G.desc = "[src] is offering [receiving]. Click this alert to take it."
 		G.icon_state = "template"
 		G.cut_overlays()
 		G.add_overlay(receiving)
@@ -208,4 +208,3 @@
 						"<span class'notice'> You make a fool of yourself trying to give away an item stuck to your hands")
 		return
 	put_in_hands(I)
-
