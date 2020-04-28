@@ -198,7 +198,7 @@
 		to_chat(src, "<span class='warning'>[giver] is out of range! </span>")
 		return
 	if(!I || giver.get_active_held_item() != I)
-		to_chat(src, "<span class='warning'>[giver] is no longer holding the item they wanted to give you! </span>")
+		to_chat(src, "<span class='warning'>[giver] is no longer holding the item they were offering! </span>")
 		return
 	if(!get_empty_held_indexes())
 		to_chat(src, "<span class='warning'>You have no empty hands!</span>")
