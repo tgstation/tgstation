@@ -2,10 +2,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	"randomfigurine" = list(
 		"weight" = 4,
 		"toy_figures" = list(
-			"weight" = 3,
-			subtypesof(/obj/item/toy/figure)
+			"weight" = 10,
+			"end_point" = ( subtypesof(/obj/item/toy/figure))
 			),
-		"toy_figures" = list(
+		"toy_plushes" = list(
 			"weight" = 3,
 			"end_point" = ( subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)
 				),

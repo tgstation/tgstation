@@ -15,7 +15,7 @@
 
 /proc/pick_from_weighted_lists(list/list_to_pick_from)
 	var/choice_pool = list_to_pick_from
-	while(islist(choice_pool) && !choice_pool["end_point"])
+	while(!choice_pool["end_point"])
 		var/weight = 0
 		for(var/element in (choice_pool - "weight")) //We first check how much is the total weight.
 			weight += choice_pool[element]["weight"]
