@@ -18,7 +18,7 @@
 	while(!choice_pool["element_list"])
 		var/weight = 0
 		for(var/element in (choice_pool - "weight")) //We first check how much is the total weight.
-			weight += element["weight"]
+			weight += choice_pool[element]["weight"]
 		if(!islist(list_to_pick_from))
 			CRASH("Invalid parameter passed, not a list.")
 		if(!length(list_to_pick_from))
@@ -30,7 +30,7 @@
 			return /obj/item/toy/sword
 		var/random_roll = rand(1, weight) //Then we run the random roll.
 		for(var/element in (choice_pool - "weight")) //Let's scan where do we hit.
-			random_roll -= element["weight"]
+			random_roll -= choice_pool[element]["weight"]
 			if(random_roll <= 0) //Jackpot!
 				choice_pool = element
 				break
