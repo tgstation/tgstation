@@ -83,6 +83,10 @@
 	/// Previous subsystem in the queue of subsystems to run this tick
 	var/datum/controller/subsystem/queue_prev
 
+	//Do not blindly add vars here to the bottom, put it where it goes above
+	//If your var only has two values, put it in as a flag.
+
+
 //Do not override
 ///datum/controller/subsystem/New()
 

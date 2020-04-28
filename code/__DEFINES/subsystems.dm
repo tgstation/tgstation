@@ -220,9 +220,8 @@
 #define SSAIR_SUPERCONDUCTIVITY 7
 #define SSAIR_REBUILD_PIPENETS 8
 
-// Explosion Subsystem tasks
-#define SSEXPLOSIONS_TURFS 1
-#define SSEXPLOSIONS_MOBS 2
-#define SSEXPLOSIONS_OBJECTS 3
-
+// Explosion Subsystem subtasks
+#define SSEXPLOSIONS_MOVABLES 1
+#define SSEXPLOSIONS_TURFS 2
+#define SSEXPLOSIONS_THROWS 3
 
