@@ -30,7 +30,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
-	var/sign_path = /obj/structure/sign/
+	var/sign_path = /obj/structure/sign
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
@@ -70,7 +70,7 @@
 	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 						 "<span class='notice'>You unfasten [src].</span>")
 	var/obj/item/sign_backing/unwrenched_sign = new (get_turf(user))
-	if(type != /obj/structure/sign/) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
+	if(type != /obj/structure/sign) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
 		unwrenched_sign.desc = "[desc] It can be placed on a wall."
 		unwrenched_sign.icon_state = icon_state
