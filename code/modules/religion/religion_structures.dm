@@ -15,16 +15,11 @@
 
 /obj/structure/altar_of_gods/Initialize(mapload)
 	. = ..()
-	if(GLOB.religious_sect)
-		sect_to_altar = GLOB.religious_sect
-		if(sect_to_altar.altar_icon)
-			icon = sect_to_altar.altar_icon
-		if(sect_to_altar.altar_icon_state)
-			icon_state = sect_to_altar.altar_icon_state
+	reflect_sect_in_icons()
 
 /obj/structure/altar_of_gods/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/religious_tool, ALL, FALSE, null)
+	AddComponent(/datum/component/religious_tool, ALL, FALSE, CALLBACK(src, .proc/reflect_sect_in_icons), null)
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user)
 	if(!Adjacent(user) || !user.pulling)
@@ -40,3 +35,11 @@
 		return ..()
 	pushed_mob.forceMove(loc)
 	return ..()
+
+/obj/structure/altar_of_gods/proc/reflect_sect_in_icons()
+	if(GLOB.religious_sect)
+		sect_to_altar = GLOB.religious_sect
+		if(sect_to_altar.altar_icon)
+			icon = sect_to_altar.altar_icon
+		if(sect_to_altar.altar_icon_state)
+			icon_state = sect_to_altar.altar_icon_state

@@ -15,30 +15,36 @@
 	var/catalyst_type = /obj/item/storage/book/bible
 	///Enables overide of COMPONENT_NO_AFTERATTACK, not recommended as it means you can potentially cause damage to the item using the catalyst.
 	var/force_catalyst_afterattack = FALSE
+	var/datum/callback/after_sect_select_cb
 
-/datum/component/religious_tool/Initialize(_flags = ALL, _force_catalyst_afterattack = FALSE, override_catalyst_type)
+/datum/component/religious_tool/Initialize(_flags = ALL, _force_catalyst_afterattack = FALSE, _after_sect_select_cb, override_catalyst_type)
 	. = ..()
 	SetGlobalToLocal() //attempt to connect on start in case one already exists!
 	operation_flags = _flags
 	force_catalyst_afterattack = _force_catalyst_afterattack
+	after_sect_select_cb = _after_sect_select_cb
 	if(override_catalyst_type)
 		catalyst_type = override_catalyst_type
 
 /datum/component/religious_tool/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_RELIGION_NEWSECT, .proc/SetGlobalToLocal)
 	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY,.proc/AttemptActions)
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/religious_tool/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY,COMSIG_RELIGION_NEWSECT, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY, COMSIG_PARENT_EXAMINE))
 
 /**
   * Sets the easy access variable to the global if it exists.
   */
 /datum/component/religious_tool/proc/SetGlobalToLocal()
+	if(easy_access_sect)
+		return TRUE
 	if(!GLOB.religious_sect)
-		return
+		return FALSE
 	easy_access_sect = GLOB.religious_sect
+	after_sect_select_cb.Invoke()
+	return TRUE
+
 
 
 /**
@@ -46,7 +52,7 @@
   */
 /datum/component/religious_tool/proc/AttemptActions(datum/source, obj/item/the_item, mob/living/user)
 	/**********Sect Selection**********/
-	if(!easy_access_sect)
+	if(!SetGlobalToLocal())
 		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
 			return
 		. = COMPONENT_NO_AFTERATTACK //At this point you're intentionally trying to select a sect.
@@ -71,14 +77,8 @@
 				continue
 			GLOB.religious_sect.on_conversion(am_i_holy_living)
 		easy_access_sect = GLOB.religious_sect
-		SEND_SIGNAL(parent, COMSIG_RELIGION_NEWSECT)
-		if(istype(parent,/obj/structure/altar_of_gods))
-			var/obj/structure/altar_of_gods/AOG = parent
-			if(easy_access_sect.altar_icon)
-				AOG.icon = easy_access_sect.altar_icon
-			if(easy_access_sect.altar_icon_state)
-				AOG.icon_state = easy_access_sect.altar_icon_state
-
+		after_sect_select_cb.Invoke()
+		return
 	/**********Rite Invocation**********/
 	else if(istype(the_item, catalyst_type))
 		if(!(operation_flags & RELIGION_TOOL_INVOKE))
