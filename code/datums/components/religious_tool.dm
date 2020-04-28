@@ -81,7 +81,7 @@
 
 	/**********Rite Invocation**********/
 	else if(istype(the_item, catalyst_type))
-		if(!operation_flags & RELIGION_TOOL_INVOKE)
+		if(!(operation_flags & RELIGION_TOOL_INVOKE))
 			return
 		. = force_catalyst_afterattack ? null : COMPONENT_NO_AFTERATTACK
 		if(!easy_access_sect.rites_list)
