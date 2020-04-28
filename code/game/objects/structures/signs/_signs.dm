@@ -18,7 +18,7 @@
 
 /obj/structure/sign/basic
 	name = "sign backing"
-	desc = "A plastic sign with adhesive backing, use a pen to change the decal. It can be detached from the wall with a wrench."
+	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
 	icon_state = "backing"
 
 /obj/structure/sign/attack_hand(mob/user)
@@ -155,7 +155,7 @@
 
 /obj/item/sign_backing
 	name = "sign backing"
-	desc = "A plastic sign with adhesive backing, use a pen to change the decal. It can be placed on a wall."
+	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
 	w_class = WEIGHT_CLASS_NORMAL
