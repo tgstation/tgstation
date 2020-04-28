@@ -14,12 +14,33 @@
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
-	var/sign_change_name = "Sign - Blank" 
+	var/sign_change_name = "Sign - Blank"
 
 /obj/structure/sign/basic
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
 	icon_state = "backing"
+
+/obj/item/sign_backing
+	name = "sign backing"
+	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
+	icon = 'icons/obj/decals.dmi'
+	icon_state = "backing"
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = list(/datum/material/plastic = 2000)
+	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	resistance_flags = FLAMMABLE
+	max_integrity = 100
+	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
+	var/sign_path = /obj/structure/sign/basic
+	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
+	var/is_editable = TRUE
+
+/obj/item/sign_backing/Initialize() //Signs not attached to walls are always rotated so they look like they're laying horizontal.
+	. = ..()
+	var/matrix/M = matrix()
+	M.Turn(90)
+	transform = M
 
 /obj/structure/sign/attack_hand(mob/user)
 	. = ..()
@@ -50,14 +71,14 @@
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 						 "<span class='notice'>You unfasten [src].</span>")
-	var/obj/item/sign_backing/SB = new (get_turf(user))
+	var/obj/item/sign_backing/unwrenched_sign = new (get_turf(user))
 	if(type != /obj/structure/sign/basic) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
-		SB.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
-		SB.desc = "[desc] It can be placed on a wall."
-		SB.icon_state = icon_state
-		SB.sign_path = type
-	SB.obj_integrity = obj_integrity //Transfer how damaged it is.
-	SB.setDir(dir)
+		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
+		unwrenched_sign.desc = "[desc] It can be placed on a wall."
+		unwrenched_sign.icon_state = icon_state
+		unwrenched_sign.sign_path = type
+	unwrenched_sign.obj_integrity = obj_integrity //Transfer how damaged it is.
+	unwrenched_sign.setDir(dir)
 	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 	return TRUE
 
@@ -117,10 +138,10 @@
 		//It's import to clone the pixel layout information.
 		//Otherwise signs revert to being on the turf and
 		//move jarringly.
-		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
-		newsign.pixel_x = pixel_x
-		newsign.pixel_y = pixel_y
-		newsign.obj_integrity = obj_integrity
+		var/obj/structure/sign/changedsign = new sign_type(get_turf(src))
+		changedsign.pixel_x = pixel_x
+		changedsign.pixel_y = pixel_y
+		changedsign.obj_integrity = obj_integrity
 		qdel(src)
 		user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
 					 "<span class='notice'>You finish changing the sign.</span>")
@@ -152,25 +173,6 @@
 		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()
-
-/obj/item/sign_backing
-	name = "sign backing"
-	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
-	icon = 'icons/obj/decals.dmi'
-	icon_state = "backing"
-	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/plastic = 2000)
-	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
-	resistance_flags = FLAMMABLE
-	max_integrity = 100
-	var/sign_path = /obj/structure/sign/basic //The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
-	var/is_editable = TRUE
-
-/obj/item/sign_backing/Initialize() //Signs not attached to walls are always rotated so they look like they're laying horizontal.
-	. = ..()
-	var/matrix/M = matrix()
-	M.Turn(90)
-	transform = M
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
 	. = ..()

@@ -44,13 +44,13 @@
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 						 "<span class='notice'>You unfasten [src].</span>")
-	var/obj/item/plaque/CP = new (get_turf(user))
+	var/obj/item/plaque/unwrenched_plaque = new (get_turf(user))
 	if(engraved) //If it's still just a basic unengraved plaque, we can (and should) skip some of the below variable transfers.
-		CP.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
-		CP.desc = desc
-		CP.engraved = engraved
-	CP.obj_integrity = obj_integrity
-	CP.setDir(dir)
+		unwrenched_plaque.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
+		unwrenched_plaque.desc = desc
+		unwrenched_plaque.engraved = engraved
+	unwrenched_plaque.obj_integrity = obj_integrity
+	unwrenched_plaque.setDir(dir)
 	qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
 	return TRUE
 
