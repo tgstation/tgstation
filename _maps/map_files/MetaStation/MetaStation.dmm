@@ -1586,6 +1586,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "adL" = (
@@ -73806,6 +73807,7 @@
 /obj/structure/bed,
 /obj/item/bedsheet/red,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/landmark/start/prisoner,
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "nDf" = (
