@@ -49,6 +49,71 @@
 	name = "gear crate"
 	icon_state = "secgearcrate"
 
+/obj/structure/closet/crate/secure/gear/resources
+	desc = "An old crate, possibly containing all sort of treasures!"
+	name = "old gear crate"
+
+/obj/structure/closet/crate/secure/gear/resources/PopulateContents()
+	var/min_c = 20 //Minimum amount of minerals in the stack for common minerals
+	var/max_c = 50 //Maximum amount.
+	var/min_r = 5  //Ditto for rares
+	var/max_r = 15
+	var/pickednum = rand(1, 50)
+
+	//Total Failure! (F)
+	if(pickednum == 1)
+		var/obj/item/paper/F = new /obj/item/paper(src)
+		F.name = "\improper old letter"
+		F.info = "Sorry about it, but we needed all this stuff to repair our new listening outpost in this sector. Just gather those ores around the pod, you don't have much of a choice anyway."
+
+	//Common ores
+
+	//Metal (common ore)
+	if(pickednum >= 2)
+		new /obj/item/stack/sheet/metal(src, rand(min_c, max_c))
+
+	//Glass (common ore)
+	if(pickednum >= 4)
+		new /obj/item/stack/sheet/glass(src, rand(min_c, max_c))
+
+	// Rare ores
+
+	//Gold
+	if(pickednum >= 10)
+		new /obj/item/stack/sheet/mineral/gold(src, rand(min_r, max_r))
+
+	//Silver
+	if(pickednum >= 12)
+		new /obj/item/stack/sheet/mineral/silver(src, rand(min_r, max_r))
+
+	//Plasma
+	if(pickednum >= 18)
+		new /obj/item/stack/sheet/mineral/plasma(src, rand(min_r, max_r))
+
+	//Uranium (Fuel for generator!)
+	if(pickednum >= 24)
+		new /obj/item/stack/sheet/mineral/uranium(src, rand(min_r, max_r))
+
+	//Titanium
+	if(pickednum >= 26)
+		new /obj/item/stack/sheet/mineral/titanium(src, rand(min_r, max_r))
+
+	//Plastitanium
+	if(pickednum >= 30)
+		new /obj/item/stack/sheet/mineral/plastitanium(src, rand(min_r, max_r))
+
+	//Diamond
+	if(pickednum >= 40)
+		new /obj/item/stack/sheet/mineral/diamond(src, rand(min_r, max_r))
+
+	//Bluespace Crystals (Ultra rare!)
+	if(pickednum >= 48)
+		new /obj/item/stack/ore/bluespace_crystal/artificial(src, rand(min_r, max_r))
+
+	//Bluespace Crystals (Ultra HONK!)
+	if(pickednum == 50)
+		new /obj/item/stack/ore/bananium(src, rand(min_r, max_r))
+
 /obj/structure/closet/crate/secure/hydroponics
 	desc = "A crate with a lock on it, painted in the scheme of the station's botanists."
 	name = "secure hydroponics crate"

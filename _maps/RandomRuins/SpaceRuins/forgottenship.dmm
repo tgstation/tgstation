@@ -40,8 +40,11 @@
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ah" = (
+/obj/machinery/light{
+	dir = 1
+	},
 /obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ai" = (
 /obj/machinery/light{
@@ -54,9 +57,12 @@
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ak" = (
-/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/aiModule/core/full/cybersun,
 /obj/structure/table/reinforced,
-/turf/open/floor/plastic,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "al" = (
 /turf/open/floor/mineral/plastitanium,
@@ -148,10 +154,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aA" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aB" = (
@@ -209,13 +212,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aI" = (
-/obj/structure/table/reinforced,
-/obj/machinery/button/door{
-	id = "fscaproom";
-	name = "Room shutters control";
-	req_one_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/obj/structure/table,
+/turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aJ" = (
 /obj/machinery/light{
@@ -238,8 +237,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aM" = (
-/obj/structure/table/reinforced,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1,
+/obj/structure/table,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aN" = (
@@ -301,9 +299,13 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aW" = (
-/obj/structure/table/reinforced,
-/obj/item/toy/plush/nukeplushie,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "fscaproom";
+	name = "Room shutters control";
+	req_one_access_txt = "150"
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aX" = (
 /obj/machinery/light{
@@ -329,18 +331,25 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bd" = (
-/obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+/obj/item/circuitboard/machine/circuit_imprinter,
+/obj/item/circuitboard/machine/protolathe,
+/obj/item/stack/sheet/metal/twenty,
+/obj/item/stack/sheet/glass{
+	amount = 10
 	},
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/metal/fifty,
-/obj/item/stack/sheet/plasteel/twenty,
-/obj/item/stack/sheet/mineral/plastitanium{
-	amount = 50
+/obj/item/stack/cable_coil,
+/obj/item/circuitboard/computer/rdconsole,
+/obj/machinery/light{
+	dir = 1
 	},
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/rods/fifty,
+/obj/item/circuitboard/machine/autolathe{
+	layer = 2.9
+	},
+/obj/structure/closet/crate/secure/science{
+	layer = 2.8;
+	req_access_txt = "150"
+	},
+/obj/item/storage/box/stockparts/cybersun,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "be" = (
@@ -359,20 +368,6 @@
 	start_charge = 0
 	},
 /obj/structure/cable,
-/obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
-	},
-/obj/item/circuitboard/machine/circuit_imprinter,
-/obj/item/circuitboard/machine/protolathe,
-/obj/item/stack/sheet/metal/twenty,
-/obj/item/stack/sheet/glass{
-	amount = 10
-	},
-/obj/item/stack/cable_coil,
-/obj/item/circuitboard/computer/rdconsole,
-/obj/item/storage/box/stockparts/deluxe,
-/obj/item/storage/box/stockparts/deluxe,
-/obj/item/storage/box/beakers,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bg" = (
@@ -384,31 +379,21 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bi" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox/electrical,
-/obj/item/clothing/glasses/welding,
-/obj/item/clothing/glasses/welding,
-/obj/item/clothing/glasses/welding,
-/obj/structure/closet/crate/secure/engineering{
+/obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+/obj/machinery/light,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bj" = (
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bk" = (
-/obj/structure/table/reinforced,
-/obj/machinery/button/door{
-	id = "fslockdown";
-	name = "Window shutters";
-	req_one_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium/red,
+/obj/structure/table,
+/obj/machinery/light,
+/obj/item/paper_bin,
+/obj/item/pen/red,
+/turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bl" = (
 /obj/machinery/ore_silo,
@@ -423,11 +408,14 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bn" = (
-/obj/structure/table/reinforced,
-/obj/item/paper,
-/obj/item/pen,
-/obj/machinery/light,
-/turf/open/floor/carpet/royalblack,
+/obj/structure/table,
+/obj/machinery/computer/security/telescreen/interrogation{
+	name = "Cameras monitor";
+	network = list("fsci");
+	req_one_access_txt = "150";
+	screen_loc = ""
+	},
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bo" = (
 /obj/machinery/light,
@@ -435,14 +423,15 @@
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bp" = (
 /obj/structure/closet/crate/secure/gear{
+	name = "mining gear crate";
 	req_one_access_txt = "150"
 	},
-/obj/item/mining_scanner,
 /obj/item/pickaxe/drill,
 /obj/item/storage/bag/ore,
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe/drill,
-/obj/item/mining_scanner,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/t_scanner/adv_mining_scanner/lesser,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bq" = (
@@ -462,14 +451,21 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bu" = (
-/obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
+/obj/item/toy/sword,
+/obj/item/toy/balloon/syndicate,
+/obj/structure/closet/crate/wooden{
+	desc = "Contains everything you would ever need! Sponsored by Donk Co.";
+	name = "toy crate"
 	},
-/obj/item/toy/nuke,
-/obj/item/clothing/under/chameleon,
-/obj/item/pda/chameleon,
-/obj/item/clothing/mask/chameleon,
-/obj/item/card/id/syndicate/anyone,
+/obj/item/gun/ballistic/automatic/toy/pistol,
+/obj/item/toy/crayon/black{
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/obj/item/stack/sheet/cardboard{
+	amount = 10;
+	layer = 2.9
+	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bv" = (
@@ -517,28 +513,40 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bz" = (
-/obj/structure/table/reinforced,
-/obj/item/assembly/prox_sensor,
-/obj/item/assembly/prox_sensor,
-/turf/open/floor/mineral/plastitanium,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+/obj/structure/closet/crate/secure/gear{
+	desc = "A secure crate, containing something interesting, but you don't know what exactly.";
+	name = "secret gear crate";
+	req_one_access_txt = "150"
+	},
+/obj/effect/spawner/lootdrop/cybersun_vault,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bA" = (
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/clothing/suit/space/hardsuit/cybersun,
+/obj/item/codespeak_manual/unlimited,
+/obj/item/melee/transforming/energy/sword/saber/red{
+	pixel_x = 6;
+	pixel_y = 6
+	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bB" = (
-/obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
-	},
-/obj/item/melee/transforming/energy/sword/saber/red,
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/obj/structure/closet/crate/secure/engineering{
+	req_one_access_txt = "150"
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/item/multitool,
+/obj/item/multitool,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bC" = (
 /obj/structure/closet/crate/medical,
 /obj/item/stack/medical/bruise_pack{
@@ -651,13 +659,8 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bT" = (
-/obj/structure/table/reinforced,
-/obj/machinery/computer/security/telescreen/interrogation{
-	name = "Cameras monitor";
-	network = list("fsci");
-	req_one_access_txt = "150";
-	screen_loc = ""
-	},
+/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/layer1,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bU" = (
@@ -666,8 +669,9 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "bV" = (
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/structure/table,
+/obj/machinery/atmospherics/components/unary/vent_pump,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bW" = (
 /obj/machinery/light{
@@ -762,16 +766,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"ci" = (
-/obj/machinery/porta_turret/syndicate/energy{
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
-	dir = 4;
-	name = "Syndicate Ship Turret";
-	on = 0;
-	shot_delay = 10
-	},
-/turf/closed/wall/r_wall/syndicate,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cj" = (
 /obj/machinery/stasis,
 /turf/open/floor/plastic,
@@ -781,19 +775,15 @@
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "cl" = (
-/obj/machinery/light{
-	dir = 1
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
+	dir = 4
 	},
-/obj/item/aiModule/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cm" = (
-/obj/machinery/door/airlock/grunge{
-	name = "Syndicate Ship Airlock";
-	req_one_access_txt = "150"
-	},
-/turf/open/floor/mineral/plastitanium/red,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cn" = (
 /obj/machinery/recharge_station,
@@ -832,10 +822,13 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cs" = (
 /obj/structure/closet/crate/secure/gear{
+	desc = "A secure crate, containing pure STEALTH!";
+	name = "stealth gear crate";
 	req_one_access_txt = "150"
 	},
-/obj/item/toy/sword,
-/obj/item/toy/balloon/syndicate,
+/obj/item/clothing/under/chameleon,
+/obj/item/clothing/mask/chameleon,
+/obj/item/card/id/syndicate/anyone,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "ct" = (
@@ -857,10 +850,13 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cw" = (
-/obj/structure/closet/crate/secure/gear{
+/obj/structure/closet/crate/secure/engineering{
 	req_one_access_txt = "150"
 	},
-/obj/item/switchblade,
+/obj/item/storage/belt/utility,
+/obj/item/storage/belt/utility,
+/obj/item/clothing/head/welding,
+/obj/item/clothing/head/welding,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "cx" = (
@@ -882,20 +878,15 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cz" = (
-/obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
-	},
-/obj/item/stack/sheet/mineral/titanium{
-	amount = 40
-	},
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 15
-	},
+/obj/structure/closet/crate/secure/gear/resources,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "cA" = (
-/obj/structure/table/reinforced,
-/obj/machinery/atmospherics/components/unary/vent_pump,
+/obj/structure/table,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cB" = (
@@ -1012,19 +1003,17 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cO" = (
-/obj/structure/table/reinforced,
-/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1,
-/obj/machinery/atmospherics/pipe/simple/supplymain/hidden{
-	dir = 4
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "fslockdown";
+	name = "Window shutters";
+	req_one_access_txt = "150"
 	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cP" = (
-/obj/structure/table/reinforced,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold/supplymain/hidden,
+/obj/structure/table,
+/obj/item/paper/fluff/ruins/forgottenship/missionobj,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cQ" = (
@@ -1113,7 +1102,7 @@
 	},
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "da" = (
-/obj/structure/table/reinforced,
+/obj/structure/table,
 /obj/item/ammo_box/c10mm,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -1135,7 +1124,6 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/codespeak_manual/unlimited,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "de" = (
@@ -1175,6 +1163,7 @@
 /obj/item/clothing/under/syndicate/skirt,
 /obj/item/clothing/gloves/combat,
 /obj/item/clothing/shoes/combat,
+/obj/item/clothing/head/HoS/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dh" = (
@@ -1202,7 +1191,7 @@
 	req_one_access_txt = "150"
 	},
 /obj/effect/spawner/lootdrop/donkpockets,
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dl" = (
 /obj/machinery/door/password/voice/sfc{
@@ -1218,13 +1207,8 @@
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dm" = (
-/obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
-	},
-/obj/item/stack/ore/diamond{
-	amount = 3
-	},
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dn" = (
 /obj/machinery/door/airlock/grunge{
@@ -1237,47 +1221,54 @@
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/stack/sheet/mineral/gold{
-	amount = 30
+/obj/item/clothing/suit/space/hardsuit/cybersun{
+	pixel_x = 4;
+	pixel_y = -2
 	},
-/obj/item/stack/sheet/mineral/silver{
-	amount = 30
+/obj/item/clothing/suit/space/hardsuit/cybersun{
+	pixel_x = -4;
+	pixel_y = 2
 	},
-/obj/machinery/light,
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dp" = (
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/item/stack/ore/plasma{
-	amount = 19
-	},
-/turf/open/floor/mineral/plastitanium,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dq" = (
-/obj/structure/closet/crate/secure/gear{
-	req_one_access_txt = "150"
-	},
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/spawner/lootdrop/maintenance,
-/turf/open/floor/mineral/plastitanium,
+/obj/structure/table/reinforced,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dr" = (
-/obj/structure/table/reinforced,
-/obj/item/paper/fluff/ruins/forgottenship/missionobj,
-/turf/open/floor/mineral/plastitanium,
+/obj/machinery/door/airlock/grunge{
+	name = "Syndicate Ship Airlock";
+	req_one_access_txt = "150"
+	},
+/turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ds" = (
 /obj/structure/closet/crate/secure/gear{
 	req_one_access_txt = "150"
 	},
-/obj/effect/spawner/lootdrop/costume,
-/turf/open/floor/mineral/plastitanium,
+/obj/effect/spawner/lootdrop/maintenance/three,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "dt" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/open/floor/mineral/plastitanium,
+/obj/structure/closet/crate/secure/gear{
+	req_one_access_txt = "150"
+	},
+/obj/effect/spawner/lootdrop/costume,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"du" = (
+/obj/structure/closet/crate/secure/gear{
+	req_one_access_txt = "150"
+	},
+/obj/item/screwdriver,
+/obj/item/stock_parts/cell/high,
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 
 (1,1,1) = {"
@@ -1757,23 +1748,23 @@ aa
 aa
 aa
 aa
-ci
+ac
 bZ
 dk
-dt
-al
-al
+dm
+cm
+cm
+du
+dm
+cm
+ds
+dp
+cm
+cm
 dm
 dt
-al
-dp
-dq
-al
-al
-dt
-ds
 bZ
-ci
+ac
 aa
 aa
 aa
@@ -1805,21 +1796,21 @@ aa
 aa
 aa
 bZ
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
-al
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
+cm
 bZ
 aa
 aa
@@ -1900,7 +1891,7 @@ aa
 aa
 bZ
 bZ
-bV
+dq
 bZ
 ag
 bw
@@ -1909,11 +1900,11 @@ av
 aR
 az
 bZ
-bz
+aM
 bD
 al
 bY
-al
+bZ
 bZ
 aa
 aa
@@ -1946,7 +1937,7 @@ aa
 aa
 aa
 bZ
-aA
+ah
 aw
 bZ
 ao
@@ -2007,7 +1998,7 @@ al
 al
 al
 cc
-dr
+cP
 bZ
 aa
 aa
@@ -2065,8 +2056,8 @@ ba
 ba
 aZ
 aZ
-bA
-bA
+cz
+do
 aZ
 aZ
 ba
@@ -2087,11 +2078,11 @@ aa
 aa
 aa
 bZ
-cl
+ak
 aw
 bZ
 aB
-bn
+bk
 bZ
 cy
 cE
@@ -2111,10 +2102,10 @@ ba
 ba
 ba
 aZ
-bd
+bz
 de
 de
-cz
+dd
 aZ
 ba
 aY
@@ -2137,14 +2128,14 @@ ac
 bZ
 co
 bZ
-aI
-bT
+aW
+bn
 bg
 aD
 cF
 cM
 bZ
-ah
+aM
 bD
 al
 bY
@@ -2158,10 +2149,10 @@ ba
 bq
 ba
 aZ
-bB
+bd
 de
 de
-do
+bi
 aZ
 ba
 bq
@@ -2205,7 +2196,7 @@ aY
 ba
 ba
 aZ
-dd
+bA
 de
 de
 di
@@ -2323,11 +2314,11 @@ aa
 aa
 aa
 bZ
-ak
+aI
 ar
 am
 am
-cm
+dr
 cv
 cW
 al
@@ -2368,7 +2359,7 @@ aa
 aa
 aa
 aa
-ci
+ac
 bZ
 bZ
 bZ
@@ -2384,7 +2375,7 @@ bZ
 bZ
 bZ
 bZ
-ci
+ac
 aa
 aa
 aa
@@ -2515,11 +2506,11 @@ al
 aU
 al
 at
-ah
 aM
-cO
-ah
-ah
+bT
+cl
+aM
+aM
 bQ
 aP
 be
@@ -2537,7 +2528,7 @@ bF
 bh
 bh
 bj
-bu
+cs
 bb
 ba
 ba
@@ -2562,11 +2553,11 @@ al
 an
 al
 at
-ah
+aM
+bV
 cA
-cP
-ah
-ah
+aM
+aM
 aL
 al
 an
@@ -2581,7 +2572,7 @@ aa
 aY
 aY
 ck
-bi
+bB
 bj
 bj
 bU
@@ -2610,9 +2601,9 @@ bZ
 al
 al
 al
-ah
+aM
 cQ
-ah
+aM
 al
 al
 al
@@ -2629,7 +2620,7 @@ aY
 ba
 bb
 bb
-cs
+bu
 cw
 bb
 bb
@@ -2652,7 +2643,7 @@ aa
 aa
 ac
 bZ
-ah
+aM
 bZ
 cr
 al
@@ -2664,7 +2655,7 @@ aF
 al
 al
 bZ
-ah
+aM
 bZ
 ac
 aa
@@ -3030,15 +3021,15 @@ aa
 aa
 bZ
 bZ
-bV
-bV
-aW
-bV
-bk
-bV
-bV
-bV
-bV
+aA
+aA
+aA
+aA
+cO
+aA
+aA
+aA
+aA
 bZ
 bZ
 aa

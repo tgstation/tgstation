@@ -446,6 +446,73 @@
 				/obj/effect/spawner/bundle/costume/mafia/beige = 5
 				)
 
+// Cybersun ship loot spawners
+
+/obj/effect/spawner/lootdrop/cybersun_vault //Random gimmick loot spawner
+	name = "cybersun vault loot spawner"
+	lootdoubles = FALSE
+	loot = list(
+				/obj/effect/spawner/lootdrop/cybersun_vault/bundle/xenobio = 5,
+				/obj/effect/spawner/lootdrop/cybersun_vault/bundle/cybertech = 4,
+				/obj/effect/spawner/lootdrop/cybersun_vault/bundle/charlie = 2,
+				/obj/effect/spawner/lootdrop/cybersun_vault/bundle/fluke = 2
+				)
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle
+	fan_out_items = TRUE
+	lootcount = INFINITY
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle/xenobio //Xenobiology!
+	loot = list(
+				/obj/item/slime_extract/grey,
+				/obj/item/storage/box/monkeycubes,
+				/obj/item/circuitboard/machine/processor/slime,
+				/obj/item/circuitboard/machine/monkey_recycler,
+				/obj/item/circuitboard/computer/xenobiology,
+				/obj/item/stock_parts/matter_bin/bluespace,
+				/obj/item/stock_parts/matter_bin/bluespace,
+				/obj/item/stock_parts/manipulator/pico,
+				/obj/item/stock_parts/manipulator/pico,
+				/obj/item/reagent_containers/dropper,
+				/obj/item/toy/plush/slimeplushie
+				)
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle/cybertech //Cybernetics!
+	loot = list(
+				/obj/item/organ/eyes/robotic/thermals,
+				/obj/item/organ/eyes/robotic/glow,
+				/obj/item/organ/ears/cybernetic/upgraded,
+				/obj/item/organ/ears/cybernetic,
+				/obj/item/organ/heart/cybernetic/tier3,
+				/obj/item/organ/heart/cybernetic/tier2,
+				/obj/item/organ/liver/cybernetic/tier3,
+				/obj/item/organ/liver/cybernetic/tier2,
+				/obj/item/organ/lungs/cybernetic/tier3,
+				/obj/item/organ/lungs/cybernetic/tier2,
+				/obj/item/organ/cyberimp/arm/toolset,
+				/obj/item/organ/cyberimp/arm/surgery,
+				/obj/item/organ/tongue/robot,
+				/obj/item/organ/tongue/robot
+				)
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle/charlie //Yes, I'm from boomer station, not syndicate. Honest!
+	loot = list(
+				/obj/item/clothing/suit/space/nasavoid,
+				/obj/item/clothing/head/helmet/space/nasavoid,
+				/obj/item/gun/energy/laser/retro/old
+				)
+
+/obj/effect/spawner/lootdrop/cybersun_vault/bundle/fluke //Fluke Ops!
+	loot = list(
+				/obj/item/instrument/harmonica,
+				/obj/item/toy/nuke,
+				/obj/item/storage/crayons,
+				/obj/item/cardboard_cutout/adaptive,
+				/obj/item/cardboard_cutout/adaptive,
+				/obj/item/cardboard_cutout/adaptive,
+				/obj/item/toy/plush/nukeplushie
+				)
+
 //finds the probabilities of items spawning from a loot spawner's loot pool
 /obj/item/loot_table_maker
 	icon = 'icons/effects/landmarks_static.dmi'

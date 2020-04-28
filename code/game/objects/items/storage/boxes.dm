@@ -1174,6 +1174,18 @@
 		/obj/item/stock_parts/matter_bin/bluespace = 3)
 	generate_items_inside(items_inside,src)
 
+/obj/item/storage/box/stockparts/cybersun
+	name = "box of emergency stock parts"
+	desc = "Contains all stock parts you might need to setup basic R&D."
+	icon_state = "syndiebox"
+
+/obj/item/storage/box/stockparts/cybersun/PopulateContents()
+	var/static/items_inside = list(
+		/obj/item/stock_parts/matter_bin/bluespace = 6,
+		/obj/item/stock_parts/manipulator/femto = 5,
+		/obj/item/reagent_containers/glass/beaker = 4)
+	generate_items_inside(items_inside,src)
+
 /obj/item/storage/box/dishdrive
 	name = "DIY Dish Drive Kit"
 	desc = "Contains everything you need to build your own Dish Drive!"
