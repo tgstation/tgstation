@@ -68,19 +68,26 @@
 			if(available_hardcore_quirks[available_quirk] > quirk_budget)
 				available_hardcore_quirks -= available_quirk
 
+		if(!available_hardcore_quirks.len)
+			break
+
 		var/datum/quirk/picked_quirk = pick(available_hardcore_quirks)
 
-		for(var/bl in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted. quirk_blacklist is a list of lists.
+		var/picked_quirk_blacklisted = FALSE
+		for(var/bl in SSquirks.quirk_blacklist) //Check if the quirk is blacklisted with our current quirks. quirk_blacklist is a list of lists.
 			var/list/blacklist = bl
-			for(var/iterator_quirk in all_quirks)
-				if((picked_quirk in blacklist) && (iterator_quirk in blacklist) && !(iterator_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
-					available_hardcore_quirks -= picked_quirk
-					continue
-
-		for(var/iterator_quirk in all_quirks)//Check for dupes
-			if(iterator_quirk == picked_quirk)
-				available_hardcore_quirks -= picked_quirk
+			if(!(picked_quirk in blacklist))
 				continue
+			for(var/iterator_quirk in all_quirks) //Go through all the quirks we've already selected to see if theres a blacklist match
+				if((iterator_quirk in blacklist) && !(iterator_quirk == picked_quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+					picked_quirk_blacklisted = TRUE
+					break
+			if(picked_quirk_blacklisted)
+				break
+
+		if(picked_quirk_blacklisted)
+			available_hardcore_quirks -= picked_quirk
+			continue
 
 		if(initial(picked_quirk.mood_quirk) && CONFIG_GET(flag/disable_human_mood)) //check for moodlet quirks
 			available_hardcore_quirks -= picked_quirk
