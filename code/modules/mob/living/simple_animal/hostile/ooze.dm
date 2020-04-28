@@ -89,7 +89,7 @@
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/A)
 	A.reagents.trans_to(src, A.reagents.total_volume, transfered_by = src)
-	visible_message("<span class='warning>[src] eats [A]!</span>", "<span class='notice'>You eat [A].</span>")
+	src.visible_message("<span class='warning>[src] eats [A]!</span>", "<span class='notice'>You eat [A].</span>")
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(A)
 
@@ -202,19 +202,22 @@
 	if(vored_mob)
 		to_chat(src, "<span class='warning'>You are already consuming another creature!</span>")
 		return FALSE
+	owner.visible_message("<span class='warning>[ooze] starts attempting to devour [target]!</span>", "<span class='notice'>You start attempting to devour [target].</span>")
 	if(!do_after(ooze, 15, target = ooze.pulling))
 		return FALSE
-	var/mob/living/target = ooze.pulling
+	var/mob/living/eat_target = ooze.pulling
 
-	if(!(target.mob_biotypes & MOB_ORGANIC) || target.stat == DEAD)
+	if(!(eat_target.mob_biotypes & MOB_ORGANIC) || eat_target.stat == DEAD)
 		to_chat(src, "<span class='warning'>This creature isn't to my tastes!</span>")
 		return FALSE
-	start_consuming(target)
+	start_consuming(eat_target)
 
 ///Start allowing this datum to process to handle the damage done to  this mob.
 /datum/action/consume/proc/start_consuming(mob/living/target)
 	vored_mob = target
 	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!! VORE!!!!
+	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
+	owner.visible_message("<span class='warning>[src] devours [target]!</span>", "<span class='notice'>You devour [target].</span>")
 	START_PROCESSING(SSprocessing, src)
 
 ///Stop consuming the mob; dump them on the floor
@@ -253,7 +256,7 @@
 	///The ability to give yourself a metabolic speed boost which raises heat
 	var/datum/action/cooldown/gel_cocoon/gel_cocoon
 	///The ability to consume mobs
-	var/obj/effect/proc_holder/globules
+	var/obj/effect/proc_holder/globules/globules
 
 /mob/living/simple_animal/hostile/ooze/grapes/Initialize()
 	. = ..()
@@ -349,7 +352,7 @@
 /obj/item/mending_globule/embedded(mob/living/carbon/human/embedded_mob)
 	. = ..()
 	healing_target = embedded_mob
-	if(!istype(loc, /obj/item/bodypart)
+	if(!istype(loc, /obj/item/bodypart))
 		return
 	bodypart = loc
 	healing_target.add_overlay(mutable_appearance('icons/mob/vatgrowing.dmi', "glob_[bodypart.body_zone]"))
@@ -369,5 +372,78 @@
 	if(heals_left <= 0)
 		qdel(src)
 
+///This action lets you put a mob inside of a cacoon that will inject it with some chemicals.
+/datum/action/cooldown/gel_cocoon
+	name = "Gel Cocoon"
+	desc = "Puts a mob inside of a cocoon, allowing it to slowly heal."
+	background_icon_state = "bg_hive"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon_state = "gel_cocoon"
+	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
+	cooldown_time = 10 SECONDS
 
+///Try to put the pulled mob in a cocoon
+/datum/action/cooldown/gel_cocoon/Trigger()
+	. = ..()
+	if(!.)
+		return
+	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
+	if(!ooze.pulling)
+		to_chat(src, "<span class='warning'>You need to be pulling a creature for this to work!</span>")
+		return FALSE
+	if(!iscarbon(ooze.pulling))
+		to_chat(src, "<span class='warning'>This creature is not advanced enough to be assisted with a cocoon!</span>")
+		return FALSE
+	owner.visible_message("<span class='nicegreen>[ooze] starts attempting to put [target] into a gel cocoon!</span>", "<span class='notice'>You start attempting to put [target] into a gel cocoon.</span>")
+	if(!do_after(ooze, 1.5 SECONDS, target = ooze.pulling))
+		return FALSE
 
+	put_in_cocoon(ooze.pulling)
+	ooze.adjust_ooze_nutrition(-30)
+
+///Mob needs to have enough nutrition
+/datum/action/cooldown/gel_cocoon/IsAvailable()
+	. = ..()
+	var/mob/living/simple_animal/hostile/ooze/ooze = owner
+	if(. && ooze.ooze_nutrition >= 30)
+		return TRUE
+
+///Puts the mob in the new cocoon
+/datum/action/cooldown/gel_cocoon/proc/put_in_cocoon(mob/living/carbon/target)
+	var/obj/structure/gel_cocoon/cocoon = new /obj/structure/gel_cocoon(get_turf(owner))
+	cocoon.insert_target(target)
+	owner.visible_message("<span class='nicegreen>[owner] has put [target] into a gel cocoon!</span>", "<span class='notice'>You put [target] into a gel cocoon.</span>")
+
+/obj/structure/gel_cocoon
+	name = "gel_cocoon"
+	desc = "It looks gross, but helpful."
+	icon_state = "gel_cocoon"
+	max_integrity = 50
+	var/mob/living/carbon/inhabitant
+
+/obj/structure/gel_cocoon/Destroy()
+	dump_inhabitant()
+	. = ..()
+
+/obj/structure/gel_cocoon/resist_act(mob/living/user)
+	. = ..()
+	user.visible_message("<span class='notice'>You see [user] breaking out of [src]!</span>", \
+		"<span class='notice'>You start tearing the soft tissue of the gel cocoon</span>")
+	if(!do_after(user, 1.5 SECONDS, target = src))
+		return FALSE
+	dump_inhabitant()
+
+///This proc handles the insertion of a person into the cocoon
+/obj/structure/gel_cocoon/proc/insert_target(target)
+	inhabitant = target
+	inhabitant.forceMove(src)
+	START_PROCESSING(SSobj, src)
+
+///This proc dumps the mob and handles associated audiovisual feedback
+/obj/structure/gel_cocoon/proc/dump_inhabitant()
+	inhabitant.forceMove(get_turf(src))
+	playsound(get_turf(inhabitant), 'sound/effects/splat.ogg', 50, TRUE)
+	inhabitant.Paralyze(10)
+	inhabitant.visible_message("<span class='warning>[inhabitant] falls out of [src]!</span>", "<span class='notice'>You fall out of [src].</span>")
+	inhabitant = null
+	STOP_PROCESSING(SSobj, src)
