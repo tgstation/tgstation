@@ -174,14 +174,7 @@
 		var/obj/screen/alert/give/G = C.throw_alert("[src]", /obj/screen/alert/give)
 		if(!G)
 			return
-		G.name = "[src] is offering [receiving]"
-		G.desc = "[src] is offering [receiving]. Click this alert to take it."
-		G.icon_state = "template"
-		G.cut_overlays()
-		G.add_overlay(receiving)
-		G.receiving = receiving
-		G.giver = src
-		G.RegisterSignal(C, COMSIG_MOVABLE_MOVED, /obj/screen/alert/give/.proc/removeAlert)
+		G.setup(C, src, receiving)
 
 /**
   * Proc called when the player clicks the give alert
