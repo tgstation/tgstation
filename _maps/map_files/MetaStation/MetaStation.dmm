@@ -34499,7 +34499,7 @@
 	},
 /area/engine/atmos)
 "bAF" = (
-/obj/structure/sign/plaques/atmos{
+/obj/structure/plaque/static_plaque/atmos{
 	pixel_y = 32
 	},
 /obj/item/phone{
@@ -49759,7 +49759,7 @@
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "cjK" = (
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	desc = "A golden plaque commemorating excellence in medical care. God only knows how this ended up in this medbay.";
 	name = "The Hippocratic Award for Excellence in Medicine";
 	pixel_x = -32
