@@ -31,47 +31,6 @@
 			loot_spawned++
 	return INITIALIZE_HINT_QDEL
 
-/obj/effect/spawner/lootdrop/prank
-	name = "prank spawner"
-	lootdoubles = FALSE
-
-	loot = list(
-		/obj/item/toy/talking/codex_gigas,
-			/obj/item/coin/antagtoken,
-			/obj/item/hot_potato/harmless/toy,
-			/obj/item/card/emagfake,
-			/obj/item/gun/ballistic/shotgun/toy/crossbow,
-			/obj/item/restraints/handcuffs/fake,
-			/obj/item/extendohand/acme,
-			/obj/item/storage/box/snappops,
-			/obj/item/toy/braintoy,
-			/obj/item/toy/brokenradio,
-			/obj/item/toy/cards/deck,
-			/obj/item/toy/clockwork_watch,
-			/obj/item/toy/eightball,
-			/obj/item/toy/gun,
-			/obj/item/toy/minimeteor,
-			/obj/item/toy/nuke,
-			/obj/item/toy/redbutton,
-			/obj/item/toy/spinningtoy,
-			/obj/item/toy/sword,
-			/obj/item/toy/toy_dagger,
-			/obj/item/toy/toy_xeno,
-			/obj/item/toy/windupToolbox
-		)
-
-/obj/effect/spawner/lootdrop/gamergear
-	name = "gamergear spawner"
-	lootdoubles = FALSE
-
-	loot = list(
-			/obj/item/storage/box/fakesyndiesuit,
-        	/obj/item/storage/belt/military/snack,
-        	/obj/item/clothing/under/syndicate/tacticool,
-        	/obj/item/clothing/shoes/wheelys,
-        	/obj/item/clothing/shoes/kindleKicks,
-        	/obj/item/clothing/glasses/trickblindfold
-		)
 /obj/effect/spawner/lootdrop/donkpockets
 	name = "donk pocket box spawner"
 	lootdoubles = FALSE

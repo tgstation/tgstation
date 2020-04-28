@@ -2286,10 +2286,7 @@
 	. = ..()
 	var/the_toy
 	for(var/i in 1 to num_contained)
-		if(prob(50))
-			the_toy = pickweight(GLOB.arcade_prize_pool)
-		else
-			the_toy = pick(subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/kinggoat))
+		the_toy = pick(pick_from_weighted_lists(GLOB.arcade_prize_pool))
 		new the_toy(.)
 
 /datum/supply_pack/costumes_toys/wizard

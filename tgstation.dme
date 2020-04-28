@@ -154,6 +154,7 @@
 #include "code\__HELPERS\typelists.dm"
 #include "code\__HELPERS\unsorted.dm"
 #include "code\__HELPERS\view.dm"
+#include "code\__HELPERS\weighted_lists.dm"
 #include "code\__HELPERS\sorts\__main.dm"
 #include "code\__HELPERS\sorts\InsertSort.dm"
 #include "code\__HELPERS\sorts\MergeSort.dm"

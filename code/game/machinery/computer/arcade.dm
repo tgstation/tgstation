@@ -1,48 +1,84 @@
-//these lists comprise the figurine category, a frequent drop due to it's many unique entries
-GLOBAL_LIST_INIT("toy_figures" = subtypesof(/obj/item/toy/figure),
-				"toy_plushes" = (subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)),
-				"toy_mechs" = subtypesof(/obj/item/toy/prize),
-				"toy_talking" = subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas),
-//these lists comprise the "decoration" category, things that are both consumable and used to add visual difference to a space
-				"toy_grenades" = subtypesof(/obj/item/grenade/chem_grenade/glitter),
-				"toy_decorations" = list(
-					/obj/item/storage/crayons,
-					/obj/item/stack/tile/fakespace/loaded,
-					/obj/item/stack/tile/fakepit/loaded,
-					/obj/item/stack/tile/eighties/loaded)
-//this is the clothing list, clothes are pretty dank, while there are a few flukes in here it's all pretty decent
-				"toy_gamergear" = list(
-					/obj/item/storage/box/fakesyndiesuit,
-					/obj/item/storage/belt/military/snack,
-					/obj/item/clothing/under/syndicate/tacticool,
-					/obj/item/clothing/shoes/wheelys,
-					/obj/item/clothing/shoes/kindleKicks,
-					/obj/item/clothing/glasses/trickblindfold)
-//most of these simulate an antag or event, these are preferred as rare spawns as they quickly clutter up a space which also devalues their potential
-				"toy_pranks", list(
-					/obj/item/toy/talking/codex_gigas,
-					/obj/item/coin/antagtoken,
-					/obj/item/hot_potato/harmless/toy,
-					/obj/item/card/emagfake,
-					/obj/item/gun/ballistic/shotgun/toy/crossbow,
-					/obj/item/restraints/handcuffs/fake,
-					/obj/item/extendohand/acme,
-					/obj/item/storage/box/snappops,
-					/obj/item/toy/braintoy,
-					/obj/item/toy/brokenradio,
-					/obj/item/toy/cards/deck,
-					/obj/item/toy/clockwork_watch,
-					/obj/item/toy/eightball,
-					/obj/item/toy/gun,
-					/obj/item/toy/minimeteor,
-					/obj/item/toy/nuke,
-					/obj/item/toy/redbutton,
-					/obj/item/toy/spinningtoy,
-					/obj/item/toy/sword,
-					/obj/item/toy/toy_dagger,
-					/obj/item/toy/toy_xeno,
-					/obj/item/toy/windupToolbox)
-				)
+GLOBAL_LIST_INIT(arcade_prize_pool, list(
+	"randomfigurine" = list(
+		"weight" = 4,
+		"toy_figures" = list(
+			"weight" = 3,
+			subtypesof(/obj/item/toy/figure)
+			),
+		"toy_figures" = list(
+			"weight" = 3,
+			"element_list" = ( subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)
+				),
+			),
+
+		"toy_mechs" = list(
+			"weight" = 2,
+			"element_list" = ( subtypesof(/obj/item/toy/prize)
+				),
+			),
+		"toy_talking" = list(
+			"weight" = 1,
+			"element_list" = ( subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas)
+				),
+			),
+		),
+	"randomdeco" = list(
+		"weight" = 3,
+		"toy_decorations" = list(
+			"weight" = 2,
+			"element_list" = list(
+				/obj/item/storage/crayons,
+				/obj/item/stack/tile/fakespace/loaded,
+				/obj/item/stack/tile/fakepit/loaded,
+				/obj/item/stack/tile/eighties/loaded
+				),
+			),
+		"toy_grenades" = list(
+			"weight" = 1,
+			"element_list" = ( subtypesof(/obj/item/grenade/chem_grenade/glitter)
+				),
+			),
+		),
+	"toy_pranks" = list(
+		"weight" = 2,
+		"element_list" = list(
+			/obj/item/toy/talking/codex_gigas,
+			/obj/item/coin/antagtoken,
+			/obj/item/hot_potato/harmless/toy,
+			/obj/item/card/emagfake,
+			/obj/item/gun/ballistic/shotgun/toy/crossbow,
+			/obj/item/restraints/handcuffs/fake,
+			/obj/item/extendohand/acme,
+			/obj/item/storage/box/snappops,
+			/obj/item/toy/braintoy,
+			/obj/item/toy/brokenradio,
+			/obj/item/toy/cards/deck,
+			/obj/item/toy/clockwork_watch,
+			/obj/item/toy/eightball,
+			/obj/item/toy/gun,
+			/obj/item/toy/minimeteor,
+			/obj/item/toy/nuke,
+			/obj/item/toy/redbutton,
+			/obj/item/toy/spinningtoy,
+			/obj/item/toy/sword,
+			/obj/item/toy/toy_dagger,
+			/obj/item/toy/toy_xeno,
+			/obj/item/toy/windupToolbox
+			),
+		),
+	"toy_gamergear" = list(
+		"weight" = 1,
+		"element_list" = list(
+			/obj/item/storage/box/fakesyndiesuit,
+			/obj/item/storage/belt/military/snack,
+			/obj/item/clothing/under/syndicate/tacticool,
+			/obj/item/clothing/shoes/wheelys,
+			/obj/item/clothing/shoes/kindleKicks,
+			/obj/item/clothing/glasses/trickblindfold
+			)
+		)
+	))
+
 /obj/machinery/computer/arcade
 	name = "random arcade"
 	desc = "random arcade machine"
@@ -51,28 +87,6 @@ GLOBAL_LIST_INIT("toy_figures" = subtypesof(/obj/item/toy/figure),
 	icon_screen = "invaders"
 	var/list/prize_override
 	light_color = LIGHT_COLOR_GREEN
-
-	//This allows us to weight the figurine sub-categories
-	var/list/randomfigurine = pick(
-	3;pick(GLOB.toy_figures),
-	3;pick(GLOB.toy_plushes),
-	2;pick(GLOB.toy_mechs),
-	1;pick(GLOB.toy_talking)
-	)
-
-	//This allows us to balance glitter grenades against the rest of the decorations
-	var/randomdeco = pick(
-	2; pick(GLOB.toy_decorations),
-	1; pick(GLOB.toy_grenades)
-	)
-
-	//Here is where the 4 categories are weighted and chosen during vend
-	var/list/prizepick = pick(
-	4; pick(randomfigurine),
-	3; pick(randomdeco),
-	2; pick(GLOB.toy_pranks),
-	1; pick(GLOB.toy_gamergear)
-	)
 
 /obj/machinery/computer/arcade/proc/Reset()
 	return
@@ -109,7 +123,7 @@ GLOBAL_LIST_INIT("toy_figures" = subtypesof(/obj/item/toy/figure),
 		if(prize_override)
 			prizeselect = pickweight(prize_override)
 		else
-			prizeselect = pick(prizepick)
+			prizeselect = pick(pick_from_weighted_lists(GLOB.arcade_prize_pool))
 		var/atom/movable/the_prize = new prizeselect(get_turf(src))
 		playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
 		visible_message("<span class='notice'>[src] dispenses [the_prize]!</span>", "<span class='notice'>You hear a chime and a clunk.</span>")
@@ -134,7 +148,7 @@ GLOBAL_LIST_INIT("toy_figures" = subtypesof(/obj/item/toy/figure),
 		if(override)
 			empprize = pickweight(prize_override)
 		else
-			empprize = pick(prizepick)
+			empprize = pick(pick_from_weighted_lists(GLOB.arcade_prize_pool))
 		new empprize(loc)
 	explosion(loc, -1, 0, 1+num_of_prizes, flame_range = 1+num_of_prizes)
 
