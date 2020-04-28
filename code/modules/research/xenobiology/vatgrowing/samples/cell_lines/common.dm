@@ -249,7 +249,7 @@
 						/datum/reagent/consumable/frostoil = -2,
 						/datum/reagent/consumable/ice = -1)
 	virus_suspectibility = 0
-	resulting_atoms = list() //Add the gelatinous cube here.´
+	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/gelatinous = 1)
 
 /datum/micro_organism/cell_line/Sholean_grapes
 	desc = "Globular ooze particles"
@@ -274,7 +274,7 @@
 						/datum/reagent/consumable/frostoil = -2,
 						/datum/reagent/consumable/ice = -1)
 	virus_suspectibility = 0
-	resulting_atoms = list() //Add the sholean grapes here
+	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/grapes = 1)
 
 ////////////////////
 ////	MISC	////
@@ -336,6 +336,10 @@
 						/datum/reagent/consumable/sodiumchloride = -3,
 						/datum/reagent/medicine/C2/syriniver = -2)
 	virus_suspectibility = 0.5
-	resulting_atoms = list() //Add the vat beast here.
+	resulting_atoms = list(/mob/living/simple_animal/hostile/vatbeast = 1)
+
+/datum/micro_organism/cell_line/vat_beast/succeed_growing(obj/machinery/plumbing/growing_vat/vat)
+	. = ..()
+	qdel(vat)
 
 #undef VAT_GROWTH_RATE

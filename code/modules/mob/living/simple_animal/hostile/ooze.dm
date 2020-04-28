@@ -21,8 +21,8 @@
 	//health = 100
 
 	//harm_intent_damage = 5
-	//melee_damage_lower = 21
-	//melee_damage_upper = 21
+	melee_damage_lower = 10
+	melee_damage_upper = 10
 	//attack_verb_continuous = "bites"
 	//attack_verb_simple = "bite"
 	//attack_sound = 'sound/hallucinations/growl1.ogg'
@@ -228,9 +228,9 @@
 ///Gain health for the consumption and dump some clone loss on the target.
 /datum/action/consume/process()
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
-	vored_mob.adjustCloneLoss(12)
-	ooze.heal_ordered_damage((ooze.maxHealth * 0.06), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
-	ooze.adjust_ooze_nutrition(6)
+	vored_mob.adjustCloneLoss(6)
+	ooze.heal_ordered_damage((ooze.maxHealth * 0.03), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
+	ooze.adjust_ooze_nutrition(3)
 
 	///Dump em at 200 cloneloss.
 	if(vored_mob.getCloneLoss() >= 200)
@@ -247,11 +247,18 @@
 /mob/living/simple_animal/hostile/ooze/grapes
 	name = "Sholean grapes"
 	desc = "It's a gummy cube, it's a gummy cube, it's a gummy gummy gummy gummy gummy cube."
+	icon_state = "grapes"
+	icon_dead = "grapes_dead"
 	speed = 1
 	///The ability to give yourself a metabolic speed boost which raises heat
 	var/datum/action/cooldown/gel_cocoon/gel_cocoon
 	///The ability to consume mobs
-	var/datum/action/globules/globules
+	var/obj/effect/proc_holder/globules
+
+/mob/living/simple_animal/hostile/ooze/grapes/Initialize()
+	. = ..()
+	globules = new
+	AddAbility(globules)
 
 /mob/living/simple_animal/hostile/ooze/grapes/check_edible(atom/movable/AM)
 	if(ismob(AM))
@@ -263,7 +270,6 @@
 	return foodtype & MEAT || foodtype & VEGETABLES //Dont forget to add edible component compat here later
 
 
-
 ///Ability that allows the owner to fire healing globules at mobs, targetting specific limbs.
 /obj/effect/proc_holder/globules
 	name = "Fire Mending globule"
@@ -272,9 +278,21 @@
 	action_icon = 'icons/mob/actions/actions_slime.dmi'
 	action_icon_state = "globules"
 	action_background_icon_state = "bg_hive"
+	var/cooldown = 5 SECONDS
+	var/current_cooldown = 0
+
+/obj/effect/proc_holder/globules/Click(location, control, params)
+	. = ..()
+	if(!isliving(usr))
+		return TRUE
+	var/mob/living/user = usr
+	fire(user)
 
 /obj/effect/proc_holder/globules/fire(mob/living/carbon/user)
 	var/message
+	if(current_cooldown > world.time)
+		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
+		return
 	if(active)
 		message = "<span class='notice'>You stop preparing your mending globules.</span>"
 		remove_ranged_ability(message)
@@ -302,6 +320,7 @@
 	globule.def_zone = ooze.zone_selected
 	globule.fire()
 	ooze.adjust_ooze_nutrition(-5)
+	remove_ranged_ability()
 
 	return TRUE
 
@@ -311,33 +330,44 @@
 ///This projectile embeds into mobs and heals them over time.
 /obj/projectile/globule
 	name = "mending globule"
+	icon_state = "glob_projectile"
 	shrapnel_type = /obj/item/mending_globule
 	nodamage = TRUE
 	damage = 0
-	icon_state = "glob_projectile"
 
 ///This item is what is embedded into the mob, and actually handles healing of mending globules
 /obj/item/mending_globule
 	name = "mending globule"
 	desc = "It somehow heals those who touch it."
+	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
+	icon_state = "globule"
 	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0)
 	var/mob/living/carbon/human/healing_target
+	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
-/obj/item/mending_globules/embedded(mob/living/carbon/human/embedded_mob)
+/obj/item/mending_globule/embedded(mob/living/carbon/human/embedded_mob)
 	. = ..()
 	healing_target = embedded_mob
-	healing_target.add_overlay(mutable_appearance('icons/mob/vatgrowing.dmi', "glob_[]"))
+	if(!istype(loc, /obj/item/bodypart)
+		return
+	bodypart = loc
+	healing_target.add_overlay(mutable_appearance('icons/mob/vatgrowing.dmi', "glob_[bodypart.body_zone]"))
 	START_PROCESSING(SSobj, src)
 
-/obj/item/mending_globules/unembedded()
+/obj/item/mending_globule/unembedded()
 	. = ..()
+	bodypart = null
 	STOP_PROCESSING(SSobj, src)
 
 ///Handles the healing of the mending globule
-/obj/item/mending_globules/process()
-	if(!heals_left)
-		qdel()
+/obj/item/mending_globule/process()
+	if(!bodypart) //this is fucked
+		return FALSE
+	bodypart.heal_damage(1,1)
+	heals_left--
+	if(heals_left <= 0)
+		qdel(src)
 
 
 
