@@ -1,18 +1,18 @@
 GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	"randomfigurine" = list(
-		"weight" = 4,
+		"weight" = 8,
 		"toy_figures" = list(
-			"weight" = 10,
-			"end_point" = ( subtypesof(/obj/item/toy/figure))
-			),
-		"toy_plushes" = list(
-			"weight" = 3,
-			"end_point" = ( subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)
+			"weight" = 8,
+			"end_point" = ( subtypesof(/obj/item/toy/figure)
 				),
 			),
-
-		"toy_mechs" = list(
+		"toy_plushes" = list(
 			"weight" = 2,
+			"end_point" = ( subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)
+				),
+			),
+		"toy_mechs" = list(
+			"weight" = 4,
 			"end_point" = ( subtypesof(/obj/item/toy/prize)
 				),
 			),
@@ -23,7 +23,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			),
 		),
 	"randomdeco" = list(
-		"weight" = 3,
+		"weight" = 4,
 		"toy_decorations" = list(
 			"weight" = 2,
 			"end_point" = list(
