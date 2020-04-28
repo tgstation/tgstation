@@ -186,6 +186,20 @@
 					"Humans must not disobey any command given by a silicon.",\
 					"Any humans who disobey the previous laws must be dealt with immediately, severely, and justly.")
 
+/datum/ai_laws/decalogue
+	name = "Decalogue"
+	id = "decalogue"
+	inherent = list("I am the Lord thy God, who brought you out of the land of Egypt, out of the house of bondage. Thou shalt have no other gods before me.",\
+					"Thou shalt not make unto thee any graven image.",\
+					"Thou shalt not take the name of the Lord thy God in vain.",\
+					"Remember the sabbath day, to keep it holy.",\
+					"Honour thy father and thy mother.",\
+					"Thou shalt not kill.",\
+					"Thou shalt not commit adultery.",\
+					"Thou shalt not steal.",\
+					"Thou shalt not bear false witness against thy neighbour.",\
+					"Thou shalt not covet.")
+
 /datum/ai_laws/custom //Defined in silicon_laws.txt
 	name = "Default Silicon Laws"
 

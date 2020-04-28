@@ -593,3 +593,9 @@ AI MODULES
 /obj/item/aiModule/core/full/overlord
 	name = "'Overlord' Core AI Module"
 	law_id = "overlord"
+
+/*****************Decalogue***************/
+
+/obj/item/aiModule/core/full/decalogue
+	name = "'Decalogue' Core AI Module
+	law_id = "decalogue"
