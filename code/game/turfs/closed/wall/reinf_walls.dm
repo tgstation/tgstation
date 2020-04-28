@@ -5,7 +5,7 @@
 	icon_state = "r_wall"
 	heat_integrity = 100
 	max_heat_integrity = 100
-	heat_capacity = 10000
+	heat_capacity = 25000
 	thermal_conductivity = 0.1
 	opacity = 1
 	density = TRUE

@@ -11,7 +11,7 @@
 	var/list/baseturfs = /turf/baseturf_bottom
 
 	var/temperature = T20C
-	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
+	var/to_be_destroyed = TRUE //Used for fire, if a melting temperature was reached, it will be destroyed
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 
 	///How much health the turf has
@@ -568,20 +568,23 @@
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 ///Prot to set the damage of the turf, also used to call the windows and doors adjacent_fire_act()
-/turf/proc/set_heat_damage_amount(temperature)
+/turf/open/proc/set_heat_damage_amount(exposed_temperature)
 	var/obj/structure/window/Window
 	for(Window in range(1, src))
-		Window.adjacent_fire_act(temperature)
+		Window.adjacent_fire_act(exposed_temperature)
 	var/obj/machinery/door/Door
 	for(Door in range(1, src))
-		Door.adjacent_fire_act(temperature)
+		Door.adjacent_fire_act(exposed_temperature)
+	var/turf/closed/Closed
+	for(Closed in range(1, src))
+		if(exposed_temperature > Closed.heat_capacity)
+			Closed.damage_amount = clamp((exposed_temperature - Closed.heat_capacity)/10000, 1, 15)
+			Closed.turf_take_heat_damage(damage_amount)
+			Closed.heat_capacity = max(Closed.heat_capacity - (Closed.damage_amount * 10), 0)
 	if(to_be_destroyed && !changing_turf)
-		damage_amount = clamp((temperature - heat_capacity)/10000, 1, 15)
+		damage_amount = clamp((exposed_temperature - heat_capacity)/10000, 1, 15)
 		turf_take_heat_damage(damage_amount)
 		heat_capacity = max(heat_capacity - (damage_amount * 10), 0)
-	else
-		to_be_destroyed = FALSE
-		max_fire_temperature_sustained = 0
 
 ///Take the damage_amount from the set_heat_damage_amount() and apply it to the turf
 /turf/proc/turf_take_heat_damage(damage_amount)
