@@ -340,7 +340,7 @@ SUBSYSTEM_DEF(ticker)
 /datum/controller/subsystem/ticker/proc/station_explosion_detonation(atom/bomb)
 	if(bomb)	//BOOM
 		qdel(bomb)
-	for(var/turf/T in GLOB.station_turfs)
+	for(var/T in GLOB.station_turfs)
 		if(prob(33))
 			SSexplosions.highturf += T
 		else
