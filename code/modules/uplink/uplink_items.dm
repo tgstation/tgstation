@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/bundles_TC/firestarter
 	name = "Spetsnaz Pyro bundle"
 	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains a lethal New Russian backpack spray, Elite hardsuit, \
-			Stechkin APS pistol, two magazines, a minibomb and a stimulant syringe. \
+			Stechkin APS machine pistol, two magazines, a minibomb and a stimulant syringe. \
 			Order NOW and comrade Boris will throw in an extra tracksuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	cost = 30
@@ -398,7 +398,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			24-round magazine and is compatible with suppressors."
 	item = /obj/item/gun/ballistic/automatic/c20r
-	cost = 10
+	cost = 13
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -493,12 +493,21 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/pistol
-	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+	name = "Makarov Pistol"
+	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = 7
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	
+/datum/uplink_item/dangerous/aps
+	name = "Stechkin APS Machine Pistol"
+	desc = "A ancient Soviet machine pistol that uses 9mm auto rounds in 15-round magazines and is compatible \
+			with suppressors. The gun fires in three round bursts.'
+	item = /obj/item/gun/ballistic/automatic/pistol/APS
+	cost = 10
+	include_modes = list(/datum/game_mode/nuclear)
+	excluse_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
@@ -642,7 +651,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Suppressor"
-	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Stechkin and C-20r, but not revolvers or energy guns."
+	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."
 	item = /obj/item/suppressor
 	cost = 3
 	surplus = 10
@@ -660,35 +669,42 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 
 /datum/uplink_item/ammo/pistol
-	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol."
-	item = /obj/item/ammo_box/magazine/m10mm
+	name = "9mm Handgun Magazine"
+	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol."
+	item = /obj/item/ammo_box/magazine/m9mm
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolap
 	name = "10mm Armour Piercing Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
+	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are less effective at injuring the target but penetrate protective gear."
-	item = /obj/item/ammo_box/magazine/m10mm/ap
+	item = /obj/item/ammo_box/magazine/m9mm/ap
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolhp
 	name = "10mm Hollow Point Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
+	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are more damaging but ineffective against armour."
-	item = /obj/item/ammo_box/magazine/m10mm/hp
+	item = /obj/item/ammo_box/magazine/m9mm/hp
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolfire
 	name = "10mm Incendiary Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
+	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			Loaded with incendiary rounds which inflict little damage, but ignite the target."
-	item = /obj/item/ammo_box/magazine/m10mm/fire
+	item = /obj/item/ammo_box/magazine/m9mm/fire
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/ammo/pistolaps
+	name = "9mm Stechkin APS Magazine"
+	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS machine pistol, found in the Spetsnaz Pyro bundle."
+	item = /obj/item/ammo_box/magazine/m9mm_aps
+	cost = 2
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
@@ -755,6 +771,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun."
 	item = /obj/item/ammo_box/magazine/smgm45
 	cost = 3
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/smgap
+	name = ".45 Armor Piercing SMG Magazine"
+	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun.\
+			These rounds are less effective at injuring the target but penetrate protective gear."
+	item = /obj/item/ammo_box/magazine/smgm45/ap
+	cost = 5
+	include_modes = list(/datum/game_mode/nuclear)
+	
+/datum/uplink_item/ammo/smgfire
+	name = ".45 Incendiary SMG Magazine"
+	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun.\
+			Loaded with incendiary rounds which inflict little damage, but ignite the target."
+	item = /obj/item/ammo_box/magazine/smgm45/incen
+	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/sniper
@@ -839,13 +871,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Strike fear into the hearts of your enemies."
 	item = /obj/item/ammo_casing/caseless/rocket/hedp
 	cost = 6
-
-/datum/uplink_item/ammo/pistolaps
-	name = "9mm Handgun Magazine"
-	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS pistol, found in the Spetsnaz Pyro bundle."
-	item = /obj/item/ammo_box/magazine/pistolm9mm
-	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/toydarts
 	name = "Box of Riot Darts"

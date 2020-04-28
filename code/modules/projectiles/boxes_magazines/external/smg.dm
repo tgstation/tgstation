@@ -63,10 +63,20 @@
 	ammo_type = /obj/item/ammo_casing/c45
 	caliber = ".45"
 	max_ammo = 24
-
+	
 /obj/item/ammo_box/magazine/smgm45/update_icon()
 	..()
 	icon_state = "c20r45-[round(ammo_count(),2)]"
+	
+/obj/item/ammo_box/magazine/smgm45/ap
+	name = "SMG magazine (Armour Piercing .45)"
+	icon_state = "c20r45-24"
+	ammo_type = /obj/item/ammo_casing/c45_ap
+
+/obj/item/ammo_box/magazine/smgm45/incen
+	name = "SMG magazine (Incendiary .45)"
+	icon_state = "c20r45-24"
+	ammo_type = /obj/projectile/bullet/incendiary/c45
 
 /obj/item/ammo_box/magazine/tommygunm45
 	name = "drum magazine (.45)"
