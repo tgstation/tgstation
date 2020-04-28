@@ -1,4 +1,4 @@
-#define CHEMEFFECT "[initial(reagent.name)][(reagent in reagent_desc) ? reagent_desc[reagent] : ""] [initial(reagent.harmful) ? "(Has side effects)" : ""]"
+#define CHEMEFFECT "[initial(reagent.name)][reagent_desc[reagent]] [initial(reagent.harmful) ? "(Has side effects)" : ""]"
 /*
 Contains:
 Borg Hypospray
