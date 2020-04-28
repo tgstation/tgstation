@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(explosions)
 	var/choice = input("Bomb Size?") in choices
 	switch(choice)
 		if(null)
-			return 0
+			return
 		if("Small Bomb")
 			dev = 1
 			heavy = 2
