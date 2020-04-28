@@ -12,11 +12,6 @@
 	alien_plasma_display.hud = src
 	infodisplay += alien_plasma_display
 
-///Sets the right hud type for the ooze
-/mob/living/simple_animal/hostile/ooze/create_mob_hud()
-	hud_type = /datum/hud/ooze
-
-
 /obj/screen/ooze_nutrition_display
 	icon = 'icons/mob/screen_alien.dmi'
 	icon = 'icons/mob/screen_gen.dmi'

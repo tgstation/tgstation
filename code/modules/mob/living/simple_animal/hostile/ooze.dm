@@ -11,6 +11,7 @@
 	emote_see = list("jiggles", "bounces in place")
 	speak_emote = list("blorbles")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	hud_type = /datum/hud/ooze
 	//minbodytemp = 250
 	//maxbodytemp = 350
 	//healable = FALSE
@@ -127,6 +128,8 @@
 
 ///This ability lets the gelatinious ooze speed up for a little bit
 /datum/action/cooldown/metabolicboost
+	name = "Metabolic boost"
+	desc = "Gain a temporary speed boost. Costs 10 nutrition and slowly raises your temperature"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
 	cooldown_time = 240
 	var/nutrition_cost = 10
@@ -142,10 +145,12 @@
 ///Give the mob a speed boost, heat it up every second, and end the ability in 6 seconds
 /datum/action/cooldown/metabolicboost/Trigger()
 	. = ..()
+	if(!.)
+		return
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE) //Heat up every second
-	addtimer(CALLBACK(ooze, .proc/FinishSpeedup, timerid), 6 SECONDS)
+	addtimer(CALLBACK(src, .proc/FinishSpeedup, timerid), 6 SECONDS)
 	ooze.adjust_ooze_nutrition(-10)
 
 ///Heat up the mob a little
@@ -162,6 +167,8 @@
 
 ///This action lets you consume the mob you're currently pulling. I'M GONNA CONSUUUUUME (this is considered one of the funny memes in the 2019-2020 era)
 /datum/action/consume
+	name = "Consume"
+	desc = "Consume a mob that you are dragging to gain nutrition from them"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
@@ -171,27 +178,29 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_MOB_DEATH, .proc/on_owner_death)
 
-///Do we have a pulled mob?
-/datum/action/consume/IsAvailable()
-	. = ..()
-	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
-	if(!ooze.pulling)
-		return FALSE
-	if(!isliving(ooze.pulling))
-		return FALSE
-	if(vored_mob)
-		return FALSE
-
 ///Try to consume the pulled mob
 /datum/action/consume/Trigger()
 	. = ..()
+		if(!.)
+		return
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
+	if(!ooze.pulling)
+		to_chat(src, "<span class='warning'>You need to be pulling a creature for this to work!</span>")
+		return FALSE
+	if(!isliving(ooze.pulling))
+		to_chat(src, "<span class='warning'>You need to be pulling a creature for this to work!</span>")
+		return FALSE
+	if(vored_mob)
+		to_chat(src, "<span class='warning'>You are already consuming another creature!</span>")
+		return FALSE
 	if(!do_after(ooze, 15, target = ooze.pulling))
 		return FALSE
 	var/mob/living/target = ooze.pulling
 
-	if(!(target.mob_biotypes & MOB_ORGANIC))
+	if(!(target.mob_biotypes & MOB_ORGANIC) || target.stat == DEAD)
+		to_chat(src, "<span class='warning'>This creature isn't to my tastes!</span>")
 		return FALSE
+	start_consuming(target)
 
 ///Start allowing this datum to process to handle the damage done to  this mob.
 /datum/action/consume/proc/start_consuming(mob/living/target)
@@ -222,3 +231,13 @@
 
 
 ///* Gelatinious Grapes code below *\\\\
+
+///Child of the ooze mob which is orientated at being a support role with minor healing capabilities
+/mob/living/simple_animal/hostile/ooze/gelatinous
+	name = "Gelatinous Cube"
+	desc = "It's a gummy cube, it's a gummy cube, it's a gummy gummy gummy gummy gummy cube."
+	speed = 1
+	///The ability to give yourself a metabolic speed boost which raises heat
+	var/datum/action/cooldown/metabolicboost/boost
+	///The ability to consume mobs
+	var/datum/action/consume/consume
