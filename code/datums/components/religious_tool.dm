@@ -47,7 +47,7 @@
 /datum/component/religious_tool/proc/AttemptActions(datum/source, obj/item/the_item, mob/living/user)
 	/**********Sect Selection**********/
 	if(!easy_access_sect)
-		if(!operation_flags & RELIGION_TOOL_SECTSELECT)
+		if(!(operation_flags & RELIGION_TOOL_SECTSELECT))
 			return
 		. = COMPONENT_NO_AFTERATTACK //At this point you're intentionally trying to select a sect.
 		if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
