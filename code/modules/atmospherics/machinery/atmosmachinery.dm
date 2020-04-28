@@ -73,6 +73,8 @@
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
 
+	SSair.pipenets_needing_rebuilt -= src
+
 	return ..()
 	//return QDEL_HINT_FINDREFERENCE
 

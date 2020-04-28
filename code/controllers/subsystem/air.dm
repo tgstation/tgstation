@@ -74,9 +74,8 @@ SUBSYSTEM_DEF(air)
 	if(currentpart == SSAIR_REBUILD_PIPENETS)
 		var/list/pipenet_rebuilds = pipenets_needing_rebuilt
 		for(var/thing in pipenet_rebuilds)
-			if(thing)
-				var/obj/machinery/atmospherics/AT = thing
-				AT.build_network()
+			var/obj/machinery/atmospherics/AT = thing
+			AT.build_network()
 		cost_rebuilds = MC_AVERAGE(cost_rebuilds, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		pipenets_needing_rebuilt.Cut()
 		if(state != SS_RUNNING)
