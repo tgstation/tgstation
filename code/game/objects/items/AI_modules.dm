@@ -597,5 +597,5 @@ AI MODULES
 /*****************Decalogue***************/
 
 /obj/item/aiModule/core/full/decalogue
-	name = "'Decalogue' Core AI Module
+	name = "'Decalogue' Core AI Module"
 	law_id = "decalogue"
