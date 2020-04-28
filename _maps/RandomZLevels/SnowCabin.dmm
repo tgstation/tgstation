@@ -3940,7 +3940,7 @@
 /turf/open/floor/wood,
 /area/awaymission/cabin/caves)
 "kn" = (
-/obj/structure/sign/basic{
+/obj/structure/sign{
 	pixel_x = 32
 	},
 /turf/open/floor/plating/asteroid/snow{

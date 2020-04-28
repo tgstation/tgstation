@@ -19,7 +19,7 @@
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
 	var/sign_change_name = "Sign - Blank" //If this is ever seen in game, something went wrong.
 
-/obj/item/sign_backing
+/obj/item/sign
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
@@ -34,7 +34,7 @@
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
-/obj/item/sign_backing/Initialize() //Signs not attached to walls are always rotated so they look like they're laying horizontal.
+/obj/item/sign/Initialize() //Signs not attached to walls are always rotated so they look like they're laying horizontal.
 	. = ..()
 	var/matrix/M = matrix()
 	M.Turn(90)
@@ -69,7 +69,7 @@
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 						 "<span class='notice'>You unfasten [src].</span>")
-	var/obj/item/sign_backing/unwrenched_sign = new (get_turf(user))
+	var/obj/item/sign/unwrenched_sign = new (get_turf(user))
 	if(type != /obj/structure/sign) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
 		unwrenched_sign.desc = "[desc] It can be placed on a wall."
@@ -98,7 +98,7 @@
 	obj_integrity = max_integrity
 	return TRUE
 
-/obj/item/sign_backing/welder_act(mob/living/user, obj/item/I)
+/obj/item/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
@@ -146,7 +146,7 @@
 		return
 	return ..()
 
-/obj/item/sign_backing/attackby(obj/item/I, mob/user, params)
+/obj/item/sign/attackby(obj/item/I, mob/user, params)
 	if(is_editable && istype(I, /obj/item/pen))
 		if(!length(GLOB.editable_sign_types))
 			populate_editable_sign_types()
@@ -172,7 +172,7 @@
 		return
 	return ..()
 
-/obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
+/obj/item/sign/afterattack(atom/target, mob/user, proximity)
 	. = ..()
 	if(!iswallturf(target) || !proximity)
 		return
