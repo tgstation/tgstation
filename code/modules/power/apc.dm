@@ -811,8 +811,8 @@
 					return
 				if(istype(stomach))
 					to_chat(H, "<span class='notice'>You receive some charge from the APC.</span>")
-					stomach.adjust_charge(10)
-					cell.charge -= 10
+					stomach.adjust_charge(15)
+					cell.charge -= 15
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
 			return
