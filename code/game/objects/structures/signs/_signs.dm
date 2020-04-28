@@ -1,5 +1,8 @@
 /obj/structure/sign
 	icon = 'icons/obj/decals.dmi'
+	icon_state = "backing"
+	name = "sign backing"
+	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
 	anchored = TRUE
 	opacity = 0
 	density = FALSE
@@ -14,12 +17,7 @@
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
-	var/sign_change_name = "Sign - Blank"
-
-/obj/structure/sign/basic
-	name = "sign backing"
-	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
-	icon_state = "backing"
+	var/sign_change_name = "Sign - Blank" //If this is ever seen in game, something went wrong.
 
 /obj/item/sign_backing
 	name = "sign backing"
@@ -32,7 +30,7 @@
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
-	var/sign_path = /obj/structure/sign/basic
+	var/sign_path = /obj/structure/sign/
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
@@ -72,7 +70,7 @@
 	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 						 "<span class='notice'>You unfasten [src].</span>")
 	var/obj/item/sign_backing/unwrenched_sign = new (get_turf(user))
-	if(type != /obj/structure/sign/basic) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
+	if(type != /obj/structure/sign/) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
 		unwrenched_sign.desc = "[desc] It can be placed on a wall."
 		unwrenched_sign.icon_state = icon_state
