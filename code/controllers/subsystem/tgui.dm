@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(tgui)
 	flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_TGUI
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
-	critical_subsystem = TRUE
 
 	var/list/currentrun = list()
 	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.

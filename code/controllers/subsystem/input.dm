@@ -5,7 +5,6 @@ SUBSYSTEM_DEF(input)
 	flags = SS_TICKER
 	priority = FIRE_PRIORITY_INPUT
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
-	critical_subsystem = TRUE
 
 	var/list/macro_set
 

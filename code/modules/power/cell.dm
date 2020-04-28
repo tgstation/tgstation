@@ -176,8 +176,7 @@
 
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
-	if(EXPLODE_DEVASTATE)
-		SSexplosions.highobj += src
+	SSexplosions.highobj += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)
