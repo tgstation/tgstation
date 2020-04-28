@@ -568,21 +568,15 @@
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 ///Prot to set the damage of the turf, also used to call the windows and doors adjacent_fire_act()
-/turf/open/proc/set_heat_damage_amount(exposed_temperature)
+/turf/proc/set_heat_damage_amount(temperature)
 	var/obj/structure/window/Window
 	for(Window in range(1, src))
-		Window.adjacent_fire_act(exposed_temperature)
+		Window.adjacent_fire_act(temperature)
 	var/obj/machinery/door/Door
 	for(Door in range(1, src))
-		Door.adjacent_fire_act(exposed_temperature)
-	var/turf/closed/Closed
-	for(Closed in range(1, src))
-		if(exposed_temperature > Closed.heat_capacity)
-			Closed.damage_amount = clamp((exposed_temperature - Closed.heat_capacity)/10000, 1, 15)
-			Closed.turf_take_heat_damage(damage_amount)
-			Closed.heat_capacity = max(Closed.heat_capacity - (Closed.damage_amount * 10), 0)
+		Door.adjacent_fire_act(temperature)
 	if(to_be_destroyed && !changing_turf)
-		damage_amount = clamp((exposed_temperature - heat_capacity)/10000, 1, 15)
+		damage_amount = clamp((temperature - heat_capacity)/10000, 1, 15)
 		turf_take_heat_damage(damage_amount)
 		heat_capacity = max(heat_capacity - (damage_amount * 10), 0)
 
