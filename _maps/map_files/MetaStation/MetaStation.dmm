@@ -1491,33 +1491,16 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "ady" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 4
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
 	},
-/obj/structure/cable,
-/obj/structure/table,
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_x = -6;
-	pixel_y = 10
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/camera{
+	c_tag = "Prison Cell Block 2";
+	dir = 4;
+	network = list("ss13","prison")
 	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/clothing/shoes/sneakers/orange{
-	pixel_x = -6;
-	pixel_y = -8
-	},
-/obj/item/clothing/under/rank/prisoner{
-	pixel_x = 8;
-	pixel_y = 5
-	},
-/turf/open/floor/plasteel,
+/turf/open/floor/plasteel/white,
 /area/security/prison)
 "adz" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -1698,22 +1681,33 @@
 /turf/open/floor/plating,
 /area/security/prison)
 "adV" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/structure/cable,
+/obj/structure/table,
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = 10
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = -2
 	},
-/obj/effect/turf_decal/tile/neutral{
-	dir = 8
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = 4
 	},
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral,
-/obj/effect/turf_decal/tile/neutral,
-/turf/open/floor/plasteel/dark,
+/obj/item/clothing/shoes/sneakers/orange{
+	pixel_x = -6;
+	pixel_y = -8
+	},
+/obj/item/clothing/under/rank/prisoner{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/open/floor/plasteel,
 /area/security/prison)
 "adW" = (
 /obj/structure/rack,
@@ -1996,6 +1990,11 @@
 "aeM" = (
 /obj/effect/turf_decal/trimline/red/filled/line,
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden,
+/obj/machinery/camera{
+	c_tag = "Prison Cell Block 1";
+	dir = 1;
+	network = list("ss13","prison")
+	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "aeN" = (
@@ -3806,7 +3805,8 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
-/turf/open/space/basic,
+/obj/structure/table,
+/turf/open/floor/plasteel,
 /area/security/prison)
 "ais" = (
 /obj/structure/chair/stool,
@@ -4895,6 +4895,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
+/obj/structure/table,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "aku" = (
@@ -5608,22 +5609,22 @@
 /turf/closed/wall,
 /area/maintenance/port)
 "alL" = (
-/obj/structure/table,
-/obj/item/storage/box/bodybags{
-	pixel_x = 4;
-	pixel_y = 2
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/obj/item/pen,
-/obj/item/storage/box/prisoner,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 9
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/obj/machinery/camera{
-	c_tag = "Prison Hallway Port";
-	dir = 1;
-	network = list("ss13","prison")
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
 	},
-/turf/open/floor/plasteel,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral,
+/obj/effect/turf_decal/tile/neutral,
+/turf/open/floor/plasteel/dark,
 /area/security/prison)
 "alM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -66997,6 +66998,13 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/starboard/fore)
+"dtX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "duo" = (
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
@@ -68110,15 +68118,22 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
 "dKN" = (
+/obj/structure/table,
+/obj/item/storage/box/bodybags{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/pen,
+/obj/item/storage/box/prisoner,
 /obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
+	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/structure/cable,
-/obj/machinery/light{
-	dir = 8
+/obj/machinery/camera{
+	c_tag = "Prison Hallway Port";
+	dir = 1;
+	network = list("ss13","prison")
 	},
-/turf/open/floor/plasteel/white,
+/turf/open/floor/plasteel,
 /area/security/prison)
 "dLn" = (
 /obj/structure/flora/ausbushes/fernybush,
@@ -69832,14 +69847,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
-"gvd" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/structure/cable,
-/obj/effect/turf_decal/trimline/red/filled/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "gwH" = (
 /obj/structure/chair/stool/bar,
 /obj/effect/turf_decal/tile/bar{
@@ -70623,13 +70630,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/engine/break_room)
-"hKx" = (
-/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
-/turf/open/floor/plasteel,
-/area/security/brig)
 "hLm" = (
 /obj/effect/turf_decal/bot,
 /obj/structure/closet/crate,
@@ -71178,6 +71178,14 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/aft)
+"iZq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/structure/cable,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "jah" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -72654,6 +72662,13 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/starboard)
+"lrV" = (
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/filled/corner,
+/turf/open/floor/plasteel,
+/area/security/brig)
 "lui" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -73383,13 +73398,6 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
-"mGa" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/effect/turf_decal/trimline/red/filled/corner{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "mGQ" = (
 /obj/structure/grille/broken,
 /obj/structure/lattice,
@@ -73720,13 +73728,6 @@
 /obj/structure/statue/snow/snowman,
 /turf/open/floor/grass/snow/safe,
 /area/maintenance/port/aft)
-"ntN" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/security/brig)
 "nuZ" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/blue{
@@ -77522,6 +77523,13 @@
 /obj/effect/turf_decal/trimline/blue/filled/line,
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"uiS" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "ulz" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Storage Room";
@@ -79579,11 +79587,6 @@
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
 	},
-/obj/machinery/camera{
-	c_tag = "Prison Cell Block Central";
-	dir = 1;
-	network = list("ss13","prison")
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 5
 	},
@@ -79645,6 +79648,17 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel,
+/area/security/prison)
+"xRq" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
 /area/security/prison)
 "xSF" = (
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
@@ -101105,7 +101119,7 @@ oXP
 adp
 adM
 acY
-adp
+ady
 adM
 acY
 xKw
@@ -102911,7 +102925,7 @@ aeQ
 agI
 agI
 kNq
-dKN
+xRq
 fML
 jNH
 fgU
@@ -103419,7 +103433,7 @@ acv
 acJ
 lDT
 adw
-adV
+alL
 hyP
 ajm
 ajm
@@ -104711,7 +104725,7 @@ afR
 agK
 ahy
 aiu
-gvd
+iZq
 akx
 alQ
 anh
@@ -104960,7 +104974,7 @@ acf
 acy
 xSF
 adf
-ady
+adV
 xJh
 hyP
 aiq
@@ -105225,10 +105239,10 @@ afS
 agM
 ahA
 aiw
-ntN
-hKx
+dtX
+lrV
 ajQ
-mGa
+uiS
 alS
 alS
 agR
@@ -105476,7 +105490,7 @@ adg
 adg
 adA
 adh
-alL
+dKN
 ajm
 afT
 ajm
