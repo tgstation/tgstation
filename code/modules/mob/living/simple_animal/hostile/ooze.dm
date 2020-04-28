@@ -26,7 +26,7 @@
 	//attack_verb_continuous = "bites"
 	//attack_verb_simple = "bite"
 	//attack_sound = 'sound/hallucinations/growl1.ogg'
-	//a_intent = INTENT_HARM
+	a_intent = INTENT_HARM
 
 	///Oozes have their own nutrition. Changes based on them eating
 	var/ooze_nutrition = 50
@@ -89,6 +89,7 @@
 ///Tries to transfer the atoms reagents then delete it
 /mob/living/simple_animal/hostile/ooze/proc/eat_atom(obj/item/A)
 	A.reagents.trans_to(src, A.reagents.total_volume, transfered_by = src)
+	visible_message("<span class='warning>[src] eats [A]!</span>", "<span class='notice'>You eat [A].</span>")
 	playsound(loc,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	qdel(A)
 
@@ -130,6 +131,9 @@
 /datum/action/cooldown/metabolicboost
 	name = "Metabolic boost"
 	desc = "Gain a temporary speed boost. Costs 10 nutrition and slowly raises your temperature"
+	background_icon_state = "bg_hive"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon_state = "metabolic_boost"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
 	cooldown_time = 240
 	var/nutrition_cost = 10
@@ -151,6 +155,7 @@
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
 	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE) //Heat up every second
 	addtimer(CALLBACK(src, .proc/FinishSpeedup, timerid), 6 SECONDS)
+	to_chat(ooze, "<span class='notice>You start feel a lot quicker.</span>")
 	ooze.adjust_ooze_nutrition(-10)
 
 ///Heat up the mob a little
@@ -162,6 +167,7 @@
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.remove_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
+	to_chat(ooze, "<span class='notice>You start slowing down again.</span>")
 	deltimer(timerid)
 
 
@@ -169,6 +175,9 @@
 /datum/action/consume
 	name = "Consume"
 	desc = "Consume a mob that you are dragging to gain nutrition from them"
+	background_icon_state = "bg_hive"
+	icon_icon = 'icons/mob/actions/actions_slime.dmi'
+	button_icon_state = "consume"
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
 	///The mob thats being consumed by this creature
 	var/mob/living/vored_mob
@@ -181,7 +190,7 @@
 ///Try to consume the pulled mob
 /datum/action/consume/Trigger()
 	. = ..()
-		if(!.)
+	if(!.)
 		return
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
 	if(!ooze.pulling)
@@ -212,14 +221,16 @@
 /datum/action/consume/proc/stop_consuming()
 	STOP_PROCESSING(SSprocessing, src)
 	vored_mob.forceMove(get_turf(owner))
-	vored_mob = null
 	playsound(get_turf(owner), 'sound/effects/splat.ogg', 50, TRUE)
+	owner.visible_message("<span class='warning>[owner] pukes out [vored_mob]!</span>", "<span class='notice'>You puke out [vored_mob].</span>")
+	vored_mob = null
 
 ///Gain health for the consumption and dump some clone loss on the target.
 /datum/action/consume/process()
 	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
 	vored_mob.adjustCloneLoss(12)
 	ooze.heal_ordered_damage((ooze.maxHealth * 0.06), list(BRUTE, BURN, OXY)) ///Heal 6% of these specific damage types each process
+	ooze.adjust_ooze_nutrition(6)
 
 	///Dump em at 200 cloneloss.
 	if(vored_mob.getCloneLoss() >= 200)
@@ -233,11 +244,100 @@
 ///* Gelatinious Grapes code below *\\\\
 
 ///Child of the ooze mob which is orientated at being a support role with minor healing capabilities
-/mob/living/simple_animal/hostile/ooze/gelatinous
-	name = "Gelatinous Cube"
+/mob/living/simple_animal/hostile/ooze/grapes
+	name = "Sholean grapes"
 	desc = "It's a gummy cube, it's a gummy cube, it's a gummy gummy gummy gummy gummy cube."
 	speed = 1
 	///The ability to give yourself a metabolic speed boost which raises heat
-	var/datum/action/cooldown/metabolicboost/boost
+	var/datum/action/cooldown/gel_cocoon/gel_cocoon
 	///The ability to consume mobs
-	var/datum/action/consume/consume
+	var/datum/action/globules/globules
+
+/mob/living/simple_animal/hostile/ooze/grapes/check_edible(atom/movable/AM)
+	if(ismob(AM))
+		return FALSE
+	var/foodtype
+	if(istype(AM, /obj/item/reagent_containers/food))
+		var/obj/item/reagent_containers/food/meal = AM
+		foodtype = meal.foodtype
+	return foodtype & MEAT || foodtype & VEGETABLES //Dont forget to add edible component compat here later
+
+
+
+///Ability that allows the owner to fire healing globules at mobs, targetting specific limbs.
+/obj/effect/proc_holder/globules
+	name = "Fire Mending globule"
+	desc = "Fires a mending globule at someone, healing a specific limb of theirs."
+	active = FALSE
+	action_icon = 'icons/mob/actions/actions_slime.dmi'
+	action_icon_state = "globules"
+	action_background_icon_state = "bg_hive"
+
+/obj/effect/proc_holder/globules/fire(mob/living/carbon/user)
+	var/message
+	if(active)
+		message = "<span class='notice'>You stop preparing your mending globules.</span>"
+		remove_ranged_ability(message)
+	else
+		message = "<span class='notice'>You prepare to launch a mending globule. <B>Left-click to fire at a target!</B></span>"
+		add_ranged_ability(user, message, TRUE)
+
+/obj/effect/proc_holder/globules/InterceptClickOn(mob/living/caller, params, atom/target)
+	if(..())
+		return
+	if(!istype(ranged_ability_user, /mob/living/simple_animal/hostile/ooze) || ranged_ability_user.stat)
+		remove_ranged_ability()
+		return
+
+	var/mob/living/simple_animal/hostile/ooze/ooze = ranged_ability_user
+
+	if(ooze.ooze_nutrition < 5)
+		to_chat(ooze, "<span class='warning'>You need at least 5 nutrition to launch a mending globule.</span>")
+		remove_ranged_ability()
+		return
+
+	ooze.visible_message("<span class='nicegreen>[ooze] launches a mending globule!</span>", "<span class='notice'>You launch a mending globule.</span>")
+	var/obj/projectile/globule/globule = new (ooze.loc)
+	globule.preparePixelProjectile(target, ooze, params)
+	globule.def_zone = ooze.zone_selected
+	globule.fire()
+	ooze.adjust_ooze_nutrition(-5)
+
+	return TRUE
+
+/obj/effect/proc_holder/globules/on_lose(mob/living/carbon/user)
+	remove_ranged_ability()
+
+///This projectile embeds into mobs and heals them over time.
+/obj/projectile/globule
+	name = "mending globule"
+	shrapnel_type = /obj/item/mending_globule
+	nodamage = TRUE
+	damage = 0
+	icon_state = "glob_projectile"
+
+///This item is what is embedded into the mob, and actually handles healing of mending globules
+/obj/item/mending_globule
+	name = "mending globule"
+	desc = "It somehow heals those who touch it."
+	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0)
+	var/mob/living/carbon/human/healing_target
+	var/heals_left = 35
+
+/obj/item/mending_globules/embedded(mob/living/carbon/human/embedded_mob)
+	. = ..()
+	healing_target = embedded_mob
+	healing_target.add_overlay(mutable_appearance('icons/mob/vatgrowing.dmi', "glob_[]"))
+	START_PROCESSING(SSobj, src)
+
+/obj/item/mending_globules/unembedded()
+	. = ..()
+	STOP_PROCESSING(SSobj, src)
+
+///Handles the healing of the mending globule
+/obj/item/mending_globules/process()
+	if(!heals_left)
+		qdel()
+
+
+
