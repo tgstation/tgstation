@@ -55,7 +55,7 @@
 
 /obj/item/ammo_box/magazine/smgm9mm/fire
 	name = "SMG Magazine (Incendiary 9mm)"
-	ammo_type = /obj/item/ammo_casing/c9mm/inc
+	ammo_type = /obj/item/ammo_casing/c9mm/fire
 
 /obj/item/ammo_box/magazine/smgm45
 	name = "SMG magazine (.45)"
@@ -71,12 +71,12 @@
 /obj/item/ammo_box/magazine/smgm45/ap
 	name = "SMG magazine (Armour Piercing .45)"
 	icon_state = "c20r45-24"
-	ammo_type = /obj/item/ammo_casing/c45_ap
+	ammo_type = /obj/item/ammo_casing/c45/ap
 
 /obj/item/ammo_box/magazine/smgm45/incen
 	name = "SMG magazine (Incendiary .45)"
 	icon_state = "c20r45-24"
-	ammo_type = /obj/projectile/bullet/incendiary/c45
+	ammo_type = /obj/item/ammo_casing/c45/inc
 
 /obj/item/ammo_box/magazine/tommygunm45
 	name = "drum magazine (.45)"

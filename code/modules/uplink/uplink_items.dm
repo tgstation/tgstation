@@ -503,11 +503,11 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/aps
 	name = "Stechkin APS Machine Pistol"
 	desc = "A ancient Soviet machine pistol that uses 9mm auto rounds in 15-round magazines and is compatible \
-			with suppressors. The gun fires in three round bursts.'
+			with suppressors. The gun fires in three round bursts."
 	item = /obj/item/gun/ballistic/automatic/pistol/APS
 	cost = 10
 	include_modes = list(/datum/game_mode/nuclear)
-	excluse_modes = list(/datum/game_mode/nuclear/clown_ops)
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/bolt_action
 	name = "Surplus Rifle"
@@ -701,7 +701,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/pistolaps
 	name = "9mm Stechkin APS Magazine"
-	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS machine pistol, found in the Spetsnaz Pyro bundle."
+	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS machine pistol."
 	item = /obj/item/ammo_box/magazine/m9mm_aps
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)

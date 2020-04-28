@@ -39,7 +39,7 @@
 	desc = "A 10mm hollow-point bullet casing."
 	projectile_type = /obj/projectile/bullet/c9mm_hp
 
-/obj/item/ammo_casing/c9mm/inc
+/obj/item/ammo_casing/c9mm/fire
 	name = "9mm incendiary bullet casing"
 	desc = "A 9mm incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c9mm
