@@ -371,6 +371,7 @@ RANDOM_LAWS corporate
 #RANDOM_LAWS peacekeeper
 #RANDOM_LAWS reporter
 #RANDOM_LAWS hulkamania
+#RANDOM_LAWS decalogue
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie
