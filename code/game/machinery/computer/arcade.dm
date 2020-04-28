@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	"randomdeco" = list(
 		"weight" = 4,
 		"toy_decorations" = list(
-			"weight" = 2,
+			"weight" = 4,
 			"end_point" = list(
 				/obj/item/storage/crayons,
 				/obj/item/stack/tile/fakespace/loaded,
