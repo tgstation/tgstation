@@ -15,23 +15,16 @@
 
 /proc/pick_from_weighted_lists(list/list_to_pick_from)
 	var/choice_pool = list_to_pick_from
-	while(!choice_pool["element_list"])
+	while(islist(choice_pool) && !choice_pool["end_point"])
 		var/weight = 0
 		for(var/element in (choice_pool - "weight")) //We first check how much is the total weight.
 			weight += choice_pool[element]["weight"]
-		if(!islist(list_to_pick_from))
-			CRASH("Invalid parameter passed, not a list.")
-		if(!length(list_to_pick_from))
-			CRASH("Empty list, cannot pick from it")
-		if(!istext(list_to_pick_from[1]))
-			CRASH("This proc requires string-indexed associative lists.")
-		if(!length(list_to_pick_from[list_to_pick_from[1]]))
-			CRASH("This proc requires indexed lists to pick from.")
-			return /obj/item/toy/sword
+		if(!weight) //To prevent infinite loops.
+			CRASH("pick_from_weighted_lists() ran with a list lacking both element_list and weight indexes.")
 		var/random_roll = rand(1, weight) //Then we run the random roll.
 		for(var/element in (choice_pool - "weight")) //Let's scan where do we hit.
 			random_roll -= choice_pool[element]["weight"]
 			if(random_roll <= 0) //Jackpot!
-				choice_pool = element
+				choice_pool = choice_pool[element]
 				break
-	return choice_pool["element_list"]
+	return choice_pool["end_point"]

@@ -7,18 +7,18 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			),
 		"toy_figures" = list(
 			"weight" = 3,
-			"element_list" = ( subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)
+			"end_point" = ( subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/) - typecacheof(/obj/item/toy/plush/carpplushie/dehy_carp)
 				),
 			),
 
 		"toy_mechs" = list(
 			"weight" = 2,
-			"element_list" = ( subtypesof(/obj/item/toy/prize)
+			"end_point" = ( subtypesof(/obj/item/toy/prize)
 				),
 			),
 		"toy_talking" = list(
 			"weight" = 1,
-			"element_list" = ( subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas)
+			"end_point" = ( subtypesof(/obj/item/toy/talking) - typesof(/obj/item/toy/talking/codex_gigas)
 				),
 			),
 		),
@@ -26,7 +26,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		"weight" = 3,
 		"toy_decorations" = list(
 			"weight" = 2,
-			"element_list" = list(
+			"end_point" = list(
 				/obj/item/storage/crayons,
 				/obj/item/stack/tile/fakespace/loaded,
 				/obj/item/stack/tile/fakepit/loaded,
@@ -35,13 +35,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			),
 		"toy_grenades" = list(
 			"weight" = 1,
-			"element_list" = ( subtypesof(/obj/item/grenade/chem_grenade/glitter)
+			"end_point" = ( subtypesof(/obj/item/grenade/chem_grenade/glitter)
 				),
 			),
 		),
 	"toy_pranks" = list(
 		"weight" = 2,
-		"element_list" = list(
+		"end_point" = list(
 			/obj/item/toy/talking/codex_gigas,
 			/obj/item/coin/antagtoken,
 			/obj/item/hot_potato/harmless/toy,
@@ -68,7 +68,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		),
 	"toy_gamergear" = list(
 		"weight" = 1,
-		"element_list" = list(
+		"end_point" = list(
 			/obj/item/storage/box/fakesyndiesuit,
 			/obj/item/storage/belt/military/snack,
 			/obj/item/clothing/under/syndicate/tacticool,
