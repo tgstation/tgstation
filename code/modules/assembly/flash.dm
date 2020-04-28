@@ -119,6 +119,8 @@
 			if(M.confused < power)
 				var/diff = power * CONFUSION_STACK_MAX_MULTIPLIER - M.confused
 				M.confused += min(power, diff)
+			if(!HAS_TRAIT(M, TRAIT_STUNRESISTANCE))
+				M.apply_status_effect(STATUS_EFFECT_STAMDRAIN)
 			if(user)
 				terrible_conversion_proc(M, user)
 				visible_message("<span class='danger'>[user] blinds [M] with the flash!</span>")
@@ -126,7 +128,7 @@
 				to_chat(M, "<span class='userdanger'>[user] blinds you with the flash!</span>")
 			else
 				to_chat(M, "<span class='userdanger'>You are blinded by [src]!</span>")
-			M.Paralyze(rand(80,120))
+			M.Knockdown(8 SECONDS)
 		else if(user)
 			visible_message("<span class='warning'>[user] fails to blind [M] with the flash!</span>")
 			to_chat(user, "<span class='warning'>You fail to blind [M] with the flash!</span>")

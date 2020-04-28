@@ -32,7 +32,7 @@
 	var/confusion_amt = 10
 	var/stamina_loss_amt = 60
 	var/apply_stun_delay = 2 SECONDS
-	var/stun_time = 5 SECONDS
+	var/stun_time = 0 SECONDS
 
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
@@ -170,7 +170,7 @@
 		playsound(src, stun_sound, 75, TRUE, -1)
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stun_time*3) //should really be an equivalent to attack(user,user)
+		user.Knockdown(15) //should really be an equivalent to attack(user,user)
 		deductcharge(cell_hit_cost)
 		return TRUE
 	return FALSE
@@ -220,12 +220,17 @@
 	else
 		if(!deductcharge(cell_hit_cost))
 			return FALSE
+	//the zone the damage is applied against; the target's chest
+	var/chest = L.get_bodypart(BODY_ZONE_CHEST)
+	//how much the target's chest armor will block of the stamina damage
+	var/zap_block = L.run_armor_check(chest, "melee")
+	
 	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
 	/// After a period of time, we then check to see what stun duration we give.
 	L.Jitter(20)
 	L.confused = max(confusion_amt, L.confused)
 	L.stuttering = max(8, L.stuttering)
-	L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
+	L.apply_damage(stamina_loss_amt, STAMINA, chest, zap_block)
 
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), apply_stun_delay)
@@ -252,14 +257,12 @@
 
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
-	if(!target.IsKnockdown())
-		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
-
+	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine disable duration
 	if(trait_check)
-		target.Knockdown(stun_time * 0.1)
+		to_chat(target, "<span class='warning'>Your body spasms, but you quickly recover!</span>")
 	else
-		target.Knockdown(stun_time)
+		target.apply_status_effect(STATUS_EFFECT_CONVULSING)
+		target.apply_status_effect(STATUS_EFFECT_STAMDRAIN)
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
@@ -285,7 +288,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stun_time = 5 SECONDS
 	cell_hit_cost = 2000
 	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK

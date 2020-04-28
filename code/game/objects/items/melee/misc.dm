@@ -176,10 +176,11 @@
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
 	var/cooldown = 40 // Default wait time until can stun again.
-	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
+	var/knockdown_time_carbon = (1.5 SECONDS) // Disable length for carbons.
 	var/stun_time_silicon = (5 SECONDS) // If enabled, how long do we stun silicons.
 	var/stamina_damage = 55 // Do we deal stamina damage.
 	var/affect_silicon = FALSE // Does it stun silicons.
+	var/can_knockdown = FALSE //Does our baton cause knockdown.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
 	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
 	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
@@ -225,6 +226,7 @@
 
 // Are we applying any special effects when we stun to carbon
 /obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
+	target.confused += clamp(5, 0, 10)
 	return
 
 // Are we applying any special effects when we stun to silicon
@@ -287,12 +289,20 @@
 
 			var/list/desc = get_stun_description(target, user)
 
-			if (stun_animation)
+			if(stun_animation)
 				user.do_attack_animation(target)
 
 			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
-			target.Knockdown(knockdown_time_carbon)
-			target.apply_damage(stamina_damage, STAMINA, BODY_ZONE_CHEST)
+			
+			if(can_knockdown)
+				target.Knockdown(knockdown_time_carbon)
+			
+			//the zone the damage is applied against; the target's chest
+			var/chest = target.get_bodypart(BODY_ZONE_CHEST)
+			//how much the target's chest armor will block of the stamina damage
+			var/armor_block = target.run_armor_check(chest, "melee", null, null, armour_penetration)
+			
+			target.apply_damage(stamina_damage, STAMINA, chest, armor_block)
 			additional_effects_carbon(target, user)
 
 			log_combat(user, target, "stunned", src)
@@ -337,6 +347,8 @@
 	on_item_state = "nullrod"
 	force_on = 10
 	force_off = 0
+	var/armour_penetration_on = 0
+	var/armour_penetration_off = 0
 	weight_class_on = WEIGHT_CLASS_BULKY
 
 /obj/item/melee/classic_baton/telescopic/suicide_act(mob/user)
@@ -367,6 +379,7 @@
 		item_state = on_item_state
 		w_class = weight_class_on
 		force = force_on
+		armour_penetration = armour_penetration_on
 		attack_verb = list("smacked", "struck", "cracked", "beaten")
 	else
 		to_chat(user, desc["local_off"])
@@ -375,6 +388,7 @@
 		slot_flags = ITEM_SLOT_BELT
 		w_class = WEIGHT_CLASS_SMALL
 		force = force_off
+		armour_penetration = armour_penetration_off
 		attack_verb = list("hit", "poked")
 
 	playsound(src.loc, on_sound, 50, TRUE)
@@ -396,6 +410,7 @@
 	cooldown = 25
 	stamina_damage = 85
 	affect_silicon = TRUE
+	can_knockdown = TRUE
 	on_sound = 'sound/weapons/contractorbatonextend.ogg'
 	on_stun_sound = 'sound/effects/contractorbatonhit.ogg'
 
@@ -404,6 +419,7 @@
 	on_item_state = "contractor_baton"
 	force_on = 16
 	force_off = 5
+	armour_penetration_on = 30
 	weight_class_on = WEIGHT_CLASS_NORMAL
 
 /obj/item/melee/classic_baton/telescopic/contractor_baton/get_wait_description()

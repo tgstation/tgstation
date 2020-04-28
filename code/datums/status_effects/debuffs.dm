@@ -201,19 +201,6 @@
 			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
-
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
-/datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
-	return ..()
-
-/datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
-
 //OTHER DEBUFFS
 /datum/status_effect/pacify
 	id = "pacify"
@@ -579,6 +566,20 @@
 	name = "Shaky Hands"
 	desc = "You've been zapped with something and your hands can't stop shaking! You can't seem to hold on to anything."
 	icon_state = "convulsing"
+
+//Stamina drain associated with stun batons and flashes when used on carbons
+/datum/status_effect/stamdrain
+	id = "stamdrain"
+	duration = 50
+	alert_type = null
+	status_type = STATUS_EFFECT_REFRESH
+
+/datum/status_effect/stamdrain/tick()
+	if(iscarbon(owner) && !HAS_TRAIT(owner, TRAIT_STUNRESISTANCE))
+		var/mob/living/carbon/H = owner
+		H.adjustStaminaLoss(3)
+	else
+		qdel(src)
 
 /datum/status_effect/dna_melt
 	id = "dna_melt"
