@@ -37,6 +37,10 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
+/turf/closed/wall/Destroy()
+	if(is_station_level(z))
+		GLOB.station_turfs -= src
+	..()
 
 /turf/closed/wall/examine(mob/user)
 	. += ..()
