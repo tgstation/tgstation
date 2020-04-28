@@ -83,7 +83,7 @@
 	required_container = /obj/item/slime_extract/green
 
 /datum/chemical_reaction/slime/slimepod
-	results = list(/datum/reagent/mutationtoxin/fly = 1)
+	results = list(/datum/reagent/mutationtoxin/pod = 1)
 	required_reagents = list(/datum/reagent/plantnutriment/eznutriment = 1)
 	required_other = TRUE
 	required_container = /obj/item/slime_extract/green
