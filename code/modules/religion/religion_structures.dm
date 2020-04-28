@@ -24,7 +24,7 @@
 
 /obj/structure/altar_of_gods/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/religious_tool, ALL)
+	AddComponent(/datum/component/religious_tool, ALL, FALSE, null)
 
 /obj/structure/altar_of_gods/attack_hand(mob/living/user)
 	if(!Adjacent(user) || !user.pulling)

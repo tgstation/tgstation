@@ -442,4 +442,4 @@
 #define COMSIG_XENO_MONKEY_CLICK_CTRL "xeno_monkey_click_ctrl"				//from monkey CtrlClickOn(): (/mob)
 
 // Religion Signals
-#define COMSIG_RELIGION_NEWSECT "rel_newsect"	//Post GLOB.religious_sect being set ()
+#define COMSIG_RELIGION_NEWSECT "rel_newsect"								//Post GLOB.religious_sect being set ()

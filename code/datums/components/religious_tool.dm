@@ -11,10 +11,18 @@
 	var/operation_flags
 	/// The rite currently being invoked
 	var/datum/religion_rites/performing_rite
+	///Sets the type for catalyst
+	var/catalyst_type = /obj/item/storage/book/bible
+	///Enables overide of COMPONENT_NO_AFTERATTACK, not recommended as it means you can potentially cause damage to the item using the catalyst.
+	var/force_catalyst_afterattack = FALSE
 
-/datum/component/religious_tool/Initialize(_flags = ALL)
+/datum/component/religious_tool/Initialize(_flags = ALL, _force_catalyst_afterattack = FALSE, override_catalyst_type)
+	. = ..()
 	SetGlobalToLocal() //attempt to connect on start in case one already exists!
 	operation_flags = _flags
+	force_catalyst_afterattack = _force_catalyst_afterattack
+	if(override_catalyst_type)
+		catalyst_type = override_catalyst_type
 
 /datum/component/religious_tool/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_RELIGION_NEWSECT, .proc/SetGlobalToLocal)
@@ -22,7 +30,7 @@
 	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, .proc/on_examine)
 
 /datum/component/religious_tool/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY,COMSIG_RELIGION_NEWSECT))
+	UnregisterSignal(parent, list(COMSIG_PARENT_ATTACKBY,COMSIG_RELIGION_NEWSECT, COMSIG_PARENT_EXAMINE))
 
 /**
   * Sets the easy access variable to the global if it exists.
@@ -37,37 +45,10 @@
   * Since all of these involve attackby, we require mega proc. Handles Invocation, Sacrificing, And Selection of Sects.
   */
 /datum/component/religious_tool/proc/AttemptActions(datum/source, obj/item/the_item, mob/living/user)
-	if(!istype(the_item, /obj/item/storage/book/bible)) //if it's not a bible we are going to try to sacrifice.
-		if(operation_flags & RELIGION_TOOL_SACRIFICE)
-			if(!(easy_access_sect?.can_sacrifice(the_item,user)))
-				return
-			easy_access_sect.on_sacrifice(the_item,user)
-			return COMPONENT_NO_AFTERATTACK
-	else if(easy_access_sect) //we have a bible so let's see if we have a sect!
-		if(!(operation_flags & RELIGION_TOOL_INVOKE))
+	/**********Sect Selection**********/
+	if(!easy_access_sect)
+		if(!operation_flags & RELIGION_TOOL_SECTSELECT)
 			return
-		// At this point you're intentionally trying to invoke rites, so we dont need to afterattack.
-		. = COMPONENT_NO_AFTERATTACK
-		if(!easy_access_sect.rites_list)
-			to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
-			return
-		if(performing_rite)
-			to_chat(user, "<span class='notice'>There is a rite currently being performed here already!")
-			return
-		var/rite_select = input(user,"Select a rite to perform!","Select a rite",null) in easy_access_sect.rites_list
-		if(!rite_select || !user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
-			to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
-			return
-		var/selection2type = easy_access_sect.rites_list[rite_select]
-		performing_rite = new selection2type(parent)
-		if(!performing_rite.perform_rite(user, parent))
-			QDEL_NULL(performing_rite)
-		else
-			performing_rite.invoke_effect(user, parent)
-			easy_access_sect.adjust_favor(-performing_rite.favor_cost)
-			QDEL_NULL(performing_rite)
-		return
-	else if((operation_flags & RELIGION_TOOL_SECTSELECT)) //No bible, No sect, time to select a new one!
 		. = COMPONENT_NO_AFTERATTACK //At this point you're intentionally trying to select a sect.
 		if(user.mind.holy_role != HOLY_ROLE_HIGHPRIEST)
 			to_chat(user, "<span class='warning'>You are not the high priest, and therefore cannot select a religious sect.")
@@ -98,6 +79,39 @@
 			if(easy_access_sect.altar_icon_state)
 				AOG.icon_state = easy_access_sect.altar_icon_state
 
+	/**********Rite Invocation**********/
+	else if(istype(the_item, catalyst_type))
+		if(!operation_flags & RELIGION_TOOL_INVOKE)
+			return
+		. = force_catalyst_afterattack ? null : COMPONENT_NO_AFTERATTACK
+		if(!easy_access_sect.rites_list)
+			to_chat(user, "<span class='notice'>Your sect doesn't have any rites to perform!")
+			return
+		if(performing_rite)
+			to_chat(user, "<span class='notice'>There is a rite currently being performed here already!")
+			return
+		var/rite_select = input(user,"Select a rite to perform!","Select a rite",null) in easy_access_sect.rites_list
+		if(!rite_select || !user.canUseTopic(parent, BE_CLOSE, FALSE, NO_TK))
+			to_chat(user,"<span class ='warning'>You cannot perform the rite at this time.</span>")
+			return
+		var/selection2type = easy_access_sect.rites_list[rite_select]
+		performing_rite = new selection2type(parent)
+		if(!performing_rite.perform_rite(user, parent))
+			QDEL_NULL(performing_rite)
+		else
+			performing_rite.invoke_effect(user, parent)
+			easy_access_sect.adjust_favor(-performing_rite.favor_cost)
+			QDEL_NULL(performing_rite)
+		return
+
+	/**********Sacrificing**********/
+	else if(operation_flags & RELIGION_TOOL_SACRIFICE)
+		if(!easy_access_sect?.can_sacrifice(the_item,user))
+			return
+		easy_access_sect.on_sacrifice(the_item,user)
+		return COMPONENT_NO_AFTERATTACK
+
+
 /**
   * Generates a list of available sects to the user. Intended to support custom-availability sects. Because these are not instanced, we cannot put the availability on said sect beyond variables.
   */
@@ -123,7 +137,7 @@
 	if(!can_i_see)
 		return
 	if(!easy_access_sect)
-		if((operation_flags & RELIGION_TOOL_SECTSELECT))
+		if(operation_flags & RELIGION_TOOL_SECTSELECT)
 			examine_list += "<span class='notice'>This looks like it can be used to select a sect.</span>"
 			return
 

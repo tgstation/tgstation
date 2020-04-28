@@ -12,6 +12,7 @@
 	var/favor_cost = 0
 
 /datum/religion_rites/New()
+	. = ..()
 	if(!GLOB?.religious_sect)
 		return
 	LAZYADD(GLOB.religious_sect.active_rites, src)
@@ -20,6 +21,7 @@
 	if(!GLOB?.religious_sect)
 		return
 	LAZYREMOVE(GLOB.religious_sect.active_rites, src)
+	..()
 
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
@@ -72,16 +74,16 @@
 	if(!ismovable(religious_tool))
 		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
 		return FALSE
-	var/atom/movable/religious_tool2
+	var/atom/movable/religious_tool2 = religious_tool
 	if(!religious_tool2?.buckled_mobs?.len)
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [religious_tool].</span>")
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [religious_tool2].</span>")
 		return FALSE
 	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
 		return FALSE
-	var/atom/movable/religious_tool2
+	var/atom/movable/religious_tool2 = religious_tool
 	if(!religious_tool2?.buckled_mobs?.len)
 		return FALSE
 	var/mob/living/carbon/human/human2borg

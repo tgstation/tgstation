@@ -38,6 +38,7 @@
 	var/list/active_rites
 
 /datum/religion_sect/New()
+	. = ..()
 	if(desired_items)
 		desired_items_typecache = typecacheof(desired_items)
 	if(rites_list)
