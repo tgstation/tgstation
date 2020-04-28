@@ -95,7 +95,6 @@
 		log_game("[src] turned off at [AREACOORD(Turf)]")
 
 /obj/machinery/power/proto_sh_emitter/interact(mob/user)
-	var/turf/ShieldedTurf = /turf
 	var/turf/EmitterTurf = get_turf(src)
 	var/list/outline = list()
 	var/list/internal = list()
@@ -130,48 +129,35 @@
 		update_icon_state()
 		switch(dir) //this part check the direction of the machine and create the block in front of it
 			if(NORTH)
-				for(ShieldedTurf in block(locate(src.x - 2, src.y + 1, src.z), locate(src.x + 2, src.y + 5, src.z)))
-					outline += ShieldedTurf
-				for(ShieldedTurf in block(locate(src.x - 1, src.y + 2, src.z), locate(src.x + 1, src.y + 4, src.z)))
-					outline -= ShieldedTurf
-					internal += ShieldedTurf
-				for(ShieldedTurf in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
-				for(ShieldedTurf in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+				internal = block(locate(src.x - 1, src.y + 2, src.z), locate(src.x + 1, src.y + 4, src.z))
+				outline = block(locate(src.x - 2, src.y + 1, src.z), locate(src.x + 2, src.y + 5, src.z)) - internal
+				for(var/turf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+				for(var/turf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
 			if(SOUTH)
-				for(ShieldedTurf in block(locate(src.x - 2, src.y - 1, src.z), locate(src.x + 2, src.y - 5, src.z)))
-					outline += ShieldedTurf
-				for(ShieldedTurf in block(locate(src.x - 1, src.y - 2, src.z), locate(src.x + 1, src.y - 4, src.z)))
-					outline -= ShieldedTurf
-					internal += ShieldedTurf
-				for(ShieldedTurf in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
-				for(ShieldedTurf in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+				internal = block(locate(src.x - 1, src.y - 2, src.z), locate(src.x + 1, src.y - 4, src.z))
+				outline = block(locate(src.x - 2, src.y - 1, src.z), locate(src.x + 2, src.y - 5, src.z)) - internal
+				for(var/turf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+				for(var/turf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
 			if(EAST)
-				for(ShieldedTurf in block(locate(src.x +1, src.y -2, src.z), locate(src.x +5, src.y +2, src.z)))
-					outline += ShieldedTurf
-				for(ShieldedTurf in block(locate(src.x +2, src.y -1, src.z), locate(src.x +4, src.y +1, src.z)))
-					outline -= ShieldedTurf
-					internal += ShieldedTurf
-				for(ShieldedTurf in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
-				for(ShieldedTurf in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+				internal = block(locate(src.x +2, src.y -1, src.z), locate(src.x +4, src.y +1, src.z))
+				outline = block(locate(src.x +1, src.y -2, src.z), locate(src.x +5, src.y +2, src.z)) - internal
+				for(var/turf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+				for(var/turf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
 			if(WEST)
-				for(ShieldedTurf in block(locate(src.x -1, src.y -2, src.z), locate(src.x -5, src.y +2, src.z)))
-					outline += ShieldedTurf
-				for(ShieldedTurf in block(locate(src.x -2, src.y -1, src.z), locate(src.x -4, src.y +1, src.z)))
-					outline -= ShieldedTurf
-					internal += ShieldedTurf
-				for(ShieldedTurf in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
-				for(ShieldedTurf in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+				internal = block(locate(src.x -2, src.y -1, src.z), locate(src.x -4, src.y +1, src.z))
+				outline = block(locate(src.x -1, src.y -2, src.z), locate(src.x -5, src.y +2, src.z)) - internal
+				for(var/turf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+				for(var/turf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
 
 /obj/machinery/power/proto_sh_emitter/small/interact(mob/user)
-	var/turf/ShieldedTurf = /turf
 	var/turf/EmitterTurf = get_turf(src)
 	var/list/outline = list()
 	var/list/internal = list()
@@ -206,42 +192,30 @@
 		update_icon_state()
 		switch(dir) //this part check the direction of the machine and create the block in front of it
 			if(NORTH)
-				for(ShieldedTurf in block(locate(src.x - 1, src.y + 1, src.z), locate(src.x + 3, src.y + 4, src.z)))
-					outline += ShieldedTurf
-				for(ShieldedTurf in block(locate(src.x, src.y + 2, src.z), locate(src.x + 2, src.y + 3, src.z)))
-					outline -= ShieldedTurf
-					internal += ShieldedTurf
-				for(ShieldedTurf in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
-				for(ShieldedTurf in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+				internal = block(locate(src.x, src.y + 2, src.z), locate(src.x + 2, src.y + 3, src.z))
+				outline = block(locate(src.x - 1, src.y + 1, src.z), locate(src.x + 3, src.y + 4, src.z)) - internal
+				for(var/turf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+				for(var/turf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
 			if(SOUTH)
-				for(ShieldedTurf in block(locate(src.x - 3, src.y - 1, src.z), locate(src.x + 1, src.y - 4, src.z)))
-					outline += ShieldedTurf
-				for(ShieldedTurf in block(locate(src.x - 2, src.y - 2, src.z), locate(src.x, src.y - 3, src.z)))
-					outline -= ShieldedTurf
-					internal += ShieldedTurf
-				for(ShieldedTurf in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
-				for(ShieldedTurf in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+				internal = block(locate(src.x - 2, src.y - 2, src.z), locate(src.x, src.y - 3, src.z))
+				outline = block(locate(src.x - 3, src.y - 1, src.z), locate(src.x + 1, src.y - 4, src.z)) - internal
+				for(var/turf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+				for(var/turf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
 			if(EAST)
-				for(ShieldedTurf in block(locate(src.x +1, src.y -3, src.z), locate(src.x +4, src.y +1, src.z)))
-					outline += ShieldedTurf
-				for(ShieldedTurf in block(locate(src.x +2, src.y -2, src.z), locate(src.x +3, src.y, src.z)))
-					outline -= ShieldedTurf
-					internal += ShieldedTurf
-				for(ShieldedTurf in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
-				for(ShieldedTurf in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+				internal = block(locate(src.x +2, src.y -2, src.z), locate(src.x +3, src.y, src.z))
+				outline = block(locate(src.x +1, src.y -3, src.z), locate(src.x +4, src.y +1, src.z)) - internal
+				for(var/turf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+				for(var/turf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
 			if(WEST)
-				for(ShieldedTurf in block(locate(src.x -1, src.y -1, src.z), locate(src.x -4, src.y +3, src.z)))
-					outline += ShieldedTurf
-				for(ShieldedTurf in block(locate(src.x -2, src.y, src.z), locate(src.x -3, src.y +2, src.z)))
-					outline -= ShieldedTurf
-					internal += ShieldedTurf
-				for(ShieldedTurf in outline)
-					new /obj/machinery/holosign/barrier/power_shield/wall(ShieldedTurf, src)
-				for(ShieldedTurf in internal)
-					new /obj/machinery/holosign/barrier/power_shield/floor(ShieldedTurf, src)
+				internal = block(locate(src.x -2, src.y, src.z), locate(src.x -3, src.y +2, src.z))
+				outline = block(locate(src.x -1, src.y -1, src.z), locate(src.x -4, src.y +3, src.z)) - internal
+				for(var/turf in outline)
+					new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+				for(var/turf in internal)
+					new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
