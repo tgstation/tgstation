@@ -1,6 +1,0 @@
-author: "MrDoomBringer with some code stolen from itseasytosee"
-delete-after: True
-changes: 
-  - rscadd: "added the Airlock Authentication Override Card. Use it to open airlocks!"
-  - rscadd: "added Syndicate Jaws of Life to the nuke op uplink. Use it in it's crowbar configuration to open as many doors as you'd like!"
-  - rscdel: "The cryptographic sequencer can no longer open airlocks :("
