@@ -114,7 +114,7 @@
   *
   * Note that grenades have extra handling for someone throwing themselves/being thrown on top of it, while landmines do not (obviously, it's a landmine!). See [/datum/component/pellet_cloud/proc/handle_martyrs()]
   */
-/datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/lanced_by=NONE)
+/datum/component/pellet_cloud/proc/create_blast_pellets(obj/O, mob/living/lanced_by)
 	var/atom/A = parent
 
 	if(isgrenade(parent)) // handle_martyrs can reduce the radius and thus the number of pellets we produce if someone dives on top of a frag grenade
