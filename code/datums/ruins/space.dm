@@ -300,7 +300,23 @@
 	id = "forgottenship"
 	suffix = "forgottenship.dmm"
 	name = "Syndicate Forgotten Ship"
-	description = "Seemingly abandoned ship went of course right into NT controlled space. It seems that malfunction caused most systems to turn off, except for sleepers."
+	description = "Seemingly abandoned ship went off course right into NT controlled space. It seems that malfunction caused most systems to turn off, except for sleepers."
+	never_spawn_with = list(/datum/map_template/ruin/space/forgottenpod, /datum/map_template/ruin/space/forgottenruin)
+	placement_weight = 0.5
+
+/datum/map_template/ruin/space/forgottenpod
+	id = "forgottenpod"
+	suffix = "forgottenpod.dmm"
+	name = "Syndicate Forgotten Ship (Pod Only)"
+	description = "Abandoned ship managed to leave this sector, but the cargo pod left there, still containing some sort of valuable loot."
+	never_spawn_with = list(/datum/map_template/ruin/space/forgottenship, /datum/map_template/ruin/space/forgottenruin)
+
+/datum/map_template/ruin/space/forgottenruin
+	id = "forgottenruin"
+	suffix = "forgottenruin.dmm"
+	name = "Syndicate Forgotten Ship (Broken Ship only)"
+	description = "Syndicate ship went off course into your sector, but it looks like NT assault force managed to get rid of every sort of threat it ever possesed."
+	never_spawn_with = list(/datum/map_template/ruin/space/forgottenpod, /datum/map_template/ruin/space/forgottenship)
 
 /datum/map_template/ruin/space/hellfactory
 	id = "hellfactory"
