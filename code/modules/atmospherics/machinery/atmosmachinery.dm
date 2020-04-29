@@ -66,14 +66,13 @@
 		nullifyNode(i)
 
 	SSair.atmos_machinery -= src
+	SSair.pipenets_needing_rebuilt -= src
 	if(SSair.currentpart == SSAIR_ATMOSMACHINERY)
 		SSair.currentrun -= src
 
 	dropContents()
 	if(pipe_vision_img)
 		qdel(pipe_vision_img)
-
-	SSair.pipenets_needing_rebuilt -= src
 
 	return ..()
 	//return QDEL_HINT_FINDREFERENCE
