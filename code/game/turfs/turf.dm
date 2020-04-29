@@ -568,17 +568,18 @@
 				M.reagents.remove_reagent(R.type, min(R.volume, 10))
 
 ///Prot to set the damage of the turf, also used to call the windows and doors adjacent_fire_act()
-/turf/proc/set_heat_damage_amount(temperature)
+/turf/proc/set_heat_damage_amount(exposed_temperature)
 	var/obj/structure/window/Window
 	for(Window in range(1, src))
-		Window.adjacent_fire_act(temperature)
+		Window.adjacent_fire_act(exposed_temperature)
 	var/obj/machinery/door/Door
 	for(Door in range(1, src))
-		Door.adjacent_fire_act(temperature)
+		Door.adjacent_fire_act(exposed_temperature)
 	if(to_be_destroyed && !changing_turf)
-		damage_amount = clamp((temperature - heat_capacity)/10000, 1, 15)
+		damage_amount = clamp((exposed_temperature - heat_capacity)/10000, 1, 15)
 		turf_take_heat_damage(damage_amount)
-		heat_capacity = max(heat_capacity - (damage_amount * 10), 0)
+	else
+		max_fire_temperature_sustained = 0
 
 ///Take the damage_amount from the set_heat_damage_amount() and apply it to the turf
 /turf/proc/turf_take_heat_damage(damage_amount)
@@ -605,7 +606,7 @@
 			overlays +=  image('icons/turf/walls.dmi', icon_state = "melt_75")
 
 /turf/proc/Melt()
-	return ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
+	return ScrapeAway(flags = CHANGETURF_IGNORE_AIR)
 
 /turf/bullet_act(obj/projectile/P)
 	. = ..()

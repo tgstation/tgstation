@@ -84,17 +84,11 @@
 /turf/open/return_analyzable_air()
 	return return_air()
 
-/turf/closed/temperature_expose()
-	if(temperature > max_fire_temperature_sustained)
-		max_fire_temperature_sustained = temperature
-	if(max_fire_temperature_sustained > heat_capacity)
-		set_heat_damage_amount(temperature)
-
-/turf/open/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/turf/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > max_fire_temperature_sustained)
 		max_fire_temperature_sustained = exposed_temperature
 	if(max_fire_temperature_sustained > heat_capacity)
-		set_heat_damage_amount(temperature)
+		set_heat_damage_amount(exposed_temperature)
 
 /turf/proc/archive()
 	temperature_archived = temperature
