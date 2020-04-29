@@ -160,12 +160,12 @@
 		if(default_unfasten_wrench(user, I, time = 20))
 			return
 
-	if(istype(I, /obj/item/bee/queen))
+	if(istype(I, /obj/item/queen_bee))
 		if(queen_bee)
 			to_chat(user, "<span class='warning'>This hive already has a queen!</span>")
 			return
 
-		var/obj/item/bee/queen/qb = I
+		var/obj/item/queen_bee/qb = I
 		user.temporarilyRemoveItemFromInventory(qb)
 
 		qb.queen.forceMove(src)
@@ -244,7 +244,7 @@
 				if(!queen_bee || queen_bee.loc != src)
 					to_chat(user, "<span class='warning'>There is no queen bee to remove!</span>")
 					return
-				var/obj/item/bee/queen/QB = new()
+				var/obj/item/queen_bee/QB = new()
 				queen_bee.forceMove(QB)
 				bees -= queen_bee
 				QB.queen = queen_bee

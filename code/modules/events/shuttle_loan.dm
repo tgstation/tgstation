@@ -216,7 +216,7 @@
 				shuttle_spawns.Add(/obj/item/honey_frame)
 				shuttle_spawns.Add(/obj/item/honey_frame)
 				shuttle_spawns.Add(/obj/structure/beebox/unwrenched)
-				shuttle_spawns.Add(/obj/item/bee/queen/bought)
+				shuttle_spawns.Add(/obj/item/queen_bee/bought)
 				shuttle_spawns.Add(/obj/structure/closet/crate/hydroponics)
 
 				for(var/i in 1 to 8)

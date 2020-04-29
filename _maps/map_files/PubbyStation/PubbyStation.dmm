@@ -47198,7 +47198,7 @@
 /obj/structure/flora/ausbushes/ywflowers,
 /obj/structure/flora/ausbushes/sparsegrass,
 /obj/structure/beebox,
-/obj/item/bee/queen/bought,
+/obj/item/queen_bee/bought,
 /turf/open/floor/grass,
 /area/hydroponics/garden/monastery)
 "cuB" = (
