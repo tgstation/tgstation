@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(explosions)
 	var/cost_medturf = 0
 	var/cost_highturf = 0
 	var/cost_flameturf = 0
-	
+
 	var/cost_throwturf = 0
 
 	var/cost_lowobj = 0
@@ -25,7 +25,7 @@ SUBSYSTEM_DEF(explosions)
 	var/list/medturf = list()
 	var/list/highturf = list()
 	var/list/flameturf = list()
-	
+
 	var/list/throwturf = list()
 
 	var/list/lowobj = list()
@@ -331,6 +331,7 @@ SUBSYSTEM_DEF(explosions)
 				throwingturf[3] = max_range
 		else
 			T.explosion_throw_details = list(throw_range, throw_dir, max_range)
+			throwturf += T
 
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
@@ -410,7 +411,7 @@ SUBSYSTEM_DEF(explosions)
 		return
 	var/timer
 	Master.current_ticklimit = TICK_LIMIT_RUNNING //force using the entire tick if we need it.
-	
+
 	if(currentpart == SSEXPLOSIONS_TURFS)
 		currentpart = SSEXPLOSIONS_MOVABLES
 
@@ -423,7 +424,7 @@ SUBSYSTEM_DEF(explosions)
 				T.explosion_level = max(T.explosion_level, EXPLODE_LIGHT)
 				T.ex_act(EXPLODE_LIGHT)
 		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		
+
 		timer = TICK_USAGE_REAL
 		var/list/med_turf = medturf
 		medturf = list()
@@ -433,10 +434,10 @@ SUBSYSTEM_DEF(explosions)
 				T.explosion_level = max(T.explosion_level, EXPLODE_HEAVY)
 				T.ex_act(EXPLODE_HEAVY)
 		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		
+
 		timer = TICK_USAGE_REAL
 		var/list/high_turf = highturf
-		highturf = list()		
+		highturf = list()
 		for(var/thing in high_turf)
 			if(thing)
 				var/turf/T = thing
@@ -455,10 +456,10 @@ SUBSYSTEM_DEF(explosions)
 
 		if (low_turf.len || med_turf.len || high_turf.len)
 			Master.laggy_byond_map_update_incoming()
-	
+
 	if(currentpart == SSEXPLOSIONS_MOVABLES)
 		currentpart = SSEXPLOSIONS_THROWS
-		
+
 		timer = TICK_USAGE_REAL
 		var/list/high_obj = highobj
 		highobj = list()
@@ -467,7 +468,7 @@ SUBSYSTEM_DEF(explosions)
 				var/obj/O = thing
 				O.ex_act(EXPLODE_DEVASTATE)
 		cost_highobj = MC_AVERAGE(cost_highobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		
+
 		timer = TICK_USAGE_REAL
 		var/list/med_obj = medobj
 		medobj = list()
@@ -476,7 +477,7 @@ SUBSYSTEM_DEF(explosions)
 				var/obj/O = thing
 				O.ex_act(EXPLODE_HEAVY)
 		cost_medobj = MC_AVERAGE(cost_medobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		
+
 		timer = TICK_USAGE_REAL
 		var/list/low_obj = lowobj
 		lowobj = list()
