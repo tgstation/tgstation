@@ -77,6 +77,14 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+	// Spawn the "bee" food. We can't just set this as a normal drop, as we need to set it to the bee's color and give it the bee's reagents.
+	var/obj/item/reagent_containers/food/snacks/bee/bee_snack = new(loc)
+	bee_snack.pixel_x = pixel_x
+	bee_snack.pixel_y = pixel_y
+	bee_snack.filling_color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
+	bee_snack.update_snack_overlays(bee_snack)
+	if(beegent)
+		bee_snack.reagents.add_reagent(beegent.type, 5)
 	beegent = null
 	..()
 

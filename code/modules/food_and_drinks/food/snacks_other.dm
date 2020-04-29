@@ -764,3 +764,12 @@
 	tastes = list("fried corn" = 1)
 	foodtype = JUNKFOOD | FRIED
 
+/obj/item/reagent_containers/food/snacks/bee
+	name = "bee"
+	desc = "It's a dead bee. I mean, it has protein, so I GUESS you can eat it?"
+	icon_state = "bee"
+	foodtype = RAW | MEAT | GROSS
+	w_class = WEIGHT_CLASS_TINY
+	bitesize = 10
+	list_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("bee" = 1)
