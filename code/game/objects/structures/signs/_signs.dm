@@ -24,6 +24,8 @@
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	rightthand_file = 'icons/mob/inhands/items_rigthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/plastic = 2000)
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)

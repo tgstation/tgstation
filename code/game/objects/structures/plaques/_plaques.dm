@@ -17,6 +17,8 @@
 /obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	rightthand_file = 'icons/mob/inhands/items_rigthand.dmi'
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
