@@ -1,6 +1,6 @@
 /*!
 
-This element is used in vat growing to allow for swabable behavior. This swabbing usually results in receiving a biological sample in this case.
+This element is used in vat growing to allow for the object to be
 
 */
 /datum/element/swabable
@@ -15,6 +15,7 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 	///Amount of viruses on a single sample
 	var/virus_chance
 
+///Listens for the swab signal and then generate a sample based on pre-determined lists that are saved as GLOBs. this allows us to have very few swabbable element instances.
 /datum/element/swabable/Attach(datum/target, cell_line_define, virus_define, cell_line_amount = 3, virus_chance = 50)
 	. = ..()
 	if(!isatom(target) || isarea(target))
@@ -26,6 +27,13 @@ This element is used in vat growing to allow for swabable behavior. This swabbin
 	src.virus_define = virus_define
 	src.cell_line_amount = cell_line_amount
 	src.virus_chance = virus_chance
+
+///Stops listening to the swab signal; you can no longer be swabbed.
+/datum/element/swabable/Detach(datum/source, force)
+	. = ..()
+	if(!isatom(source) || isarea(source))
+		return ELEMENT_INCOMPATIBLE
+	UnregisterSignal(source, COMSIG_SWAB_FOR_SAMPLES)
 
 ///Ran when the parent is swabbed by an object that can swab that type of obj. The list is sent by ref, which means the thing which sent the signal will still have the updated list.
 /datum/element/swabable/proc/GetSwabbed(datum/source, list/mutable_results)

@@ -14,7 +14,6 @@
 
 /obj/screen/ooze_nutrition_display
 	icon = 'icons/mob/screen_alien.dmi'
-	icon = 'icons/mob/screen_gen.dmi'
-	icon_state = "power_display2"
-	name = "plasma stored"
+	icon_state = "power_display"
+	name = "nutrition"
 	screen_loc = ui_alienplasmadisplay

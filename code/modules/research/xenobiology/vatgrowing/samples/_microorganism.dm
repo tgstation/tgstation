@@ -29,7 +29,7 @@
 /datum/micro_organism/cell_line/proc/HandleGrowth(var/obj/machinery/plumbing/growing_vat/vat)
 	if(!try_eat(vat.reagents))
 		return
-	growth += calculate_growth(vat.reagents, vat.biological_sample)
+	growth = max(growth, growth + calculate_growth(vat.reagents, vat.biological_sample)) //Prevent you from having minus growth.
 	if(growth >= 100)
 		finish_growing(vat)
 

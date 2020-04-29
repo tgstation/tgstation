@@ -137,13 +137,14 @@
 	check_flags = AB_CHECK_CONSCIOUS|AB_CHECK_STUN
 	cooldown_time = 240
 	var/nutrition_cost = 10
+	var/active = FALSE
 
 
 ///Mob needs to have enough nutrition
 /datum/action/cooldown/metabolicboost/IsAvailable()
 	. = ..()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	if(. && ooze.ooze_nutrition >= nutrition_cost)
+	if(. && ooze.ooze_nutrition >= nutrition_cost && !active)
 		return TRUE
 
 ///Give the mob a speed boost, heat it up every second, and end the ability in 6 seconds
@@ -262,6 +263,9 @@
 	. = ..()
 	globules = new
 	AddAbility(globules)
+	gel_cocoon = new
+	gel_cocoon.Grant(src)
+
 
 /mob/living/simple_animal/hostile/ooze/grapes/check_edible(atom/movable/AM)
 	if(ismob(AM))
@@ -324,6 +328,7 @@
 	globule.fire()
 	ooze.adjust_ooze_nutrition(-5)
 	remove_ranged_ability()
+	current_cooldown = world.time + cooldown
 
 	return TRUE
 
@@ -344,18 +349,16 @@
 	desc = "It somehow heals those who touch it."
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "globule"
-	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0)
+	embedding = list("embed_chance" = 100, ignore_throwspeed_threshold = TRUE, "pain_mult" = 0, "jostle_pain_mult" = 0, "fall chance" = 0.5)
 	var/mob/living/carbon/human/healing_target
 	var/obj/item/bodypart/bodypart
 	var/heals_left = 35
 
 /obj/item/mending_globule/embedded(mob/living/carbon/human/embedded_mob)
 	. = ..()
-	healing_target = embedded_mob
 	if(!istype(loc, /obj/item/bodypart))
 		return
-	bodypart = loc
-	healing_target.add_overlay(mutable_appearance('icons/mob/vatgrowing.dmi', "glob_[bodypart.body_zone]"))
+	healing_target = embedded_mob
 	START_PROCESSING(SSobj, src)
 
 /obj/item/mending_globule/unembedded()
@@ -410,19 +413,20 @@
 
 ///Puts the mob in the new cocoon
 /datum/action/cooldown/gel_cocoon/proc/put_in_cocoon(mob/living/carbon/target)
-	var/obj/structure/gel_cocoon/cocoon = new /obj/structure/gel_cocoon(get_turf(owner))
+	var/obj/structure/gel_cocoon/cocoon = new /obj/structure/gel_cocoon(get_turf(target))
 	cocoon.insert_target(target)
 	owner.visible_message("<span class='nicegreen>[owner] has put [target] into a gel cocoon!</span>", "<span class='notice'>You put [target] into a gel cocoon.</span>")
 
 /obj/structure/gel_cocoon
-	name = "gel_cocoon"
+	name = "gel cocoon"
 	desc = "It looks gross, but helpful."
+	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "gel_cocoon"
 	max_integrity = 50
 	var/mob/living/carbon/inhabitant
 
 /obj/structure/gel_cocoon/Destroy()
-	dump_inhabitant()
+	dump_inhabitant(FALSE)
 	. = ..()
 
 /obj/structure/gel_cocoon/resist_act(mob/living/user)
@@ -440,10 +444,21 @@
 	START_PROCESSING(SSobj, src)
 
 ///This proc dumps the mob and handles associated audiovisual feedback
-/obj/structure/gel_cocoon/proc/dump_inhabitant()
+/obj/structure/gel_cocoon/proc/dump_inhabitant(destroy_after = TRUE)
 	inhabitant.forceMove(get_turf(src))
 	playsound(get_turf(inhabitant), 'sound/effects/splat.ogg', 50, TRUE)
 	inhabitant.Paralyze(10)
 	inhabitant.visible_message("<span class='warning>[inhabitant] falls out of [src]!</span>", "<span class='notice'>You fall out of [src].</span>")
-	inhabitant = null
-	STOP_PROCESSING(SSobj, src)
+	if(destroy_after)
+		qdel(src)
+
+
+/obj/structure/gel_cocoon/process()
+	if(inhabitant.reagents.get_reagent_amount(/datum/reagent/medicine/atropine) < 5)
+		inhabitant.reagents.add_reagent(/datum/reagent/medicine/atropine, 0.5)
+
+	if(inhabitant.reagents.get_reagent_amount(/datum/reagent/medicine/salglu_solution) < 15)
+		inhabitant.reagents.add_reagent(/datum/reagent/medicine/salglu_solution, 1.5)
+
+	if(inhabitant.reagents.get_reagent_amount(/datum/reagent/consumable/milk) < 20)
+		inhabitant.reagents.add_reagent(/datum/reagent/consumable/milk, 2)
