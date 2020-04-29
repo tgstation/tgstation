@@ -252,6 +252,9 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/item/toy/plush{
+	name = "therapy plush"
+	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "aaF" = (
@@ -1292,11 +1295,11 @@
 /turf/open/floor/grass,
 /area/medical/virology)
 "acX" = (
-/obj/machinery/door/airlock/security{
-	name = "Permanent Cell 4"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/public{
+	name = "Cell 4"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
@@ -1801,11 +1804,11 @@
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "aei" = (
-/obj/machinery/door/airlock/security{
-	name = "Permanent Cell 3"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/public{
+	name = "Cell 3"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
@@ -2477,17 +2480,17 @@
 /turf/open/floor/plating,
 /area/maintenance/solars/port/fore)
 "afG" = (
-/obj/machinery/door/airlock/security{
-	name = "Permanent Cell 2"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/public{
+	name = "Cell 2"
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "afI" = (
-/obj/machinery/door/airlock/security{
-	name = "Permanent Cell 1"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/machinery/door/airlock/public{
+	name = "Cell 1"
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "afJ" = (
@@ -68533,13 +68536,13 @@
 /turf/open/floor/plasteel/dark,
 /area/security/execution/education)
 "eqf" = (
-/obj/machinery/door/airlock/security{
-	name = "Permabrig Visitation"
-	},
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/public/glass{
+	name = "Visitation"
+	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "eqG" = (
@@ -72320,15 +72323,15 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison)
 "kNq" = (
-/obj/machinery/door/airlock/security{
-	name = "Permabrig Visitation"
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/cable,
+/obj/machinery/door/airlock/public/glass{
+	name = "Visitation"
+	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "kOt" = (
@@ -72519,11 +72522,11 @@
 /turf/open/floor/plasteel,
 /area/engine/break_room)
 "leJ" = (
-/obj/machinery/door/airlock/security{
-	name = "Prison Forestry"
-	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/public{
+	name = "Prison Forestry"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
@@ -79596,11 +79599,11 @@
 /turf/open/floor/plasteel/white,
 /area/security/prison)
 "xKy" = (
-/obj/machinery/door/airlock/security{
-	name = "Prison Workshop"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
+	},
+/obj/machinery/door/airlock/public{
+	name = "Prison Workshop"
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
