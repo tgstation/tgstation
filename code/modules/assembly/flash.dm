@@ -14,9 +14,9 @@
 	var/flashing_overlay = "flash-f"
 	var/times_used = 0 //Number of times it's been used.
 	var/burnt_out = FALSE     //Is the flash burnt out?
-	var/burnout_resistance = 0
+	var/burnout_resistance = 0 //How resistant to burning out is the flash? Affects probability for burnout.
 	var/last_used = 0 //last world.time it was used.
-	var/cooldown = 0
+	var/cooldown = 0 //Cooldown between flashes. Only relevant on some flashes like the hypnoflash.
 	var/last_trigger = 0 //Last time it was successfully triggered.
 
 /obj/item/assembly/flash/suicide_act(mob/living/user)

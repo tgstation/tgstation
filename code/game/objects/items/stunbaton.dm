@@ -15,6 +15,7 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	throwforce = 7
+	//The likelihood of a thrown baton to apply it's stun effect. Otherwise, it's simply a standard non-stun hit.
 	var/throw_stun_chance = 35
 
 	var/obj/item/stock_parts/cell/cell
@@ -24,14 +25,22 @@
 
 	var/turned_on = FALSE
 	var/activate_sound = "sparks"
-
+	
+	//This var changes as part of the internal cooldown check from when you use this particular baton to hit someone with a stun attack.
 	var/attack_cooldown_check = 0 SECONDS
-	var/attack_cooldown = 2.5 SECONDS
+	//This var is the cooldown between baton swings. The lower, the more frequently the baton can be used for a stun attack. Does not affect harm intent attacks, only how frequently the stun can be applied.
+	var/attack_cooldown = 1.5 SECONDS
 	var/stun_sound = 'sound/weapons/egloves.ogg'
 
+	//How much confusion is applied by the baton's hit.
 	var/confusion_amt = 10
-	var/stamina_loss_amt = 60
-	var/apply_stun_delay = 2 SECONDS
+	//This var determines the upfront stamina damage of the baton. This is used in the stun attack effect, and not the after effect. This value is reduced by armor.
+	var/stamina_loss_amt = 30
+	//This var determines the after effect's stamina damage if they are not stun resistant. This value isn't reduced by armor.
+	var/stamloss_after_amt = 20
+	//This var determines how long before the baton's after effects are applied. The lower this is, the more immediate the after effect occurs. This shouldn't ever be equal or close to the attack cooldown so as to prevent locking out of attacks.
+	var/apply_stun_delay = 1 SECONDS
+	//This is only used for some children of the stun baton. For the parent stun baton, it is unused. It determines paralysis from the stun effect.
 	var/stun_time = 0 SECONDS
 
 	var/convertible = TRUE //if it can be converted with a conversion kit
@@ -165,6 +174,7 @@
 	update_icon()
 	add_fingerprint(user)
 
+///The clumsy check is used only for those who are clowns and clown-like. Honk.
 /obj/item/melee/baton/proc/clumsy_check(mob/living/carbon/human/user)
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		playsound(src, stun_sound, 75, TRUE, -1)
@@ -175,6 +185,7 @@
 		return TRUE
 	return FALSE
 
+///This handles the special function that allows the baton to be used nonharmfully while also applying the stun effect regardless of intent. It also is where our clumsy check and martial counter, or CQC block, check is made.
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	if(clumsy_check(user))
 		return FALSE
@@ -206,7 +217,7 @@
 				baton_effect(M, user)
 		..()
 
-
+///This is the stun effect of the baton. It handles the stamina damage and other effects inflicted upon the attack, checks if the target has recently been hit with a baton, and handles logging.
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(shields_blocked(L, user))
 		return FALSE
@@ -259,16 +270,19 @@
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine disable duration
 	if(trait_check)
-		to_chat(target, "<span class='warning'>Your body spasms, but you quickly recover!</span>")
-	else
-		target.apply_status_effect(STATUS_EFFECT_CONVULSING)
+		to_chat(target, "<span class='warning'>Your body spasms, but you manage to withstand the worst of it!</span>")
 		target.apply_status_effect(STATUS_EFFECT_STAMDRAIN)
+	else
+		target.apply_damage(stamloss_after_amt, STAMINA, BODY_ZONE_CHEST)
+		target.apply_status_effect(STATUS_EFFECT_STAMDRAIN)
+		to_chat(target, "<span class='boldwarning'>Your body spasms as you feel a shock course through you!</span>")
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
 
+///This is to ensure that the stun effect doesn't occur despite the attack being blocked by a shield or shield like effect, like hardsuit shields.
 /obj/item/melee/baton/proc/shields_blocked(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -290,6 +304,8 @@
 	throwforce = 5
 	cell_hit_cost = 2000
 	throw_stun_chance = 10
+	attack_cooldown = 2.5 SECONDS
+	stamloss_after_amt = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler = 0

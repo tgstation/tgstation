@@ -575,11 +575,9 @@
 	status_type = STATUS_EFFECT_REFRESH
 
 /datum/status_effect/stamdrain/tick()
-	if(iscarbon(owner) && !HAS_TRAIT(owner, TRAIT_STUNRESISTANCE))
+	if(iscarbon(owner))
 		var/mob/living/carbon/H = owner
 		H.adjustStaminaLoss(3)
-	else
-		qdel(src)
 
 /datum/status_effect/dna_melt
 	id = "dna_melt"
