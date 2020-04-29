@@ -253,3 +253,10 @@
 	amount_per_transfer_from_this = 15
 	list_reagents = list(/datum/reagent/drug/pumpup = 15)
 	icon_state = "maintenance"
+
+/obj/item/reagent_containers/hypospray/medipen/ekit
+	name = "emergency first-aid autoinjector"
+	desc = "An epinephrine medipen with trace amounts of coagulents and antibiotics to help stabilize bad cuts and burns."
+	volume = 15
+	amount_per_transfer_from_this = 15
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 13, /datum/reagent/medicine/coagulent = 1.5, /datum/reagent/medicine/spaceacillin = 0.5)

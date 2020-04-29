@@ -58,7 +58,7 @@
 			"<span class='notice'>[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 			"<span class='notice'>[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)]!</span>")
 		log_combat(user, target, "repaired a hairline fracture in", addition="INTENT: [uppertext(user.a_intent)]")
-		surgery.operated_wound.remove_wound()
+		qdel(surgery.operated_wound)
 	else
 		to_chat(user, "<span class='warning'>[target] has no hairline fracture there!</span>")
 	return ..()
@@ -130,7 +130,7 @@
 			"<span class='notice'>[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 			"<span class='notice'>[user] successfully repairs the fracture in [target]'s [parse_zone(target_zone)]!</span>")
 		log_combat(user, target, "repaired a compound fracture in", addition="INTENT: [uppertext(user.a_intent)]")
-		surgery.operated_wound.remove_wound()
+		qdel(surgery.operated_wound)
 	else
 		to_chat(user, "<span class='warning'>[target] has no compound fracture there!</span>")
 	return ..()

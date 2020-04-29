@@ -14,6 +14,8 @@
 	ricochets_max = 50	//Honk!
 	ricochet_chance = 80
 	reflectable = REFLECT_NORMAL
+	wound_bonus = -20
+	bare_wound_bonus = 10
 
 /obj/projectile/beam/laser
 	tracer_type = /obj/effect/projectile/tracer/laser
@@ -24,15 +26,12 @@
 
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
-	tracer_type = /obj/effect/projectile/tracer/laser
-	muzzle_type = /obj/effect/projectile/muzzle/laser
-	impact_type = /obj/effect/projectile/impact/laser
-	wound_bonus = -20
-	bare_wound_bonus = 50
+	wound_bonus = 0
+	speed = 0.6 // faster than light... light
 
 /obj/projectile/beam/laser/hellfire/Initialize()
 	. = ..()
-	transform *= 1.5
+	transform *= 2
 
 /obj/projectile/beam/laser/heavylaser
 	name = "heavy laser"
@@ -133,6 +132,8 @@
 	damage = 30
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/green_laser
 	light_color = LIGHT_COLOR_GREEN
+	wound_bonus = -40
+	bare_wound_bonus = 70
 
 /obj/projectile/beam/emitter/singularity_pull()
 	return //don't want the emitters to miss

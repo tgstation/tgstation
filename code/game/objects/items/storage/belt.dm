@@ -182,10 +182,6 @@
 		/obj/item/shears
 		))
 
-/obj/item/storage/belt/medical/paramedic/
-	name = "triage belt"
-	desc = "A medical belt "
-
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	new /obj/item/sensor_device(src)
 	new /obj/item/pinpointer/crew/prox(src)

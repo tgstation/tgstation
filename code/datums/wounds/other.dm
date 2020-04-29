@@ -12,7 +12,7 @@
 	severity = WOUND_SEVERITY_TRIVIAL
 	limp_slowdown = 1
 
-/datum/wound/brute/stubbed_toe/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = NONE, special_arg=NONE)
+/datum/wound/brute/stubbed_toe/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = null)
 	. = ..()
 	victim.apply_status_effect(STATUS_EFFECT_LIMP)
 
@@ -21,5 +21,5 @@
 		user.visible_message("<span class='green'>[user] helpfully reminds [victim] of the punishment for gross deriliction of duty by aiming [I] point blank at [victim.p_their()] head, curing [victim.p_their()] stubbed toe!</span>", \
 			"<span class='nicegreen'>You helpfully remind [victim] of the punishment for gross deriliction of duty by aiming [I] point blank at [victim.p_their()] head, curing their stubbed toe!</span>", ignored_mobs=list(victim))
 		to_chat(victim, "<span class='nicegreen'><b>[user] helpfully reminds you of the punishment for gross deriliction of duty by aiming [I] point blank at your head! Suddenly your stubbed toe is cured!</b></span>")
-		remove_wound()
+		qdel(src)
 		return TRUE

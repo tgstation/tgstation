@@ -494,7 +494,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	var/crit_case
 	if(crit)
-		crit_case = rand(1,5)
+		crit_case = rand(1,6)
 
 	if(forcecrit)
 		crit_case = forcecrit
@@ -517,10 +517,10 @@ GLOBAL_LIST_EMPTY(vending_products)
 						C.bleed(150)
 						var/obj/item/bodypart/l_leg/l = C.get_bodypart(BODY_ZONE_L_LEG)
 						if(l)
-							l.receive_damage(brute=200, updating_health=TRUE)
+							l.receive_damage(brute=200)
 						var/obj/item/bodypart/r_leg/r = C.get_bodypart(BODY_ZONE_R_LEG)
 						if(r)
-							r.receive_damage(brute=200, updating_health=TRUE)
+							r.receive_damage(brute=200)
 						if(l || r)
 							C.visible_message("<span class='danger'>[C]'s legs shatter with a sickening crunch!</span>", \
 								"<span class='userdanger'>Your legs shatter with a sickening crunch!</span>")
@@ -543,6 +543,17 @@ GLOBAL_LIST_EMPTY(vending_products)
 						visible_message("<span class='danger'>[C]'s spinal cord is obliterated with a sickening crunch!</span>", ignored_mobs = list(C))
 						C.gain_trauma(/datum/brain_trauma/severe/paralysis/paraplegic)
 					if(5) // skull squish!
+						for(var/i in C.bodyparts)
+							var/obj/item/bodypart/squish_part = i
+							if(squish_part.is_organic_limb())
+								//var/type_wound = pick(WOUND_TYPE_BONE)
+								var/type_wound = pick(list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate))
+								squish_part.force_wound_upwards(type_wound)
+							else
+								squish_part.receive_damage(brute=30)
+						C.visible_message("<span class='danger'>[C]'s body is maimed underneath the mass of [src]!</span>", \
+							"<span class='userdanger'>Your body is maimed underneath the mass of [src]!</span>")
+					if(6) // skull squish!
 						var/obj/item/bodypart/head/O = C.get_bodypart(BODY_ZONE_HEAD)
 						if(O)
 							C.visible_message("<span class='danger'>[O] explodes in a shower of gore beneath [src]!</span>", \

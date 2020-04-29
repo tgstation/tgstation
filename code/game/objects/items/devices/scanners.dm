@@ -333,7 +333,7 @@ GENE SCANNER
 			render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
 			for(var/k in wounded_part.wounds)
 				var/datum/wound/W = k
-				render_list += "<div class='ml-2'>Type: [W.name]\nSeverity: [W.severity_text()]\nDescription: [W.desc]\nRecommended Treatment: [W.treat_text]</div>\n"
+				render_list += "<div class='ml-2'>Type: [W.name]\nSeverity: [W.severity_text()]\nRecommended Treatment: [W.treat_text]</div>\n" // less lines than in woundscan() so we don't overload people trying to get basic med info
 			render_list += "</span>"
 
 	for(var/thing in M.diseases)
@@ -408,6 +408,42 @@ GENE SCANNER
 	icon_state = "health_adv"
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject with high accuracy."
 	advanced = TRUE
+
+// Displays wounds with extended information on their status vs medscanners
+/proc/woundscan(mob/user, mob/living/carbon/patient, obj/item/healthanalyzer/wound/scanner)
+	if(!istype(patient))
+		return
+
+	var/render_list = ""
+	for(var/i in patient.get_wounded_bodyparts())
+		var/obj/item/bodypart/wounded_part = i
+		render_list += "<span class='alert ml-1'><b>Warning: Physical trauma[LAZYLEN(wounded_part.wounds) > 1? "s" : ""] detected in [wounded_part.name]</b>"
+		for(var/k in wounded_part.wounds)
+			var/datum/wound/W = k
+			render_list += "<div class='ml-2'>[W.get_scanner_description()]</div>\n"
+		render_list += "</span>"
+
+	if(render_list == "")
+		playsound(scanner, 'sound/machines/ping.ogg', 50, FALSE)
+		to_chat(user, "<span class='notice'>\The [scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!</span>")
+	else
+		to_chat(user, jointext(render_list, ""))
+
+/obj/item/healthanalyzer/wound
+	name = "first aid analyzer"
+	icon_state = "adv_spectrometer"
+	desc = "A specialized medical scanner that is used to diagnose and recommend extra treatment information for serious wounds, but offers no further insight into the patient's health."
+
+/obj/item/healthanalyzer/wound/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
+	add_fingerprint(user)
+	user.visible_message("<span class='notice'>[user] scans [patient] for serious injuries.</span>", "<span class='notice'>You scan [patient] for serious injuries.</span>")
+
+	if(!istype(patient))
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+		to_chat(user, "<span class='notice'>\The [src] makes a sad buzz and briefly displays a frowny face, indicating it can't scan [patient].</span>")
+		return
+
+	woundscan(user, patient, src)
 
 /obj/item/analyzer
 	desc = "A hand-held environmental scanner which reports current gas levels. Alt-Click to use the built in barometer function."

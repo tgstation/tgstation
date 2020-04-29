@@ -1,9 +1,10 @@
 #define WOUND_DAMAGE_EXPONENT	1.4
 
-#define WOUND_SEVERITY_TRIVIAL	0
+#define WOUND_SEVERITY_TRIVIAL	0 // for jokey/meme wounds like stubbed toe, no standard messages/sounds or second winds
 #define WOUND_SEVERITY_MODERATE	1
 #define WOUND_SEVERITY_SEVERE	2
 #define WOUND_SEVERITY_CRITICAL	3
+#define WOUND_SEVERITY_LOSS		4 // theoretical total limb loss, like dismemberment for cuts
 
 #define WOUND_BRUTE	0
 #define WOUND_SHARP	1
@@ -19,7 +20,7 @@
 
 // list in order of highest severity to lowest
 #define WOUND_TYPE_BONE		list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate)
-#define WOUND_TYPE_CUT		list(/datum/wound/brute/cut/critical, /datum/wound/brute/cut/severe, /datum/wound/brute/cut/moderate)
+#define WOUND_TYPE_CUT		list(/datum/wound/brute/cut/loss, /datum/wound/brute/cut/critical, /datum/wound/brute/cut/severe, /datum/wound/brute/cut/moderate)
 #define WOUND_TYPE_BURN		list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate)
 #define WOUND_TYPE_SPECIAL	list(/datum/wound/brute/stubbed_toe)
 
@@ -29,3 +30,5 @@
 #define WOUND_INFECTION_CRITICAL	12 // then below here, your limb occasionally locks up from damage and infection and briefly becomes disabled. Things are getting really bad
 #define WOUND_INFECTION_SEPTIC		20 // below here, your skin is almost entirely falling off and your limb locks up more frequently. You are within a stone's throw of septic paralysis and losing the limb
 // above WOUND_INFECTION_SEPTIC, your limb is completely putrid and you start rolling to lose the entire limb by way of paralyzation. After 3 failed rolls (~4-5% each probably), the limb is paralyzed
+
+#define WOUND_BURN_SANITIZATION_RATE 0.3 // how quickly sanitization removes infestation and decays per tick

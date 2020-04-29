@@ -13,15 +13,11 @@
 
 	/// The item we're currently splinted with, if there is one
 	var/obj/item/stack/splinted
-	var/splint_examine_desc = "is fastened in a splint of "
 
 /*
 	Overwriting of base procs
 */
-
-//oh god nevermind what i said about bones.dm being neat and a model for what i have in mind this is all still dirty and doesn't even use get_examine_description() yet oh god oh no
-
-/datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = NONE, special_arg=NONE)
+/datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = null)
 	. = ..()
 	if(QDELETED(src) || !limb)
 		return
@@ -36,13 +32,33 @@
 
 	update_inefficiencies()
 
-/datum/wound/brute/bone/remove_wound()
+/datum/wound/brute/bone/remove_wound(ignore_limb)
 	if(victim)
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	. = ..()
 
-/datum/wound/brute/bone/receive_damage(wounding_type, wounding_dmg)
-	if(!(wounding_type in list(WOUND_SHARP, WOUND_BURN)) || !splinted)
+// note this is only for humans since they alone have COMSIG_HUMAN_EARLY_UNARMED_ATTACK (obviously)
+/datum/wound/brute/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
+	if(victim.get_active_hand() != limb || victim.a_intent == INTENT_HELP || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
+		return
+
+	// With a severe or critical wound, you have a 33% or 66% chance to proc pain on hit
+	if(prob(33 * (severity - 1)))
+		// And you have a 70% or 50% chance to actually land the blow, respectively
+		if(prob(70 - 20 * (severity - 1)))
+			to_chat(victim, "<span class='userdanger'>The fracture in your [limb.name] shoots with pain as you strike [target]!</span>")
+			limb.receive_damage(brute=rand(1,5))
+		else
+			victim.visible_message("<span class='danger'>[victim] weakly strikes [target] with [victim.p_their()] broken [limb.name], recoiling from pain!</span>", \
+			"<span class='userdanger'>You fail to strike [target] as the fracture in your [limb.name] lights up in unbearable pain!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.emote("scream")
+			victim.Stun(0.5 SECONDS)
+			limb.receive_damage(brute=rand(3,7))
+			return COMPONENT_NO_ATTACK_HAND
+
+
+/datum/wound/brute/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	if(!(wounding_type in list(WOUND_SHARP, WOUND_BURN)) || !splinted || !victim || wound_bonus == CANT_WOUND)
 		return
 
 	splinted.take_damage(wounding_dmg, damage_type = (wounding_type == WOUND_SHARP ? BRUTE : BURN), sound_effect = FALSE)
@@ -51,7 +67,6 @@
 		victim.visible_message("<span class='danger'>The splint securing [victim]'s [limb.name] is [destroyed_verb] away!</span>", "<span class='danger'><b>The splint securing your [limb.name] is [destroyed_verb] away!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
 		splinted = null
 		treat_priority = TRUE
-		examine_desc = initial(examine_desc)
 		update_inefficiencies()
 
 
@@ -96,25 +111,6 @@
 
 	limb.update_wounds()
 
-// note this is only for humans since they alone have COMSIG_HUMAN_EARLY_UNARMED_ATTACK
-/datum/wound/brute/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
-	if(victim.get_active_hand() != limb || victim.a_intent == INTENT_HELP || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
-		return
-
-	// With a severe or critical wound, you have a 33% or 66% chance to proc pain on hit
-	if(prob(33 * (severity - 1)))
-		// And you have a 70% or 50% chance to actually land the blow, respectively
-		if(prob(70 - 20 * (severity - 1)))
-			to_chat(victim, "<span class='userdanger'>The fracture in your [limb.name] shoots with pain as you strike [target]!</span>")
-			limb.receive_damage(brute=rand(1,5))
-		else
-			victim.visible_message("<span class='danger'>[victim] weakly strikes [target] with [victim.p_their()] broken [limb.name], recoiling from pain!</span>", \
-			"<span class='userdanger'>You fail to strike [target] as the fracture in your [limb.name] lights up in unbearable pain!</span>", vision_distance=COMBAT_MESSAGE_RANGE)
-			victim.emote("scream")
-			victim.Stun(0.5 SECONDS)
-			limb.receive_damage(brute=rand(3,7))
-			return COMPONENT_NO_ATTACK_HAND
-
 /*
 	BEWARE OF REDUNDANCY AHEAD THAT I MUST PARE DOWN
 */
@@ -124,20 +120,12 @@
 		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
 		return
 
-	if(user == victim)
-		user.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting your [limb.name] with [I]...</span>")
-	else
-		user.visible_message("<span class='notice'>[user] begins splinting [victim]'s [limb.name] with [I].</span>", "<span class='notice'>You begin splinting [victim]'s [limb.name] with [I]...</span>")
+	user.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting your [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 
 	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
 		return
 
-	if(user == victim)
-		user.visible_message("<span class='green'>[user] finishes splinting [victim.p_their()] [limb.name]!</span>", "<span class='green'>You finish splinting your [limb.name]!</span>")
-	else
-		user.visible_message("<span class='green'>[user] finishes splinting [victim]'s [limb.name]!</span>", "<span class='green'>You finish splinting [victim]'s [limb.name]!</span>")
-
-	examine_desc = splint_examine_desc + I.name
+	user.visible_message("<span class='green'>[user] finishes splinting [victim]'s [limb.name]!</span>", "<span class='green'>You finish splinting [user == victim ? "your" : "[victim]'s"] [limb.name]!</span>")
 	treat_priority = FALSE
 	splinted = new I.type(limb)
 	splinted.amount = 1
@@ -155,6 +143,7 @@
 	examine_desc = "is awkwardly jammed out of place"
 	occur_text = "jerks violently and becomes unseated"
 	severity = WOUND_SEVERITY_MODERATE
+	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	interaction_efficiency_penalty = 1.5
 	limp_slowdown = 3
 	threshold_minimum = 35
@@ -179,9 +168,6 @@
 			malpractice(user)
 		return TRUE
 
-/*
-
-*/
 /datum/wound/brute/bone/moderate/proc/chiropractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
@@ -197,7 +183,7 @@
 		to_chat(victim, "<span class='userdanger'>[user] snaps your dislocated [limb.name] back into place!</span>")
 		victim.emote("scream")
 		limb.receive_damage(brute=20, wound_bonus=CANT_WOUND)
-		remove_wound()
+		qdel(src)
 	else
 		user.visible_message("<span class='danger'>[user] wrenches [victim]'s dislocated [limb.name] around painfully!</span>", "<span class='danger'>You wrench [victim]'s dislocated [limb.name] around painfully!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] wrenches your dislocated [limb.name] around painfully!</span>")
@@ -244,7 +230,7 @@
 		to_chat(victim, "<span class='userdanger'>[user] resets your [limb.name]!</span>")
 
 	victim.emote("scream")
-	remove_wound()
+	qdel(src)
 
 /*
 	Severe (Hairline Fracture)

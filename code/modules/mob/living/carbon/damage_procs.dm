@@ -237,7 +237,7 @@
 
 		for(var/w in picked.wounds)
 			var/datum/wound/W = w
-			W.remove_wound()
+			qdel(W)
 
 		parts -= picked
 	if(updating_health)
@@ -264,7 +264,7 @@
 		var/stamina_was = picked.stamina_dam
 
 
-		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE, required_status)
+		update |= picked.receive_damage(brute_per_part, burn_per_part, stamina_per_part, FALSE, required_status, wound_bonus = CANT_WOUND) // disabling wounds from these for now cuz your entire body snapping cause your heart stopped would suck
 
 		brute	= round(brute - (picked.brute_dam - brute_was), DAMAGE_PRECISION)
 		burn	= round(burn - (picked.burn_dam - burn_was), DAMAGE_PRECISION)

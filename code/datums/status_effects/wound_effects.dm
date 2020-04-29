@@ -107,7 +107,6 @@
 // wound status effect base
 /datum/status_effect/wound
 	id = "wound"
-	var/alert_id = "wound"
 	status_type = STATUS_EFFECT_MULTIPLE
 	var/obj/item/bodypart/linked_limb
 	var/datum/wound/linked_wound
@@ -116,8 +115,6 @@
 /datum/status_effect/wound/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
 	if(owner)
-		if(LAZYLEN(owner.has_status_effect_list(alert_id)) <= 1) // basically if we have no wounds
-			owner.clear_alert(alert_id)
 		LAZYREMOVE(owner.status_effects, src)
 		on_remove()
 		owner = null

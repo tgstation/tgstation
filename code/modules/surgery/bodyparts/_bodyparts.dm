@@ -187,7 +187,7 @@
 	if(wounding_type == WOUND_BRUTE && sharpness)
 		wounding_type = WOUND_SHARP
 	// i know this is effectively the same check as above but i don't know if those can null the damage by rounding and want to be safe
-	if((brute || burn) && wound_bonus != CANT_WOUND)
+	if(owner && wounding_dmg > 4 && wound_bonus != CANT_WOUND)
 		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
 		// handle all our wounding stuff
 		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
@@ -206,7 +206,7 @@
 
 	for(var/i in wounds)
 		var/datum/wound/W = i
-		W.receive_damage(wounding_type, wounding_dmg)
+		W.receive_damage(wounding_type, wounding_dmg, wound_bonus)
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
@@ -257,17 +257,29 @@
 
 		if(initial(possible_wound.threshold_minimum) < injury_roll)
 			if(replaced_wound)
-				replaced_wound.remove_wound()
-			var/datum/wound/W = new possible_wound
-			W.apply_wound(src)
+				replaced_wound.replace_wound(possible_wound)
+			else
+				var/datum/wound/new_wound = new possible_wound
+				new_wound.apply_wound(src)
 			return
 
+// try forcing a specific wound, but only if there isn't already a wound of that  severity or greater for that type on this bodypart
+/obj/item/bodypart/proc/force_wound_upwards(specific_woundtype)
+	var/datum/wound/potential_wound = specific_woundtype
+	for(var/datum/wound/existing_wound in wounds)
+		if(existing_wound.type in (initial(potential_wound.wound_type)))
+			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
+				existing_wound.replace_wound(potential_wound)
+			return
+
+	var/datum/wound/new_wound = new potential_wound
+	new_wound.apply_wound(src)
 
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
 	var/injury_mod = 0
 
-	var/bwb = 0
+	//var/bwb = 0
 
 	if(owner && ishuman(owner))
 		var/mob/living/carbon/human/H = owner
@@ -283,15 +295,15 @@
 
 		if(!armor_ablation)
 			injury_mod += bare_wound_bonus
-			bwb = bare_wound_bonus
+			//bwb = bare_wound_bonus
 
 	injury_mod -= armor_ablation
 	injury_mod += wound_bonus
 
-	var/tp = 0
+	//var/tp = 0
 	for(var/thing in wounds)
 		var/datum/wound/W = thing
-		tp += W.threshold_penalty
+		//tp += W.threshold_penalty
 		injury_mod += W.threshold_penalty
 
 	var/part_mod = -wound_resistance
@@ -330,9 +342,13 @@
 
 //Checks disabled status thresholds
 /obj/item/bodypart/proc/update_disabled()
+	if(!owner)
+		return
 	set_disabled(is_disabled())
 
 /obj/item/bodypart/proc/is_disabled()
+	if(!owner)
+		return
 	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
 		return BODYPART_DISABLED_PARALYSIS
 	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
@@ -352,7 +368,7 @@
 		return BODYPART_NOT_DISABLED
 
 /obj/item/bodypart/proc/set_disabled(new_disabled)
-	if(disabled == new_disabled)
+	if(disabled == new_disabled || !owner)
 		return
 	disabled = new_disabled
 	if(disabled && owner.get_item_for_held_index(held_index))

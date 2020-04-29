@@ -29,6 +29,12 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/lasergun/old)
 	ammo_x_offset = 3
 
+/obj/item/gun/energy/laser/retro/hellgun
+	name ="hellfire laser gun"
+	desc = "A relic of a laser gun, tuned to a much higher power level than Nanotrasen's modern beam laser weapons. While devastatingly effective against lightly armored humanoids, TerraGov balked at the grotesque burns it inflicted, witholding lucrative arms contracts until the power was lowered."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
+	ammo_x_offset = 3
+
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
 	icon_state = "caplaser"
@@ -37,7 +43,6 @@
 	force = 10
 	ammo_x_offset = 3
 	selfcharge = 1
-	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/gun/energy/laser/captain/scattershot

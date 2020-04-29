@@ -234,7 +234,7 @@
 
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
-	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with."
+	description = "Spaceacillin will prevent a patient from conventionally spreading any diseases they are currently infected with. Also reduces infection in serious burns."
 	color = "#E1F2E6"
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 
@@ -1334,3 +1334,11 @@
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.Dizzy(0)
 	L.Jitter(0)
+
+// handled in cut wounds process
+/datum/reagent/medicine/coagulent
+	name = "Sanguirite"
+	description = "A coagulent used to help open cuts clot faster."
+	reagent_state = LIQUID
+	color = "#bb2424"
+	metabolization_rate = 0.25 * REAGENTS_METABOLISM

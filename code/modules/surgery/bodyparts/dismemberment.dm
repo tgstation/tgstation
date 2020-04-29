@@ -99,8 +99,9 @@
 
 	for(var/thing in wounds)
 		var/datum/wound/W = thing
-		W.victim = null
-		LAZYREMOVE(C.all_wounds, W)
+		W.remove_wound(TRUE)
+		W.hibernate = W.processes
+		W.processes = FALSE
 
 	owner = null
 
@@ -313,6 +314,11 @@
 
 	for(var/obj/item/organ/O in contents)
 		O.Insert(C)
+
+	for(var/i in wounds)
+		var/datum/wound/W = i
+		W.apply_wound(src, TRUE)
+		W.processes = W.hibernate
 
 	update_bodypart_damage_state()
 

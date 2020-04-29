@@ -29,7 +29,7 @@
 	/// This sound will be played upon the wound being applied
 	var/sound_effect
 
-	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL
+	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
 	/// What damage type can allow this wound to be rolled, currently either BRUTE or BURN, not actually really used rn
 	var/damtype = BRUTE
@@ -43,8 +43,12 @@
 
 	/// Specific items such as bandages or sutures that can try directly treating this wound
 	var/list/treatable_by
+	/// Specific items such as bandages or sutures that can try directly treating this wound only if the user has the victim in an aggressive grab or higher
+	var/list/treatable_by_grabbed
 	/// Tools with the specified tool flag will also be able to try directly treating this wound
 	var/treatable_tool
+	/// Set to TRUE if we don't give a shit about the patient's comfort and are allowed to just use any random sharp thing on this wound. Will require an aggressive grab or more to perform
+	var/treatable_sharp
 	/// How long it will take to treat this wound with a standard effective tool, assuming it doesn't need surgery
 	var/base_treat_time = 5 SECONDS
 
@@ -57,6 +61,9 @@
 
 	/// If we currently need to process each life tick
 	var/processes = FALSE
+	/// We stop processing on dismembered or detached limbs, but if some other dumb sucker gets a rotten arm attached to them, we use this to remember if we were processing before
+	var/hibernate
+
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
 
@@ -80,8 +87,10 @@
 	var/datum/status_effect/linked_status_effect
 
 /datum/wound/Destroy()
-	. = ..()
 	remove_wound()
+	limb = null
+	victim = null
+	return ..()
 
 /**
   * apply_wound() is used once a wound type is instantiated to assign it to a bodypart, and actually come into play.
@@ -91,16 +100,16 @@
   * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
   * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
   * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
-  * * special_arg: Pretty sure this is obsolete, i'll remove this shortly
   */
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = NONE, special_arg = NONE)
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
 		return
 
-	// we accept promotions and demotions, but no point in redundancy
+	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
+	// in case we ever directly add wounds
 	for(var/i in L.wounds)
-		var/datum/wound/prexisting_wound = i
-		if(prexisting_wound.type == type)
+		var/datum/wound/preexisting_wound = i
+		if(preexisting_wound.type == type && preexisting_wound != src)
 			qdel(src)
 			return
 
@@ -138,25 +147,22 @@
 		wound_injury()
 		second_wind()
 
-/// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times
-/datum/wound/proc/remove_wound()
-	if(limb)
-		LAZYREMOVE(limb.wounds, src)
-		limb.update_wounds()
-		limb = null
+/// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
+/datum/wound/proc/remove_wound(ignore_limb)
 	if(victim)
 		LAZYREMOVE(victim.all_wounds, src)
 		if(!victim.all_wounds)
 			victim.clear_alert("wound")
 		SEND_SIGNAL(victim, COMSIG_CARBON_LOSE_WOUND, src, limb)
-		victim = null
+	if(limb && !ignore_limb)
+		LAZYREMOVE(limb.wounds, src)
+		limb.update_wounds()
 
 /// When you want to swap out one wound for another (typically a promotion or demotion in the same wound type). First we remove the old one, then we apply the new one with a reference to the old one, then we qdel the old one fully
-/datum/wound/proc/replace_wound(new_type, special_arg)
+/datum/wound/proc/replace_wound(new_type)
 	var/datum/wound/new_wound = new new_type
-	var/obj/item/bodypart/temp_limb = limb // since we're about to null it
 	remove_wound()
-	new_wound.apply_wound(temp_limb, silent = TRUE, old_wound = src)
+	new_wound.apply_wound(limb, old_wound = src)
 	qdel(src)
 
 /// The immediate negative effects faced as a result of the wound
@@ -184,15 +190,27 @@
   * * user: The mob trying to use it on us
   */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
-	if(limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
+	if(!I || limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
 		return FALSE
+
+	if(treatable_sharp && I.sharpness && user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE)
+		treat(I, user)
+		return TRUE
 
 	if((I.tool_behaviour != treatable_tool) && !(treatable_tool == TOOL_CAUTERY && I.get_temperature() > 300))
 		var/allowed = FALSE
-		for(var/allowed_type in treatable_by)
-			if(istype(I, allowed_type))
-				allowed = TRUE
-				break
+		if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE)
+			for(var/allowed_type in treatable_by_grabbed)
+				if(istype(I, allowed_type))
+					allowed = TRUE
+					break
+
+		if(!allowed)
+			for(var/allowed_type in treatable_by)
+				if(istype(I, allowed_type))
+					allowed = TRUE
+					break
+
 		if(!allowed)
 			return FALSE
 
@@ -231,7 +249,7 @@
 	return (!QDELETED(src) && limb)
 
 /// When our parent bodypart is hurt
-/datum/wound/proc/receive_damage(wounding_type, wounding_dmg)
+/datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	return
 
 /**
@@ -244,6 +262,9 @@
   */
 /datum/wound/proc/get_examine_description(mob/user)
 	return "<B>[victim.p_their(TRUE)] [limb.name] [examine_desc]!</B>"
+
+/datum/wound/proc/get_scanner_description(mob/user)
+	return "Type: [name]\nSeverity: [severity_text()]\nDescription: [desc]\nRecommended Treatment: [treat_text]"
 
 /datum/wound/proc/severity_text()
 	switch(severity)
