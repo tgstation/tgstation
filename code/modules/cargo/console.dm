@@ -196,6 +196,9 @@
 				if(!istype(id_card))
 					say("No ID card detected.")
 					return
+				if(istype(id_card, /obj/item/card/id/departmental_budget))
+					say("The [src] rejects [id_card].")
+					return
 				account = id_card.registered_account
 				if(!istype(account))
 					say("Invalid bank account.")
