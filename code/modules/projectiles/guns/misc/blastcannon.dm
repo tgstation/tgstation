@@ -150,7 +150,13 @@
 				if(prob(wallbreak_chance))
 					W.dismantle_wall(TRUE, TRUE)
 		else
-			loc.ex_act(amount_destruction)
+			switch(amount_destruction)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.highturf += loc
+				if(EXPLODE_HEAVY)
+					SSexplosions.medturf += loc
+				if(EXPLODE_LIGHT)
+					SSexplosions.lowturf += loc
 	else
 		qdel(src)
 
