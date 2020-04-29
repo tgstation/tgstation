@@ -16,7 +16,7 @@
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
 	var/sign_change_name
 
-/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames) inheret from the parent type.
+/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
 	icon_state = "backing"
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
@@ -68,6 +68,8 @@
 
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
+	if(!buildable_sign)
+		return TRUE
 	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 						 "<span class='notice'>You start unfastening [src].</span>")
 	I.play_tool_sound(src)
@@ -217,3 +219,4 @@
 	name = "\improper Nanotrasen logo sign"
 	desc = "The Nanotrasen corporate logo."
 	icon_state = "nanotrasen_sign1"
+	buildable_sign = FALSE
