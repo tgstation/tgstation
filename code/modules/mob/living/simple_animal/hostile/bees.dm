@@ -45,11 +45,11 @@
 	movement_type = FLYING
 	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
+	can_be_held = TRUE
 
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	minbodytemp = 0
-	del_on_death = 1
 
 	var/datum/reagent/beegent = null //hehe, beegent
 	var/obj/structure/beebox/beehome = null
@@ -77,15 +77,7 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
-	// Spawn the "bee" food. We can't just set this as a normal drop, as we need to set it to the bee's color and give it the bee's reagents.
-	// Optimally we could have like, a proc that returns loot drops on death, but I ain't refactoring jack shit for the purpose of eating bees.
-	var/obj/item/reagent_containers/food/snacks/bee/bee_snack = new(loc)
-	bee_snack.pixel_x = pixel_x
-	bee_snack.pixel_y = pixel_y
-	bee_snack.filling_color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
-	bee_snack.update_snack_overlays(bee_snack)
-	if(beegent)
-		bee_snack.reagents.add_reagent(beegent.type, 5)
+	new /obj/item/bee(loc, src)
 	beegent = null
 	..()
 
@@ -237,6 +229,17 @@
 	var/datum/reagent/R = pick(typesof(/datum/reagent/toxin))
 	assign_reagent(GLOB.chemical_reagents_list[R])
 
+/mob/living/simple_animal/hostile/poison/bees/toxin/mob_pickup(mob/living/L)
+	to_chat(world, "1")
+	if(!iscarbon(L) || !L.canUseTopic(src, BE_CLOSE))
+		return FALSE
+	var/oldLoc = loc
+	var/obj/item/bee/dr_bees = new(L.loc, src)
+	if(!L.put_in_hands(dr_bees))
+		dr_bees.bee = null
+		forceMove(oldLoc)
+		qdel(dr_bees)
+
 /mob/living/simple_animal/hostile/poison/bees/queen
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
@@ -247,7 +250,6 @@
 //the Queen doesn't leave the box on her own, and she CERTAINLY doesn't pollinate by herself
 /mob/living/simple_animal/hostile/poison/bees/queen/Found(atom/A)
 	return FALSE
-
 
 //leave pollination for the peasent bees
 /mob/living/simple_animal/hostile/poison/bees/queen/AttackingTarget()
@@ -270,23 +272,63 @@
 		return TRUE
 	return FALSE
 
+/obj/item/bee
+	name = "bee"
+	desc = "It's a bee. What more could you ask for?"
+	icon = 'icons/mob/bees.dmi'
+	icon_state = "bee_item"
+	item_state = ""
+	var/mob/living/simple_animal/hostile/poison/bees/bee
+	var/overlay_name = "bee_item_overlay"
 
-/obj/item/queen_bee
+/obj/item/bee/Initialize(mapload, mob/living/simple_animal/hostile/poison/bees/bee)
+	. = ..()
+	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	if(bee)
+		bee.forceMove(src)
+		pixel_x = bee.pixel_x
+		pixel_y = bee.pixel_y
+		src.bee = bee
+		if(bee.beegent)
+			reagents.add_reagent(bee.beegent.type, 5)
+	update_icon()
+
+/obj/item/bee/Destroy()
+	. = ..()
+	if(bee)
+		qdel(bee)
+
+/obj/item/bee/dropped(mob/user, silent)
+	. = ..()
+	if(bee && !bee.stat)
+		bee.forceMove(user.loc)
+		bee = null
+		qdel(src)
+
+/obj/item/bee/update_icon()
+	. = ..()
+	if(overlay_name && bee)
+		cut_overlays()
+		var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = overlay_name)
+		body_overlay.color = bee.beegent ? bee.beegent.color : BEE_DEFAULT_COLOUR
+		add_overlay(body_overlay)
+
+
+/obj/item/bee/queen
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
-	item_state = ""
-	icon = 'icons/mob/bees.dmi'
+	overlay_name = null
 	var/mob/living/simple_animal/hostile/poison/bees/queen/queen
 
 
-/obj/item/queen_bee/attackby(obj/item/I, mob/user, params)
+/obj/item/bee/queen/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/syringe))
 		var/obj/item/reagent_containers/syringe/S = I
 		if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly)) //checked twice, because I really don't want royal bee jelly to be duped
 			if(S.reagents.has_reagent(/datum/reagent/royal_bee_jelly,5))
 				S.reagents.remove_reagent(/datum/reagent/royal_bee_jelly, 5)
-				var/obj/item/queen_bee/qb = new(user.drop_location())
+				var/obj/item/bee/queen/qb = new(user.drop_location())
 				qb.queen = new(qb)
 				if(queen && queen.beegent)
 					qb.queen.assign_reagent(queen.beegent) //Bees use the global singleton instances of reagents, so we don't need to worry about one bee being deleted and her copies losing their reagents.
@@ -306,12 +348,12 @@
 	..()
 
 
-/obj/item/queen_bee/bought/Initialize()
+/obj/item/bee/queen/bought/Initialize()
 	. = ..()
 	queen = new(src)
 
 
-/obj/item/queen_bee/Destroy()
+/obj/item/bee/queen/Destroy()
 	QDEL_NULL(queen)
 	return ..()
 

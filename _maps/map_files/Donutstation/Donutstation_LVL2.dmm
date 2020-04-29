@@ -4180,7 +4180,7 @@
 /obj/item/honey_frame,
 /obj/item/honey_frame,
 /obj/item/honey_frame,
-/obj/item/queen_bee/bought,
+/obj/item/bee/queen/bought,
 /obj/item/melee/flyswatter,
 /turf/open/floor/plasteel,
 /area/hydroponics/upper)
