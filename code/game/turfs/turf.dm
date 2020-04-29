@@ -576,7 +576,7 @@
 	for(Door in range(1, src))
 		Door.adjacent_fire_act(exposed_temperature)
 	if(to_be_destroyed && !changing_turf)
-		damage_amount = clamp((exposed_temperature - heat_capacity)/10000, 1, 15)
+		damage_amount = clamp((exposed_temperature - heat_capacity)/1000, 1, 15)
 		turf_take_heat_damage(damage_amount)
 	else
 		max_fire_temperature_sustained = 0
