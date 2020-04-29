@@ -85,6 +85,7 @@
 		unwrenched_sign.icon_state = icon_state
 		unwrenched_sign.sign_path = type
 		unwrenched_sign.custom_materials = custom_materials //This is here so picture frames and wooden things don't get messed up.
+		unwrenched_sign.is_editable = is_editable
 	unwrenched_sign.obj_integrity = obj_integrity //Transfer how damaged it is.
 	unwrenched_sign.setDir(dir)
 	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
