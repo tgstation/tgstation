@@ -78,6 +78,7 @@
 		beehome.bees -= src
 		beehome = null
 	// Spawn the "bee" food. We can't just set this as a normal drop, as we need to set it to the bee's color and give it the bee's reagents.
+	// Optimally we could have like, a proc that returns loot drops on death, but I ain't refactoring jack shit for the purpose of eating bees.
 	var/obj/item/reagent_containers/food/snacks/bee/bee_snack = new(loc)
 	bee_snack.pixel_x = pixel_x
 	bee_snack.pixel_y = pixel_y
