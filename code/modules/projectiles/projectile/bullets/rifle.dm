@@ -8,6 +8,7 @@
 /obj/projectile/bullet/a556/phasic
 	name = "5.56mm phasic bullet"
 	icon_state = "gaussphase"
+	speed = 0.4
 	movement_type = FLYING | UNSTOPPABLE
 	damage = 20
 	armour_penetration = 70
