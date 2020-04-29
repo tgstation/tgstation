@@ -23,6 +23,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	var/explosion_level = 0	//for preventing explosion dodging
 	var/explosion_id = 0
+	var/list/explosion_throw_details
 
 	var/requires_activation	//add to air processing after initialize?
 	var/changing_turf = FALSE
