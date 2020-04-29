@@ -634,10 +634,12 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			playsound(src, drop_sound, YEET_SOUND_VOLUME, ignore_walls = FALSE)
 		return hit_atom.hitby(src, 0, itempush, throwingdatum=throwingdatum)
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+	if(HAS_TRAIT(src, TRAIT_NODROP))
+		return
 	thrownby = thrower
 	callback = CALLBACK(src, .proc/after_throw, callback) //replace their callback with our own
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
 
 
 /obj/item/proc/after_throw(datum/callback/callback)
@@ -908,11 +910,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			plane = initial(plane)
 			appearance_flags &= ~NO_CLIENT_COLOR
 			dropped(M, FALSE)
-	return ..()
-
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, gentle = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NODROP))
-		return
 	return ..()
 
 /obj/item/proc/embedded(mob/living/carbon/human/embedded_mob)
