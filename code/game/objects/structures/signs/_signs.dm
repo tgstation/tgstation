@@ -15,17 +15,18 @@
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
-	var/is_editable = FALSE
+	var/is_editable = TRUE
 	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
-	var/sign_change_name = "Sign - Blank" //If this is ever seen in game, something went wrong.
+	var/sign_change_name = "Blank Sign"
 
 /obj/item/sign
-	name = "sign backing"
-	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
+	item_state = "backing"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
-	rightthand_file = 'icons/mob/inhands/items_rigthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
+	name = "sign backing"
+	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/plastic = 2000)
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
