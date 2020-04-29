@@ -247,7 +247,7 @@
 	custom_price = 50
 	var/break_chance = 25
 
-/obj/item/kitchen/knife/plastic/afterattack(mob/living/carbon/user)
+/obj/item/kitchen/spoon/plastic/afterattack(mob/living/carbon/user)
 	.=..()
 	if(prob(break_chance))
 		user.visible_message("<span class='danger'>[user]'s spoon snaps into tiny pieces in their hand.</span>")
