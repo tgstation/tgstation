@@ -63,8 +63,6 @@
 	var/static/regex/lizard_kSS = new(@"(\w)X", "g")
 	var/static/regex/lizard_ecks = new(@"\bx([\-|r|R]|\b)", "g")
 	var/static/regex/lizard_eckS = new(@"\bX([\-|r|R]|\b)", "g")
-	var/static/regex/lizard_hizz = new(@"\bx(\w)", "g")//This chunk checks for X's the sounds like Z's. Xeno >> (Z)eno
-	var/static/regex/lizard_hiZZ = new(@"\bX(\w)", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = lizard_hiss.Replace(message, "sss")
