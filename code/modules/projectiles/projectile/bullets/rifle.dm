@@ -2,7 +2,15 @@
 
 /obj/projectile/bullet/a556
 	name = "5.56mm bullet"
-	damage = 40
+	damage = 35
+	armour_penetration = 30
+
+/obj/projectile/bullet/a556/phasic
+	name = "5.56mm phasic bullet"
+	icon_state = "gaussphase"
+	movement_type = FLYING | UNSTOPPABLE
+	damage = 20
+	armour_penetration = 70
 
 // 7.62 (Nagant Rifle)
 

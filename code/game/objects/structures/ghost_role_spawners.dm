@@ -718,7 +718,7 @@
 	shoes = /obj/item/clothing/shoes/combat
 	gloves = /obj/item/clothing/gloves/combat
 	back = /obj/item/storage/backpack
-	l_pocket = /obj/item/gun/ballistic/automatic/pistol/APS
+	l_pocket = /obj/item/gun/ballistic/automatic/pistol/aps
 	r_pocket = /obj/item/kitchen/knife/combat/survival
 	belt = /obj/item/storage/belt/military/assault
 	id = /obj/item/card/id/syndicate_command/captain_id

@@ -69,15 +69,16 @@
 	icon_state = "deaglecamo"
 	item_state = "deagleg"
 
-/obj/item/gun/ballistic/automatic/pistol/APS
+/obj/item/gun/ballistic/automatic/pistol/aps
 	name = "stechkin APS machine pistol"
-	desc = "An old Soviet machine pistol. Uses 9mm ammo. Has a threaded barrel for suppressors."
+	desc = "An old Soviet machine pistol. It fires quickly, but kicks like a mule. Uses 9mm ammo. Has a threaded barrel for suppressors."
 	icon_state = "aps"
 	w_class = WEIGHT_CLASS_NORMAL
 	mag_type = /obj/item/ammo_box/magazine/m9mm_aps
 	can_suppress = TRUE
 	burst_size = 3
-	fire_delay = 2
+	fire_delay = 1
+	spread = 10
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 
 /obj/item/gun/ballistic/automatic/pistol/stickman
