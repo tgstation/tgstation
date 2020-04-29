@@ -28,10 +28,10 @@ SUBSYSTEM_DEF(explosions)
 	var/list/lowobj = list()
 	var/list/medobj = list()
 	var/list/highobj = list()
-	
+
 	var/list/throwobj = list()
 
-	
+
 
 	var/list/explosions = list()
 
@@ -62,7 +62,7 @@ SUBSYSTEM_DEF(explosions)
 	msg += "LO:[lowobj.len]|"
 	msg += "MO:[medobj.len]|"
 	msg += "HO:[highobj.len]|"
-	
+
 	msg += "TO:[throwobj.len]"
 
 	msg += "} "
@@ -324,17 +324,17 @@ SUBSYSTEM_DEF(explosions)
 		//--- THROW ITEMS AROUND ---
 
 		var/throw_dir = get_dir(epicenter,T)
-		for(var/obj/item/I in T)
-			if(!I.anchored)
+		for(var/atom/movable/A in T)
+			if(!A.anchored && A.move_resist != INFINITY)
 				var/throw_range = rand(throw_dist, max_range)
-				var/list/throwingobj = throwobj[I]
+				var/list/throwingobj = throwobj[A]
 				if (throwingobj)
 					if (throwingobj[1] < throw_range)
 						throwingobj[1] = throw_range
 						throwingobj[2] = throw_dir
 				else
-					throwobj[I] = list(throw_range, throw_dir)
-				
+					throwobj[A] = list(throw_range, throw_dir)
+
 
 	var/took = (REALTIMEOFDAY - started_at) / 10
 
@@ -440,10 +440,6 @@ SUBSYSTEM_DEF(explosions)
 				O.ex_act(EXPLODE_LIGHT)
 		cost_lowobj = MC_AVERAGE(cost_lowobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 
-
-	if (MC_TICK_CHECK)
-		return
-
 	if(currentpart == SSEXPLOSIONS_TURFS)
 		currentpart = SSEXPLOSIONS_THROWS
 		var/list/low_turf = lowturf
@@ -460,6 +456,12 @@ SUBSYSTEM_DEF(explosions)
 				var/turf/T = thing
 				T.explosion_level = max(T.explosion_level, EXPLODE_LIGHT)
 				T.ex_act(EXPLODE_LIGHT)
+				for(var/atom/movable/A in T)
+					if(!A.anchored && A.move_resist != INFINITY)
+						var/throw_range = rand(1, 20)
+						var/list/throwingobj = throwobj[A]
+						if (!throwingobj)
+							throwobj[A] = list(throw_range, pick(list(NORTH,SOUTH,EAST,WEST,NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)))
 		cost_lowturf = MC_AVERAGE(cost_lowturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		timer = TICK_USAGE_REAL
 		for(var/thing in med_turf)
@@ -467,6 +469,12 @@ SUBSYSTEM_DEF(explosions)
 				var/turf/T = thing
 				T.explosion_level = max(T.explosion_level, EXPLODE_HEAVY)
 				T.ex_act(EXPLODE_HEAVY)
+				for(var/atom/movable/A in T)
+					if(!A.anchored && A.move_resist != INFINITY)
+						var/throw_range = rand(1, 20)
+						var/list/throwingobj = throwobj[A]
+						if (!throwingobj)
+							throwobj[A] = list(throw_range, pick(list(NORTH,SOUTH,EAST,WEST,NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)))
 		cost_medturf = MC_AVERAGE(cost_medturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
 		timer = TICK_USAGE_REAL
 		for(var/thing in high_turf)
@@ -474,20 +482,23 @@ SUBSYSTEM_DEF(explosions)
 				var/turf/T = thing
 				T.explosion_level = max(T.explosion_level, EXPLODE_DEVASTATE)
 				T.ex_act(EXPLODE_DEVASTATE)
+				for(var/atom/movable/A in T)
+					if(!A.anchored && A.move_resist != INFINITY)
+						var/throw_range = rand(1, 20)
+						var/list/throwingobj = throwobj[A]
+						if (!throwingobj)
+							throwobj[A] = list(throw_range, pick(list(NORTH,SOUTH,EAST,WEST,NORTHWEST,NORTHEAST,SOUTHWEST,SOUTHEAST)))
 		cost_highturf = MC_AVERAGE(cost_highturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		
+
 		timer = TICK_USAGE_REAL
 		for(var/thing in flame_turf)
 			if(thing)
 				var/turf/T = thing
 				new /obj/effect/hotspot(T) //Mostly for ambience!
 		cost_flameturf = MC_AVERAGE(cost_flameturf, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
-		
+
 		if (low_turf.len || med_turf.len || high_turf.len)
 			Master.laggy_byond_map_update_incoming()
-		
-
-		return
 
 	if (currentpart == SSEXPLOSIONS_THROWS)
 		currentpart = SSEXPLOSIONS_MOVABLES
@@ -503,7 +514,7 @@ SUBSYSTEM_DEF(explosions)
 			var/throw_dir = L[2]
 			var/turf/throw_at = get_ranged_target_turf(I, throw_dir, throw_range)
 			I.throw_at(throw_at, throw_range, EXPLOSION_THROW_SPEED)
-		cost_throwobj = MC_AVERAGE(cost_throwobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))	
-		
-		
+		cost_throwobj = MC_AVERAGE(cost_throwobj, TICK_DELTA_TO_MS(TICK_USAGE_REAL - timer))
+
+
 	currentpart = SSEXPLOSIONS_MOVABLES
