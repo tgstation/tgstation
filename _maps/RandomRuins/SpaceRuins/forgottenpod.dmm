@@ -1,51 +1,615 @@
-"aa" = (/turf/open/space/basic,/area/space)
-"ab" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/obj/effect/decal/cleanable/blood/tracks,/turf/open/space/basic,/area/space/nearstation)
-"ac" = (/obj/structure/lattice/catwalk,/obj/structure/cable,/obj/effect/decal/cleanable/blood/tracks,/turf/open/space/basic,/area/ruin/unpowered/no_grav)
-"ad" = (/obj/effect/turf_decal/bot,/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/grenade/smokebomb,/obj/item/grenade/flashbang,/obj/effect/decal/cleanable/dirt,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ae" = (/obj/effect/turf_decal/bot,/obj/structure/closet/crate/secure/gear{icon_state = "crate"; locked = 0; opened = 1; req_one_access_txt = "150"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"af" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 9},/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ag" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 1},/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ah" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 1},/obj/structure/closet/crate/secure/gear{icon_state = "crate"; locked = 0; opened = 1; req_one_access_txt = "150"},/obj/effect/spawner/lootdrop/maintenance/two,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ai" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 1},/obj/effect/spawner/lootdrop/crate_spawner,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"aj" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 1},/obj/effect/decal/cleanable/blood/tracks,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ak" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 5},/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"al" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"am" = (/obj/machinery/door/airlock/grunge{armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90); desc = "Vault airlock preventing air from going out."; name = "Syndicate Vault Airlock"; req_one_access_txt = "150"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"an" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 8},/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ao" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ap" = (/obj/effect/turf_decal/stripes/corner{icon_state = "warninglinecorner"; dir = 4},/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"aq" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 5},/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/pickaxe/drill,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ar" = (/obj/machinery/door/airlock/external{name = "cargo pod airlock"; req_one_access_txt = "150"},/obj/structure/cable,/obj/effect/decal/cleanable/blood/tracks,/turf/open/floor/plating,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"as" = (/obj/effect/turf_decal/stripes/corner,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"at" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 6},/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"au" = (/obj/effect/turf_decal/bot,/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/effect/decal/cleanable/dirt,/turf/open/floor/pod/dark,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"av" = (/obj/effect/turf_decal/stripes/line{icon_state = "warningline"; dir = 10},/obj/structure/closet/crate/secure/gear{req_one_access_txt = "150"},/obj/item/relic,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"aw" = (/obj/effect/turf_decal/stripes/line,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ax" = (/obj/effect/turf_decal/stripes/line,/obj/structure/closet/crate/secure/gear{icon_state = "crate"; locked = 0; opened = 1; req_one_access_txt = "150"},/obj/effect/spawner/lootdrop/prison_contraband,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"ay" = (/obj/effect/turf_decal/stripes/line,/obj/effect/spawner/lootdrop/crate_spawner,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"az" = (/obj/effect/turf_decal/stripes/line,/obj/structure/closet/crate/secure/gear{icon_state = "crate"; locked = 0; opened = 1; req_one_access_txt = "150"},/obj/effect/spawner/lootdrop/maintenance/three,/obj/effect/decal/cleanable/dirt,/turf/open/floor/mineral/plastitanium,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"aA" = (/obj/effect/mob_spawn/human/corpse/syndicatesoldier,/turf/open/space/basic,/area/space)
-"aY" = (/turf/open/space/basic,/area/ruin/unpowered/no_grav)
-"ba" = (/turf/closed/mineral/random,/area/ruin/unpowered/no_grav)
-"bb" = (/turf/closed/wall/r_wall/syndicate,/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"bq" = (/turf/closed/mineral/random/high_chance,/area/ruin/unpowered/no_grav)
-"bs" = (/turf/closed/mineral,/area/ruin/unpowered/no_grav)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/open/space/basic,
+/area/space)
+"ab" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/space/basic,
+/area/space/nearstation)
+"ac" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/space/basic,
+/area/ruin/unpowered/no_grav)
+"ad" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/secure/gear{
+	req_one_access_txt = "150"
+	},
+/obj/item/grenade/smokebomb,
+/obj/item/grenade/flashbang,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ae" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/secure/gear{
+	icon_state = "crate";
+	locked = 0;
+	opened = 1;
+	req_one_access_txt = "150"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"af" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ag" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ah" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/obj/structure/closet/crate/secure/gear{
+	icon_state = "crate";
+	locked = 0;
+	opened = 1;
+	req_one_access_txt = "150"
+	},
+/obj/effect/spawner/lootdrop/maintenance/two,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ai" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"aj" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ak" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"al" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"am" = (
+/obj/machinery/door/airlock/grunge{
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 90, "acid" = 90);
+	desc = "Vault airlock preventing air from going out.";
+	name = "Syndicate Vault Airlock";
+	req_one_access_txt = "150"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"an" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ao" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ap" = (
+/obj/effect/turf_decal/stripes/corner{
+	icon_state = "warninglinecorner";
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"aq" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 5
+	},
+/obj/structure/closet/crate/secure/gear{
+	req_one_access_txt = "150"
+	},
+/obj/item/pickaxe/drill,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ar" = (
+/obj/machinery/door/airlock/external{
+	name = "cargo pod airlock";
+	req_one_access_txt = "150"
+	},
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"as" = (
+/obj/effect/turf_decal/stripes/corner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"at" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"au" = (
+/obj/effect/turf_decal/bot,
+/obj/structure/closet/crate/secure/gear{
+	req_one_access_txt = "150"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"av" = (
+/obj/effect/turf_decal/stripes/line{
+	icon_state = "warningline";
+	dir = 10
+	},
+/obj/structure/closet/crate/secure/gear{
+	req_one_access_txt = "150"
+	},
+/obj/item/relic,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"aw" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ax" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/crate/secure/gear{
+	icon_state = "crate";
+	locked = 0;
+	opened = 1;
+	req_one_access_txt = "150"
+	},
+/obj/effect/spawner/lootdrop/prison_contraband,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ay" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/spawner/lootdrop/crate_spawner,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"az" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/structure/closet/crate/secure/gear{
+	icon_state = "crate";
+	locked = 0;
+	opened = 1;
+	req_one_access_txt = "150"
+	},
+/obj/effect/spawner/lootdrop/maintenance/three,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"aA" = (
+/obj/effect/mob_spawn/human/corpse/syndicatesoldier,
+/turf/open/space/basic,
+/area/space)
+"aY" = (
+/turf/open/space/basic,
+/area/ruin/unpowered/no_grav)
+"ba" = (
+/turf/closed/mineral/random,
+/area/ruin/unpowered/no_grav)
+"bb" = (
+/turf/closed/wall/r_wall/syndicate,
+/area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"bq" = (
+/turf/closed/mineral/random/high_chance,
+/area/ruin/unpowered/no_grav)
+"bs" = (
+/turf/closed/mineral,
+/area/ruin/unpowered/no_grav)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaAaaaaaaaaaaaa
-aaaaaaaaaYaYaYaYaYaYaYaaaaaaabaaaaaaaaaaaa
-aaaaaaaYaYbabaaYbabaaYaYaYaaabaaaYaYaYaaaa
-aaaaaYaYbababqbqbabababaaYaYacaYaYbqaYaYaa
-aaaYaYbababqbqbqbqbqbababaaYacaYbqbqbqaYaY
-aaaYbababbbbbbbbbbbbbbbbbbbbarbbbbbqbqbqaY
-aYaYbqbbbbadaeaebbafagahaiaiajakbbbbbqbaaY
-aYbabqbbaealalalamanaoaoaoaoaoapaqbbbabaaY
-aYbqbqbbaealalalbbanaoaoaoaoaoasatbbbqbaaY
-aYbabqbbbbaeauaebbavawaxayazawatbbbbbqbaaY
-aYaYbababbbbbbbbbbbbbbbbbbbbbbbbbbbqbqbaaY
-aaaYaYbababqbqbqbqbqbqbabsbqbqbqbqbqbaaYaY
-aaaaaYaYaYaYbqbabqbqbaaYbabababababqaYaYaa
-aaaaaaaaaaaYaYaYbabqaYaYbabaaYaYaYaYaYaaaa
-aaaaaaaaaaaaaaaYaYbaaYaYbaaYaYaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaYaYaYaYaYaYaaaaaaaaaaaaaa
+aa
+aa
+aa
+aa
+aa
+aa
+aY
+aY
+aY
+aY
+aY
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aY
+aY
+aY
+ba
+bq
+ba
+aY
+aY
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aY
+aY
+ba
+bq
+bq
+bq
+bq
+ba
+aY
+aY
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aY
+aY
+ba
+ba
+bb
+bb
+bb
+bb
+ba
+ba
+aY
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aY
+aY
+ba
+ba
+bb
+bb
+ae
+ae
+bb
+bb
+ba
+aY
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aY
+ba
+ba
+bq
+bb
+ad
+al
+al
+ae
+bb
+bq
+aY
+aY
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aY
+ba
+bq
+bq
+bb
+ae
+al
+al
+au
+bb
+bq
+bq
+aY
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aY
+aY
+bq
+bq
+bb
+ae
+al
+al
+ae
+bb
+bq
+ba
+aY
+aY
+aa
+"}
+(9,1,1) = {"
+aa
+aY
+ba
+ba
+bq
+bb
+bb
+am
+bb
+bb
+bb
+bq
+bq
+ba
+aY
+aY
+"}
+(10,1,1) = {"
+aa
+aY
+ba
+ba
+bq
+bb
+af
+an
+an
+av
+bb
+bq
+bq
+bq
+ba
+aY
+"}
+(11,1,1) = {"
+aa
+aY
+aY
+ba
+ba
+bb
+ag
+ao
+ao
+aw
+bb
+bq
+ba
+aY
+aY
+aY
+"}
+(12,1,1) = {"
+aa
+aa
+aY
+ba
+ba
+bb
+ah
+ao
+ao
+ax
+bb
+ba
+aY
+aY
+aY
+aY
+"}
+(13,1,1) = {"
+aa
+aa
+aY
+aY
+ba
+bb
+ai
+ao
+ao
+ay
+bb
+bs
+ba
+ba
+ba
+aY
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aY
+aY
+bb
+ai
+ao
+ao
+az
+bb
+bq
+ba
+ba
+aY
+aY
+"}
+(15,1,1) = {"
+aA
+ab
+ab
+ac
+ac
+ar
+aj
+ao
+ao
+aw
+bb
+bq
+ba
+aY
+aY
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aY
+aY
+bb
+ak
+ap
+as
+at
+bb
+bq
+ba
+aY
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aY
+aY
+bq
+bb
+bb
+aq
+at
+bb
+bb
+bq
+ba
+aY
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aY
+bq
+bq
+bq
+bb
+bb
+bb
+bb
+bq
+bq
+bq
+aY
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aY
+aY
+bq
+bq
+bq
+ba
+bq
+bq
+bq
+ba
+aY
+aY
+aa
+aa
+"}
+(20,1,1) = {"
+aa
+aa
+aa
+aY
+aY
+bq
+ba
+ba
+ba
+ba
+ba
+aY
+aY
+aa
+aa
+aa
+"}
+(21,1,1) = {"
+aa
+aa
+aa
+aa
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aY
+aa
+aa
+aa
+aa
 "}
