@@ -83,7 +83,7 @@
 				if(T.value < -1)
 					dat += medical ? T.medical_record_text : T.name
 				if(!dat.len)
-					return medical ? "No minor disabilities have been declared." : "None"
+					return medical ? "No major disabilities have been declared." : "None"
 			return medical ?  dat.Join("<br>") : dat.Join(",")
 
 		//Minor Disabilities
