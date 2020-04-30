@@ -2251,7 +2251,9 @@ All effects don't start immediately, but rather get worse over time; the rate is
 	glass_desc = "Coolin' by the lockers, getting kind of funky, me and the crew, we're drinking Brass Monkey."
 
 /datum/reagent/consumable/ethanol/brass_monkey/on_mob_add(mob/living/M)
-	M.faction |= "jungle"
+	if(!HAS_TRAIT_FROM(M, TRAIT_MONKEYBRO, BRASS_MONKEY))
+		ADD_TRAIT(M, TRAIT_MONKEYBRO, BRASS_MONKEY)
 
 /datum/reagent/consumable/ethanol/brass_monkey/on_mob_delete(mob/living/M)
-	M.faction -= "jungle"
+	if(HAS_TRAIT_FROM(M, TRAIT_MONKEYBRO, BRASS_MONKEY))
+		REMOVE_TRAIT(M, TRAIT_MONKEYBRO, BRASS_MONKEY)
