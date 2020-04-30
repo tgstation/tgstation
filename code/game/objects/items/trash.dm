@@ -6,6 +6,7 @@
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	item_flags = NOBLUDGEON
 
 /obj/item/trash/Initialize(mapload)
 	var/turf/T = get_turf(src)
@@ -107,8 +108,3 @@
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
-
-
-// I'm pretty sure there was a reason this was empty, so imma just make it send signals. -steamport
-/obj/item/trash/attack(mob/M, mob/living/user)
-	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
