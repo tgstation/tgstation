@@ -60,7 +60,7 @@
 /datum/chemical_reaction/reagent_explosion/rdx_explosion2 //makes rdx unique , on its own it is a good bomb, but when combined with liquid electricity it becomes truly destructive
 	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/consumable/liquidelectricity = 1)
 	strengthdiv = 4
-	modifier = 2
+	modifier = 3
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion2/on_reaction(datum/reagents/holder, created_volume)
 	var/fire_range = round(created_volume/50)
@@ -73,7 +73,7 @@
 /datum/chemical_reaction/reagent_explosion/rdx_explosion3
 	required_reagents = list(/datum/reagent/rdx = 1 , /datum/reagent/teslium = 1)
 	modifier = 4
-	strengthdiv = 4
+	strengthdiv = 5
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion3/on_reaction(datum/reagents/holder, created_volume)
 	var/fire_range = round(created_volume/30)
@@ -131,7 +131,7 @@
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
-	strengthdiv = 18
+	strengthdiv = 20
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	required_reagents = list(/datum/reagent/water/holywater = 1, /datum/reagent/potassium = 1)
@@ -167,13 +167,34 @@
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion
 	required_reagents = list(/datum/reagent/gunpowder = 1)
 	required_temp = 474
-	strengthdiv = 6
-	modifier = 2
+	strengthdiv = 10
+	modifier = 5
 	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
 	sleep(rand(50,100))
 	..()
+
+/datum/chemical_reaction/ghetto_gunpowder
+	results = list(/datum/reagent/gunpowder/ghetto = 2)
+	required_reagents = list(/datum/reagent/phosphorus = 1,/datum/reagent/nitrogen = 1, /datum/reagent/carbon = 1, /datum/reagent/sulfur = 1)
+
+/datum/chemical_reaction/reagent_explosion/ghetto_gunpowder_explosion
+	required_reagents = list(/datum/reagent/gunpowder/ghetto = 1)
+	strengthdiv = 10
+	required_temp = 474
+	var/time_amplitude = 100
+
+/datum/chemical_reaction/reagent_explosion/ghetto_gunpowder_explosion/New()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
+
+/datum/chemical_reaction/reagent_explosion/ghetto_gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
+	sleep(rand(time_amplitude,time_amplitude*2))
+	..()
+
+/datum/chemical_reaction/reagent_explosion/ghetto_gunpowder_explosion/proc/UpdateInfo()
+	required_temp += rand(-30,30)
+	time_amplitude += rand(-50,50)
 
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
@@ -229,8 +250,8 @@
 /datum/chemical_reaction/reagent_explosion/methsplosion
 	required_temp = 380 //slightly above the meth mix time.
 	required_reagents = list(/datum/reagent/drug/methamphetamine = 1)
-	strengthdiv = 9
-	modifier = 1
+	strengthdiv = 12
+	modifier = 5
 	mob_react = FALSE
 
 /datum/chemical_reaction/reagent_explosion/methsplosion/on_reaction(datum/reagents/holder, created_volume)

@@ -115,6 +115,10 @@
 	e.start()
 	holder.clear_reagents()
 
+/datum/reagent/gunpowder/ghetto
+	name = "Improvised Gunpowder"
+	description = "Better than nothing i guess."
+
 /datum/reagent/rdx
 	name = "RDX"
 	description = "Military grade explosive"
