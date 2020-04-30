@@ -63,7 +63,7 @@
 	modifier = 2
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion2/on_reaction(datum/reagents/holder, created_volume)
-	var/fire_range = round(created_volume/100)
+	var/fire_range = round(created_volume/50)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(fire_range,T))
 		new /obj/effect/hotspot(turf)
@@ -76,7 +76,7 @@
 	strengthdiv = 4
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion3/on_reaction(datum/reagents/holder, created_volume)
-	var/fire_range = round(created_volume/50)
+	var/fire_range = round(created_volume/30)
 	var/turf/T = get_turf(holder.my_atom)
 	for(var/turf/turf in range(fire_range,T))
 		new /obj/effect/hotspot(turf)
@@ -110,6 +110,11 @@
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/New()
 	SSticker.OnRoundstart(CALLBACK(src,.proc/UpdateInfo))
 
+/datum/chemical_reaction/reagent_explosion/tatp_explosion/on_reaction(datum/reagents/holder, created_volume)
+	var/strengthdiv_adjust = created_volume / ( 2100 / initial(strengthdiv))
+	strengthdiv = max(initial(strengthdiv) - strengthdiv_adjust + 0.25 ,0.25) //small scale explosions are weak, but at the higher end it becomes a true force of nature
+	. = ..()
+	return
 
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/proc/UpdateInfo()
 	required_temp = 550 + rand(-49,49)
@@ -126,7 +131,7 @@
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion
 	required_reagents = list(/datum/reagent/water = 1, /datum/reagent/potassium = 1)
-	strengthdiv = 20
+	strengthdiv = 18
 
 /datum/chemical_reaction/reagent_explosion/potassium_explosion/holyboom
 	required_reagents = list(/datum/reagent/water/holywater = 1, /datum/reagent/potassium = 1)
@@ -163,7 +168,7 @@
 	required_reagents = list(/datum/reagent/gunpowder = 1)
 	required_temp = 474
 	strengthdiv = 6
-	modifier = 1
+	modifier = 2
 	mix_message = "<span class='boldannounce'>Sparks start flying around the gunpowder!</span>"
 
 /datum/chemical_reaction/reagent_explosion/gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
@@ -224,7 +229,7 @@
 /datum/chemical_reaction/reagent_explosion/methsplosion
 	required_temp = 380 //slightly above the meth mix time.
 	required_reagents = list(/datum/reagent/drug/methamphetamine = 1)
-	strengthdiv = 6
+	strengthdiv = 9
 	modifier = 1
 	mob_react = FALSE
 
