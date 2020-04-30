@@ -1,6 +1,3 @@
-//Both available scanning modes for the plant analyzer.
-#define SCANMODE_STATS		0
-#define SCANMODE_CHEMICALS 	1
 
 // Plant analyzer
 /obj/item/plant_analyzer
@@ -14,12 +11,12 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
-	var/scan_mode = SCANMODE_STATS
+	var/scan_mode = PLANT_SCANMODE_STATS
 
 /obj/item/plant_analyzer/attack_self(mob/user)
 	. = ..()
 	scan_mode = !scan_mode
-	to_chat(user, "<span class='notice'>You switch [src] to [scan_mode == SCANMODE_CHEMICALS ? "scan for chemical reagents and traits" : "scan for plant growth statistics"].</span>")
+	to_chat(user, "<span class='notice'>You switch [src] to [scan_mode == PLANT_SCANMODE_CHEMICALS ? "scan for chemical reagents and traits" : "scan for plant growth statistics"].</span>")
 
 // *************************************
 // Hydroponics Tools

@@ -1,8 +1,3 @@
-#define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
-#define YIELD_WEED_MINIMUM 3
-#define YIELD_WEED_MAXIMUM 10
-#define STATIC_NUTRIENT_CAPACITY 10
-
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
@@ -263,7 +258,7 @@
 			if(myseed.instability >= 80)
 				mutate(0, 0, 0, 0, 0, 0, 0, 5, 0) //Exceedingly low odds of gaining a trait.
 			if(myseed.instability >= 60)
-				if(prob((myseed.instability)/2) && !self_sustaining) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
+				if(prob((myseed.instability)/2) && !self_sustaining && length(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
 					mutatespecie()
 					myseed.instability = myseed.instability/2
 			if(myseed.instability >= 40)
@@ -647,14 +642,14 @@
 	else if(istype(O, /obj/item/plant_analyzer))
 		var/obj/item/plant_analyzer/P_analyzer = O
 		if(myseed)
-			if(P_analyzer.scan_mode == 0)
+			if(P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
 				to_chat(user, "*** <B>[myseed.plantname]</B> ***" )
 				to_chat(user, "- Plant Age: <span class='notice'>[age]</span>")
 				var/list/text_string = myseed.get_analyzer_text()
 				if(text_string)
 					to_chat(user, text_string)
 					to_chat(user, "*---------*")
-			if(myseed.reagents_add && P_analyzer.scan_mode == 1)
+			if(myseed.reagents_add && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
 				to_chat(user, "- <B>Plant Reagents</B> -")
 				to_chat(user, "*---------*")
 				for(var/datum/plant_gene/reagent/G in myseed.genes)

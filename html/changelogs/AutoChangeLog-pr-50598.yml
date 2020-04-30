@@ -1,9 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - rscadd: "Added electrolite components"
-  - rscadd: "Added electrolite components to the node tree"
-  - tweak: "changed the electrolyzer circuit board to use 2 electrolite, 2 capacitors, 5 cable coils and 1 glass sheet"
-  - tweak: "reduced h2 gas export gain"
-  - imageadd: "Added electrolites sprites (Thanks Trollbreeder!)"
-  - imageadd: "Changed the H2 canister sprite"
