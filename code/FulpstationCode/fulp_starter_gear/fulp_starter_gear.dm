@@ -167,3 +167,13 @@
 	build_path = /obj/item/melee/baton
 	category = list("Weapons")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/forensic_disk
+	name = "Forensic Data Disk"
+	desc = "A forensic data storage disk used with the detective's forensic scanner. Has read and write functionality."
+	id = "forensic_data_disk"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 50, /datum/material/glass = 50)
+	build_path = /obj/item/disk/forensic
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

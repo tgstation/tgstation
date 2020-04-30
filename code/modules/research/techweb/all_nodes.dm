@@ -573,7 +573,7 @@
 	id = "sec_basic"
 	display_name = "Basic Security Equipment"
 	description = "Standard equipment used by security."
-	design_ids = list("seclite", "pepperspray", "bola_energy", "zipties", "evidencebag", "sec_radio", "protolathe_handcuffs", "stun_baton", "sec_belt", "security_helmet", "security_armor", "security_uniform", "security_boots", "security_headset") //FULPSTATION Improved Sec Starter Gear by Surrealistik MAR 2020
+	design_ids = list("seclite", "pepperspray", "bola_energy", "zipties", "evidencebag", "sec_radio", "protolathe_handcuffs", "stun_baton", "sec_belt", "security_helmet", "security_armor", "security_uniform", "security_boots", "security_headset", "forensic_data_disk") //FULPSTATION Improved Sec Starter Gear by Surrealistik MAR 2020
 	prereq_ids = list("base")
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1000)
 	export_price = 5000
