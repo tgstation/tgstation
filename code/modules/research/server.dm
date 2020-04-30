@@ -83,6 +83,7 @@
 	// Once we go over the damage temp, the breaker is flipped
 	// Power is still going to the server
 	if(!overheated && current_temp >= temp_tolerance_damage)
+		investigate_log("[src] overheated!", INVESTIGATE_RESEARCH)		// Do we need this?
 		overheated = TRUE
 
 	// If we are over heated, the server will not restart till
@@ -133,6 +134,7 @@
 /obj/machinery/rnd/server/proc/get_env_temp()
 	return thermo.get_env_temp()
 
+
 /obj/machinery/computer/rdservercontrol
 	name = "R&D Server Controller"
 	desc = "Used to manage access to research and manufacturing databases."
@@ -143,14 +145,12 @@
 	ui_x = 900
 	ui_y = 750
 
-
 /obj/machinery/computer/rdservercontrol/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "RDConsole", name, ui_x, ui_y, master_ui, state)
 		ui.open()
-
 
 /obj/machinery/computer/rdservercontrol/ui_data(mob/user)
 	var/list/data = list()
@@ -186,9 +186,9 @@
 /obj/machinery/computer/rdservercontrol/ui_act(action, params)
 	if(..())
 		return
-	// for some reason I couldn't find the server based off the server_id number
-	// even though they print the same.  Converting it to text and comparing it that
-	// way worked...sadly.
+	if(!allowed(usr))
+		to_chat(usr, "<span class='warning'>Access denied.</span>")
+		return
 	switch(action)
 		if("enable_server")
 			var/test_id = params["server_id"]
@@ -203,11 +203,6 @@
 					. = TRUE
 					break
 
-
-
-/obj/machinery/computer/rdservercontrol/attackby(obj/item/D, mob/user, params)
-	. = ..()
-	src.updateUsrDialog()
 
 /obj/machinery/computer/rdservercontrol/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
