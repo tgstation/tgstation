@@ -215,12 +215,11 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///teleport people and put them on fire if they run into the rune.
 /obj/effect/warped_rune/orangespace/proc/teleport_fire()
-	if(!locate(/obj/effect/hotspot) in rune_turf) //doesn't teleport items but put them on fire anyway for good measure.
+	if(!locate(/obj/effect/hotspot) in rune_turf) //will create a hotspot to burn items passing through too.
 		new /obj/effect/hotspot(rune_turf)
 
 	for(var/mob/living/on_fire in rune_turf)
-		do_teleport(on_fire, rune_turf, 3, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-		on_fire.adjust_fire_stacks(10)
+		on_fire.adjust_fire_stacks(20)
 		on_fire.IgniteMob()
 
 
@@ -461,11 +460,11 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 			desc = "Feed me and I will feed you back, I currently hold [nutriment] units of nutrients."
 
 	for(var/mob/living/carbon/human/person_fed in rune_turf)
-		if((person_fed.nutrition > NUTRITION_LEVEL_WELL_FED) || (nutriment <= 0)) //don't need to feed a perfectly healthy boi
+		if((person_fed.nutrition >= NUTRITION_LEVEL_WELL_FED) || (nutriment <= 5)) //don't need to feed a perfectly healthy boi
 			return
 
-		person_fed.reagents.add_reagent(/datum/reagent/consumable/nutriment,1) //with the time nutriment takes to metabolise it might make them fat oopsie
-		nutriment--
+		person_fed.nutrition += 100 //the equivalent of one nutrition level
+		nutriment -= 5
 		desc = "Feed me and I will feed you back, I currently hold [nutriment] units of nutrients."
 
 /obj/effect/warped_rune/silverspace/Destroy()
@@ -574,7 +573,7 @@ obj/effect/warped_rune/sepiaspace/proc/normal_speed(mob/living/slowed_down)
 /obj/item/slimecross/warping/cerulean
 	colour = "cerulean"
 	runepath = /obj/effect/warped_rune/ceruleanspace
-	effect_desc = "Draws a rune creating a hologram of the last living thing that stepped on the tile. Can draw up to 6 runes."
+	effect_desc = "Draws a rune creating a hologram of the last living thing that stepped on the tile."
 	max_charge = 1
 	warp_charge = 1
 
@@ -724,7 +723,7 @@ obj/effect/warped_rune/sepiaspace/proc/normal_speed(mob/living/slowed_down)
 ///takes away the overlay and the genetic punch when you leave the rune
 /obj/effect/warped_rune/redspace/Uncrossed(atom/movable/crossing)
 	. = ..()
-	if(!istype(crossing,/mob/living/carbon/human)) //checks if the person that just left is the same as the currently enraged person
+	if(!istype(crossing,/mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/enraged = crossing
 	UnregisterSignal(enraged, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
@@ -969,15 +968,16 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	if(!istype(crossing,/mob/living/carbon/human))
 		return
 
+	var/mob/living/carbon/human/crosser = crossing
 	if(!stepped_on)
-		first_person = crossing
+		first_person = crosser
 		stepped_on = TRUE
 		return
 
-	if(crossing == first_person)
+	if(crosser == first_person || crosser.stat == DEAD)
 		return
 
-	second_person = crossing
+	second_person = crosser
 	var/first_dna = first_person.dna.species
 	var/second_dna = second_person.dna.species
 	second_person.set_species(first_dna)  //swap the species
