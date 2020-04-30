@@ -37,7 +37,6 @@
 		pressure_charging = FALSE // newly built disposal bins start with pump off
 	else
 		stored = new /obj/structure/disposalconstruct(null, null , SOUTH , FALSE , src)
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_DUMPSTER, CELL_VIRUS_TABLE_DUMPSTER)
 
 	trunk_check()
 

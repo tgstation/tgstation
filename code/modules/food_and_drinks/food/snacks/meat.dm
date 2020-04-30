@@ -164,16 +164,28 @@
 	desc = "A slab of mouse meat. Best not eat it raw."
 	foodtype = RAW | MEAT | GROSS
 
+/obj/item/reagent_containers/food/snacks/meat/slab/mouse/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB)
+
 /obj/item/reagent_containers/food/snacks/meat/slab/corgi
 	name = "corgi meat"
 	desc = "Tastes like... well you know..."
 	tastes = list("meat" = 4, "a fondness for wearing hats" = 1)
 	foodtype = RAW | MEAT | GROSS
 
+/obj/item/reagent_containers/food/snacks/meat/slab/corgi/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB)
+
 /obj/item/reagent_containers/food/snacks/meat/slab/pug
 	name = "pug meat"
 	desc = "Tastes like... well you know..."
 	foodtype = RAW | MEAT | GROSS
+
+/obj/item/reagent_containers/food/snacks/meat/slab/pug/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PUG, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/killertomato
 	name = "killer tomato meat"
@@ -197,6 +209,9 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtype = RAW | MEAT
 
+/obj/item/reagent_containers/food/snacks/meat/slab/bear/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 	name = "xeno meat"
@@ -319,6 +334,10 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/meat/rawcutlet/chicken
 	tastes = list("chicken" = 1)
 
+/obj/item/reagent_containers/food/snacks/meat/slab/chicken/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
+
 ////////////////////////////////////// MEAT STEAKS ///////////////////////////////////////////////////////////
 
 
@@ -425,6 +444,10 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/bear
 	tastes = list("meat" = 1, "salmon" = 1)
 
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet/bear/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB)
+
 /obj/item/reagent_containers/food/snacks/meat/rawcutlet/xeno
 	name = "raw xeno cutlet"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/xeno
@@ -449,6 +472,10 @@
 	name = "raw chicken cutlet"
 	cooked_type = /obj/item/reagent_containers/food/snacks/meat/cutlet/chicken
 	tastes = list("chicken" = 1)
+
+/obj/item/reagent_containers/food/snacks/meat/rawcutlet/chicken/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 //Cooked cutlets
 

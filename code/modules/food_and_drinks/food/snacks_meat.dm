@@ -28,6 +28,8 @@
 /obj/item/reagent_containers/food/snacks/carpmeat/Initialize()
 	. = ..()
 	eatverb = pick("bite","chew","gnaw","swallow","chomp")
+	if(!istype(src, /obj/item/reagent_containers/food/snacks/carpmeat/imitation))
+		AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/reagent_containers/food/snacks/carpmeat/imitation
 	name = "imitation carp fillet"
@@ -276,6 +278,10 @@
 	filling_color = "#FA8072"
 	tastes = list("fish" = 1, "hot peppers" = 1)
 	foodtype = MEAT | TOXIC
+
+/obj/item/reagent_containers/food/snacks/sashimi/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/reagent_containers/food/snacks/nugget
 	name = "chicken nugget"

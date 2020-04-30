@@ -146,6 +146,7 @@
 
 /mob/living/simple_animal/cow/Initialize()
 	udder = new()
+	add_cell_sample()
 	. = ..()
 
 /mob/living/simple_animal/cow/Destroy()
@@ -205,6 +206,9 @@
 		internal = "You resign yourself to your fate."
 	visible_message("<span class='notice'>[external]</span>",
 		"<span class='revennotice'>[internal]</span>")
+
+/mob/living/simple_animal/cow/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 ///Wisdom cow, gives XP to a random skill and speaks wisdoms
 /mob/living/simple_animal/cow/wisdom
@@ -269,6 +273,7 @@
 	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
+	add_cell_sample()
 
 /mob/living/simple_animal/chick/Life()
 	. =..()
@@ -280,9 +285,15 @@
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
 
+/mob/living/simple_animal/chick/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
+
 /mob/living/simple_animal/chick/holo/Life()
 	..()
 	amount_grown = 0
+
+/mob/living/simple_animal/chick/holo/add_cell_sample()
+	return
 
 /mob/living/simple_animal/chicken
 	name = "\improper chicken"
@@ -337,6 +348,7 @@
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 	++chicken_count
+	add_cell_sample()
 
 /mob/living/simple_animal/chicken/Destroy()
 	--chicken_count
@@ -380,6 +392,8 @@
 	else
 		STOP_PROCESSING(SSobj, src)
 
+/mob/living/simple_animal/chicken/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /obj/item/udder
 	name = "udder"

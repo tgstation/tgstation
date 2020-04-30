@@ -5,7 +5,7 @@
 	///This is the loot table for the spawner. Try to make sure the weights add up to 1000, so it is easy to understand.
 	var/list/loot_table = list(/obj/structure/closet/crate/maint = 810,
 							/obj/structure/closet/crate/trashcart/filled = 70,
-							/obj/effect/spawner/bundle/moisture_trap = 5000,
+							/obj/effect/spawner/bundle/moisture_trap = 50,
 							/obj/effect/spawner/bundle/hobo_squat = 35,
 							/obj/structure/closet/mini_fridge = 35)
 

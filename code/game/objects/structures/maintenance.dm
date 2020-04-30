@@ -34,6 +34,7 @@ at the cost of risking a vicious bite.**/
 	if(prob(75))
 		var/picked_item = pickweight(loot)
 		hidden_item = new picked_item(src)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOIST, CELL_VIRUS_TABLE_GENERIC)
 
 /obj/structure/moisture_trap/Destroy()
 	if(hidden_item)

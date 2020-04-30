@@ -34,7 +34,7 @@
 		verbs -= /mob/living/verb/pulled
 	else
 		pass_flags &= ~PASSBLOB
-		
+
 /mob/living/simple_animal/hostile/blob/Destroy()
 	if(overmind)
 		overmind.blob_mobs -= src
@@ -118,6 +118,7 @@
 	. = ..()
 	if(linked_node.overmind && istype(linked_node.overmind.blobstrain, /datum/blobstrain/reagent/distributed_neurons) && !istype(src, /mob/living/simple_animal/hostile/blob/blobspore/weak))
 		notify_ghosts("A controllable spore has been created in \the [get_area(src)].", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Sentient Spore Created")
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobspore/Life()
 	if(!is_zombie && isturf(src.loc))
@@ -128,7 +129,7 @@
 	if(factory && z != factory.z)
 		death()
 	..()
-	
+
 /mob/living/simple_animal/hostile/blob/blobspore/attack_ghost(mob/user)
 	. = ..()
 	if(.)
@@ -220,6 +221,9 @@
 		color = initial(color)//looks better.
 		add_overlay(blob_head_overlay)
 
+/mob/living/simple_animal/hostile/blob/blobspore/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB)
+
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"
 	health = 15
@@ -255,6 +259,10 @@
 	pressure_resistance = 50
 	mob_size = MOB_SIZE_LARGE
 	hud_type = /datum/hud/blobbernaut
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/Initialize()
+	. = ..()
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/Life()
 	if(..())
@@ -321,6 +329,9 @@
 		factory.naut = null //remove this naut from its factory
 		factory.max_integrity = initial(factory.max_integrity)
 	flick("blobbernaut_death", src)
+
+/mob/living/simple_animal/hostile/blob/blobbernaut/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBBERNAUT, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /mob/living/simple_animal/hostile/blob/blobbernaut/independent
 	independent = TRUE

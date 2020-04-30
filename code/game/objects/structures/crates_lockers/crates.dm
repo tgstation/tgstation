@@ -100,6 +100,10 @@
 	name = "trash cart"
 	icon_state = "trashcart"
 
+/obj/structure/closet/crate/trashcart/Initialize()
+	. = ..()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC)
+
 /obj/structure/closet/crate/trashcart/filled
 
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()

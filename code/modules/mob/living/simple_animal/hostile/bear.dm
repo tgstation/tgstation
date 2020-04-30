@@ -48,6 +48,10 @@
 /mob/living/simple_animal/hostile/bear/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
+	add_cell_sample()
+
+/mob/living/simple_animal/hostile/bear/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
@@ -141,6 +145,9 @@ mob/living/simple_animal/hostile/bear/butter //The mighty companion to Cak. Seve
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/butter = 6, /obj/item/reagent_containers/food/snacks/meat/slab = 3, /obj/item/organ/brain = 1, /obj/item/organ/heart = 1)
 	attack_sound = 'sound/weapons/slap.ogg'
 	attack_verb_continuous = "slaps"
+
+mob/living/simple_animal/hostile/bear/butter/add_cell_sample()
+	return //You cannot grow a real bear from butter.
 
 /mob/living/simple_animal/hostile/bear/butter/Life() //Heals butter bear really fast when he takes damage.
 	if(stat)

@@ -74,6 +74,7 @@
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	carp_randomify(rarechance)
 	update_icons()
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/carp/proc/carp_randomify(rarechance)
 	if(random_color)
@@ -152,6 +153,9 @@
 	D.drive_verb = "ride"
 	D.override_allow_spacemove = TRUE
 
+/mob/living/simple_animal/hostile/carp/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CARP, CELL_VIRUS_TABLE_GENERIC_MOB)
+
 /mob/living/simple_animal/hostile/carp/holocarp
 	icon_state = "holocarp"
 	icon_living = "holocarp"
@@ -162,6 +166,9 @@
 	food_type = list()
 	tame_chance = 0
 	bonus_tame_chance = 0
+
+/mob/living/simple_animal/hostile/carp/holocarp/add_cell_sample()
+	return
 
 /mob/living/simple_animal/hostile/carp/megacarp
 	icon = 'icons/mob/broadMobs.dmi'
@@ -195,6 +202,7 @@
 	melee_damage_upper += rand(10,20)
 	maxHealth += rand(30,60)
 	move_to_delay = rand(3,7)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /mob/living/simple_animal/hostile/carp/megacarp/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
@@ -219,6 +227,9 @@
 		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
 		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
 		rideable = TRUE
+
+/mob/living/simple_animal/hostile/carp/megacarp/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MEGACARP, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /mob/living/simple_animal/hostile/carp/cayenne
 	name = "Cayenne"

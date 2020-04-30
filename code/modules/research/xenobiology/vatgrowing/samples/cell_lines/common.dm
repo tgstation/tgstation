@@ -15,12 +15,15 @@
 							/datum/reagent/consumable/nutriment/vitamin = 1,
 							/datum/reagent/consumable/sugar = 1,
 							/datum/reagent/consumable/cooking_oil = 1,
-							/datum/reagent/consumable/rice = 1)
+							/datum/reagent/consumable/rice = 1,
+							/datum/reagent/consumable/eggyolk = 1)
 
 	suppressive_reagents = list(
 							/datum/reagent/toxin/heparin = -6,
 							/datum/reagent/consumable/astrotame = -4, //Saccarin gives rats cancer.
-							/datum/reagent/consumable/ethanol/rubberneck = -3)
+							/datum/reagent/consumable/ethanol/rubberneck = -3,
+							/datum/reagent/consumable/grey_bull = -1)
+
 	virus_suspectibility = 2
 	growth_rate = VAT_GROWTH_RATE
 	resulting_atoms = list(/mob/living/simple_animal/mouse = 2)
@@ -54,7 +57,9 @@
 						/datum/reagent/consumable/rice = 2,
 						/datum/reagent/consumable/flour = 1)
 
-	suppressive_reagents = list(/datum/reagent/toxin = -2)
+	suppressive_reagents = list(/datum/reagent/toxin = -2,
+							/datum/reagent/toxin/carpotoxin = -5)
+
 	virus_suspectibility = 1
 	resulting_atoms = list(/mob/living/simple_animal/cow = 1)
 
@@ -129,6 +134,7 @@
 
 	suppressive_reagents = list(
 						/datum/reagent/consumable/condensedcapsaicin = -4, //bear mace, steal it from the sec checkpoint.
+						/datum/reagent/toxin/carpotoxin = -2,
 						/datum/reagent/medicine/insulin = -2) //depletes hunny.
 
 	virus_suspectibility = 2
@@ -142,6 +148,7 @@
 
 	supplementary_reagents = list(
 						/datum/reagent/consumable/cornoil = 4, //Carp are oily fish
+						/datum/reagent/toxin/carpotoxin = 3,
 						/datum/reagent/consumable/cooking_oil = 2,
 						/datum/reagent/consumable/nutriment/vitamin = 2)
 
@@ -163,6 +170,7 @@
 	supplementary_reagents = list(
 						/datum/reagent/consumable/cornoil = 4,
 						/datum/reagent/growthserum = 3,
+						/datum/reagent/toxin/carpotoxin = 2,
 						/datum/reagent/consumable/cooking_oil = 2,
 						/datum/reagent/consumable/nutriment/vitamin = 2)
 
@@ -172,6 +180,25 @@
 
 	virus_suspectibility = 1
 	resulting_atoms = list(/mob/living/simple_animal/hostile/carp/megacarp = 1)
+
+/datum/micro_organism/cell_line/snake
+	desc = "Ophidic cells"
+	required_reagents = list(
+						/datum/reagent/consumable/nutriment/protein,
+						/datum/reagent/liquidgibs)
+
+	supplementary_reagents = list(
+						/datum/reagent/growthserum = 3,
+						/datum/reagent/consumable/nutriment/peptides = 3,
+						/datum/reagent/consumable/eggyolk = 2,
+						/datum/reagent/consumable/nutriment/vitamin = 2)
+
+	suppressive_reagents = list(
+						/datum/reagent/consumable/corn_syrup = -6,
+						/datum/reagent/sulfur = -3) //sulfur repels snakes according to professor google.
+
+	resulting_atoms = list(/mob/living/simple_animal/hostile/retaliate/poison/snake = 1)
+
 
 ///////////////////////////////////////////
 /// 		SLIMES, OOZES & BLOBS  		///
@@ -221,7 +248,8 @@
 	 					/datum/reagent/growthserum = 3,
 	 					/datum/reagent/consumable/nutriment/vitamin = 2,
 	 					/datum/reagent/liquidgibs = 2,
-	 					/datum/reagent/consumable/eggyolk = 2)
+	 					/datum/reagent/consumable/eggyolk = 2,
+	 					/datum/reagent/consumable/shamblers = 1)
 
 	suppressive_reagents = list(/datum/reagent/consumable/tinlux = -6)
 
@@ -241,6 +269,7 @@
 						/datum/reagent/consumable/corn_syrup = 3,
 						/datum/reagent/gold = 2, //This is why they eat so many adventurers.
 						/datum/reagent/consumable/nutriment/peptides = 2,
+						/datum/reagent/consumable/potato_juice = 1,
 						/datum/reagent/liquidgibs = 1,
 						/datum/reagent/consumable/nutriment/vitamin = 1)
 
@@ -251,7 +280,7 @@
 	virus_suspectibility = 0
 	resulting_atoms = list(/mob/living/simple_animal/hostile/ooze/gelatinous = 1)
 
-/datum/micro_organism/cell_line/Sholean_grapes
+/datum/micro_organism/cell_line/sholean_grapes
 	desc = "Globular ooze particles"
 	required_reagents = list(
 	 					/datum/reagent/consumable/nutriment/protein,
@@ -264,6 +293,7 @@
 						/datum/reagent/consumable/nutriment/peptides = 3,
 						/datum/reagent/consumable/corn_syrup = 2,
 						/datum/reagent/consumable/ethanol/squirt_cider = 2,
+						/datum/reagent/consumable/doctor_delight = 1,
 						/datum/reagent/medicine/salglu_solution = 1,
 						/datum/reagent/liquidgibs = 1,
 						/datum/reagent/consumable/nutriment/vitamin = 1)
@@ -290,6 +320,7 @@
 
 	suppressive_reagents = list(
 							/datum/reagent/toxin/pestkiller = -2,
+							/datum/reagent/consumable/poisonberryjuice = -4,
 							/datum/reagent/consumable/ethanol/bug_spray = -4)
 
 	virus_suspectibility = 0
@@ -329,7 +360,8 @@
 						/datum/reagent/medicine/rezadone = 3,
 						/datum/reagent/consumable/entpoly = 3,
 						/datum/reagent/consumable/red_queen = 2,
-						/datum/reagent/uranium = 2,
+						/datum/reagent/consumable/peachjuice = 2,
+						/datum/reagent/uranium = 1,
 						/datum/reagent/liquidgibs = 1)
 
 	suppressive_reagents = list(

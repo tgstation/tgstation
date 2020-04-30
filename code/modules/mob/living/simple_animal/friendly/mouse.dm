@@ -40,7 +40,7 @@
 	icon_state = "mouse_[body_color]"
 	icon_living = "mouse_[body_color]"
 	icon_dead = "mouse_[body_color]_dead"
-
+	add_cell_sample()
 
 /mob/living/simple_animal/mouse/proc/splat()
 	src.health = 0
@@ -117,6 +117,9 @@
 	if(mind)
 		mind.transfer_to(regalrat)
 	qdel(src)
+
+/mob/living/simple_animal/mouse/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOUSE, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /*
  * Mouse types

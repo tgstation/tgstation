@@ -22,6 +22,10 @@
 
 	footstep_type = FOOTSTEP_MOB_CLAW
 
+/mob/living/simple_animal/pet/dog/Initialize()
+	. = ..()
+	add_cell_sample()
+
 /mob/living/simple_animal/pet/dog/Life()
 	..()
 
@@ -112,6 +116,8 @@
 		regenerate_icons()
 	return ..()
 
+/mob/living/simple_animal/pet/dog/corgi/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CORGI, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /mob/living/simple_animal/pet/dog/pug
 	name = "\improper pug"
@@ -125,6 +131,9 @@
 	gold_core_spawnable = FRIENDLY_SPAWN
 	collar_type = "pug"
 	held_state = "pug"
+
+/mob/living/simple_animal/pet/dog/pug/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_PUG, CELL_VIRUS_TABLE_GENERIC_MOB)
 
 /mob/living/simple_animal/pet/dog/corgi/exoticcorgi
 	name = "Exotic Corgi"
