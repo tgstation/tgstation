@@ -50,11 +50,11 @@
 	return data
 
 /obj/structure/microscope/proc/get_reagent_list(list/reagents)
-	var/reagent_list = list()
+	var/list/reagent_list = list()
 	for(var/i in reagents) //Convert from assoc to normal. Yeah very shit.
 		var/datum/reagent/reagent = i
 		reagent_list += reagent.name
-	reagent_list.Join(", ")
+	return reagent_list.Join(", ")
 
 
 /obj/structure/microscope/ui_act(action, params)
