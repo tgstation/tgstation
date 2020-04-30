@@ -1,4 +1,4 @@
-/obj/item/clothing/under/rank
+/obj/item/clothing/under/rank/centcom
 	icon = 'icons/obj/clothing/under/centcom.dmi'
 	mob_overlay_icon = 'icons/mob/clothing/under/centcom.dmi'
 

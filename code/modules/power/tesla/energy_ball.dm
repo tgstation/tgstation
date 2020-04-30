@@ -1,5 +1,14 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
+//Zap constants, speeds up targeting
+#define BIKE (COIL + 1)
+#define COIL (ROD + 1)
+#define ROD (RIDE + 1)
+#define RIDE (LIVING + 1)
+#define LIVING (MACHINERY + 1)
+#define MACHINERY (BLOB + 1)
+#define BLOB (STRUCTURE + 1)
+#define STRUCTURE (1)
 
 /obj/singularity/energy_ball
 	name = "energy ball"
@@ -30,6 +39,9 @@
 		set_light(10, 7, "#EEEEFF")
 
 /obj/singularity/energy_ball/ex_act(severity, target)
+	return
+
+/obj/singularity/energy_ball/consume(severity, target)
 	return
 
 /obj/singularity/energy_ball/Destroy()
@@ -143,8 +155,8 @@
 		target.orbiting_balls += src
 		GLOB.poi_list -= src
 		target.dissipate_strength = target.orbiting_balls.len
-
 	. = ..()
+
 /obj/singularity/energy_ball/stop_orbit()
 	if (orbiting && istype(orbiting.parent, /obj/singularity/energy_ball))
 		var/obj/singularity/energy_ball/orbitingball = orbiting.parent
@@ -178,16 +190,8 @@
 	/*
 	THIS IS SO FUCKING UGLY AND I HATE IT, but I can't make it nice without making it slower, check*N rather then n. So we're stuck with it.
 	*/
-	var/closest_dist = 0
-	var/closest_atom
-	var/obj/vehicle/ridden/bicycle/closest_million_dollar_baby
-	var/obj/machinery/power/tesla_coil/closest_tesla_coil
-	var/obj/machinery/power/grounding_rod/closest_grounding_rod
-	var/obj/vehicle/ridden/closest_rideable
-	var/mob/living/closest_mob
-	var/obj/machinery/closest_machine
-	var/obj/structure/closest_structure
-	var/obj/structure/blob/closest_blob
+	var/atom/closest_atom
+	var/closest_type = 0
 	var/static/things_to_shock = typecacheof(list(/obj/machinery, /mob/living, /obj/structure, /obj/vehicle/ridden))
 	var/static/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
@@ -211,123 +215,105 @@
 										/obj/structure/grille,
 										/obj/structure/frame/machine))
 
-	for(var/A in typecache_filter_multi_list_exclusion(oview(source, zap_range+2), things_to_shock, blacklisted_tesla_types))
+	//Ok so we are making an assumption here. We assume that view() still calculates from the center out.
+	//This means that if we find an object we can assume it is the closest one of its type. This is somewhat of a speed increase.
+	//This also means we have no need to track distance, as the doview() proc does it all for us.
+
+	//Darkness fucks oview up hard. I've tried dview() but it doesn't seem to work
+	//I hate existance
+	for(var/a in typecache_filter_multi_list_exclusion(oview(zap_range+2, source), things_to_shock, blacklisted_tesla_types))
+		var/atom/A = a
 		if(!(zap_flags & ZAP_ALLOW_DUPLICATES) && LAZYACCESS(shocked_targets, A))
 			continue
+		if(closest_type >= BIKE)
+			break
 
-		if(istype(A, /obj/vehicle/ridden/bicycle))//God's not on our side cause he hates idiots.
-			var/dist = get_dist(source, A)
+		else if(istype(A, /obj/vehicle/ridden/bicycle))//God's not on our side cause he hates idiots.
 			var/obj/vehicle/ridden/bicycle/B = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_million_dollar_baby) && !(B.obj_flags & BEING_SHOCKED) && B.can_buckle)//Gee goof thanks for the boolean
-				closest_dist = dist
+			if(!(B.obj_flags & BEING_SHOCKED) && B.can_buckle)//Gee goof thanks for the boolean
 				//we use both of these to save on istype and typecasting overhead later on
 				//while still allowing common code to run before hand
-				closest_million_dollar_baby = B
+				closest_type = BIKE
 				closest_atom = B
 
-		else if(closest_million_dollar_baby)
+		else if(closest_type >= COIL)
 			continue //no need checking these other things
 
 		else if(istype(A, /obj/machinery/power/tesla_coil))
-			var/dist = get_dist(source, A)
 			var/obj/machinery/power/tesla_coil/C = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_tesla_coil) && !(C.obj_flags & BEING_SHOCKED))
-				closest_dist = dist
-				closest_tesla_coil = C
+			if(!(C.obj_flags & BEING_SHOCKED))
+				closest_type = COIL
 				closest_atom = C
 
-		else if(closest_tesla_coil)
+		else if(closest_type >= ROD)
 			continue
 
 		else if(istype(A, /obj/machinery/power/grounding_rod))
-			var/dist = get_dist(source, A)-2
-			if(dist <= zap_range && (dist < closest_dist || !closest_grounding_rod))
-				closest_grounding_rod = A
-				closest_atom = A
-				closest_dist = dist
+			closest_type = ROD
+			closest_atom = A
 
-		else if(closest_grounding_rod)
+		else if(closest_type >= RIDE)
 			continue
 
 		else if(istype(A,/obj/vehicle/ridden))
-			var/dist = get_dist(source, A)
 			var/obj/vehicle/ridden/R = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_rideable) && R.can_buckle && !(R.obj_flags & BEING_SHOCKED))
-				closest_rideable = R
+			if(R.can_buckle && !(R.obj_flags & BEING_SHOCKED))
+				closest_type = RIDE
 				closest_atom = A
-				closest_dist = dist
 
-		else if(closest_rideable)
+		else if(closest_type >= LIVING)
 			continue
 
 		else if(isliving(A))
-			var/dist = get_dist(source, A)
 			var/mob/living/L = A
-			if(dist <= zap_range && (dist < closest_dist || !closest_mob) && L.stat != DEAD && !(HAS_TRAIT(L, TRAIT_TESLA_SHOCKIMMUNE)) && !(L.flags_1 & SHOCKED_1))
-				closest_mob = L
+			if(L.stat != DEAD && !(HAS_TRAIT(L, TRAIT_TESLA_SHOCKIMMUNE)) && !(L.flags_1 & SHOCKED_1))
+				closest_type = LIVING
 				closest_atom = A
-				closest_dist = dist
 
-		else if(closest_mob)
+		else if(closest_type >= MACHINERY)
 			continue
 
 		else if(ismachinery(A))
 			var/obj/machinery/M = A
-			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_machine) && !(M.obj_flags & BEING_SHOCKED))
-				closest_machine = M
+			if(!(M.obj_flags & BEING_SHOCKED))
+				closest_type = MACHINERY
 				closest_atom = A
-				closest_dist = dist
 
-		else if(closest_machine)
+		else if(closest_type >= BLOB)
 			continue
 
 		else if(istype(A, /obj/structure/blob))
 			var/obj/structure/blob/B = A
-			var/dist = get_dist(source, A)
-			if(dist <= zap_range && (dist < closest_dist || !closest_blob) && !(B.obj_flags & BEING_SHOCKED))
-				closest_blob = B
+			if(!(B.obj_flags & BEING_SHOCKED))
+				closest_type = BLOB
 				closest_atom = A
-				closest_dist = dist
 
-		else if(closest_blob)
+		else if(closest_type >= STRUCTURE)
 			continue
 
 		else if(isstructure(A))
 			var/obj/structure/S = A
-			var/dist = get_dist(source, A)
-			//There's no closest_structure here because there are no checks below this one, re-add it if that changes
-			if(dist <= zap_range && (dist < closest_dist) && !(S.obj_flags & BEING_SHOCKED))
-				closest_structure = S
+			if(!(S.obj_flags & BEING_SHOCKED))
+				closest_type = STRUCTURE
 				closest_atom = A
-				closest_dist = dist
 
 	//Alright, we've done our loop, now lets see if was anything interesting in range
-	if(closest_atom)
-		//common stuff
-		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
-		if(!(zap_flags & ZAP_ALLOW_DUPLICATES))
-			LAZYSET(shocked_targets, closest_atom, TRUE)
-		var/zapdir = get_dir(source, closest_atom)
-		if(zapdir)
-			. = zapdir
+	if(!closest_atom)
+		return
+	//common stuff
+	source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", time=5, maxdistance = INFINITY)
+	if(!(zap_flags & ZAP_ALLOW_DUPLICATES))
+		LAZYSET(shocked_targets, closest_atom, TRUE)
+	var/zapdir = get_dir(source, closest_atom)
+	if(zapdir)
+		. = zapdir
 
-	//per type stuff:
-	var/range = 3
-	if(!QDELETED(closest_million_dollar_baby))
-		power = closest_million_dollar_baby.zap_act(power, zap_flags, shocked_targets)
+	var/next_range = 3
+	if(closest_type == COIL)
+		next_range = 5
 
-	else if(!QDELETED(closest_tesla_coil))
-		power = closest_tesla_coil.zap_act(power, zap_flags, shocked_targets)
-		range = 5
-
-	else if(!QDELETED(closest_grounding_rod))
-		power = closest_grounding_rod.zap_act(power, zap_flags, shocked_targets)
-
-	else if(!QDELETED(closest_rideable))
-		power = closest_rideable.zap_act(power, zap_flags, shocked_targets)
-
-	else if(!QDELETED(closest_mob))
+	if(closest_type == LIVING)
+		var/mob/living/closest_mob = closest_atom
 		closest_mob.set_shocked()
 		addtimer(CALLBACK(closest_mob, /mob/living/proc/reset_shocked), 10)
 		var/shock_damage = (zap_flags & ZAP_MOB_DAMAGE) ? (min(round(power/600), 90) + rand(-5, 5)) : 0
@@ -336,20 +322,24 @@
 			var/mob/living/silicon/S = closest_mob
 			if((zap_flags & ZAP_MOB_STUN) && (zap_flags & ZAP_MOB_DAMAGE))
 				S.emp_act(EMP_LIGHT)
-			range = 7 // metallic folks bounce it further
+			next_range = 7 // metallic folks bounce it further
 		else
-			range = 5
+			next_range = 5
 		power /= 1.5
 
-	else if(!QDELETED(closest_machine))
-		power = closest_machine.zap_act(power, zap_flags, shocked_targets)
-
-	else if(!QDELETED(closest_blob))
-		power = closest_blob.zap_act(power, zap_flags, shocked_targets)
-
-	else if(!QDELETED(closest_structure))
-		power = closest_structure.zap_act(power, zap_flags, shocked_targets)
-
-	tesla_zap(closest_mob, range, power, zap_flags, shocked_targets)
+	else
+		power = closest_atom.zap_act(power, zap_flags, shocked_targets)
 	if(prob(20))//I know I know
-		tesla_zap(closest_mob, range, power / 2, zap_flags, shocked_targets)
+		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
+		tesla_zap(closest_atom, next_range, power * 0.5, zap_flags, shocked_targets)
+	else
+		tesla_zap(closest_atom, next_range, power, zap_flags, shocked_targets)
+
+#undef BIKE
+#undef COIL
+#undef ROD
+#undef RIDE
+#undef LIVING
+#undef MACHINERY
+#undef BLOB
+#undef STRUCTURE

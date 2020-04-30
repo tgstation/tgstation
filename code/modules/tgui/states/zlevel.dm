@@ -1,8 +1,8 @@
- /**
-  * tgui state: z_state
-  *
-  * Only checks that the Z-level of the user and src_object are the same.
- **/
+/**
+ * tgui state: z_state
+ *
+ * Only checks that the Z-level of the user and src_object are the same.
+ */
 
 GLOBAL_DATUM_INIT(z_state, /datum/ui_state/z_state, new)
 

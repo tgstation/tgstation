@@ -106,6 +106,7 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/stack/rods/twentyfive = 1,
 		/obj/item/stack/sheet/metal/twenty = 1,
 		/obj/item/stack/sheet/mineral/plasma = 1,
+		/obj/item/sign = 1,
 
 		//assemblies
 		/obj/item/assembly/infra = 1,
@@ -192,7 +193,8 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/stack/sheet/mineral/wood/fifty = 1,
 		/obj/item/beacon = 1,
 		/obj/item/weaponcrafting/receiver = 1,
-		/obj/item/paper/fluff/stations/soap =1, //recipes count as crafting.
+		/obj/item/paper/fluff/stations/soap = 1, //recipes count as crafting.
+		/obj/item/plaque = 1,
 		) = 8,
 
 	list(//medical and chemicals

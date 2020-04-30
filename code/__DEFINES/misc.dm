@@ -489,3 +489,9 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 
 // The alpha we give to stuff under tiles, if they want it
 #define ALPHA_UNDERTILE 128
+
+// Anonymous names defines (used in the secrets panel)
+
+#define ANON_DISABLED "" //so it's falsey
+#define ANON_RANDOMNAMES "Random Default"
+#define ANON_EMPLOYEENAMES "Employees"

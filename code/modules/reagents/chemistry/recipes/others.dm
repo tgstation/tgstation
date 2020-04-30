@@ -532,10 +532,6 @@
 	var/location = get_turf(holder.my_atom)
 	new /obj/item/slime_extract/grey(location)
 
-/datum/chemical_reaction/metalgen
-	required_reagents = list(/datum/reagent/wittel = 1, /datum/reagent/bluespace = 1, /datum/reagent/toxin/mutagen = 1)
-	results = list(/datum/reagent/metalgen = 1)
-
 /datum/chemical_reaction/metalgen_imprint
 	required_reagents = list(/datum/reagent/metalgen = 1, /datum/reagent/liquid_dark_matter = 1)
 	results = list(/datum/reagent/metalgen = 1)

@@ -95,6 +95,13 @@
 	/// Last appearance of the atom for demo saving purposes
 	var/image/demo_last_appearance
 
+	/// Last name used to calculate a color for the chatmessage overlays
+	var/chat_color_name
+	/// Last color calculated for the the chatmessage overlays
+	var/chat_color
+	/// A luminescence-shifted value of the last color calculated for chatmessage overlays
+	var/chat_color_darkened
+
 /**
   * Called when an atom is created in byond (built in engine proc)
   *
@@ -119,7 +126,6 @@
 		if(SSatoms.InitAtom(src, args))
 			//we were deleted
 			return
-	SSdemo.mark_new(src)
 
 /**
   * The primary method that objects are setup in SS13 with
@@ -560,7 +566,6 @@
 			add_overlay(new_overlays)
 		. = TRUE
 
-	SSdemo.mark_dirty(src)
 	SEND_SIGNAL(src, COMSIG_ATOM_UPDATED_ICON, signalOut, .)
 
 /// Updates the icon state of the atom
@@ -717,8 +722,8 @@
   *
   * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
   */
-/atom/proc/emag_act(mob/user)
-	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user)
+/atom/proc/emag_act(mob/user, obj/item/card/emag/E)
+	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, E)
 
 /**
   * Respond to a radioactive wave hitting this atom
@@ -750,6 +755,14 @@
 /atom/proc/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
 	SEND_SIGNAL(src, COMSIG_ATOM_RCD_ACT, user, the_rcd, passed_mode)
 	return FALSE
+
+/**
+  * Respond to a electric bolt action on our item
+  *
+  * Default behaviour is to return, we define here to allow for cleaner code later on
+  */
+/atom/proc/zap_act(power, zap_flags, shocked_targets)
+	return
 
 /**
   * Implement the behaviour for when a user click drags a storage object to your atom
@@ -837,7 +850,6 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(src, COMSIG_ATOM_DIR_CHANGE, dir, newdir)
 	dir = newdir
-	SSdemo.mark_dirty(src)
 
 ///Handle melee attack by a mech
 /atom/proc/mech_melee_attack(obj/mecha/M)
@@ -1164,6 +1176,8 @@
 			log_comment(log_text)
 		if(LOG_TELECOMMS)
 			log_telecomms(log_text)
+		if(LOG_ECON)
+			log_econ(log_text)
 		if(LOG_OOC)
 			log_ooc(log_text)
 		if(LOG_ADMIN)
