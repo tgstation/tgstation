@@ -52,7 +52,8 @@
 /obj/structure/microscope/proc/get_reagent_list(list/reagents)
 	var/reagent_list = list()
 	for(var/i in reagents) //Convert from assoc to normal. Yeah very shit.
-		reagent_list = i
+		var/datum/reagent/reagent = i
+		reagent_list += reagent.name
 	reagent_list.Join(", ")
 
 
