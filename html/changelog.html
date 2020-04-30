@@ -72,6 +72,18 @@
 			<ul class="changes bgimages16">
 				<li class="rscadd">on april fools laughter demons embrace their clown nature to the fullest degree</li>
 			</ul>
+			<h3 class="author">Ghilker updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Hot ice burn in fires (made a change to obj_defense.dm where in the obj/fire_act proc i added at the end of the proc . = ..(), allowing it to call for the parent, i initially put it at the start obj/fire_act proc but it caused hot ice to runtime when burned. This change will affect everything that uses fire_act and fire_react procs)</li>
+				<li class="rscdel">Removed hot ice ability to make furnitures (to do this i had to add a new flag to all the base mats that had the MAT_CATEGORY_RIGID flag, the new flag is MAT_CATEGORY_BASE_RECIPES, if this flag is true then the four basic recipes will appear, otherwhise it wont)</li>
+				<li class="tweak">changed the value of the hot ice basemat from 0.75 to 0.2</li>
+				<li class="tweak">changed the beauty value of the hot ice basemat from 0.75 to 0.2</li>
+			</ul>
+			<h3 class="author">Qustinnus updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="rscadd">Families wanted stars now only show up when you are involved in it, and announcements for wanted level changes</li>
+				<li class="rscadd">hovering over wanted stars tells you what they are through a tooltip</li>
+			</ul>
 			<h3 class="author">RiskySikh updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="spellcheck">fixes a spelling mistake in taste description for lean</li>
@@ -87,6 +99,12 @@
 			<h3 class="author">TiviPlus updated:</h3>
 			<ul class="changes bgimages16">
 				<li class="balance">RnD consoles can no longer be screwdrivered to reenable research</li>
+			</ul>
+			<h3 class="author">cacogen updated:</h3>
+			<ul class="changes bgimages16">
+				<li class="bugfix">Material floors are now correctly called floors and not plating</li>
+				<li class="balance">Buffs material floor tiles' throwforces from 1 to 10 (same as iron) to better showcase the effect of different materials (e.g. meat vs. titanium)</li>
+				<li class="bugfix">Radioactive items no longer output a single . when examined at a distance</li>
 			</ul>
 			<h3 class="author">zxaber updated:</h3>
 			<ul class="changes bgimages16">

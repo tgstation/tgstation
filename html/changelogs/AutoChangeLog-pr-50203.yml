@@ -1,6 +1,0 @@
-author: "cacogen"
-delete-after: True
-changes: 
-  - bugfix: "Material floors are now correctly called floors and not plating"
-  - balance: "Buffs material floor tiles' throwforces from 1 to 10 (same as iron) to better showcase the effect of different materials (e.g. meat vs. titanium)"
-  - bugfix: "Radioactive items no longer output a single . when examined at a distance"

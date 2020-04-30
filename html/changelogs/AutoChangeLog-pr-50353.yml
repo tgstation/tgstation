@@ -1,7 +1,0 @@
-author: "Ghilker"
-delete-after: True
-changes: 
-  - bugfix: "Hot ice burn in fires (made a change to obj_defense.dm where in the obj/fire_act proc i added at the end of the proc . = ..(), allowing it to call for the parent, i initially put it at the start obj/fire_act proc but it caused hot ice to runtime when burned. This change will affect everything that uses fire_act and fire_react procs)"
-  - rscdel: "Removed hot ice ability to make furnitures (to do this i had to add a new flag to all the base mats that had the MAT_CATEGORY_RIGID flag, the new flag is MAT_CATEGORY_BASE_RECIPES, if this flag is true then the four basic recipes will appear, otherwhise it wont)"
-  - tweak: "changed the value of the hot ice basemat from 0.75 to 0.2"
-  - tweak: "changed the beauty value of the hot ice basemat from 0.75 to 0.2"
