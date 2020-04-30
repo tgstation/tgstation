@@ -169,25 +169,6 @@
 	sleep(rand(50,100))
 	..()
 
-/datum/chemical_reaction/ghetto_gunpowder
-	results = list(/datum/reagent/gunpowder/ghetto = 2)
-	required_reagents = list(/datum/reagent/phosphorus = 1,/datum/reagent/nitrogen = 1, /datum/reagent/carbon = 1, /datum/reagent/sulfur = 1)
-
-/datum/chemical_reaction/reagent_explosion/ghetto_gunpowder_explosion
-	required_reagents = list(/datum/reagent/gunpowder/ghetto = 1)
-	strengthdiv = 10
-	required_temp = 474
-	///Amplitude of time
-	var/time_amplitude = 100
-
-/datum/chemical_reaction/reagent_explosion/ghetto_gunpowder_explosion/on_reaction(datum/reagents/holder, created_volume)
-	sleep(rand(time_amplitude,time_amplitude*2))
-	..()
-
-/datum/chemical_reaction/reagent_explosion/ghetto_gunpowder_explosion/update_info()
-	required_temp += rand(-30,30)
-	time_amplitude += rand(-50,50)
-
 /datum/chemical_reaction/thermite
 	results = list(/datum/reagent/thermite = 3)
 	required_reagents = list(/datum/reagent/aluminium = 1, /datum/reagent/iron = 1, /datum/reagent/oxygen = 1)
