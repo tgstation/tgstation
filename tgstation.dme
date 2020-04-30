@@ -2832,6 +2832,7 @@
 #include "code\modules\research\xenobiology\crossbreeding\selfsustaining.dm"
 #include "code\modules\research\xenobiology\crossbreeding\stabilized.dm"
 #include "code\modules\research\xenobiology\vatgrowing\biopsy_tool.dm"
+#include "code\modules\research\xenobiology\vatgrowing\microscope.dm"
 #include "code\modules\research\xenobiology\vatgrowing\petridish.dm"
 #include "code\modules\research\xenobiology\vatgrowing\swab.dm"
 #include "code\modules\research\xenobiology\vatgrowing\vatgrower.dm"

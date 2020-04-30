@@ -1,5 +1,7 @@
 ///A single type of growth.
 /datum/micro_organism
+	///Name, shown on microscope
+	var/name = "Unknown fluids"
 	///Desc, shown by science goggles
 	var/desc = "White fluid that tastes like salty coins and milk"
 
