@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - tweak: "Auto fit viewport is now the default, and everyone's setting for this has been reset to the default. If you don't know what this means, it's safe to ignore."

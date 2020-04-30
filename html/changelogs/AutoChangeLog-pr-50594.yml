@@ -1,4 +1,0 @@
-author: "Goonstation Coders, Beestation, Extools devs"
-delete-after: True
-changes: 
-  - refactor: "Explosions have been heavily optimized."
