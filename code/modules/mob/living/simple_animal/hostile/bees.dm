@@ -356,3 +356,4 @@
 	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
 	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
 	add_overlay(body_overlay)
+

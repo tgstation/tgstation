@@ -108,5 +108,7 @@
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 
+
+// I'm pretty sure there was a reason this was empty, so imma just make it send signals. -steamport
 /obj/item/trash/attack(mob/M, mob/living/user)
-	return
+	SEND_SIGNAL(src, COMSIG_ITEM_ATTACK, M, user)
