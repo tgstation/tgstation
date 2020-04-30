@@ -883,6 +883,7 @@
 #include "code\FulpstationCode\sec_borg_files\fulp_sec_borg.dm"
 #include "code\FulpstationCode\sec_expanded_loadouts\detective_goggles.dm"
 #include "code\FulpstationCode\sec_expanded_loadouts\detective_scanner.dm"
+#include "code\FulpstationCode\sec_expanded_loadouts\detective_vendor.dm"
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"

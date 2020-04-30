@@ -14,8 +14,8 @@
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
 /obj/item/clothing/glasses/detective
-	name = "detective glasses"
-	desc = "Stylish glasses with integrated medical, diagnostic and security HUDs and reagent scanning used by detectives. The Meson Scanner mode lets you see basic structural and terrain layouts through walls. Flash proofing compromised to accomodate HUD integration."
+	name = "detective's glasses"
+	desc = "Stylish glasses with integrated medical, diagnostic and security HUDs and reagent scanning used by detectives. The Meson Scanner mode lets you see basic structural and terrain layouts through walls. WARNING! Flash proofing has been compromised to accomodate HUD integration."
 	icon = 'icons/Fulpicons/Surreal_stuff/detective_obs.dmi'
 	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/detective_obs_worn.dmi'
 	icon_state = "sundetect-"

@@ -186,7 +186,7 @@
 
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
-	new /obj/item/clothing/under/rank/security/detective(src)
+	/*new /obj/item/clothing/under/rank/security/detective(src) //FULPSTATION DETECTIVE CLOSET REPLACEMENT by Surrealistik and D4n0w4r APR 2020
 	new /obj/item/clothing/under/rank/security/detective/skirt(src)
 	new /obj/item/clothing/suit/det_suit(src)
 	new /obj/item/clothing/head/fedora/det_hat(src)
@@ -218,7 +218,8 @@
 	new /obj/item/pinpointer/crew(src)
 	new /obj/item/clothing/shoes/laceup/digitigrade(src) //fulp
 	new /obj/item/binoculars(src)
-	new /obj/item/storage/box/rxglasses/spyglasskit(src)
+	new /obj/item/storage/box/rxglasses/spyglasskit(src)*/
+
 /obj/structure/closet/secure_closet/injection
 	name = "lethal injections"
 	req_access = list(ACCESS_HOS)
