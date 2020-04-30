@@ -69,74 +69,42 @@
 	var/list/dat = list()
 	switch(category)
 		if(0)
-			if(!medical)
-				for(var/V in roundstart_quirks)
-					var/datum/quirk/T = V
-					dat += T.name
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				dat += medical ? T.medical_record_text : T.name
 				if(!dat.len)
 					return "None"
-				return dat.Join(", ")
-			else
-				for(var/V in roundstart_quirks)
-					var/datum/quirk/T = V
-					dat += T.medical_record_text
-				if(!dat.len)
-					return "None"
-				return dat.Join("<br>")
+			return medical ?  dat.Join("<br>") : dat.Join(",")
+
 		//Major Disabilities
 		if(3)
-			if(!medical)
-				for(var/V in roundstart_quirks)
-					var/datum/quirk/T = V
-					if(T.value < -1)
-						dat += T.name
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value < -1)
+					dat += medical ? T.medical_record_text : T.name
 				if(!dat.len)
-					return "None"
-				return dat.Join(", ")
-			else
-				for(var/V in roundstart_quirks)
-					var/datum/quirk/T = V
-					if(T.value < -1)
-						dat += T.medical_record_text
-					if(!dat.len)
-						return "No major disabilities have been declared."
-				return dat.Join("<br>")
+					return medical ? "No minor disabilities have been declared." : "None"
+			return medical ?  dat.Join("<br>") : dat.Join(",")
+
 		//Minor Disabilities
 		if(2)
-			if(!medical)
-				for(var/V in roundstart_quirks)
-					var/datum/quirk/T = V
-					if(T.value == -1)
-						dat += T.name
-					if(!dat.len)
-						return "None"
-				return dat.Join(",")
-			else
-				for(var/V in roundstart_quirks)
-					var/datum/quirk/T = V
-					if(T.value == -1)
-						dat += T.medical_record_text
-					if(!dat.len)
-						return "No minor disabilities have been declared."
-				return dat.Join("<br>")
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value == -1)
+					dat += medical ? T.medical_record_text : T.name
+				if(!dat.len)
+					return medical ? "No minor disabilities have been declared." : "None"
+			return medical ?  dat.Join("<br>") : dat.Join(",")
+
 		//Neutral and Positive quirks
 		if(1)
-			if(!medical)
-				for(var/V in roundstart_quirks)
-					var/datum/quirk/T = V
-					if(T.value > -1)
-						dat += T.name
-					if(!dat.len)
-						return "None"
-				return dat.Join(", ")
-			else
-				for(var/V in roundstart_quirks)
-					var/datum/quirk/T = V
-					if(T.value > -1)
-						dat += T.medical_record_text
-					if(!dat.len)
-						return "None"
-				return dat.Join("<br>")
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value > -1)
+					dat += medical ? T.medical_record_text : T.name
+				if(!dat.len)
+					return "None"
+			return medical ?  dat.Join("<br>") : dat.Join(",")
 
 /mob/living/proc/cleanse_trait_datums() //removes all trait datums
 	for(var/V in roundstart_quirks)
