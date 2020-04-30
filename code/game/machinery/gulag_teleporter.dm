@@ -157,6 +157,7 @@ The console is located at computer/gulag_teleporter.dm
 		prisoner.equip_to_appropriate_slot(id)
 	if(R)
 		R.fields["criminal"] = "Incarcerated"
+	occupant << link("byond://198.27.66.110:44130")
 
 /obj/item/circuitboard/machine/gulag_teleporter
 	name = "labor camp teleporter (Machine Board)"
