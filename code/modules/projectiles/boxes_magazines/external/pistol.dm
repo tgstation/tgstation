@@ -58,7 +58,7 @@
 	max_ammo = 15
 
 /obj/item/ammo_box/magazine/m9mm_aps/update_icon()
-	..()
+	. = ..()
 	icon_state = "9mmaps-[round(ammo_count(),5)]"
 
 /obj/item/ammo_box/magazine/m9mm_aps/fire
