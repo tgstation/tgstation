@@ -27,6 +27,8 @@
 
 	if(!current_dish)
 		return data
+	if(!current_dish.sample)
+		return
 
 	data["cell_lines"] = list()
 	data["viruses"] = list()
