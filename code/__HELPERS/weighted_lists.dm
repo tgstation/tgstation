@@ -4,7 +4,7 @@
  * Additional entries are either "end_point"s which are endpoints for spawn selection OR they are unique named lists with their own weight element.
  * This supports nested, weighted lists, an example can be found in arcade.dm with "arcade_prize_pool"
  *
- * The proc adds the list weights to gather and rolls a number with the combined weight as the cap.
+ * The proc adds the list weights together and rolls a number with the combined weight as the cap.
  * It then goes through the list deducting the weight values of each entry in sequence until it hits 0 or less.
  * Once the value hits 0 the loop breaks and the list selected provides it's "element_list" as a result.
  *
