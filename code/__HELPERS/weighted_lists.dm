@@ -1,7 +1,7 @@
 /**
  * Pick From Weighted Lists
  * The first value of a list is the weight, which is equal to the number of entries into the pick.
- * Additional entries are either "element_list"s which are endpoints for spawn selection OR they are unique named lists with their own weight element.
+ * Additional entries are either "end_point"s which are endpoints for spawn selection OR they are unique named lists with their own weight element.
  * This supports nested, weighted lists, an example can be found in arcade.dm with "arcade_prize_pool"
  *
  * The proc adds the list weights to gather and rolls a number with the combined weight as the cap.
