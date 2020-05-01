@@ -81,7 +81,7 @@
 
 /obj/item/storage/bag/trash/filled/PopulateContents()
 	. = ..()
-	for(var/i in 1 to (rand(-3,3)+3))
+	for(var/i in 1 to rand(0,3))
 		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
 	update_icon_state()
 
