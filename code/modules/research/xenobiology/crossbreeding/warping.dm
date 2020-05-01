@@ -596,7 +596,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	///used to remember the recent speech of the holo_host
 	var/list/recent_speech = list()
 	///used to remember the timer ID that activates holo_talk
-	var/current_timerid
+
 
 /obj/effect/warped_rune/ceruleanspace/Initialize()
 	. = ..()
@@ -607,8 +607,8 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 /obj/effect/warped_rune/ceruleanspace/proc/holo_talk()
 	if(holotile && length(recent_speech))
 		holotile.say(recent_speech[pick(recent_speech)]) //say one of the 10 latest sentence said by the holo_host
-		current_timerid = addtimer(CALLBACK(src, .proc/holo_talk), 100)
-	current_timerid = null
+		addtimer(CALLBACK(src, .proc/holo_talk), 100, TIMER_OVERRIDE|TIMER_UNIQUE)
+
 
 
 ///makes a hologram of the mob stepping on the tile, any new person stepping in will replace it with a new hologram
@@ -651,9 +651,9 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 			if(recent_speech.len >= 10)
 				break
 			recent_speech[spoken_memory] = say_log[spoken_memory]
-		if(current_timerid)
-			deltimer(current_timerid) //deletes the previous timer so it doesn't stack
-		current_timerid = addtimer(CALLBACK(src, .proc/holo_talk), 100)
+
+	addtimer(CALLBACK(src, .proc/holo_talk), 100, TIMER_OVERRIDE|TIMER_UNIQUE)
+
 
 ///destroys the hologram with the rune
 /obj/effect/warped_rune/ceruleanspace/Destroy()
