@@ -26,7 +26,7 @@
 		micro_organisms += new chosen_type
 	if(virus_chance)
 		if(!GLOB.cell_virus_tables[virus_define])
-			CRASH("Bruh moment: There's no virus table linked to this string [virus_define]")
+			return
 		var/datum/micro_organism/chosen_type = pickweight(GLOB.cell_virus_tables[virus_define])
 		micro_organisms += new chosen_type
 
