@@ -25,7 +25,7 @@
  *			)
  *		)
  *	"rare" = list(
- *		"weight" = 4
+ *		"weight" = 1
  *		"end_point" = (gold, loot, gems)
  *		)
  *  )
