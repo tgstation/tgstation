@@ -29,7 +29,7 @@
 	D.override_allow_spacemove = TRUE
 
 
-///Ability that allows the owner to fire healing globules at mobs, targetting specific limbs.
+///Ability that allows the owner to slap other mobs a short distance away
 /obj/effect/proc_holder/tentacle_slap
 	name = "Tentacle slap"
 	desc = "Slap a creature with your tentacles."

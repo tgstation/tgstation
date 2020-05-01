@@ -53,7 +53,7 @@
 	var/list/reagent_list = list()
 	for(var/i in reagents) //Convert from assoc to normal. Yeah very shit.
 		var/datum/reagent/reagent = i
-		reagent_list += reagent.name
+		reagent_list += initial(reagent.name)
 	return reagent_list.Join(", ")
 
 
