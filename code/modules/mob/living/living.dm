@@ -1495,3 +1495,35 @@
 	if(!apply_change)
 		return BODYTEMP_NORMAL
 	return BODYTEMP_NORMAL + get_body_temp_normal_change()
+
+/mob/living/proc/can_look_up() //Checks if the user is incapacitated.
+	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+
+/**
+ * look_up Changes the perspective of the mob to any openspace turf above the mob
+ *
+ * This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up
+ *
+ */
+/mob/living/verb/look_up()
+	set name = "Look Up"
+	set category = "IC"
+
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
+		reset_perspective()
+		UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+		return
+	if(!can_look_up())
+		return
+	var/turf/above_turf = get_step_multiz(src, UP)
+	if(!above_turf) //We are at the highest z-level.
+		to_chat(src, "<span class='warning'>You're already at the highest floor.</span>")
+		return
+	else if(!isopenspace(above_turf)) //There is no openspace turf above us.
+		to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
+		return
+
+	changeNext_move(CLICK_CD_LOOK_UP)
+	SEND_SIGNAL(src, COMSIG_LIVING_LOOK_UP, src)
+	reset_perspective(above_turf)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/reset_perspective) //We stop looking up if we move.
