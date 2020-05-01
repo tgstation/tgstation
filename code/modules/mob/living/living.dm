@@ -1515,15 +1515,15 @@
 		return
 	if(!can_look_up())
 		return
-	var/turf/above_turf = get_step_multiz(src, UP)
-	if(!above_turf) //We are at the highest z-level.
-		to_chat(src, "<span class='warning'>You're already at the highest floor.</span>")
+	var/turf/ceiling= get_step_multiz(src, UP)
+	if(!ceiling) //We are at the highest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
 		return
-	else if(!isopenspace(above_turf)) //There is no openspace turf above us.
+	else if(!isopenspace(ceiling)) //There is no openspace turf above us.
 		to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
 		return
 
 	changeNext_move(CLICK_CD_LOOK_UP)
 	SEND_SIGNAL(src, COMSIG_LIVING_LOOK_UP, src)
-	reset_perspective(above_turf)
+	reset_perspective(ceiling)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/reset_perspective) //We stop looking up if we move.
