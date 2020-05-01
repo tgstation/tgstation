@@ -184,24 +184,27 @@
 		to_chat(src, "<span class='userdanger'>You are tipped over by [M]!</span>")
 		Paralyze(60, ignore_canstun = TRUE)
 		icon_state = icon_dead
-		spawn(rand(20,50))
-			if(!stat && M)
-				icon_state = icon_living
-				var/external
-				var/internal
-				switch(pick(1,2,3,4))
-					if(1,2,3)
-						var/text = pick("imploringly.", "pleadingly.",
-							"with a resigned expression.")
-						external = "[src] looks at [M] [text]"
-						internal = "You look at [M] [text]"
-					if(4)
-						external = "[src] seems resigned to its fate."
-						internal = "You resign yourself to your fate."
-				visible_message("<span class='notice'>[external]</span>",
-					"<span class='revennotice'>[internal]</span>")
+		addtimer(CALLBACK(src, .proc/cow_tipped, M), rand(20,50))
+
 	else
 		..()
+
+/mob/living/simple_animal/cow/proc/cow_tipped(mob/living/carbon/M)
+	if(QDELETED(M) || stat)
+		return
+	icon_state = icon_living
+	var/external
+	var/internal
+	if(prob(75))
+		var/text = pick("imploringly.", "pleadingly.",
+			"with a resigned expression.")
+		external = "[src] looks at [M] [text]"
+		internal = "You look at [M] [text]"
+	else
+		external = "[src] seems resigned to its fate."
+		internal = "You resign yourself to your fate."
+	visible_message("<span class='notice'>[external]</span>",
+		"<span class='revennotice'>[internal]</span>")
 
 ///Wisdom cow, gives XP to a random skill and speaks wisdoms
 /mob/living/simple_animal/cow/wisdom

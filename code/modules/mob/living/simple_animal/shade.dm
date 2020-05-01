@@ -3,7 +3,7 @@
 	real_name = "Shade"
 	desc = "A bound spirit."
 	gender = PLURAL
-	icon = 'icons/mob/mob.dmi'
+	icon = 'icons/mob/cult.dmi'
 	icon_state = "shade"
 	icon_living = "shade"
 	mob_biotypes = MOB_SPIRIT

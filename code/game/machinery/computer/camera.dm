@@ -15,7 +15,7 @@
 	// Stuff needed to render the map
 	var/map_name
 	var/const/default_map_size = 15
-	var/obj/screen/cam_screen
+	var/obj/screen/map_view/cam_screen
 	var/obj/screen/plane_master/lighting/cam_plane_master
 	var/obj/screen/background/cam_background
 
@@ -79,7 +79,7 @@
 		user.client.register_map_obj(cam_plane_master)
 		user.client.register_map_obj(cam_background)
 		// Open UI
-		ui = new(user, src, ui_key, "camera_console", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "CameraConsole", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/security/ui_data()

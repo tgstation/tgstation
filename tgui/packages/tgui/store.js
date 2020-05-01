@@ -1,16 +1,8 @@
 import { flow } from 'common/fp';
 import { applyMiddleware, createStore as createReduxStore } from 'common/redux';
+import { Component } from 'inferno';
 import { backendReducer } from './backend';
 import { hotKeyMiddleware, hotKeyReducer } from './hotkeys';
-import { createLogger } from './logging';
-
-const logger = createLogger('store');
-
-// const loggingMiddleware = store => next => action => {
-//   const { type, payload } = action;
-//   logger.log('dispatching', type);
-//   next(action);
-// };
 
 export const createStore = () => {
   const reducer = flow([
@@ -25,4 +17,19 @@ export const createStore = () => {
     hotKeyMiddleware,
   ];
   return createReduxStore(reducer, applyMiddleware(...middleware));
+};
+
+export class StoreProvider extends Component {
+  getChildContext() {
+    const { store } = this.props;
+    return { store };
+  }
+
+  render() {
+    return this.props.children;
+  }
+}
+
+export const useDispatch = context => {
+  return context.store.dispatch;
 };

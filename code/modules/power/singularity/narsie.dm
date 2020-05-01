@@ -1,7 +1,8 @@
 /obj/singularity/narsie //Moving narsie to a child object of the singularity so it can be made to function differently. --NEO
 	name = "Nar'Sie's Avatar"
 	desc = "Your mind begins to bubble and ooze as it tries to comprehend what it sees."
-	icon = 'icons/obj/magic_terror.dmi'
+	icon = 'icons/obj/narsie_small.dmi'
+	icon_state = "narsie"
 	pixel_x = -89
 	pixel_y = -85
 	density = FALSE
@@ -35,7 +36,7 @@
 	if(A)
 		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult_effects.dmi', "ghostalertsie")
 		notify_ghosts("Nar'Sie has risen in \the [A.name]. Reach out to the Geometer to be given a new shell for your soul.", source = src, alert_overlay = alert_overlay, action=NOTIFY_ATTACK)
-	INVOKE_ASYNC(src, .proc/narsie_spawn_animation)
+	narsie_spawn_animation()
 	UnregisterSignal(src, COMSIG_ATOM_BSA_BEAM) //set up in /singularity/Initialize()
 
 /obj/singularity/narsie/large/cult  // For the new cult ending, guaranteed to end the round within 3 minutes
@@ -226,13 +227,10 @@
 
 
 /obj/singularity/narsie/proc/narsie_spawn_animation()
-	icon = 'icons/obj/narsie_spawn_anim.dmi'
 	setDir(SOUTH)
-	move_self = 0
+	move_self = FALSE
 	flick("narsie_spawn_anim",src)
-	sleep(11)
-	move_self = 1
-	icon = initial(icon)
+	addtimer(CALLBACK(src, .proc/narsie_spawn_animation_end), 3.5 SECONDS)
 
-
-
+/obj/singularity/narsie/proc/narsie_spawn_animation_end()
+	move_self = TRUE

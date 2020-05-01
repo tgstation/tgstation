@@ -11,7 +11,7 @@
 	requires_ntnet = 0
 	network_destination = "power monitoring system"
 	size = 9
-	tgui_id = "ntos_power_monitor"
+	tgui_id = "NtosPowerMonitor"
 	ui_x = 550
 	ui_y = 700
 

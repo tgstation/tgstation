@@ -136,7 +136,7 @@
 	. = ..()
 	setDir(t)
 
-/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
+/obj/item/assembly/infra/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	. = ..()
 	olddir = dir
 
@@ -192,7 +192,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "infrared_emitter", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "InfraredEmitter", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/assembly/infra/ui_data(mob/user)

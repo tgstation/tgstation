@@ -1258,22 +1258,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 
-/datum/uplink_item/suits/hardsuit/cybersun
-	name = "Cybersun Hardsuit"
-	desc = "A long forgotten hardsuit made by Cybersun industries. \
-			Offers ROBUST protection against laser-based weapons, while still giving somewhat good chances \
-			to survive assault from a toolbox or shotgun. \
-			Not to mention, it doesn't slow you down and contains an integrated jetpack that runs on standard tanks. \
-			Systems in this hardsuit make it really hard to take it off from you."
-	item = /obj/item/clothing/suit/space/hardsuit/cybersun
-	cost = 14
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //nuke and clown ops get it for lower value
-
-/datum/uplink_item/suits/hardsuit/cybersun/nuke
-	cost = 8
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	exclude_modes = list()
-
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
 	desc = "An upgraded, elite version of the Syndicate hardsuit. It features fireproofing, and also \
@@ -1357,9 +1341,24 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
+			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
 	item = /obj/item/card/emag
-	cost = 6
+	cost = 4
+
+/datum/uplink_item/device_tools/syndie_jaws_of_life
+	name = "Syndicate Jaws of Life"
+	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
+	In it's crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or it's departments."
+	item = /obj/item/crowbar/power/syndicate
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/device_tools/doorjack
+	name = "Airlock Authentication Override Card"
+	desc = "A specialized cryptographic sequencer specifically designed to override station airlock access codes. \
+			After hacking a certain number of airlocks, the device will require some time to recharge."
+	item = /obj/item/card/emag/doorjack
+	cost = 3
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
@@ -1952,7 +1951,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	illegal_tech = FALSE
- 
+
 /datum/uplink_item/badass/tactical_naptime
 	name = "Sleepy Time Pajama Bundle"
 	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."
