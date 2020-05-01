@@ -39663,13 +39663,13 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bUj" = (
-/obj/machinery/computer/secure_data,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
+/obj/machinery/computer/security,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/engineering)
 "bUk" = (
