@@ -301,7 +301,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	add_overlay(receiving)
 	src.receiving = receiving
 	src.giver = giver
-	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, /obj/screen/alert/give/.proc/removeAlert)
+	RegisterSignal(taker, COMSIG_MOVABLE_MOVED, .proc/removeAlert)
 
 /obj/screen/alert/give/proc/removeAlert()
 	to_chat(owner, "<span class='warning'>You moved out of range of [giver]!</span>")
