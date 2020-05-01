@@ -1,3 +1,4 @@
+
 /turf/open/floor/light
 	name = "light floor"
 	desc = "A wired glass tile embedded into the floor. Modify the color with a Multitool."
@@ -17,11 +18,8 @@
 	. = ..()
 	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 
-/turf/open/floor/light/Initialize()
-	. = ..()
-	update_icon()
-	if(!length(lighttile_designs))
-		populate_lighttile_designs()
+/turf/open/floor/light/proc/populate_lighttile_designs()
+	lighttile_designs = list(
 		"r" = image(icon = src.icon, icon_state = "light_on-r"),
 		"o" = image(icon = src.icon, icon_state = "light_on-o"),
 		"y" = image(icon = src.icon, icon_state = "light_on-y"),
@@ -34,6 +32,12 @@
 		"s" = image(icon = src.icon, icon_state = "light_on-s"),
 		"z" = image(icon = src.icon, icon_state = "light_on-z")
 		)
+
+/turf/open/floor/light/Initialize()
+	. = ..()
+	update_icon()
+	if(!length(lighttile_designs))
+		populate_lighttile_designs()
 
 /turf/open/floor/light/break_tile()
 	..()
