@@ -397,12 +397,6 @@
 /mob/proc/show_inv(mob/user)
 	return
 
-/mob/living/carbon/verb/giveitem(var/mob/living/carbon/target in (view(1) - usr)))
-	set name = "Give"
-	set category = "IC"
-	if(!iscarbon(target) || target.incapacitated() || !target.client)
-		return
-	give()
 
 /**
   * Examine a mob
