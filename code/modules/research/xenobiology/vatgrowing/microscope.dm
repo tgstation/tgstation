@@ -23,6 +23,11 @@
 /obj/structure/microscope/ui_data(mob/user)
 	var/list/data = list()
 
+	data["has_dish"] = current_dish ? TRUE : FALSE
+
+	if(!current_dish)
+		return data
+
 	data["cell_lines"] = list()
 	data["viruses"] = list()
 
