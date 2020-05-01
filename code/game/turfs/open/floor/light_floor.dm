@@ -8,11 +8,11 @@
 	broken_states = list("light_broken")
 	var/on = TRUE
 	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
-	var/list/coloredlights = list("r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
+	var/static/list/coloredlights = list("r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
 	var/currentcolor = "b"
 	var/can_modify_colour = TRUE
 	tiled_dirt = FALSE
-	var/static/list/lighttile_designs = list()
+	var/static/list/lighttile_designs
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()
