@@ -89,7 +89,6 @@
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
-		return FALSE
 	var/atom/movable/religious_tool2 = religious_tool
 	if(!religious_tool2?.buckled_mobs?.len)
 		return FALSE
