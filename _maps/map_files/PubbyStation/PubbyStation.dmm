@@ -24903,7 +24903,7 @@
 "bmg" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Port Emergency Storage";
-	req_one_access_txt = "12;45;5;9"
+	req_one_access_txt = "12;45;5"
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
@@ -25296,7 +25296,7 @@
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
-/area/storage/emergency/port)
+/area/medical/medbay/zone2)
 "bny" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/firealarm{
@@ -25315,7 +25315,7 @@
 	dir = 4
 	},
 /turf/open/floor/plasteel/white,
-/area/storage/emergency/port)
+/area/medical/medbay/zone2)
 "bnz" = (
 /obj/structure/table,
 /obj/item/folder/white,
@@ -48721,7 +48721,8 @@
 "cBL" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Medbay Maintenance";
-	req_one_access_txt = "12;45;5;9"
+	req_access_txt = "5";
+	req_one_access_txt = ""
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/engine)
@@ -51612,7 +51613,7 @@
 	dir = 9
 	},
 /turf/open/floor/plasteel/white,
-/area/storage/emergency/port)
+/area/medical/medbay/zone2)
 "iJb" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
