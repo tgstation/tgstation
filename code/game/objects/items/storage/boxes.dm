@@ -856,7 +856,7 @@
 /obj/item/storage/box/beanbag
 	name = "box of beanbags"
 	desc = "A box full of beanbag shells."
-	illustration =  = "rubbershot_box"
+	illustration = "rubbershot_box"
 	illustration = null
 
 /obj/item/storage/box/beanbag/PopulateContents()
@@ -924,12 +924,7 @@
 				desc = "A paper sack with a heart etched onto the side."
 			if(SMILEY)
 				desc = "A paper sack with a crude smile etched onto the side."
-			else
-				return FALSE
-		to_chat(user, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
-		icon_state = "paperbag_[choice]"
-		item_state = "paperbag_[choice]"
-		return FALSE
+		return 0
 	else if(W.get_sharpness())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
@@ -1264,7 +1259,7 @@
 		new/obj/item/sparkler(src)
 		new/obj/item/grenade/firecracker(src)
 	if(prob(20))
-		new /obj/item/syndieminibomb/concussion/frag(src)
+		new /obj/item/grenade/syndieminibomb/concussion/frag(src)
 	else
 		new /obj/item/toy/snappop(src)
 
