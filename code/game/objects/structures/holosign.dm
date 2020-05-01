@@ -10,9 +10,8 @@
 	var/obj/item/holosign_creator/projector
 
 /obj/structure/holosign/New(loc, source_projector)
-	if(source_projector)
-		projector = source_projector
-		projector.signs += src
+	projector = source_projector
+	LAZYADD(projector.signs, src)
 	..()
 
 /obj/structure/holosign/Initialize()
@@ -21,9 +20,7 @@
 	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, plane, dir, add_appearance_flags = RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
 
 /obj/structure/holosign/Destroy()
-	if(projector)
-		projector.signs -= src
-		projector = null
+	LAZYREMOVE(projector.signs, src)
 	return ..()
 
 /obj/structure/holosign/attack_hand(mob/living/user)
@@ -126,9 +123,8 @@
 		stack_trace("Power shield created without power avaiable")
 		qdel(src)
 		return
-	if(source_projector)
-		shield_projector = source_projector
-		shield_projector.signs += src
+	shield_projector = source_projector
+	LAZYADD(shield_projector.signs, src)
 	air_update_turf(TRUE)
 	a.addStaticPower(power_consumption, STATIC_EQUIP)
 	shield_turf()
@@ -138,9 +134,7 @@
 	T.thermal_conductivity = stored_conductivity
 	var/area/a = get_area(src)
 	a.addStaticPower(-power_consumption, STATIC_EQUIP)
-	if(shield_projector)
-		shield_projector.signs -= src
-		shield_projector = null
+	LAZYREMOVE(shield_projector.signs, src)
 	return ..()
 
 ///Proc that takes the thermal conductivity of the turf its on and store it inside a variable

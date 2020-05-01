@@ -120,6 +120,23 @@
 				qdel(h)
 			update_icon_state()
 			return
+	. = TRUE
+	switch(dir) //Check for map limits.
+		if(NORTH)
+			if(!locate(x - 2, y + 5, z) || !locate(x + 2, y + 5, z))
+				. = FALSE
+		if(SOUTH)
+			if(!locate(x - 2, y - 5, z) || !locate(x + 2, y - 5, z))
+				. = FALSE
+		if(EAST)
+			if(!locate(x + 5, y -2, z) || !locate(x + 5, y + 2, z))
+				. = FALSE
+		if(WEST)
+			if(!locate(x - 5, y - 2, z) || !locate(x - 5, y + 2, z))
+				. = FALSE
+	if(!.)
+		to_chat(user, "<span class='warning'>The motors whir and fail!</span>")
+		return
 	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
 	if(do_after(user, 1.5 SECONDS, target = src))
 		to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
@@ -171,6 +188,23 @@
 				qdel(h)
 			update_icon_state()
 			return
+	. = TRUE
+	switch(dir) //Check for map limits.
+		if(NORTH)
+			if(!locate(x - 1, y + 4, z) || !locate(x + 3, y + 4, z))
+				. = FALSE
+		if(SOUTH)
+			if(!locate(x - 3, y - 4, z) || !locate(x + 1, y - 4, z))
+				. = FALSE
+		if(EAST)
+			if(!locate(x + 4, y -3, z) || !locate(x + 4, y + 1, z))
+				. = FALSE
+		if(WEST)
+			if(!locate(x - 4, y - 1, z) || !locate(x - 4, y + 3, z))
+				. = FALSE
+	if(!.)
+		to_chat(user, "<span class='warning'>The motors whir and fail!</span>")
+		return
 	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
 	if(do_after(user, 1.5 SECONDS, target = src))
 		to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")

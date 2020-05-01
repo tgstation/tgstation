@@ -14,6 +14,7 @@
 	CanAtmosPass = ATMOS_PASS_PROC
 	rad_insulation = RAD_VERY_LIGHT_INSULATION
 	rad_flags = RAD_PROTECT_CONTENTS
+	///maximum heat that the window can withstand
 	var/heat_capacity = 1000
 	var/ini_dir = null
 	var/state = WINDOW_OUT_OF_FRAME
