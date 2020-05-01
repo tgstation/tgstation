@@ -14,45 +14,48 @@
 	current_dish = I
 	current_dish.forceMove(src)
 
-/obj/structure/microscope/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/structure/microscope/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "microscope", name, 400, 800, master_ui, state)
+		ui = new(user, src, ui_key, "Microscope", name, 525, 594, master_ui, state)
 		ui.open()
 
 /obj/structure/microscope/ui_data(mob/user)
 	var/list/data = list()
 
 	data["has_dish"] = current_dish ? TRUE : FALSE
+	data["cell_lines"] = list()
+	data["viruses"] = list()
 
 	if(!current_dish)
 		return data
 	if(!current_dish.sample)
-		return
-
-	data["cell_lines"] = list()
-	data["viruses"] = list()
+		return data
 
 	for(var/organism in current_dish.sample.micro_organisms) //All the microorganisms in the dish
-		var/list/organism_information = list()
 		if(istype(organism, /datum/micro_organism/cell_line))
 			var/datum/micro_organism/cell_line/cell_line = organism
-			organism_information["type"] = "cell line"
-			organism_information["name"] = cell_line.name
-			organism_information["desc"] = cell_line.desc
-			organism_information["growth_rate"] = cell_line.growth_rate
-			organism_information["suspectibility"] = cell_line.virus_suspectibility
-			organism_information["requireds"] = get_reagent_list(cell_line.required_reagents)
-			organism_information["supplementaries"] = get_reagent_list(cell_line.supplementary_reagents)
-			organism_information["suppressives"] = get_reagent_list(cell_line.suppressive_reagents)
-			data["cell_lines"] += organism_information
+			var/list/organism_data = list(
+				type = "cell line",
+				name = cell_line.name,
+				desc = cell_line.desc,
+				growth_rate = cell_line.growth_rate,
+				suspectibility = cell_line.virus_suspectibility,
+				requireds = get_reagent_list(cell_line.required_reagents),
+				supplementaries = get_reagent_list(cell_line.supplementary_reagents),
+				suppressives = get_reagent_list(cell_line.suppressive_reagents)
+			)
+			data["cell_lines"] += list(organism_data)
 
 		if(istype(organism, /datum/micro_organism/virus))
 			var/datum/micro_organism/virus/virus = organism
-			organism_information["type"] = "virus"
-			organism_information["name"] = virus.name
-			organism_information["desc"] = virus.desc
-			data["viruses"] += organism_information
+			var/list/virus_data = list(
+				type = "virus",
+				name = virus.name,
+				desc = virus.desc
+			)
+			data["viruses"] += list(virus_data)
 
 	return data
 
@@ -68,7 +71,7 @@
 	if(..())
 		return
 	switch(action)
-		if("eject petridish")
+		if("eject_petridish")
 			if(!current_dish)
 				return FALSE
 			current_dish.forceMove(get_turf(src))
