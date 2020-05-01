@@ -21,6 +21,12 @@
 	build_path = /obj/item/circuitboard/computer/arcade/orion_trail
 	category = list("Computer Boards")
 
+/datum/design/board/arcade_amputation
+	name = "Computer Design (Amputation Adventure Arcade Machine)"
+	desc = "Allows for the construction of circuit boards used to build a new Amputation Adventure machine."
+	id = "arcade_amputation"
+	build_path = /obj/item/circuitboard/computer/arcade/amputation
+	category = list("Computer Boards")
 
 /datum/design/board/seccamera
 	name = "Computer Design (Security Camera)"
