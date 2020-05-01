@@ -40,7 +40,7 @@
 	return ..()
 
 /mob/living/carbon/human/ZImpactDamage(turf/T, levels)
-	if(dna.species.flying_species || (ismoth(src) && dna.features["moth_wings"] != "Burnt Off"))
+	if(("wings" in dna.species.mutant_bodyparts) || (("moth_wings" in dna.species.mutant_bodyparts) && dna.features["moth_wings"] != "Burnt Off"))
 		visible_message("<span class='danger'>[src] softly lands on [T].</span>", \
 						"<span class='userdanger'>You softly land on [T].</span>")
 		Knockdown(levels * 50)
