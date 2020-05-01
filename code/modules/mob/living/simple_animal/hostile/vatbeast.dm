@@ -53,10 +53,10 @@
 		to_chat(user, "<span class='notice'>This ability is still on cooldown.</span>")
 		return
 	if(active)
-		message = "<span class='notice'>You prepare your pimp-tentacle.</span>"
+		message = "<span class='notice'>You stop preparing to tentacle slap.</span>"
 		remove_ranged_ability(message)
 	else
-		message = "<span class='notice'>You stop preparing to tentacle slap. <B>Left-click to slap a target!</B></span>"
+		message = "<span class='notice'>You prepare your pimp-tentacle. <B>Left-click to slap a target!</B></span>"
 		add_ranged_ability(user, message, TRUE)
 
 /obj/effect/proc_holder/tentacle_slap/InterceptClickOn(mob/living/caller, params, atom/target)
