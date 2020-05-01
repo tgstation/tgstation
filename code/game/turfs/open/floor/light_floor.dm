@@ -11,7 +11,7 @@
 	var/currentcolor = "b"
 	var/can_modify_colour = TRUE
 	tiled_dirt = FALSE
-	var/list/lighttile_designs = list()
+	var/static/list/lighttile_designs = list()
 
 /turf/open/floor/light/examine(mob/user)
 	. = ..()
@@ -20,7 +20,8 @@
 /turf/open/floor/light/Initialize()
 	. = ..()
 	update_icon()
-	lighttile_designs = list(
+	if(!length(lighttile_designs))
+		populate_lighttile_designs()
 		"r" = image(icon = src.icon, icon_state = "light_on-r"),
 		"o" = image(icon = src.icon, icon_state = "light_on-o"),
 		"y" = image(icon = src.icon, icon_state = "light_on-y"),
