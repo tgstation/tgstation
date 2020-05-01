@@ -48,7 +48,7 @@
 	activate()
 	add_fingerprint(user)
 
-//For the Condenser, which functions like the igniter but makes things cold.
+//For the Condenser, which functions like the igniter but makes things colder.
 /obj/item/assembly/igniter/condenser
 	name = "condenser"
 	desc = "A small electronic device able to chill their surroundings."
