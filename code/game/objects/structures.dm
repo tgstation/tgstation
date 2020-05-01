@@ -114,9 +114,9 @@
 			. += examine_status
 
 /obj/structure/CanAllowThrough(atom/movable/mover, turf/target)
-	.= ..()
+	. = ..()
 	
-	if(istype(mover) && (mover.pass_flags & PASSSTRUCTURE))
+	if(mover.pass_flags & PASSSTRUCTURE)
 		return TRUE
 
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
