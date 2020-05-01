@@ -68,7 +68,7 @@
 /mob/living/proc/get_trait_string(medical, category) //helper string. gets a string of all the traits the mob has
 	var/list/dat = list()
 	switch(category)
-		if(0)
+		if(CAT_QUIRK_ALL)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				dat += medical ? T.medical_record_text : T.name
@@ -77,7 +77,7 @@
 			return medical ?  dat.Join("<br>") : dat.Join(",")
 
 		//Major Disabilities
-		if(3)
+		if(CAT_QUIRK_MAJOR_DISABILITY)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				if(T.value < -1)
@@ -87,7 +87,7 @@
 			return medical ?  dat.Join("<br>") : dat.Join(",")
 
 		//Minor Disabilities
-		if(2)
+		if(CAT_QUIRK_MINOR_DISABILITY)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				if(T.value == -1)
@@ -97,7 +97,7 @@
 			return medical ?  dat.Join("<br>") : dat.Join(",")
 
 		//Neutral and Positive quirks
-		if(1)
+		if(CAT_QUIRK_NOTES)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				if(T.value > -1)
