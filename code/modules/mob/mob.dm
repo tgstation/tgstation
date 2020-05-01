@@ -397,15 +397,12 @@
 /mob/proc/show_inv(mob/user)
 	return
 
-/mob/verb/giveitem(atom/A as mob in range(1))
+/mob/living/carbon/verb/giveitem(var/mob/living/carbon/target in (view(1) - usr)))
 	set name = "Give"
 	set category = "IC"
-	if(!iscarbon(src))
-		to_chat(src, "<span class='warning'>You can't give items!</span>")
+	if(!iscarbon(target) || target.incapacitated() || !target.client)
 		return
-	if(A && A != src && get_dist(src, A) < 2)
-		var/mob/living/carbon/C = src
-		C.give()
+	give()
 
 /**
   * Examine a mob
