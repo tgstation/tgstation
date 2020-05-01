@@ -75,13 +75,20 @@
 		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
 		return FALSE
 	var/atom/movable/religious_tool2 = religious_tool
-	if(!religious_tool2?.buckled_mobs?.len)
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [religious_tool2].</span>")
+	if(!religious_tool2)
 		return FALSE
+	if(!religious_tool2.buckled_mobs?.len)
+		. = FALSE
+		if(!religious_tool2.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
+			to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
+			return
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [religious_tool2].</span>")
+		return
 	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
+		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
 		return FALSE
 	var/atom/movable/religious_tool2 = religious_tool
 	if(!religious_tool2?.buckled_mobs?.len)
