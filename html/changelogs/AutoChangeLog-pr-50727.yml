@@ -1,0 +1,4 @@
+author: "jdawg1290"
+delete-after: True
+changes: 
+  - bugfix: "canister exports should no longer runtime"
