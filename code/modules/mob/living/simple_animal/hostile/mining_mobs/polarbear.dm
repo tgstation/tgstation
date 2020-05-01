@@ -57,3 +57,8 @@
 	move_resist = MOVE_RESIST_DEFAULT
 	pull_force = PULL_FORCE_DEFAULT
 	return ..()
+
+/mob/living/simple_animal/hostile/asteroid/polarbear/lesser
+	name = "magic polar bear"
+	desc = "It seems sentient somehow."
+	faction = list("neutral")

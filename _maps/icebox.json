@@ -18,6 +18,7 @@
       {
          "Up":1,
          "Mining":true,
+		 "Station":false,
          "Linkage":null,
          "Gravity":true,
          "Ice Ruins Underground":true,
@@ -27,6 +28,7 @@
          "Down":-1,
          "Up":1,
          "Mining":true,
+		 "Station":false,
          "Linkage":null,
          "Gravity":true,
          "Ice Ruins Underground":true,

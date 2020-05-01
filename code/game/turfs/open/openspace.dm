@@ -17,11 +17,12 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	icon_state = "transparent"
 	baseturfs = /turf/open/openspace
 	CanAtmosPassVertical = ATMOS_PASS_YES
-	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	/// If you can can over up the turf with tiles
 	var/can_cover_up = TRUE
+	/// If you can build a catwalk over the turf
 	var/can_build_on = TRUE
-
 	intact = 0
+
 /turf/open/openspace/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -161,9 +162,4 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 /turf/open/openspace/icemoon
 	name = "ice chasm"
 	baseturfs = /turf/open/openspace/icemoon
-	can_cover_up = FALSE
-	can_build_on = FALSE
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-
-/turf/open/openspace/icemoon/can_zFall(atom/movable/A, levels = 1, turf/target)
-	return TRUE

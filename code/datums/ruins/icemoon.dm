@@ -25,6 +25,12 @@
 	description = "Just relax and take a dip, nothing will go wrong, I swear!"
 	suffix = "icemoon_surface_hotsprings.dmm"
 
+/datum/map_template/ruin/icemoon/engioutpost
+	name = "Engineer Outpost"
+	id = "engioutpost"
+	description = "Blown up by an unfortunate accident."
+	suffix = "icemoon_surface_engioutpost.dmm"
+
 /datum/map_template/ruin/icemoon/fountain
 	name = "Fountain Hall"
 	id = "fountain"

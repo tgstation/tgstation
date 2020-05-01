@@ -31,7 +31,7 @@
 	butcher_results = list(/obj/item/stack/ore/diamond = 3, /obj/item/stack/sheet/sinew = 2, /obj/item/stack/sheet/bone = 10, /obj/item/stack/sheet/animalhide/ashdrake = 1)
 	loot = list()
 	crusher_loot = /obj/item/crusher_trophy/tail_spike
-	deathmessage = "collapses on it's side."
+	deathmessage = "collapses on its side."
 	deathsound = 'sound/magic/demon_dies.ogg'
 	stat_attack = UNCONSCIOUS
 	robust_searching = TRUE

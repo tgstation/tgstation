@@ -5,6 +5,89 @@
 "b" = (
 /turf/closed/mineral/random/snow/no_caves,
 /area/icemoon/surface/outdoors)
+"c" = (
+/turf/closed/wall/mineral/bronze,
+/area/icemoon/surface/outdoors)
+"d" = (
+/obj/structure/fluff/clockwork/fallen_armor,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"i" = (
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"k" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"m" = (
+/turf/closed/wall/mineral/bronze,
+/area/icemoon/surface/outdoors/unexplored)
+"n" = (
+/obj/effect/mob_spawn/human/skeleton,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"p" = (
+/obj/structure/fluff/clockwork/alloy_shards/large,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"r" = (
+/obj/structure/fluff/clockwork/blind_eye,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"u" = (
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"v" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"x" = (
+/obj/effect/mob_spawn/human/skeleton,
+/obj/item/clothing/suit/bronze,
+/obj/item/clothing/shoes/bronze,
+/obj/item/clothing/head/bronze,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"z" = (
+/obj/structure/table/bronze,
+/obj/item/toy/clockwork_watch{
+	desc = "You can still feel the embers of a once great empire in your hand...";
+	name = "drained clockwork slab"
+	},
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"H" = (
+/obj/machinery/door/airlock/bronze/seethru,
+/obj/structure/fans/tiny,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"P" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"Q" = (
+/obj/item/paper{
+	info = "We tried to use the power of this moon to bring him back, but we've failed... I've contained what remains of his power here... if you find this, make sure those Nar-Sian Dogs don't last a second."
+	},
+/obj/item/pen,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"R" = (
+/obj/item/nullrod/spear{
+	name = "empowered bronze spear"
+	},
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"U" = (
+/obj/machinery/door/airlock/bronze,
+/obj/structure/fans/tiny,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
+"V" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium,
+/turf/open/floor/bronze,
+/area/icemoon/surface/outdoors)
 
 (1,1,1) = {"
 b
@@ -50,50 +133,51 @@ b
 "}
 (2,1,1) = {"
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+U
+U
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 b
 "}
 (3,1,1) = {"
 b
-b
-b
+c
+c
+m
 a
 a
 a
@@ -106,6 +190,14 @@ a
 a
 a
 a
+c
+u
+v
+i
+P
+i
+u
+c
 a
 a
 a
@@ -118,23 +210,15 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
-b
+m
+c
+c
 b
 "}
 (4,1,1) = {"
 b
-b
+c
+m
 a
 a
 a
@@ -148,6 +232,14 @@ a
 a
 a
 a
+c
+r
+i
+n
+i
+i
+r
+c
 a
 a
 a
@@ -161,22 +253,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
+m
+c
 b
 "}
 (5,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -191,6 +274,14 @@ a
 a
 a
 a
+c
+c
+c
+H
+H
+c
+c
+c
 a
 a
 a
@@ -205,20 +296,12 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-b
+c
 b
 "}
 (6,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -255,12 +338,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (7,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -297,12 +380,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (8,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -339,12 +422,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (9,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -381,12 +464,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (10,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -423,12 +506,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (11,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -465,12 +548,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (12,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -507,12 +590,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (13,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -549,12 +632,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (14,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -591,12 +674,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (15,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -633,12 +716,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (16,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -675,12 +758,15 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (17,1,1) = {"
 b
-b
+c
+c
+c
+c
 a
 a
 a
@@ -711,18 +797,18 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-b
+c
+c
+c
+c
 b
 "}
 (18,1,1) = {"
 b
-b
+c
+u
+r
+c
 a
 a
 a
@@ -753,18 +839,18 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-b
+c
+r
+z
+c
 b
 "}
 (19,1,1) = {"
 b
-b
+c
+i
+i
+c
 a
 a
 a
@@ -778,6 +864,10 @@ a
 a
 a
 a
+c
+i
+i
+c
 a
 a
 a
@@ -791,22 +881,18 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
+c
+i
+p
+c
 b
 "}
 (20,1,1) = {"
 b
-b
+U
+k
+n
+H
 a
 a
 a
@@ -820,6 +906,10 @@ a
 a
 a
 a
+i
+x
+i
+i
 a
 a
 a
@@ -833,22 +923,18 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
+H
+n
+i
+U
 b
 "}
 (21,1,1) = {"
 b
-b
+U
+i
+P
+H
 a
 a
 a
@@ -862,6 +948,10 @@ a
 a
 a
 a
+i
+R
+Q
+i
 a
 a
 a
@@ -875,22 +965,18 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
+H
+v
+d
+U
 b
 "}
 (22,1,1) = {"
 b
-b
+c
+i
+i
+c
 a
 a
 a
@@ -904,6 +990,10 @@ a
 a
 a
 a
+c
+i
+i
+c
 a
 a
 a
@@ -917,22 +1007,18 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
+c
+i
+i
+c
 b
 "}
 (23,1,1) = {"
 b
-b
+c
+u
+r
+c
 a
 a
 a
@@ -963,18 +1049,18 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-b
+c
+r
+u
+c
 b
 "}
 (24,1,1) = {"
 b
-b
+c
+c
+c
+c
 a
 a
 a
@@ -1005,18 +1091,15 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-b
+c
+c
+c
+c
 b
 "}
 (25,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1053,12 +1136,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (26,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1095,12 +1178,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (27,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1137,12 +1220,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (28,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1179,12 +1262,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (29,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1221,12 +1304,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (30,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1263,12 +1346,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (31,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1305,12 +1388,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (32,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1347,12 +1430,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (33,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1389,12 +1472,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (34,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1431,12 +1514,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (35,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1473,12 +1556,12 @@ a
 a
 a
 a
-b
+c
 b
 "}
 (36,1,1) = {"
 b
-b
+c
 a
 a
 a
@@ -1493,6 +1576,14 @@ a
 a
 a
 a
+c
+c
+c
+H
+H
+c
+c
+c
 a
 a
 a
@@ -1507,20 +1598,13 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-b
+c
 b
 "}
 (37,1,1) = {"
 b
-b
+c
+m
 a
 a
 a
@@ -1534,6 +1618,14 @@ a
 a
 a
 a
+c
+r
+i
+n
+V
+i
+r
+c
 a
 a
 a
@@ -1547,23 +1639,15 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
+m
+c
 b
 "}
 (38,1,1) = {"
 b
-b
-b
+c
+c
+m
 a
 a
 a
@@ -1576,6 +1660,14 @@ a
 a
 a
 a
+c
+u
+i
+P
+i
+i
+u
+c
 a
 a
 a
@@ -1588,60 +1680,51 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-b
-b
+m
+c
+c
 b
 "}
 (39,1,1) = {"
 b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
-b
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+U
+U
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 b
 "}
 (40,1,1) = {"

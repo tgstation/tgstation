@@ -9,12 +9,6 @@
 /obj/structure/spawner/nether,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"n" = (
-/obj/item/stack/sheet/mineral/runite{
-	amount = 2
-	},
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
 "p" = (
 /obj/item/wisp_lantern,
 /turf/open/floor/plating/asteroid/snow/icemoon,
@@ -24,9 +18,7 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "X" = (
-/obj/item/stack/sheet/mineral/runite{
-	amount = 3
-	},
+/obj/item/clothing/gloves/butchering,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 
@@ -124,9 +116,9 @@ a
 a
 a
 a
-L
 a
 L
+a
 a
 a
 b
@@ -174,7 +166,7 @@ a
 L
 a
 a
-n
+a
 a
 a
 a

@@ -114,6 +114,14 @@ Difficulty: Hard
 		if(3)
 			disorienting_scream()
 
+/mob/living/simple_animal/hostile/megafauna/wendigo/Life()
+	. = ..()
+	if(!.)
+		return
+	if(target || get_dist(src, starting) < 12)
+		return
+	do_teleport(src, starting, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
+
 /mob/living/simple_animal/hostile/megafauna/wendigo/Move(atom/newloc, direct)
 	if(!can_move)
 		return
@@ -165,7 +173,7 @@ Difficulty: Hard
 	do_teleport(src, end, 0,  channel=TELEPORT_CHANNEL_BLUESPACE, forced = TRUE)
 	SetRecoveryTime(20, 0)
 
-/// Shakes all nearby enemies screens and animates the wendigo shaking up and down
+/// Applies dizziness to all nearby enemies that can hear the scream and animates the wendigo shaking up and down
 /mob/living/simple_animal/hostile/megafauna/wendigo/proc/disorienting_scream()
 	can_move = FALSE
 	last_scream = world.time
@@ -173,12 +181,12 @@ Difficulty: Hard
 	animate(src, pixel_z = rand(5, 15), time = 1, loop = 6)
 	animate(pixel_z = 0, time = 1)
 	for(var/mob/living/L in get_hearers_in_view(7, src) - src)
-		L.woozy_eyes(4)
+		L.Dizzy(6)
 		to_chat(L, "<span class='danger'>The wendigo screams loudly!</span>")
 	SetRecoveryTime(30, 0)
 	SLEEP_CHECK_DEATH(12)
 	can_move = TRUE
-	return
+	teleport()
 
 /mob/living/simple_animal/hostile/megafauna/wendigo/death(gibbed, list/force_grant)
 	if(health > 0)
@@ -212,5 +220,4 @@ Difficulty: Hard
 	desc = "Take on the shape of a polar bear."
 	invocation = "RAAAAAAAAWR!"
 	convert_damage = FALSE
-
-	shapeshift_type = /mob/living/simple_animal/hostile/asteroid/polarbear
+	shapeshift_type = /mob/living/simple_animal/hostile/asteroid/polarbear/lesser
