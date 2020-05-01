@@ -535,18 +535,14 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 /obj/effect/warped_rune/sepiaspace
 	icon_state = "time_space"
 	desc = "The clock is ticking, but in what direction?"
-	var/current_timerid
 
-///slows down whoever walks on the rune and makes them older by ten years. if the person goes above 100 years they get dusted.Very similar to the "old timer" reagent code with a few tweaks.
+
+///slows down whoever walks on the rune and makes them older by five years. if the person goes above 120 years they get dusted.Very similar to the "old timer" reagent code with a few tweaks.
 /obj/effect/warped_rune/sepiaspace/Crossed(atom/movable/crossing)
 	. = ..()
 	var/mob/living/carbon/human/slowed_down
 	if(istype(crossing,/mob/living/carbon/human))
 		slowed_down = crossing
-		slowed_down.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia_rune)
-		if(current_timerid)
-			deltimer(current_timerid)
-		addtimer(CALLBACK(src, .proc/normal_speed, slowed_down), 50)
 		if(slowed_down.age < 50) //not counterable by just being ultra young
 			slowed_down.age = 50
 
@@ -564,11 +560,18 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		if(slowed_down.age >= 120)
 			slowed_down.visible_message("<span class='notice'>[slowed_down] is too old and weak to resist the rune anymore!</span>")
 			slowed_down.dust(0,1,0)
+			return
+
+	slowed_down.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia_rune)
+	addtimer(CALLBACK(src, .proc/normal_speed, slowed_down), 50, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 
 /obj/effect/warped_rune/sepiaspace/proc/normal_speed(mob/living/slowed_down)
 	slowed_down.remove_movespeed_modifier(/datum/movespeed_modifier/status_effect/sepia_rune)
-	current_timerid = null
+
+
+/obj/effect/warped_rune/sepiaspace/Destroy()
+	return ..()
 
 
 /*Cerulean crossbreed : creates a hologram of the last person that stepped on the tile */
