@@ -1142,14 +1142,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
 				return
 			var/mob/living/carbon/C = target
-			var/timer = 20
+			var/timer = 2 SECONDS
 			for(var/obj/item/bodypart/thing in C.bodyparts)
 				if(thing.body_part == HEAD || thing.body_part == CHEST)
 					continue
 				addtimer(CALLBACK(thing, /obj/item/bodypart/.proc/dismember), timer)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, C, 'sound/effects/cartoon_pop.ogg', 70), timer)
-				addtimer(CALLBACK(C, /mob/living/.proc/spin, 4, 1), timer-4)
-				timer += 20
+				addtimer(CALLBACK(C, /mob/living/.proc/spin, 4, 1), timer - 0.4 SECONDS)
+				timer += 2 SECONDS
 
 
 	punish_log(target, punishment)
