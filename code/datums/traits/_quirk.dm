@@ -94,7 +94,7 @@
 					dat += medical ? T.medical_record_text : T.name
 	if(!dat.len)
 		return medical ? "No issues have been declared." : "None"
-	return medical ?  dat.Join("<br> ") : dat.Join(", ")
+	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_trait_datums() //removes all trait datums
 	for(var/V in roundstart_quirks)
