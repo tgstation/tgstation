@@ -155,9 +155,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
 	var/list/gas_comp = list(/datum/gas/oxygen = 0, /datum/gas/water_vapor = 0, /datum/gas/plasma = 0, /datum/gas/carbon_dioxide = 0, /datum/gas/nitrous_oxide = 0, /datum/gas/nitrogen = 0, /datum/gas/pluoxium = 0, /datum/gas/tritium = 0, /datum/gas/bz = 0, /datum/gas/freon = 0, /datum/gas/hydrogen = 0)
 	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
-	var/list/gas_trans = list(/datum/gas/oxygen = OXYGEN_TRANSMIT_MODIFIER, /datum/gas/water_vapor = H2O_TRANSMIT_MODIFIER, /datum/gas/plasma = PLASMA_TRANSMIT_MODIFIER, /datum/gas/carbon_dioxide = 0, /datum/gas/nitrous_oxide = 0, /datum/gas/nitrogen = 0, /datum/gas/pluoxium = PLUOXIUM_TRANSMIT_MODIFIER, /datum/gas/tritium = TRITIUM_TRANSMIT_MODIFIER, /datum/gas/bz = BZ_TRANSMIT_MODIFIER, /datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER)
+	var/list/gas_trans = list(/datum/gas/oxygen = OXYGEN_TRANSMIT_MODIFIER, /datum/gas/water_vapor = H2O_TRANSMIT_MODIFIER, /datum/gas/plasma = PLASMA_TRANSMIT_MODIFIER, /datum/gas/pluoxium = PLUOXIUM_TRANSMIT_MODIFIER, /datum/gas/tritium = TRITIUM_TRANSMIT_MODIFIER, /datum/gas/bz = BZ_TRANSMIT_MODIFIER, /datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
-	var/list/gas_heat = list(/datum/gas/oxygen = OXYGEN_HEAT_PENALTY, /datum/gas/water_vapor = H2O_HEAT_PENALTY, /datum/gas/plasma = PLASMA_HEAT_PENALTY, /datum/gas/carbon_dioxide = CO2_HEAT_PENALTY, /datum/gas/nitrous_oxide, /datum/gas/nitrogen = NITROGEN_HEAT_PENALTY, /datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY, /datum/gas/tritium = TRITIUM_HEAT_PENALTY, /datum/gas/bz = BZ_HEAT_PENALTY, /datum/gas/freon = FREON_HEAT_PENALTY, /datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY)
+	var/list/gas_heat = list(/datum/gas/oxygen = OXYGEN_HEAT_PENALTY, /datum/gas/water_vapor = H2O_HEAT_PENALTY, /datum/gas/plasma = PLASMA_HEAT_PENALTY, /datum/gas/carbon_dioxide = CO2_HEAT_PENALTY, /datum/gas/nitrogen = NITROGEN_HEAT_PENALTY, /datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY, /datum/gas/tritium = TRITIUM_HEAT_PENALTY, /datum/gas/bz = BZ_HEAT_PENALTY, /datum/gas/freon = FREON_HEAT_PENALTY, /datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
 	var/list/gas_resist = list(/datum/gas/water_vapor = H2O_HEAT_RESISTANCE, /datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE, /datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE, /datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE)
 	///The list of gases mapped against their powermix ratio
@@ -447,6 +447,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		for(var/gasID in gases_we_care_about)
 			removed.assert_gas(gasID)
+
 		//calculating gas related values
 		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
 		combined_gas = max(removed.total_moles(), 0)
@@ -458,7 +459,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Can cause an overestimation of mol count, should stabalize things though.
 		//Prevents huge bursts of gas/heat when a large amount of something is introduced
 		//They range between 0 and 1
-		for(var/datum/gas/gasID in gases_we_care_about)
+		for(var/gasID in gases_we_care_about)
 			gas_comp[gasID] += clamp(max(removed.gases[gasID][MOLES]/combined_gas, 0) - gas_comp[gasID], -1, gas_change_rate)
 
 		var/list/heat_mod = gases_we_care_about.Copy()
@@ -498,13 +499,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
 		gasmix_power_ratio = 0
-		for(var/datum/gas/gasID in gas_powermix)
+		for(var/gasID in gas_powermix)
 			gasmix_power_ratio += gas_comp[gasID] * gas_powermix[gasID]
 		gasmix_power_ratio = min(max(gasmix_power_ratio * h2omalus, 0), 1)
 
 		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
 		dynamic_heat_modifier = 0
-		for(var/datum/gas/gasID in gas_heat)
+		for(var/gasID in gas_heat)
 			if(gasID == /datum/gas/water_vapor) //I hate this I hate this I hate this
 				dynamic_heat_modifier *= h2omalus
 			dynamic_heat_modifier += gas_comp[gasID] * gas_heat[gasID] * (isnull(heat_mod[gasID]) ? 1 : heat_mod[gasID])
@@ -512,13 +513,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		//Value between 1 and 10. Effects the damage heat does to the crystal
 		dynamic_heat_resistance = 0
-		for(var/datum/gas/gasID in gas_resist)
+		for(var/gasID in gas_resist)
 			dynamic_heat_resistance += gas_comp[gasID] * gas_resist[gasID] * (isnull(resistance_mod[gasID]) ? 1 : resistance_mod[gasID])
 		dynamic_heat_resistance = max(dynamic_heat_resistance, 1)
 
 		//Value between -5 and 30, used to determine radiation output as it concerns things like collectors.
 		power_transmission_bonus = 0
-		for(var/datum/gas/gasID in gas_trans)
+		for(var/gasID in gas_trans)
 			power_transmission_bonus += gas_comp[gasID] * gas_trans[gasID] * (isnull(transit_mod[gasID]) ? 1 : transit_mod[gasID])
 		power_transmission_bonus *= h2omalus
 
