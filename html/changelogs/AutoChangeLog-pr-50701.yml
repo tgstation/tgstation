@@ -1,0 +1,6 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - rscadd: "Foreigner Quirk - Removes Galactic Common"
+  - rscadd: "Galactic Uncommon - Given to Human and Felinid foreigners"
+  - imageadd: "Inverted Galactic Common sprite for Galactic Uncommon"
