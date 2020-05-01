@@ -417,7 +417,7 @@ Class Procs:
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
 	
-	if(istype(mover) && (mover.pass_flags & PASSMACHINE))
+	if(mover.pass_flags & PASSMACHINE)
 		return TRUE
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
