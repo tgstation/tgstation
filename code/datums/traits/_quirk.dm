@@ -74,37 +74,27 @@
 				dat += medical ? T.medical_record_text : T.name
 				if(!dat.len)
 					return "None"
-			return medical ?  dat.Join("<br>") : dat.Join(",")
-
 		//Major Disabilities
 		if(CAT_QUIRK_MAJOR_DISABILITY)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				if(T.value < -1)
 					dat += medical ? T.medical_record_text : T.name
-				if(!dat.len)
-					return medical ? "No major disabilities have been declared." : "None"
-			return medical ?  dat.Join("<br>") : dat.Join(",")
-
 		//Minor Disabilities
 		if(CAT_QUIRK_MINOR_DISABILITY)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				if(T.value == -1)
 					dat += medical ? T.medical_record_text : T.name
-				if(!dat.len)
-					return medical ? "No minor disabilities have been declared." : "None"
-			return medical ?  dat.Join("<br>") : dat.Join(",")
-
 		//Neutral and Positive quirks
 		if(CAT_QUIRK_NOTES)
 			for(var/V in roundstart_quirks)
 				var/datum/quirk/T = V
 				if(T.value > -1)
 					dat += medical ? T.medical_record_text : T.name
-				if(!dat.len)
-					return "None"
-			return medical ?  dat.Join("<br>") : dat.Join(",")
+	if(!dat.len)
+		return medical ? "No issues have been declared." : "None"
+	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_trait_datums() //removes all trait datums
 	for(var/V in roundstart_quirks)
