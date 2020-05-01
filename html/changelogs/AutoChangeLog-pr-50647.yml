@@ -1,0 +1,4 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - tweak: "Quirks sort into medical records rather than just dumping into notes."
