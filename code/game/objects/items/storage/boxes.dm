@@ -863,12 +863,6 @@
 	for(var/i in 1 to 6)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
 
-#define NODESIGN "None"
-#define NANOTRASEN "NanotrasenStandard"
-#define SYNDI "SyndiSnacks"
-#define HEART "Heart"
-#define SMILEY "SmileyFace"
-
 /obj/item/storage/box/papersack
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."
