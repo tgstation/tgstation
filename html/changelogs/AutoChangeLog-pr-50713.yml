@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "gorilla cubes, gorilla injector and dna gun are now geneticist and rd uplink items, rather than geneticist and cmo"
