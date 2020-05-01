@@ -11,6 +11,24 @@
  * Arguments
  * list to pick from ~ this is the list it will be reading and moving through
  *
+ * Example List Format
+ *  list/"lootdrop"(
+ *	"common" = list(
+ *		"weight" = 4,
+ *		"materials" = list(
+ *			"weight" = 2,
+ *			"end_point" = (iron, glass, plastic)
+ *			)
+ *		"weapon" = list(
+ *			"weight" = 1,
+ *			"end_point" = (sword, hammer, gun)
+ *			)
+ *		)
+ *	"rare" = list(
+ *		"weight" = 4
+ *		"end_point" = (gold, loot, gems)
+ *		)
+ *  )
  */
 
 /proc/pick_from_weighted_lists(list/list_to_pick_from)
