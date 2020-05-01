@@ -124,7 +124,7 @@
 		return TRUE
 
 	// target non-jungle mobs when aggressive, with a small probability of monkey v monkey. Also avoids attacking  monkey bros.
-	if(aggressive && (!faction_check_mob(L, FALSE) || !HAS_TRAIT(L, TRAIT_MONKEYBRO) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
+	if(aggressive && (!(faction_check_mob(L, FALSE) || HAS_TRAIT(L, TRAIT_MONKEYBRO)) || prob(MONKEY_AGGRESSIVE_MVM_PROB)))
 		return TRUE
 
 	return FALSE
