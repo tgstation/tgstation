@@ -415,7 +415,7 @@ Class Procs:
 		updateUsrDialog()
 
 /obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
-	.= ..()
+	. = ..()
 	
 	if(istype(mover) && (mover.pass_flags & PASSMACHINE))
 		return TRUE
