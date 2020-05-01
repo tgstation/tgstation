@@ -8,7 +8,7 @@
 	broken_states = list("light_broken")
 	var/on = TRUE
 	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
-	var/static/list/coloredlights = list("r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
+	var/list/coloredlights = list("r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
 	var/currentcolor = "b"
 	var/can_modify_colour = TRUE
 	tiled_dirt = FALSE
@@ -70,18 +70,17 @@
 	set_light(0)
 	return ..()
 
-/turf/open/floor/light/attackby(obj/item/W, mob/user, params)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		. = ..()
-		if(.)
-			return
-		if(!can_modify_colour)
-			return
-		var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
-		if(!choice)
-			return FALSE
-		currentcolor = choice
-		update_icon()
+/turf/open/floor/light/multitool_act(mob/living/user, obj/item/I)
+	. = ..()
+	if(.)
+		return
+	if(!can_modify_colour)
+		return
+	var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+	if(!choice)
+		return FALSE
+	currentcolor = choice
+	update_icon()
 
 /turf/open/floor/light/attack_ai(mob/user)
 	return attack_hand(user)
