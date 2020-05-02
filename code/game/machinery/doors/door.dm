@@ -146,9 +146,8 @@
 
 /obj/machinery/door/CanAllowThrough(atom/movable/mover, turf/target)
 	. = ..()
-	
-	if(mover.pass_flags & PASSMACHINE)
-		return TRUE
+	if(.)
+		return
 		
 	if(istype(mover) && (mover.pass_flags & PASSGLASS))
 		return !opacity
