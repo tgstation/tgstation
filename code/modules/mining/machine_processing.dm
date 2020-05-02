@@ -30,6 +30,13 @@
 	if(input_turf)
 		UnregisterSignal(input_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_CREATED))
 
+/obj/machinery/mineral/Moved()
+	. = ..()
+	if(!needs_item_input || !anchored)
+		return
+	unregister_input_turf()
+	register_input_turf()
+
 /**
 	Base proc for all `/mineral` subtype machines to use. Place your item pickup behavior in this proc when you override it for your specific machine.
 
