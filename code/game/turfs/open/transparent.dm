@@ -1,6 +1,8 @@
 /turf/open/transparent
 	baseturfs = /turf/open/transparent/openspace
+	intact = FALSE //this means wires go on top
 	var/can_show_space = FALSE
+	var/show_pipes = FALSE
 
 /turf/open/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
@@ -49,6 +51,10 @@
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/transparent/glass, /turf/open/transparent/glass/reinforced)
 	can_show_space = TRUE
+	footstep = FOOTSTEP_PLATING
+	barefootstep = FOOTSTEP_HARD_BAREFOOT
+	clawfootstep = FOOTSTEP_HARD_CLAW
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
 /turf/open/transparent/glass/reinforced
 	name = "Reinforced glass floor"
