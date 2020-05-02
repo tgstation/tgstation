@@ -199,7 +199,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	colour = "orange"
 	runepath = /obj/effect/warped_rune/orangespace
 	effect_desc = "Creates a rune burning with bluespace fire, anyone walking into the rune will ignite and teleport randomly as long as they are on fire"
-	drawing_time = 150 //one of the hardest rune to get past and as such one of the longest to draw
+	drawing_time = 150
 
 
 /obj/effect/warped_rune/orangespace
@@ -208,19 +208,23 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	max_cooldown = 50
 
 
-/obj/effect/warped_rune/orangespace/Initialize()
-	. = ..()
-	RegisterSignal(rune_turf,COMSIG_ATOM_ENTERED,.proc/teleport_fire)
-
-
 ///teleport people and put them on fire if they run into the rune.
-/obj/effect/warped_rune/orangespace/proc/teleport_fire()
+/obj/effect/warped_rune/orangespace/Crossed(atom/movable/burned)
 	if(!locate(/obj/effect/hotspot) in rune_turf) //will create a hotspot to burn items passing through too.
 		new /obj/effect/hotspot(rune_turf)
 
-	for(var/mob/living/on_fire in rune_turf)
-		on_fire.adjust_fire_stacks(20)
-		on_fire.IgniteMob()
+	if(istype(burned,/mob/living/carbon/human))
+		var/mob/living/carbon/human/burning = burned
+		burning.adjust_fire_stacks(10)
+		burning.IgniteMob()
+		addtimer(CALLBACK(src, .proc/bluespace_fire, burning), 70, TIMER_OVERRIDE|TIMER_UNIQUE)
+
+
+///will keep teleporting the person every 5 seconds as long as they are on fire
+/obj/effect/warped_rune/orangespace/proc/bluespace_fire(mob/living/burning)
+	if(burning.fire_stacks > 0)
+		do_teleport(burning, get_turf(burning), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+		addtimer(CALLBACK(src, .proc/bluespace_fire, burning), 70, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 
 /*The purple warp rune makes suture and ointment if you put cloth or plastic on it. */
@@ -468,9 +472,11 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		nutriment -= nutrition_to_add
 		desc = "Feed me and I will feed you back. I currently hold [nutriment] units of nutrition."
 
+
 /obj/effect/warped_rune/silverspace/Destroy()
 	nutriment = null
 	return ..()
+
 
 /* Bluespace rune,reworked so that the last person that walked on the rune will swap place with the next person stepping on it*/
 
@@ -484,7 +490,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 /obj/effect/warped_rune/bluespace
 	desc = "Everyone is everywhere at once, yet so far away from each other"
 	icon_state = "bluespace_rune"
-	max_cooldown = 10 //only here to avoid spam lag
+	max_cooldown = 30 //only here to avoid spam lag
 	/// first person to run into the rune
 	var/mob/living/carbon/first_person
 	///second person that run into the rune
@@ -689,7 +695,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	colour = "red"
 	runepath = /obj/effect/warped_rune/redspace
 	effect_desc = "Draws a rune giving your fists the ability to hurt the very soul of whoever you punch, healing you in the process."
-	drawing_time = 100 // slightly longer to draw so you don't draw it in the middle of a fight.
+	drawing_time = 30
 
 
 /obj/effect/warped_rune/redspace
@@ -723,9 +729,9 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 	var/mob/living/carbon/human/punched = attacked
 	if(punched.mind && punched.stat != DEAD)
-		puncher.adjustBruteLoss(-20)//Heal the puncher per punch. Only works on players that are alive.
-		puncher.adjustFireLoss(-20)
-	punched.adjustCloneLoss(20) //genetic damage is the closest thing we have to soul damage
+		puncher.adjustBruteLoss(-40)//Heal the puncher per punch. Only works on players that are alive.
+		puncher.adjustFireLoss(-40)
+	punched.adjustCloneLoss(40) //genetic damage is the closest thing we have to soul damage
 	playsound(puncher, 'sound/effects/pop_expl.ogg', 75, TRUE)
 	to_chat(puncher, "<span class='warning'>You punch [punched]'s soul with all your might!</span>")
 	to_chat(punched, "<span class='warning'>You feel like something very important got punched out of you!</span>")
@@ -880,7 +886,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	for(var/mob_type in mob_list)
 		var/mob/living/simple_animal/hostile/spawned_mob = new mob_type(rune_turf)
 		spawned_mob.GiveTarget(crossing)
-		//forces the first target of the mobs on the person that stepped on the rune.
+		//make crossing a priority target for the mobs.
 		//they WILL attack others if they lose their target however.
 		//Because they are given a target from the get go they will react much faster after spawn than usual.
 		mob_list -= mob_type
