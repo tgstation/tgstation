@@ -1,4 +1,4 @@
-#define CARD_FILES list("templates", "set_core", "set_resin")
+#define CARD_FILES list("templates", "set_one", "set_two")
 #define CARD_DIRECTORY "strings/tcg"
 SUBSYSTEM_DEF(trading_card_game)
 	name = "Trading Card Game"

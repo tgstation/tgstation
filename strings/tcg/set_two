@@ -1,22 +1,22 @@
-resin|0,Xenoborg|1,With a mini-gun in one hand and a rocket launcher in the other, the Xenoborg is a failed hybridization of a Xenomorph and cyborg.|3,xeno_borg|4,82|7,SILICON&XENO&S2|9,CARD_RARITY_EPIC|
-resin|0,Xenomorph Sentinel|1,The Sentinel's neurotoxin gland goes brilliantly with a Pan-Galactic Gargle Blaster.|3,xeno_sentinel|4,83|7,XENO&S2|9,CARD_RARITY_COMMON|
-resin|0,Xenomorph Drone|1,Rarely seen on the frontlines, the Drone is your average worker that lays the foundation of the hive.|3,xeno_drone|4,84|7,XENO&S2|9,CARD_RARITY_COMMON|
-resin|0,Xenomorph Hunter (Resin Frontier)|1,A rare strain of Hunter that prioritizes killing over infecting.|3,xeno_hunter|4,85|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
-resin|0,Xenomorph Spitter|1,While their acid gland is too dangerous to mix with alcohol, a Spitter's acid can melt most things with ease.|3,xeno_spitter|4,86|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
-resin|0,Xenomorph Runner|1,Running fast and dying faster, the sheer number of Runner corpses from a battle are enough to keep a research facility busy for years.|3,xeno_runner|4,87|7,XENO&S2|9,CARD_RARITY_COMMON|
-resin|0,Xenomorph Praetorian|1,The Praetorian is the Queen's royal guard, never seen far from the Queen's chambers.|3,xeno_praetorian|4,88|7,XENO&S2|9,CARD_RARITY_RARE|
-resin|0,Xenomorph Hivelord|1,The Hivelord is the last word in construction, capable of building entire hives in a matter of seconds.|3,xeno_hivelord|4,89|7,XENO&S2|9,CARD_RARITY_RARE|
-resin|0,Xenomorph Boiler|1,The Boiler is a long-range artillery machine, capable of spewing clouds of acid that melt everything in seconds.|3,xeno_boiler|4,90|7,XENO&S2|9,CARD_RARITY_RARE|
-resin|0,Xenomorph Ravager|1,With large scythe claws for hands, the furious Ravager goes berserk at the sight of fire.|3,xeno_ravager|4,91|7,XENO&S2|9,CARD_RARITY_RARE|
-resin|0,Xenomorph Crusher|1,Testing has concluded that a pulse rifle is unable to penetrate a Crusher's thick armored head.|3,xeno_crusher|4,92|7,XENO&S2|9,CARD_RARITY_RARE|
-resin|0,Xenomorph Defender|1,The Defender's armored head crest makes an excellent makeshift shield.|3,xeno_defender|4,93|7,XENO&S2|9,CARD_RARITY_COMMON|
-resin|0,Xenomorph Warrior|1,Warriors exhibit greater cruelty than other Xeno strains, enjoying snapping a victim's limbs before finishing them off.|3,xeno_warrior|4,94|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
-resin|0,Xenomorph Queen (Resin Frontier)|1,The ruler of the hive. Organs from a Queen fetch a high price amongst researchers and less-than-moral surgeons.|3,xeno_queen|4,95|7,XENO&S2|9,CARD_RARITY_EPIC|
-resin|0,Xenomorph Carrier|1,Carriers are like the Easter Bunny except the eggs they hide will kill you.|3,xeno_carrier|4,96|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
-resin|0,Xenomorph Defiler|1,Instead of utilizing eggs, the Defiler prefers to inject an unknown chemical in their victim, causing a devastating infection.|3,xeno_defiler|4,97|7,XENO&S2|9,CARD_RARITY_RARE|
-resin|0,Predalien|1,No concrete information is available on this elusive creature as no one that has seen it has lived to tell the tale.|3,xeno_predalien|4,98|7,XENO&S2|9,CARD_RARITY_LEGENDARY|
-resin|0,Xenomorph Shrike|1,It is unknown why Shrikes are able to lead a Hive, but their hives are always much smaller than a Queen's.|3,xeno_shrike|4,99|7,XENO&S2|9,CARD_RARITY_RARE|
-resin|0,Xenomorph Bull|1,Popular in illegal rodeos, the Bull's horn can pierce a reinforced wall with ease.|3,xeno_bull|4,100|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
-resin|0,Xenomorph Hivemind|1,Recently discovered to have sapience, this pulsating orb will dig into the earth and rapidly spread resin throughout planets.|3,xeno_hivemind|4,101|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
-resin|0,Xenomorph Screecher|1,The Screecher's screeches are more psychologically damaging than the resulting hearing damage.|3,xeno_screecher|4,102|7,XENO&S2|9,CARD_RARITY_EPIC|
-resin|0,Xenomorph Creep|1,This special Hunter strain prioritizes stalking its target. It evolves into a strain of Hunter that is (mercifully) rarely seen aboard space stations.|3,xeno_creep|4,103|7,XENO&S2|9,CARD_RARITY_COMMON|
+$resin|0,Xenoborg|1,With a mini-gun in one hand and a rocket launcher in the other, the Xenoborg is a failed hybridization of a Xenomorph and cyborg.|3,xeno_borg|4,82|7,SILICON&XENO&S2|9,CARD_RARITY_EPIC|
+$resin|0,Xenomorph Sentinel|1,The Sentinel's neurotoxin gland goes brilliantly with a Pan-Galactic Gargle Blaster.|3,xeno_sentinel|4,83|7,XENO&S2|9,CARD_RARITY_COMMON|
+$resin|0,Xenomorph Drone|1,Rarely seen on the frontlines, the Drone is your average worker that lays the foundation of the hive.|3,xeno_drone|4,84|7,XENO&S2|9,CARD_RARITY_COMMON|
+$resin|0,Xenomorph Hunter (Resin Frontier)|1,A rare strain of Hunter that prioritizes killing over infecting.|3,xeno_hunter|4,85|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
+$resin|0,Xenomorph Spitter|1,While their acid gland is too dangerous to mix with alcohol, a Spitter's acid can melt most things with ease.|3,xeno_spitter|4,86|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
+$resin|0,Xenomorph Runner|1,Running fast and dying faster, the sheer number of Runner corpses from a battle are enough to keep a research facility busy for years.|3,xeno_runner|4,87|7,XENO&S2|9,CARD_RARITY_COMMON|
+$resin|0,Xenomorph Praetorian|1,The Praetorian is the Queen's royal guard, never seen far from the Queen's chambers.|3,xeno_praetorian|4,88|7,XENO&S2|9,CARD_RARITY_RARE|
+$resin|0,Xenomorph Hivelord|1,The Hivelord is the last word in construction, capable of building entire hives in a matter of seconds.|3,xeno_hivelord|4,89|7,XENO&S2|9,CARD_RARITY_RARE|
+$resin|0,Xenomorph Boiler|1,The Boiler is a long-range artillery machine, capable of spewing clouds of acid that melt everything in seconds.|3,xeno_boiler|4,90|7,XENO&S2|9,CARD_RARITY_RARE|
+$resin|0,Xenomorph Ravager|1,With large scythe claws for hands, the furious Ravager goes berserk at the sight of fire.|3,xeno_ravager|4,91|7,XENO&S2|9,CARD_RARITY_RARE|
+$resin|0,Xenomorph Crusher|1,Testing has concluded that a pulse rifle is unable to penetrate a Crusher's thick armored head.|3,xeno_crusher|4,92|7,XENO&S2|9,CARD_RARITY_RARE|
+$resin|0,Xenomorph Defender|1,The Defender's armored head crest makes an excellent makeshift shield.|3,xeno_defender|4,93|7,XENO&S2|9,CARD_RARITY_COMMON|
+$resin|0,Xenomorph Warrior|1,Warriors exhibit greater cruelty than other Xeno strains, enjoying snapping a victim's limbs before finishing them off.|3,xeno_warrior|4,94|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
+$resin|0,Xenomorph Queen (Resin Frontier)|1,The ruler of the hive. Organs from a Queen fetch a high price amongst researchers and less-than-moral surgeons.|3,xeno_queen|4,95|7,XENO&S2|9,CARD_RARITY_EPIC|
+$resin|0,Xenomorph Carrier|1,Carriers are like the Easter Bunny except the eggs they hide will kill you.|3,xeno_carrier|4,96|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
+$resin|0,Xenomorph Defiler|1,Instead of utilizing eggs, the Defiler prefers to inject an unknown chemical in their victim, causing a devastating infection.|3,xeno_defiler|4,97|7,XENO&S2|9,CARD_RARITY_RARE|
+$resin|0,Predalien|1,No concrete information is available on this elusive creature as no one that has seen it has lived to tell the tale.|3,xeno_predalien|4,98|7,XENO&S2|9,CARD_RARITY_LEGENDARY|
+$resin|0,Xenomorph Shrike|1,It is unknown why Shrikes are able to lead a Hive, but their hives are always much smaller than a Queen's.|3,xeno_shrike|4,99|7,XENO&S2|9,CARD_RARITY_RARE|
+$resin|0,Xenomorph Bull|1,Popular in illegal rodeos, the Bull's horn can pierce a reinforced wall with ease.|3,xeno_bull|4,100|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
+$resin|0,Xenomorph Hivemind|1,Recently discovered to have sapience, this pulsating orb will dig into the earth and rapidly spread resin throughout planets.|3,xeno_hivemind|4,101|7,XENO&S2|9,CARD_RARITY_UNCOMMON|
+$resin|0,Xenomorph Screecher|1,The Screecher's screeches are more psychologically damaging than the resulting hearing damage.|3,xeno_screecher|4,102|7,XENO&S2|9,CARD_RARITY_EPIC|
+$resin|0,Xenomorph Creep|1,This special Hunter strain prioritizes stalking its target. It evolves into a strain of Hunter that is (mercifully) rarely seen aboard space stations.|3,xeno_creep|4,103|7,XENO&S2|9,CARD_RARITY_COMMON|

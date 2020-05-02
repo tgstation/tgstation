@@ -167,7 +167,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/reload_configuration,
 	/client/proc/reload_cards,
 	/client/proc/print_cards,
-	/client/proc/print_templates,
 	/datum/admins/proc/create_or_modify_area,
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, /proc/release))
@@ -549,16 +548,11 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	set name = "Reload All Cards"
 	set category = "Debug"
 	reloadAllCardFiles(CARD_FILES, CARD_DIRECTORY)
-	
+
 /client/proc/print_cards()
 	set name = "Print Cards"
 	set category = "Debug"
 	printAllCards()
-
-/client/proc/print_templates()
-	set name = "Print Templates"
-	set category = "Debug"
-	printAllTemplates()
 
 /client/proc/give_spell(mob/T in GLOB.mob_list)
 	set category = "Fun"

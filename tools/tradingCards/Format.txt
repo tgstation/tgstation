@@ -1,14 +1,14 @@
-/obj/item/tcgcard
-	name = "Coder"
-	desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
-	icon = 'icons/obj/tcg.dmi'
-    icon_state = 'C_L' //Icon state
-    var/id = -1 //Unique ID, for use in lookups and storage
-	var/power = 0 //How hard this card hits (by default).
-	var/resolve = 0 //How hard this card can get hit (by default).
-    var/tags = "" //Special tags
-    var/cardtype = "" //Cardtype, for use ingame
-	var/rarity = 1 //The rarity of this card in a set, defined by the set it's called by
+/datum/card
+	var/name = "Coder"
+	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
+	var/icon/state_location = 'icons/obj/tcg.dmi'
+	var/icon_state = "runtime"
+	var/id = -1 //Unique ID, for use in lookups and storage
+	var/power = 0 //How hard this card hits (by default)
+	var/resolve = 0 //How hard this card can get hit (by default)
+	var/tags = "" //Special tags
+	var/cardtype = "" //Cardtype, for use in battles. Arcane/Inept if you don't update this whole block when you finalize the game I will throw you into the sm
+	var/rarity = 0 //The rarity of this card in a set, each set must have at least one of all types
 
 //Converter:
 I have written a python program to convert human readable into the concentrated format
@@ -16,8 +16,13 @@ The goal of this program is to allow a user to insert new cards, and pull out ol
 It can currently directly convert between both formats one file at a time.
 
 //Dreammaker
-The file format is readable by Dreammaker. Each line is loaded to a global list as a string on game startup
-One of these strings can then be included on initilization to make a card of the specified type
+The file format is readable by Dreammaker. Each line is read in, expanded on by templates, and then turned into a global list
+of card datums, which we then referance with an id in that global list to find the datum itself.
+The datum is used in the card object init to set a few variables.
+If you want to change any of the vars that the datum has during runtime, make a related var the card object and modify it as has been done with names.
+Remember, if you do this for all the values, the only benifit to storing datums over strings is filter time and resets.
+
+Oh and remember if you want to use an id to get a datum from the global list, wrap it in "[id]"  before using it as an index
 
 //Identifiers:
 \n (Newline) Start a new card definition
@@ -31,13 +36,14 @@ name //A fluff term displayed to the players
 desc //A more detailed fluff term displayed to the players
 icon //The icon source of the card
 icon_state //The icon state of the card
-id //A unique id issued to each card for lookups and storage. May contain any number > 0 that has not yet been used. Templates and id's get thier own pools
-power //A statistic used for fights. May contain any char from 0-9 in any amount
-resolve //A statistic used for fights. May contain any char from 0-9 in any amount
+id //A unique id issued to each card for lookups and storage. May contain any number > 0 that has not yet been used. Templates and cards get thier own pools
+power //A statistic used for fights. May contain any number from 0-9 in any amount
+resolve //A statistic used for fights. May contain any number from 0-9 in any amount
 tags //A tagging system to be used for formulating packs and adding behavior in the future
      //A tag may be any sequence of chars except | or $
      //Stacking tags: To stack tags, place a & between each. For instance |7,CE&NERD|
 cardtype //A string that allows us to define the use of the card ingame
+rarity //A number used as an index against the pack's rarity table.
 
 
 //Templates:

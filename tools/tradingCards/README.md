@@ -3,7 +3,7 @@ Aight, so a few things before you start.
 
 For more details on the formats read Format.txt. It goes further in depth on how this all works, and what means what.
 For our purposes you only need to know a couple things.
-There are 2 formats we use to edit and add cards. One is made to be inerfaced by you, and one by dreammaker
+There are 2 formats we use to edit and add cards. One is made to be interfaced by you, and one by dreammaker
 I'll be covering the first for now.
 
 There are a couple variables that we store. You can modify any one of these.
@@ -96,8 +96,7 @@ and insert or is
 
 Both of these commands take in 2 files, and will transfre the data between both.
 extract will take file1's contents, make it readable, and write it to file2
-insert will take file1's contents, compress it, and write it to file2
+insert will do the same, except it will compress rather then expand
 
 A note on rarity:
-we draw some cardcount, then we sum all the raritys in the pack's table, then we get a random number between 0 and the sum of the raritys.
-we then subtract from that random by the weights untill the random is equal to 0. we then try and find all the cards of that rarity and add 1 to the to be returned list.
+A card is picked by rarity by rolling a random number between 1 and the sum total of the raritys, and going through each rarity bracket, subtracting the random number by the value of the bracket. When the value is equal to or less then 0, we get our bracket, and get a random card that has that bracket as its rarity.
