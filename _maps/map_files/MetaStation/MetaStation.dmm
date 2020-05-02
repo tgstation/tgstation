@@ -69162,7 +69162,7 @@
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
 /obj/machinery/camera{
-	c_tag = "Isolation Cell";
+	c_tag = "Prison Isolation Cell";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -72233,7 +72233,7 @@
 /area/security/prison)
 "kGE" = (
 /obj/machinery/camera{
-	c_tag = "Permabrig Central";
+	c_tag = "Prison Central";
 	dir = 8;
 	network = list("ss13","prison")
 	},
@@ -100604,7 +100604,7 @@ gNS
 aaZ
 jik
 vVt
-aep
+abe
 aby
 abX
 agH
@@ -101630,8 +101630,8 @@ oMJ
 ddG
 abe
 xKy
-adU
-aep
+pnf
+abe
 agH
 agH
 agH
