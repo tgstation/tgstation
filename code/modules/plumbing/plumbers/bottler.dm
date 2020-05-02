@@ -1,6 +1,6 @@
 /obj/machinery/plumbing/bottler
 	name = "chemical bottler"
-	desc = "chemical bottler."
+	desc = "Puts reagents into containers, like bottles and beakers."
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER
 	reagent_flags = TRANSPARENT | DRAINABLE
