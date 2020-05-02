@@ -13,7 +13,7 @@
 /area/ruin/unpowered/buried_library)
 "ad" = (
 /turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/unexplored)
 "ae" = (
 /turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
@@ -331,17 +331,7 @@
 "bu" = (
 /obj/item/stack/sheet/mineral/wood,
 /turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/underground/explored)
-"bv" = (
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
-"bw" = (
-/turf/open/floor/wood,
-/area/icemoon/underground/explored)
-"bx" = (
-/obj/item/stack/sheet/mineral/wood,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/unexplored)
 "by" = (
 /obj/structure/statue/bronze/marx,
 /turf/open/floor/carpet/black,
@@ -567,7 +557,7 @@ ah
 ae
 ac
 bs
-bv
+an
 ad
 "}
 (9,1,1) = {"
@@ -592,8 +582,8 @@ ae
 ao
 ac
 ax
-bw
-bv
+ae
+an
 "}
 (10,1,1) = {"
 aa
@@ -617,7 +607,7 @@ aR
 ae
 bq
 ae
-bx
+aU
 ad
 "}
 (11,1,1) = {"
@@ -642,7 +632,7 @@ ae
 bm
 ac
 ae
-bv
+an
 ad
 "}
 (12,1,1) = {"

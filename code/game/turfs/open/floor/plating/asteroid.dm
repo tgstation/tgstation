@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	icon_state = "snow"
 	icon_plating = "snow"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	slowdown = 2
+	slowdown = 1
 	environment_type = "snow"
 	flags_1 = NONE
 	planetary_atmos = TRUE

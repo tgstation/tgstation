@@ -4,14 +4,14 @@
 /area/icemoon/underground/explored)
 "b" = (
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/unexplored)
 "d" = (
 /turf/template_noop,
-/area/template_noop)
+/area/icemoon/underground/unexplored)
 "j" = (
 /obj/effect/mob_spawn/human/miner/explorer,
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/unexplored)
 "q" = (
 /mob/living/simple_animal/hostile/megafauna/wendigo,
 /turf/open/indestructible/necropolis{
@@ -31,7 +31,7 @@
 	id = "wendigo arena exit"
 	},
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/unexplored)
 "N" = (
 /turf/open/indestructible/necropolis{
 	initial_gas_mix = "ICEMOON_ATMOS"
@@ -42,13 +42,13 @@
 	info = "for your own sake, do not enter"
 	},
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/unexplored)
 "V" = (
 /obj/effect/portal/permanent/one_way{
 	id = "wendigo arena"
 	},
 /turf/open/floor/plating/asteroid/snow/ice/icemoon,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/unexplored)
 
 (1,1,1) = {"
 d

@@ -12,6 +12,10 @@
 /obj/structure/ladder,
 /turf/open/floor/plasteel,
 /area/mine/eva)
+"e" = (
+/obj/machinery/light/small,
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "g" = (
 /obj/structure/closet/emcloset,
 /turf/open/floor/plasteel,
@@ -19,6 +23,12 @@
 "i" = (
 /obj/effect/turf_decal/tile/brown,
 /obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"j" = (
+/obj/machinery/light/small{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -58,6 +68,9 @@
 /area/mine/eva)
 "z" = (
 /obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plating,
 /area/mine/eva)
 "A" = (
@@ -72,6 +85,9 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/mine/eva)
 "B" = (
@@ -82,6 +98,12 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "C" = (
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"I" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "K" = (
@@ -96,6 +118,12 @@
 /area/mine/eva)
 "V" = (
 /turf/open/floor/plating,
+/area/mine/eva)
+"W" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "X" = (
 /obj/machinery/door/airlock/maintenance{
@@ -19020,9 +19048,9 @@ z
 V
 V
 y
+W
 C
-C
-C
+e
 y
 y
 y
@@ -19788,6 +19816,7 @@ a
 a
 Y
 g
+I
 C
 C
 C
@@ -19795,8 +19824,7 @@ C
 C
 C
 C
-C
-C
+I
 C
 Y
 a
@@ -20302,6 +20330,7 @@ a
 a
 Y
 s
+j
 C
 C
 C
@@ -20309,8 +20338,7 @@ C
 C
 C
 C
-C
-C
+j
 C
 Y
 a
@@ -21076,9 +21104,9 @@ A
 c
 K
 y
+W
 C
-C
-C
+e
 y
 y
 y

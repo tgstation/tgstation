@@ -17,7 +17,7 @@
 /area/ruin/powered/bathhouse)
 "d" = (
 /turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/underground/explored)
+/area/icemoon/underground/unexplored)
 "e" = (
 /obj/structure/mirror{
 	pixel_y = 28

@@ -124,7 +124,7 @@
 /area/icemoon/underground/explored)
 "mi" = (
 /obj/effect/decal/remains/human,
-/mob/living/simple_animal/hostile/construct/armored/hostile{
+/mob/living/simple_animal/hostile/construct/juggernaut/hostile{
 	health = 450;
 	maxHealth = 450;
 	name = "Right Hand of the Elder"
@@ -226,8 +226,8 @@
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "tN" = (
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/underground/explored)
+/turf/closed/mineral/random/snow/more_caves,
+/area/icemoon/underground/unexplored)
 "tX" = (
 /obj/structure/table/wood,
 /obj/structure/bedsheetbin,
@@ -354,7 +354,7 @@
 "EF" = (
 /obj/effect/decal/cleanable/blood/gibs/torso,
 /obj/effect/decal/remains/human,
-/mob/living/simple_animal/hostile/construct/armored/hostile{
+/mob/living/simple_animal/hostile/construct/juggernaut/hostile{
 	health = 450;
 	maxHealth = 450;
 	name = "Left Hand of the Elder"
@@ -574,13 +574,13 @@ tN
 tN
 tN
 tN
-Og
-Og
-Og
-Og
-Og
-Og
-oF
+tN
+tN
+tN
+tN
+tN
+tN
+tN
 tN
 tN
 tN
@@ -715,7 +715,7 @@ pc
 Og
 Og
 Og
-Og
+tN
 "}
 (6,1,1) = {"
 tN
@@ -745,7 +745,7 @@ Ei
 Og
 Rv
 Og
-Og
+tN
 "}
 (7,1,1) = {"
 tN
@@ -778,7 +778,7 @@ Og
 tN
 "}
 (8,1,1) = {"
-Og
+tN
 Og
 Og
 Og
@@ -808,7 +808,7 @@ Og
 tN
 "}
 (9,1,1) = {"
-Og
+tN
 Og
 Og
 Ei
@@ -895,7 +895,7 @@ Ei
 Ei
 Og
 Og
-Og
+tN
 "}
 (12,1,1) = {"
 tN
@@ -925,7 +925,7 @@ Ei
 Ei
 Ei
 Og
-Og
+tN
 "}
 (13,1,1) = {"
 tN
@@ -955,7 +955,7 @@ Ei
 Ei
 Ei
 pI
-Og
+tN
 "}
 (14,1,1) = {"
 tN
@@ -985,7 +985,7 @@ Ei
 Ei
 Ei
 Og
-Og
+tN
 "}
 (15,1,1) = {"
 tN
@@ -1015,7 +1015,7 @@ Ei
 Ei
 bY
 Og
-pc
+tN
 "}
 (16,1,1) = {"
 tN
@@ -1384,8 +1384,6 @@ tN
 tN
 tN
 tN
-Og
-Og
 tN
 tN
 tN
@@ -1397,13 +1395,15 @@ tN
 tN
 tN
 tN
-Og
-Og
 tN
 tN
 tN
 tN
-Og
-Og
+tN
+tN
+tN
+tN
+tN
+tN
 tN
 "}

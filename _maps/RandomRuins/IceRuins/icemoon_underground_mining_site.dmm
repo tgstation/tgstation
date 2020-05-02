@@ -8,7 +8,7 @@
 /area/icemoon/underground/explored)
 "d" = (
 /turf/template_noop,
-/area/template_noop)
+/area/icemoon/underground/unexplored)
 "f" = (
 /obj/item/flashlight/lantern{
 	on = 1

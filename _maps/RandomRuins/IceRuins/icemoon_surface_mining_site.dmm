@@ -42,7 +42,7 @@
 /area/icemoon/surface/outdoors)
 "i" = (
 /turf/template_noop,
-/area/template_noop)
+/area/icemoon/surface/outdoors/unexplored)
 "j" = (
 /obj/structure/sink/kitchen,
 /turf/open/floor/wood,
@@ -53,10 +53,6 @@
 /area/ruin/unpowered)
 "l" = (
 /obj/machinery/vending/dinnerware,
-/turf/open/floor/wood,
-/area/ruin/unpowered)
-"m" = (
-/obj/structure/barricade/wooden/crude/snow,
 /turf/open/floor/wood,
 /area/ruin/unpowered)
 "n" = (
@@ -735,7 +731,7 @@ d
 d
 d
 b
-m
+n
 b
 d
 d
@@ -762,7 +758,7 @@ d
 d
 a
 h
-n
+h
 h
 a
 d

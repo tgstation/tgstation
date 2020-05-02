@@ -3,8 +3,8 @@
 /turf/closed/mineral/random/more_caves,
 /area/icemoon/surface/outdoors/unexplored)
 "b" = (
-/turf/closed/mineral/random/snow/no_caves,
-/area/icemoon/surface/outdoors)
+/turf/closed/mineral/random/snow/more_caves,
+/area/icemoon/surface/outdoors/unexplored)
 "c" = (
 /turf/closed/wall/mineral/bronze,
 /area/icemoon/surface/outdoors)
@@ -176,7 +176,7 @@ b
 (3,1,1) = {"
 b
 c
-c
+m
 m
 a
 a
@@ -210,7 +210,7 @@ a
 a
 a
 a
-m
+c
 c
 c
 b
@@ -253,7 +253,7 @@ a
 a
 a
 a
-m
+c
 c
 b
 "}
@@ -1639,14 +1639,14 @@ a
 a
 a
 a
-m
+c
 c
 b
 "}
 (38,1,1) = {"
 b
 c
-c
+m
 m
 a
 a
@@ -1680,7 +1680,7 @@ a
 a
 a
 a
-m
+c
 c
 c
 b
