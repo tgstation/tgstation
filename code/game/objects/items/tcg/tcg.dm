@@ -26,7 +26,6 @@ var/list/cardTypeLookup = list("name" = 0,
 	icon_state = "runtime"
 	var/id = -1 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
 	var/flipped = 0
-	var/smallboi = 0 //whether or not the card is small, it becomes small on turfs/tables and large in hand
 
 /obj/item/tcgcard/Initialize(mapload, var/datum/card/temp)
 	. = ..()
@@ -66,7 +65,7 @@ var/list/cardTypeLookup = list("name" = 0,
 /obj/item/tcgcard/attack_self(mob/user)
 	. = ..()
 	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
-	if(!flipped)
+	if(flipped == 0)
 		name = "Trading Card"
 		desc = "It's the back of a trading card... no peeking!"
 		icon_state = "cardback"
@@ -104,7 +103,7 @@ var/list/cardTypeLookup = list("name" = 0,
 	name = "Trading Card Pack: Series 1"
 	desc = "Contains six cards of varying rarity from Series 1. Collect them all!"
 	icon = 'icons/obj/tcg.dmi'
-	icon_state = "cardback_nt"
+	icon_state = "cardpack_series1"
 	series = "S1"
 	contains_coin = 0
 
@@ -112,7 +111,7 @@ var/list/cardTypeLookup = list("name" = 0,
 	name = "Trading Card Pack: Resin Frontier Booster Pack"
 	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
 	icon = 'icons/obj/tcg_xenos.dmi'
-	icon_state = "cardback_xeno"
+	icon_state = "cardpack_resin"
 	series = "S2"
 	contains_coin = 0
 	rarityTable = list(2,
