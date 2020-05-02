@@ -100,47 +100,47 @@
 
 	var/list/items = list()
 	if(mybag)
-		items += list("trash bag" = image(icon = mybag.icon, icon_state = mybag.icon_state))
+		items += list("Trash bag" = image(icon = mybag.icon, icon_state = mybag.icon_state))
 	if(mymop)
-		items += list("mop" = image(icon = mymop.icon, icon_state = mymop.icon_state))
+		items += list("Mop" = image(icon = mymop.icon, icon_state = mymop.icon_state))
 	if(mybroom)
-		items += list("push broom" = image(icon = mybroom.icon, icon_state = mybroom.icon_state))
+		items += list("Broom" = image(icon = mybroom.icon, icon_state = mybroom.icon_state))
 	if(myspray)
-		items += list("spray bottle" = image(icon = myspray.icon, icon_state = myspray.icon_state))
+		items += list("Spray bottle" = image(icon = myspray.icon, icon_state = myspray.icon_state))
 	if(myreplacer)
-		items += list("light replacer" = image(icon = myreplacer.icon, icon_state = myreplacer.icon_state))
+		items += list("Light replacer" = image(icon = myreplacer.icon, icon_state = myreplacer.icon_state))
 	var/obj/item/clothing/suit/caution/sign = locate() in src
 	if(sign)
-		items += list("wet floor sign" = image(icon = sign.icon, icon_state = sign.icon_state))
+		items += list("Sign" = image(icon = sign.icon, icon_state = sign.icon_state))
 
 	if(!length(items))
 		return
 	items = sortList(items)
-	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user, src), radius = 38, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 38, require_near = TRUE)
 	if(!pick)
 		return
 	switch(pick)
-		if("trash bag")
+		if("Trash bag")
 			user.put_in_hands(mybag)
 			to_chat(user, "<span class='notice'>You take [mybag] from [src].</span>")
 			mybag = null
-		if("mop")
+		if("Mop")
 			user.put_in_hands(mymop)
 			to_chat(user, "<span class='notice'>You take [mymop] from [src].</span>")
 			mymop = null
-		if("push broom")
+		if("Broom")
 			user.put_in_hands(mybroom)
 			to_chat(user, "<span class='notice'>You take [mybroom] from [src].</span>")
 			mybroom = null
-		if("spray bottle")
+		if("Spray bottle")
 			user.put_in_hands(myspray)
 			to_chat(user, "<span class='notice'>You take [myspray] from [src].</span>")
 			myspray = null
-		if("light replacer")
+		if("Light replacer")
 			user.put_in_hands(myreplacer)
 			to_chat(user, "<span class='notice'>You take [myreplacer] from [src].</span>")
 			myreplacer = null
-		if("wet floor sign")
+		if("Sign")
 			if(signs <= 0)
 				return
 			user.put_in_hands(sign)
@@ -156,14 +156,11 @@
   *
   * Arguments:
   * * user The mob interacting with a menu
-  * * cart The cart used to interact with a menu
   */
-/obj/structure/janitorialcart/proc/check_menu(mob/living/user, obj/structure/janitorialcart/cart)
+/obj/structure/janitorialcart/proc/check_menu(mob/living/user)
 	if(!istype(user))
 		return FALSE
 	if(user.incapacitated())
-		return FALSE
-	if(!cart)
 		return FALSE
 	return TRUE
 
