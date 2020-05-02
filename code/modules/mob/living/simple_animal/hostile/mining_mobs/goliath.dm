@@ -235,5 +235,5 @@
 /obj/item/saddle
 	name = "saddle"
 	desc = "This saddle will solve all your problems with being killed by lava beasts!"
-	icon = 'icons/obj/items_and_weapons.dmi'
-	icon_state = "saddle"
+	icon = 'icons/obj/mining.dmi'
+	icon_state = "goliath_saddle"

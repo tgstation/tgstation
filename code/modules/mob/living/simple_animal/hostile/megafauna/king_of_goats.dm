@@ -55,7 +55,6 @@ Difficulty: Insanely Hard
 	robust_searching = TRUE
 	move_to_delay = 3
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	minbodytemp = 0
 	var/stun_chance = 5 //chance per attack to Weaken target
 
 /mob/living/simple_animal/hostile/megafauna/king/ex_act(severity, target)

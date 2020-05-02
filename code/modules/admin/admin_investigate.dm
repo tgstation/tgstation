@@ -37,6 +37,6 @@
 
 	var/F = file("[GLOB.log_directory]/[selected].html")
 	if(!fexists(F))
-		to_chat(src, "<span class='danger'>No [selected] logfile was found.</span>")
+		to_chat(src, "<span class='danger'>No [selected] logfile was found.</span>", confidential = TRUE)
 		return
 	src << browse(F,"window=investigate[selected];size=800x300")

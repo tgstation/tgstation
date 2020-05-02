@@ -84,7 +84,6 @@
 
 	"lizards": [
 		"lizard",
-		"ligger",
 		"hiss",
 		"hissed",
 		"hissing",
@@ -217,8 +216,9 @@
 
 "strangers": [
 		"as (unknown)",
+		"unidentified",
 		"unknown",
-		"stranger danger"
+		"stranger"
 	],
 
 "birds": [

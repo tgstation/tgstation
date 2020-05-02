@@ -19,6 +19,8 @@ GLOBAL_VAR(restart_counter)
   *
   */
 /world/New()
+	if(fexists("byond-extools.dll"))
+		call("byond-extools.dll", "maptick_initialize")()
 	enable_debugger()
 
 	//Early profile for auto-profiler - will be stopped on profiler init if necessary.
@@ -139,6 +141,8 @@ GLOBAL_VAR(restart_counter)
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
 	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
 	GLOB.discord_api_log = "[GLOB.log_directory]/discord_api_log.log"
+
+	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")

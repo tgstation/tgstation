@@ -28,6 +28,7 @@
 #define IMMUTABLE_SLOW			(1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
 #define IN_STORAGE				(1<<11) //is this item in the storage item, such as backpack? used for tooltips
 #define SURGICAL_TOOL			(1<<12)	//Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
+#define EYE_STAB				(1<<13) /// Item can be used to eyestab
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

@@ -248,6 +248,12 @@
 				SEND_SIGNAL(owner, COMSIG_ADD_MOOD_EVENT, "chemical_euphoria", /datum/mood_event/chemical_euphoria)
 		else
 			SEND_SIGNAL(owner, COMSIG_CLEAR_MOOD_EVENT, "chemical_euphoria")
+		if(SA_pp > safe_toxins_max*3)
+			var/ratio = (breath_gases[/datum/gas/nitrous_oxide][MOLES]/safe_toxins_max)
+			H.apply_damage_type(clamp(ratio, tox_breath_dam_min, tox_breath_dam_max), tox_damage_type)
+			H.throw_alert("too_much_tox", /obj/screen/alert/too_much_tox)
+		else
+			H.clear_alert("too_much_tox")
 
 
 	// BZ

@@ -1,39 +1,57 @@
-.Tabs__content {
-  padding-top: 6px;
-  border-top: 2px solid rgba(255, 255, 255, 0.1);
+@use '../base.scss';
+
+$border-radius: base.$border-radius !default;
+
+.Tabs--horizontal {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 6px;
+
+  .Tabs__tab--altSelection::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: $border-radius;
+  }
 }
 
 .Tabs--vertical {
-  display: table-row;
-}
+  margin-right: 9px;
 
-// NOTE: These selectors have to be specific in order to stop cascading
-// from influencing nested tabs.
-.Tabs--vertical > .Tabs__content {
-  display: table-cell;
-  width: 100%;
-  padding-top: 0;
-  padding-left: 9px;
-  border-top: 0;
-}
+  .Tabs__tabBox {
+    // padding-right: 2px;
+    border-right: 2px solid rgba(255, 255, 255, 0.1);
+    // Disable baseline alignment when doing vertical tabs
+    vertical-align: top;
+  }
 
-.Tabs--vertical > .Tabs__tabBox {
-  display: table-cell;
-  // padding-right: 2px;
-  border-right: 2px solid rgba(255, 255, 255, 0.1);
-  // Disable baseline alignment when doing vertical tabs
-  vertical-align: top;
-}
+  .Tabs__tab {
+    // Force display block because Button theme overrides it via cascading.
+    display: block !important;
+    // Override to stop themed buttons from taking priority over it.
+    margin-right: 0 !important;
+    margin-bottom: 0;
+    padding: 1px 9px 0px 6px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 
-.Tabs--vertical > .Tabs__tabBox > .Tabs__tab {
-  // Force display block because Button theme overrides it via cascading.
-  display: block !important;
-  margin-right: 0;
-  margin-bottom: 0;
-  padding: 1px 9px 0px 6px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
 
-  &:last-child {
-    border-bottom: 0;
+  .Tabs__tab--altSelection::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    height: 100%;
+    width: 3px;
+    background-color: #fff;
+    border-radius: $border-radius;
   }
 }

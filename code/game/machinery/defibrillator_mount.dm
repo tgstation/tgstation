@@ -45,8 +45,9 @@
 	. += "defib"
 
 	if(defib.powered)
+		var/obj/item/stock_parts/cell/C = get_cell()
 		. += (defib.safety ? "online" : "emagged")
-		var/ratio = defib.cell.charge / defib.cell.maxcharge
+		var/ratio = C.charge / C.maxcharge
 		ratio = CEILING(ratio * 4, 1) * 25
 		. += "charge[ratio]"
 
@@ -75,10 +76,16 @@
 		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
+		var/obj/item/defibrillator/D = I
+		if(!D.get_cell())
+			to_chat(user, "<span class='warning'>Only defibrilators containing a cell can be hooked up to [src]!</span>")
+			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
 		"<span class='notice'>You press [I] into the mount, and it clicks into place.</span>")
 		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+		// Make sure the defib is set before processing begins.
 		defib = I
+		begin_processing()
 		update_icon()
 		return
 	else if(defib && I == defib.paddles)
@@ -148,6 +155,8 @@
 	user.visible_message("<span class='notice'>[user] unhooks [defib] from [src].</span>", \
 	"<span class='notice'>You slide out [defib] from [src] and unhook the charging cables.</span>")
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	// Make sure processing ends before the defib is nulled
+	end_processing()
 	defib = null
 	update_icon()
 
@@ -159,11 +168,11 @@
 	wallframe_type = /obj/item/wallframe/defib_mount/charging
 
 /obj/machinery/defibrillator_mount/charging/process()
-	if(defib?.cell?.charge < defib.cell.maxcharge && is_operational())
+	var/obj/item/stock_parts/cell/C = get_cell()
+	if(C.charge < C.maxcharge && is_operational())
 		use_power(100)
-		defib.cell.give(80)
+		C.give(80)
 		update_icon()
-
 
 //wallframe, for attaching the mounts easily
 /obj/item/wallframe/defib_mount

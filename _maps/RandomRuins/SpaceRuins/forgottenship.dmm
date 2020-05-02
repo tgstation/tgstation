@@ -9,12 +9,11 @@
 /area/ruin/unpowered/no_grav)
 "ac" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	armor = list("melee" = 80, "bullet" = 30, "laser" = 50, "energy" = 50, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
 	dir = 4;
 	name = "Syndicate Ship Turret";
 	on = 0;
-	throw_speed = 4;
-	use_power = 1
+	shot_delay = 10
 	},
 /turf/closed/wall/r_wall/syndicate/nodiagonal,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -133,10 +132,12 @@
 	secure = 1
 	},
 /obj/item/coin/antagtoken,
-/obj/item/coin/gold,
+/obj/item/encryptionkey/syndicate,
+/obj/item/encryptionkey/syndicate,
+/obj/item/encryptionkey/syndicate,
 /obj/item/dnainjector/thermal,
-/obj/item/storage/box/firingpins,
-/obj/item/storage/box/firingpins,
+/obj/item/storage/box/firingpins/syndicate,
+/obj/item/storage/box/firingpins/syndicate,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "az" = (
@@ -150,7 +151,6 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/aiModule/reset/purge,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -244,7 +244,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "aN" = (
 /obj/item/stack/sheet/mineral/uranium{
-	amount = 50
+	amount = 15
 	},
 /obj/structure/cable,
 /obj/machinery/light{
@@ -764,12 +764,11 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ci" = (
 /obj/machinery/porta_turret/syndicate/energy{
-	armor = list("melee" = 80, "bullet" = 30, "laser" = 50, "energy" = 50, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
+	armor = list("melee" = 40, "bullet" = 40, "laser" = 60, "energy" = 60, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100);
 	dir = 4;
 	name = "Syndicate Ship Turret";
 	on = 0;
-	throw_speed = 4;
-	use_power = 1
+	shot_delay = 10
 	},
 /turf/closed/wall/r_wall/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -785,7 +784,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/aiModule/core/freeformcore,
+/obj/item/aiModule/core/full/cybersun,
 /obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
@@ -840,9 +839,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
 "ct" = (
-/obj/machinery/vending/medical/syndicate_access{
-	premium = list(/obj/item/reagent_containers/medigel/instabitaluri = 2, /obj/item/storage/pill_bottle/psicodine = 2, /obj/item/reagent_containers/hypospray/medipen = 3, /obj/item/storage/belt/medical = 3, /obj/item/sensor_device = 2, /obj/item/pinpointer/crew = 2, /obj/item/storage/firstaid = 5, /obj/item/storage/firstaid/advanced = 2, /obj/item/storage/firstaid/tactical = 1, /obj/item/shears = 1, /obj/item/plunger/reinforced = 2)
-	},
+/obj/machinery/vending/medical/syndicate_access/cybersun,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cu" = (
@@ -889,10 +886,10 @@
 	req_one_access_txt = "150"
 	},
 /obj/item/stack/sheet/mineral/titanium{
-	amount = 50
+	amount = 40
 	},
 /obj/item/stack/sheet/mineral/uranium{
-	amount = 20
+	amount = 15
 	},
 /turf/open/floor/pod/dark,
 /area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
@@ -1241,10 +1238,10 @@
 	req_one_access_txt = "150"
 	},
 /obj/item/stack/sheet/mineral/gold{
-	amount = 50
+	amount = 30
 	},
 /obj/item/stack/sheet/mineral/silver{
-	amount = 50
+	amount = 30
 	},
 /obj/machinery/light,
 /turf/open/floor/pod/dark,

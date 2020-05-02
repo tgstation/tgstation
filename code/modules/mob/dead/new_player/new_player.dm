@@ -476,6 +476,7 @@
 	var/mob/living/carbon/human/H = new(loc)
 
 	var/frn = CONFIG_GET(flag/force_random_names)
+	var/admin_anon_names = SSticker.anonymousnames
 	if(!frn)
 		frn = is_banned_from(ckey, "Appearance")
 		if(QDELETED(src))
@@ -483,6 +484,10 @@
 	if(frn)
 		client.prefs.random_character()
 		client.prefs.real_name = client.prefs.pref_species.random_name(gender,1)
+
+	if(admin_anon_names)//overrides random name because it achieves the same effect and is an admin enabled event tool
+		client.prefs.random_character()
+		client.prefs.real_name = anonymous_name(src)
 
 	var/is_antag
 	if(mind in GLOB.pre_setup_antags)

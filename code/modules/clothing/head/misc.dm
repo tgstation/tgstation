@@ -426,7 +426,7 @@
 	icon_state = "kippah"
 
 /obj/item/clothing/head/medievaljewhat
-	name = "medieval Jew hat"
+	name = "medieval Jewish hat"
 	desc = "A silly looking hat, intended to be placed on the heads of the station's oppressed religious minorities."
 	icon_state = "medievaljewhat"
 

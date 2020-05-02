@@ -101,10 +101,10 @@
 	tastes = list("meat" = 1, "salmon" = 1)
 	foodtype = MEAT | ALCOHOL
 
-/obj/item/reagent_containers/food/snacks/faggot
-	name = "faggot"
+/obj/item/reagent_containers/food/snacks/meatball
+	name = "meatball"
 	desc = "A great meal all round. Not a cord of wood."
-	icon_state = "faggot"
+	icon_state = "meatball"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 1)
 	filling_color = "#800000"
 	tastes = list("meat" = 1)
@@ -178,6 +178,33 @@
 	else if (!spammer) // Visible message in case there are no fingerprints
 		visible_message("<span class='notice'>[src] fails to expand!</span>")
 	qdel(src)
+
+/obj/item/reagent_containers/food/snacks/monkeycube/suicide_act(mob/living/M)
+	M.visible_message("<span class='suicide'>[M] is putting [src] in [M.p_their()] mouth! It looks like [M.p_theyre()] trying to commit suicide!</span>")
+	var/eating_success = do_after(M, 10, TRUE, src, TRUE)
+	if(QDELETED(M)) //qdeletion: the nuclear option of self-harm
+		return SHAME
+	if(!eating_success || QDELETED(src)) //checks if src is gone or if they failed to wait for a second
+		M.visible_message("<span class='suicide'>[M] chickens out!</span>")
+		return SHAME
+	if(HAS_TRAIT(M, TRAIT_NOHUNGER)) //plasmamen don't have saliva/stomach acid
+		M.visible_message("<span class='suicide'>[M] realizes [M.p_their()] body won't activate [src]!</span>"
+		,"<span class='warning'>Your body won't activate [src]...</span>")
+		return SHAME
+	playsound(M, 'sound/items/eatfood.ogg', rand(10,50), TRUE)
+	M.temporarilyRemoveItemFromInventory(src) //removes from hands, keeps in M
+	addtimer(CALLBACK(src, .proc/finish_suicide, M), 15) //you've eaten it, you can run now
+	return MANUAL_SUICIDE
+
+/obj/item/reagent_containers/food/snacks/monkeycube/proc/finish_suicide(mob/living/M) ///internal proc called by a monkeycube's suicide_act using a timer and callback. takes as argument the mob/living who activated the suicide
+	if(QDELETED(M) || QDELETED(src))
+		return
+	if((src.loc != M)) //how the hell did you manage this
+		to_chat(M, "<span class='warning'>Something happened to [src]...</span>")
+		return
+	Expand()
+	M.visible_message("<span class='danger'>[M]'s torso bursts open as a primate emerges!</span>")
+	M.gib(null, TRUE, null, TRUE)
 
 /obj/item/reagent_containers/food/snacks/monkeycube/syndicate
 	faction = list("neutral", ROLE_SYNDICATE)
@@ -282,6 +309,19 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/meatclown
+	name = "meat clown"
+	desc = "A delicious, round piece of meat clown. How horrifying."
+	icon_state = "meatclown"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/consumable/banana = 2)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
+	tastes = list("meat" = 5, "clowns" = 3, "sixteen teslas" = 1)
+	foodtype = MEAT
+
+/obj/item/reagent_containers/food/snacks/meatclown/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/slippery, 30)
 
 //////////////////////////////////////////// KEBABS AND OTHER SKEWERS ////////////////////////////////////////////
 
