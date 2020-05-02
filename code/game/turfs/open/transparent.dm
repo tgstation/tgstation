@@ -1,5 +1,6 @@
 /turf/open/transparent
 	baseturfs = /turf/open/transparent/openspace
+	var/can_show_space = FALSE
 
 /turf/open/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
@@ -20,7 +21,10 @@
 	var/turf/T = below()
 	if(!T)
 		vis_contents.len = 0
-		if(prune_on_fail)
+		if(can_show_space)
+			var/mutable_appearance/underlay_appearance = mutable_appearance('icons/turf/space.dmi', icon_state = SPACE_ICON_STATE, layer = TURF_LAYER, plane = PLANE_SPACE)
+			underlays += underlay_appearance
+		else if(prune_on_fail)
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return FALSE
 	if(init)
@@ -44,6 +48,7 @@
 	icon_state = "floor_glass"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/transparent/glass, /turf/open/transparent/glass/reinforced)
+	can_show_space = TRUE
 
 /turf/open/transparent/glass/reinforced
 	name = "Reinforced glass floor"
