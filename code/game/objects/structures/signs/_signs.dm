@@ -1,8 +1,5 @@
 /obj/structure/sign
 	icon = 'icons/obj/decals.dmi'
-	icon_state = "backing"
-	name = "sign backing"
-	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
 	anchored = TRUE
 	opacity = 0
 	density = FALSE
@@ -16,21 +13,31 @@
 	resistance_flags = FLAMMABLE
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = FALSE
-	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on a sign backing.
-	var/sign_change_name = "Sign - Blank" //If this is ever seen in game, something went wrong.
+	///sign_change_name is used to make nice looking, alphebetized and categorized names when you use a pen on any sign item or structure which is_editable.
+	var/sign_change_name
+
+/obj/structure/sign/blank //This subtype is necessary for now because some other things (posters, picture frames, paintings) inheret from the parent type.
+	icon_state = "backing"
+	name = "sign backing"
+	desc = "A plastic sign backing, use a pen to change the decal. It can be detached from the wall with a wrench."
+	is_editable = TRUE
+	sign_change_name = "Blank Sign"
 
 /obj/item/sign
 	name = "sign backing"
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
+	item_state = "backing"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/plastic = 2000)
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
 	///The type of sign structure that will be created when placed on a turf, the default looks just like a sign backing item.
-	var/sign_path = /obj/structure/sign
+	var/sign_path = /obj/structure/sign/blank
 	///This determines if you can select this sign type when using a pen on a sign backing. False by default, set to true per sign type to override.
 	var/is_editable = TRUE
 
@@ -61,6 +68,8 @@
 
 /obj/structure/sign/wrench_act(mob/living/user, obj/item/wrench/I)
 	. = ..()
+	if(!buildable_sign)
+		return TRUE
 	user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 						 "<span class='notice'>You start unfastening [src].</span>")
 	I.play_tool_sound(src)
@@ -70,11 +79,13 @@
 	user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
 						 "<span class='notice'>You unfasten [src].</span>")
 	var/obj/item/sign/unwrenched_sign = new (get_turf(user))
-	if(type != /obj/structure/sign) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
+	if(type != /obj/structure/sign/blank) //If it's still just a basic sign backing, we can (and should) skip some of the below variable transfers.
 		unwrenched_sign.name = name //Copy over the sign structure variables to the sign item we're creating when we unwrench a sign.
 		unwrenched_sign.desc = "[desc] It can be placed on a wall."
 		unwrenched_sign.icon_state = icon_state
 		unwrenched_sign.sign_path = type
+		unwrenched_sign.custom_materials = custom_materials //This is here so picture frames and wooden things don't get messed up.
+		unwrenched_sign.is_editable = is_editable
 	unwrenched_sign.obj_integrity = obj_integrity //Transfer how damaged it is.
 	unwrenched_sign.setDir(dir)
 	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
@@ -165,7 +176,10 @@
 			return
 		var/obj/structure/sign/sign_type = GLOB.editable_sign_types[choice]
 		name = initial(sign_type.name)
-		desc = "[initial(sign_type.desc)] It can be placed on a wall."
+		if(sign_type != /obj/structure/sign/blank)
+			desc = "[initial(sign_type.desc)] It can be placed on a wall."
+		else
+			desc = initial(desc) //If you're changing it to a blank sign, just use obj/item/sign's description.
 		icon_state = initial(sign_type.icon_state)
 		sign_path = sign_type	
 		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
@@ -207,3 +221,4 @@
 	name = "\improper Nanotrasen logo sign"
 	desc = "The Nanotrasen corporate logo."
 	icon_state = "nanotrasen_sign1"
+	buildable_sign = FALSE

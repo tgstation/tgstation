@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Fixed a bug that caused the hierophant to ignore all armor."
