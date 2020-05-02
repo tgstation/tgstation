@@ -1,6 +1,6 @@
 /obj/machinery/plumbing/fermenter
 	name = "chemical fermenter"
-	desc = "chemical fermetner."
+	desc = "Turns plants into various types of booze."
 	icon_state = "fermenter"
 	layer = ABOVE_ALL_MOB_LAYER
 	reagent_flags = TRANSPARENT | DRAINABLE
@@ -50,4 +50,3 @@
 			var/amount = G.seed.potency * 0.25
 			reagents.add_reagent(G.distill_reagent, amount)
 			qdel(G)
-
