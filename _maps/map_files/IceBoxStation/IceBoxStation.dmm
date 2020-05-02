@@ -4016,7 +4016,7 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ajd" = (
-/obj/structure/sign/plaques/golden{
+/obj/item/instrument/violin/golden{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/red{
@@ -40195,7 +40195,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bSD" = (
-/obj/structure/sign/plaques/atmos{
+/obj/structure/holosign/barrier/atmos{
 	pixel_y = -32
 	},
 /obj/structure/table,
@@ -51535,14 +51535,6 @@
 	},
 /turf/open/floor/engine,
 /area/science/xenobiology)
-"eSO" = (
-/obj/machinery/power/solar{
-	id = "starboardsolar";
-	name = "Starboard Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
 "eUr" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "testlab";
@@ -53806,14 +53798,6 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
-"pEh" = (
-/obj/machinery/power/solar{
-	id = "portsolar";
-	name = "Port Solar Array"
-	},
-/obj/structure/cable,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/icemoon/surface/outdoors)
 "pHl" = (
 /obj/structure/table,
 /obj/item/storage/box/beakers{
@@ -69877,7 +69861,7 @@ boP
 boP
 bBM
 boP
-glY
+aae
 boP
 bBM
 boP
@@ -70134,7 +70118,7 @@ bBM
 boP
 boP
 boP
-sHm
+aah
 boP
 boP
 boP
@@ -70391,7 +70375,7 @@ boP
 boP
 boP
 boP
-sHm
+aah
 boP
 boP
 boP
@@ -70642,19 +70626,19 @@ boP
 boP
 bBM
 boP
-pEh
-pEh
-pEh
-pEh
-pEh
+atY
+atY
+atY
+atY
+atY
 boP
+asU
 boP
-boP
-pEh
-pEh
-pEh
-pEh
-pEh
+atY
+atY
+atY
+atY
+atY
 boP
 bBM
 boP
@@ -70899,19 +70883,19 @@ boP
 boP
 bBM
 boP
-sHm
-sHm
-sHm
-sHm
-sHm
-sHm
-boP
-sHm
-sHm
-sHm
-sHm
-sHm
-sHm
+aah
+aah
+aah
+aah
+aah
+aah
+asU
+aah
+aah
+aah
+aah
+aah
+aah
 boP
 bBM
 boP
@@ -71156,19 +71140,19 @@ boP
 boP
 bBM
 boP
-pEh
-pEh
-pEh
-pEh
-pEh
+atY
+atY
+atY
+atY
+atY
 boP
+asU
 boP
-boP
-pEh
-pEh
-pEh
-pEh
-pEh
+atY
+atY
+atY
+atY
+atY
 boP
 bBM
 boP
@@ -71419,7 +71403,7 @@ boP
 boP
 boP
 boP
-boP
+asU
 boP
 boP
 boP
@@ -71670,19 +71654,19 @@ boP
 boP
 bBM
 boP
-pEh
-pEh
-pEh
-pEh
-pEh
+atY
+atY
+atY
+atY
+atY
 boP
+asU
 boP
-boP
-pEh
-pEh
-pEh
-pEh
-pEh
+atY
+atY
+atY
+atY
+atY
 boP
 bBM
 boP
@@ -71927,19 +71911,19 @@ boP
 boP
 bBM
 boP
-sHm
-sHm
-sHm
-sHm
-sHm
-sHm
-boP
-sHm
-sHm
-sHm
-sHm
-sHm
-sHm
+aah
+aah
+aah
+aah
+aah
+aah
+asU
+aah
+aah
+aah
+aah
+aah
+aah
 boP
 bBM
 boP
@@ -72196,7 +72180,7 @@ atY
 atY
 atY
 atY
-pEh
+atY
 boP
 bBM
 boP
@@ -72710,7 +72694,7 @@ atY
 atY
 atY
 atY
-pEh
+atY
 boP
 bBM
 boP
@@ -72967,7 +72951,7 @@ aah
 aah
 aah
 aah
-sHm
+aah
 boP
 bBM
 boP
@@ -73224,7 +73208,7 @@ atY
 atY
 atY
 atY
-pEh
+atY
 boP
 bBM
 boP
@@ -104079,8 +104063,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 bBM
 boP
@@ -104336,8 +104320,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 bBM
 boP
@@ -104593,8 +104577,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 bBM
 boP
@@ -104850,8 +104834,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 boP
 boP
@@ -105107,8 +105091,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 boP
 bBM
@@ -105364,7 +105348,7 @@ aah
 boP
 boP
 boP
-sHm
+aah
 boP
 boP
 boP
@@ -105621,11 +105605,11 @@ asU
 asU
 asU
 asU
-boP
-boP
-sHm
-sHm
-glY
+asU
+asU
+aah
+aah
+aae
 boP
 bBM
 boP
@@ -105878,7 +105862,7 @@ aah
 boP
 boP
 boP
-sHm
+aah
 boP
 boP
 boP
@@ -106135,8 +106119,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 boP
 bBM
@@ -106392,8 +106376,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 boP
 boP
@@ -106649,8 +106633,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 bBM
 boP
@@ -106906,8 +106890,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 bBM
 boP
@@ -107163,8 +107147,8 @@ aah
 aud
 boP
 aud
-sHm
-eSO
+aah
+aud
 boP
 bBM
 boP

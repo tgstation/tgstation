@@ -227,6 +227,7 @@
 
 /turf/open/floor/plating/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	slowdown = 0
 
 /turf/open/floor/plating/snowed
 	name = "snowed-over plating"
@@ -244,6 +245,9 @@
 
 /turf/open/floor/plating/snowed/cavern
 	initial_gas_mix = "o2=0;n2=82;plasma=24;TEMP=120"
+
+/turf/open/floor/plating/snowed/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 /turf/open/floor/plating/snowed/smoothed
 	smooth = SMOOTH_MORE | SMOOTH_BORDER
