@@ -49,10 +49,9 @@
 
 /datum/bioware/cortex_imprint
 	name = "Cortex Imprint"
-	desc = "The cerebral cortex has been reshaped into a redundant neural pattern, making the brain able to bypass impedements caused by minor brain traumas."
+	desc = "The cerebral cortex has been reshaped into a redundant neural pattern, making the brain able to bypass impediments caused by minor brain traumas."
 	mod_type = BIOWARE_CORTEX
 	can_process = TRUE
 
 /datum/bioware/cortex_imprint/process()
 	owner.cure_trauma_type(resilience = TRAUMA_RESILIENCE_BASIC)
-
