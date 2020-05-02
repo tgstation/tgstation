@@ -1,5 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "borg examine text describing hotkeys now always shows on non-broken doors/portable-turrets"
-  - code_imp: "cleans up some accidents around the & operator"

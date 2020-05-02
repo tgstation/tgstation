@@ -1,5 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "Plastic spoons can now break when hitting things"
-  - bugfix: "Plastic spoons/forks breaking now shows the correct name of whoever broke them"
