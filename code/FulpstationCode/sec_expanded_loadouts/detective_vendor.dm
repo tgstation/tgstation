@@ -6,11 +6,11 @@
 	icon_state = "det"
 	icon_deny = "det-deny"
 	req_access = list(ACCESS_FORENSICS_LOCKERS)
-	products = list(/obj/item/clothing/suit/det_suit/disco = 4,
-					/obj/item/clothing/suit/det_suit/disco/aerostatic = 4,
-					/obj/item/clothing/suit/det_suit = 4,
-					/obj/item/clothing/suit/det_suit/grey = 4,
-					/obj/item/clothing/suit/det_suit/noir = 4,
+	products = list(/obj/item/clothing/suit/det_suit/disco = 1,
+					/obj/item/clothing/suit/det_suit/disco/aerostatic = 1,
+					/obj/item/clothing/suit/det_suit = 1,
+					/obj/item/clothing/suit/det_suit/grey = 1,
+					/obj/item/clothing/suit/det_suit/noir = 1,
 					/obj/item/clothing/under/rank/security/detective/disco = 4,
 					/obj/item/clothing/under/rank/security/detective/disco/aerostatic = 4,
 					/obj/item/clothing/under/rank/security/detective = 4,
