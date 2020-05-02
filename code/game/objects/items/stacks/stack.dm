@@ -320,10 +320,13 @@
 	if (amount < used)
 		return FALSE
 	amount -= used
-	if(check)
-		zero_amount()
-	for(var/i in mats_per_unit)
-		custom_materials[i] = amount * mats_per_unit[i]
+	if(check && zero_amount())
+		return FALSE
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
+		for(var/i in mats_per_unit)
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 	return TRUE
@@ -355,10 +358,11 @@
 		source.add_charge(amount * cost)
 	else
 		src.amount += amount
-	if(mats_per_unit && mats_per_unit.len)
+	if(length(mats_per_unit))
+		var/temp_materials = custom_materials.Copy()
 		for(var/i in mats_per_unit)
-			custom_materials[i] = mats_per_unit[i] * src.amount
-		set_custom_materials() //Refresh
+			temp_materials[i] = mats_per_unit[i] * src.amount
+		set_custom_materials(temp_materials)
 	update_icon()
 	update_weight()
 

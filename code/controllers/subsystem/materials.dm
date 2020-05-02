@@ -51,7 +51,6 @@ SUBSYSTEM_DEF(materials)
 		var/path_name = ispath(mat) ? "[mat]" : "[mat.type]"
 		combo_params += "[path_name]=[materials_declaration[mat] * multiplier]"
 	sortTim(combo_params, /proc/cmp_text_asc)
-
 	var/combo_index = combo_params.Join("-")
 	var/list/combo = material_combos[combo_index]
 	if(!combo)
