@@ -5,7 +5,6 @@ These materials call on_applied() on whatever item they are applied to, common e
 
 */
 
-
 SUBSYSTEM_DEF(materials)
 	name = "Materials"
 	flags = SS_NO_FIRE | SS_NO_INIT
@@ -46,7 +45,6 @@ SUBSYSTEM_DEF(materials)
 /datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
 	if(!material_combos)
 		InitializeMaterials()
-
 	var/list/combo_params = list()
 	for(var/x in materials_declaration)
 		var/datum/material/mat = x
@@ -56,12 +54,9 @@ SUBSYSTEM_DEF(materials)
 
 	var/combo_index = combo_params.Join("-")
 	var/list/combo = material_combos[combo_index]
-
 	if(!combo)
 		combo = list()
 		for(var/mat in materials_declaration)
 			combo[GetMaterialRef(mat)] = materials_declaration[mat] * multiplier
 		material_combos[combo_index] = combo
-	else
-		WRITE_LOG(GLOB.world_game_log, "MATERIALS: Reusing [combo_index]")
 	return combo

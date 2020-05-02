@@ -185,12 +185,9 @@
 	if (canSmoothWith)
 		canSmoothWith = typelist("canSmoothWith", canSmoothWith)
 
-	var/temp_list = list()
-	for(var/i in custom_materials)
-		temp_list[SSmaterials.GetMaterialRef(i)] = custom_materials[i] //Get the proper instanced version
-
+	var/temp_materials = custom_materials
 	custom_materials = null //Null the list to prepare for applying the materials properly
-	set_custom_materials(temp_list)
+	set_custom_materials(temp_materials)
 
 	ComponentInitialize()
 
