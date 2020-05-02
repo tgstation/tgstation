@@ -1521,7 +1521,7 @@
 		return
 
 	changeNext_move(CLICK_CD_LOOK_UP)
-	SEND_SIGNAL(src, COMSIG_LIVING_LOOK_UP, src)
+	SEND_SIGNAL(src, COMSIG_LIVING_LOOK_UP)
 	reset_perspective(ceiling)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
 
