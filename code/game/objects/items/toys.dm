@@ -899,10 +899,10 @@
 
 	interact(cardUser)
 	update_sprite()
-	if(src.currenthand.len == 1)
+	if(length(currenthand) == 1)
 		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(src.loc)
-		N.parentdeck = src.parentdeck
-		N.cardname = src.currenthand[1]
+		N.parentdeck = parentdeck
+		N.cardname = currenthand[1]
 		N.apply_card_vars(N,O)
 		qdel(src)
 		N.pickup(cardUser)
