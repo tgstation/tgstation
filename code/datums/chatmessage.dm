@@ -68,7 +68,7 @@
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, list/extra_classes, lifespan)
 	// Register client who owns this message
 	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/qdel, src)
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/on_ownedby_deleting)
 
 	// Clip message
 	var/maxlen = owned_by.prefs.max_chat_length
@@ -153,6 +153,12 @@
 /datum/chatmessage/proc/end_of_life(fadetime = CHAT_MESSAGE_EOL_FADE)
 	animate(message, alpha = 0, time = fadetime, flags = ANIMATION_PARALLEL)
 	QDEL_IN(src, fadetime)
+
+/**
+  * Deletes the message when the owners client gets deleted.
+  */
+/datum/chatmessage/proc/on_ownedby_deleting()
+	qdel(src)
 
 /**
   * Creates a message overlay at a defined location for a given speaker
