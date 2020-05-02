@@ -10,7 +10,6 @@
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
-	gps_name = "Hissing Signal"
 
 	var/life_ticks_to_wait = 10 //life does some expensive things, so we only want to do the calculation occasionally
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
@@ -92,6 +91,7 @@
 	var/neutralized = FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()
+	AddComponent(/datum/component/gps, "Hissing Signal")
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/royal/queen/Q in GLOB.carbon_list)
 		if(Q == src)
