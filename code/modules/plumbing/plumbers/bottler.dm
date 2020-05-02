@@ -53,7 +53,7 @@
 	reagents.clear_reagents()
 	create_reagents(vol, TRANSPARENT)
 	reagents.maximum_volume = vol
-	to_chat(user, "<span class='notice'> The [src] will now fill for [vol] u.</span>")
+	to_chat(user, "<span class='notice'> The [src] will now fill for [vol]u.</span>")
 
 /obj/machinery/plumbing/bottler/process()
 	if(machine_stat & NOPOWER)
