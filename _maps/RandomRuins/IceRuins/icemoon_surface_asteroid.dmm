@@ -7,48 +7,45 @@
 /area/icemoon/surface/outdoors/unexplored)
 "c" = (
 /turf/closed/wall/mineral/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "d" = (
 /obj/structure/fluff/clockwork/fallen_armor,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "i" = (
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "k" = (
 /obj/structure/fluff/clockwork/alloy_shards,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
-"m" = (
-/turf/closed/wall/mineral/bronze,
-/area/icemoon/surface/outdoors/unexplored)
+/area/icemoon/surface)
 "n" = (
 /obj/effect/mob_spawn/human/skeleton,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "p" = (
 /obj/structure/fluff/clockwork/alloy_shards/large,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "r" = (
 /obj/structure/fluff/clockwork/blind_eye,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "u" = (
 /obj/structure/table/bronze,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "v" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "x" = (
 /obj/effect/mob_spawn/human/skeleton,
 /obj/item/clothing/suit/bronze,
 /obj/item/clothing/shoes/bronze,
 /obj/item/clothing/head/bronze,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "z" = (
 /obj/structure/table/bronze,
 /obj/item/toy/clockwork_watch{
@@ -56,38 +53,38 @@
 	name = "drained clockwork slab"
 	},
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "H" = (
 /obj/machinery/door/airlock/bronze/seethru,
 /obj/structure/fans/tiny,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "P" = (
 /obj/structure/fluff/clockwork/clockgolem_remains,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "Q" = (
 /obj/item/paper{
 	info = "We tried to use the power of this moon to bring him back, but we've failed... I've contained what remains of his power here... if you find this, make sure those Nar-Sian Dogs don't last a second."
 	},
 /obj/item/pen,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "R" = (
 /obj/item/nullrod/spear{
 	name = "empowered bronze spear"
 	},
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "U" = (
 /obj/machinery/door/airlock/bronze,
 /obj/structure/fans/tiny,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 "V" = (
 /obj/structure/fluff/clockwork/alloy_shards/medium,
 /turf/open/floor/bronze,
-/area/icemoon/surface/outdoors)
+/area/icemoon/surface)
 
 (1,1,1) = {"
 b
@@ -176,20 +173,20 @@ b
 (3,1,1) = {"
 b
 c
-m
-m
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 c
 u
 v
@@ -198,18 +195,18 @@ P
 i
 u
 c
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 c
 c
 c
@@ -218,7 +215,7 @@ b
 (4,1,1) = {"
 b
 c
-m
+c
 a
 a
 a
@@ -260,7 +257,7 @@ b
 (5,1,1) = {"
 b
 c
-a
+c
 a
 a
 a
@@ -295,13 +292,14 @@ a
 a
 a
 a
-a
+c
 c
 b
 "}
 (6,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -336,14 +334,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (7,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -378,14 +376,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (8,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -420,14 +418,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (9,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -462,14 +460,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (10,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -504,14 +502,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (11,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -546,14 +544,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (12,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -588,14 +586,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (13,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -630,14 +628,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (14,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -672,14 +670,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (15,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -714,14 +712,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (16,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -756,8 +754,7 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
@@ -1100,6 +1097,7 @@ b
 (25,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1134,14 +1132,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (26,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1176,14 +1174,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (27,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1218,14 +1216,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (28,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1260,14 +1258,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (29,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1302,14 +1300,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (30,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1344,14 +1342,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (31,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1386,14 +1384,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (32,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1428,14 +1426,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (33,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1470,14 +1468,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (34,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1512,14 +1510,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (35,1,1) = {"
 b
 c
+c
 a
 a
 a
@@ -1554,15 +1552,14 @@ a
 a
 a
 a
-a
-a
+c
 c
 b
 "}
 (36,1,1) = {"
 b
 c
-a
+c
 a
 a
 a
@@ -1597,14 +1594,14 @@ a
 a
 a
 a
-a
+c
 c
 b
 "}
 (37,1,1) = {"
 b
 c
-m
+c
 a
 a
 a
@@ -1646,20 +1643,20 @@ b
 (38,1,1) = {"
 b
 c
-m
-m
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 c
 u
 i
@@ -1668,18 +1665,18 @@ i
 i
 u
 c
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 c
 c
 c

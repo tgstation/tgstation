@@ -8,53 +8,53 @@
 "d" = (
 /obj/item/grown/bananapeel,
 /turf/open/floor/plasteel/cult,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "h" = (
 /obj/item/paper{
 	info = "We have managed to seal the beast inside, the last of its kind they say... unfortunately in doing so, it seems we have spawned creatures beyond our power to contain..."
 	},
 /obj/item/pen,
 /turf/open/floor/plating/asteroid,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "m" = (
 /obj/structure/trap/cult,
 /turf/open/floor/plasteel/cult,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "y" = (
 /mob/living/simple_animal/hostile/megafauna/dragon{
 	desc = "Hunted to extinction, the icey moon of lavaland is the final resting place for these creatures.";
 	name = "the last ash drake"
 	},
 /turf/open/floor/mineral/gold,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "A" = (
 /obj/effect/mob_spawn/human/skeleton,
 /turf/open/floor/plating/asteroid,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "H" = (
 /obj/machinery/door/airlock/cult/friendly,
 /obj/structure/fans/tiny,
 /turf/open/floor/plasteel/cult,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "J" = (
 /turf/closed/wall/mineral/cult,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "P" = (
 /turf/open/floor/mineral/silver,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "R" = (
 /turf/open/floor/mineral/gold,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "U" = (
 /turf/open/floor/plasteel/cult,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "V" = (
 /obj/item/storage/toolbox/mechanical/old/clean,
 /turf/open/floor/plating/asteroid,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 "Z" = (
 /turf/open/floor/plating/asteroid,
-/area/icemoon/underground/explored)
+/area/icemoon/underground)
 
 (1,1,1) = {"
 b
@@ -145,38 +145,38 @@ b
 J
 J
 J
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
 J
 U
 m
 U
 U
 J
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
 J
 J
 J
@@ -227,7 +227,7 @@ b
 (5,1,1) = {"
 b
 J
-a
+J
 a
 a
 a
@@ -262,14 +262,14 @@ a
 a
 a
 a
-a
+J
 J
 b
 "}
 (6,1,1) = {"
 b
 J
-a
+J
 a
 a
 a
@@ -304,13 +304,14 @@ a
 a
 a
 a
-a
+J
 J
 b
 "}
 (7,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -345,14 +346,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (8,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -387,14 +388,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (9,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -429,14 +430,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (10,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -471,14 +472,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (11,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -513,14 +514,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (12,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -555,14 +556,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (13,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -597,14 +598,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (14,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -639,14 +640,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (15,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -681,14 +682,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (16,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -723,15 +724,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (17,1,1) = {"
 b
 J
-a
+J
 a
 a
 a
@@ -766,7 +766,7 @@ a
 a
 a
 a
-a
+J
 J
 b
 "}
@@ -1025,7 +1025,7 @@ b
 (24,1,1) = {"
 b
 J
-a
+J
 a
 a
 a
@@ -1060,13 +1060,14 @@ a
 a
 a
 a
-a
+J
 J
 b
 "}
 (25,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1101,14 +1102,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (26,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1143,14 +1144,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (27,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1185,14 +1186,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (28,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1227,14 +1228,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (29,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1269,14 +1270,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (30,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1311,14 +1312,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (31,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1353,14 +1354,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (32,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1395,14 +1396,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (33,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1437,14 +1438,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (34,1,1) = {"
 b
 J
+J
 a
 a
 a
@@ -1479,15 +1480,14 @@ a
 a
 a
 a
-a
-a
+J
 J
 b
 "}
 (35,1,1) = {"
 b
 J
-a
+J
 a
 a
 a
@@ -1522,14 +1522,14 @@ a
 a
 a
 a
-a
+J
 J
 b
 "}
 (36,1,1) = {"
 b
 J
-a
+J
 a
 a
 a
@@ -1564,7 +1564,7 @@ a
 a
 a
 a
-a
+J
 J
 b
 "}
@@ -1615,38 +1615,38 @@ b
 J
 J
 J
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
 J
 U
 m
 U
 U
 J
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
 J
 J
 J
