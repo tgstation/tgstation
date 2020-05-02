@@ -210,6 +210,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///teleport people and put them on fire if they run into the rune.
 /obj/effect/warped_rune/orangespace/Crossed(atom/movable/burned)
+	. = ..()
 	if(!locate(/obj/effect/hotspot) in rune_turf) //will create a hotspot to burn items passing through too.
 		new /obj/effect/hotspot(rune_turf)
 
