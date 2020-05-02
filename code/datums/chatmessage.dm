@@ -93,15 +93,17 @@
 
 	// Non mobs speakers can be small
 	if (!ismob(target))
+		if (!extra_classes)
+			extra_classes = list()
 		extra_classes |= "small"
 
 	// Append radio icon if from a virtual speaker
-	if (extra_classes.Find("virtual-speaker"))
+	if (extra_classes?.Find("virtual-speaker"))
 		var/image/r_icon = image('icons/UI_Icons/chat/chat_icons.dmi', icon_state = "radio")
 		text =  "\icon[r_icon]&nbsp;" + text
 
 	// We dim italicized text to make it more distinguishable from regular text
-	var/tgt_color = extra_classes.Find("italics") ? target.chat_color_darkened : target.chat_color
+	var/tgt_color = extra_classes?.Find("italics") ? target.chat_color_darkened : target.chat_color
 
 	// Approximate text height
 	// Note we have to replace HTML encoded metacharacters otherwise MeasureText will return a zero height
@@ -171,6 +173,8 @@
 	// Check for virtual speakers (aka hearing a message through a radio)
 	var/atom/movable/originalSpeaker = speaker
 	if (istype(speaker, /atom/movable/virtualspeaker))
+		if (!spans)
+			spans = list()
 		var/atom/movable/virtualspeaker/v = speaker
 		speaker = v.source
 		spans |= "virtual-speaker"
