@@ -842,7 +842,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 /obj/item/slimecross/warping/gold
 	colour = "gold"
 	runepath = /obj/effect/warped_rune/goldspace
-	effect_desc = "Draws a rune that will add hostile animals to the rune's personal army if they stay on it. The next person to walk on the rune will be attacked by the rune's army."
+	effect_desc = "Draws a rune that will add any hostile creatures on it to the rune's personal army. The next person to walk on the rune will be attacked by the rune's army."
 
 
 /obj/effect/warped_rune/goldspace
@@ -858,13 +858,13 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	cooldown = 0 //the cooldown is only used when someone step on the rune
 
 
-///Will vore hostile mobs on the rune and add them to the mob_list of the rune. 10 maximum number of mobs in the rune.
+///Will vore hostile mobs on the rune and add them to the mob_list of the rune. 5 maximum number of mobs in the rune.
 /obj/effect/warped_rune/goldspace/attack_hand(mob/living/user)
 	if(cooldown > world.time)
 		to_chat(user,"<span class='notice'>The rune needs a little bit more time before absorbing more animals!</span>")
 		return
 
-	if(length(mob_list) >= 10) //no more than 10 good boys allowed.
+	if(length(mob_list) >= 5) //no more than 5 good boys allowed.
 		to_chat(user,"<span class='notice'>The rune's army is as full as it can be!</span>")
 		return
 
