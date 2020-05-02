@@ -1505,13 +1505,10 @@
  * This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up
  *
  */
-/mob/living/verb/look_up()
-	set name = "Look Up"
-	set category = "IC"
+/mob/living/proc/look_up()
 
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
-		reset_perspective()
-		UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+		stop_look_up()
 		return
 	if(!can_look_up())
 		return
@@ -1526,4 +1523,8 @@
 	changeNext_move(CLICK_CD_LOOK_UP)
 	SEND_SIGNAL(src, COMSIG_LIVING_LOOK_UP, src)
 	reset_perspective(ceiling)
-	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/reset_perspective) //We stop looking up if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+
+/mob/living/proc/stop_look_up()
+	reset_perspective()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)

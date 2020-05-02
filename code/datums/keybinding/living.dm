@@ -26,3 +26,8 @@
 	var/mob/living/L = user.mob
 	L.look_up()
 	return TRUE
+
+/datum/keybinding/living/look_up/up(client/user)
+	var/mob/living/L = user.mob
+	L.stop_look_up()
+	return TRUE
