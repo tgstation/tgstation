@@ -56,6 +56,12 @@
 	return ..()
 
 /**
+  * Calls qdel on the chatmessage when its parent is deleted, used to register qdel signal
+  */
+/datum/chatmessage/proc/parent_qdel()
+	qdel(src)
+
+/**
   * Generates a chat message image representation
   *
   * Arguments:
@@ -68,7 +74,7 @@
 /datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, list/extra_classes, lifespan)
 	// Register client who owns this message
 	owned_by = owner.client
-	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/qdel, src)
+	RegisterSignal(owned_by, COMSIG_PARENT_QDELETING, .proc/parent_qdel)
 
 	// Clip message
 	var/maxlen = owned_by.prefs.max_chat_length
