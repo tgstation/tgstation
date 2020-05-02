@@ -4657,6 +4657,7 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mh" = (
 /obj/machinery/portable_atmospherics/scrubber,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "mi" = (
@@ -5607,6 +5608,7 @@
 /obj/machinery/atmospherics/components/binary/pump{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oe" = (
@@ -5779,7 +5781,6 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/engine,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "ou" = (
@@ -5812,7 +5813,6 @@
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oA" = (
 /obj/machinery/igniter/incinerator_syndicatelava,
-/obj/structure/cable,
 /turf/open/floor/engine/vacuum,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "oB" = (
@@ -5900,6 +5900,10 @@
 /obj/machinery/atmospherics/pipe/simple/dark/visible,
 /turf/open/floor/plating/airless,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
+"sP" = (
+/obj/structure/cable,
+/turf/closed/wall/mineral/plastitanium/nodiagonal,
+/area/ruin/unpowered/syndicate_lava_base/engineering)
 "ta" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
 	dir = 8;
@@ -5918,6 +5922,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/unpowered/syndicate_lava_base/engineering)
 "vu" = (
@@ -7867,9 +7872,9 @@ IJ
 IJ
 IJ
 uB
-ju
-ju
-ju
+sP
+sP
+sP
 ab
 ab
 ab
@@ -7919,7 +7924,7 @@ Lp
 od
 Lp
 oz
-ju
+sP
 ju
 nf
 ab
