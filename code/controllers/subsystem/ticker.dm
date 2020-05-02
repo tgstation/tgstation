@@ -512,6 +512,8 @@ SUBSYSTEM_DEF(ticker)
 	var/news_message
 	var/news_source = "Nanotrasen News Network"
 	switch(news_report)
+		if(XENO_CONTAINMENT)
+			news_message = "Following the invasion of [station_name()] by a host of hostile alien lifeforms, the self destruct device was detonated in accordance with contaiment protocols."
 		if(NUKE_SYNDICATE_BASE)
 			news_message = "In a daring raid, the heroic crew of [station_name()] detonated a nuclear device in the heart of a terrorist base."
 		if(STATION_DESTROYED_NUKE)

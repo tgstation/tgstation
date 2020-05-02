@@ -10,8 +10,73 @@
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
+	gps_name = "Hissing Signal"
 
+	var/life_ticks_to_wait = 10 //life does some expensive things, so we only want to do the calculation occasionally
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
+
+/mob/living/carbon/alien/humanoid/royal/queen/Login()
+	..()
+	SSshuttle.registerHostileEnvironment(src)
+
+/mob/living/carbon/alien/humanoid/royal/queen/Logout()
+	..()
+	addtimer(CALLBACK(src, .proc/logoutcheck), 12 SECONDS)//when logging out, we don't want to spam announcements with leaving and reconnecting.
+	SSshuttle.clearHostileEnvironment(src)
+	neutralized = TRUE
+
+/mob/living/carbon/alien/humanoid/royal/queen/death()
+	..()
+	SSshuttle.clearHostileEnvironment(src)
+	neutralized = TRUE
+
+/mob/living/carbon/alien/humanoid/royal/queen/proc/logoutcheck()
+	if(!client)
+		SSshuttle.clearHostileEnvironment(src) //the queen has officially gone braindead, so we can allow the shuttle to leave
+
+/mob/living/carbon/alien/humanoid/royal/queen/Life()
+	..()
+	if(client)
+		if(life_ticks_to_wait)
+			life_ticks_to_wait--
+			return
+		life_ticks_to_wait = initial(life_ticks_to_wait)
+		var/living_humans = 0
+		var/total_humans = length(GLOB.human_list)
+		for(var/H in GLOB.human_list)
+			var/mob/living/carbon/human/human = H
+			if(!human.client || human.stat == DEAD )
+				continue
+			living_humans++
+
+		if(living_humans < total_humans/10 && !nuking && !neutralized)
+			INVOKE_ASYNC(src, .proc/nuke_it_from_orbit)
+
+/mob/living/carbon/alien/humanoid/royal/queen/proc/nuke_it_from_orbit()
+	nuking = TRUE
+	sleep(50)
+	priority_announce("Hostile Lifeforms Identified. Extreme Biohazard Alert. Determining Containment Solutions","Central Command Update", 'sound/misc/notice1.ogg')
+	sleep(400)
+	priority_announce("Containment Solution Identified. Initiating Station Self Destruct Protocol.")
+	sleep(50)
+	set_security_level("delta")
+	SSshuttle.lockdown = TRUE
+	sleep(200)
+	if(src && client && stat != DEAD) //queen is still alive- you didn't prevent this!
+		sound_to_playing_players('sound/machines/alarm.ogg')
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/xenomorph_nuke), 120)
+	else
+		priority_announce("Containment In Progress. Self Destruct Aborted.")
+		set_security_level("red")
+		SSshuttle.lockdown = FALSE
+		nuking = FALSE
+		neutralized = TRUE
+
+/proc/xenomorph_nuke(where)
+	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+	nuke.safety = FALSE
+	nuke.explode()
+	SSticker.news_report = XENO_CONTAINMENT
 
 /mob/living/carbon/alien/humanoid/royal/can_inject()
 	return 0
@@ -23,6 +88,8 @@
 	health = 400
 	icon_state = "alienq"
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
+	var/nuking = FALSE
+	var/neutralized = FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()
 	//there should only be one queen
