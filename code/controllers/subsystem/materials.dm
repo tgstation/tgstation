@@ -42,6 +42,7 @@ SUBSYSTEM_DEF(materials)
 		InitializeMaterials()
 	return materials[fakemat] || fakemat
 
+///Returns a list to be used as an object's custom_materials. Lists will be cached and re-used based on the parameters.
 /datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
 	if(!material_combos)
 		InitializeMaterials()
@@ -50,7 +51,7 @@ SUBSYSTEM_DEF(materials)
 		var/datum/material/mat = x
 		var/path_name = ispath(mat) ? "[mat]" : "[mat.type]"
 		combo_params += "[path_name]=[materials_declaration[mat] * multiplier]"
-	sortTim(combo_params, /proc/cmp_text_asc)
+	sortTim(combo_params, /proc/cmp_text_asc) // We have to sort now in case the declaration was not in order
 	var/combo_index = combo_params.Join("-")
 	var/list/combo = material_combos[combo_index]
 	if(!combo)
