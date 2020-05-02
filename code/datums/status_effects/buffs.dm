@@ -194,12 +194,12 @@
 /datum/status_effect/blooddrunk/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-			H.physiology.brute_mod *= 10
-			H.physiology.burn_mod *= 10
-			H.physiology.tox_mod *= 10
-			H.physiology.oxy_mod *= 10
-			H.physiology.clone_mod *= 10
-			H.physiology.stamina_mod *= 10
+		H.physiology.brute_mod *= 10
+		H.physiology.burn_mod *= 10
+		H.physiology.tox_mod *= 10
+		H.physiology.oxy_mod *= 10
+		H.physiology.clone_mod *= 10
+		H.physiology.stamina_mod *= 10
 	owner.log_message("lost blood-drunk stun immunity", LOG_ATTACK)
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, "blooddrunk");
 	if(islist(owner.stun_absorption) && owner.stun_absorption["blooddrunk"])
