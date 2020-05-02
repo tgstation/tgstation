@@ -16,7 +16,7 @@
 
 /obj/machinery/mineral/Initialize(mapload)
 	. = ..()
-	if(needs_item_input)
+	if(needs_item_input && anchored)
 		register_input_turf()
 
 /// Gets the turf in the `input_dir` direction adjacent to the machine, and registers signals for ATOM_ENTERED and ATOM_CREATED. Calls the `pickup_item()` proc when it recieves these signals.
