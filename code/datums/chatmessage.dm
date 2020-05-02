@@ -93,8 +93,6 @@
 
 	// Non mobs speakers can be small
 	if (!ismob(target))
-		if (!extra_classes)
-			extra_classes = list()
 		extra_classes |= "small"
 
 	// Append radio icon if from a virtual speaker
@@ -168,13 +166,11 @@
   */
 /mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, message_mode)
 	// Ensure the list we are using, if present, is a copy so we don't modify the list provided to us
-	spans = spans?.Copy()
+	spans = spans ? spans.Copy() : list()
 
 	// Check for virtual speakers (aka hearing a message through a radio)
 	var/atom/movable/originalSpeaker = speaker
 	if (istype(speaker, /atom/movable/virtualspeaker))
-		if (!spans)
-			spans = list()
 		var/atom/movable/virtualspeaker/v = speaker
 		speaker = v.source
 		spans |= "virtual-speaker"
