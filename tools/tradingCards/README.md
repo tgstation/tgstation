@@ -96,5 +96,8 @@ and insert or is
 
 Both of these commands take in 2 files, and will transfre the data between both.
 extract will take file1's contents, make it readable, and write it to file2
-insert will take file2's contents, compress it, and write it to file1
+insert will take file1's contents, compress it, and write it to file2
 
+A note on rarity:
+we draw some cardcount, then we sum all the raritys in the pack's table, then we get a random number between 0 and the sum of the raritys.
+we then subtract from that random by the weights untill the random is equal to 0. we then try and find all the cards of that rarity and add 1 to the to be returned list.

@@ -1,8 +1,8 @@
 ///A global list of cards, or rather changes to be applied to cards in the format
-#define CARD_RARITY_COMMON 50
-#define CARD_RARITY_UNCOMMON 30
-#define CARD_RARITY_RARE 12
-#define CARD_RARITY_EPIC 6
+#define CARD_RARITY_COMMON 1000
+#define CARD_RARITY_UNCOMMON 100
+#define CARD_RARITY_RARE 50
+#define CARD_RARITY_EPIC 20
 #define CARD_RARITY_LEGENDARY 2
 #define CARD_RARITY_MISPRINT 1
 
@@ -25,12 +25,17 @@ var/list/cardTypeLookup = list("name" = 0,
 	desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "runtime"
+	var/original_name = "Coder"
+	var/original_desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
+	var/original_icon_state = "runtime"
 	var/id = -1 //Unique ID, for use in lookups and storage
 	var/power = 0 //How hard this card hits (by default)
 	var/resolve = 0 //How hard this card can get hit (by default)
 	var/tags = "" //Special tags
 	var/cardtype = "" //Cardtype, for use in battles. Arcane/Inept if you don't update this whole block when you finalize the game I will throw you into the sm
 	var/rarity = 0 //The rarity of this card in a set, each set must have at least one of all types
+	var/flipped = 0
+	var/smallboi = 0 //whether or not the card is small, it becomes small on turfs/tables and large in hand
 
 ///Creates a card based on a passed card string
 /obj/item/tcgcard/Initialize(mapload, card)
@@ -39,10 +44,13 @@ var/list/cardTypeLookup = list("name" = 0,
 		card = expandCard(card, GLOB.card_template_list)
 		//Sets the variables of the card based off the string
 		name = extractCardVariable("name", card)
+		original_name = name
 		desc = extractCardVariable("desc", card)
+		original_desc = desc
 		var/icon/con = new(extractCardVariable("icon", card))
 		icon = con
 		icon_state = extractCardVariable("icon_state", card)
+		original_icon_state = icon_state
 		id = text2num(extractCardVariable("id", card))
 		power = text2num(extractCardVariable("power", card))
 		resolve = text2num(extractCardVariable("resolve", card))
@@ -51,9 +59,31 @@ var/list/cardTypeLookup = list("name" = 0,
 		rarity = text2num(extractCardVariable("rarity", card))
 	. = ..()
 
+/obj/item/tcgcard/attack_self(mob/user)
+	. = ..()
+	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
+	if(!flipped)
+		name = "Trading Card"
+		desc = "It's the back of a trading card... no peeking!"
+		icon_state = "cardback"
+		flipped = 1
+	else
+		name = original_name
+		desc = original_desc
+		icon_state = original_icon_state
+		flipped = 0
+
+/obj/item/tcgcard/equipped(mob/user, slot, initial)
+	. = ..()
+	transform = matrix()
+
+/obj/item/tcgcard/dropped(mob/user, silent)
+	. = ..()
+	transform = matrix(0.2,0,0,0,0.2,0)
+
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
-	desc = "If you find this go yell at us on the github"
+	desc = "Contains six complete fuckups by the coders. Report this on github please!"
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "cardback_nt"
 	var/series = "MEME" //Mirrors the card series.
