@@ -9,7 +9,7 @@
 	integrity_failure = 0.2
 	circuit = /obj/item/circuitboard/machine/proto_sh_emitter
 	///Store the powered shields placed in the world, used when turned off to removed them
-	var/list/signs = list()
+	var/list/signs
 	///Check if the machine is turned on or off
 	var/is_on = FALSE
 	///Check if the machine is locked
