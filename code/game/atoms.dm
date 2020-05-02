@@ -1326,7 +1326,7 @@
 
 	if(isspaceturf(T)) // Turf never has gravity
 		return FALSE
-	if(istype(T, /turf/open/openspace)) //openspace in a space area doesn't get gravity
+	if(istype(T, /turf/open/transparent/openspace)) //openspace in a space area doesn't get gravity
 		if(istype(get_area(T), /area/space))
 			return FALSE
 

@@ -1247,6 +1247,7 @@
 #include "code\game\turfs\open\lava.dm"
 #include "code\game\turfs\open\openspace.dm"
 #include "code\game\turfs\open\river.dm"
+#include "code\game\turfs\open\transparent.dm"
 #include "code\game\turfs\open\water.dm"
 #include "code\game\turfs\open\floor\fancy_floor.dm"
 #include "code\game\turfs\open\floor\hull.dm"
