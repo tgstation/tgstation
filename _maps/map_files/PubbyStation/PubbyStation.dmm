@@ -51485,9 +51485,6 @@
 /obj/machinery/light{
 	light_color = "#e8eaff"
 	},
-/obj/item/radio/intercom{
-	pixel_y = -28
-	},
 /obj/machinery/stasis,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
