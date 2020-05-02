@@ -1284,14 +1284,12 @@
 	if(!length(materials))
 		return
 
-	custom_materials = list() //Reset the list
+	if(!(material_flags & MATERIAL_NO_EFFECTS))
+		for(var/x in materials)
+			var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
+			custom_material.on_applied(src, materials[x] * multiplier * material_modifier, material_flags)
 
-	for(var/x in materials)
-		var/datum/material/custom_material = SSmaterials.GetMaterialRef(x)
-
-		if(!(material_flags & MATERIAL_NO_EFFECTS))
-			custom_material.on_applied(src, materials[custom_material] * multiplier * material_modifier, material_flags)
-		custom_materials[custom_material] += materials[x] * multiplier
+	custom_materials = SSmaterials.FindOrCreateMaterialCombo(materials, multiplier)
 
 /**
   * Returns true if this atom has gravity for the passed in turf

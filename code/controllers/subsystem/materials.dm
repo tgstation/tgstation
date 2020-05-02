@@ -5,6 +5,7 @@ These materials call on_applied() on whatever item they are applied to, common e
 
 */
 
+
 SUBSYSTEM_DEF(materials)
 	name = "Materials"
 	flags = SS_NO_FIRE | SS_NO_INIT
@@ -14,6 +15,8 @@ SUBSYSTEM_DEF(materials)
 	var/list/materials_by_category
 	///Dictionary of category || list of material types, mostly used by rnd machines like autolathes.
 	var/list/materialtypes_by_category
+	///A cache of all material combinations that have been applied to an object
+	var/list/material_combos
 	///List of stackcrafting recipes for materials using rigid materials
 	var/list/rigid_stack_recipes = list(
 		new /datum/stack_recipe("Chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
@@ -27,6 +30,7 @@ SUBSYSTEM_DEF(materials)
 	materials = list()
 	materials_by_category = list()
 	materialtypes_by_category = list()
+	material_combos = list()
 	for(var/type in subtypesof(/datum/material))
 		var/datum/material/ref = new type
 		materials[type] = ref
@@ -38,3 +42,26 @@ SUBSYSTEM_DEF(materials)
 	if(!materials)
 		InitializeMaterials()
 	return materials[fakemat] || fakemat
+
+/datum/controller/subsystem/materials/proc/FindOrCreateMaterialCombo(list/materials_declaration, multiplier)
+	if(!material_combos)
+		InitializeMaterials()
+
+	var/list/combo_params = list()
+	for(var/x in materials_declaration)
+		var/datum/material/mat = x
+		var/path_name = ispath(mat) ? "[mat]" : "[mat.type]"
+		combo_params += "[path_name]=[materials_declaration[mat] * multiplier]"
+	sortTim(combo_params, /proc/cmp_text_asc)
+
+	var/combo_index = combo_params.Join("-")
+	var/list/combo = material_combos[combo_index]
+
+	if(!combo)
+		combo = list()
+		for(var/mat in materials_declaration)
+			combo[GetMaterialRef(mat)] = materials_declaration[mat] * multiplier
+		material_combos[combo_index] = combo
+	else
+		WRITE_LOG(GLOB.world_game_log, "MATERIALS: Reusing [combo_index]")
+	return combo
