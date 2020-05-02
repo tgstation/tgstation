@@ -264,7 +264,7 @@
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.machine_stat = 0
-	pump.build_network()
+	SSair.add_to_rebuild_queue(pump)
 	update_overlays()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()

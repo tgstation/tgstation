@@ -1,7 +1,0 @@
-author: "uomo91"
-delete-after: True
-changes: 
-  - rscadd: "You can now craft plaques using gold in hand, and with a fountain pen can engrave a title and description on them. They can be mounted on walls. No good deed shall ever go forgotten now."
-  - bugfix: "Refactored signs heavily. A bunch of sign types previously left out of using a pen on a sign to change it are now included. They're also sorted sensibly now. You can no longer change sign types that shouldn't be changeable (guidance signs, maps, etc)"
-  - bugfix: "Signs (and plaques) can now be repaired with a welder."
-  - bugfix: "Signs placed on walls now are only placed on one side of that wall, and are not visible through the wall."

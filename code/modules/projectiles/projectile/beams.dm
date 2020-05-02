@@ -94,7 +94,10 @@
 /obj/projectile/beam/pulse/on_hit(atom/target, blocked = FALSE)
 	. = ..()
 	if (!QDELETED(target) && (isturf(target) || istype(target, /obj/structure/)))
-		target.ex_act(EXPLODE_HEAVY)
+		if(isobj(target))
+			SSexplosions.medobj += target
+		else
+			SSexplosions.medturf += target
 
 /obj/projectile/beam/pulse/shotgun
 	damage = 40

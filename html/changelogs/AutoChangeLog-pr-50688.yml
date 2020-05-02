@@ -1,6 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - rscadd: "Shaved Mohawk hair-style is now available"
-  - imagedel: "deleted redundant \"Drill Hair\" icon"
-  - code_imp: "deleted redundant \"Drill Hair\" hair-style"

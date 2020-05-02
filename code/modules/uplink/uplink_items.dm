@@ -1292,22 +1292,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 
-/datum/uplink_item/suits/hardsuit/cybersun
-	name = "Cybersun Hardsuit"
-	desc = "A long forgotten hardsuit made by Cybersun industries. \
-			Offers ROBUST protection against laser-based weapons, while still giving somewhat good chances \
-			to survive assault from a toolbox or shotgun. \
-			Not to mention, it doesn't slow you down and contains an integrated jetpack that runs on standard tanks. \
-			Systems in this hardsuit make it really hard to take it off from you."
-	item = /obj/item/clothing/suit/space/hardsuit/cybersun
-	cost = 14
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //nuke and clown ops get it for lower value
-
-/datum/uplink_item/suits/hardsuit/cybersun/nuke
-	cost = 8
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	exclude_modes = list()
-
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
 	desc = "An upgraded, elite version of the Syndicate hardsuit. It features fireproofing, and also \
@@ -1754,7 +1738,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Caution: Product may rehydrate when exposed to water."
 	item = /obj/item/storage/box/gorillacubes
 	cost = 6
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
+	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
@@ -1876,14 +1860,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
+	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
 	name = "Modified Syringe Gun"
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
+	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
