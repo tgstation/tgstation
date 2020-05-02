@@ -123,11 +123,10 @@ var/list/cardTypeLookup = list("name" = 0,
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
-	message_admins(GLOB.card_list.len)
 	var/list/datum/card/cards = buildCardListWithRarity(6, 4, GLOB.card_list)
-	for(var/i = 1 to 6)
+	for(var/datum/card/template in cards)
 		//Makes a new card based of the series of the pack.
-		new /obj/item/tcgcard(get_turf(user), pick(cards))
+		new /obj/item/tcgcard(get_turf(user), template)
 	to_chat(user, "<span_class='notice'>Wow! Check out these cards!</span>")
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
@@ -166,7 +165,7 @@ var/list/cardTypeLookup = list("name" = 0,
 			EXCEPTION("The guarenteed index [guarenteedRarity] of rarityTable does not exist in the supplied cardList")
 	return cards
 
-///Returns a list of card indexes of the length cardCount that match a random rarity weighted by rarityTable[]
+///Returns a list of card datums of the length cardCount that match a random rarity weighted by rarityTable[]
 /obj/item/cardpack/proc/returnCardsByRarity(cardCount, cardList)
 	var/list/datum/card/toReturn = list()
 	for(var/card in 1 to cardCount)
