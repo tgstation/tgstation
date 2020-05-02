@@ -30524,20 +30524,10 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/computer/med_data{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
-/area/medical/sleeper)
-"bzQ" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/tile/blue{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white,
 /area/medical/sleeper)
 "bzR" = (
 /turf/open/floor/plasteel/white,
@@ -31589,6 +31579,9 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
+/obj/machinery/computer/med_data{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCj" = (
@@ -31605,6 +31598,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -24
 	},
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel,
 /area/medical/sleeper)
 "bCk" = (
@@ -35673,6 +35667,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/iv_drip,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "bKH" = (
@@ -85960,8 +85955,8 @@ bsC
 buc
 jsj
 bwG
-bzQ
-bzQ
+byp
+byp
 gVy
 ioj
 bsA
