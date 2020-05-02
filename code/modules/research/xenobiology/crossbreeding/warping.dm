@@ -310,7 +310,8 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	colour = "metal"
 	runepath = /obj/effect/warped_rune/metalspace
 	effect_desc = "Draws a rune that prevents passage above it, takes longer to store and draw than other runes."
-	drawing_time = 100  //Long to draw like most griefing runes
+	drawing_time = 50  //Longer to draw like most griefing runes
+	storing_time = 25
 	max_charge = 4 //higher to allow a wider degree of fuckery, still takes a long ass time to draw but you can draw multiple ones at once.
 	warp_charge = 4
 
@@ -323,7 +324,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	storing_time = 10 //faster to destroy with the bluespace crystal than with the crossbreed
 
 
-/*  Yellow rune space acts as an infinite generator, works without power and anywhere, recharges the APC of the room it's in and any battery fueled things. */
+/*  Yellow rune space acts as an infinite generator, works without power and anywhere, recharges the APC of the room it's in and any battery fueled things.*/
 
 
 /obj/item/slimecross/warping/yellow
@@ -529,7 +530,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	colour = "sepia"
 	runepath = /obj/effect/warped_rune/sepiaspace
 	effect_desc = "Draws a rune that make people grow older and slower until they eventually wither away."
-	drawing_time = 200 //much longer to draw than other runes because it fucking stops time
+	drawing_time = 100 //much longer to draw than other runes because it fucking stops time
 
 
 /obj/effect/warped_rune/sepiaspace
@@ -834,38 +835,61 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 /obj/item/slimecross/warping/gold
 	colour = "gold"
 	runepath = /obj/effect/warped_rune/goldspace
-	effect_desc = "Draws a rune capable of turning nearly anything put on it to gold every minute"
+	effect_desc = "Draws a rune that will add hostile animals to the rune's personal army if they stay on it. The next person to walk on the rune will be attacked by the rune's army."
 
 
 /obj/effect/warped_rune/goldspace
 	icon_state = "midas_rune"
-	desc = "When everything is abundant, it becomes easy to forget when one had to work to obtain anything."
-	max_cooldown = 600
+	desc = "We will make an army to conquer bluespace itself. We have no shortage of willing soldiers after all."
+	max_cooldown = 100
+	///used to remember the mobs currently contained by the rune
+	var/list/mob_list = list()
 
 
 /obj/effect/warped_rune/goldspace/Initialize()
 	. = ..()
-	START_PROCESSING(SSprocessing, src)
+	cooldown = 0 //the cooldown is only used when someone step on the rune
 
 
-///turn anything on the tile to a golden version of themselves. Sheets of any kind will be directly turned into gold bars.
-/obj/effect/warped_rune/goldspace/process()
+///Will vore hostile mobs on the rune and add them to the mob_list of the rune. 10 maximum number of mobs in the rune.
+/obj/effect/warped_rune/goldspace/attack_hand(mob/living/user)
 	if(cooldown > world.time)
+		to_chat(user,"<span class='notice'>The rune needs a little bit more time before absorbing more animals!</span>")
 		return
 
-	for(var/obj/item/goldened in rune_turf)
-		if(istype(goldened,/obj/item/stack/sheet/mineral/gold))//can't turn gold into gold
+	if(length(mob_list) >= 10) //no more than 10 good boys allowed.
+		to_chat(user,"<span class='notice'>The rune's army is as full as it can be!</span>")
+		return
+
+	for(var/mob/living/simple_animal/hostile/captured in rune_turf)
+		if(istype(captured,/mob/living/simple_animal/hostile/megafauna) || captured.stat == DEAD) //Megafaunas are too thick to be proper soldiers
 			return
 
-		var/gold_amount = 0
-		for(var/mats in goldened.custom_materials)
-			gold_amount += goldened.custom_materials[mats]
-		if(!gold_amount)
-			gold_amount = 50 //if the item doesn't have any material it makes the item worth around 0.005 gold bars.
-		goldened.material_flags = MATERIAL_COLOR | MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
-		goldened.set_custom_materials(list(/datum/material/gold = gold_amount))
-		cooldown = world.time + max_cooldown //only set the cooldown once something's been turned to gold
+		mob_list += captured.type
+		qdel(captured)
+		playsound(rune_turf, 'sound/effects/splat.ogg', 20, TRUE)
+		to_chat(user,"<span class='warning'>The rune somehow absorbs [captured] into itself!</span>")
+
+
+///will unleash all the mobs in the rune on the rune and give them the person that just crossed the rune their first target.
+/obj/effect/warped_rune/goldspace/Crossed(atom/movable/crossing)
+	. = ..()
+	if(!istype(crossing,/mob/living/carbon/human))
 		return
+
+	for(var/mob_type in mob_list)
+		var/mob/living/simple_animal/hostile/spawned_mob = new mob_type(rune_turf)
+		spawned_mob.GiveTarget(crossing)
+		//forces the first target of the mobs on the person that stepped on the rune.
+		//they WILL attack others if they lose their target however.
+		//Because they are given a target from the get go they will react much faster after spawn than usual.
+		mob_list -= mob_type
+		cooldown = world.time + max_cooldown //you can't instantly reuse the rune to send the mobs back into the rune.
+
+
+/obj/effect/warped_rune/goldspace/Destroy()
+	mob_list = null
+	return ..()
 
 
 /*Adamantine rune, will spawn ores depending on the mineral rocks surrounding it. Here to make miners do their job even less.  */
@@ -934,14 +958,13 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 			var/mob/dead/observer/ghost = pick(candidates)
 			host.key = ghost.key
 			host.suiciding = 0 //turns off the suicide var just in case
-			host.revive(full_heal = TRUE, admin_revive = TRUE) //might as well go all the way
-			to_chat(host, "<span class='warning'>You may wear the skin of someone else, but you know who and what you are. Pretend to be the original owner of this body as best as you can.</span>")
+			host.revive(full_heal = TRUE, admin_revive = TRUE) //might as well heal them all the way back up
+			to_chat(host, "<span class='boldwarning'>You may wear the skin of someone else, but you know who and what you are. Pretend to be the original owner of this body as best as you can.</span>")
 			to_chat(user, "<span class='notice'>[host.name] is slowly getting back up. It...worked?</span>")
 			playsound(host, "sound/magic/castsummon.ogg", 50, TRUE)
 			return
 
-		else
-			to_chat(user, "<span class='warning'>The rune failed! Maybe you should try again later.</span>")
+		to_chat(user, "<span class='warning'>The rune failed! Maybe you should try again later.</span>")
 
 
 /* black space rune : will swap out the species of the two next person walking on the rune  */
