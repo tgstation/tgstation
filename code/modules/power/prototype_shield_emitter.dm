@@ -14,6 +14,12 @@
 	var/is_on = FALSE
 	///Check if the machine is locked
 	var/locked = FALSE
+	///Stores the outline of the room to generate
+	var/list/outline
+	///Stores the internal turfs of the room to generate
+	var/list/internal
+	///Used to check if the machine is placed inside the borders of the map
+	var/borders = TRUE
 
 /obj/machinery/power/proto_sh_emitter/ComponentInitialize()
 	. = ..()
@@ -95,9 +101,6 @@
 		log_game("[src] turned off at [AREACOORD(Turf)]")
 
 /obj/machinery/power/proto_sh_emitter/interact(mob/user)
-	var/turf/EmitterTurf = get_turf(src)
-	var/list/outline = list()
-	var/list/internal = list()
 	var/area/a = get_area(src)
 	add_fingerprint(user)
 	if(!anchored)
@@ -110,62 +113,15 @@
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return
 	if(is_on == TRUE)
-		to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
-		if(do_after(user, 3.5 SECONDS, target = src))
-			to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
-			message_admins("Prototype Shield Emitter turned off at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
-			log_game("Prototype Shield Emitter turned off at [AREACOORD(EmitterTurf)] by [key_name(user)]")
-			is_on = FALSE
-			for(var/h in signs)
-				qdel(h)
-			update_icon_state()
-			return
-	. = TRUE
-	switch(dir) //Check for map limits.
-		if(NORTH)
-			if(!locate(x - 2, y + 5, z) || !locate(x + 2, y + 5, z))
-				. = FALSE
-		if(SOUTH)
-			if(!locate(x - 2, y - 5, z) || !locate(x + 2, y - 5, z))
-				. = FALSE
-		if(EAST)
-			if(!locate(x + 5, y -2, z) || !locate(x + 5, y + 2, z))
-				. = FALSE
-		if(WEST)
-			if(!locate(x - 5, y - 2, z) || !locate(x - 5, y + 2, z))
-				. = FALSE
-	if(!.)
+		remove_barrier(user)
+		return
+	check_map_borders(2,5,2,5)
+	if(!borders)
 		to_chat(user, "<span class='warning'>The motors whir and fail!</span>")
 		return
-	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
-	if(do_after(user, 1.5 SECONDS, target = src))
-		to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
-		message_admins("Prototype Shield Emitter turned on at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
-		log_game("Prototype Shield Emitter turned on at [AREACOORD(EmitterTurf)] by [key_name(user)]")
-		is_on = TRUE
-		update_icon_state()
-		switch(dir) //this part check the direction of the machine and create the block in front of it
-			if(NORTH)
-				internal = block(locate(src.x - 1, src.y + 2, src.z), locate(src.x + 1, src.y + 4, src.z))
-				outline = block(locate(src.x - 2, src.y + 1, src.z), locate(src.x + 2, src.y + 5, src.z)) - internal
-			if(SOUTH)
-				internal = block(locate(src.x - 1, src.y - 2, src.z), locate(src.x + 1, src.y - 4, src.z))
-				outline = block(locate(src.x - 2, src.y - 1, src.z), locate(src.x + 2, src.y - 5, src.z)) - internal
-			if(EAST)
-				internal = block(locate(src.x +2, src.y -1, src.z), locate(src.x +4, src.y +1, src.z))
-				outline = block(locate(src.x +1, src.y -2, src.z), locate(src.x +5, src.y +2, src.z)) - internal
-			if(WEST)
-				internal = block(locate(src.x -2, src.y -1, src.z), locate(src.x -4, src.y +1, src.z))
-				outline = block(locate(src.x -1, src.y -2, src.z), locate(src.x -5, src.y +2, src.z)) - internal
-		for(var/turf in outline)
-			new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
-		for(var/turf in internal)
-			new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
+	build_barrier(1,2,1,4,2,1,2,5,user)
 
 /obj/machinery/power/proto_sh_emitter/small/interact(mob/user)
-	var/turf/EmitterTurf = get_turf(src)
-	var/list/outline = list()
-	var/list/internal = list()
 	var/area/a = get_area(src)
 	add_fingerprint(user)
 	if(!anchored)
@@ -178,54 +134,70 @@
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return
 	if(is_on == TRUE)
-		to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
-		if(do_after(user, 3.5 SECONDS, target = src))
-			to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
-			message_admins("Small Prototype Shield Emitter turned off at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
-			log_game("Small Prototype Shield Emitter turned off at [AREACOORD(EmitterTurf)] by [key_name(user)]")
-			is_on = FALSE
-			for(var/h in signs)
-				qdel(h)
-			update_icon_state()
-			return
-	. = TRUE
-	switch(dir) //Check for map limits.
-		if(NORTH)
-			if(!locate(x - 1, y + 4, z) || !locate(x + 3, y + 4, z))
-				. = FALSE
-		if(SOUTH)
-			if(!locate(x - 3, y - 4, z) || !locate(x + 1, y - 4, z))
-				. = FALSE
-		if(EAST)
-			if(!locate(x + 4, y -3, z) || !locate(x + 4, y + 1, z))
-				. = FALSE
-		if(WEST)
-			if(!locate(x - 4, y - 1, z) || !locate(x - 4, y + 3, z))
-				. = FALSE
-	if(!.)
+		remove_barrier(user)
+		return
+	check_map_borders(1,4,3,4)
+	if(!borders)
 		to_chat(user, "<span class='warning'>The motors whir and fail!</span>")
 		return
+	build_barrier(0,2,2,3,1,1,3,4,user)
+
+///Build the barriers
+/obj/machinery/power/proto_sh_emitter/proc/build_barrier(A,B,C,D,E,F,G,H,user)
+	var/turf/EmitterTurf = get_turf(src)
 	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
 	if(do_after(user, 1.5 SECONDS, target = src))
 		to_chat(user, "<span class='warning'>You turn on the [src] and the generated shields!</span>")
-		message_admins("Small Prototype Shield Emitter turned on at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
-		log_game("Small Prototype Shield Emitter turned on at [AREACOORD(EmitterTurf)] by [key_name(user)]")
+		message_admins("[src] turned on at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
+		log_game("[src] turned on at [AREACOORD(EmitterTurf)] by [key_name(user)]")
 		is_on = TRUE
 		update_icon_state()
 		switch(dir) //this part check the direction of the machine and create the block in front of it
 			if(NORTH)
-				internal = block(locate(src.x, src.y + 2, src.z), locate(src.x + 2, src.y + 3, src.z))
-				outline = block(locate(src.x - 1, src.y + 1, src.z), locate(src.x + 3, src.y + 4, src.z)) - internal
+				LAZYADD(internal, block(locate(x - A, y + B, z), locate(x + C, y + D, z)))
+				LAZYADD(outline, block(locate(x - E, y + F, z), locate(x + G, y + H, z)) - internal)
 			if(SOUTH)
-				internal = block(locate(src.x - 2, src.y - 2, src.z), locate(src.x, src.y - 3, src.z))
-				outline = block(locate(src.x - 3, src.y - 1, src.z), locate(src.x + 1, src.y - 4, src.z)) - internal
+				LAZYADD(internal, block(locate(x - C, y - B, z), locate(x + A, y - D, z)))
+				LAZYADD(outline, block(locate(x - G, y - F, z), locate(x + E, y - H, z)) - internal)
 			if(EAST)
-				internal = block(locate(src.x +2, src.y -2, src.z), locate(src.x +3, src.y, src.z))
-				outline = block(locate(src.x +1, src.y -3, src.z), locate(src.x +4, src.y +1, src.z)) - internal
+				LAZYADD(internal, block(locate(x + B, y - C, z), locate(x + D, y + A, z)))
+				LAZYADD(outline, block(locate(x + F, y - G, z), locate(x + H, y + E, z)) - internal)
 			if(WEST)
-				internal = block(locate(src.x -2, src.y, src.z), locate(src.x -3, src.y +2, src.z))
-				outline = block(locate(src.x -1, src.y -1, src.z), locate(src.x -4, src.y +3, src.z)) - internal
+				LAZYADD(internal, block(locate(x - B, y - A, z), locate(x - D, y + C, z)))
+				LAZYADD(outline, block(locate(x - F, y - E, z), locate(x - H, y + G, z)) - internal)
 		for(var/turf in outline)
 			new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
+			LAZYREMOVE(outline, turf)
 		for(var/turf in internal)
 			new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
+			LAZYREMOVE(internal, turf)
+
+///Remove the barriers
+/obj/machinery/power/proto_sh_emitter/proc/remove_barrier(user)
+	var/turf/EmitterTurf = get_turf(src)
+	to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
+	if(do_after(user, 3.5 SECONDS, target = src))
+		to_chat(user, "<span class='warning'>You turn off the [src] and the generated shields!</span>")
+		message_admins("[src] turned off at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
+		log_game("[src] turned off at [AREACOORD(EmitterTurf)] by [key_name(user)]")
+		is_on = FALSE
+		for(var/h in signs)
+			qdel(h)
+		update_icon_state()
+
+///Check if the machine is generating the barriers inside the map borders
+/obj/machinery/power/proto_sh_emitter/proc/check_map_borders(A,B,C,D)
+	borders = TRUE
+	switch(dir) //Check for map limits.
+		if(NORTH)
+			if(!locate(x - A, y + B, z) || !locate(x + C, y + D, z))
+				borders = FALSE
+		if(SOUTH)
+			if(!locate(x - C, y - B, z) || !locate(x + A, y - D, z))
+				borders = FALSE
+		if(EAST)
+			if(!locate(x + B, y -C, z) || !locate(x + D, y + A, z))
+				borders = FALSE
+		if(WEST)
+			if(!locate(x - B, y - A, z) || !locate(x - D, y + C, z))
+				borders = FALSE
