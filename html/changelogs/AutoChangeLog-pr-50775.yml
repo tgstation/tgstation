@@ -1,0 +1,11 @@
+author: "EdgeLordExe"
+delete-after: True
+changes: 
+  - balance: "Nitroglycerin : You now have to use exotic stabilizer."
+  - balance: "TaTP : The more you use it, the more powerful it becomes. You now have to stabilize it with exotic stabilizer"
+  - balance: "RDX : produces slightly bigger heatwave and slightly bigger shockwave. Now requires gold."
+  - balance: "Gunpowder : strengthdiv 8 - > 10 (nerf), modifier 2 - > 5 (buff)."
+  - balance: "Methamphetamine : strengthdiv 6 -> 12 (nerf), modifier 1 - > 5 (buff)."
+  - balance: "Moved some power from facid to nitric acid."
+  - rscadd: "Hyper-plasmium oxide can be commonly found in lavaland geysers"
+  - rscadd: "Exotic stabilizer can now be crafted with hyper-plasmium oxide and stabilizing agent"
