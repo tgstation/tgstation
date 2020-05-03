@@ -6,7 +6,7 @@
 |0,Bartender|1,Ever ready to hear your problems and drown your sorrows, the Bartender is easily one of the most important yet overlooked jobs on the station.|3,bartender|4,6|7,S1|9,6|
 |0,Botanist|1,The Botanist is in charge of keeping the station's food supply happy, healthy, and preferably not laced with hallucinogens.|3,botanist|4,7|7,S1|9,6|
 |0,Captain|1,Every Captain is expected to lay down their life for their assigned station. Any Captain who returns to Centcom alive without permission is ceremonially executed before being cloned and stripped of rank.|3,captain|4,8|7,COMMAND&S1|9,4|
-|0,Apadyne Technologies Mk.2 R.I.O.T. Suit (Captain's Version)|1,A heavily customised Apadyne Technologies Mk.2 R.I.O.T. Suit, rebuilt and refitted to Nanotrasen's highest standards for issue to Station Captains.|3,captain_hardsuit|4,9|7,HARDSUIT&S1|9,2|
+|0,Apadyne Technologies Mk.2 R.I.O.T. Suit (Captain's Version)|1,A heavily customised Apadyne Technologies Mk.2 R.I.O.T. Suit, rebuilt and refitted to Nanotrasen's highest standards for issue to Station Captains.|3,captain_hardsuit|4,9|7,HARDSUIT&S1|9,3|
 |0,Cargo Technician|1,The grunts of Cargo. Any reports that Cargo Technicians are frequently overcome by revolutionary fervour are exaggerated.|3,cargo_tech|4,10|7,S1|9,6|
 |0,Chaplain (Crusader Armour)|1,The common war attire of chaplains. Mostly ceremonial.|3,chaplain_crusader|4,11|7,CHAPLAIN&S1|9,6|
 |0,Chemist|1,The backbone of the Medical Department, the chemists are reponsible for the production of medicines, and definitely should not misuse their position to mass produce illegal substances.|3,chemist|4,12|7,S1|9,6|
@@ -14,17 +14,17 @@
 |0,Nakamura Engineering R.I.G.Suit (Advanced)|1,An updated model of the NE R.I.G.Suit, fitted with upgraded radiation shielding and further armour plating. Rollout to general engineering staff is expected within 10-15 years.|3,ce_hardsuit|4,14|7,HARDSUIT&S1|9,4|
 |0,Chief Medical Officer|1,The Chief Medical Officer is the head of the Medical Department, and is responsible for the health and wellbeing of all station employees.|3,cmo|4,15|7,COMMAND&S1|9,6|
 |0,DeForest Medical Corporation 'Lifesaver' Carapace|1,An advanced voidsuit designed for emergency medical personnel. Features include a built-in medical HUD and advanced medical gauntlets.|3,cmo_hardsuit|4,16|7,HARDSUIT&S1|9,5|
-|0,Chrono Legionnaire|1,Currently in the very first phases of development, the Chrono Legionnaire project seeks to harness time itself as a weapon.|3,chrono_legionnaire|4,17|7,S1|9,2|
+|0,Chrono Legionnaire|1,Currently in the very first phases of development, the Chrono Legionnaire project seeks to harness time itself as a weapon.|3,chrono_legionnaire|4,17|7,S1|9,3|
 |0,Citrus|1,Cargo's happy sloth friend. Known for always getting in the way.|3,citrus|4,18|7,PETS&S1|9,6|
 |0,Clown|1,Every Nanotrasen station has a clown on board, to provide joy and entertainment to the crew in the deep void of space.|3,clown|4,19|7,S1|9,6|
 |0,Cyborg (Clown Shell)|1,The clown shell is a new development in cyborg technology, seeking to bring the entertainment properties of clowns to the cyborg age.|3,borg_clown|4,20|7,SILICON&S1|9,5|
-|0,HONK Ltd. Entertainment Voidsuit|1,The most advanced clown suit produced by HONK Ltd. the Entertainment Voidsuit is designed to withstand extreme conditions while still maintaining the clowny aesthetic.|3,clown_hardsuit|4,21|7,HARDSUIT&S1|9,2|
+|0,HONK Ltd. Entertainment Voidsuit|1,The most advanced clown suit produced by HONK Ltd. the Entertainment Voidsuit is designed to withstand extreme conditions while still maintaining the clowny aesthetic.|3,clown_hardsuit|4,21|7,HARDSUIT&S1|9,3|
 |0,Abductor Combat Armor|1,Recovered from the strange alien species known as the Abductors, this armour is constructed from an ultra-lightweight yet tough metal scientists are calling 'alien alloy'.|3,abductor_combat|4,22|7,ABDUCTOR&S1|9,5|
 |0,Cook|1,Every Nanotrasen chef is trained in 3 cuisines of their choosing upon being hired.|3,cook|4,23|7,S1|9,6|
 |0,Wizard Federation Standard Issue Hardsuit|1,Seemingly reverse engineered from captured engineering hardsuits, and reinforced with magical protection runes and gems, the Wizard Federation issues these suits to their members for hazardous operations.|3,wizard_hardsuit|4,24|7,HARDSUIT&S1|9,4|
 |0,Curator|1,In Nanotrasen polls, the curator has ranked as the most useless job on the station.|3,curator|4,25|7,S1|9,6|
 |0,Borgi Ian|1,Ian's cyborg uniform was created by a bored roboticist one day to avoid doing his real job. Thankfully, Borgi Ian's so adorable that nobody wanted to punish him for slacking off.|3,ian_cyborg|4,26|7,IAN&S1|9,4|
-|0,Apadyne Technologies Mk.3 R.I.O.T. Carapace|1,The most advanced set of armour available for purchase from Apadyne Technologies, the Mk.3 R.I.O.T. Carapace is built for war.|3,deathsquad|4,27|7,HARDSUIT&S1|9,2|
+|0,Apadyne Technologies Mk.3 R.I.O.T. Carapace|1,The most advanced set of armour available for purchase from Apadyne Technologies, the Mk.3 R.I.O.T. Carapace is built for war.|3,deathsquad|4,27|7,HARDSUIT&S1|9,3|
 |0,Detective|1,Nanotrasen hires nothing but the best detectives to investigate crime on our stations. A penchant for cigarettes and outdated fashion isn't mandatory, but is appreciated.|3,detective|4,28|7,S1|9,5|
 |0,Elite Syndicate Nuclear Stormtrooper|1,The best of the best of the syndicate troops, elite stormtroopers can be distinguished by their black armour. Shoot on sight, ask questions later!|3,nukie_elite|4,29|7,SYNDIE&S1|9,4|
 |0,Cyborg (Engineering Shell)|1,A common sight on Nanotrasen Stations, the Engineering Shell is tasked with maintaining critical station functions and engineering tasks in hazardous environments.|3,borg_engi|4,30|7,SILICON&S1|9,6|
@@ -36,12 +36,12 @@
 |0,Cyborg|1,Created as a side effect of the AI project, cyborgs utilise a man-machine interface fitted with a human brain as their control system.|3,borg_generic|4,36|7,SILICON&S1|9,6|
 |0,Geneticist|1,Geneticists are tasked with manipulating human DNA to produce special effects. Nanotrasen holds a strict 'no superhero' policy for mutations.|3,geneticist|4,37|7,S1|9,6|
 |0,Geneticist|1,Geneticists are tasked with manipulating human DNA to produce special effects. Nanotrasen holds a strict 'no superhero' policy for mutations.|3,geneticist_med|4,38|7,S1|9,1|
-|0,Ghost Ian|1,Oh my God! Ian's dead!|3,ian_ghost|4,39|7,IAN&S1|9,2|
+|0,Ghost Ian|1,Oh my God! Ian's dead!|3,ian_ghost|4,39|7,IAN&S1|9,3|
 |0,Head of Personnel|1,The Head of Personnel is the leader of both the Cargo and Service Departments, and is the vanguard of employment and access on the station.|3,hop|4,40|7,COMMAND&S1|9,5|
 |0,Head of Security|1,Nanotrasen hires most heads of staff based on their qualifications as being amicable, good at conflict resolution, ability to handle high-stakes situations, humanity, and a desire to learn. Heads of Security only need a highschool degree.|3,hos|4,41|7,S1|9,5|
 |0,Apadyne Technologies 'Tyrant' Class Hardshell|1,The distinctive shape of the Tyrant Class Hardshell is due, in part by the large amount of kevlar reinforcement and the ablative armour layer. Perhaps more importantly, it also looks rad.|3,hos_hardsuit|4,42|7,S1|9,4|
 |0,Ian|1,This adorable corgi has become the defacto mascot of the station to many. He comes in many forms, many sizes, and many shapes, but he's still just as lovable. Hand wash only.|3,ian|4,43|7,S1|9,6|
-|0,Inquisitor's Hardsuit|1,Nanotrasen officially doesn't believe in ghosts, magic, or anything that can't be solved with science. When you see someone show up in one of these, let that remind you of that fact.|3,inquisitor|4,44|7,S1|9,2|
+|0,Inquisitor's Hardsuit|1,Nanotrasen officially doesn't believe in ghosts, magic, or anything that can't be solved with science. When you see someone show up in one of these, let that remind you of that fact.|3,inquisitor|4,44|7,S1|9,3|
 |0,Centcom Intern|1,All interns come with 3 things: A resume, a desire to learn, and a lack of knowledge that they're not getting paid. So don't be too rough on them.|3,intern|4,45|7,S1|9,6|
 |0,Janitor|1,A true testament to futility, they clean and they clean and they clean, knowing that there's no way they can clean it all. Yet, they perservere, knowing that without them, the crew would simply give in to their base animalistic nature.|3,janitor|4,46|7,S1|9,6|
 |0,Cyborg (Custodial Shell)|1,A powerful, state of the act cleaning machine. They exist to eradicate stains, snag garbage, and replace lights, forever. Just don't let the janitor know.|3,borg_janitor|4,47|7,S1|9,6|
@@ -65,9 +65,9 @@
 |0,Roboticist|1,The roboticist's work is as close as Nanotrasen legally allows its employees to come to necromancy.|3,roboticist|4,65|7,S1|9,5|
 |0,Runtime|1,Runtime is the CMO's personal feline companion, and is well known for her laziness. It's said that opening a tin of tuna anywhere on the station will bring her running.|3,runtime|4,66|7,S1|9,5|
 |0,Scientist|1,Rumours that Nanotrasen hires 'mad scientists' are greatly exaggerated. All employees have to pass a rigourous mandatory psychological test before deployment.|3,scientist|4,67|7,S1|9,6|
-|0,Cyborg (Security Shell)|1,Following an incident in 2554, the Security Cyborg Shell was unilaterally phased out and replaced by the Peacekeeper. Nonetheless, many units remain in service with various other organisations such as private militaries.|3,borg_sec|4,68|7,S1|9,2|
+|0,Cyborg (Security Shell)|1,Following an incident in 2554, the Security Cyborg Shell was unilaterally phased out and replaced by the Peacekeeper. Nonetheless, many units remain in service with various other organisations such as private militaries.|3,borg_sec|4,68|7,S1|9,3|
 |0,Security Officer|1,Nanotrasen would like to remind all employees to support their station security team; remember, the boys in red keep you safe!|3,sec|4,69|7,S1|9,6|
-|0,Ratvarian Clockwork Cuirass|1,Fashioned from paranormally reinforced brass, the Ratvar Cult's clockwork armour is as beautiful as it is heretical.|3,clock_cultist|4,70|7,CWC&S1|9,2|
+|0,Ratvarian Clockwork Cuirass|1,Fashioned from paranormally reinforced brass, the Ratvar Cult's clockwork armour is as beautiful as it is heretical.|3,clock_cultist|4,70|7,CWC&S1|9,3|
 |0,Cyborg (Service Shell- Beercan)|1,Despite being based on the Medical Shell, this particular Service Shell is tasked with destroying livers, rather than healing them.|3,borg_serv_can|4,71|7,S1|9,5|
 |0,Cyborg (Service Shell- Flamboyant)|1,Sometimes a cyborg just needs to show a bit of flamboyance, you know?|3,borg_serv_pink|4,72|7,S1|9,6|
 |0,Cyborg (Service Shell- Skirted)|1,The Service Shell is intended to be the most human of the Cyborg Shells, due to its outwardly social role- none exemplify this better than the Skirted Shell, showing that even robots can't escape fashion norms.|3,borg_serv_skirt|4,73|7,S1|9,6|

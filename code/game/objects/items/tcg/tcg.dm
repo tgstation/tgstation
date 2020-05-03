@@ -91,12 +91,14 @@ var/list/cardTypeLookup = list("name" = 0,
 	icon_state = "cardback_nt"
 	var/series = "MEME" //Mirrors the card series.
 	var/contains_coin = -1 //Chance of the pack having a coin in it.
+	var/card_count = 6
+	var/guar_rarity = 4
 	var/list/rarityTable = list(1,
 							2,
 							20,
 							50,
 							100,
-							1000,
+							1000
 							) //The rarity table, the set must contain at least one of each
 
 /obj/item/cardpack/series_one
@@ -118,12 +120,13 @@ var/list/cardTypeLookup = list("name" = 0,
 					20,
 					50,
 					100,
-					1000,
+					1000
 					)
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
-	var/list/datum/card/cards = buildCardListWithRarity(6, 4, GLOB.card_list)
+	var/list/datum/card/cards = buildCardListWithRarity(card_count, guar_rarity, GLOB.card_list)
+
 	for(var/datum/card/template in cards)
 		//Makes a new card based of the series of the pack.
 		new /obj/item/tcgcard(get_turf(user), template)
@@ -144,26 +147,24 @@ var/list/cardTypeLookup = list("name" = 0,
 
 ///Returns a list of cards of cardCount weighted by rarity from cardList that have matching tags to series, with at least one of guarenteedRarity.
 /obj/item/cardpack/proc/buildCardListWithRarity(cardCount, guarenteedRarity, cardList)
-	var/list/datum/card/cards = list()
+	var/list/datum/card/readFrom = list()
+	var/list/datum/card/toReturn = list()
 	for(var/index in cardList)
 		if(isCardTagsMatch(cardList[index], series))
-			cards += cardList[index]
-	//Don't give too many now
-	if(guarenteedRarity > 0 && guarenteedRarity <= rarityTable.len)
-		cardCount--
-
-	cards = returnCardsByRarity(cardCount, cards)
+			readFrom += cardList[index]
 	//You can always get at least one of some rarity
 	if(guarenteedRarity > 0 && guarenteedRarity <= rarityTable.len)
+		cardCount--
 		var/list/datum/card/forSure = list()
-		for(var/datum/card/template in cards)
+		for(var/datum/card/template in readFrom)
 			if(template.rarity == guarenteedRarity)
 				forSure += template
 		if(forSure.len)
-			cards += pick(forSure)
+			toReturn += pick(forSure)
 		else
 			EXCEPTION("The guarenteed index [guarenteedRarity] of rarityTable does not exist in the supplied cardList")
-	return cards
+	toReturn += returnCardsByRarity(cardCount, readFrom)
+	return toReturn
 
 ///Returns a list of card datums of the length cardCount that match a random rarity weighted by rarityTable[]
 /obj/item/cardpack/proc/returnCardsByRarity(cardCount, cardList)
