@@ -58,7 +58,7 @@
 	regenerate_icons()
 
 /mob/living/simple_animal/pet/cat/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/pet/cat/space
 	name = "space cat"

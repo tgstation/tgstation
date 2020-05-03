@@ -208,7 +208,7 @@
 		"<span class='revennotice'>[internal]</span>")
 
 /mob/living/simple_animal/cow/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_COW, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 ///Wisdom cow, gives XP to a random skill and speaks wisdoms
 /mob/living/simple_animal/cow/wisdom
@@ -286,7 +286,7 @@
 			qdel(src)
 
 /mob/living/simple_animal/chick/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/chick/holo/Life()
 	..()
@@ -393,7 +393,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 /mob/living/simple_animal/chicken/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_CHICKEN, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /obj/item/udder
 	name = "udder"

@@ -28,7 +28,8 @@ GLOBAL_LIST_INIT_TYPED(cell_line_tables, /list, list(
 
 ///Assoc list of cell virus define | assoc list of datum | cell_virus
 GLOBAL_LIST_INIT(cell_virus_tables, list(
-	CELL_VIRUS_TABLE_GENERIC = list(/datum/micro_organism/virus = 1)
+	CELL_VIRUS_TABLE_GENERIC = list(/datum/micro_organism/virus = 1),
+	CELL_VIRUS_TABLE_GENERIC_MOB = list(/datum/micro_organism/virus = 1)
 	))
 
 ///List of all possible sample colors

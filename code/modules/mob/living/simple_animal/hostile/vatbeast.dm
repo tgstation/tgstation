@@ -14,6 +14,7 @@
 	. = ..()
 	tentacle_slap = new
 	AddAbility(tentacle_slap)
+	add_cell_sample()
 
 /mob/living/simple_animal/hostile/vatbeast/tamed()
 	. = ..()
@@ -28,6 +29,8 @@
 	D.drive_verb = "ride"
 	D.override_allow_spacemove = TRUE
 
+/mob/living/simple_animal/hostile/vatbeast/add_cell_sample()
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 ///Ability that allows the owner to slap other mobs a short distance away
 /obj/effect/proc_holder/tentacle_slap

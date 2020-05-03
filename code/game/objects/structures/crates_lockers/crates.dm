@@ -102,7 +102,7 @@
 
 /obj/structure/closet/crate/trashcart/Initialize()
 	. = ..()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SLUDGE, CELL_VIRUS_TABLE_GENERIC, rand(2,3), 15)
 
 /obj/structure/closet/crate/trashcart/filled
 

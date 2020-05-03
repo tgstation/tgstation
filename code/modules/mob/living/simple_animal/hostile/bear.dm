@@ -51,7 +51,7 @@
 	add_cell_sample()
 
 /mob/living/simple_animal/hostile/bear/add_cell_sample()
-	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/simple_animal/hostile/bear/Life()
 	. = ..()
