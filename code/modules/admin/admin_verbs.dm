@@ -166,6 +166,8 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/cmd_display_overlay_log,
 	/client/proc/reload_configuration,
 	/client/proc/reload_cards,
+	/client/proc/validate_cardpacks,
+	/client/proc/test_cardpack_distribution,
 	/client/proc/print_cards,
 	/datum/admins/proc/create_or_modify_area,
 	)
@@ -545,9 +547,22 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("[key_name_admin(usr)] has  modified Dynamic Explosion Scale: [ex_scale]")
 
 /client/proc/reload_cards()
-	set name = "Reload All Cards"
+	set name = "Reload Cards"
 	set category = "Debug"
 	reloadAllCardFiles(CARD_FILES, CARD_DIRECTORY)
+
+/client/proc/validate_cardpacks()
+	set name = "Validate Cardpacks"
+	set category = "Debug"
+	checkCardpacks(CARD_PACKS)
+
+/client/proc/test_cardpack_distribution()
+	set name = "Test Cardpack Distribution"
+	set category = "Debug"
+	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(CARD_PACKS)
+	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
+	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
+	checkCardDistribution(pack, batchSize, batchCount)
 
 /client/proc/print_cards()
 	set name = "Print Cards"

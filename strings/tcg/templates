@@ -1,2 +1,2 @@
-default|0,Coder|1,Wow, a mint condition coder card! Better tell the Github all about this!|2,icons/obj/tcg.dmi|3,runtime|4,1|5,-1|6,-1|7,S1|8,ALL|
-resin|0,Xenomorph Coder|1,Wow, a mint condition coder card! Better tell the Github all about this!|2,icons/obj/tcg_xenos.dmi|3,xeno_borg|4,2|5,-1|6,-1|7,S2|8,ALL|
+default|0,Coder|1,Wow, a mint condition coder card! Better tell the Github all about this!|2,icons/obj/tcg.dmi|3,runtime|4,1|5,-1|6,-1|7,S1|8,ALL|9,-1|
+resin|0,Xenomorph Coder|2,icons/obj/tcg_xenos.dmi|3,xeno_borg|4,2|7,S2|
