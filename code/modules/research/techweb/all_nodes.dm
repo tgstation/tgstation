@@ -1164,7 +1164,7 @@
 	display_name = "Experimental Optic Technology"
 	description = "Technology to bring even more pointless details to your eyes!"
 	prereq_ids = list("base")
-	design_ids = list("materials". "medsechud")
+	design_ids = list("materials", "medsechud")
 
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 3500)
 	export_price = 2500
