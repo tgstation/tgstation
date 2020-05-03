@@ -97,3 +97,17 @@ require only minor tweaks.
 #define PLACE_LAVA_RUIN "lavaland" //On lavaland ruin z levels(s)
 #define PLACE_BELOW "below" //On z levl below - centered on same tile
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level
+
+
+///Map generation defines
+#define PERLIN_LAYER_HEIGHT "perlin_height"
+#define PERLIN_LAYER_HUMIDITY "perlin_humidity"
+#define PERLIN_LAYER_HEAT "perlin_heat"
+
+#define BIOME_LOW_HEAT "low_heat"
+#define BIOME_MEDIUM_HEAT "medium_heat"
+#define BIOME_HIGH_HEAT "high_heat"
+
+#define BIOME_LOW_HUMIDITY "low_humidity"
+#define BIOME_MEDIUM_HUMIDITY "medium_humidity"
+#define BIOME_HIGH_HUMIDITY "high_humidity"
