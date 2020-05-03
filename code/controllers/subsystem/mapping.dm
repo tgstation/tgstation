@@ -31,6 +31,9 @@ SUBSYSTEM_DEF(mapping)
 	var/list/reservation_ready = list()
 	var/clearing_reserved_turfs = FALSE
 
+	///All possible biomes in assoc list as type || instance
+	var/list/biomes = list()
+
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
 	var/space_levels_so_far = 0
@@ -103,6 +106,7 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level(transit.z_value)
+	initialize_biomes()
 	return ..()
 
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
@@ -527,7 +531,11 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	used_turfs.Cut()
 	reserve_turfs(clearing)
 
-
+///Initialize all biomes, assoc as type || instance
+/datum/controller/subsystem/mapping/proc/initialize_biomes()
+	for(var/i in subtypesof(/datum/biome))
+		var/datum/biome/B = new i
+		biomes[i] += B
 
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
 	for(var/B in areas)
