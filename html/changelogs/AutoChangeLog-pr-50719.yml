@@ -1,4 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "The cortex folding and cortex imprint surgeries now check the BIOWARE_CORTEX slot (which is where they actually install their corresponding pieces of bioware) for competing pieces of bioware instead of the BIOWARE_LIGAMENTS slot, as almost certainly intended."
