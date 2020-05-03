@@ -39,8 +39,6 @@ GLOBAL_DATUM_INIT(openspace_backdrop_light, /atom/movable/openspace_backdrop/lig
 	plane = OPENSPACE_PLANE
 	layer = OPENSPACE_LAYER
 
-	vis_contents += GLOB.openspace_backdrop
-
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/openspace/LateInitialize()
@@ -68,13 +66,13 @@ GLOBAL_DATUM_INIT(openspace_backdrop_light, /atom/movable/openspace_backdrop/lig
 		if(prune_on_fail)
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return FALSE
-	if(isclosedturf(below) && !wall_below) //If wall_below is false, it means we havn't switched to remove the backdrop yet
+	if(isclosedturf(below)) //If wall_below is false, it means we havn't switched to remove the backdrop yet
 		vis_contents -= GLOB.openspace_backdrop
 		vis_contents += GLOB.openspace_backdrop_light
 		wall_below = TRUE
-	else if(wall_below) //This implies that we have no wall below us, but havn't updated this yet
+	else //This implies that we have no wall below us, but havn't updated this yet
 		vis_contents -= GLOB.openspace_backdrop_light
-		vis_contents += GLOB.openspace_backdrop //Special grey square for projecting backdrop darkness filter on it.
+		vis_contents += GLOB.openspace_backdrop
 		wall_below = FALSE
 
 	if(init)
