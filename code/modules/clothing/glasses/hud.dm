@@ -252,7 +252,7 @@
 	var/secondary_type = DATA_HUD_MEDICAL_ADVANCED
 	var/secondary_trait = TRAIT_MEDICAL_HUD
 
-/obj/item/clothing/glasses/hud/medsechud/equipped(mob/living/carbon/human/user)
+/obj/item/clothing/glasses/hud/medsechud/equipped(mob/living/carbon/human/user, slot)
 	..()
 	if(slot != ITEM_SLOT_EYES)
 		return
