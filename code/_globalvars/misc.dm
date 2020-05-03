@@ -24,3 +24,5 @@ GLOBAL_PROTECT(polls)
 ///All poll option datums of running polls
 GLOBAL_LIST_EMPTY(poll_options)
 GLOBAL_PROTECT(poll_options)
+
+GLOBAL_VAR_INIT(internal_tick_usage, 0.2 * world.tick_lag)

@@ -75,7 +75,7 @@
 	if(!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 		assets.send(user)
-		ui = new(user, src, ui_key, "chem_press", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ChemPress", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/plumbing/pill_press/ui_data(mob/user)

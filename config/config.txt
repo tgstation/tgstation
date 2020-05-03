@@ -115,6 +115,9 @@ LOG_PRAYER
 ## log lawchanges
 LOG_LAW
 
+## log economy actions
+LOG_ECON
+
 ## log crew manifest to seperate file
 LOG_MANIFEST
 
@@ -140,8 +143,11 @@ LOG_VIRUS
 ## log cloning actions
 LOG_CLONING
 
-# log shuttle actions
+## log shuttle actions
 LOG_SHUTTLE
+
+## Enable the demo subsystem
+# DEMOS_ENABLED
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA

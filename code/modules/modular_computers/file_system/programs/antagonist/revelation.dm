@@ -7,7 +7,7 @@
 	requires_ntnet = FALSE
 	available_on_ntnet = FALSE
 	available_on_syndinet = TRUE
-	tgui_id = "ntos_revelation"
+	tgui_id = "NtosRevelation"
 	ui_x = 400
 	ui_y = 250
 

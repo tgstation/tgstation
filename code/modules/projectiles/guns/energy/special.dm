@@ -48,7 +48,7 @@
 	desc = "A tool that discharges controlled radiation which induces mutation in plant cells."
 	icon_state = "flora"
 	item_state = "gun"
-	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut)
+	ammo_type = list(/obj/item/ammo_casing/energy/flora/yield, /obj/item/ammo_casing/energy/flora/mut, /obj/item/ammo_casing/energy/flora/revolution)
 	modifystate = 1
 	ammo_x_offset = 1
 	selfcharge = 1
@@ -277,6 +277,9 @@
 		qdel(p_blue)
 		p_blue = P
 	crosslink()
+
+/obj/item/gun/energy/wormhole_projector/core_inserted
+    firing_core = TRUE
 
 /* 3d printer 'pseudo guns' for borgs */
 

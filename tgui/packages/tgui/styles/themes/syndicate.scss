@@ -27,10 +27,8 @@
   @include meta.load-css('../components/Input.scss', $with: (
     'border-color': #87ce87,
   ));
-  @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/NoticeBox.scss', $with: (
-    'color-first': #750000,
-    'color-second': #910101,
+    'color-background': #910101,
   ));
   @include meta.load-css('../components/NumberInput.scss', $with: (
     'border-color': #87ce87,
@@ -39,11 +37,15 @@
     'color-background': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
-  @include meta.load-css('../components/TitleBar.scss', $with: (
-    'color-background': #910101,
-  ));
   @include meta.load-css('../components/Tooltip.scss', $with: (
     'color-background': #4a0202,
+  ));
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
+    'color-background': #910101,
   ));
 
   .Layout__content {

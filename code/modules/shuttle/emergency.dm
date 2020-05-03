@@ -23,7 +23,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "emergency_shuttle_console", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "EmergencyShuttleConsole", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/emergency_shuttle/ui_data()

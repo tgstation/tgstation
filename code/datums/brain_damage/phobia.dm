@@ -7,7 +7,7 @@
 	var/phobia_type
 	var/next_check = 0
 	var/next_scare = 0
-	var/list/trigger_words
+	var/regex/trigger_regex
 	//instead of cycling every atom, only cycle the relevant types
 	var/list/trigger_mobs
 	var/list/trigger_objs //also checked in mob equipment
@@ -24,7 +24,7 @@
 	gain_text = "<span class='warning'>You start finding [phobia_type] very unnerving...</span>"
 	lose_text = "<span class='notice'>You no longer feel afraid of [phobia_type].</span>"
 	scan_desc += " of [phobia_type]"
-	trigger_words = SStraumas.phobia_words[phobia_type]
+	trigger_regex = SStraumas.phobia_regexes[phobia_type]
 	trigger_mobs = SStraumas.phobia_mobs[phobia_type]
 	trigger_objs = SStraumas.phobia_objs[phobia_type]
 	trigger_turfs = SStraumas.phobia_turfs[phobia_type]
@@ -78,23 +78,16 @@
 		return
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	for(var/word in trigger_words)
-		var/regex/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
-
-		if(findtext(hearing_args[HEARING_RAW_MESSAGE], reg))
-			addtimer(CALLBACK(src, .proc/freak_out, null, word), 10) //to react AFTER the chat message
-			hearing_args[HEARING_RAW_MESSAGE] = reg.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='phobia'>$1</span>")
-			break
+	if(trigger_regex.Find(hearing_args[HEARING_RAW_MESSAGE]) != 0)
+		addtimer(CALLBACK(src, .proc/freak_out, null, trigger_regex.group[2]), 10) //to react AFTER the chat message
+		hearing_args[HEARING_RAW_MESSAGE] = trigger_regex.Replace(hearing_args[HEARING_RAW_MESSAGE], "<span class='phobia'>$2</span>$3")
 
 /datum/brain_trauma/mild/phobia/handle_speech(datum/source, list/speech_args)
 	if(HAS_TRAIT(owner, TRAIT_FEARLESS))
 		return
-	for(var/word in trigger_words)
-		var/regex/reg = regex("(\\b|\\A)[REGEX_QUOTE(word)]'?s*(\\b|\\Z)", "i")
-
-		if(findtext(speech_args[SPEECH_MESSAGE], reg))
-			to_chat(owner, "<span class='warning'>You can't bring yourself to say the word \"<span class='phobia'>[word]</span>\"!</span>")
-			speech_args[SPEECH_MESSAGE] = ""
+	if(trigger_regex.Find(speech_args[SPEECH_MESSAGE]) != 0)
+		to_chat(owner, "<span class='warning'>You can't bring yourself to say the word \"<span class='phobia'>[trigger_regex.group[2]]</span>\"!</span>")
+		speech_args[SPEECH_MESSAGE] = ""
 
 /datum/brain_trauma/mild/phobia/proc/freak_out(atom/reason, trigger_word)
 	next_scare = world.time + 120

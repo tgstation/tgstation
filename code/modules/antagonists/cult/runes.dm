@@ -82,7 +82,7 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 
 /obj/effect/rune/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/shade) || istype(M, /mob/living/simple_animal/hostile/construct))
-		if(istype(M, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(M, /mob/living/simple_animal/hostile/construct/armored/angelic) || istype(M, /mob/living/simple_animal/hostile/construct/builder/angelic))
+		if(istype(M, /mob/living/simple_animal/hostile/construct/wraith/angelic) || istype(M, /mob/living/simple_animal/hostile/construct/juggernaut/angelic) || istype(M, /mob/living/simple_animal/hostile/construct/artificer/angelic))
 			to_chat(M, "<span class='warning'>You purge the rune!</span>")
 			qdel(src)
 		else if(construct_invoke || !iscultist(M)) //if you're not a cult construct we want the normal fail message
@@ -843,7 +843,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		notify_ghosts("Manifest rune invoked in [get_area(src)].", 'sound/effects/ghost2.ogg', source = src, header = "Manifest rune")
 		var/list/ghosts_on_rune = list()
 		for(var/mob/dead/observer/O in T)
-			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !QDELETED(O))
+			if(O.client && !is_banned_from(O.ckey, ROLE_CULTIST) && !QDELETED(src) && !(IsAdminGhost(O) && (O.client.prefs.toggles & ADMIN_IGNORE_CULT_GHOST)) && !QDELETED(O))
 				ghosts_on_rune += O
 		if(!ghosts_on_rune.len)
 			to_chat(user, "<span class='cultitalic'>There are no spirits near [src]!</span>")
@@ -974,7 +974,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 			if(!iscultist(M))
 				AH.remove_hud_from(M)
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/hudFix, M), duration)
-			var/image/A = image('icons/mob/mob.dmi',M,"cultist", ABOVE_MOB_LAYER)
+			var/image/A = image('icons/mob/cult.dmi',M,"cultist", ABOVE_MOB_LAYER)
 			A.override = 1
 			add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/noncult, "human_apoc", A, NONE)
 			addtimer(CALLBACK(M,/atom/.proc/remove_alt_appearance,"human_apoc",TRUE), duration)

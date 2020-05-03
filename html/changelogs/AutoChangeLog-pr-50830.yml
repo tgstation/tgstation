@@ -1,0 +1,5 @@
+author: "bobbahbrown"
+delete-after: True
+changes: 
+  - bugfix: "Fixed unstyled messages potentially causing null reference exceptions in runechat."
+  - bugfix: "Fixed a client's qdeletion causing runtimes on chat messages they see."

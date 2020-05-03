@@ -1387,12 +1387,6 @@
 	dir = 1
 	},
 /area/hallway/primary/central)
-"va" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/construction)
 "vt" = (
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 1
@@ -2662,7 +2656,7 @@ gY
 bO
 bO
 yt
-va
+vT
 dn
 dn
 dn

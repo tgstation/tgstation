@@ -32,9 +32,11 @@
 
 /area/mine/lobby
 	name = "Mining Station"
+	icon_state = "mining_lobby"
 
 /area/mine/storage
 	name = "Mining Station Storage"
+	icon_state = "mining_storage"
 
 /area/mine/production
 	name = "Mining Station Starboard Wing"
@@ -56,15 +58,18 @@
 
 /area/mine/cafeteria
 	name = "Mining Station Cafeteria"
+	icon_state = "mining_labor_cafe"
 
 /area/mine/hydroponics
 	name = "Mining Station Hydroponics"
+	icon_state = "mining_labor_hydro"
 
 /area/mine/sleeper
 	name = "Mining Station Emergency Sleeper"
 
 /area/mine/laborcamp
 	name = "Labor Camp"
+	icon_state = "mining_labor"
 
 /area/mine/laborcamp/security
 	name = "Labor Camp Security"

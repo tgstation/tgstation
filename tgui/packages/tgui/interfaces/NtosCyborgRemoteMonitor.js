@@ -1,9 +1,24 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
+import { NtosWindow } from '../layouts';
 
-export const NtosCyborgRemoteMonitor = props => {
-  const { act, data } = useBackend(props);
+export const NtosCyborgRemoteMonitor = (props, context) => {
+  const { data } = useBackend(context);
+  const {
+    theme,
+  } = data;
+  return (
+    <NtosWindow theme={data.theme}>
+      <NtosWindow.Content scrollable>
+        <NtosCyborgRemoteMonitorContent />
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
+
+export const NtosCyborgRemoteMonitorContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     card,
     cyborgs = [],

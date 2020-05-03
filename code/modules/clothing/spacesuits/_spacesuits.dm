@@ -75,24 +75,21 @@
 	var/mob/living/carbon/human/user = src.loc
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
-	if(!cell && thermal_on)
-		toggle_spacesuit()
-	if(!cell)
-		user.update_spacesuit_hud_icon("missing")
-	else
-		var/cell_percent = cell.percent()
-		if(cell_percent > 0.6)
-			user.update_spacesuit_hud_icon("high")
-		else if(cell_percent > 0.20)
-			user.update_spacesuit_hud_icon("mid")
-		else if(cell_percent > 0.01 && cell.charge > THERMAL_REGULATOR_COST)
-			user.update_spacesuit_hud_icon("low")
-		else
-			user.update_spacesuit_hud_icon("empty")
 
-		if(thermal_on && cell.charge >= THERMAL_REGULATOR_COST)
-			user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
-			cell.use(THERMAL_REGULATOR_COST)
+	if(!cell)
+		if(thermal_on)
+			toggle_spacesuit()
+		update_hud_icon(user)
+		return
+
+	// cell.use will return FALSE if charge is lower than THERMAL_REGULATOR_COST
+	if(!cell.use(THERMAL_REGULATOR_COST))
+		toggle_spacesuit()
+		update_hud_icon(user)
+		return
+
+	user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
+	update_hud_icon(user)
 
 // Clean up the cell on destroy
 /obj/item/clothing/suit/space/Destroy()
@@ -191,6 +188,12 @@
 
 /// Toggle the space suit's thermal regulator status
 /obj/item/clothing/suit/space/proc/toggle_spacesuit()
+	// If we're turning thermal protection on, check for valid cell and for enough
+	// charge that cell. If it's too low, we shouldn't bother with setting the
+	// thermal protection value and should just return out early.
+	if(!thermal_on && !(cell && cell.charge >= THERMAL_REGULATOR_COST))
+		return
+
 	thermal_on = !thermal_on
 	min_cold_protection_temperature = thermal_on ? SPACE_SUIT_MIN_TEMP_PROTECT : SPACE_SUIT_MIN_TEMP_PROTECT_OFF
 	SEND_SIGNAL(src, COMSIG_SUIT_SPACE_TOGGLE)
@@ -202,6 +205,32 @@
 		user.visible_message("<span class='warning'>You emag [src], overwriting thermal regulator restrictions.</span>")
 		log_game("[key_name(user)] emagged [src] at [AREACOORD(src)], overwriting thermal regulator restrictions.")
 	playsound(src, "sparks", 50, TRUE)
+
+// update the HUD icon
+/obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)
+	var/mob/living/carbon/human/human = user
+
+	if(!cell)
+		human.update_spacesuit_hud_icon("missing")
+		return
+
+	var/cell_percent = cell.percent()
+
+	// Check if there's enough charge to trigger a thermal regulator tick and
+	// if there is, whethere the cell's capacity indicates high, medium or low
+	// charge based on it.
+	if(cell.charge >= THERMAL_REGULATOR_COST)
+		if(cell_percent > 0.60)
+			human.update_spacesuit_hud_icon("high")
+			return
+		if(cell_percent > 0.20)
+			human.update_spacesuit_hud_icon("mid")
+			return
+		human.update_spacesuit_hud_icon("low")
+		return
+
+	human.update_spacesuit_hud_icon("empty")
+	return
 
 // zap the cell if we get hit with an emp
 /obj/item/clothing/suit/space/emp_act(severity)
