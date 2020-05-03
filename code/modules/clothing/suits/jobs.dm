@@ -60,7 +60,8 @@
 	item_state = "det_suit"
 	blood_overlay_type = "coat"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
-	armor = list("melee" = 25, "bullet" = 10, "laser" = 25, "energy" = 35, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 45)
+	armor = list("melee" = 35, "bullet" = 30, "laser" = 30, "energy" = 40, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50) //FULPSTATION Sprite Tweaks by Surrealisitik May 2020
+	resistance_flags = FLAMMABLE //FULPSTATION Sprite Tweaks by Surrealisitik May 2020
 	cold_protection = CHEST|GROIN|LEGS|ARMS
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 

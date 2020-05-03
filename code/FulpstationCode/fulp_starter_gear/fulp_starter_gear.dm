@@ -19,7 +19,7 @@
 
 /obj/item/radio/off/security
 	name = "security station bounced radio"
-	icon = 'icons/Fulpicons/surreal_stash/sec_radio.dmi'
+	icon = 'icons/Fulpicons/Surreal_stuff/sec_radio.dmi'
 	icon_state = "sec_radio"
 	desc = "A sophisticated full range station bounced radio. Preconfigured with a radio frequency for emergency security use in the event of telecom disruption. You can use a Security ID to reset its frequency to the emergency security channel."
 	freerange = TRUE //Can access the full spectrum

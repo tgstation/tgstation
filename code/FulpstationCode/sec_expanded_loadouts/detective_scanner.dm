@@ -140,7 +140,7 @@
 /obj/item/disk/forensic
 	name = "forensic data disk"
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
-	desc = "Charmingly antiquated yet undeniably effective. Used to read and write data to and from the forensic scanner. Can be labeled with a pen."
+	desc = "Charmingly antiquated yet undeniably effective. Used to read and write data to and from the forensic scanner for record storage. Can be labeled with a pen."
 	var/list/disk_log = list()
 	var/write_mode = FALSE //This determines whether we read or write data from/to the forensic scanner
 	obj_flags = UNIQUE_RENAME //Allows us to name and identify the disk.
