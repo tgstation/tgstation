@@ -223,8 +223,11 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///will keep teleporting the person every 5 seconds as long as they are on fire
 /obj/effect/warped_rune/orangespace/proc/bluespace_fire(mob/living/burning)
+	if(burning.stat == DEAD || !src) //the teleportation will stop if the guy burning is dead or the rune is destroyed
+		return
+
 	if(burning.fire_stacks > 0)
-		do_teleport(burning, get_turf(burning), 5, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+		do_teleport(burning, get_turf(burning), 7, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 		addtimer(CALLBACK(src, .proc/bluespace_fire, burning), 70, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 
