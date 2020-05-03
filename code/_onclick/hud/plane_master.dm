@@ -39,6 +39,15 @@
 /obj/screen/plane_master/proc/clear_filters()
 	filters = list()
 
+/obj/screen/plane_master/openspace/light
+	name = "light open space plane master"
+	plane = OPENSPACE_BACKDROP_PLANE_LIGHT
+
+/obj/screen/plane_master/openspace/light/backdrop(mob/mymob)
+	filters = list()
+	filters += filter(type = "drop_shadow", color = "#04080F28", size = -3)
+	filters += filter(type = "drop_shadow", color = "#04080F28", size = -5)
+
 ///Contains just the floor
 /obj/screen/plane_master/floor
 	name = "floor plane master"

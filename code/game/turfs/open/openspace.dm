@@ -1,15 +1,18 @@
-GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdrop, new)
+GLOBAL_DATUM_INIT(openspace_backdrop, /atom/movable/openspace_backdrop, new)
+GLOBAL_DATUM_INIT(openspace_backdrop_light, /atom/movable/openspace_backdrop/light, new)
 
 /atom/movable/openspace_backdrop
 	name			= "openspace_backdrop"
-
 	anchored		= TRUE
-
 	icon            = 'icons/turf/floors.dmi'
 	icon_state      = "grey"
 	plane           = OPENSPACE_BACKDROP_PLANE
 	mouse_opacity 	= MOUSE_OPACITY_TRANSPARENT
 	layer           = SPLASHSCREEN_LAYER
+
+/atom/movable/openspace_backdrop/light
+	icon_state      = "greylight"
+	plane			= OPENSPACE_BACKDROP_PLANE_LIGHT
 
 /turf/open/openspace
 	name = "open space"
@@ -20,6 +23,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
+	///Whether or not we have a wall on the tile below us.
+	var/wall_below = FALSE
 
 	intact = 0
 /turf/open/openspace/airless
@@ -34,7 +39,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	plane = OPENSPACE_PLANE
 	layer = OPENSPACE_LAYER
 
-	vis_contents += GLOB.openspace_backdrop_one_for_all //Special grey square for projecting backdrop darkness filter on it.
+	vis_contents += GLOB.openspace_backdrop
 
 	return INITIALIZE_HINT_LATELOAD
 
@@ -45,6 +50,11 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	vis_contents.len = 0
 	return ..()
 
+/turf/open/openspace/examine(mob/user)
+	. = ..()
+	if(wall_below)
+		to_chat(user, "<span class='notice'>There seems to be something below that I could walk on</span>")
+
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
 		return TRUE
@@ -52,14 +62,23 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 
 /turf/open/openspace/update_multiz(prune_on_fail = FALSE, init = FALSE)
 	. = ..()
-	var/turf/T = below()
-	if(!T)
+	var/turf/below = below()
+	if(!below)
 		vis_contents.len = 0
 		if(prune_on_fail)
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return FALSE
+	if(isclosedturf(below) && !wall_below) //If wall_below is false, it means we havn't switched to remove the backdrop yet
+		vis_contents -= GLOB.openspace_backdrop
+		vis_contents += GLOB.openspace_backdrop_light
+		wall_below = TRUE
+	else if(wall_below) //This implies that we have no wall below us, but havn't updated this yet
+		vis_contents -= GLOB.openspace_backdrop_light
+		vis_contents += GLOB.openspace_backdrop //Special grey square for projecting backdrop darkness filter on it.
+		wall_below = FALSE
+
 	if(init)
-		vis_contents += T
+		vis_contents += below
 	return TRUE
 
 /turf/open/openspace/multiz_turf_del(turf/T, dir)
@@ -82,6 +101,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	return TRUE
 
 /turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
+	if(wall_below)
+		return FALSE
 	if(A.anchored)
 		return FALSE
 	for(var/obj/O in contents)
