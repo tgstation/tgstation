@@ -20,7 +20,7 @@
 	hotkey_keys = list("L")
 	name = "look up"
 	full_name = "Look Up"
-	description = ""
+	description = "Look up at the next z-level.  Only works if directly below open space."
 
 /datum/keybinding/living/look_up/down(client/user)
 	var/mob/living/L = user.mob
