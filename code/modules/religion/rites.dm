@@ -21,7 +21,7 @@
 	if(!GLOB?.religious_sect)
 		return
 	LAZYREMOVE(GLOB.religious_sect.active_rites, src)
-	..()
+	return ..()
 
 
 ///Called to perform the invocation of the rite, with args being the performer and the altar where it's being performed. Maybe you want it to check for something else?
@@ -74,26 +74,26 @@
 	if(!ismovable(religious_tool))
 		to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
 		return FALSE
-	var/atom/movable/religious_tool2 = religious_tool
-	if(!religious_tool2)
+	var/atom/movable/movable_reltool = religious_tool
+	if(!movable_reltool)
 		return FALSE
-	if(!religious_tool2.buckled_mobs?.len)
+	if(!LAZYLEN(movable_reltool.buckled_mobs))
 		. = FALSE
-		if(!religious_tool2.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
+		if(!movable_reltool.can_buckle) //yes, if you have somehow managed to have someone buckled to something that now cannot buckle, we will still let you perform the rite!
 			to_chat(user, "<span class='warning'>This rite requires a religious device that individuals can be buckled to.</span>")
 			return
-		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [religious_tool2].</span>")
+		to_chat(user, "<span class='warning'>This rite requires an individual to be buckled to [movable_reltool].</span>")
 		return
 	return ..()
 
 /datum/religion_rites/synthconversion/invoke_effect(mob/living/user, atom/religious_tool)
 	if(!ismovable(religious_tool))
 		CRASH("[name]'s perform_rite had a movable atom that has somehow turned into a non-movable!")
-	var/atom/movable/religious_tool2 = religious_tool
-	if(!religious_tool2?.buckled_mobs?.len)
+	var/atom/movable/movable_reltool = religious_tool
+	if(!movable_reltool?.buckled_mobs?.len)
 		return FALSE
 	var/mob/living/carbon/human/human2borg
-	for(var/i in religious_tool2.buckled_mobs)
+	for(var/i in movable_reltool.buckled_mobs)
 		if(istype(i,/mob/living/carbon/human))
 			human2borg = i
 			break
