@@ -1292,7 +1292,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/grunge{
 	name = "Cell 4"
 	},
 /turf/open/floor/plasteel/dark,
@@ -1812,7 +1812,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/grunge{
 	name = "Cell 3"
 	},
 /turf/open/floor/plasteel/dark,
@@ -2486,14 +2486,14 @@
 /area/maintenance/solars/port/fore)
 "afG" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/grunge{
 	name = "Cell 2"
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/prison/safe)
 "afI" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/grunge{
 	name = "Cell 1"
 	},
 /turf/open/floor/plasteel/dark,
@@ -69238,11 +69238,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /turf/open/floor/plating,
 /area/maintenance/aft/secondary)
-"fBM" = (
-/obj/effect/spawner/lootdrop/maintenance,
-/obj/effect/turf_decal/bot_white,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "fBP" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
@@ -72552,7 +72547,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/grunge{
 	name = "Prison Forestry"
 	},
 /turf/open/floor/plasteel,
@@ -74728,6 +74723,14 @@
 	},
 /turf/open/floor/plasteel,
 /area/hydroponics)
+"phK" = (
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "piK" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -75758,6 +75761,10 @@
 	dir = 5
 	},
 /area/crew_quarters/kitchen)
+"qPL" = (
+/obj/machinery/pinpointer_dispenser,
+/turf/closed/wall,
+/area/quartermaster/qm)
 "qQr" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 1
@@ -75800,14 +75807,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/warden)
-"qSc" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/turf/open/floor/plasteel,
-/area/quartermaster/storage)
 "qTc" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment,
@@ -75981,6 +75980,11 @@
 "rig" = (
 /turf/open/floor/plasteel,
 /area/maintenance/port/aft)
+"riE" = (
+/obj/effect/spawner/lootdrop/maintenance,
+/obj/effect/turf_decal/bot_white,
+/turf/open/floor/plasteel,
+/area/quartermaster/storage)
 "riP" = (
 /obj/structure/chair/office{
 	dir = 4
@@ -76633,10 +76637,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"sjn" = (
-/obj/machinery/pinpointer_dispenser,
-/turf/closed/wall,
-/area/quartermaster/qm)
 "sjs" = (
 /obj/machinery/disposal/deliveryChute{
 	dir = 1;
@@ -76965,11 +76965,6 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/department/medical/central)
-"sXO" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
-/obj/effect/turf_decal/trimline/brown/filled/line,
-/turf/open/floor/plasteel,
-/area/construction/storage_wing)
 "sYH" = (
 /turf/closed/wall/r_wall,
 /area/medical/medbay/central)
@@ -79625,7 +79620,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/grunge{
 	name = "Prison Workshop"
 	},
 /turf/open/floor/plasteel,
@@ -79825,6 +79820,11 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
+"xZy" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/effect/turf_decal/trimline/brown/filled/line,
+/turf/open/floor/plasteel,
+/area/construction/storage_wing)
 "yaN" = (
 /obj/effect/turf_decal/delivery,
 /obj/structure/closet/crate,
@@ -97580,11 +97580,11 @@ aJE
 aYM
 vXN
 aKR
-fBM
+riE
 cVC
 vXN
 aKR
-fBM
+riE
 cVC
 aXf
 wzA
@@ -97844,7 +97844,7 @@ aXh
 dCB
 xAO
 aXi
-qSc
+phK
 bap
 hpn
 hpn
@@ -97852,7 +97852,7 @@ beX
 bgJ
 biG
 dmH
-sjn
+qPL
 bnY
 bqw
 bsA
@@ -100156,7 +100156,7 @@ aRL
 aSZ
 aUk
 aVO
-sXO
+xZy
 eUK
 bax
 bbU
