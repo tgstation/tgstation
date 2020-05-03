@@ -191,6 +191,8 @@
 	terminated++
 	hits++
 	targets_hit[target]++
+	if(targets_hit[target] == 1)
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/target_qdel)
 	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
@@ -227,6 +229,7 @@
 
 	for(var/atom/target in targets_hit)
 		var/num_hits = targets_hit[target]
+		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 		if(num_hits > 1)
 			target.visible_message("<span class='danger'>[target] is hit by [num_hits] [proj_name]s!</span>", null, null, COMBAT_MESSAGE_RANGE, target)
 			to_chat(target, "<span class='userdanger'>You're hit by [num_hits] [proj_name]s!</span>")
@@ -267,10 +270,14 @@
 /datum/component/pellet_cloud/proc/grenade_uncrossed(datum/source, atom/movable/AM)
 	bodies -= AM
 
-/// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
+/// Our grenade or landmine or caseless shell or whatever tried deleting itself, so we intervene and nullspace it until we're done here
 /datum/component/pellet_cloud/proc/nullspace_parent()
 	var/atom/movable/AM = parent
 	AM.moveToNullspace()
 	queued_delete = TRUE
 	return TRUE
 
+/// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
+/datum/component/pellet_cloud/proc/target_qdel(atom/target)
+	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	targets_hit -= target
