@@ -58,10 +58,20 @@
 	desc = "Upgraded version of the diagnostic HUD designed to function during a power failure."
 	id = "diagnostic_hud_night"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/plasma = 300)
+	materials = list(/datum/material/iron = 600, /datum/material/glass = 600, /datum/material/uranium = 1000, /datum/material/plasma = 350)
 	build_path = /obj/item/clothing/glasses/hud/diagnostic/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/medsechud
+	name = "Medical Security HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID and health status."
+	id = "medsechud"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000, /datum/material/titanium = 1000)
+	build_path = /obj/item/clothing/glasses/hud/medsechud
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SECURITY
 
 /////////////////////////////////////////
 //////////////////Misc///////////////////
@@ -186,6 +196,16 @@
 	build_path = /obj/item/clothing/glasses/night
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/materials
+	name = "Optical Material Scanners"
+	desc = "Used by engineering staff to see structures and machinery through walls."
+	id = "materials"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/diamond = 100)
+	build_path = /obj/item/clothing/glasses/material
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
 
 /datum/design/magboots
 	name = "Magnetic Boots"

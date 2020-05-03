@@ -242,3 +242,28 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 
+/obj/item/clothing/glasses/hud/medsechud
+	name = "medical security HUD scanner"
+	desc = "These almost look like 3D glasses! Wait, what's 3D?"
+	icon_state = "medsechud"
+	glass_colour_type = /datum/client_colour/glass_colour/purple //red and blue makes purple
+	hud_type = DATA_HUD_SECURITY_ADVANCED
+	hud_trait = TRAIT_SECURITY_HUD
+	var/secondary_type = DATA_HUD_MEDICAL_ADVANCED
+	var/secondary_trait = TRAIT_MEDICAL_HUD
+
+/obj/item/clothing/glasses/hud/medsechud/equipped(mob/living/carbon/human/user)
+	..()
+	if(secondary_type)
+		var/datum/atom_hud/H = GLOB.huds[secondary_type]
+		H.add_hud_to(user)
+	if(secondary_trait)
+		ADD_TRAIT(user, secondary_trait, GLASSES_TRAIT)
+
+/obj/item/clothing/glasses/hud/medsechud/dropped(mob/living/carbon/human/user)
+	..()
+	if(secondary_type)
+		var/datum/atom_hud/H = GLOB.huds[secondary_type]
+		H.remove_hud_from(user)
+	if(secondary_trait)
+		REMOVE_TRAIT(user, secondary_trait, GLASSES_TRAIT)

@@ -133,31 +133,20 @@
 
 /obj/item/clothing/glasses/material
 	name = "optical material scanner"
-	desc = "Very confusing glasses."
+	desc = "Very confusing glasses. How do they even work?"
 	icon_state = "material"
 	item_state = "glasses"
 	vision_flags = SEE_OBJS
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 
-/obj/item/clothing/glasses/material/mining
-	name = "optical material scanner"
-	desc = "Used by miners to detect ores deep within the rock."
-	icon_state = "material"
-	item_state = "glasses"
-	darkness_view = 0
-
-/obj/item/clothing/glasses/material/mining/gar
-	name = "gar material scanner"
-	icon_state = "garm"
-	item_state = "garm"
-	desc = "Do the impossible, see the invisible!"
-	force = 10
-	throwforce = 20
-	throw_speed = 4
-	attack_verb = list("sliced")
-	hitsound = 'sound/weapons/bladeslice.ogg'
-	sharpness = IS_SHARP
-	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
+/obj/item/clothing/glasses/material/night
+	name = "night vision material scanner"
+	desc = "These are even more confusing!"
+	icon_state = "nvgmaterial"
+	darkness_view = 8
+	flash_protect = FLASH_PROTECTION_SENSITIVE
+	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
+	glass_colour_type = /datum/client_colour/glass_colour/green
 
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
