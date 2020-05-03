@@ -8,7 +8,6 @@
 	status_flags = GODMODE  // You can't damage it.
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	see_in_dark = 7
-	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_ABSTRACT // No one can see us
 	sight = SEE_SELF
 	move_on_shuttle = FALSE
