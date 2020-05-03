@@ -51,7 +51,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_light, /atom/movable/openspace_backdrop/lig
 /turf/open/openspace/examine(mob/user)
 	. = ..()
 	if(wall_below)
-		. +="<span class='notice'>There seems to be something below that I could walk on</span>")
+		. += "<span class='notice'>There seems to be something below that I could walk on</span>"
 
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
