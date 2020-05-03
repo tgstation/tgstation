@@ -49,11 +49,11 @@
 |0,Legion|1,They are the cursed, damned souls of the millions of lives lost on lavaland, conglomerated into a lump of emaciated bodies, wandering the barren wastes. ...or something along those lines.|3,legion|4,49|7,S1|9,5|
 |0,Cyborg (Medical Shell)|1,A state of the art medical shell, for when biological life just can't take care of itself. Comes equipped with built-in surgical equipment and all the lollipops you could ever want.|3,borg_medical|4,50|7,S1|9,5|
 |0,Medical Doctor|1,Nanotrasen's doctors are well known for their ability to treat almost any ailment known to mankind... as well as causing a fair few in the process.|3,md|4,51|7,S1|9,6|
-|0,Mime|1,Si vous regardez attentivement dans les yeux d'un mime, vous pouvez voir le tourment sans fin derrière leur façade silencieuse. C'est vraiment tragique.|3,mime|4,52|7,S1|
+|0,Mime|1,Si vous regardez attentivement dans les yeux d'un mime, vous pouvez voir le tourment sans fin derrière leur façade silencieuse. C'est vraiment tragique.|3,mime|4,52|7,S1|9,5|
 |0,Cyborg (Mining Shell)|1,Fitted with a drill and tracks, the Mining Shell is designed to hold up to the rigours of mining, be that on the hellish surface of Lavaland, or in the silent vacuum of the asteroid belt.|3,borg_miner|4,53|7,S1|9,6|
 |0,Monkey|1,Nanotrasen seeks to phase out animal testing by 2570, in accordance with new TerraGov legislation. The monkeys, and monkey cubes, will go alongside that. Enjoy them while you can!|3,monkey|4,54|7,S1|9,6|
-|0,Nuclear Operative|1,The frontline grunts of the syndicate army, Nuclear Operatives are typically well trained and equipped for their grim duty.|3,nukie_red|4,55|7,S1|
-|0,Paramedic|1,Nanotrasen encourages all paramedics to think of others before themselves- if this means running through a plasma fire to save a colleague, so be it.|3,paramedic|4,56|7,S1|
+|0,Nuclear Operative|1,The frontline grunts of the syndicate army, Nuclear Operatives are typically well trained and equipped for their grim duty.|3,nukie_red|4,55|7,S1|9,4|
+|0,Paramedic|1,Nanotrasen encourages all paramedics to think of others before themselves- if this means running through a plasma fire to save a colleague, so be it.|3,paramedic|4,56|7,S1|9,6|
 |0,Cyborg (Peacekeeper Shell)|1,After the unilateral phasing out of Security Shells in 2554 following mass reports of cyborg-on-human violence, the Peacekeeper Shell was introduced as a stopgap solution until the problems could be resolved.|3,borg_peace|4,57|7,S1|9,5|
 |0,Station Engineer (Plasmaman)|1,The ever industrious plasmamen are well suited to engineering work, due to their natural radiation resistance.|3,engi_plasma|4,58|7,S1|9,6|
 |0,Quartermaster|1,The Quartermaster controls cargo on every Nanotrasen station, deciding what gets ordered and by who. They aren't a head of staff though.|3,qm|4,59|7,S1|9,5|
