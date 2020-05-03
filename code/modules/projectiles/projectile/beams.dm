@@ -27,6 +27,7 @@
 /obj/projectile/beam/laser/hellfire
 	name = "hellfire laser"
 	wound_bonus = 0
+	damage = 25
 	speed = 0.6 // faster than light... light
 
 /obj/projectile/beam/laser/hellfire/Initialize()

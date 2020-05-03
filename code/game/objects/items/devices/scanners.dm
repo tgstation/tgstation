@@ -11,9 +11,10 @@ GENE SCANNER
 
 */
 
-// Describes the two modes of scanning available for health analyzers
+// Describes the three modes of scanning available for health analyzers
 #define SCANMODE_HEALTH		0
 #define SCANMODE_CHEMICAL 	1
+#define SCANMODE_WOUND	 	2
 #define SCANNER_CONDENSED 	0
 #define SCANNER_VERBOSE 	1
 
@@ -104,8 +105,14 @@ GENE SCANNER
 	return BRUTELOSS
 
 /obj/item/healthanalyzer/attack_self(mob/user)
-	scanmode = !scanmode
-	to_chat(user, "<span class='notice'>You switch the health analyzer to [scanmode ? "scan chemical contents" : "check physical health"].</span>")
+	scanmode = (scanmode + 1) % 3
+	switch(scanmode)
+		if(SCANMODE_HEALTH)
+			to_chat(user, "<span class='notice'>You switch the health analyzer to check physical health.</span>")
+		if(SCANMODE_CHEMICAL)
+			to_chat(user, "<span class='notice'>You switch the health analyzer to scan chemical contents.</span>")
+		if(SCANMODE_WOUND)
+			to_chat(user, "<span class='notice'>You switch the health analyzer to report extra info on wounds.</span>")
 
 /obj/item/healthanalyzer/attack(mob/living/M, mob/living/carbon/human/user)
 	flick("[icon_state]-scan", src)	//makes it so that it plays the scan animation upon scanning, including clumsy scanning
@@ -125,8 +132,10 @@ GENE SCANNER
 
 	if(scanmode == SCANMODE_HEALTH)
 		healthscan(user, M, mode, advanced)
-	else
+	else if(scanmode == SCANMODE_CHEMICAL)
 		chemscan(user, M)
+	else
+		woundscan(user, M, src)
 
 	add_fingerprint(user)
 
@@ -432,7 +441,7 @@ GENE SCANNER
 /obj/item/healthanalyzer/wound
 	name = "first aid analyzer"
 	icon_state = "adv_spectrometer"
-	desc = "A specialized medical scanner that is used to diagnose and recommend extra treatment information for serious wounds, but offers no further insight into the patient's health."
+	desc = "A prototype Lo-Tech medical scanner used to diagnose injuries and recommend treatment for serious wounds, but offers no further insight into the patient's health. You hope the final version is less annoying to read!"
 
 /obj/item/healthanalyzer/wound/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
 	add_fingerprint(user)
@@ -850,5 +859,6 @@ GENE SCANNER
 
 #undef SCANMODE_HEALTH
 #undef SCANMODE_CHEMICAL
+#undef SCANMODE_WOUND
 #undef SCANNER_CONDENSED
 #undef SCANNER_VERBOSE

@@ -36,8 +36,12 @@
 // TODO: flesh out (haha flesh), also clean up all of this to be more modular and less sprawly
 /datum/wound/burn/handle_process()
 	. = ..()
-	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
-		sanitization += 0.4
+	if(victim.reagents)
+		if(victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
+			sanitization += 0.4
+		if(victim.reagents.has_reagent(/datum/reagent/space_cleaner/sterilizine/))
+			sanitization += 0.4
+
 
 	if(current_bandage)
 		current_bandage.absorption_capacity -= WOUND_BURN_SANITIZATION_RATE
@@ -271,7 +275,7 @@
 		shave(I, user)
 
 /datum/wound/burn/proc/regenerate_flesh(amount)
-	flesh_healing += amount
+	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
 
 // we don't even care about first degree burns, straight to second
 /datum/wound/burn/moderate

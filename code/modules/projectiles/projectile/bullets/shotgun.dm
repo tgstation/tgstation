@@ -2,10 +2,22 @@
 	name = "12g shotgun slug"
 	damage = 60
 
+/obj/projectile/bullet/shotgun_slug/executioner
+	name = "executioner slug"
+	sharpness = TRUE
+	wound_bonus = 0
+
+/obj/projectile/bullet/shotgun_slug/pulverizer
+	name = "pulverizer slug"
+	sharpness = FALSE
+	wound_bonus = 0
+
 /obj/projectile/bullet/shotgun_beanbag
 	name = "beanbag slug"
-	damage = 5
-	stamina = 55
+	damage = 10
+	stamina = 45
+	wound_bonus = 20
+	sharpness = FALSE
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
@@ -62,6 +74,7 @@
 /obj/projectile/bullet/pellet/shotgun_buckshot
 	name = "buckshot pellet"
 	damage = 12.5
+	wound_bonus = -10
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubbershot pellet"

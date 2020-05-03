@@ -20,7 +20,7 @@
 	var/name = "ouchie"
 	var/desc = ""
 	var/treat_text = ""
-	var/examine_desc = ""
+	var/examine_desc = "is badly hurt"
 
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burs"
 	var/a_or_from = "a"
@@ -38,6 +38,8 @@
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
+	/// If we only work on organics (yes to all)
+	var/organic_only = TRUE
 	/// The bodypart we're parented to
 	var/obj/item/bodypart/limb = null
 
@@ -86,6 +88,9 @@
 
 	var/datum/status_effect/linked_status_effect
 
+	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
+	var/cryo_progress
+
 /datum/wound/Destroy()
 	remove_wound()
 	limb = null
@@ -103,13 +108,20 @@
   */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
+		qdel(src)
 		return
+
+	if(ishuman(L.owner))
+		var/mob/living/carbon/human/H = L.owner
+		if(organic_only && (NOBLOOD in H.dna.species.species_traits))
+			qdel(src)
+			return
 
 	// we accept promotions and demotions, but no point in redundancy. This should have already been checked wherever the wound was rolled and applied for (see: bodypart damage code), but we do an extra check
 	// in case we ever directly add wounds
 	for(var/i in L.wounds)
 		var/datum/wound/preexisting_wound = i
-		if(preexisting_wound.type == type && preexisting_wound != src)
+		if((preexisting_wound.type == type) && (preexisting_wound != old_wound))
 			qdel(src)
 			return
 
@@ -171,6 +183,9 @@
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
 /datum/wound/proc/second_wind()
+	if(HAS_TRAIT(victim, TRAIT_NOMETABOLISM))
+		return
+
 	switch(severity)
 		if(WOUND_SEVERITY_MODERATE)
 			victim.reagents.add_reagent(/datum/reagent/determination, WOUND_DETERMINATION_MODERATE)
@@ -251,6 +266,11 @@
 /// When our parent bodypart is hurt
 /datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	return
+
+/datum/wound/proc/on_cryo(power)
+	cryo_progress += power
+	if(cryo_progress > 33 * severity)
+		qdel(src)
 
 /**
   * get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.

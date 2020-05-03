@@ -216,7 +216,7 @@
 
 /obj/item/stack/medical/ointment
 	name = "ointment"
-	desc = "Basic burn ointment, rated effective for up to and including second degree burns with proper bandaging, though it's still an effective stabilizer for worse burns."
+	desc = "Basic burn ointment, rated effective for second degree burns with proper bandaging, though it's still an effective stabilizer for worse burns. Not terribly good at outright healing burns though."
 	gender = PLURAL
 	singular_name = "ointment"
 	icon_state = "ointment"
@@ -227,7 +227,7 @@
 	self_delay = 40
 	other_delay = 20
 
-	heal_burn = 10
+	heal_burn = 5
 	flesh_regeneration = 2
 	sanitization = 1.5
 	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
@@ -357,7 +357,7 @@
 /obj/item/stack/medical/bone_gel
 	name = "bone gel"
 	singular_name = "bone gel"
-	desc = "A potent medical gel that, when applied to a damaged bone, triggers an intense melding reaction to repair the wound. Like plastic glue, but for people instead!"
+	desc = "A potent medical gel that, when applied to a damaged bone in a surgery setting, triggers an intense melding reaction to repair the wound. Like plastic glue, but for people instead! Ineffective outside of surgery."
 
 	icon = 'icons/obj/surgery.dmi'
 	item_state = ""
@@ -368,6 +368,10 @@
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
 	novariants = TRUE
+
+/obj/item/stack/medical/bone_gel/try_heal(mob/living/M, mob/user, silent)
+	to_chat(user, "<span class='notice'>[src] requires a surgical setting to use!</span>")
+	return
 
 /obj/item/stack/medical/bone_gel/suicide_act(mob/user)
 	if(iscarbon(user))
@@ -391,3 +395,7 @@
 			C.visible_message("<span class='suicide'>[C] screws up like an idiot and still dies anyway!</span>")
 			return (SHAME)
 
+/obj/item/stack/medical/bone_gel/cyborg
+	custom_materials = null
+	is_cyborg = 1
+	cost = 250

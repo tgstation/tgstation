@@ -2309,6 +2309,9 @@
 		significant = TRUE
 		M.apply_status_effect(STATUS_EFFECT_DETERMINED)
 
+	if(volume > WOUND_DETERMINATION_MAX)
+		volume = WOUND_DETERMINATION_MAX
+
 	for(var/thing in M.all_wounds)
 		var/datum/wound/W = thing
 		var/obj/item/bodypart/wounded_part = W.limb

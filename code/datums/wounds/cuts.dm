@@ -60,6 +60,10 @@
 			bandage_condition = "clean "
 	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [current_bandage.name]!</B>"
 
+/datum/wound/brute/cut/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	if(wounding_type == WOUND_SHARP)
+		blood_flow += 0.05 * wounding_dmg
+
 /datum/wound/brute/cut/handle_process()
 	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulent))
 		blood_flow -= 0.25
@@ -99,9 +103,9 @@
 
 /datum/wound/brute/cut/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.5 : 1)
-	user.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>Your begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
+	user.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER) || 1
-	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, extra_checks = CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 	var/damage = lasgun.chambered.BB.damage
 	lasgun.chambered.BB.wound_bonus -= 30
@@ -117,7 +121,7 @@
 	var/self_penalty_mult = (user == victim ? 1.5 : 1)
 	user.visible_message("<span class='danger'>[user] begins cauterizing [victim]'s [limb.name] with [I]...</span>", "<span class='danger'>You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER) || 1
-	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, extra_checks = CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
 	user.visible_message("<span class='green'>[user] cauterizes some of the bleeding on [victim].</span>", "<span class='green'>You cauterize some of the bleeding on [victim].</span>")
@@ -137,7 +141,7 @@
 	var/self_penalty_mult = (user == victim ? 1.5 : 1)
 	user.visible_message("<span class='notice'>[user] begins stitching [victim]'s [limb.name] with [I]...</span>", "<span class='notice'>You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER) || 1
-	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, extra_checks = CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 	user.visible_message("<span class='green'>[user] stitches up some of the bleeding on [victim].</span>", "<span class='green'>You stitch up some of the bleeding on [user == victim ? "yourself" : "[victim]"].</span>")
 	var/blood_sutured = I.stop_bleeding / self_penalty_mult
@@ -193,7 +197,7 @@
 	examine_desc = "has a severe cut"
 	occur_text = "is ripped open, veins spurting blood"
 	severity = WOUND_SEVERITY_SEVERE
-	initial_flow = 5
+	initial_flow = 4.5
 	minimum_flow = 3
 	clot_rate = 0.05
 	max_per_type = 4
@@ -209,8 +213,8 @@
 	examine_desc = "is spurting blood at an alarming rate"
 	occur_text = "is torn open, spraying blood wildly"
 	severity = WOUND_SEVERITY_CRITICAL
-	initial_flow = 6
-	minimum_flow = 5.5
+	initial_flow = 5.5
+	minimum_flow = 5
 	clot_rate = -0.05 // critical cuts actively get worse instead of better
 	max_per_type = 5
 	threshold_minimum = 80

@@ -269,6 +269,7 @@
 	for(var/datum/wound/existing_wound in wounds)
 		if(existing_wound.type in (initial(potential_wound.wound_type)))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
+				testing("inferior")
 				existing_wound.replace_wound(potential_wound)
 			return
 
@@ -351,21 +352,21 @@
 		return
 	if(HAS_TRAIT(src, TRAIT_PARALYSIS))
 		return BODYPART_DISABLED_PARALYSIS
-	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
+	if(HAS_TRAIT(src, TRAIT_LIMB_DISABLED_WOUND))
+		return BODYPART_DISABLED_WOUND
+	/*if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 		if(is_organic_limb())
-			for(var/i in wounds)
-				var/datum/wound/W = i
-				if(W.disabling)
-					return BODYPART_DISABLED_WOUND
-			return BODYPART_NOT_DISABLED
-		else
+			/* TODO: figure if i'm keeping disabling to broken bones only
 			if((get_damage(TRUE) >= max_damage) || (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) && (get_damage(TRUE) >= (max_damage * 0.6)))) //Easy limb disable disables the limb at 40% health instead of 0%
 				return BODYPART_DISABLED_DAMAGE
+			*/
 			if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
 				return BODYPART_NOT_DISABLED
 	else
 		return BODYPART_NOT_DISABLED
+	*/
+	return BODYPART_NOT_DISABLED
 
 /obj/item/bodypart/proc/set_disabled(new_disabled)
 	if(disabled == new_disabled || !owner)

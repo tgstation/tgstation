@@ -4,7 +4,8 @@
 ///// Repair Hairline Fracture (Severe)
 /datum/surgery/debride
 	name = "Debride burnt flesh"
-	steps = list(/datum/surgery_step/debride, /datum/surgery_step/disinfect, /datum/surgery_step/regenerate_flesh, /datum/surgery_step/dress)
+	//steps = list(/datum/surgery_step/debride, /datum/surgery_step/disinfect, /datum/surgery_step/regenerate_flesh, /datum/surgery_step/dress)
+	steps = list(/datum/surgery_step/debride, /datum/surgery_step/dress)
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
 	requires_real_bodypart = TRUE
@@ -21,7 +22,7 @@
 
 ///// Debride, remove mortification
 /datum/surgery_step/debride
-	name = "debride ruined flesh"
+	name = "debride ruined flesh (hemostat/scalpel)"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_WIRECUTTER = 60, TOOL_SCALPEL = 70, TOOL_SAW = 40)
 	time = 40
 	repeatable = TRUE
@@ -61,7 +62,7 @@
 
 ///// Disinfect, remove infestation TODO: make this disinfect
 /datum/surgery_step/disinfect
-	name = "disinfect ruined flesh"
+	name = "disinfect ruined flesh (ointment/sterilizine)"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_WIRECUTTER = 60, TOOL_SCALPEL = 70, TOOL_SAW = 40)
 	time = 40
 	repeatable = TRUE
@@ -101,7 +102,7 @@
 
 ///// Regenerate, remove flesh_damage
 /datum/surgery_step/regenerate_flesh
-	name = "regenerate flesh"
+	name = "regenerate flesh (mesh)"
 	implements = list(/obj/item/stack/medical/mesh = 100)
 	time = 40
 	repeatable = TRUE
@@ -135,7 +136,7 @@
 
 ///// Dressing burns
 /datum/surgery_step/dress
-	name = "dress burns"
+	name = "dress burns (bandage)"
 	implements = list(/obj/item/stack/medical/gauze = 100, /obj/item/stack/sticky_tape/surgical = 100)
 	time = 40
 	experience_given = MEDICAL_SKILL_MEDIUM
@@ -156,6 +157,8 @@
 		log_combat(user, target, "dressed burns in", addition="INTENT: [uppertext(user.a_intent)]")
 		var/datum/wound/burn/burn_wound = surgery.operated_wound
 		burn_wound.bandaged(tool)
+		burn_wound.sanitization += 6 // TODO: Actually make this surgery in depth
+		burn_wound.flesh_healing += 6
 	else
 		to_chat(user, "<span class='warning'>[target] has no burns there!</span>")
 	return ..()

@@ -33,17 +33,18 @@
 	update_inefficiencies()
 
 /datum/wound/brute/bone/remove_wound(ignore_limb)
+	REMOVE_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 	if(victim)
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
-	. = ..()
+	return ..()
 
 // note this is only for humans since they alone have COMSIG_HUMAN_EARLY_UNARMED_ATTACK (obviously)
 /datum/wound/brute/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	if(victim.get_active_hand() != limb || victim.a_intent == INTENT_HELP || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
 		return
 
-	// With a severe or critical wound, you have a 33% or 66% chance to proc pain on hit
-	if(prob(33 * (severity - 1)))
+	// With a severe or critical wound, you have a 15% or 30% chance to proc pain on hit
+	if(prob((severity - 1) * 15))
 		// And you have a 70% or 50% chance to actually land the blow, respectively
 		if(prob(70 - 20 * (severity - 1)))
 			to_chat(victim, "<span class='userdanger'>The fracture in your [limb.name] shoots with pain as you strike [target]!</span>")
@@ -55,7 +56,6 @@
 			victim.Stun(0.5 SECONDS)
 			limb.receive_damage(brute=rand(3,7))
 			return COMPONENT_NO_ATTACK_HAND
-
 
 /datum/wound/brute/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	if(!(wounding_type in list(WOUND_SHARP, WOUND_BURN)) || !splinted || !victim || wound_bonus == CANT_WOUND)
@@ -76,7 +76,7 @@
 
 	var/splint_condition = ""
 	// how much life we have left in these bandages
-	switch(splinted.obj_integrity / splinted.max_integrity)
+	switch(splinted.obj_integrity / splinted.max_integrity * 100)
 		if(0 to 25)
 			splint_condition = "just barely "
 		if(25 to 50)
@@ -85,7 +85,7 @@
 			splint_condition = "mostly "
 		if(75 to INFINITY)
 			splint_condition = "tightly "
-	return "<B>[victim.p_their()] [limb.name] is [splint_condition] fastened in a splint of [splinted.name]!</B>"
+	return "<B>[victim.p_their(TRUE)] [limb.name] is [splint_condition] fastened in a splint of [splinted.name]!</B>"
 
 /*
 	New common procs for /datum/wound/brute/bone/
@@ -106,7 +106,9 @@
 
 	if(initial(disabling) && splinted)
 		disabling = FALSE
+		REMOVE_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 	else if(initial(disabling))
+		ADD_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 		disabling = TRUE
 
 	limb.update_wounds()
@@ -120,7 +122,7 @@
 		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
 		return
 
-	user.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting your [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
+	user.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 
 	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
 		return
@@ -175,7 +177,7 @@
 	if(time_mod)
 		time *= time_mod
 
-	if(!do_after(user, time, TRUE, victim))
+	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
 	if(prob(65 + prob_mod))
@@ -197,7 +199,7 @@
 	if(time_mod)
 		time *= time_mod
 
-	if(!do_after(user, time, TRUE, victim))
+	if(!do_after(user, time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
 		return
 
 	if(prob(25 + prob_mod))

@@ -115,8 +115,9 @@
 	name = initial(name) // remove "tattered" or "shredded" if there's a prefix
 	body_parts_covered = initial(body_parts_covered)
 	slot_flags = initial(slot_flags)
-	damage_by_parts = NONE
+	damage_by_parts = null
 	if(user)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		to_chat(user, "<span class='notice'>You fix the damage on [src].</span>")
 
 /**
@@ -167,6 +168,7 @@
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
 		C.visible_message("<span class='danger'>The [zone_name] on [C]'s [src.name] is [break_verb] away!</span>", "<span class='userdanger'>The [zone_name] on your [src.name] is [break_verb] away!</span>", vision_distance = COMBAT_MESSAGE_RANGE)
+		RegisterSignal(C, COMSIG_MOVABLE_MOVED, .proc/bristle)
 
 	zones_disabled++
 	for(var/i in zone2body_parts_covered(def_zone))
@@ -197,6 +199,7 @@
 	..()
 	if(!istype(user))
 		return
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 	if(LAZYLEN(user_vars_remembered))
 		for(var/variable in user_vars_remembered)
 			if(variable in user.vars)
@@ -209,6 +212,8 @@
 	if (!istype(user))
 		return
 	if(slot_flags & slot) //Was equipped to a valid slot for this item?
+		if(iscarbon(user) && LAZYLEN(zones_disabled))
+			RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/bristle)
 		if (LAZYLEN(user_vars_to_edit))
 			for(var/variable in user_vars_to_edit)
 				if(variable in user.vars)
@@ -474,6 +479,8 @@ BLIND     // can't see anything
 		if(!alt_covers_chest)
 			body_parts_covered |= CHEST
 			body_parts_covered |= ARMS
+			if(!LAZYLEN(damage_by_parts))
+				return adjusted
 			for(var/zone in list(BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM)) // ugly check to make sure we don't reenable protection on a disabled part
 				if(damage_by_parts[zone] > limb_integrity)
 					for(var/part in zone2body_parts_covered(zone))
@@ -552,3 +559,10 @@ BLIND     // can't see anything
 			GLOB.suit_sensors_list -= H
 	else
 		GLOB.suit_sensors_list -= H
+
+/obj/item/clothing/proc/bristle(mob/living/L)
+	if(!istype(L))
+		return
+
+	if(prob(0.3))
+		to_chat(L, "<span class='warning'>The damaged threads on your [src.name] chafe!</span>")
