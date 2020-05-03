@@ -178,6 +178,7 @@
 
 		if(martyr.stat != DEAD && martyr.client)
 			LAZYADD(purple_hearts, martyr)
+			RegisterSignal(martyr, COMSIG_PARENT_QDELETING, .proc/target_qdel, override=TRUE)
 
 		for(var/i in 1 to round(pellets_absorbed * 0.5))
 			pew(martyr)
@@ -192,7 +193,7 @@
 	hits++
 	targets_hit[target]++
 	if(targets_hit[target] == 1)
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/target_qdel)
+		RegisterSignal(target, COMSIG_PARENT_QDELETING, .proc/target_qdel, override=TRUE)
 	UnregisterSignal(P, list(COMSIG_PARENT_QDELETING, COMSIG_PROJECTILE_RANGE_OUT, COMSIG_PROJECTILE_SELF_ON_HIT))
 	if(terminated == num_pellets)
 		finalize()
@@ -264,6 +265,7 @@
 /datum/component/pellet_cloud/proc/grenade_moved()
 	LAZYCLEARLIST(bodies)
 	for(var/mob/living/L in get_turf(parent))
+		RegisterSignal(L, COMSIG_PARENT_QDELETING, .proc/target_qdel, override=TRUE)
 		bodies += L
 
 /// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
@@ -281,3 +283,5 @@
 /datum/component/pellet_cloud/proc/target_qdel(atom/target)
 	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 	targets_hit -= target
+	bodies -= target
+	purple_hearts -= target
