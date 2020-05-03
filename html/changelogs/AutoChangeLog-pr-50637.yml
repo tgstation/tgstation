@@ -1,0 +1,9 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - bugfix: "Clusters of shrapnel mines will no longer kill the server when set off together."
+  - tweak: "Shooting over landmines will no longer trigger them"
+  - bugfix: "security crates briefly required forensics access instead of proper security access, this has been fixed"
+  - bugfix: "Buckshot shells no longer disappear into the void after being fired"
+  - bugfix: "Priming shrapnel grenades and then dropping them will no longer exempt you from being shredded by the shrapnel, nor will using shrapnel grenades on explosive lances"
+  - bugfix: "Armor penetration works again! Oops!! Turns out that's been broken for a bit"
