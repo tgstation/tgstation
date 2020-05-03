@@ -280,7 +280,7 @@
 	return TRUE
 
 /// Someone who was originally "under" the grenade has moved off the tile and is now eligible for being a martyr and "covering" it
-/datum/component/pellet_cloud/proc/target_qdel(atom/target)
+/datum/component/pellet_cloud/proc/on_target_qdel(atom/target)
 	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
 	targets_hit -= target
 	bodies -= target
