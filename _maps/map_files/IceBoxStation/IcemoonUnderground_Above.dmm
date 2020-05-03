@@ -2229,6 +2229,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"nB" = (
+/obj/structure/ladder,
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "nE" = (
 /obj/structure/sign/poster/official/do_not_question{
 	pixel_y = 32
@@ -2614,6 +2618,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /turf/open/floor/plasteel,
 /area/mine/living_quarters)
+"wd" = (
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/storage/mining)
 "we" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
@@ -2667,6 +2674,9 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/closed/wall,
 /area/mine/living_quarters)
+"xn" = (
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "xU" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/turf_decal/tile/green{
@@ -2789,6 +2799,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/production)
+"AT" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "AW" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
@@ -2944,6 +2960,12 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"DZ" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Public Mining Storage"
+	},
+/turf/open/floor/plasteel/dark,
+/area/storage/mining)
 "Ee" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
@@ -3007,6 +3029,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Fc" = (
+/obj/structure/sign/warning,
+/turf/closed/wall,
+/area/storage/mining)
 "Fd" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red,
@@ -3587,6 +3613,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Re" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/storage/mining)
 "Rx" = (
 /obj/structure/cable,
 /turf/open/floor/plasteel,
@@ -3936,6 +3966,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/laborcamp)
+"Yl" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/storage/mining)
 "Ym" = (
 /obj/structure/chair{
 	dir = 8
@@ -3977,6 +4013,9 @@
 /obj/structure/lattice/catwalk,
 /turf/closed/mineral/random/snow,
 /area/mine/living_quarters)
+"YF" = (
+/turf/closed/wall,
+/area/storage/mining)
 "YP" = (
 /obj/machinery/door/airlock/public/glass{
 	name = "Showers"
@@ -31922,11 +31961,11 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+wd
+wd
+wd
 ah
 ah
 ah
@@ -32178,13 +32217,13 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+Re
+Re
+Re
+wd
+wd
 ah
 ah
 ah
@@ -32434,15 +32473,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+YF
+YF
+YF
+YF
+YF
+wd
+wd
 ah
 ah
 ah
@@ -32691,15 +32730,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+YF
+xn
+xn
+xn
+Fc
+Yl
+wd
 ah
 ah
 ah
@@ -32948,15 +32987,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+YF
+AT
+nB
+xn
+DZ
+wd
+wd
 ah
 ah
 ah
@@ -33205,15 +33244,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+YF
+xn
+xn
+xn
+Fc
+Yl
+wd
 ah
 ah
 ah
@@ -33462,15 +33501,15 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+YF
+YF
+YF
+YF
+YF
+wd
+wd
 ah
 ah
 ah
@@ -33720,13 +33759,13 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+Re
+Re
+Re
+wd
+wd
 ah
 ah
 ah
@@ -33978,11 +34017,11 @@ ah
 ah
 ah
 ah
-ah
-ah
-ah
-ah
-ah
+wd
+wd
+wd
+wd
+wd
 ah
 ah
 ah
