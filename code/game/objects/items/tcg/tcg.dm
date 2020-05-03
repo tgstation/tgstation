@@ -6,8 +6,8 @@
 #define CARD_RARITY_LEGENDARY 2
 #define CARD_RARITY_MISPRINT 1
 
-GLOBAL_LIST(card_list)
-var/list/cardTypeLookup = list("name" = 0,
+GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
+GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 								"desc" = 1,
 								"icon" = 2,
 								"icon_state" = 3,
@@ -17,7 +17,7 @@ var/list/cardTypeLookup = list("name" = 0,
 								"tags" = 7,
 								"cardtype" = 8,
 								"rarity" = 9,
-								)
+								))
 
 /obj/item/tcgcard
 	name = "Coder"
@@ -27,11 +27,11 @@ var/list/cardTypeLookup = list("name" = 0,
 	var/id = -1 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
 	var/flipped = 0
 
-/obj/item/tcgcard/Initialize(mapload, var/datum/card/temp)
+/obj/item/tcgcard/Initialize(mapload, datum/card/temp)
 	. = ..()
 	name = temp.name
 	desc = temp.desc
-	icon = temp.state_location
+	icon = icon(temp.state_location)
 	icon_state = temp.icon_state
 	id = temp.id
 	transform = matrix(0.3,0,0,0,0.3,0)
@@ -39,7 +39,7 @@ var/list/cardTypeLookup = list("name" = 0,
 /datum/card
 	var/name = "Coder"
 	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
-	var/icon/state_location = 'icons/obj/tcg.dmi'
+	var/state_location = 'icons/obj/tcg.dmi'
 	var/icon_state = "runtime"
 	var/id = -1 //Unique ID, for use in lookups and storage
 	var/power = 0 //How hard this card hits (by default)
@@ -53,8 +53,7 @@ var/list/cardTypeLookup = list("name" = 0,
 		//Sets the variables of the card based off the string
 		name = extractCardVariable("name", card)
 		desc = extractCardVariable("desc", card)
-		var/icon/con = new(extractCardVariable("icon", card))
-		state_location = con
+		state_location = extractCardVariable("icon", card)
 		icon_state = extractCardVariable("icon_state", card)
 		id = text2num(extractCardVariable("id", card))
 		power = text2num(extractCardVariable("power", card))
@@ -267,7 +266,7 @@ var/list/cardTypeLookup = list("name" = 0,
 	if(split.len >= 2)
 		card = "|[split[2]]"
 	var/done = ""
-	for(var/index in 0 to cardTypeLookup.len - 1)
+	for(var/index in 0 to GLOB.cardTypeLookup.len - 1)
 		done += applyCardTemplateByIndex(index, card, template)
 	return done + "|"
 
@@ -307,7 +306,7 @@ var/list/cardTypeLookup = list("name" = 0,
 
 ///Extracts the specified variable from the card and returns it
 /proc/extractCardVariable(matchType = "id", card)
-	var/list/toReturn = splittext(card, "|[cardTypeLookup[matchType]],")
+	var/list/toReturn = splittext(card, "|[GLOB.cardTypeLookup[matchType]],")
 	if(toReturn.len >= 2)
 		toReturn = splittext(toReturn[2], "|")
 		if(toReturn.len >= 2)
