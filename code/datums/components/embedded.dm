@@ -92,6 +92,8 @@
 	if(!weapon.isEmbedHarmless())
 		harmful = TRUE
 
+	weapon.embedded(parent)
+
 	if(iscarbon(parent))
 		initCarbon()
 	else if(isclosedturf(parent))
