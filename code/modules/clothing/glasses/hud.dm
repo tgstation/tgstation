@@ -254,6 +254,8 @@
 
 /obj/item/clothing/glasses/hud/medsechud/equipped(mob/living/carbon/human/user)
 	..()
+	if(slot != ITEM_SLOT_EYES)
+		return
 	if(secondary_type)
 		var/datum/atom_hud/H = GLOB.huds[secondary_type]
 		H.add_hud_to(user)
@@ -262,6 +264,8 @@
 
 /obj/item/clothing/glasses/hud/medsechud/dropped(mob/living/carbon/human/user)
 	..()
+	if(!istype(user) || user.glasses != src)
+		return
 	if(secondary_type)
 		var/datum/atom_hud/H = GLOB.huds[secondary_type]
 		H.remove_hud_from(user)
