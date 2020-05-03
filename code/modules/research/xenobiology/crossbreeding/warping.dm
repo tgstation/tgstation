@@ -943,8 +943,13 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 /obj/effect/warped_rune/lightpinkspace
 	icon_state = "necro_rune"
-	desc = "Souls are like any other material, You just have to find the right place to manufacture them."
-	max_cooldown = 600
+	desc = "Souls are like any other material, you just have to find the right place to manufacture them."
+	max_cooldown = 300
+
+
+/obj/effect/warped_rune/lightpinkspace/Initialize()
+	. = ..()
+	cooldown = 0
 
 
 /obj/effect/warped_rune/lightpinkspace/attack_hand(mob/living/user)
@@ -953,25 +958,32 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		return
 
 	for(var/mob/living/carbon/human/host in rune_turf)
-		if(!host.getorgan(/obj/item/organ/brain) || host.key || host.get_ghost(FALSE, TRUE)) //checks if the ghost and brain's there
+		if(!host.getorgan(/obj/item/organ/brain) || host.key) //checks if the ghost and brain's there
 			to_chat(user, "<span class='warning'>This body can't be fixed by the rune in this state!</span>")
 			return
 
 		cooldown = world.time + max_cooldown //only start the cooldown if there's an actual body on there and it can be resurrected.
 		to_chat(user, "<span class='warning'>The rune is trying to repair [host.name]'s soul!</span>")
-		var/list/candidates = pollCandidatesForMob("Do you want to replace the soul of [host.name]?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, host,POLL_IGNORE_SENTIENCE_POTION)//sentience flags because lightpink.
+		var/list/candidates = pollCandidatesForMob("Do you want to replace the soul of [host.name]?", ROLE_SENTIENCE, null, ROLE_SENTIENCE, 50, host, POLL_IGNORE_LOST_SOUL)
 
-		if(length(candidates) && !host.mind) //check if anyone wanted to play as the dead person and check if no one's in control of the body one last time.
+		if(length(candidates) && !host.key) //check if anyone wanted to play as the dead person and check if no one's in control of the body one last time.
 			var/mob/dead/observer/ghost = pick(candidates)
 			host.key = ghost.key
 			host.suiciding = 0 //turns off the suicide var just in case
 			host.revive(full_heal = TRUE, admin_revive = TRUE) //might as well heal them all the way back up
-			to_chat(host, "<span class='boldwarning'>You may wear the skin of someone else, but you know who and what you are. Pretend to be the original owner of this body as best as you can.</span>")
+
+			to_chat(host, "<span class='boldwarning'>You may wear the skin of someone else, but you know who and what you are.</span>")
+			to_chat(host, "<big><span class='warning'><b>Pretend to be the original owner of this body as best as you can.</b></span></big>")
+			host.mind.memory += "<br><B>Soul directives :"
+			host.mind.memory += "<br><B>#1 : Pretend to be the original owner of this body as best as you can. </B>"
+			host.mind.memory += "<br><B>#2 : Do not share or use any information you may have gotten from the soulspace unless it is to better impersonate your host body.</B>"
+
 			to_chat(user, "<span class='notice'>[host.name] is slowly getting back up. It...worked?</span>")
 			playsound(host, "sound/magic/castsummon.ogg", 50, TRUE)
 			return
 
 		to_chat(user, "<span class='warning'>The rune failed! Maybe you should try again later.</span>")
+
 
 
 /* black space rune : will swap out the species of the two next person walking on the rune  */
