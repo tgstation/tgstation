@@ -105,12 +105,12 @@
 	SEND_SIGNAL(src, COMSIG_GRENADE_ARMED, det_time, delayoverride)
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/proc/prime()
+/obj/item/grenade/proc/prime(mob/living/lanced_by)
 	if(shrapnel_type && shrapnel_radius && !shrapnel_initialized) // add a second check for adding the component in case whatever triggered the grenade went straight to prime (badminnery for example)
 		shrapnel_initialized = TRUE
 		AddComponent(/datum/component/pellet_cloud, projectile_type=shrapnel_type, magnitude=shrapnel_radius)
 
-	SEND_SIGNAL(src, COMSIG_GRENADE_PRIME)
+	SEND_SIGNAL(src, COMSIG_GRENADE_PRIME, lanced_by)
 	if(ex_dev || ex_heavy || ex_light || ex_flame)
 		explosion(loc, ex_dev, ex_heavy, ex_light, flame_range = ex_flame)
 
@@ -170,10 +170,3 @@
 	. = ..()
 	if(active)
 		user.throw_item(target)
-
-/// Don't call qdel() directly on the grenade after it booms, call this instead so it can still resolve its pellet_cloud component if it has shrapnel, then the component will qdel it
-/obj/item/grenade/proc/resolve()
-	if(shrapnel_type)
-		moveToNullspace()
-	else
-		qdel(src)
