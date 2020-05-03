@@ -76,6 +76,9 @@
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
 
+	if(!thermal_on)
+		return
+
 	if(!cell)
 		if(thermal_on)
 			toggle_spacesuit()
