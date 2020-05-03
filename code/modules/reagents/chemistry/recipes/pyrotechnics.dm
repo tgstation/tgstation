@@ -30,7 +30,8 @@
 	strengthdiv = 2
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+
+	if(holder.has_reagent(/datum/reagent/exotic_stabilizer,round(created_volume / 25, CHEMICAL_QUANTISATION_LEVEL)))
 		return
 	holder.remove_reagent(/datum/reagent/nitroglycerin, created_volume*2)
 	..()
@@ -94,9 +95,8 @@
 /datum/chemical_reaction/reagent_explosion/tatp/update_info()
 	required_temp = 450 + rand(-49,49)  //this gets loaded only on round start
 
-
 /datum/chemical_reaction/reagent_explosion/tatp/on_reaction(datum/reagents/holder, created_volume)
-	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
+	if(holder.has_reagent(/datum/reagent/exotic_stabilizer,round(created_volume / 50, CHEMICAL_QUANTISATION_LEVEL)))
 		return
 	holder.remove_reagent(/datum/reagent/tatp, created_volume)
 	..()
