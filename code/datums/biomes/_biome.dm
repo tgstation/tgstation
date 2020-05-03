@@ -8,17 +8,17 @@
 	)
 
 /datum/biome/mudlands
-	turf_type = /turf/open/floor/plating/dirt/dark
+	turf_type = /turf/open/floor/plating/dirt/jungle/dark
 	flora_types = list(/obj/structure/flora/grass/jungle,/obj/structure/flora/grass/jungle/b, /obj/structure/flora/rock/jungle, /obj/structure/flora/rock/pile/largejungle)
 	flora_density = 3
 
 /datum/biome/plains
-	turf_type = /turf/open/floor/plating/dirt
+	turf_type = /turf/open/floor/plating/grass/jungle
 	flora_types = list(/obj/structure/flora/grass/jungle,/obj/structure/flora/grass/jungle/b, /obj/structure/flora/tree/jungle, /obj/structure/flora/rock/jungle, /obj/structure/flora/junglebush, /obj/structure/flora/junglebush/b, /obj/structure/flora/junglebush/c, /obj/structure/flora/junglebush/large, /obj/structure/flora/rock/pile/largejungle)
 	flora_density = 15
 
 /datum/biome/jungle
-	turf_type = /turf/open/floor/plating/dirt/dark
+	turf_type = /turf/open/floor/plating/dirt/jungle/wasteland
 	flora_types = list(/obj/structure/flora/grass/jungle,/obj/structure/flora/grass/jungle/b, /obj/structure/flora/tree/jungle, /obj/structure/flora/rock/jungle, /obj/structure/flora/junglebush, /obj/structure/flora/junglebush/b, /obj/structure/flora/junglebush/c, /obj/structure/flora/junglebush/large, /obj/structure/flora/rock/pile/largejungle)
 	flora_density = 40
 	fauna_density = 0.2
@@ -33,12 +33,11 @@
 	flora_density = 65
 	fauna_density = 0.25
 
-/datum/biome/desert
-	turf_type = /turf/open/floor/plating/beach/sand
+/datum/biome/wasteland
+	turf_type = /turf/open/floor/plating/dirt/jungle/wasteland
 
 /datum/biome/water
-	turf_type = /turf/open/water
+	turf_type = /turf/open/water/jungle
 
 /datum/biome/mountain
-	turf_type = /turf/closed/mineral/random
-	flora_density = 0
+	turf_type = /turf/closed/mineral/random/jungle
