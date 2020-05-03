@@ -169,6 +169,13 @@
 		return hand_index || TRUE
 	return FALSE
 
+/mob/proc/force_hand_swap()
+	var/obj/item/left = get_item_for_held_index(LEFT_HANDS)
+	var/obj/item/right = get_item_for_held_index(RIGHT_HANDS)
+	held_items[RIGHT_HANDS] = left
+	held_items[LEFT_HANDS] = right
+	update_inv_hands()
+
 //Puts the item into the first available left hand if possible and calls all necessary triggers/updates. returns 1 on success.
 /mob/proc/put_in_l_hand(obj/item/I)
 	return put_in_hand(I, get_empty_held_index_for_side(LEFT_HANDS))
