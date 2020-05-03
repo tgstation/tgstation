@@ -4,8 +4,8 @@
 #define MOLES_THRESHOLD 2000
 #define POWER_THRESHOLD 5000
 #define LIGHT_SPEED 299792458
-#define PLASMA_CONVERSION_FACTOR 1e-9
-#define FUEL_CONVERSION_FACTOR 1e-10
+#define PLASMA_CONVERSION_FACTOR 1e-8
+#define FUEL_CONVERSION_FACTOR 1e-9
 #define PLANK_LIGHT_CONSTANT 2e-16
 #define CALCULATED_H2RADIUS 120e-4
 #define CALCULATED_TRITRADIUS 230e-3
@@ -105,7 +105,7 @@
 			return
 
 		Energy = (external.gases[/datum/gas/hydrogen][MOLES] + external.gases[/datum/gas/tritium][MOLES] - external.gases[/datum/gas/plasma][MOLES]) * LIGHT_SPEED ** 2
-		InternalPower = (external.gases[/datum/gas/hydrogen][MOLES] / 4000) * (external.gases[/datum/gas/tritium][MOLES] / 4000) * (PI * (2 * (h2comp * CALCULATED_H2RADIUS) * (tritiumcomp * CALCULATED_TRITRADIUS))**2) * Energy
+		InternalPower = (external.gases[/datum/gas/hydrogen][MOLES] / 4000) * (external.gases[/datum/gas/tritium][MOLES] / 4000) * (PI * (2 * (external.gases[/datum/gas/hydrogen][MOLES] / 100 * CALCULATED_H2RADIUS) * (external.gases[/datum/gas/tritium][MOLES] / 100 * CALCULATED_TRITRADIUS))**2) * Energy
 		Core_temperature += InternalPower / 1000
 		deltaTemperature = archived_heat - Core_temperature
 		Conduction = - materialConduct * deltaTemperature
@@ -118,7 +118,7 @@
 
 		if(InternalPower < 0)
 			InternalPower = - InternalPower
-		external.gases[/datum/gas/plasma][MOLES] += InternalPower * PLASMA_CONVERSION_FACTOR / 16
+		external.gases[/datum/gas/plasma][MOLES] += InternalPower * PLASMA_CONVERSION_FACTOR
 		external.gases[/datum/gas/hydrogen][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR
 		external.gases[/datum/gas/tritium][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR
 
