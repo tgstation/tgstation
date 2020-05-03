@@ -34,6 +34,7 @@ var/list/cardTypeLookup = list("name" = 0,
 	icon = temp.state_location
 	icon_state = temp.icon_state
 	id = temp.id
+	transform = matrix(0.3,0,0,0,0.3,0)
 
 /datum/card
 	var/name = "Coder"
@@ -82,7 +83,7 @@ var/list/cardTypeLookup = list("name" = 0,
 
 /obj/item/tcgcard/dropped(mob/user, silent)
 	. = ..()
-	transform = matrix(0.2,0,0,0,0.2,0)
+	transform = matrix(0.3,0,0,0,0.3,0)
 
 /obj/item/cardpack
 	name = "Trading Card Pack: Coder"
@@ -124,6 +125,18 @@ var/list/cardTypeLookup = list("name" = 0,
 					100,
 					1000
 					)
+
+/obj/item/cardpack/Initialize()
+	. = ..()
+	transform = matrix(0.4,0,0,0,0.4,0)
+
+/obj/item/cardpack/equipped(mob/user, slot, initial)
+	. = ..()
+	transform = matrix()
+
+/obj/item/cardpack/dropped(mob/user, silent)
+	. = ..()
+	transform = matrix(0.4,0,0,0,0.4,0)
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
