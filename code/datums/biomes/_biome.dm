@@ -7,16 +7,23 @@
 	/mob/living/simple_animal/hostile/jungle/mook{faction = list("wildlife")} = 50,
 	)
 
+/datum/biome/mudlands
+	turf_type = /turf/open/floor/plating/dirt/dark
+	flora_types = list(/obj/structure/flora/grass/jungle,/obj/structure/flora/grass/jungle/b, /obj/structure/flora/rock/jungle, /obj/structure/flora/rock/pile/largejungle)
+	flora_density = 3
+
+/datum/biome/mudlands/
+
 /datum/biome/plains
 	turf_type = /turf/open/floor/plating/dirt
 	flora_types = list(/obj/structure/flora/grass/jungle,/obj/structure/flora/grass/jungle/b, /obj/structure/flora/tree/jungle, /obj/structure/flora/rock/jungle, /obj/structure/flora/junglebush, /obj/structure/flora/junglebush/b, /obj/structure/flora/junglebush/c, /obj/structure/flora/junglebush/large, /obj/structure/flora/rock/pile/largejungle)
-	flora_density = 20
+	flora_density = 15
 	fauna_density = 0.25
 
 /datum/biome/jungle
 	turf_type = /turf/open/floor/plating/dirt/dark
 	flora_types = list(/obj/structure/flora/grass/jungle,/obj/structure/flora/grass/jungle/b, /obj/structure/flora/tree/jungle, /obj/structure/flora/rock/jungle, /obj/structure/flora/junglebush, /obj/structure/flora/junglebush/b, /obj/structure/flora/junglebush/c, /obj/structure/flora/junglebush/large, /obj/structure/flora/rock/pile/largejungle)
-	flora_density = 65
+	flora_density = 40
 	fauna_density = 0.25
 	fauna_types = list(
 	/mob/living/simple_animal/hostile/jungle/mook{faction = list("wildlife")} = 10,
@@ -25,7 +32,10 @@
 	/mob/living/simple_animal/hostile/jungle/seedling{faction = list("wildlife")} = 10,
 	)
 
-/datum/biome/beach
+/datum/biome/jungle/deep
+	flora_density = 65
+
+/datum/biome/desert
 	turf_type = /turf/open/floor/plating/beach/sand
 
 /datum/biome/water
