@@ -1496,7 +1496,8 @@
 		return BODYTEMP_NORMAL
 	return BODYTEMP_NORMAL + get_body_temp_normal_change()
 
-/mob/living/proc/can_look_up() //Checks if the user is incapacitated.
+///Checks if the user is incapacitated or on cooldown.
+/mob/living/proc/can_look_up()
 	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
 
 /**
