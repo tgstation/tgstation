@@ -63,11 +63,11 @@
 			cut_overlay("improvised_grenade_filled")
 			preprime(user, null, FALSE)
 
-/obj/item/grenade/iedcasing/prime() //Blowing that can up
+/obj/item/grenade/iedcasing/prime(mob/living/lanced_by) //Blowing that can up
 	. = ..()
 	update_mob()
 	explosion(src.loc,-1,-1,2, flame_range = 4)	// small explosion, plus a very large fireball.
-	resolve()
+	qdel(src)
 
 /obj/item/grenade/iedcasing/change_det_time()
 	return //always be random.

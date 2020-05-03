@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - bugfix: "Plants above 60 instability with no new mutations will no longer halve their instability if they would otherwise mutate."

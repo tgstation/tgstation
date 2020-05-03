@@ -11,6 +11,16 @@
   display: table !important;
 }
 
+.Flex--ie8--column {
+  display: block !important;
+
+  & > .Flex__item {
+    display: block !important;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+}
+
 .Flex__item--ie8 {
   display: table-cell !important;
 }

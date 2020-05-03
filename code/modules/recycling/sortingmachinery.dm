@@ -27,7 +27,13 @@
 
 /obj/structure/bigDelivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act()
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += AM
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += AM
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += AM
 
 /obj/structure/bigDelivery/examine(mob/user)
 	. = ..()
@@ -169,7 +175,13 @@
 
 /obj/item/smallDelivery/contents_explosion(severity, target)
 	for(var/atom/movable/AM in contents)
-		AM.ex_act()
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += AM
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += AM
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += AM
 
 /obj/item/smallDelivery/attack_self(mob/user)
 	to_chat(user, "<span class='notice'>You start to unwrap the package...</span>")

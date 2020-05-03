@@ -722,8 +722,8 @@
   *
   * Default behaviour is to send [COMSIG_ATOM_EMAG_ACT] and return
   */
-/atom/proc/emag_act(mob/user)
-	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user)
+/atom/proc/emag_act(mob/user, obj/item/card/emag/E)
+	SEND_SIGNAL(src, COMSIG_ATOM_EMAG_ACT, user, E)
 
 /**
   * Respond to a radioactive wave hitting this atom

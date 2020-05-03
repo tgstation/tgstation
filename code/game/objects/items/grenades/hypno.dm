@@ -7,7 +7,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7
 
-/obj/item/grenade/hypnotic/prime()
+/obj/item/grenade/hypnotic/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
@@ -18,7 +18,7 @@
 	new /obj/effect/dummy/lighting_obj (flashbang_turf, LIGHT_COLOR_PURPLE, (flashbang_range + 2), 4, 2)
 	for(var/mob/living/M in get_hearers_in_view(flashbang_range, flashbang_turf))
 		bang(get_turf(M), M)
-	resolve()
+	qdel(src)
 
 /obj/item/grenade/hypnotic/proc/bang(turf/T, mob/living/M)
 	if(M.stat == DEAD)	//They're dead!

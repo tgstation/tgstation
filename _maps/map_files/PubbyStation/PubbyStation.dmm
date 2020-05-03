@@ -3240,7 +3240,7 @@
 /area/security/main)
 "ajn" = (
 /obj/structure/table,
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_y = 32
 	},
 /obj/machinery/light{
@@ -39463,7 +39463,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/sign/plaques/atmos{
+/obj/structure/plaque/static_plaque/atmos{
 	pixel_y = 32
 	},
 /obj/machinery/light{
