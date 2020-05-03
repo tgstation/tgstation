@@ -15,7 +15,7 @@
 
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
 	/// the exact container path required for the reaction to happen
-	var/required_container = null
+	var/required_container
 	/// an integer required for the reaction to happen
 	var/required_other = 0
 
@@ -24,7 +24,7 @@
 	///Required temperature for the reaction to begin
 	var/required_temp = 0
 	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
-	var/is_cold_recipe = 0
+	var/is_cold_recipe = FALSE
 	///The message shown to nearby people upon mixing, if applicable
 	var/mix_message = "The solution begins to bubble."
 	///The sound played upon mixing, if applicable
