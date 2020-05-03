@@ -912,11 +912,6 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 			dropped(M, FALSE)
 	return ..()
 
-/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin=TRUE, diagonals_first = FALSE, datum/callback/callback, gentle = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NODROP))
-		return
-	return ..()
-
 /obj/item/proc/embedded(atom/embedded_target)
 	return
 
