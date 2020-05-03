@@ -9,7 +9,7 @@
 #define PLANK_LIGHT_CONSTANT 2e-16
 #define CALCULATED_H2RADIUS 120e-4
 #define CALCULATED_TRITRADIUS 230e-3
-#define HIGH_RADIATION_WAVELENGHT 1e-18
+#define HIGH_RADIATION_FACTOR 1e-6
 #define VOID_CONDUCTION 1e-2
 #define MAX_FUSION_RESEARCH 1000
 
@@ -41,6 +41,8 @@
 	var/efficiency = 0
 	var/PowerOutput = 0
 	var/Core_temperature = 273
+	var/gas_power = 0
+	var/Instability = 0
 
 	var/lasercomp = 1 //those need to be tied to the internal components
 	var/upgrades = 1
@@ -77,6 +79,8 @@
 		return
 	var/datum/gas_mixture/env = T.return_air()
 	var/datum/gas_mixture/external
+	if(Core_temperature < 1e6)
+		return
 	if(active)
 		//Remove gas from surrounding area
 		external = env.remove(gasefficency * env.total_moles())
@@ -93,25 +97,33 @@
 		tritiumcomp += clamp(max(external.gases[/datum/gas/tritium][MOLES]/combined_gas, 0) - tritiumcomp, -1, gas_change_rate)
 		h2comp += clamp(max(external.gases[/datum/gas/hydrogen][MOLES]/combined_gas, 0) - h2comp, -1, gas_change_rate)
 
-		if(tritiumcomp == 0 || h2comp == 0)
-			active = FALSE
-			env.merge(external)
-			air_update_turf()
-			return
-		if(Core_temperature < 1000000)
+		if(external.gases[/datum/gas/tritium][MOLES] < 5 || external.gases[/datum/gas/hydrogen][MOLES] < 5)
 			active = FALSE
 			env.merge(external)
 			air_update_turf()
 			return
 
-		Energy = (external.gases[/datum/gas/hydrogen][MOLES] + external.gases[/datum/gas/tritium][MOLES] - external.gases[/datum/gas/plasma][MOLES]) * LIGHT_SPEED ** 2
+		var/toroidal_size = (2 * PI) + TORADIANS(arctan((combined_gas * 10 - TOROID_VOLUME_BREAKEVEN) / TOROID_VOLUME_BREAKEVEN)) //The size of the phase space hypertorus
+		gas_power = 0
+		gas_power += external.gases[/datum/gas/tritium][MOLES] * 55
+		gas_power += external.gases[/datum/gas/hydrogen][MOLES] * 45
+		gas_power += external.gases[/datum/gas/plasma][MOLES] * - 100
+		Instability = 0
+		Instability += MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size)
+		var/internal_instability = 0
+		if(Instability < FUSION_INSTABILITY_ENDOTHERMALITY)
+			internal_instability = 1
+		else
+			internal_instability = -1
+
+		Energy += internal_instability * ((external.gases[/datum/gas/hydrogen][MOLES] + external.gases[/datum/gas/tritium][MOLES] - external.gases[/datum/gas/plasma][MOLES]) * LIGHT_SPEED ** 2)
 		InternalPower = (external.gases[/datum/gas/hydrogen][MOLES] / 4000) * (external.gases[/datum/gas/tritium][MOLES] / 4000) * (PI * (2 * (external.gases[/datum/gas/hydrogen][MOLES] / 100 * CALCULATED_H2RADIUS) * (external.gases[/datum/gas/tritium][MOLES] / 100 * CALCULATED_TRITRADIUS))**2) * Energy
-		Core_temperature += InternalPower / 1000
+		Core_temperature = InternalPower / 1000
 		deltaTemperature = archived_heat - Core_temperature
 		Conduction = - materialConduct * deltaTemperature
 		Radiation = max(- (PLANK_LIGHT_CONSTANT / ((0.0005/lasercomp) * 1e-14)) * deltaTemperature, 0)
 		efficiency = VOID_CONDUCTION * upgrades
-		PowerOutput = efficiency * (InternalPower - Conduction - Radiation)
+		PowerOutput = max(efficiency * (InternalPower - Conduction - Radiation), 0)
 
 		external.temperature += Conduction
 		external.temperature = max(min(external.temperature, MAX_POSSIBLE_HEAT), 0)
@@ -120,7 +132,7 @@
 			InternalPower = - InternalPower
 		external.gases[/datum/gas/plasma][MOLES] += InternalPower * PLASMA_CONVERSION_FACTOR
 		external.gases[/datum/gas/hydrogen][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR
-		external.gases[/datum/gas/tritium][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR
+		external.gases[/datum/gas/tritium][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR * 2
 
 		if(PowerOutput < 0)
 			PowerOutput = - PowerOutput
@@ -128,7 +140,7 @@
 
 		idle_power_usage = Core_temperature / 1e6
 
-		radiation_pulse(src, Radiation / 1000)
+		radiation_pulse(src, Radiation * HIGH_RADIATION_FACTOR)
 		if(prob(30))
 			src.fire_nuclear_particle()
 		env.merge(external)

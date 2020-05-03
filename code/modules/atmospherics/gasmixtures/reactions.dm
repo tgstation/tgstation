@@ -400,7 +400,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
 
-/datum/gas_reaction/fusion
+/*/datum/gas_reaction/fusion
 	exclude = FALSE
 	priority = 2
 	name = "Plasmic Fusion"
@@ -480,7 +480,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.temperature <= FUSION_MAXIMUM_TEMPERATURE || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
 			air.temperature = clamp(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY)
 		return REACTING
-
+*/
 /datum/gas_reaction/nitrousformation //formationn of n2o, esothermic, requires bz as catalyst
 	priority = 3
 	name = "Nitrous Oxide formation"
