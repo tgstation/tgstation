@@ -23,8 +23,6 @@ GLOBAL_DATUM_INIT(openspace_backdrop_light, /atom/movable/openspace_backdrop/lig
 	//mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
-	///Whether or not we have a wall on the tile below us.
-	var/wall_below = FALSE
 
 	intact = 0
 /turf/open/openspace/airless
@@ -50,8 +48,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_light, /atom/movable/openspace_backdrop/lig
 
 /turf/open/openspace/examine(mob/user)
 	. = ..()
-	if(wall_below)
-		. += "<span class='notice'>There seems to be something below that I could walk on</span>"
+	if(isclosedturf(below()))
+		. += "<span class='notice'>There seems to be something below that I could walk on </span>"
 
 /turf/open/openspace/can_have_cabling()
 	if(locate(/obj/structure/lattice/catwalk, src))
@@ -69,11 +67,9 @@ GLOBAL_DATUM_INIT(openspace_backdrop_light, /atom/movable/openspace_backdrop/lig
 	if(isclosedturf(below)) //If wall_below is false, it means we havn't switched to remove the backdrop yet
 		vis_contents -= GLOB.openspace_backdrop
 		vis_contents += GLOB.openspace_backdrop_light
-		wall_below = TRUE
 	else //This implies that we have no wall below us, but havn't updated this yet
 		vis_contents -= GLOB.openspace_backdrop_light
 		vis_contents += GLOB.openspace_backdrop
-		wall_below = FALSE
 
 	if(init)
 		vis_contents += below
@@ -99,7 +95,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_light, /atom/movable/openspace_backdrop/lig
 	return TRUE
 
 /turf/open/openspace/zPassOut(atom/movable/A, direction, turf/destination)
-	if(wall_below)
+	if(isclosedturf(below()))
 		return FALSE
 	if(A.anchored)
 		return FALSE
