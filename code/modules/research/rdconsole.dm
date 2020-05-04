@@ -674,7 +674,7 @@ Nothing else in the console has ID requirements.
 		for(var/v in stored_research.researched_nodes)
 			res += SSresearch.techweb_node_by_id(v)
 		for(var/v in stored_research.available_nodes)
-			if(stored_research.researched_nodes[v])
+			if(stored_research.researched_nodes[v] || stored_research.hidden_nodes[v])
 				continue
 			avail += SSresearch.techweb_node_by_id(v)
 		for(var/v in stored_research.visible_nodes)
