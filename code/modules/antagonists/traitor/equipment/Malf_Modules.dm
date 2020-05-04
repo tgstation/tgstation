@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
-	if (active)
+	if (active || owner.stat == DEAD)
 		return //prevent the AI from activating an already active doomsday
 	active = TRUE
 	set_us_up_the_bomb(owner)
