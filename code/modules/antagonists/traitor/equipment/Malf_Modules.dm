@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
-		return	
+		return
 	if(!timing)
 		STOP_PROCESSING(SSfastprocess, src)
 		return
