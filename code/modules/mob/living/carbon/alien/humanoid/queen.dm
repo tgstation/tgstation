@@ -35,32 +35,32 @@
 
 /mob/living/carbon/alien/humanoid/royal/queen/Life()
 	..()
-	if(client)
-		if(life_ticks_to_wait)
-			life_ticks_to_wait--
-			return
-		life_ticks_to_wait = initial(life_ticks_to_wait)
-		var/living_humans = 0
-		var/total_humans = length(GLOB.human_list)
-		for(var/H in GLOB.human_list)
-			var/mob/living/carbon/human/human = H
-			if(!human.client || human.stat == DEAD )
-				continue
-			living_humans++
-
-		if(living_humans < total_humans/10 && !nuking && !neutralized)
-			INVOKE_ASYNC(src, .proc/nuke_it_from_orbit)
+	if(!client)
+		return
+	if(life_ticks_to_wait)
+		life_ticks_to_wait--
+		return
+	life_ticks_to_wait = initial(life_ticks_to_wait)
+	var/living_humans = 0
+	var/total_humans = length(GLOB.human_list)
+	for(var/H in GLOB.human_list)
+		var/mob/living/carbon/human/human = H
+		if(!human.client || human.stat == DEAD )
+			continue
+		living_humans++
+	if(living_humans < total_humans/10 && !nuking && !neutralized)
+		INVOKE_ASYNC(src, .proc/nuke_it_from_orbit)
 
 /mob/living/carbon/alien/humanoid/royal/queen/proc/nuke_it_from_orbit()
 	nuking = TRUE
-	sleep(50)
+	addtimer(src, CALLBACK(), 50)
 	priority_announce("Hostile Lifeforms Identified. Extreme Biohazard Alert. Determining Containment Solutions","Central Command Update", 'sound/misc/notice1.ogg')
-	sleep(400)
+	addtimer(src, CALLBACK(), 400)
 	priority_announce("Containment Solution Identified. Initiating Station Self Destruct Protocol.")
-	sleep(50)
+	addtimer(src, CALLBACK(), 50)
 	set_security_level("delta")
 	SSshuttle.lockdown = TRUE
-	sleep(200)
+	addtimer(src, CALLBACK(), 200)
 	if(src && client && stat != DEAD) //queen is still alive- you didn't prevent this!
 		sound_to_playing_players('sound/machines/alarm.ogg')
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/xenomorph_nuke), 120)
