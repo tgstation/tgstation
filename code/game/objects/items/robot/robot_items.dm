@@ -632,6 +632,10 @@
 	. = ..()
 	host = loc
 
+/obj/item/borg/projectile_dampen/cyborg_unequip(mob/user)
+	deactivate_field()
+	. = ..()
+
 /obj/item/borg/projectile_dampen/on_mob_death()
 	deactivate_field()
 	. = ..()

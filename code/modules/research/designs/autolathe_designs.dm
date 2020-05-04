@@ -384,7 +384,7 @@
 	build_path = /obj/item/storage/bag/tray
 	category = list("initial","Dinnerware")
 
-/datum/design/tray
+/datum/design/cafeteria_tray
 	name = "Cafeteria Tray"
 	id = "foodtray"
 	build_type = AUTOLATHE
@@ -1065,6 +1065,30 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
 	build_path = /obj/item/toy/ammo/gun
+	category = list("hacked", "Misc")
+
+/datum/design/toy_balloon
+	name = "Plastic Balloon"
+	id = "toy_balloon"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 1200)
+	build_path = /obj/item/toy/balloon
+	category = list("hacked", "Misc")
+
+/datum/design/toy_meteor
+	name = "Plastic Toy Meteor"
+	id = "toy_meteor"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/toy/minimeteor
+	category = list("hacked", "Misc")
+
+/datum/design/toy_armblade
+	name = "Plastic Armblade"
+	id = "toy_armblade"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 2000)
+	build_path = /obj/item/toy/foamblade
 	category = list("hacked", "Misc")
 
 /datum/design/plastic_tree

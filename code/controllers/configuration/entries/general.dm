@@ -8,6 +8,10 @@
 /datum/config_entry/flag/auto_deadmin_players
 	protection = CONFIG_ENTRY_LOCKED
 
+/datum/config_entry/number/auto_deadmin_timegate
+	config_entry_value = null
+	protection = CONFIG_ENTRY_LOCKED
+
 /datum/config_entry/flag/auto_deadmin_antagonists
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -73,6 +77,8 @@
 
 /datum/config_entry/flag/log_emote	// log emotes
 
+/datum/config_entry/flag/log_econ	// log economy actions
+
 /datum/config_entry/flag/log_adminchat	// log admin chat messages
 	protection = CONFIG_ENTRY_LOCKED
 
@@ -89,6 +95,9 @@
 /datum/config_entry/flag/log_job_debug	// log roundstart divide occupations debug information to a file
 
 /datum/config_entry/flag/log_shuttle // log shuttle related actions, ie shuttle computers, shuttle manipulator, emergency console
+
+/// Whether demos are written, if not set demo SS never initializes
+/datum/config_entry/flag/demos_enabled
 
 /datum/config_entry/flag/allow_admin_ooccolor	// Allows admins with relevant permissions to have their own ooc colour
 

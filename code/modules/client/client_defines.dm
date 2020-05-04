@@ -138,3 +138,6 @@
 	var/middragtime = 0
 	//Middle-mouse-button clicked object control for aimbot exploit detection.
 	var/atom/middragatom
+
+	/// Messages currently seen by this client
+	var/list/seen_messages

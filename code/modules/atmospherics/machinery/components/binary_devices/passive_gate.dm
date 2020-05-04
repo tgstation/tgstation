@@ -28,13 +28,13 @@ Passive gate is similar to the regular pump except:
 
 	ui_x = 335
 	ui_y = 115
-	
+
 /obj/machinery/atmospherics/components/binary/passive_gate/CtrlClick(mob/user)
 	if(can_interact(user))
 		on = !on
 		update_icon()
 	return ..()
-	
+
 /obj/machinery/atmospherics/components/binary/passive_gate/AltClick(mob/user)
 	if(can_interact(user))
 		target_pressure = MAX_OUTPUT_PRESSURE
@@ -106,7 +106,7 @@ Passive gate is similar to the regular pump except:
 																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_pump", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "AtmosPump", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_data()

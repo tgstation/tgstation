@@ -10,7 +10,7 @@
 	requires_ntnet_feature = NTNET_SOFTWAREDOWNLOAD
 	available_on_ntnet = 0
 	ui_header = "downloader_finished.gif"
-	tgui_id = "ntos_net_downloader"
+	tgui_id = "NtosNetDownloader"
 	ui_x = 480
 	ui_y = 735
 
