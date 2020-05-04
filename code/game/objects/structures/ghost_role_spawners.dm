@@ -648,6 +648,7 @@
 	roundstart = FALSE
 	death = FALSE
 	show_flavour = FALSE
+	random = TRUE
 	icon = 'icons/obj/machines/sleeper.dmi'
 	icon_state = "sleeper_s"
 	short_desc = "You are a syndicate operative on old ship, stuck in hostile space."
@@ -661,6 +662,7 @@
 
 /obj/effect/mob_spawn/human/syndicatespace/special(mob/living/new_spawn)
 	new_spawn.grant_language(/datum/language/codespeak, TRUE, TRUE, LANGUAGE_MIND)
+	new_spawn.mind.add_antag_datum(/datum/antagonist/cybersun)
 	var/policy = get_policy(assignedrole)
 	if(policy)
 		to_chat(new_spawn, "<span class='bold'>[policy]</span>")
@@ -675,6 +677,9 @@
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
 	H.faction |= ROLE_SYNDICATE
+
+/obj/effect/mob_spawn/human/syndicatespace/captain/special(mob/living/new_spawn)
+	new_spawn.mind.add_antag_datum(/datum/antagonist/cybersun/captain)
 
 /obj/effect/mob_spawn/human/syndicatespace/captain/Destroy()
 	new/obj/structure/fluff/empty_sleeper/syndicate/captain(get_turf(src))

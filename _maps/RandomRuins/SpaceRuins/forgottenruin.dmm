@@ -328,9 +328,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bc" = (
-/obj/effect/mob_spawn/human/corpse/syndicatesoldier{
-	outfit = /datum/outfit/syndicatespace/syndicrew
-	},
+/obj/effect/mob_spawn/human/corpse/syndicatesoldier,
 /turf/open/floor/plating/airless,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bd" = (
@@ -353,9 +351,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bg" = (
 /obj/structure/table/optable,
-/obj/effect/mob_spawn/human/corpse/syndicatesoldier{
-	outfit = /datum/outfit/syndicatespace/syndicrew
-	},
+/obj/effect/mob_spawn/human/corpse/syndicatesoldier,
 /turf/open/floor/plastic,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bh" = (
