@@ -489,8 +489,8 @@
 	secure = 1
 	},
 /obj/item/crowbar/red,
-/obj/item/ammo_box/magazine/m9mm,
-/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm_aps,
+/obj/item/ammo_box/magazine/m9mm_aps,
 /turf/open/floor/carpet/royalblack,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bx" = (
@@ -693,10 +693,8 @@
 	req_one_access_txt = "150";
 	secure = 1
 	},
-/obj/item/crowbar/red,
-/obj/item/ammo_box/magazine/m10mm,
-/obj/item/ammo_box/magazine/m10mm,
-/turf/open/floor/mineral/plastitanium,
+/obj/item/ammo_box/c9mm,
+/turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "bZ" = (
 /turf/closed/wall/r_wall/syndicate,
@@ -732,8 +730,10 @@
 	req_one_access_txt = "150";
 	secure = 1
 	},
-/obj/item/ammo_box/c10mm,
-/turf/open/floor/mineral/plastitanium/red,
+/obj/item/crowbar/red,
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cf" = (
 /obj/structure/displaycase{
@@ -765,6 +765,11 @@
 	state_open = 1
 	},
 /turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"ci" = (
+/obj/structure/table,
+/obj/item/ammo_box/c9mm,
+/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cj" = (
 /obj/machinery/stasis,
@@ -1100,11 +1105,6 @@
 /turf/open/floor/plasteel/dark/side{
 	dir = 1
 	},
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
-"da" = (
-/obj/structure/table,
-/obj/item/ammo_box/c10mm,
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "db" = (
 /obj/structure/toilet{
@@ -1903,7 +1903,7 @@ bZ
 aM
 bD
 al
-bY
+ce
 bZ
 bZ
 aa
@@ -1947,7 +1947,7 @@ aN
 cC
 bc
 bZ
-bY
+ce
 bE
 al
 al
@@ -2045,7 +2045,7 @@ al
 al
 al
 cc
-da
+ci
 bZ
 aa
 aa
@@ -2088,7 +2088,7 @@ cy
 cE
 cV
 bZ
-bY
+ce
 bE
 al
 al
@@ -2138,7 +2138,7 @@ bZ
 aM
 bD
 al
-bY
+ce
 bZ
 ac
 aa
@@ -2740,14 +2740,14 @@ aa
 aa
 aq
 aE
-ce
+bY
 bW
 aw
 cS
 aw
 bW
 cg
-ce
+bY
 bZ
 aa
 aa
