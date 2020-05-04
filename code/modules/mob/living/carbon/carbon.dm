@@ -1075,3 +1075,15 @@
 
 	if(shoes && !(HIDESHOES in obscured) && shoes.washed(washer))
 		update_inv_shoes()
+
+//FULP: This code used to be in human.dm, but we've moved it here (and improved it) so that mulebots and motorized wheelchairs can run over both humans AND monkeys (and xenos)
+/mob/living/carbon/Crossed(atom/movable/AM)
+	if(istype(AM, /mob/living/simple_animal/bot/mulebot)) //are we being run over by a mulebot?
+		var/mob/living/simple_animal/bot/mulebot/MB = AM
+		MB.RunOver(src)
+	else if(istype(AM, /obj/vehicle/ridden/wheelchair/motorized)) //are we being run over by a motorized wheelchair?
+		var/obj/vehicle/ridden/wheelchair/motorized/MW = AM
+		if(MW.t5 >= 15 && !(MW.pulledby)) //is that wheelchair fully upgraded with T5 parts? also, is it NOT being pulled by someone?
+			MW.RunOver(src)
+	. = ..()
+
