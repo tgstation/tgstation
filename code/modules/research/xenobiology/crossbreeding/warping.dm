@@ -605,7 +605,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	///mob the hologram will copy
 	var/mob/living/holo_host
 	///used to remember the recent speech of the holo_host
-	var/list/recent_speech = list()
+	var/list/recent_speech
 	///used to remember the timer ID that activates holo_talk
 
 
@@ -616,7 +616,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 /obj/effect/warped_rune/ceruleanspace/proc/holo_talk()
-	if(holotile && length(recent_speech))
+	if(holotile && length(recent_speech)) //the proc should'nt be called if the list is empty in the first place but we might as well make sure.
 		holotile.say(recent_speech[pick(recent_speech)]) //say one of the 10 latest sentence said by the holo_host
 		addtimer(CALLBACK(src, .proc/holo_talk), 100, TIMER_OVERRIDE|TIMER_UNIQUE)
 
@@ -656,12 +656,16 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 				break
 
 	if(length(say_log) > 10) //we're going to get up to the last 10 sentences spoken by the holo_host
-		recent_speech = say_log.Copy(say_log.len - 11,0)
+		recent_speech = say_log.Copy(say_log.len - 11, 0)
 	else
 		for(var/spoken_memory in say_log)
 			if(recent_speech.len >= 10)
 				break
 			recent_speech[spoken_memory] = say_log[spoken_memory]
+
+	if(!length(recent_speech)) //lazy lists don't work here for whatever reason so we set it to null manually if the list is empty.
+		recent_speech = null
+		return
 
 	addtimer(CALLBACK(src, .proc/holo_talk), 100, TIMER_OVERRIDE|TIMER_UNIQUE)
 
@@ -853,7 +857,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	desc = "We will make an army to conquer bluespace itself. We have no shortage of willing soldiers after all."
 	max_cooldown = 100
 	///used to remember the mobs currently contained by the rune
-	var/list/mob_list = list()
+	var/list/mob_list
 
 
 /obj/effect/warped_rune/goldspace/Initialize()
@@ -875,7 +879,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		if(istype(captured,/mob/living/simple_animal/hostile/megafauna) || captured.stat == DEAD) //Megafaunas are too thick to be proper soldiers
 			return
 
-		mob_list += captured.type
+		LAZYADD(mob_list, captured.type)
 		qdel(captured)
 		playsound(rune_turf, 'sound/effects/splat.ogg', 20, TRUE)
 		to_chat(user,"<span class='warning'>The rune somehow absorbs [captured] into itself!</span>")
@@ -889,11 +893,8 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 	for(var/mob_type in mob_list)
 		var/mob/living/simple_animal/hostile/spawned_mob = new mob_type(rune_turf)
-		spawned_mob.GiveTarget(crossing)
-		//make crossing a priority target for the mobs.
-		//they WILL attack others if they lose their target however.
-		//Because they are given a target from the get go they will react much faster after spawn than usual.
-		mob_list -= mob_type
+		spawned_mob.GiveTarget(crossing)//Because they are given a target from the get go they will react much faster after spawn than usual.
+		LAZYREMOVE(mob_list, mob_type)
 		cooldown = world.time + max_cooldown //you can't instantly reuse the rune to send the mobs back into the rune.
 
 
@@ -1061,7 +1062,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	icon_state = "oil_rune"
 	desc = "The world is ending, but we have one last trick up our sleeve, we will survive."
 	///used to remember the oilspace_bunker specific to this rune
-	var/list/bunker_list = list()
+	var/list/bunker_list
 
 
 /obj/effect/oilspace_bunker //we'll surround the rune with these so it "blocks" nearby explosions. Although only the rune itself is 100% protected
@@ -1078,16 +1079,14 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	. = ..()
 	for(var/turf/bunker_turf in range(1,rune_turf))
 		var/obj/effect/oilspace_bunker/bunker_wall = new /obj/effect/oilspace_bunker(bunker_turf)
-		bunker_list += bunker_wall
+		LAZYADD(bunker_list, bunker_wall)
 
 
 /obj/effect/warped_rune/oilspace/Destroy()
 	for(var/obj/effect/oilspace_bunker/bunker_wall in range(1,rune_turf))
 		if(bunker_wall in bunker_list)
-			bunker_list -= bunker_wall
+			LAZYREMOVE(bunker_list, bunker_wall)
 			qdel(bunker_wall)
-		if(!length(bunker_list))
-			bunker_list = null //no need to keep an empty list around
 			return ..()
 
 
@@ -1109,7 +1108,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	///the template of the warped_room map
 	var/datum/map_template/warped_room/rune_room
 	///list of people that teleported into the rune_room. The room will dissapear if the list is empty and the rune is destroyed.
-	var/list/customer_list = list()
+	var/list/customer_list
 
 
 /obj/effect/warped_room_exit
@@ -1157,9 +1156,9 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		return
 	for(var/mob/living/carbon/human/customer in hidden_customers)
 		if(smuggle_in)
-			customer_list += customer //if they enter the room
+			LAZYADD(customer_list, customer) //if they enter the room
 		else
-			customer_list -= customer //if they exit the room
+			LAZYREMOVE(customer_list, customer) //if they exit the room
 
 
 /obj/effect/warped_rune/rainbowspace/attack_hand(mob/living/user)
@@ -1169,10 +1168,9 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		customer_check(customer, TRUE)
 
 
-///Will delete the room when the rune is destroyed if no customer is left in the room
+///Will delete the room when the rune is destroyed if no customer is left in the room.
 /obj/effect/warped_rune/rainbowspace/Destroy()
 	if(!length(customer_list))
-		customer_list = null
 		qdel(room_reservation)
 	return ..()
 
@@ -1186,7 +1184,6 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		enter_rune.customer_check(customer, FALSE)
 
 	if(!length(enter_rune.customer_list) && !locate(enter_rune) in exit_turf) //deletes the room if the rune doesn't exist anymore and all customers have left
-		enter_rune.customer_list = null
 		qdel(enter_rune.room_reservation)
 		qdel(src)
 		return ..()
