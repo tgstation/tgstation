@@ -502,7 +502,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/dangerous/aps
 	name = "Stechkin APS Machine Pistol"
-	desc = "A ancient Soviet machine pistol that uses 9mm auto rounds in 15-round magazines and is compatible \
+	desc = "A ancient Soviet machine pistol, refurbished for the modern age. Uses 9mm auto rounds in 15-round magazines and is compatible \
 			with suppressors. The gun fires in three round bursts."
 	item = /obj/item/gun/ballistic/automatic/pistol/aps
 	cost = 10
