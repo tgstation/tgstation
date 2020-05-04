@@ -291,7 +291,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
-	var/mob/living/silicon/ai/owner_AI = owner
+	var/mob/living/silicon/ai/owner_AI = src.owner 
 	if(!T || !is_station_level(T.z))
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		SSshuttle.clearHostileEnvironment(src)
