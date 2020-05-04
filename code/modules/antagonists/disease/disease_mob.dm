@@ -15,6 +15,7 @@ the new instance inside the host to be updated to the template's stats.
 	move_on_shuttle = FALSE
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
+	see_invisible = SEE_INVISIBLE_LIVING
 	layer = BELOW_MOB_LAYER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight = SEE_SELF|SEE_THRU
