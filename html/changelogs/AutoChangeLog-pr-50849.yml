@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes: 
+  - bugfix: "RnD Consoles will no longer list BEPIS-exclusive research nodes in list view as available for research."
