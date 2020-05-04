@@ -18,7 +18,7 @@
 	var/datum/tgs_event_handler/event_handler
 
 /datum/tgs_api/v5/ApiVersion()
-	return new /datum/tgs_version("5.1.0")
+	return new /datum/tgs_version("5.0.0")
 
 /datum/tgs_api/v5/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)
 	src.event_handler = event_handler
