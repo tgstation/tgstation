@@ -3,6 +3,45 @@
 #define DOCKING_PORT_HIGHLIGHT
 #endif
 
+GLOBAL_LIST_INIT(blacklisted_lavaland_types, typecacheof(list(
+		/mob/living/simple_animal/hostile, //Generally, any hostile mob is not allowed back in the station.
+		/obj/item/immortality_talisman,
+		/obj/item/book_of_babel,
+		/obj/item/gun/magic/hook,
+		/obj/item/wisp_lantern,
+		/obj/item/reagent_containers/glass/bottle/potion/flight,
+		/obj/item/katana/cursed,
+		/obj/item/clothing/glasses/godeye,
+		/obj/item/melee/ghost_sword,
+		/obj/item/clothing/suit/space/hardsuit/cult,
+		/obj/item/voodoo,
+		/obj/item/grenade/clusterbuster/inferno,
+		/obj/item/clothing/neck/necklace/memento_mori,
+		/obj/item/organ/heart/cursed/wizard,
+		/obj/item/clothing/suit/hooded/cloak/drake,
+		/obj/item/dragons_blood,
+		/obj/item/lava_staff,
+		/obj/item/ship_in_a_bottle,
+		/obj/item/gun/magic/staff/honk,
+		/obj/item/kitchen/knife/envy,
+		/obj/item/gun/ballistic/revolver/russian/soul,
+		/obj/item/veilrender/vealrender,
+		/obj/item/guardiancreator,
+		/obj/item/rod_of_asclepius,
+		/obj/item/clothing/suit/space/hardsuit/ert/paranormal,
+		/obj/item/prisoncube,
+		/obj/item/staff/storm,
+		/obj/item/hierophant_club,
+		/obj/item/melee/transforming/cleaving_saw,
+		/obj/item/organ/vocal_cords/colossus,
+		/obj/machinery/anomalous_crystal,
+		/obj/item/mayhem,
+		/obj/item/blood_contract,
+		/obj/item/gun/magic/staff/spellblade,
+		/obj/item/clothing/suit/space/hostile_environment,
+		/obj/item/clothing/head/helmet/space/hostile_environment
+	)))
+
 //NORTH default dir
 /obj/docking_port
 	invisibility = INVISIBILITY_ABSTRACT
@@ -349,6 +388,23 @@
 
 //this is a hook for custom behaviour. Maybe at some point we could add checks to see if engines are intact
 /obj/docking_port/mobile/proc/canMove()
+	if(is_mining_level(z))
+		return check_for_lavaland_items(shuttle_areas)
+	return TRUE
+
+///Checks if any of the atoms on the shuttle are bringing cursed atoms from Lavaland.
+/proc/check_for_lavaland_items(areaInstances)
+	for(var/place in areaInstances)
+		var/area/shuttle/shuttle_area = place
+		for(var/trf in shuttle_area)
+			var/turf/T = trf
+			for(var/a in T.GetAllContents())
+				if(is_type_in_typecache(a, GLOB.blacklisted_lavaland_types) && !istype(a, /obj/docking_port))
+					return FALSE
+				if(ishuman(a))
+					var/mob/living/carbon/human/H = a
+					if(is_species(H, /datum/species/lizard/ashwalker))
+						return FALSE //BUILD, THE, WALL.
 	return TRUE
 
 //this is to check if this shuttle can physically dock at dock S
