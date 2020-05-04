@@ -160,7 +160,7 @@
 
 /obj/machinery/mineral/ore_redemption/default_unfasten_wrench(mob/user, obj/item/I)
 	. = ..()
-	if(!.)
+	if(. != SUCCESSFUL_UNFASTEN)
 		return
 	if(anchored)
 		register_input_turf() // someone just wrenched us down, re-register the turf
