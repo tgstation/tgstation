@@ -101,6 +101,7 @@ window.onerror = function (msg, url, line, col, error) {
   // Short-circuit further updates
   window.__updateQueue__ = [];
   window.update = function () {};
+  window.reinit = function () {};
   // Prevent default action
   return true;
 };

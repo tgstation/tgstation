@@ -141,3 +141,6 @@
 
 	/// Messages currently seen by this client
 	var/list/seen_messages
+
+	/// stack of window ids that are free to be recycled into
+	var/list/free_tgui_windows = list()

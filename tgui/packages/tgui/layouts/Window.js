@@ -8,7 +8,7 @@ import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { IS_IE8, runCommand, winset } from '../byond';
+import { IS_IE8, runCommand, winset, callByond } from '../byond';
 import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { dragStartHandler, resizeStartHandler } from '../drag';
@@ -50,8 +50,10 @@ export class Window extends Component {
           onClose={() => {
             logger.log('pressed close');
             releaseHeldKeys();
-            winset(config.window, 'is-visible', false);
-            runCommand(`uiclose ${config.ref}`);
+            callByond('', {
+              src: config.ref,
+              action: 'tgui:close',
+            });
           }} />
         <div
           className={classes([

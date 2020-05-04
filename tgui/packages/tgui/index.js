@@ -29,7 +29,7 @@ import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate } from './backend';
-import { IS_IE8 } from './byond';
+import { IS_IE8, callByond } from './byond';
 import { setupDrag } from './drag';
 import { logger } from './logging';
 import { createStore, StoreProvider } from './store';
@@ -140,6 +140,14 @@ const setupApp = () => {
       : stateJson;
     // Backend update dispatches a store action
     store.dispatch(backendUpdate(state));
+  };
+
+  window.reinit = newRef => {
+    window.__ref__ = newRef;
+    callByond('', {
+      ref: window.__ref__,
+      action: 'tgui:initialize',
+    });
   };
 
   // Enable hot module reloading

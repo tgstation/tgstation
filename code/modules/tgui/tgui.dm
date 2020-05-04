@@ -99,34 +99,44 @@
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
 
-	// Build window options
-	var/window_options = "can_minimize=0;auto_format=0;"
-	// If we have a width and height, use them.
-	if(width && height)
-		window_options += "size=[width]x[height];"
-	// Remove titlebar and resize handles for a fancy window
-	if(user.client.prefs.tgui_fancy)
-		window_options += "titlebar=0;can_resize=0;"
+	var/list/free_windows = user.client.free_tgui_windows
+	if(length(free_windows))
+		//Use a recycled window
+		window_id = free_windows[length(free_windows)]
+		free_windows -= window_id
+		user << output(url_encode(ref(src)), "[window_id].browser:reinit")
+		winset(user.client, window_id, "is-visible=true")
 	else
-		window_options += "titlebar=1;can_resize=1;"
+		//Create a new window
+		// Build window options
+		var/window_options = "can_minimize=0;auto_format=0;"
+		// If we have a width and height, use them.
+		if(width && height)
+			window_options += "size=[width]x[height];"
+		// Remove titlebar and resize handles for a fancy window
+		if(user.client.prefs.tgui_fancy)
+			window_options += "titlebar=0;can_resize=0;"
+		else
+			window_options += "titlebar=1;can_resize=1;"
 
-	// Generate page html
-	var/html
-	html = SStgui.basehtml
-	// Allow the src object to override the html if needed
-	html = src_object.ui_base_html(html)
-	// Replace template tokens with important UI data
-	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
-	// be tagged, so this is an effective unwrap
-	html = replacetextEx(html, "\[tgui:ref]", "\ref[src]")
+		// Generate page html
+		var/html
+		html = SStgui.basehtml
+		// Allow the src object to override the html if needed
+		html = src_object.ui_base_html(html)
+		// Replace template tokens with important UI data
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
+		html = replacetextEx(html, "\[tgui:ref]", "\ref[src]")
 
-	// Open the window.
-	user << browse(html, "window=[window_id];[window_options]")
+		// Open the window.
+		user << browse(html, "window=[window_id];[window_options]")
 
-	// Instruct the client to signal UI when the window is closed.
-	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
-	// be tagged, so this is an effective unwrap
-	winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
+		// Instruct the client to signal UI when the window is closed.
+		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+		// be tagged, so this is an effective unwrap
+		winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
+
 
 	// Pre-fetch initial state while browser is still loading in
 	// another thread
@@ -137,6 +147,7 @@
 	_initial_update = url_encode(get_json(initial_data, initial_static_data))
 
 	SStgui.on_open(src)
+
 
 /**
  * public
@@ -161,8 +172,18 @@
  *
  * Close the UI, and all its children.
  */
-/datum/tgui/proc/close()
-	user << browse(null, "window=[window_id]") // Close the window.
+/datum/tgui/proc/close(recycle = TRUE)
+	if(status == UI_CLOSING)
+		return
+	status = UI_CLOSING
+	if(!recycle || (user.client && length(user.client.free_tgui_windows) >= MAX_RECYCLED_WINDOWS))
+		//destroy the window
+		user << browse(null, "window=[window_id]")
+	else
+		//hide the window
+		winset(user.client, window_id, "is-visible=false")
+		//Add the window id to the free windows stack
+		user.client.free_tgui_windows += window_id
 	src_object.ui_close(user)
 	SStgui.on_close(src)
 	for(var/datum/tgui/child in children) // Loop through and close all children.
@@ -233,10 +254,14 @@
 	if(user != usr)
 		return // Something is not right here.
 
+	to_chat(world, "href received: [href], [href_list]")
+
 	var/action = href_list["action"]
 	var/params = href_list; params -= "action"
 
 	switch(action)
+		if("tgui:close")
+			close()
 		if("tgui:initialize")
 			user << output(_initial_update, "[window_id].browser:update")
 			initialized = TRUE

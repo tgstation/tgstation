@@ -150,7 +150,7 @@
 
 	// If we found the UI, close it.
 	if(istype(ui))
-		ui.close()
+		ui.close(FALSE)
 		// Unset machine just to be sure.
 		if(src && src.mob)
 			src.mob.unset_machine()
