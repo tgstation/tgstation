@@ -457,22 +457,18 @@
 	metabolization_rate = 2 * REAGENTS_METABOLISM
 	overdose_threshold = 30
 
-/datum/reagent/drug/pumpup/on_mob_metabolize(mob/living/L)
-	..()
-	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-
-/datum/reagent/drug/pumpup/on_mob_end_metabolize(mob/living/L)
-	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	..()
-
 /datum/reagent/drug/pumpup/on_mob_life(mob/living/carbon/M)
 	M.Jitter(5)
-
+	M.adjustStaminaLoss (-5, 0)
+	
 	if(prob(5))
 		to_chat(M, "<span class='notice'>[pick("Go! Go! GO!", "You feel ready...", "You feel invincible...")]</span>")
-	if(prob(15))
+	if(prob(30))
 		M.losebreath++
 		M.adjustToxLoss(2, 0)
+		M.adjustOrganLoss(ORGAN_SLOT_HEART, 1)
+	else if(prob(10))
+		M.adjustOrganLoss(ORGAN_SLOT_HEART, 4)
 	..()
 	. = 1
 
@@ -483,6 +479,7 @@
 	M.Jitter(5)
 	if(prob(5))
 		M.drop_all_held_items()
+		M.adjustOrganLoss(ORGAN_SLOT_HEART, 10)
 	if(prob(15))
 		M.emote(pick("twitch","drool"))
 	if(prob(20))

@@ -36,4 +36,4 @@
 
 /datum/chemical_reaction/pumpup
 	results = list(/datum/reagent/drug/pumpup = 5)
-	required_reagents = list(/datum/reagent/medicine/epinephrine = 2, /datum/reagent/consumable/coffee = 5)
+	required_reagents = list(/datum/reagent/medicine/epinephrine = 2, /datum/reagent/consumable/coffee = 5, /datum/reagent/consumable/ethanol/thirteenloko = 10)

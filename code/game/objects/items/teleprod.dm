@@ -13,11 +13,11 @@
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
 		if(do_teleport(user, get_turf(user), 50, channel = TELEPORT_CHANNEL_BLUESPACE))//honk honk
 			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-			user.Paralyze(stun_time*3)
+			user.Paralyze(15 SECONDS)
 			deductcharge(cell_hit_cost)
 		else
 			SEND_SIGNAL(user, COMSIG_LIVING_MINOR_SHOCK)
-			user.Paralyze(stun_time*3)
+			user.Paralyze(15 SECONDS)
 			deductcharge(cell_hit_cost/4)
 		return
 	else

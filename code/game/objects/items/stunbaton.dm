@@ -15,24 +15,22 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	throwforce = 7
-	var/throw_stun_chance = 35
-
+	//The likelihood of a thrown baton to apply it's stun effect. Otherwise, it's simply a standard non-stun hit.
+	var/throw_stun_chance = 100
+	
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cell_hit_cost = 1000
+	var/cell_hit_cost = 500 //How much do we deduct from our cell per hit
 	var/can_remove_cell = TRUE
 
+	//This var is used internally to determine if the baton is on or off.
 	var/turned_on = FALSE
 	var/activate_sound = "sparks"
 
-	var/attack_cooldown_check = 0 SECONDS
-	var/attack_cooldown = 2.5 SECONDS
 	var/stun_sound = 'sound/weapons/egloves.ogg'
-
-	var/confusion_amt = 10
-	var/stamina_loss_amt = 60
-	var/apply_stun_delay = 2 SECONDS
-	var/stun_time = 5 SECONDS
+	
+	//This var determines the upfront stamina damage of the baton. This is used in the stun attack effect, and not the after effect. This value is reduced by armor.
+	var/stamina_loss_amt = 30
 
 	var/convertible = TRUE //if it can be converted with a conversion kit
 
@@ -165,16 +163,18 @@
 	update_icon()
 	add_fingerprint(user)
 
+///The clumsy check is used only for those who are clowns and clown-like. Honk.
 /obj/item/melee/baton/proc/clumsy_check(mob/living/carbon/human/user)
 	if(turned_on && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
 		playsound(src, stun_sound, 75, TRUE, -1)
 		user.visible_message("<span class='danger'>[user] accidentally hits [user.p_them()]self with [src]!</span>", \
 							"<span class='userdanger'>You accidentally hit yourself with [src]!</span>")
-		user.Knockdown(stun_time*3) //should really be an equivalent to attack(user,user)
+		user.Knockdown(15 SECONDS) //should really be an equivalent to attack(user,user)
 		deductcharge(cell_hit_cost)
 		return TRUE
 	return FALSE
 
+///This handles the special function that allows the baton to be used nonharmfully while also applying the stun effect regardless of intent. It also is where our clumsy check and martial counter, or CQC block, check is made.
 /obj/item/melee/baton/attack(mob/M, mob/living/carbon/human/user)
 	if(clumsy_check(user))
 		return FALSE
@@ -191,10 +191,9 @@
 
 	if(user.a_intent != INTENT_HARM)
 		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				if(baton_effect(M, user))
-					user.do_attack_animation(M)
-					return
+			if(baton_effect(M, user))
+				user.do_attack_animation(M)
+				return
 			else
 				to_chat(user, "<span class='danger'>The baton is still charging!</span>")
 		else
@@ -202,16 +201,12 @@
 							"<span class='warning'>[user] prods you with [src]. Luckily it was off.</span>")
 	else
 		if(turned_on)
-			if(attack_cooldown_check <= world.time)
-				baton_effect(M, user)
+			baton_effect(M, user)
 		..()
 
-
+///This is the stun effect of the baton. It handles the stamina damage and other effects inflicted upon the attack, checks if the target has recently been hit with a baton, and handles logging.
 /obj/item/melee/baton/proc/baton_effect(mob/living/L, mob/user)
 	if(shields_blocked(L, user))
-		return FALSE
-	if(HAS_TRAIT_FROM(L, TRAIT_IWASBATONED, user)) //no doublebaton abuse anon!
-		to_chat(user, "<span class='danger'>[L] manages to avoid the attack!</span>")
 		return FALSE
 	if(iscyborg(loc))
 		var/mob/living/silicon/robot/R = loc
@@ -220,15 +215,17 @@
 	else
 		if(!deductcharge(cell_hit_cost))
 			return FALSE
-	/// After a target is hit, we do a chunk of stamina damage, along with other effects.
-	/// After a period of time, we then check to see what stun duration we give.
+	//the zone the damage is applied against; the target's chest
+	var/chest = L.get_bodypart(BODY_ZONE_CHEST)
+	//how much the target's chest armor will block of the stamina damage
+	var/zap_block = L.run_armor_check(chest, "melee")
+	
+	/// After a target is hit, we do a chunk of stamina damage, reduced by the target's armor
 	L.Jitter(20)
-	L.confused = max(confusion_amt, L.confused)
 	L.stuttering = max(8, L.stuttering)
-	L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
+	L.apply_damage(stamina_loss_amt, STAMINA, chest, zap_block)
 
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
-	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), apply_stun_delay)
 
 	if(user)
 		L.lastattacker = user.real_name
@@ -243,29 +240,14 @@
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
 
-	attack_cooldown_check = world.time + attack_cooldown
-
-	ADD_TRAIT(L, TRAIT_IWASBATONED, user)
-	addtimer(TRAIT_CALLBACK_REMOVE(L, TRAIT_IWASBATONED, user), attack_cooldown)
-
-	return 1
-
-/// After the initial stun period, we check to see if the target needs to have the stun applied.
-/obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
-	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
-	if(!target.IsKnockdown())
-		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
-
-	if(trait_check)
-		target.Knockdown(stun_time * 0.1)
-	else
-		target.Knockdown(stun_time)
+	return TRUE
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
 	if (!(. & EMP_PROTECT_SELF))
 		deductcharge(1000 / severity)
 
+///This is to ensure that the stun effect doesn't occur despite the attack being blocked by a shield or shield like effect, like hardsuit shields.
 /obj/item/melee/baton/proc/shields_blocked(mob/living/L, mob/user)
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
@@ -285,9 +267,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	force = 3
 	throwforce = 5
-	stun_time = 5 SECONDS
 	cell_hit_cost = 2000
-	throw_stun_chance = 10
 	slot_flags = ITEM_SLOT_BACK
 	convertible = FALSE
 	var/obj/item/assembly/igniter/sparkler = 0
