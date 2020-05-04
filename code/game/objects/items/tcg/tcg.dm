@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 			totalCards++
 			cardsByCount["[template.id]"] += 1
 	var/toSend = "Out of [totalCards] cards"
-	for(var/id in sortList(cardsByCount))
+	for(var/id in sortList(cardsByCount, /proc/cmp_num_string_asc))
 		if(id)
 			toSend += "\nID:[id] [GLOB.card_list["[id]"].name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
 	message_admins(toSend)
