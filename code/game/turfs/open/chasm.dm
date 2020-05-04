@@ -14,6 +14,11 @@
 	. = ..()
 	AddComponent(/datum/component/chasm, SSmapping.get_turf_below(src))
 
+/// Lets people walk into chasms.
+/turf/open/chasm/CanAllowThrough(atom/movable/AM, turf/target)
+	. = ..()
+	return TRUE
+
 /turf/open/chasm/proc/set_target(turf/target)
 	var/datum/component/chasm/chasm_component = GetComponent(/datum/component/chasm)
 	chasm_component.target_turf = target
