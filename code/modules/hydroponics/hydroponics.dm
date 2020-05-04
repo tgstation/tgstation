@@ -607,8 +607,9 @@
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
-				H.adjustWater(round(reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/(trays.len)))
-				reagent_source.reagents.remove_reagent(/datum/reagent/water, reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/(trays.len))
+				var/water_amt = reagent_source.reagents.get_reagent_amount(/datum/reagent/water) * split / reagent_source.reagents.total_volume
+				H.adjustWater(round(water_amt))
+				reagent_source.reagents.remove_reagent(/datum/reagent/water, water_amt)
 			reagent_source.reagents.trans_to(H.reagents, split, transfered_by = user)
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
@@ -687,13 +688,13 @@
 			return
 		else
 			user.visible_message("<span class='notice'>[user] grafts off a limb from [src].</span>", "<span class='notice'>You carefully graft off a portion of [src].</span>")
-			var/obj/item/graft/snip = new /obj/item/graft(loc)
-			if(myseed.graft_gene)
-				snip.stored_trait = new myseed.graft_gene
-			snip.parent_seed = myseed
+			var/obj/item/graft/snip = myseed.create_graft()
+			if(!snip)
+				return // The plant did not return a graft.
+
+			snip.forceMove(drop_location())
 			myseed.grafted = TRUE
 			adjustHealth(-5)
-			snip.name += " ([snip.parent_seed.plantname])"
 			return
 
 	else if(istype(O, /obj/item/geneshears))
@@ -729,19 +730,12 @@
 
 	else if(istype(O, /obj/item/graft))
 		var/obj/item/graft/snip = O
-		var/datum/plant_gene/trait/new_trait = snip.stored_trait
 		if(!myseed)
 			to_chat(user, "<span class='notice'>The tray is empty.</span>")
 			return
-		if(new_trait.can_add(myseed))
-			myseed.genes += snip.stored_trait
-		//Alright this one's a mess, but it's either 2/3rds of the difference of the two seed's respective stats, and the higher of the two is taken. Min 0, max 100.
-		myseed.lifespan =  round(clamp(max(myseed.lifespan,(myseed.lifespan+(2/3)*(snip.parent_seed.lifespan-myseed.lifespan))),0,100))
-		myseed.endurance =  round(clamp(max(myseed.endurance,(myseed.endurance+(2/3)*(snip.parent_seed.endurance-myseed.endurance))),0,100))
-		myseed.production = round(clamp(max(myseed.production,(myseed.production+(2/3)*(snip.parent_seed.production-myseed.production))),0,100))
-		myseed.weed_rate = round(clamp(max(myseed.weed_rate,(myseed.weed_rate+(2/3)*(snip.parent_seed.weed_rate-myseed.weed_rate))),0,100))
-		myseed.weed_chance = round(clamp(max(myseed.weed_chance,(myseed.weed_chance+(2/3)*(snip.parent_seed.weed_chance-myseed.weed_chance))),0,100))
-		myseed.yield = round(clamp(max(myseed.yield,(myseed.yield+(2/3)*(snip.parent_seed.yield-myseed.yield))),0,10))
+		if(!myseed.apply_graft(snip))
+			to_chat(user, "<span class='warning'>The [myseed.plantname] rejects the [snip]!</span>")
+			return
 		qdel(snip)
 		to_chat(user, "<span class='notice'>You carefully integrate the grafted plant limb onto [myseed.plantname].</span>")
 		return

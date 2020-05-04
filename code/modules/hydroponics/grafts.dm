@@ -14,6 +14,19 @@
 	var/graft_appearance
 	///Seed type that the graft was taken from, used for applying parent stats.
 	var/obj/item/seeds/parent_seed = null
+	///The lifespan stat of the parent seed when the graft was taken.
+	var/lifespan
+	///The endurance stat of the parent seed when the graft was taken.
+	var/endurance
+	///The production stat of the parent seed when the graft was taken.
+	var/production
+	///The weed_rate stat of the parent seed when the graft was taken.
+	var/weed_rate
+	///The weed_chance stat of the parent seed when the graft was taken.
+	var/weed_chance
+	///The yield stat of the parent seed when the graft was taken.
+	var/yield
+
 
 /obj/item/graft/Initialize()
 	. = ..()
