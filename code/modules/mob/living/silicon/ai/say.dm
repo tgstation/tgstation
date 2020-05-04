@@ -59,50 +59,16 @@
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
 #define VOX_DELAY 600
-/mob/living/silicon/ai/verb/announcement_help()
-
-	set name = "Announcement Help"
-	set desc = "Display a list of vocal words to announce to the crew."
-	set category = "AI Commands"
-
-	if(incapacitated())
-		return
-
-	var/dat = {"
-	<font class='bad'>WARNING:</font> Misuse of the announcement system will get you job banned.<BR><BR>
-	Here is a list of words you can type into the 'Announcement' button to create sentences to vocally announce to everyone on the same level at you.<BR>
-	<UL><LI>You can also click on the word to PREVIEW it.</LI>
-	<LI>You can only say 30 words for every announcement.</LI>
-	<LI>Do not use punctuation as you would normally, if you want a pause you can use the full stop and comma characters by separating them with spaces, like so: 'Alpha . Test , Bravo'.</LI>
-	<LI>Numbers are in word format, e.g. eight, sixty, etc </LI>
-	<LI>Sound effects begin with an 's' before the actual word, e.g. scensor</LI>
-	<LI>Use Ctrl+F to see if a word exists in the list.</LI></UL><HR>
-	"}
-
-	var/index = 0
-	for(var/word in GLOB.vox_sounds)
-		index++
-		dat += "<A href='?src=[REF(src)];say_word=[word]'>[capitalize(word)]</A>"
-		if(index != GLOB.vox_sounds.len)
-			dat += " / "
-
-	var/datum/browser/popup = new(src, "announce_help", "Announcement Help", 500, 400)
-	popup.set_content(dat)
-	popup.open()
-
-
 /mob/living/silicon/ai/proc/announcement()
 	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
-
-	var/message = input(src, "WARNING: Misuse of this verb can result in you being job banned. More help is available in 'Announcement Help'", "Announcement", src.last_announcement) as text|null
+	var/max_characters = 240 // magic number but its the cap 15 allows
+	var/message = input(src, "Use the power of 15.ai to say anything! (240 character maximum)", "15.ai VOX System", src.last_announcement) as text|null
 
 	if(!message || announcing_vox > world.time)
 		return
-
-	last_announcement = message
 
 	if(incapacitated())
 		return
@@ -111,35 +77,40 @@
 		to_chat(src, "<span class='warning'>Wireless interface disabled, unable to interact with announcement PA.</span>")
 		return
 
-	var/list/words = splittext(trim(message), " ")
-	var/list/incorrect_words = list()
-
-	if(words.len > 30)
-		words.len = 30
-
-	for(var/word in words)
-		word = lowertext(trim(word))
-		if(!word)
-			words -= word
-			continue
-		if(!GLOB.vox_sounds[word])
-			incorrect_words += word
-
-	if(incorrect_words.len)
-		to_chat(src, "<span class='notice'>These words are not available on the announcement system: [english_list(incorrect_words)].</span>")
+	if(length(message) > max_characters)
+		to_chat(src, "<span class='notice'>You have too many characters! You used [length(message)] characters, you need to lower this to 240 or lower.</span>")
+	var/regex/check_for_bad_chars = regex("\[^a-zA-Z!?.,' :\]+")
+	if(check_for_bad_chars.Find(message))
+		to_chat(src, "<span class='notice'>These characters are not available on the 15.ai system: [english_list(check_for_bad_chars.group)].</span>")
 		return
+
+	var/character_to_use = "Soldier" // temp, will allow choosing soon
+
+	last_announcement = message
 
 	announcing_vox = world.time + VOX_DELAY
 
 	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
-
-	for(var/word in words)
-		play_vox_word(word, src.z, null)
+	play_vox_word(message, character_to_use, src.z, null)
 
 
-/proc/play_vox_word(word, z_level, mob/only_listener)
+/proc/play_vox_word(message, character, z_level, mob/only_listener)
+	var/api_url = "https://api.fifteen.ai/app/getAudioFile"
 
-	word = lowertext(word)
+	var/datum/http_request/req = new()
+	var/params = list(
+	"text" = message,
+	"character" = character,
+	"emotion" = "Neutral"
+	)
+	if(character == "GLadOS")
+		params["emotion"] = "Homicidal"
+
+	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "", params)
+	req.begin_async()
+	UNTIL(req.is_complete())
+	world.log << "15.AI: POST returned [req._raw_response]"
+	/*word = lowertext(word)
 
 	if(GLOB.vox_sounds[word])
 
@@ -158,7 +129,7 @@
 		else
 			SEND_SOUND(only_listener, voice)
 		return 1
-	return 0
+	return 0*/
 
 #undef VOX_DELAY
 #endif
