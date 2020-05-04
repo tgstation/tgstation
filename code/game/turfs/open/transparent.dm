@@ -63,6 +63,10 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 
+/turf/open/transparent/glass/Initialize()
+	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
+	return ..()
+
 /turf/open/transparent/glass/reinforced
 	name = "Reinforced glass floor"
 	desc = "Do jump on it, it can take it."
