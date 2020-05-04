@@ -544,12 +544,6 @@
 		cooldown = world.time
 		owner.playsound_local(box, 'sound/misc/box_deploy.ogg', 50, TRUE)
 
-/datum/action/item_action/rig
-	background_icon_state = "bg_tech_blue"
-
-/datum/action/item_action/rig/deploy
-	name = "Deploy RIGsuit"
-
 //Preset for spells
 /datum/action/spell_action
 	check_flags = NONE

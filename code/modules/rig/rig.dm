@@ -50,12 +50,15 @@
 	var/list/initial_modules = list()
 	///Person wearing the RIGsuit
 	var/mob/living/carbon/human/wearer
+	var/datum/action/item_action/rig/deploy/deploy
 
 /obj/item/rig/control/Initialize()
 	..()
 	START_PROCESSING(SSobj,src)
 	icon_state = "[theme]-module"
 	wires = new /datum/wires/rig(src)
+	deploy = new
+	deploy.rig = src
 	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
 		locked = FALSE
 	if(cell)
@@ -80,15 +83,27 @@
 /obj/item/rig/control/Destroy()
 	..()
 	QDEL_NULL(wires)
+	QDEL_NULL(deploy)
 
 /obj/item/rig/control/process()
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
 		seconds_electrified--
-	if(cell.charge > 0)
-		cell.charge -= cell_usage
+	if(cell.charge > 0 && active)
+		if((cell.charge -= cell_usage) < 0)
+			cell.charge = 0
+		else
+			cell.charge -= cell_usage
 
-/obj/item/rig/control/equipped(mob/user)
-	wearer = user
+/obj/item/rig/control/equipped(mob/user, slot)
+	..()
+	if(slot == ITEM_SLOT_BACK)
+		deploy.Grant(src)
+		wearer = user
+
+/obj/item/rig/control/dropped(mob/user)
+	..()
+	QDEL_NULL(deploy)
+	wearer = null
 
 /obj/item/rig/control/proc/shock(mob/living/user)
 	if(!istype(wearer) || cell.charge < 1)
@@ -103,57 +118,54 @@
 /obj/item/rig/control/proc/install()
 	return
 
-/obj/item/rig/control/proc/deploy()
-	if(!wearer)
-		return
-	if(wearer.wear_suit != src)
-		to_chat(wearer, "<span class='warning'>You must be wearing [src] to engage the helmet!</span>")
-		return
-	if(wearer.head)
-		to_chat(wearer, "<span class='warning'>You're already wearing something on your head!</span>")
-		return
-	else if(wearer.equip_to_slot_if_possible(helmet,ITEM_SLOT_HEAD,0,0,1))
-		to_chat(wearer, "<span class='notice'>You engage the helmet on the hardsuit.</span>")
-		wearer.update_inv_wear_suit()
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-	if(wearer.wear_suit)
-		to_chat(wearer, "<span class='warning'>You're already wearing something on your body!</span>")
-		return
-	else if(wearer.equip_to_slot_if_possible(chestplate,ITEM_SLOT_OCLOTHING,0,0,1))
-		to_chat(wearer, "<span class='notice'>You engage the chestplate on the hardsuit.</span>")
-		wearer.update_inv_wear_suit()
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-	if(wearer.gloves)
-		to_chat(wearer, "<span class='warning'>You're already wearing something on your arms!</span>")
-		return
-	else if(wearer.equip_to_slot_if_possible(gauntlets,ITEM_SLOT_HANDS,0,0,1))
-		to_chat(wearer, "<span class='notice'>You engage the gauntlets on the hardsuit.</span>")
-		wearer.update_inv_wear_suit()
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
-	if(wearer.shoes)
-		to_chat(wearer, "<span class='warning'>You're already wearing something on your legs!</span>")
-		return
-	else if(wearer.equip_to_slot_if_possible(boots,ITEM_SLOT_FEET,0,0,1))
-		to_chat(wearer, "<span class='notice'>You engage the boots on the hardsuit.</span>")
-		wearer.update_inv_wear_suit()
-		playsound(src.loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
+/obj/item/rig/control/proc/deploy(piece)
+	var/obj/item/mastapiece = piece
+	if(wearer.equip_to_slot_if_possible(mastapiece,mastapiece.slot_flags,0,0,1))
+		to_chat(wearer, "<span class='notice'>[piece] deploys with a mechanical hiss.</span>")
+		playsound(loc, 'sound/mecha/mechmove03.ogg', 25, TRUE)
+	else
+		to_chat(wearer, "<span class='warning'>You are already wearing something there! Remove it and try again.</span>")
 
 /obj/item/clothing/head/helmet/space/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-helmet"
 	mob_overlay_icon = 'icons/mob/rig.dmi'
+	var/obj/item/rig/control/rig
+
+/obj/item/clothing/head/helmet/space/rig/dropped(mob/user)
+	forceMove(rig)
+	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/suit/space/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-chestplate"
 	mob_overlay_icon = 'icons/mob/rig.dmi'
+	var/obj/item/rig/control/rig
+
+/obj/item/clothing/suit/space/rig/dropped(mob/user)
+	forceMove(rig)
+	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/gloves/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-gauntlets"
 	mob_overlay_icon = 'icons/mob/rig.dmi'
+	var/obj/item/rig/control/rig
+
+/obj/item/clothing/gloves/rig/dropped(mob/user)
+	forceMove(rig)
+	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
 
 /obj/item/clothing/shoes/rig
 	icon = 'icons/obj/rig.dmi'
 	icon_state = "rig-boots"
 	mob_overlay_icon = 'icons/mob/rig.dmi'
+	var/obj/item/rig/control/rig
+
+/obj/item/clothing/shoes/rig/dropped(mob/user)
+	forceMove(rig)
+	to_chat(user, "<span class='notice'>[src] retracts back into [rig] with a mechanical hiss.</span>")
+	playsound(loc, 'sound/mecha/mechmove03.ogg', 50, TRUE)
