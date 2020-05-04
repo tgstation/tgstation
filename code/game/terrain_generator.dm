@@ -77,3 +77,4 @@
 
 /area/mine/planetgeneration
 	name = "planet generation area"
+	dynamic_lighting = DYNAMIC_LIGHTING_DISABLED
