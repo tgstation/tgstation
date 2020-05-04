@@ -1181,8 +1181,8 @@
 
 /obj/item/storage/box/stockparts/cybersun/PopulateContents()
 	var/static/items_inside = list(
-		/obj/item/stock_parts/matter_bin/super = 6,
-		/obj/item/stock_parts/manipulator/pico = 5,
+		/obj/item/stock_parts/matter_bin = 6,
+		/obj/item/stock_parts/manipulator = 5,
 		/obj/item/reagent_containers/glass/beaker = 4)
 	generate_items_inside(items_inside,src)
 
