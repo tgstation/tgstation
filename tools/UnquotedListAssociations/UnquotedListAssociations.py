@@ -31,7 +31,7 @@ def unquoted_list_associations_scan_dir(scan_dir):
             for root, dirs, files in os.walk(scan_dir):
                 for f in files:
                     if log_output:
-                        print str(f)
+                        print(str(f))
                     scan_result = scan_dm_file_for_unquoted_list_associations(os.path.join(root, f))
                     files_scanned += 1
                     if scan_result:
@@ -50,8 +50,8 @@ def scan_dm_file_for_unquoted_list_associations(_file):
     global total_unquoted_list_associations
     if not _file.endswith(".dm"):
         return False
-    
-    with open(_file, "r") as dm_file:
+
+    with open(_file, "r", errors="ignore", encoding="utf-8") as dm_file:
         filecontents = dm_file.read()
 
         unquoted_list_associations = []
@@ -65,9 +65,9 @@ def scan_dm_file_for_unquoted_list_associations(_file):
         for matchtuple in re.findall(r"(?:list\(|,)\s*(\w+)\s*,*\s*=\s*(\w+)", listdefs):
             if not define_dict.get(matchtuple[0], False): #defines are valid
                 unquoted_list_associations.append(matchtuple)
-                
+
         count = len(unquoted_list_associations)
-            
+
         if count:
             file_report = ".."+scan_dir+str(_file).split(scan_dir)[1]+" " #crop it down to ..\code\DIR\FILE.dm, everything else is developer specific
             for nla in unquoted_list_associations:
@@ -91,12 +91,12 @@ def scan_dm_file_for_defines(_file):
     if not _file.endswith(".dm"):
         return False
 
-    with open(_file, "r") as dm_file:
+    with open(_file, "r", errors="ignore", encoding="utf-8") as dm_file:
         filecontents = dm_file.read()
 
         for define_def in re.findall(r"#define\s+([\w()]+)[ \t]+[^\n]+", filecontents):
             define_dict[define_def] = True
 
-        
+
 unquoted_list_associations_scan_dir(real_dir)
-print "Done!"
+print(f"Done!")
