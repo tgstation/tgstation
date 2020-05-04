@@ -1,7 +1,6 @@
 /turf/open/transparent
 	baseturfs = /turf/open/transparent/openspace
 	intact = FALSE //this means wires go on top
-	var/can_show_space = FALSE
 	var/show_pipes = FALSE
 
 /turf/open/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
@@ -23,10 +22,8 @@
 	var/turf/T = below()
 	if(!T)
 		vis_contents.len = 0
-		if(can_show_space)
-			var/mutable_appearance/underlay_appearance = mutable_appearance('icons/turf/space.dmi', icon_state = SPACE_ICON_STATE, layer = TURF_LAYER, plane = PLANE_SPACE)
-			underlays += underlay_appearance
-		else if(prune_on_fail)
+		show_bottom_level()
+		if(prune_on_fail)
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return FALSE
 	if(init)
@@ -43,6 +40,18 @@
 		return
 	update_multiz()
 
+///Called when there is no real turf below this turf
+/turf/open/transparent/proc/show_bottom_level()
+	var/turf/path = SSmapping.level_trait(z, ZTRAIT_BASETURF) || /turf/open/space
+	if(!ispath(path))
+		path = text2path(path)
+		if(!ispath(path))
+			warning("Z-level [z] has invalid baseturf '[SSmapping.level_trait(z, ZTRAIT_BASETURF)]'")
+			path = /turf/open/space
+	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER, plane = PLANE_SPACE)
+	underlays += underlay_appearance
+
+
 /turf/open/transparent/glass
 	name = "Glass floor"
 	desc = "Dont jump on it, or do, I'm not your mom."
@@ -50,7 +59,6 @@
 	icon_state = "floor_glass"
 	smooth = SMOOTH_MORE
 	canSmoothWith = list(/turf/open/transparent/glass, /turf/open/transparent/glass/reinforced)
-	can_show_space = TRUE
 	footstep = FOOTSTEP_PLATING
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
 	clawfootstep = FOOTSTEP_HARD_CLAW
