@@ -19,6 +19,9 @@ GLOBAL_VAR(restart_counter)
   *
   */
 /world/New()
+	var/extools = world.GetConfig("env", "EXTOOLS_DLL") || "./byond-extools.dll"
+	if (fexists(extools))
+		call(extools, "maptick_initialize")()
 	enable_debugger()
 
 	//Early profile for auto-profiler - will be stopped on profiler init if necessary.

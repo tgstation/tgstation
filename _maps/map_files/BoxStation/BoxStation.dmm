@@ -3717,7 +3717,7 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ajd" = (
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_y = 32
 	},
 /obj/effect/turf_decal/tile/red{
@@ -15448,6 +15448,7 @@
 /obj/effect/turf_decal/tile/bar{
 	dir = 1
 	},
+/obj/item/paicard,
 /turf/open/floor/plasteel,
 /area/crew_quarters/bar)
 "aQa" = (
@@ -35049,7 +35050,7 @@
 /turf/open/floor/plating,
 /area/engine/atmos)
 "bSD" = (
-/obj/structure/sign/plaques/atmos{
+/obj/structure/plaque/static_plaque/atmos{
 	pixel_y = -32
 	},
 /obj/structure/table,
@@ -56349,6 +56350,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"wBV" = (
+/obj/structure/table,
+/obj/structure/disposalpipe/segment,
+/obj/item/paicard,
+/turf/open/floor/plasteel,
+/area/crew_quarters/locker)
 "wCV" = (
 /obj/docking_port/stationary{
 	dir = 8;
@@ -75517,7 +75524,7 @@ aOq
 aPD
 aQT
 ixk
-aTC
+wBV
 aTC
 aUY
 aXv

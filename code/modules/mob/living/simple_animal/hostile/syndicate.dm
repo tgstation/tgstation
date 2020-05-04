@@ -173,7 +173,7 @@
 	minimum_distance = 5
 	icon_state = "syndicate_pistol"
 	icon_living = "syndicate_pistol"
-	casingtype = /obj/item/ammo_casing/c10mm
+	casingtype = /obj/item/ammo_casing/c9mm
 	projectilesound = 'sound/weapons/gun/pistol/shot.ogg'
 	loot = list(/obj/effect/gibspawner/human)
 	dodging = FALSE

@@ -28561,7 +28561,7 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "beE" = (
-/obj/structure/sign/plaques/atmos,
+/obj/structure/plaque/static_plaque/atmos,
 /turf/closed/wall,
 /area/engine/atmos)
 "beF" = (
@@ -38381,7 +38381,7 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "bwh" = (
-/obj/structure/sign/plaques/golden{
+/obj/structure/plaque/static_plaque/golden{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/red,
@@ -50796,7 +50796,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/heads/captain)
 "bQW" = (
-/obj/structure/sign/plaques/golden/captain{
+/obj/structure/plaque/static_plaque/golden/captain{
 	pixel_x = 32
 	},
 /turf/open/floor/wood,

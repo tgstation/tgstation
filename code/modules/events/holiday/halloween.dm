@@ -55,8 +55,3 @@
 		/obj/item/reagent_containers/food/snacks/chocolatebar,
 		/obj/item/organ/brain ) // OH GOD THIS ISN'T CANDY!
 		new type(src)
-
-/obj/item/card/emag/halloween
-	name = "hack-o'-lantern"
-	desc = "It's a pumpkin with a cryptographic sequencer sticking out."
-	icon_state = "hack_o_lantern"

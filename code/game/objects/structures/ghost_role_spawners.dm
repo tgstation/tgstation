@@ -672,7 +672,7 @@
 	short_desc = "You are the captain of an old ship, stuck in hostile space."
 	flavour_text = "Your ship docks after a long time somewhere in hostile space, reporting a malfunction. You are stuck here, with Nanotrasen station nearby. Command your crew and turn your ship into the most protected fortress."
 	important_info = "Protect the ship and secret documents in your backpack with your own life."
-	outfit = /datum/outfit/syndicatespace/syndicaptain
+	outfit = /datum/outfit/syndicatespace/syndicrew/syndicaptain
 	assignedrole = ROLE_SYNDICATE_CYBERSUN_CAPTAIN
 
 /datum/outfit/syndicatespace/syndicaptain/post_equip(mob/living/carbon/human/H)
@@ -700,7 +700,7 @@
 	id = /obj/item/card/id/syndicate_command/crew_id
 	implants = list(/obj/item/implant/weapons_auth)
 
-/datum/outfit/syndicatespace/syndicaptain
+/datum/outfit/syndicatespace/syndicrew/syndicaptain
 	name = "Syndicate Ship Captain"
 	suit = /obj/item/clothing/suit/armor/vest/capcarapace/syndicate
 	head = /obj/item/clothing/head/HoS/beret/syndicate

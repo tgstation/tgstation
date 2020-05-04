@@ -626,7 +626,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/large/empty, 3), \
 	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/food/drinks/colocup, 1), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2), \
-	new /datum/stack_recipe("blank sign", /obj/item/sign_backing, 1)))
+	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"

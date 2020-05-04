@@ -1158,7 +1158,7 @@
 /obj/machinery/status_display/evac{
 	pixel_y = 32
 	},
-/obj/structure/sign/plaques/golden/captain{
+/obj/structure/plaque/static_plaque/golden/captain{
 	pixel_x = 32
 	},
 /obj/item/gun/energy/laser/retro,
