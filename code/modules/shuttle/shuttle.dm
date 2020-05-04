@@ -393,7 +393,7 @@ GLOBAL_LIST_INIT(blacklisted_lavaland_types, typecacheof(list(
 	return TRUE
 
 ///Checks if any of the atoms on the shuttle are bringing cursed atoms from Lavaland.
-/proc/check_for_lavaland_items(areaInstances)
+/obj/docking_port/mobile/proc/check_for_lavaland_items(areaInstances)
 	for(var/place in areaInstances)
 		var/area/shuttle/shuttle_area = place
 		for(var/trf in shuttle_area)
