@@ -696,11 +696,11 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/ammo_box/magazine/m10mm{
+/obj/item/ammo_box/magazine/m9mm_aps{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm_aps,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "hX" = (
@@ -1038,7 +1038,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/secure/weapon,
-/obj/item/gun/ballistic/automatic/pistol/APS,
+/obj/item/gun/ballistic/automatic/pistol/aps,
 /turf/open/floor/plasteel/airless/dark,
 /area/shuttle/caravan/freighter2)
 "js" = (
