@@ -37,9 +37,9 @@ GLOBAL_VAR(restart_counter)
 
 	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = GLOB.world_shuttle_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
 
-	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
-
 	GLOB.revdata = new
+
+	InitTgs()
 
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
@@ -75,6 +75,10 @@ GLOBAL_VAR(restart_counter)
 
 	if(TEST_RUN_PARAMETER in params)
 		HandleTestRun()
+
+/world/proc/InitTgs()
+	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
+	GLOB.revdata.load_tgs_info()
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
