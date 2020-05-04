@@ -172,7 +172,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
 	if (active || owner.stat == DEAD)
-		return //prevent the AI from activating an already active doomsday
+		return //prevent the AI from activating an already active doomsday or while they are dead
 	active = TRUE
 	set_us_up_the_bomb(owner)
 
@@ -296,6 +296,15 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
 		return
+	if(owner_AI.stat == DEAD && src.timing == TRUE && owner_AI.nuking = TRUE)
+		set_security_level("red")
+		src.timing = FALSE
+		owner_AI.nuking = FALSE
+		for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
+			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
+			P.alert = FALSE
+		SSshuttle.clearHostileEnvironment(src)
+		qdel(src)
 	if(!timing)
 		STOP_PROCESSING(SSfastprocess, src)
 		return
