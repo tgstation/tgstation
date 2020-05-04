@@ -121,22 +121,32 @@
 		return
 	switch(pick)
 		if("Trash bag")
+			if(!mybag)
+				return
 			user.put_in_hands(mybag)
 			to_chat(user, "<span class='notice'>You take [mybag] from [src].</span>")
 			mybag = null
 		if("Mop")
+			if(!mymop)
+				return
 			user.put_in_hands(mymop)
 			to_chat(user, "<span class='notice'>You take [mymop] from [src].</span>")
 			mymop = null
 		if("Broom")
+			if(!mybroom)
+				return
 			user.put_in_hands(mybroom)
 			to_chat(user, "<span class='notice'>You take [mybroom] from [src].</span>")
 			mybroom = null
 		if("Spray bottle")
+			if(!myspray)
+				return
 			user.put_in_hands(myspray)
 			to_chat(user, "<span class='notice'>You take [myspray] from [src].</span>")
 			myspray = null
 		if("Light replacer")
+			if(!myreplacer)
+				return
 			user.put_in_hands(myreplacer)
 			to_chat(user, "<span class='notice'>You take [myreplacer] from [src].</span>")
 			myreplacer = null
