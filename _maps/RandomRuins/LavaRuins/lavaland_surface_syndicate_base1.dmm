@@ -505,19 +505,19 @@
 	pixel_y = 6
 	},
 /obj/item/ammo_box/c10mm,
-/obj/item/ammo_box/magazine/m10mm{
+/obj/item/ammo_box/magazine/m9mm{
 	pixel_x = -5;
 	pixel_y = 5
 	},
-/obj/item/ammo_box/magazine/m10mm{
+/obj/item/ammo_box/magazine/m9mm{
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/ammo_box/magazine/m10mm{
+/obj/item/ammo_box/magazine/m9mm{
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/ammo_box/magazine/m10mm{
+/obj/item/ammo_box/magazine/m9mm{
 	pixel_x = 4;
 	pixel_y = -4
 	},
@@ -2452,7 +2452,7 @@
 /area/ruin/unpowered/syndicate_lava_base/main)
 "hM" = (
 /obj/structure/table/wood,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/sniper_rounds,
 /obj/machinery/airalarm/syndicate{
 	pixel_y = 24
@@ -2478,7 +2478,7 @@
 /area/ruin/unpowered/syndicate_lava_base/dormitories)
 "hQ" = (
 /obj/structure/table/wood,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm,
 /obj/machinery/airalarm/syndicate{
 	pixel_y = 24
 	},
@@ -3357,7 +3357,7 @@
 /area/ruin/unpowered/syndicate_lava_base/bar)
 "jA" = (
 /obj/structure/table/wood,
-/obj/item/ammo_box/magazine/m10mm,
+/obj/item/ammo_box/magazine/m9mm,
 /obj/item/ammo_box/magazine/sniper_rounds,
 /turf/open/floor/plasteel/grimy,
 /area/ruin/unpowered/syndicate_lava_base/dormitories)

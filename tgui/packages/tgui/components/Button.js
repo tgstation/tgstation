@@ -1,9 +1,9 @@
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';
-import { tridentVersion } from '../byond';
+import { IS_IE8 } from '../byond';
 import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from '../hotkeys';
+import { refocusLayout } from '../layouts';
 import { createLogger } from '../logging';
-import { refocusLayout } from '../refocus';
 import { Box } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
@@ -41,7 +41,7 @@ export const Button = props => {
   // IE8: Use a lowercase "onclick" because synthetic events are fucked.
   // IE8: Use an "unselectable" prop because "user-select" doesn't work.
   return (
-    <Box as="span"
+    <Box
       className={classes([
         'Button',
         fluid && 'Button--fluid',
@@ -55,7 +55,7 @@ export const Button = props => {
         className,
       ])}
       tabIndex={!disabled && '0'}
-      unselectable={tridentVersion <= 4}
+      unselectable={IS_IE8}
       onclick={e => {
         refocusLayout();
         if (!disabled && onClick) {

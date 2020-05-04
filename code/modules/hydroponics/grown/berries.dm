@@ -10,6 +10,7 @@
 	maturation = 5
 	production = 5
 	yield = 2
+	instability = 30
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "berry-grow" // Uses one growth icons set for all the subtypes
 	icon_dead = "berry-dead" // Same for the dead icon
@@ -93,6 +94,7 @@
 	genes = list(/datum/plant_gene/trait/glow/white, /datum/plant_gene/trait/repeated_harvest)
 	reagents_add = list(/datum/reagent/uranium = 0.25, /datum/reagent/iodine = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
+	graft_gene = /datum/plant_gene/trait/glow/white
 
 /obj/item/reagent_containers/food/snacks/grown/berries/glow
 	seed = /obj/item/seeds/berry/glow
@@ -118,6 +120,7 @@
 	maturation = 5
 	production = 5
 	growthstages = 5
+	instability = 15
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_grow = "cherry-grow"
 	icon_dead = "cherry-dead"
@@ -175,6 +178,7 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.07, /datum/reagent/consumable/sugar = 0.07)
 	rarity = 10
+	graft_gene = /datum/plant_gene/trait/glow/pink
 
 /obj/item/reagent_containers/food/snacks/grown/cherrybulbs
 	seed = /obj/item/seeds/cherry/bulb

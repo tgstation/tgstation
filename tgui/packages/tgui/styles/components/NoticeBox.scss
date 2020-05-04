@@ -1,13 +1,16 @@
+@use 'sass:color';
+@use '../colors.scss';
 @use '../functions.scss' as *;
 
 // NoticeBox
-$color-first: #bb9b68 !default;
-$color-second: #b1905d !default;
+$color-background: #bb9b68 !default;
+$color-stripes: rgba(0, 0, 0, 0.1) !default;
 $color-border: #272727 !default;
+$bg-map: colors.$bg-map !default;
 
 .NoticeBox {
   // Adapt text color to background luminance to ensure high contast
-  $luminance: luminance($color-first);
+  $luminance: luminance($color-background);
   $text-color: if($luminance > 0.35,
     rgba(0, 0, 0, 1),
     rgba(255, 255, 255, 1));
@@ -18,11 +21,45 @@ $color-border: #272727 !default;
   font-weight: bold;
   font-style: italic;
   color: $text-color;
-  background-color: $color-first;
+  background-color: $color-background;
   background-image: repeating-linear-gradient(
     -45deg,
-    $color-first,
-    $color-first 10px,
-    $color-second 10px,
-    $color-second 20px);
+    transparent,
+    transparent 10px,
+    $color-stripes 10px,
+    $color-stripes 20px);
+}
+
+@mixin box-color($color) {
+  $luminance: luminance($color);
+  $text-color: if($luminance > 0.35,
+    rgba(0, 0, 0, 1),
+    rgba(255, 255, 255, 1));
+  color: $text-color;
+  background-color: color.adjust(
+    $color,
+    $saturation: -15%,
+    $lightness: -15%);
+}
+
+@each $color-name, $color-value in $bg-map {
+  .NoticeBox--color--#{$color-name} {
+    @include box-color($color-value)
+  }
+}
+
+.NoticeBox--type--info {
+  @include box-color(colors.$blue);
+}
+
+.NoticeBox--type--success {
+  @include box-color(colors.$green);
+}
+
+.NoticeBox--type--warning {
+  @include box-color(colors.$orange);
+}
+
+.NoticeBox--type--danger {
+  @include box-color(colors.$red);
 }

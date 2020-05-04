@@ -4,10 +4,6 @@
 	assets = list(
 		"tgui.bundle.js" = 'tgui/packages/tgui/public/tgui.bundle.js',
 		"tgui.bundle.css" = 'tgui/packages/tgui/public/tgui.bundle.css',
-		"shim-html5shiv.js" = 'tgui/packages/tgui/public/shim-html5shiv.js',
-		"shim-ie8.js" = 'tgui/packages/tgui/public/shim-ie8.js',
-		"shim-dom4.js" = 'tgui/packages/tgui/public/shim-dom4.js',
-		"shim-css-om.js" = 'tgui/packages/tgui/public/shim-css-om.js',
 	)
 
 /datum/asset/group/tgui
@@ -43,7 +39,8 @@
 		"smmon_3.gif" 				= 'icons/program_icons/smmon_3.gif',
 		"smmon_4.gif" 				= 'icons/program_icons/smmon_4.gif',
 		"smmon_5.gif" 				= 'icons/program_icons/smmon_5.gif',
-		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif'
+		"smmon_6.gif" 				= 'icons/program_icons/smmon_6.gif',
+		"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
 	)
 
 /datum/asset/spritesheet/simple/pda
@@ -92,7 +89,11 @@
 		"stamp-rd" = 'icons/stamp_icons/large_stamp-rd.png',
 		"stamp-cap" = 'icons/stamp_icons/large_stamp-cap.png',
 		"stamp-qm" = 'icons/stamp_icons/large_stamp-qm.png',
-		"stamp-law" = 'icons/stamp_icons/large_stamp-law.png'
+		"stamp-law" = 'icons/stamp_icons/large_stamp-law.png',
+		"stamp-chap" = 'icons/stamp_icons/large_stamp-chap.png',
+		"stamp-mime" = 'icons/stamp_icons/large_stamp-mime.png',
+		"stamp-centcom" = 'icons/stamp_icons/large_stamp-centcom.png',
+		"stamp-syndicate" = 'icons/stamp_icons/large_stamp-syndicate.png'
 	)
 
 
@@ -139,13 +140,11 @@
 	)
 
 /datum/asset/simple/jquery
-	verify = FALSE
 	assets = list(
 		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 	)
 
 /datum/asset/simple/goonchat
-	verify = FALSE
 	assets = list(
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
@@ -154,7 +153,6 @@
 	)
 
 /datum/asset/simple/fontawesome
-	verify = FALSE
 	assets = list(
 		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
 		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',

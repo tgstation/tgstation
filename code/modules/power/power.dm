@@ -15,6 +15,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
+	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -138,7 +139,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
 		if(!term || !term.powernet)
@@ -353,13 +354,12 @@
 // Misc.
 ///////////////////////////////////////////////
 
-// return a cable if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node(check_layer = CABLE_LAYER_2)
+// return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
+/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
 	if(!can_have_cabling())
 		return null
-	var/obj/structure/cable_bridge/B = locate() in src
 	for(var/obj/structure/cable/C in src)
-		if(C.cable_layer & check_layer || B)
+		if(C.machinery_layer & machinery_layer)
 			C.update_icon()
 			return C
 	return null

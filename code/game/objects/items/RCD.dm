@@ -202,10 +202,10 @@ RLD
 	var/airlock_glass = FALSE // So the floor's rcd_act knows how much ammo to use
 	var/window_type = /obj/structure/window/fulltile
 	var/advanced_airlock_setting = 1 //Set to 1 if you want more paintjobs available
-	var/list/conf_access = null
-	var/use_one_access = 0 //If the airlock should require ALL or only ONE of the listed accesses.
 	var/delay_mod = 1
 	var/canRturf = FALSE //Variable for R walls to deconstruct them
+	/// Integrated airlock electronics for setting access to a newly built airlocks
+	var/obj/item/electronics/airlock/airlock_electronics
 
 /obj/item/construction/rcd/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] sets the RCD to 'Wall' and points it down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide..</span>")
@@ -241,78 +241,6 @@ RLD
 		to_chat(user, "<span class='notice'>You change \the [src]'s storage link state: [silo_link ? "ON" : "OFF"].</span>")
 	else
 		to_chat(user, "<span class='warning'>\the [src] dont have remote storage connection.</span>")
-
-
-/obj/item/construction/rcd/proc/change_airlock_access(mob/user)
-	if (!ishuman(user) && !user.has_unlimited_silicon_privilege)
-		return
-
-	var/t1 = ""
-
-	if(use_one_access)
-		t1 += "Restriction Type: <a href='?src=[REF(src)];access=one'>At least one access required</a><br>"
-	else
-		t1 += "Restriction Type: <a href='?src=[REF(src)];access=one'>All accesses required</a><br>"
-
-	t1 += "<a href='?src=[REF(src)];access=all'>Remove All</a><br>"
-
-	var/accesses = ""
-	accesses += "<div align='center'><b>Access</b></div>"
-	accesses += "<table style='width:100%'>"
-	accesses += "<tr>"
-	for(var/i = 1; i <= 7; i++)
-		accesses += "<td style='width:14%'><b>[get_region_accesses_name(i)]:</b></td>"
-	accesses += "</tr><tr>"
-	for(var/i = 1; i <= 7; i++)
-		accesses += "<td style='width:14%' valign='top'>"
-		for(var/A in get_region_accesses(i))
-			if(A in conf_access)
-				accesses += "<a href='?src=[REF(src)];access=[A]'><font color=\"red\">[replacetext(get_access_desc(A), " ", "&nbsp")]</font></a> "
-			else
-				accesses += "<a href='?src=[REF(src)];access=[A]'>[replacetext(get_access_desc(A), " ", "&nbsp")]</a> "
-			accesses += "<br>"
-		accesses += "</td>"
-	accesses += "</tr></table>"
-	t1 += "<tt>[accesses]</tt>"
-
-	t1 += "<p><a href='?src=[REF(src)];close=1'>Close</a></p>\n"
-
-	var/datum/browser/popup = new(user, "rcd_access", "Access Control", 900, 500)
-	popup.set_content(t1)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
-	popup.open()
-	onclose(user, "rcd_access")
-
-/obj/item/construction/rcd/Topic(href, href_list)
-	..()
-	if (usr.stat || usr.restrained())
-		return
-
-	if (href_list["close"])
-		usr << browse(null, "window=rcd_access")
-		return
-
-	if (href_list["access"])
-		toggle_access(href_list["access"])
-		change_airlock_access(usr)
-
-/obj/item/construction/rcd/proc/toggle_access(acc)
-	if (acc == "all")
-		conf_access = null
-	else if(acc == "one")
-		use_one_access = !use_one_access
-	else
-		var/req = text2num(acc)
-
-		if (conf_access == null)
-			conf_access = list()
-
-		if (!(req in conf_access))
-			conf_access += req
-		else
-			conf_access -= req
-			if (!conf_access.len)
-				conf_access = null
 
 /obj/item/construction/rcd/proc/get_airlock_image(airlock_type)
 	var/obj/machinery/door/airlock/proto = airlock_type
@@ -495,9 +423,13 @@ RLD
 
 /obj/item/construction/rcd/Initialize()
 	. = ..()
+	airlock_electronics = new(src)
+	airlock_electronics.name = "Access Control"
+	airlock_electronics.holder = src
 	GLOB.rcd_list += src
 
 /obj/item/construction/rcd/Destroy()
+	QDEL_NULL(airlock_electronics)
 	GLOB.rcd_list -= src
 	. = ..()
 
@@ -546,7 +478,7 @@ RLD
 			change_computer_dir(user)
 			return
 		if("Change Access")
-			change_airlock_access(user)
+			airlock_electronics.ui_interact(user)
 			return
 		if("Change Airlock Type")
 			change_airlock_setting(user)

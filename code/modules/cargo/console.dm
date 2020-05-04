@@ -68,7 +68,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cargo", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Cargo", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/cargo/ui_data()
@@ -195,6 +195,9 @@
 				var/obj/item/card/id/id_card = H.get_idcard(TRUE)
 				if(!istype(id_card))
 					say("No ID card detected.")
+					return
+				if(istype(id_card, /obj/item/card/id/departmental_budget))
+					say("The [src] rejects [id_card].")
 					return
 				account = id_card.registered_account
 				if(!istype(account))

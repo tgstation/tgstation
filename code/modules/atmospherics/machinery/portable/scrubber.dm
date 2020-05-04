@@ -3,7 +3,13 @@
 	icon_state = "pscrubber:0"
 	density = TRUE
 	ui_x = 320
-	ui_y = 335
+	ui_y = 350
+
+	max_integrity = 250
+	///Max amount of heat allowed inside of the canister before it starts to melt (different tiers have different limits)
+	var/heat_limit = 5000
+	///Max amount of pressure allowed inside of the canister before it starts to break (different tiers have different limits)
+	var/pressure_limit = 50000
 
 	var/on = FALSE
 	var/volume_rate = 1000
@@ -11,7 +17,7 @@
 	var/use_overlays = TRUE
 	volume = 1000
 
-	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor, /datum/gas/freon)
+	var/list/scrubbing = list(/datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitryl, /datum/gas/tritium, /datum/gas/hypernoblium, /datum/gas/water_vapor, /datum/gas/freon, /datum/gas/hydrogen)
 
 /obj/machinery/portable_atmospherics/scrubber/Destroy()
 	var/turf/T = get_turf(src)
@@ -33,6 +39,14 @@
 
 /obj/machinery/portable_atmospherics/scrubber/process_atmos()
 	..()
+
+	var/pressure = air_contents.return_pressure()
+	var/temperature = air_contents.return_temperature()
+	///function used to check the limit of the scrubbers and also set the amount of damage that the scrubber can recieve, if the heat and pressure are way higher than the limit the more damage will be done
+	if(temperature > heat_limit || pressure > pressure_limit)
+		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+		return
+
 	if(!on)
 		return
 
@@ -78,7 +92,7 @@
 														datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "portable_scrubber", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "PortableScrubber", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/portable_atmospherics/scrubber/ui_data()

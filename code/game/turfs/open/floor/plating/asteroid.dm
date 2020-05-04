@@ -53,6 +53,9 @@
 /turf/open/floor/plating/asteroid/MakeDry()
 	return
 
+/turf/open/floor/plating/asteroid/crush()
+	return
+
 /turf/open/floor/plating/asteroid/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(!.)

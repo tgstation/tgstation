@@ -1,5 +1,5 @@
 /obj/item/grenade/spawnergrenade
-	desc = "It will unleash an unspecified anomaly into the vicinity."
+	desc = "It will unleash an unspecified anomaly in the surrounding vicinity."
 	name = "delivery grenade"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "delivery"
@@ -7,7 +7,8 @@
 	var/spawner_type = null // must be an object path
 	var/deliveryamt = 1 // amount of type to deliver
 
-/obj/item/grenade/spawnergrenade/prime()			// Prime now just handles the two loops that query for people in lockers and people who can see it.
+/obj/item/grenade/spawnergrenade/prime(mob/living/lanced_by)			// Prime now just handles the two loops that query for people in lockers and people who can see it.
+	. = ..()
 	update_mob()
 	if(spawner_type && deliveryamt)
 		// Make a quick flash

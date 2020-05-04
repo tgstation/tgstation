@@ -1,284 +1,355 @@
-import { map } from 'common/collections';
+import { toArray } from 'common/collections';
 import { Fragment } from 'inferno';
-import { act } from '../byond';
-import { AnimatedNumber, Box, Button, LabeledList, Section, Tabs } from '../components';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
+import { useBackend, useSharedState } from '../backend';
+import { AnimatedNumber, Box, Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
+import { formatMoney } from '../format';
+import { Window } from '../layouts';
 
-export const Cargo = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-  const supplies = data.supplies || {};
-  const requests = data.requests || [];
+export const Cargo = (props, context) => {
+  const { act, data } = useBackend(context);
+  const [tab, setTab] = useSharedState(context, 'tab', 'catalog');
+  const {
+    requestonly,
+  } = data;
   const cart = data.cart || [];
+  const requests = data.requests || [];
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <CargoStatus />
+        <Tabs>
+          <Tabs.Tab
+            icon="list"
+            selected={tab === 'catalog'}
+            onClick={() => setTab('catalog')}>
+            Catalog
+          </Tabs.Tab>
+          <Tabs.Tab
+            icon="envelope"
+            textColor={tab !== 'requests'
+              && requests.length > 0
+              && 'yellow'}
+            selected={tab === 'requests'}
+            onClick={() => setTab('requests')}>
+            Requests ({requests.length})
+          </Tabs.Tab>
+          {!requestonly && (
+            <Tabs.Tab
+              icon="shopping-cart"
+              textColor={tab !== 'cart'
+                && cart.length > 0
+                && 'yellow'}
+              selected={tab === 'cart'}
+              onClick={() => setTab('cart')}>
+              Checkout ({cart.length})
+            </Tabs.Tab>
+          )}
+        </Tabs>
+        {tab === 'catalog' && (
+          <CargoCatalog />
+        )}
+        {tab === 'requests' && (
+          <CargoRequests />
+        )}
+        {tab === 'cart' && (
+          <CargoCart />
+        )}
+      </Window.Content>
+    </Window>
+  );
+};
 
-  const cartTotalAmount = cart
-    .reduce((total, entry) => total + entry.cost, 0);
+const CargoStatus = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    away,
+    docked,
+    loan,
+    loan_dispatched,
+    location,
+    message,
+    points,
+    requestonly,
+  } = data;
+  return (
+    <Section
+      title="Cargo"
+      buttons={(
+        <Box inline bold>
+          <AnimatedNumber
+            value={points}
+            format={value => formatMoney(value)} />
+          {' credits'}
+        </Box>
+      )}>
+      <LabeledList>
+        <LabeledList.Item label="Shuttle">
+          {docked && !requestonly && (
+            <Button
+              content={location}
+              onClick={() => act('send')} />
+          ) || location}
+        </LabeledList.Item>
+        <LabeledList.Item label="CentCom Message">
+          {message}
+        </LabeledList.Item>
+        {!!loan && !requestonly && (
+          <LabeledList.Item label="Loan">
+            {!loan_dispatched && (
+              <Button
+                content="Loan Shuttle"
+                disabled={!(away && docked)}
+                onClick={() => act('loan')} />
+            ) || (
+              <Box color="bad">
+                Loaned to Centcom
+              </Box>
+            )}
+          </LabeledList.Item>
+        )}
+      </LabeledList>
+    </Section>
+  );
+};
 
-  const cartButtons = !data.requestonly && (
+export const CargoCatalog = (props, context) => {
+  const { express } = props;
+  const { act, data } = useBackend(context);
+  const {
+    self_paid,
+  } = data;
+  const supplies = toArray(data.supplies);
+  const [
+    activeSupplyName,
+    setActiveSupplyName,
+  ] = useSharedState(context, 'supply', supplies[0]?.name);
+  const activeSupply = supplies.find(supply => {
+    return supply.name === activeSupplyName;
+  });
+  return (
+    <Section
+      title="Catalog"
+      buttons={!express && (
+        <Fragment>
+          <CargoCartButtons />
+          <Button.Checkbox
+            ml={2}
+            content="Buy Privately"
+            checked={self_paid}
+            onClick={() => act('toggleprivate')} />
+        </Fragment>
+      )}>
+      <Flex>
+        <Flex.Item>
+          <Tabs vertical>
+            {supplies.map(supply => (
+              <Tabs.Tab
+                key={supply.name}
+                selected={supply.name === activeSupplyName}
+                onClick={() => setActiveSupplyName(supply.name)}>
+                {supply.name} ({supply.packs.length})
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+        </Flex.Item>
+        <Flex.Item grow={1} basis={0}>
+          <Table>
+            {activeSupply?.packs.map(pack => {
+              const tags = [];
+              if (pack.small_item) {
+                tags.push('Small');
+              }
+              if (pack.access) {
+                tags.push('Restricted');
+              }
+              return (
+                <Table.Row
+                  key={pack.name}
+                  className="candystripe">
+                  <Table.Cell>
+                    {pack.name}
+                  </Table.Cell>
+                  <Table.Cell
+                    collapsing
+                    color="label"
+                    textAlign="right">
+                    {tags.join(', ')}
+                  </Table.Cell>
+                  <Table.Cell
+                    collapsing
+                    textAlign="right">
+                    <Button
+                      fluid
+                      tooltip={pack.desc}
+                      tooltipPosition="left"
+                      onClick={() => act('add', {
+                        id: pack.id,
+                      })}>
+                      {formatMoney(self_paid
+                        ? Math.round(pack.cost * 1.1)
+                        : pack.cost)}
+                      {' cr'}
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              );
+            })}
+          </Table>
+        </Flex.Item>
+      </Flex>
+    </Section>
+  );
+};
+
+const CargoRequests = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    requestonly,
+  } = data;
+  const requests = data.requests || [];
+  // Labeled list reimplementation to squeeze extra columns out of it
+  return (
+    <Section
+      title="Active Requests"
+      buttons={!requestonly && (
+        <Button
+          icon="times"
+          content="Clear"
+          color="transparent"
+          onClick={() => act('denyall')} />
+      )}>
+      {requests.length === 0 && (
+        <Box color="good">
+          No Requests
+        </Box>
+      )}
+      {requests.length > 0 && (
+        <Table>
+          {requests.map(request => (
+            <Table.Row
+              key={request.id}
+              className="candystripe">
+              <Table.Cell collapsing color="label">
+                #{request.id}
+              </Table.Cell>
+              <Table.Cell>
+                {request.object}
+              </Table.Cell>
+              <Table.Cell>
+                <b>{request.orderer}</b>
+              </Table.Cell>
+              <Table.Cell width="25%">
+                <i>{request.reason}</i>
+              </Table.Cell>
+              <Table.Cell collapsing textAlign="right">
+                {formatMoney(request.cost)} cr
+              </Table.Cell>
+              {!requestonly && (
+                <Table.Cell collapsing>
+                  <Button
+                    icon="check"
+                    color="good"
+                    onClick={() => act('approve', {
+                      id: request.id,
+                    })} />
+                  <Button
+                    icon="times"
+                    color="bad"
+                    onClick={() => act('deny', {
+                      id: request.id,
+                    })} />
+                </Table.Cell>
+              )}
+            </Table.Row>
+          ))}
+        </Table>
+      )}
+    </Section>
+  );
+};
+
+const CargoCartButtons = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    requestonly,
+  } = data;
+  const cart = data.cart || [];
+  const total = cart.reduce((total, entry) => total + entry.cost, 0);
+  if (requestonly) {
+    return null;
+  }
+  return (
     <Fragment>
       <Box inline mx={1}>
         {cart.length === 0 && 'Cart is empty'}
         {cart.length === 1 && '1 item'}
         {cart.length >= 2 && cart.length + ' items'}
         {' '}
-        {cartTotalAmount > 0 && `(${cartTotalAmount} cr)`}
+        {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
       <Button
         icon="times"
         color="transparent"
         content="Clear"
-        onClick={() => act(ref, 'clear')} />
-    </Fragment>
-  );
-
-  return (
-    <Fragment>
-      <Section
-        title="Cargo"
-        buttons={(
-          <Box inline bold>
-            <AnimatedNumber value={Math.round(data.points)} /> credits
-          </Box>
-        )}>
-        <LabeledList>
-          <LabeledList.Item label="Shuttle">
-            {data.docked && !data.requestonly && (
-              <Button
-                content={data.location}
-                onClick={() => act(ref, 'send')} />
-            ) || data.location}
-          </LabeledList.Item>
-          <LabeledList.Item label="CentCom Message">
-            {data.message}
-          </LabeledList.Item>
-          {(data.loan && !data.requestonly) ? (
-            <LabeledList.Item label="Loan">
-              {!data.loan_dispatched ? (
-                <Button
-                  content="Loan Shuttle"
-                  disabled={!(data.away && data.docked)}
-                  onClick={() => act(ref, 'loan')} />
-              ) : (
-                <Box color="bad">Loaned to Centcom</Box>
-              )}
-            </LabeledList.Item>
-          ) : ''}
-        </LabeledList>
-      </Section>
-      <Tabs mt={2}>
-        <Tabs.Tab
-          key="catalog"
-          label="Catalog"
-          icon="list"
-          lineHeight="23px">
-          {() => (
-            <Section
-              title="Catalog"
-              buttons={(
-                <Fragment>
-                  {cartButtons}
-                  <Button
-                    ml={1}
-                    icon={data.self_paid ? 'check-square-o' : 'square-o'}
-                    content="Buy Privately"
-                    selected={data.self_paid}
-                    onClick={() => act(ref, 'toggleprivate')} />
-                </Fragment>
-              )}>
-              <Catalog state={state} supplies={supplies} />
-            </Section>
-          )}
-        </Tabs.Tab>
-        <Tabs.Tab
-          key="requests"
-          label={`Requests (${requests.length})`}
-          icon="envelope"
-          highlight={requests.length > 0}
-          lineHeight="23px">
-          {() => (
-            <Section
-              title="Active Requests"
-              buttons={!data.requestonly && (
-                <Button
-                  icon="times"
-                  content="Clear"
-                  color="transparent"
-                  onClick={() => act(ref, 'denyall')} />
-              )}>
-              <Requests state={state} requests={requests} />
-            </Section>
-          )}
-        </Tabs.Tab>
-        {!data.requestonly && (
-          <Tabs.Tab
-            key="cart"
-            label={`Checkout (${cart.length})`}
-            icon="shopping-cart"
-            highlight={cart.length > 0}
-            lineHeight="23px">
-            {() => (
-              <Section
-                title="Current Cart"
-                buttons={cartButtons}>
-                <Cart state={state} cart={cart} />
-              </Section>
-            )}
-          </Tabs.Tab>
-        )}
-      </Tabs>
+        onClick={() => act('clear')} />
     </Fragment>
   );
 };
 
-const Catalog = props => {
-  const { state, supplies } = props;
-  const { config, data } = state;
-  const { ref } = config;
-  const renderTab = key => {
-    const supply = supplies[key];
-    const packs = supply.packs;
-    return (
-      <table className="LabeledList">
-        {packs.map(pack => (
-          <tr
-            key={pack.name}
-            className="LabeledList__row candystripe">
-            <td className="LabeledList__cell LabeledList__label">
-              {pack.name}:
-            </td>
-            <td className="LabeledList__cell">
-              {!!pack.small_item && (
-                <Fragment>Small Item</Fragment>
-              )}
-            </td>
-            <td className="LabeledList__cell">
-              {!!pack.access && (
-                <Fragment>Restrictions Apply</Fragment>
-              )}
-            </td>
-            <td className="LabeledList__cell LabeledList__buttons">
-              <Button fluid
-                content={(data.self_paid
-                  ? Math.round(pack.cost * 1.1)
-                  : pack.cost) + ' credits'}
-                tooltip={pack.desc}
-                tooltipPosition="left"
-                onClick={() => act(ref, 'add', {
-                  id: pack.id,
-                })} />
-            </td>
-          </tr>
-        ))}
-      </table>
-    );
-  };
+const CargoCart = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    requestonly,
+    away,
+    docked,
+    location,
+  } = data;
+  const cart = data.cart || [];
   return (
-    <Tabs vertical>
-      {map(supply => {
-        const name = supply.name;
-        return (
-          <Tabs.Tab key={name} label={name}>
-            {renderTab}
-          </Tabs.Tab>
-        );
-      })(supplies)}
-    </Tabs>
-  );
-};
-
-const Requests = props => {
-  const { state, requests } = props;
-  const { config, data } = state;
-  const { ref } = config;
-  if (requests.length === 0) {
-    return (
-      <Box color="good">
-        No Requests
-      </Box>
-    );
-  }
-  // Labeled list reimplementation to squeeze extra columns out of it
-  return (
-    <table className="LabeledList">
-      {requests.map(request => (
-        <Fragment key={request.id}>
-          <tr className="LabeledList__row candystripe">
-            <td className="LabeledList__cell LabeledList__label">
-              #{request.id}:
-            </td>
-            <td className="LabeledList__cell LabeledList__content">
-              {request.object}
-            </td>
-            <td className="LabeledList__cell">
-              By <b>{request.orderer}</b>
-            </td>
-            <td className="LabeledList__cell">
-              <i>{request.reason}</i>
-            </td>
-            <td className="LabeledList__cell LabeledList__buttons">
-              {request.cost} credits
-              {' '}
-              {!data.requestonly && (
-                <Fragment>
-                  <Button
-                    icon="check"
-                    color="good"
-                    onClick={() => act(ref, 'approve', {
-                      id: request.id,
-                    })} />
-                  <Button
-                    icon="times"
-                    color="bad"
-                    onClick={() => act(ref, 'deny', {
-                      id: request.id,
-                    })} />
-                </Fragment>
-              )}
-            </td>
-          </tr>
-        </Fragment>
-      ))}
-    </table>
-  );
-};
-
-const Cart = props => {
-  const { state, cart } = props;
-  const { config, data } = state;
-  const { ref } = config;
-  return (
-    <Fragment>
-      {cart.length === 0 && 'Nothing in cart'}
-      {cart.length > 0 && (
-        <LabeledList>
-          {cart.map(entry => (
-            <LabeledList.Item
-              key={entry.id}
-              className="candystripe"
-              label={'#' + entry.id}
-              buttons={(
-                <Fragment>
-                  <Box inline mx={2}>
-                    {!!entry.paid && (<b>[Paid Privately]</b>)}
-                    {' '}
-                    {entry.cost} credits
-                  </Box>
-                  <Button
-                    icon="minus"
-                    onClick={() => act(ref, 'remove', {
-                      id: entry.id,
-                    })} />
-                </Fragment>
-              )}>
-              {entry.object}
-            </LabeledList.Item>
-          ))}
-        </LabeledList>
+    <Section
+      title="Current Cart"
+      buttons={(
+        <CargoCartButtons />
+      )}>
+      {cart.length === 0 && (
+        <Box color="label">
+          Nothing in cart
+        </Box>
       )}
-      {cart.length > 0 && !data.requestonly && (
+      {cart.length > 0 && (
+        <Table>
+          {cart.map(entry => (
+            <Table.Row
+              key={entry.id}
+              className="candystripe">
+              <Table.Cell collapsing color="label">
+                #{entry.id}
+              </Table.Cell>
+              <Table.Cell>
+                {entry.object}
+              </Table.Cell>
+              <Table.Cell collapsing>
+                {!!entry.paid && (
+                  <b>[Paid Privately]</b>
+                )}
+              </Table.Cell>
+              <Table.Cell collapsing textAlign="right">
+                {formatMoney(entry.cost)} cr
+              </Table.Cell>
+              <Table.Cell collapsing>
+                <Button
+                  icon="minus"
+                  onClick={() => act('remove', {
+                    id: entry.id,
+                  })} />
+              </Table.Cell>
+            </Table.Row>
+          ))}
+        </Table>
+      )}
+      {cart.length > 0 && !requestonly && (
         <Box mt={2}>
-          {data.away === 1 && data.docked === 1 && (
+          {away === 1 && docked === 1 && (
             <Button
               color="green"
               style={{
@@ -286,64 +357,14 @@ const Cart = props => {
                 'padding': '0 12px',
               }}
               content="Confirm the order"
-              onClick={() => act(ref, 'send')} />
+              onClick={() => act('send')} />
           ) || (
             <Box opacity={0.5}>
-              Shuttle in {data.location}.
+              Shuttle in {location}.
             </Box>
           )}
         </Box>
       )}
-    </Fragment>
-  );
-};
-
-export const CargoExpress = props => {
-  const { state } = props;
-  const { config, data } = state;
-  const { ref } = config;
-  const supplies = data.supplies || {};
-  return (
-    <Fragment>
-      <InterfaceLockNoticeBox
-        siliconUser={data.siliconUser}
-        locked={data.locked}
-        onLockStatusChange={() => act(ref, 'lock')}
-        accessText="a QM-level ID card" />
-      {!data.locked &&(
-        <Fragment>
-          <Section
-            title="Cargo Express"
-            buttons={(
-              <Box inline bold>
-                <AnimatedNumber value={Math.round(data.points)} /> credits
-              </Box>
-            )}>
-            <LabeledList>
-              <LabeledList.Item label="Landing Location">
-                <Button
-                  content="Cargo Bay"
-                  selected={!data.usingBeacon}
-                  onClick={() => act(ref, 'LZCargo')} />
-                <Button
-                  selected={data.usingBeacon}
-                  disabled={!data.hasBeacon}
-                  onClick={() => act(ref, 'LZBeacon')}>
-                  {data.beaconzone} ({data.beaconName})
-                </Button>
-                <Button
-                  content={data.printMsg}
-                  disabled={!data.canBuyBeacon}
-                  onClick={() => act(ref, 'printBeacon')} />
-              </LabeledList.Item>
-              <LabeledList.Item label="Notice">
-                {data.message}
-              </LabeledList.Item>
-            </LabeledList>
-          </Section>
-          <Catalog state={state} supplies={supplies} />
-        </Fragment>
-      )}
-    </Fragment>
+    </Section>
   );
 };

@@ -1,5 +1,0 @@
-author: "SteelSlayer"
-delete-after: True
-changes: 
-  - code_imp: "Updates various machines, which currently use SSfastprocess, so that they only start processing when it's necessary. Some of these updated machines have been changed so that they don't ever need to process."
-  - refactor: "Replaces the speed_process var with two new variables. The processing_flags variable stores bitflags with information about a machine's preferences on when it should start processing. The subsystem_type var holds the path to which type of subsystem that machine should use."

@@ -19,7 +19,8 @@
 	desc = "The word '[pick(bruh_moment)]' is scribbled on it in crayon."
 
 ///Here we generate some smoke and also damage blobs??? for some reason. Honestly not sure why we do that.
-/obj/item/grenade/smokebomb/prime()
+/obj/item/grenade/smokebomb/prime(mob/living/lanced_by)
+	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 	var/datum/effect_system/smoke_spread/bad/smoke = new

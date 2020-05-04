@@ -27,14 +27,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/simple
 	_abstract = /datum/asset/simple
 	var/assets = list()
-	var/verify = FALSE
 
 /datum/asset/simple/register()
 	for(var/asset_name in assets)
 		register_asset(asset_name, assets[asset_name])
 
 /datum/asset/simple/send(client)
-	send_asset_list(client,assets,verify)
+	. = send_asset_list(client, assets)
 
 
 // For registering or sending multiple others at once
@@ -49,7 +48,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/group/send(client/C)
 	for(var/type in children)
 		var/datum/asset/A = get_asset_datum(type)
-		A.send(C)
+		. = A.send(C) || .
 
 
 // spritesheet implementation - coalesces various icons into a single .png file
@@ -66,7 +65,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/name
 	var/list/sizes = list()    // "32x32" -> list(10, icon/normal, icon/stripped)
 	var/list/sprites = list()  // "foo_bar" -> list("32x32", 5)
-	var/verify = FALSE
 
 /datum/asset/spritesheet/register()
 	if (!name)
@@ -90,7 +88,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	var/all = list("spritesheet_[name].css")
 	for(var/size_id in sizes)
 		all += "[name]_[size_id].png"
-	send_asset_list(C, all, verify)
+	. = send_asset_list(C, all)
 
 /datum/asset/spritesheet/proc/ensure_stripped(sizes_to_strip = sizes)
 	for(var/size_id in sizes_to_strip)
@@ -206,8 +204,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	var/prefix = "default" //asset_name = "[prefix].[icon_state_name].png"
 	var/generic_icon_names = FALSE //generate icon filenames using generate_asset_name() instead the above format
-
-	verify = FALSE
 
 /datum/asset/simple/icon_states/register(_icon = icon)
 	for(var/icon_state_name in icon_states(_icon))

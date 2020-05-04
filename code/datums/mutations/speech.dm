@@ -14,7 +14,7 @@
 
 /datum/mutation/human/wacky
 	name = "Wacky"
-	desc = "<span class='sans'>Unknown.</span>"
+	desc = "You are not a clown. You are the entire circus."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"
@@ -48,76 +48,6 @@
 	if(..())
 		return
 	REMOVE_TRAIT(owner, TRAIT_MUTE, GENETIC_MUTATION)
-
-
-/datum/mutation/human/smile
-	name = "Smile"
-	desc = "Causes the user to be in constant mania."
-	quality = MINOR_NEGATIVE
-	text_gain_indication = "<span class='notice'>You feel so happy. Nothing can be wrong with anything. :)</span>"
-	text_lose_indication = "<span class='notice'>Everything is terrible again. :(</span>"
-
-/datum/mutation/human/smile/on_acquiring(mob/living/carbon/human/owner)
-	if(..())
-		return
-	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/handle_speech)
-
-/datum/mutation/human/smile/on_losing(mob/living/carbon/human/owner)
-	if(..())
-		return
-	UnregisterSignal(owner, COMSIG_MOB_SAY)
-
-/datum/mutation/human/smile/proc/handle_speech(datum/source, list/speech_args)
-	var/message = speech_args[SPEECH_MESSAGE]
-	if(message)
-		message = " [message] "
-		//Time for a friendly game of SS13
-		message = replacetext(message," stupid "," smart ")
-		message = replacetext(message," retard "," genius ")
-		message = replacetext(message," unrobust "," robust ")
-		message = replacetext(message," dumb "," smart ")
-		message = replacetext(message," awful "," great ")
-		message = replacetext(message," gay ",pick(" nice "," ok "," alright "))
-		message = replacetext(message," horrible "," fun ")
-		message = replacetext(message," terrible "," terribly fun ")
-		message = replacetext(message," terrifying "," wonderful ")
-		message = replacetext(message," gross "," cool ")
-		message = replacetext(message," disgusting "," amazing ")
-		message = replacetext(message," loser "," winner ")
-		message = replacetext(message," useless "," useful ")
-		message = replacetext(message," oh god "," cheese and crackers ")
-		message = replacetext(message," jesus "," gee wiz ")
-		message = replacetext(message," weak "," strong ")
-		message = replacetext(message," kill "," hug ")
-		message = replacetext(message," murder "," tease ")
-		message = replacetext(message," ugly "," beautiful ")
-		message = replacetext(message," douchbag "," nice guy ")
-		message = replacetext(message," douchebag "," nice guy ")
-		message = replacetext(message," whore "," lady ")
-		message = replacetext(message," nerd "," smart guy ")
-		message = replacetext(message," moron "," fun person ")
-		message = replacetext(message," IT'S LOOSE "," EVERYTHING IS FINE ")
-		message = replacetext(message," sex "," hug fight ")
-		message = replacetext(message," idiot "," genius ")
-		message = replacetext(message," fat "," thin ")
-		message = replacetext(message," beer "," water with ice ")
-		message = replacetext(message," drink "," water ")
-		message = replacetext(message," feminist "," empowered woman ")
-		message = replacetext(message," i hate you "," you're mean ")
-		message = replacetext(message," nigger "," african american ")
-		message = replacetext(message," jew "," jewish ")
-		message = replacetext(message," shit "," shiz ")
-		message = replacetext(message," crap "," poo ")
-		message = replacetext(message," slut "," tease ")
-		message = replacetext(message," ass "," butt ")
-		message = replacetext(message," damn "," dang ")
-		message = replacetext(message," fuck ","  ")
-		message = replacetext(message," penis "," privates ")
-		message = replacetext(message," cunt "," privates ")
-		message = replacetext(message," dick "," jerk ")
-		message = replacetext(message," vagina "," privates ")
-		speech_args[SPEECH_MESSAGE] = trim(message)
-
 
 /datum/mutation/human/unintelligible
 	name = "Unintelligible"
@@ -251,7 +181,6 @@
 		message = replacetext(message," thanks "," thank you, thank you very much ")
 		message = replacetext(message," what are you "," whatcha ")
 		message = replacetext(message," yes ",pick(" sure", "yea "))
-		message = replacetext(message," faggot "," square ")
 		message = replacetext(message," muh valids "," my kicks ")
 		speech_args[SPEECH_MESSAGE] = trim(message)
 

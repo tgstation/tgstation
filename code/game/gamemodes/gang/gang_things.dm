@@ -27,7 +27,11 @@
 	var/datum/game_mode/gang/F = SSticker.mode
 	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
 	user.mind.add_antag_datum(swappin_sides)
+	var/policy = get_policy(ROLE_FAMILIES)
+	if(policy)
+		to_chat(user, policy)
 	swappin_sides.my_gang = team_to_use
+	user.playsound_local(user, 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	team_to_use.add_member(user.mind)
 	for(var/threads in team_to_use.free_clothes)
 		new threads(get_turf(user))

@@ -7,10 +7,6 @@
 	 */
 	var/list/screen_maps = list()
 
-/**
- * A screen object, which acts as a container for turfs and other things
- * you want to show on the map, which you usually attach to "vis_contents".
- */
 /obj/screen
 	/**
 	 * Map name assigned to this object.
@@ -25,6 +21,15 @@
 	 * But for now, this works.
 	 */
 	var/del_on_map_removal = TRUE
+
+/**
+ * A screen object, which acts as a container for turfs and other things
+ * you want to show on the map, which you usually attach to "vis_contents".
+ */
+/obj/screen/map_view
+	// Map view has to be on the lowest plane to enable proper lighting
+	layer = GAME_PLANE
+	plane = GAME_PLANE
 
 /**
  * A generic background object.

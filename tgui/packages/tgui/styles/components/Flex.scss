@@ -3,13 +3,34 @@
   display: flex;
 }
 
+.Flex--inline {
+  display: inline-flex;
+}
+
+.Flex--ie8 {
+  display: table !important;
+}
+
+.Flex--ie8--column {
+  display: block !important;
+
+  & > .Flex__item {
+    display: block !important;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+}
+
+.Flex__item--ie8 {
+  display: table-cell !important;
+}
+
 @for $i from 1 through 2 {
   .Flex--spacing--#{$i} {
-    margin: -3px * $i;
-    margin-bottom: 3px * $i;
+    margin: 0 -3px * $i;
 
     & > .Flex__item {
-      margin: 3px * $i;
+      margin: 0 3px * $i;
     }
   }
 }

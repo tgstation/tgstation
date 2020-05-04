@@ -4,6 +4,8 @@
  * - Arrays are returned unmodified;
  * - If object was provided, keys will be discarded;
  * - Everything else will result in an empty array.
+ *
+ * @returns {any[]}
  */
 export const toArray = collection => {
   if (Array.isArray(collection)) {
@@ -23,12 +25,46 @@ export const toArray = collection => {
 };
 
 /**
+ * Converts a given object to an array, and appends a key to every
+ * object inside of that array.
+ *
+ * Example input (object):
+ * ```
+ * {
+ *   'Foo': { info: 'Hello world!' },
+ *   'Bar': { info: 'Hello world!' },
+ * }
+ * ```
+ *
+ * Example output (array):
+ * ```
+ * [
+ *   { key: 'Foo', info: 'Hello world!' },
+ *   { key: 'Bar', info: 'Hello world!' },
+ * ]
+ * ```
+ *
+ * @template T
+ * @param {{ [key: string]: T }} obj Object, or in DM terms, an assoc array
+ * @param {string} keyProp Property, to which key will be assigned
+ * @returns {T[]} Array of keyed objects
+ */
+export const toKeyedArray = (obj, keyProp = 'key') => {
+  return map((item, key) => ({
+    [keyProp]: key,
+    ...item,
+  }))(obj);
+};
+
+/**
  * Iterates over elements of collection, returning an array of all elements
  * iteratee returns truthy for. The predicate is invoked with three
  * arguments: (value, index|key, collection).
  *
  * If collection is 'null' or 'undefined', it will be returned "as is"
  * without emitting any errors (which can be useful in some cases).
+ *
+ * @returns {any[]}
  */
 export const filter = iterateeFn => collection => {
   if (collection === null && collection === undefined) {
@@ -54,6 +90,8 @@ export const filter = iterateeFn => collection => {
  *
  * If collection is 'null' or 'undefined', it will be returned "as is"
  * without emitting any errors (which can be useful in some cases).
+ *
+ * @returns {any[]}
  */
 export const map = iterateeFn => collection => {
   if (collection === null && collection === undefined) {
@@ -101,6 +139,8 @@ const COMPARATOR = (objA, objB) => {
  * of running each element in a collection thru each iteratee.
  *
  * Iteratees are called with one argument (value).
+ *
+ * @returns {any[]}
  */
 export const sortBy = (...iterateeFns) => array => {
   if (!Array.isArray(array)) {
@@ -147,9 +187,54 @@ export const reduce = (reducerFn, initialValue) => array => {
 };
 
 /**
+ * Creates a duplicate-free version of an array, using SameValueZero for
+ * equality comparisons, in which only the first occurrence of each element
+ * is kept. The order of result values is determined by the order they occur
+ * in the array.
+ *
+ * It accepts iteratee which is invoked for each element in array to generate
+ * the criterion by which uniqueness is computed. The order of result values
+ * is determined by the order they occur in the array. The iteratee is
+ * invoked with one argument: value.
+ */
+export const uniqBy = iterateeFn => array => {
+  const { length } = array;
+  const result = [];
+  const seen = iterateeFn ? [] : result;
+  let index = -1;
+  outer:
+  while (++index < length) {
+    let value = array[index];
+    const computed = iterateeFn ? iterateeFn(value) : value;
+    value = value !== 0 ? value : 0;
+    if (computed === computed) {
+      let seenIndex = seen.length;
+      while (seenIndex--) {
+        if (seen[seenIndex] === computed) {
+          continue outer;
+        }
+      }
+      if (iterateeFn) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+    else if (!seen.includes(computed)) {
+      if (seen !== result) {
+        seen.push(computed);
+      }
+      result.push(value);
+    }
+  }
+  return result;
+};
+
+/**
  * Creates an array of grouped elements, the first of which contains
  * the first elements of the given arrays, the second of which contains
  * the second elements of the given arrays, and so on.
+ *
+ * @returns {any[]}
  */
 export const zip = (...arrays) => {
   if (arrays.length === 0) {
@@ -172,6 +257,8 @@ export const zip = (...arrays) => {
  * This method is like "zip" except that it accepts iteratee to
  * specify how grouped values should be combined. The iteratee is
  * invoked with the elements of each group.
+ *
+ * @returns {any[]}
  */
 export const zipWith = iterateeFn => (...arrays) => {
   return map(values => iterateeFn(...values))(zip(...arrays));
