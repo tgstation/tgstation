@@ -5,13 +5,10 @@
 			var old_reboot_mode = args[2]
 			var new_reboot_mode = args[3]
 			message_admins("TGS: Reboot will no longer [reboot_mode_lookup["[old_reboot_mode]"]], it will instead [reboot_mode_lookup["[new_reboot_mode]"]]")
-			break
 		if(TGS_EVENT_PORT_SWAP)
 			message_admins("TGS: Changing port from [world.port] to [args[2]]")
-			break
 		if(TGS_EVENT_INSTANCE_RENAMED)
 			message_admins("TGS: Instance renamed to from [world.TgsInstanceName()] to [args[2]]")
-			break
 		if(TGS_EVENT_COMPILE_START)
 			message_admins("TGS: Deployment started, new game version incoming...")
 		if(TGS_EVENT_COMPILE_CANCELLED)
