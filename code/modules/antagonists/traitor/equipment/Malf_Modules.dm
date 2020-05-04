@@ -171,7 +171,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
-	if (active || owner.stat == DEAD)
+	if (active || owner_AI.stat == DEAD)
 		return //prevent the AI from activating an already active doomsday or while they are dead
 	active = TRUE
 	set_us_up_the_bomb(owner)
@@ -240,15 +240,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	sleep(30)
 	if(!owner || QDELETED(owner))
 		return
-	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
-	set_security_level("delta")
-	var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
-	owner_AI.nuking = TRUE
-	owner_AI.doomsday_device = DOOM
-	owner_AI.doomsday_device.start()
-	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
-		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
-	qdel(src)
+	if (owner_AI.stat != DEAD)
+		priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
+		set_security_level("delta")
+		var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
+		owner_AI.nuking = TRUE
+		owner_AI.doomsday_device = DOOM
+		owner_AI.doomsday_device.start()
+		for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
+			P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
+		qdel(src)
 
 /obj/machinery/doomsday_device
 	icon = 'icons/obj/machines/nuke_terminal.dmi'
@@ -291,21 +292,11 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 
 /obj/machinery/doomsday_device/process()
 	var/turf/T = get_turf(src)
-	var/mob/living/silicon/ai/owner_AI = src.owner 
 	if(!T || !is_station_level(T.z))
 		minor_announce("DOOMSDAY DEVICE OUT OF STATION RANGE, ABORTING", "ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+ @#F0E4", TRUE)
 		SSshuttle.clearHostileEnvironment(src)
 		qdel(src)
-		return
-	if(owner_AI.stat == DEAD && src.timing == TRUE && owner_AI.nuking == TRUE)
-		set_security_level("red")
-		src.timing = FALSE
-		owner_AI.nuking = FALSE
-		for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
-			P.switch_mode_to(TRACK_NUKE_DISK) //Party's over, back to work, everyone
-			P.alert = FALSE
-		SSshuttle.clearHostileEnvironment(src)
-		qdel(src)
+		return	
 	if(!timing)
 		STOP_PROCESSING(SSfastprocess, src)
 		return
