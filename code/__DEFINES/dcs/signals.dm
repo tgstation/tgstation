@@ -5,7 +5,8 @@
 // global signals
 // These are signals which can be listened to by any component on any parent
 // start global signals with "!", this used to be necessary but now it's just a formatting choice
-////from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
+
+///from base of datum/controller/subsystem/mapping/proc/add_new_zlevel(): (list/args)
 #define COMSIG_GLOB_NEW_Z "!new_z"
 /// called after a successful var edit somewhere in the world: (list/args)
 #define COMSIG_GLOB_VAR_EDIT "!var_edit"
@@ -24,7 +25,8 @@
 #define COMSIG_GLOB_BUTTON_PRESSED "!button_pressed"
 
 /// signals from globally accessible objects
-////from SSsun when the sun changes position : (azimuth)
+
+///from SSsun when the sun changes position : (azimuth)
 #define COMSIG_SUN_MOVED "sun_moved"
 
 //////////////////////////////////////////////////////////////////
