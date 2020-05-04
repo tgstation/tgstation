@@ -566,6 +566,7 @@
 	if(graft_gene)
 		snip.stored_trait = graft_gene
 	snip.parent_seed = src
+	snip.parent_name = plantname
 	snip.name += "([plantname])"
 
 	// Copy over stats so the graft can outlive its parent.
