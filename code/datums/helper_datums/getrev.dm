@@ -77,7 +77,9 @@
 		msg += "No commit information"
 	if(world.TgsAvailable())
 		var/datum/tgs_version/version = world.TgsVersion()
-		msg += "Server tools version: [version.raw_parameter]"
+		msg += "TGS version: [version.raw_parameter]"
+		var/datum/tgs_version/api_version = world.TgsApiVersion()
+		msg += "DMAPI versionn: [api_version.raw_parameter]"
 
 	// Game mode odds
 	msg += "<br><b>Current Informational Settings:</b>"
