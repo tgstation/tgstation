@@ -148,7 +148,7 @@
 		return
 	if(t5 >= 15 && A.density && isliving(A)) //FULP: If T5 is greater than or equal to 15, run that fucker over and just keep on driving!
 		var/mob/living/D = A
-		throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
+		var/throw_target = get_edge_target_turf(D, pick(GLOB.cardinals))
 		D.throw_at(throw_target, 2, 3) //FULP: YEET
 		D.Knockdown(85)
 		D.adjustStaminaLoss(40) //FULP: Just like a mulebot, this does no damage on the initial hit- but it does LOADS of damage if you run a prone person over (see Crossed() in carbon.dm for the code for that))
