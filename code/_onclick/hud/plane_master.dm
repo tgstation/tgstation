@@ -45,8 +45,8 @@
 
 /obj/screen/plane_master/openspace/light/backdrop(mob/mymob)
 	filters = list()
-	filters += filter(type = "drop_shadow", color = "#04080F28", size = -3)
-	filters += filter(type = "drop_shadow", color = "#04080F28", size = -5)
+	filters += filter(type = "drop_shadow", color = "#04080F28", size = -4)
+	filters += filter(type = "drop_shadow", color = "#04080F28", size = -7)
 
 ///Contains just the floor
 /obj/screen/plane_master/floor
