@@ -30,7 +30,7 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 
 ///No bottom level for openspace.
 /turf/open/transparent/openspace/show_bottom_level()
-	return
+	return FALSE
 
 /turf/open/transparent/openspace/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()

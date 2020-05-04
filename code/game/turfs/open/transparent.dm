@@ -1,7 +1,6 @@
 /turf/open/transparent
 	baseturfs = /turf/open/transparent/openspace
 	intact = FALSE //this means wires go on top
-	var/show_pipes = FALSE
 
 /turf/open/transparent/Initialize() // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
@@ -22,8 +21,7 @@
 	var/turf/T = below()
 	if(!T)
 		vis_contents.len = 0
-		show_bottom_level()
-		if(prune_on_fail)
+		if(!show_bottom_level() && prune_on_fail) //If we cant show whats below, and we prune on fail, change the turf to plating as a fallback
 			ChangeTurf(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		return FALSE
 	if(init)
@@ -50,6 +48,7 @@
 			path = /turf/open/space
 	var/mutable_appearance/underlay_appearance = mutable_appearance(initial(path.icon), initial(path.icon_state), layer = TURF_LAYER, plane = PLANE_SPACE)
 	underlays += underlay_appearance
+	return TRUE
 
 
 /turf/open/transparent/glass
