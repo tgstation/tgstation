@@ -467,7 +467,7 @@
 		M.losebreath++
 		M.adjustToxLoss(2, 0)
 		M.adjustOrganLoss(ORGAN_SLOT_HEART, 1)
-	else if(prob(10))
+	if(prob(10))
 		M.adjustOrganLoss(ORGAN_SLOT_HEART, 4)
 	..()
 	. = 1

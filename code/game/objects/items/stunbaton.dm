@@ -29,7 +29,7 @@
 
 	var/stun_sound = 'sound/weapons/egloves.ogg'
 	
-	//This var determines the upfront stamina damage of the baton. This is used in the stun attack effect, and not the after effect. This value is reduced by armor.
+	//This var determines the stamina damage of the baton. This is used in the baton_effect proc. This value is reduced by armor.
 	var/stamina_loss_amt = 30
 
 	var/convertible = TRUE //if it can be converted with a conversion kit
