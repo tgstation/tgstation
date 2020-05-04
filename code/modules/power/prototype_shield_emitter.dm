@@ -14,10 +14,6 @@
 	var/is_on = FALSE
 	///Check if the machine is locked
 	var/locked = FALSE
-	///Stores the outline of the room to generate
-	var/list/outline
-	///Stores the internal turfs of the room to generate
-	var/list/internal
 	///Used to check if the machine is placed inside the borders of the map
 	var/borders = TRUE
 
@@ -61,11 +57,10 @@
 	if(is_on == TRUE)
 		to_chat(user, "<span class='warning'>You have to turn the [src] off first!</span>")
 		return TRUE
-	if(!anchored)
-		anchored = TRUE
+	anchored = !anchored
+	if(anchored)
 		to_chat(user, "<span class='warning'>You bolt the [src] to the floor!</span>")
 	else
-		anchored = FALSE
 		to_chat(user, "<span class='warning'>You unbolt the [src] from the floor!</span>")
 	return TRUE
 
@@ -74,7 +69,7 @@
 		if(allowed(user))
 			if(is_on)
 				locked = !locked
-				to_chat(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the controls.</span>")
+				to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the controls.</span>")
 			else
 				to_chat(user, "<span class='warning'>The controls can only be locked when \the [src] is online!</span>")
 		else
@@ -141,9 +136,15 @@
 		to_chat(user, "<span class='warning'>The motors whir and fail!</span>")
 		return
 	build_barrier(0,2,2,3,1,1,3,4,user)
-
+/* The vars you'll see in the proc() are referred to a mob looking north; NEx NEy refers to the North East corner x and y,
+all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis, i = internal, o = outline). This way of naming the vars
+won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup*/
 ///Build the barriers
-/obj/machinery/power/proto_sh_emitter/proc/build_barrier(A,B,C,D,E,F,G,H,user)
+/obj/machinery/power/proto_sh_emitter/proc/build_barrier(SWxi,SWyi,NExi,NEyi,SWxo,SWyo,NExo,NExo,mob/user)
+	///Stores the outline of the room to generate
+	var/list/outline
+	///Stores the internal turfs of the room to generate
+	var/list/internal
 	var/turf/EmitterTurf = get_turf(src)
 	to_chat(user, "<span class='warning'>You start to turn on the [src] and the generated shields!</span>")
 	if(do_after(user, 1.5 SECONDS, target = src))
@@ -154,17 +155,17 @@
 		update_icon_state()
 		switch(dir) //this part check the direction of the machine and create the block in front of it
 			if(NORTH)
-				LAZYADD(internal, block(locate(x - A, y + B, z), locate(x + C, y + D, z)))
-				LAZYADD(outline, block(locate(x - E, y + F, z), locate(x + G, y + H, z)) - internal)
+				LAZYADD(internal, block(locate(x - SWxi, y + SWyi, z), locate(x + NExi, y + NEyi, z)))
+				LAZYADD(outline, block(locate(x - SWxo, y + SWyo, z), locate(x + NExo, y + NExo, z)) - internal)
 			if(SOUTH)
-				LAZYADD(internal, block(locate(x - C, y - B, z), locate(x + A, y - D, z)))
-				LAZYADD(outline, block(locate(x - G, y - F, z), locate(x + E, y - H, z)) - internal)
+				LAZYADD(internal, block(locate(x - NExi, y - SWyi, z), locate(x + SWxi, y - NEyi, z)))
+				LAZYADD(outline, block(locate(x - NExo, y - SWyo, z), locate(x + SWxo, y - NExo, z)) - internal)
 			if(EAST)
-				LAZYADD(internal, block(locate(x + B, y - C, z), locate(x + D, y + A, z)))
-				LAZYADD(outline, block(locate(x + F, y - G, z), locate(x + H, y + E, z)) - internal)
+				LAZYADD(internal, block(locate(x + SWyi, y - NExi, z), locate(x + NEyi, y + SWxi, z)))
+				LAZYADD(outline, block(locate(x + SWyo, y - NExo, z), locate(x + NExo, y + SWxo, z)) - internal)
 			if(WEST)
-				LAZYADD(internal, block(locate(x - B, y - A, z), locate(x - D, y + C, z)))
-				LAZYADD(outline, block(locate(x - F, y - E, z), locate(x - H, y + G, z)) - internal)
+				LAZYADD(internal, block(locate(x - SWyi, y - SWxi, z), locate(x - NEyi, y + NExi, z)))
+				LAZYADD(outline, block(locate(x - SWyo, y - SWxo, z), locate(x - NExo, y + NExo, z)) - internal)
 		for(var/turf in outline)
 			new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
 			LAZYREMOVE(outline, turf)
@@ -173,7 +174,7 @@
 			LAZYREMOVE(internal, turf)
 
 ///Remove the barriers
-/obj/machinery/power/proto_sh_emitter/proc/remove_barrier(user)
+/obj/machinery/power/proto_sh_emitter/proc/remove_barrier(mob/user)
 	var/turf/EmitterTurf = get_turf(src)
 	to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
 	if(do_after(user, 3.5 SECONDS, target = src))
@@ -184,20 +185,22 @@
 		for(var/h in signs)
 			qdel(h)
 		update_icon_state()
-
+/* The vars you'll see in the proc() are referred to a mob looking north and they define a CORNER; NEx NEy refers to the North East CORNER x and y coordinates,
+all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis). This way of naming the vars
+won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup*/
 ///Check if the machine is generating the barriers inside the map borders
-/obj/machinery/power/proto_sh_emitter/proc/check_map_borders(A,B,C,D)
+/obj/machinery/power/proto_sh_emitter/proc/check_map_borders(NWx,NWy,NEx,NEy)
 	borders = TRUE
 	switch(dir) //Check for map limits.
 		if(NORTH)
-			if(!locate(x - A, y + B, z) || !locate(x + C, y + D, z))
+			if(!locate(x - NWx, y + NWy, z) || !locate(x + NEx, y + NEy, z))
 				borders = FALSE
 		if(SOUTH)
-			if(!locate(x - C, y - B, z) || !locate(x + A, y - D, z))
+			if(!locate(x - NEx, y - NWy, z) || !locate(x + NWx, y - NEy, z))
 				borders = FALSE
 		if(EAST)
-			if(!locate(x + B, y -C, z) || !locate(x + D, y + A, z))
+			if(!locate(x + NWy, y -NEx, z) || !locate(x + NEy, y + NWx, z))
 				borders = FALSE
 		if(WEST)
-			if(!locate(x - B, y - A, z) || !locate(x - D, y + C, z))
+			if(!locate(x - NWy, y - NWx, z) || !locate(x - NEy, y + NEx, z))
 				borders = FALSE

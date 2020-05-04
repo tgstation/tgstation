@@ -38,7 +38,7 @@
 	if(LAZYLEN(signs) >= max_signs)
 		to_chat(user, "<span class='notice'>[src] is projecting at max capacity!</span>")
 		return
-	playsound(src.loc, 'sound/machines/click.ogg', 20, TRUE)
+	playsound(loc, 'sound/machines/click.ogg', 20, TRUE)
 	if(creation_time)
 		holocreator_busy = TRUE
 		if(!do_after(user, creation_time, target = target))
@@ -115,7 +115,7 @@
 /obj/item/holosign_creator/powered_shielding/afterattack(atom/target, mob/user, proximity_flag)
 	if(!proximity_flag)
 		return
-	if(!check_allowed_items(target, 1))
+	if(!check_allowed_items(target, TRUE))
 		return
 	var/turf/T = get_turf(target)
 	var/obj/machinery/holosign/H = locate(holosign_type) in T
