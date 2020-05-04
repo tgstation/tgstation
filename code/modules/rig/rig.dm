@@ -37,42 +37,58 @@
 	///How much battery power the RIG uses per tick
 	var/cell_usage = 0
 	///RIG cell
-	var/obj/item/stock_parts/cell/cell = /obj/item/stock_parts/cell/high
+	var/obj/item/stock_parts/cell/cell
 	///RIG helmet
-	var/obj/item/clothing/head/helmet/space/rig/helmet = /obj/item/clothing/head/helmet/space/rig
+	var/obj/item/clothing/head/helmet/space/rig/helmet
 	///RIG chestplate
-	var/obj/item/clothing/suit/space/rig/chestplate = /obj/item/clothing/suit/space/rig
+	var/obj/item/clothing/suit/space/rig/chestplate
 	///RIG gauntlets
-	var/obj/item/clothing/gloves/rig/gauntlets = /obj/item/clothing/gloves/rig
+	var/obj/item/clothing/gloves/rig/gauntlets
 	///RIG boots
-	var/obj/item/clothing/shoes/rig/boots = /obj/item/clothing/shoes/rig
+	var/obj/item/clothing/shoes/rig/boots
 	///Modules the RIG should spawn with
 	var/list/initial_modules = list()
+	///Path for the RIG cell
+	var/cell_path = /obj/item/stock_parts/cell/high
+	///Path for the RIG helmet
+	var/helmet_path = /obj/item/clothing/head/helmet/space/rig
+	///Path for the RIG chestplate
+	var/chestplate_path = /obj/item/clothing/gloves/rig
+	///Path for the RIG gauntlets
+	var/gauntlets_path = /obj/item/clothing/gloves/rig
+	///Path for the RIG boots
+	var/boots_path = /obj/item/clothing/shoes/rig
 	///Person wearing the RIGsuit
 	var/mob/living/carbon/human/wearer
-	var/datum/action/item_action/rig/deploy/deploy
 
 /obj/item/rig/control/Initialize()
 	..()
 	START_PROCESSING(SSobj,src)
 	icon_state = "[theme]-module"
 	wires = new /datum/wires/rig(src)
-	deploy = new
-	deploy.rig = src
 	if((!req_access || !req_access.len) && (!req_one_access || !req_one_access.len))
 		locked = FALSE
-	if(cell)
+	if(cell_path)
+		cell = cell_path
 		new cell(src)
-	if(helmet)
+	if(helmet_path)
+		helmet = helmet_path
+		helmet.rig = src
 		helmet.icon_state = "[theme]-helmet-unsealed"
 		new helmet(src)
-	if(chestplate)
+	if(chestplate_path)
+		chestplate = chestplate_path
+		chestplate.rig = src
 		chestplate.icon_state = "[theme]-chestplate-unsealed"
 		new chestplate(src)
-	if(gauntlets)
+	if(gauntlets_path)
+		gauntlets = gauntlets_path
+		gauntlets.rig = src
 		gauntlets.icon_state = "[theme]-gauntlets-unsealed"
 		new gauntlets(src)
-	if(boots)
+	if(boots_path)
+		boots = boots_path
+		boots.rig = src
 		boots.icon_state = "[theme]-boots-unsealed"
 		new boots(src)
 	if(initial_modules)
@@ -83,7 +99,6 @@
 /obj/item/rig/control/Destroy()
 	..()
 	QDEL_NULL(wires)
-	QDEL_NULL(deploy)
 
 /obj/item/rig/control/process()
 	if(seconds_electrified > MACHINE_NOT_ELECTRIFIED)
@@ -97,12 +112,10 @@
 /obj/item/rig/control/equipped(mob/user, slot)
 	..()
 	if(slot == ITEM_SLOT_BACK)
-		deploy.Grant(src)
 		wearer = user
 
 /obj/item/rig/control/dropped(mob/user)
 	..()
-	QDEL_NULL(deploy)
 	wearer = null
 
 /obj/item/rig/control/proc/shock(mob/living/user)
