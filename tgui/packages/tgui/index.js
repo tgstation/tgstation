@@ -143,9 +143,10 @@ const setupApp = () => {
   };
 
   window.reinit = newRef => {
+    logger.log("Reinitializing to: " + newRef);
     window.__ref__ = newRef;
     callByond('', {
-      ref: window.__ref__,
+      src: window.__ref__,
       action: 'tgui:initialize',
     });
   };

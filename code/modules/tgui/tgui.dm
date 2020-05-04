@@ -64,6 +64,7 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	world.log << "Datum First Created"
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
@@ -105,7 +106,6 @@
 		window_id = free_windows[length(free_windows)]
 		free_windows -= window_id
 		user << output(url_encode(ref(src)), "[window_id].browser:reinit")
-		winset(user.client, window_id, "is-visible=true")
 	else
 		//Create a new window
 		// Build window options
@@ -132,10 +132,10 @@
 		// Open the window.
 		user << browse(html, "window=[window_id];[window_options]")
 
-		// Instruct the client to signal UI when the window is closed.
-		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
-		// be tagged, so this is an effective unwrap
-		winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
+	// Instruct the client to signal UI when the window is closed.
+	// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
+	// be tagged, so this is an effective unwrap
+	winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
 
 
 	// Pre-fetch initial state while browser is still loading in
@@ -263,6 +263,7 @@
 		if("tgui:close")
 			close()
 		if("tgui:initialize")
+			winset(user.client, window_id, "is-visible=true")
 			user << output(_initial_update, "[window_id].browser:update")
 			initialized = TRUE
 		if("tgui:setSharedState")
