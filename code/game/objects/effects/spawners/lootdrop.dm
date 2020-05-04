@@ -469,10 +469,6 @@
 				/obj/item/circuitboard/machine/processor/slime,
 				/obj/item/circuitboard/machine/monkey_recycler,
 				/obj/item/circuitboard/computer/xenobiology,
-				/obj/item/stock_parts/matter_bin/super,
-				/obj/item/stock_parts/matter_bin/super,
-				/obj/item/stock_parts/manipulator/pico,
-				/obj/item/stock_parts/manipulator/pico,
 				/obj/item/reagent_containers/dropper,
 				/obj/item/toy/plush/slimeplushie
 				)
@@ -491,6 +487,7 @@
 				/obj/item/organ/lungs/cybernetic/tier2,
 				/obj/item/organ/cyberimp/arm/toolset,
 				/obj/item/organ/cyberimp/arm/surgery,
+				/obj/item/organ/tongue/robot,
 				/obj/item/organ/tongue/robot,
 				/obj/item/organ/tongue/robot
 				)
