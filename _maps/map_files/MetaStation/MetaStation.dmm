@@ -74711,6 +74711,10 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/cafeteria,
 /area/crew_quarters/kitchen)
+"pgX" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel,
+/area/security/prison)
 "pgY" = (
 /obj/effect/turf_decal/tile/green{
 	dir = 1
@@ -101660,7 +101664,7 @@ agH
 xsq
 adh
 adr
-adh
+pgX
 aem
 aeN
 afG
