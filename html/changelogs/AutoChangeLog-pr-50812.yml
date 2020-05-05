@@ -1,0 +1,7 @@
+author: "willox"
+delete-after: True
+changes: 
+  - code_imp: "removed some duplicate proc definitions"
+  - bugfix: "syndicate holster now properly sets itself as silent"
+  - bugfix: "rend tears and temporary object used by fulton extraction can no longer be eaten by singularity"
+  - bugfix: "hygiene bot no longer cleans objects twice when passed over"
