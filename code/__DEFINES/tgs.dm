@@ -85,6 +85,7 @@
 //REQUIRED HOOKS
 
 //Call this somewhere in /world/New() that is always run
+//IMPORTANT: This function may sleep! Other TGS functions will not succeed until it completes
 //event_handler: optional user defined event handler. The default behaviour is to broadcast the event in english to all connected admin channels
 //minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated
 /world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
