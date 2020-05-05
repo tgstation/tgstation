@@ -1,4 +1,3 @@
-
 /turf/open/floor/light
 	name = "light floor"
 	desc = "A wired glass tile embedded into the floor. Modify the color with a Multitool."
@@ -8,7 +7,7 @@
 	broken_states = list("light_broken")
 	var/on = TRUE
 	var/state = 0//0 = fine, 1 = flickering, 2 = breaking, 3 = broken
-	var/list/coloredlights = list("r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
+	var/static/list/coloredlights = list("r", "o", "y", "g", "b", "i", "v", "w", "s", "z")
 	var/currentcolor = "b"
 	var/can_modify_colour = TRUE
 	tiled_dirt = FALSE
@@ -70,13 +69,13 @@
 	set_light(0)
 	return ..()
 
-/turf/open/floor/light/multitool_act(mob/living/user, obj/item/I)
+/turf/open/floor/light/multitool_act(mob/living/user, obj/item/I, obj/item/multitool/multitool)
 	. = ..()
 	if(.)
 		return
 	if(!can_modify_colour)
 		return
-	var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = FALSE, radius = 36, require_near = TRUE)
+	var/choice = show_radial_menu(user,src, lighttile_designs, custom_check = CALLBACK(src, .proc/check_menu, user, multitool), radius = 36, require_near = TRUE)
 	if(!choice)
 		return FALSE
 	currentcolor = choice
@@ -100,7 +99,7 @@
 
 //Cycles through all of the colours
 /turf/open/floor/light/colour_cycle
-	coloredlights = list("cycle_all")
+	currentcolor = "cycle_all"
 	can_modify_colour = FALSE
 
 
@@ -110,9 +109,25 @@
 /turf/open/floor/light/colour_cycle/dancefloor_a
 	name = "dancefloor"
 	desc = "Funky floor."
-	coloredlights = list("dancefloor_A")
+	currentcolor = "dancefloor_A"
 
 /turf/open/floor/light/colour_cycle/dancefloor_b
 	name = "dancefloor"
 	desc = "Funky floor."
-	coloredlights = list("dancefloor_B")
+	currentcolor = "dancefloor_A"
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  * * multitool The multitool used to interact with a menu
+  */
+/turf/open/floor/light/proc/check_menu(mob/living/user, obj/item/multitool/multitool)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(!user.is_holding(multitool))
+		return FALSE
+	return TRUE
