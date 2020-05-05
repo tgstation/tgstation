@@ -60,7 +60,7 @@ export class Window extends Component {
             });
             store.dispatch(enterStandby());
           }} />
-        {!standby ? (
+        {!standby && (
           <div
             className={classes([
               'Window__rest',
@@ -71,7 +71,7 @@ export class Window extends Component {
               <div className="Window__dimmer" />
             )}
           </div>
-        ) : null}
+        )}
         {config.fancy && resizable && (
           <Fragment>
             <div className="Window__resizeHandle__e"
