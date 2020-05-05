@@ -98,16 +98,18 @@
 	update_status(push = FALSE) // Update the window status.
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
+	world.log << "open: [world.time]"
 
 	var/list/free_windows = user.client.free_tgui_windows
-	if(length(free_windows))
-		//Use a recycled window
+	var/has_free_window = !!length(free_windows)
+	if(has_free_window)
+		// Use a recycled window
 		window_id = free_windows[length(free_windows)]
 		free_windows -= window_id
 		winset(user.client, window_id, "size=[width]x[height];is-visible=true")
 		initialized = TRUE
 	else
-		//Create a new window
+		// Create a new window
 		// Build window options
 		var/window_options = "can_minimize=0;auto_format=0;"
 		// If we have a width and height, use them.
@@ -136,7 +138,6 @@
 	// be tagged, so this is an effective unwrap
 	winset(user, window_id, "on-close=\"uiclose \ref[src]\"")
 
-
 	// Pre-fetch initial state while browser is still loading in
 	// another thread
 	if(!initial_data)
@@ -145,11 +146,10 @@
 		initial_static_data = src_object.ui_static_data(user)
 	_initial_update = url_encode(get_json(initial_data, initial_static_data))
 
-	if(length(free_windows))
+	if(has_free_window)
 		user << output(_initial_update, "[window_id].browser:update")
 
 	SStgui.on_open(src)
-
 
 /**
  * public

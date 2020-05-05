@@ -4,6 +4,7 @@
  */
 
 @use 'sass:color';
+@use '../colors.scss';
 
 $color-text: rgba(255, 255, 255, 0.75) !default;
 $color-background: #363636 !default;
@@ -71,5 +72,16 @@ $color-shadow: rgba(0, 0, 0, 0.1) !default;
   height: 32px;
   font-size: 20px;
   line-height: 31px;
+  text-align: center;
+}
+
+.TitleBar__devBuildIndicator {
+  position: absolute;
+  top: 6px;
+  right: 52px;
+  min-width: 20px;
+  padding: 2px 4px;
+  background-color: rgba(colors.$good, 0.75);
+  color: #fff;
   text-align: center;
 }

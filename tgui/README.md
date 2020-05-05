@@ -67,8 +67,9 @@ Run one of the following:
   game as you code it. Very useful, highly recommended.
   - In order to use it, you should start the game server first, connect to it
   and wait until the world has been properly loaded and you are no longer
-  in the lobby. Start tgui dev server. You'll know that it's hooked correctly
-  if data gets dumped to the log when tgui windows are opened.
+  in the lobby. Start tgui dev server, and once it has finished building,
+  press F5 on any tgui window. You'll know that it's hooked correctly if
+  you see a green bug icon in titlebar and data gets dumped to the console.
 - `bin/tgui --dev --reload` - reload byond cache once.
 - `bin/tgui --dev --debug` - run server with debug logging enabled.
 - `bin/tgui --dev --no-hot` - disable hot module replacement (helps when

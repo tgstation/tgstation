@@ -9,7 +9,7 @@ import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { useBackend, backendEnterStandby } from '../backend';
 import { IS_IE8, runCommand, winset, callByond } from '../byond';
-import { Box, Icon } from '../components';
+import { Box, Icon, Tooltip } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { dragStartHandler, resizeStartHandler } from '../drag';
 import { releaseHeldKeys } from '../hotkeys';
@@ -40,14 +40,13 @@ export class Window extends Component {
     const showDimmer = config.observer
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE;
-    const title = standby ? '' : decodeHtmlEntities(config.title);
     return (
       <Layout
         className="Window"
         theme={theme}>
         <TitleBar
           className="Window__titleBar"
-          title={title}
+          title={!standby && decodeHtmlEntities(config.title)}
           status={config.status}
           fancy={config.fancy}
           onDragStart={dragStartHandler}
@@ -135,9 +134,10 @@ const TitleBar = props => {
         color={statusToColor(status)}
         name="eye" />
       <div className="TitleBar__title">
-        {title === title.toLowerCase()
-          ? toTitleCase(title)
-          : title}
+        {typeof title === 'string'
+          && title === title.toLowerCase()
+          && toTitleCase(title)
+          || title}
       </div>
       <div
         className="TitleBar__dragZone"
@@ -150,6 +150,11 @@ const TitleBar = props => {
           // eslint-disable-next-line react/no-unknown-property
           onclick={onClose}>
           {IS_IE8 ? 'x' : '×'}
+        </div>
+      )}
+      {process.env.NODE_ENV !== 'production' && (
+        <div className="TitleBar__devBuildIndicator">
+          <Icon name="bug" />
         </div>
       )}
     </div>

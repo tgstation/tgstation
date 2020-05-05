@@ -29,7 +29,7 @@ import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate, backendEnterStandby } from './backend';
-import { IS_IE8, callByond } from './byond';
+import { IS_IE8 } from './byond';
 import { setupDrag } from './drag';
 import { logger } from './logging';
 import { createStore, StoreProvider } from './store';
@@ -73,14 +73,15 @@ const renderLayout = () => {
   // Report rendering time
   if (process.env.NODE_ENV !== 'production') {
     const finishedAt = Date.now();
-    if (initialRender) {
+    if (initialRender === 'recycled') {
+      logger.log('rendered in', timeDiff(startedAt, finishedAt));
+    }
+    else if (initialRender) {
       logger.debug('serving from:', location.href);
       logger.debug('bundle entered in', timeDiff(
         window.__inception__, enteredBundleAt));
-      logger.debug('initialized in', timeDiff(
-        enteredBundleAt, startedAt));
-      logger.log('rendered in', timeDiff(
-        startedAt, finishedAt));
+      logger.debug('initialized in', timeDiff(enteredBundleAt, startedAt));
+      logger.log('rendered in', timeDiff(startedAt, finishedAt));
       logger.log('fully loaded in', timeDiff(
         window.__inception__, finishedAt));
     }
@@ -140,8 +141,9 @@ const setupApp = () => {
       : stateJson;
 
     if (store.getState().standby) {
-      logger.log("Reinitializing to: " + state.config.ref);
+      logger.log('reinitializing to:', state.config.ref);
       window.__ref__ = state.config.ref;
+      initialRender = 'recycled';
     }
 
     // Backend update dispatches a store action
@@ -149,7 +151,7 @@ const setupApp = () => {
   };
 
   window.standby = () => {
-    logger.log("Entering standby");
+    logger.log("entering standby");
     store.dispatch(backendEnterStandby());
   };
 

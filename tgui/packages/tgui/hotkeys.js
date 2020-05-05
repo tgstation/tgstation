@@ -54,6 +54,18 @@ export const KEY_W = 87;
 export const KEY_X = 88;
 export const KEY_Y = 89;
 export const KEY_Z = 90;
+export const KEY_F1 = 112;
+export const KEY_F2 = 113;
+export const KEY_F3 = 114;
+export const KEY_F4 = 115;
+export const KEY_F5 = 116;
+export const KEY_F6 = 117;
+export const KEY_F7 = 118;
+export const KEY_F8 = 119;
+export const KEY_F9 = 120;
+export const KEY_F10 = 121;
+export const KEY_F11 = 122;
+export const KEY_F12 = 123;
 export const KEY_EQUAL = 187;
 export const KEY_MINUS = 189;
 
@@ -70,6 +82,18 @@ const NO_PASSTHROUGH_KEYS = [
   KEY_TAB,
   KEY_CTRL,
   KEY_SHIFT,
+  KEY_F1,
+  KEY_F2,
+  KEY_F3,
+  KEY_F4,
+  KEY_F5,
+  KEY_F6,
+  KEY_F7,
+  KEY_F8,
+  KEY_F9,
+  KEY_F10,
+  KEY_F11,
+  KEY_F12,
 ];
 
 // Tracks the "pressed" state of keys
