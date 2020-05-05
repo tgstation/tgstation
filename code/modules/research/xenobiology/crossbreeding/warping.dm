@@ -264,13 +264,11 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 /obj/effect/warped_rune/purplespace/proc/transmute_heal()
 	for(var/obj/item/stack/sheet/plastic/plastic in rune_turf)  //replace plastic with regenerative mesh
 		if(plastic.amount < 2)
-			return
+			break
 
 		plastic.use(2)
 		regen_mesh = new (rune_turf,1)
 		playsound(rune_turf, 'sound/effects/splat.ogg', 20, TRUE)
-		if(plastic.amount <= 0)
-			qdel(plastic)
 
 	for(var/obj/item/stack/sheet/cloth/cloth in rune_turf) //replace cloth with suture
 		if(cloth.amount < 2)
@@ -279,8 +277,6 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		cloth.use(2)
 		suture = new(rune_turf, 1)
 		playsound(rune_turf, 'sound/effects/splat.ogg', 20, TRUE)
-		if(cloth.amount <= 0)
-			qdel(cloth)
 
 
 /* the blue warp rune  keeps a tile slippery CONSTANTLY by adding lube over it. Excellent if you hate standing up.*/
