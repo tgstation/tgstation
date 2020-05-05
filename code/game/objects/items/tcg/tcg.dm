@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	var/cardtype ="Creature?"
 	var/cardsubtype = "Weeb"
 	var/series = "coreset2020"
-	var/rarity:= "uber rare to the extreme" //The rarity of this card in a set, each set must have at least one of all types
+	var/rarity = "uber rare to the extreme" //The rarity of this card in a set, each set must have at least one of all types
 
 /datum/card/New(list/data, list/templates = list())
 	applyTemplates(data, templates)
@@ -258,17 +258,3 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	for(var/list/data in cards)
 		var/datum/card/c = new(data, templates)
 		GLOB.card_list["[c.id]"] = c
-
-	//The parser for vscode doesn't like raw strings, that's why this looks fucky
-	//var/regex/template = regex("^(\[^$\\|\]+\\|)")
-	//var/list/json_text = list()
-/*	for(var/card in splittext(file2text("[directory]/[filename]"), "\n"))
-		//For quick lookup, if you don't have an index get dunked on
-		var/index = text2num(extractCardVariable("id", card))
-		if(index)
-			if(template.Find(card))
-				templates["[index]"] = card
-			else
-				var/full_card = expandCard(card, templates)//Expands the card fully
-				GLOB.card_list["[index]"] = new /datum/card/(card = full_card)
-*/
