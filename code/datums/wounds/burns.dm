@@ -61,8 +61,9 @@
 		return
 
 	if(sanitization > 0)
+		var/bandage_factor = (current_bandage ? current_bandage.splint_factor : 1)
 		infestation = max(0, infestation - WOUND_BURN_SANITIZATION_RATE)
-		sanitization = max(0, sanitization - WOUND_BURN_SANITIZATION_RATE)
+		sanitization = max(0, sanitization - (WOUND_BURN_SANITIZATION_RATE * bandage_factor))
 		return
 
 	infestation += infestation_rate
@@ -290,6 +291,7 @@
 	threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
 	status_effect_type = /datum/status_effect/wound/burn/moderate
 	flesh_damage = 5
+	scarring_descriptions = list("small amoeba-shaped skinmarks", "a faded streak of depressed skin")
 
 /datum/wound/burn/severe
 	name = "Third Degree Burns"
@@ -307,6 +309,7 @@
 	flesh_damage = 12.5
 	treatable_sharp = TRUE
 	mortification = 4
+	scarring_descriptions = list("a large, jagged patch of faded skin", "random spots of shiny, smooth skin", "spots of taut, leathery skin")
 
 /datum/wound/burn/critical
 	name = "Catastrophic Burns"
@@ -325,3 +328,4 @@
 	flesh_damage = 20
 	treatable_sharp = TRUE
 	mortification = 6
+	scarring_descriptions = list("massive, disfiguring keloid scars", "several long streaks of badly discolored and malformed skin", "unmistakeable splotches of dead tissue from serious burns")

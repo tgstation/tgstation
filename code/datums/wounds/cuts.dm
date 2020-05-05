@@ -33,15 +33,30 @@
 
 	/// The current bandage we have for this wound (maybe move bandages to the limb?)
 	var/obj/item/stack/current_bandage
+	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
+	var/datum/scar/highest_scar
 
 /datum/wound/brute/cut/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/brute/cut/old_wound = null)
 	. = ..()
 	blood_flow = initial_flow
 	if(old_wound)
 		blood_flow = max(old_wound.blood_flow, initial_flow)
+		if(old_wound.severity > severity && old_wound.highest_scar)
+			highest_scar = old_wound.highest_scar
+			old_wound.highest_scar = null
 		if(old_wound.current_bandage)
 			current_bandage = old_wound.current_bandage
 			old_wound.current_bandage = null
+
+	if(!highest_scar)
+		highest_scar = new
+		highest_scar.generate(L, src, add_to_scars=FALSE)
+
+/datum/wound/brute/cut/remove_wound(ignore_limb, replaced)
+	if(!replaced && highest_scar)
+		already_scarred = TRUE
+		highest_scar.lazy_attach(limb)
+	return ..()
 
 /datum/wound/brute/cut/get_examine_description(mob/user)
 	if(!current_bandage)
@@ -138,7 +153,7 @@
 		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
 
 /datum/wound/brute/cut/proc/suture(obj/item/stack/medical/suture/I, mob/user)
-	var/self_penalty_mult = (user == victim ? 1.5 : 1)
+	var/self_penalty_mult = (user == victim ? 1.4 : 1)
 	user.visible_message("<span class='notice'>[user] begins stitching [victim]'s [limb.name] with [I]...</span>", "<span class='notice'>You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER) || 1
 	if(!do_after(user, base_treat_time * time_mod * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
@@ -189,6 +204,7 @@
 	threshold_minimum = 20
 	threshold_penalty = 10
 	status_effect_type = /datum/status_effect/wound/cut/moderate
+	scarring_descriptions = list("light, faded lines", "minor cut marks", "a small faded slit", "a series of small scars")
 
 /datum/wound/brute/cut/severe
 	name = "Open Laceration"
@@ -205,6 +221,7 @@
 	threshold_penalty = 25
 	demotes_to = /datum/wound/brute/cut/moderate
 	status_effect_type = /datum/status_effect/wound/cut/severe
+	scarring_descriptions = list("a twisted line of faded gashes", "a gnarled sickle-shaped slice scar", "a long-faded puncture wound")
 
 /datum/wound/brute/cut/critical
 	name = "Weeping Avulsion"
@@ -221,6 +238,7 @@
 	threshold_penalty = 40
 	demotes_to = /datum/wound/brute/cut/severe
 	status_effect_type = /datum/status_effect/wound/cut/critical
+	scarring_descriptions = list("a winding path of very badly healed scar tissue", "a series of peaks and valleys along a gruesome line of cut scar tissue", "a grotesque snake of indentations and stitching scars")
 
 // TODO: see about moving dismemberment over to this, i'll have to add judging dismembering power/wound potential wrt item size i guess
 /datum/wound/brute/cut/loss

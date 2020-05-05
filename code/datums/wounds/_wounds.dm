@@ -91,8 +91,13 @@
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
 	var/cryo_progress
 
+	var/list/scarring_descriptions = list("general disfigurement")
+	/// If we've already tried scarring while removing (since remove_wound calls qdel, and qdel calls remove wound, .....) TODO: make this cleaner
+	var/already_scarred = FALSE
+
 /datum/wound/Destroy()
-	remove_wound()
+	if(limb && limb.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
+		remove_wound()
 	limb = null
 	victim = null
 	return ..()
@@ -160,7 +165,12 @@
 		second_wind()
 
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
-/datum/wound/proc/remove_wound(ignore_limb)
+/datum/wound/proc/remove_wound(ignore_limb, replaced = FALSE)
+	//TODO: have better way to tell if we're getting removed without replacement (full heal) scar stuff
+	if(limb && !already_scarred && !replaced)
+		already_scarred = TRUE
+		var/datum/scar/new_scar = new
+		new_scar.generate(limb, src)
 	if(victim)
 		LAZYREMOVE(victim.all_wounds, src)
 		if(!victim.all_wounds)
@@ -173,7 +183,8 @@
 /// When you want to swap out one wound for another (typically a promotion or demotion in the same wound type). First we remove the old one, then we apply the new one with a reference to the old one, then we qdel the old one fully
 /datum/wound/proc/replace_wound(new_type)
 	var/datum/wound/new_wound = new new_type
-	remove_wound()
+	already_scarred = TRUE
+	remove_wound(replaced=TRUE)
 	new_wound.apply_wound(limb, old_wound = src)
 	qdel(src)
 

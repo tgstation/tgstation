@@ -650,6 +650,7 @@
 #include "code\datums\wounds\burns.dm"
 #include "code\datums\wounds\cuts.dm"
 #include "code\datums\wounds\other.dm"
+#include "code\datums\wounds\scars\_scars.dm"
 #include "code\game\alternate_appearance.dm"
 #include "code\game\atoms.dm"
 #include "code\game\atoms_movable.dm"

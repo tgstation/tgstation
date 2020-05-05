@@ -32,8 +32,9 @@
 
 	update_inefficiencies()
 
-/datum/wound/brute/bone/remove_wound(ignore_limb)
-	REMOVE_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
+/datum/wound/brute/bone/remove_wound(ignore_limb, replaced)
+	if(limb)
+		REMOVE_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 	if(victim)
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
@@ -152,6 +153,7 @@
 	threshold_penalty = 15
 	treatable_tool = TOOL_BONESET
 	status_effect_type = /datum/status_effect/wound/bone/moderate
+	scarring_descriptions = list("light discoloring", "a slight blue tint")
 
 /datum/wound/brute/bone/moderate/try_handling(mob/living/carbon/human/user)
 	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
@@ -253,6 +255,7 @@
 	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
 	status_effect_type = /datum/status_effect/wound/bone/severe
 	treat_priority = TRUE
+	scarring_descriptions = list("a faded, fist-sized bruise", "a vaguely triangular peel scar")
 
 
 /datum/wound/brute/bone/critical
@@ -271,6 +274,7 @@
 	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
 	status_effect_type = /datum/status_effect/wound/bone/critical
 	treat_priority = TRUE
+	scarring_descriptions = list("a section of janky skin lines and badly healed scars", "a large patch of uneven skin tone", "a cluster of calluses")
 
 /datum/wound/brute/bone/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack))

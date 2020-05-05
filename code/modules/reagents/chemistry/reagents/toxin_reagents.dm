@@ -166,6 +166,11 @@
 	toxpwr = 2
 	taste_description = "fish"
 
+/datum/reagent/toxin/carpotoxin/on_mob_life(mob/living/carbon/M)
+	. = ..()
+	for(var/i in M.all_scars)
+		qdel(i)
+
 /datum/reagent/toxin/zombiepowder
 	name = "Zombie Powder"
 	description = "A strong neurotoxin that puts the subject into a death-like state."

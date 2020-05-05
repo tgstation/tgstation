@@ -68,6 +68,9 @@
 
 	/// The wounds currently afflicting this body part
 	var/list/wounds
+
+	/// The scars currently afflicting this body part
+	var/list/scars
 	/// Our current stored wound damage multiplier
 	var/wound_damage_multiplier = 1
 
@@ -75,6 +78,11 @@
 	var/wound_resistance = 0
 	/// When this bodypart hits max damage, this number is added to all wound rolls. Obviously only relevant for bodyparts that have damage caps.
 	var/disabled_wound_penalty = 10
+
+	/// A hat won't cover your face, but a shirt covering your chest will cover your... you know, chest
+	var/scars_covered_by_clothes = TRUE
+	/// Descriptions for the locations on the limb for scars to be assigned, just cosmetic
+	var/list/specific_locations = list("general area")
 
 
 /obj/item/bodypart/examine(mob/user)
@@ -269,7 +277,6 @@
 	for(var/datum/wound/existing_wound in wounds)
 		if(existing_wound.type in (initial(potential_wound.wound_type)))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
-				testing("inferior")
 				existing_wound.replace_wound(potential_wound)
 			return
 

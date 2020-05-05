@@ -418,9 +418,24 @@
 		return
 
 	face_atom(A)
-	var/list/result = A.examine(src)
+	var/list/result
+	if(mind)
+		if(mind.recent_examines && (A in mind.recent_examines)) // i think this would be faster with an associated list but i'll get to that later
+			result = A.examine_more(src)
+		else
+			result = A.examine(src)
+			LAZYADD(mind.recent_examines, A)
+			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
+	else
+		result = A.examine(src)
+
 	to_chat(src, result.Join("\n"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
+
+/mob/proc/clear_from_recent_examines(atom/A)
+	if(QDELETED(A) || !mind)
+		return
+	LAZYREMOVE(mind.recent_examines, A)
 
 /**
   * Point at an atom

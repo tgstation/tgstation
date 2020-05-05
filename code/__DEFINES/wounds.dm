@@ -34,3 +34,9 @@
 // above WOUND_INFECTION_SEPTIC, your limb is completely putrid and you start rolling to lose the entire limb by way of paralyzation. After 3 failed rolls (~4-5% each probably), the limb is paralyzed
 
 #define WOUND_BURN_SANITIZATION_RATE 0.3 // how quickly sanitization removes infestation and decays per tick
+
+// The following are for persistent scar save formats
+#define SCAR_SAVE_ZONE				1 // The body_zone we're applying to on granting
+#define SCAR_SAVE_DESC				2 // The description we're loading
+#define SCAR_SAVE_PRECISE_LOCATION	3 // The precise location we're loading
+#define SCAR_SAVE_SEVERITY			4 // The severity the scar had

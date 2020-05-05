@@ -240,3 +240,25 @@
 ///Applies a bad moodlet for having an uncovered head
 /datum/quirk/bald/proc/unequip_hat(mob/user, obj/item/clothing, force, newloc, no_move, invdrop, silent)
 	SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "bad_hair_day", /datum/mood_event/bald)
+
+/datum/quirk/longtimer
+	name = "Longtimer"
+	desc = "You've been around for a long time and seen more than your fair share of action, suffering some pretty nasty scars along the way. For whatever reason, you've declined to get them removed or augmented."
+	value = 0
+	gain_text = "<span class='notice'>Your body has seen better days.</span>"
+	lose_text = "<span class='notice'>Your sins may wash away, but those scars are here to stay...</span>"
+	medical_record_text = "Patient has withstood significant physical trauma and declined plastic surgery procedures to heal scarring."
+
+/datum/quirk/longtimer/on_spawn()
+	var/mob/living/carbon/human/H = quirk_holder
+	var/list/wounds = WOUND_TYPE_BONE + WOUND_TYPE_CUT + WOUND_TYPE_BURN
+	var/scars = rand(3,7)
+	for(var/i in 1 to scars)
+		var/datum/scar/S = new
+		var/obj/item/bodypart/BP = pick(H.bodyparts)
+
+		var/wound_type = pick(wounds)
+		var/datum/wound/W = new wound_type
+		S.generate(BP, W)
+		S.fake = TRUE
+		QDEL_NULL(W)
