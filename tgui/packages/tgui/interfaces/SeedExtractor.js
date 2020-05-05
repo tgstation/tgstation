@@ -41,8 +41,8 @@ const createSeeds = seedStrings => {
     o.amount = seedStrings[key];
     o.key = key;
     objs.push(o);
+    o.name = o.name.replace("pack of ", "").toTitleCase();
   });
- // return objs.sortBy(item => item.name);
   return flow([
     sortBy(item => item.name),
   ])(objs);
@@ -71,8 +71,8 @@ export const SeedExtractor = (props, context) => {
               <Table.Cell >Stock</Table.Cell>
             </Table.Row>
             {createSeeds(seeds).map(item => (
-              <Table.Row>
-                <Table.Cell bold>{toTitleCase(item.name.replace("pack of ", ""))}</Table.Cell>
+              <Table.Row key={item.key}>
+                <Table.Cell bold>{item.name}</Table.Cell>
                 <Table.Cell >{item.lifespan}</Table.Cell>
                 <Table.Cell >{item.endurance}</Table.Cell>
                 <Table.Cell >{item.maturation}</Table.Cell>
@@ -89,7 +89,7 @@ export const SeedExtractor = (props, context) => {
                 </Table.Cell>
               </Table.Row>
             ))}
-            </Table>
+          </Table>
         </Section>
       </Window.Content>
     </Window>
