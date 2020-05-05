@@ -13,13 +13,11 @@
 #define VOID_CONDUCTION 1e-2
 #define MAX_FUSION_RESEARCH 1000
 
-#define DAMAGE_HARDCAP 0.002
-
 /obj/machinery/atmospherics/fusion_reactor
 	name = "Fusion Reactor Core"
 	desc = "The core machine for a fusion reactor"
-	icon = 'icons/obj/supermatter.dmi'
-	icon_state = "darkmatter"
+	icon = 'icons/obj/atmos.dmi'
+	icon_state = "heater-p"
 	density = TRUE
 	anchored = TRUE
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
@@ -27,6 +25,7 @@
 	critical_machine = TRUE
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 40
+
 
 	var/gasefficency = 0.15
 	var/gas_change_rate = 0.05
@@ -43,6 +42,7 @@
 	var/Core_temperature = 273
 	var/gas_power = 0
 	var/Instability = 0
+	var/heat_factor = 1
 
 	var/lasercomp = 1 //those need to be tied to the internal components
 	var/upgrades = 1
@@ -80,8 +80,11 @@
 	var/datum/gas_mixture/env = T.return_air()
 	var/datum/gas_mixture/external
 	if(Core_temperature < 1e6)
+		active = FALSE
+		icon_state = "heater-p"
 		return
 	if(active)
+		icon_state = "heater1"
 		//Remove gas from surrounding area
 		external = env.remove(gasefficency * env.total_moles())
 	else
@@ -107,7 +110,7 @@
 		gas_power = 0
 		gas_power += external.gases[/datum/gas/tritium][MOLES] * 55
 		gas_power += external.gases[/datum/gas/hydrogen][MOLES] * 45
-		gas_power += external.gases[/datum/gas/plasma][MOLES] * - 100
+		gas_power += external.gases[/datum/gas/plasma][MOLES] * -100 * upgrades
 		Instability = 0
 		Instability += MODULUS((gas_power * INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size)
 		var/internal_instability = 0
@@ -115,10 +118,14 @@
 			internal_instability = 1
 		else
 			internal_instability = -1
+		if(archived_heat > Core_temperature)
+			internal_instability = 10
 
 		Energy += internal_instability * ((external.gases[/datum/gas/hydrogen][MOLES] + external.gases[/datum/gas/tritium][MOLES] - external.gases[/datum/gas/plasma][MOLES]) * LIGHT_SPEED ** 2)
-		InternalPower = (external.gases[/datum/gas/hydrogen][MOLES] / 4000) * (external.gases[/datum/gas/tritium][MOLES] / 4000) * (PI * (2 * (external.gases[/datum/gas/hydrogen][MOLES] / 100 * CALCULATED_H2RADIUS) * (external.gases[/datum/gas/tritium][MOLES] / 100 * CALCULATED_TRITRADIUS))**2) * Energy
-		Core_temperature = InternalPower / 1000
+		InternalPower = heat_factor * (external.gases[/datum/gas/hydrogen][MOLES] / 4000 * upgrades) * (external.gases[/datum/gas/tritium][MOLES] / 4000 * upgrades) * (PI * (2 * (external.gases[/datum/gas/hydrogen][MOLES] / 100 * CALCULATED_H2RADIUS) * (external.gases[/datum/gas/tritium][MOLES] / 100 * CALCULATED_TRITRADIUS))**2) * Energy
+		Core_temperature += InternalPower / (1000 * upgrades)
+		Core_temperature = max(TCMB, Core_temperature)
+		heat_factor = Core_temperature / 1e5
 		deltaTemperature = archived_heat - Core_temperature
 		Conduction = - materialConduct * deltaTemperature
 		Radiation = max(- (PLANK_LIGHT_CONSTANT / ((0.0005/lasercomp) * 1e-14)) * deltaTemperature, 0)
@@ -126,26 +133,25 @@
 		PowerOutput = max(efficiency * (InternalPower - Conduction - Radiation), 0)
 
 		external.temperature += Conduction
-		external.temperature = max(min(external.temperature, MAX_POSSIBLE_HEAT), 0)
+		external.temperature = clamp(external.temperature, MAX_POSSIBLE_HEAT, TCMB)
 
 		if(InternalPower < 0)
 			InternalPower = - InternalPower
 		external.gases[/datum/gas/plasma][MOLES] += InternalPower * PLASMA_CONVERSION_FACTOR
-		external.gases[/datum/gas/hydrogen][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR
-		external.gases[/datum/gas/tritium][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR * 2
+		external.gases[/datum/gas/hydrogen][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR * 1.5
+		external.gases[/datum/gas/tritium][MOLES] -= InternalPower * FUEL_CONVERSION_FACTOR * 1.8
 
 		if(PowerOutput < 0)
 			PowerOutput = - PowerOutput
 		SSresearch.science_tech.add_point_type(TECHWEB_POINT_TYPE_DEFAULT, min(PowerOutput, MAX_FUSION_RESEARCH))
 
-		idle_power_usage = Core_temperature / 1e6
+		idle_power_usage = Core_temperature / (1e4 * upgrades)
 
 		radiation_pulse(src, Radiation * HIGH_RADIATION_FACTOR)
 		if(prob(30))
 			src.fire_nuclear_particle()
 		env.merge(external)
 		air_update_turf()
-		use_power()
 
 /obj/machinery/atmospherics/fusion_reactor/interact(mob/user)
 	if(!active)
@@ -156,12 +162,10 @@
 /obj/machinery/atmospherics/fusion_reactor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_SCREWDRIVER)
 		Core_temperature += 1000000
+
+
+
 /*
-Q = (mx + ma − mb − my)c2
-a = heat calculations
-b = power calculations
-c = moles calculations
-d = heat healing calculations (damage - min(lower heat, 0))
 Energy = (H2 + Trit − Plasma) * c**2 (comp) c = 299,792,458						(0.4+0.4-0.2)*299,792,458**2 = 8.9875518e+16
 Power = densityH2 * densityTrit(Pi * (2 * rH2 * rTrit)**2) * Energy				(50/4000) * (500/4000) * (3.1415 * (2 * 0.9 * 120e-5 * 0.1 * 230e-2)**2)*8.9875518e+16
 PowerOut = efficiency * (Power - Conduction - Radiation)
