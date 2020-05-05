@@ -136,10 +136,11 @@
 		to_chat(user, "<span class='warning'>The motors whir and fail!</span>")
 		return
 	build_barrier(0,2,2,3,1,1,3,4,user)
-/* The vars you'll see in the proc() are referred to a mob looking north; NEx NEy refers to the North East corner x and y,
-all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis, i = internal, o = outline). This way of naming the vars
-won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup*/
-///Build the barriers
+/** The vars you'll see in the proc() are referred to a mob looking north; NEx NEy refers to the North East corner x and y,
+*all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis, i = internal, o = outline). This way of naming the vars
+*won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup
+*This proc builds the barriers
+**/
 /obj/machinery/power/proto_sh_emitter/proc/build_barrier(SWxi,SWyi,NExi,NEyi,SWxo,SWyo,NExo,NExo,mob/user)
 	///Stores the outline of the room to generate
 	var/list/outline
@@ -173,7 +174,7 @@ won't have much sense for the other directions, so always refer to the north dir
 			new /obj/machinery/holosign/barrier/power_shield/floor(turf, src)
 			LAZYREMOVE(internal, turf)
 
-///Remove the barriers
+///This proc removes the barriers
 /obj/machinery/power/proto_sh_emitter/proc/remove_barrier(mob/user)
 	var/turf/EmitterTurf = get_turf(src)
 	to_chat(user, "<span class='warning'>You start to turn off the [src] and the generated shields!</span>")
@@ -185,10 +186,11 @@ won't have much sense for the other directions, so always refer to the north dir
 		for(var/h in signs)
 			qdel(h)
 		update_icon_state()
-/* The vars you'll see in the proc() are referred to a mob looking north and they define a CORNER; NEx NEy refers to the North East CORNER x and y coordinates,
-all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis). This way of naming the vars
-won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup*/
-///Check if the machine is generating the barriers inside the map borders
+/** The vars you'll see in the proc() are referred to a mob looking north and they define a CORNER; NEx NEy refers to the North East CORNER x and y coordinates,
+*all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis). This way of naming the vars
+*won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup
+*This proc check if the machine is generating the barriers inside the map borders
+**/
 /obj/machinery/power/proto_sh_emitter/proc/check_map_borders(NWx,NWy,NEx,NEy)
 	borders = TRUE
 	switch(dir) //Check for map limits.
