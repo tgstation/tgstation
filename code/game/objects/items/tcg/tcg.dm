@@ -7,17 +7,6 @@
 #define CARD_RARITY_MISPRINT 1
 
 GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
-GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
-								"desc" = 1,
-								"icon" = 2,
-								"icon_state" = 3,
-								"id" = 4,
-								"power" = 5,
-								"resolve" = 6,
-								"tags" = 7,
-								"cardtype" = 8,
-								"rarity" = 9,
-								))
 
 /obj/item/tcgcard
 	name = "Coder"
@@ -31,36 +20,38 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 	. = ..()
 	name = temp.name
 	desc = temp.desc
-	icon = icon(temp.state_location)
+	icon = icon(temp.icon)
 	icon_state = temp.icon_state
 	id = temp.id
 	transform = matrix(0.3,0,0,0,0.3,0)
 
 /datum/card
+	var/id = -1 //Unique ID, for use in lookups and storage
 	var/name = "Coder"
 	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
-	var/state_location = 'icons/obj/tcg.dmi'
+	var/rules = "There are no rules here",
+	var/icon = "icons/obj/tcg.dmi"
 	var/icon_state = "runtime"
-	var/id = -1 //Unique ID, for use in lookups and storage
+	var/summoncost = -1
 	var/power = 0 //How hard this card hits (by default)
 	var/resolve = 0 //How hard this card can get hit (by default)
-	var/tags = "" //Special tags
-	var/cardtype = "" //Cardtype, for use in battles. Arcane/Inept if you don't update this whole block when you finalize the game I will throw you into the sm
-	var/rarity = 0 //The rarity of this card in a set, each set must have at least one of all types
+	var/faction = "socks"
+	var/cardtype ="Creature?"
+	var/cardsubtype = "Weeb"
+	var/series = "coreset2020"
+	var/rarity:= "uber rare to the extreme" //The rarity of this card in a set, each set must have at least one of all types
 
-/datum/card/New(location, card)
-	if(card != "")
-		//Sets the variables of the card based off the string
-		name = extractCardVariable("name", card)
-		desc = extractCardVariable("desc", card)
-		state_location = extractCardVariable("icon", card)
-		icon_state = extractCardVariable("icon_state", card)
-		id = text2num(extractCardVariable("id", card))
-		power = text2num(extractCardVariable("power", card))
-		resolve = text2num(extractCardVariable("resolve", card))
-		tags = extractCardVariable("tags", card)
-		cardtype = extractCardVariable("cardtype", card)
-		rarity = text2num(extractCardVariable("rarity", card))
+/datum/card/New(list/data, list/templates = list())
+	applyTemplates(data, templates)
+	apply(data)
+
+/datum/card/proc/apply(list/data)
+	for(var/name in (vars & data))
+		vars[name] = (!isnull(data[name]) && !isnull(vars[name])) ? data[name] : vars[name]
+
+/datum/card/proc/applyTemplates(list/data, list/templates = list())
+	apply(templates["default"])
+	apply(templates[data["template"]])
 
 /obj/item/tcgcard/attack_self(mob/user)
 	. = ..()
@@ -94,13 +85,8 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 	///The amount of cards each pack contains
 	var/card_count = 6
 	///The guarenteed rarity, if none set this to 0
-	var/guar_rarity = 4
-	var/list/rarityTable = list(1,
-							2,
-							20,
-							50,
-							100,
-							1000
+	var/guar_rarity = "uncommon"
+	var/list/rarityTable = list("uncommon" = 1
 							) //The rarity table, the set must contain at least one of each
 
 /obj/item/cardpack/series_one
@@ -108,7 +94,7 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 	desc = "Contains six cards of varying rarity from Series 1. Collect them all!"
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "cardpack_series1"
-	series = "S1"
+	series = "coreset2020"
 	contains_coin = 0
 
 /obj/item/cardpack/resin
@@ -158,15 +144,15 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
 
-///Returns a list of cards of cardCount weighted by rarity from cardList that have matching tags to series, with at least one of guarenteedRarity.
+///Returns a list of cards of cardCount weighted by rarity from cardList that have matching series, with at least one of guarenteedRarity.
 /obj/item/cardpack/proc/buildCardListWithRarity(cardCount, guarenteedRarity, cardList)
 	var/list/datum/card/readFrom = list()
 	var/list/datum/card/toReturn = list()
 	for(var/index in cardList)
-		if(isCardTagsMatch(cardList[index], series))
+		if(cardList[index].series == series)
 			readFrom += cardList[index]
 	//You can always get at least one of some rarity
-	if(guarenteedRarity > 0 && guarenteedRarity <= rarityTable.len)
+	if(guarenteedRarity != "" && (guarenteedRarity in rarityTable))
 		cardCount--
 		var/list/datum/card/forSure = list()
 		for(var/datum/card/template in readFrom)
@@ -187,9 +173,9 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 		//Some number between 1 and the sum of all values in the list
 		var/weight = 0
 		for(var/chance in rarityTable)
-			weight += chance
+			weight += rarityTable[chance]
 		var/random = rand(weight)
-		for(var/bracket in 1 to rarityTable.len)
+		for(var/bracket in rarityTable)
 			//Steals blatently from pickweight(), sorry buddy I need the index
 			random -= rarityTable[bracket]
 			if(random <= 0)
@@ -205,113 +191,6 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 			//If we still don't find anything yell into the void. Lazy coders.
 			log_runtime("The index [rarity] of rarityTable does not exist in the supplied cardList")
 	return toReturn
-
-///If the card's tags contain the input data, we return true, false if not
-/proc/isCardTagsMatch(datum/card/template, matchBy)
-	//This is where we isolate the data actually stored.
-	//We will now loop through our options to see if either of them are an exact match
-	var/content = splittext(template.tags, "&")
-	for(var/tex in content)
-		//We do this to allow number inputs for searches
-		if(tex == "[matchBy]")
-			return TRUE
-	//If we found nothing
-	return FALSE
-
-///Gets the fully expanded card def based on the passed template list
-/proc/expandCard(card, templates)
-	//Gets the cards template
-	var/temp = getCardTemplate(card)
-	if(temp == "")
-		//If it has no template
-		return applyDefaultCardTemplate(card, templates)
-	temp = findCardTemplate(temp, templates)
-	if(temp == "")
-		//If the list did not contain the right template
-		return applyDefaultCardTemplate(card, templates)
-	card = applyCardTemplate(temp, card)
-	//Returns the card with the default template applied
-	return applyDefaultCardTemplate(card, templates)
-
-/proc/applyDefaultCardTemplate(card, templates)
-	//Attempts to find the default template, so we can apply it
-	//This template should fill all gaps so we can debug any malformed input
-	var/temp = findCardTemplate("default", templates)
-	if(temp == "")
-		//If the list did not contain a default
-		return card
-	return applyCardTemplate(temp, card)
-
-///Returns the name of the template the card is using, or returns ""
-/proc/getCardTemplate(card)
-	//Anything that's got a template mentioned at the start of it's def
-	var/regex/template = regex("\[$\]+\[^\\|\]*\\|")
-	if(template.Find(card))
-		//If it's got a template def, it's gonna be the first thing
-		return splittext(splittext(card, "|")[1], "$")[2]
-	return ""
-
-///Returns the template string in full based of the name if it exists, otherwise it returns ""
-/proc/findCardTemplate(template, list/templates)
-	var/regex/isIt = regex("[template]\\|")
-	for(var/temp in templates)
-		if(isIt.Find(templates[temp]))
-			return templates[temp]
-	return ""
-
-///Applies the template to the card, returns the card with the template applied
-/proc/applyCardTemplate(template, card)
-	//Removes the template from the referance
-	var/list/split = splittext(card, "[template]|")
-	if(split.len >= 2)
-		card = "|[split[2]]"
-	var/done = ""
-	for(var/index in 0 to GLOB.cardTypeLookup.len - 1)
-		done += applyCardTemplateByIndex(index, card, template)
-	return done + "|"
-
-///Applies a template to a specified index
-/proc/applyCardTemplateByIndex(index, card, template)
-	//We're isolating the values, and trying to figure out if the card has that index defined
-	var/list/isDefined = splittext(card, "[index],")
-	var/list/plate = splittext(template, "[index],")
-	//If both defs have the index
-	if(isDefined.len >= 2 && plate.len >= 2)
-		//Isolates the text
-		isDefined = splittext(isDefined[2], "|")
-		plate = splittext(plate[2], "|")
-		//Cuts out the $
-		isDefined = splittext(isDefined[1], "$")
-		//If isDefined has a $
-		if(isDefined.len >= 2 && plate.len >= 1)
-			return "|[index],[isDefined[1]][plate[1]][isDefined[2]]"
-		//Otherwise we should leave it untouched
-		if(isDefined.len >= 1)
-			return "|[index],[isDefined[1]]"
-		//If only the template has the index we should just return the data it has
-	if(plate.len >= 2)
-		//Isolate the data
-		plate = splittext(plate[2], "|")
-		//Format it
-		if(plate.len >= 1)
-			return "|[index],[plate[1]]"
-	//Returns the cards data if only it has the index
-	if(isDefined.len >= 2)
-		//Isolate the text
-		isDefined = splittext(isDefined[2], "|")
-		if(isDefined.len >= 1)
-			return "|[index],[isDefined[1]]"
-	//If nither has the index, return ""
-	return ""
-
-///Extracts the specified variable from the card and returns it
-/proc/extractCardVariable(matchType = "id", card)
-	var/list/toReturn = splittext(card, "|[GLOB.cardTypeLookup[matchType]],")
-	if(toReturn.len >= 2)
-		toReturn = splittext(toReturn[2], "|")
-		if(toReturn.len >= 2)
-			return toReturn[1]
-	return ""
 
 ///Loads all the card files
 /proc/loadAllCardFiles(cardFiles, directory)
@@ -331,20 +210,20 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 		//Lets build a list of all the cards in our series
 		var/list/datum/card/cards = list()
 		for(var/index in GLOB.card_list)
-			if(isCardTagsMatch(GLOB.card_list[index], pack.series))
+			if(GLOB.card_list[index].series == pack.series)
 				cards += GLOB.card_list[index]
-		var/list/rarityCheck = list("1" = FALSE)
+		var/list/rarityCheck = list("uncommon" = FALSE)
 		//Lets run a check to see if all the rarities exist that we want to exist
-		for(var/I in 1 to pack.rarityTable.len)
+		for(var/I in pack.rarityTable)
 			rarityCheck["[I]"] = FALSE
 		for(var/datum/card/template in cards)
-			if(template.rarity <= 0 || template.rarity > pack.rarityTable.len)
-				message_admins("[pack.type] has a rarity [template.rarity] on the card [template.id] that is out of the bounds of 1 to [pack.rarityTable.len]")
+			if(!(template.rarity in pack.rarityTable))
+				message_admins("[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist")
 				continue
 			rarityCheck[template.rarity] = TRUE
-		for(var/I in 1 to pack.rarityTable.len)
+		for(var/I in pack.rarityTable)
 			if(rarityCheck["[I]"] == FALSE)
-				message_admins("[pack.type] does not have the required rarity [rarityCheck[I]] in the range 1 to [pack.rarityTable.len]")
+				message_admins("[pack.type] does not have the required rarity [I]")
 		qdel(pack)
 
 ///Used to test open a large amount of cardpacks
@@ -370,19 +249,26 @@ GLOBAL_LIST_INIT(cardTypeLookup, list("name" = 0,
 	GLOB.card_list = list()
 	loadAllCardFiles(cardFiles, directory)
 
-///Loads a card file and turns its contents into card datums using the currently loaded templates
-/proc/loadCardFile(filename, directory = "strings/tcg", templates)
+/proc/loadCardFile(filename, directory = "strings/tcg")
+	var/list/json = json_decode(file2text("[directory]/[filename]"))
+	var/list/cards = json["cards"]
+	var/list/templates = list()
+	for(var/list/data in json["templates"])
+		templates[data["template"]] = data
+	for(var/list/data in cards)
+		var/datum/card/c = new(data, templates)
+		GLOB.card_list["[c.id]"] = c
+
 	//The parser for vscode doesn't like raw strings, that's why this looks fucky
-	var/regex/template = regex("^(\[^$\\|\]+\\|)")
-	var/list/temp_card_list = list()
-	for(var/card in splittext(file2text("[directory]/[filename]"), "\n"))
+	//var/regex/template = regex("^(\[^$\\|\]+\\|)")
+	//var/list/json_text = list()
+/*	for(var/card in splittext(file2text("[directory]/[filename]"), "\n"))
 		//For quick lookup, if you don't have an index get dunked on
 		var/index = text2num(extractCardVariable("id", card))
 		if(index)
 			if(template.Find(card))
 				templates["[index]"] = card
 			else
-				temp_card_list["[index]"] = card
-	for(var/index in temp_card_list)
-		var/full_card = expandCard(temp_card_list[index], templates)//Expands the card fully
-		GLOB.card_list[index] = new /datum/card/(card = full_card)
+				var/full_card = expandCard(card, templates)//Expands the card fully
+				GLOB.card_list["[index]"] = new /datum/card/(card = full_card)
+*/
