@@ -6273,10 +6273,11 @@
 /obj/structure/table,
 /obj/item/clothing/gloves/color/latex,
 /obj/item/clothing/mask/surgical,
-/obj/item/reagent_containers/spray/cleaner,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 9
 	},
+/obj/item/surgical_drapes,
+/obj/item/reagent_containers/spray/cleaner,
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "ane" = (
@@ -8056,7 +8057,6 @@
 /area/security/brig)
 "aqY" = (
 /obj/structure/bed,
-/obj/item/bedsheet,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
