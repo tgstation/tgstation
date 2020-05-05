@@ -106,7 +106,6 @@
 		free_windows -= window_id
 		winset(user.client, window_id, "size=[width]x[height];is-visible=true")
 		initialized = TRUE
-		user << output(url_encode(ref(src)), "[window_id].browser:reinit")
 	else
 		//Create a new window
 		// Build window options
@@ -145,6 +144,9 @@
 	if(!initial_static_data)
 		initial_static_data = src_object.ui_static_data(user)
 	_initial_update = url_encode(get_json(initial_data, initial_static_data))
+
+	if(length(free_windows))
+		user << output(_initial_update, "[window_id].browser:update")
 
 	SStgui.on_open(src)
 
