@@ -154,6 +154,14 @@
 	build_path = /obj/item/storage/belt/janitor
 	category = list("initial","Organic Materials")
 
+/datum/design/plantbelt
+	name = "Botanical Belt"
+	id = "plantbelt"
+	build_type = BIOGENERATOR
+	materials = list(/datum/material/biomass= 300)
+	build_path = /obj/item/storage/belt/plant
+	category = list("initial","Organic Materials")
+
 /datum/design/s_holster
 	name = "Shoulder Holster"
 	id = "s_holster"

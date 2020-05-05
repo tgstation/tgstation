@@ -196,7 +196,7 @@ const PackagingControlsItem = props => {
   return (
     <LabeledList.Item label={label}>
       <NumberInput
-        width={14}
+        width="84px"
         unit={amountUnit}
         step={1}
         stepPixelSize={15}
@@ -245,7 +245,7 @@ const PackagingControls = (props, context) => {
           {pillStyles.map(pill => (
             <Button
               key={pill.id}
-              width={5}
+              width="30px"
               selected={pill.id === chosenPillStyle}
               textAlign="center"
               color="transparent"

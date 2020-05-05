@@ -10,7 +10,7 @@ export const ChemFilterPane = (props, context) => {
   return (
     <Section
       title={title}
-      minHeight={40}
+      minHeight="240px"
       buttons={(
         <Fragment>
           <Input
@@ -18,6 +18,7 @@ export const ChemFilterPane = (props, context) => {
             width="140px"
             onInput={(e, value) => onReagentInput(value)} />
           <Button
+            ml={1}
             icon="plus"
             onClick={() => act('add', {
               which: titleKey,

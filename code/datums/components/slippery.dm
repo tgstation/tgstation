@@ -23,3 +23,14 @@
 /datum/component/slippery/proc/Slip_on_wearer(datum/source, atom/movable/AM, mob/living/crossed)
 	if(!(crossed.mobility_flags & MOBILITY_STAND) && !crossed.buckle_lying)
 		Slip(source, AM)
+
+/datum/component/slippery/clowning //used for making the clown PDA only slip if the clown is wearing his shoes and the elusive banana-skin belt
+
+/datum/component/slippery/clowning/Slip_on_wearer(datum/source, atom/movable/AM, mob/living/crossed)
+	var/obj/item/I = crossed.get_item_by_slot(ITEM_SLOT_FEET)
+	if(!(crossed.mobility_flags & MOBILITY_STAND) && !crossed.buckle_lying)
+		if(istype(I, /obj/item/clothing/shoes/clown_shoes))
+			Slip(source, AM)
+		else
+			to_chat(crossed,"<span class='warning'>[parent] failed to slip anyone. Perhaps I shouldn't have abandoned my legacy...</span>")
+

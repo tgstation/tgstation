@@ -155,7 +155,7 @@
 	return take_damage(M.force*3, mech_damtype, "melee", play_soundeffect, get_dir(src, M)) // multiplied by 3 so we can hit objs hard but not be overpowered against mobs.
 
 /obj/singularity_act()
-	ex_act(EXPLODE_DEVASTATE)
+	SSexplosions.highobj += src
 	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
@@ -222,7 +222,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		SSfire_burning.processing -= src
 
 ///Called when the obj is hit by a tesla bolt.
-/obj/proc/zap_act(power, zap_flags, shocked_targets)
+/obj/zap_act(power, zap_flags, shocked_targets)
 	if(QDELETED(src))
 		return 0
 	obj_flags |= BEING_SHOCKED

@@ -1,8 +1,3 @@
-#define TRAY_NAME_UPDATE name = myseed ? "[initial(name)] ([myseed.plantname])" : initial(name)
-#define YIELD_WEED_MINIMUM 3
-#define YIELD_WEED_MAXIMUM 10
-#define STATIC_NUTRIENT_CAPACITY 10
-
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
@@ -64,6 +59,7 @@
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF IT'S MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
 	create_reagents(20)
+	reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, 10) //Half filled nutrient trays for dirt trays to have more to grow with in prison/lavaland.
 	. = ..()
 
 
@@ -135,6 +131,11 @@
 		mutate()
 	else if(istype(Proj , /obj/projectile/energy/florayield))
 		return myseed.bullet_act(Proj)
+	else if(istype(Proj , /obj/projectile/energy/florarevolution))
+		if(myseed)
+			if(myseed.mutatelist.len > 0)
+				myseed.instability = (myseed.instability/2)
+		mutatespecie()
 	else
 		return ..()
 
@@ -213,10 +214,10 @@
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
 				adjustHealth(-1 / rating)
-				adjustToxic(-rand(1,10) / rating)
+				adjustToxic(-rating * 2)
 			else if(toxic >= 80) // I don't think it ever gets here tbh unless above is commented out
 				adjustHealth(-3)
-				adjustToxic(-rand(1,10) / rating)
+				adjustToxic(-rating *3)
 
 //Pests & Weeds//////////////////////////////////////////////////////////
 
@@ -254,19 +255,18 @@
 			pollinate()
 
 //This is where stability mutations exist now.
-			switch(myseed.instability)
-				if(100 to 80)
-					mutate(0, 0, 0, 0, 0, 0, 0, 2, 0) //Exceedingly low odds of gaining a trait.
-				if(79 to 60)
-					if(prob((myseed.instability)/2) && !self_sustaining)
-						mutatespecie()
-						myseed.instability = myseed.instability/2
-				if(40 to 59)
-					if(prob(40))
-						hardmutate()
-				if(20 to 39)
-					if(prob(40))
-						mutate()
+			if(myseed.instability >= 80)
+				mutate(0, 0, 0, 0, 0, 0, 0, 5, 0) //Exceedingly low odds of gaining a trait.
+			if(myseed.instability >= 60)
+				if(prob((myseed.instability)/2) && !self_sustaining && length(myseed.mutatelist)) //Minimum 30%, Maximum 50% chance of mutating every age tick when not on autogrow.
+					mutatespecie()
+					myseed.instability = myseed.instability/2
+			if(myseed.instability >= 40)
+				if(prob(myseed.instability))
+					hardmutate()
+			if(myseed.instability >= 20 )
+				if(prob(myseed.instability))
+					mutate()
 
 //Health & Age///////////////////////////////////////////////////////////
 
@@ -512,13 +512,18 @@
   */
 /obj/machinery/hydroponics/proc/pollinate(var/range = 1)
 	for(var/obj/machinery/hydroponics/T in oview(src, range))
+		//Here is where we check for window blocking.
+		if(!Adjacent(T) && range <= 1)
+			continue
 		if(T.myseed && !T.dead)
 			T.myseed.potency =  round(clamp((T.myseed.potency+(1/10)*(myseed.potency-T.myseed.potency)),0,100))
 			T.myseed.instability =  round(clamp((T.myseed.instability+(1/10)*(myseed.instability-T.myseed.instability)),0,100))
 			T.myseed.yield =  round(clamp((T.myseed.yield+(1/2)*(myseed.yield-T.myseed.yield)),0,10))
-			if(myseed.instability >= 20 && prob(70) && T.myseed.reagents_add)
-				var/datum/reagent/picked_reagent = (pick(T.myseed.reagents_add))
-				var/datum/plant_gene/reagent/reagent_gene = new /datum/plant_gene/reagent(picked_reagent, 0.05) //I cannot figure out how to copy over the keyed value from the reagents_add list so for now this works, skog you'll want to fix this before merge
+			if(myseed.instability >= 20 && prob(70) && length(T.myseed.reagents_add))
+				var/list/datum/plant_gene/reagent/possible_reagents = list()
+				for(var/datum/plant_gene/reagent/reag in T.myseed.genes)
+					possible_reagents += reag
+				var/datum/plant_gene/reagent/reagent_gene = pick(possible_reagents) //Let this serve as a lession to delete your WIP comments before merge.
 				if(reagent_gene.can_add(myseed))
 					myseed.genes += reagent_gene
 					myseed.reagents_from_genes()
@@ -553,7 +558,7 @@
 			to_chat(user, "<span class='warning'>[reagent_source] is empty!</span>")
 			return 1
 
-		if(reagents.total_volume >= reagents.maximum_volume)
+		if(reagents.total_volume >= reagents.maximum_volume && !reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
 			to_chat(user, "<span class='notice'>[src] is full.</span>")
 			return
 
@@ -602,13 +607,14 @@
 		//cause I don't want to feel like im juggling 15 tamagotchis and I can get to my real work of ripping flooring apart in hopes of validating my life choices of becoming a space-gardener
 			//This was originally in apply_chemicals, but due to apply_chemicals only holding nutrients, we handle it here now.
 			if(reagent_source.reagents.has_reagent(/datum/reagent/water, 1))
-				adjustWater(round(reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/trays.len))
-				reagent_source.reagents.remove_reagent(/datum/reagent/water, reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/trays.len)
-			else
-				reagent_source.reagents.trans_to(reagents, split, transfered_by = user)
+				H.adjustWater(round(reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/(trays.len)))
+				reagent_source.reagents.remove_reagent(/datum/reagent/water, reagent_source.reagents.get_reagent_amount(/datum/reagent/water)/(trays.len))
+			reagent_source.reagents.trans_to(H.reagents, split, transfered_by = user)
 			if(istype(reagent_source, /obj/item/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/reagent_containers/pill))
 				qdel(reagent_source)
 				lastuser = user
+				H.update_icon()
+				return 1
 			H.update_icon()
 		if(reagent_source) // If the source wasn't composted and destroyed
 			reagent_source.update_icon()
@@ -634,12 +640,21 @@
 			return
 
 	else if(istype(O, /obj/item/plant_analyzer))
+		var/obj/item/plant_analyzer/P_analyzer = O
 		if(myseed)
-			to_chat(user, "*** <B>[myseed.plantname]</B> ***" )
-			to_chat(user, "- Plant Age: <span class='notice'>[age]</span>")
-			var/list/text_string = myseed.get_analyzer_text()
-			if(text_string)
-				to_chat(user, text_string)
+			if(P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
+				to_chat(user, "*** <B>[myseed.plantname]</B> ***" )
+				to_chat(user, "- Plant Age: <span class='notice'>[age]</span>")
+				var/list/text_string = myseed.get_analyzer_text()
+				if(text_string)
+					to_chat(user, text_string)
+					to_chat(user, "*---------*")
+			if(myseed.reagents_add && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
+				to_chat(user, "- <B>Plant Reagents</B> -")
+				to_chat(user, "*---------*")
+				for(var/datum/plant_gene/reagent/G in myseed.genes)
+					to_chat(user, "<span class='notice'>- [G.get_name()] -</span>")
+				to_chat(user, "*---------*")
 		else
 			to_chat(user, "<B>No plant found.</B>")
 		to_chat(user, "- Weed level: <span class='notice'>[weedlevel] / 10</span>")
@@ -678,6 +693,7 @@
 			snip.parent_seed = myseed
 			myseed.grafted = TRUE
 			adjustHealth(-5)
+			snip.name += " ([snip.parent_seed.plantname])"
 			return
 
 	else if(istype(O, /obj/item/geneshears))
@@ -707,7 +723,7 @@
 					break
 		myseed.reagents_from_genes()
 		adjustHealth(-15)
-		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], but leaving the plant looking a bit weak.</span>")
+		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], leaving the plant looking weaker.</span>")
 		update_icon()
 		return
 
@@ -775,6 +791,34 @@
 	else if(istype(O, /obj/item/storage/part_replacer))
 		RefreshParts()
 		return
+	else if(istype(O, /obj/item/gun/energy/floragun))
+		var/obj/item/gun/energy/floragun/flowergun = O
+		if(flowergun.cell.charge < flowergun.cell.maxcharge)
+			to_chat(user, "<span class='notice'>[flowergun] must be fully charged to lock in a mutation!</span>")
+			return
+		if(!myseed)
+			to_chat(user, "<span class='warning'>[src] is empty!</span>")
+			return
+		if(myseed.endurance <= 20)
+			to_chat(user, "<span class='warning'>[myseed.plantname] isn't hardy enough to sequence it's mutation!</span>")
+			return
+		if(!myseed.mutatelist)
+			to_chat(user, "<span class='warning'>[myseed.plantname] has nothing else to mutate into!</span>")
+			return
+		else
+			var/list/fresh_mut_list = list()
+			for(var/muties in myseed.mutatelist)
+				var/obj/item/seeds/another_mut = new muties
+				fresh_mut_list[another_mut.plantname] =  muties
+			var/locked_mutation = (input(user, "Select a mutation to lock.", "Plant Mutation Locks") as null|anything in sortList(fresh_mut_list))
+			if(!user.canUseTopic(src, BE_CLOSE) || !locked_mutation)
+				return
+			myseed.mutatelist = list(fresh_mut_list[locked_mutation])
+			myseed.endurance = (myseed.endurance/2)
+			flowergun.cell.use(flowergun.cell.charge)
+			flowergun.update_overlays()
+			to_chat(user, "<span class='notice'>[myseed.plantname]'s mutation was set to [locked_mutation], depleting [flowergun]'s cell!</span>")
+			return
 	else
 		return ..()
 

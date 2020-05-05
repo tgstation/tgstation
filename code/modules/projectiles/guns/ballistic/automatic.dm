@@ -62,7 +62,7 @@
 	item_state = "c20r"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
 	fire_delay = 2
-	burst_size = 2
+	burst_size = 3
 	pin = /obj/item/firing_pin/implant/pindicate
 	can_bayonet = TRUE
 	knife_x_offset = 26
@@ -115,6 +115,7 @@
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
 	burst_size = 3
 	fire_delay = 2
+	spread = 5
 	pin = /obj/item/firing_pin/implant/pindicate
 	mag_display = TRUE
 	empty_indicator = TRUE

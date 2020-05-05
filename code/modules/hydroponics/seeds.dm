@@ -97,6 +97,10 @@
 /obj/item/seeds/examine(mob/user)
 	. = ..()
 	. += "<span class='notice'>Use a pen on it to rename it or change its description.</span>"
+	if(reagents_add && user.can_see_reagents())
+		. += "<span class='notice'>- Plant Reagents -</span>"
+		for(var/datum/plant_gene/reagent/G in genes)
+			. += "<span class='notice'>- [G.get_name()] -</span>"
 
 /obj/item/seeds/proc/Copy()
 	var/obj/item/seeds/S = new type(null, 1)
@@ -151,7 +155,10 @@
 	adjust_weed_rate(rand(-wrmut, wrmut))
 	adjust_weed_chance(rand(-wcmut, wcmut))
 	if(prob(traitmut))
-		add_random_traits(1, 1)
+		if(prob(50))
+			add_random_traits(1, 1)
+		else
+			add_random_reagents(1, 1)
 
 
 
@@ -425,9 +432,7 @@
 			continue
 		all_traits += " [traits.get_name()]"
 	text += "- Plant Traits:[all_traits]\n"
-
 	text += "*---------*"
-
 	return text
 
 /obj/item/seeds/proc/on_chem_reaction(datum/reagents/S)  //in case seeds have some special interaction with special chems
@@ -436,9 +441,19 @@
 /obj/item/seeds/attackby(obj/item/O, mob/user, params)
 	if (istype(O, /obj/item/plant_analyzer))
 		to_chat(user, "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>.</span>")
-		var/text = get_analyzer_text()
-		if(text)
-			to_chat(user, "<span class='notice'>[text]</span>")
+		var/text
+		var/obj/item/plant_analyzer/P_analyzer = O
+		if(P_analyzer.scan_mode == PLANT_SCANMODE_STATS)
+			text = get_analyzer_text()
+			if(text)
+				to_chat(user, "<span class='notice'>[text]</span>")
+		if(reagents_add && P_analyzer.scan_mode == PLANT_SCANMODE_CHEMICALS)
+			to_chat(user, "<span class='notice'>- Plant Reagents -</span>")
+			to_chat(user, "<span class='notice'>*---------*</span>")
+			for(var/datum/plant_gene/reagent/G in genes)
+				to_chat(user, "<span class='notice'>- [G.get_name()] -</span>")
+			to_chat(user, "<span class='notice'>*---------*</span>")
+
 
 		return
 

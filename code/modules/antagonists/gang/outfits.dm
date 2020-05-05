@@ -24,7 +24,6 @@
 	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
 	r_pocket = /obj/item/lighter
 	l_pocket = /obj/item/restraints/handcuffs
-	back = /obj/item/storage/backpack/satchel/leather
 	id = /obj/item/card/id
 	backpack_contents = list(/obj/item/storage/box/handcuffs = 1,
 	/obj/item/storage/box/teargas = 1,
