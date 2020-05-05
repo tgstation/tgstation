@@ -138,17 +138,14 @@ const setupApp = () => {
     const state = typeof stateJson === 'string'
       ? parseStateJson(stateJson)
       : stateJson;
+
+    if (store.getState().standby) {
+      logger.log("Reinitializing to: " + state.config.ref);
+      window.__ref__ = state.config.ref;
+    }
+
     // Backend update dispatches a store action
     store.dispatch(backendUpdate(state));
-  };
-
-  window.reinit = newRef => {
-    logger.log("Reinitializing to: " + newRef, store.getState());
-    window.__ref__ = newRef;
-    callByond('', {
-      src: window.__ref__,
-      action: 'tgui:initialize',
-    });
   };
 
   window.standby = () => {
