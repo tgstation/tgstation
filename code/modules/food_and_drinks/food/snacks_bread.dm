@@ -192,7 +192,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bitesize = 3
 	w_class = WEIGHT_CLASS_NORMAL
-	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
+	slot_flags = ITEM_SLOT_SUITSTORE|ITEM_SLOT_BELT
 	attack_verb = list("touche'd")
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
