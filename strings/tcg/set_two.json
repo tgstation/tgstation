@@ -1,6 +1,7 @@
 {
 	"templates": [
 		{
+			"template": "default",
 			"icon": "icons/obj/tcg_xenos.dmi"
 		}
 	],
@@ -337,3 +338,4 @@
 		}
 	]
 }
+
