@@ -162,7 +162,7 @@
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
 
-		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y, ui_state())
+		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y)
 		ui.open()
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:

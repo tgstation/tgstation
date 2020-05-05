@@ -252,7 +252,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "DnaConsole", name, 539, 710, master_ui, ui_state())
+		ui = new(user, src, ui_key, "DnaConsole", name, 539, 710, master_ui)
 		ui.open()
 
 /obj/machinery/computer/scan_consolenew/ui_data(mob/user)

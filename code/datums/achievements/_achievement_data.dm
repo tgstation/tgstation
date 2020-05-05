@@ -100,7 +100,7 @@
 	if(!ui)
 		var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
 		assets.send(user)
-		ui = new(user, src, ui_key, "Achievements", "Achievements Menu", 540, 680, master_ui, ui_state())
+		ui = new(user, src, ui_key, "Achievements", "Achievements Menu", 540, 680, master_ui)
 		ui.open()
 
 /datum/achievement_data/ui_data(mob/user)

@@ -328,7 +328,7 @@
 /obj/item/launchpad_remote/ui_interact(mob/user, ui_key = "launchpad_remote", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "LaunchpadRemote", "Briefcase Launchpad Remote", 300, 240, master_ui, ui_state()) //width, height
+		ui = new(user, src, ui_key, "LaunchpadRemote", "Briefcase Launchpad Remote", 300, 240, master_ui) //width, height
 		ui.open()
 
 	ui.set_autoupdate(TRUE)

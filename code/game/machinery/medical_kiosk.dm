@@ -172,7 +172,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "MedicalKiosk", name, 575, 420, master_ui, ui_state())
+		ui = new(user, src, ui_key, "MedicalKiosk", name, 575, 420, master_ui)
 		ui.open()
 		icon_state = "kiosk_off"
 		RefreshParts()

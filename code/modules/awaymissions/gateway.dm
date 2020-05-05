@@ -279,7 +279,7 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "Gateway", name, ui_x, ui_y, master_ui, ui_state())
+		ui = new(user, src, ui_key, "Gateway", name, ui_x, ui_y, master_ui)
 		ui.open()
 
 /obj/machinery/computer/gateway_control/ui_data(mob/user)

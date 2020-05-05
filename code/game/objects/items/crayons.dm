@@ -153,7 +153,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "Crayon", name, 600, 600,
-			master_ui, ui_state())
+			master_ui)
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)
