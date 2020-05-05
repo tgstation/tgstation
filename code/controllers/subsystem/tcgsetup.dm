@@ -1,4 +1,4 @@
-#define CARD_FILES list("set_one.json")
+#define CARD_FILES list("set_one.json","set_two.json")
 #define CARD_DIRECTORY "strings/tcg"
 #define CARD_PACKS list(/obj/item/cardpack/series_one, /obj/item/cardpack/resin)
 SUBSYSTEM_DEF(trading_card_game)

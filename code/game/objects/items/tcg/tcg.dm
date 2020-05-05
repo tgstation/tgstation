@@ -81,7 +81,11 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	///The amount of cards each pack contains
 	var/card_count = 6
 	///The guaranteed rarity table, acts about the same as the rarity table. it can have as many or as few raritys as you'd like
-	var/list/guar_rarity = list("misprint" = 1)
+	var/list/guar_rarity = list(
+		"legendary" = 10,
+		"epic" = 15,
+		"rare" = 25,
+		"uncommon" = 50)
 	var/list/rarityTable = list(
 		"common" = 900,
 		"uncommon" = 300,
@@ -105,12 +109,12 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	icon_state = "cardpack_resin"
 	series = "S2"
 	contains_coin = 0
-	rarityTable = list(2,
-					20,
-					50,
-					100,
-					1000
-					)
+	rarityTable = list(
+		"common" = 900,
+		"uncommon" = 300,
+		"rare" = 100,
+		"epic" = 25,
+		"legendary" = 10)
 
 /obj/item/cardpack/Initialize()
 	. = ..()
