@@ -147,7 +147,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	material_flags = NONE
 
 ///Returns a list of cards of cardCount weighted by rarity from cardList that have matching series, with at least one of guarenteedRarity.
-/obj/item/cardpack/proc/buildCardListWithRarity(cardCount, guarenteedRarity, cardList)
+/obj/item/cardpack/proc/buildCardListWithRarity(cardCount, guarenteedRarity, list/datum/card/cardList)
 	var/list/datum/card/readFrom = list()
 	var/list/datum/card/toReturn = list()
 	for(var/index in cardList)
