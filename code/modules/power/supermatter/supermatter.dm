@@ -557,7 +557,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//Makes em go mad and accumulate rads.
 	var/toAdd = -0.05
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
-		if(l.job == "Psychologist")
+		if(l.mind?.assigned_role == "Psychologist")
 			toAdd = 0.05
 			psyCheck = TRUE
 		else if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
