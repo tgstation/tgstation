@@ -13,6 +13,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "runtime"
+	w_class = WEIGHT_CLASS_TINY
 	var/id = -1 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
 	var/flipped = 0
 
@@ -80,6 +81,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	desc = "Contains six complete fuckups by the coders. Report this on github please!"
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "cardback_nt"
+	w_class = WEIGHT_CLASS_TINY
 	var/series = "MEME" //Mirrors the card series.
 	var/contains_coin = -1 //Chance of the pack having a coin in it.
 	///The amount of cards each pack contains
