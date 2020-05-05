@@ -16,6 +16,7 @@ import { releaseHeldKeys } from '../hotkeys';
 import { createLogger } from '../logging';
 import { Layout, refocusLayout } from './Layout';
 import { enterStandby } from '../standby';
+import { useDispatch } from '../store';
 
 const logger = createLogger('Window');
 
@@ -35,7 +36,7 @@ export class Window extends Component {
       debugLayout,
       standby,
     } = useBackend(this.context);
-    const { store } = this.context;
+    const dispatch = useDispatch(this.context);
     // Determine when to show dimmer
     const showDimmer = config.observer
       ? config.status < UI_DISABLED
@@ -58,7 +59,7 @@ export class Window extends Component {
               src: config.ref,
               action: 'tgui:close',
             });
-            store.dispatch(enterStandby());
+            dispatch(enterStandby());
           }} />
         {!standby && (
           <div
