@@ -1,14 +1,9 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section, Table } from '../components';
+import { Button, Section, Table } from '../components';
 import { Window } from '../layouts';
-import { createLogger } from '../logging';
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toTitleCase } from 'common/string';
-
-
-const logger = createLogger('SeedExtractor');
-
 
 /**
  * This method takes a seed string and splits the values
@@ -40,8 +35,8 @@ const createSeeds = seedStrings => {
     let o = split_seed_string(key);
     o.amount = seedStrings[key];
     o.key = key;
+    o.name = toTitleCase(o.name.replace("pack of ", ""));
     objs.push(o);
-    o.name = o.name.replace("pack of ", "").toTitleCase();
   });
   return flow([
     sortBy(item => item.name),
