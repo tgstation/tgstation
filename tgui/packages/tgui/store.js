@@ -9,7 +9,6 @@ import { applyMiddleware, createStore as createReduxStore } from 'common/redux';
 import { Component } from 'inferno';
 import { backendReducer } from './backend';
 import { hotKeyMiddleware, hotKeyReducer } from './hotkeys';
-import { standbyReducer } from './standby';
 
 export const createStore = () => {
   const reducer = flow([
@@ -18,7 +17,6 @@ export const createStore = () => {
     // Global state reducers
     backendReducer,
     hotKeyReducer,
-    standbyReducer,
   ]);
   const middleware = [
     // loggingMiddleware,

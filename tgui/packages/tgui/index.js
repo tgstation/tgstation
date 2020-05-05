@@ -28,12 +28,11 @@ import './styles/themes/syndicate.scss';
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { backendUpdate } from './backend';
+import { backendUpdate, backendEnterStandby } from './backend';
 import { IS_IE8, callByond } from './byond';
 import { setupDrag } from './drag';
 import { logger } from './logging';
 import { createStore, StoreProvider } from './store';
-import { enterStandby } from './standby';
 
 const enteredBundleAt = Date.now();
 const store = createStore();
@@ -154,7 +153,7 @@ const setupApp = () => {
 
   window.standby = () => {
     logger.log("Entering standby");
-    store.dispatch(enterStandby());
+    store.dispatch(backendEnterStandby());
   };
 
   // Enable hot module reloading

@@ -24,6 +24,10 @@ export const backendSetSharedState = (key, nextState) => ({
   payload: { key, nextState },
 });
 
+export const backendEnterStandby = () => ({
+  type: 'backend/enterStandby',
+});
+
 export const backendReducer = (state, action) => {
   const { type, payload } = action;
 
@@ -75,6 +79,21 @@ export const backendReducer = (state, action) => {
         ...state.shared,
         [key]: nextState,
       },
+    };
+  }
+
+  if (type === 'backend/enterStandby') {
+    return {
+      ...state,
+      data: {},
+      shared: {},
+      config: {
+        ...state.config,
+        title: '',
+        status: 1,
+        interface: '',
+      },
+      standby: true,
     };
   }
 

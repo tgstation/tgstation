@@ -7,7 +7,7 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, backendEnterStandby } from '../backend';
 import { IS_IE8, runCommand, winset, callByond } from '../byond';
 import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
@@ -15,7 +15,6 @@ import { dragStartHandler, resizeStartHandler } from '../drag';
 import { releaseHeldKeys } from '../hotkeys';
 import { createLogger } from '../logging';
 import { Layout, refocusLayout } from './Layout';
-import { enterStandby } from '../standby';
 import { useDispatch } from '../store';
 
 const logger = createLogger('Window');
@@ -59,7 +58,7 @@ export class Window extends Component {
               src: config.ref,
               action: 'tgui:close',
             });
-            dispatch(enterStandby());
+            dispatch(backendEnterStandby());
           }} />
         {!standby && (
           <div
