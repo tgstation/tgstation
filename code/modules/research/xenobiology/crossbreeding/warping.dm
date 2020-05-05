@@ -1,7 +1,8 @@
 
 /*
 Warping extracts crossbreed
-put up a rune with bluespace effects, lots of those runes are fluff or act as a passive buff, others are just griefing tools */
+put up a rune with bluespace effects, lots of those runes are fluff or act as a passive buff, others are just griefing tools
+*/
 
 
 /obj/item/slimecross/warping
@@ -544,6 +545,12 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	desc = "The clock is ticking, but in what direction?"
 
 
+/obj/effect/warped_rune/sepiaspace/Initialize()
+	. = ..()
+	for(var/mob/living/carbon/human/slowed in rune_turf)
+		Crossed(slowed)
+
+
 ///slows down whoever walks on the rune and makes them older by five years. if the person goes above 120 years they get dusted.Very similar to the "old timer" reagent code with a few tweaks.
 /obj/effect/warped_rune/sepiaspace/Crossed(atom/movable/crossing)
 	. = ..()
@@ -609,13 +616,14 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	. = ..()
 	cooldown = 0 //doesn't start on cooldown
 	START_PROCESSING(SSprocessing, src)
+	for(var/mob/living/crossing in rune_turf)
+		Crossed(crossing)
 
 
 /obj/effect/warped_rune/ceruleanspace/proc/holo_talk()
 	if(holotile && length(recent_speech)) //the proc should'nt be called if the list is empty in the first place but we might as well make sure.
 		holotile.say(recent_speech[pick(recent_speech)]) //say one of the 10 latest sentence said by the holo_host
 		addtimer(CALLBACK(src, .proc/holo_talk), 100, TIMER_OVERRIDE|TIMER_UNIQUE)
-
 
 
 ///makes a hologram of the mob stepping on the tile, any new person stepping in will replace it with a new hologram
@@ -687,9 +695,9 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 ///colors whatever steps on the rune randomly
-/obj/effect/warped_rune/pyritespace/Crossed(atom/movable/AM)
+/obj/effect/warped_rune/pyritespace/Crossed(atom/movable/colored)
 	. = ..()
-	AM.color = rgb(rand(0,255),rand(0,255),rand(0,255))
+	colored.color = rgb(rand(0,255),rand(0,255),rand(0,255))
 
 
 /* Will make anyone on the rune do genetic punch damage. May need rebalancing. Not compatible with gloves of the north star*/
@@ -714,6 +722,9 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	hate_fire = image('icons/mob/OnFire.dmi',"Standing", RAGE_FIRE_LAYER)
 	hate_fire.color = "#C01414" //dark red kind of.
 	hate_fire.layer = RAGE_FIRE_LAYER
+	for(var/mob/living/carbon/human/enraged in rune_turf) //just in case they spawn the rune right under them
+		Crossed(enraged)
+
 
 ///boost up the unarmed damage of the person currently on the tile.
 /obj/effect/warped_rune/redspace/Crossed(atom/movable/crossing)
@@ -1010,7 +1021,8 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 /obj/effect/warped_rune/blackspace/Initialize()
 	. = ..()
 	cooldown = 0 //doesn't start on cooldown like most runes
-
+	for(var/atom/movable/crossing in rune_turf)
+		Crossed(crossing)
 
 ///will swap the species of the first two human or human subset that walk on the rune
 /obj/effect/warped_rune/blackspace/Crossed(atom/movable/crossing)
