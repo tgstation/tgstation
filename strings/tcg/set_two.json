@@ -7,7 +7,7 @@
 	],
 	"cards": [
 		{
-			"id": 1,
+			"id": 82,
 			"name": "Xenoborg",
 			"desc": "With a mini-gun in one hand and a rocket launcher in the other, the Xenoborg is a failed hybridization of a Xenomorph and a cyborg.",
 			"rules": "Asimov, Hivemind",
@@ -18,11 +18,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Silicon Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "epic"
 		},
 		{
-			"id": 2,
+			"id": 83,
 			"name": "Xenomorph Sentinel",
 			"desc": "The juices from a Sentinel's neurotoxin gland pair brilliantly with a Pan-Galactic Gargle Blaster.",
 			"rules": "Hivemind",
@@ -33,11 +33,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "common"
 		},
 		{
-			"id": 3,
+			"id": 84,
 			"name": "Xenomorph Drone",
 			"desc": "Rarely seen on the frontlines, the Drone is your average worker that lays the foundation of the hive.",
 			"rules": "Hivemind",
@@ -48,11 +48,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "common"
 		},
 		{
-			"id": 4,
+			"id": 85,
 			"name": "Xenomorph Hunter (Resin Frontier)",
 			"desc": "A rare strain of Hunter that prioritizes slaying prey over infecting them.",
 			"rules": "Hivemind",
@@ -63,11 +63,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "uncommon"
 		},
 		{
-			"id": 5,
+			"id": 86,
 			"name": "Xenomorph Spitter",
 			"desc": "While their acid gland is too dangerous to mix with alcohol (not that it stops the marines), a Spitter's acid is useful for industry as it can melt almost anything with ease.",
 			"rules": "Hivemind",
@@ -78,11 +78,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "uncommon"
 		},
 		{
-			"id": 6,
+			"id": 87,
 			"name": "Xenomorph Runner",
 			"desc": "Running fast and dying faster, the sheer number of Runner corpses from a battle are enough to keep a research facility busy for years.",
 			"rules": "First Strike, Hivemind",
@@ -93,11 +93,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "common"
 		},
 		{
-			"id": 7,
+			"id": 88,
 			"name": "Xenomorph Praetorian",
 			"desc": "The Praetorian is the Queen's royal guard, never seen far from the Queen's chambers.",
 			"rules": "Hivemind",
@@ -108,11 +108,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "rare"
 		},
 		{
-			"id": 8,
+			"id": 89,
 			"name": "Xenomorph Hivelord",
 			"desc": "The Hivelord is the last word in construction, capable of building entire hives in a matter of seconds.",
 			"rules": "Hivemind. For two mana, tap this card and summon a 0/2 Resin Wall counter creature.",
@@ -123,11 +123,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "rare"
 		},
 		{
-			"id": 9,
+			"id": 90,
 			"name": "Xenomorph Boiler",
 			"desc": "The Boiler is a long-range artillery machine, capable of spewing clouds of acid that melt everything in seconds.",
 			"rules": "Hivemind",
@@ -138,11 +138,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "rare"
 		},
 		{
-			"id": 10,
+			"id": 91,
 			"name": "Xenomorph Ravager",
 			"desc": "With large scythe claws for hands, the furious Ravager goes berserk at the sight of fire.",
 			"rules": "Hivemind",
@@ -153,11 +153,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "rare"
 		},
 		{
-			"id": 11,
+			"id": 92,
 			"name": "Xenomorph Crusher",
 			"desc": "Extensive testing has revealed that a pulse rifle is unable to penetrate a Crusher's thick armored head.",
 			"rules": "Hivemind",
@@ -168,11 +168,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "rare"
 		},
 		{
-			"id": 12,
+			"id": 93,
 			"name": "Xenomorph Defender",
 			"desc": "The Defender's armored head crest makes an excellent makeshift shield.",
 			"rules": "Defender, Hivemind",
@@ -183,11 +183,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "common"
 		},
 		{
-			"id": 13,
+			"id": 94,
 			"name": "Xenomorph Warrior",
 			"desc": "Warriors exhibit greater cruelty than other Xeno strains, enjoying snapping a victim's limbs before finishing them off.",
 			"rules": "Hivemind",
@@ -198,11 +198,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "uncommon"
 		},
 		{
-			"id": 14,
+			"id": 95,
 			"name": "Xenomorph Queen (Resin Frontier)",
 			"desc": "The ruler of the hive. Organs from a Queen fetch a high price amongst researchers and less-than-moral surgeons.",
 			"rules": "Hivemind. For 2 mana, tap this creature and summon a 1/1 Xenomorph Brood counter creature, with Hivemind.",
@@ -213,11 +213,11 @@
 			"summoncost": 1,
 			"cardtype": "Equipment",
 			"cardsubtype": "Armour",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "epic"
 		},
 		{
-			"id": 15,
+			"id": 96,
 			"name": "Xenomorph Carrier",
 			"desc": "Carriers are like the Easter Bunny except the eggs they hide will kill you.",
 			"rules": "Hivemind",
@@ -228,11 +228,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "uncommon"
 		},
 		{
-			"id": 16,
+			"id": 97,
 			"name": "Xenomorph Defiler",
 			"desc": "Instead of utilizing eggs, the Defiler prefers to inject an unknown chemical in their victim, causing a devastating infection.",
 			"rules": "",
@@ -243,11 +243,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "rare"
 		},
 		{
-			"id": 17,
+			"id": 98,
 			"name": "Predalien",
 			"desc": "No concrete information is available on this elusive creature as no one that has seen it has lived to tell the tale.",
 			"rules": "Hivemind",
@@ -258,11 +258,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph Soldier",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "legendary"
 		},
 		{
-			"id": 18,
+			"id": 99,
 			"name": "Xenomorph Shrike",
 			"desc": "It is unknown why Shrikes are able to lead a Hive, but their hives are always much smaller than a Queen's.",
 			"rules": "Hivemind",
@@ -273,11 +273,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "rare"
 		},
 		{
-			"id": 19,
+			"id": 100,
 			"name": "Xenomorph Bull",
 			"desc": "Popular in illegal rodeos, a Bull's horn can pierce a reinforced wall with ease.",
 			"rules": "First Strike, Hivemind",
@@ -288,11 +288,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "uncommon"
 		},
 		{
-			"id": 20,
+			"id": 101,
 			"name": "Xenomorph Hivemind",
 			"desc": "Recently discovered to have sapience, this pulsating orb will dig into the earth and rapidly spread resin throughout planets.",
 			"rules": "Defender, Hivemind",
@@ -303,11 +303,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "uncommon"
 		},
 		{
-			"id": 21,
+			"id": 102,
 			"name": "Xenomorph Screecher",
 			"desc": "The Screecher's screeches are more psychologically damaging than the resulting hearing damage.",
 			"rules": "Hivemind",
@@ -318,11 +318,11 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "epic"
 		},
 		{
-			"id": 22,
+			"id": 103,
 			"name": "Xenomorph Creep",
 			"desc": "This special Hunter strain prioritizes stalking its target. It evolves into a strain of Hunter that is (mercifully) rarely seen aboard space stations.",
 			"rules": "Hivemind",
@@ -333,7 +333,7 @@
 			"summoncost": 1,
 			"cardtype": "Creature",
 			"cardsubtype": "Xenomorph",
-			"series": "coreset2020",
+			"series": "resinfront",
 			"rarity": "common"
 		}
 	]

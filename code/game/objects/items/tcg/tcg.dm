@@ -1,10 +1,4 @@
 ///A global list of cards, or rather changes to be applied to cards in the format
-#define CARD_RARITY_COMMON 1000
-#define CARD_RARITY_UNCOMMON 100
-#define CARD_RARITY_RARE 50
-#define CARD_RARITY_EPIC 20
-#define CARD_RARITY_LEGENDARY 2
-#define CARD_RARITY_MISPRINT 1
 
 GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 
@@ -30,7 +24,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	var/id = -1 //Unique ID, for use in lookups and storage
 	var/name = "Coder"
 	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
-	var/rules = "There are no rules here"
+	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place."
 	var/icon = "icons/obj/tcg.dmi"
 	var/icon_state = "runtime"
 	var/summoncost = -1
@@ -86,10 +80,15 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	var/contains_coin = -1 //Chance of the pack having a coin in it.
 	///The amount of cards each pack contains
 	var/card_count = 6
-	///The guarenteed rarity, if none set this to 0
+	///The guaranteed rarity table, acts about the same as the rarity table. it can have as many or as few raritys as you'd like
 	var/list/guar_rarity = list("misprint" = 1)
-	var/list/rarityTable = list("uncommon" = 1
-							) //The rarity table, the set must contain at least one of each
+	var/list/rarityTable = list(
+		"common" = 900,
+		"uncommon" = 300,
+		"rare" = 100,
+		"epic" = 25,
+		"legendary" = 10,
+		"misprint" = 1)//The rarity table, the set must contain at least one of each
 
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
@@ -97,7 +96,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "cardpack_series1"
 	series = "coreset2020"
-	contains_coin = 0
+	contains_coin = 10
 
 /obj/item/cardpack/resin
 	name = "Trading Card Pack: Resin Frontier Booster Pack"
@@ -141,10 +140,24 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 
 /obj/item/coin/thunderdome
 	name = "Thunderdome Flipper"
-	desc = "A Thunderdome TCG flipper, for finding who gets to go first."
-	icon_state = "coin_valid"
+	desc = "A Thunderdome TCG flipper, for deciding who gets to go first. Also conveniently acts as a counter, for various purposes."
+	icon = 'icons/obj/tcg.dmi'
+	icon_state = "coin_nanotrasen"
 	custom_materials = list(/datum/material/plastic = 400)
 	material_flags = NONE
+	sideslist = list("nanotrasen", "syndicate")
+
+/obj/item/coin/thunderdome/Initialize()
+	. = ..()
+	transform = matrix(0.4,0,0,0,0.4,0)
+
+/obj/item/coin/thunderdome/equipped(mob/user, slot, initial)
+	. = ..()
+	transform = matrix()
+
+/obj/item/coin/thunderdome/dropped(mob/user, silent)
+	. = ..()
+	transform = matrix(0.4,0,0,0,0.4,0)
 
 ///Returns a list of cards of cardCount weighted by rarity from cardList that have matching series, with at least one of guarenteedRarity.
 /obj/item/cardpack/proc/buildCardListWithRarity(cardCount, list/guarenteedRarity, list/datum/card/cardList)
