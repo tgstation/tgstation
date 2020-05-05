@@ -75,6 +75,12 @@
 	. = ..()
 	ui_interact(user)
 
+/obj/item/canvas/ui_state()
+	if(finalized)
+		return GLOB.physical_obscured_state
+	else
+		return GLOB.default_state
+
 /obj/item/canvas/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -261,7 +267,7 @@
 /obj/structure/sign/painting/examine(mob/user)
 	. = ..()
 	if(C)
-		C.ui_interact(user,state = GLOB.physical_obscured_state)
+		C.ui_interact(user)
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)
 	. = ..()
