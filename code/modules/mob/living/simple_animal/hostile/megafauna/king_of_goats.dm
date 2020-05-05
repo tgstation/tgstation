@@ -128,6 +128,7 @@ Difficulty: Insanely Hard
 	armour_penetration = 10
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	mob_size = MOB_SIZE_LARGE
 
 /mob/living/simple_animal/hostile/retaliate/goat/guard/master
 	name = "master of the guard"

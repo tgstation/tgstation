@@ -17,6 +17,9 @@
 /obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
+	item_state = "blankplaque"
+	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
@@ -49,6 +52,7 @@
 		unwrenched_plaque.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
 		unwrenched_plaque.desc = desc
 		unwrenched_plaque.engraved = engraved
+	unwrenched_plaque.icon_state = icon_state
 	unwrenched_plaque.obj_integrity = obj_integrity
 	unwrenched_plaque.setDir(dir)
 	qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
@@ -178,6 +182,7 @@
 		placed_plaque.name = name
 		placed_plaque.desc = desc
 		placed_plaque.engraved = engraved
+	placed_plaque.icon_state = icon_state
 	placed_plaque.obj_integrity = obj_integrity
 	placed_plaque.setDir(dir)
 	qdel(src)
