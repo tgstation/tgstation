@@ -128,7 +128,6 @@ Class Procs:
 
 	// For storing and overriding ui id and dimensions
 	var/tgui_id // ID of TGUI interface
-	var/ui_style // ID of custom TGUI style (optional)
 	var/ui_x // Default size of TGUI window, in pixels
 	var/ui_y
 
