@@ -1,0 +1,15 @@
+GLOBAL_LIST_INIT(available_vox_voices, list(
+	"GLaDOS",
+	//"Wheatley",
+	"Soldier",
+	"Miss Pauling",
+	"Rise Kujikawa",
+	"SpongeBob",
+	"Sans",
+	"Twilight Sparkle",
+	"Fluttershy",
+	"Rarity",
+	"Applejack",
+	"Rainbow Dash",
+	"Pinkie Pie",
+	"Derpy Hooves"))

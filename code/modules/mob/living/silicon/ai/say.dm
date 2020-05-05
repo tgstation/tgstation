@@ -58,11 +58,14 @@
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX
-#define VOX_DELAY 600
+#define VOX_DELAY 300
 /mob/living/silicon/ai/proc/announcement()
 	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
+		return
+	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in GLOB.available_vox_voices
+	if(!character_to_use)
 		return
 	var/max_characters = 240 // magic number but its the cap 15 allows
 	var/message = input(src, "Use the power of 15.ai to say anything! (240 character maximum)", "15.ai VOX System", src.last_announcement) as text|null
@@ -84,38 +87,30 @@
 		to_chat(src, "<span class='notice'>These characters are not available on the 15.ai system: [english_list(check_for_bad_chars.group)].</span>")
 		return
 
-	var/character_to_use = "Soldier" // temp, will allow choosing soon
-
+	var/emotion_to_use = "Neutral"
+	if(character_to_use == "GLaDOS")
+		emotion_to_use = "Homicidal"
 	last_announcement = message
 
 	announcing_vox = world.time + VOX_DELAY
 
-	log_game("[key_name(src)] made a vocal announcement with the following message: [message].")
-	play_vox_word(message, character_to_use, src.z, null)
+	log_game("[key_name(src)] started making a 15.AI announcement with the following message: [message].")
+	play_vox_word(message, character_to_use, emotion_to_use, src.z, null)
 
 
-/proc/play_vox_word(message, character, z_level, mob/only_listener)
+/proc/play_vox_word(message, character, emotion, z_level, mob/only_listener)
 	var/api_url = "https://api.fifteen.ai/app/getAudioFile"
 
 	var/datum/http_request/req = new()
-	var/params = list(
-	"text" = message,
-	"character" = character,
-	"emotion" = "Neutral"
-	)
-	if(character == "GLadOS")
-		params["emotion"] = "Homicidal"
 
-	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "", params)
+	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"[emotion]\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"))
 	req.begin_async()
 	UNTIL(req.is_complete())
-	world.log << "15.AI: POST returned [req._raw_response]"
-	/*word = lowertext(word)
-
-	if(GLOB.vox_sounds[word])
-
-		var/sound_file = GLOB.vox_sounds[word]
-		var/sound/voice = sound(sound_file, wait = 1, channel = CHANNEL_VOX)
+	var/datum/http_response/res = req.into_response()
+	if(res.status_code == 200)
+		text2file(res.body, "data/vox_audio.wav") // todo: have rust-g make this into an ogg automagically
+		log_game("[key_name(src)] finished making a 15.AI announcement with the following message: [message].")
+		var/sound/voice = sound("data/vox_audio.wav", wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
  		// If there is no single listener, broadcast to everyone in the same z level
@@ -129,7 +124,7 @@
 		else
 			SEND_SOUND(only_listener, voice)
 		return 1
-	return 0*/
+	return 0
 
 #undef VOX_DELAY
 #endif

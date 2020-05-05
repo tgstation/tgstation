@@ -180,6 +180,7 @@
 #include "code\_globalvars\lists\objects.dm"
 #include "code\_globalvars\lists\poll_ignore.dm"
 #include "code\_globalvars\lists\typecache.dm"
+#include "code\_globalvars\lists\vox.dm"
 #include "code\_js\byjax.dm"
 #include "code\_js\menus.dm"
 #include "code\_onclick\adjacent.dm"
