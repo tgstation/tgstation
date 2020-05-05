@@ -15,7 +15,7 @@ SUBSYSTEM_DEF(materials)
 	///Dictionary of category || list of material types, mostly used by rnd machines like autolathes.
 	var/list/materialtypes_by_category
 	///A cache of all material combinations that have been used
-	var/list/material_combos
+	var/list/list/material_combos
 	///List of stackcrafting recipes for materials using rigid materials
 	var/list/rigid_stack_recipes = list(
 		new /datum/stack_recipe("Chair", /obj/structure/chair/greyscale, one_per_turf = TRUE, on_floor = TRUE, applies_mats = TRUE),
