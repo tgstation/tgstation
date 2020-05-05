@@ -33,6 +33,7 @@ import { IS_IE8, callByond } from './byond';
 import { setupDrag } from './drag';
 import { logger } from './logging';
 import { createStore, StoreProvider } from './store';
+import { enterStandby } from './standby';
 
 const enteredBundleAt = Date.now();
 const store = createStore();
@@ -143,12 +144,17 @@ const setupApp = () => {
   };
 
   window.reinit = newRef => {
-    logger.log("Reinitializing to: " + newRef);
+    logger.log("Reinitializing to: " + newRef, store.getState());
     window.__ref__ = newRef;
     callByond('', {
       src: window.__ref__,
       action: 'tgui:initialize',
     });
+  };
+
+  window.standby = () => {
+    logger.log("Entering standby");
+    store.dispatch(enterStandby());
   };
 
   // Enable hot module reloading

@@ -63,6 +63,7 @@ export const backendReducer = (state, action) => {
       shared,
       visible,
       interactive,
+      standby: false,
     };
   }
 

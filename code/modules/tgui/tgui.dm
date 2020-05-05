@@ -105,6 +105,8 @@
 		//Use a recycled window
 		window_id = free_windows[length(free_windows)]
 		free_windows -= window_id
+		winset(user.client, window_id, "size=[width]x[height];is-visible=true")
+		initialized = TRUE
 		user << output(url_encode(ref(src)), "[window_id].browser:reinit")
 	else
 		//Create a new window
@@ -120,8 +122,7 @@
 			window_options += "titlebar=1;can_resize=1;"
 
 		// Generate page html
-		var/html
-		html = SStgui.basehtml
+		var/html = SStgui.basehtml
 		// Allow the src object to override the html if needed
 		html = src_object.ui_base_html(html)
 		// Replace template tokens with important UI data
@@ -182,6 +183,7 @@
 	else
 		//hide the window
 		winset(user.client, window_id, "is-visible=false")
+		user << output("", "[window_id].browser:standby")
 		//Add the window id to the free windows stack
 		user.client.free_tgui_windows += window_id
 	src_object.ui_close(user)
@@ -263,7 +265,6 @@
 		if("tgui:close")
 			close()
 		if("tgui:initialize")
-			winset(user.client, window_id, "is-visible=true")
 			user << output(_initial_update, "[window_id].browser:update")
 			initialized = TRUE
 		if("tgui:setSharedState")

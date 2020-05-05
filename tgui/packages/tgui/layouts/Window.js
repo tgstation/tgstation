@@ -15,6 +15,7 @@ import { dragStartHandler, resizeStartHandler } from '../drag';
 import { releaseHeldKeys } from '../hotkeys';
 import { createLogger } from '../logging';
 import { Layout, refocusLayout } from './Layout';
+import { enterStandby } from '../standby';
 
 const logger = createLogger('Window');
 
@@ -32,18 +33,21 @@ export class Window extends Component {
     const {
       config,
       debugLayout,
+      standby,
     } = useBackend(this.context);
+    const { store } = this.context;
     // Determine when to show dimmer
     const showDimmer = config.observer
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE;
+    const title = standby ? '' : decodeHtmlEntities(config.title);
     return (
       <Layout
         className="Window"
         theme={theme}>
         <TitleBar
           className="Window__titleBar"
-          title={decodeHtmlEntities(config.title)}
+          title={title}
           status={config.status}
           fancy={config.fancy}
           onDragStart={dragStartHandler}
@@ -54,17 +58,20 @@ export class Window extends Component {
               src: config.ref,
               action: 'tgui:close',
             });
+            store.dispatch(enterStandby());
           }} />
-        <div
-          className={classes([
-            'Window__rest',
-            debugLayout && 'debug-layout',
-          ])}>
-          {children}
-          {showDimmer && (
-            <div className="Window__dimmer" />
-          )}
-        </div>
+        {!standby ? (
+          <div
+            className={classes([
+              'Window__rest',
+              debugLayout && 'debug-layout',
+            ])}>
+            {children}
+            {showDimmer && (
+              <div className="Window__dimmer" />
+            )}
+          </div>
+        ) : null}
         {config.fancy && resizable && (
           <Fragment>
             <div className="Window__resizeHandle__e"
