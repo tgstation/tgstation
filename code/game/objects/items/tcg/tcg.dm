@@ -235,13 +235,14 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 		qdel(pack)
 
 ///Used to test open a large amount of cardpacks
-/proc/checkCardDistribution(cardPack, batchSize, batchCount)
+/proc/checkCardDistribution(cardPack, batchSize, batchCount, shouldGuar)
 	var/totalCards = 0
 	//Gotta make this look like an associated list so the implicit "does this exist" checks work proper later
 	var/list/cardsByCount = list("" = 0)
 	var/obj/item/cardpack/pack = new cardPack()
+	var/list/guaranteed = (shouldGuar == "Yes") ? pack.guar_rarity : list()
 	for(var/index in 1 to batchCount)
-		var/list/datum/card/cards = pack.buildCardListWithRarity(batchSize, 0, GLOB.card_list)
+		var/list/datum/card/cards = pack.buildCardListWithRarity(batchSize, guaranteed, GLOB.card_list)
 		for(var/datum/card/template in cards)
 			totalCards++
 			cardsByCount["[template.id]"] += 1
