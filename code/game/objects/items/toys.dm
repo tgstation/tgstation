@@ -890,7 +890,7 @@
 	var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(cardUser.loc)
 	currenthand -= choice
 	handradial -= choice
-	C.parentdeck = src.parentdeck
+	C.parentdeck = parentdeck
 	C.cardname = choice
 	C.apply_card_vars(C,O)
 	C.pickup(cardUser)
@@ -900,7 +900,7 @@
 	interact(cardUser)
 	update_sprite()
 	if(length(currenthand) == 1)
-		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(src.loc)
+		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(loc)
 		N.parentdeck = parentdeck
 		N.cardname = currenthand[1]
 		N.apply_card_vars(N,O)
