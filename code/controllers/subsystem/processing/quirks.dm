@@ -13,7 +13,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/quirk_points = list()	//Assoc. list of quirk names and their "point cost"; positive numbers are good traits, and negative ones are bad
 	var/list/quirk_objects = list()	//A list of all quirk objects in the game, since some may process
 	var/list/quirk_blacklist = list() //A list of quirks that can not be used with each other. Format: list(quirk1,quirk2),list(quirk3,quirk4)
-	var/list/hardcore_quirks = list() //An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
+	///An assoc list of quirks that can be obtained as a hardcore character, and their hardcore value.
+	var/list/hardcore_quirks = list() 
 
 /datum/controller/subsystem/processing/quirks/Initialize(timeofday)
 	if(!quirks.len)
