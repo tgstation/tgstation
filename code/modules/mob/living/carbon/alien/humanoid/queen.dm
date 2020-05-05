@@ -53,29 +53,14 @@
 
 /mob/living/carbon/alien/humanoid/royal/queen/proc/nuke_it_from_orbit()
 	nuking = TRUE
-	addtimer(src, CALLBACK(), 50)
+	sleep(50)
 	priority_announce("Hostile Lifeforms Identified. Extreme Biohazard Alert. Determining Containment Solutions","Central Command Update", 'sound/misc/notice1.ogg')
-	addtimer(src, CALLBACK(), 400)
+	sleep(400)
 	priority_announce("Containment Solution Identified. Initiating Station Self Destruct Protocol.")
-	addtimer(src, CALLBACK(), 50)
-	set_security_level("delta")
-	SSshuttle.lockdown = TRUE
-	addtimer(src, CALLBACK(), 200)
-	if(src && client && stat != DEAD) //queen is still alive- you didn't prevent this!
-		sound_to_playing_players('sound/machines/alarm.ogg')
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/xenomorph_nuke), 120)
-	else
-		priority_announce("Containment In Progress. Self Destruct Aborted.")
-		set_security_level("red")
-		SSshuttle.lockdown = FALSE
-		nuking = FALSE
-		neutralized = TRUE
-
-/proc/xenomorph_nuke(where)
+	sleep(50)
 	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
 	nuke.safety = FALSE
 	nuke.explode()
-	SSticker.news_report = XENO_CONTAINMENT
 
 /mob/living/carbon/alien/humanoid/royal/can_inject()
 	return 0
