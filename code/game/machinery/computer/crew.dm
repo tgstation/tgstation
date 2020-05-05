@@ -77,11 +77,10 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 /datum/crewmonitor/Destroy()
 	return ..()
 
-/datum/crewmonitor/ui_interact(mob/user, ui_key = "crew", datum/tgui/ui = null, force_open = FALSE, \
-							datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/datum/crewmonitor/ui_interact(mob/user, ui_key = "crew", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if (!ui)
-		ui = new(user, src, ui_key, "CrewConsole", "crew monitor", 800, 600 , master_ui, state)
+		ui = new(user, src, ui_key, "CrewConsole", "crew monitor", 800, 600 , master_ui, ui_state())
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)

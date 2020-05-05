@@ -20,7 +20,7 @@
  * optional master_ui datum/tgui The parent UI.
  * optional state datum/ui_state The state used to determine status.
  */
-/datum/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/datum/proc/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	return FALSE // Not implemented.
 
 /**
@@ -109,6 +109,15 @@
  */
 /datum/proc/ui_host(mob/user)
 	return src // Default src.
+
+/**
+ * private
+ *
+ * The UI's state controller to be used for created uis
+ * This is a proc over a var for memory reasons
+ */
+/datum/proc/ui_state()
+	return GLOB.default_state
 
 /**
  * global

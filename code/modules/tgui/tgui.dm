@@ -345,7 +345,7 @@
  * optional force_open bool If force_open should be passed to ui_interact.
  */
 /datum/tgui/proc/update(force_open = FALSE)
-	src_object.ui_interact(user, ui_key, src, force_open, master_ui, state)
+	src_object.ui_interact(user, ui_key, src, force_open, master_ui, ui_state())
 
 /**
  * private

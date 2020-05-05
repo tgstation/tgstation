@@ -106,8 +106,10 @@
 	else
 		..()
 
-/obj/item/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.inventory_state)
+/obj/item/radio/ui_state()
+	return GLOB.inventory_state
+
+/obj/item/radio/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
@@ -118,7 +120,7 @@
 				ui_height += 6 + channels.len * 21
 			else
 				ui_height += 24
-		ui = new(user, src, ui_key, "Radio", name, ui_width, ui_height, master_ui, state)
+		ui = new(user, src, ui_key, "Radio", name, ui_width, ui_height, master_ui, ui_state())
 		ui.open()
 
 /obj/item/radio/ui_data(mob/user)

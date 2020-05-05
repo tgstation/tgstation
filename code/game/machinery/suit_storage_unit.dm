@@ -434,11 +434,13 @@
 		visible_message("<span class='notice'>[usr] pries open \the [src].</span>", "<span class='notice'>You pry open \the [src].</span>")
 		open_machine()
 
-/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
+/obj/machinery/suit_storage_unit/ui_state()
+	return GLOB.notcontained_state
+
+/obj/machinery/suit_storage_unit/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "SuitStorageUnit", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "SuitStorageUnit", name, ui_x, ui_y, master_ui, ui_state())
 		ui.open()
 
 /obj/machinery/suit_storage_unit/ui_data()

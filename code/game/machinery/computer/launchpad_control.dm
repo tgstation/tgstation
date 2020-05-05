@@ -53,10 +53,10 @@
 	var/obj/machinery/launchpad/pad = launchpads[number]
 	return pad
 
-/obj/machinery/computer/launchpad/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/computer/launchpad/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "LaunchpadConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "LaunchpadConsole", name, ui_x, ui_y, master_ui, ui_state())
 		ui.open()
 
 /obj/machinery/computer/launchpad/ui_data(mob/user)

@@ -60,12 +60,12 @@
 	prize_theft(0.05)
 	. = ..()
 
-/obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/roulette/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null)
 	if(machine_stat & MAINT)
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "Roulette", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Roulette", name, ui_x, ui_y, master_ui, ui_state())
 		ui.open()
 
 /obj/machinery/roulette/ui_data(mob/user)

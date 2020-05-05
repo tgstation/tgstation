@@ -84,11 +84,10 @@
 		if(demand.len > record_size)
 			demand.Cut(1, 2)
 
-/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/computer/monitor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "PowerMonitor", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "PowerMonitor", name, ui_x, ui_y, master_ui, ui_state())
 		ui.open()
 
 /obj/machinery/computer/monitor/ui_data()

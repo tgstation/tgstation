@@ -224,7 +224,7 @@
 			return TRUE
 	return FALSE
 
-/obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/lapvend/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	if(machine_stat & (BROKEN | NOPOWER | MAINT))
 		if(ui)
 			ui.close()

@@ -125,3 +125,6 @@
 	if(holder)
 		return holder
 	return src
+
+/obj/item/assembly/ui_state()
+	return GLOB.hands_state

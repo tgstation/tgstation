@@ -197,10 +197,10 @@
 	stored_decal_total = "[stored_decal][yellow_fix][stored_color]"
 	return
 
-/obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/item/airlock_painter/decal/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, master_ui)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "DecalPainter", name, 500, 400, master_ui, state)
+		ui = new(user, src, ui_key, "DecalPainter", name, 500, 400, master_ui, ui_state())
 		ui.open()
 
 /obj/item/airlock_painter/decal/ui_data(mob/user)

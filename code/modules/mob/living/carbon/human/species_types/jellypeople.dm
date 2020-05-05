@@ -263,11 +263,16 @@
 	else
 		ui_interact(owner)
 
-/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.always_state)
+/datum/action/innate/swap_body/ui_host(mob/user)
+	return owner
 
+/datum/action/innate/swap_body/ui_state()
+	return GLOB.not_incapacitated_state
+
+/datum/action/innate/swap_body/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "SlimeBodySwapper", name, 400, 400, master_ui, state)
+		ui = new(user, src, ui_key, "SlimeBodySwapper", name, 400, 400, master_ui, ui_state())
 		ui.open()
 
 /datum/action/innate/swap_body/ui_data(mob/user)

@@ -141,11 +141,13 @@
 	else
 		. = ..()
 
-/obj/item/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+/obj/item/tank/ui_status()
+	return GLOB.hands_state
+
+/obj/item/tank/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "Tank", name, 400, 120, master_ui, state)
+		ui = new(user, src, ui_key, "Tank", name, 400, 120, master_ui, ui_state())
 		ui.open()
 
 /obj/item/tank/ui_data(mob/user)

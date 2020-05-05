@@ -89,12 +89,12 @@
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
-/obj/machinery/plumbing/pill_press/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/plumbing/pill_press/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
 		assets.send(user)
-		ui = new(user, src, ui_key, "ChemPress", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "ChemPress", name, ui_x, ui_y, master_ui, ui_state())
 		ui.open()
 
 /obj/machinery/plumbing/pill_press/ui_data(mob/user)

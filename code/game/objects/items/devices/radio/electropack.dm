@@ -85,11 +85,13 @@
 	frequency = new_frequency
 	SSradio.add_object(src, frequency, RADIO_SIGNALER)
 
-/obj/item/electropack/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
+/obj/item/electropack/ui_state()
+	return GLOB.hands_state
+
+/obj/item/electropack/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "Electropack", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Electropack", name, ui_x, ui_y, master_ui, ui_state())
 		ui.open()
 
 /obj/item/electropack/ui_data(mob/user)

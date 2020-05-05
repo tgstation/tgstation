@@ -88,10 +88,10 @@
 			"desc" = P.desc || P.name // If there is a description, use it. Otherwise use the pack's name.
 		))
 
-/obj/machinery/computer/cargo/express/ui_interact(mob/living/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
+/obj/machinery/computer/cargo/express/ui_interact(mob/living/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "CargoExpress", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "CargoExpress", name, ui_x, ui_y, master_ui, ui_state())
 		ui.open()
 
 /obj/machinery/computer/cargo/express/ui_data(mob/user)

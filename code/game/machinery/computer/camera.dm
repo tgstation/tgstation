@@ -55,9 +55,7 @@
 		network -= i
 		network += "[idnum][i]"
 
-/obj/machinery/computer/security/ui_interact(\
-		mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
-		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+/obj/machinery/computer/security/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	// Show static if can't use the camera
@@ -79,7 +77,7 @@
 		user.client.register_map_obj(cam_plane_master)
 		user.client.register_map_obj(cam_background)
 		// Open UI
-		ui = new(user, src, ui_key, "CameraConsole", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "CameraConsole", name, ui_x, ui_y, master_ui, ui_state())
 		ui.open()
 
 /obj/machinery/computer/security/ui_data()
