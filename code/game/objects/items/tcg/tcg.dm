@@ -29,7 +29,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	var/id = -1 //Unique ID, for use in lookups and storage
 	var/name = "Coder"
 	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
-	var/rules = "There are no rules here",
+	var/rules = "There are no rules here"
 	var/icon = "icons/obj/tcg.dmi"
 	var/icon_state = "runtime"
 	var/summoncost = -1
@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 
 /datum/card/proc/apply(list/data)
 	for(var/name in (vars & data))
-		vars[name] = (!isnull(data[name]) && !isnull(vars[name])) ? data[name] : vars[name]
+		vars[name] = data[name]
 
 /datum/card/proc/applyTemplates(list/data, list/templates = list())
 	apply(templates["default"])
