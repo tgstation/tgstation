@@ -3092,9 +3092,6 @@
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 1
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -27
-	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "agU" = (
@@ -8072,6 +8069,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line,
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "aqZ" = (
@@ -8098,6 +8096,7 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 6
 	},
+/obj/structure/window/reinforced,
 /turf/open/floor/plasteel/white,
 /area/security/brig)
 "ara" = (
@@ -9347,7 +9346,10 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "atK" = (
-/turf/open/space/basic,
+/obj/machinery/computer/security/labor{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
 /area/security/brig)
 "atL" = (
 /obj/structure/table,
@@ -9779,6 +9781,9 @@
 	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 8
+	},
+/obj/machinery/computer/shuttle/labor{
+	dir = 4
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -70134,6 +70139,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/sleeper)
+"gXz" = (
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "gXY" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
@@ -75637,6 +75648,16 @@
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/plasteel/white,
 /area/medical/virology)
+"qGv" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/storage/box/prisoner{
+	pixel_y = 8
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "qGP" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/effect/turf_decal/tile/blue{
@@ -76164,6 +76185,7 @@
 /area/maintenance/starboard)
 "rDc" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "rFa" = (
@@ -77227,6 +77249,12 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"tCp" = (
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/security/brig)
 "tCB" = (
 /obj/structure/closet/secure_closet/bar{
 	pixel_x = -3;
@@ -77532,6 +77560,9 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
+	},
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -104223,7 +104254,7 @@ anf
 aop
 xke
 aqY
-ahx
+qGv
 atK
 ajo
 avk
@@ -104480,8 +104511,8 @@ ang
 aoq
 gEY
 aqZ
-ahx
-ahx
+tCp
+gXz
 ahx
 avZ
 ahx
