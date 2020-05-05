@@ -64,7 +64,6 @@
  * return datum/tgui The requested UI.
  */
 /datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	world.log << "Datum First Created"
 	src.user = user
 	src.src_object = src_object
 	src.ui_key = ui_key
@@ -255,8 +254,6 @@
 /datum/tgui/Topic(href, href_list)
 	if(user != usr)
 		return // Something is not right here.
-
-	to_chat(world, "href received: [href], [href_list]")
 
 	var/action = href_list["action"]
 	var/params = href_list; params -= "action"
