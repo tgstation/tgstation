@@ -36,8 +36,8 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	var/summoncost = -1
 	var/power = 0 //How hard this card hits (by default)
 	var/resolve = 0 //How hard this card can get hit (by default)
-	var/faction = "socks"
-	var/cardtype ="Creature?"
+	var/faction = "socks" //Someone please come up with a ruleset so I can comment this
+	var/cardtype ="C43a7u43?" //Used for something something card types, inept pls doc or sm, you know the deal
 	var/cardsubtype = "Weeb"
 	var/series = "coreset2020"
 	var/rarity = "uber rare to the extreme" //The rarity of this card in a set, each set must have at least one of all types
@@ -87,7 +87,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	///The amount of cards each pack contains
 	var/card_count = 6
 	///The guarenteed rarity, if none set this to 0
-	var/guar_rarity = "uncommon"
+	var/list/guar_rarity = list("misprint" = 1)
 	var/list/rarityTable = list("uncommon" = 1
 							) //The rarity table, the set must contain at least one of each
 
@@ -147,39 +147,32 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	material_flags = NONE
 
 ///Returns a list of cards of cardCount weighted by rarity from cardList that have matching series, with at least one of guarenteedRarity.
-/obj/item/cardpack/proc/buildCardListWithRarity(cardCount, guarenteedRarity, list/datum/card/cardList)
+/obj/item/cardpack/proc/buildCardListWithRarity(cardCount, list/guarenteedRarity, list/datum/card/cardList)
 	var/list/datum/card/readFrom = list()
 	var/list/datum/card/toReturn = list()
 	for(var/index in cardList)
 		if(cardList[index].series == series)
 			readFrom += cardList[index]
 	//You can always get at least one of some rarity
-	if(guarenteedRarity != "" && (guarenteedRarity in rarityTable))
+	if(guarenteedRarity.len)
 		cardCount--
-		var/list/datum/card/forSure = list()
-		for(var/datum/card/template in readFrom)
-			if(template.rarity == guarenteedRarity)
-				forSure += template
-		if(forSure.len)
-			toReturn += pick(forSure)
-		else
-			log_runtime("The guarenteed index [guarenteedRarity] of rarityTable does not exist in the supplied cardList")
-	toReturn += returnCardsByRarity(cardCount, readFrom)
+		toReturn += returnCardsByRarity(1, readFrom, guarenteedRarity)
+	toReturn += returnCardsByRarity(cardCount, readFrom, rarityTable)
 	return toReturn
 
-///Returns a list of card datums of the length cardCount that match a random rarity weighted by rarityTable[]
-/obj/item/cardpack/proc/returnCardsByRarity(cardCount, cardList)
+///Returns a list of card datums of the length cardCount that match a random rarity weighted by rarity_table[]
+/obj/item/cardpack/proc/returnCardsByRarity(cardCount, cardList, list/rarity_table)
 	var/list/datum/card/toReturn = list()
 	for(var/card in 1 to cardCount)
 		var/rarity = 0
 		//Some number between 1 and the sum of all values in the list
 		var/weight = 0
-		for(var/chance in rarityTable)
-			weight += rarityTable[chance]
+		for(var/chance in rarity_table)
+			weight += rarity_table[chance]
 		var/random = rand(weight)
-		for(var/bracket in rarityTable)
+		for(var/bracket in rarity_table)
 			//Steals blatently from pickweight(), sorry buddy I need the index
-			random -= rarityTable[bracket]
+			random -= rarity_table[bracket]
 			if(random <= 0)
 				rarity = bracket
 				break
@@ -191,7 +184,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 			toReturn += pick(cards)
 		else
 			//If we still don't find anything yell into the void. Lazy coders.
-			log_runtime("The index [rarity] of rarityTable does not exist in the supplied cardList")
+			log_runtime("The index [rarity] of rarity_table does not exist in the supplied cardList")
 	return toReturn
 
 ///Loads all the card files
