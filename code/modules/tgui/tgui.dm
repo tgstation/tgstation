@@ -177,7 +177,7 @@
 	if(status == UI_CLOSING)
 		return
 	status = UI_CLOSING
-	if(!recycle || (user.client && length(user.client.free_tgui_windows) >= MAX_RECYCLED_WINDOWS))
+	if(!recycle || !user.client || length(user.client.free_tgui_windows) >= MAX_RECYCLED_WINDOWS)
 		//destroy the window
 		user << browse(null, "window=[window_id]")
 	else
