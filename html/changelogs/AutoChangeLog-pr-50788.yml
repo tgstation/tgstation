@@ -1,4 +1,0 @@
-author: "FuryMcFlurry, Yeeye"
-delete-after: True
-changes: 
-  - imageadd: "Missing textures and error models are now visible if an item has a broken icon. If you see broken assets in game, report it!"
