@@ -403,7 +403,7 @@
 		knife_overlay = mutable_appearance(bayonet_icons, state)
 		knife_overlay.pixel_x = knife_x_offset
 		knife_overlay.pixel_y = knife_y_offset
-		add_overlay(knife_overlay, TRUE)
+		add_overlay(knife_overlay)
 	else
 		return ..()
 
@@ -528,18 +528,18 @@
 			set_light(gun_light.brightness_on)
 		else
 			set_light(0)
-		cut_overlays(flashlight_overlay, TRUE)
+		cut_overlays(flashlight_overlay)
 		var/state = "[gunlight_state][gun_light.on? "_on":""]"	//Generic state.
 		if(gun_light.icon_state in icon_states('icons/obj/guns/flashlights.dmi'))	//Snowflake state?
 			state = gun_light.icon_state
 		flashlight_overlay = mutable_appearance('icons/obj/guns/flashlights.dmi', state)
 		flashlight_overlay.pixel_x = flight_x_offset
 		flashlight_overlay.pixel_y = flight_y_offset
-		add_overlay(flashlight_overlay, TRUE)
-		add_overlay(knife_overlay, TRUE)
+		add_overlay(flashlight_overlay)
+		add_overlay(knife_overlay)
 	else
 		set_light(0)
-		cut_overlays(flashlight_overlay, TRUE)
+		cut_overlays(flashlight_overlay)
 		flashlight_overlay = null
 	update_icon(TRUE)
 	for(var/X in actions)
