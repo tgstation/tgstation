@@ -9,8 +9,8 @@
 	desc = "A canister for the storage of gas."
 	icon_state = "yellow"
 	density = TRUE
-	ui_x = 346
-	ui_y = 268
+	ui_x = 300
+	ui_y = 232
 
 	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
@@ -63,7 +63,8 @@
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
 		"caution" = /obj/machinery/portable_atmospherics/canister,
 		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon
+		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
+		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -170,6 +171,14 @@
 	gas_type = /datum/gas/freon
 	filled = 1
 
+/obj/machinery/portable_atmospherics/canister/hydrogen
+	name = "hydrogen canister"
+	desc = "Hydrogen, highly flammable"
+	icon_state = "h2"
+	gas_type = /datum/gas/hydrogen
+	filled = 1
+
+
 /obj/machinery/portable_atmospherics/canister/fusion_test
 	name = "fusion test canister"
 	desc = "Don't be a badmin."
@@ -178,8 +187,8 @@
 	mode = CANISTER_TIER_3
 
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
-	air_contents.add_gases(/datum/gas/carbon_dioxide, /datum/gas/plasma, /datum/gas/tritium)
-	air_contents.gases[/datum/gas/carbon_dioxide][MOLES] = 500
+	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/plasma, /datum/gas/tritium)
+	air_contents.gases[/datum/gas/hydrogen][MOLES] = 500
 	air_contents.gases[/datum/gas/plasma][MOLES] = 500
 	air_contents.gases[/datum/gas/tritium][MOLES] = 350
 	air_contents.temperature = 15000
@@ -255,7 +264,7 @@
 	pump = new(src, FALSE)
 	pump.on = TRUE
 	pump.machine_stat = 0
-	pump.build_network()
+	SSair.add_to_rebuild_queue(pump)
 	update_overlays()
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
@@ -314,7 +323,16 @@
 		if(!(machine_stat & BROKEN))
 			canister_break()
 		if(disassembled)
-			new /obj/item/stack/sheet/metal (loc, 10)
+			switch(mode)
+				if(CANISTER_TIER_1)
+					new /obj/item/stack/sheet/metal (loc, 10)
+				if(CANISTER_TIER_2)
+					new /obj/item/stack/sheet/metal (loc, 10)
+					new /obj/item/stack/sheet/plasteel (loc, 5)
+				if(CANISTER_TIER_3)
+					new /obj/item/stack/sheet/metal (loc, 10)
+					new /obj/item/stack/sheet/plasteel (loc, 5)
+					new /obj/item/stack/sheet/bluespace_crystal (loc, 1)
 		else
 			new /obj/item/stack/sheet/metal (loc, 5)
 	qdel(src)
@@ -324,14 +342,16 @@
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
 
-	if(machine_stat & BROKEN)
-		if(!I.tool_start_check(user, amount=0))
-			return TRUE
-		to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
-		if(I.use_tool(src, user, 30, volume=50))
-			deconstruct(TRUE)
-	else
-		to_chat(user, "<span class='warning'>You cannot slice [src] apart when it isn't broken!</span>")
+	if(!I.tool_start_check(user, amount=0))
+		return TRUE
+	var/pressure = air_contents.return_pressure()
+	if(pressure > 300)
+		to_chat(user, "<span class='alert'>The [src] meter shows high pressure inside!</span>")
+		message_admins("[src] deconstructed by [ADMIN_LOOKUPFLW(user)]")
+		log_game("[src] deconstructed by [key_name(user)]")
+	to_chat(user, "<span class='notice'>You begin cutting the[src] apart...</span>")
+	if(I.use_tool(src, user, 30, volume=50))
+		deconstruct(TRUE)
 
 	return TRUE
 

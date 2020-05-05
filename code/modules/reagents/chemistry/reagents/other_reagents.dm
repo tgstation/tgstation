@@ -210,7 +210,7 @@
 	glass_desc = "A glass of holy water."
 	self_consuming = TRUE //divine intervention won't be limited by the lack of a liver
 
-	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases stability.
+	// Holy water. Mostly the same as water, it also heals the plant a little with the power of the spirits. Also ALSO increases instability.
 /datum/reagent/water/holywater/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
 	if(chems.has_reagent(src.type, 1))
@@ -2173,6 +2173,18 @@
 	color = "#9C5A19"
 	taste_description = "bananas"
 	can_synth = TRUE
+
+/datum/reagent/plasma_oxide
+	name = "Hyper-Plasmium Oxide"
+	description = "Compound created deep in the cores of demon-class planets. Commonly found through deep geysers."
+	color = "#470750" // rgb: 255, 255, 255
+	taste_description = "hell"
+
+/datum/reagent/exotic_stabilizer
+	name = "Exotic Stabilizer"
+	description = "Advanced compound created by mixing stabilizing agent and hyper-plasmium oxide."
+	color = "#180000" // rgb: 255, 255, 255
+	taste_description = "blood"
 
 /datum/reagent/wittel
 	name = "Wittel"

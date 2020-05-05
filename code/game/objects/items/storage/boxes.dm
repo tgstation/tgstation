@@ -435,18 +435,15 @@
 		new /obj/item/reagent_containers/food/drinks/sillycup( src )
 
 /obj/item/storage/box/donkpockets
-    var/donktype = /obj/item/reagent_containers/food/snacks/donkpocket
-
-/obj/item/storage/box/donkpockets/PopulateContents()
-    for(var/i in 1 to 6)
-        new donktype(src)
-
-/obj/item/storage/box/donkpockets
 	name = "box of donk-pockets"
 	desc = "<B>Instructions:</B> <I>Heat in microwave. Product will cool if not eaten within seven minutes.</I>"
 	icon_state = "donkpocketbox"
 	illustration=null
-	donktype = /obj/item/reagent_containers/food/snacks/donkpocket
+	var/donktype = /obj/item/reagent_containers/food/snacks/donkpocket
+
+/obj/item/storage/box/donkpockets/PopulateContents()
+    for(var/i in 1 to 6)
+        new donktype(src)
 
 /obj/item/storage/box/donkpockets/ComponentInitialize()
 	. = ..()
@@ -856,7 +853,7 @@
 /obj/item/storage/box/beanbag
 	name = "box of beanbags"
 	desc = "A box full of beanbag shells."
-	illustration = "rubbershot_box"
+	icon_state = "rubbershot_box"
 	illustration = null
 
 /obj/item/storage/box/beanbag/PopulateContents()
@@ -873,12 +870,6 @@
 		var/randomFigure = pick(subtypesof(/obj/item/toy/figure))
 		new randomFigure(src)
 
-#define NODESIGN "None"
-#define NANOTRASEN "NanotrasenStandard"
-#define SYNDI "SyndiSnacks"
-#define HEART "Heart"
-#define SMILEY "SmileyFace"
-
 /obj/item/storage/box/papersack
 	name = "paper sack"
 	desc = "A sack neatly crafted out of paper."
@@ -887,7 +878,18 @@
 	illustration = null
 	resistance_flags = FLAMMABLE
 	foldable = null
-	var/design = NODESIGN
+	/// A list of all available papersack reskins
+	var/list/papersack_designs = list()
+
+/obj/item/storage/box/papersack/Initialize(mapload)
+	. = ..()
+	papersack_designs = sortList(list(
+		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
+		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
+		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),
+		"Heart" = image(icon = src.icon, icon_state = "paperbag_Heart"),
+		"SmileyFace" = image(icon = src.icon, icon_state = "paperbag_SmileyFace")
+		))
 
 /obj/item/storage/box/papersack/update_icon_state()
 	if(contents.len == 0)
@@ -897,47 +899,61 @@
 
 /obj/item/storage/box/papersack/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/pen))
-		//if a pen is used on the sack, dialogue to change its design appears
-		if(contents.len)
-			to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
-			return
-		var/list/designs = list(NODESIGN, NANOTRASEN, SYNDI, HEART, SMILEY, "Cancel")
-		var/switchDesign = input("Select a Design:", "Paper Sack Design", designs[1]) in sortList(designs)
-		if(get_dist(usr, src) > 1)
-			to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
-			return
-		var/choice = designs.Find(switchDesign)
-		if(design == designs[choice] || designs[choice] == "Cancel")
-			return 0
-		to_chat(usr, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
-		design = designs[choice]
-		icon_state = "paperbag_[design]"
-		item_state = "paperbag_[design]"
-		switch(designs[choice])
-			if(NODESIGN)
+		var/choice = show_radial_menu(user, src , papersack_designs, custom_check = CALLBACK(src, .proc/check_menu, user, W), radius = 36, require_near = TRUE)
+		if(!choice)
+			return FALSE
+		if(icon_state == "paperbag_[choice]")
+			return FALSE
+		switch(choice)
+			if("None")
 				desc = "A sack neatly crafted out of paper."
-			if(NANOTRASEN)
+			if("NanotrasenStandard")
 				desc = "A standard Nanotrasen paper lunch sack for loyal employees on the go."
-			if(SYNDI)
+			if("SyndiSnacks")
 				desc = "The design on this paper sack is a remnant of the notorious 'SyndieSnacks' program."
-			if(HEART)
+			if("Heart")
 				desc = "A paper sack with a heart etched onto the side."
-			if(SMILEY)
+			if("SmileyFace")
 				desc = "A paper sack with a crude smile etched onto the side."
-		return 0
+			else
+				return FALSE
+		to_chat(user, "<span class='notice'>You make some modifications to [src] using your pen.</span>")
+		icon_state = "paperbag_[choice]"
+		item_state = "paperbag_[choice]"
+		return FALSE
 	else if(W.get_sharpness())
 		if(!contents.len)
 			if(item_state == "paperbag_None")
 				user.show_message("<span class='notice'>You cut eyeholes into [src].</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack(user.loc)
 				qdel(src)
-				return 0
+				return FALSE
 			else if(item_state == "paperbag_SmileyFace")
 				user.show_message("<span class='notice'>You cut eyeholes into [src] and modify the design.</span>", MSG_VISUAL)
 				new /obj/item/clothing/head/papersack/smiley(user.loc)
 				qdel(src)
-				return 0
+				return FALSE
 	return ..()
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  * * P The pen used to interact with a menu
+  */
+/obj/item/storage/box/papersack/proc/check_menu(mob/user, obj/item/pen/P)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(contents.len)
+		to_chat(user, "<span class='warning'>You can't modify [src] with items still inside!</span>")
+		return FALSE
+	if(!P || !user.is_holding(P))
+		to_chat(user, "<span class='warning'>You need a pen to modify [src]!</span>")
+		return FALSE
+	return TRUE
 
 /obj/item/storage/box/papersack/meat
 	desc = "It's slightly moist and smells like a slaughterhouse."
@@ -945,12 +961,6 @@
 /obj/item/storage/box/papersack/meat/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/food/snacks/meat/slab(src)
-
-#undef NODESIGN
-#undef NANOTRASEN
-#undef SYNDI
-#undef HEART
-#undef SMILEY
 
 /obj/item/storage/box/ingredients //This box is for the randomely chosen version the chef spawns with, it shouldn't actually exist.
 	name = "ingredients box"

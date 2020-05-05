@@ -39,7 +39,7 @@ export const ChemPress = (props, context) => {
               {pill_styles.map(pill => (
                 <Button
                   key={pill.id}
-                  width={5}
+                  width="30px"
                   selected={pill.id === pill_style}
                   textAlign="center"
                   color="transparent"

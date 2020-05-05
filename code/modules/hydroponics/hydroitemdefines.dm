@@ -1,7 +1,8 @@
+
 // Plant analyzer
 /obj/item/plant_analyzer
 	name = "plant analyzer"
-	desc = "A scanner used to evaluate a plant's various areas of growth."
+	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
 	item_state = "analyzer"
@@ -10,6 +11,12 @@
 	w_class = WEIGHT_CLASS_TINY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=30, /datum/material/glass=20)
+	var/scan_mode = PLANT_SCANMODE_STATS
+
+/obj/item/plant_analyzer/attack_self(mob/user)
+	. = ..()
+	scan_mode = !scan_mode
+	to_chat(user, "<span class='notice'>You switch [src] to [scan_mode == PLANT_SCANMODE_CHEMICALS ? "scan for chemical reagents and traits" : "scan for plant growth statistics"].</span>")
 
 // *************************************
 // Hydroponics Tools

@@ -44,7 +44,7 @@ const CfStep1 = (props, context) => {
   return (
     <Section
       title="Step 1"
-      minHeight={51}>
+      minHeight="306px">
       <Box
         mt={5}
         bold
@@ -89,7 +89,7 @@ const CfStep2 = (props, context) => {
   return (
     <Section
       title="Step 2: Customize your device"
-      minHeight={47}
+      minHeight="282px"
       buttons={(
         <Box bold color="good">
           {data.totalprice} cr
@@ -346,7 +346,7 @@ const CfStep3 = (props, context) => {
   return (
     <Section
       title="Step 3: Payment"
-      minHeight={47}>
+      minHeight="282px">
       <Box
         italic
         textAlign="center"
@@ -398,7 +398,7 @@ const CfStep3 = (props, context) => {
 const CfStep4 = (props, context) => {
   return (
     <Section
-      minHeight={47}>
+      minHeight="282px">
       <Box
         bold
         textAlign="center"
