@@ -2677,6 +2677,12 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aga" = (
@@ -3022,10 +3028,11 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "agL" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
+/turf/open/floor/plasteel,
 /area/security/brig)
 "agM" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -3066,7 +3073,8 @@
 "agQ" = (
 /obj/structure/table,
 /obj/machinery/recharger{
-	pixel_y = 4
+	pixel_y = 4;
+	pixel_x = -5
 	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -3078,15 +3086,22 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
+/obj/item/storage/box/prisoner{
+	pixel_x = 9
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "agR" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = 28
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
 	},
-/turf/open/floor/plasteel,
+/turf/closed/wall,
 /area/security/brig)
 "agS" = (
 /obj/structure/lattice,
@@ -3467,7 +3482,9 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/structure/cable,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "ahF" = (
@@ -3893,13 +3910,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
-	dir = 4
-	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "aiy" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -4290,10 +4303,12 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/red,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "ajr" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -4302,9 +4317,6 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
-	dir = 8
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -5074,8 +5086,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/supply/hidden{
-	dir = 9
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -8084,15 +8096,15 @@
 	dir = 4
 	},
 /obj/structure/rack,
-/obj/item/storage/firstaid/regular,
-/obj/item/healthanalyzer{
-	pixel_y = -2
-	},
 /obj/machinery/camera{
 	c_tag = "Brig - Infirmary";
 	dir = 1
 	},
 /obj/item/clothing/under/rank/medical/doctor/purple,
+/obj/item/storage/firstaid/regular,
+/obj/item/healthanalyzer{
+	pixel_y = -2
+	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -8699,9 +8711,12 @@
 /area/security/prison)
 "asp" = (
 /obj/structure/closet/bombcloset/security,
-/obj/effect/turf_decal/tile/red,
 /obj/effect/turf_decal/tile/red{
 	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -9352,7 +9367,10 @@
 /turf/open/floor/engine/vacuum,
 /area/science/mixing/chamber)
 "atK" = (
-/turf/open/space/basic,
+/obj/machinery/computer/shuttle/labor{
+	dir = 4
+	},
+/turf/open/floor/plasteel,
 /area/security/brig)
 "atL" = (
 /obj/structure/table,
@@ -67041,6 +67059,9 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "duo" = (
@@ -67506,7 +67527,6 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/fitness/recreation)
 "dBZ" = (
-/obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/landmark/event_spawn,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -67516,6 +67536,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -70957,6 +70980,15 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"irI" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "iuX" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -71205,9 +71237,11 @@
 /turf/open/floor/plating,
 /area/maintenance/aft)
 "iZq" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -74706,6 +74740,16 @@
 "pcn" = (
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
+"pdx" = (
+/obj/machinery/gulag_teleporter,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/ai_monitored/security/armory)
 "peH" = (
 /obj/effect/landmark/start/cook,
 /obj/structure/disposalpipe/segment,
@@ -76889,6 +76933,18 @@
 	},
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
+"sJV" = (
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/security/brig)
 "sJW" = (
 /turf/closed/wall/mineral/plastitanium,
 /area/engine/break_room)
@@ -77564,6 +77620,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = 28
 	},
 /turf/open/floor/plasteel,
 /area/security/brig)
@@ -104506,7 +104566,7 @@ aoq
 gEY
 aqZ
 ahx
-ahx
+aws
 ahx
 avZ
 ahx
@@ -105012,7 +105072,7 @@ rpQ
 ege
 aiq
 awp
-awp
+agL
 aky
 awp
 awp
@@ -105275,7 +105335,7 @@ ajQ
 uiS
 alS
 alS
-agR
+alS
 alS
 atN
 alS
@@ -105526,15 +105586,15 @@ afT
 ajm
 ajm
 ahx
+agR
 ahx
-agL
 alR
 afX
 afZ
 agQ
-aeq
-aiq
-aiq
+pdx
+irI
+sJV
 auW
 ara
 axc
