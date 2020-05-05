@@ -6,18 +6,25 @@
 
 <!-- Inlined data -->
 <meta id="tgui:ref" content="[tgui:ref]">
+<meta id="tgui:windowId" content="[tgui:windowId]">
 
 <!-- Early setup -->
 <script type="text/javascript">
 // Mark the beginning of initialization
 window.__inception__ = new Date().getTime();
-// Read tgui object ref into a global
+// Read tgui ref into a global
 window.__ref__ = document
   .getElementById('tgui:ref')
   .getAttribute('content');
-// Null if template marker was not replaced
 if (window.__ref__ === '[' + 'tgui:ref' + ']') {
   window.__ref__ = null;
+}
+// Read window id into a global
+window.__windowId__ = document
+  .getElementById('tgui:windowId')
+  .getAttribute('content');
+if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
+  window.__windowId__ = null;
 }
 // BYOND API object
 window.Byond = (function () {
@@ -91,18 +98,24 @@ window.onerror = function (msg, url, line, col, error) {
       errorStack.textContent = stack;
     }
   }
+  // Set window geometry
+  Byond.call('winset', {
+    id: window.__windowId__,
+    titlebar: true,
+    size: '600x600',
+    'is-visible': true,
+    'can-resize': true,
+  });
   // Send logs to the server
   Byond.call('', {
     src: window.__ref__,
     action: 'tgui:log',
-    fatal: '1',
     log: stack,
   });
   // Short-circuit further updates
   window.__updateQueue__ = [];
   window.update = function () {};
-  window.reinit = function () {};
-  window.standby = function () {};
+  window.suspend = function () {};
   // Prevent default action
   return true;
 };

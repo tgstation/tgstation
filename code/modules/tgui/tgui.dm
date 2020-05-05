@@ -106,7 +106,7 @@
 		// Use a recycled window
 		window_id = free_windows[length(free_windows)]
 		free_windows -= window_id
-		winset(user.client, window_id, "size=[width]x[height];is-visible=true")
+		winset(user.client, window_id, "size=[width]x[height];is-visible=1")
 		initialized = TRUE
 	else
 		// Create a new window
@@ -129,6 +129,7 @@
 		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
 		// be tagged, so this is an effective unwrap
 		html = replacetextEx(html, "\[tgui:ref]", "\ref[src]")
+		html = replacetextEx(html, "\[tgui:windowId]", window_id)
 
 		// Open the window.
 		user << browse(html, "window=[window_id];[window_options]")
@@ -179,13 +180,13 @@
 		return
 	status = UI_CLOSING
 	if(!recycle || !user.client || length(user.client.free_tgui_windows) >= MAX_RECYCLED_WINDOWS)
-		//destroy the window
+		// Destroy the window
 		user << browse(null, "window=[window_id]")
 	else
-		//hide the window
-		winset(user.client, window_id, "is-visible=false")
-		user << output("", "[window_id].browser:standby")
-		//Add the window id to the free windows stack
+		// Hide the window
+		winset(user.client, window_id, "is-visible=0")
+		user << output("", "[window_id].browser:suspend")
+		// Add the window id to the free windows stack
 		user.client.free_tgui_windows += window_id
 	src_object.ui_close(user)
 	SStgui.on_close(src)
@@ -283,9 +284,6 @@
 			var/value = text2num(params["value"])
 			user.client.prefs.tgui_fancy = value
 		if("tgui:log")
-			// Force window to show frills on fatal errors
-			if(params["fatal"])
-				winset(user, window_id, "titlebar=1;can-resize=1;size=600x600")
 			log_message(params["log"])
 		if("tgui:link")
 			user << link(params["url"])

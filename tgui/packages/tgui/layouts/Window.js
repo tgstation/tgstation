@@ -7,15 +7,15 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
-import { useBackend, backendEnterStandby } from '../backend';
-import { IS_IE8, runCommand, winset, callByond } from '../byond';
-import { Box, Icon, Tooltip } from '../components';
+import { backendSuspend, useBackend } from '../backend';
+import { IS_IE8 } from '../byond';
+import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { dragStartHandler, resizeStartHandler } from '../drag';
 import { releaseHeldKeys } from '../hotkeys';
 import { createLogger } from '../logging';
-import { Layout, refocusLayout } from './Layout';
 import { useDispatch } from '../store';
+import { Layout, refocusLayout } from './Layout';
 
 const logger = createLogger('Window');
 
@@ -28,12 +28,14 @@ export class Window extends Component {
     const {
       resizable,
       theme,
+      title,
       children,
     } = this.props;
     const {
+      act,
       config,
       debugLayout,
-      standby,
+      suspended,
     } = useBackend(this.context);
     const dispatch = useDispatch(this.context);
     // Determine when to show dimmer
@@ -46,20 +48,17 @@ export class Window extends Component {
         theme={theme}>
         <TitleBar
           className="Window__titleBar"
-          title={!standby && decodeHtmlEntities(config.title)}
+          title={!suspended && (title || decodeHtmlEntities(config.title))}
           status={config.status}
           fancy={config.fancy}
           onDragStart={dragStartHandler}
           onClose={() => {
             logger.log('pressed close');
             releaseHeldKeys();
-            callByond('', {
-              src: config.ref,
-              action: 'tgui:close',
-            });
-            dispatch(backendEnterStandby());
+            act('tgui:close');
+            dispatch(backendSuspend());
           }} />
-        {!standby && (
+        {!suspended && (
           <div
             className={classes([
               'Window__rest',
@@ -139,6 +138,11 @@ const TitleBar = props => {
           && toTitleCase(title)
           || title}
       </div>
+      {process.env.NODE_ENV !== 'production' && (
+        <div className="TitleBar__devBuildIndicator">
+          <Icon name="bug" />
+        </div>
+      )}
       <div
         className="TitleBar__dragZone"
         onMousedown={e => fancy && onDragStart(e)} />
@@ -150,11 +154,6 @@ const TitleBar = props => {
           // eslint-disable-next-line react/no-unknown-property
           onclick={onClose}>
           {IS_IE8 ? 'x' : '×'}
-        </div>
-      )}
-      {process.env.NODE_ENV !== 'production' && (
-        <div className="TitleBar__devBuildIndicator">
-          <Icon name="bug" />
         </div>
       )}
     </div>

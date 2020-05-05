@@ -24,8 +24,8 @@ export const backendSetSharedState = (key, nextState) => ({
   payload: { key, nextState },
 });
 
-export const backendEnterStandby = () => ({
-  type: 'backend/enterStandby',
+export const backendSuspend = () => ({
+  type: 'backend/suspend',
 });
 
 export const backendReducer = (state, action) => {
@@ -67,7 +67,7 @@ export const backendReducer = (state, action) => {
       shared,
       visible,
       interactive,
-      standby: false,
+      suspended: false,
     };
   }
 
@@ -82,7 +82,7 @@ export const backendReducer = (state, action) => {
     };
   }
 
-  if (type === 'backend/enterStandby') {
+  if (type === 'backend/suspend') {
     return {
       ...state,
       data: {},
@@ -93,7 +93,7 @@ export const backendReducer = (state, action) => {
         status: 1,
         interface: '',
       },
-      standby: true,
+      suspended: true,
     };
   }
 

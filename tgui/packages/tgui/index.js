@@ -28,7 +28,7 @@ import './styles/themes/syndicate.scss';
 import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
-import { backendUpdate, backendEnterStandby } from './backend';
+import { backendUpdate, backendSuspend } from './backend';
 import { IS_IE8 } from './byond';
 import { setupDrag } from './drag';
 import { logger } from './logging';
@@ -134,25 +134,26 @@ const setupApp = () => {
 
   // Subscribe for bankend updates
   window.update = stateJson => {
+    const prevState = store.getState();
     // NOTE: stateJson can be an object only if called manually from console.
     // This is useful for debugging tgui in external browsers, like Chrome.
-    const state = typeof stateJson === 'string'
+    const nextState = typeof stateJson === 'string'
       ? parseStateJson(stateJson)
       : stateJson;
 
-    if (store.getState().standby) {
-      logger.log('reinitializing to:', state.config.ref);
-      window.__ref__ = state.config.ref;
+    if (prevState.suspended) {
+      logger.log('reinitializing to:', nextState.config.ref);
+      window.__ref__ = nextState.config.ref;
       initialRender = 'recycled';
     }
 
     // Backend update dispatches a store action
-    store.dispatch(backendUpdate(state));
+    store.dispatch(backendUpdate(nextState));
   };
 
-  window.standby = () => {
-    logger.log("entering standby");
-    store.dispatch(backendEnterStandby());
+  window.suspend = () => {
+    logger.log('suspending the window');
+    store.dispatch(backendSuspend());
   };
 
   // Enable hot module reloading
