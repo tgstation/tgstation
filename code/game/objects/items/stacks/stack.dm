@@ -321,7 +321,7 @@
 		return FALSE
 	amount -= used
 	if(check && zero_amount())
-		return FALSE
+		return TRUE
 	if(length(mats_per_unit))
 		var/temp_materials = custom_materials.Copy()
 		for(var/i in mats_per_unit)
