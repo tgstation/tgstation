@@ -57,11 +57,11 @@
 	heat = 200
 
 /obj/item/assembly/igniter/condenser/activate()
-	if(!..())
-		return FALSE//Cooldown check
+	. = ..()
+	if(!.)
+		return //Cooldown check
 	var/turf/location = get_turf(loc)
 	if(location)
 		var/datum/gas_mixture/enviro = location.return_air()
 		enviro.temperature = clamp(min(ROOM_TEMP, enviro.temperature*0.85),MIN_FREEZE_TEMP,MAX_FREEZE_TEMP)
 	sparks.start()
-	return TRUE
