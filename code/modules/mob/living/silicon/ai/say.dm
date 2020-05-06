@@ -129,6 +129,9 @@
 		else
 			SEND_SOUND(only_listener, voice)
 		return 1
+	else
+		log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
+		message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
 	return 0
 
 #undef VOX_DELAY
