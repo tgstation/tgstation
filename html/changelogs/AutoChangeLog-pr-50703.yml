@@ -1,0 +1,9 @@
+author: "RaveRadbury"
+delete-after: True
+changes: 
+  - tweak: "Light tiles now use a radial menu for color selection."
+  - tweak: "Light tiles need multitools to be adjusted"
+  - imageadd: "Light tiles can now display Orange"
+  - imageadd: "Light tiles have a secondary light cycle config"
+  - imageadd: "Mapper light tiles have also been updated and had their cycling times adjusted"
+  - imagedel: "Light tiles no longer cycle into white"
