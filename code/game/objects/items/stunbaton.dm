@@ -16,7 +16,7 @@
 
 	throwforce = 7
 	//The likelihood of a thrown baton to apply it's stun effect. Otherwise, it's simply a standard non-stun hit.
-	var/throw_stun_chance = 100
+	var/throw_stun_chance = 30
 	
 	var/obj/item/stock_parts/cell/cell
 	var/preload_cell_type //if not empty the baton starts with this type of cell
