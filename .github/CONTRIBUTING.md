@@ -206,6 +206,30 @@ This is good:
 ````
 This prevents nesting levels from getting deeper then they need to be.
 
+### Use our time defines
+
+The codebase contains some defines which will automatically multiply a number by the correct amount to get a number in deciseconds. Using these is preffered over using a literal amount in deciseconds.
+
+The defines are as follows:
+* SECONDS
+* MINUTES
+* HOURS
+
+This is bad:
+````DM
+/datum/datum1/proc/proc1()
+	if(do_after(mob, 15))
+		mob.dothing()
+````
+
+This is good:
+````DM
+/datum/datum1/proc/proc1()
+	if(do_after(mob, 1.5 SECONDS))
+		mob.dothing()
+````
+
+
 ### Develop Secure Code
 
 * Player input must always be escaped safely, we recommend you use stripped_input in all cases where you would use input. Essentially, just always treat input from players as inherently malicious and design with that use case in mind

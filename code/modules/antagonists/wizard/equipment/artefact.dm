@@ -66,7 +66,7 @@
 	else
 		return ..()
 
-/obj/effect/rend/singularity_pull()
+/obj/effect/rend/singularity_act()
 	return
 
 /obj/effect/rend/singularity_pull()

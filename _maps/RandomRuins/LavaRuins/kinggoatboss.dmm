@@ -9,260 +9,816 @@
 /turf/closed/wall/mineral/gold,
 /area/ruin/powered)
 "d" = (
-/obj/structure/mineral_door/transparent/diamond{
-	sheetAmount = 1
-	},
-/turf/open/floor/mineral/silver,
-/area/ruin/powered)
+/turf/closed/mineral/volcanic/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "e" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/open/floor/mineral/gold,
+/turf/closed/wall/r_wall,
 /area/ruin/powered)
 "f" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/turf/open/floor/mineral/gold,
+/turf/open/floor/carpet,
 /area/ruin/powered)
 "g" = (
 /turf/open/floor/mineral/diamond,
 /area/ruin/powered)
-"k" = (
+"h" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/retaliate/goat/guard{
+	health = 0;
+	icon_state = "goat_guard_dead"
+	},
+/turf/open/floor/mineral/diamond,
+/area/ruin/powered)
+"i" = (
 /obj/structure/ladder/unbreakable{
 	desc = "This seems to be the ladder to the King of Goats lair. Looks to be a one way trip...";
 	id = "goatlayer";
 	name = "Ladder to the King of Goats Lair"
 	},
-/turf/open/floor/mineral/gold,
+/turf/open/floor/mineral/diamond,
 /area/ruin/powered)
-"q" = (
-/obj/effect/mob_spawn/human/miner{
-	assignedrole = "null";
-	desc = "Seems this miner tried to cheese the arena using bluespace crystals. Did not turn out well";
-	mob_gender = "female";
-	mob_name = "Lyna Lavas";
-	name = "Lyna Lavas"
-	},
-/obj/item/stack/ore/bluespace_crystal,
-/obj/effect/decal/cleanable/blood/old,
-/turf/open/floor/mineral/gold,
-/area/ruin/powered)
-"r" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/open/floor/mineral/gold,
-/area/ruin/powered)
-"s" = (
+"j" = (
 /obj/item/paper/crumpled{
 	info = "Lest ye be prepared, abandon all hope ye who enter here.";
 	name = "Wise Man's Warning."
 	},
-/obj/effect/decal/remains/human,
-/turf/open/floor/mineral/diamond,
-/area/ruin/powered)
-"t" = (
-/obj/machinery/light,
 /turf/open/floor/mineral/gold,
 /area/ruin/powered)
+"k" = (
+/obj/structure/mineral_door/transparent/diamond{
+	sheetAmount = 1
+	},
+/turf/open/floor/mineral/gold,
+/area/ruin/powered)
+"l" = (
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"m" = (
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"n" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"p" = (
+/turf/template_noop,
+/area/template_noop)
+"q" = (
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"r" = (
+/turf/open/floor/wood,
+/area/ruin/powered)
+"s" = (
+/obj/structure/mineral_door/silver,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"t" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"u" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/powered)
+"v" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/retaliate/goat/guard{
+	health = 0;
+	icon_state = "goat_guard_dead"
+	},
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"w" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/retaliate/goat/guard{
+	health = 0;
+	icon_state = "goat_guard_dead"
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"x" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"y" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/spear,
+/mob/living/simple_animal/hostile/retaliate/goat{
+	health = 0;
+	icon_state = "goat_dead"
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"z" = (
+/obj/structure/stone_tile/slab/cracked,
+/mob/living/simple_animal/hostile/retaliate/goat{
+	health = 0;
+	icon_state = "goat_dead"
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"A" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"B" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"C" = (
+/obj/structure/stone_tile/surrounding_tile{
+	dir = 8
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"D" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"E" = (
+/obj/structure/stone_tile/slab/burnt,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"F" = (
+/obj/structure/stone_tile/surrounding_tile,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"G" = (
+/obj/structure/stone_tile/block/burnt,
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
 "H" = (
 /turf/open/floor/mineral/gold,
 /area/ruin/powered)
+"I" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"J" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/retaliate/goat{
+	health = 0;
+	icon_state = "goat_dead"
+	},
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"K" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"L" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"M" = (
+/obj/structure/statue/sandstone/assistant,
+/obj/structure/stone_tile/slab/burnt,
+/obj/item/gun/magic/staff{
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/turf/open/lava/smooth/lava_land_surface,
+/area/lavaland/surface/outdoors/explored)
+"N" = (
+/obj/structure/bonfire/prelit,
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"O" = (
+/obj/item/hatchet,
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
+"P" = (
+/obj/effect/decal/cleanable/blood/old,
+/mob/living/simple_animal/hostile/retaliate/goat{
+	health = 0;
+	icon_state = "goat_dead"
+	},
+/turf/open/floor/carpet/red,
+/area/ruin/powered)
 
 (1,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+p
+p
+p
+p
+p
+p
+d
+d
+d
+d
+d
+d
+d
+p
+p
+p
+p
+p
+p
+p
+p
+p
+p
 "}
 (2,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+p
+p
+p
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+p
+p
+p
+p
+p
+p
 "}
 (3,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+p
+p
+p
+p
+p
+d
+d
+q
+q
+q
+q
+q
+d
+d
+d
+d
+d
+d
+d
+p
+p
+p
+p
 "}
 (4,1,1) = {"
-a
-a
-a
-b
-b
-c
+p
+p
 d
-c
-b
-b
-a
-a
-a
+d
+d
+d
+q
+q
+q
+q
+q
+q
+d
+d
+d
+q
+q
+q
+d
+p
+p
+p
+p
 "}
 (5,1,1) = {"
-a
-a
-a
-b
+p
+p
+d
+d
+d
+d
+e
+e
+u
+u
+e
+e
+u
+d
+d
 q
-f
-H
-f
-H
-b
-a
-a
-a
+z
+q
+A
+q
+q
+d
+p
 "}
 (6,1,1) = {"
-a
-a
-a
-c
+p
+q
+q
+d
+d
+d
 e
-g
-g
-g
-t
-c
-a
-a
-a
+f
+f
+f
+f
+f
+u
+u
+u
+e
+e
+q
+B
+A
+q
+d
+p
 "}
 (7,1,1) = {"
-a
-a
-a
+p
+q
+q
 d
-H
-g
-k
-s
-H
+q
 d
+u
+f
+f
+f
+f
+f
+e
+r
+r
+r
+u
+d
+q
+q
 a
 a
-a
+p
 "}
 (8,1,1) = {"
-a
-a
-a
-c
+p
+p
+q
+d
+d
+u
+u
+l
+l
+l
+l
+l
 e
-g
-g
-g
-t
-c
-a
-a
+e
+r
+r
+u
+e
+M
+q
+J
+L
 a
 "}
 (9,1,1) = {"
-a
-a
-a
+p
+p
+q
+d
+d
+e
 b
-H
-r
-H
-r
-H
 b
+c
+b
+b
+l
+l
+s
+y
+r
+r
+e
+C
+q
 a
 a
 a
 "}
 (10,1,1) = {"
-a
-a
-a
-b
-b
-c
+p
 d
-c
+d
+d
+d
+e
 b
+g
+H
+H
 b
+N
+w
+s
+m
+m
+n
+t
+D
+G
 a
 a
 a
 "}
 (11,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+d
+d
+d
+q
+d
+e
+c
+H
+g
+H
+c
+m
+m
+e
+m
+n
+m
+e
+d
+d
+d
 a
 a
 "}
 (12,1,1) = {"
+d
+d
+q
+q
+d
+e
+b
+H
+i
+j
+k
+n
+m
+u
+m
+m
+m
+u
+d
+d
+d
+d
+d
+"}
+(13,1,1) = {"
+d
+d
+q
+q
+q
+e
+c
+H
+h
+H
+c
+m
+m
+e
+m
+O
+m
+e
+C
+q
+d
+d
 a
+"}
+(14,1,1) = {"
+p
+d
+d
+d
+d
+e
+b
+g
+H
+H
+b
+N
+m
+s
+m
+P
+n
+t
+E
+I
+K
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+L
+"}
+(15,1,1) = {"
+p
+d
+d
+d
+d
+u
+b
+b
+c
+b
+b
+l
+x
+s
+r
+r
+r
+u
+F
+q
+q
+L
+J
+"}
+(16,1,1) = {"
+p
+p
+p
+d
+d
+u
+u
+l
+l
+l
+v
+l
+u
+u
+r
+r
+u
+u
+M
+q
+q
 a
 a
 "}
-(13,1,1) = {"
+(17,1,1) = {"
+p
+q
+q
+q
+d
+d
+u
+f
+f
+f
+f
+f
+u
+r
+r
+r
+u
+d
+q
+q
+d
+d
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+"}
+(18,1,1) = {"
+p
+q
+q
+q
+d
+d
+u
+f
+f
+f
+f
+f
+e
+e
+e
+e
+e
+d
+d
+d
+p
+p
+p
+"}
+(19,1,1) = {"
+p
+q
+q
+q
+d
+d
+u
+u
+e
+e
+e
+e
+e
+d
+d
+q
+q
+q
+q
+d
+d
+p
+p
+"}
+(20,1,1) = {"
+p
+q
+q
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+d
+q
+q
+q
+q
+q
+d
+d
+p
+p
+"}
+(21,1,1) = {"
+p
+p
+d
+d
+d
+q
+d
+q
+q
+q
+q
+d
+d
+d
+q
+q
+d
+d
+d
+d
+d
+p
+p
+"}
+(22,1,1) = {"
+p
+p
+d
+d
+d
+d
+d
+d
+q
+q
+q
+d
+d
+p
+d
+d
+d
+d
+d
+p
+p
+p
+p
+"}
+(23,1,1) = {"
+p
+p
+p
+p
+p
+d
+d
+d
+d
+d
+d
+d
+d
+p
+p
+p
+p
+p
+p
+p
+p
+p
+p
+"}
+(24,1,1) = {"
+p
+p
+p
+p
+p
+p
+p
+d
+d
+d
+d
+d
+p
+p
+p
+p
+p
+p
+p
+p
+p
+p
+p
 "}

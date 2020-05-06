@@ -1,0 +1,4 @@
+author: "uomo91"
+delete-after: True
+changes: 
+  - bugfix: "Metastation now has a science wardrobe vendor."
