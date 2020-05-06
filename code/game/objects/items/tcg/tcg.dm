@@ -96,7 +96,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
-	desc = "Contains six cards of varying rarity from Series 1. Collect them all!"
+	desc = "Contains six cards of varying rarity from the 2560 Core Set. Collect them all!"
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "cardpack_series1"
 	series = "coreset2020"
