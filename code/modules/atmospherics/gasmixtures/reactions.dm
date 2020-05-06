@@ -405,11 +405,6 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	priority = 20
 	name = "Plasmic Fusion"
 	id = "fusion"
-	var/energy = 0
-	var/core_temperature = T20C
-	var/upgrades = 1
-	var/internal_power = 0
-	var/power_output = 0
 
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
@@ -429,8 +424,12 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		air.analyzer_results = new
 	var/list/cached_scan_results = air.analyzer_results
 	var/archived_heat = air.temperature
-	if(archived_heat + power_output < 0) //No using energy that doesn't exist.
-		return NO_REACTION
+	var/energy = 0
+	var/core_temperature = T20C
+	var/upgrades = 1
+	var/internal_power = 0
+	var/power_output = 0
+
 	air.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide,/datum/gas/water_vapor)
 	var/tritium = cached_gases[/datum/gas/tritium][MOLES]
 	var/hydrogen = cached_gases[/datum/gas/hydrogen][MOLES]
@@ -459,15 +458,13 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		internal_instability = 1
 	else
 		internal_instability = -1
-	if(archived_heat > core_temperature)
-		internal_instability = 10
 
 	//here go the other gas interactions
-	var/positive_modifiers = scaled_hydrogen * 1.05 + scaled_tritium * 0.95 + scaled_nitrogen * 1.15 + scaled_co2 * 0.25
+	var/positive_modifiers = scaled_hydrogen * 1.05 + scaled_tritium * 0.95 + scaled_nitrogen * 1.15 + scaled_co2 * 0.15
 	var/negative_modifiers = scaled_plasma + scaled_h2o * 0.75
 
 	//upgrades vars are placeholders for gas interactions
-	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * air.temperature
+	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(air.temperature / 1e4, 1)
 	cached_scan_results["energy"] = energy
 	internal_power = (scaled_hydrogen / 1000 * upgrades) * (scaled_tritium / 1000 * upgrades) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
 	cached_scan_results["internal_power"] = internal_power
@@ -482,7 +479,8 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/efficiency = VOID_CONDUCTION * upgrades
 	power_output = efficiency * (internal_power - conduction - radiation)
 	cached_scan_results["power_output"] = power_output
-	var/heat_output = clamp(power_output / 1e4 * upgrades, MIN_HEAT_VARIATION, MAX_HEAT_VARIATION)
+	var/heat_limiter_modifier = air.temperature / 5e4
+	var/heat_output = clamp(power_output / 1e4 * upgrades, MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 	cached_scan_results["heat_output"] = heat_output
 
 	//better gas usage and consumption
@@ -492,8 +490,11 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	cached_gases[/datum/gas/plasma][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.5
 	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
 	if(power_output > 0)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.75
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.65
 		cached_gases[/datum/gas/water_vapor][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.25
+	if(power_output < 0)
+		cached_gases[/datum/gas/tritium][MOLES] -= 5
+		cached_gases[/datum/gas/hydrogen][MOLES] -= 5
 
 	//better heat and rads emission
 	//To do
@@ -508,6 +509,8 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		if(air.temperature <= FUSION_MAXIMUM_TEMPERATURE)	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
 			air.temperature = clamp(air.temperature + heat_output,TCMB,INFINITY)
 		return REACTING
+	if(archived_heat + power_output < 0) //No using energy that doesn't exist.
+		return NO_REACTION
 
 //REMEMBER TO RESTORE CANISTER.DM TO ORIGINAL SETTINGS
 
