@@ -107,7 +107,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	desc = "Contains six cards of varying rarity from the Resin Frontier set. Collect them all!"
 	icon = 'icons/obj/tcg_xenos.dmi'
 	icon_state = "cardpack_resin"
-	series = "S2"
+	series = "resinfront"
 	contains_coin = 0
 	rarityTable = list(
 		"common" = 900,
