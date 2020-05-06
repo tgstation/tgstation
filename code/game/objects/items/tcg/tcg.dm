@@ -139,7 +139,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	playsound(src.loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
 	if(prob(contains_coin))
 		to_chat(user, "<span_class='notice'>...and it came with a flipper, too!</span>")
-		new /obj/item/coin/thunderdome(loc)
+		new /obj/item/coin/thunderdome(get_turf(user))
 	qdel(src)
 
 /obj/item/coin/thunderdome
