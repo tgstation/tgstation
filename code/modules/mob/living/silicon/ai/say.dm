@@ -64,11 +64,11 @@
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
-	var/list/banned_characters = world.file2list("[global.config.directory]/blocked_vox_voices.txt")
+	var/list/banned_characters = CONFIG_GET(keyed_list/vox_voice_blacklist)
+	var/list/usable_characters = GLOB.available_vox_voices.Copy()
 	for(var/B in banned_characters)
-		if(GLOB.available_vox_voices.Find(B))
-			GLOB.available_vox_voices -= B
-	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in GLOB.available_vox_voices
+		usable_characters -= GLOB.vox_config_translator[B]
+	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in usable_characters
 	if(!character_to_use)
 		return
 	var/max_characters = 200 // magic number but its the cap 15 allows
@@ -132,7 +132,7 @@
 		return 1
 	else
 		log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
-		message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")]
+		message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
 		to_chat(speaker, "The speech synthesizer failed to return audio. Please try again.")
 	return 0
 

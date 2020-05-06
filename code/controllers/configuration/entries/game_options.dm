@@ -400,3 +400,7 @@
 	min_val = 0
 
 /datum/config_entry/flag/dynamic_config_enabled
+
+/datum/config_entry/keyed_list/vox_voice_blacklist
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_FLAG

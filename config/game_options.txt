@@ -574,3 +574,6 @@ MAXFINE 2000
 
 ## Enable the capitalist agenda on your server.
 ECONOMY
+
+## Vox voice blacklist. Find values at code/globalvars/lists/vox.dm for characters.
+#VOX_VOICE_BLACKLIST sans
