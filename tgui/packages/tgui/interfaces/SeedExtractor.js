@@ -1,23 +1,23 @@
-import { useBackend } from '../backend';
-import { Button, Section, Table } from '../components';
-import { Window } from '../layouts';
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toTitleCase } from 'common/string';
+import { useBackend } from '../backend';
+import { Button, Section, Table } from '../components';
+import { Window } from '../layouts';
 
 /**
  * This method takes a seed string and splits the values
  * into an object
- *
- * @returns {any{}}
  */
-const split_seed_string = text => {
+const splitSeedString = text => {
   const re = /([^;=]+)=([^;]+)/g;
-  let ret = {};
+  const ret = {};
   let m;
   do {
     m = re.exec(text);
-    if (m) { ret[m[1]] = m[2]+""; }
+    if (m) {
+      ret[m[1]] = m[2] + '';
+    }
   } while (m);
   return ret;
 };
@@ -30,13 +30,12 @@ const split_seed_string = text => {
  * @returns {any[]}
  */
 const createSeeds = seedStrings => {
-  let objs = [];
-  Object.keys(seedStrings).forEach(key => {
-    let o = split_seed_string(key);
-    o.amount = seedStrings[key];
-    o.key = key;
-    o.name = toTitleCase(o.name.replace("pack of ", ""));
-    objs.push(o);
+  const objs = Object.keys(seedStrings).map(key => {
+    const obj = splitSeedString(key);
+    obj.amount = seedStrings[key];
+    obj.key = key;
+    obj.name = toTitleCase(obj.name.replace('pack of ', ''));
+    return obj;
   });
   return flow([
     sortBy(item => item.name),
@@ -45,10 +44,7 @@ const createSeeds = seedStrings => {
 
 export const SeedExtractor = (props, context) => {
   const { act, data } = useBackend(context);
-  const {
-    seeds,
-  } = data;
-  // / I  don't know why, but map dosn't work with this
+  const seeds = createSeeds(data.seeds);
   return (
     <Window resizable>
       <Window.Content scrollable>
@@ -65,7 +61,7 @@ export const SeedExtractor = (props, context) => {
               <Table.Cell>Instability</Table.Cell>
               <Table.Cell>Stock</Table.Cell>
             </Table.Row>
-            {createSeeds(seeds).map(item => (
+            {seeds.map(item => (
               <Table.Row key={item.key}>
                 <Table.Cell bold>{item.name}</Table.Cell>
                 <Table.Cell>{item.lifespan}</Table.Cell>
@@ -78,8 +74,9 @@ export const SeedExtractor = (props, context) => {
                 <Table.Cell>
                   <Button
                     content="Vend"
-                    onClick={() => act('select', { item: item.key })}
-                  />
+                    onClick={() => act('select', {
+                      item: item.key,
+                    })} />
                   ({item.amount} left)
                 </Table.Cell>
               </Table.Row>
