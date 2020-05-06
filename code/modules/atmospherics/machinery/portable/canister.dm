@@ -247,8 +247,8 @@
 
 /obj/machinery/portable_atmospherics/canister/tier_3
 	name = "Tier 3 canister"
-	heat_limit = 1e12
-	pressure_limit = 1e14
+	heat_limit = 1e30
+	pressure_limit = 1e30
 	volume = 5000
 	max_integrity = 500
 	can_max_release_pressure = (ONE_ATMOSPHERE * 30)

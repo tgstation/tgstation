@@ -565,7 +565,14 @@ GENE SCANNER
 
 		if(cached_scan_results && cached_scan_results["fusion"]) //notify the user if a fusion reaction was detected
 			render_list += "<span class='boldnotice'>Large amounts of free neutrons detected in the air indicate that a fusion reaction took place.</span>\
-						 \n<span class='notice'>Instability of the last fusion reaction: [round(cached_scan_results["fusion"], 0.01)].</span>"
+						\n<span class='notice'>instability of the last fusion reaction: [round(cached_scan_results["instability"], 0.01)].</span>\
+						\n<span class='notice'>energy of the last fusion reaction: [round(cached_scan_results["energy"], 0.01)].</span>\
+						\n<span class='notice'>internal_power of the last fusion reaction: [round(cached_scan_results["internal_power"], 0.01)].</span>\
+						\n<span class='notice'>core_temperature of the last fusion reaction: [round(cached_scan_results["core_temperature"], 0.01)].</span>\
+						\n<span class='notice'>delta_temperature of the last fusion reaction: [round(cached_scan_results["delta_temperature"], 0.01)].</span>\
+						\n<span class='notice'>radiation of the last fusion reaction: [round(cached_scan_results["radiation"], 0.01)].</span>\
+						\n<span class='notice'>power_output of the last fusion reaction: [round(cached_scan_results["power_output"], 0.01)].</span>\
+						\n<span class='notice'>heat_output of the last fusion reaction: [round(cached_scan_results["heat_output"], 0.01)].</span>"
 
 	to_chat(user, jointext(render_list, "\n")) // we let the join apply newlines so we do need handholding
 	return TRUE

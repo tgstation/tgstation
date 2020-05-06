@@ -400,17 +400,20 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //6 reworks
 
-/*/datum/gas_reaction/fusion
+/datum/gas_reaction/fusion
 	exclude = FALSE
 	priority = 2
 	name = "Plasmic Fusion"
 	id = "fusion"
+	var/energy = 0
+	var/core_temperature = T20C
+	var/upgrades = 1
+	var/internal_power = 0
 
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
-		"TEMP" = FUSION_TEMPERATURE_THRESHOLD,
-		/datum/gas/tritium = FUSION_TRITIUM_MOLES_USED,
-		/datum/gas/plasma = FUSION_MOLE_THRESHOLD,
+		"TEMP" = 10000,
+		/datum/gas/tritium = FUSION_MOLE_THRESHOLD,
 		/datum/gas/hydrogen = FUSION_MOLE_THRESHOLD)
 
 /datum/gas_reaction/fusion/react(datum/gas_mixture/air, datum/holder)
@@ -424,63 +427,88 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	if(!air.analyzer_results)
 		air.analyzer_results = new
 	var/list/cached_scan_results = air.analyzer_results
-	var/old_heat_capacity = air.heat_capacity()
-	var/reaction_energy = 0 //Reaction energy can be negative or positive, for both exothermic and endothermic reactions.
-	var/initial_plasma = cached_gases[/datum/gas/plasma][MOLES]
-	var/initial_hydrogen = cached_gases[/datum/gas/hydrogen][MOLES]
+	var/archived_heat = air.temperature
+
+	air.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide,/datum/gas/water_vapor)
+	var/tritium = cached_gases[/datum/gas/tritium][MOLES]
+	var/hydrogen = cached_gases[/datum/gas/hydrogen][MOLES]
+	var/plasma = cached_gases[/datum/gas/plasma][MOLES]
+	var/nitrogen = cached_gases[/datum/gas/nitrogen][MOLES]
+	var/co2 = cached_gases[/datum/gas/carbon_dioxide][MOLES]
+	var/h2o= cached_gases[/datum/gas/water_vapor][MOLES]
+
 	var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
+	var/scaled_tritium = max((tritium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_hydrogen = max((hydrogen - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_plasma = max((plasma - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_nitrogen = max((nitrogen - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_co2 = max((co2 - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_h2o = max((h2o - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+
 	var/toroidal_size = (2*PI)+TORADIANS(arctan((air.volume-TOROID_VOLUME_BREAKEVEN)/TOROID_VOLUME_BREAKEVEN)) //The size of the phase space hypertorus
 	var/gas_power = 0
 	for (var/gas_id in cached_gases)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
 	var/instability = MODULUS((gas_power*INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
-	cached_scan_results[id] = instability//used for analyzer feedback
-
-	var/plasma = (initial_plasma-FUSION_MOLE_THRESHOLD)/(scale_factor) //We have to scale the amounts of hydrogen and plasma down a significant amount in order to show the chaotic dynamics we want
-	var/hydrogen = (initial_hydrogen-FUSION_MOLE_THRESHOLD)/(scale_factor) //We also subtract out the threshold amount to make it harder for fusion to burn itself out.
-
-	//The reaction is a specific form of the Kicked Rotator system, which displays chaotic behavior and can be used to model particle interactions.
-	plasma = MODULUS(plasma - (instability*sin(TODEGREES(hydrogen))), toroidal_size)
-	hydrogen = MODULUS(hydrogen - plasma, toroidal_size)
-
-
-	cached_gases[/datum/gas/plasma][MOLES] = plasma*scale_factor + FUSION_MOLE_THRESHOLD //Scales the gases back up
-	cached_gases[/datum/gas/hydrogen][MOLES] = hydrogen*scale_factor + FUSION_MOLE_THRESHOLD
-	var/delta_plasma = initial_plasma - cached_gases[/datum/gas/plasma][MOLES]
-
-	reaction_energy += delta_plasma*PLASMA_BINDING_ENERGY //Energy is gained or lost corresponding to the creation or destruction of mass.
+	cached_scan_results[id] = instability
+	cached_scan_results["instability"] = instability//used for analyzer feedback
+	var/internal_instability = 0
 	if(instability < FUSION_INSTABILITY_ENDOTHERMALITY)
-		reaction_energy = max(reaction_energy,0) //Stable reactions don't end up endothermic.
-	else if (reaction_energy < 0)
-		reaction_energy *= (instability-FUSION_INSTABILITY_ENDOTHERMALITY)**0.5
-
-	if(air.thermal_energy() + reaction_energy < 0) //No using energy that doesn't exist.
-		cached_gases[/datum/gas/plasma][MOLES] = initial_plasma
-		cached_gases[/datum/gas/hydrogen][MOLES] = initial_hydrogen
-		return NO_REACTION
-	cached_gases[/datum/gas/tritium][MOLES] -= FUSION_TRITIUM_MOLES_USED
-	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
-	if(reaction_energy > 0)
-		air.assert_gases(/datum/gas/carbon_dioxide,/datum/gas/water_vapor)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)
-		cached_gases[/datum/gas/water_vapor][MOLES] += (FUSION_TRITIUM_MOLES_USED*(reaction_energy*FUSION_TRITIUM_CONVERSION_COEFFICIENT)) * 0.25
+		internal_instability = 1
 	else
-		air.assert_gases(/datum/gas/carbon_dioxide)
-		cached_gases[/datum/gas/carbon_dioxide][MOLES] += FUSION_TRITIUM_MOLES_USED*(reaction_energy*-FUSION_TRITIUM_CONVERSION_COEFFICIENT)
+		internal_instability = -1
+	if(archived_heat > core_temperature)
+		internal_instability = 10
 
-	if(reaction_energy)
+	//here go the other gas interactions
+	var/positive_modifiers = scaled_hydrogen + scaled_tritium + scaled_nitrogen + scaled_co2
+	var/negative_modifiers = scaled_plasma + scaled_h2o
+
+	//upgrades vars are placeholders for gas interactions
+	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2)
+	cached_scan_results["energy"] = energy
+	internal_power = (scaled_hydrogen / 1000 * upgrades) * (scaled_tritium / 1000 * upgrades) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
+	cached_scan_results["internal_power"] = internal_power
+	core_temperature = internal_power / (1000 * upgrades)
+	core_temperature = max(TCMB, core_temperature)
+	cached_scan_results["core_temperature"] = core_temperature
+	var/delta_temperature = archived_heat - core_temperature
+	cached_scan_results["delta_temperature"] = delta_temperature
+	var/conduction = - delta_temperature
+	var/radiation = max(- (PLANK_LIGHT_CONSTANT / ((0.0005) * 1e-14)) * delta_temperature, 0)
+	cached_scan_results["radiation"] = radiation
+	var/efficiency = VOID_CONDUCTION * upgrades
+	var/power_output = efficiency * (internal_power - conduction - radiation)
+	cached_scan_results["power_output"] = power_output
+	var/heat_output = clamp(power_output / 1e6, MIN_HEAT_VARIATION, MAX_HEAT_VARIATION)
+	cached_scan_results["heat_output"] = heat_output
+
+	//better gas usage and consumption
+	//To do
+	if(air.thermal_energy() + power_output < 0) //No using energy that doesn't exist.
+		return NO_REACTION
+	cached_gases[/datum/gas/tritium][MOLES] -= clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.2
+	cached_gases[/datum/gas/hydrogen][MOLES] -= clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.2
+	cached_gases[/datum/gas/plasma][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.5
+	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
+//	if(power_output > 0)
+//		cached_gases[/datum/gas/carbon_dioxide][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.5
+//		cached_gases[/datum/gas/water_vapor][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.75
+
+	//better heat and rads emission
+	//To do
+	if(power_output)
 		if(location)
-			var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(reaction_energy-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
+			var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
 			if(prob(PERCENT(particle_chance)))
 				location.fire_nuclear_particle()
-			var/rad_power = max((FUSION_RAD_COEFFICIENT/instability) + FUSION_RAD_MAX,0)
+			var/rad_power = clamp((radiation / 1e5), FUSION_RAD_MAX,0)
 			radiation_pulse(location,rad_power)
 
-		var/new_heat_capacity = air.heat_capacity()
-		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY && (air.temperature <= FUSION_MAXIMUM_TEMPERATURE || reaction_energy <= 0))	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
-			air.temperature = clamp(((air.temperature*old_heat_capacity + reaction_energy)/new_heat_capacity),TCMB,INFINITY)
+		if(air.temperature <= FUSION_MAXIMUM_TEMPERATURE)	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
+			air.temperature = clamp(air.temperature + heat_output,TCMB,INFINITY)
 		return REACTING
-*/
+
 /datum/gas_reaction/nitrousformation //formationn of n2o, esothermic, requires bz as catalyst
 	priority = 3
 	name = "Nitrous Oxide formation"
