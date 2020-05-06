@@ -205,7 +205,7 @@
 		to_chat(user, "<span class='warning'>An error has occured with [src]. Please reset the instrument.</span>")
 		return
 	compile_chords()
- 	if(!length(compiled_chords))
+	if(!length(compiled_chords))
 		to_chat(user, "<span class='warning'>Song is empty.</span>")
 		return
 	playing = TRUE
