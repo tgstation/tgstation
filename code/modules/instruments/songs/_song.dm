@@ -212,16 +212,13 @@
 	updateDialog(user_playing)
 	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
 	//wrap the rest of the stuff to ensure stop_playing() is called.
-	START_PROCESSING(SSinstruments, src)
 	do_hearcheck()
-	compile_chords()
 	SEND_SIGNAL(parent, COMSIG_SONG_START)
 	elapsed_delay = 0
+	delay_by = 0
 	current_chord = 1
 	user_playing = user
-	// immediately play the first chord.
-	play_chord(compiled_chords[1])
-	delay_by = tempodiv_to_delay(compiled_chords[1][length(compiled_chords[1])])
+	START_PROCESSING(SSinstruments, src)
 
 /**
   * Stops playing, terminating all sounds if in synthesized mode. Clears hearing_mobs.
@@ -248,6 +245,9 @@
 		return
 	var/list/chord = compiled_chords[current_chord]
 	if(++elapsed_delay >= delay_by)
+		play_chord(chord)
+		elapsed_delay = 0
+		delay_by = tempodiv_to_delay(chord[length(chord)])
 		current_chord++
 		if(current_chord > length(compiled_chords))
 			if(repeat)
@@ -258,10 +258,6 @@
 			else
 				stop_playing()
 				return
-		else
-			play_chord(chord)
-			elapsed_delay = 0
-			delay_by = tempodiv_to_delay(chord[length(chord)])
 
 /**
   * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
