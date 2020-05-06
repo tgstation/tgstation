@@ -1,9 +1,46 @@
 /**
-  * Proc used for playing legacy instruments - None of the "advanced" like sound reservations and decay are invoked.
-  * We just parse it, line by line, play the note, and move on, without handling anything else.
-  * Legacy mode is kept due to the so called "legacy" instruments having a different sound to them, that can't
-  * easily be replicated by synthesized ones yet.
+  * Compiles our lines into "chords" with filenames for legacy playback. This makes there have to be a bit of lag at the beginning of the song, but repeats will not have to parse it again, and overall playback won't be impacted by as much lag.
   */
+/datum/song/proc/compile_legacy()
+	if(!length(src.lines))
+		return
+	var/list/lines = src.lines		//cache for hyepr speed!
+	compiled_chords = list()
+	var/list/octaves = list(3, 3, 3, 3, 3, 3, 3)
+	var/list/accents = list("n", "n", "n", "n", "n", "n", "n")
+	for(var/line in lines)
+		var/list/chords = splittext(lowertext(line), ",")
+		for(var/chord in chords)
+			var/list/compiled_chord = list()
+			var/tempodiv = 1
+			var/list/notes_tempodiv = splittext(chord, "/")
+			var/len = length(notes_tempodiv)
+			if(len >= 2)
+				tempodiv = text2num(notes_tempodiv[2])
+			if(len)			//some dunkass is going to do ,,,, to make 3 rests instead of ,/1 because there's no standardization so let's be prepared for that.
+				var/list/notes = splittext(notes_tempodiv[1], "-")
+				for(var/note in notes)
+					if(length(note) == 0)
+						continue
+					// 1-7, A-G
+					var/key = text2ascii(note) - 96
+					if((key < 1) || (key > 7))
+						continue
+					for(var/i in 2 to length(note))
+						var/oct_acc = copytext(note, i, i + 1)
+						var/num = text2num(oct_acc)
+						if(!num)		//it's an accidental
+							accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
+						else	//octave
+							octaves[key] = clamp(num, octave_min, octave_max)
+					compiled_chord += list(key, accents[key], octaves[key])
+			compiled_chord += tempodiv		//this goes last
+			if(length(compiled_chord))
+				compiled_chords[++compiled_chords.len] = compiled_chord
+		CHECK_TICK
+	return compiled_chords
+
+/*
 /datum/song/proc/do_play_lines_legacy(mob/user)
 	while(repeat >= 0)
 		var/cur_oct[7]
@@ -43,6 +80,7 @@
 		repeat--
 		updateDialog()
 	repeat = 0
+*/
 
 /**
   * Proc to play a legacy note. Just plays the sound to hearing mobs (and does hearcheck if necessary), no fancy channel/sustain/management.
@@ -52,7 +90,7 @@
   * * acc is either "b", "n", or "#"
   * * oct is 1-8 (or 9 for C)
   */
-/datum/song/proc/playnote_legacy(note, acc as text, oct, mob/user)
+/datum/song/proc/playkey_legacy(note, acc as text, oct, mob/user)
 	// handle accidental -> B<>C of E<>F
 	if(acc == "b" && (note == 3 || note == 6)) // C or F
 		if(note == 3)

@@ -62,17 +62,24 @@
 
 	/////////////////// Playing variables ////////////////
 	/**
-	  * Only used in synthesized playback - The chords we compiled. Non assoc list of lists:
-	  * list(list(key1, key2, key3..., tempo_divisor), list(key1, key2..., tempo_divisor), ...)
-	  * tempo_divisor always exists
-	  * if key1 (and so if there's no keys) doesn't exist it's a rest
+	  * Build by compile_chords()
+	  * Must be rebuilt on instrument switch.
 	  * Compilation happens when we start playing and is cleared after we finish playing.
+	  * Format: list of chord lists, with chordlists having (key1, key2, key3, tempodiv)
 	  */
 	var/list/compiled_chords
+	/// Current section of a long chord we're on, so we don't need to make a billion chords, one for every unit ticklag.
+	var/elapsed_delay
+	/// Amount of delay to wait before playing the next chord
+	var/delay_by
+	/// Current chord we're on.
+	var/current_chord
 	/// Channel as text = current volume percentage but it's 0 to 100 instead of 0 to 1.
 	var/list/channels_playing = list()
 	/// List of channels that aren't being used, as text. This is to prevent unnecessary freeing and reallocations from SSsounds/SSinstruments.
 	var/list/channels_idle = list()
+	/// Person playing us
+	var/mob/user_playing
 	//////////////////////////////////////////////////////
 
 	/// Last world.time we checked for who can hear us
@@ -81,8 +88,6 @@
 	var/list/hearing_mobs
 	/// If this is enabled, some things won't be strictly cleared when they usually are (liked compiled_chords on play stop)
 	var/debug_mode = FALSE
-	/// Last time we processed decay
-	var/last_process_decay
 	/// Max sound channels to occupy
 	var/max_sound_channels = CHANNELS_PER_INSTRUMENT
 	/// Current channels, so we can save a length() call.
@@ -164,8 +169,10 @@
   * Sets our instrument, caching anything necessary for faster accessing. Accepts an ID, typepath, or instantiated instrument datum.
   */
 /datum/song/proc/set_instrument(datum/instrument/I)
+	var/old_legacy
 	if(using_instrument)
 		using_instrument.songs_using -= src
+		old_legacy = (using_instrument.instrument_flags & INSTRUMENT_LEGACY)
 	using_instrument = null
 	cached_samples = null
 	cached_legacy_ext = null
@@ -184,6 +191,9 @@
 		else
 			cached_samples = I.samples
 			legacy = FALSE
+		if(isnull(old_legacy) || (old_legacy != instrument_legacy))
+			if(playing)
+				compile_chords()
 
 /**
   * Attempts to start playing our song.
@@ -194,15 +204,23 @@
 	if(!using_instrument?.ready())
 		to_chat(user, "<span class='warning'>An error has occured with [src]. Please reset the instrument.</span>")
 		return
+	if(!length(compiled_chords))
+		to_chat(user, "<span class='warning'>Song is empty.</span>")
+		return
 	playing = TRUE
-	updateDialog()
+	updateDialog(user_playing)
 	//we can not afford to runtime, since we are going to be doing sound channel reservations and if we runtime it means we have a channel allocation leak.
 	//wrap the rest of the stuff to ensure stop_playing() is called.
-	last_process_decay = world.time
 	START_PROCESSING(SSinstruments, src)
+	do_hearcheck()
+	compile_chords()
 	SEND_SIGNAL(parent, COMSIG_SONG_START)
-	. = do_play_lines(user)
-	stop_playing()
+	elapsed_delay = 0
+	current_chord = 1
+	user_playing = user
+	// immediately play the first chord.
+	play_chord(compiled_chords[1])
+	delay_by = tempodiv_to_delay(compiled_chords[1][length(compiled_chords[1])])
 
 /**
   * Stops playing, terminating all sounds if in synthesized mode. Clears hearing_mobs.
@@ -217,19 +235,52 @@
 	SEND_SIGNAL(parent, COMSIG_SONG_END)
 	terminate_all_sounds(TRUE)
 	hearing_mobs.len = 0
-	updateDialog()
+	updateDialog(user_playing)
+	user_playing = null
 
 /**
-  * The actual blocking proc for playing. Uses legacy vs synthesized based on what kind of instrument we're using.
+  * Processes our song.
   */
-/datum/song/proc/do_play_lines(user)
-	if(!playing)
+/datum/song/proc/process_song(wait)
+	if(!length(compiled_chords) || should_stop_playing(user_playing))
+		stop_playing()
 		return
-	do_hearcheck()
-	if(legacy)
-		do_play_lines_legacy(user)
-	else
-		do_play_lines_synthesized(user)
+	var/list/chord = compiled_chords[current_chord]
+	if(++elapsed_delay >= delay_by)
+		current_chord++
+		if(current_chord > length(compiled_chords))
+			if(repeat)
+				repeat--
+				current_chord = 1
+				updateDialog(user_playing)
+				return
+			else
+				stop_playing()
+				return
+		else
+			play_chord(chord)
+			elapsed_delay = 0
+			delay_by = tempodiv_to_delay(chord[length(chord)])
+
+/**
+  * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
+  */
+/datum/song/proc/tempodiv_to_delay(tempodiv)
+	return min(1, round((tempo/tempodiv) / world.tick_lag, 1))
+
+/**
+  * Compiles chords.
+  */
+/datum/song/proc/compile_chords()
+	legacy? compile_legacy() : compile_synthesized()
+
+/**
+  * Plays a chord.
+  */
+/datum/song/proc/play_chord(list/chord)
+	// last value is timing information
+	for(var/i in 1 to (length(chord) - 1))
+		legacy? playkey_legacy(chord[i][1], chord[i][2], chord[i][3], user_playing) : playkey_synth(chord[i], user_playing)
 
 /**
   * Checks if we should halt playback.
@@ -265,9 +316,9 @@
 /datum/song/process(wait)
 	if(!playing)
 		return PROCESS_KILL
-	var/delay = world.time - last_process_decay
-	process_decay(delay)
-	last_process_decay = world.time
+	// it's expected this ticks at every world.tick_lag. if it lags, do not attempt to catch up.
+	process_song(world.tick_lag)
+	process_decay(world.tick_lag)
 
 /**
   * Updates our cached linear/exponential falloff stuff, saving calculations down the line.

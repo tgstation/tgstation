@@ -1,32 +1,7 @@
 /**
-  * Sub proc for playing lines in synthesized mode. Compiles the lines to make repeat playback faster first via [compile_lines()].
-  */
-/datum/song/proc/do_play_lines_synthesized(mob/user)
-	compile_lines()
-	while(repeat >= 0)
-		if(should_stop_playing(user))
-			return
-		var/warned = FALSE
-		for(var/_chord in compiled_chords)
-			if(should_stop_playing(user))
-				return
-			var/list/chord = _chord
-			var/tempodiv = chord[chord.len]
-			for(var/i in 1 to chord.len - 1)
-				var/key = chord[i]
-				if(!playkey_synth(key, user))
-					if(!warned)
-						warned = TRUE
-						to_chat(user, "<span class='boldwarning'>Your instrument has ran out of channels. You might be playing your song too fast or be setting sustain to too high of a value. This warning will be suppressed for the rest of this cycle.</span>")
-			sleep(sanitize_tempo(tempo / (tempodiv || 1)))
-		repeat--
-		updateDialog()
-	repeat = 0
-
-/**
   * Compiles our lines into "chords" with numbers. This makes there have to be a bit of lag at the beginning of the song, but repeats will not have to parse it again, and overall playback won't be impacted by as much lag.
   */
-/datum/song/proc/compile_lines()
+/datum/song/proc/compile_synthesized()
 	if(!length(src.lines))
 		return
 	var/list/lines = src.lines		//cache for hyepr speed!
