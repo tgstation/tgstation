@@ -48287,6 +48287,7 @@
 /obj/structure/noticeboard{
 	pixel_y = 31
 	},
+/obj/item/radio/headset/headset_sci,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "chj" = (
@@ -49506,6 +49507,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/radio/headset/headset_sci,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "ckd" = (
@@ -50122,6 +50124,16 @@
 /obj/structure/sign/warning/nosmoking{
 	pixel_x = 30
 	},
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/stock_parts/scanning_module{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/stock_parts/scanning_module{
+	pixel_x = 2;
+	pixel_y = 3
+	},
 /turf/open/floor/plasteel,
 /area/science/lab)
 "clF" = (
@@ -50554,11 +50566,10 @@
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "cmG" = (
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 6
-	},
 /obj/structure/table,
+/obj/item/stack/packageWrap,
+/obj/item/stack/packageWrap,
+/obj/item/hand_labeler,
 /turf/open/floor/plasteel/white,
 /area/science/lab)
 "cmH" = (
@@ -50591,13 +50602,10 @@
 	pixel_x = 27
 	},
 /obj/structure/table,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
-/obj/item/stock_parts/scanning_module{
-	pixel_x = 2;
-	pixel_y = 3
+/obj/item/paper_bin{
+	pixel_x = -2;
+	pixel_y = 6
 	},
-/obj/item/stock_parts/scanning_module,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cmK" = (
@@ -52440,9 +52448,6 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cqz" = (
-/obj/item/stack/packageWrap,
-/obj/item/stack/packageWrap,
-/obj/item/hand_labeler,
 /obj/machinery/requests_console{
 	department = "Science";
 	departmentType = 2;
@@ -52450,10 +52455,10 @@
 	pixel_y = -30;
 	receive_ore_updates = 1
 	},
-/obj/structure/table,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/vending/wardrobe/science_wardrobe,
 /turf/open/floor/plasteel,
 /area/science/lab)
 "cqA" = (
