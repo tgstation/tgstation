@@ -399,6 +399,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		"reef",
 		"reefer",
 		"roach",
+		"rollie",
 		"scoobie",
 		"shorty",
 		"spiff",
