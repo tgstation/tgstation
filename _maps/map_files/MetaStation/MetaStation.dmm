@@ -77388,11 +77388,12 @@
 /turf/open/floor/plasteel/white,
 /area/medical/patients_rooms)
 "tNn" = (
-/obj/machinery/door/airlock/security/glass{
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
+/obj/machinery/door/airlock/security{
+	id_tag = "IsolationCell";
 	name = "Isolation Cell";
 	req_access_txt = "2"
 	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /turf/open/floor/plasteel,
 /area/security/prison)
 "tNJ" = (
