@@ -56,25 +56,25 @@ export const SeedExtractor = (props, context) => {
           <Table cellpadding="3" textAlign="center">
             <Table.Row>
               <Table.Cell>Name</Table.Cell>
-              <Table.Cell >Lifespan</Table.Cell>
-              <Table.Cell >Endurance</Table.Cell>
-              <Table.Cell >Maturation</Table.Cell>
-              <Table.Cell >Production</Table.Cell>
-              <Table.Cell >Yield</Table.Cell>
-              <Table.Cell >Potency</Table.Cell>
-              <Table.Cell >Instability</Table.Cell>
-              <Table.Cell >Stock</Table.Cell>
+              <Table.Cell>Lifespan</Table.Cell>
+              <Table.Cell>Endurance</Table.Cell>
+              <Table.Cell>Maturation</Table.Cell>
+              <Table.Cell>Production</Table.Cell>
+              <Table.Cell>Yield</Table.Cell>
+              <Table.Cell>Potency</Table.Cell>
+              <Table.Cell>Instability</Table.Cell>
+              <Table.Cell>Stock</Table.Cell>
             </Table.Row>
             {createSeeds(seeds).map(item => (
               <Table.Row key={item.key}>
                 <Table.Cell bold>{item.name}</Table.Cell>
-                <Table.Cell >{item.lifespan}</Table.Cell>
-                <Table.Cell >{item.endurance}</Table.Cell>
-                <Table.Cell >{item.maturation}</Table.Cell>
-                <Table.Cell >{item.production}</Table.Cell>
-                <Table.Cell >{item.yield}</Table.Cell>
-                <Table.Cell >{item.potency}</Table.Cell>
-                <Table.Cell >{item.instability}</Table.Cell>
+                <Table.Cell>{item.lifespan}</Table.Cell>
+                <Table.Cell>{item.endurance}</Table.Cell>
+                <Table.Cell>{item.maturation}</Table.Cell>
+                <Table.Cell>{item.production}</Table.Cell>
+                <Table.Cell>{item.yield}</Table.Cell>
+                <Table.Cell>{item.potency}</Table.Cell>
+                <Table.Cell>{item.instability}</Table.Cell>
                 <Table.Cell>
                   <Button
                     content="Vend"
