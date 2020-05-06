@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "blood drunk miner's eye will no longer knock you out"

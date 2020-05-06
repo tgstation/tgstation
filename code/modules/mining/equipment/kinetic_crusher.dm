@@ -19,6 +19,7 @@
 	attack_verb = list("smashed", "crushed", "cleaved", "chopped", "pulped")
 	sharpness = IS_SHARP
 	actions_types = list(/datum/action/item_action/toggle_light)
+	obj_flags = UNIQUE_RENAME
 	var/list/trophies = list()
 	var/charged = TRUE
 	var/charge_time = 15

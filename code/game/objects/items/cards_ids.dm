@@ -222,8 +222,8 @@
 		set_new_account(user)
 		return
 
-	if (world.time < registered_account.withdrawDelay)
-		registered_account.bank_card_talk("<span class='warning'>ERROR: UNABLE TO LOGIN DUE TO SCHEDULED MAINTENANCE. MAINTENANCE IS SCHEDULED TO COMPLETE IN [(registered_account.withdrawDelay - world.time)/10] SECONDS.</span>", TRUE)
+	if (registered_account.being_dumped)
+		registered_account.bank_card_talk("<span class='warning'>内部服务器错误</span>", TRUE)
 		return
 
 	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)

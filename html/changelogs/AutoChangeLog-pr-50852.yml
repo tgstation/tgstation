@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - rscadd: "you can uniquely rename the kinetic crusher"

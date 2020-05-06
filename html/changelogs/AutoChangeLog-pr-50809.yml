@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - bugfix: "Fixes a bug that could cause the ORM to scoop up ores although it was not anchored."
+  - bugfix: "The ORM will now always scoop up from the correct turf."
