@@ -175,10 +175,10 @@
 
 	var/cooldown_check = 0 // Used interally, you don't want to modify
 
-	var/cooldown = 30  // Default wait time until can stun again.
+	var/cooldown = 25  // Default wait time until can stun again.
 	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
 	var/stun_time_silicon = (5 SECONDS) // If enabled, how long do we stun silicons.
-	var/stamina_damage = 35 // Do we deal stamina damage.
+	var/stamina_damage = 45 // Do we deal stamina damage.
 	var/can_knockdown = FALSE //Does our baton cause knockdown.
 	var/affect_silicon = FALSE // Does it stun silicons.
 	var/on_sound // "On" sound, played when switching between able to stun or not.
