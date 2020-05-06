@@ -275,3 +275,11 @@
 	icon_state = "pill8"
 	list_reagents = list(/datum/reagent/iron = 30)
 	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/methos
+	name = "Methos(TM)"
+	desc = "A sugary threat."
+	icon_state = "methos"
+	list_reagents = list(/datum/reagent/drug/methamphetamine = 1, /datum/reagent/consumable/mentonol = 10)
+	rename_with_volume = FALSE
+

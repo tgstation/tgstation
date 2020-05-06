@@ -796,3 +796,10 @@
 	color = "#78280A" // rgb: 120 40, 10
 	taste_mult = 2.5 //sugar's 1.5, capsacin's 1.5, so a good middle ground.
 	taste_description = "smokey sweetness"
+
+/datum/reagent/consumable/mentonol
+	name = "Mentonol"
+	description = "A mixture of sugar and other chemical waste from the food industry."
+	nutriment_factor = 2 * REAGENTS_METABOLISM
+	color = "#CF3600" // rgb: 207, 54, 0
+	taste_description = "mint"

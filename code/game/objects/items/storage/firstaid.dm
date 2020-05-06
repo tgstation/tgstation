@@ -497,3 +497,13 @@
 /obj/item/storage/pill_bottle/paxpsych/PopulateContents()
 	for(var/i in 1 to 5)
 		new /obj/item/reagent_containers/pill/paxpsych(src)
+
+/obj/item/storage/pill_bottle/methos
+	name = "methos pack"
+	desc = "A candy that gives you the sugar rush in a different way."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "methos_pack"
+
+/obj/item/storage/pill_bottle/methos/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/pill/methos(src)

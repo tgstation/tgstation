@@ -293,6 +293,10 @@
 /datum/chemical_reaction/ironfoam/on_reaction(datum/reagents/holder, created_volume)
 	holder.create_foam(/datum/effect_system/foam_spread/metal,5*created_volume,2,"<span class='danger'>The solution spews out a metallic foam!</span>")
 
+/datum/chemical_reaction/foam/cola
+	required_reagents = list(/datum/reagent/consumable/mentonol = 1, /datum/reagent/consumable/space_cola = 1)
+	mob_react = FALSE
+
 /datum/chemical_reaction/foaming_agent
 	results = list(/datum/reagent/foaming_agent = 1)
 	required_reagents = list(/datum/reagent/lithium = 1, /datum/reagent/hydrogen = 1)
