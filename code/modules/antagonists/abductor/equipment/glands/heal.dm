@@ -32,7 +32,7 @@
 		return
 
 	var/obj/item/organ/lungs/lungs = owner.getorganslot(ORGAN_SLOT_LUNGS)
-	if((!lungs && !HAS_TRAIT(owner, TRAIT_NOBREATH)) || (lungs && ((lungs.damage > lungs.high_threshold) || (lungs.organ_flags & ORGAN_SYNTHETIC)))
+	if((!lungs && !HAS_TRAIT(owner, TRAIT_NOBREATH)) || (lungs && ((lungs.damage > lungs.high_threshold) || (lungs.organ_flags & ORGAN_SYNTHETIC))))
 		replace_lungs(lungs)
 		return
 
