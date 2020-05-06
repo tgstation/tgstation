@@ -107,8 +107,8 @@
 	var/api_url = "https://api.fifteen.ai/app/getAudioFile"
 
 	var/datum/http_request/req = new()
-
-	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"[emotion]\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"), json_encode(list("output_filename" = "data/vox_audio.wav")))
+	var/vox_audio_number = rand(1,9999)
+	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"[emotion]\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"), json_encode(list("output_filename" = "data/vox_[vox_audio_number].wav")))
 	req.begin_async()
 	UNTIL(req.is_complete())
 	var/datum/http_response/res = req.into_response()
@@ -116,18 +116,18 @@
 		log_game("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
 		message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
 		speaker.say(";[message]")
-		var/sound/voice = sound("data/vox_audio.wav", wait = 1, channel = CHANNEL_VOX)
-
+		var/sound/voice = sound("data/vox_[vox_audio_number].wav", wait = 1, channel = CHANNEL_VOX)
+		voice.status = SOUND_STREAM
  		// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
 			// Play voice for all mobs in the z level
 			for(var/mob/M in GLOB.player_list)
-				if(M.can_hear() && (M.client.prefs.toggles & SOUND_ANNOUNCEMENTS))
-					var/turf/T = get_turf(M)
-					if(T.z == z_level)
-						SEND_SOUND(M, voice)
+				var/turf/T = get_turf(M)
+				if(T.z == z_level)
+					SEND_SOUND(M, voice)
 		else
 			SEND_SOUND(only_listener, voice)
+		fdel("data/vox_[vox_audio_number].wav")
 		return 1
 	else
 		log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
