@@ -143,7 +143,7 @@
 /obj/item/gun/ballistic/automatic/m90/attackby(obj/item/A, mob/user, params)
 	if(istype(A, /obj/item/ammo_casing))
 		if(istype(A, underbarrel.magazine.ammo_type))
-			underbarrel.attack_self()
+			underbarrel.attack_self(user)
 			underbarrel.attackby(A, user, params)
 	else
 		..()
