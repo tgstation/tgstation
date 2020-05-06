@@ -409,6 +409,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/core_temperature = T20C
 	var/upgrades = 1
 	var/internal_power = 0
+	var/power_output = 0
 
 /datum/gas_reaction/fusion/init_reqs()
 	min_requirements = list(
@@ -428,7 +429,8 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		air.analyzer_results = new
 	var/list/cached_scan_results = air.analyzer_results
 	var/archived_heat = air.temperature
-
+	if(archived_heat + power_output < 0) //No using energy that doesn't exist.
+		return NO_REACTION
 	air.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide,/datum/gas/water_vapor)
 	var/tritium = cached_gases[/datum/gas/tritium][MOLES]
 	var/hydrogen = cached_gases[/datum/gas/hydrogen][MOLES]
@@ -478,15 +480,13 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/radiation = max(- (PLANK_LIGHT_CONSTANT / ((0.0005) * 1e-14)) * delta_temperature, 0)
 	cached_scan_results["radiation"] = radiation
 	var/efficiency = VOID_CONDUCTION * upgrades
-	var/power_output = efficiency * (internal_power - conduction - radiation)
+	power_output = efficiency * (internal_power - conduction - radiation)
 	cached_scan_results["power_output"] = power_output
 	var/heat_output = clamp(power_output / 1e4 * upgrades, MIN_HEAT_VARIATION, MAX_HEAT_VARIATION)
 	cached_scan_results["heat_output"] = heat_output
 
 	//better gas usage and consumption
 	//To do
-	if(air.thermal_energy() + power_output < 0) //No using energy that doesn't exist.
-		return NO_REACTION
 	cached_gases[/datum/gas/tritium][MOLES] -= clamp(heat_output / 10, 0.15, MAX_FUEL_USAGE) * 0.25
 	cached_gases[/datum/gas/hydrogen][MOLES] -= clamp(heat_output / 10, 0.25, MAX_FUEL_USAGE) * 0.15
 	cached_gases[/datum/gas/plasma][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.5
