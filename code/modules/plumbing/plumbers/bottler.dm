@@ -4,8 +4,8 @@
 	icon_state = "bottler"
 	layer = ABOVE_ALL_MOB_LAYER
 	reagent_flags = TRANSPARENT | DRAINABLE
-	rcd_cost = 30
-	rcd_delay = 30
+	rcd_cost = 50
+	rcd_delay = 50
 	buffer = 100
 	///where things are sent
 	var/turf/goodspot = null
