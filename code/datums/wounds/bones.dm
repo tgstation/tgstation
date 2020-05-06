@@ -33,6 +33,7 @@
 	update_inefficiencies()
 
 /datum/wound/brute/bone/remove_wound(ignore_limb, replaced)
+	limp_slowdown = 0
 	if(limb)
 		REMOVE_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 	if(victim)
@@ -250,7 +251,7 @@
 	severity = WOUND_SEVERITY_SEVERE
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
-	threshold_minimum = 55
+	threshold_minimum = 60
 	threshold_penalty = 30
 	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
 	status_effect_type = /datum/status_effect/wound/bone/severe
@@ -268,7 +269,7 @@
 	interaction_efficiency_penalty = 4
 	limp_slowdown = 9
 	sound_effect = 'sound/effects/crack2.ogg'
-	threshold_minimum = 110
+	threshold_minimum = 115
 	threshold_penalty = 50
 	disabling = TRUE
 	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)

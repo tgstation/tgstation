@@ -201,7 +201,7 @@
 	px_x = -2
 	px_y = 12
 	max_stamina_damage = 50
-	specific_locations = list("inner left thigh", "outer left calf", "outer left hip", " leftkneecap", "lower left shin")
+	specific_locations = list("inner left thigh", "outer left calf", "outer left hip", " left kneecap", "lower left shin")
 
 /obj/item/bodypart/l_leg/is_disabled()
 	if(HAS_TRAIT(owner, TRAIT_PARALYSIS_L_LEG))

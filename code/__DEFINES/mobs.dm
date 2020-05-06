@@ -348,4 +348,4 @@
 #define INTERACTING_WITH(X, Y) (Y in X.do_afters)
 
 /// If you examine the same atom twice in this timeframe, we call examine_more() instead of examine()
-#define EXAMINE_MORE_TIME	1.5 SECONDS
+#define EXAMINE_MORE_TIME	1 SECONDS

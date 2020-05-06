@@ -73,8 +73,6 @@
 	var/list/known_skills = list()
 	///Assoc list of skills - exp
 	var/list/skill_experience = list()
-	///A lazy list of atoms we've examined in the last EXAMINE_MORE_TIME (default 1.5) seconds, so that we will call [atom/proc/examine_more()] instead of [atom/proc/examine()] on them when examining
-	var/list/recent_examines
 	///What character we spawned in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
 	var/mob/original_character
 

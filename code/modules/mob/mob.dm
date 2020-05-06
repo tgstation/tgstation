@@ -419,12 +419,12 @@
 
 	face_atom(A)
 	var/list/result
-	if(mind)
-		if(mind.recent_examines && (A in mind.recent_examines)) // i think this would be faster with an associated list but i'll get to that later
+	if(client)
+		if(client.recent_examines && (A in client.recent_examines)) // i think this would be faster with an associated list but i'll get to that later
 			result = A.examine_more(src)
 		else
 			result = A.examine(src)
-			LAZYADD(mind.recent_examines, A)
+			LAZYADD(client.recent_examines, A)
 			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
 	else
 		result = A.examine(src)
@@ -433,9 +433,9 @@
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
 
 /mob/proc/clear_from_recent_examines(atom/A)
-	if(QDELETED(A) || !mind)
+	if(QDELETED(A) || !client)
 		return
-	LAZYREMOVE(mind.recent_examines, A)
+	LAZYREMOVE(client.recent_examines, A)
 
 /**
   * Point at an atom
