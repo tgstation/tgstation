@@ -26,7 +26,7 @@
 	filling_color = "#e4d4b7"
 	tastes = list("candy" = 5, "weight loss" = 4, "insect larva" = 1)
 	foodtype = JUNKFOOD | RAW | GROSS
-	custom_premium_price = 800
+	custom_price = 800
 	var/revelation = FALSE
 	value = FOOD_FAST
 
