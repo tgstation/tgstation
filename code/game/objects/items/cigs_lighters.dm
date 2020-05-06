@@ -367,14 +367,14 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie/Initialize()
 	. = ..()
-	name = pick_list(list(
+	name = pick(list(
 		"bifta",
 		"bifter",
 		"bird",
 		"blunt",
-		"bloint"
+		"bloint",
 		"boof",
-		"boofer"
+		"boofer",
 		"bomber",
 		"bone",
 		"bun",
@@ -386,7 +386,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		"fatty",
 		"hogger",
 		"hooter",
-		"hootie"
+		"hootie",
 		"\improper J",
 		"jay",
 		"jimmy",
@@ -407,8 +407,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		"toke",
 		"torpedo",
 		"zoot",
-		"zooter"
-	))
+		"zooter"))
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
