@@ -1,0 +1,4 @@
+author: "Iamgoofball"
+delete-after: True
+changes: 
+  - bugfix: "Fixed the missing texture for the ears slot having a floating white pixel."
