@@ -33,7 +33,7 @@
 					"<span class='userdanger'>[A] [atk_verb]s you!</span>", null, null, A)
 	to_chat(A, "<span class='danger'>You [atk_verb] [D]!</span>")
 	playsound(get_turf(D), 'sound/weapons/punch1.ogg', 25, TRUE, -1)
-	log_combat(A, D, "strong punched (Sleeping Carp)")//so as to not double up on logging
+	log_combat(A, D, "strong punched (Sleeping Carp)")
 	D.apply_damage(20, A.dna.species.attack_type, affecting)
 	return
 
