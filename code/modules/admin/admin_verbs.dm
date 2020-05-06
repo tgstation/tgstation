@@ -562,7 +562,8 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(CARD_PACKS)
 	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
-	checkCardDistribution(pack, batchSize, batchCount)
+	var/guar = input("Should we use the pack's guaranteed rarity?", "We've all been there. Man you should have seen the old system") as null|anything in list("Yes", "No")
+	checkCardDistribution(pack, batchSize, batchCount, guar)
 
 /client/proc/print_cards()
 	set name = "Print Cards"
