@@ -1,7 +1,0 @@
-author: "Zytolg"
-delete-after: True
-changes: 
-  - tweak: "Added Regex to account for variations on X within the English language"
-  - tweak: "Added The ability for lizards to use the word X at the beginning of a word again."
-  - tweak: "Doesn't make every\" X\" into \"KSS\""
-  - tweak: "Adjusts lizard Autohissing on \"X\" to be more phonetically accurate."

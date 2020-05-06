@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Fixed a bug where the stabilized black crossbreed would not restore nutrition nor damage the target if you were at full health."

@@ -1,8 +1,0 @@
-author: "ATHATH"
-delete-after: True
-changes: 
-  - bugfix: "Unborks the sensory restoration symptom. It should work like having oculine and inacusiate in your system now."
-  - bugfix: "Adjusts inacusiate's description to more accurately reflect what it actually does."
-  - bugfix: "The eye_blind and eye_blurry healing from oculine is no longer instant, although oculine still has its 20% chance per chem tick to instantly remove the TRAIT_BLIND trait from you (if it was caused by eye damage)."
-  - bugfix: "Replaces the \"You are now blinking manually.\" fake positive message from the hallucigen symptom with a \"Your ears feel great.\" message."
-  - bugfix: "Fixes a typo in one of the messages from the sensory restoration symptom."
