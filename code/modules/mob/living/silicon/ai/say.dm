@@ -71,8 +71,8 @@
 	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in GLOB.available_vox_voices
 	if(!character_to_use)
 		return
-	var/max_characters = 240 // magic number but its the cap 15 allows
-	var/message = input(src, "Use the power of 15.ai to say anything! (240 character maximum)", "15.ai VOX System", src.last_announcement) as text|null
+	var/max_characters = 200 // magic number but its the cap 15 allows
+	var/message = input(src, "Use the power of 15.ai to say anything! (200 character maximum)", "15.ai VOX System", src.last_announcement) as text|null
 
 	if(!message || announcing_vox > world.time)
 		return
@@ -85,7 +85,8 @@
 		return
 
 	if(length(message) > max_characters)
-		to_chat(src, "<span class='notice'>You have too many characters! You used [length(message)] characters, you need to lower this to 240 or lower.</span>")
+		to_chat(src, "<span class='notice'>You have too many characters! You used [length(message)] characters, you need to lower this to [max_characters] or lower.</span>")
+		return
 	var/regex/check_for_bad_chars = regex("\[^a-zA-Z!?.,' :\]+")
 	if(check_for_bad_chars.Find(message))
 		to_chat(src, "<span class='notice'>These characters are not available on the 15.ai system: [english_list(check_for_bad_chars.group)].</span>")
@@ -131,7 +132,8 @@
 		return 1
 	else
 		log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
-		message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
+		message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")]
+		to_chat(speaker, "The speech synthesizer failed to return audio. Please try again.")
 	return 0
 
 #undef VOX_DELAY
