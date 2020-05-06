@@ -98,8 +98,8 @@
 
 	announcing_vox = world.time + VOX_DELAY
 
-	log_game("[key_name(src)] started making a 15.AI announcement with the following message: [message].")
-	message_admins("[key_name(src)] started making a 15.AI announcement with the following message: [message].")
+	log_game("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
+	message_admins("[key_name(src)] started making a 15.AI announcement with the following message: [message]")
 	play_vox_word(message, character_to_use, emotion_to_use, src, src.z, null)
 
 
@@ -113,11 +113,10 @@
 	UNTIL(req.is_complete())
 	var/datum/http_response/res = req.into_response()
 	if(res.status_code == 200)
-		log_game("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message].")
-		message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message].")
+		log_game("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
+		message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
 		speaker.say(";[message]")
 		var/sound/voice = sound("data/vox_audio.wav", wait = 1, channel = CHANNEL_VOX)
-		voice.status = SOUND_STREAM
 
  		// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
