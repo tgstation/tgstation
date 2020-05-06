@@ -2645,9 +2645,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/central)
-"afX" = (
-/turf/closed/wall,
-/area/ai_monitored/security/armory)
 "afY" = (
 /obj/machinery/light{
 	dir = 8
@@ -2663,10 +2660,14 @@
 /area/security/warden)
 "afZ" = (
 /obj/structure/table,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
+/obj/item/storage/box/evidence{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/hand_labeler{
+	pixel_x = -8;
+	pixel_y = 10
+	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -2682,6 +2683,21 @@
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/item/storage/box/evidence{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/storage/box/evidence{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/obj/item/storage/box/prisoner{
+	pixel_x = 9
+	},
+/obj/machinery/recharger{
+	pixel_x = -5;
+	pixel_y = -3
 	},
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
@@ -3071,11 +3087,6 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "agQ" = (
-/obj/structure/table,
-/obj/machinery/recharger{
-	pixel_y = 4;
-	pixel_x = -5
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
 	},
@@ -3086,13 +3097,13 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/item/storage/box/prisoner{
-	pixel_x = 9
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/machinery/computer/security/labor{
 	dir = 8
 	},
 /turf/open/floor/plasteel/dark,
@@ -9370,6 +9381,10 @@
 /obj/machinery/computer/shuttle/labor{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "atL" = (
@@ -70987,6 +71002,7 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/gulag_teleporter,
 /turf/open/floor/plasteel/dark,
 /area/security/brig)
 "iuX" = (
@@ -74741,15 +74757,17 @@
 /turf/open/floor/engine,
 /area/science/misc_lab/range)
 "pdx" = (
-/obj/machinery/gulag_teleporter,
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/red{
 	dir = 8
 	},
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark,
-/area/ai_monitored/security/armory)
+/area/security/brig)
 "peH" = (
 /obj/effect/landmark/start/cook,
 /obj/structure/disposalpipe/segment,
@@ -76934,9 +76952,6 @@
 /turf/open/floor/plating,
 /area/hallway/secondary/entry)
 "sJV" = (
-/obj/machinery/computer/prisoner/gulag_teleporter_computer{
-	dir = 1
-	},
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
@@ -105590,7 +105605,7 @@ ahx
 agR
 ahx
 alR
-afX
+ahx
 afZ
 agQ
 pdx
