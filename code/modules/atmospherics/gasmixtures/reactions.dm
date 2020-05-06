@@ -7,7 +7,6 @@ h2fire = -2
 tritfire = -1
 nitrous_decomp = 0
 water_vapor = 1
-fusion = 2
 nitrylformation = 3
 bzformation = 4
 freonformation = 5
@@ -15,6 +14,7 @@ stimformation = 5
 nobiliumformation = 6
 stimball = 7
 ammoniacrystals = 8
+fusion = 20
 nobiliumsuppression = INFINITY
 */
 
@@ -402,7 +402,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 
 /datum/gas_reaction/fusion
 	exclude = FALSE
-	priority = 2
+	priority = 20
 	name = "Plasmic Fusion"
 	id = "fusion"
 	var/energy = 0
@@ -461,11 +461,11 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		internal_instability = 10
 
 	//here go the other gas interactions
-	var/positive_modifiers = scaled_hydrogen + scaled_tritium + scaled_nitrogen + scaled_co2
-	var/negative_modifiers = scaled_plasma + scaled_h2o
+	var/positive_modifiers = scaled_hydrogen * 1.05 + scaled_tritium * 0.95 + scaled_nitrogen * 1.15 + scaled_co2 * 0.25
+	var/negative_modifiers = scaled_plasma + scaled_h2o * 0.75
 
 	//upgrades vars are placeholders for gas interactions
-	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2)
+	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * air.temperature
 	cached_scan_results["energy"] = energy
 	internal_power = (scaled_hydrogen / 1000 * upgrades) * (scaled_tritium / 1000 * upgrades) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
 	cached_scan_results["internal_power"] = internal_power
@@ -480,26 +480,26 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/efficiency = VOID_CONDUCTION * upgrades
 	var/power_output = efficiency * (internal_power - conduction - radiation)
 	cached_scan_results["power_output"] = power_output
-	var/heat_output = clamp(power_output / 1e6, MIN_HEAT_VARIATION, MAX_HEAT_VARIATION)
+	var/heat_output = clamp(power_output / 1e4 * upgrades, MIN_HEAT_VARIATION, MAX_HEAT_VARIATION)
 	cached_scan_results["heat_output"] = heat_output
 
 	//better gas usage and consumption
 	//To do
 	if(air.thermal_energy() + power_output < 0) //No using energy that doesn't exist.
 		return NO_REACTION
-	cached_gases[/datum/gas/tritium][MOLES] -= clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.2
-	cached_gases[/datum/gas/hydrogen][MOLES] -= clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.2
+	cached_gases[/datum/gas/tritium][MOLES] -= clamp(heat_output / 10, 0.15, MAX_FUEL_USAGE) * 0.25
+	cached_gases[/datum/gas/hydrogen][MOLES] -= clamp(heat_output / 10, 0.25, MAX_FUEL_USAGE) * 0.15
 	cached_gases[/datum/gas/plasma][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.5
 	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
-//	if(power_output > 0)
-//		cached_gases[/datum/gas/carbon_dioxide][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.5
-//		cached_gases[/datum/gas/water_vapor][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.75
+	if(power_output > 0)
+		cached_gases[/datum/gas/carbon_dioxide][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.75
+		cached_gases[/datum/gas/water_vapor][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.25
 
 	//better heat and rads emission
 	//To do
 	if(power_output)
 		if(location)
-			var/particle_chance = ((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1//Asymptopically approaches 100% as the energy of the reaction goes up.
+			var/particle_chance = max(((PARTICLE_CHANCE_CONSTANT)/(power_output-PARTICLE_CHANCE_CONSTANT)) + 1, 0)//Asymptopically approaches 100% as the energy of the reaction goes up.
 			if(prob(PERCENT(particle_chance)))
 				location.fire_nuclear_particle()
 			var/rad_power = clamp((radiation / 1e5), FUSION_RAD_MAX,0)
@@ -508,6 +508,8 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		if(air.temperature <= FUSION_MAXIMUM_TEMPERATURE)	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
 			air.temperature = clamp(air.temperature + heat_output,TCMB,INFINITY)
 		return REACTING
+
+//REMEMBER TO RESTORE CANISTER.DM TO ORIGINAL SETTINGS
 
 /datum/gas_reaction/nitrousformation //formationn of n2o, esothermic, requires bz as catalyst
 	priority = 3

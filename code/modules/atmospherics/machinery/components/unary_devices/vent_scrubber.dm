@@ -26,8 +26,24 @@
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+	var/list/motors
+	var/max_motors = 5
+	var/transfer_modifier = 1
 
 	pipe_state = "scrubber"
+
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/assembly/motor))
+		var/obj/item/assembly/motor/M = I
+		if(LAZYLEN(motors) > max_motors)
+			to_chat(user, "<span class='warning'>There are too many motors here!</span>")
+			return
+		to_chat(user, "<span class='notice'>You start mounting a motor.</span>")
+		if(do_after(user, 1.5 SECONDS, target = src))
+			to_chat(user, "<span class='notice'>You mounted a motor and the fans are spinning faster now.</span>")
+			LAZYADD(motors, M)
+			transfer_modifier *= 1000
+			qdel(M)
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
@@ -44,7 +60,10 @@
 	if (A)
 		A.air_scrub_names -= id_tag
 		A.air_scrub_info -= id_tag
-
+	for(var/M in motors)
+		LAZYREMOVE(motors, M)
+		transfer_modifier *= 0.001
+		new /obj/item/assembly/motor(src)
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
 	adjacent_turfs.Cut()
@@ -153,12 +172,12 @@
 	var/datum/gas_mixture/air_contents = airs[1]
 	var/list/env_gases = environment.gases
 
-	if(air_contents.return_pressure() >= 50*ONE_ATMOSPHERE)
+	if(air_contents.return_pressure() >= 50*ONE_ATMOSPHERE*transfer_modifier)
 		return FALSE
 
 	if(scrubbing & SCRUBBING)
 		if(length(env_gases & filter_types))
-			var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
+			var/transfer_moles = min(1 * transfer_modifier, (volume_rate * transfer_modifier)/environment.volume)*environment.total_moles()
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
@@ -189,7 +208,7 @@
 	else //Just siphoning all air
 
 		var/transfer_moles = environment.total_moles()*(volume_rate/environment.volume)
-
+		transfer_moles = transfer_moles * transfer_modifier
 		var/datum/gas_mixture/removed = tile.remove_air(transfer_moles)
 
 		air_contents.merge(removed)

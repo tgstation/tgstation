@@ -31,8 +31,24 @@
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
+	var/list/motors
+	var/max_motors = 5
+	var/transfer_modifier = 1
 
 	pipe_state = "uvent"
+
+/obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/assembly/motor))
+		var/obj/item/assembly/motor/M = I
+		if(LAZYLEN(motors) > max_motors)
+			to_chat(user, "<span class='warning'>There are too many motors here!</span>")
+			return
+		to_chat(user, "<span class='notice'>You start mounting a motor.</span>")
+		if(do_after(user, 1.5 SECONDS, target = src))
+			to_chat(user, "<span class='notice'>You mounted a motor and the fans are spinning faster now.</span>")
+			LAZYADD(motors, M)
+			transfer_modifier *= 1000
+			qdel(M)
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
@@ -44,7 +60,10 @@
 	if (A)
 		A.air_vent_names -= id_tag
 		A.air_vent_info -= id_tag
-
+	for(var/M in motors)
+		LAZYREMOVE(motors, M)
+		transfer_modifier *= 0.001
+		new /obj/item/assembly/motor(src)
 	SSradio.remove_object(src,frequency)
 	radio_connection = null
 	return ..()
@@ -108,7 +127,7 @@
 		if(pressure_delta > 0)
 			if(air_contents.temperature > 0)
 				var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
+				transfer_moles = transfer_moles * transfer_modifier
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				loc.assume_air(removed)
@@ -116,6 +135,7 @@
 
 	else // external -> internal
 		var/pressure_delta = 10000
+
 		if(pressure_checks&EXT_BOUND)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
 		if(pressure_checks&INT_BOUND)
@@ -123,7 +143,7 @@
 
 		if(pressure_delta > 0 && environment.temperature > 0)
 			var/transfer_moles = pressure_delta * air_contents.volume / (environment.temperature * R_IDEAL_GAS_EQUATION)
-
+			transfer_moles = transfer_moles * transfer_modifier
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 			if (isnull(removed)) // in space
 				return

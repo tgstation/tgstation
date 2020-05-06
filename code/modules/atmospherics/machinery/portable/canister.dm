@@ -189,8 +189,7 @@
 /obj/machinery/portable_atmospherics/canister/fusion_test/create_gas()
 	air_contents.add_gases(/datum/gas/hydrogen, /datum/gas/plasma, /datum/gas/tritium)
 	air_contents.gases[/datum/gas/hydrogen][MOLES] = 500
-	air_contents.gases[/datum/gas/plasma][MOLES] = 500
-	air_contents.gases[/datum/gas/tritium][MOLES] = 350
+	air_contents.gases[/datum/gas/tritium][MOLES] = 500
 	air_contents.temperature = 15000
 
 /obj/machinery/portable_atmospherics/canister/proc/get_time_left()
