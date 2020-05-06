@@ -86,7 +86,7 @@
 	var/hurt = TRUE
 	var/extra_speed = 0
 	if(throwingdatum.thrower != src)
-		extra_speed = max(0, throwingdatum.speed - initial(throw_speed))
+		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), 3)
 
 	if(istype(throwingdatum, /datum/thrownthing))
 		hurt = !throwingdatum.gentle
