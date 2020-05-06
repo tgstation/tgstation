@@ -1,0 +1,2 @@
+#To block a character from being usable, add their name to this list.
+#Sans

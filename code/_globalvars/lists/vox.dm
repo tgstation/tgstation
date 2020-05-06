@@ -6,6 +6,7 @@ GLOBAL_LIST_INIT(available_vox_voices, list(
 	"Rise Kujikawa",
 	"SpongeBob",
 	"Sans",
+	"Announcer",
 	"Twilight Sparkle",
 	"Fluttershy",
 	"Rarity",

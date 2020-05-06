@@ -64,6 +64,10 @@
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
+	var/list/banned_characters = world.file2list("[global.config.directory]/blocked_vox_voices.txt")
+	for(var/B in banned_characters)
+		if(GLOB.available_vox_voices.Find(B))
+			GLOB.available_vox_voices -= B
 	var/character_to_use = input(src, "Choose what 15.ai character to use:", "15.ai Character Choice")  as null|anything in GLOB.available_vox_voices
 	if(!character_to_use)
 		return
@@ -95,21 +99,23 @@
 	announcing_vox = world.time + VOX_DELAY
 
 	log_game("[key_name(src)] started making a 15.AI announcement with the following message: [message].")
-	play_vox_word(message, character_to_use, emotion_to_use, src.z, null)
+	message_admins("[key_name(src)] started making a 15.AI announcement with the following message: [message].")
+	play_vox_word(message, character_to_use, emotion_to_use, src, src.z, null)
 
 
-/proc/play_vox_word(message, character, emotion, z_level, mob/only_listener)
+/proc/play_vox_word(message, character, emotion, mob/living/speaker, z_level, mob/only_listener)
 	var/api_url = "https://api.fifteen.ai/app/getAudioFile"
 
 	var/datum/http_request/req = new()
 
-	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"[emotion]\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"))
+	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"[emotion]\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"), json_encode(list("output_filename" = "data/vox_audio.wav")))
 	req.begin_async()
 	UNTIL(req.is_complete())
 	var/datum/http_response/res = req.into_response()
 	if(res.status_code == 200)
-		text2file(res.body, "data/vox_audio.wav") // todo: have rust-g make this into an ogg automagically
-		log_game("[key_name(src)] finished making a 15.AI announcement with the following message: [message].")
+		log_game("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message].")
+		message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message].")
+		speaker.say(";[message]")
 		var/sound/voice = sound("data/vox_audio.wav", wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
 
