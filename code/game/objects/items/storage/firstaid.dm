@@ -500,7 +500,7 @@
 
 /obj/item/storage/pill_bottle/methos
 	name = "methos pack"
-	desc = "A candy that gives you the sugar rush in a different way."
+	desc = "A candy that tastes almost like meth."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "methos_pack"
 
