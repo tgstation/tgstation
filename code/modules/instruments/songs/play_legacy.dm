@@ -33,7 +33,7 @@
 							accents[key] = oct_acc		//if they misspelled it/fucked up that's on them lmao, no safety checks.
 						else	//octave
 							octaves[key] = clamp(num, octave_min, octave_max)
-					compiled_chord += list(key, accents[key], octaves[key])
+					compiled_chord[++compiled_chord.len] = list(key, accents[key], octaves[key])
 			compiled_chord += tempodiv		//this goes last
 			if(length(compiled_chord))
 				compiled_chords[++compiled_chords.len] = compiled_chord

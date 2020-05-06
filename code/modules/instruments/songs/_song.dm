@@ -204,7 +204,8 @@
 	if(!using_instrument?.ready())
 		to_chat(user, "<span class='warning'>An error has occured with [src]. Please reset the instrument.</span>")
 		return
-	if(!length(compiled_chords))
+	compile_chords()
+ 	if(!length(compiled_chords))
 		to_chat(user, "<span class='warning'>Song is empty.</span>")
 		return
 	playing = TRUE
@@ -266,7 +267,7 @@
   * Converts a tempodiv to ticks to elapse before playing the next chord, taking into account our tempo.
   */
 /datum/song/proc/tempodiv_to_delay(tempodiv)
-	return min(1, round((tempo/tempodiv) / world.tick_lag, 1))
+	return max(1, round((tempo/tempodiv) / world.tick_lag, 1))
 
 /**
   * Compiles chords.
