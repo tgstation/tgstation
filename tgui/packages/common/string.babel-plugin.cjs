@@ -1,5 +1,8 @@
 /**
  * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ *
  * We are using a .cjs extension because:
  *
  * 1. Webpack CLI only supports CommonJS modules;

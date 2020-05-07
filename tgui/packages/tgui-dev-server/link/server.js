@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import { createLogger, directLog } from 'common/logging.js';
 import http from 'http';
 import { inspect } from 'util';

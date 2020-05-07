@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import { Flex } from './Flex';
 
 export const LabeledControls = props => {

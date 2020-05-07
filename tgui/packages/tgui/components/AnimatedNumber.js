@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import { clamp, toFixed } from 'common/math';
 import { Component } from 'inferno';
 

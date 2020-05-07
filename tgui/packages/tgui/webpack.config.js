@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 const webpack = require('webpack');
 const path = require('path');
 const BuildNotifierPlugin = require('webpack-build-notifier');

@@ -1,4 +1,10 @@
 /**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
+/**
  * Converts a given collection to an array.
  *
  * - Arrays are returned unmodified;

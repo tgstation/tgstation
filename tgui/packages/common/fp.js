@@ -1,4 +1,10 @@
 /**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
+/**
  * Creates a function that returns the result of invoking the given
  * functions, where each successive invocation is supplied the return
  * value of the previous.

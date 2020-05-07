@@ -1,4 +1,8 @@
 /**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ *
  * This file provides a clear separation layer between backend updates
  * and what state our React app sees.
  *

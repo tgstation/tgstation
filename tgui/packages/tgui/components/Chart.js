@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import { map, zipWith } from 'common/collections';
 import { pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';

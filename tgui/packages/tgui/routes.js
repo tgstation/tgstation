@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces', false, /\.js$/);

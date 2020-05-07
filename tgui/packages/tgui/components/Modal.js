@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import { classes } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { Dimmer } from './Dimmer';

@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import glob from 'glob';
 import { resolve as resolvePath } from 'path';
 import fs from 'fs';

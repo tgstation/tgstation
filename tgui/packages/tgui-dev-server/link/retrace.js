@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import { basename } from 'path';

@@ -1,4 +1,10 @@
 /**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
+/**
  * Removes excess whitespace and indentation from the string.
  */
 export const multiline = str => {

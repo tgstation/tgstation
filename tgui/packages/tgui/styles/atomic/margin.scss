@@ -1,3 +1,9 @@
+ /**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 @for $i from 0 through 2 {
   .m-#{$i} {
     margin: 6px * $i;

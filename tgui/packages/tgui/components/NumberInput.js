@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ */
+
 import { clamp } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
 import { Component, createRef } from 'inferno';

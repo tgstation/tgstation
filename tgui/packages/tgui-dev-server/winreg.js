@@ -1,5 +1,8 @@
 /**
  * @file
+ * @copyright Aleksej Komarov 2020
+ * @license MIT
+ *
  * Tools for dealing with Windows Registry bullshit.
  */
 import { exec } from 'child_process';
