@@ -392,6 +392,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		"jimmy",
 		"joint",
 		"juju",
+		"jeebie weebie",
 		"number",
 		"owl",
 		"phattie",
