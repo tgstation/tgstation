@@ -124,6 +124,7 @@
 
 	var/raw_parameter			//The unparsed parameter
 	var/deprefixed_parameter	//The version only bit of raw_parameter
+	var/name					//Byond converts datums with names to a string containing the datum's name.
 
 //if the tgs_version is a wildcard version
 /datum/tgs_version/proc/Wildcard()
