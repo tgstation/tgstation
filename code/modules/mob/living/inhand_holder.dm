@@ -85,3 +85,15 @@
 		return ..()
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "[D.visualAppearance]_hat"
+
+/obj/item/clothing/head/mob_holder/destructible
+
+/obj/item/clothing/head/mob_holder/destructible/Destroy()
+	if(held_mob)
+		release(FALSE, TRUE)
+	return ..()
+
+/obj/item/clothing/head/mob_holder/release(del_on_release = TRUE, delete_mob = FALSE)
+	if(delete_mob && held_mob)
+		QDEL_NULL(held_mob)
+	return ..()

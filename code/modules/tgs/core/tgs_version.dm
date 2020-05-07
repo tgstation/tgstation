@@ -20,3 +20,9 @@
 
 /datum/tgs_version/Wildcard()
 	return minor == null || patch == null
+
+/datum/tgs_version/Equals(datum/tgs_version/other_version)
+	if(!istype(other_version))
+		return FALSE
+
+	return suite == other_version.suite && minor == other_version.minor && patch == other_version.patch && deprecated_patch == other_version.deprecated_patch

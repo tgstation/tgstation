@@ -45,6 +45,7 @@
 	movement_type = FLYING
 	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
+	can_be_held = TRUE
 
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -65,6 +66,15 @@
 	generate_bee_visuals()
 	AddComponent(/datum/component/swarming)
 
+/mob/living/simple_animal/hostile/poison/bees/mob_pickup(mob/living/L)
+	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
+	if(beegent)
+		reee[beegent.type] = 5
+	holder.AddComponent(/datum/component/edible, reee, null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
+	L.put_in_hands(holder)
+
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
 	if(beehome)
 		beehome.bees -= src
@@ -77,6 +87,13 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+	var/obj/item/trash/bee/bee_to_eat = new(loc)
+	bee_to_eat.pixel_x = pixel_x
+	bee_to_eat.pixel_y = pixel_y
+	if(beegent)
+		bee_to_eat.beegent = beegent
+		bee_to_eat.reagents.add_reagent(beegent.type, 5)
+	bee_to_eat.update_icon()
 	beegent = null
 	..()
 
@@ -321,3 +338,22 @@
 /mob/living/simple_animal/hostile/poison/bees/short/Initialize(mapload, timetolive=50 SECONDS)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), timetolive)
+
+/obj/item/trash/bee
+	name = "bee"
+	desc = "No wonder the bees are dying out, you monster."
+	icon = 'icons/mob/bees.dmi'
+	icon_state = "bee_item"
+	var/datum/reagent/beegent
+
+/obj/item/trash/bee/Initialize()
+	. = ..()
+	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+
+/obj/item/trash/bee/update_icon()
+	. = ..()
+	cut_overlays()
+	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
+	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
+	add_overlay(body_overlay)
+

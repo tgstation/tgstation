@@ -107,6 +107,17 @@ Difficulty: Insanely Hard
 		return A
 	return ..()
 
+/mob/living/simple_animal/hostile/retaliate/goat/harem
+	name = "goat with a wig"
+	desc = "A very... handsome beast?"
+	icon_state = "goat_harem"
+	icon_living = "goat_harem"
+	icon_dead = "goat_harem_dead"
+	faction = list("goat_king")
+	attack_same = FALSE
+	minimum_distance = 5
+	retreat_distance = 7
+
 /mob/living/simple_animal/hostile/retaliate/goat/guard
 	name = "honour guard"
 	desc = "A very handsome and noble beast."
