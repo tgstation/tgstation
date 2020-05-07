@@ -1,7 +1,7 @@
 GLOBAL_LIST_INIT(available_vox_voices, list(
 	"GLaDOS (Neutral)",
 	"GLaDOS (Homicidal)",
-	//"Wheatley",
+	"Wheatley",
 	"Soldier",
 	//"Administrator",
 	"Miss Pauling",

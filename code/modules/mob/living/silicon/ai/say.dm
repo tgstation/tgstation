@@ -60,7 +60,6 @@
 #ifdef AI_VOX
 #define VOX_DELAY 300
 /mob/living/silicon/ai/proc/announcement()
-	var/static/announcing_vox = 0 // Stores the time of the last announcement
 	if(announcing_vox > world.time)
 		to_chat(src, "<span class='notice'>Please wait [DisplayTimeText(announcing_vox - world.time)].</span>")
 		return
@@ -113,12 +112,12 @@
 	play_vox_word(message, character_to_use, emotion_to_use, src, src.z, null)
 
 
-/proc/play_vox_word(message, character, emotion, mob/living/speaker, z_level, mob/only_listener)
+/proc/play_vox_word(message, character, emotion, mob/living/silicon/ai/speaker, z_level, mob/only_listener)
 	var/api_url = "https://api.fifteen.ai/app/getAudioFile"
-
+	var/static/vox_voice_number = 0
 	var/datum/http_request/req = new()
-	var/vox_audio_number = rand(1,9999)
-	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"[emotion]\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"), json_encode(list("output_filename" = "data/vox_[vox_audio_number].wav")))
+	vox_voice_number++
+	req.prepare(RUSTG_HTTP_METHOD_POST, api_url, "{\"character\":\"[character]\",\"text\":\"[message]\",\"emotion\":\"[emotion]\"}", list("Content-Type" = "application/json", "User-Agent" = "/tg/station 13 server"), json_encode(list("output_filename" = "data/vox_[vox_voice_number].wav")))
 	req.begin_async()
 	UNTIL(req.is_complete())
 	var/datum/http_response/res = req.into_response()
@@ -126,7 +125,7 @@
 		log_game("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
 		message_admins("[key_name(speaker)] finished making a 15.AI announcement with the following message: [message]")
 		speaker.say(";[message]")
-		var/sound/voice = sound("data/vox_[vox_audio_number].wav", wait = 1, channel = CHANNEL_VOX)
+		var/sound/voice = sound("data/vox_[vox_voice_number].wav", wait = 1, channel = CHANNEL_VOX)
 		voice.status = SOUND_STREAM
  		// If there is no single listener, broadcast to everyone in the same z level
 		if(!only_listener)
@@ -137,12 +136,18 @@
 					SEND_SOUND(M, voice)
 		else
 			SEND_SOUND(only_listener, voice)
-		fdel("data/vox_[vox_audio_number].wav")
+		fdel("data/vox_[vox_voice_number].wav")
 		return 1
 	else
-		log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
-		message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
-		to_chat(speaker, "The speech synthesizer failed to return audio. Please try again.")
+		if(!res.status_code)
+			log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error: [req._raw_response]")
+			message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error: [req._raw_response]")
+		else
+			log_game("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
+			message_admins("[key_name(speaker)] failed to produce a 15.AI announcement due to an error. Error code: [res.status_code]")
+		to_chat(speaker, "The speech synthesizer failed to return audio. Your speech cooldown has been reset. Please try again.")
+		fdel("data/vox_[vox_voice_number].wav")
+		speaker.announcing_vox = world.time
 	return 0
 
 #undef VOX_DELAY

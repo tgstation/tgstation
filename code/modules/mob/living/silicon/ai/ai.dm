@@ -98,7 +98,7 @@
 
 	var/list/cam_hotkeys = new/list(9)
 	var/cam_prev
-
+	var/announcing_vox = 0 // Stores the time of the last announcement
 	var/datum/robot_control/robot_control
 
 /mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
