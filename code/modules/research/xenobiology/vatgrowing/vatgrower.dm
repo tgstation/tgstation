@@ -35,8 +35,11 @@
 	if(biological_sample)
 		to_chat(user, "<span class='warning'>There is already a sample in the vat!</span>")
 		return
+	deposit_sample(user, petri)
 
-	biological_sample = new()
+///Creates a clone of the supplied sample and puts it in the vat
+/obj/machinery/plumbing/growing_vat/proc/deposit_sample(mob/user, var/obj/item/petri_dish/petri)
+	biological_sample = new
 	for(var/datum/micro_organism/m in petri.sample.micro_organisms)
 		biological_sample.micro_organisms += new m.type()
 	biological_sample.sample_layers = petri.sample.sample_layers
