@@ -1,4 +1,0 @@
-author: "Qustinnus, AnturK"
-delete-after: True
-changes: 
-  - code_imp: "Moved gun overlay updating to update_overlays(), removing lag from objects when you add a flashlight / baynonet to them"
