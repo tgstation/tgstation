@@ -52,8 +52,9 @@
 
 //EVENT CODES
 
-#define TGS_EVENT_PORT_SWAP -2	//before a port change is about to happen, extra parameter is new port
-#define TGS_EVENT_REBOOT_MODE_CHANGE -1	//before a reboot mode change, extras parameters are the current and new reboot mode enums
+#define TGS_EVENT_REBOOT_MODE_CHANGE -1	//Before a reboot mode change, extras parameters are the current and new reboot mode enums
+#define TGS_EVENT_PORT_SWAP -2	//Before a port change is about to happen, extra parameters is new port
+#define TGS_EVENT_INSTANCE_RENAMED -3	//Before the instance is renamed, extra prameter is the new name
 
 //See the descriptions for the parameters of these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
 #define TGS_EVENT_REPO_RESET_ORIGIN 0
@@ -67,9 +68,9 @@
 #define TGS_EVENT_COMPILE_START 8
 #define TGS_EVENT_COMPILE_CANCELLED 9
 #define TGS_EVENT_COMPILE_FAILURE 10
-#define TGS_EVENT_COMPILE_COMPLETE 11
+#define TGS_EVENT_COMPILE_COMPLETE 11 // Note, this event fires before the new .dmb is loaded into the watchdog. Consider using the TGS_EVENT_DEPLOYMENT_COMPLETE instead
 #define TGS_EVENT_INSTANCE_AUTO_UPDATE_START 12
-#define TGS_EVENT_REPO_MERGE_CONFLICT 13
+#define TGS_EVENT_DEPLOYMENT_COMPLETE 13
 
 //OTHER ENUMS
 
@@ -84,6 +85,7 @@
 //REQUIRED HOOKS
 
 //Call this somewhere in /world/New() that is always run
+//IMPORTANT: This function may sleep! Other TGS functions will not succeed until it completes
 //event_handler: optional user defined event handler. The default behaviour is to broadcast the event in english to all connected admin channels
 //minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated
 /world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
@@ -125,6 +127,10 @@
 
 //if the tgs_version is a wildcard version
 /datum/tgs_version/proc/Wildcard()
+	return
+
+//if the tgs_version equals some other_version
+/datum/tgs_version/proc/Equals(datum/tgs_version/other_version)
 	return
 
 //represents a merge of a GitHub pull request
@@ -183,12 +189,16 @@
 	return
 
 //Returns TRUE if the world was launched under the server tools and the API matches, FALSE otherwise
-//No function below this succeeds if it returns FALSE
+//No function below this succeeds if it returns FALSE or if TgsNew() has yet to be called
 /world/proc/TgsAvailable()
 	return
 
 //Gets the current /datum/tgs_version of the server tools running the server
 /world/proc/TgsVersion()
+	return
+
+//Gets the current /datum/tgs_version of the DMAPI being used
+/world/proc/TgsApiVersion()
 	return
 
 //Gets the name of the TGS instance running the game

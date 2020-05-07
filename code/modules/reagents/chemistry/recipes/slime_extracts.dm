@@ -139,7 +139,8 @@
 
 	for(var/i in 1 to 4 + rand(1,2))
 		var/chosen = getbork()
-		var/obj/B = new chosen(T)
+		var/obj/item/reagent_containers/food/snacks/B = new chosen(T)
+		B.silver_spawned = TRUE
 		if(prob(5))//Fry it!
 			var/obj/item/reagent_containers/food/snacks/deepfryholder/fried
 			fried = new(T, B)

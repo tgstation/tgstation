@@ -1,3 +1,18 @@
+/**
+  * Finds and extracts seeds from an object
+  *
+  * Checks if the object is such that creates a seed when extracted.  Used by seed
+  * extractors or posably anything that would create seeds in some way.  The seeds
+  * are dropped either at the extractor, if it exists, or where the original object
+  * was and it qdel's the object
+  *
+  * Arguments:
+  * * O - Object containing the seed, can be the loc of the dumping of seeds
+  * * t_max - Amount of seed copies to dump, -1 is ranomized
+  * * extractor - Seed Extractor, used as the dumping loc for the seeds and seed multiplier
+  * * user - checks if we can remove the object from the inventory
+  * *
+  */
 /proc/seedify(obj/item/O, t_max, obj/machinery/seed_extractor/extractor, mob/living/user)
 	var/t_amount = 0
 	var/list/seeds = list()
@@ -46,15 +61,22 @@
 	icon_state = "sextractor"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/seed_extractor
-	var/piles = list()
-	var/max_seeds = 1000
-	var/seed_multiplier = 1
+	/// Associated list of seeds, they are all weak refs.  We check the len to see how many refs we have for each
+	// seed
+	var/list/piles = list()
+	/// Starting constants for Refresh parts
+	var/const/staring_max_seeds = 1000
+	var/const/staring_seed_multiplier = 1
+	var/max_seeds = staring_max_seeds
+	var/seed_multiplier = staring_seed_multiplier
+	ui_x = 1000
+	ui_y = 400
 
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/stock_parts/matter_bin/B in component_parts)
-		max_seeds = 1000 * B.rating
+		max_seeds = staring_max_seeds * B.rating
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		seed_multiplier = M.rating
+		seed_multiplier = staring_seed_multiplier * M.rating
 
 /obj/machinery/seed_extractor/examine(mob/user)
 	. = ..()
@@ -102,94 +124,25 @@
 	else
 		return ..()
 
-/** Seed Pile
- *  Takes stats from the seed, as dictated by the New proc, and assigned them to the datum's vars.
- *  Name is the Seed's name.
- *  All stats are taken from the seed's core stats.
- *  Amount is the number of seeds present of that specific type.
- **/
-/datum/seed_pile
-	var/name = ""
-	var/lifespan = 0	//Saved stats
-	var/endurance = 0
-	var/maturation = 0
-	var/production = 0
-	var/yield = 0
-	var/potency = 0
-	var/instability = 0
-	var/amount = 0
+/**
+  * Generate seed string
+  *
+  * Creates a string based of the traits of a seed.  We use this string as a bucket for all
+  * seeds that match as well as the key the ui uses to get the seed.  We also use the key
+  * for the data shown in the ui.  Javascript parses this string to display
+  *
+  * Arguments:
+  * * O - seed to generate the string from
+  */
+/obj/machinery/seed_extractor/proc/generate_seed_string(obj/item/seeds/O)
+	return "name=[O.name];lifespan=[O.lifespan];endurance=[O.endurance];maturation=[O.maturation];production=[O.production];yield=[O.yield];potency=[O.potency];instability=[O.instability]"
 
-/** Seed Pile Creation.
- *  Takes a seed's name, core stats, and amount when creating a seed pile datum.
- *  This is read by the HTML Ui for display in-game.
- **/
-/datum/seed_pile/New(name, life, endur, matur, prod, yie, poten, insta, am = 1)
-	src.name = name
-	src.lifespan = life
-	src.endurance = endur
-	src.maturation = matur
-	src.production = prod
-	src.yield = yie
-	src.potency = poten
-	src.instability = insta
-	src.amount = am
-
-/obj/machinery/seed_extractor/ui_interact(mob/user)
-	. = ..()
-	if (machine_stat)
-		return FALSE
-
-	var/dat = "<b>Stored seeds:</b><br>"
-
-	if (contents.len == 0)
-		dat += "<font color='red'>No seeds</font>"
-	else
-		dat += "<table cellpadding='3' style='text-align:center;'><tr><td>Name</td><td>Lifespan</td><td>Endurance</td><td>Maturation</td><td>Production</td><td>Yield</td><td>Potency</td><td>Instability</td><td>Stock</td></tr>"
-		for (var/datum/seed_pile/O in piles)
-			dat += "<tr><td>[O.name]</td><td>[O.lifespan]</td><td>[O.endurance]</td><td>[O.maturation]</td>"
-			dat += "<td>[O.production]</td><td>[O.yield]</td><td>[O.potency]</td><td>[O.instability]</td><td>"
-			dat += "<a href='byond://?src=[REF(src)];name=[O.name];li=[O.lifespan];en=[O.endurance];ma=[O.maturation];pr=[O.production];yi=[O.yield];pot=[O.potency];ist=[O.instability]'>Vend</a> ([O.amount] left)</td></tr>"
-		dat += "</table>"
-	var/datum/browser/popup = new(user, "seed_ext", name, 700, 400)
-	popup.set_content(dat)
-	popup.open()
-	return
-
-/obj/machinery/seed_extractor/Topic(href, list/href_list)
-	if(..())
-		return
-	usr.set_machine(src)
-
-	href_list["li"] = text2num(href_list["li"])
-	href_list["en"] = text2num(href_list["en"])
-	href_list["ma"] = text2num(href_list["ma"])
-	href_list["pr"] = text2num(href_list["pr"])
-	href_list["yi"] = text2num(href_list["yi"])
-	href_list["pot"] = text2num(href_list["pot"])
-	href_list["ist"] = text2num(href_list["ist"])
-
-	for (var/datum/seed_pile/N in piles)//Find the pile we need to reduce...
-		if (href_list["name"] == N.name && href_list["li"] == N.lifespan && href_list["en"] == N.endurance && href_list["ma"] == N.maturation && href_list["pr"] == N.production && href_list["yi"] == N.yield && href_list["pot"] == N.potency && href_list["ist"] == N.instability)
-			if(N.amount <= 0)
-				return
-			N.amount = max(N.amount - 1, 0)
-			if (N.amount <= 0)
-				piles -= N
-				qdel(N)
-			break
-
-	for (var/obj/T in contents)//Now we find the seed we need to vend
-		var/obj/item/seeds/O = T
-		if (O.plantname == href_list["name"] && O.lifespan == href_list["li"] && O.endurance == href_list["en"] && O.maturation == href_list["ma"] && O.production == href_list["pr"] && O.yield == href_list["yi"] && O.potency == href_list["pot"] && O.instability == href_list["ist"])
-			O.forceMove(drop_location())
-			break
-
-	src.updateUsrDialog()
-	return
 
 /** Add Seeds Proc.
- *  Takes a seed into the machine, and breaks it down into it's core stats.
- *  These core stats are then passed to the machine UI for display in-game through a seed pile datum..
+  *
+  * Adds the seeds to the contents and to an associated list that pregenerates the data
+  * needed to go to the ui handler
+  *
  **/
 /obj/machinery/seed_extractor/proc/add_seed(obj/item/seeds/O)
 	if(contents.len >= 999)
@@ -205,10 +158,45 @@
 		if(!M.transferItemToLoc(O, src))
 			return FALSE
 
-	. = TRUE
-	for (var/datum/seed_pile/N in piles)
-		if (O.plantname == N.name && O.lifespan == N.lifespan && O.endurance == N.endurance && O.maturation == N.maturation && O.production == N.production && O.yield == N.yield && O.potency == N.potency && O.instability == N.instability)
-			++N.amount
-			return
+	var/seed_string = generate_seed_string(O)
+	if(piles[seed_string])
+		piles[seed_string] += WEAKREF(O)
+	else
+		piles[seed_string] = list(WEAKREF(O))
 
-	piles += new /datum/seed_pile(O.plantname, O.lifespan, O.endurance, O.maturation, O.production, O.yield, O.potency, O.instability)
+	. = TRUE
+
+/obj/machinery/seed_extractor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "SeedExtractor", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/obj/machinery/seed_extractor/ui_data()
+	var/list/V = list()
+	for(var/key in piles)
+		if(piles[key])
+			var/len = length(piles[key])
+			if(len)
+				V[key] = len
+
+	. = list()
+	.["seeds"] = V
+
+/obj/machinery/seed_extractor/ui_act(action, params)
+	if(..())
+		return
+
+	switch(action)
+		if("select")
+			var/item = params["item"]
+			if(piles[item] && length(piles[item]) > 0)
+				var/datum/weakref/WO = piles[item][1]
+				var/obj/item/seeds/O = WO.resolve()
+				if(O)
+					piles[item] -= WO
+					O.forceMove(drop_location())
+					. = TRUE
+					//to_chat(usr, "<span class='notice'>[src] clanks to life briefly before vending [prize.equipment_name]!</span>")
+

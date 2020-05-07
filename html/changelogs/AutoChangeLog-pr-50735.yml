@@ -1,6 +1,0 @@
-author: "Cartographer-D"
-delete-after: True
-changes: 
-  - rscadd: "New Prison wing for MetaStation!"
-  - rscadd: "Visitation room for MetaStation Perma"
-  - balance: "Incorporates Box Perma balances for MetaStation"
