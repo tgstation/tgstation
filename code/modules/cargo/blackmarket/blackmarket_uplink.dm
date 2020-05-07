@@ -4,7 +4,7 @@
 	icon_state = "uplink"
 
 	// UI variables.
-	var/ui_x = 720
+	var/ui_x = 600
 	var/ui_y = 480
 	var/viewing_category
 	var/viewing_market
@@ -58,7 +58,7 @@
 /obj/item/blackmarket_uplink/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "blackmarket_uplink", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "BlackMarketUplink", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/item/blackmarket_uplink/ui_data(mob/user)

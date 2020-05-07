@@ -1,9 +1,20 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section, NoticeBox, Input, Table } from '../components';
+import { Window } from '../layouts';
 
-export const NaniteRemote = props => {
-  const { act, data } = useBackend(props);
+export const NaniteRemote = (props, context) => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable>
+        <NaniteRemoteContent />
+      </Window.Content>
+    </Window>
+  );
+};
+
+export const NaniteRemoteContent = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     code,
     locked,

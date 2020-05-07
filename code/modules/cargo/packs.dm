@@ -252,7 +252,7 @@
 
 /datum/supply_pack/security
 	group = "Security"
-	access_any = ACCESS_FORENSICS_LOCKERS //| ACCESS_SECURITY
+	access = ACCESS_SECURITY
 	crate_type = /obj/structure/closet/crate/secure/gear
 
 /datum/supply_pack/security/ammo
@@ -2309,7 +2309,7 @@
 /datum/supply_pack/costumes_toys/randomised/toys
 	name = "Toy Crate"
 	desc = "Who cares about pride and accomplishment? Skip the gaming and get straight to the sweet rewards with this product! Contains five random toys. Warranty void if used to prank research directors."
-	cost = 5000 // or play the arcade machines ya lazy bum
+	cost = 4000 // or play the arcade machines ya lazy bum
 	num_contained = 5
 	contains = list()
 	crate_name = "toy crate"
@@ -2538,7 +2538,7 @@
 /datum/supply_pack/misc/religious_supplies
 	name = "Religious Supplies Crate"
 	desc = "Keep your local chaplain happy and well-supplied, lest they call down judgement upon your cargo bay. Contains two bottles of holywater, bibles, chaplain robes, and burial garmets."
-	cost = 4000	// it costs so much because the Space Church is ran by Space Jews
+	cost = 4000	// it costs so much because the Space Church needs funding to build a cathedral
 	contains = list(/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/reagent_containers/food/drinks/bottle/holywater,
 					/obj/item/storage/book/bible/booze,

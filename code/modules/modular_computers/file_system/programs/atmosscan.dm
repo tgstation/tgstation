@@ -5,7 +5,7 @@
 	extended_desc = "A small built-in sensor reads out the atmospheric conditions around the device."
 	network_destination = "atmos scan"
 	size = 4
-	tgui_id = "ntos_atmos"
+	tgui_id = "NtosAtmos"
 	ui_x = 300
 	ui_y = 350
 

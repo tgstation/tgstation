@@ -172,7 +172,7 @@
 
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "medical_kiosk", name, 625, 550, master_ui, state)
+		ui = new(user, src, ui_key, "MedicalKiosk", name, 575, 420, master_ui, state)
 		ui.open()
 		icon_state = "kiosk_off"
 		RefreshParts()
@@ -236,29 +236,18 @@
 			trauma_text += trauma_desc
 		trauma_status = "Cerebral traumas detected: patient appears to be suffering from [english_list(trauma_text)]."
 
-	var/chem_status = FALSE
-	var/chemical_list= list()
-	var/overdose_status = FALSE
+	var/chemical_list = list()
 	var/overdose_list = list()
-	var/addict_status = FALSE
 	var/addict_list = list()
 	var/hallucination_status = "Patient is not hallucinating."
 
-	for(var/datum/reagent/R in altPatient.reagents.reagent_list)
-		if(R.overdosed)
-			overdose_status = TRUE
-
 	if(altPatient.reagents.reagent_list.len)	//Chemical Analysis details.
-		chem_status = TRUE
 		for(var/datum/reagent/R in altPatient.reagents.reagent_list)
 			chemical_list += list(list("name" = R.name, "volume" = round(R.volume, 0.01)))
 			if(R.overdosed == 1)
 				overdose_list += list(list("name" = R.name))
-	else
-		chemical_list = "Patient contains no reagents"
 
 	if(altPatient.reagents.addiction_list.len)
-		addict_status = TRUE
 		for(var/datum/reagent/R in altPatient.reagents.addiction_list)
 			addict_list += list(list("name" = R.name))
 	if (altPatient.hallucinating())
@@ -296,7 +285,6 @@
 	else if (user.hallucinating())
 		chaos_modifier = 0.3
 
-
 	data["kiosk_cost"] = active_price + (chaos_modifier * (rand(1,25)))
 	data["patient_name"] = patient_name
 	data["patient_health"] = round(((total_health - (chaos_modifier * (rand(1,50)))) / max_health) * 100, 0.001)
@@ -316,18 +304,15 @@
 	data["bleed_status"] = bleed_status
 	data["blood_levels"] = blood_percent - (chaos_modifier * (rand(1,35)))
 	data["blood_status"] = blood_status
-	data["are_chems_present"] = chem_status ? TRUE : FALSE
 	data["chemical_list"] = chemical_list
-	data["are_overdoses_present"] = overdose_status ? TRUE : FALSE
-	data["overdose_status"] = overdose_list
-	data["are_addictions_present"] = addict_status ? TRUE : FALSE
-	data["addiction_status"] = addict_list
+	data["overdose_list"] = overdose_list
+	data["addict_list"] = addict_list
 	data["hallucinating_status"] = hallucination_status
 
-	data["active_status_1"] = scan_active_1 ? FALSE : TRUE //General Scan Check
-	data["active_status_2"] = scan_active_2 ? FALSE : TRUE	//Symptom Scan Check
-	data["active_status_3"] = scan_active_3 ? FALSE : TRUE	//Radio-Neuro Scan Check
-	data["active_status_4"] = scan_active_4 ? FALSE : TRUE	//Radio-Neuro Scan Check
+	data["active_status_1"] = scan_active_1 // General Scan Check
+	data["active_status_2"] = scan_active_2	// Symptom Scan Check
+	data["active_status_3"] = scan_active_3	// Radio-Neuro Scan Check
+	data["active_status_4"] = scan_active_4	// Radio-Neuro Scan Check
 	return data
 
 /obj/machinery/medical_kiosk/ui_act(action,active)

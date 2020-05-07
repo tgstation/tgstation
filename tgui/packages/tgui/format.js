@@ -1,4 +1,4 @@
-import { clamp, toFixed } from 'common/math';
+import { clamp, round, toFixed } from 'common/math';
 
 const SI_SYMBOLS = [
   'f', // femto
@@ -28,7 +28,11 @@ const SI_BASE_INDEX = SI_SYMBOLS.indexOf(' ');
  * Formats a number to a human readable form, by reducing it to SI units.
  * TODO: This is quite a shit code and shit math, needs optimization.
  */
-const formatSiUnit = (value, minBase1000 = -SI_BASE_INDEX, unit = '') => {
+export const formatSiUnit = (
+  value,
+  minBase1000 = -SI_BASE_INDEX,
+  unit = ''
+) => {
   const realBase10 = Math.floor(Math.log10(value));
   const base10 = Math.floor(Math.max(minBase1000 * 3, realBase10));
   const realBase1000 = Math.floor(realBase10 / 3);
@@ -53,4 +57,31 @@ const formatSiUnit = (value, minBase1000 = -SI_BASE_INDEX, unit = '') => {
 
 export const formatPower = (value, minBase1000 = 0) => {
   return formatSiUnit(value, minBase1000, 'W');
+};
+
+export const formatMoney = (value, precision = 0) => {
+  if (!Number.isFinite(value)) {
+    return value;
+  }
+  // Round the number and make it fixed precision
+  let fixed = round(value, precision);
+  if (precision > 0) {
+    fixed = toFixed(value, precision);
+  }
+  fixed = String(fixed);
+  // Place thousand separators
+  const length = fixed.length;
+  let indexOfPoint = fixed.indexOf('.');
+  if (indexOfPoint === -1) {
+    indexOfPoint = length;
+  }
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    if (i > 0 && i < indexOfPoint && (indexOfPoint - i) % 3 === 0) {
+      // Thin space
+      result += '\u2009';
+    }
+    result += fixed.charAt(i);
+  }
+  return result;
 };

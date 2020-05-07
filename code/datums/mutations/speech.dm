@@ -14,7 +14,7 @@
 
 /datum/mutation/human/wacky
 	name = "Wacky"
-	desc = "<span class='sans'>Unknown.</span>"
+	desc = "You are not a clown. You are the entire circus."
 	quality = MINOR_NEGATIVE
 	text_gain_indication = "<span class='sans'>You feel an off sensation in your voicebox.</span>"
 	text_lose_indication = "<span class='notice'>The off sensation passes.</span>"

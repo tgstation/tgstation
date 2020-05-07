@@ -21,6 +21,7 @@
 #define BZ_HEAT_PENALTY 5
 #define H2O_HEAT_PENALTY 8  //still under testing, but should be enough to make a lot of heat
 #define FREON_HEAT_PENALTY -10 //very good heat absorbtion and less plasma and o2 generation
+#define HYDROGEN_HEAT_PENALTY 10 // similar heat penalty as tritium (dangerous)
 
 
 //All of these get divided by 10-bzcomp * 5 before having 1 added and being multiplied with power to determine rads
@@ -31,12 +32,14 @@
 #define TRITIUM_TRANSMIT_MODIFIER 30 //We divide by 10, so this works out to 3
 #define PLUOXIUM_TRANSMIT_MODIFIER -5 //Should halve the power output
 #define H2O_TRANSMIT_MODIFIER -9
+#define HYDROGEN_TRANSMIT_MODIFIER 25 //increase the radiation emission, but less than the trit (2.5)
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define PLUOXIUM_HEAT_RESISTANCE 3
 #define H2O_HEAT_RESISTANCE 10
+#define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
 #define POWERLOSS_INHIBITION_MOLE_THRESHOLD 20        //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
@@ -110,7 +113,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	critical_machine = TRUE
 
 	//If we ever start to care about all gasses, make this based on type and apply it as a for loop
-	var/list/gas_trans = list("PL" = PLASMA_TRANSMIT_MODIFIER, "WV" = H2O_TRANSMIT_MODIFIER, "O2" = OXYGEN_TRANSMIT_MODIFIER, "TRIT" = TRITIUM_TRANSMIT_MODIFIER, "PLX" = PLUOXIUM_TRANSMIT_MODIFIER, "BZ" = BZ_TRANSMIT_MODIFIER)
+	var/list/gas_trans = list("PL" = PLASMA_TRANSMIT_MODIFIER, "WV" = H2O_TRANSMIT_MODIFIER, "O2" = OXYGEN_TRANSMIT_MODIFIER, "TRIT" = TRITIUM_TRANSMIT_MODIFIER, "PLX" = PLUOXIUM_TRANSMIT_MODIFIER, "BZ" = BZ_TRANSMIT_MODIFIER, "H2" = HYDROGEN_TRANSMIT_MODIFIER)
 	var/gasefficency = 0.15
 
 	var/base_icon_state = "darkmatter"
@@ -147,6 +150,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/pluoxiumcomp = 0
 	var/h2ocomp = 0
 	var/freoncomp = 0
+	var/h2comp = 0
 
 	var/pluoxiumbonus = 0
 	///used when calculating if the heat resitance from h2o is applied
@@ -426,7 +430,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//This means we can only deal 1.8 damage per function call
 			damage = min(damage_archived + (DAMAGE_HARDCAP * explosion_point),damage)
 
-		removed.assert_gases(/datum/gas/oxygen, /datum/gas/water_vapor, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz, /datum/gas/freon)
+		removed.assert_gases(/datum/gas/oxygen, /datum/gas/water_vapor, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz, /datum/gas/freon, /datum/gas/hydrogen)
 		//calculating gas related values
 		//Wanna know a secret? See that max() to zero? it's used for error checking. If we get a mol count in the negative, we'll get a divide by zero error
 		combined_gas = max(removed.total_moles(), 0)
@@ -448,6 +452,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		n2comp += clamp(max(removed.gases[/datum/gas/nitrogen][MOLES]/combined_gas, 0) - n2comp, -1, gas_change_rate)
 		h2ocomp += clamp(max(removed.gases[/datum/gas/water_vapor][MOLES]/combined_gas, 0) - h2ocomp, -1, gas_change_rate)
 		freoncomp += clamp(max(removed.gases[/datum/gas/freon][MOLES]/combined_gas, 0) - freoncomp, -1, gas_change_rate)
+		h2comp += clamp(max(removed.gases[/datum/gas/hydrogen][MOLES]/combined_gas, 0) - h2comp, -1, gas_change_rate)
 
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		if(pluoxiumcomp >= 0.15)
@@ -482,7 +487,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				h2ofixed = 2
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
-		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp - pluoxiumcomp - n2comp - freoncomp) * h2omalus), 0), 1)
+		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp + h2comp - pluoxiumcomp - n2comp - freoncomp) * h2omalus), 0), 1)
 		//Minimum value of 1.5, maximum value of 23
 		dynamic_heat_modifier = plasmacomp * PLASMA_HEAT_PENALTY
 		dynamic_heat_modifier += o2comp * OXYGEN_HEAT_PENALTY
@@ -492,11 +497,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		dynamic_heat_modifier += n2comp * NITROGEN_HEAT_PENALTY
 		dynamic_heat_modifier += bzcomp * BZ_HEAT_PENALTY
 		dynamic_heat_modifier += freoncomp * FREON_HEAT_PENALTY
+		dynamic_heat_modifier += h2comp * HYDROGEN_HEAT_PENALTY
 		dynamic_heat_modifier *= h2omalus
 		dynamic_heat_modifier += h2ocomp * H2O_HEAT_PENALTY * h2ofixed
 		dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
 		//Value between 1 and 10
-		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((h2ocomp * H2O_HEAT_RESISTANCE) * h2obonus) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus), 1)
+		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((h2ocomp * H2O_HEAT_RESISTANCE) * h2obonus) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus) + (h2comp * HYDROGEN_HEAT_RESISTANCE), 1)
 		//Value between 30 and -5, used to determine radiation output as it concerns things like collectors
 		power_transmission_bonus = plasmacomp * gas_trans["PL"]
 		power_transmission_bonus += o2comp * gas_trans["O2"]
@@ -504,6 +510,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		power_transmission_bonus += bzcomp * gas_trans["BZ"]
 		power_transmission_bonus += tritiumcomp * gas_trans["TRIT"]
 		power_transmission_bonus += (pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus
+		power_transmission_bonus += h2comp * gas_trans["H2"]
 		power_transmission_bonus *= h2omalus
 
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
@@ -603,7 +610,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/zap_count = 0
 		//Deal with power zaps
 		switch(power)
-			if(POWER_PENALTY_THRESHOLD to SEVERE_POWER_PENALTY_THRESHOLD)
+			if(0 to SEVERE_POWER_PENALTY_THRESHOLD)
 				zap_icon = DEFAULT_ZAP_ICON_STATE
 				zap_count = 2
 			if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
@@ -958,8 +965,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//If the strength of the zap decays past the cutoff, we stop
 	if(zap_str < zap_cutoff)
 		return
-	var/datum/target
-	var/target_type = (LOWEST)
+	var/atom/target
+	var/target_type = LOWEST
 	var/list/arctargets = list()
 	//Making a new copy so additons further down the recursion do not mess with other arcs
 	//Lets put this ourself into the do not hit list, so we don't curve back to hit the same thing twice with one arc
@@ -1046,8 +1053,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Going boom should be rareish
 		if(prob(80))
 			zap_flags &= ~ZAP_MACHINE_EXPLOSIVE
-		if(istype(target, /obj/machinery/power/tesla_coil))
-			var/obj/machinery/power/tesla_coil/coil = target
+		if(target_type == COIL)
 			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4
 			var/multi = 10
@@ -1056,33 +1062,29 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					multi = 20
 				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
 					multi = 40
-			coil.zap_act(zap_str * multi, zap_flags, list())
+			target.zap_act(zap_str * multi, zap_flags, list())
 			zap_str /= 3 //Coils should take a lot out of the power of the zap
 
-		else if(istype(target, /obj/machinery/power/grounding_rod))
-			var/obj/machinery/power/grounding_rod/rod = target
+		else if(target_type == ROD)
 			//We can expect this to do very little, maybe shock the poor soul buckled to it, but that's all.
 			//This is one of our endpoints, if the bolt hits a grounding rod, it stops jumping
-			rod.zap_act(zap_str, zap_flags, list())
+			target.zap_act(zap_str, zap_flags, list())
 			return
 
 		else if(isliving(target))//If we got a fleshbag on our hands
-			var/mob/living/mob = target
-			mob.set_shocked()
-			addtimer(CALLBACK(mob, /mob/living/proc/reset_shocked), 10)
+			var/mob/living/creature = target
+			creature.set_shocked()
+			addtimer(CALLBACK(creature, /mob/living/proc/reset_shocked), 10)
 			//3 shots a human with no resistance. 2 to crit, one to death. This is at at least 10000 power.
 			//There's no increase after that because the input power is effectivly capped at 10k
 			//Does 1.5 damage at the least
 			var/shock_damage = ((zap_flags & ZAP_MOB_DAMAGE) ? (power / 200) - 10 : rand(5,10))
-			mob.electrocute_act(shock_damage, "Supermatter Discharge Bolt", 1,  ((zap_flags & ZAP_MOB_STUN) ? SHOCK_TESLA : SHOCK_NOSTUN))
+			creature.electrocute_act(shock_damage, "Supermatter Discharge Bolt", 1,  ((zap_flags & ZAP_MOB_STUN) ? SHOCK_TESLA : SHOCK_NOSTUN))
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
 
-		else if(isobj(target))
-			var/obj/junk = target
-			junk.zap_act(zap_str, zap_flags, list())
-			zap_str /= 2 // worse then living things, better then coils
 		else
-			zap_str = 0
+			target.zap_act(zap_str, zap_flags, list())
+			zap_str /= 2 // worse then living things, better then coils
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
 		var/pressure = 1

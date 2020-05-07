@@ -41,7 +41,7 @@
 	else
 		return ..()
 
-/obj/item/grenade/c4/prime()
+/obj/item/grenade/c4/prime(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
 
@@ -61,7 +61,7 @@
 			explosion(get_step(T, aim_dir), boom_sizes[1], boom_sizes[2], boom_sizes[3])
 		else
 			explosion(location, boom_sizes[1], boom_sizes[2], boom_sizes[3])
-	resolve()
+	qdel(src)
 
 //assembly stuff
 /obj/item/grenade/c4/receive_signal()
@@ -149,7 +149,7 @@
 	shout_syndicate_crap(user)
 	explosion(user,0,2,0) //Cheap explosion imitation because putting prime() here causes runtimes
 	user.gib(1, 1)
-	resolve()
+	qdel(src)
 
 // X4 is an upgraded directional variant of c4 which is relatively safe to be standing next to. And much less safe to be standing on the other side of.
 // C4 is intended to be used for infiltration, and destroying tech. X4 is intended to be used for heavy breaching and tight spaces.

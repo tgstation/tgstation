@@ -364,6 +364,11 @@
 	. = ..()
 	icon_state = "plant-[rand(26, 29)]"
 
+/obj/item/kirbyplants/potty
+	name = "Potty the Potted Plant"
+	desc = "A secret agent staffed in the station's bar to protect the mystical cakehat."
+	icon_state = "potty"
+
 //a rock is flora according to where the icon file is
 //and now these defines
 

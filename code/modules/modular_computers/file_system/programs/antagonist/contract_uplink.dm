@@ -8,7 +8,7 @@
 	available_on_ntnet = 0
 	unsendable = 1
 	undeletable = 1
-	tgui_id = "synd_contract"
+	tgui_id = "SyndContractor"
 	ui_x = 500
 	ui_y = 600
 	var/error = ""

@@ -176,7 +176,7 @@
 										datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "mulebot", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Mule", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /mob/living/simple_animal/bot/mulebot/ui_data(mob/user)

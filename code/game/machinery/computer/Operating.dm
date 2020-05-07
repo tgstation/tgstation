@@ -23,12 +23,12 @@
 	find_table()
 
 /obj/machinery/computer/operating/Destroy()
-	for(var/direction in GLOB.cardinals)
-		table = locate(/obj/structure/table/optable, get_step(src, direction))
+	for(var/direction in GLOB.alldirs)
+		table = locate(/obj/structure/table/optable) in get_step(src, direction)
 		if(table && table.computer == src)
 			table.computer = null
 		else
-			sbed = locate(/obj/machinery/stasis, get_step(src, direction))
+			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
 			if(sbed && sbed.op_computer == src)
 				sbed.op_computer = null
 	. = ..()
@@ -52,13 +52,13 @@
 		advanced_surgeries |= D.surgery
 
 /obj/machinery/computer/operating/proc/find_table()
-	for(var/direction in GLOB.cardinals)
-		table = locate(/obj/structure/table/optable, get_step(src, direction))
+	for(var/direction in GLOB.alldirs)
+		table = locate(/obj/structure/table/optable) in get_step(src, direction)
 		if(table)
 			table.computer = src
 			break
 		else
-			sbed = locate(/obj/machinery/stasis, get_step(src, direction))
+			sbed = locate(/obj/machinery/stasis) in get_step(src, direction)
 			if(sbed)
 				sbed.op_computer = src
 				break
@@ -66,7 +66,7 @@
 /obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.not_incapacitated_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "operating_computer", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "OperatingComputer", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/operating/ui_data(mob/user)
@@ -82,21 +82,20 @@
 	data["patient"] = null
 	if(table)
 		data["table"] = table
-		if(!table.check_patient())
+		if(!table.check_eligible_patient())
 			return data
 		data["patient"] = list()
 		patient = table.patient
 	else
 		if(sbed)
 			data["table"] = sbed
-			if(!sbed.check_patient())
+			if(!ishuman(sbed.occupant) &&  !ismonkey(sbed.occupant))
 				return data
 			data["patient"] = list()
 			patient = sbed.occupant
 		else
 			data["patient"] = null
 			return data
-
 	switch(patient.stat)
 		if(CONSCIOUS)
 			data["patient"]["stat"] = "Conscious"
@@ -118,8 +117,8 @@
 	data["patient"]["fireLoss"] = patient.getFireLoss()
 	data["patient"]["toxLoss"] = patient.getToxLoss()
 	data["patient"]["oxyLoss"] = patient.getOxyLoss()
+	data["procedures"] = list()
 	if(patient.surgeries.len)
-		data["procedures"] = list()
 		for(var/datum/surgery/procedure in patient.surgeries)
 			var/datum/surgery_step/surgery_step = procedure.get_surgery_step()
 			var/chems_needed = surgery_step.get_chem_list()

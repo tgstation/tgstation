@@ -99,6 +99,11 @@
 	unit_name = "cable piece"
 	export_types = list(/obj/item/stack/cable_coil)
 
+/datum/export/stack/ammonia_crystals
+	cost = 25
+	unit_name = "of ammonia crystal"
+	export_types = list(/obj/item/stack/ammonia_crystals)
+
 // Weird Stuff
 
 /datum/export/stack/abductor
