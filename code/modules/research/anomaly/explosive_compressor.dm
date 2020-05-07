@@ -79,12 +79,53 @@
 	var/radius = clamp(round(MIN_RADIUS_REQUIRED + radius_increase_per_core * already_made, 1), MIN_RADIUS_REQUIRED, MAX_RADIUS_REQUIRED)
 	return radius
 
+/obj/machinery/research/explosive_compressor/attackby(obj/item/I, mob/living/user, params)
+	. = ..()
+	if(istype(I, /obj/item/transfer_valve))
+		// If they don't have a bomb core inserted, don't let them insert this. If they do, insert and do implosion.
+		if(!inserted_core)
+			to_chat(user, "<span class='warning'>There is no core inserted in [src]. What would be the point of detonating an implosion without a core?</span>")
+			return
+		var/obj/item/transfer_valve/V = I
+		if(!V.ready())
+			to_chat(user, "<span class='warning'>[V] is incomplete.</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			to_chat(user, "<span class='warning'>[I] is stuck to your hand.</span>")
+			return
+		inserted_bomb = I
+		do_implosion()
+
 /**
   * The ""explosion"" proc.
   */
 /obj/machinery/research/explosive_compressor/proc/do_implosion()
 	var/required_radius = get_required_radius(inserted_core.anomaly_type)
-
+	// By now, we should be sure that we have a core, a TTV, and that the TTV has both tanks in place.
+	var/datum/gas_mixture/mix1 = inserted_bomb.tank_one.air
+	var/datum/gas_mixture/mix2 = inserted_bomb.tank_two.air
+	// Snowflaked tank explosion
+	var/datum/gas_mixture/mix = new(70) // Standard tank volume, 70L
+	mix.merge(mix1)
+	mix.merge(mix2)
+	mix.react()
+	if(mix < TANK_FRAGMENT_PRESSURE)
+		// They failed so miserably we're going to give them their bomb back.
+		inserted_bomb.forceMove(drop_location())
+		inserted_core.forceMove(drop_locatino())
+		say("Transfer valve resulted in negligible explosive power. Items ejected.")
+		return
+	mix.react()		// build more pressure
+	var/pressure = mix.return_pressure()
+	var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
+	QDEL_NULL(inserted_bomb)	// bomb goes poof
+	if(range < required_radius)
+		inserted_bomb.forceMove(src)
+		say("Resultant detonation failed to produce enough implosive power to compress [inserted_core]. Core ejected.")
+		return
+	inserted_core.create_core(drop_location(), TRUE, TRUE)
+	inserted_core = null
+	say("Success. Resultant detonation has theoretical range of [range]. Required radius was [required_radius]. Core production complete.")
 
 #undef MAX_RADIUS_REQUIRED
 #undef MIN_RADIUS_REQUIRED
