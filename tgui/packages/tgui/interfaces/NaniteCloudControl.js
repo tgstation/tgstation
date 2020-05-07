@@ -245,7 +245,7 @@ export const NaniteCloudBackupDetails = (props, context) => {
                   )}>
                   {program.has_rules ? (
                     rules.map(rule => (
-                      <Fragment key={rule.display}>
+                      <Box key={rule.display}>
                         <Button
                           icon="minus-circle"
                           color="bad"
@@ -253,8 +253,8 @@ export const NaniteCloudBackupDetails = (props, context) => {
                             program_id: program.id,
                             rule_id: rule.id,
                           })} />
-                        {` ${rule.display}`}<br />
-                      </Fragment>
+                        {` ${rule.display}`}
+                      </Box>
                     ))
                   ) : (
                     <Box color="bad">
