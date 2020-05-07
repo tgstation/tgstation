@@ -93,8 +93,17 @@
 		return
 
 	var/emotion_to_use = "Neutral"
-	if(character_to_use == "GLaDOS")
-		emotion_to_use = "Homicidal"
+	switch(character_to_use)
+		if("GLaDOS (Homicidal)")
+			emotion_to_use = "Homicidal"
+			character_to_use = "GLaDOS"
+		if("GLaDOS (Neutral)")
+			character_to_use = "GLaDOS"
+		if("Twilight Sparkle (Happy)")
+			emotion_to_use = "Happy"
+			character_to_use = "Twilight Sparkle"
+		if("Twilight Sparkle (Neutral)")
+			character_to_use = "Twilight Sparkle"
 	last_announcement = message
 
 	announcing_vox = world.time + VOX_DELAY
