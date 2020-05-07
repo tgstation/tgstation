@@ -7,7 +7,7 @@
 	starting_node = TRUE
 	display_name = "Basic Research Technology"
 	description = "NT default research technologies."
-	department = DEPARTMENTAL_FLAG_ALL
+	department = DEPARTMENTAL_FLAG_ALL ///Which department the research belongs to. Will sort into specific lists. This is for display and point purposes.
 	// Default research tech, prevents bricking
 	design_ids = list("basic_matter_bin", "basic_cell", "basic_scanning", "basic_capacitor", "basic_micro_laser", "micro_mani", "desttagger", "handlabel", "packagewrap",
 					"destructive_analyzer", "circuit_imprinter", "experimentor", "rdconsole", "bepis", "design_disk", "tech_disk", "rdserver", "rdservercontrol", "mechfab",
