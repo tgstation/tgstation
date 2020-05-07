@@ -37,9 +37,9 @@
 	last_requirements_say = world.time
 	say_requirements(inserted_core)
 
-/obj/machinery/research/explosive_compressor/CtrlClick(mob/user)
+/obj/machinery/research/explosive_compressor/CtrlClick(mob/living/user)
 	. = ..()
-	if(user.Adjacent(src) && (user.mobility_flags & MOBILLITY_USE))
+	if(istype(user) && user.Adjacent(src) && (user.mobility_flags & MOBILITY_USE))
 		if(!inserted_core)
 			to_chat(user, "<span class='warning'>There is no core inserted.</span>")
 			return
