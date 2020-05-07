@@ -74,7 +74,7 @@
 
 /obj/structure/closet/crate/maint/PopulateContents()
 	. = ..()
-	for(var/i in 1 to (rand(-2,2)+4))
+	for(var/i in 1 to rand(2,6))
 		new /obj/effect/spawner/lootdrop/maintenance(src)
 
 /obj/structure/closet/crate/coffin
@@ -108,7 +108,7 @@
 
 /obj/structure/closet/crate/trashcart/filled/PopulateContents()
 	. = ..()
-	for(var/i in 1 to (rand(-4,4)+12))
+	for(var/i in 1 to rand(7,15))
 		new /obj/effect/spawner/lootdrop/garbage_spawner(src)
 		if(prob(12))
 			new	/obj/item/storage/bag/trash/filled(src)

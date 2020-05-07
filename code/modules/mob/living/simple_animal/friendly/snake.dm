@@ -70,3 +70,4 @@
 
 /mob/living/simple_animal/hostile/retaliate/poison/snake/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_SNAKE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
+

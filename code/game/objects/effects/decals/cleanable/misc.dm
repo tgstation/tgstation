@@ -244,7 +244,7 @@
 	desc = "A split open garbage bag, its stinking content seems to be partially liquified. Yuck!"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "garbage"
-	layer = LOW_OBJ_LAYER //To display the decal over wires.
+	layer = OBJ_LAYER //To display the decal over wires.
 	beauty = -150
 
 /obj/effect/decal/cleanable/garbage/Initialize()

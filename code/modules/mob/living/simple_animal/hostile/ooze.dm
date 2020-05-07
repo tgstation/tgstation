@@ -1,4 +1,4 @@
-///Oozes are slime-esque creatures unlike xenobio slimes that feed off of a lot of things.
+///Oozes are slime-esque creatures, they are highly gluttonous creatures primarily intended for player controll.
 /mob/living/simple_animal/hostile/ooze
 	name = "Ooze"
 	icon = 'icons/mob/vatgrowing.dmi'
@@ -12,21 +12,20 @@
 	speak_emote = list("blorbles")
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	hud_type = /datum/hud/ooze
-	//minbodytemp = 250
-	//maxbodytemp = 350
-	//healable = FALSE
-
-	//speak_chance = 0
-	//maxHealth = 100
-	//health = 100
-
-	//harm_intent_damage = 5
+	minbodytemp = 250
+	maxbodytemp = INFINITY
+	faction = list("slime")
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	//attack_verb_continuous = "bites"
-	//attack_verb_simple = "bite"
-	//attack_sound = 'sound/hallucinations/growl1.ogg'
+	health = 200
+	maxHealth = 200
+	attack_verb_continuous = "slimes"
+	attack_verb_simple = "slime"
+	attack_sound = 'sound/effects/blobattack.ogg'
 	a_intent = INTENT_HARM
+	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
+	mob_size = MOB_SIZE_LARGE
+	initial_language_holder = /datum/language_holder/slime
 
 	///Oozes have their own nutrition. Changes based on them eating
 	var/ooze_nutrition = 50
@@ -37,6 +36,7 @@
 	. = ..()
 	create_reagents(300)
 	add_cell_sample()
+	AddComponent(/datum/component/footstep, FOOTSTEP_MOB_SLIME, 7.5)
 
 /mob/living/simple_animal/hostile/ooze/attacked_by(obj/item/I, mob/living/user)
 	if(!check_edible(I))
@@ -103,11 +103,17 @@
 ///* Gelatinious Ooze code below *\\\\
 
 
-///Child of the ooze mob which is fast and is more suited for assassin esque behavior.
+///Its good stats and high mobility makes this a good assasin type creature. It's vulnerabilites against cold, shotguns and
 /mob/living/simple_animal/hostile/ooze/gelatinous
 	name = "Gelatinous Cube"
-	desc = "It's a gummy cube, it's a gummy cube, it's a gummy gummy gummy gummy gummy cube."
+	desc = "A cubic ooze native to Sholus VII.\nSince the advent of space travel this species has established itself in the waste treatment facilities of several space colonies.\nIt is often considered to be the third most infamous invasive species due to its highly agressive and predatory nature."
 	speed = 1
+	damage_coeff = list(BRUTE = 1, BURN = 0.6, TOX = 0.5, CLONE = 1.5, STAMINA = 0, OXY = 1)
+	melee_damage_lower = 20
+	melee_damage_upper = 20
+	armour_penetration = 15
+	obj_damage = 20
+	deathmessage = "collapses into a pile of goo!"
 	///The ability to give yourself a metabolic speed boost which raises heat
 	var/datum/action/cooldown/metabolicboost/boost
 	///The ability to consume mobs
@@ -166,7 +172,7 @@
 ///Heat up the mob a little
 /datum/action/cooldown/metabolicboost/proc/HeatUp()
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
-	ooze.adjust_bodytemperature(5)
+	ooze.adjust_bodytemperature(50)
 
 ///Remove the speed modifier and delete the timer for heating up
 /datum/action/cooldown/metabolicboost/proc/FinishSpeedup(timerid)
@@ -220,7 +226,7 @@
 ///Start allowing this datum to process to handle the damage done to  this mob.
 /datum/action/consume/proc/start_consuming(mob/living/target)
 	vored_mob = target
-	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!! VORE!!!!
+	vored_mob.forceMove(owner) ///AAAAAAAAAAAAAAAAAAAAAAHHH!!!
 	playsound(owner,'sound/items/eatfood.ogg', rand(30,50), TRUE)
 	owner.visible_message("<span class='warning>[src] devours [target]!</span>", "<span class='notice'>You devour [target].</span>")
 	START_PROCESSING(SSprocessing, src)
@@ -251,16 +257,23 @@
 
 ///* Gelatinious Grapes code below *\\\\
 
-///Child of the ooze mob which is orientated at being a support role with minor healing capabilities
+///Child of the ooze mob which is orientated at being a healer type creature.
 /mob/living/simple_animal/hostile/ooze/grapes
 	name = "Sholean grapes"
-	desc = "It's a gummy cube, it's a gummy cube, it's a gummy gummy gummy gummy gummy cube."
+	desc = "A botryoidal ooze from Sholus VII.\nXenobiologists consider it to be one of the calmer and more agreeable species on the planet, but so far little is known about its behaviour in the wild.\nIt undulates in a comforting manner."
 	icon_state = "grapes"
 	icon_dead = "grapes_dead"
 	speed = 1
-	///The ability to give yourself a metabolic speed boost which raises heat
+	health = 200
+	maxHealth = 200
+	damage_coeff = list(BRUTE = 1, BURN = 0.8, TOX = 0.5, CLONE = 1.5, STAMINA = 0, OXY = 1)
+	melee_damage_lower = 12
+	melee_damage_upper = 12
+	obj_damage = 15
+	deathmessage = "deflates and spills its vital juices!"
+	///The ability lets you envelop a carbon in a healing cocoon. Useful for saving critical carbons.
 	var/datum/action/cooldown/gel_cocoon/gel_cocoon
-	///The ability to consume mobs
+	///The ability to shoot a mending globule, a sticky projectile that heals over time.
 	var/obj/effect/proc_holder/globules/globules
 
 /mob/living/simple_animal/hostile/ooze/grapes/Initialize()
@@ -396,7 +409,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/mob/living/simple_animal/hostile/ooze/gelatinous/ooze = owner
+	var/mob/living/simple_animal/hostile/ooze/grapes/ooze = owner
 	if(!ooze.pulling)
 		to_chat(src, "<span class='warning'>You need to be pulling a creature for this to work!</span>")
 		return FALSE

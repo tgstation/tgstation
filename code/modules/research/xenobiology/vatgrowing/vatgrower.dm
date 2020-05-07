@@ -3,6 +3,7 @@
 	name = "growing vat"
 	desc = "Tastes just like the chef's soup."
 	icon_state = "growing_vat"
+	buffer = 200
 	///List of all microbiological samples in this soup.
 	var/datum/biological_sample/biological_sample
 
@@ -17,7 +18,7 @@
 		return
 	if(biological_sample)
 		biological_sample.HandleGrowth(src)
-		if(prob(30))
+		if(prob(10))
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 			audible_message(pick(list("<span class='notice'>[src] grumbles!</span>", "<span class='notice'>[src] makes a splashing noise!</span>", "<span class='notice'>[src] sloshes!</span>")))
 
@@ -35,10 +36,12 @@
 		to_chat(user, "<span class='warning'>There is already a sample in the vat!</span>")
 		return
 
-	biological_sample = petri.sample
-	petri.sample = null
-	petri.update_icon()
-	to_chat(user, "<span class='warning'>You put the sample in the vat!</span>")
+	biological_sample = new()
+	for(var/datum/micro_organism/m in petri.sample.micro_organisms)
+		biological_sample.micro_organisms += new m.type()
+	biological_sample.sample_layers = petri.sample.sample_layers
+	biological_sample.sample_color = petri.sample.sample_color
+	to_chat(user, "<span class='warning'>You put some of the sample in the vat!</span>")
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	update_icon()
 

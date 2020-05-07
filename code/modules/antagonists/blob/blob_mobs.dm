@@ -224,6 +224,9 @@
 /mob/living/simple_animal/hostile/blob/blobspore/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
+/mob/living/simple_animal/hostile/blob/blobspore/independent
+	independent = TRUE
+
 /mob/living/simple_animal/hostile/blob/blobspore/weak
 	name = "fragile blob spore"
 	health = 15

@@ -14,6 +14,7 @@
 	decay_factor = STANDARD_ORGAN_DECAY
 
 	food_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/iron = 5)
+	grind_results = list(/datum/reagent/consumable/nutriment/peptides = 5)
 
 	var/alcohol_tolerance = ALCOHOL_RATE//affects how much damage the liver takes from alcohol
 	var/toxTolerance = LIVER_DEFAULT_TOX_TOLERANCE//maximum amount of toxins the liver can just shrug off

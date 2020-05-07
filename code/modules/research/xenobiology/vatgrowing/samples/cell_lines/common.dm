@@ -235,7 +235,7 @@
 						/datum/reagent/consumable/tinlux = -6,
 						/datum/reagent/napalm = -4)
 	virus_suspectibility = 0
-	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobspore = 2) //These are useless so we might as well spawn 2.
+	resulting_atoms = list(/mob/living/simple_animal/hostile/blob/blobspore/independent = 2) //These are useless so we might as well spawn 2.
 
 /datum/micro_organism/cell_line/blobbernaut
 	desc = "Blobular myocytes"

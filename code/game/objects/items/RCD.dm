@@ -814,15 +814,19 @@ RLD
 	///
 	var/list/machinery_data = list("cost" = list(), "delay" = list())
 	///This list that holds all the plumbing design types the plumberer can construct. Its purpose is to make it easy to make new plumberer subtypes with a different selection of machines.
-	var/list/plumbing_design_types = list(/obj/machinery/plumbing/acclimator,
+	var/list/plumbing_design_types = list(
+										/obj/machinery/plumbing/synthesizer,
+										/obj/machinery/plumbing/input,
+										/obj/machinery/plumbing/output,
+										/obj/machinery/plumbing/reaction_chamber,
+										/obj/machinery/plumbing/tank,
+										/obj/machinery/plumbing/acclimator,
 										/obj/machinery/plumbing/disposer,
 										/obj/machinery/plumbing/filter,
 										/obj/machinery/plumbing/grinder_chemical,
 										/obj/machinery/plumbing/pill_press,
 										/obj/machinery/plumbing/liquid_pump,
-										/obj/machinery/plumbing/reaction_chamber,
-										/obj/machinery/plumbing/splitter,
-										/obj/machinery/plumbing/synthesizer)
+										/obj/machinery/plumbing/splitter)
 
 /obj/item/construction/plumbing/attack_self(mob/user)
 	..()
@@ -885,13 +889,17 @@ RLD
 	desc = "A type of plumbing constructor designed to rapidly deploy the machines needed to conduct cytological research."
 	icon_state = "plumberer_sci"
 	has_ammobar = TRUE
-	plumbing_design_types = list(/obj/machinery/plumbing/acclimator,
+	plumbing_design_types = list(
+								/obj/machinery/plumbing/growing_vat,
+								/obj/machinery/plumbing/input,
+								/obj/machinery/plumbing/output,
+								/obj/machinery/plumbing/tank,
+								/obj/machinery/plumbing/grinder_chemical,
 								/obj/machinery/plumbing/disposer,
 								/obj/machinery/plumbing/filter,
-								/obj/machinery/plumbing/grinder_chemical,
 								/obj/machinery/plumbing/reaction_chamber,
-								/obj/machinery/plumbing/splitter,
-								/obj/machinery/plumbing/growing_vat)
+								/obj/machinery/plumbing/acclimator,
+								/obj/machinery/plumbing/splitter)
 
 /obj/item/rcd_upgrade
 	name = "RCD advanced design disk"

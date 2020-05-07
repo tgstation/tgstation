@@ -4,6 +4,7 @@
 	desc = "Some men use these for different reasons."
 	icon = 'icons/obj/xenobiology/vatgrowing.dmi'
 	icon_state = "swab"
+	w_class = WEIGHT_CLASS_TINY
 
 ///Adds the swabbing component to the biopsy tool
 /obj/item/swab/Initialize()
