@@ -18,31 +18,31 @@
 /obj/item/raw_anomaly_core/bluespace
 	name = "raw bluespace core"
 	desc = "The raw core of a bluespace anomaly, glowing and full of potential."
-	anomaly_type = ANOMALY_TYPE_BLUESPACE
+	anomaly_type = /obj/item/assembly/signaler/anomaly/bluespace
 	icon_state = "rawcore_bluespace"
 
 /obj/item/raw_anomaly_core/vortex
 	name = "raw vortex core"
 	desc = "The raw core of a vortex anomaly. Feels heavy to the touch."
-	anomaly_type = ANOMALY_TYPE_VORTEX
+	anomaly_type = /obj/item/assembly/signaler/anomaly/vortex
 	icon_state = "rawcore_vortex"
 
 /obj/item/raw_anomaly_core/gravity
 	name = "raw gravity core"
 	desc = "The raw core of a gravity anomaly. The air seems attracted to it."
-	anomaly_type = ANOMALY_TYPE_GRAVITATIONAL
+	anomaly_type = /obj/item/assembly/signaler/anomaly/grav
 	icon_state = "rawcore_gravity"
 
 /obj/item/raw_anomaly_core/pyro
 	desc = "The raw core of a pyro anomaly. It is warm to the touch."
 	name = "raw pyro core"
-	anomaly_type = ANOMALY_TYPE_PYRO
+	anomaly_type = /obj/item/assembly/signaler/anomaly/pyro
 	icon_state = "rawcore_pyro"
 
 /obj/item/raw_anomaly_core/flux
 	name = "raw flux core"
 	desc = "The raw core of a flux anomaly, faintly crackling with energy."
-	anomaly_type = ANOMALY_TYPE_FLUX
+	anomaly_type = /obj/item/assembly/signaler/anomaly/flux
 	icon_state = "rawcore_flux"
 
 /**
@@ -54,19 +54,7 @@
   * * count_towards_limit - should we increment the amount of created cores on SSresearch
   */
 /obj/item/raw_anomaly_core/proc/create_core(newloc, del_self = FALSE, count_towards_limit = FALSE)
-	var/path
-	switch(anomaly_type)
-		if(ANOMALY_TYPE_BLUESPACE)
-			path = /obj/item/assembly/signaler/anomaly/bluespace
-		if(ANOMALY_TYPE_PYRO)
-			path = /obj/item/assembly/signaler/anomaly/pyro
-		if(ANOMALY_TYPE_FLUX)
-			path = /obj/item/assembly/signaler/anomaly/flux
-		if(ANOMALY_TYPE_GRAVITATIONAL)
-			path = /obj/item/assembly/signaler/anomaly/grav
-		if(ANOMALY_TYPE_VORTEX)
-			path = /obj/item/assembly/signaler/anomaly/vortex
-	. = new path(newloc)
+	. = new anomaly_type(newloc)
 	if(count_towards_limit)
 		var/existing = SSresearch.created_anomaly_types[anomaly_type] || 0
 		SSresearch.created_anomaly_types[anomaly_type] = existing + 1
