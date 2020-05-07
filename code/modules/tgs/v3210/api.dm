@@ -76,7 +76,8 @@
 		TGS_ERROR_LOG("This API version is only supported on Windows. Not running on Windows. Aborting initialization!")
 		return
 	ListServiceCustomCommands(TRUE)
-	ExportService("[SERVICE_REQUEST_API_VERSION] [ApiVersion()]", TRUE)
+	var/datum/tgs_version/api_version = ApiVersion()
+	ExportService("[SERVICE_REQUEST_API_VERSION] [api_version.deprefixed_parameter]", TRUE)
 	return TRUE
 
 //nothing to do for v3
@@ -166,7 +167,8 @@
 
 /datum/tgs_api/v3210/Revision()
 	if(!warned_revison)
-		TGS_ERROR_LOG("Use of TgsRevision on [ApiVersion()] origin_commit only points to master!")
+		var/datum/tgs_version/api_version = ApiVersion()
+		TGS_ERROR_LOG("Use of TgsRevision on [api_version.deprefixed_parameter] origin_commit only points to master!")
 		warned_revison = TRUE
 	var/datum/tgs_revision_information/ri = new
 	ri.commit = commit
