@@ -102,8 +102,8 @@
 /obj/machinery/research/explosive_compressor/proc/do_implosion()
 	var/required_radius = get_required_radius(inserted_core.anomaly_type)
 	// By now, we should be sure that we have a core, a TTV, and that the TTV has both tanks in place.
-	var/datum/gas_mixture/mix1 = inserted_bomb.tank_one.air
-	var/datum/gas_mixture/mix2 = inserted_bomb.tank_two.air
+	var/datum/gas_mixture/mix1 = inserted_bomb.tank_one.air_contents
+	var/datum/gas_mixture/mix2 = inserted_bomb.tank_two.air_contents
 	// Snowflaked tank explosion
 	var/datum/gas_mixture/mix = new(70) // Standard tank volume, 70L
 	mix.merge(mix1)
@@ -112,7 +112,7 @@
 	if(mix < TANK_FRAGMENT_PRESSURE)
 		// They failed so miserably we're going to give them their bomb back.
 		inserted_bomb.forceMove(drop_location())
-		inserted_core.forceMove(drop_locatino())
+		inserted_core.forceMove(drop_location())
 		say("Transfer valve resulted in negligible explosive power. Items ejected.")
 		return
 	mix.react()		// build more pressure

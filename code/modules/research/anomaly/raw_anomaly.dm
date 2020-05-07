@@ -27,7 +27,7 @@
 	anomaly_type = /obj/item/assembly/signaler/anomaly/vortex
 	icon_state = "rawcore_vortex"
 
-/obj/item/raw_anomaly_core/gravity
+/obj/item/raw_anomaly_core/grav
 	name = "raw gravity core"
 	desc = "The raw core of a gravity anomaly. The air seems attracted to it."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/grav
