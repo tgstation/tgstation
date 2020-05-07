@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stat Browser</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+body {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 14px;
+
+}
+a {
+	color: black;
+	text-decoration: none
+}
+a:hover, .dark a:hover {
+	text-decoration: underline;
+}
+.dark a{
+	color: #a4bad6;
+}
+</style>
+<script>
+// browser passthrough code copy pasted here
+if(document.addEventListener && window.location) { // hey maybe some bozo is still using mega-outdated IE
+	let anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
+	document.addEventListener("keydown", function(e) {
+		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
+			return;
+		if(e.defaultPrevented)
+			return; // do e.preventDefault() to prevent this behavior.
+		if(e.which) {
+			if(!anti_spam[e.which]) {
+				anti_spam[e.which] = true;
+				let href = "?__keydown=" + e.which;
+				if(e.ctrlKey === false) href += "&ctrlKey=0"
+				else if(e.ctrlKey === true) href += "&ctrlKey=1"
+				window.location.href = href;
+			}
+		}
+	});
+	document.addEventListener("keyup", function(e) {
+		if(e.target && (e.target.localName == "input" || e.target.localName == "textarea"))
+			return;
+		if(e.defaultPrevented)
+			return;
+		if(e.which) {
+			anti_spam[e.which] = false;
+			let href = "?__keyup=" + e.which;
+			if(e.ctrlKey === false) href += "&ctrlKey=0"
+			else if(e.ctrlKey === true) href += "&ctrlKey=1"
+			window.location.href = href;
+		}
+	});
+}
+
+if(!Array.prototype.includes) {
+	Array.prototype.includes = function(thing) {
+		for(let i = 0; i < this.length; i++) {
+			if(this[i] == thing) return true;
+		}
+		return false;
+	}
+}
+
+let status_tab_parts = ["MC not initialized..."];
+let current_tab = null;
+let mc_tab_parts = [["MC not initialized...", ""]];
+let href_token = null;
+let spells = [];
+let spell_tabs = [];
+
+function update(global_data, ping_entry, other_entries) {
+	status_tab_parts = [ping_entry];
+	let parsed = JSON.parse(global_data);
+	for(let i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	parsed = JSON.parse(other_entries);
+	for(let i = 0; i < parsed.length; i++) if(parsed[i] != null) status_tab_parts.push(parsed[i]);
+	if(current_tab == "Status")
+		draw_status();
+}
+
+function update_mc(global_mc_data, coords_entry, ht) {
+	mc_tab_parts = JSON.parse(global_mc_data);
+	mc_tab_parts.splice(0,0,["Location:",coords_entry]);
+	href_token = ht;
+	if(current_tab == "MC")
+		draw_mc();
+}
+
+function update_spells(t, s) {
+	spell_tabs = JSON.parse(t);
+	let do_update = false;
+	if(spell_tabs.includes(current_tab)) {
+		window.location.href = "byond://winset?statbrowser.is-visible=true";
+		do_update = true;
+	}
+	if(s) {
+		spells = JSON.parse(s);
+		if(do_update) {
+			draw_spells(current_tab);
+		}
+	}
+}
+
+function tab_change(tab) {
+	if(tab == current_tab) return;
+	current_tab = tab
+	let spell_tabs_thingy = (spell_tabs.includes(tab));
+	if(tab == "Status") {
+		draw_status();
+	} else if(tab == "MC") {
+		draw_mc();
+	} else if(spell_tabs_thingy) {
+		draw_spells(tab)
+	} else {
+		document.body.textContent = "...";
+	}
+	if(tab == "Status" || tab == "MC" || spell_tabs_thingy) {
+		window.location.href = "byond://winset?statbrowser.is-visible=true";
+	} else {
+		window.location.href = "byond://winset?statbrowser.is-visible=false";
+	}
+}
+
+function draw_status() {
+	document.body.innerHTML = "";
+	for(let i = 0; i < status_tab_parts.length; i++) {
+		if(status_tab_parts[i].trim() == "") {
+			document.body.appendChild(document.createElement("br"));
+		} else {
+			let div = document.createElement("div");
+			div.textContent = status_tab_parts[i];
+			document.body.appendChild(div);
+		}
+	}
+}
+
+function draw_mc() {
+	document.body.innerHTML = "";
+	let table = document.createElement("table");
+	for(let i = 0; i < mc_tab_parts.length; i++) {
+		let part = mc_tab_parts[i];
+		let tr = document.createElement("tr");
+		let td1 = document.createElement("td");
+		td1.textContent = part[0];
+		let td2 = document.createElement("td");
+		if(part[2]) {
+			let a = document.createElement("a");
+			a.href = "?_src_=vars;admin_token=" + href_token + ";Vars=" + part[2];
+			a.textContent = part[1];
+			td2.appendChild(a);
+		} else {
+			td2.textContent = part[1];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.body.appendChild(table);
+}
+
+function draw_spells(cat) {
+	document.body.innerHTML = "";
+	let table = document.createElement("table");
+	for(let i = 0; i < spells.length; i++) {
+		let part = spells[i];
+		//if(part[0] != cat) continue;
+		let tr = document.createElement("tr");
+		let td1 = document.createElement("td");
+		td1.textContent = part[1];
+		let td2 = document.createElement("td");
+		if(part[3]) {
+			let a = document.createElement("a");
+			a.href = "?src=" + part[3] + ";click=1";
+			a.textContent = part[2];
+			td2.appendChild(a);
+		} else {
+			td2.textContent = part[2];
+		}
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		table.appendChild(tr);
+	}
+	document.body.appendChild(table);
+}
+
+function set_light_theme() {
+	document.body.style.backgroundColor = "white";
+	document.body.style.color = "black";
+	document.body.className = "";
+}
+
+function set_dark_theme() {
+	document.body.style.backgroundColor = "#171717";
+	document.body.style.color = "#a4bad6";
+	document.body.className = "dark";
+}
+
+window.addEventListener("load", function() {
+	if(!current_tab) {
+		tab_change("Status");
+	}
+});
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

@@ -29,11 +29,9 @@
 	internal_organs += new /obj/item/organ/alien/plasmavessel/small/tiny
 	..()
 
-//This needs to be fixed
-/mob/living/carbon/alien/larva/Stat()
-	..()
-	if(statpanel("Status"))
-		stat(null, "Progress: [amount_grown]/[max_grown]")
+/mob/living/carbon/alien/get_status_tab_items()
+	. = ..()
+	. += "Intent: [a_intent]"
 
 /mob/living/carbon/alien/larva/adjustPlasma(amount)
 	if(stat != DEAD && amount > 0)

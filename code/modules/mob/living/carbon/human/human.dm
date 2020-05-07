@@ -52,25 +52,28 @@
 	//...and display them.
 	add_to_all_human_data_huds()
 
+/mob/living/carbon/human/get_status_tab_items()
+	. = ..()
+	. += "Intent: [a_intent]"
+	. += "Move Mode: [m_intent]"
+	if (internal)
+		if (!internal.air_contents)
+			qdel(internal)
+		else
+			. += ""
+			. += "Internal Atmosphere Info: [internal.name]"
+			. += "Tank Pressure: [internal.air_contents.return_pressure()]"
+			. += "Distribution Pressure: [internal.distribute_pressure]"
+
+	if(mind)
+		var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
+		if(changeling)
+			. += ""
+			. += "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]"
+			. += "Absorbed DNA: [changeling.absorbedcount]"
+
 /mob/living/carbon/human/Stat()
 	..()
-
-	if(statpanel("Status"))
-		stat(null, "Intent: [a_intent]")
-		stat(null, "Move Mode: [m_intent]")
-		if (internal)
-			if (!internal.air_contents)
-				qdel(internal)
-			else
-				stat(null, "Internal Atmosphere Info: [internal.name]")
-				stat(null, "Tank Pressure: [internal.air_contents.return_pressure()]")
-				stat(null, "Distribution Pressure: [internal.distribute_pressure]")
-
-		if(mind)
-			var/datum/antagonist/changeling/changeling = mind.has_antag_datum(/datum/antagonist/changeling)
-			if(changeling)
-				stat(null, "Chemical Storage: [changeling.chem_charges]/[changeling.chem_storage]")
-				stat(null, "Absorbed DNA: [changeling.absorbedcount]")
 
 	//NINJACODE
 	if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja)) //Only display if actually a ninja.

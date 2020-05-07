@@ -8,7 +8,7 @@ SUBSYSTEM_DEF(acid)
 	var/list/processing = list()
 
 /datum/controller/subsystem/acid/stat_entry()
-	..("P:[processing.len]")
+	return ..("P:[processing.len]")
 
 
 /datum/controller/subsystem/acid/fire(resumed = 0)

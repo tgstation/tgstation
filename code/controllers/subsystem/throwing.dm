@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(throwing)
 	var/list/processing = list()
 
 /datum/controller/subsystem/throwing/stat_entry()
-	..("P:[processing.len]")
+	return ..("P:[processing.len]")
 
 
 /datum/controller/subsystem/throwing/fire(resumed = 0)

@@ -680,6 +680,10 @@
 /mob/proc/is_muzzled()
 	return 0
 
+// Add to this list to output to the stat browser
+/mob/proc/get_status_tab_items()
+	. = list()
+
 /**
   * Output an update to the stat panel for the client
   *
@@ -687,30 +691,12 @@
   * and puts it in the mob status panel on a regular loop
   */
 /mob/Stat()
-	..()
+	. = ..()
 
-	if(statpanel("Status"))
-		if (client)
-			stat(null, "Ping: [round(client.lastping, 1)]ms (Average: [round(client.avgping, 1)]ms)")
-		stat(null, "Map: [SSmapping.config?.map_name || "Loading..."]")
-		var/datum/map_config/cached = SSmapping.next_map_config
-		if(cached)
-			stat(null, "Next Map: [cached.map_name]")
-		stat(null, "Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]")
-		stat(null, "Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]")
-		if (SSticker.round_start_time)
-			stat(null, "Round Time: [gameTimestamp("hh:mm:ss", (world.time - SSticker.round_start_time))]")
-		else
-			stat(null, "Lobby Time: [gameTimestamp("hh:mm:ss", 0)]")
-		stat(null, "Station Time: [station_time_timestamp()]")
-		stat(null, "Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)")
-		if(SSshuttle.emergency)
-			var/ETA = SSshuttle.emergency.getModeStr()
-			if(ETA)
-				stat(null, "[ETA] [SSshuttle.emergency.getTimerStr()]")
-
+	statpanel("Status")
 	if(client && client.holder)
-		if(statpanel("MC"))
+		statpanel("MC")
+		if(client.holder.legacy_mc && statpanel("MC (legacy)"))
 			var/turf/T = get_turf(client.eye)
 			stat("Location:", COORD(T))
 			stat("CPU:", "[world.cpu]")
@@ -730,7 +716,7 @@
 			if(Master)
 				stat(null)
 				for(var/datum/controller/subsystem/SS in Master.subsystems)
-					SS.stat_entry()
+					SS.stat_entry_legacy()
 			GLOB.cameranet.stat_entry()
 		if(statpanel("Tickets"))
 			GLOB.ahelp_tickets.stat_entry()
@@ -761,10 +747,16 @@
 					continue
 				statpanel(listed_turf.name, null, A)
 
+	if(client)
+		for(var/tab in client.spell_tabs)
+			statpanel(tab)
 
+/// Gets all relevant proc holders for the browser statpenl
+/mob/proc/get_proc_holders()
+	. = list()
 	if(mind)
-		add_spells_to_statpanel(mind.spell_list)
-	add_spells_to_statpanel(mob_spell_list)
+		. += add_spells_to_statpanel(mind.spell_list)
+	. += add_spells_to_statpanel(mob_spell_list)
 
 /**
   * Convert a list of spells into a displyable list for the statpanel
@@ -772,15 +764,17 @@
   * Shows charge and other important info
   */
 /mob/proc/add_spells_to_statpanel(list/spells)
+	var/list/L = list()
 	for(var/obj/effect/proc_holder/spell/S in spells)
 		if(S.can_be_cast_by(src))
 			switch(S.charge_type)
 				if("recharge")
-					statpanel("[S.panel]","[S.charge_counter/10.0]/[S.charge_max/10]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter/10.0]/[S.charge_max/10]", S.name, REF(S))
 				if("charges")
-					statpanel("[S.panel]","[S.charge_counter]/[S.charge_max]",S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter]/[S.charge_max]", S.name, S)
 				if("holdervar")
-					statpanel("[S.panel]","[S.holder_var_type] [S.holder_var_amount]",S)
+					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, S)
+	return L
 
 #define MOB_FACE_DIRECTION_DELAY 1
 

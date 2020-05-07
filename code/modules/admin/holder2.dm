@@ -28,6 +28,9 @@ GLOBAL_PROTECT(href_token)
 
 	var/deadmined
 
+	/// Whether or not the admin is currently using legacy MC mode
+	var/legacy_mc = FALSE
+
 /datum/admins/New(datum/admin_rank/R, ckey, force_active = FALSE, protected)
 	if(IsAdminAdvancedProcCall())
 		var/msg = " has tried to elevate permissions!"

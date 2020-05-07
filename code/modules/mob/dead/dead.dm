@@ -43,27 +43,25 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 	loc = destination
 	Moved(oldloc, NONE, TRUE)
 
-/mob/dead/Stat()
-	..()
-
-	if(!statpanel("Status"))
-		return
-	stat(null, "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]")
+/mob/dead/get_status_tab_items()
+	. = ..()
+	. += ""
+	. += "Game Mode: [SSticker.hide_mode ? "Secret" : "[GLOB.master_mode]"]"
 
 	if(SSticker.HasRoundStarted())
 		return
 
 	var/time_remaining = SSticker.GetTimeLeft()
 	if(time_remaining > 0)
-		stat(null, "Time To Start: [round(time_remaining/10)]s")
+		. += "Time To Start: [round(time_remaining/10)]s"
 	else if(time_remaining == -10)
-		stat(null, "Time To Start: DELAYED")
+		. += "Time To Start: DELAYED"
 	else
-		stat(null, "Time To Start: SOON")
+		. += "Time To Start: SOON"
 
-	stat(null, "Players: [SSticker.totalPlayers]")
+	. += "Players: [SSticker.totalPlayers]"
 	if(client.holder)
-		stat(null, "Players Ready: [SSticker.totalPlayersReady]")
+		. += "Players Ready: [SSticker.totalPlayersReady]"
 
 /mob/dead/proc/server_hop()
 	set category = "OOC"

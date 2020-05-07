@@ -306,4 +306,14 @@ window "statwindow"
 		anchor2 = 100,100
 		is-default = true
 		saved-params = ""
+		on-tab = ".output statbrowser:tab_change [[*]]"
+	elem "statbrowser"
+		type = BROWSER
+		pos = 6,24
+		size = 628x450
+		anchor1 = 0,0
+		anchor2 = 100,100
+		background-color = none
+		saved-params = ""
+		is-visible = false
 

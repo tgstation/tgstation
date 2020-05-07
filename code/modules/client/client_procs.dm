@@ -318,6 +318,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		set_macros()
 		update_movement_keys()
 
+	src << browse(file('html/statbrowser.html'), "window=statbrowser")
+
 	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)

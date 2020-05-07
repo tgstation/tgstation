@@ -18,6 +18,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds,
 	/client/proc/mark_datum_mapview,
+	/client/proc/toggle_legacy_mc_tab,
 	/client/proc/fix_air				/*resets air in designated radius to its default atmos composition*/
 	)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
@@ -717,3 +718,13 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+
+/client/proc/toggle_legacy_mc_tab()
+	set name = "Toggle Legacy MC Tab"
+	set category = "Debug"
+	set desc = "For if the normal one breaks"
+
+	if(!holder)
+		return
+
+	holder.legacy_mc = !holder.legacy_mc
