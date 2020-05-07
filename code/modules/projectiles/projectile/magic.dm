@@ -709,3 +709,4 @@
 
 /obj/projectile/magic/nothing
 	name = "bolt of nothing"
+	icon_state = "spell"
