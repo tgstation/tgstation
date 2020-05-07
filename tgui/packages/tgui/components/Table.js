@@ -1,11 +1,11 @@
 /**
  * @file
- * @copyright Aleksej Komarov 2020
+ * @copyright 2020 Aleksej Komarov
  * @license MIT
  */
 
 import { classes, pureComponentHooks } from 'common/react';
-import { Box, computeBoxClassName, computeBoxProps } from './Box';
+import { computeBoxClassName, computeBoxProps } from './Box';
 
 export const Table = props => {
   const {

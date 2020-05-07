@@ -1,14 +1,14 @@
 /**
- * @file
- * @copyright Aleksej Komarov 2020
- * @license MIT
- *
  * This file provides a clear separation layer between backend updates
  * and what state our React app sees.
  *
  * Sometimes backend can response without a "data" field, but our final
  * state will still contain previous "data" because we are merging
  * the response with already existing state.
+ *
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
  */
 
 import { UI_DISABLED, UI_INTERACTIVE } from './constants';

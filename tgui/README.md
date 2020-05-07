@@ -180,8 +180,18 @@ See: [Component Reference](docs/component-reference.md).
 
 ## License
 
-All code is licensed with the parent license of *tgstation*, **AGPL-3.0**.
+This program is available with one of two licenses, depending on the
+release and requirements of the codebase it is used in.
 
-See the main [README](../README.md) for more details.
+- [**AGPL-3.0**](https://www.gnu.org/licenses/agpl-3.0.html)
+- [**MIT**](https://opensource.org/licenses/MIT)
 
-The Authors retain all copyright to their respective work here submitted.
+As found in **/tg/station** and its derivatives, this program is covered by
+**AGPL-3.0**. See the main [README](../README.md) for more details.
+
+Every file is annotated with a copyright header, which explicitly designates
+the copyright holder and license of the file.
+
+In absence of a copyright header, files are assumed to be licensed with
+**AGPL-3.0**, and the authors retain all copyright to their respective
+work here submitted.

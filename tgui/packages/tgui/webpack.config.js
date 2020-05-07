@@ -1,6 +1,6 @@
 /**
  * @file
- * @copyright Aleksej Komarov 2020
+ * @copyright 2020 Aleksej Komarov
  * @license MIT
  */
 
@@ -144,6 +144,7 @@ module.exports = (env = {}, argv) => {
           ie8: true,
           output: {
             ascii_only: true,
+            comments: false,
           },
         },
       }),
