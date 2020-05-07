@@ -280,6 +280,6 @@
 	name = "Methos(TM)"
 	desc = "A sugary threat."
 	icon_state = "methos"
-	list_reagents = list(/datum/reagent/iodine = 2, /datum/reagent/diethylamine = 2, /datum/reagent/consumable/mentonol = 10)
+	list_reagents = list(/datum/reagent/iodine = 2, /datum/reagent/phosphorus = 2, /datum/reagent/hydrogen = 2, /datum/reagent/consumable/mentonol = 10)
 	rename_with_volume = FALSE
 
