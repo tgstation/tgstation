@@ -50,6 +50,24 @@
 	if(!client)
 		SSshuttle.clearHostileEnvironment(src) //the queen has officially gone braindead, so we can allow the shuttle to leave
 
+/mob/living/carbon/alien/humanoid/royal/queen/Life()
+	..()
+	if(!client)
+		return
+	if(life_ticks_to_wait)
+		life_ticks_to_wait--
+		return
+	life_ticks_to_wait = initial(life_ticks_to_wait)
+	var/living_humans = 0
+	var/total_humans = length(GLOB.human_list)
+	for(var/H in GLOB.human_list)
+		var/mob/living/carbon/human/human = H
+		if(!human.client || human.stat == DEAD )
+			continue
+		living_humans++
+	if(living_humans < total_humans/10 && !nuking && !neutralized)
+		INVOKE_ASYNC(src, .proc/nuke_it_from_orbit)
+
 /mob/living/carbon/alien/humanoid/royal/queen/proc/nuke_it_from_orbit()
     nuking = TRUE
     addtimer(CALLBACK(GLOBAL_PROC, .proc/priority_announce, "Hostile Lifeforms Identified. Extreme Biohazard Alert. Determining Containment Solutions","Central Command Update", 'sound/misc/notice1.ogg'), 50)

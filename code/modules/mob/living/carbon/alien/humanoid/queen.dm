@@ -14,24 +14,6 @@
 	var/life_ticks_to_wait = 10 //life does some expensive things, so we only want to do the calculation occasionally
 	var/alt_inhands_file = 'icons/mob/alienqueen.dmi'
 
-/mob/living/carbon/alien/humanoid/royal/queen/Life()
-	..()
-	if(!client)
-		return
-	if(life_ticks_to_wait)
-		life_ticks_to_wait--
-		return
-	life_ticks_to_wait = initial(life_ticks_to_wait)
-	var/living_humans = 0
-	var/total_humans = length(GLOB.human_list)
-	for(var/H in GLOB.human_list)
-		var/mob/living/carbon/human/human = H
-		if(!human.client || human.stat == DEAD )
-			continue
-		living_humans++
-	if(living_humans < total_humans/10 && !nuking && !neutralized)
-		INVOKE_ASYNC(src, .proc/nuke_it_from_orbit)
-
 /mob/living/carbon/alien/humanoid/royal/can_inject()
 	return 0
 
