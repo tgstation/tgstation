@@ -25,7 +25,6 @@
 	transformation_timer = null
 
 	var/list/missing_bodyparts_zones = get_missing_limbs()
-	var/stored_stamina_damage = getStaminaLoss()
 	var/list/stored_implants = list()
 
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -152,7 +151,7 @@
 			changeling.regain_powers()
 	//transfer stamina damage
 	if(tr_flags & TR_KEEPSTAMINADAMAGE)
-		O.adjustStaminaLoss(stored_stamina_damage)
+		O.adjustStaminaLoss(getStaminaLoss())
 
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")
