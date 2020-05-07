@@ -109,3 +109,9 @@
 	if(!E)
 		return
 	E.pre_attack(I, src)
+
+
+/obj/item/organ_storage/proc/clear_organ()
+	icon_state = initial(icon_state) //We need to properly update the icon and overlays by reverting to our initial state.
+	desc = initial(desc)
+	cut_overlays()
