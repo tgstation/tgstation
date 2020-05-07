@@ -468,11 +468,11 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/heat_modifier = max(scaled_hydrogen * 1.15 + scaled_plasma * 1.05 - scaled_nitrogen * 0.75, 1)
 
 	//upgrades vars are placeholders for gas interactions
-	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(air.temperature / 1e4, 1)
+	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(air.temperature / 1000, 1)
 	cached_scan_results["energy"] = energy
-	internal_power = (scaled_hydrogen / (1000 / power_modifier)) * (scaled_tritium / (1000 / power_modifier)) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
+	internal_power = (scaled_hydrogen / max((100 / power_modifier), 1)) * (scaled_tritium / max((100 / power_modifier), 1)) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
 	cached_scan_results["internal_power"] = internal_power
-	core_temperature = internal_power / (1000 * heat_modifier)
+	core_temperature = internal_power / max((1000 / power_modifier), 1)
 	core_temperature = max(TCMB, core_temperature)
 	cached_scan_results["core_temperature"] = core_temperature
 	var/delta_temperature = archived_heat - core_temperature
@@ -483,16 +483,17 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/efficiency = VOID_CONDUCTION * upgrades
 	power_output = efficiency * (internal_power - conduction - radiation)
 	cached_scan_results["power_output"] = power_output
-	var/heat_limiter_modifier = air.temperature / (max(5e3 / heat_modifier, 1))
-	var/heat_output = clamp(power_output / (max(1e3 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
+	var/heat_limiter_modifier = air.temperature / (max(50 / heat_modifier, 1))
+	var/heat_output = clamp(power_output / (max(100 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 	cached_scan_results["heat_output"] = heat_output
 
 	//better gas usage and consumption
 	//To do
 	cached_gases[/datum/gas/tritium][MOLES] -= clamp(heat_output / 10, 0.15, MAX_FUEL_USAGE) * 0.25
-	cached_gases[/datum/gas/hydrogen][MOLES] -= clamp(heat_output / 10, 0.25, MAX_FUEL_USAGE) * 0.15
+	cached_gases[/datum/gas/hydrogen][MOLES] -= clamp(heat_output / 10, 0.25, MAX_FUEL_USAGE) * 0.35
 	cached_gases[/datum/gas/plasma][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.5
 	//The decay of the tritium and the reaction's energy produces waste gases, different ones depending on whether the reaction is endo or exothermic
+	//This is an example, will be changed later
 	if(power_output > 0)
 		cached_gases[/datum/gas/carbon_dioxide][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.65
 		cached_gases[/datum/gas/water_vapor][MOLES] += clamp(heat_output / 10, 0, MAX_FUEL_USAGE) * 0.25
