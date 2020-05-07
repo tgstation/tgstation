@@ -52,15 +52,15 @@
 		INVOKE_ASYNC(src, .proc/nuke_it_from_orbit)
 
 /mob/living/carbon/alien/humanoid/royal/queen/proc/nuke_it_from_orbit()
-	nuking = TRUE
-	sleep(50)
-	priority_announce("Hostile Lifeforms Identified. Extreme Biohazard Alert. Determining Containment Solutions","Central Command Update", 'sound/misc/notice1.ogg')
-	sleep(400)
-	priority_announce("Containment Solution Identified. Initiating Station Self Destruct Protocol.")
-	sleep(50)
-	var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
-	nuke.safety = FALSE
-	nuke.explode()
+    nuking = TRUE
+    addtimer(CALLBACK(GLOBAL_PROC, .proc/priority_announce, "Hostile Lifeforms Identified. Extreme Biohazard Alert. Determining Containment Solutions","Central Command Update", 'sound/misc/notice1.ogg'), 50)
+    addtimer(CALLBACK(GLOBAL_PROC, .proc/priority_announce, "Containment Solution Identified. Initiating Station Self Destruct Protocol.","Central Command Update", 'sound/misc/notice1.ogg'), 450)
+    addtimer(CALLBACK(src, .proc/blow_nuke), 500)
+
+/mob/living/carbon/alien/humanoid/royal/queen/proc/blow_nuke()
+    var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+    nuke.safety = FALSE
+    nuke.explode()
 
 /mob/living/carbon/alien/humanoid/royal/can_inject()
 	return 0
