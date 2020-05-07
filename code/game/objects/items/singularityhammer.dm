@@ -13,14 +13,13 @@
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
-	var/charged = 5
+	var/charged = TRUE
 	var/wielded = FALSE // track wielded status on item
 
 /obj/item/singularityhammer/Initialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
 	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
-	START_PROCESSING(SSobj, src)
 
 /obj/item/singularityhammer/ComponentInitialize()
 	. = ..()
@@ -45,15 +44,8 @@
 /obj/item/singularityhammer/update_icon_state()
 	icon_state = "singularity_hammer0"
 
-/obj/item/singularityhammer/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	return ..()
-
-/obj/item/singularityhammer/process()
-	if(charged < 5)
-		charged++
-	else
-		STOP_PROCESSING(SSobj, src)
+/obj/item/singularityhammer/proc/recharge()
+	charged = TRUE
 
 /obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
@@ -81,15 +73,15 @@
 	if(!proximity)
 		return
 	if(wielded)
-		if(charged == 5)
-			charged = 0
+		if(charged == TRUE)
+			charged = FALSE
 			if(istype(A, /mob/living/))
 				var/mob/living/Z = A
 				Z.take_bodypart_damage(20,0)
 			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
-			START_PROCESSING(SSobj, src)
+			addtimer(CALLBACK(src, /obj/item/singularityhammer/proc/recharge), 100)
 
 /obj/item/mjollnir
 	name = "Mjolnir"
