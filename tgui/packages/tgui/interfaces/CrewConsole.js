@@ -50,7 +50,7 @@ const HealthStat = props => {
   return (
     <Box
       inline
-      width={4}
+      width={2}
       color={COLORS.damageType[type]}
       textAlign="center">
       {value}
@@ -62,7 +62,7 @@ export const CrewConsole = () => {
   return (
     <Window resizable>
       <Window.Content scrollable>
-        <Section minHeight={90}>
+        <Section minHeight="540px">
           <CrewTable />
         </Section>
       </Window.Content>

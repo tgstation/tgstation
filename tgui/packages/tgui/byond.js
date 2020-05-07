@@ -22,9 +22,11 @@ const tridentVersion = (() => {
 
 /**
  * True if browser is an Internet Explorer 8 or lower.
+ *
+ * (Actually, no, it also includes IE9 and IE10).
  */
 export const IS_IE8 = tridentVersion !== null
-  && tridentVersion <= 4;
+  && tridentVersion <= 6;
 
 /**
  * Makes a BYOND call.

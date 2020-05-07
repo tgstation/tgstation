@@ -171,8 +171,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 		return
 	if(alert(owner, "Send arming signal? (true = arm, false = cancel)", "purge_all_life()", "confirm = TRUE;", "confirm = FALSE;") != "confirm = TRUE;")
 		return
-	if (active)
-		return //prevent the AI from activating an already active doomsday
+	if (active || owner_AI.stat == DEAD)
+		return //prevent the AI from activating an already active doomsday or while they are dead
 	active = TRUE
 	set_us_up_the_bomb(owner)
 
@@ -240,15 +240,16 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	sleep(30)
 	if(!owner || QDELETED(owner))
 		return
-	priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
-	set_security_level("delta")
-	var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
-	owner_AI.nuking = TRUE
-	owner_AI.doomsday_device = DOOM
-	owner_AI.doomsday_device.start()
-	for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
-		P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
-	qdel(src)
+	if (owner_AI.stat != DEAD)
+		priority_announce("Hostile runtimes detected in all station systems, please deactivate your AI to prevent possible damage to its morality core.", "Anomaly Alert", 'sound/ai/aimalf.ogg')
+		set_security_level("delta")
+		var/obj/machinery/doomsday_device/DOOM = new(owner_AI)
+		owner_AI.nuking = TRUE
+		owner_AI.doomsday_device = DOOM
+		owner_AI.doomsday_device.start()
+		for(var/obj/item/pinpointer/nuke/P in GLOB.pinpointer_list)
+			P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
+		qdel(src)
 
 /obj/machinery/doomsday_device
 	icon = 'icons/obj/machines/nuke_terminal.dmi'

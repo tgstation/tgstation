@@ -28,7 +28,11 @@ const SI_BASE_INDEX = SI_SYMBOLS.indexOf(' ');
  * Formats a number to a human readable form, by reducing it to SI units.
  * TODO: This is quite a shit code and shit math, needs optimization.
  */
-const formatSiUnit = (value, minBase1000 = -SI_BASE_INDEX, unit = '') => {
+export const formatSiUnit = (
+  value,
+  minBase1000 = -SI_BASE_INDEX,
+  unit = ''
+) => {
   const realBase10 = Math.floor(Math.log10(value));
   const base10 = Math.floor(Math.max(minBase1000 * 3, realBase10));
   const realBase1000 = Math.floor(realBase10 / 3);

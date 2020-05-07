@@ -414,6 +414,12 @@ Class Procs:
 		update_icon()
 		updateUsrDialog()
 
+/obj/machinery/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	
+	if(mover.pass_flags & PASSMACHINE)
+		return TRUE
+
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/I)
 	if(!(flags_1 & NODECONSTRUCT_1) && I.tool_behaviour == TOOL_SCREWDRIVER)
 		I.play_tool_sound(src, 50)
