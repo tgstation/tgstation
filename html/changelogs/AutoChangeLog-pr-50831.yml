@@ -1,5 +1,0 @@
-author: "Qustinnus (sprites from Lohikar)"
-delete-after: True
-changes: 
-  - code_imp: "Open-space now has a parent /transparent/ that handles the visuals of open-space besides the backdrop"
-  - rscadd: "Glass floors and reinforced glass floors. Look at those peasants down below in style."

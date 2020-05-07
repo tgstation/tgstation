@@ -1,6 +1,0 @@
-author: "Cartographer-D"
-delete-after: True
-changes: 
-  - rscadd: "The new isolation cell on Meta now has an observation monitor."
-  - rscadd: "The floor safe in Meta Maintenance now has a nice treat!"
-  - bugfix: "Meta's prison and cargo have been touched up even more!"
