@@ -398,7 +398,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 
 //fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
-//6 reworks
+//7 reworks
 
 /datum/gas_reaction/fusion
 	exclude = FALSE
@@ -430,13 +430,14 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/internal_power = 0
 	var/power_output = 0
 
-	air.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide,/datum/gas/water_vapor)
+	air.assert_gases(/datum/gas/hydrogen, /datum/gas/tritium, /datum/gas/plasma, /datum/gas/nitrogen, /datum/gas/carbon_dioxide, /datum/gas/water_vapor, /datum/gas/bz)
 	var/tritium = cached_gases[/datum/gas/tritium][MOLES]
 	var/hydrogen = cached_gases[/datum/gas/hydrogen][MOLES]
 	var/plasma = cached_gases[/datum/gas/plasma][MOLES]
 	var/nitrogen = cached_gases[/datum/gas/nitrogen][MOLES]
 	var/co2 = cached_gases[/datum/gas/carbon_dioxide][MOLES]
 	var/h2o= cached_gases[/datum/gas/water_vapor][MOLES]
+	var/bz= cached_gases[/datum/gas/bz][MOLES]
 
 	var/scale_factor = (air.volume)/(PI) //We scale it down by volume/Pi because for fusion conditions, moles roughly = 2*volume, but we want it to be based off something constant between reactions.
 	var/scaled_tritium = max((tritium - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
@@ -445,6 +446,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/scaled_nitrogen = max((nitrogen - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_co2 = max((co2 - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 	var/scaled_h2o = max((h2o - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
+	var/scaled_bz = max((bz - FUSION_MOLE_THRESHOLD) / scale_factor, 0)
 
 	var/toroidal_size = (2*PI)+TORADIANS(arctan((air.volume-TOROID_VOLUME_BREAKEVEN)/TOROID_VOLUME_BREAKEVEN)) //The size of the phase space hypertorus
 	var/gas_power = 0
@@ -452,23 +454,25 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		gas_power += (cached_gases[gas_id][GAS_META][META_GAS_FUSION_POWER]*cached_gases[gas_id][MOLES])
 	var/instability = MODULUS((gas_power*INSTABILITY_GAS_POWER_FACTOR)**2,toroidal_size) //Instability effects how chaotic the behavior of the reaction is
 	cached_scan_results[id] = instability
-	cached_scan_results["instability"] = instability//used for analyzer feedback
+	cached_scan_results["instability"] = instability * 0.5//used for analyzer feedback
 	var/internal_instability = 0
-	if(instability < FUSION_INSTABILITY_ENDOTHERMALITY)
+	if(instability * 0.5 < FUSION_INSTABILITY_ENDOTHERMALITY)
 		internal_instability = 1
 	else
 		internal_instability = -1
 
 	//here go the other gas interactions
-	var/positive_modifiers = scaled_hydrogen * 1.05 + scaled_tritium * 0.95 + scaled_nitrogen * 1.15 + scaled_co2 * 0.15
+	var/positive_modifiers = scaled_hydrogen * 1.05 + scaled_tritium * 0.95 + scaled_nitrogen * 0.35 + scaled_co2 * 0.55 + scaled_bz * 1.15
 	var/negative_modifiers = scaled_plasma + scaled_h2o * 0.75
+	var/power_modifier = clamp(scaled_tritium * 1.05 + scaled_co2 * 0.95 + scaled_bz * 0.85 - scaled_plasma * 0.55, 1, 10)
+	var/heat_modifier = max(scaled_hydrogen * 1.15 + scaled_plasma * 1.05 - scaled_nitrogen * 0.75, 1)
 
 	//upgrades vars are placeholders for gas interactions
 	energy += internal_instability * ((positive_modifiers - negative_modifiers) * LIGHT_SPEED ** 2) * max(air.temperature / 1e4, 1)
 	cached_scan_results["energy"] = energy
-	internal_power = (scaled_hydrogen / 1000 * upgrades) * (scaled_tritium / 1000 * upgrades) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
+	internal_power = (scaled_hydrogen / (1000 / power_modifier)) * (scaled_tritium / (1000 / power_modifier)) * (PI * (2 * (scaled_hydrogen * CALCULATED_H2RADIUS) * (scaled_tritium * CALCULATED_TRITRADIUS))**2) * energy
 	cached_scan_results["internal_power"] = internal_power
-	core_temperature = internal_power / (1000 * upgrades)
+	core_temperature = internal_power / (1000 * heat_modifier)
 	core_temperature = max(TCMB, core_temperature)
 	cached_scan_results["core_temperature"] = core_temperature
 	var/delta_temperature = archived_heat - core_temperature
@@ -479,8 +483,8 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 	var/efficiency = VOID_CONDUCTION * upgrades
 	power_output = efficiency * (internal_power - conduction - radiation)
 	cached_scan_results["power_output"] = power_output
-	var/heat_limiter_modifier = air.temperature / 5e4
-	var/heat_output = clamp(power_output / 1e4 * upgrades, MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
+	var/heat_limiter_modifier = air.temperature / (max(5e3 / heat_modifier, 1))
+	var/heat_output = clamp(power_output / (max(1e3 / heat_modifier, 1)), MIN_HEAT_VARIATION - heat_limiter_modifier, MAX_HEAT_VARIATION + heat_limiter_modifier)
 	cached_scan_results["heat_output"] = heat_output
 
 	//better gas usage and consumption
@@ -508,9 +512,12 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 
 		if(air.temperature <= FUSION_MAXIMUM_TEMPERATURE)	//If above FUSION_MAXIMUM_TEMPERATURE, will only adjust temperature for endothermic reactions.
 			air.temperature = clamp(air.temperature + heat_output,TCMB,INFINITY)
+		if(core_temperature < air.temperature && power_output < 0)
+			cached_gases[/datum/gas/tritium][MOLES] -= 50
+			cached_gases[/datum/gas/hydrogen][MOLES] -= 50
+			for(var/i = 0, i <2, i++)
+				location.fire_nuclear_particle()
 		return REACTING
-	if(archived_heat + power_output < 0) //No using energy that doesn't exist.
-		return NO_REACTION
 
 //REMEMBER TO RESTORE CANISTER.DM TO ORIGINAL SETTINGS
 
