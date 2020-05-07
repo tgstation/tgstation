@@ -122,7 +122,7 @@
 
 
 /mob/living/carbon/get_status_tab_items()
-	..()
+	. = ..()
 	var/obj/item/organ/heart/vampire/darkheart = getorgan(/obj/item/organ/heart/vampire)
 	if(darkheart)
 		. += "<span class='notice'>Current blood level: [blood_volume]/[BLOOD_VOLUME_MAXIMUM].</span>"
