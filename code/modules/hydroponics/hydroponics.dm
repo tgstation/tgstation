@@ -690,7 +690,7 @@
 			var/obj/item/graft/snip = new /obj/item/graft(loc)
 			if(myseed.graft_gene)
 				snip.stored_trait = new myseed.graft_gene
-			snip.parent_seed = myseed
+			snip.parent_seed = myseed.Copy()
 			myseed.grafted = TRUE
 			adjustHealth(-5)
 			snip.name += " ([snip.parent_seed.plantname])"

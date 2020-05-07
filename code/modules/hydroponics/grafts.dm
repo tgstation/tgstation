@@ -13,7 +13,7 @@
 	///Determines the appearance of the graft. Rudimentary right now so it just picks randomly.
 	var/graft_appearance
 	///Seed type that the graft was taken from, used for applying parent stats.
-	var/obj/item/seeds/parent_seed = null
+	var/obj/item/seeds/parent_seed
 
 /obj/item/graft/Initialize()
 	. = ..()
@@ -23,6 +23,10 @@
 		5 ; "graft_flower" , \
 		4 ; "graft_mushroom" , \
 		1 ; "graft_doom" )
+
+/obj/item/graft/Destroy()
+	QDEL_NULL(parent_seed)
+	return ..()
 
 /obj/item/graft/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/plant_analyzer) && user.a_intent == INTENT_HELP)
