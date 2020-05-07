@@ -1,186 +1,191 @@
-import { decodeHtmlEntities } from 'common/string';
-import { Component, Fragment } from 'inferno';
-import { act } from '../byond';
-import { Box, Button, Input, Section, Table, Tabs } from '../components';
+import { createSearch, decodeHtmlEntities } from 'common/string';
+import { Fragment } from 'inferno';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Flex, Input, Section, Table, Tabs, NoticeBox } from '../components';
+import { formatMoney } from '../format';
+import { Window } from '../layouts';
 
-// It's a class because we need to store state in the form of the current
-// hovered item, and current search terms
-export class Uplink extends Component {
-  constructor() {
-    super();
-    this.state = {
-      hoveredItem: {},
-      currentSearch: '',
-    };
-  }
+const MAX_SEARCH_RESULTS = 25;
 
-  setHoveredItem(hoveredItem) {
-    this.setState({
-      hoveredItem,
-    });
-  }
+export const Uplink = (props, context) => {
+  const { data } = useBackend(context);
+  const { telecrystals } = data;
+  return (
+    <Window
+      theme="syndicate"
+      resizable>
+      <Window.Content scrollable>
+        <GenericUplink
+          currencyAmount={telecrystals}
+          currencySymbol="TC" />
+      </Window.Content>
+    </Window>
+  );
+};
 
-  setSearchText(currentSearch) {
-    this.setState({
-      currentSearch,
-    });
-  }
-
-  render() {
-    const { state } = this.props;
-    const { config, data } = state;
-    const { ref } = config;
-    const {
-      compact_mode,
-      lockable,
-      telecrystals,
-      categories = [],
-    } = data;
-    const { hoveredItem, currentSearch } = this.state;
-    return (
-      <Section
-        title={(
-          <Box
-            inline
-            color={telecrystals > 0 ? 'good' : 'bad'}>
-            {telecrystals} TC
-          </Box>
-        )}
-        buttons={(
-          <Fragment>
-            Search
-            <Input
-              value={currentSearch}
-              onInput={(e, value) => this.setSearchText(value)}
-              ml={1}
-              mr={1} />
-            <Button
-              icon={compact_mode ? 'list' : 'info'}
-              content={compact_mode ? 'Compact' : 'Detailed'}
-              onClick={() => act(ref, 'compact_toggle')} />
-            {!!lockable && (
-              <Button
-                icon="lock"
-                content="Lock"
-                onClick={() => act(ref, 'lock')} />
-            )}
-          </Fragment>
-        )}>
-        {currentSearch.length > 0 ? (
-          <table className="Table">
-            <ItemList
-              compact
-              items={categories
-                .flatMap(category => {
-                  return category.items || [];
-                })
-                .filter(item => {
-                  const searchTerm = currentSearch.toLowerCase();
-                  const searchableString = String(item.name + item.desc)
-                    .toLowerCase();
-                  return searchableString.includes(searchTerm);
-                })}
-              hoveredItem={hoveredItem}
-              onBuyMouseOver={item => this.setHoveredItem(item)}
-              onBuyMouseOut={item => this.setHoveredItem({})}
-              onBuy={item => act(ref, 'buy', {
-                item: item.name,
-              })} />
-          </table>
-        ) : (
-          <Tabs vertical>
-            {categories.map(category => {
-              const { name, items } = category;
-              if (items === null) {
-                return;
-              }
-              return (
-                <Tabs.Tab
-                  key={name}
-                  label={`${name} (${items.length})`}>
-                  {() => (
-                    <ItemList
-                      compact={compact_mode}
-                      items={items}
-                      hoveredItem={hoveredItem}
-                      telecrystals={telecrystals}
-                      onBuyMouseOver={item => this.setHoveredItem(item)}
-                      onBuyMouseOut={item => this.setHoveredItem({})}
-                      onBuy={item => act(ref, 'buy', {
-                        item: item.name,
-                      })} />
-                  )}
-                </Tabs.Tab>
-              );
-            })}
-          </Tabs>
-        )}
-      </Section>
-    );
-  }
-}
-
-const ItemList = props => {
+export const GenericUplink = (props, context) => {
   const {
-    items,
-    hoveredItem,
-    telecrystals,
-    compact,
-    onBuy,
-    onBuyMouseOver,
-    onBuyMouseOut,
+    currencyAmount = 0,
+    currencySymbol = 'cr',
   } = props;
+  const { act, data } = useBackend(context);
+  const {
+    compactMode,
+    lockable,
+    categories = [],
+  } = data;
+  const [
+    searchText,
+    setSearchText,
+  ] = useLocalState(context, 'searchText', '');
+  const [
+    selectedCategory,
+    setSelectedCategory,
+  ] = useLocalState(context, 'category', categories[0]?.name);
+  const testSearch = createSearch(searchText, item => {
+    return item.name + item.desc;
+  });
+  const items = searchText.length > 0
+    // Flatten all categories and apply search to it
+    && categories
+      .flatMap(category => category.items || [])
+      .filter(testSearch)
+      .filter((item, i) => i < MAX_SEARCH_RESULTS)
+    // Select a category and show all items in it
+    || categories
+      .find(category => category.name === selectedCategory)
+      ?.items
+    // If none of that results in a list, return an empty list
+    || [];
+  return (
+    <Section
+      title={(
+        <Box
+          inline
+          color={currencyAmount > 0 ? 'good' : 'bad'}>
+          {formatMoney(currencyAmount)} {currencySymbol}
+        </Box>
+      )}
+      buttons={(
+        <Fragment>
+          Search
+          <Input
+            value={searchText}
+            onInput={(e, value) => setSearchText(value)}
+            mx={1} />
+          <Button
+            icon={compactMode ? 'list' : 'info'}
+            content={compactMode ? 'Compact' : 'Detailed'}
+            onClick={() => act('compact_toggle')} />
+          {!!lockable && (
+            <Button
+              icon="lock"
+              content="Lock"
+              onClick={() => act('lock')} />
+          )}
+        </Fragment>
+      )}>
+      <Flex>
+        {searchText.length === 0 && (
+          <Flex.Item>
+            <Tabs vertical>
+              {categories.map(category => (
+                <Tabs.Tab
+                  key={category.name}
+                  selected={category.name === selectedCategory}
+                  onClick={() => setSelectedCategory(category.name)}>
+                  {category.name} ({category.items?.length || 0})
+                </Tabs.Tab>
+              ))}
+            </Tabs>
+          </Flex.Item>
+        )}
+        <Flex.Item grow={1} basis={0}>
+          {items.length === 0 && (
+            <NoticeBox>
+              {searchText.length === 0
+                ? 'No items in this category.'
+                : 'No results found.'}
+            </NoticeBox>
+          )}
+          <ItemList
+            compactMode={searchText.length > 0 || compactMode}
+            currencyAmount={currencyAmount}
+            currencySymbol={currencySymbol}
+            items={items} />
+        </Flex.Item>
+      </Flex>
+    </Section>
+  );
+};
+
+const ItemList = (props, context) => {
+  const {
+    compactMode,
+    currencyAmount,
+    currencySymbol,
+  } = props;
+  const { act } = useBackend(context);
+  const [
+    hoveredItem,
+    setHoveredItem,
+  ] = useLocalState(context, 'hoveredItem', {});
   const hoveredCost = hoveredItem && hoveredItem.cost || 0;
-  if (compact) {
+  // Append extra hover data to items
+  const items = props.items.map(item => {
+    const notSameItem = hoveredItem && hoveredItem.name !== item.name;
+    const notEnoughHovered = currencyAmount - hoveredCost < item.cost;
+    const disabledDueToHovered = notSameItem && notEnoughHovered;
+    const disabled = currencyAmount < item.cost || disabledDueToHovered;
+    return {
+      ...item,
+      disabled,
+    };
+  });
+  if (compactMode) {
     return (
       <Table>
-        {items.map(item => {
-          const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-          const notEnoughHovered = telecrystals - hoveredCost < item.cost;
-          const disabledDueToHovered = notSameItem && notEnoughHovered;
-          return (
-            <Table.Row
-              key={item.name}
-              className="candystripe">
-              <Table.Cell bold>
-                {decodeHtmlEntities(item.name)}
-              </Table.Cell>
-              <Table.Cell collapsing textAlign="right">
-                <Button
-                  fluid
-                  content={item.cost + " TC"}
-                  disabled={telecrystals < item.cost || disabledDueToHovered}
-                  tooltip={item.desc}
-                  tooltipPosition="left"
-                  onmouseover={() => onBuyMouseOver(item)}
-                  onmouseout={() => onBuyMouseOut(item)}
-                  onClick={() => onBuy(item)} />
-              </Table.Cell>
-            </Table.Row>
-          );
-        })}
+        {items.map(item => (
+          <Table.Row
+            key={item.name}
+            className="candystripe">
+            <Table.Cell bold>
+              {decodeHtmlEntities(item.name)}
+            </Table.Cell>
+            <Table.Cell collapsing textAlign="right">
+              <Button
+                fluid
+                content={formatMoney(item.cost) + ' ' + currencySymbol}
+                disabled={item.disabled}
+                tooltip={item.desc}
+                tooltipPosition="left"
+                onmouseover={() => setHoveredItem(item)}
+                onmouseout={() => setHoveredItem({})}
+                onClick={() => act('buy', {
+                  name: item.name,
+                })} />
+            </Table.Cell>
+          </Table.Row>
+        ))}
       </Table>
     );
   }
-  return items.map(item => {
-    const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-    const notEnoughHovered = telecrystals - hoveredCost < item.cost;
-    const disabledDueToHovered = notSameItem && notEnoughHovered;
-    return (
-      <Section
-        key={item.name}
-        title={item.name}
-        level={2}
-        buttons={(
-          <Button
-            content={item.cost + ' TC'}
-            disabled={telecrystals < item.cost || disabledDueToHovered}
-            onmouseover={() => onBuyMouseOver(item)}
-            onmouseout={() => onBuyMouseOut(item)}
-            onClick={() => onBuy(item)} />
-        )}>
-        {decodeHtmlEntities(item.desc)}
-      </Section>
-    );
-  });
+  return items.map(item => (
+    <Section
+      key={item.name}
+      title={item.name}
+      level={2}
+      buttons={(
+        <Button
+          content={item.cost + ' ' + currencySymbol}
+          disabled={item.disabled}
+          onmouseover={() => setHoveredItem(item)}
+          onmouseout={() => setHoveredItem({})}
+          onClick={() => act('buy', {
+            name: item.name,
+          })} />
+      )}>
+      {decodeHtmlEntities(item.desc)}
+    </Section>
+  ));
 };

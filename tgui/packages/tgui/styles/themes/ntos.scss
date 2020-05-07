@@ -18,13 +18,16 @@ $nanotrasen: #384e68;
     'color-default': $nanotrasen,
     'color-transparent-text': rgba(227, 240, 255, 0.75),
   ));
-  @include meta.load-css('../components/Layout.scss');
   @include meta.load-css('../components/ProgressBar.scss', $with: (
     'color-default': $nanotrasen,
     'color-background': rgba(0, 0, 0, 0.5),
   ));
   @include meta.load-css('../components/Section.scss');
-  @include meta.load-css('../components/TitleBar.scss', $with: (
+
+  // Layouts
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css('../layouts/TitleBar.scss', $with: (
     'color-background': color.scale($nanotrasen, $lightness: -25%),
   ));
 }

@@ -64,6 +64,13 @@
 	toolspeed = 0.7
 	force_opens = TRUE
 
+/obj/item/crowbar/power/syndicate
+	name = "Syndicate jaws of life"
+	desc = "A rengineered copy of Nanotrasen's standard jaws of life. Can be used to force open airlocks in it's crowbar configuration."
+	icon_state = "jaws_pry_syndie"
+	toolspeed = 0.5
+	force_opens = TRUE
+
 /obj/item/crowbar/power/examine()
 	. = ..()
 	. += " It's fitted with a [tool_behaviour == TOOL_CROWBAR ? "prying" : "cutting"] head."
@@ -89,12 +96,25 @@
 		tool_behaviour = TOOL_WIRECUTTER
 		to_chat(user, "<span class='notice'>You attach the cutting jaws to [src].</span>")
 		usesound = 'sound/items/jaws_cut.ogg'
-		icon_state = "jaws_cutter"
+		update_icon()
+		
 	else
 		tool_behaviour = TOOL_CROWBAR
 		to_chat(user, "<span class='notice'>You attach the prying jaws to [src].</span>")
 		usesound = 'sound/items/jaws_pry.ogg'
+		update_icon()
+
+/obj/item/crowbar/power/update_icon()
+	if(tool_behaviour == TOOL_WIRECUTTER)
+		icon_state = "jaws_cutter"
+	else
 		icon_state = "jaws_pry"
+
+/obj/item/crowbar/power/syndicate/update_icon()
+	if(tool_behaviour == TOOL_WIRECUTTER)
+		icon_state = "jaws_cutter_syndie"
+	else
+		icon_state = "jaws_pry_syndie"
 
 /obj/item/crowbar/power/attack(mob/living/carbon/C, mob/user)
 	if(istype(C) && C.handcuffed && tool_behaviour == TOOL_WIRECUTTER)
