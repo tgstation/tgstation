@@ -123,7 +123,7 @@
   * * user The mob interacting with a menu
   * * multitool The multitool used to interact with a menu
   */
-/turf/open/floor/light/proc/check_menu(mob/living/user, obj/item/multitool/)
+/turf/open/floor/light/proc/check_menu(mob/living/user, obj/item/multitool)
 	if(!istype(user))
 		return FALSE
 	if(user.incapacitated())
