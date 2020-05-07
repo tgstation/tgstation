@@ -128,12 +128,12 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			return TRUE
 	return FALSE
 
-/turf/open/openspace/icemoon
+/turf/open/transparent/openspace/icemoon
 	name = "ice chasm"
-	baseturfs = /turf/open/openspace/icemoon
+	baseturfs = /turf/open/transparent/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-/turf/open/openspace/icemoon/Initialize()
+/turf/open/transparent/openspace/icemoon/Initialize()
 	. = ..()
 	var/turf/T = below()
 	if(!ismineralturf(T))
