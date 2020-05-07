@@ -292,14 +292,14 @@
 				user.do_attack_animation(target)
 
 			if(can_knockdown)
-				playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 				target.Knockdown(knockdown_time_carbon)
 
 			//the zone the damage is applied against; the target's chest
 			var/chest = target.get_bodypart(BODY_ZONE_CHEST)
 			//how much the target's chest armor will block of the stamina damage
 			var/armor_block = target.run_armor_check(chest, "melee", null, null, armour_penetration)
-
+			
+			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 			target.apply_damage(stamina_damage, STAMINA, chest, armor_block)
 			additional_effects_carbon(target, user)
 
