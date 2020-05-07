@@ -292,6 +292,7 @@
 				user.do_attack_animation(target)
 
 			if(can_knockdown)
+				playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
 				target.Knockdown(knockdown_time_carbon)
 
 			//the zone the damage is applied against; the target's chest
