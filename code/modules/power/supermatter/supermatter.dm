@@ -190,7 +190,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Var that increases from 0 to 1 when a psycologist is nearby, and decreases in the same way
 	var/psyCoeff = 0
 	///Should we check the psy overlay?
-	var/psyCheck = FALSE
+	var/psy_overlay = FALSE
 	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
 	var/obj/overlay/psy/psyOverlay = /obj/overlay/psy
 
@@ -396,13 +396,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		// Pass all the gas related code an empty gas container
 		removed = new()
 	overlays -= psyOverlay
-	if(psyCheck)
+	if(psy_overlay)
 		overlays -= psyOverlay
 		if(psyCoeff > 0)
 			psyOverlay.alpha = psyCoeff * 255
 			overlays += psyOverlay
 		else
-			psyCheck = FALSE
+			psy_overlay = FALSE
 	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
@@ -559,7 +559,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
 		if(l.job == "Psychologist")
 			toAdd = 0.05
-			psyCheck = TRUE
+			psy_overlay = TRUE
 		else if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
