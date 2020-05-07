@@ -102,9 +102,12 @@
 	var/inserted = insert_item(I, amt = requested_amount)
 	if(inserted)
 		to_chat(user, "<span class='notice'>You insert a material total of [inserted] into [parent].</span>")
+		if(get_item_material_amount(I) - inserted)
+			user.put_in_active_hand(I)
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			S.use(inserted / MINERAL_MATERIAL_AMOUNT)
+			I = S
 		else
 			qdel(I)
 		if(after_insert)
