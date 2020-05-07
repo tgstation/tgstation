@@ -105,7 +105,6 @@
 		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			S.use(inserted / MINERAL_MATERIAL_AMOUNT)
-			user.put_in_active_hand(S)
 		else
 			qdel(I)
 		if(after_insert)
