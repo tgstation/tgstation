@@ -12,6 +12,7 @@ SUBSYSTEM_DEF(research)
 	var/datum/techweb/admin/admin_tech
 	var/datum/techweb_node/error_node/error_node	//These two are what you get if a node/design is deleted and somehow still stored in a console.
 	var/datum/design/error_design/error_design
+	var/datum/techweb_node/department			///What department can research this node.
 
 	//ERROR LOGGING
 	var/list/invalid_design_ids = list()		//associative id = number of times
@@ -29,8 +30,16 @@ SUBSYSTEM_DEF(research)
 	/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_SCIENCE = 10000)
 	)
 	var/list/errored_datums = list()
-	var/list/point_types = list()				//typecache style type = TRUE list
-	var/list/slime_already_researched = list() 	///Slime cores that have already been researched
+	var/list/point_types = list()					//typecache style type = TRUE list
+	var/list/slime_already_researched = list() 		///Slime cores that have already been researched
+
+	///Research type lists. Used for displaying specific researches on their specific departmental consoles. The code should automatically add research to this list if it's tagged properly.
+	var/list/science_research = list()
+	var/list/cargo_research = list()
+	var/list/engineering_research = list()
+	var/list/medical_research = list()
+	var/list/security_research = list()
+	var/list/service_research = list()
 	//----------------------------------------------
 
 	/*Values for how many research points should be allotted per second. In general Science should get more than other departments.
@@ -138,6 +147,20 @@ SUBSYSTEM_DEF(research)
 		returned[initial(TN.id)] = TN
 		if(TN.starting_node)
 			techweb_nodes_starting[TN.id] = TRUE
+	for(var/i in subtypesof(/datum/techweb_node))
+		var/datum/techweb_node/node = new i
+		if(node.department & DEPARTMENTAL_FLAG_SECURITY)
+			security_research += node
+		if(node.department & DEPARTMENTAL_FLAG_SCIENCE)
+			science_research += node
+		if(node.department & DEPARTMENTAL_FLAG_ENGINEERING)
+			engineering_research += node
+		if(node.department & DEPARTMENTAL_FLAG_CARGO)
+			cargo_research += node
+		if(node.department & DEPARTMENTAL_FLAG_SERVICE)
+			service_research += node
+		if(node.department & DEPARTMENTAL_FLAG_MEDICAL)
+			medical_research += node
 	for(var/id in techweb_nodes)
 		var/datum/techweb_node/TN = techweb_nodes[id]
 		TN.Initialize()
