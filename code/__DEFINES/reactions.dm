@@ -54,7 +54,7 @@
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
 #define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction
-#define FUSION_MOLE_THRESHOLD				100 	//Mole count required (tritium/plasma) to start a fusion reaction
+#define FUSION_MOLE_THRESHOLD				25 	//Mole count required (tritium/plasma) to start a fusion reaction
 #define FUSION_TRITIUM_CONVERSION_COEFFICIENT (1e-10)
 #define INSTABILITY_GAS_POWER_FACTOR 		0.003
 #define FUSION_TRITIUM_MOLES_USED  			0.5
