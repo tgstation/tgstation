@@ -178,26 +178,26 @@
 	WRITE_FILE(json_file, json_encode(file_data))
 
 ///Handles random hardcore point rewarding if it applies.
-/datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/C)
-	if(!ishuman(C.mob))
+/datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
+	if(!ishuman(player_client.mob))
 		return FALSE
-	var/mob/living/carbon/human/H = C.mob
-	if(!H.hardcore_survival_score) ///no score no glory
+	var/mob/living/carbon/human/human_mob = player_client.mob
+	if(!human_mob.hardcore_survival_score) ///no score no glory
 		return FALSE
 
-	if(H.mind && (H.mind.special_role || length(H.mind.antag_datums) > 0))
+	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
 		var/didthegamerwin = TRUE
-		for(var/a in H.mind.antag_datums)
-			var/datum/antagonist/A = a
-			for(var/i in A.objectives)
-				var/datum/objective/O = i
-				if(!O.check_completion())
+		for(var/a in human_mob.mind.antag_datums)
+			var/datum/antagonist/antag_datum = a
+			for(var/i in antag_datum.objectives)
+				var/datum/objective/objective_datum = i
+				if(!objective_datum.check_completion())
 					didthegamerwin = FALSE
 		if(!didthegamerwin)
 			return FALSE
-		C.give_award(/datum/award/score/hardcore_random, H, round(H.hardcore_survival_score))
-	else if(H.onCentCom())
-		C.give_award(/datum/award/score/hardcore_random, H, round(H.hardcore_survival_score))
+		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+	else if(human_mob.onCentCom())
+		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
 
 
 /datum/controller/subsystem/ticker/proc/declare_completion()
