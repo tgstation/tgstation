@@ -803,7 +803,7 @@
 	if(do_after(user, 90, target = user))
 		firing = TRUE
 		INVOKE_ASYNC(src, .proc/pewpew, user, params)
-		var/obj/structure/emergency_shield/invoker/N = new(user.loc)
+		var/obj/structure/emergency_shield/cult/weak/N = new(user.loc)
 		if(do_after(user, 90, target = user))
 			user.Paralyze(40)
 			to_chat(user, "<span class='cult italic'>You have exhausted the power of this spell!</span>")
