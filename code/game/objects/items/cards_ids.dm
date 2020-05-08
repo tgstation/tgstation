@@ -60,44 +60,6 @@
 /*
  * ID CARDS
  */
-/obj/item/card/emag
-	desc = "It's a card with a magnetic strip attached to some circuitry."
-	name = "cryptographic sequencer"
-	icon_state = "emag"
-	item_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
-	var/prox_check = TRUE //If the emag requires you to be in range
-
-/obj/item/card/emag/bluespace
-	name = "bluespace cryptographic sequencer"
-	desc = "It's a blue card with a magnetic strip attached to some circuitry. It appears to have some sort of transmitter attached to it."
-	color = rgb(40, 130, 255)
-	prox_check = FALSE
-
-/obj/item/card/emag/attack()
-	return
-
-/obj/item/card/emag/afterattack(atom/target, mob/user, proximity)
-	. = ..()
-	var/atom/A = target
-	if(!proximity && prox_check)
-		return
-	log_combat(user, A, "attempted to emag")
-	A.emag_act(user)
-
-/obj/item/card/emagfake
-	desc = "It's a card with a magnetic strip attached to some circuitry. Closer inspection shows that this card is a poorly made replica, with a \"DonkCo\" logo stamped on the back."
-	name = "cryptographic sequencer"
-	icon_state = "emag"
-	item_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-
-/obj/item/card/emagfake/afterattack()
-	. = ..()
-	playsound(src, 'sound/items/bikehorn.ogg', 50, TRUE)
 
 /obj/item/card/id
 	name = "identification card"
@@ -182,6 +144,8 @@
 		return
 
 	registered_account.adjust_money(cash_money)
+	SSblackbox.record_feedback("amount", "credits_inserted", cash_money)
+	log_econ("[cash_money] credits were inserted into [src] owned by [src.registered_name]")
 	if(physical_currency)
 		to_chat(user, "<span class='notice'>You stuff [I] into [src]. It disappears in a small puff of bluespace smoke, adding [cash_money] credits to the linked account.</span>")
 	else
@@ -202,7 +166,8 @@
 		total += cash_money
 
 		registered_account.adjust_money(cash_money)
-
+	SSblackbox.record_feedback("amount", "credits_inserted", total)
+	log_econ("[total] credits were inserted into [src] owned by [src.registered_name]")
 	QDEL_LIST(money)
 
 	return total
@@ -257,8 +222,8 @@
 		set_new_account(user)
 		return
 
-	if (world.time < registered_account.withdrawDelay)
-		registered_account.bank_card_talk("<span class='warning'>ERROR: UNABLE TO LOGIN DUE TO SCHEDULED MAINTENANCE. MAINTENANCE IS SCHEDULED TO COMPLETE IN [(registered_account.withdrawDelay - world.time)/10] SECONDS.</span>", TRUE)
+	if (registered_account.being_dumped)
+		registered_account.bank_card_talk("<span class='warning'>内部服务器错误</span>", TRUE)
 		return
 
 	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
@@ -271,6 +236,8 @@
 		var/obj/item/holochip/holochip = new (user.drop_location(), amount_to_remove)
 		user.put_in_hands(holochip)
 		to_chat(user, "<span class='notice'>You withdraw [amount_to_remove] credits into a holochip.</span>")
+		SSblackbox.record_feedback("amount", "credits_removed", amount_to_remove)
+		log_econ("[amount_to_remove] credits were removed from [src] owned by [src.registered_name]")
 		return
 	else
 		var/difference = amount_to_remove - registered_account.account_balance
@@ -480,7 +447,7 @@ update_label()
 	registered_name = "Syndicate"
 	assignment = "Syndicate Operative"
 	icon_state = "syndie"
-	access = list(ACCESS_SYNDICATE)
+	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	uses_overlays = FALSE
 
 /obj/item/card/id/syndicate_command/captain_id
@@ -490,7 +457,7 @@ update_label()
 	registered_name = "Syndicate"
 	assignment = "Syndicate Ship Captain"
 	icon_state = "syndie"
-	access = list(ACCESS_SYNDICATE)
+	access = list(ACCESS_SYNDICATE, ACCESS_ROBOTICS)
 	uses_overlays = FALSE
 
 /obj/item/card/id/captains_spare
@@ -756,3 +723,6 @@ update_label()
 	department_ID = ACCOUNT_CAR
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
+
+/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
+	registered_account.bank_card_talk("<span class='warning'>Withdrawing is not compatible with this card design.</span>", TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates

@@ -1,121 +1,154 @@
+import { toFixed } from 'common/math';
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { AnimatedNumber, Box, Button, Icon, Knob, LabeledControls, LabeledList, Section, Tooltip } from '../components';
+import { formatSiUnit } from '../format';
+import { Window } from '../layouts';
 
-export const Canister = props => {
-  const { act, data } = useBackend(props);
+export const Canister = (props, context) => {
+  const { act, data } = useBackend(context);
+  const {
+    portConnected,
+    tankPressure,
+    releasePressure,
+    defaultReleasePressure,
+    minReleasePressure,
+    maxReleasePressure,
+    valveOpen,
+    isPrototype,
+    hasHoldingTank,
+    holdingTank,
+    restricted,
+  } = data;
   return (
-    <Fragment>
-      <NoticeBox>
-        The regulator {data.hasHoldingTank ? 'is' : 'is not'} connected
-        to a tank.
-      </NoticeBox>
-      <Section
-        title="Canister"
-        buttons={(
-          <Button
-            icon="pencil-alt"
-            content="Relabel"
-            onClick={() => act('relabel')} />
-        )}>
-        <LabeledList>
-          <LabeledList.Item label="Pressure">
-            <AnimatedNumber value={data.tankPressure} /> kPa
-          </LabeledList.Item>
-          <LabeledList.Item
-            label="Port"
-            color={data.portConnected ? 'good' : 'average'}
-            content={data.portConnected ? 'Connected' : 'Not Connected'} />
-          {!!data.isPrototype && (
-            <LabeledList.Item label="Access">
+    <Window>
+      <Window.Content>
+        <Section
+          title="Canister"
+          buttons={(
+            <Fragment>
+              {!!isPrototype && (
+                <Button
+                  mr={1}
+                  icon={restricted ? 'lock' : 'unlock'}
+                  color="caution"
+                  content={restricted
+                    ? 'Engineering'
+                    : 'Public'}
+                  onClick={() => act('restricted')} />
+              )}
               <Button
-                icon={data.restricted ? 'lock' : 'unlock'}
-                color="caution"
-                content={data.restricted
-                  ? 'Restricted to Engineering'
-                  : 'Public'}
-                onClick={() => act('restricted')} />
-            </LabeledList.Item>
+                icon="pencil-alt"
+                content="Relabel"
+                onClick={() => act('relabel')} />
+            </Fragment>
+          )}>
+          <LabeledControls>
+            <LabeledControls.Item
+              minWidth="66px"
+              label="Pressure">
+              <AnimatedNumber
+                value={tankPressure}
+                format={value => {
+                  if (value < 10000) {
+                    return toFixed(value) + ' kPa';
+                  }
+                  return formatSiUnit(value * 1000, 1, 'Pa');
+                }} />
+            </LabeledControls.Item>
+            <LabeledControls.Item label="Regulator">
+              <Box
+                position="relative"
+                left="-8px">
+                <Knob
+                  size={1.25}
+                  color={!!valveOpen && 'yellow'}
+                  value={releasePressure}
+                  unit="kPa"
+                  minValue={minReleasePressure}
+                  maxValue={maxReleasePressure}
+                  step={5}
+                  stepPixelSize={1}
+                  onDrag={(e, value) => act('pressure', {
+                    pressure: value,
+                  })} />
+                <Button
+                  fluid
+                  position="absolute"
+                  top="-2px"
+                  right="-20px"
+                  color="transparent"
+                  icon="fast-forward"
+                  onClick={() => act('pressure', {
+                    pressure: maxReleasePressure,
+                  })} />
+                <Button
+                  fluid
+                  position="absolute"
+                  top="16px"
+                  right="-20px"
+                  color="transparent"
+                  icon="undo"
+                  onClick={() => act('pressure', {
+                    pressure: defaultReleasePressure,
+                  })} />
+              </Box>
+            </LabeledControls.Item>
+            <LabeledControls.Item label="Valve">
+              <Button
+                my={0.5}
+                width="50px"
+                lineHeight={2}
+                fontSize="11px"
+                color={valveOpen
+                  ? (hasHoldingTank ? 'caution' : 'danger')
+                  : null}
+                content={valveOpen ? 'Open' : 'Closed'}
+                onClick={() => act('valve')} />
+            </LabeledControls.Item>
+            <LabeledControls.Item
+              mr={1}
+              label="Port">
+              <Box position="relative">
+                <Icon
+                  size={1.25}
+                  name={portConnected ? 'plug' : 'times'}
+                  color={portConnected ? 'good' : 'bad'} />
+                <Tooltip
+                  content={portConnected
+                    ? 'Connected'
+                    : 'Disconnected'}
+                  position="top" />
+              </Box>
+            </LabeledControls.Item>
+          </LabeledControls>
+        </Section>
+        <Section
+          title="Holding Tank"
+          buttons={!!hasHoldingTank && (
+            <Button
+              icon="eject"
+              color={valveOpen && 'danger'}
+              content="Eject"
+              onClick={() => act('eject')} />
+          )}>
+          {!!hasHoldingTank && (
+            <LabeledList>
+              <LabeledList.Item label="Label">
+                {holdingTank.name}
+              </LabeledList.Item>
+              <LabeledList.Item label="Pressure">
+                <AnimatedNumber value={holdingTank.tankPressure} /> kPa
+              </LabeledList.Item>
+            </LabeledList>
           )}
-        </LabeledList>
-      </Section>
-
-      <Section title="Valve">
-        <LabeledList>
-          <LabeledList.Item label="Release Pressure">
-            <ProgressBar
-              value={data.releasePressure
-                / (data.maxReleasePressure - data.minReleasePressure)}>
-              <AnimatedNumber value={data.releasePressure} /> kPa
-            </ProgressBar>
-          </LabeledList.Item>
-          <LabeledList.Item label="Pressure Regulator">
-            <Button
-              icon="undo"
-              disabled={data.releasePressure === data.defaultReleasePressure}
-              content="Reset"
-              onClick={() => act('pressure', {
-                pressure: 'reset',
-              })} />
-            <Button
-              icon="minus"
-              disabled={data.releasePressure <= data.minReleasePressure}
-              content="Min"
-              onClick={() => act('pressure', {
-                pressure: 'min',
-              })} />
-            <Button
-              icon="pencil-alt"
-              content="Set"
-              onClick={() => act('pressure', {
-                pressure: 'input',
-              })} />
-            <Button
-              icon="plus"
-              disabled={data.releasePressure >= data.maxReleasePressure}
-              content="Max"
-              onClick={() => act('pressure', {
-                pressure: 'max',
-              })} />
-          </LabeledList.Item>
-
-          <LabeledList.Item label="Valve">
-            <Button
-              icon={data.valveOpen ? 'unlock' : 'lock'}
-              color={data.valveOpen
-                ? (data.hasHoldingTank ? 'caution' : 'danger')
-                : null}
-              content={data.valveOpen ? 'Open' : 'Closed'}
-              onClick={() => act('valve')} />
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
-
-      <Section
-        title="Holding Tank"
-        buttons={!!data.hasHoldingTank && (
-          <Button
-            icon="eject"
-            color={data.valveOpen && 'danger'}
-            content="Eject"
-            onClick={() => act('eject')} />
-        )}>
-        {!!data.hasHoldingTank && (
-          <LabeledList>
-            <LabeledList.Item label="Label">
-              {data.holdingTank.name}
-            </LabeledList.Item>
-            <LabeledList.Item label="Pressure">
-              <AnimatedNumber value={data.holdingTank.tankPressure} /> kPa
-            </LabeledList.Item>
-          </LabeledList>
-        )}
-        {!data.hasHoldingTank && (
-          <Box color="average">
-            No Holding Tank
-          </Box>
-        )}
-      </Section>
-    </Fragment>
+          {!hasHoldingTank && (
+            <Box color="average">
+              No Holding Tank
+            </Box>
+          )}
+        </Section>
+      </Window.Content>
+    </Window>
   );
 };

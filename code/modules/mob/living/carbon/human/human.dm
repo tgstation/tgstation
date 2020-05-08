@@ -47,6 +47,8 @@
 	sec_hud_set_ID()
 	sec_hud_set_implants()
 	sec_hud_set_security_status()
+	//...fan gear
+	fan_hud_set_fandom()
 	//...and display them.
 	add_to_all_human_data_huds()
 

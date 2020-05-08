@@ -5,7 +5,7 @@
 	extended_desc = "A combination printer/scanner app that enables modular computers to print barcodes for easy scanning and shipping."
 	network_destination = "ship scanner"
 	size = 6
-	tgui_id = "ntos_shipping"
+	tgui_id = "NtosShipping"
 	ui_x = 450
 	ui_y = 350
 	///Account used for creating barcodes.

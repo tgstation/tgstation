@@ -20,7 +20,7 @@
   *
   * make sure you add an update to the schema_version stable in the db changelog
   */
-#define DB_MINOR_VERSION 7
+#define DB_MINOR_VERSION 8
 
 
 //! ## Timing subsystem
@@ -133,6 +133,7 @@
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
+#define INIT_ORDER_EXPLOSIONS		-69
 #define INIT_ORDER_PERSISTENCE		-95
 #define INIT_ORDER_DEMO				-99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
@@ -166,6 +167,7 @@
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
 #define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_OVERLAYS		500
+#define FIRE_PRIORITY_EXPLOSIONS	666
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 
 // SS runlevels
@@ -206,8 +208,6 @@
 			}\
 		}\
 		A.flags_1 &= ~OVERLAY_QUEUED_1;\
-		if(isturf(A)){SSdemo.mark_turf(A);}\
-		else if(isobj(A) || ismob(A)){SSdemo.mark_dirty(A);}\
 	}
 
 // Air subsystem subtasks
@@ -218,3 +218,10 @@
 #define SSAIR_HIGHPRESSURE 5
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
+#define SSAIR_REBUILD_PIPENETS 8
+
+// Explosion Subsystem subtasks
+#define SSEXPLOSIONS_MOVABLES 1
+#define SSEXPLOSIONS_TURFS 2
+#define SSEXPLOSIONS_THROWS 3
+

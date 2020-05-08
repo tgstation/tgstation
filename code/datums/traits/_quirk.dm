@@ -65,22 +65,36 @@
 		return
 	on_process()
 
-/mob/living/proc/get_trait_string(medical) //helper string. gets a string of all the traits the mob has
+/mob/living/proc/get_trait_string(medical, category) //helper string. gets a string of all the traits the mob has
 	var/list/dat = list()
-	if(!medical)
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			dat += T.name
-		if(!dat.len)
-			return "None"
-		return dat.Join(", ")
-	else
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			dat += T.medical_record_text
-		if(!dat.len)
-			return "None"
-		return dat.Join("<br>")
+	switch(category)
+		if(CAT_QUIRK_ALL)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				dat += medical ? T.medical_record_text : T.name
+				if(!dat.len)
+					return "None"
+		//Major Disabilities
+		if(CAT_QUIRK_MAJOR_DISABILITY)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value < -1)
+					dat += medical ? T.medical_record_text : T.name
+		//Minor Disabilities
+		if(CAT_QUIRK_MINOR_DISABILITY)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value == -1)
+					dat += medical ? T.medical_record_text : T.name
+		//Neutral and Positive quirks
+		if(CAT_QUIRK_NOTES)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value > -1)
+					dat += medical ? T.medical_record_text : T.name
+	if(!dat.len)
+		return medical ? "No issues have been declared." : "None"
+	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_trait_datums() //removes all trait datums
 	for(var/V in roundstart_quirks)

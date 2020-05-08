@@ -307,16 +307,14 @@
 		var/datum/reagent/the_reagent = r
 		if(istype(the_reagent, /datum/reagent/medicine))
 			medibonus += 1
-	M.adjustToxLoss(-0.2 * medibonus)
-	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, medibonus ? 1.5/medibonus : 1)
+	M.adjustToxLoss(-0.5 * min(medibonus, 3)) //not great at healing but if you have nothing else it will work
+	M.adjustOrganLoss(ORGAN_SLOT_LUNGS, 0.5) //kills at 40u
 	for(var/r2 in M.reagents.reagent_list)
 		var/datum/reagent/the_reagent2 = r2
 		if(the_reagent2 == src)
 			continue
-		var/amount2purge = 0.1
-		if(istype(the_reagent2,/datum/reagent/toxin) || istype(the_reagent2,/datum/reagent/consumable/ethanol/))
-			amount2purge *= (5*medibonus) //very good antitox and antidrink (well just removing them) for roundstart availability
-		else if(medibonus >= 5 && istype(the_reagent2, /datum/reagent/medicine)) //5 unique meds (4+multiver) will make it not purge medicines
+		var/amount2purge = 3
+		if(medibonus >= 3 && istype(the_reagent2, /datum/reagent/medicine)) //3 unique meds (2+multiver) will make it not purge medicines
 			continue
 		M.reagents.remove_reagent(the_reagent2.type, amount2purge)
 	..()
@@ -434,23 +432,72 @@
 
 /******ORGAN HEALING******/
 /*Suffix: -rite*/
+/*
+*How this medicine works:
+*Penthrite if you are not in crit only stabilizes your heart.
+*As soon as you pass crit threshold it's special effects kick in. Penthrite forces your heart to beat preventing you from entering
+*soft and hard crit, but there is a catch. During this you will be healed and you will sustain
+*heart damage that will not imapct you as long as penthrite is in your system.
+*If you reach the threshold of -60 HP penthrite stops working and you get a heart attack, penthrite is flushed from your system in that very moment,
+*causing you to loose your soft crit, hard crit and heart stabilization effects.
+*Overdosing on penthrite also causes a heart failure.
+*/
 /datum/reagent/medicine/C2/penthrite
 	name = "Penthrite"
-	description = "An explosive compound used to stabilize heart conditions. May interfere with stomach acid!"
+	description = "An expensive medicine that aids with pumping blood around the body even without a heart, and prevents the heart from slowing down. It reacts violently with other emergency medication."
 	color = "#F5F5F5"
-	self_consuming = TRUE
+	overdose_threshold = 50
 
 /datum/reagent/medicine/C2/penthrite/on_mob_add(mob/living/M)
 	. = ..()
+	to_chat(M,"<span class='notice'>Your heart begins to beat with great force!")
 	ADD_TRAIT(M, TRAIT_STABLEHEART, type)
+	ADD_TRAIT(M, TRAIT_NOHARDCRIT,type)
+	ADD_TRAIT(M, TRAIT_NOSOFTCRIT,type)
+	M.crit_threshold = M.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 
-/datum/reagent/medicine/C2/penthrite/on_mob_metabolize(mob/living/M)
+
+/datum/reagent/medicine/C2/penthrite/on_mob_life(mob/living/carbon/human/H)
+	H.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.25)
+	if(H.health <= HEALTH_THRESHOLD_CRIT && H.health > H.crit_threshold) //we cannot save someone above our raised crit threshold.
+
+		H.adjustToxLoss(-2 * REM, 0)
+		H.adjustBruteLoss(-2 * REM, 0)
+		H.adjustFireLoss(-2 * REM, 0)
+		H.adjustOxyLoss(-6 * REM, 0)
+
+		H.losebreath = 0
+
+		H.adjustOrganLoss(ORGAN_SLOT_HEART,max(1,volume/10)) // your heart is barely keeping up!
+
+		H.Jitter(rand(0,2))
+		H.Dizzy(rand(0,2))
+
+
+		if(prob(33))
+			to_chat(H,"<span class='danger'>Your body is trying to give up, but your heart is still beating!</span>")
+
+	if(H.health <= H.crit_threshold) //certain death above this threshold
+		REMOVE_TRAIT(H, TRAIT_STABLEHEART, type) //we have to remove the stable heart before we give him heart attack
+		to_chat(H,"<span class='danger'>You feel something rupturing inside your chest!</span>")
+		H.emote("scream")
+		H.set_heartattack(TRUE)
+		volume = 0
 	. = ..()
-	M.adjustOrganLoss(ORGAN_SLOT_STOMACH,0.5 * REM)
 
 /datum/reagent/medicine/C2/penthrite/on_mob_end_metabolize(mob/living/M)
+	M.crit_threshold = M.crit_threshold - HEALTH_THRESHOLD_FULLCRIT*2 //your heart is still pumping!
 	REMOVE_TRAIT(M, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(M, TRAIT_NOHARDCRIT,type)
+	REMOVE_TRAIT(M, TRAIT_NOSOFTCRIT,type)
 	. = ..()
+
+/datum/reagent/medicine/C2/penthrite/overdose_process(mob/living/carbon/human/H)
+	REMOVE_TRAIT(H, TRAIT_STABLEHEART, type)
+	H.adjustStaminaLoss(10)
+	H.adjustOrganLoss(ORGAN_SLOT_HEART,10)
+	H.set_heartattack(TRUE)
+
 
 /******NICHE******/
 //todo

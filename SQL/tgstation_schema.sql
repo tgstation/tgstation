@@ -258,6 +258,7 @@ CREATE TABLE `messages` (
   `lasteditor` varchar(32) DEFAULT NULL,
   `edits` text,
   `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `deleted_ckey` VARCHAR(32) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_msg_ckey_time` (`targetckey`,`timestamp`, `deleted`),
   KEY `idx_msg_type_ckeys_time` (`type`,`targetckey`,`adminckey`,`timestamp`, `deleted`),

@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("rack parts", /obj/item/rack_parts), \
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
 	null, \
-	new/datum/stack_recipe("canister", /obj/machinery/portable_atmospherics/canister, 10, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+	new/datum/stack_recipe("canister frame", /obj/structure/canister_frame/machine/frame_tier_0, 5, time = 8, one_per_turf = TRUE, on_floor = TRUE), \
 	new/datum/stack_recipe("pestle", /obj/item/pestle, 1, time = 50), \
 	// FULP: ABOVE: Plasteel was too hard to come by. Make it from metal, too.
 	null, \
@@ -628,7 +628,7 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 	new /datum/stack_recipe("large water bottle", /obj/item/reagent_containers/food/drinks/waterbottle/large/empty, 3), \
 	new /datum/stack_recipe("colo cups", /obj/item/reagent_containers/food/drinks/colocup, 1), \
 	new /datum/stack_recipe("wet floor sign", /obj/item/clothing/suit/caution, 2), \
-	new /datum/stack_recipe("blank sign", /obj/item/sign_backing, 1)))
+	new /datum/stack_recipe("blank wall sign", /obj/item/sign, 1)))
 
 /obj/item/stack/sheet/plastic
 	name = "plastic"

@@ -1,23 +1,74 @@
+/**
+  * #Chemical Reaction
+  *
+  * Datum that makes the magic between reagents happen.
+  *
+  * Chemical reactions is a class that is instantiated and stored in a global list 'chemical_reactions_list'
+  */
 /datum/chemical_reaction
+	///Results of the chemical reactions
 	var/list/results = new/list()
+	///Required chemicals that are USED in the reaction
 	var/list/required_reagents = new/list()
+	///Required chemicals that must be present in the container but are not USED.
 	var/list/required_catalysts = new/list()
 
 	// Both of these variables are mostly going to be used with slime cores - but if you want to, you can use them for other things
-	var/required_container = null // the exact container path required for the reaction to happen
-	var/required_other = 0 // an integer required for the reaction to happen
+	/// the exact container path required for the reaction to happen
+	var/required_container
+	/// an integer required for the reaction to happen
+	var/required_other = 0
 
-	var/mob_react = TRUE //Determines if a chemical reaction can occur inside a mob
-
+	///Determines if a chemical reaction can occur inside a mob
+	var/mob_react = TRUE
+	///Required temperature for the reaction to begin
 	var/required_temp = 0
-	var/is_cold_recipe = 0 // Set to 1 if you want the recipe to only react when it's BELOW the required temp.
-	var/mix_message = "The solution begins to bubble." //The message shown to nearby people upon mixing, if applicable
-	var/mix_sound = 'sound/effects/bubbles.ogg' //The sound played upon mixing, if applicable
+	/// Set to TRUE if you want the recipe to only react when it's BELOW the required temp.
+	var/is_cold_recipe = FALSE
+	///The message shown to nearby people upon mixing, if applicable
+	var/mix_message = "The solution begins to bubble."
+	///The sound played upon mixing, if applicable
+	var/mix_sound = 'sound/effects/bubbles.ogg'
 
+/datum/chemical_reaction/New()
+	. = ..()
+	SSticker.OnRoundstart(CALLBACK(src,.proc/update_info))
+
+/**
+  * Updates information during the roundstart
+  *
+  * This proc is mainly used by explosives but can be used anywhere else
+  * You should generally use the special reactions in [/datum/chemical_reaction/randomized]
+  * But for simple variable edits, like changing the temperature or adding/subtracting required reagents it is better to use this.
+  */
+/datum/chemical_reaction/proc/update_info()
+	return
+
+/**
+  * Shit that happens on reaction
+  *
+  * Proc where the additional magic happens.
+  * You dont want to handle mob spawning in this since there is a dedicated proc for that.client
+  * Arguments:
+  * * holder - the datum that holds this reagent, be it a beaker or anything else
+  * * created_volume - volume created when this is mixed. look at 'var/list/results'.
+  */
 /datum/chemical_reaction/proc/on_reaction(datum/reagents/holder, created_volume)
 	return
 	//I recommend you set the result amount to the total volume of all components.
 
+/**
+  * Magical mob spawning when chemicals react
+  *
+  * Your go to proc when you want to create new mobs from chemicals. please dont use on_reaction.
+  * Arguments:
+  * * holder - the datum that holds this reagent, be it a beaker or anything else
+  * * amount_to_spawn - how much /mob to spawn
+  * * reaction_name - what is the name of this reaction. be creative, the world is your oyster after all!
+  * * mob_class - determines if the mob will be friendly, neutral or hostile
+  * * mob_faction - used in determining targets, mobs from the same faction wont harm eachother.
+  * * random - creates random mobs. self explanatory.
+  */
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
 	if(holder && holder.my_atom)
 		var/atom/A = holder.my_atom
@@ -50,7 +101,16 @@
 				for(var/j = 1, j <= rand(1, 3), j++)
 					step(S, pick(NORTH,SOUTH,EAST,WEST))
 
-///Simulates a vortex that moves nearby movable atoms towards or away from the turf T. Range also determines the strength of the effect. High values cause nearby objects to be thrown.
+/**
+  * Magical move-wooney that happens sometimes.
+  *
+  * Simulates a vortex that moves nearby movable atoms towards or away from the turf T.
+  * Range also determines the strength of the effect. High values cause nearby objects to be thrown.
+  * Arguments:
+  * * T - turf where it happens
+  * * setting_type - does it suck or does it blow?
+  * * range - range.
+  */
 /proc/goonchem_vortex(turf/T, setting_type, range)
 	for(var/atom/movable/X in orange(range, T))
 		if(X.anchored)

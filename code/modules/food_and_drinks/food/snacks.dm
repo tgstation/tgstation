@@ -53,6 +53,8 @@ All foods are distributed among various categories. Use common sense.
 	var/list/bonus_reagents //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
+	var/value = 10	//Which export tier of value the item falls under.
+	var/silver_spawned = FALSE	//Special case used for exporting, only true if created from a silver slime to prevent cheese.
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 

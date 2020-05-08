@@ -136,7 +136,7 @@
 
 //Returns if a certain item can be equipped to a certain slot.
 // Currently invalid for two-handed items - call obj/item/mob_can_equip() instead.
-/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE)
+/mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, swap = FALSE)
 	return FALSE
 
 /mob/proc/can_put_in_hand(I, hand_index)
@@ -400,12 +400,12 @@
 	return obscured
 
 
-/obj/item/proc/equip_to_best_slot(mob/M)
+/obj/item/proc/equip_to_best_slot(mob/M, swap=FALSE)
 	if(src != M.get_active_held_item())
 		to_chat(M, "<span class='warning'>You are not holding anything to equip!</span>")
 		return FALSE
 
-	if(M.equip_to_appropriate_slot(src))
+	if(M.equip_to_appropriate_slot(src, swap))
 		M.update_inv_hands()
 		return TRUE
 	else
@@ -434,6 +434,18 @@
 	var/obj/item/I = get_active_held_item()
 	if (I)
 		I.equip_to_best_slot(src)
+
+/mob/verb/equipment_swap()
+	set name = "equipment-swap"
+	set hidden = 1
+
+	var/obj/item/I = get_active_held_item()
+	if (I)
+		if(!do_after(src, 1 SECONDS, target = I))
+			to_chat(src, "<span class='warning'>You fumble with your equipment, accidentally dropping it on the floor!</span>")
+			dropItemToGround(I)
+			return
+		I.equip_to_best_slot(src, TRUE)
 
 //used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
 /mob/proc/getBackSlot()

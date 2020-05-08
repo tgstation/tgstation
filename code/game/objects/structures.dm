@@ -113,6 +113,12 @@
 		if(examine_status)
 			. += examine_status
 
+/obj/structure/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	
+	if(mover.pass_flags & PASSSTRUCTURE)
+		return TRUE
+
 /obj/structure/proc/examine_status(mob/user) //An overridable proc, mostly for falsewalls.
 	var/healthpercent = (obj_integrity/max_integrity) * 100
 	switch(healthpercent)

@@ -27,7 +27,7 @@
 						   OFFSET_S_STORE = list(0,2), OFFSET_FACEMASK = list(0,3), OFFSET_HEAD = list(0,3), OFFSET_FACE = list(0,3), OFFSET_BELT = list(0,3), OFFSET_BACK = list(0,2), \
 						   OFFSET_SUIT = list(0,2), OFFSET_NECK = list(0,3))
 
-	skinned_type = /obj/item/reagent_containers/food/snacks/faggot // NO SKIN //  /obj/item/stack/sheet/animalhide/human
+	skinned_type = /obj/item/reagent_containers/food/snacks/meatball // NO SKIN //  /obj/item/stack/sheet/animalhide/human
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab //What the species drops on gibbing
 	toxic_food = DAIRY | PINEAPPLE //NONE
 	disliked_food = VEGETABLES | FRUIT // | FRIED// GROSS | RAW
@@ -91,7 +91,7 @@
 
 	// Be Spooked but Educated
 	//C.gain_trauma(pick(startTraumas))
-	if (SStraumas.phobia_words && SStraumas.phobia_words.len) // NOTE: ONLY if phobias have been defined! For some reason, sometimes this gets FUCKED??
+	if (SStraumas.phobia_types && SStraumas.phobia_types.len) // NOTE: ONLY if phobias have been defined! For some reason, sometimes this gets FUCKED??
 		C.gain_trauma(/datum/brain_trauma/mild/phobia/strangers)
 		C.gain_trauma(/datum/brain_trauma/mild/hallucinations)
 		C.gain_trauma(/datum/brain_trauma/special/bluespace_prophet/phobetor)

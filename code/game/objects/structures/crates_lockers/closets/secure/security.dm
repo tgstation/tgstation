@@ -124,7 +124,7 @@
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/clothing/gloves/krav_maga/sec(src)
 	new /obj/item/door_remote/head_of_security(src)
-	new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src)
+	/*new /obj/item/gun/ballistic/shotgun/automatic/combat/compact(src) FULP NOTE: this broke due to undefined type*/
 	new /obj/item/clothing/shoes/jackboots/digitigrade(src) //fulp
 
 /obj/structure/closet/secure_closet/security
