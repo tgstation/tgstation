@@ -8,10 +8,10 @@ import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
 import { backendSuspend, useBackend } from '../backend';
-import { IS_IE8 } from '../byond';
+import { callByond, IS_IE8 } from '../byond';
 import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
-import { dragStartHandler, resizeStartHandler } from '../drag';
+import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { releaseHeldKeys } from '../hotkeys';
 import { createLogger } from '../logging';
 import { useDispatch } from '../store';
@@ -19,8 +19,27 @@ import { Layout, refocusLayout } from './Layout';
 
 const logger = createLogger('Window');
 
+const DEFAULT_SIZE = [400, 600];
+
 export class Window extends Component {
   componentDidMount() {
+    logger.log('mounting');
+    const { config } = useBackend(this.context);
+    const size = [
+      this.props.width
+        || config.window.size && config.window.size[0]
+        || DEFAULT_SIZE[0],
+      this.props.height
+        || config.window.size && config.window.size[1]
+        || DEFAULT_SIZE[1],
+    ];
+    setWindowKey(config.window.key);
+    recallWindowGeometry(config.window.key, { size });
+    callByond('winset', {
+      id: window.__windowId__,
+      titlebar: !config.fancy,
+      can_resize: !config.fancy,
+    });
     refocusLayout();
   }
 
@@ -55,6 +74,10 @@ export class Window extends Component {
           onClose={() => {
             logger.log('pressed close');
             releaseHeldKeys();
+            callByond('winset', {
+              id: window.__windowId__,
+              'is-visible': false,
+            });
             act('tgui:close');
             dispatch(backendSuspend());
           }} />

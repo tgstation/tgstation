@@ -21,6 +21,8 @@
 	var/ui_key
 	/// The window_id for browse() and onclose().
 	var/window_id
+	/// Key that is used for remembering the window geometry.
+	var/window_key
 	/// The window width.
 	var/width = 0
 	/// The window height
@@ -69,6 +71,7 @@
 	src.ui_key = ui_key
 	// DO NOT replace with \ref here. src_object could potentially be tagged
 	src.window_id = "[REF(src_object)]-[ui_key]"
+	src.window_key = src.window_id
 	src.interface = interface
 
 	if(title)
@@ -106,7 +109,6 @@
 		// Use a recycled window
 		window_id = free_windows[length(free_windows)]
 		free_windows -= window_id
-		winset(user.client, window_id, "size=[width]x[height];is-visible=1")
 		initialized = TRUE
 	else
 		// Create a new window
@@ -225,7 +227,11 @@
 		"fancy" = user.client.prefs.tgui_fancy,
 		"locked" = user.client.prefs.tgui_lock,
 		"observer" = isobserver(user),
-		"window" = window_id,
+		"window" = list(
+			"id" = window_id,
+			"key" = window_key,
+			"size" = list(width, height),
+		),
 		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
 		// be tagged, so this is an effective unwrap
 		"ref" = "\ref[src]"

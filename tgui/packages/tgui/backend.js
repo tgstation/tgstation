@@ -112,7 +112,11 @@ export const backendReducer = (state, action) => {
  *     fancy: number,
  *     locked: number,
  *     observer: number,
- *     window: string,
+ *     window: {
+ *       id: string,
+ *       key: string,
+ *       size: [number, number],
+ *     },
  *     ref: string,
  *   },
  *   data: any,

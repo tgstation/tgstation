@@ -29,7 +29,7 @@ import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { backendUpdate, backendSuspend } from './backend';
-import { IS_IE8 } from './byond';
+import { IS_IE8, callByond } from './byond';
 import { setupDrag } from './drag';
 import { logger } from './logging';
 import { createStore, StoreProvider } from './store';
@@ -38,6 +38,7 @@ const enteredBundleAt = Date.now();
 const store = createStore();
 let reactRoot;
 let initialRender = true;
+let wasSuspended = false;
 
 const renderLayout = () => {
   // Mark the beginning of the render
@@ -65,6 +66,17 @@ const renderLayout = () => {
       reactRoot = document.getElementById('react-root');
     }
     render(element, reactRoot);
+    if (state.suspended) {
+      wasSuspended = true;
+      return;
+    }
+    if (initialRender || wasSuspended) {
+      callByond('winset', {
+        id: window.__windowId__,
+        'is-visible': true,
+      });
+      wasSuspended = false;
+    }
   }
   catch (err) {
     logger.error('rendering error', err);

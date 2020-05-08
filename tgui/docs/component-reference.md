@@ -279,7 +279,7 @@ Example (button):
 <ByondUi
   params={{
     id: 'test_button', // optional, can be auto-generated
-    parent: config.window,
+    parent: config.window.id,
     type: 'button',
     text: 'Hello, world!',
   }} />
@@ -291,7 +291,7 @@ Example (map):
 <ByondUi
   params={{
     id: 'test_map',
-    parent: config.window,
+    parent: config.window.id,
     type: 'map',
   }} />
 ```
