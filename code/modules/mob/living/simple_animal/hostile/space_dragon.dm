@@ -37,6 +37,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	melee_damage_upper = 35
 	melee_damage_lower = 35
+	mob_size = MOB_SIZE_LARGE
 	armour_penetration = 30
 	pixel_x = -16
 	turns_per_move = 5
@@ -289,7 +290,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * QDeletes all the current rifts after removing their references to other objects.
   * Currently, the only reference they have is to the Dragon which created them, so we clear that before deleting them.
   * Currently used when Space Dragon dies.
-  */	
+  */
 /mob/living/simple_animal/hostile/space_dragon/proc/destroy_rifts()
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.dragon = null
