@@ -97,6 +97,11 @@
 			C.dropItemToGround(owner.get_item_for_held_index(held_index), 1)
 			C.hand_bodyparts[held_index] = null
 
+	for(var/thing in scars)
+		var/datum/scar/S = thing
+		S.victim = null
+		LAZYREMOVE(owner.all_scars, S)
+
 	for(var/thing in wounds)
 		var/datum/wound/W = thing
 		W.remove_wound(TRUE)
@@ -314,6 +319,11 @@
 
 	for(var/obj/item/organ/O in contents)
 		O.Insert(C)
+
+	for(var/thing in scars)
+		var/datum/scar/S = thing
+		S.victim = C
+		LAZYADD(C.all_scars, thing)
 
 	for(var/i in wounds)
 		var/datum/wound/W = i

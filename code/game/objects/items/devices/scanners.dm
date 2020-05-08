@@ -441,7 +441,7 @@ GENE SCANNER
 /obj/item/healthanalyzer/wound
 	name = "first aid analyzer"
 	icon_state = "adv_spectrometer"
-	desc = "A prototype Lo-Tech medical scanner used to diagnose injuries and recommend treatment for serious wounds, but offers no further insight into the patient's health. You hope the final version is less annoying to read!"
+	desc = "A prototype MeLo-Tech medical scanner used to diagnose injuries and recommend treatment for serious wounds, but offers no further insight into the patient's health. You hope the final version is less annoying to read!"
 
 /obj/item/healthanalyzer/wound/attack(mob/living/carbon/patient, mob/living/carbon/human/user)
 	add_fingerprint(user)

@@ -77,7 +77,7 @@
 	/// This number is subtracted from all wound rolls on this bodypart, higher numbers mean more defense, negative means easier to wound
 	var/wound_resistance = 0
 	/// When this bodypart hits max damage, this number is added to all wound rolls. Obviously only relevant for bodyparts that have damage caps.
-	var/disabled_wound_penalty = 10
+	var/disabled_wound_penalty = 15
 
 	/// A hat won't cover your face, but a shirt covering your chest will cover your... you know, chest
 	var/scars_covered_by_clothes = TRUE
@@ -361,18 +361,16 @@
 		return BODYPART_DISABLED_PARALYSIS
 	if(HAS_TRAIT(src, TRAIT_LIMB_DISABLED_WOUND))
 		return BODYPART_DISABLED_WOUND
-	/*if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
+	if(can_dismember() && !HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 		. = disabled //inertia, to avoid limbs healing 0.1 damage and being re-enabled
 		if(is_organic_limb())
-			/* TODO: figure if i'm keeping disabling to broken bones only
+			// TODO: figure if i'm keeping disabling to broken bones only
 			if((get_damage(TRUE) >= max_damage) || (HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE) && (get_damage(TRUE) >= (max_damage * 0.6)))) //Easy limb disable disables the limb at 40% health instead of 0%
 				return BODYPART_DISABLED_DAMAGE
-			*/
-			if(disabled && (get_damage(TRUE) <= (max_damage * 0.5)))
+			if(disabled && (get_damage(TRUE) <= (max_damage * 0.8))) // reenabled at 80% now instead of 50% as of wounds update
 				return BODYPART_NOT_DISABLED
 	else
 		return BODYPART_NOT_DISABLED
-	*/
 	return BODYPART_NOT_DISABLED
 
 /obj/item/bodypart/proc/set_disabled(new_disabled)
@@ -603,6 +601,9 @@
 		return
 
 	var/bleed_rate = 0
+
+	if(brute_dam >= 40)
+		bleed_rate += (brute_dam * 0.008)
 
 	//We want an accurate reading of .len
 	listclearnulls(embedded_objects)

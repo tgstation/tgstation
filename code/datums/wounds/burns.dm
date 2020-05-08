@@ -150,23 +150,26 @@
 
 /datum/wound/burn/get_scanner_description(mob/user)
 	. = ..()
-	// how much life we have left in these bandages
 	. += "<div class='ml-3'>"
-	switch(infestation)
-		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-			. += "Infection Level: Moderate\n"
-		if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
-			. += "Infection Level: Severe\n"
-		if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
-			. += "Infection Level: <span class='deadsay'>CRITICAL</span>\n"
-		if(WOUND_INFECTION_SEPTIC to INFINITY)
-			. += "Infection Level: <span class='deadsay'>LOSS IMMINENT</span>\n"
 
-	if(flesh_damage > 0)
-		. += "Flesh damage detected: Please apply ointment or regenerative mesh to allow recovery.\n"
+	if(infestation <= sanitization && flesh_damage <= flesh_healing && mortification == 0)
+		. += "No further treatment required: Burns will heal shortly."
+	else
+		switch(infestation)
+			if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
+				. += "Infection Level: Moderate\n"
+			if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
+				. += "Infection Level: Severe\n"
+			if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
+				. += "Infection Level: <span class='deadsay'>CRITICAL</span>\n"
+			if(WOUND_INFECTION_SEPTIC to INFINITY)
+				. += "Infection Level: <span class='deadsay'>LOSS IMMINENT</span>\n"
 
-	if(mortification > 0)
-		. += "Mortification detected: Please excise dead skin via debriding surgery. If desperate, dead skin can be shaved off by applying an aggressive hold and interacting helpfully with a sharp object on the affected limb."
+		if(flesh_damage > 0)
+			. += "Flesh damage detected: Please apply ointment or regenerative mesh to allow recovery.\n"
+
+		if(mortification > 0)
+			. += "Mortification detected: Please excise dead skin via debriding surgery. If desperate, dead skin can be shaved off by applying an aggressive hold and interacting helpfully with a sharp object on the affected limb."
 	. += "</div>"
 
 /*

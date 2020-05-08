@@ -1066,7 +1066,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 									ADMIN_PUNISHMENT_IMMERSE,
 									ADMIN_PUNISHMENT_FAT,
 									ADMIN_PUNISHMENT_FAKEBWOINK,
-									ADMIN_PUNISHMENT_NUGGET
+									ADMIN_PUNISHMENT_NUGGET,
+									ADMIN_PUNISHMENT_CRACK
 									)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)
@@ -1150,7 +1151,14 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, C, 'sound/effects/cartoon_pop.ogg', 70), timer)
 				addtimer(CALLBACK(C, /mob/living/.proc/spin, 4, 1), timer - 0.4 SECONDS)
 				timer += 2 SECONDS
-
+		if(ADMIN_PUNISHMENT_CRACK)
+			if(!iscarbon(target))
+				to_chat(usr,"<span class='warning'>This must be used on a carbon mob.</span>", confidential = TRUE)
+				return
+			var/mob/living/carbon/C = target
+			for(var/obj/item/bodypart/squish_part in C.bodyparts)
+				var/type_wound = pick(list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate))
+				squish_part.force_wound_upwards(type_wound)
 
 	punish_log(target, punishment)
 

@@ -26,7 +26,10 @@
 
 	obj_damage = 60
 	melee_damage_lower = 20
-	melee_damage_upper = 30
+	melee_damage_upper = 25
+	wound_bonus = -5
+	bare_wound_bonus = 10 // BEAR wound bonus am i right
+	sharpness = TRUE
 	attack_verb_continuous = "claws"
 	attack_verb_simple = "claw"
 	attack_sound = 'sound/weapons/bladeslice.ogg'
@@ -92,7 +95,9 @@
 	faction = list("russian")
 	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab/bear = 5, /obj/item/clothing/head/bearpelt = 1, /obj/item/bear_armor = 1)
 	melee_damage_lower = 25
-	melee_damage_upper = 35
+	melee_damage_upper = 30
+	wound_bonus = 5
+	bare_wound_bonus = 15
 	armour_penetration = 20
 	health = 120
 	maxHealth = 120

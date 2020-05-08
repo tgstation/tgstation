@@ -213,7 +213,7 @@
 	examine_desc = "has a severe cut"
 	occur_text = "is ripped open, veins spurting blood"
 	severity = WOUND_SEVERITY_SEVERE
-	initial_flow = 4.5
+	initial_flow = 3.75
 	minimum_flow = 3
 	clot_rate = 0.05
 	max_per_type = 4
@@ -230,8 +230,8 @@
 	examine_desc = "is spurting blood at an alarming rate"
 	occur_text = "is torn open, spraying blood wildly"
 	severity = WOUND_SEVERITY_CRITICAL
-	initial_flow = 5.5
-	minimum_flow = 5
+	initial_flow = 5
+	minimum_flow = 4.5
 	clot_rate = -0.05 // critical cuts actively get worse instead of better
 	max_per_type = 5
 	threshold_minimum = 80
@@ -243,11 +243,11 @@
 // TODO: see about moving dismemberment over to this, i'll have to add judging dismembering power/wound potential wrt item size i guess
 /datum/wound/brute/cut/loss
 	name = "Dismembered"
-	desc = "oof ouch!!."
+	desc = "oof ouch!!"
 	occur_text = "is violently dismembered!"
 	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	severity = WOUND_SEVERITY_LOSS
-	threshold_minimum = 150
+	threshold_minimum = 180
 	status_effect_type = null
 
 /datum/wound/brute/cut/loss/apply_wound(obj/item/bodypart/L, silent, datum/wound/brute/cut/old_wound)

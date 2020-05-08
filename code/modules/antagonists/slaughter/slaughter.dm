@@ -34,8 +34,11 @@
 	healable = 0
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 50
-	melee_damage_lower = 30
-	melee_damage_upper = 30
+	melee_damage_lower = 20 // reduced from 30 to 20 with wounds since they get big buffs to slicing wounds
+	melee_damage_upper = 20
+	wound_bonus = -10
+	bare_wound_bonus = 15
+	sharpness = TRUE
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	var/playstyle_string = "<span class='big bold'>You are a slaughter demon,</span><B> a terrible creature from another realm. You have a single desire: To kill. \
@@ -48,6 +51,10 @@
 				/obj/item/organ/heart/demon)
 	del_on_death = 1
 	deathmessage = "screams in anger as it collapses into a puddle of viscera!"
+	/// How long it takes for the alt-click slam attack to come off cooldown
+	var/slam_cooldown_time = 45 SECONDS
+	/// The actual instance var for the cooldown
+	var/slam_cooldown = 0
 
 /mob/living/simple_animal/slaughter/Initialize()
 	..()
@@ -56,6 +63,23 @@
 	AddSpell(bloodspell)
 	if(istype(loc, /obj/effect/dummy/phased_mob/slaughter))
 		bloodspell.phased = TRUE
+
+/mob/living/simple_animal/slaughter/CtrlShiftClickOn(atom/A)
+	if(!isliving(A))
+		return ..()
+	if(slam_cooldown + slam_cooldown_time > world.time)
+		to_chat(src, "<span class='warning'>Your slam ability is still on cooldown!</span>")
+		return
+
+	face_atom(A)
+	var/mob/living/victim = A
+	victim.take_bodypart_damage(brute=20, wound_bonus=15) // don't worry, there's more punishment when they hit something
+	visible_message("<span class='danger'>[src] slams into [victim] with monstrous strength!</span>", "<span class='danger'>You slam into [victim] with monstrous strength!</span>", ignored_mobs=victim)
+	to_chat(victim, "<span class='userdanger'>[src] slams into you with monstrous strength, sending you flying like a ragdoll!</span>")
+	var/turf/yeet_target = get_edge_target_turf(victim, dir)
+	victim.throw_at(yeet_target, 10, 5, src)
+	slam_cooldown = world.time
+	log_combat(src, victim, "slaughter slammed")
 
 /obj/effect/decal/cleanable/blood/innards
 	name = "pile of viscera"
