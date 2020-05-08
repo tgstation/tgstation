@@ -326,7 +326,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living/carbon/human/H = i
 		if(!H.hardcore_survival_score)
 			continue
-		if(H?.mind.special_role)
+		if(H.mind?.special_role)
 			H.hardcore_survival_score *= 2 //Double for antags
 		to_chat(H, "<span class='notice'>You will gain [round(H.hardcore_survival_score)] hardcore random points if you survive this round!</span>")
 
