@@ -57,7 +57,7 @@
 
 /obj/machinery/plumbing/bottler/process()
 	if(machine_stat & NOPOWER)
-		return
+		return FALSE
 	///see if machine is full (ready)
 	if(reagents.holder_full())
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
@@ -67,13 +67,14 @@
 			if((B.reagents.total_volume + reagents.total_volume) <= B.reagents.maximum_volume)
 				reagents.trans_to(B, reagents.total_volume, transfered_by = src)
 				B.forceMove(goodspot)
-				return
+				return TRUE
 			///glass was full so we throw it away
 			AM.forceMove(badspot)
 		if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
 			reagents.trans_to(AM, reagents.total_volume, transfered_by = src, method = INJECT)
-			return
+			return TRUE
 		if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
 			reagents.trans_to(AM, reagents.total_volume, transfered_by = src, method = INJECT)
-			return
+			return TRUE
+	..()
