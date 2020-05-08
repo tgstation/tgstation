@@ -1075,14 +1075,6 @@
 	build_path = /obj/item/toy/balloon
 	category = list("hacked", "Misc")
 
-/datum/design/toy_meteor
-	name = "Plastic Toy Meteor"
-	id = "toy_meteor"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/plastic = 1000)
-	build_path = /obj/item/toy/minimeteor
-	category = list("hacked", "Misc")
-
 /datum/design/toy_armblade
 	name = "Plastic Armblade"
 	id = "toy_armblade"
