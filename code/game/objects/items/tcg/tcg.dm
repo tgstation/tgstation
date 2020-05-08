@@ -21,20 +21,20 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	transform = matrix(0.3,0,0,0,0.3,0)
 
 /datum/card
-	var/id = -1 //Unique ID, for use in lookups and storage
+	var/id = -1 //Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
 	var/name = "Coder"
 	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
-	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place."
+	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place." //This handles any extra rules for the card, i.e. extra attributes, special effects, etc. If you've played any other card game, you know how this works.
 	var/icon = "icons/obj/tcg.dmi"
 	var/icon_state = "runtime"
-	var/summoncost = -1
+	var/summoncost = -1 //What it costs to summon this card to the battlefield.
 	var/power = 0 //How hard this card hits (by default)
 	var/resolve = 0 //How hard this card can get hit (by default)
 	var/faction = "socks" //Someone please come up with a ruleset so I can comment this
-	var/cardtype ="C43a7u43?" //Used for something something card types, inept pls doc or sm, you know the deal
-	var/cardsubtype = "Weeb"
-	var/series = "coreset2020"
-	var/rarity = "uber rare to the extreme" //The rarity of this card in a set, each set must have at least one of all types
+	var/cardtype ="C43a7u43?" //Used to define the behaviour the card uses during the game.
+	var/cardsubtype = "Weeb" //An extra descriptor for the card. Combined with the cardtype for a larger card descriptor, i.e. Creature- Xenomorph, Spell- Instant, that sort of thing. For creatures, this has no effect, for spells, this is important.
+	var/series = "coreset2020" //Defines the series that the card originates from, this is *very* important for spawning the cards via packs.
+	var/rarity = "uber rare to the extreme" //The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
 
 /datum/card/New(list/data, list/templates = list())
 	applyTemplates(data, templates)
