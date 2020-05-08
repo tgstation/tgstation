@@ -250,6 +250,7 @@
 
 
 /obj/item/paper/Topic(href, href_list)
+	return
 	..()
 	var/literate = usr.is_literate()
 	if(!usr.canUseTopic(src, BE_CLOSE, literate))
@@ -288,7 +289,7 @@
 
 /obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	..()
-
+	return
 	if(resistance_flags & ON_FIRE)
 		return
 
