@@ -49,7 +49,7 @@
 ///changing input ammount with a window
 /obj/machinery/plumbing/bottler/interact(mob/user)
 	. = ..()
-	var/vol = min(100, round(input(user,"maximum is 100u","set ammount to fill with") as num|null, 1))
+	var/vol = max(1, min(100, round(input(user,"maximum is 100u","set ammount to fill with") as num|null, 1)))
 	reagents.clear_reagents()
 	create_reagents(vol, TRANSPARENT)
 	reagents.maximum_volume = vol
