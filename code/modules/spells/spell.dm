@@ -53,8 +53,8 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 		// first of all make sure we valid
 		var/mob/living/as_living = usr
 		if(!(src in usr.mob_spell_list) && !(usr.mind && (src in usr.mind.spell_list)) && !(istype(as_living) && (src in as_living.abilities)))
-			message_admins("[key_name_admin(src)] clicked on an invalid proc_holder href! ([src])")
-			log_game("[key_name(src)] clicked on an invalid proc_holder href! ([src])")
+			message_admins("[key_name_admin(usr)] clicked on an invalid proc_holder href! ([src])")
+			log_game("[key_name(usr)] clicked on an invalid proc_holder href! ([src])")
 			return
 		Click()
 
