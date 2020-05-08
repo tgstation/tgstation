@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - rscdel: "Removed the ability to print mini meteor toys from the autolathe and obtain them from cargo crates."
