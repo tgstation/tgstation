@@ -70,6 +70,7 @@
 				return TRUE
 			///glass was full so we throw it away
 			AM.forceMove(badspot)
+			return FALSE
 		if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
 			reagents.trans_to(AM, reagents.total_volume, transfered_by = src, method = INJECT)
