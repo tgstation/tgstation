@@ -469,12 +469,12 @@
 	for(var/i in GLOB.player_list)
 		if(!ishuman(i))
 			continue
-		var/mob/living/carbon/human/H = i
-		if(!H.hardcore_survival_score || !H.onCentCom() || H.stat == DEAD) ///gotta escape nerd
+		var/mob/living/carbon/human/human_player = i
+		if(!human_player.hardcore_survival_score || !human_player.onCentCom() || human_player.stat == DEAD) ///gotta escape nerd
 			continue
-		if(!H.mind)
+		if(!human_player.mind)
 			continue
-		. += "<li>[printplayer(H.mind)] with a hardcore random score of [round(H.hardcore_survival_score)]</li>"
+		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"
 	. += "</ul>"
 
 /datum/controller/subsystem/ticker/proc/antag_report()
