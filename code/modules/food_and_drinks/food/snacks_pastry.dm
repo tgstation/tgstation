@@ -574,6 +574,89 @@
 	tastes = list("meat" = 2, "dough" = 2, "inner peace" = 1)
 	foodtype = GRAIN
 
+/obj/item/reagent_containers/food/snacks/donkpocket/donkmousegrey
+	name = "\improper Grey Mouse-pocket"
+	desc = "Tastes like maintenance."
+	icon_state = "donkmousegrey"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/donkmousegrey
+	filling_color = "#CD853F"
+	tastes = list("dough" = 2, "desperation" = 2, "hairy" = 2)
+	foodtype = GROSS
+
+
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/donkmousegrey
+	name = "warm Grey Mouse-pocket"
+	desc = "Tastes like maintenance during a rad-storm."
+	icon_state = "donkmousegrey"
+	bonus_reagents = list(/datum/reagent/medicine/omnizine = 0.5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/medicine/omnizine = 0.5)
+	tastes = list("dough" = 2, "desperation" = 2, "warm hair" = 2)
+	foodtype = GROSS
+
+/obj/item/reagent_containers/food/snacks/donkpocket/donkmousewhite
+	name = "\improper Brown Mouse-pocket"
+	desc = "Tastes like maintenance."
+	icon_state = "donkmousewhite"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/donkmousewhite
+	filling_color = "#CD853F"
+	tastes = list("dough" = 2, "desperation" = 2, "hairy" = 2)
+	foodtype = GROSS
+
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/donkmousewhite
+	name = "warm White Mouse-pocket"
+	desc = "Tastes like maintenance during a rad-storm."
+	icon_state = "donkmousewhite"
+	bonus_reagents = list(/datum/reagent/medicine/omnizine = 0.5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/medicine/omnizine = 0.5)
+	tastes = list("dough" = 2, "desperation" = 2, "warm hair" = 2)
+	foodtype = GROSS
+
+/obj/item/reagent_containers/food/snacks/donkpocket/donkmousebrown
+	name = "\improper Brown Mouse-pocket"
+	desc = "Tastes like maintenance."
+	icon_state = "donkmousebrown"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/donkmousebrown
+	filling_color = "#CD853F"
+	tastes = list("dough" = 2, "desperation" = 2, "hairy" = 2)
+	foodtype = GROSS
+
+
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/donkmousebrown
+	name = "warm Brown Mouse-pocket"
+	desc = "Tastes like maintenance during a rad-storm."
+	icon_state = "donkmousebrown"
+	bonus_reagents = list(/datum/reagent/medicine/omnizine = 0.5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5 ,/datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/medicine/omnizine = 0.5)
+	tastes = list("dough" = 2, "desperation" = 2, "warm hair" = 2)
+	foodtype = GROSS
+
+
+/obj/item/reagent_containers/food/snacks/donkpocket/donkcrab
+	name = "\improper Crab-pocket"
+	desc = "For those who like the taste of cold, microwaveable crab."
+	icon_state = "donkcrab"
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/donkcrab
+	filling_color = "#CD853F"
+	tastes = list("dough" = 2, "crab" = 2)
+	foodtype = GRAIN
+
+/obj/item/reagent_containers/food/snacks/donkpocket/warm/donkcrab
+	name = "warm Crab-pocket"
+	desc = "For those who like the taste of warm, sweaty crab."
+	icon_state = "donkcrab"
+	bonus_reagents = list(/datum/reagent/medicine/omnizine = 0.5)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2, /datum/reagent/medicine/omnizine = 0.5)
+	cooked_type = /obj/item/reagent_containers/food/snacks/donkpocket/warm/donkcrab
+	filling_color = "#CD853F"
+	tastes = list("dough" = 2, "crab" = 2)
+	foodtype = GRAIN
+
+
+
 ////////////////////////////////////////////OTHER////////////////////////////////////////////
 
 /obj/item/reagent_containers/food/snacks/cookie
