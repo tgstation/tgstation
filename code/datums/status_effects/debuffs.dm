@@ -697,7 +697,7 @@
 				C.vomit(force=TRUE)
 			else if(prob(50))
 				C.losebreath += 2
-				C.visible_message("<span class='danger'>[C]'s eyes water as they try desperately to clear [C.p_their()] throat!</span>", "<span class='userdanger'>You try fruitlessly to clear the blockage in your throat, but it's not working!</span>", "<span class='danger'>You hear a disgusting splat followed by hacking!</span>")
+				C.visible_message("<span class='danger'>[C]'s eyes water as they try desperately to clear [C.p_their()] throat!</span>", "<span class='userdanger'>You try fruitlessly to clear the blockage in your throat, but it's not working!</span>", "<span class='danger'>You hear a rapid series of half-gasps!</span>")
 			else
 				C.losebreath++
 		if(11 to INFINITY)
@@ -706,11 +706,11 @@
 				C.vomit(force=TRUE)
 			else if(prob(50))
 				C.losebreath += 3
-				C.visible_message("<span class='danger'>[C]'s eyes seem to darken noticeably as [C.p_their()] flailing begins to die down!</span>", "<span class='userdanger'>CAN'T- BREATHE- IS THIS- IT?!</span>", "<span class='danger'>You hear a disgusting splat followed by hacking!</span>")
+				C.visible_message("<span class='danger'>[C]'s eyes seem to darken noticeably as [C.p_their()] flailing begins to die down!</span>", "<span class='userdanger'>CAN'T- BREATHE- IS THIS- IT?!</span>", "<span class='danger'>You hear the wheezing embodiment of despair!</span>")
 			else
 				C.losebreath += 4
 
 /obj/screen/alert/status_effect/choking
 	name = "Choking"
-	desc = "You're choking! Find someone to apply the heimlich maneuver!"
+	desc = "You're choking! Find someone to apply the Heimlich Maneuver!"
 	icon_state = "gross3"

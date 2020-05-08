@@ -113,8 +113,8 @@
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
 	if(has_status_effect(/datum/status_effect/choking) && user.pulling == src && user.grab_state >= GRAB_AGGRESSIVE)
-		user.visible_message("<span class='danger'>[user] pumps [src]'s stomach from behind with the Heimlich Maneuver!</span>", "<span class='danger'>You pump [src]'s stomach from behind with the Heimlich Maneuver!</span>", ignored_mobs=src)
-		to_chat(src, "<span class='userdanger'>[user] pumps squeezes your stomach tight from behind with the Heimlich Maneuver!</span>")
+		user.visible_message("<span class='danger'>[user] pumps [src]'s diaphragm from behind with the Heimlich Maneuver!</span>", "<span class='danger'>You pump [src]'s diaphragm from behind with the Heimlich Maneuver!</span>", ignored_mobs=src)
+		to_chat(src, "<span class='userdanger'>[user] pumps squeezes your diaphragm tight from behind with the Heimlich Maneuver!</span>")
 		if(do_after(user, 0.5 SECONDS, TRUE, src))
 			if(!has_status_effect(/datum/status_effect/choking))
 				return

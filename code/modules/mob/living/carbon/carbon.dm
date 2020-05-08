@@ -454,10 +454,9 @@
 				SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "vomit", /datum/mood_event/vomit)
 
 	var/obj/item/bodypart/head/hed = get_bodypart(BODY_ZONE_HEAD)
-	if(hed)
-		if(!has_status_effect(/datum/status_effect/choking) || force)
-			hed.mouthful = 0
-			remove_status_effect(/datum/status_effect/choking)
+	if(hed && (!has_status_effect(/datum/status_effect/choking) || force)) // we check if we're not choking OR if it's forced so people can't manually vomit somehow to clear the choking
+		hed.mouthful = 0
+		remove_status_effect(/datum/status_effect/choking)
 
 	if(stun)
 		Paralyze(80)
