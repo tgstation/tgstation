@@ -1500,7 +1500,11 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 //empty string - use TgsTargetBroadcast with admin_only = FALSE
 //other string - use TgsChatBroadcast with the tag that matches config_setting, only works with TGS4, if using TGS3 the above method is used
 /proc/send2chat(message, config_setting)
-	if(config_setting == null || !world.TgsAvailable())
+	if(config_setting == null)
+		return
+
+	UNTIL(GLOB.tgs_initialized)
+	if(!world.TgsAvailable())
 		return
 
 	var/datum/tgs_version/version = world.TgsVersion()
