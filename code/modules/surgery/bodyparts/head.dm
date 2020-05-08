@@ -13,6 +13,7 @@
 	px_y = -8
 	stam_damage_coeff = 1
 	max_stamina_damage = 100
+	needs_processing = TRUE
 
 	var/mob/living/brain/brainmob = null //The current occupant.
 	var/obj/item/organ/brain/brain = null //The brain organ
@@ -34,6 +35,14 @@
 	var/lip_style = null
 	var/lip_color = "white"
 
+	///How much food we have in our mouth
+	var/mouthful = 0
+	///How much food we had in our mouth last tick
+	var/last_mouthful
+	///How fast we chew
+	var/chew_rate = 0.8
+	///How much food it takes to start risking choking
+	var/choking_hazard = 7
 
 /obj/item/bodypart/head/Destroy()
 	QDEL_NULL(brainmob) //order is sensitive, see warning in handle_atom_del() below
@@ -245,6 +254,60 @@
 
 			if(eyes.eye_color)
 				eyes_overlay.color = "#" + eyes.eye_color
+
+/obj/item/bodypart/head/on_life(stam_regen)
+	. = ..()
+	chew()
+
+/obj/item/bodypart/head/proc/chew()
+	if(!owner && mouthful == 0)
+		return
+
+	var/this_chew = chew_rate
+	if(HAS_TRAIT(owner, TRAIT_VORACIOUS))
+		this_chew *= 1.5
+
+	if(mouthful > last_mouthful || (mouthful / choking_hazard) > 0.7)
+		switch(100 * mouthful / choking_hazard)
+			if(70 to 85)
+				if(prob(40))
+					to_chat(owner, "<span class='warning'>It's getting a bit hard to chew, maybe you should slow down!</span>")
+					this_chew *= 0.8
+			if(86 to 100)
+				if(prob(60))
+					to_chat(owner, "<span class='warning'>Your mouth is seriously stuffed, you're having a hard time chewing!</span>")
+					this_chew *= 0.6
+			if(101 to 120)
+				if(prob(40))
+					to_chat(owner, "<span class='warning'>Your jaw is really starting to hurt!</span>")
+					this_chew *= 0.6
+					owner.losebreath++
+				else if(prob(60))
+					owner.visible_message("<span class='danger'>[owner] appears to start sweating as [owner.p_they()] continue[owner.p_s()] shoveling food in [owner.p_their()] mouth!</span>", "<span class='warning'>You think you just inhaled some of the food you were eating!</span>")
+					this_chew *= 1.2
+					owner.losebreath += 3
+				else if(prob(60))
+					owner.visible_message("<span class='danger'>[owner] makes a concerning noise as [owner.p_they()] continue[owner.p_s()] shoveling food in [owner.p_their()] mouth!</span>", "<span class='warning'>You just inhaled a chunk of food and try retching, but your mouth is too full to eject it!</span>")
+					this_chew *= 0.3
+					owner.losebreath += 5
+			if(121 to 140)
+				if(prob(30))
+					to_chat(owner, "<span class='warning'>Your jaw is rebelling against your gluttony as it struggles to make room for more food!</span>")
+					this_chew *= 0.5
+				else if(prob(40))
+					owner.visible_message("<span class='danger'>[owner] appears to start tearing up as [owner.p_they()] continue[owner.p_s()] shoveling food in [owner.p_their()] mouth with horrifying gusto!</span>", "<span class='warning'>It's so hard to breathe! You're not sure how much more you can take!</span>")
+					this_chew *= 0.4
+					owner.losebreath += 4
+				else if(prob(70))
+					owner.visible_message("<span class='danger'>[owner] starts crying in agony, even as [owner.p_they()] continue[owner.p_s()] packing food into [owner.p_their()] mouth!</span>", "<span class='warning'>It hurts!! You think you might die!</span>")
+					this_chew *= 0.1
+					owner.losebreath += 6
+			if(141 to INFINITY)
+				if(prob(60))
+					owner.apply_status_effect(/datum/status_effect/choking)
+
+	mouthful = max(0, mouthful - this_chew)
+	last_mouthful = mouthful
 
 /obj/item/bodypart/head/monkey
 	icon = 'icons/mob/animal_parts.dmi'

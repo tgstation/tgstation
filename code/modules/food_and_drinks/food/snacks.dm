@@ -116,8 +116,7 @@ All foods are distributed among various categories. Use common sense.
 			else if(fullness > (600 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				user.visible_message("<span class='warning'>[user] cannot force any more of \the [src] to go down [user.p_their()] throat!</span>", "<span class='warning'>You cannot force any more of \the [src] to go down your throat!</span>")
 				return FALSE
-			if(HAS_TRAIT(M, TRAIT_VORACIOUS))
-				M.changeNext_move(CLICK_CD_MELEE * 0.5) //nom nom nom
+			M.changeNext_move(CLICK_CD_RAPID) //nom nom nom
 		else
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
@@ -147,6 +146,11 @@ All foods are distributed among various categories. Use common sense.
 				var/fraction = min(bitesize / reagents.total_volume, 1)
 				reagents.trans_to(M, bitesize, transfered_by = user, method = INGEST)
 				bitecount++
+				if(iscarbon(M))
+					var/mob/living/carbon/C = M
+					var/obj/item/bodypart/head/hed = C.get_bodypart(BODY_ZONE_HEAD)
+					if(hed)
+						hed.mouthful += bitesize
 				On_Consume(M)
 				checkLiked(fraction, M)
 				return TRUE

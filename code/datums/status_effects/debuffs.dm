@@ -655,3 +655,62 @@
 		to_chat(owner, fake_msg)
 
 	msg_stage++
+
+/datum/status_effect/choking
+	id = "choking"
+	status_type = STATUS_EFFECT_UNIQUE
+	tick_interval = 10
+	alert_type = /obj/screen/alert/status_effect/choking
+	var/choking_ticks = 0
+
+/datum/status_effect/choking/on_apply()
+	RegisterSignal(owner, COMSIG_MOB_SAY, .proc/sputter)
+	owner.visible_message("<span class='danger'>[owner] grasps frantically at [owner.p_their()] windpipe, clutching helplessly as [owner.p_their()] eyes widen in fear!</span>", "<span class='userdanger'>You can't breathe! You're choking on all the food you ate!</span>", "<span class='danger'>You hear horrible wheezing and hacking!</span>")
+	return TRUE
+
+/datum/status_effect/choking/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_SAY)
+	return ..()
+
+/datum/status_effect/choking/proc/sputter(mob/living/carbon/speaker, list/speech_args)
+	var/message = speech_args[SPEECH_MESSAGE]
+	var/static/regex/tongueless_lower = new("\[gdntke]+", "g")
+	var/static/regex/tongueless_upper = new("\[GDNTKE]+", "g")
+	if(message[1] != "*")
+		message = tongueless_lower.Replace(message, pick("aa","oo","'"))
+		message = tongueless_upper.Replace(message, pick("AA","OO","'"))
+		speech_args[SPEECH_MESSAGE] = "[copytext(message, 1, 5)] GHKK--"
+
+/datum/status_effect/choking/tick()
+	var/mob/living/carbon/C = owner
+	choking_ticks++
+	switch(choking_ticks)
+		if(1 to 5)
+			if(prob(8))
+				C.visible_message("<span class='danger'>[C] manages to vomit everywhere, successfully clearing [C.p_their()] windpipe!</span>", "<span class='userdanger'>Your stomach manages to propel all the food out of your mouth! Hooray!</span>", "<span class='danger'>You hear a disgusting splat followed by hacking!</span>")
+				C.vomit(force=TRUE)
+			else
+				C.losebreath += 2
+		if(6 to 10)
+			if(prob(4))
+				C.visible_message("<span class='danger'>[C] manages to vomit everywhere, successfully clearing [C.p_their()] windpipe!</span>", "<span class='userdanger'>Your stomach manages to propel all the food out of your mouth! Hooray!</span>", "<span class='danger'>You hear a disgusting splat followed by hacking!</span>")
+				C.vomit(force=TRUE)
+			else if(prob(50))
+				C.losebreath += 2
+				C.visible_message("<span class='danger'>[C]'s eyes water as they try desperately to clear [C.p_their()] throat!</span>", "<span class='userdanger'>You try fruitlessly to clear the blockage in your throat, but it's not working!</span>", "<span class='danger'>You hear a disgusting splat followed by hacking!</span>")
+			else
+				C.losebreath++
+		if(11 to INFINITY)
+			if(prob(2))
+				C.visible_message("<span class='danger'>[C] manages to vomit everywhere, successfully clearing [C.p_their()] windpipe!</span>", "<span class='userdanger'>Your stomach manages to propel all the food out of your mouth! Hooray!</span>", "<span class='danger'>You hear a disgusting splat followed by hacking!</span>")
+				C.vomit(force=TRUE)
+			else if(prob(50))
+				C.losebreath += 3
+				C.visible_message("<span class='danger'>[C]'s eyes seem to darken noticeably as [C.p_their()] flailing begins to die down!</span>", "<span class='userdanger'>CAN'T- BREATHE- IS THIS- IT?!</span>", "<span class='danger'>You hear a disgusting splat followed by hacking!</span>")
+			else
+				C.losebreath += 4
+
+/obj/screen/alert/status_effect/choking
+	name = "Choking"
+	desc = "You're choking! Find someone to apply the heimlich maneuver!"
+	icon_state = "gross3"

@@ -112,6 +112,18 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user)
+	if(has_status_effect(/datum/status_effect/choking) && user.pulling == src && user.grab_state >= GRAB_AGGRESSIVE)
+		user.visible_message("<span class='danger'>[user] pumps [src]'s stomach from behind with the Heimlich Maneuver!</span>", "<span class='danger'>You pump [src]'s stomach from behind with the Heimlich Maneuver!</span>", ignored_mobs=src)
+		to_chat(src, "<span class='userdanger'>[user] pumps squeezes your stomach tight from behind with the Heimlich Maneuver!</span>")
+		if(do_after(user, 0.5 SECONDS, TRUE, src))
+			if(!has_status_effect(/datum/status_effect/choking))
+				return
+			if(prob(25))
+				user.visible_message("<span class='danger'>[user] manages to force [src] to vomit, clearing [src.p_their()] windpipe!</span>", "<span class='danger'>You manage to force [src] to vomit, clearing [src.p_their()] windpipe!</span>", ignored_mobs=src)
+				to_chat(src, "<span class='userdanger'>The food blocking your throat comes shooting up, along with all the food that wasn't blocking your throat!</span>")
+				vomit(force=TRUE)
+				return
+			attack_hand(user)
 
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
