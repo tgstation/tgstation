@@ -523,7 +523,7 @@
 	export_price = 5000
 
 /datum/techweb_node/cyborg_upg_combat
-	id = "cyborg_upg_med"
+	id = "cyborg_upg_cmb"
 	display_name = "Cyborg Upgrades: Combat"
 	description = "Combat upgrades for cyborgs."
 	prereq_ids = list("cyborg_upg_sec", "weaponry")

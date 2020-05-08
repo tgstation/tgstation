@@ -1,11 +1,11 @@
-/datum/techweb_node/cyborg_upg_med
+/*/datum/techweb_node/cyborg_upg_med
 	id = "cyborg_upg_med"
 	display_name = "Cyborg Upgrades: Medical"
 	description = "Medical upgrades for cyborgs."
 	prereq_ids = list("adv_biotech")
 	design_ids = list("borg_upgrade_piercinghypospray", "borg_upgrade_expandedsynthesiser", "borg_upgrade_pinpointer", "borg_upgrade_surgicalprocessor", "borg_upgrade_beakerapp", "borg_upgrade_medbeam") //FULPSTATION MEDBORG UPGRADES by Surrealistik March 2020
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
-	export_price = 5000
+	export_price = 5000*/
 
 /datum/design/borg_upgrade_medbeam
 	name = "Cyborg Upgrade (Heal Beam)"
