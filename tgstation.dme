@@ -1511,6 +1511,7 @@
 #include "code\modules\assembly\holder.dm"
 #include "code\modules\assembly\igniter.dm"
 #include "code\modules\assembly\infrared.dm"
+#include "code\modules\assembly\motor.dm"
 #include "code\modules\assembly\mousetrap.dm"
 #include "code\modules\assembly\proximity.dm"
 #include "code\modules\assembly\shock_kit.dm"
