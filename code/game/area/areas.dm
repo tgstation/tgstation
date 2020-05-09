@@ -40,6 +40,10 @@
 	/// Mood message for being here, only shows up if mood_bonus != 0
 	var/mood_message = "<span class='nicegreen'>This area is pretty nice!\n</span>"
 
+	var/power_equip = TRUE
+	var/power_light = TRUE
+	var/power_environ = TRUE
+
 	var/has_gravity = 0
 	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/noteleport = FALSE
