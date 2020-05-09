@@ -179,11 +179,9 @@
 	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman/paperrobe(get_turf(usr)) //these guys have half the maximum health of a normal stickman, to make them less cancerous to fight against when spammed
 	var/list/factions = usr.faction.Copy()
 	if(angry_sticks)
-		for(var/F in factions)
-			if(F == "neutral")
-				factions -= F //this is so that they'll attack other players and NPCs and stuff, but still won't attack the person who made them or each other
+		factions.remove("neutral") //this is so that they'll attack other players and NPCs and stuff, but still won't attack the person who made them or each other
 	M.faction = factions
-	timer = world.time + 50 //5 second cooldown between stickman spawns
+	timer = world.time + 5 SECONDS //5 second cooldown between stickman spawns
 
 
 //Shielded Armour
