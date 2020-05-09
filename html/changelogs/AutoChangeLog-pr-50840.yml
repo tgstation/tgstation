@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - bugfix: "The INTERACTING_WITH macro now tracks all kinds of do_after"

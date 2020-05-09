@@ -1,4 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - bugfix: "light tiles are less picky about how you hold the multitool"

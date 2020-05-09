@@ -1,5 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - rscadd: "Staff of nothing now shoots nothing."
-  - bugfix: "Wand of nothing shoots nothing again, instead of doing nothing."

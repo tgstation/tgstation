@@ -1,5 +1,0 @@
-author: "RaveRadbury"
-delete-after: True
-changes: 
-  - tweak: "Health Analyzers only detect Major Disabilities, rather than all quirks"
-  - tweak: "Advanced Health Analyzers can detect Minor Disabilities as well"
