@@ -36,12 +36,14 @@
 /obj/item/singularityhammer/equipped(mob/user, slot, initial)
 	. = ..()
 	color = "#212121"
+	add_atom_colour("#212121", FIXED_COLOUR_PRIORITY)
 
 /obj/item/singularityhammer/dropped(mob/user, silent)
 	. = ..()
-	color = null
+	remove_atom_colour(FIXED_COLOUR_PRIORITY, "#212121")
 
 /obj/item/singularityhammer/update_icon_state()
+	. = ..()
 	icon_state = "singularity_hammer0"
 
 /obj/item/singularityhammer/proc/recharge()
