@@ -176,7 +176,7 @@
 
 	usr.say("Rise, my creation! Off of your page and into this realm!", forced = "stickman summoning")
 	playsound(src.loc, 'sound/magic/summon_magic.ogg', 50, TRUE, TRUE)
-	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman/paperrobe(get_turf(usr)) //these guys have half the maximum health of a normal stickman, to make them less cancerous to fight against when spammed
+	var/mob/living/M = new /mob/living/simple_animal/hostile/stickman/paperrobe(get_turf(usr)) //these guys have half the maximum health of a normal stickman, to make them less cancerous to fight against when spam-summoned
 	var/list/factions = usr.faction.Copy()
 	if(angry_sticks)
 		factions.remove("neutral") //this is so that they'll attack other players and NPCs and stuff, but still won't attack the person who made them or each other
