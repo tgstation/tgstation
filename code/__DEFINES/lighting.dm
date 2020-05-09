@@ -117,3 +117,27 @@
 #define EMISSIVE_BLOCK_GENERIC 1
 /// Uses a dedicated render_target object to copy the entire appearance in real time to the blocking layer. For things that can change in appearance a lot from the base state, like humans.
 #define EMISSIVE_BLOCK_UNIQUE 2
+
+/// Returns the red part of a RRGGBB hex sequence as number
+#define GETREDPART(hexa) text2num(copytext(hexa, 2, 4), 16)
+
+/// Returns the green part of a RRGGBB hex sequence as number
+#define GETGREENPART(hexa) text2num(copytext(hexa, 4, 6), 16)
+
+/// Returns the blue part of a RRGGBB hex sequence as number
+#define GETBLUEPART(hexa) text2num(copytext(hexa, 6, 8), 16)
+
+/// Parse the hexadecimal color into lumcounts of each perspective.
+#define PARSE_LIGHT_COLOR(source) \
+do { \
+	if (source.light_color) { \
+		var/__light_color = source.light_color; \
+		source.lum_r = GETREDPART(__light_color) / 255; \
+		source.lum_g = GETREDPART(__light_color) / 255; \
+		source.lum_b = GETREDPART(__light_color) / 255; \
+	} else { \
+		source.lum_r = 1; \
+		source.lum_g = 1; \
+		source.lum_b = 1; \
+	}; \
+} while (FALSE)
