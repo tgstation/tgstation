@@ -1,7 +1,8 @@
-import { createSearch, decodeHtmlEntities } from 'common/string';
+import { classes } from 'common/react';
+import { createSearch } from 'common/string';
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Flex, Input, Section, Table, Tabs, NoticeBox, LabeledList } from '../components';
+import { Box, Button, Dimmer, Flex, Icon, Input, Section, Table, Tabs, NoticeBox, NumberInput } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -10,47 +11,35 @@ const MAX_SEARCH_RESULTS = 25;
 export const Biogenerator = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    biomass,
     beaker,
     processing,
   } = data;
   return (
     <Window resizable>
       <Window.Content scrollable>
-        <Section
-          title="Container"
-          buttons={
-            <Button
-              icon="times"
-              content="Activate"
-              disabled={!beaker || processing}
-              onClick={() => act('activate')} />
-          }>
-          <LabeledList label="Container">
-            <Button
-              icon="eject"
-              content="Eject"
-              disabled={!beaker || processing}
-              onClick={() => act('detach')} />
-          </LabeledList>
-        </Section>
-        <GenericMachine
-          currencyAmount={biomass}
-          currencySymbol="BIO" />
+        {!beaker && (
+          <NoticeBox>No Container</NoticeBox>
+        )}
+        {!!processing && (
+          <Dimmer fontSize="32px">
+            <Icon name="cog" spin={1} />
+            {' Processing...'}
+          </Dimmer>
+        )}
+        {!!beaker && (
+          <BiogeneratorContent/>
+        )}
       </Window.Content>
     </Window>
   );
 };
 
-export const GenericMachine = (props, context) => {
-  const {
-    currencyAmount = 0,
-    currencySymbol = 'cr',
-  } = props;
+export const BiogeneratorContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    compactMode,
-    lockable,
+    beaker,
+    biomass,
+    processing,
     categories = [],
   } = data;
   const [
@@ -81,8 +70,8 @@ export const GenericMachine = (props, context) => {
       title={(
         <Box
           inline
-          color={currencyAmount > 0 ? 'good' : 'bad'}>
-          {formatMoney(currencyAmount)} Biomass
+          color={biomass > 0 ? 'good' : 'bad'}>
+          {formatMoney(biomass)} Biomass
         </Box>
       )}
       buttons={(
@@ -93,15 +82,15 @@ export const GenericMachine = (props, context) => {
             onInput={(e, value) => setSearchText(value)}
             mx={1} />
           <Button
-            icon={compactMode ? 'list' : 'info'}
-            content={compactMode ? 'Compact' : 'Detailed'}
-            onClick={() => act('compact_toggle')} />
-          {!!lockable && (
-            <Button
-              icon="lock"
-              content="Lock"
-              onClick={() => act('lock')} />
-          )}
+            icon="eject"
+            content="Eject"
+            disabled={!beaker || processing}
+            onClick={() => act('detach')} />
+          <Button
+            icon="cog"
+            content="Activate"
+            disabled={!beaker || processing}
+            onClick={() => act('activate')} />
         </Fragment>
       )}>
       <Flex>
@@ -127,11 +116,11 @@ export const GenericMachine = (props, context) => {
                 : 'No results found.'}
             </NoticeBox>
           )}
-          <ItemList
-            compactMode={searchText.length > 0 || compactMode}
-            currencyAmount={currencyAmount}
-            currencySymbol={currencySymbol}
-            items={items} />
+          <Table>
+            <ItemList
+              biomass={biomass}
+              items={items} />
+          </Table>
         </Flex.Item>
       </Flex>
     </Section>
@@ -139,11 +128,6 @@ export const GenericMachine = (props, context) => {
 };
 
 const ItemList = (props, context) => {
-  const {
-    compactMode,
-    currencyAmount,
-    currencySymbol,
-  } = props;
   const { act } = useBackend(context);
   const [
     hoveredItem,
@@ -152,58 +136,54 @@ const ItemList = (props, context) => {
   const hoveredCost = hoveredItem && hoveredItem.cost || 0;
   // Append extra hover data to items
   const items = props.items.map(item => {
+    const [
+      amount,
+      setAmount,
+    ] = useLocalState(context, "amount" + item.name, 1);
     const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-    const notEnoughHovered = currencyAmount - hoveredCost < item.cost;
+    const notEnoughHovered = props.biomass - hoveredCost * hoveredItem.amount < item.cost * amount;
     const disabledDueToHovered = notSameItem && notEnoughHovered;
-    const disabled = currencyAmount < item.cost || disabledDueToHovered;
+    const disabled = props.biomass < item.cost * amount || disabledDueToHovered;
     return {
       ...item,
       disabled,
+      amount,
+      setAmount,
     };
   });
-  if (compactMode) {
-    return (
-      <Table>
-        {items.map(item => (
-          <Table.Row
-            key={item.name}
-            className="candystripe">
-            <Table.Cell bold>
-              {decodeHtmlEntities(item.name)}
-            </Table.Cell>
-            <Table.Cell collapsing textAlign="right">
-              <Button
-                fluid
-                content={formatMoney(item.cost) + ' ' + currencySymbol}
-                disabled={item.disabled}
-                tooltipPosition="left"
-                onmouseover={() => setHoveredItem(item)}
-                onmouseout={() => setHoveredItem({})}
-                onClick={() => act('buy', {
-                  name: item.name,
-                })} />
-            </Table.Cell>
-          </Table.Row>
-        ))}
-      </Table>
-    );
-  }
   return items.map(item => (
-    <LabeledList key={item.name}>
-      <LabeledList.Item
-        buttons={(
-          <Button
-            content={item.cost + ' ' + currencySymbol}
-            disabled={item.disabled}
-            onmouseover={() => setHoveredItem(item)}
-            onmouseout={() => setHoveredItem({})}
-            onClick={() => act('buy', {
-              create: item.name,
-              amount: 1,
-            })} />
-        )}>
-        {item.name}
-      </LabeledList.Item>
-    </LabeledList>
+    <Table.Row key={item.id}>
+      <Table.Cell>
+        <span
+          className={classes(['design32x32', item.id])}
+          style={{
+            'vertical-align': 'middle',
+          }} />
+        {' '}<b>{item.name}</b>
+      </Table.Cell>
+      <Table.Cell width="40px">
+        <NumberInput
+          value={Math.round(item.amount)}
+          width="40px"
+          minValue={1}
+          maxValue={10}
+          onChange={(e, value) => item.setAmount(value)} />
+      </Table.Cell>
+      <Table.Cell width="50px">
+        <Button
+          style={{
+            'min-width': '70px',
+            'text-align': 'center',
+          }}
+          content={item.cost * item.amount + ' ' + "BIO"}
+          disabled={item.disabled}
+          onmouseover={() => setHoveredItem(item)}
+          onmouseout={() => setHoveredItem({})}
+          onClick={() => act('create', {
+            create: item.id,
+            amount: item.amount,
+          })} />
+      </Table.Cell>
+    </Table.Row>
   ));
 };

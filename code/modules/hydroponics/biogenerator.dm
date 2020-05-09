@@ -8,19 +8,17 @@
 	idle_power_usage = 40
 	circuit = /obj/item/circuitboard/machine/biogenerator
 	ui_x = 550
-	ui_y = 408
+	ui_y = 380
 	var/processing = FALSE
 	var/obj/item/reagent_containers/glass/beaker = null
 	var/points = 0
-	var/menustat = "menu"
 	var/efficiency = 0
 	var/productivity = 0
 	var/max_items = 40
 	var/datum/techweb/stored_research
 	var/list/show_categories = list("Food", "Botany Chemicals", "Organic Materials")
-	var/list/timesFiveCategories = list("Food", "Botany Chemicals")
+	/// Currently selected category in the UI
 	var/selected_cat
-	var/compact_mode = FALSE
 
 /obj/machinery/biogenerator/Initialize()
 	. = ..()
@@ -177,7 +175,8 @@
 		S += 5
 		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
 			points += 1*productivity
-		else points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)*10*productivity
+		else
+			points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)*10*productivity
 		qdel(I)
 	if(S)
 		processing = TRUE
@@ -187,14 +186,11 @@
 		sleep(S+15/productivity)
 		processing = FALSE
 		update_icon()
-	else
-		menustat = "void"
 
 /obj/machinery/biogenerator/proc/check_cost(list/materials, multiplier = 1, remove_points = TRUE)
 	if(materials.len != 1 || materials[1] != SSmaterials.GetMaterialRef(/datum/material/biomass))
 		return FALSE
 	if (materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]*multiplier/efficiency > points)
-		menustat = "nopoints"
 		return FALSE
 	else
 		if(remove_points)
@@ -209,7 +205,6 @@
 	sum_reagents *= multiplier
 
 	if(beaker.reagents.total_volume + sum_reagents > beaker.reagents.maximum_volume)
-		menustat = "nobeakerspace"
 		return FALSE
 
 	return TRUE
@@ -240,8 +235,6 @@
 				beaker.reagents.add_reagent(R, D.make_reagents[R])
 			. = 1
 			--i
-
-	menustat = "complete"
 	update_icon()
 	return .
 
@@ -259,18 +252,24 @@
 		return UI_CLOSE
 	return ..()
 
+/obj/machinery/biogenerator/ui_base_html(html)
+	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/research_designs)
+	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+
 /obj/machinery/biogenerator/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
+		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/research_designs)
+		assets.send(user)
 		ui = new(user, src, ui_key, "Biogenerator", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/biogenerator/ui_data(mob/user)
 	var/list/data = list()
-	data["processing"] = processing
 	data["beaker"] = beaker ? TRUE : FALSE
 	data["biomass"] = points
+	data["processing"] = processing
 	data["categories"] = list()
 
 	var/categories = show_categories.Copy()
@@ -289,8 +288,8 @@
 		for(var/item in categories[category])
 			var/datum/design/D = item
 			cat["items"] += list(list(
-				"name" = D.name,
 				"id" = D.id,
+				"name" = D.name,
 				"cost" = D.materials[SSmaterials.GetMaterialRef(/datum/material/biomass)]/efficiency,
 			))
 		data["categories"] += list(cat)
@@ -310,25 +309,20 @@
 			return TRUE
 		if("create")
 			var/amount = text2num(params["amount"])
-			//Can't be outside these (if you change this keep a sane limit)
 			amount = clamp(amount, 1, 10)
+			if(!amount)
+				return
 			var/id = params["create"]
 			if(!stored_research.researched_designs.Find(id))
-				//naughty naughty
 				stack_trace("ID did not map to a researched datum [id]")
 				return
-			//Get design by id (or may return error design)
 			var/datum/design/D = SSresearch.techweb_design_by_id(id)
-			//Valid design datum, amount and the datum is not the error design, lets proceed
-			if(D && amount && !istype(D, /datum/design/error_design))
+			if(D && !istype(D, /datum/design/error_design))
 				create_product(D, amount)
-			//This shouldnt happen normally but href forgery is real
 			else
 				stack_trace("ID could not be turned into a valid techweb design datum [id]")
+				return
 			return TRUE
 		if("select")
 			selected_cat = params["category"]
-			return TRUE
-		if("compact_toggle")
-			compact_mode = !compact_mode
 			return TRUE
