@@ -53,35 +53,35 @@
 #define METAL_HYDROGEN_RESEARCH_MAX_AMOUNT	3000
 #define STIMULUM_RESEARCH_AMOUNT			50
 //Plasma fusion properties
-#define FUSION_ENERGY_THRESHOLD				3e9 	//Amount of energy it takes to start a fusion reaction
-#define FUSION_MOLE_THRESHOLD				25 	//Mole count required (tritium/plasma) to start a fusion reaction
-#define FUSION_TRITIUM_CONVERSION_COEFFICIENT (1e-10)
+///Mole count required (tritium/hydrogen) to start a fusion reaction
+#define FUSION_MOLE_THRESHOLD				25
+///Used to reduce the gas_power to a more useful amount
 #define INSTABILITY_GAS_POWER_FACTOR 		0.003
-#define FUSION_TRITIUM_MOLES_USED  			0.5
-#define PLASMA_BINDING_ENERGY  				20000000
+///Used to calculate the toroidal_size for the instability
 #define TOROID_VOLUME_BREAKEVEN			1000
-#define FUSION_TEMPERATURE_THRESHOLD	    10000
+///Constant used when calculating the chance of emitting a radioactive particle
 #define PARTICLE_CHANCE_CONSTANT 			(-20000000)
+///Max amount of radiation that can be emitted per reaction cycle
 #define FUSION_RAD_MAX						5000
-#define FUSION_RAD_COEFFICIENT				(-1000)
+///Maximum instability before the reaction goes endothermic
 #define FUSION_INSTABILITY_ENDOTHERMALITY   5
+///Maximum reachable fusion temperature
 #define FUSION_MAXIMUM_TEMPERATURE			1e30
-
-#define LOW_HEAT_THRESHOLD 1e10
-#define HIGH_HEAT_THRESHOLD 1e14
-#define MAX_POSSIBLE_HEAT 1e18
-#define MOLES_THRESHOLD 2000
-#define POWER_THRESHOLD 5000
+///Speed of light, in m/s
 #define LIGHT_SPEED 299792458
-#define PLASMA_CONVERSION_FACTOR 1e-8
-#define FUEL_CONVERSION_FACTOR 1e-9
+///Calculation between the plank constant and the lambda of the lightwave
 #define PLANK_LIGHT_CONSTANT 2e-16
+///Radius of the h2 calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
 #define CALCULATED_H2RADIUS 120e-4
+///Radius of the trit calculated based on the amount of number of atom in a mole (and some addition for balancing issues)
 #define CALCULATED_TRITRADIUS 230e-3
-#define HIGH_RADIATION_FACTOR 1e-6
+///Power conduction in the void, used to calculate the efficiency of the reaction
 #define VOID_CONDUCTION 1e-2
+///Max reaction point per reaction cycle
 #define MAX_FUSION_RESEARCH 1000
-#define MAX_MOLES_VARIATION 0.05
+///Min amount of allowed heat change
 #define MIN_HEAT_VARIATION -1e5
+///Max amount of allowed heat change
 #define MAX_HEAT_VARIATION 1e5
+///Max mole consumption per reaction cycle
 #define MAX_FUEL_USAGE 5
