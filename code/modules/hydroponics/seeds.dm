@@ -551,3 +551,55 @@
 	for(var/i in 1 to amount_random_reagents)
 		var/datum/reagent/chemical = pick(reagents_add)
 		qdel(chemical)
+
+/**
+  * Creates a graft from this plant.
+  *
+  * Creates a new graft from this plant.
+  * Sets the grafts trait to this plants graftable trait.
+  * Gives the graft a reference to this plant.
+  * Copies all the relevant stats from this plant to the graft.
+  * Returns the created graft.
+  */
+/obj/item/seeds/proc/create_graft()
+	var/obj/item/graft/snip = new
+	if(graft_gene)
+		snip.stored_trait = graft_gene
+	snip.parent_seed = src
+	snip.parent_name = plantname
+	snip.name += "([plantname])"
+
+	// Copy over stats so the graft can outlive its parent.
+	snip.lifespan = lifespan
+	snip.endurance = endurance
+	snip.production = production
+	snip.weed_rate = weed_rate
+	snip.weed_chance = weed_chance
+	snip.yield = yield
+
+	return snip
+
+/**
+  * Applies a graft to this plant.
+  *
+  * Adds the graft trait to this plant if possible.
+  * Increases plant stats by 2/3 of the grafts stats to a maximum of 100 (10 for yield).
+  * Returns [TRUE]
+  *
+  * Arguments:
+  * - [snip][/obj/item/graft]: The graft being used applied to this plant.
+  */
+/obj/item/seeds/proc/apply_graft(obj/item/graft/snip)
+	var/datum/plant_gene/trait/new_trait = snip.stored_trait
+	if(new_trait?.can_add(src))
+		genes += new_trait
+
+	// Adjust stats based on graft stats.
+	src.lifespan	= round(clamp(max(src.lifespan,		(src.lifespan	+(2/3)*(snip.lifespan	-src.lifespan)		)),0,100))
+	src.endurance	= round(clamp(max(src.endurance,	(src.endurance	+(2/3)*(snip.endurance	-src.endurance)		)),0,100))
+	src.production	= round(clamp(max(src.production,	(src.production	+(2/3)*(snip.production	-src.production)	)),0,100))
+	src.weed_rate	= round(clamp(max(src.weed_rate,	(src.weed_rate	+(2/3)*(snip.weed_rate	-src.weed_rate)		)),0,100))
+	src.weed_chance	= round(clamp(max(src.weed_chance,	(src.weed_chance+(2/3)*(snip.weed_chance-src.weed_chance)	)),0,100))
+	src.yield		= round(clamp(max(src.yield,		(src.yield		+(2/3)*(snip.yield		-src.yield)			)),0,10	))
+
+	return TRUE

@@ -521,9 +521,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
-	succ_dur = 180
-	succ_int = 100
-	next_succ = 0
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
@@ -566,6 +563,7 @@
 	color = "#E48AB5" // craftable custom gums someday?
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
+	succ_dur = 450 //15 minutes
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine
 	name = "nicotine gum"
@@ -586,6 +584,7 @@
 	color = "#913D3D"
 	list_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
+	succ_dur = 180
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/process()
 	. = ..()
