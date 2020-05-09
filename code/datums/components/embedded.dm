@@ -120,7 +120,7 @@
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	if(overlay)
 		var/atom/A = parent
-		A.cut_overlay(overlay, TRUE)
+		UnregisterSignal(A,COMSIG_ATOM_UPDATE_OVERLAYS)
 		qdel(overlay)
 
 	return ..()
@@ -319,7 +319,7 @@
 	var/matrix/M = matrix()
 	M.Translate(pixelX, pixelY)
 	overlay.transform = M
-	hit.add_overlay(overlay, TRUE)
+	RegisterSignal(hit,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
 
 	if(harmful)
 		hit.visible_message("<span class='danger'>[weapon] embeds itself in [hit]!</span>")
@@ -332,6 +332,8 @@
 	else
 		hit.visible_message("<span class='danger'>[weapon] sticks itself to [hit]!</span>")
 
+/datum/component/embedded/proc/apply_overlay(atom/source, list/overlay_list)
+	overlay_list += overlay
 
 /datum/component/embedded/proc/examineTurf(datum/source, mob/user, list/examine_list)
 	if(harmful)
