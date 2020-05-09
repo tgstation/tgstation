@@ -1,4 +1,5 @@
 // channel numbers for power
+// These are indexes in a list, and indexes for "dynamic" and static channels should be kept contiguous
 #define AREA_USAGE_EQUIP			1
 #define AREA_USAGE_LIGHT			2
 #define AREA_USAGE_ENVIRON			3
@@ -6,6 +7,15 @@
 #define AREA_USAGE_STATIC_LIGHT	5
 #define AREA_USAGE_STATIC_ENVIRON	6
 #define AREA_USAGE_LEN AREA_USAGE_STATIC_ENVIRON // largest idx
+/// Index of the first dynamic usage channel
+#define AREA_USAGE_DYNAMIC_START AREA_USAGE_EQUIP
+/// Index of the last dynamic usage channel
+#define AREA_USAGE_DYNAMIC_END AREA_USAGE_ENVIRON
+/// Index of the first static usage channel
+#define AREA_USAGE_STATIC_START AREA_USAGE_STATIC_EQUIP
+/// Index of the last static usage channel
+#define AREA_USAGE_STATIC_END AREA_USAGE_STATIC_ENVIRON
+
 
 //Power use
 #define NO_POWER_USE 0

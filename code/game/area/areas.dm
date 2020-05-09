@@ -498,7 +498,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   */
 /area/proc/addStaticPower(value, powerchannel)
 	switch(powerchannel)
-		if(AREA_USAGE_STATIC_EQUIP to AREA_USAGE_STATIC_ENVIRON)
+		if(AREA_USAGE_STATIC_START to AREA_USAGE_STATIC_END)
 			power_usage[powerchannel] += value
 
 /**
@@ -507,7 +507,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Clears all power used for equipment, light and environment channels
   */
 /area/proc/clear_usage()
-	for(var/i in AREA_USAGE_EQUIP to AREA_USAGE_ENVIRON)
+	for(var/i in AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
 		power_usage[i] = 0
 
 /**
@@ -515,7 +515,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   */
 /area/proc/use_power(amount, chan)
 	switch(chan)
-		if(AREA_USAGE_EQUIP to AREA_USAGE_ENVIRON)
+		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
 			power_usage[chan] += amount
 
 
