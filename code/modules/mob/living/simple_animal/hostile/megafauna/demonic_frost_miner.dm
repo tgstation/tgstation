@@ -269,7 +269,7 @@ Difficulty: Extremely Hard
 		if(1)
 			new /obj/item/resurrection_crystal(T)
 		if(2)
-			new /obj/item/clothing/shoes/winterboots/ice_boots/speedy(T)
+			new /obj/item/clothing/shoes/winterboots/ice_boots/ice_trail(T)
 		if(3)
 			new /obj/item/pickaxe/drill/jackhammer/demonic(T)
 	return ..()
@@ -288,28 +288,53 @@ Difficulty: Extremely Hard
 	to_chat(user, "<span class='notice'>You feel a bit safer... but a demonic presence lurks in the back of your head...</span>")
 	RegisterSignal(user, COMSIG_MOB_DEATH, .proc/resurrect)
 
-/// Resurrects the target when they die by cloning them into a new duplicate body and transferring their mind to the clone on a safe station turf
+/// Resurrects the target when they die by moving them and dusting a clone in their place, one life for another
 /obj/item/resurrection_crystal/proc/resurrect(mob/living/carbon/user, gibbed)
+	if(gibbed)
+		to_chat(user, "<span class='notice'>This power cannot be used if your entire mortal body is disintegrated...</span>")
+		return
 	user.visible_message("<span class='notice'>You see [user]'s soul dragged out of their body!</span>", "<span class='notice'>You feel your soul dragged away to a fresh body!</span>")
 	var/typepath = user.type
-	var/turf/T = find_safe_turf()
-	var/mob/living/carbon/clone = new typepath(T)
+	var/mob/living/carbon/clone = new typepath(user.loc)
 	clone.real_name = user.real_name
 	user.dna.transfer_identity(clone)
 	clone.updateappearance(mutcolor_update=1)
-	user.mind.transfer_to(clone) // second life
-	to_chat(clone, "<span class='notice'>You blink and find yourself in [get_area_name(T)].</span>")
-	user.gib()
+	var/turf/T = find_safe_turf()
+	user.forceMove(T)
+	user.revive(full_heal = TRUE, admin_revive = TRUE)
+	user.set_species(/datum/species/shadow)
+	to_chat(user, "<span class='notice'>You blink and find yourself in [get_area_name(T)]... feeling a bit darker.</span>")
+	clone.dust()
 	qdel(src)
 
-/obj/item/clothing/shoes/winterboots/ice_boots/speedy
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail
 	name = "cursed ice hiking boots"
 	desc = "A pair of winter boots contractually made by a devil, they cannot be taken off once put on."
-	slowdown = SHOES_SPEED_SLIGHT
+	actions_types = list(/datum/action/item_action/toggle)
+	var/on = FALSE
+	var/change_turf = /turf/open/floor/plating/ice/icemoon
+	var/duration = 6 SECONDS
 
-/obj/item/clothing/shoes/winterboots/ice_boots/speedy/Initialize()
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
+
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/ui_action_click(mob/user)
+	on = !on
+	to_chat(user, "<span class='notice'>You [on ? "activate" : "deactivate"] [src].</span>")
+
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/examine(mob/user)
+	. = ..()
+	. += "<span class='notice'>The shoes are [on ? "enabled" : "disabled"].</span>"
+
+/obj/item/clothing/shoes/winterboots/ice_boots/ice_trail/step_action()
+	. = ..()
+	var/turf/T = get_turf(loc)
+	if(!on || istype(T, /turf/closed) || istype(T, change_turf))
+		return
+	var/reset_turf = T.type
+	T.ChangeTurf(change_turf, flags = CHANGETURF_INHERIT_AIR)
+	addtimer(CALLBACK(T, /turf.proc/ChangeTurf, reset_turf, null, CHANGETURF_INHERIT_AIR), duration, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/item/pickaxe/drill/jackhammer/demonic
 	name = "demonic jackhammer"
@@ -318,7 +343,7 @@ Difficulty: Extremely Hard
 
 /obj/item/pickaxe/drill/jackhammer/demonic/Initialize()
 	. = ..()
-	AddComponent(/datum/component/knockback, 4, FALSE, TRUE)
+	AddComponent(/datum/component/knockback, 4, TRUE, FALSE)
 	AddComponent(/datum/component/lifesteal, 5)
 
 /obj/item/crusher_trophy/ice_block_talisman
@@ -335,7 +360,7 @@ Difficulty: Extremely Hard
 
 /datum/status_effect/ice_block_talisman
 	id = "ice_block_talisman"
-	duration = 25
+	duration = 40
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /obj/screen/alert/status_effect/ice_block_talisman
 	/// Stored icon overlay for the hit mob, removed when effect is removed

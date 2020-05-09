@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	icon_state = "snow"
 	icon_plating = "snow"
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	slowdown = 1
+	slowdown = 0
 	environment_type = "snow"
 	flags_1 = NONE
 	planetary_atmos = TRUE
@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/has_data
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
 	choose_turf_type = list(/turf/open/floor/plating/asteroid/snow/icemoon = 19, /turf/open/floor/plating/ice/icemoon = 1)
-	pick_tunnel_width = list("1" = 6, "2" = 1)
+	pick_tunnel_width = list("1" = 2, "2" = 1)
 
 /turf/open/floor/plating/asteroid/airless/cave/snow/underground
 	mob_spawn_list = list(/mob/living/simple_animal/hostile/asteroid/ice_demon = 50, /obj/structure/spawner/ice_moon/demonic_portal = 3, \
@@ -229,6 +229,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	flora_spawn_list = list(/obj/structure/flora/rock/icy = 6, /obj/structure/flora/rock/pile/icy = 6)
 	data_having_type = /turf/open/floor/plating/asteroid/airless/cave/snow/underground/has_data
 	choose_turf_type = null
+	pick_tunnel_width = list("1" = 1, "2" = 2, "3" = 1)
 
 /turf/open/floor/plating/asteroid/airless/cave/snow/has_data //subtype for producing a tunnel with given data
 	has_data = TRUE
@@ -456,7 +457,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 /turf/open/floor/plating/asteroid/snow/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	slowdown = 1
+	slowdown = 0
 
 /turf/open/lava/plasma/ice_moon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
@@ -482,6 +483,7 @@ GLOBAL_LIST_INIT(megafauna_spawn_list, list(/mob/living/simple_animal/hostile/me
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	planetary_atmos = TRUE
+	slowdown = 0
 
 /turf/open/floor/plating/asteroid/snow/ice/burn_tile()
 	return FALSE

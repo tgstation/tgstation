@@ -15,19 +15,27 @@
 /turf/closed/mineral/random/snow/no_caves,
 /area/icemoon/underground/unexplored)
 "ae" = (
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "af" = (
 /obj/item/stack/sheet/mineral/wood,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "ag" = (
 /obj/item/feather,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "ah" = (
 /obj/structure/bookcase/random,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "ai" = (
 /obj/structure/table/wood/fancy/black,
@@ -37,7 +45,7 @@
 /area/ruin/unpowered/buried_library)
 "aj" = (
 /obj/structure/bookcase/random,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ak" = (
 /turf/closed/mineral/random/snow/no_caves,
@@ -55,19 +63,25 @@
 /area/ruin/unpowered/buried_library)
 "ao" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "ap" = (
 /obj/item/stack/sheet/mineral/wood,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aq" = (
 /obj/structure/fluff/paper{
 	icon_state = "paper";
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "ar" = (
 /turf/open/floor/plasteel/cult,
@@ -79,7 +93,9 @@
 /area/ruin/unpowered/buried_library)
 "at" = (
 /obj/structure/fluff/paper,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "au" = (
 /obj/structure/fluff/paper/stack,
@@ -90,7 +106,7 @@
 /turf/closed/mineral/random/snow/no_caves,
 /area/ruin/unpowered/buried_library)
 "aw" = (
-/turf/open/floor/plating,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "ax" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -102,27 +118,29 @@
 /area/ruin/unpowered/buried_library)
 "az" = (
 /obj/item/paper/crumpled/fluff/stations/lavaland/library/diary,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aA" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
-/area/ruin/unpowered/buried_library)
-"aB" = (
-/obj/structure/girder,
-/turf/open/floor/plating/asteroid/basalt/lava_land_surface,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "aC" = (
 /obj/item/feather,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "aD" = (
-/turf/open/floor/carpet/black,
+/turf/open/floor/carpet/black{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aE" = (
 /obj/item/stack/sheet/mineral/wood,
 /obj/item/book/manual/random,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aF" = (
 /obj/item/book/manual/random,
@@ -132,12 +150,16 @@
 "aG" = (
 /obj/structure/table/bronze,
 /obj/item/stack/ore/slag,
-/turf/open/floor/carpet/black,
+/turf/open/floor/carpet/black{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aH" = (
 /obj/structure/table/bronze,
 /obj/item/statuebust/hippocratic,
-/turf/open/floor/carpet/black,
+/turf/open/floor/carpet/black{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aI" = (
 /obj/effect/mob_spawn/human/skeleton,
@@ -156,7 +178,9 @@
 "aL" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aM" = (
 /obj/item/stack/sheet/mineral/wood,
@@ -165,11 +189,15 @@
 /area/ruin/unpowered/buried_library)
 "aN" = (
 /obj/structure/statue/sandstone/venus,
-/turf/open/floor/carpet/black,
+/turf/open/floor/carpet/black{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aO" = (
 /mob/living/simple_animal/pet/fox,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aP" = (
 /obj/item/keycard/library,
@@ -178,11 +206,15 @@
 "aQ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/paper/fluff/awaymissions/moonoutpost19/research/larva_autopsy,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aR" = (
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aS" = (
 /obj/structure/table/wood/fancy/black,
@@ -196,7 +228,9 @@
 "aT" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aU" = (
 /obj/item/stack/sheet/mineral/wood,
@@ -205,7 +239,9 @@
 "aV" = (
 /obj/item/stack/sheet/mineral/wood,
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "aW" = (
 /obj/structure/fluff/paper/stack,
@@ -214,16 +250,18 @@
 "aX" = (
 /obj/structure/table/bronze,
 /obj/item/statuebust,
-/turf/open/floor/plating,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "aY" = (
 /obj/structure/table_frame/wood,
-/turf/open/floor/plating,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "aZ" = (
 /obj/structure/fluff/paper/stack,
 /obj/structure/fluff/paper,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "ba" = (
 /obj/structure/barricade/wooden/snowed,
@@ -240,7 +278,9 @@
 	icon_state = "paper";
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "bd" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -248,14 +288,18 @@
 	icon_state = "paper";
 	dir = 1
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "be" = (
 /obj/structure/fluff/paper{
 	icon_state = "paper";
 	dir = 5
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "bf" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -263,7 +307,9 @@
 	icon_state = "paper";
 	dir = 4
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "bg" = (
 /obj/item/paper/fluff/ruins/oldstation/protogun,
@@ -272,7 +318,9 @@
 "bh" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /mob/living/simple_animal/pet/fox,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "bi" = (
 /obj/structure/fluff/paper,
@@ -287,7 +335,9 @@
 	icon_state = "paper";
 	dir = 10
 	},
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "bl" = (
 /obj/item/storage/box/fountainpens,
@@ -314,7 +364,9 @@
 "bq" = (
 /obj/structure/mineral_door/wood,
 /obj/structure/barricade/wooden/crude/snow,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "br" = (
 /obj/structure/girder,
@@ -334,21 +386,25 @@
 /area/icemoon/underground/unexplored)
 "by" = (
 /obj/structure/statue/bronze/marx,
-/turf/open/floor/carpet/black,
+/turf/open/floor/carpet/black{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "bz" = (
 /obj/item/flashlight/lantern/jade{
 	on = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "bA" = (
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/plating,
+/turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
 "bB" = (
 /obj/structure/fluff/paper/stack,
-/turf/open/floor/carpet/black,
+/turf/open/floor/carpet/black{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 "bC" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -357,7 +413,9 @@
 	dir = 1
 	},
 /mob/living/simple_animal/pet/fox,
-/turf/open/floor/wood,
+/turf/open/floor/wood{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/ruin/unpowered/buried_library)
 
 (1,1,1) = {"
@@ -800,7 +858,7 @@ ac
 ba
 ac
 ac
-aB
+bs
 ad
 aa
 ad

@@ -132,10 +132,14 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	name = "ice chasm"
 	baseturfs = /turf/open/transparent/openspace/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	var/replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon
 
 /turf/open/transparent/openspace/icemoon/Initialize()
 	. = ..()
 	var/turf/T = below()
+	if(T.flags_1 & NO_RUINS_1)
+		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
+		return
 	if(!ismineralturf(T))
 		return
 	var/turf/closed/mineral/M = T

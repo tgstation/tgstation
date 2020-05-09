@@ -12293,7 +12293,7 @@
 /turf/open/floor/plating,
 /area/maintenance/disposal)
 "aCV" = (
-/turf/open/floor/plasteel/airless,
+/turf/open/floor/plasteel/icemoon,
 /area/icemoon/surface/outdoors)
 "aCW" = (
 /obj/structure/reagent_dispensers/watertank,
@@ -14342,7 +14342,7 @@
 /turf/open/floor/plating/icemoon,
 /area/icemoon/surface/outdoors)
 "aHt" = (
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/plasteel/icemoon{
 	icon_state = "damaged3"
 	},
 /area/icemoon/surface/outdoors)
@@ -18278,7 +18278,7 @@
 /area/bridge)
 "aRo" = (
 /obj/item/paper/crumpled,
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/plasteel/icemoon{
 	icon_state = "damaged2"
 	},
 /area/icemoon/surface/outdoors)
@@ -21247,7 +21247,7 @@
 /turf/open/floor/plasteel,
 /area/vacant_room/commissary)
 "aYj" = (
-/turf/open/floor/plasteel/airless{
+/turf/open/floor/plasteel/icemoon{
 	icon_state = "damaged5"
 	},
 /area/icemoon/surface/outdoors)
@@ -26555,7 +26555,7 @@
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "blq" = (
-/turf/open/openspace/icemoon,
+/turf/open/transparent/openspace/icemoon,
 /area/icemoon/surface/outdoors)
 "blr" = (
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
@@ -35919,7 +35919,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plating/icemoon,
 /area/science/test_area)
 "bHx" = (
 /obj/machinery/camera{
@@ -37511,10 +37511,7 @@
 /obj/machinery/camera/preset/toxins{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "o2=0.01;n2=0.01";
-	luminosity = 2
-	},
+/turf/open/floor/plating/icemoon,
 /area/science/test_area)
 "bLs" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
@@ -38285,10 +38282,6 @@
 /obj/structure/closet/wardrobe/grey,
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
-"bNG" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/science/test_area)
 "bNH" = (
 /obj/structure/table/reinforced,
 /obj/item/radio/intercom{
@@ -38671,7 +38664,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/stripes/line,
-/turf/open/floor/plating,
+/turf/open/floor/plating/icemoon,
 /area/science/test_area)
 "bOK" = (
 /obj/structure/barricade/wooden,
@@ -114554,8 +114547,8 @@ bgx
 bne
 bLr
 btY
-bNG
-bNG
+bgx
+bgx
 boP
 boP
 aAe

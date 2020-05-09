@@ -44,7 +44,9 @@
 /obj/item/clothing/suit/bronze,
 /obj/item/clothing/shoes/bronze,
 /obj/item/clothing/head/bronze,
-/turf/open/floor/bronze,
+/turf/open/floor/bronze{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/icemoon/surface)
 "z" = (
 /obj/structure/table/bronze,
@@ -53,6 +55,11 @@
 	name = "drained clockwork slab"
 	},
 /turf/open/floor/bronze,
+/area/icemoon/surface)
+"A" = (
+/turf/open/floor/bronze{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/icemoon/surface)
 "H" = (
 /obj/machinery/door/airlock/bronze/seethru,
@@ -68,13 +75,17 @@
 	info = "We tried to use the power of this moon to bring him back, but we've failed... I've contained what remains of his power here... if you find this, make sure those Nar-Sian Dogs don't last a second."
 	},
 /obj/item/pen,
-/turf/open/floor/bronze,
+/turf/open/floor/bronze{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/icemoon/surface)
 "R" = (
 /obj/item/nullrod/spear{
 	name = "empowered bronze spear"
 	},
-/turf/open/floor/bronze,
+/turf/open/floor/bronze{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
 /area/icemoon/surface)
 "U" = (
 /obj/machinery/door/airlock/bronze,
@@ -862,8 +873,8 @@ a
 a
 a
 c
-i
-i
+A
+A
 c
 a
 a
@@ -903,10 +914,10 @@ a
 a
 a
 a
-i
+A
 x
-i
-i
+A
+A
 a
 a
 a
@@ -945,10 +956,10 @@ a
 a
 a
 a
-i
+A
 R
 Q
-i
+A
 a
 a
 a
@@ -988,8 +999,8 @@ a
 a
 a
 c
-i
-i
+A
+A
 c
 a
 a
