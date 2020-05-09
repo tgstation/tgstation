@@ -1007,9 +1007,9 @@
 				if(target.loc != loc)
 					var/old_density = density
 					density = FALSE
-					var/can_step = step_towards(target, loc)
+					step_towards(target, loc)
 					density = old_density
-					if(can_step)
+					if(target.loc == loc)
 						buckle_mob(target, TRUE, TRUE, 90, 1, 0)
 						return
 				else
