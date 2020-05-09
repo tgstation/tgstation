@@ -217,7 +217,7 @@
 /obj/item/clothing/head/wig
 	name = "wig"
 	desc = "A bunch of hair without a head attached."
-	icon = 'icons/obj/clothing/hats.dmi'	  // default icon for all hairs
+	icon = 'icons/obj/clothing/hats.dmi'
 	icon_state = "wig"
 	item_state = "pwig"
 	flags_inv = HIDEHAIR
