@@ -17801,6 +17801,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/conveyor_switch/oneway{
+	id = "QMLoad"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aUy" = (
@@ -18272,9 +18275,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aVB" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad"
-	},
 /obj/machinery/button/door{
 	id = "QMLoaddoor2";
 	layer = 4;
@@ -18293,6 +18293,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo Supply Dock";
+	dir = 8
+	},
+/obj/machinery/computer/cargo{
 	dir = 8
 	},
 /turf/open/floor/plasteel,

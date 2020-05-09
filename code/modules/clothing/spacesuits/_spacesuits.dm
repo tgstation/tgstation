@@ -76,9 +76,14 @@
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
 
+	// Do nothing if thermal regulators are off
+	if(!thermal_on)
+		return
+
+	// If we got here, thermal regulators are on. If there's no cell, turn them
+	// off
 	if(!cell)
-		if(thermal_on)
-			toggle_spacesuit()
+		toggle_spacesuit()
 		update_hud_icon(user)
 		return
 
@@ -88,6 +93,8 @@
 		update_hud_icon(user)
 		return
 
+	// If we got here, it means thermals are on, the cell is in and the cell has
+	// just had enough charge subtracted from it to power the thermal regulator
 	user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
 	update_hud_icon(user)
 

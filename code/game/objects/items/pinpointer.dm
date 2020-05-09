@@ -66,7 +66,7 @@
 		return
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(target)
-	if(here.z != there.z)
+	if(!here || !there || here.z != there.z)
 		. += "pinon[alert ? "alert" : ""]null[icon_suffix]"
 		return
 	. += get_direction_icon(here, there)

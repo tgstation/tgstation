@@ -73,12 +73,12 @@
 		if(defib)
 			to_chat(user, "<span class='warning'>There's already a defibrillator in [src]!</span>")
 			return
-		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
-			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
-			return
 		var/obj/item/defibrillator/D = I
 		if(!D.get_cell())
 			to_chat(user, "<span class='warning'>Only defibrilators containing a cell can be hooked up to [src]!</span>")
+			return
+		if(HAS_TRAIT(I, TRAIT_NODROP) || !user.transferItemToLoc(I, src))
+			to_chat(user, "<span class='warning'>[I] is stuck to your hand!</span>")
 			return
 		user.visible_message("<span class='notice'>[user] hooks up [I] to [src]!</span>", \
 		"<span class='notice'>You press [I] into the mount, and it clicks into place.</span>")
@@ -151,9 +151,11 @@
 		return
 	if(!user.put_in_hands(defib))
 		to_chat(user, "<span class='warning'>You need a free hand!</span>")
-		return
-	user.visible_message("<span class='notice'>[user] unhooks [defib] from [src].</span>", \
-	"<span class='notice'>You slide out [defib] from [src] and unhook the charging cables.</span>")
+		user.visible_message("<span class='notice'>[user] unhooks [defib] from [src], dropping it on the floor.</span>", \
+		"<span class='notice'>You slide out [defib] from [src] and unhook the charging cables, dropping it on the floor.</span>")
+	else
+		user.visible_message("<span class='notice'>[user] unhooks [defib] from [src].</span>", \
+		"<span class='notice'>You slide out [defib] from [src] and unhook the charging cables.</span>")
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	// Make sure processing ends before the defib is nulled
 	end_processing()

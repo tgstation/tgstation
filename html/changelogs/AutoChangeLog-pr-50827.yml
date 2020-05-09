@@ -1,0 +1,4 @@
+author: "dootdoom"
+delete-after: True
+changes: 
+  - tweak: "Cargo supply console is now next to the supply shuttle on box and pubby."
