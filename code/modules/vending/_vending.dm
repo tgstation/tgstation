@@ -718,7 +718,7 @@ GLOBAL_LIST_EMPTY(vending_products)
 		var/list/data = list(
 			path = replacetext(replacetext("[R.product_path]", "/obj/item/", ""), "/", "-"),
 			name = R.name,
-			price = R.custom_price || default_price,
+			price = R.custom_premium_price || extra_price,
 			max_amount = R.max_amount,
 			ref = REF(R),
 			premium = TRUE
