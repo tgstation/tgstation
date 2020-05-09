@@ -44,9 +44,9 @@
 	if(ishuman(C))
 		var/mob/living/carbon/human/H = C
 		default_color = "#" + H.dna.features["ethcolor"]
-		r1 = GetRedPart(default_color)
-		g1 = GetGreenPart(default_color)
-		b1 = GetBluePart(default_color)
+		r1 = GETREDPART(default_color)
+		g1 = GETGREENPART(default_color)
+		b1 = GETBLUEPART(default_color)
 		spec_updatehealth(H)
 		RegisterSignal(C, COMSIG_ATOM_EMAG_ACT, .proc/on_emag_act)
 		RegisterSignal(C, COMSIG_ATOM_EMP_ACT, .proc/on_emp_act)

@@ -47,8 +47,6 @@
 
 	update()
 
-	return ..()
-
 /datum/light_source/Destroy(force)
 	remove_lum()
 	if (source_atom)
@@ -93,16 +91,6 @@
 // Will cause the light source to recalculate turfs that were removed or added to visibility only.
 /datum/light_source/proc/vis_update()
 	EFFECT_UPDATE(LIGHTING_VIS_UPDATE)
-
-/datum/light_source/proc/parse_light_color()
-	if (light_color)
-		lum_r = GetRedPart   (light_color) / 255
-		lum_g = GetGreenPart (light_color) / 255
-		lum_b = GetBluePart  (light_color) / 255
-	else
-		lum_r = 1
-		lum_g = 1
-		lum_b = 1
 
 // Macro that applies light to a new corner.
 // It is a macro in the interest of speed, yet not having to copy paste it.
@@ -163,7 +151,7 @@
 	UNSETEMPTY(effect_str)
 
 
-/datum/light_source/proc/update_corners_new()
+/datum/light_source/proc/update_corners()
 	var/update = FALSE
 	var/atom/source_atom = src.source_atom
 
@@ -239,151 +227,6 @@
 			if (!T.lighting_corners_initialised)
 				T.generate_missing_corners()
 			for (thing in T.corners)
-				C = thing
-				corners[C] = 0
-			turfs += T
-		source_turf.luminosity = oldlum
-
-	LAZYINITLIST(affecting_turfs)
-	var/list/L = turfs - affecting_turfs // New turfs, add us to the affecting lights of them.
-	affecting_turfs += L
-	for (thing in L)
-		T = thing
-		LAZYADD(T.affecting_lights, src)
-
-	L = affecting_turfs - turfs // Now-gone turfs, remove us from the affecting lights.
-	affecting_turfs -= L
-	for (thing in L)
-		T = thing
-		LAZYREMOVE(T.affecting_lights, src)
-
-	LAZYINITLIST(effect_str)
-	if (needs_update == LIGHTING_VIS_UPDATE)
-		for (thing in  corners - effect_str) // New corners
-			C = thing
-			LAZYADD(C.affecting, src)
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
-	else
-		L = corners - effect_str
-		for (thing in L) // New corners
-			C = thing
-			LAZYADD(C.affecting, src)
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
-
-		for (thing in corners - L) // Existing corners
-			C = thing
-			if (!C.active)
-				effect_str[C] = 0
-				continue
-			APPLY_CORNER(C)
-
-	L = effect_str - corners
-	for (thing in L) // Old, now gone, corners.
-		C = thing
-		REMOVE_CORNER(C)
-		LAZYREMOVE(C.affecting, src)
-	effect_str -= L
-
-	applied_lum_r = lum_r
-	applied_lum_g = lum_g
-	applied_lum_b = lum_b
-
-	UNSETEMPTY(effect_str)
-	UNSETEMPTY(affecting_turfs)
-
-/turf/proc/get_corners()
-	if (!IS_DYNAMIC_LIGHTING(src) && !light_sources)
-		return null
-	if (!lighting_corners_initialised)
-		generate_missing_corners()
-	if (has_opaque_atom)
-		return null // Since this proc gets used in a for loop, null won't be looped though.
-
-	return corners
-
-/datum/light_source/proc/update_corners()
-	if (prob(100))
-		return update_corners_old()
-	return update_corners_new()
-
-/datum/light_source/proc/update_corners_old()
-	var/update = FALSE
-	var/atom/source_atom = src.source_atom
-
-	if (QDELETED(source_atom))
-		qdel(src)
-		return
-
-	if (source_atom.light_power != light_power)
-		light_power = source_atom.light_power
-		update = TRUE
-
-	if (source_atom.light_range != light_range)
-		light_range = source_atom.light_range
-		update = TRUE
-
-	if (!top_atom)
-		top_atom = source_atom
-		update = TRUE
-
-	if (!light_range || !light_power)
-		qdel(src)
-		return
-
-	if (isturf(top_atom))
-		if (source_turf != top_atom)
-			source_turf = top_atom
-			pixel_turf = source_turf
-			update = TRUE
-	else if (top_atom.loc != source_turf)
-		source_turf = top_atom.loc
-		pixel_turf = get_turf_pixel(top_atom)
-		update = TRUE
-	else
-		var/P = get_turf_pixel(top_atom)
-		if (P != pixel_turf)
-			pixel_turf = P
-			update = TRUE
-
-	if (!isturf(source_turf))
-		if (applied)
-			remove_lum()
-		return
-
-	if (light_range && light_power && !applied)
-		update = TRUE
-
-	if (source_atom.light_color != light_color)
-		light_color = source_atom.light_color
-		parse_light_color()
-		update = TRUE
-
-	else if (applied_lum_r != lum_r || applied_lum_g != lum_g || applied_lum_b != lum_b)
-		update = TRUE
-
-	if (update)
-		needs_update = LIGHTING_CHECK_UPDATE
-		applied = TRUE
-	else if (needs_update == LIGHTING_CHECK_UPDATE)
-		return //nothing's changed
-
-	var/list/datum/lighting_corner/corners = list()
-	var/list/turf/turfs                    = list()
-	var/thing
-	var/datum/lighting_corner/C
-	var/turf/T
-
-	if (source_turf)
-		var/oldlum = source_turf.luminosity
-		source_turf.luminosity = CEILING(light_range, 1)
-		for(T in view(CEILING(light_range, 1), source_turf))
-			for (thing in T.get_corners())
 				C = thing
 				corners[C] = 0
 			turfs += T
