@@ -320,6 +320,7 @@
 	M.Translate(pixelX, pixelY)
 	overlay.transform = M
 	RegisterSignal(hit,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
+	hit.update_icon()
 
 	if(harmful)
 		hit.visible_message("<span class='danger'>[weapon] embeds itself in [hit]!</span>")
