@@ -1,6 +1,6 @@
 #define TRANSFORMATION_DURATION 22
 
-/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG))
+/mob/living/carbon/proc/monkeyize(tr_flags = (TR_KEEPITEMS | TR_KEEPVIRUS | TR_KEEPSTUNS | TR_KEEPREAGENTS | TR_DEFAULTMSG | TR_KEEPSTAMINADAMAGE))
 	if (notransform || transformation_timer)
 		return
 
@@ -25,7 +25,6 @@
 	transformation_timer = null
 
 	var/list/missing_bodyparts_zones = get_missing_limbs()
-
 	var/list/stored_implants = list()
 
 	if (tr_flags & TR_KEEPIMPLANTS)
@@ -150,7 +149,9 @@
 			var/datum/action/changeling/humanform/hf = new
 			changeling.purchasedpowers += hf
 			changeling.regain_powers()
-
+	//transfer stamina damage
+	if(tr_flags & TR_KEEPSTAMINADAMAGE)
+		O.adjustStaminaLoss(getStaminaLoss())
 
 	if (tr_flags & TR_DEFAULTMSG)
 		to_chat(O, "<B>You are now a monkey.</B>")
