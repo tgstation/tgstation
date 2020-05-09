@@ -341,6 +341,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 /obj/effect/warped_rune/yellowspace
 	desc = "Where does all this energy come from? Who knows,the process does not matter, only the result."
 	icon_state = "elec_rune"
+	max_cooldown = 50
 
 
 /obj/effect/warped_rune/yellowspace/Initialize()
@@ -942,7 +943,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 			new ores.mineralType(rune_turf)
 
 
-/* Lightpink rune. Revive suicided/soulless corpses by yeeting a willing soul into it */
+/* Lightpink rune. Revive suicided/soulless corpses by yeeting a willing soul into it via a ghost poll*/
 
 
 /obj/item/slimecross/warping/lightpink
@@ -979,15 +980,20 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 		if(length(candidates) && !host.key) //check if anyone wanted to play as the dead person and check if no one's in control of the body one last time.
 			var/mob/dead/observer/ghost = pick(candidates)
+
+			host.mind.memory = "" //resets the memory since it's a new soul inside.
+			//the "soul directives" are more like borg laws than actual objectives.
+			host.mind.memory += "<br><B>Soul directives :"
+			host.mind.memory += "<br><B>#1 : Pretend to be the original owner of this body as best as you can. </B>"
+			host.mind.memory += "<br><B>#2 : Do not share or use any information you may have gotten from the soulspace unless it is to better impersonate your host body.</B>"
+
 			host.key = ghost.key
 			host.suiciding = 0 //turns off the suicide var just in case
 			host.revive(full_heal = TRUE, admin_revive = TRUE) //might as well heal them all the way back up
 
 			to_chat(host, "<span class='boldwarning'>You may wear the skin of someone else, but you know who and what you are.</span>")
 			to_chat(host, "<big><span class='warning'><b>Pretend to be the original owner of this body as best as you can.</b></span></big>")
-			host.mind.memory += "<br><B>Soul directives :"
-			host.mind.memory += "<br><B>#1 : Pretend to be the original owner of this body as best as you can. </B>"
-			host.mind.memory += "<br><B>#2 : Do not share or use any information you may have gotten from the soulspace unless it is to better impersonate your host body.</B>"
+
 
 			to_chat(user, "<span class='notice'>[host.name] is slowly getting back up. It...worked?</span>")
 			playsound(host, "sound/magic/castsummon.ogg", 50, TRUE)
