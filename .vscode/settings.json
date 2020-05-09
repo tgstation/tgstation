@@ -1,7 +1,11 @@
 {
+
+	// Sets the working directory for the eslint extension
 	"eslint.workingDirectories": [
         "./tgui"
 	],
+
+	// Lets you preview .dmi files in the editor
 	"workbench.editorAssociations": [
         {
             "filenamePattern": "*.dmi",
