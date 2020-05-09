@@ -499,7 +499,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 ////////Creation
 
 /obj/item/guardiancreator
-	name = "deck of tarot cards"
+	name = "enchanted deck of tarot cards"
 	desc = "An enchanted deck of tarot cards, rumored to be a source of unimaginable power."
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "deck_syndicate_full"
