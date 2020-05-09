@@ -1,11 +1,11 @@
 // channel numbers for power
-#define EQUIP			1
-#define LIGHT			2
-#define ENVIRON			3
-#define TOTAL			4	//for total power used only
-#define STATIC_EQUIP 	5
-#define STATIC_LIGHT	6
-#define STATIC_ENVIRON	7
+#define AREA_USAGE_EQUIP			1
+#define AREA_USAGE_LIGHT			2
+#define AREA_USAGE_ENVIRON			3
+#define AREA_USAGE_STATIC_EQUIP 	4
+#define AREA_USAGE_STATIC_LIGHT	5
+#define AREA_USAGE_STATIC_ENVIRON	6
+#define AREA_USAGE_LEN AREA_USAGE_STATIC_ENVIRON // largest idx
 
 //Power use
 #define NO_POWER_USE 0
