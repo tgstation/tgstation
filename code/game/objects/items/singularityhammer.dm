@@ -13,8 +13,10 @@
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	force_string = "LORD SINGULOTH HIMSELF"
+	///Is it able to pull shit right now?
 	var/charged = TRUE
-	var/wielded = FALSE // track wielded status on item
+	///track wielded status on item
+	var/wielded = FALSE
 
 /obj/item/singularityhammer/Initialize()
 	. = ..()
@@ -25,11 +27,11 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, force_multiplier=4, icon_wielded="singularity_hammer1")
 
-/// triggered on wield of two handed item
+///triggered on wield of two handed item
 /obj/item/singularityhammer/proc/on_wield(obj/item/source, mob/user)
 	wielded = TRUE
 
-/// triggered on unwield of two handed item
+///triggered on unwield of two handed item
 /obj/item/singularityhammer/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
 
