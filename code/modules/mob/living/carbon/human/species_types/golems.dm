@@ -37,7 +37,11 @@
 	// 3% chance that our golem has a human surname, because
 	// cultural contamination
 	if(prob(human_surname_chance))
-		golem_surname = pick(GLOB.last_names)
+		switch(rand(1,2))
+			if(1) //American last name
+				golem_surname += "[pick(GLOB.last_names_us)]"
+			if(2) //Mexican last name
+				golem_surname += "[pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 	else if(special_names && special_names.len && prob(special_name_chance))
 		golem_surname = pick(special_names)
 

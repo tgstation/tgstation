@@ -41,11 +41,23 @@
 
 /datum/language/proc/get_random_name(gender, name_count=2, syllable_count=4, syllable_divisor=2)
 	if(!syllables || !syllables.len)
-		if(gender==FEMALE)
-			return capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
-		else
-			return capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
-
+		switch(rand(1,2))
+			if(1) //American name
+				switch(gender)
+					if(MALE)
+						return "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_us)]"
+					if(FEMALE)
+						return "[pick(GLOB.first_names_female_us)] [pick(GLOB.last_names_us)]"
+					else
+						return "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_us)]"
+			if(2) //Mexican name
+				switch(gender)
+					if(MALE)
+						return "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+					if(FEMALE)
+						return "[pick(GLOB.first_names_female_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+					else
+						return "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 	var/full_name = ""
 	var/new_name = ""
 

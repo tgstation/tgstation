@@ -193,9 +193,24 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 							if(prob(10))
 								. += pick(lizard_name(MALE),lizard_name(FEMALE))
 							else
-								var/new_name = pick(pick(GLOB.first_names_male,GLOB.first_names_female))
-								new_name += " "
-								new_name += pick(GLOB.last_names)
+								var/new_name
+								switch(rand(1,2))
+									if(1) //American name
+										switch(rand(1,3))
+											if(1)
+												new_name = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_us)]"
+											if(2)
+												new_name = "[pick(GLOB.first_names_female_us)] [pick(GLOB.last_names_us)]"
+											else
+												new_name = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_us)]"
+									if(2) //Mexican name
+										switch(rand(1,3))
+											if(1)
+												new_name = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+											if(2)
+												new_name = "[pick(GLOB.first_names_female_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+											else
+												new_name = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 								. += new_name
 					if(2)
 						. += pick(get_all_jobs())//Returns a job.

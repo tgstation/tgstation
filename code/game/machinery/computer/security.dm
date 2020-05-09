@@ -832,7 +832,23 @@ What a mess.*/
 					if(prob(10))
 						R.fields["name"] = "[pick(lizard_name(MALE),lizard_name(FEMALE))]"
 					else
-						R.fields["name"] = "[pick(pick(GLOB.first_names_male), pick(GLOB.first_names_female))] [pick(GLOB.last_names)]"
+						switch(rand(1,2))
+							if(1) //American name
+								switch(rand(1,3))
+									if(1)
+										R.fields["name"] = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_us)]"
+									if(2)
+										R.fields["name"] = "[pick(GLOB.first_names_female_us)] [pick(GLOB.last_names_us)]"
+									else 
+										R.fields["name"] = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_us)]"
+							if(2) //Mexican name
+								switch(rand(1,3))
+									if(1)
+										R.fields["name"] = "[pick(GLOB.first_names_male_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+									if(2)
+										R.fields["name"] = "[pick(GLOB.first_names_female_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+									else 
+										R.fields["name"] = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 				if(2)
 					R.fields["gender"] = pick("Male", "Female", "Other")
 				if(3)

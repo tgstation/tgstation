@@ -32,7 +32,11 @@
 
 /datum/antagonist/ert/New()
 	. = ..()
-	name_source = GLOB.last_names
+	switch(rand(1,2))
+		if(1) //American last name
+			name_source = GLOB.last_names_us
+		if(2) //Mexican last name
+			name_source = GLOB.last_names_mx
 
 /datum/antagonist/ert/proc/update_name()
 	owner.current.fully_replace_character_name(owner.current.real_name,"[role] [pick(name_source)]")

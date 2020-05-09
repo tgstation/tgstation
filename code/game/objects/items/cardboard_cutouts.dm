@@ -117,7 +117,23 @@
 		add_atom_colour("#FFD7A7", FIXED_COLOUR_PRIORITY)
 	switch(new_appearance)
 		if("Assistant")
-			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+			switch(rand(1,2))
+				if(1) //American 
+					switch(rand(1,3))
+						if(1)
+							name = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_us)]"
+						if(2)
+							name = "[pick(GLOB.first_names_female_us)] [pick(GLOB.last_names_us)]"
+						else
+							name = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_us)]"
+				if(2) //Mexican name
+					switch(rand(1,3))
+						if(1)
+							name = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+						if(2)
+							name = "[pick(GLOB.first_names_female_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+						else
+							name = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 			desc = "A cardboat cutout of an assistant."
 			icon_state = "cutout_greytide"
 		if("Clown")
@@ -141,7 +157,23 @@
 			desc = "A cardboard cutout of a cultist."
 			icon_state = "cutout_cultist"
 		if("Clockwork Cultist")
-			name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
+			switch(rand(1,2))
+				if(1) //American name
+					switch(rand(1,3))
+						if(1)
+							name = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_us)]"
+						if(2)
+							name = "[pick(GLOB.first_names_female_us)] [pick(GLOB.last_names_us)]"
+						else
+							name = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_us)]"
+				if(2) //Mexican name
+					switch(rand(1,3))
+						if(1)
+							name = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+						if(2)
+							name = "[pick(GLOB.first_names_female_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+						else
+							name = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 			desc = "A cardboard cutout of a servant of Ratvar."
 			icon_state = "cutout_servant"
 		if("Revolutionary")

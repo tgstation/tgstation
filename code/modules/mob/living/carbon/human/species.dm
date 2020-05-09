@@ -216,15 +216,31 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return random_unique_name(gender)
 
 	var/randname
-	if(gender == MALE)
-		randname = pick(GLOB.first_names_male)
-	else
-		randname = pick(GLOB.first_names_female)
-
-	if(lastname)
-		randname += " [lastname]"
-	else
-		randname += " [pick(GLOB.last_names)]"
+	switch(rand(1,2))
+		if(1) //American name
+			switch(gender)
+				if(MALE)
+					randname = "[pick(GLOB.first_names_male_us)]"
+				if(FEMALE)
+					randname = "[pick(GLOB.first_names_female_us)]"
+				else
+					randname = "[pick(GLOB.first_names_unisex)]"
+			if(lastname)
+				randname += " [lastname]"
+			else
+				randname += " [pick(GLOB.last_names_us)]"
+		if(2) //Mexican name
+			switch(gender)
+				if(MALE)
+					randname = "[pick(GLOB.first_names_male_us)]"
+				if(FEMALE)
+					randname = "[pick(GLOB.first_names_female_mx)]"
+				else
+					randname = "[pick(GLOB.first_names_unisex)]"
+			if(lastname)
+				randname += " [lastname]"
+			else
+				randname += " [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 
 	return randname
 

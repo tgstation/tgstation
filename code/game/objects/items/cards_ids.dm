@@ -375,12 +375,23 @@ update_label()
 			input_name = reject_bad_name(input_name)
 			if(!input_name)
 				// Invalid/blank names give a randomly generated one.
-				if(user.gender == MALE)
-					input_name = "[pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-				else if(user.gender == FEMALE)
-					input_name = "[pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
-				else
-					input_name = "[pick(GLOB.first_names)] [pick(GLOB.last_names)]"
+				switch(rand(1,2))
+					if(1) //American name
+						switch(user.gender)
+							if(MALE)
+								input_name = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_us)]"
+							if(FEMALE)
+								input_name = "[pick(GLOB.first_names_female_us)] [pick(GLOB.last_names_us)]"
+							else
+								input_name = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_us)]"
+					if(2) //Mexican name
+						switch(user.gender)
+							if(MALE)
+								input_name = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+							else if(FEMALE)
+								input_name = "[pick(GLOB.first_names_female_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+							else
+								input_name = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 
 			var/target_occupation = stripped_input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", assignment ? assignment : "Assistant", MAX_MESSAGE_LEN)
 			if(!target_occupation)

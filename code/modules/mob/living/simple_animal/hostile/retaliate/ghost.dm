@@ -44,11 +44,24 @@
 	give_hair()
 	set_light(1, 2) // same glowing as visible player ghosts
 	if(random)
-		switch(rand(0,1))
-			if(0)
-				name = "ghost of [pick(GLOB.first_names_male)] [pick(GLOB.last_names)]"
-			if(1)
-				name = "ghost of [pick(GLOB.first_names_female)] [pick(GLOB.last_names)]"
+		name = "ghost of "
+		switch(rand(1,2))
+			if(1) //American name
+				switch(rand(1,3))
+					if(1)
+						name += "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_us)]"
+					if(2)
+						name += "[pick(GLOB.first_names_female_us)] [pick(GLOB.last_names_us)]"
+					else
+						name += "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_us)]"
+			if(2) //Mexican name
+				switch(rand(1,3))
+					if(1)
+						name += "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+					if(2)
+						name += "[pick(GLOB.first_names_female_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+					else
+						name += "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 
 
 /mob/living/simple_animal/hostile/retaliate/ghost/proc/give_hair()

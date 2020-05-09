@@ -98,10 +98,23 @@
 
 /proc/random_unique_name(gender, attempts_to_find_unique_name=10)
 	for(var/i in 1 to attempts_to_find_unique_name)
-		if(gender==FEMALE)
-			. = capitalize(pick(GLOB.first_names_female)) + " " + capitalize(pick(GLOB.last_names))
-		else
-			. = capitalize(pick(GLOB.first_names_male)) + " " + capitalize(pick(GLOB.last_names))
+		switch(rand(1,2))
+			if(1) //American name
+				switch(gender)
+					if(MALE)
+						. = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_us)]"
+					if(FEMALE)
+						. = "[pick(GLOB.first_names_female_us)] [pick(GLOB.last_names_us)]"
+					else
+						. = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_us)]"
+			if(2) //Mexican name
+				switch(gender)
+					if(MALE)
+						. = "[pick(GLOB.first_names_male_us)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+					if(FEMALE)
+						. = "[pick(GLOB.first_names_female_mx)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
+					else
+						. = "[pick(GLOB.first_names_unisex)] [pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 
 		if(!findname(.))
 			break

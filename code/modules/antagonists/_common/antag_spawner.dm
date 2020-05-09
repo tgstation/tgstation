@@ -197,10 +197,29 @@
 		else
 			R = new /mob/living/silicon/robot/modules/syndicate(T) //Assault borg by default
 
-	var/brainfirstname = pick(GLOB.first_names_male)
-	if(prob(50))
-		brainfirstname = pick(GLOB.first_names_female)
-	var/brainopslastname = pick(GLOB.last_names)
+	var/brainfirstname
+	var/brainopslastname
+	switch(rand(1,2))
+		if(1) //American name
+			switch(rand(1,3))
+				if(1)
+					brainfirstname = pick(GLOB.first_names_male_us)
+				if(2)
+					brainfirstname = pick(GLOB.first_names_female_us)
+				else 
+					brainfirstname = pick(GLOB.first_names_unisex)
+			if(!creator_op.nuke_team.syndicate_name)
+				brainopslastname = pick(GLOB.last_names_us)
+		if(2) //Mexican name
+			switch(rand(1,3))
+				if(1)
+					brainfirstname = pick(GLOB.first_names_male_mx)
+				if(2)
+					brainfirstname = pick(GLOB.first_names_female_mx)
+				else 
+					brainfirstname = pick(GLOB.first_names_unisex)
+			if(!creator_op.nuke_team.syndicate_name)
+				brainopslastname = "[pick(GLOB.last_names_mx)] [pick(GLOB.last_names_mx)]"
 	if(creator_op.nuke_team.syndicate_name)  //the brain inside the syndiborg has the same last name as the other ops.
 		brainopslastname = creator_op.nuke_team.syndicate_name
 	var/brainopsname = "[brainfirstname] [brainopslastname]"
