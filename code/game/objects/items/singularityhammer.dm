@@ -35,7 +35,6 @@
 
 /obj/item/singularityhammer/equipped(mob/user, slot, initial)
 	. = ..()
-	color = "#212121"
 	add_atom_colour("#212121", FIXED_COLOUR_PRIORITY)
 
 /obj/item/singularityhammer/dropped(mob/user, silent)
