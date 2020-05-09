@@ -163,6 +163,7 @@
 	APPLY_CORNER(C)
 	UNSETEMPTY(effect_str)
 
+
 /datum/light_source/proc/update_corners()
 	var/update = FALSE
 	var/atom/source_atom = src.source_atom
@@ -229,11 +230,16 @@
 	var/thing
 	var/datum/lighting_corner/C
 	var/turf/T
+
 	if (source_turf)
 		var/oldlum = source_turf.luminosity
 		source_turf.luminosity = CEILING(light_range, 1)
 		for(T in view(CEILING(light_range, 1), source_turf))
-			for (thing in T.get_corners(source_turf))
+			if((!IS_DYNAMIC_LIGHTING(T) && !T.light_sources) || T.has_opaque_atom)
+				continue
+			if (!T.lighting_corners_initialised)
+				T.generate_missing_corners()
+			for (thing in T.corners)
 				C = thing
 				corners[C] = 0
 			turfs += T
