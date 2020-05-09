@@ -188,3 +188,9 @@
 	var/obj/effect/decal/cleanable/molten_object/I = new (get_turf(src))
 	I.desc = "Looks like this was \an [src] some time ago."
 	qdel(src)
+
+/obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
+	if (istype(I, /obj/item/plant_analyzer))
+		myseed.attackby(I, user, params) // Hacky I guess
+	else
+		..() // Attack normally
