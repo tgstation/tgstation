@@ -226,6 +226,7 @@
 		var/i = amount
 		while(i > 0)
 			if(!check_container_volume(D.make_reagents))
+				say("Warning: Container does not have enough capacity!")
 				return .
 			if(!check_cost(D.materials))
 				return .
@@ -270,6 +271,10 @@
 	data["beaker"] = beaker ? TRUE : FALSE
 	data["biomass"] = points
 	data["processing"] = processing
+	return data
+
+/obj/machinery/biogenerator/ui_static_data(mob/user)
+	var/list/data = list()
 	data["categories"] = list()
 
 	var/categories = show_categories.Copy()

@@ -27,7 +27,7 @@ export const Biogenerator = (props, context) => {
           </Dimmer>
         )}
         {!!beaker && (
-          <BiogeneratorContent/>
+          <BiogeneratorContent />
         )}
       </Window.Content>
     </Window>
@@ -141,7 +141,8 @@ const ItemList = (props, context) => {
       setAmount,
     ] = useLocalState(context, "amount" + item.name, 1);
     const notSameItem = hoveredItem && hoveredItem.name !== item.name;
-    const notEnoughHovered = props.biomass - hoveredCost * hoveredItem.amount < item.cost * amount;
+    const notEnoughHovered = props.biomass - hoveredCost
+    * hoveredItem.amount < item.cost * amount;
     const disabledDueToHovered = notSameItem && notEnoughHovered;
     const disabled = props.biomass < item.cost * amount || disabledDueToHovered;
     return {
