@@ -688,8 +688,8 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
 	return ..()
 
-/obj/item/circlegame/dropped()
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)		//loc will have changed by the time this is called, so Destroy() can't catch it
+/obj/item/circlegame/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)		//loc will have changed by the time this is called, so Destroy() can't catch it
 	// this is a dropdel item.
 	return ..()
 
