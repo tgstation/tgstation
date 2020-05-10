@@ -165,7 +165,21 @@
 	. = ..()
 	if(slot == ITEM_SLOT_GLOVES)
 		tool_behaviour = TOOL_MINING
+		RegisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/rocksmash)
+		RegisterSignal(user, COMSIG_MOVABLE_BUMP, .proc/rocksmash)
+	else
+		stopmining(user)
 
-/obj/item/clothing/gloves/gauntlets/dropped()
+/obj/item/clothing/gloves/gauntlets/dropped(mob/user)
 	. = ..()
+	stopmining(user)
+
+/obj/item/clothing/gloves/gauntlets/proc/stopmining(mob/user)
 	tool_behaviour = initial(tool_behaviour)
+	UnregisterSignal(user, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+
+/obj/item/clothing/gloves/gauntlets/proc/rocksmash(mob/living/carbon/human/H, atom/A, proximity)
+    if(!istype(A, /turf/closed/mineral))
+        return
+    A.attackby(src, H)
+    return COMPONENT_NO_ATTACK_HAND
