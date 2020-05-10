@@ -100,12 +100,7 @@
 			return TRUE
 
 		if(istype(O, /obj/item/storage/bag) || istype(O, /obj/item/organ_storage)) //FULPSTATION MEDBORG ORGAN STORAGE FIX Surrealistik Nov 2019
-			if(istype(O, /obj/item/organ_storage)) //FULPSTATION MEDBORG ORGAN STORAGE TWEAK Surrealistik Jan 2020 BEGIN
-				O.icon_state = initial(O.icon_state) //We need to properly update the icon and overlays by reverting to our initial state.
-				O.desc = initial(O.desc)
-				O.cut_overlays()
-				O = O.contents[1] //FULPSTATION MEDBORG ORGAN STORAGE TWEAK Surrealistik Jan 2020 END
-			var/obj/item/storage/P = O
+			var/obj/item/P = O //FULPSTATION MEDBORG ORGAN STORAGE TWEAK Surrealistik Jan 2020 END
 			var/loaded = 0
 			for(var/obj/G in P.contents)
 				if(contents.len >= max_n_of_items)
@@ -113,6 +108,9 @@
 				if(accept_check(G))
 					load(G)
 					loaded++
+					if(istype(O, /obj/item/organ_storage)) //FULPSTATION MEDBORG ORGAN STORAGE TWEAK Surrealistik Jan 2020 END
+						var/obj/item/organ_storage/S = O
+						S.clear_organ() //FULPSTATION MEDBORG ORGAN STORAGE TWEAK Surrealistik Jan 2020 END
 			updateUsrDialog()
 
 			if(loaded)
