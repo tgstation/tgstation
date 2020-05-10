@@ -286,14 +286,6 @@
 	if(!C.painting_name)
 		C.try_rename(user)
 
-/obj/structure/sign/painting/update_icon_state()
-	. = ..()
-	if(C && C.generated_icon)
-		icon_state = null
-	else
-		icon_state = "frame-empty"
-
-
 /obj/structure/sign/painting/update_overlays()
 	. = ..()
 	if(C && C.generated_icon)
