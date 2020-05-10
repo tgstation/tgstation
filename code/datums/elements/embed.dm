@@ -168,7 +168,7 @@
   * If we hit a valid target (carbon or closed turf), we create the shrapnel_type object and immediately call tryEmbed() on it, targeting what we impacted. That will lead
   *	it to call tryForceEmbed() on its own embed element (it's out of our hands here, our projectile is done), where it will run through all the checks it needs to.
   */
-/datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit)
+/datum/element/embed/proc/checkEmbedProjectile(obj/projectile/P, atom/movable/firer, atom/hit, angle, hit_zone)
 	if(!iscarbon(hit) && !isclosedturf(hit))
 		Detach(P)
 		return // we don't care
@@ -177,7 +177,10 @@
 	var/did_embed
 	if(iscarbon(hit))
 		var/mob/living/carbon/C = hit
-		var/obj/item/bodypart/limb = C.get_bodypart(C.check_limb_hit(P.def_zone))
+		var/obj/item/bodypart/limb
+		limb = C.get_bodypart(hit_zone)
+		if(!limb)
+			limb = C.get_bodypart()
 		did_embed = payload.tryEmbed(limb)
 	else
 		did_embed = payload.tryEmbed(hit)
@@ -213,6 +216,7 @@
 			hit_zone = limb.body_zone
 	else if(isbodypart(target))
 		limb = target
+		hit_zone = limb.body_zone
 		C = limb.owner
 	else if(isclosedturf(target))
 		T = target
