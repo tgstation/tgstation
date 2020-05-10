@@ -110,9 +110,13 @@
 		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
 		gets_drilled(M)
 
-/turf/closed/mineral/attack_hulk(mob/user)
-	gets_drilled(user)
+/turf/closed/mineral/attack_hulk(mob/living/carbon/human/H)
 	..()
+	if(do_after(H, 50, target = src))
+		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
+		gets_drilled(H)
+	return TRUE
 
 /turf/closed/mineral/attack_hand(mob/user)
 	if(ishuman(user))

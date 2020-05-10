@@ -231,8 +231,10 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	slot_flags = null
 	item_flags = DROPDEL
 
-/obj/item/katana/cursed/equipped(mob/user)
+/obj/item/katana/cursed/equipped(mob/living/carbon/human/user)
 	. = ..()
+	if(!istype(user))
+		return
 	user.gain_trauma(/datum/brain_trauma/magic/stalker)
 
 /obj/item/katana/cursed/Initialize()
