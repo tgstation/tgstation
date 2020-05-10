@@ -1,20 +1,3 @@
-#define LOWPOP_FAMILIES_COUNT 50
-
-#define TWO_STARS_HIGHPOP 11
-#define THREE_STARS_HIGHPOP 16
-#define FOUR_STARS_HIGHPOP 21
-#define FIVE_STARS_HIGHPOP 31
-
-#define TWO_STARS_LOW 6
-#define THREE_STARS_LOW 9
-#define FOUR_STARS_LOW 12
-#define FIVE_STARS_LOW 15
-
-#define CREW_SIZE_MIN 4
-#define CREW_SIZE_MAX 8
-
-
-GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang
 	name = "Families"
 	config_tag = "families"

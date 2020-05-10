@@ -12,6 +12,25 @@
 	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"
 
+	var/datum/gang_handler/handler
+
+/datum/antagonist/gang/on_gain()
+	if(starter_gangster)
+		for(var/C in my_gang.free_clothes)
+			var/obj/O = new C(owner.current)
+			var/list/slots = list (
+				"backpack" = ITEM_SLOT_BACKPACK,
+				"left pocket" = ITEM_SLOT_LPOCKET,
+				"right pocket" = ITEM_SLOT_RPOCKET
+			)
+			var/mob/living/carbon/human/H = owner.current
+			var/equipped = H.equip_in_one_of_slots(O, slots)
+			if(!equipped)
+				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
+				qdel(O)
+
+	..()
+
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
 	..()
 	package_spawner.Grant(owner.current)
@@ -38,6 +57,9 @@
 	return TRUE
 
 /datum/antagonist/gang/greet()
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
+	to_chat(owner.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
+
 	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
 	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
 	to_chat(owner.current, "<B><font size=4 color=red>Don't fuck with non-gangsters unless they fuck with you first.</font></B>")
@@ -62,8 +84,7 @@
 	antag_hud_name = "Triad"
 
 /datum/antagonist/gang/red/check_gang_objective()
-	var/datum/game_mode/gang/F = SSticker.mode
-	for(var/datum/mind/M in F.undercover_cops)
+	for(var/datum/mind/M in handler.undercover_cops)
 		var/mob/living/carbon/human/H = M.current
 		if(considered_alive(H))
 			return FALSE
@@ -139,8 +160,7 @@
 	antag_hud_name = "Russian"
 
 /datum/antagonist/gang/russian_mafia/check_gang_objective()
-	var/datum/game_mode/gang/F = SSticker.mode
-	for(var/M in F.gangbangers)
+	for(var/M in handler.gangbangers)
 		var/datum/mind/MI = M
 		if(MI.has_antag_datum(src.type))
 			if(!considered_alive(MI.current))
@@ -170,8 +190,7 @@
 	antag_hud_name = "Italian"
 
 /datum/antagonist/gang/italian_mob/check_gang_objective()
-	var/datum/game_mode/gang/F = SSticker.mode
-	for(var/M in F.gangbangers)
+	for(var/M in handler.gangbangers)
 		var/datum/mind/MI = M
 		if(MI.has_antag_datum(src.type))
 			if(considered_alive(MI.current))
@@ -320,8 +339,7 @@
 	antag_hud_name = "JackFrost"
 
 /datum/antagonist/gang/jackbros/check_gang_objective()
-	var/datum/game_mode/gang/F = SSticker.mode
-	for(var/M in F.gangbangers)
+	for(var/M in handler.gangbangers)
 		var/datum/mind/MI = M
 		if(MI.has_antag_datum(src.type))
 			if(!considered_alive(MI.current))
@@ -351,8 +369,7 @@
 	antag_hud_name = "Dutch"
 
 /datum/antagonist/gang/dutch/check_gang_objective()
-	var/datum/game_mode/gang/F = SSticker.mode
-	for(var/M in F.gangbangers)
+	for(var/M in handler.gangbangers)
 		var/datum/mind/MI = M
 		if(MI.has_antag_datum(src.type))
 			if(!considered_alive(MI.current))
@@ -381,7 +398,21 @@
 	points += points_to_adjust
 
 /datum/team/gang/roundend_report()
-	return
+	var/list/report = list()
+	report += "<span class='header'>[name]:</span>"
+	if(!members.len)
+		report += "<span class='redtext'>The family was wiped out!</span>"
+	else if(my_gang_datum.check_gang_objective())
+		report += "<span class='greentext'>The family completed their objective!</span>"
+	else
+		report += "<span class='redtext big'>The family failed their objective!</span>"
+	report += "Objective: [my_gang_datum.gang_objective]"
+	report += "Points: [points]"
+	if(members.len)
+		report += "[my_gang_datum.roundend_category] were:"
+		report += printplayerlist(members)
+
+	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
 
 /datum/action/cooldown/spawn_induction_package
 	name = "Create Induction Package"
@@ -405,9 +436,8 @@
 	if(H.stat)
 		return FALSE
 
-	var/datum/game_mode/gang/mode = SSticker.mode
 	var/lowest_gang_count = my_gang_datum.my_gang.members.len
-	for(var/datum/team/gang/TT in mode.gangs)
+	for(var/datum/team/gang/TT in handler.gangs)
 		var/alive_gangsters = 0
 		for(var/datum/mind/gangers in TT.members)
 			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
@@ -417,12 +447,13 @@
 		if(TT != my_gang_datum.my_gang)
 			if(alive_gangsters < lowest_gang_count)
 				lowest_gang_count = alive_gangsters
-	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + mode.gang_balance_cap))
+	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + handler.gang_balance_cap))
 		to_chat(H, "Your gang is pretty packed right now. You don't need more members just yet. If the other families expand, you can recruit more members.")
 		return FALSE
 	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
 	var/obj/item/gang_induction_package/GP = new(get_turf(H))
 	GP.name = "\improper [my_gang_datum.name] signup package"
+	GP.handler = my_gang_datum.handler
 	GP.gang_to_use = my_gang_datum.type
 	GP.team_to_use = my_gang_datum.my_gang
 	StartCooldown()
