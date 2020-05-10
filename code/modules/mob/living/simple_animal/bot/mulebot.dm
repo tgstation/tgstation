@@ -21,6 +21,7 @@
 	a_intent = INTENT_HARM //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
+	buckle_prevents_pull = TRUE // No pulling loaded shit
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
@@ -400,7 +401,6 @@
 
 /mob/living/simple_animal/bot/mulebot/proc/load_mob(mob/living/M)
 	can_buckle = TRUE
-	buckle_prevents_pull = TRUE
 	if(buckle_mob(M))
 		passenger = M
 		load = M
@@ -417,7 +417,6 @@
 		load = null
 		M.layer = initial(M.layer)
 		M.pixel_y = initial(M.pixel_y)
-		buckle_prevents_pull = FALSE
 
 // called to unload the bot
 // argument is optional direction to unload
