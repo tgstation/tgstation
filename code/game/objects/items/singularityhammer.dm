@@ -76,7 +76,7 @@
 	if(!proximity)
 		return
 	if(wielded)
-		if(charged == TRUE)
+		if(charged)
 			charged = FALSE
 			if(istype(A, /mob/living/))
 				var/mob/living/Z = A
