@@ -1,5 +1,4 @@
 {
-
 	"eslint.workingDirectories": [
 		"./tgui"
 	],
@@ -9,5 +8,5 @@
 			"filenamePattern": "*.dmi",
 			"viewType": "imagePreview.previewEditor"
 		}
-	],
+	]
 }
