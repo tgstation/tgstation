@@ -419,10 +419,10 @@
 	slowdown = -0.6
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 
+//Cult hood lacks armor due to having no noticable effects, unlike the robes, and is just cosmetic.
 /obj/item/clothing/head/hooded/cult_hoodie/berserkerhood
 	name = "flagellant's hood"
 	desc = "Blood-soaked hood infused with dark magic."
-	armor = list("melee" = -45, "bullet" = -65, "laser" = -45,"energy" = -65, "bomb" = -45, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)
 
 /obj/item/clothing/suit/hooded/cultrobes/berserker/equipped(mob/living/user, slot)
 	..()
