@@ -118,7 +118,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		. += "<span class='notice'>It looks fully intact.</span>"
 	else
 		var/dam = round((heat_integrity/max_heat_integrity)* 100, 1)
-		. += "<span class='warning'>The remaining integrity is at [dam]%</span>"
+		switch(dam)
+			if(1 to 25)
+				. += "<span class='warning'>The [src] is almost melted!</span>"
+			if(26 to 50)
+				. += "<span class='warning'>The [src] is starting to melt!</span>"
+			if(51 to 75)
+				. += "<span class='warning'>The [src] is getting hotter!</span>"
 
 /turf/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -574,11 +580,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 ///Prot to set the damage of the turf, also used to call the windows and doors adjacent_fire_act()
 /turf/proc/set_heat_damage_amount(exposed_temperature)
-	var/obj/structure/window/Window
-	for(Window in range(1, src))
+	for(var/obj/structure/window/Window in range(1, src))
 		Window.adjacent_fire_act(exposed_temperature)
-	var/obj/machinery/door/Door
-	for(Door in range(1, src))
+	for(var/obj/machinery/door/Door in range(1, src))
 		Door.adjacent_fire_act(exposed_temperature)
 	if(to_be_destroyed && !changing_turf)
 		damage_amount = clamp((exposed_temperature - heat_capacity)/1000, 1, 15)

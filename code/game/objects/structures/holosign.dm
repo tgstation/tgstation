@@ -10,8 +10,9 @@
 	var/obj/item/holosign_creator/projector
 
 /obj/structure/holosign/New(loc, source_projector)
-	projector = source_projector
-	LAZYADD(projector.signs, src)
+	if(source_projector)
+		projector = source_projector
+		LAZYADD(projector.signs, src)
 	..()
 
 /obj/structure/holosign/Initialize()
@@ -121,13 +122,13 @@
 	var/area/a = get_area(src)
 	if(a.power_equip == FALSE)
 		stack_trace("Power shield created without power avaiable")
-		qdel(src)
-		return
-	shield_projector = source_projector
-	LAZYADD(shield_projector.signs, src)
-	air_update_turf(TRUE)
-	a.addStaticPower(power_consumption, STATIC_EQUIP)
-	shield_turf()
+		return INITIALIZE_HINT_QDEL
+	if(source_projector)
+		shield_projector = source_projector
+		LAZYADD(shield_projector.signs, src)
+		air_update_turf(TRUE)
+		a.addStaticPower(power_consumption, STATIC_EQUIP)
+		shield_turf()
 
 /obj/machinery/holosign/barrier/power_shield/Destroy()
 	var/turf/T = loc

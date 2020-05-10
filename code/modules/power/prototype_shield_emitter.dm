@@ -7,6 +7,8 @@
 	density = TRUE
 	max_integrity = 350
 	integrity_failure = 0.2
+	use_power = IDLE_POWER_USE
+	idle_power_usage = 50
 	circuit = /obj/item/circuitboard/machine/proto_sh_emitter
 	///Store the powered shields placed in the world, used when turned off to removed them
 	var/list/signs
@@ -16,6 +18,10 @@
 	var/locked = FALSE
 	///Used to check if the machine is placed inside the borders of the map
 	var/borders = TRUE
+	///Check if the machine is the normal version or the small version
+	var/normal = TRUE
+	///Used to check the area power
+	var/apc_power = TRUE
 
 /obj/machinery/power/proto_sh_emitter/ComponentInitialize()
 	. = ..()
@@ -28,6 +34,7 @@
 	name = "Small Prototype Shield Emitter"
 	desc = "This is the less powerful version of the P.S.E. designed to be used in the incinerator"
 	circuit = /obj/item/circuitboard/machine/proto_sh_emitter_small
+	normal = FALSE
 
 /obj/machinery/power/proto_sh_emitter/small/anchored
 	anchored = TRUE
@@ -37,12 +44,11 @@
 		var/turf/T = get_turf(src)
 		message_admins("Prototype Shield Emitter deleted at [ADMIN_VERBOSEJMP(T)]")
 		log_game("Prototype Shield Emitter deleted at [AREACOORD(T)]")
-	for(var/H in signs)
-		qdel(H)
+	QDEL_LIST(signs)
 	return ..()
 
 /obj/machinery/power/proto_sh_emitter/update_icon_state()
-	if(is_on == TRUE)
+	if(is_on)
 		icon_state = "proto_sh_emitter_on"
 	else
 		icon_state = "proto_sh_emitter"
@@ -54,7 +60,7 @@
 	return TRUE
 
 /obj/machinery/power/proto_sh_emitter/wrench_act(mob/living/user, obj/item/I)
-	if(is_on == TRUE)
+	if(is_on)
 		to_chat(user, "<span class='warning'>You have to turn the [src] off first!</span>")
 		return TRUE
 	anchored = !anchored
@@ -87,61 +93,47 @@
 	return TRUE
 
 /obj/machinery/power/proto_sh_emitter/process()
-	var/area/a = get_area(src)
-	var/turf/Turf = get_turf(src)
-	if(a.power_equip == FALSE && is_on == TRUE)
+	if(powered())
+		apc_power = TRUE
+		return
+	if(!powered() && apc_power == TRUE)
+		apc_power = FALSE
+		var/turf/Turf = get_turf(src)
 		is_on = FALSE
+		QDEL_LIST(signs)
 		update_icon_state()
 		message_admins("[src] turned off at [ADMIN_VERBOSEJMP(Turf)]")
 		log_game("[src] turned off at [AREACOORD(Turf)]")
 
 /obj/machinery/power/proto_sh_emitter/interact(mob/user)
-	var/area/a = get_area(src)
 	add_fingerprint(user)
 	if(!anchored)
 		to_chat(user, "<span class='warning'>You need to anchor the [src] first!</span>")
 		return
-	if(a.power_equip == FALSE)
+	if(!apc_power)
 		to_chat(user, "<span class='warning'>There is no power in this area!!</span>")
 		return
 	if(locked)
 		to_chat(user, "<span class='warning'>The controls are locked!</span>")
 		return
-	if(is_on == TRUE)
+	if(is_on)
 		remove_barrier(user)
 		return
 	check_map_borders(2,5,2,5)
 	if(!borders)
 		to_chat(user, "<span class='warning'>The motors whir and fail!</span>")
 		return
-	build_barrier(1,2,1,4,2,1,2,5,user)
+	if(normal)
+		build_barrier(1,2,1,4,2,1,2,5,user)
+	else
+		build_barrier(0,2,2,3,1,1,3,4,user)
 
-/obj/machinery/power/proto_sh_emitter/small/interact(mob/user)
-	var/area/a = get_area(src)
-	add_fingerprint(user)
-	if(!anchored)
-		to_chat(user, "<span class='warning'>You need to anchor the [src] first!</span>")
-		return
-	if(a.power_equip == FALSE)
-		to_chat(user, "<span class='warning'>There is no power in this area!!</span>")
-		return
-	if(locked)
-		to_chat(user, "<span class='warning'>The controls are locked!</span>")
-		return
-	if(is_on == TRUE)
-		remove_barrier(user)
-		return
-	check_map_borders(1,4,3,4)
-	if(!borders)
-		to_chat(user, "<span class='warning'>The motors whir and fail!</span>")
-		return
-	build_barrier(0,2,2,3,1,1,3,4,user)
 /** The vars you'll see in the proc() are referred to a mob looking north; NEx NEy refers to the North East corner x and y,
 *all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis, i = internal, o = outline). This way of naming the vars
 *won't have much sense for the other directions, so always refer to the north direction when making changes as all other are already properly setup
 *This proc builds the barriers
 **/
-/obj/machinery/power/proto_sh_emitter/proc/build_barrier(SWxi,SWyi,NExi,NEyi,SWxo,SWyo,NExo,NExo,mob/user)
+/obj/machinery/power/proto_sh_emitter/proc/build_barrier(SWxi,SWyi,NExi,NEyi,SWxo,SWyo,NExo,NEyo,mob/user)
 	///Stores the outline of the room to generate
 	var/list/outline
 	///Stores the internal turfs of the room to generate
@@ -157,16 +149,16 @@
 		switch(dir) //this part check the direction of the machine and create the block in front of it
 			if(NORTH)
 				LAZYADD(internal, block(locate(x - SWxi, y + SWyi, z), locate(x + NExi, y + NEyi, z)))
-				LAZYADD(outline, block(locate(x - SWxo, y + SWyo, z), locate(x + NExo, y + NExo, z)) - internal)
+				LAZYADD(outline, block(locate(x - SWxo, y + SWyo, z), locate(x + NExo, y + NEyo, z)) - internal)
 			if(SOUTH)
 				LAZYADD(internal, block(locate(x - NExi, y - SWyi, z), locate(x + SWxi, y - NEyi, z)))
-				LAZYADD(outline, block(locate(x - NExo, y - SWyo, z), locate(x + SWxo, y - NExo, z)) - internal)
+				LAZYADD(outline, block(locate(x - NExo, y - SWyo, z), locate(x + SWxo, y - NEyo, z)) - internal)
 			if(EAST)
 				LAZYADD(internal, block(locate(x + SWyi, y - NExi, z), locate(x + NEyi, y + SWxi, z)))
-				LAZYADD(outline, block(locate(x + SWyo, y - NExo, z), locate(x + NExo, y + SWxo, z)) - internal)
+				LAZYADD(outline, block(locate(x + SWyo, y - NExo, z), locate(x + NEyo, y + SWxo, z)) - internal)
 			if(WEST)
 				LAZYADD(internal, block(locate(x - SWyi, y - SWxi, z), locate(x - NEyi, y + NExi, z)))
-				LAZYADD(outline, block(locate(x - SWyo, y - SWxo, z), locate(x - NExo, y + NExo, z)) - internal)
+				LAZYADD(outline, block(locate(x - SWyo, y - SWxo, z), locate(x - NEyo, y + NExo, z)) - internal)
 		for(var/turf in outline)
 			new /obj/machinery/holosign/barrier/power_shield/wall(turf, src)
 			LAZYREMOVE(outline, turf)
@@ -183,8 +175,7 @@
 		message_admins("[src] turned off at [ADMIN_VERBOSEJMP(EmitterTurf)] by [ADMIN_LOOKUPFLW(user)]")
 		log_game("[src] turned off at [AREACOORD(EmitterTurf)] by [key_name(user)]")
 		is_on = FALSE
-		for(var/h in signs)
-			qdel(h)
+		QDEL_LIST(signs)
 		update_icon_state()
 /** The vars you'll see in the proc() are referred to a mob looking north and they define a CORNER; NEx NEy refers to the North East CORNER x and y coordinates,
 *all the other vars works in a similar way (N = North, S = South, E = East, W = West x = x axis, y = y axis). This way of naming the vars
