@@ -9,22 +9,22 @@ import { Window } from '../layouts';
 const MAX_SEARCH_RESULTS = 25;
 
 export const Biogenerator = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { data } = useBackend(context);
   const {
     beaker,
     processing,
   } = data;
   return (
     <Window resizable>
+      {!!processing && (
+        <Dimmer fontSize="32px">
+          <Icon name="cog" spin={1} />
+          {' Processing...'}
+        </Dimmer>
+      )}
       <Window.Content scrollable>
         {!beaker && (
           <NoticeBox>No Container</NoticeBox>
-        )}
-        {!!processing && (
-          <Dimmer fontSize="32px">
-            <Icon name="cog" spin={1} />
-            {' Processing...'}
-          </Dimmer>
         )}
         {!!beaker && (
           <BiogeneratorContent />
@@ -37,9 +37,8 @@ export const Biogenerator = (props, context) => {
 export const BiogeneratorContent = (props, context) => {
   const { act, data } = useBackend(context);
   const {
-    beaker,
     biomass,
-    processing,
+    can_process,
     categories = [],
   } = data;
   const [
@@ -84,12 +83,11 @@ export const BiogeneratorContent = (props, context) => {
           <Button
             icon="eject"
             content="Eject"
-            disabled={!beaker || processing}
             onClick={() => act('detach')} />
           <Button
             icon="cog"
             content="Activate"
-            disabled={!beaker || processing}
+            disabled={!can_process}
             onClick={() => act('activate')} />
         </Fragment>
       )}>
@@ -162,26 +160,26 @@ const ItemList = (props, context) => {
           }} />
         {' '}<b>{item.name}</b>
       </Table.Cell>
-      <Table.Cell width="40px">
+      <Table.Cell collapsing>
         <NumberInput
           value={Math.round(item.amount)}
-          width="40px"
+          width="35px"
           minValue={1}
           maxValue={10}
           onChange={(e, value) => item.setAmount(value)} />
       </Table.Cell>
-      <Table.Cell width="50px">
+      <Table.Cell collapsing>
         <Button
           style={{
-            'min-width': '70px',
-            'text-align': 'center',
+            'text-align': 'right',
           }}
+          fluid
           content={item.cost * item.amount + ' ' + "BIO"}
           disabled={item.disabled}
           onmouseover={() => setHoveredItem(item)}
           onmouseout={() => setHoveredItem({})}
           onClick={() => act('create', {
-            create: item.id,
+            id: item.id,
             amount: item.amount,
           })} />
       </Table.Cell>

@@ -162,28 +162,34 @@
 	if(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK) && can_interact(user))
 		detach(user)
 
-/obj/machinery/biogenerator/proc/activate()
-	if (usr.stat != CONSCIOUS)
+/**
+  * activate: Activates biomass processing and converts all inserted grown products into biomass
+  *
+  * Arguments:
+  * * user The mob starting the biomass processing
+  */
+/obj/machinery/biogenerator/proc/activate(mob/user)
+	if(user.stat != CONSCIOUS)
 		return
-	if (src.machine_stat != NONE) //NOPOWER etc
+	if(machine_stat != NONE)
 		return
 	if(processing)
-		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
+		to_chat(user, "<span class='warning'>The biogenerator is in the process of working.</span>")
 		return
 	var/S = 0
 	for(var/obj/item/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
 		if(I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) < 0.1)
-			points += 1*productivity
+			points += 1 * productivity
 		else
-			points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)*10*productivity
+			points += I.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment) * 10 * productivity
 		qdel(I)
 	if(S)
 		processing = TRUE
 		update_icon()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, TRUE)
-		use_power(S*30)
-		sleep(S+15/productivity)
+		playsound(loc, 'sound/machines/blender.ogg', 50, TRUE)
+		use_power(S * 30)
+		sleep(S + 15 / productivity)
 		processing = FALSE
 		update_icon()
 
@@ -226,7 +232,7 @@
 		var/i = amount
 		while(i > 0)
 			if(!check_container_volume(D.make_reagents))
-				say("Warning: Container does not have enough capacity!")
+				say("Warning: Attached container does not have enough free capacity!")
 				return .
 			if(!check_cost(D.materials))
 				return .
@@ -271,6 +277,10 @@
 	data["beaker"] = beaker ? TRUE : FALSE
 	data["biomass"] = points
 	data["processing"] = processing
+	if(locate(/obj/item/reagent_containers/food/snacks/grown) in contents)
+		data["can_process"] = TRUE
+	else
+		data["can_process"] = FALSE
 	return data
 
 /obj/machinery/biogenerator/ui_static_data(mob/user)
@@ -307,7 +317,7 @@
 
 	switch(action)
 		if("activate")
-			activate()
+			activate(usr)
 			return TRUE
 		if("detach")
 			detach(usr)
@@ -317,7 +327,7 @@
 			amount = clamp(amount, 1, 10)
 			if(!amount)
 				return
-			var/id = params["create"]
+			var/id = params["id"]
 			if(!stored_research.researched_designs.Find(id))
 				stack_trace("ID did not map to a researched datum [id]")
 				return
