@@ -162,9 +162,13 @@
 		ui.open()
 
 //Insert our custom spritesheet css link into the html
-/obj/machinery/chem_master/ui_base_html(html)
+/obj/machinery/chem_master/ui_assets()
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+	return list(
+		"styles" = list(
+			assets.css_filename(),
+		),
+	)
 
 /obj/machinery/chem_master/ui_data(mob/user)
 	var/list/data = list()

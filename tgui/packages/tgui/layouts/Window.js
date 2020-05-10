@@ -23,8 +23,11 @@ const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
   componentDidMount() {
+    const { config, suspended } = useBackend(this.context);
+    if (suspended) {
+      return;
+    }
     logger.log('mounting');
-    const { config } = useBackend(this.context);
     const size = [
       this.props.width
         || config.window.size && config.window.size[0]
@@ -38,7 +41,7 @@ export class Window extends Component {
     callByond('winset', {
       id: window.__windowId__,
       titlebar: !config.fancy,
-      can_resize: !config.fancy,
+      'can-resize': !config.fancy,
     });
     refocusLayout();
   }

@@ -1,8 +1,9 @@
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../../backend';
-import { BlockQuote, Box, Button, ByondUi, Collapsible, Flex, Icon, Input, Knob, LabeledList, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../../components';
+import { BlockQuote, Box, Button, ByondUi, Collapsible, Flex, Icon, Input, Knob, LabeledList, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip, NoticeBox } from '../../components';
 import { DraggableControl } from '../../components/DraggableControl';
 import { Window } from '../../layouts';
+import { formatSiUnit } from '../../format';
 
 const COLORS_ARBITRARY = [
   'red',
@@ -68,6 +69,10 @@ const PAGES = [
     title: 'Themes',
     component: () => KitchenSinkThemes,
   },
+  {
+    title: 'Storage',
+    component: () => KitchenSinkStorage,
+  },
 ];
 
 export const KitchenSink = (props, context) => {
@@ -76,6 +81,8 @@ export const KitchenSink = (props, context) => {
   const PageComponent = PAGES[pageIndex].component();
   return (
     <Window
+      width={600}
+      height={500}
       theme={theme}
       resizable>
       <Window.Content scrollable>
@@ -453,5 +460,38 @@ const KitchenSinkThemes = (props, context) => {
         </LabeledList.Item>
       </LabeledList>
     </Box>
+  );
+};
+
+const KitchenSinkStorage = (props, context) => {
+  if (!window.localStorage) {
+    return (
+      <NoticeBox>
+        Local storage is not available.
+      </NoticeBox>
+    );
+  }
+  return (
+    <Section
+      title="Local Storage"
+      level={2}
+      buttons={(
+        <Button
+          icon="recycle"
+          onClick={() => {
+            localStorage.clear();
+          }}>
+          Clear
+        </Button>
+      )}>
+      <LabeledList>
+        <LabeledList.Item label="Keys in use">
+          {localStorage.length}
+        </LabeledList.Item>
+        <LabeledList.Item label="Remaining space">
+          {formatSiUnit(localStorage.remainingSpace, 0, 'B')}
+        </LabeledList.Item>
+      </LabeledList>
+    </Section>
   );
 };

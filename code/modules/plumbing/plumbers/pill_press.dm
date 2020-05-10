@@ -85,9 +85,13 @@
 			AM.forceMove(drop_location())
 
 
-/obj/machinery/plumbing/pill_press/ui_base_html(html)
+/obj/machinery/plumbing/pill_press/ui_assets()
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+	return list(
+		"styles" = list(
+			assets.css_filename(),
+		),
+	)
 
 /obj/machinery/plumbing/pill_press/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

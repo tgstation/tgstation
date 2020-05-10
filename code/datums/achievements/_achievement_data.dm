@@ -88,9 +88,13 @@
 	else if(istype(A, /datum/award/score))
 		data[achievement_type] = 0
 
-/datum/achievement_data/ui_base_html(html)
+/datum/achievement_data/ui_assets()
 	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+	return list(
+		"styles" = list(
+			assets.css_filename(),
+		),
+	)
 
 /datum/achievement_data/ui_state()
 	return GLOB.always_state

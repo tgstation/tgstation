@@ -88,17 +88,17 @@
  * public
  *
  * Called on an object when a tgui object is being created, allowing you to
- * customise the html
- * For example: inserting a custom stylesheet that you need in the head
+ * push various assets to tgui.
  *
- * For this purpose, some tags are available in the html, to be parsed out
- ^ with replacetext
- * (customheadhtml) - Additions to the head tag
+ * For example: inserting a custom stylesheet that you need.
  *
- * required html the html base text
+ * Must return an associative list in this format:
+ * list(
+ *     "styles" = list(...),
+ * )
  */
-/datum/proc/ui_base_html(html)
-	return html
+/datum/proc/ui_assets()
+	return list()
 
 /**
  * private

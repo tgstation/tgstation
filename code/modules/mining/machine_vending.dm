@@ -89,9 +89,13 @@
 	else
 		icon_state = "[initial(icon_state)]-off"
 
-/obj/machinery/mineral/equipment_vendor/ui_base_html(html)
+/obj/machinery/mineral/equipment_vendor/ui_assets()
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+	return list(
+		"styles" = list(
+			assets.css_filename(),
+		),
+	)
 
 /obj/machinery/mineral/equipment_vendor/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

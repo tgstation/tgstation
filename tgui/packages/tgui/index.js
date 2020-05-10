@@ -25,9 +25,9 @@ import './styles/themes/hackerman.scss';
 import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
 
-import { loadCSS } from 'fg-loadcss';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
+import { loadCSS } from './assets';
 import { backendUpdate, backendSuspend } from './backend';
 import { IS_IE8, callByond } from './byond';
 import { setupDrag } from './drag';
@@ -38,16 +38,16 @@ const enteredBundleAt = Date.now();
 const store = createStore();
 let reactRoot;
 let initialRender = true;
-let wasSuspended = false;
 
 const renderLayout = () => {
   // Mark the beginning of the render
   let startedAt;
+  let finishedAt;
   if (process.env.NODE_ENV !== 'production') {
     startedAt = Date.now();
   }
+  const state = store.getState();
   try {
-    const state = store.getState();
     // Initial render setup
     if (initialRender) {
       logger.log('initial render', state);
@@ -67,15 +67,18 @@ const renderLayout = () => {
     }
     render(element, reactRoot);
     if (state.suspended) {
-      wasSuspended = true;
       return;
     }
-    if (initialRender || wasSuspended) {
-      callByond('winset', {
-        id: window.__windowId__,
-        'is-visible': true,
+    if (initialRender) {
+      // We schedule for the next tick here because resizing and unhiding
+      // during the same tick will flash with a white background.
+      setImmediate(() => {
+        callByond('winset', {
+          id: window.__windowId__,
+          'is-visible': true,
+        });
+        logger.log('visible in', timeDiff(finishedAt, Date.now()));
       });
-      wasSuspended = false;
     }
   }
   catch (err) {
@@ -84,7 +87,7 @@ const renderLayout = () => {
   }
   // Report rendering time
   if (process.env.NODE_ENV !== 'production') {
-    const finishedAt = Date.now();
+    finishedAt = Date.now();
     if (initialRender === 'recycled') {
       logger.log('rendered in', timeDiff(startedAt, finishedAt));
     }
@@ -104,6 +107,8 @@ const renderLayout = () => {
   if (initialRender) {
     initialRender = false;
   }
+  // Load assets
+  state.assets?.styles?.forEach(filename => loadCSS(filename));
 };
 
 const timeDiff = (startedAt, finishedAt) => {
@@ -146,6 +151,7 @@ const setupApp = () => {
 
   // Subscribe for bankend updates
   window.update = stateJson => {
+    logger.log('update');
     const prevState = store.getState();
     // NOTE: stateJson can be an object only if called manually from console.
     // This is useful for debugging tgui in external browsers, like Chrome.
@@ -165,6 +171,10 @@ const setupApp = () => {
 
   window.suspend = () => {
     logger.log('suspending the window');
+    callByond('winset', {
+      id: window.__windowId__,
+      'is-visible': false,
+    });
     store.dispatch(backendSuspend());
   };
 

@@ -39,6 +39,9 @@ export const formatSiUnit = (
   minBase1000 = -SI_BASE_INDEX,
   unit = ''
 ) => {
+  if (typeof value !== 'number' || !Number.isFinite(value)) {
+    return value;
+  }
   const realBase10 = Math.floor(Math.log10(value));
   const base10 = Math.floor(Math.max(minBase1000 * 3, realBase10));
   const realBase1000 = Math.floor(realBase10 / 3);

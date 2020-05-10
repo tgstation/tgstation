@@ -23,7 +23,18 @@ const routingError = (type, name) => () => {
   );
 };
 
+const SuspendedWindow = () => {
+  return (
+    <Window resizable>
+      <Window.Content scrollable />
+    </Window>
+  );
+};
+
 export const getRoutedComponent = state => {
+  if (state.suspended) {
+    return SuspendedWindow;
+  }
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
     if (state.showKitchenSink) {

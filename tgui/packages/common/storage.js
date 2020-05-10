@@ -16,6 +16,9 @@ const createMock = () => {
   const set = (key, value) => {
     storage[key] = value;
   };
+  const remove = key => {
+    storage[key] = undefined;
+  };
   const clear = () => {
     // NOTE: On IE8, this will probably leak memory if used often.
     storage = {};
@@ -23,6 +26,7 @@ const createMock = () => {
   return {
     get,
     set,
+    remove,
     clear,
     engine: STORAGE_NONE,
   };
@@ -39,12 +43,16 @@ const createLocalStorage = () => {
   const set = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
   };
+  const remove = key => {
+    localStorage.removeItem(key);
+  };
   const clear = () => {
     localStorage.clear();
   };
   return {
     get,
     set,
+    remove,
     clear,
     engine: STORAGE_LOCAL_STORAGE,
   };

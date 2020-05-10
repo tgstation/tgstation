@@ -35,8 +35,6 @@
 	var/initialized = FALSE
 	/// The data (and datastructure) used to initialize the UI.
 	var/list/initial_data
-	/// The static data used to initialize the UI.
-	var/list/initial_static_data
 	/// Holder for the json string, that is sent during the initial update
 	var/_initial_update
 	/// The status/visibility of the UI.
@@ -105,34 +103,22 @@
 
 	var/list/free_windows = user.client.free_tgui_windows
 	var/has_free_window = !!length(free_windows)
+	// Use a recycled window
 	if(has_free_window)
-		// Use a recycled window
 		window_id = free_windows[length(free_windows)]
 		free_windows -= window_id
 		initialized = TRUE
+	// Create a new window
 	else
-		// Create a new window
 		// Build window options
 		var/window_options = "can_minimize=0;auto_format=0;"
-		// If we have a width and height, use them.
-		if(width && height)
-			window_options += "size=[width]x[height];"
-		// Remove titlebar and resize handles for a fancy window
-		if(user.client.prefs.tgui_fancy)
-			window_options += "titlebar=0;can_resize=0;"
-		else
-			window_options += "titlebar=1;can_resize=1;"
-
 		// Generate page html
 		var/html = SStgui.basehtml
-		// Allow the src object to override the html if needed
-		html = src_object.ui_base_html(html)
 		// Replace template tokens with important UI data
 		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
 		// be tagged, so this is an effective unwrap
 		html = replacetextEx(html, "\[tgui:ref]", "\ref[src]")
 		html = replacetextEx(html, "\[tgui:windowId]", window_id)
-
 		// Open the window.
 		user << browse(html, "window=[window_id];[window_options]")
 
@@ -145,10 +131,14 @@
 	// another thread
 	if(!initial_data)
 		initial_data = src_object.ui_data(user)
-	if(!initial_static_data)
-		initial_static_data = src_object.ui_static_data(user)
-	_initial_update = url_encode(get_json(initial_data, initial_static_data))
+	var/static_data = src_object.ui_static_data(user)
+	var/assets = src_object.ui_assets(user)
+	_initial_update = url_encode(get_json(
+		initial_data,
+		static_data,
+		assets))
 
+	// Send a full update to a recycled window
 	if(has_free_window)
 		user << output(_initial_update, "[window_id].browser:update")
 
@@ -163,13 +153,11 @@
  * optional template string The name of the new interface.
  * optional data list The new initial data.
  */
-/datum/tgui/proc/reinitialize(interface, list/data, list/static_data)
+/datum/tgui/proc/reinitialize(interface, list/data)
 	if(interface)
 		src.interface = interface
 	if(data)
 		initial_data = data
-	if(static_data)
-		initial_static_data = static_data
 	open()
 
 /**
@@ -185,8 +173,6 @@
 		// Destroy the window
 		user << browse(null, "window=[window_id]")
 	else
-		// Hide the window
-		winset(user.client, window_id, "is-visible=0")
 		user << output("", "[window_id].browser:suspend")
 		// Add the window id to the free windows stack
 		user.client.free_tgui_windows += window_id
@@ -217,7 +203,7 @@
  *
  * return string The packaged JSON.
  */
-/datum/tgui/proc/get_json(list/data, list/static_data)
+/datum/tgui/proc/get_json(list/data, list/static_data, list/assets)
 	var/list/json_data = list()
 
 	json_data["config"] = list(
@@ -241,6 +227,8 @@
 		json_data["data"] = data
 	if(!isnull(static_data))
 		json_data["static_data"] = static_data
+	if(!isnull(assets))
+		json_data["assets"] = assets
 
 	// Send shared states
 	if(src_object.tgui_shared_states)

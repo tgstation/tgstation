@@ -162,7 +162,10 @@ GLOBAL_LIST_EMPTY(asset_datums)
 			Insert("[prefix][prefix2][icon_state_name]", I, icon_state=icon_state_name, dir=direction)
 
 /datum/asset/spritesheet/proc/css_tag()
-	return {"<link rel="stylesheet" href="spritesheet_[name].css" />"}
+	return {"<link rel="stylesheet" href="[css_filename()]" />"}
+
+/datum/asset/spritesheet/proc/css_filename()
+	return "spritesheet_[name].css"
 
 /datum/asset/spritesheet/proc/icon_tag(sprite_name)
 	var/sprite = sprites[sprite_name]

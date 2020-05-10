@@ -676,9 +676,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 
 	return ..()
 
-/obj/machinery/vending/ui_base_html(html)
+/obj/machinery/vending/ui_assets()
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
+	return list(
+		"styles" = list(
+			assets.css_filename(),
+		),
+	)
 
 /obj/machinery/vending/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open, datum/tgui/master_ui = null)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)

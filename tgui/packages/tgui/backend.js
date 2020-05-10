@@ -26,6 +26,9 @@ export const backendSetSharedState = (key, nextState) => ({
 
 export const backendSuspend = () => ({
   type: 'backend/suspend',
+  payload: {
+    timestamp: Date.now(),
+  },
 });
 
 export const backendReducer = (state, action) => {
@@ -63,6 +66,7 @@ export const backendReducer = (state, action) => {
     return {
       ...state,
       config,
+      assets: payload.assets,
       data,
       shared,
       visible,
@@ -83,6 +87,7 @@ export const backendReducer = (state, action) => {
   }
 
   if (type === 'backend/suspend') {
+    const { timestamp } = payload;
     return {
       ...state,
       data: {},
@@ -91,9 +96,8 @@ export const backendReducer = (state, action) => {
         ...state.config,
         title: '',
         status: 1,
-        interface: '',
       },
-      suspended: true,
+      suspended: timestamp,
     };
   }
 

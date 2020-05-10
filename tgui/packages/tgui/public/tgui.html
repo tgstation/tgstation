@@ -124,6 +124,7 @@ window.__updateQueue__ = [];
 window.update = function (stateJson) {
   window.__updateQueue__.push(stateJson);
 };
+window.suspend = function () {};
 Byond.call('', {
   src: window.__ref__,
   action: 'tgui:initialize',

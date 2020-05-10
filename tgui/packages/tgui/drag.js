@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { vecAdd, vecInverse, vecMultiply } from 'common/vector';
+import { vecAdd, vecInverse, vecMultiply, vecScale } from 'common/vector';
 import { winget, winset } from './byond';
 import { createLogger } from './logging';
 import { storage } from 'common/storage';
@@ -45,28 +45,75 @@ export const setWindowSize = (id, vec) => {
   return winset(id, 'size', vec[0] + ',' + vec[1]);
 };
 
-export const storeWindowGeometry = key => {
+/**
+ * Moves an item to the top of the recents array, and keeps its length
+ * limited to the number in `limit` argument.
+ *
+ * Uses a strict equality check for comparisons.
+ *
+ * Returns new recents and an item which was trimmed.
+ */
+const touchRecents = (recents, touchedItem, limit = 50) => {
+  const nextRecents = [touchedItem];
+  let trimmedItem;
+  for (let i = 0; i < recents.length; i++) {
+    const item = recents[i];
+    if (item === touchedItem) {
+      continue;
+    }
+    if (nextRecents.length < limit) {
+      nextRecents.push(item);
+    }
+    else {
+      trimmedItem = item;
+    }
+  }
+  return [nextRecents, trimmedItem];
+};
+
+export const storeWindowGeometry = windowKey => {
   logger.log('storing geometry');
   const geometry = {
     pos: getWindowPosition(),
     size: getWindowSize(),
   };
-  storage.set(key, geometry);
+  storage.set(windowKey, geometry);
+  // Update the list of stored geometries
+  const [geometries, trimmedKey] = touchRecents(
+    storage.get('geometries') || [],
+    windowKey);
+  if (trimmedKey) {
+    storage.remove(trimmedKey);
+  }
+  storage.set('geometries', geometries);
 };
 
-export const recallWindowGeometry = async (key, defaults = {}) => {
-  const geometry = storage.get(key);
+export const recallWindowGeometry = async (windowKey, defaults = {}) => {
+  const geometry = storage.get(windowKey);
   if (geometry) {
     logger.log('recalled geometry:', geometry);
   }
   const pos = geometry?.pos || defaults.pos;
+  const size = defaults.size;
+  if (size) {
+    setWindowSize(windowId, size);
+  }
   if (pos) {
     await screenOffsetPromise;
     setWindowPosition(windowId, pos);
   }
-  const size = defaults.size;
-  if (size) {
-    setWindowSize(windowId, size);
+  // Position the window at the center of the screen.
+  else if (size) {
+    await screenOffsetPromise;
+    const areaAvailable = [
+      window.screen.availWidth - Math.abs(screenOffset[0]),
+      window.screen.availHeight - Math.abs(screenOffset[1]),
+    ];
+    const pos = vecAdd(
+      vecScale(areaAvailable, 0.5),
+      vecScale(size, -0.5),
+      vecScale(screenOffset, -1.0));
+    setWindowPosition(windowId, pos);
   }
 };
 
