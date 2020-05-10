@@ -59,35 +59,5 @@
 	if(!SSdiscord)
 		to_chat(src, "<span class='notice'>The server is still starting up. Please wait before attempting to link your account!</span>")
 		return
-
-	// check that tgs is alive and well
-	if(!SSdiscord.enabled)
-		to_chat(src, "<span class='warning'>This feature requires the server is running on the TGS toolkit.</span>")
-		return
-
-	// check that this is not an IDIOT mistaking us for an attack vector
-	if(SSdiscord.reverify_cache[usr.ckey] == TRUE)
-		to_chat(src, "<span class='warning'>Thou can only do this once a round, if you're stuck seek help.</span>")
-		return
-	SSdiscord.reverify_cache[usr.ckey] = TRUE
-
-	// check that account is linked with discord
-	var/stored_id = SSdiscord.lookup_id(usr.ckey)
-	if(!stored_id) // Account is not linked
-		to_chat(usr, "Link your discord account via the linkdiscord verb in the OOC tab first");
-		return
-
-	// check for living hours requirement
-	var/required_living_minutes = CONFIG_GET(number/required_living_hours) * 60
-	var/living_minutes = usr.client ? usr.client.get_exp_living(TRUE) : 0
-	if(required_living_minutes <= 0)
-		CRASH("The discord verification system is setup to require zero hours or less, this is likely a configuration bug")
-		
-	if(living_minutes < required_living_minutes)
-		to_chat(usr, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
-			+ "playtime in a round to verify. You have [living_minutes] minutes. Play more!</span>")
-		return
-
-	// honey its time for your role flattening
-	to_chat(usr, "<span class='notice'>Discord verified</span>")
-	SSdiscord.grant_role(stored_id)
+	//Do the work
+	SSdiscord.verify_client_in_discord(src)

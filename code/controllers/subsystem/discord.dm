@@ -104,8 +104,8 @@ SUBSYSTEM_DEF(discord)
 	qdel(query_get_discord_ckey)
 
 // Finalises link
-/datum/controller/subsystem/discord/proc/link_account(ckey)
-	var/datum/DBQuery/link_account = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET discord_id = '[sanitizeSQL(account_link_cache[ckey])]' WHERE ckey = '[sanitizeSQL(ckey)]'")
+/datum/controller/subsystem/discord/proc/link_account(ckey, discordid)
+	var/datum/DBQuery/link_account = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET discord_id = '[sanitizeSQL(discordid)]' WHERE ckey = '[sanitizeSQL(ckey)]'")
 	link_account.Execute()
 	qdel(link_account)
 	account_link_cache -= ckey
@@ -115,6 +115,40 @@ SUBSYSTEM_DEF(discord)
 	var/datum/DBQuery/unlink_account = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET discord_id = NULL WHERE ckey = '[sanitizeSQL(ckey)]'")
 	unlink_account.Execute()
 	qdel(unlink_account)
+
+/datum/controller/subsystem/discord/proc/verify_client_in_discord(var/client/client_verifying)
+	// Safety checks
+	if(!CONFIG_GET(flag/sql_enabled))
+		to_chat(client_verifying, "<span class='warning'>This feature requires the SQL backend to be running.</span>")
+		return
+	// check that tgs is alive and well
+	if(!enabled)
+		to_chat(client_verifying, "<span class='warning'>This feature requires the server is running on the TGS toolkit.</span>")
+		return
+
+	// check that this is not an IDIOT mistaking us for an attack vector
+	if(reverify_cache[client_verifying.ckey] == TRUE)
+		to_chat(client_verifying, "<span class='warning'>You can only verify for discord once a round, if you're stuck seek help.</span>")
+		return
+	reverify_cache[client_verifying.ckey] = TRUE
+
+	// check that account is linked with discord
+	var/stored_id = lookup_id(client_verifying.ckey)
+	if(!stored_id) // Account is not linked
+		to_chat(client_verifying, "Link your discord account via the linkdiscord verb in the OOC tab first");
+		return
+
+	// check for living hours requirement
+	var/required_living_minutes = CONFIG_GET(number/required_living_hours) * 60
+	var/living_minutes = client_verifying.get_exp_living(TRUE)
+	if(required_living_minutes > 0 && living_minutes < required_living_minutes)
+		to_chat(client_verifying, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
+			+ "playtime in a round to verify. You have [living_minutes] minutes. Play more!</span>")
+		return
+		
+	// honey its time for your role flattening
+	to_chat(client_verifying, "<span class='notice'>Discord verified</span>")
+	grant_role(stored_id)
 
 // Clean up a discord account mention
 /datum/controller/subsystem/discord/proc/id_clean(input)

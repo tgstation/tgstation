@@ -19,12 +19,19 @@
 	help_text = "Verifies your discord account and your BYOND account linkage"
 
 /datum/tgs_chat_command/verify/Run(datum/tgs_chat_user/sender, params)
-	var/lowerparams = replacetext(lowertext(params), " ", "") // Fuck spaces
+	var/ckey = replacetext(lowertext(params), " ", "") // Fuck spaces
 	var/discordid = SSdiscord.id_clean(sender.mention)
-	if(SSdiscord.account_link_cache[lowerparams]) // First if they are in the list, then if the ckey matches
-		if(SSdiscord.account_link_cache[lowerparams] == discordid) // If the associated ID is the correct one
+	if(SSdiscord.account_link_cache[ckey]) // First if they are in the list, then if the ckey matches
+		if(SSdiscord.account_link_cache[ckey] == discordid) // If the associated ID is the correct one
 			// Link the account in the DB table
-			SSdiscord.link_account(lowerparams)
+			SSdiscord.link_account(ckey, discordid)
+			//Try to find the client online (we assume this is possible)
+			var/verifying_client = GLOB.directory[ckey]
+			if(verifying_client)
+				//We want to unset the cache in case they pushed the verify in discord verb first
+				SSdiscord.reverify_cache[ckey] = FALSE;
+				//Also dole out the verified role in discord if they're eligible
+				SSdiscord.verify_client_in_discord(verifying_client);
 			return "Successfully linked accounts"
 		else
 			return "That ckey is not associated to this discord account. If someone has used your ID, please inform an administrator"
