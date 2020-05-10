@@ -857,7 +857,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 /obj/item/slimecross/warping/gold
 	colour = "gold"
 	runepath = /obj/effect/warped_rune/goldspace
-	effect_desc = "Draws a rune that will add any hostile creatures on it to the rune's personal army. The next person to walk on the rune will be attacked by the rune's army."
+	effect_desc = "Draws a rune that will add any hostile creatures on it to the rune's personal army and boost up the creature's speed. The next person to walk on the rune will be attacked by the rune's army."
 
 
 /obj/effect/warped_rune/goldspace
@@ -901,6 +901,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 
 	for(var/mob_type in mob_list)
 		var/mob/living/simple_animal/hostile/spawned_mob = new mob_type(rune_turf)
+		spawned_mob.move_to_delay = 1 //make them much faster to make them even more lethal. 1 is slightly slower than bees
 		spawned_mob.GiveTarget(crossing)//Because they are given a target from the get go they will react much faster after spawn than usual.
 		LAZYREMOVE(mob_list, mob_type)
 		cooldown = world.time + max_cooldown //you can't instantly reuse the rune to send the mobs back into the rune.
