@@ -1339,9 +1339,9 @@
 	L.Jitter(0)
 
 // handled in cut wounds process
-/datum/reagent/medicine/coagulent
+/datum/reagent/medicine/coagulant
 	name = "Sanguirite"
-	description = "A coagulent used to help open cuts clot faster."
+	description = "A coagulant used to help open cuts clot faster."
 	reagent_state = LIQUID
 	color = "#bb2424"
 	metabolization_rate = 0.25 * REAGENTS_METABOLISM

@@ -112,13 +112,13 @@
   * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
   */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null)
-	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones))
+	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner))
 		qdel(src)
 		return
 
 	if(ishuman(L.owner))
 		var/mob/living/carbon/human/H = L.owner
-		if(organic_only && (NOBLOOD in H.dna.species.species_traits))
+		if(organic_only && ((NOBLOOD in H.dna.species.species_traits) || !L.is_organic_limb()))
 			qdel(src)
 			return
 
@@ -282,6 +282,9 @@
 	cryo_progress += power
 	if(cryo_progress > 33 * severity)
 		qdel(src)
+
+/datum/wound/proc/crush()
+	return
 
 /**
   * get_examine_description() is used in carbon/examine and human/examine to show the status of this wound. Useful if you need to show some status like the wound being splinted or bandaged.

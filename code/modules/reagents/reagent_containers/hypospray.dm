@@ -102,12 +102,12 @@
 	inhand_icon_state = "medipen"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	amount_per_transfer_from_this = 13
-	volume = 13
+	amount_per_transfer_from_this = 15
+	volume = 15
 	ignore_flags = 1 //so you can medipen through hardsuits
 	reagent_flags = DRAWABLE
 	flags_1 = null
-	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulent = 1)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 10, /datum/reagent/toxin/formaldehyde = 3, /datum/reagent/medicine/coagulant = 2)
 	custom_price = 150
 	custom_premium_price = 300
 
@@ -256,7 +256,7 @@
 
 /obj/item/reagent_containers/hypospray/medipen/ekit
 	name = "emergency first-aid autoinjector"
-	desc = "An epinephrine medipen with trace amounts of coagulents and antibiotics to help stabilize bad cuts and burns."
+	desc = "An epinephrine medipen with trace amounts of coagulants and antibiotics to help stabilize bad cuts and burns."
 	volume = 15
 	amount_per_transfer_from_this = 15
-	list_reagents = list(/datum/reagent/medicine/epinephrine = 13, /datum/reagent/medicine/coagulent = 1.5, /datum/reagent/medicine/spaceacillin = 0.5)
+	list_reagents = list(/datum/reagent/medicine/epinephrine = 12, /datum/reagent/medicine/coagulant = 2.5, /datum/reagent/medicine/spaceacillin = 0.5)

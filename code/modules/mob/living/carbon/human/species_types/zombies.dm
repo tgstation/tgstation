@@ -63,6 +63,10 @@
 			heal_amt *= 2
 		C.heal_overall_damage(heal_amt,heal_amt)
 		C.adjustToxLoss(-heal_amt)
+		for(var/i in C.all_wounds)
+			var/datum/wound/W = i
+			if(prob(4-W.severity))
+				W.remove_wound()
 	if(!C.InCritical() && prob(4))
 		playsound(C, pick(spooks), 50, TRUE, 10)
 

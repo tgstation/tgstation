@@ -9,7 +9,7 @@
 	processes = TRUE
 	sound_effect = 'sound/effects/sizzle1.ogg'
 
-	treatable_by = list(/obj/item/stack/medical/gauze, /obj/item/stack/medical/ointment) // sterilizer and alcohol will require reagent treatments, coming soon
+	treatable_by = list(/obj/item/stack/medical/gauze, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh) // sterilizer and alcohol will require reagent treatments, coming soon
 
 		// Flesh damage vars
 	/// How much damage to our flesh we currently have. Once both this and mortification reach 0, the wound is considered healed

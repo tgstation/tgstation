@@ -188,9 +188,9 @@
 	new /obj/item/pinpointer/crew/prox(src)
 	new /obj/item/stack/medical/gauze/eight(src)
 	new /obj/item/reagent_containers/syringe(src)
-	new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
+	new /obj/item/stack/medical/bone_gel(src)
+	new /obj/item/stack/sticky_tape/surgical(src)
 	new /obj/item/reagent_containers/glass/bottle/calomel(src)
-	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
 	update_icon()
 
 /obj/item/storage/belt/security

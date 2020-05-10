@@ -37,6 +37,9 @@
 		for(var/i in C.all_wounds)
 			var/datum/wound/W = i
 			W.remove_wound()
+		for(var/i in C.all_scars)
+			var/datum/scar/S = i
+			qdel(S)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.restore_blood()

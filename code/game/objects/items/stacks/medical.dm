@@ -127,7 +127,7 @@
 	custom_price = 100
 	absorption_rate = 0.25
 	absorption_capacity = 5
-	splint_factor = 0.25
+	splint_factor = 0.35
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
 /obj/item/stack/medical/gauze/try_heal(mob/living/M, mob/user, silent)
@@ -362,7 +362,7 @@
 /obj/item/stack/medical/bone_gel
 	name = "bone gel"
 	singular_name = "bone gel"
-	desc = "A potent medical gel that, when applied to a damaged bone in a surgery setting, triggers an intense melding reaction to repair the wound. Like plastic glue, but for people instead! Ineffective outside of surgery."
+	desc = "A potent medical gel that, when applied to a damaged bone in a proper surgical setting, triggers an intense melding reaction to repair the wound. Can be directly applied alongside surgical sticky tape to a broken bone in dire circumstances, though this is very harmful to the patient."
 
 	icon = 'icons/obj/surgery.dmi'
 	item_state = ""
@@ -370,12 +370,13 @@
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 
+	amount = 4
 	self_delay = 20
 	grind_results = list(/datum/reagent/medicine/C2/libital = 10)
 	novariants = TRUE
 
-/obj/item/stack/medical/bone_gel/try_heal(mob/living/M, mob/user, silent)
-	to_chat(user, "<span class='notice'>[src] requires a surgical setting to use!</span>")
+/obj/item/stack/medical/bone_gel/attack(mob/living/M, mob/user)
+	to_chat(user, "<span class='warning'>Bone gel can only be used on fractured limbs!</span>")
 	return
 
 /obj/item/stack/medical/bone_gel/suicide_act(mob/user)

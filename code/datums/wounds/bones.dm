@@ -14,6 +14,13 @@
 	/// The item we're currently splinted with, if there is one
 	var/obj/item/stack/splinted
 
+	/// Have we been taped?
+	var/taped
+	/// Have we been bone gel'd?
+	var/gelled
+	/// If we did the gel + surgical tape healing method for fractures, this is when we finish regenning
+	var/time_regenned
+
 /*
 	Overwriting of base procs
 */
@@ -39,6 +46,24 @@
 	if(victim)
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
+
+/datum/wound/brute/bone/handle_process()
+	. = ..()
+	if(!time_regenned)
+		processes = FALSE
+		return
+
+	if(prob(severity * 2))
+		victim.take_bodypart_damage(rand(2, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
+		if(prob(33))
+			to_chat(victim, "<span class='danger'>You feel a sharp pain in your body as your bones are reforming!</span>")
+
+	if(world.time > time_regenned)
+		if(!victim || !limb)
+			qdel(src)
+			return
+		to_chat(victim, "<span class='green'>Your [limb.name] has recovered from your fracture!</span>")
+		remove_wound()
 
 // note this is only for humans since they alone have COMSIG_HUMAN_EARLY_UNARMED_ATTACK (obviously)
 /datum/wound/brute/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
@@ -73,21 +98,34 @@
 
 
 /datum/wound/brute/bone/get_examine_description(mob/user)
-	if(!splinted)
+	if(!splinted && !gelled && !taped)
 		return ..()
 
-	var/splint_condition = ""
-	// how much life we have left in these bandages
-	switch(splinted.obj_integrity / splinted.max_integrity * 100)
-		if(0 to 25)
-			splint_condition = "just barely "
-		if(25 to 50)
-			splint_condition = "loosely "
-		if(50 to 75)
-			splint_condition = "mostly "
-		if(75 to INFINITY)
-			splint_condition = "tightly "
-	return "<B>[victim.p_their(TRUE)] [limb.name] is [splint_condition] fastened in a splint of [splinted.name]!</B>"
+	var/msg = ""
+	if(!splinted)
+		msg = "<B>[victim.p_their(TRUE)] [limb.name] [examine_desc]"
+	else
+		var/splint_condition = ""
+		// how much life we have left in these bandages
+		switch(splinted.obj_integrity / splinted.max_integrity * 100)
+			if(0 to 25)
+				splint_condition = "just barely "
+			if(25 to 50)
+				splint_condition = "loosely "
+			if(50 to 75)
+				splint_condition = "mostly "
+			if(75 to INFINITY)
+				splint_condition = "tightly "
+
+		msg = "<B>[victim.p_their(TRUE)] [limb.name] is [splint_condition] fastened in a splint of [splinted.name]</B>"
+
+	if(taped)
+		msg += ", <span class='notice'>and appears to be reforming itself under some surgical tape!</span>"
+	else if(gelled)
+		msg += ", <span class='notice'>with fizzing flecks of blue bone gel sparking off the bone!</span>"
+	else
+		msg +=  "!"
+	return "[msg]</B>"
 
 /*
 	New common procs for /datum/wound/brute/bone/
@@ -155,6 +193,11 @@
 	treatable_tool = TOOL_BONESET
 	status_effect_type = /datum/status_effect/wound/bone/moderate
 	scarring_descriptions = list("light discoloring", "a slight blue tint")
+
+/datum/wound/brute/bone/moderate/crush()
+	if(prob(33))
+		victim.visible_message("<span class='danger'>[victim]'s dislocated [limb.name] pops back into place!</span>", "<span class='userdanger'>Your dislocated [limb.name] pops back into place! Ow!</span>")
+		remove_wound()
 
 /datum/wound/brute/bone/moderate/try_handling(mob/living/carbon/human/user)
 	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
@@ -253,7 +296,7 @@
 	limp_slowdown = 6
 	threshold_minimum = 60
 	threshold_penalty = 30
-	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
+	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/gauze, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/bone/severe
 	treat_priority = TRUE
 	scarring_descriptions = list("a faded, fist-sized bruise", "a vaguely triangular peel scar")
@@ -272,11 +315,66 @@
 	threshold_minimum = 115
 	threshold_penalty = 50
 	disabling = TRUE
-	treatable_by = list(/obj/item/stack/sticky_tape, /obj/item/stack/medical/gauze)
+	treatable_by = list(/obj/item/stack/sticky_tape/surgical, /obj/item/stack/medical/gauze, /obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/bone/critical
 	treat_priority = TRUE
 	scarring_descriptions = list("a section of janky skin lines and badly healed scars", "a large patch of uneven skin tone", "a cluster of calluses")
 
+/datum/wound/brute/bone/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
+	if(gelled)
+		to_chat(user, "<span class='warning'>[user == victim ? "Your" : "[victim]'s"] [limb.name] is already coated with bone gel!</span>")
+		return
+
+	user.visible_message("<span class='danger'>[user] begins applying [I] to [victim]'s' [limb.name]...</span>", "<span class='warning'>You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
+
+	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
+		return
+
+	I.use(1)
+	victim.emote("scream")
+	if(user != victim)
+		user.visible_message("<span class='notice'>[user] finishes applying [I] to [victim]'s [limb.name], emitting a fizzing noise!</span>", "<span class='notice'>You finish applying [I] to [victim]'s [limb.name]!</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[user] finishes applying [I] to your [limb.name], and you can feel the bones exploding with pain as they begin melting and reforming!</span>")
+	else
+		if(prob(25 + (20 * severity - 2))) // 25%/45% chance to fail self-applying with severe and critical wounds
+			victim.visible_message("<span class='danger'>[victim] fails to finish applying [I] to [victim.p_their()] [limb.name], passing out from the pain!</span>", "<span class='notice'>You black out from the pain of applying [I] to your [limb.name] before you can finish!</span>")
+			victim.AdjustUnconscious(5 SECONDS)
+			return
+		victim.visible_message("<span class='notice'>[victim] finishes applying [I] to [victim.p_their()] [limb.name], grimacing from the pain!</span>", "<span class='notice'>You finish applying [I] to your [limb.name], and your bones explode in pain!</span>")
+
+	limb.receive_damage(100, wound_bonus=CANT_WOUND)
+	if(!gelled)
+		gelled = TRUE
+
+/datum/wound/brute/bone/proc/tape(obj/item/stack/sticky_tape/surgical/I, mob/user)
+	if(!gelled)
+		to_chat(user, "<span class='warning'>[user == victim ? "Your" : "[victim]'s"] [limb.name] must be coated with bone gel to perform this emergency operation!</span>")
+		return
+	if(taped)
+		to_chat(user, "<span class='warning'>[user == victim ? "Your" : "[victim]'s"] [limb.name] is already wrapped in [I.name] and reforming!</span>")
+		return
+
+	user.visible_message("<span class='danger'>[user] begins applying [I] to [victim]'s' [limb.name]...</span>", "<span class='warning'>You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
+
+	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
+		return
+
+	var/reform_delay = 30 SECONDS * (user == victim ? 1.5 : 1) * (severity - 1)
+	I.use(1)
+	if(user != victim)
+		user.visible_message("<span class='notice'>[user] finishes applying [I] to [victim]'s [limb.name], emitting a fizzing noise!</span>", "<span class='notice'>You finish applying [I] to [victim]'s [limb.name]!</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='green'>[user] finishes applying [I] to your [limb.name], you immediately begin to feel your bones start to reform!</span>")
+	else
+		victim.visible_message("<span class='notice'>[victim] finishes applying [I] to [victim.p_their()] [limb.name], !</span>", "<span class='green'>You finish applying [I] to your [limb.name], and you immediately begin to feel your bones start to reform!</span>")
+
+	taped = TRUE
+	processes = TRUE
+	time_regenned = world.time + reform_delay
+
 /datum/wound/brute/bone/treat(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack))
+	if(istype(I, /obj/item/stack/medical/bone_gel))
+		gel(I, user)
+	if(istype(I, /obj/item/stack/sticky_tape/surgical))
+		tape(I, user)
+	if(istype(I, /obj/item/stack/medical/gauze))
 		splint(I, user)

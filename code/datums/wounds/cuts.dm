@@ -80,7 +80,7 @@
 		blood_flow += 0.05 * wounding_dmg
 
 /datum/wound/brute/cut/handle_process()
-	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulent))
+	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
 		blood_flow -= 0.25
 	if(current_bandage)
 		if(clot_rate > 0)
@@ -197,7 +197,7 @@
 	examine_desc = "has an open cut"
 	occur_text = "is cut open, slowly leaking blood"
 	severity = WOUND_SEVERITY_MODERATE
-	initial_flow = 2.5
+	initial_flow = 2
 	minimum_flow = 0.5
 	max_per_type = 3
 	clot_rate = 0.15
@@ -213,9 +213,9 @@
 	examine_desc = "has a severe cut"
 	occur_text = "is ripped open, veins spurting blood"
 	severity = WOUND_SEVERITY_SEVERE
-	initial_flow = 3.75
-	minimum_flow = 3
-	clot_rate = 0.05
+	initial_flow = 3.25
+	minimum_flow = 2.75
+	clot_rate = 0.07
 	max_per_type = 4
 	threshold_minimum = 50
 	threshold_penalty = 25
@@ -230,8 +230,8 @@
 	examine_desc = "is spurting blood at an alarming rate"
 	occur_text = "is torn open, spraying blood wildly"
 	severity = WOUND_SEVERITY_CRITICAL
-	initial_flow = 5
-	minimum_flow = 4.5
+	initial_flow = 4.25
+	minimum_flow = 4
 	clot_rate = -0.05 // critical cuts actively get worse instead of better
 	max_per_type = 5
 	threshold_minimum = 80

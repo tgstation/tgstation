@@ -73,7 +73,7 @@
 /obj/item/stack/sticky_tape/surgical
 	name = "surgical tape"
 	singular_name = "surgical tape"
-	desc = "Made for patching broken bones back together and acting as makeshift gauze/splints, not for playing pranks."
+	desc = "Made for patching broken bones back together alongside bone gel, not for playing pranks."
 	//icon_state = "tape_spikes"
 	prefix = "surgical"
 	conferred_embed = list("embed_chance" = 30, "pain_mult" = 0, "jostle_pain_mult" = 0, "ignore_throwspeed_threshold" = TRUE)

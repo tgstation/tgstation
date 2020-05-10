@@ -32,7 +32,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen = 1)
 	generate_items_inside(items_inside,src)
@@ -121,7 +121,7 @@
 		return
 	var/static/items_inside = list(
 		/obj/item/stack/medical/gauze = 1,
-		/obj/item/stack/medical/suture/medicated = 2,
+		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/mesh = 2,
 		/obj/item/reagent_containers/hypospray/medipen/ekit = 1,
 		/obj/item/surgical_drapes = 1,

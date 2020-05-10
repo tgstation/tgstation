@@ -257,6 +257,9 @@
 		for(var/i in C.all_wounds)
 			var/datum/wound/W = i
 			W.remove_wound()
+		for(var/i in C.all_scars)
+			var/datum/scar/S = i
+			qdel(S)
 
 /obj/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"
