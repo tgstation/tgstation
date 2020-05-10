@@ -51,14 +51,14 @@
 ///changing input ammount with a window
 /obj/machinery/plumbing/bottler/interact(mob/user)
 	. = ..()
-	var/vol = max(1, min(100, round(input(user,"maximum is 100u","set ammount to fill with") as num|null, 1)))
+	var/vol = clamp(round(input(user,"maximum is 100u","set ammount to fill with") as num|null, 1), 1, 100)
 	reagents.clear_reagents()
 	wanted_amount = vol
 	to_chat(user, "<span class='notice'> The [src] will now fill for [wanted_amount]u.</span>")
 
 /obj/machinery/plumbing/bottler/process()
 	if(machine_stat & NOPOWER)
-		return FALSE
+		return
 	///see if machine has enough to fill
 	if(reagents.total_volume >= wanted_amount && anchored)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
@@ -68,15 +68,14 @@
 			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
 				reagents.trans_to(B, wanted_amount, transfered_by = src)
 				B.forceMove(goodspot)
-				return FALSE
+				return
 			///glass was full so we move it away
 			AM.forceMove(badspot)
-			return FALSE
+			return
 		if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
 			reagents.trans_to(AM, wanted_amount, transfered_by = src, method = INJECT)
-			return FALSE
+			return
 		if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
 			reagents.trans_to(AM, wanted_amount, transfered_by = src, method = INJECT)
-			return TRUE
-	..()
+			return
