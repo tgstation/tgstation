@@ -1,54 +1,56 @@
 import { Fragment } from 'inferno';
-import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, Tabs, LabeledList } from '../components';
+import { useBackend, useSharedState } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
+import { Window } from '../layouts';
 
-export const RoboticsControlConsole = props => {
-  const { state } = props;
-  const { act, data } = useBackend(props);
+export const RoboticsControlConsole = (props, context) => {
+  const { act, data } = useBackend(context);
+  const [tab, setTab] = useSharedState(context, 'tab', 1);
   const {
     can_hack,
     cyborgs = [],
     drones = [],
   } = data;
-
   return (
-    <Tabs>
-      <Tabs.Tab
-        key="cyborgs"
-        label={"Cyborgs " + `(${cyborgs.length})`}
-        icon="list"
-        lineHeight="23px">
-        {() => (
-          <Cyborgs state={state} cyborgs={cyborgs} can_hack={can_hack} />
+    <Window resizable>
+      <Window.Content scrollable>
+        <Tabs>
+          <Tabs.Tab
+            icon="list"
+            lineHeight="23px"
+            selected={tab === 1}
+            onClick={() => setTab(1)}>
+            Cyborgs ({cyborgs.length})
+          </Tabs.Tab>
+          <Tabs.Tab
+            icon="list"
+            lineHeight="23px"
+            selected={tab === 2}
+            onClick={() => setTab(2)}>
+            Drones ({drones.length})
+          </Tabs.Tab>
+        </Tabs>
+        {tab === 1 && (
+          <Cyborgs cyborgs={cyborgs} can_hack={can_hack} />
         )}
-      </Tabs.Tab>
-      <Tabs.Tab
-        key="drones"
-        label={"Drones " + `(${drones.length})`}
-        icon="list"
-        lineHeight="23px">
-        {() => (
-          <Drones state={state} drones={drones} />
+        {tab === 2 && (
+          <Drones drones={drones} />
         )}
-      </Tabs.Tab>
-    </Tabs>
+      </Window.Content>
+    </Window>
   );
 };
 
-const Cyborgs = props => {
-  const { state, cyborgs, can_hack } = props;
-  const { act, data } = useBackend(props);
-
+const Cyborgs = (props, context) => {
+  const { cyborgs, can_hack } = props;
+  const { act, data } = useBackend(context);
   if (!cyborgs.length) {
     return (
-      <Section>
-        <NoticeBox textAlign="center">
-          No cyborg units detected within access parameters
-        </NoticeBox>
-      </Section>
+      <NoticeBox>
+        No cyborg units detected within access parameters
+      </NoticeBox>
     );
   }
-
   return cyborgs.map(cyborg => {
     return (
       <Section
@@ -120,17 +122,15 @@ const Cyborgs = props => {
   });
 };
 
-const Drones = props => {
-  const { state, drones } = props;
-  const { act, data } = useBackend(props);
+const Drones = (props, context) => {
+  const { drones } = props;
+  const { act } = useBackend(context);
 
   if (!drones.length) {
     return (
-      <Section>
-        <NoticeBox textAlign="center">
-          No drone units detected within access parameters
-        </NoticeBox>
-      </Section>
+      <NoticeBox>
+        No drone units detected within access parameters
+      </NoticeBox>
     );
   }
 

@@ -335,16 +335,12 @@
 		if(SOUTH)
 			animate(M, pixel_x = 0, pixel_y = -offset, 3)
 		if(EAST)
-			if(M.lying == 270) //update the dragged dude's direction if we've turned
-				M.lying = 90
-				M.update_transform() //force a transformation update, otherwise it'll take a few ticks for update_mobility() to do so
-				M.lying_prev = M.lying
+			if(M.lying_angle == 270) //update the dragged dude's direction if we've turned
+				M.set_lying_angle(90)
 			animate(M, pixel_x = offset, pixel_y = 0, 3)
 		if(WEST)
-			if(M.lying == 90)
-				M.lying = 270
-				M.update_transform()
-				M.lying_prev = M.lying
+			if(M.lying_angle == 90)
+				M.set_lying_angle(270)
 			animate(M, pixel_x = -offset, pixel_y = 0, 3)
 
 /mob/living/proc/reset_pull_offsets(mob/living/M, override)
@@ -396,8 +392,8 @@
 			to_chat(src, "<span class='notice'>You have given up life and succumbed to death.</span>")
 		death()
 
-/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, check_immobilized = FALSE, ignore_stasis = FALSE)
-	if(stat || IsUnconscious() || IsStun() || IsParalyzed() || (check_immobilized && IsImmobilized()) || (!ignore_restraints && restrained(ignore_grab)) || (!ignore_stasis && IS_IN_STASIS(src)))
+/mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_stasis = FALSE)
+	if(stat || HAS_TRAIT(src, TRAIT_INCAPACITATED) || (!ignore_restraints && restrained(ignore_grab)) || (!ignore_stasis && IS_IN_STASIS(src)))
 		return TRUE
 
 /mob/living/canUseStorage()
@@ -543,15 +539,15 @@
 				O.applyOrganDamage(excess_healing*-1)//1 excess = 5 organ damage healed
 
 		adjustOxyLoss(-20, TRUE)
-		adjustToxLoss(-20, TRUE) //slime friendly
+		adjustToxLoss(-20, TRUE, TRUE) //slime friendly
 		updatehealth()
 		grab_ghost()
 	SEND_SIGNAL(src, COMSIG_LIVING_REVIVE, full_heal, admin_revive)
 	if(full_heal)
 		fully_heal(admin_revive = admin_revive)
 	if(stat == DEAD && can_be_revived()) //in some cases you can't revive (e.g. no brain)
-		GLOB.dead_mob_list -= src
-		GLOB.alive_mob_list += src
+		remove_from_dead_mob_list()
+		add_to_alive_mob_list()
 		set_suicide(FALSE)
 		set_stat(UNCONSCIOUS) //the mob starts unconscious,
 		updatehealth() //then we check if the mob should wake up.
@@ -629,13 +625,8 @@
 	return
 
 /mob/living/Move(atom/newloc, direct)
-	if(lying)
-		if(direct & EAST)
-			lying = 90
-		if(direct & WEST)
-			lying = 270
-		update_transform()
-		lying_prev = lying
+	if(lying_angle != 0)
+		lying_angle_on_movement(direct)
 	if (buckled && buckled.loc != newloc) //not updating position
 		if (!buckled.anchored)
 			return buckled.Move(newloc, direct)
@@ -662,6 +653,16 @@
 
 	if(!(mobility_flags & MOBILITY_STAND) && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
+
+///Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.
+/mob/living/proc/lying_angle_on_movement(direct)
+	if(direct & EAST)
+		set_lying_angle(90)
+	else if(direct & WEST)
+		set_lying_angle(270)
+
+/mob/living/carbon/alien/humanoid/lying_angle_on_movement(direct)
+	return
 
 /mob/living/proc/makeTrail(turf/target_turf, turf/start, direction)
 	if(!has_gravity())
@@ -838,7 +839,7 @@
 		animate(src, pixel_y = pixel_y - 2, time = 10, loop = -1)
 		setMovetype(movement_type | FLOATING)
 	else if(((!on || fixed) && (movement_type & FLOATING)))
-		animate(src, pixel_y = get_standard_pixel_y_offset(lying), time = 10)
+		animate(src, pixel_y = get_standard_pixel_y_offset(lying_angle), time = 10)
 		setMovetype(movement_type & ~FLOATING)
 
 // The src mob is trying to strip an item from someone
@@ -1027,7 +1028,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	stop_pulling()
 	. = ..()
 
@@ -1179,23 +1180,23 @@
 	var/canstand_involuntary = conscious && !stat_softcrit && !knockdown && !chokehold && !paralyzed && (ignore_legs || has_legs) && !(buckled && buckled.buckle_lying)
 	var/canstand = canstand_involuntary && !resting
 
-	var/should_be_lying = !canstand
-	if(buckled)
-		if(buckled.buckle_lying != -1)
-			should_be_lying = buckled.buckle_lying
-
-	if(should_be_lying)
+	if(buckled && buckled.buckle_lying != -1)
+		if(buckled.buckle_lying != 0)
+			mobility_flags &= ~MOBILITY_STAND
+		else
+			mobility_flags |= MOBILITY_STAND
+		set_lying_angle(buckled.buckle_lying)
+	else if(!canstand)
 		mobility_flags &= ~MOBILITY_STAND
-		if(buckled)
-			if(buckled.buckle_lying != -1)
-				lying = buckled.buckle_lying
-		if(!lying) //force them on the ground
-			lying = pick(90, 270)
+		if(lying_angle == 0) //force them on the ground
+			set_lying_angle(pick(90, 270))
+			if(!canstand_involuntary)
+				on_fall()
 	else
 		mobility_flags |= MOBILITY_STAND
-		lying = 0
+		set_lying_angle(0)
 
-	if(should_be_lying || restrained || incapacitated())
+	if(lying_angle != 0 || restrained || incapacitated())
 		mobility_flags &= ~(MOBILITY_UI|MOBILITY_PULL)
 	else
 		mobility_flags |= MOBILITY_UI|MOBILITY_PULL
@@ -1214,17 +1215,6 @@
 			stop_pulling()
 	if(!(mobility_flags & MOBILITY_UI))
 		unset_machine()
-	density = !lying
-	if(lying)
-		if(!lying_prev)
-			fall(!canstand_involuntary)
-		if(layer == initial(layer)) //to avoid special cases like hiding larvas.
-			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-	else
-		if(layer == LYING_MOB_LAYER)
-			layer = initial(layer)
-	update_transform()
-	lying_prev = lying
 
 	// Movespeed mods based on arms/legs quantity
 	if(!get_leg_ignore())
@@ -1239,9 +1229,9 @@
 		else
 			remove_movespeed_modifier(/datum/movespeed_modifier/limbless)
 
-/mob/living/proc/fall(forced)
-	if(!(mobility_flags & MOBILITY_USE))
-		drop_all_held_items()
+///Called when mob changes from a standing position into a prone while lacking the ability to stand up at the moment, through update_mobility()
+/mob/living/proc/on_fall()
+	return
 
 /mob/living/proc/AddAbility(obj/effect/proc_holder/A)
 	abilities.Add(A)
@@ -1371,11 +1361,11 @@
 				return FALSE
 		if("stat")
 			if((stat == DEAD) && (var_value < DEAD))//Bringing the dead back to life
-				GLOB.dead_mob_list -= src
-				GLOB.alive_mob_list += src
+				remove_from_dead_mob_list()
+				add_to_alive_mob_list()
 			if((stat < DEAD) && (var_value == DEAD))//Kill he
-				GLOB.alive_mob_list -= src
-				GLOB.dead_mob_list += src
+				remove_from_alive_mob_list()
+				add_to_dead_mob_list()
 	. = ..()
 	switch(var_name)
 		if("knockdown")
@@ -1430,6 +1420,34 @@
 		CRASH(ERROR_ERROR_LANDMARK_ERROR)
 
 /**
+  * Changes the inclination angle of a mob, used by humans and others to differentiate between standing up and prone positions.
+  *
+  * In BYOND-angles 0 is NORTH, 90 is EAST, 180 is SOUTH and 270 is WEST.
+  * This usually means that 0 is standing up, 90 and 270 are horizontal positions to right and left respectively, and 180 is upside-down.
+  * Mobs that do now follow these conventions due to unusual sprites should require a special handling or redefinition of this proc, due to the density and layer changes.
+  * The return of this proc is the previous value of the modified lying_angle if a change was successful (might include zero), or null if no change was made.
+  */
+/mob/living/proc/set_lying_angle(new_lying)
+	if(new_lying == lying_angle)
+		return
+	. = lying_angle
+	lying_angle = new_lying
+	if(lying_angle != lying_prev)
+		update_transform()
+		lying_prev = lying_angle
+	if(lying_angle != 0) //We are not standing up.
+		if(layer == initial(layer)) //to avoid things like hiding larvas.
+			layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
+		if(. == 0) //We became prone and were not before. We lose density and stop bumping passable dense things.
+			density = FALSE
+	else //We are prone.
+		if(layer == LYING_MOB_LAYER)
+			layer = initial(layer)
+		if(.) //We were prone before, so we become dense and things can bump into us again.
+			density = initial(density)
+
+
+/**
  * add_body_temperature_change Adds modifications to the body temperature
  *
  * This collects all body temperature changes that the mob is experiencing to the list body_temp_changes
@@ -1477,3 +1495,36 @@
 	if(!apply_change)
 		return BODYTEMP_NORMAL
 	return BODYTEMP_NORMAL + get_body_temp_normal_change()
+
+///Checks if the user is incapacitated or on cooldown.
+/mob/living/proc/can_look_up()
+	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+
+/**
+ * look_up Changes the perspective of the mob to any openspace turf above the mob
+ *
+ * This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up
+ *
+ */
+/mob/living/proc/look_up()
+
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
+		stop_look_up()
+		return
+	if(!can_look_up())
+		return
+	var/turf/ceiling = get_step_multiz(src, UP)
+	if(!ceiling) //We are at the highest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
+		return
+	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
+		to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
+		return
+
+	changeNext_move(CLICK_CD_LOOK_UP)
+	reset_perspective(ceiling)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+
+/mob/living/proc/stop_look_up()
+	reset_perspective()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)

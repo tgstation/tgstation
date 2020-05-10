@@ -105,6 +105,7 @@ All ShuttleMove procs go here
 
 	loc = newT
 
+
 	return TRUE
 
 // Called on atoms after everything has been moved
@@ -251,7 +252,7 @@ All ShuttleMove procs go here
 			A.atmosinit()
 			if(A.returnPipenet())
 				A.addMember(src)
-		build_network()
+		SSair.add_to_rebuild_queue(src)
 	else
 		// atmosinit() calls update_icon(), so we don't need to call it
 		update_icon()
@@ -332,8 +333,8 @@ All ShuttleMove procs go here
 
 /obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
-	connect_wire(TRUE)
-	propogate_if_no_network()
+	Connect_cable(TRUE)
+	propagate_if_no_network()
 
 /obj/structure/shuttle/beforeShuttleMove(turf/newT, rotation, move_mode, obj/docking_port/mobile/moving_dock)
 	. = ..()

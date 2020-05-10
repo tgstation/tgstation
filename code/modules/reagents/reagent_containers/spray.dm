@@ -180,7 +180,7 @@
 			return SHAME
 	else
 		user.visible_message("<span class='suicide'>[user] decided life was worth living.</span>")
-		return
+		return MANUAL_SUICIDE_NONLETHAL
 
 //spray tan
 /obj/item/reagent_containers/spray/spraytan

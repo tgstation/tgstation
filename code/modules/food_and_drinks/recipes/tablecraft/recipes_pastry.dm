@@ -322,7 +322,7 @@ datum/crafting_recipe/food/donut/meat
 	name = "Donk-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1
+		/obj/item/reagent_containers/food/snacks/meatball = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket
 	subcategory = CAT_PASTRY
@@ -342,7 +342,7 @@ datum/crafting_recipe/food/donut/meat
 	name = "Spicy-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/chili
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/spicy
@@ -353,7 +353,7 @@ datum/crafting_recipe/food/donut/meat
 	name = "Teriyaki-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
 		/datum/reagent/consumable/soysauce = 3
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/teriyaki
@@ -364,7 +364,7 @@ datum/crafting_recipe/food/donut/meat
 	name = "Pizza-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/tomato = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/pizza
@@ -396,7 +396,7 @@ datum/crafting_recipe/food/donut/meat
 	name = "Gondola-pocket"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
 		/datum/reagent/tranquility = 5
 	)
 	result = /obj/item/reagent_containers/food/snacks/donkpocket/gondola
@@ -463,7 +463,7 @@ datum/crafting_recipe/food/donut/meat
 	reqs = list(
 		/datum/reagent/consumable/soysauce = 5,
 		/obj/item/reagent_containers/food/snacks/bun = 1,
-		/obj/item/reagent_containers/food/snacks/faggot = 1,
+		/obj/item/reagent_containers/food/snacks/meatball = 1,
 		/obj/item/reagent_containers/food/snacks/grown/cabbage = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/meatbun
@@ -588,7 +588,7 @@ datum/crafting_recipe/food/donut/meat
 	result = /obj/item/reagent_containers/food/snacks/honeybun
 	subcategory = CAT_PASTRY
 
-	/datum/crafting_recipe/food/cannoli
+/datum/crafting_recipe/food/cannoli
 	name = "Cannoli"
 	reqs = list(
 		/obj/item/reagent_containers/food/snacks/pastrybase = 1,

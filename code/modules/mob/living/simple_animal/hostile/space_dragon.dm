@@ -37,6 +37,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1 | HEAR_1
 	melee_damage_upper = 35
 	melee_damage_lower = 35
+	mob_size = MOB_SIZE_LARGE
 	armour_penetration = 30
 	pixel_x = -16
 	turns_per_move = 5
@@ -289,7 +290,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
   * QDeletes all the current rifts after removing their references to other objects.
   * Currently, the only reference they have is to the Dragon which created them, so we clear that before deleting them.
   * Currently used when Space Dragon dies.
-  */	
+  */
 /mob/living/simple_animal/hostile/space_dragon/proc/destroy_rifts()
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.dragon = null
@@ -350,6 +351,8 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
 	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds.  Evacuation of the remamining crew will begin immediately.", "Central Command Spacial Corps")
+	for(var/obj/structure/carp_rift/rift in rift_list)
+		rift.carp_stored = 999999
 	sleep(50)
 	SSshuttle.emergency.request(null, set_coefficient = 0.3)
 
@@ -421,6 +424,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	light_range = 10
 	anchored = TRUE
 	density = FALSE
+	layer = MASSIVE_OBJ_LAYER
 	/// The amount of time the rift has charged for.
 	var/time_charged = 0
 	/// The maximum charge the rift can have.  It actually goes to max_charge + 1, as to prevent constantly retriggering the effects on full charge.

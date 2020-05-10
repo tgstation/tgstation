@@ -795,7 +795,8 @@
 
 	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
-		if(H.a_intent == INTENT_HARM)
+		var/datum/species/ethereal/E = H.dna.species
+		if((H.a_intent == INTENT_HARM) && (E.drain_time < world.time))
 			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldnt drain it
 				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
 				return
@@ -803,6 +804,7 @@
 			if(stomach.crystal_charge > 145)
 				to_chat(H, "<span class='warning'>Your charge is full!</span>")
 				return
+			E.drain_time = world.time + 75
 			to_chat(H, "<span class='notice'>You start channeling some power through the APC into your body.</span>")
 			if(do_after(user, 75, target = src))
 				if(cell.charge <= (cell.maxcharge / 2) || (stomach.crystal_charge > 145))
@@ -814,7 +816,7 @@
 				else
 					to_chat(H, "<span class='warning'>You can't receive charge from the APC!</span>")
 			return
-		if(H.a_intent == INTENT_GRAB)
+		if((H.a_intent == INTENT_GRAB) && (E.drain_time < world.time))
 			if(cell.charge == cell.maxcharge)
 				to_chat(H, "<span class='warning'>The APC is full!</span>")
 				return
@@ -822,6 +824,7 @@
 			if(stomach.crystal_charge < 10)
 				to_chat(H, "<span class='warning'>Your charge is too low!</span>")
 				return
+			E.drain_time = world.time + 75
 			to_chat(H, "<span class='notice'>You start channeling power through your body into the APC.</span>")
 			if(do_after(user, 75, target = src))
 				if(cell.charge == cell.maxcharge || (stomach.crystal_charge < 10))
@@ -851,7 +854,7 @@
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 
 	if(!ui)
-		ui = new(user, src, ui_key, "apc", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "Apc", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/power/apc/ui_data(mob/user)

@@ -41,9 +41,11 @@
 	else
 		return ..()
 
-/obj/item/grenade/c4/prime()
+/obj/item/grenade/c4/prime(mob/living/lanced_by)
 	if(QDELETED(src))
 		return
+
+	. = ..()
 	var/turf/location
 	if(target)
 		if(!QDELETED(target))
@@ -102,7 +104,7 @@
 			I.throw_range = max(1, (I.throw_range - 3))
 			if(I.embedding)
 				I.embedding["embed_chance"] = 0
-				I.AddElement(/datum/element/embed, I.embedding)
+				I.updateEmbedding()
 		else if(istype(AM, /mob/living))
 			plastic_overlay.layer = FLOAT_LAYER
 

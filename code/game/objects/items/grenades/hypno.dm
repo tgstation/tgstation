@@ -7,7 +7,8 @@
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	var/flashbang_range = 7
 
-/obj/item/grenade/hypnotic/prime()
+/obj/item/grenade/hypnotic/prime(mob/living/lanced_by)
+	. = ..()
 	update_mob()
 	var/flashbang_turf = get_turf(src)
 	if(!flashbang_turf)

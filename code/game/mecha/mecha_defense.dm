@@ -128,10 +128,22 @@
 	severity++
 	for(var/X in equipment)
 		var/obj/item/mecha_parts/mecha_equipment/ME = X
-		ME.ex_act(severity,target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += ME
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += ME
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += ME
 	for(var/Y in trackers)
 		var/obj/item/mecha_parts/mecha_tracking/MT = Y
-		MT.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += MT
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += MT
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += MT
 	if(occupant)
 		occupant.ex_act(severity,target)
 
@@ -151,7 +163,7 @@
 	log_message("EMP detected", LOG_MECHA, color="red")
 
 	if(istype(src, /obj/mecha/combat))
-		mouse_pointer = 'icons/mecha/mecha_mouse-disable.dmi'
+		mouse_pointer = 'icons/effects/mouse_pointers/mecha_mouse-disable.dmi'
 		occupant?.update_mouse_pointer()
 	if(!equipment_disabled && occupant) //prevent spamming this message with back-to-back EMPs
 		to_chat(occupant, "<span=danger>Error -- Connection to equipment control unit has been lost.</span>")

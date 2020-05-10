@@ -223,6 +223,7 @@
 	RegisterSignal(parent, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, .proc/on_host_unarmed_melee)
 
 /datum/component/riding/human/vehicle_mob_unbuckle(datum/source, mob/living/M, force = FALSE)
+	unequip_buckle_inhands(parent)
 	var/mob/living/carbon/human/H = parent
 	H.remove_movespeed_modifier(/datum/movespeed_modifier/human_carry)
 	. = ..()
@@ -377,3 +378,11 @@
 			AM.unbuckle_mob(rider)
 	. = ..()
 
+/obj/item/riding_offhand/on_thrown(mob/living/carbon/user, atom/target)
+	if(rider == user)
+		return //Piggyback user.
+	user.unbuckle_mob(rider)
+	if(HAS_TRAIT(user, TRAIT_PACIFISM))
+		to_chat(user, "<span class='notice'>You gently let go of [rider].</span>")
+		return
+	return rider

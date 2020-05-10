@@ -15,6 +15,7 @@ the new instance inside the host to be updated to the template's stats.
 	move_on_shuttle = FALSE
 	see_in_dark = 8
 	invisibility = INVISIBILITY_OBSERVER
+	see_invisible = SEE_INVISIBLE_LIVING
 	layer = BELOW_MOB_LAYER
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE
 	sight = SEE_SELF|SEE_THRU
@@ -78,7 +79,9 @@ the new instance inside the host to be updated to the template's stats.
 			S.overmind = null
 
 /mob/camera/disease/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	if(freemove)
 		to_chat(src, "<span class='warning'>You have [DisplayTimeText(freemove_end - world.time)] to select your first host. Click on a human to select your host.</span>")
 
@@ -126,6 +129,9 @@ the new instance inside the host to be updated to the template's stats.
 		link = FOLLOW_LINK(src, to_follow)
 	else
 		link = ""
+	// Create map text prior to modifying message for goonchat
+	if (client?.prefs.chat_on_map && (client.prefs.see_chat_non_mob || ismob(speaker)))
+		create_chat_message(speaker, message_language, raw_message, spans, message_mode)
 	// Recompose the message, because it's scrambled by default
 	message = compose_message(speaker, message_language, raw_message, radio_freq, spans, message_mode)
 	to_chat(src, "[link] [message]")

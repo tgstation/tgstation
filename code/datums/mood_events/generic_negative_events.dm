@@ -100,7 +100,7 @@
 		mood_change = 2
 
 /datum/mood_event/table_headsmash
-	description = "<span class='warning'>My fucking head, that hurt...</span>"
+	description = "<span class='warning'>My fucking head, that hurts...</span>"
 	mood_change = -3
 	timeout = 3 MINUTES
 
@@ -191,7 +191,7 @@
 
 /datum/mood_event/sad_empath
 	description = "<span class='warning'>Someone seems upset...</span>\n"
-	mood_change = -2
+	mood_change = -1
 	timeout = 60 SECONDS
 
 /datum/mood_event/sad_empath/add_effects(mob/sadtarget)

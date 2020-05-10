@@ -93,7 +93,9 @@
 	name = built_name
 
 /mob/living/simple_animal/revenant/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	to_chat(src, "<span class='deadsay'><span class='big bold'>You are a revenant.</span></span>")
 	to_chat(src, "<b>Your formerly mundane spirit has been infused with alien energies and empowered into a revenant.</b>")
 	to_chat(src, "<b>You are not dead, not alive, but somewhere in between. You are capable of limited interaction with both worlds.</b>")

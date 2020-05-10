@@ -40,8 +40,6 @@
 	// for the sake of cleanliness, though, here they are.
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	hud_type = /datum/hud/slime
-
 	var/cores = 1 // the number of /obj/item/slime_extract's the slime has left inside
 	var/mutation_chance = 30 // Chance of mutating, should be between 25 and 35
 
@@ -164,34 +162,6 @@
 		if(health <= 0)
 			mod += 2
 	add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_healthmod, multiplicative_slowdown = mod)
-	update_health_hud()
-
-/mob/living/simple_animal/slime/update_health_hud()
-	var/severity = 0
-	var/healthpercent = (health/maxHealth) * 100
-	if(hud_used?.healthdoll)
-		switch(healthpercent)
-			if(100 to INFINITY)
-				severity = 0
-			if(80 to 100)
-				severity = 1
-			if(60 to 80)
-				severity = 2
-			if(40 to 60)
-				severity = 3
-			if(20 to 40)
-				severity = 4
-			if(10 to 20)
-				severity = 5
-			if(1 to 20)
-				severity = 6
-			else
-				severity = 7
-		hud_used.healthdoll.icon_state = "slime_health[severity]"
-	if(severity > 0)
-		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
-	else
-		clear_fullscreen("brute")
 
 /mob/living/simple_animal/slime/adjust_bodytemperature()
 	. = ..()

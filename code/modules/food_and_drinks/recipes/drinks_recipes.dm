@@ -432,7 +432,7 @@
 
 /datum/chemical_reaction/stinger
 	results = list(/datum/reagent/consumable/ethanol/stinger = 15)
-	required_reagents = list(/datum/reagent/consumable/ethanol/whiskey = 10, /datum/reagent/consumable/ethanol/creme_de_menthe = 5 )
+	required_reagents = list(/datum/reagent/consumable/ethanol/cognac = 10, /datum/reagent/consumable/ethanol/creme_de_menthe = 5 )
 
 /datum/chemical_reaction/quintuplesec
 	results = list(/datum/reagent/consumable/ethanol/quintuple_sec = 15)

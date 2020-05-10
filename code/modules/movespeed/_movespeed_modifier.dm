@@ -29,7 +29,7 @@ Key procs
 	/// Whether or not this is a variable modifier. Variable modifiers can NOT be ever auto-cached. ONLY CHECKED VIA INITIAL(), EFFECTIVELY READ ONLY (and for very good reason)
 	var/variable = FALSE
 
-	/// Unique ID. You can never have different modifications with the same ID. By default, this SHOULD NOT be set. Only set it for cases where you're dynamically making modifiers/need to have two types overwrite each other. If unset, uses path as ID.
+	/// Unique ID. You can never have different modifications with the same ID. By default, this SHOULD NOT be set. Only set it for cases where you're dynamically making modifiers/need to have two types overwrite each other. If unset, uses path (converted to text) as ID.
 	var/id
 
 	/// Higher ones override lower priorities. This is NOT used for ID, ID must be unique, if it isn't unique the newer one overwrites automatically if overriding.
@@ -47,6 +47,11 @@ Key procs
 
 	/// Other modification datums this conflicts with.
 	var/conflicts_with
+
+/datum/movespeed_modifier/New()
+	. = ..()
+	if(!id)
+		id = "[type]" //We turn the path into a string.
 
 GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
@@ -69,15 +74,14 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 			type_or_datum = get_cached_movespeed_modifier(type_or_datum)
 		else
 			type_or_datum = new type_or_datum
-	var/key = type_or_datum.id || type_or_datum.type		//Our key will be ID if it's overridden, or if not, path.
-	var/datum/movespeed_modifier/existing = LAZYACCESS(movespeed_modification, key)
+	var/datum/movespeed_modifier/existing = LAZYACCESS(movespeed_modification, type_or_datum.id)
 	if(existing)
 		if(existing == type_or_datum)		//same thing don't need to touch
 			return TRUE
 		remove_movespeed_modifier(existing, FALSE)
 	if(length(movespeed_modification))
-		BINARY_INSERT(key, movespeed_modification, datum/movespeed_modifier, type_or_datum, priority, COMPARE_VALUE)
-	LAZYSET(movespeed_modification, key, type_or_datum)
+		BINARY_INSERT(type_or_datum.id, movespeed_modification, datum/movespeed_modifier, type_or_datum, priority, COMPARE_VALUE)
+	LAZYSET(movespeed_modification, type_or_datum.id, type_or_datum)
 	if(update)
 		update_movespeed()
 	return TRUE
@@ -86,9 +90,9 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /mob/proc/remove_movespeed_modifier(datum/movespeed_modifier/type_id_datum, update = TRUE)
 	var/key
 	if(ispath(type_id_datum))
-		key = initial(type_id_datum.id) || type_id_datum		//id if set, path if not.
+		key = initial(type_id_datum.id) || "[type_id_datum]"		//id if set, path set to string if not.
 	else if(!istext(type_id_datum))		//if it isn't text it has to be a datum, as it isn't a type.
-		key = type_id_datum.id || type_id_datum.type
+		key = type_id_datum.id
 	else								//assume it's an id
 		key = type_id_datum
 	if(!LAZYACCESS(movespeed_modification, key))
@@ -117,8 +121,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 	else if(ispath(type_id_datum))
 		if(!initial(type_id_datum.variable))
 			CRASH("Not a variable modifier")
-		var/id = initial(type_id_datum.id)
-		final = LAZYACCESS(movespeed_modification, id || type_id_datum)
+		final = LAZYACCESS(movespeed_modification, initial(type_id_datum.id) || "[type_id_datum]")
 		if(!final)
 			final = new type_id_datum
 			inject = TRUE
@@ -127,7 +130,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		if(!initial(type_id_datum.variable))
 			CRASH("Not a variable modifier")
 		final = type_id_datum
-		if(!LAZYACCESS(movespeed_modification, final.id || final.type))
+		if(!LAZYACCESS(movespeed_modification, final.id))
 			inject = TRUE
 			modified = TRUE
 	if(!isnull(multiplicative_slowdown))
@@ -154,11 +157,11 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 /mob/proc/has_movespeed_modifier(datum/movespeed_modifier/datum_type_id)
 	var/key
 	if(ispath(datum_type_id))
-		key = initial(datum_type_id.id) || datum_type_id
+		key = initial(datum_type_id.id) || "[datum_type_id]"
 	else if(istext(datum_type_id))
 		key = datum_type_id
 	else
-		key = datum_type_id.id || datum_type_id.type
+		key = datum_type_id.id
 	return LAZYACCESS(movespeed_modification, key)
 
 /// Set or update the global movespeed config on a mob
@@ -196,7 +199,9 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
 /// Get the move speed modifiers list of the mob
 /mob/proc/get_movespeed_modifiers()
-	return movespeed_modification
+	. = LAZYCOPY(movespeed_modification)
+	for(var/id in movespeed_mod_immunities)
+		. -= id
 
 /// Calculate the total slowdown of all movespeed modifiers
 /mob/proc/total_multiplicative_slowdown()

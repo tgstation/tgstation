@@ -1,6 +1,6 @@
 /proc/create_message(type, target_key, admin_ckey, text, timestamp, server, secret, logged = 1, browse, expiry, note_severity)
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	if(!type)
 		return
@@ -67,7 +67,7 @@
 			if(query_validate_expire_time.NextRow())
 				var/checktime = text2num(query_validate_expire_time.item[1])
 				if(!checktime)
-					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
+					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.", confidential = TRUE)
 					qdel(query_validate_expire_time)
 					return
 				expiry = query_validate_expire_time.item[1]
@@ -96,7 +96,7 @@
 
 /proc/delete_message(message_id, logged = 1, browse)
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -106,6 +106,7 @@
 	var/text
 	var/user_key_name = key_name(usr)
 	var/user_name_admin = key_name_admin(usr)
+	var/deleted_by_ckey = sanitizeSQL(usr.ckey)
 	var/datum/DBQuery/query_find_del_message = SSdbcore.NewQuery("SELECT type, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = targetckey), targetckey), text FROM [format_table_name("messages")] WHERE id = [message_id] AND deleted = 0")
 	if(!query_find_del_message.warn_execute())
 		qdel(query_find_del_message)
@@ -115,7 +116,7 @@
 		target_key = query_find_del_message.item[2]
 		text = query_find_del_message.item[3]
 	qdel(query_find_del_message)
-	var/datum/DBQuery/query_del_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET deleted = 1 WHERE id = [message_id]")
+	var/datum/DBQuery/query_del_message = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET deleted = 1, deleted_ckey = '[deleted_by_ckey]' WHERE id = [message_id]")
 	if(!query_del_message.warn_execute())
 		qdel(query_del_message)
 		return
@@ -132,7 +133,7 @@
 
 /proc/edit_message(message_id, browse)
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -171,7 +172,7 @@
 
 /proc/edit_message_expiry(message_id, browse)
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -206,7 +207,7 @@
 			if(query_validate_expire_time_edit.NextRow())
 				var/checktime = text2num(query_validate_expire_time_edit.item[1])
 				if(!checktime)
-					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.")
+					to_chat(usr, "Datetime entered is improperly formatted or not later than current server time.", confidential = TRUE)
 					qdel(query_validate_expire_time_edit)
 					qdel(query_find_edit_expiry_message)
 					return
@@ -229,7 +230,7 @@
 
 /proc/edit_message_severity(message_id)
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -268,7 +269,7 @@
 
 /proc/toggle_message_secrecy(message_id)
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	message_id = text2num(message_id)
 	if(!message_id)
@@ -300,7 +301,7 @@
 
 /proc/browse_messages(type, target_ckey, index, linkless = FALSE, filter, agegate = FALSE)
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	var/list/output = list()
 	var/ruler = "<hr style='background:#000000; border:0; height:3px'>"
@@ -510,7 +511,7 @@
 
 /proc/get_message_output(type, target_ckey)
 	if(!SSdbcore.Connect())
-		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>")
+		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
 	if(!type)
 		return
@@ -589,7 +590,7 @@
 /*alternatively this proc can be run once to pass through every note and attempt to convert it before deleting the file, if done then AUTOCONVERT_NOTES should be turned off
 this proc can take several minutes to execute fully if converting and cause DD to hang if converting a lot of notes; it's not advised to do so while a server is live
 /proc/mass_convert_notes()
-	to_chat(world, "Beginning mass note conversion")
+	to_chat(world, "Beginning mass note conversion", confidential = TRUE)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)
 		log_game("Error: Cannot access [NOTESFILE]")
@@ -597,7 +598,7 @@ this proc can take several minutes to execute fully if converting and cause DD t
 	notesfile.cd = "/"
 	for(var/ckey in notesfile.dir)
 		convert_notes_sql(ckey)
-	to_chat(world, "Deleting NOTESFILE")
+	to_chat(world, "Deleting NOTESFILE", confidential = TRUE)
 	fdel(NOTESFILE)
-	to_chat(world, "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES")*/
+	to_chat(world, "Finished mass note conversion, remember to turn off AUTOCONVERT_NOTES", confidential = TRUE)*/
 #undef NOTESFILE

@@ -189,6 +189,15 @@ GLOBAL_LIST_INIT(name2reagent, build_name2reagent())
 		to_chat(M, "<span class='boldannounce'>You're not feeling good at all! You really need some [name].</span>")
 	return
 
+/**
+  * New, standardized method for chemicals to affect hydroponics trays.
+  * Defined on a per-chem level as opposed to by the tray.
+  * Can affect plant's health, stats, or cause the plant to react in certain ways.
+  */
+/datum/reagent/proc/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	if(!mytray)
+		return
+
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
 	var/list/rs = list()

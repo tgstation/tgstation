@@ -51,7 +51,9 @@
 	real_name = name
 
 /mob/living/carbon/true_devil/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	var/datum/antagonist/devil/devilinfo = mind.has_antag_datum(/datum/antagonist/devil)
 	devilinfo.greet()
 	mind.announce_objectives()

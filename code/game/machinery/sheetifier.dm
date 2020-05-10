@@ -42,3 +42,13 @@
 	update_icon()
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all() //Returns all as sheets
+
+/obj/machinery/sheetifier/attackby(obj/item/I, mob/user, params)
+	if(default_unfasten_wrench(user, I))
+		return
+	if(default_deconstruction_screwdriver(user, I))
+		update_icon()
+		return
+	if(default_deconstruction_crowbar(I))
+		return
+	return ..()

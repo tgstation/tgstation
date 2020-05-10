@@ -24,6 +24,8 @@
 
 	/// List of movement speed modifiers applying to this mob
 	var/list/movespeed_modification				//Lazy list, see mob_movespeed.dm
+	/// List of movement speed modifiers ignored by this mob. List -> List (id) -> List (sources)
+	var/list/movespeed_mod_immunities			//Lazy list, see mob_movespeed.dm
 	/// The calculated mob speed slowdown based on the modifiers list
 	var/cached_multiplicative_slowdown
 	/// List of action hud items the user has
@@ -185,6 +187,9 @@
 	///List of progress bars this mob is currently seeing for actions
 	var/list/progressbars = null	//for stacking do_after bars
 
+	///For storing what do_after's someone has, in case we want to restrict them to only one of a certain do_after at a time
+	var/list/do_afters
+
 	///Allows a datum to intercept all click calls this mob is the source of
 	var/datum/click_intercept
 
@@ -206,5 +211,5 @@
 
 	/// Used for tracking last uses of emotes for cooldown purposes
 	var/list/emotes_used
-	
+
 	vis_flags = VIS_INHERIT_PLANE //when this be added to vis_contents of something it inherit something.plane, important for visualisation of mob in openspace.

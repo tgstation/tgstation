@@ -21,7 +21,7 @@
 	if(!stored_id) // Account is not linked
 		var/know_how = alert("Do you know how to get a Discord user ID? This ID is NOT your Discord username and numbers! (Pressing NO will open a guide.)","Question","Yes","No","Cancel Linking")
 		if(know_how == "No") // Opens discord support on how to collect IDs
-			src << link("https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID")
+			src << link("https://tgstation13.org/wiki/How_to_find_your_Discord_User_ID")
 		if(know_how == "Cancel Linking")
 			return
 		var/entered_id = input("Please enter your Discord ID (18-ish digits)", "Enter Discord ID", null, null) as text|null
@@ -32,8 +32,8 @@
 		var/choice = alert("You already have the Discord Account [stored_id] linked to [usr.ckey]. Would you like to link a different account?","Already Linked","Yes","No")
 		if(choice == "Yes")
 			var/know_how = alert("Do you know how to get a Discord user ID? This ID is NOT your Discord username and numbers! (Pressing NO will open a guide.)","Question","Yes","No", "Cancel Linking")
-			if(know_how == "No") // Opens discord support on how to collect IDs
-				src << link("https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID")
+			if(know_how == "No")
+				src << link("https://tgstation13.org/wiki/How_to_find_your_Discord_User_ID")
 
 			if(know_how == "Cancel Linking")
 				return
@@ -80,10 +80,14 @@
 	// check for living hours requirement
 	var/required_living_minutes = CONFIG_GET(number/required_living_hours) * 60
 	var/living_minutes = usr.client ? usr.client.get_exp_living(TRUE) : 0
-	if(required_living_minutes > 0 && living_minutes < required_living_minutes)
+	if(required_living_minutes <= 0)
+		CRASH("The discord verification system is setup to require zero hours or less, this is likely a configuration bug")
+		
+	if(living_minutes < required_living_minutes)
 		to_chat(usr, "<span class='warning'>You must have at least [required_living_minutes] minutes of living " \
 			+ "playtime in a round to verify. You have [living_minutes] minutes. Play more!</span>")
 		return
 
 	// honey its time for your role flattening
+	to_chat(usr, "<span class='notice'>Discord verified</span>")
 	SSdiscord.grant_role(stored_id)

@@ -249,14 +249,6 @@
 	name = "\improper DNA injector (Mute)"
 	add_mutations = list(MUT_MUTE)
 
-/obj/item/dnainjector/antismile
-	name = "\improper DNA injector (Anti-Smile)"
-	remove_mutations = list(SMILE)
-
-/obj/item/dnainjector/smilemut
-	name = "\improper DNA injector (Smile)"
-	add_mutations = list(SMILE)
-
 /obj/item/dnainjector/unintelligiblemut
 	name = "\improper DNA injector (Unintelligible)"
 	add_mutations = list(UNINTELLIGIBLE)

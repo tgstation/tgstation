@@ -7,6 +7,12 @@
 #define PLAYER_READY_TO_PLAY 1
 #define PLAYER_READY_TO_OBSERVE 2
 
+//Game mode list indexes
+#define CURRENT_LIVING_PLAYERS	"living_players_list"
+#define CURRENT_LIVING_ANTAGS	"living_antags_list"
+#define CURRENT_DEAD_PLAYERS	"dead_players_list"
+#define CURRENT_OBSERVERS		"current_observers_list"
+
 //movement intent defines for the m_intent var
 #define MOVE_INTENT_WALK "walk"
 #define MOVE_INTENT_RUN  "run"
@@ -123,6 +129,7 @@
 #define BIOWARE_NERVES "nerves"
 #define BIOWARE_CIRCULATION "circulation"
 #define BIOWARE_LIGAMENTS "ligaments"
+#define BIOWARE_CORTEX "cortex"
 
 //Health hud screws for carbon mobs
 #define SCREWYHUD_NONE 0
@@ -278,6 +285,7 @@
 //MINOR TWEAKS/MISC
 #define AGE_MIN				17	//youngest a character can be
 #define AGE_MAX				85	//oldest a character can be
+#define AGE_MINOR			20  //legal age of space drinking and smoking
 #define WIZARD_AGE_MIN		30	//youngest a wizard can be
 #define APPRENTICE_AGE_MIN	29	//youngest an apprentice can be
 #define SHOES_SLOWDOWN		0	//How much shoes slow you down by default. Negative values speed you up
@@ -285,7 +293,7 @@
 #define DOOR_CRUSH_DAMAGE	15	//the amount of damage that airlocks deal when they crush you
 
 #define	HUNGER_FACTOR		0.1	//factor at which mob nutrition decreases
-#define	ETHEREAL_CHARGE_FACTOR	0.12 //factor at which ethereal's charge decreases
+#define	ETHEREAL_CHARGE_FACTOR	0.08 //factor at which ethereal's charge decreases
 #define	REAGENTS_METABOLISM 0.4	//How many units of reagent are consumed per tick, by default.
 #define REAGENTS_EFFECT_MULTIPLIER (REAGENTS_METABOLISM / 0.4)	// By defining the effect multiplier this way, it'll exactly adjust all effects according to how they originally were with the 0.4 metabolism
 
@@ -335,3 +343,4 @@
 #define WABBAJACK     (1<<6)
 
 #define SLEEP_CHECK_DEATH(X) sleep(X); if(QDELETED(src) || stat == DEAD) return;
+#define INTERACTING_WITH(X, Y) (Y in X.do_afters)

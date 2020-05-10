@@ -210,7 +210,7 @@
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned life-saving survival spells. You are able to cast charge and forcewall.")
 		if(APPRENTICE_ROBELESS)
 			owner.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
-			owner.AddSpell(new /obj/effect/proc_holder/spell/targeted/mind_transfer(null))
+			owner.AddSpell(new /obj/effect/proc_holder/spell/pointed/mind_transfer(null))
 			to_chat(owner, "<B>Your service has not gone unrewarded, however. Studying under [master.current.real_name], you have learned stealthy, robeless spells. You are able to cast knock and mindswap.")
 
 /datum/antagonist/wizard/apprentice/create_objectives()

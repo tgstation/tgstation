@@ -237,7 +237,7 @@
 		throwforce = 35
 		playsound(user, 'sound/weapons/saberon.ogg', 5, TRUE)
 		to_chat(user, "<span class='warning'>[src] is now active.</span>")
-	AddElement(/datum/element/embed, embedding)
+	updateEmbedding()
 	update_icon()
 
 /obj/item/pen/edagger/update_icon_state()

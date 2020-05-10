@@ -29,7 +29,7 @@
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
-	icon_state = "utilitybelt"
+	icon_state = "utility"
 	item_state = "utility"
 	content_overlays = TRUE
 	custom_premium_price = 300
@@ -70,7 +70,7 @@
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
 	desc = "Holds tools, looks snazzy."
-	icon_state = "utilitybelt_ce"
+	icon_state = "utility_ce"
 	item_state = "utility_ce"
 
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
@@ -123,7 +123,7 @@
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	desc = "Can hold various medical equipment."
-	icon_state = "medicalbelt"
+	icon_state = "medical"
 	item_state = "medical"
 
 /obj/item/storage/belt/medical/ComponentInitialize()
@@ -197,7 +197,7 @@
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
-	icon_state = "securitybelt"
+	icon_state = "security"
 	item_state = "security"//Could likely use a better one.
 	content_overlays = TRUE
 
@@ -479,7 +479,7 @@
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/empgrenade = 1,
 		/obj/item/grenade/empgrenade = 1,
-		/obj/item/grenade/syndieminibomb/concussion/frag = 10,
+		/obj/item/grenade/frag = 10,
 		/obj/item/grenade/gluon = 4,
 		/obj/item/grenade/chem_grenade/incendiary = 2,
 		/obj/item/grenade/chem_grenade/facid = 1,
@@ -672,3 +672,30 @@
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)
 	update_icon()
+
+/obj/item/storage/belt/plant
+	name = "botanical belt"
+	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	icon_state = "plantbelt"
+	item_state = "plantbelt"
+	content_overlays = TRUE
+
+/obj/item/storage/belt/plant/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.set_holdable(list(
+		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/plant_analyzer,
+		/obj/item/seeds,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/cultivator,
+		/obj/item/reagent_containers/spray/pestspray,
+		/obj/item/hatchet,
+		/obj/item/graft,
+		/obj/item/secateurs,
+		/obj/item/geneshears,
+		/obj/item/shovel/spade
+		))

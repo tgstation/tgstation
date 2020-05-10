@@ -138,7 +138,7 @@
 	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 	slipper.signal_enabled = active
 
-/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
+/obj/item/shield/energy/bananium/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(active)
 		if(iscarbon(thrower))
 			var/mob/living/carbon/C = thrower
@@ -206,7 +206,7 @@
 	icon_state = "moustacheg"
 	clumsy_check = GRENADE_NONCLUMSY_FUMBLE
 
-/obj/item/grenade/chem_grenade/teargas/moustache/prime()
+/obj/item/grenade/chem_grenade/teargas/moustache/prime(mob/living/lanced_by)
 	var/myloc = get_turf(src)
 	. = ..()
 	for(var/mob/living/carbon/M in view(6, myloc))

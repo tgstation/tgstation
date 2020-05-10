@@ -37,6 +37,18 @@
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_combined_w_class = 12
 
+/obj/item/bag_of_holding_inert
+	name = "inert bag of holding"
+	desc = "What is currently a just an unwieldly block of metal with a slot ready to accept a bluespace anomaly core."
+	icon = 'icons/obj/storage.dmi'
+	icon_state = "brokenpack"
+	item_state = "brokenpack"
+	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
+	w_class = WEIGHT_CLASS_BULKY
+	resistance_flags = FIRE_PROOF
+	item_flags = NO_MAT_REDEMPTION
+
 /obj/item/storage/backpack/holding
 	name = "bag of holding"
 	desc = "A backpack that opens into a localized pocket of bluespace."
@@ -61,10 +73,6 @@
 	sleep(20)
 	playsound(src, "rustle", 50, TRUE, -5)
 	qdel(user)
-
-/obj/item/storage/backpack/holding/singularity_act(current_size)
-	var/dist = max((current_size - 2),1)
-	explosion(src.loc,(dist),(dist*2),(dist*4))
 
 /obj/item/storage/backpack/santabag
 	name = "Santa's Gift Bag"
@@ -579,9 +587,9 @@
 	new /obj/item/clothing/under/syndicate/soviet(src)
 	new /obj/item/watertank/op(src)
 	new /obj/item/clothing/suit/space/hardsuit/syndi/elite(src)
-	new /obj/item/gun/ballistic/automatic/pistol/APS(src)
-	new /obj/item/ammo_box/magazine/pistolm9mm(src)
-	new /obj/item/ammo_box/magazine/pistolm9mm(src)
+	new /obj/item/gun/ballistic/automatic/pistol/aps(src)
+	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
+	new /obj/item/ammo_box/magazine/m9mm_aps/fire(src)
 	new /obj/item/reagent_containers/food/drinks/bottle/vodka/badminka(src)
 	new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)
 	new /obj/item/grenade/syndieminibomb(src)

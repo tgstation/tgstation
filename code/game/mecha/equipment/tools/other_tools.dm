@@ -11,12 +11,13 @@
 	equip_cooldown = 150
 	energy_drain = 1000
 	range = MECHA_RANGED
+	var/teleport_range = 7
 
 /obj/item/mecha_parts/mecha_equipment/teleporter/action(atom/target)
 	if(!action_checks(target) || is_centcom_level(loc.z))
 		return
 	var/turf/T = get_turf(target)
-	if(T)
+	if(T && (loc.z == T.z) && (get_dist(loc, T) <= teleport_range))
 		do_teleport(chassis, T, 4, channel = TELEPORT_CHANNEL_BLUESPACE)
 		return 1
 

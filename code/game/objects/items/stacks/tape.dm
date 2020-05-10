@@ -36,7 +36,7 @@
 			return
 
 		I.embedding = conferred_embed
-		I.AddElement(/datum/element/embed, I.embedding)
+		I.updateEmbedding()
 		to_chat(user, "<span class='notice'>You finish wrapping [I] with [src].</span>")
 		I.name = "[prefix] [I.name]"
 

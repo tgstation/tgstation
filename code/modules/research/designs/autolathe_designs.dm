@@ -384,7 +384,7 @@
 	build_path = /obj/item/storage/bag/tray
 	category = list("initial","Dinnerware")
 
-/datum/design/tray
+/datum/design/cafeteria_tray
 	name = "Cafeteria Tray"
 	id = "foodtray"
 	build_type = AUTOLATHE
@@ -466,6 +466,15 @@
 	build_type = AUTOLATHE | PROTOLATHE
 	materials = list(/datum/material/iron = 15000)
 	build_path = /obj/item/hatchet
+	category = list("initial","Misc", "Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/secateurs
+	name = "Secateurs"
+	id = "secateurs"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/item/secateurs
 	category = list("initial","Misc", "Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -1056,6 +1065,22 @@
 	build_type = AUTOLATHE
 	materials = list(/datum/material/iron = 20, /datum/material/glass = 5)
 	build_path = /obj/item/toy/ammo/gun
+	category = list("hacked", "Misc")
+
+/datum/design/toy_balloon
+	name = "Plastic Balloon"
+	id = "toy_balloon"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 1200)
+	build_path = /obj/item/toy/balloon
+	category = list("hacked", "Misc")
+
+/datum/design/toy_armblade
+	name = "Plastic Armblade"
+	id = "toy_armblade"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/plastic = 2000)
+	build_path = /obj/item/toy/foamblade
 	category = list("hacked", "Misc")
 
 /datum/design/plastic_tree

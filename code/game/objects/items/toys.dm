@@ -180,6 +180,51 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "singularity_s1"
 
+/obj/item/toy/spinningtoy/suicide_act(mob/living/carbon/human/user)
+	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
+	if(!myhead)
+		user.visible_message("<span class='suicide'>[user] tries consuming [src]... but [user.p_they()] [user.p_have()] no mouth!</span>") // and i must scream
+		return SHAME
+	user.visible_message("<span class='suicide'>[user] consumes [src]! It looks like [user.p_theyre()] trying to commit suicicide!</span>")
+	playsound(user, 'sound/items/eatfood.ogg', 50, TRUE)
+	user.adjust_nutrition(50) // mmmm delicious
+	addtimer(CALLBACK(src, .proc/manual_suicide, user), (3SECONDS))
+	return MANUAL_SUICIDE
+
+/**
+  * Internal function used in the toy singularity suicide
+  *
+  * Cavity implants the toy singularity into the body of the user (arg1), and kills the user.
+  * Makes the user vomit and receive 120 suffocation damage if there already is a cavity implant in the user.
+  * Throwing the singularity away will cause the user to start choking themself to death.
+  * Arguments:
+  * * user - Whoever is doing the suiciding
+  */
+/obj/item/toy/spinningtoy/proc/manual_suicide(mob/living/carbon/human/user)
+	if(!user)
+		return
+	if(!user.is_holding(src)) // Half digestion? Start choking to death
+		user.visible_message("<span class='suicide'>[user] panics and starts choking [user.p_them()]self to death!</span>")
+		user.adjustOxyLoss(200)
+		user.death(FALSE) // unfortunately you have to handle the suiciding yourself with a manual suicide
+		user.ghostize(FALSE) // get the fuck out of our body
+		return
+	var/obj/item/bodypart/chest/CH = user.get_bodypart(BODY_ZONE_CHEST)
+	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
+		user.visible_message("<span class='danger'>[user] regurgitates [src]!</span>") // I swear i dont have a fetish
+		user.vomit(100, TRUE, distance = 0)
+		user.adjustOxyLoss(120)
+		user.dropItemToGround(src) // incase the crit state doesn't drop the singulo to the floor
+		user.set_suicide(FALSE)
+		return
+	user.transferItemToLoc(src, user, TRUE)
+	CH.cavity_item = src // The mother came inside and found Andy, dead with a HUGE belly full of toys
+	user.adjustOxyLoss(200) // You know how most small toys in the EU have that 3+ onion head icon and a warning that says "Unsuitable for children under 3 years of age due to small parts - choking hazard"? This is why.
+	user.death(FALSE)
+	user.ghostize(FALSE)
+
+
+
 /*
  * Toy gun: Why isnt this an /obj/item/gun?
  */
@@ -745,7 +790,7 @@
 	H.parentdeck = src
 	var/O = src
 	H.apply_card_vars(H,O)
-	src.cards -= choice
+	popleft(cards)
 	H.pickup(user)
 	user.put_in_hands(H)
 	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
@@ -821,67 +866,48 @@
 	name = "hand of cards"
 	desc = "A number of cards not in a deck, customarily held in ones hand."
 	icon = 'icons/obj/toy.dmi'
-	icon_state = "nanotrasen_hand2"
+	icon_state = "none"
 	w_class = WEIGHT_CLASS_TINY
 	var/list/currenthand = list()
 	var/choice = null
 
-
 /obj/item/toy/cards/cardhand/attack_self(mob/user)
-	user.set_machine(src)
+	var/list/handradial = list()
 	interact(user)
 
-/obj/item/toy/cards/cardhand/ui_interact(mob/user)
-	. = ..()
-	var/dat = "You have:<BR>"
 	for(var/t in currenthand)
-		dat += "<A href='?src=[REF(src)];pick=[t]'>A [t].</A><BR>"
-	dat += "Which card will you remove next?"
-	var/datum/browser/popup = new(user, "cardhand", "Hand of Cards", 400, 240)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.set_content(dat)
-	popup.open()
+		handradial[t] = image(icon = src.icon, icon_state = "sc_[t]_[deckstyle]")
 
-
-/obj/item/toy/cards/cardhand/Topic(href, href_list)
-	if(..())
-		return
 	if(usr.stat || !ishuman(usr))
 		return
 	var/mob/living/carbon/human/cardUser = usr
 	if(!(cardUser.mobility_flags & MOBILITY_USE))
 		return
 	var/O = src
-	if(href_list["pick"])
-		if (cardUser.is_holding(src))
-			var/choice = href_list["pick"]
-			var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(cardUser.loc)
-			src.currenthand -= choice
-			C.parentdeck = src.parentdeck
-			C.cardname = choice
-			C.apply_card_vars(C,O)
-			C.pickup(cardUser)
-			cardUser.put_in_hands(C)
-			cardUser.visible_message("<span class='notice'>[cardUser] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
+	var/choice = show_radial_menu(usr,src, handradial, custom_check = CALLBACK(src, .proc/check_menu, user), radius = 36, require_near = TRUE)
+	if(!choice)
+		return FALSE
+	var/obj/item/toy/cards/singlecard/C = new/obj/item/toy/cards/singlecard(cardUser.loc)
+	currenthand -= choice
+	handradial -= choice
+	C.parentdeck = parentdeck
+	C.cardname = choice
+	C.apply_card_vars(C,O)
+	C.pickup(cardUser)
+	cardUser.put_in_hands(C)
+	cardUser.visible_message("<span class='notice'>[cardUser] draws a card from [cardUser.p_their()] hand.</span>", "<span class='notice'>You take the [C.cardname] from your hand.</span>")
 
-			interact(cardUser)
-			if(src.currenthand.len < 3)
-				src.icon_state = "[deckstyle]_hand2"
-			else if(src.currenthand.len < 4)
-				src.icon_state = "[deckstyle]_hand3"
-			else if(src.currenthand.len < 5)
-				src.icon_state = "[deckstyle]_hand4"
-			if(src.currenthand.len == 1)
-				var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(src.loc)
-				N.parentdeck = src.parentdeck
-				N.cardname = src.currenthand[1]
-				N.apply_card_vars(N,O)
-				qdel(src)
-				N.pickup(cardUser)
-				cardUser.put_in_hands(N)
-				to_chat(cardUser, "<span class='notice'>You also take [currenthand[1]] and hold it.</span>")
-				cardUser << browse(null, "window=cardhand")
-		return
+	interact(cardUser)
+	update_sprite()
+	if(length(currenthand) == 1)
+		var/obj/item/toy/cards/singlecard/N = new/obj/item/toy/cards/singlecard(loc)
+		N.parentdeck = parentdeck
+		N.cardname = currenthand[1]
+		N.apply_card_vars(N,O)
+		qdel(src)
+		N.pickup(cardUser)
+		cardUser.put_in_hands(N)
+		to_chat(cardUser, "<span class='notice'>You also take [currenthand[1]] and hold it.</span>")
 
 /obj/item/toy/cards/cardhand/attackby(obj/item/toy/cards/singlecard/C, mob/living/user, params)
 	if(istype(C))
@@ -890,12 +916,7 @@
 			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>You add the [C.cardname] to your hand.</span>")
 			qdel(C)
 			interact(user)
-			if(currenthand.len > 4)
-				src.icon_state = "[deckstyle]_hand5"
-			else if(currenthand.len > 3)
-				src.icon_state = "[deckstyle]_hand4"
-			else if(currenthand.len > 2)
-				src.icon_state = "[deckstyle]_hand3"
+			update_sprite(src)
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
 	else
@@ -904,7 +925,7 @@
 /obj/item/toy/cards/cardhand/apply_card_vars(obj/item/toy/cards/newobj,obj/item/toy/cards/sourceobj)
 	..()
 	newobj.deckstyle = sourceobj.deckstyle
-	newobj.icon_state = "[deckstyle]_hand2" // Another dumb hack, without this the hand is invisible (or has the default deckstyle) until another card is added.
+	update_sprite()
 	newobj.card_hitsound = sourceobj.card_hitsound
 	newobj.card_force = sourceobj.card_force
 	newobj.card_throwforce = sourceobj.card_throwforce
@@ -912,6 +933,31 @@
 	newobj.card_throw_range = sourceobj.card_throw_range
 	newobj.card_attack_verb = sourceobj.card_attack_verb
 	newobj.resistance_flags = sourceobj.resistance_flags
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  */
+/obj/item/toy/cards/cardhand/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	return TRUE
+
+/**
+  * This proc updates the sprite for when you create a hand of cards
+  */
+/obj/item/toy/cards/cardhand/proc/update_sprite()
+	cut_overlays()
+	var/overlay_cards = currenthand.len
+
+	var/k = overlay_cards == 2 ? 1 : overlay_cards - 2
+	for(var/i = k; i <= overlay_cards; i++)
+		var/card_overlay = image(icon=src.icon,icon_state="sc_[currenthand[i]]_[deckstyle]",pixel_x=(1-i+k)*3,pixel_y=(1-i+k)*3)
+		add_overlay(card_overlay)
 
 /obj/item/toy/cards/singlecard
 	name = "card"
@@ -979,12 +1025,7 @@
 			user.visible_message("<span class='notice'>[user] adds a card to [user.p_their()] hand.</span>", "<span class='notice'>You add the [cardname] to your hand.</span>")
 			qdel(src)
 			H.interact(user)
-			if(H.currenthand.len > 4)
-				H.icon_state = "[deckstyle]_hand5"
-			else if(H.currenthand.len > 3)
-				H.icon_state = "[deckstyle]_hand4"
-			else if(H.currenthand.len > 2)
-				H.icon_state = "[deckstyle]_hand3"
+			H.update_sprite()
 		else
 			to_chat(user, "<span class='warning'>You can't mix cards from other decks!</span>")
 	else

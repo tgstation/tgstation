@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(chat)
 			return
 
 
-/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE, trailing_newline = TRUE)
+/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE, trailing_newline = TRUE, confidential = TRUE)
 	if(!target || !message)
 		return
 
@@ -38,7 +38,6 @@ SUBSYSTEM_DEF(chat)
 		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
 	if (trailing_newline)
 		message += "<br>"
-
 
 	//url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the Javascript.
 	//Do the double-encoding here to save nanoseconds

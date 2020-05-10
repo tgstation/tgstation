@@ -190,6 +190,28 @@
 	color = "#454545"
 	list_reagents = list(/datum/reagent/mutationtoxin/shadow = 5)
 
+///////////////////////////////////////// Psychologist inventory pills
+/obj/item/reagent_containers/pill/happinesspsych
+	name = "mood stabilizer pill"
+	desc = "Used to temporarily alleviate anxiety and depression, take only as prescribed."
+	list_reagents = list(/datum/reagent/drug/happiness = 5)
+	icon_state = "pill_happy"
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/paxpsych
+	name = "pacification pill"
+	desc = "Used to temporarily suppress violent, homicidal, or suicidal behavior in patients."
+	list_reagents = list(/datum/reagent/pax = 5)
+	icon_state = "pill12"
+	rename_with_volume = TRUE
+
+/obj/item/reagent_containers/pill/lsdpsych
+	name = "antipsychotic pill"
+	desc = "Talk to your healthcare provider immediately if hallucinations worsen or new hallucinations emerge."
+	list_reagents = list(/datum/reagent/toxin/mindbreaker = 5)
+	icon_state = "pill14"
+	rename_with_volume = TRUE
+
 //////////////////////////////////////// drugs
 /obj/item/reagent_containers/pill/zoom
 	name = "yellow pill"

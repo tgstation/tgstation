@@ -11,10 +11,12 @@
 	lifespan = 20
 	endurance = 10
 	yield = 4
+	instability = 55
 	growthstages = 4
 	rarity = 30
 	var/list/mutations = list()
 	reagents_add = list(/datum/reagent/medicine/C2/multiver = 0.04, /datum/reagent/consumable/nutriment = 0.02)
+	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/kudzu/Copy()
 	var/obj/item/seeds/kudzu/S = ..()

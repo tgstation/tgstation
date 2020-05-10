@@ -28,6 +28,7 @@
 	attack_verb = list("attacked", "stabbed", "poked")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 30)
+	item_flags = EYE_STAB
 	var/datum/reagent/forkload //used to eat omelette
 
 /obj/item/kitchen/fork/suicide_act(mob/living/carbon/user)
@@ -48,11 +49,6 @@
 			M.reagents.add_reagent(forkload.type, 1)
 		icon_state = "fork"
 		forkload = null
-
-	else if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-			M = user
-		return eyestab(M,user)
 	else
 		return ..()
 
@@ -67,7 +63,7 @@
 	custom_price = 50
 	var/break_chance = 25
 
-/obj/item/kitchen/fork/plastic/afterattack(mob/living/carbon/user)
+/obj/item/kitchen/fork/plastic/afterattack(atom/target, mob/user)
 	.=..()
 	if(prob(break_chance))
 		user.visible_message("<span class='danger'>[user]'s fork snaps into tiny pieces in their hand.</span>")
@@ -89,20 +85,17 @@
 	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharpness = IS_SHARP_ACCURATE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
+	item_flags = EYE_STAB
 	var/bayonet = FALSE	//Can this be attached to a gun?
 	custom_price = 250
 
-/obj/item/kitchen/knife/Initialize()
+/obj/item/kitchen/knife/ComponentInitialize()
 	. = ..()
-	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
+	set_butchering()
 
-/obj/item/kitchen/knife/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_selected == BODY_ZONE_PRECISE_EYES)
-		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-			M = user
-		return eyestab(M,user)
-	else
-		return ..()
+///Adds the butchering component, used to override stats for special cases
+/obj/item/kitchen/knife/proc/set_butchering()
+	AddComponent(/datum/component/butchering, 80 - force, 100, force - 10) //bonus chance increases depending on force
 
 /obj/item/kitchen/knife/suicide_act(mob/user)
 	user.visible_message(pick("<span class='suicide'>[user] is slitting [user.p_their()] wrists with the [src.name]! It looks like [user.p_theyre()] trying to commit suicide.</span>", \
@@ -152,6 +145,15 @@
 	attack_verb = list("cleaved", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_price = 600
+
+/obj/item/kitchen/knife/hunting
+	name = "hunting knife"
+	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
+	item_state = "huntingknife"
+	icon_state = "huntingknife"
+
+/obj/item/kitchen/knife/hunting/set_butchering()
+	AddComponent(/datum/component/butchering, 80 - force, 100, force + 10)
 
 /obj/item/kitchen/knife/combat
 	name = "combat knife"
@@ -245,7 +247,7 @@
 	custom_price = 50
 	var/break_chance = 25
 
-/obj/item/kitchen/knife/plastic/afterattack(mob/living/carbon/user)
+/obj/item/kitchen/spoon/plastic/afterattack(atom/target, mob/user)
 	.=..()
 	if(prob(break_chance))
 		user.visible_message("<span class='danger'>[user]'s spoon snaps into tiny pieces in their hand.</span>")

@@ -253,12 +253,13 @@
 /// After the initial stun period, we check to see if the target needs to have the stun applied.
 /obj/item/melee/baton/proc/apply_stun_effect_end(mob/living/target)
 	var/trait_check = HAS_TRAIT(target, TRAIT_STUNRESISTANCE) //var since we check it in out to_chat as well as determine stun duration
+	if(!target.IsKnockdown())
+		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
+
 	if(trait_check)
 		target.Knockdown(stun_time * 0.1)
 	else
 		target.Knockdown(stun_time)
-	if(!target.IsKnockdown())
-		to_chat(target, "<span class='warning'>Your muscles seize, making you collapse[trait_check ? ", but your body quickly recovers..." : "!"]</span>")
 
 /obj/item/melee/baton/emp_act(severity)
 	. = ..()
@@ -318,7 +319,7 @@
 	convertible = FALSE
 	custom_materials = list(/datum/material/iron = 10000, /datum/material/glass = 4000, /datum/material/silver = 10000, /datum/material/gold = 2000)
 
-/obj/item/melee/baton/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
+/obj/item/melee/baton/boomerang/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	if(turned_on)
 		if(ishuman(thrower))
 			var/mob/living/carbon/human/H = thrower

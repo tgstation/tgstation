@@ -4,11 +4,14 @@ import os from 'os';
 import { basename } from 'path';
 import { promisify } from 'util';
 import { resolveGlob, resolvePath } from './util.js';
+import { regQuery } from './winreg.js';
 
 const logger = createLogger('reloader');
 
 const HOME = os.homedir();
 const SEARCH_LOCATIONS = [
+  // Custom location
+  process.env.BYOND_CACHE,
   // Windows
   `${HOME}/*/BYOND/cache`,
   // Wine
@@ -28,9 +31,27 @@ export const findCacheRoot = async () => {
   logger.log('looking for byond cache');
   // Find BYOND cache folders
   for (let pattern of SEARCH_LOCATIONS) {
+    if (!pattern) {
+      continue;
+    }
     const paths = await resolveGlob(pattern);
     if (paths.length > 0) {
       cacheRoot = paths[0];
+      logger.log(`found cache at '${cacheRoot}'`);
+      return cacheRoot;
+    }
+  }
+  // Query the Windows Registry
+  if (process.platform === 'win32') {
+    logger.log('querying windows registry');
+    let userpath = await regQuery(
+      'HKCU\\Software\\Dantom\\BYOND',
+      'userpath');
+    if (userpath) {
+      cacheRoot = userpath
+        .replace(/\\$/, '')
+        .replace(/\\/g, '/')
+        + '/cache';
       logger.log(`found cache at '${cacheRoot}'`);
       return cacheRoot;
     }

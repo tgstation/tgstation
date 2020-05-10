@@ -639,24 +639,14 @@
 	screen_loc = ui_healthdoll
 
 /obj/screen/healthdoll/Click()
-	if (ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		H.check_self_for_injuries()
+	if (iscarbon(usr))
+		var/mob/living/carbon/C = usr
+		C.check_self_for_injuries()
 
 /obj/screen/healthdoll/living
 	icon_state = "fullhealth0"
 	screen_loc = ui_living_healthdoll
 	var/filtered = FALSE //so we don't repeatedly create the mask of the mob every update
-
-/obj/screen/healthdoll/slime
-	icon = 'icons/mob/screen_slime.dmi'
-	icon_state = "slime_health0"
-	screen_loc = ui_living_healthdoll
-
-/obj/screen/healthdoll/lavaland_elite
-	icon = 'icons/mob/screen_elite.dmi'
-	icon_state = "elite_health0"
-	screen_loc = ui_living_healthdoll
 
 /obj/screen/mood
 	name = "mood"

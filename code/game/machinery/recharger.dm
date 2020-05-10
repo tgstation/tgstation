@@ -1,7 +1,7 @@
 /obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "recharger0"
+	icon_state = "recharger"
 	desc = "A charging dock for energy based weaponry."
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 4
@@ -158,16 +158,24 @@
 			if(B.cell)
 				B.cell.charge = 0
 
-
-/obj/machinery/recharger/update_icon_state()
+/obj/machinery/recharger/update_overlays()
+	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
 	if(machine_stat & (NOPOWER|BROKEN) || !anchored)
-		icon_state = "rechargeroff"
-	else if(panel_open)
-		icon_state = "rechargeropen"
-	else if(charging)
+		return
+	if(panel_open)
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-open", layer, plane, dir, alpha)
+		return
+
+	luminosity = 1
+	if (charging)
 		if(using_power)
-			icon_state = "recharger1"
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-charging", layer, plane, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-charging", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 		else
-			icon_state = "recharger2"
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", layer, plane, dir, alpha)
+			SSvis_overlays.add_vis_overlay(src, icon, "recharger-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 	else
-		icon_state = "recharger0"
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", layer, plane, dir, alpha)
+		SSvis_overlays.add_vis_overlay(src, icon, "recharger-empty", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)

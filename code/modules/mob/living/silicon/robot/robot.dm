@@ -163,8 +163,8 @@
 		if(mmi.brainmob)
 			if(mmi.brainmob.stat == DEAD)
 				mmi.brainmob.set_stat(CONSCIOUS)
-				GLOB.dead_mob_list -= mmi.brainmob
-				GLOB.alive_mob_list += mmi.brainmob
+				mmi.brainmob.remove_from_dead_mob_list()
+				mmi.brainmob.add_to_alive_mob_list()
 			mind.transfer_to(mmi.brainmob)
 			mmi.update_icon()
 		else
@@ -188,6 +188,12 @@
 	eye_lights = null
 	cell = null
 	return ..()
+
+/mob/living/silicon/robot/Topic(href, href_list)
+	. = ..()
+	//Show alerts window if user clicked on "Show alerts" in chat
+	if (href_list["showalerts"])
+		robot_alerts()
 
 /mob/living/silicon/robot/proc/pick_module()
 	if(module.type != /obj/item/robot_module)
@@ -223,9 +229,11 @@
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
-	if(changed_name == "" && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
-		if(apply_pref_name("cyborg", C))
-			return //built in camera handled in proc
+	if(SSticker.anonymousnames) //only robotic renames will allow for anything other than the anonymous one
+		changed_name = anonymous_ai_name(is_ai = FALSE)
+	if(!changed_name && C && C.prefs.custom_names["cyborg"] != DEFAULT_CYBORG_NAME)
+		apply_pref_name("cyborg", C)
+		return //built in camera handled in proc
 	if(!changed_name)
 		changed_name = get_standard_name()
 
@@ -864,7 +872,8 @@
 /mob/living/silicon/robot/Exited(atom/A)
 	if(hat && hat == A)
 		hat = null
-	update_icons()
+		if(!QDELETED(src)) //Don't update icons if we are deleted.
+			update_icons()
 	. = ..()
 
 /**
@@ -1027,7 +1036,7 @@
 
 
 /mob/living/silicon/robot/proc/TryConnectToAI()
-	connected_ai = select_active_ai_with_fewest_borgs()
+	connected_ai = select_active_ai_with_fewest_borgs(z)
 	if(connected_ai)
 		connected_ai.connected_robots += src
 		lawsync()

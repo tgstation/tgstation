@@ -394,7 +394,13 @@
 				for(var/I in contents)
 					var/atom/A = I
 					if(!QDELETED(A))
-						A.ex_act(severity)
+						switch(severity)
+							if(EXPLODE_DEVASTATE)
+								SSexplosions.highobj += A
+							if(EXPLODE_HEAVY)
+								SSexplosions.medobj += A
+							if(EXPLODE_LIGHT)
+								SSexplosions.lowobj += A
 				gib()
 				return
 			else
@@ -669,7 +675,7 @@
 
 		..()
 
-/mob/living/carbon/human/proc/check_self_for_injuries()
+/mob/living/carbon/human/check_self_for_injuries()
 	if(stat == DEAD || stat == UNCONSCIOUS)
 		return
 
@@ -733,7 +739,7 @@
 		to_chat(src, "\t <span class='[no_damage ? "notice" : "warning"]'>Your [LB.name][isdisabled][self_aware ? " has " : " is "][status].</span>")
 
 		for(var/obj/item/I in LB.embedded_objects)
-			if(I.is_embed_harmless())
+			if(I.isEmbedHarmless())
 				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] stuck to your [LB.name]!</a>")
 			else
 				to_chat(src, "\t <a href='?src=[REF(src)];embedded_object=[REF(I)];embedded_limb=[REF(LB)]' class='warning'>There is \a [I] embedded in your [LB.name]!</a>")
@@ -823,7 +829,7 @@
 		to_chat(src, "<span class='info'>Your [damaged_message] [damaged_plural ? "are" : "is"] hurt.</span>")
 
 	if(roundstart_quirks.len)
-		to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string()].</span>")
+		to_chat(src, "<span class='notice'>You have these quirks: [get_trait_string(FALSE, CAT_QUIRK_ALL)].</span>")
 
 /mob/living/carbon/human/damage_clothes(damage_amount, damage_type = BRUTE, damage_flag = 0, def_zone)
 	if(damage_type != BRUTE && damage_type != BURN)

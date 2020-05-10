@@ -130,11 +130,13 @@
 		if(AMMO_BOX_FULL_EMPTY)
 			icon_state = "[initial(icon_state)]-[shells_left ? "[max_ammo]" : "0"]"
 	desc = "[initial(desc)] There [(shells_left == 1) ? "is" : "are"] [shells_left] shell\s left!"
-	for (var/material in bullet_cost)
-		var/material_amount = bullet_cost[material]
-		material_amount = (material_amount*stored_ammo.len) + base_cost[material]
-		custom_materials[material] = material_amount
-	set_custom_materials(custom_materials)//make sure we setup the correct properties again
+	if(length(bullet_cost))
+		var/temp_materials = custom_materials.Copy()
+		for (var/material in bullet_cost)
+			var/material_amount = bullet_cost[material]
+			material_amount = (material_amount*stored_ammo.len) + base_cost[material]
+			temp_materials[material] = material_amount
+		set_custom_materials(temp_materials)
 
 ///Count of number of bullets in the magazine
 /obj/item/ammo_box/magazine/proc/ammo_count(countempties = TRUE)

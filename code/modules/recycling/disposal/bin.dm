@@ -285,7 +285,7 @@
 		return
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "disposal_unit", name, ui_x, ui_y, master_ui, state)
+		ui = new(user, src, ui_key, "DisposalUnit", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/disposal/bin/ui_data(mob/user)
@@ -347,6 +347,10 @@
 
 /obj/machinery/disposal/bin/update_overlays()
 	. = ..()
+
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+	luminosity = 0
+
 	if(machine_stat & BROKEN)
 		return
 
@@ -358,15 +362,19 @@
 	if(machine_stat & NOPOWER || panel_open)
 		return
 
+	luminosity = 1
 	//check for items in disposal - occupied light
 	if(contents.len > 0)
 		. += "dispover-full"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-full", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 
 	//charging and ready light
 	if(pressure_charging)
 		. += "dispover-charge"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-charge-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 	else if(full_pressure)
 		. += "dispover-ready"
+		SSvis_overlays.add_vis_overlay(src, icon, "dispover-ready-glow", EMISSIVE_LAYER, EMISSIVE_PLANE, dir, alpha)
 
 /obj/machinery/disposal/bin/proc/do_flush()
 	set waitfor = FALSE

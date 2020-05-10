@@ -134,11 +134,24 @@
 
 // Ultra-honk pin, clown's deadly joke item.
 // A gun with ultra-honk pin is useful for clown and useless for everyone else.
+/obj/item/firing_pin/clown/ultra
+	name = "ultra hilarious firing pin"
+
 /obj/item/firing_pin/clown/ultra/pin_auth(mob/living/user)
 	playsound(src.loc, 'sound/items/bikehorn.ogg', 50, TRUE)
-	if(user && (!(HAS_TRAIT(user, TRAIT_CLUMSY)) && !(user.mind && user.mind.assigned_role == "Clown")))
-		return FALSE
-	return TRUE
+	if(QDELETED(user))  //how the hell...?
+		stack_trace("/obj/item/firing_pin/clown/ultra/pin_auth called with a [isnull(user) ? "null" : "invalid"] user.")
+		return TRUE
+	if(HAS_TRAIT(user, TRAIT_CLUMSY)) //clumsy
+		return TRUE
+	if(user.mind)
+		if(user.mind.assigned_role == "Clown") //traitor clowns can use this, even though they're technically not clumsy
+			return TRUE
+		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/clownop)) //clown ops aren't clumsy by default and technically don't have an assigned role of "Clown", but come on, they're basically clowns
+			return TRUE
+		if(user.mind.has_antag_datum(/datum/antagonist/nukeop/leader/clownop)) //Wanna hear a funny joke?
+			return TRUE //The clown op leader antag datum isn't a subtype of the normal clown op antag datum.
+	return FALSE
 
 /obj/item/firing_pin/clown/ultra/gun_insert(mob/living/user, obj/item/gun/G)
 	..()
@@ -150,6 +163,7 @@
 
 // Now two times deadlier!
 /obj/item/firing_pin/clown/ultra/selfdestruct
+	name = "super ultra hilarious firing pin"
 	desc = "Advanced clowntech that can convert any firearm into a far more useful object. It has a small nitrobananium charge on it."
 	selfdestruct = TRUE
 

@@ -1,0 +1,50 @@
+@use '../colors.scss';
+
+.outline-dotted {
+  outline-style: dotted !important;
+  outline-width: 2px !important;
+}
+
+.outline-dashed {
+  outline-style: dashed !important;
+  outline-width: 2px !important;
+}
+
+.outline-solid {
+  outline-style: solid !important;
+  outline-width: 2px !important;
+}
+
+.outline-double {
+  outline-style: double !important;
+  outline-width: 2px !important;
+}
+
+.outline-groove {
+  outline-style: groove !important;
+  outline-width: 2px !important;
+}
+
+.outline-ridge {
+  outline-style: ridge !important;
+  outline-width: 2px !important;
+}
+
+.outline-inset {
+  outline-style: inset !important;
+  outline-width: 2px !important;
+}
+
+.outline-outset {
+  outline-style: outset !important;
+  outline-width: 2px !important;
+}
+
+$fg-map: colors.$fg-map !default;
+$bg-map: colors.$bg-map !default;
+
+@each $color-name, $color-value in $fg-map {
+  .outline-color-#{$color-name} {
+    outline-color: $color-value !important;
+  }
+}

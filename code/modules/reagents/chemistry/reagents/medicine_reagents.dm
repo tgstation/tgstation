@@ -33,6 +33,25 @@
 	can_synth = FALSE
 	taste_description = "badmins"
 
+// The best stuff there is. For testing/debugging.
+/datum/reagent/medicine/adminordrazine/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.adjustWater(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustHealth(round(chems.get_reagent_amount(type) * 1))
+		mytray.adjustPests(-rand(1,5))
+		mytray.adjustWeeds(-rand(1,5))
+	if(chems.has_reagent(type, 3))
+		switch(rand(100))
+			if(66  to 100)
+				mytray.mutatespecie()
+			if(33	to 65)
+				mytray.mutateweed()
+			if(1   to 32)
+				mytray.mutatepest(user)
+			else if(prob(20))
+				mytray.visible_message("<span class='warning'>Nothing happens...</span>")
+
 /datum/reagent/medicine/adminordrazine/on_mob_life(mob/living/carbon/M)
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5*REM, 0, 1)
 	M.setCloneLoss(0, 0)
@@ -133,6 +152,12 @@
 		. = 1
 	metabolization_rate = REAGENTS_METABOLISM * (0.00001 * (M.bodytemperature ** 2) + 0.5)
 	..()
+
+// Healing
+/datum/reagent/medicine/cryoxadone/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	mytray.adjustHealth(round(chems.get_reagent_amount(type) * 3))
+	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 3))
 
 /datum/reagent/medicine/clonexadone
 	name = "Clonexadone"
@@ -354,11 +379,10 @@
 	taste_description = "acid"
 
 /datum/reagent/medicine/calomel/on_mob_life(mob/living/carbon/M)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(R != src)
-			M.reagents.remove_reagent(R.type,2.5)
+	for(var/datum/reagent/toxin/R in M.reagents.reagent_list)
+		M.reagents.remove_reagent(R.type,3)
 	if(M.health > 20)
-		M.adjustToxLoss(2.5*REM, 0)
+		M.adjustToxLoss(1*REM, 0)
 		. = 1
 	..()
 
@@ -546,10 +570,10 @@
 
 /datum/reagent/medicine/morphine/on_mob_metabolize(mob/living/L)
 	..()
-	L.ignore_slowdown(type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/morphine/on_mob_end_metabolize(mob/living/L)
-	L.unignore_slowdown(type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	..()
 
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/M)
@@ -615,6 +639,8 @@
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+	M.adjust_blindness(-2)
+	M.adjust_blurriness(-2)
 	if (!eyes)
 		return
 	eyes.applyOrganDamage(-2)
@@ -624,19 +650,15 @@
 			M.cure_blind(EYE_DAMAGE)
 			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
-
 	else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted(EYE_DAMAGE)
 		M.blur_eyes(10)
-	else if(M.eye_blind || M.eye_blurry)
-		M.set_blindness(0)
-		M.set_blurriness(0)
 	..()
 
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
-	description = "Instantly restores all hearing to the patient, but does not cure deafness."
+	description = "Instantly restores all hearing to the patient, but does not work on patients without ears, cure genetic deafness, or cure chronic deafness." //by "chronic" deafness, we mean people with the "deaf" quirk
 	color = "#606060" // ditto
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)
@@ -719,6 +741,13 @@
 	metabolization_rate = 1.25 * REAGENTS_METABOLISM
 	taste_description = "magnets"
 	harmful = TRUE
+
+
+// FEED ME SEYMOUR
+/datum/reagent/medicine/strange_reagent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		mytray.spawnplant()
 
 /datum/reagent/medicine/strange_reagent/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(M.stat != DEAD)
@@ -1020,13 +1049,13 @@
 	..()
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.ignore_slowdown(type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/changelingadrenaline/on_mob_end_metabolize(mob/living/L)
 	..()
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
-	L.unignore_slowdown(type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.Dizzy(0)
 	L.Jitter(0)
 
@@ -1060,8 +1089,8 @@
 	color = "#FF3542"
 	self_consuming = TRUE
 
-/datum/reagent/medicine/higadrite/on_mob_add(mob/living/M)
-	..()
+/datum/reagent/medicine/higadrite/on_mob_metabolize(mob/living/M)
+	. = ..()
 	ADD_TRAIT(M, TRAIT_STABLELIVER, type)
 
 /datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/M)
@@ -1088,13 +1117,13 @@
 	name = "Muscle Stimulant"
 	description = "A potent chemical that allows someone under its influence to be at full physical ability even when under massive amounts of pain."
 
-/datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_metabolize(mob/living/L)
 	. = ..()
-	M.ignore_slowdown(type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
-/datum/reagent/medicine/muscle_stimulant/on_mob_end_metabolize(mob/living/M)
+/datum/reagent/medicine/muscle_stimulant/on_mob_end_metabolize(mob/living/L)
 	. = ..()
-	M.unignore_slowdown(type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/modafinil
 	name = "Modafinil"
@@ -1295,13 +1324,13 @@
 	ADD_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	ADD_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	L.add_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
-	L.ignore_slowdown(type)
+	L.add_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 
 /datum/reagent/medicine/badstims/on_mob_end_metabolize(mob/living/L)
 	..()
 	REMOVE_TRAIT(L, TRAIT_SLEEPIMMUNE, type)
 	REMOVE_TRAIT(L, TRAIT_STUNRESISTANCE, type)
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/badstims)
-	L.unignore_slowdown(type)
+	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.Dizzy(0)
 	L.Jitter(0)

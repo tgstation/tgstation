@@ -30,7 +30,13 @@
 /obj/machinery/biogenerator/contents_explosion(severity, target)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += beaker
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += beaker
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += beaker
 
 /obj/machinery/biogenerator/handle_atom_del(atom/A)
 	..()
@@ -293,7 +299,10 @@
 
 /obj/machinery/biogenerator/proc/detach(mob/living/user)
 	if(beaker)
-		user.put_in_hands(beaker)
+		if(can_interact(user))
+			user.put_in_hands(beaker)
+		else
+			beaker.drop_location(get_turf(src))
 		beaker = null
 		update_icon()
 

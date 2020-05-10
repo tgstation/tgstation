@@ -1,10 +1,9 @@
-import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { NtosWindow } from '../layouts';
 
-export const NtosNetDownloader = props => {
-  const { state } = props;
-  const { act, data } = useBackend(props);
+export const NtosNetDownloader = (props, context) => {
+  const { act, data } = useBackend(context);
   const {
     disk_size,
     disk_used,
@@ -14,58 +13,58 @@ export const NtosNetDownloader = props => {
     hackedavailable,
   } = data;
   return (
-    <Fragment>
-      {!!error && (
-        <NoticeBox>
-          <Box mb={1}>
-            {error}
-          </Box>
-          <Button
-            content="Reset"
-            onClick={() => act('PRG_reseterror')} />
-        </NoticeBox>
-      )}
-      <Section>
-        <LabeledList>
-          <LabeledList.Item label="Disk usage">
-            <ProgressBar
-              value={disk_used}
-              minValue={0}
-              maxValue={disk_size}>
-              {`${disk_used} GQ / ${disk_size} GQ`}
-            </ProgressBar>
-          </LabeledList.Item>
-        </LabeledList>
-      </Section>
-      <Section>
-        {downloadable_programs.map(program => (
-          <Program
-            key={program.filename}
-            state={state}
-            program={program} />
-        ))}
-      </Section>
-      {!!hackedavailable && (
-        <Section title="UNKNOWN Software Repository">
-          <NoticeBox mb={1}>
-            Please note that Nanotrasen does not recommend download
-            of software from non-official servers.
+    <NtosWindow resizable>
+      <NtosWindow.Content scrollable>
+        {!!error && (
+          <NoticeBox>
+            <Box mb={1}>
+              {error}
+            </Box>
+            <Button
+              content="Reset"
+              onClick={() => act('PRG_reseterror')} />
           </NoticeBox>
-          {hacked_programs.map(program => (
+        )}
+        <Section>
+          <LabeledList>
+            <LabeledList.Item label="Disk usage">
+              <ProgressBar
+                value={disk_used}
+                minValue={0}
+                maxValue={disk_size}>
+                {`${disk_used} GQ / ${disk_size} GQ`}
+              </ProgressBar>
+            </LabeledList.Item>
+          </LabeledList>
+        </Section>
+        <Section>
+          {downloadable_programs.map(program => (
             <Program
               key={program.filename}
-              state={state}
               program={program} />
           ))}
         </Section>
-      )}
-    </Fragment>
+        {!!hackedavailable && (
+          <Section title="UNKNOWN Software Repository">
+            <NoticeBox mb={1}>
+              Please note that Nanotrasen does not recommend download
+              of software from non-official servers.
+            </NoticeBox>
+            {hacked_programs.map(program => (
+              <Program
+                key={program.filename}
+                program={program} />
+            ))}
+          </Section>
+        )}
+      </NtosWindow.Content>
+    </NtosWindow>
   );
 };
 
-const Program = props => {
+const Program = (props, context) => {
   const { program } = props;
-  const { act, data } = useBackend(props);
+  const { act, data } = useBackend(context);
   const {
     disk_size,
     disk_used,

@@ -156,14 +156,15 @@
 	return TRUE
 
 /mob/living/silicon/pai/Login()
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
-	if(client)
-		client.perspective = EYE_PERSPECTIVE
-		if(holoform)
-			client.eye = src
-		else
-			client.eye = card
+	client.perspective = EYE_PERSPECTIVE
+	if(holoform)
+		client.eye = src
+	else
+		client.eye = card
 
 /mob/living/silicon/pai/Stat()
 	..()

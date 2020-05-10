@@ -1,8 +1,3 @@
-#define CURRENT_LIVING_PLAYERS	1
-#define CURRENT_LIVING_ANTAGS	2
-#define CURRENT_DEAD_PLAYERS	3
-#define CURRENT_OBSERVERS	    4
-
 #define ONLY_RULESET       1
 #define HIGHLANDER_RULESET 2
 #define TRAITOR_RULESET    4
@@ -95,8 +90,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/list/current_rules = list()
 	/// List of executed rulesets.
 	var/list/executed_rules = list()
-	/// Associative list of current players, in order: living players, living antagonists, dead players and observers.
-	var/list/list/current_players = list(CURRENT_LIVING_PLAYERS, CURRENT_LIVING_ANTAGS, CURRENT_DEAD_PLAYERS, CURRENT_OBSERVERS)
 	/// When world.time is over this number the mode tries to inject a latejoin ruleset.
 	var/latejoin_injection_cooldown = 0
 	/// When world.time is over this number the mode tries to inject a midround ruleset.
@@ -105,8 +98,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/forced_injection = FALSE
 	/// Forced ruleset to be executed for the next latejoin.
 	var/datum/dynamic_ruleset/latejoin/forced_latejoin_rule = null
-	/// When current_players was updated last time.
-	var/pop_last_updated = 0
 	/// How many percent of the rounds are more peaceful.
 	var/peaceful_percentage = 50
 	/// If a highlander executed.
@@ -198,7 +189,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	. = "<b><i>Central Command Status Summary</i></b><hr>"
 	switch(round(threat_level))
 		if(0 to 19)
-			update_playercounts()
 			if(!current_players[CURRENT_LIVING_ANTAGS].len)
 				. += "<b>Peaceful Waypoint</b></center><BR>"
 				. += "Your station orbits deep within controlled, core-sector systems and serves as a waypoint for routine traffic through Nanotrasen's trade empire. Due to the combination of high security, interstellar traffic, and low strategic value, it makes any direct threat of violence unlikely. Your primary enemies will be incompetence and bored crewmen: try to organize team-building events to keep staffers interested and productive."
@@ -359,8 +349,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return TRUE
 
 /datum/game_mode/dynamic/post_setup(report)
-	update_playercounts()
-
 	for(var/datum/dynamic_ruleset/roundstart/rule in executed_rules)
 		rule.candidates.Cut() // The rule should not use candidates at this point as they all are null.
 		addtimer(CALLBACK(src, /datum/game_mode/dynamic/.proc/execute_roundstart_rule, rule), rule.delay)
@@ -564,7 +552,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 				if(highlander_executed)
 					return FALSE
 
-	update_playercounts()
 	if ((forced || (new_rule.acceptable(current_players[CURRENT_LIVING_PLAYERS].len, threat_level) && new_rule.cost <= threat)))
 		new_rule.trim_candidates()
 		if (new_rule.ready(forced))
@@ -609,10 +596,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	return FALSE
 
 /datum/game_mode/dynamic/process()
-	if (pop_last_updated < world.time - (60 SECONDS))
-		pop_last_updated = world.time
-		update_playercounts()
-
 	for (var/datum/dynamic_ruleset/rule in current_rules)
 		if(rule.rule_process() == RULESET_STOP_PROCESSING) // If rule_process() returns 1 (RULESET_STOP_PROCESSING), stop processing.
 			current_rules -= rule
@@ -633,7 +616,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		message_admins("DYNAMIC: Checking for midround injection.")
 		log_game("DYNAMIC: Checking for midround injection.")
 
-		update_playercounts()
 		if (get_injection_chance())
 			var/list/drafted_rules = list()
 			for (var/datum/dynamic_ruleset/midround/rule in midround_rules)
@@ -646,27 +628,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 						drafted_rules[rule] = rule.get_weight()
 			if (drafted_rules.len > 0)
 				picking_midround_latejoin_rule(drafted_rules)
-
-/// Updates current_players.
-/datum/game_mode/dynamic/proc/update_playercounts()
-	current_players[CURRENT_LIVING_PLAYERS] = list()
-	current_players[CURRENT_LIVING_ANTAGS] = list()
-	current_players[CURRENT_DEAD_PLAYERS] = list()
-	current_players[CURRENT_OBSERVERS] = list()
-	for (var/mob/M in GLOB.player_list)
-		if (istype(M, /mob/dead/new_player))
-			continue
-		if (M.stat != DEAD)
-			current_players[CURRENT_LIVING_PLAYERS].Add(M)
-			if (M.mind && (M.mind.special_role || M.mind.antag_datums?.len > 0))
-				current_players[CURRENT_LIVING_ANTAGS].Add(M)
-		else
-			if (istype(M,/mob/dead/observer))
-				var/mob/dead/observer/O = M
-				if (O.started_as_observer) // Observers
-					current_players[CURRENT_OBSERVERS].Add(M)
-					continue
-			current_players[CURRENT_DEAD_PLAYERS].Add(M) // Players who actually died (and admins who ghosted, would be nice to avoid counting them somehow)
 
 /// Gets the chance for latejoin and midround injection, the dry_run argument is only used for forced injection.
 /datum/game_mode/dynamic/proc/get_injection_chance(dry_run = FALSE)
@@ -723,8 +684,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 		return
 	if(EMERGENCY_ESCAPED_OR_ENDGAMED) // No more rules after the shuttle has left
 		return
-
-	update_playercounts()
 
 	if (forced_latejoin_rule)
 		forced_latejoin_rule.candidates = list(newPlayer)

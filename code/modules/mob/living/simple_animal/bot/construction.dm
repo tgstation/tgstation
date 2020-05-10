@@ -468,6 +468,7 @@
 					add_overlay("hs_hole")
 					to_chat(user, "<span class='notice'>You weld a water hole in [src]!</span>")
 					build_step++
+					return
 
 		if(ASSEMBLY_SECOND_STEP)
 			if(!can_finish_build(I, user))
@@ -487,6 +488,5 @@
 						return
 				var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
 				H.name = created_name
-				qdel(I)
 				qdel(src)
 				return TRUE

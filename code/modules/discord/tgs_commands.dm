@@ -30,3 +30,14 @@
 			return "That ckey is not associated to this discord account. If someone has used your ID, please inform an administrator"
 	else
 		return "Account not setup for linkage"
+
+
+/// Gets the discord user's Discord UserID
+/datum/tgs_chat_command/myuserid
+	name = "myuserid"
+	help_text = "Returns your userid"
+
+/datum/tgs_chat_command/myuserid/Run(datum/tgs_chat_user/sender, params)
+	var/discordid = SSdiscord.id_clean(sender.mention)
+	return "<@[discordid]> Your Discord UserID is [discordid]"
+	

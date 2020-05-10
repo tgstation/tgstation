@@ -151,6 +151,9 @@
 /obj/item/stock_parts/cell/attack_self(mob/user)
 	if(isethereal(user))
 		var/mob/living/carbon/human/H = user
+		var/datum/species/ethereal/E = H.dna.species
+		if(E.drain_time > world.time)
+			return
 		if(charge < 100)
 			to_chat(H, "<span class='warning'>The [src] doesn't have enough power!</span>")
 			return
@@ -159,7 +162,8 @@
 			to_chat(H, "<span class='warning'>Your charge is full!</span>")
 			return
 		to_chat(H, "<span class='notice'>You clumsily channel power through the [src] and into your body, wasting some in the process.</span>")
-		if(do_after(user, 5, target = src))
+		E.drain_time = world.time + 20
+		if(do_after(user, 20, target = src))
 			if((charge < 100) || (stomach.crystal_charge > 146))
 				return
 			if(istype(stomach))
@@ -172,7 +176,7 @@
 
 
 /obj/item/stock_parts/cell/blob_act(obj/structure/blob/B)
-	ex_act(EXPLODE_DEVASTATE)
+	SSexplosions.highobj += src
 
 /obj/item/stock_parts/cell/proc/get_electrocute_damage()
 	if(charge >= 1000)

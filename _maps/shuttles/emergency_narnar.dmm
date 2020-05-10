@@ -120,7 +120,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "w" = (
-/mob/living/simple_animal/hostile/construct/builder,
+/mob/living/simple_animal/hostile/construct/artificer,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "x" = (
@@ -148,7 +148,7 @@
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "C" = (
-/mob/living/simple_animal/hostile/construct/armored,
+/mob/living/simple_animal/hostile/construct/juggernaut,
 /turf/open/floor/plasteel/cult,
 /area/shuttle/escape)
 "D" = (

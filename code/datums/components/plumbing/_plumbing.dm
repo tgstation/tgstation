@@ -105,9 +105,9 @@
 	for(var/D in GLOB.cardinals)
 		var/color
 		var/direction
-		if(D & demand_connects)
+		if(D & initial(demand_connects))
 			color = "red" //red because red is mean and it takes
-		else if(D & supply_connects)
+		else if(D & initial(supply_connects))
 			color = "blue" //blue is nice and gives
 		else
 			continue

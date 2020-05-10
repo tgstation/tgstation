@@ -232,60 +232,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 /proc/ionnum()
 	return "[pick("!","@","#","$","%","^","&")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")][pick("!","@","#","$","%","^","&","*")]"
 
-//Returns a list of unslaved cyborgs
-/proc/active_free_borgs()
-	. = list()
-	for(var/mob/living/silicon/robot/R in GLOB.alive_mob_list)
-		if(R.connected_ai || R.shell)
-			continue
-		if(R.stat == DEAD)
-			continue
-		if(R.emagged || R.scrambledcodes)
-			continue
-		. += R
-
-//Returns a list of AI's
-/proc/active_ais(check_mind=0)
-	. = list()
-	for(var/mob/living/silicon/ai/A in GLOB.alive_mob_list)
-		if(A.stat == DEAD)
-			continue
-		if(A.control_disabled)
-			continue
-		if(check_mind)
-			if(!A.mind)
-				continue
-		. += A
-	return .
-
-//Find an active ai with the least borgs. VERBOSE PROCNAME HUH!
-/proc/select_active_ai_with_fewest_borgs()
-	var/mob/living/silicon/ai/selected
-	var/list/active = active_ais()
-	for(var/mob/living/silicon/ai/A in active)
-		if(!selected || (selected.connected_robots.len > A.connected_robots.len))
-			selected = A
-
-	return selected
-
-/proc/select_active_free_borg(mob/user)
-	var/list/borgs = active_free_borgs()
-	if(borgs.len)
-		if(user)
-			. = input(user,"Unshackled cyborg signals detected:", "Cyborg Selection", borgs[1]) in sortList(borgs)
-		else
-			. = pick(borgs)
-	return .
-
-/proc/select_active_ai(mob/user)
-	var/list/ais = active_ais()
-	if(ais.len)
-		if(user)
-			. = input(user,"AI signals detected:", "AI Selection", ais[1]) in sortList(ais)
-		else
-			. = pick(ais)
-	return .
-
 //Returns a list of all items of interest with their name
 /proc/getpois(mobs_only=0,skip_mindless=0)
 	var/list/mobs = sortmobs()
@@ -449,7 +395,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 	Gets all contents of contents and returns them all in a list.
 */
 
-/atom/proc/GetAllContents(var/T)
+/atom/proc/GetAllContents(var/T, ignore_flag_1)
 	var/list/processing_list = list(src)
 	if(T)
 		. = list()
@@ -458,14 +404,16 @@ Turf and target are separate in case you want to teleport some distance from a t
 			var/atom/A = processing_list[++i]
 			//Byond does not allow things to be in multiple contents, or double parent-child hierarchies, so only += is needed
 			//This is also why we don't need to check against assembled as we go along
-			processing_list += A.contents
-			if(istype(A,T))
-				. += A
+			if (!(A.flags_1 & ignore_flag_1))
+				processing_list += A.contents
+				if(istype(A,T))
+					. += A
 	else
 		var/i = 0
 		while(i < length(processing_list))
 			var/atom/A = processing_list[++i]
-			processing_list += A.contents
+			if (!(A.flags_1 & ignore_flag_1))
+				processing_list += A.contents
 		return processing_list
 
 /atom/proc/GetAllContentsIgnoring(list/ignore_typecache)
@@ -727,22 +675,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 			return loc
 		loc = loc.loc
 	return null
-
-
-//For objects that should embed, but make no sense being is_sharp or is_pointed()
-//e.g: rods
-GLOBAL_LIST_INIT(can_embed_types, typecacheof(list(
-	/obj/item/stack/rods,
-	/obj/item/pipe)))
-
-/proc/can_embed(obj/item/W)
-	if(W.get_sharpness())
-		return 1
-	if(is_pointed(W))
-		return 1
-
-	if(is_type_in_typecache(W, GLOB.can_embed_types))
-		return 1
 
 
 /*
@@ -1310,6 +1242,10 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		if(istype(O, /obj/structure/window))
 			var/obj/structure/window/W = O
 			if(W.ini_dir == dir_to_check || W.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
+				return FALSE
+		if(istype(O, /obj/structure/railing))
+			var/obj/structure/railing/rail = O
+			if(rail.ini_dir == dir_to_check || rail.ini_dir == FULLTILE_WINDOW_DIR || dir_to_check == FULLTILE_WINDOW_DIR)
 				return FALSE
 	return TRUE
 

@@ -19,7 +19,6 @@
 	stat_attack = UNCONSCIOUS
 	layer = LARGE_MOB_LAYER
 	sentience_type = SENTIENCE_BOSS
-	hud_type = /datum/hud/lavaland_elite
 	var/chosen_attack = 1
 	var/list/attack_action_types = list()
 	var/can_talk = FALSE
@@ -82,37 +81,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /datum/action/innate/elite_attack/Activate()
 	M.chosen_attack = chosen_attack_num
 	to_chat(M, chosen_message)
-
-/mob/living/simple_animal/hostile/asteroid/elite/updatehealth()
-	. = ..()
-	update_health_hud()
-
-/mob/living/simple_animal/hostile/asteroid/elite/update_health_hud()
-	var/severity = 0
-	var/healthpercent = (health/maxHealth) * 100
-	if(hud_used?.healthdoll)
-		switch(healthpercent)
-			if(100 to INFINITY)
-				severity = 0
-			if(80 to 100)
-				severity = 1
-			if(60 to 80)
-				severity = 2
-			if(40 to 60)
-				severity = 3
-			if(20 to 40)
-				severity = 4
-			if(10 to 20)
-				severity = 5
-			if(1 to 20)
-				severity = 6
-			else
-				severity = 7
-		hud_used.healthdoll.icon_state = "elite_health[severity]"
-	if(severity > 0)
-		overlay_fullscreen("brute", /obj/screen/fullscreen/brute, severity)
-	else
-		clear_fullscreen("brute")
 
 //The Pulsing Tumor, the actual "spawn-point" of elites, handles the spawning, arena, and procs for dealing with basic scenarios.
 

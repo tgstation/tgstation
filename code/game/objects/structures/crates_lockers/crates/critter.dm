@@ -26,6 +26,9 @@
 
 	return ..()
 
+/obj/structure/closet/crate/critter/update_icon_state()
+	return
+
 /obj/structure/closet/crate/critter/update_overlays()
 	. = ..()
 	if(opened)

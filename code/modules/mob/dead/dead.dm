@@ -13,7 +13,7 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 	tag = "mob_[next_mob_id++]"
-	GLOB.mob_list += src
+	add_to_mob_list()
 
 	prepare_huds()
 
@@ -119,6 +119,8 @@ INITIALIZE_IMMEDIATE(/mob/dead)
 
 /mob/dead/Login()
 	. = ..()
+	if(!. || !client)
+		return FALSE
 	var/turf/T = get_turf(src)
 	if (isturf(T))
 		update_z(T.z)

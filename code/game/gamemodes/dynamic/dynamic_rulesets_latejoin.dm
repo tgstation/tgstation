@@ -81,7 +81,7 @@
 	antag_datum = /datum/antagonist/rev/head
 	antag_flag = ROLE_REV_HEAD
 	antag_flag_override = ROLE_REV
-	restricted_roles = list("AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
+	restricted_roles = list("AI", "Cyborg", "Prisoner", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel", "Chief Engineer", "Chief Medical Officer", "Research Director")
 	enemy_roles = list("AI", "Cyborg", "Security Officer","Detective","Head of Security", "Captain", "Warden")
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
 	required_candidates = 1
