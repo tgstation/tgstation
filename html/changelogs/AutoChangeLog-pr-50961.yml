@@ -1,4 +1,0 @@
-author: "actioninja"
-delete-after: True
-changes: 
-  - bugfix: "Fallback order of on mob icons was changed to match older versions, correcting some issues with missing sprites"

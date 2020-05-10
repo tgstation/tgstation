@@ -1,4 +1,0 @@
-author: "SteelSlayer"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the recharger's sprite turning invisible when a screwdriver was used on it"
