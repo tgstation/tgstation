@@ -9,10 +9,14 @@
 	},
 /area/ruin/powered/bathhouse)
 "c" = (
-/obj/machinery/shower{
-	pixel_y = 16
+/obj/structure/table/greyscale,
+/obj/item/stack/medical/aloe{
+	desc = "A healing paste you can apply on wounds. It smells amazing."
 	},
-/obj/structure/curtain,
+/obj/item/clothing/shoes/sneakers/white{
+	name = "white slippers"
+	},
+/obj/item/clothing/under/misc/pj/blue,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/bathhouse)
 "d" = (
@@ -28,16 +32,29 @@
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/bathhouse)
 "f" = (
-/obj/structure/table/greyscale,
-/obj/item/bikehorn/rubberducky,
+/obj/machinery/shower{
+	pixel_y = 16;
+	reagent_id = /datum/reagent/water/holywater
+	},
+/obj/structure/curtain,
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/bathhouse)
 "g" = (
 /turf/open/floor/plasteel/white,
 /area/ruin/powered/bathhouse)
 "h" = (
-/obj/item/soap,
-/turf/open/floor/plasteel/white,
+/obj/structure/table/wood,
+/obj/machinery/light/small{
+	icon_state = "bulb";
+	dir = 1
+	},
+/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato{
+	desc = "Just how mom used to make it.";
+	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/tomatojuice = 10, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/pax = 5, /datum/reagent/medicine/psicodine = 10, /datum/reagent/medicine/morphine = 5);
+	name = "soul food";
+	tastes = list("nostalgia" = 1, "happiness" = 1)
+	},
+/turf/open/floor/wood,
 /area/ruin/powered/bathhouse)
 "i" = (
 /obj/machinery/door/airlock/freezer{
@@ -52,25 +69,31 @@
 /turf/open/floor/wood,
 /area/ruin/powered/bathhouse)
 "l" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato{
-	desc = "Just how mom used to make it.";
-	name = "soul food";
-	tastes = list("nostalgia" = 1)
-	},
-/turf/open/floor/wood,
+/obj/item/bikehorn/rubberducky,
+/obj/item/soap,
+/turf/open/floor/plasteel/white,
 /area/ruin/powered/bathhouse)
 "m" = (
 /obj/structure/bookcase/random,
 /turf/open/floor/wood,
 /area/ruin/powered/bathhouse)
 "n" = (
-/turf/open/floor/plating/asteroid/snow/ice/icemoon,
+/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
 "o" = (
 /obj/structure/bed,
 /obj/item/bedsheet,
 /turf/open/floor/wood,
+/area/ruin/powered/bathhouse)
+"p" = (
+/obj/machinery/light/dim,
+/turf/open/floor/plasteel/white,
+/area/ruin/powered/bathhouse)
+"q" = (
+/obj/item/bikehorn/rubberducky{
+	desc = "An old but clean looking rubber ducky. Something about it is very familiar..."
+	},
+/turf/open/floor/plasteel/white,
 /area/ruin/powered/bathhouse)
 
 (1,1,1) = {"
@@ -85,7 +108,7 @@ a
 "}
 (2,1,1) = {"
 b
-c
+f
 g
 g
 b
@@ -96,7 +119,7 @@ j
 (3,1,1) = {"
 b
 b
-g
+l
 g
 i
 k
@@ -105,11 +128,11 @@ j
 "}
 (4,1,1) = {"
 b
-c
+f
 g
 g
 b
-l
+h
 k
 j
 "}
@@ -125,9 +148,9 @@ j
 "}
 (6,1,1) = {"
 b
-c
+f
 g
-g
+p
 b
 j
 j
@@ -137,7 +160,7 @@ j
 b
 b
 g
-h
+q
 b
 n
 n
@@ -165,7 +188,7 @@ d
 "}
 (10,1,1) = {"
 b
-f
+c
 g
 g
 b

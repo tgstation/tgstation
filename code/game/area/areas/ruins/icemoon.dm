@@ -8,4 +8,4 @@
 	name = "Bath House"
 	icon_state = "dk_yellow"
 	mood_bonus = 10
-	mood_message = "<span class='nicegreen'>This place is like paradise, I don't ever want to leave!\n</span>"
+	mood_message = "<span class='nicegreen'>This place reminds me of home.</span>\n"
