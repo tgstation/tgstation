@@ -17,6 +17,7 @@
 #include "code\_compile_options.dm"
 #include "code\world.dm"
 #include "code\__DEFINES\_globals.dm"
+#include "code\__DEFINES\_helpers.dm"
 #include "code\__DEFINES\_protect.dm"
 #include "code\__DEFINES\_tick.dm"
 #include "code\__DEFINES\access.dm"
