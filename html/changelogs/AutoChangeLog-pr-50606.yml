@@ -1,0 +1,5 @@
+author: "Qustinnus & MrDoomBringer"
+delete-after: True
+changes: 
+  - rscadd: "Adds hardcore random mode, you get a random character with some random bad quirks. You can earn hardcore random score and get on the leaderboards if you survive and get on the shuttle. If the odds are stacked against you more, you will also earn more points."
+  - rscadd: "Gold wheelchair, only for people with 5k hardcore random mode points"
