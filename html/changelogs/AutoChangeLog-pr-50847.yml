@@ -1,5 +1,0 @@
-author: "Mickyan"
-delete-after: True
-changes: 
-  - balance: "empath quirk can now sense abnormal body temperature on examine"
-  - balance: "lowered the mood malus from examining people with low sanity as an empath"

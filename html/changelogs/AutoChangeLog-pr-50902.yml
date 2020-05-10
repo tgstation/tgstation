@@ -1,5 +1,0 @@
-author: "TemporalOroboros"
-delete-after: True
-changes: 
-  - bugfix: "Plant grafts now work after their parent plant has been deleted."
-  - tweak: "Hydroponics trays now obey transfer amounts when dealing with water."

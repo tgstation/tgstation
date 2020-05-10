@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { useBackend } from '../backend';
 import { Box, Button } from '../components';
 import { refocusLayout } from './Layout';

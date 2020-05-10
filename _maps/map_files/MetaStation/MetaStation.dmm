@@ -45526,7 +45526,7 @@
 /obj/machinery/atmospherics/pipe/simple/green/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump/on{
+/obj/machinery/atmospherics/components/binary/pump{
 	dir = 1;
 	name = "N2 to Pure"
 	},

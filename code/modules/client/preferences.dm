@@ -112,6 +112,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	var/action_buttons_screen_locs = list()
 
+	///This var stores the amount of points the owner will get for making it out alive.
+	var/hardcore_survival_score = 0
+
 /datum/preferences/New(client/C)
 	parent = C
 
@@ -197,6 +200,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<a href='?_src_=prefs;preference=name;task=random'>Random Name</A> "
 			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_NAME]'>Always Random Name: [(randomise[RANDOM_NAME]) ? "Yes" : "No"]</a>"
 			dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_NAME_ANTAG]'>When Antagonist: [(randomise[RANDOM_NAME_ANTAG]) ? "Yes" : "No"]</a>"
+			if(user.client.get_exp_living(TRUE) >= PLAYTIME_HARDCORE_RANDOM)
+				dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_HARDCORE]'>Hardcore Random: [(randomise[RANDOM_HARDCORE]) ? "Yes" : "No"]</a>"
 			dat += "<br><b>Name:</b> "
 			dat += "<a href='?_src_=prefs;preference=name;task=input'>[real_name]</a><BR>"
 
@@ -1098,8 +1103,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					return
 				for(var/V in SSquirks.quirk_blacklist) //V is a list
 					var/list/L = V
+					if(!(quirk in L))
+						continue
 					for(var/Q in all_quirks)
-						if((quirk in L) && (Q in L) && !(Q == quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
+						if((Q in L) && !(Q == quirk)) //two quirks have lined up in the list of the list of quirks that conflict with each other, so return (see quirks.dm for more details)
 							to_chat(user, "<span class='danger'>[quirk] is incompatible with [Q].</span>")
 							return
 				var/value = SSquirks.quirk_points[quirk]
@@ -1740,16 +1747,23 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 /datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE)
 
-	if(randomise[RANDOM_SPECIES] && !character_setup)
+	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
+
+	if((randomise[RANDOM_SPECIES] || randomise[RANDOM_HARDCORE]) && !character_setup)
+
 		random_species()
 
-	if((randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG] && antagonist) && !character_setup)
+	if((randomise[RANDOM_BODY] || (randomise[RANDOM_BODY_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
 		slot_randomized = TRUE
 		random_character(gender, antagonist)
 
-	if((randomise[RANDOM_NAME] || randomise[RANDOM_NAME_ANTAG] && antagonist) && !character_setup)
+	if((randomise[RANDOM_NAME] || (randomise[RANDOM_NAME_ANTAG] && antagonist) || randomise[RANDOM_HARDCORE]) && !character_setup)
 		slot_randomized = TRUE
 		real_name = pref_species.random_name(gender)
+
+	if(randomise[RANDOM_HARDCORE] && parent.mob.mind && !character_setup)
+		if(can_be_random_hardcore())
+			hardcore_random_setup(character, antagonist)
 
 	if(roundstart_checks)
 		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
@@ -1805,6 +1819,15 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		character.update_body()
 		character.update_hair()
 		character.update_body_parts()
+
+/datum/preferences/proc/can_be_random_hardcore()
+	if(parent.mob.mind.assigned_role in GLOB.command_positions) //No command staff
+		return FALSE
+	for(var/A in parent.mob.mind.antag_datums)
+		var/datum/antagonist/antag
+		if(antag.get_team()) //No team antags
+			return FALSE
+	return TRUE
 
 /datum/preferences/proc/get_default_name(name_id)
 	switch(name_id)

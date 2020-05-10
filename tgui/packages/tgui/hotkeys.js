@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { callByond, IS_IE8 } from './byond';
 import { createLogger } from './logging';
 

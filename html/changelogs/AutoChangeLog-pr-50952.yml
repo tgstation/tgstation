@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - tweak: "Nanite Cloud Controllers now display stored rules for programs without requiring specific disks inserted."

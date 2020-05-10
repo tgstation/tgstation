@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { classes, isFalsy } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
