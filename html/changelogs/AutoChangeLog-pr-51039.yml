@@ -1,0 +1,4 @@
+author: "Skoglol"
+delete-after: True
+changes: 
+  - bugfix: "Dynamic config no longer overwrites ruleset restricted roles."
