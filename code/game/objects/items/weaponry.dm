@@ -223,12 +223,21 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 50)
 	resistance_flags = FIRE_PROOF
 
-/obj/item/katana/cursed
-	slot_flags = null
-
 /obj/item/katana/suicide_act(mob/user)
 	user.visible_message("<span class='suicide'>[user] is slitting [user.p_their()] stomach open with [src]! It looks like [user.p_theyre()] trying to commit seppuku!</span>")
 	return(BRUTELOSS)
+
+/obj/item/katana/cursed
+	slot_flags = null
+	item_flags = DROPDEL
+
+/obj/item/katana/cursed/equipped(mob/user)
+	. = ..()
+	user.gain_trauma(/datum/brain_trauma/magic/stalker)
+
+/obj/item/katana/cursed/Initialize()
+	..()
+	ADD_TRAIT(src, TRAIT_NODROP, CURSED_ITEM_TRAIT)
 
 /obj/item/wirerod
 	name = "wired rod"

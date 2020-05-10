@@ -76,8 +76,6 @@
 				to_chat(user, "<span class='notice'>You finish cutting into the rock.</span>")
 				gets_drilled(user, TRUE)
 				SSblackbox.record_feedback("tally", "pick_used_mining", 1, I.type)
-	else
-		return attack_hand(user)
 
 /turf/closed/mineral/proc/gets_drilled(user, give_exp = FALSE)
 	if (mineralType && (mineralAmt > 0))
@@ -112,6 +110,17 @@
 		to_chat(M, "<span class='notice'>You tunnel into the rock.</span>")
 		gets_drilled(M)
 
+/turf/closed/mineral/attack_hulk(mob/user)
+	gets_drilled(user)
+	..()
+
+/turf/closed/mineral/attack_hand(mob/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.gloves)
+			var/obj/item/clothing/gloves/G = H.gloves
+			attackby(G, H)
+
 /turf/closed/mineral/Bumped(atom/movable/AM)
 	..()
 	if(ishuman(AM))
@@ -119,6 +128,8 @@
 		var/obj/item/I = H.is_holding_tool_quality(TOOL_MINING)
 		if(I)
 			attackby(I, H)
+		else
+			attack_hand(H)
 		return
 	else if(iscyborg(AM))
 		var/mob/living/silicon/robot/R = AM

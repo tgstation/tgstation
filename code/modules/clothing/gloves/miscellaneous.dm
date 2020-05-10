@@ -145,3 +145,27 @@
 	desc = "These gloves have been enchanted with a spell that makes them electrically insulated and fireproof."
 	icon_state = "wizard"
 	item_state = "purplegloves"
+
+/obj/item/clothing/gloves/gauntlets
+	name = "concussive gaunlets"
+	desc = "Pickaxes... for your hands!"
+	icon_state = "concussive_gauntlets"
+	item_state = "concussive_gauntlets"
+	toolspeed = 0.1
+	strip_delay = 40
+	equip_delay_other = 20
+	cold_protection = HANDS
+	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT
+	heat_protection = HANDS
+	max_heat_protection_temperature = GLOVES_MAX_TEMP_PROTECT
+	resistance_flags = LAVA_PROOF | FIRE_PROOF //they are from lavaland after all
+	armor = list("melee" = 15, "bullet" = 25, "laser" = 15, "energy" = 15, "bomb" = 100, "bio" = 10, "rad" = 0, "fire" = 0, "acid" = 0) //bone bracer armor
+
+/obj/item/clothing/gloves/gauntlets/equipped(mob/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_GLOVES)
+		tool_behaviour = TOOL_MINING
+
+/obj/item/clothing/gloves/gauntlets/dropped()
+	. = ..()
+	tool_behaviour = initial(tool_behaviour)
