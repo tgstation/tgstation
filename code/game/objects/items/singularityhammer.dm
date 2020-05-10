@@ -84,7 +84,7 @@
 			playsound(user, 'sound/weapons/marauder.ogg', 50, TRUE)
 			var/turf/target = get_turf(A)
 			vortex(target,user)
-			addtimer(CALLBACK(src, /obj/item/singularityhammer/proc/recharge), 100)
+			addtimer(CALLBACK(src, .proc/recharge), 100)
 
 /obj/item/mjollnir
 	name = "Mjolnir"
