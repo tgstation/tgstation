@@ -403,7 +403,7 @@
 //Stun
 /obj/item/melee/blood_magic/stun
 	name = "Stunning Aura"
-	desc = "Will stun and mute a weak-minded victim on contact."
+	desc = "Will stun and mute a weak-minded victim on contact. Against the strong, it drives a spike of dark energy through their skull."
 	color = RUNE_COLOR_RED
 	invocation = "Fuu ma'jin!"
 
@@ -444,7 +444,8 @@
 				C.Jitter(8)
 				C.drop_all_held_items()
 				C.bleed(40)
-				C.apply_damage(60, STAMINA, BODY_ZONE_CHEST)
+				C.apply_damage(40, BRUTE, BODY_ZONE_HEAD)
+				playsound(loc, 'sound/weapons/pierce_slow.ogg', 30)
 			else
 				to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
 				L.Paralyze(160)
@@ -757,12 +758,12 @@
 					to_chat(user,"<span class='danger'>[H.p_their(TRUE)] blood has been tainted by an even stronger form of blood magic, it's no use to us like this!</span>")
 					return
 				if(H.blood_volume > BLOOD_VOLUME_SAFE)
-					H.blood_volume -= 100
-					uses += 50
+					H.blood_volume -= 200
+					uses += 100
 					user.Beam(H,icon_state="drainbeam",time=10)
 					playsound(get_turf(H), 'sound/magic/enter_blood.ogg', 50)
 					H.visible_message("<span class='danger'>[user] drains some of [H]'s blood!</span>")
-					to_chat(user,"<span class='cultitalic'>Your blood rite gains 50 charges from draining [H]'s blood.</span>")
+					to_chat(user,"<span class='cultitalic'>Your blood rite gains 100 charges from draining [H]'s blood.</span>")
 					new /obj/effect/temp_visual/cult/sparks(get_turf(H))
 				else
 					to_chat(user,"<span class='warning'>[H.p_theyre(TRUE)] missing too much blood - you cannot drain [H.p_them()] further!</span>")
@@ -812,9 +813,13 @@
 
 /obj/item/melee/blood_magic/manipulator/attack_self(mob/living/user)
 	if(iscultist(user))
-		var/list/options = list("Blood Spear (150)", "Blood Bolt Barrage (300)", "Blood Beam (500)")
-		var/choice = input(user, "Choose a greater blood rite...", "Greater Blood Rites") as null|anything in options
-		if(!choice)
+		var/list/spells = list(
+			"Blood Spear (150)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "bloodspear0"),
+			"Blood Bolt Barrage (300)" = image(icon = 'icons/obj/guns/projectile.dmi', icon_state = "arcane_barrage"),
+			"Blood Beam (500)" = image(icon = 'icons/obj/items_and_weapons.dmi', icon_state = "disintegrate")
+			)
+		var/choice = show_radial_menu(user, src, spells, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE)
+		if(!check_menu(user))
 			to_chat(user, "<span class='cultitalic'>You decide against conducting a greater blood rite.</span>")
 			return
 		switch(choice)
@@ -858,3 +863,10 @@
 					else
 						to_chat(user, "<span class='cultitalic'>You need a free hand for this rite!</span>")
 						qdel(rite)
+
+/obj/item/melee/blood_magic/manipulator/proc/check_menu(mob/living/user)
+	if(!istype(user))
+		return FALSE
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
