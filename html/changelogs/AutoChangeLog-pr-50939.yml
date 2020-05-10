@@ -1,6 +1,0 @@
-author: "XDTM"
-delete-after: True
-changes: 
-  - tweak: "Abductor healing glands now properly check organ damage when detecting which organs to replace."
-  - rscadd: "Abductor healing glands can now replace damaged stomachs and inflamed appendixes."
-  - rscadd: "Abductor healing glands now also reject implants (like mindshield implants) on top of cybernetic organs."

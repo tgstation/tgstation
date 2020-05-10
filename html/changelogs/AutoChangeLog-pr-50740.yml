@@ -1,5 +1,0 @@
-author: "MMMiracles"
-delete-after: True
-changes: 
-  - tweak: "Boxstation's AI core was moved back into the original position just below the bridge."
-  - tweak: "Boxstation's gravity generator was moved to the left of Engineering, accessed through the main Engineering section."

@@ -1,5 +1,0 @@
-author: "Couls"
-delete-after: True
-changes: 
-  - rscadd: "Give item keybind, default to G. Press it while holding an item to offer it to someone nearby, they can click the alert they get to accept it or move for it to go away"
-  - rscadd: "There is a right click menu option for giving"

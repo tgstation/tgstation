@@ -1,4 +1,0 @@
-author: "Shadark"
-delete-after: True
-changes: 
-  - bugfix: "Contraband items in vending machines now display their correct price."
