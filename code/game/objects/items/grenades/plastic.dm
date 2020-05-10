@@ -15,7 +15,7 @@
 	var/mutable_appearance/plastic_overlay
 	var/directional = FALSE
 	var/aim_dir = NORTH
-	var/boom_sizes = list(0, 0, 3)
+	var/boom_sizes = list(1, 2, 3)
 	var/full_damage_on_mobs = FALSE
 
 /obj/item/grenade/c4/Initialize()
@@ -161,4 +161,4 @@
 	icon_state = "plasticx40"
 	item_state = "plasticx4"
 	directional = TRUE
-	boom_sizes = list(0, 2, 5)
+	boom_sizes = list(1, 2, 5)
