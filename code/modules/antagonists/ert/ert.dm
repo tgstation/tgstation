@@ -266,7 +266,6 @@
 
 
 /datum/antagonist/ert/families/undercover_cop/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/effects/families_police.ogg', 100, FALSE, pressure_affected = FALSE)
 	to_chat(owner, "<B><font size=3 color=red>You are the [name].</font></B>")
 	to_chat(owner, "<B><font size=3 color=red>You are NOT a Nanotrasen Employee. You work for the local government.</font></B>")
 

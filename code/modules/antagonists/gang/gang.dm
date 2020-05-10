@@ -28,7 +28,7 @@
 			if(!equipped)
 				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
 				qdel(O)
-
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	..()
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
@@ -65,7 +65,6 @@
 	return TRUE
 
 /datum/antagonist/gang/greet()
-	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	to_chat(owner.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
 
 	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
@@ -445,7 +444,7 @@
 		return FALSE
 
 	var/lowest_gang_count = my_gang_datum.my_gang.members.len
-	for(var/datum/team/gang/TT in handler.gangs)
+	for(var/datum/team/gang/TT in my_gang_datum.handler.gangs)
 		var/alive_gangsters = 0
 		for(var/datum/mind/gangers in TT.members)
 			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
@@ -455,7 +454,7 @@
 		if(TT != my_gang_datum.my_gang)
 			if(alive_gangsters < lowest_gang_count)
 				lowest_gang_count = alive_gangsters
-	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + handler.gang_balance_cap))
+	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + my_gang_datum.handler.gang_balance_cap))
 		to_chat(H, "Your gang is pretty packed right now. You don't need more members just yet. If the other families expand, you can recruit more members.")
 		return FALSE
 	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
