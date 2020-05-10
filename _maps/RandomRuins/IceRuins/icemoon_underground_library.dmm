@@ -44,7 +44,7 @@
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/buried_library)
 "aj" = (
-/obj/structure/bookcase/random,
+/obj/item/paper/fluff/ruins/oldstation/protosing,
 /turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "ak" = (
@@ -75,21 +75,17 @@
 	},
 /area/ruin/unpowered/buried_library)
 "aq" = (
-/obj/structure/fluff/paper{
-	icon_state = "paper";
-	dir = 1
-	},
+/obj/structure/fluff/paper/stack,
 /turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	icon_state = "wood-broken"
 	},
 /area/ruin/unpowered/buried_library)
 "ar" = (
 /turf/open/floor/plasteel/cult,
 /area/ruin/unpowered/buried_library)
 "as" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/item/paper/fluff/ruins/oldstation/protosing,
-/turf/open/floor/plating/asteroid/snow/icemoon,
+/obj/structure/bookcase/random,
+/turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "at" = (
 /obj/structure/fluff/paper,
@@ -108,10 +104,6 @@
 "aw" = (
 /turf/open/floor/plating/icemoon,
 /area/ruin/unpowered/buried_library)
-"ax" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/snow/icemoon,
-/area/ruin/unpowered/buried_library)
 "ay" = (
 /obj/machinery/door/keycard/library,
 /turf/open/floor/plasteel/cult,
@@ -125,6 +117,11 @@
 "aA" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating/icemoon,
+/area/ruin/unpowered/buried_library)
+"aB" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
 /area/ruin/unpowered/buried_library)
 "aC" = (
 /obj/item/feather,
@@ -141,11 +138,6 @@
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/ruin/unpowered/buried_library)
-"aF" = (
-/obj/item/book/manual/random,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "aG" = (
 /obj/structure/table/bronze,
@@ -289,7 +281,7 @@
 	dir = 1
 	},
 /turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	icon_state = "wood-broken7"
 	},
 /area/ruin/unpowered/buried_library)
 "be" = (
@@ -331,12 +323,9 @@
 /turf/closed/mineral/random/snow/no_caves,
 /area/ruin/unpowered/buried_library)
 "bk" = (
-/obj/structure/fluff/paper{
-	icon_state = "paper";
-	dir = 10
-	},
+/obj/structure/fluff/paper/stack,
 /turf/open/floor/wood{
-	initial_gas_mix = "ICEMOON_ATMOS"
+	icon_state = "wood-broken4"
 	},
 /area/ruin/unpowered/buried_library)
 "bl" = (
@@ -355,11 +344,6 @@
 "bo" = (
 /obj/item/stack/sheet/mineral/wood,
 /turf/closed/mineral/random/snow/no_caves,
-/area/ruin/unpowered/buried_library)
-"bp" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/fluff/paper,
-/turf/open/floor/plating/asteroid/snow/icemoon,
 /area/ruin/unpowered/buried_library)
 "bq" = (
 /obj/structure/mineral_door/wood,
@@ -384,6 +368,23 @@
 /obj/item/stack/sheet/mineral/wood,
 /turf/closed/mineral/random/snow/no_caves,
 /area/icemoon/underground/unexplored)
+"bv" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/ruin/unpowered/buried_library)
+"bw" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/ruin/unpowered/buried_library)
+"bx" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered/buried_library)
 "by" = (
 /obj/structure/statue/bronze/marx,
 /turf/open/floor/carpet/black{
@@ -415,6 +416,93 @@
 /mob/living/simple_animal/pet/fox,
 /turf/open/floor/wood{
 	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/unpowered/buried_library)
+"bD" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered/buried_library)
+"bE" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/ruin/unpowered/buried_library)
+"bF" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/ruin/unpowered/buried_library)
+"bG" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/ruin/unpowered/buried_library)
+"bH" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper,
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/ruin/unpowered/buried_library)
+"bI" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered/buried_library)
+"bJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
+	},
+/area/ruin/unpowered/buried_library)
+"bK" = (
+/obj/item/stack/sheet/mineral/wood,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered/buried_library)
+"bL" = (
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 10
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/ruin/unpowered/buried_library)
+"bM" = (
+/obj/structure/fluff/paper{
+	icon_state = "paper";
+	dir = 1
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered/buried_library)
+"bN" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/fluff/paper,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered/buried_library)
+"bO" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered/buried_library)
+"bP" = (
+/obj/item/paper/crumpled/bloody/fluff/stations/lavaland/library/warning,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/ruin/unpowered/buried_library)
+"bQ" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
 	},
 /area/ruin/unpowered/buried_library)
 
@@ -487,7 +575,7 @@ an
 au
 ae
 af
-bk
+bL
 ac
 ad
 ad
@@ -502,7 +590,7 @@ aa
 aa
 ak
 ak
-aR
+bk
 an
 an
 ae
@@ -535,7 +623,7 @@ ak
 av
 bg
 ah
-aT
+bH
 ah
 ak
 ac
@@ -562,7 +650,7 @@ aA
 ah
 ao
 ah
-aq
+bM
 ac
 ad
 ad
@@ -578,12 +666,12 @@ ac
 ak
 au
 ak
-ao
+bx
 aR
-ao
+bE
 aA
 ao
-ae
+bw
 ah
 aZ
 ah
@@ -608,9 +696,9 @@ aG
 aD
 aX
 an
-ao
+bx
 ae
-ao
+bI
 ah
 ae
 ac
@@ -625,9 +713,9 @@ aa
 aa
 ad
 ac
-as
+aj
 av
-aF
+bb
 aD
 aD
 bz
@@ -635,12 +723,12 @@ aD
 bB
 ak
 ae
-ao
+bJ
 ae
-ao
+bI
 ac
-ax
-ae
+an
+bQ
 an
 "}
 (10,1,1) = {"
@@ -651,7 +739,7 @@ ad
 ad
 ac
 ap
-ax
+an
 ak
 aD
 aD
@@ -660,11 +748,11 @@ an
 aw
 ak
 ao
-af
+bK
 aR
 ae
 bq
-ae
+bO
 aU
 ad
 "}
@@ -683,13 +771,13 @@ an
 aD
 aD
 by
-ao
+bG
 aw
 ao
 ae
 bm
 ac
-ae
+bP
 an
 ad
 "}
@@ -700,7 +788,7 @@ ab
 aI
 ar
 al
-aR
+aq
 aE
 af
 aD
@@ -725,19 +813,19 @@ am
 aJ
 aW
 ay
-ae
+aB
 ah
 ao
 ae
-ao
+bv
 ae
 af
-ax
+an
 bi
 ah
 ak
 ah
-bp
+bi
 ac
 ad
 ad
@@ -755,14 +843,14 @@ ah
 an
 ah
 bh
-aj
+as
 az
 ah
 ak
 ah
 ak
 bn
-aT
+bN
 ac
 ad
 aa
@@ -776,12 +864,12 @@ ai
 ar
 al
 bc
-aj
+ah
 aL
 ah
 aA
 ah
-ao
+bF
 ah
 ak
 ak
@@ -802,13 +890,13 @@ al
 al
 bd
 ah
-ao
+bv
 ah
 ao
 aV
 ak
 ah
-ax
+an
 ak
 bm
 bo
@@ -827,12 +915,12 @@ ad
 ac
 be
 bf
-ae
+bw
 aP
-ae
+bD
 aR
 ae
-ax
+an
 ak
 bj
 ak
