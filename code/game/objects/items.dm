@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	name = "item"
 	icon = 'icons/obj/items_and_weapons.dmi'
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
-	///icon state name for inhand overlays, has lower priority than mob_overlay_state
+	///icon state for inhand overlays, if null the normal icon_state will be used.
 	var/inhand_icon_state = null
 	///Icon file for left hand inhand overlays
 	var/lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
@@ -20,7 +20,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 
 	///Icon file for mob worn overlays.
 	var/icon/worn_icon
-	///Icon state for mob worn overlays
+	///icon state for mob worn overlays, if null the normal icon_state will be used.
 	var/worn_icon_state
 	///Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
