@@ -437,7 +437,7 @@
 
 		else
 			to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
-			L.Paralyze(160)
+			L.Paralyze(16 SECONDS)
 			L.flash_act(1,TRUE)
 			if(issilicon(target))
 				var/mob/living/silicon/S = L

@@ -67,9 +67,10 @@
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/emergency_shield/cult/barrier
-	var/obj/effect/rune/parent_rune // for deleting the barrier rune that created the barrier
 	density = FALSE //toggled on right away by the parent rune
 	CanAtmosPass = ATMOS_PASS_DENSITY
+	///The rune that created the shield itself. Used to delete the rune when the shield is destroyed.
+	var/obj/effect/rune/parent_rune
 
 /obj/structure/emergency_shield/cult/barrier/attack_hand(mob/living/user)
 	parent_rune.attack_hand(user)
@@ -81,11 +82,18 @@
 		..()
 
 /obj/structure/emergency_shield/cult/barrier/Destroy()
-	if(parent_rune && !QDELETED(parent_rune))
+	if(parent_rune)
 		parent_rune.visible_message("<span class='danger'>The [parent_rune] fades away as [src] is destroyed!</span>")
-		qdel(parent_rune)
+		QDEL_NULL(parent_rune)
 	..()
 
+/**
+*Turns the shield on and off.
+*
+*The shield has 2 states: on and off. When on, it will block movement,projectiles, items, etc. and be clearly visible, and block atmospheric gases.
+*When off, the rune no longer blocks anything and turns invisible.
+*The barrier itself is not intended to interact with the conceal runes cult spell for balance purposes.
+*/
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
 	density = !density
 	air_update_turf(1)

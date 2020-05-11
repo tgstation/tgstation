@@ -610,6 +610,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "4"
 	color = RUNE_COLOR_DARKRED
+	///The barrier summoned by the rune when invoked. Tracked as a variable to prevent refreshing the barrier's integrity.
 	var/obj/structure/emergency_shield/cult/barrier/barrier //barrier is the path and variable name.... i am not a clever man
 
 /obj/effect/rune/wall/Initialize(mapload, set_keyword)
@@ -618,8 +619,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/wall/Destroy()
 	GLOB.wall_runes -= src
-	if(barrier && !QDELETED(barrier))
-		qdel(barrier)
+	if(barrier)
+		QDEL_NULL(barrier)
 	return ..()
 
 /obj/effect/rune/wall/invoke(var/list/invokers)
