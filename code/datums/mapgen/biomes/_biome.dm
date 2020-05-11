@@ -7,6 +7,18 @@
 	/mob/living/simple_animal/hostile/jungle/mook{faction = list("wildlife")} = 50,
 	)
 
+/datum/biome/proc/generate_fauna(var/turf/T)
+	if(prob(fauna_density))
+		var/mob/fauna = pick(fauna_types)
+		new fauna(T)
+
+
+/datum/biome/proc/generate_flora(var/turf/T)
+	if(prob(flora_density))
+		var/obj/structure/flora = pick(flora_types)
+		new flora(T)
+
+
 /datum/biome/mudlands
 	turf_type = /turf/open/floor/plating/dirt/jungle/dark
 	flora_types = list(/obj/structure/flora/grass/jungle,/obj/structure/flora/grass/jungle/b, /obj/structure/flora/rock/jungle, /obj/structure/flora/rock/pile/largejungle)
