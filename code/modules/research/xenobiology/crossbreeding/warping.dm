@@ -355,13 +355,23 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 	var/area/rune_area = get_area(rune_turf)
 	cooldown = world.time + max_cooldown
+
 	for(var/obj/item/recharged in rune_turf) //recharges items on the rune
 		electrishare(recharged)
+
+	for(var/obj/mecha/recharging_mech in rune_turf) //mom said it's mech's turn on the yellow rune
+		electrishare(recharging_mech)
+
+	for(var/mob/living/silicon/robot/charged_borg in rune_turf)
+		borg_electrishare(charged_borg)//borgs use a different get_cell() so they use a different proc like the special needs child they are
+
 	for(var/obj/machinery/power/apc/apc_recharged in rune_area) //recharges the APC of the room
 		electrishare(apc_recharged)
 
 
-///charge the battery of an item by 20% every time it's called.
+
+
+///charge the battery of an item by 20% every time it's called. God bless get_cell()
 /obj/effect/warped_rune/yellowspace/proc/electrishare(obj/recharged)
 	if(recharged.get_cell()) //check if the item has a cell
 		var/obj/item/stock_parts/cell/battery = recharged.get_cell()
@@ -373,6 +383,20 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 			battery.charge = battery.maxcharge
 		battery.update_icon()
 		recharged.update_icon()
+
+
+///the same thing as electrishare but with borgs, 20% of the borg's battery rechared every 5 seconds.
+/obj/effect/warped_rune/yellowspace/proc/borg_electrishare(mob/living/silicon/robot/charged_borg)
+	if(charged_borg.get_cell()) //check if the item has a cell
+		var/obj/item/stock_parts/cell/battery = charged_borg.get_cell()
+		if(battery.charge >= battery.maxcharge) //don't charge if the battery is full
+			return
+
+		battery.charge += battery.maxcharge * 0.2
+		if(battery.charge > battery.maxcharge)
+			battery.charge = battery.maxcharge //we don't need to update the cell icon since literally no one can see the battery inside the borg anyway.
+
+
 
 /* Dark purple crossbreed, Fill up any beaker like container with 50 unit of plasma dust every 30 seconds  */
 
