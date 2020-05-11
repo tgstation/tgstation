@@ -1,12 +1,14 @@
 ///We take a constant input of reagents, and produce a pill once a set volume is reached
 /obj/machinery/plumbing/pill_press
 	name = "chemical press"
-	desc = "A press that makes pills and patches."
+	desc = "A press that makes pills, patches and bottles."
 	icon_state = "pill_press"
 	///maximum size of a pill
 	var/max_pill_volume = 50
 	///maximum size of a patch
 	var/max_patch_volume = 40
+	///maximum size of a bottle
+	var/max_bottle_volume = 30
 	///current operating product (pills or patches)
 	var/product = "pill"
 	///the minimum size a pill or patch can be
@@ -66,6 +68,11 @@
 			reagents.trans_to(P, current_volume)
 			P.name = trim("[product_name] patch")
 			stored_products += P
+		else if (product == "bottle")
+			var/obj/item/reagent_containers/glass/bottle/P = new(src)
+			reagents.trans_to(P, current_volume)
+			P.name = trim("[product_name] bottle")
+			stored_products += P
 	if(stored_products.len)
 		var/pill_amount = 0
 		for(var/obj/item/reagent_containers/pill/P in loc)
@@ -118,4 +125,6 @@
 				max_volume = max_pill_volume
 			else if (product == "patch")
 				max_volume = max_patch_volume
+			else if (product == "bottle")
+				max_volume = max_bottle_volume
 			current_volume = clamp(current_volume, min_volume, max_volume)
