@@ -23,6 +23,24 @@ const logger = createLogger('Window');
 const DEFAULT_SIZE = [400, 600];
 
 export class Window extends Component {
+  constructor() {
+    super();
+    this.fancy = null;
+  }
+
+  updateFancy() {
+    const { config } = useBackend(this.context);
+    if (this.fancy !== config.fancy) {
+      logger.log('changing fancy mode to', config.fancy);
+      this.fancy = config.fancy;
+      callByond('winset', {
+        id: window.__windowId__,
+        titlebar: !config.fancy,
+        'can-resize': !config.fancy,
+      });
+    }
+  }
+
   componentDidMount() {
     const { config, suspended } = useBackend(this.context);
     if (suspended) {
@@ -39,12 +57,12 @@ export class Window extends Component {
     ];
     setWindowKey(config.window.key);
     recallWindowGeometry(config.window.key, { size });
-    callByond('winset', {
-      id: window.__windowId__,
-      titlebar: !config.fancy,
-      'can-resize': !config.fancy,
-    });
+    this.updateFancy();
     refocusLayout();
+  }
+
+  componentDidUpdate() {
+    this.updateFancy();
   }
 
   render() {

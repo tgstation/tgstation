@@ -112,7 +112,15 @@
 	else
 		window_id = SStgui.create_window_id()
 		// Build window options
-		var/window_options = "can_minimize=0;auto_format=0;"
+		var/window_options = "can_minimize=0;auto_format=0"
+		// If we have a width and height, use them.
+		if(width && height)
+			window_options += "size=[width]x[height];"
+		// Remove titlebar and resize handles for a fancy window
+		if(user.client.prefs.tgui_fancy)
+			window_options += "titlebar=0;can_resize=0;"
+		else
+			window_options += "titlebar=1;can_resize=1;"
 		// Generate page html
 		var/html = SStgui.basehtml
 		// Replace template tokens with important UI data
