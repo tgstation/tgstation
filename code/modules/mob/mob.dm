@@ -771,9 +771,9 @@
 				if("recharge")
 					L[++L.len] = list("[S.panel]", "[S.charge_counter/10.0]/[S.charge_max/10]", S.name, REF(S))
 				if("charges")
-					L[++L.len] = list("[S.panel]", "[S.charge_counter]/[S.charge_max]", S.name, S)
+					L[++L.len] = list("[S.panel]", "[S.charge_counter]/[S.charge_max]", S.name, REF(S))
 				if("holdervar")
-					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, S)
+					L[++L.len] = list("[S.panel]", "[S.holder_var_type] [S.holder_var_amount]", S.name, REF(S))
 	return L
 
 #define MOB_FACE_DIRECTION_DELAY 1
