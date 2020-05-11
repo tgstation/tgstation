@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - tweak: "The Clarke's weight has been reduced, causing it not to break floor tiles anymore."
