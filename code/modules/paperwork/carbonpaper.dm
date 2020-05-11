@@ -1,7 +1,7 @@
 /obj/item/paper/carbon
 	name = "sheet of carbon"
 	icon_state = "paper_stack"
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	var/copied = FALSE
 	var/iscopy = FALSE
 

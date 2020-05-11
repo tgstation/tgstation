@@ -4,7 +4,7 @@
 	name = "bottle"
 	desc = "A small bottle."
 	icon_state = "bottle"
-	item_state = "atoxinbottle"
+	inhand_icon_state = "atoxinbottle"
 	possible_transfer_amounts = list(5,10,15,25,30)
 	volume = 30
 	fill_icon_thresholds = list(0, 10, 30, 50, 70)

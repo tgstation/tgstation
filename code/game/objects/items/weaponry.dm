@@ -35,7 +35,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "\improper SORD"
 	desc = "This thing is so unspeakably shitty you are having a hard time even holding it."
 	icon_state = "sord"
-	item_state = "sord"
+	inhand_icon_state = "sord"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	slot_flags = ITEM_SLOT_BELT
@@ -54,7 +54,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "claymore"
 	desc = "What are you standing around staring at this for? Get to killing!"
 	icon_state = "claymore"
-	item_state = "claymore"
+	inhand_icon_state = "claymore"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -197,7 +197,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 			user.update_icons()
 			new_name = "GORE-DRENCHED CLAYMORE OF [pick("THE WHIMSICAL SLAUGHTER", "A THOUSAND SLAUGHTERED CATTLE", "GLORY AND VALHALLA", "ANNIHILATION", "OBLITERATION")]"
 			icon_state = "claymore_gold"
-			item_state = "cultblade"
+			inhand_icon_state = "cultblade"
 			remove_atom_colour(ADMIN_COLOUR_PRIORITY)
 
 	name = new_name
@@ -207,7 +207,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "katana"
 	desc = "Woefully underpowered in D20."
 	icon_state = "katana"
-	item_state = "katana"
+	inhand_icon_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -234,7 +234,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "wired rod"
 	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
 	icon_state = "wiredrod"
-	item_state = "rods"
+	inhand_icon_state = "rods"
 	flags_1 = CONDUCT_1
 	force = 9
 	throwforce = 10
@@ -274,7 +274,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day, due to its ease of lodging itself into its victim's body parts."
 	icon_state = "throwingstar"
-	item_state = "eshield0"
+	inhand_icon_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	force = 2
@@ -380,7 +380,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A cane used by a true gentleman. Or a clown."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "cane"
-	item_state = "stick"
+	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 5
@@ -417,7 +417,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "A great tool to drag someone else's drinks across the bar."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "cane"
-	item_state = "stick"
+	inhand_icon_state = "stick"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 3
@@ -445,7 +445,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "mounted chainsaw"
 	desc = "A chainsaw that has replaced your arm."
 	icon_state = "chainsaw_on"
-	item_state = "mounted_chainsaw"
+	inhand_icon_state = "mounted_chainsaw"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
 	item_flags = ABSTRACT | DROPDEL
@@ -513,20 +513,20 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "liz o' nine tails"
 	desc = "A whip fashioned from the severed tails of lizards."
 	icon_state = "tailwhip"
-	item_state = "tailwhip"
+	inhand_icon_state = "tailwhip"
 	item_flags = NONE
 
 /obj/item/melee/chainofcommand/tailwhip/kitty
 	name = "cat o' nine tails"
 	desc = "A whip fashioned from the severed tails of cats."
 	icon_state = "catwhip"
-	item_state = "catwhip"
+	inhand_icon_state = "catwhip"
 
 /obj/item/melee/skateboard
 	name = "improvised skateboard"
 	desc = "A skateboard. It can be placed on its wheels and ridden, or used as a strong weapon."
 	icon_state = "skateboard"
-	item_state = "skateboard"
+	inhand_icon_state = "skateboard"
 	force = 12
 	throwforce = 4
 	w_class = WEIGHT_CLASS_NORMAL
@@ -543,7 +543,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "skateboard"
 	desc = "A RaDSTORMz brand professional skateboard. It looks sturdy and well made."
 	icon_state = "skateboard2"
-	item_state = "skateboard2"
+	inhand_icon_state = "skateboard2"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/pro
 	custom_premium_price = 500
 
@@ -551,7 +551,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "hoverboard"
 	desc = "A blast from the past, so retro!"
 	icon_state = "hoverboard_red"
-	item_state = "hoverboard_red"
+	inhand_icon_state = "hoverboard_red"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard
 	custom_premium_price = 2015
 
@@ -559,7 +559,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "\improper Board Of Directors"
 	desc = "The engineering complexity of a spaceship concentrated inside of a board. Just as expensive, too."
 	icon_state = "hoverboard_nt"
-	item_state = "hoverboard_nt"
+	inhand_icon_state = "hoverboard_nt"
 	board_item_type = /obj/vehicle/ridden/scooter/skateboard/hoverboard/admin
 
 /obj/item/melee/baseball_bat
@@ -567,7 +567,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "There ain't a skull in the league that can withstand a swatter."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "baseball_bat"
-	item_state = "baseball_bat"
+	inhand_icon_state = "baseball_bat"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 10
@@ -615,7 +615,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "metal baseball bat"
 	desc = "This bat is made of highly reflective, highly armored material."
 	icon_state = "baseball_bat_metal"
-	item_state = "baseball_bat_metal"
+	inhand_icon_state = "baseball_bat_metal"
 	force = 12
 	throwforce = 15
 
@@ -633,7 +633,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Useful for killing insects of all sizes."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "flyswatter"
-	item_state = "flyswatter"
+	inhand_icon_state = "flyswatter"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 1
@@ -765,7 +765,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	name = "slapper"
 	desc = "This is how real men fight."
 	icon_state = "latexballon"
-	item_state = "nothing"
+	inhand_icon_state = "nothing"
 	force = 0
 	throwforce = 0
 	item_flags = DROPDEL | ABSTRACT
@@ -793,7 +793,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	desc = "Futuristic tech has allowed these classic spring-boxing toys to essentially act as a fully functional hand-operated hand prosthetic."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "extendohand"
-	item_state = "extendohand"
+	inhand_icon_state = "extendohand"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	force = 0
@@ -821,7 +821,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	attack_verb = list("whacked", "thwacked", "walloped", "socked")
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "gohei"
-	item_state = "gohei"
+	inhand_icon_state = "gohei"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 
