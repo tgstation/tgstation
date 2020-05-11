@@ -57,7 +57,8 @@ SUBSYSTEM_DEF(statpanels)
 			C << output("[mc_data_encoded];[coord_entry];[url_encode(C.holder.href_token)]", "statbrowser:update_mc")
 		var/list/proc_holders = C.mob.get_proc_holders()
 		C.spell_tabs.Cut()
-		for(var/list/item in proc_holders)
+		for(var/I in proc_holders)
+			var/list/item = I
 			C.spell_tabs |= item[1]
 		var/proc_holders_encoded = ""
 		if(C.statpanel in C.spell_tabs)
