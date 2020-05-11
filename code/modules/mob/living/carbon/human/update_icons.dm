@@ -499,7 +499,9 @@ generate/load female uniform sprites matching all previously decided variables
 	if(override_state)
 		t_state = override_state
 	else
-		if(isinhands && item_state)
+		if (mob_overlay_state)
+			t_state = mob_overlay_state
+		else if(isinhands && item_state)
 			t_state = item_state
 		else
 			t_state = icon_state
