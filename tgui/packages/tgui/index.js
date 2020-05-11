@@ -151,7 +151,6 @@ const setupApp = () => {
 
   // Subscribe for bankend updates
   window.update = stateJson => {
-    logger.log('update');
     const prevState = store.getState();
     // NOTE: stateJson can be an object only if called manually from console.
     // This is useful for debugging tgui in external browsers, like Chrome.

@@ -66,7 +66,7 @@ export const backendReducer = (state, action) => {
     return {
       ...state,
       config,
-      assets: payload.assets,
+      assets: payload.assets || {},
       data,
       shared,
       visible,

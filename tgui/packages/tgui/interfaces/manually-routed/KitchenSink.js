@@ -1,11 +1,10 @@
 import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../../backend';
-import { BlockQuote, Box, Button, ByondUi, Collapsible, Flex, Icon, Input, Knob, LabeledList, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip, NoticeBox } from '../../components';
-import { DraggableControl } from '../../components/DraggableControl';
-import { Window } from '../../layouts';
+import { BlockQuote, Box, Button, ByondUi, Collapsible, DraggableControl, Flex, Icon, Input, Knob, LabeledList, NoticeBox, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../../components';
 import { formatSiUnit } from '../../format';
+import { Window } from '../../layouts';
 
-const COLORS_ARBITRARY = [
+const COLORS_SPECTRUM = [
   'red',
   'orange',
   'yellow',
@@ -81,6 +80,7 @@ export const KitchenSink = (props, context) => {
   const PageComponent = PAGES[pageIndex].component();
   return (
     <Window
+      title="Kitchen Sink"
       width={600}
       height={500}
       theme={theme}
@@ -137,14 +137,14 @@ const KitchenSinkButton = props => {
             content={color} />
         ))}
         <br />
-        {COLORS_ARBITRARY.map(color => (
+        {COLORS_SPECTRUM.map(color => (
           <Button
             key={color}
             color={color}
             content={color} />
         ))}
         <br />
-        {COLORS_ARBITRARY.map(color => (
+        {COLORS_SPECTRUM.map(color => (
           <Box inline
             mx="7px"
             key={color}

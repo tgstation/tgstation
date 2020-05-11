@@ -142,6 +142,11 @@
 /datum/proc/ui_close(mob/user)
 
 /**
+ * Stack of window ids that are free to be recycled into
+ */
+/client/var/list/tgui_free_windows = list()
+
+/**
  * verb
  *
  * Called by UIs when they are closed.

@@ -66,7 +66,7 @@ export const CentcomPodLauncherContent = (props, context) => {
               disabled={!data.oldArea}
               onClick={() => act('teleportBack')} />
           </LabeledList.Item>
-          <LabeledList.Item label="Item Mode" >
+          <LabeledList.Item label="Item Mode">
             <Button
               content="Clone Items"
               selected={data.launchClone}

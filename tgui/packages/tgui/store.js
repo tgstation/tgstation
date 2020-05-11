@@ -5,10 +5,14 @@
  */
 
 import { flow } from 'common/fp';
-import { applyMiddleware, createStore as createReduxStore } from 'common/redux';
+import { applyMiddleware, combineReducers, createStore as createReduxStore } from 'common/redux';
 import { Component } from 'inferno';
 import { backendReducer } from './backend';
-import { hotKeyMiddleware, hotKeyReducer } from './hotkeys';
+import { debugReducer } from './debug';
+import { hotKeyMiddleware } from './hotkeys';
+import { createLogger } from './logging';
+
+const logger = createLogger('store');
 
 export const createStore = () => {
   const reducer = flow([
@@ -16,13 +20,28 @@ export const createStore = () => {
     (state = {}, action) => state,
     // Global state reducers
     backendReducer,
-    hotKeyReducer,
+    combineReducers({
+      debug: debugReducer,
+    }),
   ]);
   const middleware = [
-    // loggingMiddleware,
     hotKeyMiddleware,
   ];
+  if (process.env.NODE_ENV !== 'production') {
+    middleware.push(loggingMiddleware);
+  }
   return createReduxStore(reducer, applyMiddleware(...middleware));
+};
+
+const loggingMiddleware = store => next => action => {
+  const { type, payload } = action;
+  if (type === 'backend/update') {
+    logger.debug('action', { type });
+  }
+  else {
+    logger.debug('action', action);
+  }
+  return next(action);
 };
 
 export class StoreProvider extends Component {

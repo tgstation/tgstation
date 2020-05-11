@@ -125,7 +125,7 @@ export const Vending = (props, context) => {
             )}
           </Section>
         )}
-        <Section title="Products" >
+        <Section title="Products">
           <Table>
             {inventory.map(product => (
               <VendingRow

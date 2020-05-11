@@ -27,7 +27,7 @@ export const MiningVendor = (props, context) => {
             </Box>
           )}
         </Section>
-        <Section title="Equipment" >
+        <Section title="Equipment">
           <Table>
             {inventory.map((product => {
               return (

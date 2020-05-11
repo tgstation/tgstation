@@ -108,7 +108,7 @@ const CfStep2 = (props, context) => {
               `}
               position="right" />
           </Table.Cell>
-          <Table.Cell >
+          <Table.Cell>
             <Button
               content="Standard"
               selected={data.hw_battery === 1}

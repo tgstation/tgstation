@@ -37,7 +37,7 @@ export const getRoutedComponent = state => {
   }
   if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
-    if (state.showKitchenSink) {
+    if (state.debug.kitchenSink) {
       return require('./interfaces/manually-routed/KitchenSink').KitchenSink;
     }
   }

@@ -15,9 +15,14 @@ SUBSYSTEM_DEF(tgui)
 	runlevels = RUNLEVEL_LOBBY | RUNLEVELS_DEFAULT
 
 	var/list/currentrun = list()
-	var/list/open_uis = list() // A list of open UIs, grouped by src_object and ui_key.
-	var/list/processing_uis = list() // A list of processing UIs, ungrouped.
-	var/basehtml // The HTML base used for all UIs.
+	/// A list of open UIs, grouped by src_object and ui_key.
+	var/list/open_uis = list()
+	/// A list of processing UIs, ungrouped.
+	var/list/processing_uis = list()
+	/// The HTML base used for all UIs.
+	var/basehtml
+	/// Window counter, which is used for creating sequential window ids.
+	var/_window_id_counter = 1
 
 /datum/controller/subsystem/tgui/PreInit()
 	basehtml = file2text('tgui/packages/tgui/public/tgui.html')
@@ -43,6 +48,14 @@ SUBSYSTEM_DEF(tgui)
 			processing_uis.Remove(ui)
 		if (MC_TICK_CHECK)
 			return
+
+/**
+ * Creates a new, unique window id.
+ *
+ * return string
+ */
+/datum/controller/subsystem/tgui/proc/create_window_id()
+	return "tgui-window-[_window_id_counter++]"
 
 /**
  * public

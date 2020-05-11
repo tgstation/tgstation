@@ -99,17 +99,22 @@ window.onerror = function (msg, url, line, col, error) {
     }
   }
   // Set window geometry
-  Byond.call('winset', {
-    id: window.__windowId__,
-    titlebar: true,
-    size: '600x600',
-    'is-visible': true,
-    'can-resize': true,
-  });
+  var setFatalErrorGeometry = function () {
+    Byond.call('winset', {
+      id: window.__windowId__,
+      titlebar: true,
+      size: '600x600',
+      'is-visible': true,
+      'can-resize': true,
+    });
+  };
+  setFatalErrorGeometry();
+  setInterval(setFatalErrorGeometry, 1000);
   // Send logs to the server
   Byond.call('', {
     src: window.__ref__,
     action: 'tgui:log',
+    fatal: 1,
     log: stack,
   });
   // Short-circuit further updates

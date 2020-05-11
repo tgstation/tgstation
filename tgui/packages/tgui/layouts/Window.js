@@ -11,6 +11,7 @@ import { backendSuspend, useBackend } from '../backend';
 import { callByond, IS_IE8 } from '../byond';
 import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
+import { toggleKitchenSink, useDebug } from '../debug';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
 import { releaseHeldKeys } from '../hotkeys';
 import { createLogger } from '../logging';
@@ -56,9 +57,9 @@ export class Window extends Component {
     const {
       act,
       config,
-      debugLayout,
       suspended,
     } = useBackend(this.context);
+    const { debugLayout } = useDebug(this.context);
     const dispatch = useDispatch(this.context);
     // Determine when to show dimmer
     const showDimmer = config.observer
@@ -139,7 +140,7 @@ const statusToColor = status => {
   }
 };
 
-const TitleBar = props => {
+const TitleBar = (props, context) => {
   const {
     className,
     title,
@@ -148,6 +149,7 @@ const TitleBar = props => {
     onDragStart,
     onClose,
   } = props;
+  const dispatch = useDispatch(context);
   return (
     <div
       className={classes([
@@ -164,14 +166,16 @@ const TitleBar = props => {
           && toTitleCase(title)
           || title}
       </div>
-      {process.env.NODE_ENV !== 'production' && (
-        <div className="TitleBar__devBuildIndicator">
-          <Icon name="bug" />
-        </div>
-      )}
       <div
         className="TitleBar__dragZone"
         onMousedown={e => fancy && onDragStart(e)} />
+      {process.env.NODE_ENV !== 'production' && (
+        <div
+          className="TitleBar__devBuildIndicator"
+          onClick={() => dispatch(toggleKitchenSink())}>
+          <Icon name="bug" />
+        </div>
+      )}
       {!!fancy && (
         <div
           className="TitleBar__close TitleBar__clickable"
