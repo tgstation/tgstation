@@ -24,6 +24,11 @@
 	CanAtmosPass = ATMOS_PASS_NO
 	timeleft = 200
 
+/obj/effect/forcefield/cult/purified
+	desc = "A holy shield that blocks all attacks."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "forcefield"
+
 ///////////Mimewalls///////////
 
 /obj/effect/forcefield/mime

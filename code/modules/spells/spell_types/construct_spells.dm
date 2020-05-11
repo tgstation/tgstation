@@ -113,6 +113,9 @@
 	action_icon_state = "cultforcewall"
 	action_background_icon_state = "bg_demon"
 
+/obj/effect/proc_holder/spell/targeted/forcewall/cult/purified
+	wall_type = /obj/effect/forcefield/cult/purified
+
 
 
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift
@@ -317,16 +320,33 @@
 	hitsound = 'sound/weapons/punch3.ogg'
 	trigger_range = 0
 	check_holy = TRUE
+	nodamage = FALSE
 	ignored_factions = list("cult")
 	range = 15
 	speed = 7
+	var/impact_effect = /obj/effect/temp_visual/cult/sac
+	var/splash_effect = /obj/effect/temp_visual/cult/turf/floor
 
 /obj/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
 	. = ..()
 	var/turf/T = get_turf(src)
 	playsound(T, 'sound/weapons/resonator_blast.ogg', 100, FALSE)
-	new /obj/effect/temp_visual/cult/sac(T)
+	new impact_effect(T)
 	for(var/obj/O in range(src,1))
 		if(O.density && !istype(O, /obj/structure/destructible/cult))
 			O.take_damage(90, BRUTE, "melee", 0)
-			new /obj/effect/temp_visual/cult/turf/floor(get_turf(O))
+			new splash_effect(get_turf(O))
+
+/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut/noncult
+	proj_type = /obj/projectile/magic/spell/juggernaut/noncult
+
+/obj/projectile/magic/spell/juggernaut/noncult
+	ignored_factions = null
+
+/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut/noncult/purified
+	proj_type = /obj/projectile/magic/spell/juggernaut/noncult/purified
+
+/obj/projectile/magic/spell/juggernaut/noncult/purified
+	icon_state = "purecultfist"
+	impact_effect = /obj/effect/temp_visual/dir_setting/firing_effect/magic
+	splash_effect = /obj/effect/temp_visual/dir_setting/firing_effect/magic

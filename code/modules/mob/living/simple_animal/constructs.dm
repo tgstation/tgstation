@@ -185,8 +185,12 @@
 /mob/living/simple_animal/hostile/construct/juggernaut/angelic
 	holy = TRUE
 	loot = list(/obj/item/ectoplasm/angelic)
+	construct_spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/cult/purified,
+							/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut/noncult/purified)
 
 /mob/living/simple_animal/hostile/construct/juggernaut/noncult
+	construct_spells = list(/obj/effect/proc_holder/spell/targeted/forcewall/cult,
+							/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/juggernaut/noncult)
 
 ////////////////////////Wraith/////////////////////////////////////////////
 /mob/living/simple_animal/hostile/construct/wraith
