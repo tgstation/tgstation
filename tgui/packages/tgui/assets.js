@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { loadCSS as fgLoadCSS } from 'fg-loadcss';
 import { createLogger } from './logging';
 

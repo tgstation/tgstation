@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { subscribeToHotKey } from './hotkeys';
 
 export const toggleKitchenSink = () => ({
