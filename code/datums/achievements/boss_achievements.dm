@@ -15,10 +15,15 @@
 	icon = "firstboss"
 
 /datum/award/achievement/boss/blood_miner_kill
-	name = "Blood-drunk Miner Killer"
+	name = "Blood-Drunk Miner Killer"
 	desc = "I guess he couldn't handle his drink that well."
 	database_id = BOSS_MEDAL_MINER
 	icon = "miner"
+
+/datum/award/achievement/boss/demonic_miner_kill
+	name = "Demonic-Frost Miner Killer"
+	desc = "Definitely harder than the Blood-Drunk Miner."
+	database_id = BOSS_MEDAL_FROSTMINER
 
 /datum/award/achievement/boss/bubblegum_kill
 	name = "Bubblegum Killer"
@@ -62,11 +67,21 @@
 	database_id = BOSS_MEDAL_KINGGOAT
 	icon = "goatboss"
 
+/datum/award/achievement/boss/wendigo_kill
+	name = "Wendigo Killer"
+	desc = "You've now ruined years of mythical storytelling."
+	database_id = BOSS_MEDAL_WENDIGO
+
 /datum/award/achievement/boss/blood_miner_crusher
-	name = "Blood-drunk Miner Crusher"
+	name = "Blood-Drunk Miner Crusher"
 	desc = "I guess he couldn't handle his drink that well."
 	database_id = BOSS_MEDAL_MINER_CRUSHER
 	icon = "miner"
+
+/datum/award/achievement/boss/demonic_miner_crusher
+	name = "Demonic-Frost Miner Crusher"
+	desc = "Definitely harder than the Blood-Drunk Miner."
+	database_id = BOSS_MEDAL_FROSTMINER_CRUSHER
 
 /datum/award/achievement/boss/bubblegum_crusher
 	name = "Bubblegum Crusher"
@@ -107,3 +122,8 @@
 	desc = "The king is dead, long live the king!"
 	database_id = BOSS_MEDAL_KINGGOAT_CRUSHER
 	icon = "goatboss"
+
+/datum/award/achievement/boss/wendigo_crusher
+	name = "Wendigo Crusher"
+	desc = "You've now ruined years of mythical storytelling."
+	database_id = BOSS_MEDAL_WENDIGO_CRUSHER
