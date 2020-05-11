@@ -99,23 +99,18 @@
 	update_status(push = FALSE) // Update the window status.
 	if(status < UI_UPDATE)
 		return // Bail if we're not supposed to open.
-	world.log << "open: [world.time]"
 
 	var/list/free_windows = user.client.tgui_free_windows
 	var/has_free_window = !!length(free_windows)
-	to_chat(world, "free windows: [length(free_windows)]")
 	for (var/x in free_windows)
-		to_chat(world, "- [x]")
 	// Use a recycled window
 	if(has_free_window)
 		window_id = free_windows[length(free_windows)]
 		free_windows -= window_id
 		initialized = TRUE
-		to_chat(world, "pulled: [window_id]")
 	// Create a new window
 	else
 		window_id = SStgui.create_window_id()
-		to_chat(world, "created: [window_id]")
 		// Build window options
 		var/window_options = "can_minimize=0;auto_format=0;"
 		// Generate page html
@@ -172,28 +167,22 @@
  * Close the UI, and all its children.
  */
 /datum/tgui/proc/close(recycle = TRUE)
-	to_chat(world, "closing: [window_id]")
 	if(status == UI_CLOSING)
 		return
-	to_chat(world, "closing: [window_id] (continued)")
 	status = UI_CLOSING
 	var/can_be_recycled = recycle && !_has_fatal_error && user.client \
 		&& length(user.client.tgui_free_windows) < MAX_RECYCLED_WINDOWS
 	if(can_be_recycled)
-		to_chat(world, "suspending: [window_id]")
 		user << output("", "[window_id].browser:suspend")
 		// Add it to the stack of free windows
-		to_chat(world, "prev length: [length(user.client.tgui_free_windows)]")
 		if (!user.client.tgui_free_windows.Find(window_id))
 			user.client.tgui_free_windows += window_id
-		to_chat(world, "next length: [length(user.client.tgui_free_windows)]")
 	else
 		// Destroy the window
 		user << browse(null, "window=[window_id]")
 		// Remove this window_id just in case it existed in the pool
 		// to avoid contamination with broken windows.
 		user.client.tgui_free_windows -= window_id
-		to_chat(world, "destroying: [window_id]")
 	src_object.ui_close(user)
 	SStgui.on_close(src)
 	for(var/datum/tgui/child in children) // Loop through and close all children.
