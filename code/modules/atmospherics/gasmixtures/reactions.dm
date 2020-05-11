@@ -396,7 +396,7 @@ datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			air.temperature = (temperature*old_heat_capacity + energy_released)/new_heat_capacity
 
-//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again!
+//fusion: a terrible idea that was fun but broken. Now reworked to be less broken and more interesting. Again (and again, and again). Again! Again?
 //Fusion Rework Counter: Please increment this if you make a major overhaul to this system again.
 //7 reworks
 
