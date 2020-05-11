@@ -81,7 +81,7 @@
 		..()
 
 /obj/structure/emergency_shield/cult/barrier/Destroy()
-	if(parent_rune)
+	if(parent_rune && !QDELETED(parent_rune))
 		parent_rune.visible_message("<span class='danger'>The [parent_rune] fades away as [src] is destroyed!</span>")
 		qdel(parent_rune)
 	..()
@@ -89,9 +89,9 @@
 /obj/structure/emergency_shield/cult/barrier/proc/Toggle()
 	density = !density
 	air_update_turf(1)
-	alpha = 255 //alpha instead of invisibility so that it doesnt mess with the conceal runes spell
+	invisibility = initial(invisibility)
 	if(!density)
-		alpha = 0
+		invisibility = INVISIBILITY_OBSERVER
 
 /obj/machinery/shieldgen
 	name = "anti-breach shielding projector"

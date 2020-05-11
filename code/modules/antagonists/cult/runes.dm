@@ -618,6 +618,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 /obj/effect/rune/wall/Destroy()
 	GLOB.wall_runes -= src
+	if(barrier && !QDELETED(barrier))
+		qdel(barrier)
 	return ..()
 
 /obj/effect/rune/wall/invoke(var/list/invokers)
