@@ -72,6 +72,9 @@
 
 	var/list/power_usage
 
+	///This datum, if set, allows terrain generation behavior to be ran on Initialize()
+	var/datum/map_generator/map_generator
+
 
 /**
   * A list of teleport locations
@@ -164,6 +167,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
 	update_beauty()
+	if(map_generator)
+		map_generator = new()
+		map_generator.generate_terrain(/turf in area)
 
 /**
   * Register this area as belonging to a z level
