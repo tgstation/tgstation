@@ -39,6 +39,10 @@
 		var/rando_race = pick(GLOB.roundstart_races)
 		pref_species = new rando_race()
 	features = random_features()
+	if(gender in list(MALE, FEMALE))
+		body_type = gender
+	else
+		body_type = pick(MALE, FEMALE)
 
 /datum/preferences/proc/random_species()
 	var/random_species_type = GLOB.species_list[pick(GLOB.roundstart_races)]
