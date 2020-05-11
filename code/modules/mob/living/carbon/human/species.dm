@@ -764,7 +764,14 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!bodyparts_to_add)
 		return
 
-	var/g = (H.gender == FEMALE) ? "f" : "m"
+	var/g
+	switch(H.gender)
+		if(MALE)
+			g = "m"
+		if(FEMALE)
+			g = "f"
+		else
+			g = (H.body_type == MALE ? "m" : "f")
 
 	for(var/layer in relevent_layers)
 		var/layertext = mutant_bodyparts_layertext(layer)

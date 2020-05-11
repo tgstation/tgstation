@@ -126,7 +126,14 @@ There are several things that need to be remembered:
 		var/mutable_appearance/uniform_overlay
 
 		if(dna && dna.species.sexes)
-			var/G = (gender == FEMALE) ? "f" : "m"
+			var/G
+			switch(gender)
+				if(MALE)
+					G = "m"
+				if(FEMALE)
+					G = "f"
+				else
+					G = (body_type == MALE ? "m" : "f")
 			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
 				uniform_overlay = U.build_worn_icon(default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/clothing/under/default.dmi', isinhands = FALSE, femaleuniform = U.fitted, override_state = target_overlay)
 
@@ -584,7 +591,15 @@ generate/load female uniform sprites matching all previously decided variables
 	else
 		. += "-not_coloured"
 
-	. += "-[gender]"
+	var/G = MALE
+	switch(gender)
+		if(MALE)
+			G = "m"
+		if(FEMALE)
+			G = "f"
+		else
+			G = (body_type == MALE ? "m" : "f")
+	. += "-[G]"
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X

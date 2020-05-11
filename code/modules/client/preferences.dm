@@ -124,6 +124,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/hearted
 	///
 	var/hearted_until
+	/// Agendered spessmen can choose whether to have a male or female bodytype
+	var/body_type = MALE
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -224,6 +226,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				else
 					dispGender = "Other"
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a>"
+				if(gender == PLURAL || gender == NEUTER)
+					dat += "<BR><b>Preferred Body:</b> <a href='?_src_=prefs;preference=body_type'>[body_type == MALE ? "Male" : "Female"]</a>"
+
 				if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG]) //doesn't work unless random body
 					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Gender: [(randomise[RANDOM_GENDER]) ? "Yes" : "No"]</A>"
 					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER_ANTAG]'>When Antagonist: [(randomise[RANDOM_GENDER_ANTAG]) ? "Yes" : "No"]</A>"
@@ -1553,7 +1558,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						socks = random_socks()
 						facial_hairstyle = random_facial_hairstyle(gender)
 						hairstyle = random_hairstyle(gender)
-
+				if("body_type")
+					if(body_type == MALE)
+						body_type = FEMALE
+					else
+						body_type = MALE
 				if("hotkeys")
 					hotkeys = !hotkeys
 					if(hotkeys)
@@ -1833,6 +1842,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	character.gender = gender
 	character.age = age
+	if(gender == MALE || gender == FEMALE)
+		character.body_type = gender
+	else
+		character.body_type = body_type
 
 	character.eye_color = eye_color
 	var/obj/item/organ/eyes/organ_eyes = character.getorgan(/obj/item/organ/eyes)
