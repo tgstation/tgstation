@@ -20,13 +20,26 @@
 	if(host)
 		UnregisterSignal(host, COMSIG_MOVABLE_MOVED)
 	if(R)
-		hasprox_receiver = R
+		set_prox_receiver(R)
 	else if(hasprox_receiver == host) //Default case
-		hasprox_receiver = H
+		set_prox_receiver(H)
 	host = H
 	RegisterSignal(host, COMSIG_MOVABLE_MOVED, .proc/HandleMove)
 	last_host_loc = host.loc
 	SetRange(current_range,TRUE)
+
+/// Sets signal callbacks for crossed
+/datum/proximity_monitor/proc/set_prox_receiver(atom/R)
+	if(hasprox_receiver)
+		for(var/i in checkers)
+			UnregisterSignal(i, COMSIG_MOVABLE_CROSSED)
+	hasprox_receiver = R
+	for(var/i in checkers)
+		RegisterSignal(i, COMSIG_MOVABLE_CROSSED, .proc/crossed_callback)
+
+/// Callback for crossing of effects
+/datum/proximity_monitor/proc/crossed_callback(/obj/effect/abstract/proximity_checker/source, atom/movable/AM)
+	hasprox_receiver.HasProximity(AM)
 
 /datum/proximity_monitor/Destroy()
 	host = null
@@ -109,8 +122,3 @@
 /obj/effect/abstract/proximity_checker/Destroy()
 	monitor = null
 	return ..()
-
-/obj/effect/abstract/proximity_checker/Crossed(atom/movable/AM)
-	set waitfor = FALSE
-	. = ..()
-	monitor.hasprox_receiver.HasProximity(AM)

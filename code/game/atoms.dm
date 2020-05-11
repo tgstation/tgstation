@@ -241,6 +241,7 @@
 
 	targeted_by = null
 	QDEL_NULL(light)
+	QDEL_NULL(proximity_monitor)
 
 	return ..()
 
