@@ -336,7 +336,15 @@
 		user.visible_message("<span class='notice'>[user] finishes applying [I] to [victim]'s [limb.name], emitting a fizzing noise!</span>", "<span class='notice'>You finish applying [I] to [victim]'s [limb.name]!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[user] finishes applying [I] to your [limb.name], and you can feel the bones exploding with pain as they begin melting and reforming!</span>")
 	else
-		if(prob(25 + (20 * severity - 2))) // 25%/45% chance to fail self-applying with severe and critical wounds
+		var/painkiller_bonus = 0
+		if(victim.drunkenness)
+			painkiller_bonus += 5
+		if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/morphine))
+			painkiller_bonus += 5
+		if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/determination))
+			painkiller_bonus += 5
+
+		if(prob(25 + (20 * severity - 2) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, -5 for each of the above painkillers
 			victim.visible_message("<span class='danger'>[victim] fails to finish applying [I] to [victim.p_their()] [limb.name], passing out from the pain!</span>", "<span class='notice'>You black out from the pain of applying [I] to your [limb.name] before you can finish!</span>")
 			victim.AdjustUnconscious(5 SECONDS)
 			return
