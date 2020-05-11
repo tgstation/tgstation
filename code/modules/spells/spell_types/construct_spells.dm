@@ -324,8 +324,8 @@
 	ignored_factions = list("cult")
 	range = 15
 	speed = 7
-	var/obj/effect/temp_visual/impact_effect = /obj/effect/temp_visual/cult/sac
-	var/obj/effect/temp_visual/splash_effect = /obj/effect/temp_visual/cult/turf/floor
+	var/impact_effect = /obj/effect/temp_visual/cult/sac
+	var/splash_effect = /obj/effect/temp_visual/cult/turf/floor
 
 /obj/projectile/magic/spell/juggernaut/on_hit(atom/target, blocked)
 	. = ..()
