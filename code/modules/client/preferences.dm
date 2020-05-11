@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///
 	var/hearted_until
 	/// Agendered spessmen can choose whether to have a male or female bodytype
-	var/body_type = MALE
+	var/body_type
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -227,7 +227,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					dispGender = "Other"
 				dat += "<b>Gender:</b> <a href='?_src_=prefs;preference=gender'>[dispGender]</a>"
 				if(gender == PLURAL || gender == NEUTER)
-					dat += "<BR><b>Preferred Body:</b> <a href='?_src_=prefs;preference=body_type'>[body_type == MALE ? "Male" : "Female"]</a>"
+					dat += "<BR><b>Body Type:</b> <a href='?_src_=prefs;preference=body_type'>[body_type == MALE ? "Male" : "Female"]</a>"
 
 				if(randomise[RANDOM_BODY] || randomise[RANDOM_BODY_ANTAG]) //doesn't work unless random body
 					dat += "<a href='?_src_=prefs;preference=toggle_random;random_type=[RANDOM_GENDER]'>Always Random Gender: [(randomise[RANDOM_GENDER]) ? "Yes" : "No"]</A>"

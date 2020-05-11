@@ -398,7 +398,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	real_name = reject_bad_name(real_name)
 	gender = sanitize_gender(gender)
-	body_type = sanitize_gender(body_type, FALSE, FALSE, MALE)
+	body_type = sanitize_gender(body_type, FALSE, FALSE, gender)
 	if(!real_name)
 		real_name = random_unique_name(gender)
 

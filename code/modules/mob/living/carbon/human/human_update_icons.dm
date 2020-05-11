@@ -591,14 +591,7 @@ generate/load female uniform sprites matching all previously decided variables
 	else
 		. += "-not_coloured"
 
-	var/G = MALE
-	switch(gender)
-		if(MALE)
-			G = "m"
-		if(FEMALE)
-			G = "f"
-		else
-			G = (body_type == MALE ? "m" : "f")
+	var/G = (body_type == FEMALE) ? "f" : "m"
 	. += "-[G]"
 
 	for(var/X in bodyparts)
