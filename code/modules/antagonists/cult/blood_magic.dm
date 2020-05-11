@@ -447,7 +447,7 @@
 				C.silent += 6
 				C.stuttering += 15
 				C.cultslurring += 15
-				C.Jitter(15)
+				C.Jitter(1.5 SECONDS)
 		uses--
 	..()
 
