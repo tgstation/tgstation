@@ -370,6 +370,32 @@
 	color = "#d8c7b7"
 	healing = 0.2
 
+/datum/reagent/medicine/omnizine/alphazine
+	name = "Alphazine"
+	description = "Experimental mixture of hyper-plasmium oxide , protozine and wittel. This inorganic slurry seems to be better than homeworld omnizine."
+	reagent_state = LIQUID
+	color = "#460000"
+	metabolization_rate = 0.2
+	healing = 0.7
+
+/datum/reagent/medicine/alphazine/on_mob_add(mob/living/L)
+	. = ..()
+	if(!iscarbon(L))
+		return
+	var/mob/living/carbon/C = L
+	C.adjustStaminaLoss(min(-volume*2,60))
+
+/datum/reagent/medicine/alphazine/on_mob_end_metabolize(mob/living/L)
+	. = ..()
+	if(!iscarbon(L))
+		return
+	var/mob/living/carbon/C = L
+	C.adjustToxLoss(-current_cycle/5, 0)
+	C.adjustOxyLoss(-current_cycle/5, 0)
+	C.adjustBruteLoss(-current_cycle/5, 0)
+	C.adjustFireLoss(-current_cycle/5, 0)
+
+
 /datum/reagent/medicine/calomel
 	name = "Calomel"
 	description = "Quickly purges the body of all chemicals. Toxin damage is dealt if the patient is in good condition."
@@ -1334,3 +1360,5 @@
 	L.remove_movespeed_mod_immunities(type, /datum/movespeed_modifier/damage_slowdown)
 	L.Dizzy(0)
 	L.Jitter(0)
+
+

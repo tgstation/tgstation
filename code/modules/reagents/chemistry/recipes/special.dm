@@ -207,3 +207,21 @@ GLOBAL_LIST_INIT(food_reagents, build_reagents_to_food()) //reagentid = related 
 	dat += "."
 	info = dat.Join("")
 	update_icon()
+
+/datum/chemical_reaction/randomized/maint_mixture1
+	persistent = TRUE
+	persistence_period = 1 //Resets every day
+	randomize_req_temperature = TRUE
+	results = list(/datum/reagent/drug/maint_mixture/slurry=1)
+
+/datum/chemical_reaction/randomized/maint_mixture2
+	persistent = TRUE
+	persistence_period = 5 //Reset every 5 days
+	randomize_req_temperature = TRUE
+	results = list(/datum/reagent/drug/maint_mixture/powder=1)
+
+/datum/chemical_reaction/randomized/maint_mixture3
+	persistent = TRUE
+	persistence_period = 7 //Reset every week
+	randomize_req_temperature = TRUE
+	results = list(/datum/reagent/drug/maint_mixture/tar=1)

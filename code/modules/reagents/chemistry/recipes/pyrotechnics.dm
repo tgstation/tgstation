@@ -115,6 +115,18 @@
 /datum/chemical_reaction/reagent_explosion/tatp_explosion/update_info()
 	required_temp = 550 + rand(-49,49)
 
+/datum/chemical_reaction/reagent_explosion/penthrite
+	results = list(/datum/reagent/medicine/C2/penthrite = 3)
+	required_reagents = list(/datum/reagent/pentaerythritol = 1, /datum/reagent/acetone = 1,  /datum/reagent/toxin/acid/nitracid = 1)
+	strengthdiv = 5
+
+/datum/chemical_reaction/reagent_explosion/penthrite/on_reaction(datum/reagents/holder, created_volume)
+
+	if(holder.has_reagent(/datum/reagent/exotic_stabilizer,round(created_volume / 100, CHEMICAL_QUANTISATION_LEVEL)))
+		return
+	holder.remove_reagent(/datum/reagent/medicine/C2/penthrite, created_volume*3)
+	..()
+
 /datum/chemical_reaction/reagent_explosion/penthrite_explosion_epinephrine
 	required_reagents = list(/datum/reagent/medicine/C2/penthrite = 1, /datum/reagent/medicine/epinephrine = 1)
 	strengthdiv = 5

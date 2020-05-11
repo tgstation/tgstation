@@ -78,7 +78,8 @@
 		/datum/reagent/medicine/mine_salve,
 		/datum/reagent/medicine/morphine,
 		/datum/reagent/drug/space_drugs,
-		/datum/reagent/toxin
+		/datum/reagent/toxin,
+		/datum/reagent/plasma_oxide
 	)
 
 	var/list/recording_recipe
