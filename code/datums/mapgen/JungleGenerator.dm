@@ -43,10 +43,8 @@
 			selected_biome = possible_biomes[heat_level][humidity_level]
 		else //Over 0.85; It's a mountain
 			selected_biome = /datum/biome/mountain
-		selected_biome = SSmapping.biomes[selected_biome]
-		T.ChangeTurf(selected_biome.turf_type)
-		selected_biome.generate_flora(T)
-		selected_biome.generate_fauna(T)
+		selected_biome = SSmapping.biomes[selected_biome] //Get the instance of this biome from SSmapping
+		selected_biome.generate_turf(T)
 		CHECK_TICK
 
 /datum/map_generator/jungle_generator/proc/get_perlin_noise(id, x, y)
