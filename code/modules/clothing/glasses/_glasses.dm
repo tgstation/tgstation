@@ -90,6 +90,17 @@
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharpness = IS_SHARP
 
+/obj/item/clothing/glasses/meson/science
+	name = "science meson goggles"
+	desc = "Used by mining staff to see basic structural and terrain layouts through walls, and scan reagents regardless of lighting conditions."
+	clothing_flags = SCAN_REAGENTS //You can see reagents while wearing science goggles
+	actions_types = list(/datum/action/item_action/toggle_research_scanner)
+	glass_colour_type = /datum/client_colour/glass_colour/purple
+
+/obj/item/clothing/glasses/meson/science/item_action_slot_check(slot)
+	if(slot == ITEM_SLOT_EYES)
+		return TRUE
+
 /obj/item/clothing/glasses/science
 	name = "science goggles"
 	desc = "A pair of snazzy goggles used to protect against chemical spills. Fitted with an analyzer for scanning items and reagents."

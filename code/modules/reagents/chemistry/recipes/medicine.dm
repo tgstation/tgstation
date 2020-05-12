@@ -170,6 +170,6 @@
 	for(var/i = 1, i <= created_volume, i++)
 		new /obj/item/stack/medical/mesh/advanced(location)
 
-/datum/chemical_reaction/psicodine
-	results = list(/datum/reagent/medicine/omnizine/alphazine = 4)
-	required_reagents = list( /datum/reagent/medicine/omnizine/protozine = 1, /datum/reagent/plasma_oxide = 1, /datum/reagent/wittel = 1)
+/datum/chemical_reaction/alphazine
+	results = list(/datum/reagent/medicine/omnizine/alphazine = 3)
+	required_reagents = list( /datum/reagent/medicine/omnizine/protozine = 1, /datum/reagent/plasma_oxide = 1)

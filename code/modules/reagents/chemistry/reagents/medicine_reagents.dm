@@ -372,21 +372,21 @@
 
 /datum/reagent/medicine/omnizine/alphazine
 	name = "Alphazine"
-	description = "Experimental mixture of hyper-plasmium oxide , protozine and wittel. This inorganic slurry seems to be better than homeworld omnizine."
+	description = "Experimental mixture of hyper-plasmium oxide and protozine. This inorganic slurry seems to be better than homeworld omnizine."
 	reagent_state = LIQUID
 	color = "#460000"
 	metabolization_rate = 0.2
 	overdose_threshold = 60
 	healing = 0.7
 
-/datum/reagent/medicine/alphazine/on_mob_add(mob/living/L)
+/datum/reagent/medicine/omnizine/alphazine/on_mob_add(mob/living/L)
 	. = ..()
 	if(!iscarbon(L))
 		return
 	var/mob/living/carbon/C = L
 	C.adjustStaminaLoss(min(-volume*2,60))
 
-/datum/reagent/medicine/alphazine/on_mob_end_metabolize(mob/living/L)
+/datum/reagent/medicine/omnizine/alphazine/on_mob_end_metabolize(mob/living/L)
 	. = ..()
 	if(!iscarbon(L))
 		return
