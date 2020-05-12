@@ -83,11 +83,12 @@
 		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
-	M.AdjustStun(-20, FALSE)
-	M.AdjustKnockdown(-20, FALSE)
-	M.AdjustUnconscious(-20, FALSE)
-	M.AdjustImmobilized(-20, FALSE)
-	M.AdjustParalyzed(-20, FALSE)
+	M.adjustStaminaLoss(-4, 0)
+	M.AdjustStun(-60, FALSE)
+	M.AdjustKnockdown(-60, FALSE)
+	M.AdjustUnconscious(-60, FALSE)
+	M.AdjustImmobilized(-60, FALSE)
+	M.AdjustParalyzed(-60, FALSE)
 	..()
 	. = 1
 

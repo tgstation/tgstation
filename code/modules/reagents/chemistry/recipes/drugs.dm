@@ -4,7 +4,7 @@
 
 /datum/chemical_reaction/crank
 	results = list(/datum/reagent/drug/crank = 5)
-	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/ammonia = 1, /datum/reagent/lithium = 1,/datum/reagent/medicine/omnizine/protozine)
+	required_reagents = list(/datum/reagent/medicine/diphenhydramine = 1, /datum/reagent/ammonia = 1, /datum/reagent/lithium = 1,/datum/reagent/medicine/omnizine/protozine = 1)
 	mix_message = "The mixture violently reacts, leaving behind a few crystalline shards."
 	required_temp = 390
 
