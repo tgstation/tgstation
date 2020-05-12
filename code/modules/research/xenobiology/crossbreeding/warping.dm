@@ -224,7 +224,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///will keep teleporting the person every 5 seconds as long as they are on fire
 /obj/effect/warped_rune/orangespace/proc/bluespace_fire(mob/living/burning)
-	if(burning.stat == DEAD || !src) //the teleportation will stop if the guy burning is dead or the rune is destroyed
+	if(burning.stat == DEAD) //the teleportation will stop if the guy burning is dead to not have 5 billion teleporting corpses.
 		return
 
 	if(burning.fire_stacks > 0)
@@ -363,12 +363,10 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		electrishare(recharging_mech)
 
 	for(var/mob/living/silicon/robot/charged_borg in rune_turf)
-		borg_electrishare(charged_borg)//borgs use a different get_cell() so they use a different proc like the special needs child they are
+		borg_electrishare(charged_borg)//borgs use a different get_cell() so they use a different proc like the special needs childrens that they are.
 
 	for(var/obj/machinery/power/apc/apc_recharged in rune_area) //recharges the APC of the room
 		electrishare(apc_recharged)
-
-
 
 
 ///charge the battery of an item by 20% every time it's called. God bless get_cell()
@@ -385,7 +383,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		recharged.update_icon()
 
 
-///the same thing as electrishare but with borgs, 20% of the borg's battery rechared every 5 seconds.
+///the same thing as electrishare but with borgs, 20% of the borg's battery recharged every 5 seconds.
 /obj/effect/warped_rune/yellowspace/proc/borg_electrishare(mob/living/silicon/robot/charged_borg)
 	if(charged_borg.get_cell()) //check if the item has a cell
 		var/obj/item/stock_parts/cell/battery = charged_borg.get_cell()
@@ -398,20 +396,20 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 
 
-/* Dark purple crossbreed, Fill up any beaker like container with 50 unit of plasma dust every 30 seconds  */
+/* Dark purple crossbreed, Fill up any beaker like container with 5 unit of plasma dust every 5 seconds. */
 
 
 /obj/item/slimecross/warping/darkpurple
 	colour = "dark purple"
 	runepath = /obj/effect/warped_rune/darkpurplespace
-	effect_desc = "Makes a rune that will periodically create plasma dust,to harvest it simply put a beaker of some kind over the rune."
+	effect_desc = "Makes a rune that will periodically create plasma dust. To harvest it simply put a beaker of some kind over the rune."
 
 
 /obj/effect/warped_rune/darkpurplespace
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "plasma_crystal"
 	desc = "The purple ocean would only grow bigger with time."
-	max_cooldown = 300 //creates 50 unit every 30 seconds
+	max_cooldown = 5 //creates 5 unit every 5 seconds
 
 
 /obj/effect/warped_rune/darkpurplespace/Initialize()
@@ -876,7 +874,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 		crossing.visible_message(crossing, "<span class='notice'>You feel happier.</span>")
 
 
-/*Gold rune : Turn things over it to gold, completely fucks over economy */
+/*Gold rune : Traps mobs in the rune when used. Anyone that walk on the rune will release the mob and force them to target whoever stepped on the rune*/
 
 /obj/item/slimecross/warping/gold
 	colour = "gold"
@@ -1034,7 +1032,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 /obj/item/slimecross/warping/black
 	colour = "black"
 	runepath = /obj/effect/warped_rune/blackspace
-	effect_desc = "Will swap the species of the first two humanoids that walk on the rune. Also works on corpses."
+	effect_desc = "Will swap the species of the first two humanoids that walk on the rune."
 	drawing_time = 100
 
 
@@ -1054,6 +1052,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	cooldown = 0 //doesn't start on cooldown like most runes
 	for(var/atom/movable/crossing in rune_turf)
 		Crossed(crossing)
+
 
 ///will swap the species of the first two human or human subset that walk on the rune
 /obj/effect/warped_rune/blackspace/Crossed(atom/movable/crossing)
@@ -1094,7 +1093,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 /obj/item/slimecross/warping/oil
 	colour = "oil"
 	runepath = /obj/effect/warped_rune/oilspace
-	effect_desc = "protects anything on the rune from explosions unless the rune is in the center of the explosion."
+	effect_desc = "protects anything on the rune from explosions outside the rune.."
 
 
 /obj/effect/warped_rune/oilspace
@@ -1184,7 +1183,7 @@ GLOBAL_LIST_INIT(resin_recipes, list ( \
 	room_reservation = SSmapping.RequestBlockReservation(rune_room.width, rune_room.height) //monkey sees valid location
 	rune_room.load(locate(room_reservation.bottom_left_coords[1], room_reservation.bottom_left_coords[2], room_reservation.bottom_left_coords[3]))//monkey room activate
 	var/obj/effect/warped_room_exit/exit_rune = new(locate(room_reservation.bottom_left_coords[1] + 3, room_reservation.bottom_left_coords[2] + 6, room_reservation.bottom_left_coords[3]))
-	exit_rune.exit_turf = rune_turf
+	exit_rune.exit_turf = rune_turf //we spawn the exit rune manually in the code because it's easier to link it to the rainbow rune that way.
 	exit_rune.enter_rune = src
 
 
