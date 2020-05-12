@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { flow } from 'common/fp';
 import { applyMiddleware, createStore as createReduxStore } from 'common/redux';
 import { Component } from 'inferno';

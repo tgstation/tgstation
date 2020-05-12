@@ -17801,6 +17801,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/conveyor_switch/oneway{
+	id = "QMLoad"
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aUy" = (
@@ -18272,9 +18275,6 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/storage)
 "aVB" = (
-/obj/machinery/conveyor_switch/oneway{
-	id = "QMLoad"
-	},
 /obj/machinery/button/door{
 	id = "QMLoaddoor2";
 	layer = 4;
@@ -18293,6 +18293,9 @@
 	},
 /obj/machinery/camera{
 	c_tag = "Cargo Supply Dock";
+	dir = 8
+	},
+/obj/machinery/computer/cargo{
 	dir = 8
 	},
 /turf/open/floor/plasteel,
@@ -24924,6 +24927,7 @@
 /obj/structure/sign/departments/psychology{
 	pixel_y = -32
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
 "bmk" = (
@@ -25273,6 +25277,7 @@
 "bnw" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/closed/wall,
 /area/storage/emergency/port)
 "bnx" = (
@@ -25653,6 +25658,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/chair/sofa/left,
 /obj/item/toy/plush/moth,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "boy" = (
@@ -26089,6 +26095,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "bpB" = (
@@ -26763,6 +26770,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "bqY" = (
@@ -26770,6 +26778,7 @@
 	dir = 4
 	},
 /obj/machinery/holopad,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "bqZ" = (

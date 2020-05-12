@@ -41,8 +41,8 @@
 		if(!istype(A))
 			return 0
 
-		if(A.powered(EQUIP))
-			A.use_power(amount, EQUIP)
+		if(A.powered(AREA_USAGE_EQUIP))
+			A.use_power(amount, AREA_USAGE_EQUIP)
 			return 1
 	return 0
 
