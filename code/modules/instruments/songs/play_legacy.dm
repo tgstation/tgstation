@@ -37,50 +37,6 @@
 			compiled_chord += tempodiv		//this goes last
 			if(length(compiled_chord))
 				compiled_chords[++compiled_chords.len] = compiled_chord
-		CHECK_TICK
-	return compiled_chords
-
-/*
-/datum/song/proc/do_play_lines_legacy(mob/user)
-	while(repeat >= 0)
-		var/cur_oct[7]
-		var/cur_acc[7]
-		for(var/i = 1 to 7)
-			cur_oct[i] = 3
-			cur_acc[i] = "n"
-
-		for(var/line in lines)
-			for(var/beat in splittext(lowertext(line), ","))
-				if(should_stop_playing(user))
-					return
-				var/list/notes = splittext(beat, "/")
-				if(length(notes))		//because some jack-butts are going to do ,,,, to symbolize 3 rests instead of something reasonable like ,/1.
-					for(var/note in splittext(notes[1], "-"))
-						if(length(note) == 0)
-							continue
-						var/cur_note = text2ascii(note) - 96
-						if(cur_note < 1 || cur_note > 7)
-							continue
-						for(var/i=2 to length(note))
-							var/ni = copytext(note,i,i+1)
-							if(!text2num(ni))
-								if(ni == "#" || ni == "b" || ni == "n")
-									cur_acc[cur_note] = ni
-								else if(ni == "s")
-									cur_acc[cur_note] = "#" // so shift is never required
-							else
-								cur_oct[cur_note] = text2num(ni)
-						playnote_legacy(cur_note, cur_acc[cur_note], cur_oct[cur_note], user)
-				if(notes.len >= 2 && text2num(notes[2]))
-					sleep(sanitize_tempo(tempo / text2num(notes[2])))
-				else
-					sleep(tempo)
-		if(should_stop_playing(user))
-			return
-		repeat--
-		updateDialog()
-	repeat = 0
-*/
 
 /**
   * Proc to play a legacy note. Just plays the sound to hearing mobs (and does hearcheck if necessary), no fancy channel/sustain/management.

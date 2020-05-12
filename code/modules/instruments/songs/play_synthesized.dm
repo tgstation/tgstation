@@ -37,8 +37,6 @@
 			compiled_chord += tempodiv		//this goes last
 			if(length(compiled_chord))
 				compiled_chords[++compiled_chords.len] = compiled_chord
-		CHECK_TICK
-	return compiled_chords
 
 /**
   * Plays a specific numerical key from our instrument to anyone who can hear us.
