@@ -290,7 +290,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(stat == DEAD)
 		ghostize(TRUE)
 		return TRUE
-	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost or offer another player control of your character whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Offer control","Stay in body")
+	if(response == "Offer control")
+		return offer_control(usr)
 	if(response != "Ghost")
 		return FALSE//didn't want to ghost after-all
 	ghostize(FALSE)						// FALSE parameter is so we can never re-enter our body. U ded.
@@ -301,7 +303,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	set name = "Ghost"
 	set desc = "Relinquish your life and enter the land of the dead."
 
-	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Stay in body")
+	var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost or offer another player control of your character whilst still alive you may not play again this round! You can't change your mind so choose wisely!!)","Are you sure you want to ghost?","Ghost","Offer control","Stay in body")
+	if(response == "Offer control")
+		offer_control(usr)
 	if(response != "Ghost")
 		return
 	ghostize(FALSE)

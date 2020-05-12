@@ -442,8 +442,12 @@
 /proc/offer_control(mob/M)
 	to_chat(M, "Control of your mob has been offered to dead players.")
 	if(usr)
-		log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
-		message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts")
+		if(usr == M)
+			log_admin("[key_name(usr)] has offered control of their own mob.")
+			message_admins("[key_name_admin(usr)] has offered control of their own mob ([ADMIN_LOOKUPFLW(M)]) to ghosts.")
+		else
+			log_admin("[key_name(usr)] has offered control of ([key_name(M)]) to ghosts.")
+			message_admins("[key_name_admin(usr)] has offered control of ([ADMIN_LOOKUPFLW(M)]) to ghosts.")
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
 		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
@@ -459,7 +463,7 @@
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(M, "Your mob has been taken over by a ghost!")
 		message_admins("[key_name_admin(C)] has taken control of ([ADMIN_LOOKUPFLW(M)])")
-		M.ghostize(0)
+		M.ghostize(FALSE)
 		M.key = C.key
 		return TRUE
 	else
