@@ -44,7 +44,7 @@
 	/// Oh no - For truly troll instruments.
 	var/admin_only = FALSE
 	/// Volume multiplier. Synthesized instruments are quite loud and I don't like to cut off potential detail via editing. (someone correct me if this isn't a thing)
-	var/volume_multiplier = 1/3
+	var/volume_multiplier = 0.33
 
 /datum/instrument/New()
 	if(isnull(id))
