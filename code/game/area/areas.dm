@@ -168,8 +168,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	power_change()		// all machines set to current power level, also updates icon
 	update_beauty()
 	if(map_generator)
-		map_generator = new()
-		map_generator.generate_terrain(/turf in area)
+		map_generator = new map_generator()
+		map_generator.generate_terrain(get_area_turfs(src))
 
 /**
   * Register this area as belonging to a z level

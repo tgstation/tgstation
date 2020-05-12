@@ -5,17 +5,18 @@
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/jungle_generator/generate_terrain(var/list/turfs)
 	. = ..()
+	to_chat(world, "[turfs.len]")
 	var/height_seed = rand(0, 50000)
 	var/humidity_seed = rand(0, 50000)
 	var/heat_seed = rand(0, 50000)
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
-		var/height = rustg_noise_get_at_coordinates("[height_seed]", T.x, T.y)
+		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "T.x", "T.y"))
 
 		var/datum/biome/selected_biome
 		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
-			var/humidity = rustg_noise_get_at_coordinates("[humidity_seed]", T.x, T.y)
-			var/heat = rustg_noise_get_at_coordinates("[heat_seed]", T.x, T.y)
+			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "T.x", "T.y"))
+			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "T.x", "T.y"))
 
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH
 			var/humidity_level  //Type of humidity zone we're in LOW-MEDIUM-HIGH
