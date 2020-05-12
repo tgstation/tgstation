@@ -23,7 +23,7 @@
 GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 /datum/gang_handler
-	var/restricted_jobs = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")//N O
+	var/list/restricted_jobs = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")//N O
 
 	var/check_counter = 0
 	var/endtime = null
@@ -42,15 +42,16 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/list/gang_locations = list()
 	var/cops_arrived = FALSE
 	var/gang_balance_cap = 5
-	var/wanted_level = 0
+	var/wanted_level = 1
 
 	var/midround_ruleset = FALSE
 
 	var/list/datum/mind/antag_candidates
 
 
-/datum/gang_handler/New(/list/datum/mind/L) // takes the list of antag candidates and makes it its own. since lists are passed by reference this is literally the list and not just a copy
+/datum/gang_handler/New(list/datum/mind/L, list/revised_restricted=restricted_jobs) // lists are passed by reference; this allows the handler to make use of the external antag_candidates and restricted_jobs lists
 	antag_candidates = L
+	restricted_jobs = revised_restricted
 
 /datum/gang_handler/warriors
 	gangs_to_generate = 11
@@ -59,7 +60,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/gang_handler/warriors/pre_setup_analogue()
 	gangs_to_use = subtypesof(/datum/antagonist/gang)
 	gangs_to_generate = gangs_to_use.len
-	. = ..()
+	return ..()
 
 /datum/gang_handler/proc/pre_setup_analogue() // EXTERNAL pre_setup equivalent
 	gangs_to_use = subtypesof(/datum/antagonist/gang)
@@ -118,6 +119,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			log_game("[key_name(undercover_cop)] has been selected as a replacement undercover cop!")
 	for(var/datum/mind/undercover_cop in undercover_cops)
 		var/datum/antagonist/ert/families/undercover_cop/one_eight_seven_on_an_undercover_cop = new()
+		one_eight_seven_on_an_undercover_cop.handler = src
 		undercover_cop.add_antag_datum(one_eight_seven_on_an_undercover_cop)
 
 	for(var/datum/mind/gangbanger in gangbangers)
@@ -139,21 +141,20 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.registerHostileEnvironment(src)
-	gamemode_ready = TRUE
-	..()
 
-/datum/gang_handler/proc/announce_gang_locations()
-	var/list/readable_gang_names = list()
-	for(var/GG in gangs)
-		var/datum/team/gang/G = GG
-		readable_gang_names += "[G.name]"
-	var/finalized_gang_names = english_list(readable_gang_names)
-	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait an hour. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
-	sent_announcement = TRUE
+/datum/gang_handler/proc/process_analogue() // EXTERNAL process() equivalent
+	check_wanted_level()
+	check_counter++
+	if(check_counter >= 5)
+		if(world.time > (endtime - 5 MINUTES) && !sent_second_announcement)
+			five_minute_warning()
+			addtimer(CALLBACK(src, .proc/send_in_the_fuzz), 5 MINUTES)
 
-/datum/gang_handler/proc/five_minute_warning()
-	priority_announce("Julio G coming to you live from Radio Los Spess! The space cops are closing in on [station_name()] and will arrive in about 5 minutes! Better clear on out of there if you don't want to get hurt!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
-	sent_second_announcement = TRUE
+		check_counter = 0
+
+		check_tagged_turfs()
+		check_gang_clothes()
+		check_rollin_with_crews()
 
 /datum/gang_handler/proc/set_round_result_analogue()
 	var/alive_gangsters = 0
@@ -180,25 +181,24 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	SSticker.news_report = GANG_DESTROYED
 	return FALSE
 
-/datum/gang_handler/proc/process_analogue() // EXTERNAL process() equivalent
-	check_wanted_level()
-	check_counter++
-	if(check_counter >= 5)
-		if(world.time > (endtime - 5 MINUTES) && !sent_second_announcement)
-			five_minute_warning()
-			addtimer(CALLBACK(src, .proc/send_in_the_fuzz), 5 MINUTES)
+/datum/gang_handler/proc/announce_gang_locations()
+	var/list/readable_gang_names = list()
+	for(var/GG in gangs)
+		var/datum/team/gang/G = GG
+		readable_gang_names += "[G.name]"
+	var/finalized_gang_names = english_list(readable_gang_names)
+	priority_announce("Julio G coming to you live from Radio Los Spess! We've been hearing reports of gang activity on [station_name()], with the [finalized_gang_names] duking it out, looking for fresh territory and drugs to sling! Stay safe out there for the hour 'till the space cops get there, and keep it cool, yeah?\n\n The local jump gates are shut down for about an hour due to some maintenance troubles, so if you wanna split from the area you're gonna have to wait an hour. \n Play music, not gunshots, I say. Peace out!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	sent_announcement = TRUE
 
-		check_counter = 0
-
-		check_tagged_turfs()
-		check_gang_clothes()
-		check_rollin_with_crews()
+/datum/gang_handler/proc/five_minute_warning()
+	priority_announce("Julio G coming to you live from Radio Los Spess! The space cops are closing in on [station_name()] and will arrive in about 5 minutes! Better clear on out of there if you don't want to get hurt!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
+	sent_second_announcement = TRUE
 
 ///Checks if our wanted level has changed. Only actually does something post the initial announcement and until the cops show up. After that its locked.
 /datum/gang_handler/proc/check_wanted_level()
 	if(!sent_announcement || fuckingdone)
 		return
-	var/new_wanted_level
+	var/new_wanted_level = wanted_level
 	if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
 		switch(GLOB.deaths_during_shift)
 			if(0 to TWO_STARS_HIGHPOP-1)
@@ -261,10 +261,11 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				time_to_end = 30 MINUTES / (midround_ruleset ? 2 : 1)
 			announcement_message = "The fleet enroute to [station_name()] now consists of national guard personnel."
 	if(!midround_ruleset)
-		var/adjusted_end_time = time_to_end / 1 MINUTES
-		announcement_message += "  They will arrive at the [num2text(adjusted_end_time)] minute mark."
+		var/adjusted_end_time = time_to_end / (1 MINUTES)
+		announcement_message += "  They will arrive at the [adjusted_end_time] minute mark."
 	endtime = start_time + time_to_end
-	priority_announce(announcement_message, "Station Spaceship Detection Systems")
+	if(sent_announcement)
+		priority_announce(announcement_message, "Station Spaceship Detection Systems")
 
 /datum/gang_handler/proc/on_lower_wanted_level(newlevel)
 	var/announcement_message
@@ -286,10 +287,11 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				time_to_end = 35 MINUTES / (midround_ruleset ? 2 : 1)
 			announcement_message = "The convoy enroute to [station_name()] seems to no longer consist of national guard personnel."
 	if(!midround_ruleset)
-		var/adjusted_end_time = time_to_end / 1 MINUTES
-		announcement_message += "  They will arrive at the [num2text(adjusted_end_time)] minute mark."
+		var/adjusted_end_time = time_to_end / (1 MINUTES)
+		announcement_message += "  They will arrive at the [adjusted_end_time] minute mark."
 	endtime = start_time + time_to_end
-	priority_announce(announcement_message, "Station Spaceship Detection Systems")
+	if(sent_announcement)
+		priority_announce(announcement_message, "Station Spaceship Detection Systems")
 
 /datum/gang_handler/proc/send_in_the_fuzz()
 	fuckingdone = TRUE
@@ -377,8 +379,9 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			cop.key = chosen_candidate.key
 
 			//Give antag datum
-			var/datum/antagonist/ert/ert_antag = new cops_to_send
+			var/datum/antagonist/ert/families/ert_antag = new cops_to_send
 
+			ert_antag.handler = src
 			cop.mind.add_antag_datum(ert_antag)
 			cop.mind.assigned_role = ert_antag.name
 			SSjob.SendToLateJoin(cop)
@@ -444,34 +447,16 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 
 
 /datum/antagonist/ert/families/beatcop/roundend_report_footer() // hijacks the beatcop's roundend results to say which gang won the round
-	var/report = "<div class='panel redborder'>"
+	var/report
 	var/highest_point_value = 0
 	var/highest_gang = "Leet Like Jeff K"
 	var/objective_failures = TRUE
 
-	var/list/datum/team/gang/gangs
-	var/list/datum/mind/gangsters
-	var/list/datum/mind/cops
-
-	for(var/datum/team/possiblegang in GLOB.antagonist_teams)
-		if(istype(possiblegang, /datum/team/gang))
-			gangs |= possiblegang
-
-	for(var/datum/antagonist/A in GLOB.antagonists)
-		if(!A.owner)
-			continue
-		if(istype(A, /datum/antagonist/gang))
-			gangsters |= A
-			continue
-		if(istype(A, /datum/antagonist/ert/families))
-			cops |= A
-			continue
-
-	for(var/datum/team/gang/GG in gangs)
+	for(var/datum/team/gang/GG in handler.gangs)
 		if(GG.my_gang_datum.check_gang_objective())
 			objective_failures = FALSE
 			break
-	for(var/datum/team/gang/G in gangs)
+	for(var/datum/team/gang/G in handler.gangs)
 		if(!objective_failures)
 			if(G.points >= highest_point_value && G.members.len && G.my_gang_datum.check_gang_objective())
 				highest_point_value = G.points
@@ -482,7 +467,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 				highest_gang = G.name
 	var/alive_gangsters = 0
 	var/alive_cops = 0
-	for(var/datum/mind/gangbanger in gangsters)
+	for(var/datum/mind/gangbanger in handler.gangbangers)
 		if(gangbanger.current)
 			if(!ishuman(gangbanger.current))
 				continue
@@ -490,7 +475,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			if(H.stat)
 				continue
 			alive_gangsters++
-	for(var/datum/mind/bacon in cops)
+	for(var/datum/mind/bacon in handler.pigs)
 		if(bacon.current)
 			if(!ishuman(bacon.current)) // always returns false
 				continue

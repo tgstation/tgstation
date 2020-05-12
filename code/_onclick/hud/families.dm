@@ -5,15 +5,20 @@
 	icon_state = "wanted_0"
 	screen_loc = ui_wanted_lvl
 	///Wanted level, affects the hud icon.
-	var/level
+	var/level = 0
 	///Boolean, have the cops arrived? If so, the icon stops changing and remains the same.
 	var/cops_arrived
+	///Storage var for the gang handler datum so that it can receive information from it
+	var/datum/gang_handler/handler
+
+/obj/screen/wanted/New(datum/gang_handler/given_handler)
+	handler = given_handler
+	return ..()
 
 /obj/screen/wanted/Initialize()
 	. = ..()
-	var/datum/game_mode/gang/F = SSticker.mode
-	level = F.wanted_level
-	cops_arrived = F.cops_arrived
+	level = handler.wanted_level
+	cops_arrived = handler.cops_arrived
 	update_icon()
 
 /obj/screen/wanted/MouseEntered(location,control,params)
