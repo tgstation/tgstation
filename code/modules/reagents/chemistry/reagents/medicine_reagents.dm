@@ -376,6 +376,7 @@
 	reagent_state = LIQUID
 	color = "#460000"
 	metabolization_rate = 0.2
+	overdose_threshold = 60
 	healing = 0.7
 
 /datum/reagent/medicine/alphazine/on_mob_add(mob/living/L)
