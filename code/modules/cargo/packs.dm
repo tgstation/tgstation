@@ -1430,6 +1430,15 @@
 	crate_name = "robotics assembly crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
+/datum/supply_pack/science/aiupload
+	name = "AI Upload Board"
+	desc = "AI Upload Board to change the AIs laws. Garaunteed to purge 99% of fleshbags with just one swipe! Requires AI upload access to open."
+	cost = 7500
+	access = ACCESS_AI_UPLOAD
+	contains = list(/obj/item/circuitboard/computer/aiupload)
+	crate_name = "AI law Upload Board crate"
+	crate_type = /obj/structure/closet/crate/secure/science
+
 /datum/supply_pack/science/rped
 	name = "RPED crate"
 	desc = "Need to rebuild the ORM but science got annihialted after a bomb test? Buy this for the most advanced parts NT can give you."
