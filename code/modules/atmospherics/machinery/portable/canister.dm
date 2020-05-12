@@ -1,8 +1,8 @@
 #define CAN_DEFAULT_RELEASE_PRESSURE 	(ONE_ATMOSPHERE)
 ///Used when setting the mode of the canisters, enabling us to switch the overlays
-#define CANISTER_TIER_1					1
-#define CANISTER_TIER_2					2
-#define CANISTER_TIER_3					3
+#define CANISTER_TIER_1					"tier 1"
+#define CANISTER_TIER_2					"tier 2"
+#define CANISTER_TIER_3					"tier 3"
 
 /obj/machinery/portable_atmospherics/canister
 	name = "canister"
@@ -77,7 +77,7 @@
 /obj/machinery/portable_atmospherics/canister/examine(user)
 	. = ..()
 	if(mode)
-		. += "<span class='notice'>This canister is tier [mode].</span>"
+		. += "<span class='notice'>This canister is [mode].</span>"
 
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "n2 canister"
@@ -287,31 +287,29 @@
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
-	if(machine_stat & BROKEN)
+	if(machine_stat & BROKEN && !(splittext(icon_state,  "-").len > 1))
 		icon_state = "[icon_state]-1"
 
 /obj/machinery/portable_atmospherics/canister/update_overlays()
 	. = ..()
+	var/isBroken = machine_stat & BROKEN
+	///Function is used to actually set the overlays
+	. += "[mode]-[isBroken]"
+	if(isBroken)
+		return
 	if(holding)
 		. += "can-open"
 	if(connected_port)
 		. += "can-connector"
 	var/pressure = air_contents.return_pressure()
 	if(pressure >= 40 * ONE_ATMOSPHERE)
-		. += "can-o3"
+		. += "can-3"
 	else if(pressure >= 10 * ONE_ATMOSPHERE)
-		. += "can-o2"
+		. += "can-2"
 	else if(pressure >= 5 * ONE_ATMOSPHERE)
-		. += "can-o1"
+		. += "can-1"
 	else if(pressure >= 10)
-		. += "can-o0"
-	///Function is used to actually set the overlays
-	if(mode == CANISTER_TIER_1)
-		. += "tier1-o"
-	else if(mode == CANISTER_TIER_2)
-		. += "tier2-o"
-	else if(mode == CANISTER_TIER_3)
-		. += "tier3-o"
+		. += "can-0"
 
 /obj/machinery/portable_atmospherics/canister/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > (temperature_resistance * mode))
@@ -407,13 +405,12 @@
 		pump.airs[1] = null
 		pump.airs[2] = null
 
-	update_icon()
 	var/pressure = air_contents.return_pressure()
 	var/temperature = air_contents.return_temperature()
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can recieve, if the heat and pressure are way higher than the limit the more damage will be done
 	if(temperature > heat_limit || pressure > pressure_limit)
 		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
-		return
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 															datum/tgui/master_ui = null, datum/ui_state/state = GLOB.physical_state)
