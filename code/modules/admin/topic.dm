@@ -1545,6 +1545,26 @@
 		else
 			show_traitor_panel(M)
 
+	else if(href_list["skill"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(!SSticker.HasRoundStarted())
+			alert("The game hasn't started yet!")
+			return
+
+		var/target = locate(href_list["skill"])
+		var/datum/mind/D
+		if(ismob(target))
+			var/mob/M = target
+			D = M.mind
+		else if (istype(target, /datum/mind))
+			D = target
+		else
+			to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+			return
+		show_skill_panel(D)
+
 	else if(href_list["borgpanel"])
 		if(!check_rights(R_ADMIN))
 			return
