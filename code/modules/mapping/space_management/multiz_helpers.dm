@@ -32,12 +32,3 @@
 
 /turf/proc/below()
 	return get_step_multiz(src, DOWN)
-
-/proc/dir_inverse_multiz(dir)
-	var/vertical = dir & (UP|DOWN)
-	dir &= ~vertical	// remove dir from vertical
-	if(vertical == (UP|DOWN))		// both up/down specified
-		vertical = NONE
-	if(dir)		// byond will be a shit if dir is 0 so let's not have dir be 0.
-		dir = turn(dir, 180)
-	return dir | vertical
