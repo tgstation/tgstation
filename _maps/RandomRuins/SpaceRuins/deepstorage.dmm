@@ -343,12 +343,12 @@
 "aW" = (
 /obj/structure/closet/cardboard,
 /obj/effect/turf_decal/delivery,
-/obj/item/ammo_box/magazine/pistolm9mm{
+/obj/item/ammo_box/magazine/m9mm{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/ammo_box/magazine/pistolm9mm,
-/obj/item/ammo_box/magazine/pistolm9mm{
+/obj/item/ammo_box/magazine/m9mm,
+/obj/item/ammo_box/magazine/m9mm{
 	pixel_x = 3;
 	pixel_y = -3
 	},

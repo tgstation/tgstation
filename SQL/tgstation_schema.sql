@@ -346,6 +346,7 @@ CREATE TABLE `poll_option` (
   `descmid` varchar(32) DEFAULT NULL,
   `descmax` varchar(32) DEFAULT NULL,
   `default_percentage_calc` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_pop_pollid` (`pollid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -361,17 +362,21 @@ DROP TABLE IF EXISTS `poll_question`;
 CREATE TABLE `poll_question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `polltype` enum('OPTION','TEXT','NUMVAL','MULTICHOICE','IRV') NOT NULL,
+  `created_datetime` datetime NOT NULL,
   `starttime` datetime NOT NULL,
   `endtime` datetime NOT NULL,
   `question` varchar(255) NOT NULL,
+  `subtitle` varchar(255) DEFAULT NULL,
   `adminonly` tinyint(1) unsigned NOT NULL,
   `multiplechoiceoptions` int(2) DEFAULT NULL,
-  `createdby_ckey` varchar(32) DEFAULT NULL,
+  `createdby_ckey` varchar(32) NOT NULL,
   `createdby_ip` int(10) unsigned NOT NULL,
   `dontshow` tinyint(1) unsigned NOT NULL,
+  `allow_revoting` tinyint(1) unsigned NOT NULL,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_pquest_question_time_ckey` (`question`,`starttime`,`endtime`,`createdby_ckey`,`createdby_ip`),
-  KEY `idx_pquest_time_admin` (`starttime`,`endtime`,`adminonly`),
+  KEY `idx_pquest_time_deleted_id` (`starttime`,`endtime`, `deleted`, `id`),
   KEY `idx_pquest_id_time_type_admin` (`id`,`starttime`,`endtime`,`polltype`,`adminonly`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -390,7 +395,8 @@ CREATE TABLE `poll_textreply` (
   `ckey` varchar(32) NOT NULL,
   `ip` int(10) unsigned NOT NULL,
   `replytext` varchar(2048) NOT NULL,
-  `adminrank` varchar(32) NOT NULL DEFAULT 'Player',
+  `adminrank` varchar(32) NOT NULL,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_ptext_pollid_ckey` (`pollid`,`ckey`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -412,6 +418,7 @@ CREATE TABLE `poll_vote` (
   `ip` int(10) unsigned NOT NULL,
   `adminrank` varchar(32) NOT NULL,
   `rating` int(2) DEFAULT NULL,
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idx_pvote_pollid_ckey` (`pollid`,`ckey`),
   KEY `idx_pvote_optionid_ckey` (`optionid`,`ckey`)
@@ -454,18 +461,6 @@ CREATE TABLE `schema_revision` (
   `date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`major`, `minor`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DELIMITER $$
-CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
-END
-$$
-CREATE TRIGGER `role_timeTloginsert` AFTER INSERT ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
-END
-$$
-CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
-END
-$$
-DELIMITER ;
 
 --
 -- Table structure for table `stickyban`
@@ -555,6 +550,29 @@ CREATE TABLE `ticket` (
   `sender` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DELIMITER $$
+CREATE PROCEDURE `set_poll_deleted`(
+	IN `poll_id` INT
+)
+SQL SECURITY INVOKER
+BEGIN
+UPDATE `poll_question` SET deleted = 1 WHERE id = poll_id;
+UPDATE `poll_option` SET deleted = 1 WHERE pollid = poll_id;
+UPDATE `poll_vote` SET deleted = 1 WHERE pollid = poll_id;
+UPDATE `poll_textreply` SET deleted = 1 WHERE pollid = poll_id;
+END
+$$
+CREATE TRIGGER `role_timeTlogupdate` AFTER UPDATE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.CKEY, NEW.job, NEW.minutes-OLD.minutes);
+END
+$$
+CREATE TRIGGER `role_timeTloginsert` AFTER INSERT ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (NEW.ckey, NEW.job, NEW.minutes);
+END
+$$
+CREATE TRIGGER `role_timeTlogdelete` AFTER DELETE ON `role_time` FOR EACH ROW BEGIN INSERT into role_time_log (ckey, job, delta) VALUES (OLD.ckey, OLD.job, 0-OLD.minutes);
+END
+$$
+DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

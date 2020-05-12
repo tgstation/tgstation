@@ -140,13 +140,11 @@
 	)
 
 /datum/asset/simple/jquery
-	verify = FALSE
 	assets = list(
 		"jquery.min.js"            = 'code/modules/goonchat/browserassets/js/jquery.min.js',
 	)
 
 /datum/asset/simple/goonchat
-	verify = FALSE
 	assets = list(
 		"json2.min.js"             = 'code/modules/goonchat/browserassets/js/json2.min.js',
 		"browserOutput.js"         = 'code/modules/goonchat/browserassets/js/browserOutput.js',
@@ -155,7 +153,6 @@
 	)
 
 /datum/asset/simple/fontawesome
-	verify = FALSE
 	assets = list(
 		"fa-regular-400.eot"  = 'html/font-awesome/webfonts/fa-regular-400.eot',
 		"fa-regular-400.woff" = 'html/font-awesome/webfonts/fa-regular-400.woff',

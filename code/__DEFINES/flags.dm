@@ -65,6 +65,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define PASSMOB			(1<<4)
 #define PASSCLOSEDTURF	(1<<5)
 #define LETPASSTHROW	(1<<6)
+#define	PASSMACHINE		(1<<7)
+#define PASSSTRUCTURE	(1<<8)
 
 //Movement Types
 #define GROUND			(1<<0)
@@ -146,3 +148,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 		REMOVE_TRAIT(x, TRAIT_KEEP_TOGETHER, KEEP_TOGETHER_ORIGINAL);\
 	else if(!HAS_TRAIT(x, TRAIT_KEEP_TOGETHER))\
 	 	x.appearance_flags &= ~KEEP_TOGETHER
+
+//religious_tool flags
+#define RELIGION_TOOL_INVOKE (1<<0)
+#define RELIGION_TOOL_SACRIFICE (1<<1)
+#define RELIGION_TOOL_SECTSELECT (1<<2)

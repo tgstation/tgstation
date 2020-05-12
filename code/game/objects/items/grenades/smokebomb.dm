@@ -19,7 +19,7 @@
 	desc = "The word '[pick(bruh_moment)]' is scribbled on it in crayon."
 
 ///Here we generate some smoke and also damage blobs??? for some reason. Honestly not sure why we do that.
-/obj/item/grenade/smokebomb/prime()
+/obj/item/grenade/smokebomb/prime(mob/living/lanced_by)
 	. = ..()
 	update_mob()
 	playsound(src, 'sound/effects/smoke.ogg', 50, TRUE, -3)
@@ -30,4 +30,4 @@
 	for(var/obj/structure/blob/B in view(8,src))
 		var/damage = round(30/(get_dist(B,src)+1))
 		B.take_damage(damage, BURN, "melee", 0)
-	resolve()
+	qdel(src)

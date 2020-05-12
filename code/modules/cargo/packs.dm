@@ -252,7 +252,7 @@
 
 /datum/supply_pack/security
 	group = "Security"
-	access_any = ACCESS_FORENSICS_LOCKERS //| ACCESS_SECURITY
+	access = ACCESS_SECURITY
 	crate_type = /obj/structure/closet/crate/secure/gear
 
 /datum/supply_pack/security/ammo
@@ -298,7 +298,7 @@
 	small_item = TRUE
 	access_any = list(ACCESS_SECURITY, ACCESS_FORENSICS_LOCKERS)
 	contains = list(/obj/item/ammo_box/c38/dumdum)
-	crate_name = ".38 match crate"
+	crate_name = ".38 DumDum crate"
 
 /datum/supply_pack/security/forensics
 	name = "Forensics Crate"

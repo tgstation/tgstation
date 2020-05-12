@@ -8,6 +8,7 @@
 	tastes = list("cake" = 1)
 	foodtype = GRAIN | DAIRY
 
+
 /obj/item/reagent_containers/food/snacks/cakeslice
 	icon = 'icons/obj/food/piecake.dmi'
 	trash = /obj/item/trash/plate
@@ -15,6 +16,7 @@
 	customfoodfilling = 0 //to avoid infinite cake-ception
 	tastes = list("cake" = 1)
 	foodtype = GRAIN | DAIRY
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/store/cake/plain
 	name = "plain cake"
@@ -24,6 +26,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("sweetness" = 2,"cake" = 5)
 	foodtype = GRAIN | DAIRY | SUGAR
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/cakeslice/plain
 	name = "plain cake slice"
@@ -44,6 +47,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/medicine/oculine = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 2, "carrot" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cakeslice/carrot
 	name = "carrot cake slice"
@@ -64,6 +68,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/medicine/mannitol = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 2, "brains" = 1)
 	foodtype = GRAIN | DAIRY | MEAT | GROSS | SUGAR
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/cakeslice/brain
 	name = "brain cake slice"
@@ -83,6 +88,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 4, "cream cheese" = 3)
 	foodtype = GRAIN | DAIRY
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cakeslice/cheese
 	name = "cheese cake slice"
@@ -101,6 +107,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "oranges" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cakeslice/orange
 	name = "orange cake slice"
@@ -119,6 +126,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "unbearable sourness" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cakeslice/lime
 	name = "lime cake slice"
@@ -137,6 +145,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 2, "sourness" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cakeslice/lemon
 	name = "lemon cake slice"
@@ -155,6 +164,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 1, "chocolate" = 4)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cakeslice/chocolate
 	name = "chocolate cake slice"
@@ -174,6 +184,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 1)
 	foodtype = GRAIN | DAIRY | JUNKFOOD | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/store/cake/birthday/microwave_act(obj/machinery/microwave/M) //super sekrit club
 	new /obj/item/clothing/head/hardhat/cakehat(get_turf(src))
@@ -197,6 +208,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/cakeslice/birthday/energy
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/sprinkles = 10, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/pwr_game = 10, /datum/reagent/consumable/liquidelectricity = 10)
 	tastes = list("cake" = 3, "a Vlad's Salad" = 1)
+	value = FOOD_ILLEGAL
 
 /obj/item/reagent_containers/food/snacks/store/cake/birthday/energy/proc/energy_bite(mob/living/user)
 	to_chat(user, "<font color='red' size='5'>As you eat the cake, you accidentally hurt yourself on the embedded energy sword!</font>")
@@ -243,6 +255,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 10)
 	tastes = list("cake" = 5, "sweetness" = 1, "apple" = 1)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cakeslice/apple
 	name = "apple cake slice"
@@ -266,6 +279,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("cake" = 5, "sweetness" = 1, "slime" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/slimecake
 	name = "slime cake slice"
@@ -283,6 +297,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("cake" = 5, "sweetness" = 1, "pumpkin" = 1)
 	foodtype = GRAIN | DAIRY | VEGETABLES | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cakeslice/pumpkinspice
 	name = "pumpkin spice cake slice"
@@ -300,6 +315,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 14, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("blackberry" = 2, "strawberries" = 2, "vanilla" = 2, "sweetness" = 2, "cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/bsvc
 	name = "blackberry and strawberry vanilla cake slice"
@@ -317,6 +333,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 14, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/coco = 5)
 	tastes = list("blackberry" = 2, "strawberries" = 2, "chocolate" = 2, "sweetness" = 2,"cake" = 3)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/bscc
 	name = "blackberry and strawberry chocolate cake slice"
@@ -334,6 +351,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3, /datum/reagent/water/holywater = 10)
 	tastes = list("cake" = 5, "sweetness" = 1, "clouds" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/holy_cake_slice
 	name = "angel food cake slice"
@@ -352,6 +370,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 60)
 	tastes = list("cake" = 5, "sweetness" = 1, "batter" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR | JUNKFOOD
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/pound_cake_slice
 	name = "pound cake slice"
@@ -369,6 +388,7 @@
 	bonus_reagents = list(/datum/reagent/toxin/acid = 15, /datum/reagent/fuel/oil = 15)
 	tastes = list("acid" = 3, "metal" = 4, "glass" = 5)
 	foodtype = GRAIN | GROSS
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/hardware_cake_slice
 	name = "hardware cake slice"
@@ -386,6 +406,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/sugar = 15, /datum/reagent/consumable/vanilla = 15)
 	tastes = list("cake" = 1, "sugar" = 1, "vanilla" = 10)
 	foodtype = GRAIN | SUGAR | DAIRY
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/vanilla_slice
 	name = "vanilla cake slice"
@@ -403,6 +424,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/sugar = 15)
 	tastes = list("cake" = 1, "sugar" = 1, "joy" = 10)
 	foodtype = GRAIN | SUGAR | DAIRY
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/clown_slice
 	name = "clown cake slice"
@@ -421,6 +443,7 @@
 	filling_color = "#7A3D80"
 	tastes = list("cake" = 4, "violets" = 2, "jam" = 2)
 	foodtype = GRAIN | DAIRY | FRUIT | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/cakeslice/trumpet
 	name = "spaceman's cake"

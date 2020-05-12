@@ -21,6 +21,7 @@
 	a_intent = INTENT_HARM //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
+	buckle_prevents_pull = TRUE // No pulling loaded shit
 
 	radio_key = /obj/item/encryptionkey/headset_cargo
 	radio_channel = RADIO_CHANNEL_SUPPLY
