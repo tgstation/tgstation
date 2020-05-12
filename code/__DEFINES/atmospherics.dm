@@ -396,7 +396,7 @@ GLOBAL_LIST_INIT(atmos_adjacent_savings, list(0,0))
 #define CALCULATE_ADJACENT_TURFS(T) SSadjacent_air.queue[T] = 1
 #endif
 
-GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
+GLOBAL_LIST_INIT(pipe_paint_colors, list(
 		"amethyst" = rgb(130,43,255), //supplymain
 		"blue" = rgb(0,0,255),
 		"brown" = rgb(178,100,56),
@@ -409,7 +409,7 @@ GLOBAL_LIST_INIT(pipe_paint_colors, sortList(list(
 		"red" = rgb(255,0,0),
 		"violet" = rgb(64,0,128),
 		"yellow" = rgb(255,198,0)
-)))
+))
 
 #define MIASMA_CORPSE_MOLES 0.02
 #define MIASMA_GIBS_MOLES 0.005

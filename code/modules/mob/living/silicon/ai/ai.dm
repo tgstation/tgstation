@@ -600,8 +600,8 @@
 
 	if(incapacitated())
 		return
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Thinking", "Friend Computer", "Dorfy", "Blue Glow", "Red Glow")
-	var/emote = input("Please, select a status!", "AI Status", null, null) in sortList(ai_emotions)
+	var/list/ai_emotions = list("Awesome", "BSOD", "Blank", "Blue Glow", "Confused", "Dorfy", "Facepalm", "Friend Computer", "Happy", "Neutral", "Problems?", "Red Glow", "Sad", "Thinking", "Unsure", "Very Happy")
+	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/each in GLOB.ai_status_displays) //change status of displays
 		var/obj/machinery/status_display/ai/M = each
 		M.emotion = emote
@@ -645,20 +645,20 @@
 			var/list/icon_list = list(
 			"bear" = 'icons/mob/animal.dmi',
 			"carp" = 'icons/mob/carp.dmi',
+			"cat" = 'icons/mob/pets.dmi',
+			"cat2" = 'icons/mob/pets.dmi',
 			"chicken" = 'icons/mob/animal.dmi',
 			"corgi" = 'icons/mob/pets.dmi',
 			"cow" = 'icons/mob/animal.dmi',
 			"crab" = 'icons/mob/animal.dmi',
 			"fox" = 'icons/mob/pets.dmi',
 			"goat" = 'icons/mob/animal.dmi',
-			"cat" = 'icons/mob/pets.dmi',
-			"cat2" = 'icons/mob/pets.dmi',
 			"poly" = 'icons/mob/animal.dmi',
 			"pug" = 'icons/mob/pets.dmi',
 			"spider" = 'icons/mob/animal.dmi'
 			)
 
-			input = input("Please select a hologram:") as null|anything in sortList(icon_list)
+			input = input("Please select a hologram:") as null|anything in icon_list
 			if(input)
 				qdel(holo_icon)
 				switch(input)
@@ -672,14 +672,14 @@
 						holo_icon = getHologramIcon(icon(icon_list[input], input))
 		else
 			var/list/icon_list = list(
+				"clock" = 'icons/mob/ai.dmi',
 				"default" = 'icons/mob/ai.dmi',
 				"floating face" = 'icons/mob/ai.dmi',
-				"xeno queen" = 'icons/mob/alien.dmi',
 				"horror" = 'icons/mob/ai.dmi',
-				"clock" = 'icons/mob/ai.dmi'
+				"xeno queen" = 'icons/mob/alien.dmi'
 				)
 
-			input = input("Please select a hologram:") as null|anything in sortList(icon_list)
+			input = input("Please select a hologram:") as null|anything in icon_list
 			if(input)
 				qdel(holo_icon)
 				switch(input)

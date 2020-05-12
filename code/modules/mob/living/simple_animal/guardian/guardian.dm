@@ -510,7 +510,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	var/used_message = "<span class='holoparasite'>All the cards seem to be blank now.</span>"
 	var/failure_message = "<span class='holoparasite bold'>..And draw a card! It's...blank? Maybe you should try again later.</span>"
 	var/ling_failure = "<span class='holoparasite bold'>The deck refuses to respond to a souless creature such as you.</span>"
-	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
+	var/list/possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Gravitokinetic", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	var/random = TRUE
 	var/allowmultiple = FALSE
 	var/allowling = TRUE
@@ -547,7 +547,7 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	if(random)
 		guardiantype = pick(possible_guardians)
 	else
-		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in sortList(possible_guardians)
+		guardiantype = input(user, "Pick the type of [mob_name]", "[mob_name] Creation") as null|anything in possible_guardians
 		if(!guardiantype)
 			to_chat(user, "[failure_message]" )
 			used = FALSE
@@ -620,10 +620,10 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	random = FALSE
 
 /obj/item/guardiancreator/choose/dextrous
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Gravitokinetic", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/guardiancreator/choose/wizard
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Gravitokinetic")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Gravitokinetic", "Lightning", "Protector", "Ranged", "Standard")
 	allowmultiple = TRUE
 
 /obj/item/guardiancreator/tech
@@ -639,14 +639,14 @@ GLOBAL_LIST_EMPTY(parasites) //all currently existing/living guardians
 	ling_failure = "<span class='holoparasite bold'>The holoparasites recoil in horror. They want nothing to do with a creature like you.</span>"
 
 /obj/item/guardiancreator/tech/choose/traitor
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Explosive", "Gravitokinetic", "Lightning", "Protector", "Ranged", "Standard", "Support")
 	allowling = FALSE
 
 /obj/item/guardiancreator/tech/choose
 	random = FALSE
 
 /obj/item/guardiancreator/tech/choose/dextrous
-	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Lightning", "Protector", "Ranged", "Standard", "Support", "Gravitokinetic")
+	possible_guardians = list("Assassin", "Chaos", "Charger", "Dextrous", "Explosive", "Gravitokinetic", "Lightning", "Protector", "Ranged", "Standard", "Support")
 
 /obj/item/paper/guides/antag/guardian
 	name = "Holoparasite Guide"

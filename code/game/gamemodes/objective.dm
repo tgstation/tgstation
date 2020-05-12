@@ -1093,25 +1093,25 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = sortList(list(
+	var/list/allowed_types = list(
+		/datum/objective/absorb,
 		/datum/objective/assassinate,
-		/datum/objective/maroon,
+		/datum/objective/capture,
+		/datum/objective/custom,
 		/datum/objective/debrain,
-		/datum/objective/protect,
+		/datum/objective/destroy,
+		/datum/objective/download,
+		/datum/objective/escape,
+		/datum/objective/hijack,
 		/datum/objective/jailbreak,
 		/datum/objective/jailbreak/detain,
-		/datum/objective/destroy,
-		/datum/objective/hijack,
-		/datum/objective/escape,
-		/datum/objective/survive,
+		/datum/objective/maroon,
 		/datum/objective/martyr,
-		/datum/objective/steal,
-		/datum/objective/download,
 		/datum/objective/nuclear,
-		/datum/objective/capture,
-		/datum/objective/absorb,
-		/datum/objective/custom
-	),/proc/cmp_typepaths_asc)
+		/datum/objective/protect,
+		/datum/objective/steal,
+		/datum/objective/survive
+	)
 
 	for(var/T in allowed_types)
 		var/datum/objective/X = T

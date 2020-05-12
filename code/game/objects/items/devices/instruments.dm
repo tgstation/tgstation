@@ -73,7 +73,7 @@
 	item_state = "synth"
 	instrumentId = "piano"
 	instrumentExt = "ogg"
-	var/static/list/insTypes = list("accordion" = "mid", "bikehorn" = "ogg", "glockenspiel" = "mid", "banjo" = "ogg", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
+	var/static/list/insTypes = list("accordion" = "mid", "banjo" = "ogg", "bikehorn" = "ogg", "glockenspiel" = "mid", "guitar" = "ogg", "harmonica" = "mid", "piano" = "ogg", "recorder" = "mid", "saxophone" = "mid", "trombone" = "mid", "violin" = "mid", "xylophone" = "mid")	//No eguitar you ear-rapey fuckers.
 	actions_types = list(/datum/action/item_action/synthswitch)
 
 /obj/item/instrument/piano_synth/proc/changeInstrument(name = "piano")
@@ -81,7 +81,7 @@
 	song.instrumentExt = insTypes[name]
 
 /obj/item/instrument/piano_synth/proc/selectInstrument() // Moved here so it can be used by the action and PAI software panel without copypasta
-	var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", song.instrumentDir) as null|anything in sortList(insTypes)
+	var/chosen = input("Choose the type of instrument you want to use", "Instrument Selection", song.instrumentDir) as null|anything in insTypes
 	if(!insTypes[chosen])
 		return
 	return changeInstrument(chosen)

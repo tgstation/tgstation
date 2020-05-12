@@ -15,27 +15,27 @@
 
 /obj/item/cardboard_cutout/Initialize()
 	. = ..()
-	possible_appearances = sortList(list(
-		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
-		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
-		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),
-		"Traitor" = image(icon = src.icon, icon_state = "cutout_traitor"),
-		"Nuke Op" = image(icon = src.icon, icon_state = "cutout_fluke"),
-		"Cultist" = image(icon = src.icon, icon_state = "cutout_cultist"),
-		"Clockwork Cultist" = image(icon = src.icon, icon_state = "cutout_servant"),
-		"Revolutionary" = image(icon = src.icon, icon_state = "cutout_viva"),
-		"Wizard" = image(icon = src.icon, icon_state = "cutout_wizard"),
-		"Shadowling" = image(icon = src.icon, icon_state = "cutout_shadowling"),
-		"Xenomorph" = image(icon = src.icon, icon_state = "cutout_fukken_xeno"),
-		"Xenomorph Maid" = image(icon = src.icon, icon_state = "cutout_lusty"),
-		"Swarmer" = image(icon = src.icon, icon_state = "cutout_swarmer"),
+	possible_appearances = list(
 		"Ash Walker" = image(icon = src.icon, icon_state = "cutout_free_antag"),
+		"Assistant" = image(icon = src.icon, icon_state = "cutout_greytide"),
+		"Clockwork Cultist" = image(icon = src.icon, icon_state = "cutout_servant"),
+		"Clown" = image(icon = src.icon, icon_state = "cutout_clown"),
+		"Cultist" = image(icon = src.icon, icon_state = "cutout_cultist"),
 		"Deathsquad Officer" = image(icon = src.icon, icon_state = "cutout_deathsquad"),
 		"Ian" = image(icon = src.icon, icon_state = "cutout_ian"),
-		"Slaughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "daemon"),
 		"Laughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "bowmon"),
-		"Private Security Officer" = image(icon = src.icon, icon_state = "cutout_ntsec")
-	))
+		"Mime" = image(icon = src.icon, icon_state = "cutout_mime"),
+		"Nuke Op" = image(icon = src.icon, icon_state = "cutout_fluke"),
+		"Private Security Officer" = image(icon = src.icon, icon_state = "cutout_ntsec"),
+		"Revolutionary" = image(icon = src.icon, icon_state = "cutout_viva"),
+		"Shadowling" = image(icon = src.icon, icon_state = "cutout_shadowling"),
+		"Slaughter Demon" = image(icon = 'icons/mob/mob.dmi', icon_state = "daemon"),
+		"Swarmer" = image(icon = src.icon, icon_state = "cutout_swarmer"),
+		"Traitor" = image(icon = src.icon, icon_state = "cutout_traitor"),
+		"Wizard" = image(icon = src.icon, icon_state = "cutout_wizard"),
+		"Xenomorph Maid" = image(icon = src.icon, icon_state = "cutout_lusty"),
+		"Xenomorph" = image(icon = src.icon, icon_state = "cutout_fukken_xeno")
+	)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)

@@ -483,13 +483,13 @@
 
 /obj/item/robot_module/butler/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/list/service_icons = sortList(list(
-		"Waitress" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_f"),
-		"Butler" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_m"),
+	var/list/service_icons = list(
 		"Bro" = image(icon = 'icons/mob/robots.dmi', icon_state = "brobot"),
+		"Butler" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_m"),
 		"Kent" = image(icon = 'icons/mob/robots.dmi', icon_state = "kent"),
-		"Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat")
-		))
+		"Tophat" = image(icon = 'icons/mob/robots.dmi', icon_state = "tophat"),
+		"Waitress" = image(icon = 'icons/mob/robots.dmi', icon_state = "service_f")
+		)
 	var/service_robot_icon = show_radial_menu(R, R , service_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(service_robot_icon)
 		if("Waitress")
@@ -533,11 +533,11 @@
 
 /obj/item/robot_module/miner/be_transformed_to(obj/item/robot_module/old_module)
 	var/mob/living/silicon/robot/R = loc
-	var/list/miner_icons = sortList(list(
-		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner"),
+	var/list/miner_icons = list(
 		"Asteroid Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "minerOLD"),
+		"Lavaland Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "miner"),
 		"Spider Miner" = image(icon = 'icons/mob/robots.dmi', icon_state = "spidermin")
-		))
+		)
 	var/miner_robot_icon = show_radial_menu(R, R , miner_icons, custom_check = CALLBACK(src, .proc/check_menu, R), radius = 42, require_near = TRUE)
 	switch(miner_robot_icon)
 		if("Lavaland Miner")

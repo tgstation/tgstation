@@ -48,23 +48,23 @@
 
 	var/update = 0
 	var/static/list/label2types = list(
-		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
-		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
+		"air" = /obj/machinery/portable_atmospherics/canister/air,
+		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
+		"caution" = /obj/machinery/portable_atmospherics/canister,
 		"co2" = /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
-		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
+		"freon" = /obj/machinery/portable_atmospherics/canister/freon,,
+		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen,
+		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
+		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
+		"n2" = /obj/machinery/portable_atmospherics/canister/nitrogen,
 		"n2o" = /obj/machinery/portable_atmospherics/canister/nitrous_oxide,
 		"no2" = /obj/machinery/portable_atmospherics/canister/nitryl,
-		"bz" = /obj/machinery/portable_atmospherics/canister/bz,
-		"air" = /obj/machinery/portable_atmospherics/canister/air,
-		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor,
-		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
-		"hyper-noblium" = /obj/machinery/portable_atmospherics/canister/nob,
-		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
+		"o2" = /obj/machinery/portable_atmospherics/canister/oxygen,
+		"plasma" = /obj/machinery/portable_atmospherics/canister/toxins,
 		"pluoxium" = /obj/machinery/portable_atmospherics/canister/pluoxium,
-		"caution" = /obj/machinery/portable_atmospherics/canister,
-		"miasma" = /obj/machinery/portable_atmospherics/canister/miasma,
-		"freon" = /obj/machinery/portable_atmospherics/canister/freon,
-		"hydrogen" = /obj/machinery/portable_atmospherics/canister/hydrogen
+		"stimulum" = /obj/machinery/portable_atmospherics/canister/stimulum,
+		"tritium" = /obj/machinery/portable_atmospherics/canister/tritium,
+		"water vapor" = /obj/machinery/portable_atmospherics/canister/water_vapor
 	)
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -454,7 +454,7 @@
 		return
 	switch(action)
 		if("relabel")
-			var/label = input("New canister label:", name) as null|anything in sortList(label2types)
+			var/label = input("New canister label:", name) as null|anything in label2types
 			if(label && !..())
 				var/newtype = label2types[label]
 				if(newtype)

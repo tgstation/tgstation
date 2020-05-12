@@ -883,13 +883,13 @@
 
 /obj/item/storage/box/papersack/Initialize(mapload)
 	. = ..()
-	papersack_designs = sortList(list(
-		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
-		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
-		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks"),
+	papersack_designs = list(
 		"Heart" = image(icon = src.icon, icon_state = "paperbag_Heart"),
-		"SmileyFace" = image(icon = src.icon, icon_state = "paperbag_SmileyFace")
-		))
+		"NanotrasenStandard" = image(icon = src.icon, icon_state = "paperbag_NanotrasenStandard"),
+		"None" = image(icon = src.icon, icon_state = "paperbag_None"),
+		"SmileyFace" = image(icon = src.icon, icon_state = "paperbag_SmileyFace"),
+		"SyndiSnacks" = image(icon = src.icon, icon_state = "paperbag_SyndiSnacks")
+		)
 
 /obj/item/storage/box/papersack/update_icon_state()
 	if(contents.len == 0)

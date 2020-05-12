@@ -12,9 +12,7 @@ SUBSYSTEM_DEF(traumas)
 
 /datum/controller/subsystem/traumas/Initialize()
 	//phobia types is to pull from randomly for brain traumas, e.g. conspiracies is for special assignment only
-	phobia_types = sortList(list("spiders", "space", "security", "clowns", "greytide", "lizards",
-						"skeletons", "snakes", "robots", "doctors", "authority", "the supernatural",
-						"aliens", "strangers", "birds", "falling", "anime"))
+	phobia_types = list("aliens", "anime", "authority", "birds", "clowns", "doctors", "falling", "greytide", "lizards",, "robots", "security", "skeletons", "snakes", "space", "spiders", "strangers", "the supernatural")
 
 	phobia_regexes = list("spiders"          = construct_phobia_regex("spiders"),
 						  "space"            = construct_phobia_regex("space"),

@@ -137,20 +137,20 @@
 /proc/random_skin_tone()
 	return pick(GLOB.skin_tones)
 
-GLOBAL_LIST_INIT(skin_tones, sortList(list(
+GLOBAL_LIST_INIT(skin_tones, list(
+	"african1",
+	"african2",
 	"albino",
+	"arab",
+	"asian1",
+	"asian2",
 	"caucasian1",
 	"caucasian2",
 	"caucasian3",
-	"latino",
-	"mediterranean",
-	"asian1",
-	"asian2",
-	"arab",
 	"indian",
-	"african1",
-	"african2"
-	)))
+	"latino",
+	"mediterranean"
+	))
 
 GLOBAL_LIST_EMPTY(species_list)
 

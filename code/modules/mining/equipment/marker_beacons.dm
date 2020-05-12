@@ -1,18 +1,18 @@
 /*****************Marker Beacons**************************/
-GLOBAL_LIST_INIT(marker_beacon_colors, sortList(list(
-"Random" = FALSE, //not a true color, will pick a random color
-"Burgundy" = LIGHT_COLOR_FLARE,
+GLOBAL_LIST_INIT(marker_beacon_colors, list(
 "Bronze" = LIGHT_COLOR_ORANGE,
-"Yellow" = LIGHT_COLOR_YELLOW,
+"Burgundy" = LIGHT_COLOR_FLARE,
+"Cerulean" = LIGHT_COLOR_BLUE,
+"Fuchsia" = LIGHT_COLOR_PINK,
+"Indigo" = LIGHT_COLOR_DARK_BLUE,
+"Jade" = LIGHT_COLOR_BLUEGREEN,
 "Lime" = LIGHT_COLOR_SLIME_LAMP,
 "Olive" = LIGHT_COLOR_GREEN,
-"Jade" = LIGHT_COLOR_BLUEGREEN,
-"Teal" = LIGHT_COLOR_LIGHT_CYAN,
-"Cerulean" = LIGHT_COLOR_BLUE,
-"Indigo" = LIGHT_COLOR_DARK_BLUE,
 "Purple" = LIGHT_COLOR_PURPLE,
+"Random" = FALSE, //not a true color, will pick a random color
+"Teal" = LIGHT_COLOR_LIGHT_CYAN,
 "Violet" = LIGHT_COLOR_LAVENDER,
-"Fuchsia" = LIGHT_COLOR_PINK)))
+"Yellow" = LIGHT_COLOR_YELLOW))
 
 /obj/item/stack/marker_beacon
 	name = "marker beacon"
