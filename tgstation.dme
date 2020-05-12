@@ -2942,6 +2942,7 @@
 #include "code\modules\surgery\dental_implant.dm"
 #include "code\modules\surgery\experimental_dissection.dm"
 #include "code\modules\surgery\eye_surgery.dm"
+#include "code\modules\surgery\gastrectomy.dm"
 #include "code\modules\surgery\healing.dm"
 #include "code\modules\surgery\hepatectomy.dm"
 #include "code\modules\surgery\implant_removal.dm"
