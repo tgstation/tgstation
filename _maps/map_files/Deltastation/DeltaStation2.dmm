@@ -54657,10 +54657,7 @@
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "bXg" = (
-/obj/structure/displaycase/captain{
-	req_access = null;
-	req_access_txt = "20"
-	},
+/obj/structure/displaycase/captain,
 /turf/open/floor/plasteel/grimy,
 /area/crew_quarters/heads/captain)
 "bXh" = (
