@@ -330,8 +330,10 @@
 /mob/living/carbon/human/attack_slime(mob/living/simple_animal/slime/M)
 	if(..()) //successful slime attack
 		var/damage = rand(5, 25)
+		var/wound_mod = -45 // 25^1.4=90, 90-45=45
 		if(M.is_adult)
 			damage = rand(10, 35)
+			wound_mod = -90 // 35^1.4=145, 145-90=55
 
 		if(check_shields(M, damage, "the [M.name]"))
 			return 0
@@ -344,7 +346,7 @@
 		if(!affecting)
 			affecting = get_bodypart(BODY_ZONE_CHEST)
 		var/armor_block = run_armor_check(affecting, "melee")
-		apply_damage(damage, BRUTE, affecting, armor_block)
+		apply_damage(damage, BRUTE, affecting, armor_block, wound_bonus=wound_mod)
 
 /mob/living/carbon/human/mech_melee_attack(obj/mecha/M)
 
