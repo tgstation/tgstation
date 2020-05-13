@@ -65,3 +65,8 @@
 		var/datum/gas_mixture/enviro = location.return_air()
 		enviro.temperature = clamp(min(ROOM_TEMP, enviro.temperature*0.85),MIN_FREEZE_TEMP,MAX_FREEZE_TEMP)
 	sparks.start()
+
+#undef EXPOSED_VOLUME
+#undef ROOM_TEMP
+#undef MIN_FREEZE_TEMP
+#undef MAX_FREEZE_TEMP
