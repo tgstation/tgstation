@@ -1432,7 +1432,7 @@
 
 /datum/supply_pack/science/aiupload
 	name = "AI Upload Board"
-	desc = "AI Upload Board to change the AIs laws. Garaunteed to purge 99% of fleshbags with just one swipe! Requires AI upload access to open."
+	desc = "An AI Upload Board to change the AI's laws. Guaranteed to purge 99% of fleshbags with just one swipe! Requires AI Upload access to open."
 	cost = 7500
 	access = ACCESS_AI_UPLOAD
 	contains = list(/obj/item/circuitboard/computer/aiupload)
