@@ -346,6 +346,11 @@ Difficulty: Extremely Hard
 	AddComponent(/datum/component/knockback, 4, TRUE, FALSE)
 	AddComponent(/datum/component/lifesteal, 5)
 
+/obj/item/pickaxe/drill/jackhammer/demonic/use_tool(atom/target, mob/living/user, delay, amount=0, volume=0, datum/callback/extra_checks)
+	var/turf/T = get_turf(target)
+	mineral_scan_pulse(T, world.view + 1)
+	. = ..()
+
 /obj/item/crusher_trophy/ice_block_talisman
 	name = "ice block talisman"
 	desc = "A glowing trinket that a demonic miner had on him, it seems he couldn't utilize it for whatever reason."

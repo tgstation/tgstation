@@ -77,15 +77,12 @@
 "aq" = (
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/wood{
-	icon_state = "wood-broken"
+	icon_state = "wood-broken";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "ar" = (
 /turf/open/floor/plasteel/cult,
-/area/ruin/unpowered/buried_library)
-"as" = (
-/obj/structure/bookcase/random,
-/turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "at" = (
 /obj/structure/fluff/paper,
@@ -120,7 +117,8 @@
 /area/ruin/unpowered/buried_library)
 "aB" = (
 /turf/open/floor/wood{
-	icon_state = "wood-broken6"
+	icon_state = "wood-broken6";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "aC" = (
@@ -281,7 +279,8 @@
 	dir = 1
 	},
 /turf/open/floor/wood{
-	icon_state = "wood-broken7"
+	icon_state = "wood-broken7";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "be" = (
@@ -325,7 +324,8 @@
 "bk" = (
 /obj/structure/fluff/paper/stack,
 /turf/open/floor/wood{
-	icon_state = "wood-broken4"
+	icon_state = "wood-broken4";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bl" = (
@@ -371,18 +371,21 @@
 "bv" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood{
-	icon_state = "wood-broken4"
+	icon_state = "wood-broken4";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bw" = (
 /turf/open/floor/wood{
-	icon_state = "wood-broken3"
+	icon_state = "wood-broken3";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bx" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood{
-	icon_state = "wood-broken5"
+	icon_state = "wood-broken5";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "by" = (
@@ -420,50 +423,58 @@
 /area/ruin/unpowered/buried_library)
 "bD" = (
 /turf/open/floor/wood{
-	icon_state = "wood-broken5"
+	icon_state = "wood-broken5";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bE" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood{
-	icon_state = "wood-broken"
+	icon_state = "wood-broken";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bF" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood{
-	icon_state = "wood-broken3"
+	icon_state = "wood-broken3";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bG" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood{
-	icon_state = "wood-broken6"
+	icon_state = "wood-broken6";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bH" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper,
 /turf/open/floor/wood{
-	icon_state = "wood-broken4"
+	icon_state = "wood-broken4";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bI" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood{
-	icon_state = "wood-broken7"
+	icon_state = "wood-broken7";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bJ" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood{
-	icon_state = "wood-broken2"
+	icon_state = "wood-broken2";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bK" = (
 /obj/item/stack/sheet/mineral/wood,
 /turf/open/floor/wood{
-	icon_state = "wood-broken5"
+	icon_state = "wood-broken5";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bL" = (
@@ -472,7 +483,8 @@
 	dir = 10
 	},
 /turf/open/floor/wood{
-	icon_state = "wood-broken3"
+	icon_state = "wood-broken3";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bM" = (
@@ -481,28 +493,29 @@
 	dir = 1
 	},
 /turf/open/floor/wood{
-	icon_state = "wood-broken5"
+	icon_state = "wood-broken5";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bN" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/fluff/paper,
 /turf/open/floor/wood{
-	icon_state = "wood-broken5"
+	icon_state = "wood-broken5";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/ruin/unpowered/buried_library)
-"bO" = (
-/turf/open/floor/wood,
 /area/ruin/unpowered/buried_library)
 "bP" = (
 /obj/item/paper/crumpled/bloody/fluff/stations/lavaland/library/warning,
 /turf/open/floor/wood{
-	icon_state = "wood-broken3"
+	icon_state = "wood-broken3";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 "bQ" = (
 /turf/open/floor/wood{
-	icon_state = "wood-broken7"
+	icon_state = "wood-broken7";
+	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/unpowered/buried_library)
 
@@ -752,7 +765,7 @@ bK
 aR
 ae
 bq
-bO
+ae
 aU
 ad
 "}
@@ -843,7 +856,7 @@ ah
 an
 ah
 bh
-as
+ah
 az
 ah
 ak

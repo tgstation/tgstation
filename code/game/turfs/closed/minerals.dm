@@ -151,11 +151,6 @@
 		//Currently, Adamantine won't spawn as it has no uses. -Durandan
 	var/mineralChance = 13
 
-/turf/closed/mineral/random/more_caves
-	mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,
-		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40, /obj/item/stack/ore/titanium = 11,
-		/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 15, /obj/item/stack/ore/bluespace_crystal = 1)
-
 /turf/closed/mineral/random/Initialize()
 
 	mineralSpawnChanceList = typelist("mineralSpawnChanceList", mineralSpawnChanceList)
@@ -164,7 +159,11 @@
 	if (prob(mineralChance))
 		var/path = pickweight(mineralSpawnChanceList)
 		if(ispath(path, /turf))
+			var/stored_flags = 0
+			if(flags_1 & NO_RUINS_1)
+				stored_flags |= NO_RUINS_1
 			var/turf/T = ChangeTurf(path,null,CHANGETURF_IGNORE_AIR)
+			T.flags_1 |= stored_flags
 
 			T.baseturfs = src.baseturfs
 			if(ismineralturf(T))
@@ -187,6 +186,11 @@
 		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40, /obj/item/stack/ore/titanium = 11,
 		/turf/closed/mineral/gibtonite = 4, /obj/item/stack/ore/bluespace_crystal = 1)
 
+/turf/closed/mineral/random/more_caves
+	mineralSpawnChanceList = list(/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10,
+		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40, /obj/item/stack/ore/titanium = 11,
+		/turf/closed/mineral/gibtonite = 4, /turf/open/floor/plating/asteroid/airless/cave = 15, /obj/item/stack/ore/bluespace_crystal = 1)
+
 /turf/closed/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 25
@@ -204,22 +208,6 @@
 		/obj/item/stack/ore/uranium = 35, /obj/item/stack/ore/diamond = 30, /obj/item/stack/ore/gold = 45, /obj/item/stack/ore/titanium = 45,
 		/obj/item/stack/ore/silver = 50, /obj/item/stack/ore/plasma = 50, /obj/item/stack/ore/bluespace_crystal)
 
-/turf/closed/mineral/random/high_chance/snow
-	name = "snowy mountainside"
-	icon = 'icons/turf/mining.dmi'
-	smooth_icon = 'icons/turf/walls/mountain_wall.dmi'
-	icon_state = "mountainrock"
-	smooth = SMOOTH_MORE|SMOOTH_BORDER
-	canSmoothWith = list (/turf/closed)
-	defer_change = TRUE
-	environment_type = "snow"
-	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
-	baseturfs = /turf/open/floor/plating/asteroid/snow/icemoon
-	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/ice/icemoon = 35, /turf/closed/mineral/diamond/ice/icemoon = 30, /turf/closed/mineral/gold/ice/icemoon = 45, /turf/closed/mineral/titanium/ice/icemoon = 45,
-		/turf/closed/mineral/silver/ice/icemoon = 50, /turf/closed/mineral/plasma/ice/icemoon = 50, /turf/closed/mineral/bscrystal/ice/icemoon = 20)
-
 /turf/closed/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 6
@@ -227,7 +215,6 @@
 		/obj/item/stack/ore/uranium = 2, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 4, /obj/item/stack/ore/titanium = 4,
 		/obj/item/stack/ore/silver = 6, /obj/item/stack/ore/plasma = 15, /obj/item/stack/ore/iron = 40,
 		/turf/closed/mineral/gibtonite = 2, /obj/item/stack/ore/bluespace_crystal = 1)
-
 
 /turf/closed/mineral/random/volcanic
 	environment_type = "basalt"
@@ -262,44 +249,54 @@
 	smooth = SMOOTH_MORE|SMOOTH_BORDER
 	canSmoothWith = list (/turf/closed)
 	defer_change = TRUE
-	environment_type = "snow"
+	environment_type = "snow_cavern"
 	turf_type = /turf/open/floor/plating/asteroid/snow/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 	mineralChance = 10
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/ice/icemoon = 5, /turf/closed/mineral/diamond/ice/icemoon = 1, /turf/closed/mineral/gold/ice/icemoon = 10, /turf/closed/mineral/titanium/ice/icemoon = 11,
-		/turf/closed/mineral/silver/ice/icemoon = 12, /turf/closed/mineral/plasma/ice/icemoon = 20, /turf/closed/mineral/iron/ice/icemoon = 40,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /turf/open/floor/plating/asteroid/airless/cave/snow = 1, /turf/closed/mineral/bscrystal/ice/icemoon = 1)
+		/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10, /obj/item/stack/ore/titanium = 11,
+		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /turf/open/floor/plating/asteroid/airless/cave/snow = 1, /obj/item/stack/ore/bluespace_crystal = 1)
+
+/turf/closed/mineral/random/snow/Change_Ore(var/ore_type, random = 0)
+	. = ..()
+	if(mineralType)
+		smooth_icon = 'icons/turf/walls/icerock_wall.dmi'
+		icon = 'icons/turf/walls/icerock_wall.dmi'
+
+/turf/closed/mineral/random/snow/more_caves
+	mineralSpawnChanceList = list(
+		/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10, /obj/item/stack/ore/titanium = 11,
+		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /turf/open/floor/plating/asteroid/airless/cave/snow = 15, /obj/item/stack/ore/bluespace_crystal = 1)
 
 /turf/closed/mineral/random/snow/no_caves
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/ice/icemoon = 5, /turf/closed/mineral/diamond/ice/icemoon = 1, /turf/closed/mineral/gold/ice/icemoon = 10, /turf/closed/mineral/titanium/ice/icemoon = 11,
-		/turf/closed/mineral/silver/ice/icemoon = 12, /turf/closed/mineral/plasma/ice/icemoon = 20, /turf/closed/mineral/iron/ice/icemoon = 40,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /turf/closed/mineral/bscrystal/ice/icemoon = 1)
-
-/turf/closed/mineral/random/labormineral
-	mineralSpawnChanceList = list(
-		/obj/item/stack/ore/uranium = 3, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 8, /obj/item/stack/ore/titanium = 8,
-		/obj/item/stack/ore/silver = 20, /obj/item/stack/ore/plasma = 30, /obj/item/stack/ore/iron = 95,
-		/turf/closed/mineral/gibtonite = 2)
-	icon_state = "rock_labor"
+		/obj/item/stack/ore/uranium = 5, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 10, /obj/item/stack/ore/titanium = 11,
+		/obj/item/stack/ore/silver = 12, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 40,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /obj/item/stack/ore/bluespace_crystal = 1)
 
 /turf/closed/mineral/random/snow/underground
 	// abundant ore and caves
 	mineralChance = 20
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/ice/icemoon = 10, /turf/closed/mineral/diamond/ice/icemoon = 4, /turf/closed/mineral/gold/ice/icemoon = 20, /turf/closed/mineral/titanium/ice/icemoon = 22,
-		/turf/closed/mineral/silver/ice/icemoon = 24, /turf/closed/mineral/plasma/ice/icemoon = 20, /turf/closed/mineral/iron/ice/icemoon = 20, /turf/closed/mineral/bananium/ice/icemoon = 1,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 8, /turf/open/floor/plating/asteroid/airless/cave/snow/underground = 2, /turf/closed/mineral/bscrystal/ice/icemoon = 2)
+		/obj/item/stack/ore/uranium = 10, /obj/item/stack/ore/diamond = 4, /obj/item/stack/ore/gold = 20, /obj/item/stack/ore/titanium = 22,
+		/obj/item/stack/ore/silver = 24, /obj/item/stack/ore/plasma = 20, /obj/item/stack/ore/iron = 20, /obj/item/stack/ore/bananium = 1,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 8, /turf/open/floor/plating/asteroid/airless/cave/snow/underground = 2, /obj/item/stack/ore/bluespace_crystal = 2)
 
-/turf/closed/mineral/random/snow/more_caves
+/turf/closed/mineral/random/snow/high_chance
 	mineralSpawnChanceList = list(
-		/turf/closed/mineral/uranium/ice/icemoon = 5, /turf/closed/mineral/diamond/ice/icemoon = 1, /turf/closed/mineral/gold/ice/icemoon = 10, /turf/closed/mineral/titanium/ice/icemoon = 11,
-		/turf/closed/mineral/silver/ice/icemoon = 12, /turf/closed/mineral/plasma/ice/icemoon = 20, /turf/closed/mineral/iron/ice/icemoon = 40,
-		/turf/closed/mineral/gibtonite/ice/icemoon = 4, /turf/open/floor/plating/asteroid/airless/cave/snow = 15, /turf/closed/mineral/bscrystal/ice/icemoon = 1)
+		/obj/item/stack/ore/uranium = 35, /obj/item/stack/ore/diamond  = 30, /obj/item/stack/ore/gold = 45, /obj/item/stack/ore/titanium = 45,
+		/obj/item/stack/ore/silver = 50, /obj/item/stack/ore/plasma = 50, /obj/item/stack/ore/bluespace_crystal = 20)
 
+/turf/closed/mineral/random/labormineral
+	icon_state = "rock_labor"
+	mineralSpawnChanceList = list(
+		/obj/item/stack/ore/uranium = 3, /obj/item/stack/ore/diamond = 1, /obj/item/stack/ore/gold = 8, /obj/item/stack/ore/titanium = 8,
+		/obj/item/stack/ore/silver = 20, /obj/item/stack/ore/plasma = 30, /obj/item/stack/ore/iron = 95,
+		/turf/closed/mineral/gibtonite = 2)
 
 /turf/closed/mineral/random/labormineral/volcanic
 	environment_type = "basalt"
@@ -332,8 +329,6 @@
 		/turf/closed/mineral/silver/ice/icemoon = 20, /turf/closed/mineral/plasma/ice/icemoon = 30, /turf/closed/mineral/bscrystal/ice/icemoon = 1, /turf/closed/mineral/gibtonite/ice/icemoon = 2,
 		/turf/closed/mineral/iron/ice/icemoon = 95)
 
-
-
 /turf/closed/mineral/iron
 	mineralType = /obj/item/stack/ore/iron
 	scan_state = "rock_Iron"
@@ -358,7 +353,6 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-
 
 /turf/closed/mineral/uranium
 	mineralType = /obj/item/stack/ore/uranium
@@ -385,7 +379,6 @@
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-
 /turf/closed/mineral/diamond
 	mineralType = /obj/item/stack/ore/diamond
 	scan_state = "rock_Diamond"
@@ -410,7 +403,6 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-
 
 /turf/closed/mineral/gold
 	mineralType = /obj/item/stack/ore/gold
@@ -437,7 +429,6 @@
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-
 /turf/closed/mineral/silver
 	mineralType = /obj/item/stack/ore/silver
 	scan_state = "rock_Silver"
@@ -462,7 +453,6 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-
 
 /turf/closed/mineral/titanium
 	mineralType = /obj/item/stack/ore/titanium
@@ -489,7 +479,6 @@
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-
 /turf/closed/mineral/plasma
 	mineralType = /obj/item/stack/ore/plasma
 	scan_state = "rock_Plasma"
@@ -515,7 +504,6 @@
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
-
 /turf/closed/mineral/bananium
 	mineralType = /obj/item/stack/ore/bananium
 	mineralAmt = 3
@@ -534,7 +522,6 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-
 
 /turf/closed/mineral/bscrystal
 	mineralType = /obj/item/stack/ore/bluespace_crystal
@@ -561,7 +548,6 @@
 	turf_type = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	baseturfs = /turf/open/floor/plating/asteroid/snow/ice/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-
 
 /turf/closed/mineral/volcanic
 	environment_type = "basalt"

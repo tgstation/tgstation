@@ -54284,6 +54284,10 @@
 	},
 /turf/open/floor/plating,
 /area/maintenance/starboard/aft)
+"sNY" = (
+/obj/effect/landmark/carpspawn,
+/turf/open/floor/plating/asteroid/snow/icemoon,
+/area/icemoon/surface/outdoors)
 "sOs" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
@@ -67243,7 +67247,7 @@ boP
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -68480,7 +68484,7 @@ aAe
 aAe
 aAe
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -69068,6 +69072,7 @@ boP
 boP
 boP
 boP
+sNY
 boP
 boP
 boP
@@ -69086,8 +69091,7 @@ boP
 boP
 boP
 boP
-boP
-boP
+sNY
 boP
 boP
 aAe
@@ -69744,7 +69748,7 @@ aAe
 aAe
 aAe
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -74629,7 +74633,7 @@ aAe
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -77823,7 +77827,7 @@ boP
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -80674,7 +80678,7 @@ boP
 bBM
 boP
 boP
-boP
+sNY
 boP
 boP
 aAe
@@ -89412,7 +89416,7 @@ boP
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 aAe
@@ -93409,7 +93413,7 @@ aAe
 aAe
 boP
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -97366,7 +97370,7 @@ boP
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -98807,7 +98811,7 @@ bBM
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -103287,7 +103291,7 @@ boP
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 aAe
@@ -103951,7 +103955,7 @@ aAe
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 aER
@@ -107891,6 +107895,7 @@ boP
 boP
 boP
 boP
+sNY
 boP
 boP
 boP
@@ -107912,8 +107917,7 @@ boP
 boP
 boP
 boP
-boP
-boP
+sNY
 boP
 boP
 aAe
@@ -108130,7 +108134,7 @@ boP
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 boP
@@ -109137,7 +109141,7 @@ boP
 boP
 boP
 boP
-boP
+sNY
 boP
 boP
 boP

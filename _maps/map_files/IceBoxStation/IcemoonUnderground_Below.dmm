@@ -3,7 +3,7 @@
 /turf/closed/mineral/random/snow/underground,
 /area/icemoon/underground/unexplored/rivers)
 "b" = (
-/turf/closed/mineral/random/high_chance/snow,
+/turf/closed/mineral/random/snow/high_chance,
 /area/icemoon/underground/unexplored/rivers)
 "c" = (
 /turf/open/floor/plasteel/dark,

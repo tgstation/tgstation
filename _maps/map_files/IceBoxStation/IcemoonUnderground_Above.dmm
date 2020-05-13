@@ -14,7 +14,7 @@
 /turf/closed/mineral/random/snow,
 /area/icemoon/underground/unexplored/rivers)
 "ak" = (
-/turf/closed/mineral/random/high_chance/snow,
+/turf/closed/mineral/random/snow/high_chance,
 /area/icemoon/underground/unexplored/rivers)
 "ao" = (
 /obj/machinery/computer/shuttle/labor/one_way{
