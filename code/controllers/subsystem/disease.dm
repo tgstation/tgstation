@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(disease)
 	return ..()
 
 /datum/controller/subsystem/disease/stat_entry(msg)
-	..("P:[active_diseases.len]")
+	return ..("P:[active_diseases.len]")
 
 /datum/controller/subsystem/disease/proc/get_disease_name(id)
 	var/datum/disease/advance/A = archive_diseases[id]

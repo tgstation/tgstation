@@ -53,6 +53,9 @@ if(document.addEventListener && window.location) { // hey maybe some bozo is sti
 			window.location.href = href;
 		}
 	});
+	document.addEventListener("mouseup", function(e) {
+		window.location = "byond://winset?mapwindow.map.focus=true"; //Byond ref says focus is read only. This will show 'em.
+	});
 }
 
 if(!Array.prototype.includes) {
