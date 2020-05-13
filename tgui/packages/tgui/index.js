@@ -50,9 +50,12 @@ const renderLayout = () => {
   try {
     // Initial render setup
     if (initialRender) {
+      logger.error('initial render config', state.config);
       logger.log('initial render', state);
       // Setup dragging
-      setupDrag(state);
+      if (initialRender !== 'recycled') {
+        setupDrag(state);
+      }
     }
     // Start rendering
     const { getRoutedComponent } = require('./routes');
@@ -67,8 +70,6 @@ const renderLayout = () => {
     }
     render(element, reactRoot);
     if (state.suspended) {
-      logger.warn('Warning: Received an update while being suspended. '
-        + 'This could be a result of a race condition.');
       return;
     }
     if (initialRender) {

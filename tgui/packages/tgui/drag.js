@@ -117,21 +117,16 @@ export const recallWindowGeometry = async (windowKey, defaults = {}) => {
   }
 };
 
-export const setupDrag = async state => {
-  logger.log('setting up');
+export const setupDrag = async () => {
   // Calculate offset caused by windows taskbar
+  logger.log('calculating screen offset');
   screenOffsetPromise = winget(windowId, 'pos')
     .then(pos => [
       pos.x - window.screenLeft,
       pos.y - window.screenTop,
     ]);
   screenOffset = await screenOffsetPromise;
-  // Constraint window position
-  const [relocated, safePosition] = constraintPosition(getWindowPosition());
-  if (relocated) {
-    setWindowPosition(windowId, safePosition);
-  }
-  logger.debug('current state', { windowId, screenOffset });
+  logger.debug({ screenOffset });
 };
 
 /**
