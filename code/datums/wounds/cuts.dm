@@ -116,6 +116,31 @@
 	else if(istype(I, /obj/item/stack/medical/suture))
 		suture(I, user)
 
+/datum/wound/brute/cut/try_handling(mob/living/carbon/human/user)
+	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
+		return FALSE
+
+	if(!isfelinid(user))
+		return FALSE
+
+	lick_wounds(user)
+	return TRUE
+
+/datum/wound/brute/cut/proc/lick_wounds(mob/living/carbon/human/user)
+	user.visible_message("<span class='notice'>[user] begins licking the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You begin licking the wounds on [victim]'s [limb.name]...</span>", ignored_mobs=victim)
+	to_chat(victim, "<span class='notice'>[user] begins to lick the wounds on your [limb.name].</span")
+	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
+		return
+
+	user.visible_message("<span class='notice'>[user] licks the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You lick some of the wounds on [victim]'s [limb.name]</span>", ignored_mobs=victim)
+	to_chat(victim, "<span class='green'>[user] licks the wounds on your [limb.name]!</span")
+	blood_flow -= 0.5
+
+	if(blood_flow > minimum_flow)
+		try_handling(user)
+	else if(demotes_to)
+		to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
+
 /datum/wound/brute/cut/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.5 : 1)
 	user.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
