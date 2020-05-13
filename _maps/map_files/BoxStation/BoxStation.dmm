@@ -49693,6 +49693,14 @@
 /obj/structure/disposalpipe/segment{
 	dir = 5
 	},
+/obj/item/raw_anomaly_core/random{
+	step_y = 0;
+	pixel_y = 11
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = -2
+	},
+/obj/structure/table,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "mJM" = (

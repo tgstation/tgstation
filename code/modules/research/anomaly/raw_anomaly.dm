@@ -52,7 +52,8 @@
 
 /obj/item/raw_anomaly_core/random/Initialize(mapload)
 	. = ..()
-	new pick(subtypesof(/obj/item/raw_anomaly_core))(loc)
+	var/path = pick(subtypesof(/obj/item/raw_anomaly_core))
+	new path(loc)
 	return INITIALIZE_HINT_QDEL
 
 /**

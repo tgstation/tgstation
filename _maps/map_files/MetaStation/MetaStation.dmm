@@ -56846,6 +56846,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 11
+	},
+/obj/item/raw_anomaly_core/random,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "cDp" = (

@@ -113488,6 +113488,14 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 4
 	},
+/obj/structure/table,
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 9
+	},
+/obj/item/raw_anomaly_core/random{
+	pixel_y = 9
+	},
+/obj/item/raw_anomaly_core/random,
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "kNS" = (
