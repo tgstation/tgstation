@@ -37,7 +37,7 @@
 
 /mob/living/carbon/alien/humanoid/royal/queen/Logout()
 	..()
-	addtimer(CALLBACK(src, .proc/logoutcheck), 12 SECONDS)//when logging out, we don't want to spam announcements with leaving and reconnecting.
+	addtimer(CALLBACK(src, .proc/logoutcheck), 40 SECONDS)//when logging out, we don't want to spam announcements with leaving and reconnecting.
 	SSshuttle.clearHostileEnvironment(src)
 	neutralized = TRUE
 
@@ -78,6 +78,8 @@
     var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
     nuke.safety = FALSE
     nuke.explode()
+
+var/nuking = FALSE
 
 //XENO
 /mob/living/carbon/alien/mind_initialize()

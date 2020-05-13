@@ -24,7 +24,6 @@
 	health = 400
 	icon_state = "alienq"
 	var/datum/action/small_sprite/smallsprite = new/datum/action/small_sprite/queen()
-	var/nuking = FALSE
 	var/neutralized = FALSE
 
 /mob/living/carbon/alien/humanoid/royal/queen/Initialize()
