@@ -2,9 +2,11 @@ TGS_DEFINE_AND_SET_GLOBAL(tgs, null)
 
 /datum/tgs_api
 	var/datum/tgs_version/version
+	var/datum/tgs_event_handler/event_handler
 
-/datum/tgs_api/New(datum/tgs_version/version)
+/datum/tgs_api/New(datum/tgs_event_handler/event_handler, datum/tgs_version/version)
 	. = ..()
+	src.event_handler = version
 	src.version = version
 
 /datum/tgs_api/latest

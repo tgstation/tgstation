@@ -1,11 +1,17 @@
 /world/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
 	var/current_api = TGS_READ_GLOBAL(tgs)
 	if(current_api)
-		TGS_ERROR_LOG("TgsNew(): TGS API datum already set ([current_api])! Was TgsNew() called more than once?")
+		TGS_ERROR_LOG("API datum already set (\ref[current_api] ([current_api]))! Was TgsNew() called more than once?")
+		return
+
+	if(!(minimum_required_security_level in list(TGS_SECURITY_ULTRASAFE, TGS_SECURITY_SAFE, TGS_SECURITY_TRUSTED)))
+		TGS_ERROR_LOG("Invalid minimum_required_security_level: [minimum_required_security_level]!")
 		return
 
 #ifdef TGS_V3_API
-	minimum_required_security_level = TGS_SECURITY_TRUSTED
+	if(minimum_required_security_level != TGS_SECURITY_TRUSTED)
+		TGS_WARNING_LOG("V3 DMAPI requires trusted security!")
+		minimum_required_security_level = TGS_SECURITY_TRUSTED
 #endif
 	var/raw_parameter = world.params[TGS_VERSION_PARAMETER]
 	if(!raw_parameter)
@@ -13,7 +19,7 @@
 
 	var/datum/tgs_version/version = new(raw_parameter)
 	if(!version.Valid(FALSE))
-		TGS_ERROR_LOG("Failed to validate TGS version parameter: [raw_parameter]!")
+		TGS_ERROR_LOG("Failed to validate DMAPI version parameter: [raw_parameter]!")
 		return
 
 	var/api_datum
@@ -21,6 +27,7 @@
 		if(3)
 #ifndef TGS_V3_API
 			TGS_ERROR_LOG("Detected V3 API but TGS_V3_API isn't defined!")
+			return
 #else
 			switch(version.minor)
 				if(2)
@@ -43,11 +50,16 @@
 		return
 
 	TGS_INFO_LOG("Activating API for version [version.deprefixed_parameter]")
-	var/datum/tgs_api/new_api = new api_datum(version)
+
+	if(event_handler && !istype(event_handler))
+		TGS_ERROR_LOG("Invalid parameter for event_handler: [event_handler]")
+		event_handler = null
+
+	var/datum/tgs_api/new_api = new api_datum(event_handler, version)
 
 	TGS_WRITE_GLOBAL(tgs, new_api)
 
-	var/result = new_api.OnWorldNew(event_handler, minimum_required_security_level)
+	var/result = new_api.OnWorldNew(minimum_required_security_level)
 	if(!result || result == TGS_UNIMPLEMENTED)
 		TGS_WRITE_GLOBAL(tgs, null)
 		TGS_ERROR_LOG("Failed to activate API!")

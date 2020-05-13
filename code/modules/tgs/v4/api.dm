@@ -43,15 +43,13 @@
 	var/list/cached_test_merges
 	var/datum/tgs_revision_information/cached_revision
 
-	var/datum/tgs_event_handler/event_handler
-
 	var/export_lock = FALSE
 	var/list/last_interop_response
 
 /datum/tgs_api/v4/ApiVersion()
 	return new /datum/tgs_version("4.0.0.0")
 
-/datum/tgs_api/v4/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)
+/datum/tgs_api/v4/OnWorldNew(minimum_required_security_level)
 	json_path = world.params[TGS4_PARAM_INFO_JSON]
 	if(!json_path)
 		TGS_ERROR_LOG("Missing [TGS4_PARAM_INFO_JSON] world parameter!")
@@ -76,7 +74,6 @@
 	security_level = cached_json["securityLevel"]
 	chat_channels_json_path = cached_json["chatChannelsJson"]
 	chat_commands_json_path = cached_json["chatCommandsJson"]
-	src.event_handler = event_handler
 	instance_name = cached_json["instanceName"]
 
 	ListCustomCommands()

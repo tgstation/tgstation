@@ -1,6 +1,6 @@
 //tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "5.0.0"
+#define TGS_DMAPI_VERSION "5.1.0"
 
 //All functions and datums outside this document are subject to change with any version and should not be relied on
 
@@ -54,7 +54,8 @@
 
 #define TGS_EVENT_REBOOT_MODE_CHANGE -1	//Before a reboot mode change, extras parameters are the current and new reboot mode enums
 #define TGS_EVENT_PORT_SWAP -2	//Before a port change is about to happen, extra parameters is new port
-#define TGS_EVENT_INSTANCE_RENAMED -3	//Before the instance is renamed, extra prameter is the new name
+#define TGS_EVENT_INSTANCE_RENAMED -3	//Before the instance is renamed, extra parameter is the new name
+#define TGS_EVENT_WATCHDOG_REATTACH -4	//After the watchdog reattaches to DD, extra parameter is the new /datum/tgs_version of the server
 
 //See the descriptions for the parameters of these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
 #define TGS_EVENT_REPO_RESET_ORIGIN 0
@@ -70,7 +71,10 @@
 #define TGS_EVENT_COMPILE_FAILURE 10
 #define TGS_EVENT_COMPILE_COMPLETE 11 // Note, this event fires before the new .dmb is loaded into the watchdog. Consider using the TGS_EVENT_DEPLOYMENT_COMPLETE instead
 #define TGS_EVENT_INSTANCE_AUTO_UPDATE_START 12
-#define TGS_EVENT_DEPLOYMENT_COMPLETE 13
+#define TGS_EVENT_REPO_MERGE_CONFLICT 13
+#define TGS_EVENT_DEPLOYMENT_COMPLETE 14
+#define TGS_EVENT_WATCHDOG_SHUTDOWN 15
+#define TGS_EVENT_WATCHDOG_DETACH 16
 
 //OTHER ENUMS
 
@@ -85,7 +89,7 @@
 //REQUIRED HOOKS
 
 //Call this somewhere in /world/New() that is always run
-//IMPORTANT: This function may sleep! Other TGS functions will not succeed until it completes
+//IMPORTANT: This function may sleep!
 //event_handler: optional user defined event handler. The default behaviour is to broadcast the event in english to all connected admin channels
 //minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated
 /world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
@@ -193,6 +197,32 @@
 /world/proc/TgsAvailable()
 	return
 
+//Forces a hard reboot of BYOND by ending the process
+//unlike del(world) clients will try to reconnect
+//If the service has not requested a shutdown, the next server will take over
+/world/proc/TgsEndProcess()
+	return
+
+//Send a message to non-admin connected chats
+//message: The message to send
+//admin_only: If TRUE, message will instead be sent to only admin connected chats
+/world/proc/TgsTargetedChatBroadcast(message, admin_only)
+	return
+
+//Send a private message to a specific user
+//message: The message to send
+//user: The /datum/tgs_chat_user to send to
+/world/proc/TgsChatPrivateMessage(message, datum/tgs_chat_user/user)
+	return
+
+//The following functions will sleep if a call to TgsNew() is sleeping
+
+//Sends a message to connected game chats
+//message: The message to send
+//channels: optional channels to limit the broadcast to
+/world/proc/TgsChatBroadcast(message, list/channels)
+	return
+
 //Gets the current /datum/tgs_version of the server tools running the server
 /world/proc/TgsVersion()
 	return
@@ -217,32 +247,8 @@
 /world/proc/TgsTestMerges()
 	return
 
-//Forces a hard reboot of BYOND by ending the process
-//unlike del(world) clients will try to reconnect
-//If the service has not requested a shutdown, the next server will take over
-/world/proc/TgsEndProcess()
-	return
-
 //Gets a list of connected tgs_chat_channel
 /world/proc/TgsChatChannelInfo()
-	return
-
-//Sends a message to connected game chats
-//message: The message to send
-//channels: optional channels to limit the broadcast to
-/world/proc/TgsChatBroadcast(message, list/channels)
-	return
-
-//Send a message to non-admin connected chats
-//message: The message to send
-//admin_only: If TRUE, message will instead be sent to only admin connected chats
-/world/proc/TgsTargetedChatBroadcast(message, admin_only)
-	return
-
-//Send a private message to a specific user
-//message: The message to send
-//user: The /datum/tgs_chat_user to send to
-/world/proc/TgsChatPrivateMessage(message, datum/tgs_chat_user/user)
 	return
 
 /*

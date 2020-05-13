@@ -56,7 +56,7 @@
 /datum/tgs_api/v3210/proc/file2list(filename)
 	return splittext(trim_left(trim_right(file2text(filename))), "\n")
 
-/datum/tgs_api/v3210/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)	//don't use event handling in this version
+/datum/tgs_api/v3210/OnWorldNew(minimum_required_security_level)
 	. = FALSE
 
 	comms_key = world.params[SERVICE_WORLD_PARAM]
