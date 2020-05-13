@@ -417,7 +417,7 @@
 		var/mob/living/carbon/carbies = M
 		if (carbies.stat == DEAD)
 			show_message = 0
-		if(method in list(PATCH, TOUCH))
+		if(method in list(PATCH, TOUCH, VAPOR))
 			var/harmies = min(carbies.getBruteLoss(),carbies.adjustBruteLoss(-1.25 * reac_volume)*-1)
 			var/burnies = min(carbies.getFireLoss(),carbies.adjustFireLoss(-1.25 * reac_volume)*-1)
 			carbies.adjustToxLoss((harmies+burnies)*0.66)
