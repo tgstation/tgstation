@@ -15,24 +15,29 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 50, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 
 	throwforce = 7
-	//The likelihood of a thrown baton to apply it's stun effect. Otherwise, it's simply a standard non-stun hit.
+	///The likelihood of a thrown baton to apply it's stun effect. Otherwise, it's simply a standard non-stun hit.
 	var/throw_stun_chance = 30
 	
+	///What types of cells are usable in this baton. Don't modify this. 
 	var/obj/item/stock_parts/cell/cell
-	var/preload_cell_type //if not empty the baton starts with this type of cell
-	var/cell_hit_cost = 500 //How much do we deduct from our cell per hit
+	///if not empty the baton starts with this type of cell
+	var/preload_cell_type
+	///How much do we deduct from our cell per hit
+	var/cell_hit_cost = 500
+	///Is our baton able to have the cell replaced? If FALSE, the baton cannot have the cell removed.
 	var/can_remove_cell = TRUE
 
-	//This var is used internally to determine if the baton is on or off.
+	///This var is used internally to determine if the baton is on or off.
 	var/turned_on = FALSE
+	///The sound used for when the baton switches on.
 	var/activate_sound = "sparks"
 
 	var/stun_sound = 'sound/weapons/egloves.ogg'
 	
-	//This var determines the stamina damage of the baton. This is used in the baton_effect proc. This value is reduced by armor.
+	///This var determines the stamina damage of the baton. This is used in the baton_effect proc. This value is reduced by armor.
 	var/stamina_loss_amt = 30
-
-	var/convertible = TRUE //if it can be converted with a conversion kit
+	///if it can be converted with a conversion kit
+	var/convertible = TRUE
 
 /obj/item/melee/baton/get_cell()
 	return cell
@@ -215,9 +220,9 @@
 	else
 		if(!deductcharge(cell_hit_cost))
 			return FALSE
-	//the zone the damage is applied against; the target's chest
+	///the zone the damage is applied against; the target's chest
 	var/chest = L.get_bodypart(BODY_ZONE_CHEST)
-	//how much the target's chest armor will block of the stamina damage
+	///how much the target's chest armor will block of the stamina damage
 	var/zap_block = L.run_armor_check(chest, "melee")
 	
 	/// After a target is hit, we do a chunk of stamina damage, reduced by the target's armor

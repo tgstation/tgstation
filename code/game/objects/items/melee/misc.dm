@@ -172,32 +172,49 @@
 	slot_flags = ITEM_SLOT_BELT
 	force = 12 //9 hit crit
 	w_class = WEIGHT_CLASS_NORMAL
+	
+	/// Used interally to set the check timer for attacks, do not modify
+	var/cooldown_check = 0
+	
+	/// Default wait time until can stun again.
+	var/cooldown = 25 
+	/// Knockdown length for carbons.
+	var/knockdown_time_carbon = (1.5 SECONDS)
+	/// If enabled, how long do we stun silicons.
+	var/stun_time_silicon = (5 SECONDS)
+	/// Do we deal stamina damage.
+	var/stamina_damage = 45
+	///Does our baton cause knockdown.
+	var/can_knockdown = FALSE
+	/// Does it stun silicons.
+	var/affect_silicon = FALSE
+	/// "On" sound, played when switching between able to stun or not.
+	var/on_sound
+	/// Default path to sound for when we stun.
+	var/on_stun_sound = "sound/effects/woodhit.ogg"
+	/// Do we animate the "hit" when stunning.
+	var/stun_animation = TRUE
+	/// Are we on or off.
+	var/on = TRUE
+	
+	/// What is our sprite when turned on
+	var/on_icon_state
+	/// What is our sprite when turned off
+	var/off_icon_state
+	/// What is our in-hand sprite when turned on
+	var/on_item_state
+	/// Damage when on - not stunning
+	var/force_on
+	/// Damage when off - not stunning
+	var/force_off
+	/// What is the new size class when turned on
+	var/weight_class_on
 
-	var/cooldown_check = 0 // Used interally, you don't want to modify
-
-	var/cooldown = 25  // Default wait time until can stun again.
-	var/knockdown_time_carbon = (1.5 SECONDS) // Knockdown length for carbons.
-	var/stun_time_silicon = (5 SECONDS) // If enabled, how long do we stun silicons.
-	var/stamina_damage = 45 // Do we deal stamina damage.
-	var/can_knockdown = FALSE //Does our baton cause knockdown.
-	var/affect_silicon = FALSE // Does it stun silicons.
-	var/on_sound // "On" sound, played when switching between able to stun or not.
-	var/on_stun_sound = "sound/effects/woodhit.ogg" // Default path to sound for when we stun.
-	var/stun_animation = TRUE // Do we animate the "hit" when stunning.
-	var/on = TRUE // Are we on or off.
-
-	var/on_icon_state // What is our sprite when turned on
-	var/off_icon_state // What is our sprite when turned off
-	var/on_item_state // What is our in-hand sprite when turned on
-	var/force_on // Damage when on - not stunning
-	var/force_off // Damage when off - not stunning
-	var/weight_class_on // What is the new size class when turned on
-
-// Description for trying to stun when still on cooldown.
+/// Description for trying to stun when still on cooldown.
 /obj/item/melee/classic_baton/proc/get_wait_description()
 	return
 
-// Description for when turning their baton "on"
+/// Description for when turning their baton "on"
 /obj/item/melee/classic_baton/proc/get_on_description()
 	. = list()
 
@@ -206,7 +223,7 @@
 
 	return .
 
-// Default message for stunning mob.
+/// Default message for stunning mob.
 /obj/item/melee/classic_baton/proc/get_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
@@ -215,7 +232,7 @@
 
 	return .
 
-// Default message for stunning a silicon.
+/// Default message for stunning a silicon.
 /obj/item/melee/classic_baton/proc/get_silicon_stun_description(mob/living/target, mob/living/user)
 	. = list()
 
@@ -224,11 +241,11 @@
 
 	return .
 
-// Are we applying any special effects when we stun to carbon
+/// Are we applying any special effects when we stun to carbon
 /obj/item/melee/classic_baton/proc/additional_effects_carbon(mob/living/target, mob/living/user)
 	return
 
-// Are we applying any special effects when we stun to silicon
+/// Are we applying any special effects when we stun to silicon
 /obj/item/melee/classic_baton/proc/additional_effects_silicon(mob/living/target, mob/living/user)
 	return
 
@@ -251,7 +268,7 @@
 			user.take_bodypart_damage(2*force)
 		return
 	if(iscyborg(target))
-		// We don't stun if we're on harm.
+		/// We don't stun if we're on harm.
 		if(user.a_intent != INTENT_HARM)
 			if(affect_silicon)
 				var/list/desc = get_silicon_stun_description(target, user)
@@ -294,9 +311,9 @@
 			if(can_knockdown)
 				target.Knockdown(knockdown_time_carbon)
 
-			//the zone the damage is applied against; the target's chest
+			///the zone the damage is applied against; the target's chest
 			var/chest = target.get_bodypart(BODY_ZONE_CHEST)
-			//how much the target's chest armor will block of the stamina damage
+			///how much the target's chest armor will block of the stamina damage
 			var/armor_block = target.run_armor_check(chest, "melee", null, null, armour_penetration)
 			
 			playsound(get_turf(src), on_stun_sound, 75, TRUE, -1)
@@ -338,8 +355,9 @@
 	item_flags = NONE
 	force = 0
 	
-	//The armor penetration of our baton when we flip it open
+	///The armor penetration of our baton when we flip it open
 	var/armour_penetration_on = 0
+	///The armor penetration while our baton is closed
 	var/armour_penetration_off = 0
 	on = FALSE
 	on_sound = 'sound/weapons/batonextend.ogg'

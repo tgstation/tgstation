@@ -453,6 +453,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	convertible = FALSE
 
 	stamina_loss_amt = 0
+	///The stun time used for the advanced baton.
 	var/stun_time = 14 SECONDS
 
 	preload_cell_type = /obj/item/stock_parts/cell/infinite //Any sufficiently advanced technology is indistinguishable from magic
