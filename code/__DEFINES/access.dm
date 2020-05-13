@@ -88,7 +88,7 @@
 #define ACCESS_CENT_GENERAL 101
 /// Thunderdome.
 #define ACCESS_CENT_THUNDER 102
-/// Special Ops. Captain's display case, Marauder and Seraph mechs.
+/// Special Ops. Marauder and Seraph mechs.
 #define ACCESS_CENT_SPECOPS 103
 /// Medical/Research
 #define ACCESS_CENT_MEDICAL 104
