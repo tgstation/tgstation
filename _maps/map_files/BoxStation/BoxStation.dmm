@@ -30881,6 +30881,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
+/obj/machinery/research/explosive_compressor,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "bHv" = (

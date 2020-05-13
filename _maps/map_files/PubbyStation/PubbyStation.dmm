@@ -53834,6 +53834,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
+/obj/machinery/research/explosive_compressor,
 /turf/open/floor/plasteel,
 /area/science/mixing)
 "npE" = (

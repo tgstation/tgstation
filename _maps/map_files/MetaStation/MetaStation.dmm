@@ -55514,6 +55514,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
+/obj/machinery/research/explosive_compressor,
 /turf/open/floor/plasteel{
 	dir = 1
 	},
@@ -69228,7 +69229,7 @@
 /obj/machinery/camera{
 	c_tag = "Prison Isolation Cell";
 	dir = 8;
-	network = list("ss13","prison" , "isolation")
+	network = list("ss13","prison","isolation")
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
@@ -70850,12 +70851,12 @@
 	brightness = 3;
 	dir = 8
 	},
-/mob/living/simple_animal/mouse/brown/Tom,
 /obj/structure/sink{
 	pixel_y = 29;
 	dir = 2;
 	pixel_x = 0
 	},
+/mob/living/simple_animal/mouse/brown/Tom,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "icO" = (

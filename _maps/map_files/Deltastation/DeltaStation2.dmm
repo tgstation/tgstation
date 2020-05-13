@@ -101070,6 +101070,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/bot,
+/obj/machinery/research/explosive_compressor,
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
 "dJO" = (

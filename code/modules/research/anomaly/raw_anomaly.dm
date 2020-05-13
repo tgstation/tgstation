@@ -31,7 +31,7 @@
 	name = "raw gravity core"
 	desc = "The raw core of a gravity anomaly. The air seems attracted to it."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/grav
-	icon_state = "rawcore_gravity"
+	icon_state = "rawcore_grav"
 
 /obj/item/raw_anomaly_core/pyro
 	desc = "The raw core of a pyro anomaly. It is warm to the touch."
@@ -44,6 +44,16 @@
 	desc = "The raw core of a flux anomaly, faintly crackling with energy."
 	anomaly_type = /obj/item/assembly/signaler/anomaly/flux
 	icon_state = "rawcore_flux"
+
+/obj/item/raw_anomaly_core/random
+	name = "random raw core"
+	desc = "You should not see this!"
+	icon_state = "rawcore_bluespace"
+
+/obj/item/raw_anomaly_core/random/Initialize(mapload)
+	. = ..()
+	new pick(subtypesof(/obj/item/raw_anomaly_core))(loc)
+	return INITIALIZE_HINT_QDEL
 
 /**
   * Created the resulting core after being "made" into it.
