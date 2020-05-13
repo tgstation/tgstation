@@ -50,11 +50,11 @@ const renderLayout = () => {
   try {
     // Initial render setup
     if (initialRender) {
-      logger.error('initial render config', state.config);
+      logger.warn('initial render', state.config);
       logger.log('initial render', state);
       // Setup dragging
       if (initialRender !== 'recycled') {
-        setupDrag(state);
+        setupDrag();
       }
     }
     // Start rendering
