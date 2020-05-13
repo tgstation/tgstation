@@ -859,7 +859,6 @@ $(function() {
 		runByond('byond://winset?mapwindow.map.focus=true');
 	});
 
-	//Sends all inputs from here over to where they are needed.
 	$('body').on('keydown', function(e) {
 		if (e.target.nodeName == 'INPUT' || e.target.nodeName == 'TEXTAREA') {
 			return;
