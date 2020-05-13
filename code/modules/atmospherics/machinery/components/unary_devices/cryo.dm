@@ -1,4 +1,6 @@
 #define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+///Max temperature allowed inside the cryotube, should break before reaching this heat
+#define MAX_TEMPERATURE 4000
 
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
@@ -78,6 +80,15 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
+	///Take the turf the cryotube is on
+	var/turf/T = loc
+	///Take the air composition of the turf
+	var/datum/gas_mixture/env = T.return_air()
+	///Take the air composition inside the cryotube
+	var/datum/gas_mixture/air1 = airs[1]
+	env.merge(air1)
+	air_update_turf()
+
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)
@@ -245,11 +256,14 @@
 
 			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 
-			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
+			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 
 		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
 		air1.garbage_collect()
+
+		if(air1.temperature > 2000)
+			take_damage(clamp((air1.temperature)/300, 7, 15), BURN, 0, 0)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	if(message_cooldown <= world.time)
