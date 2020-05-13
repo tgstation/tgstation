@@ -11,8 +11,8 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	var/list/immune = list() // the one who creates the timestop is immune, which includes wizards and the dead slime you murdered to make this chronofield
 	var/turf/target
-	var/freezerange = 2
-	var/duration = 140
+	var/freezerange = 1
+	var/duration = 30
 	var/datum/proximity_monitor/advanced/timestop/chronofield
 	alpha = 125
 	var/check_anti_magic = FALSE
