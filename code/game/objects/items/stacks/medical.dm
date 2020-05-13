@@ -190,6 +190,13 @@
 	stop_bleeding = 0.5
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 
+/obj/item/stack/medical/suture/emergency
+	name = "emergency suture"
+	desc = "A value pack of cheap sutures, not at all very good at repairing damage, but still decent at stopping bleeding."
+	heal_brute = 5
+	amount = 5
+	max_amount = 5
+
 /obj/item/stack/medical/suture/medicated
 	name = "medicated suture"
 	icon_state = "suture_purp"
