@@ -81,13 +81,14 @@
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
 	///Take the turf the cryotube is on
-	var/turf/T = loc
-	///Take the air composition of the turf
-	var/datum/gas_mixture/env = T.return_air()
-	///Take the air composition inside the cryotube
-	var/datum/gas_mixture/air1 = airs[1]
-	env.merge(air1)
-	air_update_turf()
+	var/turf/T = get_turf(src)
+	if(T)
+		///Take the air composition of the turf
+		var/datum/gas_mixture/env = T.return_air()
+		///Take the air composition inside the cryotube
+		var/datum/gas_mixture/air1 = airs[1]
+		env.merge(air1)
+		T.air_update_turf()
 
 	return ..()
 
@@ -263,7 +264,7 @@
 		air1.garbage_collect()
 
 		if(air1.temperature > 2000)
-			take_damage(clamp((air1.temperature)/300, 7, 15), BURN, 0, 0)
+			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	if(message_cooldown <= world.time)
@@ -484,3 +485,4 @@
 		SSair.add_to_rebuild_queue(src)
 
 #undef CRYOMOBS
+#undef MAX_TEMPERATURE
