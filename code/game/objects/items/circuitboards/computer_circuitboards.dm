@@ -5,6 +5,10 @@
 	icon_state = "command"
 	build_path = /obj/machinery/computer/upload/ai
 
+/obj/item/circuitboard/computer/aiupload/Initialize()
+	. = ..()
+	AddComponent(/datum/component/gps, "Inactive Encrypted Upload")
+
 /obj/item/circuitboard/computer/borgupload
 	name = "Cyborg Upload (Computer Board)"
 	icon_state = "command"
