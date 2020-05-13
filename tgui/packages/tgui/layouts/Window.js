@@ -7,7 +7,7 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
-import { backendSuspend, useBackend } from '../backend';
+import { useBackend } from '../backend';
 import { callByond, IS_IE8 } from '../byond';
 import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
@@ -78,7 +78,6 @@ export class Window extends Component {
       suspended,
     } = useBackend(this.context);
     const { debugLayout } = useDebug(this.context);
-    const dispatch = useDispatch(this.context);
     // Determine when to show dimmer
     const showDimmer = config.observer
       ? config.status < UI_DISABLED
@@ -96,12 +95,7 @@ export class Window extends Component {
           onClose={() => {
             logger.log('pressed close');
             releaseHeldKeys();
-            callByond('winset', {
-              id: window.__windowId__,
-              'is-visible': false,
-            });
             act('tgui:close');
-            dispatch(backendSuspend());
           }} />
         {!suspended && (
           <div

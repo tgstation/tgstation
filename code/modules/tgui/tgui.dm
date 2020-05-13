@@ -178,7 +178,9 @@
 	if(status == UI_CLOSING)
 		return
 	status = UI_CLOSING
-	var/can_be_recycled = recycle && !_has_fatal_error && user.client \
+	var/can_be_recycled = recycle \
+		&& !_has_fatal_error \
+		&& user.client \
 		&& length(user.client.tgui_free_windows) < MAX_RECYCLED_WINDOWS
 	if(can_be_recycled)
 		user << output("", "[window_id].browser:suspend")
@@ -190,7 +192,8 @@
 		user << browse(null, "window=[window_id]")
 		// Remove this window_id just in case it existed in the pool
 		// to avoid contamination with broken windows.
-		user.client.tgui_free_windows -= window_id
+		if(user.client)
+			user.client.tgui_free_windows -= window_id
 	src_object.ui_close(user)
 	SStgui.on_close(src)
 	for(var/datum/tgui/child in children) // Loop through and close all children.
@@ -316,11 +319,12 @@
  * optional force bool If the UI should be forced to update.
  */
 /datum/tgui/process(force = FALSE)
+	if(status == UI_CLOSING)
+		return
 	var/datum/host = src_object.ui_host(user)
 	if(!src_object || !host || !user) // If the object or user died (or something else), abort.
 		close()
 		return
-
 	if(status && (force || autoupdate))
 		update() // Update the UI if the status and update settings allow it.
 	else

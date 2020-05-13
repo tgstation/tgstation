@@ -437,6 +437,9 @@ const KitchenSinkBlockQuote = props => {
 
 const KitchenSinkByondUi = (props, context) => {
   const { config } = useBackend(context);
+  const [code, setCode] = useLocalState(context,
+    'byondUiEvalCode',
+    `Byond.call('winset', {\n  id: '',\n})`);
   return (
     <Box>
       <Section
@@ -448,6 +451,28 @@ const KitchenSinkByondUi = (props, context) => {
             parent: config.window.id,
             text: 'Button',
           }} />
+      </Section>
+      <Section
+        title="Make BYOND calls"
+        level={2}
+        buttons={(
+          <Button
+            icon="chevron-right"
+            onClick={() => {
+              setImmediate(() => {
+                eval(code);
+              });
+            }}>
+            Evaluate
+          </Button>
+        )}>
+        <Box
+          as="textarea"
+          width="100%"
+          height="10em"
+          onChange={e => setCode(e.target.value)}>
+          {code}
+        </Box>
       </Section>
     </Box>
   );

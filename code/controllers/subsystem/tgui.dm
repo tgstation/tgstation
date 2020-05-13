@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(tgui)
  * return string
  */
 /datum/controller/subsystem/tgui/proc/create_window_id()
-	return "tgui-window-[_window_id_counter++]"
+	return "tgui-w-[_window_id_counter++]"
 
 /**
  * public

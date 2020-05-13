@@ -30,9 +30,10 @@
 			. = max(., UI_INTERACTIVE)
 
 		// Regular ghosts can always at least view if in range.
-		var/clientviewlist = getviewsize(user.client.view)
-		if(get_dist(src_object, user) < max(clientviewlist[1],clientviewlist[2]))
-			. = max(., UI_UPDATE)
+		if(user.client)
+			var/clientviewlist = getviewsize(user.client.view)
+			if(get_dist(src_object, user) < max(clientviewlist[1], clientviewlist[2]))
+				. = max(., UI_UPDATE)
 
 	// Check if the state allows interaction
 	var/result = state.can_use_topic(src_object, user)

@@ -67,12 +67,19 @@ const renderLayout = () => {
     }
     render(element, reactRoot);
     if (state.suspended) {
+      logger.warn('Warning: Received an update while being suspended. '
+        + 'This could be a result of a race condition.');
       return;
     }
     if (initialRender) {
       // We schedule for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
       setImmediate(() => {
+        // Doublecheck if we are suspended, because state might have changed.
+        const state = store.getState();
+        if (state.suspended) {
+          return;
+        }
         callByond('winset', {
           id: window.__windowId__,
           'is-visible': true,
@@ -151,6 +158,7 @@ const setupApp = () => {
 
   // Subscribe for bankend updates
   window.update = stateJson => {
+    logger.debug(`window.update (${window.__windowId__})`);
     const prevState = store.getState();
     // NOTE: stateJson can be an object only if called manually from console.
     // This is useful for debugging tgui in external browsers, like Chrome.
@@ -169,7 +177,7 @@ const setupApp = () => {
   };
 
   window.suspend = () => {
-    logger.log('suspending the window');
+    logger.log(`suspending (${window.__windowId__})`);
     callByond('winset', {
       id: window.__windowId__,
       'is-visible': false,
