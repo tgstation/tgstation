@@ -19,8 +19,9 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	var/righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 
 	///Icon file for mob worn overlays.
-	///no var for state because it should *always* be the same as icon_state
 	var/icon/mob_overlay_icon
+	///Item state for mob worn overlays
+	var/mob_overlay_state
 	///Forced mob worn layer instead of the standard preferred ssize.
 	var/alternate_worn_layer
 

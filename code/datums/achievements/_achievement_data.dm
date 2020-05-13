@@ -59,8 +59,8 @@
 		data[achievement_type] = A.load(owner_ckey)
 		original_cached_data[achievement_type] = data[achievement_type]
 
-///Unlocks an achievement of a specific type.
-/datum/achievement_data/proc/unlock(achievement_type, mob/user)
+///Unlocks an achievement of a specific type. achievement type is a typepath to the award, user is the mob getting the award, and value is an optional value to be used for defining a score to add to the leaderboard
+/datum/achievement_data/proc/unlock(achievement_type, mob/user, value = 1)
 	if(!SSachievements.achievements_enabled)
 		return
 	var/datum/award/A = SSachievements.awards[achievement_type]
@@ -71,7 +71,7 @@
 		data[achievement_type] = TRUE
 		A.on_unlock(user) //Only on default achievement, as scores keep going up.
 	else if(istype(A, /datum/award/score))
-		data[achievement_type] += 1
+		data[achievement_type] += value
 
 ///Getter for the status/score of an achievement
 /datum/achievement_data/proc/get_achievement_status(achievement_type)

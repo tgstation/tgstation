@@ -1,7 +1,6 @@
 /*
  * Holds procs designed to change one type of value, into another.
  * Contains:
- *			hex2num & num2hex
  *			file2list
  *			angle2dir
  *			angle2text
@@ -9,64 +8,7 @@
  *			text2dir_extended & dir2text_short
  */
 
-//Returns an integer given a hex input, supports negative values "-ff"
-//skips preceding invalid characters
-//breaks when hittin invalid characters thereafter
-// If safe=TRUE, returns null on incorrect input strings instead of CRASHing
-/proc/hex2num(hex, safe=FALSE)
-	. = 0
-	var/place = 1
-	for(var/i in length(hex) to 1 step -1)
-		var/num = text2ascii(hex, i)
-		switch(num)
-			if(48 to 57)
-				num -= 48	//0-9
-			if(97 to 102)
-				num -= 87	//a-f
-			if(65 to 70)
-				num -= 55	//A-F
-			if(45)
-				return . * -1 // -
-			else
-				if(safe)
-					return null
-				else
-					CRASH("Malformed hex number")
 
-		. += num * place
-		place *= 16
-
-//Returns the hex value of a decimal number
-//len == length of returned string
-//if len < 0 then the returned string will be as long as it needs to be to contain the data
-//Only supports positive numbers
-//if an invalid number is provided, it assumes num==0
-//Note, unlike previous versions, this one works from low to high <-- that way
-/proc/num2hex(num, len=2)
-	if(!isnum(num))
-		num = 0
-	num = round(abs(num))
-	. = ""
-	var/i=0
-	while(1)
-		if(len<=0)
-			if(!num)
-				break
-		else
-			if(i>=len)
-				break
-		var/remainder = num/16
-		num = round(remainder)
-		remainder = (remainder - num) * 16
-		switch(remainder)
-			if(9,8,7,6,5,4,3,2,1)
-				. = "[remainder]" + .
-			if(10,11,12,13,14,15)
-				. = ascii2text(remainder+87) + .
-			else
-				. = "0" + .
-		i++
-	return .
 
 //Splits the text of a file at seperator and returns them in a list.
 //returns an empty list if the file doesn't exist

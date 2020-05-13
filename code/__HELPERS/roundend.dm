@@ -177,6 +177,29 @@
 		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
 	WRITE_FILE(json_file, json_encode(file_data))
 
+///Handles random hardcore point rewarding if it applies.
+/datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
+	if(!ishuman(player_client.mob))
+		return FALSE
+	var/mob/living/carbon/human/human_mob = player_client.mob
+	if(!human_mob.hardcore_survival_score) ///no score no glory
+		return FALSE
+
+	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
+		var/didthegamerwin = TRUE
+		for(var/a in human_mob.mind.antag_datums)
+			var/datum/antagonist/antag_datum = a
+			for(var/i in antag_datum.objectives)
+				var/datum/objective/objective_datum = i
+				if(!objective_datum.check_completion())
+					didthegamerwin = FALSE
+		if(!didthegamerwin)
+			return FALSE
+		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+	else if(human_mob.onCentCom())
+		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+
+
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
@@ -198,6 +221,7 @@
 		C.playtitlemusic(40)
 		if(speed_round)
 			C.give_award(/datum/award/achievement/misc/speed_round, C.mob)
+		HandleRandomHardcoreScore(C)
 
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
@@ -279,6 +303,8 @@
 
 	//Antagonists
 	parts += antag_report()
+
+	parts += hardcore_random_report()
 
 	CHECK_TICK
 	//Medals
@@ -434,6 +460,22 @@
 			parts += com
 		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
 	return ""
+
+///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
+/datum/controller/subsystem/ticker/proc/hardcore_random_report()
+	. = list()
+	. += "<span class='header'>The following people made it out as a random hardcore character:</span>"
+	. += "<ul class='playerlist'>"
+	for(var/i in GLOB.player_list)
+		if(!ishuman(i))
+			continue
+		var/mob/living/carbon/human/human_player = i
+		if(!human_player.hardcore_survival_score || !human_player.onCentCom() || human_player.stat == DEAD) ///gotta escape nerd
+			continue
+		if(!human_player.mind)
+			continue
+		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"
+	. += "</ul>"
 
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
 SUBSYSTEM_DEF(tgui)
 	name = "tgui"
 	wait = 9
