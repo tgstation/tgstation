@@ -47,13 +47,12 @@
 	//This could be a global count like sec and med record printouts. See GLOB.data_core.medicalPrintCount AKA datacore.dm
 	var frNum = ++forensicPrintCount
 
-	P.name = text("FR-[] 'Forensic Record'", frNum)
-	P.info = text("<center><B>Forensic Record - (FR-[])</B></center><HR><BR>", frNum)
-	P.info += jointext(log, "<BR>")
-	P.info += "<HR><B>Notes:</B><BR>"
-	P.info_links = P.info
-	P.updateinfolinks()
-	P.update_icon()
+	P.name = text("            FR-[] 'Forensic Record'", frNum)
+	var/list/text = new
+	text+= text("* _Forensic Record - (FR-[])_", frNum)
+	text += log.Join("\n")
+	text += "* _Notes:_"
+	P.setText(text.Join("\n"))
 
 	if(ismob(loc))
 		var/mob/M = loc

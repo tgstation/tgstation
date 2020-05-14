@@ -18,17 +18,17 @@
 /obj/item/paper/carbon/proc/removecopy(mob/living/user)
 	if(!copied)
 		var/obj/item/paper/carbon/C = src
-		var/copycontents = C.info
 		var/obj/item/paper/carbon/Copy = new /obj/item/paper/carbon(user.loc)
 
-		if(info)
-			copycontents = replacetext(copycontents, "<font face=\"[PEN_FONT]\" color=", "<font face=\"[PEN_FONT]\" nocolor=")
-			copycontents = replacetext(copycontents, "<font face=\"[CRAYON_FONT]\" color=", "<font face=\"[CRAYON_FONT]\" nocolor=")
-			Copy.info += copycontents
-			Copy.info += "</font>"
-			Copy.name = "Copy - [C.name]"
-			Copy.fields = C.fields
-			Copy.updateinfolinks()
+		if(C.info)
+			Copy.info = C.info
+			Copy.finalized = TRUE
+			Copy.stamps = stamps
+			Copy.stamped = C.stamped.Copy()
+			C.copy_overlays(Copy, TRUE)
+			Copy.pen_color = "black"	/// carbon is black!
+			Copy.color = pick("yellow","pink")		/// arn't carbon copys yellow and pink and such?
+
 		to_chat(user, "<span class='notice'>You tear off the carbon-copy!</span>")
 		C.copied = TRUE
 		Copy.iscopy = TRUE

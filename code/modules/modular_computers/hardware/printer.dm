@@ -27,13 +27,11 @@
 
 	// Damaged printer causes the resulting paper to be somewhat harder to read.
 	if(damage > damage_malfunction)
-		P.info = stars(text_to_print, 100-malfunction_probability)
+		P.setText(stars(text_to_print, 100-malfunction_probability))
 	else
-		P.info = text_to_print
+		P.setText(text_to_print)
 	if(paper_title)
 		P.name = paper_title
-	P.update_icon()
-	P.reload_fields()
 	stored_paper--
 	P = null
 	return TRUE

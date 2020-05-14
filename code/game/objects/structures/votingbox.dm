@@ -173,32 +173,14 @@
 	sortTim(results, cmp=/proc/cmp_numeric_dsc, associative = TRUE)
 
 	var/obj/item/paper/P = new(drop_location())
-	var/list/tally = list()
-	tally += "<h1>Voting Results:</h1><hr><ol>"
+	var/list/tally = new
+	tally += "*Voting Results:"
+	var/count = 1
 	for(var/option in results)
-		tally += "<li>\"<div class='content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
-	tally += "</ol>"
-	P.extra_headers = {"
-	<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
-	<style>
-		.content{
-			max-width:250px;
-			display:inline-block;
-			overflow:hidden;
-			text-overflow:ellipsis;
-			white-space:nowrap;
-			vertical-align:bottom
-		}
-		.content br {
-			display: none;
-		}
-		.content hr {
-			display: none;
-		}
-	</style>"}
-	P.info = tally.Join()
+		tally += "[count]: [option]\" - [results[option]] Vote[results[option] > 1 ? "s" : ""]."
+	tally += ""
+	P.setText(tally.Join("\n"))
 	P.name = "Voting Results"
-	P.update_icon()
 	user.put_in_hands(P)
 	to_chat(user,"<span class='notice'>[src] prints out the voting tally.</span>")
 
