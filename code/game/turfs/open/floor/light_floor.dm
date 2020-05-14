@@ -1,3 +1,8 @@
+#define LIGHTFLOOR_FINE 0
+#define LIGHTFLOOR_FLICKER 1
+#define LIGHTFLOOR_BREAKING 2
+#define LIGHTFLOOR_BROKEN 3
+
 /turf/open/floor/light
 	name = "light floor"
 	desc = "A wired glass tile embedded into the floor. Modify the color with a Multitool."
@@ -7,8 +12,8 @@
 	broken_states = list("light_broken")
 	///var to see if its on or off
 	var/on = TRUE
-	///0 = fine, 1 = flickering, 2 = breaking, 3 = broken
-	var/state = 0
+	///defines on top
+	var/state = LIGHTFLOOR_FINE
 	///list of colours to choose
 	var/static/list/coloredlights = list(LIGHT_COLOR_CYAN, LIGHT_COLOR_RED, LIGHT_COLOR_ORANGE, LIGHT_COLOR_GREEN, LIGHT_COLOR_YELLOW, LIGHT_COLOR_DARK_BLUE, LIGHT_COLOR_LAVENDER, LIGHT_COLOR_WHITE,  LIGHT_COLOR_SLIME_LAMP)
 	///current light color
@@ -48,27 +53,27 @@
 
 /turf/open/floor/light/break_tile()
 	..()
-	state = pick(1,2,3)/// pick a broken state
+	state = pick(LIGHTFLOOR_FLICKER, LIGHTFLOOR_BREAKING, LIGHTFLOOR_BROKEN)/// pick a broken state
 	update_icon()
 
 /turf/open/floor/light/update_icon()
 	..()
 	if(on)
 		switch(state)
-			if(0)
+			if(LIGHTFLOOR_FINE)
 				icon_state = "light_on-[LAZYFIND(coloredlights, currentcolor)]"
 				light_color = currentcolor
 				set_light(5)
 				light_range = 3
-			if(1)
+			if(LIGHTFLOOR_FLICKER)
 				icon_state = "light_on_flicker-[LAZYFIND(coloredlights, currentcolor)]"
 				light_color = currentcolor
 				set_light(3)
 				light_range = 2
-			if(2)
+			if(LIGHTFLOOR_BREAKING)
 				icon_state = "light_on_broken"
 				set_light(1)
-			if(3)
+			if(LIGHTFLOOR_BROKEN)
 				icon_state = "light_off"
 				set_light(0)
 	else
@@ -113,7 +118,7 @@
 			return
 		if(state && user.temporarilyRemoveItemFromInventory(C))
 			qdel(C)
-			state = 0 //fixing it by bashing it with a light bulb, fun eh?
+			state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
 			update_icon()
 			to_chat(user, "<span class='notice'>You replace the light bulb.</span>")
 		else
@@ -124,7 +129,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	currentcolor = pick(coloredlights)
-	state = pick(0,0,0,1,2,3)/// 50% chance of not breaking
+	state = pick(LIGHTFLOOR_FINE, LIGHTFLOOR_FINE, LIGHTFLOOR_FINE, LIGHTFLOOR_FLICKER, LIGHTFLOOR_BREAKING, LIGHTFLOOR_BROKEN)/// 50% chance of not breaking
 	update_icon()
 
 //Cycles through all of the colours
@@ -164,3 +169,8 @@
 	if(!multitool || !user.is_holding(multitool))
 		return FALSE
 	return TRUE
+
+#undef LIGHTFLOOR_FINE
+#undef LIGHTFLOOR_FLICKER
+#undef LIGHTFLOOR_BREAKING
+#undef LIGHTFLOOR_BROKEN
