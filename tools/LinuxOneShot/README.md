@@ -2,7 +2,7 @@ This is @Cyberboss rage code
 
 The goal is a one stop solution for hosting /tg/station on linux via docker
 
-Requires docker to be installed. Launch with `docker-compose up`. If that fails, Ctrl+C out, run `docker-compose down`, remove `./TGS_Instances` and `./Database`, and try again.
+Requires docker to be installed. Will not work on Windows. Launch with `docker-compose up`. If that fails, Ctrl+C out, run `docker-compose down`, remove `./TGS_Instances` and `./Database`, and try again.
 
 What it does:
 

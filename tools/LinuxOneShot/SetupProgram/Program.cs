@@ -149,8 +149,8 @@ namespace SetupProgram
 			Console.WriteLine("Uploading EventScripts/PostCompile.sh...");
 			var configurationTask = instanceClient.Configuration.Write(new ConfigurationFile
 			{
-				Path = "/EventScripts/PostCompile.sh",
-				Content = Encoding.UTF8.GetBytes(@"#!/bin/bash
+				Path = "/EventScripts/PreCompile.sh",
+				Content = Encoding.UTF8.GetBytes(@"#!/bin/sh
 
 set -e
 
@@ -247,22 +247,6 @@ if [ ""$DATABASE_EXISTS"" -ne ""ss13_db"" ]; then
     mysql -u root -p YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 -e 'CREATE DATABASE ss13_db;'
     mysql -u root -p YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 -e ss13_db < $1/SQL/tgstation_schema.sql
 fi
-
-#run deploy.sh
-echo 'Deploying tgstation compilation...'
-
-cd $1
-
-mkdir build
-
-shopt -s extglob dotglob
-mv !(build) build
-shopt -u dotglob
-
-chmod +x build/tools/deploy.sh
-build/tools/deploy.sh $1 $1/build
-
-rm -rf build
 ")
 			}, default);
 
