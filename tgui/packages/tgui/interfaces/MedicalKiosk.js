@@ -97,7 +97,9 @@ const MedicalKioskScanButton = (props, context) => {
           tooltipPosition="right"
           content={name}
           onClick={() => {
-            act(`beginScan_${index}`);
+            if (!paid) {
+              act(`beginScan_${index}`);
+            }
             setScanIndex(index);
           }} />
       </Flex.Item>

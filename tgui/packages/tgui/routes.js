@@ -4,6 +4,8 @@
  * @license MIT
  */
 
+import { selectBackend } from './backend';
+import { selectDebug } from './debug';
 import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces', false, /\.js$/);
@@ -32,16 +34,18 @@ const SuspendedWindow = () => {
 };
 
 export const getRoutedComponent = state => {
-  if (state.suspended) {
+  const { suspended, config } = selectBackend(state);
+  if (suspended) {
     return SuspendedWindow;
   }
   if (process.env.NODE_ENV !== 'production') {
+    const debug = selectDebug(state);
     // Show a kitchen sink
-    if (state.debug.kitchenSink) {
+    if (debug.kitchenSink) {
       return require('./interfaces/manually-routed/KitchenSink').KitchenSink;
     }
   }
-  const name = state.config?.interface;
+  const name = config?.interface;
   let esModule;
   try {
     esModule = requireInterface(`./${name}.js`);

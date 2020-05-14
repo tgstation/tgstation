@@ -110,7 +110,11 @@ window.onerror = function (msg, url, line, col, error) {
   };
   setFatalErrorGeometry();
   setInterval(setFatalErrorGeometry, 1000);
-  // Send logs to the server
+  // Send logs to the dev server
+  if (window.__logger__) {
+    window.__logger__.log('FatalError:', error);
+  }
+  // Send logs to the game server
   Byond.call('', {
     src: window.__ref__,
     action: 'tgui:log',

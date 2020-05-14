@@ -7,7 +7,7 @@
 import { flow } from 'common/fp';
 import { applyMiddleware, combineReducers, createStore as createReduxStore } from 'common/redux';
 import { Component } from 'inferno';
-import { backendReducer } from './backend';
+import { backendMiddleware, backendReducer } from './backend';
 import { debugReducer } from './debug';
 import { hotKeyMiddleware } from './hotkeys';
 import { createLogger } from './logging';
@@ -18,14 +18,14 @@ export const createStore = () => {
   const reducer = flow([
     // State initializer
     (state = {}, action) => state,
-    // Global state reducers
-    backendReducer,
     combineReducers({
       debug: debugReducer,
+      backend: backendReducer,
     }),
   ]);
   const middleware = [
     hotKeyMiddleware,
+    backendMiddleware,
   ];
   if (process.env.NODE_ENV !== 'production') {
     middleware.push(loggingMiddleware);

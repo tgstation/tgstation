@@ -11,8 +11,14 @@
  * @license MIT
  */
 
-import { UI_DISABLED, UI_INTERACTIVE } from './constants';
 import { callByond } from './byond';
+import { UI_DISABLED, UI_INTERACTIVE } from './constants';
+import { createLogger } from './logging';
+import { perf } from 'common/perf';
+
+const logger = createLogger('backend');
+
+const SUSPEND_TIMEOUT = 1500;
 
 export const backendUpdate = state => ({
   type: 'backend/update',
@@ -24,14 +30,18 @@ export const backendSetSharedState = (key, nextState) => ({
   payload: { key, nextState },
 });
 
-export const backendSuspend = () => ({
-  type: 'backend/suspend',
+export const backendSuspendStart = () => ({
+  type: 'backend/suspendStart',
+});
+
+export const backendSuspendSuccess = () => ({
+  type: 'backend/suspendSuccess',
   payload: {
     timestamp: Date.now(),
   },
 });
 
-export const backendReducer = (state, action) => {
+export const backendReducer = (state = {}, action) => {
   const { type, payload } = action;
 
   if (type === 'backend/update') {
@@ -86,7 +96,14 @@ export const backendReducer = (state, action) => {
     };
   }
 
-  if (type === 'backend/suspend') {
+  if (type === 'backend/suspendStart') {
+    return {
+      ...state,
+      suspending: true,
+    };
+  }
+
+  if (type === 'backend/suspendSuccess') {
     const { timestamp } = payload;
     return {
       ...state,
@@ -97,11 +114,60 @@ export const backendReducer = (state, action) => {
         title: '',
         status: 1,
       },
+      suspending: false,
       suspended: timestamp,
     };
   }
 
   return state;
+};
+
+export const backendMiddleware = store => {
+  let suspendTimer;
+  return next => action => {
+    const { suspended } = selectBackend(store.getState());
+    const { type, payload } = action;
+
+    if (type === 'backend/suspendStart') {
+      logger.log(`suspending (${window.__windowId__})`);
+      // Close window if suspend action has failed.
+      suspendTimer = setTimeout(() => {
+        throw new Error(`Failed to suspend '${window.__windowId__}'.`);
+      }, SUSPEND_TIMEOUT);
+    }
+
+    if (type === 'backend/suspendSuccess') {
+      clearTimeout(suspendTimer);
+      callByond('winset', {
+        id: window.__windowId__,
+        'is-visible': false,
+      });
+    }
+
+    if (type === 'backend/update' && suspended) {
+      // We schedule this for the next tick here because resizing and unhiding
+      // during the same tick will flash with a white background.
+      setImmediate(() => {
+        perf.mark('resume/start');
+        // Doublecheck if we are not re-suspended.
+        const { suspended } = selectBackend(store.getState());
+        if (suspended) {
+          return;
+        }
+        callByond('winset', {
+          id: window.__windowId__,
+          'is-visible': true,
+        });
+        perf.mark('resume/finish');
+        if (process.env.NODE_ENV !== 'production') {
+          logger.log('visible in',
+            perf.measure('render/finish', 'resume/finish'));
+        }
+      });
+    }
+
+    return next(action);
+  };
 };
 
 /**
@@ -124,10 +190,21 @@ export const backendReducer = (state, action) => {
  *     ref: string,
  *   },
  *   data: any,
+ *   assets: any,
+ *   shared: any,
  *   visible: boolean,
  *   interactive: boolean,
+ *   suspending: boolean,
+ *   suspended: boolean,
  * }}
  */
+
+/**
+ * Selects a backend-related slice of Redux state
+ *
+ * @return {BackendState}
+ */
+export const selectBackend = state => state.backend || {};
 
 /**
  * A React hook (sort of) for getting tgui state and related functions.
@@ -141,7 +218,7 @@ export const backendReducer = (state, action) => {
  */
 export const useBackend = context => {
   const { store } = context;
-  const state = store.getState();
+  const state = selectBackend(store.getState());
   const ref = state.config.ref;
   const act = (action, params = {}) => {
     callByond('', {
@@ -168,7 +245,7 @@ export const useBackend = context => {
  */
 export const useLocalState = (context, key, initialState) => {
   const { store } = context;
-  const state = store.getState();
+  const state = selectBackend(store.getState());
   const sharedStates = state.shared ?? {};
   const sharedState = (key in sharedStates)
     ? sharedStates[key]

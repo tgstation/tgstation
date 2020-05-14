@@ -25,104 +25,78 @@ import './styles/themes/hackerman.scss';
 import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
 
+import { perf } from 'common/perf';
 import { render } from 'inferno';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { loadCSS } from './assets';
-import { backendUpdate, backendSuspend } from './backend';
-import { IS_IE8, callByond } from './byond';
+import { backendUpdate, backendSuspendSuccess, selectBackend } from './backend';
+import { IS_IE8 } from './byond';
 import { setupDrag } from './drag';
 import { logger } from './logging';
 import { createStore, StoreProvider } from './store';
 
-const enteredBundleAt = Date.now();
+perf.mark('inception', window.__inception__);
+perf.mark('init');
+
 const store = createStore();
 let reactRoot;
 let initialRender = true;
 
 const renderLayout = () => {
-  // Mark the beginning of the render
-  let startedAt;
-  let finishedAt;
-  if (process.env.NODE_ENV !== 'production') {
-    startedAt = Date.now();
-  }
+  perf.mark('render/start');
   const state = store.getState();
-  try {
-    // Initial render setup
-    if (initialRender) {
-      logger.warn('initial render', state.config);
-      logger.log('initial render', state);
-      // Setup dragging
-      if (initialRender !== 'recycled') {
-        setupDrag();
-      }
-    }
-    // Start rendering
-    const { getRoutedComponent } = require('./routes');
-    const Component = getRoutedComponent(state);
-    const element = (
-      <StoreProvider store={store}>
-        <Component />
-      </StoreProvider>
-    );
-    if (!reactRoot) {
-      reactRoot = document.getElementById('react-root');
-    }
-    render(element, reactRoot);
-    if (state.suspended) {
-      return;
-    }
-    if (initialRender) {
-      // We schedule for the next tick here because resizing and unhiding
-      // during the same tick will flash with a white background.
-      setImmediate(() => {
-        // Doublecheck if we are suspended, because state might have changed.
-        const state = store.getState();
-        if (state.suspended) {
-          return;
-        }
-        callByond('winset', {
-          id: window.__windowId__,
-          'is-visible': true,
-        });
-        logger.log('visible in', timeDiff(finishedAt, Date.now()));
-      });
+  const { suspended, assets } = selectBackend(state);
+  // Initial render setup
+  if (initialRender) {
+    logger.log('initial render', state);
+    // Setup dragging
+    if (initialRender !== 'recycled') {
+      setupDrag();
     }
   }
-  catch (err) {
-    logger.error('rendering error', err);
-    throw err;
+  // Start rendering
+  const { getRoutedComponent } = require('./routes');
+  const Component = getRoutedComponent(state);
+  const element = (
+    <StoreProvider store={store}>
+      <Component />
+    </StoreProvider>
+  );
+  if (!reactRoot) {
+    reactRoot = document.getElementById('react-root');
   }
+  render(element, reactRoot);
+  if (suspended) {
+    return;
+  }
+  perf.mark('render/finish');
   // Report rendering time
   if (process.env.NODE_ENV !== 'production') {
-    finishedAt = Date.now();
     if (initialRender === 'recycled') {
-      logger.log('rendered in', timeDiff(startedAt, finishedAt));
+      logger.log('rendered in',
+        perf.measure('render/start', 'render/finish'));
     }
     else if (initialRender) {
       logger.debug('serving from:', location.href);
-      logger.debug('bundle entered in', timeDiff(
-        window.__inception__, enteredBundleAt));
-      logger.debug('initialized in', timeDiff(enteredBundleAt, startedAt));
-      logger.log('rendered in', timeDiff(startedAt, finishedAt));
-      logger.log('fully loaded in', timeDiff(
-        window.__inception__, finishedAt));
+      logger.debug('bundle entered in',
+        perf.measure('inception', 'init'));
+      logger.debug('initialized in',
+        perf.measure('init', 'render/start'));
+      logger.log('rendered in',
+        perf.measure('render/start', 'render/finish'));
+      logger.log('fully loaded in',
+        perf.measure('inception', 'render/finish'));
     }
     else {
-      logger.debug('rendered in', timeDiff(startedAt, finishedAt));
+      logger.debug('rendered in',
+        perf.measure('render/start', 'render/finish'));
     }
   }
   if (initialRender) {
     initialRender = false;
   }
   // Load assets
-  state.assets?.styles?.forEach(filename => loadCSS(filename));
-};
-
-const timeDiff = (startedAt, finishedAt) => {
-  const diff = finishedAt - startedAt;
-  const diffFrames = (diff / 16.6667).toFixed(2);
-  return `${diff}ms (${diffFrames} frames)`;
+  assets?.styles?.forEach(filename => loadCSS(filename));
 };
 
 // Parse JSON and report all abnormal JSON strings coming from BYOND
@@ -160,30 +134,23 @@ const setupApp = () => {
   // Subscribe for bankend updates
   window.update = stateJson => {
     logger.debug(`window.update (${window.__windowId__})`);
-    const prevState = store.getState();
+    const { suspended } = selectBackend(store.getState());
     // NOTE: stateJson can be an object only if called manually from console.
     // This is useful for debugging tgui in external browsers, like Chrome.
     const nextState = typeof stateJson === 'string'
       ? parseStateJson(stateJson)
       : stateJson;
-
-    if (prevState.suspended) {
+    if (suspended) {
       logger.log('reinitializing to:', nextState.config.ref);
       window.__ref__ = nextState.config.ref;
       initialRender = 'recycled';
     }
-
     // Backend update dispatches a store action
     store.dispatch(backendUpdate(nextState));
   };
 
   window.suspend = () => {
-    logger.log(`suspending (${window.__windowId__})`);
-    callByond('winset', {
-      id: window.__windowId__,
-      'is-visible': false,
-    });
-    store.dispatch(backendSuspend());
+    store.dispatch(backendSuspendSuccess());
   };
 
   // Enable hot module reloading

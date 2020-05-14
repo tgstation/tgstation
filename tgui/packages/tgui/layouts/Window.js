@@ -7,7 +7,7 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
-import { useBackend } from '../backend';
+import { useBackend, backendSuspendStart } from '../backend';
 import { callByond, IS_IE8 } from '../byond';
 import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
@@ -30,6 +30,9 @@ export class Window extends Component {
 
   updateFancy() {
     const { config } = useBackend(this.context);
+    if (this.fancy === null) {
+      this.fancy = config.fancy;
+    }
     if (this.fancy !== config.fancy) {
       logger.log('changing fancy mode to', config.fancy);
       this.fancy = config.fancy;
@@ -78,6 +81,7 @@ export class Window extends Component {
       suspended,
     } = useBackend(this.context);
     const { debugLayout } = useDebug(this.context);
+    const dispatch = useDispatch(this.context);
     // Determine when to show dimmer
     const showDimmer = config.observer
       ? config.status < UI_DISABLED
@@ -95,20 +99,19 @@ export class Window extends Component {
           onClose={() => {
             logger.log('pressed close');
             releaseHeldKeys();
+            dispatch(backendSuspendStart());
             act('tgui:close');
           }} />
-        {!suspended && (
-          <div
-            className={classes([
-              'Window__rest',
-              debugLayout && 'debug-layout',
-            ])}>
-            {children}
-            {showDimmer && (
-              <div className="Window__dimmer" />
-            )}
-          </div>
-        )}
+        <div
+          className={classes([
+            'Window__rest',
+            debugLayout && 'debug-layout',
+          ])}>
+          {!suspended && children}
+          {showDimmer && (
+            <div className="Window__dimmer" />
+          )}
+        </div>
         {config.fancy && resizable && (
           <Fragment>
             <div className="Window__resizeHandle__e"

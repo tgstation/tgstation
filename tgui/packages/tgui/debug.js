@@ -27,7 +27,9 @@ subscribeToHotKey('Ctrl+Alt+[8]', () => {
   });
 });
 
-export const useDebug = context => context.store.getState().debug;
+export const selectDebug = state => state.debug;
+
+export const useDebug = context => selectDebug(context.store.getState());
 
 export const debugReducer = (state = {}, action) => {
   const { type, payload } = action;
