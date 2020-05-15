@@ -341,12 +341,12 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/job_result_str
 
 	if (async)
-		var/job_id = rustg_sql_query_async(connection, sql, arguments)
+		var/job_id = rustg_sql_query_async(connection, sql, json_encode(arguments))
 		in_progress = TRUE
-		UNTIL((job_result_str = rustg_sql_check_query(job_id)) != "RUSTG_JOB_NO_RESULTS_YET")
+		UNTIL((job_result_str = rustg_sql_check_query(job_id)) != RUSTG_JOB_NO_RESULTS_YET)
 		in_progress = FALSE
 	else
-		job_result_str = rustg_sql_query_blocking(connection, sql, arguments)
+		job_result_str = rustg_sql_query_blocking(connection, sql, json_encode(arguments))
 
 	var/result = json_decode(job_result_str)
 	switch (result["status"])
