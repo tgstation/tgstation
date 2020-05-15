@@ -71,7 +71,7 @@
 	is_editable = TRUE
 
 /obj/structure/sign/departments/xenobio
-	name = "\improper Xenobiologoy sign"
+	name = "\improper Xenobiology sign"
 	sign_change_name = "Department - Science: Xenobiology"
 	desc = "A sign labelling an area as a place where xenobiological entities are researched."
 	icon_state = "xenobio"
