@@ -96,5 +96,8 @@ if [ "$DATABASE_EXISTS" != "ss13_db" ]; then
 	echo "Creating initial SS13 database..."
     mysql -u root --password=YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 -e 'CREATE DATABASE IF NOT EXISTS ss13_db;'
 	cat "$1/SQL/tgstation_schema.sql"
-    mysql -u root --password=YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 -e ss13_db < "$1/SQL/tgstation_schema.sql"
+    mysql -u root --password=YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 ss13_db < "$1/SQL/tgstation_schema.sql"
 fi
+
+#just trust me, i nearly lost my shit
+rm -rf "$1/byond-extools.dll"

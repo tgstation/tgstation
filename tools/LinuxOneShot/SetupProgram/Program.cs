@@ -148,7 +148,7 @@ namespace SetupProgram
 				ApiValidationSecurityLevel = DreamDaemonSecurity.Trusted
 			}, default);
 
-			Console.WriteLine("Uploading EventScripts/PostCompile.sh...");
+			Console.WriteLine("Uploading EventScripts/PreCompile.sh...");
 			var configurationTask = instanceClient.Configuration.Write(new ConfigurationFile
 			{
 				Path = "/EventScripts/PreCompile.sh",
