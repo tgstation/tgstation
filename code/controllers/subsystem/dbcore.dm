@@ -221,8 +221,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	It does not work with duplicate_key and the mysql server ignores it in those cases
 */
 /datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, async = TRUE)
-	CRASH("MassInsert NYI")
-
 	if (!table || !rows || !istype(rows))
 		return
 	var/list/columns = list()
@@ -259,18 +257,26 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	else
 		delayed = null
 
-	var/list/sqlrowlist = list()
 	var/len = columns.len
+	var/list/question_mark_list = list()
+	for (var/i in 1 to len)
+		question_mark_list += "?"
+	var/question_marks = "([question_mark_list.Join(",")])"
+
+	var/list/values_section = list()
+	var/arguments = list()
 	for (var/list/row in sorted_rows)
 		if (length(row) != len)
 			row.len = len
-		for (var/value in row)
-			if (value == null)
-				value = "NULL"
-		sqlrowlist += "([row.Join(", ")])"
 
-	sqlrowlist = "	[sqlrowlist.Join(",\n	")]"
-	var/datum/DBQuery/Query = NewQuery("INSERT[delayed][ignore_errors] INTO [table]\n([columns.Join(", ")])\nVALUES\n[sqlrowlist]\n[duplicate_key]")
+		values_section += question_marks
+		for (var/value in row)
+			arguments += value
+
+	var/datum/DBQuery/Query = NewQuery(
+		"INSERT[delayed][ignore_errors] INTO [table]\n([columns.Join(", ")])\nVALUES\n  [values_section.Join(",\n  ")]\n[duplicate_key]",
+		arguments
+	)
 	if (warn)
 		. = Query.warn_execute(async)
 	else
