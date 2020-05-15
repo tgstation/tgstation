@@ -130,7 +130,11 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	currentcolor = pick(coloredlights)
-	state = pick(LIGHTFLOOR_FINE, LIGHTFLOOR_FINE, LIGHTFLOOR_FINE, LIGHTFLOOR_FLICKER, LIGHTFLOOR_BREAKING, LIGHTFLOOR_BROKEN)/// 50% chance of not breaking
+	if(state == LIGHTFLOOR_BROKEN)  /// he's dead, jim
+		return
+	if(prob(50))
+		state++
+	currentcolor = pick(coloredlights)
 	update_icon()
 
 //Cycles through all of the colours
