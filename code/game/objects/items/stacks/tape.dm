@@ -7,6 +7,8 @@
 	icon = 'icons/obj/tapes.dmi'
 	icon_state = "tape_w"
 	var/prefix = "sticky"
+	w_class = WEIGHT_CLASS_TINY
+	full_w_class = WEIGHT_CLASS_TINY
 	item_flags = NOBLUDGEON
 	amount = 5
 	max_amount = 5

@@ -4,7 +4,6 @@
 ///// Repair Hairline Fracture (Severe)
 /datum/surgery/debride
 	name = "Debride and repair burnt flesh"
-	//steps = list(/datum/surgery_step/debride, /datum/surgery_step/disinfect, /datum/surgery_step/regenerate_flesh, /datum/surgery_step/dress)
 	steps = list(/datum/surgery_step/debride, /datum/surgery_step/dress)
 	target_mobtypes = list(/mob/living/carbon/human)
 	possible_locs = list(BODY_ZONE_R_ARM,BODY_ZONE_L_ARM,BODY_ZONE_R_LEG,BODY_ZONE_L_LEG,BODY_ZONE_CHEST,BODY_ZONE_HEAD)
@@ -50,6 +49,7 @@
 		log_combat(user, target, "excised infected flesh in", addition="INTENT: [uppertext(user.a_intent)]")
 		surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
 		burn_wound.infestation -= 0.5
+		burn_wound.sanitization += 0.5
 		if(burn_wound.infestation <= 0)
 			repeatable = FALSE
 	else

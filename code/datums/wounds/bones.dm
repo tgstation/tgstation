@@ -18,8 +18,10 @@
 	var/taped
 	/// Have we been bone gel'd?
 	var/gelled
-	/// If we did the gel + surgical tape healing method for fractures, this is when we finish regenning
-	var/time_regenned
+	/// If we did the gel + surgical tape healing method for fractures, how many regen points we need
+	var/regen_points_needed
+	/// Our current counter for gel + surgical tape regeneration
+	var/regen_points_current
 
 /*
 	Overwriting of base procs
@@ -49,16 +51,17 @@
 
 /datum/wound/brute/bone/handle_process()
 	. = ..()
-	if(!time_regenned)
+	if(!regen_points_needed)
 		processes = FALSE
 		return
 
+	regen_points_current++
 	if(prob(severity * 2))
 		victim.take_bodypart_damage(rand(2, severity * 2), stamina=rand(2, severity * 2.5), wound_bonus=CANT_WOUND)
 		if(prob(33))
 			to_chat(victim, "<span class='danger'>You feel a sharp pain in your body as your bones are reforming!</span>")
 
-	if(world.time > time_regenned)
+	if(regen_points_current > regen_points_needed)
 		if(!victim || !limb)
 			qdel(src)
 			return
@@ -325,9 +328,9 @@
 		to_chat(user, "<span class='warning'>[user == victim ? "Your" : "[victim]'s"] [limb.name] is already coated with bone gel!</span>")
 		return
 
-	user.visible_message("<span class='danger'>[user] begins applying [I] to [victim]'s' [limb.name]...</span>", "<span class='warning'>You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
+	user.visible_message("<span class='danger'>[user] begins hastily applying [I] to [victim]'s' [limb.name]...</span>", "<span class='warning'>You begin hastily applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.name], disregarding the warning label...</span>")
 
-	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
+	if(!do_after(user, base_treat_time * 1.5 * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
 		return
 
 	I.use(1)
@@ -350,7 +353,7 @@
 			return
 		victim.visible_message("<span class='notice'>[victim] finishes applying [I] to [victim.p_their()] [limb.name], grimacing from the pain!</span>", "<span class='notice'>You finish applying [I] to your [limb.name], and your bones explode in pain!</span>")
 
-	limb.receive_damage(100, wound_bonus=CANT_WOUND)
+	limb.receive_damage(30, stamina=100, wound_bonus=CANT_WOUND)
 	if(!gelled)
 		gelled = TRUE
 
@@ -367,7 +370,8 @@
 	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
 		return
 
-	var/reform_delay = 30 SECONDS * (user == victim ? 1.5 : 1) * (severity - 1)
+	regen_points_current = 0
+	regen_points_needed = 30 SECONDS * (user == victim ? 1.5 : 1) * (severity - 1)
 	I.use(1)
 	if(user != victim)
 		user.visible_message("<span class='notice'>[user] finishes applying [I] to [victim]'s [limb.name], emitting a fizzing noise!</span>", "<span class='notice'>You finish applying [I] to [victim]'s [limb.name]!</span>", ignored_mobs=victim)
@@ -377,7 +381,6 @@
 
 	taped = TRUE
 	processes = TRUE
-	time_regenned = world.time + reform_delay
 
 /datum/wound/brute/bone/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/bone_gel))
@@ -386,3 +389,15 @@
 		tape(I, user)
 	if(istype(I, /obj/item/stack/medical/gauze))
 		splint(I, user)
+
+/datum/wound/brute/bone/get_scanner_description(mob/user)
+	. = ..()
+
+	. += "<div class='ml-3'>"
+	if(!gelled)
+		. += "Alternative Treatment: Apply bone gel directly to injured limb, then apply surgical tape to begin bone regeneration. This is both excruciatingly painful and slow, and only recommended in dire circumstances.\n"
+	else if(!taped)
+		. += "<span class='notice'>Continue Alternative Treatment: Apply surgical tape directly to injured limb to begin bone regeneration. Note, this is both excruciatingly painful and slow.</span>\n"
+	else
+		. += "<span class='notice'>Note: Bone regeneration in effect. Bone is [round(regen_points_current/regen_points_needed)]% regenerated.</span>\n"
+	. += "</div>"

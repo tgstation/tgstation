@@ -33,7 +33,7 @@
 #define WOUND_INFECTION_SEPTIC		20 // below here, your skin is almost entirely falling off and your limb locks up more frequently. You are within a stone's throw of septic paralysis and losing the limb
 // above WOUND_INFECTION_SEPTIC, your limb is completely putrid and you start rolling to lose the entire limb by way of paralyzation. After 3 failed rolls (~4-5% each probably), the limb is paralyzed
 
-#define WOUND_BURN_SANITIZATION_RATE 0.3 // how quickly sanitization removes infestation and decays per tick
+#define WOUND_BURN_SANITIZATION_RATE 0.15 // how quickly sanitization removes infestation and decays per tick
 
 // The following are for persistent scar save formats
 #define SCAR_SAVE_ZONE				1 // The body_zone we're applying to on granting

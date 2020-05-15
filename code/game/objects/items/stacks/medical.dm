@@ -121,8 +121,8 @@
 	icon_state = "gauze"
 	self_delay = 50
 	other_delay = 20
-	max_amount = 8
-	amount = 4
+	max_amount = 12
+	amount = 6
 	grind_results = list(/datum/reagent/cellulose = 2)
 	custom_price = 100
 	absorption_rate = 0.25
@@ -137,9 +137,6 @@
 			to_chat(user, "<span class='warning'>The bleeding on [user==M ? "your" : "[M]'s"] [limb.name] is from bruising, and cannot be treated with [src]!</span>")
 		else
 			to_chat(user, "<span class='warning'>There's no bleeding on [user==M ? "your" : "[M]'s"] [limb.name]</span>")
-
-/obj/item/stack/medical/gauze/eight
-	amount = 8
 
 /obj/item/stack/medical/gauze/twelve
 	amount = 12
@@ -241,7 +238,7 @@
 
 	heal_burn = 5
 	flesh_regeneration = 2
-	sanitization = 1.5
+	sanitization = 0.3
 	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/heal(mob/living/M, mob/user)
@@ -268,7 +265,7 @@
 	heal_burn = 10
 	max_amount = 15
 	repeating = TRUE
-	sanitization = 1.2
+	sanitization = 0.75
 	flesh_regeneration = 3
 
 	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
@@ -369,7 +366,7 @@
 /obj/item/stack/medical/bone_gel
 	name = "bone gel"
 	singular_name = "bone gel"
-	desc = "A potent medical gel that, when applied to a damaged bone in a proper surgical setting, triggers an intense melding reaction to repair the wound. Can be directly applied alongside surgical sticky tape to a broken bone in dire circumstances, though this is very harmful to the patient."
+	desc = "A potent medical gel that, when applied to a damaged bone in a proper surgical setting, triggers an intense melding reaction to repair the wound. Can be directly applied alongside surgical sticky tape to a broken bone in dire circumstances, though this is very harmful to the patient and not recommended."
 
 	icon = 'icons/obj/surgery.dmi'
 	item_state = ""
