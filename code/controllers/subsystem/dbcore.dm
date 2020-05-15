@@ -132,7 +132,7 @@ SUBSYSTEM_DEF(dbcore)
 		list("internet_address" = world.internet_address || "0", "port" = "[world.port]")
 	)
 	query_round_initialize.Execute(async = FALSE)
-	GLOB.round_id = query_round_initialize.last_insert_id
+	GLOB.round_id = "[query_round_initialize.last_insert_id]"
 	qdel(query_round_initialize)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundStart()
