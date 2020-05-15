@@ -15,7 +15,7 @@
 	///defines on top
 	var/state = LIGHTFLOOR_FINE
 	///list of colours to choose
-	var/static/list/coloredlights = list(LIGHT_COLOR_CYAN, LIGHT_COLOR_RED, LIGHT_COLOR_ORANGE, LIGHT_COLOR_GREEN, LIGHT_COLOR_YELLOW, LIGHT_COLOR_DARK_BLUE, LIGHT_COLOR_LAVENDER, LIGHT_COLOR_WHITE,  LIGHT_COLOR_SLIME_LAMP)
+	var/static/list/coloredlights = list(LIGHT_COLOR_CYAN, LIGHT_COLOR_RED, LIGHT_COLOR_ORANGE, LIGHT_COLOR_GREEN, LIGHT_COLOR_YELLOW, LIGHT_COLOR_DARK_BLUE, LIGHT_COLOR_LAVENDER, LIGHT_COLOR_WHITE,  LIGHT_COLOR_SLIME_LAMP, LIGHT_COLOR_FIRE)
 	///current light color
 	var/currentcolor = LIGHT_COLOR_CYAN
 	///var to prevent changing color on certain admin spawn only tiles
@@ -43,6 +43,7 @@
 		LIGHT_COLOR_LAVENDER = image(icon = src.icon, icon_state = "light_on-7"),
 		LIGHT_COLOR_WHITE = image(icon = src.icon, icon_state = "light_on-8"),
 		LIGHT_COLOR_SLIME_LAMP = image(icon = src.icon, icon_state = "light_on-9"),
+		LIGHT_COLOR_FIRE = image(icon = src.icon, icon_state = "light_on-10")
 		)
 
 /turf/open/floor/light/Initialize()
