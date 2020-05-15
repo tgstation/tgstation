@@ -104,6 +104,7 @@ namespace SetupProgram
 			if (instances.Any())
 			{
 				Console.WriteLine("One or more instances already exist, aborting!");
+				return 3;
 			}
 
 			Console.WriteLine("Creating instance...");
