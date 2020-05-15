@@ -43,7 +43,10 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/Shutdown()
 	//This is as close as we can get to the true round end before Disconnect() without changing where it's called, defeating the reason this is a subsystem
 	if(SSdbcore.Connect())
-		var/datum/DBQuery/query_round_shutdown = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = '[sanitizeSQL(SSticker.end_state)]' WHERE id = [GLOB.round_id]")
+		var/datum/DBQuery/query_round_shutdown = SSdbcore.NewQuery(
+			"UPDATE [format_table_name("round")] SET shutdown_datetime = Now(), end_state = :end_state WHERE id = [GLOB.round_id]",
+			list("end_state" = SSticker.end_state)
+		)
 		query_round_shutdown.Execute()
 		qdel(query_round_shutdown)
 	if(IsConnected())
@@ -124,7 +127,10 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/SetRoundID()
 	if(!Connect())
 		return
-	var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery("INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]')), '[world.port]')")
+	var/datum/DBQuery/query_round_initialize = SSdbcore.NewQuery(
+		"INSERT INTO [format_table_name("round")] (initialize_datetime, server_ip, server_port) VALUES (Now(), INET_ATON(:internet_address), :port)",
+		list("internet_address" = world.internet_address || "0", "port" = "[world.port]")
+	)
 	query_round_initialize.Execute(async = FALSE)
 	qdel(query_round_initialize)
 	var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
@@ -136,15 +142,20 @@ SUBSYSTEM_DEF(dbcore)
 /datum/controller/subsystem/dbcore/proc/SetRoundStart()
 	if(!Connect())
 		return
-	var/datum/DBQuery/query_round_start = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = [GLOB.round_id]")
+	var/datum/DBQuery/query_round_start = SSdbcore.NewQuery(
+		"UPDATE [format_table_name("round")] SET start_datetime = Now() WHERE id = :round_id",
+		list("round_id" = GLOB.round_id)
+	)
 	query_round_start.Execute()
 	qdel(query_round_start)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundEnd()
 	if(!Connect())
 		return
-	var/sql_station_name = sanitizeSQL(station_name())
-	var/datum/DBQuery/query_round_end = SSdbcore.NewQuery("UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = '[sanitizeSQL(SSticker.mode_result)]', station_name = '[sql_station_name]' WHERE id = [GLOB.round_id]")
+	var/datum/DBQuery/query_round_end = SSdbcore.NewQuery(
+		"UPDATE [format_table_name("round")] SET end_datetime = Now(), game_mode_result = :game_mode_result, station_name = :station_name WHERE id = :round_id",
+		list("game_mode_result" = SSticker.mode_result, "station_name" = station_name(), "round_id" = GLOB.round_id)
+	)
 	query_round_end.Execute()
 	qdel(query_round_end)
 
