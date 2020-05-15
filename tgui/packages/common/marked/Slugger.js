@@ -1,4 +1,11 @@
 /**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
+
+/**
  * Slugger generates header id
  */
 export class Slugger {

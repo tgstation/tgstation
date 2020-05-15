@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
 import { Tokenizer } from './Tokenizer';
 import { defaults } from './defaults';
 import { block, inline } from './rules';

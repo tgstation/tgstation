@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
+
 import { Renderer } from './Renderer';
 import { TextRenderer } from './TextRenderer';
 import { Slugger } from './Slugger';

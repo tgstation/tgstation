@@ -1,9 +1,16 @@
+/**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
+
 import { toTitleCase } from 'common/string';
 import { Box, Flex, Button, TextArea } from '../components';
 import { useBackend, useSharedState, useLocalState } from '../backend';
 import { Window } from '../layouts';
 // import marked from 'marked';
-import { marked } from '../components/marked/marked';
+import { marked } from 'common/marked/marked';
 import { isFalsy } from 'common/react';
 
 import { createLogger } from '../logging';
@@ -22,7 +29,8 @@ export const PaperSheet = (props, context) => {
     pen_color="black",
     ...rest
   } = data;
-  const [marked_value, setMarked] = useLocalState(context, text);
+  const [marked_value, setMarked]
+    = useLocalState(context, 'marked_state', text);
   const handleOnInput = (e, value) => {
     // Need to fix cut and paste humm
     setMarked(value);

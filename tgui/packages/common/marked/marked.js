@@ -1,4 +1,8 @@
-import { logger } from '../../logging.js';
+/**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
 import { Lexer } from './Lexer';
 import { Parser } from './Parser';
 import { Tokenizer } from './Tokenizer';

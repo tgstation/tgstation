@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
 import { defaults } from './defaults';
 import { pureComponentHooks } from 'common/react';
 import { createVNode } from 'inferno';

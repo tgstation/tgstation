@@ -1,4 +1,10 @@
 /**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
+/**
  * Helpers
  */
 /* eslint-disable no-useless-escape */

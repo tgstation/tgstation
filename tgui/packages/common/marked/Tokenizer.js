@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
+ 
 import { defaults } from './defaults';
 import {
   rtrim,

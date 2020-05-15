@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
 export const getDefaults = () => {
   return {
     baseUrl: null,

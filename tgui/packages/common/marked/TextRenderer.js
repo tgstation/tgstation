@@ -1,4 +1,10 @@
 /**
+ * @file
+ * @copyright 2020 Paul Bruner
+ * @license MIT
+ */
+
+/**
  * TextRenderer
  * returns only the textual part of the token
  */
