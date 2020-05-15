@@ -1,6 +1,8 @@
 This is @Cyberboss rage code
 
-The goal is a one stop solution for hosting /tg/station on linux via docker
+The goal is a one stop solution for hosting /tg/station on linux via Docker. Will not work with Docker on Windows.
+
+This requires Docker with the `docker-compose` command to be installed on your system. See ubuntu instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
 
 Some basic configuration options in `docker-compose.yml` before starting:
 - Ports are mapped in the form `<external>:<internal>` NEVER change the internal port. If you want to prevent a service from being exposed, delete/comment out the entire line.
@@ -8,9 +10,9 @@ Some basic configuration options in `docker-compose.yml` before starting:
 	- The second (1337) is the exposed DreamDaemon port
 	- The third (5000) is the exposed TGS API port
 - Change TGS_BYOND to set the initial BYOND version
-- Change TGS_REPO to set the repository used. Note, this must be a BYOND codebase that implements the latest TGS [DreamMaker API](https://github.com/tgstation/tgstation-server#integrating). Repositories that follow tgstation/tgstation will have this automatically.
+- Change TGS_REPO to set the repository used. Note, this must be a /tg/ derivative from at least 2019 that implements the latest TGS [DreamMaker API](https://github.com/tgstation/tgstation-server#integrating). Repositories that follow tgstation/tgstation will have this automatically.
 
-Requires docker to be installed. Will not work on Windows. Launch with `docker-compose up`. If that fails, Ctrl+C out, run `docker-compose down`, remove `./TGS_Instances` and `./Database`, and try again.
+To launch, change to this directory and run `docker-compose up`. The initial setup will take a long time. If that fails, Ctrl+C out, run `docker-compose down`, remove `./TGS_Instances` and `./Database`, and try again. Once setup is complete, you can either leave the terminal running, or `Ctrl+C` out (this will stop DreamDaemon) and run `docker-compose -d` to run it in the background.
 
 What it does:
 
@@ -20,10 +22,24 @@ What it does:
 	- The instance is configured to autostart
 	- Repo is cloned from the origin specified in the `docker-compose.yml`
 	- BYOND version is set to the latest one specified in the `docker-compose.yml`
-	- A script similar to `../tgs4_scripts/PostCompile.sh` is used to setup BSQL, rust-g, and the non-prefixed database schema
-		- The database will be created on the same mariadb instance and is named `ss13_db`
-	- `config` and `data` folders live in `./Instances/main/Configuration/GameStaticFiles`
-	- DreamDaemon will be exposed on port 1337
+	- A script will be run to setup dependencies. This does the following every time the game is built:
+		- Reads dependency information from `dependencies.sh` in the root of the repository
+		- Installs the following necessary packages into the TGS image
+			- Rust/cargo
+			- git
+			- cmake
+			- grep
+			- g++-6
+			- g++-6-multilib
+			- mysql-client
+			- libmariadb-dev:i386
+			- libssl-dev:i386
+		- Builds rust-g in `./TGS_Instances/main/Configuration/EventScripts/rust-g` and copies the artifact to the game directory.
+		- Builds BSQL in `./TGS_Instances/main/Configuration/EventScripts/BSQL` and copies the artifact to the game directory.
+		- Sets up `./TGS_Instances/main/Configuration/GameStaticFiles/config` with the initial repository config.
+		- Sets up `./TGS_Instances/main/Configuration/GameStaticFiles/data`.
+		- If it doesn't exist, create the `ss13_db` database on the mariadb server and populate it with the repository's.
+	- Start DreamDaemon and configure it to autostart and keep it running via TGS.
 	- Updates will be pulled from the default repository branch and deployed every hour
 
 What it DOESN'T do:
