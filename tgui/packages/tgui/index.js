@@ -19,9 +19,9 @@ import './polyfills/inferno';
 // Themes
 import './styles/main.scss';
 import './styles/themes/cardtable.scss';
+import './styles/themes/hackerman.scss';
 import './styles/themes/malfunction.scss';
 import './styles/themes/ntos.scss';
-import './styles/themes/hackerman.scss';
 import './styles/themes/retro.scss';
 import './styles/themes/syndicate.scss';
 
@@ -176,6 +176,26 @@ const setupApp = () => {
 
   // Dynamically load font-awesome from browser's cache
   loadCSS('font-awesome.css');
+};
+
+// Setup a fatal error reporter
+window.__logger__ = {
+  fatal: (error, stack) => {
+    // Get last state for debugging purposes
+    const backendState = selectBackend(store.getState());
+    const reportedState = {
+      config: backendState.config,
+      suspended: backendState.suspended,
+      suspending: backendState.suspending,
+    };
+    // Send to development server
+    logger.log('FatalError:', error || stack);
+    logger.log('State:', reportedState);
+    // Append this data to the stack
+    stack += '\nState: ' + JSON.stringify(reportedState);
+    // Return an updated stack
+    return stack;
+  },
 };
 
 if (document.readyState === 'loading') {

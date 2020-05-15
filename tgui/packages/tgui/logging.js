@@ -36,7 +36,7 @@ const log = (level, ns, ...args) => {
     callByond('', {
       src: window.__ref__,
       action: 'tgui:log',
-      log: logEntry,
+      message: logEntry,
     });
   }
 };
@@ -57,6 +57,3 @@ export const createLogger = ns => {
  * Does not have a namespace associated with it.
  */
 export const logger = createLogger();
-
-// Export this logger to window in order to have a way to use it on index.html.
-window.__logger__ = logger;

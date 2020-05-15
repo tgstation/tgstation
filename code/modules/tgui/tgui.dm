@@ -230,7 +230,11 @@
 		"interface" = interface,
 		"fancy" = user.client.prefs.tgui_fancy,
 		"locked" = user.client.prefs.tgui_lock,
-		"observer" = isobserver(user),
+		"user" = list(
+			"name" = "[user]",
+			"ckey" = "[user.ckey]",
+			"observer" = isobserver(user),
+		),
 		"window" = list(
 			"id" = window_id,
 			"key" = window_key,
@@ -299,7 +303,7 @@
 			if(params["fatal"])
 				_has_fatal_error = TRUE
 				autoupdate = FALSE
-			log_message(params["log"])
+			// NOTE: Logging is handled in client_procs.dm (/client/Topic)
 		if("tgui:link")
 			user << link(params["url"])
 		else
@@ -398,6 +402,3 @@
 			// Update if the UI just because disabled, or a push is requested.
 			if(status == UI_DISABLED || push)
 				push_data(null, force = TRUE)
-
-/datum/tgui/proc/log_message(message)
-	log_tgui("[user] ([user.ckey]) using \"[title]\":\n[message]")

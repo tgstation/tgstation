@@ -183,7 +183,11 @@ export const backendMiddleware = store => {
  *     interface: string,
  *     fancy: number,
  *     locked: number,
- *     observer: number,
+ *     user: {
+ *       name: string,
+ *       ckey: string,
+ *       observer: number,
+ *     },
  *     window: {
  *       id: string,
  *       key: string,

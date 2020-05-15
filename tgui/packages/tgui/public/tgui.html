@@ -85,7 +85,7 @@ window.onerror = function (msg, url, line, col, error) {
     }
   }
   // Append user agent info
-  stack += '\n\nUser Agent: ' + navigator.userAgent;
+  stack += '\nUser Agent: ' + navigator.userAgent;
   // Print error to the page
   var errorRoot = document.getElementById('FatalError');
   var errorStack = document.getElementById('FatalError__stack');
@@ -110,16 +110,17 @@ window.onerror = function (msg, url, line, col, error) {
   };
   setFatalErrorGeometry();
   setInterval(setFatalErrorGeometry, 1000);
-  // Send logs to the dev server
+  // Use a hook that comes with the bundle to augment the stack
+  // and send errors to a dev server (if using a development build).
   if (window.__logger__) {
-    window.__logger__.log('FatalError:', error);
+    stack = window.__logger__.fatal(error, stack);
   }
   // Send logs to the game server
   Byond.call('', {
     src: window.__ref__,
     action: 'tgui:log',
     fatal: 1,
-    log: stack,
+    message: stack,
   });
   // Short-circuit further updates
   window.__updateQueue__ = [];

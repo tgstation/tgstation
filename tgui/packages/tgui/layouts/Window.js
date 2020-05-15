@@ -82,7 +82,7 @@ export class Window extends Component {
     const { debugLayout } = useDebug(this.context);
     const dispatch = useDispatch(this.context);
     // Determine when to show dimmer
-    const showDimmer = config.observer
+    const showDimmer = config.user.observer
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE;
     return (
