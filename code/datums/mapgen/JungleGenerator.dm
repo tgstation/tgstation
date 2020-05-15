@@ -3,7 +3,7 @@
 
 /datum/map_generator/jungle_generator
 	///2D list of all biomes based on heat and humidity combos.
-	var/list/possible_biomes = list(BIOME_LOW_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_MEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGH_HUMIDITY = /datum/biome/water), BIOME_MEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_MEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/jungle),BIOME_HIGH_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/wasteland, BIOME_MEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep))
+	var/list/possible_biomes = list(BIOME_LOW_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGH_HUMIDITY = /datum/biome/water), BIOME_LOWMEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/mudlands), BIOME_HIGHMEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle/deep, BIOME_HIGH_HUMIDITY = /datum/biome/jungle), BIOME_HIGH_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/wasteland, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep))
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/jungle_generator/generate_terrain(var/list/turfs)
@@ -27,18 +27,22 @@
 			var/humidity_level  //Type of humidity zone we're in LOW-MEDIUM-HIGH
 
 			switch(heat)
-				if(0 to 0.33)
+				if(0 to 0.25)
 					heat_level = BIOME_LOW_HEAT
-				if(0.33 to 0.66)
-					heat_level = BIOME_MEDIUM_HEAT
-				if(0.66 to 1)
+				if(0.25 to 0.5)
+					heat_level = BIOME_LOWMEDIUM_HEAT
+				if(0.5 to 0.75)
+					heat_level = BIOME_HIGHMEDIUM_HEAT
+				if(0.75 to 1)
 					heat_level = BIOME_HIGH_HEAT
 			switch(humidity)
-				if(0 to 0.33)
+				if(0 to 0.25)
 					humidity_level = BIOME_LOW_HUMIDITY
-				if(0.33 to 0.66)
-					humidity_level = BIOME_MEDIUM_HUMIDITY
-				if(0.66 to 1)
+				if(0.25 to 0.5)
+					humidity_level = BIOME_LOWMEDIUM_HUMIDITY
+				if(0.5 to 0.75)
+					humidity_level = BIOME_HIGHMEDIUM_HUMIDITY
+				if(0.75 to 1)
 					humidity_level = BIOME_HIGH_HUMIDITY
 			selected_biome = possible_biomes[heat_level][humidity_level]
 		else //Over 0.85; It's a mountain
