@@ -87,13 +87,23 @@ SUBSYSTEM_DEF(blackbox)
 	if (!SSdbcore.Connect())
 		return
 
-	var/list/sqlrowlist = list()
+	var/now
+	var/datum/DBQuery/now_query = SSdbcore.NewQuery("SELECT NOW()")
+	now_query.Execute()
+	if (now_query.NextRow())
+		now = now_query.item[1]
+	qdel(now_query)
 
+	var/list/sqlrowlist = list()
 	for (var/datum/feedback_variable/FV in feedback)
-		var/sqlversion = 1
-		if(FV.key in versions)
-			sqlversion = versions[FV.key]
-		sqlrowlist += list(list("datetime" = "Now()", "round_id" = GLOB.round_id, "key_name" =  "'[sanitizeSQL(FV.key)]'", "key_type" = "'[FV.key_type]'", "version" = "[sqlversion]", "json" = "'[sanitizeSQL(json_encode(FV.json))]'"))
+		sqlrowlist += list(list(
+			"datetime" = now,
+			"round_id" = GLOB.round_id,
+			"key_name" = FV.key,
+			"key_type" = FV.key_type,
+			"version" = versions[FV.key] || 1,
+			"json" = json_encode(FV.json)
+		))
 
 	if (!length(sqlrowlist))
 		return
