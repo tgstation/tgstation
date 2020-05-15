@@ -447,6 +447,12 @@
 	name = "Long Side Part"
 	icon_state = "hair_longsidepart"
 
+
+/datum/sprite_accessory/hair/machiavellian
+	name = "Machiavellian"
+	icon_state = "hair_machiavellian"
+
+
 /datum/sprite_accessory/hair/megaeyebrows
 	name = "Mega Eyebrows"
 	icon_state = "hair_megaeyebrows"
@@ -498,6 +504,10 @@
 /datum/sprite_accessory/hair/over_eye
 	name = "Over Eye"
 	icon_state = "hair_shortovereye"
+
+/datum/sprite_accessory/hair/overeye_braid
+	name = "Over Eye Braided"
+	icon_state = "hair_overeyebraid"
 
 /datum/sprite_accessory/hair/oxton
 	name = "Oxton"
@@ -583,6 +593,10 @@
 	name = "Ponytail (Fringe)"
 	icon_state = "hair_fringetail"
 
+/datum/sprite_accessory/hair/ponytailmessy
+	name = "Ponytail (Messy)"
+	icon_state = "hair_ponytailmessy"
+
 /datum/sprite_accessory/hair/sidetail
 	name = "Ponytail (Side)"
 	icon_state = "hair_sidetail"
@@ -602,6 +616,10 @@
 /datum/sprite_accessory/hair/spikyponytail
 	name = "Ponytail (Spiky)"
 	icon_state = "hair_spikyponytail"
+
+/datum/sprite_accessory/hair/possessed
+	name = "Possessed"
+	icon_state = "hair_possessed"
 
 /datum/sprite_accessory/hair/poofy
 	name = "Poofy"

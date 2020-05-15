@@ -17,7 +17,7 @@ Cargo Technician=3,2
 Shaft Miner=3,3
 
 Bartender=1,1
-Cook=2,1
+Cook=3,3
 Botanist=3,2
 Janitor=2,1
 

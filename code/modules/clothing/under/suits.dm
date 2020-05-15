@@ -28,6 +28,12 @@
 	icon_state = "waiter"
 	item_state = "waiter"
 
+/obj/item/clothing/under/suit/ratvar
+	name = "possessed suit"
+	desc = "A weird suit. Why does it sound like a clock is ticking?"
+	icon_state = "ratvar_suit"
+	item_state = "ratvar_suit"
+
 /obj/item/clothing/under/suit/blacktwopiece
 	name = "black two piece suit"
 	desc = "A black suit and red tie. Very formal."

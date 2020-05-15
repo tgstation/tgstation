@@ -21,6 +21,14 @@
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 
+/obj/item/clothing/under/rank/engineering/bunnysuit_sex
+	name = "bunny suit"
+	desc = "Don't let Mothia see this."
+	icon_state = "bunnysuit_sex"
+	item_state = "bunnysuit_sex"
+	body_parts_covered = CHEST|GROIN|ARMS
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/engineering/atmospheric_technician
 	desc = "It's a jumpsuit worn by atmospheric technicians."
 	name = "atmospheric technician's jumpsuit"

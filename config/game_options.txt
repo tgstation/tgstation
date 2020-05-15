@@ -70,12 +70,12 @@ MULTIPLICATIVE_MOVESPEED /mob/living/simple_animal 1
 
 
 ## ALERT LEVELS ###
-ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced.
+ALERT_GREEN All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced. Have a pleasant shift.
 ALERT_BLUE_UPTO The station has received reliable information about possible hostile activity on the station. Security staff may have weapons visible, random searches are permitted.
 ALERT_BLUE_DOWNTO The immediate threat has passed. Security may no longer have weapons drawn at all times, but may continue to have them visible. Random searches are still allowed.
 ALERT_RED_UPTO There is an immediate serious threat to the station. Security may have weapons unholstered at all times. Random searches are allowed and advised. Additionally, access requirements on some doors have been lifted.
-ALERT_RED_DOWNTO The station's destruction has been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
-ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. This is not a drill.
+ALERT_RED_DOWNTO The station's destruction has somehow been averted. There is still however an immediate serious threat to the station. Security may have weapons unholstered at all times, random searches are allowed and advised.
+ALERT_DELTA Destruction of the station is imminent. All crew are instructed to obey all instructions given by heads of staff. Any violations of these orders can be punished by death. God help you all.
 
 
 
@@ -93,17 +93,17 @@ PROBABILITY TRAITORBRO 2
 PROBABILITY TRAITORCHAN 4
 PROBABILITY INTERNAL_AFFAIRS 3
 PROBABILITY NUCLEAR 2
-PROBABILITY REVOLUTION 2
+PROBABILITY REVOLUTION 3
 PROBABILITY CULT 2
 PROBABILITY CHANGELING 2
-PROBABILITY WIZARD 4
-PROBABILITY MONKEY 0
-PROBABILITY METEOR 0
+PROBABILITY WIZARD 2
+PROBABILITY MONKEY 1
+PROBABILITY METEOR 1
 PROBABILITY EXTENDED 0
 PROBABILITY SECRET_EXTENDED 0
-PROBABILITY DEVIL 0
+PROBABILITY DEVIL 1
 PROBABILITY DEVIL_AGENTS 0
-PROBABILITY CLOWNOPS 0
+PROBABILITY CLOWNOPS 1
 
 ## You probably want to keep sandbox off by default for secret and random.
 PROBABILITY SANDBOX 0
@@ -153,25 +153,25 @@ MIDROUND_ANTAG WIZARD
 ## Notes: For maximum number of players a value of -1 means no maximum. Setting minimums to
 ## VERY low numbers (< 5) can lead to errors if the roundtypes were not designed for that.
 
-#MIN_POP TRAITOR 0
+MIN_POP TRAITOR 0
 #MAX_POP TRAITOR -1
 
-#MIN_POP TRAITORBRO 0
+MIN_POP TRAITORBRO 0
 #MAX_POP TRAITORBRO -1
 
-#MIN_POP TRAITORCHAN 15
+MIN_POP TRAITORCHAN 15
 #MAX_POP TRAITORCHAN -1
 
-#MIN_POP DOUBLE_AGENTS 25
+MIN_POP DOUBLE_AGENTS 12
 #MAX_POP DOUBLE_AGENTS -1
 
-#MIN_POP NUCLEAR 0
+MIN_POP NUCLEAR 16
 #MAX_POP NUCLEAR -1
 
-#MIN_POP REVOLUTION 20
+MIN_POP REVOLUTION 18
 #MAX_POP REVOLUTION -1
 
-#MIN_POP CULT 24
+MIN_POP CULT 18
 #MAX_POP CULT -1
 
 #MIN_POP CHANGELING 15
@@ -220,7 +220,7 @@ BROTHER_OBJECTIVES_AMOUNT 2
 
 ## Uncomment to prohibit jobs that start with loyalty
 ## implants from being most antagonists.
-PROTECT_ROLES_FROM_ANTAGONIST
+#PROTECT_ROLES_FROM_ANTAGONIST
 
 ## Uncomment to prohibit assistants from becoming most antagonists.
 #PROTECT_ASSISTANT_FROM_ANTAGONIST
@@ -325,7 +325,7 @@ SEC_START_BRIG
 
 ## GHOST INTERACTION ###
 ## Uncomment to let ghosts spin chairs. You may be wondering why this is a config option. Don't ask.
-#GHOST_INTERACTION
+GHOST_INTERACTION
 
 ## NEAR-DEATH EXPERIENCE ###
 ## Comment this out to disable mobs hearing ghosts when unconscious and very close to death
@@ -349,7 +349,7 @@ NEAR_DEATH_EXPERIENCE
 ## Set to 1 for "custom", silicons will start with the custom laws defined in silicon_laws.txt. (If silicon_laws.txt is empty, the AI will spawn with asimov and Custom boards will auto-delete.)
 ## Set to 2 for "random", silicons will start with a random lawset picked from random laws specified below.
 ## Set to 3 for "weighted random", using values in "silicon_weights.txt", a law will be selected, with weights specifed in that file.
-DEFAULT_LAWS 0
+DEFAULT_LAWS 3
 
 ## RANDOM LAWS ##
 ## ------------------------------------------------------------------------------------------
@@ -364,13 +364,13 @@ RANDOM_LAWS robocop
 RANDOM_LAWS corporate
 
 ## Quirky laws. Shouldn't cause too much harm
-#RANDOM_LAWS hippocratic
-#RANDOM_LAWS maintain
-#RANDOM_LAWS drone
-#RANDOM_LAWS liveandletlive
-#RANDOM_LAWS peacekeeper
-#RANDOM_LAWS reporter
-#RANDOM_LAWS hulkamania
+RANDOM_LAWS hippocratic
+RANDOM_LAWS maintain
+RANDOM_LAWS drone
+RANDOM_LAWS liveandletlive
+RANDOM_LAWS peacekeeper
+RANDOM_LAWS reporter
+RANDOM_LAWS hulkamania
 
 ## Bad idea laws. Probably shouldn't enable these
 #RANDOM_LAWS syndie
@@ -386,10 +386,10 @@ RANDOM_LAWS corporate
 
 ## Make sure there are no spaces between the law_id and the number.
 
-LAW_WEIGHT custom,0
+LAW_WEIGHT custom,24
 
 ## standard-ish laws. These are fairly ok to run
-LAW_WEIGHT asimov,32
+LAW_WEIGHT asimov,0
 LAW_WEIGHT asimovpp,12
 LAW_WEIGHT paladin,12
 LAW_WEIGHT robocop,12
@@ -398,7 +398,7 @@ LAW_WEIGHT corporate,12
 ## Quirky laws. Shouldn't cause too much harm
 LAW_WEIGHT hippocratic,3
 LAW_WEIGHT maintain,4
-LAW_WEIGHT drone,3
+LAW_WEIGHT drone,4
 LAW_WEIGHT liveandletlive,3
 LAW_WEIGHT peacekeeper,3
 LAW_WEIGHT reporter,4
@@ -436,10 +436,11 @@ ROUNDSTART_RACES human
 
 ## Races that are strictly worse than humans that could probably be turned on without balance concerns
 ROUNDSTART_RACES lizard
-#ROUNDSTART_RACES fly
-#ROUNDSTART_RACES moth
+ROUNDSTART_RACES fly
+ROUNDSTART_RACES moth
 ROUNDSTART_RACES plasmaman
 #ROUNDSTART_RACES shadow
+ROUNDSTART_RACES snail
 
 ## Races that are better than humans in some ways, but worse in others
 ROUNDSTART_RACES ethereal
@@ -451,16 +452,23 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_RACES gold
 #ROUNDSTART_RACES silver
 #ROUNDSTART_RACES uranium
+ROUNDSTART_RACES cardboard
 #ROUNDSTART_RACES abductor
-#ROUNDSTART_RACES synth
+ROUNDSTART_RACES synth
+ROUNDSTART_RACES android
+ROUNDSTART_RACES dullahan
+ROUNDSTART_RACES mush
 
 ## Races that are straight upgrades. If these are on expect powergamers to always pick them
-#ROUNDSTART_RACES skeleton
-#ROUNDSTART_RACES zombie
-#ROUNDSTART_RACES slime
-#ROUNDSTART_RACES pod
+ROUNDSTART_RACES skeleton
+ROUNDSTART_RACES zombie
+ROUNDSTART_RACES slime
+ROUNDSTART_RACES pod
 #ROUNDSTART_RACES military_synth
 #ROUNDSTART_RACES agent
+
+## Cipher sent us to hell, but we're going even deeper.
+ROUNDSTART_RACES felinid
 
 ##-------------------------------------------------------------------------------------------
 
@@ -469,7 +477,7 @@ ROUNDSTART_RACES ethereal
 #ROUNDSTART_NO_HARD_CHECK felinid
 
 ## Uncomment to give players the choice of joining as a human with mutant bodyparts before they join the game
-#JOIN_WITH_MUTANT_HUMANS
+JOIN_WITH_MUTANT_HUMANS
 
 ##Overflow job. Default is assistant
 OVERFLOW_JOB Assistant
@@ -479,10 +487,10 @@ OVERFLOW_CAP -1
 
 ## Starlight for exterior walls and breaches. Uncomment for starlight!
 ## This is disabled by default to make testing quicker, should be enabled on production servers or testing servers messing with lighting
-#STARLIGHT
+STARLIGHT
 
 ## Uncomment to bring back old grey suit assistants instead of the now default rainbow colored assistants.
-#GREY_ASSISTANTS
+GREY_ASSISTANTS
 
 ## Midround Antag (aka Mulligan antag) config options ###
 

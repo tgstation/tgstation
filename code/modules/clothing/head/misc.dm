@@ -163,6 +163,13 @@
 	item_state = "bandana"
 	dynamic_hair_suffix = ""
 
+/obj/item/clothing/neck/chefbandana
+	name = "chef bandana"
+	desc = "Smells like goat."
+	icon_state = "chefbandana"
+	item_state = "chefbandana"
+	dynamic_hair_suffix = ""
+
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"

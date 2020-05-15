@@ -114,6 +114,7 @@ GLOBAL_LIST_INIT(ai_core_display_screens, sortList(list(
 	"House",
 	"Inverted",
 	"Matrix",
+	"Microwave",
 	"Monochrome",
 	"Murica",
 	"Nanotrasen",
