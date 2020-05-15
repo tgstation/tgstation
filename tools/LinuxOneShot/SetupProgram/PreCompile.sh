@@ -18,7 +18,7 @@ has_sudo="$(command -v sudo)"
 has_cmake="$(command -v cmake)"
 has_gpp="$(command -v g++-6)"
 has_grep="$(command -v grep)"
-DATABASE_EXISTS="$(mysqlshow --host mariadb --port 3306 --user=root --password=YouDefinitelyShouldNOTChangeThis ss13_db| grep -v Wildcard | grep -o ss13_db)"
+DATABASE_EXISTS="$(mysqlshow --host mariadb --port 3306 --user=root --password=$MYSQL_ROOT_PASSWORD ss13_db| grep -v Wildcard | grep -o ss13_db)"
 set -e
 
 # install cargo if needful
@@ -89,15 +89,16 @@ cd ../..
 if [ ! -d "../GameStaticFiles/config" ]; then
 	echo "Creating initial config..."
 	cp -r "$1/config" "../GameStaticFiles/config"
-	echo -e "SQL_ENABLED\nADDRESS mariadb\nPORT 3306\nFEEDBACK_DATABASE ss13_db\nFEEDBACK_LOGIN root\nFEEDBACK_PASSWORD YouDefinitelyShouldNOTChangeThis\nASYNC_QUERY_TIMEOUT 10\nBLOCKING_QUERY_TIMEOUT 5\nBSQL_THREAD_LIMIT 50" > "../GameStaticFiles/config/dbconfig.txt"
-	echo "$TGS_DB_ADMIN_CKEY = Host" > "../GameStaticFiles/config/admins.txt"
+	echo -e "SQL_ENABLED\nFEEDBACK_TABLEPREFIX SS13_\nADDRESS mariadb\nPORT 3306\nFEEDBACK_DATABASE ss13_db\nFEEDBACK_LOGIN root\nFEEDBACK_PASSWORD $MYSQL_ROOT_PASSWORD\nASYNC_QUERY_TIMEOUT 10\nBLOCKING_QUERY_TIMEOUT 5\nBSQL_THREAD_LIMIT 50" > "../GameStaticFiles/config/dbconfig.txt"
+	echo "$TGS_ADMIN_CKEY = Host" > "../GameStaticFiles/config/admins.txt"
 fi
 
 if [ "$DATABASE_EXISTS" != "ss13_db" ]; then
 	echo "Creating initial SS13 database..."
-    mysql -u root --password=YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 -e 'CREATE DATABASE IF NOT EXISTS ss13_db;'
-	cat "$1/$TGS_SCHEMA_FILE"
-    mysql -u root --password=YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 ss13_db < "$1/$TGS_SCHEMA_FILE"
+    mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 -e 'CREATE DATABASE IF NOT EXISTS ss13_db;'
+	cat "$1/$TGS_PREFIXED_SCHEMA_FILE"
+    mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 ss13_db < "$1/$TGS_PREFIXED_SCHEMA_FILE"
+    mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 ss13_db -e "INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES ($TGS_SCHEMA_MAJOR_VERSION, $TGS_SCHEMA_MINOR_VERSION)"
 fi
 
 #just trust me, i nearly lost my shit
