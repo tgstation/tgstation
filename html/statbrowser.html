@@ -7,8 +7,9 @@
 <style>
 body {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	font-size: 14px;
-
+	font-size: 14px !important;
+	margin: 5px !important;
+	padding: 2px !important;
 }
 a {
 	color: black;
@@ -22,6 +23,7 @@ a:hover, .dark a:hover {
 }
 </style>
 <script>
+var decoder = decodeURIComponent || unescape;
 // browser passthrough code copy pasted here
 if(document.addEventListener && window.location) { // hey maybe some bozo is still using mega-outdated IE
 	let anti_spam = []; // wow I wish I could use e.repeat but IE is dumb and doesn't have it.
@@ -134,7 +136,7 @@ function draw_status() {
 			document.body.appendChild(document.createElement("br"));
 		} else {
 			let div = document.createElement("div");
-			div.textContent = status_tab_parts[i];
+			div.innerHTML = status_tab_parts[i];
 			document.body.appendChild(div);
 		}
 	}
@@ -193,15 +195,39 @@ function set_light_theme() {
 	document.body.style.backgroundColor = "white";
 	document.body.style.color = "black";
 	document.body.className = "";
+	set_style_sheet("browserOutput_white")
 }
 
 function set_dark_theme() {
 	document.body.style.backgroundColor = "#171717";
 	document.body.style.color = "#a4bad6";
 	document.body.className = "dark";
+	set_style_sheet("browserOutput")
+}
+
+function set_style_sheet(sheet) {
+	if(document.getElementById("goonStyle")) {
+		let currentSheet = document.getElementById("goonStyle");
+		currentSheet.parentElement.removeChild(currentSheet);
+	}
+	let head  = document.getElementsByTagName('head')[0];
+	let sheetElement = document.createElement("link");
+	sheetElement.id = "goonStyle";
+	sheetElement.rel = "stylesheet";
+	sheetElement.type = "text/css";
+	sheetElement.href = sheet + ".css";
+	sheetElement.media = 'all';
+	head.appendChild(sheetElement);
 }
 
 window.addEventListener("load", function() {
+	let darkmodeCookie = getCookie('darkmode');
+	if(darkmodeCookie === 'true') {
+		set_dark_theme();
+	} else {
+		set_light_theme();
+	}
+
 	if(!current_tab) {
 		tab_change("Status");
 	}
