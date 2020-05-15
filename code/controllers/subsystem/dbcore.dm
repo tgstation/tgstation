@@ -48,7 +48,6 @@ SUBSYSTEM_DEF(dbcore)
 		qdel(query_round_shutdown)
 	if(IsConnected())
 		Disconnect()
-	world.BSQL_Shutdown()
 
 //nu
 /datum/controller/subsystem/dbcore/can_vv_get(var_name)
@@ -381,13 +380,3 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 /datum/DBQuery/proc/Close()
 	rows = null
 	item = null
-
-/world/BSQL_Debug(message)
-	if(!CONFIG_GET(flag/bsql_debug))
-		return
-
-	//strip sensitive stuff
-	if(findtext(message, ": OpenConnection("))
-		message = "OpenConnection CENSORED"
-
-	log_sql("BSQL_DEBUG: [message]")
