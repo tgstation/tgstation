@@ -23,6 +23,9 @@ services:
       - "5000:80"
     restart: always
     init: true
+    environment:
+      TGS_SCHEMA_FILE: SQL/tgstation_schema.sql
+      TGS_DB_ADMIN_CKEY: <YOUR BYOND USERNAME HERE>
     volumes:
       - "./TGS_Logs:/tgs_logs"
       - "./TGS_Config:/config_data"
