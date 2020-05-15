@@ -2,6 +2,14 @@ This is @Cyberboss rage code
 
 The goal is a one stop solution for hosting /tg/station on linux via docker
 
+Some basic configuration options in `docker-compose.yml` before starting:
+- Ports are mapped in the form `<external>:<internal>` NEVER change the internal port. If you want to prevent a service from being exposed, delete/comment out the entire line.
+	- The first (3306) is the exposed mariadb port
+	- The second (1337) is the exposed DreamDaemon port
+	- The third (5000) is the exposed TGS API port
+- Change TGS_BYOND to set the initial BYOND version
+- Change TGS_REPO to set the repository used. Note, this must be a BYOND codebase that implements the latest TGS [DreamMaker API](https://github.com/tgstation/tgstation-server#integrating). Repositories that follow tgstation/tgstation will have this automatically.
+
 Requires docker to be installed. Will not work on Windows. Launch with `docker-compose up`. If that fails, Ctrl+C out, run `docker-compose down`, remove `./TGS_Instances` and `./Database`, and try again.
 
 What it does:
