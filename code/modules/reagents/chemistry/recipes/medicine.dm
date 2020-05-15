@@ -155,7 +155,7 @@
 	required_catalysts = list(/datum/reagent/iron = 5)
 
 /datum/chemical_reaction/medsuture
-	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 20, /datum/reagent/medicine/polypyr = 15) //This might be a bit much, reagent cost should be reviewed after implementation.
+	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/toxin/formaldehyde = 10, /datum/reagent/medicine/C2/libital = 10)
 
 /datum/chemical_reaction/medsuture/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
@@ -163,7 +163,7 @@
 		new /obj/item/stack/medical/suture/medicated(location)
 
 /datum/chemical_reaction/medmesh
-	required_reagents = list(/datum/reagent/cellulose = 20, /datum/reagent/consumable/aloejuice = 20, /datum/reagent/space_cleaner/sterilizine = 10)
+	required_reagents = list(/datum/reagent/cellulose = 10, /datum/reagent/space_cleaner/sterilizine = 10, /datum/reagent/medicine/C2/aiuri = 10)
 
 /datum/chemical_reaction/medmesh/on_reaction(datum/reagents/holder, created_volume)
 	var/location = get_turf(holder.my_atom)
