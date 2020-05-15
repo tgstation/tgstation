@@ -102,7 +102,6 @@
 
 	var/list/free_windows = user.client.tgui_free_windows
 	var/has_free_window = !!length(free_windows)
-	for (var/x in free_windows)
 	// Use a recycled window
 	if(has_free_window)
 		window_id = free_windows[length(free_windows)]
