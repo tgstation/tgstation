@@ -177,27 +177,32 @@
 	if(status == UI_CLOSING)
 		return
 	status = UI_CLOSING
-	var/can_be_recycled = recycle \
-		&& !_has_fatal_error \
-		&& user.client \
-		&& length(user.client.tgui_free_windows) < MAX_RECYCLED_WINDOWS
-	if(can_be_recycled)
-		user << output("", "[window_id].browser:suspend")
-		// Add it to the stack of free windows
-		if (!user.client.tgui_free_windows.Find(window_id))
-			user.client.tgui_free_windows += window_id
-	else
-		// Destroy the window
-		user << browse(null, "window=[window_id]")
-		// Remove this window_id just in case it existed in the pool
-		// to avoid contamination with broken windows.
+	// If we don't have window_id, open proc did not have the opportunity
+	// to finish, therefore it's safe to skip this whole block.
+	if(window_id)
+		// If we don't have a client, destroying this window will have
+		// no effect. Safe to skip.
 		if(user.client)
-			user.client.tgui_free_windows -= window_id
-	src_object.ui_close(user)
-	SStgui.on_close(src)
-	for(var/datum/tgui/child in children) // Loop through and close all children.
-		child.close()
-	children.Cut()
+			var/can_be_recycled = recycle \
+				&& !_has_fatal_error \
+				&& length(user.client.tgui_free_windows) < MAX_RECYCLED_WINDOWS
+			if(can_be_recycled)
+				user << output("", "[window_id].browser:suspend")
+				// Add it to the stack of free windows
+				if (!user.client.tgui_free_windows.Find(window_id))
+					user.client.tgui_free_windows += window_id
+			else
+				// Destroy the window
+				user << browse(null, "window=[window_id]")
+				// Remove this window_id just in case it existed in the pool
+				// to avoid contamination with broken windows.
+				user.client.tgui_free_windows -= window_id
+		src_object.ui_close(user)
+		SStgui.on_close(src)
+		// Loop through and close all children.
+		for(var/datum/tgui/child in children)
+			child.close()
+		children.Cut()
 	state = null
 	master_ui = null
 	qdel(src)
