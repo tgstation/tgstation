@@ -71,16 +71,16 @@
 	. = 1
 
 /datum/reagent/drug/crank
-	name = "Crank"
-	description = "Reduces stun times by about 200%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
+	name = "Lavacrank"
+	description = "Reduces stun times by about 400%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
-	color = "#FA00C8"
+	color = "#fa0000"
 	overdose_threshold = 20
 	addiction_threshold = 10
 
 /datum/reagent/drug/crank/on_mob_life(mob/living/carbon/M)
 	if(prob(5))
-		var/high_message = pick("You feel jittery.", "You feel like you gotta go fast.", "You feel like you need to step it up.")
+		var/high_message = pick("You feel the scorch in your veins", "You feel flames engulfing you.", "You feel like you need to step it up.")
 		to_chat(M, "<span class='notice'>[high_message]</span>")
 	SEND_SIGNAL(M, COMSIG_ADD_MOOD_EVENT, "tweaking", /datum/mood_event/stimulant_medium, name)
 	M.adjustStaminaLoss(-4, 0)
@@ -89,36 +89,31 @@
 	M.AdjustUnconscious(-60, FALSE)
 	M.AdjustImmobilized(-60, FALSE)
 	M.AdjustParalyzed(-60, FALSE)
-	..()
-	. = 1
+	. = ..()
 
 /datum/reagent/drug/crank/overdose_process(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 2*REM)
 	M.adjustToxLoss(2*REM, 0)
-	M.adjustBruteLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
-	..()
-	. = 1
+	M.adjustFireLoss(2*REM, FALSE, FALSE, BODYPART_ORGANIC)
+	. = ..()
 
 /datum/reagent/drug/crank/addiction_act_stage1(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5*REM)
-	..()
+	. = ..()
 
 /datum/reagent/drug/crank/addiction_act_stage2(mob/living/M)
-	M.adjustToxLoss(5*REM, 0)
-	..()
-	. = 1
+	M.adjustFireLoss(4*REM, 0)
+	. = ..()
 
 /datum/reagent/drug/crank/addiction_act_stage3(mob/living/M)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
+	M.adjustFireLoss(5*REM, 0)
+	. = ..()
 
 /datum/reagent/drug/crank/addiction_act_stage4(mob/living/M)
 	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3*REM)
 	M.adjustToxLoss(5*REM, 0)
-	M.adjustBruteLoss(5*REM, 0)
-	..()
-	. = 1
+	M.adjustFireLoss(7*REM, 0)
+	. = ..()
 
 /datum/reagent/drug/krokodil
 	name = "Krokodil"
