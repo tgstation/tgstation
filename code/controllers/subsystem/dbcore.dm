@@ -132,12 +132,8 @@ SUBSYSTEM_DEF(dbcore)
 		list("internet_address" = world.internet_address || "0", "port" = "[world.port]")
 	)
 	query_round_initialize.Execute(async = FALSE)
+	GLOB.round_id = query_round_initialize.last_insert_id
 	qdel(query_round_initialize)
-	var/datum/DBQuery/query_round_last_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-	query_round_last_id.Execute(async = FALSE)
-	if(query_round_last_id.NextRow(async = FALSE))
-		GLOB.round_id = query_round_last_id.item[1]
-	qdel(query_round_last_id)
 
 /datum/controller/subsystem/dbcore/proc/SetRoundStart()
 	if(!Connect())

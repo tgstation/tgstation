@@ -451,13 +451,6 @@
 	for(var/o in options)
 		var/datum/poll_option/option = o
 		option.save_option()
-		var/datum/DBQuery/query_get_option_id = SSdbcore.NewQuery("SELECT LAST_INSERT_ID()")
-		if(!query_get_option_id.warn_execute())
-			qdel(query_get_option_id)
-			return
-		if(query_get_option_id.NextRow())
-			option.option_id = text2num(query_get_option_id.item[1])
-		qdel(query_get_option_id)
 
 /**
   * Deletes all votes or text replies for this poll, depending on its type.
@@ -670,6 +663,8 @@
 	if(!query_update_poll_option.warn_execute())
 		qdel(query_update_poll_option)
 		return
+	if (!option_id)
+		option_id = query_update_poll_option.last_insert_id
 	qdel(query_update_poll_option)
 
 /**
