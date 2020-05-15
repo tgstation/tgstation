@@ -16,7 +16,7 @@
 	var/list/chat_channels
 
 /datum/tgs_api/v5/ApiVersion()
-	return new /datum/tgs_version("5.1.0")
+	return new /datum/tgs_version("5.1.1")
 
 /datum/tgs_api/v5/OnWorldNew(minimum_required_security_level)
 	server_port = world.params[DMAPI5_PARAM_SERVER_PORT]
