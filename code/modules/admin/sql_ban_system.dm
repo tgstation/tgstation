@@ -41,19 +41,26 @@
 /proc/is_banned_from_with_details(player_ckey, player_ip, player_cid, role)
 	if(!player_ckey && !player_ip && !player_cid)
 		return
-	role = sanitizeSQL(role)
-	var/list/where_list = list()
-	if(player_ckey)
-		player_ckey = sanitizeSQL(player_ckey)
-		where_list += "ckey = '[player_ckey]'"
-	if(player_ip)
-		player_ip = sanitizeSQL(player_ip)
-		where_list += "ip = INET_ATON('[player_ip]')"
-	if(player_cid)
-		player_cid = sanitizeSQL(player_cid)
-		where_list += "computerid = '[player_cid]'"
-	var/where = "([where_list.Join(" OR ")])"
-	var/datum/DBQuery/query_check_ban = SSdbcore.NewQuery("SELECT id, bantime, round_id, expiration_time, TIMESTAMPDIFF(MINUTE, bantime, expiration_time), applies_to_admins, reason, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey), INET_NTOA(ip), computerid, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey) FROM [format_table_name("ban")] WHERE role = '[role]' AND [where] AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW()) ORDER BY bantime DESC")
+	var/datum/DBQuery/query_check_ban = SSdbcore.NewQuery({"
+		SELECT
+			id,
+			bantime,
+			round_id,
+			expiration_time,
+			TIMESTAMPDIFF(MINUTE, bantime, expiration_time),
+			applies_to_admins,
+			reason,
+			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].ckey), ckey),
+			INET_NTOA(ip),
+			computerid,
+			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE [format_table_name("player")].ckey = [format_table_name("ban")].a_ckey), a_ckey)
+		FROM [format_table_name("ban")]
+		WHERE role = :role
+			AND (ckey = :ckey OR ip = INET_ATON(:ip) OR computerid = :computerid)
+			AND unbanned_datetime IS NULL
+			AND (expiration_time IS NULL OR expiration_time > NOW())
+		ORDER BY bantime DESC
+	"}, list("role" = role, "ckey" = player_ckey, "ip" = player_ip, "computerid" = player_cid))
 	if(!query_check_ban.warn_execute())
 		qdel(query_check_ban)
 		return

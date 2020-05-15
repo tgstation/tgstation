@@ -516,12 +516,19 @@
 	if(!type)
 		return
 	var/output
-	if(target_ckey)
-		target_ckey = sanitizeSQL(target_ckey)
-	var/query = "SELECT id, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey), text, timestamp, IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), lasteditor) FROM [format_table_name("messages")] WHERE type = '[type]' AND deleted = 0 AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)"
-	if(type == "message" || type == "watchlist entry")
-		query += " AND targetckey = '[target_ckey]'"
-	var/datum/DBQuery/query_get_message_output = SSdbcore.NewQuery(query)
+	var/datum/DBQuery/query_get_message_output = SSdbcore.NewQuery({"
+		SELECT
+			id,
+			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey),
+			text,
+			timestamp,
+			IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = lasteditor), lasteditor)
+		FROM [format_table_name("messages")]
+		WHERE type = '[type]'
+		AND deleted = 0
+		AND (expire_timestamp > NOW() OR expire_timestamp IS NULL)
+		AND ((type != 'message' AND type != 'watchlist entry') OR targetckey = :targetckey)
+	"}, list("targetckey" = target_ckey))
 	if(!query_get_message_output.warn_execute())
 		qdel(query_get_message_output)
 		return
@@ -535,7 +542,10 @@
 			if("message")
 				output += "<font color='red' size='3'><b>Admin message left by <span class='prefix'>[admin_key]</span> on [timestamp]</b></font>"
 				output += "<br><font color='red'>[text]</font><br>"
-				var/datum/DBQuery/query_message_read = SSdbcore.NewQuery("UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = [message_id]")
+				var/datum/DBQuery/query_message_read = SSdbcore.NewQuery(
+					"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE id = :id",
+					list("id" = message_id)
+				)
 				if(!query_message_read.warn_execute())
 					qdel(query_get_message_output)
 					qdel(query_message_read)
