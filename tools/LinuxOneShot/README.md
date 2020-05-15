@@ -2,7 +2,7 @@ This is @Cyberboss rage code
 
 The goal is a one stop solution for hosting /tg/station on linux via Docker. Will not work with Docker on Windows.
 
-This requires Docker with the `docker-compose` command to be installed on your system. See ubuntu instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository).
+This requires Docker with the `docker-compose` command to be installed on your system. See ubuntu instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository). If you fail to find the `docker-ce` package refer to [this StackOverflow answer](https://unix.stackexchange.com/a/363058).
 
 Some basic configuration options in `docker-compose.yml` before starting:
 - Ports are mapped in the form `<external>:<internal>` NEVER change the internal port. If you want to prevent a service from being exposed, delete/comment out the entire line.
