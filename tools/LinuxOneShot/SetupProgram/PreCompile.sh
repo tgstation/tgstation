@@ -90,13 +90,14 @@ if [ ! -d "../GameStaticFiles/config" ]; then
 	echo "Creating initial config..."
 	cp -r "$1/config" "../GameStaticFiles/config"
 	echo -e "SQL_ENABLED\nADDRESS mariadb\nPORT 3306\nFEEDBACK_DATABASE ss13\nFEEDBACK_LOGIN root\nFEEDBACK_PASSWORD YouDefinitelyShouldNOTChangeThis\nASYNC_QUERY_TIMEOUT 10\nBLOCKING_QUERY_TIMEOUT 5\nBSQL_THREAD_LIMIT 50" > "../GameStaticFiles/config/dbconfig.txt"
+	echo "$TGS_DB_ADMIN_CKEY = Host" > "../GameStaticFiles/config/admins.txt"
 fi
 
 if [ "$DATABASE_EXISTS" != "ss13_db" ]; then
 	echo "Creating initial SS13 database..."
     mysql -u root --password=YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 -e 'CREATE DATABASE IF NOT EXISTS ss13_db;'
-	cat "$1/SQL/tgstation_schema.sql"
-    mysql -u root --password=YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 ss13_db < "$1/SQL/tgstation_schema.sql"
+	cat "$1/$TGS_SCHEMA_FILE"
+    mysql -u root --password=YouDefinitelyShouldNOTChangeThis -h mariadb -P 3306 ss13_db < "$1/$TGS_SCHEMA_FILE"
 fi
 
 #just trust me, i nearly lost my shit
