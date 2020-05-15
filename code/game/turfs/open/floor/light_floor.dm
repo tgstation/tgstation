@@ -85,17 +85,13 @@
 	set_light(0)
 	return ..()
 
-/turf/open/floor/light/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/turf/open/floor/light/AltClick(mob/living/user)
 	if(!can_modify_colour)
+		return
+	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	on = !on
 	update_icon()
-
-/turf/open/floor/light/attack_ai(mob/user)
-	return attack_hand(user)
 
 /turf/open/floor/light/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
