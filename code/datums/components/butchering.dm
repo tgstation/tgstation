@@ -65,7 +65,9 @@
 					"<span class='userdanger'>[user] slits your throat...</span>")
 		log_combat(user, H, "finishes slicing the throat of")
 		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD)
-		H.bleed_rate = clamp(H.bleed_rate + 20, 0, 30)
+		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
+		if(slit_throat)
+			slit_throat.generic_bleedstacks = clamp(slit_throat.generic_bleedstacks + 20, 0, 30)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)

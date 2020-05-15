@@ -83,7 +83,10 @@
 	var/scars_covered_by_clothes = TRUE
 	/// Descriptions for the locations on the limb for scars to be assigned, just cosmetic
 	var/list/specific_locations = list("general area")
+	/// So we know if we need to scream if this limb hits max damage
 	var/last_maxed
+	/// How much generic bleedstacks we have on this bodypart
+	var/generic_bleedstacks
 
 
 /obj/item/bodypart/examine(mob/user)
@@ -607,9 +610,8 @@
 		return
 
 	var/bleed_rate = 0
-
-	if(brute_dam >= 40)
-		bleed_rate += (brute_dam * 0.008)
+	if(generic_bleedstacks > 0)
+		bleed_rate++
 
 	//We want an accurate reading of .len
 	listclearnulls(embedded_objects)

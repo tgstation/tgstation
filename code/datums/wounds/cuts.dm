@@ -80,8 +80,11 @@
 		blood_flow += 0.05 * wounding_dmg
 
 /datum/wound/brute/cut/handle_process()
-	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
+	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
+		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even more strong as long as you can cut them first
+	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
 		blood_flow -= 0.25
+
 	if(current_bandage)
 		if(clot_rate > 0)
 			blood_flow -= clot_rate

@@ -318,7 +318,8 @@
 	else if((findtext(message, bleed_words)))
 		cooldown = COOLDOWN_DAMAGE
 		for(var/mob/living/carbon/human/H in listeners)
-			H.bleed_rate += (5 * power_multiplier)
+			var/obj/item/bodypart/BP = pick(H.bodyparts)
+			BP.generic_bleedstacks += 5
 
 	//FIRE
 	else if((findtext(message, burn_words)))

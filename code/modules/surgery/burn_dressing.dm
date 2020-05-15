@@ -15,14 +15,13 @@
 	if(..())
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
 		var/datum/wound/burn/burn_wound = targeted_bodypart.get_wound_type(targetable_wound)
-		return(burn_wound && (burn_wound.mortification > 0 || burn_wound.flesh_damage > 0)) // TODO: let you skip to the step you need first
-
+		return(burn_wound && (burn_wound.infestation > 0 || burn_wound.flesh_damage > 0)) // TODO: let you skip to the step you need first
 
 //SURGERY STEPS
 
-///// Debride, remove mortification
+///// Debride
 /datum/surgery_step/debride
-	name = "debride ruined flesh (hemostat/scalpel)"
+	name = "debride infected flesh (hemostat/scalpel)"
 	implements = list(TOOL_HEMOSTAT = 100, TOOL_WIRECUTTER = 60, TOOL_SCALPEL = 70, TOOL_SAW = 40)
 	time = 40
 	repeatable = TRUE
@@ -31,70 +30,30 @@
 /datum/surgery_step/debride/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(surgery.operated_wound)
 		var/datum/wound/burn/burn_wound = surgery.operated_wound
-		if(burn_wound.mortification <= 0)
-			to_chat(user, "<span class='notice'>[target]'s [parse_zone(user.zone_selected)] has no ruined flesh to remove!</span>")
+		if(burn_wound.infestation <= 0)
+			to_chat(user, "<span class='notice'>[target]'s [parse_zone(user.zone_selected)] has no infected flesh to remove!</span>")
 			surgery.status++
 			repeatable = FALSE
 			return
-		display_results(user, target, "<span class='notice'>You begin to excise ruined flesh from [target]'s [parse_zone(user.zone_selected)]...</span>",
-			"<span class='notice'>[user] begins to excise ruined flesh from [target]'s [parse_zone(user.zone_selected)] with [tool].</span>",
-			"<span class='notice'>[user] begins to excise ruined flesh from [target]'s [parse_zone(user.zone_selected)].</span>")
+		display_results(user, target, "<span class='notice'>You begin to excise infected flesh from [target]'s [parse_zone(user.zone_selected)]...</span>",
+			"<span class='notice'>[user] begins to excise infected flesh from [target]'s [parse_zone(user.zone_selected)] with [tool].</span>",
+			"<span class='notice'>[user] begins to excise infected flesh from [target]'s [parse_zone(user.zone_selected)].</span>")
 	else
 		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
 
 /datum/surgery_step/debride/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	var/datum/wound/burn/burn_wound = surgery.operated_wound
 	if(burn_wound)
-		display_results(user, target, "<span class='notice'>You successfully excise some of the ruined flesh from [target]'s [parse_zone(target_zone)].</span>",
-			"<span class='notice'>[user] successfully excises some of the ruined flesh from [target]'s [parse_zone(target_zone)] with [tool]!</span>",
-			"<span class='notice'>[user] successfully excises some of the ruined flesh from  [target]'s [parse_zone(target_zone)]!</span>")
-		log_combat(user, target, "excised ruined flesh in", addition="INTENT: [uppertext(user.a_intent)]")
+		display_results(user, target, "<span class='notice'>You successfully excise some of the infected flesh from [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>[user] successfully excises some of the infected flesh from [target]'s [parse_zone(target_zone)] with [tool]!</span>",
+			"<span class='notice'>[user] successfully excises some of the infected flesh from  [target]'s [parse_zone(target_zone)]!</span>")
+		log_combat(user, target, "excised infected flesh in", addition="INTENT: [uppertext(user.a_intent)]")
 		surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
-		burn_wound.mortification -= 1.5
-		if(burn_wound.mortification <= 0)
+		burn_wound.infestation -= 0.5
+		if(burn_wound.infestation <= 0)
 			repeatable = FALSE
 	else
-		to_chat(user, "<span class='warning'>[target] has no ruined flesh there!</span>")
-	return ..()
-
-/datum/surgery_step/debride/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
-	..()
-	display_results(user, target, "<span class='notice'>You carve away some of the healthy flesh from [target]'s [parse_zone(target_zone)].</span>",
-		"<span class='notice'>[user] carves away some of the healthy flesh from [target]'s [parse_zone(target_zone)] with [tool]!</span>",
-		"<span class='notice'>[user] carves away some of the healthy flesh from  [target]'s [parse_zone(target_zone)]!</span>")
-	surgery.operated_bodypart.receive_damage(brute=rand(4,11), sharpness=TRUE)
-/*
-///// Disinfect, remove infestation TODO: make this disinfect
-/datum/surgery_step/disinfect
-	name = "disinfect ruined flesh (ointment/sterilizine)"
-	implements = list(TOOL_HEMOSTAT = 100, TOOL_WIRECUTTER = 60, TOOL_SCALPEL = 70, TOOL_SAW = 40)
-	time = 40
-	repeatable = TRUE
-	experience_given = MEDICAL_SKILL_MEDIUM
-
-/datum/surgery_step/debride/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/datum/wound/burn/burn_wound = surgery.operated_wound
-	if(burn_wound)
-			to_chat(user, "<span class='notice'>[target]'s [parse_zone(user.zone_selected)] has no ruined flesh to remove!</span>")
-			return
-		display_results(user, target, "<span class='notice'>You begin to excise ruined flesh from [target]'s [parse_zone(user.zone_selected)]...</span>",
-			"<span class='notice'>[user] begins to excise ruined flesh from [target]'s [parse_zone(user.zone_selected)] with [tool].</span>",
-			"<span class='notice'>[user] begins to excise ruined flesh from [target]'s [parse_zone(user.zone_selected)].</span>")
-	else
-		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
-
-/datum/surgery_step/debride/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	if(surgery.operated_wound)
-		display_results(user, target, "<span class='notice'>You successfully excise some of the ruined flesh from [target]'s [parse_zone(target_zone)].</span>",
-			"<span class='notice'>[user] successfully excises some of the ruined flesh from [target]'s [parse_zone(target_zone)] with [tool]!</span>",
-			"<span class='notice'>[user] successfully excises some of the ruined flesh from  [target]'s [parse_zone(target_zone)]!</span>")
-		log_combat(user, target, "disinfected burns in", addition="INTENT: [uppertext(user.a_intent)]")
-		surgery.operated_bodypart.receive_damage(brute=3, wound_bonus=CANT_WOUND)
-		surgery.operated_wound.mortification -= 1
-		if(surgery.operated_wound.mortification <= 0)
-			repeatable = FALSE
-	else
-		to_chat(user, "<span class='warning'>[target] has no ruined flesh there!</span>")
+		to_chat(user, "<span class='warning'>[target] has no infected flesh there!</span>")
 	return ..()
 
 /datum/surgery_step/debride/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, var/fail_prob = 0)
@@ -104,40 +63,7 @@
 		"<span class='notice'>[user] carves away some of the healthy flesh from  [target]'s [parse_zone(target_zone)]!</span>")
 	surgery.operated_bodypart.receive_damage(brute=rand(4,11), sharpness=TRUE)
 
-///// Regenerate, remove flesh_damage
-/datum/surgery_step/regenerate_flesh
-	name = "regenerate flesh (mesh)"
-	implements = list(/obj/item/stack/medical/mesh = 100)
-	time = 40
-	repeatable = TRUE
-	experience_given = MEDICAL_SKILL_MEDIUM
 
-/datum/surgery_step/regenerate_flesh/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/stack/medical/tool, datum/surgery/surgery)
-	if(surgery.operated_wound)
-		if(surgery.operated_wound.flesh_damage <= 0)
-			to_chat(user, "<span class='notice'>[target]'s [parse_zone(user.zone_selected)] is as healthy flesh-wise as you'll get!</span>")
-			return
-		display_results(user, target, "<span class='notice'>You begin to carefully apply [tool] to [target]'s [parse_zone(user.zone_selected)]...</span>",
-			"<span class='notice'>[user] begins to carefully apply [tool] to [target]'s [parse_zone(user.zone_selected)].</span>",
-			"<span class='notice'>[user] begins to carefully apply [tool] to [target]'s [parse_zone(user.zone_selected)].</span>")
-	else
-		user.visible_message("<span class='notice'>[user] looks for [target]'s [parse_zone(user.zone_selected)].</span>", "<span class='notice'>You look for [target]'s [parse_zone(user.zone_selected)]...</span>")
-
-/datum/surgery_step/regenerate_flesh/success(mob/user, mob/living/carbon/target, target_zone, obj/item/stack/medical/tool, datum/surgery/surgery, default_display_results = FALSE)
-	if(surgery.operated_wound)
-		display_results(user, target, "<span class='notice'>You successfully apply some of [tool] to [target]'s [parse_zone(target_zone)].</span>",
-			"<span class='notice'>[user] successfully applies some of [tool] to [target]'s [parse_zone(target_zone)] with [tool]!</span>",
-			"<span class='notice'>[user] successfully applies some of [tool] to [target]'s [parse_zone(target_zone)]!</span>")
-		log_combat(user, target, "regenerated flesh in", addition="INTENT: [uppertext(user.a_intent)]")
-		surgery.operated_wound.sanitization += tool.sanitization * 1.5
-		surgery.operated_wound.flesh_healing += tool.regenerate_flesh * 1.5
-		if(sanitization >= infestation && flesh_healing > flesh_damage)
-			repeatable = FALSE
-	else
-		to_chat(user, "<span class='warning'>[target] has no ruined flesh there!</span>")
-	return ..()
-
-*/
 ///// Dressing burns
 /datum/surgery_step/dress
 	name = "dress burns (bandage)"
@@ -161,8 +87,8 @@
 			"<span class='notice'>[user] successfully wraps [target]'s [parse_zone(target_zone)] with [tool]!</span>",
 			"<span class='notice'>[user] successfully wraps [target]'s [parse_zone(target_zone)]!</span>")
 		log_combat(user, target, "dressed burns in", addition="INTENT: [uppertext(user.a_intent)]")
-		burn_wound.sanitization += 15 // TODO: Actually make this surgery in depth
-		burn_wound.flesh_healing += 15
+		burn_wound.sanitization += 3
+		burn_wound.flesh_healing += 3
 		burn_wound.bandage(tool)
 	else
 		to_chat(user, "<span class='warning'>[target] has no burns there!</span>")
