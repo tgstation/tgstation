@@ -42,15 +42,6 @@
     'color-background': #ffffff,
   ));
 
-  .Button {
-    font-family: monospace;
-    color: #161613;
-    border-width: 8px;
-    border-style: outset;
-    border-color: #E8E4C9;
-    outline: 3px solid #161613;
-  }
-
   .Layout__content {
     background-image: none;
   }
@@ -64,21 +55,5 @@
   padding: 2px;
   font-size: 85%;
 }
-.textarea-container > div, .textarea-container > textarea {
-    word-wrap: break-word; /* make sure the div and the textarea wrap words in the same way */
-    box-sizing: border-box;
-    padding: 2px;
-    width: 100%;
-}
 
-.textarea-container > textarea {
-    overflow: hidden;
-    position: absolute;
-    height: 100%;
-}
-
-.textarea-container > div {
-    padding-bottom: 1.5em; /* A bit more than one additional line of text. */
-    visibility: hidden;
-}
 }

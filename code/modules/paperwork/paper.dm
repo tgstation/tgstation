@@ -111,17 +111,6 @@
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 	. = replacetext(html, "<!--customheadhtml-->", assets.css_tag())
 
-/obj/item/paper/examine(mob/user)
-	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		if(user.is_literate())
-			readonly = TRUE	  /// We just want to read it, so set to readonly
-			ui_interact(user)
-		else
-			to_chat(user, "<span class='warning'>You don't know how to read or write!</span>")
-	else
-		. += "<span class='warning'>You're too far away to read it!</span>"
-
 
 /obj/item/paper/verb/rename()
 	set name = "Rename paper"
@@ -195,7 +184,8 @@
 		else
 			var/obj/item/toy/crayon/PEN = P
 			pen_color = PEN.crayon_color
-
+		ui_interact(user)
+		return
 	else if(istype(P, /obj/item/stamp))
 
 		if(!in_range(src, user))
@@ -231,7 +221,7 @@
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
 
-	. = ..()	// UI takes over
+	. = ..()
 
 /obj/item/paper/fire_act(exposed_temperature, exposed_volume)
 	..()
@@ -257,7 +247,7 @@
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
 	data["text"] = info
-	data["paper_state"] = icon_state	/// Mabey the sheet will show blood or crinkling
+	data["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling
 	data["pen_color"] = pen_color
 	data["paper_color"] = color
 	data["edit_sheet"] = readonly || finalized ? FALSE : TRUE
@@ -266,7 +256,7 @@
 	return data
 
 
-/obj/item/paper/ntnet_relay/ui_act(action, params)
+/obj/item/paper/ui_act(action, params)
 	if(..())
 		return
 	switch(action)
@@ -275,6 +265,7 @@
 			finalized = TRUE		// once you have writen to a sheet you cannot write again
 			update_icon()
 			to_chat(usr, "You have finished your paper masterpiece!");
+			ui_close()
 			. = TRUE
 
 
