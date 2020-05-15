@@ -21,6 +21,7 @@
 					/obj/item/seeds/corn = 3,
 					/obj/item/seeds/eggplant = 3,
 					/obj/item/seeds/garlic = 3,
+					/obj/item/seeds/glowshroom = 2,
 					/obj/item/seeds/grape = 3,
 					/obj/item/seeds/grass = 3,
 					/obj/item/seeds/lemon = 3,
@@ -43,7 +44,6 @@
 					/obj/item/seeds/wheat = 3,
 					/obj/item/seeds/whitebeet = 3)
 	contraband = list(/obj/item/seeds/amanita = 2,
-					/obj/item/seeds/glowshroom = 2,
 					/obj/item/seeds/liberty = 2,
 					/obj/item/seeds/nettle = 2,
 					/obj/item/seeds/plump = 2,
