@@ -466,9 +466,10 @@
 //mega scream powder
 /datum/chemical_reaction/scream/mega
 	required_reagents = list(/datum/reagent/medicine/C2/helbital = 2, /datum/reagent/toxin/fentanyl = 1, /datum/reagent/medicine/strange_reagent = 1, /datum/reagent/sonic_powder = 1)
+	required_temp = 350
 
 /datum/chemical_reaction/scream/mega/on_reaction(datum/reagents/holder, created_volume)
-	playsound(holder.my_atom, pick(list( 'sound/voice/human/malescream_1.ogg', 'sound/voice/human/malescream_2.ogg', 'sound/voice/human/malescream_3.ogg', 'sound/voice/human/malescream_4.ogg', 'sound/voice/human/malescream_5.ogg', 'sound/voice/human/malescream_6.ogg', 'sound/voice/human/femalescream_1.ogg', 'sound/voice/human/femalescream_2.ogg', 'sound/voice/human/femalescream_3.ogg', 'sound/voice/human/femalescream_4.ogg', 'sound/voice/human/femalescream_5.ogg', 'sound/voice/human/wilhelm_scream.ogg')), created_volume*25,TRUE)
+	playsound(holder.my_atom, pick(list( 'sound/voice/human/wilhelm_scream.ogg')), created_volume*25,TRUE)
 	var/location = get_turf(holder.my_atom)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume, location))
 		C.soundbang_act(1, 100, rand(0, 5))
