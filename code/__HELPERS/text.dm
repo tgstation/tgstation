@@ -15,7 +15,7 @@
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
 /proc/sanitizeSQL(t)
-	return SSdbcore.Quote("[t]")
+	CRASH("sanitizeSQL called")
 
 /proc/format_table_name(table as text)
 	return CONFIG_GET(string/feedback_tableprefix) + table
