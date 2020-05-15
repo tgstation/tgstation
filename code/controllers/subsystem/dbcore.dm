@@ -293,6 +293,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	var/list/list/rows
 	var/next_row_to_take = 1
 	var/affected
+	var/last_insert_id
 
 	var/list/item  //list of data values populated by NextRow()
 
@@ -367,6 +368,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		if ("ok")
 			rows = result["rows"]
 			affected = result["affected"]
+			last_insert_id = result["last_insert_id"]
 			return TRUE
 		if ("err")
 			last_error = result["data"]
