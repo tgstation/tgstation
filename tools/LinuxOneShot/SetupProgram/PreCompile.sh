@@ -43,9 +43,7 @@ fi
 #need to switch to game dir for Dockerfile weirdness
 original_dir=$PWD
 cd "$1"
-file dependencies.sh
 dos2unix dependencies.sh
-chmod +x dependencies.sh
 . dependencies.sh
 cd "$original_dir"
 
