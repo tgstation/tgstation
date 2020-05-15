@@ -274,7 +274,7 @@ export const useLocalState = (context, key, initialState) => {
  */
 export const useSharedState = (context, key, initialState) => {
   const { store } = context;
-  const state = store.getState();
+  const state = selectBackend(store.getState());
   const ref = state.config.ref;
   const sharedStates = state.shared ?? {};
   const sharedState = (key in sharedStates)
