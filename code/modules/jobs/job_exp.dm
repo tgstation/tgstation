@@ -156,7 +156,10 @@ GLOBAL_PROTECT(exp_to_update)
 		return -1
 	if(!SSdbcore.Connect())
 		return -1
-	var/datum/DBQuery/exp_read = SSdbcore.NewQuery("SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = '[sanitizeSQL(ckey)]'")
+	var/datum/DBQuery/exp_read = SSdbcore.NewQuery(
+		"SELECT job, minutes FROM [format_table_name("role_time")] WHERE ckey = :ckey",
+		list("ckey" = ckey)
+	)
 	if(!exp_read.Execute(async = TRUE))
 		qdel(exp_read)
 		return -1
@@ -188,7 +191,10 @@ GLOBAL_PROTECT(exp_to_update)
 	else
 		prefs.db_flags |= newflag
 
-	var/datum/DBQuery/flag_update = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET flags = '[prefs.db_flags]' WHERE ckey='[sanitizeSQL(ckey)]'")
+	var/datum/DBQuery/flag_update = SSdbcore.NewQuery(
+		"UPDATE [format_table_name("player")] SET flags=:flags WHERE ckey=:ckey",
+		list("flags" = "[prefs.db_flags]", "ckey" = ckey)
+	)
 
 	if(!flag_update.Execute())
 		qdel(flag_update)
@@ -256,8 +262,8 @@ GLOBAL_PROTECT(exp_to_update)
 			CRASH("invalid job value [jtype]:[jvalue]")
 		LAZYINITLIST(GLOB.exp_to_update)
 		GLOB.exp_to_update.Add(list(list(
-			"job" = "'[sanitizeSQL(jtype)]'",
-			"ckey" = "'[sanitizeSQL(ckey)]'",
+			"job" = jtype,
+			"ckey" = ckey,
 			"minutes" = jvalue)))
 		prefs.exp[jtype] += jvalue
 	addtimer(CALLBACK(SSblackbox,/datum/controller/subsystem/blackbox/proc/update_exp_db),20,TIMER_OVERRIDE|TIMER_UNIQUE)
