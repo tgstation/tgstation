@@ -11,10 +11,11 @@
  * @license MIT
  */
 
+import { perf } from 'common/perf';
 import { callByond } from './byond';
 import { UI_DISABLED, UI_INTERACTIVE } from './constants';
+import { releaseHeldKeys } from './hotkeys';
 import { createLogger } from './logging';
-import { perf } from 'common/perf';
 
 const logger = createLogger('backend');
 
@@ -138,6 +139,7 @@ export const backendMiddleware = store => {
 
     if (type === 'backend/suspendSuccess') {
       clearTimeout(suspendTimer);
+      releaseHeldKeys();
       callByond('winset', {
         id: window.__windowId__,
         'is-visible': false,

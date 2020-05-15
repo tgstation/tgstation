@@ -13,7 +13,6 @@ import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
 import { toggleKitchenSink, useDebug } from '../debug';
 import { dragStartHandler, recallWindowGeometry, resizeStartHandler, setWindowKey } from '../drag';
-import { releaseHeldKeys } from '../hotkeys';
 import { createLogger } from '../logging';
 import { useDispatch } from '../store';
 import { Layout, refocusLayout } from './Layout';
@@ -98,7 +97,6 @@ export class Window extends Component {
           onDragStart={dragStartHandler}
           onClose={() => {
             logger.log('pressed close');
-            releaseHeldKeys();
             dispatch(backendSuspendStart());
             act('tgui:close');
           }} />
