@@ -150,26 +150,21 @@ namespace SetupProgram
 			var configurationTask = instanceClient.Configuration.Write(new ConfigurationFile
 			{
 				Path = "/EventScripts/PreCompile.sh",
-				Content = Encoding.UTF8.GetBytes(@"#!/bin/sh
+				Content = Encoding.UTF8.GetBytes(@"#!/bin/bash
 
 set -e
-
-#load dep exports
-#need to switch to game dir for Dockerfile weirdness
-original_dir=$PWD
-cd ""$1""
-. dependencies.sh
-cd ""$original_dir""
+set -x
 
 #find out what we have (+e is important for this)
 set +e
 has_git=""$(command - v git)""
+has_d2u=""$(command - v dos2unix)""
 has_cargo=""$(command -v ~/.cargo/bin/cargo)""
 has_sudo=""$(command -v sudo)""
 has_cmake=""$(command -v cmake)""
 has_gpp=""$(command -v g++-6)""
 has_grep=""$(command -v grep)""
-set - e
+set -e
 
 # install cargo if needful
 if ! [ -x ""$has_cargo"" ]; then
@@ -179,22 +174,32 @@ if ! [ -x ""$has_cargo"" ]; then
 fi
 
 # apt packages
-if ! { [ -x ""$has_git"" ] && [ -x ""$has_cmake"" ] && [ -x ""$has_gpp"" ] && [ -x ""$has_grep"" ] && [ -f ""/usr/lib/i386-linux-gnu/libmariadb.so.2"" ] && [ -f ""/usr/lib/i386-linux-gnu/libssl.so"" ] && [ -d ""/usr/share/doc/g++-6-multilib"" ] && [ -f ""/usr/bin/mysql"" ] && [ -d ""/usr/include/mysql"" ]; }; then
+if ! { [ -x ""$has_git"" ] && [ -x ""$has_cmake"" ] && [ -x ""$has_gpp"" ] && [ -x ""$has_grep"" ] && [ -x ""$has_d2u"" ] && [ -f ""/usr/lib/i386-linux-gnu/libmariadb.so.2"" ] && [ -f ""/usr/lib/i386-linux-gnu/libssl.so"" ] && [ -d ""/usr/share/doc/g++-6-multilib"" ] && [ -f ""/usr/bin/mysql"" ] && [ -d ""/usr/include/mysql"" ]; }; then
 	echo ""Installing apt dependencies...""
 	if ! [ -x ""$has_sudo"" ]; then
 		dpkg --add-architecture i386
 		apt-get update
-		apt-get install -y git cmake libmariadb-dev:i386 libssl-dev:i386 grep g++-6 g++-6-multilib mysql-client
+		apt-get install -y git cmake libmariadb-dev:i386 libssl-dev:i386 grep g++-6 g++-6-multilib mysql-client dos2unix
 		ln -s /usr/include/mariadb /usr/include/mysql
 		rm -rf /var/lib/apt/lists/*
 	else
 		sudo dpkg --add-architecture i386
 		sudo apt-get update
-		apt-get install -y git cmake libmariadb-dev:i386 libssl-dev:i386 grep g++-6 g++-6-multilib mysql-client
+		sudo apt-get install -y git cmake libmariadb-dev:i386 libssl-dev:i386 grep g++-6 g++-6-multilib mysql-client dos2unix
 		sudo ln -s /usr/include/mariadb /usr/include/mysql
 		sudo rm -rf /var/lib/apt/lists/*
 	fi
 fi
+
+#load dep exports
+#need to switch to game dir for Dockerfile weirdness
+original_dir=$PWD
+cd ""$1""
+file dependencies.sh
+dos2unix dependencies.sh
+chmod +x dependencies.sh
+. dependencies.sh
+cd ""$original_dir""
 
 #update rust-g
 if [ ! -d ""rust-g"" ]; then
