@@ -23,23 +23,19 @@ $border-radius: base.$border-radius !default;
   margin-right: 2px;
   line-height: 17px;
   overflow: visible;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+  width:100%;
+
 }
 
-/* Cut and paste to auto resize the textarea */
-.textarea-container > div, .textarea-container > textarea {
+.TextArea_filler {
   word-wrap: break-word; /* make sure the div and the textarea wrap words in the same way */
   box-sizing: border-box;
   padding: 2px;
   width: 100%;
-}
 
-.textarea-container > textarea {
-  overflow: hidden;
-  position: absolute;
-  height: 100%;
-}
-
-.textarea-container > div {
   padding-bottom: 1.5em; /* A bit more than one additional line of text. */
   visibility: hidden;
 }
@@ -75,6 +71,22 @@ $border-radius: base.$border-radius !default;
   background-color: transparent;
   color: #fff;
   color: inherit;
+  box-sizing: border-box;
+  width: 100%;
+
+  /* Cut and paste to auto resize the textarea */
+  word-wrap: break-word; /* make sure the div and the textarea wrap words in the same way */
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+  box-sizing: border-box;         /* Opera/IE 8+ */
+
+  padding: 2px;
+  width: 100%;
+
+  overflow: hidden;
+  position: absolute;
+  height: 100%;
 
   &:-ms-input-placeholder {
     font-style: italic;
@@ -82,3 +94,4 @@ $border-radius: base.$border-radius !default;
     color: rgba(255, 255, 255, 0.45);
   }
 }
+

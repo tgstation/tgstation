@@ -1,8 +1,10 @@
 /**
- * @file
- * @copyright 2020 Paul Bruner
+ * @copyright 2011-2020
+ * @author Original Author Christopher Jeffrey (https://github.com/chjj/)
+ * @author Changes Author WarlockD (https://github.com/warlockd)
  * @license MIT
  */
+
 import { Lexer } from './Lexer';
 import { Parser } from './Parser';
 import { Tokenizer } from './Tokenizer';

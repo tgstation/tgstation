@@ -1,6 +1,8 @@
 /**
  * @file
- * @copyright 2020 Paul Bruner
+ * @copyright 2020 Aleksej Komarov
+ * @author Original Aleksej Komarov
+ * @author Changes Warlockd (https://github.com/warlockd)
  * @license MIT
  */
 
@@ -33,7 +35,8 @@ export class TextArea extends Component {
     // there has GOT to be a better way though
     this.autoresize = () => {
       if (this.fillerRef && this.textareaRef) {
-        this.fillerRef.current.innerHTML = this.textareaRef.current.value.replace(/\n/g, '<br/>');
+      //  this.fillerRef.current.innerHTML =
+      //  this.textareaRef.current.value.replace(/\n/g, '<br/>');
       }
     };
     this.handleOnInput = e => {
@@ -161,7 +164,6 @@ export class TextArea extends Component {
     return (
       <Box
         className={classes([
-          'textarea-container',
           'TextArea',
           fluid && 'TextArea--fluid',
           className,
@@ -172,19 +174,14 @@ export class TextArea extends Component {
         <textarea
           value={value}
           ref={this.textareaRef}
-          className="Textarea_textarea"
+          className="TextArea__textarea"
           placeholder={placeholder}
           onChange={this.handleOnChange}
           onKeyDown={this.handleKeyDown}
           onKeyPress={this.handleKeyPress}
           onInput={this.handleOnInput}
           onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-        />
-        <div className="TextArea__baseline">
-          .
-        </div>
-        <div ref={this.fillerRef} />
+          onBlur={this.handleBlur} />
       </Box>
     );
   }

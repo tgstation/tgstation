@@ -28,7 +28,7 @@
 	drop_sound = 'sound/items/handling/paper_drop.ogg'
 	pickup_sound =  'sound/items/handling/paper_pickup.ogg'
 	grind_results = list(/datum/reagent/cellulose = 3)
-
+	color = "white"
 	/// What's actually written on the paper.
 	var/info
 
@@ -240,16 +240,20 @@
 		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/simple/paper)
 		assets.send(user)
 		/// The x size is because we double the width for the editor
-		ui = new(user, src, ui_key, "PaperSheet", name, 400 * ((readonly || finalized) ? 1 : 2), 600, master_ui, state)
+		ui = new(user, src, ui_key, "PaperSheet", name, 400, 600, master_ui, state)
 		ui.open()
 
+/obj/item/paper/ui_close(mob/user)
+	var/datum/tgui/ui = SStgui.try_update_ui(user, src, "main");
+	if(ui)
+		ui.close()
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
 	data["text"] = info
 	data["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling
 	data["pen_color"] = pen_color
-	data["paper_color"] = color
+	data["paper_color"] = color || "white"	// color might not be set
 	data["edit_sheet"] = readonly || finalized ? FALSE : TRUE
 	/// data["stamps_info"] = list(stamp_info)
 	data["stamps"] = stamps
@@ -265,7 +269,7 @@
 			finalized = TRUE		// once you have writen to a sheet you cannot write again
 			update_icon()
 			to_chat(usr, "You have finished your paper masterpiece!");
-			ui_close()
+			ui_close()		// got to close it to update ui size properly
 			. = TRUE
 
 
