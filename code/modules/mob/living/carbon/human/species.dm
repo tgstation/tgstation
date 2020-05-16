@@ -214,19 +214,8 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/random_name(gender,unique,lastname)
 	if(unique)
 		return random_unique_name(gender)
-
-	var/randname
-	if(gender == MALE)
-		randname = pick(GLOB.first_names_male)
 	else
-		randname = pick(GLOB.first_names_female)
-
-	if(lastname)
-		randname += " [lastname]"
-	else
-		randname += " [pick(GLOB.last_names)]"
-
-	return randname
+		return human_name(gender,lastname)
 
 /**
   * Copies some vars and properties over that should be kept when creating a copy of this species.

@@ -1,8 +1,15 @@
 /proc/lizard_name(gender)
-	if(gender == MALE)
-		return "[pick(GLOB.lizard_names_male)]-[pick(GLOB.lizard_names_male)]"
-	else
-		return "[pick(GLOB.lizard_names_female)]-[pick(GLOB.lizard_names_female)]"
+	switch(gender)
+		if(MALE)
+			return "[pick(GLOB.lizard_names_male)]-[pick(GLOB.lizard_names_male)]"
+		if(FEMALE)
+			return "[pick(GLOB.lizard_names_female)]-[pick(GLOB.lizard_names_female)]"
+		else
+			switch(rand(1,2))
+				if(1)
+					return lizard_name(MALE)
+				if(2)
+					return lizard_name(FEMALE)
 
 /proc/ethereal_name()
 	var/tempname = "[pick(GLOB.ethereal_names)] [random_capital_letter()]"
@@ -15,6 +22,59 @@
 
 /proc/moth_name()
 	return "[pick(GLOB.moth_first)] [pick(GLOB.moth_last)]"
+
+/proc/human_first_name(gender)
+	switch(gender)
+		if(MALE)
+			return pick(GLOB.first_names_male)
+		if(FEMALE)
+			return pick(GLOB.first_names_female)
+		else
+			return pick(GLOB.first_names_unisex)
+
+/proc/human_last_name()
+	return pick(GLOB.last_names)
+
+/proc/human_name(gender, lastname)
+	if(lastname)
+		return human_first_name(gender) + " " + lastname
+	else
+		return human_first_name(gender) + " " + human_last_name()
+
+/proc/random_unique_name(gender, attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = human_name(gender)
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_lizard_name(gender, attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = lizard_name(gender)
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_plasmaman_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = plasmaman_name()
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_ethereal_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = ethereal_name()
+
+		if(!findname(.))
+			break
+
+/proc/random_unique_moth_name(attempts_to_find_unique_name=10)
+	for(var/i in 1 to attempts_to_find_unique_name)
+		. = pick(GLOB.moth_first) + " " + pick(GLOB.moth_last)
+
+		if(!findname(.))
+			break
 
 GLOBAL_VAR(command_name)
 /proc/command_name()
@@ -103,7 +163,7 @@ GLOBAL_VAR(command_name)
 	var/name = ""
 
 	// Prefix
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib")
+	name += pick(GLOB.syndicate_prefix)
 
 	// Suffix
 	if (prob(80))
@@ -111,16 +171,16 @@ GLOBAL_VAR(command_name)
 
 		// Full
 		if (prob(60))
-			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive")
+			name += pick(GLOB.syndicate_suffix_full)
 		// Broken
 		else
-			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
+			name += pick(GLOB.syndicate_suffix_broken_first)
 			name += pick("", "-")
-			name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Code")
+			name += pick(GLOB.syndicate_suffix_broken_second)
 	// Small
 	else
 		name += pick("-", "*", "")
-		name += pick("Tech", "Sun", "Co", "Tek", "X", "Inc", "Gen", "Star", "Dyne", "Code", "Hive")
+		name += pick(GLOB.syndicate_small)
 
 	return name
 
@@ -191,12 +251,9 @@ GLOBAL_DATUM(syndicate_code_response_regex, /regex)
 							. += pick(names)
 						else
 							if(prob(10))
-								. += pick(lizard_name(MALE),lizard_name(FEMALE))
+								. += lizard_name(pick(MALE, FEMALE))
 							else
-								var/new_name = pick(pick(GLOB.first_names_male,GLOB.first_names_female))
-								new_name += " "
-								new_name += pick(GLOB.last_names)
-								. += new_name
+								. += human_name(pick(MALE, FEMALE, PLURAL))
 					if(2)
 						. += pick(get_all_jobs())//Returns a job.
 				safety -= 1

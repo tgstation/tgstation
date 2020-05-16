@@ -209,7 +209,7 @@
 		H.fully_replace_character_name(H.real_name,chosen_name)
 
 /datum/antagonist/nukeop/leader/proc/ask_name()
-	var/randomname = pick(GLOB.last_names)
+	var/randomname = human_last_name()
 	var/newname = stripped_input(owner.current,"You are the nuke operative [title]. Please choose a last name for your family.", "Name change",randomname)
 	if (!newname)
 		newname = randomname
@@ -217,8 +217,9 @@
 		newname = reject_bad_name(newname)
 		if(!newname)
 			newname = randomname
+		else capitalize(newname)
 
-	return capitalize(newname)
+	return newname
 
 /datum/antagonist/nukeop/lone
 	name = "Lone Operative"
