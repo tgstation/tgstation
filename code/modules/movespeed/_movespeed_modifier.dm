@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 		CRASH("[modtype] is not a movespeed modification typepath.")
 	var/datum/movespeed_modifier/M = modtype
 	if(initial(M.variable))
-		CRASH("[modtype] is a variable modifier, and can never be cached.")
+		CRASH("[modtype] is a variable modifier and can never be cached.")
 	M = GLOB.movespeed_modification_cache[modtype]
 	if(!M)
 		M = GLOB.movespeed_modification_cache[modtype] = new modtype

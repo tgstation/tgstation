@@ -38,7 +38,7 @@ SUBSYSTEM_DEF(job)
 		old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
 		old_overflow.total_positions = initial(old_overflow.total_positions)
 		overflow_role = new_overflow_role
-		JobDebug("Overflow role set to : [new_overflow_role]")
+		JobDebug("Overflow role set to: [new_overflow_role]")
 
 /datum/controller/subsystem/job/proc/SetupOccupations(faction = "Station")
 	occupations = list()
@@ -90,7 +90,7 @@ SUBSYSTEM_DEF(job)
 		var/position_limit = job.total_positions
 		if(!latejoin)
 			position_limit = job.spawn_positions
-		JobDebug("Player: [player] is now Rank: [rank], JCP:[job.current_positions], JPL:[position_limit]")
+		JobDebug("Player: [player] is now Rank: [rank], JCP: [job.current_positions], JPL: [position_limit]")
 		player.mind.assigned_role = rank
 		unassigned -= player
 		job.current_positions++
@@ -110,7 +110,7 @@ SUBSYSTEM_DEF(job)
 			JobDebug("FOC player not old enough, Player: [player]")
 			continue
 		if(job.required_playtime_remaining(player.client))
-			JobDebug("FOC player not enough xp, Player: [player]")
+			JobDebug("FOC player does not have enough XP, Player: [player]")
 			continue
 		if(flag && (!(flag in player.client.prefs.be_special)))
 			JobDebug("FOC flag failed, Player: [player], Flag: [flag], ")
@@ -119,7 +119,7 @@ SUBSYSTEM_DEF(job)
 			JobDebug("FOC incompatible with antagonist role, Player: [player]")
 			continue
 		if(player.client.prefs.job_preferences[job.title] == level)
-			JobDebug("FOC pass, Player: [player], Level:[level]")
+			JobDebug("FOC pass, Player: [player], Level: [level]")
 			candidates += player
 	return candidates
 
@@ -148,7 +148,7 @@ SUBSYSTEM_DEF(job)
 			continue
 
 		if(job.required_playtime_remaining(player.client))
-			JobDebug("GRJ player not enough xp, Player: [player]")
+			JobDebug("GRJ player does not have enough XP, Player: [player]")
 			continue
 
 		if(player.mind && (job.title in player.mind.restricted_roles))
@@ -316,7 +316,7 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				if(is_banned_from(player.ckey, job.title))
-					JobDebug("DO isbanned failed, Player: [player], Job:[job.title]")
+					JobDebug("DO isbanned failed, Player: [player], Job: [job.title]")
 					continue
 
 				if(QDELETED(player))
@@ -324,22 +324,22 @@ SUBSYSTEM_DEF(job)
 					break
 
 				if(!job.player_old_enough(player.client))
-					JobDebug("DO player not old enough, Player: [player], Job:[job.title]")
+					JobDebug("DO player not old enough, Player: [player], Job: [job.title]")
 					continue
 
 				if(job.required_playtime_remaining(player.client))
-					JobDebug("DO player not enough xp, Player: [player], Job:[job.title]")
+					JobDebug("DO player does not have enough XP, Player: [player], Job: [job.title]")
 					continue
 
 				if(player.mind && (job.title in player.mind.restricted_roles))
-					JobDebug("DO incompatible with antagonist role, Player: [player], Job:[job.title]")
+					JobDebug("DO incompatible with antagonist role, Player: [player], Job: [job.title]")
 					continue
 
 				// If the player wants that job on this level, then try give it to him.
 				if(player.client.prefs.job_preferences[job.title] == level)
 					// If the job isn't filled
 					if((job.current_positions < job.spawn_positions) || job.spawn_positions == -1)
-						JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
+						JobDebug("DO pass, Player: [player], Level: [level], Job: [job.title]")
 						AssignRole(player, job.title)
 						unassigned -= player
 						break
@@ -585,7 +585,7 @@ SUBSYSTEM_DEF(job)
 		return
 	if(PopcapReached())
 		JobDebug("Popcap overflow Check observer located, Player: [player]")
-	JobDebug("Player rejected :[player]")
+	JobDebug("Player rejected: [player]")
 	to_chat(player, "<b>You have failed to qualify for any job you desired.</b>")
 	unassigned -= player
 	player.ready = PLAYER_NOT_READY

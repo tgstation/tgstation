@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(/obj/structure/gri
 		propagate_network(O, newPN)//... and propagates it to the other side of the cable
 
 //Makes a new network for the cable and propgates it.
-//If it finds another network in the process, aborts and uses that one and propagates off of it instead
+//If it finds another network in the process, aborts and uses that one and propagates off it instead
 /obj/structure/cable/proc/propagate_if_no_network()
 	if(powernet)
 		return
@@ -668,7 +668,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	. += "<span class='notice'>L1:[cable_layer & CABLE_LAYER_1 ? "Connect" : "Disconnect"].</span>"
 	. += "<span class='notice'>L2:[cable_layer & CABLE_LAYER_2 ? "Connect" : "Disconnect"].</span>"
 	. += "<span class='notice'>L3:[cable_layer & CABLE_LAYER_3 ? "Connect" : "Disconnect"].</span>"
-	. += "<span class='notice'>M:[machinery_layer & MACHINERY_LAYER_1 ? "Connect" : "Disconnect"].</span>"
+	. += "<span class='notice'>M: [machinery_layer & MACHINERY_LAYER_1 ? "Connect" : "Disconnect"].</span>"
 
 GLOBAL_LIST(hub_radial_layer_list)
 

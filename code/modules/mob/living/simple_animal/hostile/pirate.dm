@@ -36,7 +36,7 @@
 	icon_dead = "piratemelee_dead"
 	melee_damage_lower = 30
 	melee_damage_upper = 30
-	armour_penetration = 35
+	armor_penetration = 35
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'

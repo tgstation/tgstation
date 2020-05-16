@@ -1,6 +1,6 @@
 # In-code keypress handling system
 
-This whole system is heavily based off of forum_account's keyboard library.
+This whole system is heavily based off forum_account's keyboard library.
 Thanks to forum_account for saving the day, the library can be found
 [here](https://secure.byond.com/developer/Forum_account/Keyboard)!
 

@@ -105,13 +105,13 @@
 	if(SSnetworks.station_network)
 		SSnetworks.station_network.relays.Add(src)
 		NTNet = SSnetworks.station_network
-		SSnetworks.station_network.add_log("New quantum relay activated. Current amount of linked relays: [NTNet.relays.len]")
+		SSnetworks.station_network.add_log("New quantum relay activated. Current number of linked relays: [NTNet.relays.len]")
 	. = ..()
 
 /obj/machinery/ntnet_relay/Destroy()
 	if(SSnetworks.station_network)
 		SSnetworks.station_network.relays.Remove(src)
-		SSnetworks.station_network.add_log("Quantum relay connection severed. Current amount of linked relays: [NTNet.relays.len]")
+		SSnetworks.station_network.add_log("Quantum relay connection severed. Current number of linked relays: [NTNet.relays.len]")
 		NTNet = null
 
 	for(var/datum/computer_file/program/ntnet_dos/D in dos_sources)

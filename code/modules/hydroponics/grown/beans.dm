@@ -20,7 +20,7 @@
 /obj/item/reagent_containers/food/snacks/grown/soybeans
 	seed = /obj/item/seeds/soya
 	name = "soybeans"
-	desc = "It's pretty bland, but oh the possibilities..."
+	desc = "It's pretty bland, but oh, the possibilities..."
 	gender = PLURAL
 	icon_state = "soybeans"
 	filling_color = "#F0E68C"

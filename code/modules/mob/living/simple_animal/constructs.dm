@@ -306,7 +306,7 @@
 
 /mob/living/simple_animal/hostile/construct/artificer/Aggro()
 	..()
-	if(isconstruct(target)) //oh the target is a construct no need to flee
+	if(isconstruct(target)) //oh, the target is a construct, no need to flee
 		retreat_distance = null
 		minimum_distance = 1
 

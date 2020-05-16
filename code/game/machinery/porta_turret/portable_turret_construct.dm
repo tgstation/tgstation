@@ -1,12 +1,12 @@
 #define PTURRET_UNSECURED  0
 #define PTURRET_BOLTED  1
-#define PTURRET_START_INTERNAL_ARMOUR  2
-#define PTURRET_INTERNAL_ARMOUR_ON  3
+#define PTURRET_START_INTERNAL_ARMOR  2
+#define PTURRET_INTERNAL_ARMOR_ON  3
 #define PTURRET_GUN_EQUIPPED  4
 #define PTURRET_SENSORS_ON  5
 #define PTURRET_CLOSED  6
-#define PTURRET_START_EXTERNAL_ARMOUR  7
-#define PTURRET_EXTERNAL_ARMOUR_ON  8
+#define PTURRET_START_EXTERNAL_ARMOR  7
+#define PTURRET_EXTERNAL_ARMOR_ON  8
 
 /obj/machinery/porta_turret_construct
 	name = "turret frame"
@@ -42,7 +42,7 @@
 				var/obj/item/stack/sheet/metal/M = I
 				if(M.use(2))
 					to_chat(user, "<span class='notice'>You add some metal armor to the interior frame.</span>")
-					build_step = PTURRET_START_INTERNAL_ARMOUR
+					build_step = PTURRET_START_INTERNAL_ARMOR
 					icon_state = "turret_frame2"
 				else
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
@@ -56,11 +56,11 @@
 				return
 
 
-		if(PTURRET_START_INTERNAL_ARMOUR)
+		if(PTURRET_START_INTERNAL_ARMOR)
 			if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You bolt the metal armor into place.</span>")
-				build_step = PTURRET_INTERNAL_ARMOUR_ON
+				build_step = PTURRET_INTERNAL_ARMOR_ON
 				return
 
 			else if(I.tool_behaviour == TOOL_WELDER)
@@ -76,7 +76,7 @@
 					return
 
 
-		if(PTURRET_INTERNAL_ARMOUR_ON)
+		if(PTURRET_INTERNAL_ARMOR_ON)
 			if(istype(I, /obj/item/gun/energy)) //the gun installation part
 				var/obj/item/gun/energy/E = I
 				if(!user.transferItemToLoc(E, src))
@@ -89,7 +89,7 @@
 			else if(I.tool_behaviour == TOOL_WRENCH)
 				I.play_tool_sound(src, 100)
 				to_chat(user, "<span class='notice'>You remove the turret's metal armor bolts.</span>")
-				build_step = PTURRET_START_INTERNAL_ARMOUR
+				build_step = PTURRET_START_INTERNAL_ARMOR
 				return
 
 		if(PTURRET_GUN_EQUIPPED)
@@ -115,7 +115,7 @@
 				var/obj/item/stack/sheet/metal/M = I
 				if(M.use(2))
 					to_chat(user, "<span class='notice'>You add some metal armor to the exterior frame.</span>")
-					build_step = PTURRET_START_EXTERNAL_ARMOUR
+					build_step = PTURRET_START_EXTERNAL_ARMOR
 				else
 					to_chat(user, "<span class='warning'>You need two sheets of metal to continue construction!</span>")
 				return
@@ -126,14 +126,14 @@
 				to_chat(user, "<span class='notice'>You open the internal access hatch.</span>")
 				return
 
-		if(PTURRET_START_EXTERNAL_ARMOUR)
+		if(PTURRET_START_EXTERNAL_ARMOR)
 			if(I.tool_behaviour == TOOL_WELDER)
 				if(!I.tool_start_check(user, amount=5))
 					return
 
 				to_chat(user, "<span class='notice'>You begin to weld the turret's armor down...</span>")
 				if(I.use_tool(src, user, 30, volume=50, amount=5))
-					build_step = PTURRET_EXTERNAL_ARMOUR_ON
+					build_step = PTURRET_EXTERNAL_ARMOR_ON
 					to_chat(user, "<span class='notice'>You weld the turret's armor down.</span>")
 
 					//The final step: create a full turret
@@ -175,7 +175,7 @@
 		return
 	switch(build_step)
 		if(PTURRET_GUN_EQUIPPED)
-			build_step = PTURRET_INTERNAL_ARMOUR_ON
+			build_step = PTURRET_INTERNAL_ARMOR_ON
 
 			installed_gun.forceMove(loc)
 			to_chat(user, "<span class='notice'>You remove [installed_gun] from the turret frame.</span>")

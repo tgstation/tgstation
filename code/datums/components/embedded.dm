@@ -177,8 +177,8 @@
 		victim.visible_message("<span class='danger'>[weapon] falls out of [victim.name]'s [limb.name]!</span>", ignored_mobs=victim)
 		to_chat(victim, "<span class='userdanger'>[weapon] falls out of your [limb.name]!</span>")
 	else
-		victim.visible_message("<span class='danger'>[weapon] falls off of [victim.name]'s [limb.name]!</span>", ignored_mobs=victim)
-		to_chat(victim, "<span class='userdanger'>[weapon] falls off of your [limb.name]!</span>")
+		victim.visible_message("<span class='danger'>[weapon] falls off [victim.name]'s [limb.name]!</span>", ignored_mobs=victim)
+		to_chat(victim, "<span class='userdanger'>[weapon] falls off your [limb.name]!</span>")
 
 	safeRemoveCarbon()
 
@@ -203,7 +203,7 @@
 			victim.emote("scream")
 			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] out of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
 		else
-			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] off of [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
+			victim.visible_message("<span class='notice'>[victim] successfully rips [weapon] off [victim.p_their()] [limb.name]!</span>", "<span class='notice'>You successfully remove [weapon] from your [limb.name].</span>")
 
 		safeRemoveCarbon(TRUE)
 

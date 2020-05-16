@@ -431,7 +431,7 @@
 		if(istype(traits, /datum/plant_gene/trait/plant_type))
 			continue
 		all_traits += " [traits.get_name()]"
-	text += "- Plant Traits:[all_traits]\n"
+	text += "- Plant Traits: [all_traits]\n"
 	text += "*---------*"
 	return text
 

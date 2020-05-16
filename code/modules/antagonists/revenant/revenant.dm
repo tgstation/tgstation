@@ -1,4 +1,4 @@
-//Revenants: based off of wraiths from Goon
+//Revenants: based off wraiths from Goon
 //"Ghosts" that are invisible and move like ghosts, cannot take damage while invisible
 //Don't hear deadchat and are NOT normal ghosts
 //Admin-spawn or random event

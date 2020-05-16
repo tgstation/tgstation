@@ -96,8 +96,8 @@
 	var/dat =""
 	dat += "<b>[initial(S.name)]</b>"
 	if(S.charge_type == "recharge")
-		dat += " Cooldown:[S.charge_max/10]"
-	dat += " Cost:[cost]<br>"
+		dat += " Cooldown: [S.charge_max/10]"
+	dat += " Cost: [cost]<br>"
 	dat += "<i>[S.desc][desc]</i><br>"
 	dat += "[S.clothes_req?"Requires wizard garb.":"Can be cast without wizard garb."]<br>"
 	return dat
@@ -285,7 +285,7 @@
 /datum/spellbook_entry/item/GetInfo()
 	var/dat =""
 	dat += "<b>[name]</b>"
-	dat += " Cost:[cost]<br>"
+	dat += " Cost: [cost]<br>"
 	dat += "<i>[desc]</i><br>"
 	if(surplus>=0)
 		dat += "[surplus] left.<br>"
@@ -425,8 +425,8 @@
 	item_path = /obj/item/singularityhammer
 
 /datum/spellbook_entry/item/battlemage
-	name = "Battlemage Armour"
-	desc = "An ensorceled suit of armour, protected by a powerful shield. The shield can completely negate sixteen attacks before being permanently depleted."
+	name = "Battlemage Armor"
+	desc = "An ensorceled suit of armor, protected by a powerful shield. The shield can completely negate sixteen attacks before being permanently depleted."
 	item_path = /obj/item/clothing/suit/space/hardsuit/shielded/wizard
 	limit = 1
 	category = "Defensive"
@@ -438,9 +438,9 @@
 		new /obj/item/clothing/gloves/combat/wizard(get_turf(user))//To complete the outfit
 
 /datum/spellbook_entry/item/battlemage_charge
-	name = "Battlemage Armour Charges"
-	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armour."
-	item_path = /obj/item/wizard_armour_charge
+	name = "Battlemage Armor Charges"
+	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armor."
+	item_path = /obj/item/wizard_armor_charge
 	category = "Defensive"
 	cost = 1
 
@@ -465,7 +465,7 @@
 	var/dat =""
 	dat += "<b>[name]</b>"
 	if(cost>0)
-		dat += " Cost:[cost]<br>"
+		dat += " Cost: [cost]<br>"
 	else
 		dat += " No Cost<br>"
 	dat += "<i>[desc]</i><br>"
@@ -704,7 +704,7 @@
 		cat_dat[category] = "<hr>"
 		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=[REF(src)];page=[category]'>[category]</a></li>"
 
-	dat += "<li><a><b>Points remaining : [uses]</b></a></li>"
+	dat += "<li><a><b>Points remaining: [uses]</b></a></li>"
 	dat += "</ul>"
 
 	var/datum/spellbook_entry/E

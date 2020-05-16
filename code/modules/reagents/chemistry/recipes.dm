@@ -66,7 +66,7 @@
   * * amount_to_spawn - how much /mob to spawn
   * * reaction_name - what is the name of this reaction. be creative, the world is your oyster after all!
   * * mob_class - determines if the mob will be friendly, neutral or hostile
-  * * mob_faction - used in determining targets, mobs from the same faction wont harm eachother.
+  * * mob_faction - used in determining targets, mobs from the same faction won't harm eachother.
   * * random - creates random mobs. self explanatory.
   */
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
@@ -127,7 +127,7 @@
 				X.throw_at(T, moving_power, 1)
 		else
 			if(setting_type)
-				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So this is fine.
+				if(step_away(X, T) && moving_power > 1) //Can happen twice at most. So, this is fine.
 					addtimer(CALLBACK(GLOBAL_PROC, .proc/_step_away, X, T), 2)
 			else
 				if(step_towards(X, T) && moving_power > 1)

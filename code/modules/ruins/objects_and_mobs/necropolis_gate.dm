@@ -174,7 +174,7 @@ GLOBAL_DATUM(necropolis_gate, /obj/structure/necropolis_gate/legion_gate)
 		var/turf/T = get_turf(src)
 		visible_message("<span class='userdanger'>Something horrible emerges from the Necropolis!</span>")
 		if(legion_damaged)
-			message_admins("Legion took damage while the necropolis gate was closed, and has released itself!")
+			message_admins("Legion took damage while the necropolis gate was closed and has released itself!")
 			log_game("Legion took damage while the necropolis gate was closed and released itself.")
 		else
 			message_admins("[user ? ADMIN_LOOKUPFLW(user):"Unknown"] has released Legion!")

@@ -152,9 +152,9 @@
 			continue
 		reagent_string += " ([exploded_beaker.name] [beaker_number++] : " + pretty_string_from_reagent_list(exploded_beaker.reagents.reagent_list) + ");"
 	if(landminemode)
-		log_bomber(user, "activated a proxy", src, "containing:[reagent_string]")
+		log_bomber(user, "activated a proxy", src, "containing: [reagent_string]")
 	else
-		log_bomber(user, "primed a", src, "containing:[reagent_string]")
+		log_bomber(user, "primed a", src, "containing: [reagent_string]")
 
 /obj/item/grenade/chem_grenade/preprime(mob/user, delayoverride, msg = TRUE, volume = 60)
 	var/turf/T = get_turf(src)
@@ -439,7 +439,7 @@
 
 /obj/item/grenade/chem_grenade/facid
 	name = "acid grenade"
-	desc = "Used for melting armoured opponents."
+	desc = "Used for melting armored opponents."
 	stage = GRENADE_READY
 
 /obj/item/grenade/chem_grenade/facid/Initialize()

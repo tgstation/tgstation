@@ -25,7 +25,7 @@
 
 	switch(times_spoken_to)
 		if(0)
-			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing, or make a bug report."))
+			SpeakPeace(list("Welcome to the error handling room.","Something's goofed up bad to send you here.","You should probably tell an admin what you were doing or make a bug report."))
 			for(var/obj/structure/signpost/salvation/S in orange(7))
 				S.invisibility = 0
 				var/datum/effect_system/smoke_spread/smoke = new
@@ -37,7 +37,7 @@
 		if(2)
 			SpeakPeace(list("Curious about what happened?","Somehow your corporeal form was sent to nullspace with you still in it.","Lucky for you this room exists to save you from that horrible fate."))
 		if(3)
-			SpeakPeace(list("So yeah, you're welcome.","Anyway don't you have things to do?","There's no real point to sticking around here forever."))
+			SpeakPeace(list("So yeah, you're welcome.","Anyway, don't you have things to do?","There's no real point to sticking around here forever."))
 		if(4)
 			SpeakPeace(list("I'm flattered you care this much about this room.","However it's not proper to just stand in here all shift and see what I'll say.","I'm going to work hard to be more boring so you'll leave."))
 		if(5 to 8)
@@ -53,7 +53,7 @@
 			if(times_spoken_to % 10 == 0)
 				SpeakPeace(list("That's [times_spoken_to] times you've spoken to me by the way."))
 		if(15)
-			SpeakPeace(list("See? Isn't this fun?","Now you can mash this for hours without getting bored.","Anyway I'll leave you it."))
+			SpeakPeace(list("See? Isn't this fun?","Now you can mash this for hours without getting bored.","Anyway, I'll leave you it."))
 		if(51)
 			SpeakPeace(list("The fun never ends around here.", "The Poly text files stores up to 500 statements.", "But you've probably heard a few repeats by now."))
 		if(100)

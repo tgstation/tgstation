@@ -126,7 +126,7 @@
 /// This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
 #define HAZARD_LOW_PRESSURE					20
 
-/// This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
+/// This is used in handle_temperature_damage() for humans and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
 #define TEMPERATURE_DAMAGE_COEFFICIENT		1.5
 
 /// The natural temperature for a body

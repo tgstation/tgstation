@@ -57,8 +57,8 @@
 	for(var/datum/mind/M in members)
 		to_chat(M.current,message, confidential = TRUE)
 
-	message_admins("[key_name_admin(usr)] messaged [name] team with : [message]")
-	log_admin("Team Message: [key_name(usr)] -> [name] team : [message]")
+	message_admins("[key_name_admin(usr)] messaged [name] team with: [message]")
+	log_admin("Team Message: [key_name(usr)] -> [name] team: [message]")
 
 /datum/team/proc/admin_add_objective(mob/user)
 	//any antag with get_team == src => add objective to that antag

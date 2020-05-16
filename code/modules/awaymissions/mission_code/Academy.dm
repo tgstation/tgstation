@@ -235,7 +235,7 @@
 			user.death()
 		if(3)
 			//Swarm of creatures
-			T.visible_message("<span class='userdanger'>A swarm of creatures surround [user]!</span>")
+			T.visible_message("<span class='userdanger'>A swarm of creatures surrounds [user]!</span>")
 			for(var/direction in GLOB.alldirs)
 				new /mob/living/simple_animal/hostile/netherworld(get_step(get_turf(user),direction))
 		if(4)

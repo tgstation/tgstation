@@ -145,7 +145,7 @@
 		if(0 to SKILL_EXP_NOVICE)
 			known_skills[S] = SKILL_LEVEL_NONE
 	if(isnull(old_level) || known_skills[S] == old_level)
-		return //same level or we just started earning xp towards the first level.
+		return //same level or we just started earning XP towards the first level.
 	if(silent)
 		return
 	if(known_skills[S] >= old_level)

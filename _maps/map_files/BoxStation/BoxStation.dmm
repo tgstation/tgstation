@@ -1066,11 +1066,11 @@
 /area/crew_quarters/heads/hos)
 "acT" = (
 /obj/machinery/door/window/eastleft{
-	name = "armoury desk";
+	name = "armory desk";
 	req_access_txt = "1"
 	},
 /obj/machinery/door/window/westleft{
-	name = "armoury desk";
+	name = "armory desk";
 	req_access_txt = "3"
 	},
 /obj/structure/table/reinforced,
@@ -1258,7 +1258,7 @@
 "adl" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "armory";
-	name = "Armoury Shutter"
+	name = "Armory Shutter"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,

@@ -68,8 +68,8 @@
 	var/melee_damage_upper = 0
 	///how much damage this simple animal does to objects, if any.
 	var/obj_damage = 0
-	///How much armour they ignore, as a flat reduction from the targets armour value.
-	var/armour_penetration = 0
+	///How much armor they ignore, as a flat reduction from the targets armor value.
+	var/armor_penetration = 0
 	///Damage type of a simple mob's melee attack, should it do damage.
 	var/melee_damage_type = BRUTE
 	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.

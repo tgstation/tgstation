@@ -35,7 +35,7 @@
 	name = "the head of security's personal laser gun."
 	targetitem = /obj/item/gun/energy/e_gun/hos
 	difficulty = 10
-	excludefromjob = list("Head Of Security")
+	excludefromjob = list("Head of Security")
 
 /datum/objective_item/steal/handtele
 	name = "a hand teleporter."

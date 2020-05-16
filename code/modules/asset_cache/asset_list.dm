@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	for (var/size_id in sizes)
 		var/size = sizes[size_id]
 		var/icon/tiny = size[SPRSZ_ICON]
-		out += ".[name][size_id]{display:inline-block;width:[tiny.Width()]px;height:[tiny.Height()]px;background:url('[name]_[size_id].png') no-repeat;}"
+		out += ".[name][size_id]{display:inline-block;width: [tiny.Width()]px;height: [tiny.Height()]px;background:url('[name]_[size_id].png') no-repeat;}"
 
 	for (var/sprite_id in sprites)
 		var/sprite = sprites[sprite_id]

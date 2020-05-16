@@ -18,7 +18,7 @@
 		if(iscarbon(L))
 			var/mob/living/carbon/C = L
 			C.unequip_everything()
-			C.visible_message("<span class='warning'>[C]'s belongings fall off of [C.p_them()] as they shrink down!</span>",
+			C.visible_message("<span class='warning'>[C]'s belongings fall off [C.p_them()] as they shrink down!</span>",
 			"<span class='userdanger'>Your belongings fall away as everything grows bigger!</span>")
 			if(ishuman(C))
 				var/mob/living/carbon/human/H = C

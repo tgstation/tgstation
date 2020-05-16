@@ -281,7 +281,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throwforce = 20 //20 + 2 (WEIGHT_CLASS_SMALL) * 4 (EMBEDDED_IMPACT_PAIN_MULTIPLIER) = 28 damage on hit due to guaranteed embedding
 	throw_speed = 4
 	embedding = list("pain_mult" = 4, "embed_chance" = 100, "fall_chance" = 0, "embed_chance_turf_mod" = 15)
-	armour_penetration = 40
+	armor_penetration = 40
 
 	w_class = WEIGHT_CLASS_SMALL
 	sharpness = IS_SHARP
@@ -401,7 +401,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	throw_speed = 2
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	armour_penetration = 100
+	armor_penetration = 100
 	attack_verb = list("bludgeoned", "whacked", "disciplined")
 	resistance_flags = FLAMMABLE
 
@@ -832,7 +832,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "vibro sword"
 	desc = "A potent weapon capable of cutting through nearly anything. Wielding it in two hands will allow you to deflect gunfire."
-	armour_penetration = 100
+	armor_penetration = 100
 	block_chance = 40
 	force = 20
 	throwforce = 20

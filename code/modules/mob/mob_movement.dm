@@ -271,7 +271,7 @@
 	if(backup)
 		if(istype(backup) && movement_dir && !backup.anchored)
 			if(backup.newtonian_move(turn(movement_dir, 180))) //You're pushing off something movable, so it moves
-				to_chat(src, "<span class='info'>You push off of [backup] to propel yourself.</span>")
+				to_chat(src, "<span class='info'>You push off [backup] to propel yourself.</span>")
 		return TRUE
 	return FALSE
 

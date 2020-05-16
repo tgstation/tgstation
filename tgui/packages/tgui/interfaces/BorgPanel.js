@@ -124,7 +124,7 @@ export const BorgPanel = (props, context) => {
           buttons={(
             <Button
               icon={borg.lawupdate ? 'check-square-o' : 'square-o'}
-              content="Lawsync"
+              content="Law sync"
               selected={borg.lawupdate}
               onClick={() => act('toggle_lawupdate')} />
           )}>

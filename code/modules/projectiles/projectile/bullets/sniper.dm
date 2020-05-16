@@ -6,7 +6,7 @@
 	damage = 70
 	paralyze = 100
 	dismemberment = 50
-	armour_penetration = 50
+	armor_penetration = 50
 	var/breakthings = TRUE
 
 /obj/projectile/bullet/p50/on_hit(atom/target, blocked = 0)
@@ -17,7 +17,7 @@
 
 /obj/projectile/bullet/p50/soporific
 	name =".50 soporific bullet"
-	armour_penetration = 0
+	armor_penetration = 0
 	damage = 0
 	dismemberment = 0
 	paralyze = 0

@@ -492,7 +492,7 @@
 		return
 	var/list/votelist = splittext(href_list["IRVdata"], ",")
 	if(!length(votelist))
-		to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
+		to_chat(src, "<span class='danger'>No ordering data found. Please, try again or contact an administrator.</span>")
 	var/sql_votes = list()
 	var/sql_ip = sanitizeSQL(client.address)
 	var/sql_ckey = sanitizeSQL(ckey)

@@ -95,7 +95,7 @@
 /obj/item/clothing/gloves/color/black/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WIRECUTTER)
 		if(can_be_cut && icon_state == initial(icon_state))//only if not dyed
-			to_chat(user, "<span class='notice'>You snip the fingertips off of [src].</span>")
+			to_chat(user, "<span class='notice'>You snip the fingertips off [src].</span>")
 			I.play_tool_sound(src)
 			new /obj/item/clothing/gloves/fingerless(drop_location())
 			qdel(src)

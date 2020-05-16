@@ -157,7 +157,7 @@
 		to_chat(user,"<span class='notice'>There's nothing to withdraw.</span>")
 
 /obj/machinery/shuttle_scrambler/proc/send_notification()
-	priority_announce("Data theft signal detected, source registered on local gps units.")
+	priority_announce("Data theft signal detected, source registered on local GPS units.")
 
 /obj/machinery/shuttle_scrambler/proc/toggle_off(mob/user)
 	SSshuttle.clearTradeBlockade(src)

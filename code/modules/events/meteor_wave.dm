@@ -43,7 +43,7 @@
 		if("halloween")
 			wave_type = GLOB.meteorsSPOOKY
 		else
-			WARNING("Wave name of [wave_name] not recognised.")
+			WARNING("Wave name of [wave_name] not recognized.")
 			kill()
 
 /datum/round_event/meteor_wave/announce(fake)

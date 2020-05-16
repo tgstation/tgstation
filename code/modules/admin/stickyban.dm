@@ -300,8 +300,8 @@
 
 			world.SetConfig("ban",ckey,list2stickyban(ban))
 
-			log_admin_private("[key_name(usr)] has taken [ckey]'s sticky ban off of timeout.")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has taken [ckey]'s sticky ban off of timeout.</span>")
+			log_admin_private("[key_name(usr)] has taken [ckey]'s sticky ban off timeout.")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] has taken [ckey]'s sticky ban off timeout.</span>")
 
 
 		if ("revert")

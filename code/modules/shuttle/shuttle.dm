@@ -207,7 +207,7 @@
 		var/sid = SSmapping.config.shuttles[json_key]
 		roundstart_template = SSmapping.shuttle_templates[sid]
 		if(!roundstart_template)
-			CRASH("json_key:[json_key] value \[[sid]\] resulted in a null shuttle template for [src]")
+			CRASH("json_key: [json_key] value \[[sid]\] resulted in a null shuttle template for [src]")
 	else if(roundstart_template) // passed a PATH
 		var/sid = "[initial(roundstart_template.port_id)]_[initial(roundstart_template.suffix)]"
 
@@ -486,7 +486,7 @@
 		oldT.change_area(old_area, underlying_area)
 		oldT.empty(FALSE)
 
-		// Here we locate the bottomost shuttle boundary and remove all turfs above it
+		// Here we locate the bottommost shuttle boundary and remove all turfs above it
 		var/list/baseturf_cache = oldT.baseturfs
 		for(var/k in 1 to length(baseturf_cache))
 			if(ispath(baseturf_cache[k], /turf/baseturf_skipover/shuttle))

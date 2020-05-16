@@ -1,13 +1,13 @@
-/obj/item/reactive_armour_shell
-	name = "reactive armour shell"
-	desc = "An experimental suit of armour, awaiting installation of an anomaly core."
+/obj/item/reactive_armor_shell
+	name = "reactive armor shell"
+	desc = "An experimental suit of armor, awaiting installation of an anomaly core."
 	icon_state = "reactiveoff"
 	icon = 'icons/obj/clothing/suits.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 
-/obj/item/reactive_armour_shell/attackby(obj/item/I, mob/user, params)
+/obj/item/reactive_armor_shell/attackby(obj/item/I, mob/user, params)
 	..()
-	var/static/list/anomaly_armour_types = list(
+	var/static/list/anomaly_armor_types = list(
 		/obj/effect/anomaly/grav	                = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux 	           		= /obj/item/clothing/suit/armor/reactive/tesla,
 		/obj/effect/anomaly/bluespace 	            = /obj/item/clothing/suit/armor/reactive/teleport
@@ -15,11 +15,11 @@
 
 	if(istype(I, /obj/item/assembly/signaler/anomaly))
 		var/obj/item/assembly/signaler/anomaly/A = I
-		var/armour_path = anomaly_armour_types[A.anomaly_type]
-		if(!armour_path)
-			armour_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armour coded
-		to_chat(user, "<span class='notice'>You insert [A] into the chest plate, and the armour gently hums to life.</span>")
-		new armour_path(get_turf(src))
+		var/armor_path = anomaly_armor_types[A.anomaly_type]
+		if(!armor_path)
+			armor_path = /obj/item/clothing/suit/armor/reactive/stealth //Lets not cheat the player if an anomaly type doesnt have its own armor coded
+		to_chat(user, "<span class='notice'>You insert [A] into the chest plate, and the armor gently hums to life.</span>")
+		new armor_path(get_turf(src))
 		qdel(src)
 		qdel(A)
 

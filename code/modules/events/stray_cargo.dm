@@ -27,7 +27,7 @@
 		CRASH("No valid areas for cargo pod found.")
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
-		CRASH("Stray Cargo Pod : No valid turfs found for [impact_area] - [impact_area.type]")
+		CRASH("Stray Cargo Pod: No valid turfs found for [impact_area] - [impact_area.type]")
 
 	if(!stray_spawnable_supply_packs.len)
 		stray_spawnable_supply_packs = SSshuttle.supply_packs.Copy()

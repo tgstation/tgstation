@@ -171,7 +171,7 @@ As a Shaft Miner, the northern side of Lavaland has a lot more rare minerals tha
 As a Shaft Miner, every monster on Lavaland has a pattern you can exploit to minimize damage from the encounters.
 As a Shaft Miner, you can harvest goliath plates from goliaths and upgrade your explorer's suit, mining hardsuits as well as Firefighter APLUs with them, greatly reducing incoming melee damage.
 As a Shaft Miner, always have a GPS on you, so a fellow miner or cyborg can come to save you if you die.
-As a Shaft Miner, you can craft a variety of equipment from the local fauna. Bone axes, lava boats and ash drake armour are just a few of them!
+As a Shaft Miner, you can craft a variety of equipment from the local fauna. Bone axes, lava boats and ash drake armor are just a few of them!
 As a Traitor, the cryptographic sequencer (emag) can not only open doors, but also lockers, crates, APCs and more. It can hack cyborgs, and even cause bots to go berserk. Use it on the right machines, and you can even order more traitor gear or contact the Syndicate. Experiment!
 As a Traitor, subverting the AI to serve you can make it an extremely powerful ally. However, be careful of the wording in the laws you give it, as it may use your poorly written laws against you!
 As a Traitor, the Captain and the Head of Security are two of the most difficult to kill targets on the station. If either one is your target, plan carefully.

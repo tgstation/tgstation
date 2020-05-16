@@ -1,6 +1,6 @@
 /*
 Immovable rod random event.
-The rod will spawn at some location outside the station, and travel in a straight line to the opposite side of the station
+The rod will spawn at some location outside the station and travel in a straight line to the opposite side of the station
 Everything solid in the way will be ex_act()'d
 In my current plan for it, 'solid' will be defined as anything with density == 1
 

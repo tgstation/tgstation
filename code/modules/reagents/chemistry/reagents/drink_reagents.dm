@@ -219,9 +219,9 @@
 	name = "Soy Milk"
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
-	taste_description = "soy milk"
+	taste_description = "soymilk"
 	glass_icon_state = "glass_white"
-	glass_name = "glass of soy milk"
+	glass_name = "glass of soymilk"
 	glass_desc = "White and nutritious soy goodness!"
 
 /datum/reagent/consumable/soymilk/on_mob_life(mob/living/carbon/M)

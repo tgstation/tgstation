@@ -53,7 +53,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/purple/do_effect(mob/user)
 	new /obj/item/slimecrossbeaker/omnizine(get_turf(user))
-	user.visible_message("<span class='notice'>[src] sparks, and floods with a regenerative solution!</span>")
+	user.visible_message("<span class='notice'>[src] sparks and floods with a regenerative solution!</span>")
 	..()
 
 /obj/item/slimecross/charged/blue
@@ -81,7 +81,7 @@ Charged extracts:
 
 /obj/item/slimecross/charged/yellow/do_effect(mob/user)
 	new /obj/item/stock_parts/cell/high/slime/hypercharged(get_turf(user))
-	user.visible_message("<span class='notice'>[src] sparks violently, and swells with electric power!</span>")
+	user.visible_message("<span class='notice'>[src] sparks violently and swells with electric power!</span>")
 	..()
 
 /obj/item/slimecross/charged/darkpurple

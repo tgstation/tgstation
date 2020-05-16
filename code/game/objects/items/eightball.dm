@@ -1,5 +1,5 @@
 /obj/item/toy/eightball
-	name = "magic eightball"
+	name = "magic eight-ball"
 	desc = "A black ball with a stenciled number eight in white on the side. It seems full of dark liquid.\nThe instructions state that you should ask your question aloud, and then shake."
 
 	icon = 'icons/obj/toy.dmi'
@@ -77,10 +77,10 @@
 /obj/item/toy/eightball/proc/clear_cooldown()
 	on_cooldown = FALSE
 
-// A broken magic eightball, it only says "YOU SUCK" over and over again.
+// A broken magic eight-ball, it only says "YOU SUCK" over and over again.
 
 /obj/item/toy/eightball/broken
-	name = "broken magic eightball"
+	name = "broken magic eight-ball"
 	desc = "A black ball with a stenciled number eight in white on the side. It is cracked and seems empty."
 	var/fixed_answer
 
@@ -91,7 +91,7 @@
 /obj/item/toy/eightball/broken/get_answer()
 	return fixed_answer
 
-// Haunted eightball is identical in description and function to toy,
+// Haunted eight-ball is identical in description and function to toy,
 // except it actually ASKS THE DEAD (wooooo)
 
 /obj/item/toy/eightball/haunted
@@ -158,10 +158,10 @@
 	last_message = raw_message
 
 /obj/item/toy/eightball/haunted/start_shaking(mob/user)
-	// notify ghosts that someone's shaking a haunted eightball
+	// notify ghosts that someone's shaking a haunted eight-ball
 	// and inform them of the message, (hopefully a yes/no question)
 	selected_message = last_message
-	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source=src, enter_link="<a href=?src=[REF(src)];interact=1>(Click to help)</a>", action=NOTIFY_ATTACK, header = "Magic eightball")
+	notify_ghosts("[user] is shaking [src], hoping to get an answer to \"[selected_message]\"", source=src, enter_link="<a href=?src=[REF(src)];interact=1>(Click to help)</a>", action=NOTIFY_ATTACK, header = "Magic eight-ball")
 
 /obj/item/toy/eightball/haunted/Topic(href, href_list)
 	if(href_list["interact"])

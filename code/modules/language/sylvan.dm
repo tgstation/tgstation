@@ -1,4 +1,4 @@
-// The language of the podpeople. Yes, it's a shameless ripoff of elvish.
+// The language of the podpeople. Yes, it's a shameless ripoff elvish.
 /datum/language/sylvan
 	name = "Sylvan"
 	desc = "A complicated, ancient language spoken by sentient plants."

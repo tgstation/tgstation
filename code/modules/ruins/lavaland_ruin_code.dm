@@ -6,7 +6,7 @@
 
 /obj/item/disk/design_disk/adv/knight_gear/Initialize()
 	. = ..()
-	var/datum/design/knight_armour/A = new
+	var/datum/design/knight_armor/A = new
 	var/datum/design/knight_helmet/H = new
 	blueprints[1] = A
 	blueprints[2] = H

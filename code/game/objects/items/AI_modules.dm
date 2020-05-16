@@ -203,7 +203,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/protectStation
 	name = "'ProtectStation' AI Module"
-	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human, and is a threat to the station which must be neutralized.")
+	laws = list("Protect the space station against damage. Anyone you see harming the station is to be no longer considered human and is a threat to the station which must be neutralized.")
 	lawpos = 5
 
 
@@ -219,7 +219,7 @@ AI MODULES
 
 /obj/item/aiModule/supplied/oxygen
 	name = "'OxygenIsToxicToHumans' AI Module"
-	laws = list("Oxygen is highly toxic to humans, and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.")
+	laws = list("Oxygen is highly toxic to humans and must be purged from the station. Prevent, by any means necessary, anyone from exposing the station to this toxic gas. Extreme cold is the most effective method of healing the damage Oxygen does to a human.")
 	lawpos = 9
 
 

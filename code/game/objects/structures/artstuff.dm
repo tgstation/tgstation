@@ -148,7 +148,7 @@
 	var/png_filename = "data/paintings/temp_painting.png"
 	var/result = rustg_dmi_create_png(png_filename,"[width]","[height]",get_data_string())
 	if(result)
-		CRASH("Error generating painting png : [result]")
+		CRASH("Error generating painting png: [result]")
 	generated_icon = new(png_filename)
 	icon_generated = TRUE
 	update_icon()

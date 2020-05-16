@@ -987,7 +987,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 				break
 
 	if(!department_minds.len)
-		log_game("[type] has failed to find department staff, and has removed itself. the round will continue normally")
+		log_game("[type] has failed to find department staff and has removed itself. the round will continue normally")
 		return FALSE
 	return TRUE
 
@@ -1015,7 +1015,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 			break
 
 	if(!department_minds.len)
-		log_game("[type] has failed to find department heads, and has removed itself. the round will continue normally")
+		log_game("[type] has failed to find department heads and has removed itself. the round will continue normally")
 		return FALSE
 	return TRUE
 

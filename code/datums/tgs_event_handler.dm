@@ -10,7 +10,7 @@
 		if(TGS_EVENT_INSTANCE_RENAMED)
 			message_admins("TGS: Instance renamed to from [world.TgsInstanceName()] to [args[2]]")
 		if(TGS_EVENT_COMPILE_START)
-			message_admins("TGS: Deployment started, new game version incoming...")
+			message_admins("TGS: Deployment started; new game version incoming...")
 		if(TGS_EVENT_COMPILE_CANCELLED)
 			message_admins("TGS: Deployment cancelled!")
 		if(TGS_EVENT_COMPILE_FAILURE)

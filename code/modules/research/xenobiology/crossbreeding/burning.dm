@@ -84,7 +84,7 @@ Burning extracts:
 	for(var/turf/closed/wall/W in range(1,get_turf(user)))
 		W.dismantle_wall(1)
 		playsound(W, 'sound/effects/break_stone.ogg', 50, TRUE)
-	user.visible_message("<span class='danger'>[src] pulses violently, and shatters the walls around it!</span>")
+	user.visible_message("<span class='danger'>[src] pulses violently and shatters the walls around it!</span>")
 	..()
 
 /obj/item/slimecross/burning/yellow
@@ -151,7 +151,7 @@ Burning extracts:
 	effect_desc = "Teleports anyone directly next to you."
 
 /obj/item/slimecross/burning/bluespace/do_effect(mob/user)
-	user.visible_message("<span class='danger'>[src] sparks, and lets off a shockwave of bluespace energy!</span>")
+	user.visible_message("<span class='danger'>[src] sparks and lets off a shockwave of bluespace energy!</span>")
 	for(var/mob/living/L in range(1, get_turf(user)))
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
@@ -245,7 +245,7 @@ Burning extracts:
 	effect_desc = "Creates a gank squad of monsters that are friendly to the user."
 
 /obj/item/slimecross/burning/gold/do_effect(mob/user)
-	user.visible_message("<span class='danger'>[src] shudders violently, and summons an army for [user]!</span>")
+	user.visible_message("<span class='danger'>[src] shudders violently and summons an army for [user]!</span>")
 	for(var/i in 1 to 3) //Less than gold normally does, since it's safer and faster.
 		var/mob/living/simple_animal/S = create_random_mob(get_turf(user), HOSTILE_SPAWN)
 		S.faction |= "[REF(user)]"

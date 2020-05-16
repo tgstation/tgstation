@@ -112,7 +112,7 @@
 	attack_verb_simple = "lash out at"
 	speak_emote = list("echoes")
 	attack_sound = 'sound/weapons/pierce.ogg'
-	throw_message = "bounces harmlessly off of"
+	throw_message = "bounces harmlessly off"
 	crusher_loot = /obj/item/crusher_trophy/legion_skull
 	loot = list(/obj/item/organ/regenerative_core/legion)
 	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion

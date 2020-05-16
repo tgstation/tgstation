@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/dangerous/bananashield
 	name = "Bananium Energy Shield"
 	desc = "A clown's most powerful defensive weapon, this personal shield provides near immunity to ranged energy attacks \
-		by bouncing them back at the ones who fired them. It can also be thrown to bounce off of people, slipping them, \
+		by bouncing them back at the ones who fired them. It can also be thrown to bounce off people, slipping them, \
 		and returning to you even if you miss. WARNING: DO NOT ATTEMPT TO STAND ON SHIELD WHILE DEPLOYED, EVEN IF WEARING ANTI-SLIP SHOES."
 	item = /obj/item/shield/energy/bananium
 	cost = 16
@@ -459,7 +459,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
-	desc = "A fully-loaded Aussec Armoury belt-fed machine gun. \
+	desc = "A fully-loaded Aussec Armory belt-fed machine gun. \
 			This deadly weapon has a massive 50-round magazine of devastating 7.12x82mm ammunition."
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
@@ -676,7 +676,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolap
-	name = "9mm Armour Piercing Magazine"
+	name = "9mm Armor Piercing Magazine"
 	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are less effective at injuring the target but penetrate protective gear."
 	item = /obj/item/ammo_box/magazine/m9mm/ap
@@ -686,7 +686,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/pistolhp
 	name = "9mm Hollow Point Magazine"
 	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
-			These rounds are more damaging but ineffective against armour."
+			These rounds are more damaging but ineffective against armor."
 	item = /obj/item/ammo_box/magazine/m9mm/hp
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
@@ -814,7 +814,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
 	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
-			These bullets pack less punch than 7.12x82mm rounds, but they still offer more power than .45 ammo due to their innate armour penetration."
+			These bullets pack less punch than 7.12x82mm rounds, but they still offer more power than .45 ammo due to their innate armor penetration."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
@@ -1426,7 +1426,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 		return
 	U.failsafe_code = U.generate_code()
 	var/code = "[islist(U.failsafe_code) ? english_list(U.failsafe_code) : U.failsafe_code]"
-	to_chat(user, "<span class='warning'>The new failsafe code for this uplink is now : [code].</span>")
+	to_chat(user, "<span class='warning'>The new failsafe code for this uplink is now: [code].</span>")
 	if(user.mind)
 		user.mind.store_memory("Failsafe code for [U.parent] : [code]")
 	return U.parent //For log icon
@@ -1800,7 +1800,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/role_restricted/haunted_magic_eightball
 	name = "Haunted Magic Eightball"
-	desc = "Most magic eightballs are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. \
+	desc = "Most magic eight-balls are toys with dice inside. Although identical in appearance to the harmless toys, this occult device reaches into the spirit world to find its answers. \
 			Be warned, that spirits are often capricious or just little assholes. To use, simply speak your question aloud, then begin shaking."
 	item = /obj/item/toy/eightball/haunted
 	cost = 2

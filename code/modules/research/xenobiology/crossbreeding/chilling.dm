@@ -42,7 +42,7 @@ Chilling extracts:
 	effect_desc = "Creates a ring of fire one tile away from the user."
 
 /obj/item/slimecross/chilling/orange/do_effect(mob/user)
-	user.visible_message("<span class='danger'>[src] shatters, and lets out a jet of heat!</span>")
+	user.visible_message("<span class='danger'>[src] shatters and lets out a jet of heat!</span>")
 	for(var/turf/T in orange(get_turf(user),2))
 		if(get_dist(get_turf(user), T) > 1)
 			new /obj/effect/hotspot(T)
@@ -88,7 +88,7 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/yellow/do_effect(mob/user)
 	var/area/A = get_area(get_turf(user))
-	user.visible_message("<span class='notice'>[src] shatters, and a the air suddenly feels charged for a moment.</span>")
+	user.visible_message("<span class='notice'>[src] shatters, and the air suddenly feels charged for a moment.</span>")
 	for(var/obj/machinery/power/apc/C in A)
 		if(C.cell)
 			C.cell.charge = min(C.cell.charge + C.cell.maxcharge/2, C.cell.maxcharge)

@@ -74,7 +74,7 @@
 	subcategory = CAT_WEAPON
 
 /datum/crafting_recipe/stunprod
-	name = "Stunprod"
+	name = "Stun prod"
 	result = /obj/item/melee/baton/cattleprod
 	reqs = list(/obj/item/restraints/handcuffs/cable = 1,
 				/obj/item/stack/rods = 1,
@@ -582,7 +582,7 @@
 	category = CAT_PRIMAL
 
 /datum/crafting_recipe/drakecloak
-	name = "Ash Drake Armour"
+	name = "Ash Drake Armor"
 	result = /obj/item/clothing/suit/hooded/cloak/drake
 	time = 60
 	reqs = list(/obj/item/stack/sheet/bone = 10,

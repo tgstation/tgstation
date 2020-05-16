@@ -78,7 +78,7 @@
 /datum/keybinding/admin/deadmin
 	hotkey_keys = list("Unbound")
 	name = "deadmin"
-	full_name = "Deadmin"
+	full_name = "De-admin"
 	description = "Shed your admin powers"
 
 /datum/keybinding/admin/deadmin/down(client/user)
@@ -88,7 +88,7 @@
 /datum/keybinding/admin/readmin
 	hotkey_keys = list("Unbound")
 	name = "readmin"
-	full_name = "Readmin"
+	full_name = "Re-admin"
 	description = "Regain your admin powers"
 
 /datum/keybinding/admin/readmin/down(client/user)

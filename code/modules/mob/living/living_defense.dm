@@ -1,15 +1,15 @@
 
-/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armour_penetration, penetrated_text, silent=FALSE)
+/mob/living/proc/run_armor_check(def_zone = null, attack_flag = "melee", absorb_text = null, soften_text = null, armor_penetration, penetrated_text, silent=FALSE)
 	var/armor = getarmor(def_zone, attack_flag)
 
 	if(armor <= 0)
 		return armor
 	if(silent)
-		return max(0, armor - armour_penetration)
+		return max(0, armor - armor_penetration)
 
 	//the if "armor" check is because this is used for everything on /living, including humans
-	if(armour_penetration)
-		armor = max(0, armor - armour_penetration)
+	if(armor_penetration)
+		armor = max(0, armor - armor_penetration)
 		if(penetrated_text)
 			to_chat(src, "<span class='userdanger'>[penetrated_text]</span>")
 		else
@@ -48,7 +48,7 @@
 	return BULLET_ACT_HIT
 
 /mob/living/bullet_act(obj/projectile/P, def_zone)
-	var/armor = run_armor_check(def_zone, P.flag, "","",P.armour_penetration)
+	var/armor = run_armor_check(def_zone, P.flag, "","",P.armor_penetration)
 	var/on_hit_state = P.on_hit(src, armor)
 	if(!P.nodamage && on_hit_state != BULLET_ACT_BLOCK)
 		apply_damage(P.damage, P.damage_type, def_zone, armor)
@@ -84,7 +84,7 @@
 							"<span class='userdanger'>You're hit by [I]!</span>")
 			if(!I.throwforce)
 				return
-			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armour_penetration)
+			var/armor = run_armor_check(zone, "melee", "Your armor has protected your [parse_zone(zone)].", "Your armor has softened hit to your [parse_zone(zone)].",I.armor_penetration)
 			apply_damage(I.throwforce, dtype, zone, armor)
 			if(I.thrownby)
 				log_combat(I.thrownby, src, "threw and hit", I)

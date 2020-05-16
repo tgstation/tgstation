@@ -126,7 +126,7 @@
 	if(swap_body)
 		swap_body.Remove(C)
 	bodies -= C // This means that the other bodies maintain a link
-	// so if someone mindswapped into them, they'd still be shared.
+	// so if someone mind swapped into them, they'd still be shared.
 	bodies = null
 	C.blood_volume = min(C.blood_volume, BLOOD_VOLUME_NORMAL)
 	..()

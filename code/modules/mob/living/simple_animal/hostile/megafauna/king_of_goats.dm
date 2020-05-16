@@ -44,7 +44,7 @@ Difficulty: Insanely Hard
 	wander = FALSE
 	movement_type = GROUND
 	maxHealth = 500
-	armour_penetration = 35
+	armor_penetration = 35
 	melee_damage_lower = 35
 	melee_damage_upper = 55
 	minbodytemp = 0
@@ -78,7 +78,7 @@ Difficulty: Insanely Hard
 	crusher_achievement_type = /datum/award/achievement/boss/king_goat_crusher
 	health = 750
 	maxHealth = 750
-	armour_penetration = 50
+	armor_penetration = 50
 	melee_damage_lower = 40
 	melee_damage_upper = 60
 	environment_smash = ENVIRONMENT_SMASH_RWALLS
@@ -136,7 +136,7 @@ Difficulty: Insanely Hard
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
-	armour_penetration = 10
+	armor_penetration = 10
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	mob_size = MOB_SIZE_LARGE
@@ -149,7 +149,7 @@ Difficulty: Insanely Hard
 	icon_dead = "goat_guard_m_dead"
 	health = 200
 	maxHealth = 200
-	armour_penetration = 15
+	armor_penetration = 15
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	move_to_delay = 3
@@ -162,7 +162,7 @@ Difficulty: Insanely Hard
 	icon_dead = "goat_pope_dead"
 	health = 100
 	maxHealth = 100
-	armour_penetration = 25
+	armor_penetration = 25
 	melee_damage_lower = 25
 	melee_damage_upper = 30
 	move_to_delay = 3
@@ -171,7 +171,7 @@ Difficulty: Insanely Hard
 /mob/living/simple_animal/hostile/megafauna/king/Retaliate()
 	..()
 	if(stat == CONSCIOUS && prob(5))
-		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgemental gleam in his eye.</span>")
+		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgmental gleam in his eye.</span>")
 
 /mob/living/simple_animal/hostile/megafauna/king/phase2/Retaliate()
 	set waitfor = FALSE

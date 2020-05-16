@@ -7,9 +7,9 @@
 #define MECHA_MELEE (1 << 0)
 #define MECHA_RANGED (1 << 1)
 
-#define MECHA_FRONT_ARMOUR 1
-#define MECHA_SIDE_ARMOUR 2
-#define MECHA_BACK_ARMOUR 3
+#define MECHA_FRONT_ARMOR 1
+#define MECHA_SIDE_ARMOR 2
+#define MECHA_BACK_ARMOR 3
 
 #define MECHA_LOCKED 0
 #define MECHA_SECURE_BOLTS 1

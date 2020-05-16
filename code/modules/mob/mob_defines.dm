@@ -153,7 +153,7 @@
 	/**
 	  * construct spells and mime spells.
 	  *
-	  * Spells that do not transfer from one mob to another and can not be lost in mindswap.
+	  * Spells that do not transfer from one mob to another and can not be lost in mind swap.
 	  * obviously do not live in the mind
 	  */
 	var/list/mob_spell_list = list()

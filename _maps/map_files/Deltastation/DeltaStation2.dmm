@@ -52117,7 +52117,7 @@
 /area/ai_monitored/security/armory)
 "bTl" = (
 /obj/machinery/camera/motion{
-	c_tag = "Armoury - Exterior";
+	c_tag = "Armory - Exterior";
 	dir = 4
 	},
 /turf/open/space,
@@ -55062,7 +55062,7 @@
 "bXM" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	name = "Armoury";
+	name = "Armory";
 	req_access_txt = "3"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -56363,7 +56363,7 @@
 "bZU" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/security{
-	name = "Armoury";
+	name = "Armory";
 	req_access_txt = "3"
 	},
 /obj/effect/turf_decal/stripes/line{
@@ -57301,8 +57301,8 @@
 /area/ai_monitored/security/armory)
 "cbI" = (
 /obj/machinery/button/door{
-	id = "armouryaccess";
-	name = "Armoury Access";
+	id = "armoryaccess";
+	name = "Armory Access";
 	pixel_x = -26;
 	pixel_y = -26;
 	req_access_txt = "3"
@@ -57329,7 +57329,7 @@
 "cbK" = (
 /obj/machinery/power/apc{
 	areastring = "/area/ai_monitored/security/armory";
-	name = "Armoury APC";
+	name = "Armory APC";
 	pixel_y = -23
 	},
 /obj/machinery/camera{
@@ -58188,8 +58188,8 @@
 /area/security/warden)
 "cdr" = (
 /obj/machinery/door/poddoor{
-	id = "armouryaccess";
-	name = "Armoury Access"
+	id = "armoryaccess";
+	name = "Armory Access"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -58201,13 +58201,13 @@
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/brigdoor/northright{
-	name = "Armoury Desk";
+	name = "Armory Desk";
 	req_access_txt = "3"
 	},
 /obj/item/folder/red,
 /obj/item/pen,
 /obj/machinery/door/window/southright{
-	name = "Armoury Desk"
+	name = "Armory Desk"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,

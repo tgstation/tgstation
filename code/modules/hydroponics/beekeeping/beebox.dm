@@ -238,7 +238,7 @@
 							fallen++
 					if(fallen)
 						var/multiple = fallen > 1
-						visible_message("<span class='notice'>[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off of the frame.</span>")
+						visible_message("<span class='notice'>[user] scrapes [multiple ? "[fallen]" : "a"] honeycomb[multiple ? "s" : ""] off the frame.</span>")
 
 			if("Remove the Queen Bee")
 				if(!queen_bee || queen_bee.loc != src)

@@ -9,13 +9,13 @@
 /**
   * level_gained: Gives skill levelup messages to the user
   *
-  * Only fires if the xp gain isn't silent, so only really useful for messages.
+  * Only fires if the XP gain isn't silent, so only really useful for messages.
   * Arguments:
   * * mind - The mind that you'll want to send messages
   * * new_level - The newly gained level. Can check the actual level to give different messages at different levels, see defines in skills.dm
   * * old_level - Similar to the above, but the level you had before levelling up.
   */
-/datum/skill/proc/level_gained(var/datum/mind/mind, new_level, old_level)//just for announcements (doesn't go off if the xp gain is silent)
+/datum/skill/proc/level_gained(var/datum/mind/mind, new_level, old_level)//just for announcements (doesn't go off if the XP gain is silent)
 	to_chat(mind.current, "<span class='nicegreen'>I feel like I've become more proficient at [name]!</span>")
 
 /**

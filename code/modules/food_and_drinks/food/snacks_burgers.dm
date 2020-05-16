@@ -329,7 +329,7 @@
 
 /obj/item/reagent_containers/food/snacks/burger/baseball
 	name = "home run baseball burger"
-	desc = "It's still warm. The steam coming off of it looks like baseball."
+	desc = "It's still warm. The steam coming off it looks like baseball."
 	icon_state = "baseball"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtype = GRAIN | GROSS
@@ -346,7 +346,7 @@
 
 /obj/item/reagent_containers/food/snacks/burger/empoweredburger
 	name = "empowered burger"
-	desc = "It's shockingly good, if you live off of electricity that is."
+	desc = "It's shockingly good, if you live off electricity that is."
 	icon_state = "empoweredburger"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/liquidelectricity = 5)
 	tastes = list("bun" = 2, "pure electricity" = 4)

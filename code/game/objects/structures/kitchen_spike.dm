@@ -104,7 +104,7 @@
 			if(!do_after(user, 300, target = src))
 				if(M && M.buckled)
 					M.visible_message("<span class='notice'>[user] fails to free [M]!</span>",\
-					"<span class='notice'>[user] fails to pull you off of [src].</span>")
+					"<span class='notice'>[user] fails to pull you off [src].</span>")
 				return
 
 		else

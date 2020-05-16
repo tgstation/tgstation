@@ -80,7 +80,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 
 		add_reagent(var/reagent, var/amount, var/data)
 			Attempts to add X of the matching reagent to the holder.
-			You wont use this much. Mostly in new procs for pre-filled
+			You won't use this much. Mostly in new procs for pre-filled
 			objects.
 
 		remove_reagent(var/reagent, var/amount)

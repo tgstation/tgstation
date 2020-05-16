@@ -461,7 +461,7 @@
 	force = 30
 	throwforce = 15
 	block_chance = 55
-	armour_penetration = 80
+	armor_penetration = 80
 	attack_verb = list("slapped", "slathered")
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
@@ -478,7 +478,7 @@
 	///Stores the time set for the next handle_reagents
 	var/next_succ = 0
 
-	//makes snacks actually wearable as masks and still edible the old fashioned way.
+	//makes snacks actually wearable as masks and still edible the old-fashioned way.
 /obj/item/reagent_containers/food/snacks/chewable/proc/handle_reagents()
 	if(reagents.total_volume)
 		if(iscarbon(loc))

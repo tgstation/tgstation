@@ -118,7 +118,7 @@
 					if (hub_item.name == item)
 						hub_item.handle_purchase(hard_drive.traitor_data.contractor_hub, user)
 			else
-				error = "Invalid user... You weren't recognised as the user of this system."
+				error = "Invalid user... You weren't recognized as the user of this system."
 
 /datum/computer_file/program/contract_uplink/ui_data(mob/user)
 	var/list/data = list()

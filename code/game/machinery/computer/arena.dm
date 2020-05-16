@@ -346,7 +346,7 @@
 				//Add more per player features here
 				dat += "</li>"
 		dat += "</ul>"
-		dat += "<div> Team Outfit : [outfits[team] ? outfits[team] : default_outfit]</div>"
+		dat += "<div> Team Outfit: [outfits[team] ? outfits[team] : default_outfit]</div>"
 		dat += "<a href='?src=[REF(src)];team_action=loadteam;team=[team]'>Load team</a>"
 		dat += "<a href='?src=[REF(src)];team_action=addmember;team=[team]'>Add member</a>"
 		dat += "<a href='?src=[REF(src)];team_action=outfit;team=[team]'>Change Outfit</a>"

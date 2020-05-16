@@ -128,11 +128,11 @@
 			var/type = current_value
 			var/error = ""
 			do
-				type = input("Enter type:[error]", "Type", type) as null|text
+				type = input("Enter type: [error]", "Type", type) as null|text
 				if(!type)
 					break
 				type = text2path(type)
-				error = "\nType not found, Please try again"
+				error = "\nType not found. Please, try again"
 			while(!type)
 			if(!type)
 				.["class"] = null
@@ -234,11 +234,11 @@
 			var/type = current_value
 			var/error = ""
 			do
-				type = input("Enter type:[error]", "Type", type) as null|text
+				type = input("Enter type: [error]", "Type", type) as null|text
 				if(!type)
 					break
 				type = text2path(type)
-				error = "\nType not found, Please try again"
+				error = "\nType not found. Please, try again"
 			while(!type)
 			if(!type)
 				.["class"] = null

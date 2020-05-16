@@ -39,7 +39,7 @@
 	desc = "The user of this genome can visually percieve the unique human thermal signature."
 	quality = POSITIVE
 	difficulty = 18
-	text_gain_indication = "<span class='notice'>You can see the heat rising off of your skin...</span>"
+	text_gain_indication = "<span class='notice'>You can see the heat rising off your skin...</span>"
 	time_coeff = 2
 	instability = 25
 	var/visionflag = TRAIT_THERMAL_VISION

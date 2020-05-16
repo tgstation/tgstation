@@ -23,7 +23,7 @@
 	max_integrity = 300 //max_integrity is base health
 	var/deflect_chance = 10 //chance to deflect the incoming projectiles, hits, or lesser the effect of ex_act.
 	armor = list("melee" = 20, "bullet" = 10, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
-	var/list/facing_modifiers = list(MECHA_FRONT_ARMOUR = 1.5, MECHA_SIDE_ARMOUR = 1, MECHA_BACK_ARMOUR = 0.5)
+	var/list/facing_modifiers = list(MECHA_FRONT_ARMOR = 1.5, MECHA_SIDE_ARMOR = 1, MECHA_BACK_ARMOR = 0.5)
 	var/equipment_disabled = 0 //disabled due to EMP
 	/// Keeps track of the mech's cell
 	var/obj/item/stock_parts/cell/cell
@@ -711,7 +711,7 @@
 			if(MECHA_INT_TEMP_CONTROL)
 				occupant_message("<span class='boldnotice'>Life support system reactivated.</span>")
 			if(MECHA_INT_FIRE)
-				occupant_message("<span class='boldnotice'>Internal fire extinquished.</span>")
+				occupant_message("<span class='boldnotice'>Internal fire extinguished.</span>")
 			if(MECHA_INT_TANK_BREACH)
 				occupant_message("<span class='boldnotice'>Damaged internal tank has been sealed.</span>")
 	internal_damage &= ~int_dam_flag

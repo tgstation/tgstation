@@ -106,7 +106,7 @@
 
 /obj/item/clothing/suit/armor/vest/capcarapace/alt
 	name = "captain's parade jacket"
-	desc = "For when an armoured vest isn't fashionable enough."
+	desc = "For when an armored vest isn't fashionable enough."
 	icon_state = "capformal"
 	item_state = "capspacesuit"
 
@@ -234,8 +234,8 @@
 
 
 /obj/item/clothing/suit/armor/riot/knight
-	name = "plate armour"
-	desc = "A classic suit of plate armour, highly effective at stopping melee attacks."
+	name = "plate armor"
+	desc = "A classic suit of plate armor, highly effective at stopping melee attacks."
 	icon_state = "knight_green"
 	item_state = "knight_green"
 	allowed = list(/obj/item/nullrod, /obj/item/claymore, /obj/item/banner, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
@@ -253,8 +253,8 @@
 	item_state = "knight_red"
 
 /obj/item/clothing/suit/armor/riot/knight/greyscale
-	name = "knight armour"
-	desc = "A classic suit of armour, able to be made from many different materials."
+	name = "knight armor"
+	desc = "A classic suit of armor, able to be made from many different materials."
 	icon_state = "knight_greyscale"
 	item_state = "knight_greyscale"
 	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS//Can change color and add prefix

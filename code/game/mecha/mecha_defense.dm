@@ -1,11 +1,11 @@
-/obj/mecha/proc/get_armour_facing(relative_dir)
+/obj/mecha/proc/get_armor_facing(relative_dir)
 	switch(relative_dir)
 		if(0) // BACKSTAB!
-			return facing_modifiers[MECHA_BACK_ARMOUR]
+			return facing_modifiers[MECHA_BACK_ARMOR]
 		if(45, 90, 270, 315)
-			return facing_modifiers[MECHA_SIDE_ARMOUR]
+			return facing_modifiers[MECHA_SIDE_ARMOR]
 		if(225, 180, 135)
-			return facing_modifiers[MECHA_FRONT_ARMOUR]
+			return facing_modifiers[MECHA_FRONT_ARMOR]
 	return 1 //always return non-0
 
 /obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
@@ -43,11 +43,11 @@
 				break
 
 	if(attack_dir)
-		var/facing_modifier = get_armour_facing(dir2angle(attack_dir) - dir2angle(src))
+		var/facing_modifier = get_armor_facing(dir2angle(attack_dir) - dir2angle(src))
 		booster_damage_modifier /= facing_modifier
 		booster_deflection_modifier *= facing_modifier
 	if(prob(deflect_chance * booster_deflection_modifier))
-		visible_message("<span class='danger'>[src]'s armour deflects the attack!</span>")
+		visible_message("<span class='danger'>[src]'s armor deflects the attack!</span>")
 		log_message("Armor saved.", LOG_MECHA)
 		return 0
 	if(.)

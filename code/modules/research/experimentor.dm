@@ -189,7 +189,7 @@
 		else if(!loaded_item)
 			to_chat(usr, "<span class='warning'>[src] is not currently loaded!</span>")
 		else if(!process || process != loaded_item) //Interface exploit protection (such as hrefs or swapping items with interface set to old item)
-			to_chat(usr, "<span class='danger'>Interface failure detected in [src]. Please try again.</span>")
+			to_chat(usr, "<span class='danger'>Interface failure detected in [src]. Please, try again.</span>")
 		else
 			var/dotype
 			if(text2num(scantype) == SCANTYPE_DISCOVER)

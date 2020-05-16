@@ -737,7 +737,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("patrolon")
 			to_chat(src, "<span class='warning big'>START PATROL</span>")
 		if("summon")
-			to_chat(src, "<span class='warning big'>PRIORITY ALERT:[user] in [get_area_name(user)]!</span>")
+			to_chat(src, "<span class='warning big'>PRIORITY ALERT: [user] in [get_area_name(user)]!</span>")
 		if("stop")
 			to_chat(src, "<span class='warning big'>STOP!</span>")
 
@@ -749,7 +749,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		if("ejectpai")
 			return
 		else
-			to_chat(src, "<span class='warning'>Unidentified control sequence received:[command]</span>")
+			to_chat(src, "<span class='warning'>Unidentified control sequence received: [command]</span>")
 
 /mob/living/simple_animal/bot/proc/bot_summon() // summoned to PDA
 	summon_step()

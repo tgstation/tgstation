@@ -40,7 +40,7 @@
 	if(experiment)
 		var/points = experiment.points
 		var/credits = experiment.credits
-		dat += "Collected Samples : [points] <br>"
+		dat += "Collected Samples: [points] <br>"
 		dat += "Gear Credits: [credits] <br>"
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
 		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"

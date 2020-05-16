@@ -661,7 +661,7 @@ datum/status_effect/stabilized/blue/on_remove()
 		linked_alert.icon_state = "slime_bluespace_on"
 
 	if(healthcheck && (healthcheck - owner.health) > 5)
-		owner.visible_message("<span class='warning'>[linked_extract] notices the sudden change in [owner]'s physical health, and activates!</span>")
+		owner.visible_message("<span class='warning'>[linked_extract] notices the sudden change in [owner]'s physical health and activates!</span>")
 		do_sparks(5,FALSE,owner)
 		var/F = find_safe_turf(zlevels = owner.z, extended_safety_checks = TRUE)
 		var/range = 0

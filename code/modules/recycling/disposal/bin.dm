@@ -334,7 +334,7 @@
 			visible_message("<span class='notice'>[AM] lands in [src].</span>")
 			update_icon()
 		else
-			visible_message("<span class='notice'>[AM] bounces off of [src]'s rim!</span>")
+			visible_message("<span class='notice'>[AM] bounces off [src]'s rim!</span>")
 			return ..()
 	else
 		return ..()

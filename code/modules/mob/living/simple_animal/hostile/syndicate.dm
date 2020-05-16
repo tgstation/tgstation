@@ -116,7 +116,7 @@
 	attack_verb_continuous = "slashes"
 	attack_verb_simple = "slash"
 	attack_sound = 'sound/weapons/blade1.ogg'
-	armour_penetration = 35
+	armor_penetration = 35
 	light_color = LIGHT_COLOR_RED
 	status_flags = 0
 	var/obj/effect/light_emitter/red_energy_sword/sord

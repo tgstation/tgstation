@@ -4390,7 +4390,7 @@
 "GJ" = (
 /obj/item/bikehorn{
 	color = "#000";
-	desc = "A horn off of a bicycle. This one has been charred to hell and back, yet somehow it still honks.";
+	desc = "A horn off a bicycle. This one has been charred to hell and back, yet somehow it still honks.";
 	name = "charred bike horn"
 	},
 /turf/open/floor/plating/asteroid/basalt/lava_land_surface,

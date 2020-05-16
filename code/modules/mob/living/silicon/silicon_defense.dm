@@ -33,9 +33,9 @@
 			for(var/mob/living/N in buckled_mobs)
 				N.Paralyze(20)
 				unbuckle_mob(N)
-				N.visible_message("<span class='danger'>[N] is knocked off of [src] by [M]!</span>", \
-								"<span class='userdanger'>You're knocked off of [src] by [M]!</span>", null, null, M)
-				to_chat(M, "<span class='danger'>You knock [N] off of [src]!</span>")
+				N.visible_message("<span class='danger'>[N] is knocked off [src] by [M]!</span>", \
+								"<span class='userdanger'>You're knocked off [src] by [M]!</span>", null, null, M)
+				to_chat(M, "<span class='danger'>You knock [N] off [src]!</span>")
 		switch(M.melee_damage_type)
 			if(BRUTE)
 				adjustBruteLoss(damage)
@@ -114,7 +114,7 @@
 		if(prob(severity*50))
 			unbuckle_mob(M)
 			M.Paralyze(40)
-			M.visible_message("<span class='boldwarning'>[M] is thrown off of [src]!</span>")
+			M.visible_message("<span class='boldwarning'>[M] is thrown off [src]!</span>")
 	flash_act(affect_silicon = 1)
 
 /mob/living/silicon/bullet_act(obj/projectile/Proj, def_zone)
@@ -123,13 +123,13 @@
 		adjustBruteLoss(Proj.damage)
 		if(prob(Proj.damage*1.5))
 			for(var/mob/living/M in buckled_mobs)
-				M.visible_message("<span class='boldwarning'>[M] is knocked off of [src]!</span>")
+				M.visible_message("<span class='boldwarning'>[M] is knocked off [src]!</span>")
 				unbuckle_mob(M)
 				M.Paralyze(40)
 	if(Proj.stun || Proj.knockdown || Proj.paralyze)
 		for(var/mob/living/M in buckled_mobs)
 			unbuckle_mob(M)
-			M.visible_message("<span class='boldwarning'>[M] is knocked off of [src] by the [Proj]!</span>")
+			M.visible_message("<span class='boldwarning'>[M] is knocked off [src] by the [Proj]!</span>")
 	Proj.on_hit(src)
 	return BULLET_ACT_HIT
 

@@ -213,7 +213,7 @@
 	maxHealth = 500
 	health = 500
 	speed = -2
-	armour_penetration = 20
+	armor_penetration = 20
 	attack_verb_continuous = "steals the girlfriend of"
 	attack_verb_simple = "steal the girlfriend of"
 	attack_sound = 'sound/items/airhorn2.ogg'
@@ -248,8 +248,8 @@
 	desc = "An ancient being born of arcane honking."
 	icon_state = "destroyer"
 	icon_living = "destroyer"
-	response_disarm_continuous = "bounces off of"
-	response_harm_continuous = "bounces off of"
+	response_disarm_continuous = "bounces off"
+	response_harm_continuous = "bounces off"
 	speak = list("HONK!!!", "The Honkmother is merciful, so I must act out her wrath.", "parce mihi ad beatus honkmother placet mihi ut peccata committere,", "DIE!!!")
 	maxHealth = 400
 	health = 400
@@ -257,7 +257,7 @@
 	harm_intent_damage = 30
 	melee_damage_lower = 20
 	melee_damage_upper = 40
-	armour_penetration = 30
+	armor_penetration = 30
 	stat_attack = UNCONSCIOUS
 	attack_verb_continuous = "acts out divine vengeance on"
 	attack_verb_simple = "act out divine vengeance on"
@@ -302,7 +302,7 @@
 	health = 130
 	mob_size = MOB_SIZE_LARGE
 	speed = 20
-	attack_verb_continuous = "bounces off of"
-	attack_verb_simple = "bounce off of"
+	attack_verb_continuous = "bounces off"
+	attack_verb_simple = "bounce off"
 	loot = list(/obj/item/clothing/mask/gas/clown_hat, /obj/effect/gibspawner/xeno/bodypartless, /obj/effect/particle_effect/foam, /obj/item/soap, /obj/effect/gibspawner/generic, /obj/effect/gibspawner/generic/animal, /obj/effect/gibspawner/human/bodypartless, /obj/effect/gibspawner/human)
 	attack_reagent = /datum/reagent/toxin/mindbreaker

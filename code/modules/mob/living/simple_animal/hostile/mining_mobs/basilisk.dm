@@ -100,7 +100,7 @@ mob/living/simple_animal/hostile/asteroid/basilisk/proc/cool_down()
 	icon_dead = "watcher_dead"
 	health_doll_icon = "watcher"
 	pixel_x = -10
-	throw_message = "bounces harmlessly off of"
+	throw_message = "bounces harmlessly off"
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attack_verb_continuous = "impales"

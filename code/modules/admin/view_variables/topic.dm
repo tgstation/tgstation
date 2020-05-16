@@ -113,7 +113,7 @@
 					L.adjustStaminaLoss(amount)
 					newamt = L.getStaminaLoss()
 				else
-					to_chat(usr, "You caused an error. DEBUG: Text:[Text] Mob:[L]", confidential = TRUE)
+					to_chat(usr, "You caused an error. DEBUG: Text: [Text] Mob: [L]", confidential = TRUE)
 					return
 
 			if(amount != 0)

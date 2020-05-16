@@ -14,7 +14,7 @@
 	var/list/stage2 = list("You feel boring.")
 	var/list/stage3 = list("You feel utterly plain.")
 	var/list/stage4 = list("You feel white bread.")
-	var/list/stage5 = list("Oh the humanity!")
+	var/list/stage5 = list("Oh, the humanity!")
 	var/new_form = /mob/living/carbon/human
 	var/bantype
 	var/transformed_antag_datum //Do we add a specific antag datum once the transformation is complete?

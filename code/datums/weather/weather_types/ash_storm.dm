@@ -1,7 +1,7 @@
 //Ash storms happen frequently on lavaland. They heavily obscure vision, and cause high fire damage to anyone caught outside.
 /datum/weather/ash_storm
 	name = "ash storm"
-	desc = "An intense atmospheric storm lifts ash off of the planet's surface and billows it down across the area, dealing intense fire damage to the unprotected."
+	desc = "An intense atmospheric storm lifts ash off the planet's surface and billows it down across the area, dealing intense fire damage to the unprotected."
 
 	telegraph_message = "<span class='boldwarning'>An eerie moan rises on the wind. Sheets of burning ash blacken the horizon. Seek shelter.</span>"
 	telegraph_duration = 300

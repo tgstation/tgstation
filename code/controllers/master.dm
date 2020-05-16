@@ -601,8 +601,8 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 	if(!statclick)
 		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
-	stat("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)")
-	stat("Master Controller:", statclick.update("(TickRate:[Master.processing]) (Iteration:[Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)])"))
+	stat("Byond:", "(FPS: [world.fps]) (TickCount: [world.time/world.tick_lag]) (TickDrift: [round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)")
+	stat("Master Controller:", statclick.update("(TickRate: [Master.processing]) (Iteration: [Master.iteration]) (TickLimit: [round(Master.current_ticklimit, 0.1)])"))
 
 
 /datum/controller/master/StartLoadingMap()

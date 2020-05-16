@@ -64,7 +64,7 @@
 		var/number = stored.len
 		picture.picture_name = "Image [number] (taken by [loc.name])"
 		stored[picture] = TRUE
-		to_chat(usr, "<span class='unconscious'>Image recorded and saved to local storage. Upload will happen automatically if unit is lawsynced.</span>")
+		to_chat(usr, "<span class='unconscious'>Image recorded and saved to local storage. Upload will happen automatically if unit is law synced.</span>")
 
 /obj/item/camera/siliconcam/robot_camera/selectpicture(mob/user)
 	var/mob/living/silicon/robot/R = loc

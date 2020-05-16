@@ -131,7 +131,7 @@
 	for(var/score in valid_scores)
 		var/recieved_count = 0
 		while(1)
-			world << "Fetching [score] scores, offset :[recieved_count] of [score]"
+			world << "Fetching [score] scores, offset: [recieved_count] of [score]"
 			var/list/batch = params2list(world.GetScores(giant_list_of_ckeys.len,recieved_count,score,hub_address,hub_password))
 			world << "Fetched [batch.len] scores for [score]."
 			recieved_count += batch.len

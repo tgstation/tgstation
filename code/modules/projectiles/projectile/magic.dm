@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = OXY
 	nodamage = TRUE
-	armour_penetration = 100
+	armor_penetration = 100
 	flag = "magic"
 
 /obj/projectile/magic/death
@@ -370,7 +370,7 @@
 	damage = 20
 	damage_type = BURN
 	nodamage = FALSE
-	armour_penetration = 0
+	armor_penetration = 0
 	flag = "magic"
 	hitsound = 'sound/weapons/barragespellhit.ogg'
 
@@ -581,13 +581,13 @@
 	var/datum/brain_trauma/special/imaginary_friend/trapped_owner/trauma = M.gain_trauma(/datum/brain_trauma/special/imaginary_friend/trapped_owner)
 	var/poll_message = "Do you want to play as [M.real_name]?"
 	if(M.mind && M.mind.assigned_role)
-		poll_message = "[poll_message] Job:[M.mind.assigned_role]."
+		poll_message = "[poll_message] Job: [M.mind.assigned_role]."
 	if(M.mind && M.mind.special_role)
-		poll_message = "[poll_message] Status:[M.mind.special_role]."
+		poll_message = "[poll_message] Status: [M.mind.special_role]."
 	else if(M.mind)
 		var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 		if(A)
-			poll_message = "[poll_message] Status:[A.name]."
+			poll_message = "[poll_message] Status: [A.name]."
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob(poll_message, ROLE_PAI, null, FALSE, 100, M)
 	if(M.stat == DEAD)//boo.
 		return
@@ -703,7 +703,7 @@
 	damage = 0
 	damage_type = BURN
 	nodamage = FALSE
-	armour_penetration = 100
+	armor_penetration = 100
 	temperature = -200 // Cools you down greatly per hit
 	flag = "magic"
 

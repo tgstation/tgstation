@@ -108,7 +108,7 @@
 /datum/reagent/consumable/cooking_oil
 	name = "Cooking Oil"
 	description = "A variety of cooking oil derived from fat or plants. Used in food preparation and frying."
-	color = "#EADD6B" //RGB: 234, 221, 107 (based off of canola oil)
+	color = "#EADD6B" //RGB: 234, 221, 107 (based off canola oil)
 	taste_mult = 0.8
 	taste_description = "oil"
 	nutriment_factor = 7 * REAGENTS_METABOLISM //Not very healthy on its own

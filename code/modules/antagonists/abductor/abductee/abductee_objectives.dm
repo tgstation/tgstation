@@ -24,7 +24,7 @@
 	explanation_text = "Your brain is broken... you can only communicate in"
 
 /datum/objective/abductee/speech/New()
-	var/style = pick(list("pantomime", "rhyme", "haiku", "extended metaphors", "riddles", "extremely literal terms", "sound effects", "military jargon", "three word sentences"))
+	var/style = pick(list("pantomime", "rhyme", "haiku", "extended metaphors", "riddles", "extremely literal terms", "sound effects", "military jargon", "three-word sentences"))
 	explanation_text+= " [style]."
 
 /datum/objective/abductee/capture

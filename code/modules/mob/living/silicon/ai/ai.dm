@@ -860,7 +860,7 @@
 	if(istype(picker, /datum/module_picker))
 		module_picker = picker
 	else
-		CRASH("choose_modules action created with non module picker")
+		CRASH("choose_modules action created with non-module picker")
 
 /datum/action/innate/choose_modules/Activate()
 	module_picker.ui_interact(owner)

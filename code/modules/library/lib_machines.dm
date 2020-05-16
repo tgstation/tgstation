@@ -278,7 +278,7 @@ GLOBAL_LIST(cachedbooks) // List of our cached book datums
 			dat += "<A href='?src=[REF(src)];editbook=1'>\[Edit\]</A><BR>"
 			dat += "Recipient: [src.buffer_mob] "
 			dat += "<A href='?src=[REF(src)];editmob=1'>\[Edit\]</A><BR>"
-			dat += "Checkout Date : [world.time/600]<BR>"
+			dat += "Checkout Date: [world.time/600]<BR>"
 			dat += "Due Date: [(world.time + checkoutperiod)/600]<BR>"
 			dat += "(Checkout Period: [checkoutperiod] minutes) (<A href='?src=[REF(src)];increasetime=1'>+</A>/<A href='?src=[REF(src)];decreasetime=1'>-</A>)"
 			dat += "<A href='?src=[REF(src)];checkout=1'>(Commit Entry)</A><BR>"

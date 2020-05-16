@@ -19,7 +19,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	force = 15
 	throwforce = 25
-	armour_penetration = 35
+	armor_penetration = 35
 	actions_types = list(/datum/action/item_action/cult_dagger)
 	var/drawing_rune = FALSE
 
@@ -84,7 +84,7 @@
 	block_chance = 50
 	throwforce = 20
 	force = 35
-	armour_penetration = 45
+	armor_penetration = 45
 	throw_speed = 1
 	throw_range = 3
 	sharpness = IS_SHARP
@@ -589,7 +589,7 @@
 			return
 		if(cultist_to_receive.stat == DEAD)
 			to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
-			log_game("Void torch failed  - target died")
+			log_game("Void torch failed - target died")
 			return
 		if(!iscultist(cultist_to_receive))
 			to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")
@@ -620,7 +620,7 @@
 	force = 17
 	throwforce = 40
 	throw_speed = 2
-	armour_penetration = 30
+	armor_penetration = 30
 	block_chance = 30
 	attack_verb = list("attacked", "impaled", "stabbed", "torn", "gored")
 	sharpness = IS_SHARP
@@ -663,7 +663,7 @@
 			if(L.put_in_active_hand(src))
 				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
 			else
-				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
+				L.visible_message("<span class='warning'>[src] bounces off [L], as if repelled by an unseen force!</span>")
 		else if(!..())
 			if(!L.anti_magic_check())
 				L.Paralyze(50)
@@ -959,7 +959,7 @@
 			if(L.put_in_active_hand(src))
 				L.visible_message("<span class='warning'>[L] catches [src] out of the air!</span>")
 			else
-				L.visible_message("<span class='warning'>[src] bounces off of [L], as if repelled by an unseen force!</span>")
+				L.visible_message("<span class='warning'>[src] bounces off [L], as if repelled by an unseen force!</span>")
 		else if(!..())
 			if(!L.anti_magic_check())
 				L.Paralyze(30)

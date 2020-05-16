@@ -13,7 +13,7 @@
 	status_flags = 0
 	a_intent = INTENT_HARM
 	var/crusher_loot
-	var/throw_message = "bounces off of"
+	var/throw_message = "bounces off"
 	var/fromtendril = FALSE
 	see_in_dark = 8
 	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_INVISIBLE

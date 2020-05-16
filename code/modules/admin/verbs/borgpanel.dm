@@ -116,11 +116,11 @@
 		if ("toggle_lawupdate")
 			borg.lawupdate = !borg.lawupdate
 			if (borg.lawupdate)
-				message_admins("[key_name_admin(user)] enabled lawsync on [ADMIN_LOOKUPFLW(borg)].")
-				log_admin("[key_name(user)] enabled lawsync on [key_name(borg)].")
+				message_admins("[key_name_admin(user)] enabled law sync on [ADMIN_LOOKUPFLW(borg)].")
+				log_admin("[key_name(user)] enabled law sync on [key_name(borg)].")
 			else
-				message_admins("[key_name_admin(user)] disabled lawsync on [ADMIN_LOOKUPFLW(borg)].")
-				log_admin("[key_name(user)] disabled lawsync on [key_name(borg)].")
+				message_admins("[key_name_admin(user)] disabled law sync on [ADMIN_LOOKUPFLW(borg)].")
+				log_admin("[key_name(user)] disabled law sync on [key_name(borg)].")
 		if ("toggle_lockdown")
 			borg.SetLockdown(!borg.lockcharge)
 			if (borg.lockcharge)

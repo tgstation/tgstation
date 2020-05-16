@@ -257,7 +257,7 @@
 			continue
 	listclearnulls(spooky_scaries)
 
-//Funny gimmick, skeletons always seem to wear roman/ancient armour
+//Funny gimmick, skeletons always seem to wear roman/ancient armor
 /obj/item/necromantic_stone/proc/equip_roman_skeleton(mob/living/carbon/human/H)
 	for(var/obj/item/I in H)
 		H.dropItemToGround(I)

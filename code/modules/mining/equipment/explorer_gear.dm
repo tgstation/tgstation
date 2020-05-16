@@ -1,7 +1,7 @@
 /****************Explorer's Suit and Mask****************/
 /obj/item/clothing/suit/hooded/explorer
 	name = "explorer suit"
-	desc = "An armoured suit for exploring harsh environments."
+	desc = "An armored suit for exploring harsh environments."
 	icon_state = "explorer"
 	item_state = "explorer"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
@@ -16,7 +16,7 @@
 
 /obj/item/clothing/head/hooded/explorer
 	name = "explorer hood"
-	desc = "An armoured hood for exploring harsh environments."
+	desc = "An armored hood for exploring harsh environments."
 	icon_state = "explorer"
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS

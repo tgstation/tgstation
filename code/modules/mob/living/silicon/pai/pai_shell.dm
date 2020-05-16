@@ -13,7 +13,7 @@
 		return
 
 	if(emittersemicd)
-		to_chat(src, "<span class='warning'>Error: Holochassis emitters recycling. Please try again later.</span>")
+		to_chat(src, "<span class='warning'>Error: Holochassis emitters recycling. Please, try again later.</span>")
 		return FALSE
 
 	emittersemicd = TRUE

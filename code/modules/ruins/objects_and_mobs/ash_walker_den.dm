@@ -43,7 +43,7 @@
 					qdel(W)
 			if(issilicon(H)) //no advantage to sacrificing borgs...
 				H.gib()
-				visible_message("<span class='notice'>Serrated tendrils eagerly pull [H] apart, but find nothing of interest.</span>")
+				visible_message("<span class='notice'>Serrated tendrils eagerly pull [H] apart but find nothing of interest.</span>")
 				return
 
 			if(H.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (H.key || H.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached

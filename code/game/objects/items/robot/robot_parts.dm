@@ -356,7 +356,7 @@
 			var/t1 = "Designation: <A href='?src=[REF(src)];Name=1'>[(created_name ? "[created_name]" : "Default Cyborg")]</a><br>\n"
 			t1 += "Master AI: <A href='?src=[REF(src)];Master=1'>[(forced_ai ? "[forced_ai.name]" : "Automatic")]</a><br><br>\n"
 
-			t1 += "LawSync Port: <A href='?src=[REF(src)];Law=1'>[(lawsync ? "Open" : "Closed")]</a><br>\n"
+			t1 += "Law Sync Port: <A href='?src=[REF(src)];Law=1'>[(lawsync ? "Open" : "Closed")]</a><br>\n"
 			t1 += "AI Connection Port: <A href='?src=[REF(src)];AI=1'>[(aisync ? "Open" : "Closed")]</a><br>\n"
 			t1 += "Servo Motor Functions: <A href='?src=[REF(src)];Loco=1'>[(locomotion ? "Unlocked" : "Locked")]</a><br>\n"
 			t1 += "Panel Lock: <A href='?src=[REF(src)];Panel=1'>[(panel_locked ? "Engaged" : "Disengaged")]</a><br>\n"

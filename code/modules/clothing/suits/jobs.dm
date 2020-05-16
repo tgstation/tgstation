@@ -154,7 +154,7 @@
 //Curator
 /obj/item/clothing/suit/curator
 	name = "treasure hunter's coat"
-	desc = "Both fashionable and lightly armoured, this jacket is favoured by treasure hunters the galaxy over."
+	desc = "Both fashionable and lightly armored, this jacket is favoured by treasure hunters the galaxy over."
 	icon_state = "curator"
 	item_state = "curator"
 	blood_overlay_type = "coat"

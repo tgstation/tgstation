@@ -23,7 +23,7 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_SMALL
 	hitsound = "swing_hit"
-	armour_penetration = 50
+	armor_penetration = 50
 	var/active = 0
 	var/saber_color
 
@@ -131,7 +131,7 @@
 			visible_message("<span class='warning'>Swish! [AM] lands in [src].</span>")
 			return
 		else
-			visible_message("<span class='danger'>[AM] bounces off of [src]'s rim!</span>")
+			visible_message("<span class='danger'>[AM] bounces off [src]'s rim!</span>")
 			return ..()
 	else
 		return ..()

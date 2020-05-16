@@ -13,8 +13,8 @@
 	desc = "USE A WEEL GUN"
 	icon_state= "84mm-hedp"
 	damage = 80
-	var/anti_armour_damage = 200
-	armour_penetration = 100
+	var/anti_armor_damage = 200
+	armor_penetration = 100
 	dismemberment = 100
 
 /obj/projectile/bullet/a84mm/on_hit(atom/target, blocked = FALSE)
@@ -23,10 +23,10 @@
 
 	if(ismecha(target))
 		var/obj/mecha/M = target
-		M.take_damage(anti_armour_damage)
+		M.take_damage(anti_armor_damage)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_overall_damage(anti_armour_damage*0.75, anti_armour_damage*0.25)
+		S.take_overall_damage(anti_armor_damage*0.75, anti_armor_damage*0.25)
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/a84mm_he

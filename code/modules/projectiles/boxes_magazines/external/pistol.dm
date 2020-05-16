@@ -47,7 +47,7 @@
 /obj/item/ammo_box/magazine/m9mm/ap
 	name = "pistol magazine (9mm AP)"
 	icon_state = "9x19pA"
-	desc= "A gun magazine. Loaded with rounds which penetrate armour, but are less effective against normal targets."
+	desc= "A gun magazine. Loaded with rounds which penetrate armor, but are less effective against normal targets."
 	ammo_type = /obj/item/ammo_casing/c9mm/ap
 
 /obj/item/ammo_box/magazine/m9mm_aps

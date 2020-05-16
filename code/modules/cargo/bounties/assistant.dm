@@ -18,8 +18,8 @@
 	wanted_types = list(/obj/vehicle/ridden/scooter/skateboard, /obj/item/melee/skateboard)
 
 /datum/bounty/item/assistant/stunprod
-	name = "Stunprod"
-	description = "CentCom demands a stunprod to use against dissidents. Craft one, then ship it."
+	name = "Stun prod"
+	description = "CentCom demands a stun prod to use against dissidents. Craft one, then ship it."
 	reward = 1300
 	wanted_types = list(/obj/item/melee/baton/cattleprod)
 

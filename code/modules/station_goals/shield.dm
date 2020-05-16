@@ -128,7 +128,7 @@
 
 /obj/machinery/satellite/multitool_act(mob/living/user, obj/item/I)
 	..()
-	to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode : [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]</span>")
+	to_chat(user, "<span class='notice'>// NTSAT-[id] // Mode: [active ? "PRIMARY" : "STANDBY"] //[(obj_flags & EMAGGED) ? "DEBUG_MODE //" : ""]</span>")
 	return TRUE
 
 /obj/machinery/satellite/meteor_shield

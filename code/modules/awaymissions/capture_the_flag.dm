@@ -21,7 +21,7 @@
 	throw_speed = 0
 	throw_range = 1
 	force = 200
-	armour_penetration = 1000
+	armor_penetration = 1000
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
 	item_flags = SLOWS_WHILE_IN_HAND

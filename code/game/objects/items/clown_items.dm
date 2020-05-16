@@ -111,7 +111,7 @@
 		return
 	var/clean_speedies = cleanspeed * min(user.mind.get_skill_modifier(/datum/skill/cleaning, SKILL_SPEED_MODIFIER)+0.1,1) //less scaling for soapies
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
-	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	//So, this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(user.client && ((target in user.client.screen) && !user.is_holding(target)))
 		to_chat(user, "<span class='warning'>You need to take that [target.name] off before cleaning it!</span>")
 	else if(istype(target, /obj/effect/decal/cleanable))
@@ -160,7 +160,7 @@
 
 /obj/item/bikehorn
 	name = "bike horn"
-	desc = "A horn off of a bicycle."
+	desc = "A horn off a bicycle."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "bike_horn"
 	item_state = "bike_horn"

@@ -23,7 +23,7 @@
 
 /datum/blackmarket_item/clothing/durathread_helmet
 	name = "Durathread Helmet"
-	desc = "Customers ask why it's called a helmet when it's just made from armoured fabric and I always say the same thing: No refunds."
+	desc = "Customers ask why it's called a helmet when it's just made from armored fabric and I always say the same thing: No refunds."
 	item = /obj/item/clothing/head/helmet/durathread
 
 	price_min = 100

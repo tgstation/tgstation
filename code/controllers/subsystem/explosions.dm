@@ -39,30 +39,30 @@ SUBSYSTEM_DEF(explosions)
 
 /datum/controller/subsystem/explosions/stat_entry(msg)
 	msg += "C:{"
-	msg += "LT:[round(cost_lowturf,1)]|"
-	msg += "MT:[round(cost_medturf,1)]|"
-	msg += "HT:[round(cost_highturf,1)]|"
-	msg += "FT:[round(cost_flameturf,1)]||"
+	msg += "LT: [round(cost_lowturf,1)]|"
+	msg += "MT: [round(cost_medturf,1)]|"
+	msg += "HT: [round(cost_highturf,1)]|"
+	msg += "FT: [round(cost_flameturf,1)]||"
 
-	msg += "LO:[round(cost_lowobj,1)]|"
-	msg += "MO:[round(cost_medobj,1)]|"
-	msg += "HO:[round(cost_highobj,1)]|"
+	msg += "LO: [round(cost_lowobj,1)]|"
+	msg += "MO: [round(cost_medobj,1)]|"
+	msg += "HO: [round(cost_highobj,1)]|"
 
-	msg += "TO:[round(cost_throwturf,1)]"
+	msg += "TO: [round(cost_throwturf,1)]"
 
 	msg += "} "
 
 	msg += "AMT:{"
-	msg += "LT:[lowturf.len]|"
-	msg += "MT:[medturf.len]|"
-	msg += "HT:[highturf.len]|"
-	msg += "FT:[flameturf.len]||"
+	msg += "LT: [lowturf.len]|"
+	msg += "MT: [medturf.len]|"
+	msg += "HT: [highturf.len]|"
+	msg += "FT: [flameturf.len]||"
 
-	msg += "LO:[lowobj.len]|"
-	msg += "MO:[medobj.len]|"
-	msg += "HO:[highobj.len]|"
+	msg += "LO: [lowobj.len]|"
+	msg += "MO: [medobj.len]|"
+	msg += "HO: [highobj.len]|"
 
-	msg += "TO:[throwturf.len]"
+	msg += "TO: [throwturf.len]"
 
 	msg += "} "
 	..(msg)

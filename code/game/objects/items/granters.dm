@@ -174,7 +174,7 @@
 	spellname = "smoke"
 	icon_state ="booksmoke"
 	desc = "This book is overflowing with the dank arts."
-	remarks = list("Smoke Bomb! Heh...", "Smoke bomb would do just fine too...", "Wait, there's a machine that does the same thing in chemistry?", "This book smells awful...", "Why all these weed jokes? Just tell me how to cast it...", "Wind will ruin the whole spell, good thing we're in space... Right?", "So this is how the spider clan does it...")
+	remarks = list("Smoke Bomb! Heh...", "Smoke bomb would do just fine too...", "Wait, there's a machine that does the same thing in chemistry?", "This book smells awful...", "Why all these weed jokes? Just tell me how to cast it...", "Wind will ruin the whole spell, good thing we're in space... Right?", "So, this is how the spider clan does it...")
 
 /obj/item/book/granter/spell/smoke/lesser //Chaplain smoke book
 	spell = /obj/effect/proc_holder/spell/targeted/smoke/lesser
@@ -201,11 +201,11 @@
 
 /obj/item/book/granter/spell/mindswap
 	spell = /obj/effect/proc_holder/spell/pointed/mind_transfer
-	spellname = "mindswap"
+	spellname = "mind swap"
 	icon_state ="bookmindswap"
 	desc = "This book's cover is pristine, though its pages look ragged and torn."
-	remarks = list("If you mindswap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
-	/// Mob used in book recoils to store an identity for mindswaps
+	remarks = list("If you mind swap from a mouse, they will be helpless when you recover...", "Wait, where am I...?", "This book is giving me a horrible headache...", "This page is blank, but I feel words popping into my head...", "GYNU... GYRO... Ugh...", "The voices in my head need to stop, I'm trying to read here...", "I don't think anyone will be happy when I cast this spell...")
+	/// Mob used in book recoils to store an identity for mind swaps
 	var/mob/living/stored_swap
 
 /obj/item/book/granter/spell/mindswap/onlearned()

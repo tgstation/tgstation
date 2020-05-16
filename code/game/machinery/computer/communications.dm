@@ -229,7 +229,7 @@
 			else
 				if(!currmsg.answered)
 					currmsg.answered = answer
-					log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer : [currmsg.answered]")
+					log_game("[key_name(usr)] answered [currmsg.title] comm message. Answer: [currmsg.answered]")
 					if(currmsg)
 						currmsg.answer_callback.InvokeAsync()
 				state = STATE_VIEWMESSAGE
@@ -321,13 +321,13 @@
 				if(!checkCCcooldown())
 					to_chat(usr, "<span class='warning'>Arrays recycling. Please stand by.</span>")
 					return
-				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self Destruct Code Request.","")
+				var/input = stripped_input(usr, "Please enter the reason for requesting the nuclear self-destruct codes. Misuse of the nuclear request system will not be tolerated under any circumstances.  Transmission does not guarantee a response.", "Self-Destruct Code Request.","")
 				if(!input || !(usr in view(1,src)) || !checkCCcooldown())
 					return
 				Nuke_request(input, usr)
 				to_chat(usr, "<span class='notice'>Request sent.</span>")
 				usr.log_message("has requested the nuclear codes from CentCom with reason \"[input]\"", LOG_SAY)
-				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self Destruct Codes Requested",'sound/ai/commandreport.ogg')
+				priority_announce("The codes for the on-station nuclear self-destruct have been requested by [usr]. Confirmation or denial of this request will be sent shortly.", "Nuclear Self-Destruct Codes Requested",'sound/ai/commandreport.ogg')
 				CM.lastTimeUsed = world.time
 
 
@@ -369,7 +369,7 @@
 			else
 				if(!aicurrmsg.answered)
 					aicurrmsg.answered = answer
-					log_game("[key_name(usr)] answered [aicurrmsg.title] comm message. Answer : [aicurrmsg.answered]")
+					log_game("[key_name(usr)] answered [aicurrmsg.title] comm message. Answer: [aicurrmsg.answered]")
 					if(aicurrmsg.answer_callback)
 						aicurrmsg.answer_callback.InvokeAsync()
 				aistate = STATE_VIEWMESSAGE
@@ -516,10 +516,10 @@
 				if(!currmsg.answered && currmsg.possible_answers.len)
 					for(var/i in 1 to currmsg.possible_answers.len)
 						var/answer = currmsg.possible_answers[i]
-						dat += "<br>\[ <A HREF='?src=[REF(src)];operation=respond;answer=[i]'>Answer : [answer]</A> \]"
+						dat += "<br>\[ <A HREF='?src=[REF(src)];operation=respond;answer=[i]'>Answer: [answer]</A> \]"
 				else if(currmsg.answered)
 					var/answered = currmsg.possible_answers[currmsg.answered]
-					dat += "<br> Archived Answer : [answered]"
+					dat += "<br> Archived Answer: [answered]"
 				dat += "<BR><BR>\[ <A HREF='?src=[REF(src)];operation=delmessage'>Delete</A> \]"
 			else
 				aistate = STATE_MESSAGELIST
@@ -656,10 +656,10 @@
 				if(!aicurrmsg.answered && aicurrmsg.possible_answers.len)
 					for(var/i in 1 to aicurrmsg.possible_answers.len)
 						var/answer = aicurrmsg.possible_answers[i]
-						dat += "<br>\[ <A HREF='?src=[REF(src)];operation=ai-respond;answer=[i]'>Answer : [answer]</A> \]"
+						dat += "<br>\[ <A HREF='?src=[REF(src)];operation=ai-respond;answer=[i]'>Answer: [answer]</A> \]"
 				else if(aicurrmsg.answered)
 					var/answered = aicurrmsg.possible_answers[aicurrmsg.answered]
-					dat += "<br> Archived Answer : [answered]"
+					dat += "<br> Archived Answer: [answered]"
 				dat += "<BR><BR>\[ <A HREF='?src=[REF(src)];operation=ai-delmessage'>Delete</A> \]"
 			else
 				aistate = STATE_MESSAGELIST

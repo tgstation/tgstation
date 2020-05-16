@@ -421,7 +421,7 @@
 		if(!M.has_dna())
 			to_chat(P, "<b>No DNA detected</b>")
 			return
-		to_chat(P, "<font color = red><h3>[M]'s UE string : [M.dna.unique_enzymes]</h3></font>")
+		to_chat(P, "<font color = red><h3>[M]'s UE string: [M.dna.unique_enzymes]</h3></font>")
 		if(M.dna.unique_enzymes == P.master_dna)
 			to_chat(P, "<b>DNA is a match to stored Master DNA.</b>")
 		else

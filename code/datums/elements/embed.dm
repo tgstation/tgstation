@@ -82,7 +82,7 @@
 		var/armor = max(victim.run_armor_check(hit_zone, "bullet", silent=TRUE), victim.run_armor_check(hit_zone, "bomb", silent=TRUE)) // we'll be nice and take the better of bullet and bomb armor
 
 		if(armor) // we only care about armor penetration if there's actually armor to penetrate
-			var/pen_mod = -armor + weapon.armour_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
+			var/pen_mod = -armor + weapon.armor_penetration // even a little bit of armor can make a big difference for shrapnel with large negative armor pen
 			actual_chance += pen_mod // doing the armor pen as a separate calc just in case this ever gets expanded on
 			if(actual_chance <= 0)
 				victim.visible_message("<span class='danger'>[weapon] bounces off [victim]'s armor!</span>", "<span class='notice'>[weapon] bounces off your armor!</span>", vision_distance = COMBAT_MESSAGE_RANGE)

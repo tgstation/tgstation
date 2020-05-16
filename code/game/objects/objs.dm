@@ -330,4 +330,4 @@
 /obj/handle_ricochet(obj/projectile/P)
 	. = ..()
 	if(. && ricochet_damage_mod)
-		take_damage(P.damage * ricochet_damage_mod, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armour_penetration) // pass along ricochet_damage_mod damage to the structure for the ricochet
+		take_damage(P.damage * ricochet_damage_mod, P.damage_type, P.flag, 0, turn(P.dir, 180), P.armor_penetration) // pass along ricochet_damage_mod damage to the structure for the ricochet

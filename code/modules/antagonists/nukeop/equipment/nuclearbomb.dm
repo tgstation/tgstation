@@ -88,7 +88,7 @@
 
 /obj/machinery/nuclearbomb/proc/disk_check(obj/item/disk/nuclear/D)
 	if(D.fake)
-		say("Authentication failure; disk not recognised.")
+		say("Authentication failure; disk not recognized.")
 		return FALSE
 	else
 		return TRUE
@@ -636,7 +636,7 @@ This is here to make the tiles around the station mininuke change when it's arme
 /obj/item/disk/nuclear/process()
 	if(fake)
 		STOP_PROCESSING(SSobj, src)
-		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck")
+		CRASH("A fake nuke disk tried to call process(). Who the fuck and how the fuck?")
 	var/turf/newturf = get_turf(src)
 	if(newturf && lastlocation == newturf)
 		if(last_disk_move < world.time - 5000 && prob((world.time - 5000 - last_disk_move)*0.0001))

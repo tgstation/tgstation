@@ -84,7 +84,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	force = 20
-	armour_penetration = 75
+	armor_penetration = 75
 	block_chance = 50
 	sharpness = IS_SHARP
 	max_charges = 4

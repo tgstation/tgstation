@@ -263,7 +263,7 @@
 	log_game("Antagonists at round end were...")
 	for(var/antag_name in total_antagonists)
 		var/list/L = total_antagonists[antag_name]
-		log_game("[antag_name]s :[L.Join(", ")].")
+		log_game("[antag_name]s: [L.Join(", ")].")
 
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()

@@ -11,7 +11,7 @@
 	throwforce = 20
 	throw_speed = 4
 	embedding = list("impact_pain_mult" = 3)
-	armour_penetration = 10
+	armor_penetration = 10
 	custom_materials = list(/datum/material/iron=1150, /datum/material/glass=2075)
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "poked", "jabbed", "torn", "gored")
@@ -160,7 +160,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	force = 12
 	throwforce = 22
-	armour_penetration = 15				//Enhanced armor piercing
+	armor_penetration = 15				//Enhanced armor piercing
 
 /obj/item/spear/bonespear/ComponentInitialize()
 	. = ..()

@@ -307,7 +307,7 @@ GLOBAL_DATUM_INIT(sortInstance, /datum/sortInstance, new())
 	 * key, gallopRight returns the index after the rightmost equal element.
 	 *
 	 * @param key the key whose insertion point to search for
-	 * @param a the array in which to search
+	 * @param the array in which to search
 	 * @param base the index of the first element in the range
 	 * @param len the length of the range; must be > 0
 	 * @param hint the index at which to begin the search, 0 <= hint < n.

@@ -32,7 +32,7 @@
 	attack_verb_continuous = "smashes into the side of"
 	attack_verb_simple = "smash into the side of"
 	attack_sound = 'sound/weapons/sonic_jackhammer.ogg'
-	throw_message = "merely dinks off of the"
+	throw_message = "merely dinks off the"
 	speed = 4
 	move_to_delay = 10
 	mouse_opacity = MOUSE_OPACITY_ICON

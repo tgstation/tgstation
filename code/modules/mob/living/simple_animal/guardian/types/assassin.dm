@@ -52,7 +52,7 @@
 	if(toggle)
 		melee_damage_lower = initial(melee_damage_lower)
 		melee_damage_upper = initial(melee_damage_upper)
-		armour_penetration = initial(armour_penetration)
+		armor_penetration = initial(armor_penetration)
 		obj_damage = initial(obj_damage)
 		environment_smash = initial(environment_smash)
 		alpha = initial(alpha)
@@ -70,7 +70,7 @@
 			return
 		melee_damage_lower = 50
 		melee_damage_upper = 50
-		armour_penetration = 100
+		armor_penetration = 100
 		obj_damage = 0
 		environment_smash = ENVIRONMENT_SMASH_NONE
 		new /obj/effect/temp_visual/guardian/phase/out(get_turf(src))

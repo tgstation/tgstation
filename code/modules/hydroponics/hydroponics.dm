@@ -724,7 +724,7 @@
 					break
 		myseed.reagents_from_genes()
 		adjustHealth(-15)
-		to_chat(user, "<span class='notice'>You carefully shear the genes off of the [myseed.plantname], leaving the plant looking weaker.</span>")
+		to_chat(user, "<span class='notice'>You carefully shear the genes off the [myseed.plantname], leaving the plant looking weaker.</span>")
 		update_icon()
 		return
 

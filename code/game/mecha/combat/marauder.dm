@@ -72,7 +72,7 @@
 	max_ammo()
 
 /obj/mecha/combat/marauder/mauler
-	desc = "Heavy-duty, combat exosuit, developed off of the existing Marauder model."
+	desc = "Heavy-duty, combat exosuit, developed off the existing Marauder model."
 	name = "\improper Mauler"
 	icon_state = "mauler"
 	operation_req_access = list(ACCESS_SYNDICATE)

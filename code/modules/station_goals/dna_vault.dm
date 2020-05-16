@@ -7,7 +7,7 @@
 #define VAULT_NOBREATH "Lung Enhancement"
 #define VAULT_FIREPROOF "Thermal Regulation"
 #define VAULT_STUNTIME "Neural Repathing"
-#define VAULT_ARMOUR "Bone Reinforcement"
+#define VAULT_ARMOR "Bone Reinforcement"
 #define VAULT_SPEED "Leg Muscle Stimulus"
 #define VAULT_QUICK "Arm Muscle Stimulus"
 
@@ -189,7 +189,7 @@
 	if(user in power_lottery)
 		return
 	var/list/L = list()
-	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOUR,VAULT_SPEED,VAULT_QUICK)
+	var/list/possible_powers = list(VAULT_TOXIN,VAULT_NOBREATH,VAULT_FIREPROOF,VAULT_STUNTIME,VAULT_ARMOR,VAULT_SPEED,VAULT_QUICK)
 	L += pick_n_take(possible_powers)
 	L += pick_n_take(possible_powers)
 	power_lottery[user] = L
@@ -271,7 +271,7 @@
 		if(VAULT_STUNTIME)
 			to_chat(H, "<span class='notice'>Nothing can keep you down for long.</span>")
 			S.stunmod = 0.5
-		if(VAULT_ARMOUR)
+		if(VAULT_ARMOR)
 			to_chat(H, "<span class='notice'>You feel tough.</span>")
 			S.armor = 30
 			ADD_TRAIT(H, TRAIT_PIERCEIMMUNE, "dna_vault")

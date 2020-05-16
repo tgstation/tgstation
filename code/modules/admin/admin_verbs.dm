@@ -571,7 +571,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		T.mind.AddSpell(new S)
 	else
 		T.AddSpell(new S)
-		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mindswap or cloning!</span>")
+		message_admins("<span class='danger'>Spells given to mindless mobs will not be transferred in mind swap or cloning!</span>")
 
 /client/proc/remove_spell(mob/T in GLOB.mob_list)
 	set category = "Fun"
@@ -628,7 +628,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		src.holder.output_ai_laws()
 
 /client/proc/deadmin()
-	set name = "Deadmin"
+	set name = "De-admin"
 	set category = "Admin"
 	set desc = "Shed your admin powers."
 
@@ -642,12 +642,12 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 
 	to_chat(src, "<span class='interface'>You are now a normal player.</span>")
-	log_admin("[src] deadminned themselves.")
+	log_admin("[src] de-adminned themselves.")
 	message_admins("[src] deadminned themselves.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Deadmin")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "De-admin")
 
 /client/proc/readmin()
-	set name = "Readmin"
+	set name = "Re-admin"
 	set category = "Admin"
 	set desc = "Regain your admin powers."
 
@@ -669,7 +669,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	to_chat(src, "<span class='interface'>You are now an admin.</span>", confidential = TRUE)
 	message_admins("[src] re-adminned themselves.")
 	log_admin("[src] re-adminned themselves.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Readmin")
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Re-admin")
 
 /client/proc/populate_world(amount = 50 as num)
 	set name = "Populate World"

@@ -113,7 +113,7 @@ To add a crossbreed:
 
 /obj/item/slimecrossbeaker/process()
 	if(!reagents.total_volume)
-		visible_message("<span class='notice'>[src] has been drained completely, and melts away.</span>")
+		visible_message("<span class='notice'>[src] has been drained completely and melts away.</span>")
 		qdel(src)
 
 /obj/item/slimecrossbeaker/bloodpack //Pack of 50u blood. Deletes on empty.

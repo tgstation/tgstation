@@ -26,7 +26,7 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/scrubber/update_icon_state()
-	icon_state = "pscrubber:[on]"
+	icon_state = "pscrubber: [on]"
 
 /obj/machinery/portable_atmospherics/scrubber/update_overlays()
 	. = ..()
@@ -162,7 +162,7 @@
 	anchored = FALSE
 
 /obj/machinery/portable_atmospherics/scrubber/huge/update_icon_state()
-	icon_state = "scrubber:[on]"
+	icon_state = "scrubber: [on]"
 
 /obj/machinery/portable_atmospherics/scrubber/huge/process_atmos()
 	if((!anchored && !movable) || !is_operational())

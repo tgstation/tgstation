@@ -21,7 +21,7 @@ import sys
 import string
 
 def parse_text_flags(text, previous):
-    flag_values = {"BUILDMODE":1, "BUILD":1, "ADMIN":2, "REJUVINATE":2, "REJUV":2, "BAN":4, "FUN":8, "SERVER":16, "DEBUG":32, "POSSESS":64, "PERMISSIONS":128, "RIGHTS":128, "STEALTH":256, "POLL":512, "VAREDIT":1024, "SOUNDS":2048, "SOUND":2048, "SPAWN":4096, "CREATE":4096, "AUTOLOGIN":8192, "AUTOADMIN":8192, "DBRANKS":16384}
+    flag_values = {"BUILDMODE":1, "BUILD":1, "ADMIN":2, "REJUVENATE":2, "REJUV":2, "BAN":4, "FUN":8, "SERVER":16, "DEBUG":32, "POSSESS":64, "PERMISSIONS":128, "RIGHTS":128, "STEALTH":256, "POLL":512, "VAREDIT":1024, "SOUNDS":2048, "SOUND":2048, "SPAWN":4096, "CREATE":4096, "AUTOLOGIN":8192, "AUTOADMIN":8192, "DBRANKS":16384}
     flags_int = 8192
     exclude_flags_int = 0
     can_edit_flags_int = 0

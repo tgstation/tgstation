@@ -800,7 +800,7 @@
 	description = "A strong mineral acid with the molecular formula H2SO4."
 	color = "#00FF32"
 	toxpwr = 1
-	var/acidpwr = 10 //the amount of protection removed from the armour
+	var/acidpwr = 10 //the amount of protection removed from the armor
 	taste_description = "acid"
 	self_consuming = TRUE
 
