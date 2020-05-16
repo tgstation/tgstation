@@ -98,7 +98,7 @@ if [ "$DATABASE_EXISTS" != "ss13_db" ]; then
     mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 -e 'CREATE DATABASE IF NOT EXISTS ss13_db;'
 	cat "$1/$TGS_PREFIXED_SCHEMA_FILE"
     mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 ss13_db < "$1/$TGS_PREFIXED_SCHEMA_FILE"
-    mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 ss13_db -e "INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES ($TGS_SCHEMA_MAJOR_VERSION, $TGS_SCHEMA_MINOR_VERSION)"
+    mysql -u root --password=$MYSQL_ROOT_PASSWORD -h mariadb -P 3306 ss13_db -e "INSERT INTO \`SS13_schema_revision\` (\`major\`, \`minor\`) VALUES ($TGS_SCHEMA_MAJOR_VERSION, $TGS_SCHEMA_MINOR_VERSION)"
 fi
 
 #just trust me, i nearly lost my shit
