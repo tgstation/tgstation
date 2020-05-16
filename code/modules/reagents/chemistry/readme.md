@@ -40,7 +40,7 @@ The holder (reagents datum) is the datum that holds a list of all reagents curre
 
 		metabolize(var/mob/living/carbon/C)
 			This proc is called by the mobs life proc. It simply calls on_mob_life for
-			all contained reagents. You shouldnt have to use this one directly.
+			all contained reagents. You shouldn't have to use this one directly.
 
 		handle_reactions()
 			This proc check all recipes and, on a match, uses them.

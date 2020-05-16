@@ -291,7 +291,7 @@ All the important duct code:
 		"<span class='hear'>You hear ratcheting.</span>")
 		attempt_connect()
 	return TRUE
-///collection of all the sanity checks to prevent us from stacking ducts that shouldnt be stacked
+///collection of all the sanity checks to prevent us from stacking ducts that shouldn't be stacked
 /obj/machinery/duct/proc/can_anchor(turf/T)
 	if(!T)
 		T = get_turf(src)
@@ -371,7 +371,7 @@ All the important duct code:
 	else
 		connects = EAST | WEST
 
-///don't connect to other multilayered stuff because honestly it shouldnt be done and I dont wanna deal with it
+///don't connect to other multilayered stuff because honestly it shouldn't be done and I dont wanna deal with it
 /obj/machinery/duct/multilayered/connect_duct(obj/machinery/duct/D, direction, ignore_color)
 	if(istype(D, /obj/machinery/duct/multilayered))
 		return
