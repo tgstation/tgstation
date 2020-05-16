@@ -5,12 +5,16 @@ The goal is a one stop solution for hosting /tg/station on linux via Docker. Wil
 This requires Docker with the `docker-compose` command to be installed on your system. See ubuntu instructions [here](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository). If you fail to find the `docker-ce` package refer to [this StackOverflow answer](https://unix.stackexchange.com/a/363058).
 
 Some basic configuration options in `docker-compose.yml` before starting:
+- Change TGS_ADMIN_CKEY to your ckey so you may have initial control over the server.
+- Change TGS_SCHEMA_MAJOR_VERSION to your repo's latest schema major version.
+- Change TGS_SCHEMA_MINOR_VERSION to your repo's latest schema minor version.
+- If you want to change the MariaDB password, there are three locations in the file it must be changed from its default value of `ChangeThisInBothMariaDBAndTgsConnectionString`.
+- Change TGS_BYOND to set the initial BYOND version.
 - Ports are mapped in the form `<external>:<internal>` NEVER change the internal port. If you want to prevent a service from being exposed, delete/comment out the entire line.
-	- The first (3306) is the exposed mariadb port
+	- The first (3306) is the exposed mariadb port. Do not expose this over the internet without changing the password. In general it's a bad idea.
 	- The second (1337) is the exposed DreamDaemon port
-	- The third (5000) is the exposed TGS API port
-- Change TGS_BYOND to set the initial BYOND version
-- Change TGS_REPO to set the repository used. Note, this must be a /tg/ derivative from at least 2019 that implements the latest TGS [DreamMaker API](https://github.com/tgstation/tgstation-server#integrating). Repositories that follow tgstation/tgstation will have this automatically.
+	- The third (5000) is the exposed TGS API port. Do not expose this over the internet. Setup an HTTPS reverse proxy instead.
+- Change TGS_REPO to set the repository used. Note, this must be a /tg/ derivative from at least 2019 that implements the latest TGS [DreamMaker API](https://github.com/tgstation/tgstation-server#integrating). Repositories that follow tgstation/tgstation will have this automatically. It also must contain a prefixed SQL schema setup file.
 
 To launch, change to this directory and run `docker-compose up`. The initial setup will take a long time. If that fails, Ctrl+C out, run `docker-compose down`, remove `./TGS_Instances` and `./Database`, and try again. Once setup is complete, you can either leave the terminal running, or `Ctrl+C` out (this will stop DreamDaemon) and run `docker-compose -d` to run it in the background.
 
