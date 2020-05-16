@@ -106,7 +106,7 @@
 		cell.forceMove(loc)
 		cell = null
 		visible_message("<span class='notice'>[user] crowbars out the power cell from [src].</span>",
-						"<span class='notice'>You pry the powercell out of [src].</span>")
+						"<span class='notice'>You pry the power cell out of [src].</span>")
 	else if(is_wire_tool(I) && open)
 		return attack_hand(user)
 	else if(load && ismob(load))  // chance to knock off rider

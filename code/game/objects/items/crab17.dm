@@ -84,7 +84,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
+	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.

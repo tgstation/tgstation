@@ -731,7 +731,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_to_summon.visible_message("<span class='warning'>[cultist_to_summon] suddenly disappears in a flash of red light!</span>", \
 									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
-	visible_message("<span class='warning'>A foggy shape materializes atop [src] and solidifes into [cultist_to_summon]!</span>")
+	visible_message("<span class='warning'>A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!</span>")
 	cultist_to_summon.forceMove(get_turf(src))
 	qdel(src)
 

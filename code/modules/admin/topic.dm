@@ -145,7 +145,7 @@
 					message_admins("[key_name(usr)] created an abductor team.")
 					log_admin("[key_name(usr)] created an abductor team.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
+					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunately there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create an abductor team.")
 			if("revenant")
 				if(src.makeRevenant())

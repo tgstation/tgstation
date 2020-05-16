@@ -751,7 +751,7 @@
 		return -1
 
 	if(!held_item)
-		if(src == usr) //So that other mobs wont make this message appear when they're bludgeoning you.
+		if(src == usr) //So that other mobs won't make this message appear when they're bludgeoning you.
 			to_chat(src, "<span class='warning'>You have nothing to drop!</span>")
 		return 0
 
