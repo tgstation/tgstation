@@ -38,7 +38,7 @@ if ! { [ -x "$has_git" ] && [ -x "$has_cmake" ] && [ -x "$has_gpp" ] && [ -f "/u
 	else
 		sudo dpkg --add-architecture i386
 		sudo apt-get update
-		apt-get install -y git cmake libmariadb-dev:i386 libssl-dev:i386 grep g++-6 g++-6-multilib
+		sudo apt-get install -y git cmake libmariadb-dev:i386 libssl-dev:i386 grep g++-6 g++-6-multilib
 		sudo ln -s /usr/include/mariadb /usr/include/mysql
 		sudo rm -rf /var/lib/apt/lists/*
 	fi
