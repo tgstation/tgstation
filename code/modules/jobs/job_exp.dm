@@ -274,7 +274,10 @@ GLOBAL_PROTECT(exp_to_update)
 	if(!SSdbcore.Connect())
 		return FALSE
 
-	var/datum/DBQuery/flags_read = SSdbcore.NewQuery("SELECT flags FROM [format_table_name("player")] WHERE ckey='[ckey]'")
+	var/datum/DBQuery/flags_read = SSdbcore.NewQuery(
+		"SELECT flags FROM [format_table_name("player")] WHERE ckey=:ckey",
+		list("ckey" = ckey)
+	)
 
 	if(!flags_read.Execute(async = TRUE))
 		qdel(flags_read)

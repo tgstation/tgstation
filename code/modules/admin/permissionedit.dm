@@ -233,7 +233,7 @@
 		qdel(query_add_admin)
 		var/datum/DBQuery/query_add_admin_log = SSdbcore.NewQuery({"
 			INSERT INTO [format_table_name("admin_log")] (datetime, round_id, adminckey, adminip, operation, target, log)
-			VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'add admin', :target, 'New admin added: [.]')
+			VALUES (:time, :round_id, :adminckey, INET_ATON(:adminip), 'add admin', :target, 'New admin added: ' + :target)
 		"}, list("time" = SQLtime(), "round_id" = "[GLOB.round_id]", "adminckey" = usr.ckey, "adminip" = usr.client.address, "target" = .))
 		if(!query_add_admin_log.warn_execute())
 			qdel(query_add_admin_log)
@@ -316,7 +316,10 @@
 	if(use_db)
 		//if a player was tempminned before having a permanent change made to their rank they won't yet be in the db
 		var/old_rank
-		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery("SELECT `rank` FROM [format_table_name("admin")] WHERE ckey = '[admin_ckey]'")
+		var/datum/DBQuery/query_admin_in_db = SSdbcore.NewQuery(
+			"SELECT `rank` FROM [format_table_name("admin")] WHERE ckey = :admin_ckey",
+			list("admin_ckey" = admin_ckey)
+		)
 		if(!query_admin_in_db.warn_execute())
 			qdel(query_admin_in_db)
 			return
