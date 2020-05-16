@@ -63,7 +63,7 @@
 				sbed.op_computer = src
 				break
 
-/obj/machinery/computer/ui_state()
+/obj/machinery/computer/operating/ui_state()
 	return GLOB.not_incapacitated_state
 
 /obj/machinery/computer/operating/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null)
