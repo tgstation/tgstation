@@ -263,4 +263,3 @@
 	
 /obj/item/crusher_trophy/broodmother_tongue/proc/remove_lavaproofing(mob/living/L)
 	L.weather_immunities -= "lava"
-	
