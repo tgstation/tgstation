@@ -25,8 +25,8 @@
 	icon_dead = "legionnaire_dead"
 	icon_gib = "syndicate_gib"
 	health_doll_icon = "legionnaire"
-	maxHealth = 800
-	health = 800
+	maxHealth = 1000
+	health = 1000
 	melee_damage_lower = 30
 	melee_damage_upper = 30
 	attack_verb_continuous = "slashes its arms at"
@@ -48,6 +48,7 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/myhead = null
 	var/obj/structure/legionnaire_bonfire/mypile = null
 	var/has_head = TRUE
+	var/charging
 
 /datum/action/innate/elite_attack/legionnaire_charge
 	name = "Legionnaire Charge"
@@ -95,31 +96,49 @@
 			bonfire_teleport()
 		if(SPEW_SMOKE)
 			spew_smoke()
+			
+/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/Move()
+	if(!charging)
+		..()
 
+/mob/living/simple_animal/hostile/asteroid/elite/legionnaire/MiddleClickOn(atom/A)
+	. = ..()
+	if(myhead != null)
+		var/turf/T = get_turf(A)
+		if(T != null)
+			myhead.LoseTarget()
+			myhead.Goto(T, myhead.move_to_delay)
+		
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge(target)
 	ranged_cooldown = world.time + 50
+	charging = TRUE
 	var/dir_to_target = get_dir(get_turf(src), get_turf(target))
 	var/turf/T = get_step(get_turf(src), dir_to_target)
-	for(var/i in 1 to 4)
+	for(var/i in 1 to 6)
 		new /obj/effect/temp_visual/dragon_swoop/legionnaire(T)
 		T = get_step(T, dir_to_target)
 	playsound(src,'sound/magic/demon_attack1.ogg', 200, 1)
 	visible_message("<span class='boldwarning'>[src] prepares to charge!</span>")
-	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, dir_to_target, 0), 5)
+	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, dir_to_target, 0), 4)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge_2(var/move_dir, var/times_ran)
-	if(times_ran >= 4)
+	if(times_ran >= 6)
+		charging = FALSE
 		return
 	var/turf/T = get_step(get_turf(src), move_dir)
 	if(ismineralturf(T))
 		var/turf/closed/mineral/M = T
 		M.gets_drilled()
 	if(T.density)
+		charging = FALSE
 		return
 	for(var/obj/structure/window/W in T.contents)
+		charging = FALSE
 		return
 	for(var/obj/machinery/door/D in T.contents)
-		return
+		if(D.density)
+			charging = FALSE
+			return
 	forceMove(T)
 	playsound(src,'sound/effects/bang.ogg', 200, 1)
 	var/list/hit_things = list()
@@ -128,12 +147,12 @@
 		if(faction_check_mob(L))
 			return
 		hit_things += L
-		visible_message("<span class='boldwarning'>[src] attacks [L] with much force!</span>")
-		to_chat(L, "<span class='userdanger'>[src] grabs you and throws you with much force!</span>")
+		visible_message("<span class='boldwarning'>[src] tramples and kicks [L]!</span>")
+		to_chat(L, "<span class='userdanger'>[src] tramples you and kicks you away!</span>")
 		L.safe_throw_at(throwtarget, 10, 1, src)
 		L.Paralyze(20)
 		L.adjustBruteLoss(50)
-	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 2)
+	addtimer(CALLBACK(src, .proc/legionnaire_charge_2, move_dir, (times_ran + 1)), 1.5)
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/head_detach(target)
 	ranged_cooldown = world.time + 10
@@ -153,11 +172,11 @@
 		myhead = newhead
 		myhead.body = src
 		if(health < maxHealth * 0.25)
+			myhead.melee_damage_lower = 40
+			myhead.melee_damage_upper = 40
+		else if(health < maxHealth * 0.5)
 			myhead.melee_damage_lower = 30
 			myhead.melee_damage_upper = 30
-		else if(health < maxHealth * 0.5)
-			myhead.melee_damage_lower = 20
-			myhead.melee_damage_upper = 20
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/onHeadDeath()
 	myhead = null
@@ -221,10 +240,10 @@
 	icon_aggro = "legionnaire_head"
 	icon_dead = "legionnaire_dead"
 	icon_gib = "syndicate_gib"
-	maxHealth = 80
-	health = 80
-	melee_damage_lower = 10
-	melee_damage_upper = 10
+	maxHealth = 200
+	health = 200
+	melee_damage_lower = 20
+	melee_damage_upper = 20
 	attack_verb_continuous = "bites at"
 	attack_verb_simple = "bite at"
 	attack_sound = 'sound/effects/curse1.ogg'
@@ -282,11 +301,12 @@
 
 /obj/item/crusher_trophy/legionnaire_spine
 	name = "legionnaire spine"
-	desc = "The spine of a legionnaire.  It almost feels like it's moving..."
+	desc = "The spine of a legionnaire.  With some creativity, you could use it as a crusher trophy.  Alternatively, shaking it might do something as well."
 	icon = 'icons/obj/lavaland/elite_trophies.dmi'
 	icon_state = "legionnaire_spine"
 	denied_type = /obj/item/crusher_trophy/legionnaire_spine
 	bonus_value = 20
+	var/use_time
 
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
@@ -299,3 +319,18 @@
 	A.GiveTarget(target)
 	A.friends = user
 	A.faction = user.faction.Copy()
+	
+/obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
+	if(!isliving(user))
+		return
+	var/mob/living/L = user
+	if(use_time > world.time)
+		L.visible_message("<span class='warning'>[L] shakes the [src], but nothing happens...</span>")
+		to_chat(L, "<b>You need to wait longer to use this again.</b>")
+		return
+	L.visible_message("<span class='boldwarning'>[L] shakes the [src] and summons a legion skull!</span>")
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(L.loc)
+	A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
+	A.friends = L
+	A.faction = L.faction.Copy()
+	use_time = world.time + 40
