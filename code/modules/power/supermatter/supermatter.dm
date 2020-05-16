@@ -868,18 +868,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
 			if(W.use_tool(src, user, 4.5 SECONDS, volume=100))
 				to_chat(user, "<span class='notice'>The [src] is reacting violently with the fluid!</span>")
+				priority_announce("We detected an unusual spike in the Supermatter Crystal containment protocols, please stand by")
+				sound_to_playing_players('sound/misc/notice2.ogg')
 				for(var/i, i<5, i++)
 					src.fire_nuclear_particle()
-					radiation_pulse(src, 550, 4)
-					sleep(5)
-				priority_announce("We detected an unusual spike in the Supermatter Crystal containment protocols, please standby")
+					radiation_pulse(src, 1000, 4)
+					sleep(1)
 				if(W.use_tool(src, user, 7.5 SECONDS, volume=100))
 					to_chat(user, "<span class='notice'>The [src] has been violently destabilized!</span>")
 					destabilized = TRUE
-					matter_power += 3500
-					damage += 350
+					matter_power += 1500
+					damage += 250
 					injector.filled = FALSE
-					user.apply_damage(25, BURN)
+					user.apply_damage(45, BURN)
 
 	else if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
