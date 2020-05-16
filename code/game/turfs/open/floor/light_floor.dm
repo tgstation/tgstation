@@ -86,6 +86,7 @@
 	return ..()
 
 /turf/open/floor/light/AltClick(mob/living/user)
+	..()
 	if(!can_modify_colour)
 		return
 	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
