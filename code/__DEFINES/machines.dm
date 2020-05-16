@@ -97,7 +97,8 @@
 #define SUPERMATTER_WARNING 3		// Ambient temp > CRITICAL_TEMPERATURE OR integrity damaged
 #define SUPERMATTER_DANGER 4		// Integrity < 50%
 #define SUPERMATTER_EMERGENCY 5		// Integrity < 25%
-#define SUPERMATTER_DELAMINATING 6	// Pretty obvious.
+#define SUPERMATTER_DESTABILIZED 6  // Crystal Matrix destabilized
+#define SUPERMATTER_DELAMINATING 7	// Pretty obvious.
 
 //Nuclear bomb stuff
 #define NUKESTATE_INTACT		5

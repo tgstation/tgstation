@@ -549,6 +549,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 2
 	surplus = 10
 
+/datum/uplink_item/dangerous/crystal_destabilizer
+	name = "Supermatter Crystal Destabilizer"
+	desc = "The last resort of the Syndicate to destroy Centcomm, it allows the user to disrupt the fabric of the Crystal Matrix\
+			so that everything and everyone will be swallowed by the infinite recurring structure. To use it, directly inject the crystal \
+			and wait for the three passages to be done"
+	item = /obj/item/crystal_destabilizer
+	cost = 18
+
 // Stealthy Weapons
 /datum/uplink_item/stealthy_weapons
 	category = "Stealthy Weapons"

@@ -201,6 +201,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/datum/looping_sound/supermatter/soundloop
 
 	var/moveable = FALSE
+	///Check if the SM Crystal Matrix has been destabilized
+	var/destabilized = FALSE
 
 	/// cooldown tracker for accent sounds,
 	var/last_accent_sound = 0
@@ -268,6 +270,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(integrity < SUPERMATTER_DELAM_PERCENT)
 		return SUPERMATTER_DELAMINATING
 
+	if(destabilized)
+		return SUPERMATTER_DESTABILIZED
+
 	if(integrity < SUPERMATTER_EMERGENCY_PERCENT)
 		return SUPERMATTER_EMERGENCY
 
@@ -294,6 +299,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			playsound(src, 'sound/machines/engine_alert2.ogg', 100)
 		if(SUPERMATTER_WARNING)
 			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
+		if(SUPERMATTER_DESTABILIZED)
+			sound_to_playing_players('sound/misc/notice1.ogg')
+			priority_announce("WARNING - The Supermatter Matrix has been destabilized, this can incur in a TK-class world ending scenario \
+								please don't let the Crystal delaminate any further or the entire reality is at risk")
 
 /obj/machinery/power/supermatter_crystal/proc/get_integrity()
 	var/integrity = damage / explosion_point
@@ -343,6 +352,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			L.rad_act(rads)
 
 	var/turf/T = get_turf(src)
+	var/datum/gas_mixture/air = T.return_air()
 	for(var/mob/M in GLOB.player_list)
 		if(M.z == z)
 			SEND_SOUND(M, 'sound/magic/charge.ogg')
@@ -360,6 +370,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(T)
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = power
+	else if((air.temperature > 100000 && bzcomp > 0.5) || destabilized)
+		investigate_log("has collapsed and is eating up the universe.", INVESTIGATE_SUPERMATTER)
+		if(T) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.
+			qdel(src)
+			new/obj/destabilized_supermatter(T)
+			return //No boom for me sir
 	investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
 	explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
 	qdel(src)
@@ -841,6 +857,30 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					to_chat(user, "<span class='notice'>A tiny piece of \the [W] falls off, rendering it useless!</span>")
 			else
 				to_chat(user, "<span class='warning'>You fail to extract a sliver from \The [src]! \the [W] isn't sharp enough anymore.</span>")
+	if(istype(W, /obj/item/crystal_destabilizer))
+		var/obj/item/crystal_destabilizer/injector = W
+		if(!injector.filled)
+			to_chat(user, "<span class='notice'>You already used \the [W]...</span>")
+			return
+		to_chat(user, "<span class='notice'>You carefully begin inject \the [src] with \the [W]... please don't move untill all the steps are finished</span>")
+		if(W.use_tool(src, user, 4 SECONDS, volume=100))
+			to_chat(user, "<span class='notice'>Seems that \the [src] is starting to resonate with the fluid!</span>")
+			playsound(get_turf(src), 'sound/effects/supermatter.ogg', 50, TRUE)
+			if(W.use_tool(src, user, 4.5 SECONDS, volume=100))
+				to_chat(user, "<span class='notice'>The [src] is reacting violently with the fluid!</span>")
+				for(var/i, i<5, i++)
+					src.fire_nuclear_particle()
+					radiation_pulse(src, 550, 4)
+					sleep(5)
+				priority_announce("We detected an unusual spike in the Supermatter Crystal containment protocols, please standby")
+				if(W.use_tool(src, user, 7.5 SECONDS, volume=100))
+					to_chat(user, "<span class='notice'>The [src] has been violently destabilized!</span>")
+					destabilized = TRUE
+					matter_power += 3500
+					damage += 350
+					injector.filled = FALSE
+					user.apply_damage(25, BURN)
+
 	else if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\
