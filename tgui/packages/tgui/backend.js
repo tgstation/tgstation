@@ -124,14 +124,19 @@ export const backendReducer = (state = {}, action) => {
 };
 
 export const backendMiddleware = store => {
-  let suspendTimer;
+  let suspendTimer = null;
   return next => action => {
     const { suspended } = selectBackend(store.getState());
     const { type, payload } = action;
 
-    if (type === 'backend/suspendStart') {
+    if (type === 'backend/suspendStart' && !suspendTimer) {
       logger.log(`suspending (${window.__windowId__})`);
-      // Close window if suspend action has failed.
+      callByond('', {
+        src: window.__ref__,
+        action: 'tgui:close',
+        window_id: window.__windowId__,
+      });
+      // Show a bluescreen if failed to suspend or force-close in time.
       suspendTimer = setTimeout(() => {
         throw new Error(`Failed to suspend '${window.__windowId__}'.`);
       }, SUSPEND_TIMEOUT);
@@ -139,6 +144,7 @@ export const backendMiddleware = store => {
 
     if (type === 'backend/suspendSuccess') {
       clearTimeout(suspendTimer);
+      suspendTimer = null;
       releaseHeldKeys();
       callByond('winset', {
         id: window.__windowId__,

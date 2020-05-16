@@ -100,10 +100,9 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 			keyUp(keycode)
 		return
 
-	// Process tgui logs
-	if(href_list["action"] == "tgui:log")
-		var/message = href_list["message"]
-		log_tgui("[usr] ([usr.ckey]):\n[message]")
+	// Tgui Topic middleware
+	if(!tgui_Topic(href, href_list, hsrc))
+		return
 
 	// Admin PM
 	if(href_list["priv_msg"])

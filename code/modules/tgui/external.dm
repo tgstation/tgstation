@@ -133,6 +133,7 @@
  * Used to track UIs for a mob.
  */
 /mob/var/list/open_uis = list()
+
 /**
  * public
  *
@@ -168,3 +169,25 @@
 		// Unset machine just to be sure.
 		if(src && src.mob)
 			src.mob.unset_machine()
+
+/**
+ * Middleware for /client/Topic. This proc allows processing topic calls
+ * before they reach /datum/tgui.
+ *
+ * return bool Whether the topic is passed (TRUE), or cancelled (FALSE).
+ */
+/proc/tgui_Topic(href, href_list, hsrc)
+	// Process tgui logs
+	if(href_list["action"] == "tgui:log")
+		var/message = href_list["message"]
+		log_tgui("[usr] ([usr.ckey]):\n[message]")
+	// Destroy windows that cannot be suspended due to disconnects
+	if(href_list["action"] == "tgui:close")
+		var/src_object = locate(href_list["src"])
+		if(!istype(src_object, /datum/tgui))
+			var/window_id = href_list["window_id"]
+			log_tgui("[usr] ([usr.ckey]):\nForce closing '[window_id].'")
+			usr << browse(null, "window=[window_id]")
+			return FALSE
+	// Pass
+	return TRUE

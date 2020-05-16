@@ -7,7 +7,7 @@
 import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';
-import { useBackend, backendSuspendStart } from '../backend';
+import { backendSuspendStart, useBackend } from '../backend';
 import { callByond, IS_IE8 } from '../byond';
 import { Box, Icon } from '../components';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
@@ -75,7 +75,6 @@ export class Window extends Component {
       children,
     } = this.props;
     const {
-      act,
       config,
       suspended,
     } = useBackend(this.context);
@@ -98,7 +97,6 @@ export class Window extends Component {
           onClose={() => {
             logger.log('pressed close');
             dispatch(backendSuspendStart());
-            act('tgui:close');
           }} />
         <div
           className={classes([
