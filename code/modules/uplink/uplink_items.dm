@@ -556,6 +556,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			and wait for the three passages to be done"
 	item = /obj/item/crystal_destabilizer
 	cost = 18
+	player_minimum = 25
 
 // Stealthy Weapons
 /datum/uplink_item/stealthy_weapons
