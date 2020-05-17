@@ -23,6 +23,9 @@
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	var/state = 0
 	var/list/allowed_books = list(/obj/item/book, /obj/item/spellbook, /obj/item/storage/book) //Things allowed in the bookcase
+	var/load_random_books = FALSE
+	var/random_category = null
+	var/books_to_load = 0
 
 /obj/structure/bookcase/examine(mob/user)
 	. = ..()
@@ -119,6 +122,9 @@
 		return
 	if(!istype(user))
 		return
+	if(load_random_books)
+		create_random_books(books_to_load, src, FALSE, random_category)
+		load_random_books = FALSE
 	if(contents.len)
 		var/obj/item/book/choice = input(user, "Which book would you like to remove from the shelf?") as null|obj in sortNames(contents.Copy())
 		if(choice)
@@ -140,8 +146,11 @@
 
 
 /obj/structure/bookcase/update_icon_state()
-	if(contents.len < 5)
-		icon_state = "book-[contents.len]"
+	var/amount = contents.len
+	if(load_random_books)
+		amount += books_to_load
+	if(amount < 5)
+		icon_state = "book-[amount]"
 	else
 		icon_state = "book-5"
 
