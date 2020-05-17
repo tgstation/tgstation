@@ -245,7 +245,6 @@
 	if(!items)
 		return output
 	for (var/item in items)
-		world.log << "get_assets [item]"
 		if(istype(item, /datum/asset/spritesheet))
 			var/datum/asset/spritesheet/asset = item
 			output["styles"] += list(asset.css_filename())
