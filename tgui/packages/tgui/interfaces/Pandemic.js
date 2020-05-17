@@ -6,16 +6,13 @@ import { Window } from '../layouts';
 
 export const PandemicBeakerDisplay = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     has_beaker,
     beaker_empty,
     has_blood,
     blood,
   } = data;
-
   const cant_empty = !has_beaker || beaker_empty;
-
   return (
     <Section
       title="Beaker"
@@ -71,13 +68,10 @@ export const PandemicBeakerDisplay = (props, context) => {
 
 export const PandemicDiseaseDisplay = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     is_ready,
   } = data;
-
   const viruses = data.viruses || [];
-
   return (
     viruses.map(virus => {
       const symptoms = virus.symptoms || [];
@@ -182,10 +176,8 @@ export const PandemicSymptomDisplay = (props, context) => {
     level,
     neutered,
   } = symptom;
-
   const thresholds = map((desc, label) => ({ desc, label }))(
     symptom.threshold_desc || {});
-
   return (
     <Section
       title={name}
@@ -240,14 +232,11 @@ export const PandemicSymptomDisplay = (props, context) => {
       )}
     </Section>
   );
-
 };
 
 export const PandemicAntibodyDisplay = (props, context) => {
   const { act, data } = useBackend(context);
-
   const resistances = data.resistances || [];
-
   return (
     <Section title="Antibodies">
       {resistances.length > 0 ? (
@@ -280,9 +269,11 @@ export const PandemicAntibodyDisplay = (props, context) => {
 
 export const Pandemic = (props, context) => {
   const { data } = useBackend(context);
-
   return (
-    <Window resizable>
+    <Window
+      width={520}
+      height={550}
+      resizable>
       <Window.Content scrollable>
         <PandemicBeakerDisplay />
         {!!data.has_blood && (

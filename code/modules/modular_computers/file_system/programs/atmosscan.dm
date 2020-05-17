@@ -6,8 +6,6 @@
 	network_destination = "atmos scan"
 	size = 4
 	tgui_id = "NtosAtmos"
-	ui_x = 300
-	ui_y = 350
 
 /datum/computer_file/program/atmosscan/ui_data(mob/user)
 	var/list/data = get_header_data()

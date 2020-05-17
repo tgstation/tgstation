@@ -33,9 +33,6 @@
 	var/available_on_syndinet = 0
 	/// ID of TGUI interface
 	var/tgui_id
-	/// Default size of TGUI window, in pixels
-	var/ui_x = 575
-	var/ui_y = 700
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
 
@@ -155,14 +152,12 @@
 		generate_network_log("Connection to [network_destination] closed.")
 	return 1
 
-
-/datum/computer_file/program/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui && tgui_id)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
-
-		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y)
+		ui = new(user, src, tgui_id, filedesc)
 		ui.open()
 
 // CONVENTIONS, READ THIS WHEN CREATING NEW PROGRAM AND OVERRIDING THIS PROC:
@@ -197,7 +192,6 @@
 
 				if(user && istype(user))
 					computer.ui_interact(user) // Re-open the UI on this computer. It should show the main screen now.
-
 
 /datum/computer_file/program/ui_host()
 	if(computer.physical)

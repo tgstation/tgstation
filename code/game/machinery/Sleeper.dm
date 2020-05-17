@@ -12,8 +12,6 @@
 	density = FALSE
 	state_open = TRUE
 	circuit = /obj/item/circuitboard/machine/sleeper
-	ui_x = 310
-	ui_y = 465
 
 	var/efficiency = 1
 	var/min_health = -25
@@ -139,13 +137,12 @@
 /obj/machinery/sleeper/ui_state()
 	if(controls_inside)
 		return GLOB.notcontained_state
-	else
-		return GLOB.default_state
+	return GLOB.default_state
 
-/obj/machinery/sleeper/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/sleeper/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Sleeper", name, ui_x, ui_y, master_ui)
+		ui = new(user, src, "Sleeper", name)
 		ui.open()
 
 /obj/machinery/sleeper/AltClick(mob/user)
@@ -288,8 +285,6 @@
 	idle_power_usage = 3000
 	circuit = /obj/item/circuitboard/machine/sleeper/party
 	var/leddit = FALSE //Get it like reddit and lead alright fine
-	ui_x = 310
-	ui_y = 400
 
 	controls_inside = TRUE
 	possible_chems = list(

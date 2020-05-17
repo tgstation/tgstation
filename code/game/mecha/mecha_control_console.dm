@@ -5,13 +5,11 @@
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_ROBOTICS)
 	circuit = /obj/item/circuitboard/computer/mecha_control
-	ui_x = 500
-	ui_y = 500
 
-/obj/machinery/computer/mecha/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, master_ui)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/mecha/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "ExosuitControlConsole", name, ui_x, ui_y, master_ui)
+		ui = new(user, src, "ExosuitControlConsole", name)
 		ui.open()
 
 /obj/machinery/computer/mecha/ui_data(mob/user)

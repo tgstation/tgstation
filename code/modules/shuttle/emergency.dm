@@ -8,8 +8,6 @@
 	desc = "For shuttle control."
 	icon_screen = "shuttle"
 	icon_keyboard = "tech_key"
-	ui_x = 400
-	ui_y = 350
 
 	var/auth_need = 3
 	var/list/authorized = list()
@@ -22,11 +20,11 @@
 /obj/machinery/computer/emergency_shuttle/ui_state()
 	return GLOB.human_adjacent_state
 
-/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
+/obj/machinery/computer/emergency_shuttle/ui_interact(mob/user, datum/tgui/ui)
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "EmergencyShuttleConsole", name, ui_x, ui_y, master_ui)
+		ui = new(user, src, "EmergencyShuttleConsole", name)
 		ui.open()
 
 /obj/machinery/computer/emergency_shuttle/ui_data()

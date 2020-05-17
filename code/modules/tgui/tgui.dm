@@ -17,16 +17,10 @@
 	var/datum/src_object
 	/// The title of te UI.
 	var/title
-	/// The ui_key of the UI. This allows multiple UIs for one src_object.
-	var/ui_key
 	/// The window_id for browse() and onclose().
 	var/window_id
 	/// Key that is used for remembering the window geometry.
 	var/window_key
-	/// The window width.
-	var/width = 0
-	/// The window height
-	var/height = 0
 	/// The interface (template) to be used for this UI.
 	var/interface
 	/// Update the UI every MC tick.
@@ -43,10 +37,6 @@
 	var/status = UI_INTERACTIVE
 	/// Topic state used to determine status/interactability.
 	var/datum/ui_state/state = null
-	/// The parent UI.
-	var/datum/tgui/master_ui
-	/// Children of this UI.
-	var/list/datum/tgui/children = list()
 
 /**
  * public
@@ -55,35 +45,19 @@
  *
  * required user mob The mob who opened/is using the UI.
  * required src_object datum The object or datum which owns the UI.
- * required ui_key string The ui_key of the UI.
  * required interface string The interface used to render the UI.
  * optional title string The title of the UI.
- * optional width int The window width.
- * optional height int The window height.
- * optional master_ui datum/tgui The parent UI.
- * optional state datum/ui_state The state used to determine status.
  *
  * return datum/tgui The requested UI.
  */
-/datum/tgui/New(mob/user, datum/src_object, ui_key, interface, title, width = 0, height = 0, datum/tgui/master_ui = null)
+/datum/tgui/New(mob/user, datum/src_object, interface, title)
 	src.user = user
 	src.src_object = src_object
-	src.ui_key = ui_key
-	src.window_key = "[REF(src_object)]-[ui_key]"
+	src.window_key = "[REF(src_object)]-main"
 	src.interface = interface
-
 	if(title)
-		src.title = sanitize(title)
-	if(width)
-		src.width = width
-	if(height)
-		src.height = height
-
-	src.master_ui = master_ui
-	if(master_ui)
-		master_ui.children += src
+		src.title = title
 	src.state = src_object.ui_state()
-
 	var/datum/asset/assets = get_asset_datum(/datum/asset/group/tgui)
 	assets.send(user)
 
@@ -93,13 +67,14 @@
  * Open this UI (and initialize it with data).
  */
 /datum/tgui/proc/open()
+	// Bail if there is no client.
 	if(!user.client)
-		return // Bail if there is no client.
-
-	update_status(push = FALSE) // Update the window status.
+		return
+	// Update the window status.
+	update_status(push = FALSE)
+	// Bail if we're not supposed to open.
 	if(status < UI_UPDATE)
-		return // Bail if we're not supposed to open.
-
+		return
 	var/list/free_windows = user.client.tgui_free_windows
 	var/has_free_window = !!length(free_windows)
 	// Use a recycled window
@@ -111,10 +86,7 @@
 	else
 		window_id = SStgui.create_window_id()
 		// Build window options
-		var/window_options = "can_minimize=0;auto_format=0"
-		// If we have a width and height, use them.
-		if(width && height)
-			window_options += "size=[width]x[height];"
+		var/window_options = "can_minimize=0;auto_format=0;"
 		// Remove titlebar and resize handles for a fancy window
 		if(user.client.prefs.tgui_fancy)
 			window_options += "titlebar=0;can_resize=0;"
@@ -171,7 +143,7 @@
 /**
  * public
  *
- * Close the UI, and all its children.
+ * Close the UI.
  */
 /datum/tgui/proc/close(recycle = TRUE)
 	if(status == UI_CLOSING)
@@ -199,12 +171,7 @@
 				user.client.tgui_free_windows -= window_id
 		src_object.ui_close(user)
 		SStgui.on_close(src)
-		// Loop through and close all children.
-		for(var/datum/tgui/child in children)
-			child.close()
-		children.Cut()
 	state = null
-	master_ui = null
 	qdel(src)
 
 /**
@@ -233,7 +200,6 @@
 		"status" = status,
 		"interface" = interface,
 		"fancy" = user.client.prefs.tgui_fancy,
-		"locked" = user.client.prefs.tgui_lock,
 		"user" = list(
 			"name" = "[user]",
 			"ckey" = "[user.ckey]",
@@ -242,7 +208,6 @@
 		"window" = list(
 			"id" = window_id,
 			"key" = window_key,
-			"size" = list(width, height),
 		),
 		// NOTE: Intentional \ref usage; tgui datums can't/shouldn't
 		// be tagged, so this is an effective unwrap
@@ -369,7 +334,7 @@
  * optional force_open bool If force_open should be passed to ui_interact.
  */
 /datum/tgui/proc/update(force_open = FALSE)
-	src_object.ui_interact(user, ui_key, src, force_open, master_ui)
+	src_object.ui_interact(user, src, force_open)
 
 /**
  * private
@@ -380,8 +345,6 @@
  */
 /datum/tgui/proc/update_status(push = FALSE)
 	var/status = src_object.ui_status(user, state)
-	if(master_ui)
-		status = min(status, master_ui.status)
 	set_status(status, push)
 	if(status == UI_CLOSE)
 		close()

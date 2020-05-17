@@ -147,13 +147,12 @@
 /obj/item/toy/crayon/ui_state()
 	return GLOB.hands_state
 
-/obj/item/toy/crayon/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
+/obj/item/toy/crayon/ui_interact(mob/user, datum/tgui/ui)
 	// tgui is a plague upon this codebase
-
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	// no u
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "Crayon", name, 600, 600,
-			master_ui)
+		ui = new(user, src, "Crayon", name)
 		ui.open()
 
 /obj/item/toy/crayon/spraycan/AltClick(mob/user)

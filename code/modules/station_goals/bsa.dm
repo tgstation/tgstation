@@ -235,8 +235,6 @@
 	circuit = /obj/item/circuitboard/computer/bsa_control
 	icon = 'icons/obj/machines/particle_accelerator.dmi'
 	icon_state = "control_boxp"
-	ui_x = 400
-	ui_y = 220
 
 	var/obj/machinery/bsa/full/cannon
 	var/notice
@@ -246,10 +244,10 @@
 /obj/machinery/computer/bsa_control/ui_state()
 	return GLOB.physical_state
 
-/obj/machinery/computer/bsa_control/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/computer/bsa_control/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "BluespaceArtillery", name, ui_x, ui_y, master_ui)
+		ui = new(user, src, "BluespaceArtillery", name)
 		ui.open()
 
 /obj/machinery/computer/bsa_control/ui_data()

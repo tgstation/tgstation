@@ -3,7 +3,7 @@
 	ui_interact(user)
 
 // Operates TGUI
-/obj/item/modular_computer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
+/obj/item/modular_computer/ui_interact(mob/user, datum/tgui/ui)
 	if(!enabled)
 		if(ui)
 			ui.close()
@@ -33,13 +33,11 @@
 		to_chat(user, "<span class='danger'>\The [src] beeps three times, it's screen displaying a \"DISK ERROR\" warning.</span>")
 		return // No HDD, No HDD files list or no stored files. Something is very broken.
 
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
-		assets = get_asset_datum(/datum/asset/simple/arcade)
-		assets.send(user)
-		ui = new(user, src, ui_key, "NtosMain", "NtOS Main menu", 400, 500, master_ui)
+		ui = new(user, src, "NtosMain")
 		ui.open()
 		ui.set_autoupdate(state = 1)
 

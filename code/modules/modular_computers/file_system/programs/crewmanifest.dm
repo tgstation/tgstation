@@ -7,8 +7,6 @@
 	requires_ntnet = FALSE
 	size = 4
 	tgui_id = "NtosCrewManifest"
-	ui_x = 400
-	ui_y = 480
 
 /datum/computer_file/program/crew_manifest/ui_static_data(mob/user)
 	var/list/data = list()

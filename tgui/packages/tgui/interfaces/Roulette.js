@@ -1,8 +1,7 @@
-import { classes } from "common/react";
-import { useBackend, useLocalState } from "../backend";
-import { Box, Button, Grid, NumberInput } from "../components";
-import { Component } from "inferno";
-import { Window } from "../layouts";
+import { classes } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, Grid, NumberInput } from '../components';
+import { Window } from '../layouts';
 
 const getNumberColor = number => {
   if (number === 0) {
@@ -379,7 +378,10 @@ export const RouletteBetTable = (props, context) => {
 
 export const Roulette = (props, context) => {
   return (
-    <Window theme="cardtable">
+    <Window
+      width={603}
+      height={475}
+      theme="cardtable">
       <Window.Content>
         <RouletteBoard />
         <RouletteBetTable />

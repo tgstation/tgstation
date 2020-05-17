@@ -6,7 +6,9 @@ export const Mint = (props, context) => {
   const { act, data } = useBackend(context);
   const inserted_materials = data.inserted_materials || [];
   return (
-    <Window>
+    <Window
+      width={300}
+      height={250}>
       <Window.Content>
         <Section
           title="Materials"

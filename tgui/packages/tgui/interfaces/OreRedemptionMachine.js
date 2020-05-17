@@ -1,5 +1,5 @@
 import { toTitleCase } from 'common/string';
-import { Component, Fragment } from 'inferno';
+import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../backend';
 import { BlockQuote, Box, Button, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
@@ -14,7 +14,11 @@ export const OreRedemptionMachine = (props, context) => {
     hasDisk,
   } = data;
   return (
-    <Window resizable>
+    <Window
+      title="Ore Redemption Machine"
+      width={440}
+      height={550}
+      resizable>
       <Window.Content scrollable>
         <Section>
           <BlockQuote mb={1}>

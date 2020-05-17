@@ -36,10 +36,10 @@
 /datum/borgpanel/ui_state()
 	return GLOB.admin_state
 
-/datum/borgpanel/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/datum/borgpanel/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, ui_key, "BorgPanel", "Borg Panel", 700, 700, master_ui)
+		ui = new(user, src, "BorgPanel")
 		ui.open()
 
 /datum/borgpanel/ui_data(mob/user)

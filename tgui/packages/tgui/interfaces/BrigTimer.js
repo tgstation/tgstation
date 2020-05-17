@@ -6,7 +6,10 @@ import { Window } from '../layouts';
 export const BrigTimer = (props, context) => {
   const { act, data } = useBackend(context);
   return (
-    <Window resizable>
+    <Window
+      width={300}
+      height={138}
+      resizable>
       <Window.Content scrollable>
         <Section
           title="Cell Timer"

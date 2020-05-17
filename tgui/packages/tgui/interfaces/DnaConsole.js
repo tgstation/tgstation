@@ -75,7 +75,11 @@ export const DnaConsole = (props, context) => {
   } = data;
   const { consoleMode } = data.view;
   return (
-    <Window resizable>
+    <Window
+      title="DNA Console"
+      width={539}
+      height={710}
+      resizable>
       {!!isPulsingRads && (
         <Dimmer
           fontSize="14px"

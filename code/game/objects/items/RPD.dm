@@ -237,21 +237,19 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	playsound(get_turf(user), 'sound/items/deconstruct.ogg', 50, TRUE)
 	return(BRUTELOSS)
 
-/obj/item/pipe_dispenser/ui_assets()
+/obj/item/pipe_dispenser/ui_assets(mob/user)
 	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
+	assets.send(user)
 	return list(
 		"styles" = list(
 			assets.css_filename(),
 		),
 	)
 
-/obj/item/pipe_dispenser/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null)
-	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/item/pipe_dispenser/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		var/datum/asset/assets = get_asset_datum(/datum/asset/spritesheet/pipes)
-		assets.send(user)
-
-		ui = new(user, src, ui_key, "RapidPipeDispenser", name, 425, 515, master_ui)
+		ui = new(user, src, "RapidPipeDispenser", name)
 		ui.open()
 
 /obj/item/pipe_dispenser/ui_data(mob/user)

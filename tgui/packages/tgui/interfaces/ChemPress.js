@@ -14,7 +14,9 @@ export const ChemPress = (props, context) => {
     max_volume,
   } = data;
   return (
-    <Window>
+    <Window
+      width={300}
+      height={227}>
       <Window.Content>
         <Section>
           <LabeledList>

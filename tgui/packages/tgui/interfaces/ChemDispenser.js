@@ -26,7 +26,10 @@ export const ChemDispenser = (props, context) => {
     || data.beakerContents
     || [];
   return (
-    <Window resizable>
+    <Window
+      width={565}
+      height={620}
+      resizable>
       <Window.Content scrollable>
         <Section
           title="Status"

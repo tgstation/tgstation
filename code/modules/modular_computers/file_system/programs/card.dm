@@ -15,8 +15,6 @@
 	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
-	ui_x = 450
-	ui_y = 520
 
 	var/is_centcom = FALSE
 	var/minor = FALSE

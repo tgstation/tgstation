@@ -2,7 +2,6 @@ import { classes } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Button, Section, Table } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 const VendingRow = (props, context) => {
   const { act, data } = useBackend(context);
@@ -121,7 +120,11 @@ export const Vending = (props, context) => {
   // Just in case we still have undefined values in the list
   inventory = inventory.filter(item => !!item);
   return (
-    <Window resizable>
+    <Window
+      title="Vending Machine"
+      width={450}
+      height={600}
+      resizable>
       <Window.Content scrollable>
         {!!onstation && (
           <Section title="User">

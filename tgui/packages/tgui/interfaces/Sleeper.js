@@ -3,15 +3,32 @@ import { Box, Section, LabeledList, Button, ProgressBar } from '../components';
 import { Fragment } from 'inferno';
 import { Window } from '../layouts';
 
+const damageTypes = [
+  {
+    label: 'Brute',
+    type: 'bruteLoss',
+  },
+  {
+    label: 'Burn',
+    type: 'fireLoss',
+  },
+  {
+    label: 'Toxin',
+    type: 'toxLoss',
+  },
+  {
+    label: 'Oxygen',
+    type: 'oxyLoss',
+  },
+];
+
 export const Sleeper = (props, context) => {
   const { act, data } = useBackend(context);
-
   const {
     open,
     occupant = {},
     occupied,
   } = data;
-
   const preSortChems = data.chems || [];
   const chems = preSortChems.sort((a, b) => {
     const descA = a.name.toLowerCase();
@@ -24,28 +41,10 @@ export const Sleeper = (props, context) => {
     }
     return 0;
   });
-
-  const damageTypes = [
-    {
-      label: 'Brute',
-      type: 'bruteLoss',
-    },
-    {
-      label: 'Burn',
-      type: 'fireLoss',
-    },
-    {
-      label: 'Toxin',
-      type: 'toxLoss',
-    },
-    {
-      label: 'Oxygen',
-      type: 'oxyLoss',
-    },
-  ];
-
   return (
-    <Window>
+    <Window
+      width={310}
+      height={465}>
       <Window.Content>
         <Section
           title={occupant.name ? occupant.name : 'No Occupant'}
@@ -110,12 +109,11 @@ export const Sleeper = (props, context) => {
               key={chem.name}
               icon="flask"
               content={chem.name}
-              disabled={!(occupied && chem.allowed)}
+              disabled={!occupied || !chem.allowed}
               width="140px"
               onClick={() => act('inject', {
                 chem: chem.id,
-              })}
-            />
+              })} />
           ))}
         </Section>
       </Window.Content>
