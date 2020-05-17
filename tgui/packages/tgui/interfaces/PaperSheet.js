@@ -1,7 +1,7 @@
 /**
  * @file
- * @copyright 2020
- * @author Original Warlockd (https://github.com/warlockd)
+ * @copyright 2020 WarlockD (https://github.com/warlockd)
+ * @author Original WarlockD (https://github.com/warlockd)
  * @author Changes stylemistake
  * @license MIT
  */
