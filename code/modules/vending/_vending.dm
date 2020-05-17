@@ -677,12 +677,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 	return ..()
 
 /obj/machinery/vending/ui_assets(mob/user)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-	assets.send(user)
 	return list(
-		"styles" = list(
-			assets.css_filename(),
-		),
+		get_asset_datum(/datum/asset/spritesheet/vending),
 	)
 
 /obj/machinery/vending/ui_interact(mob/user, datum/tgui/ui)

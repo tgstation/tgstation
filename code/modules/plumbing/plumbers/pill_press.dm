@@ -83,12 +83,8 @@
 
 
 /obj/machinery/plumbing/pill_press/ui_assets(mob/user)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	assets.send(user)
 	return list(
-		"styles" = list(
-			assets.css_filename(),
-		),
+		get_asset_datum(/datum/asset/spritesheet/simple/pills),
 	)
 
 /obj/machinery/plumbing/pill_press/ui_interact(mob/user, datum/tgui/ui)

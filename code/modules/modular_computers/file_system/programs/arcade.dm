@@ -75,9 +75,9 @@
 	game_check()
 
 /datum/computer_file/program/arcade/ui_assets(mob/user)
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/arcade)
-	assets.send(user)
-	return list()
+	return list(
+		get_asset_datum(/datum/asset/simple/arcade),
+	)
 
 /datum/computer_file/program/arcade/ui_data(mob/user)
 	var/list/data = get_header_data()

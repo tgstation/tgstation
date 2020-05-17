@@ -85,14 +85,9 @@
  * public
  *
  * Called on an object when a tgui object is being created, allowing you to
- * push various assets to tgui.
+ * push various assets to tgui, for examples spritesheets.
  *
- * For example: inserting a custom stylesheet that you need.
- *
- * Must return an associative list in this format:
- * list(
- *     "styles" = list(...),
- * )
+ * return list List of asset datums or file paths.
  */
 /datum/proc/ui_assets(mob/user)
 	return list()

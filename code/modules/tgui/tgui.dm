@@ -111,12 +111,10 @@
 	// another thread
 	if(!initial_data)
 		initial_data = src_object.ui_data(user)
-	var/static_data = src_object.ui_static_data(user)
-	var/assets = src_object.ui_assets(user)
 	_initial_update = url_encode(get_json(
 		initial_data,
-		static_data,
-		assets))
+		src_object.ui_static_data(user),
+		get_assets()))
 
 	// Send a full update to a recycled window
 	if(has_free_window)
@@ -231,6 +229,30 @@
 	json = replacetext(json, "\proper", "")
 	json = replacetext(json, "\improper", "")
 	return json
+
+/**
+ * private
+ *
+ * Calls ui_assets() proc on src_object, processes asset datums and returns
+ * an associative list of stylesheets and other paths which are directly
+ * consumable by tgui.
+ */
+/datum/tgui/proc/get_assets()
+	var/list/items = src_object.ui_assets(user)
+	var/list/output = list(
+		"styles" = list(),
+	)
+	if(!items)
+		return output
+	for (var/item in items)
+		world.log << "get_assets [item]"
+		if(istype(item, /datum/asset/spritesheet))
+			var/datum/asset/spritesheet/asset = item
+			output["styles"] += list(asset.css_filename())
+		if(istype(item, /datum/asset))
+			var/datum/asset/simple/asset = item
+			asset.send(user)
+	return output
 
 /**
  * private

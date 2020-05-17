@@ -89,12 +89,8 @@
 		data[achievement_type] = 0
 
 /datum/achievement_data/ui_assets(mob/user)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/achievements)
-	assets.send(user)
 	return list(
-		"styles" = list(
-			assets.css_filename(),
-		),
+		get_asset_datum(/datum/asset/spritesheet/simple/achievements),
 	)
 
 /datum/achievement_data/ui_state()

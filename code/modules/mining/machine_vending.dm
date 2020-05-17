@@ -88,12 +88,8 @@
 		icon_state = "[initial(icon_state)]-off"
 
 /obj/machinery/mineral/equipment_vendor/ui_assets(mob/user)
-	var/datum/asset/spritesheet/assets = get_asset_datum(/datum/asset/spritesheet/vending)
-	assets.send(user)
 	return list(
-		"styles" = list(
-			assets.css_filename(),
-		),
+		get_asset_datum(/datum/asset/spritesheet/vending),
 	)
 
 /obj/machinery/mineral/equipment_vendor/ui_interact(mob/user, datum/tgui/ui)

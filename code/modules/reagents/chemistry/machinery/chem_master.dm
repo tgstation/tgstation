@@ -151,12 +151,8 @@
 	return ..()
 
 /obj/machinery/chem_master/ui_assets(mob/user)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/simple/pills)
-	assets.send(user)
 	return list(
-		"styles" = list(
-			assets.css_filename(),
-		),
+		get_asset_datum(/datum/asset/spritesheet/simple/pills),
 	)
 
 /obj/machinery/chem_master/ui_interact(mob/user, datum/tgui/ui)

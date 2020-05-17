@@ -258,12 +258,8 @@
 	return ..()
 
 /obj/machinery/biogenerator/ui_assets(mob/user)
-	var/datum/asset/spritesheet/simple/assets = get_asset_datum(/datum/asset/spritesheet/research_designs)
-	assets.send(user)
 	return list(
-		"styles" = list(
-			assets.css_filename(),
-		),
+		get_asset_datum(/datum/asset/spritesheet/research_designs),
 	)
 
 /obj/machinery/biogenerator/ui_interact(mob/user, datum/tgui/ui)
