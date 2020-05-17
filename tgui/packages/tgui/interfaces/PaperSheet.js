@@ -51,6 +51,7 @@ const PaperSheetEdit = (props, context) => {
     paper_color = "white",
     pen_color = "black",
   } = data;
+
   return (
     <Flex direction="column">
       <Flex.Item>
@@ -102,7 +103,8 @@ const PaperSheetEdit = (props, context) => {
             backgroundColor="white"
             textColor="black"
             height={(window.innerHeight - 80)+ "px"}
-            onInput={(e, value) => setText(value)} />
+            onInput={(e, value) =>
+            { if (value.length < 30000) { setText(value); } }} />
         ) || (
           <PaperSheetView value={text} />
         )}
