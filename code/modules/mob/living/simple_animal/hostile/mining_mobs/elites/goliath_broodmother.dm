@@ -237,6 +237,7 @@
 	icon_state = "broodmother_tongue"
 	denied_type = /obj/item/crusher_trophy/broodmother_tongue
 	bonus_value = 10
+	/// Time at which the item becomes usable again
 	var/use_time
 
 /obj/item/crusher_trophy/broodmother_tongue/effect_desc()

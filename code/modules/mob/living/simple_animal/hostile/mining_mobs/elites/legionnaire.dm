@@ -48,6 +48,7 @@
 	var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/myhead = null
 	var/obj/structure/legionnaire_bonfire/mypile = null
 	var/has_head = TRUE
+	/// Whether or not the legionnaire is currently charging, used to deny movement input if he is
 	var/charging
 
 /datum/action/innate/elite_attack/legionnaire_charge
@@ -306,6 +307,7 @@
 	icon_state = "legionnaire_spine"
 	denied_type = /obj/item/crusher_trophy/legionnaire_spine
 	bonus_value = 20
+	/// Time at which the item becomes usable again
 	var/use_time
 
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
