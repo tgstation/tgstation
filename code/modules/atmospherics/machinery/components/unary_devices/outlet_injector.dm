@@ -27,13 +27,13 @@
 	ui_y = 115
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
-	if(can_interact(user))
+	if(user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK))
 		on = !on
 		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
-	if(can_interact(user))
+	if(user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK))
 		volume_rate = MAX_TRANSFER_RATE
 		update_icon()
 	return ..()

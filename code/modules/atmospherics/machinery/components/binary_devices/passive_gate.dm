@@ -30,13 +30,13 @@ Passive gate is similar to the regular pump except:
 	ui_y = 115
 
 /obj/machinery/atmospherics/components/binary/passive_gate/CtrlClick(mob/user)
-	if(can_interact(user))
+	if(user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK))
 		on = !on
 		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/passive_gate/AltClick(mob/user)
-	if(can_interact(user))
+	if(user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK))
 		target_pressure = MAX_OUTPUT_PRESSURE
 		update_icon()
 	return ..()

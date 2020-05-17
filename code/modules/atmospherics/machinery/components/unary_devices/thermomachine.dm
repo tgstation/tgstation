@@ -175,7 +175,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/CtrlClick(mob/living/user)
-	if(!can_interact(user))
+	if(!user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK))
 		return
 	on = !on
 	update_icon()
@@ -214,7 +214,7 @@
 	min_temperature = max(T0C - (initial(min_temperature) + L * 15), TCMB) //73.15K with T1 stock parts
 
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/AltClick(mob/living/user)
-	if(!can_interact(user))
+	if(!user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK))
 		return
 	target_temperature = min_temperature
 
@@ -240,6 +240,6 @@
 	max_temperature = T20C + (initial(max_temperature) * L) //573.15K with T1 stock parts
 
 /obj/machinery/atmospherics/components/unary/thermomachine/heater/AltClick(mob/living/user)
-	if(!can_interact(user))
+	if(!user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK))
 		return
 	target_temperature = max_temperature

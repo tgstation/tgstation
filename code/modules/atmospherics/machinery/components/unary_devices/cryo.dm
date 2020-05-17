@@ -421,13 +421,13 @@
 				. = TRUE
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
-	if(can_interact(user) && !state_open)
+	if(user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK) && !state_open)
 		on = !on
 		update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
-	if(can_interact(user))
+	if(user.canUseTopic(src, !issilicon(usr), FALSE, NO_TK))
 		if(state_open)
 			close_machine()
 		else
