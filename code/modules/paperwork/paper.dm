@@ -241,12 +241,18 @@
 		assets.send(user)
 		/// The x size is because we double the width for the editor
 		ui = new(user, src, ui_key, "PaperSheet", name, 400, 600, master_ui, state)
+		ui.set_autoupdate(FALSE)
 		ui.open()
 
 /obj/item/paper/ui_close(mob/user)
 	var/datum/tgui/ui = SStgui.try_update_ui(user, src, "main");
 	if(ui)
 		ui.close()
+
+/obj/item/paper/proc/ui_update()
+	var/datum/tgui/ui = SStgui.try_update_ui(usr, src, "main");
+	if(ui)
+		ui.update()
 
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
@@ -269,8 +275,10 @@
 			if(length(info) > 0)
 				finalized = TRUE		// once you have writen to a sheet you cannot write again
 				to_chat(usr, "You have finished your paper masterpiece!");
+				ui_update()
 			else
 				to_chat(usr, pick("Writing block strikes again!", "You forgot to write anthing!"))
+				ui_close(usr)
 			update_icon()
 			. = TRUE
 
