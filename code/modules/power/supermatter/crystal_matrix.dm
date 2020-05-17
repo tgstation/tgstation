@@ -23,10 +23,10 @@ GLOBAL_LIST_EMPTY(crystal_matrix)
 
 ///Start the process where the crystal matrix expands to devour the world
 /obj/machinery/destabilized_supermatter/proc/end_world_activation()
-	priority_announce("WARNING - Possible TK-end of the world scenario approaching, please standby")
+	priority_announce("WARNING - Possible ZK-Lambda-Class Cosmic Fragmentation Scenario approaching, please standby")
 	sound_to_playing_players('sound/misc/notice2.ogg')
 	sleep(10 SECONDS)
-	priority_announce("WARNING - TK-end of the world scenario confirmed, all personnel must contain the crystal before it reaches critical mass!")
+	priority_announce("WARNING - ZK-Lambda-Class Cosmic Fragmentation Scenario confirmed, all personnel must contain the crystal before it reaches critical mass!")
 	sound_to_playing_players('sound/misc/notice1.ogg')
 	active = TRUE
 	sleep(5 MINUTES)
@@ -44,7 +44,8 @@ GLOBAL_LIST_EMPTY(crystal_matrix)
 	explosion(T,5,10,15,1,1,1)
 	T.ChangeTurf(/turf/closed/indestructible/crystal_matrix_core)
 	priority_announce("WARNING - The crystal matrix has been uncontained! The spread of the free crystal structure is unkown but it has been \
-						calculated to be able to devour the entire region of space. Emergency shuttle can't reach the station, good luck")
+						calculated to be able to devour the entire region of space causing a ZK-Lambda-Class Cosmic Fragmentation Scenario. \
+						Emergency shuttle can't reach the station, good luck")
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(1.5 MINUTES)
 	total_annihilation()
@@ -69,7 +70,7 @@ GLOBAL_LIST_EMPTY(crystal_matrix)
 
 ///Process the restoration of the SM crystal
 /obj/machinery/destabilized_supermatter/proc/restore()
-	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the TK-Z Class scenario, go back to work now")
+	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the ZK-Lambda-Class Scenario, go back to work now")
 	sound_to_playing_players('sound/misc/notice2.ogg')
 	var/turf/T = get_turf(src)
 	new/obj/machinery/power/supermatter_crystal(T)
@@ -77,7 +78,7 @@ GLOBAL_LIST_EMPTY(crystal_matrix)
 
 ///Process the world ending scenario by killing everyone and making everything a crystal matrix
 /obj/machinery/destabilized_supermatter/proc/total_annihilation()
-	priority_announce("The Crystal Matrix has reached the Expansion point! This is a TK-Z Level of End of the World Scenario! \
+	priority_announce("The Crystal Matrix has reached the Expansion point! This is a ZK-Lambda-Class Cosmic Fragmentation Scenario! \
 						It has been estimated that it will devour your entire sector! Try to evaquate with all necessary means!")
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(13 SECONDS)

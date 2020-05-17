@@ -305,7 +305,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			sound_to_playing_players('sound/misc/notice1.ogg')
 			if(!warned)
 				warned = TRUE
-				priority_announce("WARNING - The Supermatter Matrix has been destabilized, this can incur in a TK-class world ending scenario \
+				priority_announce("WARNING - The Supermatter Matrix has been destabilized, this can incur in a ZK-Lambda-Class Cosmic Fragmentation Scenario \
 									please don't let the Crystal delaminate any further or the entire reality is at risk")
 
 /obj/machinery/power/supermatter_crystal/proc/get_integrity()
