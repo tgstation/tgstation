@@ -254,7 +254,7 @@
 		to_chat(L, "<b>The tongue looks dried out. You'll need to wait longer to use it again.</b>")
 		return
 	else if("lava" in L.weather_immunities)
-		to_chat(L, "<b>You stare at the tongue.  You don't think this is any use to you.</b>")
+		to_chat(L, "<b>You stare at the tongue. You don't think this is any use to you.</b>")
 		return
 	L.weather_immunities |= "lava"
 	to_chat(L, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
