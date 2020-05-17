@@ -301,7 +301,7 @@
 
 /obj/item/crusher_trophy/legionnaire_spine
 	name = "legionnaire spine"
-	desc = "The spine of a legionnaire.  With some creativity, you could use it as a crusher trophy.  Alternatively, shaking it might do something as well."
+	desc = "The spine of a legionnaire. With some creativity, you could use it as a crusher trophy. Alternatively, shaking it might do something as well."
 	icon = 'icons/obj/lavaland/elite_trophies.dmi'
 	icon_state = "legionnaire_spine"
 	denied_type = /obj/item/crusher_trophy/legionnaire_spine
