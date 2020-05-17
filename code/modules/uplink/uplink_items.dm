@@ -555,7 +555,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			so that everything and everyone will be swallowed by the infinite recurring structure. To use it, directly inject the crystal \
 			and wait for the three passages to be done"
 	item = /obj/item/crystal_destabilizer
-	cost = 18
+	cost = 25
 	player_minimum = 25
 
 // Stealthy Weapons
