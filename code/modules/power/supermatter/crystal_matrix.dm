@@ -1,6 +1,6 @@
 GLOBAL_LIST_EMPTY(crystal_matrix)
 
-/obj/destabilized_supermatter
+/obj/machinery/destabilized_supermatter
 	name = "destabilized crystal"
 	desc = "A strangely translucent and iridescent crystal."
 	icon = 'icons/obj/supermatter.dmi'
@@ -10,20 +10,28 @@ GLOBAL_LIST_EMPTY(crystal_matrix)
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	var/active = FALSE
 
-/obj/destabilized_supermatter/Initialize()
+/obj/machinery/destabilized_supermatter/Initialize()
 	. = ..()
 	end_world_activation()
 	SSshuttle.registerHostileEnvironment(src)
 
-/obj/destabilized_supermatter/Destroy()
+/obj/machinery/destabilized_supermatter/Destroy()
+	SSshuttle.registerHostileEnvironment(src)
 	return..()
 
 ///Start the process where the crystal matrix expands to devour the world
-/obj/destabilized_supermatter/proc/end_world_activation()
+/obj/machinery/destabilized_supermatter/proc/end_world_activation()
 	priority_announce("WARNING - Possible TK-end of the world scenario approaching, please standby")
 	sound_to_playing_players('sound/misc/notice2.ogg')
-	sleep(0.7 MINUTES)
+	sleep(10 SECONDS)
+	priority_announce("WARNING - TK-end of the world scenario confirmed, all personnel must contain the crystal before it reaches critical mass!")
+	sound_to_playing_players('sound/misc/notice1.ogg')
+	active = TRUE
+	sleep(5 MINUTES)
+	if(!active)
+		return
 	for(var/mob/M in GLOB.player_list)
 		SEND_SOUND(M, 'sound/items/poster_ripped.ogg')
 		sleep(10)
@@ -33,25 +41,52 @@ GLOBAL_LIST_EMPTY(crystal_matrix)
 		sleep(15)
 		SEND_SOUND(M, 'sound/effects/explosion3.ogg')
 	var/turf/T = get_turf(src)
-	explosion(T,0,5,10,1,1,1)
+	explosion(T,5,10,15,1,1,1)
 	T.ChangeTurf(/turf/closed/indestructible/crystal_matrix_core)
 	priority_announce("WARNING - The crystal matrix has been uncontained! The spread of the free crystal structure is unkown but it has been \
 						calculated to be able to devour the entire region of space. Emergency shuttle can't reach the station, good luck")
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	sleep(2.5 MINUTES)
+	sleep(1.5 MINUTES)
 	total_annihilation()
 
+/obj/machinery/destabilized_supermatter/process()
+	if(active)
+		if(prob(45))
+			src.fire_nuclear_particle()
+			radiation_pulse(src, 250, 6)
+		var/turf/T = loc
+		var/datum/gas_mixture/env = T.return_air()
+		var/datum/gas_mixture/removed
+		var/gasefficency = 0.5
+		removed = env.remove(gasefficency * env.total_moles())
+		removed.assert_gases(/datum/gas/bz, /datum/gas/stimulum, /datum/gas/nitryl, /datum/gas/miasma)
+		removed.gases[/datum/gas/bz][MOLES] += 5.5
+		removed.gases[/datum/gas/stimulum][MOLES] += 4.5
+		removed.gases[/datum/gas/nitryl][MOLES] += 6.75
+		removed.gases[/datum/gas/miasma][MOLES] += 10.5
+		env.merge(removed)
+		air_update_turf()
+
+///Process the restoration of the SM crystal
+/obj/machinery/destabilized_supermatter/proc/restore()
+	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the TK-Z Class scenario, go back to work now")
+	sound_to_playing_players('sound/misc/notice2.ogg')
+	var/turf/T = get_turf(src)
+	new/obj/machinery/power/supermatter_crystal(T)
+	qdel(src)
+
 ///Process the world ending scenario by killing everyone and making everything a crystal matrix
-/obj/destabilized_supermatter/proc/total_annihilation()
-	for(var/T in GLOB.crystal_matrix)
-		var/turf/Turf = T
-		Turf.Melt()
+/obj/machinery/destabilized_supermatter/proc/total_annihilation()
 	priority_announce("The Crystal Matrix has reached the Expansion point! This is a TK-Z Level of End of the World Scenario! \
 						It has been estimated that it will devour your entire sector! Try to evaquate with all necessary means!")
 	sound_to_playing_players('sound/machines/alarm.ogg')
-	sleep(0.2 MINUTES)
+	sleep(13 SECONDS)
+	sound_to_playing_players('sound/effects/explosion_distant.ogg')
 	for(var/i in GLOB.mob_living_list)
 		var/mob/living/L = i
+		var/turf/T = get_turf(L)
+		if(!T)
+			continue
 		playsound(L, 'sound/effects/supermatter.ogg', 50, TRUE)
 		L.death()
 	for(var/area/A in GLOB.sortedAreas)
@@ -62,6 +97,29 @@ GLOBAL_LIST_EMPTY(crystal_matrix)
 		A.invisibility = 0
 		A.blend_mode = 0
 	SSticker.force_ending = 1
+
+/obj/machinery/destabilized_supermatter/attackby(obj/item/W, mob/living/user, params)
+	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
+		return
+	if(istype(W, /obj/item/crystal_stabilizer))
+		var/obj/item/crystal_stabilizer/injector = W
+		if(!injector.filled)
+			to_chat(user, "<span class='notice'>You already used \the [W]...</span>")
+			return
+		to_chat(user, "<span class='notice'>You carefully begin inject \the [src] with \the [W]... please don't move untill all the steps are finished</span>")
+		if(W.use_tool(src, user, 5 SECONDS, volume=100))
+			to_chat(user, "<span class='notice'>Seems that \the [src] internal resonance is fading with the fluid!</span>")
+			playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
+			if(W.use_tool(src, user, 6.5 SECONDS, volume=100))
+				to_chat(user, "<span class='notice'>The [src] is reacting violently with the fluid!</span>")
+				src.fire_nuclear_particle()
+				radiation_pulse(src, 2500, 6)
+				if(W.use_tool(src, user, 7.5 SECONDS, volume=100))
+					to_chat(user, "<span class='notice'>The [src] has been restored and restabilized!</span>")
+					playsound(get_turf(src), 'sound/effects/supermatter.ogg', 35, TRUE)
+					injector.filled = FALSE
+					active = FALSE
+					restore()
 
 /turf/closed/indestructible/crystal_matrix_core
 	name = "Crystal Matrix"
@@ -116,6 +174,7 @@ GLOBAL_LIST_EMPTY(crystal_matrix)
 /turf/closed/indestructible/crystal_matrix_core/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
 		return
+
 	if(user.dropItemToGround(W))
 		user.visible_message("<span class='danger'>As [user] touches \the [src] with \a [W], silence fills the room...</span>",\
 			"<span class='userdanger'>You touch \the [src] with \the [W], and everything suddenly goes silent.</span>\n<span class='notice'>\The [W] flashes into dust as you flinch away from \the [src].</span>",\

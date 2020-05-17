@@ -203,6 +203,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/moveable = FALSE
 	///Check if the SM Crystal Matrix has been destabilized
 	var/destabilized = FALSE
+	///Check if the crew has already been warned about the destabilization, prevent repetition of the message
+	var/warned = FALSE
 
 	/// cooldown tracker for accent sounds,
 	var/last_accent_sound = 0
@@ -301,8 +303,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			playsound(src, 'sound/machines/terminal_alert.ogg', 75)
 		if(SUPERMATTER_DESTABILIZED)
 			sound_to_playing_players('sound/misc/notice1.ogg')
-			priority_announce("WARNING - The Supermatter Matrix has been destabilized, this can incur in a TK-class world ending scenario \
-								please don't let the Crystal delaminate any further or the entire reality is at risk")
+			if(!warned)
+				warned = TRUE
+				priority_announce("WARNING - The Supermatter Matrix has been destabilized, this can incur in a TK-class world ending scenario \
+									please don't let the Crystal delaminate any further or the entire reality is at risk")
 
 /obj/machinery/power/supermatter_crystal/proc/get_integrity()
 	var/integrity = damage / explosion_point
@@ -374,8 +378,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		investigate_log("has collapsed and is eating up the universe.", INVESTIGATE_SUPERMATTER)
 		if(T) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.
 			qdel(src)
-			new/obj/destabilized_supermatter(T)
-			return //No boom for me sir
+			new/obj/machinery/destabilized_supermatter(T)
+			explosion(T,0,4,15,1,1,1)
+			return
 	investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
 	explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
 	qdel(src)

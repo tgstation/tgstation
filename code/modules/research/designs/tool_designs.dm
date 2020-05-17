@@ -103,6 +103,16 @@
 	category = list("Tool Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
+/datum/design/crystal_stabilizer
+	name = "Supermatter Matrix Stabilizer"
+	desc = "A tool that is used to restore the stability of the Crystal Matrix by injecting it with the strange liquid"
+	id = "crystal_stabilizer"
+	build_path = /obj/item/crystal_stabilizer
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 8000, /datum/material/glass = 4500, /datum/material/silver = 2500, /datum/material/titanium = 2000)
+	category = list("Tool Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /////////////////////////////////////////
 //////////////Alien Tools////////////////
 /////////////////////////////////////////
