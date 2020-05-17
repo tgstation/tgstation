@@ -138,6 +138,25 @@
 	var/candy = FALSE //for cigarette overlay
 	custom_price = 75
 	age_restricted = TRUE
+	var/spawn_coupon = TRUE
+	var/obj/item/coupon/attached_coupon
+
+/obj/item/storage/fancy/cigarettes/Initialize()
+	. = ..()
+	if(spawn_coupon)
+		attached_coupon = new
+
+/obj/item/storage/fancy/cigarettes/attack_self(mob/user)
+	if(contents.len == 0 && attached_coupon)
+		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
+		user.put_in_hands(attached_coupon)
+		attached_coupon = null
+		name = "discarded cigarette packet"
+		desc = "An old cigarette packet with the back torn off, worth less than nothing now."
+		var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+		STR.max_items = 0
+		return
+	return ..()
 
 /obj/item/storage/fancy/cigarettes/ComponentInitialize()
 	. = ..()
@@ -147,7 +166,11 @@
 
 /obj/item/storage/fancy/cigarettes/examine(mob/user)
 	. = ..()
-	. += "<span class='notice'>Alt-click to extract contents.</span>"
+	if(!spawn_coupon)
+		. += "<span class='notice'>Alt-click to extract contents.</span>"
+	else if(attached_coupon)
+		. += "<span class='notice'>Alt-click to extract contents.</span>"
+		. += "<span class='notice'>There's a coupon on the back of the pack! You can tear it off once it's empty.</span>"
 
 /obj/item/storage/fancy/cigarettes/AltClick(mob/living/carbon/user)
 	if(!istype(user) || !user.canUseTopic(src, BE_CLOSE, ismonkey(user)))
@@ -323,6 +346,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	icon_type = "premium cigar"
 	spawn_type = /obj/item/clothing/mask/cigarette/cigar
+	spawn_coupon = FALSE
 
 /obj/item/storage/fancy/cigarettes/cigars/ComponentInitialize()
 	. = ..()
