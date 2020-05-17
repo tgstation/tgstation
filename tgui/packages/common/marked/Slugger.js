@@ -18,6 +18,9 @@ export class Slugger {
    * Convert string to unique id
    */
   slug(value) {
+    if (typeof value !== 'string') {
+      value = value.innerHTML;
+    }
     let slug = value
       .toLowerCase()
       .trim()

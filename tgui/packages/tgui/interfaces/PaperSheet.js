@@ -6,16 +6,15 @@
  * @license MIT
  */
 
-
-import { toTitleCase } from 'common/string';
-import { Tabs, Fragment, Box, Flex, Button, TextArea } from '../components';
+import { Tabs, Box, Flex, Button, TextArea } from '../components';
 import { useBackend, useSharedState, useLocalState } from '../backend';
 import { Window } from '../layouts';
 // import marked from 'marked';
 import { marked } from 'common/marked/marked';
-import { isFalsy } from 'common/react';
+
 
 import { createLogger } from '../logging';
+import { Fragment } from 'inferno';
 
 const logger = createLogger('PaperSheet');
 
@@ -50,10 +49,14 @@ const PaperSheetEdit = (props, context) => {
     previewSelected,
     setPreviewSelected,
   ] = useLocalState(context, 'preview', "Preview");
+  const {
+    paper_color = "white",
+    pen_color = "black",
+  } = data;
   return (
-    <Flex height="100%" direction="column">
-      <Flex.Item height="1.5em">
-        <Tabs>
+    <Flex direction="column">
+      <Flex.Item height="1.5em" >
+        <Tabs p={0}>
           <Tabs.Tab
             key="marked_edit"
             textColor={'black'}
@@ -93,19 +96,17 @@ const PaperSheetEdit = (props, context) => {
 
       </Flex.Item>
       <Flex.Item
-        position="relative"
         grow={1}
-        shrink={0}
         basis={1}>
-
         {previewSelected === "Edit" && (
           <TextArea
+            value={text}
             backgroundColor="white"
             textColor="black"
             height={(window.innerHeight - 80)+ "px"}
             onInput={(e, value) => setText(value)} />
         ) || (
-          <PaperSheetView value={text} />
+          <PaperSheetView value={text} pb="100%" pr="100%" />
         )}
       </Flex.Item>
     </Flex>
@@ -116,12 +117,10 @@ export const PaperSheet = (props, context) => {
   const { data } = useBackend(context);
   const {
     edit_sheet,
-    paper_color = "white",
-    pen_color = "black",
   } = data;
   return (
-    <Window resizable theme="paper" >
-      <Window.Content>
+    <Window resizable theme="paper">
+      <Window.Content scrollable>
         {edit_sheet && (
           <PaperSheetEdit />
         ) || (

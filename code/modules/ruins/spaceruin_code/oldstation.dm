@@ -38,8 +38,14 @@
 
 /obj/item/paper/fluff/ruins/oldstation/protoinv
 	name = "Laboratory Inventory"
-	info = "<b>*Inventory*</b><br><br>(1) Prototype Hardsuit<br><br>(1)Health Analyser<br><br>(1)Prototype Energy Gun<br><br>(1)Singularity Generation Disk<br><br><b>DO NOT REMOVE WITHOUT \
-	THE CAPTAIN AND RESEARCH DIRECTOR'S AUTHORISATION</b>"
+	info = {"
+**Inventory**
+* (1) Prototype Hardsuit
+* (1)Health Analyser
+* (1)Prototype Energy Gun
+* (1)Singularity Generation Disk
+__DO NOT REMOVE WITHOUT HE CAPTAIN AND RESEARCH DIRECTOR'S AUTHORISATION__
+"}
 
 /obj/item/paper/fluff/ruins/oldstation/report
 	name = "Crew Reawakening Report"

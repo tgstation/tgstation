@@ -56,13 +56,27 @@ GLOBAL_VAR_INIT(fscpassword, generate_password())
 
 /obj/item/paper/fluff/ruins/forgottenship/password/Initialize(mapload)
 	. = ..()
-	info = "Welcome to most advanced cruiser owned by Cyber Sun Industries!<br>You might notice, that this cruiser is equipped with 12 prototype laser turrets making any hostile boarding attempts futile.<br>Other facilities built on the ship are: Simple atmospheric system, Camera system with built-in X-ray visors and Safety module, enabling emergency engines in case of... you know, emergency.<br>Emergency system will bring you to nearest syndicate pod containing everything needed for human life.<br><br><b>In case of emergency, you must remember the pod-door activation code - [GLOB.fscpassword]</b><br><br>Cyber Sun Industries (C) 2484."
+	info = {"
+Welcome to most advanced cruiser owned by Cyber Sun Industries!
+You might notice, that this cruiser is equipped with 12 prototype laser turrets making any hostile boarding attempts futile.
+Other facilities built on the ship are: Simple atmospheric system, Camera system with built-in X-ray visors and Safety module, enabling emergency engines in case of... you know, emergency.
+Emergency system will bring you to nearest syndicate pod containing everything needed for human life.
+
+In case of emergency, you must remember the pod-door activation code - [GLOB.fscpassword]</b><br><br>Cyber Sun Industries (C) 2484.
+"}
 	icon_state = "paper_words"
 	item_state = "paper"
 
 /obj/item/paper/fluff/ruins/forgottenship/powerissues
 	name = "Power issues"
-	info = "Welcome to battle cruiser SCSBC-12!<br>Our most advanced systems allow you to fly in space and never worry about power issues!<br>However, emergencies occur, and in case of power loss, <b>you must</b> enable emergency generator using uranium as fuel and enable turrets in bridge afterwards.<br><br><b>REMEMBER! CYBERSUN INDUSTRIES ARE NOT RESPONSIBLE FOR YOUR DEATH OR SHIP LOSS WHEN TURRETS ARE DISABLED!</b><br><br>Cyber Sun Industries (C) 2484."
+	info = {""
+"Welcome to battle cruiser SCSBC-12!
+Our most advanced systems allow you to fly in space and never worry about power issues!
+However, emergencies occur, and in case of power loss, __you must__ enable emergency generator using uranium as fuel and enable turrets in bridge afterwards.
+
+__REMEMBER! CYBERSUN INDUSTRIES ARE NOT RESPONSIBLE FOR YOUR DEATH OR SHIP LOSS WHEN TURRETS ARE DISABLED!__
+_Cyber Sun Industries (C) 2484._
+"}
 
 /obj/item/paper/fluff/ruins/forgottenship/missionobj
 	name = "Mission objectives"

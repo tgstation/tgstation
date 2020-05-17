@@ -6,11 +6,11 @@
 
 /obj/item/paper/fluff/ruins/thederelict/syndie_mission
 	name = "Mission Objectives"
-	info = "The Syndicate have cunningly disguised a Syndicate Uplink as your PDA. Simply enter the code \"678 Bravo\" into the ringtone select to unlock its hidden features. <br><br><b>Objective #1</b>. Kill the God damn AI in a fire blast that it rocks the station. <b>Success!</b>  <br><b>Objective #2</b>. Escape alive. <b>Failed.</b>"
+	info = "The Syndicate have cunningly disguised a Syndicate Uplink as your PDA. Simply enter the code \"678 Bravo\" into the ringtone select to unlock its hidden features.\n  \n__Objective #1__. Kill the God damn AI in a fire blast that it rocks the station. __Success!__  \n  \n__Objective #2__. Escape alive. __Failed.__"
 
 /obj/item/paper/fluff/ruins/thederelict/nukie_objectives
 	name = "Objectives of a Nuclear Operative"
-	info = "<b>Objective #1</b>: Destroy the station with a nuclear device."
+	info = "__Objective #1__: Destroy the station with a nuclear device."
 
 /obj/item/paper/crumpled/bloody/ruins/thederelict/unfinished
 	name = "unfinished paper scrap"
@@ -18,7 +18,7 @@
 	info = "I, Victor Belyakov, do hereby leave my _- "
 /obj/item/paper/fluff/ruins/thederelict/vaultraider
 	name = "Vault Raider Objectives"
-	info = "<b>Objectives #1</b>: Find out what is hidden in Kosmicheskaya Stantsiya 13s Vault"
+	info = "__Objectives #1__: Find out what is hidden in Kosmicheskaya Stantsiya 13s Vault"
 
 
 /// Vault controller for use on the derelict/KS13.

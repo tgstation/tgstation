@@ -40,6 +40,9 @@ const unescapeTest = /&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/ig;
 
 export const unescape = html => {
   // explicitly match decimal, hex, and named HTML entities
+  if (typeof value !== 'string') {
+    html = html.innerHTML;
+  }
   return html.replace(unescapeTest, (_, n) => {
     n = n.toLowerCase();
     if (n === 'colon') { return ':'; }

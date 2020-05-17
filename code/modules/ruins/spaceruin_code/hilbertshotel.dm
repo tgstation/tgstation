@@ -467,29 +467,30 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 /obj/item/paper/crumpled/docslogs/Initialize()
     . = ..()
     GLOB.hhmysteryRoomNumber = rand(1, SHORT_REAL_LIMIT)
-    info = {"<h4><center>Research Logs</center></h4>
-	I might just be onto something here!<br>
-	The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.<br>
-	It's too soon to say for sure, but this might be the start of something quite important!<br>
-    I'll be sure to log any major future breakthroughs. This might be a lot more than I can manage on my own, perhaps I should hire that secretary after all...<br>
-	<h4>Breakthrough!</h4>
-	I can't believe it, but I did it! Just when I was certain it couldn't be done, I made the final necessary breakthrough.<br>
-    Exploiting the effects of space dilation caused by specific bluespace structures combined with a precise use of geometric calculus, I've discovered a way to correlate an infinite amount of space within a finite area!<br>
-    While the potential applications are endless, I utilized it in quite a nifty way so far by designing a system that recursively constructs subspace rooms and spatially links them to any of the infinite infinitesimally distinct points on the spheres surface.<br>
-    I call it: Hilbert's Hotel!<br>
-	<h4>Goodbye</h4>
-	I can't take this anymore. I know what happens next, and the fear of what is coming leaves me unable to continue working.<br>
-    Any fool in my field has heard the stories. It's not that I didn't believe them, it's just... I guess I underestimated the importance of my own research...<br>
-    Robert has reported a further increase in frequency of the strange, prying visitors who ask questions they have no business asking. I've requested him to keep everything on strict lockdown and have permanently dismissed all other assistants.<br>
-    I've also instructed him to use the encryption method we discussed for any important quantitative data. The poor lad... I don't think he truly understands what he's gotten himself into...<br>
-    It's clear what happens now. One day they'll show up uninvited, and claim my research as their own, leaving me as nothing more than a bullet ridden corpse floating in space.<br>
-    I can't stick around to the let that happen.<br>
-    I'm escaping into the very thing that brought all this trouble to my doorstep in the first place - my hotel.<br>
-    I'll be in <u>[uppertext(num2hex(GLOB.hhmysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)<br>
-    I'm sorry that I must go like this. Maybe one day things will be different and it will be safe to return... maybe...<br>
-    Goodbye<br>
-	<br>
-	<i>Doctor Hilbert</i>"}
+    info = {"
+###  Research Logs
+I might just be onto something here!
+The strange space-warping properties of bluespace have been known about for awhile now, but I might be on the verge of discovering a new way of harnessing it.
+It's too soon to say for sure, but this might be the start of something quite important!
+I'll be sure to log any major future breakthroughs. This might be a lot more than I can manage on my own, perhaps I should hire that secretary after all...
+###  Breakthrough!
+I can't believe it, but I did it! Just when I was certain it couldn't be done, I made the final necessary breakthrough.
+Exploiting the effects of space dilation caused by specific bluespace structures combined with a precise use of geometric calculus, I've discovered a way to correlate an infinite amount of space within a finite area!
+While the potential applications are endless, I utilized it in quite a nifty way so far by designing a system that recursively constructs subspace rooms and spatially links them to any of the infinite infinitesimally distinct points on the spheres surface.
+I call it: Hilbert's Hotel!
+<h4>Goodbye</h4>
+I can't take this anymore. I know what happens next, and the fear of what is coming leaves me unable to continue working.
+Any fool in my field has heard the stories. It's not that I didn't believe them, it's just... I guess I underestimated the importance of my own research...
+Robert has reported a further increase in frequency of the strange, prying visitors who ask questions they have no business asking. I've requested him to keep everything on strict lockdown and have permanently dismissed all other assistants.
+I've also instructed him to use the encryption method we discussed for any important quantitative data. The poor lad... I don't think he truly understands what he's gotten himself into...
+It's clear what happens now. One day they'll show up uninvited, and claim my research as their own, leaving me as nothing more than a bullet ridden corpse floating in space.
+I can't stick around to the let that happen.
+I'm escaping into the very thing that brought all this trouble to my doorstep in the first place - my hotel.
+I'll be in <u>[uppertext(num2hex(GLOB.hhmysteryRoomNumber, 0))]</u> (That will make sense to anyone who should know)
+I'm sorry that I must go like this. Maybe one day things will be different and it will be safe to return... maybe...
+Goodbye
+
+     _Doctor Hilbert_"}
 
 /obj/item/paper/crumpled/robertsworkjournal
     name = "Work Journal"
@@ -519,16 +520,18 @@ GLOBAL_VAR_INIT(hhmysteryRoomNumber, 1337)
 
 /obj/item/paper/crumpled/bloody/docsdeathnote
     name = "note"
-    info = {"This is it isn't it?<br>
-    No one's coming to help, that much has become clear.<br>
-    Sure, it's lonely, but do I have much choice? At least I brought the analyzer with me, they shouldn't be able to find me without it.<br>
-    Who knows who's waiting for me out there. Its either die out there in their hands, or die a slower, slightly more comfortable death in here.<br>
-    Everyday I can feel myself slipping away more and more, both physically and mentally. Who knows what happens now...<br>
-    Heh, so it's true then, this must be the inescapable path of all great minds... so be it then.<br>
-    <br>
-    <br>
-    <br>
-    <i>Choose a room, and enter the sphere<br>
-    Lay your head to rest, it soon becomes clear<br>
-    There's always more room around every bend<br>
-    Not all that's countable has an end...<i>"}
+    info = {"
+This is it isn't it?
+No one's coming to help, that much has become clear.
+Sure, it's lonely, but do I have much choice? At least I brought the analyzer with me, they shouldn't be able to find me without it.
+Who knows who's waiting for me out there. Its either die out there in their hands, or die a slower, slightly more comfortable death in here.
+Everyday I can feel myself slipping away more and more, both physically and mentally. Who knows what happens now...
+Heh, so it's true then, this must be the inescapable path of all great minds... so be it then.
+
+
+
+_Choose a room, and enter the sphere
+Lay your head to rest, it soon becomes clear
+There's always more room around every bend
+Not all that's countable has an end..._
+"}

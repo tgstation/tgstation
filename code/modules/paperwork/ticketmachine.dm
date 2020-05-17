@@ -225,7 +225,10 @@
 		user.visible_message("<span class='danger'>[user] lights [src] ablaze with [P]!</span>", "<span class='danger'>You light [src] on fire!</span>")
 		fire_act()
 
-/obj/item/paper/extinguish()
+// Original /obj/item/paper/extinguish()
+// Starting Shaming protocol:  SHAME!
+// Side note, why didn't he just subclass paper?
+/obj/item/ticket_machine_ticket/extinguish()
 	..()
 	update_icon()
 

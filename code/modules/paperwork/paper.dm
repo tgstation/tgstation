@@ -266,10 +266,12 @@
 	switch(action)
 		if("save")
 			info = params["text"]
-			finalized = TRUE		// once you have writen to a sheet you cannot write again
+			if(length(info) > 0)
+				finalized = TRUE		// once you have writen to a sheet you cannot write again
+				to_chat(usr, "You have finished your paper masterpiece!");
+			else
+				to_chat(usr, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			update_icon()
-			to_chat(usr, "You have finished your paper masterpiece!");
-			ui_close()		// got to close it to update ui size properly
 			. = TRUE
 
 
