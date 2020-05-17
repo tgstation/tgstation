@@ -10,7 +10,7 @@ import { Tabs, Box, Flex, Button, TextArea } from '../components';
 import { useBackend, useSharedState, useLocalState } from '../backend';
 import { Window } from '../layouts';
 // import marked from 'marked';
-import { marked } from 'common/marked/marked';
+import marked from 'marked';
 
 
 import { createLogger } from '../logging';
@@ -29,16 +29,14 @@ const PaperSheetView = (props, context) => {
     value = text || '',
     ...rest
   } = props;
+  const innerHTML = { __html:
+    marked(value, { breaks: true, smartypants: true }) };
   return (
     <Box
       backgroundColor={paper_color}
       color={pen_color}
-      {...rest}>
-      {marked(value, {
-        breaks: true,
-        smartypants: true,
-      })}
-    </Box>
+      {...rest}
+      dangerouslySetInnerHTML={innerHTML} />
   );
 };
 
@@ -55,8 +53,8 @@ const PaperSheetEdit = (props, context) => {
   } = data;
   return (
     <Flex direction="column">
-      <Flex.Item height="1.5em" >
-        <Tabs p={0}>
+      <Flex.Item>
+        <Tabs>
           <Tabs.Tab
             key="marked_edit"
             textColor={'black'}
@@ -106,7 +104,7 @@ const PaperSheetEdit = (props, context) => {
             height={(window.innerHeight - 80)+ "px"}
             onInput={(e, value) => setText(value)} />
         ) || (
-          <PaperSheetView value={text} pb="100%" pr="100%" />
+          <PaperSheetView value={text} />
         )}
       </Flex.Item>
     </Flex>
