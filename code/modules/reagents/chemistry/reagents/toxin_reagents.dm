@@ -852,7 +852,7 @@
 		mytray.adjustWeeds(-rand(1,4))
 
 /datum/reagent/toxin/acid/fluacid/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(current_cycle/10, 0)
+	M.adjustFireLoss(current_cycle/15, 0)
 	. = 1
 	..()
 
@@ -864,7 +864,7 @@
 	acidpwr = 5.0
 
 /datum/reagent/toxin/acid/nitracid/on_mob_life(mob/living/carbon/M)
-	M.adjustFireLoss(current_cycle/15, FALSE) //here you go nervar
+	M.adjustFireLoss(volume/10, FALSE) //here you go nervar
 	. = TRUE
 	..()
 

@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { classes } from 'common/react';
 import { decodeHtmlEntities, toTitleCase } from 'common/string';
 import { Component, Fragment } from 'inferno';

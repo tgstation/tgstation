@@ -1,4 +1,4 @@
-import { Component, Fragment } from 'inferno';
+import { Fragment } from 'inferno';
 import { useBackend, useLocalState } from '../../backend';
 import { BlockQuote, Box, Button, ByondUi, Collapsible, Flex, Icon, Input, Knob, LabeledList, NumberInput, ProgressBar, Section, Slider, Tabs, Tooltip } from '../../components';
 import { DraggableControl } from '../../components/DraggableControl';
@@ -117,7 +117,7 @@ const KitchenSinkButton = props => {
         <Button fluid content="Fluid" />
         <Button
           my={1}
-          lineHeight={1}
+          lineHeight={2}
           minWidth={15}
           textAlign="center"
           content="With Box props" />
@@ -181,45 +181,36 @@ const KitchenSinkBox = props => {
   );
 };
 
-class KitchenSinkProgressBar extends Component {
-  constructor() {
-    super();
-    this.state = {
-      progress: 0.5,
-    };
-  }
+const KitchenSinkProgressBar = (props, context) => {
+  const [
+    progress,
+    setProgress,
+  ] = useLocalState(context, 'progress', 0.5);
 
-  render() {
-    const { progress } = this.state;
-    return (
-      <Box>
-        <ProgressBar
-          ranges={{
-            good: [0.5, Infinity],
-            bad: [-Infinity, 0.1],
-            average: [0, 0.5],
-          }}
-          minValue={-1}
-          maxValue={1}
-          value={progress}>
-          Value: {Number(progress).toFixed(1)}
-        </ProgressBar>
-        <Box mt={1}>
-          <Button
-            content="-0.1"
-            onClick={() => this.setState(prevState => ({
-              progress: prevState.progress - 0.1,
-            }))} />
-          <Button
-            content="+0.1"
-            onClick={() => this.setState(prevState => ({
-              progress: prevState.progress + 0.1,
-            }))} />
-        </Box>
+  return (
+    <Box>
+      <ProgressBar
+        ranges={{
+          good: [0.5, Infinity],
+          bad: [-Infinity, 0.1],
+          average: [0, 0.5],
+        }}
+        minValue={-1}
+        maxValue={1}
+        value={progress}>
+        Value: {Number(progress).toFixed(1)}
+      </ProgressBar>
+      <Box mt={1}>
+        <Button
+          content="-0.1"
+          onClick={() => setProgress(progress - 0.1)} />
+        <Button
+          content="+0.1"
+          onClick={() => setProgress(progress + 0.1)} />
       </Box>
-    );
-  }
-}
+    </Box>
+  );
+};
 
 const KitchenSinkTabs = (props, context) => {
   const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
@@ -289,127 +280,110 @@ const KitchenSinkTooltip = props => {
   );
 };
 
-class KitchenSinkInput extends Component {
-  constructor() {
-    super();
-    this.state = {
-      number: 0,
-      text: 'Sample text',
-    };
-  }
+const KitchenSinkInput = (props, context) => {
+  const [
+    number,
+    setNumber,
+  ] = useLocalState(context, 'number', 0);
 
-  render() {
-    const { number, text } = this.state;
-    return (
-      <Box>
-        <LabeledList>
-          <LabeledList.Item label="Input (onChange)">
-            <Input
-              value={text}
-              onChange={(e, value) => this.setState({
-                text: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Input (onInput)">
-            <Input
-              value={text}
-              onInput={(e, value) => this.setState({
-                text: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="NumberInput (onChange)">
-            <NumberInput
-              animated
-              width="30px"
+  const [
+    text,
+    setText,
+  ] = useLocalState(context, 'text', "Sample text");
+
+  return (
+    <Box>
+      <LabeledList>
+        <LabeledList.Item label="Input (onChange)">
+          <Input
+            value={text}
+            onChange={(e, value) => setText(value)} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Input (onInput)">
+          <Input
+            value={text}
+            onInput={(e, value) => setText(value)} />
+        </LabeledList.Item>
+        <LabeledList.Item label="NumberInput (onChange)">
+          <NumberInput
+            animated
+            width="40px"
+            step={1}
+            stepPixelSize={5}
+            value={number}
+            minValue={-100}
+            maxValue={100}
+            onChange={(e, value) => setNumber(value)} />
+        </LabeledList.Item>
+        <LabeledList.Item label="NumberInput (onDrag)">
+          <NumberInput
+            animated
+            width="40px"
+            step={1}
+            stepPixelSize={5}
+            value={number}
+            minValue={-100}
+            maxValue={100}
+            onDrag={(e, value) => setNumber(value)} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Slider (onDrag)">
+          <Slider
+            step={1}
+            stepPixelSize={5}
+            value={number}
+            minValue={-100}
+            maxValue={100}
+            onDrag={(e, value) => setNumber(value)} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Knob (onDrag)">
+          <Knob
+            inline
+            size={1}
+            step={1}
+            stepPixelSize={2}
+            value={number}
+            minValue={-100}
+            maxValue={100}
+            onDrag={(e, value) => setNumber(value)} />
+          <Knob
+            ml={1}
+            inline
+            bipolar
+            size={1}
+            step={1}
+            stepPixelSize={2}
+            value={number}
+            minValue={-100}
+            maxValue={100}
+            onDrag={(e, value) => setNumber(value)} />
+        </LabeledList.Item>
+        <LabeledList.Item label="Rotating Icon">
+          <Box inline position="relative">
+            <DraggableControl
+              value={number}
+              minValue={-100}
+              maxValue={100}
+              dragMatrix={[0, -1]}
               step={1}
               stepPixelSize={5}
-              value={number}
-              minValue={-100}
-              maxValue={100}
-              onChange={(e, value) => this.setState({
-                number: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="NumberInput (onDrag)">
-            <NumberInput
-              animated
-              width="30px"
-              step={1}
-              stepPixelSize={5}
-              value={number}
-              minValue={-100}
-              maxValue={100}
-              onDrag={(e, value) => this.setState({
-                number: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Slider (onDrag)">
-            <Slider
-              step={1}
-              stepPixelSize={5}
-              value={number}
-              minValue={-100}
-              maxValue={100}
-              onDrag={(e, value) => this.setState({
-                number: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Knob (onDrag)">
-            <Knob
-              inline
-              size={1}
-              step={1}
-              stepPixelSize={2}
-              value={number}
-              minValue={-100}
-              maxValue={100}
-              onDrag={(e, value) => this.setState({
-                number: value,
-              })} />
-            <Knob
-              ml={1}
-              inline
-              bipolar
-              size={1}
-              step={1}
-              stepPixelSize={2}
-              value={number}
-              minValue={-100}
-              maxValue={100}
-              onDrag={(e, value) => this.setState({
-                number: value,
-              })} />
-          </LabeledList.Item>
-          <LabeledList.Item label="Rotating Icon">
-            <Box inline position="relative">
-              <DraggableControl
-                value={number}
-                minValue={-100}
-                maxValue={100}
-                dragMatrix={[0, -1]}
-                step={1}
-                stepPixelSize={5}
-                onDrag={(e, value) => this.setState({
-                  number: value,
-                })}>
-                {control => (
-                  <Box onMouseDown={control.handleDragStart}>
-                    <Icon
-                      size={4}
-                      color="yellow"
-                      name="times"
-                      rotation={control.displayValue * 4} />
-                    {control.inputElement}
-                  </Box>
-                )}
-              </DraggableControl>
-            </Box>
-          </LabeledList.Item>
-        </LabeledList>
-      </Box>
-    );
-  }
-}
+              onDrag={(e, value) => setNumber(value)}>
+              {control => (
+                <Box onMouseDown={control.handleDragStart}>
+                  <Icon
+                    size={4}
+                    color="yellow"
+                    name="times"
+                    rotation={control.displayValue * 4} />
+                  {control.inputElement}
+                </Box>
+              )}
+            </DraggableControl>
+          </Box>
+        </LabeledList.Item>
+      </LabeledList>
+    </Box>
+  );
+};
 
 const KitchenSinkCollapsible = props => {
   return (

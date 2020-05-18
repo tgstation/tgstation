@@ -12,10 +12,8 @@
 
 /obj/effect/cult_turf/overlay/singularity_act()
 	return
-/obj/effect/cult_turf/overlay/singularity_pull()
-	return
 
-/obj/effect/cult_turf/overlay/singularity_pull(S, current_size)
+/obj/effect/cult_turf/overlay/singularity_pull()
 	return
 
 /obj/effect/cult_turf/overlay/Destroy()

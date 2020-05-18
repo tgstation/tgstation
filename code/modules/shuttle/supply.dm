@@ -30,7 +30,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/obj/structure/disposalpipe,
 		/obj/item/hilbertshotel,
 		/obj/machinery/camera,
-		/obj/item/gps
+		/obj/item/gps,
+		/obj/structure/checkoutmachine
 	)))
 
 /obj/docking_port/mobile/supply

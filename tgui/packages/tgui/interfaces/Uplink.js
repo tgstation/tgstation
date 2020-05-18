@@ -162,7 +162,7 @@ const ItemList = (props, context) => {
                 onmouseover={() => setHoveredItem(item)}
                 onmouseout={() => setHoveredItem({})}
                 onClick={() => act('buy', {
-                  item: item.name,
+                  name: item.name,
                 })} />
             </Table.Cell>
           </Table.Row>
@@ -182,7 +182,7 @@ const ItemList = (props, context) => {
           onmouseover={() => setHoveredItem(item)}
           onmouseout={() => setHoveredItem({})}
           onClick={() => act('buy', {
-            item: item.name,
+            name: item.name,
           })} />
       )}>
       {decodeHtmlEntities(item.desc)}

@@ -19,6 +19,7 @@
 	slot_flags = ITEM_SLOT_HEAD
 	customfoodfilling = 0 //to avoid infinite bread-ception
 	foodtype = GRAIN
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/breadslice/Initialize()
 	. = ..()
@@ -34,6 +35,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/breadslice/plain
 	tastes = list("bread" = 10)
 	foodtype = GRAIN
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/breadslice/plain
 	name = "bread slice"
@@ -60,6 +62,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "meat" = 10)
 	foodtype = GRAIN | MEAT
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/breadslice/meat
 	name = "meatbread slice"
@@ -76,6 +79,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "acid" = 10)
 	foodtype = GRAIN | MEAT
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/breadslice/xenomeat
 	name = "xenomeatbread slice"
@@ -94,6 +98,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/toxin = 15, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "cobwebs" = 5)
 	foodtype = GRAIN | MEAT | TOXIC
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/breadslice/spidermeat
 	name = "spider meat bread slice"
@@ -102,6 +107,7 @@
 	filling_color = "#7CFC00"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/toxin = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	foodtype = GRAIN | MEAT | TOXIC
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/store/bread/banana
 	name = "banana-nut bread"
@@ -112,6 +118,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/banana = 20)
 	tastes = list("bread" = 10) // bananjuice will also flavour
 	foodtype = GRAIN | FRUIT
+	value = FOOD_RARE
 
 
 /obj/item/reagent_containers/food/snacks/breadslice/banana
@@ -131,6 +138,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "tofu" = 10)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/breadslice/tofu
 	name = "tofubread slice"
@@ -149,6 +157,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "cheese" = 10)
 	foodtype = GRAIN | DAIRY
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/breadslice/creamcheese
 	name = "cream cheese bread slice"
@@ -167,6 +176,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 20, /datum/reagent/toxin/mutetoxin = 5, /datum/reagent/consumable/nothing = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("bread" = 10, "silence" = 10)
 	foodtype = GRAIN | FRUIT
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/breadslice/mimana
 	name = "mimana bread slice"
@@ -196,6 +206,7 @@
 	attack_verb = list("touche'd")
 	tastes = list("bread" = 1)
 	foodtype = GRAIN
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/garlicbread
 	name = "garlic bread"
@@ -208,6 +219,7 @@
 	bitesize = 3
 	tastes = list("bread" = 1, "garlic" = 1, "butter" = 1)
 	foodtype = GRAIN
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/deepfryholder
 	name = "Deep Fried Foods Holder Obj"
@@ -215,6 +227,7 @@
 	icon = 'icons/obj/food/food.dmi'
 	icon_state = ""
 	bitesize = 2
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/deepfryholder/Initialize(mapload, obj/item/fried)
 	. = ..()
@@ -284,6 +297,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter" = 1, "biscuit" = 1)
 	foodtype = GRAIN | BREAKFAST
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/butterdog
 	name = "butterdog"
@@ -296,6 +310,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("butter", "exotic butter")
 	foodtype = GRAIN | DAIRY
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/butterdog/ComponentInitialize()
 	. = ..()

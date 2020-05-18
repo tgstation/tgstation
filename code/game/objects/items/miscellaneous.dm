@@ -80,6 +80,7 @@
 
 /obj/item/storage/box/hero
 	name = "Courageous Tomb Raider - 1940's."
+	desc = "This legendary figure of still dubious historical accuracy is thought to have been a world-famous archeologist who embarked on countless adventures in far away lands, along with his trademark whip and fedora hat."
 
 /obj/item/storage/box/hero/PopulateContents()
 	new /obj/item/clothing/head/fedora/curator(src)
@@ -90,6 +91,7 @@
 
 /obj/item/storage/box/hero/astronaut
 	name = "First Man on the Moon - 1960's."
+	desc = "One small step for a man, one giant leap for mankind. Relive the beginnings of space exploration with this fully functional set of vintage EVA equipment."
 
 /obj/item/storage/box/hero/astronaut/PopulateContents()
 	new /obj/item/clothing/suit/space/nasavoid(src)
@@ -99,6 +101,7 @@
 
 /obj/item/storage/box/hero/scottish
 	name = "Braveheart, the Scottish rebel - 1300's."
+	desc = "Seemingly a legendary figure in the battle for Scottish independence, this historical figure is closely associated with blue facepaint, big swords, strange man skirts, and his ever enduring catchphrase: 'FREEDOM!!'"
 
 /obj/item/storage/box/hero/scottish/PopulateContents()
 	new /obj/item/clothing/under/costume/kilt(src)
@@ -108,6 +111,7 @@
 
 /obj/item/storage/box/hero/carphunter
 	name = "Carp Hunter, Wildlife Expert - 2506."
+	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate enviromentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
 
 /obj/item/storage/box/hero/carphunter/PopulateContents()
 	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)

@@ -30,6 +30,8 @@ Make sure to add new items to this list if you document new components.
   - [`Icon`](#icon)
   - [`Input`](#input)
   - [`Knob`](#knob)
+  - [`LabeledControls`](#labeledcontrols)
+  - [`LabeledControls.Item`](#labeledcontrolsitem)
   - [`LabeledList`](#labeledlist)
   - [`LabeledList.Item`](#labeledlistitem)
   - [`LabeledList.Divider`](#labeledlistdivider)
@@ -583,6 +585,24 @@ Default is about 250ms, increase it if you still see flickering.
 the input, or successfully enter a number.
 - `onDrag: (e, value) => void` - An event, which fires about every 500ms
 when you drag the input up and down, on release and on manual editing.
+
+### `LabeledControls`
+
+LabeledControls is a horizontal grid, that is designed to hold various
+controls, like [Knobs](#knob) or small [Buttons](#button). Every item in
+this grid is labeled at the bottom.
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `children: LabeledControls.Item` - Items to render.
+
+### `LabeledControls.Item`
+
+**Props:**
+
+- See inherited props: [Box](#box)
+- `label: string` - Item label.
 
 ### `LabeledList`
 

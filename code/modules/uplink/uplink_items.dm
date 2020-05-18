@@ -190,7 +190,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/bundles_TC/firestarter
 	name = "Spetsnaz Pyro bundle"
 	desc = "For systematic suppression of carbon lifeforms in close quarters: Contains a lethal New Russian backpack spray, Elite hardsuit, \
-			Stechkin APS pistol, two magazines, a minibomb and a stimulant syringe. \
+			Stechkin APS machine pistol, two incendiary magazines, a minibomb and a stimulant syringe. \
 			Order NOW and comrade Boris will throw in an extra tracksuit."
 	item = /obj/item/storage/backpack/duffelbag/syndie/firestarter
 	cost = 30
@@ -398,7 +398,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "A fully-loaded Scarborough Arms bullpup submachine gun. The C-20r fires .45 rounds with a \
 			24-round magazine and is compatible with suppressors."
 	item = /obj/item/gun/ballistic/automatic/c20r
-	cost = 10
+	cost = 13
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
 
@@ -493,11 +493,20 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/pistol
-	name = "Stechkin Pistol"
-	desc = "A small, easily concealable handgun that uses 10mm auto rounds in 8-round magazines and is compatible \
+	name = "Makarov Pistol"
+	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = 7
+	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/dangerous/aps
+	name = "Stechkin APS Machine Pistol"
+	desc = "A ancient Soviet machine pistol, refurbished for the modern age. Uses 9mm auto rounds in 15-round magazines and is compatible \
+			with suppressors. The gun fires in three round bursts."
+	item = /obj/item/gun/ballistic/automatic/pistol/aps
+	cost = 10
+	include_modes = list(/datum/game_mode/nuclear)
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/dangerous/bolt_action
@@ -642,7 +651,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/stealthy_weapons/suppressor
 	name = "Suppressor"
-	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Stechkin and C-20r, but not revolvers or energy guns."
+	desc = "This suppressor will silence the shots of the weapon it is attached to for increased stealth and superior ambushing capability. It is compatible with many small ballistic guns including the Makarov, Stechkin APS and C-20r, but not revolvers or energy guns."
 	item = /obj/item/suppressor
 	cost = 3
 	surplus = 10
@@ -660,35 +669,42 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	surplus = 40
 
 /datum/uplink_item/ammo/pistol
-	name = "10mm Handgun Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol."
-	item = /obj/item/ammo_box/magazine/m10mm
+	name = "9mm Handgun Magazine"
+	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol."
+	item = /obj/item/ammo_box/magazine/m9mm
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolap
-	name = "10mm Armour Piercing Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
+	name = "9mm Armour Piercing Magazine"
+	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are less effective at injuring the target but penetrate protective gear."
-	item = /obj/item/ammo_box/magazine/m10mm/ap
+	item = /obj/item/ammo_box/magazine/m9mm/ap
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolhp
-	name = "10mm Hollow Point Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
+	name = "9mm Hollow Point Magazine"
+	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			These rounds are more damaging but ineffective against armour."
-	item = /obj/item/ammo_box/magazine/m10mm/hp
+	item = /obj/item/ammo_box/magazine/m9mm/hp
 	cost = 3
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
 
 /datum/uplink_item/ammo/pistolfire
-	name = "10mm Incendiary Magazine"
-	desc = "An additional 8-round 10mm magazine; compatible with the Stechkin Pistol. \
+	name = "9mm Incendiary Magazine"
+	desc = "An additional 8-round 9mm magazine, compatible with the Makarov pistol. \
 			Loaded with incendiary rounds which inflict little damage, but ignite the target."
-	item = /obj/item/ammo_box/magazine/m10mm/fire
+	item = /obj/item/ammo_box/magazine/m9mm/fire
 	cost = 2
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/ammo/pistolaps
+	name = "9mm Stechkin APS Magazine"
+	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS machine pistol."
+	item = /obj/item/ammo_box/magazine/m9mm_aps
+	cost = 2
+	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/shotgun
 	cost = 2
@@ -757,6 +773,22 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 3
 	include_modes = list(/datum/game_mode/nuclear)
 
+/datum/uplink_item/ammo/smgap
+	name = ".45 Armor Piercing SMG Magazine"
+	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun.\
+			These rounds are less effective at injuring the target but penetrate protective gear."
+	item = /obj/item/ammo_box/magazine/smgm45/ap
+	cost = 5
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/smgfire
+	name = ".45 Incendiary SMG Magazine"
+	desc = "An additional 24-round .45 magazine suitable for use with the C-20r submachine gun.\
+			Loaded with incendiary rounds which inflict little damage, but ignite the target."
+	item = /obj/item/ammo_box/magazine/smgm45/incen
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+
 /datum/uplink_item/ammo/sniper
 	cost = 4
 	include_modes = list(/datum/game_mode/nuclear)
@@ -782,9 +814,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/ammo/carbine
 	name = "5.56mm Toploader Magazine"
 	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
-			These bullets pack less punch than 7.12x82mm rounds, but they still offer more power than .45 ammo."
+			These bullets pack less punch than 7.12x82mm rounds, but they still offer more power than .45 ammo due to their innate armour penetration."
 	item = /obj/item/ammo_box/magazine/m556
 	cost = 4
+	include_modes = list(/datum/game_mode/nuclear)
+
+/datum/uplink_item/ammo/carbinephase
+	name = "5.56mm Toploader Phasic Magazine"
+	desc = "An additional 30-round 5.56mm magazine; suitable for use with the M-90gl carbine. \
+			These bullets are made from an experimental alloy, 'Ghost Lead', that allows it to pass through almost any non-organic material. \
+			The name is a misnomer. It doesn't contain any lead whatsoever!"
+	item = /obj/item/ammo_box/magazine/m556/phasic
+	cost = 8
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/machinegun
@@ -839,13 +880,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Strike fear into the hearts of your enemies."
 	item = /obj/item/ammo_casing/caseless/rocket/hedp
 	cost = 6
-
-/datum/uplink_item/ammo/pistolaps
-	name = "9mm Handgun Magazine"
-	desc = "An additional 15-round 9mm magazine, compatible with the Stechkin APS pistol, found in the Spetsnaz Pyro bundle."
-	item = /obj/item/ammo_box/magazine/pistolm9mm
-	cost = 2
-	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/toydarts
 	name = "Box of Riot Darts"
@@ -1258,22 +1292,6 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 8
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //you can't buy it in nuke, because the elite hardsuit costs the same while being better
 
-/datum/uplink_item/suits/hardsuit/cybersun
-	name = "Cybersun Hardsuit"
-	desc = "A long forgotten hardsuit made by Cybersun industries. \
-			Offers ROBUST protection against laser-based weapons, while still giving somewhat good chances \
-			to survive assault from a toolbox or shotgun. \
-			Not to mention, it doesn't slow you down and contains an integrated jetpack that runs on standard tanks. \
-			Systems in this hardsuit make it really hard to take it off from you."
-	item = /obj/item/clothing/suit/space/hardsuit/cybersun
-	cost = 14
-	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops) //nuke and clown ops get it for lower value
-
-/datum/uplink_item/suits/hardsuit/cybersun/nuke
-	cost = 8
-	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
-	exclude_modes = list()
-
 /datum/uplink_item/suits/hardsuit/elite
 	name = "Elite Syndicate Hardsuit"
 	desc = "An upgraded, elite version of the Syndicate hardsuit. It features fireproofing, and also \
@@ -1357,9 +1375,24 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 /datum/uplink_item/device_tools/emag
 	name = "Cryptographic Sequencer"
 	desc = "The cryptographic sequencer, electromagnetic card, or emag, is a small card that unlocks hidden functions \
-			in electronic devices, subverts intended functions, and easily breaks security mechanisms."
+			in electronic devices, subverts intended functions, and easily breaks security mechanisms. Cannot be used to open airlocks."
 	item = /obj/item/card/emag
-	cost = 6
+	cost = 4
+
+/datum/uplink_item/device_tools/syndie_jaws_of_life
+	name = "Syndicate Jaws of Life"
+	desc = "Based on a Nanotrasen model, this powerful tool can be used as both a crowbar and a pair of wirecutters. \
+	In it's crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or it's departments."
+	item = /obj/item/crowbar/power/syndicate
+	cost = 4
+	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
+
+/datum/uplink_item/device_tools/doorjack
+	name = "Airlock Authentication Override Card"
+	desc = "A specialized cryptographic sequencer specifically designed to override station airlock access codes. \
+			After hacking a certain number of airlocks, the device will require some time to recharge."
+	item = /obj/item/card/emag/doorjack
+	cost = 3
 
 /datum/uplink_item/device_tools/fakenucleardisk
 	name = "Decoy Nuclear Authentication Disk"
@@ -1705,7 +1738,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Caution: Product may rehydrate when exposed to water."
 	item = /obj/item/storage/box/gorillacubes
 	cost = 6
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
+	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
@@ -1827,14 +1860,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			Side-affects may include hypertrichosis, violent outbursts, and an unending affinity for bananas."
 	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
+	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/modified_syringe_gun
 	name = "Modified Syringe Gun"
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
-	restricted_roles = list("Geneticist", "Chief Medical Officer")
+	restricted_roles = list("Geneticist", "Research Director")
 
 /datum/uplink_item/role_restricted/chemical_gun
 	name = "Reagent Dartgun"
@@ -1952,7 +1985,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear/clown_ops)
 	illegal_tech = FALSE
- 
+
 /datum/uplink_item/badass/tactical_naptime
 	name = "Sleepy Time Pajama Bundle"
 	desc = "Even soldiers need to get a good nights rest. Comes with blood-red pajamas, a blankie, a hot mug of cocoa and a fuzzy friend."

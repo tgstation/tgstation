@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 export { AnimatedNumber } from './AnimatedNumber';
 export { BlockQuote } from './BlockQuote';
 export { Box } from './Box';
@@ -14,6 +20,7 @@ export { Grid } from './Grid';
 export { Icon } from './Icon';
 export { Input } from './Input';
 export { Knob } from './Knob';
+export { LabeledControls } from './LabeledControls';
 export { LabeledList } from './LabeledList';
 export { Modal } from './Modal';
 export { NoticeBox } from './NoticeBox';

@@ -204,7 +204,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 #endif
 
 /client/New(TopicData)
-	SSdemo.write_event_line("login [ckey]")
 	var/tdata = TopicData //save this for later use
 	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
@@ -492,8 +491,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+	seen_messages = null
 	Master.UpdateTickRate()
-	SSdemo.write_event_line("logout [ckey]")
 	. = ..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
 	return QDEL_HINT_HARDDEL_NOW
 
@@ -853,7 +852,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		'html/browser/playeroptions.css',
 		)
 	spawn (10) //removing this spawn causes all clients to not get verbs.
-		
+
 		//load info on what assets the client has
 		src << browse('code/modules/asset_cache/validate_assets.html', "window=asset_cache_browser")
 
@@ -961,6 +960,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 		qdel(S)
 	char_render_holders = null
 
+///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
+/client/proc/give_award(achievement_type, mob/user, value = 1)
+	return	player_details.achievements.unlock(achievement_type, user, value)
 
-/client/proc/give_award(achievement_type, mob/user)
-	return	player_details.achievements.unlock(achievement_type, user)
+///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/client/proc/get_award_status(achievement_type, mob/user, value = 1)
+	return	player_details.achievements.get_achievement_status(achievement_type)

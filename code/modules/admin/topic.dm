@@ -405,10 +405,10 @@
 				M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
 			if("polyparrot")
 				M.change_mob_type( /mob/living/simple_animal/parrot/Poly , null, null, delmob )
-			if("constructarmored")
-				M.change_mob_type( /mob/living/simple_animal/hostile/construct/armored , null, null, delmob )
-			if("constructbuilder")
-				M.change_mob_type( /mob/living/simple_animal/hostile/construct/builder , null, null, delmob )
+			if("constructjuggernaut")
+				M.change_mob_type( /mob/living/simple_animal/hostile/construct/juggernaut , null, null, delmob )
+			if("constructartificer")
+				M.change_mob_type( /mob/living/simple_animal/hostile/construct/artificer , null, null, delmob )
 			if("constructwraith")
 				M.change_mob_type( /mob/living/simple_animal/hostile/construct/wraith , null, null, delmob )
 			if("shade")
@@ -2201,6 +2201,55 @@
 
 	else if(href_list["beakerpanel"])
 		beaker_panel_act(href_list)
+
+	else if(href_list["reloadpolls"])
+		GLOB.polls.Cut()
+		GLOB.poll_options.Cut()
+		load_poll_data()
+		poll_list_panel()
+
+	else if(href_list["newpoll"])
+		poll_management_panel()
+
+	else if(href_list["editpoll"])
+		var/datum/poll_question/poll = locate(href_list["editpoll"]) in GLOB.polls
+		poll_management_panel(poll)
+
+	else if(href_list["deletepoll"])
+		var/datum/poll_question/poll = locate(href_list["deletepoll"]) in GLOB.polls
+		poll.delete_poll()
+		poll_list_panel()
+
+	else if(href_list["initializepoll"])
+		poll_parse_href(href_list)
+
+	else if(href_list["submitpoll"])
+		var/datum/poll_question/poll = locate(href_list["submitpoll"]) in GLOB.polls
+		poll_parse_href(href_list, poll)
+
+	else if(href_list["clearpollvotes"])
+		var/datum/poll_question/poll = locate(href_list["clearpollvotes"]) in GLOB.polls
+		poll.clear_poll_votes()
+		poll_management_panel(poll)
+
+	else if(href_list["addpolloption"])
+		var/datum/poll_question/poll = locate(href_list["addpolloption"]) in GLOB.polls
+		poll_option_panel(poll)
+
+	else if(href_list["editpolloption"])
+		var/datum/poll_option/option = locate(href_list["editpolloption"]) in GLOB.poll_options
+		var/datum/poll_question/poll = locate(href_list["parentpoll"]) in GLOB.polls
+		poll_option_panel(poll, option)
+
+	else if(href_list["deletepolloption"])
+		var/datum/poll_option/option = locate(href_list["deletepolloption"]) in GLOB.poll_options
+		var/datum/poll_question/poll = option.delete_option()
+		poll_management_panel(poll)
+
+	else if(href_list["submitoption"])
+		var/datum/poll_option/option = locate(href_list["submitoption"]) in GLOB.poll_options
+		var/datum/poll_question/poll = locate(href_list["submitoptionpoll"]) in GLOB.polls
+		poll_option_parse_href(href_list, poll, option)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

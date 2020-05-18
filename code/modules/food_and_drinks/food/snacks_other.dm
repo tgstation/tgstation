@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("cheese" = 1)
 	foodtype = DAIRY
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/royalcheese
 	name = "royal cheese"
@@ -29,6 +30,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("cheese" = 1)
 	foodtype = DAIRY
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/watermelonslice
 	name = "watermelon slice"
@@ -38,6 +40,7 @@
 	tastes = list("watermelon" = 1)
 	foodtype = FRUIT
 	juice_results = list(/datum/reagent/consumable/watermelonjuice = 5)
+	value = FOOD_WORTHLESS
 
 /obj/item/reagent_containers/food/snacks/candy_corn
 	name = "candy corn"
@@ -47,6 +50,7 @@
 	filling_color = "#FF8C00"
 	tastes = list("candy corn" = 1)
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/candy_corn/prison
 	name = "desiccated candy corn"
@@ -64,6 +68,7 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/hugemushroomslice
 	name = "huge mushroom slice"
@@ -72,6 +77,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("mushroom" = 1)
 	foodtype = VEGETABLES
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/popcorn
 	name = "popcorn"
@@ -83,6 +89,7 @@
 	filling_color = "#FFEFD5"
 	tastes = list("popcorn" = 3, "butter" = 1)
 	foodtype = JUNKFOOD
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/popcorn/Initialize()
 	. = ..()
@@ -97,6 +104,7 @@
 	filling_color = "#D2B48C"
 	tastes = list("potato" = 1)
 	foodtype = VEGETABLES | DAIRY
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/fries
 	name = "space fries"
@@ -107,6 +115,7 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "salt" = 1)
 	foodtype = VEGETABLES | GRAIN | FRIED
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/fries/Initialize()
 	. = ..()
@@ -120,6 +129,7 @@
 	filling_color = "FFD700"
 	tastes = list("potato" = 3, "valids" = 1)
 	foodtype = FRIED | VEGETABLES
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/tatortot/Initialize()
 	. = ..()
@@ -134,6 +144,7 @@
 	filling_color = "#DEB887"
 	tastes = list("soy" = 1)
 	foodtype = VEGETABLES
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/cheesyfries
 	name = "cheesy fries"
@@ -145,6 +156,7 @@
 	filling_color = "#FFD700"
 	tastes = list("fries" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | GRAIN | DAIRY
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/cheesyfries/Initialize()
 	. = ..()
@@ -157,6 +169,7 @@
 	list_reagents = list(/datum/reagent/toxin/bad_food = 30)
 	filling_color = "#8B4513"
 	foodtype = GROSS
+	value = FOOD_WORTHLESS
 
 /obj/item/reagent_containers/food/snacks/carrotfries
 	name = "carrot fries"
@@ -167,6 +180,7 @@
 	filling_color = "#FFA500"
 	tastes = list("carrots" = 3, "salt" = 1)
 	foodtype = VEGETABLES
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/carrotfries/Initialize()
 	. = ..()
@@ -182,6 +196,7 @@
 	filling_color = "#FF4500"
 	tastes = list("apple" = 2, "caramel" = 3)
 	foodtype = JUNKFOOD | FRUIT | SUGAR
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/mint
 	name = "mint"
@@ -192,6 +207,7 @@
 	list_reagents = list(/datum/reagent/toxin/minttoxin = 2)
 	filling_color = "#800000"
 	foodtype = TOXIC | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/eggwrap
 	name = "egg wrap"
@@ -202,6 +218,7 @@
 	filling_color = "#F0E68C"
 	tastes = list("egg" = 1)
 	foodtype = MEAT | GRAIN
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/spidereggs
 	name = "spider eggs"
@@ -211,6 +228,7 @@
 	filling_color = "#008000"
 	tastes = list("cobwebs" = 1)
 	foodtype = MEAT | TOXIC
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/spiderling
 	name = "spiderling"
@@ -220,8 +238,9 @@
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "guts" = 2)
 	foodtype = MEAT | TOXIC
+	value = FOOD_JUNK
 
-/obj/item/reagent_containers/food/snacks/spiderlollipop
+/obj/item/reagent_containers/food/snacks/chewable/spiderlollipop
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
@@ -229,6 +248,7 @@
 	filling_color = "#00800"
 	tastes = list("cobwebs" = 1, "sugar" = 2)
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/chococoin
 	name = "chocolate coin"
@@ -239,6 +259,7 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/fudgedice
 	name = "fudge dice"
@@ -250,6 +271,7 @@
 	trash = /obj/item/dice/fudge
 	tastes = list("fudge" = 1)
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/chocoorange
 	name = "chocolate orange"
@@ -260,6 +282,7 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 3, "oranges" = 1)
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/eggplantparm
 	name = "eggplant parmigiana"
@@ -271,6 +294,7 @@
 	filling_color = "#BA55D3"
 	tastes = list("eggplant" = 3, "cheese" = 1)
 	foodtype = VEGETABLES | DAIRY
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/tortilla
 	name = "tortilla"
@@ -281,6 +305,7 @@
 	filling_color = "#FFEFD5"
 	tastes = list("tortilla" = 1)
 	foodtype = GRAIN
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/burrito
 	name = "burrito"
@@ -291,6 +316,7 @@
 	filling_color = "#FFEFD5"
 	tastes = list("torilla" = 2, "meat" = 3)
 	foodtype = GRAIN | MEAT
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cheesyburrito
 	name = "cheesy burrito"
@@ -301,6 +327,7 @@
 	filling_color = "#FFD800"
 	tastes = list("torilla" = 2, "meat" = 3, "cheese" = 1)
 	foodtype = GRAIN | MEAT | DAIRY
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/carneburrito
 	name = "carne asada burrito"
@@ -311,6 +338,7 @@
 	filling_color = "#A0522D"
 	tastes = list("torilla" = 2, "meat" = 4)
 	foodtype = GRAIN | MEAT
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/fuegoburrito
 	name = "fuego plasma burrito"
@@ -321,6 +349,7 @@
 	filling_color = "#FF2000"
 	tastes = list("torilla" = 2, "meat" = 3, "hot peppers" = 1)
 	foodtype = GRAIN | MEAT
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/yakiimo
 	name = "yaki imo"
@@ -331,6 +360,7 @@
 	filling_color = "#8B1105"
 	tastes = list("sweet potato" = 1)
 	foodtype = GRAIN | VEGETABLES | SUGAR
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/roastparsnip
 	name = "roast parsnip"
@@ -341,6 +371,7 @@
 	filling_color = "#FF5500"
 	tastes = list("parsnip" = 1)
 	foodtype = VEGETABLES
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/melonfruitbowl
 	name = "melon fruit bowl"
@@ -352,6 +383,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	tastes = list("melon" = 1)
 	foodtype = FRUIT
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/nachos
 	name = "nachos"
@@ -362,6 +394,7 @@
 	filling_color = "#F4A460"
 	tastes = list("nachos" = 1)
 	foodtype = VEGETABLES | FRIED
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/cheesynachos
 	name = "cheesy nachos"
@@ -372,6 +405,7 @@
 	filling_color = "#FFD700"
 	tastes = list("nachos" = 2, "cheese" = 1)
 	foodtype = VEGETABLES | FRIED | DAIRY
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cubannachos
 	name = "Cuban nachos"
@@ -382,6 +416,7 @@
 	filling_color = "#DC143C"
 	tastes = list("nachos" = 2, "hot pepper" = 1)
 	foodtype = VEGETABLES | FRIED | DAIRY
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/melonkeg
 	name = "melon keg"
@@ -394,6 +429,7 @@
 	bitesize = 5
 	tastes = list("grain alcohol" = 1, "fruit" = 1)
 	foodtype = FRUIT | ALCOHOL
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/honeybar
 	name = "honey nut bar"
@@ -404,6 +440,7 @@
 	filling_color = "#F2CE91"
 	tastes = list("oats" = 3, "nuts" = 2, "honey" = 1)
 	foodtype = GRAIN | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/stuffedlegion
 	name = "stuffed legion"
@@ -413,6 +450,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5, /datum/reagent/consumable/capsaicin = 2)
 	tastes = list("death" = 2, "rock" = 1, "meat" = 1, "hot peppers" = 1)
 	foodtype = MEAT
+	value = FOOD_LEGENDARY
 
 /obj/item/reagent_containers/food/snacks/powercrepe
 	name = "Powercrepe"
@@ -428,9 +466,11 @@
 	w_class = WEIGHT_CLASS_BULKY
 	tastes = list("cherry" = 1, "crepe" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+	value = FOOD_LEGENDARY
 
 /obj/item/reagent_containers/food/snacks/chewable
 	slot_flags = ITEM_SLOT_MASK
+	value = FOOD_WORTHLESS
 	///How long it lasts before being deleted
 	var/succ_dur = 180
 	///The delay between each time it will handle reagents
@@ -481,9 +521,6 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 1, /datum/reagent/iron = 10, /datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/omnizine = 2)	//Honk
 	var/mutable_appearance/head
 	var/headcolor = rgb(0, 0, 0)
-	succ_dur = 180
-	succ_int = 100
-	next_succ = 0
 	tastes = list("candy" = 1)
 	foodtype = JUNKFOOD | SUGAR
 
@@ -526,6 +563,7 @@
 	color = "#E48AB5" // craftable custom gums someday?
 	list_reagents = list(/datum/reagent/consumable/sugar = 5)
 	tastes = list("candy" = 1)
+	succ_dur = 450 //15 minutes
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine
 	name = "nicotine gum"
@@ -546,6 +584,7 @@
 	color = "#913D3D"
 	list_reagents = list(/datum/reagent/blood = 15)
 	tastes = list("hell" = 1)
+	succ_dur = 180
 
 /obj/item/reagent_containers/food/snacks/chewable/bubblegum/bubblegum/process()
 	. = ..()
@@ -568,7 +607,7 @@
 	else
 		to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
 
-/obj/item/reagent_containers/food/snacks/gumball
+/obj/item/reagent_containers/food/snacks/chewable/gumball
 	name = "gumball"
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
@@ -576,23 +615,24 @@
 	list_reagents = list(/datum/reagent/consumable/sugar = 5, /datum/reagent/medicine/sal_acid = 2, /datum/reagent/medicine/oxandrolone = 2)	//Kek
 	tastes = list("candy")
 	foodtype = JUNKFOOD
+	value = FOOD_WORTHLESS
 
-/obj/item/reagent_containers/food/snacks/gumball/Initialize()
+/obj/item/reagent_containers/food/snacks/chewable/gumball/Initialize()
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg
+/obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/Initialize()
+/obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
+/obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg/equipped(mob/living/user, slot)
 	. = ..(user, slot)
 	spamchecking = FALSE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/proc/spamcheck()
+/obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg/proc/spamcheck()
 	if(spamchecking)
 		qdel(src)
 
@@ -605,6 +645,7 @@
 	filling_color = "F0D830"
 	tastes = list("taco" = 4, "meat" = 2, "cheese" = 2, "lettuce" = 1)
 	foodtype = MEAT | DAIRY | GRAIN | VEGETABLES
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/taco/plain
 	desc = "A traditional taco with meat and cheese, minus the rabbit food."
@@ -622,6 +663,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/sodiumchloride = 10)
 	tastes = list("bran" = 4, "raisins" = 3, "salt" = 1)
 	foodtype = GRAIN | FRUIT | BREAKFAST
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/butter
 	name = "stick of butter"
@@ -631,6 +673,7 @@
 	filling_color = "#FFD700"
 	tastes = list("butter" = 1)
 	foodtype = DAIRY
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/butter/examine(mob/user)
 	. = ..()
@@ -656,6 +699,7 @@
 	desc = "delicious, golden, fatty goodness on a stick."
 	icon_state = "butteronastick"
 	trash = /obj/item/stack/rods
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/onionrings
 	name = "onion rings"
@@ -666,6 +710,7 @@
 	gender = PLURAL
 	tastes = list("batter" = 3, "onion" = 1)
 	foodtype = VEGETABLES
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/pineappleslice
 	name = "pineapple slice"
@@ -675,6 +720,7 @@
 	juice_results = list(/datum/reagent/consumable/pineapplejuice = 3)
 	tastes = list("pineapple" = 1)
 	foodtype = FRUIT | PINEAPPLE
+	value = FOOD_WORTHLESS
 
 /obj/item/reagent_containers/food/snacks/tinychocolate
 	name = "chocolate"
@@ -684,6 +730,7 @@
 	filling_color = "#A0522D"
 	tastes = list("chocolate" = 1)
 	foodtype = JUNKFOOD | SUGAR
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/canned
 	name = "Canned Air"
@@ -695,6 +742,7 @@
 	spillable = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	volume = 30
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/canned/proc/open_can(mob/user)
 	to_chat(user, "<span class='notice'>You pull back the tab of \the [src].</span>")
@@ -751,6 +799,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	tastes = list("cream cheese" = 4, "crab" = 3, "crispiness" = 2)
 	foodtype = MEAT | DAIRY | GRAIN
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/cornchips
 	name = "boritos corn chips"
@@ -763,4 +812,4 @@
 	filling_color = "#ECA735"
 	tastes = list("fried corn" = 1)
 	foodtype = JUNKFOOD | FRIED
-
+	value = FOOD_JUNK

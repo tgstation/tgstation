@@ -83,7 +83,7 @@
 /obj/item/cartridge/security
 	name = "\improper R.O.B.U.S.T. cartridge"
 	icon_state = "cart-s"
-	access = CART_SECURITY
+	access = CART_SECURITY | CART_MANIFEST
 	bot_access_flags = SEC_BOT
 
 /obj/item/cartridge/detective

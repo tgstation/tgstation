@@ -1,9 +1,16 @@
+/**
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
+ */
+
 import { createLogger } from 'common/logging.js';
 import fs from 'fs';
 import os from 'os';
 import { basename } from 'path';
 import { promisify } from 'util';
 import { resolveGlob, resolvePath } from './util.js';
+import { regQuery } from './winreg.js';
 
 const logger = createLogger('reloader');
 
@@ -36,6 +43,21 @@ export const findCacheRoot = async () => {
     const paths = await resolveGlob(pattern);
     if (paths.length > 0) {
       cacheRoot = paths[0];
+      logger.log(`found cache at '${cacheRoot}'`);
+      return cacheRoot;
+    }
+  }
+  // Query the Windows Registry
+  if (process.platform === 'win32') {
+    logger.log('querying windows registry');
+    let userpath = await regQuery(
+      'HKCU\\Software\\Dantom\\BYOND',
+      'userpath');
+    if (userpath) {
+      cacheRoot = userpath
+        .replace(/\\$/, '')
+        .replace(/\\/g, '/')
+        + '/cache';
       logger.log(`found cache at '${cacheRoot}'`);
       return cacheRoot;
     }

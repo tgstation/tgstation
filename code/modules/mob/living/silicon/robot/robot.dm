@@ -872,7 +872,8 @@
 /mob/living/silicon/robot/Exited(atom/A)
 	if(hat && hat == A)
 		hat = null
-	update_icons()
+		if(!QDELETED(src)) //Don't update icons if we are deleted.
+			update_icons()
 	. = ..()
 
 /**
@@ -1035,7 +1036,7 @@
 
 
 /mob/living/silicon/robot/proc/TryConnectToAI()
-	connected_ai = select_active_ai_with_fewest_borgs()
+	connected_ai = select_active_ai_with_fewest_borgs(z)
 	if(connected_ai)
 		connected_ai.connected_robots += src
 		lawsync()

@@ -204,6 +204,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// cooldown tracker for accent sounds,
 	var/last_accent_sound = 0
+	///Var that increases from 0 to 1 when a psycologist is nearby, and decreases in the same way
+	var/psyCoeff = 0
+	///Should we check the psy overlay?
+	var/psy_overlay = FALSE
+	///A pinkish overlay used to denote the presance of a psycologist. We fade in and out of this depending on the amount of time they've spent near the crystal
+	var/obj/overlay/psy/psyOverlay = /obj/overlay/psy
 
 /obj/machinery/power/supermatter_crystal/Initialize()
 	. = ..()
@@ -224,6 +230,11 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	RegisterSignal(src, COMSIG_ATOM_BSA_BEAM, .proc/call_explode)
 
 	soundloop = new(list(src), TRUE)
+	if(ispath(psyOverlay))
+		psyOverlay = new psyOverlay()
+	else
+		stack_trace("Supermatter created with non-path psyOverlay variable. This can break things, please fix.")
+		psyOverlay = new()
 
 /obj/machinery/power/supermatter_crystal/Destroy()
 	investigate_log("has been destroyed.", INVESTIGATE_SUPERMATTER)
@@ -234,6 +245,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(is_main_engine && GLOB.main_supermatter_engine == src)
 		GLOB.main_supermatter_engine = null
 	QDEL_NULL(soundloop)
+	if(psyOverlay)
+		QDEL_NULL(psyOverlay)
 	return ..()
 
 /obj/machinery/power/supermatter_crystal/examine(mob/user)
@@ -399,7 +412,14 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	else
 		// Pass all the gas related code an empty gas container
 		removed = new()
-
+	overlays -= psyOverlay
+	if(psy_overlay)
+		overlays -= psyOverlay
+		if(psyCoeff > 0)
+			psyOverlay.alpha = psyCoeff * 255
+			overlays += psyOverlay
+		else
+			psy_overlay = FALSE
 	damage_archived = damage
 	if(!removed || !removed.total_moles() || isspaceturf(T)) //we're in space or there is no gas to process
 		if(takes_damage)
@@ -421,8 +441,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			//There might be a way to integrate healing and hurting via heat
 			//healing damage
 			if(combined_gas < MOLE_PENALTY_THRESHOLD)
-				//Only heals damage when the temp is below 313.15, heals up to 2 damage
-				damage = max(damage + (min(removed.temperature - (T0C + HEAT_PENALTY_THRESHOLD), 0) / 150 ), 0)
+				//Only has a net positive effect when the temp is below 313.15, heals up to 2 damage. Psycologists increase this temp min by up to 45
+				damage = max(damage + (min(removed.temperature - ((T0C + HEAT_PENALTY_THRESHOLD) + (45 * psyCoeff)), 0) / 150 ), 0)
 
 			//caps damage rate
 
@@ -555,8 +575,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(bzcomp >= 0.4 && prob(30 * bzcomp))
 			src.fire_nuclear_particle()        // Start to emit radballs at a maximum of 30% chance per tick
 
-		//Power * 0.55
-		var/device_energy = power * REACTION_POWER_MODIFIER
+		//Power * 0.55 * a value between 1 and 0.8
+		var/device_energy = power * REACTION_POWER_MODIFIER * (1 - (psyCoeff * 0.2))
 
 		//To figure out how much temperature to add each tick, consider that at one atmosphere's worth
 		//of pure oxygen, with all four lasers firing at standard energy and no N2 present, at room temperature
@@ -581,19 +601,23 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			air_update_turf()
 
 	//Makes em go mad and accumulate rads.
+	var/toAdd = -0.05
 	for(var/mob/living/carbon/human/l in view(src, HALLUCINATION_RANGE(power))) // If they can see it without mesons on.  Bad on them.
-		if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
+		if(l.mind?.assigned_role == "Psychologist")
+			toAdd = 0.05
+			psy_overlay = TRUE
+		else if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
 			l.hallucination += power * config_hallucination_power * D
 			l.hallucination = clamp(l.hallucination, 0, 200)
-
+	psyCoeff = clamp(psyCoeff + toAdd, 0, 1)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
 		var/rads = (power / 10) * sqrt( 1 / max(get_dist(l, src),1) )
 		l.rad_act(rads)
 
 	//Transitions between one function and another, one we use for the fast inital startup, the other is used to prevent errors with fusion temperatures.
 	//Use of the second function improves the power gain imparted by using co2
-	power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor),0)
+	power = max(power - min(((power/500)**3) * powerloss_inhibitor, power * 0.83 * powerloss_inhibitor) * (1 - (0.2 * psyCoeff)),0)
 	//After this point power is lowered
 	//This wraps around to the begining of the function
 	//Handle high power zaps/anomaly generation
@@ -906,6 +930,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
 	moveable = TRUE
+	psyOverlay = /obj/overlay/psy/shard
 
 /obj/machinery/power/supermatter_crystal/shard/engine
 	name = "anchored supermatter shard"
@@ -965,8 +990,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	//If the strength of the zap decays past the cutoff, we stop
 	if(zap_str < zap_cutoff)
 		return
-	var/datum/target
-	var/target_type = (LOWEST)
+	var/atom/target
+	var/target_type = LOWEST
 	var/list/arctargets = list()
 	//Making a new copy so additons further down the recursion do not mess with other arcs
 	//Lets put this ourself into the do not hit list, so we don't curve back to hit the same thing twice with one arc
@@ -1053,8 +1078,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Going boom should be rareish
 		if(prob(80))
 			zap_flags &= ~ZAP_MACHINE_EXPLOSIVE
-		if(istype(target, /obj/machinery/power/tesla_coil))
-			var/obj/machinery/power/tesla_coil/coil = target
+		if(target_type == COIL)
 			//In the best situation we can expect this to grow up to 2120kw before a delam/IT'S GONE TOO FAR FRED SHUT IT DOWN
 			//The formula for power gen is zap_str * zap_mod / 2 * capacitor rating, between 1 and 4
 			var/multi = 10
@@ -1063,33 +1087,29 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					multi = 20
 				if(CRITICAL_POWER_PENALTY_THRESHOLD to INFINITY)
 					multi = 40
-			coil.zap_act(zap_str * multi, zap_flags, list())
+			target.zap_act(zap_str * multi, zap_flags, list())
 			zap_str /= 3 //Coils should take a lot out of the power of the zap
 
-		else if(istype(target, /obj/machinery/power/grounding_rod))
-			var/obj/machinery/power/grounding_rod/rod = target
+		else if(target_type == ROD)
 			//We can expect this to do very little, maybe shock the poor soul buckled to it, but that's all.
 			//This is one of our endpoints, if the bolt hits a grounding rod, it stops jumping
-			rod.zap_act(zap_str, zap_flags, list())
+			target.zap_act(zap_str, zap_flags, list())
 			return
 
 		else if(isliving(target))//If we got a fleshbag on our hands
-			var/mob/living/mob = target
-			mob.set_shocked()
-			addtimer(CALLBACK(mob, /mob/living/proc/reset_shocked), 10)
+			var/mob/living/creature = target
+			creature.set_shocked()
+			addtimer(CALLBACK(creature, /mob/living/proc/reset_shocked), 10)
 			//3 shots a human with no resistance. 2 to crit, one to death. This is at at least 10000 power.
 			//There's no increase after that because the input power is effectivly capped at 10k
 			//Does 1.5 damage at the least
 			var/shock_damage = ((zap_flags & ZAP_MOB_DAMAGE) ? (power / 200) - 10 : rand(5,10))
-			mob.electrocute_act(shock_damage, "Supermatter Discharge Bolt", 1,  ((zap_flags & ZAP_MOB_STUN) ? SHOCK_TESLA : SHOCK_NOSTUN))
+			creature.electrocute_act(shock_damage, "Supermatter Discharge Bolt", 1,  ((zap_flags & ZAP_MOB_STUN) ? SHOCK_TESLA : SHOCK_NOSTUN))
 			zap_str /= 1.5 //Meatsacks are conductive, makes working in pairs more destructive
 
-		else if(isobj(target))
-			var/obj/junk = target
-			junk.zap_act(zap_str, zap_flags, list())
-			zap_str /= 2 // worse then living things, better then coils
 		else
-			zap_str = 0
+			target.zap_act(zap_str, zap_flags, list())
+			zap_str /= 2 // worse then living things, better then coils
 		//This gotdamn variable is a boomer and keeps giving me problems
 		var/turf/T = get_turf(target)
 		var/pressure = 1
@@ -1104,6 +1124,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		for(var/j in 1 to zap_count)
 			supermatter_zap(target, new_range, zap_str, targets_hit, zap_flags)
 
+/obj/overlay/psy
+	icon = 'icons/obj/supermatter.dmi'
+	icon_state = "psy"
+	layer = FLOAT_LAYER - 1
+
+/obj/overlay/psy/shard
+	icon_state = "psy_shard"
 #undef HALLUCINATION_RANGE
 #undef GRAVITATIONAL_ANOMALY
 #undef FLUX_ANOMALY

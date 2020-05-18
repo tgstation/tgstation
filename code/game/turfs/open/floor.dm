@@ -25,7 +25,6 @@
 	tiled_dirt = TRUE
 
 /turf/open/floor/Initialize(mapload)
-
 	if (!broken_states)
 		broken_states = typelist("broken_states", list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5"))
 	else
@@ -56,6 +55,14 @@
 		icon_regular_floor = icon_state
 	if(mapload && prob(33))
 		MakeDirty()
+	if(is_station_level(z))
+		GLOB.station_turfs += src
+
+
+/turf/open/floor/Destroy()
+	if(is_station_level(z))
+		GLOB.station_turfs -= src
+	..()
 
 /turf/open/floor/ex_act(severity, target)
 	var/shielded = is_shielded()
@@ -253,17 +260,17 @@
 				return FALSE
 			to_chat(user, "<span class='notice'>You build an airlock.</span>")
 			var/obj/machinery/door/airlock/A = new the_rcd.airlock_type(src)
-
-			A.electronics = new/obj/item/electronics/airlock(A)
-
-			if(the_rcd.conf_access)
-				A.electronics.accesses = the_rcd.conf_access.Copy()
-			A.electronics.one_access = the_rcd.use_one_access
-
+			A.electronics = new /obj/item/electronics/airlock(A)
+			if(the_rcd.airlock_electronics)
+				A.electronics.accesses = the_rcd.airlock_electronics.accesses.Copy()
+				A.electronics.one_access = the_rcd.airlock_electronics.one_access
+				A.electronics.unres_sides = the_rcd.airlock_electronics.unres_sides
 			if(A.electronics.one_access)
 				A.req_one_access = A.electronics.accesses
 			else
 				A.req_access = A.electronics.accesses
+			if(A.electronics.unres_sides)
+				A.unres_sides = A.electronics.unres_sides
 			A.autoclose = TRUE
 			return TRUE
 		if(RCD_DECONSTRUCT)
