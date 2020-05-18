@@ -32,6 +32,7 @@
 		return TRUE
 
 	if(get_dist(src, T0) > 1 || z != T0.z) //too far
+	if(get_dist(src, T0) > 1) //too far
 		return FALSE
 
 	// Non diagonal case
