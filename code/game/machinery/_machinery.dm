@@ -248,22 +248,19 @@ Class Procs:
 	return !(machine_stat & (NOPOWER|BROKEN|MAINT))
 
 /obj/machinery/can_interact(mob/user)
-	var/silicon = issilicon(user)
-	var/admin_ghost = IsAdminGhost(user)
-	var/living = isliving(user)
-
 	if((machine_stat & (NOPOWER|BROKEN)) && !(interaction_flags_machine & INTERACT_MACHINE_OFFLINE)) // Check if the machine is broken, and if we can still interact with it if so
 		return FALSE
 
+	var/silicon = issilicon(user)
 	if(panel_open && !(interaction_flags_machine & INTERACT_MACHINE_OPEN)) // Check if we can interact with an open panel machine, if the panel is open
 		if(!silicon || !(interaction_flags_machine & INTERACT_MACHINE_OPEN_SILICON))
 			return FALSE
 
-	if(silicon || admin_ghost) // If we are an AI or adminghsot, make sure the machine allows silicons to interact
+	if(silicon || IsAdminGhost(user)) // If we are an AI or adminghsot, make sure the machine allows silicons to interact
 		if(!(interaction_flags_machine & INTERACT_MACHINE_ALLOW_SILICON))
 			return FALSE
 
-	else if(living) // If we are a living human
+	else if(isliving(user)) // If we are a living human
 		var/mob/living/L = user
 
 		if(interaction_flags_machine & INTERACT_MACHINE_REQUIRES_SILICON) // First make sure the machine doesn't require silicon interaction
