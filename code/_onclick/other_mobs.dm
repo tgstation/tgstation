@@ -5,17 +5,9 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
-	if(a_intent == INTENT_HELP && src == A)
-		check_self_for_injuries()
-		return
-
 	if(!has_active_hand()) //can't attack without a hand.
 		var/obj/item/bodypart/check_arm = get_active_hand()
-		if(!check_arm)
-			to_chat(src, "<span class='notice'>You look at your arm and sigh.</span>")
-			return
-
-		if(HAS_TRAIT(check_arm, TRAIT_LIMB_DISABLED_WOUND))
+		if(check_arm && HAS_TRAIT(check_arm, TRAIT_LIMB_DISABLED_WOUND))
 			to_chat(src, "<span class='warning'>The damage in your [check_arm.name] is preventing you from using it! Get it fixed, or at least splinted!</span>")
 			return
 

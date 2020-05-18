@@ -25,7 +25,8 @@
 				"<span class='notice'>Blood pools around the incision in [H]'s [parse_zone(target_zone)].</span>",
 				"")
 			var/obj/item/bodypart/BP = target.get_bodypart(target_zone)
-			BP.generic_bleedstacks += 10
+			if(BP)
+				BP.generic_bleedstacks += 10
 	return ..()
 
 /datum/surgery_step/incise/nobleed //silly friendly!
@@ -57,7 +58,8 @@
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
-		BP.generic_bleedstacks -= 3
+		if(BP)
+			BP.generic_bleedstacks -= 3
 	return ..()
 
 //retract skin
@@ -97,7 +99,8 @@
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/obj/item/bodypart/BP = H.get_bodypart(target_zone)
-		BP.generic_bleedstacks -= 3
+		if(BP)
+			BP.generic_bleedstacks -= 3
 	return ..()
 
 

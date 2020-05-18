@@ -68,5 +68,11 @@
 	ricochets_max = 6
 	ricochet_chance = 110
 
+/obj/projectile/bullet/pellet/stingball/breaker
+	name = "breakbang pellet"
+	damage = 10
+	wound_bonus = 30
+	sharpness = FALSE
+
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_stunned_targets = TRUE // ducking will save you from the first wave, but not the rebounds
