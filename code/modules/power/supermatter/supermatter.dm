@@ -1124,6 +1124,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		for(var/j in 1 to zap_count)
 			supermatter_zap(target, new_range, zap_str, targets_hit, zap_flags)
 
+/obj/machinery/power/supermatter_crystal/proc/destabilize()
+	var/turf/T = get_turf(src)
+	if(T) //If something fucks up we blow anyhow. This fix is 4 years old and none ever said why it's here. help.
+		qdel(src)
+		new/obj/machinery/destabilized_crystal(T)
+		explosion(T,0,4,15,1,1,1)
+
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'
 	icon_state = "psy"
