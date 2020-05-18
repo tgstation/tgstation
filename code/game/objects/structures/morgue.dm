@@ -3,7 +3,6 @@
  *		Morgue
  *		Morgue tray
  *		Crematorium
- *		Creamatorium
  *		Crematorium tray
  *		Crematorium button
  */
@@ -210,6 +209,12 @@ GLOBAL_LIST_EMPTY(crematoriums)
 	desc = "A human incinerator. Works well on barbecue nights."
 	icon_state = "crema1"
 	dir = SOUTH
+	///If the crematorium is currently cremating its contents
+	var/cremating = FALSE
+	///Checks if this is currently the first tick of cremation, used to avoid repeating ceratin logs and actions
+	var/first_cremation_tick = TRUE
+	///Last user to turn on the crematorium
+	var/last_user = null
 	var/id = 1
 
 /obj/structure/bodycontainer/crematorium/attack_robot(mob/user) //Borgs can't use crematoriums without help
@@ -242,67 +247,63 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		else
 			src.icon_state = "crema1"
 
-		if(locked)
+		if(cremating)
 			src.icon_state = "crema_active"
 
 	return
 
-/obj/structure/bodycontainer/crematorium/proc/cremate(mob/user)
-	if(locked)
-		return //don't let you cremate something twice or w/e
-	// Make sure we don't delete the actual morgue and its tray
-	var/list/conts = GetAllContents() - src - connected
+/obj/structure/bodycontainer/crematorium/process()
+	if(cremating)
+		cremate()
 
-	if(!conts.len)
-		audible_message("<span class='hear'>You hear a hollow crackle.</span>")
-		return
-
-	else
-		audible_message("<span class='hear'>You hear a roar as the crematorium activates.</span>")
-
-		locked = TRUE
+///Toggles cremation. The cremate parameter can be used to set a specific value instead of toggling.
+/obj/structure/bodycontainer/crematorium/proc/toggle_cremation(set_cremate, mob/user)
+	if(cremating && set_cremate != TRUE)
+		cremating = FALSE
+		locked = FALSE
+		STOP_PROCESSING(SSobj, src)
 		update_icon()
 
-		for(var/mob/living/M in conts)
-			if (M.stat != DEAD)
-				M.emote("scream")
-			if(user)
-				log_combat(user, M, "cremated")
+		audible_message("<span class='hear'>You hear a roar as [src] activates.</span>")
+		return
+	if(!cremating && set_cremate != FALSE)
+		if(user)
+			last_user = user
+		else
+			last_user = null //let's not blame the previous guy
+		cremating = TRUE
+		first_cremation_tick = TRUE
+		locked = TRUE
+		START_PROCESSING(SSobj, src)
+		update_icon()
+
+		audible_message("<span class='hear'>The roar of [src]'s flames gradually dies down.</span>")
+		return
+
+///Ignites and causes heavy burn damage to mobs and objects inside. Non-immune mobs will quickly be incinerated.
+/obj/structure/bodycontainer/crematorium/proc/cremate()
+	if(!cremating)
+		return
+	// Make sure we don't burn the actual morgue and its tray
+	var/list/conts = GetAllContents() - src - connected
+	for(var/mob/living/L in conts)
+		if(first_cremation_tick)
+			if(L.stat != DEAD)
+				L.emote("scream")
+			if(last_user)
+				log_combat(last_user, L, "cremated")
 			else
-				M.log_message("was cremated", LOG_ATTACK)
+				L.log_message("was cremated", LOG_ATTACK)
 
-			M.death(1)
-			if(M) //some animals get automatically deleted on death.
-				M.ghostize()
-				qdel(M)
+		L.apply_damage(90, BURN, spread_damage = TRUE)
+		L.adjust_fire_stacks(10)
+		L.IgniteMob()
 
-		for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
-			qdel(O)
+	for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
+		O.fire_act()
+		O.take_damage(50, BURN, null, FALSE)
 
-		if(!locate(/obj/effect/decal/cleanable/ash) in get_step(src, dir))//prevent pile-up
-			new/obj/effect/decal/cleanable/ash/crematorium(src)
-
-		sleep(30)
-
-		if(!QDELETED(src))
-			locked = FALSE
-			update_icon()
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, TRUE) //you horrible people
-
-/obj/structure/bodycontainer/crematorium/creamatorium
-	name = "creamatorium"
-	desc = "A human incinerator. Works well during ice cream socials."
-
-/obj/structure/bodycontainer/crematorium/creamatorium/cremate(mob/user)
-	var/list/icecreams = new()
-	for(var/i_scream in GetAllContents(/mob/living))
-		var/obj/item/reagent_containers/food/snacks/icecream/IC = new()
-		IC.set_cone_type("waffle")
-		IC.add_mob_flavor(i_scream)
-		icecreams += IC
-	. = ..()
-	for(var/obj/IC in icecreams)
-		IC.forceMove(src)
+	first_cremation_tick = FALSE
 
 /*
  * Generic Tray

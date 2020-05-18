@@ -143,6 +143,6 @@
 	cooldown = TRUE
 	for (var/obj/structure/bodycontainer/crematorium/C in GLOB.crematoriums)
 		if (C.id == id)
-			C.cremate(usr)
+			C.toggle_cremation(usr)
 
-	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 50)
+	addtimer(VARSET_CALLBACK(src, cooldown, FALSE), 30)
