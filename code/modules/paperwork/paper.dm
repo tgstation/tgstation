@@ -174,7 +174,7 @@
 	readonly = TRUE		/// Assume we are just reading it
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
 		if(finalized)
-			to_chat(user, "<span class='warning'>This sheet of paper has allready been written too!</span>")
+			to_chat(user, "<span class='warning'>This sheet of paper has already been written too!</span>")
 			return
 		readonly = FALSE	/// Nope we are going to write stuff
 		/// should a crayon be in the same subtype as a pen?  How about a brush or charcoal?

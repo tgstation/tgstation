@@ -472,7 +472,7 @@
 /obj/item/paper/monitorkey/proc/print(obj/machinery/telecomms/message_server/server)
 	info = {"
               Daily Key Reset
-The new message monitor key is 'server.decryptkey'.
+The new message monitor key is **[server.decryptkey]**.
 Please keep this a secret and away from the clown.
 If necessary, change the password to a more secure one.
 "}
