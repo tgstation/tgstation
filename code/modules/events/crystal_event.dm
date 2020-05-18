@@ -7,21 +7,21 @@ GLOBAL_LIST_EMPTY(crystal_portals)
 This section is for the event controller
 */
 /datum/round_event_control/crystal_invasion
-	name = "Crystal Invasion : Small"
+	name = "Crystal Invasion"
 	typepath = /datum/round_event/crystal_invasion
-	weight = 4
-	min_players = 15
-	max_occurrences = 3
-	earliest_start = 25 MINUTES
+	weight = 2
+	min_players = 35
+	max_occurrences = 1
+	earliest_start = 45 MINUTES
 
 /datum/round_event/crystal_invasion
 	announceWhen = 1
 	///Stores the type of the wave for the event
 	var/list/wave_type
 	///Is the name of the wave, used to check wich wave will be generated
-	var/wave_name = "small wave"
+	var/wave_name
 	///Max number of portals that can spawn per type of wave
-	var/portal_numbers = 5
+	var/portal_numbers
 
 /datum/round_event/crystal_invasion/announce()
 	priority_announce("WARNING - Destabilization of the Supermatter Crystal Matrix detected, please stand by waiting further instructions", "Alert", 'sound/misc/notice1.ogg')
@@ -35,19 +35,23 @@ This section is for the event controller
 /datum/round_event/crystal_invasion/proc/choose_wave_type()
 	if(!wave_name)
 		wave_name = pickweight(list(
-			"small wave" = 50,
-			"medium wave" = 35,
-			"big wave" = 10,
-			"huge wave" = 5))
+			"small wave" = 60,
+			"medium wave" = 30,
+			"big wave" = 7,
+			"huge wave" = 3))
 	switch(wave_name)
 		if("small wave")
 			wave_type = GLOB.small_wave
+			portal_numbers = pick(2, 3, 4, 5)
 		if("medium wave")
 			wave_type = GLOB.medium_wave
+			portal_numbers = pick(4, 5, 6, 7)
 		if("big wave")
 			wave_type = GLOB.big_wave
+			portal_numbers = pick(6, 7, 8, 9)
 		if("huge wave")
 			wave_type = GLOB.huge_wave
+			portal_numbers = pick(9, 10, 11, 12)
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()
@@ -62,12 +66,15 @@ This section is for the event controller
 			message_admins("found a shard, skipping it")
 			continue
 		sm_crystal += temp
+	if(sm_crystal == null)
+		WARNING("No engine found.")
+		kill()
 	var/obj/machinery/power/supermatter_crystal/crystal = pick(sm_crystal)
 	crystal.destabilize()
 
-	priority_announce("WARNING - Detected numerous energy fluctuation generated from your Supermatter; we estimate a [wave_name] of crystal-like creatures \
-						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Collect the \[REDACTED] \
-						anomaly from the remains of the portals and use it in a crystal stabilizer to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario", "Alert", 'sound/misc/notice1.ogg')
+	priority_announce("WARNING - Numerous energy fluctuations have been detected from your Supermatter; we estimate a [wave_name] of crystalline creatures \
+						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
+						anomaly from a portal, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert", 'sound/misc/notice1.ogg')
 
 	sleep(10 SECONDS)
 
@@ -91,42 +98,6 @@ This section is for the event controller
 	var/obj/spawner = pick_n_take(spawners)
 	new pick_portal(spawner.loc)
 
-/datum/round_event_control/crystal_invasion/medium
-	name = "Crystal Invasion : Medium"
-	typepath = /datum/round_event/crystal_invasion/medium
-	weight = 6
-	min_players = 25
-	max_occurrences = 3
-	earliest_start = 35 MINUTES
-
-/datum/round_event/crystal_invasion/medium
-	wave_name = "medium wave"
-	portal_numbers = 8
-
-/datum/round_event_control/crystal_invasion/big
-	name = "Crystal Invasion : Big"
-	typepath = /datum/round_event/crystal_invasion/big
-	weight = 9
-	min_players = 35
-	max_occurrences = 3
-	earliest_start = 35 MINUTES
-
-/datum/round_event/crystal_invasion/big
-	wave_name = "big wave"
-	portal_numbers = 11
-
-/datum/round_event_control/crystal_invasion/huge
-	name = "Crystal Invasion : Huge"
-	typepath = /datum/round_event/crystal_invasion/huge
-	weight = 4
-	min_players = 35
-	max_occurrences = 3
-	earliest_start = 45 MINUTES
-
-/datum/round_event/crystal_invasion/huge
-	wave_name = "huge wave"
-	portal_numbers = 17
-
 /*
 This section is for the destabilized SM
 */
@@ -146,10 +117,8 @@ This section is for the destabilized SM
 
 /obj/machinery/destabilized_crystal/Initialize()
 	. = ..()
-	SSshuttle.registerHostileEnvironment(src)
 
 /obj/machinery/destabilized_crystal/Destroy()
-	SSshuttle.clearHostileEnvironment(src)
 	return..()
 
 /obj/machinery/destabilized_crystal/process()
