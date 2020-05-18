@@ -43,6 +43,13 @@
 		"borg_mon.gif"				= 'icons/program_icons/borg_mon.gif'
 	)
 
+/datum/asset/simple/radar_assets
+	assets = list(
+		"ntosradarbackground.png"	= 'icons/UI_Icons/tgui/ntosradar_background.png',
+		"ntosradarpointer.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer.png',
+		"ntosradarpointerS.png"		= 'icons/UI_Icons/tgui/ntosradar_pointer_S.png'
+	)
+
 /datum/asset/spritesheet/simple/pda
 	name = "pda"
 	assets = list(
