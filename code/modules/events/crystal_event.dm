@@ -16,8 +16,11 @@ This section is for the event controller
 
 /datum/round_event/crystal_invasion
 	announceWhen = 1
+	///Stores the type of the wave for the event
 	var/list/wave_type
+	///Is the name of the wave, used to check wich wave will be generated
 	var/wave_name = "small wave"
+	///Max number of portals that can spawn per type of wave
 	var/portal_numbers = 5
 
 /datum/round_event/crystal_invasion/announce()
@@ -28,6 +31,7 @@ This section is for the event controller
 	if(!wave_type)
 		choose_wave_type()
 
+///Choose the type of the wave
 /datum/round_event/crystal_invasion/proc/choose_wave_type()
 	if(!wave_name)
 		wave_name = pickweight(list(
@@ -70,7 +74,7 @@ This section is for the event controller
 	for(var/i = 0, i< portal_numbers, i++)
 		spawn_portal(wave_type)
 
-
+///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type)
 	var/list/spawners = list()
 	for(var/obj/effect/landmark/event_spawn/temp in GLOB.generic_event_spawns)
@@ -137,6 +141,7 @@ This section is for the destabilized SM
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	light_range = 4
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
+	///If not active the crystal will not emit radiations and gases
 	var/active = TRUE
 
 /obj/machinery/destabilized_crystal/Initialize()
@@ -188,6 +193,7 @@ This section is for the destabilized SM
 					active = FALSE
 					restore()
 
+///Restore the Destabilized Crystal as it was before
 /obj/machinery/destabilized_crystal/proc/restore()
 	priority_announce("The Crystal has been restored and is now stable again, your sector of space is now safe from the ZK-Lambda-Class Scenario, \
 						kill the remaining crystal monsters and go back to work")
@@ -234,12 +240,17 @@ This section is for the crystal portals variations
 	color = "#B2FFFE"
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
-
+	///Max amount of mobs that a portal can spawn in any given time
 	var/max_mobs = 5
+	///Spawn time between each mobs
 	var/spawn_time = 1000
+	///Type of mob that the portal will spawn, if more than one type in the list will choose randomly
 	var/mob_types = list(/mob/living/simple_animal/hostile/carp)
+	///Fluff text for each mob spawned
 	var/spawn_text = "emerges from"
+	///Affiliation to a faction, used to stop mobs from destroying their portals (unused for now)
 	var/faction = list("hostile")
+	///Spawner component
 	var/spawner_type = /datum/component/spawner
 
 /obj/structure/crystal_portal/Initialize()
