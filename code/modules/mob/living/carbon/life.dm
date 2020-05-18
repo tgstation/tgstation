@@ -724,6 +724,16 @@ All effects don't start immediately, but rather get worse over time; the rate is
 /////////////
 //CREMATION//
 /////////////
+
+///Manually adjusts the cremation counter for the selected limbs (all limbs if left null)
+/mob/living/carbon/proc/adjust_cremation(amount, list/limb_list)
+	if(!limb_list)
+		limb_list = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
+	for(var/zone in limb_list)
+		limb = get_bodypart(zone)
+		if(limb)
+			limb.cremation_progress = max(limb.cremation_progress + amount, 0)
+
 /mob/living/carbon/proc/check_cremation()
 	//Only cremate while actively on fire
 	if(!on_fire)

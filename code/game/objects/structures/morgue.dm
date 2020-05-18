@@ -299,6 +299,11 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		L.adjust_fire_stacks(10)
 		L.IgniteMob()
 
+		//Artificially speed up the cremation process
+		if(iscarbon(L))
+			var/mob/living/carbon/C = L
+			C.adjust_cremation(25)
+
 	for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
 		O.fire_act()
 		O.take_damage(50, BURN, null, FALSE)
