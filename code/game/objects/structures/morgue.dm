@@ -294,8 +294,8 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				log_combat(last_user, L, "cremated")
 			else
 				L.log_message("was cremated", LOG_ATTACK)
-
-		L.apply_damage(90, BURN, spread_damage = TRUE)
+		var/heat_resistant = HAS_TRAIT(L, TRAIT_RESISTHEAT)
+		L.apply_damage(heat_resistant ? 90 : 25, BURN, spread_damage = TRUE)
 		L.adjust_fire_stacks(10)
 		L.IgniteMob()
 
@@ -305,8 +305,9 @@ GLOBAL_LIST_EMPTY(crematoriums)
 			C.adjust_cremation(25)
 
 	for(var/obj/O in conts) //conts defined above, ignores crematorium and tray
-		O.fire_act()
-		O.take_damage(50, BURN, null, FALSE)
+		if(!(O.resistance_flags & FIRE_PROOF))
+			O.fire_act()
+			O.take_damage(50, BURN, null, FALSE)
 
 	first_cremation_tick = FALSE
 
