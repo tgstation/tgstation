@@ -1,9 +1,12 @@
+/// The global controller which runs migrations.
 GLOBAL_DATUM(migration_controller_mysql, /datum/migration_controller/mysql)
 
 /datum/migration_controller/mysql
 	id="mysql"
+	/// The subsystem used to establish a connection to the database and run SQL.
 	var/datum/controller/subsystem/dbcore/db
 
+// Concrete implementation of MySQL: check if ssdbcore exists.
 /datum/migration_controller/mysql/setup()
 	if(!SSdbcore || !istype(SSdbcore))
 		warning("Something wrong with SSdbcore.")
@@ -19,6 +22,7 @@ GLOBAL_DATUM(migration_controller_mysql, /datum/migration_controller/mysql)
 	db = SSdbcore
 	return TRUE
 
+// Concrete implementation of MySQL: create a simple SQL table.
 /datum/migration_controller/mysql/createMigrationTable()
 	var/tableSQL = {"
 CREATE TABLE IF NOT EXISTS [format_table_name(TABLE_NAME)] (
@@ -27,6 +31,8 @@ CREATE TABLE IF NOT EXISTS [format_table_name(TABLE_NAME)] (
 );
 	"}
 	execute(tableSQL)
+
+// Helper procs: running simple SQL using dbcore and /datum/DBQuery.
 
 /datum/migration_controller/mysql/query(var/sql)
 	var/datum/DBQuery/query = execute(sql)
