@@ -22,7 +22,7 @@
 	///Used to store when the next scan is available. Updated by the scan() proc.
 	var/next_scan = 0
 
-/datum/computer_file/program/radar/kill_program()
+/datum/computer_file/program/radar/kill_program(forced = FALSE)
 	objects = list()
 	selected = null
 	return ..()
