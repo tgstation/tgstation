@@ -47,8 +47,8 @@
 	name = "Limping"
 	desc = "One or more of your legs has been wounded, slowing down steps with that leg! Get it fixed, or at least splinted!"
 
-/datum/status_effect/limp/proc/check_step()
-	if(!owner.client || !(owner.mobility_flags & MOBILITY_STAND))
+/datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced)
+	if(!owner.client || !(owner.mobility_flags & MOBILITY_STAND) || forced)
 		return
 	var/determined_mod = 1
 	if(owner.has_status_effect(STATUS_EFFECT_DETERMINED))

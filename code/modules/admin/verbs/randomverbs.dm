@@ -1067,7 +1067,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 									ADMIN_PUNISHMENT_FAT,
 									ADMIN_PUNISHMENT_FAKEBWOINK,
 									ADMIN_PUNISHMENT_NUGGET,
-									ADMIN_PUNISHMENT_CRACK
+									ADMIN_PUNISHMENT_CRACK,
+									ADMIN_PUNISHMENT_BLEED
 									)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in sortList(punishment_list)

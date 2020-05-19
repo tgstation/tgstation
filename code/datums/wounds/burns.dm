@@ -165,7 +165,7 @@
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
 				. += "Infection Level: <span class='deadsay'>LOSS IMMINENT</span>\n"
 		if(infestation > sanitization)
-			. += "\tPlease apply regenerative mesh to affected limb, or have patient injest Sterilizine, Spaceacillin, or \"Miner's Salve\", to rid infection. Paramedic UV penlights are also effective.\n"
+			. += "\tSurgical skin debridal, application of topical ointment, or ingesting Sterilizine, Spaceacillin, or \"Miner's Salve\" will rid infection. Paramedic UV penlights are also effective.\n"
 
 		if(flesh_damage > 0)
 			. += "Flesh damage detected: Please apply ointment or regenerative mesh to allow recovery.\n"
@@ -237,6 +237,7 @@
 	else
 		try_treating(I, user)
 
+// Paramedic UV penlights
 /datum/wound/burn/proc/uv(obj/item/flashlight/pen/paramedic/I, mob/user)
 	if(I.uv_cooldown > world.time)
 		to_chat(user, "<span class='notice'>[I] is still recharging!</span>")
@@ -266,7 +267,7 @@
 /datum/wound/burn/moderate
 	name = "Second Degree Burns"
 	desc = "Patient is suffering considerable burns with mild skin penetration, weakening limb integrity and increased burning sensations."
-	treat_text = "Recommended application of disinfectant and salve to affected limb, followed by bandaging."
+	treat_text = "Recommended application of topical ointment or regenerative mesh to affected region."
 	examine_desc = "is badly burned and breaking out in blisters"
 	occur_text = "breaks out with violent red burns"
 	severity = WOUND_SEVERITY_MODERATE

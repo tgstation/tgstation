@@ -1,7 +1,7 @@
 
-/////BONE FIXING SURGERIES//////
+/////BURN FIXING SURGERIES//////
 
-///// Repair Hairline Fracture (Severe)
+///// Debride burnt flesh
 /datum/surgery/debride
 	name = "Debride infected flesh"
 	steps = list(/datum/surgery_step/debride, /datum/surgery_step/dress)
@@ -73,7 +73,7 @@
 
 ///// Dressing burns
 /datum/surgery_step/dress
-	name = "dress burns (bandage)"
+	name = "bandage burns"
 	implements = list(/obj/item/stack/medical/gauze = 100, /obj/item/stack/sticky_tape/surgical = 100)
 	time = 40
 	experience_given = MEDICAL_SKILL_MEDIUM

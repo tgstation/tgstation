@@ -420,11 +420,12 @@
 	face_atom(A)
 	var/list/result
 	if(client)
-		if(client.recent_examines && (A in client.recent_examines)) // i think this would be faster with an associated list but i'll get to that later
+		LAZYINITLIST(client.recent_examines)
+		if(!isnull(client.recent_examines[A]) && client.recent_examines[A] > world.time) // originally this wasn't an assoc list, but sometimes the timer failed and atoms stayed in a client's recent_examines, so we check here manually
 			result = A.examine_more(src)
 		else
+			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME
 			result = A.examine(src)
-			LAZYADD(client.recent_examines, A)
 			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
 	else
 		result = A.examine(src)
