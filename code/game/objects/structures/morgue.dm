@@ -267,10 +267,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		audible_message("<span class='hear'>You hear a roar as [src] activates.</span>")
 		return
 	if(!cremating && set_cremate != FALSE)
-		if(user)
-			last_user = user
-		else
-			last_user = null //let's not blame the previous guy
+		last_user = user
 		cremating = TRUE
 		first_cremation_tick = TRUE
 		locked = TRUE
@@ -294,6 +291,7 @@ GLOBAL_LIST_EMPTY(crematoriums)
 				log_combat(last_user, L, "cremated")
 			else
 				L.log_message("was cremated", LOG_ATTACK)
+			first_cremation_tick = FALSE
 		var/heat_resistant = HAS_TRAIT(L, TRAIT_RESISTHEAT)
 		L.apply_damage(heat_resistant ? 90 : 25, BURN, spread_damage = TRUE)
 		L.adjust_fire_stacks(10)
@@ -308,8 +306,6 @@ GLOBAL_LIST_EMPTY(crematoriums)
 		if(!(O.resistance_flags & FIRE_PROOF))
 			O.fire_act()
 			O.take_damage(50, BURN, null, FALSE)
-
-	first_cremation_tick = FALSE
 
 /*
  * Generic Tray

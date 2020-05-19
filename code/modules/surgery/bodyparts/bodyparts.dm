@@ -178,14 +178,14 @@
 	var/total_damage = brute + burn
 
 	if(total_damage > can_inflict)
-		brute = round(brute * (can_inflict / total_damage),DAMAGE_PRECISION)
-		burn = round(burn * (can_inflict / total_damage),DAMAGE_PRECISION)
+		brute = CEILING(brute * (can_inflict / total_damage),DAMAGE_PRECISION)
+		burn = CEILING(burn * (can_inflict / total_damage),DAMAGE_PRECISION)
 
 	brute_dam += brute
 	burn_dam += burn
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
-	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
+	stamina_dam += CEILING(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
 
 
 	if(owner && updating_health)
