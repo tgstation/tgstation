@@ -33,8 +33,8 @@ This section is for the event controller
 /datum/round_event/crystal_invasion/proc/choose_wave_type()
 	if(!wave_name)
 		wave_name = pickweight(list(
-			"small wave" = 50,
-			"medium wave" = 30,
+			"small wave" = 45,
+			"medium wave" = 35,
 			"big wave" = 15,
 			"huge wave" = 5))
 	switch(wave_name)
@@ -50,7 +50,6 @@ This section is for the event controller
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()
 
-	sleep(10 SECONDS)
 	var/list/sm_crystal = list()
 	for(var/obj/machinery/power/supermatter_crystal/temp in GLOB.machines)
 		if(QDELETED(temp))
@@ -70,8 +69,9 @@ This section is for the event controller
 						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
 						anomaly from a portal, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert", 'sound/misc/notice1.ogg')
 
-	sleep(10 SECONDS)
+	addtimer(CALLBACK(src, .proc/spawn_portals), 10 SECONDS)
 
+/datum/round_event/crystal_invasion/proc/spawn_portals()
 	for(var/i = 0, i< portal_numbers, i++)
 		spawn_portal(GLOB.waves[wave_name])
 
@@ -213,6 +213,8 @@ This section is for the crystal portals variations
 	var/faction = list("hostile")
 	///Spawner component
 	var/spawner_type = /datum/component/spawner
+	///This var check if the portal has been closed by a player with a neutralizer
+	var/closed = FALSE
 
 /obj/structure/crystal_portal/Initialize()
 	. = ..()
@@ -220,8 +222,18 @@ This section is for the crystal portals variations
 	GLOB.crystal_portals += src
 
 /obj/structure/crystal_portal/Destroy()
-	new/obj/item/assembly/signaler/anomaly(loc)
 	GLOB.crystal_portals -= src
+	if(!closed)
+		switch(name)
+			if("Small Portal")
+				explosion(loc, 0,1,3)
+			if("Medium Portal")
+				explosion(loc, 0,3,5)
+			if("Big Portal")
+				explosion(loc, 1,3,5)
+			if("Huge Portal")
+				explosion(loc, 2,5,7)
+	new/obj/item/assembly/signaler/anomaly(loc)
 	return ..()
 
 /obj/structure/crystal_portal/attack_animal(mob/living/simple_animal/M)
