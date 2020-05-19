@@ -144,4 +144,5 @@ StyleMistake = Game Master
 tumesuo = Game Master
 twaticus = Game Master
 PolishUser = Game Master
+Tlaltecuhtli = Game Master
 actioninja = Game Master
