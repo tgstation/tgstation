@@ -248,11 +248,13 @@
 	gain_text = "<span class='notice'>Your body has seen better days.</span>"
 	lose_text = "<span class='notice'>Your sins may wash away, but those scars are here to stay...</span>"
 	medical_record_text = "Patient has withstood significant physical trauma and declined plastic surgery procedures to heal scarring."
+	var/min_scars = 3
+	var/max_scars = 7
 
 /datum/quirk/longtimer/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/list/wounds = WOUND_TYPE_BONE + WOUND_TYPE_CUT + WOUND_TYPE_BURN
-	var/scars = rand(3,7)
+	var/scars = rand(min_scars,max_scars)
 	for(var/i in 1 to scars)
 		var/datum/scar/S = new
 		var/obj/item/bodypart/BP = pick(H.bodyparts)

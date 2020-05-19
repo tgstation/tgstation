@@ -246,14 +246,13 @@ SUBSYSTEM_DEF(shuttle)
 
 	if(iscarbon(user) && security_num != SEC_LEVEL_DELTA)
 		var/mob/living/carbon/comdom = user
-		var/stub_chance = 2
 		var/minutes_into_shift = round((world.time - SSticker.round_start_time) / 60)
-		stub_chance += 40 - minutes_into_shift
+		var/stub_chance = STUB_TOE_BASELINE_TIME - minutes_into_shift
 		switch(security_num)
 			if(SEC_LEVEL_GREEN)
-				stub_chance *= 1.5
+				stub_chance *= STUB_TOE_MULT_GREEN
 			if(SEC_LEVEL_BLUE)
-				stub_chance *= 1.25
+				stub_chance *= STUB_TOE_MULT_BLUE
 
 		if(prob(stub_chance))
 			var/obj/item/bodypart/leg = comdom.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
@@ -911,3 +910,7 @@ SUBSYSTEM_DEF(shuttle)
 					message_admins("[key_name_admin(usr)] loaded [mdp] with the shuttle manipulator.")
 					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
+
+#undef STUB_TOE_BASELINE_TIME
+#undef STUB_TOE_MULT_GREEN
+#undef STUB_TOE_MULT_BLUE

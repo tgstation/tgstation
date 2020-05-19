@@ -92,11 +92,10 @@
 //////// WOUNDS /////////
 /////////////////////////
 
-// wound alert base
-// TODO: have this update to show the worst severity you currently have of all your wounds whenever one is gained/lost
+// wound alert
 /obj/screen/alert/status_effect/wound
 	name = "Wounded"
-	desc = "Your body has sustained serious damage, click here to inspect yourself." // TODO: do the self inspect on click im going to bed in a sec
+	desc = "Your body has sustained serious damage, click here to inspect yourself."
 
 /obj/screen/alert/status_effect/wound/Click()
 	var/mob/living/carbon/C = usr

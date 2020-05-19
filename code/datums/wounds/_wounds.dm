@@ -21,7 +21,7 @@
 	var/treat_text = ""
 	var/examine_desc = "is badly hurt"
 
-	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burs"
+	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
 	var/a_or_from = "a"
 
 	var/occur_text = ""
@@ -37,7 +37,7 @@
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	/// Who owns the body part that we're wounding
 	var/mob/living/carbon/victim = null
-	/// If we only work on organics (yes to all)
+	/// If we only work on organics (everything right now)
 	var/organic_only = TRUE
 	/// The bodypart we're parented to
 	var/obj/item/bodypart/limb = null

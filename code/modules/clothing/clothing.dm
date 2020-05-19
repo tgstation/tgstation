@@ -178,15 +178,13 @@
 		obj_destruction((damage_type == BRUTE ? "melee" : "laser")) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
 		return
 
+	damaged_clothes = CLOTHING_DAMAGED
 	switch(zones_disabled)
 		if(1)
-			damaged_clothes = CLOTHING_PRISTINE // i mean it's not pristine but it's not super damaged
 			name = "damaged [initial(name)]"
 		if(2)
-			damaged_clothes = CLOTHING_DAMAGED
 			name = "mangy [initial(name)]"
 		if(3 to INFINITY) // take better care of your shit, dude
-			damaged_clothes = CLOTHING_DAMAGED
 			name = "tattered [initial(name)]"
 
 	update_clothes_damaged_state()

@@ -1,6 +1,6 @@
 // stubbed toe (for when the captain needs to justify a shuttle call)
 /datum/wound/brute/stubbed_toe
-	name = "stubbed toe"
+	name = "Stubbed Toe"
 	desc = "Patient's large toe has been mildly bruised, resulting in moderate discomfort and an extreme need to abandon their post."
 	treat_text = "Firm application of Space Law manual to patient or pressing a gun up to patient's head to remind them of their duties."
 	examine_desc = "is slightly stubbed"

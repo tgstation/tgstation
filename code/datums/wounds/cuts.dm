@@ -282,6 +282,7 @@
 	name = "Dismembered"
 	desc = "oof ouch!!"
 	occur_text = "is violently dismembered!"
+	sound_effect = 'sound/effects/dismember.ogg'
 	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	severity = WOUND_SEVERITY_LOSS
 	threshold_minimum = 180

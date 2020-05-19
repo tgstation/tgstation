@@ -189,7 +189,7 @@
 
 /obj/item/stack/medical/suture/emergency
 	name = "emergency suture"
-	desc = "A value pack of cheap sutures, not at all very good at repairing damage, but still decent at stopping bleeding."
+	desc = "A value pack of cheap sutures, not very good at repairing damage, but still decent at stopping bleeding."
 	heal_brute = 5
 	amount = 5
 	max_amount = 5
@@ -402,7 +402,7 @@
 /obj/item/stack/medical/bone_gel/suicide_act(mob/user)
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		C.visible_message("<span class='suicide'>[C] is squirting all of \the [src] into [C.p_their()] mouth! That's not proper procedure! [C.p_they(TRUE)] must be trying to commit suicide!</span>")
+		C.visible_message("<span class='suicide'>[C] is squirting all of \the [src] into [C.p_their()] mouth! That's not proper procedure! It looks like [C.p_theyre()] trying to commit suicide!</span>")
 		if(do_after(C, 2 SECONDS))
 			C.emote("scream")
 			for(var/i in C.bodyparts)
@@ -419,7 +419,7 @@
 			return (BRUTELOSS)
 		else
 			C.visible_message("<span class='suicide'>[C] screws up like an idiot and still dies anyway!</span>")
-			return (SHAME)
+			return (BRUTELOSS)
 
 /obj/item/stack/medical/bone_gel/cyborg
 	custom_materials = null

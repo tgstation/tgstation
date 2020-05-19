@@ -2,7 +2,7 @@
 	var/speed = 80 //time in deciseconds taken to butcher something
 	var/effectiveness = 100 //percentage effectiveness; numbers above 100 yield extra drops
 	var/bonus_modifier = 0 //percentage increase to bonus item chance
-	var/butcher_sound = 'sound/weapons/slice.ogg' //sound played when butchering
+	var/butcher_sound = 'sound/effects/butcher.ogg' //sound played when butchering
 	var/butchering_enabled = TRUE
 	var/can_be_blunt = FALSE
 

@@ -2299,7 +2299,7 @@
 		var/stam_crash = 0
 		for(var/thing in M.all_wounds)
 			var/datum/wound/W = thing
-			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 3, severe = 6, critical = 9) when the determination wears off if it was a combat rush
+			stam_crash += (W.severity + 1) * 3 // spike of 3 stam damage per wound severity (moderate = 6, severe = 9, critical = 12) when the determination wears off if it was a combat rush
 		M.adjustStaminaLoss(stam_crash)
 	M.remove_status_effect(STATUS_EFFECT_DETERMINED)
 	..()
@@ -2307,10 +2307,9 @@
 /datum/reagent/determination/on_mob_life(mob/living/carbon/M)
 	if(!significant && volume >= WOUND_DETERMINATION_SEVERE)
 		significant = TRUE
-		M.apply_status_effect(STATUS_EFFECT_DETERMINED)
+		M.apply_status_effect(STATUS_EFFECT_DETERMINED) // in addition to the slight healing, limping cooldowns are divided by 4 during the combat high
 
-	if(volume > WOUND_DETERMINATION_MAX)
-		volume = WOUND_DETERMINATION_MAX
+	volume = min(volume, WOUND_DETERMINATION_MAX)
 
 	for(var/thing in M.all_wounds)
 		var/datum/wound/W = thing

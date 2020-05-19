@@ -398,10 +398,15 @@ SUBSYSTEM_DEF(persistence)
 
 		var/mob/living/carbon/human/original_human = ending_human.mind.original_character
 		if(!original_human || original_human.stat == DEAD || !original_human.all_scars || !(original_human == ending_human))
-			ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ""
+			if(ending_human.client) // i was told if i don't check this every step of the way byond might decide a client ceases to exist mid proc so here we go
+				ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ""
 		else
 			for(var/k in ending_human.all_wounds)
 				var/datum/wound/W = k
 				W.remove_wound() // so we can get the scars for open wounds
+			if(!ending_human.client)
+				return
 			ending_human.client.prefs.scars_list["[ending_human.client.prefs.scars_index]"] = ending_human.format_scars()
+		if(!ending_human.client)
+			return
 		ending_human.client.prefs.save_character()
