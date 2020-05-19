@@ -8,7 +8,7 @@ import { NtosRadarContent } from './NtosRadar';
 export const NtosRadarSyndicate = (props, context) => {
   return (
     <NtosWindow theme="syndicate">
-        <NtosRadarContent />
+      <NtosRadarContent />
     </NtosWindow>
   );
 };
