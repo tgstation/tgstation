@@ -84,6 +84,7 @@ cd artifacts
 cmake .. -DCMAKE_CXX_COMPILER=g++-6 -DMARIA_LIBRARY=/usr/lib/i386-linux-gnu/libmariadb.so.3
 make
 mv src/BSQL/libBSQL.so "$1/"
+cp /usr/lib/i386-linux-gnu/libmariadb.so.3 "$1/"
 cd ../..
 
 if [ ! -d "../GameStaticFiles/config" ]; then
