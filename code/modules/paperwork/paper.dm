@@ -271,8 +271,9 @@
 		return
 	switch(action)
 		if("save")
-			info = params["text"]
-			if(length(info) > 0)
+			var/in_paper = params["text"]
+			if(length(in_paper) > 0 && length(in_paper) < 1000) // Sheet must have less than 1000 charaters
+				info = in_paper
 				finalized = TRUE		// once you have writen to a sheet you cannot write again
 				to_chat(usr, "You have finished your paper masterpiece!");
 				ui_update()
