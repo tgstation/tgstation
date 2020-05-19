@@ -4,7 +4,9 @@
 		src << browse_rsc(file)
 
 /client/proc/browse_files(root="data/logs/", max_iterations=10, list/valid_extensions=list("txt","log","htm", "html"))
-	var/path = root
+	// wow why was this ever a parameter
+	root="data/logs/"
+	var/path = "data/logs"
 
 	for(var/i=0, i<max_iterations, i++)
 		var/list/choices = flist(path)
