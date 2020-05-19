@@ -12,10 +12,10 @@
 
 /datum/migration_controller/New()
 	if(!setup())
-		world.log << "\[Migrations] ([id]): Setup() returned false, will not run migrations for this DBMS."
+		log_sql("\[Migrations] ([id]): Setup() returned false, will not run migrations for this DBMS.")
 	else
 		if(!hasTable(TABLE_NAME))
-			world.log << "\[Migrations] ([id]): Creating [format_table_name(TABLE_NAME)]"
+			log_sql("\[Migrations] ([id]): Creating [format_table_name(TABLE_NAME)]")
 			createMigrationTable()
 
 		for(var/list/row in query("SELECT pkgID, version FROM [format_table_name(TABLE_NAME)]"))
@@ -40,17 +40,12 @@
 			var/list/pack[prepack.len]
 			for(var/datum/migration/M in newpacks[pkgID])
 				pack[M.id] = M
-				//world.log << "\[Migrations] [pkgID]#[M.id] = [M.type] - [M.name]"
 			packages[pkgID]=pack
-			world.log << "\[Migrations] Loaded [pack.len] [id] DB migrations from package [pkgID]."
-		//VersionCheck()
+			log_sql("\[Migrations] Loaded [pack.len] [id] DB migrations from package [pkgID].")
 		UpdateAll()
 
 /datum/migration_controller/proc/getCurrentVersion(var/pkgID)
-	if(pkgID in db_states)
-		return db_states[pkgID]
-	else
-		return 0
+	return (pkgID in db_states) && db_states[pkgID]
 
 /datum/migration_controller/proc/VersionCheck()
 	for(var/pkgID in packages)
@@ -59,9 +54,8 @@
 		for(var/datum/migration/M in packages[pkgID])
 			if(M.id > latestVersionAvail)
 				latestVersionAvail = M.id
-		//world.log << "\[Migrations] Package [pkgID]: Current: [currentVersion], Avail: [latestVersionAvail]"
 		if(latestVersionAvail > currentVersion)
-			world.log << "\[Migrations] *** [pkgID] is behind [latestVersionAvail-currentVersion] versions!"
+			log_sql("\[Migrations] *** [pkgID] is behind [latestVersionAvail-currentVersion] versions!")
 
 /datum/migration_controller/proc/UpdateAll()
 	for(var/pkgID in packages)
@@ -81,19 +75,18 @@
 			if(M.id > to_version)
 				to_version = M.id
 	if(from_version == to_version)
-		world.log << "\[Migrations] [pkgID] is up to date."
+		log_sql("\[Migrations] [pkgID] is up to date.")
 		return
-	world.log << "\[Migrations] Updating [pkgID] from [from_version] to [to_version]..."
+	log_sql("\[Migrations] Updating [pkgID] from [from_version] to [to_version]...")
 	for(var/datum/migration/M in package)
 		if(M.id > from_version && M.id <= to_version)
 			if(!M.up())
-//				to_chat(world, "[log_text] <span style='font-weight:bold;color:red;'>FAIL</span><br>Failed to process migration [pkgID] #[M.id]!")
-				world.log << "Failed to process migration [pkgID] #[M.id]"
+				log_sql("Failed to process migration [pkgID] #[M.id]")
 				return FALSE
 			else
 				M.execute("REPLACE INTO [format_table_name(TABLE_NAME)] (pkgID,version) VALUES ('[pkgID]',[M.id])") // SQLite also supports REPLACE.
-				world.log << "\[Migrations] Successfully applied [pkgID]#[M.id] ([M.name])"
-	world.log << "\[Migrations] Done!"
+				log_sql("\[Migrations] Successfully applied [pkgID]#[M.id] ([M.name])")
+	log_sql("\[Migrations] Done!")
 	return TRUE
 
 /datum/migration_controller/proc/query(var/sql)

@@ -16,7 +16,6 @@ GLOBAL_DATUM(migration_controller_mysql, /datum/migration_controller/mysql)
 		warning("Something wrong with SSdbcore.NewQuery()")
 		return FALSE
 	qdel(Q)
-	//testing("MySQL is okay")
 	db = SSdbcore
 	return TRUE
 

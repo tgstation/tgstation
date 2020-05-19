@@ -12,7 +12,7 @@
 /datum/migration/mysql/query(var/sql)
 	var/datum/DBQuery/query = db.NewQuery(sql)
 	if(!query.Execute())
-		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
+		log_sql("Error in [package]#[id]: [query.ErrorMsg()]")
 		qdel(query)
 		return FALSE
 
@@ -38,7 +38,7 @@
 /datum/migration/mysql/execute(var/sql)
 	var/datum/DBQuery/query = db.NewQuery(sql)
 	if(!query.Execute())
-		world.log << "Error in [package]#[id]: [query.ErrorMsg()]"
+		log_sql("Error in [package]#[id]: [query.ErrorMsg()]")
 		qdel(query)
 		return FALSE
 	qdel(query)
