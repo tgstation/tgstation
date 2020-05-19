@@ -1,7 +1,7 @@
-GLOBAL_LIST_INIT(small_wave, list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=1)) //5
-GLOBAL_LIST_INIT(medium_wave, list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=1)) //8
-GLOBAL_LIST_INIT(big_wave, list(/obj/structure/crystal_portal/small=5, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=2, /obj/structure/crystal_portal/huge=1)) //11
-GLOBAL_LIST_INIT(huge_wave, list(/obj/structure/crystal_portal/small=7, /obj/structure/crystal_portal/medium=5, /obj/structure/crystal_portal/big=3, /obj/structure/crystal_portal/huge=2)) //17
+GLOBAL_LIST_INIT(waves, list("small wave" = list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=1),
+"medium wave" = list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=1),
+"big wave" = list(/obj/structure/crystal_portal/small=5, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=2, /obj/structure/crystal_portal/huge=1),
+"huge wave" = list(/obj/structure/crystal_portal/small=7, /obj/structure/crystal_portal/medium=5, /obj/structure/crystal_portal/big=3, /obj/structure/crystal_portal/huge=2)))
 GLOBAL_LIST_EMPTY(crystal_portals)
 /*
 This section is for the event controller
@@ -15,42 +15,36 @@ This section is for the event controller
 	earliest_start = 45 MINUTES
 
 /datum/round_event/crystal_invasion
+	startWhen = 10
 	announceWhen = 1
-	///Stores the type of the wave for the event
-	var/list/wave_type
 	///Is the name of the wave, used to check wich wave will be generated
 	var/wave_name
 	///Max number of portals that can spawn per type of wave
 	var/portal_numbers
 
-/datum/round_event/crystal_invasion/announce()
-	priority_announce("WARNING - Destabilization of the Supermatter Crystal Matrix detected, please stand by waiting further instructions", "Alert", 'sound/misc/notice1.ogg')
+/datum/round_event/crystal_invasion/start()
+	choose_wave_type()
 
-/datum/round_event/crystal_invasion/New()
-	. = ..()
-	if(!wave_type)
-		choose_wave_type()
+/datum/round_event/crystal_invasion/announce(fake)
+	priority_announce("WARNING - Destabilization of the Supermatter Crystal Matrix detected, please stand by waiting further instructions", "Alert")
+	sound_to_playing_players('sound/misc/notice1.ogg')
 
 ///Choose the type of the wave
 /datum/round_event/crystal_invasion/proc/choose_wave_type()
 	if(!wave_name)
 		wave_name = pickweight(list(
-			"small wave" = 60,
+			"small wave" = 50,
 			"medium wave" = 30,
-			"big wave" = 7,
-			"huge wave" = 3))
+			"big wave" = 15,
+			"huge wave" = 5))
 	switch(wave_name)
 		if("small wave")
-			wave_type = GLOB.small_wave
 			portal_numbers = pick(2, 3, 4, 5)
 		if("medium wave")
-			wave_type = GLOB.medium_wave
 			portal_numbers = pick(4, 5, 6, 7)
 		if("big wave")
-			wave_type = GLOB.big_wave
 			portal_numbers = pick(6, 7, 8, 9)
 		if("huge wave")
-			wave_type = GLOB.huge_wave
 			portal_numbers = pick(9, 10, 11, 12)
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
@@ -70,7 +64,7 @@ This section is for the event controller
 		WARNING("No engine found.")
 		kill()
 	var/obj/machinery/power/supermatter_crystal/crystal = pick(sm_crystal)
-	crystal.destabilize()
+	crystal.destabilize(portal_numbers)
 
 	priority_announce("WARNING - Numerous energy fluctuations have been detected from your Supermatter; we estimate a [wave_name] of crystalline creatures \
 						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
@@ -79,7 +73,7 @@ This section is for the event controller
 	sleep(10 SECONDS)
 
 	for(var/i = 0, i< portal_numbers, i++)
-		spawn_portal(wave_type)
+		spawn_portal(GLOB.waves[wave_name])
 
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type)
@@ -91,7 +85,7 @@ This section is for the event controller
 			spawners += temp
 
 	if(!spawners.len)
-		message_admins("No APCs on the station, aborting crystal event")
+		message_admins("No landmarks on the station, aborting")
 		return MAP_ERROR
 
 	var/pick_portal = pickweight(wave_type)
@@ -123,7 +117,7 @@ This section is for the destabilized SM
 
 /obj/machinery/destabilized_crystal/process()
 	if(active)
-		if(prob(45))
+		if(prob(75))
 			src.fire_nuclear_particle()
 			radiation_pulse(src, 250, 6)
 		var/turf/T = loc
@@ -131,10 +125,8 @@ This section is for the destabilized SM
 		var/datum/gas_mixture/removed
 		var/gasefficency = 0.5
 		removed = env.remove(gasefficency * env.total_moles())
-		removed.assert_gases(/datum/gas/bz, /datum/gas/stimulum, /datum/gas/nitryl, /datum/gas/miasma)
+		removed.assert_gases(/datum/gas/bz, /datum/gas/miasma)
 		removed.gases[/datum/gas/bz][MOLES] += 5.5
-		removed.gases[/datum/gas/stimulum][MOLES] += 4.5
-		removed.gases[/datum/gas/nitryl][MOLES] += 6.75
 		removed.gases[/datum/gas/miasma][MOLES] += 10.5
 		env.merge(removed)
 		air_update_turf()
