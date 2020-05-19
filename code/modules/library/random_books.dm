@@ -10,7 +10,9 @@
 
 /obj/item/book/random
 	icon_state = "random_book"
+	/// The category of books to pick from when creating this book.
 	var/random_category = null
+	/// If this book has already been 'generated' yet.
 	var/random_loaded = FALSE
 
 /obj/item/book/random/Initialize(mapload)
@@ -52,10 +54,7 @@
 	if(query_get_random_books.Execute())
 		while(query_get_random_books.NextRow())
 			var/obj/item/book/B
-			if(existing_book)
-				B = existing_book
-			else
-				B = new(location)
+			B = existing_book ? existing_book : new(location)
 			B.author	=	query_get_random_books.item[1]
 			B.title		=	query_get_random_books.item[2]
 			B.dat		=	query_get_random_books.item[3]
