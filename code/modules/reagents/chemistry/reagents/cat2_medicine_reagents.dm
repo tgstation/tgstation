@@ -23,7 +23,7 @@
 	var/good_kind_of_healing = FALSE
 	if(death_is_coming <= 50) //bad
 		M.adjustOxyLoss(1, TRUE)
-	if(death_is_coming <= 100&& death_is_coming <= 100) //meh convert
+	if(death_is_coming <= 100) //meh convert
 		M.adjustOxyLoss(1, TRUE)
 	else //no convert
 		good_kind_of_healing = TRUE
