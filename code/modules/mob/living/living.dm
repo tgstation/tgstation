@@ -1533,3 +1533,38 @@
 	stop_look_up()
 	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
+/**
+ * look_down Changes the perspective of the mob to any openspace turf below the mob
+ *
+ * This also checks if an openspace turf is below the mob before looking down or resets the perspective if already looking up
+ *
+ */
+/mob/living/proc/look_down()
+
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
+		stop_look_down()
+		return
+	if(!can_look_down())
+		return
+	var/turf/lower_level = get_step_multiz(src, DOWN)
+	var/turf/floor = get_turf(src)
+	if(!lower_level) //We are at the lowest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
+		return
+	else if(!istransparentturf(floor) && !HAS_TRAIT(src, TRAIT_XRAY_VISION)) //There is no turf we can look through below us
+		to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
+		return
+
+	changeNext_move(CLICK_CD_LOOK_UP)
+	reset_perspective(lower_level)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_down) //We stop looking down if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/look_down) //We start looking again after we move.
+
+/mob/living/proc/stop_look_down()
+	reset_perspective()
+
+/mob/living/proc/end_look_down()
+	stop_look_up()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
