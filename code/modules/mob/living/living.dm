@@ -1545,7 +1545,7 @@
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
 		stop_look_down()
 		return
-	if(!can_look_down())
+	if(!can_look_up()) //if we cant look up, we cant look down.
 		return
 	var/turf/lower_level = get_step_multiz(src, DOWN)
 	var/turf/floor = get_turf(src)
