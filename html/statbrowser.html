@@ -58,6 +58,18 @@ if(document.addEventListener && window.location) { // hey maybe some bozo is sti
 	document.addEventListener("mouseup", function(e) {
 		window.location = "byond://winset?mapwindow.map.focus=true"; //Byond ref says focus is read only. This will show 'em.
 	});
+	window.addEventListener("load", function() {
+		let darkmodeCookie = getCookie('darkmode');
+		if(darkmodeCookie === 'true') {
+			set_dark_theme();
+		} else {
+			set_light_theme();
+		}
+
+		if(!current_tab) {
+			tab_change("Status");
+		}
+	});
 }
 
 if(!Array.prototype.includes) {
@@ -218,21 +230,6 @@ function set_style_sheet(sheet) {
 	sheetElement.href = sheet + ".css";
 	sheetElement.media = 'all';
 	head.appendChild(sheetElement);
-}
-
-if(window.addEventListener && window.location) {
-	window.addEventListener("load", function() {
-		let darkmodeCookie = getCookie('darkmode');
-		if(darkmodeCookie === 'true') {
-			set_dark_theme();
-		} else {
-			set_light_theme();
-		}
-
-		if(!current_tab) {
-			tab_change("Status");
-		}
-	});
 }
 
 function getCookie(cname) {
