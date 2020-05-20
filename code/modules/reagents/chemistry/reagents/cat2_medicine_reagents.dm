@@ -21,15 +21,17 @@
 	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
 	var/thou_shall_heal = 0
 	var/good_kind_of_healing = FALSE
-	switch(M.stat)
-		if(CONSCIOUS) //bad
-			thou_shall_heal = death_is_coming/50
-			M.adjustOxyLoss(2, TRUE)
-		if(SOFT_CRIT) //meh convert
-			thou_shall_heal = round(death_is_coming/47,0.1)
+	switch(death_is_coming)
+		if(death_is_coming <= 50) //bad
+			thou_shall_heal = 1
 			M.adjustOxyLoss(1, TRUE)
+		if(death_is_coming > 50 && death_is_coming <= 100) //meh convert
+			thou_shall_heal = 2
+			M.adjustOxyLoss(0.5, TRUE)
+		if(death_is_coming > 100 && death_is_coming <= 150)
+			thou_shall_heal = 3
 		else //no convert
-			thou_shall_heal = round(death_is_coming/45,0.1)
+			thou_shall_heal = 4
 			good_kind_of_healing = TRUE
 	M.adjustBruteLoss(-thou_shall_heal, FALSE)
 
@@ -116,10 +118,6 @@
 	M.adjustStaminaLoss(3*REM, 0)
 	if(M.getStaminaLoss() >= 80)
 		M.drowsyness++
-	if(M.getStaminaLoss() >= 100)
-		to_chat(M,"<span class='warning'>You feel more tired than you usually do, perhaps if you rest your eyes for a bit...</span>")
-		M.adjustStaminaLoss(-100, TRUE)
-		M.Sleeping(10 SECONDS)
 	..()
 	. = TRUE
 
@@ -172,10 +170,10 @@
 
 /datum/reagent/medicine/C2/hercuri
 	name = "Hercuri"
-	description = "Not to be confused with element Mercury, this medicine excels in reverting effects of dangerous high-temperature environments. Prolonged exposure can cause hypothermia."
+	description = "Not to be confused with element Mercury, this medicine excels in reverting effects of dangerous high-temperature environments. Prolonged exposure can cause hearing loss."
 	reagent_state = LIQUID
 	color = "#F7FFA5"
-	overdose_threshold = 25
+	overdose_threshold = 35
 	reagent_weight = 0.6
 
 /datum/reagent/medicine/C2/hercuri/on_mob_life(mob/living/carbon/M)
@@ -183,8 +181,7 @@
 		M.adjustFireLoss(-2*REM, FALSE)
 	else
 		M.adjustFireLoss(-1.25*REM, FALSE)
-	M.adjust_bodytemperature(rand(-25,-5)*(TEMPERATURE_DAMAGE_COEFFICIENT*REM), 50)
-	M.reagents?.chem_temp +=(-10*REM)
+	M.adjustOrganLoss(ORGAN_SLOT_EARS,0.3*REM)
 	M.adjust_fire_stacks(-1)
 	..()
 	. = TRUE
@@ -201,7 +198,8 @@
 	..()
 
 /datum/reagent/medicine/C2/hercuri/overdose_process(mob/living/carbon/M)
-	M.adjust_bodytemperature(-10*TEMPERATURE_DAMAGE_COEFFICIENT*REM,50) //chilly chilly
+	M.adjust_bodytemperature(-10*TEMPERATURE_DAMAGE_COEFFICIENT*REM,50)//chilly chilly
+	M.adjustFireLoss(4*REM, FALSE)
 	..()
 
 
@@ -325,8 +323,6 @@
 	. = ..()
 	mytray.adjustToxic(-round(chems.get_reagent_amount(type) * 2))
 
-#define issyrinormusc(A)	(istype(A,/datum/reagent/medicine/C2/syriniver) || istype(A,/datum/reagent/medicine/C2/musiver)) //musc is metab of syrin so let's make sure we're not purging either
-
 /datum/reagent/medicine/C2/syriniver //Inject >> SYRINge
 	name = "Syriniver"
 	description = "A potent antidote for intravenous use with a narrow therapeutic index, it is considered an active prodrug of musiver."
@@ -353,11 +349,6 @@
 /datum/reagent/medicine/C2/syriniver/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8)
 	M.adjustToxLoss(-1*REM, 0)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(issyrinormusc(R))
-			continue
-		M.reagents.remove_reagent(R.type,0.4)
-
 	..()
 	. = 1
 
@@ -380,10 +371,6 @@
 /datum/reagent/medicine/C2/musiver/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1)
 	M.adjustToxLoss(-1*REM, 0)
-	for(var/datum/reagent/R in M.reagents.reagent_list)
-		if(issyrinormusc(R))
-			continue
-		M.reagents.remove_reagent(R.type,0.2)
 	..()
 	. = 1
 
