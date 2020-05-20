@@ -220,18 +220,20 @@ function set_style_sheet(sheet) {
 	head.appendChild(sheetElement);
 }
 
-window.addEventListener("load", function() {
-	let darkmodeCookie = getCookie('darkmode');
-	if(darkmodeCookie === 'true') {
-		set_dark_theme();
-	} else {
-		set_light_theme();
-	}
+if(window.addEventListener && window.location) {
+	window.addEventListener("load", function() {
+		let darkmodeCookie = getCookie('darkmode');
+		if(darkmodeCookie === 'true') {
+			set_dark_theme();
+		} else {
+			set_light_theme();
+		}
 
-	if(!current_tab) {
-		tab_change("Status");
-	}
-});
+		if(!current_tab) {
+			tab_change("Status");
+		}
+	});
+}
 
 function getCookie(cname) {
 	var name = cname + '=';
