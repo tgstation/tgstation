@@ -1498,7 +1498,7 @@
 
 ///Checks if the user is incapacitated or on cooldown.
 /mob/living/proc/can_look_up()
-	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+	return !(incapacitated(ignore_restraints = TRUE))
 
 /**
  * look_up Changes the perspective of the mob to any openspace turf above the mob
@@ -1510,7 +1510,6 @@
 
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
 		stop_look_up()
-		return
 	if(!can_look_up())
 		return
 	var/turf/ceiling = get_step_multiz(src, UP)
@@ -1544,7 +1543,6 @@
 
 	if(client.perspective != MOB_PERSPECTIVE) //We are already looking down.
 		stop_look_down()
-		return
 	if(!can_look_up()) //if we cant look up, we cant look down.
 		return
 	var/turf/lower_level = get_step_multiz(src, DOWN)
