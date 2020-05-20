@@ -19,15 +19,15 @@
 /datum/reagent/medicine/C2/helbital/on_mob_life(mob/living/carbon/M)
 	. = TRUE
 	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
-	var/thou_shall_heal = 0
+	var/thou_shall_heal = round((death_is_coming/50),1)
 	var/good_kind_of_healing = FALSE
 	if(death_is_coming <= 50) //bad
 		M.adjustOxyLoss(1, TRUE)
 	if(death_is_coming <= 100) //meh convert
 		M.adjustOxyLoss(1, TRUE)
-	else //no convert
+	if(death_is_coming > 100) //no convert
 		good_kind_of_healing = TRUE
-	M.adjustBruteLoss(-(round((thou_shall_heal/50),1), FALSE)
+	M.adjustBruteLoss(-thou_shall_heal, FALSE)
 
 	if(good_kind_of_healing && !reaping && prob(0.0001)) //janken with the grim reaper!
 		reaping = TRUE
