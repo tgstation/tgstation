@@ -21,19 +21,13 @@
 	var/death_is_coming = (M.getToxLoss() + M.getOxyLoss() + M.getFireLoss() + M.getBruteLoss())
 	var/thou_shall_heal = 0
 	var/good_kind_of_healing = FALSE
-	switch(death_is_coming)
-		if(death_is_coming <= 50) //bad
-			thou_shall_heal = 1
-			M.adjustOxyLoss(1, TRUE)
-		if(death_is_coming > 50 && death_is_coming <= 100) //meh convert
-			thou_shall_heal = 2
-			M.adjustOxyLoss(0.5, TRUE)
-		if(death_is_coming > 100 && death_is_coming <= 150)
-			thou_shall_heal = 3
-		else //no convert
-			thou_shall_heal = 4
-			good_kind_of_healing = TRUE
-	M.adjustBruteLoss(-thou_shall_heal, FALSE)
+	if(death_is_coming <= 50) //bad
+		M.adjustOxyLoss(1, TRUE)
+	if(death_is_coming <= 100&& death_is_coming <= 100) //meh convert
+		M.adjustOxyLoss(1, TRUE)
+	else //no convert
+		good_kind_of_healing = TRUE
+	M.adjustBruteLoss(-(round((thou_shall_heal/50),1), FALSE)
 
 	if(good_kind_of_healing && !reaping && prob(0.0001)) //janken with the grim reaper!
 		reaping = TRUE
