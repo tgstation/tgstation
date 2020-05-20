@@ -34,16 +34,6 @@ map deltastation
 	votable
 endmap
 
-map donutstation
-	minplayers 50
-	votable
-endmap
-
-map kilostation
-	minplayers 25
-	votable
-endmap
-
 map runtimestation
 endmap
 
