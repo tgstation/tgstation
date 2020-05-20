@@ -1524,7 +1524,12 @@
 	changeNext_move(CLICK_CD_LOOK_UP)
 	reset_perspective(ceiling)
 	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, .proc/look_up) //We stop looking again after we move.
 
 /mob/living/proc/stop_look_up()
 	reset_perspective()
+
+/mob/living/proc/end_look_up()
+	stop_look_up()
 	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
