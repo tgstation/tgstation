@@ -84,12 +84,12 @@
 	max_ammo = 7
 	multiple_sprites = AMMO_BOX_PER_BULLET
 
-/obj/item/ammo_box/magazine/liberator10mm
+/obj/item/ammo_box/magazine/liberator9mm
 	name = "Makeshift 9mm magazine"
 	desc = "A handcrafted ammunition magazine, designed to be loaded with 9mm bullets. It seems to be custom-fit for an off-market pistol design."
 	icon_state = "libmag"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
 	max_ammo = 5
-	multiload = TRUE
+	multiload = FALSE
 	multiple_sprites = AMMO_BOX_FULL_EMPTY
