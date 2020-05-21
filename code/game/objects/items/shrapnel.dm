@@ -71,8 +71,14 @@
 /obj/projectile/bullet/pellet/stingball/breaker
 	name = "breakbang pellet"
 	damage = 10
-	wound_bonus = 30
+	wound_bonus = 40
 	sharpness = FALSE
+
+/obj/projectile/bullet/pellet/stingball/shred
+	name = "shredbang pellet"
+	damage = 10
+	wound_bonus = 30
+	sharpness = TRUE
 
 /obj/projectile/bullet/pellet/stingball/on_ricochet(atom/A)
 	hit_stunned_targets = TRUE // ducking will save you from the first wave, but not the rebounds

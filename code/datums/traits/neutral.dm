@@ -254,15 +254,5 @@
 	var/max_scars = 7
 
 /datum/quirk/longtimer/on_spawn()
-	var/mob/living/carbon/human/H = quirk_holder
-	var/list/wounds = WOUND_TYPE_BONE + WOUND_TYPE_CUT + WOUND_TYPE_BURN
-	var/scars = rand(min_scars,max_scars)
-	for(var/i in 1 to scars)
-		var/datum/scar/S = new
-		var/obj/item/bodypart/BP = pick(H.bodyparts)
-
-		var/wound_type = pick(wounds)
-		var/datum/wound/W = new wound_type
-		S.generate(BP, W)
-		S.fake = TRUE
-		QDEL_NULL(W)
+	var/mob/living/carbon/C = quirk_holder
+	C.generate_fake_scars(rand(min_scars, max_scars))

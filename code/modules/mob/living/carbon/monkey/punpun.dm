@@ -15,6 +15,7 @@
 		name = ancestor_name
 		if(ancestor_chain > 1)
 			name += " \Roman[ancestor_chain]"
+			generate_fake_scars(rand(ancestor_chain, ancestor_chain * 5))
 	else
 		if(prob(5))
 			name = pick(rare_pet_monkey_names)

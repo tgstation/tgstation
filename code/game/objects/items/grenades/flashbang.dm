@@ -61,6 +61,10 @@
 	name = "breakbang"
 	shrapnel_type = /obj/projectile/bullet/pellet/stingball/breaker
 
+/obj/item/grenade/stingbang/shred
+	name = "shredbang"
+	shrapnel_type = /obj/projectile/bullet/pellet/stingball/shred
+
 /obj/item/grenade/stingbang/prime(mob/living/lanced_by)
 	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
