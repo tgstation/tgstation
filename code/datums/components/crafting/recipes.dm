@@ -850,7 +850,7 @@
 
 /datum/crafting_recipe/makeshiftliberatorpistolmagazine
 	name = "Improvised Pistol Magazine"
-	result = /obj/item/ammo_box/magazine/liberator10mm
+	result = /obj/item/ammo_box/magazine/liberator9mm
 	reqs = list(/obj/item/stack/sheet/plasteel = 2,
 				/obj/item/stack/sheet/metal = 2)
 	tools = list(TOOL_SCREWDRIVER)
