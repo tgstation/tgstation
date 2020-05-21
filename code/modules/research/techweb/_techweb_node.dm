@@ -6,7 +6,7 @@
 	var/id
 	var/display_name = "Errored Node"
 	var/description = "Why are you seeing this?"
-	var/department = DEPARTMENTAL_FLAG_ALL	///What department can research the node.
+	var/departmental_flags = DEPARTMENTAL_FLAG_ALL	///What department can research the node.
 	var/hidden = FALSE			//Whether it starts off hidden.
 	var/experimental = FALSE	//If the tech can be randomly granted by the BEPIS as a reward. Meant to be fully given in tech disks, not researched.
 	var/starting_node = FALSE	//Whether it's available without any research.
