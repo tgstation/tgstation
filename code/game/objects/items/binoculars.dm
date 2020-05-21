@@ -25,17 +25,25 @@
 	return ..()
 
 /obj/item/binoculars/proc/on_wield(obj/item/source, mob/user)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/unwield)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_walk)
+	RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
 	listeningTo = user
 	user.visible_message("<span class='notice'>[user] holds [src] up to [user.p_their()] eyes.</span>", "<span class='notice'>You hold [src] up to your eyes.</span>")
 	item_state = "binoculars_wielded"
+	zoom(user, user.dir)
+
+/obj/item/binoculars/proc/rotate(atom/thing, old_dir, new_dir)
+	listeningTo.client.view_size.add(-zoom_out_amt)
+	zoom(listeningTo, new_dir)
+
+/obj/item/binoculars/proc/zoom(mob/user, direction)
 	user.regenerate_icons()
 	if(!user?.client)
 		return
 	var/client/C = user.client
 	var/_x = 0
 	var/_y = 0
-	switch(user.dir)
+	switch(direction)
 		if(NORTH)
 			_y = zoom_amt
 		if(EAST)
@@ -44,15 +52,18 @@
 			_y = -zoom_amt
 		if(WEST)
 			_x = -zoom_amt
-	C.change_view(world.view + zoom_out_amt)
+	//Ready for this one?
+	C.view_size.add(zoom_out_amt)
 	C.pixel_x = world.icon_size*_x
 	C.pixel_y = world.icon_size*_y
-/obj/item/binoculars/proc/on_unwield(obj/item/source, mob/user)
-	unwield(user)
 
-/obj/item/binoculars/proc/unwield(mob/user)
+/obj/item/binoculars/proc/on_walk()
+	attack_self(listeningTo) //Yes I have sinned, why do you ask?
+
+/obj/item/binoculars/proc/on_unwield(obj/item/source, mob/user)
 	if(listeningTo)
-		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
 		listeningTo = null
 	user.visible_message("<span class='notice'>[user] lowers [src].</span>", "<span class='notice'>You lower [src].</span>")
 	item_state = "binoculars"
@@ -60,6 +71,6 @@
 	if(user && user.client)
 		user.regenerate_icons()
 		var/client/C = user.client
-		C.change_view(CONFIG_GET(string/default_view))
+		C.view_size.add(-zoom_out_amt)
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0

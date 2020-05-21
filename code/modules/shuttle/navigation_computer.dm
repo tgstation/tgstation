@@ -94,7 +94,7 @@
 			to_add += SSshuttle.hidden_shuttle_turf_images
 
 		user.client.images += to_add
-		user.client.change_view(view_range)
+		user.client.view_size.setTo(view_range)
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/remove_eye_control(mob/living/user)
 	..()
@@ -107,7 +107,7 @@
 			to_remove += SSshuttle.hidden_shuttle_turf_images
 
 		user.client.images -= to_remove
-		user.client.change_view(CONFIG_GET(string/default_view))
+		user.client.view_size.resetToDefault()
 
 /obj/machinery/computer/camera_advanced/shuttle_docker/proc/placeLandingSpot()
 	if(designating_target_loc || !current_user)

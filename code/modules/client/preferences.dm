@@ -1722,8 +1722,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
-					user.client.change_view(CONFIG_GET(string/default_view))
-
+					user.client.view_size.setDefault(getScreenSize(widescreenpref))
+					user.client.view_size.resetToDefault()
+					
 				if("save")
 					save_preferences()
 					save_character()

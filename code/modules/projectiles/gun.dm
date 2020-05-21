@@ -649,11 +649,11 @@
 			if(WEST)
 				_x = -zoom_amt
 
-		user.client.change_view(zoom_out_amt)
+		user.client.view_size.setTo(zoom_out_amt)
 		user.client.pixel_x = world.icon_size*_x
 		user.client.pixel_y = world.icon_size*_y
 	else
-		user.client.change_view(CONFIG_GET(string/default_view))
+		user.client.view_size.resetToDefault()
 		user.client.pixel_x = 0
 		user.client.pixel_y = 0
 	return zoomed
