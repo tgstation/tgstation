@@ -345,6 +345,10 @@
 /datum/reagent/medicine/C2/syriniver/on_mob_life(mob/living/carbon/M)
 	M.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.8)
 	M.adjustToxLoss(-1*REM, 0)
+	for(var/datum/reagent/R in M.reagents.reagent_list)
+ 		if(issyrinormusc(R))
+ 			continue
+ 		M.reagents.remove_reagent(R.type,0.1)
 	..()
 	. = 1
 
