@@ -1,18 +1,20 @@
-#define HEART_PCT_PLAYERS 0.05
-
+/// Called when the shuttle starts launching back to centcom, polls a few random players who joined the round for commendations
 /datum/controller/subsystem/ticker/proc/poll_hearts()
-	var/number_to_ask = round(LAZYLEN(GLOB.joined_player_list) * HEART_PCT_PLAYERS) + rand(0,1)
+	if(!CONFIG_GET(number/commendations))
+		return
+	var/number_to_ask = round(LAZYLEN(GLOB.joined_player_list) * CONFIG_GET(number/commendations)) + rand(0,1)
 
 	for(var/i in GLOB.joined_player_list)
 		var/mob/check_mob = get_mob_by_ckey(i)
 		if(!check_mob || !check_mob.mind || !check_mob.client)
 			continue
-
+		// maybe some other filters like bans or whatever
 		check_mob.query_heart(1)
 		number_to_ask--
 		if(number_to_ask == 0)
 			break
 
+/// Once the round is actually over, cycle through the commendations in the hearts list and give them the hearted status
 /datum/controller/subsystem/ticker/proc/handle_hearts()
 	for(var/i in hearts)
 		var/mob/heart_winner = i
@@ -26,10 +28,9 @@
 		if(!heart_winner.client)
 			return
 		heart_winner.client.prefs.save_preferences()
-		var/heart_message = hearts[heart_winner]
-		tgalert(heart_winner, "Someone anonymously thanked you for being kind during the last round! [heart_message ? "They left a message: [heart_message]" : ""]", "<3!", "Okay")
+		tgalert(heart_winner, "Someone anonymously thanked you for being kind during the last round!", "<3!", "Okay")
 
-
+/// Ask someone if they'd like to award a commendation for the round, 3 tries to get the name they want before we give up
 /mob/proc/query_heart(attempt=1)
 	if(!mind || !client || attempt > 3)
 		return
@@ -56,8 +57,8 @@
 
 	for(var/i in name_checks)
 		var/mob/heart_contender = i
-		//if(heart_contender == src)
-			//continue
+		if(heart_contender == src)
+			continue
 
 		switch(tgalert(src, "Is this the person: [heart_contender.real_name]?", "<3?", "Yes!", "Nope", "Cancel", Timeout = 15 SECONDS))
 			if("Yes!")
@@ -70,11 +71,11 @@
 
 	query_heart(attempt + 1)
 
+/// Once we've confirmed who we're commendating, log it and add them to the hearts list
 /mob/proc/nominate_heart(mob/heart_recepient)
 	if(!mind || !client)
 		return
-	var/heart_message = input(src, "OPTIONAL: Attach an anonymous message with your thank-you?", "<3?")
-	message_admins("[key_name(src)] commended [key_name(heart_recepient)] [heart_message ? "with the message: [heart_message]" : "with no message"] (<a href='?src=[REF(SSticker)];cancel_heart=1;heart_source=[REF(src)];heart_target=[REF(heart_recepient)]'>CANCEL</a>)")
-	log_admin("[key_name(src)] commended [key_name(heart_recepient)] [heart_message ? "with the message: [heart_message]" : "with no message"]")
-	LAZYINITLIST(SSticker.hearts)
-	SSticker.hearts[heart_recepient] = heart_message
+	to_chat(src, "<span class='nicegreen'>Commendation sent!</span>")
+	message_admins("[key_name(src)] commended [key_name(heart_recepient)] (<a href='?src=[REF(SSticker)];cancel_heart=1;heart_source=[REF(src)];heart_target=[REF(heart_recepient)]'>CANCEL</a>)") // cancel is probably unnecessary without messages
+	log_admin("[key_name(src)] commended [key_name(heart_recepient)]")
+	LAZYADD(SSticker.hearts, heart_recepient)
