@@ -967,3 +967,14 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 ///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
 /client/proc/get_award_status(achievement_type, mob/user, value = 1)
 	return	player_details.achievements.get_achievement_status(achievement_type)
+
+///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
+/client/proc/award_heart(heart_reason)
+	to_chat(src, "<span class='nicegreen'>Someone awarded you a heart![heart_reason ? " They said: [heart_reason]!" : ""]</span>")
+	if(!src)
+		return
+	prefs.hearted_until = world.realtime + (24 HOURS)
+	prefs.hearted = TRUE
+	if(!src)
+		return
+	prefs.save_preferences()

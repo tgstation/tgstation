@@ -115,6 +115,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///This var stores the amount of points the owner will get for making it out alive.
 	var/hardcore_survival_score = 0
 
+	///Someone thought we were nice! We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
+	var/hearted
+	///
+	var/hearted_until
+
 /datum/preferences/New(client/C)
 	parent = C
 

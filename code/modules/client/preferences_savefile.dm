@@ -203,6 +203,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	// Custom hotkeys
 	S["key_bindings"]		>> key_bindings
+	// hearted
+	S["hearted_until"]		>> hearted_until
 
 	//try to fix any outdated data if necessary
 	if(needs_update >= 0)
@@ -288,6 +290,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["pda_style"], pda_style)
 	WRITE_FILE(S["pda_color"], pda_color)
 	WRITE_FILE(S["key_bindings"], key_bindings)
+	WRITE_FILE(S["hearted_until"], hearted_until)
 	return TRUE
 
 /datum/preferences/proc/load_character(slot)
