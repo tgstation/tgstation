@@ -835,3 +835,25 @@
            /obj/item/stack/sticky_tape = 1)
 	result = /obj/item/pickaxe/improvised
 	category = CAT_MISC
+
+/datum/crafting_recipe/makeshiftliberatorpistol
+	name = "Improvised Pistol"
+	result = /obj/item/gun/ballistic/automatic/liberatorpistol
+	reqs = list(/obj/item/weaponcrafting/receiver = 1,
+				/obj/item/pipe = 1,
+				/obj/item/stack/sheet/plasteel = 2,
+				/obj/item/stack/sheet/metal = 5)
+	tools = list(TOOL_WELDER)
+	time = 100
+	category = CAT_WEAPONRY
+	subcategory = CAT_WEAPON
+
+/datum/crafting_recipe/makeshiftliberatorpistolmagazine
+	name = "Improvised Pistol Magazine"
+	result = /obj/item/ammo_box/magazine/liberator10mm
+	reqs = list(/obj/item/stack/sheet/plasteel = 2,
+				/obj/item/stack/sheet/metal = 2)
+	tools = list(TOOL_SCREWDRIVER)
+	time = 25
+	category = CAT_WEAPONRY
+	subcategory = CAT_AMMO

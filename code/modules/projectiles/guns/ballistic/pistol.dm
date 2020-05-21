@@ -97,3 +97,17 @@
 		to_chat(user, "<span class='notice'>..and falls into view. Whew, that was a close one.</span>")
 		user.dropItemToGround(src)
 
+/obj/item/gun/ballistic/automatic/liberatorpistol
+	name = "Makeshift Pistol"
+	desc = "Harkening back to the prehistoric Liberator pistol design, this small makeshift pistol fires 10mm bullets."
+	icon_state = "liberatorpistol"
+	item_state = "liberatorpistol"
+	w_class = WEIGHT_CLASS_SMALL
+	mag_type = /obj/item/ammo_box/magazine/liberator10mm
+	can_suppress = FALSE
+	burst_size = 1
+	fire_delay = 1
+	fire_sound = 'sound/weapons/gun/pistol/shot_alt.ogg'
+	rack_sound = 'sound/weapons/gun/pistol/rack.ogg'
+	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
+	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
