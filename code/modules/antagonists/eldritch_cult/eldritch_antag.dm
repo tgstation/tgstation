@@ -24,8 +24,8 @@
 /datum/antagonist/ecult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has cult'ed [key_name_admin(new_owner)].")
-	log_admin("[key_name(admin)] has cult'ed [key_name(new_owner)].")
+	message_admins("[key_name_admin(admin)] has eldritch cult'ed [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has eldritch cult'ed [key_name(new_owner)].")
 
 
 /datum/antagonist/ecult/create_team(datum/team/cult/new_team)
@@ -44,13 +44,13 @@
 	to_chat(owner, "<span class='boldannounce'>You are the Eldritch Cultist!</span>")
 	to_chat(owner, "<B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "Your magic uses souls of the dead. You are very weak at first,")
+	to_chat(owner, "Your magic uses the souls of the dead. You are very weak at first,")
 	to_chat(owner, "but the more souls you reap the more powerful you become.")
 	to_chat(owner, "You can choose a specific old one you can worship:")
-	to_chat(owner, "Rust - decay and destruction, passive destructive abilities")
-	to_chat(owner, "Flesh - life and necrosis, allows you to ressurect the dead and summon deadly beasts.")
+	to_chat(owner, "Rust - decay and destruction, passive destructive abilities.")
+	to_chat(owner, "Flesh - life and necrosis, allows you to resurrect the dead and summon deadly beasts.")
 	to_chat(owner, "Ash - shadows and secrets, stealth and movement based abilties.")
-	to_chat(owner,"<B>Remember your power comes with souls!</B>")
+	to_chat(owner,"<B>Remember that your power comes from souls!</B>")
 
 /datum/antagonist/ecult/on_gain()
 	var/mob/living/current = owner.current

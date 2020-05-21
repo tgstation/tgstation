@@ -13,7 +13,7 @@
 	enemy_minimum_age = 0
 
 	announce_span = "danger"
-	announce_text = "Eldritch cultist has been spotted on the station!\n\
+	announce_text = "An eldritch cultist has been spotted on the station!\n\
 	<span class='danger'>Cultist</span>: Accomplish your objectives.\n\
 	<span class='notice'>Crew</span>: Do not let the madman succeed!"
 
@@ -65,5 +65,5 @@
 	. =..()
 
 /datum/game_mode/ecult/generate_report()
-	return "Cybersun Industries has announced that they successfully raided a high-security library. The library contained a very dangerous book that was \
+	return "Cybersun Industries has announced that they have successfully raided a high-security library. The library contained a very dangerous book that was \
 	shown to posses anomalous properties. We suspect that the book has been delivered onto your station. Stay vigilant!"
