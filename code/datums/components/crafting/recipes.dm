@@ -842,7 +842,8 @@
 	reqs = list(/obj/item/weaponcrafting/receiver = 1,
 				/obj/item/pipe = 1,
 				/obj/item/stack/sheet/plasteel = 2,
-				/obj/item/stack/sheet/metal = 5)
+				/obj/item/stack/sheet/metal = 5
+				/obj/item/clothing/gloves/color/yellow = 1)
 	tools = list(TOOL_WELDER)
 	time = 100
 	category = CAT_WEAPONRY
