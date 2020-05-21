@@ -71,7 +71,7 @@
 	. = 1
 
 /datum/reagent/drug/crank
-	name = "Lavacrank"
+	name = "Crank"
 	description = "Reduces stun times by about 400%. If overdosed or addicted it will deal significant Toxin, Brute and Brain damage."
 	reagent_state = LIQUID
 	color = "#fa0000"
