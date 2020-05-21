@@ -152,8 +152,8 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/ecult
-	name = "Changelings"
-	antag_flag = ROLE_CHANGELING
+	name = "Eldritch Cultists"
+	antag_flag = ROLE_ECULT
 	antag_datum = /datum/antagonist/ecult
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI", "Cyborg","Chaplain")

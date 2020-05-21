@@ -4,8 +4,8 @@
 	report_type = "eldritch cultist"
 	antag_flag = ROLE_ECULT
 	false_report_weight = 5
-	restricted_jobs = list("Cyborg")
-	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain","Chaplain")
+	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_roles = list("AI", "Cyborg","Chaplain")
 	required_players = 0
 	required_enemies = 1
 	recommended_enemies = 4
