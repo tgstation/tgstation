@@ -323,6 +323,40 @@
 		update_body_parts()
 		update_mutations_overlay()// no lizard with human hulk overlay please.
 
+/mob/proc/set_limb_id(datum/species/target_species, icon_update = 1) //Code for just changing limp id and appearance, not species
+	return
+
+/mob/living/carbon/set_limb_id(datum/species/target_species, icon_update = TRUE, pref_load = FALSE, change_voice = TRUE) //Voice mod can be toggled
+	if(target_species && has_dna())
+		var/datum/species/new_limb_id
+		if(ispath(target_species))
+			new_limb_id = new target_species
+		else if(istype(target_species))
+			new_limb_id = target_species
+		else
+			return
+		dna.species.limbs_id = new_limb_id.limbs_id //changes limb id
+		if(change_voice == TRUE)//toggable when calling the proc, default true
+			dna.species.say_mod = new_limb_id.say_mod //changes voice
+		if(ishuman(src))
+			qdel(language_holder)
+			var/species_holder = initial(new_limb_id.species_language_holder)
+			language_holder = new species_holder(src)
+		update_atom_languages()
+
+		if(new_limb_id.limbs_id == "zombie")
+			dna.species.use_skintones = FALSE //prevent sprite turning transparent
+			dna.species.species_traits -= MUTCOLORS
+			dna.species.species_traits -= DYNCOLORS
+
+/mob/living/carbon/human/set_limb_id(datum/species/target_species, icon_update = TRUE, pref_load = FALSE)
+	..()
+	if(icon_update)
+		update_body()
+		update_hair()
+		update_body_parts()
+		update_mutations_overlay()
+
 
 /mob/proc/has_dna()
 	return

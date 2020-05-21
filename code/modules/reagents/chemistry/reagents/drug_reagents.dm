@@ -161,10 +161,10 @@
 
 /datum/reagent/drug/krokodil/addiction_act_stage4(mob/living/carbon/human/M)
 	CHECK_DNA_AND_SPECIES(M)
-	if(!istype(M.dna.species, /datum/species/krokodil_addict))
-		to_chat(M, "<span class='userdanger'>Your skin falls off easily! You feel like you have changed.</span>") // Alert user of species change
+	if(M.mob_biotypes & MOB_ORGANIC)
+		to_chat(M, "<span class='userdanger'>Your skin falls off easily and you feel rotten!</span>") // Alert user injury
 		M.adjustBruteLoss(50*REM, 0) // holy shit your skin just FELL THE FUCK OFF
-		M.set_species(/datum/species/krokodil_addict)
+		M.set_limb_id(/datum/species/krokodil_addict) // Apply krok addict zombie sprites and say_mod, doesnt mutate
 	else
 		M.adjustBruteLoss(5*REM, 0)
 	..()

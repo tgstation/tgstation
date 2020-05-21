@@ -87,13 +87,14 @@
 		infection.Insert(C)
 
 // Your skin falls off
+/* his species is only left in to be targeted by set_limb_id(), which reads limbs_id and applies the respective sprite, Addicts WONT change species by this and only gain visual effects */
 /datum/species/krokodil_addict
 	name = "Krokodil Addict"
 	id = "goofzombies"
 	limbs_id = "zombie" //They look like zombies
 	sexes = 0
 	meat = /obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/zombie
-	mutanttongue = /obj/item/organ/tongue/zombie
+	say_mod = "moans"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | ERT_SPAWN
 
 #undef REGENERATION_DELAY
