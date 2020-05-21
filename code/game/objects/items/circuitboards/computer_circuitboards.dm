@@ -339,6 +339,11 @@
 	icon_state = "generic"
 	build_path = /obj/machinery/computer/rdconsole/department
 
+/obj/item/circuitboard/computer/rdconsole/department/science
+	name = "Departmental Protolathe (Machine Board) - Science"
+	icon_state = "science"
+	build_path = /obj/machinery/computer/rdconsole/department/science
+
 /obj/item/circuitboard/computer/rdconsole/department/engineering
 	name = "Departmental Protolathe (Machine Board) - Engineering"
 	icon_state = "engineering"

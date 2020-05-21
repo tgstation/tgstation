@@ -20,8 +20,8 @@ Nothing else in the console has ID requirements.
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"
 	var/datum/techweb/stored_research					//Reference to global science techweb.
-	var/obj/item/disk/tech_disk/t_disk	//Stores the technology disk.
-	var/obj/item/disk/design_disk/d_disk	//Stores the design disk.
+	var/obj/item/disk/tech_disk/t_disk					//Stores the technology disk.
+	var/obj/item/disk/design_disk/d_disk				//Stores the design disk.
 	circuit = /obj/item/circuitboard/computer/rdconsole
 	var/department_research = DEPARTMENTAL_FLAG_SCIENCE //Which department's research shows up on this screen
 
@@ -45,6 +45,8 @@ Nothing else in the console has ID requirements.
 	var/searchstring = ""
 	var/searchtype = ""
 	var/ui_mode = RDCONSOLE_UI_MODE_NORMAL
+	var/allowed_department_flags
+	var/list/visible_nodes
 
 	var/research_control = TRUE
 
@@ -209,6 +211,13 @@ Nothing else in the console has ID requirements.
 	var/lathe = linked_lathe && linked_lathe.multitool_act(user, I)
 	var/print = linked_imprinter && linked_imprinter.multitool_act(user, I)
 	return lathe || print || .
+
+/obj/machinery/computer/rdconsole/proc/update_research()
+	for(var/i in stored_research.researched_nodes)
+		visible_nodes += SSresearch.techweb_node_by_id(i)
+		var/datum/techweb_node/d = SSresearch.techweb_node_by_id(i)
+		if((isnull(allowed_department_flags) || (d.departmental_flags & allowed_department_flags)))
+			visible_nodes |= d
 
 /obj/machinery/computer/rdconsole/proc/list_categories(list/categories, menu_num as num)
 	if(!categories)
@@ -652,6 +661,7 @@ Nothing else in the console has ID requirements.
 /obj/machinery/computer/rdconsole/proc/ui_techweb()
 	var/list/l = list()
 	if(ui_mode != RDCONSOLE_UI_MODE_LIST)
+		update_research()
 		var/list/columns = list()
 		var/max_tier = 0
 		for (var/node_ in stored_research.tiers)
@@ -677,7 +687,7 @@ Nothing else in the console has ID requirements.
 		for(var/v in stored_research.available_nodes)
 			if(stored_research.researched_nodes[v] || stored_research.hidden_nodes[v])
 				continue
-			avail += SSresearch.techweb_node_by_id(v)
+			avail += visible_nodes
 		for(var/v in stored_research.visible_nodes)
 			if(stored_research.available_nodes[v])
 				continue
@@ -1145,6 +1155,7 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/robotics/Initialize()
 	. = ..()
+	visible_nodes = list()
 	if(circuit)
 		circuit.name = "R&D Console - Robotics (Computer Board)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
