@@ -99,7 +99,7 @@
 
 /obj/item/gun/ballistic/automatic/liberatorpistol
 	name = "Makeshift Pistol"
-	desc = "Harkening back to the prehistoric Liberator pistol design, this small makeshift pistol fires 10mm bullets."
+	desc = "Harkening back to before humanity achieved spaceflight on Terra, this \"Liberator\" makeshift pistol fires 10mm bullets."
 	icon_state = "liberatorpistol"
 	item_state = "liberatorpistol"
 	w_class = WEIGHT_CLASS_SMALL
