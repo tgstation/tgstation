@@ -133,6 +133,10 @@
 	return TRUE
 
 /datum/wound/brute/cut/proc/lick_wounds(mob/living/carbon/human/user)
+	if(INTERACTING_WITH(user, victim))
+		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
+		return
+
 	user.visible_message("<span class='notice'>[user] begins licking the wounds on [victim]'s [limb.name].</span>", "<span class='notice'>You begin licking the wounds on [victim]'s [limb.name]...</span>", ignored_mobs=victim)
 	to_chat(victim, "<span class='notice'>[user] begins to lick the wounds on your [limb.name].</span")
 	if(!do_after(user, base_treat_time, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
@@ -285,7 +289,7 @@
 	sound_effect = 'sound/effects/dismember.ogg'
 	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	severity = WOUND_SEVERITY_LOSS
-	threshold_minimum = 180
+	threshold_minimum = 150
 	status_effect_type = null
 
 /datum/wound/brute/cut/loss/apply_wound(obj/item/bodypart/L, silent, datum/wound/brute/cut/old_wound, smited = FALSE)

@@ -47,6 +47,10 @@
 		Butcher(user, M)
 
 /datum/component/butchering/proc/startNeckSlice(obj/item/source, mob/living/carbon/human/H, mob/living/user)
+	if(INTERACTING_WITH(user, H))
+		to_chat(user, "<span class='warning'>You're already interacting with [H]!</span>")
+		return
+
 	user.visible_message("<span class='danger'>[user] is slitting [H]'s throat!</span>", \
 					"<span class='danger'>You start slicing [H]'s throat!</span>", \
 					"<span class='hear'>You hear a cutting noise!</span>", ignored_mobs = H)
@@ -64,10 +68,11 @@
 		H.visible_message("<span class='danger'>[user] slits [H]'s throat!</span>", \
 					"<span class='userdanger'>[user] slits your throat...</span>")
 		log_combat(user, H, "finishes slicing the throat of")
-		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD)
+		H.apply_damage(source.force, BRUTE, BODY_ZONE_HEAD, wound_bonus=CANT_WOUND) // easy tiger, we'll get to that in a sec
 		var/obj/item/bodypart/slit_throat = H.get_bodypart(BODY_ZONE_HEAD)
 		if(slit_throat)
-			slit_throat.generic_bleedstacks = clamp(slit_throat.generic_bleedstacks + 20, 0, 30)
+			var/datum/wound/brute/cut/critical/screaming_through_a_slit_throat = new
+			screaming_through_a_slit_throat.apply_wound(slit_throat)
 		H.apply_status_effect(/datum/status_effect/neck_slice)
 
 /datum/component/butchering/proc/Butcher(mob/living/butcher, mob/living/meat)

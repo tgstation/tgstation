@@ -335,8 +335,18 @@
 /datum/status_effect/neck_slice/tick()
 	var/mob/living/carbon/human/H = owner
 	var/obj/item/bodypart/throat = H.get_bodypart(BODY_ZONE_HEAD)
-	if(H.stat == DEAD || !throat || throat.generic_bleedstacks <= 8)
+	if(H.stat == DEAD || !throat)
 		H.remove_status_effect(/datum/status_effect/neck_slice)
+
+	var/still_bleeding = FALSE
+	for(var/thing in throat.wounds)
+		var/datum/wound/W = thing
+		if(W.wound_type == WOUND_TYPE_CUT && W.severity > WOUND_SEVERITY_MODERATE)
+			still_bleeding = TRUE
+			break
+	if(!still_bleeding)
+		H.remove_status_effect(/datum/status_effect/neck_slice)
+
 	if(prob(10))
 		H.emote(pick("gasp", "gag", "choke"))
 
