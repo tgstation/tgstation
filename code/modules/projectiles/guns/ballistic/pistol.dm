@@ -103,7 +103,7 @@
 	icon_state = "liberatorpistol"
 	item_state = "liberatorpistol"
 	w_class = WEIGHT_CLASS_SMALL
-	mag_type = /obj/item/ammo_box/magazine/liberator10mm
+	mag_type = /obj/item/ammo_box/magazine/liberator9mm
 	can_suppress = FALSE
 	burst_size = 1
 	fire_delay = 1
