@@ -86,7 +86,7 @@
 
 /obj/item/ammo_box/magazine/liberator10mm
 	name = "Makeshift 9mm magazine"
-	desc = "A handcrafted ammunition magazine, designed to be loaded with 10mm bullets. It seems to be custom-fit for an off-market pistol design."
+	desc = "A handcrafted ammunition magazine, designed to be loaded with 9mm bullets. It seems to be custom-fit for an off-market pistol design."
 	icon_state = "libmag"
 	ammo_type = /obj/item/ammo_casing/c9mm
 	caliber = "9mm"
