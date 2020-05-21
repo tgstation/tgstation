@@ -17,6 +17,7 @@
 #define ROLE_ALIEN				"Xenomorph"
 #define ROLE_PAI				"pAI"
 #define ROLE_CULTIST			"Cultist"
+#define ROLE_ECULTIST			"Ecultist"
 #define ROLE_BLOB				"Blob"
 #define ROLE_NINJA				"Space Ninja"
 #define ROLE_MONKEY				"Monkey"
@@ -40,6 +41,7 @@
 #define ROLE_FAMILIES			"Familes Antagonists"
 #define ROLE_SYNDICATE_CYBERSUN			"Cybersun Space Syndicate"		//Ghost role syndi from Forgottenship ruin
 #define ROLE_SYNDICATE_CYBERSUN_CAPTAIN	"Cybersun Space Syndicate Captain"		//Forgottenship captain syndie
+#define ROLE_ECULT				"Eldritch Cultist"
 
 //Missing assignment means it's not a gamemode specific role, IT'S NOT A BUG OR ERROR.
 //The gamemode specific ones are just so the gamemodes can query whether a player is old enough

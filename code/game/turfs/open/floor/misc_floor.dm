@@ -180,3 +180,8 @@
 	icon_state = "eighties"
 	floor_tile = /obj/item/stack/tile/eighties
 	broken_states = list("damaged")
+
+/turf/open/floor/plating/rust
+	name = "retro floor"
+	desc = "This one takes you back."
+	icon_state = "plating_rust"

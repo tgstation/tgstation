@@ -262,6 +262,7 @@
 	var/mutable_appearance/marked_underlay
 	var/obj/item/kinetic_crusher/hammer_synced
 
+
 /datum/status_effect/crusher_mark/on_creation(mob/living/new_owner, obj/item/kinetic_crusher/new_hammer_synced)
 	. = ..()
 	if(.)
@@ -285,6 +286,78 @@
 
 /datum/status_effect/crusher_mark/be_replaced()
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
+	..()
+
+/datum/status_effect/eldritch
+	duration = 150 //15 seconds
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	var/mutable_appearance/marked_underlay
+	var/effect_sprite = ""
+
+/datum/status_effect/eldritch/on_apply()
+	if(owner.mob_size >= MOB_SIZE_HUMAN)
+		marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite)
+		marked_underlay.pixel_x = -owner.pixel_x
+		marked_underlay.pixel_y = -owner.pixel_y
+		owner.underlays += marked_underlay
+		return TRUE
+	return FALSE
+
+/datum/status_effect/eldritch/proc/on_effect()
+	Destroy() //what happens when this is procced.
+
+/datum/status_effect/eldritch/Destroy()
+	if(owner)
+		owner.underlays -= marked_underlay
+	QDEL_NULL(marked_underlay)
+	return ..()
+
+/datum/status_effect/eldritch/be_replaced()
+	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
+	..()
+
+//Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
+/datum/status_effect/eldritch/flesh
+	id = "flesh_mark"
+	effect_sprite = "emark1"
+
+/datum/status_effect/eldritch/flesh/on_effect()
+	if(istype(owner,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = owner
+		H.bleed_rate += 2
+	..()
+
+/datum/status_effect/eldritch/ash
+	id = "ash_mark"
+	effect_sprite = "emark2"
+	var/repetitions = 1
+
+/datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, _repetition = 1)
+	repetitions = _repetition
+	. = ..()
+
+/datum/status_effect/eldritch/ash/on_effect()
+	if(istype(owner,/mob/living/carbon))
+		var/mob/living/carbon/C = owner
+		C.adjustStaminaLoss(10 * repetitions)
+		C.adjustFireLoss(5 * repetitions)
+		for(var/mob/living/carbon/C1 in range(1,C))
+			if((C1.mind && C1.mind.has_antag_datum(/datum/antagonist/ecult)) || C1 == C)
+				continue
+			C1.apply_status_effect(type,repetitions+1)
+			break
+	..()
+/datum/status_effect/eldritch/rust
+	id = "rust_mark"
+	effect_sprite = "emark3"
+
+/datum/status_effect/eldritch/rust/on_effect()
+	for(var/X in owner.GetAllContents())
+		if(istype(X,/obj/item))
+			var/obj/item/I = X
+			if(prob(75))
+				I.take_damage(rand(0,200))
 	..()
 
 /datum/status_effect/stacking/saw_bleed
@@ -655,3 +728,42 @@
 		to_chat(owner, fake_msg)
 
 	msg_stage++
+
+/datum/status_effect/corrosion_curse
+	id = "corrosion_curse"
+	status_type = STATUS_EFFECT_REPLACE
+	alert_type = null
+	tick_interval = 100
+
+
+/datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
+	to_chat(owner, "<span class='warning'>Your feel your body starting to break apart...</span>")
+	. = ..()
+
+/datum/status_effect/corrosion_curse/tick()
+	. = ..()
+	if(!ishuman(owner))
+		return
+	var/mob/living/carbon/human/H = owner
+	var/chance = rand(0,100)
+	switch(chance)
+		if(0 to 19)
+			H.vomit()
+		if(20 to 29)
+			H.Dizzy(10)
+		if(30 to 39)
+			H.adjustOrganLoss(ORGAN_SLOT_LIVER,5)
+		if(40 to 49)
+			H.adjustOrganLoss(ORGAN_SLOT_HEART,5)
+		if(50 to 59)
+			H.adjustOrganLoss(ORGAN_SLOT_STOMACH,5)
+		if(60 to 69)
+			H.adjustOrganLoss(ORGAN_SLOT_EYES,10)
+		if(70 to 79)
+			H.adjustOrganLoss(ORGAN_SLOT_EARS,10)
+		if(80 to 89)
+			H.adjustOrganLoss(ORGAN_SLOT_LUNGS,10)
+		if(90 to 99)
+			H.adjustOrganLoss(ORGAN_SLOT_TONGUE,10)
+		if(100)
+			H.adjustOrganLoss(ORGAN_SLOT_BRAIN,20)

@@ -19,7 +19,7 @@
 	if(!HD) //Decapitated
 		return
 
-	if(HAS_TRAIT(src, TRAIT_HUSK))
+	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src,TRAIT_GHOUL))
 		return
 
 	var/hair_hidden = 0

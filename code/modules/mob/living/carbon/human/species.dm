@@ -444,7 +444,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 	if(!HD) //Decapitated
 		return
 
-	if(HAS_TRAIT(H, TRAIT_HUSK))
+	if(HAS_TRAIT(H, TRAIT_HUSK) || HAS_TRAIT(H,TRAIT_GHOUL))
 		return
 	var/datum/sprite_accessory/S
 	var/list/standing = list()
@@ -600,7 +600,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 
 	var/obj/item/bodypart/head/HD = H.get_bodypart(BODY_ZONE_HEAD)
 
-	if(HD && !(HAS_TRAIT(H, TRAIT_HUSK)))
+	if(HD && !(HAS_TRAIT(H, TRAIT_HUSK) || HAS_TRAIT(H,TRAIT_GHOUL)))
 		// lipstick
 		if(H.lip_style && (LIPS in species_traits))
 			var/mutable_appearance/lip_overlay = mutable_appearance('icons/mob/human_face.dmi', "lips_[H.lip_style]", -BODY_LAYER)
@@ -823,7 +823,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
-			if(!(HAS_TRAIT(H, TRAIT_HUSK)))
+			if(!(HAS_TRAIT(H, TRAIT_HUSK) || !HAS_TRAIT(H,TRAIT_GHOUL)))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)

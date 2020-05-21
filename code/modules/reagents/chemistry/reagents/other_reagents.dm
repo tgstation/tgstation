@@ -2262,3 +2262,28 @@
 	color = "#623301"
 	taste_mult = 1.2
 
+/datum/reagent/eldritch
+	name = "Eldritch Essence"
+	description = "Strange liquid that defies the laws of physics"
+	taste_description = "Ag'hsj'saje'sh"
+	color = "#1f8016"
+
+/datum/reagent/eldritch/on_mob_life(mob/living/carbon/M)
+	if(isecultist(M))
+		M.drowsyness = max(M.drowsyness-5, 0)
+		M.AdjustAllImmobility(-40, FALSE)
+		M.adjustStaminaLoss(-10, 0)
+		M.adjustToxLoss(-2, 0)
+		M.adjustOxyLoss(-2, 0)
+		M.adjustBruteLoss(-2, 0)
+		M.adjustFireLoss(-2, 0)
+		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
+			M.blood_volume += 3
+	else  // Will deal about 90 damage when 50 units are thrown
+		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
+		M.adjustToxLoss(2, 0)
+		M.adjustFireLoss(2, 0)
+		M.adjustOxyLoss(2, 0)
+		M.adjustBruteLoss(2, 0)
+	holder.remove_reagent(type, 1)
+	return TRUE

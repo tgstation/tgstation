@@ -60,7 +60,7 @@
 /mob/living/Bump(atom/A)
 	if(..()) //we are thrown onto something
 		return
-	if (buckled || now_pushing)
+	if(buckled || now_pushing)
 		return
 	if(ismob(A))
 		var/mob/M = A
