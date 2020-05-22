@@ -629,7 +629,7 @@
 /obj/item/gun/proc/rotate(atom/thing, old_dir, new_dir)
 	if(ismob(thing))
 		var/mob/lad = thing
-		zoom(lad, new_dir, TRUE)
+		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)
 
 /obj/item/gun/proc/zoom(mob/living/user, direc, forced_zoom)
 	if(!user || !user.client)
@@ -641,8 +641,10 @@
 		zoomed = forced_zoom
 
 	if(zoomed)
+		RegisterSignal(user, COMSIG_ATOM_DIR_CHANGE, .proc/rotate)
 		user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, direc)
 	else
+		UnregisterSignal(user, COMSIG_ATOM_DIR_CHANGE)
 		user.client.view_size.zoomIn()
 	return zoomed
 
