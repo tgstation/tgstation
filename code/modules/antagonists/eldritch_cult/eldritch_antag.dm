@@ -86,7 +86,7 @@
 	var/where = H.equip_in_one_of_slots(T, slots)
 	if(!where)
 		to_chat(H, "<span class='userdanger'>Unfortunately, you weren't able to get a [item_name]. This is very bad and you should adminhelp immediately (press F1).</span>")
-		return 0
+		return FALSE
 	else
 		to_chat(H, "<span class='danger'>You have a [item_name] in your [where].</span>")
 		if(where == "backpack")
@@ -146,7 +146,7 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
-	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to wield weaponry.")
+	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "ecult"
 
 /datum/antagonist/ecult/remove_innate_effects(mob/living/mob_override)

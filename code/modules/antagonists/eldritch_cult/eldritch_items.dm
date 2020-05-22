@@ -24,7 +24,7 @@
 			to_chat(user,"<span class='warning'>[target.current.real_name] is beyond our reach</span>")
 
 	if(target.current.stat == DEAD)
-		to_chat(user,"<span class='warning'>[target.current.real_name] is dead. Bring him onto the transmutation rune!</span>")
+		to_chat(user,"<span class='warning'>[target.current.real_name] is dead. Bring them onto a transmutation rune!</span>")
 
 /obj/item/melee/sickly_blade
 	name = "Sickly blade"
