@@ -2279,7 +2279,7 @@
 		M.adjustFireLoss(-2, 0)
 		if(ishuman(M) && M.blood_volume < BLOOD_VOLUME_NORMAL)
 			M.blood_volume += 3
-	else  // Will deal about 90 damage when 50 units are thrown
+	else
 		M.adjustOrganLoss(ORGAN_SLOT_BRAIN, 3, 150)
 		M.adjustToxLoss(2, 0)
 		M.adjustFireLoss(2, 0)

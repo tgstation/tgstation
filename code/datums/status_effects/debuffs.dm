@@ -289,7 +289,7 @@
 	..()
 
 /datum/status_effect/eldritch
-	duration = 150 //15 seconds
+	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
 	var/mutable_appearance/marked_underlay
@@ -305,7 +305,7 @@
 	return FALSE
 
 /datum/status_effect/eldritch/proc/on_effect()
-	Destroy() //what happens when this is procced.
+	qdel(src) //what happens when this is procced.
 
 /datum/status_effect/eldritch/Destroy()
 	if(owner)

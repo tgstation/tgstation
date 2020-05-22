@@ -23,7 +23,6 @@
 		get_power_from_influence(target,user)
 	if(istype(target,/turf/open))
 		draw_rune(target,user)
-	return
 
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target

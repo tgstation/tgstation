@@ -72,7 +72,7 @@
 /datum/eldritch_knowledge/curse/blindness
 	name = "Curse of blindness"
 	gain_text = "Blind man walks through the world, unnoticed by the masses."
-	desc = "Curse someone with 5 minutes of complete blindness."
+	desc = "Curse someone with 2 minutes of complete blindness."
 	cost = 1
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/kitchen/knife,/obj/effect/decal/cleanable/blood)
 	next_knowledge = list(/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/curse/paralysis)
@@ -109,8 +109,8 @@
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
-		C.IgniteMob()
 		C.adjust_fire_stacks(1)
+		C.IgniteMob()
 
 /datum/eldritch_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
@@ -159,7 +159,7 @@
 /datum/eldritch_knowledge/ash_final
 	name = "Ashlord's rite"
 	gain_text = "The forgotten lords have spoken! The lord of ash have come! Fear the fire!"
-	desc = "Bring 3 corpses onto a transmutation rune, you will gain a powerful ability that is a high range spell that throws people away from you, sets them on fire and stuns them for 2 seconds. If anyone is already on fire it sleeps them for 10 seconds."
+	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards. You will passively create ring of fire around you as well as you will gain a powerful abiltiy that let's you burn people around you."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
 	route = "Ash"
