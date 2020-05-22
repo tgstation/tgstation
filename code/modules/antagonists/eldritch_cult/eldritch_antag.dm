@@ -25,16 +25,16 @@
 
 /datum/antagonist/ecult/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
-	to_chat(owner, "<span class='boldannounce'>You are the Eldritch Cultist!</span>")
-	to_chat(owner, "<B>The old ones gave you these tasks to fulfill:</B>")
+	to_chat(owner, "<span class='boldannounce'>You are the Eldritch Cultist!</span><br>\
+	<B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "Your magic uses the souls of the dead. You are very weak at first,")
-	to_chat(owner, "but the more souls you reap the more powerful you become.")
-	to_chat(owner, "You can choose a specific old one you can worship:")
-	to_chat(owner, "Rust - decay and destruction, passive destructive abilities.")
-	to_chat(owner, "Flesh - life and necrosis, allows you to resurrect the dead and summon deadly beasts.")
-	to_chat(owner, "Ash - shadows and secrets, stealth and movement based abilties.")
-	to_chat(owner,"<B>Remember that your power comes from souls!</B>")
+	to_chat(owner, "<span class='cult'>Your magic uses the souls of the dead. You are very weak at first,<br>\
+	but the more souls you reap the more powerful you become.<br>\
+	You can choose a specific old one you can worship:<br>\
+	Rust - decay and destruction, passive destructive abilities.<br>\
+	Flesh - life and necrosis, allows you to resurrect the dead and summon deadly beasts.<br>\
+	Ash - shadows and secrets, stealth and movement based abilties.<br>\
+	<B>Remember that your power comes from souls!</B></span>")
 
 /datum/antagonist/ecult/on_gain()
 	var/mob/living/current = owner.current
@@ -50,7 +50,7 @@
 	START_PROCESSING(SSprocessing,src)
 	if(give_equipment)
 		equip_cultist()
-	. = ..()
+	return ..()
 
 /datum/antagonist/ecult/on_removal()
 
@@ -65,7 +65,8 @@
 	GLOB.reality_smash_track.RemoveMind(owner)
 	STOP_PROCESSING(SSprocessing,src)
 
-	. = ..()
+	return ..()
+
 
 /datum/antagonist/ecult/proc/equip_cultist()
 	var/mob/living/carbon/H = owner.current
@@ -111,7 +112,7 @@
 /datum/antagonist/ecult/proc/forge_primary_objectives()
 	var/list/assasination = list()
 	var/list/protection = list()
-	for(var/i = 0 , i < 2 , i++)
+	for(var/i in 1 to 2)
 		var/pck = pick("assasinate","stalk","protect")
 		switch(pck)
 			if("assasinate")
@@ -184,11 +185,11 @@
 
 	parts += "<b>Knowledge Researched:</b> "
 
-	var/knowledge_message = ""
+	var/list/knowledge_message = list()
 	for(var/X in get_all_knowledge())
 		var/datum/eldritch_knowledge/EK = X
-		knowledge_message += "[EK.name], "
-	parts += knowledge_message
+		knowledge_message += "[EK.name]"
+	parts += knowledge_message.Join(", ")
 
 	return parts.Join("<br>")
 ////////////////
@@ -199,7 +200,7 @@
 	if(has_knowledge(EK))
 		return FALSE
 	var/datum/eldritch_knowledge/initialized_knowledge = new EK
-	researched_knowledge |= initialized_knowledge
+	researched_knowledge += initialized_knowledge
 	initialized_knowledge.on_gain(owner.current)
 	return TRUE
 
