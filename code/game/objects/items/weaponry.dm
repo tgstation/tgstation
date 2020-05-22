@@ -684,10 +684,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/circlegame/Destroy()
 	var/mob/owner = loc
-	if(!istype(owner))
-		return
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
-	. = ..()
+	if(istype(owner))
+		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+	return ..()
+
+/obj/item/circlegame/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)		//loc will have changed by the time this is called, so Destroy() can't catch it
+	// this is a dropdel item.
+	return ..()
 
 /// Stage 1: The mistake is made
 /obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)
