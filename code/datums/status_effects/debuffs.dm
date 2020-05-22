@@ -315,7 +315,7 @@
 
 /datum/status_effect/eldritch/be_replaced()
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
-	..()
+	return ..()
 
 //Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
 /datum/status_effect/eldritch/flesh
@@ -327,7 +327,7 @@
 		var/mob/living/carbon/human/H = owner
 		H.bleed_rate += 5
 		H.blood_volume -= 200
-	..()
+	return ..()
 
 /datum/status_effect/eldritch/ash
 	id = "ash_mark"
@@ -335,8 +335,8 @@
 	var/repetitions = 1
 
 /datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, _repetition = 1)
-	repetitions = _repetition
 	. = ..()
+	repetitions = _repetition
 
 /datum/status_effect/eldritch/ash/on_effect()
 	if(istype(owner,/mob/living/carbon))
@@ -344,22 +344,21 @@
 		C.adjustStaminaLoss(10 * repetitions)
 		C.adjustFireLoss(5 * repetitions)
 		for(var/mob/living/carbon/C1 in range(1,C))
-			if((C1.mind && C1.mind.has_antag_datum(/datum/antagonist/ecult)) || C1 == C)
+			if(C1.mind?.has_antag_datum(/datum/antagonist/ecult) || C1 == C)
 				continue
 			C1.apply_status_effect(type,repetitions+1)
 			break
-	..()
+	return ..()
+
 /datum/status_effect/eldritch/rust
 	id = "rust_mark"
 	effect_sprite = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
-	for(var/X in owner.GetAllContents())
-		if(istype(X,/obj/item))
-			var/obj/item/I = X
+	for(var/obj/item/I in owner.GetAllContents())
 			if(prob(75))
 				I.take_damage(rand(0,200))
-	..()
+	return ..()
 
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
@@ -743,8 +742,8 @@
 	tick_interval = 1 SECONDS
 
 /datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
-	to_chat(owner, "<span class='warning'>Your feel your body starting to break apart...</span>")
 	. = ..()
+	to_chat(owner, "<span class='warning'>Your feel your body starting to break apart...</span>")
 
 /datum/status_effect/corrosion_curse/tick()
 	. = ..()

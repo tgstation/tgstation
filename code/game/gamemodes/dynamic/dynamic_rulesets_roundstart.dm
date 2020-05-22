@@ -183,7 +183,8 @@
 
 /datum/dynamic_ruleset/roundstart/ecult/execute()
 
-	for(var/datum/mind/cultie in assigned)
+	for(var/c in assigned)
+		var/datum/mind/cultie = c
 		var/datum/antagonist/ecult/new_antag = new antag_datum()
 		cultie.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= cultie

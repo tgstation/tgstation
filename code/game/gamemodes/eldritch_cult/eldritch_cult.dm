@@ -35,7 +35,7 @@
 	else
 		num_ecult = max(1, min(num_players(), ecult_possible))
 
-	for(var/i = 0, i < num_ecult, i++)
+	for(var/i in 1 to num_ecult)
 		if(!antag_candidates.len)
 			break
 		var/datum/mind/cultie = antag_pick(antag_candidates)
@@ -57,12 +57,13 @@
 /datum/game_mode/ecult/post_setup()
 	new /datum/reality_smash_tracker()
 	GLOB.reality_smash_track.Generate(num_ecult)
-	for(var/datum/mind/cultie in culties)
+	for(var/c in culties)
+		var/datum/mind/cultie = c
 		log_game("[key_name(cultie)] has been selected as an eldritch cultist!")
 		var/datum/antagonist/ecult/new_antag = new()
 		cultie.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= cultie
-	. =..()
+	return ..()
 
 /datum/game_mode/ecult/generate_report()
 	return "Cybersun Industries has announced that they have successfully raided a high-security library. The library contained a very dangerous book that was \
