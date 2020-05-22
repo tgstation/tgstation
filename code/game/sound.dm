@@ -16,20 +16,22 @@
 	var/source_z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[source_z]
 
+	var/turf/above_turf = SSmapping.get_turf_above(turf_source)
+	var/turf/below_turf = SSmapping.get_turf_below(turf_source)
+
 	if(!ignore_walls) //these sounds don't carry through walls
 		listeners = listeners & hearers(maxdistance,turf_source)
-		var/turf/above_turf = SSmapping.get_turf_above(turf_source)
+
 		if(istransparentturf(above_turf))
 			listeners += hearers(maxdistance,above_turf)
-		var/turf/below_turf = SSmapping.get_turf_below(turf_source)
+
 		if(istransparentturf(below_turf))
 			listeners += hearers(maxdistance,below_turf)
 
 	else
-		var/turf/above_turf = SSmapping.get_turf_above(turf_source)
 		if(istransparentturf(above_turf))
 			listeners += SSmobs.clients_by_zlevel[above_turf.z]
-		var/turf/below_turf = SSmapping.get_turf_below(turf_source)
+
 		if(istransparentturf(below_turf))
 			listeners += SSmobs.clients_by_zlevel[below_turf.z]
 
@@ -93,8 +95,9 @@
 		S.x = dx
 		var/dz = turf_source.y - T.y // Hearing from infront/behind
 		S.z = dz
-		// The y value is for above your head, but there is no ceiling in 2d spessmens.
-		S.y = 1
+		var/dy = (turf_source.z - T.z) * 5 // Hearing from  above / below, multiplied by 5 because we assume height is further along coords.
+		S.y = dy
+
 		S.falloff = (falloff ? falloff : FALLOFF_SOUNDS)
 
 	SEND_SOUND(src, S)
