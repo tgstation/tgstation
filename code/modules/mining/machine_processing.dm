@@ -16,7 +16,7 @@
 
 /obj/machinery/mineral/Initialize(mapload)
 	. = ..()
-	if(needs_item_input)
+	if(needs_item_input && anchored)
 		register_input_turf()
 
 /// Gets the turf in the `input_dir` direction adjacent to the machine, and registers signals for ATOM_ENTERED and ATOM_CREATED. Calls the `pickup_item()` proc when it recieves these signals.
@@ -29,6 +29,13 @@
 /obj/machinery/mineral/proc/unregister_input_turf()
 	if(input_turf)
 		UnregisterSignal(input_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_CREATED))
+
+/obj/machinery/mineral/Moved()
+	. = ..()
+	if(!needs_item_input || !anchored)
+		return
+	unregister_input_turf()
+	register_input_turf()
 
 /**
 	Base proc for all `/mineral` subtype machines to use. Place your item pickup behavior in this proc when you override it for your specific machine.

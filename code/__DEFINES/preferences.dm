@@ -86,6 +86,7 @@
 #define JP_HIGH 3
 
 //randomised elements
+#define RANDOM_HARDCORE "random_hardcore"
 #define RANDOM_NAME "random_name"
 #define RANDOM_NAME_ANTAG "random_name_antag"
 #define RANDOM_BODY "random_body"

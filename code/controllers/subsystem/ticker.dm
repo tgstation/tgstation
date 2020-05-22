@@ -322,6 +322,15 @@ SUBSYSTEM_DEF(ticker)
 		else
 			stack_trace("[S] [S.type] found in start landmarks list, which isn't a start landmark!")
 
+	for(var/i in GLOB.player_list)
+		if(!ishuman(i))
+			continue
+		var/mob/living/carbon/human/hardcore_player = i
+		if(!hardcore_player.hardcore_survival_score)
+			continue
+		if(hardcore_player.mind?.special_role)
+			hardcore_player.hardcore_survival_score *= 2 //Double for antags
+		to_chat(hardcore_player, "<span class='notice'>You will gain [round(hardcore_player.hardcore_survival_score)] hardcore random points if you survive this round!</span>")
 
 //These callbacks will fire after roundstart key transfer
 /datum/controller/subsystem/ticker/proc/OnRoundstart(datum/callback/cb)

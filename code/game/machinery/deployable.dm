@@ -167,7 +167,7 @@
 
 	to_chat(user, "<span class='notice'>[src] is now in [mode] mode.</span>")
 
-/obj/item/grenade/barrier/prime()
+/obj/item/grenade/barrier/prime(mob/living/lanced_by)
 	. = ..()
 	new /obj/structure/barricade/security(get_turf(src.loc))
 	switch(mode)

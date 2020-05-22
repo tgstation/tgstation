@@ -29,7 +29,7 @@
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
-	icon_state = "utilitybelt"
+	icon_state = "utility"
 	item_state = "utility"
 	content_overlays = TRUE
 	custom_premium_price = 300
@@ -71,7 +71,7 @@
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
 	desc = "Holds tools, looks snazzy."
-	icon_state = "utilitybelt_ce"
+	icon_state = "utility_ce"
 	item_state = "utility_ce"
 
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
@@ -124,7 +124,7 @@
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	desc = "Can hold various medical equipment."
-	icon_state = "medicalbelt"
+	icon_state = "medical"
 	item_state = "medical"
 
 /obj/item/storage/belt/medical/ComponentInitialize()
@@ -198,7 +198,7 @@
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
-	icon_state = "securitybelt"
+	icon_state = "security"
 	item_state = "security"//Could likely use a better one.
 	content_overlays = TRUE
 

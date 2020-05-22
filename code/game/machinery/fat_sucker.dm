@@ -118,12 +118,12 @@
 		else
 			. += "[icon_state]_door_off"
 			if(occupant)
-				if(powered(EQUIP))
+				if(powered())
 					. += "[icon_state]_stack"
 					. += "[icon_state]_yellow"
 			else
 				. += "[icon_state]_red"
-	else if(powered(EQUIP))
+	else if(powered())
 		. += "[icon_state]_red"
 	if(panel_open)
 		. += "[icon_state]_panel"
@@ -131,7 +131,7 @@
 /obj/machinery/fat_sucker/process()
 	if(!processing)
 		return
-	if(!powered(EQUIP) || !occupant || !iscarbon(occupant))
+	if(!powered() || !occupant || !iscarbon(occupant))
 		open_machine()
 		return
 
@@ -152,7 +152,7 @@
 	use_power(500)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
-	if(state_open || !occupant || processing || !powered(EQUIP))
+	if(state_open || !occupant || processing || !powered())
 		return
 	if(iscarbon(occupant))
 		var/mob/living/carbon/C = occupant

@@ -1,0 +1,4 @@
+author: "Dorsidwarf"
+delete-after: True
+changes: 
+  - bugfix: "Swarmer structures are no longer broken."

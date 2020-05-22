@@ -17,6 +17,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install pyyaml
+          sudo apt-get install  dos2unix
       - name: "Checkout"
         uses: actions/checkout@v1
         with:
@@ -24,6 +25,9 @@ jobs:
       - name: "Compile"
         run: |
           python tools/ss13_genchangelog.py html/changelog.html html/changelogs
+      - name: "Convert Lineendings"
+        run: |
+          unix2dos html/changelogs/.all_changelog.yml
       - name: Commit
         run: |
           git config --local user.email "action@github.com"
