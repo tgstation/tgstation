@@ -379,6 +379,12 @@
 	invocation_type = "whisper"
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
+	possible_shapes = list(/mob/living/simple_animal/mouse,\
+		/mob/living/simple_animal/pet/dog/corgi,\
+		/mob/living/simple_animal/hostile/carp,\
+		/mob/living/simple_animal/bot/secbot, \
+		/mob/living/simple_animal/pet/fox,\
+		/mob/living/simple_animal/pet/cat )
 
 /obj/effect/proc_holder/spell/targeted/emplosion/eldritch
 	name = "Energetic Pulse"
@@ -386,6 +392,11 @@
 	invocation_type = "whisper"
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 300
+	emp_heavy = 6
+	emp_light = 10
 
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade
 	name = "Fire Cascade"
@@ -395,16 +406,25 @@
 	clothes_req = FALSE
 	invocation = "C'SC'DE"
 	invocation_type = "whisper"
-	range = 5
+	range = 4
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "fire_ring"
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/cast(list/targets, mob/user = usr)
-	playsound(get_turf(user), 'sound/items/welder.ogg', 75, TRUE)
-	for(var/turf/T in range(range,user)-range(2,user))
-		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+	INVOKE_ASYNC(src, .proc/fire_cascade, user,range)
+
+/obj/effect/proc_holder/spell/aoe_turf/fire_cascade/proc/fire_cascade(atom/centre,max_range)
+	playsound(get_turf(centre), 'sound/items/welder.ogg', 75, TRUE)
+	var/_range = 1
+	var/prev_range = 0
+	for(var/i = 0, i <= max_range,i++)
+		for(var/turf/T in range(_range,centre)-range(prev_range,centre))
+			new /obj/effect/hotspot(T)
+			T.hotspot_expose(700,50,1)
+		prev_range = _range
+		_range++
+		sleep(3)
 
 /obj/effect/proc_holder/spell/targeted/telepathy/eldritch
 	invocation = ""

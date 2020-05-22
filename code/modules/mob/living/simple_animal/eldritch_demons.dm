@@ -243,8 +243,8 @@
 	icon_state = "ash_walker"
 	status_flags = CANPUSH
 	icon_living = "ash_walker"
-	maxHealth = 50
-	health = 50
+	maxHealth = 75
+	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
@@ -253,11 +253,7 @@
 	. = ..()
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
 	AddSpell(new /obj/effect/proc_holder/spell/pointed/ash_cleave/long)
-
-
-/mob/living/simple_animal/hostile/eldritch/ash_spirit/Life()
-	. = ..()
-
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade)
 
 /mob/living/simple_animal/hostile/eldritch/stalker
 	name = "Flesh Stalker"
