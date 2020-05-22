@@ -2269,7 +2269,7 @@
 	color = "#1f8016"
 
 /datum/reagent/eldritch/on_mob_life(mob/living/carbon/M)
-	if(isecultist(M))
+	if(IS_E_CULTIST(M))
 		M.drowsyness = max(M.drowsyness-5, 0)
 		M.AdjustAllImmobility(-40, FALSE)
 		M.adjustStaminaLoss(-10, 0)

@@ -1,11 +1,3 @@
-#define RUST_CULTIST 0
-#define FLESH_CULTIST 1
-#define ASH_CULTIST 2
-
-
-/proc/isecultist(mob/living/M)
-	return M && M.mind && M.mind.has_antag_datum(/datum/antagonist/ecult)
-
 /datum/antagonist/ecult
 	name = "Eldritch Cultist"
 	roundend_category = "eldritch cultist"
@@ -105,7 +97,7 @@
 		if(!istype(X,/datum/objective/stalk))
 			continue
 		var/datum/objective/stalk/S = X
-		if(S.target && S.target.current.stat == CONSCIOUS && S.target in view(7,src))
+		if(S.target && S.target.current.stat == CONSCIOUS && (S.target in view(7,src)))
 			S.timer -= 1 SECONDS
 
 /datum/antagonist/ecult/proc/forge_primary_objectives()

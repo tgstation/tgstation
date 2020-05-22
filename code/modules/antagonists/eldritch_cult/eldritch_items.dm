@@ -7,7 +7,7 @@
 
 /obj/item/living_heart/attack_self(mob/user)
 	. = ..()
-	if(!isecultist(user))
+	if(!IS_E_CULTIST(user))
 		return
 	if(!target)
 		return

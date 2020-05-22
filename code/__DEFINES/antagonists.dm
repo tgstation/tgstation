@@ -70,3 +70,6 @@
 
 #define CONTRACT_UPLINK_PAGE_CONTRACTS "CONTRACTS"
 #define CONTRACT_UPLINK_PAGE_HUB "HUB"
+
+///It is faster as a macro than a proc
+#define IS_E_CULTIST(mob) (mob.mind?.has_antag_datum(/datum/antagonist/ecult))
