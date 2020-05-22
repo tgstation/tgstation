@@ -81,7 +81,7 @@ This section is for the event controller
 		spawn_portal(GLOB.waves[wave_name])
 		spawn_anomaly()
 
-	addtimer(CALLBACK(src, .proc/more_portals, GLOB.waves[wave_name]), 1 MINUTES)
+	addtimer(CALLBACK(src, .proc/more_portals, GLOB.waves[wave_name]), 10 MINUTES)
 
 ///Spawn an anomaly randomly in a different location than spawn_portal()
 /datum/round_event/crystal_invasion/proc/spawn_anomaly()
@@ -124,7 +124,7 @@ This section is for the event controller
 		spawn_portal(GLOB.waves["small wave"])
 
 	for(var/C in GLOB.destabilized_crystals)
-		addtimer(CALLBACK(C, /obj/machinery/destabilized_crystal/proc/zk_event), 1 MINUTES)
+		addtimer(CALLBACK(C, /obj/machinery/destabilized_crystal/proc/zk_event), 10 MINUTES)
 
 /*
 This section is for the destabilized SM
