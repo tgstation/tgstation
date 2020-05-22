@@ -127,14 +127,14 @@
 		shield_projector = source_projector
 		LAZYADD(shield_projector.signs, src)
 		air_update_turf(TRUE)
-		a.addStaticPower(power_consumption, STATIC_EQUIP)
+		a.addStaticPower(power_consumption, AREA_USAGE_STATIC_EQUIP)
 		shield_turf()
 
 /obj/machinery/holosign/barrier/power_shield/Destroy()
 	var/turf/T = loc
 	T.thermal_conductivity = stored_conductivity
 	var/area/a = get_area(src)
-	a.addStaticPower(-power_consumption, STATIC_EQUIP)
+	a.addStaticPower(-power_consumption, AREA_USAGE_STATIC_EQUIP)
 	LAZYREMOVE(shield_projector.signs, src)
 	return ..()
 
