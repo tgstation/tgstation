@@ -657,6 +657,7 @@ SUBSYSTEM_DEF(ticker)
 		'sound/roundend/yeehaw.ogg',
 		'sound/roundend/disappointed.ogg',
 		'sound/roundend/scrunglartiy.ogg',
+		'sound/roundend/orangeslovesanimecatgirls.ogg'
 		'sound/roundend/petersondisappointed.ogg'\
 		)
 	///The reference to the end of round sound that we have chosen.
