@@ -10,11 +10,11 @@
 	var/cost = 0
 	///Next knowledge in the research tree
 	var/list/next_knowledge = list()
-	///What knowledge this is incompatible with
+	///What knowledge is incompatible with this. This will simply make it impossible to research knowledges that are in banned_knowledge once this gets researched.
 	var/list/banned_knowledge = list()
 	///Used with rituals, how many items this needs
 	var/list/required_atoms = list()
-
+	///What do we get out of this
 	var/list/result_atoms = list()
 	///What path is this on
 	var/route = "Side"

@@ -46,8 +46,8 @@
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
 	. = ..()
-	AddSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long)
-	AddSpell(/obj/effect/proc_holder/spell/targeted/telepathy/eldritch)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/eldritch)
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()
@@ -224,8 +224,8 @@
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Initialize()
 	. = ..()
-	AddSpell(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small)
-	AddSpell(/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
+	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
 	. = ..()
@@ -251,8 +251,8 @@
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit/Initialize()
 	. = ..()
-	AddSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
-	AddSpell(/obj/effect/proc_holder/spell/pointed/ash_cleave/long)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
+	AddSpell(new /obj/effect/proc_holder/spell/pointed/ash_cleave/long)
 
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit/Life()
@@ -273,8 +273,8 @@
 	sight = SEE_MOBS
 
 /mob/living/simple_animal/hostile/eldritch/stalker/Initialize()
-	AddSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
-	AddSpell(/obj/effect/proc_holder/spell/targeted/shapeshift/eldritch)
-	AddSpell(/obj/effect/proc_holder/spell/targeted/emplosion/eldritch)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch)
+	AddSpell(new /obj/effect/proc_holder/spell/targeted/emplosion/eldritch)
 	. = ..()
 

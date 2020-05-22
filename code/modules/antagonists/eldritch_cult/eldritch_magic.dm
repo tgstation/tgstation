@@ -37,7 +37,7 @@
 	charge_max = 150
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "ash_shift"
+	action_icon_state = "mansus_grasp"
 	action_background_icon_state = "bg_ecult"
 
 /obj/item/melee/touch_attack/mansus_fist
@@ -77,7 +77,7 @@
 	invocation_type = "whisper"
 	range = 3
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "ash_shift"
+	action_icon_state = "corrode"
 	action_background_icon_state = "bg_ecult"
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
 
@@ -119,13 +119,13 @@
 	invocation = "FL'MS O'ET'RN'ITY"
 	invocation_type = "whisper"
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "ash_shift"
+	action_icon_state = "blood_siphon"
 	action_background_icon_state = "bg_ecult"
 
 /obj/item/melee/touch_attack/ash_leech
 	name = "Blood Siphon"
 	desc = "A sinister looking aura that distorts the flow of reality around it."
-	icon_state = "disintegrate"
+	icon_state = "blood_siphon"
 	item_state = "disintegrate"
 	catchphrase = "R'BRTH"
 
@@ -155,7 +155,7 @@
 	charge_max = 350
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "ash_shift"
+	action_icon_state = "rust_wave"
 	action_background_icon_state = "bg_ecult"
 	invocation = "SPR'D TH' WO'D"
 	invocation_type = "whisper"
@@ -231,7 +231,7 @@
 	invocation_type = "whisper"
 	range = 9
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "ash_shift"
+	action_icon_state = "cleave"
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/pointed/ash_cleave/cast(list/targets, mob/user)
@@ -284,7 +284,7 @@
 	invocation_type = "whisper"
 	range = 2
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "ash_shift"
+	action_icon_state = "mad_touch"
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/pointed/touch/mad_touch/can_target(atom/target, mob/user, silent)
@@ -318,7 +318,7 @@
 	range = 15
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "ash_shift"
+	action_icon_state = "fire_ring"
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/pointed/ash_final/cast(list/targets, mob/user)
@@ -395,14 +395,14 @@
 	clothes_req = FALSE
 	invocation = "C'SC'DE"
 	invocation_type = "whisper"
-	range = 3
+	range = 5
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "ash_shift"
+	action_icon_state = "fire_ring"
 	action_background_icon_state = "bg_ecult"
 
-/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/cast(list/targets, mob/user = usr)
+/obj/effect/proc_holder/spell/aoe_turf/fire_cascade/cast(list/targets, mob/user = usr)
 	playsound(get_turf(user), 'sound/items/welder.ogg', 75, TRUE)
-	for(var/turf/T in targets)
+	for(var/turf/T in range(range,user)-range(2,user))
 		new /obj/effect/hotspot(T)
 		T.hotspot_expose(700,50,1)
 
