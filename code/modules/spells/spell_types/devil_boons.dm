@@ -37,13 +37,13 @@
 	cooldown_min = 10
 	action_icon = 'icons/mob/actions/actions_silicon.dmi'
 	action_icon_state = "camera_jump"
-	var/ranges = list(6.5,7.5,8.5,9.5)
+	var/ranges = list(7,8,9,10)
 
 /obj/effect/proc_holder/spell/targeted/view_range/cast(list/targets, mob/user = usr)
 	for(var/mob/C in targets)
 		if(!C.client)
 			continue
-		C.client.view_size.setTo(input("Select view range:", "Range", 4) in ranges)
+		C.client.view_size.setTo((input("Select view range:", "Range", 4) in ranges) - 7)
 
 /obj/effect/proc_holder/spell/targeted/summon_friend
 	name = "Summon Friend"
