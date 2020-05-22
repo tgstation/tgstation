@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes: 
-  - bugfix: "you can no longer inject html in ahelps"
-  - admin: "you cant either, jannies"

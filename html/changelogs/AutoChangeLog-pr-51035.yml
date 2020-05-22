@@ -1,4 +1,0 @@
-author: "kevinz000"
-delete-after: True
-changes: 
-  - bugfix: "Circlegame items now properly delete on drop and can't be made with full hands."
