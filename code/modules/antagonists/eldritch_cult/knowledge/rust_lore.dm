@@ -201,6 +201,14 @@
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed/wall/rust,/turf/closed/wall/r_wall/rust,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
 	var/spread_per_tick = 5
 
+
+/**
+  * #Rust spread datum
+  *
+  * Simple datum that automatically spreads rust around it
+  *
+  * Simple implementation of automatically growing entity
+  */
 /datum/rust_spread/New(loc)
 	var/turf/T = get_turf(loc)
 	T.ChangeTurf(/turf/open/floor/plating/rust)
@@ -234,6 +242,11 @@
 			turfs += T1
 			continue
 
+/**
+  * Compile turfs
+  *
+  * Recreates all edge_turfs as well as normal turfs.
+  */
 /datum/rust_spread/proc/compile_turfs()
 	edge_turfs = list()
 	for(var/X in turfs)

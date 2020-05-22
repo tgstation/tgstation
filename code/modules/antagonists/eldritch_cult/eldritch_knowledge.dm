@@ -1,4 +1,11 @@
 
+/**
+  * #Eldritch Knwoledge
+  *
+  * Datum that makes eldritch cultist interesting.
+  *
+  * Eldritch knowledge aren't instantiated anywhere roundstart, and are initalized and destroyed as the round goes on.
+  */
 /datum/eldritch_knowledge
 	///Name of the knowledge
 	var/name = "Basic knowledge"
@@ -16,7 +23,7 @@
 	var/list/required_atoms = list()
 	///What do we get out of this
 	var/list/result_atoms = list()
-	///What path is this on
+	///What path is this on defaults to "Side"
 	var/route = "Side"
 
 /datum/eldritch_knowledge/New()
@@ -27,19 +34,42 @@
 		temp_list += list(typesof(A))
 	required_atoms = temp_list
 
+/**
+  * What happens when this is assigned to an antag datum
+  *
+  * This proc is called whenever a new eldritch knowledge is added to an antag datum
+  */
 /datum/eldritch_knowledge/proc/on_gain(mob/user)
 	to_chat(user, "<span class='warning'>[gain_text]</span>")
 	return
-
+/**
+  * What happens when you loose this
+  *
+  * This proc is called whenever antagonist looses his antag datum, put cleanup code in here
+  */
 /datum/eldritch_knowledge/proc/on_lose(mob/user)
 	return
-
+/**
+  * What happens every tick
+  *
+  * This proc is called on SSprocess in eldritch cultist antag datum. SSprocess happens roughly every second
+  */
 /datum/eldritch_knowledge/proc/on_life(mob/user)
 	return
 
-/datum/eldritch_knowledge/proc/recipe_snowflake_check(list/atoms,loc,...) //overwrite this if you want to have a snowflage check in the recipe.
+/**
+  * Special check for recipes
+  *
+  * If you are adding a more complex summoning or something that requires a special check that parses through all the atoms in an area override this.
+  */
+/datum/eldritch_knowledge/proc/recipe_snowflake_check(list/atoms,loc)
 	return TRUE
 
+/**
+  * What happens once the recipe is succesfully finished
+  *
+  * By default this proc creates atoms from result_atoms list. Override this is you want something else to happen.
+  */
 /datum/eldritch_knowledge/proc/on_finished_recipe(mob/living/user,list/atoms,loc)
 	if(result_atoms.len == 0)
 		return FALSE
@@ -50,15 +80,31 @@
 
 	return TRUE
 
+/**
+  * Used atom cleanup
+  *
+  * Overide this proc if you dont want ALL ATOMS to be destroyed. useful in many situations.
+  */
 /datum/eldritch_knowledge/proc/cleanup_atoms(list/atoms)
 	for(var/X in atoms)
 		var/atom/A = X
 		A.Destroy()
 	return
 
+/**
+  * Mansus grasp act
+  *
+  * Gives addtional effects to mansus grasp spell
+  */
 /datum/eldritch_knowledge/proc/mansus_grasp_act(atom/target, mob/user, proximity_flag, click_parameters)
 	return
 
+
+/**
+  * Sickly blade act
+  *
+  * Gives addtional effects to sickly blade weapon
+  */
 /datum/eldritch_knowledge/proc/eldritch_blade_act(atom/target, mob/user, proximity_flag, click_parameters)
 	return
 

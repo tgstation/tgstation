@@ -77,7 +77,13 @@
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
 	pixel_y = -32
 
-
+/**
+  * #Reality smash tracker
+  *
+  * Stupid fucking list holder, DONT create new ones, it will break the game, this is automnatically created whenever eldritch cultists are created.
+  *
+  * Tracks relevant data, generates relevant data, useful tool
+  */
 /datum/reality_smash_tracker
 	var/list/smashes = list()
 	var/list/targets = list()
@@ -87,6 +93,12 @@
 		GLOB.reality_smash_track = src
 	. = ..()
 
+
+/**
+  * Generates a set amount of reality smashes based on the N value
+  *
+  * Automatically creates more reality smashes
+  */
 /datum/reality_smash_tracker/proc/Generate(var/n)
 	var/chance = max(n * 2.5,10)
 
@@ -96,11 +108,21 @@
 			var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(ES.drop_location())
 			smashes += RS
 
+/**
+  * Adds a mind to the list of people that can see the reality smashes
+  *
+  * Use this whenever you want to add someone to the list
+  */
 /datum/reality_smash_tracker/proc/AddMind(var/datum/mind/M)
 	targets |= M
 	for(var/obj/effect/reality_smash/RS in smashes)
 		RS.AddMind(M)
 
+/**
+  * Removes a mind from the list of people that can see the reality smashes
+  *
+  * Use this whenever you want to remove someone from the list
+  */
 /datum/reality_smash_tracker/proc/RemoveMind(var/datum/mind/M)
 	targets -= M
 	for(var/obj/effect/reality_smash/RS in smashes)
@@ -130,16 +152,19 @@
 	new /obj/effect/broken_illusion(drop_location())
 	. = ..()
 
+///Makes the mind able to see this effect
 /obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)
 	if(cultie.current.client)
 		minds |= cultie
 		cultie.current.client.images |= img
 
+///Makes the mind not able to see this effect
 /obj/effect/reality_smash/proc/RemoveMind(var/datum/mind/cultie)
 	if(cultie.current.client)
 		minds -= cultie
 		cultie.current.client.images -= img
 
+///Generates random name
 /obj/effect/reality_smash/proc/generate_name()
 	var/static/list/prefix = list("Omniscient","Thundering","Enlightening","Intrusive","Rejectful","Atomized","Subtle","Rising","Lowering","Fleeting","Towering","Blissful")
 	var/static/list/postfix = list("Flaw","Presence","Crack","Heat","Cold","Memory","Reminder","Breeze")
