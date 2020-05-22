@@ -17,17 +17,30 @@
 		else if(roles in C.ban_cache)
 			return TRUE
 	else
-		player_ckey = sanitizeSQL(player_ckey)
-		var/admin_where
-		if(GLOB.admin_datums[player_ckey] || GLOB.deadmins[player_ckey])
-			admin_where = " AND applies_to_admins = 1"
+		var/values = list(
+			"player_ckey" = player_ckey,
+			"must_apply_to_admins" = !!(GLOB.admin_datums[player_ckey] || GLOB.deadmins[player_ckey]),
+		)
 		var/sql_roles
 		if(islist(roles))
-			sql_roles = jointext(roles, "', '")
+			var/list/sql_roles_list = list()
+			for (var/i in 1 to roles.len)
+				values["role[i]"] = roles[i]
+				sql_roles_list += ":role[i]"
+			sql_roles = sql_roles_list.Join(", ")
 		else
-			sql_roles = roles
-		sql_roles = sanitizeSQL(sql_roles)
-		var/datum/DBQuery/query_check_ban = SSdbcore.NewQuery("SELECT 1 FROM [format_table_name("ban")] WHERE ckey = '[player_ckey]' AND role IN ('[sql_roles]') AND unbanned_datetime IS NULL AND (expiration_time IS NULL OR expiration_time > NOW())[admin_where]")
+			values["role"] = roles
+			sql_roles = ":role"
+		var/datum/DBQuery/query_check_ban = SSdbcore.NewQuery({"
+			SELECT 1
+			FROM [format_table_name("ban")]
+			WHERE
+				ckey = :player_ckey AND
+				role IN ([sql_roles]) AND
+				unbanned_datetime IS NULL AND
+				(expiration_time IS NULL OR expiration_time > NOW())
+				AND (NOT :must_apply_to_admins OR applies_to_admins = 1)
+		"}, values)
 		if(!query_check_ban.warn_execute())
 			qdel(query_check_ban)
 			return
