@@ -11,7 +11,7 @@
 	max_integrity = 100
 	buckle_lying = FALSE
 	layer = ABOVE_MOB_LAYER
-	var/view_range = 10
+	var/view_range = 9.5
 	var/cooldown = 0
 	var/projectile_type = /obj/projectile/bullet/manned_turret
 	var/rate_of_fire = 1

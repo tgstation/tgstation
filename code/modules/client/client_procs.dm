@@ -883,7 +883,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			return FALSE
 		if("view")
 			view_size.setDefault(var_value)
-			view_size.resetToDefault()
 			return TRUE
 	. = ..()
 
@@ -893,7 +892,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	var/y = viewscale[2]
 	x = clamp(x+change, min, max)
 	y = clamp(y+change, min,max)
-	view_size.setBoth(x, y)
+	view_size.setDefault("[x]x[y]")
 
 /client/proc/update_movement_keys(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs

@@ -140,9 +140,8 @@
 		user = current_user
 	if(!user || !user.client)
 		return FALSE
-	animate(user.client, pixel_x = 0, pixel_y = 0, 0, FALSE, LINEAR_EASING, ANIMATION_END_NOW)
+	user.client.view_size.zoomIn()
 	zoom_current_view_increase = 0
-	user.client.view_size.resetToDefault()
 	zooming_angle = 0
 	current_zoom_x = 0
 	current_zoom_y = 0

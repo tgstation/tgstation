@@ -376,7 +376,7 @@
 	icon_state_underpowered = "protoemitter_+u"
 	can_buckle = TRUE
 	buckle_lying = FALSE
-	var/view_range = 12
+	var/view_range = 11.5
 	var/datum/action/innate/protoemitter/firing/auto
 
 //BUCKLE HOOKS
