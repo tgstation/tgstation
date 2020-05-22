@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - rscadd: "Adds a new assembly component, the freezer, for gradually making the environment colder."
