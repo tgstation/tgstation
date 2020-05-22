@@ -3,6 +3,8 @@ GLOBAL_LIST_INIT(waves, list("small wave" = list(/obj/structure/crystal_portal/s
 "big wave" = list(/obj/structure/crystal_portal/small=5, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=2, /obj/structure/crystal_portal/huge=1),
 "huge wave" = list(/obj/structure/crystal_portal/small=7, /obj/structure/crystal_portal/medium=5, /obj/structure/crystal_portal/big=3, /obj/structure/crystal_portal/huge=2)))
 GLOBAL_LIST_EMPTY(crystal_portals)
+GLOBAL_LIST_EMPTY(destabilized_crystals)
+
 /*
 This section is for the event controller
 */
@@ -21,6 +23,8 @@ This section is for the event controller
 	var/wave_name
 	///Max number of portals that can spawn per type of wave
 	var/portal_numbers
+	///Check if this is the first wave or not
+	var/spawned = FALSE
 
 /datum/round_event/crystal_invasion/start()
 	choose_wave_type()
@@ -33,10 +37,10 @@ This section is for the event controller
 /datum/round_event/crystal_invasion/proc/choose_wave_type()
 	if(!wave_name)
 		wave_name = pickweight(list(
-			"small wave" = 45,
-			"medium wave" = 35,
-			"big wave" = 15,
-			"huge wave" = 5))
+			"small wave" = 55,
+			"medium wave" = 37,
+			"big wave" = 5,
+			"huge wave" = 3))
 	switch(wave_name)
 		if("small wave")
 			portal_numbers = pick(2, 3, 4, 5)
@@ -67,13 +71,33 @@ This section is for the event controller
 
 	priority_announce("WARNING - Numerous energy fluctuations have been detected from your Supermatter; we estimate a [wave_name] of crystalline creatures \
 						coming from \[REDACTED]; there will be [portal_numbers] portals spread around the station that you must close. Harvest a \[REDACTED] \
-						anomaly from a portal, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert", 'sound/misc/notice1.ogg')
+						anomaly from a portal, place it inside a crystal stabilizer, and inject it into your Supermatter to stop a ZK-Lambda-Class Cosmic Fragmentation Scenario from occurring.", "Alert")
+	sound_to_playing_players('sound/misc/notice1.ogg')
 
 	addtimer(CALLBACK(src, .proc/spawn_portals), 10 SECONDS)
 
 /datum/round_event/crystal_invasion/proc/spawn_portals()
 	for(var/i = 0, i< portal_numbers, i++)
 		spawn_portal(GLOB.waves[wave_name])
+		spawn_anomaly()
+
+	addtimer(CALLBACK(src, .proc/more_portals, GLOB.waves[wave_name]), 1 MINUTES)
+
+///Spawn an anomaly randomly in a different location than spawn_portal()
+/datum/round_event/crystal_invasion/proc/spawn_anomaly()
+	var/list/spawners = list()
+	for(var/obj/effect/landmark/event_spawn/temp in GLOB.generic_event_spawns)
+		if(QDELETED(temp))
+			continue
+		if(is_station_level(temp.loc.z))
+			spawners += temp
+
+	if(!spawners.len)
+		message_admins("No landmarks on the station, aborting")
+		return MAP_ERROR
+	var/obj/spawner = pick_n_take(spawners)
+	var/obj/effect/anomaly/flux/A = new(spawner.loc)
+	A.is_zk = TRUE
 
 ///Spawn one portal in a random location choosen from the generic_event_spawns list
 /datum/round_event/crystal_invasion/proc/spawn_portal(list/wave_type)
@@ -92,10 +116,19 @@ This section is for the event controller
 	var/obj/spawner = pick_n_take(spawners)
 	new pick_portal(spawner.loc)
 
+/datum/round_event/crystal_invasion/proc/more_portals()
+	priority_announce("WARNING - Detected another spike from the destabilized crystal. More portals are spawning all around the station, the next spike could \
+						cause a \[REDACTED] class event we assume you have 10 more minutes before total crystal annihilation", "Alert")
+	sound_to_playing_players('sound/misc/notice1.ogg')
+	for(var/i = 0, i< 8, i++)
+		spawn_portal(GLOB.waves["small wave"])
+
+	for(var/C in GLOB.destabilized_crystals)
+		addtimer(CALLBACK(C, /obj/machinery/destabilized_crystal/proc/zk_event), 1 MINUTES)
+
 /*
 This section is for the destabilized SM
 */
-
 /obj/machinery/destabilized_crystal
 	name = "destabilized crystal"
 	desc = "A strangely translucent and iridescent crystal."
@@ -108,11 +141,17 @@ This section is for the destabilized SM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	///If not active the crystal will not emit radiations and gases
 	var/active = TRUE
+	///Check if the crew managed to stop the ZK-class event
+	var/is_zk = FALSE
 
 /obj/machinery/destabilized_crystal/Initialize()
 	. = ..()
+	GLOB.destabilized_crystals += src
 
 /obj/machinery/destabilized_crystal/Destroy()
+	GLOB.destabilized_crystals -= src
+	if(is_zk)
+		priority_announce("WARNING - Portal are appearing everywhere, you failed to contain the event. You people should feel ashamed of yourself!","Alarm")
 	return..()
 
 /obj/machinery/destabilized_crystal/process()
@@ -126,10 +165,36 @@ This section is for the destabilized SM
 		var/gasefficency = 0.5
 		removed = env.remove(gasefficency * env.total_moles())
 		removed.assert_gases(/datum/gas/bz, /datum/gas/miasma)
-		removed.gases[/datum/gas/bz][MOLES] += 5.5
-		removed.gases[/datum/gas/miasma][MOLES] += 10.5
+		removed.gases[/datum/gas/bz][MOLES] += 15.5
+		removed.gases[/datum/gas/miasma][MOLES] += 5.5
 		env.merge(removed)
 		air_update_turf()
+
+/obj/machinery/destabilized_crystal/proc/zk_event()
+	active = FALSE
+	priority_announce("WARNING - The crystal has reached critical instability point. ZK-Event inbound, please do not panic, anyone who panics will \
+						be terminated on the spot. Have a nice day", "Alert")
+	sound_to_playing_players('sound/machines/alarm.ogg')
+	sleep(15 SECONDS)
+
+	var/list/spawners = list()
+	for(var/obj/effect/landmark/event_spawn/temp in GLOB.generic_event_spawns)
+		if(QDELETED(temp))
+			continue
+		if(is_station_level(temp.loc.z))
+			spawners += temp
+
+	if(!spawners.len)
+		message_admins("No landmarks on the station, aborting")
+		return MAP_ERROR
+
+	var/obj/spawner = pick_n_take(spawners)
+	var/pick_portal = pickweight(GLOB.waves["huge wave"])
+	for(var/i = 0, i < 10, i++)
+		new pick_portal(spawner.loc)
+	explosion(src, 7, 10, 25, 25)
+	is_zk = TRUE
+	qdel(src)
 
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
 	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
@@ -168,7 +233,6 @@ This section is for the destabilized SM
 /*
 This section is for the crystal stabilizer item
 */
-
 /obj/item/crystal_stabilizer
 	name = "Supermatter Stabilizer"
 	desc = "Used when the Supermatter Matrix is starting to reach the destruction point."
@@ -192,7 +256,6 @@ This section is for the crystal stabilizer item
 /*
 This section is for the crystal portals variations
 */
-
 /obj/structure/crystal_portal
 	name = "crystal portal"
 	desc = "this shouldn't be here"
@@ -246,10 +309,10 @@ This section is for the crystal portals variations
 		return
 	if(istype(W, /obj/item/anomaly_neutralizer))
 		to_chat(user, "<span class='notice'>You start closing the [src]</span>")
-		if(W.use_tool(src, user, 6.5 SECONDS, volume=100))
+		if(W.use_tool(src, user, 5.5 SECONDS, volume=100))
 			to_chat(user, "<span class='notice'>You you successfully close the [src]</span>")
+			closed = TRUE
 			qdel(src)
-
 
 /obj/structure/crystal_portal/small
 	name = "Small Portal"
@@ -307,7 +370,6 @@ This section is for the crystal portals variations
 /*
 This section is for the crystal monsters variations
 */
-
 /mob/living/simple_animal/hostile/crystal_monster
 	name = "crystal monster"
 	desc = "A monster made of crystals similar to the Supermatter ones."
@@ -354,9 +416,9 @@ This section is for the crystal monsters variations
 	maxHealth = 25
 	health = 25
 	speed = 1.2
-	harm_intent_damage = 2.5
+	harm_intent_damage = 5
 	melee_damage_lower = 5
-	melee_damage_upper = 5
+	melee_damage_upper = 10
 
 /mob/living/simple_animal/hostile/crystal_monster/thug
 	name = "crystal thug"
@@ -369,8 +431,9 @@ This section is for the crystal monsters variations
 	health = 35
 	speed = 1
 	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 7
+	melee_damage_lower = 15
+	melee_damage_upper = 20
+
 /mob/living/simple_animal/hostile/crystal_monster/recruit
 	name = "crystal recruit"
 	desc = "A monster made of crystals similar to the Supermatter ones."
@@ -382,8 +445,9 @@ This section is for the crystal monsters variations
 	health = 45
 	speed = 1
 	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 10
+	melee_damage_lower = 20
+	melee_damage_upper = 30
+
 /mob/living/simple_animal/hostile/crystal_monster/killer
 	name = "crystal killer"
 	desc = "A monster made of crystals similar to the Supermatter ones."
@@ -395,8 +459,9 @@ This section is for the crystal monsters variations
 	health = 60
 	speed = 0.9
 	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 15
+	melee_damage_lower = 25
+	melee_damage_upper = 40
+
 /mob/living/simple_animal/hostile/crystal_monster/boss
 	name = "crystal boss"
 	desc = "A monster made of crystals similar to the Supermatter ones."
@@ -408,5 +473,5 @@ This section is for the crystal monsters variations
 	health = 80
 	speed = 0.9
 	harm_intent_damage = 5
-	melee_damage_lower = 5
-	melee_damage_upper = 25
+	melee_damage_lower = 25
+	melee_damage_upper = 55

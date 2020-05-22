@@ -147,6 +147,7 @@
 	var/canshock = FALSE
 	var/shockdamage = 20
 	var/explosive = TRUE
+	var/is_zk = FALSE
 
 /obj/effect/anomaly/flux/anomalyEffect()
 	..()
@@ -170,7 +171,9 @@
 		M.electrocute_act(shockdamage, name, flags = SHOCK_NOGLOVES)
 
 /obj/effect/anomaly/flux/detonate()
-	if(explosive)
+	if(is_zk)
+		explosion(src, 0, 2, 8, 9)
+	else if(explosive)
 		explosion(src, 1, 4, 16, 18) //Low devastation, but hits a lot of stuff.
 	else
 		new /obj/effect/particle_effect/sparks(loc)
