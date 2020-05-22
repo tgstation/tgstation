@@ -431,13 +431,11 @@
 	if(!SSdbcore.Connect())
 		to_chat(usr, "<span class='danger'>Failed to establish database connection.</span>", confidential = TRUE)
 		return
-	var/player_ckey = sanitizeSQL(ckey(player_key))
-	player_ip = sanitizeSQL(player_ip)
-	player_cid = sanitizeSQL(player_cid)
+	var/player_ckey = ckey(player_key)
 	if(player_ckey)
 		var/datum/DBQuery/query_create_ban_get_player = SSdbcore.NewQuery({"
 			SELECT byond_key, INET_NTOA(ip), computerid FROM [format_table_name("player")] WHERE ckey = :player_ckey
-		"}, list("player_ckey" = ckey(player_key)))
+		"}, list("player_ckey" = player_ckey))
 		if(!query_create_ban_get_player.warn_execute())
 			qdel(query_create_ban_get_player)
 			return
@@ -485,9 +483,7 @@
 	var/admin_ip = sanitizeSQL(usr.client.address)
 	var/admin_cid = sanitizeSQL(usr.client.computer_id)
 	duration = text2num(duration)
-	if(interval)
-		interval = sanitizeSQL(interval)
-	else
+	if (!(interval in list("SECOND", "MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR")))
 		interval = "MINUTE"
 	var/time_message = "[duration] [lowertext(interval)]" //no DisplayTimeText because our duration is of variable interval type
 	if(duration > 1) //pluralize the interval if necessary
@@ -503,26 +499,34 @@
 	var/adminwho = admins_online.Join(", ")
 	var/kn = key_name(usr)
 	var/kna = key_name_admin(usr)
-	var/sql_ban
+
+	var/special_columns = list(
+		"bantime" = "NOW()",
+		"server_ip" = "INET_ATON(?)",
+		"ip" = "INET_ATON(?)",
+		"a_ip" = "INET_ATON(?)",
+		"expiration_time" = "NOW() + INTERVAL IFNULL(?, 0) [interval]"
+	)
+	var/sql_ban = list()
 	for(var/role in roles_to_ban)
-		sql_ban += list(list("bantime" = "NOW()",
-		"server_ip" = "INET_ATON(IF('[world.internet_address]' LIKE '', '0', '[world.internet_address]'))",
-		"server_port" = sanitizeSQL(world.port),
-		"round_id" = sanitizeSQL(GLOB.round_id),
-		"role" = "'[sanitizeSQL(role)]'",
-		"expiration_time" = "IF('[duration]' LIKE '', NULL, NOW() + INTERVAL [duration ? "[duration]" : "0"] [interval])",
-		"applies_to_admins" = sanitizeSQL(applies_to_admins),
-		"reason" = "'[reason]'",
-		"ckey" = "IF('[player_ckey]' LIKE '', NULL, '[player_ckey]')",
-		"ip" = "INET_ATON(IF('[player_ip]' LIKE '', NULL, '[player_ip]'))",
-		"computerid" = "IF('[player_cid]' LIKE '', NULL, '[player_cid]')",
-		"a_ckey" = "'[admin_ckey]'",
-		"a_ip" = "INET_ATON(IF('[admin_ip]' LIKE '', NULL, '[admin_ip]'))",
-		"a_computerid" = "'[admin_cid]'",
-		"who" = "'[who]'",
-		"adminwho" = "'[adminwho]'"
+		sql_ban += list(list(
+			"server_ip" = world.internet_address || 0,
+			"server_port" = world.port,
+			"round_id" = GLOB.round_id,
+			"role" = role,
+			"expiration_time" = duration
+			"applies_to_admins" = applies_to_admins,
+			"reason" = reason,
+			"ckey" = player_ckey || null
+			"ip" = player_ip || null,
+			"computerid" = player_cid || null,
+			"a_ckey" = admin_ckey,
+			"a_ip" = admin_ip || null,
+			"a_computerid" = admin_cid,
+			"who" = who,
+			"adminwho" = adminwho,
 		))
-	if(!SSdbcore.MassInsert(format_table_name("ban"), sql_ban, warn = 1))
+	if(!SSdbcore.MassInsert(format_table_name("ban"), sql_ban, warn = TRUE, special_columns = special_columns))
 		return
 	var/target = ban_target_string(player_key, player_ip, player_cid)
 	var/msg = "has created a [isnull(duration) ? "permanent" : "temporary [time_message]"] [applies_to_admins ? "admin " : ""][roles_to_ban[1] == "Server" ? "server ban" : "role ban from [roles_to_ban.len] roles"] for [target]."
