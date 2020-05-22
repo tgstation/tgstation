@@ -25,14 +25,14 @@
 		if(istransparentturf(above_turf))
 			listeners += hearers(maxdistance,above_turf)
 
-		if(istransparentturf(below_turf))
+		if(below_turf && istransparentturf(turf_source))
 			listeners += hearers(maxdistance,below_turf)
 
 	else
 		if(istransparentturf(above_turf))
 			listeners += SSmobs.clients_by_zlevel[above_turf.z]
 
-		if(istransparentturf(below_turf))
+		if(below_turf && istransparentturf(turf_source))
 			listeners += SSmobs.clients_by_zlevel[below_turf.z]
 
 	for(var/P in listeners)
