@@ -27,7 +27,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
-	if(vision_range != aggro_vision_range)
+	if(vision_range == aggro_vision_range && icon_aggro)
 		icon_state = icon_aggro
 
 /mob/living/simple_animal/hostile/asteroid/LoseAggro()
