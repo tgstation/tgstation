@@ -42015,7 +42015,6 @@
 	pixel_y = 22
 	},
 /obj/machinery/power/proto_sh_emitter/small/anchored{
-	icon_state = "proto_sh_emitter";
 	dir = 4
 	},
 /obj/effect/turf_decal/box/white,

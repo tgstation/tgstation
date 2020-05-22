@@ -33656,7 +33656,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
 /obj/machinery/power/proto_sh_emitter/small/anchored{
-	icon_state = "proto_sh_emitter";
 	dir = 8
 	},
 /obj/effect/turf_decal/box/white,

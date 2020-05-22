@@ -16420,7 +16420,6 @@
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/power/proto_sh_emitter/small/anchored{
-	icon_state = "proto_sh_emitter";
 	dir = 8
 	},
 /obj/effect/turf_decal/box/white,
@@ -112442,7 +112441,6 @@
 	dir = 4
 	},
 /obj/machinery/power/proto_sh_emitter/small/anchored{
-	icon_state = "proto_sh_emitter";
 	dir = 1
 	},
 /obj/effect/turf_decal/box/white,
