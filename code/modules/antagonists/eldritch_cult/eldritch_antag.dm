@@ -105,9 +105,8 @@
 		if(!istype(X,/datum/objective/stalk))
 			continue
 		var/datum/objective/stalk/S = X
-		if(S.target in view(7,src) && S.target && S.target.current.stat == CONSCIOUS)
+		if(S.target && S.target.current.stat == CONSCIOUS && S.target in view(7,src))
 			S.timer -= 1 SECONDS
-	return
 
 /datum/antagonist/ecult/proc/forge_primary_objectives()
 	var/list/assasination = list()
@@ -139,8 +138,6 @@
 	var/datum/objective/sacrifice_ecult/SE = new
 	SE.update_explanation_text()
 	objectives += SE
-
-	return
 
 /datum/antagonist/ecult/apply_innate_effects(mob/living/mob_override)
 	. = ..()
@@ -215,18 +212,18 @@
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
 
-/datum/antagonist/ecult/proc/has_knowledge(datum/eldritch_knowledge/EK)
+/datum/antagonist/ecult/proc/has_knowledge(datum/eldritch_knowledge/wanted)
 	for(var/X in researched_knowledge)
-		var/datum/eldritch_knowledge/EK1 = X
-		if(initial(EK.name) == EK1.name)
+		var/datum/eldritch_knowledge/searched = X
+		if(initial(wanted.name) == searched.name)
 			return TRUE
 	return FALSE
 
-/datum/antagonist/ecult/proc/get_knowledge(datum/eldritch_knowledge/EK)
+/datum/antagonist/ecult/proc/get_knowledge(datum/eldritch_knowledge/wanted)
 	for(var/X in researched_knowledge)
-		var/datum/eldritch_knowledge/EK1 = X
-		if(istype(EK1,EK))
-			return EK1
+		var/datum/eldritch_knowledge/searched = X
+		if(istype(searched,wanted))
+			return searched
 
 /datum/antagonist/ecult/proc/get_all_knowledge()
 	return researched_knowledge

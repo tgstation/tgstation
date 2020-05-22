@@ -304,6 +304,12 @@
 		return TRUE
 	return FALSE
 
+
+/**
+  * What happens when this mark gets popped
+  *
+  * Adds actual functionality to each mark
+  */
 /datum/status_effect/eldritch/proc/on_effect()
 	qdel(src) //what happens when this is procced.
 
@@ -340,13 +346,13 @@
 
 /datum/status_effect/eldritch/ash/on_effect()
 	if(istype(owner,/mob/living/carbon))
-		var/mob/living/carbon/C = owner
-		C.adjustStaminaLoss(10 * repetitions)
-		C.adjustFireLoss(5 * repetitions)
-		for(var/mob/living/carbon/C1 in range(1,C))
-			if(C1.mind?.has_antag_datum(/datum/antagonist/ecult) || C1 == C)
+		var/mob/living/carbon/carbon_owner = owner
+		carbon_owner.adjustStaminaLoss(10 * repetitions)
+		carbon_owner.adjustFireLoss(5 * repetitions)
+		for(var/mob/living/carbon/victim in range(1,carbon_owner))
+			if(victim.mind?.has_antag_datum(/datum/antagonist/ecult) || victim == carbon_owner)
 				continue
-			C1.apply_status_effect(type,repetitions+1)
+			victim.apply_status_effect(type,repetitions+1)
 			break
 	return ..()
 
@@ -356,8 +362,8 @@
 
 /datum/status_effect/eldritch/rust/on_effect()
 	for(var/obj/item/I in owner.GetAllContents())
-			if(prob(75))
-				I.take_damage(rand(0,200))
+		if(prob(75))
+			I.take_damage(rand(0,200))
 	return ..()
 
 /datum/status_effect/stacking/saw_bleed

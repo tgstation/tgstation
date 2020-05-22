@@ -27,7 +27,7 @@
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
 	if(do_after(user,10 SECONDS,FALSE,RS))
-		RS.Destroy()
+		qdel(RS)
 		charge += 1
 
 /obj/item/forbidden_book/proc/draw_rune(atom/target,mob/user)
