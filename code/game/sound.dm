@@ -12,12 +12,19 @@
 
  	// Looping through the player list has the added bonus of working for mobs inside containers
 	var/sound/S = sound(get_sfx(soundin))
-	var/maxdistance = (world.view + extrarange) * 3
+	var/maxdistance = (world.view + extrarange)
 	var/source_z = turf_source.z
 	var/list/listeners = SSmobs.clients_by_zlevel[source_z]
 
 	if(!ignore_walls) //these sounds don't carry through walls
 		listeners = listeners & hearers(maxdistance,turf_source)
+		var/turf/above_turf = SSmapping.get_turf_above(turf_source)
+		if(istransparentturf(above_turf))
+			listeners += hearers(maxdistance,above_turf)
+		var/turf/below_turf = SSmapping.get_turf_below(turf_source)
+		if(istransparentturf(below_turf))
+			listeners += hearers(maxdistance,below_turf)
+
 	else
 		var/turf/above_turf = SSmapping.get_turf_above(turf_source)
 		if(istransparentturf(above_turf))
