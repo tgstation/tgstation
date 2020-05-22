@@ -64,7 +64,8 @@
 
 	//ZOOMING
 	var/zoom_current_view_increase = 0
-	var/zoom_target_view_increase = 10
+	///The radius you want to zoom by
+	var/zoom_target_view_increase = 9.5
 	var/zooming = FALSE
 	var/zoom_lock = ZOOM_LOCK_OFF
 	var/zooming_angle
@@ -120,7 +121,7 @@
 /obj/item/gun/energy/beam_rifle/proc/handle_zooming()
 	if(!zooming || !check_user())
 		return
-	current_user.client.view_size.add(zoom_target_view_increase)
+	current_user.client.view_size.setTo(zoom_target_view_increase)
 	zoom_current_view_increase = zoom_target_view_increase
 	set_autozoom_pixel_offsets_immediate(zooming_angle)
 

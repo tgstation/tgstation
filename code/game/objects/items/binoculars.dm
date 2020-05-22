@@ -8,7 +8,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	var/mob/listeningTo
-	var/zoom_out_amt = 6
+	var/zoom_out_amt = 5.5
 	var/zoom_amt = 10
 
 /obj/item/binoculars/Initialize()
@@ -30,32 +30,14 @@
 	listeningTo = user
 	user.visible_message("<span class='notice'>[user] holds [src] up to [user.p_their()] eyes.</span>", "<span class='notice'>You hold [src] up to your eyes.</span>")
 	item_state = "binoculars_wielded"
-	zoom(user, user.dir)
+	user.regenerate_icons()
+	user.client.view_size.zoomOut(zoom_out_amt, zoom_amt, user.dir)
 
 /obj/item/binoculars/proc/rotate(atom/thing, old_dir, new_dir)
-	listeningTo.client.view_size.add(-zoom_out_amt)
-	zoom(listeningTo, new_dir)
-
-/obj/item/binoculars/proc/zoom(mob/user, direction)
-	user.regenerate_icons()
-	if(!user?.client)
-		return
-	var/client/C = user.client
-	var/_x = 0
-	var/_y = 0
-	switch(direction)
-		if(NORTH)
-			_y = zoom_amt
-		if(EAST)
-			_x = zoom_amt
-		if(SOUTH)
-			_y = -zoom_amt
-		if(WEST)
-			_x = -zoom_amt
-	//Ready for this one?
-	C.view_size.add(zoom_out_amt)
-	C.pixel_x = world.icon_size*_x
-	C.pixel_y = world.icon_size*_y
+	if(ismob(thing))
+		var/mob/lad = thing
+		lad.regenerate_icons()
+		lad.client.view_size.zoomOut(zoom_out_amt, zoom_amt, new_dir)
 
 /obj/item/binoculars/proc/on_walk()
 	attack_self(listeningTo) //Yes I have sinned, why do you ask?
@@ -68,9 +50,4 @@
 	user.visible_message("<span class='notice'>[user] lowers [src].</span>", "<span class='notice'>You lower [src].</span>")
 	item_state = "binoculars"
 	user.regenerate_icons()
-	if(user && user.client)
-		user.regenerate_icons()
-		var/client/C = user.client
-		C.view_size.add(-zoom_out_amt)
-		user.client.pixel_x = 0
-		user.client.pixel_y = 0
+	user.client.view_size.zoomIn()
