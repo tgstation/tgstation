@@ -46,13 +46,12 @@
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
 	. = ..()
-	AddSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt)
+	AddSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long)
+	AddSpell(/obj/effect/proc_holder/spell/targeted/telepathy/eldritch)
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()
 	client.change_view(11)
-
-
 
 /mob/living/simple_animal/hostile/eldritch/armsy
 	name = "Terror of the night"
@@ -228,6 +227,15 @@
 	AddSpell(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small)
 	AddSpell(/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
 
+/mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
+	. = ..()
+	var/turf/T = get_turf(src)
+	if(istype(T,/turf/open/floor/plating/rust))
+		adjustBruteLoss(-3)
+		adjustFireLoss(-3)
+		adjustToxLoss(-3)
+		adjustOxyLoss(-1)
+
 /mob/living/simple_animal/hostile/eldritch/ash_spirit
 	name = "Ash Man"
 	real_name = "Ashy"
@@ -246,6 +254,11 @@
 	AddSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
 	AddSpell(/obj/effect/proc_holder/spell/pointed/ash_cleave/long)
 
+
+/mob/living/simple_animal/hostile/eldritch/ash_spirit/Life()
+	. = ..()
+
+
 /mob/living/simple_animal/hostile/eldritch/stalker
 	name = "Flesh Stalker"
 	real_name = "Flesh Stalker"
@@ -261,7 +274,7 @@
 
 /mob/living/simple_animal/hostile/eldritch/stalker/Initialize()
 	AddSpell(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
-	AddSpell(/obj/effect/proc_holder/spell/targeted/shapeshift)
-	AddSpell(/obj/effect/proc_holder/spell/aoe_turf/knock)
+	AddSpell(/obj/effect/proc_holder/spell/targeted/shapeshift/eldritch)
+	AddSpell(/obj/effect/proc_holder/spell/targeted/emplosion/eldritch)
 	. = ..()
 

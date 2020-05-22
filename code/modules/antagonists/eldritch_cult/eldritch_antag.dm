@@ -14,30 +14,14 @@
 	job_rank = ROLE_ECULTIST
 	var/ignore_implant = FALSE
 	var/give_equipment = TRUE
-	var/datum/team/ecult/ecult_team
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
-
-/datum/antagonist/ecult/get_team()
-	return ecult_team
 
 /datum/antagonist/ecult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has eldritch cult'ed [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has eldritch cult'ed [key_name(new_owner)].")
-
-
-/datum/antagonist/ecult/create_team(datum/team/cult/new_team)
-	if(!new_team)
-		ecult_team = new /datum/team/ecult
-		return
-	if(!istype(new_team))
-		stack_trace("Wrong team type passed to [type] initialization.")
-	ecult_team = new_team
-
-/datum/antagonist/ecult/proc/add_objectives()
-	objectives |= ecult_team.objectives
 
 /datum/antagonist/ecult/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
@@ -121,7 +105,7 @@
 			continue
 		var/datum/objective/stalk/S = X
 		if(S.target in view(7,src) && S.target && S.target.current.stat == CONSCIOUS)
-			S.timer -= 10
+			S.timer -= 1 SECONDS
 	return
 
 /datum/antagonist/ecult/proc/forge_primary_objectives()
@@ -133,7 +117,8 @@
 			if("assasinate")
 				var/datum/objective/assassinate/A = new
 				A.owner = owner
-				A.find_target(owner,protection)
+				var/list/owners = A.get_owners()
+				A.find_target(owners,protection)
 				assasination += A.target
 				objectives += A
 			if("stalk")
@@ -145,7 +130,8 @@
 			if("protect")
 				var/datum/objective/protect/P = new
 				P.owner = owner
-				P.find_target(owner,assasination)
+				var/list/owners = P.get_owners()
+				P.find_target(owners,assasination)
 				protection += P.target
 				objectives += P
 
@@ -171,10 +157,40 @@
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "ecult"
 
+/datum/antagonist/ecult/roundend_report()
+	var/list/parts = list()
 
-/datum/team/ecult
-	name = "Eldritch Cult"
+	var/cultiewin = TRUE
 
+	parts += printplayer(owner)
+
+	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
+	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
+
+	if(objectives.len)
+		var/count = 1
+		for(var/datum/objective/objective in objectives)
+			if(objective.check_completion())
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
+			else
+				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='redtext'>Fail.</span>"
+				cultiewin = FALSE
+			count++
+
+	if(cultiewin)
+		parts += "<span class='greentext'>The eldritch cultist was successful!</span>"
+	else
+		parts += "<span class='redtext'>The eldritch cultist has failed.</span>"
+
+	parts += "<b>Knowledge Researched:</b> "
+
+	var/knowledge_message = ""
+	for(var/X in get_all_knowledge())
+		var/datum/eldritch_knowledge/EK = X
+		knowledge_message += "[EK.name], "
+	parts += knowledge_message
+
+	return parts.Join("<br>")
 ////////////////
 // Knowledge //
 ////////////////

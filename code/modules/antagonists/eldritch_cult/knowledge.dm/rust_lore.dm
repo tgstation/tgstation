@@ -27,10 +27,6 @@
 		if(E)
 			E.on_effect()
 			H.bleed_rate = min(H.bleed_rate + 4, 8)
-			for(var/atom/X in range(1,H))
-				if(prob(75))
-					conv_area(target)
-			return
 	conv_area(target)
 	return
 
@@ -100,6 +96,7 @@
 	L.adjustFireLoss(-2)
 	L.adjustToxLoss(-2)
 	L.adjustOxyLoss(-0.5)
+	L.adjustStaminaLoss(-2)
 	return
 
 /datum/eldritch_knowledge/rust_mark
@@ -168,19 +165,20 @@
 	route = "Rust"
 	var/finished = FALSE
 
-/datum/eldritch_knowledge/rust_final/recipe_snowflake_check(list/atoms, loc)
+/datum/eldritch_knowledge/rust_final/recipe_snowflake_check(list/atoms, loc,list/selected_atoms)
 	if(finished)
 		return FALSE
 	var/counter = 0
 	for(var/mob/living/carbon/human/H in atoms)
+		selected_atoms |= H
 		counter++
-	if(counter >= 3)
-		return TRUE
+		if(counter == 3)
+			return TRUE
 	return FALSE
 
 /datum/eldritch_knowledge/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	new /datum/rust_spread(loc)
 	finished = TRUE
+	new /datum/rust_spread(loc)
 	. = ..()
 
 /datum/eldritch_knowledge/rust_final/on_life(mob/user)
@@ -195,6 +193,7 @@
 	L.adjustFireLoss(-3)
 	L.adjustToxLoss(-3)
 	L.adjustOxyLoss(-1)
+	L.adjustStaminaLoss(-10)
 
 /datum/rust_spread
 	var/list/edge_turfs = list()

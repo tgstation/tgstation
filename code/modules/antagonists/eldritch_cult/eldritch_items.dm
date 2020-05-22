@@ -11,7 +11,7 @@
 		return
 	if(!target)
 		return
-	var/dist = get_dist(user,target)
+	var/dist = get_dist(user.loc,target.current.loc)
 
 	switch(dist)
 		if(0 to 5)

@@ -325,7 +325,8 @@
 /datum/status_effect/eldritch/flesh/on_effect()
 	if(istype(owner,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = owner
-		H.bleed_rate += 2
+		H.bleed_rate += 5
+		H.blood_volume -= 200
 	..()
 
 /datum/status_effect/eldritch/ash
@@ -733,8 +734,7 @@
 	id = "corrosion_curse"
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
-	tick_interval = 100
-
+	tick_interval = 1 SECONDS
 
 /datum/status_effect/corrosion_curse/on_creation(mob/living/new_owner, ...)
 	to_chat(owner, "<span class='warning'>Your feel your body starting to break apart...</span>")

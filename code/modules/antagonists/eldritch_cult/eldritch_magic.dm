@@ -17,6 +17,9 @@
 /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long
 	jaunt_duration = 50
 
+/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/play_sound()
+	return
+
 /obj/effect/temp_visual/dir_setting/ash_shift
 	name = "ash_shift"
 	icon = 'icons/mob/mob.dmi'
@@ -54,20 +57,19 @@
 	var/datum/mind/M = user.mind
 	var/datum/antagonist/ecult/cultie = M.has_antag_datum(/datum/antagonist/ecult)
 
-	for(var/X in cultie.get_all_knowledge())
-		var/datum/eldritch_knowledge/EK = X
-		EK.mansus_grasp_act(target, user, proximity_flag, click_parameters)
-
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(10)
 		C.AdjustKnockdown(1 SECONDS)
 		return
 
+	for(var/X in cultie.get_all_knowledge())
+		var/datum/eldritch_knowledge/EK = X
+		EK.mansus_grasp_act(target, user, proximity_flag, click_parameters)
+
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
 	desc = "Spreads rust onto nearby turfs."
-
 	school = "transmutation"
 	charge_max = 300 //twice as long as mansus grasp
 	clothes_req = FALSE
@@ -107,33 +109,6 @@
 	desc = "Spreads rust onto nearby turfs."
 	range = 2
 
-/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/big
-	name = "Rustbringer's rite"
-	desc = "Spreads rust onto a lot of turfs, and damages items worn on other peoplke"
-	range = 8
-
-/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/big/cast(list/targets, mob/user)
-	. = ..()
-	for(var/turf/T in targets)
-
-		for(var/Y in T.GetAllContents())
-
-			if(!is_type_in_list(/mob/living/carbon,T.GetAllContents()))
-				break
-
-			if(!istype(Y,/mob/living/carbon))
-				continue
-
-			var/mob/living/carbon/C = Y
-			if(C == user)
-				continue
-
-			for(var/X in C.GetAllContents())
-				if(istype(X,/obj/item))
-					var/obj/item/I = X
-					if(prob(75))
-						I.take_damage(rand(50,500))
-
 /obj/effect/proc_holder/spell/targeted/touch/ash_leech
 	name = "Blood Siphon"
 	desc = "Touch spell that heals you while damaging the enemy."
@@ -161,13 +136,16 @@
 		if(tar.anti_magic_check())
 			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return
+	var/mob/living/carbon/C2 = user
+	if(isliving(target))
+		var/mob/living/L = target
+		L.adjustBruteLoss(20)
+		C2.adjustBruteLoss(-20)
 	if(iscarbon(target))
 		var/mob/living/carbon/C1 = target
-		var/mob/living/carbon/C2 = user
-		C1.adjustBruteLoss(20)
 		C1.blood_volume -= 100
-		C2.adjustBruteLoss(-20)
-		C2.blood_volume += 100
+		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
+			C2.blood_volume += 100
 		return
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
@@ -279,7 +257,8 @@
 		target.visible_message("<span class='danger'>[target]'s veins are shredded from within as an unholy blaze erupts from their blood!</span>", \
 							"<span class='danger'>Your veins burst from within and unholy flame erupts from your blood!</span>")
 
-		target.bleed_rate += 8
+		target.bleed_rate += 15
+		target.blood_volume -= 200
 		target.adjustFireLoss(10)
 
 /obj/effect/proc_holder/spell/pointed/ash_cleave/can_target(atom/target, mob/user, silent)
@@ -295,39 +274,39 @@
 /obj/effect/proc_holder/spell/pointed/ash_cleave/long
 	charge_max = 650
 
-/obj/effect/proc_holder/spell/targeted/touch/mad_touch
+/obj/effect/proc_holder/spell/pointed/touch/mad_touch
 	name = "Touch of madness"
 	desc = "Touch spell that drains your enemies sanity."
-	hand_path = /obj/item/melee/touch_attack/mad_touch
-	school = "evocation"
+	school = "transmutation"
 	charge_max = 150
 	clothes_req = FALSE
-	invocation = "OP'N Y'R M'ND"
+	invocation = ""
 	invocation_type = "whisper"
+	range = 2
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "ash_shift"
 	action_background_icon_state = "bg_ecult"
 
+/obj/effect/proc_holder/spell/pointed/touch/mad_touch/can_target(atom/target, mob/user, silent)
+	. = ..()
+	if(!.)
+		return FALSE
+	if(!istype(target,/mob/living/carbon/human))
+		if(!silent)
+			to_chat(user, "<span class='warning'>You are unable to touch [target]!</span>")
+		return FALSE
+	return TRUE
 
-/obj/item/melee/touch_attack/mad_touch
-	name = "Ash Leech"
-	desc = "A sinister looking aura that distorts the flow of reality around it."
-	icon_state = "disintegrate"
-	item_state = "disintegrate"
-	catchphrase = "M'DNESS"
-
-/obj/item/melee/touch_attack/mad_touch/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	..()
-	if(ishuman(target))
-		var/mob/living/carbon/human/tar = target
-		if(tar.anti_magic_check())
-			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
-			return
-	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		if(!C.mind.has_antag_datum(/datum/antagonist/ecult))
-			SEND_SIGNAL(C, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
-		return
+/obj/effect/proc_holder/spell/pointed/touch/mad_touch/cast(list/targets, mob/user)
+	. = ..()
+	for(var/mob/living/carbon/target in targets)
+		if(ishuman(targets))
+			var/mob/living/carbon/human/tar = target
+			if(tar.anti_magic_check())
+				tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
+				return
+		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/ecult))
+			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/proc_holder/spell/pointed/ash_final
 	name = "Nightwatcher's Rite"
@@ -374,8 +353,7 @@
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
 			break
-		new /obj/effect/hotspot(T)
-		T.hotspot_expose(700,50,1)
+
 		for(var/mob/living/L in T.contents)
 			if(L.anti_magic_check())
 				L.visible_message("<span class='danger'>Spell bounces off of [L.real_name]!</span>","<span class='danger'>The spell bounces off of you!</span>")
@@ -386,10 +364,50 @@
 			L.adjustFireLoss(20)
 			to_chat(L, "<span class='userdanger'>You're hit by [source]'s fire breath!</span>")
 
+		new /obj/effect/hotspot(T)
+		T.hotspot_expose(700,50,1)
 		// deals damage to mechs
 		for(var/obj/mecha/M in T.contents)
 			if(M in hit_list)
 				continue
 			hit_list += M
-			M.take_damage(45, BRUTE, "melee", 1)
+			M.take_damage(45, BURN, "melee", 1)
 		sleep(1.5)
+
+/obj/effect/proc_holder/spell/targeted/shapeshift/eldritch
+	invocation = "SH'PE"
+	invocation_type = "whisper"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+
+/obj/effect/proc_holder/spell/targeted/emplosion/eldritch
+	name = "Energetic Pulse"
+	invocation = "E'P"
+	invocation_type = "whisper"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+
+/obj/effect/proc_holder/spell/aoe_turf/fire_cascade
+	name = "Fire Cascade"
+	desc = "creates hot turfs around you."
+	school = "transmutation"
+	charge_max = 300 //twice as long as mansus grasp
+	clothes_req = FALSE
+	invocation = "C'SC'DE"
+	invocation_type = "whisper"
+	range = 3
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "ash_shift"
+	action_background_icon_state = "bg_ecult"
+
+/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/cast(list/targets, mob/user = usr)
+	playsound(get_turf(user), 'sound/items/welder.ogg', 75, TRUE)
+	for(var/turf/T in targets)
+		new /obj/effect/hotspot(T)
+		T.hotspot_expose(700,50,1)
+
+/obj/effect/proc_holder/spell/targeted/telepathy/eldritch
+	invocation = ""
+	invocation_type = "whisper"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"

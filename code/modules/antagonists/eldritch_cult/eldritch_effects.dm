@@ -6,8 +6,6 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	layer = SIGIL_LAYER
 
-/obj/effect/eldritch/a
-
 /obj/effect/eldritch/attack_hand(mob/living/user)
 	. = ..()
 	if(.)
@@ -42,7 +40,7 @@
 
 		var/list/selected_atoms = list()
 
-		if(!EK.recipe_snowflake_check(atoms_in_range,drop_location()))
+		if(!EK.recipe_snowflake_check(atoms_in_range,drop_location(),selected_atoms))
 			continue
 
 		for(var/X1 in local_required_atoms)
@@ -55,7 +53,7 @@
 				if(!is_type_in_list(atom_x1,temp_list_X2) || local_required_atoms[X2] == TRUE)
 					continue
 				local_required_atoms[X2] = TRUE
-				selected_atoms += atom_x1
+				selected_atoms |= atom_x1
 
 		if(selected_atoms.len == 0)
 			continue

@@ -37,7 +37,7 @@
 /datum/eldritch_knowledge/proc/on_life(mob/user)
 	return
 
-/datum/eldritch_knowledge/proc/recipe_snowflake_check(list/atoms,loc) //overwrite this if you want to have a snowflage check in the recipe.
+/datum/eldritch_knowledge/proc/recipe_snowflake_check(list/atoms,loc,...) //overwrite this if you want to have a snowflage check in the recipe.
 	return TRUE
 
 /datum/eldritch_knowledge/proc/on_finished_recipe(mob/living/user,list/atoms,loc)
@@ -142,7 +142,7 @@
 
 /datum/eldritch_knowledge/spell/basic
 	name = "Break of dawn"
-	desc = "Starts your journey in the mansus. Allows you to transmute a soul bottle using a glass shard and a broken drinking bottle. Use a soul bottle on a dead person to harvest their soul. Use it then on ancient lore to  gain a charge. You can additionally harvest pierced realities. It takes a minute to harvest them and after you do so they are visible to everyone."
+	desc = "Starts your journey in the mansus. Allows you to get a select a target using a living heart on a transmutation rune."
 	gain_text = "Gates of mansus open up to your mind."
 	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh)
 	cost = 0
@@ -154,12 +154,9 @@
 	. = ..()
 	for(var/obj/item/living_heart/LH in atoms)
 		if(!LH.target)
-			var/datum/objective/A = new
-			LH.target = A.find_target()//easy way, i dont feel like copy pasting that entire block of code
-			qdel(A)
-			return FALSE
+			return TRUE
 		for(var/mob/living/carbon/human/H in atoms)
-			if(H.stat == DEAD)
+			if(H == LH.target.current)
 				return TRUE
 	return FALSE
 
@@ -170,15 +167,25 @@
 			continue
 		var/obj/item/forbidden_book/FB = X
 		FB.charge++
+		break
+
 	for(var/obj/item/living_heart/LH in atoms)
-		var/mob/living/carbon/human/H = LH.target.current
-		H.gib()
-		var/datum/antagonist/ecult/EC = user.mind.has_antag_datum(/datum/antagonist/ecult)
-		EC.total_sacrifices++
-		var/datum/objective/A = new
-		LH.target = A.find_target()//easy way, i dont feel like copy pasting that entire block of code
-		qdel(A)
-		to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.current.real_name]!</span>")
+		if(LH.target == user.mind)
+			LH.target = FALSE
+
+		if(LH.target && LH.target.current && LH.target.current.stat == DEAD)
+			var/mob/living/carbon/human/H = LH.target.current
+			H.gib()
+			var/datum/antagonist/ecult/EC = user.mind.has_antag_datum(/datum/antagonist/ecult)
+			EC.total_sacrifices++
+
+		if(!LH.target)
+			var/datum/objective/A = new
+			A.owner = user.mind
+			LH.target = A.find_target()//easy way, i dont feel like copy pasting that entire block of code
+			qdel(A)
+			if(LH.target)
+				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.current.real_name]!</span>")
 
 /datum/eldritch_knowledge/spell/basic/cleanup_atoms(list/atoms)
 	return

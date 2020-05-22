@@ -28,7 +28,7 @@
 	if(!H)
 		return
 	var/mob/dead/observer/G
-	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
+	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //we are just looking for the owner of the body
 		if(ghost.mind && ghost.mind.current == H && ghost.client)  //the dead mobs list can contain clientless mobs
 			G = ghost
 			break
@@ -51,6 +51,7 @@
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(50)
 	H.health = 50 // Voiceless dead are much tougher than ghouls
+	H.faction |= "ecult"
 	H.fully_replace_character_name(H.real_name,"Voiceless [H.real_name]")
 	to_chat(H, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(H, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
@@ -63,6 +64,7 @@
 
 	for(var/mob/living/carbon/human/ghoul in ghouls)
 		if(ghoul.stat == DEAD)
+			ghoul.dust(TRUE)
 			ghouls -= ghoul
 			current_amt--
 
@@ -97,10 +99,10 @@
 		if(ghost.mind && ghost.mind.current == H && ghost.client)  //the dead mobs list can contain clientless mobs
 			ghost.reenter_corpse()
 			break
-	//Remember to un comment it when it gets TMed
-	//if(!H.mind || !H.client)
-	//	to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
-	//	return
+
+	if(!H.mind || !H.client)
+		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
+		return
 
 	check_ghouls()
 
@@ -114,7 +116,7 @@
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(25)
 	H.health = 25
-
+	H.faction |= "ecult"
 	H.fully_replace_character_name(H.real_name,"Ghouled [H.real_name]")
 	to_chat(H, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(H, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
@@ -164,7 +166,8 @@
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/C = target
-		C.bleed_rate++
+		C.bleed_rate += 3
+		C.blood_volume -= 10
 
 /datum/eldritch_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
@@ -221,18 +224,21 @@
 	route = "Flesh"
 	var/is_summoned = FALSE
 
-/datum/eldritch_knowledge/flesh_final/recipe_snowflake_check(list/atoms, loc)
+/datum/eldritch_knowledge/flesh_final/recipe_snowflake_check(list/atoms, loc,list/selected_atoms)
 	if(is_summoned)
 		return FALSE
 	var/counter = 0
 	for(var/mob/living/carbon/human/H in atoms)
+		selected_atoms |= H
 		counter++
-	if(counter >= 3)
-		return TRUE
+		if(counter == 3)
+			return TRUE
 	return FALSE
 
 /datum/eldritch_knowledge/flesh_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	var/alert_ = alert("Do you want to ascend as the lord of the night or just summon a terror of the night?","...","Yes","No")
+	is_summoned = TRUE // you got one chance
+	var/alert_ = alert(user,"Do you want to ascend as the lord of the night or just summon a terror of the night?","...","Yes","No")
+	user.SetImmobilized(10 HOURS) // no way someone will stand 10 hours in a spot, just so he can move.
 	switch(alert_)
 		if("No")
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy(loc)
@@ -244,14 +250,15 @@
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
 			summoned.ghostize(0)
 			summoned.key = C.key
-			is_summoned = TRUE
+			user.SetImmobilized(0)
+
 
 			to_chat(summoned,"<span class='warning'>You are bound to [user.real_name]'s' will! Don't let your master die, protect him at all cost!</span>")
 		if("Yes")
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy/prime(loc,spawn_more = TRUE,len = 10)
 			summoned.ghostize(0)
+			user.SetImmobilized(0)
 			var/mob/living/carbon/C = user
-			summoned.key = C.key
+			C.mind.transfer_to(summoned,TRUE)
 			C.gib()
-			is_summoned = FALSE
 	. = ..()

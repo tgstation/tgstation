@@ -92,7 +92,7 @@
 	gain_text = "Take what's yours."
 	desc = "You gain a spell that destroys enemies sanity."
 	cost = 1
-	spell_to_add = /obj/effect/proc_holder/spell/targeted/touch/mad_touch
+	spell_to_add = /obj/effect/proc_holder/spell/pointed/touch/mad_touch
 	next_knowledge = list(/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/ash_final)
 	route = "Ash"
 
@@ -166,14 +166,15 @@
 	var/finished = FALSE
 	var/list/trait_list = list(TRAIT_RESISTHEAT,TRAIT_NOBREATH,TRAIT_RESISTCOLD,TRAIT_RESISTHIGHPRESSURE,TRAIT_RESISTLOWPRESSURE,TRAIT_NOFIRE,TRAIT_RADIMMUNE,TRAIT_PIERCEIMMUNE,TRAIT_NODISMEMBER,TRAIT_BOMBIMMUNE)
 
-/datum/eldritch_knowledge/ash_final/recipe_snowflake_check(list/atoms, loc)
+/datum/eldritch_knowledge/ash_final/recipe_snowflake_check(list/atoms, loc,list/selected_atoms)
 	if(finished)
 		return FALSE
 	var/counter = 0
 	for(var/mob/living/carbon/human/H in atoms)
+		selected_atoms |= H
 		counter++
-	if(counter >= 3)
-		return TRUE
+		if(counter == 3)
+			return TRUE
 	return FALSE
 
 /datum/eldritch_knowledge/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
