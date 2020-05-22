@@ -1,0 +1,5 @@
+author: "Whoneedspacee"
+delete-after: True
+changes: 
+  - rscadd: "Icebox Station has been added, explore the depths of the Ice Moon with boxstation right on top of it, don't forget your coat and internals!"
+  - rscadd: "You can now mine rock flora into volcanic ash to make glass."
