@@ -216,16 +216,61 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 	It was included because it is still supported in mariadb.
 	It does not work with duplicate_key and the mysql server ignores it in those cases
 */
-/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, async = TRUE)
+/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, async = TRUE, special_columns = null)
 	if (!table || !rows || !istype(rows))
 		return
+
+	// Prepare column list
 	var/list/columns = list()
+	var/list/has_question_mark = list()
+	for (var/list/row in rows)
+		for (var/column in row)
+			columns[column] = "?"
+			has_question_mark[column] = TRUE
+	for (var/column in special_columns)
+		columns[column] = special_columns[column]
+		var/q = findtext(special_columns[column], "?")
+		has_question_mark[column] = !!q
+		if (q && findtext(special_columns[column], "?", q + 1))
+			CRASH("MassInsert special column `[column]` may contain at most one `?`: `[special_columns[column]]`")
+
+	// Prepare SQL query full of question marks
+	var/list/arguments = list()
+
+	var/list/query_parts = list("INSERT")
+	if (delayed)
+		query_parts += " DELAYED"
+	if (ignore_errors)
+		query_parts += " IGNORE"
+	query_parts += " INTO "
+	query_parts += table
+	query_parts += "\n([columns.Join(", "])\nVALUES"
+
+	var/has_row = FALSE
+	for (var/list/row in rows)
+		if (has_row)
+			query_parts += ","
+		query_parts += "\n  ("
+		query_parts += columns.Join(", ")
+		for (var/column in columns)
+			if (has_question_mark[column])
+				values += row[column]
+		query_parts += ")"
+		has_row = TRUE
+
+	if (duplicate_key)
+		var/list/column_list = list()
+		for (var/column in columns)
+			column_list += "[column] = VALUES([column])"
+		query_parts += "\nON DUPLICATE KEY UPDATE [column_list.Join(", ")]"
+
 	var/list/sorted_rows = list()
 
 	for (var/list/row in rows)
 		var/list/sorted_row = list()
 		sorted_row.len = columns.len
 		for (var/column in row)
+			columns[column] = TRUE
 			var/idx = columns[column]
 			if (!idx)
 				idx = columns.len + 1
@@ -234,24 +279,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 
 			sorted_row[idx] = row[column]
 		sorted_rows[++sorted_rows.len] = sorted_row
-
-	if (duplicate_key == TRUE)
-		var/list/column_list = list()
-		for (var/column in columns)
-			column_list += "[column] = VALUES([column])"
-		duplicate_key = "ON DUPLICATE KEY UPDATE [column_list.Join(", ")]\n"
-	else if (duplicate_key == FALSE)
-		duplicate_key = null
-
-	if (ignore_errors)
-		ignore_errors = " IGNORE"
-	else
-		ignore_errors = null
-
-	if (delayed)
-		delayed = " DELAYED"
-	else
-		delayed = null
 
 	var/len = columns.len
 	var/list/question_mark_list = list()
@@ -269,7 +296,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		for (var/value in row)
 			arguments += value
 
-	var/datum/DBQuery/Query = NewQuery(
+	var/datum/DBQuery/Query = NewQuery(query_parts.Join(), arguments)
 		"INSERT[delayed][ignore_errors] INTO [table]\n([columns.Join(", ")])\nVALUES\n  [values_section.Join(",\n  ")]\n[duplicate_key]",
 		arguments
 	)
