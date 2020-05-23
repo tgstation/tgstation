@@ -45,7 +45,7 @@
 	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return
 	if(do_after(user,2 SECONDS,user))
-		target.Destroy()
+		qdel(target)
 
 /obj/item/forbidden_book/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
 	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
