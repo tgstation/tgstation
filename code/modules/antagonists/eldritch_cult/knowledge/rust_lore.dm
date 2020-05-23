@@ -71,7 +71,7 @@
 
 /datum/eldritch_knowledge/spell/area_conversion
 	name = "Agressive Spread"
-	desc = "Spreads rust to nearby turfs"
+	desc = "Spreads rust to nearby turfs. Destroys already rusted walls."
 	gain_text = "All men wise know not to touch the bound king."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
@@ -101,7 +101,7 @@
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
-	desc = "Your eldritch blade now applies a mark. To Detonate the mark use your mansus grasp on it."
+	desc = "Your eldritch blade now applies a rust mark. Rust mark has a chance to deal between 0 to 200 damage to 75% of enemies items. To Detonate the mark use your mansus grasp on it."
 	gain_text = "Lords of the depths help those in dire need at a cost."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/area_conversion)
@@ -117,7 +117,7 @@
 /datum/eldritch_knowledge/rust_blade_upgrade
 	name = "Toxic blade"
 	gain_text = "Let the blade guide you through the flesh."
-	desc = "Your blade of choice will now add toxin to your enemies system."
+	desc = "Your blade of choice will now add toxin to enemies bloodstream."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/rust_wave)
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
@@ -158,7 +158,7 @@
 
 /datum/eldritch_knowledge/rust_final
 	name = "Rustbringer's Oath"
-	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual you will be granted a spell of incredible power."
+	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is alos tripled"
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)

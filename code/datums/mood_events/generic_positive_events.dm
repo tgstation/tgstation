@@ -101,7 +101,7 @@
 	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
-/datum/mood_event/ecult
+/datum/mood_event/e_cult
 	description = "<span class='nicegreen'>The world is all but an illusion, and only I can see the cracks in the performance.</span>\n"
 	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE

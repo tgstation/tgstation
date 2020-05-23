@@ -222,7 +222,7 @@
 		if(LH.target && LH.target.current && LH.target.current.stat == DEAD)
 			var/mob/living/carbon/human/H = LH.target.current
 			H.gib()
-			var/datum/antagonist/ecult/EC = user.mind.has_antag_datum(/datum/antagonist/ecult)
+			var/datum/antagonist/e_cult/EC = user.mind.has_antag_datum(/datum/antagonist/e_cult)
 			EC.total_sacrifices++
 
 		if(!LH.target)

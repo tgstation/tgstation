@@ -85,7 +85,7 @@
 	integer = FALSE
 	min_val = 1
 
-/datum/config_entry/number/ecult_scaling_coeff	//how much does the amount of players get divided by to determine ecult
+/datum/config_entry/number/ecult_scaling_coeff	//how much does the amount of players get divided by to determine e_cult
 	config_entry_value = 6
 	integer = FALSE
 	min_val = 1

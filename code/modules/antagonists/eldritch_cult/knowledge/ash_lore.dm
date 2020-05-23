@@ -19,7 +19,7 @@
 	route = "Ash"
 
 /datum/eldritch_knowledge/ashen_grasp
-	name = "Ashen Grasp"
+	name = "Grasp of Ash"
 	gain_text = "Gates have opened, minds have flooded, I remain."
 	desc = "Empowers your mansus grasp to throw away enemies."
 	cost = 1
@@ -72,7 +72,7 @@
 /datum/eldritch_knowledge/curse/blindness
 	name = "Curse of blindness"
 	gain_text = "Blind man walks through the world, unnoticed by the masses."
-	desc = "Curse someone with 2 minutes of complete blindness."
+	desc = "Curse someone with 2 minutes of complete blindness by sacrificing a pair of eyes, a knife and a pool of blood, with an object that the victim has touched."
 	cost = 1
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/kitchen/knife,/obj/effect/decal/cleanable/blood)
 	next_knowledge = list(/datum/eldritch_knowledge/curse/corrosion,/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/curse/paralysis)
@@ -90,7 +90,7 @@
 /datum/eldritch_knowledge/spell/mad_touch
 	name = "Touch of Madness"
 	gain_text = "Take what's yours."
-	desc = "You gain a spell that destroys enemies sanity."
+	desc = "Short range spell that allows you to curse someone with massive sanity loss."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/touch/mad_touch
 	next_knowledge = list(/datum/eldritch_knowledge/spell/blood_siphon,/datum/eldritch_knowledge/summon/ashy,/datum/eldritch_knowledge/ash_final)
@@ -99,7 +99,7 @@
 /datum/eldritch_knowledge/ash_blade_upgrade
 	name = "Fiery blade"
 	gain_text = "May the sun burn the heretics."
-	desc = "Your blade of choice will now add firestacks"
+	desc = "Your blade of choice will now add firestacks."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/spell/mad_touch)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
@@ -115,7 +115,7 @@
 /datum/eldritch_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
 	gain_text = "Cursed land, cursed man, cursed mind."
-	desc = "Curse someone for 2 minutes of vomiting and organ damage. Using a knife, a spill of blood, a heart, left arm and a right arm, and an item that the cursed person touched."
+	desc = "Curse someone for 2 minutes of vomiting and slight organ damage. Using a knife, a spill of blood, a heart, left arm and a right arm, and an item that the victim touched."
 	cost = 1
 	required_atoms = list(/obj/item/kitchen/knife,/obj/effect/decal/cleanable/blood,/obj/item/organ/heart,/obj/item/bodypart/l_arm,/obj/item/bodypart/r_arm)
 	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness,/datum/eldritch_knowledge/spell/area_conversion)
@@ -132,10 +132,10 @@
 /datum/eldritch_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
 	gain_text = "Corrupt their flesh, make them bleed."
-	desc = "Curse someone for 5 minutes of inability to walk. "
+	desc = "Curse someone for 5 minutes of inability to walk. Using a knife, pool of blood, left leg, right leg, a hatchet and an item that the victim touched. "
 	cost = 1
 	required_atoms = list(/obj/item/kitchen/knife,/obj/effect/decal/cleanable/blood,/obj/item/bodypart/l_leg,/obj/item/bodypart/r_leg,/obj/item/hatchet)
-	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness)
+	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness,/datum/eldritch_knowledge/summon/raw_prophet)
 	timer = 5 MINUTES
 
 /datum/eldritch_knowledge/curse/paralysis/curse(mob/living/chosen_mob)
@@ -151,7 +151,7 @@
 /datum/eldritch_knowledge/spell/cleave
 	name = "Blood Cleave"
 	gain_text = "At first i didn't know these instruments of war, but the priest told me to use them."
-	desc = "Gives AOE spell that causes massive bleeding. Be aware it can affect you aswell!"
+	desc = "Gives AOE spell that causes heavy bleeding."
 	cost = 1
 	spell_to_add = /obj/effect/proc_holder/spell/pointed/ash_cleave
 	next_knowledge = list(/datum/eldritch_knowledge/summon/raw_prophet,/datum/eldritch_knowledge/spell/area_conversion)

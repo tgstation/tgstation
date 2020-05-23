@@ -51,7 +51,7 @@
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(50)
 	H.health = 50 // Voiceless dead are much tougher than ghouls
-	H.faction |= "ecult"
+	H.faction |= "e_cult"
 	H.fully_replace_character_name(H.real_name,"Voiceless [H.real_name]")
 	to_chat(H, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(H, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
@@ -116,7 +116,7 @@
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(25)
 	H.health = 25
-	H.faction |= "ecult"
+	H.faction |= "e_cult"
 	H.fully_replace_character_name(H.real_name,"Ghouled [H.real_name]")
 	to_chat(H, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(H, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
@@ -172,7 +172,7 @@
 /datum/eldritch_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
 	gain_text = "Uncanny man, walks alone in the valley, I was able to call his aid."
-	desc = "You can now summon a Raw Prophet using eyes, a left arm, right arm and a pool of blood"
+	desc = "You can now summon a Raw Prophet using eyes, a left arm, right arm and a pool of blood. Raw prophets have increased seeing range, as well as Xray. But are very fragile and weak."
 	cost = 1
 	required_atoms = list(/obj/item/organ/eyes,/obj/item/bodypart/l_arm,/obj/item/bodypart/r_arm,/obj/effect/decal/cleanable/blood)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/raw_prophet
@@ -182,7 +182,7 @@
 /datum/eldritch_knowledge/summon/stalker
 	name = "Lonely Ritual"
 	gain_text = "I was able to combine my greed and desires to summon an eldritch beast i have not seen before."
-	desc = "You can now summon a Stalker using a knife, a flower, a pen and a piece of paper"
+	desc = "You can now summon a Stalker using a knife, a flower, a pen and a piece of paper. Stalkers can shapeshift into harmeless animals and get close to the victim."
 	cost = 1
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/reagent_containers/food/snacks/grown/poppy,/obj/item/pen,/obj/item/paper)
 	mob_to_summon = /mob/living/simple_animal/hostile/eldritch/stalker

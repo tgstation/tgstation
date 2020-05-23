@@ -55,7 +55,7 @@
 			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return
 	var/datum/mind/M = user.mind
-	var/datum/antagonist/ecult/cultie = M.has_antag_datum(/datum/antagonist/ecult)
+	var/datum/antagonist/e_cult/cultie = M.has_antag_datum(/datum/antagonist/e_cult)
 
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -168,7 +168,7 @@
 	damage_type = TOX
 	hitsound = 'sound/weapons/punch3.ogg'
 	trigger_range = 0
-	ignored_factions = list("ecult")
+	ignored_factions = list("e_cult")
 	range = 15
 	speed = 1
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
@@ -305,7 +305,7 @@
 			if(tar.anti_magic_check())
 				tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 				return
-		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/ecult))
+		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/e_cult))
 			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/proc_holder/spell/pointed/ash_final

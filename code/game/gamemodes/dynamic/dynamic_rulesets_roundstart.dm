@@ -151,10 +151,10 @@
 //                                          //
 //////////////////////////////////////////////
 
-/datum/dynamic_ruleset/roundstart/ecult
+/datum/dynamic_ruleset/roundstart/e_cult
 	name = "Eldritch Cultists"
 	antag_flag = ROLE_ECULT
-	antag_datum = /datum/antagonist/ecult
+	antag_datum = /datum/antagonist/e_cult
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI", "Cyborg","Chaplain")
 	required_candidates = 1
@@ -166,7 +166,7 @@
 	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
 
 
-/datum/dynamic_ruleset/roundstart/ecult/pre_execute()
+/datum/dynamic_ruleset/roundstart/e_cult/pre_execute()
 	. = ..()
 	var/num_ecult = antag_cap[indice_pop] * (scaled_times + 1)
 
@@ -181,11 +181,11 @@
 		GLOB.pre_setup_antags += M.mind
 	return TRUE
 
-/datum/dynamic_ruleset/roundstart/ecult/execute()
+/datum/dynamic_ruleset/roundstart/e_cult/execute()
 
 	for(var/c in assigned)
 		var/datum/mind/cultie = c
-		var/datum/antagonist/ecult/new_antag = new antag_datum()
+		var/datum/antagonist/e_cult/new_antag = new antag_datum()
 		cultie.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= cultie
 		GLOB.reality_smash_track.AddMind(cultie)

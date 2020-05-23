@@ -1,4 +1,4 @@
-/datum/game_mode/ecult
+/datum/game_mode/e_cult
 	name = "eldritch cultist"
 	config_tag = "eldritch cultist"
 	report_type = "eldritch cultist"
@@ -21,7 +21,7 @@
 	var/num_ecult = 1
 	var/list/culties = list()
 
-/datum/game_mode/ecult/pre_setup()
+/datum/game_mode/e_cult/pre_setup()
 
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		restricted_jobs += protected_jobs
@@ -54,17 +54,17 @@
 			GLOB.pre_setup_antags += antag
 		return TRUE
 
-/datum/game_mode/ecult/post_setup()
+/datum/game_mode/e_cult/post_setup()
 	new /datum/reality_smash_tracker()
 	GLOB.reality_smash_track.Generate(num_ecult)
 	for(var/c in culties)
 		var/datum/mind/cultie = c
 		log_game("[key_name(cultie)] has been selected as an eldritch cultist!")
-		var/datum/antagonist/ecult/new_antag = new()
+		var/datum/antagonist/e_cult/new_antag = new()
 		cultie.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= cultie
 	return ..()
 
-/datum/game_mode/ecult/generate_report()
+/datum/game_mode/e_cult/generate_report()
 	return "Cybersun Industries has announced that they have successfully raided a high-security library. The library contained a very dangerous book that was \
 	shown to posses anomalous properties. We suspect that the book has been copied over, Stay vigilant!"

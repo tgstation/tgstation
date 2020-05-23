@@ -13,7 +13,7 @@
 	try_activate(user)
 
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
-	if(!user.mind.has_antag_datum(/datum/antagonist/ecult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return
 	flick("[icon_state]_active",src)
 	activate(user)
@@ -21,7 +21,7 @@
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
 
-	var/datum/antagonist/ecult/cultie = user.mind.has_antag_datum(/datum/antagonist/ecult)
+	var/datum/antagonist/e_cult/cultie = user.mind.has_antag_datum(/datum/antagonist/e_cult)
 	var/list/knowledge = cultie.get_all_knowledge()
 	var/list/atoms_in_range = list()
 

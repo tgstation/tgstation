@@ -25,7 +25,7 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
-	faction = list("ecult")
+	faction = list("e_cult")
 	movement_type = GROUND
 	pressure_resistance = 100
 	del_on_death = TRUE
