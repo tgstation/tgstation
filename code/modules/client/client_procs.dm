@@ -448,6 +448,8 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 			menuitem.Load_checked(src)
 
 	view_size = new(src, getScreenSize(prefs.widescreenpref))
+	view_size.safeApplyFormat()
+	view_size.setZoomMode()
 	Master.UpdateTickRate()
 
 //////////////
