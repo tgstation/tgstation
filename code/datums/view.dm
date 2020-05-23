@@ -15,6 +15,26 @@
 	default = string
 	apply()
 
+/datum/viewData/proc/safeApplyFormat()//T-Pose
+	if(chief.prefs.auto_fit_viewport)
+		chief.fit_viewport()
+	if(isZooming())
+		assertFormat()
+		return
+	resetFormat()
+
+/datum/viewData/proc/assertFormat()//T-Pose
+	winset(chief, "mapwindow.map", "zoom=0")
+
+/datum/viewData/proc/resetFormat()//Cuck
+	winset(chief, "mapwindow.map", "zoom=[chief.prefs.pixel_size]")
+
+/datum/viewData/proc/setZoomMode()
+	winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.scaling_method]")
+
+/datum/viewData/proc/isZooming()
+	return (width || height)
+
 /datum/viewData/proc/resetToDefault()
 	width = 0
 	height = 0
@@ -60,6 +80,7 @@
 
 /datum/viewData/proc/apply()
 	chief.change_view(getView())
+	safeApplyFormat()
 
 /datum/viewData/proc/getView()
 	var/list/temp = getviewsize(default)
