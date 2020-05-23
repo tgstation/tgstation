@@ -78,7 +78,7 @@
 	new /obj/item/crowbar/power(src)
 	new /obj/item/weldingtool/experimental(src)//This can be changed if this is too much
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src)
 	new /obj/item/extinguisher/mini(src)
 	new /obj/item/analyzer(src)
 	//much roomier now that we've managed to remove two tools
@@ -90,7 +90,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src)
 
 /obj/item/storage/belt/utility/full/engi/PopulateContents()
 	new /obj/item/screwdriver(src)
@@ -99,7 +99,7 @@
 	new /obj/item/crowbar(src)
 	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src)
 
 
 /obj/item/storage/belt/utility/atmostech/PopulateContents()
@@ -129,7 +129,7 @@
 /obj/item/storage/belt/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
@@ -168,8 +168,6 @@
 		/obj/item/clothing/glasses,
 		/obj/item/wrench/medical,
 		/obj/item/clothing/mask/muzzle,
-		/obj/item/storage/bag/chemistry,
-		/obj/item/storage/bag/bio,
 		/obj/item/reagent_containers/blood,
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/gun/syringe/syndicate,
@@ -258,7 +256,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
 	STR.max_combined_w_class = 20
 	STR.set_holdable(list(
 		/obj/item/crowbar,
@@ -296,7 +294,6 @@
 		/obj/item/reagent_containers/food/drinks,
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
-		/obj/item/storage/bag/plants,
 		/obj/item/stack/marker_beacon,
 		/obj/item/key/lasso
 		))
@@ -430,7 +427,7 @@
 	new /obj/item/crowbar/abductor(src)
 	new /obj/item/wirecutters/abductor(src)
 	new /obj/item/multitool/abductor(src)
-	new /obj/item/stack/cable_coil(src,MAXCOIL,"white")
+	new /obj/item/stack/cable_coil(src)
 
 /obj/item/storage/belt/military/army
 	name = "army belt"
@@ -525,7 +522,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 6
-	STR.max_w_class = WEIGHT_CLASS_BULKY // Set to this so the  light replacer can fit.
+	STR.max_w_class = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 	STR.set_holdable(list(
 		/obj/item/grenade/chem_grenade,
 		/obj/item/lightreplacer,
@@ -559,6 +556,7 @@
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 18
+	STR.max_combined_w_class = 18
 	STR.display_numerical_stacking = TRUE
 	STR.set_holdable(list(
 		/obj/item/ammo_casing/shotgun
