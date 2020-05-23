@@ -164,12 +164,10 @@
 	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 	var/list/breath_gases = breath.gases
-	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz, /datum/gas/nitrogen)
+	breath.assert_gases(/datum/gas/oxygen, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/bz)
 	var/O2_partialpressure = (breath_gases[/datum/gas/oxygen][MOLES]/breath.total_moles())*breath_pressure
 	var/Toxins_partialpressure = (breath_gases[/datum/gas/plasma][MOLES]/breath.total_moles())*breath_pressure
 	var/CO2_partialpressure = (breath_gases[/datum/gas/carbon_dioxide][MOLES]/breath.total_moles())*breath_pressure
-	var/N2_partialpressure = (breath_gases[/datum/gas/nitrogen][MOLES]/breath.total_moles())*breath_pressure
-
 
 	//OXYGEN
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
@@ -194,9 +192,6 @@
 
 	breath_gases[/datum/gas/oxygen][MOLES] -= oxygen_used
 	breath_gases[/datum/gas/carbon_dioxide][MOLES] += oxygen_used
-
-	if(N2_partialpressure > 0) //N2 is non-toxic at all pressures, it get consumed roughly 3 times the amount of o2 and it has no downside on its own
-		breath_gases[/datum/gas/nitrogen][MOLES] -= oxygen_used * 3.76
 
 	//CARBON DIOXIDE
 	if(CO2_partialpressure > safe_co2_max)
