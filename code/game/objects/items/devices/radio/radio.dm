@@ -51,10 +51,7 @@
 	frequency = add_radio(src, new_frequency)
 
 /obj/item/radio/proc/recalculateChannels()
-	channels = list()
-	translate_binary = FALSE
-	syndie = FALSE
-	independent = FALSE
+	resetChannels()
 
 	if(keyslot)
 		for(var/ch_name in keyslot.channels)
@@ -70,6 +67,13 @@
 
 	for(var/ch_name in channels)
 		secure_radio_connections[ch_name] = add_radio(src, GLOB.radiochannels[ch_name])
+
+// Used for cyborg override
+/obj/item/radio/proc/resetChannels()
+	channels = list()
+	translate_binary = FALSE
+	syndie = FALSE
+	independent = FALSE
 
 /obj/item/radio/proc/make_syndie() // Turns normal radios into Syndicate radios!
 	qdel(keyslot)
@@ -364,11 +368,16 @@
 
 /obj/item/radio/borg
 	name = "cyborg radio"
+	subspace_transmission = TRUE
 	subspace_switchable = TRUE
 	dog_fashion = null
 
-/obj/item/radio/borg/Initialize(mapload)
+/obj/item/radio/borg/resetChannels()
 	. = ..()
+	
+	var/mob/living/silicon/robot/R = loc
+	if(istype(R) && R.module.radio_channel)
+		channels[R.module.radio_channel] = 1
 
 /obj/item/radio/borg/syndicate
 	syndie = 1
