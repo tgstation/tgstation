@@ -1,0 +1,4 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - balance: "Dissection will now give XP instead of research points."
