@@ -23,7 +23,7 @@
 	//Breath damage
 
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
-	var/safe_oxygen_max = 0
+	var/safe_oxygen_max = 50
 	var/safe_nitro_min = 0
 	var/safe_nitro_max = 0
 	var/safe_co2_min = 0
