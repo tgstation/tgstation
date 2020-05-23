@@ -31,9 +31,14 @@
 	/// The current bandage we have for this wound (maybe move bandages to the limb?)
 	var/obj/item/stack/current_bandage
 
-// TODO: flesh out (haha flesh), also clean up all of this to be more modular and less sprawly
 /datum/wound/burn/handle_process()
 	. = ..()
+	if(strikes_to_lose_limb == 0)
+		victim.adjustToxLoss(0.5)
+		if(prob(1))
+			victim.visible_message("<span class='danger'>The infection on the remnants of [victim]'s [limb.name] shift and bubble nauseatingly!</span>", "<span class='warning'>You can feel the infection on the remnants of your [limb.name] coursing through your veins!</span>")
+		return
+
 	if(victim.reagents)
 		if(victim.reagents.has_reagent(/datum/reagent/medicine/spaceacillin))
 			sanitization += 0.9
@@ -48,7 +53,7 @@
 		if(current_bandage.absorption_capacity <= 0)
 			victim.visible_message("<span class='danger'>Pus soaks through \the [current_bandage] on [victim]'s [limb.name].</span>", "<span class='warning'>Pus soaks through \the [current_bandage] on your [limb.name].</span>", vision_distance=COMBAT_MESSAGE_RANGE)
 			QDEL_NULL(current_bandage)
-			treat_priority = TRUE // todo: check if burns need this really
+			treat_priority = TRUE
 
 	if(flesh_healing > 0)
 		var/bandage_factor = (current_bandage ? current_bandage.splint_factor : 1)
@@ -70,7 +75,6 @@
 
 	infestation += infestation_rate
 
-	// TODO: actual math on this stuff
 	switch(infestation)
 		if(0 to WOUND_INFECTION_MODERATE)
 		if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
@@ -110,9 +114,9 @@
 						to_chat(victim, "<span class='deadsay'><b>Infection has just about completely claimed your [limb.name]!</b></span>")
 					if(0)
 						to_chat(victim, "<span class='deadsay'><b>The last of the nerve endings in your [limb.name] wither away, as the infection completely paralyzes your joint connector.</b></span>")
+						threshold_penalty = 120 // piss easy to destroy
 						var/datum/brain_trauma/severe/paralysis/sepsis = new (limb.body_zone)
 						victim.gain_trauma(sepsis)
-						processes = FALSE
 				strikes_to_lose_limb--
 
 /datum/wound/burn/get_examine_description(mob/user)
@@ -149,6 +153,11 @@
 	return "<B>[victim.p_their(TRUE)] [limb.name] [examine_desc][condition]</B>"
 
 /datum/wound/burn/get_scanner_description(mob/user)
+	if(strikes_to_lose_limb == 0)
+		var/oopsie = "Type: [name]\nSeverity: [severity_text()]"
+		oopsie += "<div class='ml-3'>Infection Level: <span class='deadsay'>The infection is total. The bodypart is lost. Amputate or augment limb immediately.</span></div>"
+		return oopsie
+
 	. = ..()
 	. += "<div class='ml-3'>"
 
@@ -165,7 +174,7 @@
 			if(WOUND_INFECTION_SEPTIC to INFINITY)
 				. += "Infection Level: <span class='deadsay'>LOSS IMMINENT</span>\n"
 		if(infestation > sanitization)
-			. += "\tSurgical skin debridal, application of topical ointment, or ingesting Sterilizine, Spaceacillin, or \"Miner's Salve\" will rid infection. Paramedic UV penlights are also effective.\n"
+			. += "\tSurgical debridement, antiobiotics/sterilizers, or regenerative mesh will rid infection. Paramedic UV penlights are also effective.\n"
 
 		if(flesh_damage > 0)
 			. += "Flesh damage detected: Please apply ointment or regenerative mesh to allow recovery.\n"
