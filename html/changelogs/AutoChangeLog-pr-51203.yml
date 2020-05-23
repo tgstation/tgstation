@@ -1,0 +1,4 @@
+author: "qustinnus"
+delete-after: True
+changes: 
+  - bugfix: "Fixes you being able to put in more than one license plate in the license plate machine"
