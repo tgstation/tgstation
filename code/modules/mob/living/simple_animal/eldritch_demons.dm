@@ -193,7 +193,8 @@
 			if(BP)
 				BP.dismember()
 
-	. = ..()
+	return ..()
+
 
 /mob/living/simple_animal/hostile/eldritch/armsy/prime
 	name = "Lord of the Night"
@@ -204,10 +205,10 @@
 	melee_damage_upper = 25
 
 /mob/living/simple_animal/hostile/eldritch/armsy/prime/New(spawn_more, len)
+	. = ..()
 	var/matrix/M = matrix()
 	M.Scale(1.4,1.4)
 	src.transform = M
-	. = ..()
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit
 	name = "Rust Walker"
@@ -269,8 +270,7 @@
 	sight = SEE_MOBS
 
 /mob/living/simple_animal/hostile/eldritch/stalker/Initialize()
+	. = ..()
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch)
 	AddSpell(new /obj/effect/proc_holder/spell/targeted/emplosion/eldritch)
-	. = ..()
-
