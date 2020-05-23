@@ -329,7 +329,7 @@
 	effect_sprite = "emark1"
 
 /datum/status_effect/eldritch/flesh/on_effect()
-	if(istype(owner,/mob/living/carbon/human))
+	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.bleed_rate += 5
 		H.blood_volume -= 200
@@ -345,12 +345,12 @@
 	repetitions = _repetition
 
 /datum/status_effect/eldritch/ash/on_effect()
-	if(istype(owner,/mob/living/carbon))
+	if(iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		carbon_owner.adjustStaminaLoss(10 * repetitions)
 		carbon_owner.adjustFireLoss(5 * repetitions)
 		for(var/mob/living/carbon/victim in range(1,carbon_owner))
-			if(victim.mind?.has_antag_datum(/datum/antagonist/ecult) || victim == carbon_owner)
+			if(IS_E_CULTIST(victim) || victim == carbon_owner)
 				continue
 			victim.apply_status_effect(type,repetitions+1)
 			break
