@@ -184,7 +184,7 @@
 	max_amount = 10
 	repeating = TRUE
 	heal_brute = 10
-	stop_bleeding = 0.5
+	stop_bleeding = 0.6
 	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
 
 /obj/item/stack/medical/suture/emergency
@@ -237,7 +237,7 @@
 	other_delay = 20
 
 	heal_burn = 5
-	flesh_regeneration = 2
+	flesh_regeneration = 2.5
 	sanitization = 0.3
 	grind_results = list(/datum/reagent/medicine/C2/lenturi = 10)
 

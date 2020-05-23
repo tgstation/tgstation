@@ -11,6 +11,7 @@
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY
 	treat_priority = TRUE
+	base_treat_time = 3 SECONDS
 
 	/// How much blood we start losing when this wound is first applied
 	var/initial_flow
@@ -36,7 +37,7 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
-/datum/wound/brute/cut/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/brute/cut/old_wound = null)
+/datum/wound/brute/cut/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/brute/cut/old_wound = null, smited = FALSE)
 	. = ..()
 	blood_flow = initial_flow
 	if(old_wound)
@@ -76,10 +77,12 @@
 	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [current_bandage.name]!</B>"
 
 /datum/wound/brute/cut/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(wounding_type == WOUND_SHARP)
+	if(victim.stat != DEAD && wounding_type == WOUND_SHARP) // can't stab dead bodies to make it bleed faster this way
 		blood_flow += 0.05 * wounding_dmg
 
 /datum/wound/brute/cut/handle_process()
+	blood_flow = min(blood_flow, WOUND_CUT_MAX_BLOODFLOW)
+
 	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
 		blood_flow += 0.5 // old herapin used to just add +2 bleed stacks per tick, this adds 0.5 bleed flow to all open cuts which is probably even more strong as long as you can cut them first
 	else if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/coagulant))
@@ -144,6 +147,10 @@
 	else if(demotes_to)
 		to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
 
+/datum/wound/brute/cut/on_xadone(power)
+	. = ..()
+	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
+
 /datum/wound/brute/cut/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.5 : 1)
 	user.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
@@ -156,8 +163,8 @@
 	if(!lasgun.process_fire(victim, victim, TRUE, null, limb.body_zone))
 		return
 	victim.emote("scream")
-	blood_flow -= damage / (10 * self_penalty_mult)
-	cauterized += damage / (10 * self_penalty_mult)
+	blood_flow -= damage / (5 * self_penalty_mult) // 20 / 5 = 4 bloodflow removed, p good
+	cauterized += damage / (5 * self_penalty_mult)
 	victim.visible_message("<span class='warning'>The cuts on [victim]'s [limb.name] scar over!</span>")
 
 /datum/wound/brute/cut/proc/tool_cauterize(obj/item/I, mob/user)
@@ -278,7 +285,7 @@
 	threshold_minimum = 180
 	status_effect_type = null
 
-/datum/wound/brute/cut/loss/apply_wound(obj/item/bodypart/L, silent, datum/wound/brute/cut/old_wound)
+/datum/wound/brute/cut/loss/apply_wound(obj/item/bodypart/L, silent, datum/wound/brute/cut/old_wound, smited = FALSE)
 	if(!L.dismemberable)
 		qdel(src)
 		return

@@ -345,6 +345,28 @@
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
 				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
+		if(SSblackbox.who_wounded)
+			SSblackbox.who_wounded = sortTim(SSblackbox.who_wounded, /proc/cmp_numeric_asc, TRUE)
+			var/mob/most_wounded
+			var/total_wounds
+			for(var/i in SSblackbox.who_wounded)
+				most_wounded = i
+				total_wounds += SSblackbox.who_wounded[i] // we end with the last one being the most
+			parts += "[FOURSPACES]The crew suffered [total_wounds] wounds this shift!</b>"
+			parts += "[FOURSPACES]Most Wounded: <b>[most_wounded] was wounded [SSblackbox.who_wounded[most_wounded]] times!</b>"
+		else
+			parts += "[FOURSPACES]<i>Nobody was wounded this shift!</i>"
+		if(SSblackbox.who_scarred)
+			SSblackbox.who_scarred = sortTim(SSblackbox.who_scarred, /proc/cmp_numeric_asc, TRUE)
+			var/mob/most_scarred
+			var/total_scars
+			for(var/i in SSblackbox.who_scarred)
+				most_scarred = i
+				total_scars += SSblackbox.who_scarred[i] // we end with the last one being the most
+			parts += "[FOURSPACES]The crew suffered [total_scars] scars this shift!</b>"
+			parts += "[FOURSPACES]Most Scarred: <b>[most_scarred] was scarred [SSblackbox.who_scarred[most_scarred]] times!</b>"
+		else
+			parts += "[FOURSPACES]<i>Nobody suffered a (physical) scar this shift!</i>"
 	if(istype(SSticker.mode, /datum/game_mode/dynamic))
 		var/datum/game_mode/dynamic/mode = SSticker.mode
 		parts += "[FOURSPACES]Threat level: [mode.threat_level]"

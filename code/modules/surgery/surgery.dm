@@ -33,8 +33,11 @@
 			operated_bodypart = surgery_bodypart
 			if(targetable_wound)
 				operated_wound = operated_bodypart.get_wound_type(targetable_wound)
+				operated_wound.attached_surgery = src
 
 /datum/surgery/Destroy()
+	if(operated_wound)
+		operated_wound.attached_surgery = null
 	if(target)
 		target.surgeries -= src
 	target = null

@@ -41,7 +41,7 @@
 			sanitization += 0.9
 		if(victim.reagents.has_reagent(/datum/reagent/medicine/mine_salve))
 			sanitization += 0.3
-			flesh_healing += 0.2
+			flesh_healing += 0.5
 
 	if(current_bandage)
 		current_bandage.absorption_capacity -= WOUND_BURN_SANITIZATION_RATE
@@ -52,11 +52,11 @@
 
 	if(flesh_healing > 0)
 		var/bandage_factor = (current_bandage ? current_bandage.splint_factor : 1)
-		flesh_damage = max(0, flesh_damage - min(1, flesh_healing))
+		flesh_damage = max(0, flesh_damage - 1)
 		flesh_healing = max(0, flesh_healing - bandage_factor) // good bandages multiply the length of flesh healing
 
 	// here's the check to see if we're cleared up
-	if((flesh_damage <= 0) && (infestation <= 0))
+	if((flesh_damage <= 0) && (infestation <= 1))
 		to_chat(victim, "<span class='green'>The burns on your [limb.name] have cleared up!</span>")
 		qdel(src)
 		return
@@ -128,7 +128,7 @@
 			if(1.25 to 2.75)
 				bandage_condition = "badly worn "
 			if(2.75 to 4)
-				bandage_condition = "slightly bloodied "
+				bandage_condition = "slightly pus-stained "
 			if(4 to INFINITY)
 				bandage_condition = "clean "
 
@@ -136,7 +136,7 @@
 	else
 		switch(infestation)
 			if(WOUND_INFECTION_MODERATE to WOUND_INFECTION_SEVERE)
-				condition += ", <span class='deadsay'>with discolored spots along the nearby veins!</span>"
+				condition += ", <span class='deadsay'>with small spots of discoloration along the nearby veins!</span>"
 			if(WOUND_INFECTION_SEVERE to WOUND_INFECTION_CRITICAL)
 				condition += ", <span class='deadsay'>with dark clouds spreading outwards under the skin!</span>"
 			if(WOUND_INFECTION_CRITICAL to WOUND_INFECTION_SEPTIC)
@@ -192,6 +192,15 @@
 	else
 		try_treating(I, user)
 
+/// for use in the burn dressing surgery since we don't want to make them do another do_after obviously
+/datum/wound/burn/proc/force_bandage(obj/item/stack/medical/gauze/I, mob/user)
+	QDEL_NULL(current_bandage)
+	current_bandage = new I.type(limb)
+	current_bandage.amount = 1
+	treat_priority = FALSE
+	sanitization += I.sanitization
+	I.use(1)
+
 /datum/wound/burn/proc/bandage(obj/item/stack/medical/gauze/I, mob/user)
 	if(current_bandage)
 		if(current_bandage.absorption_capacity > I.absorption_capacity + 1)
@@ -209,8 +218,8 @@
 	current_bandage = new I.type(limb)
 	current_bandage.amount = 1
 	treat_priority = FALSE
-	I.use(1)
 	sanitization += I.sanitization
+	I.use(1)
 
 /datum/wound/burn/proc/mesh(obj/item/stack/medical/mesh/I, mob/user)
 	user.visible_message("<span class='notice'>[user] begins wrapping [victim]'s [limb.name] with [I]...</span>", "<span class='notice'>You begin wrapping [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")

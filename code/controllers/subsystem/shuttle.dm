@@ -1,4 +1,7 @@
 #define MAX_TRANSIT_REQUEST_RETRIES 10
+#define STUB_TOE_BASELINE_TIME 35 MINUTES // after this many minutes our chances of stubbing our toe are at 0%
+#define STUB_TOE_MULT_GREEN	1.5
+#define STUB_TOE_MULT_BLUE	1.25
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"

@@ -16,7 +16,6 @@
 
 /datum/wound
 	//Fluff
-	var/form = "injury"
 	var/name = "ouchie"
 	var/desc = ""
 	var/treat_text = ""
@@ -91,11 +90,18 @@
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
 	var/cryo_progress
 
+	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
+	var/datum/surgery/attached_surgery
+
 	var/list/scarring_descriptions = list("general disfigurement")
 	/// If we've already tried scarring while removing (since remove_wound calls qdel, and qdel calls remove wound, .....) TODO: make this cleaner
 	var/already_scarred = FALSE
+	/// If we forced this wound through badmin smite, we won't count it towards the round totals
+	var/from_smite
 
 /datum/wound/Destroy()
+	if(attached_surgery)
+		QDEL_NULL(attached_surgery)
 	if(limb && limb.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
 		remove_wound()
 	limb = null
@@ -111,7 +117,7 @@
   * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
   * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
   */
-/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null)
+/datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner))
 		qdel(src)
 		return
@@ -149,6 +155,9 @@
 		return
 
 	if(!(silent || demoted))
+		if(!from_smite)
+			LAZYINITLIST(SSblackbox.who_wounded)
+			SSblackbox.who_wounded[victim]++
 		var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
@@ -171,6 +180,9 @@
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
+		if(!from_smite)
+			LAZYINITLIST(SSblackbox.who_scarred)
+			SSblackbox.who_scarred[victim]++
 	if(victim)
 		LAZYREMOVE(victim.all_wounds, src)
 		if(!victim.all_wounds)
@@ -181,11 +193,11 @@
 		limb.update_wounds()
 
 /// When you want to swap out one wound for another (typically a promotion or demotion in the same wound type). First we remove the old one, then we apply the new one with a reference to the old one, then we qdel the old one fully
-/datum/wound/proc/replace_wound(new_type)
+/datum/wound/proc/replace_wound(new_type, smited = FALSE)
 	var/datum/wound/new_wound = new new_type
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
-	new_wound.apply_wound(limb, old_wound = src)
+	new_wound.apply_wound(limb, old_wound = src, smited = smited)
 	qdel(src)
 
 /// The immediate negative effects faced as a result of the wound
@@ -278,7 +290,8 @@
 /datum/wound/proc/receive_damage(wounding_type, wounding_dmg, wound_bonus)
 	return
 
-/datum/wound/proc/on_cryo(power)
+/// Called from cryoxadone and pyroxadone when they're proc'ing. Wounds will slowly be fixed separately from other methods when these are in effect. crappy name but eh
+/datum/wound/proc/on_xadone(power)
 	cryo_progress += power
 	if(cryo_progress > 33 * severity)
 		qdel(src)

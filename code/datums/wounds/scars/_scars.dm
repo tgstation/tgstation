@@ -98,9 +98,14 @@
 	if(!victim || !is_visible(viewer))
 		return
 
-	var/msg = "<span class='smallnotice'>[victim.p_they(TRUE)] [victim.p_have()] [description] on [victim.p_their()] [precise_location].</span>"
-	if(severity == WOUND_SEVERITY_CRITICAL)
-		msg = "<b>[msg]</b>"
+	var/msg = "[victim.p_they(TRUE)] [victim.p_have()] [description] on [victim.p_their()] [precise_location]."
+	switch(severity)
+		if(WOUND_SEVERITY_MODERATE)
+			msg = "<span class='tinynotice'>[msg]</span>"
+		if(WOUND_SEVERITY_SEVERE)
+			msg = "<span class='smallnotice'>[msg]</span>"
+		if(WOUND_SEVERITY_CRITICAL)
+			msg = "<span class='smallnotice'><b>[msg]</b></span>"
 	return "\t[msg]"
 
 /// Whether a scar can currently be seen by the viewer

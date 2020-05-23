@@ -278,17 +278,17 @@
 				new_wound.apply_wound(src)
 			return
 
-// try forcing a specific wound, but only if there isn't already a wound of that  severity or greater for that type on this bodypart
-/obj/item/bodypart/proc/force_wound_upwards(specific_woundtype)
+// try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
+/obj/item/bodypart/proc/force_wound_upwards(specific_woundtype, smited = FALSE)
 	var/datum/wound/potential_wound = specific_woundtype
 	for(var/datum/wound/existing_wound in wounds)
 		if(existing_wound.type in (initial(potential_wound.wound_type)))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
-				existing_wound.replace_wound(potential_wound)
+				existing_wound.replace_wound(potential_wound, smited)
 			return
 
 	var/datum/wound/new_wound = new potential_wound
-	new_wound.apply_wound(src)
+	new_wound.apply_wound(src, smited = smited)
 
 /obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0

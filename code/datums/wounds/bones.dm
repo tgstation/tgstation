@@ -26,7 +26,7 @@
 /*
 	Overwriting of base procs
 */
-/datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = null)
+/datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = null, smited = FALSE)
 	. = ..()
 	if(QDELETED(src) || !limb)
 		return
