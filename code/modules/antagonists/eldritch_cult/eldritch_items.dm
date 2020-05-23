@@ -3,6 +3,7 @@
 	desc = "Link to the worlds beyond."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "living_heart"
+	///Target
 	var/datum/mind/target
 
 /obj/item/living_heart/attack_self(mob/user)
