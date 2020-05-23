@@ -9,7 +9,7 @@
 
 /obj/item/forbidden_book/examine(mob/user)
 	. = ..()
-	if(!user.mind.has_antag_datum(/datum/antagonist/ecult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return
 	. += "The Tome holds [charge] charges."
 
@@ -31,7 +31,7 @@
 		charge += 1
 
 /obj/item/forbidden_book/proc/draw_rune(atom/target,mob/user)
-	if(!user.mind.has_antag_datum(/datum/antagonist/ecult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return
 	for(var/turf/T in range(1,target))
 		if(is_type_in_typecache(T, blacklisted_turfs))
@@ -42,13 +42,13 @@
 		new /obj/effect/eldritch/big(A)
 
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
-	if(!user.mind.has_antag_datum(/datum/antagonist/ecult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return
 	if(do_after(user,2 SECONDS,user))
 		target.Destroy()
 
 /obj/item/forbidden_book/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
-	if(!user.mind.has_antag_datum(/datum/antagonist/ecult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return FALSE
 	last_user = user
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -57,7 +57,7 @@
 		ui.open()
 
 /obj/item/forbidden_book/ui_data(mob/user)
-	var/datum/antagonist/ecult/cultie = user.mind.has_antag_datum(/datum/antagonist/ecult)
+	var/datum/antagonist/e_cult/cultie = user.mind.has_antag_datum(/datum/antagonist/e_cult)
 	var/list/to_know_alpha = list()
 	for(var/Y in cultie.get_researchable_knowledge())
 		to_know_alpha += new Y
@@ -120,7 +120,7 @@
 		return
 	switch(action)
 		if("research")
-			var/datum/antagonist/ecult/cultie = last_user.mind.has_antag_datum(/datum/antagonist/ecult)
+			var/datum/antagonist/e_cult/cultie = last_user.mind.has_antag_datum(/datum/antagonist/e_cult)
 			var/ekname = params["name"]
 			for(var/X in cultie.get_researchable_knowledge())
 				var/datum/eldritch_knowledge/EK = X
