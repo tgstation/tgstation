@@ -162,10 +162,10 @@
 
 				current_stacks = 0
 
-	adjustBruteLoss(-maxHealth/2)
-	adjustFireLoss(-maxHealth/2)
-	adjustToxLoss(-maxHealth/2)
-	adjustOxyLoss(-maxHealth/2)
+	adjustBruteLoss(-maxHealth * 0.5)
+	adjustFireLoss(-maxHealth * 0.5)
+	adjustToxLoss(-maxHealth * 0.5)
+	adjustOxyLoss(-maxHealth * 0.5)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
 	if(istype(target,/obj/item/bodypart/r_arm) || istype(target,/obj/item/bodypart/l_arm))
