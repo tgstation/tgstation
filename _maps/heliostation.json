@@ -1,0 +1,11 @@
+{
+    "map_name": "Heliostation",
+    "map_path": "map_files/Heliostation",
+    "map_file": "heliostation.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    }
+}

@@ -110,6 +110,12 @@
 /turf/open/floor/mineral/titanium/purple/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/mineral/titanium/brown
+	icon_state = "titanium_brown"
+
+/turf/open/floor/mineral/titanium/brown/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
 //PLASTITANIUM (syndieshuttle)
 /turf/open/floor/mineral/plastitanium
 	name = "shuttle floor"
