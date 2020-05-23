@@ -338,6 +338,7 @@
 /datum/status_effect/eldritch/ash
 	id = "ash_mark"
 	effect_sprite = "emark2"
+	///Dictates how much damage and stamina loss this mark will cause.
 	var/repetitions = 1
 
 /datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, _repetition = 1)

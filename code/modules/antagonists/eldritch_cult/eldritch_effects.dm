@@ -85,7 +85,9 @@
   * Tracks relevant data, generates relevant data, useful tool
   */
 /datum/reality_smash_tracker
+	///list of tracked reality smashes
 	var/list/smashes = list()
+	///List of mobs with ability to see the smashes
 	var/list/targets = list()
 
 /datum/reality_smash_tracker/New()
@@ -136,8 +138,11 @@
 /obj/effect/reality_smash
 	name = "/improper reality smash"
 	icon = 'icons/effects/eldritch.dmi'
+	///We cannot use icon_state since this is invisible, functions the same way but with custom behaviour.
 	var/image_state = "reality_smash"
+	///Who can see us?
 	var/list/minds = list()
+	///Tracked image
 	var/image/img
 
 /obj/effect/reality_smash/Initialize()
