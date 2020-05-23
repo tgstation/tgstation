@@ -14,7 +14,7 @@
 	var/list/added_modules = list() //modules not inherient to the robot module, are kept when the module changes
 	var/list/storages = list()
 
-	var/radio_channel = null
+	var/list/radio_channels = list()
 
 	var/cyborg_base_icon = "robot" //produces the icon for the borg and, if no special_light_key is set, the lights
 	var/special_light_key //if we want specific lights, use this instead of copying lights in the dmi
@@ -288,7 +288,7 @@
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/organ_storage,
 		/obj/item/borg/lollipop)
-	radio_channel = RADIO_CHANNEL_MEDICAL
+	radio_channels = list(RADIO_CHANNEL_MEDICAL)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
@@ -321,7 +321,7 @@
 		/obj/item/stack/rods/cyborg,
 		/obj/item/stack/tile/plasteel/cyborg,
 		/obj/item/stack/cable_coil/cyborg)
-	radio_channel = RADIO_CHANNEL_ENGINEERING
+	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
@@ -337,7 +337,7 @@
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/extinguisher/mini)
-	radio_channel = RADIO_CHANNEL_SECURITY
+	radio_channels = list(RADIO_CHANNEL_SECURITY)
 	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
@@ -399,7 +399,7 @@
 		/obj/item/lightreplacer/cyborg,
 		/obj/item/holosign_creator/janibarrier,
 		/obj/item/reagent_containers/spray/cyborg_drying)
-	radio_channel = RADIO_CHANNEL_SERVICE
+	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
@@ -478,7 +478,7 @@
 		/obj/item/borg/lollipop,
 		/obj/item/stack/pipe_cleaner_coil/cyborg,
 		/obj/item/borg/apparatus/beaker/service)
-	radio_channel = RADIO_CHANNEL_SERVICE
+	radio_channels = list(RADIO_CHANNEL_SERVICE)
 	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
 	moduleselect_icon = "service"
 	special_light_key = "service"
@@ -534,7 +534,7 @@
 		/obj/item/gun/energy/kinetic_accelerator/cyborg,
 		/obj/item/gps/cyborg,
 		/obj/item/stack/marker_beacon)
-	radio_channel = RADIO_CHANNEL_SUPPLY
+	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
 	emag_modules = list(/obj/item/borg/stun)
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"

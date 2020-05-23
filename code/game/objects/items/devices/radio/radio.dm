@@ -376,8 +376,9 @@
 	. = ..()
 	
 	var/mob/living/silicon/robot/R = loc
-	if(istype(R) && R.module.radio_channel)
-		channels[R.module.radio_channel] = 1
+	if(istype(R))
+		for(var/ch_name in R.module.radio_channels)
+			channels[ch_name] = 1
 
 /obj/item/radio/borg/syndicate
 	syndie = 1
