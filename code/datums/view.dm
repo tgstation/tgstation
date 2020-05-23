@@ -15,7 +15,7 @@
 	default = string
 	apply()
 
-/datum/viewData/proc/safeApplyFormat()//T-Pose
+/datum/viewData/proc/safeApplyFormat()
 	if(chief.prefs.auto_fit_viewport)
 		chief.fit_viewport()
 	if(isZooming())
