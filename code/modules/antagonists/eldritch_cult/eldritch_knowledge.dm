@@ -162,8 +162,7 @@
 	return
 
 /datum/eldritch_knowledge/curse/proc/uncurse(mob/living/chosen_mob)
-	if(!chosen_mob)
-		return
+	return
 
 /datum/eldritch_knowledge/summon
 	var/mob/living/mob_to_summon
