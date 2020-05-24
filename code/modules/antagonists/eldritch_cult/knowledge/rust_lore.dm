@@ -209,12 +209,6 @@
 	L.physiology.brute_mod = prev_brute_mod * 0.5
 	L.physiology.burn_mod = prev_burn_mod * 0.5
 
-/datum/rust_spread
-	var/list/edge_turfs = list()
-	var/list/turfs = list()
-	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed/wall/rust,/turf/closed/wall/r_wall/rust,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
-	var/spread_per_tick = 5
-
 
 /**
   * #Rust spread datum
@@ -223,6 +217,13 @@
   *
   * Simple implementation of automatically growing entity
   */
+/datum/rust_spread
+	var/list/edge_turfs = list()
+	var/list/turfs = list()
+	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed/wall/rust,/turf/closed/wall/r_wall/rust,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
+	var/spread_per_tick = 5
+
+
 /datum/rust_spread/New(loc)
 	var/turf/T = get_turf(loc)
 	T.ChangeTurf(/turf/open/floor/plating/rust)
