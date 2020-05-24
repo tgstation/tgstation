@@ -42,8 +42,6 @@
 	var/list/atom_colours
 
 
-	///overlays that should remain on top and not normally removed when using cut_overlay functions, like c4.
-	var/list/priority_overlays
 	/// a very temporary list of overlays to remove
 	var/list/remove_overlays
 	/// a very temporary list of overlays to add
@@ -233,7 +231,6 @@
 	orbiters = null // The component is attached to us normaly and will be deleted elsewhere
 
 	LAZYCLEARLIST(overlays)
-	LAZYCLEARLIST(priority_overlays)
 
 	for(var/i in targeted_by)
 		var/mob/M = i
