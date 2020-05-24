@@ -4,9 +4,13 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 	var/name = "Skilling"
 	var/title = "Skiller"
 	var/desc = "the art of doing things"
+	///Dictionary of modifier type - list of modifiers (indexed by level). 7 entries in each list for all 7 skill levels.
 	var/modifiers = list(SKILL_SPEED_MODIFIER = list(1, 1, 1, 1, 1, 1, 1)) //Dictionary of modifier type - list of modifiers (indexed by level). 7 entries in each list for all 7 skill levels.
+	///List Path pointing to the skill cape reward that will appear when a user finishes leveling up a skill
 	var/skill_cape_path
+	///List associating different messages that appear on level up with different levels
 	var/list/levelUpMessages = list()
+	///List associating different messages that appear on level up with different levels
 	var/list/levelDownMessages = list()
 
 /datum/skill/proc/get_skill_modifier(modifier, level)
