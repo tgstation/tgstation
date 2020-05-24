@@ -218,7 +218,7 @@
 
 /obj/machinery/computer/security/qm
 	name = "\improper Quartermaster's camera console"
-	desc = "A console with access to the mining, auxillary base and vault camera networks."
+	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list("mine", "auxbase", "vault")
 	circuit = null
 
@@ -322,8 +322,8 @@
 	network = list("prison")
 
 /obj/machinery/computer/security/telescreen/auxbase
-	name = "auxillary base monitor"
-	desc = "A telescreen that connects to the auxillary base's camera."
+	name = "auxiliary base monitor"
+	desc = "A telescreen that connects to the auxiliary base's camera."
 	network = list("auxbase")
 
 /obj/machinery/computer/security/telescreen/minisat

@@ -589,7 +589,7 @@
 			return
 		if(cultist_to_receive.stat == DEAD)
 			to_chat(user, "<span class='cult italic'>[cultist_to_receive] has died!</span>")
-			log_game("Void torch failed  - target died")
+			log_game("Void torch failed - target died")
 			return
 		if(!iscultist(cultist_to_receive))
 			to_chat(user, "<span class='cult italic'>[cultist_to_receive] is not a follower of the Geometer!</span>")

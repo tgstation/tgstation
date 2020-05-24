@@ -67,7 +67,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if((current_version < 21) && features["ethcolor"] && (features["ethcolor"] == "#9c3030"))
 		features["ethcolor"] = "9c3030"
 	if(current_version < 22)
-		job_preferences = list() //It loaded null from nonexistant savefile field.
+		job_preferences = list() //It loaded null from nonexistent savefile field.
 		var/job_civilian_high = 0
 		var/job_civilian_med = 0
 		var/job_civilian_low = 0

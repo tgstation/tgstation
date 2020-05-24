@@ -1716,7 +1716,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //////////////////////////
 
 /**
- * Enviroment handler for species
+ * environment handler for species
  *
  * vars:
  * * environment The environment gas mix

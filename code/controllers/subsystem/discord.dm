@@ -2,8 +2,8 @@
 NOTES:
 There is a DB table to track ckeys and associated discord IDs.
 This system REQUIRES TGS, and will auto-disable if TGS is not present.
-The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasnt properly shutdown
-It only writes to the disk every 5 minutes, and it wont write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
+The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasn't properly shutdown
+It only writes to the disk every 5 minutes, and it won't write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
 The system is kept per-server (EG: Terry will not notify people who pressed notify on Sybil), but the accounts are between servers so you dont have to relink on each server.
 
 ##################
@@ -20,7 +20,7 @@ MIDROUND:
 2] On fire, it will write that to the disk, as long as conditions above are correct
 
 END ROUND:
-1] The file is force-saved, incase it hasnt fired at end round
+1] The file is force-saved, incase it hasn't fired at end round
 
 This is an absolute clusterfuck, but its my clusterfuck -aa07
 */
@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(discord)
 	/// list of people who tried to reverify, so they can only do it once per round as a shitty slowdown
 	var/list/reverify_cache = list()
 	var/notify_file = file("data/notify.json")
-	/// Is TGS enabled (If not we wont fire because otherwise this is useless)
+	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
 	var/enabled = 0
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
@@ -119,7 +119,7 @@ SUBSYSTEM_DEF(discord)
 	return num_only.Replace(input, "")
 
 /datum/controller/subsystem/discord/proc/grant_role(id)
-	// Ignore this shit if config isnt enabled for it
+	// Ignore this shit if config isn't enabled for it
 	if(!CONFIG_GET(flag/enable_discord_autorole))
 		return
 
