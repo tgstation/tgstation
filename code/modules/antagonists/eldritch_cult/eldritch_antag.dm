@@ -4,7 +4,6 @@
 	antagpanel_category = "Eldritch Cult"
 	antag_moodlet = /datum/mood_event/e_cult
 	job_rank = ROLE_ECULTIST
-	var/ignore_implant = FALSE
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
