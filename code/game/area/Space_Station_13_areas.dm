@@ -1120,6 +1120,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Technical Storage"
 	icon_state = "aux_storage"
 
+/area/storage/mining
+	name = "Public Mining Storage"
+	icon_state = "mining"
+
 //Construction
 
 /area/construction

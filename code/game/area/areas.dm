@@ -13,10 +13,22 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
-	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+	/// Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+	var/map_name
 
-	var/valid_territory = TRUE // If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
-	var/blob_allowed = TRUE // If blobs can spawn there and if it counts towards their score.
+	/// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
+	var/valid_territory = TRUE
+	/// If blobs can spawn there and if it counts towards their score.
+	var/blob_allowed = TRUE
+
+	/// If mining tunnel generation is allowed in this area
+	var/tunnel_allowed = FALSE
+	/// If flora are allowed to spawn in this area randomly through tunnel generation
+	var/flora_allowed = FALSE
+	/// If mobs can be spawned by natural random generation
+	var/mob_spawn_allowed = FALSE
+	/// If megafauna can be spawned by natural random generation
+	var/megafauna_spawn_allowed = FALSE
 
 	var/fire = null
 	var/atmos = TRUE
@@ -24,16 +36,22 @@
 	var/poweralm = TRUE
 	var/lightswitch = TRUE
 
-	var/totalbeauty = 0 //All beauty in this area combined, only includes indoor area.
-	var/beauty = 0 // Beauty average per open turf in the area
-	var/beauty_threshold = 150 //If a room is too big it doesn't have beauty.
+	/// All beauty in this area combined, only includes indoor area.
+	var/totalbeauty = 0
+	/// Beauty average per open turf in the area
+	var/beauty = 0
+	/// If a room is too big it doesn't have beauty.
+	var/beauty_threshold = 150
 
 	var/requires_power = TRUE
-	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
+	/// This gets overridden to 1 for space in area/Initialize().
+	var/always_unpowered = FALSE
 
-	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	/// For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/outdoors = FALSE
 
-	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
+	/// Size of the area in open turfs, only calculated for indoors areas.
+	var/areasize = 0
 
 	/// Bonus mood for being in this area
 	var/mood_bonus = 0
@@ -45,11 +63,11 @@
 	var/power_environ = TRUE
 
 	var/has_gravity = 0
-	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
+	/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
 	var/noteleport = FALSE
-	///Hides area from player Teleport function.
+	/// Hides area from player Teleport function.
 	var/hidden = FALSE
-	///Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	/// Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 	var/safe = FALSE
 	/// If false, loading multiple maps with this area type will create multiple instances.
 	var/unique = TRUE
@@ -294,7 +312,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
 
 /**
-  * Generate an firealarm alert for this area
+  * Generate a firealarm alert for this area
   *
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
   *

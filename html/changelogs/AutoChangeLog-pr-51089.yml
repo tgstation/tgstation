@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes: 
+  - balance: "Explosions that were able to destroy doors before will now rip them from the universe."

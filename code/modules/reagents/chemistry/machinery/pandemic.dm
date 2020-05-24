@@ -160,9 +160,9 @@
 		var/datum/reagent/blood/B = locate() in beaker.reagents.reagent_list
 		if(B)
 			data["has_blood"] = TRUE
-			data[/datum/reagent/blood] = list()
-			data[/datum/reagent/blood]["dna"] = B.data["blood_DNA"] || "none"
-			data[/datum/reagent/blood]["type"] = B.data["blood_type"] || "none"
+			data["blood"] = list()
+			data["blood"]["dna"] = B.data["blood_DNA"] || "none"
+			data["blood"]["type"] = B.data["blood_type"] || "none"
 			data["viruses"] = get_viruses_data(B)
 			data["resistances"] = get_resistance_data(B)
 		else
