@@ -219,7 +219,7 @@
 
 /obj/item/clothing/head/helmet/space/plasmaman/cargo
 	name = "cargo plasma envirosuit helmet"
-	desc = "An plasmaman envirohelmet designed for cargo techs and quartermasters."
+	desc = "A plasmaman envirohelmet designed for cargo techs and quartermasters."
 	icon_state = "cargo_envirohelm"
 	item_state = "cargo_envirohelm"
 

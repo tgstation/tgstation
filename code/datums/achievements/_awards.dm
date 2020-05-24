@@ -1,5 +1,5 @@
 /datum/award
-	///Name of the achievement, If null it wont show up in the achievement browser. (Handy for inheritance trees)
+	///Name of the achievement, If null it won't show up in the achievement browser. (Handy for inheritance trees)
 	var/name
 	var/desc = "You did it."
 	///Found in UI_Icons/Achievements

@@ -1,0 +1,6 @@
+author: "Cyberboss"
+delete-after: True
+changes: 
+  - bugfix: "The `notify` TGS command will no longer work if the related config setting is disabled"
+  - bugfix: "Fixed not actually limiting chat sends to tagged channels as the config should allow when running under TGS4."
+  - bugfix: "Fixed the `notify` command not working for IRC users."

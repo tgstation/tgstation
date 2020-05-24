@@ -856,76 +856,17 @@ $(function() {
 			href = escaper(href);
 			runByond('?action=openLink&link='+href);
 		}
+		runByond('byond://winset?mapwindow.map.focus=true');
 	});
 
-	//Fuck everything about this event. Will look into alternatives.
 	$('body').on('keydown', function(e) {
 		if (e.target.nodeName == 'INPUT' || e.target.nodeName == 'TEXTAREA') {
 			return;
 		}
-
 		if (e.ctrlKey || e.altKey || e.shiftKey) { //Band-aid "fix" for allowing ctrl+c copy paste etc. Needs a proper fix.
 			return;
 		}
-
-		e.preventDefault()
-
-		var k = e.which;
-		// Hardcoded because else there would be no feedback message.
-		if (k == 113) { // F2
-			runByond('byond://winset?screenshot=auto');
-			internalOutput('Screenshot taken', 'internal');
-		}
-
-		var c = "";
-		switch (k) {
-			case 8:
-				c = 'BACK';
-			case 9:
-				c = 'TAB';
-			case 13:
-				c = 'ENTER';
-			case 19:
-				c = 'PAUSE';
-			case 27:
-				c = 'ESCAPE';
-			case 33: // Page up
-				c = 'NORTHEAST';
-			case 34: // Page down
-				c = 'SOUTHEAST';
-			case 35: // End
-				c = 'SOUTHWEST';
-			case 36: // Home
-				c = 'NORTHWEST';
-			case 37:
-				c = 'WEST';
-			case 38:
-				c = 'NORTH';
-			case 39:
-				c = 'EAST';
-			case 40:
-				c = 'SOUTH';
-			case 45:
-				c = 'INSERT';
-			case 46:
-				c = 'DELETE';
-			case 93: // That weird thing to the right of alt gr.
-				c = 'APPS';
-
-			default:
-				c = String.fromCharCode(k);
-		}
-
-		if (c.length == 0) {
-			if (!e.shiftKey) {
-				c = c.toLowerCase();
-			}
-			runByond('byond://winset?mapwindow.map.focus=true;mainwindow.input.text='+c);
-			return false;
-		} else {
-			runByond('byond://winset?mapwindow.map.focus=true');
-			return false;
-		}
+		runByond('byond://winset?mapwindow.map.focus=true');
 	});
 
 	//Mildly hacky fix for scroll issues on mob change (interface gets resized sometimes, messing up snap-scroll)
