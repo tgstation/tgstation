@@ -244,7 +244,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		query_parts += " IGNORE"
 	query_parts += " INTO "
 	query_parts += table
-	query_parts += "\n([columns.Join(", "])\nVALUES"
+	query_parts += "\n([columns.Join(", ")]\nVALUES"
 
 	var/has_row = FALSE
 	for (var/list/row in rows)
@@ -297,9 +297,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 			arguments += value
 
 	var/datum/DBQuery/Query = NewQuery(query_parts.Join(), arguments)
-		"INSERT[delayed][ignore_errors] INTO [table]\n([columns.Join(", ")])\nVALUES\n  [values_section.Join(",\n  ")]\n[duplicate_key]",
-		arguments
-	)
 	if (warn)
 		. = Query.warn_execute(async)
 	else
