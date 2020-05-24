@@ -3,6 +3,8 @@
 	roundend_category = "gangsters"
 	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"
+	antagpanel_category = "Family"
+	show_in_antagpanel = FALSE // i don't *think* this base class is buggy but it's too worthless to test
 	/// The overarching family that the owner of this datum is a part of. Family teams are generic and imprinted upon by the per-person antagonist datums.
 	var/datum/team/gang/my_gang
 	/// The name of the family corresponding to this family member datum.
@@ -55,18 +57,19 @@
 			starter_gangster = TRUE
 
 	if(starter_gangster)
-		for(var/C in my_gang.free_clothes)
-			var/obj/O = new C(owner.current)
-			var/list/slots = list (
-				"backpack" = ITEM_SLOT_BACKPACK,
-				"left pocket" = ITEM_SLOT_LPOCKET,
-				"right pocket" = ITEM_SLOT_RPOCKET
-			)
-			var/mob/living/carbon/human/H = owner.current
-			var/equipped = H.equip_in_one_of_slots(O, slots)
-			if(!equipped)
-				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
-				qdel(O)
+		if(istype(owner.current, /mob/living/carbon/human))
+			for(var/C in my_gang.free_clothes)
+				var/obj/O = new C(owner.current)
+				var/list/slots = list (
+					"backpack" = ITEM_SLOT_BACKPACK,
+					"left pocket" = ITEM_SLOT_LPOCKET,
+					"right pocket" = ITEM_SLOT_RPOCKET
+				)
+				var/mob/living/carbon/human/H = owner.current
+				var/equipped = H.equip_in_one_of_slots(O, slots)
+				if(!equipped)
+					to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
+					qdel(O)
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	..()
 
@@ -132,6 +135,7 @@
 	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [gang_objective]</font>")
 
 /datum/antagonist/gang/red
+	show_in_antagpanel = TRUE
 	name = "San Fierro Triad"
 	roundend_category = "The San Fierro Triad gangsters"
 	gang_name = "San Fierro Triad"
@@ -157,6 +161,7 @@
 	return TRUE
 
 /datum/antagonist/gang/purple
+	show_in_antagpanel = TRUE
 	name = "Ballas"
 	roundend_category = "The Ballas gangsters"
 	gang_name = "Ballas"
@@ -183,6 +188,7 @@
 	return TRUE
 
 /datum/antagonist/gang/green
+	show_in_antagpanel = TRUE
 	name = "Grove Street Families"
 	roundend_category = "The Grove Street Families gangsters"
 	gang_name = "Grove Street Families"
@@ -210,6 +216,7 @@
 
 
 /datum/antagonist/gang/russian_mafia
+	show_in_antagpanel = TRUE
 	name = "Russian Mafia"
 	roundend_category = "The Russian mafiosos"
 	gang_name = "Russian Mafia"
@@ -240,6 +247,7 @@
 
 
 /datum/antagonist/gang/italian_mob
+	show_in_antagpanel = TRUE
 	name = "Italian Mob"
 	roundend_category = "The Italian mobsters"
 	gang_name = "Italian Mob"
@@ -270,6 +278,7 @@
 	return TRUE
 
 /datum/antagonist/gang/tunnel_snakes
+	show_in_antagpanel = TRUE
 	name = "Tunnel Snakes"
 	roundend_category = "The Tunnel Snakes"
 	gang_name = "Tunnel Snakes"
@@ -300,6 +309,7 @@
 	return TRUE
 
 /datum/antagonist/gang/vagos
+	show_in_antagpanel = TRUE
 	name = "Los Santos Vagos"
 	roundend_category = "The Los Santos Vagos gangsters"
 	gang_name = "Los Santos Vagos"
@@ -334,6 +344,7 @@
 
 
 /datum/antagonist/gang/henchmen
+	show_in_antagpanel = TRUE
 	name = "Monarch Crew"
 	roundend_category = "The Monarch henchmen"
 	gang_name = "Monarch Crew"
@@ -358,6 +369,7 @@
 	return TRUE
 
 /datum/antagonist/gang/yakuza
+	show_in_antagpanel = TRUE
 	name = "Tojo Clan"
 	roundend_category = "The Yakuza"
 	gang_name = "Tojo Clan"
@@ -387,6 +399,7 @@
 	return TRUE
 
 /datum/antagonist/gang/jackbros
+	show_in_antagpanel = TRUE
 	name = "Jack Bros"
 	roundend_category = "The Hee-hos"
 	gang_name = "Jack Bros"
@@ -416,6 +429,7 @@
 
 
 /datum/antagonist/gang/dutch
+	show_in_antagpanel = TRUE
 	name = "Dutch van der Linde's Gang"
 	roundend_category = "Dutch's outlaws"
 	gang_name = "Dutch van der Linde's Gang"

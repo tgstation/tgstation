@@ -253,18 +253,19 @@
 	random_names = FALSE
 
 /datum/antagonist/ert/families/undercover_cop/on_gain()
-	for(var/C in free_clothes)
-		var/obj/O = new C(owner.current)
-		var/list/slots = list (
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"left pocket" = ITEM_SLOT_LPOCKET,
-			"right pocket" = ITEM_SLOT_RPOCKET
-		)
-		var/mob/living/carbon/human/H = owner.current
-		var/equipped = H.equip_in_one_of_slots(O, slots)
-		if(!equipped)
-			to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
-			qdel(O)
+	if(istype(owner.current, /mob/living/carbon/human))
+		for(var/C in free_clothes)
+			var/obj/O = new C(owner.current)
+			var/list/slots = list (
+				"backpack" = ITEM_SLOT_BACKPACK,
+				"left pocket" = ITEM_SLOT_LPOCKET,
+				"right pocket" = ITEM_SLOT_RPOCKET
+			)
+			var/mob/living/carbon/human/H = owner.current
+			var/equipped = H.equip_in_one_of_slots(O, slots)
+			if(!equipped)
+				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
+				qdel(O)
 	. = ..()
 
 
