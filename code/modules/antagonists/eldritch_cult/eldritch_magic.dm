@@ -317,7 +317,7 @@
 	range = 15
 	clothes_req = FALSE
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "fire_ring"
+	action_icon_state = "flames"
 	action_background_icon_state = "bg_ecult"
 
 /obj/effect/proc_holder/spell/pointed/ash_final/cast(list/targets, mob/user)
@@ -347,7 +347,7 @@
 		T = check
 	return (getline(user, T) - get_turf(user))
 
-/obj/effect/proc_holder/spell/pointed/ash_final/proc/fire_line(source, list/turfs)
+/obj/effect/proc_holder/spell/pointed/ash_final/proc/fire_line(atom/source, list/turfs)
 	var/list/hit_list = list()
 	for(var/turf/T in turfs)
 		if(istype(T, /turf/closed))
@@ -430,3 +430,40 @@
 	invocation_type = "whisper"
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
+
+/obj/effect/proc_holder/spell/targeted/fire_sworn
+	name = "Oath of Fire"
+	desc = "For a minute you will passively create a ring of fire around you."
+	invocation = "FL'MS"
+	invocation_type = "whisper"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 700
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "fire_ring"
+	///how long it lasts
+	var/duration = 1 MINUTES
+	///who casted it right now
+	var/mob/current_user
+	///Determines if you get the fire ring effect
+	var/has_fire_ring = FALSE
+
+/obj/effect/proc_holder/spell/targeted/fire_sworn/cast(list/targets, mob/user)
+	. = ..()
+	current_user = user
+	has_fire_ring = TRUE
+	addtimer(CALLBACK(src, .proc/remove, user), duration, TIMER_OVERRIDE|TIMER_UNIQUE)
+
+/obj/effect/proc_holder/spell/targeted/fire_sworn/proc/remove()
+	has_fire_ring = FALSE
+
+/obj/effect/proc_holder/spell/targeted/fire_sworn/process()
+	. = ..()
+	if(!has_fire_ring)
+		return
+	for(var/turf/T in range(1,current_user))
+		new /obj/effect/hotspot(T)
+
+

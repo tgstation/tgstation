@@ -159,7 +159,7 @@
 /datum/eldritch_knowledge/ash_final
 	name = "Ashlord's rite"
 	gain_text = "The forgotten lords have spoken! The lord of ash have come! Fear the fire!"
-	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards. You will passively create ring of fire around you as well as you will gain a powerful abiltiy that let's you burn people around you."
+	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards. You will gain a spell that passively creates ring of fire around you as well as you will gain a powerful abiltiy that let's you breath flames of the beast.
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
 	route = "Ash"
@@ -180,8 +180,8 @@
 /datum/eldritch_knowledge/ash_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	if(finished)
 		return
-	var/obj/effect/proc_holder/S = new /obj/effect/proc_holder/spell/pointed/ash_final
-	user.mind.AddSpell(S)
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/pointed/ash_final)
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/fire_sworn)
 	for(var/X in trait_list)
 		ADD_TRAIT(user,X,MAGIC_TRAIT)
 	finished = TRUE
@@ -194,9 +194,7 @@
 	var/turf/L = get_turf(user)
 	var/datum/gas_mixture/env = L.return_air()
 	env.temperature += 50
-
 	for(var/turf/T in range(1,user)-range(0,user))
-		new /obj/effect/hotspot(T)
 		env = T.return_air()
 		env.temperature += 25
 		T.air_update_turf()
