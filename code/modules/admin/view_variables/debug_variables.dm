@@ -1,4 +1,5 @@
 #define VV_HTML_ENCODE(thing) ( sanitize ? html_encode(thing) : thing )
+/// Get displayed variable in VV variable list
 /proc/debug_variable(name, value, level, datum/D, sanitize = TRUE)			//if D is a list, name will be index, and value will be assoc value.
 	var/header
 	if(D)
@@ -35,6 +36,17 @@
 	else if (isfile(value))
 		item = "[VV_HTML_ENCODE(name)] = <span class='value'>'[value]'</span>"
 
+	else if(istype(value,/matrix)) // Needs to be before datum
+		var/matrix/M = value
+		item = {"[VV_HTML_ENCODE(name)] = <span class='value'>
+			<table class='matrixbrak'><tbody><tr><td class='lbrak'>&nbsp;</td><td>
+			<table class='matrix'>
+			<tbody>
+				<tr><td>[M.a]</td><td>[M.d]</td><td>0</td></tr>
+				<tr><td>[M.b]</td><td>[M.e]</td><td>0</td></tr>
+				<tr><td>[M.c]</td><td>[M.f]</td><td>1</td></tr>
+			</tbody>
+			</table></td><td class='rbrak'>&nbsp;</td></tr></tbody></table></span>"} //TODO link to modify_transform wrapper for all matrices
 	else if (istype(value, /datum))
 		var/datum/DV = value
 		if ("[DV]" != "[DV.type]") //if the thing as a name var, lets use it.
