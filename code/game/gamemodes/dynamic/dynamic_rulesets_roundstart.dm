@@ -461,6 +461,54 @@
 		SSticker.mode_result = "loss - rev heads killed"
 		SSticker.news_report = REVS_LOSE
 
+//////////////////////////////////////////////
+//                                          //
+//                 FAMILIES                 //
+//                                          //
+//////////////////////////////////////////////
+
+/datum/dynamic_ruleset/roundstart/families
+	name = "Families"
+	persistent = TRUE
+	antag_flag = ROLE_FAMILIES
+	restricted_roles = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	required_candidates = 1 // will always have at least 1 family // debug 2
+	weight = 2
+	cost = 30
+	requirements = list(10,101,101,80,70,30,15,10,10,10) // debug 101 start
+	high_population_requirement = 10
+	flags = TRAITOR_RULESET
+	blocking_rules = list(/datum/dynamic_ruleset/midround/families)
+	minimum_players = 1 // debug 20
+	antag_cap = list(2,2,2,2,2,4,4,6,6,6)
+	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
+	var/datum/gang_handler/handler
+	minimum_required_age = 0 // debug remove
+
+/datum/dynamic_ruleset/roundstart/families/pre_execute()
+	..()
+	handler = new /datum/gang_handler(candidates,restricted_roles)
+	handler.gangs_to_generate = (antag_cap[indice_pop] / 2)
+	handler.gang_balance_cap = clamp((indice_pop - 3), 2, 5) // gang_balance_cap by indice_pop: (2,2,2,2,2,3,4,5,5,5)
+	return handler.pre_setup_analogue()
+
+/datum/dynamic_ruleset/roundstart/families/execute()
+	return handler.post_setup_analogue(TRUE)
+
+/datum/dynamic_ruleset/roundstart/families/clean_up()
+	QDEL_NULL(handler)
+	..()
+
+/datum/dynamic_ruleset/roundstart/families/Destroy()
+	QDEL_NULL(handler)
+	return ..()
+
+/datum/dynamic_ruleset/roundstart/families/rule_process()
+	return handler.process_analogue()
+
+/datum/dynamic_ruleset/roundstart/families/round_result()
+	return handler.set_round_result_analogue()
+
 // Admin only rulesets. The threat requirement is 101 so it is not possible to roll them.
 
 //////////////////////////////////////////////

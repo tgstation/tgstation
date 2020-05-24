@@ -200,7 +200,6 @@
 	name = "Space Police Responder"
 	antag_hud_type = ANTAG_HUD_SPACECOP
 	antag_hud_name = "hud_spacecop"
-	var/datum/gang_handler/handler
 
 /datum/antagonist/ert/families/apply_innate_effects(mob/living/mob_override)
 	..()
@@ -208,8 +207,11 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
-		H.wanted_lvl = new /obj/screen/wanted(handler)
-		H.infodisplay += H.wanted_lvl
+		var/obj/screen/wanted/giving_wanted_lvl = new /obj/screen/wanted()
+		H.wanted_lvl = giving_wanted_lvl
+		giving_wanted_lvl.hud = H
+		H.infodisplay += giving_wanted_lvl
+		H.mymob.client.screen += giving_wanted_lvl
 
 
 /datum/antagonist/ert/families/remove_innate_effects(mob/living/mob_override)

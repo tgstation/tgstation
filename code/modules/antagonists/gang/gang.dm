@@ -1,20 +1,61 @@
 /datum/antagonist/gang
 	name = "Family Member"
 	roundend_category = "gangsters"
-	var/gang_name = "Leet Like Jeff K"
-	var/gang_id = "LLJK"
-	var/datum/team/gang/my_gang
-	var/list/acceptable_clothes = list()
-	var/list/free_clothes = list()
-	var/datum/action/cooldown/spawn_induction_package/package_spawner = new()
-	var/gang_objective = "Be super cool and stuff."
-	var/starter_gangster = FALSE
 	antag_hud_type = ANTAG_HUD_GANGSTER
 	antag_hud_name = "hud_gangster"
+	/// The overarching family that the owner of this datum is a part of. Family teams are generic and imprinted upon by the per-person antagonist datums.
+	var/datum/team/gang/my_gang
+	/// The name of the family corresponding to this family member datum.
+	var/gang_name = "Leet Like Jeff K"
+	/// The abbreviation of the family corresponding to this family member datum.
+	var/gang_id = "LLJK"
+	/// The list of clothes that are acceptable to show allegiance to this family.
+	var/list/acceptable_clothes = list()
+	/// The list of clothes that are given to family members upon induction into the family.
+	var/list/free_clothes = list()
+	/// The action used to spawn family induction packages.
+	var/datum/action/cooldown/spawn_induction_package/package_spawner = new()
+	/// The textual description of the family's overarching objective.
+	var/gang_objective = "Be super cool and stuff."
+	/// Whether or not this family member is the first of their family.
+	var/starter_gangster = FALSE
 
+	/// A reference to the handler datum that manages the families gamemode. In case of no handler (admin-spawned during round), this will be null; this is fine.
 	var/datum/gang_handler/handler
 
 /datum/antagonist/gang/on_gain()
+	if(isnull(my_gang))
+		/* if my_gang is null, this gang member didn't join a gang by using a recruitment package. so there are two things we need to consider
+		1. does a gang handler exist -- does this round have a gang_handler instanced by the families gamemode or ruleset?
+		2. does the gang we're trying to join already exist?
+		if 1 is true and 2 is false, we were probably added by the gang_handler, and probably have a "handler" var.
+		if we don't have a "handler" var, and a gang_handler exists, we need to grab it, since our "handler" is null.
+		if the gang exists, we need to join it; if the gang doesn't exist, we need to make it. */
+		var/found_gang = FALSE
+		if(!starter_gangster) // if they're a starter gangster according to the handler, we don't need to check this shit
+			for(var/datum/team/gang/G in GLOB.antagonist_teams)
+
+				if(G.my_gang_datum.handler) // if one of the gangs in the gang list
+					handler = G.my_gang_datum.handler
+
+				if(G.name == gang_name)
+					my_gang = G
+					my_gang.add_member(owner)
+					found_gang = TRUE
+					break
+		if(!found_gang)
+			var/new_gang = new /datum/team/gang()
+			my_gang = new_gang
+			if(handler) // if we have a handler, the handler should track this gang
+				handler.gangs += my_gang
+			my_gang.add_member(owner)
+			my_gang.name = gang_name
+			my_gang.gang_id = gang_id
+			my_gang.acceptable_clothes = acceptable_clothes.Copy()
+			my_gang.free_clothes = free_clothes.Copy()
+			my_gang.my_gang_datum = src
+			starter_gangster = TRUE
+
 	if(starter_gangster)
 		for(var/C in my_gang.free_clothes)
 			var/obj/O = new C(owner.current)
@@ -31,6 +72,20 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	..()
 
+/datum/antagonist/gang/on_removal()
+	if(my_gang.my_gang_datum == src) // if we're the first gangster, we need to replace ourselves so that objectives function correctly
+		var/datum/antagonist/gang/replacement_datum = new type()
+		replacement_datum.handler = handler
+		replacement_datum.my_gang = my_gang
+		my_gang.my_gang_datum = replacement_datum
+		/* all we need to replace; the gang's "my_gang_datum" is just a person's datum because we assign it while we
+		have that datum onhand. it would be easier if all of the code the gang team calls on its my_gang_datum was
+		just in the team datum itself, and there were different types of teams instead of different types of gangster
+		that imprint on generic teams, but i'm too lazy to refactor THAT too */
+	..()
+
+
+
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
 	..()
 	package_spawner.Grant(owner.current)
@@ -39,8 +94,11 @@
 	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	if(M.hud_used)
 		var/datum/hud/H = M.hud_used
-		H.wanted_lvl = new /obj/screen/wanted(handler)
-		H.infodisplay += H.wanted_lvl
+		var/obj/screen/wanted/giving_wanted_lvl = new /obj/screen/wanted()
+		H.wanted_lvl = giving_wanted_lvl
+		giving_wanted_lvl.hud = H
+		H.infodisplay += giving_wanted_lvl
+		H.mymob.client.screen += giving_wanted_lvl
 
 
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
@@ -57,11 +115,13 @@
 /datum/antagonist/gang/get_team()
 	return my_gang
 
-/datum/antagonist/gang/proc/add_gang_points(var/points_to_add)
+/// Passes points gained to the family team.
+/datum/antagonist/gang/proc/add_gang_points(points_to_add)
 	if(my_gang)
 		my_gang.adjust_points(points_to_add)
 
-/datum/antagonist/gang/proc/check_gang_objective() // used to determine if a gang has completed their special objective
+/// Determines if a gang has completed their special objective.
+/datum/antagonist/gang/proc/check_gang_objective()
 	return TRUE
 
 /datum/antagonist/gang/greet()
@@ -91,7 +151,8 @@
 	antag_hud_name = "Triad"
 
 /datum/antagonist/gang/red/check_gang_objective()
-	for(var/datum/mind/M in handler.undercover_cops)
+	for(var/C in get_antag_minds(/datum/antagonist/ert/families/undercover_cop))
+		var/datum/mind/M = C
 		var/mob/living/carbon/human/H = M.current
 		if(considered_alive(H))
 			return FALSE
@@ -167,17 +228,16 @@
 	antag_hud_name = "Russian"
 
 /datum/antagonist/gang/russian_mafia/check_gang_objective()
-	for(var/M in handler.gangbangers)
-		var/datum/mind/MI = M
-		if(MI.has_antag_datum(src.type))
-			if(!considered_alive(MI.current))
-				continue // dead people cant really do the objective lol
-			var/list/items_to_check = MI.current.GetAllContents()
-			for(var/I in items_to_check)
-				var/obj/IT = I
-				if(istype(IT, /obj/item/reagent_containers/food/drinks/bottle))
-					continue
-			return FALSE // didnt pass the bottle check, no point in continuing to loop
+	for(var/R in get_antag_minds(/datum/antagonist/gang/russian_mafia))
+		var/datum/mind/M = R
+		if(!considered_alive(M.current))
+			continue // dead people cant really do the objective lol
+		var/list/items_to_check = M.current.GetAllContents()
+		for(var/I in items_to_check)
+			var/obj/IT = I
+			if(istype(IT, /obj/item/reagent_containers/food/drinks/bottle))
+				continue
+		return FALSE // didnt pass the bottle check, no point in continuing to loop
 	return TRUE
 
 
@@ -197,12 +257,12 @@
 	antag_hud_name = "Italian"
 
 /datum/antagonist/gang/italian_mob/check_gang_objective()
-	for(var/M in handler.gangbangers)
-		var/datum/mind/MI = M
-		if(MI.has_antag_datum(src.type))
-			if(considered_alive(MI.current))
+	for(var/I in get_antag_minds(/datum/antagonist/gang/italian_mob))
+		var/datum/mind/M = I
+		if(M.has_antag_datum(src.type))
+			if(considered_alive(M.current))
 				continue
-			if(istype(MI.current.loc, /obj/structure/closet/crate/coffin))
+			if(istype(M.current.loc, /obj/structure/closet/crate/coffin))
 				continue
 			return FALSE
 	for(var/mob/M in GLOB.player_list)
@@ -346,15 +406,14 @@
 	antag_hud_name = "JackFrost"
 
 /datum/antagonist/gang/jackbros/check_gang_objective()
-	for(var/M in handler.gangbangers)
-		var/datum/mind/MI = M
-		if(MI.has_antag_datum(src.type))
-			if(!considered_alive(MI.current))
-				continue // dead people cant really do the objective lol
-			if(ishuman(MI.current))
-				var/mob/living/carbon/human/H = MI.current
-				if(H.get_assignment() == "Captain")
-					return TRUE
+	for(var/J in get_antag_minds(/datum/antagonist/gang/jackbros))
+		var/datum/mind/M = J
+		if(!considered_alive(M.current))
+			continue // dead people cant really do the objective lol
+		if(ishuman(M.current))
+			var/mob/living/carbon/human/H = M.current
+			if(H.get_assignment() == "Captain")
+				return TRUE
 	return FALSE
 
 
@@ -376,17 +435,16 @@
 	antag_hud_name = "Dutch"
 
 /datum/antagonist/gang/dutch/check_gang_objective()
-	for(var/M in handler.gangbangers)
-		var/datum/mind/MI = M
-		if(MI.has_antag_datum(src.type))
-			if(!considered_alive(MI.current))
-				continue // dead people cant really do the objective lol
-			var/list/items_to_check = MI.current.GetAllContents()
-			for(var/I in items_to_check)
-				var/obj/IT = I
-				if(istype(IT, /obj/item/stack/sheet/mineral/gold))
-					continue
-			return FALSE // didnt pass the bar check, no point in continuing to loop
+	for(var/D in get_antag_minds(/datum/antagonist/gang/dutch))
+		var/datum/mind/M = D
+		if(!considered_alive(M.current))
+			continue // dead people cant really do the objective lol
+		var/list/items_to_check = M.current.GetAllContents()
+		for(var/I in items_to_check)
+			var/obj/IT = I
+			if(istype(IT, /obj/item/stack/sheet/mineral/gold))
+				continue
+		return FALSE // didnt pass the bar check, no point in continuing to loop
 	var/obj/machinery/ore_silo/S = GLOB.ore_silo_default
 	var/datum/component/material_container/mat_container = S.GetComponent(/datum/component/material_container)
 	if(mat_container.materials[SSmaterials.GetMaterialRef(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
@@ -395,12 +453,18 @@
 
 
 /datum/team/gang
+	/// The number of points this family has gained. Used for determining a victor if multiple families complete their objectives.
 	var/points = 0
+	/// The abbreviation of this family.
 	var/gang_id = "LLJK"
+	/// The list of clothes that are acceptable to show allegiance to this family.
 	var/list/acceptable_clothes = list()
+	/// The list of clothes that are given to family members upon induction into the family.
 	var/list/free_clothes = list()
+	/// The specific, occupied family member antagonist datum that is used to reach the handler / check objectives, and from which the above properties (sans points) are inherited.
 	var/datum/antagonist/gang/my_gang_datum
 
+/// Adds points to the points var.
 /datum/team/gang/proc/adjust_points(var/points_to_adjust)
 	points += points_to_adjust
 
@@ -428,6 +492,7 @@
 	button_icon_state = "recruit"
 	icon_icon = 'icons/obj/gang/actions.dmi'
 	cooldown_time = 300
+	/// The family antagonist datum of the "owner" of this action.
 	var/datum/antagonist/gang/my_gang_datum
 
 /datum/action/cooldown/spawn_induction_package/Trigger()
@@ -443,8 +508,14 @@
 	if(H.stat)
 		return FALSE
 
+	var/gang_balance_cap // we need some stuff to fall back on if we're handlerless
+	if(my_gang_datum.handler)
+		gang_balance_cap = my_gang_datum.handler.gang_balance_cap
+	else
+		gang_balance_cap = 5 //just a filler default value
+
 	var/lowest_gang_count = my_gang_datum.my_gang.members.len
-	for(var/datum/team/gang/TT in my_gang_datum.handler.gangs)
+	for(var/datum/team/gang/TT in GLOB.antagonist_teams)
 		var/alive_gangsters = 0
 		for(var/datum/mind/gangers in TT.members)
 			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
@@ -454,7 +525,7 @@
 		if(TT != my_gang_datum.my_gang)
 			if(alive_gangsters < lowest_gang_count)
 				lowest_gang_count = alive_gangsters
-	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + my_gang_datum.handler.gang_balance_cap))
+	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + gang_balance_cap))
 		to_chat(H, "Your gang is pretty packed right now. You don't need more members just yet. If the other families expand, you can recruit more members.")
 		return FALSE
 	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")

@@ -4,21 +4,16 @@
 	icon = 'icons/obj/gang/wanted_160x32.dmi'
 	icon_state = "wanted_0"
 	screen_loc = ui_wanted_lvl
-	///Wanted level, affects the hud icon.
+	/// Wanted level, affects the hud icon. Level 0 is default, and the level 0 icon is blank, so in case of no families gamemode (and thus no wanted level), this HUD element will never appear.
 	var/level = 0
-	///Boolean, have the cops arrived? If so, the icon stops changing and remains the same.
-	var/cops_arrived
-	///Storage var for the gang handler datum so that it can receive information from it
-	var/datum/gang_handler/handler
+	/// Boolean, have the cops arrived? If so, the icon stops changing and remains the same.
+	var/cops_arrived = 0
 
-/obj/screen/wanted/New(datum/gang_handler/given_handler)
-	handler = given_handler
+/obj/screen/wanted/New()
 	return ..()
 
 /obj/screen/wanted/Initialize()
 	. = ..()
-	level = handler.wanted_level
-	cops_arrived = handler.cops_arrived
 	update_icon()
 
 /obj/screen/wanted/MouseEntered(location,control,params)

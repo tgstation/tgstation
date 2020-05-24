@@ -12,6 +12,7 @@
 	restricted_jobs = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")//N O
 	protected_jobs = list()
 
+	/// A reference to the handler that is used to run pre_setup(), post_setup(), etc..
 	var/datum/gang_handler/handler
 
 /datum/game_mode/gang/warriors
@@ -20,7 +21,10 @@
 	announce_text = "Can you survive this onslaught?"
 
 /datum/game_mode/gang/warriors/pre_setup()
-	handler = new /datum/gang_handler/warriors(antag_candidates,restricted_jobs)
+	handler = new /datum/gang_handler(antag_candidates,restricted_jobs)
+	var/list/datum/antagonist/gang/gangs_to_generate = subtypesof(/datum/antagonist/gang)
+	handler.gangs_to_generate = gangs_to_generate.len
+	handler.gang_balance_cap = 3
 	return handler.pre_setup_analogue()
 
 /datum/game_mode/gang/pre_setup()
@@ -32,7 +36,7 @@
 	return ..()
 
 /datum/game_mode/gang/post_setup()
-	handler.post_setup_analogue()
+	handler.post_setup_analogue(FALSE)
 	gamemode_ready = TRUE
 	return ..()
 
