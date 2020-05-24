@@ -456,7 +456,7 @@
 					qdel(query_create_ban_get_player)
 					return
 		qdel(query_create_ban_get_player)
-	var/admin_ckey = sanitizeSQL(usr.client.ckey)
+	var/admin_ckey = usr.client.ckey
 	if(applies_to_admins)
 		var/datum/DBQuery/query_check_adminban_count = SSdbcore.NewQuery({"
 			SELECT COUNT(DISTINCT bantime)
@@ -466,7 +466,7 @@
 				applies_to_admins = 1 AND
 				unbanned_datetime IS NULL AND
 				(expiration_time IS NULL OR expiration_time > NOW())
-		"}, list("admin_ckey" = usr.client.ckey))
+		"}, list("admin_ckey" = admin_ckey))
 		if(!query_check_adminban_count.warn_execute()) //count distinct bantime to treat rolebans made at the same time as one ban
 			qdel(query_check_adminban_count)
 			return
@@ -480,8 +480,8 @@
 				qdel(query_check_adminban_count)
 				return
 		qdel(query_check_adminban_count)
-	var/admin_ip = sanitizeSQL(usr.client.address)
-	var/admin_cid = sanitizeSQL(usr.client.computer_id)
+	var/admin_ip = usr.client.address
+	var/admin_cid = usr.client.computer_id
 	duration = text2num(duration)
 	if (!(interval in list("SECOND", "MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR")))
 		interval = "MINUTE"
@@ -489,7 +489,6 @@
 	if(duration > 1) //pluralize the interval if necessary
 		time_message += "s"
 	var/note_reason = "Banned from [roles_to_ban[1] == "Server" ? "the server" : " Roles: [roles_to_ban.Join(", ")]"] [isnull(duration) ? "permanently" : "for [time_message]"] - [reason]"
-	reason = sanitizeSQL(reason)
 	var/list/clients_online = GLOB.clients.Copy()
 	var/list/admins_online = list()
 	for(var/client/C in clients_online)
@@ -806,7 +805,7 @@
 	var/list/changes_text = list()
 	var/list/changes_keys = list()
 	for(var/i in changes)
-		changes_text += "[sanitizeSQL(i)]: [sanitizeSQL(changes[i])]"
+		changes_text += "[i]: [changes[i]]"
 		changes_keys += i
 	var/change_message = "[usr.client.key] edited the following [jointext(changes_text, ", ")]<hr>"
 
