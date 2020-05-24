@@ -191,13 +191,11 @@
 
 
 /obj/machinery/computer/scan_consolenew/AltClick(mob/user)
-	if(diskette && user.canUseTopic(src, !issilicon(user)))
-		to_chat(user, "<span class='notice'>You take out [diskette] from [src].</span>")
-		if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))
-			diskette.forceMove(drop_location())
-		diskette = null
-	return
+	// Make sure the user can interact with the machine.
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
 
+	eject_disk(user)
 
 /obj/machinery/computer/scan_consolenew/Initialize()
 	. = ..()
@@ -1058,13 +1056,7 @@
 
 		// Eject stored diskette from console
 		if("eject_disk")
-			// GUARD CHECK - This code shouldn't even be callable without a diskette
-			//  inserted. Unexpected result
-			if(!diskette)
-				return
-
-			diskette.forceMove(drop_location())
-			diskette = null
+			eject_disk(usr)
 			return
 
 		// Create a Genetic Makeup injector. These injectors are timed and thus are
@@ -1996,6 +1988,20 @@
 	tgui_view_state["storageConsSubMode"] = "mutations"
 	tgui_view_state["storageDiskSubMode"] = "mutations"
 
+/*
+ * Ejects the DNA Disk from the console.
+ */
+/obj/machinery/computer/scan_consolenew/proc/eject_disk(mob/user)
+	// Check for diskette.
+	if(!diskette)
+		return
+
+	to_chat(user, "<span class='notice'>You eject [diskette] from [src].</span>")
+
+	// If the disk shouldn't pop into the user's hand for any reason, drop it on the console instead.
+	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))
+		diskette.forceMove(drop_location())
+	diskette = null
 
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS
