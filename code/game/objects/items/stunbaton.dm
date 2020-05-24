@@ -225,7 +225,10 @@
 	L.Jitter(20)
 	L.confused = max(confusion_amt, L.confused)
 	L.stuttering = max(8, L.stuttering)
-	L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
+	if(HAS_TRAIT(target, TRAIT_STUNRESISTANCE))
+		L.apply_damage(round(stamina_loss_amt/2), STAMINA, BODY_ZONE_CHEST) //halves the stamina damage from the baton strike
+	else
+		L.apply_damage(stamina_loss_amt, STAMINA, BODY_ZONE_CHEST)
 
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 	addtimer(CALLBACK(src, .proc/apply_stun_effect_end, L), apply_stun_delay)
