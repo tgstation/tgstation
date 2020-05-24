@@ -235,7 +235,7 @@
 	if(!S)
 		return
 	else
-		icon_state = S.icon_state
+		hairstyle_icon = S.icon_state
 
 /obj/item/clothing/head/wig/worn_overlays(isinhands = FALSE, file2use)
 	. = list()
