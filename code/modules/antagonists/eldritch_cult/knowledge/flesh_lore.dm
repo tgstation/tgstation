@@ -43,7 +43,8 @@
 	if(!H.mind || !H.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
-	if(!check_ghouls() || HAS_TRAIT(H,TRAIT_GHOUL))
+
+	if(!check_ghouls(user) || HAS_TRAIT(H,TRAIT_GHOUL))
 		return
 
 	ADD_TRAIT(H,TRAIT_MUTE,MAGIC_TRAIT)
@@ -58,13 +59,13 @@
 	atoms -= H
 	ghouls += H
 
-/datum/eldritch_knowledge/flesh_ghoul/proc/check_ghouls()
+/datum/eldritch_knowledge/flesh_ghoul/proc/check_ghouls(mob/living/user)
 
 	listclearnulls(ghouls)
 
 	for(var/mob/living/carbon/human/ghoul in ghouls)
 		if(ghoul.stat == DEAD)
-			ghoul.dust(TRUE)
+			to_chat(user, "<span class='warning'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
 			ghouls -= ghoul
 			current_amt--
 
