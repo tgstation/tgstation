@@ -799,37 +799,63 @@
 				qdel(query_check_adminban_count)
 				return
 		qdel(query_check_adminban_count)
-	applies_to_admins = sanitizeSQL(applies_to_admins)
-	duration = sanitizeSQL(duration)
-	if(interval)
-		interval = sanitizeSQL(interval)
-	else
+
+	if (!(interval in list("SECOND", "MINUTE", "HOUR", "DAY", "WEEK", "MONTH", "YEAR")))
 		interval = "MINUTE"
-	reason = sanitizeSQL(reason)
-	var/kn = key_name(usr)
-	var/kna = key_name_admin(usr)
-	var/list/changes_text= list()
+
+	var/list/changes_text = list()
 	var/list/changes_keys = list()
 	for(var/i in changes)
 		changes_text += "[sanitizeSQL(i)]: [sanitizeSQL(changes[i])]"
 		changes_keys += i
-	var/where = "id = [sanitizeSQL(ban_id)]"
+	var/change_message = "[usr.client.key] edited the following [jointext(changes_text, ", ")]<hr>"
+
+	var/list/arguments = list(
+		"duration" = duration || null,
+		"reason" = reason,
+		"applies_to_admins" = applies_to_admins,
+		"ckey" = player_ckey || null,
+		"ip" = player_ip || null,
+		"cid" = player_cid || null,
+		"change_message" = change_message,
+	)
+	var/where
 	if(text2num(mirror_edit))
 		var/list/wherelist = list("bantime = '[bantime]'")
 		if(old_key)
-			wherelist += "ckey = '[sanitizeSQL(ckey(old_key))]'"
+			wherelist += "ckey = :old_ckey"
+			arguments["old_ckey"] = ckey(old_key)
 		if(old_ip)
-			old_ip = sanitizeSQL(old_ip)
-			wherelist += "ip = INET_ATON(IF('[old_ip]' LIKE '', NULL, '[old_ip]'))"
+			wherelist += "ip = INET_ATON(:old_ip)"
+			arguments["old_ip"] = old_ip || null
 		if(old_cid)
-			wherelist += "computerid = '[sanitizeSQL(old_cid)]'"
+			wherelist += "computerid = :old_cid"
+			arguments["old_cid"] = old_cid
 		where = wherelist.Join(" AND ")
-	var/datum/DBQuery/query_edit_ban = SSdbcore.NewQuery("UPDATE [format_table_name("ban")] SET expiration_time = IF('[duration]' LIKE '', NULL, bantime + INTERVAL [duration ? "[duration]" : "0"] [interval]), applies_to_admins = [applies_to_admins], reason = '[reason]', ckey = IF('[player_ckey]' LIKE '', NULL, '[player_ckey]'), ip = INET_ATON(IF('[player_ip]' LIKE '', NULL, '[player_ip]')), computerid = IF('[player_cid]' LIKE '', NULL, '[player_cid]'), edits = CONCAT(IFNULL(edits,''),'[sanitizeSQL(usr.client.key)] edited the following [jointext(changes_text, ", ")]<hr>') WHERE [where]")
+	else
+		where = "id = :ban_id"
+		arguments["ban_id"] = ban_id
+
+	var/datum/DBQuery/query_edit_ban = SSdbcore.NewQuery({"
+		UPDATE [format_table_name("ban")]
+		SET
+			expiration_time = IF(:duration IS NULL, NULL, bantime + INTERVAL :duration [interval])
+			applies_to_admins = :applies_to_admins,
+			reason = :reason,
+			ckey = :ckey,
+			ip = INET_ATON(:ip),
+			computerid = :ci
+			edits = CONCAT(IFNULL(edits,''), :change_message)
+		WHERE [where]
+	"}, arguments)
 	if(!query_edit_ban.warn_execute())
 		qdel(query_edit_ban)
 		return
 	qdel(query_edit_ban)
+
 	var/changes_keys_text = jointext(changes_keys, ", ")
+	var/kn = key_name(usr)
+	var/kna = key_name_admin(usr)
 	log_admin_private("[kn] has edited the [changes_keys_text] of a ban for [old_key ? "[old_key]" : "[old_ip]-[old_cid]"].") //if a ban doesn't have a key it must have an ip and/or a cid to have reached this point normally
 	message_admins("[kna] has edited the [changes_keys_text] of a ban for [old_key ? "[old_key]" : "[old_ip]-[old_cid]"].")
 	if(changes["Applies to admins"])
