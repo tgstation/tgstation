@@ -128,6 +128,9 @@
 			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
 			return
 		sticker = stickerA
+		var/list/wrap_contents = src.GetAllContents()
+		for(var/obj/I in wrap_contents)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.percent_cut)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -306,6 +309,9 @@
 			to_chat(user, "<span class='warning'>For some reason, you can't attach [W]!</span>")
 			return
 		sticker = stickerA
+		var/list/wrap_contents = src.GetAllContents()
+		for(var/obj/I in wrap_contents)
+			I.AddComponent(/datum/component/pricetag, sticker.payments_acc, sticker.percent_cut)
 		var/overlaystring = "[icon_state]_tag"
 		if(giftwrapped)
 			overlaystring = copytext_char(overlaystring, 5) //5 == length("gift") + 1
@@ -398,14 +404,16 @@
 	if(istype(I, /obj/item/card/id))
 		var/obj/item/card/id/potential_acc = I
 		if(potential_acc.registered_account)
-			payments_acc = potential_acc.registered_account
-			playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-			to_chat(user, "<span class='notice'>[src] registers the ID card. Tag a wrapped item to create a barcode.</span>")
+			if(payments_acc == potential_acc.registered_account)
+				to_chat(user, "<span class='notice'>ID card already registered.</span>")
+				return
+			else
+				payments_acc = potential_acc.registered_account
+				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+				to_chat(user, "<span class='notice'>[src] registers the ID card. Tag a wrapped item to create a barcode.</span>")
 		else if(!potential_acc.registered_account)
 			to_chat(user, "<span class='warning'>This ID card has no account registered!</span>")
 			return
-		else if(payments_acc != potential_acc.registered_account)
-			to_chat(user, "<span class='notice'>ID card already registered.</span>")
 	if(istype(I, /obj/item/paper))
 		if (!(paper_count >=  max_paper_count))
 			paper_count += 10
@@ -432,7 +440,8 @@
 	playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 	to_chat(user, "<span class='notice'>You print a new barcode.</span>")
 	var/obj/item/barcode/new_barcode = new /obj/item/barcode(src)
-	new_barcode.payments_acc = payments_acc		//The sticker gets the scanner's registered account.
+	new_barcode.payments_acc = payments_acc		// The sticker gets the scanner's registered account.
+	new_barcode.percent_cut = percent_cut		// Also the registered percent cut.
 	user.put_in_hands(new_barcode)
 
 /obj/item/sales_tagger/CtrlClick(mob/user)

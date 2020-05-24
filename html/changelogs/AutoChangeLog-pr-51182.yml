@@ -1,0 +1,4 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - rscadd: "The camera console looks fancier now."

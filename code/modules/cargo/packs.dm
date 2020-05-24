@@ -1488,7 +1488,7 @@
 
 /datum/supply_pack/service/noslipfloor
 	name = "High-traction Floor Tiles"
-	desc = "Make slipping a thing of the past with thirty industrial-grade anti-slip floortiles!"
+	desc = "Make slipping a thing of the past with thirty industrial-grade anti-slip floor tiles!"
 	cost = 2000
 	contains = list(/obj/item/stack/tile/noslip/thirty)
 	crate_name = "high-traction floor tiles crate"
@@ -1925,7 +1925,7 @@
 
 /datum/supply_pack/organic/vending/hydro_refills
 	name = "Hydroponics Vending Machines Refills"
-	desc = "When the clown takes all the banana seeds. Contains a NutriMax refill and an MegaSeed Servitor refill."
+	desc = "When the clown takes all the banana seeds. Contains a NutriMax refill and a MegaSeed Servitor refill."
 	cost = 2000
 	crate_type = /obj/structure/closet/crate
 	contains = list(/obj/item/vending_refill/hydroseeds,

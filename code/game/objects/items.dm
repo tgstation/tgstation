@@ -709,7 +709,7 @@ GLOBAL_VAR_INIT(embedpocalypse, FALSE) // if true, all items will be able to emb
 	if(damtype == BURN)
 		. = 'sound/weapons/sear.ogg'
 	else
-		. = "desceration"
+		. = "desecration"
 
 /obj/item/proc/open_flame(flame_heat=700)
 	var/turf/location = loc

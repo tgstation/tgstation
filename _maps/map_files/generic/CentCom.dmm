@@ -4090,7 +4090,7 @@
 	dwidth = 25;
 	height = 50;
 	id = "emergency_syndicate";
-	name = "Syndicate Auxillary Shuttle Dock";
+	name = "Syndicate Auxiliary Shuttle Dock";
 	width = 50
 	},
 /turf/open/floor/plating/asteroid/snow/airless,
@@ -4882,7 +4882,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/supply)
 "mc" = (
-/obj/machinery/computer/auxillary_base{
+/obj/machinery/computer/auxiliary_base{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,
@@ -6894,7 +6894,7 @@
 /area/centcom/supplypod/loading/ert)
 "pF" = (
 /obj/machinery/door/airlock/centcom{
-	name = "Auxillary Dock";
+	name = "Auxiliary Dock";
 	req_access_txt = ""
 	},
 /turf/open/floor/plating,
@@ -7679,7 +7679,7 @@
 /turf/open/floor/plasteel/dark,
 /area/centcom/ferry)
 "rl" = (
-/obj/machinery/computer/auxillary_base{
+/obj/machinery/computer/auxiliary_base{
 	pixel_y = 32
 	},
 /obj/structure/table/reinforced,

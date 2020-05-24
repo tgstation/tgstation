@@ -239,10 +239,15 @@
 	//Set news report and mode result
 	mode.set_round_result()
 
-	send2tgs("Server", "Round just ended.")
+	send2adminchat("Server", "Round just ended.")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
+
+	CHECK_TICK
+
+	//check config blah blah
+	handle_hearts()
 
 	CHECK_TICK
 
