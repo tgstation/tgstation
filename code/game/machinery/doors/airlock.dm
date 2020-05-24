@@ -1137,7 +1137,7 @@
 		return
 
 	var/airlock_type = painter.available_paint_jobs["[current_paintjob]"] // get the airlock type path associated with the airlock name the user just chose
-	var/obj/machinery/door/airlock/airlock = new airlock_type // we need to create an new instance of the airlock and assembly to read vars from them
+	var/obj/machinery/door/airlock/airlock = new airlock_type // we need to create a new instance of the airlock and assembly to read vars from them
 	var/obj/structure/door_assembly/assembly = new airlock.assemblytype
 
 	if(airlock_material == "glass" && assembly.noglass) // prevents painting glass airlocks with a paint job that doesn't have a glass version, such as the freezer

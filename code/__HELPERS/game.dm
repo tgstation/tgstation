@@ -546,7 +546,7 @@
 	)
 	return (is_type_in_list(item, pire_wire))
 
-// Find a obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
+// Find an obstruction free turf that's within the range of the center. Can also condition on if it is of a certain area type.
 /proc/find_obstruction_free_location(range, atom/center, area/specific_area)
 	var/list/turfs = RANGE_TURFS(range, center)
 	var/list/possible_loc = list()
