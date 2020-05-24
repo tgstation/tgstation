@@ -1,0 +1,4 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - tweak: "Nanotrasen's export price for Hydrogen no longer violates the basic rules of supply and demand."
