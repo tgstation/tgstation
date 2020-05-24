@@ -246,6 +246,11 @@
 
 	CHECK_TICK
 
+	//check config blah blah
+	handle_hearts()
+
+	CHECK_TICK
+
 	//These need update to actually reflect the real antagonists
 	//Print a list of antagonists to the server log
 	var/list/total_antagonists = list()

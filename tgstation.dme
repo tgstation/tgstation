@@ -131,6 +131,7 @@
 #include "code\__HELPERS\game.dm"
 #include "code\__HELPERS\global_lists.dm"
 #include "code\__HELPERS\heap.dm"
+#include "code\__HELPERS\hearted.dm"
 #include "code\__HELPERS\icon_smoothing.dm"
 #include "code\__HELPERS\icons.dm"
 #include "code\__HELPERS\level_traits.dm"

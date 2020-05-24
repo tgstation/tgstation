@@ -687,3 +687,34 @@ GLOBAL_DATUM_INIT(ahelp_tickets, /datum/admin_help_tickets, new)
 			return founds
 
 	return msg
+
+/proc/get_mob_by_name(msg)
+	//This is a list of words which are ignored by the parser when comparing message contents for names. MUST BE IN LOWER CASE!
+	var/list/ignored_words = list("unknown","the","a","an","of","monkey","alien","as", "i")
+
+	//explode the input msg into a list
+	var/list/msglist = splittext(msg, " ")
+
+	//who might fit the shoe
+	var/list/potential_hits = list()
+
+	for(var/i in GLOB.mob_list)
+		var/mob/M = i
+		var/list/nameWords = list()
+		if(!M.mind)
+			continue
+
+		for(var/string in splittext(lowertext(M.real_name), " "))
+			if(!(string in ignored_words))
+				nameWords += string
+		for(var/string in splittext(lowertext(M.name), " "))
+			if(!(string in ignored_words))
+				nameWords += string
+
+		for(var/string in nameWords)
+			testing("Name word [string]")
+			if(string in msglist)
+				potential_hits += M
+				break
+
+	return potential_hits

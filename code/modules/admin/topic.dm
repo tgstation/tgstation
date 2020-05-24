@@ -2251,6 +2251,15 @@
 		var/datum/poll_question/poll = locate(href_list["submitoptionpoll"]) in GLOB.polls
 		poll_option_parse_href(href_list, poll, option)
 
+	else if(href_list["admincommend"])
+		if(!SSticker.IsRoundInProgress())
+			to_chat(usr, "<span class='warning'>The round must be in progress to use this!</span>")
+			return
+		var/mob/heart_recepient = locate(href_list["admincommend"])
+		if(tgalert(usr, "Are you sure you'd like to anonymously commend [heart_recepient.ckey]? NOTE: This is logged, please use this sparingly and only for actual kind behavior, not as a reward for your friends.", "<3?", "Yes", "No") == "No")
+			return
+		usr.nominate_heart(heart_recepient)
+
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))
 		return
