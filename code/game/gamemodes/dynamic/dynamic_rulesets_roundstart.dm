@@ -472,18 +472,17 @@
 	persistent = TRUE
 	antag_flag = ROLE_FAMILIES
 	restricted_roles = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
-	required_candidates = 1 // will always have at least 1 family // debug 2
+	required_candidates = 2 // will always have at least 1 family + opponent for that family (other family or cop)
 	weight = 2
 	cost = 30
-	requirements = list(10,101,101,80,70,30,15,10,10,10) // debug 101 start
+	requirements = list(101,101,101,80,70,30,15,10,10,10)
 	high_population_requirement = 10
 	flags = TRAITOR_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/midround/families)
-	minimum_players = 1 // debug 20
+	minimum_players = 20
 	antag_cap = list(2,2,2,2,2,4,4,6,6,6)
 	/// A reference to the handler that is used to run pre_execute(), execute(), etc..
 	var/datum/gang_handler/handler
-	minimum_required_age = 0 // debug remove
 
 /datum/dynamic_ruleset/roundstart/families/pre_execute()
 	..()

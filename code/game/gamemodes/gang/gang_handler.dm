@@ -291,9 +291,12 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	priority_announce("Julio G coming to you live from Radio Los Spess! The space cops are closing in on [station_name()] and will arrive in about 5 minutes! Better clear on out of there if you don't want to get hurt!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 	sent_second_announcement = TRUE
 
-/// Internal. Checks if our wanted level has changed. Only actually does something post the initial announcement and until the cops show up. After that, it's locked.
+/// Internal. Checks if our wanted level has changed; calls update_wanted_level. Only updates wanted level post the initial announcement and until the cops show up. After that, it's locked.
 /datum/gang_handler/proc/check_wanted_level()
-	if(cops_arrived || !sent_announcement)
+	if(cops_arrived)
+		update_wanted_level(wanted_level) // at this point, we still want to update people's star huds, even though they're mostly locked, because not everyone is around for the last update before the rest of this proc gets shut off forever, and that's when the wanted bar switches from gold stars to red / blue to signify the arrival of the space cops
+		return
+	if(!sent_announcement)
 		return
 	var/new_wanted_level
 	if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)

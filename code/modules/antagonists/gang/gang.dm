@@ -34,10 +34,8 @@
 		var/found_gang = FALSE
 		if(!starter_gangster) // if they're a starter gangster according to the handler, we don't need to check this shit
 			for(var/datum/team/gang/G in GLOB.antagonist_teams)
-
-				if(G.my_gang_datum.handler) // if one of the gangs in the gang list
+				if(G.my_gang_datum.handler) // if one of the gangs in the gang list has a handler, nab that
 					handler = G.my_gang_datum.handler
-
 				if(G.name == gang_name)
 					my_gang = G
 					my_gang.add_member(owner)
