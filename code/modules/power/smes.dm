@@ -242,7 +242,7 @@
 
 	//check for slime cores in stock parts and use them to self-charge
 	for(var/obj/item/stock_parts/cell/high/slime/SC in component_parts)
-		charge += min(capcity-charge, SC.chargerate) // If capacity-charge is smaller than the attempted charge rate, this avoids overcharging
+		charge += min(capacity-charge, SC.chargerate) // If capacity-charge is smaller than the attempted charge rate, this avoids overcharging
 
 	//inputting
 	if(terminal && input_attempt)
