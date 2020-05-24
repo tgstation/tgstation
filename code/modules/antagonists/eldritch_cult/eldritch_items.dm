@@ -37,7 +37,7 @@
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = WEIGHT_CLASS_NORMAL
 	force = 15
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
