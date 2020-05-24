@@ -61,8 +61,7 @@ jobs:
             - gcc-multilib
             - g++-7
             - g++-7-multilib
-            - libmariadb-client-lgpl-dev:i386
-            - libmariadbd-dev
+            - libssl1.1:i386
       cache:
         directories:
           - $HOME/BYOND
