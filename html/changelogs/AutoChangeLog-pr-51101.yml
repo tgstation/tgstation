@@ -1,0 +1,4 @@
+author: "MarioWizard119"
+delete-after: True
+changes: 
+  - tweak: "Synthflesh now also works via vapor."

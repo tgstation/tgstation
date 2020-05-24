@@ -244,7 +244,7 @@
 	wires.cut_all()
 
 /obj/machinery/syndicatebomb/self_destruct
-	name = "self destruct device"
+	name = "self-destruct device"
 	desc = "Do not taunt. Warranty invalid if exposed to high temperature. Not suitable for agents under 3 years of age."
 	payload = /obj/item/bombcore/large
 	can_unanchor = FALSE

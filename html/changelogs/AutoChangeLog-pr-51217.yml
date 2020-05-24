@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscadd: "Adds a config option for OOC kindness commendations! When enabled, a small percentage of the crew gets asked if anyone made their round better, and those people will get a little heart next to their name in OOC for 24h!"

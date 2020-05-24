@@ -792,6 +792,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = null
 
 				if(killed_crew >= 4)
+					xp_gained -= 15//no cheating by spamming game overs
 					report_player(usr)
 			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)

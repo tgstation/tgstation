@@ -535,7 +535,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	var/board_item_type = /obj/vehicle/ridden/scooter/skateboard
 
 /obj/item/melee/skateboard/attack_self(mob/user)
-	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))//this probably has fucky interactions with telekinesis but for the record it wasnt my fault
+	var/obj/vehicle/ridden/scooter/skateboard/S = new board_item_type(get_turf(user))//this probably has fucky interactions with telekinesis but for the record it wasn't my fault
 	S.buckle_mob(user)
 	qdel(src)
 
@@ -684,10 +684,14 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 
 /obj/item/circlegame/Destroy()
 	var/mob/owner = loc
-	if(!istype(owner))
-		return
-	UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
-	. = ..()
+	if(istype(owner))
+		UnregisterSignal(owner, COMSIG_PARENT_EXAMINE)
+	return ..()
+
+/obj/item/circlegame/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_PARENT_EXAMINE)		//loc will have changed by the time this is called, so Destroy() can't catch it
+	// this is a dropdel item.
+	return ..()
 
 /// Stage 1: The mistake is made
 /obj/item/circlegame/proc/ownerExamined(mob/living/owner, mob/living/sucker)

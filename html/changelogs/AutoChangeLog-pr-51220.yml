@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - admin: "You can now use ! and ? at the end of 'spawn' chatbar verb commands to search for only the ends of paths, or to automatically select a random type of the paths your search returns! Happy badminning!"

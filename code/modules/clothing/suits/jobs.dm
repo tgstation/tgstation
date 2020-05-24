@@ -55,7 +55,7 @@
 //Detective
 /obj/item/clothing/suit/det_suit
 	name = "trenchcoat"
-	desc = "An 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
+	desc = "A 18th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "detective"
 	item_state = "det_suit"
 	blood_overlay_type = "coat"

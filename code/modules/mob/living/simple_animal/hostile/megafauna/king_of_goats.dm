@@ -2,10 +2,10 @@
 KING OF GOATS
 The king of goat is inside a 9x9 arena protected by two guards while during stage one it is generally a cake walk the later stages however can prove extremely challenging and downright impossible for less skilled miners..
 The king goat is as indicated by his name the king of all goats and as such if you attempt to fight him you will learn why he is the king in the first place...
-It has no ranged attacks what so ever but makes up for it by being confined in a small space and having the ability to summon guards, charge at his enemy and do a aoe explosion attack which can prove devistating for most miners.
+It has no ranged attacks what so ever but makes up for it by being confined in a small space and having the ability to summon guards, charge at his enemy and do an aoe explosion attack which can prove devistating for most miners.
 The three stages of the king goat:
  Stage 1: The king goat is pretty much just a slightly more robust regular goat, the king will proceed to charge at you full force in the hopes of taking you out easily but can be easily defeated by even a unexperienced miner.
- Stage 2: This is where things start heating up. At this stage the king goat will become slightly larger and start doing special attacks which range from summoning guards to come to his aid to stomping his hooves on the ground causing the arena to shake and a aoe explosion to appear around him most miners do not make it pass this stage but if you do...
+ Stage 2: This is where things start heating up. At this stage the king goat will become slightly larger and start doing special attacks which range from summoning guards to come to his aid to stomping his hooves on the ground causing the arena to shake and an aoe explosion to appear around him most miners do not make it pass this stage but if you do...
  Stage 3: Oh boy your in for it now at this stage the king goat will completly heal and grow slightly bigger and start glowing it has the exact same attacks as stage 2 but is much more intimidating if you can defeat him at stage three he will fall over dead on the ground and drop a ladder so you may now leave the arena but dont forget to grab the loot first!
 The loot:
 The goat gun: This weapon as the name implies fires goats at your enemies knocking them down and doing a bit of brute damage it self recharges and combined with the goat pope hat or king goat pelt can lead to some interesting shenigans,
@@ -171,7 +171,7 @@ Difficulty: Insanely Hard
 /mob/living/simple_animal/hostile/megafauna/king/Retaliate()
 	..()
 	if(stat == CONSCIOUS && prob(5))
-		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgemental gleam in his eye.</span>")
+		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgmental gleam in his eye.</span>")
 
 /mob/living/simple_animal/hostile/megafauna/king/phase2/Retaliate()
 	set waitfor = FALSE
