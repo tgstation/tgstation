@@ -225,7 +225,7 @@
 					continue
 				var/obj/item/forbidden_book/FB = X
 				FB.charge++
-		b		break
+				break
 
 		if(!LH.target)
 			var/datum/objective/A = new
