@@ -134,7 +134,7 @@
 		var/atom/A = X
 		fingerprints |= A.return_fingerprints()
 	listclearnulls(fingerprints)
-	if(LAZYLEN(fingerprints) == 0)
+	if(fingerprints.len == 0)
 		return FALSE
 	return TRUE
 
@@ -142,16 +142,16 @@
 
 	var/list/compiled_list = list()
 
-	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
+	for(var/mob/living/carbon/human/H in GLOB.human_list)
 		if(fingerprints[md5(H.dna.uni_identity)])
 			compiled_list |= H.real_name
 			compiled_list[H.real_name] = H
 
-	if(LAZYLEN(compiled_list) == 0)
+	if(compiled_list.len == 0)
 		to_chat(user, "<span class='warning'>The items don't posses required fingerprints.</span>")
 		return
 
-	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_typepaths_asc)
+	var/chosen_mob = input("Select the person you wish to curse","Your target") as null|anything in sortList(compiled_list, /proc/cmp_mob_realname_dsc)
 	if(!chosen_mob)
 		return ..()
 	curse(compiled_list[chosen_mob])
@@ -171,11 +171,12 @@
 
 /datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user,list/atoms,loc)
 	. = ..()
-	var/mob/living/summoned = new mob_to_summon(loc)
+
 	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_ECULTIST, null, ROLE_ECULTIST, 50,summoned)
 	if(!LAZYLEN(candidates))
 		return
+	var/mob/living/summoned = new mob_to_summon(loc)
 	var/mob/dead/observer/C = pick(candidates)
 	message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
 	summoned.ghostize(0)
