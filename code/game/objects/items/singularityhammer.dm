@@ -35,14 +35,6 @@
 /obj/item/singularityhammer/proc/on_unwield(obj/item/source, mob/user)
 	wielded = FALSE
 
-/obj/item/singularityhammer/equipped(mob/user, slot, initial)
-	. = ..()
-	add_atom_colour("#212121", FIXED_COLOUR_PRIORITY)
-
-/obj/item/singularityhammer/dropped(mob/user, silent)
-	. = ..()
-	remove_atom_colour(FIXED_COLOUR_PRIORITY, "#212121")
-
 /obj/item/singularityhammer/update_icon_state()
 	. = ..()
 	icon_state = "singularity_hammer0"

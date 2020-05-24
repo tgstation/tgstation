@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - bugfix: "fixed science glasses recipe using beer goggles instead of science glasses"
