@@ -61,7 +61,7 @@ jobs:
             - gcc-multilib
             - g++-7
             - g++-7-multilib
-            - libssl1.1:i386
+            - libssl1.0.0:i386
       cache:
         directories:
           - $HOME/BYOND
