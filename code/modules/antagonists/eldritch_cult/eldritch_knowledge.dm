@@ -165,20 +165,20 @@
 	return
 
 /datum/eldritch_knowledge/summon
-	var/mob_to_summon
+	var/mob/living/mob_to_summon
 
 
 /datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user,list/atoms,loc)
 	. = ..()
 
-	message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_ECULTIST, null, ROLE_ECULTIST, 50,summoned)
+	message_admins("[initial(mob_to_summon.name)] is being summoned by [user.real_name] in [loc]")
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [initial(mob_to_summon.real_name)]", ROLE_ECULTIST, null, ROLE_ECULTIST, 50,initial(mob_to_summon))
 	if(!LAZYLEN(candidates))
 		return
 	var/mob/living/summoned = new mob_to_summon(loc)
 	var/mob/dead/observer/C = pick(candidates)
 	message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
-	summoned.ghostize(FALSE)
+	summoned.ghostize(0)
 	summoned.key = C.key
 
 	to_chat(summoned,"<span class='warning'>You are bound to [user.real_name]'s' will! Don't let your master die, protect him at all cost!</span>")
