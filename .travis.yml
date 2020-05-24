@@ -66,11 +66,9 @@ jobs:
       cache:
         directories:
           - $HOME/BYOND
-          - $HOME/libmariadb
       install:
         - tools/travis/install_byond.sh
         - source $HOME/BYOND/byond/bin/byondsetup
-        - tools/travis/install_libmariadb.sh
         - tools/travis/install_rust_g.sh
       before_script:
         - mysql -u root -e 'CREATE DATABASE tg_travis;'
