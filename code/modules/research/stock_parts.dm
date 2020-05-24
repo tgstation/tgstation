@@ -60,6 +60,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
 		new /obj/item/stock_parts/cell/high(src)
+		new /obj/item/stock_parts/electrolite(src)
 
 /obj/item/storage/part_replacer/bluespace/tier2
 
@@ -71,6 +72,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/high(src)
 		new /obj/item/stock_parts/matter_bin/adv(src)
 		new /obj/item/stock_parts/cell/super(src)
+		new /obj/item/stock_parts/electrolite/adv(src)
 
 /obj/item/storage/part_replacer/bluespace/tier3
 
@@ -82,6 +84,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/ultra(src)
 		new /obj/item/stock_parts/matter_bin/super(src)
 		new /obj/item/stock_parts/cell/hyper(src)
+		new /obj/item/stock_parts/electrolite/super(src)
 
 /obj/item/storage/part_replacer/bluespace/tier4
 
@@ -93,6 +96,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/micro_laser/quadultra(src)
 		new /obj/item/stock_parts/matter_bin/bluespace(src)
 		new /obj/item/stock_parts/cell/bluespace(src)
+		new /obj/item/stock_parts/electrolite/bluespace(src)
 
 /obj/item/storage/part_replacer/cargo //used in a cargo crate
 
@@ -103,6 +107,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 		new /obj/item/stock_parts/manipulator(src)
 		new /obj/item/stock_parts/micro_laser(src)
 		new /obj/item/stock_parts/matter_bin(src)
+		new /obj/item/stock_parts/electrolite(src)
 
 /obj/item/storage/part_replacer/cyborg
 	name = "rapid part exchange device"
@@ -294,7 +299,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	custom_materials = list(/datum/material/iron=80)
 
 /obj/item/stock_parts/electrolite/bluespace
-	name = "super electrolite"
+	name = "bluespace electrolite"
 	desc = "An electrolite component to separate matters into others"
 	icon_state = "bluespace_electrolite"
 	rating = 4

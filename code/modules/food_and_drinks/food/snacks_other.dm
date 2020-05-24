@@ -240,7 +240,7 @@
 	foodtype = MEAT | TOXIC
 	value = FOOD_JUNK
 
-/obj/item/reagent_containers/food/snacks/spiderlollipop
+/obj/item/reagent_containers/food/snacks/chewable/spiderlollipop
 	name = "spider lollipop"
 	desc = "Still gross, but at least it has a mountain of sugar on it."
 	icon_state = "spiderlollipop"
@@ -607,7 +607,7 @@
 	else
 		to_chat(victim, "<span class='warning'>[pick("You hear faint whispers.","You smell ash.","You feel hot.","You hear a roar in the distance.")]</span>")
 
-/obj/item/reagent_containers/food/snacks/gumball
+/obj/item/reagent_containers/food/snacks/chewable/gumball
 	name = "gumball"
 	desc = "A colorful, sugary gumball."
 	icon = 'icons/obj/lollipop.dmi'
@@ -617,22 +617,22 @@
 	foodtype = JUNKFOOD
 	value = FOOD_WORTHLESS
 
-/obj/item/reagent_containers/food/snacks/gumball/Initialize()
+/obj/item/reagent_containers/food/snacks/chewable/gumball/Initialize()
 	. = ..()
 	color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg
+/obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg
 	var/spamchecking = TRUE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/Initialize()
+/obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg/Initialize()
 	. = ..()
 	addtimer(CALLBACK(src, .proc/spamcheck), 1200)
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/equipped(mob/living/user, slot)
+/obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg/equipped(mob/living/user, slot)
 	. = ..(user, slot)
 	spamchecking = FALSE
 
-/obj/item/reagent_containers/food/snacks/gumball/cyborg/proc/spamcheck()
+/obj/item/reagent_containers/food/snacks/chewable/gumball/cyborg/proc/spamcheck()
 	if(spamchecking)
 		qdel(src)
 

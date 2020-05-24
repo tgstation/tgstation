@@ -13,7 +13,7 @@
 #_maps/RandomRuins/LavaRuins/lavaland_surface_seed_vault.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_ash_walker1.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_syndicate_base1.dmm
-#_maps/RandomRuins/LavaRuins/lavaland_surface_golem_ship.dmm
+#_maps/RandomRuins/AnywhereRuins/golem_ship.dmm
 
 ##SIN
 #_maps/RandomRuins/LavaRuins/lavaland_surface_envy.dmm
@@ -32,10 +32,11 @@
 #_maps/RandomRuins/LavaRuins/lavaland_surface_wwiioutpost.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_tomb.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_hierophant.dmm
-#_maps/RandomRuins/LavaRuins/lavaland_surface_fountain_hall.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_pizzaparty.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_cultaltar.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_hermit.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_swarmer_crash.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_gaia.dmm
 #_maps/RandomRuins/LavaRuins/lavaland_surface_elephant_graveyard.dmm
+#_maps/RandomRuins/LavaRuins/lavaland_surface_library.dmm
+#_maps/RandomRuins/AnywhereRuins/fountain_hall.dmm

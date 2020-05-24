@@ -19,7 +19,7 @@
 		/datum/reagent/water = 5,
 		/obj/item/reagent_containers/food/snacks/spiderling = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
+	result = /obj/item/reagent_containers/food/snacks/chewable/spiderlollipop
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
