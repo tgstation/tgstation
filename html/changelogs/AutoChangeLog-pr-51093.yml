@@ -1,0 +1,4 @@
+author: "Shadark"
+delete-after: True
+changes: 
+  - bugfix: "Manually printed barcodes are now working correctly."
