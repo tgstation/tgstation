@@ -466,7 +466,7 @@
 	if(poll_type == POLLTYPE_TEXT)
 		table = "poll_textreply"
 	var/datum/DBQuery/query_clear_poll_votes = SSdbcore.NewQuery(
-		"UPDATE [format_table_name("[table]")] SET deleted = 1 WHERE pollid = :poll_id",
+		"UPDATE [format_table_name(table)] SET deleted = 1 WHERE pollid = :poll_id",
 		list("poll_id" = poll_id)
 	)
 	if(!query_clear_poll_votes.warn_execute())

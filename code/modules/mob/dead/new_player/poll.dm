@@ -338,7 +338,7 @@
 	var/vote_id //only used for option and text polls to save needing another query
 	var/datum/DBQuery/query_validate_poll_vote = SSdbcore.NewQuery({"
 		SELECT
-			(SELECT id FROM [format_table_name("[table]")] WHERE ckey = :ckey AND pollid = :pollid AND deleted = 0 LIMIT 1)
+			(SELECT id FROM [format_table_name(table)] WHERE ckey = :ckey AND pollid = :pollid AND deleted = 0 LIMIT 1)
 		FROM [format_table_name("poll_question")]
 		WHERE NOW() BETWEEN starttime AND endtime AND deleted = 0 AND id = :pollid
 	"}, list("ckey" = ckey, "pollid" = sql_poll_id))
