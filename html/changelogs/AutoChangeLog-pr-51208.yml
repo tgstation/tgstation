@@ -1,0 +1,9 @@
+author: "LemonInTheDark"
+delete-after: True
+changes: 
+  - refactor: "Refactored client.view into a datum, changed some zoom values to work properly"
+  - rscadd: "Spinning while using a binocular will work as expected"
+  - rscadd: "Fully adds widescreen support to zooming"
+  - refactor: "I've moved the pixel scaling and zoom methods from the menu bar to the game preferences window. You'll need to reset them."
+  - bugfix: "Pixel size will now automatically update on zoom, so you won't end up with ui buttons you can't see."
+  - bugfix: "FIxed the epic gamer skill of binocular applied to advanced camera console"

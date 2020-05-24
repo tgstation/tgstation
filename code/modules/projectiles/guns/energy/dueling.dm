@@ -83,7 +83,7 @@
 
 
 /datum/duel/proc/back_to_prep()
-	message_duelists("<span class='notice'>Positions invalid. Please move to valid positions [required_distance] steps aways from each other to continue.</span>")
+	message_duelists("<span class='notice'>Positions invalid. Please move to valid positions [required_distance] steps away from each other to continue.</span>")
 	state = DUEL_PREPARATION
 	confirmations.Cut()
 	countdown_step = countdown_length

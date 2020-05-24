@@ -87,7 +87,7 @@
 			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
-				playsound(loc, "desceration", 50, TRUE, -1)
+				playsound(loc, "desecration", 50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/crowbar/power/attack_self(mob/user)

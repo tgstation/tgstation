@@ -26,7 +26,7 @@
 			var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 			if(BP)
 				BP.drop_limb()
-				playsound(loc, "desceration" ,50, TRUE, -1)
+				playsound(loc, "desecration" ,50, TRUE, -1)
 		return (BRUTELOSS)
 	else
 		user.visible_message("<span class='suicide'>[user] repeatedly bashes [src.name] against [user.p_their()] head! It looks like [user.p_theyre()] trying to commit suicide!</span>")

@@ -301,23 +301,26 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
+/obj/machinery/power/supermatter_crystal/update_overlays()
+	. = ..()
+	if(final_countdown)
+		. += "casuality_field"
+
 /obj/machinery/power/supermatter_crystal/proc/countdown()
 	set waitfor = FALSE
 
 	if(final_countdown) // We're already doing it go away
 		return
 	final_countdown = TRUE
-
-	var/image/causality_field = image(icon, null, "causality_field")
-	add_overlay(causality_field, TRUE)
+	update_icon()
 
 	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
 	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
-			cut_overlay(causality_field, TRUE)
 			final_countdown = FALSE
+			update_icon()
 			return
 		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
 			sleep(10)

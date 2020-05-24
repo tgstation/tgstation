@@ -1,0 +1,4 @@
+author: "antropod"
+delete-after: True
+changes: 
+  - bugfix: "Fix PanDEMIC 2200 not showing Blood DNA and Blood Type"

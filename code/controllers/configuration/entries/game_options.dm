@@ -204,6 +204,9 @@
 
 /datum/config_entry/flag/ooc_during_round
 
+/datum/config_entry/number/commendations
+	integer = FALSE
+
 /datum/config_entry/flag/emojis
 
 /datum/config_entry/keyed_list/multiplicative_movespeed

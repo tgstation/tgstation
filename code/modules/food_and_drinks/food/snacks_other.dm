@@ -478,7 +478,7 @@
 	///Stores the time set for the next handle_reagents
 	var/next_succ = 0
 
-	//makes snacks actually wearable as masks and still edible the old fashioned way.
+	//makes snacks actually wearable as masks and still edible the old-fashioned way.
 /obj/item/reagent_containers/food/snacks/chewable/proc/handle_reagents()
 	if(reagents.total_volume)
 		if(iscarbon(loc))
@@ -792,7 +792,7 @@
 
 /obj/item/reagent_containers/food/snacks/crab_rangoon
 	name = "Crab Rangoon"
-	desc = "Has many names, like crab puffs, cheese wontons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
+	desc = "Has many names, like crab puffs, cheese won'tons, crab dumplings? Whatever you call them, they're a fabulous blast of cream cheesy crab."
 	icon_state = "crabrangoon"
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	filling_color = "#f2efdc"

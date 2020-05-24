@@ -367,6 +367,47 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 /obj/item/clothing/mask/cigarette/rollie/Initialize()
 	. = ..()
+	name = pick(list(
+		"bifta",
+		"bifter",
+		"bird",
+		"blunt",
+		"bloint",
+		"boof",
+		"boofer",
+		"bomber",
+		"bone",
+		"bun",
+		"doink",
+		"doob",
+		"doober",
+		"doobie",
+		"dutch",
+		"fatty",
+		"hogger",
+		"hooter",
+		"hootie",
+		"\improper J",
+		"jay",
+		"jimmy",
+		"joint",
+		"juju",
+		"jeebie weebie",
+		"number",
+		"owl",
+		"phattie",
+		"puffer",
+		"reef",
+		"reefer",
+		"rollie",
+		"scoobie",
+		"shorty",
+		"spiff",
+		"spliff",
+		"toke",
+		"torpedo",
+		"zoot",
+		"zooter"))
 	pixel_x = rand(-5, 5)
 	pixel_y = rand(-5, 5)
 
@@ -923,7 +964,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			STOP_PROCESSING(SSobj, src)
 			//it's reusable so it won't unequip when empty
 		return
-	//open flame removed because vapes are a closed system, they wont light anything on fire
+	//open flame removed because vapes are a closed system, they won't light anything on fire
 
 	if(super && vapetime > 3)//Time to start puffing those fat vapes, yo.
 		var/datum/effect_system/smoke_spread/chem/smoke_machine/s = new
