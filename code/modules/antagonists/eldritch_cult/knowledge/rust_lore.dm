@@ -158,12 +158,16 @@
 
 /datum/eldritch_knowledge/rust_final
 	name = "Rustbringer's Oath"
-	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is alos tripled"
+	desc = "Bring 3 corpses onto the transmutation rune. After you finish the ritual rust will now automatically spread from the rune. Your healing on rust is also tripled, while you become more resillient while on rust tiles."
 	gain_text = "Champion of rust. Corruptor of steel. Fear the dark for Rustbringer has come!"
 	cost = 3
 	required_atoms = list(/mob/living/carbon/human)
 	route = "Rust"
 	var/finished = FALSE
+	///keeps track of previous brute mod
+	var/prev_brute_mod
+	///keeps track of previous burn mod
+	var/prev_burn_mod
 
 /datum/eldritch_knowledge/rust_final/recipe_snowflake_check(list/atoms, loc,list/selected_atoms)
 	if(finished)
@@ -177,23 +181,33 @@
 	return FALSE
 
 /datum/eldritch_knowledge/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
+	prev_brute_mod = user.physiology.brute_mod
+	prev_burn_mod = user.physiology.burn_mod
 	finished = TRUE
+	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for Rustbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 	new /datum/rust_spread(loc)
+
+
 	. = ..()
 
 /datum/eldritch_knowledge/rust_final/on_life(mob/user)
 	. = ..()
 	if(!finished)
 		return
+	var/mob/living/L = user
 	var/turf/T = get_turf(user)
 	if(!istype(T,/turf/open/floor/plating/rust) || !isliving(user))
+		L.physiology.brute_mod = prev_brute_mod
+		L.physiology.burn_mod = prev_burn_mod
 		return
-	var/mob/living/L = user
+
 	L.adjustBruteLoss(-3)
 	L.adjustFireLoss(-3)
 	L.adjustToxLoss(-3)
 	L.adjustOxyLoss(-1)
 	L.adjustStaminaLoss(-10)
+	L.physiology.brute_mod = prev_brute_mod * 0.5
+	L.physiology.burn_mod = prev_burn_mod * 0.5
 
 /datum/rust_spread
 	var/list/edge_turfs = list()

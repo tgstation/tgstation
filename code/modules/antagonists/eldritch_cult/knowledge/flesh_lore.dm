@@ -238,15 +238,17 @@
 /datum/eldritch_knowledge/flesh_final/on_finished_recipe(mob/living/user, list/atoms, loc)
 	is_summoned = TRUE // you got one chance
 	var/alert_ = alert(user,"Do you want to ascend as the lord of the night or just summon a terror of the night?","...","Yes","No")
-	user.SetImmobilized(10 HOURS) // no way someone will stand 10 hours in a spot, just so he can move.
+	user.SetImmobilized(10 HOURS) // no way someone will stand 10 hours in a spot, just so he can move while the alert is still showing.
 	switch(alert_)
 		if("No")
+
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy(loc)
 			message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
 			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_ECULTIST, null, ROLE_ECULTIST, 50,summoned)
 			if(!LAZYLEN(candidates))
 				return
 			var/mob/dead/observer/C = pick(candidates)
+			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for vassal of arms has ascended! Terror of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
 			summoned.ghostize(0)
 			summoned.key = C.key
@@ -258,6 +260,7 @@
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy/prime(loc,spawn_more = TRUE,len = 10)
 			summoned.ghostize(0)
 			user.SetImmobilized(0)
+			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for king of arms has ascended! Lord of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 			var/mob/living/carbon/C = user
 			C.mind.transfer_to(summoned,TRUE)
 			C.gib()
