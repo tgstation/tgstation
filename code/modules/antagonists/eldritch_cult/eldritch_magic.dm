@@ -48,7 +48,7 @@
 	catchphrase = "R'CH T'H TR'TH"
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	..()
+	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
@@ -81,7 +81,7 @@
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/cast(list/targets, mob/user = usr)
-	playsound(get_turf(user), 'sound/items/welder.ogg', 75, TRUE)
+	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 	for(var/turf/T in targets)
 		///What we want is the 3 tiles around the user and the tile under him to be rusted, so min(dist,1)-1 causes us to get 0 for these tiles, rest of the tiles are based on chance
 		var/chance = 100 - (max(get_dist(T,user),1)-1)*100/(range+1)
@@ -129,7 +129,7 @@
 	catchphrase = "R'BRTH"
 
 /obj/item/melee/touch_attack/ash_leech/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	..()
+	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
