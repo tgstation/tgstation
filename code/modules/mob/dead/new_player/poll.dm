@@ -461,31 +461,24 @@
 	qdel(query_get_rating_votes)
 	href_list.Cut(1,3) //first two values aren't options
 
-	var/datum/DBQuery/query_get_sql_values = SSdbcore.NewQuery({"
-		SELECT Now(), INET_ATON(:ip)
-	"}, list("ip" = client.address))
-	if (!query_get_sql_values.warn_execute())
-		qdel(query_get_sql_values)
-		return
-	ASSERT(query_get_sql_values.NextRow())
-	var/now = query_get_sql_values.item[1]
-	var/ip = query_get_sql_values.item[2]
-	qdel(query_get_sql_values)
+	var/special_columns = list(
+		"datetime" = "NOW()",
+		"ip" = "INET_ATON(?)",
+	)
 
 	var/sql_votes = list()
 	for(var/h in href_list)
 		var/datum/poll_option/option = locate(h) in poll.options
 		sql_votes += list(list(
 			"id" = votes["[option.option_id]"],
-			"datetime" = now,
 			"pollid" = sql_poll_id,
 			"optionid" = option.option_id,
 			"ckey" = ckey,
-			"ip" = ip,
+			"ip" = client.address,
 			"adminrank" = admin_rank,
 			"rating" = href_list[h]
 		))
-	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes, duplicate_key = TRUE)
+	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes, duplicate_key = TRUE, special_columns = special_columns)
 	return TRUE
 
 /**
@@ -503,16 +496,10 @@
 	else
 		to_chat(src, "<span class='danger'>No options were selected.</span>")
 
-	var/datum/DBQuery/query_get_sql_values = SSdbcore.NewQuery({"
-		SELECT Now(), INET_ATON(:ip)
-	"}, list("ip" = client.address))
-	if (!query_get_sql_values.warn_execute())
-		qdel(query_get_sql_values)
-		return
-	ASSERT(query_get_sql_values.NextRow())
-	var/now = query_get_sql_values.item[1]
-	var/ip = query_get_sql_values.item[2]
-	qdel(query_get_sql_values)
+	var/special_columns = list(
+		"datetime" = "NOW()",
+		"ip" = "INET_ATON(?)",
+	)
 
 	var/sql_votes = list()
 	var/vote_count = 0
@@ -523,11 +510,10 @@
 		vote_count++
 		var/datum/poll_option/option = locate(h) in poll.options
 		sql_votes += list(list(
-			"datetime" = now,
 			"pollid" = sql_poll_id,
 			"optionid" = option.option_id,
 			"ckey" = ckey,
-			"ip" = ip,
+			"ip" = client.address,
 			"adminrank" = admin_rank
 		))
 	/*with revoting and poll editing possible there can be an edge case where a poll is changed to allow less multiple choice options than a user has already voted on
@@ -539,7 +525,7 @@
 		qdel(query_delete_multi_votes)
 		return
 	qdel(query_delete_multi_votes)
-	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes)
+	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes, special_columns = special_columns)
 	return TRUE
 
 /**
@@ -556,26 +542,19 @@
 	if(!length(votelist))
 		to_chat(src, "<span class='danger'>No ordering data found. Please try again or contact an administrator.</span>")
 
-	var/datum/DBQuery/query_get_sql_values = SSdbcore.NewQuery({"
-		SELECT Now(), INET_ATON(:ip)
-	"}, list("ip" = client.address))
-	if (!query_get_sql_values.warn_execute())
-		qdel(query_get_sql_values)
-		return
-	ASSERT(query_get_sql_values.NextRow())
-	var/now = query_get_sql_values.item[1]
-	var/ip = query_get_sql_values.item[2]
-	qdel(query_get_sql_values)
+	var/list/special_columns = list(
+		"datetime" = "NOW()",
+		"ip" = "INET_ATON(?)",
+	)
 
 	var/sql_votes = list()
 	for(var/o in votelist)
 		var/datum/poll_option/option = locate(o) in poll.options
 		sql_votes += list(list(
-			"datetime" = now,
 			"pollid" = sql_poll_id,
 			"optionid" = option.option_id,
 			"ckey" = ckey,
-			"ip" = ip,
+			"ip" = client.address,
 			"adminrank" = admin_rank
 		))
 	//IRV results are calculated based on id order, we delete all of a user's votes to avoid potential errors caused by revoting and option editing
@@ -586,5 +565,5 @@
 		qdel(query_delete_irv_votes)
 		return
 	qdel(query_delete_irv_votes)
-	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes)
+	SSdbcore.MassInsert(format_table_name("poll_vote"), sql_votes, special_columns = special_columns)
 	return TRUE

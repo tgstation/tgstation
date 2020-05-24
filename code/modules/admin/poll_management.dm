@@ -402,7 +402,7 @@
 	var/datum/DBQuery/query_save_poll = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("poll_question")] (id, polltype, created_datetime, starttime, endtime, question, subtitle, adminonly, multiplechoiceoptions, createdby_ckey, createdby_ip, dontshow, allow_revoting)
 		VALUES (:poll_id, :poll_type, NOW(), COALESCE(:start_datetime, NOW()), [end_datetime_sql], :question, :subtitle, :admin_only, :options_allowed, :admin_ckey, INET_ATON(:admin_ip), :dont_show, :allow_revoting)
-		ON DUPLICATE KEY UPDATE starttime = :start_datetime, endtime = [end_datetime_sql], question = :question, subtitle = :subtitle, adminonly = :admin_only, multiplechoiceoptions = :options_allowed, dontshow = :dont_show, allow_revoting = :allow_revoting'
+		ON DUPLICATE KEY UPDATE starttime = :start_datetime, endtime = [end_datetime_sql], question = :question, subtitle = :subtitle, adminonly = :admin_only, multiplechoiceoptions = :options_allowed, dontshow = :dont_show, allow_revoting = :allow_revoting
 	"}, list(
 		"poll_id" = poll_id, "poll_type" = poll_type, "start_datetime" = start_datetime, "duration" = duration,
 		"question" = question, "subtitle" = subtitle, "admin_only" = admin_only, "options_allowed" = options_allowed,

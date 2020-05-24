@@ -97,17 +97,12 @@ SUBSYSTEM_DEF(blackbox)
 	if (!SSdbcore.Connect())
 		return
 
-	var/now
-	var/datum/DBQuery/now_query = SSdbcore.NewQuery("SELECT NOW()")
-	now_query.Execute()
-	if (now_query.NextRow())
-		now = now_query.item[1]
-	qdel(now_query)
-
+	var/list/special_columns = list(
+		"datetime" = "NOW()"
+	)
 	var/list/sqlrowlist = list()
 	for (var/datum/feedback_variable/FV in feedback)
 		sqlrowlist += list(list(
-			"datetime" = now,
 			"round_id" = GLOB.round_id,
 			"key_name" = FV.key,
 			"key_type" = FV.key_type,
@@ -118,7 +113,7 @@ SUBSYSTEM_DEF(blackbox)
 	if (!length(sqlrowlist))
 		return
 
-	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE)
+	SSdbcore.MassInsert(format_table_name("feedback"), sqlrowlist, ignore_errors = TRUE, delayed = TRUE, special_columns = special_columns)
 
 /datum/controller/subsystem/blackbox/proc/Seal()
 	if(sealed)

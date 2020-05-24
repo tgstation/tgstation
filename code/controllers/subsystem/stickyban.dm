@@ -204,13 +204,13 @@ SUBSYSTEM_DEF(stickyban)
 			sqlips[++sqlips.len] = sqlip
 
 	if (length(sqlckeys))
-		SSdbcore.MassInsert(format_table_name("stickyban_matched_ckey"), sqlckeys, FALSE, TRUE)
+		SSdbcore.MassInsert(format_table_name("stickyban_matched_ckey"), sqlckeys, ignore_errors = TRUE)
 
 	if (length(sqlcids))
-		SSdbcore.MassInsert(format_table_name("stickyban_matched_cid"), sqlcids, FALSE, TRUE)
+		SSdbcore.MassInsert(format_table_name("stickyban_matched_cid"), sqlcids, ignore_errors = TRUE)
 
 	if (length(sqlips))
-		SSdbcore.MassInsert(format_table_name("stickyban_matched_ip"), sqlips, FALSE, TRUE)
+		SSdbcore.MassInsert(format_table_name("stickyban_matched_ip"), sqlips, ignore_errors = TRUE)
 
 
 	return TRUE

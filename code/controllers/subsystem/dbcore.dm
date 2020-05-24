@@ -261,11 +261,13 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		query_parts += ")"
 		has_row = TRUE
 
-	if (duplicate_key)
+	if (duplicate_key == TRUE)
 		var/list/column_list = list()
 		for (var/column in columns)
 			column_list += "[column] = VALUES([column])"
 		query_parts += "\nON DUPLICATE KEY UPDATE [column_list.Join(", ")]"
+	else if (duplicate_key != FALSE)
+		query_parts += duplicate_key
 
 	var/datum/DBQuery/Query = NewQuery(query_parts.Join(), arguments)
 	if (warn)

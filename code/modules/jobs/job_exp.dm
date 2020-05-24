@@ -148,7 +148,7 @@ GLOBAL_PROTECT(exp_to_update)
 	set waitfor = FALSE
 	var/list/old_minutes = GLOB.exp_to_update
 	GLOB.exp_to_update = null
-	SSdbcore.MassInsert(format_table_name("role_time"), old_minutes, "ON DUPLICATE KEY UPDATE minutes = minutes + VALUES(minutes)")
+	SSdbcore.MassInsert(format_table_name("role_time"), old_minutes, duplicate_key = "ON DUPLICATE KEY UPDATE minutes = minutes + VALUES(minutes)")
 
 //resets a client's exp to what was in the db.
 /client/proc/set_exp_from_db()
