@@ -65,7 +65,7 @@
 
 	for(var/mob/living/carbon/human/ghoul in ghouls)
 		if(ghoul.stat == DEAD)
-			to_chat(user, "<span class='warning'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
+			to_chat(user, "<span class='big bold'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
 			ghouls -= ghoul
 			current_amt--
 
@@ -105,7 +105,10 @@
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
 
-	check_ghouls()
+	check_ghouls(user)
+	if(HAS_TRAIT(H,TRAIT_GHOUL))
+		to_chat(user, "<span class='warning'>You cannot revive a dead ghoul!</span>")
+		return
 
 	if(LAZYLEN(spooky_scaries) >= ghoul_amt)
 		to_chat(user, "<span class='warning'>Your patron cannot support more ghouls on this plane!</span>")
@@ -123,7 +126,7 @@
 	to_chat(H, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
 	return
 
-/datum/eldritch_knowledge/flesh_grasp/proc/check_ghouls()
+/datum/eldritch_knowledge/flesh_grasp/proc/check_ghouls(mob/user)
 	if(LAZYLEN(spooky_scaries) == 0)
 		return
 
@@ -133,7 +136,7 @@
 			continue
 		var/mob/living/carbon/human/H = X
 		if(H.stat == DEAD)
-			H.dust(TRUE)
+			to_chat(user, "<span class='big bold'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
 			LAZYREMOVE(spooky_scaries,X)
 			continue
 
