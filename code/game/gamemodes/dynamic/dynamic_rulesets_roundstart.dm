@@ -477,7 +477,6 @@
 	cost = 30
 	requirements = list(101,101,101,80,70,30,15,10,10,10)
 	high_population_requirement = 10
-	flags = TRAITOR_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/midround/families)
 	minimum_players = 20
 	antag_cap = list(2,2,2,2,2,4,4,6,6,6)
@@ -497,10 +496,6 @@
 /datum/dynamic_ruleset/roundstart/families/clean_up()
 	QDEL_NULL(handler)
 	..()
-
-/datum/dynamic_ruleset/roundstart/families/Destroy()
-	QDEL_NULL(handler)
-	return ..()
 
 /datum/dynamic_ruleset/roundstart/families/rule_process()
 	return handler.process_analogue()
