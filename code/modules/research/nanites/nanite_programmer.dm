@@ -23,6 +23,10 @@
 				eject(user)
 			disk = N
 			program = N.program
+	else if (default_deconstruction_screwdriver(user, "nanite_programmer", "nanite_programmer", I))
+		return
+	else if(default_deconstruction_crowbar(I))
+		return
 	else
 		..()
 

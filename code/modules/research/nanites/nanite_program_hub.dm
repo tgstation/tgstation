@@ -37,6 +37,10 @@
 			if(disk)
 				eject(user)
 			disk = N
+	else if (default_deconstruction_screwdriver(user, "nanite_program_hub", "nanite_program_hub", I))
+		return
+	else if(default_deconstruction_crowbar(I))
+		return
 	else
 		..()
 
