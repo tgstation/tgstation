@@ -1,6 +1,6 @@
 language: generic
 os: linux
-dist: xenial
+dist: bionic
 
 branches:
   except:
@@ -61,7 +61,7 @@ jobs:
             - gcc-multilib
             - g++-7
             - g++-7-multilib
-            - libssl1.0.0:i386
+            - libssl1.1:i386
       cache:
         directories:
           - $HOME/BYOND
@@ -76,7 +76,6 @@ jobs:
         - mysql -u root tg_travis < SQL/tgstation_schema.sql
         - mysql -u root -e 'CREATE DATABASE tg_travis_prefixed;'
         - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
-        - tools/travis/build_bsql.sh
       script:
         - tools/travis/dm.sh -DTRAVISBUILDING tgstation.dme || travis_terminate 1
         - tools/travis/run_server.sh

@@ -13,9 +13,6 @@ unset LIST
 #rust_g git tag
 export RUST_G_VERSION=0.4.5
 
-#bsql git tag
-export BSQL_VERSION=v1.4.0.0
-
 #node version
 export NODE_VERSION=12
 
