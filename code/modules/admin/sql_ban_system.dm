@@ -504,7 +504,7 @@
 		"server_ip" = "INET_ATON(?)",
 		"ip" = "INET_ATON(?)",
 		"a_ip" = "INET_ATON(?)",
-		"expiration_time" = "NOW() + INTERVAL IFNULL(?, 0) [interval]"
+		"expiration_time" = "IF(? IS NULL, NULL, NOW() + INTERVAL ? [interval])"
 	)
 	var/sql_ban = list()
 	for(var/role in roles_to_ban)

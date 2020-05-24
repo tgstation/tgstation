@@ -229,14 +229,9 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 			has_question_mark[column] = TRUE
 	for (var/column in special_columns)
 		columns[column] = special_columns[column]
-		var/q = findtext(special_columns[column], "?")
-		has_question_mark[column] = !!q
-		if (q && findtext(special_columns[column], "?", q + 1))
-			CRASH("MassInsert special column `[column]` may contain at most one `?`: `[special_columns[column]]`")
+		has_question_mark[column] = !!findtext(special_columns[column], "?")
 
-	// Prepare SQL query full of question marks
-	var/list/arguments = list()
-
+	// Prepare SQL query full of placeholders
 	var/list/query_parts = list("INSERT")
 	if (delayed)
 		query_parts += " DELAYED"
@@ -244,17 +239,25 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		query_parts += " IGNORE"
 	query_parts += " INTO "
 	query_parts += table
-	query_parts += "\n([columns.Join(", ")]\nVALUES"
+	query_parts += "\n([columns.Join(", ")])\nVALUES"
 
+	var/list/arguments = list()
 	var/has_row = FALSE
 	for (var/list/row in rows)
 		if (has_row)
 			query_parts += ","
 		query_parts += "\n  ("
-		query_parts += columns.Join(", ")
+		var/has_col = FALSE
 		for (var/column in columns)
+			if (has_col)
+				query_parts += ", "
 			if (has_question_mark[column])
-				values += row[column]
+				var/name = "p[arguments.len]"
+				query_parts += replacetext(columns[column], "?", ":[name]")
+				arguments[name] = row[column]
+			else
+				query_parts += columns[column]
+			has_col = TRUE
 		query_parts += ")"
 		has_row = TRUE
 
@@ -263,38 +266,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 		for (var/column in columns)
 			column_list += "[column] = VALUES([column])"
 		query_parts += "\nON DUPLICATE KEY UPDATE [column_list.Join(", ")]"
-
-	var/list/sorted_rows = list()
-
-	for (var/list/row in rows)
-		var/list/sorted_row = list()
-		sorted_row.len = columns.len
-		for (var/column in row)
-			columns[column] = TRUE
-			var/idx = columns[column]
-			if (!idx)
-				idx = columns.len + 1
-				columns[column] = idx
-				sorted_row.len = columns.len
-
-			sorted_row[idx] = row[column]
-		sorted_rows[++sorted_rows.len] = sorted_row
-
-	var/len = columns.len
-	var/list/question_mark_list = list()
-	for (var/i in 1 to len)
-		question_mark_list += "?"
-	var/question_marks = "([question_mark_list.Join(",")])"
-
-	var/list/values_section = list()
-	var/arguments = list()
-	for (var/list/row in sorted_rows)
-		if (length(row) != len)
-			row.len = len
-
-		values_section += question_marks
-		for (var/value in row)
-			arguments += value
 
 	var/datum/DBQuery/Query = NewQuery(query_parts.Join(), arguments)
 	if (warn)
