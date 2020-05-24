@@ -16,8 +16,6 @@
 	apply()
 
 /datum/viewData/proc/safeApplyFormat()
-	if(chief.prefs.auto_fit_viewport)
-		chief.fit_viewport()
 	if(isZooming())
 		assertFormat()
 		return
@@ -81,6 +79,8 @@
 /datum/viewData/proc/apply()
 	chief.change_view(getView())
 	safeApplyFormat()
+	if(chief.prefs.auto_fit_viewport)
+		chief.fit_viewport()
 
 /datum/viewData/proc/getView()
 	var/list/temp = getviewsize(default)
