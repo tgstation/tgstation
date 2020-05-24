@@ -4,6 +4,7 @@
 	var/width = 0
 	var/height = 0
 	var/default = ""
+	var/is_suppressed = FALSE
 	var/client/chief = null
 
 /datum/viewData/New(client/owner, view_string)
@@ -82,8 +83,18 @@
 	if(chief.prefs.auto_fit_viewport)
 		chief.fit_viewport()
 
+/datum/viewData/proc/supress()
+	is_suppressed = TRUE
+	apply()
+
+/datum/viewData/proc/unsupress()
+	is_suppressed = FALSE
+	apply()
+
 /datum/viewData/proc/getView()
 	var/list/temp = getviewsize(default)
+	if(is_suppressed)
+		return "[temp[1]]x[temp[2]]"
 	return "[width + temp[1]]x[height + temp[2]]"
 
 /datum/viewData/proc/zoomIn()
