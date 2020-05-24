@@ -1,4 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "diseases now retain the ability to infect people after having 'inorganic biology' or 'necrotic metabolism' removed from them"
