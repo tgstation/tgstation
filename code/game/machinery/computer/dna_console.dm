@@ -189,6 +189,16 @@
 
 	return ..()
 
+
+/obj/machinery/computer/scan_consolenew/AltClick(mob/user)
+	if(diskette && user.canUseTopic(src, !issilicon(user)))
+		to_chat(user, "<span class='notice'>You take out [diskette] from [src].</span>")
+		if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))
+			diskette.forceMove(drop_location())
+		diskette = null
+	return
+
+
 /obj/machinery/computer/scan_consolenew/Initialize()
 	. = ..()
 
