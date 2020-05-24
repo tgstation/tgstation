@@ -181,8 +181,9 @@
 	return FALSE
 
 /datum/eldritch_knowledge/rust_final/on_finished_recipe(mob/living/user, list/atoms, loc)
-	prev_brute_mod = user.physiology.brute_mod
-	prev_burn_mod = user.physiology.burn_mod
+	var/mob/living/carbon/human/H = user
+	prev_brute_mod = H.physiology.brute_mod
+	prev_burn_mod = H.physiology.burn_mod
 	finished = TRUE
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for Rustbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 	new /datum/rust_spread(loc)
@@ -194,20 +195,20 @@
 	. = ..()
 	if(!finished)
 		return
-	var/mob/living/L = user
+	var/mob/living/carbon/human/H = user
 	var/turf/T = get_turf(user)
 	if(!istype(T,/turf/open/floor/plating/rust) || !isliving(user))
-		L.physiology.brute_mod = prev_brute_mod
-		L.physiology.burn_mod = prev_burn_mod
+		H.physiology.brute_mod = prev_brute_mod
+		H.physiology.burn_mod = prev_burn_mod
 		return
 
-	L.adjustBruteLoss(-3)
-	L.adjustFireLoss(-3)
-	L.adjustToxLoss(-3)
-	L.adjustOxyLoss(-1)
-	L.adjustStaminaLoss(-10)
-	L.physiology.brute_mod = prev_brute_mod * 0.5
-	L.physiology.burn_mod = prev_burn_mod * 0.5
+	H.adjustBruteLoss(-3)
+	H.adjustFireLoss(-3)
+	H.adjustToxLoss(-3)
+	H.adjustOxyLoss(-1)
+	H.adjustStaminaLoss(-10)
+	H.physiology.brute_mod = prev_brute_mod * 0.5
+	H.physiology.burn_mod = prev_burn_mod * 0.5
 
 
 /**
