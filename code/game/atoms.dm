@@ -751,7 +751,7 @@
 	return FALSE
 
 /**
-  * Respond to a electric bolt action on our item
+  * Respond to an electric bolt action on our item
   *
   * Default behaviour is to return, we define here to allow for cleaner code later on
   */
