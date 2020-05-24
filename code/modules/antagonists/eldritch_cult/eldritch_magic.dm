@@ -61,7 +61,6 @@
 		var/mob/living/carbon/C = target
 		C.adjustBruteLoss(10)
 		C.AdjustKnockdown(1 SECONDS)
-		return
 
 	for(var/X in cultie.get_all_knowledge())
 		var/datum/eldritch_knowledge/EK = X

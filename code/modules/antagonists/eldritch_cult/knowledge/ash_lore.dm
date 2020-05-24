@@ -5,7 +5,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/rust_final,/datum/eldritch_knowledge/flesh_final)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
 	required_atoms = list(/obj/item/kitchen/knife,/obj/item/match)
-	result_atoms = list(/obj/item/melee/sickly_blade/rust)
+	result_atoms = list(/obj/item/melee/sickly_blade/ash)
 	cost = 1
 	route = "Ash"
 

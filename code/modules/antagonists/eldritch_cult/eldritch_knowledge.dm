@@ -208,12 +208,7 @@
 
 /datum/eldritch_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
 	. = ..()
-	for(var/X in user.GetAllContents())
-		if(!istype(X,/obj/item/forbidden_book))
-			continue
-		var/obj/item/forbidden_book/FB = X
-		FB.charge++
-		break
+
 
 	for(var/obj/item/living_heart/LH in atoms)
 		if(LH.target == user.mind)
@@ -223,7 +218,14 @@
 			var/mob/living/carbon/human/H = LH.target.current
 			H.gib()
 			var/datum/antagonist/e_cult/EC = user.mind.has_antag_datum(/datum/antagonist/e_cult)
+
 			EC.total_sacrifices++
+			for(var/X in user.GetAllContents())
+				if(!istype(X,/obj/item/forbidden_book))
+					continue
+				var/obj/item/forbidden_book/FB = X
+				FB.charge++
+		b		break
 
 		if(!LH.target)
 			var/datum/objective/A = new
