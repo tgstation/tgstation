@@ -1,5 +1,0 @@
-author: "TetraK1"
-delete-after: True
-changes: 
-  - bugfix: "Ghosts can no longer control atmos stuff with alt/ctrl click."
-  - admin: "Added logging to ctrl/alt clicks on atmos stuff"
