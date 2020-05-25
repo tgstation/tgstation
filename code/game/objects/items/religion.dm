@@ -44,9 +44,9 @@
 		if(H.stat == DEAD || H == user)
 			continue
 		if(H.mind && (has_job_loyalties || has_role_loyalties))
-			if(has_job_loyalties && H.mind.assigned_role in job_loyalties)
+			if(has_job_loyalties && (H.mind.assigned_role in job_loyalties))
 				inspired += H
-			else if(has_role_loyalties && H.mind.special_role in role_loyalties)
+			else if(has_role_loyalties && (H.mind.special_role in role_loyalties))
 				inspired += H
 		else if(check_inspiration(H))
 			inspired += H
@@ -78,6 +78,9 @@
 	name = "securistan banner"
 	desc = "The banner of Securistan, ruling the station with an iron fist."
 	icon_state = "banner_security"
+	item_state = "banner_security"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	job_loyalties = list("Security Officer", "Warden", "Detective", "Head of Security")
 	warcry = "EVERYONE DOWN ON THE GROUND!!"
 
@@ -89,14 +92,17 @@
 	result = /obj/item/banner/security/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/security = 1)
+				/obj/item/clothing/under/rank/security/officer = 1)
 	category = CAT_MISC
 
 /obj/item/banner/medical
 	name = "meditopia banner"
 	desc = "The banner of Meditopia, generous benefactors that cure wounds and shelter the weak."
 	icon_state = "banner_medical"
-	job_loyalties = list("Medical Doctor", "Chemist", "Geneticist", "Virologist", "Chief Medical Officer")
+	item_state = "banner_medical"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
+	job_loyalties = list("Medical Doctor", "Chemist", "Virologist", "Chief Medical Officer")
 	warcry = "No wounds cannot be healed!"
 
 /obj/item/banner/medical/mundane
@@ -122,7 +128,10 @@
 	name = "sciencia banner"
 	desc = "The banner of Sciencia, bold and daring thaumaturges and researchers that take the path less traveled."
 	icon_state = "banner_science"
-	job_loyalties = list("Scientist", "Roboticist", "Research Director")
+	item_state = "banner_science"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
+	job_loyalties = list("Scientist", "Roboticist", "Research Director", "Geneticist",)
 	warcry = "For Cuban Pete!"
 
 /obj/item/banner/science/mundane
@@ -136,13 +145,16 @@
 	result = /obj/item/banner/science/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/scientist = 1)
+				/obj/item/clothing/under/rank/rnd/scientist = 1)
 	category = CAT_MISC
 
 /obj/item/banner/cargo
 	name = "cargonia banner"
 	desc = "The banner of the eternal Cargonia, with the mystical power of conjuring any object into existence."
 	icon_state = "banner_cargo"
+	item_state = "banner_cargo"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	job_loyalties = list("Cargo Technician", "Shaft Miner", "Quartermaster")
 	warcry = "Hail Cargonia!"
 
@@ -154,13 +166,16 @@
 	result = /obj/item/banner/cargo/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/cargotech = 1)
+				/obj/item/clothing/under/rank/cargo/tech = 1)
 	category = CAT_MISC
 
 /obj/item/banner/engineering
 	name = "engitopia banner"
 	desc = "The banner of Engitopia, wielders of limitless power."
 	icon_state = "banner_engineering"
+	item_state = "banner_engineering"
+	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	job_loyalties = list("Station Engineer", "Atmospheric Technician", "Chief Engineer")
 	warcry = "All hail lord Singuloth!!"
 
@@ -175,7 +190,7 @@
 	result = /obj/item/banner/engineering/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/rank/engineer = 1)
+				/obj/item/clothing/under/rank/engineering/engineer = 1)
 	category = CAT_MISC
 
 /obj/item/banner/command
@@ -196,7 +211,7 @@
 	result = /obj/item/banner/command/mundane
 	time = 40
 	reqs = list(/obj/item/stack/rods = 2,
-				/obj/item/clothing/under/captainparade = 1)
+				/obj/item/clothing/under/rank/captain/parade = 1)
 	category = CAT_MISC
 
 /obj/item/banner/red
@@ -212,7 +227,7 @@
 	desc = "A banner with the logo of the blue deity."
 
 /obj/item/storage/backpack/bannerpack
-	name = "nanotrasen banner backpack"
+	name = "\improper Nanotrasen banner backpack"
 	desc = "It's a backpack with lots of extra room.  A banner with Nanotrasen's logo is attached, that can't be removed."
 	icon_state = "bannerpack"
 
@@ -239,7 +254,7 @@
 	w_class = WEIGHT_CLASS_BULKY
 	slowdown = 2.0 //gotta pretend we're balanced.
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 
 /obj/item/clothing/suit/armor/plate/crusader/red
 	icon_state = "crusader-red"
@@ -253,7 +268,7 @@
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60)
 
 /obj/item/clothing/head/helmet/plate/crusader/blue
 	icon_state = "crusader-blue"
@@ -265,9 +280,9 @@
 /obj/item/clothing/head/helmet/plate/crusader/prophet
 	name = "Prophet's Hat"
 	desc = "A religious-looking hat."
-	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	flags_1 = 0
-	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 50, "bomb" = 70, "bio" = 50, "rad" = 50, "fire" = 60, "acid" = 60) //religion protects you from disease and radiation, honk.
+	armor = list("melee" = 60, "bullet" = 60, "laser" = 60, "energy" = 60, "bomb" = 70, "bio" = 50, "rad" = 50, "fire" = 60, "acid" = 60) //religion protects you from disease and radiation, honk.
 	worn_x_dimension = 64
 	worn_y_dimension = 64
 
@@ -293,7 +308,7 @@
 	. = ..()
 	if(staffcooldown + staffwait > world.time)
 		return
-	user.visible_message("[user] chants deeply and waves [user.p_their()] staff!")
+	user.visible_message("<span class='notice'>[user] chants deeply and waves [user.p_their()] staff!</span>")
 	if(do_after(user, 20,1,src))
 		target.add_atom_colour(conversion_color, WASHABLE_COLOUR_PRIORITY) //wololo
 	staffcooldown = world.time
@@ -327,7 +342,7 @@
 	desc = "Metal boots, they look heavy."
 	icon_state = "crusader"
 	w_class = WEIGHT_CLASS_NORMAL
-	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 40, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60) //does this even do anything on boots?
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 60, "bio" = 0, "rad" = 0, "fire" = 60, "acid" = 60) //does this even do anything on boots?
 	clothing_flags = NOSLIP
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT

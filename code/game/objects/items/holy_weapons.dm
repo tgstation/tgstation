@@ -5,7 +5,7 @@
 	desc = "Deus Vult."
 	icon_state = "knight_templar"
 	item_state = "knight_templar"
-	armor = list("melee" = 41, "bullet" = 15, "laser" = 5,"energy" = 5, "bomb" = 5, "bio" = 2, "rad" = 0, "fire" = 0, "acid" = 50)
+	armor = list("melee" = 50, "bullet" = 10, "laser" = 10, "energy" = 10, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 80)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	strip_delay = 80
@@ -25,10 +25,10 @@
 	desc = "Contains a set of armaments for the chaplain."
 
 /obj/item/choice_beacon/holy/canUseBeacon(mob/living/user)
-	if(user.mind && user.mind.isholy)
+	if(user.mind && user.mind.holy_role)
 		return ..()
 	else
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 40, TRUE)
 		return FALSE
 
 /obj/item/choice_beacon/holy/generate_display_names()
@@ -44,7 +44,7 @@
 /obj/item/choice_beacon/holy/spawn_option(obj/choice,mob/living/M)
 	if(!GLOB.holy_armor_type)
 		..()
-		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, 1)
+		playsound(src, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
 		SSblackbox.record_feedback("tally", "chaplain_armor", 1, "[choice]")
 		GLOB.holy_armor_type = choice
 	else
@@ -77,7 +77,8 @@
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
 	desc = "A cage that restrains the will of the self, allowing one to see the profane world for what it is."
-	alternate_worn_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
+	flags_inv = HIDEHAIR //bald
+	mob_overlay_icon = 'icons/mob/large-worn-icons/64x64/head.dmi'
 	icon_state = "cage"
 	item_state = "cage"
 	worn_x_dimension = 64
@@ -123,6 +124,28 @@
 	icon_state = "witchhunterhat"
 	item_state = "witchhunterhat"
 	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEEYES|HIDEHAIR
+
+/obj/item/storage/box/holy/adept
+	name = "Divine Adept Kit"
+
+/obj/item/storage/box/holy/adept/PopulateContents()
+	new /obj/item/clothing/suit/armor/riot/chaplain/adept(src)
+	new /obj/item/clothing/head/helmet/chaplain/adept(src)
+
+/obj/item/clothing/head/helmet/chaplain/adept
+	name = "adept hood"
+	desc = "Its only heretical when others do it."
+	icon_state = "crusader"
+	item_state = "crusader"
+	flags_cover = HEADCOVERSEYES
+	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
+
+/obj/item/clothing/suit/armor/riot/chaplain/adept
+	name = "adept robes"
+	desc = "The ideal outfit for burning the unfaithful."
+	icon_state = "crusader"
+	item_state = "crusader"
 
 /obj/item/storage/box/holy/follower
 	name = "Followers of the Chaplain Kit"
@@ -167,7 +190,7 @@
 
 /obj/item/nullrod
 	name = "null rod"
-	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie and Ratvar's followers."
+	desc = "A rod of pure obsidian; its very presence disrupts and dampens the powers of Nar'Sie's followers."
 	icon_state = "nullrod"
 	item_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -190,27 +213,33 @@
 	return (BRUTELOSS|FIRELOSS)
 
 /obj/item/nullrod/attack_self(mob/user)
-	if(user.mind && (user.mind.isholy) && !reskinned)
+	if(user.mind && (user.mind.holy_role) && !reskinned)
 		reskin_holy_weapon(user)
 
+/**
+  * reskin_holy_weapon: Shows a user a list of all available nullrod reskins and based on his choice replaces the nullrod with the reskinned version
+  *
+  * Arguments:
+  * * M The mob choosing a nullrod reskin
+  */
 /obj/item/nullrod/proc/reskin_holy_weapon(mob/M)
 	if(GLOB.holy_weapon_type)
 		return
-	var/obj/item/nullrod/holy_weapon
-	var/list/holy_weapons_list = typesof(/obj/item/nullrod)
 	var/list/display_names = list()
-	for(var/V in holy_weapons_list)
+	var/list/nullrod_icons = list()
+	for(var/V in typesof(/obj/item/nullrod))
 		var/obj/item/nullrod/rodtype = V
-		if (initial(rodtype.chaplain_spawnable))
+		if(initial(rodtype.chaplain_spawnable))
 			display_names[initial(rodtype.name)] = rodtype
+			nullrod_icons += list(initial(rodtype.name) = image(icon = initial(rodtype.icon), icon_state = initial(rodtype.icon_state)))
 
-	var/choice = input(M,"What theme would you like for your holy weapon?","Holy Weapon Theme") as null|anything in display_names
-	if(QDELETED(src) || !choice || M.stat || !in_range(M, src) || M.incapacitated() || reskinned)
+	nullrod_icons = sortList(nullrod_icons)
+	var/choice = show_radial_menu(M, src , nullrod_icons, custom_check = CALLBACK(src, .proc/check_menu, M), radius = 42, require_near = TRUE)
+	if(!choice || !check_menu(M))
 		return
 
 	var/A = display_names[choice] // This needs to be on a separate var as list member access is not allowed for new
-	holy_weapon = new A
-
+	var/obj/item/nullrod/holy_weapon = new A
 	GLOB.holy_weapon_type = holy_weapon.type
 
 	SSblackbox.record_feedback("tally", "chaplain_weapon", 1, "[choice]")
@@ -219,6 +248,21 @@
 		holy_weapon.reskinned = TRUE
 		qdel(src)
 		M.put_in_active_hand(holy_weapon)
+
+/**
+  * check_menu: Checks if we are allowed to interact with a radial menu
+  *
+  * Arguments:
+  * * user The mob interacting with a menu
+  */
+/obj/item/nullrod/proc/check_menu(mob/user)
+	if(!istype(user))
+		return FALSE
+	if(QDELETED(src) || reskinned)
+		return FALSE
+	if(user.incapacitated() || !user.is_holding(src))
+		return FALSE
+	return TRUE
 
 /obj/item/nullrod/godhand
 	icon_state = "disintegrate"
@@ -262,8 +306,8 @@
 	shield_icon = "shield-old"
 
 /obj/item/nullrod/claymore
-	icon_state = "claymore"
-	item_state = "claymore"
+	icon_state = "claymore_gold"
+	item_state = "claymore_gold"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	name = "holy claymore"
@@ -300,6 +344,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 1.5 //slower than a real saw
 
 /obj/item/nullrod/claymore/glowing
 	icon_state = "swordon"
@@ -387,20 +433,6 @@
 	attack_verb = list("chopped", "sliced", "cut", "zandatsu'd")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
-/obj/item/nullrod/Hypertool
-	icon = 'icons/obj/device.dmi'
-	icon_state = "hypertool"
-	item_state = "hypertool"
-	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	slot_flags = ITEM_SLOT_BELT
-	name = "hypertool"
-	desc = "A tool so powerful even you cannot perfectly use it."
-	armour_penetration = 35
-	damtype = BRAIN
-	attack_verb = list("pulsed", "mended", "cut")
-	hitsound = 'sound/effects/sparks4.ogg'
-
 /obj/item/nullrod/scythe/spellblade
 	icon_state = "spellblade"
 	item_state = "spellblade"
@@ -429,7 +461,7 @@
 	if(possessed)
 		return
 
-	to_chat(user, "You attempt to wake the spirit of the blade...")
+	to_chat(user, "<span class='notice'>You attempt to wake the spirit of the blade...</span>")
 
 	possessed = TRUE
 
@@ -441,19 +473,21 @@
 		S.ckey = C.ckey
 		S.fully_replace_character_name(null, "The spirit of [name]")
 		S.status_flags |= GODMODE
-		S.language_holder = user.language_holder.copy(S)
-		var/input = stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN)
+		S.copy_languages(user, LANGUAGE_MASTER)	//Make sure the sword can understand and communicate with the user.
+		S.update_atom_languages()
+		grant_all_languages(FALSE, FALSE, TRUE)	//Grants omnitongue
+		var/input = sanitize_name(stripped_input(S,"What are you named?", ,"", MAX_NAME_LEN))
 
 		if(src && input)
 			name = input
 			S.fully_replace_character_name(null, "The spirit of [input]")
 	else
-		to_chat(user, "The blade is dormant. Maybe you can try again later.")
+		to_chat(user, "<span class='warning'>The blade is dormant. Maybe you can try again later.</span>")
 		possessed = FALSE
 
 /obj/item/nullrod/scythe/talking/Destroy()
 	for(var/mob/living/simple_animal/shade/S in contents)
-		to_chat(S, "You were destroyed!")
+		to_chat(S, "<span class='userdanger'>You were destroyed!</span>")
 		qdel(S)
 	return ..()
 
@@ -467,7 +501,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
-
+	tool_behaviour = TOOL_SAW
+	toolspeed = 0.5 //faster than normal saw
 
 /obj/item/nullrod/hammmer
 	icon_state = "hammeron"
@@ -492,6 +527,8 @@
 	sharpness = IS_SHARP
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsawhit.ogg'
+	tool_behaviour = TOOL_SAW
+	toolspeed = 2 //slower than a real saw
 
 /obj/item/nullrod/chainsaw/Initialize()
 	. = ..()
@@ -591,8 +628,8 @@
 
 /obj/item/nullrod/carp/attack_self(mob/living/user)
 	if(used_blessing)
-	else if(user.mind && (user.mind.isholy))
-		to_chat(user, "You are blessed by Carp-Sie. Wild space carp will no longer attack you.")
+	else if(user.mind && (user.mind.holy_role))
+		to_chat(user, "<span class='boldnotice'>You are blessed by Carp-Sie. Wild space carp will no longer attack you.</span>")
 		user.faction |= "carp"
 		used_blessing = TRUE
 
@@ -660,3 +697,32 @@
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	attack_verb = list("bashes", "smacks", "whacks")
+
+/obj/item/nullrod/hypertool
+	icon = 'icons/obj/device.dmi'
+	icon_state = "hypertool"
+	item_state = "hypertool"
+	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	name = "hypertool"
+	desc = "A tool so powerful even you cannot perfectly use it."
+	armour_penetration = 35
+	damtype = BRAIN
+	attack_verb = list("pulsed", "mended", "cut")
+	hitsound = 'sound/effects/sparks4.ogg'
+
+/obj/item/nullrod/spear
+	name = "ancient spear"
+	desc = "An ancient spear made of brass, I mean gold, I mean bronze."
+	icon_state = "ratvarian_spear"
+	item_state = "ratvarian_spear"
+	lefthand_file = 'icons/mob/inhands/antag/clockwork_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/antag/clockwork_righthand.dmi'
+	icon = 'icons/obj/clockwork_objects.dmi'
+	slot_flags = ITEM_SLOT_BELT
+	armour_penetration = 10
+	sharpness = IS_SHARP_ACCURATE
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb = list("stabbed", "poked", "slashed", "clocked")
+	hitsound = 'sound/weapons/bladeslice.ogg'

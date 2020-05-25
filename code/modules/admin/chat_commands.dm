@@ -1,32 +1,32 @@
-#define IRC_STATUS_THROTTLE 5
+#define TGS_STATUS_THROTTLE 5
 
-/datum/tgs_chat_command/ircstatus
+/datum/tgs_chat_command/tgsstatus
 	name = "status"
 	help_text = "Gets the admincount, playercount, gamemode, and true game mode of the server"
 	admin_only = TRUE
-	var/last_irc_status = 0
+	var/last_tgs_status = 0
 
-/datum/tgs_chat_command/ircstatus/Run(datum/tgs_chat_user/sender, params)
+/datum/tgs_chat_command/tgsstatus/Run(datum/tgs_chat_user/sender, params)
 	var/rtod = REALTIMEOFDAY
-	if(rtod - last_irc_status < IRC_STATUS_THROTTLE)
+	if(rtod - last_tgs_status < TGS_STATUS_THROTTLE)
 		return
-	last_irc_status = rtod
+	last_tgs_status = rtod
 	var/list/adm = get_admin_counts()
 	var/list/allmins = adm["total"]
 	var/status = "Admins: [allmins.len] (Active: [english_list(adm["present"])] AFK: [english_list(adm["afk"])] Stealth: [english_list(adm["stealth"])] Skipped: [english_list(adm["noflags"])]). "
 	status += "Players: [GLOB.clients.len] (Active: [get_active_player_count(0,1,0)]). Mode: [SSticker.mode ? SSticker.mode.name : "Not started"]."
 	return status
 
-/datum/tgs_chat_command/irccheck
+/datum/tgs_chat_command/tgscheck
 	name = "check"
 	help_text = "Gets the playercount, gamemode, and address of the server"
-	var/last_irc_check = 0
+	var/last_tgs_check = 0
 
-/datum/tgs_chat_command/irccheck/Run(datum/tgs_chat_user/sender, params)
+/datum/tgs_chat_command/tgscheck/Run(datum/tgs_chat_user/sender, params)
 	var/rtod = REALTIMEOFDAY
-	if(rtod - last_irc_check < IRC_STATUS_THROTTLE)
+	if(rtod - last_tgs_check < TGS_STATUS_THROTTLE)
 		return
-	last_irc_check = rtod
+	last_tgs_check = rtod
 	var/server = CONFIG_GET(string/server)
 	return "[GLOB.round_id ? "Round #[GLOB.round_id]: " : ""][GLOB.clients.len] players on [SSmapping.config.map_name], Mode: [GLOB.master_mode]; Round [SSticker.HasRoundStarted() ? (SSticker.IsRoundInProgress() ? "Active" : "Finishing") : "Starting"] -- [server ? server : "[world.internet_address]:[world.port]"]" 
 
@@ -48,7 +48,7 @@
 			target = AH.initiator_ckey
 		else
 			return "Ticket #[id] not found!"
-	var/res = IrcPm(target, all_params.Join(" "), sender.friendly_name)
+	var/res = TgsPm(target, all_params.Join(" "), sender.friendly_name)
 	if(res != "Message Successful")
 		return res
 
@@ -71,7 +71,7 @@
 	admin_only = TRUE
 
 /datum/tgs_chat_command/adminwho/Run(datum/tgs_chat_user/sender, params)
-	return ircadminwho()
+	return tgsadminwho()
 
 GLOBAL_LIST(round_end_notifiees)
 

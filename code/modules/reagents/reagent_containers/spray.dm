@@ -47,7 +47,7 @@
 
 	spray(A, user)
 
-	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+	playsound(src.loc, 'sound/effects/spray2.ogg', 50, TRUE, -6)
 	user.changeNext_move(CLICK_CD_RANGE*2)
 	user.newtonian_move(get_dir(A, user))
 
@@ -90,6 +90,8 @@
 			if(stream_mode)
 				if(isliving(T))
 					var/mob/living/M = T
+					if(!M.can_inject())
+						continue
 					if((M.mobility_flags & MOBILITY_STAND) || !range_left)
 						D.reagents.reaction(M, VAPOR)
 						puff_reagent_left -= 1
@@ -122,7 +124,7 @@
 	to_chat(user, "<span class='notice'>You switch the nozzle setting to [stream_mode ? "\"stream\"":"\"spray\""]. You'll now use [amount_per_transfer_from_this] units per use.</span>")
 
 /obj/item/reagent_containers/spray/attackby(obj/item/I, mob/user, params)
-	var/hotness = I.is_hot()
+	var/hotness = I.get_temperature()
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, "<span class='notice'>You heat [name] with [I]!</span>")
@@ -150,7 +152,7 @@
 
 	if(total_reagent_weight && amount_of_reagents) //don't bother if the container is empty - DIV/0
 		var/average_reagent_weight = total_reagent_weight / amount_of_reagents
-		spray_range = CLAMP(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
+		spray_range = clamp(round((initial(spray_range) / average_reagent_weight) - ((amount_of_reagents - 1) * 1)), 3, 5) //spray distance between 3 and 5 tiles rounded down; extra reagents lose a tile
 	else
 		spray_range = initial(spray_range)
 	if(stream_mode == 0)
@@ -167,7 +169,7 @@
 	stream_amount = 5
 
 /obj/item/reagent_containers/spray/cleaner/suicide_act(mob/user)
-	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth.  It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	user.visible_message("<span class='suicide'>[user] is putting the nozzle of \the [src] in [user.p_their()] mouth. It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	if(do_mob(user,user,30))
 		if(reagents.total_volume >= amount_per_transfer_from_this)//if not empty
 			user.visible_message("<span class='suicide'>[user] pulls the trigger!</span>")
@@ -178,7 +180,7 @@
 			return SHAME
 	else
 		user.visible_message("<span class='suicide'>[user] decided life was worth living.</span>")
-		return
+		return MANUAL_SUICIDE_NONLETHAL
 
 //spray tan
 /obj/item/reagent_containers/spray/spraytan
@@ -197,10 +199,10 @@
 	item_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	volume = 40
+	volume = 50
 	stream_range = 4
 	amount_per_transfer_from_this = 5
-	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 40)
+	list_reagents = list(/datum/reagent/consumable/condensedcapsaicin = 50)
 
 /obj/item/reagent_containers/spray/pepper/empty //for protolathe printing
 	list_reagents = null
@@ -371,7 +373,7 @@
 	spray_range = 4
 	stream_range = 2
 	volume = 100
-	custom_premium_price = 200
+	custom_premium_price = 900
 
 /obj/item/reagent_containers/spray/syndicate/Initialize()
 	. = ..()
@@ -390,7 +392,7 @@
 						"Blue" = "sprayer_med_blue")
 
 /obj/item/reagent_containers/spray/medical/AltClick(mob/user)
-	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERY))
+	if(unique_reskin && !current_skin && user.canUseTopic(src, BE_CLOSE, NO_DEXTERITY))
 		reskin_obj(user)
 
 /obj/item/reagent_containers/spray/medical/reskin_obj(mob/M)
@@ -404,12 +406,8 @@
 			item_state = "sprayer_med_blue"
 	M.update_inv_hands()
 
-/obj/item/reagent_containers/spray/rhigoxane
-	name = "medical spray (rhigoxane)"
-	desc = "A medical spray bottle.This one contains rhigoxane, it is used to treat burns and cool down temperature if applied with spray."
+/obj/item/reagent_containers/spray/hercuri
+	name = "medical spray (hercuri)"
+	desc = "A medical spray bottle.This one contains hercuri, a medicine used to negate the effects of dangerous high-temperature environments. Careful not to freeze the patient!"
 	icon_state = "sprayer_large"
-	list_reagents = list(/datum/reagent/medicine/rhigoxane = 100)
-
-
-
-
+	list_reagents = list(/datum/reagent/medicine/C2/hercuri = 100)

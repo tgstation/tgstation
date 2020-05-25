@@ -4,7 +4,6 @@
 /obj/item/clothing/shoes/sneakers/mime
 	name = "mime shoes"
 	icon_state = "mime"
-	item_color = "mime"
 
 /obj/item/clothing/shoes/combat //basic syndicate combat boots for nuke ops and mob corpses
 	name = "combat boots"
@@ -14,11 +13,29 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 25, "bomb" = 50, "bio" = 10, "rad" = 0, "fire" = 70, "acid" = 50)
-	strip_delay = 70
+	strip_delay = 40
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 12 SECONDS
 
+/obj/item/clothing/shoes/combat/sneakboots
+	name = "sneakboots"
+	desc = "These boots have special noise cancelling soles. Perfect for stealth, if it wasn't for the color scheme."
+	icon_state = "sneakboots"
+	item_state = "sneakboots"
+	w_class = WEIGHT_CLASS_SMALL
+	resistance_flags = FIRE_PROOF |  ACID_PROOF
+
+/obj/item/clothing/shoes/combat/sneakboots/equipped(mob/living/carbon/human/user, slot)
+	. = ..()
+	if(slot == ITEM_SLOT_FEET)
+		ADD_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
+
+/obj/item/clothing/shoes/combat/sneakboots/dropped(mob/living/carbon/human/user)
+	REMOVE_TRAIT(user, TRAIT_SILENT_FOOTSTEPS, SHOES_TRAIT)
+	return ..()
+	
 /obj/item/clothing/shoes/combat/swat //overpowered boots for death squads
 	name = "\improper SWAT boots"
 	desc = "High speed, no drag combat boots."
@@ -30,9 +47,11 @@
 	desc = "A pair of rather plain wooden sandals."
 	name = "sandals"
 	icon_state = "wizard"
-	strip_delay = 50
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 0.5)
+	strip_delay = 5
 	equip_delay_other = 50
 	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic black shoes."
@@ -52,12 +71,13 @@
 	permeability_coefficient = 0.01
 	clothing_flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
-	strip_delay = 50
+	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 40, "acid" = 75)
 	can_be_bloody = FALSE
-	custom_price = 100
+	custom_price = 600
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/galoshes/dry
 	name = "absorbent galoshes"
@@ -74,10 +94,9 @@
 	icon_state = "clown"
 	item_state = "clown_shoes"
 	slowdown = SHOES_SLOWDOWN+1
-	item_color = "clown"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes/clown
-	var/datum/component/waddle
 	var/enabled_waddle = TRUE
+	lace_time = 20 SECONDS // how the hell do these laces even work??
 
 /obj/item/clothing/shoes/clown_shoes/Initialize()
 	. = ..()
@@ -85,15 +104,15 @@
 
 /obj/item/clothing/shoes/clown_shoes/equipped(mob/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		if(enabled_waddle)
-			waddle = user.AddComponent(/datum/component/waddling)
+			user.AddElement(/datum/element/waddling)
 		if(user.mind && user.mind.assigned_role == "Clown")
 			SEND_SIGNAL(user, COMSIG_ADD_MOOD_EVENT, "clownshoes", /datum/mood_event/clownshoes)
 
 /obj/item/clothing/shoes/clown_shoes/dropped(mob/user)
 	. = ..()
-	QDEL_NULL(waddle)
+	user.RemoveElement(/datum/element/waddling)
 	if(user.mind && user.mind.assigned_role == "Clown")
 		SEND_SIGNAL(user, COMSIG_CLEAR_MOOD_EVENT, "clownshoes")
 
@@ -122,12 +141,12 @@
 	item_state = "jackboots"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
-	item_color = "hosred"
-	strip_delay = 50
+	strip_delay = 30
 	equip_delay_other = 50
 	resistance_flags = NONE
 	permeability_coefficient = 0.05 //Thick soles, and covers the ankle
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/jackboots/fast
 	slowdown = -1
@@ -143,6 +162,14 @@
 	heat_protection = FEET|LEGS
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
+
+/obj/item/clothing/shoes/winterboots/ice_boots
+	name = "ice hiking boots"
+	desc = "A pair of winter boots with special grips on the bottom, designed to prevent slipping on frozen surfaces."
+	icon_state = "iceboots"
+	item_state = "iceboots"
+	clothing_flags = NOSLIP_ICE
 
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
@@ -152,9 +179,10 @@
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	permeability_coefficient = 0.15
-	strip_delay = 40
+	strip_delay = 20
 	equip_delay_other = 40
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/workboots/mining
 	name = "mining boots"
@@ -167,11 +195,11 @@
 	desc = "A pair of boots worn by the followers of Nar'Sie."
 	icon_state = "cult"
 	item_state = "cult"
-	item_color = "cult"
 	cold_protection = FEET
 	min_cold_protection_temperature = SHOES_MIN_TEMP_PROTECT
 	heat_protection = FEET
 	max_heat_protection_temperature = SHOES_MAX_TEMP_PROTECT
+	lace_time = 10 SECONDS
 
 /obj/item/clothing/shoes/cult/alt
 	name = "cultist boots"
@@ -203,6 +231,7 @@
 	strip_delay = 100
 	equip_delay_other = 100
 	permeability_coefficient = 0.9
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/griffin
 	name = "griffon boots"
@@ -210,17 +239,18 @@
 	icon_state = "griffinboots"
 	item_state = "griffinboots"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/bhop
 	name = "jump boots"
 	desc = "A specialized pair of combat boots with a built-in propulsion system for rapid foward movement."
 	icon_state = "jetboots"
 	item_state = "jetboots"
-	item_color = "hosred"
 	resistance_flags = FIRE_PROOF
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
 	actions_types = list(/datum/action/item_action/bhop)
 	permeability_coefficient = 0.05
+	strip_delay = 30
 	var/jumpdistance = 5 //-1 from to see the actual distance, e.g 4 goes over 3 tiles
 	var/jumpspeed = 3
 	var/recharging_rate = 60 //default 6 seconds between each dash
@@ -237,7 +267,7 @@
 	var/atom/target = get_edge_target_turf(user, user.dir) //gets the user's direction
 
 	if (user.throw_at(target, jumpdistance, jumpspeed, spin = FALSE, diagonals_first = TRUE))
-		playsound(src, 'sound/effects/stealthoff.ogg', 50, 1, 1)
+		playsound(src, 'sound/effects/stealthoff.ogg', 50, TRUE, TRUE)
 		user.visible_message("<span class='warning'>[usr] dashes forward into the air!</span>")
 		recharging_time = world.time + recharging_rate
 	else
@@ -260,6 +290,7 @@
 	desc = "A giant, clunky pair of shoes crudely made out of bronze. Why would anyone wear these?"
 	icon = 'icons/obj/clothing/clockwork_garb.dmi'
 	icon_state = "clockwork_treads"
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/bronze/Initialize()
 	. = ..()
@@ -281,7 +312,7 @@
 /obj/item/clothing/shoes/wheelys/ui_action_click(mob/user, action)
 	if(!isliving(user))
 		return
-	if(!istype(user.get_item_by_slot(SLOT_SHOES), /obj/item/clothing/shoes/wheelys))
+	if(!istype(user.get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes/wheelys))
 		to_chat(user, "<span class='warning'>You must be wearing the wheely-heels to use them!</span>")
 		return
 	if(!(W.is_occupant(user)))
@@ -336,6 +367,7 @@
 	icon_state = "rus_shoes"
 	item_state = "rus_shoes"
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
+	lace_time = 8 SECONDS
 
 /obj/item/clothing/shoes/cowboy
 	name = "cowboy boots"
@@ -343,9 +375,10 @@
 	icon_state = "cowboy_brown"
 	permeability_coefficient = 0.05 //these are quite tall
 	pocket_storage_component_path = /datum/component/storage/concrete/pockets/shoes
-	custom_price = 35 //poor assistants cant afford 50 credits
+	custom_price = 60
 	var/list/occupants = list()
 	var/max_occupants = 4
+	can_be_tied = FALSE
 
 /obj/item/clothing/shoes/cowboy/Initialize()
 	. = ..()
@@ -356,10 +389,10 @@
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
 	. = ..()
-	if(slot == SLOT_SHOES)
+	if(slot == ITEM_SLOT_FEET)
 		for(var/mob/living/occupant in occupants)
 			occupant.forceMove(user.drop_location())
-			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'> You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
+			user.visible_message("<span class='warning'>[user] recoils as something slithers out of [src].</span>", "<span class='userdanger'>You feel a sudden stabbing pain in your [pick("foot", "toe", "ankle")]!</span>")
 			user.Knockdown(20) //Is one second paralyze better here? I feel you would fall on your ass in some fashion.
 			user.apply_damage(5, BRUTE, pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
 			if(istype(occupant, /mob/living/simple_animal/hostile/retaliate/poison))
@@ -371,12 +404,12 @@
 	if(user.stat || !(user.mobility_flags & MOBILITY_USE) || user.restrained() || !Adjacent(user) || !user.Adjacent(target) || target.stat == DEAD)
 		return
 	if(occupants.len >= max_occupants)
-		to_chat(user, "<span class='notice'>[src] are full!</span>")
+		to_chat(user, "<span class='warning'>[src] are full!</span>")
 		return
 	if(istype(target, /mob/living/simple_animal/hostile/retaliate/poison/snake) || istype(target, /mob/living/simple_animal/hostile/headcrab) || istype(target, /mob/living/carbon/alien/larva))
 		occupants += target
 		target.forceMove(src)
-		to_chat(user, "<span class='notice'>[target] slithers into [src]</span>")
+		to_chat(user, "<span class='notice'>[target] slithers into [src].</span>")
 
 /obj/item/clothing/shoes/cowboy/container_resist(mob/living/user)
 	if(!do_after(user, 10, target = user))
@@ -418,3 +451,21 @@
 	loot = list(
 		/obj/item/clothing/shoes/cowboy/lizard = 7,
 		/obj/item/clothing/shoes/cowboy/lizard/masterwork = 1)
+
+/obj/item/clothing/shoes/cookflops
+	desc = "All this talk of antags, greytiding, and griefing... I just wanna grill for god's sake!"
+	name = "grilling sandals"
+	icon_state = "cookflops"
+	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/yakuza
+	name = "tojo clan shoes"
+	desc = "Steel-toed and intimidating."
+	icon_state = "MajimaShoes"
+	item_state = "MajimaShoes_worn"
+
+/obj/item/clothing/shoes/jackbros
+	name = "frosty boots"
+	desc = "For when you're stepping on up to the plate."
+	icon_state = "JackFrostShoes"
+	item_state = "JackFrostShoes_worn"

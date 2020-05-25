@@ -9,7 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = HEAR_1
 	slot_flags = ITEM_SLOT_BELT
-	materials = list(/datum/material/iron=60, /datum/material/glass=30)
+	custom_materials = list(/datum/material/iron=60, /datum/material/glass=30)
 	force = 2
 	throwforce = 0
 	var/recording = 0
@@ -56,13 +56,9 @@
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/taperecorder/attack_hand(mob/user)
-	if(loc == user)
-		if(mytape)
-			if(!user.is_holding(src))
-				return ..()
-			eject(user)
-	else
+	if(loc != user || !mytape || !user.is_holding(src))
 		return ..()
+	eject(user)
 
 /obj/item/taperecorder/proc/can_use(mob/user)
 	if(user && ismob(user))
@@ -83,7 +79,7 @@
 	eject(usr)
 
 
-/obj/item/taperecorder/update_icon()
+/obj/item/taperecorder/update_icon_state()
 	if(!mytape)
 		icon_state = "taperecorder_empty"
 	else if(recording)
@@ -224,9 +220,8 @@
 	P.info = t1
 	P.name = "paper- 'Transcript'"
 	usr.put_in_hands(P)
-	canprint = 0
-	sleep(300)
-	canprint = 1
+	canprint = FALSE
+	addtimer(VARSET_CALLBACK(src, canprint, TRUE), 30 SECONDS)
 
 
 //empty tape recorders
@@ -243,7 +238,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
-	materials = list(/datum/material/iron=20, /datum/material/glass=5)
+	custom_materials = list(/datum/material/iron=20, /datum/material/glass=5)
 	force = 1
 	throwforce = 0
 	var/max_capacity = 600

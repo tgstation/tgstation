@@ -32,8 +32,8 @@ BONUS
 	var/mob/living/M = A.affected_mob
 	switch(A.stage)
 		if(5)
-			var/static/list/banned_reagents = list(/datum/reagent/colorful_reagent/crayonpowder/invisible, /datum/reagent/colorful_reagent/crayonpowder/white)
-			var/color = pick(subtypesof(/datum/reagent/colorful_reagent/crayonpowder) - banned_reagents)
+			var/static/list/banned_reagents = list(/datum/reagent/colorful_reagent/powder/invisible, /datum/reagent/colorful_reagent/powder/white)
+			var/color = pick(subtypesof(/datum/reagent/colorful_reagent/powder) - banned_reagents)
 			if(M.reagents.total_volume <= (M.reagents.maximum_volume/10)) // no flooding humans with 1000 units of colorful reagent
 				M.reagents.add_reagent(color, 5)
 		else

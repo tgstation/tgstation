@@ -5,6 +5,7 @@
  *		Air
  *		Plasma
  *		Emergency Oxygen
+ *		Generic
  */
 
 /*
@@ -51,22 +52,6 @@
 	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrous_oxide)
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-
-/*
- * Air
- */
-/obj/item/tank/internals/air
-	name = "air tank"
-	desc = "Mixed anyone?"
-	icon_state = "air"
-	item_state = "air"
-	force = 10
-	dog_fashion = /datum/dog_fashion/back
-
-/obj/item/tank/internals/air/populate_gas()
-	air_contents.assert_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	air_contents.gases[/datum/gas/oxygen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-	air_contents.gases[/datum/gas/nitrogen][MOLES] = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
 /*
  * Plasma
@@ -181,3 +166,17 @@
 /obj/item/tank/internals/emergency_oxygen/double/empty/populate_gas()
 	return
 
+// *
+// * GENERIC
+// *
+
+/obj/item/tank/internals/generic
+	name = "gas tank"
+	desc = "A generic tank used for storing and transporting gasses. Can be used for internals."
+	icon_state = "generic"
+	distribute_pressure = TANK_DEFAULT_RELEASE_PRESSURE
+	force = 10
+	dog_fashion = /datum/dog_fashion/back
+
+/obj/item/tank/internals/generic/populate_gas()
+	return

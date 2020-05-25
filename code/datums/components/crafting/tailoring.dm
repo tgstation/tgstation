@@ -16,7 +16,7 @@
 
 /datum/crafting_recipe/durathread_jumpsuit
 	name = "Durathread Jumpsuit"
-	result = /obj/item/clothing/under/durathread
+	result = /obj/item/clothing/under/misc/durathread
 	reqs = list(/obj/item/stack/sheet/durathread = 4)
 	time = 40
 	category = CAT_CLOTHING
@@ -104,9 +104,9 @@
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses = 1)
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/beergoggles
-	name = "Beer Goggles"
-	result = /obj/item/clothing/glasses/sunglasses/reagent
+/datum/crafting_recipe/scienceglasses
+	name = "Science Glasses"
+	result = /obj/item/clothing/glasses/sunglasses/chemical
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 	reqs = list(/obj/item/clothing/glasses/science = 1,
@@ -114,12 +114,12 @@
 				  /obj/item/stack/cable_coil = 5)
 	category = CAT_CLOTHING
 
-/datum/crafting_recipe/beergogglesremoval
-	name = "Beer Goggles removal"
+/datum/crafting_recipe/scienceglassesremoval
+	name = "Chemical Scanner removal"
 	result = /obj/item/clothing/glasses/sunglasses
 	time = 20
 	tools = list(TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
-	reqs = list(/obj/item/clothing/glasses/sunglasses/reagent = 1)
+	reqs = list(/obj/item/clothing/glasses/sunglasses/chemical = 1)
 	category = CAT_CLOTHING
 
 /datum/crafting_recipe/ghostsheet

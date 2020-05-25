@@ -240,3 +240,14 @@
 	airlock_type = /obj/machinery/door/airlock/wood
 	mineral = "wood"
 	glass_type = /obj/machinery/door/airlock/wood/glass
+
+/obj/structure/door_assembly/door_assembly_bronze
+	name = "bronze airlock assembly"
+	icon = 'icons/obj/doors/airlocks/clockwork/pinion_airlock.dmi'
+	base_name = "bronze airlock"
+	airlock_type = /obj/machinery/door/airlock/bronze
+	noglass = TRUE
+	material_type = /obj/item/stack/tile/bronze
+
+/obj/structure/door_assembly/door_assembly_bronze/seethru
+	airlock_type = /obj/machinery/door/airlock/bronze/seethru

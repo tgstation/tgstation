@@ -19,4 +19,8 @@
 	ammo_type = /obj/item/ammo_casing/a556
 	caliber = "a556"
 	max_ammo = 30
-	multiple_sprites = 2
+	multiple_sprites = AMMO_BOX_FULL_EMPTY
+
+/obj/item/ammo_box/magazine/m556/phasic
+	name = "toploader magazine (5.56mm Phasic)"
+	ammo_type = /obj/item/ammo_casing/a556/phasic

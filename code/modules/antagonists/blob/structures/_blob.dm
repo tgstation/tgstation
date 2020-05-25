@@ -44,7 +44,7 @@
 	if(overmind)
 		overmind.blobs_legit -= src  //if it was in the legit blobs list, it isn't now
 	GLOB.blobs -= src //it's no longer in the all blobs list either
-	playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Expand() is no longer broken, no check necessary.
+	playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Expand() is no longer broken, no check necessary.
 	return ..()
 
 /obj/structure/blob/blob_act()
@@ -67,17 +67,17 @@
 /obj/structure/blob/BlockSuperconductivity()
 	return atmosblock
 
-/obj/structure/blob/CanPass(atom/movable/mover, turf/target)
-	if(istype(mover) && (mover.pass_flags & PASSBLOB))
-		return 1
-	return 0
+/obj/structure/blob/CanAllowThrough(atom/movable/mover, turf/target)
+	. = ..()
+	if(!(mover.pass_flags & PASSBLOB))
+		return FALSE
 
 /obj/structure/blob/CanAtmosPass(turf/T)
 	return !atmosblock
 
 /obj/structure/blob/CanAStarPass(ID, dir, caller)
 	. = 0
-	if(ismovableatom(caller))
+	if(ismovable(caller))
 		var/atom/movable/mover = caller
 		. = . || (mover.pass_flags & PASSBLOB)
 
@@ -167,7 +167,7 @@
 
 	if(isspaceturf(T) && !(locate(/obj/structure/lattice) in T) && prob(80))
 		make_blob = FALSE
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1) //Let's give some feedback that we DID try to spawn in space, since players are used to it
+		playsound(src.loc, 'sound/effects/splat.ogg', 50, TRUE) //Let's give some feedback that we DID try to spawn in space, since players are used to it
 
 	ConsumeTile() //hit the tile we're in, making sure there are no border objects blocking us
 	if(!T.CanPass(src, T)) //is the target turf impassable
@@ -207,8 +207,8 @@
 		if(prob(100 - severity * 30))
 			new /obj/effect/temp_visual/emp(get_turf(src))
 
-/obj/structure/blob/tesla_act(power)
-	..()
+/obj/structure/blob/zap_act(power)
+	. = ..()
 	if(overmind)
 		if(overmind.blobstrain.tesla_reaction(src, power))
 			take_damage(power/400, BURN, "energy")
@@ -263,11 +263,11 @@
 	switch(damage_type)
 		if(BRUTE)
 			if(damage_amount)
-				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
+				playsound(src.loc, 'sound/effects/attackblob.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/weapons/tap.ogg', 50, 1)
+				playsound(src, 'sound/weapons/tap.ogg', 50, TRUE)
 		if(BURN)
-			playsound(src.loc, 'sound/items/welder.ogg', 100, 1)
+			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
 /obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
@@ -299,7 +299,6 @@
 /obj/structure/blob/proc/change_to(type, controller)
 	if(!ispath(type))
 		CRASH("change_to(): invalid type for blob")
-		return
 	var/obj/structure/blob/B = new type(src.loc, controller)
 	B.creation_action()
 	B.update_icon()

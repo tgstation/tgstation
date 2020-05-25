@@ -28,13 +28,14 @@ Difficulty: Medium
 	icon_state = "miner"
 	icon_living = "miner"
 	icon = 'icons/mob/broadMobs.dmi'
-	mob_biotypes = list(MOB_ORGANIC, MOB_HUMANOID)
+	health_doll_icon = "miner"
+	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
 	light_color = "#E4C7C5"
 	movement_type = GROUND
 	speak_emote = list("roars")
 	speed = 3
 	move_to_delay = 3
-	projectiletype = /obj/item/projectile/kinetic/miner
+	projectiletype = /obj/projectile/kinetic/miner
 	projectilesound = 'sound/weapons/kenetic_accel.ogg'
 	ranged = TRUE
 	ranged_cooldown_time = 16
@@ -44,8 +45,10 @@ Difficulty: Medium
 	wander = FALSE
 	del_on_death = TRUE
 	blood_volume = BLOOD_VOLUME_NORMAL
-	internal_type = /obj/item/gps/internal/miner
-	medal_type = BOSS_MEDAL_MINER
+	gps_name = "Resonant Signal"
+	achievement_type = /datum/award/achievement/boss/blood_miner_kill
+	crusher_achievement_type = /datum/award/achievement/boss/blood_miner_crusher
+	score_achievement_type = /datum/award/score/blood_miner_score
 	var/obj/item/melee/transforming/cleaving_saw/miner/miner_saw
 	var/time_until_next_transform = 0
 	var/dashing = FALSE
@@ -54,7 +57,7 @@ Difficulty: Medium
 	var/transform_stop_attack = FALSE // stops the blood drunk miner from attacking after transforming his weapon until the next attack chain
 	deathmessage = "falls to the ground, decaying into glowing particles."
 	deathsound = "bodyfall"
-	do_footstep = TRUE
+	footstep_type = FOOTSTEP_MOB_HEAVY
 	attack_action_types = list(/datum/action/innate/megafauna_attack/dash,
 							   /datum/action/innate/megafauna_attack/kinetic_accelerator,
 							   /datum/action/innate/megafauna_attack/transform_weapon)
@@ -111,7 +114,7 @@ Difficulty: Medium
 	..()
 	target.stun_absorption -= "miner"
 
-/obj/item/projectile/kinetic/miner
+/obj/projectile/kinetic/miner
 	damage = 20
 	speed = 0.9
 	icon_state = "ka_tracer"
@@ -229,14 +232,14 @@ Difficulty: Medium
 	new /obj/effect/temp_visual/small_smoke/halfsecond(step_forward_turf)
 	var/obj/effect/temp_visual/decoy/fading/halfsecond/D = new (own_turf, src)
 	forceMove(step_back_turf)
-	playsound(own_turf, 'sound/weapons/punchmiss.ogg', 40, 1, -1)
+	playsound(own_turf, 'sound/weapons/punchmiss.ogg', 40, TRUE, -1)
 	dashing = TRUE
 	alpha = 0
 	animate(src, alpha = 255, time = 5)
 	SLEEP_CHECK_DEATH(2)
 	D.forceMove(step_forward_turf)
 	forceMove(target_turf)
-	playsound(target_turf, 'sound/weapons/punchmiss.ogg', 40, 1, -1)
+	playsound(target_turf, 'sound/weapons/punchmiss.ogg', 40, TRUE, -1)
 	SLEEP_CHECK_DEATH(1)
 	dashing = FALSE
 	return TRUE
@@ -275,12 +278,6 @@ Difficulty: Medium
 	sleep(4)
 	animate(src, alpha = 0, time = 6, easing = EASE_OUT, flags = ANIMATION_PARALLEL)
 
-/obj/item/gps/internal/miner
-	icon_state = null
-	gpstag = "Resonant Signal"
-	desc = "The sweet blood, oh, it sings to me."
-	invisibility = 100
-
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE
 
@@ -288,5 +285,13 @@ Difficulty: Medium
 	. = ..()
 	if(. && prob(12))
 		INVOKE_ASYNC(src, .proc/dash)
+
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom
+	name = "hostile-environment miner"
+	desc = "A miner destined to hop across dimensions for all eternity, hunting anomalous creatures."
+	speed = 8
+	move_to_delay = 8
+	ranged_cooldown_time = 8
+	dash_cooldown = 8
 
 #undef MINER_DASH_RANGE

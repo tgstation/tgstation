@@ -55,6 +55,6 @@
 		if(bad_chars)
 			bad_match = url_encode(bad_chars_regex.match)
 			scrubbed_url += bad_match
-			last_good = bad_chars + length(bad_match)
+			last_good = bad_chars + length(bad_chars_regex.match)
 	while(bad_chars)
 	. = scrubbed_url

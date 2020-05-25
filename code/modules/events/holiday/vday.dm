@@ -23,7 +23,7 @@
 
 	var/list/valentines = list()
 	for(var/mob/living/M in GLOB.player_list)
-		if(!M.stat && M.client && M.mind)
+		if(!M.stat && M.mind)
 			valentines |= M
 
 

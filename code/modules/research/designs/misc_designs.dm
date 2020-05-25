@@ -67,6 +67,16 @@
 //////////////////Misc///////////////////
 /////////////////////////////////////////
 
+/datum/design/welding_goggles
+	name = "Welding Goggles"
+	desc = "Protects the eyes from bright flashes; approved by the mad scientist association."
+	id = "welding_goggles"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/clothing/glasses/welding
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
 /datum/design/welding_mask
 	name = "Welding Gas Mask"
 	desc = "A gas mask with built in welding goggles and face shield. Looks like a skull, clearly designed by a nerd."
@@ -76,6 +86,36 @@
 	build_path = /obj/item/clothing/mask/gas/welding
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/bright_helmet
+	name = "Workplace-Ready Firefighter Helmet"
+	desc = "By applying state of the art lighting technology to a fire helmet with industry standard photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
+	id = "bright_helmet"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000, /datum/material/glass = 1000, /datum/material/plastic = 3000, /datum/material/silver = 500)
+	build_path = /obj/item/clothing/head/hardhat/red/upgraded
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SECURITY | DEPARTMENTAL_FLAG_CARGO
+
+/datum/design/mauna_mug
+	name = "Mauna Mug"
+	desc = "This awesome mug will ensure your coffee never stays cold!"
+	id = "mauna_mug"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1000, /datum/material/glass = 100)
+	build_path = /obj/item/reagent_containers/glass/maunamug
+	category = list("Equipment")
+
+
+/datum/design/rolling_table
+	name = "Rolly poly"
+	desc = "We duct-taped some wheels to the bottom of a table. It's goddamn science alright?"
+	id = "rolling_table"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 4000)
+	build_path = /obj/structure/table/rolling
+	category = list("Equipment")
+
 
 /datum/design/portaseeder
 	name = "Portable Seed Extractor"
@@ -95,7 +135,7 @@
 	materials = list(/datum/material/iron = 4000, /datum/material/bananium = 1000)
 	build_path = /obj/item/bikehorn/airhorn
 	category = list("Equipment")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL			//HONK!
+
 
 /datum/design/mesons
 	name = "Optical Meson Scanners"
@@ -177,16 +217,6 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/diskplantgene
-	name = "Plant Data Disk"
-	desc = "A disk for storing plant genetic data."
-	id = "diskplantgene"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
-	build_path = /obj/item/disk/plantgene
-	category = list("Electronics")
-	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
-
 /datum/design/roastingstick
 	name = "Advanced Roasting Stick"
 	desc = "A roasting stick for cooking sausages in exotic ovens."
@@ -255,6 +285,45 @@
 	build_path = /obj/item/tank/internals/plasma/empty
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_SCIENCE
+
+/datum/design/id
+	name = "Identification Card"
+	desc = "A card used to provide ID and determine access across the station."
+	id = "idcard"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=200, /datum/material/glass = 100)
+	build_path = /obj/item/card/id
+	category = list("Electronics")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/eng_gloves
+	name = "Tinkers Gloves"
+	desc = "Overdesigned engineering gloves that have automated construction subroutines dialed in, allowing for faster construction while worn."
+	id = "eng_gloves"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=2000, /datum/material/silver=1500, /datum/material/gold = 1000)
+	build_path = /obj/item/clothing/gloves/color/latex/engineering
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/lavarods
+	name = "Lava-Resistant Metal Rods"
+	id = "lava_rods"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron=1000, /datum/material/plasma=500, /datum/material/titanium=2000)
+	build_path = /obj/item/stack/rods/lava
+	category = list("initial", "Stock Parts")
+	departmental_flags = DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/plasticducky
+	name = "Rubber Ducky"
+	desc = "The classic Nanotrasen design for competitively priced bath based duck toys. No need for fancy Waffle co. rubber, buy Plastic Ducks today!"
+	id = "plasticducky"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 1000)
+	build_path = /obj/item/bikehorn/rubberducky/plasticducky
+	category = list("Equipment")
+
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
@@ -330,7 +399,7 @@
 	id = "holobarrier_jani"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 1000)
-	build_path = /obj/structure/holosign/barrier/wetsign
+	build_path = /obj/item/holosign_creator/janibarrier
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
 
@@ -388,6 +457,26 @@
 	build_path = /obj/item/reactive_armour_shell
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SCIENCE | DEPARTMENTAL_FLAG_ENGINEERING
+
+/datum/design/knight_armour
+	name = "Knight Armour"
+	desc = "A royal knight's favorite garments. Can be trimmed by any friendly person."
+	id = "knight_armour"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_RIGID = 10000)
+	build_path = /obj/item/clothing/suit/armor/riot/knight/greyscale
+	category = list("Imported")
+
+/datum/design/knight_helmet
+	name = "Knight Helmet"
+	desc = "A royal knight's favorite hat. If you hold it upside down it's actually a bucket."
+	id = "knight_helmet"
+	build_type = AUTOLATHE
+	materials = list(MAT_CATEGORY_RIGID = 5000)
+	build_path = /obj/item/clothing/head/helmet/knight/greyscale
+	category = list("Imported")
+
+
 
 /////////////////////////////////////////
 /////////////Security////////////////////
@@ -453,4 +542,59 @@
 	category = list("Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
 
+/datum/design/plumbing_rcd
+	name = "Plumbing Constructor"
+	id = "plumbing_rcd"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 75000, /datum/material/glass = 37500, /datum/material/plastic = 1000)
+	build_path = /obj/item/construction/plumbing
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
+
+
+/////////////////////////////////////////
+/////////////////Tape////////////////////
+/////////////////////////////////////////
+
+/datum/design/super_sticky_tape
+	name = "Super Sticky Tape"
+	id = "super_sticky_tape"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 3000)
+	build_path = /obj/item/stack/sticky_tape/super
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+/datum/design/pointy_tape
+	name = "Pointy Tape"
+	id = "pointy_tape"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1500, /datum/material/plastic = 1000)
+	build_path = /obj/item/stack/sticky_tape/pointy
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SERVICE
+
+
+
+/////////////////////////////////////////
+////////////Tackle Gloves////////////////
+/////////////////////////////////////////
+
+/datum/design/tackle_dolphin
+	name = "Dolphin Gloves"
+	id = "tackle_dolphin"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plastic = 2500)
+	build_path = /obj/item/clothing/gloves/tackler/dolphin
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY
+
+/datum/design/tackle_rocket
+	name = "Rocket Gloves"
+	id = "tackle_rocket"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/plasma = 1000, /datum/material/plastic = 2000)
+	build_path = /obj/item/clothing/gloves/tackler/rocket
+	category = list("Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_SECURITY

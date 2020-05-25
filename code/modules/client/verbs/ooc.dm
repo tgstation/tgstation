@@ -28,7 +28,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(QDELETED(src))
 		return
 
-	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	var/raw_msg = msg
 
 	if(!msg)
@@ -36,8 +36,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	msg = emoji_parse(msg)
 
-	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
-		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+	if((msg[1] in list(".",";",":","#")) || findtext_char(msg, "say", 1, 5))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in OOC?", "Meant for OOC?", "Yes", "No") != "Yes")
 			return
 
 	if(!holder)
@@ -102,13 +102,13 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 /client/proc/set_ooc(newColor as color)
 	set name = "Set Player OOC Color"
 	set desc = "Modifies player OOC Color"
-	set category = "Fun"
+	set category = "Server"
 	GLOB.OOC_COLOR = sanitize_ooccolor(newColor)
 
 /client/proc/reset_ooc()
 	set name = "Reset Player OOC Color"
 	set desc = "Returns player OOC Color to default"
-	set category = "Fun"
+	set category = "Server"
 	GLOB.OOC_COLOR = null
 
 /client/verb/colorooc()
@@ -264,7 +264,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 
 	var/list/body = list()
-	body += "<html><head><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
+	body += "<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Playtime for [key]</title></head><BODY><BR>Playtime:"
 	body += get_exp_report()
 	body += "</BODY></HTML>"
 	usr << browse(body.Join(), "window=playerplaytime[ckey];size=550x615")
@@ -288,7 +288,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/list/choices = list()
 	var/displayed_choicename = ""
 	for(var/client/C in GLOB.clients)
-		if(C.holder.fakekey)
+		if(C.holder?.fakekey)
 			displayed_choicename = C.holder.fakekey
 		else
 			displayed_choicename = C.key
@@ -300,7 +300,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	var/selection = input("Please, select a player!", "Ignore", null, null) as null|anything in choices
 	if(!selection || !(selection in choices))
 		return
-	selection = choices[selection]
+	displayed_choicename = selection // ckey string
+	selection = choices[selection] // client
 	if(selection == src)
 		to_chat(src, "You can't ignore yourself.")
 		return

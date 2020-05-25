@@ -39,7 +39,7 @@
 	. = ..()
 	if(!isliving(user))
 		return
-	if(user.mind && user.mind in immune_minds)
+	if(user.mind && (user.mind in immune_minds))
 		return
 	if(get_dist(user, src) <= 1)
 		. += "<span class='notice'>You reveal [src]!</span>"
@@ -61,6 +61,7 @@
 		animate(src, alpha = initial(alpha), time = time_between_triggers)
 
 /obj/structure/trap/Crossed(atom/movable/AM)
+	. = ..()
 	if(last_trigger + time_between_triggers > world.time)
 		return
 	// Don't want the traps triggered by sparks, ghosts or projectiles.
@@ -89,7 +90,7 @@
 	var/stun_time = 100
 
 /obj/structure/trap/stun/trap_effect(mob/living/L)
-	L.electrocute_act(30, src, safety=1) // electrocute act does a message.
+	L.electrocute_act(30, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
 	L.Paralyze(stun_time)
 
 /obj/structure/trap/stun/hunter
@@ -149,7 +150,7 @@
 
 /obj/item/bountytrap/proc/announce_fugitive()
 	spark_system.start()
-	playsound(src, 'sound/machines/ding.ogg', 50, 1)
+	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 	radio.talk_into(src, "Fugitive has triggered this trap in the [get_area_name(src)]!", RADIO_CHANNEL_COMMON)
 
 /obj/item/bountytrap/attack_self(mob/living/user)
@@ -174,11 +175,7 @@
 /obj/structure/trap/fire/trap_effect(mob/living/L)
 	to_chat(L, "<span class='danger'><B>Spontaneous combustion!</B></span>")
 	L.Paralyze(20)
-
-/obj/structure/trap/fire/flare()
-	..()
 	new /obj/effect/hotspot(get_turf(src))
-
 
 /obj/structure/trap/chill
 	name = "frost trap"
@@ -202,9 +199,6 @@
 	to_chat(L, "<span class='danger'><B>The ground quakes beneath your feet!</B></span>")
 	L.Paralyze(100)
 	L.adjustBruteLoss(35)
-
-/obj/structure/trap/damage/flare()
-	..()
 	var/obj/structure/flora/rock/giant_rock = new(get_turf(src))
 	QDEL_IN(giant_rock, 200)
 
@@ -219,3 +213,16 @@
 /obj/structure/trap/ward/Initialize()
 	. = ..()
 	QDEL_IN(src, time_between_triggers)
+
+/obj/structure/trap/cult
+	name = "unholy trap"
+	desc = "A trap that rings with unholy energy. You think you hear... chittering?"
+	icon_state = "trap-cult"
+
+/obj/structure/trap/cult/trap_effect(mob/living/L)
+	to_chat(L, "<span class='danger'><B>With a crack, the hostile constructs come out of hiding, stunning you!</B></span>")
+	L.electrocute_act(10, src, flags = SHOCK_NOGLOVES) // electrocute act does a message.
+	L.Paralyze(20)
+	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
+	new /mob/living/simple_animal/hostile/construct/proteon/hostile(loc)
+	QDEL_IN(src, 30)

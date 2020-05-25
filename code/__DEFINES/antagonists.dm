@@ -26,9 +26,11 @@
 
 
 //Blob
-#define BLOB_REROLL_TIME 2400 //blob gets a free reroll every X time
+/// blob gets a free reroll every X time
+#define BLOB_REROLL_TIME 2400
 #define BLOB_SPREAD_COST 4
-#define BLOB_ATTACK_REFUND 2 //blob refunds this much if it attacks and doesn't spread
+/// blob refunds this much if it attacks and doesn't spread
+#define BLOB_ATTACK_REFUND 2
 #define BLOB_REFLECTOR_COST 15
 
 
@@ -47,16 +49,12 @@
 #define DEATHSQUAD_LEADER "ds_leader"
 
 //Shuttle hijacking
-#define HIJACK_NEUTRAL 0 //Does not stop hijacking but itself won't hijack
-#define HIJACK_HIJACKER 1 //Needs to be present for shuttle to be hijacked
-#define HIJACK_PREVENT 2 //Prevents hijacking same way as non-antags
-
-//Assimilation
-#define TRACKER_DEFAULT_TIME 900
-#define TRACKER_MINDSHIELD_TIME 1200
-#define TRACKER_AWAKENED_TIME	3000
-#define TRACKER_BONUS_LARGE 300
-#define TRACKER_BONUS_SMALL 100
+/// Does not stop hijacking but itself won't hijack
+#define HIJACK_NEUTRAL 0
+/// Needs to be present for shuttle to be hijacked
+#define HIJACK_HIJACKER 1
+/// Prevents hijacking same way as non-antags
+#define HIJACK_PREVENT 2
 
 //Syndicate Contracts
 #define CONTRACT_STATUS_INACTIVE 1

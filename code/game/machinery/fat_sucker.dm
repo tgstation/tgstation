@@ -57,7 +57,7 @@
 			occupant.forceMove(drop_location())
 			occupant = null
 			return
-		to_chat(occupant, "<span class='notice'>You enter [src]</span>")
+		to_chat(occupant, "<span class='notice'>You enter [src].</span>")
 		addtimer(CALLBACK(src, .proc/start_extracting), 20, TIMER_OVERRIDE|TIMER_UNIQUE)
 		update_icon()
 
@@ -75,7 +75,7 @@
 		user.last_special = world.time + CLICK_CD_BREAKOUT
 		user.visible_message("<span class='notice'>You see [user] kicking against the door of [src]!</span>", \
 			"<span class='notice'>You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-			"<span class='italics'>You hear a metallic creaking from [src].</span>")
+			"<span class='hear'>You hear a metallic creaking from [src].</span>")
 		if(do_after(user, breakout_time, target = src))
 			if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
 				return
@@ -106,31 +106,32 @@
 	free_exit = !free_exit
 	to_chat(user, "<span class='notice'>Safety hatch [free_exit ? "unlocked" : "locked"].</span>")
 
-/obj/machinery/fat_sucker/update_icon()
-	overlays.Cut()
+/obj/machinery/fat_sucker/update_overlays()
+	. = ..()
+
 	if(!state_open)
 		if(processing)
-			overlays += "[icon_state]_door_on"
-			overlays += "[icon_state]_stack"
-			overlays += "[icon_state]_smoke"
-			overlays += "[icon_state]_green"
+			. += "[icon_state]_door_on"
+			. += "[icon_state]_stack"
+			. += "[icon_state]_smoke"
+			. += "[icon_state]_green"
 		else
-			overlays += "[icon_state]_door_off"
+			. += "[icon_state]_door_off"
 			if(occupant)
-				if(powered(EQUIP))
-					overlays += "[icon_state]_stack"
-					overlays += "[icon_state]_yellow"
+				if(powered())
+					. += "[icon_state]_stack"
+					. += "[icon_state]_yellow"
 			else
-				overlays += "[icon_state]_red"
-	else if(powered(EQUIP))
-		overlays += "[icon_state]_red"
+				. += "[icon_state]_red"
+	else if(powered())
+		. += "[icon_state]_red"
 	if(panel_open)
-		overlays += "[icon_state]_panel"
+		. += "[icon_state]_panel"
 
 /obj/machinery/fat_sucker/process()
 	if(!processing)
 		return
-	if(!powered(EQUIP) || !occupant || !iscarbon(occupant))
+	if(!powered() || !occupant || !iscarbon(occupant))
 		open_machine()
 		return
 
@@ -151,7 +152,7 @@
 	use_power(500)
 
 /obj/machinery/fat_sucker/proc/start_extracting()
-	if(state_open || !occupant || processing || !powered(EQUIP))
+	if(state_open || !occupant || processing || !powered())
 		return
 	if(iscarbon(occupant))
 		var/mob/living/carbon/C = occupant

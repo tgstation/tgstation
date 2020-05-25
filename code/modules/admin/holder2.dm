@@ -40,11 +40,9 @@ GLOBAL_PROTECT(href_token)
 	if(!ckey)
 		QDEL_IN(src, 0)
 		CRASH("Admin datum created without a ckey")
-		return
 	if(!istype(R))
 		QDEL_IN(src, 0)
 		CRASH("Admin datum created without a rank")
-		return
 	target = ckey
 	name = "[ckey]'s admin datum ([R])"
 	rank = R
@@ -158,7 +156,7 @@ generally it would be used like so:
 /proc/admin_proc()
 	if(!check_rights(R_ADMIN))
 		return
-	to_chat(world, "you have enough rights!")
+	to_chat(world, "you have enough rights!", confidential = TRUE)
 
 NOTE: it checks usr! not src! So if you're checking somebody's rank in a proc which they did not call
 you will have to do something like if(client.rights & R_ADMIN) yourself.
@@ -169,7 +167,7 @@ you will have to do something like if(client.rights & R_ADMIN) yourself.
 			return 1
 		else
 			if(show_msg)
-				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>")
+				to_chat(usr, "<font color='red'>Error: You do not have sufficient rights to do that. You require one of the following flags:[rights2text(rights_required," ")].</font>", confidential = TRUE)
 	return 0
 
 //probably a bit iffy - will hopefully figure out a better solution

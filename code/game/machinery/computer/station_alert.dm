@@ -4,6 +4,8 @@
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/stationalert
+	ui_x = 325
+	ui_y = 500
 	var/alarms = list("Fire" = list(), "Atmosphere" = list(), "Power" = list())
 
 	light_color = LIGHT_COLOR_CYAN
@@ -20,22 +22,24 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "station_alert", name, 300, 500, master_ui, state)
+		ui = new(user, src, ui_key, "StationAlertConsole", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/station_alert/ui_data(mob/user)
-	. = list()
+	var/list/data = list()
 
-	.["alarms"] = list()
+	data["alarms"] = list()
 	for(var/class in alarms)
-		.["alarms"][class] = list()
+		data["alarms"][class] = list()
 		for(var/area in alarms[class])
-			.["alarms"][class] += area
+			data["alarms"][class] += area
+
+	return data
 
 /obj/machinery/computer/station_alert/proc/triggerAlarm(class, area/A, O, obj/source)
 	if(source.z != z)
 		return
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		return
 
 	var/list/L = alarms[class]
@@ -59,7 +63,7 @@
 
 
 /obj/machinery/computer/station_alert/proc/cancelAlarm(class, area/A, obj/origin)
-	if(stat & (BROKEN))
+	if(machine_stat & (BROKEN))
 		return
 	var/list/L = alarms[class]
 	var/cleared = 0
@@ -74,9 +78,9 @@
 				L -= I
 	return !cleared
 
-/obj/machinery/computer/station_alert/update_icon()
-	..()
-	if(stat & (NOPOWER|BROKEN))
+/obj/machinery/computer/station_alert/update_overlays()
+	. = ..()
+	if(machine_stat & (NOPOWER|BROKEN))
 		return
 	var/active_alarms = FALSE
 	for(var/cat in alarms)
@@ -84,4 +88,4 @@
 		if(L.len)
 			active_alarms = TRUE
 	if(active_alarms)
-		add_overlay("alert:2")
+		. += "alert:2"

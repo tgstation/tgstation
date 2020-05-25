@@ -41,7 +41,6 @@
 	req_access = list(ACCESS_SYNDICATE)
 	shuttleId = "steel_rain"
 	possible_destinations = null
-	clockwork = TRUE //it'd look weird
 
 /obj/machinery/computer/shuttle/syndicate/drop_pod/Topic(href, href_list)
 	if(href_list["move"])
@@ -62,6 +61,7 @@
 	view_range = 13
 	x_offset = -7
 	y_offset = -1
+	whitelist_turfs = list(/turf/open/space, /turf/open/floor/plating, /turf/open/lava, /turf/closed/mineral)
 	see_hidden = TRUE
 
 #undef SYNDICATE_CHALLENGE_TIMER

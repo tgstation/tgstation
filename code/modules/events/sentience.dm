@@ -84,7 +84,7 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 
 		SA.key = SG.key
 
-		SA.grant_all_languages(TRUE)
+		SA.grant_all_languages(TRUE, FALSE, FALSE)
 
 		SA.sentience_act()
 

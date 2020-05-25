@@ -42,7 +42,7 @@
 				return
 		G.defineRegion(cornerA, cornerB, 1)
 		highlight_region(G.map)
-		var/confirm = alert("Are you sure you want run the map generator?", "Run generator", "Yes", "No")
+		var/confirm = alert("Are you sure you want to run the map generator?", "Run generator", "Yes", "No")
 		if(confirm == "Yes")
 			G.generate()
 		log_admin("Build Mode: [key_name(c)] ran the map generator '[G.buildmode_name]' in the region from [AREACOORD(cornerA)] to [AREACOORD(cornerB)]")

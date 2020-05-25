@@ -66,14 +66,16 @@
 	for(var/i in GLOB.cardinals)
 		D.set_vehicle_dir_layer(i, BELOW_MOB_LAYER)
 
-/obj/vehicle/ridden/space/speedwagon/Bump(atom/movable/A)
+/obj/vehicle/ridden/space/speedwagon/Bump(atom/A)
 	. = ..()
 	if(A.density && has_buckled_mobs())
 		var/atom/throw_target = get_edge_target_turf(A, dir)
 		if(crash_all)
-			A.throw_at(throw_target, 4, 3)
+			if(ismovable(A))
+				var/atom/movable/AM = A
+				AM.throw_at(throw_target, 4, 3)
 			visible_message("<span class='danger'>[src] crashes into [A]!</span>")
-			playsound(src, 'sound/effects/bang.ogg', 50, 1)
+			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
 			H.Paralyze(100)
@@ -82,7 +84,7 @@
 			if(!crash_all)
 				H.throw_at(throw_target, 4, 3)
 				visible_message("<span class='danger'>[src] crashes into [H]!</span>")
-				playsound(src, 'sound/effects/bang.ogg', 50, 1)
+				playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
 
 /obj/vehicle/ridden/space/speedwagon/Moved()
 	. = ..()

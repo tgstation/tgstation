@@ -28,6 +28,10 @@
 		if(T.density)
 			to_chat(src, "<span class='warning'>This spot is too dense to place a blob core on!</span>")
 			return 0
+		var/area/A = get_area(T)
+		if(isspaceturf(T) || A && !A.blob_allowed)
+			to_chat(src, "<span class='warning'>You cannot place your core here!</span>")
+			return 0
 		for(var/obj/O in T)
 			if(istype(O, /obj/structure/blob))
 				if(istype(O, /obj/structure/blob/normal))
@@ -175,7 +179,7 @@
 		B.obj_integrity = min(B.obj_integrity, B.max_integrity)
 		B.update_icon()
 		B.visible_message("<span class='warning'><b>The blobbernaut [pick("rips", "tears", "shreds")] its way out of the factory blob!</b></span>")
-		playsound(B.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(B.loc, 'sound/effects/splat.ogg', 50, TRUE)
 		var/mob/living/simple_animal/hostile/blob/blobbernaut/blobber = new /mob/living/simple_animal/hostile/blob/blobbernaut(get_turf(B))
 		flick("blobbernaut_produce", blobber)
 		B.naut = blobber
@@ -296,7 +300,7 @@
 				OB = pick(diagonalblobs)
 				if(attacksuccess)
 					OB.blob_attack_animation(T, src)
-					playsound(OB, 'sound/effects/splat.ogg', 50, 1)
+					playsound(OB, 'sound/effects/splat.ogg', 50, TRUE)
 					add_points(BLOB_ATTACK_REFUND)
 				else
 					add_points(BLOB_SPREAD_COST) //if we're attacking diagonally and didn't hit anything, refund
@@ -318,7 +322,7 @@
 	if(!surrounding_turfs.len)
 		return
 	for(var/mob/living/simple_animal/hostile/blob/blobspore/BS in blob_mobs)
-		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
+		if(isturf(BS.loc) && get_dist(BS, T) <= 35 && !BS.key)
 			BS.LoseTarget()
 			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 
@@ -326,7 +330,7 @@
 	set category = "Blob"
 	set name = "Blob Broadcast"
 	set desc = "Speak with your blob spores and blobbernauts as your mouthpieces."
-	var/speak_text = input(src, "What would you like to say with your minions?", "Blob Broadcast", null) as text
+	var/speak_text = stripped_input(src, "What would you like to say with your minions?", "Blob Broadcast", null)
 	if(!speak_text)
 		return
 	else
@@ -354,7 +358,7 @@
 		var/datum/blobstrain/bs = pick((GLOB.valid_blobstrains))
 		choices[initial(bs.name)] = bs
 
-	var/choice = input(usr, "Please choose a new strain","Strain") as anything in choices
+	var/choice = input(usr, "Please choose a new strain","Strain") as anything in sortList(choices, /proc/cmp_typepaths_asc)
 	if (choice && choices[choice] && !QDELETED(src))
 		var/datum/blobstrain/bs = choices[choice]
 		set_strain(bs)

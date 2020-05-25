@@ -7,6 +7,7 @@
 	use_power = IDLE_POWER_USE
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
+	hide = TRUE
 
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF //really helpful in building gas chambers for xenomorphs
 
@@ -18,10 +19,24 @@
 	var/id = null
 	var/datum/radio_frequency/radio_connection
 
-	level = 1
 	layer = GAS_SCRUBBER_LAYER
 
 	pipe_state = "injector"
+
+	ui_x = 310
+	ui_y = 115
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/CtrlClick(mob/user)
+	if(can_interact(user))
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/AltClick(mob/user)
+	if(can_interact(user))
+		volume_rate = MAX_TRANSFER_RATE
+		update_icon()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -37,12 +52,6 @@
 		icon_state = "inje_off"
 	else
 		icon_state = "inje_on"
-
-/obj/machinery/atmospherics/components/unary/outlet_injector/power_change()
-	var/old_stat = stat
-	..()
-	if(old_stat != stat)
-		update_icon()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	..()
@@ -119,30 +128,25 @@
 		on = !on
 
 	if("inject" in signal.data)
-		spawn inject()
+		INVOKE_ASYNC(src, .proc/inject)
 		return
 
 	if("set_volume_rate" in signal.data)
 		var/number = text2num(signal.data["set_volume_rate"])
 		var/datum/gas_mixture/air_contents = airs[1]
-		volume_rate = CLAMP(number, 0, air_contents.volume)
+		volume_rate = clamp(number, 0, air_contents.volume)
 
-	if("status" in signal.data)
-		spawn(2)
-			broadcast_status()
-		return //do not update_icon
+	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 
-	spawn(2)
-		broadcast_status()
-
-	update_icon()
+	if(!("status" in signal.data)) //do not update_icon
+		update_icon()
 
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
 																		datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "atmos_pump", name, 310, 115, master_ui, state)
+		ui = new(user, src, ui_key, "AtmosPump", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/ui_data()
@@ -166,15 +170,11 @@
 			if(rate == "max")
 				rate = MAX_TRANSFER_RATE
 				. = TRUE
-			else if(rate == "input")
-				rate = input("New transfer rate (0-[MAX_TRANSFER_RATE] L/s):", name, volume_rate) as num|null
-				if(!isnull(rate) && !..())
-					. = TRUE
 			else if(text2num(rate) != null)
 				rate = text2num(rate)
 				. = TRUE
 			if(.)
-				volume_rate = CLAMP(rate, 0, MAX_TRANSFER_RATE)
+				volume_rate = clamp(rate, 0, MAX_TRANSFER_RATE)
 				investigate_log("was set to [volume_rate] L/s by [key_name(usr)]", INVESTIGATE_ATMOS)
 	update_icon()
 	broadcast_status()

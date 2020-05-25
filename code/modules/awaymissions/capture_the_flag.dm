@@ -9,7 +9,7 @@
 
 
 
-/obj/item/twohanded/ctf
+/obj/item/ctf
 	name = "banner"
 	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
@@ -31,16 +31,20 @@
 	var/obj/effect/ctf/flag_reset/reset
 	var/reset_path = /obj/effect/ctf/flag_reset
 
-/obj/item/twohanded/ctf/Destroy()
+/obj/item/ctf/Destroy()
 	QDEL_NULL(reset)
 	return ..()
 
-/obj/item/twohanded/ctf/Initialize()
+/obj/item/ctf/Initialize()
 	. = ..()
 	if(!reset)
 		reset = new reset_path(get_turf(src))
 
-/obj/item/twohanded/ctf/process()
+/obj/item/ctf/ComponentInitialize()
+	. = ..()
+	AddComponent(/datum/component/two_handed)
+
+/obj/item/ctf/process()
 	if(is_ctf_target(loc)) //don't reset from someone's hands.
 		return PROCESS_KILL
 	if(world.time > reset_cooldown)
@@ -52,7 +56,7 @@
 		STOP_PROCESSING(SSobj, src)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
-/obj/item/twohanded/ctf/attack_hand(mob/living/user)
+/obj/item/ctf/attack_hand(mob/living/user)
 	if(!is_ctf_target(user) && !anyonecanpickup)
 		to_chat(user, "<span class='warning'>Non-players shouldn't be moving the flag!</span>")
 		return
@@ -76,7 +80,7 @@
 	STOP_PROCESSING(SSobj, src)
 	..()
 
-/obj/item/twohanded/ctf/dropped(mob/user)
+/obj/item/ctf/dropped(mob/user)
 	..()
 	user.anchored = FALSE
 	user.status_flags |= CANPUSH
@@ -89,7 +93,7 @@
 	anchored = TRUE
 
 
-/obj/item/twohanded/ctf/red
+/obj/item/ctf/red
 	name = "red flag"
 	icon_state = "banner-red"
 	item_state = "banner-red"
@@ -98,7 +102,7 @@
 	reset_path = /obj/effect/ctf/flag_reset/red
 
 
-/obj/item/twohanded/ctf/blue
+/obj/item/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
 	item_state = "banner-blue"
@@ -277,8 +281,8 @@
 			attack_ghost(ghost)
 
 /obj/machinery/capture_the_flag/attackby(obj/item/I, mob/user, params)
-	if(istype(I, /obj/item/twohanded/ctf))
-		var/obj/item/twohanded/ctf/flag = I
+	if(istype(I, /obj/item/ctf))
+		var/obj/item/ctf/flag = I
 		if(flag.team != src.team)
 			user.transferItemToLoc(flag, get_turf(flag.reset), TRUE)
 			points++
@@ -295,7 +299,7 @@
 		if(istype(mob_area, /area/ctf))
 			to_chat(M, "<span class='narsie [team_span]'>[team] team wins!</span>")
 			to_chat(M, "<span class='userdanger'>Teams have been cleared. Click on the machines to vote to begin another round.</span>")
-			for(var/obj/item/twohanded/ctf/W in M)
+			for(var/obj/item/ctf/W in M)
 				M.dropItemToGround(W)
 			M.dust()
 	for(var/obj/machinery/control_point/control in GLOB.machines)
@@ -325,7 +329,7 @@
 
 	dead_barricades.Cut()
 
-	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK)
+	notify_ghosts("[name] has been activated!", enter_link="<a href=?src=[REF(src)];join=1>(Click to join the [team] team!)</a> or click on the controller directly!", source = src, action=NOTIFY_ATTACK, header = "CTF has been activated")
 
 	if(!arena_reset)
 		reset_the_arena()
@@ -336,7 +340,7 @@
 	var/list/ctf_object_typecache = typecacheof(list(
 				/obj/machinery,
 				/obj/effect/ctf,
-				/obj/item/twohanded/ctf
+				/obj/item/ctf
 			))
 	for(var/atm in A)
 		if (isturf(A) || ismob(A) || isarea(A))
@@ -389,12 +393,12 @@
 	ammo_type = /obj/item/ammo_casing/a50/ctf
 
 /obj/item/ammo_casing/a50/ctf
-	projectile_type = /obj/item/projectile/bullet/ctf
+	projectile_type = /obj/projectile/bullet/ctf
 
-/obj/item/projectile/bullet/ctf
+/obj/projectile/bullet/ctf
 	damage = 0
 
-/obj/item/projectile/bullet/ctf/prehit(atom/target)
+/obj/projectile/bullet/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
 		damage = 60
 	. = ..()
@@ -424,13 +428,13 @@
 		qdel(src)
 
 /obj/item/ammo_casing/caseless/laser/ctf
-	projectile_type = /obj/item/projectile/beam/ctf
+	projectile_type = /obj/projectile/beam/ctf
 
-/obj/item/projectile/beam/ctf
+/obj/projectile/beam/ctf
 	damage = 0
 	icon_state = "omnilaser"
 
-/obj/item/projectile/beam/ctf/prehit(atom/target)
+/obj/projectile/beam/ctf/prehit(atom/target)
 	if(is_ctf_target(target))
 		damage = 150
 	. = ..()
@@ -453,9 +457,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/red
 
 /obj/item/ammo_casing/caseless/laser/ctf/red
-	projectile_type = /obj/item/projectile/beam/ctf/red
+	projectile_type = /obj/projectile/beam/ctf/red
 
-/obj/item/projectile/beam/ctf/red
+/obj/projectile/beam/ctf/red
 	icon_state = "laser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/red_laser
 
@@ -468,9 +472,9 @@
 	ammo_type = /obj/item/ammo_casing/caseless/laser/ctf/blue
 
 /obj/item/ammo_casing/caseless/laser/ctf/blue
-	projectile_type = /obj/item/projectile/beam/ctf/blue
+	projectile_type = /obj/projectile/beam/ctf/blue
 
-/obj/item/projectile/beam/ctf/blue
+/obj/projectile/beam/ctf/blue
 	icon_state = "bluelaser"
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 
@@ -481,7 +485,7 @@
 	suit = /obj/item/clothing/suit/space/hardsuit/shielded/ctf
 	toggle_helmet = FALSE // see the whites of their eyes
 	shoes = /obj/item/clothing/shoes/combat
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	id = /obj/item/card/id/away
 	belt = /obj/item/gun/ballistic/automatic/pistol/deagle/ctf
 	l_pocket = /obj/item/ammo_box/magazine/recharge/ctf
@@ -497,11 +501,11 @@
 	W.registered_name = H.real_name
 	W.update_label()
 
-	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
-	no_drops += H.get_item_by_slot(SLOT_GLOVES)
-	no_drops += H.get_item_by_slot(SLOT_SHOES)
-	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
-	no_drops += H.get_item_by_slot(SLOT_EARS)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_GLOVES)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_EARS)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CAPTURE_THE_FLAG_TRAIT)
@@ -609,10 +613,11 @@
 	QDEL_IN(src, AMMO_DROP_LIFETIME)
 
 /obj/effect/ctf/ammo/Crossed(atom/movable/AM)
+	. = ..()
 	reload(AM)
 
-/obj/effect/ctf/ammo/Bump(atom/movable/AM)
-	reload(AM)
+/obj/effect/ctf/ammo/Bump(atom/A)
+	reload(A)
 
 /obj/effect/ctf/ammo/Bumped(atom/movable/AM)
 	reload(AM)
@@ -628,7 +633,7 @@
 				qdel(G)
 			O.equip(M)
 			to_chat(M, "<span class='notice'>Ammunition reloaded!</span>")
-			playsound(get_turf(M), 'sound/weapons/shotgunpump.ogg', 50, 1, -1)
+			playsound(get_turf(M), 'sound/weapons/gun/shotgun/rack.ogg', 50, TRUE, -1)
 			qdel(src)
 			break
 

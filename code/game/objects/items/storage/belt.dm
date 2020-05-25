@@ -9,19 +9,18 @@
 	slot_flags = ITEM_SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
 	max_integrity = 300
+	equip_sound = 'sound/items/equip/toolbelt_equip.ogg'
 	var/content_overlays = FALSE //If this is true, the belt will gain overlays based on what it's holding
 
 /obj/item/storage/belt/suicide_act(mob/living/carbon/user)
 	user.visible_message("<span class='suicide'>[user] begins belting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!</span>")
 	return BRUTELOSS
 
-/obj/item/storage/belt/update_icon()
-	cut_overlays()
+/obj/item/storage/belt/update_overlays()
+	. = ..()
 	if(content_overlays)
 		for(var/obj/item/I in contents)
-			var/mutable_appearance/M = I.get_belt_overlay()
-			add_overlay(M)
-	..()
+			. += I.get_belt_overlay()
 
 /obj/item/storage/belt/Initialize()
 	. = ..()
@@ -30,14 +29,18 @@
 /obj/item/storage/belt/utility
 	name = "toolbelt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
 	desc = "Holds tools."
-	icon_state = "utilitybelt"
+	icon_state = "utility"
 	item_state = "utility"
 	content_overlays = TRUE
-	custom_price = 50
+	custom_premium_price = 300
+	drop_sound = 'sound/items/handling/toolbelt_drop.ogg'
+	pickup_sound =  'sound/items/handling/toolbelt_pickup.ogg'
 
 /obj/item/storage/belt/utility/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
 		/obj/item/crowbar,
 		/obj/item/screwdriver,
@@ -57,13 +60,17 @@
 		/obj/item/holosign_creator/engineering,
 		/obj/item/forcefield_projector,
 		/obj/item/assembly/signaler,
-		/obj/item/lightreplacer
+		/obj/item/lightreplacer,
+		/obj/item/construction/rcd,
+		/obj/item/pipe_dispenser,
+		/obj/item/inducer,
+		/obj/item/plunger
 		))
 
 /obj/item/storage/belt/utility/chief
 	name = "\improper Chief Engineer's toolbelt" //"the Chief Engineer's toolbelt", because "Chief Engineer's toolbelt" is not a proper noun
 	desc = "Holds tools, looks snazzy."
-	icon_state = "utilitybelt_ce"
+	icon_state = "utility_ce"
 	item_state = "utility_ce"
 
 /obj/item/storage/belt/utility/chief/full/PopulateContents()
@@ -104,25 +111,26 @@
 	new /obj/item/t_scanner(src)
 	new /obj/item/extinguisher/mini(src)
 
-/obj/item/storage/belt/utility/servant/PopulateContents()
-	new /obj/item/screwdriver/brass(src)
-	new /obj/item/wirecutters/brass(src)
-	new /obj/item/wrench/brass(src)
-	new /obj/item/crowbar/brass(src)
-	new /obj/item/weldingtool/experimental/brass(src)
+/obj/item/storage/belt/utility/syndicate/PopulateContents()
+	new /obj/item/screwdriver/nuke(src)
+	new /obj/item/wrench/combat(src)
+	new /obj/item/weldingtool/largetank(src)
+	new /obj/item/crowbar(src)
+	new /obj/item/wirecutters(src)
 	new /obj/item/multitool(src)
-	new /obj/item/stack/cable_coil(src, MAXCOIL, "yellow")
+	new /obj/item/inducer/syndicate(src)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
 	desc = "Can hold various medical equipment."
-	icon_state = "medicalbelt"
+	icon_state = "medical"
 	item_state = "medical"
 
 /obj/item/storage/belt/medical/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_w_class = WEIGHT_CLASS_BULKY
+	STR.max_combined_w_class = 21
 	STR.set_holdable(list(
 		/obj/item/healthanalyzer,
 		/obj/item/dnainjector,
@@ -169,13 +177,27 @@
 		/obj/item/implant,
 		/obj/item/implanter,
 		/obj/item/pinpointer/crew,
-		/obj/item/holosign_creator/medical
+		/obj/item/holosign_creator/medical,
+		/obj/item/construction/plumbing,
+		/obj/item/plunger,
+		/obj/item/reagent_containers/spray,
+		/obj/item/shears
 		))
+
+/obj/item/storage/belt/medical/paramedic/PopulateContents()
+	new /obj/item/sensor_device(src)
+	new /obj/item/pinpointer/crew/prox(src)
+	new /obj/item/stack/medical/gauze/twelve(src)
+	new /obj/item/reagent_containers/syringe(src)
+	new /obj/item/reagent_containers/glass/bottle/epinephrine(src)
+	new /obj/item/reagent_containers/glass/bottle/calomel(src)
+	new /obj/item/reagent_containers/glass/bottle/formaldehyde(src)
+	update_icon()
 
 /obj/item/storage/belt/security
 	name = "security belt"
 	desc = "Can hold security gear like handcuffs and flashes."
-	icon_state = "securitybelt"
+	icon_state = "security"
 	item_state = "security"//Could likely use a better one.
 	content_overlays = TRUE
 
@@ -218,7 +240,7 @@
 	icon_state = "securitywebbing"
 	item_state = "securitywebbing"
 	content_overlays = FALSE
-	custom_premium_price = 800
+	custom_premium_price = 900
 
 /obj/item/storage/belt/security/webbing/ComponentInitialize()
 	. = ..()
@@ -275,7 +297,8 @@
 		/obj/item/organ/regenerative_core,
 		/obj/item/wormhole_jaunter,
 		/obj/item/storage/bag/plants,
-		/obj/item/stack/marker_beacon
+		/obj/item/stack/marker_beacon,
+		/obj/item/key/lasso
 		))
 
 
@@ -323,8 +346,8 @@
 	name = "championship belt"
 	desc = "Proves to the world that you are the strongest!"
 	icon_state = "championbelt"
-	item_state = "champion"
-	materials = list(/datum/material/gold=400)
+	item_state = "championbelt"
+	custom_materials = list(/datum/material/gold=400)
 
 /obj/item/storage/belt/champion/ComponentInitialize()
 	. = ..()
@@ -445,7 +468,9 @@
 		/obj/item/lighter,
 		/obj/item/multitool,
 		/obj/item/reagent_containers/food/drinks/bottle/molotov,
-		/obj/item/grenade/plastic/c4,
+		/obj/item/grenade/c4,
+		/obj/item/reagent_containers/food/snacks/grown/cherry_bomb,
+		/obj/item/reagent_containers/food/snacks/grown/firelemon
 		))
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
@@ -454,7 +479,7 @@
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/empgrenade = 1,
 		/obj/item/grenade/empgrenade = 1,
-		/obj/item/grenade/syndieminibomb/concussion/frag = 10,
+		/obj/item/grenade/frag = 10,
 		/obj/item/grenade/gluon = 4,
 		/obj/item/grenade/chem_grenade/incendiary = 2,
 		/obj/item/grenade/chem_grenade/facid = 1,
@@ -507,19 +532,21 @@
 		/obj/item/flashlight,
 		/obj/item/reagent_containers/spray,
 		/obj/item/soap,
-		/obj/item/holosign_creator/janibarrier,
+		/obj/item/holosign_creator,
 		/obj/item/forcefield_projector,
 		/obj/item/key/janitor,
 		/obj/item/clothing/gloves,
 		/obj/item/melee/flyswatter,
-		/obj/item/assembly/mousetrap
+		/obj/item/assembly/mousetrap,
+		/obj/item/paint/paint_remover,
+		/obj/item/pushbroom
 		))
 
 /obj/item/storage/belt/janitor/full/PopulateContents()
 	new /obj/item/lightreplacer(src)
 	new /obj/item/reagent_containers/spray/cleaner(src)
 	new /obj/item/soap/nanotrasen(src)
-	new /obj/item/holosign_creator/janibarrier(src)
+	new /obj/item/holosign_creator(src)
 	new /obj/item/melee/flyswatter(src)
 
 /obj/item/storage/belt/bandolier
@@ -537,38 +564,13 @@
 		/obj/item/ammo_casing/shotgun
 		))
 
-/obj/item/storage/belt/holster
-	name = "shoulder holster"
-	desc = "A holster to carry a handgun and ammo. WARNING: Badasses only."
-	icon_state = "holster"
-	item_state = "holster"
-	alternate_worn_layer = UNDER_SUIT_LAYER
-
-/obj/item/storage/belt/holster/ComponentInitialize()
-	. = ..()
-	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
-	STR.max_items = 3
-	STR.max_w_class = WEIGHT_CLASS_NORMAL
-	STR.set_holdable(list(
-		/obj/item/gun/ballistic/automatic/pistol,
-		/obj/item/gun/ballistic/revolver,
-		/obj/item/ammo_box,
-		/obj/item/gun/energy/e_gun/mini
-		))
-
-/obj/item/storage/belt/holster/full/PopulateContents()
-	var/static/items_inside = list(
-		/obj/item/gun/ballistic/revolver/detective = 1,
-		/obj/item/ammo_box/c38 = 2)
-	generate_items_inside(items_inside,src)
-
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
 	desc = "A dorky fannypack for keeping small items in."
 	icon_state = "fannypack_leather"
 	item_state = "fannypack_leather"
-	item_color = "fannypackleather"
-	custom_price = 15
+	dying_key = DYE_REGISTRY_FANNYPACK
+	custom_price = 100
 
 /obj/item/storage/belt/fannypack/ComponentInitialize()
 	. = ..()
@@ -580,61 +582,51 @@
 	name = "black fannypack"
 	icon_state = "fannypack_black"
 	item_state = "fannypack_black"
-	item_color = "black"
 
 /obj/item/storage/belt/fannypack/red
 	name = "red fannypack"
 	icon_state = "fannypack_red"
 	item_state = "fannypack_red"
-	item_color = "red"
 
 /obj/item/storage/belt/fannypack/purple
 	name = "purple fannypack"
 	icon_state = "fannypack_purple"
 	item_state = "fannypack_purple"
-	item_color = "purple"
 
 /obj/item/storage/belt/fannypack/blue
 	name = "blue fannypack"
 	icon_state = "fannypack_blue"
 	item_state = "fannypack_blue"
-	item_color = "blue"
 
 /obj/item/storage/belt/fannypack/orange
 	name = "orange fannypack"
 	icon_state = "fannypack_orange"
 	item_state = "fannypack_orange"
-	item_color = "orange"
 
 /obj/item/storage/belt/fannypack/white
 	name = "white fannypack"
 	icon_state = "fannypack_white"
 	item_state = "fannypack_white"
-	item_color = "white"
 
 /obj/item/storage/belt/fannypack/green
 	name = "green fannypack"
 	icon_state = "fannypack_green"
 	item_state = "fannypack_green"
-	item_color = "green"
 
 /obj/item/storage/belt/fannypack/pink
 	name = "pink fannypack"
 	icon_state = "fannypack_pink"
 	item_state = "fannypack_pink"
-	item_color = "pink"
 
 /obj/item/storage/belt/fannypack/cyan
 	name = "cyan fannypack"
 	icon_state = "fannypack_cyan"
 	item_state = "fannypack_cyan"
-	item_color = "cyan"
 
 /obj/item/storage/belt/fannypack/yellow
 	name = "yellow fannypack"
 	icon_state = "fannypack_yellow"
 	item_state = "fannypack_yellow"
-	item_color = "yellow"
 
 /obj/item/storage/belt/sabre
 	name = "sabre sheath"
@@ -645,6 +637,7 @@
 
 /obj/item/storage/belt/sabre/ComponentInitialize()
 	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
 	STR.max_items = 1
 	STR.rustle_sound = FALSE
@@ -663,23 +656,46 @@
 		return
 	if(length(contents))
 		var/obj/item/I = contents[1]
-		user.visible_message("[user] takes [I] out of [src].", "<span class='notice'>You take [I] out of [src].</span>")
+		user.visible_message("<span class='notice'>[user] takes [I] out of [src].</span>", "<span class='notice'>You take [I] out of [src].</span>")
 		user.put_in_hands(I)
 		update_icon()
 	else
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 
-/obj/item/storage/belt/sabre/update_icon()
+/obj/item/storage/belt/sabre/update_icon_state()
 	icon_state = "sheath"
 	item_state = "sheath"
 	if(contents.len)
 		icon_state += "-sabre"
 		item_state += "-sabre"
-	if(loc && isliving(loc))
-		var/mob/living/L = loc
-		L.regenerate_icons()
-	..()
 
 /obj/item/storage/belt/sabre/PopulateContents()
 	new /obj/item/melee/sabre(src)
 	update_icon()
+
+/obj/item/storage/belt/plant
+	name = "botanical belt"
+	desc = "A belt used to hold most hydroponics supplies. Suprisingly, not green."
+	icon_state = "plantbelt"
+	item_state = "plantbelt"
+	content_overlays = TRUE
+
+/obj/item/storage/belt/plant/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	STR.max_items = 6
+	STR.max_w_class = WEIGHT_CLASS_NORMAL
+	STR.set_holdable(list(
+		/obj/item/reagent_containers/spray/plantbgone,
+		/obj/item/plant_analyzer,
+		/obj/item/seeds,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/glass/beaker,
+		/obj/item/cultivator,
+		/obj/item/reagent_containers/spray/pestspray,
+		/obj/item/hatchet,
+		/obj/item/graft,
+		/obj/item/secateurs,
+		/obj/item/geneshears,
+		/obj/item/shovel/spade
+		))

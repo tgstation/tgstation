@@ -93,7 +93,7 @@
 				REMOVE_TRAIT(src, TRAIT_NODROP, HIS_GRACE_TRAIT)
 				master.Paralyze(60)
 				master.adjustBruteLoss(master.maxHealth)
-				playsound(master, 'sound/effects/splat.ogg', 100, 0)
+				playsound(master, 'sound/effects/splat.ogg', 100, FALSE)
 			else
 				master.apply_status_effect(STATUS_EFFECT_HISGRACE)
 		return
@@ -114,8 +114,8 @@
 		if(!L.stat)
 			L.visible_message("<span class='warning'>[src] lunges at [L]!</span>", "<span class='his_grace big bold'>[src] lunges at you!</span>")
 			do_attack_animation(L, null, src)
-			playsound(L, 'sound/weapons/smash.ogg', 50, 1)
-			playsound(L, 'sound/misc/desceration-01.ogg', 50, 1)
+			playsound(L, 'sound/weapons/smash.ogg', 50, TRUE)
+			playsound(L, 'sound/misc/desceration-01.ogg', 50, TRUE)
 			L.adjustBruteLoss(force)
 			adjust_bloodthirst(-5) //Don't stop attacking they're right there!
 		else
@@ -160,7 +160,7 @@
 		return
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='boldwarning'>[src] slowly stops rattling and falls still, His latch snapping shut.</span>")
-	playsound(loc, 'sound/weapons/batonextend.ogg', 100, 1)
+	playsound(loc, 'sound/weapons/batonextend.ogg', 100, TRUE)
 	name = initial(name)
 	desc = initial(desc)
 	icon_state = initial(icon_state)
@@ -177,8 +177,8 @@
 	var/victims = 0
 	meal.visible_message("<span class='warning'>[src] swings open and devours [meal]!</span>", "<span class='his_grace big bold'>[src] consumes you!</span>")
 	meal.adjustBruteLoss(200)
-	playsound(meal, 'sound/misc/desceration-02.ogg', 75, 1)
-	playsound(src, 'sound/items/eatfood.ogg', 100, 1)
+	playsound(meal, 'sound/misc/desceration-02.ogg', 75, TRUE)
+	playsound(src, 'sound/items/eatfood.ogg', 100, TRUE)
 	meal.forceMove(src)
 	force_bonus += HIS_GRACE_FORCE_BONUS
 	prev_bloodthirst = bloodthirst
@@ -196,9 +196,9 @@
 /obj/item/his_grace/proc/adjust_bloodthirst(amt)
 	prev_bloodthirst = bloodthirst
 	if(prev_bloodthirst < HIS_GRACE_CONSUME_OWNER && !ascended)
-		bloodthirst = CLAMP(bloodthirst + amt, HIS_GRACE_SATIATED, HIS_GRACE_CONSUME_OWNER)
+		bloodthirst = clamp(bloodthirst + amt, HIS_GRACE_SATIATED, HIS_GRACE_CONSUME_OWNER)
 	else if(!ascended)
-		bloodthirst = CLAMP(bloodthirst + amt, HIS_GRACE_CONSUME_OWNER, HIS_GRACE_FALL_ASLEEP)
+		bloodthirst = clamp(bloodthirst + amt, HIS_GRACE_CONSUME_OWNER, HIS_GRACE_FALL_ASLEEP)
 	update_stats()
 
 /obj/item/his_grace/proc/update_stats()

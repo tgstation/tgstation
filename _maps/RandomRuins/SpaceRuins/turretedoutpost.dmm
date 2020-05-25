@@ -77,7 +77,7 @@
 "ar" = (
 /obj/machinery/power/apc{
 	name = "Worn-out APC";
-	pixel_y = -24
+	pixel_y = -23
 	},
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/turretedoutpost)

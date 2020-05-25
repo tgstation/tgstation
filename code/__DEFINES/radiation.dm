@@ -16,6 +16,11 @@ Ask ninjanomnom if they're around
 #define RAD_OVERDOSE_REDUCTION 0.000001				// Coefficient to the reduction in applied rads once the thing, usualy mob, has too much radiation
 													// WARNING: This number is highly sensitive to change, graph is first for best results
 #define RAD_BURN_THRESHOLD 1000						// Applied radiation must be over this to burn
+//Holy shit test after you tweak anything it's said like 6 times in here
+//You probably want to plot any tweaks you make so you can see the curves visually
+#define RAD_BURN_LOG_BASE 1.1
+#define RAD_BURN_LOG_GRADIENT 10000
+#define RAD_BURN_CURVE(X) log(1+((X-RAD_BURN_THRESHOLD)/RAD_BURN_LOG_GRADIENT))/log(RAD_BURN_LOG_BASE)
 
 #define RAD_MOB_SAFE 500							// How much stored radiation in a mob with no ill effects
 
@@ -39,10 +44,8 @@ Ask ninjanomnom if they're around
 #define RAD_FULL_INSULATION 0						// Unused
 
 // WARNING: The defines below could have disastrous consequences if tweaked incorrectly. See: The great SM purge of Oct.6.2017
-// contamination_chance = 		(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1/(steps*RAD_DISTANCE_COEFFICIENT), 1))
 // contamination_strength = 	(strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
 #define RAD_MINIMUM_CONTAMINATION 350				// How strong does a radiation wave have to be to contaminate objects
-#define RAD_CONTAMINATION_CHANCE_COEFFICIENT 0.01	// Higher means higher strength scaling contamination chance
 #define RAD_CONTAMINATION_STR_COEFFICIENT 0.25		// Higher means higher strength scaling contamination strength
 #define RAD_DISTANCE_COEFFICIENT 1					// Lower means further rad spread
 

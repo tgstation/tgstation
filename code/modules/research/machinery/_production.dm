@@ -29,6 +29,14 @@
 	materials = AddComponent(/datum/component/remote_materials, "lathe", mapload)
 	RefreshParts()
 
+/obj/machinery/rnd/production/Destroy()
+	materials = null
+	cached_designs = null
+	matching_designs = null
+	QDEL_NULL(stored_research)
+	host_research = null
+	return ..()
+
 /obj/machinery/rnd/production/proc/update_research()
 	host_research.copy_research_to(stored_research, TRUE)
 	update_designs()
@@ -51,10 +59,6 @@
 	popup.set_content(generate_ui())
 	popup.open()
 
-/obj/machinery/rnd/production/Destroy()
-	QDEL_NULL(stored_research)
-	return ..()
-
 /obj/machinery/rnd/production/proc/calculate_efficiency()
 	efficiency_coeff = 1
 	if(reagents)		//If reagents/materials aren't initialized, don't bother, we'll be doing this again after reagents init anyways.
@@ -69,7 +73,7 @@
 		materials.set_local_size(total_storage)
 	var/total_rating = 1.2
 	for(var/obj/item/stock_parts/manipulator/M in component_parts)
-		total_rating = CLAMP(total_rating - (M.rating * 0.1), 0, 1)
+		total_rating = clamp(total_rating - (M.rating * 0.1), 0, 1)
 	if(total_rating == 0)
 		efficiency_coeff = INFINITY
 	else
@@ -88,7 +92,8 @@
 	for(var/i in 1 to amount)
 		var/obj/item/I = new path(get_turf(src))
 		if(efficient_with(I.type))
-			I.materials = matlist.Copy()
+			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
+			I.set_custom_materials(matlist)
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material
@@ -131,7 +136,7 @@
 		say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	var/power = 1000
-	amount = CLAMP(amount, 1, 50)
+	amount = clamp(amount, 1, 50)
 	for(var/M in D.materials)
 		power += round(D.materials[M] * amount / 35)
 	power = min(3000, power)
@@ -163,7 +168,7 @@
 	matching_designs.Cut()
 	for(var/v in stored_research.researched_designs)
 		var/datum/design/D = SSresearch.techweb_design_by_id(v)
-		if(!(D.build_type & allowed_buildtypes) || !(isnull(allowed_department_flags) || (D.departmental_flags & allowed_department_flags)))
+		if(!(D.build_type & allowed_buildtypes) || !(isnull(allowed_department_flags) ||(D.departmental_flags & allowed_department_flags)))
 			continue
 		if(findtext(D.name,string))
 			matching_designs.Add(D)

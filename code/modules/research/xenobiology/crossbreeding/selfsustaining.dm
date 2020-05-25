@@ -32,7 +32,7 @@ Self-sustaining extracts:
 	return ..()
 
 /obj/item/autoslime/attack_self(mob/user)
-	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in extract.activate_reagents
+	var/reagentselect = input(user, "Choose the reagent the extract will produce.", "Self-sustaining Reaction") as null|anything in sortList(extract.activate_reagents, /proc/cmp_typepaths_asc)
 	var/amount = 5
 	var/secondary
 
@@ -42,10 +42,10 @@ Self-sustaining extracts:
 		return
 	if(reagentselect == "lesser plasma")
 		amount = 4
-		reagentselect = "plasma"
+		reagentselect = /datum/reagent/toxin/plasma
 	if(reagentselect == "holy water and uranium")
 		reagentselect = /datum/reagent/water/holywater
-		secondary = "uranium"
+		secondary = /datum/reagent/uranium
 	extract.forceMove(user.drop_location())
 	qdel(src)
 	user.put_in_active_hand(extract)

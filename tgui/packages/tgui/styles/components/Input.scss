@@ -1,0 +1,63 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use '../base.scss';
+@use '../functions.scss' as *;
+
+$border-color: #88bfff !default;
+$border-radius: base.$border-radius !default;
+
+.Input {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  border: 1px solid $border-color;
+  border: 1px solid rgba($border-color, 0.75);
+  border-radius: $border-radius;
+  color: #fff;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 0 4px;
+  margin-right: 2px;
+  line-height: 17px;
+  overflow: visible;
+}
+
+.Input--fluid {
+  display: block;
+  width: auto;
+}
+
+.Input__baseline {
+  display: inline-block;
+  color: transparent;
+}
+
+.Input__input {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 0;
+  outline: 0;
+  width: 100%;
+  font-size: 12px;
+  line-height: 17px;
+  height: 17px;
+  margin: 0;
+  padding: 0 6px;
+  font-family: Verdana, sans-serif;
+  background-color: transparent;
+  color: #fff;
+  color: inherit;
+
+  &:-ms-input-placeholder {
+    font-style: italic;
+    color: #777;
+    color: rgba(255, 255, 255, 0.45);
+  }
+}

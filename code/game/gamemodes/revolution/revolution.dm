@@ -13,7 +13,7 @@
 	report_type = "revolution"
 	antag_flag = ROLE_REV
 	false_report_weight = 10
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_jobs = list(list("Captain"=1),list("Head of Personnel"=1),list("Head of Security"=1),list("Chief Engineer"=1),list("Research Director"=1),list("Chief Medical Officer"=1)) //Any head present
 	required_players = 30
 	required_enemies = 2
@@ -55,6 +55,8 @@
 		setup_error = "Not enough headrev candidates"
 		return FALSE
 
+	for(var/antag in headrev_candidates)
+		GLOB.pre_setup_antags += antag
 	return TRUE
 
 /datum/game_mode/revolution/post_setup()
@@ -97,6 +99,7 @@
 		new_head.give_hud = TRUE
 		new_head.remove_clumsy = TRUE
 		rev_mind.add_antag_datum(new_head,revolution)
+		GLOB.pre_setup_antags -= rev_mind
 
 	revolution.update_objectives()
 	revolution.update_heads()

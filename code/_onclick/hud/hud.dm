@@ -57,7 +57,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	var/obj/screen/healths
 	var/obj/screen/healthdoll
 	var/obj/screen/internals
-
+	var/obj/screen/wanted/wanted_lvl
+	var/obj/screen/spacesuit
 	// subtypes can override this to force a specific UI style
 	var/ui_style
 
@@ -80,6 +81,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		plane_masters["[instance.plane]"] = instance
 		instance.backdrop(mymob)
 
+	owner.overlay_fullscreen("see_through_darkness", /obj/screen/fullscreen/see_through_darkness)
+
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
@@ -100,7 +103,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 	healths = null
 	healthdoll = null
+	wanted_lvl = null
 	internals = null
+	spacesuit = null
 	lingchemdisplay = null
 	devilsouldisplay = null
 	lingstingdisplay = null
@@ -113,9 +118,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	mymob = null
 
 	return ..()
-
-/mob
-	var/hud_type = /datum/hud
 
 /mob/proc/create_mob_hud()
 	if(!client || hud_used)
@@ -192,7 +194,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	hud_version = display_hud_version
 	persistent_inventory_update(screenmob)
 	screenmob.update_action_buttons(1)
-	reorganize_alerts()
+	reorganize_alerts(screenmob)
 	screenmob.reload_fullscreen()
 	update_parallax_pref(screenmob)
 

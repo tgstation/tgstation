@@ -16,6 +16,7 @@
 
 	var/port_x_offset
 	var/port_y_offset
+	var/extra_desc = ""
 
 /datum/map_template/shuttle/proc/prerequisites_met()
 	return TRUE
@@ -108,6 +109,7 @@
 /datum/map_template/shuttle/cargo
 	port_id = "cargo"
 	name = "Base Shuttle Template (Cargo)"
+	can_be_bought = FALSE
 
 /datum/map_template/shuttle/ferry
 	port_id = "ferry"
@@ -126,10 +128,6 @@
 
 /datum/map_template/shuttle/mining_common
 	port_id = "mining_common"
-	can_be_bought = FALSE
-
-/datum/map_template/shuttle/cargo
-	port_id = "cargo"
 	can_be_bought = FALSE
 
 /datum/map_template/shuttle/arrival
@@ -229,6 +227,7 @@
 	suffix = "luxury"
 	name = "Luxury Shuttle"
 	description = "A luxurious golden shuttle complete with an indoor swimming pool. Each crewmember wishing to board must bring 500 credits, payable in cash and mineral coin."
+	extra_desc = "This shuttle costs 500 credits to board."
 	admin_notes = "Due to the limited space for non paying crew, this shuttle may cause a riot."
 	credit_cost = 10000
 
@@ -382,6 +381,13 @@
 	description = "On the smaller size with a modern design, this shuttle is for the crew who like the cosier things, while still being able to stretch their legs."
 	credit_cost = 1000
 
+/datum/map_template/shuttle/emergency/cruise
+	suffix = "cruise"
+	name = "The NTSS Independence"
+	description = "Ordinarily reserved for special functions and events, the Cruise Shuttle Independence can bring a summery cheer to your next station evacuation for a 'modest' fee!"
+	admin_notes = "This motherfucker is BIG. You might need to force dock it."
+	credit_cost = 50000
+
 /datum/map_template/shuttle/ferry/base
 	suffix = "base"
 	name = "transport ferry"
@@ -430,6 +436,10 @@
 	suffix = "cere"
 	name = "NT Construction Vessel"
 
+/datum/map_template/shuttle/whiteship/kilo
+	suffix = "kilo"
+	name = "NT Mining Shuttle"
+
 /datum/map_template/shuttle/whiteship/donut
 	suffix = "donut"
 	name = "NT Long-Distance Bluespace Jumper"
@@ -441,10 +451,6 @@
 /datum/map_template/shuttle/whiteship/pod
 	suffix = "whiteship_pod"
 	name = "Salvage Pod"
-
-/datum/map_template/shuttle/cargo/box
-	suffix = "box"
-	name = "supply shuttle (Box)"
 
 /datum/map_template/shuttle/cargo/kilo
 	suffix = "kilo"
@@ -479,7 +485,7 @@
 	name = "Tr%nPo2r& Z3TA"
 	description = "A glitch appears on your monitor, flickering in and out of the options laid before you. \
 	It seems strange and alien, you may need a special technology to access the signal.."
-	admin_notes = "Has an on-board experimental cloner that creates copies of its user, alien surgery tools, and a void core that provides unlimited power."
+	admin_notes = "Has alien surgery tools, and a void core that provides unlimited power."
 	credit_cost = 8000
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
@@ -542,6 +548,10 @@
 /datum/map_template/shuttle/mining_common/meta
 	suffix = "meta"
 	name = "lavaland shuttle (Meta)"
+
+/datum/map_template/shuttle/mining_common/kilo
+	suffix = "kilo"
+	name = "lavaland shuttle (Kilo)"
 
 /datum/map_template/shuttle/arrival/delta
 	suffix = "delta"

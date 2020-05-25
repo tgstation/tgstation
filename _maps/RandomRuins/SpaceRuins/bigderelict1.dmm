@@ -146,7 +146,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "aC" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/unpowered/no_grav)
 "aD" = (
 /obj/machinery/door/poddoor{
@@ -428,6 +428,7 @@
 /obj/machinery/power/terminal{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/ruin/space/has_grav/derelictoutpost/powerstorage)
 "bs" = (
@@ -1397,7 +1398,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/derelictoutpost)
 "ds" = (
-/turf/closed/mineral,
+/turf/closed/mineral/random/no_caves,
 /area/ruin/space/has_grav/derelictoutpost)
 "dt" = (
 /obj/structure/alien/weeds{

@@ -1,5 +1,7 @@
 //tgstation-server DMAPI
 
+#define TGS_DMAPI_VERSION "5.0.0"
+
 //All functions and datums outside this document are subject to change with any version and should not be relied on
 
 //CONFIGURATION
@@ -17,7 +19,6 @@
 //Required interfaces (fill in with your codebase equivalent):
 
 //create a global variable named `Name` and set it to `Value`
-//These globals must not be modifiable from anywhere outside of the server tools
 #define TGS_DEFINE_AND_SET_GLOBAL(Name, Value)
 
 //Read the value in the global variable `Name`
@@ -26,10 +27,10 @@
 //Set the value in the global variable `Name` to `Value`
 #define TGS_WRITE_GLOBAL(Name, Value)
 
-//Disallow ANYONE from reflecting a given `path`, security measure to prevent in-game priveledge escalation
+//Disallow ANYONE from reflecting a given `path`, security measure to prevent in-game use of DD -> TGS capabilities
 #define TGS_PROTECT_DATUM(Path)
 
-//display an announcement `message` from the server to all players
+//Display an announcement `message` from the server to all players
 #define TGS_WORLD_ANNOUNCE(message)
 
 //Notify current in-game administrators of a string `event`
@@ -37,6 +38,9 @@
 
 //Write an info `message` to a server log
 #define TGS_INFO_LOG(message)
+
+//Write an warning `message` to a server log
+#define TGS_WARNING_LOG(message)
 
 //Write an error `message` to a server log
 #define TGS_ERROR_LOG(message)
@@ -48,10 +52,11 @@
 
 //EVENT CODES
 
-#define TGS_EVENT_PORT_SWAP -2	//before a port change is about to happen, extra parameter is new port
-#define TGS_EVENT_REBOOT_MODE_CHANGE -1	//before a reboot mode change, extras parameters are the current and new reboot mode enums
+#define TGS_EVENT_REBOOT_MODE_CHANGE -1	//Before a reboot mode change, extras parameters are the current and new reboot mode enums
+#define TGS_EVENT_PORT_SWAP -2	//Before a port change is about to happen, extra parameters is new port
+#define TGS_EVENT_INSTANCE_RENAMED -3	//Before the instance is renamed, extra prameter is the new name
 
-//See the descriptions for these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
+//See the descriptions for the parameters of these codes here: https://github.com/tgstation/tgstation-server/blob/master/src/Tgstation.Server.Host/Components/EventType.cs
 #define TGS_EVENT_REPO_RESET_ORIGIN 0
 #define TGS_EVENT_REPO_CHECKOUT 1
 #define TGS_EVENT_REPO_FETCH 2
@@ -63,9 +68,9 @@
 #define TGS_EVENT_COMPILE_START 8
 #define TGS_EVENT_COMPILE_CANCELLED 9
 #define TGS_EVENT_COMPILE_FAILURE 10
-#define TGS_EVENT_COMPILE_COMPLETE 11
+#define TGS_EVENT_COMPILE_COMPLETE 11 // Note, this event fires before the new .dmb is loaded into the watchdog. Consider using the TGS_EVENT_DEPLOYMENT_COMPLETE instead
 #define TGS_EVENT_INSTANCE_AUTO_UPDATE_START 12
-#define TGS_EVENT_REPO_MERGE_CONFLICT 13
+#define TGS_EVENT_DEPLOYMENT_COMPLETE 13
 
 //OTHER ENUMS
 
@@ -80,6 +85,7 @@
 //REQUIRED HOOKS
 
 //Call this somewhere in /world/New() that is always run
+//IMPORTANT: This function may sleep! Other TGS functions will not succeed until it completes
 //event_handler: optional user defined event handler. The default behaviour is to broadcast the event in english to all connected admin channels
 //minimum_required_security_level: The minimum required security level to run the game in which the DMAPI is integrated
 /world/proc/TgsNew(datum/tgs_event_handler/event_handler, minimum_required_security_level = TGS_SECURITY_ULTRASAFE)
@@ -109,18 +115,22 @@
 
 //represents a version of tgstation-server
 /datum/tgs_version
-	var/suite			//The suite version, can be >=3
+	var/suite			//The suite/major version, can be >=3
 
 	//this group of variables can be null to represent a wild card
-	var/major					//The major version
 	var/minor					//The minor version
 	var/patch					//The patch version
+	var/deprecated_patch		//The legacy version
 
 	var/raw_parameter			//The unparsed parameter
 	var/deprefixed_parameter	//The version only bit of raw_parameter
 
 //if the tgs_version is a wildcard version
 /datum/tgs_version/proc/Wildcard()
+	return
+
+//if the tgs_version equals some other_version
+/datum/tgs_version/proc/Equals(datum/tgs_version/other_version)
 	return
 
 //represents a merge of a GitHub pull request
@@ -179,7 +189,7 @@
 	return
 
 //Returns TRUE if the world was launched under the server tools and the API matches, FALSE otherwise
-//No function below this succeeds if it returns FALSE
+//No function below this succeeds if it returns FALSE or if TgsNew() has yet to be called
 /world/proc/TgsAvailable()
 	return
 
@@ -187,6 +197,11 @@
 /world/proc/TgsVersion()
 	return
 
+//Gets the current /datum/tgs_version of the DMAPI being used
+/world/proc/TgsApiVersion()
+	return
+
+//Gets the name of the TGS instance running the game
 /world/proc/TgsInstanceName()
 	return
 
@@ -211,7 +226,7 @@
 //Gets a list of connected tgs_chat_channel
 /world/proc/TgsChatChannelInfo()
 	return
-	
+
 //Sends a message to connected game chats
 //message: The message to send
 //channels: optional channels to limit the broadcast to
@@ -235,24 +250,24 @@ The MIT License
 
 Copyright (c) 2017 Jordan Brown
 
-Permission is hereby granted, free of charge, 
-to any person obtaining a copy of this software and 
-associated documentation files (the "Software"), to 
-deal in the Software without restriction, including 
-without limitation the rights to use, copy, modify, 
-merge, publish, distribute, sublicense, and/or sell 
-copies of the Software, and to permit persons to whom 
-the Software is furnished to do so, 
+Permission is hereby granted, free of charge,
+to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to
+deal in the Software without restriction, including
+without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom
+the Software is furnished to do so,
 subject to the following conditions:
 
-The above copyright notice and this permission notice 
+The above copyright notice and this permission notice
 shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
-OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
-IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR 
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
-TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
+ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */

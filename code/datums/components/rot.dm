@@ -51,7 +51,7 @@
 		return
 
 	// Also no decay if corpse chilled or not organic/undead
-	if(C.bodytemperature <= T0C-10 || (!(MOB_ORGANIC in C.mob_biotypes) && !(MOB_UNDEAD in C.mob_biotypes)))
+	if(C.bodytemperature <= T0C-10 || !(C.mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD)))
 		return
 
 	..()

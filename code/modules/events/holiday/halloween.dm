@@ -8,7 +8,8 @@
 
 /datum/round_event/spooky/start()
 	..()
-	for(var/mob/living/carbon/human/H in GLOB.carbon_list)
+	for(var/i in GLOB.human_list)
+		var/mob/living/carbon/human/H = i
 		var/obj/item/storage/backpack/b = locate() in H.contents
 		if(b)
 			new /obj/item/storage/spooky(b)
@@ -54,8 +55,3 @@
 		/obj/item/reagent_containers/food/snacks/chocolatebar,
 		/obj/item/organ/brain ) // OH GOD THIS ISN'T CANDY!
 		new type(src)
-
-/obj/item/card/emag/halloween
-	name = "hack-o'-lantern"
-	desc = "It's a pumpkin with a cryptographic sequencer sticking out."
-	icon_state = "hack_o_lantern"

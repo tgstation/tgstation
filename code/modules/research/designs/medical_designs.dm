@@ -2,6 +2,15 @@
 ////////////Medical Tools////////////////
 /////////////////////////////////////////
 
+/datum/design/healthanalyzer
+	name = "Health Analyzer"
+	id = "healthanalyzer"
+	build_type =  PROTOLATHE
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 50)
+	build_path = /obj/item/healthanalyzer
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 /datum/design/mmi
 	name = "Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
@@ -72,25 +81,15 @@
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
-/datum/design/cloning_disk
-	name = "Cloning Data Disk"
+/datum/design/dna_disk
+	name = "Genetic Data Disk"
 	desc = "Produce additional disks for storing genetic data."
-	id = "cloning_disk"
+	id = "dna_disk"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 300, /datum/material/glass = 100, /datum/material/silver = 50)
 	build_path = /obj/item/disk/data
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
-
-/datum/design/noreactsyringe
-	name = "Cryo Syringe"
-	desc = "An advanced syringe that stops reagents inside from reacting. It can hold up to 20 units."
-	id = "noreactsyringe"
-	build_type = PROTOLATHE
-	materials = list(/datum/material/glass = 2000, /datum/material/gold = 1000)
-	build_path = /obj/item/reagent_containers/syringe/noreact
-	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /datum/design/piercesyringe
 	name = "Piercing Syringe"
@@ -120,15 +119,25 @@
 	materials = list(/datum/material/iron = 4000, /datum/material/plasma = 1000)
 	build_path = /obj/item/extinguisher_refill
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL
+
 
 /datum/design/crewpinpointer
 	name = "Crew Pinpointer"
 	desc = "Allows tracking of someone's location if their suit sensors are turned to tracking beacon."
 	id = "crewpinpointer"
 	build_type = PROTOLATHE
-	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500, /datum/material/gold = 200)
+	materials = list(/datum/material/iron = 3000, /datum/material/glass = 1500, /datum/material/gold = 500)
 	build_path = /obj/item/pinpointer/crew
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/crewpinpointerprox
+	name = "Proximity Crew Pinpointer"
+	desc = "Displays your approximate proximity to someone if their suit sensors are turned to tracking beacon."
+	id = "crewpinpointerprox"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 1200, /datum/material/glass = 300, /datum/material/gold = 200)
+	build_path = /obj/item/pinpointer/crew/prox
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
@@ -144,13 +153,24 @@
 
 /datum/design/defibrillator_mount
 	name = "Defibrillator Wall Mount"
-	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables."
-	id = "defibmount"
+	desc = "A mounted frame for holding defibrillators, providing easy security."
+	id = "defibmountdefault"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000)
 	build_path = /obj/item/wallframe/defib_mount
 	category = list("Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/defibrillator_mount_charging
+	name = "PENLITE Defibrillator Wall Mount"
+	desc = "An all-in-one mounted frame for holding defibrillators, complete with ID-locked clamps and recharging cables. The PENLITE version also allows for slow recharging of the defib's battery."
+	id = "defibmount"
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = 2000, /datum/material/glass = 1000, /datum/material/silver = 500)
+	build_path = /obj/item/wallframe/defib_mount/charging
+	category = list("Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
 
 /datum/design/defibrillator_compact
 	name = "Compact Defibrillator"
@@ -170,7 +190,7 @@
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 500)
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL | DEPARTMENTAL_FLAG_SCIENCE
 
 /datum/design/healthanalyzer_advanced
 	name = "Advanced Health Analyzer"
@@ -223,9 +243,9 @@
 
 /datum/design/searingtool
 	name = "Searing Tool"
-	desc = "Used to mend tissue togheter."
+	desc = "Used to mend tissue together. Or drill tissue away."
 	id = "searingtool"
-	build_path = /obj/item/cautery/advanced
+	build_path = /obj/item/surgicaldrill/advanced
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = 4000, /datum/material/glass = 2000, /datum/material/plasma = 2000, /datum/material/uranium = 3000, /datum/material/titanium = 3000)
 	category = list("Tool Designs")
@@ -473,7 +493,7 @@
 	materials = list(/datum/material/glass = 500, /datum/material/bananium = 500)
 	build_path = /obj/item/implantcase/sad_trombone
 	category = list("Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_ALL		//if you get bananium you get the sad trombones.
+
 
 /datum/design/implant_chem
 	name = "Chemical Implant Case"
@@ -498,8 +518,8 @@
 //Cybernetic organs
 
 /datum/design/cybernetic_liver
-	name = "Cybernetic Liver"
-	desc = "A cybernetic liver"
+	name = "Basic Cybernetic Liver"
+	desc = "A basic cybernetic liver."
 	id = "cybernetic_liver"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
@@ -508,20 +528,24 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cybernetic_liver_u
-	name = "Upgraded Cybernetic Liver"
-	desc = "An upgraded cybernetic liver"
-	id = "cybernetic_liver_u"
-	build_type = PROTOLATHE | MECHFAB
-	construction_time = 50
+/datum/design/cybernetic_liver/tier2
+	name = "Cybernetic Liver"
+	desc = "A cybernetic liver."
+	id = "cybernetic_liver_tier2"
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
-	build_path = /obj/item/organ/liver/cybernetic/upgraded
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	build_path = /obj/item/organ/liver/cybernetic/tier2
+
+/datum/design/cybernetic_liver/tier3
+	name = "Upgraded Cybernetic Liver"
+	desc = "An upgraded cybernetic liver."
+	id = "cybernetic_liver_tier3"
+	construction_time = 50
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver=500)
+	build_path = /obj/item/organ/liver/cybernetic/tier3
 
 /datum/design/cybernetic_heart
-	name = "Cybernetic Heart"
-	desc = "A cybernetic heart"
+	name = "Basic Cybernetic Heart"
+	desc = "A basic cybernetic heart."
 	id = "cybernetic_heart"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
@@ -530,20 +554,24 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cybernetic_heart_u
+/datum/design/cybernetic_heart/tier2
+	name = "Cybernetic Heart"
+	desc = "A cybernetic heart."
+	id = "cybernetic_heart_tier2"
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/heart/cybernetic/tier2
+
+/datum/design/cybernetic_heart/tier3
 	name = "Upgraded Cybernetic Heart"
-	desc = "An upgraded cybernetic heart"
-	id = "cybernetic_heart_u"
-	build_type = PROTOLATHE | MECHFAB
+	desc = "An upgraded cybernetic heart."
+	id = "cybernetic_heart_tier3"
 	construction_time = 50
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver=500)
-	build_path = /obj/item/organ/heart/cybernetic/upgraded
-	category = list("Misc", "Medical Designs")
-	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+	build_path = /obj/item/organ/heart/cybernetic/tier3
 
 /datum/design/cybernetic_lungs
-	name = "Cybernetic Lungs"
-	desc = "A pair of cybernetic lungs."
+	name = "Basic Cybernetic Lungs"
+	desc = "A basic pair of cybernetic lungs."
 	id = "cybernetic_lungs"
 	build_type = PROTOLATHE | MECHFAB
 	construction_time = 40
@@ -552,20 +580,47 @@
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
-/datum/design/cybernetic_lungs_u
+/datum/design/cybernetic_lungs/tier2
+	name = "Cybernetic Lungs"
+	desc = "A pair of cybernetic lungs."
+	id = "cybernetic_lungs_tier2"
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500)
+	build_path = /obj/item/organ/lungs/cybernetic/tier2
+
+/datum/design/cybernetic_lungs/tier3
 	name = "Upgraded Cybernetic Lungs"
 	desc = "A pair of upgraded cybernetic lungs."
-	id = "cybernetic_lungs_u"
-	build_type = PROTOLATHE | MECHFAB
+	id = "cybernetic_lungs_tier3"
 	construction_time = 50
 	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
-	build_path = /obj/item/organ/lungs/cybernetic/upgraded
+	build_path = /obj/item/organ/lungs/cybernetic/tier3
+
+/datum/design/cybernetic_ears
+	name = "Cybernetic Ears"
+	desc = "A pair of cybernetic ears."
+	id = "cybernetic_ears"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 30
+	materials = list(/datum/material/iron = 250, /datum/material/glass = 400)
+	build_path = /obj/item/organ/ears/cybernetic
+	category = list("Misc", "Medical Designs")
+	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
+
+/datum/design/cybernetic_ears_u
+	name = "Upgraded Cybernetic Ears"
+	desc = "A pair of upgraded cybernetic ears."
+	id = "cybernetic_ears_u"
+	build_type = PROTOLATHE | MECHFAB
+	construction_time = 40
+	materials = list(/datum/material/iron = 500, /datum/material/glass = 500, /datum/material/silver = 500)
+	build_path = /obj/item/organ/ears/cybernetic/upgraded
 	category = list("Misc", "Medical Designs")
 	departmental_flags = DEPARTMENTAL_FLAG_MEDICAL
 
 /////////////////////
 ///Surgery Designs///
 /////////////////////
+
 /datum/design/surgery
 	name = "Surgery Design"
 	desc = "what"
@@ -612,7 +667,7 @@
 	surgery = /datum/surgery/advanced/viral_bonding
 	research_icon_state = "surgery_chest"
 
-/datum/design/surgery/healing
+/datum/design/surgery/healing //PLEASE ACCOUNT FOR UNIQUE HEALING BRANCHES IN THE hptech HREF (currently 2 for Brute/Burn; Combo is bonus)
 	name = "Tend Wounds"
 	desc = "An upgraded version of the original surgery."
 	id = "surgery_healing_base" //holder because travis cries otherwise. Not used in techweb unlocks.
@@ -635,7 +690,7 @@
 
 /datum/design/surgery/healing/burn_upgrade_2
 	name = "Tend Wounds (Burn) Upgrade"
-	surgery = /datum/surgery/healing/brute/upgraded/femto
+	surgery = /datum/surgery/healing/burn/upgraded/femto
 	id = "surgery_heal_burn_upgrade_femto"
 
 /datum/design/surgery/healing/combo
@@ -654,13 +709,6 @@
 	desc = "A surgical procedure that repairs both bruises and burns faster than their individual counterparts. It is more effective than both the individual surgeries."
 	surgery = /datum/surgery/healing/combo/upgraded/femto
 	id = "surgery_heal_combo_upgrade_femto"
-
-/datum/design/surgery/revival
-	name = "Revival"
-	desc = "An experimental surgical procedure which involves reconstruction and reactivation of the patient's brain even long after death. The body must still be able to sustain life."
-	id = "surgery_revival"
-	surgery = /datum/surgery/advanced/revival
-	research_icon_state = "surgery_head"
 
 /datum/design/surgery/brainwashing
 	name = "Brainwashing"
@@ -712,6 +760,20 @@
 	id = "surgery_ligament_reinforcement"
 	surgery = /datum/surgery/advanced/bioware/ligament_reinforcement
 	research_icon_state = "surgery_chest"
+
+/datum/design/surgery/cortex_imprint
+	name = "Cortex Imprint"
+	desc = "A surgical procedure which modifies the cerebral cortex into a redundant neural pattern, making the brain able to bypass damage caused by minor brain traumas."
+	id = "surgery_cortex_imprint"
+	surgery = /datum/surgery/advanced/bioware/cortex_imprint
+	research_icon_state = "surgery_head"
+
+/datum/design/surgery/cortex_folding
+	name = "Cortex Folding"
+	desc = "A surgical procedure which modifies the cerebral cortex into a complex fold, giving space to non-standard neural patterns."
+	id = "surgery_cortex_folding"
+	surgery = /datum/surgery/advanced/bioware/cortex_folding
+	research_icon_state = "surgery_head"
 
 /datum/design/surgery/necrotic_revival
 	name = "Necrotic Revival"

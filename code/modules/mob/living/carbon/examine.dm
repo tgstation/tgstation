@@ -13,9 +13,9 @@
 		. += "<span class='warning'>[t_He] [t_is] [icon2html(handcuffed, user)] handcuffed!</span>"
 	if (head)
 		. += "[t_He] [t_is] wearing [head.get_examine_string(user)] on [t_his] head. "
-	if(wear_mask && !(SLOT_WEAR_MASK in obscured))
+	if(wear_mask && !(ITEM_SLOT_MASK in obscured))
 		. += "[t_He] [t_is] wearing [wear_mask.get_examine_string(user)] on [t_his] face."
-	if(wear_neck && !(SLOT_NECK in obscured))
+	if(wear_neck && !(ITEM_SLOT_NECK in obscured))
 		. += "[t_He] [t_is] wearing [wear_neck.get_examine_string(user)] around [t_his] neck."
 
 	for(var/obj/item/I in held_items)
@@ -32,14 +32,36 @@
 		else if(get_bodypart(BODY_ZONE_HEAD))
 			. += "<span class='deadsay'>It appears that [t_his] brain is missing...</span>"
 
-	var/list/missing = get_missing_limbs()
+	var/list/msg = list("<span class='warning'>")
+	var/list/missing = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
+	var/list/disabled = list()
+	for(var/X in bodyparts)
+		var/obj/item/bodypart/BP = X
+		if(BP.disabled)
+			disabled += BP
+		missing -= BP.body_zone
+		for(var/obj/item/I in BP.embedded_objects)
+			if(I.isEmbedHarmless())
+				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] stuck to [t_his] [BP.name]!</B>\n"
+			else
+				msg += "<B>[t_He] [t_has] \a [icon2html(I, user)] [I] embedded in [t_his] [BP.name]!</B>\n"
+
+	for(var/X in disabled)
+		var/obj/item/bodypart/BP = X
+		var/damage_text
+		if(!(BP.get_damage(include_stamina = FALSE) >= BP.max_damage)) //Stamina is disabling the limb
+			damage_text = "limp and lifeless"
+		else
+			damage_text = (BP.brute_dam >= BP.burn_dam) ? BP.heavy_brute_msg : BP.heavy_burn_msg
+		msg += "<B>[capitalize(t_his)] [BP.name] is [damage_text]!</B>\n"
+
 	for(var/t in missing)
 		if(t==BODY_ZONE_HEAD)
-			. += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
+			msg += "<span class='deadsay'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 			continue
-		. += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>"
+		msg += "<span class='warning'><B>[t_His] [parse_zone(t)] is missing!</B></span>\n"
 
-	var/list/msg = list("<span class='warning'>")
+
 	var/temp = getBruteLoss()
 	if(!(user == src && src.hal_screwyhud == SCREWYHUD_HEALTHY)) //fake healthy
 		if(temp)
@@ -89,9 +111,6 @@
 		else if(InCritical())
 			. += "[t_His] breathing is shallow and labored."
 
-		if(digitalcamo)
-			. += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly unsimian manner."
-
 	var/trait_exam = common_trait_examine()
 	if (!isnull(trait_exam))
 		. += trait_exam
@@ -112,3 +131,5 @@
 			if(MOOD_LEVEL_HAPPY4 to INFINITY)
 				. += "[t_He] look[p_s()] ecstatic."
 	. += "*---------*</span>"
+
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)

@@ -63,6 +63,9 @@
 	owner = null
 	qdel(src)
 
+/datum/status_effect/proc/before_remove() //! Called before being removed; returning FALSE will cancel removal
+	return TRUE
+
 /datum/status_effect/proc/refresh()
 	var/original_duration = initial(duration)
 	if(original_duration == -1)
@@ -107,12 +110,13 @@
 	S1 = new effect(arguments)
 	. = S1
 
-/mob/living/proc/remove_status_effect(effect) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
+/mob/living/proc/remove_status_effect(effect, ...) //removes all of a given status effect from this mob, returning TRUE if at least one was removed
 	. = FALSE
+	var/list/arguments = args.Copy(2)
 	if(status_effects)
 		var/datum/status_effect/S1 = effect
 		for(var/datum/status_effect/S in status_effects)
-			if(initial(S1.id) == S.id)
+			if(initial(S1.id) == S.id && S.before_remove(arguments))
 				qdel(S)
 				. = TRUE
 
@@ -143,7 +147,7 @@
 	var/stacks = 0 //how many stacks are accumulated, also is # of stacks that target will have when first applied
 	var/delay_before_decay //deciseconds until ticks start occuring, which removes stacks (first stack will be removed at this time plus tick_interval)
 	tick_interval = 10 //deciseconds between decays once decay starts
-	var/stack_decay = 1 //how many stacks are lost per tick (decay trigger) 
+	var/stack_decay = 1 //how many stacks are lost per tick (decay trigger)
 	var/stack_threshold //special effects trigger when stacks reach this amount
 	var/max_stacks //stacks cannot exceed this amount
 	var/consumed_on_threshold = TRUE //if status should be removed once threshold is crossed
@@ -151,7 +155,7 @@
 	var/overlay_file
 	var/underlay_file
 	var/overlay_state // states in .dmi must be given a name followed by a number which corresponds to a number of stacks. put the state name without the number in these state vars
-	var/underlay_state // the number is concatonated onto the string based on the number of stacks to get the correct state name 
+	var/underlay_state // the number is concatonated onto the string based on the number of stacks to get the correct state name
 	var/mutable_appearance/status_overlay
 	var/mutable_appearance/status_underlay
 
@@ -194,6 +198,8 @@
 		if(stacks >= stack_threshold && !threshold_crossed) //threshold_crossed check prevents threshold effect from occuring if changing from above threshold to still above threshold
 			threshold_crossed = TRUE
 			on_threshold_cross()
+			if(consumed_on_threshold)
+				return
 		else if(stacks < stack_threshold && threshold_crossed)
 			threshold_crossed = FALSE //resets threshold effect if we fall below threshold so threshold effect can trigger again
 			on_threshold_drop()
@@ -205,13 +211,14 @@
 		owner.add_overlay(status_overlay)
 		owner.underlays += status_underlay
 	else
-		fadeout_effect() 
+		fadeout_effect()
 		qdel(src) //deletes status if stacks fall under one
 
 /datum/status_effect/stacking/on_creation(mob/living/new_owner, stacks_to_apply)
-	..()
-	src.add_stacks(stacks_to_apply)
-	
+	. = ..()
+	if(.)
+		add_stacks(stacks_to_apply)
+
 /datum/status_effect/stacking/on_apply()
 	if(!can_have_status())
 		return FALSE
@@ -235,3 +242,22 @@
 		owner.underlays -= status_underlay
 	QDEL_NULL(status_overlay)
 	return ..()
+
+/// Status effect from multiple sources, when all sources are removed, so is the effect
+/datum/status_effect/grouped
+	status_type = STATUS_EFFECT_MULTIPLE //! Adds itself to sources and destroys itself if one exists already, there are never multiple
+	var/list/sources = list()
+
+/datum/status_effect/grouped/on_creation(mob/living/new_owner, source)
+	var/datum/status_effect/grouped/existing = new_owner.has_status_effect(type)
+	if(existing)
+		existing.sources |= source
+		qdel(src)
+		return FALSE
+	else
+		sources |= source
+		return ..()
+
+/datum/status_effect/grouped/before_remove(source)
+	sources -= source
+	return !length(sources)

@@ -39,7 +39,7 @@
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("tank")
-			new /obj/item/tank/internals/air(src)
+			new /obj/item/tank/internals/oxygen(src)
 			new /obj/item/clothing/mask/breath(src)
 
 		if ("both")
@@ -153,7 +153,7 @@
 
 /obj/structure/closet/bombcloset/security/PopulateContents()
 	new /obj/item/clothing/suit/bomb_suit/security(src)
-	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/under/rank/security/officer(src)
 	new /obj/item/clothing/shoes/jackboots(src)
 	new /obj/item/clothing/head/bomb_hood/security(src)
 

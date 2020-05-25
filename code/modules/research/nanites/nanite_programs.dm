@@ -11,7 +11,7 @@
 	var/trigger_cost = 0		//Amount of nanites required to trigger
 	var/trigger_cooldown = 50	//Deciseconds required between each trigger activation
 	var/next_trigger = 0		//World time required for the next trigger activation
-	var/timer_counter = 0		//Counts up while active. Used for the timer and the activation delay.
+
 	var/program_flags = NONE
 	var/passive_enabled = FALSE //If the nanites have an on/off-style effect, it's tracked by this var
 
@@ -28,9 +28,17 @@
 
 	//The following vars are customizable
 	var/activated = TRUE 			//If FALSE, the program won't process, disables passive effects, can't trigger and doesn't consume nanites
-	var/activation_delay = 0 		//Seconds before the program self-activates.
-	var/timer = 0 					//Seconds before the timer effect activates. Starts counting AFTER the activation delay
-	var/timer_type = NANITE_TIMER_DEACTIVATE //What happens when the timer runs out
+
+	var/timer_restart = 0 			//When deactivated, the program will wait X deciseconds before self-reactivating. Also works if the program begins deactivated.
+	var/timer_shutdown = 0 			//When activated, the program will wait X deciseconds before self-deactivating. Also works if the program begins activated.
+	var/timer_trigger = 0			//[Trigger only] While active, the program will attempt to trigger once every x deciseconds.
+	var/timer_trigger_delay = 0				//[Trigger only] While active, the program will delay trigger signals by X deciseconds.
+
+	//Indicates the next world.time tick where these timers will act
+	var/timer_restart_next = 0
+	var/timer_shutdown_next = 0
+	var/timer_trigger_next = 0
+	var/timer_trigger_delay_next = 0
 
 	//Signal codes, these handle remote input to the nanites. If set to 0 they'll ignore signals.
 	var/activation_code 	= 0 	//Code that activates the program [1-9999]
@@ -39,19 +47,19 @@
 	var/trigger_code 		= 0 	//Code that triggers the program (if available) [1-9999]
 
 	//Extra settings
-	//Must be listed in text form, with the same title they'll be displayed in the programmer UI
-	//Changing these values is handled by set_extra_setting()
-	//Viewing these values is handled by get_extra_setting()
-	//Copying these values is handled by copy_extra_settings_to()
-	var/list/extra_settings = list()
+	///Don't ever override this or I will come to your house and stand menacingly behind a bush
+	VAR_FINAL/list/extra_settings = list()
 
-/datum/nanite_program/triggered
-	use_rate = 0
-	trigger_cost = 5
-	trigger_cooldown = 50
-	can_trigger = TRUE
+	//Rules
+	//Rules that automatically manage if the program's active without requiring separate sensor programs
+	var/list/datum/nanite_rule/rules = list()
+
+/datum/nanite_program/New()
+	. = ..()
+	register_extra_settings()
 
 /datum/nanite_program/Destroy()
+	extra_settings = null
 	if(host_mob)
 		if(activated)
 			deactivate()
@@ -64,40 +72,60 @@
 
 /datum/nanite_program/proc/copy()
 	var/datum/nanite_program/new_program = new type()
-
-	new_program.activated = activated
-	new_program.activation_delay = activation_delay
-	new_program.timer = timer
-	new_program.timer_type = timer_type
-	new_program.activation_code = activation_code
-	new_program.deactivation_code = deactivation_code
-	new_program.kill_code = kill_code
-	new_program.trigger_code = trigger_code
-	copy_extra_settings_to(new_program)
+	copy_programming(new_program, TRUE)
 
 	return new_program
 
 /datum/nanite_program/proc/copy_programming(datum/nanite_program/target, copy_activated = TRUE)
 	if(copy_activated)
 		target.activated = activated
-	target.activation_delay = activation_delay
-	target.timer = timer
-	target.timer_type = timer_type
+	target.timer_restart = timer_restart
+	target.timer_shutdown = timer_shutdown
+	target.timer_trigger = timer_trigger
+	target.timer_trigger_delay = timer_trigger_delay
 	target.activation_code = activation_code
 	target.deactivation_code = deactivation_code
 	target.kill_code = kill_code
 	target.trigger_code = trigger_code
+
+	target.rules = list()
+	for(var/R in rules)
+		var/datum/nanite_rule/rule = R
+		rule.copy_to(target)
+
 	if(istype(target,src))
 		copy_extra_settings_to(target)
 
-/datum/nanite_program/proc/set_extra_setting(user, setting)
+///Register extra settings by overriding this.
+///extra_settings[name] = new typepath() for each extra setting
+/datum/nanite_program/proc/register_extra_settings()
 	return
 
-/datum/nanite_program/proc/get_extra_setting(setting)
-	return
+///You can override this if you need to have special behavior after setting certain settings.
+/datum/nanite_program/proc/set_extra_setting(setting, value)
+	var/datum/nanite_extra_setting/ES = extra_settings[setting]
+	return ES.set_value(value)
 
+///You probably shouldn't be overriding this one, but I'm not a cop.
+/datum/nanite_program/proc/get_extra_setting_value(setting)
+	var/datum/nanite_extra_setting/ES = extra_settings[setting]
+	return ES.get_value()
+
+///Used for getting information about the extra settings to the frontend
+/datum/nanite_program/proc/get_extra_settings_frontend()
+	var/list/out = list()
+	for(var/name in extra_settings)
+		var/datum/nanite_extra_setting/ES = extra_settings[name]
+		out += ES.get_frontend_list(name)
+	return out
+
+///Copy of the list instead of direct reference for obvious reasons
 /datum/nanite_program/proc/copy_extra_settings_to(datum/nanite_program/target)
-	return
+	var/list/copy_list = list()
+	for(var/ns_name in extra_settings)
+		var/datum/nanite_extra_setting/extra_setting = extra_settings[ns_name]
+		copy_list[ns_name] = extra_setting.get_copy()
+	target.extra_settings = copy_list
 
 /datum/nanite_program/proc/on_add(datum/component/nanites/_nanites)
 	nanites = _nanites
@@ -106,8 +134,10 @@
 
 /datum/nanite_program/proc/on_mob_add()
 	host_mob = nanites.host_mob
-	if(activated) //apply activation effects if it starts active
+	if(activated) //apply activation effects depending on initial status; starts the restart and shutdown timers
 		activate()
+	else
+		deactivate()
 
 /datum/nanite_program/proc/on_mob_remove()
 	return
@@ -120,36 +150,38 @@
 
 /datum/nanite_program/proc/activate()
 	activated = TRUE
-	timer_counter = activation_delay
+	if(timer_shutdown)
+		timer_shutdown_next = world.time + timer_shutdown
 
 /datum/nanite_program/proc/deactivate()
 	if(passive_enabled)
 		disable_passive_effect()
 	activated = FALSE
+	if(timer_restart)
+		timer_restart_next = world.time + timer_restart
 
 /datum/nanite_program/proc/on_process()
-	timer_counter++
-
-	if(activation_delay)
-		if(activated && timer_counter < activation_delay)
-			deactivate()
-		else if(!activated && timer_counter >= activation_delay)
-			activate()
 	if(!activated)
+		if(timer_restart_next && world.time > timer_restart_next)
+			activate()
+			timer_restart_next = 0
 		return
 
-	if(timer && timer_counter > timer)
-		if(timer_type == NANITE_TIMER_DEACTIVATE)
-			deactivate()
-			return
-		else if(timer_type == NANITE_TIMER_SELFDELETE)
-			qdel(src)
-			return
-		else if(can_trigger && timer_type == NANITE_TIMER_TRIGGER)
-			trigger()
-			timer_counter = activation_delay
-		else if(timer_type == NANITE_TIMER_RESET)
-			timer_counter = 0
+	if(timer_shutdown_next && world.time > timer_shutdown_next)
+		deactivate()
+		timer_shutdown_next = 0
+		return
+
+	if(timer_trigger && world.time > timer_trigger_next)
+		trigger()
+		timer_trigger_next = world.time + timer_trigger
+		return
+
+	if(timer_trigger_delay_next && world.time > timer_trigger_delay_next)
+		trigger(delayed = TRUE)
+		timer_trigger_delay_next = 0
+		return
+
 	if(check_conditions() && consume_nanites(use_rate))
 		if(!passive_enabled)
 			enable_passive_effect()
@@ -161,6 +193,10 @@
 //If false, disables active and passive effects, but doesn't consume nanites
 //Can be used to avoid consuming nanites for nothing
 /datum/nanite_program/proc/check_conditions()
+	for(var/R in rules)
+		var/datum/nanite_rule/rule = R
+		if(!rule.check_rule())
+			return FALSE
 	return TRUE
 
 //Constantly procs as long as the program is active
@@ -175,15 +211,25 @@
 /datum/nanite_program/proc/disable_passive_effect()
 	passive_enabled = FALSE
 
-/datum/nanite_program/proc/trigger()
+//Checks conditions then fires the nanite trigger effect
+/datum/nanite_program/proc/trigger(delayed = FALSE, comm_message)
+	if(!can_trigger)
+		return
 	if(!activated)
-		return FALSE
+		return
+	if(timer_trigger_delay && !delayed)
+		timer_trigger_delay_next = world.time + timer_trigger_delay
+		return
 	if(world.time < next_trigger)
-		return FALSE
+		return
 	if(!consume_nanites(trigger_cost))
-		return FALSE
+		return
 	next_trigger = world.time + trigger_cooldown
-	return TRUE
+	on_trigger(comm_message)
+
+//Nanite trigger effect, requires can_trigger to be used
+/datum/nanite_program/proc/on_trigger(comm_message)
+	return
 
 /datum/nanite_program/proc/consume_nanites(amount, force = FALSE)
 	return nanites.consume_nanites(amount, force)
@@ -246,13 +292,23 @@
 		host_mob.investigate_log("'s [name] nanite program was deleted by [source] with code [code].", INVESTIGATE_NANITES)
 		qdel(src)
 
-/datum/nanite_program/proc/get_timer_type_text()
-	switch(timer_type)
-		if(NANITE_TIMER_DEACTIVATE)
-			return "Deactivate"
-		if(NANITE_TIMER_SELFDELETE)
-			return "Self-Delete"
-		if(NANITE_TIMER_TRIGGER)
-			return "Trigger"
-		if(NANITE_TIMER_RESET)
-			return "Reset Activation Timer"
+///A nanite program containing a behaviour protocol. Only one protocol of each class can be active at once.
+/datum/nanite_program/protocol
+	name = "Nanite Protocol"
+	var/protocol_class = NONE
+
+/datum/nanite_program/protocol/check_conditions()
+	. = ..()
+	for(var/protocol in nanites.protocols)
+		var/datum/nanite_program/protocol/P = protocol
+		if(P != src && P.activated && P.protocol_class == protocol_class)
+			return FALSE
+
+/datum/nanite_program/protocol/on_add(datum/component/nanites/_nanites)
+	..()
+	nanites.protocols += src
+
+/datum/nanite_program/protocol/Destroy()
+	if(nanites)
+		nanites.protocols -= src
+	return ..()

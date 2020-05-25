@@ -5,7 +5,7 @@
 #define CYCLE_INTERIOR	5
 
 /obj/machinery/doorButtons
-	power_channel = ENVIRON
+	power_channel = AREA_USAGE_ENVIRON
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 2
 	active_power_usage = 4
@@ -31,7 +31,7 @@
 	obj_flags |= EMAGGED
 	req_access = list()
 	req_one_access = list()
-	playsound(src, "sparks", 100, 1)
+	playsound(src, "sparks", 100, TRUE)
 	to_chat(user, "<span class='warning'>You short out the access controller.</span>")
 
 /obj/machinery/doorButtons/proc/removeMe()
@@ -64,7 +64,7 @@
 		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	if(controller && !controller.busy && door)
-		if(controller.stat & NOPOWER)
+		if(controller.machine_stat & NOPOWER)
 			return
 		busy = TRUE
 		update_icon()
@@ -82,18 +82,14 @@
 		busy = FALSE
 		update_icon()
 
-/obj/machinery/doorButtons/access_button/update_icon()
-	if(stat & NOPOWER)
+/obj/machinery/doorButtons/access_button/update_icon_state()
+	if(machine_stat & NOPOWER)
 		icon_state = "access_button_off"
 	else
 		if(busy)
 			icon_state = "access_button_cycle"
 		else
 			icon_state = "access_button_standby"
-
-/obj/machinery/doorButtons/access_button/power_change()
-	..()
-	update_icon()
 
 /obj/machinery/doorButtons/access_button/removeMe(obj/O)
 	if(O == door)
@@ -166,7 +162,7 @@
 	A.safe = FALSE //Door crushies, manual door after all. Set every time in case someone changed it, safe doors can end up waiting forever.
 	A.unbolt()
 	if(A.close())
-		if(stat & NOPOWER || lostPower || !A || QDELETED(A))
+		if(machine_stat & NOPOWER || lostPower || !A || QDELETED(A))
 			goIdle(TRUE)
 			return FALSE
 		A.bolt()
@@ -209,11 +205,13 @@
 		goIdle(TRUE)
 		return
 	A.unbolt()
-	spawn()
-		if(A && A.open())
-			if(stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
-				A.bolt()
-		goIdle(TRUE)
+	INVOKE_ASYNC(src, .proc/do_openDoor, A)
+
+/obj/machinery/doorButtons/airlock_controller/proc/do_openDoor(obj/machinery/door/airlock/A)
+	if(A && A.open())
+		if(machine_stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
+			A.bolt()
+	goIdle(TRUE)
 
 /obj/machinery/doorButtons/airlock_controller/proc/goIdle(update)
 	lostPower = FALSE
@@ -223,7 +221,7 @@
 	updateUsrDialog()
 
 /obj/machinery/doorButtons/airlock_controller/process()
-	if(stat & NOPOWER)
+	if(machine_stat & NOPOWER)
 		return
 	if(busy == CYCLE_EXTERIOR)
 		cycleOpen(exteriorAirlock)
@@ -231,13 +229,12 @@
 		cycleOpen(interiorAirlock)
 
 /obj/machinery/doorButtons/airlock_controller/power_change()
-	..()
-	if(stat & NOPOWER)
+	. = ..()
+	if(machine_stat & NOPOWER)
 		lostPower = TRUE
 	else
 		if(!busy)
 			lostPower = FALSE
-	update_icon()
 
 /obj/machinery/doorButtons/airlock_controller/findObjsByTag()
 	for(var/obj/machinery/door/airlock/A in GLOB.machines)
@@ -246,8 +243,8 @@
 		else if(A.id_tag == idExterior)
 			exteriorAirlock = A
 
-/obj/machinery/doorButtons/airlock_controller/update_icon()
-	if(stat & NOPOWER)
+/obj/machinery/doorButtons/airlock_controller/update_icon_state()
+	if(machine_stat & NOPOWER)
 		icon_state = "access_control_off"
 		return
 	if(busy || lostPower)

@@ -24,7 +24,6 @@ GLOBAL_PROTECT(protected_ranks)
 	if(!name)
 		qdel(src)
 		CRASH("Admin rank created without name.")
-		return
 	if(init_rights)
 		rights = init_rights
 	include_rights = rights
@@ -113,7 +112,7 @@ GLOBAL_PROTECT(protected_ranks)
 	set waitfor = FALSE
 
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>")
+		to_chat(usr, "<span class='admin prefix'>Admin rank DB Sync blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
 		return
 
 	var/list/sql_ranks = list()
@@ -128,7 +127,7 @@ GLOBAL_PROTECT(protected_ranks)
 //load our rank - > rights associations
 /proc/load_admin_ranks(dbfail, no_update)
 	if(IsAdminAdvancedProcCall())
-		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>")
+		to_chat(usr, "<span class='admin prefix'>Admin Reload blocked: Advanced ProcCall detected.</span>", confidential = TRUE)
 		return
 	GLOB.admin_ranks.Cut()
 	GLOB.protected_ranks.Cut()

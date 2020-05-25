@@ -15,14 +15,20 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 
 /obj/machinery/ore_silo/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/material_container,
-		list(/datum/material/iron, /datum/material/glass, /datum/material/silver, /datum/material/gold, /datum/material/diamond, /datum/material/plasma, /datum/material/uranium, /datum/material/bananium, /datum/material/titanium, /datum/material/bluespace, /datum/material/plastic),
-		INFINITY,
-		FALSE,
-		/obj/item/stack,
-		null,
-		null,
-		TRUE)
+	var/static/list/materials_list = list(
+		/datum/material/iron,
+		/datum/material/glass,
+		/datum/material/silver,
+		/datum/material/gold,
+		/datum/material/diamond,
+		/datum/material/plasma,
+		/datum/material/uranium,
+		/datum/material/bananium,
+		/datum/material/titanium,
+		/datum/material/bluespace,
+		/datum/material/plastic,
+		)
+	AddComponent(/datum/component/material_container, materials_list, INFINITY, allowed_types=/obj/item/stack, _disable_attackby=TRUE)
 	if (!GLOB.ore_silo_default && mapload && is_station_level(z))
 		GLOB.ore_silo_default = src
 
@@ -33,6 +39,8 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	for(var/C in connected)
 		var/datum/component/remote_materials/mats = C
 		mats.disconnect_from(src)
+
+	connected = null
 
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	materials.retrieve_all()
@@ -49,7 +57,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	if(!istype(I) || (I.flags_1 & HOLOGRAM_1) || (I.item_flags & NO_MAT_REDEMPTION))
 		to_chat(user, "<span class='warning'>[M] won't accept [I]!</span>")
 		return
-	var/item_mats = I.materials & materials.materials
+	var/item_mats = I.custom_materials & materials.materials
 	if(!length(item_mats))
 		to_chat(user, "<span class='warning'>[I] does not contain sufficient materials to be accepted by [M].</span>")
 		return
@@ -80,7 +88,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		var/sheets = round(amount) / MINERAL_MATERIAL_AMOUNT
 		var/ref = REF(M)
 		if (sheets)
-			if (sheets >= 1)	
+			if (sheets >= 1)
 				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</a>"
 			else
 				ui += "<span class='linkOff'>Eject</span>"
@@ -108,7 +116,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/logs = GLOB.silo_access_logs[REF(src)]
 	var/len = LAZYLEN(logs)
 	var/num_pages = 1 + round((len - 1) / 30)
-	var/page = CLAMP(log_page, 1, num_pages)
+	var/page = clamp(log_page, 1, num_pages)
 	if(num_pages > 1)
 		for(var/i in 1 to num_pages)
 			if(i == page)
@@ -163,6 +171,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		return TRUE
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
+	. = ..()
 	if (istype(I))
 		to_chat(user, "<span class='notice'>You log [src] in the multitool's buffer.</span>")
 		I.buffer = src
@@ -229,8 +238,9 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	var/list/msg = list("([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br>")
 	var/sep = ""
 	for(var/key in materials)
+		var/datum/material/M = key
 		var/val = round(materials[key]) / MINERAL_MATERIAL_AMOUNT
 		msg += sep
 		sep = ", "
-		msg += "[amount < 0 ? "-" : "+"][val] [copytext(key, 2)]"
+		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
 	formatted = msg.Join()

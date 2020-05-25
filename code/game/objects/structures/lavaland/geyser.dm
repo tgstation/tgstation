@@ -9,7 +9,7 @@
 
 	var/erupting_state = null //set to null to get it greyscaled from "[icon_state]_soup". Not very usable with the whole random thing, but more types can be added if you change the spawn prob
 	var/activated = FALSE //whether we are active and generating chems
-	var/reagent_id = /datum/reagent/oil
+	var/reagent_id = /datum/reagent/fuel/oil
 	var/potency = 2 //how much reagents we add every process (2 seconds)
 	var/max_volume = 500
 	var/start_volume = 50
@@ -27,24 +27,24 @@
 		add_overlay(I)
 
 /obj/structure/geyser/process()
-	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive and should be avoided in continous
-		reagents.add_reagent(reagent_id, potency)						   //processes
+	if(activated && reagents.total_volume <= reagents.maximum_volume) //this is also evaluated in add_reagent, but from my understanding proc calls are expensive
+		reagents.add_reagent(reagent_id, potency)
 
 /obj/structure/geyser/plunger_act(obj/item/plunger/P, mob/living/user, _reinforced)
 	if(!_reinforced)
 		to_chat(user, "<span class='warning'>The [P.name] isn't strong enough!</span>")
 		return
 	if(activated)
-		to_chat(user, "<span class'warning'>The [name] is already active!")
+		to_chat(user, "<span class'warning'>The [name] is already active!</span>")
 		return
 
-	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!")
-	if(do_after(user, 50*P.plunge_mod, target = src) && !activated)
+	to_chat(user, "<span class='notice'>You start vigorously plunging [src]!</span>")
+	if(do_after(user, 50 * P.plunge_mod, target = src) && !activated)
 		start_chemming()
 
 /obj/structure/geyser/random
 	erupting_state = null
-	var/list/options = list(/datum/reagent/oil = 2, /datum/reagent/clf3 = 1) //fucking add more
+	var/list/options = list(/datum/reagent/clf3 = 10, /datum/reagent/water/hollowwater = 10,/datum/reagent/plasma_oxide = 8, /datum/reagent/medicine/omnizine/protozine = 6, /datum/reagent/wittel = 1)
 
 /obj/structure/geyser/random/Initialize()
 	. = ..()
@@ -56,6 +56,8 @@
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "plunger"
 
+	slot_flags = ITEM_SLOT_MASK
+
 	var/plunge_mod = 1 //time*plunge_mod = total time we take to plunge an object
 	var/reinforced = FALSE //whether we do heavy duty stuff like geysers
 
@@ -63,10 +65,22 @@
 	if(!O.plunger_act(src, user, reinforced))
 		return ..()
 
+/obj/item/plunger/throw_impact(atom/hit_atom, datum/thrownthing/tt)
+	. = ..()
+	if(tt.target_zone != BODY_ZONE_HEAD)
+		return
+	if(iscarbon(hit_atom))
+		var/mob/living/carbon/H = hit_atom
+		if(!H.wear_mask)
+			H.equip_to_slot_if_possible(src, ITEM_SLOT_MASK)
+			H.visible_message("<span class='warning'>The plunger slams into [H]'s face!</span>", "<span class='warning'>The plunger suctions to your face!</span>")
+
 /obj/item/plunger/reinforced
 	name = "reinforced plunger"
-	desc = " It's an M. 7 Reinforced Plunger© for heavy duty plunging."
+	desc = "It's an M. 7 Reinforced PlungerÂ© for heavy duty plunging."
 	icon_state = "reinforced_plunger"
 
 	reinforced = TRUE
 	plunge_mod = 0.8
+
+	custom_premium_price = 1200

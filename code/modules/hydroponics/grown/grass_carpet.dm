@@ -11,11 +11,12 @@
 	maturation = 2
 	production = 5
 	yield = 5
+	instability = 10
 	growthstages = 2
 	icon_grow = "grass-grow"
 	icon_dead = "grass-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/grass/carpet)
+	mutatelist = list(/obj/item/seeds/grass/carpet, /obj/item/seeds/grass/fairy)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05)
 
 /obj/item/reagent_containers/food/snacks/grown/grass
@@ -40,12 +41,34 @@
 	new stacktype(user.drop_location(), grassAmt)
 	qdel(src)
 
+//Fairygrass
+/obj/item/seeds/grass/fairy
+	name = "pack of fairygrass seeds"
+	desc = "These seeds grow into a more mystical grass."
+	icon_state = "seed-fairygrass"
+	species = "fairygrass"
+	plantname = "Fairygrass"
+	product = /obj/item/reagent_containers/food/snacks/grown/grass/fairy
+	icon_grow = "fairygrass-grow"
+	icon_dead = "fairygrass-dead"
+	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/glow/blue)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/hydrogen = 0.05, /datum/reagent/drug/space_drugs = 0.15)
+	graft_gene = /datum/plant_gene/trait/glow/blue
+
+/obj/item/reagent_containers/food/snacks/grown/grass/fairy
+	seed = /obj/item/seeds/grass/fairy
+	name = "fairygrass"
+	desc = "Blue, glowing, and smells fainly of mushrooms."
+	icon_state = "fairygrassclump"
+	filling_color = "#3399ff"
+	stacktype = /obj/item/stack/tile/fairygrass
+
 // Carpet
 /obj/item/seeds/grass/carpet
 	name = "pack of carpet seeds"
 	desc = "These seeds grow into stylish carpet samples."
 	icon_state = "seed-carpet"
-	species = /datum/reagent/carpet
+	species = "carpet"
 	plantname = "Carpet"
 	product = /obj/item/reagent_containers/food/snacks/grown/grass/carpet
 	mutatelist = list()

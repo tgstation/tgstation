@@ -30,7 +30,7 @@
 		R.add_fingerprint(user)
 		qdel(src)
 		user.forceMove(R)
-		playsound(src, 'sound/items/zip.ogg', 15, 1, -3)
+		playsound(src, 'sound/items/zip.ogg', 15, TRUE, -3)
 		return (OXYLOSS)
 	..()
 

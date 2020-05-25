@@ -7,6 +7,7 @@
 
 	if(!gibbed)
 		emote("deathgasp")
+	reagents.end_metabolization(src)
 
 	. = ..()
 
@@ -17,12 +18,23 @@
 	if(SSticker.mode)
 		SSticker.mode.check_win() //Calls the rounds wincheck, mainly for wizard, malf, and changeling now
 
-/mob/living/carbon/gib(no_brain, no_organs, no_bodyparts)
+/mob/living/carbon/proc/inflate_gib() // Plays an animation that makes mobs appear to inflate before finally gibbing
+	addtimer(CALLBACK(src, .proc/gib, null, null, TRUE, TRUE), 25)
+	var/matrix/M = matrix()
+	M.Scale(1.8, 1.2)
+	animate(src, time = 40, transform = M, easing = SINE_EASING)
+
+/mob/living/carbon/gib(no_brain, no_organs, no_bodyparts, safe_gib = FALSE)
+	if(safe_gib) // If you want to keep all the mob's items and not have them deleted
+		for(var/obj/item/W in src)
+			dropItemToGround(W)
+			if(prob(50))
+				step(W, pick(GLOB.alldirs))
 	var/atom/Tsec = drop_location()
 	for(var/mob/M in src)
 		M.forceMove(Tsec)
 		visible_message("<span class='danger'>[M] bursts out of [src]!</span>")
-	..()
+	. = ..()
 
 /mob/living/carbon/spill_organs(no_brain, no_organs, no_bodyparts)
 	var/atom/Tsec = drop_location()

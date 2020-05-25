@@ -15,6 +15,7 @@
 	use_power = NO_POWER_USE
 	idle_power_usage = 0
 	active_power_usage = 0
+	var/machinery_layer = MACHINERY_LAYER_1 //cable layer to which the machine is connected
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()
@@ -47,13 +48,13 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return CLAMP(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
-/obj/machinery/power/proc/avail()
+/obj/machinery/power/proc/avail(amount)
 	if(powernet)
-		return powernet.avail
+		return amount ? powernet.avail >= amount : powernet.avail
 	else
 		return 0
 
@@ -63,7 +64,7 @@
 
 /obj/machinery/power/proc/delayed_surplus()
 	if(powernet)
-		return CLAMP(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
+		return clamp(powernet.newavail - powernet.delayedload, 0, powernet.newavail)
 	else
 		return 0
 
@@ -109,15 +110,28 @@
 /obj/machinery/proc/removeStaticPower(value, powerchannel)
 	addStaticPower(-value, powerchannel)
 
-/obj/machinery/proc/power_change()		// called whenever the power settings of the containing area change
-										// by default, check equipment channel & set flag
-										// can override if needed
+/**
+  * Called whenever the power settings of the containing area change
+  *
+  * by default, check equipment channel & set flag, can override if needed
+  *
+  * Returns TRUE if the NOPOWER flag was toggled
+  */
+/obj/machinery/proc/power_change()
+	SHOULD_CALL_PARENT(1)
+	if(machine_stat & BROKEN)
+		return
 	if(powered(power_channel))
-		stat &= ~NOPOWER
+		if(machine_stat & NOPOWER)
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_RESTORED)
+			. = TRUE
+		machine_stat &= ~NOPOWER
 	else
-
-		stat |= NOPOWER
-	return
+		if(!(machine_stat & NOPOWER))
+			SEND_SIGNAL(src, COMSIG_MACHINERY_POWER_LOST)
+			. = TRUE
+		machine_stat |= NOPOWER
+	update_icon()
 
 // connect the machine to a powernet if a node cable or a terminal is present on the turf
 /obj/machinery/power/proc/connect_to_network()
@@ -125,7 +139,7 @@
 	if(!T || !istype(T))
 		return FALSE
 
-	var/obj/structure/cable/C = T.get_cable_node() //check if we have a node cable on the machine turf, the first found is picked
+	var/obj/structure/cable/C = T.get_cable_node(machinery_layer) //check if we have a node cable on the machine turf, the first found is picked
 	if(!C || !C.powernet)
 		var/obj/machinery/power/terminal/term = locate(/obj/machinery/power/terminal) in T
 		if(!term || !term.powernet)
@@ -222,7 +236,7 @@
 		index++
 
 		var/list/connections = working_cable.get_cable_connections(skip_assigned_powernets)
-		
+
 		for(var/obj/structure/cable/cable_entry in connections)
 			if(!cables[cable_entry]) //Since it's an associated list, we can just do an access and check it's null before adding; prevents duplicate entries
 				cables[cable_entry] = TRUE
@@ -269,7 +283,7 @@
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)
 //No animations will be performed by this proc.
 /proc/electrocute_mob(mob/living/carbon/M, power_source, obj/source, siemens_coeff = 1, dist_check = FALSE)
-	if(!M || ismecha(M.loc))
+	if(!istype(M) || ismecha(M.loc))
 		return 0	//feckin mechs are dumb
 	if(dist_check)
 		if(!in_range(source,M))
@@ -279,6 +293,7 @@
 		if(H.gloves)
 			var/obj/item/clothing/gloves/G = H.gloves
 			if(G.siemens_coefficient == 0)
+				SEND_SIGNAL(M, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 				return 0		//to avoid spamming with insulated glvoes on
 
 	var/area/source_area
@@ -339,13 +354,14 @@
 // Misc.
 ///////////////////////////////////////////////
 
-// return a cable if there's one on the turf, null if there isn't one
-/turf/proc/get_cable_node()
+// return a cable able connect to machinery on layer if there's one on the turf, null if there isn't one
+/turf/proc/get_cable_node(machinery_layer = MACHINERY_LAYER_1)
 	if(!can_have_cabling())
 		return null
 	for(var/obj/structure/cable/C in src)
-		C.update_icon()
-		return C
+		if(C.machinery_layer & machinery_layer)
+			C.update_icon()
+			return C
 	return null
 
 /area/proc/get_apc()

@@ -3,6 +3,8 @@
 	roundend_category = "syndicate operatives" //just in case
 	antagpanel_category = "NukeOp"
 	job_rank = ROLE_OPERATIVE
+	antag_hud_type = ANTAG_HUD_OPS
+	antag_hud_name = "synd"
 	antag_moodlet = /datum/mood_event/focused
 	var/datum/team/nuclear/nuke_team
 	var/always_new_team = FALSE //If not assigned a team by default ops will try to join existing ones, set this to TRUE to always create new team.
@@ -10,24 +12,15 @@
 	var/nukeop_outfit = /datum/outfit/syndicate
 	can_hijack = HIJACK_HIJACKER //Alternative way to wipe out the station.
 
-/datum/antagonist/nukeop/proc/update_synd_icons_added(mob/living/M)
-	var/datum/atom_hud/antag/opshud = GLOB.huds[ANTAG_HUD_OPS]
-	opshud.join_hud(M)
-	set_antag_hud(M, "synd")
-
-/datum/antagonist/nukeop/proc/update_synd_icons_removed(mob/living/M)
-	var/datum/atom_hud/antag/opshud = GLOB.huds[ANTAG_HUD_OPS]
-	opshud.leave_hud(M)
-	set_antag_hud(M, null)
 
 /datum/antagonist/nukeop/apply_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_synd_icons_added(M)
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
 	ADD_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/M = mob_override || owner.current
-	update_synd_icons_removed(M)
+	remove_antag_hud(antag_hud_type, M)
 	REMOVE_TRAIT(owner, TRAIT_DISK_VERIFIER, NUKEOP_TRAIT)
 
 /datum/antagonist/nukeop/proc/equip_op()
@@ -161,6 +154,7 @@
 	nukeop_outfit = /datum/outfit/syndicate/leader
 	always_new_team = TRUE
 	var/title
+	var/challengeitem = /obj/item/nuclear_challenge
 
 /datum/antagonist/nukeop/leader/memorize_code()
 	..()
@@ -186,7 +180,14 @@
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ops.ogg',100,0)
 	to_chat(owner, "<B>You are the Syndicate [title] for this mission. You are responsible for the distribution of telecrystals and your ID is the only one who can open the launch bay doors.</B>")
 	to_chat(owner, "<B>If you feel you are not up to this task, give your ID to another operative.</B>")
-	to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+	if(!CONFIG_GET(flag/disable_warops))
+		to_chat(owner, "<B>In your hand you will find a special item capable of triggering a greater challenge for your team. Examine it carefully and consult with your fellow operatives before activating it.</B>")
+		var/obj/item/dukinuki = new challengeitem
+		var/mob/living/carbon/human/H = owner.current
+		if(!istype(H))
+			dukinuki.forceMove(H.drop_location())
+		else
+			H.put_in_hands(dukinuki, TRUE)
 	owner.announce_objectives()
 	addtimer(CALLBACK(src, .proc/nuketeam_name_assign), 1)
 

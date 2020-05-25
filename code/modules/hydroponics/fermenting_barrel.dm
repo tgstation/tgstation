@@ -50,22 +50,25 @@
 		to_chat(user, "<span class='notice'>You place [I] into [src] to start the fermentation process.</span>")
 		addtimer(CALLBACK(src, .proc/makeWine, fruit), rand(80, 120) * speed_multiplier)
 		return TRUE
+	if(I)
+		if(I.is_refillable())
+			return FALSE //so we can refill them via their afterattack.
 	else
 		return ..()
 
 /obj/structure/fermenting_barrel/attack_hand(mob/user)
 	open = !open
 	if(open)
-		DISABLE_BITFIELD(reagents.flags, DRAINABLE)
-		ENABLE_BITFIELD(reagents.flags, REFILLABLE)
+		reagents.flags &= ~(DRAINABLE)
+		reagents.flags |= REFILLABLE
 		to_chat(user, "<span class='notice'>You open [src], letting you fill it.</span>")
 	else
-		ENABLE_BITFIELD(reagents.flags, DRAINABLE)
-		DISABLE_BITFIELD(reagents.flags, REFILLABLE)
+		reagents.flags |= DRAINABLE
+		reagents.flags &= ~(REFILLABLE)
 		to_chat(user, "<span class='notice'>You close [src], letting you draw from its tap.</span>")
 	update_icon()
 
-/obj/structure/fermenting_barrel/update_icon()
+/obj/structure/fermenting_barrel/update_icon_state()
 	if(open)
 		icon_state = "barrel_open"
 	else
@@ -74,6 +77,6 @@
 /datum/crafting_recipe/fermenting_barrel
 	name = "Wooden Barrel"
 	result = /obj/structure/fermenting_barrel
-	reqs = list(/obj/item/stack/sheet/mineral/wood = 30)
+	reqs = list(/obj/item/stack/sheet/mineral/wood = 8)
 	time = 50
 	category = CAT_PRIMAL

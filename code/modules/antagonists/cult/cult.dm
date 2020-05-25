@@ -1,4 +1,7 @@
 #define SUMMON_POSSIBILITIES 3
+#define CULT_VICTORY 1
+#define CULT_LOSS 0
+#define CULT_NARSIE_KILLED -1
 
 /datum/antagonist/cult
 	name = "Cultist"
@@ -9,6 +12,8 @@
 	var/datum/action/innate/cult/mastervote/vote = new
 	var/datum/action/innate/cult/blood_magic/magic = new
 	job_rank = ROLE_CULTIST
+	antag_hud_type = ANTAG_HUD_CULT
+	antag_hud_name = "cult"
 	var/ignore_implant = FALSE
 	var/give_equipment = FALSE
 	var/datum/team/cult/cult_team
@@ -58,7 +63,6 @@
 	if(give_equipment)
 		equip_cultist(TRUE)
 	SSticker.mode.cult += owner // Only add after they've been given objectives
-	SSticker.mode.update_cult_icons_added(owner)
 	current.log_message("has been converted to the cult of Nar'Sie!", LOG_ATTACK, color="#960000")
 
 	if(cult_team.blood_target && cult_team.blood_target_image && current.client)
@@ -69,9 +73,6 @@
 	var/mob/living/carbon/H = owner.current
 	if(!istype(H))
 		return
-	if (owner.assigned_role == "Clown")
-		to_chat(owner, "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
-		H.dna.remove_mutation(CLOWNMUT)
 	. += cult_give_item(/obj/item/melee/cultblade/dagger, H)
 	if(metal)
 		. += cult_give_item(/obj/item/stack/sheet/runed_metal/ten, H)
@@ -80,9 +81,9 @@
 
 /datum/antagonist/cult/proc/cult_give_item(obj/item/item_path, mob/living/carbon/human/mob)
 	var/list/slots = list(
-		"backpack" = SLOT_IN_BACKPACK,
-		"left pocket" = SLOT_L_STORE,
-		"right pocket" = SLOT_R_STORE
+		"backpack" = ITEM_SLOT_BACKPACK,
+		"left pocket" = ITEM_SLOT_LPOCKET,
+		"right pocket" = ITEM_SLOT_RPOCKET
 	)
 
 	var/T = new item_path(mob)
@@ -102,8 +103,10 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	add_antag_hud(antag_hud_type, antag_hud_name, current)
+	handle_clown_mutation(current, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	current.faction |= "cult"
-	current.grant_language(/datum/language/narsie)
+	current.grant_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	if(!cult_team.cult_master)
 		vote.Grant(current)
 	communion.Grant(current)
@@ -120,8 +123,10 @@
 	var/mob/living/current = owner.current
 	if(mob_override)
 		current = mob_override
+	remove_antag_hud(antag_hud_type, current)
+	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "cult"
-	current.remove_language(/datum/language/narsie)
+	current.remove_language(/datum/language/narsie, TRUE, TRUE, LANGUAGE_CULTIST)
 	vote.Remove(current)
 	communion.Remove(current)
 	magic.Remove(current)
@@ -136,7 +141,6 @@
 
 /datum/antagonist/cult/on_removal()
 	SSticker.mode.cult -= owner
-	SSticker.mode.update_cult_icons_removed(owner)
 	if(!silent)
 		owner.current.visible_message("<span class='deconversion_message'>[owner.current] looks like [owner.current.p_theyve()] just reverted to [owner.current.p_their()] old faith!</span>", null, null, null, owner.current)
 		to_chat(owner.current, "<span class='userdanger'>An unfamiliar white light flashes through your mind, cleansing the taint of the Geometer and all your memories as her servant.</span>")
@@ -272,7 +276,7 @@
 		for(var/datum/mind/B in members)
 			if(B.current)
 				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-				to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!")
+				to_chat(B.current, "<span class='cultlarge'>Your cult is ascendent and the red harvest approaches - you cannot hide your true nature for much longer!!</span>")
 				addtimer(CALLBACK(src, .proc/ascend, B.current), 200)
 		cult_ascendent = TRUE
 
@@ -344,12 +348,13 @@
 
 /datum/objective/sacrifice/update_explanation_text()
 	if(target)
-		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking a Sacrifice rune with [target.p_them()] on it and three acolytes around it."
+		explanation_text = "Sacrifice [target], the [target.assigned_role] via invoking an Offer rune with [target.p_them()] on it and three acolytes around it."
 	else
 		explanation_text = "The veil has already been weakened here, proceed to the final objective."
 
 /datum/objective/eldergod
 	var/summoned = FALSE
+	var/killed = FALSE
 	var/list/summon_spots = list()
 
 /datum/objective/eldergod/New()
@@ -366,18 +371,25 @@
 	explanation_text = "Summon Nar'Sie by invoking the rune 'Summon Nar'Sie'. <b>The summoning can only be accomplished in [english_list(summon_spots)] - where the veil is weak enough for the ritual to begin.</b>"
 
 /datum/objective/eldergod/check_completion()
+	if(killed)
+		return CULT_NARSIE_KILLED // You failed so hard that even the code went backwards.
 	return summoned || completed
 
 /datum/team/cult/proc/check_cult_victory()
 	for(var/datum/objective/O in objectives)
-		if(!O.check_completion())
-			return FALSE
-	return TRUE
+		if(O.check_completion() == CULT_NARSIE_KILLED)
+			return CULT_NARSIE_KILLED
+		else if(!O.check_completion())
+			return CULT_LOSS
+	return CULT_VICTORY
 
 /datum/team/cult/roundend_report()
 	var/list/parts = list()
+	var/victory = check_cult_victory()
 
-	if(check_cult_victory())
+	if(victory == CULT_NARSIE_KILLED) // Epic failure, you summoned your god and then someone killed it.
+		parts += "<span class='redtext big'>Nar'sie has been killed! The cult will haunt the universe no longer!</span>"
+	else if(victory)
 		parts += "<span class='greentext big'>The cult has succeeded! Nar'Sie has snuffed out another torch in the void!</span>"
 	else
 		parts += "<span class='redtext big'>The staff managed to stop the cult! Dark words and heresy are no match for Nanotrasen's finest!</span>"

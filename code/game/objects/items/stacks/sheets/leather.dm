@@ -15,9 +15,9 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5), \
 	))
 
-/obj/item/stack/sheet/animalhide/human/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.human_recipes
-	return ..()
+/obj/item/stack/sheet/animalhide/human/get_main_recipes()
+	. = ..()
+	. += GLOB.human_recipes
 
 /obj/item/stack/sheet/animalhide/generic
 	name = "skin"
@@ -35,7 +35,7 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 
 GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1), \
-	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/gondola, 2), \
+	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2), \
 	))
 
 /obj/item/stack/sheet/animalhide/gondola
@@ -45,17 +45,17 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	icon_state = "sheet-gondola"
 	item_state = "sheet-gondola"
 
-/obj/item/stack/sheet/animalhide/gondola/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.gondola_recipes
-	return ..()
+/obj/item/stack/sheet/animalhide/gondola/get_main_recipes()
+	. = ..()
+	. += GLOB.gondola_recipes
 
 GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	new/datum/stack_recipe("corgi costume", /obj/item/clothing/suit/hooded/ian_costume, 3), \
 	))
 
-/obj/item/stack/sheet/animalhide/corgi/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.corgi_recipes
-	return ..()
+/obj/item/stack/sheet/animalhide/corgi/get_main_recipes()
+	. = ..()
+	. += GLOB.corgi_recipes
 
 /obj/item/stack/sheet/animalhide/cat
 	name = "cat hide"
@@ -69,16 +69,16 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	desc = "The by-product of monkey farming."
 	singular_name = "monkey hide piece"
 	icon_state = "sheet-monkey"
-	icon_state = "sheet-monkey"
+	item_state = "sheet-monkey"
 
 GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	new/datum/stack_recipe("monkey mask", /obj/item/clothing/mask/gas/monkeymask, 1), \
 	new/datum/stack_recipe("monkey suit", /obj/item/clothing/suit/monkeysuit, 2), \
 	))
 
-/obj/item/stack/sheet/animalhide/monkey/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.monkey_recipes
-	return ..()
+/obj/item/stack/sheet/animalhide/monkey/get_main_recipes()
+	. = ..()
+	. += GLOB.monkey_recipes
 
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
@@ -99,9 +99,9 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	new/datum/stack_recipe("alien suit", /obj/item/clothing/suit/xenos, 2), \
 	))
 
-/obj/item/stack/sheet/animalhide/xeno/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.xeno_recipes
-	return ..()
+/obj/item/stack/sheet/animalhide/xeno/get_main_recipes()
+	. = ..()
+	. += GLOB.xeno_recipes
 
 //don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
 /obj/item/stack/sheet/xenochitin
@@ -131,10 +131,10 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	icon_state = "sheet-hairlesshide"
 	item_state = "sheet-hairlesshide"
 
-/obj/item/stack/sheet/wetleather
-	name = "wet leather"
-	desc = "This leather has been cleaned but still needs to be dried."
-	singular_name = "wet leather piece"
+/obj/item/stack/sheet/wethide
+	name = "wet hide"
+	desc = "This hide has been cleaned but still needs to be dried."
+	singular_name = "wet hide piece"
 	icon_state = "sheet-wetleather"
 	item_state = "sheet-wetleather"
 	var/wetness = 30 //Reduced when exposed to high temperautres
@@ -160,12 +160,12 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("leather jacket", /obj/item/clothing/suit/jacket/leather, 7), \
 	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2), \
 	new/datum/stack_recipe("leather overcoat", /obj/item/clothing/suit/jacket/leather/overcoat, 10), \
+	new/datum/stack_recipe("saddle", /obj/item/saddle, 5), \
 ))
 
-/obj/item/stack/sheet/leather/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.leather_recipes
-	return ..()
-
+/obj/item/stack/sheet/leather/get_main_recipes()
+	. = ..()
+	. += GLOB.leather_recipes
 /*
  * Sinew
  */
@@ -177,14 +177,19 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	icon_state = "sinew"
 	novariants = TRUE
 
+/obj/item/stack/sheet/sinew/wolf
+	name = "wolf sinew"
+	desc = "Long stringy filaments which came from the insides of a wolf."
+	singular_name = "wolf sinew"
+
 
 GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	new/datum/stack_recipe("sinew restraints", /obj/item/restraints/handcuffs/cable/sinew, 1), \
 ))
 
-/obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge = TRUE)
-	recipes = GLOB.sinew_recipes
-	return ..()
+/obj/item/stack/sheet/sinew/get_main_recipes()
+	. = ..()
+	. += GLOB.sinew_recipes
 
 		/*
  * Plates
@@ -201,6 +206,11 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 
+/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
+	name = "polar bear hides"
+	desc = "Pieces of a polar bear's fur, these might be able to make your suit a bit more durable to attack from the local fauna."
+	icon_state = "polar_bear_hide"
+	singular_name = "polar bear hide"
 
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
@@ -218,9 +228,9 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step one - dehairing.
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/W, mob/user, params)
-	if(W.is_sharp())
-		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-		user.visible_message("[user] starts cutting hair off \the [src].", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='italics'>You hear the sound of a knife rubbing against flesh.</span>")
+	if(W.get_sharpness())
+		playsound(loc, 'sound/weapons/slice.ogg', 50, TRUE, -1)
+		user.visible_message("<span class='notice'>[user] starts cutting hair off \the [src].</span>", "<span class='notice'>You start cutting the hair off \the [src]...</span>", "<span class='hear'>You hear the sound of a knife rubbing against flesh.</span>")
 		if(do_after(user, 50, target = src))
 			to_chat(user, "<span class='notice'>You cut the hair from this [src.singular_name].</span>")
 			new /obj/item/stack/sheet/hairlesshide(user.drop_location(), 1)
@@ -232,7 +242,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 //Step two - washing..... it's actually in washing machine code.
 
 //Step three - drying
-/obj/item/stack/sheet/wetleather/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/item/stack/sheet/wethide/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
 	if(exposed_temperature >= drying_threshold_temperature)
 		wetness--
@@ -241,7 +251,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 			wetness = initial(wetness)
 			use(1)
 
-/obj/item/stack/sheet/wetleather/microwave_act(obj/machinery/microwave/MW)
+/obj/item/stack/sheet/wethide/microwave_act(obj/machinery/microwave/MW)
 	..()
 	new /obj/item/stack/sheet/leather(drop_location(), amount)
 	qdel(src)

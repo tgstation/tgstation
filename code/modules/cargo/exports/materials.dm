@@ -14,16 +14,13 @@
 	if(!isitem(O))
 		return 0
 	var/obj/item/I = O
-	if(!(getmaterialref(material_id) in I.materials))
+	if(!(SSmaterials.GetMaterialRef(material_id) in I.custom_materials))
 		return 0
 
-	var/amount = I.materials[getmaterialref(material_id)]
+	var/amount = I.custom_materials[SSmaterials.GetMaterialRef(material_id)]
 
-	if(istype(I, /obj/item/stack))
-		var/obj/item/stack/S = I
-		amount *= S.amount
-		if(istype(I, /obj/item/stack/ore))
-			amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
+	if(istype(I, /obj/item/stack/ore))
+		amount *= 0.8 // Station's ore redemption equipment is really goddamn good.
 
 	return round(amount/MINERAL_MATERIAL_AMOUNT)
 
@@ -65,10 +62,30 @@
 	material_id = /datum/material/titanium
 	message = "cm3 of titanium"
 
-/datum/export/material/plastitanium
-	cost = 325 // plasma + titanium costs
-	material_id = /datum/material/titanium // code can only check for one material_id; plastitanium is half plasma, half titanium
-	message = "cm3 of plastitanium"
+/datum/export/material/adamantine
+	cost = 500
+	material_id = /datum/material/adamantine
+	message = "cm3 of adamantine"
+
+/datum/export/material/mythril
+	cost = 1500
+	material_id = /datum/material/mythril
+	message = "cm3 of mythril"
+
+/datum/export/material/bscrystal
+	cost = 300
+	message = "of bluespace crystals"
+	material_id = /datum/material/bluespace
+
+/datum/export/material/plastic
+	cost = 25
+	message = "cm3 of plastic"
+	material_id = /datum/material/plastic
+
+/datum/export/material/runite
+	cost = 600
+	message = "cm3 of runite"
+	material_id = /datum/material/runite
 
 /datum/export/material/metal
 	cost = 5
@@ -84,3 +101,15 @@
 	material_id = /datum/material/glass
 	export_types = list(/obj/item/stack/sheet/glass, /obj/item/stack/ore,
 		/obj/item/shard)
+
+/datum/export/material/hot_ice
+	cost = 400
+	message = "cm3 of Hot Ice"
+	material_id = /datum/material/hot_ice
+	export_types = /obj/item/stack/sheet/hot_ice
+
+/datum/export/material/metal_hydrogen
+	cost = 550
+	unit_name = "of metallic hydrogen"
+	material_id = /datum/material/metalhydrogen
+	export_types = /obj/item/stack/sheet/mineral/metal_hydrogen

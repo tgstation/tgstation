@@ -15,7 +15,7 @@
 	UnregisterSignal(parent, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	unmodify()
 
-/datum/component/fantasy/Destroy()
+/datum/component/tactical/Destroy()
 	unmodify()
 	return ..()
 
@@ -37,5 +37,5 @@
 		if(!ismob(master.loc))
 			return
 		user = master.loc
-	
+
 	user.remove_alt_appearance("sneaking_mission")

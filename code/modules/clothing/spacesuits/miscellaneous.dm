@@ -13,6 +13,7 @@ Contains:
  - Freedom's spacesuit (freedom from vacuum's oppression)
  - Carp hardsuit
  - Bounty hunter hardsuit
+ - Blackmarket combat medic hardsuit
 */
 
 	//Death squad armored space suits, not hardsuits!
@@ -21,7 +22,7 @@ Contains:
 	desc = "An advanced tactical space helmet."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
-	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 60, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -36,12 +37,13 @@ Contains:
 	icon_state = "deathsquad"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
-	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 60, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/deathsquad
 	dog_fashion = /datum/dog_fashion/back/deathsquad
+	cell = /obj/item/stock_parts/cell/bluespace
 
 	//NEW SWAT suit
 /obj/item/clothing/suit/space/swat
@@ -50,7 +52,7 @@ Contains:
 	icon_state = "heavy"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
-	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 30, "bomb" = 50, "bio" = 90, "rad" = 20, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 40, "bullet" = 30, "laser" = 30,"energy" = 40, "bomb" = 50, "bio" = 90, "rad" = 20, "fire" = 100, "acid" = 100)
 	strip_delay = 120
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 
@@ -61,7 +63,7 @@ Contains:
 	dynamic_hair_suffix = "+generic"
 	dynamic_fhair_suffix = "+generic"
 	flags_inv = 0
-	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 60, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -76,7 +78,7 @@ Contains:
 	flags_inv = 0
 	w_class = WEIGHT_CLASS_NORMAL
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 80, "bullet" = 80, "laser" = 50, "energy" = 60, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -133,7 +135,7 @@ Contains:
 	desc = "Yarr."
 	icon_state = "pirate"
 	item_state = "pirate"
-	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
+	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
 	flags_inv = HIDEHAIR
 	strip_delay = 40
 	equip_delay_other = 20
@@ -153,7 +155,7 @@ Contains:
 	flags_inv = 0
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/melee/transforming/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/food/drinks/bottle/rum)
 	slowdown = 0
-	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 15, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
+	armor = list("melee" = 30, "bullet" = 50, "laser" = 30,"energy" = 40, "bomb" = 30, "bio" = 30, "rad" = 30, "fire" = 60, "acid" = 75)
 	strip_delay = 40
 	equip_delay_other = 20
 
@@ -163,8 +165,8 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has blue highlights."
 	icon_state = "hardsuit0-ert_commander"
 	item_state = "hardsuit0-ert_commander"
-	item_color = "ert_commander"
-	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
+	hardsuit_type = "ert_commander"
+	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 60, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
 	brightness_on = 7
 	resistance_flags = FIRE_PROOF
@@ -181,11 +183,17 @@ Contains:
 	item_state = "ert_command"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
+	armor = list("melee" = 65, "bullet" = 50, "laser" = 50, "energy" = 60, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	slowdown = 0
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	cell = /obj/item/stock_parts/cell/bluespace
+
+// ERT suit's gets EMP Protection
+/obj/item/clothing/suit/space/hardsuit/ert/Initialize()
+	. = ..()
+	AddComponent(/datum/component/empprotection, EMP_PROTECT_CONTENTS)
 
 	//ERT Security
 /obj/item/clothing/head/helmet/space/hardsuit/ert/sec
@@ -193,7 +201,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has red highlights."
 	icon_state = "hardsuit0-ert_security"
 	item_state = "hardsuit0-ert_security"
-	item_color = "ert_security"
+	hardsuit_type = "ert_security"
 
 /obj/item/clothing/suit/space/hardsuit/ert/sec
 	name = "emergency response team security hardsuit"
@@ -208,7 +216,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has orange highlights."
 	icon_state = "hardsuit0-ert_engineer"
 	item_state = "hardsuit0-ert_engineer"
-	item_color = "ert_engineer"
+	hardsuit_type = "ert_engineer"
 
 /obj/item/clothing/suit/space/hardsuit/ert/engi
 	name = "emergency response team engineering hardsuit"
@@ -223,7 +231,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has white highlights."
 	icon_state = "hardsuit0-ert_medical"
 	item_state = "hardsuit0-ert_medical"
-	item_color = "ert_medical"
+	hardsuit_type = "ert_medical"
 
 /obj/item/clothing/suit/space/hardsuit/ert/med
 	name = "emergency response team medical hardsuit"
@@ -231,7 +239,6 @@ Contains:
 	icon_state = "ert_medical"
 	item_state = "ert_medical"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/med
-	species_exception = list(/datum/species/angel)
 
 	//ERT Janitor
 /obj/item/clothing/head/helmet/space/hardsuit/ert/jani
@@ -239,7 +246,7 @@ Contains:
 	desc = "The integrated helmet of an ERT hardsuit, this one has purple highlights."
 	icon_state = "hardsuit0-ert_janitor"
 	item_state = "hardsuit0-ert_janitor"
-	item_color = "ert_janitor"
+	hardsuit_type = "ert_janitor"
 
 /obj/item/clothing/suit/space/hardsuit/ert/jani
 	name = "emergency response team janitorial hardsuit"
@@ -247,7 +254,23 @@ Contains:
 	icon_state = "ert_janitor"
 	item_state = "ert_janitor"
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/jani
-	allowed = list(/obj/item/storage/bag/trash, /obj/item/melee/flyswatter, /obj/item/mop, /obj/item/holosign_creator/janibarrier, /obj/item/reagent_containers/glass/bucket, /obj/item/reagent_containers/spray/chemsprayer/janitor)
+	allowed = list(/obj/item/tank/internals, /obj/item/storage/bag/trash, /obj/item/melee/flyswatter, /obj/item/mop, /obj/item/holosign_creator, /obj/item/reagent_containers/glass/bucket, /obj/item/reagent_containers/spray/chemsprayer/janitor)
+
+	//ERT Clown
+/obj/item/clothing/head/helmet/space/hardsuit/ert/clown
+	name = "emergency response team clown helmet"
+	desc = "The integrated helmet of an ERT hardsuit, this one is colourful!"
+	icon_state = "hardsuit0-ert_clown"
+	item_state = "hardsuit0-ert_clown"
+	hardsuit_type = "ert_clown"
+
+/obj/item/clothing/suit/space/hardsuit/ert/clown
+	name = "emergency response team clown hardsuit"
+	desc = "The non-standard issue hardsuit of the ERT, this one is colourful! Offers superb protection against environmental hazards. Does not offer superb protection against a ravaging crew."
+	icon_state = "ert_clown"
+	item_state = "ert_clown"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/clown
+	allowed = list(/obj/item/tank/internals, /obj/item/bikehorn, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/grown/banana, /obj/item/grown/bananapeel)
 
 /obj/item/clothing/suit/space/eva
 	name = "EVA suit"
@@ -261,7 +284,7 @@ Contains:
 	icon_state = "space"
 	item_state = "space"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
-	flash_protect = 0
+	flash_protect = FLASH_PROTECTION_NONE
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 20, "fire" = 50, "acid" = 65)
 
 /obj/item/clothing/head/helmet/space/freedom
@@ -269,7 +292,7 @@ Contains:
 	desc = "An advanced, space-proof helmet. It appears to be modeled after an old-world eagle."
 	icon_state = "griffinhat"
 	item_state = "griffinhat"
-	armor = list("melee" = 20, "bullet" = 40, "laser" = 30, "energy" = 25, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
+	armor = list("melee" = 20, "bullet" = 40, "laser" = 30, "energy" = 40, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
@@ -280,7 +303,7 @@ Contains:
 	icon_state = "freedom"
 	item_state = "freedom"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals)
-	armor = list("melee" = 20, "bullet" = 40, "laser" = 30,"energy" = 25, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
+	armor = list("melee" = 20, "bullet" = 40, "laser" = 30,"energy" = 40, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	resistance_flags = ACID_PROOF | FIRE_PROOF
@@ -295,6 +318,7 @@ Contains:
 	armor = list("melee" = -20, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 75, "fire" = 60, "acid" = 75)	//As whimpy as a space carp
 	brightness_on = 0 //luminosity when on
 	actions_types = list()
+	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR //facial hair will clip with the helm, this'll need a dynamic_fhair_suffix at some point.
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/Initialize()
 	. = ..()
@@ -312,7 +336,7 @@ Contains:
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/equipped(mob/living/carbon/human/user, slot)
 	..()
-	if (slot == SLOT_HEAD)
+	if (slot == ITEM_SLOT_HEAD)
 		user.faction |= "carp"
 
 /obj/item/clothing/head/helmet/space/hardsuit/carp/dropped(mob/living/carbon/human/user)
@@ -320,12 +344,17 @@ Contains:
 	if (user.head == src)
 		user.faction -= "carp"
 
+/obj/item/clothing/suit/space/hardsuit/carp/old
+	name = "battered carp space suit"
+	desc = "It's covered in bite marks and scratches, yet seems to be still perfectly functional."
+	slowdown = 1
+
 /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal
 	name = "paranormal response team helmet"
 	desc = "A helmet worn by those who deal with paranormal threats for a living."
 	icon_state = "hardsuit0-prt"
 	item_state = "hardsuit0-prt"
-	item_color = "knight_grey"
+	hardsuit_type = "prt"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
 	resistance_flags = FIRE_PROOF
@@ -357,19 +386,21 @@ Contains:
 	name = "inquisitor's helmet"
 	icon_state = "hardsuit0-inq"
 	item_state = "hardsuit0-inq"
+	hardsuit_type = "inq"
 
-/obj/item/clothing/suit/space/hardsuit/ert/paranormal/beserker
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker
 	name = "champion's hardsuit"
 	desc = "Voices echo from the hardsuit, driving the user insane."
-	icon_state = "hardsuit-beserker"
-	item_state = "hardsuit-beserker"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker
+	icon_state = "hardsuit-berserker"
+	item_state = "hardsuit-berserker"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/berserker
 
-/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/beserker
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/berserker
 	name = "champion's helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
-	icon_state = "hardsuit0-beserker"
-	item_state = "hardsuit0-beserker"
+	icon_state = "hardsuit0-berserker"
+	item_state = "hardsuit0-berserker"
+	hardsuit_type = "berserker"
 
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"
@@ -396,8 +427,8 @@ Contains:
 		name = "torn [src]."
 		desc = "A bulky suit meant to protect the user during emergency situations, at least until someone tore a hole in the suit."
 		torn = TRUE
-		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1)
-		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
+		playsound(loc, 'sound/weapons/slashmiss.ogg', 50, TRUE)
+		playsound(loc, 'sound/effects/refill.ogg', 50, TRUE)
 
 /obj/item/clothing/suit/space/hunter
 	name = "bounty hunting suit"
@@ -405,6 +436,26 @@ Contains:
 	icon_state = "hunter"
 	item_state = "swat_suit"
 	allowed = list(/obj/item/gun, /obj/item/ammo_box, /obj/item/ammo_casing, /obj/item/melee/baton, /obj/item/restraints/handcuffs, /obj/item/tank/internals, /obj/item/kitchen/knife/combat)
-	armor = list(melee = 60, bullet = 40, laser = 40, energy = 50, bomb = 100, bio = 100, rad = 100, fire = 100, acid = 100)
+	armor = list("melee" = 60, "bullet" = 40, "laser" = 40, "energy" = 50, "bomb" = 100, "bio" = 100, "rad" = 100, "fire" = 100, "acid" = 100)
 	strip_delay = 130
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	cell = /obj/item/stock_parts/cell/hyper
+
+//We can either be alive monsters or dead monsters, you choose.
+/obj/item/clothing/head/helmet/space/hardsuit/combatmedic
+	name = "endemic combat medic helmet"
+	desc = "The integrated helmet of the combat medic hardsuit, this has a bright, glowing facemask."
+	icon_state = "hardsuit0-combatmedic"
+	item_state = "hardsuit0-combatmedic"
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
+	hardsuit_type = "combatmedic"
+
+/obj/item/clothing/suit/space/hardsuit/combatmedic
+	name = "endemic combat medic hardsuit"
+	desc = "The standard issue hardsuit of infectious disease officers, before the formation of ERT teams. This model is labeled 'Veradux'."
+	icon_state = "combatmedic"
+	item_state = "combatmedic"
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/combatmedic
+	armor = list("melee" = 35, "bullet" = 10, "laser" = 20, "energy" = 30, "bomb" = 5, "bio" = 100, "rad" = 50, "fire" = 65, "acid" = 75)
+	allowed = list(/obj/item/gun, /obj/item/melee/baton, /obj/item/circular_saw, /obj/item/tank/internals, /obj/item/storage/box/pillbottles,\
+	/obj/item/storage/firstaid, /obj/item/stack/medical/gauze, /obj/item/stack/medical/suture, /obj/item/stack/medical/mesh, /obj/item/storage/bag/chemistry)

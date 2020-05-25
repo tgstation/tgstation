@@ -4,6 +4,7 @@
 	speech_verb = "mumbles"
 	ask_verb = "grills"
 	exclaim_verb = "hollers"
+	sing_verb = "parties"
 	key = "u"
 	space_chance = 85
 	default_priority = 90

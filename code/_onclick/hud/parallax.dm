@@ -8,7 +8,7 @@
 	var/last_parallax_shift //world.time of last update
 	var/parallax_throttle = 0 //ds between updates
 	var/parallax_movedir = 0
-	var/parallax_layers_max = 3
+	var/parallax_layers_max = 4
 	var/parallax_animate_timer
 
 /datum/hud/proc/create_parallax(mob/viewmob)
@@ -22,6 +22,8 @@
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_1(null, C.view)
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_2(null, C.view)
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/planet(null, C.view)
+		if(SSparallax.random_layer)
+			C.parallax_layers_cached += new SSparallax.random_layer
 		C.parallax_layers_cached += new /obj/screen/parallax_layer/layer_3(null, C.view)
 
 	C.parallax_layers = C.parallax_layers_cached.Copy()
@@ -64,12 +66,12 @@
 		switch(C.prefs.parallax)
 			if (PARALLAX_INSANE)
 				C.parallax_throttle = FALSE
-				C.parallax_layers_max = 4
+				C.parallax_layers_max = 5
 				return TRUE
 
 			if (PARALLAX_MED)
 				C.parallax_throttle = PARALLAX_DELAY_MED
-				C.parallax_layers_max = 2
+				C.parallax_layers_max = 3
 				return TRUE
 
 			if (PARALLAX_LOW)
@@ -80,8 +82,9 @@
 			if (PARALLAX_DISABLE)
 				return FALSE
 
+	//This is high parallax.
 	C.parallax_throttle = PARALLAX_DELAY_DEFAULT
-	C.parallax_layers_max = 3
+	C.parallax_layers_max = 4
 	return TRUE
 
 /datum/hud/proc/update_parallax_pref(mob/viewmob)
@@ -146,6 +149,8 @@
 
 
 /datum/hud/proc/update_parallax_motionblur(client/C, animatedir, new_parallax_movedir, matrix/newtransform)
+	if(!C)
+		return
 	C.parallax_animate_timer = FALSE
 	for(var/thing in C.parallax_layers)
 		var/obj/screen/parallax_layer/L = thing
@@ -167,7 +172,7 @@
 /datum/hud/proc/update_parallax()
 	var/client/C = mymob.client
 	var/turf/posobj = get_turf(C.eye)
-	if(!posobj) 
+	if(!posobj)
 		return
 	var/area/areaobj = posobj.loc
 
@@ -296,6 +301,21 @@
 	speed = 1.4
 	layer = 3
 
+/obj/screen/parallax_layer/random
+	blend_mode = BLEND_OVERLAY
+	speed = 3
+	layer = 3
+
+/obj/screen/parallax_layer/random/space_gas
+	icon_state = "space_gas"
+
+/obj/screen/parallax_layer/random/space_gas/Initialize(mapload, view)
+	. = ..()
+	src.add_atom_colour(SSparallax.random_parallax_color, ADMIN_COLOUR_PRIORITY)
+
+/obj/screen/parallax_layer/random/asteroids
+	icon_state = "asteroids"
+
 /obj/screen/parallax_layer/planet
 	icon_state = "planet"
 	blend_mode = BLEND_OVERLAY
@@ -304,11 +324,11 @@
 	layer = 30
 
 /obj/screen/parallax_layer/planet/update_status(mob/M)
-	var/turf/T = get_turf(M)
-	if(is_station_level(T.z))
-		invisibility = 0
-	else
-		invisibility = INVISIBILITY_ABSTRACT
+	var/client/C = M.client
+	var/turf/posobj = get_turf(C.eye)
+	if(!posobj)
+		return
+	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
 
 /obj/screen/parallax_layer/planet/update_o()
 	return //Shit wont move

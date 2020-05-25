@@ -11,14 +11,18 @@
 	var/modifies_speech = FALSE
 	var/static/list/languages_possible_base = typecacheof(list(
 		/datum/language/common,
+		/datum/language/uncommon,
 		/datum/language/draconic,
 		/datum/language/codespeak,
 		/datum/language/monkey,
 		/datum/language/narsie,
 		/datum/language/beachbum,
-		/datum/language/ratvar,
 		/datum/language/aphasia,
 		/datum/language/piratespeak,
+		/datum/language/moffic,
+		/datum/language/sylvan,
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
 	))
 
 /obj/item/organ/tongue/Initialize(mapload)
@@ -42,8 +46,8 @@
 	UnregisterSignal(M, COMSIG_MOB_SAY, .proc/handle_speech)
 	M.RegisterSignal(M, COMSIG_MOB_SAY, /mob/living/carbon/.proc/handle_tongueless_speech)
 
-/obj/item/organ/tongue/could_speak_in_language(datum/language/dt)
-	return is_type_in_typecache(dt, languages_possible)
+/obj/item/organ/tongue/could_speak_language(language)
+	return is_type_in_typecache(language, languages_possible)
 
 /obj/item/organ/tongue/lizard
 	name = "forked tongue"
@@ -56,10 +60,18 @@
 /obj/item/organ/tongue/lizard/handle_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
+	var/static/regex/lizard_kss = new(@"(\w)x", "g")
+	var/static/regex/lizard_kSS = new(@"(\w)X", "g")
+	var/static/regex/lizard_ecks = new(@"\bx([\-|r|R]|\b)", "g")
+	var/static/regex/lizard_eckS = new(@"\bX([\-|r|R]|\b)", "g")
 	var/message = speech_args[SPEECH_MESSAGE]
 	if(message[1] != "*")
 		message = lizard_hiss.Replace(message, "sss")
 		message = lizard_hiSS.Replace(message, "SSS")
+		message = lizard_kss.Replace(message, "$1kss")
+		message = lizard_kSS.Replace(message, "$1KSS")
+		message = lizard_ecks.Replace(message, "ecks$1")
+		message = lizard_eckS.Replace(message, "ECKS$1")
 	speech_args[SPEECH_MESSAGE] = message
 
 /obj/item/organ/tongue/fly
@@ -69,6 +81,21 @@
 	say_mod = "buzzes"
 	taste_sensitivity = 25 // you eat vomit, this is a mercy
 	modifies_speech = TRUE
+	var/static/list/languages_possible_fly = typecacheof(list(
+		/datum/language/common,
+		/datum/language/draconic,
+		/datum/language/codespeak,
+		/datum/language/monkey,
+		/datum/language/narsie,
+		/datum/language/beachbum,
+		/datum/language/aphasia,
+		/datum/language/piratespeak,
+		/datum/language/moffic,
+		/datum/language/sylvan,
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
+		/datum/language/buzzwords
+	))
 
 /obj/item/organ/tongue/fly/handle_speech(datum/source, list/speech_args)
 	var/static/regex/fly_buzz = new("z+", "g")
@@ -78,6 +105,10 @@
 		message = fly_buzz.Replace(message, "zzz")
 		message = fly_buZZ.Replace(message, "ZZZ")
 	speech_args[SPEECH_MESSAGE] = message
+
+/obj/item/organ/tongue/fly/Initialize(mapload)
+	. = ..()
+	languages_possible = languages_possible_fly
 
 /obj/item/organ/tongue/abductor
 	name = "superlingual matrix"
@@ -115,7 +146,7 @@
 /obj/item/organ/tongue/abductor/handle_speech(datum/source, list/speech_args)
 	//Hacks
 	var/message = speech_args[SPEECH_MESSAGE]
-	var/mob/living/carbon/human/user = usr
+	var/mob/living/carbon/human/user = source
 	var/rendered = "<span class='abductor'><b>[user.real_name]:</b> [message]</span>"
 	user.log_talk(message, LOG_SAY, tag="abductor")
 	for(var/mob/living/carbon/human/H in GLOB.alive_mob_list)
@@ -147,7 +178,7 @@
 		var/insertpos = rand(1, message_list.len - 1)
 		var/inserttext = message_list[insertpos]
 
-		if(!(copytext(inserttext, length(inserttext) - 2) == "..."))
+		if(!(copytext(inserttext, -3) == "..."))//3 == length("...")
 			message_list[insertpos] = inserttext + "..."
 
 		if(prob(20) && message_list.len > 3)
@@ -166,7 +197,6 @@
 		/datum/language/xenocommon,
 		/datum/language/common,
 		/datum/language/draconic,
-		/datum/language/ratvar,
 		/datum/language/monkey))
 
 /obj/item/organ/tongue/alien/Initialize(mapload)
@@ -174,7 +204,7 @@
 	languages_possible = languages_possible_alien
 
 /obj/item/organ/tongue/alien/handle_speech(datum/source, list/speech_args)
-	playsound(owner, "hiss", 25, 1, 1)
+	playsound(owner, "hiss", 25, TRUE, TRUE)
 
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""
@@ -187,10 +217,26 @@
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
 	var/list/phomeme_types = list("sans", "papyrus")
+	var/static/list/languages_possible_skeleton = typecacheof(list(
+		/datum/language/common,
+		/datum/language/draconic,
+		/datum/language/codespeak,
+		/datum/language/monkey,
+		/datum/language/narsie,
+		/datum/language/beachbum,
+		/datum/language/aphasia,
+		/datum/language/piratespeak,
+		/datum/language/moffic,
+		/datum/language/sylvan,
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
+		/datum/language/calcic
+	))
 
 /obj/item/organ/tongue/bone/Initialize()
 	. = ..()
 	phomeme_type = pick(phomeme_types)
+	languages_possible = languages_possible_skeleton
 
 /obj/item/organ/tongue/bone/handle_speech(datum/source, list/speech_args)
 	if (chattering)
@@ -211,13 +257,14 @@
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
 	status = ORGAN_ROBOTIC
+	organ_flags = NONE
 	icon_state = "tonguerobot"
 	say_mod = "states"
 	attack_verb = list("beeped", "booped")
 	modifies_speech = TRUE
 	taste_sensitivity = 25 // not as good as an organic tongue
 
-/obj/item/organ/tongue/robot/can_speak_in_language(datum/language/dt)
+/obj/item/organ/tongue/robot/can_speak_language(language)
 	return TRUE // THE MAGIC OF ELECTRONICS
 
 /obj/item/organ/tongue/robot/handle_speech(datum/source, list/speech_args)
@@ -236,3 +283,30 @@
 		else
 			new_message += message[i]
 	speech_args[SPEECH_MESSAGE] = new_message
+
+/obj/item/organ/tongue/ethereal
+	name = "electric discharger"
+	desc = "A sophisticated ethereal organ, capable of synthesising speech via electrical discharge."
+	icon_state = "electrotongue"
+	say_mod = "crackles"
+	attack_verb = list("shocked", "jolted", "zapped")
+	taste_sensitivity = 101 // Not a tongue, they can't taste shit
+	var/static/list/languages_possible_ethereal = typecacheof(list(
+		/datum/language/common,
+		/datum/language/draconic,
+		/datum/language/codespeak,
+		/datum/language/monkey,
+		/datum/language/narsie,
+		/datum/language/beachbum,
+		/datum/language/aphasia,
+		/datum/language/piratespeak,
+		/datum/language/moffic,
+		/datum/language/sylvan,
+		/datum/language/shadowtongue,
+		/datum/language/terrum,
+		/datum/language/voltaic
+	))
+
+/obj/item/organ/tongue/ethereal/Initialize(mapload)
+	. = ..()
+	languages_possible = languages_possible_ethereal

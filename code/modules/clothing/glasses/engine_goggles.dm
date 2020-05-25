@@ -8,7 +8,7 @@
 
 /obj/item/clothing/glasses/meson/engine
 	name = "engineering scanner goggles"
-	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode let's you see objects contaminated by radiation."
+	desc = "Goggles used by engineers. The Meson Scanner mode lets you see basic structural and terrain layouts through walls, the T-ray Scanner mode lets you see underfloor objects such as cables and pipes, and the Radiation Scanner mode lets you see objects contaminated by radiation."
 	icon_state = "trayson-meson"
 	item_state = "trayson-meson"
 	actions_types = list(/datum/action/item_action/toggle_mode)
@@ -25,6 +25,10 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	update_icon()
+
+/obj/item/clothing/glasses/meson/engine/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/clothing/glasses/meson/engine/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -115,18 +119,8 @@
 				pic = new('icons/turf/overlays.dmi', place, "redOverlay", AREA_LAYER)
 			flick_overlay(pic, list(user.client), 8)
 
-/obj/item/clothing/glasses/meson/engine/update_icon()
-	icon_state = "trayson-[mode]"
-	update_mob()
-
-/obj/item/clothing/glasses/meson/engine/proc/update_mob()
-	item_state = icon_state
-	if(isliving(loc))
-		var/mob/living/user = loc
-		if(user.get_item_by_slot(SLOT_GLASSES) == src)
-			user.update_inv_glasses()
-		else
-			user.update_inv_hands()
+/obj/item/clothing/glasses/meson/engine/update_icon_state()
+	icon_state = item_state = "trayson-[mode]"
 
 /obj/item/clothing/glasses/meson/engine/tray //atmos techs have lived far too long without tray goggles while those damned engineers get their dual-purpose gogles all to themselves
 	name = "optical t-ray scanner"

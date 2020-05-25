@@ -183,7 +183,7 @@
 
 	owner.changeNext_move(CLICK_CD_RANGE)
 	B.RCD.afterattack(rcd_target, owner, TRUE) //Activate the RCD and force it to work remotely!
-	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, 1)
+	playsound(target_turf, 'sound/items/deconstruct.ogg', 60, TRUE)
 
 /datum/action/innate/aux_base/switch_mode
 	name = "Switch Mode"
@@ -242,7 +242,7 @@ datum/action/innate/aux_base/place_fan/Activate()
 	new /obj/structure/fans/tiny(fan_turf)
 	B.fans_remaining--
 	to_chat(owner, "<span class='notice'>Tiny fan placed. [B.fans_remaining] remaining.</span>")
-	playsound(fan_turf, 'sound/machines/click.ogg', 50, 1)
+	playsound(fan_turf, 'sound/machines/click.ogg', 50, TRUE)
 
 datum/action/innate/aux_base/install_turret
 	name = "Install Plasma Anti-Wildlife Turret"
@@ -271,4 +271,4 @@ datum/action/innate/aux_base/install_turret/Activate()
 
 	B.turret_stock--
 	to_chat(owner, "<span class='notice'>Turret installation complete!</span>")
-	playsound(turret_turf, 'sound/items/drill_use.ogg', 65, 1)
+	playsound(turret_turf, 'sound/items/drill_use.ogg', 65, TRUE)

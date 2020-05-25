@@ -2,7 +2,7 @@
 	if(!check_rights())
 		return
 	log_admin("[key_name(usr)] checked the player panel.")
-	var/dat = "<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge'/><title>Player Panel</title></head>"
+	var/dat = "<html><head><meta http-equiv='X-UA-Compatible' content='IE=edge; charset=UTF-8'/><title>Player Panel</title></head>"
 
 	//javascript, the part that does most of the work~
 	dat += {"
@@ -56,11 +56,20 @@
 					locked_tabs = new Array();
 				}
 
-				function expand(id,job,name,real_name,old_names,key,ip,antagonist,ref){
+				function expand(data_id,target_id){
+
+					job = document.getElementById(data_id+"_job").textContent
+					name = document.getElementById(data_id+"_name").textContent
+					real_name = document.getElementById(data_id+"_rname").textContent
+					old_names = document.getElementById(data_id+"_prevnames").textContent
+					key = document.getElementById(data_id+"_key").textContent
+					ip = document.getElementById(data_id+"_lastip").textContent
+					antagonist = document.getElementById(data_id+"_isantag").textContent
+					ref = document.getElementById(data_id+"_ref").textContent
 
 					clearAll();
 
-					var span = document.getElementById(id);
+					var span = document.getElementById(target_id);
 					var ckey = key.toLowerCase().replace(/\[^a-z@0-9\]+/g,"");
 
 					body = "<table><tr><td>";
@@ -281,10 +290,18 @@
 					<td align='center' bgcolor='[color]'>
 						<span id='notice_span[i]'></span>
 						<a id='link[i]'
-						onmouseover='expand("item[i]","[M_job]","[M_name]","[M_rname]","[previous_names]","[M_key]","[M.lastKnownIP]",[is_antagonist],"[REF(M)]")'
+						onmouseover='expand("data[i]","item[i]")'
 						>
 						<b id='search[i]'>[M_name] - [M_rname] - [M_key] ([M_job])</b>
 						<span hidden class='filter_data'>[M_name] [M_rname] [M_key] [M_job] [previous_names]</span>
+						<span hidden id="data[i]_name">[M_name]</span>
+						<span hidden id="data[i]_job">[M_job]</span>
+						<span hidden id="data[i]_rname">[M_rname]</span>
+						<span hidden id="data[i]_prevnames">[previous_names]</span>
+						<span hidden id="data[i]_key">[M_key]</span>
+						<span hidden id="data[i]_lastip">[M.lastKnownIP]</span>
+						<span hidden id="data[i]_isantag">[is_antagonist]</span>
+						<span hidden id="data[i]_ref">[REF(M)]</span>
 						</a>
 						<br><span id='item[i]'></span>
 					</td>

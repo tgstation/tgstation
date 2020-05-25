@@ -19,7 +19,7 @@
 		/datum/reagent/water = 5,
 		/obj/item/reagent_containers/food/snacks/spiderling = 1
 	)
-	result = /obj/item/reagent_containers/food/snacks/spiderlollipop
+	result = /obj/item/reagent_containers/food/snacks/chewable/spiderlollipop
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/chococoin
@@ -83,7 +83,7 @@
 	reqs = list(/datum/reagent/consumable/ketchup = 5,
 		/obj/item/reagent_containers/food/snacks/grown/soybeans = 2
 	)
-	result = /obj/item/reagent_containers/food/snacks/beans
+	result = /obj/item/reagent_containers/food/snacks/canned/beans
 	subcategory = CAT_MISCFOOD
 
 /datum/crafting_recipe/food/eggplantparm
@@ -195,39 +195,6 @@
 	result = /obj/item/reagent_containers/food/snacks/melonfruitbowl
 	subcategory = CAT_MISCFOOD
 
-/datum/crafting_recipe/food/spacefreezy
-	name ="Space freezy"
-	reqs = list(
-		/datum/reagent/consumable/bluecherryjelly = 5,
-		/datum/reagent/consumable/spacemountainwind = 15,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/spacefreezy
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/sundae
-	name ="Sundae"
-	reqs = list(
-		/datum/reagent/consumable/cream = 5,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 1,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/sundae
-	subcategory = CAT_MISCFOOD
-
-/datum/crafting_recipe/food/honkdae
-	name ="Honkdae"
-	reqs = list(
-		/datum/reagent/consumable/cream = 5,
-		/obj/item/clothing/mask/gas/clown_hat = 1,
-		/obj/item/reagent_containers/food/snacks/grown/cherries = 1,
-		/obj/item/reagent_containers/food/snacks/grown/banana = 2,
-		/obj/item/reagent_containers/food/snacks/icecream = 1
-	)
-	result = /obj/item/reagent_containers/food/snacks/honkdae
-	subcategory = CAT_MISCFOOD
-
 /datum/crafting_recipe/food/nachos
 	name ="Nachos"
 	reqs = list(
@@ -290,19 +257,6 @@
 	result = /obj/item/reagent_containers/food/snacks/stuffedlegion
 	subcategory = CAT_MISCFOOD
 
-
-/datum/crafting_recipe/lizardwine
-	name = "Lizard wine"
-	time = 40
-	reqs = list(
-		/obj/item/organ/tail/lizard = 1,
-		/datum/reagent/consumable/ethanol = 100
-	)
-	result = /obj/item/reagent_containers/food/drinks/bottle/lizardwine
-	category = CAT_FOOD
-	subcategory = CAT_MISCFOOD
-
-
 /datum/crafting_recipe/food/powercrepe
 	name = "Powercrepe"
 	time = 40
@@ -354,4 +308,49 @@
 		/obj/item/reagent_containers/food/snacks/salad/boiledrice = 1
 	)
 	result = /obj/item/reagent_containers/food/snacks/salad/ricepudding
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/butterbear //ITS ALIVEEEEEE!
+	name = "Living bear/butter hybrid"
+	reqs = list(
+		/obj/item/organ/brain = 1,
+		/obj/item/organ/heart = 1,
+		/obj/item/reagent_containers/food/snacks/butter = 10,
+		/obj/item/reagent_containers/food/snacks/meat/slab = 5,
+		/datum/reagent/blood = 50,
+		/datum/reagent/teslium = 1 //To shock the whole thing into life
+	)
+	result = /mob/living/simple_animal/hostile/bear/butter
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/crab_rangoon
+	name = "Crab Rangoon"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/doughslice = 1,
+		/datum/reagent/consumable/cream = 5,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/obj/item/reagent_containers/food/snacks/meat/rawcrab = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/crab_rangoon
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/poutine
+	name = "Poutine"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/fries = 1,
+		/obj/item/reagent_containers/food/snacks/cheesewedge = 1,
+		/datum/reagent/consumable/gravy = 1
+	)
+	result = /obj/item/reagent_containers/food/snacks/customizable/poutine
+	subcategory = CAT_MISCFOOD
+
+/datum/crafting_recipe/food/royalcheese
+	name = "Royal Cheese"
+	reqs = list(
+		/obj/item/reagent_containers/food/snacks/store/cheesewheel = 1,
+		/obj/item/clothing/head/crown = 1,
+		/datum/reagent/medicine/strange_reagent = 5,
+		/datum/reagent/toxin/mutagen = 5
+	)
+	result = /obj/item/reagent_containers/food/snacks/royalcheese
 	subcategory = CAT_MISCFOOD

@@ -18,7 +18,6 @@ Buildable meters
 	icon_state = "simple"
 	item_state = "buildpipe"
 	w_class = WEIGHT_CLASS_NORMAL
-	level = 2
 	var/piping_layer = PIPING_LAYER_DEFAULT
 	var/RPD_type
 
@@ -127,6 +126,7 @@ Buildable meters
 	setDir(turn(dir,-90))
 
 /obj/item/pipe/wrench_act(mob/living/user, obj/item/wrench/W)
+	. = ..()
 	if(!isturf(loc))
 		return TRUE
 
@@ -154,7 +154,7 @@ Buildable meters
 	user.visible_message( \
 		"[user] fastens \the [src].", \
 		"<span class='notice'>You fasten \the [src].</span>", \
-		"<span class='italics'>You hear ratcheting.</span>")
+		"<span class='hear'>You hear ratcheting.</span>")
 
 	qdel(src)
 
@@ -196,7 +196,7 @@ Buildable meters
 	var/piping_layer = PIPING_LAYER_DEFAULT
 
 /obj/item/pipe_meter/wrench_act(mob/living/user, obj/item/wrench/W)
-
+	. = ..()
 	var/obj/machinery/atmospherics/pipe/pipe
 	for(var/obj/machinery/atmospherics/pipe/P in loc)
 		if(P.piping_layer == piping_layer)

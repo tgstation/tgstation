@@ -108,14 +108,14 @@
 		return TRUE
 	return FALSE
 
-/obj/machinery/atmospherics/miner/update_icon()
-	cut_overlays()
+/obj/machinery/atmospherics/miner/update_overlays()
+	. = ..()
 	if(broken)
-		add_overlay("broken")
+		. += "broken"
 	else if(active)
 		var/mutable_appearance/on_overlay = mutable_appearance(icon, "on")
 		on_overlay.color = overlay_color
-		add_overlay(on_overlay)
+		. += on_overlay
 
 /obj/machinery/atmospherics/miner/process()
 	update_power()

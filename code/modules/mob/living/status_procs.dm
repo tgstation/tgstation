@@ -406,12 +406,14 @@
 /mob/living/proc/cure_blind(source)
 	REMOVE_TRAIT(src, TRAIT_BLIND, source)
 	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		adjust_blindness(-1)
+		update_blindness()
 
 /mob/living/proc/become_blind(source)
-	if(!HAS_TRAIT(src, TRAIT_BLIND))
-		blind_eyes(1)
-	ADD_TRAIT(src, TRAIT_BLIND, source)
+	if(!HAS_TRAIT(src, TRAIT_BLIND)) // not blind already, add trait then overlay
+		ADD_TRAIT(src, TRAIT_BLIND, source)
+		update_blindness()
+	else
+		ADD_TRAIT(src, TRAIT_BLIND, source)
 
 /mob/living/proc/cure_nearsighted(source)
 	REMOVE_TRAIT(src, TRAIT_NEARSIGHT, source)
@@ -432,10 +434,11 @@
 
 /mob/living/proc/become_husk(source)
 	if(!HAS_TRAIT(src, TRAIT_HUSK))
+		ADD_TRAIT(src, TRAIT_HUSK, source)
 		ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
 		update_body()
-		. = TRUE
-	ADD_TRAIT(src, TRAIT_HUSK, source)
+	else
+		ADD_TRAIT(src, TRAIT_HUSK, source)
 
 /mob/living/proc/cure_fakedeath(source)
 	REMOVE_TRAIT(src, TRAIT_FAKEDEATH, source)
@@ -454,10 +457,40 @@
 	tod = station_time_timestamp()
 	update_stat()
 
+///Unignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/unignore_slowdown(source)
 	REMOVE_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
-	update_movespeed(FALSE)
+	update_movespeed()
 
+///Ignores all slowdowns that lack the IGNORE_NOSLOW flag.
 /mob/living/proc/ignore_slowdown(source)
 	ADD_TRAIT(src, TRAIT_IGNORESLOWDOWN, source)
-	update_movespeed(FALSE)
+	update_movespeed()
+
+///Ignores specific slowdowns. Accepts a list of slowdowns.
+/mob/living/proc/add_movespeed_mod_immunities(source, slowdown_type, update = TRUE)
+	if(islist(slowdown_type))
+		for(var/listed_type in slowdown_type)
+			if(ispath(listed_type))
+				listed_type = "[listed_type]" //Path2String
+			LAZYADDASSOC(movespeed_mod_immunities, listed_type, source)
+	else
+		if(ispath(slowdown_type))
+			slowdown_type = "[slowdown_type]" //Path2String
+		LAZYADDASSOC(movespeed_mod_immunities, slowdown_type, source)
+	if(update)
+		update_movespeed()
+
+///Unignores specific slowdowns. Accepts a list of slowdowns.
+/mob/living/proc/remove_movespeed_mod_immunities(source, slowdown_type, update = TRUE)
+	if(islist(slowdown_type))
+		for(var/listed_type in slowdown_type)
+			if(ispath(listed_type))
+				listed_type = "[listed_type]" //Path2String
+			LAZYREMOVEASSOC(movespeed_mod_immunities, listed_type, source)
+	else
+		if(ispath(slowdown_type))
+			slowdown_type = "[slowdown_type]" //Path2String
+		LAZYREMOVEASSOC(movespeed_mod_immunities, slowdown_type, source)
+	if(update)
+		update_movespeed()

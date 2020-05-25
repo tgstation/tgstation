@@ -3,6 +3,10 @@
 	desc = "Old will forever be in fashion."
 	icon_state = "cabinet"
 	resistance_flags = FLAMMABLE
+	open_sound = 'sound/machines/wooden_closet_open.ogg'
+	close_sound = 'sound/machines/wooden_closet_close.ogg'
+	open_sound_volume = 25
+	close_sound_volume = 50
 	max_integrity = 70
 
 /obj/structure/closet/acloset
@@ -25,7 +29,7 @@
 	for(var/i in 1 to 5)
 		new /obj/item/clothing/head/ushanka(src)
 	for(var/i in 1 to 5)
-		new /obj/item/clothing/under/soviet(src)
+		new /obj/item/clothing/under/costume/soviet(src)
 
 /obj/structure/closet/gimmick/tacticool
 	name = "tacticool gear closet"
@@ -35,8 +39,8 @@
 	..()
 	new /obj/item/clothing/glasses/eyepatch(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
-	new /obj/item/clothing/gloves/combat(src)
-	new /obj/item/clothing/gloves/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/head/helmet/swat(src)
 	new /obj/item/clothing/mask/gas/sechailer/swat(src)

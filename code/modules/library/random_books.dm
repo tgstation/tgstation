@@ -36,10 +36,10 @@
 	if(book_count && isnum(book_count))
 		book_count += pick(-1,-1,0,1,1)
 		. = INITIALIZE_HINT_LATELOAD
-	update_icon()
 
 /obj/structure/bookcase/random/LateInitialize()
 	create_random_books(book_count, src, FALSE, category)
+	update_icon()
 
 /proc/create_random_books(amount = 2, location, fail_loud = FALSE, category = null)
 	. = list()

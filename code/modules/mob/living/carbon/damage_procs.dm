@@ -43,8 +43,6 @@
 					update_damage_overlays()
 			else
 				adjustStaminaLoss(damage_amount, forced = forced)
-		if(BRAIN)
-			adjustBrainLoss(damage_amount)
 	return TRUE
 
 
@@ -115,9 +113,46 @@
 		return
 	adjustStaminaLoss(diff, updating_health, forced)
 
+/**
+  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the damage proc on that organ.
+  *
+  * Arguments:
+  * * slot - organ slot, like [ORGAN_SLOT_HEART]
+  * * amount - damage to be done
+  * * maximum - currently an arbitrarily large number, can be set so as to limit damage
+  */
+/mob/living/carbon/adjustOrganLoss(slot, amount, maximum)
+	var/obj/item/organ/O = getorganslot(slot)
+	if(O && !(status_flags & GODMODE))
+		O.applyOrganDamage(amount, maximum)
+
+/**
+  * If an organ exists in the slot requested, and we are capable of taking damage (we don't have [GODMODE] on), call the set damage proc on that organ, which can
+  *	set or clear the failing variable on that organ, making it either cease or start functions again, unlike adjustOrganLoss.
+  *
+  * Arguments:
+  * * slot - organ slot, like [ORGAN_SLOT_HEART]
+  * * amount - damage to be set to
+  */
+/mob/living/carbon/setOrganLoss(slot, amount)
+	var/obj/item/organ/O = getorganslot(slot)
+	if(O && !(status_flags & GODMODE))
+		O.setOrganDamage(amount)
+
+/**
+  * If an organ exists in the slot requested, return the amount of damage that organ has
+  *
+  * Arguments:
+  * * slot - organ slot, like [ORGAN_SLOT_HEART]
+  */
+/mob/living/carbon/getOrganLoss(slot)
+	var/obj/item/organ/O = getorganslot(slot)
+	if(O)
+		return O.damage
+
 ////////////////////////////////////////////
 
-//Returns a list of damaged bodyparts
+///Returns a list of damaged bodyparts
 /mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, stamina = FALSE, status)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
@@ -128,7 +163,7 @@
 			parts += BP
 	return parts
 
-//Returns a list of damageable bodyparts
+///Returns a list of damageable bodyparts
 /mob/living/carbon/proc/get_damageable_bodyparts(status)
 	var/list/obj/item/bodypart/parts = list()
 	for(var/X in bodyparts)
@@ -139,20 +174,31 @@
 			parts += BP
 	return parts
 
-//Heals ONE bodypart randomly selected from damaged ones.
-//It automatically updates damage overlays if necessary
-//It automatically updates health status
+/**
+  * Heals ONE bodypart randomly selected from damaged ones.
+  *
+  * It automatically updates damage overlays if necessary
+  *
+  * It automatically updates health status
+  */
 /mob/living/carbon/heal_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute,burn,stamina,required_status)
 	if(!parts.len)
 		return
 	var/obj/item/bodypart/picked = pick(parts)
+	var/damage_calculator = picked.get_damage(TRUE) //heal_damage returns update status T/F instead of amount healed so we dance gracefully around this
 	if(picked.heal_damage(brute, burn, stamina, required_status))
 		update_damage_overlays()
+	return max(damage_calculator - picked.get_damage(TRUE), 0)
 
-//Damages ONE bodypart randomly selected from damagable ones.
-//It automatically updates damage overlays if necessary
-//It automatically updates health status
+
+/**
+  * Damages ONE bodypart randomly selected from damagable ones.
+  *
+  * It automatically updates damage overlays if necessary
+  *
+  * It automatically updates health status
+  */
 /mob/living/carbon/take_bodypart_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status, check_armor = FALSE)
 	var/list/obj/item/bodypart/parts = get_damageable_bodyparts(required_status)
 	if(!parts.len)
@@ -161,7 +207,7 @@
 	if(picked.receive_damage(brute, burn, stamina,check_armor ? run_armor_check(picked, (brute ? "melee" : burn ? "fire" : stamina ? "bullet" : null)) : FALSE))
 		update_damage_overlays()
 
-//Heal MANY bodyparts, in random order
+///Heal MANY bodyparts, in random order
 /mob/living/carbon/heal_overall_damage(brute = 0, burn = 0, stamina = 0, required_status, updating_health = TRUE)
 	var/list/obj/item/bodypart/parts = get_damaged_bodyparts(brute, burn, stamina, required_status)
 
@@ -186,7 +232,7 @@
 	if(update)
 		update_damage_overlays()
 
-// damage MANY bodyparts, in random order
+/// damage MANY bodyparts, in random order
 /mob/living/carbon/take_overall_damage(brute = 0, burn = 0, stamina = 0, updating_health = TRUE, required_status)
 	if(status_flags & GODMODE)
 		return	//godmode
@@ -216,70 +262,3 @@
 	if(update)
 		update_damage_overlays()
 	update_stamina()
-
-/mob/living/carbon/getBrainLoss()
-	. = 0
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-	if(B)
-		. = B.get_brain_damage()
-
-//Some sources of brain damage shouldn't be deadly
-/mob/living/carbon/adjustBrainLoss(amount, maximum = BRAIN_DAMAGE_DEATH)
-	if(status_flags & GODMODE)
-		return FALSE
-	var/prev_brainloss = getBrainLoss()
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-	if(!B)
-		return
-	B.adjust_brain_damage(amount, maximum)
-	if(amount <= 0) //cut this early
-		return
-	var/brainloss = getBrainLoss()
-	if(brainloss > BRAIN_DAMAGE_MILD)
-		if(prob(amount * (1 + max(0, (brainloss - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
-			gain_trauma_type(BRAIN_TRAUMA_MILD)
-	if(brainloss > BRAIN_DAMAGE_SEVERE)
-		if(prob(amount * (1 + max(0, (brainloss - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
-			if(prob(20))
-				gain_trauma_type(BRAIN_TRAUMA_SPECIAL)
-			else
-				gain_trauma_type(BRAIN_TRAUMA_SEVERE)
-
-	if (stat < UNCONSCIOUS) // conscious or soft-crit
-		if(prev_brainloss < BRAIN_DAMAGE_MILD && brainloss >= BRAIN_DAMAGE_MILD)
-			to_chat(src, "<span class='warning'>You feel lightheaded.</span>")
-		else if(prev_brainloss < BRAIN_DAMAGE_SEVERE && brainloss >= BRAIN_DAMAGE_SEVERE)
-			to_chat(src, "<span class='warning'>You feel less in control of your thoughts.</span>")
-		else if(prev_brainloss < (BRAIN_DAMAGE_DEATH - 20) && brainloss >= (BRAIN_DAMAGE_DEATH - 20))
-			to_chat(src, "<span class='warning'>You can feel your mind flickering on and off...</span>")
-
-/mob/living/carbon/setBrainLoss(amount)
-	var/obj/item/organ/brain/B = getorganslot(ORGAN_SLOT_BRAIN)
-	if(B)
-		var/adjusted_amount = amount - B.get_brain_damage()
-		B.adjust_brain_damage(adjusted_amount, null)
-
-/mob/living/carbon/proc/getLiverLoss()
-	. = 0
-	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
-	if(L)
-		. = L.damage
-
-/mob/living/carbon/proc/adjustLiverLoss(amount, check_toxres = TRUE, rev_failure = FALSE)
-	if(status_flags & GODMODE)
-		return 0
-	var/obj/item/organ/liver/L = getorganslot(ORGAN_SLOT_LIVER)
-	if(!L)
-		return
-
-	if(amount < 0 && L.failing && !rev_failure)
-		return 0
-
-	var/adjusted_amount = amount
-
-	if(check_toxres)
-		adjusted_amount *= 100 * L.toxLethality
-
-	L.damage += adjusted_amount
-
-	return adjusted_amount

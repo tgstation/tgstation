@@ -1,10 +1,9 @@
 /**
-  * # area 
-  * 
+  * # area
+  *
   * A grouping of tiles into a logical space, mostly used by map editors
   */
 /area
-	level = null
 	name = "Space"
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "unknown"
@@ -14,12 +13,22 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 
-	var/map_name // Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+	/// Set in New(); preserves the name set by the map maker, even if renamed by the Blueprints.
+	var/map_name
 
-	var/valid_territory = TRUE // If it's a valid territory for gangs to claim
-	var/blob_allowed = TRUE // Does it count for blobs score? By default, all areas count.
-	var/clockwork_warp_allowed = TRUE // Can servants warp into this area from Reebe?
-	var/clockwork_warp_fail = "The structure there is too dense for warping to pierce. (This is normal in high-security areas.)"
+	/// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn
+	var/valid_territory = TRUE
+	/// If blobs can spawn there and if it counts towards their score.
+	var/blob_allowed = TRUE
+
+	/// If mining tunnel generation is allowed in this area
+	var/tunnel_allowed = FALSE
+	/// If flora are allowed to spawn in this area randomly through tunnel generation
+	var/flora_allowed = FALSE
+	/// If mobs can be spawned by natural random generation
+	var/mob_spawn_allowed = FALSE
+	/// If megafauna can be spawned by natural random generation
+	var/megafauna_spawn_allowed = FALSE
 
 	var/fire = null
 	var/atmos = TRUE
@@ -27,12 +36,22 @@
 	var/poweralm = TRUE
 	var/lightswitch = TRUE
 
+	/// All beauty in this area combined, only includes indoor area.
+	var/totalbeauty = 0
+	/// Beauty average per open turf in the area
+	var/beauty = 0
+	/// If a room is too big it doesn't have beauty.
+	var/beauty_threshold = 150
+
 	var/requires_power = TRUE
-	var/always_unpowered = FALSE	// This gets overridden to 1 for space in area/Initialize().
+	/// This gets overridden to 1 for space in area/Initialize().
+	var/always_unpowered = FALSE
 
-	var/outdoors = FALSE //For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	/// For space, the asteroid, lavaland, etc. Used with blueprints to determine if we are adding a new area (vs editing a station room)
+	var/outdoors = FALSE
 
-	var/areasize = 0 //Size of the area in open turfs, only calculated for indoors areas.
+	/// Size of the area in open turfs, only calculated for indoors areas.
+	var/areasize = 0
 
 	/// Bonus mood for being in this area
 	var/mood_bonus = 0
@@ -42,19 +61,13 @@
 	var/power_equip = TRUE
 	var/power_light = TRUE
 	var/power_environ = TRUE
-	var/used_equip = 0
-	var/used_light = 0
-	var/used_environ = 0
-	var/static_equip
-	var/static_light = 0
-	var/static_environ
 
 	var/has_gravity = 0
-	///Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
-	var/noteleport = FALSE			
-	///Hides area from player Teleport function.
+	/// Are you forbidden from teleporting to the area? (centcom, mobs, wizard, hand teleporter)
+	var/noteleport = FALSE
+	/// Hides area from player Teleport function.
 	var/hidden = FALSE
-	///Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
+	/// Is the area teleport-safe: no space / radiation / aggresive mobs / other dangers
 	var/safe = FALSE
 	/// If false, loading multiple maps with this area type will create multiple instances.
 	var/unique = TRUE
@@ -63,10 +76,8 @@
 
 	var/parallax_movedir = 0
 
-	var/global/global_uid = 0
-	var/uid
 	var/list/ambientsounds = GENERIC
-	flags_1 = CAN_BE_DIRTY_1
+	flags_1 = CAN_BE_DIRTY_1 | CULT_PERMITTED_1
 
 	var/list/firedoors
 	var/list/cameras
@@ -76,6 +87,9 @@
 	var/xenobiology_compatible = FALSE
 	/// typecache to limit the areas that atoms in this area can smooth with, used for shuttles IIRC
 	var/list/canSmoothWithAreas
+
+	var/list/power_usage
+
 
 /**
   * A list of teleport locations
@@ -107,7 +121,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		if (picked && is_station_level(picked.z))
 			GLOB.teleportlocs[AR.name] = AR
 
-	sortTim(GLOB.teleportlocs, /proc/cmp_text_dsc)
+	sortTim(GLOB.teleportlocs, /proc/cmp_text_asc)
 
 /**
   * Called when an area loads
@@ -119,6 +133,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	// rather than waiting for atoms to initialize.
 	if (unique)
 		GLOB.areas_by_type[type] = src
+	power_usage = new /list(AREA_USAGE_LEN) // Some atoms would like to use power in Initialize()
 	return ..()
 
 /**
@@ -132,7 +147,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /area/Initialize()
 	icon_state = ""
 	layer = AREA_LAYER
-	uid = ++global_uid
 	map_name = name // Save the initial (the name set in the map) name of the area.
 	canSmoothWithAreas = typecacheof(canSmoothWithAreas)
 
@@ -167,37 +181,28 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   */
 /area/LateInitialize()
 	power_change()		// all machines set to current power level, also updates icon
+	update_beauty()
 
 /**
   * Register this area as belonging to a z level
   *
   * Ensures the item is added to the SSmapping.areas_in_z list for this z
-  * 
-  * It also goes through every item in this areas contents and sets the area level z to it
-  * breaking the exat first time it does this, this seems crazy but what would I know, maybe
-  * areas don't have a valid z themself or something
   */
 /area/proc/reg_in_areas_in_z()
-	if(contents.len)
-		var/list/areas_in_z = SSmapping.areas_in_z
-		var/z
-		update_areasize()
-		for(var/i in 1 to contents.len)
-			var/atom/thing = contents[i]
-			if(!thing)
-				continue
-			z = thing.z
-			break
-		if(!z)
-			WARNING("No z found for [src]")
-			return
-		if(!areas_in_z["[z]"])
-			areas_in_z["[z]"] = list()
-		areas_in_z["[z]"] += src
+	if(!length(contents))
+		return
+	var/list/areas_in_z = SSmapping.areas_in_z
+	update_areasize()
+	if(!z)
+		WARNING("No z found for [src]")
+		return
+	if(!areas_in_z["[z]"])
+		areas_in_z["[z]"] = list()
+	areas_in_z["[z]"] += src
 
 /**
   * Destroy an area and clean it up
-  * 
+  *
   * Removes the area from GLOB.areas_by_type and also stops it processing on SSobj
   *
   * This is despite the fact that no code appears to put it on SSobj, but
@@ -310,7 +315,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Generate an firealarm alert for this area
   *
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
-  * 
+  *
   * Also starts the area processing on SSobj
   */
 /area/proc/firealert(obj/source)
@@ -344,7 +349,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   *
   * resets the alert sent to all ai players, alert consoles, drones and alarm monitor programs
   * in the world
-  * 
+  *
   * Also cycles the icons of all firealarms and deregisters the area from processing on SSOBJ
   */
 /area/proc/firereset(obj/source)
@@ -440,12 +445,12 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		L.update()
 
 /**
-  * Update the icon of the area
+  * Update the icon state of the area
   *
   * Im not sure what the heck this does, somethign to do with weather being able to set icon
   * states on areas?? where the heck would that even display?
   */
-/area/proc/update_icon()
+/area/update_icon_state()
 	var/weather_icon
 	for(var/V in SSweather.processing)
 		var/datum/weather/W = V
@@ -458,13 +463,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /**
   * Update the icon of the area (overridden to always be null for space
   */
-/area/space/update_icon()
+/area/space/update_icon_state()
 	icon_state = null
 
 
 /**
   * Returns int 1 or 0 if the area has power for the given channel
-  * 
+  *
   * evalutes a mixture of variables mappers can set, requires_power, always_unpowered and then
   * per channel power_equip, power_light, power_environ
   */
@@ -475,11 +480,11 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(always_unpowered)
 		return 0
 	switch(chan)
-		if(EQUIP)
+		if(AREA_USAGE_EQUIP)
 			return power_equip
-		if(LIGHT)
+		if(AREA_USAGE_LIGHT)
 			return power_light
-		if(ENVIRON)
+		if(AREA_USAGE_ENVIRON)
 			return power_environ
 
 	return 0
@@ -500,44 +505,19 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		M.power_change()				// reverify power status (to update icons etc.)
 	update_icon()
 
-/**
-  * Return the usage of power per channel
-  */
-/area/proc/usage(chan)
-	var/used = 0
-	switch(chan)
-		if(LIGHT)
-			used += used_light
-		if(EQUIP)
-			used += used_equip
-		if(ENVIRON)
-			used += used_environ
-		if(TOTAL)
-			used += used_light + used_equip + used_environ
-		if(STATIC_EQUIP)
-			used += static_equip
-		if(STATIC_LIGHT)
-			used += static_light
-		if(STATIC_ENVIRON)
-			used += static_environ
-	return used
 
 /**
   * Add a static amount of power load to an area
   *
   * Possible channels
-  * *STATIC_EQUIP
-  * *STATIC_LIGHT
-  * *STATIC_ENVIRON
+  * *AREA_USAGE_STATIC_EQUIP
+  * *AREA_USAGE_STATIC_LIGHT
+  * *AREA_USAGE_STATIC_ENVIRON
   */
 /area/proc/addStaticPower(value, powerchannel)
 	switch(powerchannel)
-		if(STATIC_EQUIP)
-			static_equip += value
-		if(STATIC_LIGHT)
-			static_light += value
-		if(STATIC_ENVIRON)
-			static_environ += value
+		if(AREA_USAGE_STATIC_START to AREA_USAGE_STATIC_END)
+			power_usage[powerchannel] += value
 
 /**
   * Clear all power usage in area
@@ -545,26 +525,21 @@ GLOBAL_LIST_EMPTY(teleportlocs)
   * Clears all power used for equipment, light and environment channels
   */
 /area/proc/clear_usage()
-	used_equip = 0
-	used_light = 0
-	used_environ = 0
+	for(var/i in AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
+		power_usage[i] = 0
 
 /**
   * Add a power value amount to the stored used_x variables
   */
 /area/proc/use_power(amount, chan)
-
 	switch(chan)
-		if(EQUIP)
-			used_equip += amount
-		if(LIGHT)
-			used_light += amount
-		if(ENVIRON)
-			used_environ += amount
+		if(AREA_USAGE_DYNAMIC_START to AREA_USAGE_DYNAMIC_END)
+			power_usage[chan] += amount
+
 
 /**
   * Call back when an atom enters an area
-  * 
+  *
   * Sends signals COMSIG_AREA_ENTERED and COMSIG_ENTER_AREA (to the atom)
   *
   * If the area has ambience, then it plays some ambience music to the ambience channel
@@ -596,6 +571,17 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			L.client.played = TRUE
 			addtimer(CALLBACK(L.client, /client/proc/ResetAmbiencePlayed), 600)
 
+///Divides total beauty in the room by roomsize to allow us to get an average beauty per tile.
+/area/proc/update_beauty()
+	if(!areasize)
+		beauty = 0
+		return FALSE
+	if(areasize >= beauty_threshold)
+		beauty = 0
+		return FALSE //Too big
+	beauty = totalbeauty / areasize
+
+
 /**
   * Called when an atom exits an area
   *
@@ -611,51 +597,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 /client/proc/ResetAmbiencePlayed()
 	played = FALSE
 
-/**
-  * Returns true if this atom has gravity for the passed in turf
-  *
-  * Sends signals COMSIG_ATOM_HAS_GRAVITY and COMSIG_TURF_HAS_GRAVITY, both can force gravity with
-  * the forced gravity var
-  *
-  * Gravity situations:
-  * * No gravity if you're not in a turf
-  * * No gravity if this atom is in is a space turf
-  * * Gravity if the area it's in always has gravity
-  * * Gravity if there's a gravity generator on the z level
-  * * Gravity if the Z level has an SSMappingTrait for ZTRAIT_GRAVITY
-  * * otherwise no gravity
-  */
-/atom/proc/has_gravity(turf/T)
-	if(!T || !isturf(T))
-		T = get_turf(src)
-
-	if(!T)
-		return 0
-
-	var/list/forced_gravity = list()
-	SEND_SIGNAL(src, COMSIG_ATOM_HAS_GRAVITY, T, forced_gravity)
-	if(!forced_gravity.len)
-		SEND_SIGNAL(T, COMSIG_TURF_HAS_GRAVITY, src, forced_gravity)
-	if(forced_gravity.len)
-		var/max_grav
-		for(var/i in forced_gravity)
-			max_grav = max(max_grav, i)
-		return max_grav
-
-	if(isspaceturf(T)) // Turf never has gravity
-		return 0
-
-	var/area/A = get_area(T)
-	if(A.has_gravity) // Areas which always has gravity
-		return A.has_gravity
-	else
-		// There's a gravity generator on our z level
-		if(GLOB.gravity_generators["[T.z]"])
-			var/max_grav = 0
-			for(var/obj/machinery/gravity_generator/main/G in GLOB.gravity_generators["[T.z]"])
-				max_grav = max(G.setting,max_grav)
-			return max_grav
-	return SSmapping.level_trait(T.z, ZTRAIT_GRAVITY)
 /**
   * Setup an area (with the given name)
   *

@@ -2429,23 +2429,6 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "fG" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
-"fH" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/obj/effect/turf_decal/bot,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
-"fI" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
 /obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
@@ -2793,27 +2776,17 @@
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "gw" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "gx" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
 	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
-"gy" = (
-/obj/machinery/gateway{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "gz" = (
@@ -2887,7 +2860,7 @@
 /area/awaymission/snowdin/post/hydro)
 "gL" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
@@ -3143,25 +3116,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
-"hl" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/obj/effect/turf_decal/bot,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plasteel,
-/area/awaymission/snowdin/post/gateway)
 "hm" = (
-/obj/machinery/gateway,
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/gateway)
 "hn" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt,
@@ -4200,11 +4161,6 @@
 /obj/item/kitchen/fork,
 /turf/open/floor/plasteel/cafeteria,
 /area/awaymission/snowdin/post/messhall)
-"jA" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/plantgenes,
-/turf/open/floor/plating,
-/area/awaymission/snowdin/post/hydro)
 "jB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	piping_layer = 3;
@@ -4212,7 +4168,7 @@
 	pixel_y = 5
 	},
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /obj/effect/turf_decal/tile/green,
@@ -4646,7 +4602,7 @@
 /area/awaymission/snowdin/post/dorm)
 "kC" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -5583,7 +5539,7 @@
 /area/awaymission/snowdin/post/hydro)
 "mv" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plating{
@@ -7784,7 +7740,7 @@
 	id_tag = "snowdin_toxins_out";
 	name = "toxin out"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "rN" = (
 /obj/machinery/air_sensor{
@@ -7792,7 +7748,7 @@
 	id_tag = "snowdin_toxins";
 	name = "gas sensor (toxins)"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "rO" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -7801,7 +7757,7 @@
 	id_tag = "snowdin_oxygen_out";
 	name = "oxygen out"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "rP" = (
 /obj/machinery/air_sensor{
@@ -7809,7 +7765,7 @@
 	id_tag = "snowdin_oxygen";
 	name = "gas sensor (oxygen)"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "rQ" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -7818,7 +7774,7 @@
 	id_tag = "snowdin_nitrogen_out";
 	name = "nitrogen out"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
 "rR" = (
 /obj/machinery/air_sensor{
@@ -7826,7 +7782,7 @@
 	id_tag = "snowdin_nitrogen";
 	name = "gas sensor (nitrogen)"
 	},
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
 "rS" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -7914,20 +7870,17 @@
 /turf/open/floor/engine,
 /area/awaymission/snowdin/post/engineering)
 "sh" = (
-/obj/machinery/atmospherics/miner/toxins,
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "si" = (
 /obj/machinery/light/small,
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/post/engineering)
 "sj" = (
-/obj/machinery/atmospherics/miner/oxygen,
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/o2,
 /area/awaymission/snowdin/post/engineering)
 "sk" = (
-/obj/machinery/atmospherics/miner/nitrogen,
-/turf/open/floor/plating/airless,
+/turf/open/floor/engine/n2,
 /area/awaymission/snowdin/post/engineering)
 "sl" = (
 /obj/effect/turf_decal/stripes/line{
@@ -8238,7 +8191,7 @@
 /area/awaymission/snowdin/post/cavern2)
 "tc" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -8904,7 +8857,7 @@
 /area/awaymission/snowdin/post/cavern1)
 "vw" = (
 /obj/structure/sink{
-	dir = 4;
+	dir = 8;
 	pixel_x = 11
 	},
 /turf/open/floor/plasteel/showroomfloor,
@@ -9887,11 +9840,7 @@
 /turf/open/floor/plating,
 /area/awaymission/snowdin/cave)
 "yg" = (
-/turf/open/floor/engine/vacuum,
-/area/awaymission/snowdin/cave)
-"yh" = (
-/obj/machinery/atmospherics/miner/toxins,
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/cave)
 "yi" = (
 /obj/effect/turf_decal/stripes/line{
@@ -10005,7 +9954,7 @@
 	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/cave)
 "yv" = (
 /turf/closed/wall/mineral/snow,
@@ -10234,7 +10183,7 @@
 	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/cave)
 "zc" = (
 /obj/machinery/atmospherics/pipe/simple/orange/visible{
@@ -11861,7 +11810,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/awaymission/snowdin/cave)
 "Ds" = (
-/obj/item/grenade/plastic/c4,
+/obj/item/grenade/c4,
 /obj/effect/turf_decal/tile/neutral,
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -12011,7 +11960,7 @@
 /turf/open/floor/plasteel/dark,
 /area/awaymission/snowdin/cave)
 "DH" = (
-/obj/structure/window/plastitanium,
+/obj/structure/window/plasma/reinforced/plastitanium,
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/cave)
@@ -13352,7 +13301,7 @@
 /turf/open/floor/plating/asteroid/snow,
 /area/awaymission/snowdin/cave/mountain)
 "Ho" = (
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/outside)
 "Hp" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
@@ -13361,7 +13310,7 @@
 	id_tag = "snowdin_toxins_mine_1";
 	name = "toxin out"
 	},
-/turf/open/floor/engine/vacuum,
+/turf/open/floor/engine/plasma,
 /area/awaymission/snowdin/outside)
 "Hq" = (
 /obj/effect/turf_decal/bot,
@@ -13484,10 +13433,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/snowdin/post/mining_main)
-"HH" = (
-/obj/machinery/atmospherics/miner/toxins,
-/turf/open/floor/engine/vacuum,
-/area/awaymission/snowdin/outside)
 "HI" = (
 /obj/effect/turf_decal/bot,
 /obj/machinery/portable_atmospherics/canister,
@@ -14287,6 +14232,10 @@
 "JQ" = (
 /turf/open/floor/plasteel/elevatorshaft,
 /area/awaymission/snowdin/post/mining_main)
+"JT" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine/o2,
+/area/awaymission/snowdin/post/engineering)
 "JU" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -14778,6 +14727,10 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/awaymission/snowdin/post/garage)
+"Oo" = (
+/obj/machinery/light/small,
+/turf/open/floor/engine/n2,
+/area/awaymission/snowdin/post/engineering)
 "OF" = (
 /obj/machinery/door/airlock/external{
 	name = "Ready Room";
@@ -25758,7 +25711,7 @@ en
 fh
 fG
 gw
-hl
+gw
 hR
 iA
 ju
@@ -26013,7 +25966,7 @@ bE
 dK
 eo
 fh
-fH
+fG
 gx
 hm
 hS
@@ -26270,8 +26223,8 @@ dk
 dK
 ep
 fh
-fI
-gy
+fG
+fG
 hn
 hT
 iC
@@ -28459,7 +28412,7 @@ ae
 ae
 ae
 ai
-yh
+yg
 yg
 ai
 wQ
@@ -28698,9 +28651,9 @@ aj
 aj
 ai
 yg
-yh
 yg
-yh
+yg
+yg
 yg
 ai
 ae
@@ -29102,7 +29055,7 @@ gE
 hw
 hX
 iI
-jA
+gJ
 ke
 kQ
 lF
@@ -29889,7 +29842,7 @@ qy
 ra
 rt
 rP
-si
+JT
 oW
 am
 am
@@ -30660,7 +30613,7 @@ qB
 rb
 rt
 rR
-si
+Oo
 oW
 ag
 af
@@ -31106,7 +31059,7 @@ Fx
 Fy
 GS
 Ho
-HH
+Ho
 tq
 ae
 ae
@@ -32391,7 +32344,7 @@ te
 Gw
 GS
 Ho
-HH
+Ho
 tq
 ae
 ae
@@ -32568,7 +32521,7 @@ ae
 ae
 ai
 yg
-yh
+yg
 ai
 ae
 ae
@@ -34093,7 +34046,7 @@ ae
 ae
 ae
 ai
-yh
+yg
 yg
 ai
 ae

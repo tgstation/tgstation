@@ -8,7 +8,6 @@
 	var/add_to_accounts = TRUE
 	var/account_id
 	var/being_dumped = FALSE //pink levels are rising
-	var/withdrawDelay = 0
 
 /datum/bank_account/New(newname, job)
 	if(add_to_accounts)
@@ -24,7 +23,6 @@
 
 /datum/bank_account/proc/dumpeet()
 	being_dumped = TRUE
-	withdrawDelay = world.time + DUMPTIME
 
 /datum/bank_account/proc/_adjust_money(amt)
 	account_balance += amt
@@ -43,6 +41,8 @@
 /datum/bank_account/proc/transfer_money(datum/bank_account/from, amount)
 	if(from.has_money(amount))
 		adjust_money(amount)
+		SSblackbox.record_feedback("amount", "credits_transferred", amount)
+		log_econ("[amount] credits were transferred from [from.account_holder]'s account to [src.account_holder]")
 		from.adjust_money(-amount)
 		return TRUE
 	return FALSE
@@ -51,6 +51,8 @@
 	var/money_to_transfer = account_job.paycheck * amt_of_paychecks
 	if(free)
 		adjust_money(money_to_transfer)
+		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)
+		log_econ("[money_to_transfer] credits were given to [src.account_holder]'s account from income.")
 	else
 		var/datum/bank_account/D = SSeconomy.get_dep_account(account_job.paycheck_department)
 		if(D)
@@ -58,7 +60,7 @@
 				bank_card_talk("ERROR: Payday aborted, departmental funds insufficient.")
 				return FALSE
 			else
-				bank_card_talk("Payday processed, account now holds $[account_balance].")
+				bank_card_talk("Payday processed, account now holds [account_balance] cr.")
 				return TRUE
 	bank_card_talk("ERROR: Payday aborted, unable to contact departmental account.")
 	return FALSE
@@ -79,13 +81,13 @@
 
 			card_holder.playsound_local(get_turf(card_holder), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 			if(card_holder.can_hear())
-				to_chat(card_holder, "[icon2html(icon_source, card_holder)] *[message]*")
+				to_chat(card_holder, "[icon2html(icon_source, card_holder)] <span class='notice'>[message]</span>")
 		else if(isturf(A.loc)) //If on the ground
 			for(var/mob/M in hearers(1,get_turf(A)))
 				if(M.client && !(M.client.prefs.chat_toggles & CHAT_BANKCARD) && !force)
 					return
 				playsound(A, 'sound/machines/twobeep_high.ogg', 50, TRUE)
-				A.audible_message("[icon2html(icon_source, hearers(A))] *[message]*", null, 1)
+				A.audible_message("[icon2html(icon_source, hearers(A))] <span class='notice'>[message]</span>", null, 1)
 				break
 		else
 			for(var/mob/M in A.loc) //If inside a container with other mobs (e.g. locker)
@@ -93,7 +95,7 @@
 					return
 				M.playsound_local(get_turf(M), 'sound/machines/twobeep_high.ogg', 50, TRUE)
 				if(M.can_hear())
-					to_chat(M, "[icon2html(icon_source, M)] *[message]*")
+					to_chat(M, "[icon2html(icon_source, M)] <span class='notice'>[message]</span>")
 
 /datum/bank_account/department
 	account_holder = "Guild Credit Agency"

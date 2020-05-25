@@ -202,6 +202,11 @@
 		if(filename == P.filename)
 			return P
 
+/datum/ntnet/proc/get_chat_channel_by_id(id)
+	for(var/datum/ntnet_conversation/chan in chat_channels)
+		if(chan.id == id)
+			return chan
+
 // Resets the IDS alarm
 /datum/ntnet/proc/resetIDS()
 	intrusion_detection_alarm = FALSE

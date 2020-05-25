@@ -5,7 +5,7 @@
 	var/list/swarm_members = list()
 
 /datum/component/swarming/Initialize(max_x = 24, max_y = 24)
-	if(!ismovableatom(parent))
+	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 	offset_x = rand(-max_x, max_x)
 	offset_y = rand(-max_y, max_y)

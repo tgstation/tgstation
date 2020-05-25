@@ -1,5 +1,5 @@
 /datum/holiday
-	var/name = "Bugsgiving"
+	var/name = "If you see this the holiday calendar code is broken"
 
 	var/begin_day = 1
 	var/begin_month = 0
@@ -23,8 +23,8 @@
 // Returns special prefixes for the station name on certain days. You wind up with names like "Christmas Object Epsilon". See new_station_name()
 /datum/holiday/proc/getStationPrefix()
 	//get the first word of the Holiday and use that
-	var/i = findtext(name," ",1,0)
-	return copytext(name,1,i)
+	var/i = findtext(name, " ")
+	return copytext(name, 1, i)
 
 // Return 1 if this holidy should be celebrated today
 /datum/holiday/proc/shouldCelebrate(dd, mm, yy, ww, ddd)
@@ -92,6 +92,16 @@
 
 /datum/holiday/valentines/getStationPrefix()
 	return pick("Love","Amore","Single","Smootch","Hug")
+
+/// Garbage DAYYYYY
+/// Huh?.... NOOOO
+/// *GUNSHOT*
+/// AHHHGHHHHHHH
+/datum/holiday/garbageday
+	name = GARBAGEDAY
+	begin_day = 17
+	end_day = 17
+	begin_month = JUNE
 
 /datum/holiday/birthday
 	name = "Birthday of Space Station 13"
@@ -170,7 +180,8 @@
 /datum/holiday/april_fools/celebrate()
 	SSjob.set_overflow_role("Clown")
 	SSticker.login_music = 'sound/ambience/clown.ogg'
-	for(var/mob/dead/new_player/P in GLOB.mob_list)
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/P = i
 		if(P.client)
 			P.client.playtitlemusic()
 
@@ -451,36 +462,27 @@
 /datum/holiday/moth/getStationPrefix()
 	return pick("Mothball","Lepidopteran","Lightbulb","Moth","Giant Atlas","Twin-spotted Sphynx","Madagascan Sunset","Luna","Death's Head","Emperor Gum","Polyphenus","Oleander Hawk","Io","Rosy Maple","Cecropia","Noctuidae","Giant Leopard","Dysphania Militaris","Garden Tiger")
 
-/datum/holiday/ramadan
+/datum/holiday/islamic
+	name = "Islamic calendar code broken"
+
+/datum/holiday/islamic/shouldCelebrate(dd, mm, yy, ww, ddd)
+	var/datum/foreign_calendar/islamic/cal = new
+	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
+
+/datum/holiday/islamic/ramadan
 	name = "Start of Ramadan"
+	begin_month = 9
+	begin_day = 1
+	end_day = 3
 
-/*
+/datum/holiday/islamic/ramadan/getStationPrefix()
+	return pick("Haram","Halaal","Jihad","Muslim", "Al", "Mohammad", "Rashidun", "Umayyad", "Abbasid", "Abdul", "Fatimid", "Ayyubid", "Almohad", "Abu")
 
-For anyone who stumbles on this some time in the future: this was calibrated to 2017
-Calculated based on the start and end of Ramadan in 2000 (First year of the Gregorian Calendar supported by BYOND)
-This is going to be accurate for at least a decade, likely a lot longer
-Since the date fluctuates, it may be inaccurate one year and then accurate for several after
-Inaccuracies will never be by more than one day for at least a hundred years
-Finds the number of days since the day in 2000 and gets the modulo of that and the average length of a Muslim year since the first one (622 AD, Gregorian)
-Since Ramadan is an entire month that lasts 29.5 days on average, the start and end are holidays and are calculated from the two dates in 2000
-
-*/
-
-/datum/holiday/ramadan/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if (round(((world.realtime - 285984000) / 864000) % 354.373435326843) == 0)
-		return TRUE
-	return FALSE
-
-/datum/holiday/ramadan/getStationPrefix()
-	return pick("Harm","Halaal","Jihad","Muslim")
-
-/datum/holiday/ramadan/end
+/datum/holiday/islamic/ramadan/end
 	name = "End of Ramadan"
-
-/datum/holiday/ramadan/end/shouldCelebrate(dd, mm, yy, ww, ddd)
-	if (round(((world.realtime - 312768000) / 864000) % 354.373435326843) == 0)
-		return TRUE
-	return FALSE
+	end_month = 10
+	begin_day = 28
+	end_day = 1
 
 /datum/holiday/lifeday
 	name = "Life Day"
@@ -589,3 +591,52 @@ Since Ramadan is an entire month that lasts 29.5 days on average, the start and 
 
 /datum/holiday/easter/getStationPrefix()
 	return pick("Fluffy","Bunny","Easter","Egg")
+
+/datum/holiday/ianbirthday
+	name = "Ian's Birthday" //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
+	begin_month = SEPTEMBER
+	begin_day = 9
+	end_day = 10
+
+/datum/holiday/ianbirthday/greet()
+	return "Happy birthday, Ian!"
+
+/datum/holiday/ianbirthday/getStationPrefix()
+	return pick("Ian", "Corgi", "Erro")
+
+/datum/holiday/hotdogday //I have plans for this.
+	name = "National Hot Dog Day"
+	begin_day = 17
+	begin_month = JULY
+
+/datum/holiday/hotdogday/greet()
+	return "Happy National Hot Dog Day!"
+
+/datum/holiday/hebrew
+	name = "If you see this the Hebrew holiday calendar code is broken"
+
+/datum/holiday/hebrew/shouldCelebrate(dd, mm, yy, ww, ddd)
+	var/datum/foreign_calendar/hebrew/cal = new
+	return ..(cal.dd, cal.mm, cal.yy, ww, ddd)
+
+/datum/holiday/hebrew/hanukkah
+	name = "Hanukkah"
+	begin_day = 25
+	begin_month = 9
+	end_day = 2
+	end_month = 10
+
+/datum/holiday/hebrew/hanukkah/greet()
+	return "Happy [pick("Hanukkah", "Chanukah")]!"
+
+/datum/holiday/hebrew/hanukkah/getStationPrefix()
+	return pick("Dreidel", "Menorah", "Latkes", "Gelt")
+
+/datum/holiday/hebrew/passover
+	name = "Passover"
+	begin_day = 15
+	begin_month = 1
+	end_day = 22
+
+/datum/holiday/hebrew/passover/getStationPrefix()
+	return pick("Matzah", "Moses", "Red Sea")

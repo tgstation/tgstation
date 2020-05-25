@@ -35,7 +35,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(target && target.current)
 		def_value = target.current
 
-	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in possible_targets
+	var/mob/new_target = input(admin,"Select target:", "Objective target", def_value) as null|anything in sortNames(possible_targets)
 	if (!new_target)
 		return
 
@@ -162,7 +162,7 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 	if(receiver && receiver.current)
 		if(ishuman(receiver.current))
 			var/mob/living/carbon/human/H = receiver.current
-			var/list/slots = list("backpack" = SLOT_IN_BACKPACK)
+			var/list/slots = list("backpack" = ITEM_SLOT_BACKPACK)
 			for(var/eq_path in special_equipment)
 				var/obj/O = new eq_path
 				H.equip_in_one_of_slots(O, slots)
@@ -305,6 +305,42 @@ GLOBAL_LIST(admin_objective_list) //Prefilled admin assignable objective list
 /datum/objective/protect/nonhuman
 	name = "protect nonhuman"
 	human_check = FALSE
+
+/datum/objective/jailbreak
+	name = "jailbreak"
+	martyr_compatible = TRUE //why not?
+	var/target_role_type
+
+/datum/objective/jailbreak/find_target_by_role(role, role_type, invert=FALSE)
+	if(!invert)
+		target_role_type = role_type
+	return ..()
+
+/datum/objective/jailbreak/check_completion()
+	return completed || (considered_escaped(target))
+
+/datum/objective/jailbreak/update_explanation_text()
+	..()
+	if(target?.current)
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] escapes alive and out of custody."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/jailbreak/admin_edit(mob/admin)
+	admin_simple_target_pick(admin)
+
+/datum/objective/jailbreak/detain
+	name = "detain"
+
+/datum/objective/jailbreak/detain/check_completion()
+	return completed || (!considered_escaped(target) && (considered_alive(target) && target.current.onCentCom()))
+
+/datum/objective/jailbreak/detain/update_explanation_text()
+	..()
+	if(target && target.current)
+		explanation_text = "Ensure that [target.name], the [!target_role_type ? target.assigned_role : target.special_role] is delivered to nanotrasen alive and in custody."
+	else
+		explanation_text = "Free Objective"
 
 /datum/objective/hijack
 	name = "hijack"
@@ -493,7 +529,9 @@ GLOBAL_LIST_EMPTY(possible_items)
 				if(M.current.mind.assigned_role in possible_item.excludefromjob)
 					continue check_items
 			approved_targets += possible_item
-	return set_target(safepick(approved_targets))
+	if (length(approved_targets))
+		return set_target(pick(approved_targets))
+	return set_target(null)
 
 /datum/objective/steal/proc/set_target(datum/objective_item/item)
 	if(item)
@@ -507,8 +545,8 @@ GLOBAL_LIST_EMPTY(possible_items)
 		return
 
 /datum/objective/steal/admin_edit(mob/admin)
-	var/list/possible_items_all = GLOB.possible_items+"custom"
-	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in possible_items_all
+	var/list/possible_items_all = GLOB.possible_items
+	var/new_target = input(admin,"Select target:", "Objective target", steal_target) as null|anything in sortNames(possible_items_all)+"custom"
 	if (!new_target)
 		return
 
@@ -544,7 +582,7 @@ GLOBAL_LIST_EMPTY(possible_items)
 				else if(targetinfo.check_special_completion(I))//Returns 1 by default. Items with special checks will return 1 if the conditions are fulfilled.
 					return TRUE
 
-			if(targetinfo && I.type in targetinfo.altitems) //Ok, so you don't have the item. Do you have an alternative, at least?
+			if(targetinfo && (I.type in targetinfo.altitems)) //Ok, so you don't have the item. Do you have an alternative, at least?
 				if(targetinfo.check_special_completion(I))//Yeah, we do! Don't return 0 if we don't though - then you could fail if you had 1 item that didn't pass and got checked first!
 					return TRUE
 	return FALSE
@@ -707,12 +745,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/n_p = 1 //autowin
 	var/list/datum/mind/owners = get_owners()
 	if (SSticker.current_state == GAME_STATE_SETTING_UP)
-		for(var/mob/dead/new_player/P in GLOB.player_list)
-			if(P.client && P.ready == PLAYER_READY_TO_PLAY && !(P.mind in owners))
+		for(var/i in GLOB.new_player_list)
+			var/mob/dead/new_player/P = i
+			if(P.ready == PLAYER_READY_TO_PLAY && !(P.mind in owners))
 				n_p ++
 	else if (SSticker.IsRoundInProgress())
 		for(var/mob/living/carbon/human/P in GLOB.player_list)
-			if(P.client && !(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
+			if(!(P.mind.has_antag_datum(/datum/antagonist/changeling)) && !(P.mind in owners))
 				n_p ++
 	target_amount = min(target_amount, n_p)
 
@@ -811,10 +850,10 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /datum/objective/destroy/admin_edit(mob/admin)
 	var/list/possible_targets = active_ais(1)
 	if(possible_targets.len)
-		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in possible_targets
+		var/mob/new_target = input(admin,"Select target:", "Objective target") as null|anything in sortNames(possible_targets)
 		target = new_target.mind
 	else
-		to_chat(admin, "No active AIs with minds")
+		to_chat(admin, "<span class='boldwarning'>No active AIs with minds.</span>")
 	update_explanation_text()
 
 /datum/objective/destroy/internal
@@ -1054,11 +1093,13 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 /proc/generate_admin_objective_list()
 	GLOB.admin_objective_list = list()
 
-	var/list/allowed_types = list(
+	var/list/allowed_types = sortList(list(
 		/datum/objective/assassinate,
 		/datum/objective/maroon,
 		/datum/objective/debrain,
 		/datum/objective/protect,
+		/datum/objective/jailbreak,
+		/datum/objective/jailbreak/detain,
 		/datum/objective/destroy,
 		/datum/objective/hijack,
 		/datum/objective/escape,
@@ -1070,7 +1111,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 		/datum/objective/capture,
 		/datum/objective/absorb,
 		/datum/objective/custom
-	)
+	),/proc/cmp_typepaths_asc)
 
 	for(var/T in allowed_types)
 		var/datum/objective/X = T
@@ -1086,7 +1127,7 @@ GLOBAL_LIST_EMPTY(possible_items_special)
 	var/found = FALSE
 	while (!found)
 		var/area/dropoff_area = pick(GLOB.sortedAreas)
-		if(dropoff_area && is_station_level(dropoff_area.z) && dropoff_area.valid_territory)
+		if(dropoff_area && is_station_level(dropoff_area.z) && !dropoff_area.outdoors)
 			dropoff = dropoff_area
 			found = TRUE
 

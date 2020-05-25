@@ -6,6 +6,7 @@
 	desc = "This is rubbish."
 	w_class = WEIGHT_CLASS_TINY
 	resistance_flags = FLAMMABLE
+	item_flags = NOBLUDGEON
 
 /obj/item/trash/Initialize(mapload)
 	var/turf/T = get_turf(src)
@@ -34,6 +35,11 @@
 /obj/item/trash/chips
 	name = "chips"
 	icon_state = "chips"
+
+/obj/item/trash/boritos
+	name = "boritos bag"
+	icon_state = "boritos"
+	grind_results = list(/datum/reagent/aluminium = 1) //from the mylar bag
 
 /obj/item/trash/popcorn
 	name = "popcorn"
@@ -84,22 +90,21 @@
 	resistance_flags = NONE
 	grind_results = list(/datum/reagent/aluminium = 10)
 
+/obj/item/trash/can/food/peaches
+	name = "canned peaches"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "peachcan_empty"
+
+/obj/item/trash/can/food/peaches/maint
+	name = "Maintenance Peaches"
+	icon_state = "peachcanmaint_empty"
+
+/obj/item/trash/can/food/beans
+	name = "tin of beans"
+	icon = 'icons/obj/food/food.dmi'
+	icon_state = "beans_empty"
+
 /obj/item/trash/can/Initialize()
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
-
-/obj/item/trash/attack(mob/M, mob/living/user)
-	return
-
-/obj/item/trash/coal
-	name = "lump of coal"
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "slag"
-	desc = "Someone's gotten on the naughty list."
-	grind_results = list(/datum/reagent/carbon = 20)
-
-/obj/item/trash/coal/burn()
-	visible_message("[src] fuses into a diamond! Someone wasn't so naughty after all...")
-	new /obj/item/stack/ore/diamond(loc)
-	qdel(src)

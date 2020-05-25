@@ -1,11 +1,21 @@
 /datum/radiation_wave
+	/// The thing that spawned this radiation wave
 	var/source
-	var/turf/master_turf //The center of the wave
-	var/steps=0 //How far we've moved
-	var/intensity //How strong it was originaly
-	var/range_modifier //Higher than 1 makes it drop off faster, 0.5 makes it drop off half etc
-	var/move_dir //The direction of movement
-	var/list/__dirs //The directions to the side of the wave, stored for easy looping
+	/// The center of the wave
+	var/turf/master_turf
+	/// How far we've moved
+	var/steps=0
+	/// How strong it was originaly
+	var/intensity
+	/// How much contaminated material it still has
+	var/remaining_contam
+	/// Higher than 1 makes it drop off faster, 0.5 makes it drop off half etc
+	var/range_modifier
+	/// The direction of movement
+	var/move_dir
+	/// The directions to the side of the wave, stored for easy looping
+	var/list/__dirs
+	/// Whether or not this radiation wave can create contaminated objects
 	var/can_contaminate
 
 /datum/radiation_wave/New(atom/_source, dir, _intensity=0, _range_modifier=RAD_DISTANCE_COEFFICIENT, _can_contaminate=TRUE)
@@ -20,6 +30,7 @@
 	__dirs+=turn(dir, -90)
 
 	intensity = _intensity
+	remaining_contam = intensity
 	range_modifier = _range_modifier
 	can_contaminate = _can_contaminate
 
@@ -47,9 +58,7 @@
 	if(strength<RAD_BACKGROUND_RADIATION)
 		qdel(src)
 		return
-
-	radiate(atoms, FLOOR(strength, 1))
-
+	radiate(atoms, strength)
 	check_obstructions(atoms) // reduce our overall strength if there are radiation insulators
 
 /datum/radiation_wave/proc/get_rad_atoms()
@@ -91,10 +100,14 @@
 			intensity *= (1-((1-thing.rad_insulation)/width))
 
 /datum/radiation_wave/proc/radiate(list/atoms, strength)
-	var/contamination_chance = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_CHANCE_COEFFICIENT * min(1, 1/(steps*range_modifier))
-	for(var/k in 1 to atoms.len)
-		var/atom/thing = atoms[k]
-		if(!thing)
+	var/can_contam = strength >= RAD_MINIMUM_CONTAMINATION
+	var/contamination_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
+	contamination_strength = max(contamination_strength, RAD_BACKGROUND_RADIATION)
+	// It'll never reach 100% chance but the further out it gets the more likely it'll contaminate
+	var/contamination_chance = 100 - (90 / (1 + steps * 0.1))
+	for(var/k in atoms)
+		var/atom/thing = k
+		if(QDELETED(thing))
 			continue
 		thing.rad_act(strength)
 
@@ -110,10 +123,18 @@
 			/obj/item/implant,
 			/obj/singularity
 			))
-		if(!can_contaminate || blacklisted[thing.type])
+		if(!can_contaminate || !can_contam || blacklisted[thing.type])
 			continue
-		if(prob(contamination_chance)) // Only stronk rads get to have little baby rads
-			if(SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
-				continue
-			var/rad_strength = (strength-RAD_MINIMUM_CONTAMINATION) * RAD_CONTAMINATION_STR_COEFFICIENT
-			thing.AddComponent(/datum/component/radioactive, rad_strength, source)
+		if(thing.rad_flags & RAD_NO_CONTAMINATE || SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+			continue
+
+		if(contamination_strength > remaining_contam)
+			contamination_strength = remaining_contam
+		if(!prob(contamination_chance))
+			continue
+		if(SEND_SIGNAL(thing, COMSIG_ATOM_RAD_CONTAMINATING, strength) & COMPONENT_BLOCK_CONTAMINATION)
+			continue
+		remaining_contam -= contamination_strength
+		if(remaining_contam < RAD_BACKGROUND_RADIATION)
+			can_contaminate = FALSE
+		thing.AddComponent(/datum/component/radioactive, contamination_strength, source)

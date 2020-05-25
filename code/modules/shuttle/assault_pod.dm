@@ -13,7 +13,7 @@
 /obj/docking_port/mobile/assault_pod/initiate_docking(obj/docking_port/stationary/S1)
 	. = ..()
 	if(!istype(S1, /obj/docking_port/stationary/transit))
-		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,1)
+		playsound(get_turf(src.loc), 'sound/effects/explosion1.ogg',50,TRUE)
 
 
 
@@ -42,9 +42,10 @@
 	if(!src || QDELETED(src))
 		return
 
-	var/turf/T = safepick(get_area_turfs(picked_area))
-	if(!T)
+	var/list/turfs = get_area_turfs(picked_area)
+	if (!length(turfs))
 		return
+	var/turf/T = pick(turfs)
 	var/obj/docking_port/stationary/landing_zone = new /obj/docking_port/stationary(T)
 	landing_zone.id = "assault_pod([REF(src)])"
 	landing_zone.name = "Landing Zone"
@@ -58,6 +59,6 @@
 		if(S.shuttleId == shuttle_id)
 			S.possible_destinations = "[landing_zone.id]"
 
-	to_chat(user, "Landing zone set.")
+	to_chat(user, "<span class='notice'>Landing zone set.</span>")
 
 	qdel(src)

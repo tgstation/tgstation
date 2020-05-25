@@ -1,0 +1,15 @@
+/**
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'sass:color';
+
+$color-fg: #ffffff !default;
+$color-bg: #252525 !default;
+$color-bg-grad-spread: 2% !default;
+$color-bg-start: color.adjust(
+  $color-bg, $lightness: $color-bg-grad-spread) !default;
+$color-bg-end: color.adjust(
+  $color-bg, $lightness: -$color-bg-grad-spread) !default;
+$border-radius: 2px !default;

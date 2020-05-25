@@ -39,5 +39,5 @@
 		user.alien_evolve(new_xeno)
 		return 1
 	else
-		to_chat(user, "<span class='notice'>We already have a living royal!</span>")
+		to_chat(user, "<span class='warning'>We already have a living royal!</span>")
 		return 0

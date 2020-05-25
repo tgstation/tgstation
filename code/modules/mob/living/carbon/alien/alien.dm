@@ -18,7 +18,8 @@
 
 	status_flags = CANUNCONSCIOUS|CANPUSH
 
-	var/heat_protection = 0.5
+	heat_protection = 0.5 // minor heat insulation
+
 	var/leaping = 0
 	gib_type = /obj/effect/decal/cleanable/xenoblood/xgibs
 	unique_name = 1
@@ -48,22 +49,9 @@
 	return -10
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
-	if(!environment)
-		return
-
-	var/loc_temp = get_temperature(environment)
-
-	// Aliens are now weak to fire.
-
-	//After then, it reacts to the surrounding atmosphere based on your thermal protection
-	if(!on_fire) // If you're on fire, ignore local air temperature
-		if(loc_temp > bodytemperature)
-			//Place is hotter than we are
-			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of heat protection.
-			if(thermal_protection < 1)
-				adjust_bodytemperature((1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
-		else
-			adjust_bodytemperature(1 * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR))
+	// Run base mob body temperature proc before taking damage
+	// this balances body temp to the enviroment and natural stabilization
+	. = ..()
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
 		//Body temperature is too hot.
@@ -121,7 +109,8 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
 	if (client)
 		for(var/image/I in client.images)
-			if(dd_hasprefix_case(I.icon_state, "infected"))
+			var/searchfor = "infected"
+			if(findtext(I.icon_state, searchfor, 1, length(searchfor) + 1))
 				qdel(I)
 	return
 
@@ -135,11 +124,18 @@ Des: Removes all infected images from the alien.
 	to_chat(src, "<span class='noticealien'>You begin to evolve!</span>")
 	visible_message("<span class='alertalien'>[src] begins to twist and contort!</span>")
 	new_xeno.setDir(dir)
+	if(numba && unique_name)
+		new_xeno.numba = numba
+		new_xeno.set_name()
 	if(!alien_name_regex.Find(name))
 		new_xeno.name = name
 		new_xeno.real_name = real_name
 	if(mind)
 		mind.transfer_to(new_xeno)
+	var/datum/component/nanites/nanites = GetComponent(/datum/component/nanites)
+	if(nanites)
+		new_xeno.AddComponent(/datum/component/nanites, nanites.nanite_volume)
+		SEND_SIGNAL(new_xeno, COMSIG_NANITE_SYNC, nanites)
 	qdel(src)
 
 /mob/living/carbon/alien/can_hold_items()

@@ -22,25 +22,30 @@
 	turns_per_move = 0
 	melee_damage_lower = 1
 	melee_damage_upper = 1
-	attacktext = "stings"
-	response_help  = "shoos"
-	response_disarm = "swats away"
-	response_harm   = "squashes"
+	attack_verb_continuous = "stings"
+	attack_verb_simple = "sting"
+	response_help_continuous = "shoos"
+	response_help_simple = "shoo"
+	response_disarm_continuous = "swats away"
+	response_disarm_simple = "swat away"
+	response_harm_continuous = "squashes"
+	response_harm_simple = "squash"
 	maxHealth = 10
 	health = 10
-	spacewalk = TRUE
 	faction = list("hostile")
 	move_to_delay = 0
 	obj_damage = 0
+	ventcrawler = VENTCRAWLER_ALWAYS
 	environment_smash = ENVIRONMENT_SMASH_NONE
 	mouse_opacity = MOUSE_OPACITY_OPAQUE
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
 	density = FALSE
 	mob_size = MOB_SIZE_TINY
-	mob_biotypes = list(MOB_ORGANIC, MOB_BUG)
+	mob_biotypes = MOB_ORGANIC|MOB_BUG
 	movement_type = FLYING
-	gold_core_spawnable = HOSTILE_SPAWN
+	gold_core_spawnable = FRIENDLY_SPAWN
 	search_objects = 1 //have to find those plant trays!
+	can_be_held = TRUE
 
 	//Spaceborn beings don't get hurt by space
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
@@ -57,8 +62,18 @@
 
 /mob/living/simple_animal/hostile/poison/bees/Initialize()
 	. = ..()
+	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)
 	generate_bee_visuals()
 	AddComponent(/datum/component/swarming)
+
+/mob/living/simple_animal/hostile/poison/bees/mob_pickup(mob/living/L)
+	var/obj/item/clothing/head/mob_holder/destructible/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
+	var/list/reee = list(/datum/reagent/consumable/nutriment/vitamin = 5)
+	if(beegent)
+		reee[beegent.type] = 5
+	holder.AddComponent(/datum/component/edible, reee, null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+	L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
+	L.put_in_hands(holder)
 
 /mob/living/simple_animal/hostile/poison/bees/Destroy()
 	if(beehome)
@@ -72,6 +87,13 @@
 	if(beehome)
 		beehome.bees -= src
 		beehome = null
+	var/obj/item/trash/bee/bee_to_eat = new(loc)
+	bee_to_eat.pixel_x = pixel_x
+	bee_to_eat.pixel_y = pixel_y
+	if(beegent)
+		bee_to_eat.beegent = beegent
+		bee_to_eat.reagents.add_reagent(beegent.type, 5)
+	bee_to_eat.update_icon()
 	beegent = null
 	..()
 
@@ -82,6 +104,16 @@
 	if(!beehome)
 		. += "<span class='warning'>This bee is homeless!</span>"
 
+/mob/living/simple_animal/hostile/poison/bees/ListTargets() // Bee processing is expessive, so we override them finding targets here.
+	if(!search_objects) //In case we want to have purely hostile bees
+		return ..()
+	else
+		. = list() // The following code is only very slightly slower than just returning oview(vision_range, targets_from), but it saves us much more work down the line
+		var/list/searched_for = oview(vision_range, targets_from)
+		for(var/obj/A in searched_for)
+			. += A
+		for(var/mob/A in searched_for)
+			. += A
 
 /mob/living/simple_animal/hostile/poison/bees/proc/generate_bee_visuals()
 	cut_overlays()
@@ -144,6 +176,10 @@
 				beegent.reaction_mob(L, INJECT)
 				L.reagents.add_reagent(beegent.type, rand(1,5))
 
+/mob/living/simple_animal/hostile/poison/bees/inject_poison(mob/living/L)
+	if(beegent && istype(L) && L.reagents)
+		beegent.reaction_mob(L, INJECT)
+		L.reagents.add_reagent(beegent.type, rand(1,5))
 
 /mob/living/simple_animal/hostile/poison/bees/proc/assign_reagent(datum/reagent/R)
 	if(istype(R))
@@ -162,9 +198,7 @@
 	target = null //so we pick a new hydro tray next FindTarget(), instead of loving the same plant for eternity
 	wanted_objects -= hydroponicstypecache //so we only hunt them while they're alive/seeded/not visisted
 	Hydro.recent_bee_visit = TRUE
-	spawn(BEE_TRAY_RECENT_VISIT)
-		if(Hydro)
-			Hydro.recent_bee_visit = FALSE
+	addtimer(VARSET_CALLBACK(Hydro, recent_bee_visit, FALSE), BEE_TRAY_RECENT_VISIT)
 
 	var/growth = health //Health also means how many bees are in the swarm, roughly.
 	//better healthier plants!
@@ -304,3 +338,22 @@
 /mob/living/simple_animal/hostile/poison/bees/short/Initialize(mapload, timetolive=50 SECONDS)
 	. = ..()
 	addtimer(CALLBACK(src, .proc/death), timetolive)
+
+/obj/item/trash/bee
+	name = "bee"
+	desc = "No wonder the bees are dying out, you monster."
+	icon = 'icons/mob/bees.dmi'
+	icon_state = "bee_item"
+	var/datum/reagent/beegent
+
+/obj/item/trash/bee/Initialize()
+	. = ..()
+	AddComponent(/datum/component/edible, list(/datum/reagent/consumable/nutriment/vitamin = 5), null, RAW | MEAT | GROSS, 10, 0, list("bee"), null, 10)
+
+/obj/item/trash/bee/update_icon()
+	. = ..()
+	cut_overlays()
+	var/mutable_appearance/body_overlay = mutable_appearance(icon = icon, icon_state = "bee_item_overlay")
+	body_overlay.color = beegent ? beegent.color : BEE_DEFAULT_COLOUR
+	add_overlay(body_overlay)
+

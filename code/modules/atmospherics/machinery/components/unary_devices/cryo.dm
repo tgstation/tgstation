@@ -1,4 +1,6 @@
 #define CRYOMOBS 'icons/obj/cryo_mobs.dmi'
+///Max temperature allowed inside the cryotube, should break before reaching this heat
+#define MAX_TEMPERATURE 4000
 
 /obj/machinery/atmospherics/components/unary/cryo_cell
 	name = "cryo cell"
@@ -10,6 +12,8 @@
 	layer = ABOVE_WINDOW_LAYER
 	state_open = FALSE
 	circuit = /obj/item/circuitboard/machine/cryo_tube
+	ui_x = 400
+	ui_y = 550
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 
@@ -76,12 +80,28 @@
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
+	///Take the turf the cryotube is on
+	var/turf/T = get_turf(src)
+	if(T)
+		///Take the air composition of the turf
+		var/datum/gas_mixture/env = T.return_air()
+		///Take the air composition inside the cryotube
+		var/datum/gas_mixture/air1 = airs[1]
+		env.merge(air1)
+		T.air_update_turf()
+
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/contents_explosion(severity, target)
 	..()
 	if(beaker)
-		beaker.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += beaker
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += beaker
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += beaker
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/handle_atom_del(atom/A)
 	..()
@@ -177,11 +197,12 @@
 		return
 
 	var/mob/living/mob_occupant = occupant
+	if(mob_occupant.on_fire)
+		mob_occupant.ExtinguishMob()
 	if(!check_nap_violations())
 		return
 	if(mob_occupant.stat == DEAD) // We don't bother with dead people.
 		return
-
 	if(mob_occupant.health >= mob_occupant.getMaxHealth()) // Don't bother with fully healed people.
 		on = FALSE
 		update_icon()
@@ -237,15 +258,14 @@
 
 			var/heat = ((1 - cold_protection) * 0.1 + conduction_coefficient) * temperature_delta * (air_heat_capacity * heat_capacity / (air_heat_capacity + heat_capacity))
 
-			air1.temperature = max(air1.temperature - heat / air_heat_capacity, TCMB)
+			air1.temperature = clamp(air1.temperature - heat / air_heat_capacity, TCMB, MAX_TEMPERATURE)
 			mob_occupant.adjust_bodytemperature(heat / heat_capacity, TCMB)
 
 		air1.gases[/datum/gas/oxygen][MOLES] = max(0,air1.gases[/datum/gas/oxygen][MOLES] - 0.5 / efficiency) // Magically consume gas? Why not, we run on cryo magic.
 		air1.garbage_collect()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/power_change()
-	..()
-	update_icon()
+		if(air1.temperature > 2000)
+			take_damage(clamp((air1.temperature)/200, 10, 20), BURN)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/relaymove(mob/user)
 	if(message_cooldown <= world.time)
@@ -275,7 +295,7 @@
 	user.last_special = world.time + CLICK_CD_BREAKOUT
 	user.visible_message("<span class='notice'>You see [user] kicking against the glass of [src]!</span>", \
 		"<span class='notice'>You struggle inside [src], kicking the release with your foot... (this will take about [DisplayTimeText(breakout_time)].)</span>", \
-		"<span class='italics'>You hear a thump from [src].</span>")
+		"<span class='hear'>You hear a thump from [src].</span>")
 	if(do_after(user, breakout_time, target = src))
 		if(!user || user.stat != CONSCIOUS || user.loc != src )
 			return
@@ -301,7 +321,7 @@
 		if(L.incapacitated())
 			close_machine(target)
 	else
-		user.visible_message("<b>[user]</b> starts shoving [target] inside [src].", "<span class='notice'>You start shoving [target] inside [src].</span>")
+		user.visible_message("<span class='notice'>[user] starts shoving [target] inside [src].</span>", "<span class='notice'>You start shoving [target] inside [src].</span>")
 		if (do_after(user, 25, target=target))
 			close_machine(target)
 
@@ -314,7 +334,7 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I
-		user.visible_message("[user] places [I] in [src].", \
+		user.visible_message("<span class='notice'>[user] places [I] in [src].</span>", \
 							"<span class='notice'>You place [I] in [src].</span>")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
@@ -335,7 +355,7 @@
 																	datum/tgui/master_ui = null, datum/ui_state/state = GLOB.notcontained_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "cryo", name, 400, 550, master_ui, state)
+		ui = new(user, src, ui_key, "Cryo", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/ui_data()
@@ -416,6 +436,20 @@
 				beaker = null
 				. = TRUE
 
+/obj/machinery/atmospherics/components/unary/cryo_cell/CtrlClick(mob/user)
+	if(can_interact(user) && !state_open)
+		on = !on
+		update_icon()
+	return ..()
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/AltClick(mob/user)
+	if(can_interact(user))
+		if(state_open)
+			close_machine()
+		else
+			open_machine()
+	return ..()
+
 /obj/machinery/atmospherics/components/unary/cryo_cell/update_remote_sight(mob/living/user)
 	return // we don't see the pipe network while inside cryo.
 
@@ -449,6 +483,7 @@
 		if(node)
 			node.atmosinit()
 			node.addMember(src)
-		build_network()
+		SSair.add_to_rebuild_queue(src)
 
 #undef CRYOMOBS
+#undef MAX_TEMPERATURE

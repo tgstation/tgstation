@@ -3,15 +3,17 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass
 	name = "drinking glass"
 	desc = "Your standard drinking glass."
-	custom_price = 5
 	icon_state = "glass_empty"
 	amount_per_transfer_from_this = 10
 	volume = 50
-	materials = list(/datum/material/glass=500)
+	custom_materials = list(/datum/material/glass=500)
 	max_integrity = 20
 	spillable = TRUE
 	resistance_flags = ACID_PROOF
 	obj_flags = UNIQUE_RENAME
+	drop_sound = 'sound/items/handling/drinkglass_drop.ogg'
+	pickup_sound =  'sound/items/handling/drinkglass_pickup.ogg'
+	custom_price = 25
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/on_reagent_change(changetype)
 	cut_overlays()
@@ -41,21 +43,18 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass
 	name = "shot glass"
 	desc = "A shot glass - the universal symbol for bad decisions."
-	custom_price = 5
 	icon_state = "shotglass"
 	gulp_size = 15
 	amount_per_transfer_from_this = 15
 	possible_transfer_amounts = list()
 	volume = 15
-	materials = list(/datum/material/glass=100)
+	custom_materials = list(/datum/material/glass=100)
+	custom_price = 20
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shotglass/on_reagent_change(changetype)
 	cut_overlays()
 
-	if (gulp_size < 15)
-		gulp_size = 15
-	else
-		gulp_size = max(round(reagents.total_volume / 15), 15)
+	gulp_size = max(round(reagents.total_volume / 15), 15)
 
 	if (reagents.reagent_list.len > 0)
 		var/datum/reagent/largest_reagent = reagents.get_master_reagent()
@@ -110,7 +109,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/attack(obj/target, mob/user)
 	if(user.a_intent == INTENT_HARM && ismob(target) && target.reagents && reagents.total_volume)
 		target.visible_message("<span class='danger'>[user] splashes the contents of [src] onto [target]!</span>", \
-						"<span class='userdanger'>[user] splashes the contents of [src] onto [target]!</span>")
+						"<span class='userdanger'>[user] splashes the contents of [src] onto you!</span>")
 		log_combat(user, target, "splashed", src)
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
@@ -128,4 +127,3 @@
 		reagents.reaction(target, TOUCH)
 		reagents.clear_reagents()
 		return
-

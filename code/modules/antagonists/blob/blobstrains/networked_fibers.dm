@@ -34,5 +34,5 @@
 /datum/reagent/blob/networked_fibers/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.apply_damage(0.6*reac_volume, BRUTE)
-	if(M)
+	if(!QDELETED(M))
 		M.apply_damage(0.6*reac_volume, BURN)

@@ -14,6 +14,7 @@
 	//book contents below
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -49,6 +50,7 @@
 	title = "APLU \"Ripley\" Construction and Operation Manual"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -99,14 +101,6 @@
 				<li>Install the external reinforced armor plating (Not included due to Nanotrasen regulations. Can be made using 5 reinforced metal sheets.)</li>
 				<li>Secure the external reinforced armor plating with a wrench</li>
 				<li>Weld the external reinforced armor plating to the chassis</li>
-				<li></li>
-				<li>Additional Information:</li>
-				<li>The firefighting variation is made in a similar fashion.</li>
-				<li>A firesuit must be connected to the Firefighter chassis for heat shielding.</li>
-				<li>Internal armor is plasteel for additional strength.</li>
-				<li>External armor must be installed in 2 parts, totaling 10 sheets.</li>
-				<li>Completed mech is more resiliant against fire, and is a bit more durable overall</li>
-				<li>Nanotrasen is determined to the safety of its <s>investments</s> employees.</li>
 				</ol>
 				</body>
 				</html>
@@ -122,6 +116,7 @@
 	title = "Chef Recipes"
 	dat = {"<html>
 				<head>
+				<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 				<style>
 				h1 {font-size: 18px; margin: 15px 0px 5px;}
 				h2 {font-size: 15px; margin: 15px 0px 5px;}
@@ -169,7 +164,7 @@
 				It can cook multiple items at once.
 
 				<h2>Processor:</h2>
-				Use it to process certain ingredients (meat into faggot, doughslice into spaghetti, potato into fries,etc...)
+				Use it to process certain ingredients (meat into meatballs, doughslice into spaghetti, potato into fries,etc...)
 
 				<h2>Gibber:</h2>
 				Stuff an animal in it to grind it into meat.
@@ -202,6 +197,10 @@
 	author = "Syndicate"
 	title = "Fission Mailed: Nuclear Sabotage 101"
 	dat = {"<html>
+			<head>
+			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
+			</head>
+			<body>
 			Nuclear Explosives 101:<br>
 			Hello and thank you for choosing the Syndicate for your nuclear information needs.<br>
 			Today's crash course will deal with the operation of a Fusion Class Nanotrasen made Nuclear Device.<br>
@@ -229,6 +228,7 @@
 			<b>Disk, Code, Safety, Timer, Disk, RUN!</b><br>
 			Intelligence Analysts believe that normal Nanotrasen procedure is for the Captain to secure the nuclear authorisation disk.<br>
 			Good luck!
+			</body>
 			</html>"}
 
 // Wiki books that are linked to the configured wiki link.
@@ -248,7 +248,9 @@
 	if(wikiurl)
 		dat = {"
 
-			<html><head>
+			<html>
+			<head>
+			<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 			<style>
 				iframe {
 					display: none;
@@ -366,13 +368,6 @@
 	title = "Mentoring your Experiments"
 	page_link = "Experimentor"
 
-/obj/item/book/manual/wiki/medical_cloning
-	name = "Cloning techniques of the 26th century"
-	icon_state ="bookCloning"
-	author = "Medical Journal, volume 3"
-	title = "Cloning techniques of the 26th century"
-	page_link = "Guide_to_genetics#Cloning"
-
 /obj/item/book/manual/wiki/cooking_to_serve_man
 	name = "To Serve Man"
 	desc = "It's a cookbook!"
@@ -426,7 +421,7 @@
 /obj/item/book/manual/wiki/toxins/suicide_act(mob/user)
 	var/mob/living/carbon/human/H = user
 	user.visible_message("<span class='suicide'>[user] starts dancing to the Rhumba Beat! It looks like [user.p_theyre()] trying to commit suicide!</span>")
-	playsound(loc, 'sound/effects/spray.ogg', 10, 1, -3)
+	playsound(loc, 'sound/effects/spray.ogg', 10, TRUE, -3)
 	if (!QDELETED(H))
 		H.emote("spin")
 		sleep(20)
@@ -443,3 +438,10 @@
 		H.spill_organs()
 		H.spread_bodyparts()
 	return (BRUTELOSS)
+
+/obj/item/book/manual/wiki/plumbing
+	name = "Chemical Factories Without Narcotics"
+	icon_state ="plumbingbook"
+	author = "Nanotrasen"
+	title = "Chemical Factories Without Narcotics"
+	page_link = "Guide_to_plumbing"

@@ -1,4 +1,6 @@
 /mob/dead/new_player/Login()
+	if(!client)
+		return
 	if(CONFIG_GET(flag/use_exp_tracking))
 		client.set_exp_from_db()
 		client.set_db_player_flags()
@@ -7,7 +9,9 @@
 		mind.active = 1
 		mind.current = src
 
-	..()
+	. = ..()
+	if(!. || !client)
+		return FALSE
 
 	var/motd = global.config.motd
 	if(motd)

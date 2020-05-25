@@ -4,7 +4,7 @@
 	name = "picture frame"
 	desc = "The perfect showcase for your favorite deathtrap memories."
 	icon = 'icons/obj/decals.dmi'
-	materials = list()
+	custom_materials = list(/datum/material/wood = 2000)
 	flags_1 = 0
 	icon_state = "frame-empty"
 	result_path = /obj/structure/sign/picture_frame
@@ -44,10 +44,10 @@
 	else
 		return ..()
 
-/obj/item/wallframe/picture/update_icon()
-	cut_overlays()
+/obj/item/wallframe/picture/update_overlays()
+	. = ..()
 	if(displayed)
-		add_overlay(image(displayed))
+		. += displayed
 
 /obj/item/wallframe/picture/after_attach(obj/O)
 	..()
@@ -64,6 +64,7 @@
 	desc = "Every time you look it makes you laugh."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "frame-empty"
+	custom_materials = list(/datum/material/wood = 2000)
 	var/obj/item/photo/framed
 	var/persistence_id
 	var/can_decon = TRUE
@@ -99,7 +100,7 @@
 		load_from_id(data[persistence_id])
 
 /obj/structure/sign/picture_frame/proc/load_from_id(id)
-	var/obj/item/photo/P = load_photo_from_disk(id)
+	var/obj/item/photo/old/P = load_photo_from_disk(id)
 	if(istype(P))
 		if(istype(framed))
 			framed.forceMove(drop_location())
@@ -119,7 +120,7 @@
 	if(can_decon && (I.tool_behaviour == TOOL_SCREWDRIVER || I.tool_behaviour == TOOL_WRENCH))
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		if(I.use_tool(src, user, 30, volume=50))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 			deconstruct()
 
@@ -148,10 +149,10 @@
 	if(framed)
 		framed.show(user)
 
-/obj/structure/sign/picture_frame/update_icon()
-	cut_overlays()
+/obj/structure/sign/picture_frame/update_overlays()
+	. = ..()
 	if(framed)
-		add_overlay(image(framed))
+		. += framed
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))

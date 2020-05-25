@@ -36,7 +36,8 @@
 //  Arguments: event_type as text, any number of additional arguments to pass to event handler
 //  Returns: null
 /datum/events/proc/fireEvent(eventName, ...)
-	var/list/event = listgetindex(events,eventName)
+	
+	var/list/event = LAZYACCESS(events,eventName)
 	if(istype(event))
 		for(var/E in event)
 			var/datum/callback/cb = E
@@ -48,7 +49,7 @@
 /datum/events/proc/clearEvent(event_type as text, datum/callback/cb)
 	if(!event_type || !cb)
 		return FALSE
-	var/list/event = listgetindex(events,event_type)
+	var/list/event = LAZYACCESS(events,event_type)
 	event -= cb
 	qdel(cb)
 	return TRUE

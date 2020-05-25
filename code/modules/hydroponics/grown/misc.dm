@@ -11,10 +11,12 @@
 	production = 1
 	yield = 2
 	potency = 10
+	instability = 35
 	growthstages = 3
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy)
-	mutatelist = list(/obj/item/seeds/starthistle/corpse_flower)
+	mutatelist = list(/obj/item/seeds/starthistle/corpse_flower, /obj/item/seeds/galaxythistle)
+	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/starthistle/harvest(mob/user)
 	var/obj/machinery/hydroponics/parent = loc
@@ -62,6 +64,44 @@
 	T.assume_air(stank)
 	T.air_update_turf()
 
+//Galaxy Thistle
+/obj/item/seeds/galaxythistle
+	name = "pack of galaxythistle seeds"
+	desc = "An impressive species of weed that is thought to have evolved from the simple milk thistle. Contains flavolignans that can help repair a damaged liver."
+	icon_state = "seed-galaxythistle"
+	species = "galaxythistle"
+	plantname = "Galaxythistle"
+	product = /obj/item/reagent_containers/food/snacks/grown/galaxythistle
+	lifespan = 70
+	endurance = 40
+	maturation = 3
+	production = 2
+	yield = 2
+	potency = 25
+	instability = 35
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
+	genes = list(/datum/plant_gene/trait/plant_type/weed_hardy, /datum/plant_gene/trait/invasive)
+	mutatelist = list()
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.05, /datum/reagent/medicine/silibinin = 0.1)
+	graft_gene = /datum/plant_gene/trait/invasive
+
+/obj/item/seeds/galaxythistle/Initialize(mapload,nogenes)
+	. = ..()
+	if(!nogenes)
+		unset_mutability(/datum/plant_gene/trait/invasive, PLANT_GENE_REMOVABLE)
+
+/obj/item/reagent_containers/food/snacks/grown/galaxythistle
+	seed = /obj/item/seeds/galaxythistle
+	name = "galaxythistle flower head"
+	desc = "This spiny cluster of florets reminds you of the highlands."
+	icon_state = "galaxythistle"
+	filling_color = "#1E7549"
+	bitesize_mod = 3
+	foodtype = VEGETABLES
+	wine_power = 35
+	tastes = list("thistle" = 2, "artichoke" = 1)
+
 // Cabbage
 /obj/item/seeds/cabbage
 	name = "pack of cabbage seeds"
@@ -75,6 +115,7 @@
 	maturation = 3
 	production = 5
 	yield = 4
+	instability = 10
 	growthstages = 1
 	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -104,6 +145,7 @@
 	endurance = 50
 	maturation = 3
 	yield = 4
+	instability = 15
 	growthstages = 2
 	reagents_add = list(/datum/reagent/consumable/sugar = 0.25)
 	mutatelist = list(/obj/item/seeds/bamboo)
@@ -158,7 +200,7 @@
 	plantname = "Cherry Bomb Tree"
 	product = /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
 	mutatelist = list()
-	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/blackpowder = 0.7)
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1, /datum/reagent/consumable/sugar = 0.1, /datum/reagent/gunpowder = 0.7)
 	rarity = 60 //See above
 
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb
@@ -168,7 +210,7 @@
 	filling_color = rgb(20, 20, 20)
 	seed = /obj/item/seeds/cherry/bomb
 	bitesize_mod = 2
-	volume = 125 //Gives enough room for the black powder at max potency
+	volume = 125 //Gives enough room for the gunpowder at max potency
 	max_integrity = 40
 	wine_power = 80
 
@@ -186,8 +228,40 @@
 /obj/item/reagent_containers/food/snacks/grown/cherry_bomb/ex_act(severity)
 	qdel(src) //Ensuring that it's deleted by its own explosion. Also prevents mass chain reaction with piles of cherry bombs
 
-/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime()
+/obj/item/reagent_containers/food/snacks/grown/cherry_bomb/proc/prime(mob/living/lanced_by)
 	icon_state = "cherry_bomb_lit"
-	playsound(src, 'sound/effects/fuse.ogg', seed.potency, 0)
-	reagents.chem_temp = 1000 //Sets off the black powder
+	playsound(src, 'sound/effects/fuse.ogg', seed.potency, FALSE)
+	reagents.chem_temp = 1000 //Sets off the gunpowder
 	reagents.handle_reactions()
+
+// aloe
+/obj/item/seeds/aloe
+	name = "pack of aloe seeds"
+	desc = "These seeds grow into aloe."
+	icon_state = "seed-aloe"
+	species = "aloe"
+	plantname = "Aloe"
+	product = /obj/item/reagent_containers/food/snacks/grown/aloe
+	lifespan = 60
+	endurance = 25
+	maturation = 4
+	production = 4
+	yield = 6
+	growthstages = 5
+	growing_icon = 'icons/obj/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
+
+/obj/item/reagent_containers/food/snacks/grown/aloe
+	seed = /obj/item/seeds/aloe
+	name = "aloe"
+	desc = "Cut leaves from the aloe plant."
+	icon_state = "aloe"
+	filling_color = "#90EE90"
+	bitesize_mod = 5
+	foodtype = VEGETABLES
+	juice_results = list(/datum/reagent/consumable/aloejuice = 0)
+	distill_reagent = /datum/reagent/consumable/ethanol/tequila
+
+/obj/item/reagent_containers/food/snacks/grown/aloe/microwave_act(obj/machinery/microwave/M)
+	new /obj/item/stack/medical/aloe(drop_location(), 2)
+	qdel(src)

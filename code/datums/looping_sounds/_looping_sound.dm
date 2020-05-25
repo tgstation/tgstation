@@ -23,8 +23,11 @@
 	var/end_sound
 	var/chance
 	var/volume = 100
+	var/vary = FALSE
 	var/max_loops
 	var/direct
+	var/extra_range = 0
+	var/falloff
 
 	var/timerid
 
@@ -80,7 +83,7 @@
 		if(direct)
 			SEND_SOUND(thing, S)
 		else
-			playsound(thing, S, volume)
+			playsound(thing, S, volume, vary, extra_range, falloff)
 
 /datum/looping_sound/proc/get_sound(starttime, _mid_sounds)
 	. = _mid_sounds || mid_sounds

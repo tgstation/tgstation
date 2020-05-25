@@ -2,7 +2,7 @@
 	name = "Prison Escapee"
 	uniform = /obj/item/clothing/under/rank/prisoner
 	shoes = /obj/item/clothing/shoes/sneakers/orange
-	r_pocket = /obj/item/kitchen/knife/carrotshiv
+	r_pocket = /obj/item/kitchen/knife/shiv
 
 /datum/outfit/prisoner/post_equip(mob/living/carbon/human/H, visualsOnly=FALSE)
 	if(visualsOnly)
@@ -11,7 +11,7 @@
 
 /datum/outfit/yalp_cultist
 	name = "Cultist of Yalp Elor"
-	uniform = /obj/item/clothing/under/rank/chaplain
+	uniform = /obj/item/clothing/under/rank/civilian/chaplain
 	suit = /obj/item/clothing/suit/chaplainsuit/holidaypriest
 	gloves = /obj/item/clothing/gloves/color/red
 	shoes = /obj/item/clothing/shoes/sneakers/black
@@ -33,19 +33,19 @@
 	H.eye_color = "000"
 	H.gender = MALE
 	H.skin_tone = "caucasian3"
-	H.hair_style = "Business Hair 3"
-	H.facial_hair_style = "Shaved"
+	H.hairstyle = "Business Hair 3"
+	H.facial_hairstyle = "Shaved"
 	H.hair_color = "000"
 	H.facial_hair_color = H.hair_color
 	H.update_body()
 	if(H.mind)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/knock(null))
 	var/list/no_drops = list()
-	no_drops += H.get_item_by_slot(SLOT_SHOES)
-	no_drops += H.get_item_by_slot(SLOT_W_UNIFORM)
-	no_drops += H.get_item_by_slot(SLOT_WEAR_SUIT)
-	no_drops += H.get_item_by_slot(SLOT_HEAD)
-	no_drops += H.get_item_by_slot(SLOT_GLASSES)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_FEET)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_OCLOTHING)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_HEAD)
+	no_drops += H.get_item_by_slot(ITEM_SLOT_EYES)
 	for(var/i in no_drops)
 		var/obj/item/I = i
 		ADD_TRAIT(I, TRAIT_NODROP, CURSED_ITEM_TRAIT)
@@ -63,11 +63,11 @@
 
 /datum/outfit/spacepol
 	name = "Spacepol Officer"
-	uniform = /obj/item/clothing/under/rank/security/spacepol
+	uniform = /obj/item/clothing/under/rank/security/officer/spacepol
 	suit = /obj/item/clothing/suit/armor/vest/blueshirt
 	belt = /obj/item/gun/ballistic/automatic/pistol/m1911
 	head = /obj/item/clothing/head/helmet/police
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/sechailer/swat/spacepol
 	glasses = /obj/item/clothing/glasses/sunglasses
@@ -97,7 +97,7 @@
 	uniform = /obj/item/clothing/under/rank/prisoner
 	head = /obj/item/clothing/head/hunter
 	suit = /obj/item/clothing/suit/space/hunter
-	gloves = /obj/item/clothing/gloves/combat
+	gloves = /obj/item/clothing/gloves/tackler/combat
 	shoes = /obj/item/clothing/shoes/jackboots
 	mask = /obj/item/clothing/mask/gas/hunter
 	glasses = /obj/item/clothing/glasses/sunglasses/garb

@@ -14,7 +14,7 @@ Format:
 endmap
 
 map boxstation
-	default
+	#default
 	#voteweight 1.5
 	votable
 endmap
@@ -34,8 +34,8 @@ map deltastation
 	votable
 endmap
 
-map donutstation
-	minplayers 50
+map icebox
+	minplayers 25
 	votable
 endmap
 

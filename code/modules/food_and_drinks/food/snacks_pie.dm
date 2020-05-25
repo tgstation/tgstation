@@ -17,6 +17,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 1)
 	tastes = list("pie" = 1)
 	foodtype = GRAIN
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/pie/cream
 	name = "banana cream pie"
@@ -28,6 +29,7 @@
 	tastes = list("pie" = 1)
 	foodtype = GRAIN | DAIRY | SUGAR
 	var/stunning = TRUE
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/pie/cream/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -41,22 +43,15 @@
 	new/obj/effect/decal/cleanable/food/pie_smudge(T)
 	if(reagents && reagents.total_volume)
 		reagents.reaction(hit_atom, TOUCH)
-	if(ishuman(hit_atom))
-		var/mob/living/carbon/human/H = hit_atom
-		var/mutable_appearance/creamoverlay = mutable_appearance('icons/effects/creampie.dmi')
-		if(H.dna.species.limbs_id == "lizard")
-			creamoverlay.icon_state = "creampie_lizard"
-		else
-			creamoverlay.icon_state = "creampie_human"
+	if(isliving(hit_atom))
+		var/mob/living/L = hit_atom
 		if(stunning)
-			H.Paralyze(20) //splat!
-		H.adjust_blurriness(1)
-		H.visible_message("<span class='warning'>[H] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
-		playsound(H, "desceration", 50, TRUE)
-		if(!H.creamed) // one layer at a time
-			H.add_overlay(creamoverlay)
-			H.creamed = TRUE
-			SEND_SIGNAL(H, COMSIG_ADD_MOOD_EVENT, "creampie", /datum/mood_event/creampie)
+			L.Paralyze(20) //splat!
+		L.adjust_blurriness(1)
+		L.visible_message("<span class='warning'>[L] is creamed by [src]!</span>", "<span class='userdanger'>You've been creamed by [src]!</span>")
+		playsound(L, "desceration", 50, TRUE)
+	if(is_type_in_typecache(hit_atom, GLOB.creamable))
+		hit_atom.AddComponent(/datum/component/creamed, src)
 	qdel(src)
 
 /obj/item/reagent_containers/food/snacks/pie/cream/nostun
@@ -70,6 +65,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/berryjuice = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pie" = 1, "blackberries" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/pie/bearypie
 	name = "beary pie"
@@ -78,7 +74,8 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("pie" = 1, "meat" = 1, "salmon" = 1)
-	foodtype = GRAIN | SUGAR
+	foodtype = GRAIN | SUGAR | MEAT | FRUIT
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/pie/meatpie
 	name = "meat-pie"
@@ -87,7 +84,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("pie" = 1, "meat" = 1)
 	foodtype = GRAIN | MEAT
-
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pie/tofupie
 	name = "tofu-pie"
@@ -96,7 +93,6 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pie" = 1, "tofu" = 1)
 	foodtype = GRAIN
-
 
 /obj/item/reagent_containers/food/snacks/pie/amanita_pie
 	name = "amanita pie"
@@ -107,7 +103,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/toxin/amatoxin = 3, /datum/reagent/drug/mushroomhallucinogen = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtype = GRAIN | VEGETABLES | TOXIC | GROSS
-
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pie/plump_pie
 	name = "plump pie"
@@ -116,7 +112,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("pie" = 1, "mushroom" = 1)
 	foodtype = GRAIN | VEGETABLES
-
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pie/plump_pie/Initialize()
 	. = ..()
@@ -128,7 +124,6 @@
 	if(fey)
 		reagents.add_reagent(/datum/reagent/medicine/omnizine, 5)
 
-
 /obj/item/reagent_containers/food/snacks/pie/xemeatpie
 	name = "xeno-pie"
 	icon_state = "xenomeatpie"
@@ -137,7 +132,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("pie" = 1, "meat" = 1, "acid" = 1)
 	foodtype = GRAIN | MEAT
-
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/pie/applepie
 	name = "apple pie"
@@ -146,8 +141,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("pie" = 1, "apple" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
-
-
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pie/cherrypie
 	name = "cherry pie"
@@ -156,7 +150,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 2)
 	tastes = list("pie" = 7, "Nicole Paige Brooks" = 2)
 	foodtype = GRAIN | FRUIT | SUGAR
-
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pie/pumpkinpie
 	name = "pumpkin pie"
@@ -167,6 +161,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("pie" = 1, "pumpkin" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pumpkinpieslice
 	name = "pumpkin pie slice"
@@ -178,6 +173,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "pumpkin" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/pie/appletart
 	name = "golden apple streusel tart"
@@ -187,6 +183,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/gold = 5, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("pie" = 1, "apple" = 1, "expensive metal" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/pie/grapetart
 	name = "grape tart"
@@ -196,6 +193,37 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
 	tastes = list("pie" = 1, "grape" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+	value = FOOD_RARE
+
+/obj/item/reagent_containers/food/snacks/pie/mimetart
+	name = "mime tart"
+	desc = "..."
+	icon_state = "mimetart"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/nothing = 10)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("nothing" = 3)
+	foodtype = GRAIN
+	value = FOOD_EXOTIC
+
+/obj/item/reagent_containers/food/snacks/pie/berrytart
+	name = "berry tart"
+	desc = "A tasty dessert of many different small barries on a thin pie crust."
+	icon_state = "berrytart"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 5)
+	tastes = list("pie" = 1, "berries" = 2)
+	foodtype = GRAIN | FRUIT
+	value = FOOD_RARE
+
+/obj/item/reagent_containers/food/snacks/pie/cocolavatart
+	name = "chocolate lava tart"
+	desc = "A tasty dessert made of chocolate, with a liquid core."
+	icon_state = "cocolavatart"
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 1, /datum/reagent/consumable/nutriment/vitamin = 4)
+	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	tastes = list("pie" = 1, "dark chocolate" = 3)
+	foodtype = GRAIN | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/pie/blumpkinpie
 	name = "blumpkin pie"
@@ -206,6 +234,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 3, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/blumpkinpieslice
 	name = "blumpkin pie slice"
@@ -217,6 +246,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("pie" = 1, "a mouthful of pool water" = 1)
 	foodtype = GRAIN | VEGETABLES
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/pie/dulcedebatata
 	name = "dulce de batata"
@@ -227,6 +257,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 8)
 	tastes = list("jelly" = 1, "sweet potato" = 1)
 	foodtype = GRAIN | VEGETABLES | SUGAR
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/dulcedebatataslice
 	name = "dulce de batata slice"
@@ -238,6 +269,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	tastes = list("jelly" = 1, "sweet potato" = 1)
 	foodtype = GRAIN | VEGETABLES | SUGAR
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/pie/frostypie
 	name = "frosty pie"
@@ -246,3 +278,26 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("mint" = 1, "pie" = 1)
 	foodtype = GRAIN | FRUIT | SUGAR
+	value = FOOD_RARE
+
+/obj/item/reagent_containers/food/snacks/pie/baklava
+	name = "baklava"
+	desc = "A delightful healthy snack made of nut layers with thin bread."
+	icon_state = "baklava"
+	slice_path = /obj/item/reagent_containers/food/snacks/baklavaslice
+	slices_num = 6
+	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 6)
+	tastes = list("nuts" = 1, "pie" = 1)
+	foodtype = GRAIN
+	value = FOOD_EXOTIC
+
+/obj/item/reagent_containers/food/snacks/baklavaslice
+	name = "baklava dish"
+	desc = "A portion of a delightful healthy snack made of nut layers with thin bread"
+	icon = 'icons/obj/food/piecake.dmi'
+	icon_state = "baklavaslice"
+	trash = /obj/item/trash/plate
+	filling_color = "#1E90FF"
+	tastes = list("nuts" = 1, "pie" = 1)
+	foodtype = GRAIN
+	value = FOOD_JUNK

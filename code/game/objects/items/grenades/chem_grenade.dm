@@ -115,8 +115,8 @@
 				user.log_message("removed [O] ([reagent_list]) from [src]", LOG_GAME)
 			beakers = list()
 			to_chat(user, "<span class='notice'>You open the [initial(name)] assembly and remove the payload.</span>")
-			wires.detach_assembly(wires.get_wire(1))
 			return
+		wires.detach_assembly(wires.get_wire(1))
 		new /obj/item/stack/cable_coil(get_turf(src),1)
 		stage_change(GRENADE_EMPTY)
 		to_chat(user, "<span class='notice'>You remove the activation mechanism from the [initial(name)] assembly.</span>")
@@ -166,7 +166,7 @@
 				to_chat(user, "<span class='warning'>You prime [src], activating its proximity sensor.</span>")
 			else
 				to_chat(user, "<span class='warning'>You prime [src]! [DisplayTimeText(det_time)]!</span>")
-	playsound(src, 'sound/weapons/armbomb.ogg', volume, 1)
+	playsound(src, 'sound/weapons/armbomb.ogg', volume, TRUE)
 	icon_state = initial(icon_state) + "_active"
 	if(landminemode)
 		landminemode.activate()
@@ -174,10 +174,11 @@
 	active = TRUE
 	addtimer(CALLBACK(src, .proc/prime), isnull(delayoverride)? det_time : delayoverride)
 
-/obj/item/grenade/chem_grenade/prime()
+/obj/item/grenade/chem_grenade/prime(mob/living/lanced_by)
 	if(stage != GRENADE_READY)
 		return
 
+	. = ..()
 	var/list/datum/reagents/reactants = list()
 	for(var/obj/item/reagent_containers/glass/G in beakers)
 		reactants += G.reagents
@@ -185,7 +186,7 @@
 	var/turf/detonation_turf = get_turf(src)
 
 	if(!chem_splash(detonation_turf, affected_area, reactants, ignition_temp, threatscale) && !no_splash)
-		playsound(src, 'sound/items/screwdriver2.ogg', 50, 1)
+		playsound(src, 'sound/items/screwdriver2.ogg', 50, TRUE)
 		if(beakers.len)
 			for(var/obj/O in beakers)
 				O.forceMove(drop_location())
@@ -212,7 +213,7 @@
 	ignition_temp = 25 // Large grenades are slightly more effective at setting off heat-sensitive mixtures than smaller grenades.
 	threatscale = 1.1	// 10% more effective.
 
-/obj/item/grenade/chem_grenade/large/prime()
+/obj/item/grenade/chem_grenade/large/prime(mob/living/lanced_by)
 	if(stage != GRENADE_READY)
 		return
 
@@ -273,13 +274,13 @@
 		var/newspread = text2num(stripped_input(user, "Please enter a new spread amount", name))
 		if (newspread != null && user.canUseTopic(src, BE_CLOSE))
 			newspread = round(newspread)
-			unit_spread = CLAMP(newspread, 5, 100)
+			unit_spread = clamp(newspread, 5, 100)
 			to_chat(user, "<span class='notice'>You set the time release to [unit_spread] units per detonation.</span>")
 		if (newspread != unit_spread)
 			to_chat(user, "<span class='notice'>The new value is out of bounds. Minimum spread is 5 units, maximum is 100 units.</span>")
 	..()
 
-/obj/item/grenade/chem_grenade/adv_release/prime()
+/obj/item/grenade/chem_grenade/adv_release/prime(mob/living/lanced_by)
 	if(stage != GRENADE_READY)
 		return
 

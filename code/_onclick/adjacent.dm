@@ -14,7 +14,7 @@
 	return 0
 
 // Not a sane use of the function and (for now) indicative of an error elsewhere
-/area/Adjacent(var/atom/neighbor)
+/area/Adjacent(atom/neighbor)
 	CRASH("Call to /area/Adjacent(), unimplemented proc")
 
 
@@ -65,7 +65,7 @@
 	Adjacency (to anything else):
 	* Must be on a turf
 */
-/atom/movable/Adjacent(var/atom/neighbor)
+/atom/movable/Adjacent(atom/neighbor)
 	if(neighbor == loc)
 		return TRUE
 	var/turf/T = loc
@@ -76,7 +76,7 @@
 	return FALSE
 
 // This is necessary for storage items not on your person.
-/obj/item/Adjacent(var/atom/neighbor, var/recurse = 1)
+/obj/item/Adjacent(atom/neighbor, recurse = 1)
 	if(neighbor == loc)
 		return 1
 	if(isitem(loc))

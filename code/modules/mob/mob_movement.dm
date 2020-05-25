@@ -1,17 +1,3 @@
-///Can the atom pass this mob (always true for /mob)
-/mob/CanPass(atom/movable/mover, turf/target)
-	return TRUE				//There's almost no cases where non /living mobs should be used in game as actual mobs, other than ghosts.
-
-/**
-  * Get the current movespeed delay of the mob
-  *
-  * DO NOT OVERRIDE THIS UNLESS YOU ABSOLUTELY HAVE TO.
-  * THIS IS BEING PHASED OUT FOR THE MOVESPEED MODIFICATION SYSTEM.
-  * See mob_movespeed.dm
-  */
-/mob/proc/movement_delay()	//update /living/movement_delay() if you change this
-	return cached_multiplicative_slowdown
-
 /**
   * If your mob is concious, drop the item in the active hand
   *
@@ -48,17 +34,17 @@
   * Move a client in a direction
   *
   * Huge proc, has a lot of functionality
-  * 
+  *
   * Mostly it will despatch to the mob that you are the owner of to actually move
   * in the physical realm
-  * 
+  *
   * Things that stop you moving as a mob:
   * * world time being less than your next move_delay
   * * not being in a mob, or that mob not having a loc
   * * missing the n and direction parameters
   * * being in remote control of an object (calls Moveobject instead)
   * * being dead (it ghosts you instead)
-  * 
+  *
   * Things that stop you moving as a mob living (why even have OO if you're just shoving it all
   * in the parent proc with istype checks right?):
   * * having incorporeal_move set (calls Process_Incorpmove() instead)
@@ -78,7 +64,7 @@
   *
   * Finally if you're pulling an object and it's dense, you are turned 180 after the move
   * (if you ask me, this should be at the top of the move so you don't dance around)
-  * 
+  *
   */
 /client/Move(n, direct)
 	if(world.time < move_delay) //do not move anything ahead of this check please
@@ -131,7 +117,7 @@
 	if(!mob.Process_Spacemove(direct))
 		return FALSE
 	//We are now going to move
-	var/add_delay = mob.movement_delay()
+	var/add_delay = mob.cached_multiplicative_slowdown
 	if(old_move_delay + (add_delay*MOVEMENT_DELAY_BUFFER_DELTA) + MOVEMENT_DELAY_BUFFER > world.time)
 		move_delay = old_move_delay
 	else
@@ -185,7 +171,7 @@
   * Allows mobs to ignore density and phase through objects
   *
   * Called by client/Move()
-  * 
+  *
   * The behaviour depends on the incorporeal_move value of the mob
   *
   * * INCORPOREAL_MOVE_BASIC - forceMoved to the next tile with no stop
@@ -273,13 +259,13 @@
   * Handles mob/living movement in space (or no gravity)
   *
   * Called by /client/Move()
-  * 
+  *
   * return TRUE for movement or FALSE for none
-  * 
+  *
   * You can move in space if you have a spacewalk ability
   */
 /mob/Process_Spacemove(movement_dir = 0)
-	if(spacewalk || ..())
+	if(HAS_TRAIT(src, TRAIT_SPACEWALK) || ..())
 		return TRUE
 	var/atom/movable/backup = get_spacemove_backup()
 	if(backup)
@@ -337,8 +323,12 @@
 	return
 
 /// Update the gravity status of this mob
-/mob/proc/update_gravity()
-	return
+/mob/proc/update_gravity(has_gravity, override=FALSE)
+	var/speed_change = max(0, has_gravity - STANDARD_GRAVITY)
+	if(!speed_change)
+		remove_movespeed_modifier(/datum/movespeed_modifier/gravity)
+	else
+		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/gravity, multiplicative_slowdown=speed_change)
 
 //bodypart selection verbs - Cyberboss
 //8:repeated presses toggles through head - eyes - mouth
@@ -449,7 +439,7 @@
 
 /**
   * Toggle the move intent of the mob
-  * 
+  *
   * triggers an update the move intent hud as well
   */
 /mob/proc/toggle_move_intent(mob/user)
@@ -459,7 +449,7 @@
 		m_intent = MOVE_INTENT_RUN
 	if(hud_used && hud_used.static_inventory)
 		for(var/obj/screen/mov_intent/selector in hud_used.static_inventory)
-			selector.update_icon(src)
+			selector.update_icon()
 
 ///Moves a mob upwards in z level
 /mob/verb/up()
@@ -484,7 +474,7 @@
 	var/turf/target = get_step_multiz(src, dir)
 	if(!target)
 		if(feedback)
-			to_chat(src, "<span class='warning'>There's nothing in that direction!</span>")
+			to_chat(src, "<span class='warning'>There's nowhere to go in that direction!</span>")
 		return FALSE
 	if(!canZMove(dir, target))
 		if(feedback)

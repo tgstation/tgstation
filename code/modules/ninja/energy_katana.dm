@@ -12,7 +12,6 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
-	block_chance = 50
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_BELT
 	sharpness = IS_SHARP
 	max_integrity = 200
@@ -38,15 +37,15 @@
 		jaunt.Teleport(user, target)
 	if(proximity_flag && (isobj(target) || issilicon(target)))
 		spark_system.start()
-		playsound(user, "sparks", 50, 1)
-		playsound(user, 'sound/weapons/blade1.ogg', 50, 1)
+		playsound(user, "sparks", 50, TRUE)
+		playsound(user, 'sound/weapons/blade1.ogg', 50, TRUE)
 		target.emag_act(user)
 
 /obj/item/energy_katana/pickup(mob/living/user)
 	. = ..()
 	jaunt.Grant(user, src)
 	user.update_icons()
-	playsound(src, 'sound/items/unsheath.ogg', 25, 1)
+	playsound(src, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/energy_katana/dropped(mob/user)
 	. = ..()
@@ -74,13 +73,13 @@
 
 	if(doSpark)
 		spark_system.start()
-		playsound(get_turf(src), "sparks", 50, 1)
+		playsound(get_turf(src), "sparks", 50, TRUE)
 
 	var/msg = ""
 
 	if(user.put_in_hands(src))
 		msg = "Your Energy Katana teleports into your hand!"
-	else if(user.equip_to_slot_if_possible(src, SLOT_BELT, 0, 1, 1))
+	else if(user.equip_to_slot_if_possible(src, ITEM_SLOT_BELT, 0, 1, 1))
 		msg = "Your Energy Katana teleports back to you, sheathing itself as it does so!</span>"
 	else
 		msg = "Your Energy Katana teleports to your location!"

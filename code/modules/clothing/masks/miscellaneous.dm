@@ -71,7 +71,7 @@
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
-	desc = "A rubber pig mask with a builtin voice modulator."
+	desc = "A rubber pig mask with a built-in voice modulator."
 	icon_state = "pig"
 	item_state = "pig"
 	flags_inv = HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -80,19 +80,19 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/pig/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("Oink!","Squeeeeeeee!","Oink Oink!")
 
 /obj/item/clothing/mask/pig/cursed
 	name = "pig face"
-	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
+	desc = "It looks like a mask, but closer inspection reveals it's melded onto this person's face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
 /obj/item/clothing/mask/pig/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/pighead_curse.ogg', 50, TRUE)
 
 ///frog mask - reeee!!
 /obj/item/clothing/mask/frog
@@ -106,7 +106,7 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/frog/handle_speech(datum/source, list/speech_args) //whenever you speak
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		if(prob(5)) //sometimes, the angry spirit finds others words to speak.
 			speech_args[SPEECH_MESSAGE] = pick("HUUUUU!!","SMOOOOOKIN'!!","Hello my baby, hello my honey, hello my rag-time gal.", "Feels bad, man.", "GIT DIS GUY OFF ME!!" ,"SOMEBODY STOP ME!!", "NORMIES, GET OUT!!")
 		else
@@ -127,7 +127,6 @@
 
 /obj/item/clothing/mask/cowmask
 	name = "cow mask"
-	icon = 'icons/mob/mask.dmi'
 	icon_state = "cowmask"
 	item_state = "cowmask"
 	clothing_flags = VOICEBOX_TOGGLABLE
@@ -136,19 +135,19 @@
 	modifies_speech = TRUE
 
 /obj/item/clothing/mask/cowmask/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("Moooooooo!","Moo!","Moooo!")
 
 /obj/item/clothing/mask/cowmask/cursed
 	name = "cow face"
-	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this persons face!"
+	desc = "It looks like a cow mask, but closer inspection reveals it's melded onto this person's face!"
 	flags_inv = HIDEFACIALHAIR
 	clothing_flags = NONE
 
 /obj/item/clothing/mask/cowmask/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/cowhead_curse.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/horsehead
 	name = "horse head mask"
@@ -160,7 +159,7 @@
 	clothing_flags = VOICEBOX_TOGGLABLE
 
 /obj/item/clothing/mask/horsehead/handle_speech(datum/source, list/speech_args)
-	if(!CHECK_BITFIELD(clothing_flags, VOICEBOX_DISABLED))
+	if(!(clothing_flags & VOICEBOX_DISABLED))
 		speech_args[SPEECH_MESSAGE] = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
 
 /obj/item/clothing/mask/horsehead/cursed
@@ -172,7 +171,7 @@
 /obj/item/clothing/mask/horsehead/cursed/Initialize()
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, CURSED_MASK_TRAIT)
-	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, 1)
+	playsound(get_turf(src), 'sound/magic/horsehead_curse.ogg', 50, TRUE)
 
 /obj/item/clothing/mask/rat
 	name = "rat mask"
@@ -231,7 +230,7 @@
 	flags_cover = MASKCOVERSMOUTH
 	flags_inv = HIDEFACE|HIDEFACIALHAIR
 	visor_flags_inv = HIDEFACE|HIDEFACIALHAIR
-	visor_flags_cover = MASKCOVERSMOUTH
+	visor_flags_cover = MASKCOVERSMOUTH | PEPPERPROOF
 	slot_flags = ITEM_SLOT_MASK
 	adjusted_flags = ITEM_SLOT_HEAD
 	icon_state = "bandbotany"
@@ -243,7 +242,7 @@
 	. = ..()
 	if(iscarbon(user))
 		var/mob/living/carbon/C = user
-		if((C.get_item_by_slot(SLOT_HEAD == src)) || (C.get_item_by_slot(SLOT_WEAR_MASK) == src))
+		if((C.get_item_by_slot(ITEM_SLOT_HEAD == src)) || (C.get_item_by_slot(ITEM_SLOT_MASK) == src))
 			to_chat(user, "<span class='warning'>You can't tie [src] while wearing it!</span>")
 			return
 	if(slot_flags & ITEM_SLOT_HEAD)

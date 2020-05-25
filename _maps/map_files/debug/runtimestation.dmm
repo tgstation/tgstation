@@ -341,7 +341,7 @@
 "bo" = (
 /obj/structure/table,
 /obj/item/screwdriver/power,
-/obj/item/wirecutters/power,
+/obj/item/crowbar/power,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "bp" = (
@@ -406,7 +406,7 @@
 /turf/open/floor/plasteel,
 /area/science)
 "bC" = (
-/obj/machinery/computer/gulag_teleporter_computer{
+/obj/machinery/computer/prisoner/gulag_teleporter_computer{
 	dir = 4
 	},
 /turf/open/floor/plasteel,
@@ -826,7 +826,6 @@
 /turf/open/floor/plasteel/cafeteria,
 /area/medical/medbay)
 "cK" = (
-/obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
@@ -1112,6 +1111,7 @@
 /obj/structure/table,
 /obj/machinery/light,
 /obj/item/storage/firstaid/regular,
+/obj/item/healthanalyzer/advanced,
 /turf/open/floor/plasteel,
 /area/storage/primary)
 "dP" = (
@@ -1278,7 +1278,6 @@
 /area/hallway/secondary/entry)
 "es" = (
 /obj/machinery/light,
-/obj/machinery/clonepod,
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
@@ -1925,16 +1924,6 @@
 	},
 /turf/open/floor/plating,
 /area/storage/primary)
-"gh" = (
-/obj/machinery/light{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/machinery/computer/shuttle/mining,
-/turf/open/floor/plasteel,
-/area/quartermaster/miningoffice)
 "gi" = (
 /obj/machinery/power/apc{
 	dir = 1;
@@ -1944,9 +1933,7 @@
 	pixel_x = 32
 	},
 /obj/structure/cable,
-/obj/machinery/computer/shuttle/mining{
-	dir = 2
-	},
+/obj/machinery/computer/shuttle/mining,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "gk" = (
@@ -2073,6 +2060,9 @@
 	dir = 1
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/corner{
+	dir = 1
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "gE" = (
@@ -2253,6 +2243,11 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
+"sH" = (
+/obj/structure/table,
+/obj/item/storage/box/shipping,
+/turf/open/floor/plasteel,
+/area/storage/primary)
 "tG" = (
 /obj/docking_port/stationary/random{
 	id = "pod_lavaland1";
@@ -2298,6 +2293,9 @@
 /turf/open/floor/plating,
 /area/storage/primary)
 "vy" = (
+/obj/effect/turf_decal/stripes/corner{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/quartermaster/miningoffice)
 "vP" = (
@@ -2360,15 +2358,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science)
-"BB" = (
-/obj/machinery/computer/cloning{
-	dir = 1
-	},
-/obj/effect/turf_decal/tile/blue{
-	dir = 8
-	},
-/turf/open/floor/plasteel/white/corner,
-/area/medical/medbay)
 "BD" = (
 /obj/structure/closet/secure_closet/CMO{
 	locked = 0
@@ -2475,8 +2464,8 @@
 	height = 5;
 	id = "mining_home";
 	name = "mining shuttle bay";
-	width = 7;
-	roundstart_template = /datum/map_template/shuttle/mining/box
+	roundstart_template = /datum/map_template/shuttle/mining/box;
+	width = 7
 	},
 /turf/open/floor/engine,
 /area/quartermaster/miningoffice)
@@ -4260,7 +4249,7 @@ II
 II
 Td
 II
-gh
+II
 gl
 gD
 kj
@@ -7869,7 +7858,7 @@ dJ
 dJ
 dJ
 dJ
-dN
+sH
 cS
 fU
 gb
@@ -8408,7 +8397,7 @@ by
 Qt
 by
 cm
-BB
+cK
 by
 cS
 cS

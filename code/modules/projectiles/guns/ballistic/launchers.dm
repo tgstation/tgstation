@@ -7,7 +7,7 @@
 	icon_state = "dshotgun_sawn"
 	item_state = "gun"
 	mag_type = /obj/item/ammo_box/magazine/internal/grenadelauncher
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
@@ -35,7 +35,7 @@
 	name = "gyrojet pistol"
 	desc = "A prototype pistol designed to fire self propelled rockets."
 	icon_state = "gyropistol"
-	fire_sound = 'sound/weapons/grenadelaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/grenade_launch.ogg'
 	mag_type = /obj/item/ammo_box/magazine/m75
 	burst_size = 1
 	fire_delay = 0
@@ -48,7 +48,7 @@
 	icon_state = "rocketlauncher"
 	item_state = "rocketlauncher"
 	mag_type = /obj/item/ammo_box/magazine/internal/rocketlauncher
-	fire_sound = 'sound/weapons/rocketlaunch.ogg'
+	fire_sound = 'sound/weapons/gun/general/rocket_launch.ogg'
 	w_class = WEIGHT_CLASS_BULKY
 	can_suppress = FALSE
 	pin = /obj/item/firing_pin/implant/pindicate
@@ -77,7 +77,7 @@
 		"<span class='userdanger'>You aim [src] at the ground to perform a bisnasty rocket jump...</span>")
 	if(can_shoot())
 		user.notransform = TRUE
-		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, 1, 5)
+		playsound(src, 'sound/vehicles/rocketlaunch.ogg', 80, TRUE, 5)
 		animate(user, pixel_z = 300, time = 30, easing = LINEAR_EASING)
 		sleep(70)
 		animate(user, pixel_z = 0, time = 5, easing = LINEAR_EASING)

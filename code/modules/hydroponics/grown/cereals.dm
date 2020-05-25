@@ -9,6 +9,7 @@
 	production = 1
 	yield = 4
 	potency = 15
+	instability = 20
 	icon_dead = "wheat-dead"
 	mutatelist = list(/obj/item/seeds/wheat/oat, /obj/item/seeds/wheat/meat)
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.04)
@@ -54,8 +55,9 @@
 	name = "pack of rice seeds"
 	desc = "These may, or may not, grow into rice."
 	icon_state = "seed-rice"
-	species = /datum/reagent/consumable/rice
+	species = "rice"
 	plantname = "Rice Stalks"
+	instability = 1
 	product = /obj/item/reagent_containers/food/snacks/grown/rice
 	mutatelist = list()
 	growthstages = 3
@@ -98,7 +100,7 @@
 
 /obj/item/reagent_containers/food/snacks/grown/meatwheat/attack_self(mob/living/user)
 	user.visible_message("<span class='notice'>[user] crushes [src] into meat.</span>", "<span class='notice'>You crush [src] into something that resembles meat.</span>")
-	playsound(user, 'sound/effects/blobattack.ogg', 50, 1)
+	playsound(user, 'sound/effects/blobattack.ogg', 50, TRUE)
 	var/obj/item/reagent_containers/food/snacks/meat/slab/meatwheat/M = new
 	qdel(src)
 	user.put_in_hands(M)

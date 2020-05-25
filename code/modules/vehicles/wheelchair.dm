@@ -9,6 +9,10 @@
 	legs_required = 0	//You'll probably be using this if you don't have legs
 	canmove = TRUE
 	density = FALSE		//Thought I couldn't fix this one easily, phew
+	/// Run speed delay is multiplied with this for vehicle move delay.
+	var/delay_multiplier = 6.7
+	/// This variable is used to specify which overlay icon is used for the wheelchair, ensures wheelchair can cover your legs
+	var/overlay_icon = "wheelchair_overlay"
 
 /obj/vehicle/ridden/wheelchair/Initialize()
 	. = ..()
@@ -41,16 +45,19 @@
 			canmove = FALSE
 			addtimer(VARSET_CALLBACK(src, canmove, TRUE), 20)
 			return FALSE
-		var/datum/component/riding/D = GetComponent(/datum/component/riding)
-		//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
-		//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
-		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / min(user.get_num_arms(), 2)
+		set_move_delay(user)
 	return ..()
+
+/obj/vehicle/ridden/wheelchair/proc/set_move_delay(mob/living/user)
+	var/datum/component/riding/D = GetComponent(/datum/component/riding)
+	//1.5 (movespeed as of this change) multiplied by 6.7 gets ABOUT 10 (rounded), the old constant for the wheelchair that gets divided by how many arms they have
+	//if that made no sense this simply makes the wheelchair speed change along with movement speed delay
+	D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * delay_multiplier) / min(user.get_num_arms(), 2)
 
 /obj/vehicle/ridden/wheelchair/Moved()
 	. = ..()
 	cut_overlays()
-	playsound(src, 'sound/effects/roll.ogg', 75, 1)
+	playsound(src, 'sound/effects/roll.ogg', 75, TRUE)
 	if(has_buckled_mobs())
 		handle_rotation_overlayed()
 
@@ -68,6 +75,7 @@
 	handle_rotation(newdir)
 
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/I)	//Attackby should stop it attacking the wheelchair after moving away during decon
+	..()
 	to_chat(user, "<span class='notice'>You begin to detach the wheels...</span>")
 	if(I.use_tool(src, user, 40, volume=50))
 		to_chat(user, "<span class='notice'>You detach the wheels and deconstruct the chair.</span>")
@@ -85,7 +93,7 @@
 
 /obj/vehicle/ridden/wheelchair/proc/handle_rotation_overlayed()
 	cut_overlays()
-	var/image/V = image(icon = icon, icon_state = "wheelchair_overlay", layer = FLY_LAYER, dir = src.dir)
+	var/image/V = image(icon = icon, icon_state = overlay_icon, layer = FLY_LAYER, dir = src.dir)
 	add_overlay(V)
 
 
@@ -107,3 +115,13 @@
 		var/datum/component/riding/D = GetComponent(/datum/component/riding)
 		D.vehicle_move_delay = round(CONFIG_GET(number/movedelay/run_delay) * 6.7) / user.get_num_arms()
 	return ..()
+
+
+/obj/vehicle/ridden/wheelchair/gold
+	material_flags = MATERIAL_ADD_PREFIX | MATERIAL_AFFECT_STATISTICS
+	desc = "Damn, he's been through a lot."
+	icon_state = "gold_wheelchair"
+	overlay_icon = "gold_wheelchair_overlay"
+	max_integrity = 200
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 0, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 30, "acid" = 40)
+	custom_materials = list(/datum/material/gold = 10000)

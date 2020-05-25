@@ -8,7 +8,6 @@
 	component_type = /datum/component/storage/concrete/wallet
 
 	var/obj/item/card/id/front_id = null
-	var/obj/item/card/id/cached_front_id = null
 	var/list/combined_access
 	var/cached_flat_icon
 
@@ -65,21 +64,13 @@
 	. = ..()
 	refreshID()
 
-/obj/item/storage/wallet/update_icon(list/override_overlays)
-	if(!override_overlays && front_id == cached_front_id) //Icon didn't actually change
-		return
-	cut_overlays()
+/obj/item/storage/wallet/update_overlays()
+	. = ..()
 	cached_flat_icon = null
-	cached_front_id = front_id
 	if(front_id)
-		var/list/add_overlays = list()
-		add_overlays += mutable_appearance(front_id.icon, front_id.icon_state)
-		if(override_overlays)
-			add_overlays += override_overlays
-		else
-			add_overlays += front_id.overlays
-		add_overlays += mutable_appearance(icon, "wallet_overlay")
-		add_overlay(add_overlays)
+		. += mutable_appearance(front_id.icon, front_id.icon_state)
+		. += front_id.overlays
+		. += mutable_appearance(icon, "wallet_overlay")
 
 /obj/item/storage/wallet/proc/get_cached_flat_icon()
 	if(!cached_flat_icon)
@@ -104,6 +95,21 @@
 
 /obj/item/storage/wallet/GetID()
 	return front_id
+
+/obj/item/storage/wallet/RemoveID()
+	if(!front_id)
+		return
+	. = front_id
+	front_id.forceMove(get_turf(src))
+
+/obj/item/storage/wallet/InsertID(obj/item/inserting_item)
+	var/obj/item/card/inserting_id = inserting_item.RemoveID()
+	if(!inserting_id)
+		return FALSE
+	attackby(inserting_id)
+	if(inserting_id in contents)
+		return TRUE
+	return FALSE
 
 /obj/item/storage/wallet/GetAccess()
 	if(LAZYLEN(combined_access))

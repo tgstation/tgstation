@@ -55,16 +55,13 @@
 		down.update_icon()
 	up = down = null
 
-/obj/structure/ladder/update_icon()
+/obj/structure/ladder/update_icon_state()
 	if(up && down)
 		icon_state = "ladder11"
-
 	else if(up)
 		icon_state = "ladder10"
-
 	else if(down)
 		icon_state = "ladder01"
-
 	else	//wtf make your ladders properly assholes
 		icon_state = "ladder00"
 
@@ -91,8 +88,13 @@
 	if (!is_ghost && !in_range(src, user))
 		return
 
+	var/list/tool_list = list(
+		"Up" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = NORTH),
+		"Down" = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow", dir = SOUTH)
+		)
+
 	if (up && down)
-		var/result = alert("Go up or down [src]?", "Ladder", "Up", "Down", "Cancel")
+		var/result = show_radial_menu(user, src, tool_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 		if (!is_ghost && !in_range(src, user))
 			return  // nice try
 		switch(result)
@@ -111,6 +113,11 @@
 
 	if(!is_ghost)
 		add_fingerprint(user)
+
+/obj/structure/ladder/proc/check_menu(mob/user)
+	if(user.incapacitated() || !user.Adjacent(src))
+		return FALSE
+	return TRUE
 
 /obj/structure/ladder/attack_hand(mob/user)
 	. = ..()
@@ -135,9 +142,9 @@
 
 /obj/structure/ladder/proc/show_fluff_message(going_up, mob/user)
 	if(going_up)
-		user.visible_message("[user] climbs up [src].","<span class='notice'>You climb up [src].</span>")
+		user.visible_message("<span class='notice'>[user] climbs up [src].</span>", "<span class='notice'>You climb up [src].</span>")
 	else
-		user.visible_message("[user] climbs down [src].","<span class='notice'>You climb down [src].</span>")
+		user.visible_message("<span class='notice'>[user] climbs down [src].</span>", "<span class='notice'>You climb down [src].</span>")
 
 
 // Indestructible away mission ladders which link based on a mapped ID and height value rather than X/Y/Z.
@@ -181,51 +188,3 @@
 				break  // break if both our connections are filled
 
 	update_icon()
-
-/obj/structure/ladder/unbreakable/binary
-	name = "mysterious ladder"
-	desc = "Where does it go?"
-	height = 0
-	id = "lavaland_binary"
-	var/area_to_place = /area/lavaland/surface/outdoors
-	var/active = FALSE
-
-/obj/structure/ladder/unbreakable/binary/proc/ActivateAlmonds()
-	if(area_to_place && !active)
-		var/turf/T = getTargetTurf()
-		if(T)
-			var/obj/structure/ladder/unbreakable/U = new (T)
-			U.id = id
-			U.height = height+1
-			LateInitialize() // LateInit both of these to build the links. It's fine.
-			U.LateInitialize()
-			for(var/turf/TT in range(2,U))
-				TT.TerraformTurf(/turf/open/indestructible/binary, /turf/open/indestructible/binary, CHANGETURF_INHERIT_AIR)
-		active = TRUE
-
-/obj/structure/ladder/unbreakable/binary/proc/getTargetTurf()
-	var/list/turfList = get_area_turfs(area_to_place)
-	while (turfList.len && !.)
-		var/i = rand(1, turfList.len)
-		var/turf/potentialTurf = turfList[i]
-		if (is_centcom_level(potentialTurf.z)) // These ladders don't lead to centcom.
-			turfList.Cut(i,i+1)
-			continue
-		if(!istype(potentialTurf, /turf/open/lava) && !potentialTurf.density)			// Or inside dense turfs or lava
-			var/clear = TRUE
-			for(var/obj/O in potentialTurf) // Let's not place these on dense objects either. Might be funny though.
-				if(O.density)
-					clear = FALSE
-					break
-			if(clear)
-				. = potentialTurf
-		if (!.)
-			turfList.Cut(i,i+1)
-
-/obj/structure/ladder/unbreakable/binary/space
-	id = "space_binary"
-	area_to_place = /area/space
-
-/obj/structure/ladder/unbreakable/binary/unlinked //Crew gets to complete one
-	id = "unlinked_binary"
-	area_to_place = null

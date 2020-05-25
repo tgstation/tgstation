@@ -19,7 +19,7 @@
 	if(start_lit)
 		light()
 
-/obj/item/candle/update_icon()
+/obj/item/candle/update_icon_state()
 	icon_state = "candle[(wax > 400) ? ((wax > 750) ? 1 : 2) : 3][lit ? "_lit" : ""]"
 
 /obj/item/candle/attackby(obj/item/W, mob/user, params)
@@ -34,7 +34,7 @@
 		light() //honk
 	return ..()
 
-/obj/item/candle/is_hot()
+/obj/item/candle/get_temperature()
 	return lit * heat
 
 /obj/item/candle/proc/light(show_message)
