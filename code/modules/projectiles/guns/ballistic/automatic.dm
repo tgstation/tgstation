@@ -95,6 +95,20 @@
 	mag_display_ammo = TRUE
 	empty_indicator = TRUE
 
+/obj/item/gun/ballistic/automatic/plastikov
+	name = "\improper PP-95 SMG"
+	desc = "An ancient 9x19mm submachine gun pattern updated and simplified to lower costs, though perhaps simplified too much."
+	icon_state = "plastikov"
+	item_state = "plastikov"
+	mag_type = /obj/item/ammo_box/magazine/plastikov9mm
+	fire_delay = 2
+	burst_size = 3
+	spread = 15
+	can_suppress = FALSE
+	actions_types = list()
+	can_bayonet = FALSE
+	mag_display = TRUE
+
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"
 	desc = "A lightweight, burst-fire submachine gun, for when you really want someone dead. Uses 9mm rounds."
