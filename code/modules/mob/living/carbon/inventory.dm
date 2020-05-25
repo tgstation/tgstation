@@ -120,7 +120,6 @@
 		wear_neck = null
 		if(!QDELETED(src))
 			update_inv_neck(I)
-
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)
