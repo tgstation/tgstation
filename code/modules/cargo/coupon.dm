@@ -12,7 +12,8 @@
 /obj/item/coupon/Initialize()
 	. = ..()
 	discounted_pack = pick(subtypesof(/datum/supply_pack/goody))
-	discount_pct_off = pickweight(list(0.10 = 3, 0.15 = 5, 0.20 = 6, 0.25 = 4, 0.50 = 2))
+	var/list/chances = list(0.10 = 3, 0.15 = 5, 0.20 = 6, 0.25 = 4, 0.50 = 2)
+	discount_pct_off = pickweight(chances)
 	name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
 
 /obj/item/coupon/attack_obj(obj/O, mob/living/user)
