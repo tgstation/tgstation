@@ -139,21 +139,23 @@
 			content.moveToNullspace()
 			qdel(content)
 
-/obj/machinery/recycler/proc/recycle_item(obj/item/I)
+/obj/machinery/recycler/proc/recycle_item(obj/item/O)
 
-	var/obj/item/grown/log/L = I
+	var/obj/item/grown/log/L = O
 	if(istype(L))
 		var/seed_modifier = 0
 		if(L.seed)
 			seed_modifier = round(L.seed.potency / 25)
 		new L.plank_type(loc, 1 + seed_modifier)
 	else
-		var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
-		var/material_amount = materials.get_item_material_amount(I)
-		if(!material_amount)
-			return
-		materials.insert_item(I, material_amount, multiplier = (amount_produced / 100))
-		materials.retrieve_all()
+		var/datum/component/material_container/mat_container = GetComponent(/datum/component/material_container)
+		var/material_amount = mat_container.get_item_material_amount(O)
+
+		if (material_amount)
+			var/loaded_amount = mat_container.insert_item(O, material_amount, multiplier = (amount_produced / 100))
+			if (loaded_amount >= material_amount) //if there is not enough space, eject it
+				mat_container.retrieve_all()
+
 
 
 /obj/machinery/recycler/proc/emergency_stop()

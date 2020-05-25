@@ -67,18 +67,16 @@
 
 	var/material_amount = mat_container.get_item_material_amount(O)
 
-	if(!material_amount)
-		qdel(O) //no materials, incinerate it
-
-	else if(!mat_container.has_space(material_amount * O.amount)) //if there is no space, eject it
-		unload_mineral(O)
-
-	else
-		var/mats = O.custom_materials & mat_container.materials
-		var/amount = O.amount
-		mat_container.insert_item(O, ore_multiplier) //insert it
-		materials.silo_log(src, "smelted", amount, "someone", mats)
+	if (!material_amount) //no materials, incinerate it
 		qdel(O)
+	else
+		var/loaded_amount = mat_container.insert_item(O, material_amount, ore_multiplier)
+		var/mats = O.custom_materials & mat_container.materials
+		materials.silo_log(src, "smelted", loaded_amount, "someone", mats)
+		if(loaded_amount < material_amount) //if there is not enough space, eject it
+			unload_mineral(O)
+		else
+			qdel(O)
 
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
 	var/datum/component/material_container/mat_container = materials.mat_container
