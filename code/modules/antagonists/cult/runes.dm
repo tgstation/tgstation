@@ -610,79 +610,29 @@ structure_check() searches for nearby cultist structures required for the invoca
 	invocation = "Khari'd! Eske'te tannin!"
 	icon_state = "4"
 	color = RUNE_COLOR_DARKRED
-	CanAtmosPass = ATMOS_PASS_DENSITY
-	var/datum/timedevent/density_timer
-	var/recharging = FALSE
+	///The barrier summoned by the rune when invoked. Tracked as a variable to prevent refreshing the barrier's integrity.
+	var/obj/structure/emergency_shield/cult/barrier/barrier //barrier is the path and variable name.... i am not a clever man
 
 /obj/effect/rune/wall/Initialize(mapload, set_keyword)
 	. = ..()
 	GLOB.wall_runes += src
 
-/obj/effect/rune/wall/examine(mob/user)
-	. = ..()
-	if(density && iscultist(user))
-		if(density_timer)
-			. += "<span class='cultitalic'>The air above this rune has hardened into a barrier that will last [DisplayTimeText(density_timer.timeToRun - world.time)].</span>"
-
 /obj/effect/rune/wall/Destroy()
 	GLOB.wall_runes -= src
+	if(barrier)
+		QDEL_NULL(barrier)
 	return ..()
 
-/obj/effect/rune/wall/BlockSuperconductivity()
-	return density
-
 /obj/effect/rune/wall/invoke(var/list/invokers)
-	if(recharging)
-		return
 	var/mob/living/user = invokers[1]
 	..()
-	density = !density
-	update_state()
-	if(density)
-		spread_density()
-	var/carbon_user = iscarbon(user)
-	user.visible_message("<span class='warning'>[user] [carbon_user ? "places [user.p_their()] hands on":"stares intently at"] [src], and [density ? "the air above it begins to shimmer" : "the shimmer above it fades"].</span>", \
-						 "<span class='cult italic'>You channel [carbon_user ? "your life ":""]energy into [src], [density ? "temporarily preventing" : "allowing"] passage above it.</span>")
-	if(carbon_user)
+	if(!barrier)
+		barrier = new /obj/structure/emergency_shield/cult/barrier(src.loc)
+		barrier.parent_rune = src
+	barrier.Toggle()
+	if(iscarbon(user))
 		var/mob/living/carbon/C = user
 		C.apply_damage(2, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
-
-/obj/effect/rune/wall/proc/spread_density()
-	for(var/R in GLOB.wall_runes)
-		var/obj/effect/rune/wall/W = R
-		if(W.z == z && get_dist(src, W) <= 2 && !W.density && !W.recharging)
-			W.density = TRUE
-			W.update_state()
-			W.spread_density()
-	density_timer = addtimer(CALLBACK(src, .proc/lose_density), 3000, TIMER_STOPPABLE)
-
-/obj/effect/rune/wall/proc/lose_density()
-	if(density)
-		recharging = TRUE
-		density = FALSE
-		update_state()
-		var/oldcolor = color
-		add_atom_colour("#696969", FIXED_COLOUR_PRIORITY)
-		animate(src, color = oldcolor, time = 50, easing = EASE_IN)
-		addtimer(CALLBACK(src, .proc/recharge), 50)
-
-/obj/effect/rune/wall/proc/recharge()
-	recharging = FALSE
-	add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
-
-/obj/effect/rune/wall/proc/update_state()
-	deltimer(density_timer)
-	air_update_turf(1)
-	if(density)
-		var/mutable_appearance/shimmer = mutable_appearance('icons/effects/effects.dmi', "barriershimmer", ABOVE_MOB_LAYER)
-		shimmer.appearance_flags |= RESET_COLOR
-		shimmer.alpha = 60
-		shimmer.color = "#701414"
-		add_overlay(shimmer)
-		add_atom_colour(RUNE_COLOR_RED, FIXED_COLOUR_PRIORITY)
-	else
-		cut_overlays()
-		add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
 
 //Rite of Joined Souls: Summons a single cultist.
 /obj/effect/rune/summon
@@ -731,7 +681,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	cultist_to_summon.visible_message("<span class='warning'>[cultist_to_summon] suddenly disappears in a flash of red light!</span>", \
 									  "<span class='cult italic'><b>Overwhelming vertigo consumes you as you are hurled through the air!</b></span>")
 	..()
-	visible_message("<span class='warning'>A foggy shape materializes atop [src] and solidifes into [cultist_to_summon]!</span>")
+	visible_message("<span class='warning'>A foggy shape materializes atop [src] and solidifies into [cultist_to_summon]!</span>")
 	cultist_to_summon.forceMove(get_turf(src))
 	qdel(src)
 
@@ -860,7 +810,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		playsound(src, 'sound/magic/exit_blood.ogg', 50, TRUE)
 		visible_message("<span class='warning'>A cloud of red mist forms above [src], and from within steps... a [new_human.gender == FEMALE ? "wo":""]man.</span>")
 		to_chat(user, "<span class='cultitalic'>Your blood begins flowing into [src]. You must remain in place and conscious to maintain the forms of those summoned. This will hurt you slowly but surely...</span>")
-		var/obj/structure/emergency_shield/invoker/N = new(T)
+		var/obj/structure/emergency_shield/cult/weak/N = new(T)
 		new_human.key = ghost_to_spawn.key
 		SSticker.mode.add_cultist(new_human.mind, 0)
 		to_chat(new_human, "<span class='cultitalic'><b>You are a servant of the Geometer. You have been made semi-corporeal by the cult of Nar'Sie, and you are to serve them at all costs.</b></span>")

@@ -3,7 +3,7 @@
 	desc = "Something has gone wrong!"
 	icon = 'icons/obj/clothing/accessories.dmi'
 	icon_state = "plasma"
-	item_state = ""	//no inhands
+	inhand_icon_state = ""	//no inhands
 	slot_flags = 0
 	w_class = WEIGHT_CLASS_SMALL
 	var/above_suit = FALSE
@@ -88,7 +88,7 @@
 	name = "waistcoat"
 	desc = "For some classy, murderous fun."
 	icon_state = "waistcoat"
-	item_state = "waistcoat"
+	inhand_icon_state = "waistcoat"
 	minimize_when_attached = FALSE
 	attachment_slot = null
 
@@ -96,7 +96,7 @@
 	name = "maid apron"
 	desc = "The best part of a maid costume."
 	icon_state = "maidapron"
-	item_state = "maidapron"
+	inhand_icon_state = "maidapron"
 	minimize_when_attached = FALSE
 	attachment_slot = null
 

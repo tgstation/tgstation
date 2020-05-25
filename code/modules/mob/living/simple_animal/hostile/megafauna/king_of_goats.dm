@@ -171,7 +171,7 @@ Difficulty: Insanely Hard
 /mob/living/simple_animal/hostile/megafauna/king/Retaliate()
 	..()
 	if(stat == CONSCIOUS && prob(5))
-		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgemental gleam in his eye.</span>")
+		visible_message("<span class='warning'>\The [src] bellows indignantly, with a judgmental gleam in his eye.</span>")
 
 /mob/living/simple_animal/hostile/megafauna/king/phase2/Retaliate()
 	set waitfor = FALSE

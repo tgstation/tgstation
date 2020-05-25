@@ -1,7 +1,7 @@
 ///We pump liquids from activated(plungerated) geysers to a plumbing outlet. We need to be wired.
 /obj/machinery/plumbing/liquid_pump
 	name = "liquid pump"
-	desc = "Pump up those sweet liquids from under the surface. Uses thermal energy from geysers to power itself." //better than placing 200 cables, because it wasnt fun
+	desc = "Pump up those sweet liquids from under the surface. Uses thermal energy from geysers to power itself." //better than placing 200 cables, because it wasn't fun
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	icon_state = "pump"
 	anchored = FALSE
