@@ -143,7 +143,7 @@
 	desc = "Instant cover."
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "flashbang"
-	item_state = "flashbang"
+	inhand_icon_state = "flashbang"
 	actions_types = list(/datum/action/item_action/toggle_barrier_spread)
 	var/mode = SINGLE
 

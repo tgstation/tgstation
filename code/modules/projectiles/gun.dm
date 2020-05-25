@@ -7,7 +7,7 @@
 	desc = "It's a gun. It's pretty terrible, though."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "detective"
-	item_state = "gun"
+	inhand_icon_state = "gun"
 	flags_1 =  CONDUCT_1
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=2000)

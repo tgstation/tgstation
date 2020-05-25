@@ -258,7 +258,7 @@
 	desc = "This lantern gives off no light, but is home to a friendly wisp."
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "lantern-blue"
-	item_state = "lantern"
+	inhand_icon_state = "lantern"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
 	var/obj/effect/wisp/wisp
@@ -393,7 +393,7 @@
 	desc = "Mid or feed."
 	ammo_type = /obj/item/ammo_casing/magic/hook
 	icon_state = "hook"
-	item_state = "hook"
+	inhand_icon_state = "hook"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
 	fire_sound = 'sound/weapons/batonextend.ogg'
@@ -782,7 +782,7 @@
 	name = "\improper spectral blade"
 	desc = "A rusted and dulled blade. It doesn't look like it'd do much damage. It glows weakly."
 	icon_state = "spectral"
-	item_state = "spectral"
+	inhand_icon_state = "spectral"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -928,7 +928,7 @@
 	name = "staff of lava"
 	desc = "The ability to fill the emergency shuttle with lava. What more could you want out of life?"
 	icon_state = "staffofstorms"
-	item_state = "staffofstorms"
+	inhand_icon_state = "staffofstorms"
 	lefthand_file = 'icons/mob/inhands/weapons/staves_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/staves_righthand.dmi'
 	icon = 'icons/obj/guns/magic.dmi'
@@ -1099,7 +1099,7 @@
 	name = "hierophant club"
 	desc = "The strange technology of this large club allows various nigh-magical feats. It used to beat you, but now you can set the beat."
 	icon_state = "hierophant_club_ready_beacon"
-	item_state = "hierophant_club_ready_beacon"
+	inhand_icon_state = "hierophant_club_ready_beacon"
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
@@ -1188,7 +1188,7 @@
 		blast_range -= round(health_percent * 10) //one additional range for each missing 10% of health
 
 /obj/item/hierophant_club/update_icon_state()
-	icon_state = item_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
+	icon_state = inhand_icon_state = "hierophant_club[timer <= world.time ? "_ready":""][(beacon && !QDELETED(beacon)) ? "":"_beacon"]"
 
 /obj/item/hierophant_club/proc/prepare_icon_update()
 	update_icon()

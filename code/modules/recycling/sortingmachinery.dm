@@ -170,7 +170,7 @@
 	desc = "A brown paper delivery parcel."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "deliverypackage3"
-	item_state = "deliverypackage"
+	inhand_icon_state = "deliverypackage"
 	var/giftwrapped = 0
 	var/sortTag = 0
 	var/obj/item/paper/note
@@ -331,7 +331,7 @@
 	var/currTag = 0 //Destinations are stored in code\globalvars\lists\flavor_misc.dm
 	var/locked_destination = FALSE //if true, users can't open the destination tag window to prevent changing the tagger's current destination
 	w_class =  WEIGHT_CLASS_TINY
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -382,7 +382,7 @@
 	desc = "A scanner that lets you tag wrapped items for sale, splitting the profit between you and cargo. Ctrl-Click to clear the registered account."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "salestagger"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

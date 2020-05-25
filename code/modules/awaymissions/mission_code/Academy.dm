@@ -79,7 +79,7 @@
 	name = "The Lens of Truesight"
 	desc = "I can see forever!"
 	icon_state = "monocle"
-	item_state = "headset"
+	inhand_icon_state = "headset"
 
 
 /obj/structure/academy_wizard_spawner

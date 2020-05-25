@@ -5,7 +5,7 @@
 	desc = "It's a cape that can be worn around your neck."
 	icon = 'icons/obj/clothing/cloaks.dmi'
 	icon_state = "qmcloak"
-	item_state = "qmcloak"
+	inhand_icon_state = "qmcloak"
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESUITSTORAGE
