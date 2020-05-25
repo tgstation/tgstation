@@ -310,6 +310,22 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 	ignore_key(selection, displayed_choicename)
 
+/client/verb/ignore_list()
+	set name = "Ignore list"
+	set category = "OOC"
+	set desc = "View a list of players you've ignored"
+
+	// Combine the list into one message
+	// Start the message with a title
+	var/msg = "<b>Ignored Players:</b>\n"
+
+	// Add the key of every player we've ignored to the message
+	for(var/key in prefs.ignoring)
+		msg += "[key]\n"
+
+	// Output the message to chat
+	to_chat(src, msg)
+
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"
 	set category = "OOC"
