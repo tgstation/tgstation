@@ -143,9 +143,9 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 				assignment = I.assignment
 				ijob = jobs[I.assignment]
 			else
-			name = "Unknown"
-			assignment = ""
-			ijob = 80
+				name = "Unknown"
+				assignment = ""
+				ijob = 80
 
 			life_status = (!H.stat ? TRUE : FALSE)
 
