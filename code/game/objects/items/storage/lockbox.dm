@@ -223,3 +223,4 @@
 	privacy_lock = SEND_SIGNAL(src, COMSIG_IS_STORAGE_LOCKED)
 	user.visible_message("<span class='notice'>[user] [privacy_lock ? "" : "un"]locks [src]'s privacy lock.</span>",
 					"<span class='notice'>You [privacy_lock ? "" : "un"]lock [src]'s privacy lock.</span>")
+
