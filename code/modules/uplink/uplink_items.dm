@@ -513,7 +513,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Surplus SMG"
 	desc = "A horribly outdated automatic weapon. Why would you want to use this."
 	item = /obj/item/gun/ballistic/automatic/plastikov
-	cost = 5
+	cost = 3
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/dangerous/revolver
@@ -901,7 +901,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "Surplus SMG Magazine"
 	desc = "A cylindrical magazine designed for the PP-95 smg."
 	item = /obj/item/ammo_box/magazine/plastikov9mm
-	cost = 3
+	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/ammo/mech/bag
