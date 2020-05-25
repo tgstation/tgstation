@@ -75,7 +75,7 @@
 	health = 200
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	move_resist = MOVE_FORCE_OVERPOWERING
+	move_resist = MOVE_FORCE_OVERPOWERING+1
 	///Previous segment in the chain
 	var/mob/living/simple_animal/hostile/eldritch/armsy/back
 	///Next segment in the chain
@@ -127,28 +127,16 @@
 	return FALSE
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Moved()
-
-	if(back && back.loc != oldloc)
-		for(var/i in 1 to max(get_dist(back.loc,oldloc), 10) )
-			step_towards(back,oldloc)
-			if(back.loc == oldloc)
-				break
-		///ForceMove wont do, we must rebuild the worm, and moving there wont be enough, It MUST be teleported there or it WILL break. Why wont it work? because forceMove calls Move and it calls forceMove and so on and so on causing weird and janky behaviour. Please believe me i tried.
-		back.loc = oldloc
-
-	if(front && loc != front.oldloc)
-		for(var/i in 1 to max(get_dist(loc,front.oldloc), 10) )
-			step_towards(src,front.oldloc)
-			if(loc == front.oldloc)
-				break
-		loc = front.oldloc
-
-	oldloc = loc
+	. = ..()
 	gib_trail()
-	RETURN ..()
+	if(back && back.loc != oldloc)
+		back.Move(oldloc)
+	if(front && loc != front.oldloc)
+		forceMove(front.oldloc) // self fixing properties
+	oldloc = loc
 
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/gib_trail()
-	if(back)
+	if(front) // head makes gibs
 		return
 	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/gibs))
 	var/obj/effect/decal/cleanable/blood/gibs/decal = new chosen_decal(drop_location())
