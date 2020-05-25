@@ -87,6 +87,7 @@
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
 			H.update_inv_wear_suit()
+	set_sensor_glob()	
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
@@ -96,7 +97,7 @@
 			H.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
 				H.update_inv_wear_suit()
-
+	set_sensor_glob()	
 	..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
@@ -182,9 +183,11 @@
 
 /obj/item/clothing/under/proc/set_sensor_glob()
 	 var/mob/living/carbon/human/H = loc
-    if ((H.z == 0 || H.z == z) && (istype(H.w_uniform, /obj/item/clothing/under) || nanite_sensors))
+    if ((H.z == 0 || H.z == z) && (istype(H.w_uniform, /obj/item/clothing/under)))
         U = H.w_uniform
-        if (nanite_sensors || ((U.has_sensor > 0) && U.sensor_mode) && !GLOB.suit_sensor_list.contains(H) && U.has_sensor != BROKEN_SENSORS)
+        if (((U.has_sensor) && U.sensor_mode) && !GLOB.suit_sensor_list.contains(H) && U.has_sensor != BROKEN_SENSORS)
             GLOB.suit_sensor_list |= src
 		else 
    			GLOB.suit_sensor_list -= src
+	else 
+   		GLOB.suit_sensor_list -= src	
