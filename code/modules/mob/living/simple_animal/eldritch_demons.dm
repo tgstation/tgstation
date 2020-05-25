@@ -30,6 +30,21 @@
 	pressure_resistance = 100
 	del_on_death = TRUE
 	deathmessage = "implodes into itself"
+	///Innate spells that are supposed to be added when a beast is created
+	var/list/spells_to_add
+
+/mob/living/simple_animal/hostile/eldritch/Initialize()
+	. = ..()
+	add_spells()
+
+/**
+  * Add_spells
+  *
+  * Goes through spells_to_add and adds each spell to the mind.
+  */
+/mob/living/simple_animal/hostile/eldritch/proc/add_spells()
+	for(var/spell in spells_to_add)
+		AddSpell(new spell())
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet
 	name = "Raw Prophet"
@@ -40,14 +55,10 @@
 	icon_living = "raw_prophet"
 	melee_damage_lower = 5
 	melee_damage_upper = 10
-	maxHealth = 75
-	health = 75
+	maxHealth = 50
+	health = 50
 	sight = SEE_MOBS|SEE_OBJS|SEE_TURFS
-
-/mob/living/simple_animal/hostile/eldritch/raw_prophet/Initialize()
-	. = ..()
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long)
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/telepathy/eldritch)
+	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash/long,/obj/effect/proc_holder/spell/targeted/telepathy/eldritch)
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()
@@ -201,7 +212,6 @@
 
 	return ..()
 
-
 /mob/living/simple_animal/hostile/eldritch/armsy/prime
 	name = "Lord of the Night"
 	real_name = "Master of Decay"
@@ -223,16 +233,12 @@
 	icon_state = "rust_walker"
 	status_flags = CANPUSH
 	icon_living = "rust_walker"
-	maxHealth = 50
-	health = 50
+	maxHealth = 75
+	health = 75
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
-
-/mob/living/simple_animal/hostile/eldritch/rust_spirit/Initialize()
-	. = ..()
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small)
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
+	spells_to_add = list(/obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small,/obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short)
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
 	. = ..()
@@ -257,12 +263,7 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_TURFS
-
-/mob/living/simple_animal/hostile/eldritch/ash_spirit/Initialize()
-	. = ..()
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
-	AddSpell(new /obj/effect/proc_holder/spell/pointed/ash_cleave/long)
-	AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade)
+	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,/obj/effect/proc_holder/spell/pointed/ash_cleave/long,/obj/effect/proc_holder/spell/aoe_turf/fire_cascade)
 
 /mob/living/simple_animal/hostile/eldritch/stalker
 	name = "Flesh Stalker"
@@ -276,9 +277,4 @@
 	melee_damage_lower = 15
 	melee_damage_upper = 20
 	sight = SEE_MOBS
-
-/mob/living/simple_animal/hostile/eldritch/stalker/Initialize()
-	. = ..()
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash)
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/shapeshift/eldritch)
-	AddSpell(new /obj/effect/proc_holder/spell/targeted/emplosion/eldritch)
+	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift/ash,/obj/effect/proc_holder/spell/targeted/shapeshift/eldritch,/obj/effect/proc_holder/spell/targeted/emplosion/eldritch)
