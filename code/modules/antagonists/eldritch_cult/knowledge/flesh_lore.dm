@@ -83,7 +83,7 @@
 	var/list/spooky_scaries
 	route = "Flesh"
 
-/datum/eldritch_knowledge/flesh_grasp/mansus_grasp_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/flesh_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!ishumanbasic(target))
 		return
@@ -151,7 +151,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/ash_mark)
 	route = "Flesh"
 
-/datum/eldritch_knowledge/flesh_mark/eldritch_blade_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/flesh_mark/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(istype(target,/mob/living))
 		var/mob/living/L = target
@@ -166,7 +166,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/rust_blade_upgrade)
 	route = "Flesh"
 
-/datum/eldritch_knowledge/flesh_blade_upgrade/eldritch_blade_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/flesh_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(ishuman(target))
 		var/mob/living/carbon/human/C = target

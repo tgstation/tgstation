@@ -5,9 +5,7 @@
 	slot_flags = ITEM_SLOT_NECK
 	strip_delay = 40
 	equip_delay_other = 40
-	///Vision flags granted by wearing this
-	var/trinket_flag = 0
-	var/trinket_lighting_alpha
+
 /obj/item/clothing/neck/worn_overlays(isinhands = FALSE)
 	. = list()
 	if(!isinhands)

@@ -96,7 +96,7 @@
   *
   * Gives addtional effects to mansus grasp spell
   */
-/datum/eldritch_knowledge/proc/mansus_grasp_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/proc/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	return
 
 
@@ -105,7 +105,7 @@
   *
   * Gives addtional effects to sickly blade weapon
   */
-/datum/eldritch_knowledge/proc/eldritch_blade_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/proc/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	return
 
 //////////////

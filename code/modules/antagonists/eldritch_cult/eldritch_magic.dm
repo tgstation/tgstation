@@ -64,7 +64,7 @@
 
 	for(var/X in cultie.get_all_knowledge())
 		var/datum/eldritch_knowledge/EK = X
-		EK.mansus_grasp_act(target, user, proximity_flag, click_parameters)
+		EK.on_mansus_grasp(target, user, proximity_flag, click_parameters)
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion
 	name = "Aggressive Spread"
@@ -78,7 +78,6 @@
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "corrode"
 	action_background_icon_state = "bg_ecult"
-	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/cast(list/targets, mob/user = usr)
 	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
@@ -87,21 +86,7 @@
 		var/chance = 100 - (max(get_dist(T,user),1)-1)*100/(range+1)
 		if(!prob(chance))
 			continue
-		if(!is_type_in_typecache(T, blacklisted_turfs))
-			T.ChangeTurf(/turf/open/floor/plating/rust)
-			continue
-		if(T.type == /turf/closed/wall/rust)
-			T.ScrapeAway()
-			continue
-		if(T.type == /turf/closed/wall/r_wall/rust && prob(50))
-			T.ScrapeAway()
-			continue
-		if(T.type == /turf/closed/wall)
-			T.ChangeTurf(/turf/closed/wall/rust)
-			continue
-		if(T.type == /turf/closed/wall/r_wall && prob(50))
-			T.ChangeTurf(/turf/closed/wall/r_wall/rust)
-			continue
+		T.rust_heretic_act()
 
 /obj/effect/proc_holder/spell/aoe_turf/rust_conversion/small
 	name = "Rust Conversion"
@@ -170,7 +155,6 @@
 	ignored_factions = list("e_cult")
 	range = 15
 	speed = 1
-	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
 
 /obj/projectile/magic/spell/rust_wave/Moved(atom/OldLoc, Dir)
 	. = ..()
@@ -208,9 +192,10 @@
 			turflist += get_step(T1,SOUTH)
 
 	for(var/X in turflist)
+		if(prob(25))
+			continue
 		var/turf/T = X
-		if(!is_type_in_typecache(T, blacklisted_turfs) && prob(75))
-			T.ChangeTurf(/turf/open/floor/plating/rust)
+		T.rust_heretic_act()
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave/short
 	name = "Small Patron's Reach"

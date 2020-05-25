@@ -26,7 +26,7 @@
 	next_knowledge = list(/datum/eldritch_knowledge/spell/ashen_shift)
 	route = "Ash"
 
-/datum/eldritch_knowledge/ashen_grasp/mansus_grasp_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/ashen_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(!iscarbon(target))
 		return
@@ -57,17 +57,17 @@
 /datum/eldritch_knowledge/ash_mark
 	name = "Mark of ash"
 	gain_text = "Spread the famine."
-	desc = "Your sickly blade now applies ash mark on hit. Use your mansus grasp to proc the mark. Mark of Ash causes stamina damage, and fire loss, and spreads to a nearby carbon. Damage scales with how many times the mark has spread."
+	desc = "Your sickly blade now applies ash mark on hit. Use your mansus grasp to proc the mark. Mark of Ash causes stamina damage, and fire loss, and spreads to a nearby carbon. Damage decreases with how many times the mark has spread."
 	cost = 2
 	next_knowledge = list(/datum/eldritch_knowledge/curse/blindness)
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_mark,/datum/eldritch_knowledge/flesh_mark)
 	route = "Ash"
 
-/datum/eldritch_knowledge/ash_mark/eldritch_blade_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/ash_mark/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(istype(target,/mob/living))
 		var/mob/living/L = target
-		L.apply_status_effect(/datum/status_effect/eldritch/ash,1)
+		L.apply_status_effect(/datum/status_effect/eldritch/ash)
 
 /datum/eldritch_knowledge/curse/blindness
 	name = "Curse of blindness"
@@ -105,7 +105,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/rust_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
 	route = "Ash"
 
-/datum/eldritch_knowledge/ash_blade_upgrade/eldritch_blade_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/ash_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target

@@ -50,7 +50,7 @@
 		return
 	for(var/X in cultie.get_all_knowledge())
 		var/datum/eldritch_knowledge/EK = X
-		EK.eldritch_blade_act(target,user,proximity_flag,click_parameters)
+		EK.on_eldritch_blade(target,user,proximity_flag,click_parameters)
 
 /obj/item/melee/sickly_blade/rust
 	name = "Rusted Blade"
@@ -68,12 +68,10 @@
 	icon_state = "eye_medalion"
 	item_state = ""	//no inhands
 	w_class = WEIGHT_CLASS_SMALL
-	trinket_flag = SEE_MOBS
-	trinket_lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+
 
 /obj/item/clothing/neck/eldritch_amulet/piercing
 	name = "Piercing Eldritch Medallion"
-	trinket_flag = SEE_TURFS|SEE_MOBS|SEE_OBJS
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	name = "ominous hood"

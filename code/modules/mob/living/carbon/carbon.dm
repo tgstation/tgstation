@@ -564,12 +564,6 @@
 		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
 			return
 
-	if(wear_neck)
-		var/obj/item/clothing/neck/N = wear_neck
-		sight |= N.trinket_flag
-		if(!isnull(N.trinket_lighting_alpha))
-			lighting_alpha = min(lighting_alpha, N.trinket_lighting_alpha)
-
 	if(glasses)
 		var/obj/item/clothing/glasses/G = glasses
 		sight |= G.vision_flags

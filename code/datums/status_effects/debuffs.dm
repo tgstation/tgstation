@@ -292,7 +292,9 @@
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	///underlay used to indicate that someone is marked
 	var/mutable_appearance/marked_underlay
+	///path for the underlay
 	var/effect_sprite = ""
 
 /datum/status_effect/eldritch/on_apply()
@@ -341,9 +343,9 @@
 	///Dictates how much damage and stamina loss this mark will cause.
 	var/repetitions = 1
 
-/datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, _repetition = 1)
+/datum/status_effect/eldritch/ash/on_creation(mob/living/new_owner, _repetition = 5)
 	. = ..()
-	repetitions = _repetition
+	repetitions = min(1,_repetition)
 
 /datum/status_effect/eldritch/ash/on_effect()
 	if(iscarbon(owner))
@@ -353,7 +355,7 @@
 		for(var/mob/living/carbon/victim in range(1,carbon_owner))
 			if(IS_E_CULTIST(victim) || victim == carbon_owner)
 				continue
-			victim.apply_status_effect(type,repetitions+1)
+			victim.apply_status_effect(type,repetitions-1)
 			break
 	return ..()
 

@@ -19,7 +19,7 @@
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
 	route = "Rust"
 
-/datum/eldritch_knowledge/rust_fist/mansus_grasp_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(ishumanbasic(target))
 		var/mob/living/carbon/human/H = target
@@ -27,47 +27,8 @@
 		if(E)
 			E.on_effect()
 			H.bleed_rate = min(H.bleed_rate + 4, 8)
-	conv_area(target)
+	target.rust_heretic_act()
 	return
-
-/datum/eldritch_knowledge/rust_fist/proc/conv_area(atom/target)
-	if(istype(target,/mob/living/simple_animal/bot))
-		var/mob/living/simple_animal/bot/B = target
-		B.adjustBruteLoss(rust_force)
-		return
-
-	if(istype(target,/mob/living/silicon))
-		var/mob/living/silicon/S = target
-		S.adjustBruteLoss(rust_force)
-		return
-
-	if(istype(target,/obj/structure))
-		var/obj/structure/S = target
-		S.take_damage(rust_force, BRUTE, "melee", 1)
-		return
-
-	if(istype(target,/obj/machinery))
-		var/obj/machinery/M = target
-		M.take_damage(rust_force, BRUTE, "melee", 1)
-		return
-
-	//Walls
-	var/turf/T = get_turf(target)
-	if(T.type == /turf/closed/wall/rust)
-		T.ScrapeAway()
-		return
-	if(T.type == /turf/closed/wall/r_wall/rust && prob(50))
-		T.ScrapeAway()
-		return
-	if(T.type == /turf/closed/wall)
-		T.ChangeTurf(/turf/closed/wall/rust)
-		return
-	if(T.type == /turf/closed/wall/r_wall && prob(50))
-		T.ChangeTurf(/turf/closed/wall/r_wall/rust)
-		return
-	if(!is_type_in_typecache(T, blacklisted_turfs))
-		T.ChangeTurf(/turf/open/floor/plating/rust)
-		return
 
 /datum/eldritch_knowledge/spell/area_conversion
 	name = "Agressive Spread"
@@ -98,7 +59,6 @@
 	L.adjustOxyLoss(-0.5, FALSE)
 	L.adjustStaminaLoss(-2)
 
-
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
 	desc = "Your eldritch blade now applies a rust mark. Rust mark has a chance to deal between 0 to 200 damage to 75% of enemies items. To Detonate the mark use your mansus grasp on it."
@@ -108,7 +68,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_mark,/datum/eldritch_knowledge/flesh_mark)
 	route = "Rust"
 
-/datum/eldritch_knowledge/rust_mark/eldritch_blade_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/rust_mark/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(istype(target,/mob/living))
 		var/mob/living/L = target
@@ -123,7 +83,7 @@
 	banned_knowledge = list(/datum/eldritch_knowledge/ash_blade_upgrade,/datum/eldritch_knowledge/flesh_blade_upgrade)
 	route = "Rust"
 
-/datum/eldritch_knowledge/rust_blade_upgrade/eldritch_blade_act(atom/target, mob/user, proximity_flag, click_parameters)
+/datum/eldritch_knowledge/rust_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -239,24 +199,10 @@
 /datum/rust_spread/process()
 	compile_turfs()
 	var/turf/T
-	var/T1
 	for(var/i = 0, i < spread_per_tick,i++)
 		T = pick(edge_turfs)
-		if(istype(T,/turf/closed/wall))
-			edge_turfs -= T
-			T1 = T.ChangeTurf(/turf/closed/wall/rust)
-			turfs += T1
-			continue
-		if(istype(T,/turf/closed/wall/r_wall))
-			edge_turfs -= T
-			T1 = T.ChangeTurf(/turf/closed/wall/r_wall/rust)
-			turfs += T1
-			continue
-		if(istype(T,/turf/open/floor))
-			edge_turfs -= T
-			T1 = T.ChangeTurf(/turf/open/floor/plating/rust)
-			turfs += T1
-			continue
+		T.rust_heretic_act()
+		turfs += get_turf(T)
 
 /**
   * Compile turfs

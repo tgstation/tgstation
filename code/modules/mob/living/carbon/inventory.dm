@@ -72,9 +72,7 @@
 				current_equip = wear_neck
 			wear_neck = I
 			update_inv_neck(I)
-			var/obj/item/clothing/neck/N = I
-			if(N.trinket_flag)
-				update_sight()
+
 		if(ITEM_SLOT_HANDCUFFED)
 			handcuffed = I
 			update_handcuffed()
@@ -123,9 +121,7 @@
 		wear_neck = null
 		if(!QDELETED(src))
 			update_inv_neck(I)
-			var/obj/item/clothing/neck/N = I
-			if(N.trinket_flag)
-				update_sight()
+
 	else if(I == handcuffed)
 		handcuffed = null
 		if(buckled && buckled.buckle_requires_restraints)

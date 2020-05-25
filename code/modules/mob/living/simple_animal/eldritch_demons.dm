@@ -51,7 +51,8 @@
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()
-	client?.view_size.setTo(11)
+	//client?.view_size.setTo(11) doesnt work
+	client?.change_view(11)
 
 /mob/living/simple_animal/hostile/eldritch/armsy
 	name = "Terror of the night"
@@ -63,11 +64,17 @@
 	health = 200
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	///Previous segment in the chain
 	var/mob/living/simple_animal/hostile/eldritch/armsy/back
+	///Next segment in the chain
 	var/mob/living/simple_animal/hostile/eldritch/armsy/front
+	///Your old location
 	var/oldloc
+	///Allow / disallow pulling
 	var/allow_pulling = FALSE
+	///How many arms do we have to eat to expand?
 	var/stacks_to_grow = 5
+	///Currently eaten arms
 	var/current_stacks = 0
 
 /mob/living/simple_animal/hostile/eldritch/armsy/New(spawn_more = TRUE,len = 6)
@@ -107,21 +114,21 @@
 
 	if(pulledby && !allow_pulling)
 		pulledby.stop_pulling()
-		loc = oldloc
+		forceMove(oldloc)
 
 	if(back && back.loc != oldloc)
 		for(var/i = 0, i < max(get_dist(loc,back.loc),10),i++)
 			step_towards(back,oldloc)
 			if(loc == back.loc)
 				break
-		back.loc = oldloc//just in case
+		back.forceMove(oldloc)
 
 	if(front && loc != front.oldloc)
 		for(var/i = 0, i < max(get_dist(loc,front.loc),10),i++)
 			step_towards(src,front.oldloc)
 			if(loc == front.loc)
 				break
-		loc = front.oldloc//just in case
+		forceMove(front.oldloc)
 
 	oldloc = loc
 	gib_trail()
@@ -139,7 +146,7 @@
 		front.icon_state = "armsy_end"
 		front.icon_living = "armsy_end"
 	if(back)
-		back.Destroy() // chain destruction baby
+		qdel(back) // chain destruction baby
 	return ..()
 
 
@@ -163,8 +170,8 @@
 				current_stacks = 0
 
 	adjustBruteLoss(-maxHealth * 0.5, FALSE)
-	adjustFireLoss(-maxHealth * 0.5 FALSE)
-	adjustToxLoss(-maxHealth * 0.5 FALSE)
+	adjustFireLoss(-maxHealth * 0.5 ,FALSE)
+	adjustToxLoss(-maxHealth * 0.5, FALSE)
 	adjustOxyLoss(-maxHealth * 0.5)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
