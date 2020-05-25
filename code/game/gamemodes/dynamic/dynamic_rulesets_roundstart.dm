@@ -152,7 +152,7 @@
 //////////////////////////////////////////////
 
 /datum/dynamic_ruleset/roundstart/e_cult
-	name = "Eldritch Cultists"
+	name = "Heretics"
 	antag_flag = ROLE_ECULT
 	antag_datum = /datum/antagonist/e_cult
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")

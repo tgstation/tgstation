@@ -1,7 +1,7 @@
 /datum/antagonist/e_cult
-	name = "Eldritch Cultist"
-	roundend_category = "eldritch cultist"
-	antagpanel_category = "Eldritch Cult"
+	name = "Heretic"
+	roundend_category = "Heretic"
+	antagpanel_category = "Heretic"
 	antag_moodlet = /datum/mood_event/e_cult
 	job_rank = ROLE_ECULTIST
 	var/give_equipment = TRUE
@@ -11,21 +11,17 @@
 /datum/antagonist/e_cult/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
 	new_owner.add_antag_datum(src)
-	message_admins("[key_name_admin(admin)] has eldritch cult'ed [key_name_admin(new_owner)].")
-	log_admin("[key_name(admin)] has eldritch cult'ed [key_name(new_owner)].")
+	message_admins("[key_name_admin(admin)] has heresized [key_name_admin(new_owner)].")
+	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
 /datum/antagonist/e_cult/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
-	to_chat(owner, "<span class='boldannounce'>You are the Eldritch Cultist!</span><br>\
+	to_chat(owner, "<span class='boldannounce'>You are the Heretic!</span><br>\
 	<B>The old ones gave you these tasks to fulfill:</B>")
 	owner.announce_objectives()
-	to_chat(owner, "<span class='cult'>Your magic uses the souls of the dead. You are very weak at first,<br>\
-	but the more souls you reap the more powerful you become.<br>\
-	You can choose a specific old one you can worship:<br>\
-	Rust - decay and destruction, passive destructive abilities.<br>\
-	Flesh - life and necrosis, allows you to resurrect the dead and summon deadly beasts.<br>\
-	Ash - shadows and secrets, stealth and movement based abilties.<br>\
-	<B>Remember that your power comes from souls!</B></span>")
+	to_chat(owner, "<span class='cult'>The book whispers, the forbidden knowledge walks once again!<br>\
+	Your book allows you to research abilities, read it very carefully! you cannot undo what has been done!<br>\
+	You gain charges by either collecitng influences or sacrifcing people tracked by the living heart<br></span>")
 
 /datum/antagonist/e_cult/on_gain()
 	var/mob/living/current = owner.current
@@ -167,9 +163,9 @@
 			count++
 
 	if(cultiewin)
-		parts += "<span class='greentext'>The eldritch cultist was successful!</span>"
+		parts += "<span class='greentext'>The heretic was successful!</span>"
 	else
-		parts += "<span class='redtext'>The eldritch cultist has failed.</span>"
+		parts += "<span class='redtext'>The heretic has failed.</span>"
 
 	parts += "<b>Knowledge Researched:</b> "
 

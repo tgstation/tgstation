@@ -1,7 +1,7 @@
 /datum/game_mode/e_cult
-	name = "eldritch cultist"
-	config_tag = "eldritch cultist"
-	report_type = "eldritch cultist"
+	name = "heresy"
+	config_tag = "heresy"
+	report_type = "heresy"
 	antag_flag = ROLE_ECULT
 	false_report_weight = 5
 	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
@@ -13,8 +13,8 @@
 	enemy_minimum_age = 0
 
 	announce_span = "danger"
-	announce_text = "An eldritch cultist has been spotted on the station!\n\
-	<span class='danger'>Cultist</span>: Accomplish your objectives.\n\
+	announce_text = "An heretics has been spotted on the station!\n\
+	<span class='danger'>Heretics</span>: Accomplish your objectives.\n\
 	<span class='notice'>Crew</span>: Do not let the madman succeed!"
 
 	var/ecult_possible = 4 //hard limit on culties if scaling is turned off
@@ -31,7 +31,7 @@
 
 	var/esc = CONFIG_GET(number/ecult_scaling_coeff)
 	if(esc)
-		num_ecult = max(1, min(round(num_players() / (esc * 2)) + 2, round(num_players() / esc)))
+		num_ecult = min(max(1, min(round(num_players() / (esc * 2)) + 2, round(num_players() / esc))),4)
 	else
 		num_ecult = max(1, min(num_players(), ecult_possible))
 
@@ -59,7 +59,7 @@
 	GLOB.reality_smash_track.Generate(num_ecult)
 	for(var/c in culties)
 		var/datum/mind/cultie = c
-		log_game("[key_name(cultie)] has been selected as an eldritch cultist!")
+		log_game("[key_name(cultie)] has been selected as an heretic!")
 		var/datum/antagonist/e_cult/new_antag = new()
 		cultie.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= cultie
