@@ -51,7 +51,7 @@
 
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()
-	client.change_view(11)
+	client?.view_size.setTo(11)
 
 /mob/living/simple_animal/hostile/eldritch/armsy
 	name = "Terror of the night"
@@ -89,14 +89,14 @@
 			current.front = src
 			current.AIStatus = AI_OFF
 			back = current
-		if(i > 0 && i < len)
+		else if(i > 0 && i < len)
 			current = new type(drop_location(),spawn_more = FALSE)
 			prev.back = current
 			prev.icon_state = "armsy_mid"
 			prev.icon_living = "armsy_mid"
 			prev.front = next
 			prev.AIStatus = AI_OFF
-		if(i == len)
+		else
 			prev.icon_state = "armsy_end"
 			prev.icon_living = "armsy_end"
 			prev.front = next
@@ -133,7 +133,6 @@
 	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/gibs))
 	var/obj/effect/decal/cleanable/blood/gibs/decal = new chosen_decal(drop_location())
 	decal.setDir(dir)
-	return
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Destroy()
 	if(front)
@@ -141,7 +140,8 @@
 		front.icon_living = "armsy_end"
 	if(back)
 		back.Destroy() // chain destruction baby
-	. = ..()
+	return ..()
+
 
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/heal()
 	if(health == maxHealth)
@@ -162,9 +162,9 @@
 
 				current_stacks = 0
 
-	adjustBruteLoss(-maxHealth * 0.5)
-	adjustFireLoss(-maxHealth * 0.5)
-	adjustToxLoss(-maxHealth * 0.5)
+	adjustBruteLoss(-maxHealth * 0.5, FALSE)
+	adjustFireLoss(-maxHealth * 0.5 FALSE)
+	adjustToxLoss(-maxHealth * 0.5 FALSE)
 	adjustOxyLoss(-maxHealth * 0.5)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
@@ -188,10 +188,9 @@
 			if(BP.body_part != HEAD && BP.body_part != CHEST && BP.body_part != LEG_LEFT && BP.body_part != LEG_RIGHT)
 				if(BP.dismemberable)
 					parts += BP
-		if(prob(10))
+		if(length(parts) && prob(10))
 			var/obj/item/bodypart/BP = pick(parts)
-			if(BP)
-				BP.dismember()
+			BP.dismember()
 
 	return ..()
 
@@ -206,9 +205,9 @@
 
 /mob/living/simple_animal/hostile/eldritch/armsy/prime/New(spawn_more, len)
 	. = ..()
-	var/matrix/M = matrix()
-	M.Scale(1.4,1.4)
-	src.transform = M
+	var/matrix/matrix_transformation = matrix()
+	matrix_transformation.Scale(1.4,1.4)
+	transform = matrix_transformation
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit
 	name = "Rust Walker"
@@ -230,11 +229,13 @@
 
 /mob/living/simple_animal/hostile/eldritch/rust_spirit/Life()
 	. = ..()
+	if(stat == DEAD)
+		return
 	var/turf/T = get_turf(src)
 	if(istype(T,/turf/open/floor/plating/rust))
-		adjustBruteLoss(-3)
-		adjustFireLoss(-3)
-		adjustToxLoss(-3)
+		adjustBruteLoss(-3, FALSE)
+		adjustFireLoss(-3, FALSE)
+		adjustToxLoss(-3, FALSE)
 		adjustOxyLoss(-1)
 
 /mob/living/simple_animal/hostile/eldritch/ash_spirit

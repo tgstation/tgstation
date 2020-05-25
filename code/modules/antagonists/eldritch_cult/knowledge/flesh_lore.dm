@@ -268,4 +268,4 @@
 			var/mob/living/carbon/C = user
 			C.mind.transfer_to(summoned,TRUE)
 			C.gib()
-	. = ..()
+	return ..()

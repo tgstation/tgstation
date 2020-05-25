@@ -92,12 +92,12 @@
 	if(!istype(T,/turf/open/floor/plating/rust) || !isliving(user))
 		return
 	var/mob/living/L = user
-	L.adjustBruteLoss(-2)
-	L.adjustFireLoss(-2)
-	L.adjustToxLoss(-2)
-	L.adjustOxyLoss(-0.5)
+	L.adjustBruteLoss(-2, FALSE)
+	L.adjustFireLoss(-2, FALSE)
+	L.adjustToxLoss(-2, FALSE)
+	L.adjustOxyLoss(-0.5, FALSE)
 	L.adjustStaminaLoss(-2)
-	return
+
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
@@ -273,4 +273,3 @@
 			if(is_type_in_typecache(T,blacklisted_turfs))
 				continue
 			edge_turfs += T
-
