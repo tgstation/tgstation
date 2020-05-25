@@ -34,4 +34,4 @@
 
 /obj/projectile/bullet/c9x19mm
 	name = "9x19mm bullet"
-	damage = 5
+	damage = 10
