@@ -86,7 +86,7 @@
 	var/mob/living/simple_animal/hostile/eldritch/armsy/next
 	var/mob/living/simple_animal/hostile/eldritch/armsy/prev
 	var/mob/living/simple_animal/hostile/eldritch/armsy/current
-	for(var/i = 0, i <= len,i++)
+	for(var/i in 0 to len)
 		prev = current
 		//i tried using switch, but byond is really fucky and it didnt work as intended. Im sorry
 		if(i == 0)
@@ -117,14 +117,14 @@
 		forceMove(oldloc)
 
 	if(back && back.loc != oldloc)
-		for(var/i = 0, i < max(get_dist(loc,back.loc),10),i++)
+		for(for(var/i in 1 to max(get_dist(loc, front.loc), 10)))
 			step_towards(back,oldloc)
 			if(loc == back.loc)
 				break
 		back.forceMove(oldloc)
 
 	if(front && loc != front.oldloc)
-		for(var/i = 0, i < max(get_dist(loc,front.loc),10),i++)
+		for(var/i in 1 to max(max(get_dist(loc,front.loc), 10))
 			step_towards(src,front.oldloc)
 			if(loc == front.loc)
 				break
