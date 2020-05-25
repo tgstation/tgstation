@@ -32,7 +32,7 @@
 	desc = "Twisted sickle with an ornamental eye. The eyes looks at you."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eldritch_blade"
-	item_state = "eldritch_blade"
+	inhand_icon_state = "eldritch_blade"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -66,12 +66,24 @@
 	desc = "Eldritch medallion that let's you see."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "eye_medalion"
-	item_state = ""	//no inhands
 	w_class = WEIGHT_CLASS_SMALL
+	///What trait do we want to add upon equipiing
+	var/trait = TRAIT_THERMAL_VISION
 
+/obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
+	. = ..()
+	if(ishuman(user) && user.mind && slot == ITEM_SLOT_NECK && IS_E_CULTIST(user) )
+		ADD_TRAIT(user, trait, CLOTHING_TRAIT)
+		user.update_sight()
+
+/obj/item/clothing/neck/eldritch_amulet/dropped(mob/user)
+	. = ..()
+	REMOVE_TRAIT(user, trait, CLOTHING_TRAIT)
+	user.update_sight()
 
 /obj/item/clothing/neck/eldritch_amulet/piercing
 	name = "Piercing Eldritch Medallion"
+	trait = TRAIT_XRAY_VISION
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	name = "ominous hood"
@@ -82,7 +94,7 @@
 	name = "ominous armor"
 	desc = "A ragged, dusty set of robes. Strange eyes line the inside."
 	icon_state = "eldritch_armor"
-	item_state = "eldritch_armor"
+	inhand_icon_state = "eldritch_armor"
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 

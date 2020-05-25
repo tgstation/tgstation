@@ -44,7 +44,7 @@
 	name = "Mansus Grasp"
 	desc = "A sinister looking aura that distorts the flow of reality around it."
 	icon_state = "disintegrate"
-	item_state = "disintegrate"
+	inhand_icon_state = "disintegrate"
 	catchphrase = "R'CH T'H TR'TH"
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
@@ -110,7 +110,7 @@
 	name = "Blood Siphon"
 	desc = "A sinister looking aura that distorts the flow of reality around it."
 	icon_state = "blood_siphon"
-	item_state = "disintegrate"
+	inhand_icon_state = "disintegrate"
 	catchphrase = "R'BRTH"
 
 /obj/item/melee/touch_attack/ash_leech/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
