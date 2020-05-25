@@ -10,6 +10,7 @@
 	var/static/list/anomaly_armour_types = list(
 		/obj/effect/anomaly/grav	                = /obj/item/clothing/suit/armor/reactive/repulse,
 		/obj/effect/anomaly/flux 	           		= /obj/item/clothing/suit/armor/reactive/tesla,
+		/obj/effect/anomaly/bhole	                = /obj/item/clothing/suit/armor/reactive/vortex,
 		/obj/effect/anomaly/bluespace 	            = /obj/item/clothing/suit/armor/reactive/teleport
 		)
 
@@ -246,3 +247,26 @@
 
 /obj/item/clothing/suit/armor/reactive/table/emp_act()
 	return
+
+/obj/item/clothing/suit/armor/reactive/vortex
+	name = "reactive vortex armor"
+	desc = "An experimental suit of armor that uses the power of black holes to stop any attacker."
+
+/obj/item/clothing/suit/armor/reactive/vortex/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
+	if(!active)
+		return FALSE
+	if(prob(hit_reaction_chance))
+		if(world.time < reactivearmor_cooldown)
+			owner.visible_message("<span class='danger'>The black hole generators on [owner]'s reactive vortex armor are still recharging! The armor merely emits some sparks.</span>")
+			return
+		for(var/mob/living/A in range(T, 7))
+			visible_message("<span class='notice'>[owner] starts cock-voring [A]!</span>")
+			A.say("NOOOO! HELP ME!!")
+			A.Paralyze(50)
+			if(do_after(owner, 50, TRUE, A))
+				A.say("AAAAAAAAAAAAAAAAAAAA!!")
+				visible_message("<span class='notice'>[A] is sucked into [owner]'s cock, instantly killing them!</span>")
+				A.gib(null, null, TRUE, TRUE)
+		owner.visible_message("<span class='danger'>[src] blocks [attack_text], cock voring the attackers!</span>")
+		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
+		return TRUE
