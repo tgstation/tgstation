@@ -177,7 +177,7 @@
 
 /mob/living/simple_animal/hostile/eldritch/armsy/AttackingTarget()
 	if(istype(target,/obj/item/bodypart/r_arm) || istype(target,/obj/item/bodypart/l_arm))
-		target.Destroy()
+		qdel(target)
 		heal()
 		return
 	if(back)
