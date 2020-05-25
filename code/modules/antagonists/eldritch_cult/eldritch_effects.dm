@@ -155,7 +155,7 @@
 		if(cultie && cultie.current && cultie.current.client)
 			cultie.current.client.images -= img
 	new /obj/effect/broken_illusion(drop_location())
-	return = ..()
+	return ..()
 
 ///Makes the mind able to see this effect
 /obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)
