@@ -3,8 +3,11 @@
 	desc = "Book describing the secrets of the veil."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "book"
+	///Last person that touched this
 	var/mob/living/last_user
+	///how many charges do we have?
 	var/charge = 1
+	///Where we cannot create the rune?
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava))
 
 /obj/item/forbidden_book/examine(mob/user)
@@ -24,12 +27,14 @@
 	if(istype(target,/turf/open))
 		draw_rune(target,user)
 
+///Gives you a charge and destroys a corresponding influence
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
 	if(do_after(user,10 SECONDS,FALSE,RS))
 		qdel(RS)
 		charge += 1
 
+///Draws a rune on a selected turf
 /obj/item/forbidden_book/proc/draw_rune(atom/target,mob/user)
 	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return
@@ -41,6 +46,7 @@
 	if(do_after(user,30 SECONDS,A))
 		new /obj/effect/eldritch/big(A)
 
+///Removes runes from the selected turf
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
 	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return
