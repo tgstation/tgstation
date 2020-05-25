@@ -338,7 +338,7 @@
 	else
 		return ..()
 
-/obj/item/stack/medical/mesh/aloe
+/obj/item/stack/medical/aloe
 	name = "aloe cream"
 	desc = "A healing paste you can apply on wounds."
 
@@ -348,12 +348,29 @@
 	novariants = TRUE
 	amount = 20
 	max_amount = 20
-	sanitization = 0.5
-	flesh_regeneration = 0.25
-	heal_burn = 3
-	heal_brute = 3
+	var/heal = 3
 	grind_results = list(/datum/reagent/consumable/aloejuice = 1)
 
+/obj/item/stack/medical/aloe/heal(mob/living/M, mob/user)
+	. = ..()
+	if(M.stat == DEAD)
+		to_chat(user, "<span class='warning'>[M] is dead! You can not help [M.p_them()].</span>")
+		return FALSE
+	if(iscarbon(M))
+		return heal_carbon(M, user, heal, heal)
+	if(isanimal(M))
+		var/mob/living/simple_animal/critter = M
+		if (!(critter.healable))
+			to_chat(user, "<span class='warning'>You cannot use \the [src] on [M]!</span>")
+			return FALSE
+		else if (critter.health == critter.maxHealth)
+			to_chat(user, "<span class='notice'>[M] is at full health.</span>")
+			return FALSE
+		user.visible_message("<span class='green'>[user] applies \the [src] on [M].</span>", "<span class='green'>You apply \the [src] on [M].</span>")
+		M.heal_bodypart_damage(heal, heal)
+		return TRUE
+
+	to_chat(user, "<span class='warning'>You can't heal [M] with the \the [src]!</span>")
 
 	/*
 	The idea is for these medical devices to work like a hybrid of the old brute packs and tend wounds,
@@ -369,7 +386,6 @@
 	desc = "A potent medical gel that, when applied to a damaged bone in a proper surgical setting, triggers an intense melding reaction to repair the wound. Can be directly applied alongside surgical sticky tape to a broken bone in dire circumstances, though this is very harmful to the patient and not recommended."
 
 	icon = 'icons/obj/surgery.dmi'
-	item_state = ""
 	icon_state = "bone-gel"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
