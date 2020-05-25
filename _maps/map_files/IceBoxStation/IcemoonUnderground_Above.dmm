@@ -79,7 +79,8 @@
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "an" = (
-/obj/effect/spawner/structure/window,
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "ao" = (
@@ -809,6 +810,7 @@
 /area/mine/production)
 "df" = (
 /obj/effect/turf_decal/bot,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dg" = (
@@ -934,12 +936,14 @@
 /area/mine/production)
 "du" = (
 /obj/effect/turf_decal/loading_area,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dv" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/mine/production)
 "dw" = (
@@ -23805,7 +23809,7 @@ bf
 bf
 bq
 ar
-bP
+Rx
 bP
 bP
 bP
@@ -24062,7 +24066,7 @@ bf
 aj
 bq
 as
-bP
+Rx
 dM
 dW
 AB
@@ -24319,7 +24323,7 @@ bf
 bt
 am
 bP
-bP
+Rx
 dN
 dX
 em
