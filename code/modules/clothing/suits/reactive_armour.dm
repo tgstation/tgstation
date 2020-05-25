@@ -259,6 +259,7 @@
 		if(world.time < reactivearmor_cooldown)
 			owner.visible_message("<span class='danger'>The black hole generators on [owner]'s reactive vortex armor are still recharging! The armor merely emits some sparks.</span>")
 			return
+		var/turf/T = get_turf(owner)
 		for(var/mob/living/A in range(T, 7))
 			visible_message("<span class='notice'>[owner] starts cock-voring [A]!</span>")
 			A.say("NOOOO! HELP ME!!")
