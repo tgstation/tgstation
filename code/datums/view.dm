@@ -32,7 +32,7 @@
 	winset(chief, "mapwindow.map", "zoom-mode=[chief.prefs.scaling_method]")
 
 /datum/viewData/proc/isZooming()
-	return (width || height)
+	return (!!width || !!height) //Fear it
 
 /datum/viewData/proc/resetToDefault()
 	width = 0
@@ -80,8 +80,6 @@
 /datum/viewData/proc/apply()
 	chief.change_view(getView())
 	safeApplyFormat()
-	if(chief.prefs.auto_fit_viewport)
-		chief.fit_viewport()
 
 /datum/viewData/proc/supress()
 	is_suppressed = TRUE

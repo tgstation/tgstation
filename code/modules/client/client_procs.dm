@@ -890,12 +890,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	. = ..()
 
 /client/proc/rescale_view(change, min, max)
-	var/viewscale = getviewsize(view)
-	var/x = viewscale[1]
-	var/y = viewscale[2]
-	x = clamp(x+change, min, max)
-	y = clamp(y+change, min,max)
-	view_size.setDefault("[x]x[y]")
+	view_size.setTo(clamp(change, min, max), clamp(change, min, max))
 
 /client/proc/update_movement_keys(datum/preferences/direct_prefs)
 	var/datum/preferences/D = prefs || direct_prefs
