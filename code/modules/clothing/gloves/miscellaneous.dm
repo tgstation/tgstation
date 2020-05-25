@@ -147,7 +147,7 @@
 	item_state = "purplegloves"
 
 /obj/item/clothing/gloves/gauntlets
-	name = "concussive gaunlets"
+	name = "concussive gauntlets"
 	desc = "Pickaxes... for your hands!"
 	icon_state = "concussive_gauntlets"
 	item_state = "concussive_gauntlets"
