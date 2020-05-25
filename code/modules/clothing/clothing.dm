@@ -416,8 +416,8 @@ BLIND     // can't see anything
 	if ((H.z == 0 || H.z == z) && (istype(H.w_uniform, /obj/item/clothing/under)))
 		var/obj/item/clothing/under/U = H.w_uniform
 		if (((U.has_sensor) && U.sensor_mode) && !(H in GLOB.suit_sensor_list) && U.has_sensor != BROKEN_SENSORS)
-			GLOB.suit_sensor_list |= src
+			GLOB.suit_sensor_list |= H
 		else 
-			GLOB.suit_sensor_list -= src
+			GLOB.suit_sensor_list -= H
 	else 
-		GLOB.suit_sensor_list -= src	
+		GLOB.suit_sensor_list -= H	
