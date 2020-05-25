@@ -91,9 +91,9 @@
 	var/list/targets = list()
 
 /datum/reality_smash_tracker/New()
+	. = ..()
 	if(!GLOB.reality_smash_track)
 		GLOB.reality_smash_track = src
-	. = ..()
 
 
 /**
@@ -146,16 +146,16 @@
 	var/image/img
 
 /obj/effect/reality_smash/Initialize()
+	. = ..()
 	img = image(icon, src, image_state, OBJ_LAYER)
 	generate_name()
-	. = ..()
 
 /obj/effect/reality_smash/Destroy()
 	for(var/datum/mind/cultie in minds)
 		if(cultie && cultie.current && cultie.current.client)
 			cultie.current.client.images -= img
 	new /obj/effect/broken_illusion(drop_location())
-	. = ..()
+	return = ..()
 
 ///Makes the mind able to see this effect
 /obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)

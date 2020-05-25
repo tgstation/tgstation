@@ -118,11 +118,11 @@
 /datum/eldritch_knowledge/spell/on_gain(mob/user)
 	var/obj/effect/proc_holder/S = new spell_to_add
 	user.mind.AddSpell(S)
-	. = ..()
+	return = ..()
 
 /datum/eldritch_knowledge/spell/on_lose(mob/user)
 	user.mind.RemoveSpell(spell_to_add)
-	. = ..()
+	return = ..()
 
 /datum/eldritch_knowledge/curse
 	var/timer = 5 MINUTES
@@ -156,7 +156,7 @@
 		return ..()
 	curse(compiled_list[chosen_mob])
 	addtimer(CALLBACK(src, .proc/uncurse, compiled_list[chosen_mob]),timer)
-	. = ..()
+	return = ..()
 
 /datum/eldritch_knowledge/curse/proc/curse(mob/living/chosen_mob)
 	return

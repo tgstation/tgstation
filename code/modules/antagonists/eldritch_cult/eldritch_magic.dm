@@ -318,7 +318,7 @@
 		INVOKE_ASYNC(src, .proc/fire_line, user,T)
 		T = line_target(25, range, X, user)
 		INVOKE_ASYNC(src, .proc/fire_line, user,T)
-	. = ..()
+	return = ..()
 
 /obj/effect/proc_holder/spell/pointed/ash_final/proc/line_target(offset, range, atom/at , atom/user)
 	if(!at)

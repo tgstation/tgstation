@@ -149,7 +149,7 @@
 	new /datum/rust_spread(loc)
 
 
-	. = ..()
+	return = ..()
 
 /datum/eldritch_knowledge/rust_final/on_life(mob/user)
 	. = ..()
@@ -186,15 +186,16 @@
 
 
 /datum/rust_spread/New(loc)
+	. = ..()
 	var/turf/T = get_turf(loc)
 	T.ChangeTurf(/turf/open/floor/plating/rust)
 	turfs += T
 	START_PROCESSING(SSprocessing,src)
-	. = ..()
+
 
 /datum/rust_spread/Destroy(force, ...)
 	STOP_PROCESSING(SSprocessing,src)
-	. = ..()
+	return = ..()
 
 /datum/rust_spread/process()
 	compile_turfs()
