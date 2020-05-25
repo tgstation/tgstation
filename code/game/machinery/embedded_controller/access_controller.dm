@@ -209,7 +209,7 @@
 
 /obj/machinery/doorButtons/airlock_controller/proc/do_openDoor(obj/machinery/door/airlock/A)
 	if(A && A.open())
-		if(machine_stat | (NOPOWER) && !lostPower && A && !QDELETED(A))
+		if(!(machine_stat & NOPOWER) && !lostPower && A && !QDELETED(A))
 			A.bolt()
 	goIdle(TRUE)
 
