@@ -101,6 +101,7 @@
 	icon_state = "plastikov"
 	icon_state = "plastikov"
 	mag_type = /obj/item/ammo_box/magazine/plastikov9mm
+	w_class = WEIGHT_CLASS_NORMAL
 	fire_delay = 2
 	burst_size = 5
 	spread = 30
