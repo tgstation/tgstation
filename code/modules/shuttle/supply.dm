@@ -133,7 +133,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			if(SO.paying_account)
 				if(!miscboxes.len || !miscboxes[D.account_holder]) //if there's no miscbox for this person
 					miscboxes[D.account_holder] = new /obj/item/storage/lockbox/order(pick_n_take(empty_turfs))
-					miscboxes[D.account_holder].buyer_account = SO.paying_account
+					var/obj/item/storage/lockbox/order/our_box = miscboxes[D.account_holder]
+					our_box.buyer_account = SO.paying_account
 					miscboxes[D.account_holder].name = "small items case - purchased by [D.account_holder]"
 					misc_contents[D.account_holder] = list()
 				for (var/item in SO.pack.contains)
