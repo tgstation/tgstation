@@ -1,4 +1,0 @@
-author: "LemonInTheDark, with thanks to ArcaneDefence for the pointer"
-delete-after: True
-changes: 
-  - bugfix: "Scrubbers no longer cool pipenets attached to them when scrubbing space"
