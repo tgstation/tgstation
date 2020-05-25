@@ -103,11 +103,13 @@
 	mag_type = /obj/item/ammo_box/magazine/plastikov9mm
 	fire_delay = 2
 	burst_size = 3
-	spread = 15
+	spread = 25
 	can_suppress = FALSE
 	actions_types = list()
 	can_bayonet = FALSE
 	mag_display = TRUE
+	empty_indicator = TRUE
+	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
 
 /obj/item/gun/ballistic/automatic/mini_uzi
 	name = "\improper Type U3 Uzi"

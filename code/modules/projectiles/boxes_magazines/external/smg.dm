@@ -28,7 +28,7 @@
 	icon_state = "46x30mmtI-[round(ammo_count(),4)]"
 
 /obj/item/ammo_box/magazine/plastikov9mm
-	name = "wt550 magazine (4.6x30mm)"
+	name = "pp-95 magazine (9x19mm)"
 	icon_state = "9x19-50"
 	ammo_type = /obj/item/ammo_casing/c9x19mm
 	caliber = "9x19mm"
