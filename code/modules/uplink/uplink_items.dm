@@ -899,7 +899,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/ammo/surplus_smg
 	name = "Surplus SMG Magazine"
-	desc = "A cylindrical magazine designed for the PP-95 smg."
+	desc = "A cylindrical magazine designed for the PP-95 SMG."
 	item = /obj/item/ammo_box/magazine/plastikov9mm
 	cost = 2
 	include_modes = list(/datum/game_mode/nuclear)
