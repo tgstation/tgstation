@@ -199,7 +199,7 @@
 /datum/rust_spread/process()
 	compile_turfs()
 	var/turf/T
-	for(var/i = 0, i < spread_per_tick,i++)
+	for(var/i in 0 to 6)
 		T = pick(edge_turfs)
 		T.rust_heretic_act()
 		turfs += get_turf(T)

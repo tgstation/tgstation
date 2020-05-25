@@ -75,6 +75,7 @@
 	health = 200
 	melee_damage_lower = 10
 	melee_damage_upper = 15
+	move_resist = MOVE_FORCE_OVERPOWERING
 	///Previous segment in the chain
 	var/mob/living/simple_animal/hostile/eldritch/armsy/back
 	///Next segment in the chain
