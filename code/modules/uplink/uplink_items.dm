@@ -511,7 +511,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 
 /datum/uplink_item/dangerous/surplus_smg
 	name = "Surplus SMG"
-	desc = "A horribly outdated automatic weapon. Why would you want to use this."
+	desc = "A horribly outdated automatic weapon. Why would you want to use this?"
 	item = /obj/item/gun/ballistic/automatic/plastikov
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
