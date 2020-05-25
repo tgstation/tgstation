@@ -118,14 +118,14 @@
 		forceMove(oldloc)
 
 	if(back && back.loc != oldloc)
-		for(for(var/i in 1 to max(get_dist(loc, front.loc), 10)))
+		for(var/i in 1 to max(get_dist(loc, front.loc), 10) )
 			step_towards(back,oldloc)
 			if(loc == back.loc)
 				break
 		back.forceMove(oldloc)
 
 	if(front && loc != front.oldloc)
-		for(var/i in 1 to max(max(get_dist(loc,front.loc), 10))
+		for(var/i in 1 to max(get_dist(loc,front.loc), 10) )
 			step_towards(src,front.oldloc)
 			if(loc == front.loc)
 				break
