@@ -354,11 +354,8 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	var/area/rune_area = get_area(rune_turf)
 	cooldown = world.time + max_cooldown
 
-	for(var/obj/item/recharged in rune_turf) //recharges items on the rune
+	for(var/obj/recharged in rune_turf) //recharges items on the rune
 		electrishare(recharged)
-
-	for(var/obj/mecha/recharging_mech in rune_turf) //mom said it's mech's turn on the yellow rune
-		electrishare(recharging_mech)
 
 	for(var/mob/living/silicon/robot/charged_borg in rune_turf)
 		borg_electrishare(charged_borg)//borgs use a different get_cell() so they use a different proc like the special needs child they are
