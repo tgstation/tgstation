@@ -25,7 +25,7 @@
 	desc = "It's a jumpsuit worn by atmospheric technicians. It has minor protection from fire."
 	name = "atmospheric technician's jumpsuit"
 	icon_state = "atmos"
-	item_state = "atmos_suit"
+	inhand_icon_state = "atmos_suit"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 10, "fire" = 60, "acid" = 20)
 	resistance_flags = NONE
 
