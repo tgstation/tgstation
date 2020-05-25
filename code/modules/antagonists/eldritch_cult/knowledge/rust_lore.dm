@@ -149,7 +149,7 @@
 	new /datum/rust_spread(loc)
 
 
-	return = ..()
+	return ..()
 
 /datum/eldritch_knowledge/rust_final/on_life(mob/user)
 	. = ..()
@@ -195,7 +195,7 @@
 
 /datum/rust_spread/Destroy(force, ...)
 	STOP_PROCESSING(SSprocessing,src)
-	return = ..()
+	return ..()
 
 /datum/rust_spread/process()
 	compile_turfs()

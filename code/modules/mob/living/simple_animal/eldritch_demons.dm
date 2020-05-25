@@ -145,7 +145,7 @@
 
 	oldloc = loc
 	gib_trail()
-	. = ..()
+	RETURN ..()
 
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/gib_trail()
 	if(back)
