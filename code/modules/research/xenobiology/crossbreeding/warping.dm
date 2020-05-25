@@ -788,7 +788,6 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 
 ///takes away the overlay and the genetic punch when you leave the rune
 /obj/effect/warped_rune/redspace/proc/rage_out(datum/source, atom/movable/crossing)
-	. = ..()
 	if(!istype(crossing,/mob/living/carbon/human))
 		return
 	var/mob/living/carbon/human/enraged = crossing
