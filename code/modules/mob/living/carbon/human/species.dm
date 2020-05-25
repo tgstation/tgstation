@@ -825,7 +825,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			if(S.center)
 				accessory_overlay = center_image(accessory_overlay, S.dimension_x, S.dimension_y)
 
-			if(!HAS_TRAIT(H, TRAIT_HUSK))
+			if(!(HAS_TRAIT(H, TRAIT_HUSK)))
 				if(!forced_colour)
 					switch(S.color_src)
 						if(MUTCOLORS)
