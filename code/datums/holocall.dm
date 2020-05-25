@@ -422,3 +422,44 @@
 	SOUND explosion
 
 	"}
+
+/obj/item/disk/holodisk/ruin/snowengieruin
+    name = "Blackbox Print-out #EB412"
+    desc = "A holodisk containing the last moments of EB412. There's a bloody fingerprint on it."
+    preset_image_type = /datum/preset_holoimage/engineer
+    preset_record_text = {"
+    NAME Dave Tundrale
+    SAY Maria, how's Build?
+    DELAY 10
+    NAME Maria Dell
+    PRESET /datum/preset_holoimage/engineer/atmos
+    SAY It's fine, don't worry. I've got Plastic on it. And frankly, i'm kinda busy with, the, uhhm, incinerator.
+    DELAY 30
+    NAME Dave Tundrale
+    PRESET /datum/preset_holoimage/engineer
+    SAY Aight, wonderful. The science mans been kinda shit though. No RCDs-
+    DELAY 20
+    NAME Maria Dell
+    PRESET /datum/preset_holoimage/engineer/atmos
+    SAY Enough about your RCDs. They're not even that important, just bui-
+    DELAY 15
+    SOUND explosion
+    DELAY 10
+    SAY Oh, shit!
+    DELAY 10
+    PRESET /datum/preset_holoimage/engineer/atmos/rig
+    LANGUAGE /datum/language/narsie
+    NAME Unknown
+    SAY RISE, MY LORD!!
+    DELAY 10
+    LANGUAGE /datum/language/common
+    NAME Plastic
+    PRESET /datum/preset_holoimage/engineer/rig
+    SAY Fuck, fuck, fuck!
+    DELAY 20
+    SAY It's loose! CALL THE FUCKING SHUTT-
+    DELAY 10
+    PRESET /datum/preset_holoimage/corgi
+    NAME Blackbox Automated Message
+    SAY Connection lost. Dumping audio logs to disk.
+    DELAY 50"}

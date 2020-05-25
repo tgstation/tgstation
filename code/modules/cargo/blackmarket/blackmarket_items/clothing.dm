@@ -44,7 +44,7 @@
 /datum/blackmarket_item/clothing/full_spacesuit_set/spawn_item(loc)
 	var/obj/item/storage/box/B = ..()
 	B.name = "Spacesuit Box"
-	B.desc = "It has a NT logo on it."
+	B.desc = "It has an NT logo on it."
 	new /obj/item/clothing/suit/space(B)
 	new /obj/item/clothing/head/helmet/space(B)
 	return B

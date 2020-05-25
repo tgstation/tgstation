@@ -187,7 +187,7 @@
 			l_arm.dismember()
 		else
 			r_arm.dismember()
-		playsound(user, "desceration" ,50, TRUE, -1)
+		playsound(user, "desecration" ,50, TRUE, -1)
 
 /obj/item/reagent_containers/food/snacks/proc/i_kill_you(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/pineappleslice))
