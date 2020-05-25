@@ -549,20 +549,20 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 /client/proc/reload_cards()
 	set name = "Reload Cards"
 	set category = "Debug"
-	reloadAllCardFiles(CARD_FILES, CARD_DIRECTORY)
+	reloadAllCardFiles(GLOB.card_files, GLOB.card_directory)
 
 /client/proc/validate_cardpacks()
 	set name = "Validate Cardpacks"
 	set category = "Debug"
-	checkCardpacks(CARD_PACKS)
+	checkCardpacks(GLOB.card_packs)
 
 /client/proc/test_cardpack_distribution()
 	set name = "Test Cardpack Distribution"
 	set category = "Debug"
-	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(CARD_PACKS)
+	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(GLOB.card_packs)
 	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
-	var/guar = input("Should we use the pack's guaranteed rarity?", "We've all been there. Man you should have seen the old system") as null|anything in list("Yes", "No")
+	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as null|num
 	checkCardDistribution(pack, batchSize, batchCount, guar)
 
 /client/proc/print_cards()

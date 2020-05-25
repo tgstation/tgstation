@@ -1,6 +1,8 @@
-///A global list of cards, or rather changes to be applied to cards in the format
 
-GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
+GLOBAL_LIST_EMPTY(cached_guar_rarity)
+GLOBAL_LIST_EMPTY(cached_rarity_table)
+//Global list of all cards by series, with cards cached by rarity to make those lookups faster
+GLOBAL_LIST_EMPTY(cached_cards)
 
 /obj/item/tcgcard
 	name = "Coder"
@@ -9,16 +11,21 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	icon_state = "runtime"
 	w_class = WEIGHT_CLASS_TINY
 	var/id = -1 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
-	var/flipped = 0
+	var/series = "coderbus" //Used along with the id for lookup
+	var/flipped = FALSE
 
-/obj/item/tcgcard/Initialize(mapload, datum/card/temp)
+/obj/item/tcgcard/Initialize(mapload, brand, badge_me)
 	. = ..()
+	transform = matrix(0.3,0,0,0,0.3,0)
+	var/datum/card/temp = GLOB.cached_cards[brand]["ALL"][badge_me]
+	if(!temp)
+		return
 	name = temp.name
 	desc = temp.desc
 	icon = icon(temp.icon)
 	icon_state = temp.icon_state
 	id = temp.id
-	transform = matrix(0.3,0,0,0,0.3,0)
+	series = temp.series
 
 /datum/card
 	var/id = -1 //Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
@@ -36,7 +43,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	var/series = "coreset2020" //Defines the series that the card originates from, this is *very* important for spawning the cards via packs.
 	var/rarity = "uber rare to the extreme" //The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
 
-/datum/card/New(list/data, list/templates = list())
+/datum/card/New(list/data = list(), list/templates = list())
 	applyTemplates(data, templates)
 	apply(data)
 
@@ -51,16 +58,16 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 /obj/item/tcgcard/attack_self(mob/user)
 	. = ..()
 	to_chat(user, "<span_class='notice'>You turn the card over.</span>")
-	if(flipped == 0)
+	if(!flipped)
 		name = "Trading Card"
 		desc = "It's the back of a trading card... no peeking!"
 		icon_state = "cardback"
-		flipped = 1
 	else
-		name = GLOB.card_list["[id]"].name
-		desc = GLOB.card_list["[id]"].desc
-		icon_state = GLOB.card_list["[id]"].icon_state
-		flipped = 0
+		var/datum/card/template = GLOB.cached_cards[series]["ALL"]["[id]"]
+		name = template.name
+		desc = template.desc
+		icon_state = template.icon_state
+	flipped = !flipped
 
 /obj/item/tcgcard/equipped(mob/user, slot, initial)
 	. = ..()
@@ -80,13 +87,14 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	var/contains_coin = -1 //Chance of the pack having a coin in it.
 	///The amount of cards each pack contains
 	var/card_count = 6
+	var/guaranteed_count = 1
 	///The guaranteed rarity table, acts about the same as the rarity table. it can have as many or as few raritys as you'd like
 	var/list/guar_rarity = list(
 		"legendary" = 10,
 		"epic" = 15,
 		"rare" = 25,
 		"uncommon" = 50)
-	var/list/rarityTable = list(
+	var/list/rarity_table = list(
 		"common" = 900,
 		"uncommon" = 300,
 		"rare" = 100,
@@ -109,7 +117,7 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	icon_state = "cardpack_resin"
 	series = "resinfront"
 	contains_coin = 0
-	rarityTable = list(
+	rarity_table = list(
 		"common" = 900,
 		"uncommon" = 300,
 		"rare" = 100,
@@ -119,6 +127,16 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 /obj/item/cardpack/Initialize()
 	. = ..()
 	transform = matrix(0.4,0,0,0,0.4,0)
+	//Pass by refrance moment
+	//This lets us only have one rarity table per pack, badmins beware
+	if(GLOB.cached_rarity_table[type])
+		rarity_table = GLOB.cached_rarity_table[type]
+	else
+		GLOB.cached_rarity_table[type] = rarity_table
+	if(GLOB.cached_guar_rarity[type])
+		guar_rarity = GLOB.cached_guar_rarity[type]
+	else
+		GLOB.cached_guar_rarity[type] = guar_rarity
 
 /obj/item/cardpack/equipped(mob/user, slot, initial)
 	. = ..()
@@ -130,13 +148,13 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 
 /obj/item/cardpack/attack_self(mob/user)
 	. = ..()
-	var/list/datum/card/cards = buildCardListWithRarity(card_count, guar_rarity, GLOB.card_list)
-	for(var/datum/card/template in cards)
+	var/list/cards = buildCardListWithRarity(card_count, guaranteed_count)
+	for(var/template in cards)
 		//Makes a new card based of the series of the pack.
-		new /obj/item/tcgcard(get_turf(user), template)
+		new /obj/item/tcgcard(get_turf(user), series, template)
 	to_chat(user, "<span_class='notice'>Wow! Check out these cards!</span>")
 	new /obj/effect/decal/cleanable/wrapping(get_turf(user))
-	playsound(src.loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
+	playsound(loc, 'sound/items/poster_ripped.ogg', 20, TRUE)
 	if(prob(contains_coin))
 		to_chat(user, "<span_class='notice'>...and it came with a flipper, too!</span>")
 		new /obj/item/coin/thunderdome(get_turf(user))
@@ -163,23 +181,17 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 	. = ..()
 	transform = matrix(0.4,0,0,0,0.4,0)
 
-///Returns a list of cards of cardCount weighted by rarity from cardList that have matching series, with at least one of guarenteedRarity.
-/obj/item/cardpack/proc/buildCardListWithRarity(cardCount, list/guarenteedRarity, list/datum/card/cardList)
-	var/list/datum/card/readFrom = list()
-	var/list/datum/card/toReturn = list()
-	for(var/index in cardList)
-		if(cardList[index].series == series)
-			readFrom += cardList[index]
+///Returns a list of cards ids of card_cnt weighted by rarity from the pack's tables that have matching series, with gnt_cnt of the guarenteed table.
+/obj/item/cardpack/proc/buildCardListWithRarity(card_cnt, rarity_cnt)
+	var/list/toReturn = list()
 	//You can always get at least one of some rarity
-	if(guarenteedRarity.len)
-		cardCount--
-		toReturn += returnCardsByRarity(1, readFrom, guarenteedRarity)
-	toReturn += returnCardsByRarity(cardCount, readFrom, rarityTable)
+	toReturn += returnCardsByRarity(rarity_cnt, guar_rarity)
+	toReturn += returnCardsByRarity(card_cnt, rarity_table)
 	return toReturn
 
 ///Returns a list of card datums of the length cardCount that match a random rarity weighted by rarity_table[]
-/obj/item/cardpack/proc/returnCardsByRarity(cardCount, cardList, list/rarity_table)
-	var/list/datum/card/toReturn = list()
+/obj/item/cardpack/proc/returnCardsByRarity(cardCount, list/rarity_table)
+	var/list/toReturn = list()
 	for(var/card in 1 to cardCount)
 		var/rarity = 0
 		//Some number between 1 and the sum of all values in the list
@@ -193,15 +205,15 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 			if(random <= 0)
 				rarity = bracket
 				break
-		var/list/datum/card/cards = list()
-		for(var/datum/card/template in cardList)
-			if(template.rarity == rarity)
-				cards += template
+		//What we're doing here is using the cached the results of the rarity we find.
+		//This allows us to only have to run this once per rarity, ever.
+		//Unless you reload the cards of course, in which case we have to do this again.
+		var/list/cards = GLOB.cached_cards[series][rarity]
 		if(cards.len)
 			toReturn += pick(cards)
 		else
 			//If we still don't find anything yell into the void. Lazy coders.
-			log_runtime("The index [rarity] of rarity_table does not exist in the supplied cardList")
+			log_runtime("The index [rarity] of rarity_table does not exist in the global cache")
 	return toReturn
 
 ///Loads all the card files
@@ -212,56 +224,60 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 
 ///Prints all the cards names
 /proc/printAllCards()
-	for(var/card in GLOB.card_list)
-		message_admins("[GLOB.card_list[card].name]")
+	for(var/card_set in GLOB.cached_cards)
+		message_admins("Printing the [card_set] set")
+		for(var/card in GLOB.cached_cards[card_set]["ALL"])
+			var/datum/card/toPrint = GLOB.cached_cards[card_set]["ALL"][card]
+			message_admins(toPrint.name)
 
 ///Checks the passed type list for missing raritys, or raritys out of bounds
 /proc/checkCardpacks(cardPackList)
 	for(var/cardPack in cardPackList)
 		var/obj/item/cardpack/pack = new cardPack()
-		//Lets build a list of all the cards in our series
-		var/list/datum/card/cards = list()
-		for(var/index in GLOB.card_list)
-			if(GLOB.card_list[index].series == pack.series)
-				cards += GLOB.card_list[index]
-		var/list/rarityCheck = list("uncommon" = FALSE)
-		//Lets run a check to see if all the rarities exist that we want to exist
-		for(var/I in pack.rarityTable)
-			rarityCheck["[I]"] = FALSE
-		for(var/datum/card/template in cards)
-			if(!(template.rarity in pack.rarityTable))
+		//Lets see if someone made a type yeah?
+		if(!GLOB.cached_cards[pack.series])
+			message_admins("[pack.series] does not have any related cards")
+			continue
+		for(var/card in GLOB.cached_cards[pack.series]["ALL"])
+			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"][card]
+			if(!(template.rarity in pack.rarity_table))
 				message_admins("[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist")
 				continue
-			rarityCheck[template.rarity] = TRUE
-		for(var/I in pack.rarityTable)
-			if(rarityCheck["[I]"] == FALSE)
+		//Lets run a check to see if all the rarities exist that we want to exist exist
+		for(var/I in pack.rarity_table)
+			if(!GLOB.cached_cards[pack.series][I])
 				message_admins("[pack.type] does not have the required rarity [I]")
 		qdel(pack)
 
 ///Used to test open a large amount of cardpacks
-/proc/checkCardDistribution(cardPack, batchSize, batchCount, shouldGuar)
+/proc/checkCardDistribution(cardPack, batchSize, batchCount, guaranteed)
 	var/totalCards = 0
 	//Gotta make this look like an associated list so the implicit "does this exist" checks work proper later
 	var/list/cardsByCount = list("" = 0)
 	var/obj/item/cardpack/pack = new cardPack()
-	var/list/guaranteed = (shouldGuar == "Yes") ? pack.guar_rarity : list()
 	for(var/index in 1 to batchCount)
-		var/list/datum/card/cards = pack.buildCardListWithRarity(batchSize, guaranteed, GLOB.card_list)
-		for(var/datum/card/template in cards)
+		var/list/cards = pack.buildCardListWithRarity(batchSize, guaranteed)
+		for(var/id in cards)
 			totalCards++
-			cardsByCount["[template.id]"] += 1
+			cardsByCount["[id]"] += 1
 	var/toSend = "Out of [totalCards] cards"
 	for(var/id in sortList(cardsByCount, /proc/cmp_num_string_asc))
 		if(id)
-			toSend += "\nID:[id] [GLOB.card_list["[id]"].name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
+			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"]["[id]"]
+			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
 	message_admins(toSend)
 	qdel(pack)
 
+///Empty the rarity cache so we can safely add new cards
+/proc/clearCards()
+	GLOB.cached_cards = list()
+
 ///Reloads all card files
 /proc/reloadAllCardFiles(cardFiles, directory)
-	GLOB.card_list = list()
+	clearCards()
 	loadAllCardFiles(cardFiles, directory)
 
+///Loads the contents of a json file into our global card list
 /proc/loadCardFile(filename, directory = "strings/tcg")
 	var/list/json = json_decode(file2text("[directory]/[filename]"))
 	var/list/cards = json["cards"]
@@ -270,4 +286,12 @@ GLOBAL_LIST_EMPTY_TYPED(card_list, /datum/card)
 		templates[data["template"]] = data
 	for(var/list/data in cards)
 		var/datum/card/c = new(data, templates)
-		GLOB.card_list["[c.id]"] = c
+		//Lets cache the id by rarity, for top speed lookup later
+		if(!GLOB.cached_cards[c.series])
+			GLOB.cached_cards[c.series] = list()
+			GLOB.cached_cards[c.series]["ALL"] = list()
+		if(!GLOB.cached_cards[c.series][c.rarity])
+			GLOB.cached_cards[c.series][c.rarity] = list()
+		GLOB.cached_cards[c.series][c.rarity] += "[c.id]"
+		//And series too, why not, it's semi cheap
+		GLOB.cached_cards[c.series]["ALL"]["[c.id]"] = c
