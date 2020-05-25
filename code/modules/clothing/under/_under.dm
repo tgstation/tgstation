@@ -180,14 +180,3 @@
 
 /obj/item/clothing/under/rank
 	dying_key = DYE_REGISTRY_UNDER
-
-/obj/item/clothing/under/proc/set_sensor_glob()
-	 var/mob/living/carbon/human/H = loc
-    if ((H.z == 0 || H.z == z) && (istype(H.w_uniform, /obj/item/clothing/under)))
-        U = H.w_uniform
-        if (((U.has_sensor) && U.sensor_mode) && !GLOB.suit_sensor_list.contains(H) && U.has_sensor != BROKEN_SENSORS)
-            GLOB.suit_sensor_list |= src
-		else 
-   			GLOB.suit_sensor_list -= src
-	else 
-   		GLOB.suit_sensor_list -= src	

@@ -294,7 +294,7 @@ BLIND     // can't see anything
 		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
-
+	set_sensor_glob()
 	if (src.loc == usr)
 		switch(sensor_mode)
 			if(0)
@@ -411,3 +411,13 @@ BLIND     // can't see anything
 		deconstruct(FALSE)
 	else
 		..()
+/obj/item/clothing/proc/set_sensor_glob()
+	 var/mob/living/carbon/human/H = src.loc
+    if ((H.z == 0 || H.z == z) && (istype(H.w_uniform, /obj/item/clothing/under)))
+        U = H.w_uniform
+        if (((U.has_sensor) && U.sensor_mode) && !GLOB.suit_sensor_list.contains(H) && U.has_sensor != BROKEN_SENSORS)
+            GLOB.suit_sensor_list |= src
+		else 
+   			GLOB.suit_sensor_list -= src
+	else 
+   		GLOB.suit_sensor_list -= src	
