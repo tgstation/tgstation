@@ -72,7 +72,6 @@
 				current_equip = wear_neck
 			wear_neck = I
 			update_inv_neck(I)
-
 		if(ITEM_SLOT_HANDCUFFED)
 			handcuffed = I
 			update_handcuffed()
