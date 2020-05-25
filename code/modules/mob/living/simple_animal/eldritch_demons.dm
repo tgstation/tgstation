@@ -111,11 +111,10 @@
 			prev.AIStatus = AI_OFF
 		next = prev
 
-/mob/living/simple_animal/hostile/eldritch/armsy/Moved()
+/mob/living/simple_animal/hostile/eldritch/armsy/can_be_pulled()
+	return FALSE
 
-	if(pulledby && !allow_pulling)
-		pulledby.stop_pulling()
-		forceMove(oldloc)
+/mob/living/simple_animal/hostile/eldritch/armsy/Moved()
 
 	if(back && back.loc != oldloc)
 		for(var/i in 1 to max(get_dist(loc, front.loc), 10) )
