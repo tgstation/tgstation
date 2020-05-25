@@ -21,8 +21,8 @@
 
 		var/datum/biome/selected_biome
 		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
-			var/humidity = CLAMP01(text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[x / 65]", "[y / 65]")))
-			var/heat = CLAMP01(text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[x / 65]", "[y / 65]")))
+			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[x / 65]", "[y / 65]"))
+			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[x / 65]", "[y / 65]"))
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH
 			var/humidity_level  //Type of humidity zone we're in LOW-MEDIUM-HIGH
 
