@@ -101,12 +101,6 @@
 	rune_center_type = /obj/effect/temp_visual/cult/rune_spawn/rune4/center
 	rune_color = RUNE_COLOR_DARKRED
 
-/datum/action/innate/cult/create_rune/wall/Activate()
-	. = ..()
-	var/obj/effect/rune/wall/W = locate(/obj/effect/rune/wall) in owner.loc
-	if(W)
-		W.spread_density()
-
 /datum/action/innate/cult/create_rune/revive
 	name = "Summon Revive Rune"
 	desc = "Summons a revive rune to your location, as though it has been there all along..."

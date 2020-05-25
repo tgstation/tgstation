@@ -65,7 +65,7 @@ Emergency system will bring you to nearest syndicate pod containing everything n
 In case of emergency, you must remember the pod-door activation code - [GLOB.fscpassword]</b><br><br>Cyber Sun Industries (C) 2484.
 "}
 	icon_state = "paper_words"
-	item_state = "paper"
+	inhand_icon_state = "paper"
 
 /obj/item/paper/fluff/ruins/forgottenship/powerissues
 	name = "Power issues"
@@ -145,7 +145,7 @@ _Cyber Sun Industries (C) 2484._
 	name = "Cybersun hardsuit helmet"
 	desc = "Prototype hardsuit helmet with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."
 	icon_state = "cybersun"
-	item_state = "cybersun"
+	inhand_icon_state = "cybersun"
 	hardsuit_type = "cybersun"
 	armor = list("melee" = 30, "bullet" = 40, "laser" = 55, "energy" = 55, "bomb" = 30, "bio" = 100, "rad" = 60, "fire" = 60, "acid" = 60)
 	strip_delay = 600
@@ -154,7 +154,7 @@ _Cyber Sun Industries (C) 2484._
 
 /obj/item/clothing/suit/space/hardsuit/cybersun
 	icon_state = "cybersun"
-	item_state = "cybersun"
+	inhand_icon_state = "cybersun"
 	hardsuit_type = "cybersun"
 	name = "Cybersun hardsuit"
 	desc = "Prototype hardsuit with experimental armor plates, protecting from laser-based weapons very well, while giving limited protection against anything else."

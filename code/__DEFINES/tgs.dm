@@ -39,7 +39,7 @@
 //Write an info `message` to a server log
 #define TGS_INFO_LOG(message)
 
-//Write an warning `message` to a server log
+//Write a warning `message` to a server log
 #define TGS_WARNING_LOG(message)
 
 //Write an error `message` to a server log

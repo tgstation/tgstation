@@ -615,6 +615,14 @@
 	build_path = /obj/item/assembly/igniter
 	category = list("initial", "Misc")
 
+/datum/design/condenser
+	name = "Condenser"
+	id = "condenser"
+	build_type = AUTOLATHE
+	materials = list(/datum/material/iron=250, /datum/material/glass=300)
+	build_path = /obj/item/assembly/igniter/condenser
+	category = list("initial", "Misc")
+
 /datum/design/signaler
 	name = "Remote Signaling Device"
 	id = "signaler"

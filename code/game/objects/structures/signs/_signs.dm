@@ -28,7 +28,7 @@
 	desc = "A plastic sign backing, use a pen to change the decal. It can be placed on a wall."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
-	item_state = "backing"
+	inhand_icon_state = "backing"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
@@ -181,7 +181,7 @@
 		else
 			desc = initial(desc) //If you're changing it to a blank sign, just use obj/item/sign's description.
 		icon_state = initial(sign_type.icon_state)
-		sign_path = sign_type	
+		sign_path = sign_type
 		user.visible_message("<span class='notice'>You finish changing the sign.</span>")
 		return
 	return ..()
