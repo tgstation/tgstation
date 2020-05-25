@@ -79,6 +79,7 @@
 
 /mob/living/simple_animal/hostile/eldritch/armsy/New(spawn_more = TRUE,len = 6)
 	. = ..()
+	len = max(3,len) //code breaks below 3, let's just not allow it.
 	oldloc = loc
 	if(!spawn_more)
 		return
