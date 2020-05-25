@@ -128,18 +128,19 @@
 /mob/living/simple_animal/hostile/eldritch/armsy/Moved()
 
 	if(back && back.loc != oldloc)
-		for(var/i in 1 to max(get_dist(loc, front.loc), 10) )
+		for(var/i in 1 to max(get_dist(back.loc,oldloc), 10) )
 			step_towards(back,oldloc)
-			if(loc == back.loc)
+			if(back.loc == oldloc)
 				break
-		back.forceMove(oldloc)
+		///ForceMove wont do, we must rebuild the worm, and moving there wont be enough, It MUST be teleported there or it WILL break. Why wont it work? because forceMove calls Move and it calls forceMove and so on and so on causing weird and janky behaviour. Please believe me i tried.
+		back.loc = oldloc
 
 	if(front && loc != front.oldloc)
-		for(var/i in 1 to max(get_dist(loc,front.loc), 10) )
+		for(var/i in 1 to max(get_dist(loc,front.oldloc), 10) )
 			step_towards(src,front.oldloc)
-			if(loc == front.loc)
+			if(loc == front.oldloc)
 				break
-		forceMove(front.oldloc)
+		loc = front.oldloc
 
 	oldloc = loc
 	gib_trail()

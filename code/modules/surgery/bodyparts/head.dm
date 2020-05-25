@@ -131,7 +131,7 @@
 		C = owner
 
 	real_name = C.real_name
-	if(HAS_TRAIT(C, TRAIT_HUSK) || HAS_TRAIT(src,TRAIT_GHOUL))
+	if(HAS_TRAIT(C, TRAIT_HUSK))
 		real_name = "Unknown"
 		hairstyle = "Bald"
 		facial_hairstyle = "Shaved"

@@ -44,11 +44,11 @@
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
 
-	if(!check_ghouls(user) || HAS_TRAIT(H,TRAIT_GHOUL))
+	if(!check_ghouls(user) || HAS_TRAIT(H,TRAIT_HUSK))
 		return
 
 	ADD_TRAIT(H,TRAIT_MUTE,MAGIC_TRAIT)
-	ADD_TRAIT(H,TRAIT_GHOUL,MAGIC_TRAIT)
+	H.become_husk()
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(50)
 	H.health = 50 // Voiceless dead are much tougher than ghouls
@@ -106,7 +106,7 @@
 		return
 
 	check_ghouls(user)
-	if(HAS_TRAIT(H,TRAIT_GHOUL))
+	if(HAS_TRAIT(H,TRAIT_HUSK))
 		to_chat(user, "<span class='warning'>You cannot revive a dead ghoul!</span>")
 		return
 
@@ -116,7 +116,7 @@
 
 	LAZYADD(spooky_scaries,H)
 
-	ADD_TRAIT(H,TRAIT_GHOUL,MAGIC_TRAIT)
+	H.become_husk()
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(25)
 	H.health = 25
