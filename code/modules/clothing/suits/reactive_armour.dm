@@ -268,6 +268,6 @@
 				A.say("AAAAAAAAAAAAAAAAAAAA!!")
 				visible_message("<span class='notice'>[A] is sucked into [owner]'s cock, instantly killing them!</span>")
 				A.gib(null, null, TRUE, TRUE)
-		owner.visible_message("<span class='danger'>[src] blocks [attack_text], cock voring the attackers!</span>")
+		owner.visible_message("<span class='danger'>[src] blocks [attack_text], cock-voring the attackers!</span>")
 		reactivearmor_cooldown = world.time + reactivearmor_cooldown_duration
 		return TRUE
