@@ -659,7 +659,7 @@
 				if(!paicard)
 					log_combat(src, L, "knocked down")
 					visible_message("<span class='danger'>[src] knocks over [L]!</span>")
-					L.Knockdown(80)
+					L.Knockdown(8 SECONDS)
 	return ..()
 
 // called from mob/living/carbon/human/Crossed()
