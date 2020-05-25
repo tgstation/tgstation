@@ -76,6 +76,7 @@
 
 	current_user = null
 	user.unset_machine()
+	user.client.view_size.unsupress()
 	playsound(src, 'sound/machines/terminal_off.ogg', 25, FALSE)
 
 /obj/machinery/computer/camera_advanced/check_eye(mob/user)
@@ -161,6 +162,7 @@
 	user.remote_control = eyeobj
 	user.reset_perspective(eyeobj)
 	eyeobj.setLoc(eyeobj.loc)
+	user.client.view_size.supress()
 
 /mob/camera/aiEye/remote
 	name = "Inactive Camera Eye"

@@ -3,7 +3,7 @@
 	desc = "A chemical patch for touch based applications."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bandaid"
-	item_state = "bandaid"
+	inhand_icon_state = "bandaid"
 	possible_transfer_amounts = list()
 	volume = 40
 	apply_type = PATCH

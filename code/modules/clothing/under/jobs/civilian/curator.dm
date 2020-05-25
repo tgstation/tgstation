@@ -3,8 +3,8 @@
 	desc = "It's very... sensible."
 	icon = 'icons/obj/clothing/under/suits.dmi'
 	icon_state = "red_suit"
-	item_state = "red_suit"
-	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
+	inhand_icon_state = "red_suit"
+	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	can_adjust = FALSE
 
 /obj/item/clothing/under/rank/civilian/curator/skirt
@@ -12,8 +12,8 @@
 	desc = "It's very... sensible."
 	icon = 'icons/obj/clothing/under/suits.dmi'
 	icon_state = "red_suit_skirt"
-	item_state = "red_suit"
-	mob_overlay_icon = 'icons/mob/clothing/under/suits.dmi'
+	inhand_icon_state = "red_suit"
+	worn_icon = 'icons/mob/clothing/under/suits.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
@@ -23,16 +23,16 @@
 	desc = "A rugged uniform suitable for treasure hunting."
 	icon = 'icons/obj/clothing/under/civilian.dmi'
 	icon_state = "curator"
-	item_state = "curator"
-	mob_overlay_icon = 'icons/mob/clothing/under/civilian.dmi'
+	inhand_icon_state = "curator"
+	worn_icon = 'icons/mob/clothing/under/civilian.dmi'
 
 /obj/item/clothing/under/rank/civilian/curator/nasa
 	name = "\improper NASA jumpsuit"
 	desc = "It has a NASA logo on it and is made of space-proofed materials."
 	icon = 'icons/obj/clothing/under/color.dmi'
 	icon_state = "black"
-	item_state = "bl_suit"
-	mob_overlay_icon = 'icons/mob/clothing/under/color.dmi'
+	inhand_icon_state = "bl_suit"
+	worn_icon = 'icons/mob/clothing/under/color.dmi'
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02

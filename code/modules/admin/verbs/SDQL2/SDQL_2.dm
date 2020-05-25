@@ -738,7 +738,7 @@ GLOBAL_DATUM_INIT(sdql2_vv_statobj, /obj/effect/statclick/SDQL2_VV_all, new(null
 					text_list += " <font color='gray'>at</font> [final] [ADMIN_COORDJMP(final)]"
 					a = final.loc
 				else
-					text_list += " <font color='gray'>at</font> nonexistant location"
+					text_list += " <font color='gray'>at</font> nonexistent location"
 			if(a)
 				text_list += " <font color='gray'>in</font> area [a]"
 				if(T.loc != a)

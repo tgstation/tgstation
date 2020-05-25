@@ -355,7 +355,7 @@
 		to_chat(usr, "<span class='notice'>Vote successful.</span>")
 
 /**
-  * Processes vote form data and saves results to the database for a option type poll.
+  * Processes vote form data and saves results to the database for an option type poll.
   *
   */
 /mob/dead/new_player/proc/vote_on_poll_option(datum/poll_question/poll, href_list, admin_rank, sql_poll_id, vote_id)

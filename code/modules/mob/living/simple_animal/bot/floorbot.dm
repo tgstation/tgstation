@@ -355,7 +355,7 @@
 				F.PlaceOnTop(initial(tiletype.turf_type), flags = CHANGETURF_INHERIT_AIR)
 				specialtiles -= 1
 				if(specialtiles == 0)
-					speak("Requesting refill of custom floortiles to continue replacing.")
+					speak("Requesting refill of custom floor tiles to continue replacing.")
 	mode = BOT_IDLE
 	update_icon()
 	anchored = FALSE

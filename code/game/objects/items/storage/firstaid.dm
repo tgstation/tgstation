@@ -40,7 +40,7 @@
 /obj/item/storage/firstaid/medical
 	name = "medical aid kit"
 	icon_state = "firstaid_surgery"
-	item_state = "firstaid"
+	inhand_icon_state = "firstaid"
 	desc = "A high capacity aid kit for doctors, full of medical supplies and basic surgical equipment"
 
 /obj/item/storage/firstaid/medical/ComponentInitialize()
@@ -134,7 +134,7 @@
 	name = "burn treatment kit"
 	desc = "A specialized medical kit for when the toxins lab <i>-spontaneously-</i> burns down."
 	icon_state = "ointment"
-	item_state = "firstaid-ointment"
+	inhand_icon_state = "firstaid-ointment"
 	damagetype_healed = BURN
 
 /obj/item/storage/firstaid/fire/suicide_act(mob/living/carbon/user)
@@ -159,7 +159,7 @@
 	name = "toxin treatment kit"
 	desc = "Used to treat toxic blood content and radiation poisoning."
 	icon_state = "antitoxin"
-	item_state = "firstaid-toxin"
+	inhand_icon_state = "firstaid-toxin"
 	damagetype_healed = TOX
 
 /obj/item/storage/firstaid/toxin/suicide_act(mob/living/carbon/user)
@@ -184,7 +184,7 @@
 	name = "oxygen deprivation treatment kit"
 	desc = "A box full of oxygen goodies."
 	icon_state = "o2"
-	item_state = "firstaid-o2"
+	inhand_icon_state = "firstaid-o2"
 	damagetype_healed = OXY
 
 /obj/item/storage/firstaid/o2/suicide_act(mob/living/carbon/user)
@@ -209,7 +209,7 @@
 	name = "brute trauma treatment kit"
 	desc = "A first aid kit for when you get toolboxed."
 	icon_state = "brute"
-	item_state = "firstaid-brute"
+	inhand_icon_state = "firstaid-brute"
 	damagetype_healed = BRUTE
 
 /obj/item/storage/firstaid/brute/suicide_act(mob/living/carbon/user)
@@ -234,7 +234,7 @@
 	name = "advanced first aid kit"
 	desc = "An advanced kit to help deal with advanced wounds."
 	icon_state = "radfirstaid"
-	item_state = "firstaid-rad"
+	inhand_icon_state = "firstaid-rad"
 	custom_premium_price = 1100
 
 /obj/item/storage/firstaid/advanced/PopulateContents()
@@ -304,7 +304,7 @@
 	desc = "It's an airtight container for storing medication."
 	icon_state = "pill_canister"
 	icon = 'icons/obj/chemical.dmi'
-	item_state = "contsolid"
+	inhand_icon_state = "contsolid"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
