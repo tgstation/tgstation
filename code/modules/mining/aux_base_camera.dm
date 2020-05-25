@@ -12,7 +12,7 @@
 
 /mob/camera/aiEye/remote/base_construction/setLoc(var/t)
 	var/area/curr_area = get_area(t)
-	if(curr_area == starting_area || istype(curr_area, /area/shuttle/auxillary_base))
+	if(curr_area == starting_area || istype(curr_area, /area/shuttle/auxiliary_base))
 		return ..()
 	//While players are only allowed to build in the base area, but consoles starting outside the base can move into the base area to begin work.
 
@@ -42,7 +42,7 @@
 	var/fans_remaining = 0 //Number of fans in stock.
 	var/datum/action/innate/aux_base/install_turret/turret_action = new //Action for spawning turrets
 	var/turret_stock = 0 //Turrets in stock
-	var/obj/machinery/computer/auxillary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
+	var/obj/machinery/computer/auxiliary_base/found_aux_console //Tracker for the Aux base console, so the eye can always find it.
 
 	icon_screen = "mining"
 	icon_keyboard = "rd_key"
@@ -63,8 +63,8 @@
 /obj/machinery/computer/camera_advanced/base_construction/CreateEye()
 
 	var/spawn_spot
-	for(var/obj/machinery/computer/auxillary_base/ABC in GLOB.machines)
-		if(istype(get_area(ABC), /area/shuttle/auxillary_base))
+	for(var/obj/machinery/computer/auxiliary_base/ABC in GLOB.machines)
+		if(istype(get_area(ABC), /area/shuttle/auxiliary_base))
 			found_aux_console = ABC
 			break
 
@@ -147,7 +147,7 @@
 	var/turf/build_target = get_turf(remote_eye)
 	var/area/build_area = get_area(build_target)
 
-	if(!istype(build_area, /area/shuttle/auxillary_base))
+	if(!istype(build_area, /area/shuttle/auxiliary_base))
 		to_chat(owner, "<span class='warning'>You can only build within the mining base!</span>")
 		return FALSE
 

@@ -7,6 +7,8 @@
 	rcd_cost = 50
 	rcd_delay = 50
 	buffer = 100
+	///how much do we fill
+	var/wanted_amount = 10
 	///where things are sent
 	var/turf/goodspot = null
 	///where things are taken
@@ -49,31 +51,29 @@
 ///changing input ammount with a window
 /obj/machinery/plumbing/bottler/interact(mob/user)
 	. = ..()
-	var/vol = min(100, round(input(user,"maximum is 100u","set ammount to fill with") as num|null, 1))
+	wanted_amount = clamp(round(input(user,"maximum is 100u","set ammount to fill with") as num|null, 1), 1, 100)
 	reagents.clear_reagents()
-	create_reagents(vol, TRANSPARENT)
-	reagents.maximum_volume = vol
-	to_chat(user, "<span class='notice'> The [src] will now fill for [vol]u.</span>")
+	to_chat(user, "<span class='notice'> The [src] will now fill for [wanted_amount]u.</span>")
 
 /obj/machinery/plumbing/bottler/process()
 	if(machine_stat & NOPOWER)
 		return
-	///see if machine is full (ready)
-	if(reagents.holder_full())
+	///see if machine has enough to fill
+	if(reagents.total_volume >= wanted_amount && anchored)
 		var/obj/AM = pick(inputspot.contents)///pick a reagent_container that could be used
 		if(istype(AM, /obj/item/reagent_containers) && (!istype(AM, /obj/item/reagent_containers/hypospray/medipen)))
 			var/obj/item/reagent_containers/B = AM
 			///see if it would overflow else inject
-			if((B.reagents.total_volume + reagents.total_volume) <= B.reagents.maximum_volume)
-				reagents.trans_to(B, reagents.total_volume, transfered_by = src)
+			if((B.reagents.total_volume + wanted_amount) <= B.reagents.maximum_volume)
+				reagents.trans_to(B, wanted_amount, transfered_by = src)
 				B.forceMove(goodspot)
 				return
-			///glass was full so we throw it away
+			///glass was full so we move it away
 			AM.forceMove(badspot)
 		if(istype(AM, /obj/item/slime_extract)) ///slime extracts need inject
 			AM.forceMove(goodspot)
-			reagents.trans_to(AM, reagents.total_volume, transfered_by = src, method = INJECT)
+			reagents.trans_to(AM, wanted_amount, transfered_by = src, method = INJECT)
 			return
 		if(istype(AM, /obj/item/slimecross/industrial)) ///no need to move slimecross industrial things
-			reagents.trans_to(AM, reagents.total_volume, transfered_by = src, method = INJECT)
+			reagents.trans_to(AM, wanted_amount, transfered_by = src, method = INJECT)
 			return

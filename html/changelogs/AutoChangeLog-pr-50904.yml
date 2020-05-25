@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes: 
+  - rscdel: "Sleeping carp no longer grants outright damage resistances to all forms of damage. Its price has been decreased to 12TC"

@@ -50,13 +50,18 @@
 
 /datum/component/decal/proc/apply(atom/thing)
 	var/atom/master = thing || parent
-	master.add_overlay(pic, TRUE)
+	RegisterSignal(master,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
+	master.update_icon() //could use some queuing here now maybe.
 	if(isitem(master))
 		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
+/datum/component/decal/proc/apply_overlay(atom/source, list/overlay_list)
+	overlay_list += pic
+
 /datum/component/decal/proc/remove(atom/thing)
 	var/atom/master = thing || parent
-	master.cut_overlay(pic, TRUE)
+	UnregisterSignal(master,COMSIG_ATOM_UPDATE_OVERLAYS)
+	master.update_icon()
 	if(isitem(master))
 		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
 
