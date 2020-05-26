@@ -9,10 +9,13 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
+	// Time interval between glowshroom "spreads"
 	var/delay_spread = 2 MINUTES
+	// Time interval between glowshroom decay checks
 	var/delay_decay = 30 SECONDS
 	var/floor = 0
 	var/generation = 1
+	// Chance to spread into adjacent tiles (0-100)
 	var/spreadIntoAdjacentChance = 75
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
 	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
@@ -43,7 +46,7 @@
 		QDEL_NULL(myseed)
 	return ..()
 
-/obj/structure/glowshroom/New(loc, obj/item/seeds/newseed, mutate_stats, spread)
+/obj/structure/glowshroom/New(loc, obj/item/seeds/newseed, mutate_stats, spread) // If spread, mushroom is a result of spreading, so we must reduce its stats
 	..()
 	if(newseed)
 		myseed = newseed.Copy()
@@ -163,6 +166,7 @@
 	floor = 1
 	return 1
 
+// Decays a mushroom by reducing its endurance due to spreading or natural decay.
 /obj/structure/glowshroom/proc/Decay(spread, amount)
 	if (spread) // Decay due to spread
 		myseed.endurance -= amount
@@ -172,7 +176,7 @@
 			addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Recall decay timer
 			return
 	if (myseed.endurance < 1) // Plant is gone
-		Destroy()
+		qdel(src)
 
 /obj/structure/glowshroom/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type == BURN && damage_amount)
@@ -191,6 +195,6 @@
 
 /obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
 	if (istype(I, /obj/item/plant_analyzer))
-		myseed.attackby(I, user, params) // Hacky I guess
+		return myseed.attackby(I, user, params) // Hacky I guess
 	else
-		..() // Attack normally
+		return ..() // Attack normally
