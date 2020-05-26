@@ -1534,15 +1534,15 @@
 
 /datum/reagent/plantnutriment/liquidearthquake
 	name = "Liquid Earthquake"
-	description = "A specialized nutriment, which deceases the plant's yield and endurance, but increases the plant's production speed."
-	color = "#912e00" // RBG: 160, 111, 167
+	description = "A specialized nutriment, which increases the plant's production speed, as well as it's susceptibility to weeds."
+	color = "#912e00" // RBG: 145, 46, 0
 	tox_prob = 25
 
 /datum/reagent/plantnutriment/liquidearthquake/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
 	. = ..()
 	if(myseed && chems.has_reagent(src.type, 1))
-		myseed.adjust_yield(-round(chems.get_reagent_amount(src.type) * 0.1))
-		myseed.adjust_endurance(-round(chems.get_reagent_amount(src.type) * 0.3))
+		myseed.adjust_weed_rate(round(chems.get_reagent_amount(src.type) * 0.1))
+		myseed.adjust_weed_chance(round(chems.get_reagent_amount(src.type) * 0.3))
 		myseed.adjust_production(-round(chems.get_reagent_amount(src.type) * 0.075))
 
 // GOON OTHERS
