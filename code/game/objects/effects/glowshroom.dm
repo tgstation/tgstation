@@ -9,15 +9,19 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroom" //replaced in New
 	layer = ABOVE_NORMAL_TURF_LAYER
-	// Time interval between glowshroom "spreads"
+	/// Time interval between glowshroom "spreads"
 	var/delay_spread = 2 MINUTES
-	// Time interval between glowshroom decay checks
+	/// Time interval between glowshroom decay checks
 	var/delay_decay = 30 SECONDS
+	/// Boolean to indicate if the shroom is on the floor/wall
 	var/floor = 0
+	/// Mushroom generation number
 	var/generation = 1
-	// Chance to spread into adjacent tiles (0-100)
+	/// Chance to spread into adjacent tiles (0-100)
 	var/spreadIntoAdjacentChance = 75
+	/// Internal seed of the glowshroom, stats are stored here
 	var/obj/item/seeds/myseed = /obj/item/seeds/glowshroom
+	/// Turfs where the glowshroom cannot spread to
 	var/static/list/blacklisted_glowshroom_turfs = typecacheof(list(
 	/turf/open/lava,
 	/turf/open/floor/plating/beach/water))
@@ -46,7 +50,16 @@
 		QDEL_NULL(myseed)
 	return ..()
 
-/obj/structure/glowshroom/New(loc, obj/item/seeds/newseed, mutate_stats, spread) // If spread, mushroom is a result of spreading, so we must reduce its stats
+/**
+  *	Creates a new glowshroom structure.
+  *
+  * Arguments:
+  * * newseed - Seed of the shroom
+  * * mutate_stats - If the plant needs to mutate their stats
+  * * spread - If the plant is a result of spreading, reduce its stats
+  */
+
+/obj/structure/glowshroom/New(loc, obj/item/seeds/newseed, mutate_stats, spread)
 	..()
 	if(newseed)
 		myseed = newseed.Copy()
@@ -85,6 +98,10 @@
 
 	addtimer(CALLBACK(src, .proc/Spread), delay_spread)
 	addtimer(CALLBACK(src, .proc/Decay), delay_decay, FALSE) // Start decaying the plant
+
+/**
+  * Causes glowshroom spreading across the floor/walls.
+  */
 
 /obj/structure/glowshroom/proc/Spread()
 	var/turf/ownturf = get_turf(src)
@@ -166,7 +183,13 @@
 	floor = 1
 	return 1
 
-// Decays a mushroom by reducing its endurance due to spreading or natural decay.
+/**
+  * Causes the glowshroom to decay by decreasing its endurance.
+  *
+  * Arguments:
+  * * spread - Boolean to indicate if the decay is due to spreading or natural decay.
+  * * amount - Amount of endurance to be reduced due to spread decay.
+  */
 /obj/structure/glowshroom/proc/Decay(spread, amount)
 	if (spread) // Decay due to spread
 		myseed.endurance -= amount
