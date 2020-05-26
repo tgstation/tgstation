@@ -90,7 +90,9 @@
 
 /mob/living/simple_animal/hostile/eldritch/armsy/New(spawn_more = TRUE,len = 6)
 	. = ..()
-	len = max(3,len) //code breaks below 3, let's just not allow it.
+	if(len < 3)
+		stack_trace("Eldritch Armsy created with invalid len ([len]). Reverting to 3.")
+		len = 3 //code breaks below 3, let's just not allow it.
 	oldloc = loc
 	if(!spawn_more)
 		return
