@@ -38,8 +38,8 @@
 	..()
 	if(ammo_count())
 		icon_state = "9x19-50"
-	else
-		icon_state = "9x19-0"
+		return
+	icon_state = "9x19-0"
 
 /obj/item/ammo_box/magazine/uzim9mm
 	name = "uzi magazine (9mm)"
