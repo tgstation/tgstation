@@ -1,6 +1,0 @@
-author: "MrDoomBringer"
-delete-after: True
-changes: 
-  - rscadd: "Reaching legendary levels of any given skill will grant you an otherwise unobtainable reward."
-  - rscadd: "Nanotrasen has recently acquired new software to track employee skill development, straight from your PDA! Check it out! In unrelated news, the rate of summary executions handed out to Nanotrasen's lowest performing employees has risen sharply."
-  - admin: "Modify player's skills with the new Skill Panel menu, available from the Player Panel!"
