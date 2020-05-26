@@ -99,7 +99,7 @@
 	name = "\improper PP-95 SMG"
 	desc = "An ancient 9x19mm submachine gun pattern updated and simplified to lower costs, though perhaps simplified too much."
 	icon_state = "plastikov"
-	item_state = "plastikov"
+	icon_state_inhand = "plastikov"
 	mag_type = /obj/item/ammo_box/magazine/plastikov9mm
 	burst_size = 5
 	spread = 20
