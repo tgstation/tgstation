@@ -148,8 +148,8 @@
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the decay, for Rustbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 	new /datum/rust_spread(loc)
 
-
 	return ..()
+
 
 /datum/eldritch_knowledge/rust_final/on_life(mob/user)
 	. = ..()
