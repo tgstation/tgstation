@@ -469,6 +469,14 @@
 					return
 
 		if(ASSEMBLY_SECOND_STEP)
+			if(isprox(I))
+				if(!user.temporarilyRemoveItemFromInventory(I))
+					return
+				build_step++
+				to_chat(user, "<span class='notice'>You add [I] to [src].</span>")
+				qdel(I)
+
+		if(ASSEMBLY_THIRD_STEP)
 			if(!can_finish_build(I, user, 0))
 				return
 			if(istype(I, /obj/item/stack/ducts))
