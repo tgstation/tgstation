@@ -10,6 +10,8 @@
 					/obj/item/reagent_containers/dropper = 3,
 					/obj/item/healthanalyzer = 4,
 					/obj/item/wrench/medical = 1,
+					/obj/item/extraction_pack = 10,
+					/obj/item/fulton_core = 3,
 					/obj/item/reagent_containers/pill/patch/libital = 5,
 					/obj/item/reagent_containers/pill/patch/aiuri = 5,
 					/obj/item/reagent_containers/syringe/convermol = 2,
