@@ -46,6 +46,21 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
 
+/obj/item/clothing/suit/hooded/skubsuit
+	name = "skubman costume"
+	desc = "Skubman, simultaneously the world's favourite and least favourite superhero."
+	icon_state = "skubsuit"
+	inhand_icon_state = "armor"
+	body_parts_covered = CHEST|GROIN
+	hoodtype = /obj/item/clothing/head/hooded/skubsuit
+
+/obj/item/clothing/head/hooded/skubsuit
+	name = "skubman helm"
+	desc = "Is he good, or bad? Nobody knows. But they sure will argue about it as if they do."
+	icon_state = "skubsuit"
+	body_parts_covered = HEAD
+	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR|HIDEFACE|HIDEMASK
+
 /obj/item/clothing/suit/pirate
 	name = "pirate coat"
 	desc = "Yarr."
