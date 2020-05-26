@@ -221,8 +221,8 @@
 
 /datum/wound/brute/bone/moderate/proc/chiropractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
-	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
-	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_PROBS_MODIFIER)
+	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
+	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_PROBS_MODIFIER)
 	if(time_mod)
 		time *= time_mod
 
@@ -243,8 +243,8 @@
 
 /datum/wound/brute/bone/moderate/proc/malpractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
-	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_SPEED_MODIFIER)
-	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/medical, SKILL_PROBS_MODIFIER)
+	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
+	var/prob_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_PROBS_MODIFIER)
 	if(time_mod)
 		time *= time_mod
 
