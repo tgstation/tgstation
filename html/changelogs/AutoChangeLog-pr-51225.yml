@@ -1,6 +1,0 @@
-author: "Tlaltecuhtli"
-delete-after: True
-changes: 
-  - bugfix: "janibelt/medibelt can be opened from backpack"
-  - bugfix: "removed some defunct code (picking a color of cable but its all yellow in belt.dm)"
-  - bugfix: "bandoliers now hold their intended 18 shells."
