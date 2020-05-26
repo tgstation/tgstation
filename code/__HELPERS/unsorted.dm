@@ -162,6 +162,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 				py+=sdy
 			px+=sdx		//Step on in x direction
 			line+=locate(px,py,M.z)//Add the turf to the list
+			CHECK_TICK
 	else
 		for(j=0;j<dyabs;j++)
 			x+=dxabs
@@ -170,6 +171,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 				px+=sdx
 			py+=sdy
 			line+=locate(px,py,M.z)
+			CHECK_TICK
 	return line
 
 //Returns whether or not a player is a guest using their ckey as an input
@@ -452,26 +454,40 @@ Turf and target are separate in case you want to teleport some distance from a t
 			processing += A.contents
 			. += A
 
-//Step-towards method of determining whether one atom can see another. Similar to viewers()
-/proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
-	var/turf/current = get_turf(source)
-	var/turf/target_turf = get_turf(target)
-	var/steps = 1
-	if(current != target_turf)
-		current = get_step_towards(current, target_turf)
-		while(current != target_turf)
-			if(steps > length)
-				return 0
-			if(current.opacity)
-				return 0
-			for(var/thing in current)
+//Raycasting method using getline to figure out if we can see something.
+/proc/can_see(atom/source, atom/target, length = 5, care_about_objects = TRUE) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate. // Inaccurate no longer! Uses proper raycasting now.
+	var/list/raycast = getline(source, target)
+	for(var/TU in raycast)
+		var/turf/T = TU
+		if(raycast.len > length)
+			return FALSE
+		if(T.opacity)
+			return FALSE
+		if(care_about_objects)
+			for(var/thing in T)
 				var/atom/A = thing
 				if(A.opacity)
-					return 0
-			current = get_step_towards(current, target_turf)
-			steps++
+					return FALSE
+	return TRUE
 
-	return 1
+/proc/cheap_view(distance = 7, atom/center, include_turfs = TRUE, include_objects = TRUE, include_mobs = TRUE)
+	. = list()
+	var/list/turfs_to_check = SSexplosions.GatherSpiralTurfs(distance, center)
+	for(var/T in turfs_to_check)
+		if(can_see(center, T, distance))
+			if(include_turfs)
+				. += T
+			var/turf/TU = T
+			for(var/AT in TU)
+				if((include_mobs && ismob(AT)) || (include_objects && isobj(AT)))
+					if(can_see(center, AT, distance))
+						. += AT
+		CHECK_TICK
+
+
+
+
+
 
 /proc/is_blocked_turf(turf/T, exclude_mobs)
 	if(T.density)

@@ -366,7 +366,7 @@ GLOBAL_LIST_INIT(spells, typesof(/obj/effect/proc_holder/spell)) //needed for th
 /obj/effect/proc_holder/spell/proc/view_or_range(distance = world.view, center=usr, type="view")
 	switch(type)
 		if("view")
-			. = view(distance,center)
+			. = cheap_view(distance,center)
 		if("range")
 			. = range(distance,center)
 

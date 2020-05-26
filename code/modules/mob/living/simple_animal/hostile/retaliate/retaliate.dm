@@ -21,7 +21,7 @@
 	return see
 
 /mob/living/simple_animal/hostile/retaliate/proc/Retaliate()
-	var/list/around = view(src, vision_range)
+	var/list/around = cheap_view(vision_range, src)
 
 	for(var/atom/movable/A in around)
 		if(A == src)

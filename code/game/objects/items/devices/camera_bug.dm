@@ -287,7 +287,7 @@
 		var/list/b_cams = get_cameras()
 		for(var/entry in b_cams)
 			tracking_cams += b_cams[entry]
-		var/list/target_region = view(tracking)
+		var/list/target_region = cheap_view(center = tracking)
 
 		for(var/obj/machinery/camera/C in (target_region & tracking_cams))
 			if(!can_see(C,tracking)) // target may have xray, that doesn't make them visible to cameras

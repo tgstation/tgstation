@@ -158,7 +158,7 @@
 	switch(mode)
 		if(MONKEY_IDLE)		// idle
 			if(enemies.len)
-				var/list/around = view(src, MONKEY_ENEMY_VISION) // scan for enemies
+				var/list/around = cheap_view(MONKEY_ENEMY_VISION, src, include_turfs = FALSE) // scan for enemies
 				for(var/mob/living/L in around)
 					if( should_target(L) )
 						if(L.stat == CONSCIOUS)
@@ -199,7 +199,7 @@
 					pickupTarget = W
 
 			// recruit other monkies
-			var/list/around = view(src, MONKEY_ENEMY_VISION)
+			var/list/around = cheap_view(MONKEY_ENEMY_VISION, src, include_turfs = FALSE)
 			for(var/mob/living/carbon/monkey/M in around)
 				if(M.mode == MONKEY_IDLE && prob(MONKEY_RECRUIT_PROB))
 					M.battle_screech()
@@ -249,7 +249,7 @@
 				back_to_idle()
 
 		if(MONKEY_FLEE)
-			var/list/around = view(src, MONKEY_FLEE_VISION)
+			var/list/around = cheap_view(MONKEY_FLEE_VISION, src, include_turfs = FALSE)
 			target = null
 
 			// flee from anyone who attacked us and we didn't beat down

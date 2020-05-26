@@ -19,6 +19,7 @@
 	var/casingtype		//set ONLY it and NULLIFY projectiletype, if we have projectile IN CASING
 	var/move_to_delay = 3 //delay for the automated movement.
 	var/list/friends = list()
+	var/list/targets_to_check = list()
 	var/list/emote_taunt = list()
 	var/taunt_chance = 0
 
@@ -72,16 +73,30 @@
 /mob/living/simple_animal/hostile/handle_automated_action()
 	if(AIStatus == AI_OFF)
 		return 0
-	var/list/possible_targets = ListTargets() //we look around for potential targets and make it a list for later use.
+
+	if (!length(SSmobs.clients_by_zlevel[src.z])) // Nobody on our z-level? Die.
+		toggle_ai(AI_Z_OFF)
+		return
+	else
+		var/found_person = FALSE
+		for(var/A in SSmobs.clients_by_zlevel[src.z])
+			if(get_dist(A, src) < vision_range)
+				found_person = TRUE
+				break
+		if(!found_person)
+			toggle_ai(AI_IDLE)
+			return
+
+	targets_to_check = ListTargets() //we look around for potential targets and make it a list for later use.
 
 	if(environment_smash)
 		EscapeConfinement()
 
-	if(AICanContinue(possible_targets))
+	if(FindTarget())
 		if(!QDELETED(target) && !targets_from.Adjacent(target))
 			DestroyPathToTarget()
-		if(!MoveToTarget(possible_targets))     //if we lose our target
-			if(AIShouldSleep(possible_targets))	// we try to acquire a new one
+		if(!MoveToTarget(targets_to_check))     //if we lose our target
+			if(!FindTarget(targets_to_check))	// we try to acquire a new one
 				toggle_ai(AI_IDLE)			// otherwise we go idle
 	return 1
 
@@ -115,13 +130,13 @@
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
-		FindTarget(list(user), 1)
+		GiveTarget(user)
 	return ..()
 
 /mob/living/simple_animal/hostile/bullet_act(obj/projectile/P)
 	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
 		if(P.firer && get_dist(src, P.firer) <= aggro_vision_range)
-			FindTarget(list(P.firer), 1)
+			GiveTarget(P.firer)
 		Goto(P.starting, move_to_delay, 3)
 	return ..()
 
@@ -129,21 +144,13 @@
 
 /mob/living/simple_animal/hostile/proc/ListTargets() //Step 1, find out what we can see
 	if(!search_objects)
-		. = hearers(vision_range, targets_from) - src //Remove self, so we don't suicide
-
-		var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha))
-
-		for(var/HM in typecache_filter_list(range(vision_range, targets_from), hostile_machines))
-			if(can_see(targets_from, HM, vision_range))
-				. += HM
+		. = cheap_view(vision_range, src, include_turfs = FALSE, include_objects = FALSE) - src
 	else
-		. = oview(vision_range, targets_from)
+		. = cheap_view(vision_range, src, include_turfs = FALSE) - src
 
-/mob/living/simple_animal/hostile/proc/FindTarget(list/possible_targets, HasTargetsList = 0)//Step 2, filter down possible targets to things we actually care about
+/mob/living/simple_animal/hostile/proc/FindTarget()//Step 2, filter down possible targets to things we actually care about
 	. = list()
-	if(!HasTargetsList)
-		possible_targets = ListTargets()
-	for(var/pos_targ in possible_targets)
+	for(var/pos_targ in targets_to_check)
 		var/atom/A = pos_targ
 		if(Found(A))//Just in case people want to override targetting
 			. = list(A)
@@ -159,7 +166,7 @@
 
 /mob/living/simple_animal/hostile/proc/PossibleThreats()
 	. = list()
-	for(var/pos_targ in ListTargets())
+	for(var/pos_targ in targets_to_check)
 		var/atom/A = pos_targ
 		if(Found(A))
 			. = list(A)
@@ -167,7 +174,6 @@
 		if(CanAttack(A))
 			. += A
 			continue
-
 
 
 /mob/living/simple_animal/hostile/proc/Found(atom/A)//This is here as a potential override to pick a specific target if available
@@ -502,14 +508,14 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 		if(AI_ON)
 			. = 1
 		if(AI_IDLE)
-			if(FindTarget(possible_targets, 1))
+			if(FindTarget())
 				. = 1
 				toggle_ai(AI_ON) //Wake up for more than one Life() cycle.
 			else
 				. = 0
 
 /mob/living/simple_animal/hostile/proc/AIShouldSleep(var/list/possible_targets)
-	return !FindTarget(possible_targets, 1)
+	return !FindTarget()
 
 
 //These two procs handle losing our target if we've failed to attack them for
@@ -538,7 +544,6 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 
 /mob/living/simple_animal/hostile/consider_wakeup()
 	..()
-	var/list/tlist
 	var/turf/T = get_turf(src)
 
 	if (!T)
@@ -547,28 +552,11 @@ mob/living/simple_animal/hostile/proc/DestroySurroundings() // for use with mega
 	if (!length(SSmobs.clients_by_zlevel[T.z])) // It's fine to use .len here but doesn't compile on 511
 		toggle_ai(AI_Z_OFF)
 		return
-
-	var/cheap_search = isturf(T) && !is_station_level(T.z)
-	if (cheap_search)
-		tlist = ListTargetsLazy(T.z)
 	else
-		tlist = ListTargets()
-
-	if(AIStatus == AI_IDLE && FindTarget(tlist, 1))
-		if(cheap_search) //Try again with full effort
-			FindTarget()
-		toggle_ai(AI_ON)
-
-/mob/living/simple_animal/hostile/proc/ListTargetsLazy(var/_Z)//Step 1, find out what we can see
-	var/static/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/mecha))
-	. = list()
-	for (var/I in SSmobs.clients_by_zlevel[_Z])
-		var/mob/M = I
-		if (get_dist(M, src) < vision_range)
-			if (isturf(M.loc))
-				. += M
-			else if (M.loc.type in hostile_machines)
-				. += M.loc
+		for(var/A in SSmobs.clients_by_zlevel[T.z])
+			if(get_dist(A, src) < vision_range)
+				toggle_ai(AI_ON)
+				return
 
 /mob/living/simple_animal/hostile/tamed(whomst)
 	if(isliving(whomst))

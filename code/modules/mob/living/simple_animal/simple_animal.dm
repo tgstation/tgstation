@@ -124,7 +124,7 @@
 	var/dextrous_hud_type = /datum/hud/dextrous
 
 	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever), AI_Z_OFF (Temporarily off due to nonpresence of players).
-	var/AIStatus = AI_ON
+	var/AIStatus = AI_IDLE
 	///once we have become sentient, we can never go back.
 	var/can_have_ai = TRUE
 

@@ -214,7 +214,7 @@
 
 /// Attacks enemies around the megafauna if they lose health
 /mob/living/simple_animal/hostile/megafauna/proc/Retaliate()
-	var/list/around = view(src, vision_range)
+	var/list/around = cheap_view(vision_range, src)
 
 	for(var/atom/movable/A in around)
 		if(A == src)
