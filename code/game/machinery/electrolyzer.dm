@@ -14,7 +14,7 @@
 	circuit = /obj/item/circuitboard/machine/electrolyzer
 	ui_x = 400
 	ui_y = 305
-
+	use_power = NO_POWER_USE		/// We don't use area power, we always use the cell
 	///used to check if there is a cell in the machine
 	var/obj/item/stock_parts/cell/cell
 	///check if the machine is on or off
