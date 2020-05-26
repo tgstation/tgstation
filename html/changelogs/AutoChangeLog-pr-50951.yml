@@ -1,4 +1,0 @@
-author: "TerraGS"
-delete-after: True
-changes: 
-  - bugfix: "Material containers are better at managing local storage"

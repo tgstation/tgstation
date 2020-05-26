@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes: 
-  - bugfix: "SMES units now self-charge when containing yellow slime cores."
