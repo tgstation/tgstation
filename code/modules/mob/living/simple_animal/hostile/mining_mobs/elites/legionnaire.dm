@@ -106,7 +106,7 @@
 	. = ..()
 	if(myhead != null)
 		var/turf/T = get_turf(A)
-		if(T != null)
+		if(T)
 			myhead.LoseTarget()
 			myhead.Goto(T, myhead.move_to_delay)
 		
