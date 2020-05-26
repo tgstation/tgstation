@@ -46,6 +46,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	desc = "It just won't stay in place. it has [warp_charge] charge left"
 	return ..()
 
+
 ///runes can also be deleted by bluespace crystals relatively fast as an alternative to cleaning them.
 /obj/effect/warped_rune/attackby(obj/item/used_item, mob/user)
 	. = ..()
@@ -85,8 +86,15 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 ///using the extract on the floor will "draw" the rune.
 /obj/item/slimecross/warping/afterattack(atom/target, mob/user, proximity)
 	. = ..()
+	if(!proximity)
+		return
 
-	if(!warping_turf_check(target,user,proximity))
+	if(isturf(target) && locate(/obj/effect/warped_rune) in target) //check if the target is a floor and if there's a rune on said floor
+		to_chat(user, "<span class='warning'>There is already a bluespace rune here!</span>")
+		return
+
+	if(!istype(target,/turf/open/floor) && !istype(target, runepath))
+		to_chat(user, "<span class='warning'>you cannot draw a rune here!</span>")
 		return
 
 	if(istype(target, runepath)) //checks if the target is a rune and then if you can store it
@@ -94,40 +102,36 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 			to_chat(user, "<span class='warning'>[src] is already full!</span>")
 			return
 
-		if(do_after(user, storing_time,target = target) && warp_charge < max_charge)
-			to_chat(user, "<span class='notice'>You store the rune in [src].</span>")
-			qdel(target)
-			warp_charge++
+		else if(do_after(user, storing_time,target = target) && warp_charge < max_charge)
+			warping_crossbreed_absorb(target, user)
 			return
 
-	if(warp_charge <= 0) //spawns the right rune if you have charge(s) left
+	if(warp_charge < 1) //check if we have at least 1 charge left.
 		to_chat(user, "<span class='warning'>[src] is empty!</span>")
 		return
 
 	if(do_after(user, drawing_time,target = target))
-		if(warp_charge <= 0) //In case the state has changed since we started the do_after
-			return
-
-		playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
-		warp_charge--
-		new runepath(target)
-		to_chat(user, "<span class='notice'>You carefully draw the rune with [src].</span>")
+		if(warp_charge >= 1 && !locate(/obj/effect/warped_rune) in target) //check one last time if a rune has been drawn during the do_after and if there's enough charges left
+			warping_crossbreed_spawn(target,user)
 
 
+///spawns the rune, taking away one rune charge
+/obj/item/slimecross/warping/proc/warping_crossbreed_spawn(atom/target, mob/user)
+	playsound(target, 'sound/effects/slosh.ogg', 20, TRUE)
+	warp_charge--
+	new runepath(target)
+	to_chat(user, "<span class='notice'>You carefully draw the rune with [src].</span>")
 
-/obj/item/slimecross/warping/proc/warping_turf_check(atom/target, mob/user, proximity)
-	if(!proximity)
-		return FALSE
 
-	if(isturf(target) && locate(/obj/effect/warped_rune) in target) //check if the target is a floor and if there's a rune on said floor
-		to_chat(user, "<span class='warning'>There is already a bluespace rune here!</span>")
-		return FALSE
+///absorb the rune into the crossbreed adding one more charge to the crossbreed.
+/obj/item/slimecross/warping/proc/warping_crossbreed_absorb(atom/target, mob/user)
+	to_chat(user, "<span class='notice'>You store the rune in [src].</span>")
+	qdel(target)
+	warp_charge++
+	return
 
-	if(!istype(target,/turf/open/floor) && !istype(target, runepath))
-		to_chat(user, "<span class='warning'>you cannot draw a rune here!</span>")
-		return FALSE
 
-	return TRUE
+/* Creates a rune that will periodically absorb slime extract of the same color. After 8 extracts have been absorbed the rune will spawn a slime of that color*/
 
 
 /obj/item/slimecross/warping/grey
@@ -454,7 +458,7 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		human.adjust_bodytemperature(-1000) //Not enough to crit anyone not already weak to cold, might need serious rebalance if cold damage is reworked.
 
 
-/* makes a rune that absorb food, whenever someone step on the rune the nutrition come back to them, not all of it of course.*/
+/* makes a rune that absorb food, whenever someone step on the rune the nutrition come back to them until they are full.*/
 
 
 /obj/item/slimecross/warping/silver
@@ -475,13 +479,17 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 	START_PROCESSING(SSprocessing, src)
 
 
+/obj/effect/warped_rune/silverspace/examine()
+	desc = "Feed me and I will feed you back. I currently hold [nutriment] units of nutrition."
+	return ..()
+
+
 ///any food put on the rune with nutrients will have said nutrients absorbed by the rune. Then the nutrients will be redirected to the people on the rune
 /obj/effect/warped_rune/silverspace/process()
 	for(var/obj/item/reagent_containers/food/nutriment_source in rune_turf) //checks if there's snacks on the rune.and then vores the food
 		for(var/datum/reagent/consumable/nutriment/nutr in nutriment_source.reagents.reagent_list)
 			nutriment += round((nutr.nutriment_factor * nutr.volume) / (nutr.metabolization_rate)) //the value of nutrition for the nutriment unit
 			nutriment_source.reagents.remove_reagent(nutr.type,1)
-			desc = "Feed me and I will feed you back. I currently hold [nutriment] units of nutrition."
 
 	for(var/mob/living/carbon/human/person_fed in rune_turf)
 		if(HAS_TRAIT(person_fed, TRAIT_NOHUNGER) || (person_fed.nutrition >= NUTRITION_LEVEL_WELL_FED) || (nutriment <= 0)) //don't need to feed a perfectly well-fed boi
@@ -490,7 +498,6 @@ put up a rune with bluespace effects, lots of those runes are fluff or act as a 
 		var/nutrition_to_add = min(nutriment, max(round(NUTRITION_LEVEL_FULL - 1 - person_fed.nutrition), 0))
 		person_fed.nutrition += nutrition_to_add
 		nutriment -= nutrition_to_add
-		desc = "Feed me and I will feed you back. I currently hold [nutriment] units of nutrition."
 
 
 /obj/effect/warped_rune/silverspace/Destroy()
