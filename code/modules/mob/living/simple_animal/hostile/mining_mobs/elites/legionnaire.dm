@@ -104,7 +104,7 @@
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/MiddleClickOn(atom/A)
 	. = ..()
-	if(myhead != null)
+	if(myhead)
 		var/turf/T = get_turf(A)
 		if(T)
 			myhead.LoseTarget()
