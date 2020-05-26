@@ -35,6 +35,7 @@
 
 #define WOUND_BURN_SANITIZATION_RATE 0.15 // how quickly sanitization removes infestation and decays per tick
 #define WOUND_CUT_MAX_BLOODFLOW	8 // how much blood you can lose per tick per cut max. 8 is a LOT of blood for one cut so don't worry about hitting it easily
+#define WOUND_BONE_HEAD_TIME_VARIANCE 20 // if we suffer a bone wound to the head that creates brain traumas, the timer for the trauma cycle is +/- by this percent (0-100)
 
 // The following are for persistent scar save formats
 #define SCAR_SAVE_ZONE				1 // The body_zone we're applying to on granting

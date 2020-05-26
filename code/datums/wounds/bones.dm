@@ -22,6 +22,16 @@
 	var/regen_points_needed
 	/// Our current counter for gel + surgical tape regeneration
 	var/regen_points_current
+	/// If we suffer severe head booboos, we can get brain traumas tied to them
+	var/datum/brain_trauma/active_trauma
+	/// What brain trauma group, if any, we can draw from for head wounds
+	var/brain_trauma_group
+	/// If we deal brain traumas, when is the next one due?
+	var/next_trauma_cycle
+	/// How long do we wait +/- 20% for the next trauma?
+	var/trauma_cycle_cooldown
+	/// If this is a chest wound and this is set, we have this chance to cough up blood when hit in the chest
+	var/chance_internal_bleeding = 0
 
 /*
 	Overwriting of base procs
@@ -30,6 +40,11 @@
 	. = ..()
 	if(QDELETED(src) || !limb)
 		return
+	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group)
+		processes = TRUE
+		active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
+		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
+
 	RegisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/attack_with_hurt_hand)
 	if(L.held_index && victim.get_item_for_held_index(L.held_index) && (disabling || prob(30 * severity)))
 		var/obj/item/I = victim.get_item_for_held_index(L.held_index)
@@ -43,6 +58,7 @@
 
 /datum/wound/brute/bone/remove_wound(ignore_limb, replaced)
 	limp_slowdown = 0
+	QDEL_NULL(active_trauma)
 	if(limb)
 		REMOVE_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 	if(victim)
@@ -51,8 +67,14 @@
 
 /datum/wound/brute/bone/handle_process()
 	. = ..()
+	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
+		if(active_trauma)
+			QDEL_NULL(active_trauma)
+		else
+			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
+		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
+
 	if(!regen_points_needed)
-		processes = FALSE
 		return
 
 	regen_points_current++
@@ -88,7 +110,28 @@
 			return COMPONENT_NO_ATTACK_HAND
 
 /datum/wound/brute/bone/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(!(wounding_type in list(WOUND_SHARP, WOUND_BURN)) || !splinted || !victim || wound_bonus == CANT_WOUND)
+	if(!victim)
+		return
+
+	if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume && prob(chance_internal_bleeding + wounding_dmg))
+		var/blood_bled = rand(1, wounding_dmg * (severity == WOUND_SEVERITY_CRITICAL ? 2 : 1.5)) // 12 brute toolbox can cause up to 18/24 bleeding with a severe/critical chest wound
+		switch(blood_bled)
+			if(1 to 6)
+				victim.bleed(blood_bled, TRUE)
+			if(7 to 13)
+				victim.visible_message("<span class='danger'>[victim] coughs up a bit of blood from the blow to [victim.p_their()] chest.</span>", "<span class='danger'>You cough up a bit of blood from the blow to your chest.</span>")
+				victim.bleed(blood_bled, TRUE)
+			if(14 to 19)
+				victim.visible_message("<span class='danger'>[victim] spits out a string of blood from the blow to [victim.p_their()] chest!</span>", "<span class='danger'>You spit out a string of blood from the blow to your chest!</span>")
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				victim.bleed(blood_bled)
+			if(20 to INFINITY)
+				victim.visible_message("<span class='danger'>[victim] chokes up a spray of blood from the blow to [victim.p_their()] chest!</span>", "<span class='danger'><b>You choke up on a spray of blood from the blow to your chest!</b></span>")
+				victim.bleed(blood_bled)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(victim.loc, victim.dir)
+				victim.add_splatter_floor(get_step(victim.loc, victim.dir))
+
+	if(!(wounding_type in list(WOUND_SHARP, WOUND_BURN)) || !splinted || wound_bonus == CANT_WOUND)
 		return
 
 	splinted.take_damage(wounding_dmg, damage_type = (wounding_type == WOUND_SHARP ? BRUTE : BURN), sound_effect = FALSE)
@@ -303,7 +346,9 @@
 	status_effect_type = /datum/status_effect/wound/bone/severe
 	treat_priority = TRUE
 	scarring_descriptions = list("a faded, fist-sized bruise", "a vaguely triangular peel scar")
-
+	brain_trauma_group = BRAIN_TRAUMA_MILD
+	trauma_cycle_cooldown = 1.5 MINUTES
+	chance_internal_bleeding = 40
 
 /datum/wound/brute/bone/critical
 	name = "Compound Fracture"
@@ -322,6 +367,9 @@
 	status_effect_type = /datum/status_effect/wound/bone/critical
 	treat_priority = TRUE
 	scarring_descriptions = list("a section of janky skin lines and badly healed scars", "a large patch of uneven skin tone", "a cluster of calluses")
+	brain_trauma_group = BRAIN_TRAUMA_SEVERE
+	trauma_cycle_cooldown = 2.5 MINUTES
+	chance_internal_bleeding = 60
 
 /datum/wound/brute/bone/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	if(gelled)
@@ -343,11 +391,11 @@
 		if(victim.drunkenness)
 			painkiller_bonus += 5
 		if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/medicine/morphine))
-			painkiller_bonus += 5
+			painkiller_bonus += 10
 		if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/determination))
 			painkiller_bonus += 5
 
-		if(prob(25 + (20 * severity - 2) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, -5 for each of the above painkillers
+		if(prob(25 + (20 * severity - 2) - painkiller_bonus)) // 25%/45% chance to fail self-applying with severe and critical wounds, modded by painkillers
 			victim.visible_message("<span class='danger'>[victim] fails to finish applying [I] to [victim.p_their()] [limb.name], passing out from the pain!</span>", "<span class='notice'>You black out from the pain of applying [I] to your [limb.name] before you can finish!</span>")
 			victim.AdjustUnconscious(5 SECONDS)
 			return
@@ -394,10 +442,16 @@
 	. = ..()
 
 	. += "<div class='ml-3'>"
+
 	if(!gelled)
 		. += "Alternative Treatment: Apply bone gel directly to injured limb, then apply surgical tape to begin bone regeneration. This is both excruciatingly painful and slow, and only recommended in dire circumstances.\n"
 	else if(!taped)
 		. += "<span class='notice'>Continue Alternative Treatment: Apply surgical tape directly to injured limb to begin bone regeneration. Note, this is both excruciatingly painful and slow.</span>\n"
 	else
 		. += "<span class='notice'>Note: Bone regeneration in effect. Bone is [round(regen_points_current/regen_points_needed)]% regenerated.</span>\n"
+
+	if(limb.body_zone == BODY_ZONE_HEAD)
+		. += "Cranial Trauma Detected: Patient will suffer random bouts of [severity == WOUND_SEVERITY_SEVERE ? "mild" : "severe"] brain traumas until bone is repaired."
+	else if(limb.body_zone == BODY_ZONE_CHEST && victim.blood_volume)
+		. += "Ribcage Trauma Detected: Further trauma to chest is likely to worsen internal bleeding until bone is repaired."
 	. += "</div>"
