@@ -1988,9 +1988,15 @@
 	tgui_view_state["storageConsSubMode"] = "mutations"
 	tgui_view_state["storageDiskSubMode"] = "mutations"
 
-/*
- * Ejects the DNA Disk from the console.
- */
+/**
+  * Ejects the DNA Disk from the console.
+	*
+	* Will insert into the user's hand if possible, otherwise will drop it at the
+	* console's location.
+	*
+	* Arguments:
+  * * user - The mob that is attempting to eject the diskette.
+  */
 /obj/machinery/computer/scan_consolenew/proc/eject_disk(mob/user)
 	// Check for diskette.
 	if(!diskette)
