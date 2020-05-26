@@ -47,10 +47,12 @@
 		real_name = pref_species.random_name(gender,1)
 
 ///Setup a hardcore random character and calculate their hardcore random score
-/datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character, antagonist)
+/datum/preferences/proc/hardcore_random_setup(mob/living/carbon/human/character, antagonist, is_latejoiner)
 	random_character(TRUE, antagonist)
 	select_hardcore_quirks()
 	hardcore_survival_score = hardcore_survival_score ** 1.2 //30 points would be about 60 score
+	if(is_latejoiner)//prevent them from cheatintg
+		hardcore_survival_score = 0
 
 ///Go through all quirks that can be used in hardcore mode and select some based on a random budget.
 /datum/preferences/proc/select_hardcore_quirks()
