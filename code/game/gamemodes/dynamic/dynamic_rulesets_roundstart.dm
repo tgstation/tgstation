@@ -59,7 +59,7 @@
 	cost = 15
 	scaling_cost = 15
 	requirements = list(40,30,30,20,20,15,15,15,10,10)
-	high_population_requirement = 15
+	high_population_requirement = 10
 	antag_cap = list(2,2,2,2,2,2,2,2,2,2)	// Can pick 3 per team, but rare enough it doesn't matter.
 	var/list/datum/team/brother_team/pre_brother_teams = list()
 	var/const/min_team_size = 2

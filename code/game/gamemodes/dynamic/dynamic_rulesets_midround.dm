@@ -276,7 +276,7 @@
 	weight = 1
 	cost = 20
 	requirements = list(90,90,70,40,30,20,10,10,10,10)
-	high_population_requirement = 50
+	high_population_requirement = 10
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -351,7 +351,7 @@
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
-	high_population_requirement = 50
+	high_population_requirement = 10
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
@@ -374,7 +374,7 @@
 	weight = 3
 	cost = 10
 	requirements = list(101,101,101,70,50,40,20,15,10,10)
-	high_population_requirement = 50
+	high_population_requirement = 10
 	repeatable = TRUE
 	var/list/vents = list()
 
@@ -421,7 +421,7 @@
 	weight = 3
 	cost = 10
 	requirements = list(101,101,101,70,50,40,20,15,10,10)
-	high_population_requirement = 50
+	high_population_requirement = 10
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -468,7 +468,7 @@
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
-	high_population_requirement = 50
+	high_population_requirement = 10
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
