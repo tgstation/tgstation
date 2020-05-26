@@ -9,8 +9,6 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/obj/structure/extraction_point/beacon
 	var/list/beacon_networks = list("station")
 	var/uses_left = 3
-	var/can_use_indoors
-	var/safe_for_living_creatures = 1
 	var/max_force_fulton = MOVE_FORCE_STRONG
 
 /obj/item/extraction_pack/examine()
@@ -47,19 +45,11 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		beacon = null
 		to_chat(user, "<span class='warning'>The connected beacon has been destroyed!</span>")
 		return
-	if(!can_use_indoors)
-		var/area/area = get_area(A)
-		if(!area.outdoors)
-			to_chat(user, "<span class='warning'>[src] can only be used on things that are outdoors!</span>")
-			return
 	if(!flag)
 		return
 	if(!istype(A))
 		return
 	else
-		if(!safe_for_living_creatures && check_for_living_mobs(A))
-			to_chat(user, "<span class='warning'>[src] is not safe for use with living creatures, they wouldn't survive the trip back!</span>")
-			return
 		if(!isturf(A.loc)) // no extracting stuff inside other stuff
 			return
 		if(A.anchored || (A.move_resist > max_force_fulton))
@@ -114,6 +104,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				L.SetUnconscious(0)
 				L.drowsyness = 0
 				L.SetSleeping(0)
+				L.say(pick(list("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHH!", "AAAAAAAAAAAUGH!", "EEEEEEEEEEEEEEEEEEEEEEEK!", "OH NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!", "WHOAAAAAAAAAAAAAAAAAAAAAAAA!")))
 			sleep(30)
 			var/list/flooring_near_beacon = list()
 			for(var/turf/open/floor in orange(1, beacon))
