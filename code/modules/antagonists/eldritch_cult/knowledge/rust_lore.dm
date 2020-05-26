@@ -162,7 +162,7 @@
 		H.physiology.burn_mod = prev_burn_mod
 		return
 
-	H.adjustBruteLoss(-3)
+	H.adjustBruteLoss(-3, FALSE)
 	H.adjustFireLoss(-3, FALSE)
 	H.adjustToxLoss(-3, FALSE)
 	H.adjustOxyLoss(-1, FALSE)
