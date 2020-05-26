@@ -155,8 +155,6 @@
 			mat_container.insert_item(O, material_amount, multiplier = (amount_produced / 100))
 			mat_container.retrieve_all()
 
-
-
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 	safety_mode = TRUE
