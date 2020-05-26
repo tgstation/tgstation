@@ -113,7 +113,7 @@
 			current.front = src
 			current.AIStatus = AI_OFF
 			back = current
-		else if(i > 0 && i < len)
+		else if(i < len)
 			current = new type(drop_location(),spawn_more = FALSE)
 			prev.back = current
 			prev.icon_state = "armsy_mid"
