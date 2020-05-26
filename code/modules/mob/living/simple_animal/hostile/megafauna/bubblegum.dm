@@ -188,9 +188,8 @@ Difficulty: Hard
 	charging = FALSE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/get_mobs_on_blood()
-	var/list/targets = ListTargets()
 	. = list()
-	for(var/mob/living/L in targets)
+	for(var/mob/living/L in targets_to_check)
 		var/list/bloodpool = get_pools(get_turf(L), 0)
 		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
 			. += L

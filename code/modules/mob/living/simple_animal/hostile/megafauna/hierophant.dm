@@ -247,12 +247,11 @@ Difficulty: Hard
 	var/oldcolor = color
 	animate(src, color = "#660099", time = 6)
 	SLEEP_CHECK_DEATH(6)
-	var/list/targets = ListTargets()
 	var/list/cardinal_copy = GLOB.cardinals.Copy()
-	while(targets.len && cardinal_copy.len)
-		var/mob/living/pickedtarget = pick(targets)
-		if(targets.len >= cardinal_copy.len)
-			pickedtarget = pick_n_take(targets)
+	while(targets_to_check.len && cardinal_copy.len)
+		var/mob/living/pickedtarget = pick(targets_to_check)
+		if(targets_to_check.len >= cardinal_copy.len)
+			pickedtarget = pick_n_take(targets_to_check)
 		if(!istype(pickedtarget) || pickedtarget.stat == DEAD)
 			pickedtarget = target
 			if(QDELETED(pickedtarget) || (istype(pickedtarget) && pickedtarget.stat == DEAD))
