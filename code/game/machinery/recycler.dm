@@ -152,9 +152,8 @@
 		var/material_amount = mat_container.get_item_material_amount(O)
 
 		if (material_amount)
-			var/loaded_amount = mat_container.insert_item(O, material_amount, multiplier = (amount_produced / 100))
-			if (loaded_amount >= material_amount) //if there is not enough space, eject it
-				mat_container.retrieve_all()
+			mat_container.insert_item(O, material_amount, multiplier = (amount_produced / 100))
+			mat_container.retrieve_all()
 
 
 
