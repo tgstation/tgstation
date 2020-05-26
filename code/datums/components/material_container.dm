@@ -116,7 +116,7 @@
 		user.put_in_active_hand(I)
 
 /// Proc specifically for inserting items, returns the amount of materials entered.
-/datum/component/material_container/proc/insert_item(obj/item/I, var/multiplier = 1, amt)
+/datum/component/material_container/proc/insert_item(obj/item/I, amt=1, multiplier = 1)
 	if(!I)
 		return FALSE
 
