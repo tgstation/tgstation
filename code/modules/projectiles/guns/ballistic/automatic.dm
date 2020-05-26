@@ -102,7 +102,7 @@
 	inhand_icon_state = "plastikov"
 	mag_type = /obj/item/ammo_box/magazine/plastikov9mm
 	burst_size = 5
-	spread = 20
+	spread = 25
 	can_suppress = FALSE
 	actions_types = list()
 	mag_display = TRUE
