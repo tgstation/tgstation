@@ -149,7 +149,7 @@
 		front.icon_state = "armsy_end"
 		front.icon_living = "armsy_end"
 	if(back)
-		qdel(back) // chain destruction baby
+		QDEL_NULL(back) // chain destruction baby
 	return ..()
 
 
