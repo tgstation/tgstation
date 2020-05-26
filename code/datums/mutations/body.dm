@@ -206,7 +206,7 @@
 	if(!glowth)
 		return
 	var/power = GET_MUTATION_POWER(src)
-	glowth.set_light(range * power, glow * power, "#[dna.features["mcolor"]]")
+	glowth.set_light(range * power, glow, "#[dna.features["mcolor"]]")
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
