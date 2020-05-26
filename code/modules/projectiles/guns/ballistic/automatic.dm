@@ -101,13 +101,10 @@
 	icon_state = "plastikov"
 	icon_state = "plastikov"
 	mag_type = /obj/item/ammo_box/magazine/plastikov9mm
-	w_class = WEIGHT_CLASS_NORMAL
-	fire_delay = 2
 	burst_size = 5
 	spread = 20
 	can_suppress = FALSE
 	actions_types = list()
-	can_bayonet = FALSE
 	mag_display = TRUE
 	empty_indicator = TRUE
 	fire_sound = 'sound/weapons/gun/smg/shot_alt.ogg'
