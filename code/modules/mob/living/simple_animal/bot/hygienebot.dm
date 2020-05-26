@@ -108,7 +108,7 @@
 
 		if(BOT_HUNT)		// hunting for stinkman
 			if(emagged) //lol fuck em up
-				currentspeed = 8
+				currentspeed = 3.5
 				start_washing()
 				mad = TRUE
 			else
@@ -130,11 +130,11 @@
 				else
 					stop_washing()
 					var/olddist = get_dist(src, target)
-					if(olddist > 7) // Target got away, focus on something else
+					if(olddist > 20 || frustration > 100) // Focus on something else
 						back_to_idle()
 						return
 					walk_to(src, target,0, currentspeed)
-					if(mad && prob(min(frustration, 60)))
+					if(mad && prob(min(frustration * 2, 60)))
 						playsound(loc, 'sound/effects/hygienebot_angry.ogg', 60, 1)
 						speak(pick("Get back here you foul smelling fucker.", "STOP RUNNING OR I WILL CUT YOUR ARTERIES!", "Just fucking let me clean you you arsehole!", "STOP. RUNNING.", "Either you stop running or I will fucking drag you out of an airlock.", "I just want to fucking clean you you troglodyte.", "If you don't come back here I'll put a green cloud around you cunt."))
 					if((get_dist(src, target)) >= olddist)

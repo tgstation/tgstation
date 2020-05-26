@@ -24,7 +24,7 @@
 		return
 	created_name = t
 
-/obj/item/bot_assembly/proc/can_finish_build(var/obj/item/I, var/mob/user, var/drop_item = 1)
+/obj/item/bot_assembly/proc/can_finish_build(obj/item/I, mob/user, drop_item = 1)
 	if(istype(loc, /obj/item/storage/backpack))
 		to_chat(user, "<span class='warning'>You must take [src] out of [loc] first!</span>")
 		return FALSE
