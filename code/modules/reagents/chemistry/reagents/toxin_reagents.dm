@@ -280,6 +280,8 @@
 
 	//Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	if(!mytray)
+		return
 	if(chems.has_reagent(type, 1))
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.5))
 		mytray.adjustWeeds(-rand(1,2))
@@ -292,6 +294,8 @@
 
 //Pest Spray
 /datum/reagent/toxin/pestkiller/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	if(!mytray)
+		return
 	if(chems.has_reagent(type, 1))
 		mytray.adjustToxic(round(chems.get_reagent_amount(type) * 0.5))
 		mytray.adjustPests(-rand(1,2))
