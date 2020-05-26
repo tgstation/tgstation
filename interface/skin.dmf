@@ -309,8 +309,8 @@ window "statwindow"
 		on-tab = ".output statbrowser:tab_change [[*]]"
 	elem "statbrowser"
 		type = BROWSER
-		pos = 6,24
-		size = 628x450
+		pos = 6,44
+		size = 628x430
 		anchor1 = 0,0
 		anchor2 = 100,100
 		background-color = none
