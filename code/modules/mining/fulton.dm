@@ -104,6 +104,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				L.SetUnconscious(0)
 				L.drowsyness = 0
 				L.SetSleeping(0)
+				L.emote("scream")
 				L.say(pick(list("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHH!", "AAAAAAAAAAAUGH!", "EEEEEEEEEEEEEEEEEEEEEEEK!", "OH NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO!", "WHOAAAAAAAAAAAAAAAAAAAAAAAA!", "NOOOOOOOOOOOOOOOO!! HELP ME!!!")))
 			sleep(30)
 			var/list/flooring_near_beacon = list()
