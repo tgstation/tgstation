@@ -96,8 +96,11 @@
 	if(!spawn_more)
 		return
 	allow_pulling = TRUE
+	///next link
 	var/mob/living/simple_animal/hostile/eldritch/armsy/next
+	///previous link
 	var/mob/living/simple_animal/hostile/eldritch/armsy/prev
+	///current link
 	var/mob/living/simple_animal/hostile/eldritch/armsy/current
 	for(var/i in 0 to len)
 		prev = current
