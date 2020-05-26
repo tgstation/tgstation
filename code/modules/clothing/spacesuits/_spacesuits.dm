@@ -7,7 +7,7 @@
 	icon_state = "spaceold"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
-	item_state = "spaceold"
+	inhand_icon_state = "spaceold"
 	permeability_coefficient = 0.01
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 100, "rad" = 50, "fire" = 80, "acid" = 70)
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -28,7 +28,7 @@
 	name = "space suit"
 	desc = "A suit that protects against low pressure environments. Has a big 13 on the back."
 	icon_state = "spaceold"
-	item_state = "s_suit"
+	inhand_icon_state = "s_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
@@ -76,9 +76,14 @@
 	if(!user || !ishuman(user) || !(user.wear_suit == src))
 		return
 
+	// Do nothing if thermal regulators are off
+	if(!thermal_on)
+		return
+
+	// If we got here, thermal regulators are on. If there's no cell, turn them
+	// off
 	if(!cell)
-		if(thermal_on)
-			toggle_spacesuit()
+		toggle_spacesuit()
 		update_hud_icon(user)
 		return
 
@@ -88,6 +93,8 @@
 		update_hud_icon(user)
 		return
 
+	// If we got here, it means thermals are on, the cell is in and the cell has
+	// just had enough charge subtracted from it to power the thermal regulator
 	user.adjust_bodytemperature((temperature_setting - user.bodytemperature), use_steps=TRUE, capped=FALSE)
 	update_hud_icon(user)
 

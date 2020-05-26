@@ -93,7 +93,7 @@
 		var/obj/item/I = new path(get_turf(src))
 		if(efficient_with(I.type))
 			I.material_flags |= MATERIAL_NO_EFFECTS //Find a better way to do this.
-			I.set_custom_materials(matlist.Copy())
+			I.set_custom_materials(matlist)
 	SSblackbox.record_feedback("nested tally", "item_printed", amount, list("[type]", "[path]"))
 
 /obj/machinery/rnd/production/proc/check_mat(datum/design/being_built, var/mat)	// now returns how many times the item can be built with the material

@@ -117,4 +117,4 @@
 		owner.adjustToxLoss(10)
 		severe_cooldown = world.time + 10 SECONDS
 	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
-		organ_flags = ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

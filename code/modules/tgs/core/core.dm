@@ -90,6 +90,11 @@
 	if(api)
 		return api.version
 
+/world/TgsApiVersion()
+	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
+	if(api)
+		return api.ApiVersion()
+
 /world/TgsInstanceName()
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)

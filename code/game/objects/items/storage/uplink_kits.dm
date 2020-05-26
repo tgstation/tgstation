@@ -88,6 +88,9 @@
 			new /obj/item/clothing/head/helmet/space/syndicate/black/red(src)
 			new /obj/item/card/emag(src)
 			new /obj/item/storage/toolbox/syndicate(src)
+			new /obj/item/card/mining_access_card(src)
+			new /obj/item/stack/spacecash/c10000(src)
+			new /obj/item/toy/spinningtoy(src) //lol
 
 		if("sabotage")
 			/obj/item/storage/backpack/duffelbag/syndie/sabotage
@@ -121,8 +124,8 @@
 		if("bond")
 			new /obj/item/gun/ballistic/automatic/pistol(src)
 			new /obj/item/suppressor(src)
-			new /obj/item/ammo_box/magazine/m10mm(src)
-			new /obj/item/ammo_box/magazine/m10mm(src)
+			new /obj/item/ammo_box/magazine/m9mm(src)
+			new /obj/item/ammo_box/magazine/m9mm(src)
 			new /obj/item/clothing/under/chameleon(src)
 			new /obj/item/card/id/syndicate(src)
 			new /obj/item/reagent_containers/hypospray/medipen/stimulants(src)

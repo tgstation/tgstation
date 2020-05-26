@@ -364,6 +364,11 @@
 	. = ..()
 	icon_state = "plant-[rand(26, 29)]"
 
+/obj/item/kirbyplants/potty
+	name = "Potty the Potted Plant"
+	desc = "A secret agent staffed in the station's bar to protect the mystical cakehat."
+	icon_state = "potty"
+
 //a rock is flora according to where the icon file is
 //and now these defines
 
@@ -373,10 +378,30 @@
 	icon = 'icons/obj/flora/rocks.dmi'
 	resistance_flags = FIRE_PROOF
 	density = TRUE
+	/// Itemstack that is dropped when a rock is mined with a pickaxe
+	var/obj/item/stack/mineResult = /obj/item/stack/ore/glass/basalt
+	/// Amount of the itemstack to drop
+	var/mineAmount = 20
 
 /obj/structure/flora/rock/Initialize()
 	. = ..()
 	icon_state = "[icon_state][rand(1,3)]"
+
+/obj/structure/flora/rock/Destroy()
+	if(mineResult && mineAmount)
+		new mineResult(loc, mineAmount)
+	. = ..()
+
+/obj/structure/flora/rock/attackby(obj/item/W, mob/user, params)
+	if(!mineResult || W.tool_behaviour != TOOL_MINING)
+		return ..()
+	if(flags_1 & NODECONSTRUCT_1)
+		return ..()
+	to_chat(user, "<span class='notice'>You start mining...</span>")
+	if(W.use_tool(src, user, 40, volume=50))
+		to_chat(user, "<span class='notice'>You finish mining the rock.</span>")
+		SSblackbox.record_feedback("tally", "pick_used_mining", 1, W.type)
+		qdel(src)
 
 /obj/structure/flora/rock/pile
 	icon_state = "lavarocks"
