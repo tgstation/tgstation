@@ -11,9 +11,6 @@
 #define SKILL_LVL 1
 #define SKILL_EXP 2
 
-// Playtime-based skill defines
-#define PLAYTIME_PLAYER_SKILL 10000 HOURS
-
 //Allows us to get EXP from level, or level from EXP
 #define SKILL_EXP_LIST list(0, 100, 250, 500, 900, 1500, 2500)
 

@@ -381,7 +381,7 @@ GLOBAL_LIST_EMPTY(PDAs)
 						dat += "<br>" + num2loadingbar(progress_percent) + "([progress_percent*100])%"
 						dat += "<br>OVERALL DEVELOPMENT PROGRESS:"
 						dat += "<br>" + num2loadingbar(overall_percent) + "([overall_percent*100])%"
-					if (lvl_num >= length(SKILL_EXP_LIST) && !(type in targetmind.skills_rewarded) && !(istype(type, /datum/skill/playing) && user.client?.prefs.playtime_reward_cloak))
+					if (lvl_num >= length(SKILL_EXP_LIST) && !(type in targetmind.skills_rewarded))
 						dat += "<br><a href='byond://?src=[REF(src)];choice=SkillReward;skill=[type]'>Contact the Professional [S.title] Association</a>"
 					dat += "</li></ul>"
 			if(21)

@@ -241,7 +241,7 @@
 		PDA.ownjob = J.title
 		PDA.update_label()
 
-	if(H.client?.prefs.playtime_reward_cloak && H.mind?.known_skills[/datum/skill/playing][SKILL_LVL] >= SKILL_LEVEL_LEGENDARY)
+	if(H.client?.prefs.playtime_reward_cloak)
 		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
 
 /datum/outfit/job/get_chameleon_disguise_info()

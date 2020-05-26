@@ -98,17 +98,24 @@
 	. = ..()
 	. += "<span class='notice'>You notice a powerful aura about this cloak, suggesting that only the truly experienced may wield it.</span>"
 
-/obj/item/clothing/neck/cloak/skill_reward/equipped(mob/user, slot)
-	if (user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY)
-		to_chat(user, "<span class = 'notice'>You feel completely and utterly unworthy to even touch \the [src].</span>")
+/obj/item/clothing/neck/cloak/skill_reward/proc/check_wearable(mob/user)
+	return user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY
+
+/obj/item/clothing/neck/cloak/skill_reward/proc/unworthy_unequip(mob/user)
+	to_chat(user, "<span class = 'notice'>You feel completely and utterly unworthy to even touch \the [src].</span>")
+	var/hand_index = user.get_held_index_of_item(src)
+	if (hand_index)
 		user.dropItemToGround(src, TRUE)
-		return FALSE
+	return FALSE
+
+/obj/item/clothing/neck/cloak/skill_reward/equipped(mob/user, slot)
+	if (check_wearable(user))
+		unworthy_unequip(user)
 	return ..()
 
 /obj/item/clothing/neck/cloak/skill_reward/attack_hand(mob/user)
-	if (user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY)
-		to_chat(user, "<span class = 'notice'>You feel completely and utterly unworthy to even touch \the [src]!</span>")
-		return FALSE
+	if (check_wearable(user))
+		unworthy_unequip(user)
 	return ..()
 
 /obj/item/clothing/neck/cloak/skill_reward/gaming
@@ -139,4 +146,6 @@
 	name = "legendary player's cloak" 
 	desc = "Worn by the most skilled players, this legendary cloak is only attainable by playing for an unreasonable amount of time. Playing what, you ask? You're not sure. This cloak is said to be able to cause damage directly to one's immersion, whatever the hell that means."
 	icon_state = "playercloak"
-	associated_skill_path = /datum/skill/playing
+
+/obj/item/clothing/neck/cloak/skill_reward/playing/check_wearable(mob/user)
+	return user.client?.get_exp_living(TRUE) >= PLAYTIME_VETERAN

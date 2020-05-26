@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///What scaling method should we use?
 	var/scaling_method = "normal"
 	var/uplink_spawn_loc = UPLINK_PDA
-
+	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 10K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
 	var/playtime_reward_cloak = FALSE
 
 	var/list/exp = list()
@@ -287,7 +287,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 			dat += "<br><b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
-			if (user.client.get_exp_living(TRUE) >= PLAYTIME_PLAYER_SKILL)
+			if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
 				dat += "<br><b>Don The Ultimate Gamer Cloak?:</b><BR><a href ='?_src_=prefs;preference=playtime_reward_cloak'>[(playtime_reward_cloak) ? "Enabled" : "Disabled"]</a><BR></td>"
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
@@ -1485,7 +1485,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 						uplink_spawn_loc = new_loc
 
 				if("playtime_reward_cloak")
-					if (user.client.get_exp_living(TRUE) >= PLAYTIME_PLAYER_SKILL)
+					if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
 						playtime_reward_cloak = !playtime_reward_cloak
 
 				if("ai_core_icon")
