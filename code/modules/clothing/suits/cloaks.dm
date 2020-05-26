@@ -119,7 +119,7 @@
 
 /obj/item/clothing/neck/cloak/skill_reward/cleaning
 	name = "legendary cleaner's cloak"
-	desc = "Worn by the most skilled of custodians, this legendary cloak is only attainable by achieving janitorial enlightenment. This status symbol represents a being not only extensively trained in grime combat, but one who is willing to use an entire aresenal of cleaning supplies to its full extent to wipe grime's miserable ass off the face of the station."
+	desc = "Worn by the most skilled custodians, this legendary cloak is only attainable by achieving janitorial enlightenment. This status symbol represents a being not only extensively trained in grime combat, but one who is willing to use an entire aresenal of cleaning supplies to its full extent to wipe grime's miserable ass off the face of the station."
 	icon_state = "cleanercloak"
 	associated_skill_path = /datum/skill/cleaning
 
@@ -134,3 +134,9 @@
 	desc = "Worn by the most skilled miners, this legendary cloak is only attainable by achieving true mineral enlightenment. This status symbol represents a being who has forgotten more about rocks than most miners will ever know, a being who has moved mountains and filled valleys."
 	icon_state = "minercloak"
 	associated_skill_path = /datum/skill/mining
+
+/obj/item/clothing/neck/cloak/skill_reward/playing
+	name = "legendary player's cloak" 
+	desc = "Worn by the most skilled players, this legendary cloak is only attainable by playing for an unreasonable amount of time. Playing what, you ask? You're not sure. This cloak is said to be able to cause damage directly to one's immersion, whatever the hell that means."
+	icon_state = "playercloak"
+	associated_skill_path = /datum/skill/playing

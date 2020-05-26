@@ -127,6 +127,8 @@
 /datum/mind/proc/init_known_skills()
 	for (var/type in GLOB.skill_types)
 		known_skills[type] = list(SKILL_LEVEL_NONE, 0)
+	if (current.client?.get_exp_living(TRUE) > PLAYTIME_PLAYER_SKILL)
+		set_level(/datum/skill/playing, SKILL_LEVEL_LEGENDARY)
 
 ///Return the amount of EXP needed to go to the next level. Returns 0 if max level
 /datum/mind/proc/exp_needed_to_level_up(skill)

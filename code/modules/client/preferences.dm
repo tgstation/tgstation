@@ -112,6 +112,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/scaling_method = "normal"
 	var/uplink_spawn_loc = UPLINK_PDA
 
+	var/playtime_reward_cloak = FALSE
+
 	var/list/exp = list()
 	var/list/menuoptions
 
@@ -285,7 +287,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 			dat += "<br><b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
-
+			if (user.client.get_exp_living(TRUE) >= PLAYTIME_PLAYER_SKILL)
+				dat += "<br><b>Don The Ultimate Gamer Cloak?:</b><BR><a href ='?_src_=prefs;preference=playtime_reward_cloak'>[(playtime_reward_cloak) ? "Enabled" : "Disabled"]</a><BR></td>"
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
 
@@ -1480,6 +1483,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
 					if(new_loc)
 						uplink_spawn_loc = new_loc
+
+				if("playtime_reward_cloak")
+					if (user.client.get_exp_living(TRUE) >= PLAYTIME_PLAYER_SKILL)
+						playtime_reward_cloak = !playtime_reward_cloak
 
 				if("ai_core_icon")
 					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens
