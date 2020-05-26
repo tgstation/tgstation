@@ -173,6 +173,8 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 		return
 	if (active || owner_AI.stat == DEAD)
 		return //prevent the AI from activating an already active doomsday or while they are dead
+	if (owner_AI.shunted)
+		return //prevent AI from activating doomsday while shunted, fucking abusers
 	active = TRUE
 	set_us_up_the_bomb(owner)
 

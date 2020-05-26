@@ -1069,6 +1069,7 @@
 		return
 	if(!is_station_level(z))
 		return
+	malf.ShutOffDoomsdayDevice()
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))
