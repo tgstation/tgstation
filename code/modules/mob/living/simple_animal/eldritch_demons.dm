@@ -63,7 +63,6 @@
 /mob/living/simple_animal/hostile/eldritch/raw_prophet/Login()
 	. = ..()
 	client?.view_size.setTo(11)
-	//client?.change_view(11)
 
 /mob/living/simple_animal/hostile/eldritch/armsy
 	name = "Terror of the night"
