@@ -143,8 +143,8 @@
 	associated_skill_path = /datum/skill/mining
 
 /obj/item/clothing/neck/cloak/skill_reward/playing
-	name = "legendary player's cloak" 
-	desc = "Worn by the most skilled players, this legendary cloak is only attainable by playing for an unreasonable amount of time. Playing what, you ask? You're not sure. This cloak is said to be able to cause damage directly to one's immersion, whatever the hell that means."
+	name = "legendary veteran's cloak" 
+	desc = "Worn by the wisest of veteran employees, this legendary cloak is only attainable by maintaining a living employment agreement with Nanotrasen for over <b>ten thousand hours</b>. This status symbol represents a being is better than you in nearly every quantifiable way, simple as that."
 	icon_state = "playercloak"
 
 /obj/item/clothing/neck/cloak/skill_reward/playing/check_wearable(mob/user)
