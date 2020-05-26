@@ -1554,16 +1554,16 @@
 			return
 
 		var/target = locate(href_list["skill"])
-		var/datum/mind/D
+		var/datum/mind/target_mind
 		if(ismob(target))
-			var/mob/M = target
-			D = M.mind
+			var/mob/target_mob = target
+			target_mind = target_mob.mind
 		else if (istype(target, /datum/mind))
-			D = target
+			target_mind = target
 		else
 			to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 			return
-		show_skill_panel(D)
+		show_skill_panel(target_mind)
 
 	else if(href_list["borgpanel"])
 		if(!check_rights(R_ADMIN))

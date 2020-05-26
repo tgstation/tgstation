@@ -740,34 +740,34 @@
 	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
+/datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
 	set category = "Admin - Game"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
-	var/datum/mind/D = M.mind
-	if(!D)
+	var/datum/mind/target_mind = target_mob.mind
+	if(!target_mind)
 		to_chat(usr, "This mob has no mind!", confidential = TRUE)
 		return
-	if(!istype(M) && !istype(D))
+	if(!istype(target_mob) && !istype(target_mind))
 		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
-	D.traitor_panel()
+	target_mind.traitor_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/show_skill_panel(var/target)
 	set category = "Admin - Game"
 	set desc = "Edit mobs's experience and skill levels"
 	set name = "Show Skill Panel"
-	var/datum/mind/D
+	var/datum/mind/target_mind
 	if(ismob(target))
-		var/mob/M = target
-		D = M.mind
+		var/mob/target_mob = target
+		target_mind = target_mob.mind
 	else if (istype(target, /datum/mind))
-		D = target
+		target_mind = target
 	else
 		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
 		return
-	var/datum/skill_panel/SP  = new(usr, D)
+	var/datum/skill_panel/SP  = new(usr, target_mind)
 	SP.ui_interact(usr)
 
 /datum/admins/proc/toggletintedweldhelmets()
