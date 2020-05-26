@@ -101,7 +101,7 @@
 		return FALSE
 	if(maximum_players > 0 && population > maximum_players)
 		return FALSE
-	if (population >= GLOB.dynamic_high_pop_limit)
+	if(population >= GLOB.dynamic_high_pop_limit)
 		indice_pop = 10
 		return (threat_level >= high_population_requirement)
 	else

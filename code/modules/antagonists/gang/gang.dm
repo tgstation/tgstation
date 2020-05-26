@@ -204,6 +204,7 @@
 						/obj/item/toy/crayon/spraycan)
 	gang_objective = "We lost a lot of territory recently. We gotta get that shit back. Make sure 45 rooms are tagged for Grove Street."
 	antag_hud_name = "Grove"
+
 /datum/antagonist/gang/green/check_gang_objective()
 	var/tag_amount = 0
 	for(var/T in GLOB.gang_tags)

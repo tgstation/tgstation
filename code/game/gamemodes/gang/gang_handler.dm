@@ -59,6 +59,8 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 	var/gang_balance_cap = 5
 	/// Whether the handler corresponds to a ruleset that does not trigger at round start. Should be set externally only if applicable; used internally.
 	var/midround_ruleset = FALSE
+	/// Keeps track of the amount of deaths since the calling of pre_setup_analogue() if this is a midround handler. Used to prevent a high wanted level due to a large amount of deaths during the shift prior to the activation of this handler / the midround ruleset.
+	var/deaths_during_shift_at_beginning = 0
 
 	/// List of all eligible starting family members / undercover cops. Set externally (passed by reference) by gamemode / ruleset; used internally. Note that dynamic uses a list of mobs to handle candidates while game_modes use lists of minds! Don't be fooled!
 	var/list/antag_candidates = list()
@@ -95,7 +97,9 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
   * It is intended to take the place of the code that would normally occupy the pre_setup()
   * or pre_execute() proc, were the code localized to the game_mode or dynamic_ruleset datum respectively
   * as opposed to this handler. As such, it picks players to be chosen for starting familiy members
-  * or undercover cops prior to assignment to jobs. Also sets start_time and a default end_time.
+  * or undercover cops prior to assignment to jobs. Sets start_time, default end_time,
+  * and the current value of deaths_during_shift, to ensure the wanted level only cares about
+  * the deaths since this proc has been called.
   * Takes no arguments.
   */
 /datum/gang_handler/proc/pre_setup_analogue()
@@ -129,6 +133,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		log_game("[key_name(undercover_cop)] has been selected as a starting undercover cop!")
 		if(!midround_ruleset)
 			GLOB.pre_setup_antags += undercover_cop
+	deaths_during_shift_at_beginning = GLOB.deaths_during_shift // don't want to mix up pre-families and post-families deaths
 	start_time = world.time
 	end_time = start_time + ((60 MINUTES) / (midround_ruleset ? 2 : 1)) // midround families rounds end quicker
 	return TRUE
@@ -300,7 +305,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		return
 	var/new_wanted_level
 	if(GLOB.joined_player_list.len > LOWPOP_FAMILIES_COUNT)
-		switch(GLOB.deaths_during_shift)
+		switch(GLOB.deaths_during_shift - deaths_during_shift_at_beginning) // if this is a midround ruleset, we only care about the deaths since the families were activated, not since shiftstart
 			if(0 to TWO_STARS_HIGHPOP-1)
 				new_wanted_level = 1
 			if(TWO_STARS_HIGHPOP to THREE_STARS_HIGHPOP-1)
@@ -312,7 +317,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			if(FIVE_STARS_HIGHPOP to INFINITY)
 				new_wanted_level = 5
 	else
-		switch(GLOB.deaths_during_shift)
+		switch(GLOB.deaths_during_shift - deaths_during_shift_at_beginning)
 			if(0 to TWO_STARS_LOW-1)
 				new_wanted_level = 1
 			if(TWO_STARS_LOW to THREE_STARS_LOW-1)
