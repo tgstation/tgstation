@@ -2,8 +2,8 @@
 /mob/living/simple_animal/bot/hygienebot
 	name = "\improper Hygienebot"
 	desc = "A flying cleaning robot, he'll chase down people who can't shower properly!"
-	icon = 'icons/obj/watercloset.dmi'
-	icon_state = "drone"
+	icon = 'icons/mob/aibots.dmi'
+	icon_state = "hygienebot"
 	density = FALSE
 	anchored = FALSE
 	health = 100
@@ -59,20 +59,20 @@
 /mob/living/simple_animal/bot/hygienebot/update_icon_state()
 	. = ..()
 	if(on)
-		icon_state = "drone-on"
+		icon_state = "hygienebot-on"
 	else
-		icon_state = "drone"
+		icon_state = "hygienebot"
 
 
 /mob/living/simple_animal/bot/hygienebot/update_overlays()
 	. = ..()
 	if(on)
-		var/mutable_appearance/fire_overlay = mutable_appearance(icon,"flame")
+		var/mutable_appearance/fire_overlay = mutable_appearance(icon, "hygienebot-flame")
 		. +=fire_overlay
 
 
 	if(washing)
-		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "dronefire" : "dronewater")
+		var/mutable_appearance/water_overlay = mutable_appearance(icon, emagged ? "hygienebot-fire" : "hygienebot-water")
 		. += water_overlay
 
 
