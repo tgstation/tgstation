@@ -163,9 +163,9 @@
 		return
 
 	H.adjustBruteLoss(-3)
-	H.adjustFireLoss(-3)
-	H.adjustToxLoss(-3)
-	H.adjustOxyLoss(-1)
+	H.adjustFireLoss(-3, FALSE)
+	H.adjustToxLoss(-3, FALSE)
+	H.adjustOxyLoss(-1, FALSE)
 	H.adjustStaminaLoss(-10)
 	H.physiology.brute_mod = prev_brute_mod * 0.5
 	H.physiology.burn_mod = prev_burn_mod * 0.5
