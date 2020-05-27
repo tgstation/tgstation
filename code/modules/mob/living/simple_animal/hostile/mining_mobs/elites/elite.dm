@@ -271,7 +271,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	icon_state = "crevice_shard"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	item_state = "screwdriver_head"
+	inhand_icon_state = "screwdriver_head"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 3

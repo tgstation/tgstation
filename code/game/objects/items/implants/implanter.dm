@@ -3,7 +3,7 @@
 	desc = "A sterile automatic implant injector."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "implanter0"
-	item_state = "syringe_0"
+	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3

@@ -160,7 +160,7 @@
 /mob/living/simple_animal/hostile/retaliate/goose{
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 1, "min_co2" = 0, "max_co2" = 5, "min_n2" = 0, "max_n2" = 0);
 	damage_coeff = list("brute" = 0, "fire" = 0, "toxin" = 0, "clone" = 0, "stamina" = 0, "oxygen" = 0);
-	desc = "If you are alive and reading this you should not be in this room and should prob tell a admin how you got here.";
+	desc = "If you are alive and reading this you should not be in this room and should prob tell an admin how you got here.";
 	name = "The Paradox Goose"
 	},
 /turf/open/indestructible/hoteltile,

@@ -2,7 +2,7 @@
 /obj/item/kinetic_crusher
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
-	item_state = "crusher0"
+	inhand_icon_state = "crusher0"
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
 	name = "proto-kinetic crusher"
@@ -156,7 +156,7 @@
 		set_light(0)
 
 /obj/item/kinetic_crusher/update_icon_state()
-	item_state = "crusher[wielded]" // this is not icon_state and not supported by 2hcomponent
+	inhand_icon_state = "crusher[wielded]" // this is not icon_state and not supported by 2hcomponent
 
 /obj/item/kinetic_crusher/update_overlays()
 	. = ..()

@@ -2,8 +2,8 @@
 NOTES:
 There is a DB table to track ckeys and associated discord IDs.
 This system REQUIRES TGS, and will auto-disable if TGS is not present.
-The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasnt properly shutdown
-It only writes to the disk every 5 minutes, and it wont write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
+The SS uses fire() instead of just pure shutdown, so people can be notified if it comes back after a crash, where the SS wasn't properly shutdown
+It only writes to the disk every 5 minutes, and it won't write to disk if the file is the same as it was the last time it was written. This is to save on disk writes
 The system is kept per-server (EG: Terry will not notify people who pressed notify on Sybil), but the accounts are between servers so you dont have to relink on each server.
 
 ##################
@@ -20,7 +20,7 @@ MIDROUND:
 2] On fire, it will write that to the disk, as long as conditions above are correct
 
 END ROUND:
-1] The file is force-saved, incase it hasnt fired at end round
+1] The file is force-saved, incase it hasn't fired at end round
 
 This is an absolute clusterfuck, but its my clusterfuck -aa07
 */
@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(discord)
 	/// list of people who tried to reverify, so they can only do it once per round as a shitty slowdown
 	var/list/reverify_cache = list()
 	var/notify_file = file("data/notify.json")
-	/// Is TGS enabled (If not we wont fire because otherwise this is useless)
+	/// Is TGS enabled (If not we won't fire because otherwise this is useless)
 	var/enabled = 0
 
 /datum/controller/subsystem/discord/Initialize(start_timeofday)
@@ -56,12 +56,9 @@ SUBSYSTEM_DEF(discord)
 		people_to_notify = json_decode(file2text(notify_file))
 	catch
 		pass() // The list can just stay as its default (blank). Pass() exists because it needs a catch
-	var/notifymsg = ""
-	for(var/id in people_to_notify)
-		// I would use jointext here, but I dont think you can two-side glue with it, and I would have to strip characters otherwise
-		notifymsg += "<@[id]> " // 22 charaters per notify, 90 notifies per message, so I am not making a failsafe because 90 people arent going to notify at once
+	var/notifymsg = jointext(people_to_notify, ", ")
 	if(notifymsg)
-		send2chat("[notifymsg]", CONFIG_GET(string/chat_announce_new_game)) // Sends the message to the discord, using same config option as the roundstart notification
+		send2chat(trim(notifymsg), CONFIG_GET(string/chat_announce_new_game)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
 	return ..()
 
@@ -122,7 +119,7 @@ SUBSYSTEM_DEF(discord)
 	return num_only.Replace(input, "")
 
 /datum/controller/subsystem/discord/proc/grant_role(id)
-	// Ignore this shit if config isnt enabled for it
+	// Ignore this shit if config isn't enabled for it
 	if(!CONFIG_GET(flag/enable_discord_autorole))
 		return
 
@@ -136,3 +133,38 @@ SUBSYSTEM_DEF(discord)
 	var/datum/http_response/res = req.into_response()
 
 	WRITE_LOG(GLOB.discord_api_log, "PUT [url] returned [res.status_code] [res.body]")
+
+/**
+  * Sends a message to TGS chat channels.
+  *
+  * message - The message to send.
+  * channel_tag - Required. If "", the message with be sent to all connected (Game-type for TGS3) channels. Otherwise, it will be sent to TGS4 channels with that tag.
+  */
+/proc/send2chat(message, channel_tag)
+	if(channel_tag == null || !world.TgsAvailable())
+		return
+
+	var/datum/tgs_version/version = world.TgsVersion()
+	if(channel_tag == "" || version.suite == 3)
+		world.TgsTargetedChatBroadcast(message, FALSE)
+		return
+
+	var/list/channels_to_use = list()
+	for(var/I in world.TgsChatChannelInfo())
+		var/datum/tgs_chat_channel/channel = I
+		if(channel.tag == channel_tag)
+			channels_to_use += channel
+
+	if(channels_to_use.len)
+		world.TgsChatBroadcast(message, channels_to_use)
+
+/**
+  * Sends a message to TGS admin chat channels.
+  *
+  * category - The category of the mssage.
+  * message - The message to send.
+  */
+/proc/send2adminchat(category, message)
+	category = replacetext(replacetext(category, "\proper", ""), "\improper", "")
+	message = replacetext(replacetext(message, "\proper", ""), "\improper", "")
+	world.TgsTargetedChatBroadcast("[category] | [message]", TRUE)
