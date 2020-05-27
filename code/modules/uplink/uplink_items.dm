@@ -995,12 +995,18 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 6
 	restricted = TRUE
 
+/datum/uplink_item/explosives/emp_nade
+	name = "EMP Grenade"
+	desc = "An electromagnetic pulse grenade. Useful to disrupt communications, \
+			security's energy weapons and silicon lifeforms when you're in a tight spot."
+	item = /obj/item/grenade/empgrenade
+	cost = 1
+
 /datum/uplink_item/explosives/emp
 	name = "EMP Grenades and Implanter Kit"
-	desc = "A box that contains five EMP grenades and an EMP implant with three uses. Useful to disrupt communications, \
-			security's energy weapons and silicon lifeforms when you're in a tight spot."
+	desc = "A box that contains five EMP grenades and an EMP implant with three uses."
 	item = /obj/item/storage/box/syndie_kit/emp
-	cost = 2
+	cost = 5 //bargain bc you get 5 nades for the price of 5, as well as the implant
 
 /datum/uplink_item/explosives/virus_grenade
 	name = "Fungal Tuberculosis Grenade"
