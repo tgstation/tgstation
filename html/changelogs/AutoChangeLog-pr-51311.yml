@@ -1,4 +1,0 @@
-author: "nemvar"
-delete-after: True
-changes: 
-  - bugfix: "Scaling methods in the preference menu now have the correct names."

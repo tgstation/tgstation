@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Adds Liquid Earthquake, a botany biogenerator chem that increases production speed, but increases plant weed susceptibility."
-  - rscadd: "Adds Enduro Grow, a botany biogenerator chem that improves a plant's endurance stat, but decreases it's yield and potency."

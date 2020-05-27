@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - admin: "Removed errant TP from the admin full monty"
