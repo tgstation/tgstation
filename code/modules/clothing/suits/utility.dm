@@ -13,7 +13,7 @@
 	name = "emergency firesuit"
 	desc = "A suit that helps protect against fire and heat."
 	icon_state = "fire"
-	item_state = "ro_suit"
+	inhand_icon_state = "ro_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5
@@ -33,20 +33,20 @@
 
 /obj/item/clothing/suit/fire/firefighter
 	icon_state = "firesuit"
-	item_state = "firefighter"
+	inhand_icon_state = "firefighter"
 
 /obj/item/clothing/suit/fire/heavy
 	name = "heavy firesuit"
 	desc = "An old, bulky thermal protection suit."
 	icon_state = "thermal"
-	item_state = "ro_suit"
+	inhand_icon_state = "ro_suit"
 	slowdown = 1.5
 
 /obj/item/clothing/suit/fire/atmos
 	name = "firesuit"
 	desc = "An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame."
 	icon_state = "atmos_firesuit"
-	item_state = "firesuit_atmos"
+	inhand_icon_state = "firesuit_atmos"
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
 /*
@@ -75,7 +75,7 @@
 	name = "bomb suit"
 	desc = "A suit designed for safety when handling explosives."
 	icon_state = "bombsuit"
-	item_state = "bombsuit"
+	inhand_icon_state = "bombsuit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -95,21 +95,21 @@
 
 /obj/item/clothing/head/bomb_hood/security
 	icon_state = "bombsuit_sec"
-	item_state = "bombsuit_sec"
+	inhand_icon_state = "bombsuit_sec"
 
 /obj/item/clothing/suit/bomb_suit/security
 	icon_state = "bombsuit_sec"
-	item_state = "bombsuit_sec"
+	inhand_icon_state = "bombsuit_sec"
 	allowed = list(/obj/item/gun/energy, /obj/item/melee/baton, /obj/item/restraints/handcuffs)
 
 
 /obj/item/clothing/head/bomb_hood/white
 	icon_state = "bombsuit_white"
-	item_state = "bombsuit_white"
+	inhand_icon_state = "bombsuit_white"
 
 /obj/item/clothing/suit/bomb_suit/white
 	icon_state = "bombsuit_white"
-	item_state = "bombsuit_white"
+	inhand_icon_state = "bombsuit_white"
 
 /*
 * Radiation protection
@@ -132,7 +132,7 @@
 	name = "radiation suit"
 	desc = "A suit that protects against radiation. The label reads, 'Made with lead. Please do not consume insulation.'"
 	icon_state = "rad"
-	item_state = "rad_suit"
+	inhand_icon_state = "rad_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.9
 	permeability_coefficient = 0.5

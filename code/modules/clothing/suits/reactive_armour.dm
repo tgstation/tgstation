@@ -31,7 +31,7 @@
 	var/reactivearmor_cooldown_duration = 0 //cooldown specific to reactive armor
 	var/reactivearmor_cooldown = 0
 	icon_state = "reactiveoff"
-	item_state = "reactiveoff"
+	inhand_icon_state = "reactiveoff"
 	blood_overlay_type = "armor"
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 100, "acid" = 100)
 	actions_types = list(/datum/action/item_action/toggle)
@@ -43,11 +43,11 @@
 	if(active)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 		icon_state = "reactive"
-		item_state = "reactive"
+		inhand_icon_state = "reactive"
 	else
 		to_chat(user, "<span class='notice'>[src] is now inactive.</span>")
 		icon_state = "reactiveoff"
-		item_state = "reactiveoff"
+		inhand_icon_state = "reactiveoff"
 	add_fingerprint(user)
 	return
 
@@ -57,7 +57,7 @@
 		return
 	active = 0
 	icon_state = "reactiveoff"
-	item_state = "reactiveoff"
+	inhand_icon_state = "reactiveoff"
 	reactivearmor_cooldown = world.time + 200
 
 //When the wearer gets hit, this armor will teleport the user a short distance away (to safety or to more danger, no one knows. That's the fun of it!)

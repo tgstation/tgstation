@@ -147,7 +147,7 @@
 		to_chat(src, "<span class='notice'>PM to-<b>Admins</b>: <span class='linkify'>[rawmsg]</span></span>", confidential = TRUE)
 		var/datum/admin_help/AH = admin_ticket_log(src, "<font color='red'>Reply PM from-<b>[key_name(src, TRUE, TRUE)]</b> to <i>External</i>: [keywordparsedmsg]</font>")
 		externalreplyamount--
-		send2tgs("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
+		send2adminchat("[AH ? "#[AH.id] " : ""]Reply: [ckey]", rawmsg)
 	else
 		if(recipient.holder)
 			if(holder)	//both are admins

@@ -5,7 +5,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "RPED"
-	item_state = "RPED"
+	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_HUGE
@@ -113,7 +113,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 	name = "rapid part exchange device"
 	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
 	icon_state = "borgrped"
-	item_state = "RPED"
+	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 
@@ -265,7 +265,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/stock_parts/capacitor/quadratic
 	name = "quadratic capacitor"
-	desc = "An capacity capacitor used in the construction of a variety of devices."
+	desc = "A capacity capacitor used in the construction of a variety of devices."
 	icon_state = "quadratic_capacitor"
 	rating = 4
 	custom_materials = list(/datum/material/iron=50, /datum/material/glass=50)

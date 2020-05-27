@@ -3,7 +3,7 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -13,6 +13,8 @@
 	var/list/modules = list() //holds all the usable modules
 	var/list/added_modules = list() //modules not inherient to the robot module, are kept when the module changes
 	var/list/storages = list()
+
+	var/list/radio_channels = list()
 
 	var/cyborg_base_icon = "robot" //produces the icon for the borg and, if no special_light_key is set, the lights
 	var/special_light_key //if we want specific lights, use this instead of copying lights in the dmi
@@ -184,6 +186,8 @@
 	R.module = RM
 	R.update_module_innate()
 	RM.rebuild_modules()
+	R.radio.recalculateChannels()
+
 	INVOKE_ASYNC(RM, .proc/do_transform_animation)
 	qdel(src)
 	return RM
@@ -274,7 +278,12 @@
 		/obj/item/borg/cyborghug/medical,
 		/obj/item/stack/medical/gauze/cyborg,
 		/obj/item/organ_storage,
+<<<<<<< HEAD
 		/obj/item/gun/magic/staff/healing)
+=======
+		/obj/item/borg/lollipop)
+	radio_channels = list(RADIO_CHANNEL_MEDICAL)
+>>>>>>> origin/master
 	emag_modules = list(/obj/item/reagent_containers/borghypo/hacked)
 	cyborg_base_icon = "medical"
 	moduleselect_icon = "medical"
@@ -284,6 +293,7 @@
 /obj/item/robot_module/engineering
 	name = "Engineering"
 	basic_modules = list(
+<<<<<<< HEAD
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/pen,
 		/obj/item/rsf,
@@ -295,6 +305,33 @@
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/apparatus/beaker/service)
 	emag_modules = null
+=======
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/borg/sight/meson,
+		/obj/item/construction/rcd/borg,
+		/obj/item/pipe_dispenser,
+		/obj/item/extinguisher,
+		/obj/item/weldingtool/largetank/cyborg,
+		/obj/item/screwdriver/cyborg,
+		/obj/item/wrench/cyborg,
+		/obj/item/crowbar/cyborg,
+		/obj/item/wirecutters/cyborg,
+		/obj/item/multitool/cyborg,
+		/obj/item/t_scanner,
+		/obj/item/analyzer,
+		/obj/item/geiger_counter/cyborg,
+		/obj/item/assembly/signaler/cyborg,
+		/obj/item/areaeditor/blueprints/cyborg,
+		/obj/item/electroadaptive_pseudocircuit,
+		/obj/item/stack/sheet/metal/cyborg,
+		/obj/item/stack/sheet/glass/cyborg,
+		/obj/item/stack/sheet/rglass/cyborg,
+		/obj/item/stack/rods/cyborg,
+		/obj/item/stack/tile/plasteel/cyborg,
+		/obj/item/stack/cable_coil/cyborg)
+	radio_channels = list(RADIO_CHANNEL_ENGINEERING)
+	emag_modules = list(/obj/item/borg/stun)
+>>>>>>> origin/master
 	cyborg_base_icon = "engineer"
 	moduleselect_icon = "engineer"
 	magpulsing = TRUE
@@ -309,7 +346,12 @@
 		/obj/item/gun/energy/disabler/cyborg,
 		/obj/item/clothing/mask/gas/sechailer/cyborg,
 		/obj/item/extinguisher/mini)
+<<<<<<< HEAD
 	emag_modules = null
+=======
+	radio_channels = list(RADIO_CHANNEL_SECURITY)
+	emag_modules = list(/obj/item/gun/energy/laser/cyborg)
+>>>>>>> origin/master
 	cyborg_base_icon = "sec"
 	moduleselect_icon = "security"
 	can_be_pushed = FALSE
@@ -364,12 +406,18 @@
 		/obj/item/mop/cyborg,
 		/obj/item/reagent_containers/glass/bucket,
 		/obj/item/holosign_creator/janibarrier,
+<<<<<<< HEAD
 		/obj/item/reagent_containers/spray/cyborg_drying,
 		/obj/item/rsf,
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/apparatus/beaker/service)
 	emag_modules = null
+=======
+		/obj/item/reagent_containers/spray/cyborg_drying)
+	radio_channels = list(RADIO_CHANNEL_SERVICE)
+	emag_modules = list(/obj/item/reagent_containers/spray/cyborg_lube)
+>>>>>>> origin/master
 	cyborg_base_icon = "janitor"
 	moduleselect_icon = "janitor"
 	hat_offset = -5
@@ -426,7 +474,12 @@
 		/obj/item/storage/bag/tray,
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/apparatus/beaker/service)
+<<<<<<< HEAD
 	emag_modules = null
+=======
+	radio_channels = list(RADIO_CHANNEL_SERVICE)
+	emag_modules = list(/obj/item/reagent_containers/borghypo/borgshaker/hacked)
+>>>>>>> origin/master
 	moduleselect_icon = "service"
 	special_light_key = "service"
 	hat_offset = 0
@@ -463,6 +516,7 @@
 /obj/item/robot_module/miner
 	name = "Miner"
 	basic_modules = list(
+<<<<<<< HEAD
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/pen,
 		/obj/item/rsf,
@@ -474,6 +528,22 @@
 		/obj/item/reagent_containers/borghypo/borgshaker,
 		/obj/item/borg/apparatus/beaker/service)
 	emag_modules = null
+=======
+		/obj/item/assembly/flash/cyborg,
+		/obj/item/borg/sight/meson,
+		/obj/item/storage/bag/ore/cyborg,
+		/obj/item/pickaxe/drill/cyborg,
+		/obj/item/shovel,
+		/obj/item/crowbar/cyborg,
+		/obj/item/weldingtool/mini,
+		/obj/item/extinguisher/mini,
+		/obj/item/storage/bag/sheetsnatcher/borg,
+		/obj/item/gun/energy/kinetic_accelerator/cyborg,
+		/obj/item/gps/cyborg,
+		/obj/item/stack/marker_beacon)
+	radio_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SUPPLY)
+	emag_modules = list(/obj/item/borg/stun)
+>>>>>>> origin/master
 	cyborg_base_icon = "miner"
 	moduleselect_icon = "miner"
 	hat_offset = 0

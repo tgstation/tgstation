@@ -525,7 +525,7 @@
 					possible_reagents += reag
 				var/datum/plant_gene/reagent/reagent_gene = pick(possible_reagents) //Let this serve as a lession to delete your WIP comments before merge.
 				if(reagent_gene.can_add(myseed))
-					myseed.genes += reagent_gene
+					myseed.genes += reagent_gene.Copy()
 					myseed.reagents_from_genes()
 					continue
 

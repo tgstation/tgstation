@@ -1302,7 +1302,7 @@
 /obj/item/clipboard,
 /obj/item/mining_voucher,
 /obj/machinery/camera{
-	c_tag = "Auxillary Construction - Storage";
+	c_tag = "Auxiliary Construction - Storage";
 	dir = 4;
 	name = "engineering camera"
 	},
@@ -1897,7 +1897,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/machinery/camera{
-	c_tag = "Auxillary Construction";
+	c_tag = "Auxiliary Construction";
 	dir = 4;
 	name = "engineering camera"
 	},

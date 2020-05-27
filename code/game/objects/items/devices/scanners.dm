@@ -26,7 +26,7 @@ GENE SCANNER
 	var/on = FALSE
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	custom_materials = list(/datum/material/iron=150)
@@ -80,7 +80,7 @@ GENE SCANNER
 	name = "health analyzer"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "health"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner capable of distinguishing vital signs of the subject."
@@ -401,7 +401,7 @@ GENE SCANNER
 	custom_price = 100
 	icon = 'icons/obj/device.dmi'
 	icon_state = "analyzer"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -579,7 +579,7 @@ GENE SCANNER
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "adv_spectrometer"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -634,7 +634,7 @@ GENE SCANNER
 	name = "nanite scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "nanite_scanner"
-	item_state = "nanite_remote"
+	inhand_icon_state = "nanite_remote"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held body scanner able to detect nanites and their programming."
@@ -661,7 +661,7 @@ GENE SCANNER
 	name = "genetic sequence scanner"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gene"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Hold near a DNA console to update the internal database."
@@ -762,10 +762,10 @@ GENE SCANNER
 	name = "kiosk scanner wand"
 	icon = 'icons/obj/device.dmi'
 	icon_state = "scanner_wand"
-	item_state = "healthanalyzer"
+	inhand_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	desc = "An wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
+	desc = "A wand for scanning someone else for a medical analysis. Insert into a kiosk is make the scanned patient the target of a health scan."
 	force = 0
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY

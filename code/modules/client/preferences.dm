@@ -102,9 +102,14 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/parallax
 
 	var/ambientocclusion = TRUE
+	///Should we automatically fit the viewport?
 	var/auto_fit_viewport = FALSE
+	///Should we be in the widescreen mode set by the config?
 	var/widescreenpref = TRUE
-
+	///What size should pixels be displayed as? 0 is strech to fit
+	var/pixel_size = 0
+	///What scaling method should we use?
+	var/scaling_method = "normal"
 	var/uplink_spawn_loc = UPLINK_PDA
 
 	var/list/exp = list()
@@ -114,6 +119,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	///This var stores the amount of points the owner will get for making it out alive.
 	var/hardcore_survival_score = 0
+
+	///Someone thought we were nice! We get a little heart in OOC until we join the server past the below time (we can keep it until the end of the round otherwise)
+	var/hearted
+	///
+	var/hearted_until
 
 /datum/preferences/New(client/C)
 	parent = C
@@ -591,6 +601,18 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			if (CONFIG_GET(string/default_view) != CONFIG_GET(string/default_view_square))
 				dat += "<b>Widescreen:</b> <a href='?_src_=prefs;preference=widescreenpref'>[widescreenpref ? "Enabled ([CONFIG_GET(string/default_view)])" : "Disabled ([CONFIG_GET(string/default_view_square)])"]</a><br>"
 
+			button_name = pixel_size
+			dat += "<b>Pixel Scaling:</b> <a href='?_src_=prefs;preference=pixel_size'>[(button_name) ? "Pixel Perfect [button_name]x" : "Stretch to fit"]</a><br>"
+
+			switch(scaling_method)
+				if(SCALING_METHOD_NORMAL)
+					button_name = "Nearest Neighbor"
+				if(SCALING_METHOD_DISTORT)
+					button_name = "Point Sampling"
+				if(SCALING_METHOD_BLUR)
+					button_name = "Bilinear"
+			dat += "<b>Scaling Method:</b> <a href='?_src_=prefs;preference=scaling_method'>[button_name]</a><br>"
+
 			if (CONFIG_GET(flag/maprotation))
 				var/p_map = preferred_map
 				if (!p_map)
@@ -653,6 +675,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if(unlock_content || check_rights_for(user.client, R_ADMIN))
 					dat += "<b>OOC Color:</b> <span style='border: 1px solid #161616; background-color: [ooccolor ? ooccolor : GLOB.normal_ooc_colour];'>&nbsp;&nbsp;&nbsp;</span> <a href='?_src_=prefs;preference=ooccolor;task=input'>Change</a><br>"
+				if(hearted_until)
+					dat += "<a href='?_src_=prefs;preference=clear_heart'>Clear OOC Commend Heart</a><br>"
 
 			dat += "</td>"
 
@@ -1722,7 +1746,31 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 				if("widescreenpref")
 					widescreenpref = !widescreenpref
-					user.client.change_view(CONFIG_GET(string/default_view))
+					user.client.view_size.setDefault(getScreenSize(widescreenpref))
+
+				if("pixel_size")
+					switch(pixel_size)
+						if(PIXEL_SCALING_AUTO)
+							pixel_size = PIXEL_SCALING_1X
+						if(PIXEL_SCALING_1X)
+							pixel_size = PIXEL_SCALING_1_2X
+						if(PIXEL_SCALING_1_2X)
+							pixel_size = PIXEL_SCALING_2X
+						if(PIXEL_SCALING_2X)
+							pixel_size = PIXEL_SCALING_3X
+						if(PIXEL_SCALING_3X)
+							pixel_size = PIXEL_SCALING_AUTO
+					user.client.view_size.apply() //Let's winset() it so it actually works
+
+				if("scaling_method")
+					switch(scaling_method)
+						if(SCALING_METHOD_NORMAL)
+							scaling_method = SCALING_METHOD_DISTORT
+						if(SCALING_METHOD_DISTORT)
+							scaling_method = SCALING_METHOD_BLUR
+						if(SCALING_METHOD_BLUR)
+							scaling_method = SCALING_METHOD_NORMAL
+					user.client.view_size.setZoomMode()
 
 				if("save")
 					save_preferences()
@@ -1742,10 +1790,16 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					if (href_list["tab"])
 						current_tab = text2num(href_list["tab"])
 
+				if("clear_heart")
+					hearted = FALSE
+					hearted_until = null
+					to_chat(user, "<span class='notice'>OOC Commendation Heart disabled</span>")
+					save_preferences()
+
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
 
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
 
@@ -1763,7 +1817,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(randomise[RANDOM_HARDCORE] && parent.mob.mind && !character_setup)
 		if(can_be_random_hardcore())
-			hardcore_random_setup(character, antagonist)
+			hardcore_random_setup(character, antagonist, is_latejoiner)
 
 	if(roundstart_checks)
 		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))

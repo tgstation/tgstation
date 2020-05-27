@@ -2,7 +2,7 @@
 	icon = 'icons/obj/wallframe.dmi'
 	custom_materials = list(/datum/material/iron=MINERAL_MATERIAL_AMOUNT*2)
 	flags_1 = CONDUCT_1
-	item_state = "syringe_kit"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -114,7 +114,7 @@
 	desc = "Looks like a circuit. Probably is."
 	icon = 'icons/obj/module.dmi'
 	icon_state = "door_electronics"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	flags_1 = CONDUCT_1

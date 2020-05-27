@@ -151,7 +151,7 @@ SUBSYSTEM_DEF(mapping)
 		qdel(T, TRUE)
 
 /* Nuke threats, for making the blue tiles on the station go RED
-   Used by the AI doomsday and the self destruct nuke.
+   Used by the AI doomsday and the self-destruct nuke.
 */
 
 /datum/controller/subsystem/mapping/proc/add_nuke_threat(datum/nuke)
@@ -541,7 +541,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			qdel(TR, TRUE)
 	UNSETEMPTY(turf_reservations)
 	var/list/clearing = list()
-	for(var/l in unused_turfs)			//unused_turfs is a assoc list by z = list(turfs)
+	for(var/l in unused_turfs)			//unused_turfs is an assoc list by z = list(turfs)
 		if(islist(unused_turfs[l]))
 			clearing |= unused_turfs[l]
 	clearing |= used_turfs		//used turfs is an associative list, BUT, reserve_turfs() can still handle it. If the code above works properly, this won't even be needed as the turfs would be freed already.

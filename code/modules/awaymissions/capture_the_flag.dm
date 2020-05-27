@@ -13,7 +13,7 @@
 	name = "banner"
 	icon = 'icons/obj/banner.dmi'
 	icon_state = "banner"
-	item_state = "banner"
+	inhand_icon_state = "banner"
 	lefthand_file = 'icons/mob/inhands/equipment/banners_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/banners_righthand.dmi'
 	desc = "A banner with Nanotrasen's logo on it."
@@ -96,7 +96,7 @@
 /obj/item/ctf/red
 	name = "red flag"
 	icon_state = "banner-red"
-	item_state = "banner-red"
+	inhand_icon_state = "banner-red"
 	desc = "A red banner used to play capture the flag."
 	team = RED_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/red
@@ -105,7 +105,7 @@
 /obj/item/ctf/blue
 	name = "blue flag"
 	icon_state = "banner-blue"
-	item_state = "banner-blue"
+	inhand_icon_state = "banner-blue"
 	desc = "A blue banner used to play capture the flag."
 	team = BLUE_TEAM
 	reset_path = /obj/effect/ctf/flag_reset/blue

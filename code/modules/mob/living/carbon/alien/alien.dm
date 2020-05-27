@@ -12,7 +12,6 @@
 	bubble_icon = "alien"
 	type_of_meat = /obj/item/reagent_containers/food/snacks/meat/slab/xeno
 
-	var/obj/item/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/has_fine_manipulation = 0
 	var/move_delay_add = 0 // movement delay to add
 
@@ -50,7 +49,7 @@
 
 /mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 	// Run base mob body temperature proc before taking damage
-	// this balances body temp to the enviroment and natural stabilization
+	// this balances body temp to the environment and natural stabilization
 	. = ..()
 
 	if(bodytemperature > BODYTEMP_HEAT_DAMAGE_LIMIT)
