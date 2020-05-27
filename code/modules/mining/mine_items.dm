@@ -37,6 +37,7 @@
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
 	new /obj/item/clothing/gloves/color/black(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 
 /obj/structure/closet/secure_closet/miner
 	name = "miner's equipment"
@@ -61,6 +62,7 @@
 	new /obj/item/clothing/glasses/meson(src)
 	new /obj/item/survivalcapsule(src)
 	new /obj/item/assault_pod/mining(src)
+	new /obj/item/clothing/suit/hooded/wintercoat/miner(src)
 
 
 /**********************Shuttle Computer**************************/
