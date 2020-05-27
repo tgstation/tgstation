@@ -186,7 +186,7 @@
 ///what the minimum cold protection is set to for the explorer suit
 #define EXPLORER_SUIT_MIN_TEMP_PROTECT		100
 ///what the maximum heat protection is set to for the explorer suit (extinguish yourself!)
-#define EXPLORER_SUIT_MAX_TEMP_PROTECT		15000
+#define EXPLORER_SUIT_MAX_TEMP_PROTECT		25000
 
 /// For some gloves (black and)
 #define GLOVES_MIN_TEMP_PROTECT				2.0
