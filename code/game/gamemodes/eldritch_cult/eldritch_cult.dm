@@ -2,7 +2,7 @@
 	name = "heresy"
 	config_tag = "heresy"
 	report_type = "heresy"
-	antag_flag = ROLE_ECULT
+	antag_flag = ROLE_HERETIC
 	false_report_weight = 5
 	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_jobs = list("AI", "Cyborg","Chaplain")
@@ -29,6 +29,7 @@
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
 		restricted_jobs += "Assistant"
 
+
 	var/esc = CONFIG_GET(number/ecult_scaling_coeff)
 	if(esc)
 		num_ecult = min(max(1, min(round(num_players() / (esc * 2)) + 2, round(num_players() / esc))),4)
@@ -39,15 +40,15 @@
 		if(!antag_candidates.len)
 			break
 		var/datum/mind/cultie = antag_pick(antag_candidates)
-		antag_candidates -= cultie
-		cultie.special_role = ROLE_ECULTIST
+		possible_heretics -= cultie
+		cultie.special_role = ROLE_HERETIC
 		cultie.restricted_roles = restricted_jobs
 		culties += cultie
 
-	var/enough_tators = culties.len > 0
+	var/enough_heretics = culties.len > 0
 
-	if(!enough_tators)
-		setup_error = "Not enough cult candidates"
+	if(!enough_heretics)
+		setup_error = "Not enough heretic candidates"
 		return FALSE
 	else
 		for(var/antag in culties)

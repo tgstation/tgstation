@@ -3,7 +3,7 @@
 	roundend_category = "Heretic"
 	antagpanel_category = "Heretic"
 	antag_moodlet = /datum/mood_event/e_cult
-	job_rank = ROLE_ECULTIST
+	job_rank = ROLE_HERETIC
 	var/give_equipment = TRUE
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0

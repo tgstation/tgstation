@@ -153,7 +153,7 @@
 
 /datum/dynamic_ruleset/roundstart/e_cult
 	name = "Heretics"
-	antag_flag = ROLE_ECULT
+	antag_flag = ROLE_HERETIC
 	antag_datum = /datum/antagonist/e_cult
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI", "Cyborg","Chaplain")
@@ -177,7 +177,7 @@
 		var/mob/M = pick_n_take(candidates)
 		assigned += M.mind
 		M.mind.restricted_roles = restricted_roles
-		M.mind.special_role = ROLE_ECULT
+		M.mind.special_role = ROLE_HERETIC
 		GLOB.pre_setup_antags += M.mind
 	return TRUE
 

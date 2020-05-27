@@ -33,7 +33,7 @@
 			G = ghost
 			break
 	if(!G.reenter_corpse())
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [H.real_name], a voiceless dead", ROLE_ECULTIST, null, ROLE_ECULTIST, 50,H)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [H.real_name], a voiceless dead", ROLE_HERETIC, null, ROLE_HERETIC, 50,H)
 		if(!LAZYLEN(candidates))
 			return
 		var/mob/dead/observer/C = pick(candidates)
@@ -248,7 +248,7 @@
 
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy(loc)
 			message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
-			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_ECULTIST, null, ROLE_ECULTIST, 50,summoned)
+			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_HERETIC, null, ROLE_HERETIC, 50,summoned)
 			if(!LAZYLEN(candidates))
 				return
 			var/mob/dead/observer/C = pick(candidates)

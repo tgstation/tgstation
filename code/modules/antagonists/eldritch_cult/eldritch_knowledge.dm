@@ -172,7 +172,7 @@
 	. = ..()
 
 	message_admins("[initial(mob_to_summon.name)] is being summoned by [user.real_name] in [loc]")
-	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [initial(mob_to_summon.real_name)]", ROLE_ECULTIST, null, ROLE_ECULTIST, 50,initial(mob_to_summon))
+	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [initial(mob_to_summon.real_name)]", ROLE_HERETIC, null, ROLE_HERETIC, 50,initial(mob_to_summon))
 	if(!LAZYLEN(candidates))
 		return
 	var/mob/living/summoned = new mob_to_summon(loc)
