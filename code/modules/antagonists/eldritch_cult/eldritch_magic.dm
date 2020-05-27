@@ -242,8 +242,7 @@
 							"<span class='danger'>Your veins burst from within and unholy flame erupts from your blood!</span>")
 
 		target.bleed_rate += 15
-		target.blood_volume -= 200
-		target.adjustFireLoss(10)
+		target.adjustFireLoss(20)
 
 /obj/effect/proc_holder/spell/pointed/ash_cleave/can_target(atom/target, mob/user, silent)
 	. = ..()
