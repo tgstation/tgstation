@@ -1,0 +1,4 @@
+author: "Kathy Ryals"
+delete-after: True
+changes: 
+  - tweak: "You can now altClick to take out a disk from a DNA Console."

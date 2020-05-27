@@ -1799,7 +1799,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1, roundstart_checks = TRUE, character_setup = FALSE, antagonist = FALSE, is_latejoiner = TRUE)
 
 	hardcore_survival_score = 0 //Set to 0 to prevent you getting points from last another time.
 
@@ -1817,7 +1817,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 	if(randomise[RANDOM_HARDCORE] && parent.mob.mind && !character_setup)
 		if(can_be_random_hardcore())
-			hardcore_random_setup(character, antagonist)
+			hardcore_random_setup(character, antagonist, is_latejoiner)
 
 	if(roundstart_checks)
 		if(CONFIG_GET(flag/humans_need_surnames) && (pref_species.id == "human"))
