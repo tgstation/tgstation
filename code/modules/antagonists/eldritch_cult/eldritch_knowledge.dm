@@ -169,8 +169,6 @@
 
 
 /datum/eldritch_knowledge/summon/on_finished_recipe(mob/living/user,list/atoms,loc)
-	. = ..()
-
 	message_admins("[initial(mob_to_summon.name)] is being summoned by [user.real_name] in [loc]")
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [initial(mob_to_summon.real_name)]", ROLE_HERETIC, null, ROLE_HERETIC, 50,initial(mob_to_summon))
 	if(!LAZYLEN(candidates))
@@ -208,7 +206,6 @@
 
 /datum/eldritch_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
 	. = ..()
-
 
 	for(var/obj/item/living_heart/LH in atoms)
 		if(LH.target == user.mind)
