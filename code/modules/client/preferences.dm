@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	///What scaling method should we use?
 	var/scaling_method = "normal"
 	var/uplink_spawn_loc = UPLINK_PDA
-	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 10K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
+	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
 	var/playtime_reward_cloak = FALSE
 
 	var/list/exp = list()
