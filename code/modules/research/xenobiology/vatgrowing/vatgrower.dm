@@ -61,7 +61,7 @@
 ///Call update icon when reagents change to update the reagent content icons
 /obj/machinery/plumbing/growing_vat/on_reagent_change(changetype)
 	update_icon()
-	. = ..()
+	return ..()
 
 ///Adds overlays to show the reagent contents
 /obj/machinery/plumbing/growing_vat/update_overlays()
@@ -76,4 +76,3 @@
 	if(biological_sample && is_operational())
 		var/mutable_appearance/bubbles_overlay = mutable_appearance(icon, "vat_bubbles")
 		. += bubbles_overlay
-
