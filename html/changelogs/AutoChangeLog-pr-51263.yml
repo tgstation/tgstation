@@ -1,4 +1,0 @@
-author: "WarlockD"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the internal to use mask"
