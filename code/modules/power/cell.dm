@@ -133,7 +133,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	charge -= 1000 / severity
+	charge -= 6000 / severity
 	if (charge < 0)
 		charge = 0
 
