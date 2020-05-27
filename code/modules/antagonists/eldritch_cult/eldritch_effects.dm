@@ -18,6 +18,10 @@
 	flick("[icon_state]_active",src)
 	activate(user)
 
+/obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
+	. = ..()
+	if(istype(I,/obj/item/nullrod))
+		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
 
