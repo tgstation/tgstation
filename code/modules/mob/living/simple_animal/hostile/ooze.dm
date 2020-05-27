@@ -29,7 +29,7 @@
 
 	///Oozes have their own nutrition. Changes based on them eating
 	var/ooze_nutrition = 50
-	var/ooze_nutrition_loss = 0.15
+	var/ooze_nutrition_loss = -0.15
 	var/ooze_metabolism_modifier = 2
 
 /mob/living/simple_animal/hostile/ooze/Initialize()
@@ -53,10 +53,10 @@
 /mob/living/simple_animal/hostile/ooze/Life()
 	. = ..()
 
-	if(!mind)//no mind no change
+	if(!mind && stat != DEAD)//no mind no change
 		return
 
-	var/nutrition_change
+	var/nutrition_change = ooze_nutrition_loss
 
 	//Eat a bit of all the reagents we have. Gaining nutrition for actual nutritional ones.
 	for(var/i in reagents.reagent_list)
@@ -66,7 +66,6 @@
 			var/datum/reagent/consumable/consumable = R
 			nutrition_change += consumption_amount * consumable.nutriment_factor
 		reagents.remove_reagent(R.type, consumption_amount)
-	nutrition_change -= 0.15
 	adjust_ooze_nutrition(nutrition_change)
 
 	if(ooze_nutrition <= 0)
@@ -164,7 +163,7 @@
 		return
 	var/mob/living/simple_animal/hostile/ooze/ooze = owner
 	ooze.add_movespeed_modifier(/datum/movespeed_modifier/metabolicboost)
-	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE) //Heat up every second
+	var/timerid = addtimer(CALLBACK(src, .proc/HeatUp), 1 SECONDS, TIMER_STOPPABLE | TIMER_LOOP) //Heat up every second
 	addtimer(CALLBACK(src, .proc/FinishSpeedup, timerid), 6 SECONDS)
 	to_chat(ooze, "<span class='notice>You start feel a lot quicker.</span>")
 	ooze.adjust_ooze_nutrition(-10)

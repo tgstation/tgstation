@@ -38,8 +38,7 @@ at the cost of risking a vicious bite.**/
 
 /obj/structure/moisture_trap/Destroy()
 	if(hidden_item)
-		qdel(hidden_item)
-		hidden_item = null
+		QDEL_NULL(hidden_item)
 	return ..()
 
 ///This proc checks if we are able to reach inside the trap to interact with it.
@@ -66,10 +65,10 @@ at the cost of risking a vicious bite.**/
 		to_chat(user, "<span class='notice'>As you poke around inside [src] you feel the contours of something hidden below the murky waters.</span>\n<span class='nicegreen'>You retrieve [hidden_item] from [src].</span>")
 		hidden_item = null
 		return
-	else if(critter_infested && prob(50) && iscarbon(user))
+	if(critter_infested && prob(50) && iscarbon(user))
 		var/mob/living/carbon/bite_victim = user
 		var/obj/item/bodypart/affecting = bite_victim.get_bodypart("[(user.active_hand_index % 2 == 0) ? "r" : "l" ]_arm")
-		if(affecting && affecting.receive_damage(40))
+		if(affecting && affecting.receive_damage(30))
 			to_chat(user, "<span class='danger'>You feel a sharp as an unseen creature sinks it's [pick("fangs", "beak", "proboscis")] into your arm!</span>")
 			bite_victim.update_damage_overlays()
 			playsound(src,'sound/weapons/bite.ogg', 70, TRUE)
