@@ -9,7 +9,7 @@
 
 /obj/effect/spawner/scatter/Initialize()
 	..()
-	if(!loot_table || !loot_table.len)
+	if(!length(loot_table))
 		return INITIALIZE_HINT_QDEL
 
 	var/list/candidate_locations = list()
@@ -52,4 +52,3 @@
 					/obj/item/reagent_containers/glass/bucket = 10,
 					/obj/effect/decal/cleanable/blood/old = 10,
 					/obj/structure/mopbucket = 10)
-
