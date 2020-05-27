@@ -66,8 +66,7 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_DEVIL = /datum/game_mode/devil,
 	ROLE_INTERNAL_AFFAIRS = /datum/game_mode/traitor/internal_affairs,
 	ROLE_SENTIENCE,
-	ROLE_FAMILIES = /datum/game_mode/gang,
-	ROLE_HERETIC = /datum/game_mode/e_cult
+	ROLE_FAMILIES = /datum/game_mode/gang
 ))
 
 //Job defines for what happens when you fail to qualify for any job during job selection
