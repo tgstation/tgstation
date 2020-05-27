@@ -145,10 +145,10 @@ RLD
 				to_chat(user, no_ammo_message)
 			return FALSE
 
-		silo_mats.mat_container.use_materials(list(mat = 500), amount)
-		var/list/log_mat_list = list()
-		log_mat_list[SSmaterials.GetMaterialRef(/datum/material/iron)] = 500
-		silo_mats.silo_log(src, "consume", -amount, "build", log_mat_list)
+		var/list/materials = list()
+		materials[SSmaterials.GetMaterialRef(/datum/material/iron)] = 500
+		silo_mats.mat_container.use_materials(materials, amount)
+		silo_mats.silo_log(src, "consume", -amount, "build", materials)
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
