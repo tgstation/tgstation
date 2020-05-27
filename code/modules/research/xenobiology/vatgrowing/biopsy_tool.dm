@@ -12,7 +12,7 @@
 
 
 /obj/item/biopsy_tool/proc/update_swab_icon(list/swabbed_items)
-	if(swabbed_items.len)
+	if(LAZYLEN(swabbed_items))
 		icon_state = "biopsy_full"
 	else
 		icon_state = "biopsy"

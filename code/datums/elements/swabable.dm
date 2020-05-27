@@ -39,7 +39,7 @@ This element is used in vat growing to allow for the object to be
 /datum/element/swabable/proc/GetSwabbed(datum/source, list/mutable_results)
 	. = COMPONENT_SWAB_FOUND //Return this so the swabbing component knows hes a good boy and found something that needs swabbing.
 
-	mutable_results += GenerateSample()
+	LAZYADD(mutable_results, GenerateSample())
 	Detach(source)
 
 ///Generates a /datum/biological_sample

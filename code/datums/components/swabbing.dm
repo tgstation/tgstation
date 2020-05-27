@@ -5,7 +5,7 @@ This component is used in vat growing to swab for microbiological samples which 
 */
 /datum/component/swabbing
 	///The current datums on the swab
-	var/list/swabbed_items = list()
+	var/list/swabbed_items
 	///Can we swab objs?
 	var/CanSwabObj
 	///Can we swab turfs?
@@ -34,7 +34,7 @@ This component is used in vat growing to swab for microbiological samples which 
 
 ///Changes examine based on your sample
 /datum/component/swabbing/proc/examine(datum/source, mob/user, list/examine_list)
-	if(swabbed_items.len)
+	if(LAZYLEN(swabbed_items))
 		examine_list += "<span class='nicegreen'>There is a microbiological sample on [parent]!</span>"
 		examine_list += "<span class='notice'>You can see the following micro-organisms:</span>\n"
 		for(var/i in swabbed_items)
@@ -49,7 +49,7 @@ This component is used in vat growing to swab for microbiological samples which 
 		return NONE //idk bro pls send help
 
 	if(istype(target, /obj/item/petri_dish))
-		if(!swabbed_items.len)
+		if(!LAZYLEN(swabbed_items))
 			return NONE
 		var/obj/item/petri_dish/dish = target
 		if(dish.sample)
@@ -65,7 +65,7 @@ This component is used in vat growing to swab for microbiological samples which 
 				deposited_sample.Merge(S)
 
 		dish.deposit_sample(user, deposited_sample)
-		swabbed_items = list()
+		LAZYCLEARLIST(swabbed_items)
 
 		var/obj/item/I = parent
 		I.update_icon()
@@ -77,7 +77,7 @@ This component is used in vat growing to swab for microbiological samples which 
 
 	. = COMPONENT_NO_ATTACK //Point of no return. No more attacking after this.
 
-	if(swabbed_items.len >= 3)
+	if(LAZYLEN(swabbed_items))
 		to_chat(user, "<span class='warning'>You cannot collect another sample on [parent]!</span>")
 		return
 
