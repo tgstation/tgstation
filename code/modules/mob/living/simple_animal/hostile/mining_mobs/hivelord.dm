@@ -351,8 +351,11 @@
 			shoes = /obj/item/clothing/shoes/laceup
 			head = /obj/item/clothing/head/helmet/knight
 			suit = /obj/item/clothing/suit/armor/riot/knight
-			back = /obj/item/shield/riot/buckler
-			belt = /obj/item/nullrod/claymore
+			if(prob(30))
+				back = /obj/item/nullrod/scythe/talking
+			else
+				back = /obj/item/shield/riot/buckler
+				belt = /obj/item/nullrod/claymore
 			r_pocket = /obj/item/tank/internals/emergency_oxygen
 			mask = /obj/item/clothing/mask/breath
 		if("Operative")
@@ -377,3 +380,26 @@
 			glasses =  /obj/item/clothing/glasses/hud/health/night/cultblind
 			backpack_contents = list(/obj/item/reagent_containers/glass/beaker/unholywater = 1, /obj/item/cult_shift = 1, /obj/item/flashlight/flare/culttorch = 1, /obj/item/stack/sheet/runed_metal = 15)
 	. = ..()
+
+// Snow Legion
+/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow
+	name = "snow legion"
+	desc = "You can still see what was once a human under the shifting snowy mass, clearly decorated by a clown."
+	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon_state = "snowlegion"
+	icon_living = "snowlegion"
+	icon_aggro = "snowlegion_alive"
+	icon_dead = "snowlegion"
+	crusher_loot = /obj/item/crusher_trophy/legion_skull
+	loot = list(/obj/item/organ/regenerative_core/legion)
+	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+
+// Snow Legion skull
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow
+	name = "snow legion"
+	desc = "One of many."
+	icon = 'icons/mob/icemoon/icemoon_monsters.dmi'
+	icon_state = "snowlegion_head"
+	icon_living = "snowlegion_head"
+	icon_aggro = "snowlegion_head"
+	icon_dead = "snowlegion_head"

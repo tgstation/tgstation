@@ -51,17 +51,13 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/template_noop,
 /area/ruin/powered/golem_ship)
 "i" = (
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/open/floor/plating{
-	initial_gas_mix = "LAVALAND_ATMOS"
-	},
+/turf/template_noop,
 /area/ruin/powered/golem_ship)
 "j" = (
 /obj/machinery/door/airlock/titanium,

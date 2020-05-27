@@ -10,6 +10,8 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 	plane           = OPENSPACE_BACKDROP_PLANE
 	mouse_opacity 	= MOUSE_OPACITY_TRANSPARENT
 	layer           = SPLASHSCREEN_LAYER
+	//I don't know why the others are aligned but I shall do the same.
+	vis_flags		= VIS_INHERIT_ID
 
 /turf/open/transparent/openspace
 	name = "open space"
@@ -127,3 +129,22 @@ GLOBAL_DATUM_INIT(openspace_backdrop_one_for_all, /atom/movable/openspace_backdr
 			PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 			return TRUE
 	return FALSE
+
+/turf/open/transparent/openspace/icemoon
+	name = "ice chasm"
+	baseturfs = /turf/open/transparent/openspace/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
+	var/replacement_turf = /turf/open/floor/plating/asteroid/snow/icemoon
+
+/turf/open/transparent/openspace/icemoon/Initialize()
+	. = ..()
+	var/turf/T = below()
+	if(T.flags_1 & NO_RUINS_1)
+		ChangeTurf(replacement_turf, null, CHANGETURF_IGNORE_AIR)
+		return
+	if(!ismineralturf(T))
+		return
+	var/turf/closed/mineral/M = T
+	M.mineralAmt = 0
+	M.gets_drilled()
+
