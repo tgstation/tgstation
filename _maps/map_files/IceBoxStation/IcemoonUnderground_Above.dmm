@@ -2778,7 +2778,6 @@
 /area/mine/laborcamp)
 "yy" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/storage/bag/ore,
 /obj/item/pickaxe,
 /obj/item/flashlight,
@@ -2990,7 +2989,6 @@
 /area/mine/living_quarters)
 "Dn" = (
 /obj/structure/rack,
-/obj/item/clothing/suit/hooded/wintercoat/miner,
 /obj/item/storage/bag/ore,
 /obj/item/flashlight,
 /obj/item/pickaxe,
