@@ -1,6 +1,6 @@
 /datum/antagonist/e_cult
 	name = "Heretic"
-	roundend_category = "Heretic"
+	roundend_category = "Heretics"
 	antagpanel_category = "Heretic"
 	antag_moodlet = /datum/mood_event/e_cult
 	job_rank = ROLE_HERETIC
