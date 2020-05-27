@@ -1,5 +1,0 @@
-author: "willox"
-delete-after: True
-changes: 
-  - bugfix: "Botany grafts for traits other than 'perennial growth' are no longer non-functional"
-  - bugfix: "Cross-pollination can no longer result in plants entering an infinitely-harvestable state"
