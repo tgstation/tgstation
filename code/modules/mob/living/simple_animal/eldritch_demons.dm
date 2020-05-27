@@ -190,19 +190,20 @@
 	if(!Adjacent(target))
 		return
 	do_attack_animation(target)
+	//have fun
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))
 			return
 		var/list/parts = list()
 		for(var/X in C.bodyparts)
-			var/obj/item/bodypart/BP = X
-			if(BP.body_part != HEAD && BP.body_part != CHEST && BP.body_part != LEG_LEFT && BP.body_part != LEG_RIGHT)
-				if(BP.dismemberable)
-					parts += BP
+			var/obj/item/bodypart/bodypart = X
+			if(bodypart.body_part != HEAD && bodypart.body_part != CHEST && bodypart.body_part != LEG_LEFT && bodypart.body_part != LEG_RIGHT)
+				if(bodypart.dismemberable)
+					parts += bodypart
 		if(length(parts) && prob(10))
-			var/obj/item/bodypart/BP = pick(parts)
-			BP.dismember()
+			var/obj/item/bodypart/bodypart = pick(parts)
+			bodypart.dismember()
 
 	return ..()
 
