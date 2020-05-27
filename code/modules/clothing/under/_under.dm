@@ -87,6 +87,7 @@
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
 			H.update_inv_wear_suit()
+	set_sensor_glob()	
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
@@ -96,7 +97,7 @@
 			H.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
 				H.update_inv_wear_suit()
-
+	set_sensor_glob()	
 	..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
