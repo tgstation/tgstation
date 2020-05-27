@@ -88,7 +88,7 @@
 /obj/item/clothing/head/bunnyhead
 	name = "Easter Bunny Head"
 	icon_state = "bunnyhead"
-	item_state = "bunnyhead"
+	inhand_icon_state = "bunnyhead"
 	desc = "Considerably more cute than 'Frank'."
 	slowdown = -1
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR
@@ -97,7 +97,7 @@
 	name = "Easter Bunny Suit"
 	desc = "Hop Hop Hop!"
 	icon_state = "bunnysuit"
-	item_state = "bunnysuit"
+	inhand_icon_state = "bunnysuit"
 	slowdown = -1
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
@@ -107,7 +107,7 @@
 	name = "Easter Bunny Satchel"
 	desc = "Good for your eyes."
 	icon_state = "satchel_carrot"
-	item_state = "satchel_carrot"
+	inhand_icon_state = "satchel_carrot"
 
 //Egg prizes and egg spawns!
 /obj/item/reagent_containers/food/snacks/egg

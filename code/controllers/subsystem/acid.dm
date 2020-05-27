@@ -29,7 +29,7 @@ SUBSYSTEM_DEF(acid)
 
 		if(O.acid_level && O.acid_processing())
 		else
-			O.cut_overlay(GLOB.acid_overlay, TRUE)
+			O.update_icon()
 			processing -= O
 
 		if (MC_TICK_CHECK)

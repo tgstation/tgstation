@@ -14983,7 +14983,7 @@
 /area/engine/engineering)
 "aIf" = (
 /obj/machinery/camera{
-	c_tag = "Auxillary Base Construction";
+	c_tag = "Auxiliary Base Construction";
 	dir = 1
 	},
 /obj/machinery/button/door{
@@ -19116,7 +19116,7 @@
 "aSL" = (
 /obj/machinery/power/apc{
 	areastring = "/area/construction/mining/aux_base";
-	name = "Auxillary Base Construction APC";
+	name = "Auxiliary Base Construction APC";
 	pixel_y = -23
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -63563,9 +63563,9 @@
 /area/space)
 "cYK" = (
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for the Auxillary Mining Base.";
+	desc = "Used for the Auxiliary Mining Base.";
 	dir = 1;
-	name = "Auxillary Base Monitor";
+	name = "Auxiliary Base Monitor";
 	network = list("auxbase");
 	pixel_y = -28
 	},
@@ -63580,7 +63580,7 @@
 "cYL" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "aux_base_shutters";
-	name = "Auxillary Base Shutters"
+	name = "Auxiliary Base Shutters"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -63590,7 +63590,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/engineering{
-	name = "Auxillary Base Construction";
+	name = "Auxiliary Base Construction";
 	req_one_access_txt = "32;47;48"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,

@@ -12,12 +12,12 @@
 	armor = list("melee" = 50, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50)
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
-	var/engraved = FALSE 
+	var/engraved = FALSE
 
 /obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "blankplaque"
-	item_state = "blankplaque"
+	inhand_icon_state = "blankplaque"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "blank plaque"

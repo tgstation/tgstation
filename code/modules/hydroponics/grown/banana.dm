@@ -21,7 +21,7 @@
 	name = "banana"
 	desc = "It's an excellent prop for a clown."
 	icon_state = "banana"
-	item_state = "banana"
+	inhand_icon_state = "banana"
 	trash = /obj/item/grown/bananapeel
 	filling_color = "#FFFF00"
 	bitesize = 5
@@ -50,7 +50,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 	icon_state = "banana_peel"
-	item_state = "banana_peel"
+	inhand_icon_state = "banana_peel"
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
 	throw_speed = 3
@@ -89,7 +89,7 @@
 	name = "mimana peel"
 	desc = "A mimana peel."
 	icon_state = "mimana_peel"
-	item_state = "mimana_peel"
+	inhand_icon_state = "mimana_peel"
 
 // Bluespace Banana
 /obj/item/seeds/banana/bluespace
@@ -111,7 +111,7 @@
 	seed = /obj/item/seeds/banana/bluespace
 	name = "bluespace banana"
 	icon_state = "banana_blue"
-	item_state = "bluespace_peel"
+	inhand_icon_state = "bluespace_peel"
 	trash = /obj/item/grown/bananapeel/bluespace
 	filling_color = "#0000FF"
 	tastes = list("banana" = 1)

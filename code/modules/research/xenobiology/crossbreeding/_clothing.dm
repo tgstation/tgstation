@@ -9,7 +9,7 @@ Slimecrossing Armor
 	name = "rebreather mask"
 	desc = "A transparent mask, resembling a conventional breath mask, but made of bluish slime. Seems to lack any air supply tube, though."
 	icon_state = "slime"
-	item_state = "slime"
+	inhand_icon_state = "slime"
 	body_parts_covered = NONE
 	w_class = WEIGHT_CLASS_SMALL
 	gas_transfer_coefficient = 0
@@ -99,7 +99,7 @@ Slimecrossing Armor
 	desc = "An extremely addictive flower, full of peace magic."
 	icon = 'icons/obj/slimecrossing.dmi'
 	icon_state = "peaceflower"
-	item_state = "peaceflower"
+	inhand_icon_state = "peaceflower"
 	slot_flags = ITEM_SLOT_HEAD
 	body_parts_covered = NONE
 	dynamic_hair_suffix = ""
@@ -130,7 +130,7 @@ Slimecrossing Armor
 	name = "adamantine armor"
 	desc = "A full suit of adamantine plate armor. Impressively resistant to damage, but weighs about as much as you do."
 	icon_state = "adamsuit"
-	item_state = "adamsuit"
+	inhand_icon_state = "adamsuit"
 	flags_inv = NONE
 	obj_flags = IMMUTABLE_SLOW
 	slowdown = 4
