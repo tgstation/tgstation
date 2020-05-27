@@ -48,10 +48,11 @@
 		return
 
 	ADD_TRAIT(H,TRAIT_MUTE,MAGIC_TRAIT)
-	H.become_husk()
+
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(50)
 	H.health = 50 // Voiceless dead are much tougher than ghouls
+	H.become_husk()
 	H.faction |= "e_cult"
 	H.fully_replace_character_name(H.real_name,"Voiceless [H.real_name]")
 	to_chat(H, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
@@ -116,10 +117,11 @@
 
 	LAZYADD(spooky_scaries,H)
 
-	H.become_husk()
+
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(25)
 	H.health = 25
+	H.become_husk()
 	H.faction |= "e_cult"
 	H.fully_replace_character_name(H.real_name,"Ghouled [H.real_name]")
 	to_chat(H, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
