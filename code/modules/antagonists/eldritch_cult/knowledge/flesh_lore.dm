@@ -32,7 +32,8 @@
 		if(ghost.mind && ghost.mind.current == H && ghost.client)  //the dead mobs list can contain clientless mobs
 			G = ghost
 			break
-	if(!G.reenter_corpse())
+
+	if(!G || !G.reenter_corpse())
 		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [H.real_name], a voiceless dead", ROLE_HERETIC, null, ROLE_HERETIC, 50,H)
 		if(!LAZYLEN(candidates))
 			return
@@ -40,6 +41,7 @@
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(H)]) to replace an AFK player.")
 		H.ghostize(0)
 		H.key = C.key
+
 	if(!H.mind || !H.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
