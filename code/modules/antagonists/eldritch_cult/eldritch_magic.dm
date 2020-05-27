@@ -109,7 +109,7 @@
 /obj/item/melee/touch_attack/ash_leech
 	name = "Blood Siphon"
 	desc = "A sinister looking aura that distorts the flow of reality around it."
-	icon_state = "blood_siphon"
+	icon_state = "disintegrate"
 	inhand_icon_state = "disintegrate"
 	catchphrase = "R'BRTH"
 
