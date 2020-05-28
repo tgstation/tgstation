@@ -172,6 +172,7 @@
 	message_admins("[initial(mob_to_summon.name)] is being summoned by [user.real_name] in [loc]")
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [initial(mob_to_summon.real_name)]", ROLE_HERETIC, null, ROLE_HERETIC, 50,initial(mob_to_summon))
 	if(!LAZYLEN(candidates))
+		to_chat(user,"<span class='warning'>You are bound to [user.real_name]'s' will! Don't let your master die, protect him at all cost!</span>")
 		return
 	var/mob/living/summoned = new mob_to_summon(loc)
 	var/mob/dead/observer/C = pick(candidates)
@@ -199,19 +200,16 @@
 	for(var/obj/item/living_heart/LH in atoms)
 		if(!LH.target)
 			return TRUE
-		for(var/mob/living/carbon/human/H in atoms)
-			if(H == LH.target.current)
-				return TRUE
+		if(LH.target.current in atoms)
+			return TRUE
 	return FALSE
 
 /datum/eldritch_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
-	. = ..()
 
 	for(var/obj/item/living_heart/LH in atoms)
-		if(LH.target == user.mind)
-			LH.target = FALSE
 
 		if(LH.target && LH.target.current && LH.target.current.stat == DEAD)
+			to_chat(user,"<span class='danger'>Your patrons accepts your offer..</span>")
 			var/mob/living/carbon/human/H = LH.target.current
 			H.gib()
 			var/datum/antagonist/e_cult/EC = user.mind.has_antag_datum(/datum/antagonist/e_cult)
@@ -231,6 +229,8 @@
 			qdel(A)
 			if(LH.target)
 				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.current.real_name]!</span>")
+			else
+				to_chat(user,"<span class='warning'>target could not be found for living heart.</span>")
 
 /datum/eldritch_knowledge/spell/basic/cleanup_atoms(list/atoms)
 	return

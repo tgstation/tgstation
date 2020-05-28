@@ -182,7 +182,7 @@
 	var/list/edge_turfs = list()
 	var/list/turfs = list()
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed/wall/rust,/turf/closed/wall/r_wall/rust,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
-	var/spread_per_tick = 5
+	var/spread_per_tick = 6
 
 
 /datum/rust_spread/New(loc)
@@ -200,7 +200,7 @@
 /datum/rust_spread/process()
 	compile_turfs()
 	var/turf/T
-	for(var/i in 0 to 6)
+	for(var/i in 0 to spread_per_tick)
 		T = pick(edge_turfs)
 		T.rust_heretic_act()
 		turfs += get_turf(T)

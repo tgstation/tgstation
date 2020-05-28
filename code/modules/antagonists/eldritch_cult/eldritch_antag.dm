@@ -142,6 +142,10 @@
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "e_cult"
 
+/datum/antagonist/e_cult/get_admin_commands()
+	. = ..()
+	.["Equip"] = CALLBACK(src,.proc/equip_cultist)
+
 /datum/antagonist/e_cult/roundend_report()
 	var/list/parts = list()
 
@@ -244,12 +248,11 @@
 
 /datum/objective/sacrifice_ecult/check_completion()
 	var/list/datum/mind/owners = get_owners()
-	var/sacrificed = 0
-	for(var/datum/mind/M in owners)
+	for(var/M in owners)
 		if(!M)
 			continue
-		var/datum/antagonist/e_cult/cultie = M.has_antag_datum(/datum/antagonist/e_cult)
+		var/datum/mind/mind = M
+		var/datum/antagonist/e_cult/cultie = mind.has_antag_datum(/datum/antagonist/e_cult)
 		if(!cultie)
 			continue
-		sacrificed += cultie.total_sacrifices
-	return sacrificed >= target_amount
+		return cultie.total_sacrifices >= target_amount

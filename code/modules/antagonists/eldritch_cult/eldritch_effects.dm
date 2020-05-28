@@ -69,7 +69,7 @@
 
 		if(skip)
 			continue
-
+		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
 		EK.on_finished_recipe(user,selected_atoms,loc)
 		EK.cleanup_atoms(selected_atoms)
 	return
@@ -98,6 +98,18 @@
 	. = ..()
 	if(!GLOB.reality_smash_track)
 		GLOB.reality_smash_track = src
+	else
+		stack_trace("/datum/reality_smash_tracker was initialized while one already exists. Deleting")
+		qdel(src)
+
+/datum/reality_smash_tracker/Destroy(force, ...)
+	if(GLOB.reality_smash_track == src)
+		stack_trace("/datum/reality_smash_tracker was deleted. Heretics may no longer access any influences. Fix it or call coder support")
+	for(var/X in smashes)
+		qdel(X)
+	for(var/Y in targets)
+		targets -= Y
+	. = ..()
 
 
 /**
@@ -111,7 +123,7 @@
 	for(var/sloc in GLOB.generic_event_spawns)
 		var/obj/effect/landmark/event_spawn/ES = sloc
 		if(prob(chance))
-			var/obj/effect/reality_smash/RS = new/obj/effect/reality_smash(ES.drop_location())
+			var/obj/effect/reality_smash/RS = new(ES.drop_location())
 			smashes += RS
 
 /**
@@ -121,8 +133,9 @@
   */
 /datum/reality_smash_tracker/proc/AddMind(var/datum/mind/M)
 	targets |= M
-	for(var/obj/effect/reality_smash/RS in smashes)
-		RS.AddMind(M)
+	for(var/X in smashes)
+		var/obj/effect/reality_smash/reality_smash = X
+		reality_smash.AddMind(M)
 
 /**
   * Removes a mind from the list of people that can see the reality smashes
@@ -155,9 +168,13 @@
 	generate_name()
 
 /obj/effect/reality_smash/Destroy()
+
 	for(var/datum/mind/cultie in minds)
 		if(cultie && cultie.current && cultie.current.client)
 			cultie.current.client.images -= img
+		//clear the list
+		minds -= cultie
+	img = null
 	new /obj/effect/broken_illusion(drop_location())
 	return ..()
 

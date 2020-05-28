@@ -25,7 +25,6 @@
 	minbodytemp = 0
 	maxbodytemp = INFINITY
 	healable = 0
-	faction = list("e_cult")
 	movement_type = GROUND
 	pressure_resistance = 100
 	del_on_death = TRUE
@@ -150,6 +149,7 @@
 	if(front)
 		front.icon_state = "armsy_end"
 		front.icon_living = "armsy_end"
+		front.back = null
 	if(back)
 		QDEL_NULL(back) // chain destruction baby
 	return ..()
@@ -191,6 +191,10 @@
 		return
 	do_attack_animation(target)
 	//have fun
+	if(istype(target,/turf/closed/wall))
+		var/turf/closed/wall = target
+		wall.ScrapeAway()
+
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(HAS_TRAIT(C, TRAIT_NODISMEMBER))

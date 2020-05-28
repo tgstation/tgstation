@@ -49,6 +49,7 @@
 
 /obj/item/melee/touch_attack/mansus_fist/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	playsound(user, 'sound/items/welder.ogg', 75, TRUE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
@@ -115,6 +116,7 @@
 
 /obj/item/melee/touch_attack/ash_leech/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
+	playsound(user, 'sound/magic/demon_attack1.ogg', 75, TRUE)
 	if(ishuman(target))
 		var/mob/living/carbon/human/tar = target
 		if(tar.anti_magic_check())
@@ -127,9 +129,9 @@
 		C2.adjustBruteLoss(-20)
 	if(iscarbon(target))
 		var/mob/living/carbon/C1 = target
-		C1.blood_volume -= 100
+		C1.blood_volume -= 20
 		if(C2.blood_volume < BLOOD_VOLUME_MAXIMUM) //we dont want to explode after all
-			C2.blood_volume += 100
+			C2.blood_volume += 20
 		return
 
 /obj/effect/proc_holder/spell/targeted/projectile/dumbfire/rust_wave
@@ -158,6 +160,7 @@
 
 /obj/projectile/magic/spell/rust_wave/Moved(atom/OldLoc, Dir)
 	. = ..()
+	playsound(src, 'sound/items/welder.ogg', 75, TRUE)
 	var/list/turflist = list()
 	var/turf/T1
 	turflist += get_turf(src)
@@ -289,6 +292,7 @@
 				tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 				return
 		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/e_cult))
+			to_chat(user,"<span class='warning'>[target.name] has been cursed!</span>")
 			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
 /obj/effect/proc_holder/spell/pointed/ash_final

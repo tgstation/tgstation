@@ -3,12 +3,18 @@
 	desc = "Book describing the secrets of the veil."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "book"
+	w_class = WEIGHT_CLASS_SMALL
 	///Last person that touched this
 	var/mob/living/last_user
 	///how many charges do we have?
 	var/charge = 1
 	///Where we cannot create the rune?
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed,/turf/open/space,/turf/open/lava))
+
+/obj/item/forbidden_book/Destroy()
+	last_user = null
+	. = ..()
+
 
 /obj/item/forbidden_book/examine(mob/user)
 	. = ..()

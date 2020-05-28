@@ -313,6 +313,7 @@
   * Adds actual functionality to each mark
   */
 /datum/status_effect/eldritch/proc/on_effect()
+	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
 
 /datum/status_effect/eldritch/Destroy()
@@ -331,10 +332,11 @@
 	effect_sprite = "emark1"
 
 /datum/status_effect/eldritch/flesh/on_effect()
+
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
 		H.bleed_rate += 5
-		H.blood_volume -= 200
+		H.blood_volume -= 50
 	return ..()
 
 /datum/status_effect/eldritch/ash

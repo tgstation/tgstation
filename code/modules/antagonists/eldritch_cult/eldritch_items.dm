@@ -3,6 +3,7 @@
 	desc = "Link to the worlds beyond."
 	icon = 'icons/obj/eldritch.dmi'
 	icon_state = "living_heart"
+	w_class = WEIGHT_CLASS_SMALL
 	///Target
 	var/datum/mind/target
 
@@ -11,6 +12,7 @@
 	if(!IS_E_CULTIST(user))
 		return
 	if(!target)
+		to_chat(user,"<span class='warning'>No target could be found. Put the living heart on the rune and use the rune to recieve a target.</span>")
 		return
 	var/dist = get_dist(user.loc,target.current.loc)
 
