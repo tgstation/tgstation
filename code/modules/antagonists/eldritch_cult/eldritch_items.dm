@@ -40,10 +40,17 @@
 	flags_1 = CONDUCT_1
 	sharpness = IS_SHARP
 	w_class = WEIGHT_CLASS_NORMAL
-	force = 15
+	force = 17
 	throwforce = 10
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
+
+/obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
+	if(!IS_E_CULTIST(user))
+		var/mob/living/carbon/human/human_user = user
+		human_user.AdjustStun(5 SECONDS)
+		return FALSE
+	. = ..()
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
