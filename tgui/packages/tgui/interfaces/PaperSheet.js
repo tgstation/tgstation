@@ -9,7 +9,6 @@
 import { Tabs, Box, Flex, Button, TextArea } from '../components';
 import { useBackend, useSharedState, useLocalState } from '../backend';
 import { Window } from '../layouts';
-// import marked from 'marked';
 import marked from 'marked';
 import DOMPurify from 'dompurify';
 // There is a sanatize option in marked but they say its deprecated.
@@ -17,16 +16,32 @@ import DOMPurify from 'dompurify';
 
 import { createLogger } from '../logging';
 import { Fragment } from 'inferno';
-
 const logger = createLogger('PaperSheet');
 
+// Override function, any links and images should
+// be just converted to text
+const walkTokens = token => {
+  switch (token.type) {
+    case 'link':
+    case 'image':
+      token.type = 'text';
+      // Once asset system is up change to some default image
+      // or rewrite for icon images
+      token.href = "";
+      break;
+  }
+};
+
 const run_marked_default = value => {
-  const sanitizer = DOMPurify.sanitize;
-  // too much?
-  // return sanitizer(marked(sanitizer(value),
-  //   { breaks: true, smartypants: true });
-  return sanitizer(marked(value,
-    { breaks: true, smartypants: true }));
+  const clean = DOMPurify.sanitize(value);
+  return marked(clean,
+    { breaks: true,
+      smartypants: true,
+      smartLists: true,
+      walkTokens: walkTokens,
+      // Once assets are fixed might need to change this for them
+      baseUrl: "thisshouldbreakhttp",
+    });
 };
 
 const PaperSheetView = (props, context) => {
@@ -45,6 +60,7 @@ const PaperSheetView = (props, context) => {
     { __html: run_marked_default(value) });
   return (
     <Box
+      opacity={1}
       backgroundColor={paper_color}
       color={pen_color}
       {...rest}
@@ -73,7 +89,6 @@ const PaperSheetEdit = (props, context) => {
       setText(value.substr(1000));
     }
   };
-
   return (
     <Flex direction="column">
       <Flex.Item>
@@ -106,7 +121,7 @@ const PaperSheetEdit = (props, context) => {
               || previewSelected === "save"}
             onClick={() => {
               if (previewSelected === "confirm") {
-                act('save', { text });
+                act('save', { text: DOMPurify.sanitize(text) });
               } else {
                 setPreviewSelected("confirm");
               }
