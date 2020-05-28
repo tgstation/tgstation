@@ -1,5 +1,6 @@
 #define CAN_DEFAULT_RELEASE_PRESSURE 	(ONE_ATMOSPHERE)
 ///Used when setting the mode of the canisters, enabling us to switch the overlays
+//These are used as icon states later down the line for tier overlays
 #define CANISTER_TIER_1					"tier 1"
 #define CANISTER_TIER_2					"tier 2"
 #define CANISTER_TIER_3					"tier 3"
@@ -12,6 +13,8 @@
 	ui_x = 300
 	ui_y = 232
 
+	///Have we entered a broken canister icon state
+	var/has_been_broken
 	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
 	var/release_log = ""
@@ -19,6 +22,7 @@
 	volume = 1000
 	var/filled = 0.5
 	var/gas_type
+
 	var/release_pressure = ONE_ATMOSPHERE
 	var/can_max_release_pressure = (ONE_ATMOSPHERE * 10)
 	var/can_min_release_pressure = (ONE_ATMOSPHERE / 10)
@@ -287,9 +291,11 @@
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
-	if(machine_stat & BROKEN && !(splittext(icon_state,  "-").len > 1))
+	if(machine_stat & BROKEN && !has_been_broken)
 		icon_state = "[icon_state]-1"
-
+		has_been_broken = TRUE
+	else
+		has_been_broken = FALSE
 /obj/machinery/portable_atmospherics/canister/update_overlays()
 	. = ..()
 	var/isBroken = machine_stat & BROKEN
