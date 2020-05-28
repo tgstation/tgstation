@@ -30913,6 +30913,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 6
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMM" = (
@@ -30928,6 +30929,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMN" = (
@@ -30940,6 +30942,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMO" = (
@@ -30958,6 +30961,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bMQ" = (
@@ -31343,6 +31347,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bNV" = (
@@ -31364,6 +31369,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bOb" = (
@@ -31748,6 +31754,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bPd" = (
@@ -32162,6 +32169,8 @@
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bQp" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -32531,6 +32540,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bRx" = (
@@ -32552,13 +32562,6 @@
 "bRA" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
 	dir = 4
-	},
-/turf/open/floor/plasteel,
-/area/engine/atmos)
-"bRB" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible{
-	dir = 6
 	},
 /turf/open/floor/plasteel,
 /area/engine/atmos)
@@ -32930,6 +32933,7 @@
 /obj/item/multitool,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSG" = (
@@ -32949,11 +32953,6 @@
 /obj/item/t_scanner,
 /obj/item/t_scanner,
 /obj/item/t_scanner,
-/turf/open/floor/plasteel,
-/area/engine/atmos)
-"bSI" = (
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bSJ" = (
@@ -33594,7 +33593,6 @@
 /obj/machinery/atmospherics/pipe/simple/cyan/visible{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bUN" = (
@@ -33930,6 +33928,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVU" = (
@@ -33940,7 +33939,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bVW" = (
@@ -34299,6 +34297,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bWS" = (
@@ -34313,7 +34312,6 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bWT" = (
@@ -34636,6 +34634,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "bXR" = (
@@ -38925,6 +38924,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cpX" = (
@@ -45016,6 +45016,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "hsB" = (
@@ -49956,6 +49957,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/atmos)
 "rlH" = (
@@ -52106,11 +52108,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"vDs" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/simple/scrubbers/visible,
-/turf/open/floor/plasteel,
-/area/engine/atmos)
 "vDJ" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -85062,10 +85059,10 @@ bLK
 bML
 bNT
 bOa
-cyA
+bQp
 bRw
 bSF
-cyA
+bQp
 bPc
 hsp
 bWQ
@@ -85584,7 +85581,7 @@ bUK
 bVT
 bWR
 bXQ
-cyA
+bQp
 bZF
 sjx
 bVQ
@@ -85833,16 +85830,16 @@ bLK
 bMP
 bOd
 bOd
-bQp
-bRB
-vDs
-vDs
+bOd
+bVP
+cbA
+cbA
 bUM
 bVV
 bWS
-bSI
-bSI
-bSI
+cbA
+cbA
+cbA
 caE
 cbA
 ccy
@@ -86088,9 +86085,9 @@ cBD
 bKD
 bLO
 bMO
-bQp
-bQp
-bQp
+bOd
+bOd
+bOd
 bRA
 bOd
 bTO
