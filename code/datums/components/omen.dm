@@ -40,7 +40,7 @@
   * We do the prob() at the beginning to A. add some tension for /when/ it will strike, and B. (more importantly) ameliorate the fact that we're checking up to 5 turfs's contents each time
   */
 /datum/component/omen/proc/check_accident(atom/movable/our_guy)
-	if(!prob(10))
+	if(!prob(15))
 		return
 	for(var/t in get_adjacent_open_turfs(our_guy))
 		var/turf/the_turf = t
@@ -52,7 +52,7 @@
 
 /// If we get knocked down, see if we have a really bad slip and bash our head hard
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
-	if(amount <= 0 || !prob(45))
+	if(amount <= 0 || !prob(50))
 		return
 
 	var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
