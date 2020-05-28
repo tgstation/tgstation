@@ -50,7 +50,7 @@
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustStun(5 SECONDS)
 		return FALSE
-	. = ..()
+	return ..()
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

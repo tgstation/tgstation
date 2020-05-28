@@ -21,6 +21,9 @@
 	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
 		return
 	. += "The Tome holds [charge] charges."
+	. += "Use it on the floor to create a transmutation rune, used to perform rituals."
+	. += "Hit an influence in the black part with it to gain a charge."
+	. += "Hit a transmutation rune to destroy it."
 
 /obj/item/forbidden_book/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()

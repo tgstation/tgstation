@@ -112,7 +112,6 @@
 				var/datum/objective/stalk/S = new
 				S.owner = owner
 				S.find_target()
-				S.update_explanation_text()
 				objectives += S
 			if("protect")
 				var/datum/objective/protect/P = new
@@ -225,11 +224,12 @@
 
 /datum/objective/stalk
 	name = "spendtime"
-	var/timer = 1800 //5 minutes
+	var/timer = 5 MINUTES
+
 
 /datum/objective/stalk/update_explanation_text()
 	if(timer == initial(timer))//just so admins can mess with it
-		timer += pick(-600, 600)
+		timer += pick(-3 MINUTES, 3 MINUTES)
 	if(target?.current)
 		explanation_text = "Stalk [target.name] for at least [DisplayTimeText(timer)] while they're alive."
 	else
