@@ -32,6 +32,13 @@ DATU: Datums for map templates
 	power_equip = FALSE
 	power_environ = FALSE
 
+/area/ruin/has_grav/DnDmansion
+	requires_power = FALSE
+	outdoors = FALSE
+	power_light = TRUE
+	power_equip = TRUE
+	power_environ = TRUE
+
 /area/ruin/has_grav/prototype/Captain
 	name = "Prototype Captain's quarter"
 	icon_state = "blue"
@@ -233,5 +240,6 @@ There is no point for a testament, but maybe a confession is appropriate. I've n
 	id = "dndmansion"
 	suffix = "DnDmansion.dmm"
 	name = "dndmansion"
-	placement_weight = 0 //Fun spawners in space are rare. Might be toned down in the future.
+	placement_weight = 0
+	unpickable = TRUE
 	description = "A rich guy hired a bunch of nerds so he can watch you play dnd. That nerd is you. have fun."
