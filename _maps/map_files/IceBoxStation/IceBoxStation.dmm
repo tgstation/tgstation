@@ -27754,7 +27754,6 @@
 /area/crew_quarters/heads/hop)
 "bnT" = (
 /obj/structure/ladder,
-/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plasteel,
 /area/quartermaster/miningdock)
 "bnU" = (
