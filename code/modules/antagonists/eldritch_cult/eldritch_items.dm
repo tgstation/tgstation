@@ -17,11 +17,11 @@
 	var/dist = get_dist(user.loc,target.loc)
 
 	switch(dist)
-		if(0 to 5)
+		if(0 to 15)
 			to_chat(user,"<span class='warning'>[target.real_name] is near you</span>")
-		if(6 to 15)
+		if(16 to 31)
 			to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty</span>")
-		if(16 to 64)
+		if(32 to 127)
 			to_chat(user,"<span class='warning'>[target.real_name] is far away from you</span>")
 		else
 			to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach</span>")
