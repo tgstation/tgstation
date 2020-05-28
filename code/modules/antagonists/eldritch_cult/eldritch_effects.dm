@@ -72,7 +72,6 @@
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
 		EK.on_finished_recipe(user,selected_atoms,loc)
 		EK.cleanup_atoms(selected_atoms)
-	return
 
 /obj/effect/eldritch/big
 	name = "Transmutation rune"
