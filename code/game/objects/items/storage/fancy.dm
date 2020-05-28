@@ -150,6 +150,7 @@
 	if(contents.len == 0 && attached_coupon)
 		to_chat(user, "<span class='notice'>You rip the back off \the [src] and get a coupon!</span>")
 		user.put_in_hands(attached_coupon)
+		attached_coupon.generate()
 		attached_coupon = null
 		name = "discarded cigarette packet"
 		desc = "An old cigarette packet with the back torn off, worth less than nothing now."

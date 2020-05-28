@@ -1,4 +1,6 @@
-/obj/item/coupon
+#define COUPON_OMEN "omen"
+
+obj/item/coupon
 	name = "coupon"
 	desc = "It doesn't matter if you didn't want it before, what matters now is that you've got a coupon for it!"
 	icon_state = "data_1"
@@ -9,16 +11,29 @@
 	var/discount_pct_off = 0.05
 	var/obj/machinery/computer/cargo/inserted_console
 
-/obj/item/coupon/Initialize()
-	. = ..()
+/// Choose what our prize is :D
+/obj/item/coupon/proc/generate()
 	discounted_pack = pick(subtypesof(/datum/supply_pack/goody))
-	var/list/chances = list(0.10 = 3, 0.15 = 5, 0.20 = 6, 0.25 = 4, 0.50 = 2)
+	var/list/chances = list("0.10" = 3, "0.15" = 5, "0.20" = 6, "0.25" = 4, "0.50" = 2, COUPON_OMEN = 1000)
 	discount_pct_off = pickweight(chances)
-	name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
+	if(discount_pct_off == COUPON_OMEN)
+		name = "coupon - fuck you"
+		desc = "The small text reads, 'You will be slaughtered'... That doesn't sound right, does it?"
+		if(ismob(loc))
+			var/mob/M = loc
+			to_chat(M, "<span class='warning'>The coupon reads '<b>fuck you</b>' in large, bold text... is- is that a prize, or?</span>")
+			M.AddComponent(/datum/component/omen, TRUE, src)
+	else
+		discount_pct_off = text2num(discount_pct_off)
+		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
 
 /obj/item/coupon/attack_obj(obj/O, mob/living/user)
 	if(!istype(O, /obj/machinery/computer/cargo))
 		return ..()
+	if(discount_pct_off == COUPON_OMEN)
+		to_chat(user, "<span class='warning'>\The [O] validates the coupon as authentic, but refuses to accept it...</span>")
+		O.say("Coupon fulfillment already in progress...")
+		return
 
 	inserted_console = O
 	LAZYADD(inserted_console.loaded_coupons, src)
@@ -29,3 +44,5 @@
 	if(inserted_console)
 		LAZYREMOVE(inserted_console.loaded_coupons, src)
 	. = ..()
+
+#undef COUPON_OMEN

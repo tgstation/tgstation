@@ -420,6 +420,7 @@
 #include "code\datums\components\mood.dm"
 #include "code\datums\components\nanites.dm"
 #include "code\datums\components\ntnet_interface.dm"
+#include "code\datums\components\omen.dm"
 #include "code\datums\components\orbiter.dm"
 #include "code\datums\components\paintable.dm"
 #include "code\datums\components\pellet_cloud.dm"
