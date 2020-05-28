@@ -15,16 +15,17 @@
 		to_chat(user,"<span class='warning'>No target could be found. Put the living heart on the rune and use the rune to recieve a target.</span>")
 		return
 	var/dist = get_dist(user.loc,target.loc)
+	var/dir = get_dir(user.loc,target.loc)
 
 	switch(dist)
 		if(0 to 15)
-			to_chat(user,"<span class='warning'>[target.real_name] is near you</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is near you. They are to the [lowertext("[dir]")] of you!</span>")
 		if(16 to 31)
-			to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty. They are to the [lowertext("[dir]")] of you!</span>")
 		if(32 to 127)
-			to_chat(user,"<span class='warning'>[target.real_name] is far away from you</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is far away from you. They are to the [lowertext("[dir]")] of you!</span>")
 		else
-			to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
 
 	if(target.stat == DEAD)
 		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them onto a transmutation rune!</span>")
@@ -47,6 +48,7 @@
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
 	if(!IS_E_CULTIST(user))
+		to_chat(user,"<span class='danger'>Echoes of the breat beyond break your mind!</span>")
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustStun(5 SECONDS)
 		return FALSE
