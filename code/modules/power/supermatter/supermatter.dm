@@ -131,7 +131,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/warning_point = 50
 	///The alert we send when we've reached warning_point
 	var/warning_alert = "Danger! Crystal hyperstructure integrity faltering!"
-	///The point at which we start sending messages to the commen channel
+	///The point at which we start sending messages to the common channel
 	var/emergency_point = 700
 	///The alert we send when we've reached emergency_point
 	var/emergency_alert = "CRYSTAL DELAMINATION IMMINENT."
@@ -140,8 +140,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///When we pass this amount of damage we start shooting bolts
 	var/damage_penalty_point = 550
 
-	//var/emergency_issued = FALSE
-	//A scaling value that effects the severity of explosions.
+	//A scaling value that affects the severity of explosions.
 	var/explosion_power = 35
 	///Time in 1/10th of seconds since the last sent warning
 	var/lastwarning = 0
@@ -163,17 +162,17 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/list/gas_powermix = list(/datum/gas/oxygen = 1, /datum/gas/water_vapor = 1, /datum/gas/plasma = 1, /datum/gas/carbon_dioxide = 1, /datum/gas/nitrogen = -1, /datum/gas/pluoxium = -1, /datum/gas/tritium = 1, /datum/gas/bz = 1, /datum/gas/freon = -1, /datum/gas/hydrogen = 1)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
-	///Effects the power gain the sm experiances from heat
+	///Affects the power gain the sm experiances from heat
 	var/gasmix_power_ratio = 0
-	///Effects the amount of o2 and plasma the sm outputs, along with the heat it makes.
+	///Affects the amount of o2 and plasma the sm outputs, along with the heat it makes.
 	var/dynamic_heat_modifier = 1
-	///Effects the amount of damage and minimum point at which the sm takes heat damage
+	///Affects the amount of damage and minimum point at which the sm takes heat damage
 	var/dynamic_heat_resistance = 1
 	///Uses powerloss_dynamic_scaling and combined_gas to lessen the effects of our powerloss functions
 	var/powerloss_inhibitor = 1
 	///Based on co2 percentage, slowly moves between 0 and 1. We use it to calc the powerloss_inhibitor
 	var/powerloss_dynamic_scaling= 0
-	///Effects the amount of radiation the sm makes. We multiply this with power to find the rads.
+	///Affects the amount of radiation the sm makes. We multiply this with power to find the rads.
 	var/power_transmission_bonus = 0
 	///Used to increase or lessen the amount of damage the sm takes from heat based on molar counts.
 	var/mole_heat_penalty = 0
@@ -192,7 +191,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/radio_key = /obj/item/encryptionkey/headset_eng
 	///The engineering channel
 	var/engineering_channel = "Engineering"
-	///The commen channel
+	///The common channel
 	var/common_channel = null
 
 	///Boolean used for logging if we've been powered
@@ -502,7 +501,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		gasmix_power_ratio = 0
 		for(var/gasID in gas_powermix)
 			gasmix_power_ratio += gas_comp[gasID] * gas_powermix[gasID]
-		gasmix_power_ratio = min(max(gasmix_power_ratio, 0), 1)
+		gasmix_power_ratio = clamp(gasmix_power_ratio, 0, 1)
 
 		//Minimum value of -10, maximum value of 23. Effects plasma and o2 output and the output heat
 		dynamic_heat_modifier = 0
