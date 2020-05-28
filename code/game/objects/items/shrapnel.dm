@@ -40,7 +40,7 @@
 	ricochet_incidence_leeway = 60
 	hit_stunned_targets = TRUE
 	sharpness = TRUE
-	wound_bonus = 10
+	wound_bonus = 30
 
 /obj/projectile/bullet/shrapnel/mega
 	name = "flying shrapnel hunk"

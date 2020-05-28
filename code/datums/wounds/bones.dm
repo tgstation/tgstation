@@ -38,7 +38,7 @@
 */
 /datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = null, smited = FALSE)
 	. = ..()
-	if(QDELETED(src) || !limb)
+	if(QDELING(src) || !limb)
 		return
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group)
 		processes = TRUE
@@ -90,7 +90,7 @@
 		to_chat(victim, "<span class='green'>Your [limb.name] has recovered from your fracture!</span>")
 		remove_wound()
 
-// note this is only for humans since they alone have COMSIG_HUMAN_EARLY_UNARMED_ATTACK (obviously)
+/// If we're a human who's punching something with a broken arm, we might hurt ourselves doing so
 /datum/wound/brute/bone/proc/attack_with_hurt_hand(mob/M, atom/target, proximity)
 	if(victim.get_active_hand() != limb || victim.a_intent == INTENT_HELP || !ismob(target) || severity <= WOUND_SEVERITY_MODERATE)
 		return
@@ -241,7 +241,8 @@
 	scarring_descriptions = list("light discoloring", "a slight blue tint")
 
 /datum/wound/brute/bone/moderate/crush()
-	if(prob(33))
+	if(!prob(33))
+		return
 		victim.visible_message("<span class='danger'>[victim]'s dislocated [limb.name] pops back into place!</span>", "<span class='userdanger'>Your dislocated [limb.name] pops back into place! Ow!</span>")
 		remove_wound()
 
@@ -262,6 +263,7 @@
 			malpractice(user)
 		return TRUE
 
+/// If someone is snapping our dislocated joint back into place by hand with an aggro grab and help intent
 /datum/wound/brute/bone/moderate/proc/chiropractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
@@ -284,6 +286,7 @@
 		limb.receive_damage(brute=10, wound_bonus=CANT_WOUND)
 		chiropractice(user)
 
+/// If someone is snapping our dislocated joint into a fracture by hand with an aggro grab and harm or disarm intent
 /datum/wound/brute/bone/moderate/proc/malpractice(mob/living/carbon/human/user)
 	var/time = base_treat_time
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER)
@@ -371,6 +374,7 @@
 	trauma_cycle_cooldown = 2.5 MINUTES
 	chance_internal_bleeding = 60
 
+/// if someone is using bone gel on our wound
 /datum/wound/brute/bone/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
 	if(gelled)
 		to_chat(user, "<span class='warning'>[user == victim ? "Your" : "[victim]'s"] [limb.name] is already coated with bone gel!</span>")
@@ -405,6 +409,7 @@
 	if(!gelled)
 		gelled = TRUE
 
+/// if someone is using surgical tape on our wound
 /datum/wound/brute/bone/proc/tape(obj/item/stack/sticky_tape/surgical/I, mob/user)
 	if(!gelled)
 		to_chat(user, "<span class='warning'>[user == victim ? "Your" : "[victim]'s"] [limb.name] must be coated with bone gel to perform this emergency operation!</span>")
@@ -433,9 +438,9 @@
 /datum/wound/brute/bone/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/stack/medical/bone_gel))
 		gel(I, user)
-	if(istype(I, /obj/item/stack/sticky_tape/surgical))
+	else if(istype(I, /obj/item/stack/sticky_tape/surgical))
 		tape(I, user)
-	if(istype(I, /obj/item/stack/medical/gauze))
+	else if(istype(I, /obj/item/stack/medical/gauze))
 		splint(I, user)
 
 /datum/wound/brute/bone/get_scanner_description(mob/user)

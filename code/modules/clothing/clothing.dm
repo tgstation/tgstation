@@ -558,9 +558,12 @@ BLIND     // can't see anything
 	else
 		GLOB.suit_sensors_list -= H
 
+	else
+		GLOB.suit_sensors_list -= H
+
+/// If we're a clothing with at least 1 shredded/disabled zone, give the wearer a periodic heads up letting them know their clothes are damaged
 /obj/item/clothing/proc/bristle(mob/living/L)
 	if(!istype(L))
 		return
-
 	if(prob(0.2))
 		to_chat(L, "<span class='warning'>The damaged threads on your [src.name] chafe!</span>")

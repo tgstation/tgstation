@@ -36,7 +36,7 @@
 	obj_damage = 50
 	melee_damage_lower = 15 // reduced from 30 to 15-20 with wounds since they get big buffs to slicing wounds
 	melee_damage_upper = 20
-	wound_bonus = -10
+	wound_bonus = -15
 	bare_wound_bonus = 0
 	sharpness = TRUE
 	see_in_dark = 8
@@ -60,7 +60,7 @@
 	/// How many times we have hit humanoid targets since we last bloodcrawled, scaling wounding power
 	var/current_hitstreak = 0
 	/// How much both our wound_bonus and bare_wound_bonus go up per hitstreak hit
-	var/wound_bonus_per_hit = 10
+	var/wound_bonus_per_hit = 5
 	/// How much our wound_bonus hitstreak bonus caps at (peak demonry)
 	var/wound_bonus_hitstreak_max = 12
 

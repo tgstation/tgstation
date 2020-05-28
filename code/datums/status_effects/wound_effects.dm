@@ -23,10 +23,15 @@
 	tick_interval = 10
 	alert_type = /obj/screen/alert/status_effect/limp
 	var/msg_stage = 0//so you dont get the most intense messages immediately
+	/// The left leg of the limping person
 	var/obj/item/bodypart/l_leg/left
+	/// The right leg of the limping person
 	var/obj/item/bodypart/r_leg/right
+	/// Which leg we're limping with next
 	var/obj/item/bodypart/next_leg
+	/// How many deciseconds we limp for on the left leg
 	var/slowdown_left = 0
+	/// How many deciseconds we limp for on the right leg
 	var/slowdown_right = 0
 
 /datum/status_effect/limp/on_apply()
@@ -118,7 +123,7 @@
 	return ..()
 
 /datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
-	..()
+	. = ..()
 	var/datum/wound/W = incoming_wound
 	linked_wound = W
 	linked_limb = linked_wound.limb
@@ -134,6 +139,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_LOSE_WOUND, .proc/check_remove)
 	return TRUE
 
+/// check if the wound getting removed is the wound we're tied to
 /datum/status_effect/wound/proc/check_remove(mob/living/L, datum/wound/W)
 	if(W == linked_wound)
 		qdel(src)
@@ -148,16 +154,16 @@
 	if(C.get_active_hand() == linked_limb)
 		to_chat(C, "<span class='warning'>The [lowertext(linked_wound)] in your [linked_limb.name] slows your progress!</span>")
 		return linked_wound.interaction_efficiency_penalty
-	else
-		return 1
+
+	return 1
 
 /datum/status_effect/wound/bone/nextmove_modifier()
 	var/mob/living/carbon/C = owner
 
 	if(C.get_active_hand() == linked_limb)
 		return linked_wound.interaction_efficiency_penalty
-	else
-		return 1
+
+	return 1
 
 /datum/status_effect/wound/bone/moderate
 	id = "disjoint"

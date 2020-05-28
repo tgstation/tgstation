@@ -252,11 +252,12 @@
 	owner.adjustBruteLoss(-10, FALSE)
 	owner.adjustFireLoss(-5, FALSE)
 	owner.adjustOxyLoss(-10)
-	if(iscarbon(owner))
-		var/mob/living/carbon/C = owner
-		for(var/i in C.all_scars)
-			var/datum/scar/S = i
-			qdel(S)
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/C = owner
+	for(var/i in C.all_scars)
+		var/datum/scar/S = i
+		qdel(S)
 
 /obj/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"

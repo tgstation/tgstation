@@ -248,7 +248,9 @@
 	gain_text = "<span class='notice'>Your body has seen better days.</span>"
 	lose_text = "<span class='notice'>Your sins may wash away, but those scars are here to stay...</span>"
 	medical_record_text = "Patient has withstood significant physical trauma and declined plastic surgery procedures to heal scarring."
+	/// the minimum amount of scars we can generate
 	var/min_scars = 3
+	/// the maximum amount of scars we can generate
 	var/max_scars = 7
 
 /datum/quirk/longtimer/on_spawn()

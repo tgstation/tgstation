@@ -15,15 +15,18 @@
 */
 
 /datum/wound
-	//Fluff
+	/// What it's named
 	var/name = "ouchie"
+	/// The description shown on the scanners
 	var/desc = ""
+	/// The basic treatment suggested by health analyzers
 	var/treat_text = ""
+	/// What the limb looks like on a cursory examine
 	var/examine_desc = "is badly hurt"
 
 	/// needed for "your arm has a compound fracture" vs "your arm has some third degree burns"
 	var/a_or_from = "a"
-
+	/// The visible message when this happens
 	var/occur_text = ""
 	/// This sound will be played upon the wound being applied
 	var/sound_effect
@@ -85,6 +88,7 @@
 	/// If having this wound makes currently makes the parent bodypart unusable
 	var/disabling
 
+	/// The status effect we're linked to
 	var/datum/status_effect/linked_status_effect
 
 	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
@@ -93,6 +97,7 @@
 	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
 	var/datum/surgery/attached_surgery
 
+	/// What kind of scars this wound will create description wise once healed
 	var/list/scarring_descriptions = list("general disfigurement")
 	/// If we've already tried scarring while removing (since remove_wound calls qdel, and qdel calls remove wound, .....) TODO: make this cleaner
 	var/already_scarred = FALSE
@@ -102,7 +107,7 @@
 /datum/wound/Destroy()
 	if(attached_surgery)
 		QDEL_NULL(attached_surgery)
-	if(limb && limb.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
+	if(limb?.wounds && (src in limb.wounds)) // destroy can call remove_wound() and remove_wound() calls qdel, so we check to make sure there's anything to remove first
 		remove_wound()
 	limb = null
 	victim = null

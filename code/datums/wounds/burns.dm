@@ -175,7 +175,7 @@
 	new burn common procs
 */
 
-// TODO:actually balance ointment + regen mesh + bandages
+/// if someone is using ointment on our burns
 /datum/wound/burn/proc/ointment(obj/item/stack/medical/ointment/I, mob/user)
 	user.visible_message("<span class='notice'>[user] begins applying [I] to [victim]'s [limb.name]...</span>", "<span class='notice'>You begin applying [I] to [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
 	if(!do_after(user, (user == victim ? I.self_delay : I.other_delay), extra_checks = CALLBACK(src, .proc/still_exists)))
@@ -201,6 +201,7 @@
 	sanitization += I.sanitization
 	I.use(1)
 
+/// if someone is wrapping gauze on our burns
 /datum/wound/burn/proc/bandage(obj/item/stack/medical/gauze/I, mob/user)
 	if(current_bandage)
 		if(current_bandage.absorption_capacity > I.absorption_capacity + 1)
@@ -221,6 +222,7 @@
 	sanitization += I.sanitization
 	I.use(1)
 
+/// if someone is using mesh on our burns
 /datum/wound/burn/proc/mesh(obj/item/stack/medical/mesh/I, mob/user)
 	user.visible_message("<span class='notice'>[user] begins wrapping [victim]'s [limb.name] with [I]...</span>", "<span class='notice'>You begin wrapping [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 	if(!do_after(user, (user == victim ? I.self_delay : I.other_delay), target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
@@ -237,7 +239,7 @@
 	else
 		try_treating(I, user)
 
-// Paramedic UV penlights
+/// Paramedic UV penlights
 /datum/wound/burn/proc/uv(obj/item/flashlight/pen/paramedic/I, mob/user)
 	if(I.uv_cooldown > world.time)
 		to_chat(user, "<span class='notice'>[I] is still recharging!</span>")
@@ -260,6 +262,7 @@
 	else if(istype(I, /obj/item/flashlight/pen/paramedic))
 		uv(I, user)
 
+/// basic support for instabitaluri/synthflesh healing flesh damage, more chem support in the future
 /datum/wound/burn/proc/regenerate_flesh(amount)
 	flesh_healing += amount * 0.5 // 20u patch will heal 10 flesh standard
 
