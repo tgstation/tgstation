@@ -35,7 +35,7 @@
 	var/stun_sound = 'sound/weapons/egloves.ogg'
 	
 	///This var determines the stamina damage of the baton. This is used in the baton_effect proc. This value is reduced by armor.
-	var/stamina_loss_amt = 30
+	var/stamina_loss_amt = 40
 	///if it can be converted with a conversion kit
 	var/convertible = TRUE
 
@@ -93,7 +93,7 @@
 		baton_effect(hit_atom)
 
 /obj/item/melee/baton/loaded //this one starts with a cell pre-installed.
-	preload_cell_type = /obj/item/stock_parts/cell/high
+	preload_cell_type = /obj/item/stock_parts/cell/high/plus
 
 /obj/item/melee/baton/proc/deductcharge(chrgdeductamt)
 	if(cell)
@@ -118,7 +118,7 @@
 /obj/item/melee/baton/examine(mob/user)
 	. = ..()
 	if(cell)
-		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged.</span>"
+		. += "<span class='notice'>\The [src] is [round(cell.percent())]% charged. The cell it is using has a rating of [DisplayEnergy(cell.maxcharge)].</span>"
 	else
 		. += "<span class='warning'>\The [src] does not have a power source installed.</span>"
 
@@ -150,6 +150,14 @@
 		to_chat(user, "<span class='notice'>You remove the cell from [src].</span>")
 		turned_on = FALSE
 		update_icon()
+
+/obj/item/melee/baton/proc/get_cell_zap_pen()
+	if(cell)
+		var/chargepower = cell.maxcharge
+		var/zap_pen = (chargepower/1000)
+		return zap_pen
+	else
+		return FALSE
 
 /obj/item/melee/baton/attack_self(mob/user)
 	toggle_on(user)
@@ -222,14 +230,16 @@
 			return FALSE
 	///the zone the damage is applied against; the target's chest
 	var/chest = L.get_bodypart(BODY_ZONE_CHEST)
+	///armour penetration derived from the baton's cell
+	var/zap_penetration = get_cell_zap_pen()
 	///how much the target's chest armor will block of the stamina damage
-	var/zap_block = L.run_armor_check(chest, "melee")
+	var/zap_block = L.run_armor_check(chest, "melee", null, null, zap_penetration)
 	
 	/// After a target is hit, we do a chunk of stamina damage, reduced by the target's armor
 	L.Jitter(20)
 	L.stuttering = max(8, L.stuttering)
 	L.apply_damage(stamina_loss_amt, STAMINA, chest, zap_block)
-
+	
 	SEND_SIGNAL(L, COMSIG_LIVING_MINOR_SHOCK)
 
 	if(user)
@@ -240,11 +250,11 @@
 		log_combat(user, L, "stunned")
 
 	playsound(src, stun_sound, 50, TRUE, -1)
-
+	
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		H.forcesay(GLOB.hit_appends)
-
+	
 	return TRUE
 
 /obj/item/melee/baton/emp_act(severity)
