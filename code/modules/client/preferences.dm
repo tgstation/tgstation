@@ -108,9 +108,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/widescreenpref = TRUE
 	///What size should pixels be displayed as? 0 is strech to fit
 	var/pixel_size = 0
-	///What scaling method should we use?
-	var/scaling_method = "normal"
+	///What scaling method should we use? Distort means nearest neighbor
+	var/scaling_method = SCALING_METHOD_DISTORT
 	var/uplink_spawn_loc = UPLINK_PDA
+	///The playtime_reward_cloak variable can be set to TRUE from the prefs menu only once the user has gained over 5K playtime hours. If true, it allows the user to get a cool looking roundstart cloak.
+	var/playtime_reward_cloak = FALSE
 
 	var/list/exp = list()
 	var/list/menuoptions
@@ -285,7 +287,8 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 
 			dat += "<br><b>Uplink Spawn Location:</b><BR><a href ='?_src_=prefs;preference=uplink_loc;task=input'>[uplink_spawn_loc]</a><BR></td>"
-
+			if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
+				dat += "<br><b>Don The Ultimate Gamer Cloak?:</b><BR><a href ='?_src_=prefs;preference=playtime_reward_cloak'>[(playtime_reward_cloak) ? "Enabled" : "Disabled"]</a><BR></td>"
 			var/use_skintones = pref_species.use_skintones
 			if(use_skintones)
 
@@ -605,9 +608,9 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			dat += "<b>Pixel Scaling:</b> <a href='?_src_=prefs;preference=pixel_size'>[(button_name) ? "Pixel Perfect [button_name]x" : "Stretch to fit"]</a><br>"
 
 			switch(scaling_method)
-				if(SCALING_METHOD_NORMAL)
-					button_name = "Nearest Neighbor"
 				if(SCALING_METHOD_DISTORT)
+					button_name = "Nearest Neighbor"
+				if(SCALING_METHOD_NORMAL)
 					button_name = "Point Sampling"
 				if(SCALING_METHOD_BLUR)
 					button_name = "Bilinear"
@@ -1480,6 +1483,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 					var/new_loc = input(user, "Choose your character's traitor uplink spawn location:", "Character Preference") as null|anything in GLOB.uplink_spawn_loc_list
 					if(new_loc)
 						uplink_spawn_loc = new_loc
+
+				if("playtime_reward_cloak")
+					if (user.client.get_exp_living(TRUE) >= PLAYTIME_VETERAN)
+						playtime_reward_cloak = !playtime_reward_cloak
 
 				if("ai_core_icon")
 					var/ai_core_icon = input(user, "Choose your preferred AI core display screen:", "AI Core Display Screen Selection") as null|anything in GLOB.ai_core_display_screens

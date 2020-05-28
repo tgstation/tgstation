@@ -16,9 +16,22 @@
 /obj/machinery/light/small,
 /turf/open/floor/plasteel,
 /area/mine/eva)
+"f" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/mine/eva)
 "g" = (
 /obj/structure/closet/emcloset,
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
+/area/mine/eva)
+"h" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
 /area/mine/eva)
 "i" = (
 /obj/effect/turf_decal/tile/brown,
@@ -30,6 +43,13 @@
 "j" = (
 /obj/machinery/light/small{
 	dir = 4
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"k" = (
+/obj/machinery/door/airlock/maintenance{
+	name = "Mining Station Maintenance";
+	req_access_txt = "48"
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
@@ -46,12 +66,50 @@
 /obj/machinery/door/airlock/external,
 /turf/open/floor/plasteel,
 /area/mine/eva)
+"n" = (
+/obj/machinery/space_heater,
+/obj/item/trash/waffles,
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "o" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/open/floor/plating,
 /area/mine/eva)
+"p" = (
+/obj/structure/showcase/machinery/tv{
+	desc = "A slightly battered looking TV. Sadly, being surrounded by a metric ton of rubble prevents it from getting a signal."
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"q" = (
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"r" = (
+/obj/structure/chair/sofa{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "s" = (
 /obj/structure/ore_box,
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"t" = (
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"u" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 8
+	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "v" = (
@@ -63,15 +121,24 @@
 	},
 /turf/open/floor/plasteel,
 /area/mine/eva)
+"w" = (
+/obj/effect/turf_decal/tile/brown,
+/turf/open/floor/plasteel,
+/area/mine/eva)
+"x" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/mine/eva)
 "y" = (
 /turf/closed/wall,
 /area/mine/eva)
 "z" = (
-/obj/structure/reagent_dispensers/watertank,
-/obj/machinery/light/small{
-	dir = 1
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
 	},
-/turf/open/floor/plating,
+/turf/open/floor/plasteel,
 /area/mine/eva)
 "A" = (
 /obj/machinery/telecomms/relay/preset/mining,
@@ -18788,16 +18855,16 @@ a
 a
 y
 o
-V
+h
 V
 y
-C
+u
 l
+x
+y
+n
 C
-y
-y
-y
-y
+q
 y
 a
 a
@@ -19044,7 +19111,7 @@ a
 a
 a
 y
-z
+f
 V
 V
 y
@@ -19052,9 +19119,9 @@ W
 C
 e
 y
-y
-y
-y
+p
+C
+r
 y
 a
 a
@@ -19308,10 +19375,10 @@ Q
 C
 C
 C
-y
-y
-y
-y
+k
+C
+C
+t
 y
 a
 a
@@ -19825,7 +19892,7 @@ C
 C
 C
 I
-C
+w
 Y
 a
 a
@@ -20339,7 +20406,7 @@ C
 C
 C
 j
-C
+u
 Y
 a
 a
@@ -21361,9 +21428,9 @@ c
 K
 K
 y
-C
+w
 i
-C
+z
 y
 y
 y

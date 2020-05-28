@@ -98,17 +98,24 @@
 	. = ..()
 	. += "<span class='notice'>You notice a powerful aura about this cloak, suggesting that only the truly experienced may wield it.</span>"
 
-/obj/item/clothing/neck/cloak/skill_reward/equipped(mob/user, slot)
-	if (user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY)
-		to_chat(user, "<span class = 'notice'>You feel completely and utterly unworthy to even touch \the [src].</span>")
+/obj/item/clothing/neck/cloak/skill_reward/proc/check_wearable(mob/user)
+	return user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY
+
+/obj/item/clothing/neck/cloak/skill_reward/proc/unworthy_unequip(mob/user)
+	to_chat(user, "<span class = 'notice'>You feel completely and utterly unworthy to even touch \the [src].</span>")
+	var/hand_index = user.get_held_index_of_item(src)
+	if (hand_index)
 		user.dropItemToGround(src, TRUE)
-		return FALSE
+	return FALSE
+
+/obj/item/clothing/neck/cloak/skill_reward/equipped(mob/user, slot)
+	if (check_wearable(user))
+		unworthy_unequip(user)
 	return ..()
 
 /obj/item/clothing/neck/cloak/skill_reward/attack_hand(mob/user)
-	if (user.mind?.get_skill_level(associated_skill_path) < SKILL_LEVEL_LEGENDARY)
-		to_chat(user, "<span class = 'notice'>You feel completely and utterly unworthy to even touch \the [src]!</span>")
-		return FALSE
+	if (check_wearable(user))
+		unworthy_unequip(user)
 	return ..()
 
 /obj/item/clothing/neck/cloak/skill_reward/gaming
@@ -119,7 +126,7 @@
 
 /obj/item/clothing/neck/cloak/skill_reward/cleaning
 	name = "legendary cleaner's cloak"
-	desc = "Worn by the most skilled of custodians, this legendary cloak is only attainable by achieving janitorial enlightenment. This status symbol represents a being not only extensively trained in grime combat, but one who is willing to use an entire aresenal of cleaning supplies to its full extent to wipe grime's miserable ass off the face of the station."
+	desc = "Worn by the most skilled custodians, this legendary cloak is only attainable by achieving janitorial enlightenment. This status symbol represents a being not only extensively trained in grime combat, but one who is willing to use an entire aresenal of cleaning supplies to its full extent to wipe grime's miserable ass off the face of the station."
 	icon_state = "cleanercloak"
 	associated_skill_path = /datum/skill/cleaning
 
@@ -134,3 +141,11 @@
 	desc = "Worn by the most skilled miners, this legendary cloak is only attainable by achieving true mineral enlightenment. This status symbol represents a being who has forgotten more about rocks than most miners will ever know, a being who has moved mountains and filled valleys."
 	icon_state = "minercloak"
 	associated_skill_path = /datum/skill/mining
+
+/obj/item/clothing/neck/cloak/skill_reward/playing
+	name = "legendary veteran's cloak" 
+	desc = "Worn by the wisest of veteran employees, this legendary cloak is only attainable by maintaining a living employment agreement with Nanotrasen for over <b>five thousand hours</b>. This status symbol represents a being is better than you in nearly every quantifiable way, simple as that."
+	icon_state = "playercloak"
+
+/obj/item/clothing/neck/cloak/skill_reward/playing/check_wearable(mob/user)
+	return user.client?.get_exp_living(TRUE) >= PLAYTIME_VETERAN

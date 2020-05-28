@@ -241,6 +241,9 @@
 		PDA.ownjob = J.title
 		PDA.update_label()
 
+	if(H.client?.prefs.playtime_reward_cloak)
+		neck = /obj/item/clothing/neck/cloak/skill_reward/playing
+
 /datum/outfit/job/get_chameleon_disguise_info()
 	var/list/types = ..()
 	types -= /obj/item/storage/backpack //otherwise this will override the actual backpacks

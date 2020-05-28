@@ -38,6 +38,8 @@
 	var/ui_y = 700
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images are taken from /icons/program_icons. Be careful not to use too large images!
 	var/ui_header = null
+	///Assets specific to programs
+	var/list/special_assets = list()
 
 /datum/computer_file/program/New(obj/item/modular_computer/comp = null)
 	..()
@@ -161,6 +163,9 @@
 	if(!ui && tgui_id)
 		var/datum/asset/assets = get_asset_datum(/datum/asset/simple/headers)
 		assets.send(user)
+		for(var/i in special_assets)
+			assets = get_asset_datum(i)
+			assets.send(user)
 
 		ui = new(user, src, ui_key, tgui_id, filedesc, ui_x, ui_y, state = state)
 		ui.open()
