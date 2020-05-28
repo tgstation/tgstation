@@ -75,11 +75,9 @@
 /mob/living/simple_animal/hostile/ooze/proc/check_edible(atom/movable/AM)
 	if(ismob(AM))
 		return FALSE
-	var/foodtype
 	if(istype(AM, /obj/item/reagent_containers/food))
 		var/obj/item/reagent_containers/food/meal = AM
-		foodtype = meal.foodtype
-	return foodtype & MEAT //Dont forget to add edible component compat here later
+		return (meal.foodtype & MEAT) //Dont forget to add edible component compat here later
 
 ///Does ooze_nutrition + supplied amount and clamps it within 0 and 500
 /mob/living/simple_animal/hostile/ooze/proc/adjust_ooze_nutrition(amount)
