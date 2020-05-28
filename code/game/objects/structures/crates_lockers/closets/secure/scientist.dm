@@ -33,7 +33,7 @@
 	req_access = list(ACCESS_RESEARCH)
 
 /obj/structure/closet/secure_closet/cytology/PopulateContents()
-	..()
+	. = ..()
 	new /obj/item/pushbroom(src)
 	new /obj/item/plunger(src)
 	new /obj/item/storage/bag/bio(src)
