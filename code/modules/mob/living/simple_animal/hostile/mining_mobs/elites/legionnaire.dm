@@ -99,19 +99,21 @@
 			spew_smoke()
 			
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/Move()
-	if(!charging)
-		..()
+	if(charging)
+		return
+	..()
 
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/MiddleClickOn(atom/A)
 	. = ..()
-	if(myhead)
-		var/turf/T = get_turf(A)
-		if(T)
-			myhead.LoseTarget()
-			myhead.Goto(T, myhead.move_to_delay)
+	if(!myhead)
+		return
+	var/turf/T = get_turf(A)
+	if(T)
+		myhead.LoseTarget()
+		myhead.Goto(T, myhead.move_to_delay)
 		
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge(target)
-	ranged_cooldown = world.time + 50
+	ranged_cooldown = world.time + 35
 	charging = TRUE
 	var/dir_to_target = get_dir(get_turf(src), get_turf(target))
 	var/turf/T = get_step(get_turf(src), dir_to_target)
@@ -167,7 +169,6 @@
 		icon_aggro = "legionnaire_headless"
 		visible_message("<span class='boldwarning'>[src]'s head flies off!</span>")
 		var/mob/living/simple_animal/hostile/asteroid/elite/legionnairehead/newhead = new /mob/living/simple_animal/hostile/asteroid/elite/legionnairehead(loc)
-		newhead.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 		newhead.GiveTarget(target)
 		newhead.faction = faction.Copy()
 		myhead = newhead
@@ -317,9 +318,8 @@
 	if(!rand(1, 100) <= bonus_value || target.stat == DEAD)
 		return
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(user.loc)
-	A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
 	A.GiveTarget(target)
-	A.friends = user
+	A.friends += user
 	A.faction = user.faction.Copy()
 	
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
@@ -332,7 +332,6 @@
 		return
 	L.visible_message("<span class='boldwarning'>[L] shakes the [src] and summons a legion skull!</span>")
 	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(L.loc)
-	A.flags_1 |= (flags_1 & ADMIN_SPAWNED_1)
-	A.friends = L
+	A.friends += L
 	A.faction = L.faction.Copy()
-	use_time = world.time + 40
+	use_time = world.time + 4 SECONDS
