@@ -44,12 +44,6 @@
 		GLOB.surgeries_list += new path()
 	sortList(GLOB.surgeries_list, /proc/cmp_typepaths_asc)
 
-	//Materials
-	for(var/path in subtypesof(/datum/material))
-		var/datum/material/D = new path()
-		GLOB.materials_list[D.id] = D
-	sortList(GLOB.materials_list, /proc/cmp_typepaths_asc)
-
 	// Keybindings
 	init_keybindings()
 
