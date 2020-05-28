@@ -1600,8 +1600,8 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 		center = get_turf(center)
 		if(!center)
 			CRASH("get_circle_edge_turfs called with an invalid arguments")
-	if(radius < 1)
-		CRASH("get_circle_edge_turfs called a non-positive radius")
+	if(!isnum(radius) || radius < 1)
+		CRASH("get_circle_edge_turfs called with a non-positive radius")
 
 	. = list()
 	var/squared_radius = radius * radius
