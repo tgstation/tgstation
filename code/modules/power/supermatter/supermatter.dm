@@ -158,7 +158,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
 	var/list/gas_heat = list(/datum/gas/oxygen = OXYGEN_HEAT_PENALTY, /datum/gas/water_vapor = H2O_HEAT_PENALTY, /datum/gas/plasma = PLASMA_HEAT_PENALTY, /datum/gas/carbon_dioxide = CO2_HEAT_PENALTY, /datum/gas/nitrogen = NITROGEN_HEAT_PENALTY, /datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY, /datum/gas/tritium = TRITIUM_HEAT_PENALTY, /datum/gas/bz = BZ_HEAT_PENALTY, /datum/gas/freon = FREON_HEAT_PENALTY, /datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
-	var/list/gas_resist = list(/datum/gas/water_vapor = H2O_HEAT_RESISTANCE, /datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE, /datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE, /datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE)
+	var/list/gas_resist = list(/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE, /datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE, /datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE)
 	///The list of gases mapped against their powermix ratio
 	var/list/gas_powermix = list(/datum/gas/oxygen = 1, /datum/gas/water_vapor = 1, /datum/gas/plasma = 1, /datum/gas/carbon_dioxide = 1, /datum/gas/nitrogen = -1, /datum/gas/pluoxium = -1, /datum/gas/tritium = 1, /datum/gas/bz = 1, /datum/gas/freon = -1, /datum/gas/hydrogen = 1)
 	///The last air sample's total molar count, will always be above or equal to 0
@@ -181,11 +181,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/matter_power = 0
 	///The cutoff for a bolt jumping, grows with heat, lowers with higher mol count,
 	var/zap_cutoff = 1500
-	//Temporary values so that we can optimize this
 	///How much the bullets damage should be multiplied by when it is added to the internal variables
-	var/config_bullet_energy = 2
+	var/bullet_energy = 2
 	///How much hallucination should we produce per unit of power?
-	var/config_hallucination_power = 0.1
+	var/hallucination_power = 0.1
 
 	///Our internal radio
 	var/obj/item/radio/radio
@@ -483,7 +482,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		//Prevents huge bursts of gas/heat when a large amount of something is introduced
 		//They range between 0 and 1
 		for(var/gasID in gases_we_care_about)
-			gas_comp[gasID] += clamp(max(removed.gases[gasID][MOLES]/combined_gas, 0) - gas_comp[gasID], -1, gas_change_rate)
+			gas_comp[gasID] += max(removed.gases[gasID][MOLES]/combined_gas)
 
 		var/list/heat_mod = gases_we_care_about.Copy()
 		var/list/transit_mod = gases_we_care_about.Copy()
@@ -491,7 +490,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 		//We're concerned about pluoxium being too easy to abuse at low percents, so we make sure there's a substantial amount.
 		var/pluoxiumbonus = (gas_comp[/datum/gas/pluoxium] >= 0.15) //makes pluoxium only work at 15%+
-		var/h2obonus = 1 - (h2ocomp * 0.25)//At max this value should be 0.75
+		var/h2obonus = 1 - (gas_comp[/datum/gas/water_vapor] * 0.25)//At max this value should be 0.75
 		var/freonbonus = (gas_comp[/datum/gas/freon] <= 0.03) //Let's just yeet power output if this shit is high
 
 		heat_mod[/datum/gas/pluoxium] = pluoxiumbonus
@@ -599,7 +598,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			psy_overlay = TRUE
 		else if(!istype(l.glasses, /obj/item/clothing/glasses/meson))
 			var/D = sqrt(1 / max(1, get_dist(l, src)))
-			l.hallucination += power * config_hallucination_power * D
+			l.hallucination += power * hallucination_power * D
 			l.hallucination = clamp(l.hallucination, 0, 200)
 	psyCoeff = clamp(psyCoeff + toAdd, 0, 1)
 	for(var/mob/living/l in range(src, round((power / 100) ** 0.25)))
@@ -625,7 +624,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/zap_count = 0
 		//Deal with power zaps
 		switch(power)
-			if(0 to SEVERE_POWER_PENALTY_THRESHOLD)
+			if(POWER_PENALTY_THRESHOLD to SEVERE_POWER_PENALTY_THRESHOLD)
 				zap_icon = DEFAULT_ZAP_ICON_STATE
 				zap_count = 2
 			if(SEVERE_POWER_PENALTY_THRESHOLD to CRITICAL_POWER_PENALTY_THRESHOLD)
@@ -650,7 +649,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				supermatter_zap(src, range, clamp(power*2, 4000, 20000), list(), flags)
 
 		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
-			supermatter_pull(src, power/750)
+			supermatter_pull(src.loc, power/750)
 		if(prob(5))
 			supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
 		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
@@ -699,13 +698,13 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(!istype(Proj.firer, /obj/machinery/power/emitter))
 		investigate_log("has been hit by [Proj] fired by [key_name(Proj.firer)]", INVESTIGATE_SUPERMATTER)
 	if(Proj.flag != "bullet")
-		power += Proj.damage * config_bullet_energy
+		power += Proj.damage * bullet_energy
 		if(!has_been_powered)
 			investigate_log("has been powered for the first time.", INVESTIGATE_SUPERMATTER)
 			message_admins("[src] has been powered for the first time [ADMIN_JMP(src)].")
 			has_been_powered = TRUE
 	else if(takes_damage)
-		damage += Proj.damage * config_bullet_energy
+		damage += Proj.damage * bullet_energy
 	return BULLET_ACT_HIT
 
 /obj/machinery/power/supermatter_crystal/singularity_act()
@@ -946,7 +945,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = 7)
 	for(var/atom/movable/P in orange(pull_range,center))
 		if(P.anchored || P.move_resist >= MOVE_FORCE_EXTREMELY_STRONG) //move resist memes.
-			return
+			continue
 		if(ishuman(P))
 			var/mob/living/carbon/human/H = P
 			if(H.incapacitated() || !(H.mobility_flags & MOBILITY_STAND) || H.mob_negates_gravity())
