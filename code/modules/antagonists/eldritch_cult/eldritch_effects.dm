@@ -150,14 +150,13 @@
 	name = "Pierced reality"
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "pierced_illusion"
-	///Decides what effect this has on the atmosphere
 
 /obj/effect/broken_illusion/examine(mob/user)
-	. = ..()
 	if(!IS_E_CULTIST && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
-		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this thing!</span>")
+		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
 		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10)
+	. = ..()
 
 /obj/effect/reality_smash
 	name = "/improper reality smash"
