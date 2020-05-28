@@ -241,8 +241,7 @@
 	scarring_descriptions = list("light discoloring", "a slight blue tint")
 
 /datum/wound/brute/bone/moderate/crush()
-	if(!prob(33))
-		return
+	if(prob(33))
 		victim.visible_message("<span class='danger'>[victim]'s dislocated [limb.name] pops back into place!</span>", "<span class='userdanger'>Your dislocated [limb.name] pops back into place! Ow!</span>")
 		remove_wound()
 
