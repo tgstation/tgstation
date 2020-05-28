@@ -140,7 +140,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///When we pass this amount of damage we start shooting bolts
 	var/damage_penalty_point = 550
 
-	//A scaling value that affects the severity of explosions.
+	///A scaling value that affects the severity of explosions.
 	var/explosion_power = 35
 	///Time in 1/10th of seconds since the last sent warning
 	var/lastwarning = 0
