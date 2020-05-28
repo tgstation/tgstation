@@ -230,7 +230,7 @@
 /datum/objective/stalk/update_explanation_text()
 	if(timer == initial(timer))//just so admins can mess with it
 		timer += pick(-600, 600)
-	if(target && target.current)
+	if(target?.current)
 		explanation_text = "Stalk [target.name] for at least [DisplayTimeText(timer)] while they're alive."
 	else
 		explanation_text = "Free Objective"
