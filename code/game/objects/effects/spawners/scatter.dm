@@ -14,8 +14,9 @@
 
 	var/list/candidate_locations = list()
 
-	for(var/turf/T in view(radius, get_turf(src)))
-		if(!T.density && (T != get_turf(src)))
+	for(var/turf/T in oview(radius, get_turf(src)))
+		if(!T.density)
+
 			candidate_locations += T
 
 	if(!candidate_locations.len)
