@@ -2,7 +2,7 @@
 	name = "heresy"
 	config_tag = "heresy"
 	report_type = "heresy"
-	antag_flag = ROLE_HERETIC
+	antag_flag = ROLE_CULTIST // TEMPORARY SOLUTION, CHANGE TO ROLE_HERETIC UPON MERGING
 	false_report_weight = 5
 	protected_jobs = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_jobs = list("AI", "Cyborg","Chaplain")
