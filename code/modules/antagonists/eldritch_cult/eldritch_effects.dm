@@ -13,7 +13,7 @@
 	try_activate(user)
 
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
-	if(!IS_E_CULTIST(user)))
+	if(!IS_E_CULTIST(user))
 		return
 	flick("[icon_state]_active",src)
 	activate(user)
