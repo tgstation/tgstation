@@ -1006,7 +1006,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	name = "EMP Grenades and Implanter Kit"
 	desc = "A box that contains five EMP grenades and an EMP implant with three uses."
 	item = /obj/item/storage/box/syndie_kit/emp
-	cost = 5 //bargain bc you get 5 nades for the price of 5, as well as the implant
+	cost = 4
 
 /datum/uplink_item/explosives/virus_grenade
 	name = "Fungal Tuberculosis Grenade"
