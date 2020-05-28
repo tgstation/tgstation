@@ -274,7 +274,6 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 	///Copies all gas info from the turf into the gas list along with temperature
 	///Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/copy_from_turf(turf/model)
-	parse_gas_string(model.initial_gas_mix)
 	#ifdef EVENTMODE
 	///Default nice breathable atmosphere and temp
 	parse_gas_string(OPENTURF_DEFAULT_ATMOS)
