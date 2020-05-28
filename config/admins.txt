@@ -7,3 +7,4 @@
 Wallem = Host
 Doshmobile = Game Master
 MostPowerfulDad = Game Master
+Boltcat = Game Master
