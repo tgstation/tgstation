@@ -201,7 +201,7 @@
 	for(var/obj/item/living_heart/LH in atoms)
 		if(!LH.target)
 			return TRUE
-		if(LH.target.current in atoms)
+		if(LH.target in atoms)
 			return TRUE
 	return FALSE
 
@@ -209,10 +209,11 @@
 
 	for(var/obj/item/living_heart/LH in atoms)
 
-		if(LH.target && LH.target.current && LH.target.current.stat == DEAD)
+		if(LH.target && LH.target.stat == DEAD)
 			to_chat(user,"<span class='danger'>Your patrons accepts your offer..</span>")
-			var/mob/living/carbon/human/H = LH.target.current
+			var/mob/living/carbon/human/H = LH.target
 			H.gib()
+			LH.target = null
 			var/datum/antagonist/e_cult/EC = user.mind.has_antag_datum(/datum/antagonist/e_cult)
 
 			EC.total_sacrifices++
@@ -226,10 +227,11 @@
 		if(!LH.target)
 			var/datum/objective/A = new
 			A.owner = user.mind
-			LH.target = A.find_target()//easy way, i dont feel like copy pasting that entire block of code
+			var/datum/mind/targeted =  A.find_target()//easy way, i dont feel like copy pasting that entire block of code
+			LH.target = targeted.current
 			qdel(A)
 			if(LH.target)
-				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.current.real_name]!</span>")
+				to_chat(user,"<span class='warning'>Your new target has been selected, go and sacrifice [LH.target.real_name]!</span>")
 			else
 				to_chat(user,"<span class='warning'>target could not be found for living heart.</span>")
 

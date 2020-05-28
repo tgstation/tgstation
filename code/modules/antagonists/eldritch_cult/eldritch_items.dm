@@ -5,7 +5,7 @@
 	icon_state = "living_heart"
 	w_class = WEIGHT_CLASS_SMALL
 	///Target
-	var/datum/mind/target
+	var/mob/living/carbon/human/target
 
 /obj/item/living_heart/attack_self(mob/user)
 	. = ..()
@@ -14,20 +14,20 @@
 	if(!target)
 		to_chat(user,"<span class='warning'>No target could be found. Put the living heart on the rune and use the rune to recieve a target.</span>")
 		return
-	var/dist = get_dist(user.loc,target.current.loc)
+	var/dist = get_dist(user.loc,target.loc)
 
 	switch(dist)
 		if(0 to 5)
-			to_chat(user,"<span class='warning'>[target.current.real_name] is near you</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is near you</span>")
 		if(6 to 15)
-			to_chat(user,"<span class='warning'>[target.current.real_name] is somewhere in your vicinty</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty</span>")
 		if(16 to 64)
-			to_chat(user,"<span class='warning'>[target.current.real_name] is far away from you</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is far away from you</span>")
 		else
-			to_chat(user,"<span class='warning'>[target.current.real_name] is beyond our reach</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach</span>")
 
-	if(target.current.stat == DEAD)
-		to_chat(user,"<span class='warning'>[target.current.real_name] is dead. Bring them onto a transmutation rune!</span>")
+	if(target.stat == DEAD)
+		to_chat(user,"<span class='warning'>[target.real_name] is dead. Bring them onto a transmutation rune!</span>")
 
 /obj/item/melee/sickly_blade
 	name = "Sickly blade"
