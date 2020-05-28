@@ -476,7 +476,6 @@
 	weight = 2
 	cost = 30
 	requirements = list(101,101,101,101,101,70,40,10,10,10)
-	high_population_requirement = 10
 	flags = HIGHLANDER_RULESET
 	blocking_rules = list(/datum/dynamic_ruleset/midround/families)
 	minimum_players = 36
