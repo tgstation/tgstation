@@ -51,8 +51,8 @@
 	if(!cultie)
 		return
 	for(var/X in cultie.get_all_knowledge())
-		var/datum/eldritch_knowledge/EK = X
-		eldritch_knowledge_datum.on_eldritch_blade_afterattack(target,user,proximity_flag,click_parameters)
+		var/datum/eldritch_knowledge/eldritch_knowledge_datum = X
+		eldritch_knowledge_datum.on_eldritch_blade(target,user,proximity_flag,click_parameters)
 
 /obj/item/melee/sickly_blade/rust
 	name = "Rusted Blade"
