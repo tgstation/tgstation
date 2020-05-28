@@ -153,7 +153,7 @@
 
 /datum/dynamic_ruleset/roundstart/e_cult
 	name = "Heretics"
-	antag_flag = ROLE_HERETIC
+	antag_flag = ROLE_CULTIST
 	antag_datum = /datum/antagonist/e_cult
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI", "Cyborg","Chaplain")
