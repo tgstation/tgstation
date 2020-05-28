@@ -88,7 +88,8 @@
 /datum/eldritch_knowledge/proc/cleanup_atoms(list/atoms)
 	for(var/X in atoms)
 		var/atom/A = X
-		qdel(A)
+		if(!isliving(A))
+			qdel(A)
 	return
 
 /**
