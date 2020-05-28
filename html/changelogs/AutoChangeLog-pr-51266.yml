@@ -1,5 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Fixed smallscreen resizing on restart or when you die."
-  - bugfix: "Pixel size and scaling method will properly save now."
