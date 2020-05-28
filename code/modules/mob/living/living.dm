@@ -776,7 +776,7 @@
 	. = TRUE
 	if(pulledby.grab_state || resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS))
 		var/altered_grab_state = pulledby.grab_state
-		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. wont make the grab state exceed the normal max, however
+		if((resting || HAS_TRAIT(src, TRAIT_GRABWEAKNESS)) && pulledby.grab_state < GRAB_KILL) //If resting, resisting out of a grab is equivalent to 1 grab state higher. won't make the grab state exceed the normal max, however
 			altered_grab_state++
 		var/resist_chance = BASE_GRAB_RESIST_CHANCE // see defines/combat.dm
 		resist_chance = max((resist_chance/altered_grab_state)-sqrt((getBruteLoss()+getFireLoss()+getOxyLoss()+getToxLoss()+getCloneLoss())*0.5+getStaminaLoss()), 0) //stamina loss is weighted twice as heavily as the other damage types in this calculation
@@ -890,9 +890,14 @@
 		if(!what.mob_can_equip(who, src, final_where, TRUE, TRUE))
 			to_chat(src, "<span class='warning'>\The [what.name] doesn't fit in that place!</span>")
 			return
-
-		who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
-						"<span class='notice'>[src] tries to put [what] on you.</span>", null, null, src)
+		if(istype(what,/obj/item/clothing))
+			var/obj/item/clothing/c = what
+			if(c.clothing_flags & DANGEROUS_OBJECT)
+				who.visible_message("<span class='danger'>[src] tries to put [what] on [who].</span>", \
+							"<span class='userdanger'>[src] tries to put [what] on you.</span>", null, null, src)
+			else 
+				who.visible_message("<span class='notice'>[src] tries to put [what] on [who].</span>", \
+							"<span class='notice'>[src] tries to put [what] on you.</span>", null, null, src)
 		to_chat(src, "<span class='notice'>You try to put [what] on [who]...</span>")
 		if(do_mob(src, who, what.equip_delay_other))
 			if(what && Adjacent(who) && what.mob_can_equip(who, src, final_where, TRUE, TRUE))
@@ -1028,7 +1033,7 @@
 		return TRUE
 	return FALSE
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	stop_pulling()
 	. = ..()
 
@@ -1495,3 +1500,36 @@
 	if(!apply_change)
 		return BODYTEMP_NORMAL
 	return BODYTEMP_NORMAL + get_body_temp_normal_change()
+
+///Checks if the user is incapacitated or on cooldown.
+/mob/living/proc/can_look_up()
+	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+
+/**
+ * look_up Changes the perspective of the mob to any openspace turf above the mob
+ *
+ * This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up
+ *
+ */
+/mob/living/proc/look_up()
+
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
+		stop_look_up()
+		return
+	if(!can_look_up())
+		return
+	var/turf/ceiling = get_step_multiz(src, UP)
+	if(!ceiling) //We are at the highest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
+		return
+	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
+		to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
+		return
+
+	changeNext_move(CLICK_CD_LOOK_UP)
+	reset_perspective(ceiling)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+
+/mob/living/proc/stop_look_up()
+	reset_perspective()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)

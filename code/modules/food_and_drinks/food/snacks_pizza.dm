@@ -14,6 +14,7 @@
 	icon = 'icons/obj/food/pizzaspaghetti.dmi'
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5)
 	foodtype = GRAIN | DAIRY | VEGETABLES
+	value = FOOD_JUNK
 
 /obj/item/reagent_containers/food/snacks/pizza/margherita
 	name = "pizza margherita"
@@ -23,6 +24,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/pizza/margherita/robo/Initialize()
 	bonus_reagents += list(/datum/reagent/nanomachines = 70)
@@ -45,6 +47,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 8)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtype = GRAIN | VEGETABLES| DAIRY | MEAT
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/meat
 	name = "meatpizza slice"
@@ -63,6 +66,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "mushroom" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY
+	value = FOOD_FAST
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/mushroom
 	name = "mushroom pizza slice"
@@ -81,6 +85,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/medicine/oculine = 12, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 2, "cheese" = 1, "carrot" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/vegetable
 	name = "vegetable pizza slice"
@@ -99,6 +104,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/medicine/omnizine = 10, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1, "laziness" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | JUNKFOOD
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/donkpocket
 	name = "donkpocket pizza slice"
@@ -117,6 +123,7 @@
 	list_reagents = list(/datum/reagent/consumable/nutriment = 25, /datum/reagent/consumable/doctor_delight = 5, /datum/reagent/consumable/tomatojuice = 6, /datum/reagent/consumable/nutriment/vitamin = 5)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/dank
 	name = "dank pizza slice"
@@ -134,6 +141,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "meat" = 1)
 	foodtype = GRAIN | VEGETABLES | DAIRY
+	value = FOOD_EXOTIC
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/sassysage
 	name = "sassysage pizza slice"
@@ -151,6 +159,7 @@
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 6)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pineapple" = 2, "ham" = 2)
 	foodtype = GRAIN | VEGETABLES | DAIRY | MEAT | FRUIT | PINEAPPLE
+	value = FOOD_RARE
 
 /obj/item/reagent_containers/food/snacks/pizzaslice/pineapple
 	name = "\improper Hawaiian pizza slice"
@@ -167,6 +176,7 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/pizzaslice/arnold
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 30, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/iron = 10, /datum/reagent/medicine/omnizine = 30)
 	tastes = list("crust" = 1, "tomato" = 1, "cheese" = 1, "pepperoni" = 2, "9 millimeter bullets" = 2)
+	value = FOOD_ILLEGAL
 
 /obj/item/reagent_containers/food/snacks/proc/try_break_off(mob/living/M, mob/living/user) //maybe i give you a pizza maybe i break off your arm
 	var/obj/item/bodypart/l_arm = user.get_bodypart(BODY_ZONE_L_ARM)
@@ -177,7 +187,7 @@
 			l_arm.dismember()
 		else
 			r_arm.dismember()
-		playsound(user, "desceration" ,50, TRUE, -1)
+		playsound(user, "desecration" ,50, TRUE, -1)
 
 /obj/item/reagent_containers/food/snacks/proc/i_kill_you(obj/item/I, mob/user)
 	if(istype(I, /obj/item/reagent_containers/food/snacks/pineappleslice))

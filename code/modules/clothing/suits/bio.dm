@@ -14,7 +14,7 @@
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio"
-	item_state = "bio_suit"
+	inhand_icon_state = "bio_suit"
 	w_class = WEIGHT_CLASS_BULKY
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
@@ -91,7 +91,7 @@
 	name = "plague doctor suit"
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."
 	icon_state = "plaguedoctor"
-	item_state = "bio_suit"
+	inhand_icon_state = "bio_suit"
 	strip_delay = 40
 	equip_delay_other = 20
 

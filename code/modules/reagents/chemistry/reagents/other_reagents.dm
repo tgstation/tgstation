@@ -530,6 +530,7 @@
 		H.set_species(species_type)
 		H.reagents.del_reagent(type)
 		to_chat(H, "<span class='warning'>You've become \a [lowertext(initial(species_type.name))]!</span>")
+		return
 	..()
 
 /datum/reagent/mutationtoxin/classic //The one from plasma on green slimes
@@ -1518,8 +1519,31 @@
 		myseed.adjust_potency(round(chems.get_reagent_amount(src.type) * 0.1))
 		myseed.adjust_yield(round(chems.get_reagent_amount(src.type) * 0.2))
 
+/datum/reagent/plantnutriment/endurogrow
+	name = "Enduro Grow"
+	description = "A specialized nutriment, which decreases product quantity and potency, but strengthens the plants endurance."
+	color = "#a06fa7" // RBG: 160, 111, 167
+	tox_prob = 15
 
+/datum/reagent/plantnutriment/endurogrow/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	. = ..()
+	if(myseed && chems.has_reagent(src.type, 1))
+		myseed.adjust_potency(-round(chems.get_reagent_amount(src.type) * 0.1))
+		myseed.adjust_yield(-round(chems.get_reagent_amount(src.type) * 0.075))
+		myseed.adjust_endurance(round(chems.get_reagent_amount(src.type) * 0.35))
 
+/datum/reagent/plantnutriment/liquidearthquake
+	name = "Liquid Earthquake"
+	description = "A specialized nutriment, which increases the plant's production speed, as well as it's susceptibility to weeds."
+	color = "#912e00" // RBG: 145, 46, 0
+	tox_prob = 25
+
+/datum/reagent/plantnutriment/liquidearthquake/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray)
+	. = ..()
+	if(myseed && chems.has_reagent(src.type, 1))
+		myseed.adjust_weed_rate(round(chems.get_reagent_amount(src.type) * 0.1))
+		myseed.adjust_weed_chance(round(chems.get_reagent_amount(src.type) * 0.3))
+		myseed.adjust_production(-round(chems.get_reagent_amount(src.type) * 0.075))
 
 // GOON OTHERS
 
@@ -2173,6 +2197,18 @@
 	color = "#9C5A19"
 	taste_description = "bananas"
 	can_synth = TRUE
+
+/datum/reagent/plasma_oxide
+	name = "Hyper-Plasmium Oxide"
+	description = "Compound created deep in the cores of demon-class planets. Commonly found through deep geysers."
+	color = "#470750" // rgb: 255, 255, 255
+	taste_description = "hell"
+
+/datum/reagent/exotic_stabilizer
+	name = "Exotic Stabilizer"
+	description = "Advanced compound created by mixing stabilizing agent and hyper-plasmium oxide."
+	color = "#180000" // rgb: 255, 255, 255
+	taste_description = "blood"
 
 /datum/reagent/wittel
 	name = "Wittel"

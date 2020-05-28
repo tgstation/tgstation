@@ -82,11 +82,6 @@
 
 /datum/dynamic_ruleset/New()
 	..()
-	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		restricted_roles += protected_roles
-	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		restricted_roles += "Assistant"
-
 	if (istype(SSticker.mode, /datum/game_mode/dynamic))
 		mode = SSticker.mode
 	else if (GLOB.master_mode != "dynamic") // This is here to make roundstart forced ruleset function.
@@ -144,6 +139,11 @@
 /// Do everything you need to do before job is assigned here.
 /// IMPORTANT: ASSIGN special_role HERE
 /datum/dynamic_ruleset/proc/pre_execute()
+	SHOULD_CALL_PARENT(TRUE)
+	if(CONFIG_GET(flag/protect_roles_from_antagonist))
+		restricted_roles |= protected_roles
+	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
+		restricted_roles |= "Assistant"
 	return TRUE
 
 /// Called on post_setup on roundstart and when the rule executes on midround and latejoin.

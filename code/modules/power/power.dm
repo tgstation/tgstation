@@ -277,7 +277,7 @@
 
 //Determines how strong could be shock, deals damage to mob, uses power.
 //M is a mob who touched wire/whatever
-//power_source is a source of electricity, can be powercell, area, apc, cable, powernet or null
+//power_source is a source of electricity, can be power cell, area, apc, cable, powernet or null
 //source is an object caused electrocuting (airlock, grille, etc)
 //siemens_coeff - layman's terms, conductivity
 //dist_check - set to only shock mobs within 1 of source (vendors, airlocks, etc.)

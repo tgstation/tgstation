@@ -149,7 +149,7 @@
 	result = /obj/item/reagent_containers/food/drinks/colocup/lean
 	time = 30
 	reqs = list(/obj/item/reagent_containers/food/drinks/colocup = 1,
-				/obj/item/reagent_containers/food/snacks/gumball = 2,
+				/obj/item/reagent_containers/food/snacks/chewable/gumball = 2,
 				/datum/reagent/medicine/morphine = 5,
 				/datum/reagent/consumable/space_up = 15)
 	category = CAT_DRINK

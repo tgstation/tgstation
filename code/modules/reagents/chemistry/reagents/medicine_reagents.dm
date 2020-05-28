@@ -230,7 +230,7 @@
 		var/mob/living/carbon/patient = M
 		if(reac_volume >= 5 && HAS_TRAIT_FROM(patient, TRAIT_HUSK, "burn") && patient.getFireLoss() < THRESHOLD_UNHUSK) //One carp yields 12u rezadone.
 			patient.cure_husk("burn")
-			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the enviroment, taking on a more healthy appearance.</span>")
+			patient.visible_message("<span class='nicegreen'>[patient]'s body rapidly absorbs moisture from the environment, taking on a more healthy appearance.</span>")
 
 /datum/reagent/medicine/spaceacillin
 	name = "Spaceacillin"
@@ -639,6 +639,8 @@
 
 /datum/reagent/medicine/oculine/on_mob_life(mob/living/carbon/M)
 	var/obj/item/organ/eyes/eyes = M.getorganslot(ORGAN_SLOT_EYES)
+	M.adjust_blindness(-2)
+	M.adjust_blurriness(-2)
 	if (!eyes)
 		return
 	eyes.applyOrganDamage(-2)
@@ -648,19 +650,15 @@
 			M.cure_blind(EYE_DAMAGE)
 			M.cure_nearsighted(EYE_DAMAGE)
 			M.blur_eyes(35)
-
 	else if(HAS_TRAIT_FROM(M, TRAIT_NEARSIGHT, EYE_DAMAGE))
 		to_chat(M, "<span class='warning'>The blackness in your peripheral vision fades.</span>")
 		M.cure_nearsighted(EYE_DAMAGE)
 		M.blur_eyes(10)
-	else if(M.eye_blind || M.eye_blurry)
-		M.set_blindness(0)
-		M.set_blurriness(0)
 	..()
 
 /datum/reagent/medicine/inacusiate
 	name = "Inacusiate"
-	description = "Instantly restores all hearing to the patient, but does not cure deafness."
+	description = "Instantly restores all hearing to the patient, but does not work on patients without ears, cure genetic deafness, or cure chronic deafness." //by "chronic" deafness, we mean people with the "deaf" quirk
 	color = "#606060" // ditto
 
 /datum/reagent/medicine/inacusiate/on_mob_life(mob/living/carbon/M)

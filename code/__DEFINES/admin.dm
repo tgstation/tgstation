@@ -48,6 +48,7 @@
 #define ADMIN_VV(atom) "(<a href='?_src_=vars;[HrefToken(TRUE)];Vars=[REF(atom)]'>VV</a>)"
 #define ADMIN_SM(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];subtlemessage=[REF(user)]'>SM</a>)"
 #define ADMIN_TP(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];traitor=[REF(user)]'>TP</a>)"
+#define ADMIN_SP(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];skill=[REF(user)]'>SP</a>)"
 #define ADMIN_KICK(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];boot2=[REF(user)]'>KICK</a>)"
 #define ADMIN_CENTCOM_REPLY(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];CentComReply=[REF(user)]'>RPLY</a>)"
 #define ADMIN_SYNDICATE_REPLY(user) "(<a href='?_src_=holder;[HrefToken(TRUE)];SyndicateReply=[REF(user)]'>RPLY</a>)"
@@ -75,6 +76,9 @@
 #define ADMIN_PUNISHMENT_SUPPLYPOD "Supply Pod"
 #define ADMIN_PUNISHMENT_MAZING "Puzzle"
 #define ADMIN_PUNISHMENT_IMMERSE "Fully Immerse"
+#define ADMIN_PUNISHMENT_FAT "Fatten up"
+#define ADMIN_PUNISHMENT_FAKEBWOINK "Fake bwoink"
+#define ADMIN_PUNISHMENT_NUGGET "Nugget"
 
 #define AHELP_ACTIVE 1
 #define AHELP_CLOSED 2

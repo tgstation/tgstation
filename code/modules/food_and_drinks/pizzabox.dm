@@ -2,7 +2,7 @@
 	name = "pizza bomb"
 	desc = "Special delivery!"
 	icon_state = "pizzabomb_inactive"
-	item_state = "eshield0"
+	inhand_icon_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 
@@ -11,7 +11,7 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox"
-	item_state = "pizzabox"
+	inhand_icon_state = "pizzabox"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 
@@ -91,7 +91,7 @@
 	var/current_offset = 2
 	if(isinhands)
 		for(var/V in boxes) //add EXTRA BOX per box
-			var/mutable_appearance/M = mutable_appearance(icon_file, item_state)
+			var/mutable_appearance/M = mutable_appearance(icon_file, inhand_icon_state)
 			M.pixel_y = current_offset
 			current_offset += 2
 			. += M

@@ -331,4 +331,4 @@
 	invisibility = is_station_level(posobj.z) ? 0 : INVISIBILITY_ABSTRACT
 
 /obj/screen/parallax_layer/planet/update_o()
-	return //Shit wont move
+	return //Shit won't move

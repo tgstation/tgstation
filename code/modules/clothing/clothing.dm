@@ -231,11 +231,18 @@
 		var/mob/M = loc
 		to_chat(M, "<span class='warning'>Your [name] starts to fall apart!</span>")
 
+//This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaging = TRUE)
-	var/index = "[REF(initial(icon))]-[initial(icon_state)]"
-	var/static/list/damaged_clothes_icons = list()
 	if(damaging)
 		damaged_clothes = 1
+	else
+		damaged_clothes = 0
+
+/obj/item/clothing/update_overlays()
+	. = ..()
+	if(damaged_clothes)
+		var/index = "[REF(initial(icon))]-[initial(icon_state)]"
+		var/static/list/damaged_clothes_icons = list()
 		var/icon/damaged_clothes_icon = damaged_clothes_icons[index]
 		if(!damaged_clothes_icon)
 			damaged_clothes_icon = icon(initial(icon), initial(icon_state), , 1)	//we only want to apply damaged effect to the initial icon_state for each object
@@ -243,11 +250,7 @@
 			damaged_clothes_icon.Blend(icon('icons/effects/item_damage.dmi', "itemdamaged"), ICON_MULTIPLY) //adds damage effect and the remaining white areas become transparant
 			damaged_clothes_icon = fcopy_rsc(damaged_clothes_icon)
 			damaged_clothes_icons[index] = damaged_clothes_icon
-		add_overlay(damaged_clothes_icon, 1)
-	else
-		damaged_clothes = 0
-		cut_overlay(damaged_clothes_icons[index], TRUE)
-
+		. += damaged_clothes_icon
 
 /*
 SEE_SELF  // can see self, no matter what
@@ -291,7 +294,7 @@ BLIND     // can't see anything
 		to_chat(usr, "<span class='warning'>You have moved too far away!</span>")
 		return
 	sensor_mode = modes.Find(switchMode) - 1
-
+	set_sensor_glob()
 	if (src.loc == usr)
 		switch(sensor_mode)
 			if(0)
@@ -408,3 +411,16 @@ BLIND     // can't see anything
 		deconstruct(FALSE)
 	else
 		..()
+/obj/item/clothing/proc/set_sensor_glob()
+	var/mob/living/carbon/human/H = src.loc
+	
+	if (istype(H.w_uniform, /obj/item/clothing/under))
+		var/obj/item/clothing/under/U = H.w_uniform
+		if (((U.has_sensor && U.sensor_mode) && !(H in GLOB.suit_sensors_list) && U.has_sensor != BROKEN_SENSORS))
+			GLOB.suit_sensors_list |= H
+			
+		else 
+			GLOB.suit_sensors_list -= H
+		
+	else 
+		GLOB.suit_sensors_list -= H	

@@ -5,7 +5,7 @@
 	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
-	item_state = "analyzer"
+	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -27,7 +27,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "weed spray"
 	icon_state = "weedspray"
-	item_state = "spraycan"
+	inhand_icon_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
@@ -42,7 +42,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest spray"
 	icon_state = "pestspray"
-	item_state = "plantbgone"
+	inhand_icon_state = "plantbgone"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
@@ -57,7 +57,7 @@
 	desc = "It's used for removing weeds or scratching your back."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "cultivator"
-	item_state = "cultivator"
+	inhand_icon_state = "cultivator"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -99,7 +99,7 @@
 	desc = "A very sharp axe blade upon a short fibremetal handle. It has a long history of chopping things, but now it is used for chopping wood."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "hatchet"
-	item_state = "hatchet"
+	inhand_icon_state = "hatchet"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -157,7 +157,7 @@
 		var/obj/item/bodypart/BP = C.get_bodypart(BODY_ZONE_HEAD)
 		if(BP)
 			BP.drop_limb()
-			playsound(src, "desceration" ,50, TRUE, -1)
+			playsound(src, "desecration" ,50, TRUE, -1)
 	return (BRUTELOSS)
 
 /obj/item/scythe/pre_attack(atom/A, mob/living/user, params)
@@ -180,7 +180,7 @@
 	desc = "It's a tool for cutting grafts off plants."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
-	item_state = "secateurs"
+	inhand_icon_state = "secateurs"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1
@@ -197,7 +197,7 @@
 	desc = "A high tech, high fidelity pair of plant shears, capable of cutting genetic traits out of a plant."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "genesheers"
-	item_state = "secateurs"
+	inhand_icon_state = "secateurs"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	flags_1 = CONDUCT_1

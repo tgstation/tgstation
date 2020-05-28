@@ -32,7 +32,7 @@
 	var/function = "storage"
 	var/data = "null"
 	var/special = null
-	item_state = "card-id"
+	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	var/detail_color = COLOR_ASSEMBLY_ORANGE
@@ -65,7 +65,7 @@
 	name = "identification card"
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
-	item_state = "card-id"
+	inhand_icon_state = "card-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	slot_flags = ITEM_SLOT_ID
@@ -222,8 +222,8 @@
 		set_new_account(user)
 		return
 
-	if (world.time < registered_account.withdrawDelay)
-		registered_account.bank_card_talk("<span class='warning'>ERROR: UNABLE TO LOGIN DUE TO SCHEDULED MAINTENANCE. MAINTENANCE IS SCHEDULED TO COMPLETE IN [(registered_account.withdrawDelay - world.time)/10] SECONDS.</span>", TRUE)
+	if (registered_account.being_dumped)
+		registered_account.bank_card_talk("<span class='warning'>内部服务器错误</span>", TRUE)
 		return
 
 	var/amount_to_remove =  FLOOR(input(user, "How much do you want to withdraw? Current Balance: [registered_account.account_balance]", "Withdraw Funds", 5) as num|null, 1)
@@ -316,7 +316,7 @@ update_label()
 	id_type_name = "silver identification card"
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
-	item_state = "silver_id"
+	inhand_icon_state = "silver_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
@@ -331,7 +331,7 @@ update_label()
 	id_type_name = "gold identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
-	item_state = "gold_id"
+	inhand_icon_state = "gold_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 
@@ -465,7 +465,7 @@ update_label()
 	id_type_name = "captain's spare ID"
 	desc = "The spare ID of the High Lord himself."
 	icon_state = "gold"
-	item_state = "gold_id"
+	inhand_icon_state = "gold_id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	registered_name = "Captain"
@@ -593,7 +593,7 @@ update_label()
 	id_type_name = "prisoner ID card"
 	desc = "You are a number, you are not a free man."
 	icon_state = "orange"
-	item_state = "orange-id"
+	inhand_icon_state = "orange-id"
 	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	assignment = "Prisoner"
@@ -723,3 +723,6 @@ update_label()
 	department_ID = ACCOUNT_CAR
 	department_name = ACCOUNT_CAR_NAME
 	icon_state = "car_budget" //saving up for a new tesla
+
+/obj/item/card/id/departmental_budget/AltClick(mob/living/user)
+	registered_account.bank_card_talk("<span class='warning'>Withdrawing is not compatible with this card design.</span>", TRUE) //prevents the vault bank machine being useless and putting money from the budget to your card to go over personal crates

@@ -3,7 +3,7 @@
 	desc = "A medical gel applicator bottle, designed for precision application, with an unscrewable cap."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "medigel"
-	item_state = "spraycan"
+	inhand_icon_state = "spraycan"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	item_flags = NOBLUDGEON

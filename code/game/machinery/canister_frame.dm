@@ -57,7 +57,7 @@
 	else if (istype(S, /obj/item/stack/sheet/plasteel))
 		var/obj/item/stack/ST = S
 		if (ST.get_amount() < 5)
-			to_chat(user, "<span class='warning'>You need at least one crystal for that!</span>")
+			to_chat(user, "<span class='warning'>You need at least five sheets for that!</span>")
 			return
 		if (do_after(user, 15, target = src))
 			new /obj/structure/canister_frame/machine/frame_tier_2(drop_location())
@@ -75,7 +75,7 @@
 	else if (istype(S, /obj/item/stack/sheet/bluespace_crystal))
 		var/obj/item/stack/ST = S
 		if (ST.get_amount() < 1)
-			to_chat(user, "<span class='warning'>You need at least five sheets for that!</span>")
+			to_chat(user, "<span class='warning'>You need at least one bluespace crystal for that!</span>")
 			return
 		if (do_after(user,15, target = src))
 			new /obj/structure/canister_frame/machine/frame_tier_3(drop_location())

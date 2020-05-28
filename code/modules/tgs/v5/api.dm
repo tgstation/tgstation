@@ -18,7 +18,7 @@
 	var/datum/tgs_event_handler/event_handler
 
 /datum/tgs_api/v5/ApiVersion()
-	return "5.0.0"
+	return new /datum/tgs_version("5.0.0")
 
 /datum/tgs_api/v5/OnWorldNew(datum/tgs_event_handler/event_handler, minimum_required_security_level)
 	src.event_handler = event_handler
@@ -26,7 +26,8 @@
 	server_port = world.params[DMAPI5_PARAM_SERVER_PORT]
 	access_identifier = world.params[DMAPI5_PARAM_ACCESS_IDENTIFIER]
 
-	var/list/bridge_response = Bridge(DMAPI5_BRIDGE_COMMAND_STARTUP, list(DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL = minimum_required_security_level, DMAPI5_BRIDGE_PARAMETER_VERSION = ApiVersion(), DMAPI5_BRIDGE_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
+	var/datum/tgs_version/api_version = ApiVersion()
+	var/list/bridge_response = Bridge(DMAPI5_BRIDGE_COMMAND_STARTUP, list(DMAPI5_BRIDGE_PARAMETER_MINIMUM_SECURITY_LEVEL = minimum_required_security_level, DMAPI5_BRIDGE_PARAMETER_VERSION = api_version.raw_parameter, DMAPI5_BRIDGE_PARAMETER_CUSTOM_COMMANDS = ListCustomCommands()))
 	if(!istype(bridge_response))
 		TGS_ERROR_LOG("Failed initial bridge request!")
 		return FALSE
@@ -42,6 +43,7 @@
 
 	security_level = runtime_information[DMAPI5_RUNTIME_INFORMATION_SECURITY_LEVEL]
 	instance_name = runtime_information[DMAPI5_RUNTIME_INFORMATION_INSTANCE_NAME]
+	version = new /datum/tgs_version(runtime_information[DMAPI5_RUNTIME_INFORMATION_SERVER_VERSION])
 
 	var/list/revisionData = runtime_information[DMAPI5_RUNTIME_INFORMATION_REVISION]
 	if(istype(revisionData))
@@ -94,8 +96,7 @@
 
 /datum/tgs_api/v5/proc/TopicResponse(error_message = null)
 	var/list/response = list()
-	if(error_message)
-		response[DMAPI5_RESPONSE_ERROR_MESSAGE] = error_message
+	response[DMAPI5_RESPONSE_ERROR_MESSAGE] = error_message
 
 	return json_encode(response)
 
@@ -127,14 +128,14 @@
 			intercepted_message_queue = list()
 			var/list/event_notification = topic_parameters[DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]
 			if(!istype(event_notification))
-				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]!")
+				return TopicResponse("Invalid [DMAPI5_TOPIC_PARAMETER_EVENT_NOTIFICATION]!")
 
 			var/event_type = event_notification[DMAPI5_EVENT_NOTIFICATION_TYPE]
 			if(!isnum(event_type))
 				return TopicResponse("Invalid or missing [DMAPI5_EVENT_NOTIFICATION_TYPE]!")
 
 			var/list/event_parameters = event_notification[DMAPI5_EVENT_NOTIFICATION_PARAMETERS]
-			if(!istype(event_parameters))
+			if(event_parameters && !istype(event_parameters))
 				return TopicResponse("Invalid or missing [DMAPI5_EVENT_NOTIFICATION_PARAMETERS]!")
 
 			var/list/event_call = list(event_type)
@@ -145,8 +146,7 @@
 				event_handler.HandleEvent(arglist(event_call))
 
 			var/list/response = list()
-			if(intercepted_message_queue.len)
-				response[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
+			response[DMAPI5_TOPIC_RESPONSE_CHAT_RESPONSES] = intercepted_message_queue
 			intercepted_message_queue = null
 			return json_encode(response)
 		if(DMAPI5_TOPIC_COMMAND_CHANGE_PORT)
@@ -177,6 +177,9 @@
 			var/new_instance_name = topic_parameters[DMAPI5_TOPIC_PARAMETER_NEW_INSTANCE_NAME]
 			if(!istext(new_instance_name))
 				return TopicResponse("Invalid or missing [DMAPI5_TOPIC_PARAMETER_NEW_INSTANCE_NAME]!")
+
+			if(event_handler != null)
+				event_handler.HandleEvent(TGS_EVENT_INSTANCE_RENAMED, new_instance_name)
 
 			instance_name = new_instance_name
 			return TopicResponse()
@@ -261,17 +264,19 @@
 	return revision
 
 /datum/tgs_api/v5/ChatBroadcast(message, list/channels)
-	var/list/ids
-	if(length(channels))
-		ids = list()
-		for(var/I in channels)
-			var/datum/tgs_chat_channel/channel = I
-			ids += channel.id
+	if(!length(channels))
+		channels = ChatChannelInfo()
+
+	var/list/ids = list()
+	for(var/I in channels)
+		var/datum/tgs_chat_channel/channel = I
+		ids += channel.id
+
 	message = list(DMAPI5_CHAT_MESSAGE_TEXT = message, DMAPI5_CHAT_MESSAGE_CHANNEL_IDS = ids)
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
-		Bridge(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE, message)
+		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
 /datum/tgs_api/v5/ChatTargetedBroadcast(message, admin_only)
 	var/list/channels = list()
@@ -283,14 +288,14 @@
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
-		Bridge(TGS4_COMM_CHAT, message)
+		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
 /datum/tgs_api/v5/ChatPrivateMessage(message, datum/tgs_chat_user/user)
 	message = list(DMAPI5_CHAT_MESSAGE_TEXT = message, DMAPI5_CHAT_MESSAGE_CHANNEL_IDS = list(user.channel.id))
 	if(intercepted_message_queue)
 		intercepted_message_queue += list(message)
 	else
-		Bridge(TGS4_COMM_CHAT, message)
+		Bridge(DMAPI5_BRIDGE_COMMAND_CHAT_SEND, list(DMAPI5_BRIDGE_PARAMETER_CHAT_MESSAGE = message))
 
 /datum/tgs_api/v5/ChatChannelInfo()
 	return chat_channels

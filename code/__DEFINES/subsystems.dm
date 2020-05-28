@@ -20,7 +20,7 @@
   *
   * make sure you add an update to the schema_version stable in the db changelog
   */
-#define DB_MINOR_VERSION 8
+#define DB_MINOR_VERSION 9
 
 
 //! ## Timing subsystem
@@ -133,6 +133,7 @@
 #define INIT_ORDER_MINOR_MAPPING	-40
 #define INIT_ORDER_PATH				-50
 #define INIT_ORDER_DISCORD			-60
+#define INIT_ORDER_EXPLOSIONS		-69
 #define INIT_ORDER_PERSISTENCE		-95
 #define INIT_ORDER_DEMO				-99  // o avoid a bunch of changes related to initialization being written, do this last
 #define INIT_ORDER_CHAT				-100 //Should be last to ensure chat remains smooth during init.
@@ -166,6 +167,7 @@
 #define FIRE_PRIORITY_ATMOS_ADJACENCY	300
 #define FIRE_PRIORITY_CHAT			400
 #define FIRE_PRIORITY_OVERLAYS		500
+#define FIRE_PRIORITY_EXPLOSIONS	666
 #define FIRE_PRIORITY_INPUT			1000 // This must always always be the max highest priority. Player input must never be lost.
 
 // SS runlevels
@@ -183,11 +185,11 @@
 //! ## Overlays subsystem
 
 ///Compile all the overlays for an atom from the cache lists
+// |= on overlays is not actually guaranteed to not add same appearances but we're optimistically using it anyway.
 #define COMPILE_OVERLAYS(A)\
 	if (TRUE) {\
 		var/list/ad = A.add_overlays;\
 		var/list/rm = A.remove_overlays;\
-		var/list/po = A.priority_overlays;\
 		if(LAZYLEN(rm)){\
 			A.overlays -= rm;\
 			rm.Cut();\
@@ -195,9 +197,6 @@
 		if(LAZYLEN(ad)){\
 			A.overlays |= ad;\
 			ad.Cut();\
-		}\
-		if(LAZYLEN(po)){\
-			A.overlays |= po;\
 		}\
 		for(var/I in A.alternate_appearances){\
 			var/datum/atom_hud/alternate_appearance/AA = A.alternate_appearances[I];\
@@ -216,3 +215,10 @@
 #define SSAIR_HIGHPRESSURE 5
 #define SSAIR_HOTSPOTS 6
 #define SSAIR_SUPERCONDUCTIVITY 7
+#define SSAIR_REBUILD_PIPENETS 8
+
+// Explosion Subsystem subtasks
+#define SSEXPLOSIONS_MOVABLES 1
+#define SSEXPLOSIONS_TURFS 2
+#define SSEXPLOSIONS_THROWS 3
+

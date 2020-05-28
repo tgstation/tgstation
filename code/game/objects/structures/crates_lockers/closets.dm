@@ -240,7 +240,7 @@
 	else
 		return ..()
 
-/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldnt be continued (because tool was used/closet was of wrong type), FALSE if otherwise
+/obj/structure/closet/proc/tool_interact(obj/item/W, mob/user)//returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 	. = TRUE
 	if(opened)
 		if(istype(W, cutting_tool))
@@ -491,8 +491,13 @@
 
 /obj/structure/closet/contents_explosion(severity, target)
 	for(var/atom/A in contents)
-		A.ex_act(severity, target)
-		CHECK_TICK
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += A
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += A
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += A
 
 /obj/structure/closet/singularity_act()
 	dump_contents()

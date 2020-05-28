@@ -201,19 +201,6 @@
 			to_chat(owner, "<span class='notice'>You succesfuly remove the durathread strand.</span>")
 			L.remove_status_effect(STATUS_EFFECT_CHOKINGSTRAND)
 
-
-/datum/status_effect/pacify/on_creation(mob/living/new_owner, set_duration)
-	if(isnum(set_duration))
-		duration = set_duration
-	. = ..()
-
-/datum/status_effect/pacify/on_apply()
-	ADD_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
-	return ..()
-
-/datum/status_effect/pacify/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_PACIFISM, "status_effect")
-
 //OTHER DEBUFFS
 /datum/status_effect/pacify
 	id = "pacify"
@@ -321,7 +308,13 @@
 	new /obj/effect/temp_visual/bleed/explode(T)
 	for(var/d in GLOB.alldirs)
 		new /obj/effect/temp_visual/dir_setting/bloodsplatter(T, d)
-	playsound(T, "desceration", 100, TRUE, -1)
+	playsound(T, "desecration", 100, TRUE, -1)
+
+/datum/status_effect/stacking/saw_bleed/bloodletting
+	id = "bloodletting"
+	stack_threshold = 7
+	max_stacks = 7
+	bleed_damage = 20
 
 /datum/status_effect/neck_slice
 	id = "neck_slice"
