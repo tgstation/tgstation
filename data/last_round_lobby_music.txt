@@ -1,0 +1,48 @@
+sound/ambience/title2.ogg
+sound/ambience/clown.ogg
+sound/ambience/clown.ogg
+sound/ambience/title2.ogg
+sound/ambience/title3.ogg
+sound/ambience/title3.ogg
+sound/ambience/title1.ogg
+sound/ambience/title2.ogg
+sound/ambience/clown.ogg
+sound/ambience/title3.ogg
+sound/ambience/title3.ogg
+sound/ambience/title2.ogg
+sound/ambience/title2.ogg
+sound/ambience/title2.ogg
+sound/ambience/title1.ogg
+sound/ambience/title2.ogg
+sound/ambience/title2.ogg
+sound/ambience/clown.ogg
+sound/ambience/title2.ogg
+sound/ambience/title2.ogg
+sound/ambience/clown.ogg
+sound/ambience/clown.ogg
+sound/ambience/clown.ogg
+config/title_music/sounds/Hopeless Romantic.ogg
+config/title_music/sounds/Title1 (Flip-Flap).ogg
+config/title_music/sounds/Title3.ogg
+config/title_music/sounds/23rd Century Life.ogg
+config/title_music/sounds/23rd Century Life.ogg
+config/title_music/sounds/Gastly.ogg
+config/title_music/sounds/Starfish Island.ogg
+config/title_music/sounds/Lil B Station.ogg
+config/title_music/sounds/Gastly.ogg
+config/title_music/sounds/Noise channel theme.ogg
+config/title_music/sounds/Skyline have my child.ogg
+config/title_music/sounds/Noise channel theme.ogg
+config/title_music/sounds/Starfish Island.ogg
+config/title_music/sounds/Time to do Something.ogg
+config/title_music/sounds/Coastline.ogg
+config/title_music/sounds/Icarus.ogg
+config/title_music/sounds/Pamp radion.ogg
+config/title_music/sounds/23rd Century Life.ogg
+config/title_music/sounds/Noise channel theme.ogg
+config/title_music/sounds/Corpse Party.ogg
+config/title_music/sounds/3D Galax.ogg
+config/title_music/sounds/Sine ride.ogg
+config/title_music/sounds/Pamp radion.ogg
+config/title_music/sounds/Icarus.ogg
+config/title_music/sounds/The artichoke king.ogg

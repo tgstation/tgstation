@@ -1,11 +1,12 @@
 ###Files and folders specified here will never be tracked.
 
 #Ignore everything in datafolder and subdirectories
-/data/**/*
+# /data/**/*
+/data/logs/**/*
 /tmp/**/*
 
 #Ignore byond config folder.
-/cfg/**/*
+# /cfg/**/*
 
 #Ignore compiled files and other files generated during compilation.
 *.mdme
