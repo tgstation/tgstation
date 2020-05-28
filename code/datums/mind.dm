@@ -197,7 +197,8 @@
 		return
 	var/msg = "<span class='info'>*---------*\n<EM>Your skills</EM></span>\n<span class='notice'>"
 	for(var/i in shown_skills)
-		msg += "[i] - [get_skill_level_name(i)]\n"
+		var/datum/skill/the_skill = i
+		msg += "[initial(the_skill.name)] - [get_skill_level_name(the_skill)]\n"
 	msg += "</span>"
 	to_chat(user, msg)
 
