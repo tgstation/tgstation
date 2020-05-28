@@ -307,6 +307,7 @@
 	desc = "A little bit of nature contained in a pot."
 	layer = ABOVE_MOB_LAYER
 	w_class = WEIGHT_CLASS_HUGE
+	anchored = 1
 	force = 10
 	throwforce = 13
 	throw_speed = 2
