@@ -1584,3 +1584,95 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
 			return "."
 		if(189)
 			return "-"
+
+/**
+  * Algorithm to compile and return a list of edge turfs in a circle.
+  *
+  * Arguments:
+  * * turf/center - If an atom, it will be converted to a turf.
+  * * radius - Distance to center. A value of 1 will produce a 3x3 hollow square. Non-positive values will error out.
+  *
+  * Takes advantage of 8-way symmetry for optimization purposes.
+  * If it reaches the edge of the map the circle will have a hole there.
+  */
+/proc/get_circle_edge_turfs(turf/center, radius = 1)
+	if(!isturf(center))
+		center = get_turf(center)
+		if(!center)
+			CRASH("get_circle_edge_turfs called with an invalid arguments")
+	if(radius < 1)
+		CRASH("get_circle_edge_turfs called a non-positive radius")
+
+	. = list()
+	var/squared_radius = radius * radius
+
+	var/turf/turf_to_add = locate(center.x, center.y - radius, center.z)
+	if(turf_to_add) //In case we reach the map limit.
+		. += turf_to_add
+
+	turf_to_add = locate(center.x, center.y + radius, center.z)
+	if(turf_to_add)
+		. += turf_to_add
+
+	turf_to_add = locate(center.x + radius, center.y, center.z)
+	if(turf_to_add)
+		. += turf_to_add
+
+	turf_to_add = locate(center.x - radius, center.y, center.z)
+	if(turf_to_add)
+		. += turf_to_add
+
+	var/x = 1
+	var/y = radius
+	while(x < y)
+		turf_to_add = locate(center.x + x, center.y + y, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x + x, center.y - y, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x - x, center.y + y, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x - x, center.y - y, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x + y, center.y + x, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x + y, center.y - x, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x - y, center.y + x, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x - y, center.y - x, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		x++
+		y = round(sqrt(squared_radius - (x * x)) + 0.5, 1)
+
+	if(x == y)
+		turf_to_add = locate(center.x + x, center.y + y, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x + x, center.y - y, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x - x, center.y + y, center.z)
+		if(turf_to_add)
+			. += turf_to_add
+
+		turf_to_add = locate(center.x - x, center.y - y, center.z)
+		if(turf_to_add)
+			. += turf_to_add
