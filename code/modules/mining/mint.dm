@@ -14,7 +14,6 @@
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
 	var/processing = FALSE
 	var/chosen = /datum/material/iron //which material will be used to make coins
-	var/coin_multiplier = 1			// not used
 
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
@@ -44,7 +43,7 @@
 
 	var/material_amount = mat_container.get_item_material_amount(O)
 	if (material_amount)
-		var/loaded_amount = mat_container.insert_item(O, material_amount, coin_multiplier)
+		var/loaded_amount = mat_container.insert_item(O, material_amount)
 		if(loaded_amount < material_amount) //if there is not enough space, eject it
 			unload_mineral(O)
 		else

@@ -115,15 +115,15 @@
 	else if(I == active_held)
 		user.put_in_active_hand(I)
 
-/*
- * insert_item: Used to inert items into the material container.  It returns false
- * if it does not have space for the item.  Returns the amount of raw material the
- * item is made of.
-  * Arguments:
-  * * I - item to add to container
-  * * amt - amount to add to container, used mainly for error checking
-  * * multiplier - multiplier applyed to materials when inserted
-  */
+/**
+ ** insert_item: Used to inert items into the material container.  It returns false
+ ** if it does not have space for the item.  Returns the amount of raw material the
+ ** item is made of.
+ ** Arguments:
+ ** I - item to add to container
+ ** amt - amount to add to container, used mainly for error checking
+ ** multiplier - multiplier applyed to materials when inserted
+ **/
 /datum/component/material_container/proc/insert_item(obj/item/I, amt=1, multiplier = 1)
 	if(!I)
 		return FALSE

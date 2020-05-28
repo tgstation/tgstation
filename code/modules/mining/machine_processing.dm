@@ -126,7 +126,6 @@
 	var/datum/material/selected_material = null
 	var/selected_alloy = null
 	var/datum/techweb/stored_research
-	var/ore_multiplier = 1				/// Just moved over from the orm
 
 /obj/machinery/mineral/processing_unit/Initialize()
 	. = ..()
@@ -147,7 +146,7 @@
 	if (!material_amount) //no materials, incinerate it
 		qdel(O)
 	else
-		var/loaded_amount = mat_container.insert_item(O, material_amount, ore_multiplier)
+		var/loaded_amount = mat_container.insert_item(O, material_amount)
 		if(loaded_amount < material_amount) //if there is not enough space, eject it
 			unload_mineral(O)
 		else
