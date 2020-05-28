@@ -283,11 +283,11 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Make a list to choose players from
 	var/list/players = list()
 
+	// Use keys and fakekeys for the same purpose
+	var/displayed_key = ""
+
 	// Try to add every player who's online to the list
 	for(var/client/C in GLOB.clients)
-		// Use keys and fakekeys for the same purpose
-		var/displayed_key = ""
-
 		// Don't add ourself
 		if(C == src)
 			continue
