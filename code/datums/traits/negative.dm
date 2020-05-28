@@ -381,6 +381,30 @@
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
+/datum/quirk/prosthetic_arm
+	name = "Prosthetic Arm"
+	desc = "An accident caused you to lose your arm. Because of this, you now have a prostheticarm!"
+	value = -1
+	var/slot_string = "limb"
+	medical_record_text = "During physical examination, patient was found to have a prosthetic arm."
+
+/datum/quirk/prosthetic_arm/on_spawn()
+	var/limb_slot = pick(BODY_ZONE_R_ARM)
+	var/mob/living/carbon/human/H = quirk_holder
+	var/obj/item/bodypart/old_part = H.get_bodypart(limb_slot)
+	var/obj/item/bodypart/prosthetic
+	switch(limb_slot)
+		if(BODY_ZONE_R_ARM)
+			prosthetic = new/obj/item/bodypart/r_arm/robot/surplus(quirk_holder)
+			slot_string = "right arm"
+	prosthetic.replace_limb(H)
+	qdel(old_part)
+	H.regenerate_icons()
+
+/datum/quirk/prosthetic_arm/post_add()
+	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
+	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
+
 /datum/quirk/pushover
 	name = "Pushover"
 	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."

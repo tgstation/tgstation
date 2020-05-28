@@ -3,6 +3,10 @@
 /area/ruin/powered/beach
 	icon_state = "dk_yellow"
 
+/area/ruin/powered/ratvarmonument
+	icon_state = "dk_yellow"
+	ambientsounds = SPOOKY
+
 /area/ruin/powered/clownplanet
 	name = "Clown Planet"
 	icon_state = "dk_yellow"

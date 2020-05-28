@@ -1173,6 +1173,24 @@
 		to_chat(user, "<span class='alert'>Nothing happens.</span>")
 
 /*
+ * Fucked up and true
+ */
+
+/obj/item/toy/wrathvar
+	name = "God's wrath"
+	desc = "oh he MAD mad."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "wrath"
+	w_class = WEIGHT_CLASS_SMALL
+
+
+/obj/item/toy/wrathvar/attack_self(mob/user)
+	if (!..())
+		playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
+		for(var/mob/M in range(10, src))
+			shake_camera(M, 3, 2)
+
+/*
  * Snowballs
  */
 

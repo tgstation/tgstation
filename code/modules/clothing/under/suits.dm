@@ -55,6 +55,12 @@
 	alt_covers_chest = TRUE
 	fitted = FEMALE_UNIFORM_TOP
 
+/obj/item/clothing/under/suit/king_attire
+	name = "King's Attire"
+	desc = "A white suit, Lawrence's bandana is being used as an ascot."
+	icon_state = "king_attire"
+	item_state = "king_attire"
+
 /obj/item/clothing/under/suit/black_really
 	name = "executive suit"
 	desc = "A formal black suit and red tie, intended for the station's finest."

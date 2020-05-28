@@ -21,11 +21,12 @@
 	can_adjust = FALSE
 	fitted = FEMALE_UNIFORM_TOP
 
-/obj/item/clothing/under/rank/engineering/bunnysuit_sex
-	name = "bunny suit"
+/obj/item/clothing/under/rank/engineering/engineeringsuit
+	name = "Engineering Suit"
 	desc = "Don't let Mothia see this."
-	icon_state = "bunnysuit_sex"
-	item_state = "bunnysuit_sex"
+	icon_state = "engineeringsuit"
+	item_state = "engineeringsuit"
+	armor = list("melee" = 0, "bullet" = 0, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 80, "fire" = 60, "acid" = 20)
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 

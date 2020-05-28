@@ -277,6 +277,9 @@
 					/obj/item/clothing/under/rank/civilian/cookjorts = 2,
 					/obj/item/clothing/shoes/cookflops = 2,
 					/obj/item/reagent_containers/glass/rag = 1,
+					/obj/item/clothing/under/suit/king_attire = 1,
+					/obj/item/clothing/gloves/color/white = 1,
+					/obj/item/clothing/shoes/cowboy/white = 1,
 					/obj/item/clothing/suit/hooded/wintercoat = 2)
 	refill_canister = /obj/item/vending_refill/wardrobe/chef_wardrobe
 	payment_department = ACCOUNT_SRV

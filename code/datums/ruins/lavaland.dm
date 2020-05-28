@@ -123,6 +123,14 @@
 	cost = 0
 	allow_duplicates = FALSE
 
+/datum/map_template/ruin/lavaland/ratvarmonument
+	name = "Monument"
+	id = "cuneiform"
+	description = "Ancient monument to a god."
+	suffix = "lavaland_surface_ratvarmonument.dmm"
+	allow_duplicates = FALSE
+	always_place = TRUE
+
 /datum/map_template/ruin/lavaland/hierophant
 	name = "Hierophant's Arena"
 	id = "hierophant"

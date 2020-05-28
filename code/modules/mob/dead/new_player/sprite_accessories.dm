@@ -239,6 +239,10 @@
 	name = "Combover"
 	icon_state = "hair_combover"
 
+/datum/sprite_accessory/hair/cook
+	name = "Cook's Cut"
+	icon_state = "hair_cook"
+
 /datum/sprite_accessory/hair/cornrows1
 	name = "Cornrows"
 	icon_state = "hair_cornrows"
@@ -410,6 +414,10 @@
 /datum/sprite_accessory/hair/keanu
 	name = "Keanu Hair"
 	icon_state = "hair_keanu"
+
+/datum/sprite_accessory/hair/king
+	name = "King's Cut"
+	icon_state = "hair_king"
 
 /datum/sprite_accessory/hair/kusangi
 	name = "Kusanagi Hair"
@@ -1298,6 +1306,16 @@
 	icon_state = "shirt_white"
 	gender = NEUTER
 
+/datum/sprite_accessory/undershirt/ratvarsoul
+	name = "Ratvar's Soul"
+	icon_state = "ratvarsoul"
+	gender = NEUTER
+
+/datum/sprite_accessory/undershirt/defib
+	name = "Defib"
+	icon_state = "defib"
+	gender = NEUTER
+
 /datum/sprite_accessory/undershirt/blackshortsleeve
 	name = "Short-sleeved Shirt (Black)"
 	icon_state = "blackshortsleeve"
@@ -1733,23 +1751,6 @@
 /datum/sprite_accessory/wings_open/dragon
 	name = "Dragon"
 	icon_state = "dragon"
-	dimension_x = 96
-	center = TRUE
-	dimension_y = 32
-
-/datum/sprite_accessory/wings/megamoth
-	name = "Megamoth"
-	icon_state = "megamoth"
-	color_src = 0
-	dimension_x = 96
-	center = TRUE
-	dimension_y = 32
-	locked = TRUE
-
-/datum/sprite_accessory/wings_open/megamoth
-	name = "Megamoth"
-	icon_state = "megamoth"
-	color_src = 0
 	dimension_x = 96
 	center = TRUE
 	dimension_y = 32
