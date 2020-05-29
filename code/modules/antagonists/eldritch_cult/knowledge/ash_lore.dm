@@ -1,6 +1,6 @@
 /datum/eldritch_knowledge/base_ash
 	name = "Nightwatcher's secret"
-	desc = "Opens up the path of ash to you. Allows you to transmute a match with a knife into an ashen blade."
+	desc = "Opens up the path of ash to you. Allows you to transmute a match with a kitchen knife or it's derivatives into an ashen blade."
 	gain_text = "City guard knows their watch. If you ask them at night they may tell you about the ashy lantern."
 	banned_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_flesh,/datum/eldritch_knowledge/rust_final,/datum/eldritch_knowledge/flesh_final)
 	next_knowledge = list(/datum/eldritch_knowledge/ashen_grasp)
