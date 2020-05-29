@@ -357,8 +357,7 @@
 	if(isliving(target))
 		var/teleport_radius = max(round(G.seed.potency / 10), 1)
 		var/turf/T = get_turf(target)
-		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect... //we could teleport the goo to a different location (like we do to the plant in on_slip()), but I have a feeling that that would be misinterpreted as a bug
-		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
+		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)	
 
 /datum/plant_gene/trait/teleport/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
