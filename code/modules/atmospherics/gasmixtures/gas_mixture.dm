@@ -198,7 +198,7 @@ GLOBAL_LIST_INIT(gaslist_cache, init_gaslist_cache())
 
 	return removed
 
-	///Removes a amount of a specific gas from the gas_mixture.
+	///Removes an amount of a specific gas from the gas_mixture.
 	///Returns: gas_mixture with the gas removed
 /datum/gas_mixture/proc/remove_specific(gas_id, amount)
 	var/list/cached_gases = gases

@@ -45,10 +45,9 @@ map deltastation
 	votable
 endmap
 
-map donutstation
-	minplayers 50
+map icebox
+	minplayers 25
 	votable
-	disabled
 endmap
 
 map runtimestation

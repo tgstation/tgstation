@@ -381,7 +381,7 @@
 	name = "space carp plushie"
 	desc = "An adorable stuffed toy that resembles a space carp."
 	icon_state = "carpplush"
-	item_state = "carp_plushie"
+	inhand_icon_state = "carp_plushie"
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	squeak_override = list('sound/weapons/bite.ogg'=1)
 
@@ -497,7 +497,7 @@
 	name = "lizard plushie"
 	desc = "An adorable stuffed toy that resembles a lizardperson."
 	icon_state = "plushie_lizard"
-	item_state = "plushie_lizard"
+	inhand_icon_state = "plushie_lizard"
 	attack_verb = list("clawed", "hissed", "tail slapped")
 	squeak_override = list('sound/weapons/slash.ogg' = 1)
 
@@ -505,7 +505,7 @@
 	name = "snake plushie"
 	desc = "An adorable stuffed toy that resembles a snake. Not to be mistaken for the real thing."
 	icon_state = "plushie_snake"
-	item_state = "plushie_snake"
+	inhand_icon_state = "plushie_snake"
 	attack_verb = list("bitten", "hissed", "tail slapped")
 	squeak_override = list('sound/weapons/bite.ogg' = 1)
 
@@ -513,7 +513,7 @@
 	name = "operative plushie"
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious."
 	icon_state = "plushie_nuke"
-	item_state = "plushie_nuke"
+	inhand_icon_state = "plushie_nuke"
 	attack_verb = list("shot", "nuked", "detonated")
 	squeak_override = list('sound/effects/hit_punch.ogg' = 1)
 
@@ -521,7 +521,7 @@
 	name = "slime plushie"
 	desc = "An adorable stuffed toy that resembles a slime. It is practically just a hacky sack."
 	icon_state = "plushie_slime"
-	item_state = "plushie_slime"
+	inhand_icon_state = "plushie_slime"
 	attack_verb = list("blorbled", "slimed", "absorbed")
 	squeak_override = list('sound/effects/blobattack.ogg' = 1)
 	gender = FEMALE	//given all the jokes and drawings, I'm not sure the xenobiologists would make a slimeboy
@@ -530,7 +530,7 @@
 	name = "awakened plushie"
 	desc = "An ancient plushie that has grown enlightened to the true nature of reality."
 	icon_state = "plushie_awake"
-	item_state = "plushie_awake"
+	inhand_icon_state = "plushie_awake"
 
 /obj/item/toy/plush/awakenedplushie/ComponentInitialize()
 	. = ..()
@@ -540,7 +540,7 @@
 	name = "bee plushie"
 	desc = "A cute toy that resembles an even cuter bee."
 	icon_state = "plushie_h"
-	item_state = "plushie_h"
+	inhand_icon_state = "plushie_h"
 	attack_verb = list("stung")
 	gender = FEMALE
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
@@ -665,7 +665,7 @@
 	name = "moth plushie"
 	desc = "A plushie depicting an adorable mothperson. It's a huggable bug!"
 	icon_state = "moffplush"
-	item_state = "moffplush"
+	inhand_icon_state = "moffplush"
 	attack_verb = list("fluttered", "flapped")
 	squeak_override = list('sound/voice/moth/scream_moth.ogg'=1)
 ///Used to track how many people killed themselves with item/toy/plush/moth

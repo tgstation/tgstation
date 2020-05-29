@@ -19,6 +19,8 @@
 	initial_gas_mix = AIRLESS_ATMOS
 /turf/open/floor/plasteel/telecomms
 	initial_gas_mix = TCOMMS_ATMOS
+/turf/open/floor/plasteel/icemoon
+	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 
 
 /turf/open/floor/plasteel/dark

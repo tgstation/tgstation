@@ -1,7 +1,11 @@
 /**
- * @file
  * Tools for dealing with Windows Registry bullshit.
+ *
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
  */
+
 import { exec } from 'child_process';
 import { createLogger } from 'common/logging.js';
 import { promisify } from 'util';

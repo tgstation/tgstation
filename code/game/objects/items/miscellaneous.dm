@@ -17,7 +17,7 @@
 	desc = "Hey, why are you viewing this?!! Please let CentCom know about this odd occurrence."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "gangtool-blue"
-	item_state = "radio"
+	inhand_icon_state = "radio"
 	var/uses = 1
 
 /obj/item/choice_beacon/attack_self(mob/user)
@@ -111,7 +111,7 @@
 
 /obj/item/storage/box/hero/carphunter
 	name = "Carp Hunter, Wildlife Expert - 2506."
-	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate enviromentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
+	desc = "Despite his nickname, this wildlife expert was mainly known as a passionate environmentalist and conservationist, often coming in contact with dangerous wildlife to teach about the beauty of nature."
 
 /obj/item/storage/box/hero/carphunter/PopulateContents()
 	new /obj/item/clothing/suit/space/hardsuit/carp/old(src)

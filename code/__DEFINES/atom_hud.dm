@@ -65,7 +65,6 @@
 #define DATA_HUD_FAN					10
 
 //antag HUD defines
-
 #define ANTAG_HUD_CULT			11
 #define ANTAG_HUD_REV			12
 #define ANTAG_HUD_OPS			13

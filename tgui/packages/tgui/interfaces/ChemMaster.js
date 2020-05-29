@@ -215,144 +215,114 @@ const PackagingControlsItem = props => {
   );
 };
 
-class PackagingControls extends Component {
-  constructor() {
-    super();
-    this.state = {
-      pillAmount: 1,
-      patchAmount: 1,
-      bottleAmount: 1,
-      medipenAmount: 1, // FULP
-      packAmount: 1,
-    };
-  }
-
-  render() {
-    const { state, props } = this;
-    const { ref } = props.state.config;
-    const {
-      pillAmount,
-      patchAmount,
-      bottleAmount,
-      medipenAmount, // FULP
-      packAmount,
-    } = this.state;
-    const {
-      condi,
-      chosenPillStyle,
-      pillStyles = [],
-    } = props.state.data;
-    return (
-      <LabeledList>
-        {!condi && (
-          <LabeledList.Item label="Pill type">
-            {pillStyles.map(pill => (
-              <Button
-                key={pill.id}
-                width={5}
-                selected={pill.id === chosenPillStyle}
-                textAlign="center"
-                color="transparent"
-                onClick={() => act(ref, 'pillStyle', { id: pill.id })}>
-                <Box mx={-1} className={pill.className} />
-              </Button>
-            ))}
-          </LabeledList.Item>
-        )}
-        {!condi && (
-          <PackagingControlsItem
-            label="Pills"
-            amount={pillAmount}
-            amountUnit="pills"
-            sideNote="max 50u"
-            onChangeAmount={(e, value) => this.setState({
-              pillAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'pill',
-              amount: pillAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!condi && (
-          <PackagingControlsItem
-            label="Patches"
-            amount={patchAmount}
-            amountUnit="patches"
-            sideNote="max 40u"
-            onChangeAmount={(e, value) => this.setState({
-              patchAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'patch',
-              amount: patchAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!condi && (
-          <PackagingControlsItem
-            label="Bottles"
-            amount={bottleAmount}
-            amountUnit="bottles"
-            sideNote="max 30u"
-            onChangeAmount={(e, value) => this.setState({
-              bottleAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'bottle',
-              amount: bottleAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!condi && (
-          <PackagingControlsItem
-            label="Medipens"
-            amount={medipenAmount}
-            amountUnit="medipens"
-            sideNote="max 10u"
-            onChangeAmount={(e, value) => this.setState({
-              medipenAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'medipen',
-              amount: medipenAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!!condi && (
-          <PackagingControlsItem
-            label="Packs"
-            amount={packAmount}
-            amountUnit="packs"
-            sideNote="max 10u"
-            onChangeAmount={(e, value) => this.setState({
-              packAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'condimentPack',
-              amount: packAmount,
-              volume: 'auto',
-            })} />
-        )}
-        {!!condi && (
-          <PackagingControlsItem
-            label="Bottles"
-            amount={bottleAmount}
-            amountUnit="bottles"
-            sideNote="max 50u"
-            onChangeAmount={(e, value) => this.setState({
-              bottleAmount: value,
-            })}
-            onCreate={() => act(ref, 'create', {
-              type: 'condimentBottle',
-              amount: bottleAmount,
-              volume: 'auto',
-            })} />
-        )}
-      </LabeledList>
-    );
-  }
-}
+const PackagingControls = (props, context) => {
+  const { act, data } = useBackend(context);
+  const [
+    pillAmount,
+    setPillAmount,
+  ] = useSharedState(context, 'pillAmount', 1);
+  const [
+    patchAmount,
+    setPatchAmount,
+  ] = useSharedState(context, 'patchAmount', 1);
+  const [
+    bottleAmount,
+    setBottleAmount,
+  ] = useSharedState(context, 'bottleAmount', 1);
+  const [
+    packAmount,
+    setPackAmount,
+  ] = useSharedState(context, 'packAmount', 1);
+  const {
+    condi,
+    chosenPillStyle,
+    pillStyles = [],
+  } = data;
+  return (
+    <LabeledList>
+      {!condi && (
+        <LabeledList.Item label="Pill type">
+          {pillStyles.map(pill => (
+            <Button
+              key={pill.id}
+              width="30px"
+              selected={pill.id === chosenPillStyle}
+              textAlign="center"
+              color="transparent"
+              onClick={() => act('pillStyle', { id: pill.id })}>
+              <Box mx={-1} className={pill.className} />
+            </Button>
+          ))}
+        </LabeledList.Item>
+      )}
+      {!condi && (
+        <PackagingControlsItem
+          label="Pills"
+          amount={pillAmount}
+          amountUnit="pills"
+          sideNote="max 50u"
+          onChangeAmount={(e, value) => setPillAmount(value)}
+          onCreate={() => act('create', {
+            type: 'pill',
+            amount: pillAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!condi && (
+        <PackagingControlsItem
+          label="Patches"
+          amount={patchAmount}
+          amountUnit="patches"
+          sideNote="max 40u"
+          onChangeAmount={(e, value) => setPatchAmount(value)}
+          onCreate={() => act('create', {
+            type: 'patch',
+            amount: patchAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!condi && (
+        <PackagingControlsItem
+          label="Bottles"
+          amount={bottleAmount}
+          amountUnit="bottles"
+          sideNote="max 30u"
+          onChangeAmount={(e, value) => setBottleAmount(value)}
+          onCreate={() => act('create', {
+            type: 'bottle',
+            amount: bottleAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!!condi && (
+        <PackagingControlsItem
+          label="Packs"
+          amount={packAmount}
+          amountUnit="packs"
+          sideNote="max 10u"
+          onChangeAmount={(e, value) => setPackAmount(value)}
+          onCreate={() => act('create', {
+            type: 'condimentPack',
+            amount: packAmount,
+            volume: 'auto',
+          })} />
+      )}
+      {!!condi && (
+        <PackagingControlsItem
+          label="Bottles"
+          amount={bottleAmount}
+          amountUnit="bottles"
+          sideNote="max 50u"
+          onChangeAmount={(e, value) => setBottleAmount(value)}
+          onCreate={() => act('create', {
+            type: 'condimentBottle',
+            amount: bottleAmount,
+            volume: 'auto',
+          })} />
+      )}
+    </LabeledList>
+  );
+};
 
 const AnalysisResults = (props, context) => {
   const { act, data } = useBackend(context);
