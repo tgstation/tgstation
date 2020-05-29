@@ -1,0 +1,5 @@
+author: "TheVekter"
+delete-after: True
+changes: 
+  - rscadd: "Nanotrasen is experimenting further regarding the interaction between hydrogen and plasma. A new cargo bounty has been added for a single tank of hydrogen."
+  - rscdel: "Centcom no longer needs Phazon mechs delivered to them."
