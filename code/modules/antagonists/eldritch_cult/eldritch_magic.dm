@@ -267,8 +267,7 @@
 	school = "transmutation"
 	charge_max = 150
 	clothes_req = FALSE
-	invocation = ""
-	invocation_type = "whisper"
+	invocation_type = "none"
 	range = 2
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
 	action_icon_state = "mad_touch"
@@ -454,5 +453,6 @@
 		return
 	for(var/turf/T in range(1,current_user))
 		new /obj/effect/hotspot(T)
+		T.hotspot_expose(700,50,1)
 
 
