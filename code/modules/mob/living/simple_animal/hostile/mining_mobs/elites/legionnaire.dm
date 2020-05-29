@@ -49,7 +49,7 @@
 	var/obj/structure/legionnaire_bonfire/mypile = null
 	var/has_head = TRUE
 	/// Whether or not the legionnaire is currently charging, used to deny movement input if he is
-	var/charging
+	var/charging = FALSE
 
 /datum/action/innate/elite_attack/legionnaire_charge
 	name = "Legionnaire Charge"
