@@ -249,7 +249,7 @@
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
 	// Generates sparks on squash.
 	// Small (potency*rate) chance to shock squish or slip target for (potency*rate) damage.
-	// Also affects plant batteries (see capatative cell production datum)
+	// Also affects plant batteries (see the capatative cell production datum)
 	name = "Electrical Activity"
 	rate = 0.2
 
