@@ -225,7 +225,7 @@
 	name = "Anti-Glow"
 	desc = "Your skin seems to attract and absorb nearby light creating 'darkness' around you."
 	text_gain_indication = "<span class='notice'>Your light around you seems to disappear.</span>"
-	glow = -3.5 //Slightly stronger, since negating light tends to be harder than making it.
+	glow = -1.5
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
 
