@@ -162,7 +162,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 				py+=sdy
 			px+=sdx		//Step on in x direction
 			line+=locate(px,py,M.z)//Add the turf to the list
-			CHECK_TICK
 	else
 		for(j=0;j<dyabs;j++)
 			x+=dxabs
@@ -171,7 +170,6 @@ Turf and target are separate in case you want to teleport some distance from a t
 				px+=sdx
 			py+=sdy
 			line+=locate(px,py,M.z)
-			CHECK_TICK
 	return line
 
 //Returns whether or not a player is a guest using their ckey as an input
@@ -472,7 +470,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 
 /proc/cheap_view(distance = 7, atom/center, include_turfs = TRUE, include_objects = TRUE, include_mobs = TRUE)
 	. = list()
-	var/list/turfs_to_check = SSexplosions.GatherSpiralTurfs(distance, center)
+	var/list/turfs_to_check = RANGE_TURFS(distance, center)
 	for(var/T in turfs_to_check)
 		if(can_see(center, T, distance))
 			if(include_turfs)
@@ -480,11 +478,7 @@ Turf and target are separate in case you want to teleport some distance from a t
 			var/turf/TU = T
 			for(var/AT in TU)
 				if((include_mobs && ismob(AT)) || (include_objects && isobj(AT)))
-					if(can_see(center, AT, distance))
-						. += AT
-		CHECK_TICK
-
-
+					. += AT // no point in checking if we can see it because if we can see the turf, we can see it
 
 
 
