@@ -6,6 +6,7 @@ SUBSYSTEM_DEF(trading_card_game)
 	flags = SS_NO_FIRE
 	init_order = INIT_ORDER_TCG
 
+//Let's load the cards before the map fires, so we can load cards on the map safely
 /datum/controller/subsystem/trading_card_game/Initialize()
 	reloadAllCardFiles(GLOB.card_files, GLOB.card_directory)
-	. = ..()
+	return ..()

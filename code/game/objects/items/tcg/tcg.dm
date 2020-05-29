@@ -10,14 +10,25 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "runtime"
 	w_class = WEIGHT_CLASS_TINY
-	var/id = -1 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
-	var/series = "coderbus" //Used along with the id for lookup
+	 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
+	var/id = -1
+	//Used along with the id for lookup
+	var/series = "coderbus"
+	///Is the card flipped?
 	var/flipped = FALSE
 
-/obj/item/tcgcard/Initialize(mapload, brand, badge_me)
+/obj/item/tcgcard/Initialize(mapload, datum_series, datum_id)
 	. = ..()
 	transform = matrix(0.3,0,0,0,0.3,0)
-	var/datum/card/temp = GLOB.cached_cards[brand]["ALL"][badge_me]
+	//If they are passed as null let's replace them with the vars on the card. this also means we can allow for map loaded ccards
+	if(!datum_series)
+		datum_series = series
+	if(!datum_id)
+		datum_id = series
+	var/list/L = GLOB.cached_cards[datum_series]
+	if(!L)
+		return
+	var/datum/card/temp = L["ALL"][datum_id]
 	if(!temp)
 		return
 	name = temp.name
@@ -26,34 +37,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	icon_state = temp.icon_state
 	id = temp.id
 	series = temp.series
-
-/datum/card
-	var/id = -1 //Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
-	var/name = "Coder"
-	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
-	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place." //This handles any extra rules for the card, i.e. extra attributes, special effects, etc. If you've played any other card game, you know how this works.
-	var/icon = "icons/obj/tcg.dmi"
-	var/icon_state = "runtime"
-	var/summoncost = -1 //What it costs to summon this card to the battlefield.
-	var/power = 0 //How hard this card hits (by default)
-	var/resolve = 0 //How hard this card can get hit (by default)
-	var/faction = "socks" //Someone please come up with a ruleset so I can comment this
-	var/cardtype ="C43a7u43?" //Used to define the behaviour the card uses during the game.
-	var/cardsubtype = "Weeb" //An extra descriptor for the card. Combined with the cardtype for a larger card descriptor, i.e. Creature- Xenomorph, Spell- Instant, that sort of thing. For creatures, this has no effect, for spells, this is important.
-	var/series = "coreset2020" //Defines the series that the card originates from, this is *very* important for spawning the cards via packs.
-	var/rarity = "uber rare to the extreme" //The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
-
-/datum/card/New(list/data = list(), list/templates = list())
-	applyTemplates(data, templates)
-	apply(data)
-
-/datum/card/proc/apply(list/data)
-	for(var/name in (vars & data))
-		vars[name] = data[name]
-
-/datum/card/proc/applyTemplates(list/data, list/templates = list())
-	apply(templates["default"])
-	apply(templates[data["template"]])
 
 /obj/item/tcgcard/attack_self(mob/user)
 	. = ..()
@@ -83,10 +66,21 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	icon = 'icons/obj/tcg.dmi'
 	icon_state = "cardback_nt"
 	w_class = WEIGHT_CLASS_TINY
-	var/series = "MEME" //Mirrors the card series.
-	var/contains_coin = -1 //Chance of the pack having a coin in it.
-	///The amount of cards each pack contains
-	var/card_count = 6
+	///The card series to look in
+	var/series = "MEME"
+	///Chance of the pack having a coin in it out of 10
+	var/contains_coin = -1
+	///The amount of cards to draw from the rarity table
+	var/card_count = 5
+	///The rarity table, the set must contain at least one of each
+	var/list/rarity_table = list(
+		"common" = 900,
+		"uncommon" = 300,
+		"rare" = 100,
+		"epic" = 25,
+		"legendary" = 10,
+		"misprint" = 1)
+	///The amount of cards to draw from the guarenteed rarity table
 	var/guaranteed_count = 1
 	///The guaranteed rarity table, acts about the same as the rarity table. it can have as many or as few raritys as you'd like
 	var/list/guar_rarity = list(
@@ -94,13 +88,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		"epic" = 15,
 		"rare" = 25,
 		"uncommon" = 50)
-	var/list/rarity_table = list(
-		"common" = 900,
-		"uncommon" = 300,
-		"rare" = 100,
-		"epic" = 25,
-		"legendary" = 10,
-		"misprint" = 1)//The rarity table, the set must contain at least one of each
 
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
@@ -216,6 +203,46 @@ GLOBAL_LIST_EMPTY(cached_cards)
 			log_runtime("The index [rarity] of rarity_table does not exist in the global cache")
 	return toReturn
 
+/datum/card
+	///Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD IN AS SERIES, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
+	var/id = -1
+	var/name = "Coder"
+	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
+	///This handles any extra rules for the card, i.e. extra attributes, special effects, etc. If you've played any other card game, you know how this works.
+	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place."
+	var/icon = "icons/obj/tcg.dmi"
+	var/icon_state = "runtime"
+	///What it costs to summon this card to the battlefield.
+	var/summoncost = -1
+	///How hard this card hits (by default)
+	var/power = 0
+	///How hard this card can get hit (by default)
+	var/resolve = 0
+	///Someone please come up with a ruleset so I can comment this
+	var/faction = "socks"
+	///Used to define the behaviour the card uses during the game.
+	var/cardtype ="C43a7u43?"
+	///An extra descriptor for the card. Combined with the cardtype for a larger card descriptor, i.e. Creature- Xenomorph, Spell- Instant, that sort of thing. For creatures, this has no effect, for spells, this is important.
+	var/cardsubtype = "Weeb"
+	///Defines the series that the card originates from, this is *very* important for spawning the cards via packs.
+	var/series = "coreset2020"
+	///The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
+	var/rarity = "uber rare to the extreme"
+
+/datum/card/New(list/data = list(), list/templates = list())
+	applyTemplates(data, templates)
+	apply(data)
+
+///For each var that the card datum and the json entry share, we set the datum var to the json entry
+/datum/card/proc/apply(list/data)
+	for(var/name in (vars & data))
+		vars[name] = data[name]
+
+///Applies a json file to a card datum
+/datum/card/proc/applyTemplates(list/data, list/templates = list())
+	apply(templates["default"])
+	apply(templates[data["template"]])
+
 ///Loads all the card files
 /proc/loadAllCardFiles(cardFiles, directory)
 	var/list/templates = list()
@@ -276,7 +303,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 /proc/reloadAllCardFiles(cardFiles, directory)
 	clearCards()
 	loadAllCardFiles(cardFiles, directory)
-
 ///Loads the contents of a json file into our global card list
 /proc/loadCardFile(filename, directory = "strings/tcg")
 	var/list/json = json_decode(file2text("[directory]/[filename]"))
