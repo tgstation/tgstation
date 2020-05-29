@@ -271,22 +271,15 @@
 /area/ruin/powered/seedvault)
 "aL" = (
 /obj/structure/table/wood,
-/obj/item/storage/bag/plants{
-	pixel_x = -5
+/obj/item/geneshears{
+	pixel_x = 6
 	},
-/obj/item/storage/bag/plants{
-	pixel_y = -5
+/obj/item/geneshears,
+/obj/item/geneshears{
+	pixel_x = -6
 	},
-/obj/item/storage/bag/plants{
-	pixel_y = 5
-	},
-/obj/item/storage/bag/plants{
-	pixel_x = 5
-	},
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
+/obj/item/geneshears,
+/turf/open/floor/vault,
 /area/ruin/powered/seedvault)
 "aM" = (
 /obj/structure/table/wood,
@@ -308,17 +301,6 @@
 	},
 /turf/open/floor/plasteel/dark,
 /area/ruin/powered/seedvault)
-"aP" = (
-/obj/structure/table/wood,
-/obj/item/geneshears{
-	pixel_x = 6
-	},
-/obj/item/geneshears,
-/obj/item/geneshears{
-	pixel_x = -6
-	},
-/turf/open/floor/vault,
-/area/ruin/powered/seedvault)
 "aQ" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plasteel/freezer,
@@ -332,14 +314,22 @@
 /area/ruin/powered/seedvault)
 "aS" = (
 /obj/structure/table/wood,
-/obj/item/secateurs{
-	pixel_x = -6
+/obj/item/storage/bag/plants{
+	pixel_x = -5
 	},
-/obj/item/secateurs{
-	pixel_x = 6
+/obj/item/storage/bag/plants{
+	pixel_y = -5
 	},
-/obj/item/secateurs,
-/turf/open/floor/vault,
+/obj/item/storage/bag/plants{
+	pixel_y = 5
+	},
+/obj/item/storage/bag/plants{
+	pixel_x = 5
+	},
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel/dark,
 /area/ruin/powered/seedvault)
 "aT" = (
 /obj/item/reagent_containers/glass/bucket,
@@ -700,6 +690,20 @@
 	},
 /turf/open/floor/plasteel/freezer,
 /area/ruin/powered/seedvault)
+"GN" = (
+/obj/structure/table/wood,
+/obj/item/secateurs{
+	pixel_x = -6
+	},
+/obj/item/secateurs{
+	pixel_x = 6
+	},
+/obj/item/secateurs,
+/obj/item/secateurs{
+	pixel_x = -6
+	},
+/turf/open/floor/vault,
+/area/ruin/powered/seedvault)
 "KF" = (
 /obj/machinery/door/airlock/titanium,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -884,7 +888,7 @@ ac
 ac
 PH
 ah
-aL
+aS
 ac
 aG
 ac
@@ -1064,7 +1068,7 @@ ac
 ac
 aI
 aA
-aP
+aL
 ac
 by
 bA
@@ -1086,7 +1090,7 @@ aX
 aE
 aA
 aA
-aS
+GN
 ac
 bm
 br
