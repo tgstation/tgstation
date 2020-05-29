@@ -216,7 +216,7 @@
 /datum/plant_gene/trait/squash
 	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 	// Also splashes everything in target turf with reagents and applies other trait effects (teleporting, etc) to the target by on_squash.
-	// For code, see grown.dm (and the handle_slip() proc in this file)
+	// For code, see grown.dm (and anything that checks for the presence of this trait)
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
 
@@ -248,17 +248,17 @@
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
 	// Generates sparks on squash.
-	// Small (potency*rate*5) chance to shock squish or slip target for (potency*rate*5) damage.
-	// Also affects plant batteries see capatative cell production datum
+	// Small (potency*rate) chance to shock squish or slip target for (potency*rate) damage.
+	// Also affects plant batteries (see capatative cell production datum)
 	name = "Electrical Activity"
 	rate = 0.2
 
 /datum/plant_gene/trait/cell_charge/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
 	var/power = G.seed.potency*rate
-	if(prob(power))
+	if(!(G.seed && G.seed.get_gene(/datum/plant_gene/trait/squash)) && prob(power)) //if the plant has the liquid contents trait, then on_squash() will be called later and roll the chance to shock them anyway (without this check, that chance would be rolled twice)
 		C.electrocute_act(round(power), G, 1, SHOCK_NOGLOVES)
 
-/datum/plant_gene/trait/cell_charge/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target)
+/datum/plant_gene/trait/cell_charge/on_squash(obj/item/reagent_containers/food/snacks/grown/G, atom/target) //someday, we should make this recharge ethereals, AIs (specifically, the backup battery power of AIs), and borgs
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		var/power = G.seed.potency*rate
@@ -357,19 +357,16 @@
 	if(isliving(target))
 		var/teleport_radius = max(round(G.seed.potency / 10), 1)
 		var/turf/T = get_turf(target)
-		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
+		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect... //we could teleport the goo to a different location (like we do to the plant in on_slip()), but I have a feeling that that would be misinterpreted as a bug
 		do_teleport(target, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /datum/plant_gene/trait/teleport/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
-	var/teleport_radius = max(round(G.seed.potency / 10), 1)
-	var/turf/T = get_turf(C)
 	to_chat(C, "<span class='warning'>You slip through spacetime!</span>")
-	do_teleport(C, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
-	if(prob(50))
+	if(!(G.seed && G.seed.get_gene(/datum/plant_gene/trait/squash))) //on_slip() will call on_squash(), so without this check, a plant with the slippery skin and liquid contents traits would teleport people twice in one slip
+		var/teleport_radius = max(round(G.seed.potency / 10), 1)
+		var/turf/T = get_turf(C)
+		do_teleport(C, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
 		do_teleport(G, T, teleport_radius, channel = TELEPORT_CHANNEL_BLUESPACE)
-	else
-		new /obj/effect/decal/cleanable/molten_object(T) //Leave a pile of goo behind for dramatic effect...
-		qdel(G)
 
 
 /datum/plant_gene/trait/maxchem
