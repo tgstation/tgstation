@@ -242,7 +242,7 @@
 /datum/plant_gene/trait/slip/proc/handle_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/M)
 	for(var/datum/plant_gene/trait/T in G.seed.genes)
 		T.on_slip(G, M)
-	if(G.seed && G.seed.get_gene(/datum/plant_gene/trait/squash)) //squash() deletes the plant product, so we need to make sure that it is called LAST, or else the plant can get deleted before the on_slip() effects of other plant traits can be called
+	if(G.seed && G.seed.get_gene(/datum/plant_gene/trait/squash)) //squash() deletes the plant, so we need to make sure that it is called LAST, or else the plant can get deleted before the on_slip() effects of other plant traits can be called
 		G.squash(M)
 
 /datum/plant_gene/trait/cell_charge
