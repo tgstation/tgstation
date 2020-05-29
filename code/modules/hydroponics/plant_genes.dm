@@ -216,13 +216,9 @@
 /datum/plant_gene/trait/squash
 	// Allows the plant to be squashed when thrown or slipped on, leaving a colored mess and trash type item behind.
 	// Also splashes everything in target turf with reagents and applies other trait effects (teleporting, etc) to the target by on_squash.
-	// For code, see grown.dm
+	// For code, see grown.dm (and the handle_slip() proc in this file)
 	name = "Liquid Contents"
 	examine_line = "<span class='info'>It has a lot of liquid contents inside.</span>"
-
-/datum/plant_gene/trait/squash/on_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/living/carbon/C)
-	// Squash the plant on slip.
-	G.squash(C)
 
 /datum/plant_gene/trait/slip
 	// Makes plant slippery, unless it has a grown-type trash. Then the trash gets slippery.
@@ -246,6 +242,8 @@
 /datum/plant_gene/trait/slip/proc/handle_slip(obj/item/reagent_containers/food/snacks/grown/G, mob/M)
 	for(var/datum/plant_gene/trait/T in G.seed.genes)
 		T.on_slip(G, M)
+	if(G.seed && G.seed.get_gene(/datum/plant_gene/trait/squash)) //squash() deletes the plant product, so we need to make sure that it is called LAST, or else the plant can get deleted before the on_slip() effects of other plant traits can be called
+		G.squash(M)
 
 /datum/plant_gene/trait/cell_charge
 	// Cell recharging trait. Charges all mob's power cells to (potency*rate)% mark when eaten.
