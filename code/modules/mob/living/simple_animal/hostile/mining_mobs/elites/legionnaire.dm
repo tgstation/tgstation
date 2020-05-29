@@ -113,7 +113,7 @@
 		myhead.Goto(T, myhead.move_to_delay)
 		
 /mob/living/simple_animal/hostile/asteroid/elite/legionnaire/proc/legionnaire_charge(target)
-	ranged_cooldown = world.time + 35
+	ranged_cooldown = world.time + 3.5 SECONDS
 	charging = TRUE
 	var/dir_to_target = get_dir(get_turf(src), get_turf(target))
 	var/turf/T = get_step(get_turf(src), dir_to_target)
