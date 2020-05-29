@@ -388,29 +388,19 @@ Contains:
 	inhand_icon_state = "hardsuit0-inq"
 	hardsuit_type = "inq"
 
-/obj/item/clothing/suit/space/hardsuit/berserker
+/obj/item/clothing/suit/space/hardsuit/ert/paranormal/berserker
 	name = "champion's hardsuit"
 	desc = "Voices echo from the hardsuit, driving the user insane."
 	icon_state = "hardsuit-berserker"
 	inhand_icon_state = "hardsuit-berserker"
-	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/berserker
-	slowdown = 0
-	armor = list("melee" = 65, "bullet" = 60, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	resistance_flags = FIRE_PROOF | ACID_PROOF
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/berserker
 
-/obj/item/clothing/head/helmet/space/hardsuit/berserker
+/obj/item/clothing/head/helmet/space/hardsuit/ert/paranormal/berserker
 	name = "champion's helmet"
 	desc = "Peering into the eyes of the helmet is enough to seal damnation."
 	icon_state = "hardsuit0-berserker"
 	inhand_icon_state = "hardsuit0-berserker"
 	hardsuit_type = "berserker"
-	armor = list("melee" = 65, "bullet" = 60, "laser" = 50, "energy" = 50, "bomb" = 50, "bio" = 100, "rad" = 100, "fire" = 80, "acid" = 80)
-	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
-	heat_protection = HEAD
-	resistance_flags = FIRE_PROOF | ACID_PROOF
-	flags_inv = HIDEEARS|HIDEHAIR|HIDEFACIALHAIR
 
 /obj/item/clothing/head/helmet/space/fragile
 	name = "emergency space helmet"
