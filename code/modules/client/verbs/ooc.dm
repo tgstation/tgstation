@@ -342,7 +342,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Check if the selected player is not on our ignore list
 	if(!(selection in prefs.ignoring))
 		// Add the selected player to our ignore list
-		prefs.ignoring |= selection
+		prefs.ignoring += selection
 
 		// Save our preferences
 		prefs.save_preferences()
