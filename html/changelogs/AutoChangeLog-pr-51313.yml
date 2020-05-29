@@ -1,0 +1,5 @@
+author: "AsphaltEvidence"
+delete-after: True
+changes: 
+  - imageadd: "added directional sprites to the arcade machines"
+  - imageadd: "added directional sprites to the arcade machine screens"
