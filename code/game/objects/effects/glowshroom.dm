@@ -67,7 +67,7 @@
 	else
 		myseed = new myseed(src)
 	if(spread)
-		myseed.potency -= round(myseed.potency / 4) // Reduce potency of the little mushie if it's spreading
+		myseed.potency -= round(myseed.potency * 0.25) // Reduce potency of the little mushie if it's spreading
 	if(mutate_stats) //baby mushrooms have different stats :3
 		myseed.adjust_potency(rand(-4,3))
 		myseed.adjust_yield(rand(-3,2))
@@ -107,7 +107,7 @@
 	var/turf/ownturf = get_turf(src)
 	var/shrooms_planted = 0
 	for(var/i in 1 to myseed.yield)
-		var/chance_stats = ((myseed.potency + myseed.endurance * 2) / 5) // Chance of generating a new mushroom based on stats
+		var/chance_stats = ((myseed.potency + myseed.endurance * 2) * 0.2) // Chance of generating a new mushroom based on stats
 		var/chance_generation = (100 / (generation * generation)) // This formula gives you diminishing returns based on generation. 100% with 1st gen, decreasing to 25%, 11%, 6, 4, 2...
 		if(prob(max(chance_stats, chance_generation))) // Whatever is the higher chance we use it
 			var/list/possibleLocs = list()
@@ -219,5 +219,4 @@
 /obj/structure/glowshroom/attackby(obj/item/I, mob/living/user, params)
 	if (istype(I, /obj/item/plant_analyzer))
 		return myseed.attackby(I, user, params) // Hacky I guess
-	else
-		return ..() // Attack normally
+	return ..() // Attack normally
