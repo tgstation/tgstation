@@ -13,7 +13,7 @@
 	try_activate(user)
 
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
-	if(! IS_E_CULTIST(user) )
+	if(! IS_HERETIC(user) )
 		return
 	flick("[icon_state]_active",src)
 	activate(user)
@@ -25,7 +25,7 @@
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
 
-	var/datum/antagonist/e_cult/cultie = user.mind.has_antag_datum(/datum/antagonist/e_cult)
+	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/list/knowledge = cultie.get_all_knowledge()
 	var/list/atoms_in_range = list()
 
@@ -152,7 +152,7 @@
 	icon_state = "pierced_illusion"
 
 /obj/effect/broken_illusion/examine(mob/user)
-	if(!IS_E_CULTIST(user) && ishuman(user))
+	if(!IS_HERETIC(user) && ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		to_chat(human_user,"<span class='warning'>Your brain hurts when you look at this!</span>")
 		human_user.adjustOrganLoss(ORGAN_SLOT_BRAIN,10)

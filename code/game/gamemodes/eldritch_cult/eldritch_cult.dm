@@ -61,7 +61,7 @@
 	for(var/c in culties)
 		var/datum/mind/cultie = c
 		log_game("[key_name(cultie)] has been selected as an heretic!")
-		var/datum/antagonist/e_cult/new_antag = new()
+		var/datum/antagonist/heretic/new_antag = new()
 		cultie.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= cultie
 	return ..()

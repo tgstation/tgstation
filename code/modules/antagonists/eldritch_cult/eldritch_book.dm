@@ -18,7 +18,7 @@
 
 /obj/item/forbidden_book/examine(mob/user)
 	. = ..()
-	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
 		return
 	. += "The Tome holds [charge] charges."
 	. += "Use it on the floor to create a transmutation rune, used to perform rituals."
@@ -45,7 +45,7 @@
 
 ///Draws a rune on a selected turf
 /obj/item/forbidden_book/proc/draw_rune(atom/target,mob/user)
-	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
 		return
 	for(var/turf/T in range(1,target))
 		if(is_type_in_typecache(T, blacklisted_turfs))
@@ -57,13 +57,13 @@
 
 ///Removes runes from the selected turf
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
-	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
 		return
 	if(do_after(user,2 SECONDS,user))
 		qdel(target)
 
 /obj/item/forbidden_book/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state) // Remember to use the appropriate state.
-	if(!user.mind.has_antag_datum(/datum/antagonist/e_cult))
+	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
 		return FALSE
 	last_user = user
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -72,7 +72,7 @@
 		ui.open()
 
 /obj/item/forbidden_book/ui_data(mob/user)
-	var/datum/antagonist/e_cult/cultie = user.mind.has_antag_datum(/datum/antagonist/e_cult)
+	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/list/to_know_alpha = list()
 	for(var/Y in cultie.get_researchable_knowledge())
 		to_know_alpha += new Y
@@ -136,7 +136,7 @@
 		return
 	switch(action)
 		if("research")
-			var/datum/antagonist/e_cult/cultie = last_user.mind.has_antag_datum(/datum/antagonist/e_cult)
+			var/datum/antagonist/heretic/cultie = last_user.mind.has_antag_datum(/datum/antagonist/heretic)
 			var/ekname = params["name"]
 			for(var/X in cultie.get_researchable_knowledge())
 				var/datum/eldritch_knowledge/EK = X

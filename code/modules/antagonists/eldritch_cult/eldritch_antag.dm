@@ -1,4 +1,4 @@
-/datum/antagonist/e_cult
+/datum/antagonist/heretic
 	name = "Heretic"
 	roundend_category = "Heretics"
 	antagpanel_category = "Heretic"
@@ -8,13 +8,13 @@
 	var/list/researched_knowledge = list()
 	var/total_sacrifices = 0
 
-/datum/antagonist/e_cult/admin_add(datum/mind/new_owner,mob/admin)
+/datum/antagonist/heretic/admin_add(datum/mind/new_owner,mob/admin)
 	give_equipment = FALSE
 	new_owner.add_antag_datum(src)
 	message_admins("[key_name_admin(admin)] has heresized [key_name_admin(new_owner)].")
 	log_admin("[key_name(admin)] has heresized [key_name(new_owner)].")
 
-/datum/antagonist/e_cult/greet()
+/datum/antagonist/heretic/greet()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/ecult_op.ogg', 100, FALSE, pressure_affected = FALSE)//subject to change
 	to_chat(owner, "<span class='boldannounce'>You are the Heretic!</span><br>\
 	<B>The old ones gave you these tasks to fulfill:</B>")
@@ -23,7 +23,7 @@
 	Your book allows you to research abilities, read it very carefully! you cannot undo what has been done!<br>\
 	You gain charges by either collecitng influences or sacrifcing people tracked by the living heart<br></span>")
 
-/datum/antagonist/e_cult/on_gain()
+/datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
 	if(ishuman(current))
 		forge_primary_objectives()
@@ -39,7 +39,7 @@
 		equip_cultist()
 	return ..()
 
-/datum/antagonist/e_cult/on_removal()
+/datum/antagonist/heretic/on_removal()
 
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = X
@@ -55,14 +55,14 @@
 	return ..()
 
 
-/datum/antagonist/e_cult/proc/equip_cultist()
+/datum/antagonist/heretic/proc/equip_cultist()
 	var/mob/living/carbon/H = owner.current
 	if(!istype(H))
 		return
 	. += ecult_give_item(/obj/item/forbidden_book, H)
 	. += ecult_give_item(/obj/item/living_heart, H)
 
-/datum/antagonist/e_cult/proc/ecult_give_item(obj/item/item_path, mob/living/carbon/human/H)
+/datum/antagonist/heretic/proc/ecult_give_item(obj/item/item_path, mob/living/carbon/human/H)
 	var/list/slots = list(
 		"backpack" = ITEM_SLOT_BACKPACK,
 		"left pocket" = ITEM_SLOT_LPOCKET,
@@ -82,7 +82,7 @@
 		return TRUE
 
 
-/datum/antagonist/e_cult/process()
+/datum/antagonist/heretic/process()
 
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = X
@@ -95,7 +95,7 @@
 		if(S.target && S.target.current.stat == CONSCIOUS && (S.target in view(7,src)))
 			S.timer -= 1 SECONDS
 
-/datum/antagonist/e_cult/proc/forge_primary_objectives()
+/datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()
 	var/list/protection = list()
 	for(var/i in 1 to 2)
@@ -125,7 +125,7 @@
 	SE.update_explanation_text()
 	objectives += SE
 
-/datum/antagonist/e_cult/apply_innate_effects(mob/living/mob_override)
+/datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	if(mob_override)
@@ -133,7 +133,7 @@
 	handle_clown_mutation(current, mob_override ? null : "Knowledge described in the book allowed you to overcome your clownish nature, allowing you to use complex items effectively.")
 	current.faction |= "e_cult"
 
-/datum/antagonist/e_cult/remove_innate_effects(mob/living/mob_override)
+/datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/current = owner.current
 	if(mob_override)
@@ -141,11 +141,11 @@
 	handle_clown_mutation(current, removing = FALSE)
 	current.faction -= "e_cult"
 
-/datum/antagonist/e_cult/get_admin_commands()
+/datum/antagonist/heretic/get_admin_commands()
 	. = ..()
 	.["Equip"] = CALLBACK(src,.proc/equip_cultist)
 
-/datum/antagonist/e_cult/roundend_report()
+/datum/antagonist/heretic/roundend_report()
 	var/list/parts = list()
 
 	var/cultiewin = TRUE
@@ -183,7 +183,7 @@
 // Knowledge //
 ////////////////
 
-/datum/antagonist/e_cult/proc/gain_knowledge(datum/eldritch_knowledge/EK)
+/datum/antagonist/heretic/proc/gain_knowledge(datum/eldritch_knowledge/EK)
 	if(has_knowledge(EK))
 		return FALSE
 	var/datum/eldritch_knowledge/initialized_knowledge = new EK
@@ -191,7 +191,7 @@
 	initialized_knowledge.on_gain(owner.current)
 	return TRUE
 
-/datum/antagonist/e_cult/proc/get_researchable_knowledge()
+/datum/antagonist/heretic/proc/get_researchable_knowledge()
 	var/list/researchable_knowledge = list()
 	var/list/banned_knowledge = list()
 	for(var/X in researched_knowledge)
@@ -202,20 +202,20 @@
 	researchable_knowledge -= banned_knowledge
 	return researchable_knowledge
 
-/datum/antagonist/e_cult/proc/has_knowledge(datum/eldritch_knowledge/wanted)
+/datum/antagonist/heretic/proc/has_knowledge(datum/eldritch_knowledge/wanted)
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/searched = X
 		if(initial(wanted.name) == searched.name)
 			return TRUE
 	return FALSE
 
-/datum/antagonist/e_cult/proc/get_knowledge(datum/eldritch_knowledge/wanted)
+/datum/antagonist/heretic/proc/get_knowledge(datum/eldritch_knowledge/wanted)
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/searched = X
 		if(istype(searched,wanted))
 			return searched
 
-/datum/antagonist/e_cult/proc/get_all_knowledge()
+/datum/antagonist/heretic/proc/get_all_knowledge()
 	return researched_knowledge
 
 ////////////////
@@ -252,7 +252,7 @@
 		if(!M)
 			continue
 		var/datum/mind/mind = M
-		var/datum/antagonist/e_cult/cultie = mind.has_antag_datum(/datum/antagonist/e_cult)
+		var/datum/antagonist/heretic/cultie = mind.has_antag_datum(/datum/antagonist/heretic)
 		if(!cultie)
 			continue
 		return cultie.total_sacrifices >= target_amount

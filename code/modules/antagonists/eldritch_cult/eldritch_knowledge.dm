@@ -214,7 +214,7 @@
 			var/mob/living/carbon/human/H = LH.target
 			H.gib()
 			LH.target = null
-			var/datum/antagonist/e_cult/EC = user.mind.has_antag_datum(/datum/antagonist/e_cult)
+			var/datum/antagonist/heretic/EC = user.mind.has_antag_datum(/datum/antagonist/heretic)
 
 			EC.total_sacrifices++
 			for(var/X in user.GetAllContents())

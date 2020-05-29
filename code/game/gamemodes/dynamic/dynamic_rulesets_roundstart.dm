@@ -154,7 +154,7 @@
 /datum/dynamic_ruleset/roundstart/e_cult
 	name = "Heretics"
 	antag_flag = ROLE_CULTIST
-	antag_datum = /datum/antagonist/e_cult
+	antag_datum = /datum/antagonist/heretic
 	protected_roles = list("Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	restricted_roles = list("AI", "Cyborg","Chaplain")
 	required_candidates = 1
@@ -185,7 +185,7 @@
 
 	for(var/c in assigned)
 		var/datum/mind/cultie = c
-		var/datum/antagonist/e_cult/new_antag = new antag_datum()
+		var/datum/antagonist/heretic/new_antag = new antag_datum()
 		cultie.add_antag_datum(new_antag)
 		GLOB.pre_setup_antags -= cultie
 		GLOB.reality_smash_track.AddMind(cultie)

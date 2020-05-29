@@ -9,7 +9,7 @@
 
 /obj/item/living_heart/attack_self(mob/user)
 	. = ..()
-	if(!IS_E_CULTIST(user))
+	if(!IS_HERETIC(user))
 		return
 	if(!target)
 		to_chat(user,"<span class='warning'>No target could be found. Put the living heart on the rune and use the rune to recieve a target.</span>")
@@ -47,7 +47,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "rended")
 
 /obj/item/melee/sickly_blade/attack(mob/living/M, mob/living/user)
-	if(!IS_E_CULTIST(user))
+	if(!IS_HERETIC(user))
 		to_chat(user,"<span class='danger'>Echoes of the breat beyond break your mind!</span>")
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustStun(5 SECONDS)
@@ -56,7 +56,7 @@
 
 /obj/item/melee/sickly_blade/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	var/datum/antagonist/e_cult/cultie = user.mind.has_antag_datum(/datum/antagonist/e_cult)
+	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	if(!cultie)
 		return
 	for(var/X in cultie.get_all_knowledge())
@@ -83,7 +83,7 @@
 
 /obj/item/clothing/neck/eldritch_amulet/equipped(mob/user, slot)
 	. = ..()
-	if(ishuman(user) && user.mind && slot == ITEM_SLOT_NECK && IS_E_CULTIST(user) )
+	if(ishuman(user) && user.mind && slot == ITEM_SLOT_NECK && IS_HERETIC(user) )
 		ADD_TRAIT(user, trait, CLOTHING_TRAIT)
 		user.update_sight()
 

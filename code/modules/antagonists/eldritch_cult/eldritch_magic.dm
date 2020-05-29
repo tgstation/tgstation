@@ -56,7 +56,7 @@
 			tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 			return
 	var/datum/mind/M = user.mind
-	var/datum/antagonist/e_cult/cultie = M.has_antag_datum(/datum/antagonist/e_cult)
+	var/datum/antagonist/heretic/cultie = M.has_antag_datum(/datum/antagonist/heretic)
 
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -291,7 +291,7 @@
 			if(tar.anti_magic_check())
 				tar.visible_message("<span class='danger'>Spell bounces off of [target]!</span>","<span class='danger'>The spell bounces off of you!</span>")
 				return
-		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/e_cult))
+		if(target.mind && !target.mind.has_antag_datum(/datum/antagonist/heretic))
 			to_chat(user,"<span class='warning'>[target.name] has been cursed!</span>")
 			SEND_SIGNAL(target, COMSIG_ADD_MOOD_EVENT, "gates_of_mansus", /datum/mood_event/gates_of_mansus)
 
