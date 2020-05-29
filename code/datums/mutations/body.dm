@@ -192,7 +192,6 @@
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 2.5
 	var/range = 2.5
-	var/hue = 0
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
 
