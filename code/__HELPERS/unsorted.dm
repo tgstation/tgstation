@@ -1594,6 +1594,7 @@ GLOBAL_DATUM_INIT(dview_mob, /mob/dview, new)
   *
   * Takes advantage of 8-way symmetry for optimization purposes.
   * If it reaches the edge of the map the circle will have a hole there.
+  * Since it prioritizes drawing a better circle shape there might be uncovered turfs between one range and the next, but they will never overlap.
   */
 /proc/get_circle_edge_turfs(turf/center, radius = 1)
 	if(!isturf(center))
