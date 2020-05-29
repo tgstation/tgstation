@@ -4,7 +4,7 @@
 	random_color = FALSE
 	icon = 'icons/fulpicons/phoenix_nest/balloon.dmi'
 	icon_state = "syndballoongold"
-	item_state = "syndballoongold"
+	inhand_icon_state = "syndballoongold"
 	lefthand_file = 'icons/fulpicons/phoenix_nest/balloons_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/phoenix_nest/balloons_righthand.dmi'
 

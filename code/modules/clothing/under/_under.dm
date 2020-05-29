@@ -87,7 +87,7 @@
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
 			H.update_inv_wear_suit()
-	set_sensor_glob()	
+	set_sensor_glob()
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
@@ -97,7 +97,7 @@
 			H.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
 				H.update_inv_wear_suit()
-	set_sensor_glob()	
+	set_sensor_glob()
 	..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
@@ -121,7 +121,7 @@
 				to_chat(user, "<span class='notice'>You attach [I] to [src].</span>")
 
 			var/accessory_color = attached_accessory.icon_state
-			accessory_overlay = mutable_appearance(I.mob_overlay_icon, "[accessory_color]") //FULP modified - changed hardcoded file path to I.mob_overlay_icon
+			accessory_overlay = mutable_appearance(I.worn_icon, "[accessory_color]") //FULP modified - changed hardcoded file path to I.mob_overlay_icon
 			accessory_overlay.alpha = attached_accessory.alpha
 			accessory_overlay.color = attached_accessory.color
 

@@ -2,7 +2,7 @@
 	name = "Black Bowler"
 	desc = "A deep black bowler. Inside the hat, there is a sleek red S, with a smaller X insignia embroidered within. On closer inspection, the brim feels oddly weighted..."
 	icon_state = "bowler"
-	item_state = "bowler"
+	inhand_icon_state = "bowler"
 	dynamic_hair_suffix = ""
 	force = 3
 	throwforce = 45

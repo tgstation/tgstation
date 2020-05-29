@@ -14,7 +14,7 @@
 
 /mob/living/carbon/human/proc/digisuit_icon_update(var/obj/item/clothing/under/U)
 	if(U.fulp_digisuit)
-		U.mob_overlay_icon = 'icons/fulpicons/mith_stash/clothing/under_worn.dmi'
+		U.worn_icon = 'icons/fulpicons/mith_stash/clothing/under_worn.dmi'
 
 
 /obj/item/clothing/under

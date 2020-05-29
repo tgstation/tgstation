@@ -5,9 +5,9 @@
 	name = "\improper Head of Security's winter coat"
 	desc = "This is the Head of Security's personal winter coat. Although it looks like a normal coat, it actually has armor woven inside."
 	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_hos"
-	item_state = "wintercoat_hos"
+	inhand_icon_state = "wintercoat_hos"
 	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	armor = list("melee" = 30, "bullet" = 30, "laser" = 30, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 70, "acid" = 90) // Same as the HoS trench coat
@@ -17,7 +17,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security/head
 
 /obj/item/clothing/head/hooded/winterhood/security/head
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_hos"
 
@@ -26,9 +26,9 @@
 	name = "\improper Chief Medical Officer's winter coat"
 	desc = "This is the Chief Medical Officer's personal winter coat."
 	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_cmo"
-	item_state = "wintercoat_cmo"
+	inhand_icon_state = "wintercoat_cmo"
 	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	allowed = list(/obj/item/analyzer, /obj/item/sensor_device, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/assembly/flash/handheld)
@@ -36,7 +36,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/head
 
 /obj/item/clothing/head/hooded/winterhood/medical/head
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_cmo"
 
@@ -45,9 +45,9 @@
 	name = "\improper Research Director's winter coat"
 	desc = "This is the Research Director's personal winter coat."
 	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_rd"
-	item_state = "wintercoat_rd"
+	inhand_icon_state = "wintercoat_rd"
 	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/assembly/flash/handheld)
@@ -55,7 +55,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/science/head
 
 /obj/item/clothing/head/hooded/winterhood/science/head
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_rd"
 
@@ -63,9 +63,9 @@
 	name = "\improper Chief Engineer's winter coat"
 	desc = "This is the Chief Engineer's personal winter coat."
 	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_ce"
-	item_state = "wintercoat_ce"
+	inhand_icon_state = "wintercoat_ce"
 	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 40, "fire" = 30, "acid" = 45) // 20 extra rad protection. Why not?
@@ -73,7 +73,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/engineering/head
 
 /obj/item/clothing/head/hooded/winterhood/engineering/head
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_ce"
 
@@ -82,16 +82,16 @@
 	name = "\improper Head of Personel's winter coat"
 	desc = "This is the Head of Personel's personal winter coat. It has a small armor vest woven inside."
 	icon = 'icons/fulpicons/phoenix_nest/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon_state = "wintercoat_hop"
-	item_state = "wintercoat_hop"
+	inhand_icon_state = "wintercoat_hop"
 	lefthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/phoenix_nest/wintercoat_righthand.dmi'
 	armor = list("melee" = 25, "bullet" = 25, "laser" = 25, "energy" = 10, "bomb" = 25, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 50) // Weaker armor vest. (-5% Melee, Bullet, Laser)
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/captain/hop
 
 /obj/item/clothing/head/hooded/winterhood/captain/hop
-	mob_overlay_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/phoenix_nest/wintercoats.dmi'
 	icon = 'icons/fulpicons/phoenix_nest/wintercoathoods.dmi'
 	icon_state = "winterhood_hop"
 
@@ -113,9 +113,9 @@
 	name = "\improper Lawyer's winter coat"
 	desc = "This is a winter coat custom tailored for the lawyer."
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon_state = "wintercoat_law"
-	item_state = "wintercoat_law"
+	inhand_icon_state = "wintercoat_law"
 	lefthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_righthand.dmi'
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
@@ -123,7 +123,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/security/law
 
 /obj/item/clothing/head/hooded/winterhood/security/law
-	mob_overlay_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
 	icon_state = "winterhood_law"
 
@@ -131,9 +131,9 @@
 	name = "\improper Bartender's winter coat"
 	desc = "This is a winter coat made to look like a butler's suit."
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon_state = "wintercoat_bar"
-	item_state = "wintercoat_bar"
+	inhand_icon_state = "wintercoat_bar"
 	lefthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_righthand.dmi'
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman, /obj/item/toy, /obj/item/storage/fancy/cigarettes, /obj/item/lighter)
@@ -141,7 +141,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/service/bar
 
 /obj/item/clothing/head/hooded/winterhood/service/bar
-	mob_overlay_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
 	icon_state = "winterhood_bar"
 
@@ -149,9 +149,9 @@
 	name = "\improper Chemist's winter coat"
 	desc = "This is a winter coat made to protect from minor chemical spills and to have a stylish orange theme."
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon_state = "wintercoat_chem"
-	item_state = "wintercoat_chem"
+	inhand_icon_state = "wintercoat_chem"
 	lefthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_righthand.dmi'
 	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/soap, /obj/item/sensor_device, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
@@ -159,7 +159,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/chem
 
 /obj/item/clothing/head/hooded/winterhood/medical/chem
-	mob_overlay_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
 	icon_state = "winterhood_chem"
 
@@ -167,9 +167,9 @@
 	name = "\improper Geneticist's winter coat"
 	desc = "This winter coat is made out of a comfortable material and dyed to the geneticist's color scheme."
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats_icons.dmi'
-	mob_overlay_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon_state = "wintercoat_gen"
-	item_state = "wintercoat_gen"
+	inhand_icon_state = "wintercoat_gen"
 	lefthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoat_righthand.dmi'
 	allowed = list(/obj/item/analyzer, /obj/item/stack/medical, /obj/item/dnainjector, /obj/item/reagent_containers/dropper, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/hypospray, /obj/item/healthanalyzer, /obj/item/flashlight/pen, /obj/item/reagent_containers/glass/bottle, /obj/item/reagent_containers/glass/beaker, /obj/item/reagent_containers/pill, /obj/item/storage/pill_bottle, /obj/item/paper, /obj/item/melee/classic_baton/telescopic, /obj/item/soap, /obj/item/sensor_device, /obj/item/tank/internals/emergency_oxygen, /obj/item/tank/internals/plasmaman)
@@ -177,6 +177,6 @@
 	hoodtype = /obj/item/clothing/head/hooded/winterhood/medical/gen
 
 /obj/item/clothing/head/hooded/winterhood/medical/gen
-	mob_overlay_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
+	worn_icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoats.dmi'
 	icon = 'icons/fulpicons/Penguins_cove/Winter_Coat_Pile/wintercoathoods.dmi'
 	icon_state = "winterhood_gen"

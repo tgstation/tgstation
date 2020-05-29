@@ -4,6 +4,6 @@
 	fulp_item = TRUE //I don't know if this is necessary but WHATEVER
 	icon = 'icons/fulpicons/halloween_costumes/zrider_icon.dmi'
 	icon_state = "zombie_rider"
-	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/zrider_worn.dmi'
+	worn_icon = 'icons/fulpicons/halloween_costumes/zrider_worn.dmi'
 	lefthand_file = 'icons/fulpicons/halloween_costumes/zrheld_l.dmi'
 	righthand_file = 'icons/fulpicons/halloween_costumes/zrheld_r.dmi'

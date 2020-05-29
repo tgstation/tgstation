@@ -4,7 +4,7 @@
 	fulp_item = TRUE
 	icon = 'icons/Fulpicons/zepelli_hat.dmi'
 	icon_state = "zepelli_hat"
-	mob_overlay_icon = 'icons/Fulpicons/zepelli_hat_worn.dmi'
+	worn_icon = 'icons/Fulpicons/zepelli_hat_worn.dmi'
 
 /datum/outfit/zepelli_hat
 	name = "Zepelli"

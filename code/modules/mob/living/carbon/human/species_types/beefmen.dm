@@ -675,13 +675,13 @@
 	name = "body sash"
 	desc = "A simple body sash, slung from shoulder to hip."
 	icon = 'icons/Fulpicons/fulpclothing.dmi' // item icon
-	mob_overlay_icon =  'icons/Fulpicons/fulpclothing_worn.dmi' // mob worn icon
+	worn_icon =  'icons/Fulpicons/fulpclothing_worn.dmi' // mob worn icon
 	icon_state = "assistant" // Inventory Icon
 	//item_color = "assistant" // The worn item Icon
 	body_parts_covered = CHEST // |GROIN|ARMS
 	lefthand_file = 'icons/Fulpicons/fulpclothing_hold_left.dmi'
 	righthand_file = 'icons/Fulpicons/fulpclothing_hold_right.dmi'
-	item_state = "sash" // In-hand Icon
+	inhand_icon_state = "sash" // In-hand Icon
 
 /obj/item/clothing/under/bodysash/security
 	name = "security sash"
