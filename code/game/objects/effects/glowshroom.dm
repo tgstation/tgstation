@@ -59,8 +59,8 @@
   * * spread - If the plant is a result of spreading, reduce its stats
   */
 
-/obj/structure/glowshroom/New(loc, obj/item/seeds/newseed, mutate_stats, spread)
-	..()
+/obj/structure/glowshroom/Initialize(mapload, obj/item/seeds/newseed, mutate_stats, spread)
+	. = ..()
 	if(newseed)
 		myseed = newseed.Copy()
 		myseed.forceMove(src)
