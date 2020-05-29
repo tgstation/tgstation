@@ -8318,11 +8318,11 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/clothing/glasses/sunglasses,
 /obj/item/reagent_containers/food/drinks/bottle/whiskey{
 	pixel_x = 3
 	},
 /obj/item/lighter,
+/obj/item/clothing/glasses/hud/security/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "atd" = (

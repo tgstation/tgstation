@@ -11800,10 +11800,10 @@
 "azT" = (
 /obj/structure/table/wood,
 /obj/item/storage/fancy/cigarettes,
-/obj/item/clothing/glasses/sunglasses,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 5
 	},
+/obj/item/clothing/glasses/hud/security/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "azU" = (
@@ -69225,7 +69225,7 @@
 /obj/machinery/camera{
 	c_tag = "Prison Isolation Cell";
 	dir = 8;
-	network = list("ss13","prison" , "isolation")
+	network = list("ss13","prison","isolation")
 	},
 /turf/open/floor/plasteel/white,
 /area/security/prison)
@@ -70847,12 +70847,12 @@
 	brightness = 3;
 	dir = 8
 	},
-/mob/living/simple_animal/mouse/brown/Tom,
 /obj/structure/sink{
 	pixel_y = 29;
 	dir = 2;
 	pixel_x = 0
 	},
+/mob/living/simple_animal/mouse/brown/Tom,
 /turf/open/floor/plating,
 /area/security/prison/safe)
 "icO" = (

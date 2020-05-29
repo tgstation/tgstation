@@ -48514,7 +48514,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
 	},
-/obj/item/clothing/glasses/sunglasses,
+/obj/item/clothing/glasses/hud/security/sunglasses,
 /turf/open/floor/carpet,
 /area/security/detectives_office)
 "bNc" = (
