@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes: 
+  - imageadd: "Standard Engineering tools now show up on the player when worn on the belt."
