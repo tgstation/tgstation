@@ -413,6 +413,8 @@
 		_range++
 		sleep(3)
 
+/obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big
+
 /obj/effect/proc_holder/spell/targeted/telepathy/eldritch
 	invocation = ""
 	invocation_type = "whisper"

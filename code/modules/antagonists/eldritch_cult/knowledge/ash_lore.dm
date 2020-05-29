@@ -183,7 +183,7 @@
 	if(finished)
 		return
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for Ashbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
-	user.mind.AddSpell(new /obj/effect/proc_holder/spell/pointed/ash_final)
+	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/fire_sworn)
 	for(var/X in trait_list)
 		ADD_TRAIT(user,X,MAGIC_TRAIT)
