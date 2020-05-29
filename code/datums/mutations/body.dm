@@ -185,13 +185,14 @@
 
 /datum/mutation/human/glow
 	name = "Glowy"
-	desc = "You permanently emit a light with a random color and intensity."
+	desc = "An odd mutation the will cause its owner to glow."
 	quality = POSITIVE
 	text_gain_indication = "<span class='notice'>Your skin begins to glow softly.</span>"
 	instability = 5
 	var/obj/effect/dummy/luminescent_glow/glowth //shamelessly copied from luminescents
 	var/glow = 2.5
 	var/range = 2.5
+	var/hue = 0
 	power_coeff = 1
 	conflicts = list(/datum/mutation/human/glow/anti)
 
@@ -206,7 +207,14 @@
 	if(!glowth)
 		return
 	var/power = GET_MUTATION_POWER(src)
-	glowth.set_light(range * power, glow, "#[dna.features["mcolor"]]")
+	var/colour = glow_color("#[dna.features["mcolor"]]")
+	glowth.set_light(range * power, glow, colour)
+
+/// Returns the color for the glow effect. Colour is based on the mutant color.
+/datum/mutation/human/glow/proc/glow_color(col)
+	var/_hsv = RGBtoHSV(col)
+	var/list_hsv = ReadHSV(_hsv)
+	return HSVtoRGB(hsv(list_hsv[1], list_hsv[2], 255))
 
 /datum/mutation/human/glow/on_losing(mob/living/carbon/human/owner)
 	. = ..()
@@ -221,6 +229,14 @@
 	glow = -3.5 //Slightly stronger, since negating light tends to be harder than making it.
 	conflicts = list(/datum/mutation/human/glow)
 	locked = TRUE
+	hue = 180 // Since it's shadows we need to rotate it, otherwise it appears inverted.
+
+/datum/mutation/human/glow/anti/glow_color(col)
+	var/rbg_list = ReadRGB(col)
+	var/red = (rbg_list[2] + rbg_list[3]) / 2
+	var/green = (rbg_list[1] + rbg_list[3]) / 2
+	var/blue = (rbg_list[2] + rbg_list[1]) / 2
+	return ..(rgb(red,green,blue))
 
 /datum/mutation/human/strong
 	name = "Strength"
