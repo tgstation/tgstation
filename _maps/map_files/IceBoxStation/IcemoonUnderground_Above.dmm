@@ -59,6 +59,7 @@
 /area/mine/production)
 "aj" = (
 /obj/structure/ladder,
+/obj/effect/turf_decal/stripes/box,
 /turf/open/floor/plasteel,
 /area/mine/eva)
 "ak" = (
