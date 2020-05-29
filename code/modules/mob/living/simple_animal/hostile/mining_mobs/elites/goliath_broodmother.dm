@@ -260,7 +260,7 @@
 	L.weather_immunities |= "lava"
 	to_chat(L, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
 	addtimer(CALLBACK(src, .proc/remove_lavaproofing, L), 100)
-	use_time = world.time + 600
+	use_time = world.time + 60 SECONDS
 	
 /obj/item/crusher_trophy/broodmother_tongue/proc/remove_lavaproofing(mob/living/L)
 	L.weather_immunities -= "lava"
