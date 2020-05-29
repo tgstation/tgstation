@@ -33,9 +33,8 @@
 /// Adds the user to the family that this package corresponds to, dispenses the free_clothes of that family, and adds them to the handler if it exists.
 /obj/item/gang_induction_package/proc/add_to_gang(mob/living/user)
 	var/datum/antagonist/gang/swappin_sides = new gang_to_use()
-	swappin_sides.my_gang = team_to_use
 	swappin_sides.handler = handler
-	user.mind.add_antag_datum(swappin_sides)
+	user.mind.add_antag_datum(swappin_sides, team_to_use)
 	var/policy = get_policy(ROLE_FAMILIES)
 	if(policy)
 		to_chat(user, policy)

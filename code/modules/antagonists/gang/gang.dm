@@ -25,37 +25,38 @@
 	/// A reference to the handler datum that manages the families gamemode. In case of no handler (admin-spawned during round), this will be null; this is fine.
 	var/datum/gang_handler/handler
 
-/datum/antagonist/gang/on_gain()
-	if(isnull(my_gang))
-		/* if my_gang is null, this gang member didn't join a gang by using a recruitment package. so there are two things we need to consider
-		1. does a gang handler exist -- does this round have a gang_handler instanced by the families gamemode or ruleset?
-		2. does the gang we're trying to join already exist?
-		if 1 is true and 2 is false, we were probably added by the gang_handler, and probably have a "handler" var.
-		if we don't have a "handler" var, and a gang_handler exists, we need to grab it, since our "handler" is null.
-		if the gang exists, we need to join it; if the gang doesn't exist, we need to make it. */
-		var/found_gang = FALSE
-		if(!starter_gangster) // if they're a starter gangster according to the handler, we don't need to check this shit
-			for(var/datum/team/gang/G in GLOB.antagonist_teams)
-				if(G.my_gang_datum.handler) // if one of the gangs in the gang list has a handler, nab that
-					handler = G.my_gang_datum.handler
-				if(G.name == gang_name)
-					my_gang = G
-					my_gang.add_member(owner)
-					found_gang = TRUE
-					break
-		if(!found_gang)
-			var/new_gang = new /datum/team/gang()
-			my_gang = new_gang
-			if(handler) // if we have a handler, the handler should track this gang
-				handler.gangs += my_gang
-			my_gang.add_member(owner)
-			my_gang.name = gang_name
-			my_gang.gang_id = gang_id
-			my_gang.acceptable_clothes = acceptable_clothes.Copy()
-			my_gang.free_clothes = free_clothes.Copy()
-			my_gang.my_gang_datum = src
-			starter_gangster = TRUE
+/datum/antagonist/gang/create_team(team_given) // gets called whenever add_antag_datum() is called on a mind
+	if(team_given)
+		my_gang = team_given
+		return
+	/* if team_given is falsey, this gang member didn't join a gang by using a recruitment package. so there are two things we need to consider
+	1. does a gang handler exist -- does this round have a gang_handler instanced by the families gamemode or ruleset?
+	2. does the gang we're trying to join already exist?
+	if 1 is true and 2 is false, we were probably added by the gang_handler, and probably already have a "handler" var.
+	if we don't have a "handler" var, and a gang_handler exists, we need to grab it, since our "handler" is null.
+	if the gang exists, we need to join it; if the gang doesn't exist, we need to make it. */
+	var/found_gang = FALSE
+	if(!starter_gangster) // if they're a starter gangster according to the handler, we don't need to check this shit
+		for(var/datum/team/gang/G in GLOB.antagonist_teams)
+			if(G.my_gang_datum.handler) // if one of the gangs in the gang list has a handler, nab that
+				handler = G.my_gang_datum.handler
+			if(G.name == gang_name)
+				my_gang = G
+				found_gang = TRUE
+				break
+	if(!found_gang)
+		var/new_gang = new /datum/team/gang()
+		my_gang = new_gang
+		if(handler) // if we have a handler, the handler should track this gang
+			handler.gangs += my_gang
+		my_gang.name = gang_name
+		my_gang.gang_id = gang_id
+		my_gang.acceptable_clothes = acceptable_clothes.Copy()
+		my_gang.free_clothes = free_clothes.Copy()
+		my_gang.my_gang_datum = src
+		starter_gangster = TRUE
 
+/datum/antagonist/gang/on_gain()
 	if(starter_gangster)
 		if(istype(owner.current, /mob/living/carbon/human))
 			for(var/C in my_gang.free_clothes)

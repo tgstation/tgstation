@@ -215,7 +215,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 		new_gangster.handler = src
 		new_gangster.starter_gangster = TRUE
 		gangbanger.add_antag_datum(new_gangster)
-		// see /datum/antagonist/gang/on_gain() for how the gang "team" datum gets instantiated and added to our gangs list
+		// see /datum/antagonist/gang/create_team() for how the gang team datum gets instantiated and added to our gangs list
 
 	addtimer(CALLBACK(src, .proc/announce_gang_locations), 5 MINUTES)
 	SSshuttle.registerHostileEnvironment(src)
