@@ -39,7 +39,11 @@
 /// Don't spam the "HEY I'M COMING" messages
 	var/last_newpatient_speak = 0
 /// How much healing do we do at a time?
-	var/heal_amount = 2.5
+	var/heal_amount = 1
+/// How long do we apply the surgery bonus trait?
+	var/surgery_bonus_trait_duration = (15 SECONDS)
+/// Can we heal tox and oxygen?
+	var/expanded_damagetype = FALSE
 /// Start healing when they have this much damage in a category
 	var/heal_threshold = 10
 /// If active, the bot will transmit a critical patient alert to MedHUD users.
@@ -61,6 +65,8 @@
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
 	heal_amount = 10
+	surgery_bonus_trait_duration = 0
+	expanded_damagetype = TRUE
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
@@ -69,6 +75,8 @@
 	heal_threshold = 0
 	declare_crit = 0
 	heal_amount = 5
+	surgery_bonus_trait_duration = 0
+	expanded_damagetype = TRUE
 
 /mob/living/simple_animal/bot/medbot/update_icon()
 	cut_overlays()
@@ -176,16 +184,21 @@
 
 	else if(href_list["hptech"])
 		var/oldheal_amount = heal_amount
-		var/tech_boosters
+		var/tech_boosters = 0
 		for(var/i in linked_techweb.researched_designs)
 			var/datum/design/surgery/healing/D = SSresearch.techweb_design_by_id(i)
 			if(!istype(D))
 				continue
 			tech_boosters++
 		if(tech_boosters)
-			heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
+			var/surgery_trait_adj = 1
+			if(surgery_bonus_trait_duration)
+				surgery_bonus_trait_duration = (round(tech_boosters/2,0.1)*(15 SECONDS))+initial(surgery_bonus_trait_duration) //every 2 tend wounds tech gives you an extra 15 seconds on trait bonus, adjusting for unique branches (combo is bonus)
+				surgery_trait_adj = 0.5 //medibots with surgery bonus trait are focused on being supportive rather than healing, so we adjust our healing bonuses accordingly.
+			heal_amount = (round(tech_boosters/2,0.1)*surgery_trait_adj*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 50% healing, adjusting for unique branches (combo is bonus). If you are a strict healer, this is shifted to 100%.
+
 			if(oldheal_amount < heal_amount)
-				speak("Surgerical Knowledge Found! Efficiency is increased by [round(heal_amount/oldheal_amount*100)]%!")
+				speak("Surgerical Knowledge Found! Wound-tending efficiency is increased by [round(heal_amount/oldheal_amount*100)]%!")
 	update_controls()
 	return
 
@@ -314,7 +327,7 @@
 	if(emagged == 2) //Everyone needs our medicine. (Our medicine is toxins)
 		return TRUE
 
-	if(HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH,tag)) //the early medbot gets the worm (or in this case the patient)
+	if(HAS_TRAIT(C,TRAIT_SURGERYPLUS) || (HAS_TRAIT(C,TRAIT_MEDIBOTCOMINGTHROUGH) && !HAS_TRAIT_FROM(C,TRAIT_MEDIBOTCOMINGTHROUGH, src))) //Your wounds have already been made easier to tend or you are having a medibot affair.
 		return FALSE
 
 	if(ishuman(C))
@@ -339,6 +352,9 @@
 		return TRUE
 
 	if(C.getToxLoss() >= heal_threshold)
+		return TRUE
+
+	if(surgery_bonus_trait_duration && !HAS_TRAIT(C, TRAIT_SURGERYPLUS)) //if it isn't a strict healing bot, we will nicely provide people with surgery boosting!
 		return TRUE
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
@@ -378,18 +394,21 @@
 	tending = TRUE
 	while(tending)
 		var/treatment_method
-
 		if(C.getBruteLoss() >= heal_threshold)
 			treatment_method = BRUTE
 
 		else if(C.getFireLoss() >= heal_threshold)
 			treatment_method = BURN
 
-		else if(C.getOxyLoss() >= (5 + heal_threshold))
-			treatment_method = OXY
+		else if(expanded_damagetype)
+			if(C.getOxyLoss() >= (5 + heal_threshold))
+				treatment_method = OXY
 
-		else if(C.getToxLoss() >= heal_threshold)
-			treatment_method = TOX
+			else if(C.getToxLoss() >= heal_threshold)
+				treatment_method = TOX
+
+		else if(!HAS_TRAIT(patient, TRAIT_SURGERYPLUS))
+			treatment_method = BRUTE
 
 		if(!treatment_method && emagged != 2) //If they don't need any of that they're probably cured!
 			if(C.maxHealth - C.health < heal_threshold)
@@ -398,11 +417,15 @@
 			var/message = pick(messagevoice)
 			speak(message)
 			playsound(src, messagevoice[message], 50)
-			bot_reset()
 			tending = FALSE
+			bot_reset()
 		else if(patient)
-			C.visible_message("<span class='danger'>[src] is trying to tend the wounds of [patient]!</span>", \
-				"<span class='userdanger'>[src] is trying to tend your wounds!</span>")
+			if(surgery_bonus_trait_duration)
+				C.visible_message("<span class='danger'>[src] is trying to prepare [patient] for surgery!</span>", \
+					"<span class='userdanger'>[src] is trying to prepare you for surgery!</span>")
+			else
+				C.visible_message("<span class='danger'>[src] is trying to tend the wounds of [patient]!</span>", \
+					"<span class='userdanger'>[src] is trying to tend your wounds!</span>")
 
 			if(do_mob(src, patient, 20)) //Slightly faster than default tend wounds, but does less HPS
 				if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
@@ -411,16 +434,22 @@
 					if(treatment_method == initial(FA.damagetype_healed)) //using the damage specific medkits give bonuses when healing this type of damage.
 						healies *= 1.5
 					if(emagged == 2)
-						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
-						patient.apply_damage_type((healies*1),treatment_method)
-						log_combat(src, patient, "pretended to tend wounds on", "internal tools", "([uppertext(treatment_method)]) (EMAGGED)")
+						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 3)
+						patient.apply_damage_type(healies,treatment_method)
+						log_combat(src, patient, "pretended to prepare", "internal tools", "([uppertext(treatment_method)]) (EMAGGED)")
 					else
-						patient.apply_damage_type((healies*-1),treatment_method) //don't need to check treatment_method since we know by this point that they were actually damaged.
-						log_combat(src, patient, "tended the wounds of", "internal tools", "([uppertext(treatment_method)])")
-					C.visible_message("<span class='notice'>[src] tends the wounds of [patient]!</span>", \
-						"<span class='green'>[src] tends your wounds!</span>")
-					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH,tag)
-					addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_MEDIBOTCOMINGTHROUGH, tag), (30 SECONDS))
+						patient.apply_damage_type(-healies,treatment_method) //don't need to check treatment_method since we know by this point that they were actually damaged.
+						log_combat(src, patient, "prepares (and slightly heals)", "internal tools", "([uppertext(treatment_method)])")
+					if(surgery_bonus_trait_duration)
+						C.visible_message("<span class='notice'>[src] prepares [patient] for surgery!</span>", \
+							"<span class='green'>[src] prepares you for surgery!</span>")
+						ADD_TRAIT(patient,TRAIT_SURGERYPLUS,tag)
+						addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_SURGERYPLUS, tag), surgery_bonus_trait_duration)
+					else
+						C.visible_message("<span class='notice'>[src] tends [patient]'s wounds!</span>", \
+							"<span class='green'>[src] tends your wounds!</span>")
+					ADD_TRAIT(patient,TRAIT_MEDIBOTCOMINGTHROUGH, tag)
+					addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_MEDIBOTCOMINGTHROUGH, tag), (10 SECONDS))
 				else
 					tending = FALSE
 			else

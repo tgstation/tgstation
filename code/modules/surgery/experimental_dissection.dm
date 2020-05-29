@@ -72,10 +72,15 @@
 /datum/surgery_step/dissection/success(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	user.visible_message("<span class='notice'>[user] dissects [target], enhancing their medical knowledge!", "<span class='notice'>You dissect [target] and receive some healing experience!</span>")
 	var/obj/item/bodypart/L = target.get_bodypart(BODY_ZONE_CHEST)
-	target.apply_damage(80, BRUTE, L)
+
 	ADD_TRAIT(target, TRAIT_DISSECTED, "[surgery.name]")
 	repeatable = FALSE
 	experience_given = check_value(target, surgery)
+	if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+		experience_given *= 1.05
+		target.apply_damage(66, BRUTE, L)
+	else
+		target.apply_damage(80, BRUTE, L)
 	return ..()
 
 /datum/surgery_step/dissection/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

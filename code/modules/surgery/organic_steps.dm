@@ -7,9 +7,14 @@
 	time = 16
 
 /datum/surgery_step/incise/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	display_results(user, target, "<span class='notice'>You begin to make an incision in [target]'s [parse_zone(target_zone)]...</span>",
-		"<span class='notice'>[user] begins to make an incision in [target]'s [parse_zone(target_zone)].</span>",
-		"<span class='notice'>[user] begins to make an incision in [target]'s [parse_zone(target_zone)].</span>")
+	if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+		display_results(user, target, "<span class='notice'>You begin to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)]...</span>",
+			"<span class='notice'>[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>[user] begins to <i>carefully</i> make an incision in [target]'s [parse_zone(target_zone)].</span>")
+	else
+		display_results(user, target, "<span class='notice'>You begin to make an incision in [target]'s [parse_zone(target_zone)]...</span>",
+			"<span class='notice'>[user] begins to make an incision in [target]'s [parse_zone(target_zone)].</span>",
+			"<span class='notice'>[user] begins to make an incision in [target]'s [parse_zone(target_zone)].</span>")
 
 /datum/surgery_step/incise/tool_check(mob/user, obj/item/tool)
 	if(implement_type == /obj/item && !tool.get_sharpness())
@@ -18,7 +23,7 @@
 	return TRUE
 
 /datum/surgery_step/incise/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	if ishuman(target)
+	if (ishuman(target) && !HAS_TRAIT(target,TRAIT_SURGERYPLUS))
 		var/mob/living/carbon/human/H = target
 		if (!(NOBLOOD in H.dna.species.species_traits))
 			display_results(user, target, "<span class='notice'>Blood pools around the incision in [H]'s [parse_zone(target_zone)].</span>",

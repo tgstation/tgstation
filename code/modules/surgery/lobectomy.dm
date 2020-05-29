@@ -30,7 +30,10 @@
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/lungs/L = H.getorganslot(ORGAN_SLOT_LUNGS)
 		L.operated = TRUE
-		H.setOrganLoss(ORGAN_SLOT_LUNGS, 60)
+		if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+			H.setOrganLoss(ORGAN_SLOT_LUNGS, 50)
+		else
+			H.setOrganLoss(ORGAN_SLOT_LUNGS, 60)
 		display_results(user, target, "<span class='notice'>You successfully excise [H]'s most damaged lobe.</span>",
 			"<span class='notice'>Successfully removes a piece of [H]'s lungs.</span>",
 			"")

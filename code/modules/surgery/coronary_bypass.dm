@@ -58,7 +58,10 @@
 			"<span class='notice'>[user] begins to graft something onto [target]'s heart!</span>")
 
 /datum/surgery_step/coronary_bypass/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	target.setOrganLoss(ORGAN_SLOT_HEART, 60)
+	if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+		target.setOrganLoss(ORGAN_SLOT_HEART, 50)
+	else
+		target.setOrganLoss(ORGAN_SLOT_HEART, 60)
 	var/obj/item/organ/heart/heart = target.getorganslot(ORGAN_SLOT_HEART)
 	if(heart)	//slightly worrying if we lost our heart mid-operation, but that's life
 		heart.operated = TRUE
@@ -73,6 +76,10 @@
 		display_results(user, target, "<span class='warning'>You screw up in attaching the graft, and it tears off, tearing part of the heart!</span>",
 			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest profusely!</span>",
 			"<span class='warning'>[user] screws up, causing blood to spurt out of [H]'s chest profusely!</span>")
-		H.adjustOrganLoss(ORGAN_SLOT_HEART, 20)
-		H.bleed_rate += 30
+		if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+			H.adjustOrganLoss(ORGAN_SLOT_HEART, 15)
+			H.bleed_rate += 20
+		else
+			H.adjustOrganLoss(ORGAN_SLOT_HEART, 20)
+			H.bleed_rate += 30
 	return FALSE

@@ -33,12 +33,20 @@
 	target.cure_blind(list(EYE_DAMAGE))
 	target.set_blindness(0)
 	target.cure_nearsighted(list(EYE_DAMAGE))
-	target.blur_eyes(35)	//this will fix itself slowly.
+	if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+		target.blur_eyes(25)	//this will fix itself slowly.
+	else
+		target.blur_eyes(35)
 	E.setOrganDamage(0)
 	return ..()
 
 /datum/surgery_step/fix_eyes/failure(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	if(target.getorgan(/obj/item/organ/brain))
+	if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+		display_results(user, target, "<span class='warning'>You nearly stabbed [target] right in the brain!</span>",
+			"<span class='warning'>[user] nearly stabs [target] in the brain!</span>",
+			"<span class='warning'>[user] nearly stabs [target] in the brain!</span>")
+		target.adjustBruteLoss(10)
+	else if(target.getorgan(/obj/item/organ/brain))
 		display_results(user, target, "<span class='warning'>You accidentally stab [target] right in the brain!</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>",
 			"<span class='warning'>[user] accidentally stabs [target] right in the brain!</span>")

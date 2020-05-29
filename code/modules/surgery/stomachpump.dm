@@ -44,6 +44,8 @@
 				"<span class='notice'>[user] forces [H] to vomit, cleansing their stomach of some chemicals!</span>",
 				"[user] forces [H] to vomit!")
 		H.vomit(20, FALSE, TRUE, 1, TRUE, FALSE, purge = TRUE) //called with purge as true to lose more reagents
+		if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+			target.reagents?.remove_all(5) //additional purging that is irretrievable (in case someone had the crazy idea to make reagents extractable via vomit).
 		if(istype(surgery,/datum/surgery/stomach_pump))
 			var/datum/surgery/stomach_pump/stom_pump = surgery
 			if(stom_pump.accumulated_experience > MEDICAL_SKILL_MEDIUM*10) //capped so you can't dope bodies and purge for ezxp

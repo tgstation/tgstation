@@ -21,7 +21,7 @@
 			"<span class='notice'>[user] begins to cut away [target]'s excess fat.</span>",
 			"<span class='notice'>[user] begins to cut [target]'s [target_zone] with [tool].</span>")
 
-/datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results)
+/datum/surgery_step/cut_fat/success(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
 	display_results(user, target, "<span class='notice'>You cut [target]'s excess fat loose.</span>",
 			"<span class='notice'>[user] cuts [target]'s excess fat loose!</span>",
 			"<span class='notice'>[user] finishes the cut on [target]'s [target_zone].</span>")

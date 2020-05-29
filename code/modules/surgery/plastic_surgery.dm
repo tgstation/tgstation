@@ -24,11 +24,12 @@
 			"<span class='notice'>[user] finishes the operation on [target]'s face.</span>")
 	else
 		var/list/names = list()
+		var/numchoices = HAS_TRAIT(target,TRAIT_SURGERYPLUS) ? 15 : 10
 		if(!isabductor(user))
-			for(var/i in 1 to 10)
+			for(var/i in 1 to numchoices)
 				names += target.dna.species.random_name(target.gender, TRUE)
 		else
-			for(var/_i in 1 to 9)
+			for(var/_i in 1 to numchoices)
 				names += "Subject [target.gender == MALE ? "i" : "o"]-[pick("a", "b", "c", "d", "e")]-[rand(10000, 99999)]"
 			names += target.dna.species.random_name(target.gender, TRUE) //give one normal name in case they want to do regular plastic surgery
 		var/chosen_name = input(user, "Choose a new name to assign.", "Plastic Surgery") as null|anything in names

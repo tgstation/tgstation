@@ -66,6 +66,9 @@
 		else //less healing bonus for the dead since they're expected to have lots of damage to begin with (to make TW into defib not TOO simple)
 			urhealedamt_brute += round((target.getBruteLoss()/ (missinghpbonus*5)),0.1)
 			urhealedamt_burn += round((target.getFireLoss()/ (missinghpbonus*5)),0.1)
+	if(HAS_TRAIT(target,TRAIT_SURGERYPLUS))
+		urhealedamt_brute *= 1.2
+		urhealedamt_burn *= 1.2
 	if(!get_location_accessible(target, target_zone))
 		urhealedamt_brute *= 0.55
 		urhealedamt_burn *= 0.55
