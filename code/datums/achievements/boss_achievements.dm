@@ -115,3 +115,16 @@
 	name = "Wendigo Crusher"
 	desc = "You've now ruined years of mythical storytelling."
 	database_id = BOSS_MEDAL_WENDIGO_CRUSHER
+
+//should be removed soon
+/datum/award/achievement/boss/king_goat_kill
+	name = "King Goat Killer"
+	desc = "The king is dead, long live the king!"
+	database_id = BOSS_MEDAL_KINGGOAT
+	icon = "goatboss"
+
+/datum/award/achievement/boss/king_goat_crusher
+	name = "King Goat Crusher"
+	desc = "The king is dead, long live the king!"
+	database_id = BOSS_MEDAL_KINGGOAT_CRUSHER
+	icon = "goatboss"
