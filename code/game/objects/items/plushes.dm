@@ -549,6 +549,7 @@
 	name = "strange goat plushie"
 	icon_state = "goat"
 	desc = "Despite its cuddly appearance and plush nature, it will beat you up all the same. Goats never change."
+	squeak_override = list('sound/items/goatsound.ogg'=1)
 
 /obj/item/toy/plush/moth
 	name = "moth plushie"
