@@ -442,6 +442,7 @@
 	vend_reply = "Thank you for using the DetDrobe!"
 	products = list(/obj/item/clothing/under/rank/security/detective = 2,
 					/obj/item/clothing/under/rank/security/detective/skirt = 2,
+					/obj/item/clothing/glasses/sunglasses = 1,
 					/obj/item/clothing/shoes/sneakers/brown = 2,
 					/obj/item/clothing/suit/det_suit = 2,
 					/obj/item/clothing/head/fedora/det_hat = 2,
