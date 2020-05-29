@@ -73,7 +73,7 @@
 /obj/machinery/modular_computer/console/preset/id
 	console_department = "Identification"
 	name = "identification console"
-	desc = "A stationary computer. This one comes preloaded with identification programs."
+	desc = "A stationary computer. This one comes preloaded with identification modification programs."
 	_has_id_slot = TRUE
 	_has_printer = TRUE
 
