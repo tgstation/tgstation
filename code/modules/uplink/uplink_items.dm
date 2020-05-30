@@ -439,6 +439,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	cost = 4
 	surplus = 40
 	include_modes = list(/datum/game_mode/nuclear)
+	illegal_tech = FALSE
 
 /datum/uplink_item/dangerous/rapid
 	name = "Gloves of the North Star"
@@ -596,7 +597,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	desc = "This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat \
 			and gain the ability to swat bullets from the air, but you will also refuse to use dishonorable ranged weaponry."
 	item = /obj/item/book/granter/martial/carp
-	cost = 12
+	cost = 13
 	surplus = 0
 	exclude_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 
@@ -674,6 +675,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/ammo_box/magazine/m9mm
 	cost = 1
 	exclude_modes = list(/datum/game_mode/nuclear/clown_ops)
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/pistolap
 	name = "9mm Armour Piercing Magazine"
@@ -903,6 +905,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = 	/obj/item/ammo_box/a762
 	cost = 1
 	include_modes = list(/datum/game_mode/nuclear)
+	illegal_tech = FALSE
 
 /datum/uplink_item/ammo/mech/bag
 	name = "Mech Support Kit Bag"
@@ -1257,6 +1260,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/backpack/satchel/flat/with_tools
 	cost = 1
 	surplus = 30
+	illegal_tech = FALSE
 
 //Space Suits and Hardsuits
 /datum/uplink_item/suits
@@ -1401,6 +1405,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/disk/nuclear/fake
 	cost = 1
 	surplus = 1
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/frame
 	name = "F.R.A.M.E. PDA Cartridge"
@@ -1437,6 +1442,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 			multitool and combat gloves that are resistant to shocks and heat."
 	item = /obj/item/storage/toolbox/syndicate
 	cost = 1
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/hacked_module
 	name = "Hacked AI Law Upload Module"
@@ -1515,6 +1521,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/soap/syndie
 	cost = 1
 	surplus = 50
+	illegal_tech = FALSE
 
 /datum/uplink_item/device_tools/surgerybag
 	name = "Syndicate Surgery Duffel Bag"
@@ -1574,6 +1581,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/clothing/gloves/tackler/combat/insulated
 	include_modes = list(/datum/game_mode/nuclear, /datum/game_mode/nuclear/clown_ops)
 	cost = 2
+	illegal_tech = FALSE
 
 // Implants
 /datum/uplink_item/implants
@@ -1961,6 +1969,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/storage/secure/briefcase/syndie
 	cost = 1
 	restricted = TRUE
+	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecards
 	name = "Syndicate Playing Cards"
@@ -1970,6 +1979,7 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/toy/cards/deck/syndicate
 	cost = 1
 	surplus = 40
+	illegal_tech = FALSE
 
 /datum/uplink_item/badass/syndiecigs
 	name = "Syndicate Smokes"
