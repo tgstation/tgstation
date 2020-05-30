@@ -1,0 +1,4 @@
+author: "Kathy Ryals"
+delete-after: True
+changes: 
+  - bugfix: "The Nanite Programmer and Nanite Program Hub can now be properly deconstructed."
