@@ -15,7 +15,6 @@
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
 	if(! IS_HERETIC(user) )
 		return
-	flick("[icon_state]_active",src)
 	activate(user)
 
 /obj/effect/eldritch/attacked_by(obj/item/I, mob/living/user)
@@ -24,54 +23,57 @@
 		qdel(src)
 
 /obj/effect/eldritch/proc/activate(mob/living/user)
-
+	// Have fun trying to read this proc.
 	var/datum/antagonist/heretic/cultie = user.mind.has_antag_datum(/datum/antagonist/heretic)
 	var/list/knowledge = cultie.get_all_knowledge()
 	var/list/atoms_in_range = list()
 
-	for(var/atom/A in range(1,src))
-		if(istype(A,/mob/living))
-			var/mob/living/L = A
-			if(L.stat != DEAD || L == user) // we only accept corpses, no living beings allowed.
+	for(var/atom/atom_in_range in range(1,src))
+		if(istype(atom_in_range,/mob/living))
+			var/mob/living/living_in_range = atom_in_range
+			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
 				continue
-		atoms_in_range += A
+		atoms_in_range += atom_in_range
 
 	for(var/X in knowledge)
-		var/datum/eldritch_knowledge/EK = X
-		var/list/local_required_atoms = EK.required_atoms
+		var/datum/eldritch_knowledge/current_eldritch_knowledge = X
+		var/list/local_required_atoms = current_eldritch_knowledge.required_atoms
 		if(!local_required_atoms || local_required_atoms.len == 0)
 			continue
 
 		var/list/selected_atoms = list()
 
-		if(!EK.recipe_snowflake_check(atoms_in_range,drop_location(),selected_atoms))
+		if(!current_eldritch_knowledge.recipe_snowflake_check(atoms_in_range,drop_location(),selected_atoms))
 			continue
 
-		for(var/X1 in local_required_atoms)
-			local_required_atoms[X1] = FALSE
+		for(var/local_required_atom in local_required_atoms)
+			local_required_atoms[local_required_atom] = FALSE
 
-		for(var/X1 in atoms_in_range)
-			var/atom/atom_x1 = X1
-			for(var/X2 in local_required_atoms)
-				var/list/temp_list_X2 = X2
-				if(!is_type_in_list(atom_x1,temp_list_X2) || local_required_atoms[X2] == TRUE)
+		for(var/local_atom_in_range in atoms_in_range)
+			var/atom/first_atom = local_atom_in_range
+			for(var/local_required_atom_in_range in local_required_atoms)
+				var/list/local_required_atom_list_in_range = local_required_atom_in_range
+				if(!is_type_in_list(first_atom,local_required_atom_list_in_range) || local_required_atoms[local_required_atom_in_range] == TRUE)
 					continue
-				local_required_atoms[X2] = TRUE
-				selected_atoms |= atom_x1
+				local_required_atoms[local_required_atom_in_range] = TRUE
+				selected_atoms |= first_atom
 
 		if(selected_atoms.len == 0)
 			continue
 		var/skip = FALSE
-		for(var/X1 in local_required_atoms)
-			if(local_required_atoms[X1] != TRUE)
+		for(var/secondary_local_required_atom in local_required_atoms)
+			if(local_required_atoms[secondary_local_required_atom] != TRUE)
 				skip = TRUE
 				break
 
 		if(skip)
 			continue
+		flick("[icon_state]_active",src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
-		EK.on_finished_recipe(user,selected_atoms,loc)
-		EK.cleanup_atoms(selected_atoms)
+		current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc)
+		current_eldritch_knowledge.cleanup_atoms(selected_atoms)
+		return
+	to_chat(user,"<span class='warning'>Your ritual failed! You used either wrong components or are missing something important!</span>")
 
 /obj/effect/eldritch/big
 	name = "Transmutation rune"

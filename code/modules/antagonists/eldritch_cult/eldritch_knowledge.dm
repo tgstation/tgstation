@@ -178,7 +178,7 @@
 	var/mob/living/summoned = new mob_to_summon(loc)
 	var/mob/dead/observer/C = pick(candidates)
 	message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
-	summoned.ghostize(0)
+	summoned.ghostize(FALSE)
 	summoned.key = C.key
 
 	to_chat(summoned,"<span class='warning'>You are bound to [user.real_name]'s' will! Don't let your master die, protect him at all cost!</span>")
