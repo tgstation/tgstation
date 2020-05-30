@@ -34,9 +34,9 @@
 	healable = 0
 	environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 	obj_damage = 50
-	melee_damage_lower = 15 // reduced from 30 to 15-20 with wounds since they get big buffs to slicing wounds
-	melee_damage_upper = 20
-	wound_bonus = -15
+	melee_damage_lower = 15 // reduced from 30 to 15 with wounds since they get big buffs to slicing wounds
+	melee_damage_upper = 15
+	wound_bonus = -10
 	bare_wound_bonus = 0
 	sharpness = TRUE
 	see_in_dark = 8
