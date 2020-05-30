@@ -74,6 +74,7 @@
 		user.visible_message("<span class='notice'>[user] snuffs [src].</span>")
 
 /obj/item/candle/infinite
+	anchored = 1
 	infinite = TRUE
 	start_lit = TRUE
 
