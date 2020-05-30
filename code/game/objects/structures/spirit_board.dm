@@ -5,14 +5,14 @@
 	icon_state = "spirit_board"
 	density = TRUE
 	anchored = FALSE
-	var/virgin = 1
+	var/virgin = TRUE //applies especially to admins
 	var/next_use = 0
 	var/planchette = "A"
 	var/lastuser = null
 
 /obj/structure/spirit_board/examine()
 	desc = "[initial(desc)] The planchette is sitting at \"[planchette]\"."
-	..()
+	. = ..()
 
 /obj/structure/spirit_board/attack_hand(mob/user)
 	. = ..()
@@ -28,11 +28,11 @@
 
 /obj/structure/spirit_board/proc/spirit_board_pick_letter(mob/M)
 	if(!spirit_board_checks(M))
-		return 0
+		return FALSE
 
 	if(virgin)
-		virgin = 0
-		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src)
+		virgin = FALSE
+		notify_ghosts("Someone has begun playing with a [src.name] in [get_area(src)]!", source = src, header = "Spirit board")
 
 	planchette = input("Choose the letter.", "Seance!") as null|anything in list("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z")
 	if(!planchette || !Adjacent(M) || next_use > world.time)
@@ -51,7 +51,7 @@
 		bonus = 10 //Give some other people a chance, hog.
 
 	if(next_use - bonus > world.time )
-		return 0 //No feedback here, hiding the cooldown a little makes it harder to tell who's really picking letters.
+		return FALSE //No feedback here, hiding the cooldown a little makes it harder to tell who's really picking letters.
 
 	//lighting check
 	var/light_amount = 0
@@ -61,7 +61,7 @@
 
 	if(light_amount > 0.2)
 		to_chat(M, "<span class='warning'>It's too bright here to use [src.name]!</span>")
-		return 0
+		return FALSE
 
 	//mobs in range check
 	var/users_in_range = 0
@@ -74,6 +74,6 @@
 
 	if(users_in_range < 2)
 		to_chat(M, "<span class='warning'>There aren't enough people to use the [src.name]!</span>")
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE

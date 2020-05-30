@@ -48,6 +48,19 @@
 	id = "SCIENCE"
 	organization = "Nanotrasen"
 
+/datum/techweb/bepis	//Should contain only 1 BEPIS tech selected at random.
+	id = "EXPERIMENTAL"
+	organization = "Nanotrasen R&D"
+
+/datum/techweb/bepis/New()
+	. = ..()
+	var/bepis_id = pick(SSresearch.techweb_nodes_experimental)	//To add a new tech to the BEPIS, add the ID to this pick list.
+	var/datum/techweb_node/BN = (SSresearch.techweb_node_by_id(bepis_id))
+	hidden_nodes -= BN.id				//Has to be removed from hidden nodes
+	research_node(BN, TRUE, FALSE, FALSE)
+	update_node_status(BN)
+	SSresearch.techweb_nodes_experimental -= bepis_id
+
 /datum/techweb/Destroy()
 	researched_nodes = null
 	researched_designs = null
@@ -111,17 +124,17 @@
 	modify_point_list(l)
 
 /datum/techweb/proc/copy_research_to(datum/techweb/receiver, unlock_hidden = TRUE)				//Adds any missing research to theirs.
+	if(unlock_hidden)
+		for(var/i in receiver.hidden_nodes)
+			CHECK_TICK
+			if(!hidden_nodes[i])
+				receiver.hidden_nodes -= i		//We can see it so let them see it too.
 	for(var/i in researched_nodes)
 		CHECK_TICK
 		receiver.research_node_id(i, TRUE, FALSE, FALSE)
 	for(var/i in researched_designs)
 		CHECK_TICK
 		receiver.add_design_by_id(i)
-	if(unlock_hidden)
-		for(var/i in receiver.hidden_nodes)
-			CHECK_TICK
-			if(!hidden_nodes[i])
-				receiver.hidden_nodes -= i		//We can see it so let them see it too.
 	receiver.recalculate_nodes()
 
 /datum/techweb/proc/copy()
@@ -220,6 +233,11 @@
 		if(D)
 			D.adjust_money(SSeconomy.techweb_bounty)
 	return TRUE
+
+/datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE) //When something is researched, triggers the proc for this techweb only
+	. = ..()
+	if(.)
+		node.on_research()
 
 /datum/techweb/proc/unresearch_node_id(id)
 	return unresearch_node(SSresearch.techweb_node_by_id(id))

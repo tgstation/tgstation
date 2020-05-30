@@ -1,31 +1,33 @@
 /mob/living/carbon/human/get_movespeed_modifiers()
 	var/list/considering = ..()
-	. = considering
 	if(HAS_TRAIT(src, TRAIT_IGNORESLOWDOWN))
-		for(var/id in .)
-			var/list/data = .[id]
-			if(data[MOVESPEED_DATA_INDEX_FLAGS] & IGNORE_NOSLOW)
-				.[id] = data
-
-/mob/living/carbon/human/movement_delay()
-	. = ..()
-	if(dna && dna.species)
-		. += dna.species.movement_delay(src)
+		. = list()
+		for(var/id in considering)
+			var/datum/movespeed_modifier/M = considering[id]
+			if(M.flags & IGNORE_NOSLOW || M.multiplicative_slowdown < 0)
+				.[id] = M
+		return
+	return considering
 
 /mob/living/carbon/human/slip(knockdown_amount, obj/O, lube, paralyze, forcedrop)
 	if(HAS_TRAIT(src, TRAIT_NOSLIPALL))
 		return 0
-	if (!(lube&GALOSHES_DONT_HELP))
+	if (!(lube & GALOSHES_DONT_HELP))
 		if(HAS_TRAIT(src, TRAIT_NOSLIPWATER))
 			return 0
 		if(shoes && istype(shoes, /obj/item/clothing))
 			var/obj/item/clothing/CS = shoes
 			if (CS.clothing_flags & NOSLIP)
 				return 0
+	if (lube & SLIDE_ICE)
+		if(shoes && istype(shoes, /obj/item/clothing))
+			var/obj/item/clothing/CS = shoes
+			if (CS.clothing_flags & NOSLIP_ICE)
+				return FALSE
 	return ..()
 
 /mob/living/carbon/human/experience_pressure_difference()
-	playsound(src, 'sound/effects/space_wind.ogg', 50, 1)
+	playsound(src, 'sound/effects/space_wind.ogg', 50, TRUE)
 	if(shoes && istype(shoes, /obj/item/clothing))
 		var/obj/item/clothing/S = shoes
 		if (S.clothing_flags & NOSLIP)

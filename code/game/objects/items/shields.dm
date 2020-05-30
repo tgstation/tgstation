@@ -1,5 +1,6 @@
 /obj/item/shield
 	name = "shield"
+	icon = 'icons/obj/shields.dmi'
 	block_chance = 50
 	armor = list("melee" = 50, "bullet" = 50, "laser" = 50, "energy" = 0, "bomb" = 30, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 	var/transparent = FALSE	// makes beam projectiles pass through the shield
@@ -10,7 +11,6 @@
 /obj/item/shield/riot
 	name = "riot shield"
 	desc = "A shield adept at blocking blunt objects from connecting with the torso of the shield wielder."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "riot"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
@@ -20,11 +20,12 @@
 	throw_speed = 2
 	throw_range = 3
 	w_class = WEIGHT_CLASS_BULKY
-	materials = list(MAT_GLASS=7500, MAT_METAL=1000)
+	custom_materials = list(/datum/material/glass=7500, /datum/material/iron=1000)
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 	transparent = TRUE
 	max_integrity = 75
+	material_flags = MATERIAL_NO_EFFECTS
 
 /obj/item/shield/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK)
 	if(transparent && (hitby.pass_flags & PASSGLASS))
@@ -33,17 +34,19 @@
 		final_block_chance += 30
 	if(attack_type == LEAP_ATTACK)
 		final_block_chance = 100
-	return ..()
+	. = ..()
+	if(.)
+		on_shield_block(owner, hitby, attack_text, damage, attack_type)
 
 /obj/item/shield/riot/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/melee/baton))
 		if(cooldown < world.time - 25)
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
-			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
+			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, TRUE)
 			cooldown = world.time
 	else if(istype(W, /obj/item/stack/sheet/mineral/titanium))
 		if (obj_integrity >= max_integrity)
-			to_chat(user, "<span class='notice'>[src] is already in perfect condition.</span>")
+			to_chat(user, "<span class='warning'>[src] is already in perfect condition.</span>")
 		else
 			var/obj/item/stack/sheet/mineral/titanium/T = W
 			T.use(1)
@@ -53,15 +56,15 @@
 		return ..()
 
 /obj/item/shield/riot/examine(mob/user)
-	..()
+	. = ..()
 	var/healthpercent = round((obj_integrity/max_integrity) * 100, 1)
 	switch(healthpercent)
 		if(50 to 99)
-			to_chat(user, "<span class='info'>It looks slightly damaged.</span>")
+			. += "<span class='info'>It looks slightly damaged.</span>"
 		if(25 to 50)
-			to_chat(user, "<span class='info'>It appears heavily damaged.</span>")
+			. += "<span class='info'>It appears heavily damaged.</span>"
 		if(0 to 25)
-			to_chat(user, "<span class='warning'>It's falling apart!</span>")
+			. += "<span class='warning'>It's falling apart!</span>"
 
 /obj/item/shield/riot/proc/shatter(mob/living/carbon/human/owner)
 	playsound(owner, 'sound/effects/glassbr3.ogg', 100)
@@ -81,11 +84,11 @@
 	name = "\improper Roman shield"
 	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
 	icon_state = "roman_shield"
-	item_state = "roman_shield"
+	inhand_icon_state = "roman_shield"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	transparent = FALSE
-	materials = list(MAT_METAL=8500)
+	custom_materials = list(/datum/material/iron=8500)
 	max_integrity = 65
 
 /obj/item/shield/riot/roman/fake
@@ -102,10 +105,10 @@
 	name = "wooden buckler"
 	desc = "A medieval wooden buckler."
 	icon_state = "buckler"
-	item_state = "buckler"
+	inhand_icon_state = "buckler"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
-	materials = list()
+	custom_materials = list(/datum/material/wood = MINERAL_MATERIAL_AMOUNT * 10)
 	resistance_flags = FLAMMABLE
 	block_chance = 30
 	transparent = FALSE
@@ -120,12 +123,16 @@
 	name = "strobe shield"
 	desc = "A shield with a built in, high intensity light capable of blinding and disorienting suspects. Takes regular handheld flashes as bulbs."
 	icon_state = "flashshield"
-	item_state = "flashshield"
+	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash
 
 /obj/item/shield/riot/flash/Initialize()
 	. = ..()
 	embedded_flash = new(src)
+
+/obj/item/shield/riot/flash/ComponentInitialize()
+	. = .. ()
+	AddElement(/datum/element/update_icon_updates_onmob)
 
 /obj/item/shield/riot/flash/attack(mob/living/M, mob/user)
 	. =  embedded_flash.attack(M, user)
@@ -146,10 +153,10 @@
 	if(istype(W, /obj/item/assembly/flash/handheld))
 		var/obj/item/assembly/flash/handheld/flash = W
 		if(flash.burnt_out)
-			to_chat(user, "No sense replacing it with a broken bulb.")
+			to_chat(user, "<span class='warning'>No sense replacing it with a broken bulb!</span>")
 			return
 		else
-			to_chat(user, "You begin to replace the bulb.")
+			to_chat(user, "<span class='notice'>You begin to replace the bulb...</span>")
 			if(do_after(user, 20, target = user))
 				if(flash.burnt_out || !flash || QDELETED(flash))
 					return
@@ -166,22 +173,22 @@
 	embedded_flash.emp_act(severity)
 	update_icon()
 
-/obj/item/shield/riot/flash/update_icon()
+/obj/item/shield/riot/flash/update_icon_state()
 	if(!embedded_flash || embedded_flash.burnt_out)
 		icon_state = "riot"
-		item_state = "riot"
+		inhand_icon_state = "riot"
 	else
 		icon_state = "flashshield"
-		item_state = "flashshield"
+		inhand_icon_state = "flashshield"
 
 /obj/item/shield/riot/flash/examine(mob/user)
-	..()
-	to_chat(user, "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>")
+	. = ..()
+	if (embedded_flash?.burnt_out)
+		. += "<span class='info'>The mounted bulb has burnt out. You can try replacing it with a new one.</span>"
 
 /obj/item/shield/energy
 	name = "energy combat shield"
 	desc = "A shield that reflects almost all energy projectiles, but is useless against physical attacks. It can be retracted, expanded, and stored anywhere."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -209,7 +216,7 @@
 
 /obj/item/shield/energy/attack_self(mob/living/carbon/human/user)
 	if(clumsy_check && HAS_TRAIT(user, TRAIT_CLUMSY) && prob(50))
-		to_chat(user, "<span class='warning'>You beat yourself in the head with [src].</span>")
+		to_chat(user, "<span class='userdanger'>You beat yourself in the head with [src]!</span>")
 		user.take_bodypart_damage(5)
 	active = !active
 	icon_state = "[base_icon_state][active]"
@@ -219,24 +226,24 @@
 		throwforce = on_throwforce
 		throw_speed = on_throw_speed
 		w_class = WEIGHT_CLASS_BULKY
-		playsound(user, 'sound/weapons/saberon.ogg', 35, 1)
+		playsound(user, 'sound/weapons/saberon.ogg', 35, TRUE)
 		to_chat(user, "<span class='notice'>[src] is now active.</span>")
 	else
 		force = initial(force)
 		throwforce = initial(throwforce)
 		throw_speed = initial(throw_speed)
 		w_class = WEIGHT_CLASS_TINY
-		playsound(user, 'sound/weapons/saberoff.ogg', 35, 1)
+		playsound(user, 'sound/weapons/saberoff.ogg', 35, TRUE)
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
 
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
 	desc = "An advanced riot shield made of lightweight materials that collapses for easy storage."
-	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "teleriot0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
+	custom_materials = list(/datum/material/iron = 3600, /datum/material/glass = 3600, /datum/material/silver = 270, /datum/material/titanium = 180)
 	slot_flags = null
 	force = 3
 	throwforce = 3
@@ -253,7 +260,7 @@
 /obj/item/shield/riot/tele/attack_self(mob/living/user)
 	active = !active
 	icon_state = "teleriot[active]"
-	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, 1)
+	playsound(src.loc, 'sound/weapons/batonextend.ogg', 50, TRUE)
 
 	if(active)
 		force = 8

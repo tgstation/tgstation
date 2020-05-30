@@ -3,18 +3,18 @@
 	desc = "A sterile automatic implant injector."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "implanter0"
-	item_state = "syringe_0"
+	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	throw_speed = 3
 	throw_range = 5
 	w_class = WEIGHT_CLASS_SMALL
-	materials = list(MAT_METAL=600, MAT_GLASS=200)
+	custom_materials = list(/datum/material/iron=600, /datum/material/glass=200)
 	var/obj/item/implant/imp = null
 	var/imp_type = null
 
 
-/obj/item/implanter/update_icon()
+/obj/item/implanter/update_icon_state()
 	if(imp)
 		icon_state = "implanter1"
 	else
@@ -35,7 +35,7 @@
 					if (M == user)
 						to_chat(user, "<span class='notice'>You implant yourself.</span>")
 					else
-						M.visible_message("[user] has implanted [M].", "<span class='notice'>[user] implants you.</span>")
+						M.visible_message("<span class='notice'>[user] implants [M].</span>", "<span class='notice'>[user] implants you.</span>")
 					imp = null
 					update_icon()
 				else

@@ -23,6 +23,6 @@
 			DuplicateObject(stored, perfectcopy=1, sameloc=0,newloc=T)
 			log_admin("Build Mode: [key_name(c)] copied [stored] to [AREACOORD(object)]")
 	else if(right_click)
-		if(ismovableatom(object)) // No copying turfs for now.
+		if(ismovable(object)) // No copying turfs for now.
 			to_chat(c, "<span class='notice'>[object] set as template.</span>")
 			stored = object

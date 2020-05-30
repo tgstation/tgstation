@@ -6,7 +6,7 @@
 	anchored = TRUE
 	density = FALSE
 	max_integrity = 200
-	integrity_failure = 50
+	integrity_failure = 0.25
 	var/obj/item/extinguisher/stored_extinguisher
 	var/opened = FALSE
 
@@ -22,8 +22,8 @@
 		stored_extinguisher = new /obj/item/extinguisher(src)
 
 /obj/structure/extinguisher_cabinet/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>")
+	. = ..()
+	. += "<span class='notice'>Alt-click to [opened ? "close":"open"] it.</span>"
 
 /obj/structure/extinguisher_cabinet/Destroy()
 	if(stored_extinguisher)
@@ -33,7 +33,13 @@
 
 /obj/structure/extinguisher_cabinet/contents_explosion(severity, target)
 	if(stored_extinguisher)
-		stored_extinguisher.ex_act(severity, target)
+		switch(severity)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highobj += stored_extinguisher
+			if(EXPLODE_HEAVY)
+				SSexplosions.medobj += stored_extinguisher
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowobj += stored_extinguisher
 
 /obj/structure/extinguisher_cabinet/handle_atom_del(atom/A)
 	if(A == stored_extinguisher)
@@ -45,7 +51,7 @@
 		to_chat(user, "<span class='notice'>You start unsecuring [name]...</span>")
 		I.play_tool_sound(src)
 		if(I.use_tool(src, user, 60))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 			to_chat(user, "<span class='notice'>You unsecure [name].</span>")
 			deconstruct(TRUE)
 		return
@@ -80,7 +86,7 @@
 		stored_extinguisher = null
 		if(!opened)
 			opened = 1
-			playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		update_icon()
 	else
 		toggle_cabinet(user)
@@ -92,7 +98,7 @@
 		to_chat(user, "<span class='notice'>You telekinetically remove [stored_extinguisher] from [src].</span>")
 		stored_extinguisher = null
 		opened = 1
-		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		update_icon()
 	else
 		toggle_cabinet(user)
@@ -110,15 +116,14 @@
 	if(opened && broken)
 		to_chat(user, "<span class='warning'>[src] is broken open.</span>")
 	else
-		playsound(loc, 'sound/machines/click.ogg', 15, 1, -3)
+		playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
 		opened = !opened
 		update_icon()
 
-/obj/structure/extinguisher_cabinet/update_icon()
+/obj/structure/extinguisher_cabinet/update_icon_state()
 	if(!opened)
 		icon_state = "extinguisher_closed"
-		return
-	if(stored_extinguisher)
+	else if(stored_extinguisher)
 		if(istype(stored_extinguisher, /obj/item/extinguisher/mini))
 			icon_state = "extinguisher_mini"
 		else

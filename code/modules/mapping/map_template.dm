@@ -84,6 +84,13 @@
 	if(T.y+height > world.maxy)
 		return
 
+	var/list/border = block(locate(max(T.x-1, 1),			max(T.y-1, 1),			 T.z),
+							locate(min(T.x+width+1, world.maxx),	min(T.y+height+1, world.maxy), T.z))
+	for(var/L in border)
+		var/turf/turf_to_disable = L
+		SSair.remove_from_active(turf_to_disable) //stop processing turfs along the border to prevent runtimes, we return it in initTemplateBounds()
+		turf_to_disable.atmos_adjacent_turfs?.Cut()
+
 	// Accept cached maps, but don't save them automatically - we don't want
 	// ruins clogging up memory for the whole round.
 	var/datum/parsed_map/parsed = cached_map || new(file(mappath))
@@ -114,6 +121,6 @@
 
 //for your ever biggening badminnery kevinz000
 //❤ - Cyberboss
-/proc/load_new_z_level(var/file, var/name)
+/proc/load_new_z_level(file, name)
 	var/datum/map_template/template = new(file, name)
 	template.load_new_z()

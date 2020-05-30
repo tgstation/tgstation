@@ -17,6 +17,7 @@
 	genes = list(/datum/plant_gene/trait/battery)
 	mutatelist = list(/obj/item/seeds/potato/sweet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	graft_gene = /datum/plant_gene/trait/battery
 
 /obj/item/reagent_containers/food/snacks/grown/potato
 	seed = /obj/item/seeds/potato
@@ -38,7 +39,7 @@
 
 
 /obj/item/reagent_containers/food/snacks/grown/potato/attackby(obj/item/W, mob/user, params)
-	if(W.is_sharp())
+	if(W.get_sharpness())
 		to_chat(user, "<span class='notice'>You cut the potato into wedges with [W].</span>")
 		var/obj/item/reagent_containers/food/snacks/grown/potato/wedges/Wedges = new /obj/item/reagent_containers/food/snacks/grown/potato/wedges
 		remove_item_from_storage(user)

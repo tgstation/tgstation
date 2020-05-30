@@ -3,6 +3,7 @@
 	name = "cybernetic implant"
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	status = ORGAN_ROBOTIC
+	organ_flags = ORGAN_SYNTHETIC
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 	var/syndicate_implant = FALSE //Makes the implant invisible to health analyzers and medical HUDs.
@@ -98,58 +99,44 @@
 	desc = "This implant will automatically give you back control over your central nervous system, reducing downtime when stunned."
 	implant_color = "#FFFF00"
 	slot = ORGAN_SLOT_BRAIN_ANTISTUN
-	var/datum/component/redirect/listener
-	var/datum/callback/CB
+
+	var/static/list/signalCache = list(
+		COMSIG_LIVING_STATUS_STUN,
+		COMSIG_LIVING_STATUS_KNOCKDOWN,
+		COMSIG_LIVING_STATUS_IMMOBILIZE,
+		COMSIG_LIVING_STATUS_PARALYZE,
+	)
+
 	var/stun_cap_amount = 40
-	var/working = FALSE
-
-/obj/item/organ/cyberimp/brain/anti_stun/Initialize()
-	. = ..()
-	initialize_callback()
-
-/obj/item/organ/cyberimp/brain/anti_stun/proc/initialize_callback()
-	if(CB)
-		return
-	CB = CALLBACK(src, .proc/on_signal)
 
 /obj/item/organ/cyberimp/brain/anti_stun/Remove(mob/living/carbon/M, special = FALSE)
 	. = ..()
-	QDEL_NULL(listener)
+	UnregisterSignal(M, signalCache)
 
 /obj/item/organ/cyberimp/brain/anti_stun/Insert()
 	. = ..()
-	if(listener)
-		qdel(listener)
-	listener = owner.AddComponent(/datum/component/redirect, list(
-	COMSIG_LIVING_STATUS_STUN = CB,
-	COMSIG_LIVING_STATUS_KNOCKDOWN = CB,
-	COMSIG_LIVING_STATUS_IMMOBILIZE = CB,
-	COMSIG_LIVING_STATUS_PARALYZE = CB
-	))
+	RegisterSignal(owner, signalCache, .proc/on_signal)
 
-/obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal()
-	if(broken_cyber_organ || working)
-		return
-	working = TRUE
-	if(owner.AmountStun() > stun_cap_amount)
-		owner.SetStun(stun_cap_amount)
-	if(owner.AmountKnockdown() > stun_cap_amount)
-		owner.SetKnockdown(stun_cap_amount)
-	if(owner.AmountImmobilized() > stun_cap_amount)
-		owner.SetImmobilized(stun_cap_amount)
-	if(owner.AmountParalyzed() > stun_cap_amount)
-		owner.SetParalyzed(stun_cap_amount)
-	working = FALSE
+/obj/item/organ/cyberimp/brain/anti_stun/proc/on_signal(datum/source, amount)
+	if(!(organ_flags & ORGAN_FAILING) && amount > 0)
+		addtimer(CALLBACK(src, .proc/clear_stuns), stun_cap_amount, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+/obj/item/organ/cyberimp/brain/anti_stun/proc/clear_stuns()
+	if(owner || !(organ_flags & ORGAN_FAILING))
+		owner.SetStun(0)
+		owner.SetKnockdown(0)
+		owner.SetImmobilized(0)
+		owner.SetParalyzed(0)
 
 /obj/item/organ/cyberimp/brain/anti_stun/emp_act(severity)
 	. = ..()
-	if(broken_cyber_organ || . & EMP_PROTECT_SELF)
+	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
-	broken_cyber_organ = TRUE
+	organ_flags |= ORGAN_FAILING
 	addtimer(CALLBACK(src, .proc/reboot), 90 / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
-	broken_cyber_organ = FALSE
+	organ_flags &= ~ORGAN_FAILING
 
 //[[[[MOUTH]]]]
 /obj/item/organ/cyberimp/mouth
@@ -177,10 +164,10 @@
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
 	var/list/boxed = list(
-		/obj/item/autosurgeon/thermal_eyes,
-		/obj/item/autosurgeon/xray_eyes,
-		/obj/item/autosurgeon/anti_stun,
-		/obj/item/autosurgeon/reviver)
+		/obj/item/autosurgeon/syndicate/thermal_eyes,
+		/obj/item/autosurgeon/syndicate/xray_eyes,
+		/obj/item/autosurgeon/syndicate/anti_stun,
+		/obj/item/autosurgeon/syndicate/reviver)
 	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()

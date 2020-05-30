@@ -185,7 +185,7 @@ Actual Adjacent procs :
 			L.Add(T)
 	return L
 
-/turf/proc/reachableTurftest(caller, var/turf/T, ID, simulated_only)
+/turf/proc/reachableTurftest(caller, turf/T, ID, simulated_only)
 	if(T && !T.density && !(simulated_only && SSpathfinder.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
 		return TRUE
 

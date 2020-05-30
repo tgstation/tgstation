@@ -10,7 +10,7 @@
 
 	new /obj/structure/alien/egg(T)
 	new /obj/effect/temp_visual/gravpush(T)
-	playsound(T, 'sound/items/party_horn.ogg', 50, 1, -1)
+	playsound(T, 'sound/items/party_horn.ogg', 50, TRUE, -1)
 
 	message_admins("An alien egg has been delivered to [ADMIN_VERBOSEJMP(T)].")
 	log_game("An alien egg has been delivered to [AREACOORD(T)]")

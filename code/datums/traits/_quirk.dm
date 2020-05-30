@@ -10,12 +10,15 @@
 	var/medical_record_text //This text will appear on medical records for the trait. Not yet implemented
 	var/mood_quirk = FALSE //if true, this quirk affects mood and is unavailable if moodlets are disabled
 	var/mob_trait //if applicable, apply and remove this mob trait
+	///Amount of points this trait is worth towards the hardcore character mode; minus points implies a positive quirk, positive means its hard. This is used to pick the quirks assigned to a hardcore character. 0 means its not available to hardcore draws.
+	var/hardcore_value = 0
 	var/mob/living/quirk_holder
 
 /datum/quirk/New(mob/living/quirk_mob, spawn_effects)
 	..()
 	if(!quirk_mob || (human_only && !ishuman(quirk_mob)) || quirk_mob.has_quirk(type))
 		qdel(src)
+		return
 	quirk_holder = quirk_mob
 	SSquirks.quirk_objects += src
 	to_chat(quirk_holder, gain_text)
@@ -55,9 +58,6 @@
 /datum/quirk/proc/post_add() //for text, disclaimers etc. given after you spawn in with the trait
 /datum/quirk/proc/on_transfer() //code called when the trait is transferred to a new mob
 
-/datum/quirk/proc/clone_data() //return additional data that should be remembered by cloning
-/datum/quirk/proc/on_clone(data) //create the quirk from clone data
-
 /datum/quirk/process()
 	if(QDELETED(quirk_holder))
 		quirk_holder = null
@@ -67,22 +67,36 @@
 		return
 	on_process()
 
-/mob/living/proc/get_trait_string(medical) //helper string. gets a string of all the traits the mob has
+/mob/living/proc/get_trait_string(medical, category) //helper string. gets a string of all the traits the mob has
 	var/list/dat = list()
-	if(!medical)
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			dat += T.name
-		if(!dat.len)
-			return "None"
-		return dat.Join(", ")
-	else
-		for(var/V in roundstart_quirks)
-			var/datum/quirk/T = V
-			dat += T.medical_record_text
-		if(!dat.len)
-			return "None"
-		return dat.Join("<br>")
+	switch(category)
+		if(CAT_QUIRK_ALL)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				dat += medical ? T.medical_record_text : T.name
+				if(!dat.len)
+					return "None"
+		//Major Disabilities
+		if(CAT_QUIRK_MAJOR_DISABILITY)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value < -1)
+					dat += medical ? T.medical_record_text : T.name
+		//Minor Disabilities
+		if(CAT_QUIRK_MINOR_DISABILITY)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value == -1)
+					dat += medical ? T.medical_record_text : T.name
+		//Neutral and Positive quirks
+		if(CAT_QUIRK_NOTES)
+			for(var/V in roundstart_quirks)
+				var/datum/quirk/T = V
+				if(T.value > -1)
+					dat += medical ? T.medical_record_text : T.name
+	if(!dat.len)
+		return medical ? "No issues have been declared." : "None"
+	return medical ?  dat.Join("<br>") : dat.Join(", ")
 
 /mob/living/proc/cleanse_trait_datums() //removes all trait datums
 	for(var/V in roundstart_quirks)
@@ -123,7 +137,7 @@ Use this as a guideline
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
+	H.equip_to_slot(glasses, ITEM_SLOT_EYES)
 	H.regenerate_icons()
 
 //This whole proc is called automatically

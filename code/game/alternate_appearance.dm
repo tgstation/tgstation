@@ -1,9 +1,5 @@
 GLOBAL_LIST_EMPTY(active_alternate_appearances)
 
-
-/atom
-	var/list/alternate_appearances
-
 /atom/proc/remove_alt_appearance(key)
 	if(alternate_appearances)
 		for(var/K in alternate_appearances)
@@ -174,11 +170,11 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 		return TRUE
 	if (istype(M, /mob/living/simple_animal/hostile/construct/wraith))
 		return TRUE
-	if(isrevenant(M) || iseminence(M) || iswizard(M))
+	if(isrevenant(M) || iswizard(M))
 		return TRUE
 	return FALSE
 
-datum/atom_hud/alternate_appearance/basic/onePerson
+/datum/atom_hud/alternate_appearance/basic/onePerson
 	var/mob/seer
 
 /datum/atom_hud/alternate_appearance/basic/onePerson/mobShouldSee(mob/M)

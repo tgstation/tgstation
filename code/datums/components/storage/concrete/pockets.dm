@@ -12,9 +12,6 @@
 		else
 			to_chat(user, "<span class='notice'>You discreetly slip [I] into [parent].</span>")
 
-/datum/component/storage/concrete/pockets
-	max_w_class = WEIGHT_CLASS_NORMAL
-
 /datum/component/storage/concrete/pockets/small
 	max_items = 1
 	max_w_class = WEIGHT_CLASS_SMALL
@@ -84,11 +81,13 @@
 	// if the component is reparented to a jumpsuit, the items still go in the protector
 	return original_parent
 
-/datum/component/storage/concrete/pockets/small/helmet
-	max_items = 1
+/datum/component/storage/concrete/pockets/helmet
 	quickdraw = TRUE
+	max_combined_w_class = 6
 
-/datum/component/storage/concrete/pockets/small/helmet/Initialize()
+/datum/component/storage/concrete/pockets/helmet/Initialize()
 	. = ..()
-	set_holdable(list(/obj/item/reagent_containers/glass/bottle,
-								/obj/item/ammo_box/a762))
+	set_holdable(list(/obj/item/reagent_containers/food/drinks/bottle/vodka,
+					  /obj/item/reagent_containers/food/drinks/bottle/molotov,
+					  /obj/item/reagent_containers/food/drinks/drinkingglass,
+					  /obj/item/ammo_box/a762))

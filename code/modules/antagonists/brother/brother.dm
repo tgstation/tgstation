@@ -3,6 +3,8 @@
 	antagpanel_category = "Brother"
 	job_rank = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
+	antag_hud_type = ANTAG_HUD_BROTHER
+	antag_hud_name = "brother"
 	var/datum/team/brother_team/team
 	antag_moodlet = /datum/mood_event/focused
 	can_hijack = HIJACK_HIJACKER
@@ -31,6 +33,14 @@
 	owner.special_role = null
 	return ..()
 
+/datum/antagonist/brother/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	add_antag_hud(antag_hud_type, antag_hud_name, M)
+
+/datum/antagonist/brother/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/M = mob_override || owner.current
+	remove_antag_hud(antag_hud_type, M)
+
 /datum/antagonist/brother/antag_panel_data()
 	return "Conspirators : [get_brother_names()]]"
 
@@ -54,13 +64,13 @@
 
 /datum/antagonist/brother/greet()
 	var/brother_text = get_brother_names()
-	to_chat(owner.current, "<B><font size=3 color=red>You are the [owner.special_role] of [brother_text].</font></B>")
+	to_chat(owner.current, "<span class='alertsyndie'>You are the [owner.special_role] of [brother_text].</span>")
 	to_chat(owner.current, "The Syndicate only accepts those that have proven themselves. Prove yourself and prove your [team.member_name]s by completing your objectives together!")
 	owner.announce_objectives()
 	give_meeting_area()
 
 /datum/antagonist/brother/proc/finalize_brother()
-	SSticker.mode.update_brother_icons_added(owner)
+	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/tatoralert.ogg', 100, FALSE, pressure_affected = FALSE)
 
 /datum/antagonist/brother/admin_add(datum/mind/new_owner,mob/admin)
 	//show list of possible brothers
@@ -70,7 +80,7 @@
 			continue
 		candidates[L.mind.name] = L.mind
 
-	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in candidates
+	var/choice = input(admin,"Choose the blood brother.", "Brother") as null|anything in sortNames(candidates)
 	if(!choice)
 		return
 	var/datum/mind/bro = candidates[choice]

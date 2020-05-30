@@ -50,7 +50,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 		overmind.add_points(point_rate)
 	overmind.blob_core.obj_integrity = min(overmind.blob_core.max_integrity, overmind.blob_core.obj_integrity+core_regen)
 
-/datum/blobstrain/proc/attack_living(var/mob/living/L, var/list/nearby_blobs) // When the blob attacks people
+/datum/blobstrain/proc/attack_living(mob/living/L, list/nearby_blobs) // When the blob attacks people
 	send_message(L)
 
 /datum/blobstrain/proc/blobbernaut_attack(mob/living/L, blobbernaut) // When this blob's blobbernaut attacks people
@@ -72,3 +72,6 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 
 /datum/blobstrain/proc/emp_reaction(obj/structure/blob/B, severity, coefficient = 1) //when the blob is hit with an emp, do this
 	return
+
+/datum/blobstrain/proc/examine(mob/user)
+	return list("<b>Progress to Critical Mass:</b> <span class='notice'>[overmind.blobs_legit.len]/[overmind.blobwincount].</span>")

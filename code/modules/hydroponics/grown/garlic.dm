@@ -2,7 +2,7 @@
 	name = "pack of garlic seeds"
 	desc = "A packet of extremely pungent seeds."
 	icon_state = "seed-garlic"
-	species = /datum/reagent/consumable/garlic
+	species = "garlic"
 	plantname = "Garlic Sprouts"
 	product = /obj/item/reagent_containers/food/snacks/grown/garlic
 	yield = 6

@@ -3,7 +3,7 @@
 	desc = "A storage device for AIs. Patent pending."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "aicard" // aicard-full
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -58,7 +58,7 @@
 									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.hands_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "intellicard", name, 500, 500, master_ui, state)
+		ui = new(user, src, ui_key, "Intellicard", name, 500, 500, master_ui, state)
 		ui.open()
 
 /obj/item/aicard/ui_data()
@@ -86,19 +86,19 @@
 				if(confirm == "Yes" && !..())
 					flush = TRUE
 					if(AI && AI.loc == src)
-						to_chat(AI, "Your core files are being wiped!")
+						to_chat(AI, "<span class='userdanger'>Your core files are being wiped!</span>")
 						while(AI.stat != DEAD && flush)
-							AI.adjustOxyLoss(1)
+							AI.adjustOxyLoss(5)
 							AI.updatehealth()
 							sleep(5)
 						flush = FALSE
 			. = TRUE
 		if("wireless")
 			AI.control_disabled = !AI.control_disabled
-			to_chat(AI, "[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!")
+			to_chat(AI, "<span class='warning'>[src]'s wireless port has been [AI.control_disabled ? "disabled" : "enabled"]!</span>")
 			. = TRUE
 		if("radio")
 			AI.radio_enabled = !AI.radio_enabled
-			to_chat(AI, "Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!")
+			to_chat(AI, "<span class='warning'>Your Subspace Transceiver has been [AI.radio_enabled ? "enabled" : "disabled"]!</span>")
 			. = TRUE
 	update_icon()

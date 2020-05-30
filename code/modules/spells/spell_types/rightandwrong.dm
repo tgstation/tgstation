@@ -59,7 +59,7 @@ GLOBAL_LIST_INIT(summoned_magic, list(
 	/obj/item/book/granter/spell/barnyard,
 	/obj/item/book/granter/spell/charge,
 	/obj/item/book/granter/spell/summonitem,
-	/obj/item/gun/magic/wand,
+	/obj/item/gun/magic/wand/nothing,
 	/obj/item/gun/magic/wand/death,
 	/obj/item/gun/magic/wand/resurrection,
 	/obj/item/gun/magic/wand/polymorph,
@@ -120,7 +120,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 	var/obj/item/gun/G = new gun_type(get_turf(H))
 	if (istype(G)) // The list contains some non-gun type guns like the speargun which do not have this proc
 		G.unlock()
-	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, 1)
+	playsound(get_turf(H),'sound/magic/summon_guns.ogg', 50, TRUE)
 
 	var/in_hand = H.put_in_hands(G) // not always successful
 
@@ -144,7 +144,7 @@ GLOBAL_VAR_INIT(summon_magic_triggered, FALSE)
 		lucky = TRUE
 
 	var/obj/item/M = new magic_type(get_turf(H))
-	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, 1)
+	playsound(get_turf(H),'sound/magic/summon_magic.ogg', 50, TRUE)
 
 	var/in_hand = H.put_in_hands(M)
 

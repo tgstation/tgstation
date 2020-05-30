@@ -98,6 +98,7 @@
 	noteleport = TRUE
 	hidden = TRUE
 	safe = TRUE
+	flags_1 = NONE
 
 GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 

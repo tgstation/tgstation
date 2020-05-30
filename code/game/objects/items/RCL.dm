@@ -1,14 +1,14 @@
-/obj/item/twohanded/rcl
-	name = "rapid cable layer"
-	desc = "A device used to rapidly deploy cables. It has screws on the side which can be removed to slide off the cables. Do not use without insulation!"
+/obj/item/rcl
+	name = "rapid pipe cleaner layer"
+	desc = "A device used to rapidly deploy pipe cleaners. It has screws on the side which can be removed to slide off the pipe cleaners. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"
-	item_state = "rcl-0"
-	var/obj/structure/cable/last
-	var/obj/item/stack/cable_coil/loaded
+	inhand_icon_state = "rcl-0"
+	var/obj/structure/pipe_cleaner/last
+	var/obj/item/stack/pipe_cleaner_coil/loaded
 	opacity = FALSE
 	force = 5 //Plastic is soft
-	throwforce = 5
+	throwforce =5
 	throw_speed = 1
 	throw_range = 7
 	w_class = WEIGHT_CLASS_NORMAL
@@ -20,12 +20,30 @@
 	var/ghetto = FALSE
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	var/datum/component/mobhook
 	var/datum/radial_menu/persistent/wiring_gui_menu
+	var/mob/listeningTo
 
-/obj/item/twohanded/rcl/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = W
+/obj/item/rcl/Initialize()
+	. = ..()
+	RegisterSignal(src, COMSIG_TWOHANDED_WIELD, .proc/on_wield)
+	RegisterSignal(src, COMSIG_TWOHANDED_UNWIELD, .proc/on_unwield)
+
+/obj/item/rcl/ComponentInitialize()
+	. = ..()
+	AddElement(/datum/element/update_icon_updates_onmob)
+	AddComponent(/datum/component/two_handed)
+
+/// triggered on wield of two handed item
+/obj/item/rcl/proc/on_wield(obj/item/source, mob/user)
+	active = TRUE
+
+/// triggered on unwield of two handed item
+/obj/item/rcl/proc/on_unwield(obj/item/source, mob/user)
+	active = FALSE
+
+/obj/item/rcl/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/stack/pipe_cleaner_coil))
+		var/obj/item/stack/pipe_cleaner_coil/C = W
 
 		if(!loaded)
 			if(!user.transferItemToLoc(W, src))
@@ -43,7 +61,7 @@
 		else
 			return
 		update_icon()
-		to_chat(user, "<span class='notice'>You add the cables to [src]. It now contains [loaded.amount].</span>")
+		to_chat(user, "<span class='notice'>You add the pipe cleaners to [src]. It now contains [loaded.amount].</span>")
 	else if(W.tool_behaviour == TOOL_SCREWDRIVER)
 		if(!loaded)
 			return
@@ -53,10 +71,10 @@
 				var/diff = loaded.amount % 30
 				if(diff)
 					loaded.use(diff)
-					new /obj/item/stack/cable_coil(get_turf(user), diff)
+					new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
 				else
 					loaded.use(30)
-					new /obj/item/stack/cable_coil(get_turf(user), 30)
+					new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
 			qdel(src)
 			return
 
@@ -65,10 +83,10 @@
 			var/diff = loaded.amount % 30
 			if(diff)
 				loaded.use(diff)
-				new /obj/item/stack/cable_coil(get_turf(user), diff)
+				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), diff)
 			else
 				loaded.use(30)
-				new /obj/item/stack/cable_coil(get_turf(user), 30)
+				new /obj/item/stack/pipe_cleaner_coil(get_turf(user), 30)
 		loaded.max_amount = initial(loaded.max_amount)
 		if(!user.put_in_hands(loaded))
 			loaded.forceMove(get_turf(user))
@@ -78,94 +96,88 @@
 	else
 		..()
 
-/obj/item/twohanded/rcl/examine(mob/user)
-	..()
+/obj/item/rcl/examine(mob/user)
+	. = ..()
 	if(loaded)
-		to_chat(user, "<span class='info'>It contains [loaded.amount]/[max_amount] cables.</span>")
+		. += "<span class='info'>It contains [loaded.amount]/[max_amount] pipe cleaners.</span>"
 
-/obj/item/twohanded/rcl/Destroy()
+/obj/item/rcl/Destroy()
 	QDEL_NULL(loaded)
 	last = null
-	QDEL_NULL(mobhook)
+	listeningTo = null
 	QDEL_NULL(wiring_gui_menu)
 	return ..()
 
-/obj/item/twohanded/rcl/update_icon()
+/obj/item/rcl/update_icon_state()
 	if(!loaded)
 		icon_state = "rcl-0"
-		item_state = "rcl-0"
+		inhand_icon_state = "rcl-0"
 		return
 	switch(loaded.amount)
 		if(61 to INFINITY)
 			icon_state = "rcl-30"
-			item_state = "rcl"
+			inhand_icon_state = "rcl"
 		if(31 to 60)
 			icon_state = "rcl-20"
-			item_state = "rcl"
+			inhand_icon_state = "rcl"
 		if(1 to 30)
 			icon_state = "rcl-10"
-			item_state = "rcl"
+			inhand_icon_state = "rcl"
 		else
 			icon_state = "rcl-0"
-			item_state = "rcl-0"
+			inhand_icon_state = "rcl-0"
 
-/obj/item/twohanded/rcl/proc/is_empty(mob/user, loud = 1)
+/obj/item/rcl/proc/is_empty(mob/user, loud = 1)
 	update_icon()
 	if(!loaded || !loaded.amount)
 		if(loud)
-			to_chat(user, "<span class='notice'>The last of the cables unreel from [src].</span>")
+			to_chat(user, "<span class='notice'>The last of the pipe cleaners unreel from [src].</span>")
 		if(loaded)
 			QDEL_NULL(loaded)
 			loaded = null
 		QDEL_NULL(wiring_gui_menu)
-		unwield(user)
-		active = wielded
 		return TRUE
 	return FALSE
 
-/obj/item/twohanded/rcl/pickup(mob/user)
+/obj/item/rcl/pickup(mob/user)
 	..()
 	getMobhook(user)
 
 
-/obj/item/twohanded/rcl/dropped(mob/wearer)
+/obj/item/rcl/dropped(mob/wearer)
 	..()
-	if(mobhook)
-		active = FALSE
-		QDEL_NULL(mobhook)
+	UnregisterSignal(wearer, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	last = null
 	QDEL_NULL(wiring_gui_menu)
 
-/obj/item/twohanded/rcl/attack_self(mob/user)
+/obj/item/rcl/attack_self(mob/user)
 	..()
-	active = wielded
 	if(!active)
 		last = null
 	else if(!last)
-		for(var/obj/structure/cable/C in get_turf(user))
+		for(var/obj/structure/pipe_cleaner/C in get_turf(user))
 			if(C.d1 == FALSE || C.d2 == FALSE)
 				last = C
 				break
 
-/obj/item/twohanded/rcl/proc/getMobhook(mob/to_hook)
-	if(to_hook)
-		if(mobhook && mobhook.parent != to_hook)
-			QDEL_NULL(mobhook)
-		if (!mobhook)
-			mobhook = to_hook.AddComponent(/datum/component/redirect, list(COMSIG_MOVABLE_MOVED = CALLBACK(src, .proc/trigger)))
-	else
-		QDEL_NULL(mobhook)
+/obj/item/rcl/proc/getMobhook(mob/to_hook)
+	if(listeningTo == to_hook)
+		return
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, .proc/trigger)
+	listeningTo = to_hook
 
-
-/obj/item/twohanded/rcl/proc/trigger(mob/user)
+/obj/item/rcl/proc/trigger(mob/user)
 	if(active)
 		layCable(user)
 	if(wiring_gui_menu) //update the wire options as you move
 		wiringGuiUpdate(user)
 
 
-//previous contents of trigger(), lays cable each time the player moves
-/obj/item/twohanded/rcl/proc/layCable(mob/user)
+//previous contents of trigger(), lays pipe_cleaner each time the player moves
+/obj/item/rcl/proc/layCable(mob/user)
 	if(!isturf(user.loc))
 		return
 	if(is_empty(user, 0))
@@ -187,19 +199,19 @@
 					//Did we just walk backwards? Well, that's the one direction we CAN'T complete a stub.
 					last = null
 					return
-				loaded.cable_join(last, user, FALSE)
+				loaded.pipe_cleaner_join(last, user, FALSE)
 				if(is_empty(user))
 					return //If we've run out, display message and exit
 			else
 				last = null
-		loaded.item_color	 = colors[current_color_index]
+		loaded.pipe_cleaner_color = colors[current_color_index]
 		last = loaded.place_turf(get_turf(src), user, turn(user.dir, 180))
 		is_empty(user) //If we've run out, display message
 	update_icon()
 
 
-//searches the current tile for a stub cable of the same colour
-/obj/item/twohanded/rcl/proc/findLinkingCable(mob/user)
+//searches the current tile for a stub pipe_cleaner of the same colour
+/obj/item/rcl/proc/findLinkingCable(mob/user)
 	var/turf/T
 	if(!isturf(user.loc))
 		return
@@ -208,40 +220,37 @@
 	if(T.intact || !T.can_have_cabling())
 		return
 
-	for(var/obj/structure/cable/C in T)
+	for(var/obj/structure/pipe_cleaner/C in T)
 		if(!C)
 			continue
-		if(C.cable_color != GLOB.cable_colors[colors[current_color_index]])
+		if(C.pipe_cleaner_color != GLOB.pipe_cleaner_colors[colors[current_color_index]])
 			continue
 		if(C.d1 == 0)
 			return C
-			break
-	return
 
-
-/obj/item/twohanded/rcl/proc/wiringGuiGenerateChoices(mob/user)
+/obj/item/rcl/proc/wiringGuiGenerateChoices(mob/user)
 	var/fromdir = 0
-	var/obj/structure/cable/linkingCable = findLinkingCable(user)
+	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
 	if(linkingCable)
 		fromdir = linkingCable.d2
 
 	var/list/wiredirs = list("1","5","4","6","2","10","8","9")
 	for(var/icondir in wiredirs)
 		var/dirnum = text2num(icondir)
-		var/cablesuffix = "[min(fromdir,dirnum)]-[max(fromdir,dirnum)]"
-		if(fromdir == dirnum) //cables can't loop back on themselves
-			cablesuffix = "invalid"
-		var/image/img = image(icon = 'icons/mob/radial.dmi', icon_state = "cable_[cablesuffix]")
-		img.color = GLOB.cable_colors[colors[current_color_index]]
+		var/pipe_cleanersuffix = "[min(fromdir,dirnum)]-[max(fromdir,dirnum)]"
+		if(fromdir == dirnum) //pipe_cleaners can't loop back on themselves
+			pipe_cleanersuffix = "invalid"
+		var/image/img = image(icon = 'icons/mob/radial.dmi', icon_state = "cable_[pipe_cleanersuffix]")
+		img.color = GLOB.pipe_cleaner_colors[colors[current_color_index]]
 		wiredirs[icondir] = img
 	return wiredirs
 
-/obj/item/twohanded/rcl/proc/showWiringGui(mob/user)
+/obj/item/rcl/proc/showWiringGui(mob/user)
 	var/list/choices = wiringGuiGenerateChoices(user)
 
 	wiring_gui_menu = show_radial_menu_persistent(user, src , choices, select_proc = CALLBACK(src, .proc/wiringGuiReact, user), radius = 42)
 
-/obj/item/twohanded/rcl/proc/wiringGuiUpdate(mob/user)
+/obj/item/rcl/proc/wiringGuiUpdate(mob/user)
 	if(!wiring_gui_menu)
 		return
 
@@ -250,9 +259,8 @@
 
 	wiring_gui_menu.change_choices(choices,FALSE)
 
-
 //Callback used to respond to interactions with the wiring menu
-/obj/item/twohanded/rcl/proc/wiringGuiReact(mob/living/user,choice)
+/obj/item/rcl/proc/wiringGuiReact(mob/living/user,choice)
 	if(!choice) //close on a null choice (the center button)
 		QDEL_NULL(wiring_gui_menu)
 		return
@@ -269,12 +277,12 @@
 	if(T.intact || !T.can_have_cabling())
 		return
 
-	loaded.item_color	 = colors[current_color_index]
+	loaded.pipe_cleaner_color = colors[current_color_index]
 
-	var/obj/structure/cable/linkingCable = findLinkingCable(user)
+	var/obj/structure/pipe_cleaner/linkingCable = findLinkingCable(user)
 	if(linkingCable)
 		if(choice != linkingCable.d2)
-			loaded.cable_join(linkingCable, user, FALSE, choice)
+			loaded.pipe_cleaner_join(linkingCable, user, FALSE, choice)
 			last = null
 	else
 		last = loaded.place_turf(get_turf(src), user, choice)
@@ -283,19 +291,18 @@
 
 	wiringGuiUpdate(user)
 
-
-/obj/item/twohanded/rcl/pre_loaded/Initialize() //Comes preloaded with cable, for testing stuff
+/obj/item/rcl/pre_loaded/Initialize() //Comes preloaded with pipe_cleaner, for testing stuff
 	. = ..()
 	loaded = new()
 	loaded.max_amount = max_amount
 	loaded.amount = max_amount
 	update_icon()
 
-/obj/item/twohanded/rcl/Initialize()
+/obj/item/rcl/Initialize()
 	. = ..()
 	update_icon()
 
-/obj/item/twohanded/rcl/ui_action_click(mob/user, action)
+/obj/item/rcl/ui_action_click(mob/user, action)
 	if(istype(action, /datum/action/item_action/rcl_col))
 		current_color_index++;
 		if (current_color_index > colors.len)
@@ -303,7 +310,7 @@
 		var/cwname = colors[current_color_index]
 		to_chat(user, "Color changed to [cwname]!")
 		if(loaded)
-			loaded.item_color= colors[current_color_index]
+			loaded.pipe_cleaner_color = colors[current_color_index]
 		if(wiring_gui_menu)
 			wiringGuiUpdate(user)
 	else if(istype(action, /datum/action/item_action/rcl_gui))
@@ -312,21 +319,21 @@
 		else //open the menu
 			showWiringGui(user)
 
-/obj/item/twohanded/rcl/ghetto
+/obj/item/rcl/ghetto
 	actions_types = list()
 	max_amount = 30
-	name = "makeshift rapid cable layer"
+	name = "makeshift rapid pipe cleaner layer"
 	ghetto = TRUE
 
-/obj/item/twohanded/rcl/ghetto/update_icon()
+/obj/item/rcl/ghetto/update_icon_state()
 	if(!loaded)
 		icon_state = "rclg-0"
-		item_state = "rclg-0"
+		inhand_icon_state = "rclg-0"
 		return
 	switch(loaded.amount)
 		if(1 to INFINITY)
 			icon_state = "rclg-1"
-			item_state = "rcl"
+			inhand_icon_state = "rcl"
 		else
 			icon_state = "rclg-1"
-			item_state = "rclg-1"
+			inhand_icon_state = "rclg-1"

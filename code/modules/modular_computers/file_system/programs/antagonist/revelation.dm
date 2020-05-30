@@ -4,11 +4,10 @@
 	program_icon_state = "hostile"
 	extended_desc = "This virus can destroy hard drive of system it is executed on. It may be obfuscated to look like another non-malicious program. Once armed, it will destroy the system upon next execution."
 	size = 13
-	requires_ntnet = 0
-	available_on_ntnet = 0
-	available_on_syndinet = 1
-	tgui_id = "ntos_revelation"
-	ui_style = "syndicate"
+	requires_ntnet = FALSE
+	available_on_ntnet = FALSE
+	available_on_syndinet = TRUE
+	tgui_id = "NtosRevelation"
 	ui_x = 400
 	ui_y = 250
 
@@ -22,7 +21,7 @@
 /datum/computer_file/program/revelation/proc/activate()
 	if(computer)
 		computer.visible_message("<span class='notice'>\The [computer]'s screen brightly flashes and loud electrical buzzing is heard.</span>")
-		computer.enabled = 0
+		computer.enabled = FALSE
 		computer.update_icon()
 		var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 		var/obj/item/computer_hardware/battery/battery_module = computer.all_components[MC_CELL]
@@ -44,18 +43,20 @@
 
 /datum/computer_file/program/revelation/ui_act(action, params)
 	if(..())
-		return 1
+		return
 	switch(action)
 		if("PRG_arm")
 			armed = !armed
+			return TRUE
 		if("PRG_activate")
 			activate()
+			return TRUE
 		if("PRG_obfuscate")
-			var/mob/living/user = usr
-			var/newname = sanitize(input(user, "Enter new program name: "))
+			var/newname = params["new_name"]
 			if(!newname)
 				return
 			filedesc = newname
+			return TRUE
 
 
 /datum/computer_file/program/revelation/clone()

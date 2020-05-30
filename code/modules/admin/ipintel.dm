@@ -72,7 +72,7 @@
 			qdel(query_add_ip_intel)
 
 
-/proc/ip_intel_query(ip, var/retryed=0)
+/proc/ip_intel_query(ip, retryed=0)
 	. = -1 //default
 	if (!ip)
 		return

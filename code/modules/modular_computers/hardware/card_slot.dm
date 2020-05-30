@@ -36,6 +36,17 @@
 		return stored_card2
 	return ..()
 
+/obj/item/computer_hardware/card_slot/RemoveID()
+	if(stored_card)
+		. = stored_card
+		if(!try_eject(1))
+			return null
+		return
+	if(stored_card2)
+		. = stored_card2
+		if(!try_eject(2))
+			return null
+
 /obj/item/computer_hardware/card_slot/on_install(obj/item/modular_computer/M, mob/living/user = null)
 	M.add_verb(device_type)
 
@@ -63,7 +74,7 @@
 	else
 		stored_card2 = I
 	to_chat(user, "<span class='notice'>You insert \the [I] into \the [src].</span>")
-	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		H.sec_hud_set_ID()
@@ -105,7 +116,7 @@
 			var/mob/living/carbon/human/H = user
 			H.sec_hud_set_ID()
 		to_chat(user, "<span class='notice'>You remove the card[ejected>1 ? "s" : ""] from \the [src].</span>")
-		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+		playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 		return TRUE
 	return FALSE
 
@@ -118,6 +129,6 @@
 		return
 
 /obj/item/computer_hardware/card_slot/examine(mob/user)
-	..()
+	. = ..()
 	if(stored_card || stored_card2)
-		to_chat(user, "There appears to be something loaded in the card slots.")
+		. += "There appears to be something loaded in the card slots."

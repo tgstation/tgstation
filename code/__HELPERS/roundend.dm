@@ -6,73 +6,91 @@
 	gather_antag_data()
 	record_nuke_disk_location()
 	var/json_file = file("[GLOB.log_directory]/round_end_data.json")
+	// All but npcs sublists and ghost category contain only mobs with minds
 	var/list/file_data = list("escapees" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "abandoned" = list("humans" = list(), "silicons" = list(), "others" = list(), "npcs" = list()), "ghosts" = list(), "additional data" = list())
-	var/num_survivors = 0
-	var/num_escapees = 0
-	var/num_shuttle_escapees = 0
+	var/num_survivors = 0 //Count of non-brain non-camera mobs with mind that are alive
+	var/num_escapees = 0 //Above and on centcom z
+	var/num_shuttle_escapees = 0 //Above and on escape shuttle
 	var/list/area/shuttle_areas
 	if(SSshuttle && SSshuttle.emergency)
 		shuttle_areas = SSshuttle.emergency.shuttle_areas
-	for(var/mob/m in GLOB.mob_list)
-		var/escaped
-		var/category
+
+	for(var/mob/M in GLOB.mob_list)
 		var/list/mob_data = list()
-		if(isnewplayer(m))
+		if(isnewplayer(M))
 			continue
-		if(m.mind)
-			if(m.stat != DEAD && !isbrain(m) && !iscameramob(m))
+
+		var/escape_status = "abandoned" //default to abandoned
+		var/category = "npcs" //Default to simple count only bracket
+		var/count_only = TRUE //Count by name only or full info
+
+		mob_data["name"] = M.name
+		if(M.mind)
+			count_only = FALSE
+			mob_data["ckey"] = M.mind.key
+			if(M.stat != DEAD && !isbrain(M) && !iscameramob(M))
 				num_survivors++
-			mob_data += list("name" = m.name, "ckey" = ckey(m.mind.key))
-			if(isobserver(m))
-				escaped = "ghosts"
-			else if(isliving(m))
-				var/mob/living/L = m
-				mob_data += list("location" = get_area(L), "health" = L.health)
+				if(EMERGENCY_ESCAPED_OR_ENDGAMED && (M.onCentCom() || M.onSyndieBase()))
+					num_escapees++
+					escape_status = "escapees"
+					if(shuttle_areas[get_area(M)])
+						num_shuttle_escapees++
+			if(isliving(M))
+				var/mob/living/L = M
+				mob_data["location"] = get_area(L)
+				mob_data["health"] = L.health
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
 					category = "humans"
-					mob_data += list("job" = H.mind.assigned_role, "species" = H.dna.species.name)
+					if(H.mind)
+						mob_data["job"] = H.mind.assigned_role
+					else
+						mob_data["job"] = "Unknown"
+					mob_data["species"] = H.dna.species.name
 				else if(issilicon(L))
 					category = "silicons"
 					if(isAI(L))
-						mob_data += list("module" = "AI")
-					if(isAI(L))
-						mob_data += list("module" = "pAI")
-					if(iscyborg(L))
+						mob_data["module"] = "AI"
+					else if(ispAI(L))
+						mob_data["module"] = "pAI"
+					else if(iscyborg(L))
 						var/mob/living/silicon/robot/R = L
-						mob_data += list("module" = R.module)
-			else
-				category = "others"
-				mob_data += list("typepath" = m.type)
-		if(!escaped)
-			if(EMERGENCY_ESCAPED_OR_ENDGAMED && (m.onCentCom() || m.onSyndieBase()))
-				escaped = "escapees"
-				num_escapees++
-				if(shuttle_areas[get_area(m)])
-					num_shuttle_escapees++
-			else
-				escaped = "abandoned"
-		if(!m.mind && (!ishuman(m) || !issilicon(m)))
-			var/list/npc_nest = file_data["[escaped]"]["npcs"]
-			if(npc_nest.Find(initial(m.name)))
-				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] += 1
-			else
-				file_data["[escaped]"]["npcs"]["[initial(m.name)]"] = 1
-		else
-			if(isobserver(m))
-				var/pos = length(file_data["[escaped]"]) + 1
-				file_data["[escaped]"]["[pos]"] = mob_data
-			else
-				if(!category)
+						mob_data["module"] = R.module.name
+				else
 					category = "others"
-					mob_data += list("name" = m.name, "typepath" = m.type)
-				var/pos = length(file_data["[escaped]"]["[category]"]) + 1
-				file_data["[escaped]"]["[category]"]["[pos]"] = mob_data
+					mob_data["typepath"] = M.type
+		//Ghosts don't care about minds, but we want to retain ckey data etc
+		if(isobserver(M))
+			count_only = FALSE
+			escape_status = "ghosts"
+			if(!M.mind)
+				mob_data["ckey"] = M.key
+			category = null //ghosts are one list deep
+		//All other mindless stuff just gets counts by name
+		if(count_only)
+			var/list/npc_nest = file_data["[escape_status]"]["npcs"]
+			var/name_to_use = initial(M.name)
+			if(ishuman(M))
+				name_to_use = "Unknown Human" //Monkeymen and other mindless corpses
+			if(npc_nest.Find(name_to_use))
+				file_data["[escape_status]"]["npcs"][name_to_use] += 1
+			else
+				file_data["[escape_status]"]["npcs"][name_to_use] = 1
+		else
+			//Mobs with minds and ghosts get detailed data
+			if(category)
+				var/pos = length(file_data["[escape_status]"]["[category]"]) + 1
+				file_data["[escape_status]"]["[category]"]["[pos]"] = mob_data
+			else
+				var/pos = length(file_data["[escape_status]"]) + 1
+				file_data["[escape_status]"]["[pos]"] = mob_data
+
 	var/datum/station_state/end_state = new /datum/station_state()
 	end_state.count()
 	var/station_integrity = min(PERCENT(GLOB.start_state.score(end_state)), 100)
 	file_data["additional data"]["station integrity"] = station_integrity
 	WRITE_FILE(json_file, json_encode(file_data))
+
 	SSblackbox.record_feedback("nested tally", "round_end_stats", num_survivors, list("survivors", "total"))
 	SSblackbox.record_feedback("nested tally", "round_end_stats", num_escapees, list("escapees", "total"))
 	SSblackbox.record_feedback("nested tally", "round_end_stats", GLOB.joined_player_list.len, list("players", "total"))
@@ -159,23 +177,51 @@
 		file_data["wanted"] = list("author" = "[GLOB.news_network.wanted_issue.scannedUser]", "criminal" = "[GLOB.news_network.wanted_issue.criminal]", "description" = "[GLOB.news_network.wanted_issue.body]", "photo file" = "[GLOB.news_network.wanted_issue.photo_file]")
 	WRITE_FILE(json_file, json_encode(file_data))
 
+///Handles random hardcore point rewarding if it applies.
+/datum/controller/subsystem/ticker/proc/HandleRandomHardcoreScore(client/player_client)
+	if(!ishuman(player_client.mob))
+		return FALSE
+	var/mob/living/carbon/human/human_mob = player_client.mob
+	if(!human_mob.hardcore_survival_score) ///no score no glory
+		return FALSE
+
+	if(human_mob.mind && (human_mob.mind.special_role || length(human_mob.mind.antag_datums) > 0))
+		var/didthegamerwin = TRUE
+		for(var/a in human_mob.mind.antag_datums)
+			var/datum/antagonist/antag_datum = a
+			for(var/i in antag_datum.objectives)
+				var/datum/objective/objective_datum = i
+				if(!objective_datum.check_completion())
+					didthegamerwin = FALSE
+		if(!didthegamerwin)
+			return FALSE
+		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+	else if(human_mob.onCentCom())
+		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
+
+
 /datum/controller/subsystem/ticker/proc/declare_completion()
 	set waitfor = FALSE
 
 	to_chat(world, "<BR><BR><BR><span class='big bold'>The round has ended.</span>")
 	log_game("The round has ended.")
-	if(LAZYLEN(GLOB.round_end_notifiees))
-		send2irc("Notice", "[GLOB.round_end_notifiees.Join(", ")] the round has ended.")
 
 	for(var/I in round_end_events)
 		var/datum/callback/cb = I
 		cb.InvokeAsync()
 	LAZYCLEARLIST(round_end_events)
 
+	var/speed_round = FALSE
+	if(world.time - SSticker.round_start_time <= 300 SECONDS)
+		speed_round = TRUE
+
 	for(var/client/C in GLOB.clients)
 		if(!C.credits)
 			C.RollCredits()
 		C.playtitlemusic(40)
+		if(speed_round)
+			C.give_award(/datum/award/achievement/misc/speed_round, C.mob)
+		HandleRandomHardcoreScore(C)
 
 	var/popcount = gather_roundend_feedback()
 	display_report(popcount)
@@ -193,10 +239,15 @@
 	//Set news report and mode result
 	mode.set_round_result()
 
-	send2irc("Server", "Round just ended.")
+	send2adminchat("Server", "Round just ended.")
 
 	if(length(CONFIG_GET(keyed_list/cross_server)))
 		send_news_report()
+
+	CHECK_TICK
+
+	//check config blah blah
+	handle_hearts()
 
 	CHECK_TICK
 
@@ -258,6 +309,8 @@
 	//Antagonists
 	parts += antag_report()
 
+	parts += hardcore_random_report()
+
 	CHECK_TICK
 	//Medals
 	parts += medal_report()
@@ -275,23 +328,30 @@
 	if(GLOB.round_id)
 		var/statspage = CONFIG_GET(string/roundstatsurl)
 		var/info = statspage ? "<a href='?action=openLink&link=[url_encode(statspage)][GLOB.round_id]'>[GLOB.round_id]</a>" : GLOB.round_id
-		parts += "[GLOB.TAB]Round ID: <b>[info]</b>"
-	parts += "[GLOB.TAB]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
-	parts += "[GLOB.TAB]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
+		parts += "[FOURSPACES]Round ID: <b>[info]</b>"
+	parts += "[FOURSPACES]Shift Duration: <B>[DisplayTimeText(world.time - SSticker.round_start_time)]</B>"
+	parts += "[FOURSPACES]Station Integrity: <B>[mode.station_was_nuked ? "<span class='redtext'>Destroyed</span>" : "[popcount["station_integrity"]]%"]</B>"
 	var/total_players = GLOB.joined_player_list.len
 	if(total_players)
-		parts+= "[GLOB.TAB]Total Population: <B>[total_players]</B>"
+		parts+= "[FOURSPACES]Total Population: <B>[total_players]</B>"
 		if(station_evacuated)
-			parts += "<BR>[GLOB.TAB]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
-			parts += "[GLOB.TAB](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
-		parts += "[GLOB.TAB]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
+			parts += "<BR>[FOURSPACES]Evacuation Rate: <B>[popcount[POPCOUNT_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_ESCAPEES]/total_players)]%)</B>"
+			parts += "[FOURSPACES](on emergency shuttle): <B>[popcount[POPCOUNT_SHUTTLE_ESCAPEES]] ([PERCENT(popcount[POPCOUNT_SHUTTLE_ESCAPEES]/total_players)]%)</B>"
+		parts += "[FOURSPACES]Survival Rate: <B>[popcount[POPCOUNT_SURVIVORS]] ([PERCENT(popcount[POPCOUNT_SURVIVORS]/total_players)]%)</B>"
 		if(SSblackbox.first_death)
 			var/list/ded = SSblackbox.first_death
 			if(ded.len)
-				parts += "[GLOB.TAB]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
+				parts += "[FOURSPACES]First Death: <b>[ded["name"]], [ded["role"]], at [ded["area"]]. Damage taken: [ded["damage"]].[ded["last_words"] ? " Their last words were: \"[ded["last_words"]]\"" : ""]</b>"
 			//ignore this comment, it fixes the broken sytax parsing caused by the " above
 			else
-				parts += "[GLOB.TAB]<i>Nobody died this shift!</i>"
+				parts += "[FOURSPACES]<i>Nobody died this shift!</i>"
+	if(istype(SSticker.mode, /datum/game_mode/dynamic))
+		var/datum/game_mode/dynamic/mode = SSticker.mode
+		parts += "[FOURSPACES]Threat level: [mode.threat_level]"
+		parts += "[FOURSPACES]Threat left: [mode.threat]"
+		parts += "[FOURSPACES]Executed rules:"
+		for(var/datum/dynamic_ruleset/rule in mode.executed_rules)
+			parts += "[FOURSPACES][FOURSPACES][rule.ruletype] - <b>[rule.name]</b>: -[rule.cost + rule.scaled_times * rule.scaling_cost] threat"
 	return parts.Join("<br>")
 
 /client/proc/roundend_report_file()
@@ -314,6 +374,7 @@
 	roundend_report.set_content(content)
 	roundend_report.stylesheets = list()
 	roundend_report.add_stylesheet("roundend", 'html/browser/roundend.css')
+	roundend_report.add_stylesheet("font-awesome", 'html/font-awesome/css/all.min.css')
 	roundend_report.open(FALSE)
 
 /datum/controller/subsystem/ticker/proc/personal_report(client/C, popcount)
@@ -365,12 +426,11 @@
 
 		if (aiPlayer.connected_robots.len)
 			var/borg_num = aiPlayer.connected_robots.len
-			var/robolist = "<br><b>[aiPlayer.real_name]</b>'s minions were: "
+			parts += "<br><b>[aiPlayer.real_name]</b>'s minions were:"
 			for(var/mob/living/silicon/robot/robo in aiPlayer.connected_robots)
 				borg_num--
 				if(robo.mind)
-					robolist += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]<br>"
-			parts += "[robolist]"
+					parts += "<b>[robo.name]</b> (Played by: <b>[robo.mind.key]</b>)[robo.stat == DEAD ? " <span class='redtext'>(Deactivated)</span>" : ""][borg_num ?", ":""]"
 		if(!borg_spacer)
 			borg_spacer = TRUE
 
@@ -406,6 +466,22 @@
 		return "<div class='panel stationborder'>[parts.Join("<br>")]</div>"
 	return ""
 
+///Generate a report for all players who made it out alive with a hardcore random character and prints their final score
+/datum/controller/subsystem/ticker/proc/hardcore_random_report()
+	. = list()
+	. += "<span class='header'>The following people made it out as a random hardcore character:</span>"
+	. += "<ul class='playerlist'>"
+	for(var/i in GLOB.player_list)
+		if(!ishuman(i))
+			continue
+		var/mob/living/carbon/human/human_player = i
+		if(!human_player.hardcore_survival_score || !human_player.onCentCom() || human_player.stat == DEAD) ///gotta escape nerd
+			continue
+		if(!human_player.mind)
+			continue
+		. += "<li>[printplayer(human_player.mind)] with a hardcore random score of [round(human_player.hardcore_survival_score)]</li>"
+	. += "</ul>"
+
 /datum/controller/subsystem/ticker/proc/antag_report()
 	var/list/result = list()
 	var/list/all_teams = list()
@@ -415,7 +491,7 @@
 		if(!A.members)
 			continue
 		all_teams |= A
-	
+
 	for(var/datum/antagonist/A in GLOB.antagonists)
 		if(!A.owner)
 			continue

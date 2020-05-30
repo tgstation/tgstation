@@ -45,6 +45,8 @@
 		dat += "<b>Transfer data in exchange for supplies:</b><br>"
 		dat += "<a href='?src=[REF(src)];dispense=baton'>Advanced Baton (2 Credits)</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=mind_device'>Mental Interface Device (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=chem_dispenser'>Reagent Synthesizer (2 Credits)</A><br>"
+		dat += "<a href='?src=[REF(src)];dispense=shrink_ray'>Shrink Ray Blaster (2 Credits)</a><br>"
 		dat += "<a href='?src=[REF(src)];dispense=helmet'>Agent Helmet</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=vest'>Agent Vest</A><br>"
 		dat += "<a href='?src=[REF(src)];dispense=silencer'>Radio Silencer</A><br>"
@@ -102,7 +104,7 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("baton")
-				Dispense(/obj/item/abductor/baton,cost=2)
+				Dispense(/obj/item/melee/baton/abductor,cost=2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")
@@ -113,8 +115,12 @@
 				Dispense(/obj/item/clothing/suit/armor/abductor/vest)
 			if("mind_device")
 				Dispense(/obj/item/abductor/mind_device,cost=2)
+			if("chem_dispenser")
+				Dispense(/obj/item/abductor_machine_beacon/chem_dispenser,cost=2)
 			if("tongue")
 				Dispense(/obj/item/organ/tongue/abductor)
+			if("shrink_ray")
+				Dispense(/obj/item/gun/energy/shrink_ray,cost=2)
 	updateUsrDialog()
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()

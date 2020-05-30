@@ -4,6 +4,7 @@
 	product_ads = "Crack capitalist skulls!;Beat some heads in!;Don't forget - harm is good!;Your weapons are right here.;Handcuffs!;Freeze, scumbag!;Don't tase me bro!;Tase them, bro.;Why not have a donut?"
 	icon_state = "sec"
 	icon_deny = "sec-deny"
+	light_mask = "sec-light-mask"
 	req_access = list(ACCESS_SECURITY)
 	products = list(/obj/item/restraints/handcuffs = 8,
 					/obj/item/restraints/handcuffs/cable/zipties = 10,
@@ -18,10 +19,12 @@
 	premium = list(/obj/item/storage/belt/security/webbing = 5,
 				   /obj/item/coin/antagtoken = 1,
 				   /obj/item/clothing/head/helmet/blueshirt = 1,
-				   /obj/item/clothing/suit/armor/vest/blueshirt = 1)
+				   /obj/item/clothing/suit/armor/vest/blueshirt = 1,
+				   /obj/item/clothing/gloves/tackler = 5,
+				   /obj/item/grenade/stingbang = 1)
 	refill_canister = /obj/item/vending_refill/security
-	default_price = 100
-	extra_price = 150
+	default_price = 650
+	extra_price = 700
 	payment_department = ACCOUNT_SEC
 
 /obj/machinery/vending/security/pre_throw(obj/item/I)

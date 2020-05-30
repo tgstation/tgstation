@@ -17,4 +17,4 @@
 /mob/living/carbon/alien/AdjustStun(amount, updating = 1, ignore_canstun = 0)
 	. = ..()
 	if(!.)
-		move_delay_add = CLAMP(move_delay_add + round(amount/2), 0, 10)
+		move_delay_add = clamp(move_delay_add + round(amount/2), 0, 10)

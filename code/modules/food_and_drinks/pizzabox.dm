@@ -2,7 +2,7 @@
 	name = "pizza bomb"
 	desc = "Special delivery!"
 	icon_state = "pizzabomb_inactive"
-	item_state = "eshield0"
+	inhand_icon_state = "eshield0"
 	lefthand_file = 'icons/mob/inhands/equipment/shields_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/shields_righthand.dmi'
 
@@ -11,7 +11,7 @@
 	desc = "A box suited for pizzas."
 	icon = 'icons/obj/food/containers.dmi'
 	icon_state = "pizzabox"
-	item_state = "pizzabox"
+	inhand_icon_state = "pizzabox"
 	lefthand_file = 'icons/mob/inhands/misc/food_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/food_righthand.dmi'
 
@@ -91,7 +91,7 @@
 	var/current_offset = 2
 	if(isinhands)
 		for(var/V in boxes) //add EXTRA BOX per box
-			var/mutable_appearance/M = mutable_appearance(icon_file, item_state)
+			var/mutable_appearance/M = mutable_appearance(icon_file, inhand_icon_state)
 			M.pixel_y = current_offset
 			current_offset += 2
 			. += M
@@ -124,8 +124,12 @@
 				update_icon()
 				return
 			else
-				bomb_timer = input(user, "Set the [bomb] timer from [BOMB_TIMER_MIN] to [BOMB_TIMER_MAX].", bomb, bomb_timer) as num
-				bomb_timer = CLAMP(CEILING(bomb_timer / 2, 1), BOMB_TIMER_MIN, BOMB_TIMER_MAX)
+				bomb_timer = input(user, "Set the [bomb] timer from [BOMB_TIMER_MIN] to [BOMB_TIMER_MAX].", bomb, bomb_timer) as num|null
+
+				if (isnull(bomb_timer))
+					return
+
+				bomb_timer = clamp(CEILING(bomb_timer / 2, 1), BOMB_TIMER_MIN, BOMB_TIMER_MAX)
 				bomb_defused = FALSE
 
 				log_bomber(user, "has trapped a", src, "with [bomb] set to [bomb_timer * 2] seconds")
@@ -187,7 +191,7 @@
 			update_icon()
 			return
 		else if(bomb)
-			to_chat(user, "<span class='notice'>[src] already has a bomb in it!</span>")
+			to_chat(user, "<span class='warning'>[src] already has a bomb in it!</span>")
 	else if(istype(I, /obj/item/pen))
 		if(!open)
 			if(!user.is_literate())
@@ -209,7 +213,7 @@
 
 /obj/item/pizzabox/process()
 	if(bomb_active && !bomb_defused && (bomb_timer > 0))
-		playsound(loc, 'sound/items/timer.ogg', 50, 0)
+		playsound(loc, 'sound/items/timer.ogg', 50, FALSE)
 		bomb_timer--
 	if(bomb_active && !bomb_defused && (bomb_timer <= 0))
 		if(bomb in src)
@@ -217,7 +221,7 @@
 			unprocess()
 			qdel(src)
 	if(!bomb_active || bomb_defused)
-		if(bomb_defused && bomb in src)
+		if(bomb_defused && (bomb in src))
 			bomb.defuse()
 			bomb_active = FALSE
 			unprocess()
@@ -316,9 +320,9 @@
 		pizza_preferences = list()
 
 /obj/item/pizzabox/infinite/examine(mob/user)
-	..()
+	. = ..()
 	if(isobserver(user))
-		to_chat(user, "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>")
+		. += "<span class='deadsay'>This pizza box is anomalous, and will produce infinite pizza.</span>"
 
 /obj/item/pizzabox/infinite/attack_self(mob/living/user)
 	QDEL_NULL(pizza)

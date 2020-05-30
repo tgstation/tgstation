@@ -8,10 +8,12 @@
 	lifespan = 30
 	endurance = 40 // tuff like a toiger
 	yield = 4
+	instability = 25
 	growthstages = 5
 	genes = list(/datum/plant_gene/trait/repeated_harvest, /datum/plant_gene/trait/plant_type/weed_hardy)
 	mutatelist = list(/obj/item/seeds/nettle/death)
 	reagents_add = list(/datum/reagent/toxin/acid = 0.5)
+	graft_gene = /datum/plant_gene/trait/plant_type/weed_hardy
 
 /obj/item/seeds/nettle/death
 	name = "pack of death-nettle seeds"
@@ -27,6 +29,7 @@
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/toxin/acid/fluacid = 0.5, /datum/reagent/toxin/acid = 0.5)
 	rarity = 20
+	graft_gene = /datum/plant_gene/trait/stinging
 
 /obj/item/reagent_containers/food/snacks/grown/nettle // "snack"
 	seed = /obj/item/seeds/nettle
@@ -73,7 +76,7 @@
 	if(force > 0)
 		force -= rand(1, (force / 3) + 1) // When you whack someone with it, leaves fall off
 	else
-		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
+		to_chat(usr, "<span class='warning'>All the leaves have fallen off the nettle from violent whacking.</span>")
 		qdel(src)
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/basic
@@ -99,13 +102,13 @@
 	if(..())
 		if(prob(50))
 			user.Paralyze(100)
-			to_chat(user, "<span class='userdanger'>You are stunned by the Deathnettle as you try picking it up!</span>")
+			to_chat(user, "<span class='userdanger'>You are stunned by [src] as you try picking it up!</span>")
 
 /obj/item/reagent_containers/food/snacks/grown/nettle/death/attack(mob/living/carbon/M, mob/user)
 	if(!..())
 		return
 	if(isliving(M))
-		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of the Deathnettle!</span>")
+		to_chat(M, "<span class='danger'>You are stunned by the powerful acid of [src]!</span>")
 		log_combat(user, M, "attacked", src)
 
 		M.adjust_blurriness(force/7)

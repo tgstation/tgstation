@@ -3,6 +3,10 @@
 	name = "Electromagnetic Web"
 	color = "#83ECEC"
 	complementary_color = "#EC8383"
+	description = "will do high burn damage and EMP targets."
+	effectdesc = "will also take massively increased damage and release an EMP when killed."
+	analyzerdescdamage = "Does low burn damage and EMPs targets."
+	analyzerdesceffect = "Is fragile to all types of damage, but takes massive damage from brute. In addition, releases a small EMP when killed."
 	reagent = /datum/reagent/blob/electromagnetic_web
 
 /datum/blobstrain/reagent/electromagnetic_web/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)

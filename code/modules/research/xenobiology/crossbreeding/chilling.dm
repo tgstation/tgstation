@@ -19,8 +19,8 @@ Chilling extracts:
 		return
 	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
 	to_chat(user, "<span class='notice'>You squeeze the extract, and it absorbs the plasma!</span>")
-	playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
-	playsound(src, 'sound/effects/glassbr1.ogg', 50, 1)
+	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
+	playsound(src, 'sound/effects/glassbr1.ogg', 50, TRUE)
 	do_effect(user)
 
 /obj/item/slimecross/chilling/proc/do_effect(mob/user) //If, for whatever reason, you don't want to delete the extract, don't do ..()
@@ -280,14 +280,14 @@ Chilling extracts:
 
 /obj/item/slimecross/chilling/oil
 	colour = "oil"
-	effect_desc = "It creates a useless flash."
+	effect_desc = "It creates a weak, but wide-ranged explosion."
 
 /obj/item/slimecross/chilling/oil/do_effect(mob/user)
 	user.visible_message("<span class='danger'>[src] begins to shake with muted intensity!</span>")
 	addtimer(CALLBACK(src, .proc/boom), 50)
 
 /obj/item/slimecross/chilling/oil/proc/boom()
-	explosion(get_turf(src), -1, -1, 3, 10) //Large radius, but mostly light damage.
+	explosion(get_turf(src), -1, -1, 10, 0) //Large radius, but mostly light damage, and no flash.
 	qdel(src)
 
 /obj/item/slimecross/chilling/black

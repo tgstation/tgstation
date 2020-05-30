@@ -71,7 +71,7 @@ announce_unvalidated - Announce prs by unvalidated users (see the validation set
 	Can also be set to 'only' to only announce prs by unvalidated users.
 $servers[$configitem]['announce_unvalidated'] = false;
 
-//Note: the same webhook or game server can be given in mutiple announce endpoints with different settings, allowing you to say, have embeds only show on prs to certain repos by excluding the repo in a endpoint with embed = false, and including the repo in a endpoint with embed = true true. This could also be used to only block closed and reopened events on prs by unvalidated users.
+//Note: the same webhook or game server can be given in mutiple announce endpoints with different settings, allowing you to say, have embeds only show on prs to certain repos by excluding the repo in an endpoint with embed = false, and including the repo in an endpoint with embed = true true. This could also be used to only block closed and reopened events on prs by unvalidated users.
 
 
 

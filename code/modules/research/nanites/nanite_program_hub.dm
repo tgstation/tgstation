@@ -3,22 +3,25 @@
 	desc = "Compiles nanite programs from the techweb servers and downloads them into disks."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "nanite_program_hub"
-	circuit = /obj/item/circuitboard/machine/nanite_program_hub
 	use_power = IDLE_POWER_USE
 	anchored = TRUE
 	density = TRUE
+	circuit = /obj/item/circuitboard/machine/nanite_program_hub
+	ui_x = 500
+	ui_y = 700
 
 	var/obj/item/disk/nanite_program/disk
 	var/datum/techweb/linked_techweb
 	var/current_category = "Main"
-	var/detail_view = FALSE
+	var/detail_view = TRUE
 	var/categories = list(
 						list(name = "Utility Nanites"),
 						list(name = "Medical Nanites"),
 						list(name = "Sensor Nanites"),
 						list(name = "Augmentation Nanites"),
 						list(name = "Suppression Nanites"),
-						list(name = "Weaponized Nanites")
+						list(name = "Weaponized Nanites"),
+						list(name = "Protocols")
 						)
 
 /obj/machinery/nanite_program_hub/Initialize()
@@ -28,11 +31,11 @@
 /obj/machinery/nanite_program_hub/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/disk/nanite_program))
 		var/obj/item/disk/nanite_program/N = I
-		if(disk)
-			eject(user)
 		if(user.transferItemToLoc(N, src))
-			to_chat(user, "<span class='notice'>You insert [N] into [src]</span>")
-			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, 0)
+			to_chat(user, "<span class='notice'>You insert [N] into [src].</span>")
+			playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
+			if(disk)
+				eject(user)
 			disk = N
 	else
 		..()
@@ -44,11 +47,16 @@
 		disk.forceMove(drop_location())
 	disk = null
 
+/obj/machinery/nanite_program_hub/AltClick(mob/user)
+	if(disk && user.canUseTopic(src, !issilicon(user)))
+		to_chat(user, "<span class='notice'>You take out [disk] from [src].</span>")
+		eject(user)
+	return
+
 /obj/machinery/nanite_program_hub/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
-	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "nanite_program_hub", name, 500, 700, master_ui, state)
-		ui.set_autoupdate(FALSE) //to avoid making the whole program list every second
+		ui = new(user, src, ui_key, "NaniteProgramHub", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/nanite_program_hub/ui_data()
@@ -62,25 +70,31 @@
 			disk_data["name"] = P.name
 			disk_data["desc"] = P.desc
 		data["disk"] = disk_data
+	else
+		data["has_disk"] = FALSE
 
 	data["detail_view"] = detail_view
-	data["category"] = current_category
 
-	if(current_category != "Main")
-		var/list/program_list = list()
-		for(var/i in linked_techweb.researched_designs)
-			var/datum/design/nanites/D = SSresearch.techweb_design_by_id(i)
-			if(!istype(D))
-				continue
-			if(current_category in D.category)
-				var/list/program_design = list()
-				program_design["id"] = D.id
-				program_design["name"] = D.name
-				program_design["desc"] = D.desc
-				program_list += list(program_design)
-		data["program_list"] = program_list
-	else
-		data["categories"] = categories
+	return data
+
+/obj/machinery/nanite_program_hub/ui_static_data(mob/user)
+	var/list/data = list()
+	data["programs"] = list()
+	for(var/i in linked_techweb.researched_designs)
+		var/datum/design/nanites/D = SSresearch.techweb_design_by_id(i)
+		if(!istype(D))
+			continue
+		var/cat_name = D.category[1] //just put them in the first category fuck it
+		if(isnull(data["programs"][cat_name]))
+			data["programs"][cat_name] = list()
+		var/list/program_design = list()
+		program_design["id"] = D.id
+		program_design["name"] = D.name
+		program_design["desc"] = D.desc
+		data["programs"][cat_name] += list(program_design)
+
+	if(!length(data["programs"]))
+		data["programs"] = null
 
 	return data
 
@@ -101,11 +115,10 @@
 				qdel(disk.program)
 			disk.program = new downloaded.program_type
 			disk.name = "[initial(disk.name)] \[[disk.program.name]\]"
-			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, 0)
+			playsound(src, 'sound/machines/terminal_prompt.ogg', 25, FALSE)
 			. = TRUE
-		if("set_category")
-			var/new_category = params["category"]
-			current_category = new_category
+		if("refresh")
+			update_static_data(usr)
 			. = TRUE
 		if("toggle_details")
 			detail_view = !detail_view

@@ -11,9 +11,8 @@
 "ad" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ae" = (
@@ -36,9 +35,8 @@
 "ah" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "ai" = (
@@ -239,7 +237,6 @@
 /area/awaymission/caves/BMP_asteroid/level_three)
 "aM" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 1;
 	id = "minedeep"
 	},
@@ -266,7 +263,6 @@
 /area/awaymission/caves/BMP_asteroid/level_three)
 "aP" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 1;
 	id = "dungeon";
 	name = "rusty ladder"
@@ -316,9 +312,8 @@
 /obj/effect/forcefield/cult,
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "aW" = (
@@ -356,7 +351,7 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "ba" = (
 /obj/structure/destructible/cult/talisman,
-/obj/item/book/granter/martial/plasma_fist,
+/obj/item/book/granter/martial/plasma_fist/nobomb,
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -397,49 +392,9 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
-"bi" = (
-/obj/machinery/gateway{
-	dir = 9
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bj" = (
-/obj/machinery/gateway{
-	dir = 1
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bk" = (
-/obj/machinery/gateway{
-	dir = 5
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bl" = (
-/obj/machinery/gateway{
-	dir = 8
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
 "bm" = (
-/obj/machinery/gateway/centeraway{
+/obj/machinery/gateway/away{
 	calibrated = 0
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bn" = (
-/obj/machinery/gateway{
-	dir = 4
 	},
 /turf/open/floor/engine/cult{
 	initial_gas_mix = "n2=23;o2=14"
@@ -452,28 +407,6 @@
 	initial_gas_mix = "n2=23;o2=14"
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
-"bp" = (
-/obj/machinery/gateway{
-	dir = 10
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"bq" = (
-/obj/machinery/gateway,
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
-"br" = (
-/obj/machinery/gateway{
-	dir = 6
-	},
-/turf/open/floor/engine/cult{
-	initial_gas_mix = "n2=23;o2=14"
-	},
-/area/awaymission/caves/BMP_asteroid/level_four)
 "bs" = (
 /obj/structure/trap/stun{
 	desc = "A rune inscribed in the floor, the air feeling electrified around it.";
@@ -516,7 +449,7 @@
 	},
 /area/awaymission/caves/BMP_asteroid/level_three)
 "by" = (
-/obj/item/twohanded/mjollnir,
+/obj/item/mjollnir,
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse,
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -563,7 +496,6 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bF" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 2;
 	id = "dungeon";
 	name = "rusty ladder"
@@ -580,7 +512,7 @@
 /area/awaymission/caves/BMP_asteroid/level_four)
 "bH" = (
 /obj/effect/decal/remains/human,
-/obj/item/clothing/under/patriotsuit,
+/obj/item/clothing/under/misc/patriotsuit,
 /turf/open/floor/plating/asteroid/basalt/lava{
 	initial_gas_mix = "n2=23;o2=14"
 	},
@@ -605,9 +537,8 @@
 "bM" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid)
 "bN" = (
@@ -616,9 +547,8 @@
 "bO" = (
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_two)
 "bP" = (
@@ -705,13 +635,8 @@
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
 	},
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -734,7 +659,6 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "ce" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 1;
 	id = "mineintro"
 	},
@@ -924,8 +848,8 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "cK" = (
 /obj/structure/sign/warning/securearea{
-	desc = "A warning sign which reads 'HOLY SHIT NIGGA WHAT ARE YOU DOING'.";
-	name = "\improper HOLY SHIT NIGGA WHAT ARE YOU DOING"
+	desc = "A warning sign which reads 'HOLY SHIT SWAGMAN WHAT ARE YOU DOING'.";
+	name = "\improper HOLY SHIT SWAGMAN WHAT ARE YOU DOING"
 	},
 /turf/closed/wall,
 /area/awaymission/caves/BMP_asteroid/level_two)
@@ -966,13 +890,8 @@
 	},
 /area/awaymission/caves/research)
 "cQ" = (
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /turf/open/floor/plating/asteroid/basalt{
 	initial_gas_mix = "n2=23;o2=14"
@@ -1122,7 +1041,6 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "dj" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 2;
 	id = "minedeep"
 	},
@@ -1169,13 +1087,8 @@
 /area/awaymission/caves/BMP_asteroid/level_two)
 "ds" = (
 /obj/structure/closet/secure_closet/personal,
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/BMP_asteroid/level_two)
@@ -1564,21 +1477,11 @@
 /area/awaymission/caves/listeningpost)
 "eP" = (
 /obj/structure/table,
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/caves/listeningpost)
@@ -1905,8 +1808,8 @@
 /area/awaymission/caves/BMP_asteroid)
 "fQ" = (
 /turf/open/floor/plasteel/elevatorshaft{
-	name = "elevator flooring";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	name = "elevator flooring"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fR" = (
@@ -1930,8 +1833,8 @@
 "fU" = (
 /obj/effect/landmark/awaystart,
 /turf/open/floor/plasteel/elevatorshaft{
-	name = "elevator flooring";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	name = "elevator flooring"
 	},
 /area/awaymission/caves/BMP_asteroid)
 "fW" = (
@@ -1944,13 +1847,8 @@
 /obj/structure/closet/crate/miningcar{
 	name = "Mining cart"
 	},
-/obj/item/pickaxe{
-	attack_verb = list("ineffectively hit");
-	desc = "A pickaxe thats been left to rust.";
-	force = 1;
-	name = "rusty pickaxe";
-	pixel_x = 5;
-	throwforce = 1
+/obj/item/pickaxe/rusted{
+	pixel_x = 5
 	},
 /obj/item/stack/sheet/mineral/adamantine{
 	amount = 15
@@ -1966,7 +1864,6 @@
 /area/awaymission/caves/BMP_asteroid)
 "ga" = (
 /obj/structure/ladder/unbreakable{
-	anchored = 1;
 	height = 2;
 	id = "mineintro"
 	},
@@ -2259,9 +2156,8 @@
 /obj/effect/baseturf_helper/lava,
 /turf/open/lava/smooth{
 	desc = "Looks hot.";
-	luminosity = 5;
-	name = "lava";
-	initial_gas_mix = "n2=23;o2=14"
+	initial_gas_mix = "n2=23;o2=14";
+	luminosity = 5
 	},
 /area/awaymission/caves/BMP_asteroid/level_four)
 "gZ" = (
@@ -58111,9 +58007,9 @@ ao
 ao
 ao
 bf
-bi
-bl
-bp
+ao
+ao
+ao
 aw
 ao
 bz
@@ -58368,9 +58264,9 @@ ao
 ao
 bf
 ap
-bj
+ao
 bm
-bq
+ao
 bf
 bw
 bA
@@ -58625,9 +58521,9 @@ ao
 ao
 ao
 bf
-bk
-bn
-br
+ao
+ao
+ao
 ao
 ao
 bz

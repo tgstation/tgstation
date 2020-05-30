@@ -32,7 +32,7 @@
 
 /obj/item/paper/fluff/ruins/listeningstation/receipt
 	name = "receipt"
-	info = "1 x Stechkin pistol - $600<br>1 x silencer - $200<br>shipping charge - $4360<br>total - $5160"
+	info = "1 x Stechkin pistol - 600 cr<br>1 x silencer - 200 cr<br>shipping charge - 4360 cr<br>total - 5160 cr"
 
 /obj/item/paper/fluff/ruins/listeningstation/odd_report
 	name = "odd report"

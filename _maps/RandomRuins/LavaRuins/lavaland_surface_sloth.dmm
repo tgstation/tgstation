@@ -8,20 +8,17 @@
 "c" = (
 /obj/item/paper/fluff/stations/lavaland/sloth/note,
 /turf/open/floor/sepia{
-	blocks_air = 0;
 	slowdown = 10
 	},
 /area/ruin/unpowered)
 "d" = (
 /turf/open/floor/sepia{
-	blocks_air = 0;
 	slowdown = 10
 	},
 /area/ruin/unpowered)
 "e" = (
 /obj/machinery/door/airlock/wood,
 /turf/open/floor/sepia{
-	blocks_air = 0;
 	slowdown = 10
 	},
 /area/ruin/unpowered)
@@ -29,7 +26,6 @@
 /obj/structure/table/wood,
 /obj/item/reagent_containers/food/snacks/grown/citrus/orange,
 /turf/open/floor/sepia{
-	blocks_air = 0;
 	slowdown = 10
 	},
 /area/ruin/unpowered)
@@ -37,7 +33,6 @@
 /obj/structure/bed,
 /obj/item/bedsheet/brown,
 /turf/open/floor/sepia{
-	blocks_air = 0;
 	slowdown = 10
 	},
 /area/ruin/unpowered)

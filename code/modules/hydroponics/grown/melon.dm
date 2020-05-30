@@ -8,6 +8,7 @@
 	product = /obj/item/reagent_containers/food/snacks/grown/watermelon
 	lifespan = 50
 	endurance = 40
+	instability = 20
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	icon_dead = "watermelon-dead"
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
@@ -44,9 +45,11 @@
 	species = "holymelon"
 	plantname = "Holy Melon Vines"
 	product = /obj/item/reagent_containers/food/snacks/grown/holymelon
+	genes = list(/datum/plant_gene/trait/glow/yellow)
 	mutatelist = list()
 	reagents_add = list(/datum/reagent/water/holywater = 0.2, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
 	rarity = 20
+	graft_gene = /datum/plant_gene/trait/glow/yellow
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon
 	seed = /obj/item/seeds/watermelon/holy
@@ -63,7 +66,7 @@
 	var/uses = 1
 	if(seed)
 		uses = round(seed.potency / 20)
-	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, null, uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
+	AddComponent(/datum/component/anti_magic, TRUE, TRUE, FALSE, ITEM_SLOT_HANDS, uses, TRUE, CALLBACK(src, .proc/block_magic), CALLBACK(src, .proc/expire)) //deliver us from evil o melon god
 
 /obj/item/reagent_containers/food/snacks/grown/holymelon/proc/block_magic(mob/user, major)
 	if(major)

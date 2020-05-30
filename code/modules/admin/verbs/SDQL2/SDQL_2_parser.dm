@@ -27,15 +27,15 @@
 //	assignment			:	<variable name> '=' expression
 //	variable			:	<variable name> | variable '.' variable | variable '[' <list index> ']' | '{' <ref as hex number> '}' | '(' expression ')' | call_function
 //
-//	bool_expression		:	expression comparitor expression  [bool_operator bool_expression]
+//	bool_expression		:	expression comparator expression  [bool_operator bool_expression]
 //	expression			:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
 //	expression_list		:	expression [',' expression_list]
 //	unary_expression	:	unary_operator ( unary_expression | value )
 //
-//	comparitor			:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
+//	comparator			:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
 //	value				:	variable | string | number | 'null' | object_type | array | selectors_array
 //	unary_operator		:	'!' | '-' | '~'
-//	binary_operator		:	comparitor | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
+//	binary_operator		:	comparator | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
 //	bool_operator		:	'AND' | '&&' | 'OR' | '||'
 //
 //	array				:	'[' expression_list ']'
@@ -56,14 +56,14 @@
 	var/list/boolean_operators = list("and", "or", "&&", "||")
 	var/list/unary_operators = list("!", "-", "~")
 	var/list/binary_operators = list("+", "-", "/", "*", "&", "|", "^", "%")
-	var/list/comparitors = list("=", "==", "!=", "<>", "<", "<=", ">", ">=")
+	var/list/comparators = list("=", "==", "!=", "<>", "<", "<=", ">", ">=")
 
 /datum/SDQL_parser/New(query_list)
 	query = query_list
 
 /datum/SDQL_parser/proc/parse_error(error_message)
 	error = 1
-	to_chat(usr, "<span class='warning'>SQDL2 Parsing Error: [error_message]</span>")
+	to_chat(usr, "<span class='warning'>SQDL2 Parsing Error: [error_message]</span>", confidential = TRUE)
 	return query.len + 1
 
 /datum/SDQL_parser/proc/parse()
@@ -109,7 +109,7 @@
 		parse_error("Invalid option assignment symbol: [token(i + 1)]")
 	var/val = tokenl(i + 2)
 	if(!(val in SDQL2_VALID_OPTION_VALUES))
-		parse_error("Invalid optoin value: [val]")
+		parse_error("Invalid option value: [val]")
 	assignment_list[type] = val
 	return (i + 3)
 
@@ -260,7 +260,7 @@
 		node += "*"
 		i++
 
-	else if (copytext(token(i), 1, 2) == "/")
+	else if(token(i)[1] == "/")
 		i = object_type(i, node)
 
 	else
@@ -322,7 +322,7 @@
 
 
 //assignment:	<variable name> '=' expression
-/datum/SDQL_parser/proc/assignment(var/i, var/list/node, var/list/assignment_list = list())
+/datum/SDQL_parser/proc/assignment(i, list/node, list/assignment_list = list())
 	assignment_list += token(i)
 
 	if(token(i + 1) == ".")
@@ -391,26 +391,26 @@
 //object_type:	<type path>
 /datum/SDQL_parser/proc/object_type(i, list/node)
 
-	if (copytext(token(i), 1, 2) != "/")
+	if(token(i)[1] != "/")
 		return parse_error("Expected type, but it didn't begin with /")
 
 	var/path = text2path(token(i))
 	if (path == null)
-		return parse_error("Nonexistant type path: [token(i)]")
+		return parse_error("Nonexistent type path: [token(i)]")
 
 	node += path
 
 	return i + 1
 
 
-//comparitor:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
-/datum/SDQL_parser/proc/comparitor(i, list/node)
+//comparator:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
+/datum/SDQL_parser/proc/comparator(i, list/node)
 
 	if(token(i) in list("=", "==", "!=", "<>", "<", "<=", ">", ">="))
 		node += token(i)
 
 	else
-		parse_error("Unknown comparitor [token(i)]")
+		parse_error("Unknown comparator [token(i)]")
 
 	return i + 1
 
@@ -422,7 +422,7 @@
 		node += token(i)
 
 	else
-		parse_error("Unknown comparitor [token(i)]")
+		parse_error("Unknown comparator [token(i)]")
 
 	return i + 1
 
@@ -430,7 +430,7 @@
 //string:	''' <some text> ''' | '"' <some text > '"'
 /datum/SDQL_parser/proc/string(i, list/node)
 
-	if(copytext(token(i), 1, 2) in list("'", "\""))
+	if(token(i)[1] in list("'", "\""))
 		node += token(i)
 
 	else
@@ -439,9 +439,9 @@
 	return i + 1
 
 //array:	'[' expression_list ']'
-/datum/SDQL_parser/proc/array(var/i, var/list/node)
+/datum/SDQL_parser/proc/array(i, list/node)
 	// Arrays get turned into this: list("[", list(exp_1a = exp_1b, ...), ...), "[" is to mark the next node as an array.
-	if(copytext(token(i), 1, 2) != "\[")
+	if(token(i)[1] != "\[")
 		parse_error("Expected an array but found '[token(i)]'")
 		return i + 1
 
@@ -482,14 +482,6 @@
 			temp_expression_list = list()
 			i = expression(i, temp_expression_list)
 
-#if MIN_COMPILER_VERSION > 512
-#warn Remove this outdated workaround
-#elif DM_BUILD < 1467
-			// http://www.byond.com/forum/post/2445083
-			var/dummy = src.type
-			dummy = dummy
-#endif
-
 		while(token(i) && token(i) != "]")
 
 		if (temp_expression_list)
@@ -500,7 +492,7 @@
 	return i + 1
 
 //selectors_array:	'@[' object_selectors ']'
-/datum/SDQL_parser/proc/selectors_array(var/i, var/list/node)
+/datum/SDQL_parser/proc/selectors_array(i, list/node)
 	if(token(i) == "@\[")
 		node += token(i++)
 		if(token(i) != "]")
@@ -559,7 +551,7 @@
 		i = binary_operator(i, node)
 		i = expression(i, node)
 
-	else if(token(i) in comparitors)
+	else if(token(i) in comparators)
 		i = binary_operator(i, node)
 
 		var/list/rhs = list()
@@ -595,10 +587,10 @@
 	return i
 
 
-//binary_operator:	comparitor | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
+//binary_operator:	comparator | '+' | '-' | '/' | '*' | '&' | '|' | '^' | '%'
 /datum/SDQL_parser/proc/binary_operator(i, list/node)
 
-	if(token(i) in (binary_operators + comparitors))
+	if(token(i) in (binary_operators + comparators))
 		node += token(i)
 
 	else
@@ -613,7 +605,7 @@
 		node += "null"
 		i++
 
-	else if(lowertext(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))
+	else if(lowertext(copytext(token(i), 1, 3)) == "0x" && isnum(hex2num(copytext(token(i), 3))))//3 == length("0x") + 1
 		node += hex2num(copytext(token(i), 3))
 		i++
 
@@ -621,16 +613,16 @@
 		node += text2num(token(i))
 		i++
 
-	else if(copytext(token(i), 1, 2) in list("'", "\""))
+	else if(token(i)[1] in list("'", "\""))
 		i = string(i, node)
 
-	else if(copytext(token(i), 1, 2) == "\[") // Start a list.
+	else if(token(i)[1] == "\[") // Start a list.
 		i = array(i, node)
 
-	else if(copytext(token(i), 1, 3) == "@\[")
+	else if(copytext(token(i), 1, 3) == "@\[")//3 == length("@\[") + 1
 		i = selectors_array(i, node)
 
-	else if(copytext(token(i), 1, 2) == "/")
+	else if(token(i)[1] == "/")
 		i = object_type(i, node)
 
 	else

@@ -72,11 +72,13 @@
 		air.copy_from(copy)
 
 /turf/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	var/datum/gas_mixture/GM = new
 	GM.copy_from_turf(src)
 	return GM
 
 /turf/open/return_air()
+	RETURN_TYPE(/datum/gas_mixture)
 	return air
 
 /turf/open/return_analyzable_air()

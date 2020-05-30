@@ -8,6 +8,7 @@
 	gain_text = "<span class='danger'>Your back REALLY hurts!</span>"
 	lose_text = "<span class='notice'>Your back feels better.</span>"
 	medical_record_text = "Patient scans indicate severe and chronic back pain."
+	hardcore_value = 4
 
 /datum/quirk/badback/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -23,6 +24,7 @@
 	gain_text = "<span class='danger'>You feel your vigor slowly fading away.</span>"
 	lose_text = "<span class='notice'>You feel vigorous again.</span>"
 	medical_record_text = "Patient requires regular treatment for blood loss due to low production of blood."
+	hardcore_value = 8
 
 /datum/quirk/blooddeficiency/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -39,6 +41,7 @@
 	gain_text = "<span class='danger'>You can't see anything.</span>"
 	lose_text = "<span class='notice'>You miraculously gain back your vision.</span>"
 	medical_record_text = "Patient has permanent blindness."
+	hardcore_value = 15
 
 /datum/quirk/blindness/add()
 	quirk_holder.become_blind(ROUNDSTART_TRAIT)
@@ -46,7 +49,7 @@
 /datum/quirk/blindness/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/blindfold/white/B = new(get_turf(H))
-	if(!H.equip_to_slot_if_possible(B, SLOT_GLASSES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
+	if(!H.equip_to_slot_if_possible(B, ITEM_SLOT_EYES, bypass_equip_delay_self = TRUE)) //if you can't put it on the user's eyes, put it in their hands, otherwise put it on their eyes
 		H.put_in_hands(B)
 	H.regenerate_icons()
 
@@ -57,9 +60,10 @@
 	gain_text = "<span class='danger'>You feel smooth.</span>"
 	lose_text = "<span class='notice'>You feel wrinkled again.</span>"
 	medical_record_text = "Patient has a tumor in their brain that is slowly driving them to brain death."
+	hardcore_value = 12
 
 /datum/quirk/brainproblems/on_process()
-	quirk_holder.adjustBrainLoss(0.2)
+	quirk_holder.adjustOrganLoss(ORGAN_SLOT_BRAIN, 0.2)
 
 /datum/quirk/deafness
 	name = "Deaf"
@@ -69,6 +73,7 @@
 	gain_text = "<span class='danger'>You can't hear anything.</span>"
 	lose_text = "<span class='notice'>You're able to hear again!</span>"
 	medical_record_text = "Patient's cochlear nerve is incurably damaged."
+	hardcore_value = 12
 
 /datum/quirk/depression
 	name = "Depression"
@@ -77,12 +82,13 @@
 	value = -1
 	gain_text = "<span class='danger'>You start feeling depressed.</span>"
 	lose_text = "<span class='notice'>You no longer feel depressed.</span>" //if only it were that easy!
-	medical_record_text = "Patient has a severe mood disorder, causing them to experience acute episodes of depression."
+	medical_record_text = "Patient has a mild mood disorder causing them to experience acute episodes of depression."
 	mood_quirk = TRUE
+	hardcore_value = 1
 
 /datum/quirk/depression/on_process()
 	if(prob(0.05))
-		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression", /datum/mood_event/depression)
+		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "depression_mild", /datum/mood_event/depression_mild)
 
 /datum/quirk/family_heirloom
 	name = "Family Heirloom"
@@ -92,6 +98,7 @@
 	var/obj/item/heirloom
 	var/where
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
+	hardcore_value = 1
 
 /datum/quirk/family_heirloom/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -107,15 +114,17 @@
 			if("Mime")
 				heirloom_type = /obj/item/reagent_containers/food/snacks/baguette
 			if("Janitor")
-				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket)
+				heirloom_type = pick(/obj/item/mop, /obj/item/clothing/suit/caution, /obj/item/reagent_containers/glass/bucket, /obj/item/paper/fluff/stations/soap)
 			if("Cook")
 				heirloom_type = pick(/obj/item/reagent_containers/food/condiment/saltshaker, /obj/item/kitchen/rollingpin, /obj/item/clothing/head/chefhat)
 			if("Botanist")
-				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/storage/bag/plants)
+				heirloom_type = pick(/obj/item/cultivator, /obj/item/reagent_containers/glass/bucket, /obj/item/toy/plush/beeplushie)
 			if("Bartender")
 				heirloom_type = pick(/obj/item/reagent_containers/glass/rag, /obj/item/clothing/head/that, /obj/item/reagent_containers/food/drinks/shaker)
 			if("Curator")
 				heirloom_type = pick(/obj/item/pen/fountain, /obj/item/storage/pill_bottle/dice)
+			if("Chaplain")
+				heirloom_type = pick(/obj/item/toy/windupToolbox, /obj/item/reagent_containers/food/drinks/bottle/holywater)
 			if("Assistant")
 				heirloom_type = /obj/item/storage/toolbox/mechanical/old/heirloom
 			//Security/Command
@@ -123,6 +132,8 @@
 				heirloom_type = /obj/item/reagent_containers/food/drinks/flask/gold
 			if("Head of Security")
 				heirloom_type = /obj/item/book/manual/wiki/security_space_law
+			if("Head of Personnel")
+				heirloom_type = /obj/item/reagent_containers/food/drinks/trophy/silver_cup
 			if("Warden")
 				heirloom_type = /obj/item/book/manual/wiki/security_space_law
 			if("Security Officer")
@@ -131,6 +142,8 @@
 				heirloom_type = /obj/item/reagent_containers/food/drinks/bottle/whiskey
 			if("Lawyer")
 				heirloom_type = pick(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
+			if("Prisoner")
+				heirloom_type = /obj/item/pen/blue
 			//RnD
 			if("Research Director")
 				heirloom_type = /obj/item/toy/plush/slimeplushie
@@ -138,11 +151,17 @@
 				heirloom_type = /obj/item/toy/plush/slimeplushie
 			if("Roboticist")
 				heirloom_type = pick(subtypesof(/obj/item/toy/prize)) //look at this nerd
+			if("Geneticist")
+				heirloom_type = /obj/item/clothing/under/shorts/purple
 			//Medical
 			if("Chief Medical Officer")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
 			if("Medical Doctor")
-				heirloom_type = pick(/obj/item/clothing/neck/stethoscope, /obj/item/bodybag)
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
+			if("Paramedic")
+				heirloom_type = /obj/item/storage/firstaid/ancient/heirloom
+			if("Psychologist")
+				heirloom_type = /obj/item/storage/pill_bottle
 			if("Chemist")
 				heirloom_type = /obj/item/book/manual/wiki/chemistry
 			if("Virologist")
@@ -169,9 +188,10 @@
 		/obj/item/dice/d20)
 	heirloom = new heirloom_type(get_turf(quirk_holder))
 	var/list/slots = list(
-		"in your left pocket" = SLOT_L_STORE,
-		"in your right pocket" = SLOT_R_STORE,
-		"in your backpack" = SLOT_IN_BACKPACK
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK,
+		"in your hands" = ITEM_SLOT_HANDS
 	)
 	where = H.equip_in_one_of_slots(heirloom, slots, FALSE) || "at your feet"
 
@@ -195,11 +215,15 @@
 		SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "family_heirloom")
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "family_heirloom_missing", /datum/mood_event/family_heirloom_missing)
 
-/datum/quirk/family_heirloom/clone_data()
-	return heirloom
-
-/datum/quirk/family_heirloom/on_clone(data)
-	heirloom = data
+/datum/quirk/frail
+	name = "Frail"
+	desc = "Your bones might as well be made of glass! Your limbs can take less damage before they become disabled."
+	value = -2
+	mob_trait = TRAIT_EASYLIMBDISABLE
+	gain_text = "<span class='danger'>You feel frail.</span>"
+	lose_text = "<span class='notice'>You feel sturdy again.</span>"
+	medical_record_text = "Patient has unusually frail bones, recommend calcium-rich diet."
+	hardcore_value = 4
 
 /datum/quirk/heavy_sleeper
 	name = "Heavy Sleeper"
@@ -209,6 +233,7 @@
 	gain_text = "<span class='danger'>You feel sleepy.</span>"
 	lose_text = "<span class='notice'>You feel awake again.</span>"
 	medical_record_text = "Patient has abnormal sleep study results and is difficult to wake up."
+	hardcore_value = 2
 
 /datum/quirk/hypersensitive
 	name = "Hypersensitive"
@@ -217,6 +242,7 @@
 	gain_text = "<span class='danger'>You seem to make a big deal out of everything.</span>"
 	lose_text = "<span class='notice'>You don't seem to make a big deal out of everything anymore.</span>"
 	medical_record_text = "Patient demonstrates a high level of emotional volatility."
+	hardcore_value = 3
 
 /datum/quirk/hypersensitive/add()
 	var/datum/component/mood/mood = quirk_holder.GetComponent(/datum/component/mood)
@@ -237,6 +263,7 @@
 	gain_text = "<span class='notice'>Just the thought of drinking alcohol makes your head spin.</span>"
 	lose_text = "<span class='danger'>You're no longer severely affected by alcohol.</span>"
 	medical_record_text = "Patient demonstrates a low tolerance for alcohol. (Wimp)"
+	hardcore_value = 3
 
 /datum/quirk/nearsighted //t. errorage
 	name = "Nearsighted"
@@ -245,6 +272,7 @@
 	gain_text = "<span class='danger'>Things far away from you start looking blurry.</span>"
 	lose_text = "<span class='notice'>You start seeing faraway things normally again.</span>"
 	medical_record_text = "Patient requires prescription glasses in order to counteract nearsightedness."
+	hardcore_value = 5
 
 /datum/quirk/nearsighted/add()
 	quirk_holder.become_nearsighted(ROUNDSTART_TRAIT)
@@ -253,7 +281,7 @@
 	var/mob/living/carbon/human/H = quirk_holder
 	var/obj/item/clothing/glasses/regular/glasses = new(get_turf(H))
 	H.put_in_hands(glasses)
-	H.equip_to_slot(glasses, SLOT_GLASSES)
+	H.equip_to_slot(glasses, ITEM_SLOT_EYES)
 	H.regenerate_icons() //this is to remove the inhand icon, which persists even if it's not in their hands
 
 /datum/quirk/nyctophobia
@@ -261,6 +289,7 @@
 	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctually act careful, and constantly feel a sense of dread."
 	value = -1
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"
+	hardcore_value = 5
 
 /datum/quirk/nyctophobia/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
@@ -284,6 +313,7 @@
 	gain_text = "<span class='danger'>You feel repulsed by the thought of violence!</span>"
 	lose_text = "<span class='notice'>You think you can defend yourself again.</span>"
 	medical_record_text = "Patient is unusually pacifistic and cannot bring themselves to cause physical harm."
+	hardcore_value = 6
 
 /datum/quirk/paraplegic
 	name = "Paraplegic"
@@ -293,6 +323,7 @@
 	gain_text = null // Handled by trauma.
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function in the lower extremities."
+	hardcore_value = 15
 
 /datum/quirk/paraplegic/add()
 	var/datum/brain_trauma/severe/paralysis/paraplegic/T = new()
@@ -306,7 +337,11 @@
 	var/turf/T = get_turf(quirk_holder)
 	var/obj/structure/chair/spawn_chair = locate() in T
 
-	var/obj/vehicle/ridden/wheelchair/wheels = new(T)
+	var/obj/vehicle/ridden/wheelchair/wheels
+	if(quirk_holder.client?.get_award_status(HARDCORE_RANDOM_SCORE) >= 5000) //More than 5k score? you unlock the gamer wheelchair.
+		wheels = new /obj/vehicle/ridden/wheelchair/gold(T)
+	else
+		wheels = new(T)
 	if(spawn_chair) // Makes spawning on the arrivals shuttle more consistent looking
 		wheels.setDir(spawn_chair.dir)
 
@@ -325,6 +360,7 @@
 	value = -1
 	mob_trait = TRAIT_POOR_AIM
 	medical_record_text = "Patient possesses a strong tremor in both hands."
+	hardcore_value = 3
 
 /datum/quirk/prosopagnosia
 	name = "Prosopagnosia"
@@ -332,6 +368,7 @@
 	value = -1
 	mob_trait = TRAIT_PROSOPAGNOSIA
 	medical_record_text = "Patient suffers from prosopagnosia and cannot recognize faces."
+	hardcore_value = 5
 
 /datum/quirk/prosthetic_limb
 	name = "Prosthetic Limb"
@@ -339,6 +376,7 @@
 	value = -1
 	var/slot_string = "limb"
 	medical_record_text = "During physical examination, patient was found to have a prosthetic limb."
+	hardcore_value = 3
 
 /datum/quirk/prosthetic_limb/on_spawn()
 	var/limb_slot = pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -366,6 +404,16 @@
 	to_chat(quirk_holder, "<span class='boldannounce'>Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of bruise packs and ointment.</span>")
 
+/datum/quirk/pushover
+	name = "Pushover"
+	desc = "Your first instinct is always to let people push you around. Resisting out of grabs will take conscious effort."
+	value = -2
+	mob_trait = TRAIT_GRABWEAKNESS
+	gain_text = "<span class='danger'>You feel like a pushover.</span>"
+	lose_text = "<span class='notice'>You feel like standing up for yourself.</span>"
+	medical_record_text = "Patient presents a notably unassertive personality and is easy to manipulate."
+	hardcore_value = 4
+
 /datum/quirk/insanity
 	name = "Reality Dissociation Syndrome"
 	desc = "You suffer from a severe disorder that causes very vivid hallucinations. Mindbreaker toxin can suppress its effects, and you are immune to mindbreaker's hallucinogenic properties. <b>This is not a license to grief.</b>"
@@ -374,9 +422,10 @@
 	gain_text = "<span class='userdanger'>...</span>"
 	lose_text = "<span class='notice'>You feel in tune with the world again.</span>"
 	medical_record_text = "Patient suffers from acute Reality Dissociation Syndrome and experiences vivid hallucinations."
+	hardcore_value = 6
 
 /datum/quirk/insanity/on_process()
-	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker))
+	if(quirk_holder.reagents.has_reagent(/datum/reagent/toxin/mindbreaker, needs_metabolizing = TRUE))
 		quirk_holder.hallucination = 0
 		return
 	if(prob(2)) //we'll all be mad soon enough
@@ -398,6 +447,7 @@
 	gain_text = "<span class='danger'>You start worrying about what you're saying.</span>"
 	lose_text = "<span class='notice'>You feel easier about talking again.</span>" //if only it were that easy!
 	medical_record_text = "Patient is usually anxious in social encounters and prefers to avoid them."
+	hardcore_value = 4
 	var/dumb_thing = TRUE
 
 /datum/quirk/social_anxiety/on_process()
@@ -417,7 +467,6 @@
 		if(prob(1))
 			new/obj/item/reagent_containers/food/snacks/spaghetti/pastatomato(get_turf(H)) //now that's what I call spaghetti code
 
-//If you want to make some kind of junkie variant, just extend this quirk.
 /datum/quirk/junkie
 	name = "Junkie"
 	desc = "You can't get enough of hard drugs."
@@ -425,43 +474,41 @@
 	gain_text = "<span class='danger'>You suddenly feel the craving for drugs.</span>"
 	lose_text = "<span class='notice'>You feel like you should kick your drug habit.</span>"
 	medical_record_text = "Patient has a history of hard drugs."
+	hardcore_value = 4
 	var/drug_list = list(/datum/reagent/drug/crank, /datum/reagent/drug/krokodil, /datum/reagent/medicine/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
-	var/reagent_id //ID picked from list
-	var/datum/reagent/reagent_type //If this is defined, reagent_id will be unused and the defined reagent type will be instead.
-	var/datum/reagent/reagent_instance
-	var/where_drug
-	var/obj/item/drug_container_type //If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
-	var/obj/item/drug_instance
-	var/where_accessory
-	var/obj/item/accessory_type //If this is null, it won't be spawned.
-	var/obj/item/accessory_instance
-	var/tick_counter = 0
+	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
+	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
+	var/where_drug //! Where the drug spawned
+	var/obj/item/drug_container_type //! If this is defined before pill generation, pill generation will be skipped. This is the type of the pill bottle.
+	var/where_accessory //! where the accessory spawned
+	var/obj/item/accessory_type //! If this is null, an accessory won't be spawned.
+	var/process_interval = 30 SECONDS //! how frequently the quirk processes
+	var/next_process = 0 //! ticker for processing
 
 /datum/quirk/junkie/on_spawn()
 	var/mob/living/carbon/human/H = quirk_holder
-	reagent_id = pick(drug_list)
 	if (!reagent_type)
-		var/datum/reagent/prot_holder = GLOB.chemical_reagents_list[reagent_id]
-		reagent_type = prot_holder.type
+		reagent_type = pick(drug_list)
 	reagent_instance = new reagent_type()
 	H.reagents.addiction_list.Add(reagent_instance)
 	var/current_turf = get_turf(quirk_holder)
 	if (!drug_container_type)
 		drug_container_type = /obj/item/storage/pill_bottle
-	drug_instance = new drug_container_type(current_turf)
+	var/obj/item/drug_instance = new drug_container_type(current_turf)
 	if (istype(drug_instance, /obj/item/storage/pill_bottle))
 		var/pill_state = "pill[rand(1,20)]"
 		for(var/i in 1 to 7)
 			var/obj/item/reagent_containers/pill/P = new(drug_instance)
 			P.icon_state = pill_state
-			P.reagents.add_reagent(reagent_id, 1)
+			P.reagents.add_reagent(reagent_type, 1)
 
+	var/obj/item/accessory_instance
 	if (accessory_type)
 		accessory_instance = new accessory_type(current_turf)
 	var/list/slots = list(
-		"in your left pocket" = SLOT_L_STORE,
-		"in your right pocket" = SLOT_R_STORE,
-		"in your backpack" = SLOT_IN_BACKPACK
+		"in your left pocket" = ITEM_SLOT_LPOCKET,
+		"in your right pocket" = ITEM_SLOT_RPOCKET,
+		"in your backpack" = ITEM_SLOT_BACKPACK
 	)
 	where_drug = H.equip_in_one_of_slots(drug_instance, slots, FALSE) || "at your feet"
 	if (accessory_instance)
@@ -474,23 +521,19 @@
 		SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 
 /datum/quirk/junkie/proc/announce_drugs()
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] of [reagent_instance.name] [where_drug]. Better hope you don't run out...</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a [initial(drug_container_type.name)] of [initial(reagent_type.name)] [where_drug]. Better hope you don't run out...</span>")
 
 /datum/quirk/junkie/on_process()
 	var/mob/living/carbon/human/H = quirk_holder
-	if (tick_counter == 60) //Halfassed optimization, increase this if there's slowdown due to this quirk
-		var/in_list = FALSE
-		for (var/datum/reagent/entry in H.reagents.addiction_list)
-			if(istype(entry, reagent_type))
-				in_list = TRUE
-				break
-		if(!in_list)
+	if(world.time > next_process)
+		next_process = world.time + process_interval
+		if(!H.reagents.addiction_list.Find(reagent_instance))
+			if(QDELETED(reagent_instance))
+				reagent_instance = new reagent_type()
+			else
+				reagent_instance.addiction_stage = 0
 			H.reagents.addiction_list += reagent_instance
-			reagent_instance.addiction_stage = 0
 			to_chat(quirk_holder, "<span class='danger'>You thought you kicked it, but you suddenly feel like you need [reagent_instance.name] again...</span>")
-		tick_counter = 0
-	else
-		++tick_counter
 
 /datum/quirk/junkie/smoker
 	name = "Smoker"
@@ -501,6 +544,7 @@
 	medical_record_text = "Patient is a current smoker."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
+	hardcore_value = 1
 
 /datum/quirk/junkie/smoker/on_spawn()
 	drug_container_type = pick(/obj/item/storage/fancy/cigarettes,
@@ -508,23 +552,20 @@
 		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
 		/obj/item/storage/fancy/cigarettes/cigpack_robust,
 		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-		/obj/item/storage/fancy/cigarettes/cigpack_carp,
-		/obj/item/storage/fancy/cigarettes/cigars,
-		/obj/item/storage/fancy/cigarettes/cigars/cohiba,
-		/obj/item/storage/fancy/cigarettes/cigars/havana)
+		/obj/item/storage/fancy/cigarettes/cigpack_carp)
 	. = ..()
 
 /datum/quirk/junkie/smoker/announce_drugs()
-	to_chat(quirk_holder, "<span class='boldnotice'>There is a [drug_instance.name] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
+	to_chat(quirk_holder, "<span class='boldnotice'>There is a [initial(drug_container_type.name)] [where_drug], and a lighter [where_accessory]. Make sure you get your favorite brand when you run out.</span>")
 
 
 /datum/quirk/junkie/smoker/on_process()
 	. = ..()
 	var/mob/living/carbon/human/H = quirk_holder
-	var/obj/item/I = H.get_item_by_slot(SLOT_WEAR_MASK)
+	var/obj/item/I = H.get_item_by_slot(ITEM_SLOT_MASK)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
-		var/obj/item/storage/fancy/cigarettes/C = drug_instance
-		if(istype(I, C.spawn_type))
+		var/obj/item/storage/fancy/cigarettes/C = drug_container_type
+		if(istype(I, initial(C.spawn_type)))
 			SEND_SIGNAL(quirk_holder, COMSIG_CLEAR_MOOD_EVENT, "wrong_cigs")
 			return
 		SEND_SIGNAL(quirk_holder, COMSIG_ADD_MOOD_EVENT, "wrong_cigs", /datum/mood_event/wrong_brand)
@@ -537,3 +578,4 @@
 	gain_text = "<span class='danger'>There's a lot on your mind right now.</span>"
 	lose_text = "<span class='notice'>Your mind finally feels calm.</span>"
 	medical_record_text = "Patient's mind is in a vulnerable state, and cannot recover from traumatic events."
+	hardcore_value = 9

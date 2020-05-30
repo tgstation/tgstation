@@ -36,6 +36,7 @@
 		client.eye = src
 	set_light(0)
 	icon_state = "[chassis]"
+	held_state = "[chassis]"
 	visible_message("<span class='boldnotice'>[src] folds out its holochassis emitter and forms a holoshell around itself!</span>")
 	holoform = TRUE
 
@@ -54,6 +55,9 @@
 		return
 	visible_message("<span class='notice'>[src] deactivates its holochassis emitter and folds back into a compact card!</span>")
 	stop_pulling()
+	if(istype(loc, /obj/item/clothing/head/mob_holder))
+		var/obj/item/clothing/head/mob_holder/MH = loc
+		MH.release()
 	if(client)
 		client.perspective = EYE_PERSPECTIVE
 		client.eye = card
@@ -70,12 +74,14 @@
 	if(!isturf(loc) && loc != card)
 		to_chat(src, "<span class='boldwarning'>You can not change your holochassis composite while not on the ground or in your card!</span>")
 		return FALSE
-	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in possible_chassis
+	var/choice = input(src, "What would you like to use for your holochassis composite?") as null|anything in sortList(possible_chassis)
 	if(!choice)
 		return FALSE
 	chassis = choice
+	icon_state = "[chassis]"
+	held_state = "[chassis]"
 	update_resting()
-	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis]</span>")
+	to_chat(src, "<span class='boldnotice'>You switch your holochassis projection composite to [chassis].</span>")
 
 /mob/living/silicon/pai/update_resting()
 	. = ..()
@@ -96,13 +102,6 @@
 	else
 		set_light(0)
 		to_chat(src, "<span class='notice'>You disable your integrated light.</span>")
-
-/mob/living/silicon/pai/mob_pickup(mob/living/L)
-	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, chassis, item_head_icon, item_lh_icon, item_rh_icon)
-	if(!L.put_in_hands(holder))
-		qdel(holder)
-	else
-		L.visible_message("<span class='warning'>[L] scoops up [src]!</span>")
 
 /mob/living/silicon/pai/mob_try_pickup(mob/living/user)
 	if(!possible_chassis[chassis])

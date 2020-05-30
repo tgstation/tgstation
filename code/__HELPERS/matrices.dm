@@ -2,7 +2,7 @@
 	. = new_angle - old_angle
 	Turn(.) //BYOND handles cases such as -270, 360, 540 etc. DOES NOT HANDLE 180 TURNS WELL, THEY TWEEN AND LOOK LIKE SHIT
 
-/atom/proc/SpinAnimation(speed = 10, loops = -1, clockwise = 1, segments = 3)
+/atom/proc/SpinAnimation(speed = 10, loops = -1, clockwise = 1, segments = 3, parallel = TRUE)
 	if(!segments)
 		return
 	var/segment = 360/segments
@@ -18,7 +18,10 @@
 
 	speed /= segments
 
-	animate(src, transform = matrices[1], time = speed, loops)
+	if(parallel)
+		animate(src, transform = matrices[1], time = speed, loops , flags = ANIMATION_PARALLEL)
+	else
+		animate(src, transform = matrices[1], time = speed, loops)
 	for(var/i in 2 to segments) //2 because 1 is covered above
 		animate(transform = matrices[i], time = speed)
 		//doesn't have an object argument because this is "Stacking" with the animate call above

@@ -12,14 +12,14 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 		return ..()
 
 	//this is snowflake because of a byond bug (ID:2306577), do not attempt to call non-builtin procs in this if
-	if(copytext(E.name,1,32) == "Maximum recursion level reached")
+	if(copytext(E.name, 1, 32) == "Maximum recursion level reached")//32 == length() of that string + 1
 		//log to world while intentionally triggering the byond bug.
 		log_world("runtime error: [E.name]\n[E.desc]")
 		//if we got to here without silently ending, the byond bug has been fixed.
 		log_world("The bug with recursion runtimes has been fixed. Please remove the snowflake check from world/Error in [__FILE__]:[__LINE__]")
 		return //this will never happen.
 	
-	else if(copytext(E.name,1,18) == "Out of resources!")
+	else if(copytext(E.name, 1, 18) == "Out of resources!")//18 == length() of that string + 1
 		log_world("BYOND out of memory. Restarting")
 		log_game("BYOND out of memory. Restarting")
 		TgsEndProcess()
@@ -109,7 +109,7 @@ GLOBAL_VAR_INIT(total_runtimes_skipped, 0)
 					usrinfo = null
 				continue // Our usr info is better, replace it
 
-			if(copytext(line, 1, 3) != "  ")
+			if(copytext(line, 1, 3) != "  ")//3 == length("  ") + 1
 				desclines += ("  " + line) // Pad any unpadded lines, so they look pretty
 			else
 				desclines += line

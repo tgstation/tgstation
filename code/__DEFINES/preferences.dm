@@ -15,14 +15,15 @@
 #define DISABLE_DEATHRATTLE		(1<<12)
 #define DISABLE_ARRIVALRATTLE	(1<<13)
 #define COMBOHUD_LIGHTING		(1<<14)
-
 #define DEADMIN_ALWAYS			(1<<15)
 #define DEADMIN_ANTAGONIST		(1<<16)
 #define DEADMIN_POSITION_HEAD	(1<<17)
 #define DEADMIN_POSITION_SECURITY	(1<<18)
 #define DEADMIN_POSITION_SILICON	(1<<19)
+#define SOUND_ENDOFROUND		(1<<20)
+#define ADMIN_IGNORE_CULT_GHOST	(1<<21)
 
-#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS)
+#define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SOUND_ENDOFROUND|MEMBER_PUBLIC|INTENT_STYLE|MIDROUND_ANTAG|SOUND_INSTRUMENTS|SOUND_SHIP_AMBIENCE|SOUND_PRAYERS|SOUND_ANNOUNCEMENTS)
 
 //Chat toggles
 #define CHAT_OOC			(1<<0)
@@ -36,14 +37,25 @@
 #define CHAT_GHOSTPDA		(1<<8)
 #define CHAT_GHOSTRADIO 	(1<<9)
 #define CHAT_BANKCARD  (1<<10)
+#define CHAT_GHOSTLAWS	(1<<11)
 
-#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD)
+#define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_PULLR|CHAT_GHOSTWHISPER|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS)
 
 #define PARALLAX_INSANE -1 //for show offs
 #define PARALLAX_HIGH    0 //default.
 #define PARALLAX_MED     1
 #define PARALLAX_LOW     2
 #define PARALLAX_DISABLE 3 //this option must be the highest number
+
+#define PIXEL_SCALING_AUTO 0
+#define PIXEL_SCALING_1X 1
+#define PIXEL_SCALING_1_2X 1.5
+#define PIXEL_SCALING_2X 2
+#define PIXEL_SCALING_3X 3
+
+#define SCALING_METHOD_NORMAL "normal"
+#define SCALING_METHOD_DISTORT "distort"
+#define SCALING_METHOD_BLUR "blur"
 
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
 #define PARALLAX_DELAY_MED     1
@@ -82,3 +94,27 @@
 #define JP_LOW 1
 #define JP_MEDIUM 2
 #define JP_HIGH 3
+
+//randomised elements
+#define RANDOM_HARDCORE "random_hardcore"
+#define RANDOM_NAME "random_name"
+#define RANDOM_NAME_ANTAG "random_name_antag"
+#define RANDOM_BODY "random_body"
+#define RANDOM_BODY_ANTAG "random_body_antag"
+#define RANDOM_SPECIES "random_species"
+#define RANDOM_GENDER "random_gender"
+#define RANDOM_GENDER_ANTAG "random_gender_antag"
+#define RANDOM_AGE "random_age"
+#define RANDOM_AGE_ANTAG "random_age_antag"
+#define RANDOM_UNDERWEAR "random_underwear"
+#define RANDOM_UNDERWEAR_COLOR "random_underwear_color"
+#define RANDOM_UNDERSHIRT "random_undershirt"
+#define RANDOM_SOCKS "random_socks"
+#define RANDOM_BACKPACK "random_backpack"
+#define RANDOM_JUMPSUIT_STYLE "random_jumpsuit_style"
+#define RANDOM_HAIRSTYLE "random_hairstyle"
+#define RANDOM_HAIR_COLOR "random_hair_color"
+#define RANDOM_FACIAL_HAIR_COLOR "random_facial_hair_color"
+#define RANDOM_FACIAL_HAIRSTYLE "random_facial_hairstyle"
+#define RANDOM_SKIN_TONE "random_skin_tone"
+#define RANDOM_EYE_COLOR "random_eye_color"

@@ -28,6 +28,12 @@
 	color = "#FFFF00"
 	taste_description = "metal"
 
+	//It has stable IN THE NAME. IT WAS MADE FOR THIS MOMENT.
+/datum/reagent/stabilizing_agent/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(myseed && chems.has_reagent(type, 1))
+		myseed.adjust_instability(-1)
+
 /datum/reagent/clf3
 	name = "Chlorine Trifluoride"
 	description = "Makes a temporary 3x3 fireball when it comes into existence, so be careful when mixing. ClF3 applied to a surface burns things that wouldn't otherwise burn, sometimes through the very floors of the station and exposing it to the vacuum of space."
@@ -47,7 +53,7 @@
 	if(isplatingturf(T))
 		var/turf/open/floor/plating/F = T
 		if(prob(10 + F.burnt + 5*F.broken)) //broken or burnt plating is more susceptible to being destroyed
-			F.ScrapeAway()
+			F.ScrapeAway(flags = CHANGETURF_INHERIT_AIR)
 	if(isfloorturf(T))
 		var/turf/open/floor/F = T
 		if(prob(reac_volume))
@@ -85,25 +91,43 @@
 	color = "#210021"
 	taste_description = "compressed bitterness"
 
-/datum/reagent/blackpowder
-	name = "Black Powder"
+/datum/reagent/gunpowder
+	name = "Gunpowder"
 	description = "Explodes. Violently."
 	reagent_state = LIQUID
 	color = "#000000"
 	metabolization_rate = 0.05
 	taste_description = "salt"
 
-/datum/reagent/blackpowder/on_mob_life(mob/living/carbon/M)
+/datum/reagent/gunpowder/on_mob_life(mob/living/carbon/M)
+	. = TRUE
 	..()
-	if(isplasmaman(M))
+	if(!isplasmaman(M))
+		return
+	M.set_drugginess(15)
+	if(M.hallucination < volume)
 		M.hallucination += 5
 
-/datum/reagent/blackpowder/on_ex_act()
+/datum/reagent/gunpowder/on_ex_act()
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/reagents_explosion/e = new()
 	e.set_up(1 + round(volume/6, 1), location, 0, 0, message = 0)
 	e.start()
 	holder.clear_reagents()
+
+/datum/reagent/rdx
+	name = "RDX"
+	description = "Military grade explosive"
+	reagent_state = SOLID
+	color = "#FFFFFF"
+	taste_description = "salt"
+
+/datum/reagent/tatp
+	name = "TaTP"
+	description = "Suicide grade explosive"
+	reagent_state = SOLID
+	color = "#FFFFFF"
+	taste_description = "death"
 
 /datum/reagent/flash_powder
 	name = "Flash Powder"
@@ -132,6 +156,7 @@
 	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
+	self_consuming = TRUE
 
 /datum/reagent/phlogiston/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	M.adjust_fire_stacks(1)
@@ -153,6 +178,16 @@
 	reagent_state = LIQUID
 	color = "#FA00AF"
 	taste_description = "burning"
+	self_consuming = TRUE
+
+	// why, just why
+/datum/reagent/napalm/on_hydroponics_apply(obj/item/seeds/myseed, datum/reagents/chems, obj/machinery/hydroponics/mytray, mob/user)
+	. = ..()
+	if(chems.has_reagent(type, 1))
+		if(!(myseed.resistance_flags & FIRE_PROOF))
+			mytray.adjustHealth(-round(chems.get_reagent_amount(type) * 6))
+			mytray.adjustToxic(round(chems.get_reagent_amount(type) * 7))
+		mytray.adjustWeeds(-rand(5,9)) //At least give them a small reward if they bother.
 
 /datum/reagent/napalm/on_mob_life(mob/living/carbon/M)
 	M.adjust_fire_stacks(1)
@@ -169,6 +204,7 @@
 	color = "#0000DC"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	self_consuming = TRUE
 
 
 /datum/reagent/cryostylane/on_mob_life(mob/living/carbon/M) //TODO: code freezing into an ice cube
@@ -188,6 +224,7 @@
 	color = "#64FAC8"
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "bitterness"
+	self_consuming = TRUE
 
 /datum/reagent/pyrosium/on_mob_life(mob/living/carbon/M)
 	if(M.reagents.has_reagent(/datum/reagent/oxygen))
@@ -202,15 +239,28 @@
 	color = "#20324D" //RGB: 32, 50, 77
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	taste_description = "charged metal"
+	self_consuming = TRUE
 	var/shock_timer = 0
 
 /datum/reagent/teslium/on_mob_life(mob/living/carbon/M)
 	shock_timer++
 	if(shock_timer >= rand(5,30)) //Random shocks are wildly unpredictable
 		shock_timer = 0
-		M.electrocute_act(rand(5,20), "Teslium in their body", 1, 1) //Override because it's caused from INSIDE of you
-		playsound(M, "sparks", 50, 1)
+		M.electrocute_act(rand(5,20), "Teslium in their body", 1, SHOCK_NOGLOVES) //SHOCK_NOGLOVES because it's caused from INSIDE of you
+		playsound(M, "sparks", 50, TRUE)
 	..()
+
+/datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/human/L)
+	. = ..()
+	if(!istype(L))
+		return
+	L.physiology.siemens_coeff *= 2
+
+/datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/human/L)
+	. = ..()
+	if(!istype(L))
+		return
+	L.physiology.siemens_coeff *= 0.5
 
 /datum/reagent/teslium/energized_jelly
 	name = "Energized Jelly"

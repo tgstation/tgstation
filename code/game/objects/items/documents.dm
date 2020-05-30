@@ -3,7 +3,7 @@
 	desc = "\"Top Secret\" documents."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "docs_generic"
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 	throw_range = 1
@@ -51,8 +51,8 @@
 			to_chat(user, "<span class='warning'>You have already forged a seal on [src]!</span>")
 		else
 			var/obj/item/toy/crayon/C = O
-			name = "[C.item_color] secret documents"
-			icon_state = "docs_[C.item_color]"
-			forgedseal = C.item_color
-			to_chat(user, "<span class='notice'>You forge the official seal with a [C.item_color] crayon. No one will notice... right?</span>")
+			name = "[C.crayon_color] secret documents"
+			icon_state = "docs_[C.crayon_color]"
+			forgedseal = C.crayon_color
+			to_chat(user, "<span class='notice'>You forge the official seal with a [C.crayon_color] crayon. No one will notice... right?</span>")
 			update_icon()

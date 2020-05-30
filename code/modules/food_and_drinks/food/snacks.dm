@@ -45,6 +45,7 @@ All foods are distributed among various categories. Use common sense.
 	var/eatverb
 	var/dried_type = null
 	var/dry = 0
+	var/dunk_amount = 10 // how much reagent is transferred per dunk
 	var/cooked_type = null  //for microwave cooking. path of the resulting item after microwaving
 	var/filling_color = "#FFFFFF" //color to use when added to custom food.
 	var/custom_food_type = null  //for food customizing. path of the custom food to create
@@ -52,6 +53,8 @@ All foods are distributed among various categories. Use common sense.
 	var/list/bonus_reagents //the amount of reagents (usually nutriment and vitamin) added to crafted/cooked snacks, on top of the ingredients reagents.
 	var/customfoodfilling = 1 // whether it can be used as filling in custom food
 	var/list/tastes  // for example list("crisps" = 2, "salt" = 1)
+	var/value = 10	//Which export tier of value the item falls under.
+	var/silver_spawned = FALSE	//Special case used for exporting, only true if created from a silver slime to prevent cheese.
 
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 
@@ -71,10 +74,11 @@ All foods are distributed among various categories. Use common sense.
 	if(!eater)
 		return
 	if(!reagents.total_volume)
-		var/obj/item/trash_item = generate_trash(eater)
+		var/mob/living/location = loc
+		var/obj/item/trash_item = generate_trash(location)
 		qdel(src)
-		eater.put_in_hands(trash_item)
-
+		if(istype(location))
+			location.put_in_hands(trash_item)
 
 /obj/item/reagent_containers/food/snacks/attack_self(mob/user)
 	return
@@ -86,7 +90,7 @@ All foods are distributed among various categories. Use common sense.
 	if(!eatverb)
 		eatverb = pick("bite","chew","nibble","gnaw","gobble","chomp")
 	if(!reagents.total_volume)						//Shouldn't be needed but it checks to see if it has anything left in it.
-		to_chat(user, "<span class='notice'>None of [src] left, oh no!</span>")
+		to_chat(user, "<span class='warning'>None of [src] left, oh no!</span>")
 		qdel(src)
 		return FALSE
 	if(iscarbon(M))
@@ -99,7 +103,7 @@ All foods are distributed among various categories. Use common sense.
 
 		if(M == user)								//If you're eating it yourself.
 			if(junkiness && M.satiety < -150 && M.nutrition > NUTRITION_LEVEL_STARVING + 50 && !HAS_TRAIT(user, TRAIT_VORACIOUS))
-				to_chat(M, "<span class='notice'>You don't feel like eating any more junk food at the moment.</span>")
+				to_chat(M, "<span class='warning'>You don't feel like eating any more junk food at the moment!</span>")
 				return FALSE
 			else if(fullness <= 50)
 				user.visible_message("<span class='notice'>[user] hungrily [eatverb]s \the [src], gobbling it down!</span>", "<span class='notice'>You hungrily [eatverb] \the [src], gobbling it down!</span>")
@@ -118,17 +122,17 @@ All foods are distributed among various categories. Use common sense.
 			if(!isbrain(M))		//If you're feeding it to someone else.
 				if(fullness <= (600 * (1 + M.overeatduration / 1000)))
 					M.visible_message("<span class='danger'>[user] attempts to feed [M] [src].</span>", \
-										"<span class='userdanger'>[user] attempts to feed [M] [src].</span>")
+										"<span class='userdanger'>[user] attempts to feed you [src].</span>")
 				else
 					M.visible_message("<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>", \
-										"<span class='warning'>[user] cannot force any more of [src] down [M]'s throat!</span>")
+										"<span class='warning'>[user] cannot force any more of [src] down your throat!</span>")
 					return FALSE
 
 				if(!do_mob(user, M))
 					return
 				log_combat(user, M, "fed", reagents.log_list())
-				M.visible_message("<span class='danger'>[user] forces [M] to eat [src].</span>", \
-									"<span class='userdanger'>[user] forces [M] to eat [src].</span>")
+				M.visible_message("<span class='danger'>[user] forces [M] to eat [src]!</span>", \
+									"<span class='userdanger'>[user] forces you to eat [src]!</span>")
 
 			else
 				to_chat(user, "<span class='warning'>[M] doesn't seem to have a mouth!</span>")
@@ -137,12 +141,11 @@ All foods are distributed among various categories. Use common sense.
 		if(reagents)								//Handle ingestion of the reagent.
 			if(M.satiety > -200)
 				M.satiety -= junkiness
-			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 			if(reagents.total_volume)
 				SEND_SIGNAL(src, COMSIG_FOOD_EATEN, M, user)
 				var/fraction = min(bitesize / reagents.total_volume, 1)
-				reagents.reaction(M, INGEST, fraction)
-				reagents.trans_to(M, bitesize, transfered_by = user)
+				reagents.trans_to(M, bitesize, transfered_by = user, method = INGEST)
 				bitecount++
 				On_Consume(M)
 				checkLiked(fraction, M)
@@ -151,16 +154,17 @@ All foods are distributed among various categories. Use common sense.
 	return 0
 
 /obj/item/reagent_containers/food/snacks/examine(mob/user)
-	..()
-	if(bitecount == 0)
-		return
-	else if(bitecount == 1)
-		to_chat(user, "[src] was bitten by someone!")
-	else if(bitecount <= 3)
-		to_chat(user, "[src] was bitten [bitecount] times!")
-	else
-		to_chat(user, "[src] was bitten multiple times!")
-
+	. = ..()
+	if(!in_container)
+		switch (bitecount)
+			if (0)
+				return
+			if(1)
+				. += "[src] was bitten by someone!"
+			if(2,3)
+				. += "[src] was bitten [bitecount] times!"
+			else
+				. += "[src] was bitten multiple times!"
 
 /obj/item/reagent_containers/food/snacks/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/storage))
@@ -181,7 +185,7 @@ All foods are distributed among various categories. Use common sense.
 			var/obj/item/reagent_containers/food/snacks/customizable/C = new custom_food_type(get_turf(src))
 			C.initialize_custom_food(src, S, user)
 			return 0
-	var/sharp = W.is_sharp()
+	var/sharp = W.get_sharpness()
 	if(sharp)
 		if(slice(sharp, W, user))
 			return 1
@@ -267,7 +271,7 @@ All foods are distributed among various categories. Use common sense.
 			trash = null
 			return
 
-/obj/item/reagent_containers/food/snacks/proc/update_overlays(obj/item/reagent_containers/food/snacks/S)
+/obj/item/reagent_containers/food/snacks/proc/update_snack_overlays(obj/item/reagent_containers/food/snacks/S)
 	cut_overlays()
 	var/mutable_appearance/filling = mutable_appearance(icon, "[initial(icon_state)]_filling")
 	if(S.filling_color == "#FFFFFF")
@@ -317,7 +321,7 @@ All foods are distributed among various categories. Use common sense.
 
 /obj/item/reagent_containers/food/snacks/attack_animal(mob/M)
 	if(isanimal(M))
-		if(iscorgi(M))
+		if(isdog(M))
 			var/mob/living/L = M
 			if(bitecount == 0 || prob(50))
 				M.emote("me", 1, "nibbles away at \the [src]")
@@ -329,6 +333,7 @@ All foods are distributed among various categories. Use common sense.
 					M.emote("me", 1, "[sattisfaction_text]")
 				qdel(src)
 
+
 // //////////////////////////////////////////////Store////////////////////////////////////////
 /// All the food items that can store an item inside itself, like bread or cake.
 /obj/item/reagent_containers/food/snacks/store
@@ -338,7 +343,7 @@ All foods are distributed among various categories. Use common sense.
 /obj/item/reagent_containers/food/snacks/store/attackby(obj/item/W, mob/user, params)
 	..()
 	if(W.w_class <= WEIGHT_CLASS_SMALL & !istype(W, /obj/item/reagent_containers/food/snacks)) //can't slip snacks inside, they're used for custom foods.
-		if(W.is_sharp())
+		if(W.get_sharpness())
 			return 0
 		if(stored_item)
 			return 0
@@ -361,3 +366,4 @@ All foods are distributed among various categories. Use common sense.
 		TB.MouseDrop(over)
 	else
 		return ..()
+

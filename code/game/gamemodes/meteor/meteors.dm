@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 /obj/effect/meteor/Bump(atom/A)
 	if(A)
 		ram_turf(get_turf(A))
-		playsound(src.loc, meteorsound, 40, 1)
+		playsound(src.loc, meteorsound, 40, TRUE)
 		get_hit()
 
 /obj/effect/meteor/proc/ram_turf(turf/T)
@@ -144,11 +144,23 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 		if(A != src)
 			if(isliving(A))
 				A.visible_message("<span class='warning'>[src] slams into [A].</span>", "<span class='userdanger'>[src] slams into you!.</span>")
-			A.ex_act(hitpwr)
+			switch(hitpwr)
+				if(EXPLODE_DEVASTATE)
+					SSexplosions.highobj += A
+				if(EXPLODE_HEAVY)
+					SSexplosions.medobj += A
+				if(EXPLODE_LIGHT)
+					SSexplosions.lowobj += A
 
 	//then, ram the turf if it still exists
 	if(T)
-		T.ex_act(hitpwr)
+		switch(hitpwr)
+			if(EXPLODE_DEVASTATE)
+				SSexplosions.highturf += T
+			if(EXPLODE_HEAVY)
+				SSexplosions.medturf += T
+			if(EXPLODE_LIGHT)
+				SSexplosions.lowturf += T
 
 
 
@@ -165,9 +177,9 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	return
 
 /obj/effect/meteor/examine(mob/user)
+	. = ..()
 	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
-		SSmedals.UnlockMedal(MEDAL_METEOR, user.client)
-	..()
+		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
 
 /obj/effect/meteor/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_MINING)
@@ -212,7 +224,7 @@ GLOBAL_LIST_INIT(meteorsC, list(/obj/effect/meteor/dust)) //for space dust event
 	pass_flags = PASSTABLE | PASSGRILLE
 	hits = 1
 	hitpwr = 3
-	meteorsound = 'sound/weapons/gunshot_smg.ogg'
+	meteorsound = 'sound/weapons/gun/smg/shot.ogg'
 	meteordrop = list(/obj/item/stack/ore/glass)
 	threat = 1
 

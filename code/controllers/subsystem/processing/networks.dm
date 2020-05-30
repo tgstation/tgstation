@@ -46,6 +46,6 @@ PROCESSING_SUBSYSTEM_DEF(networks)
 	var/hex = md5(string)
 	if(!hex)
 		return		//errored
-	. = "[copytext(hex, 1, 9)]"		//16 ^ 8 possibilities I think.
+	. = "[copytext_char(hex, 1, 9)]"		//16 ^ 8 possibilities I think.
 	if(interfaces_by_id[.])
 		return resolve_collisions? make_address("[num2text(rand(HID_RESTRICTED_END, 999999999), 12)]"):null

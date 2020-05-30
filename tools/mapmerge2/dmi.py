@@ -45,6 +45,8 @@ class Dmi:
     @classmethod
     def from_file(cls, fname):
         image = Image.open(fname)
+        if image.mode != 'RGBA':
+            image = image.convert('RGBA')
 
         # no metadata = regular image file
         if 'Description' not in image.info:

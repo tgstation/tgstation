@@ -1,7 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/structure/shuttle/engine/propulsion{
-	icon_state = "propulsion";
 	dir = 8
 	},
 /turf/closed/wall/mineral/titanium,
@@ -32,7 +31,6 @@
 /area/shuttle/escape)
 "i" = (
 /obj/machinery/light{
-	icon_state = "tube";
 	dir = 8
 	},
 /turf/open/floor/mineral/titanium/blue,
@@ -48,7 +46,6 @@
 	dir = 8
 	},
 /obj/machinery/light/small{
-	icon_state = "bulb";
 	dir = 4
 	},
 /turf/open/floor/mineral/titanium/blue,

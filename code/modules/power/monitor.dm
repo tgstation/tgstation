@@ -10,6 +10,9 @@
 	idle_power_usage = 20
 	active_power_usage = 100
 	circuit = /obj/item/circuitboard/computer/powermonitor
+	tgui_id = "PowerMonitor"
+	ui_x = 550
+	ui_y = 700
 
 	var/obj/structure/cable/attached_wire
 	var/obj/machinery/power/apc/local_apc
@@ -27,8 +30,8 @@
 	is_secret_monitor = TRUE
 
 /obj/machinery/computer/monitor/secret/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.</span>")
+	. = ..()
+	. += "<span class='notice'>It's operating system seems quite outdated... It doesn't seem like it'd be compatible with the latest remote NTOS monitoring systems.</span>"
 
 /obj/machinery/computer/monitor/Initialize()
 	. = ..()
@@ -85,7 +88,7 @@
 											datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "power_monitor", name, 1200, 1000, master_ui, state)
+		ui = new(user, src, ui_key, "PowerMonitor", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
 /obj/machinery/computer/monitor/ui_data()

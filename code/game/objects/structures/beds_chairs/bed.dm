@@ -17,15 +17,15 @@
 	buckle_lying = 90
 	resistance_flags = FLAMMABLE
 	max_integrity = 100
-	integrity_failure = 30
+	integrity_failure = 0.35
 	var/buildstacktype = /obj/item/stack/sheet/metal
 	var/buildstackamount = 2
 	var/bolts = TRUE
 
 /obj/structure/bed/examine(mob/user)
-	..()
+	. = ..()
 	if(bolts)
-		to_chat(user, "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>")
+		. += "<span class='notice'>It's held together by a couple of <b>bolts</b>.</span>"
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
 	if(!(flags_1 & NODECONSTRUCT_1))
@@ -70,7 +70,7 @@
 		else
 			R.loaded = src
 			forceMove(R)
-			user.visible_message("[user] collects [src].", "<span class='notice'>You collect [src].</span>")
+			user.visible_message("<span class='notice'>[user] collects [src].</span>", "<span class='notice'>You collect [src].</span>")
 		return 1
 	else
 		return ..()
@@ -82,7 +82,7 @@
 			return 0
 		if(has_buckled_mobs())
 			return 0
-		usr.visible_message("[usr] collapses \the [src.name].", "<span class='notice'>You collapse \the [src.name].</span>")
+		usr.visible_message("<span class='notice'>[usr] collapses \the [src.name].</span>", "<span class='notice'>You collapse \the [src.name].</span>")
 		var/obj/structure/bed/roller/B = new foldabletype(get_turf(src))
 		usr.put_in_hands(B)
 		qdel(src)
@@ -95,13 +95,13 @@
 /obj/structure/bed/roller/Moved()
 	. = ..()
 	if(has_gravity())
-		playsound(src, 'sound/effects/roll.ogg', 100, 1)
+		playsound(src, 'sound/effects/roll.ogg', 100, TRUE)
 
 /obj/structure/bed/roller/post_unbuckle_mob(mob/living/M)
 	density = FALSE
 	icon_state = "down"
-	M.pixel_x = M.get_standard_pixel_x_offset(M.lying)
-	M.pixel_y = M.get_standard_pixel_y_offset(M.lying)
+	M.pixel_x = M.get_standard_pixel_x_offset(!(M.mobility_flags & MOBILITY_STAND))
+	M.pixel_y = M.get_standard_pixel_y_offset(!(M.mobility_flags & MOBILITY_STAND))
 
 /obj/item/roller
 	name = "roller bed"
@@ -148,13 +148,13 @@
 	loaded = new(src)
 
 /obj/item/roller/robo/examine(mob/user)
-	..()
-	to_chat(user, "The dock is [loaded ? "loaded" : "empty"].")
+	. = ..()
+	. += "The dock is [loaded ? "loaded" : "empty"]."
 
 /obj/item/roller/robo/deploy_roller(mob/user, atom/location)
 	if(loaded)
 		loaded.forceMove(location)
-		user.visible_message("[user] deploys [loaded].", "<span class='notice'>You deploy [loaded].</span>")
+		user.visible_message("<span class='notice'>[user] deploys [loaded].</span>", "<span class='notice'>You deploy [loaded].</span>")
 		loaded = null
 	else
 		to_chat(user, "<span class='warning'>The dock is empty!</span>")
