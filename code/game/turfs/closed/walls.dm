@@ -14,7 +14,7 @@
 
 	flags_ricochet = RICOCHET_HARD
 
-	///lower numbers are harder. Used to determine the probability of a hulk smashing through. Also, (hardness - 40) is used as a modifier for objects trying to embed in this (hardness of 30 results in a -10% chance)
+	///Hardness - 40 is used as a modifier for objects trying to embed in this (hardness of 30 results in a -10% chance)
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
 	var/sheet_type = /obj/item/stack/sheet/metal
@@ -136,18 +136,15 @@
 		dismantle_wall(1)
 		return
 
-/turf/closed/wall/attack_hulk(mob/user)
+/turf/closed/wall/attack_hulk(mob/user) //Hulks can't destroy walls, but they can dent them and be loud all they want.
 	..()
-	if(prob(hardness))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	if(prob(20))
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		dismantle_wall(1)
-	else
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		add_dent(WALL_DENT_HIT)
-		user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
-					"<span class='danger'>You smash \the [src]!</span>", \
-					"<span class='hear'>You hear a booming smash!</span>")
+	add_dent(WALL_DENT_HIT)
+	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
+		"<span class='danger'>You smash \the [src], but it doesn't seem to budge!</span>", \
+		"<span class='hear'>You hear a booming smash!</span>")
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)
