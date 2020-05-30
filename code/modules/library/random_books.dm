@@ -23,7 +23,7 @@
 	if(!random_loaded)
 		create_random_books(1, loc, TRUE, random_category, src)
 		random_loaded = TRUE
-	..()
+	return ..()
 
 /obj/structure/bookcase/random
 	load_random_books = TRUE
