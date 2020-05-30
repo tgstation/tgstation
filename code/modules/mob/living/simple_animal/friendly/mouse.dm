@@ -95,6 +95,16 @@
 		evolve()
 		return
 
+/mob/living/simple_animal/mouse/ClickOn(atom/A, params)
+	if(istype(A, /obj/item/reagent_containers/food/snacks/cheesewedge))
+		if(health == maxHealth)
+			to_chat(src,"<span class='warning'>You don't need to eat or heal.</span>")
+			return
+		to_chat(src,"<span class='green'>You nibble some cheese, restoring your health.</span>")
+		health = maxHealth
+		qdel(A)
+	..()
+
 /**
   *Checks the mouse cap, if it's above the cap, doesn't spawn a mouse. If below, spawns a mouse and adds it to cheeserats.
   */
