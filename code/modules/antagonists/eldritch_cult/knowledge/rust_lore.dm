@@ -188,7 +188,7 @@
 /datum/rust_spread/New(loc)
 	. = ..()
 	var/turf/T = get_turf(loc)
-	T.ChangeTurf(/turf/open/floor/plating/rust)
+	T.rust_heretic_act()
 	turfs += T
 	START_PROCESSING(SSprocessing,src)
 
