@@ -27,8 +27,8 @@ GLOBAL_LIST_INIT(skill_types, subtypesof(/datum/skill))
 	"<span class='nicegreen'>I'm getting a little better at [name]!</span>",
 	"<span class='nicegreen'>I'm getting much better at [name]!</span>",
 	"<span class='nicegreen'>I feel like I've become quite proficient at [name]!</span>",
-	"<span class='nicegreen'>After lots of practice, I've begun to truly understand the intricies \
-	 and surprising depth behind [name]. I now condsider myself a master [title].</span>",
+	"<span class='nicegreen'>After lots of practice, I've begun to truly understand the intricacies \
+	 and surprising depth behind [name]. I now consider myself a master [title].</span>",
 	"<span class='nicegreen'>Through incredible determination and effort, I've reached the peak of my [name] abiltities. I'm finally able to consider myself a legendary [title]!</span>" )
 	levelDownMessages = list("<span class='nicegreen'>I have somehow completely lost all understanding of [name]. Please tell an admin if you see this.</span>",
 	"<span class='nicegreen'>I'm starting to forget what [name] really even is. I need more practice...</span>",
