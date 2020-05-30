@@ -49,7 +49,12 @@
 	/// A weak reference to another datum
 	var/datum/weakref/weak_reference
 
-	///Lazy associative list of currently active cooldowns.
+	/*
+	* Lazy associative list of currently active cooldowns.
+	*
+	* cooldowns [ COOLDOWN_INDEX ] = add_timer()
+	* add_timer() returns the truthy value of -1 when not stoppable, and else a truthy numeric index
+	*/
 	var/list/cooldowns
 
 #ifdef TESTING
