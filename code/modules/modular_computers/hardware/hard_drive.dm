@@ -171,7 +171,7 @@
 	power_usage = 8
 	max_capacity = 70
 
-/obj/item/computer_hardware/hard_drive/install_default_programs()
+/obj/item/computer_hardware/hard_drive/small/nukeops/install_default_programs()
 	store_file(new/datum/computer_file/program/computerconfig(src))
 	store_file(new/datum/computer_file/program/ntnetdownload/syndicate(src)) // Syndicate version; automatic access to syndicate apps and no NT apps
 	store_file(new/datum/computer_file/program/filemanager(src))
@@ -184,5 +184,3 @@
 	max_capacity = 32
 	icon_state = "ssd_micro"
 	w_class = WEIGHT_CLASS_TINY
-
-

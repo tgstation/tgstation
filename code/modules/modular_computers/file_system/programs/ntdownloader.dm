@@ -38,9 +38,9 @@
 	if(!PRG || !istype(PRG))
 		return 0
 
-	// Attempting to download antag only program, but without having emagged computer. No.
-	//if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
-		//return 0
+	// Attempting to download antag only program, but without having emagged/syndicate computer. No.
+	if(PRG.available_on_syndinet && !((computer.obj_flags & EMAGGED) || (computer.device_theme = "syndicate")))
+		return 0
 
 	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 
