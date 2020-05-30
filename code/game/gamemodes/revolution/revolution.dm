@@ -195,7 +195,8 @@
 /datum/game_mode/revolution/speedy/process()
 	. = ..()
 	check_counter++
-	if(check_counter == 0)
+	if(check_counter == 5)
+		check_counter = 0
 		if (world.time > endtime && !fuckingdone)
 			fuckingdone = TRUE
 			for (var/obj/machinery/nuclearbomb/N in GLOB.nuke_list)
