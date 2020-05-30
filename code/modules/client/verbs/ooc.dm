@@ -339,20 +339,22 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Store the selected player
 	selection = players[selection]
 
-	// Check if the selected player is not on our ignore list
-	if(!(selection in prefs.ignoring))
-		// Add the selected player to our ignore list
-		prefs.ignoring.Add(selection)
-
-		// Save our preferences
-		prefs.save_preferences()
-
-		// Express that we've ignored the selected player in chat
-		to_chat(src, "You are now ignoring [selection] on the OOC channel.")
-
-	// Express that the selected player is already on our ignore list in chat
-	else
+	// Check if the selected player is on our ignore list
+	if(selection in prefs.ignoring)
+		// Express that the selected player is already on our ignore list in chat
 		to_chat(src, "You are already ignoring [selection]!")
+
+		// Stop running
+		return
+
+	// Add the selected player to our ignore list
+	prefs.ignoring.Add(selection)
+
+	// Save our preferences
+	prefs.save_preferences()
+
+	// Express that we've ignored the selected player in chat
+	to_chat(src, "You are now ignoring [selection] on the OOC channel.")
 
 // Unignore verb
 /client/verb/select_unignore()
@@ -371,24 +373,26 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	// Request the player to unignore
 	var/selection = input("Please, select a player!", "Unignore", null, null) as null|anything in prefs.ignoring
 
-	// Stop running if we didn't receive a valid selection
-	if(!selection || !(selection in players))
+	// Stop running if we didn't receive a selection
+	if(!selection)
 		return
 
-	// Check if the selected player is on our ignore list
-	if(selection in prefs.ignoring)
-		// Remove the selected player from our ignore list
-		prefs.ignoring.Remove(selection)
-
-		// Save our preferences
-		prefs.save_preferences()
-
-		// Express that we've unignored the selected player in chat
-		to_chat(src, "You are no longer ignoring [selection] on the OOC channel.")
-
-	// Express that the selected player is not on our ignore list in chat
-	else
+	// Check if the selected player is not on our ignore list
+	if(!(selection in prefs.ignoring))
+		// Express that the selected player is not on our ignore list in chat
 		to_chat(src, "You are not ignoring [selection]!")
+
+		// Stop running
+		return
+
+	// Remove the selected player from our ignore list
+	prefs.ignoring.Remove(selection)
+
+	// Save our preferences
+	prefs.save_preferences()
+
+	// Express that we've unignored the selected player in chat
+	to_chat(src, "You are no longer ignoring [selection] on the OOC channel.")
 
 /client/proc/show_previous_roundend_report()
 	set name = "Your Last Round"
