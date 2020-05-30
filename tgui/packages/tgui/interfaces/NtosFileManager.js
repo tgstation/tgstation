@@ -6,12 +6,13 @@ import { NtosWindow } from '../layouts';
 export const NtosFileManager = (props, context) => {
   const { act, data } = useBackend(context);
   const {
+    device_theme,
     usbconnected,
     files = [],
     usbfiles = [],
   } = data;
   return (
-    <NtosWindow resizable>
+    <NtosWindow resizable theme={device_theme}>
       <NtosWindow.Content scrollable>
         <Section>
           <FileTable

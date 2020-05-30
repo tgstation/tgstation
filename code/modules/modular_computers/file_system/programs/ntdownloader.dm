@@ -20,6 +20,14 @@
 	var/download_netspeed = 0
 	var/downloaderror = ""
 	var/obj/item/modular_computer/my_computer = null
+	var/list/main_repo
+	var/list/antag_repo
+	var/theme = "ntos"
+
+/datum/computer_file/program/ntnetdownload/run_program()
+	. = ..()
+	main_repo = SSnetworks.station_network.available_station_software
+	antag_repo = SSnetworks.station_network.available_antag_software
 
 /datum/computer_file/program/ntnetdownload/proc/begin_file_download(filename)
 	if(downloaded_file)
@@ -31,8 +39,8 @@
 		return 0
 
 	// Attempting to download antag only program, but without having emagged computer. No.
-	if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
-		return 0
+	//if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
+		//return 0
 
 	var/obj/item/computer_hardware/hard_drive/hard_drive = computer.all_components[MC_HDD]
 
@@ -41,10 +49,10 @@
 
 	ui_header = "downloader_running.gif"
 
-	if(PRG in SSnetworks.station_network.available_station_software)
+	if(PRG in main_repo)
 		generate_network_log("Began downloading file [PRG.filename].[PRG.filetype] from NTNet Software Repository.")
 		hacked_download = 0
-	else if(PRG in SSnetworks.station_network.available_antag_software)
+	else if(PRG in antag_repo)
 		generate_network_log("Began downloading file **ENCRYPTED**.[PRG.filetype] from unspecified server.")
 		hacked_download = 1
 	else
@@ -115,6 +123,7 @@
 
 	var/list/data = get_header_data()
 
+	data["theme"] = theme
 	data["downloading"] = !!downloaded_file
 	data["error"] = downloaderror || FALSE
 
@@ -130,7 +139,7 @@
 	data["disk_size"] = hard_drive.max_capacity
 	data["disk_used"] = hard_drive.used_capacity
 	var/list/all_entries[0]
-	for(var/A in SSnetworks.station_network.available_station_software)
+	for(var/A in main_repo)
 		var/datum/computer_file/program/P = A
 		// Only those programs our user can run will show in the list
 		if(!P.can_run(user,transfer = 1) || hard_drive.find_file_by_name(P.filename))
@@ -145,7 +154,7 @@
 	data["hackedavailable"] = FALSE
 	if(computer.obj_flags & EMAGGED) // If we are running on emagged computer we have access to some "bonus" software
 		var/list/hacked_programs[0]
-		for(var/S in SSnetworks.station_network.available_antag_software)
+		for(var/S in antag_repo)
 			var/datum/computer_file/program/P = S
 			if(hard_drive.find_file_by_name(P.filename))
 				continue
@@ -172,3 +181,24 @@
 /datum/computer_file/program/ntnetdownload/kill_program(forced)
 	abort_file_download()
 	return ..(forced)
+
+////////////////////////
+//Syndicate Downloader//
+////////////////////////
+
+/// This app only lists programs normally found in the emagged section of the normal downloader app
+
+/datum/computer_file/program/ntnetdownload/syndicate
+	filename = "syndownloader"
+	filedesc = "Software Download Tool"
+	program_icon_state = "generic"
+	extended_desc = "This program allows downloads of software from shared Syndicate repositories"
+	requires_ntnet = 0
+	ui_header = "downloader_finished.gif"
+	tgui_id = "NtosNetDownloader"
+	theme = "syndicate"
+
+/datum/computer_file/program/ntnetdownload/syndicate/run_program()
+	. = ..()
+	main_repo = SSnetworks.station_network.available_antag_software
+	antag_repo = null

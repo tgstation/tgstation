@@ -33,3 +33,14 @@
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	comp_light_luminosity = 6.3
 	has_variants = FALSE
+
+/// Given to Nuke Ops members.
+/obj/item/modular_computer/tablet/nukeops
+	icon_state = "tablet-syndicate"
+	comp_light_luminosity = 6.3
+	has_variants = FALSE
+	device_theme = "syndicate"
+
+/obj/item/modular_computer/tablet/nukeops/emag_act(mob/user)
+	to_chat(user, "<span class='notice'>You emag \the [src]. It's screen briefly shows a \"MEMORY CODE INJECTION DETECTED AND SUCCESSFULLY QUARANTINED\" message.</span>")
+	return FALSE

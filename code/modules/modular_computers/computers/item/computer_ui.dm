@@ -39,13 +39,19 @@
 		assets.send(user)
 		assets = get_asset_datum(/datum/asset/simple/arcade)
 		assets.send(user)
-		ui = new(user, src, ui_key, "NtosMain", "NtOS Main menu", 400, 500, master_ui, state)
+		var/headername
+		if(device_theme == "ntos")
+			headername = "NtOS Main Menu"
+		if(device_theme == "syndicate")
+			headername = "Synux Main Menu"
+		ui = new(user, src, ui_key, "NtosMain", headername, 400, 500, master_ui, state)
 		ui.open()
 		ui.set_autoupdate(state = 1)
 
 
 /obj/item/modular_computer/ui_data(mob/user)
 	var/list/data = get_header_data()
+	data["device_theme"] = device_theme
 	data["programs"] = list()
 	var/obj/item/computer_hardware/hard_drive/hard_drive = all_components[MC_HDD]
 	for(var/datum/computer_file/program/P in hard_drive.stored_files)
