@@ -1783,7 +1783,7 @@
 					/obj/item/kirbyplants/random,
 					/obj/item/kirbyplants/random)
 	crate_name = "potted plants crate"
-	crate_type = /obj/structure/closet/crate/hydroponics
+	crate_type = /obj/structure/closet/crate/wooden
 
 /datum/supply_pack/organic/seeds
 	name = "Seeds Crate"
