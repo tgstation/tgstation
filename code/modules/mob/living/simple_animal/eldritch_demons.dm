@@ -93,6 +93,7 @@
 		stack_trace("Eldritch Armsy created with invalid len ([len]). Reverting to 3.")
 		len = 3 //code breaks below 3, let's just not allow it.
 	oldloc = loc
+	RegisterSignal(src,COMSIG_MOVABLE_MOVED,.proc/update_chain_links)
 	if(!spawn_more)
 		return
 	allow_pulling = TRUE
@@ -129,13 +130,14 @@
 /mob/living/simple_animal/hostile/eldritch/armsy/can_be_pulled()
 	return FALSE
 
-/mob/living/simple_animal/hostile/eldritch/armsy/Moved()
-	. = ..()
+///Updates the next mob in the chain to move to our last location, fixed the worm if somehow broken.
+/mob/living/simple_animal/hostile/eldritch/armsy/proc/update_chain_links()
 	gib_trail()
 	if(back && back.loc != oldloc)
 		back.Move(oldloc)
+	// self fixing properties if somehow broken
 	if(front && loc != front.oldloc)
-		forceMove(front.oldloc) // self fixing properties
+		forceMove(front.oldloc)
 	oldloc = loc
 
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/gib_trail()
@@ -146,6 +148,7 @@
 	decal.setDir(dir)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Destroy()
+	UnregisterSignal(src,COMSIG_MOVABLE_MOVED)
 	if(front)
 		front.icon_state = "armsy_end"
 		front.icon_living = "armsy_end"
