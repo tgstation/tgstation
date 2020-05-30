@@ -164,31 +164,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang/proc/five_minute_warning()
 	priority_announce("Julio G coming to you live from Radio Los Spess! The space cops are closing in on [station_name()] and will arrive in about 5 minutes! Better clear on out of there if you don't want to get hurt!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 
-/datum/game_mode/gang/check_win()
-	var/alive_gangsters = 0
-	var/alive_cops = 0
-	for(var/datum/mind/gangbanger in gangbangers)
-		if(!ishuman(gangbanger.current))
-			continue
-		var/mob/living/carbon/human/H = gangbanger.current
-		if(H.stat)
-			continue
-		alive_gangsters++
-	for(var/datum/mind/bacon in pigs)
-		if(!ishuman(bacon.current)) // always returns false
-			continue
-		var/mob/living/carbon/human/H = bacon.current
-		if(H.stat)
-			continue
-		alive_cops++
-	if(alive_gangsters > alive_cops)
-		SSticker.mode_result = "win - gangs survived"
-		SSticker.news_report = GANG_OPERATING
-		return TRUE
-	SSticker.mode_result = "loss - police destroyed the gangs"
-	SSticker.news_report = GANG_DESTROYED
-	return FALSE
-
 /datum/game_mode/gang/process()
 	check_wanted_level()
 	check_counter++
@@ -197,7 +172,6 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 			fuckingdone = TRUE
 			send_in_the_fuzz()
 		check_counter = 0
-		SSticker.mode.check_win()
 
 		check_tagged_turfs()
 		check_gang_clothes()
