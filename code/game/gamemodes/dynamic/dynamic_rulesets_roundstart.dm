@@ -176,7 +176,6 @@
 	. = ..()
 	if(GLOB.wizardstart.len == 0)
 		return FALSE
-	mode.antags_rolled += 1
 	var/mob/M = pick_n_take(candidates)
 	if (M)
 		assigned += M.mind
@@ -219,7 +218,6 @@
 /datum/dynamic_ruleset/roundstart/bloodcult/pre_execute()
 	. = ..()
 	var/cultists = antag_cap[indice_pop]
-	mode.antags_rolled += cultists
 	for(var/cultists_number = 1 to cultists)
 		if(candidates.len <= 0)
 			break
@@ -280,7 +278,6 @@
 	. = ..()
 	// If ready() did its job, candidates should have 5 or more members in it
 	var/operatives = antag_cap[indice_pop]
-	mode.antags_rolled += operatives
 	for(var/operatives_number = 1 to operatives)
 		if(candidates.len <= 0)
 			break
@@ -367,7 +364,6 @@
 /datum/dynamic_ruleset/roundstart/revs/pre_execute()
 	. = ..()
 	var/max_candidates = antag_cap[indice_pop]
-	mode.antags_rolled += max_candidates
 	for(var/i = 1 to max_candidates)
 		if(candidates.len <= 0)
 			break
@@ -534,7 +530,6 @@
 /datum/dynamic_ruleset/roundstart/devil/pre_execute()
 	. = ..()
 	var/num_devils = antag_cap[indice_pop]
-	mode.antags_rolled += num_devils
 
 	for(var/j = 0, j < num_devils, j++)
 		if (!candidates.len)
@@ -592,7 +587,6 @@
 /datum/dynamic_ruleset/roundstart/monkey/pre_execute()
 	. = ..()
 	var/carriers_to_make = max(round(mode.roundstart_pop_ready / players_per_carrier, 1), 1)
-	mode.antags_rolled += carriers_to_make
 
 	for(var/j = 0, j < carriers_to_make, j++)
 		if (!candidates.len)
