@@ -36,23 +36,20 @@
 /*
 	Overwriting of base procs
 */
-/datum/wound/brute/bone/apply_wound(obj/item/bodypart/L, silent=FALSE, datum/wound/old_wound = null, smited = FALSE)
-	. = ..()
-	if(QDELING(src) || !limb)
-		return
+/datum/wound/brute/bone/wound_injury(datum/wound/old_wound = null)
 	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group)
 		processes = TRUE
 		active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
 	RegisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, .proc/attack_with_hurt_hand)
-	if(L.held_index && victim.get_item_for_held_index(L.held_index) && (disabling || prob(30 * severity)))
-		var/obj/item/I = victim.get_item_for_held_index(L.held_index)
+	if(limb.held_index && victim.get_item_for_held_index(limb.held_index) && (disabling || prob(30 * severity)))
+		var/obj/item/I = victim.get_item_for_held_index(limb.held_index)
 		if(istype(I, /obj/item/offhand))
 			I = victim.get_inactive_held_item()
 
 		if(I && victim.dropItemToGround(I))
-			victim.visible_message("<span class='danger'>[victim] drops [I] in shock!</span>", "<span class='warning'><b>The force on your [L.name] causes you to drop [I]!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
+			victim.visible_message("<span class='danger'>[victim] drops [I] in shock!</span>", "<span class='warning'><b>The force on your [limb.name] causes you to drop [I]!</b></span>", vision_distance=COMBAT_MESSAGE_RANGE)
 
 	update_inefficiencies()
 
@@ -208,7 +205,7 @@
 		to_chat(user, "<span class='warning'>The splint already on [user == victim ? "your" : "[victim]'s"] [limb.name] is better than you can do with [I].</span>")
 		return
 
-	user.visible_message("<span class='danger'>[user] begins splinting [victim.p_their()] [limb.name] with [I].</span>", "<span class='warning'>You begin splinting [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
+	user.visible_message("<span class='danger'>[user] begins splinting [victim]'s [limb.name] with [I].</span>", "<span class='warning'>You begin splinting [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 
 	if(!do_after(user, base_treat_time * (user == victim ? 1.5 : 1), target = victim, extra_checks=CALLBACK(src, .proc/still_exists)))
 		return

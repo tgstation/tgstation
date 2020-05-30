@@ -33,8 +33,8 @@
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// What damage type can allow this wound to be rolled, currently either BRUTE or BURN, not actually really used rn
-	var/damtype = BRUTE
+	/// The list of wounds it belongs in, WOUND_TYPE_BONE, WOUND_TYPE_CUT, or WOUND_TYPE_BURN
+	var/wound_type
 
 	/// What body zones can we affect
 	var/list/viable_zones = list(BODY_ZONE_HEAD, BODY_ZONE_CHEST, BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
@@ -62,25 +62,16 @@
 	var/damage_mulitplier_penalty = 1
 	/// If set and this wound is applied to a leg, we take this many deciseconds extra per step on this leg
 	var/limp_slowdown
-
-	/// If we currently need to process each life tick
-	var/processes = FALSE
-	/// We stop processing on dismembered or detached limbs, but if some other dumb sucker gets a rotten arm attached to them, we use this to remember if we were processing before
-	var/hibernate
-
 	/// How much we're contributing to this limb's bleed_rate
 	var/blood_flow
-
-	/// The list of wounds it belongs in, WOUND_TYPE_BONE, WOUND_TYPE_CUT, or WOUND_TYPE_BURN
-	var/wound_type
 
 	/// The minimum we need to roll on [/obj/item/bodypart/proc/check_wounding()] to begin suffering this wound, see check_wounding_mods() for more
 	var/threshold_minimum
 	/// How much having this wound will add to all future check_wounding() rolls on this limb, to allow progression to worse injuries with repeated damage
 	var/threshold_penalty
+	/// If we need to process each life tick
+	var/processes = FALSE
 
-	/// What status effect we assign on application
-	var/status_effect_type
 	/// If TRUE and an item that can treat multiple different types of coexisting wounds (gauze can be used to splint broken bones, staunch bleeding, and cover burns), we get first dibs if we come up first for it, then become nonpriority.
 	/// Otherwise, if no untreated wound claims the item, we cycle through the non priority wounds and pick a random one who can use that item.
 	var/treat_priority = FALSE
@@ -88,14 +79,14 @@
 	/// If having this wound makes currently makes the parent bodypart unusable
 	var/disabling
 
+	/// What status effect we assign on application
+	var/status_effect_type
 	/// The status effect we're linked to
 	var/datum/status_effect/linked_status_effect
-
-	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
-	var/cryo_progress
-
 	/// If we're operating on this wound and it gets healed, we'll nix the surgery too
 	var/datum/surgery/attached_surgery
+	/// if you're a lazy git and just throw them in cryo, the wound will go away after accumulating severity * 25 power
+	var/cryo_progress
 
 	/// What kind of scars this wound will create description wise once healed
 	var/list/scarring_descriptions = list("general disfigurement")
@@ -175,7 +166,7 @@
 			playsound(L.owner, sound_effect, 60 + 20 * severity, TRUE)
 
 	if(!demoted)
-		wound_injury()
+		wound_injury(old_wound)
 		second_wind()
 
 /// Remove the wound from whatever it's afflicting, and cleans up whateverstatus effects it had or modifiers it had on interaction times. ignore_limb is used for detachments where we only want to forget the victim
@@ -206,7 +197,7 @@
 	qdel(src)
 
 /// The immediate negative effects faced as a result of the wound
-/datum/wound/proc/wound_injury()
+/datum/wound/proc/wound_injury(datum/wound/old_wound = null)
 	return
 
 /// Additional beneficial effects when the wound is gained, in case you want to give a temporary boost to allow the victim to try an escape or last stand
@@ -225,7 +216,7 @@
 /**
   * try_treating() is an intercept run from [/mob/living/carbon/attackby()] right after surgeries but before anything else. Return TRUE here if the item is something that is relevant to treatment to take over the interaction.
   *
-  * This proc leads into [/datum/wound/proc/treat()] and its sister proc [/datum/wound/proc/treat_self()] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
+  * This proc leads into [/datum/wound/proc/treat()] and probably shouldn't be added onto in children types. You can specify what items or tools you want to be intercepted
   * with var/list/treatable_by and var/treatable_tool, then if an item fulfills one of those requirements and our wound claims it first, it goes over to treat() and treat_self().
   *
   * Arguments:
@@ -233,54 +224,48 @@
   * * user: The mob trying to use it on us
   */
 /datum/wound/proc/try_treating(obj/item/I, mob/user)
+	// first we weed out if we're not dealing with our wound's bodypart, or if it might be an attack
 	if(!I || limb.body_zone != user.zone_selected || (I.force && user.a_intent != INTENT_HELP))
 		return FALSE
 
-	if(treatable_sharp && I.sharpness && user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE)
-		treat(I, user)
-		return TRUE
+	var/allowed = FALSE
 
-	if((I.tool_behaviour != treatable_tool) && !(treatable_tool == TOOL_CAUTERY && I.get_temperature() > 300))
-		var/allowed = FALSE
-		if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE)
-			for(var/allowed_type in treatable_by_grabbed)
-				if(istype(I, allowed_type))
-					allowed = TRUE
-					break
+	// check if we have a valid treatable tool (or, if cauteries are allowed, if we have something hot)
+	if((I.tool_behaviour == treatable_tool) || (treatable_tool == TOOL_CAUTERY && I.get_temperature()))
+		allowed = TRUE
+	// failing that, see if we're aggro grabbing them and if we have an item that works for aggro grabs only
+	else if(user.pulling == victim && user.grab_state >= GRAB_AGGRESSIVE && check_grab_treatments(I, user))
+		allowed = TRUE
+	// failing THAT, we check if we have a generally allowed item
+	else
+		for(var/allowed_type in treatable_by)
+			if(istype(I, allowed_type))
+				allowed = TRUE
+				break
 
-		if(!allowed)
-			for(var/allowed_type in treatable_by)
-				if(istype(I, allowed_type))
-					allowed = TRUE
-					break
+	// if none of those apply, we return false to avoid interrupting
+	if(!allowed)
+		return FALSE
 
-		if(!allowed)
-			return FALSE
-
+	// now that we've determined we have a valid attempt at treating, we can stomp on their dreams if we're already interacting with the patient
 	if(INTERACTING_WITH(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return TRUE
 
-	if(user == victim)
-		treat_self(I, user)
-	else
-		treat(I, user)
+	// lastly, treat them
+	treat(I, user)
 	return TRUE
 
-/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice.
+/// Return TRUE if we have an item that can only be used while aggro grabbed (unhanded aggro grab treatments go in [/datum/wound/proc/try_handling()]). Treatment is still is handled in [/datum/wound/proc/treat()]
+/datum/wound/proc/check_grab_treatments(obj/item/I, mob/user)
+	return FALSE
+
+/// Like try_treating() but for unhanded interactions from humans, used by joint dislocations for manual bodypart chiropractice for example.
 /datum/wound/proc/try_handling(mob/living/carbon/human/user)
 	return FALSE
 
-/// We're trying to use a valid item on ourself. If in doubt, just treat it like normal.
-/datum/wound/proc/treat_self(obj/item/I, mob/user)
-	return treat(I, user)
-
 /// Someone is using something that might be used for treating the wound on this limb
 /datum/wound/proc/treat(obj/item/I, mob/user)
-	return
-
-/// Someone is using something that might be used for treating the wound on this limb. not really complete
-/datum/wound/proc/applied_reagents(mob/user)
 	return
 
 /// If var/processing is TRUE, this is run on each life tick
@@ -301,6 +286,7 @@
 	if(cryo_progress > 33 * severity)
 		qdel(src)
 
+/// Called when we're crushed in an airlock or firedoor, for one of the improvised joint dislocation fixes
 /datum/wound/proc/crush()
 	return
 
@@ -330,4 +316,3 @@
 			return "Critical"
 
 /datum/wound/brute
-	damtype = BRUTE

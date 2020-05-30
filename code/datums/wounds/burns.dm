@@ -4,7 +4,6 @@
 // TODO: well, a lot really, but specifically I want to add potential fusing of clothing/equipment on the affected area, and limb infections, though those may go in body part code
 /datum/wound/burn
 	a_or_from = "from"
-	damtype = BURN
 	wound_type = WOUND_TYPE_BURN
 	processes = TRUE
 	sound_effect = 'sound/effects/sizzle1.ogg'
@@ -304,7 +303,6 @@
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/gauze, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
 	infestation_rate = 0.05 // appx 13 minutes to reach sepsis without any treatment
 	flesh_damage = 12.5
-	treatable_sharp = TRUE
 	scarring_descriptions = list("a large, jagged patch of faded skin", "random spots of shiny, smooth skin", "spots of taut, leathery skin")
 
 /datum/wound/burn/critical
@@ -322,5 +320,4 @@
 	treatable_by = list(/obj/item/flashlight/pen/paramedic, /obj/item/stack/medical/gauze, /obj/item/stack/medical/ointment, /obj/item/stack/medical/mesh)
 	infestation_rate = 0.15 // appx 4.33 minutes to reach sepsis without any treatment
 	flesh_damage = 20
-	treatable_sharp = TRUE
 	scarring_descriptions = list("massive, disfiguring keloid scars", "several long streaks of badly discolored and malformed skin", "unmistakeable splotches of dead tissue from serious burns")

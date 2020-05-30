@@ -106,8 +106,6 @@
 	for(var/thing in wounds)
 		var/datum/wound/W = thing
 		W.remove_wound(TRUE)
-		W.hibernate = W.processes
-		W.processes = FALSE
 
 	owner = null
 
@@ -329,7 +327,6 @@
 	for(var/i in wounds)
 		var/datum/wound/W = i
 		W.apply_wound(src, TRUE)
-		W.processes = W.hibernate
 
 	update_bodypart_damage_state()
 

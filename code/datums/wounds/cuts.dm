@@ -37,8 +37,7 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
-/datum/wound/brute/cut/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/brute/cut/old_wound = null, smited = FALSE)
-	. = ..()
+/datum/wound/brute/cut/wound_injury(datum/wound/brute/cut/old_wound = null)
 	blood_flow = initial_flow
 	if(old_wound)
 		blood_flow = max(old_wound.blood_flow, initial_flow)
@@ -51,7 +50,7 @@
 
 	if(!highest_scar)
 		highest_scar = new
-		highest_scar.generate(L, src, add_to_scars=FALSE)
+		highest_scar.generate(limb, src, add_to_scars=FALSE)
 
 /datum/wound/brute/cut/remove_wound(ignore_limb, replaced)
 	if(!replaced && highest_scar)
@@ -111,6 +110,10 @@
 			qdel(src)
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
+
+/datum/wound/brute/cut/check_grab_treatments(obj/item/I, mob/user)
+	if(istype(I, /obj/item/gun/energy/laser))
+		return TRUE
 
 /datum/wound/brute/cut/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
@@ -172,7 +175,7 @@
 	cauterized += damage / (5 * self_penalty_mult)
 	victim.visible_message("<span class='warning'>The cuts on [victim]'s [limb.name] scar over!</span>")
 
-/// If someone is using either a cautery tool or something that can light a cigarette (heat > 300) to cauterize this cut
+/// If someone is using either a cautery tool or something with heat to cauterize this cut
 /datum/wound/brute/cut/proc/tool_cauterize(obj/item/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.5 : 1)
 	user.visible_message("<span class='danger'>[user] begins cauterizing [victim]'s [limb.name] with [I]...</span>", "<span class='danger'>You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
