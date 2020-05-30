@@ -188,6 +188,7 @@
 		return FALSE
 	var/datum/eldritch_knowledge/initialized_knowledge = new EK
 	researched_knowledge += initialized_knowledge
+	researched_knowledge[initialized_knowledge] = initialized_knowledge.name
 	initialized_knowledge.on_gain(owner.current)
 	return TRUE
 
@@ -203,17 +204,12 @@
 	return researchable_knowledge
 
 /datum/antagonist/heretic/proc/has_knowledge(datum/eldritch_knowledge/wanted)
-	for(var/X in researched_knowledge)
-		var/datum/eldritch_knowledge/searched = X
-		if(initial(wanted.name) == searched.name)
-			return TRUE
+	if(researched_knowledge[initial(wanted.name)])
+		return TRUE
 	return FALSE
 
 /datum/antagonist/heretic/proc/get_knowledge(datum/eldritch_knowledge/wanted)
-	for(var/X in researched_knowledge)
-		var/datum/eldritch_knowledge/searched = X
-		if(istype(searched,wanted))
-			return searched
+	return researched_knowledge[initial(wanted.name)] || FALSE
 
 /datum/antagonist/heretic/proc/get_all_knowledge()
 	return researched_knowledge
