@@ -115,12 +115,12 @@
 
 /datum/emote/living/carbon/circle/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
+	if(!length(user.get_empty_held_indexes()))
+		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
+		return
 	var/obj/item/circlegame/N = new(user)
 	if(user.put_in_hands(N))
 		to_chat(user, "<span class='notice'>You make a circle with your hand.</span>")
-	else
-		qdel(N)
-		to_chat(user, "<span class='warning'>You don't have any free hands to make a circle with.</span>")
 
 /datum/emote/living/carbon/slap
 	key = "slap"

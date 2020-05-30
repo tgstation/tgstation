@@ -364,7 +364,7 @@
 
 /obj/item/reagent_containers/food/snacks/burger/soylent
 	name = "soylent burger"
-	desc = "A eco-friendly burger made using upcycled low value biomass."
+	desc = "An eco-friendly burger made using upcycled low value biomass."
 	icon_state = "soylentburger"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("bun" = 2, "assistant" = 4)

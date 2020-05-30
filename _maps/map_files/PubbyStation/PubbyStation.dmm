@@ -16722,7 +16722,7 @@
 /obj/item/wallframe/camera,
 /obj/item/assault_pod/mining,
 /obj/machinery/camera{
-	c_tag = "Auxillary Base Construction";
+	c_tag = "Auxiliary Base Construction";
 	dir = 8
 	},
 /obj/machinery/light{
@@ -24927,6 +24927,7 @@
 /obj/structure/sign/departments/psychology{
 	pixel_y = -32
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/freezer,
 /area/storage/emergency/port)
 "bmk" = (
@@ -25276,6 +25277,7 @@
 "bnw" = (
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
+/obj/structure/cable,
 /turf/closed/wall,
 /area/storage/emergency/port)
 "bnx" = (
@@ -25656,6 +25658,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
 /obj/structure/chair/sofa/left,
 /obj/item/toy/plush/moth,
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "boy" = (
@@ -26092,6 +26095,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet,
 /area/medical/psychology)
 "bpB" = (
@@ -26766,6 +26770,7 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "bqY" = (
@@ -26773,6 +26778,7 @@
 	dir = 4
 	},
 /obj/machinery/holopad,
+/obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/psychology)
 "bqZ" = (
@@ -51106,7 +51112,7 @@
 /area/hallway/primary/central)
 "hDG" = (
 /obj/machinery/door/airlock/engineering{
-	name = "Auxillary Base Construction";
+	name = "Auxiliary Base Construction";
 	req_one_access_txt = "32;47;48"
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden,
@@ -51746,7 +51752,7 @@
 "iPO" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "aux_base_shutters";
-	name = "Auxillary Base Shutters"
+	name = "Auxiliary Base Shutters"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -53870,7 +53876,7 @@
 /obj/machinery/power/apc{
 	areastring = "/area/construction/mining/aux_base";
 	dir = 8;
-	name = "Auxillary Base Construction APC";
+	name = "Auxiliary Base Construction APC";
 	pixel_x = -25
 	},
 /obj/structure/cable,
@@ -56134,7 +56140,7 @@
 /area/science/genetics)
 "scp" = (
 /obj/machinery/door/airlock/maintenance{
-	name = "Auxillary Base Maintenance";
+	name = "Auxiliary Base Maintenance";
 	req_access_txt = "12";
 	req_one_access_txt = "32;47;48"
 	},
@@ -57350,7 +57356,7 @@
 "uCS" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "aux_base_shutters";
-	name = "Auxillary Base Shutters"
+	name = "Auxiliary Base Shutters"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,

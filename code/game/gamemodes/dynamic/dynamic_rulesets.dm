@@ -141,9 +141,9 @@
 /datum/dynamic_ruleset/proc/pre_execute()
 	SHOULD_CALL_PARENT(TRUE)
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
-		restricted_roles += protected_roles
+		restricted_roles |= protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))
-		restricted_roles += "Assistant"
+		restricted_roles |= "Assistant"
 	return TRUE
 
 /// Called on post_setup on roundstart and when the rule executes on midround and latejoin.

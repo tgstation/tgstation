@@ -120,7 +120,7 @@
 		UnregisterSignal(weapon, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING))
 	if(overlay)
 		var/atom/A = parent
-		A.cut_overlay(overlay, TRUE)
+		UnregisterSignal(A,COMSIG_ATOM_UPDATE_OVERLAYS)
 		qdel(overlay)
 
 	return ..()
@@ -312,14 +312,15 @@
 			pixelX -= 2
 
 	if(throwingdatum.init_dir in list(NORTH,  WEST, NORTHWEST, SOUTHWEST))
-		overlay = mutable_appearance(icon=weapon.righthand_file,icon_state=weapon.item_state)
+		overlay = mutable_appearance(icon=weapon.righthand_file,icon_state=weapon.inhand_icon_state)
 	else
-		overlay = mutable_appearance(icon=weapon.lefthand_file,icon_state=weapon.item_state)
+		overlay = mutable_appearance(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state)
 
 	var/matrix/M = matrix()
 	M.Translate(pixelX, pixelY)
 	overlay.transform = M
-	hit.add_overlay(overlay, TRUE)
+	RegisterSignal(hit,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
+	hit.update_icon()
 
 	if(harmful)
 		hit.visible_message("<span class='danger'>[weapon] embeds itself in [hit]!</span>")
@@ -332,6 +333,8 @@
 	else
 		hit.visible_message("<span class='danger'>[weapon] sticks itself to [hit]!</span>")
 
+/datum/component/embedded/proc/apply_overlay(atom/source, list/overlay_list)
+	overlay_list += overlay
 
 /datum/component/embedded/proc/examineTurf(datum/source, mob/user, list/examine_list)
 	if(harmful)
