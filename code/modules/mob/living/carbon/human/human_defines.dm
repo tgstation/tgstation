@@ -63,3 +63,5 @@
 	var/account_id
 
 	var/hardcore_survival_score = 0
+	/// For agendered spessmen, which body type to use
+	var/body_type = MALE

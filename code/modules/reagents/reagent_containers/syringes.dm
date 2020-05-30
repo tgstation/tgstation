@@ -2,7 +2,7 @@
 	name = "syringe"
 	desc = "A syringe that can hold up to 15 units."
 	icon = 'icons/obj/syringe.dmi'
-	item_state = "syringe_0"
+	inhand_icon_state = "syringe_0"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	icon_state = "0"
@@ -158,7 +158,7 @@
 /obj/item/reagent_containers/syringe/update_icon_state()
 	var/rounded_vol = get_rounded_vol()
 	icon_state = "[rounded_vol]"
-	item_state = "syringe_[rounded_vol]"
+	inhand_icon_state = "syringe_[rounded_vol]"
 
 /obj/item/reagent_containers/syringe/update_overlays()
 	. = ..()

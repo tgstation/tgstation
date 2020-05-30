@@ -610,4 +610,9 @@
 	desc = "This informational poster teaches the viewer what carbon dioxide is."
 	icon_state = "poster35_legit"
 
+/obj/structure/sign/poster/official/dick_gum
+	name = "Dick Gumshue"
+	desc = "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
+	icon_state = "poster36_legit"
+
 #undef PLACE_SPEED

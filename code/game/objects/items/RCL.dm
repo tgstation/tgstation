@@ -3,7 +3,7 @@
 	desc = "A device used to rapidly deploy pipe cleaners. It has screws on the side which can be removed to slide off the pipe cleaners. Do not use without insulation!"
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rcl-0"
-	item_state = "rcl-0"
+	inhand_icon_state = "rcl-0"
 	var/obj/structure/pipe_cleaner/last
 	var/obj/item/stack/pipe_cleaner_coil/loaded
 	opacity = FALSE
@@ -111,21 +111,21 @@
 /obj/item/rcl/update_icon_state()
 	if(!loaded)
 		icon_state = "rcl-0"
-		item_state = "rcl-0"
+		inhand_icon_state = "rcl-0"
 		return
 	switch(loaded.amount)
 		if(61 to INFINITY)
 			icon_state = "rcl-30"
-			item_state = "rcl"
+			inhand_icon_state = "rcl"
 		if(31 to 60)
 			icon_state = "rcl-20"
-			item_state = "rcl"
+			inhand_icon_state = "rcl"
 		if(1 to 30)
 			icon_state = "rcl-10"
-			item_state = "rcl"
+			inhand_icon_state = "rcl"
 		else
 			icon_state = "rcl-0"
-			item_state = "rcl-0"
+			inhand_icon_state = "rcl-0"
 
 /obj/item/rcl/proc/is_empty(mob/user, loud = 1)
 	update_icon()
@@ -328,12 +328,12 @@
 /obj/item/rcl/ghetto/update_icon_state()
 	if(!loaded)
 		icon_state = "rclg-0"
-		item_state = "rclg-0"
+		inhand_icon_state = "rclg-0"
 		return
 	switch(loaded.amount)
 		if(1 to INFINITY)
 			icon_state = "rclg-1"
-			item_state = "rcl"
+			inhand_icon_state = "rcl"
 		else
 			icon_state = "rclg-1"
-			item_state = "rclg-1"
+			inhand_icon_state = "rclg-1"

@@ -132,7 +132,7 @@
 	name = "dueling pistol"
 	desc = "High-tech dueling pistol. Launches chaff and projectile according to preset settings."
 	icon_state = "dueling_pistol"
-	item_state = "gun"
+	inhand_icon_state = "gun"
 	ammo_x_offset = 2
 	w_class = WEIGHT_CLASS_SMALL
 	ammo_type = list(/obj/item/ammo_casing/energy/duel)
@@ -306,7 +306,7 @@
 	name = "dueling pistol case"
 	desc = "Let's solve this like gentlespacemen."
 	icon_state = "medalbox+l"
-	item_state = "syringe_kit"
+	inhand_icon_state = "syringe_kit"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	w_class = WEIGHT_CLASS_NORMAL

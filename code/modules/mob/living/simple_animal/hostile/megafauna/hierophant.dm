@@ -456,6 +456,7 @@ Difficulty: Hard
 				else
 					burst_range = 3
 					INVOKE_ASYNC(src, .proc/burst, get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
+				OpenFire()
 			else
 				devour(L)
 		else
