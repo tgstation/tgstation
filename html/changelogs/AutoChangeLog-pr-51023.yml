@@ -1,0 +1,6 @@
+author: "Shadark"
+delete-after: True
+changes: 
+  - rscadd: "Plant analyzer can now be used on planted glowshrooms."
+  - tweak: "Planted glowshrooms are more influenced by their stats."
+  - balance: "Planted glowshrooms expand more rapidly, but decay over time."
