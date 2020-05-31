@@ -21,7 +21,7 @@
 
 /obj/structure/blob/shield/update_icon()
 	..()
-	if(obj_integrity < max_integrity * 0.5)
+	if(atom_integrity < max_integrity * 0.5)
 		icon_state = "[initial(icon_state)]_damaged"
 		name = "weakened [initial(name)]"
 		desc = "[damaged_desc]"

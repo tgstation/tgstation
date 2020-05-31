@@ -402,7 +402,7 @@
 	N.dna_lock = M.dna_lock
 	N.maint_access = M.maint_access
 	N.strafe = M.strafe
-	N.obj_integrity = M.obj_integrity //This is not a repair tool
+	N.atom_integrity = M.atom_integrity //This is not a repair tool
 	if (M.name != "\improper APLU MK-I \"Ripley\"")
 		N.name = M.name
 	M.wreckage = 0

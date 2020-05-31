@@ -10,7 +10,7 @@
 
 /obj/mecha/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		spark_system.start()
 		switch(damage_flag)
 			if("fire")
@@ -23,7 +23,7 @@
 			occupant_message("<span class='userdanger'>Taking damage!</span>")
 		log_message("Took [damage_amount] points of damage. Damage type: [damage_type]", LOG_MECHA)
 
-/obj/mecha/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/mecha/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	. = ..()
 	if(!damage_amount)
 		return 0
@@ -304,12 +304,12 @@
 		clearInternalDamage(MECHA_INT_TANK_BREACH)
 		to_chat(user, "<span class='notice'>You repair the damaged gas tank.</span>")
 		return
-	if(obj_integrity < max_integrity)
+	if(atom_integrity < max_integrity)
 		if(!W.use_tool(src, user, 0, volume=50, amount=1))
 			return
 		user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to [src].</span>")
-		obj_integrity += min(10, max_integrity-obj_integrity)
-		if(obj_integrity == max_integrity)
+		atom_integrity += min(10, max_integrity-atom_integrity)
+		if(atom_integrity == max_integrity)
 			to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return
 	to_chat(user, "<span class='warning'>The [name] is at full integrity!</span>")
@@ -332,7 +332,7 @@
 		. = ..()
 
 /obj/mecha/proc/full_repair(charge_cell)
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	if(cell && charge_cell)
 		cell.charge = cell.maxcharge
 	if(internal_damage & MECHA_INT_FIRE)
@@ -361,7 +361,7 @@
 				visual_effect_icon = ATTACK_EFFECT_MECHTOXIN
 	..()
 
-/obj/mecha/obj_destruction()
+/obj/mecha/atom_destruction()
 	if(wreckage)
 		var/mob/living/silicon/ai/AI
 		if(isAI(occupant))

@@ -77,7 +77,7 @@
 					return
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
 				machine_stat &= ~BROKEN
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				update_icon()
 
 		else
@@ -101,7 +101,7 @@
 		return ..()
 
 /obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
-	obj_break()
+	atom_break()
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
 	. = ..()

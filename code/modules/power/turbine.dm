@@ -79,7 +79,7 @@
 	inturf = get_step(src, dir)
 	locate_machinery()
 	if(!turbine)
-		obj_break()
+		atom_break()
 
 #define COMPFRICTION 5e5
 
@@ -114,7 +114,7 @@
 			machine_stat &= ~BROKEN
 		else
 			to_chat(user, "<span class='alert'>Turbine not connected.</span>")
-			obj_break()
+			atom_break()
 		return
 
 	default_deconstruction_crowbar(I)
@@ -173,7 +173,7 @@
 	outturf = get_step(src, dir)
 	locate_machinery()
 	if(!compressor)
-		obj_break()
+		atom_break()
 	connect_to_network()
 
 /obj/machinery/power/turbine/RefreshParts()
@@ -244,7 +244,7 @@
 			machine_stat &= ~BROKEN
 		else
 			to_chat(user, "<span class='alert'>Compressor not connected.</span>")
-			obj_break()
+			atom_break()
 		return
 
 	default_deconstruction_crowbar(I)

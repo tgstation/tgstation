@@ -184,7 +184,11 @@
 		if(impact_effect_type && !hitscan)
 			new impact_effect_type(target_loca, hitx, hity)
 
+		var/penetrate = FALSE
+		if(armour_penetration)
+			penetrate = TRUE
 		W.add_dent(WALL_DENT_SHOT, hitx, hity)
+		W.take_damage(damage, damage_type, flag, FALSE, dir, penetrate)
 
 		return BULLET_ACT_HIT
 

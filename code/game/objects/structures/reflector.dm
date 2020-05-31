@@ -93,7 +93,7 @@
 				new buildstacktype(drop_location(), buildstackamount)
 			qdel(src)
 	else if(W.tool_behaviour == TOOL_WELDER)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(!W.tool_start_check(user, amount=0))
 				return
 
@@ -101,7 +101,7 @@
 								"<span class='notice'>You begin repairing [src]...</span>",
 								"<span class='hear'>You hear welding.</span>")
 			if(W.use_tool(src, user, 40, volume=40))
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				user.visible_message("<span class='notice'>[user] repairs [src].</span>", \
 									"<span class='notice'>You finish repairing [src].</span>")
 

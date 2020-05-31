@@ -239,7 +239,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 	if(!(machine_stat & (NOPOWER|BROKEN)) && !GLOB.news_network.wanted_issue.active && alert)
 		. += "newscaster_alert"
 
-	var/hp_percent = obj_integrity * 100 /max_integrity
+	var/hp_percent = atom_integrity * 100 /max_integrity
 	switch(hp_percent)
 		if(75 to 100)
 			return
@@ -733,7 +733,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 				if(!(machine_stat & BROKEN))
 					return
 				to_chat(user, "<span class='notice'>You repair [src].</span>")
-				obj_integrity = max_integrity
+				atom_integrity = max_integrity
 				machine_stat &= ~BROKEN
 				update_icon()
 		else
@@ -759,7 +759,7 @@ GLOBAL_LIST_EMPTY(allCasters)
 		new /obj/item/shard(loc)
 	qdel(src)
 
-/obj/machinery/newscaster/obj_break(damage_flag)
+/obj/machinery/newscaster/atom_break(damage_flag)
 	. = ..()
 	if(.)
 		playsound(loc, 'sound/effects/glassbr3.ogg', 100, TRUE)

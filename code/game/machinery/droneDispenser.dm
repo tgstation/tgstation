@@ -239,12 +239,12 @@
 			"<span class='notice'>You restore [src] to operation.</span>")
 
 		machine_stat &= ~BROKEN
-		obj_integrity = max_integrity
+		atom_integrity = max_integrity
 		update_icon()
 	else
 		return ..()
 
-/obj/machinery/droneDispenser/obj_break(damage_flag)
+/obj/machinery/droneDispenser/atom_break(damage_flag)
 	. = ..()
 	if(!.)
 		return

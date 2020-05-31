@@ -10,7 +10,7 @@
 	reagent = /datum/reagent/blob/energized_jelly
 
 /datum/blobstrain/reagent/energized_jelly/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag)
-	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.obj_integrity - damage <= 0 && prob(10))
+	if((damage_flag == "melee" || damage_flag == "bullet" || damage_flag == "laser") && B.atom_integrity - damage <= 0 && prob(10))
 		do_sparks(rand(2, 4), FALSE, B)
 	return ..()
 

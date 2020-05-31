@@ -21,12 +21,12 @@
 	D.vehicle_move_delay = 1.75
 	D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 4), TEXT_SOUTH = list(0, 4), TEXT_EAST = list(0, 4), TEXT_WEST = list( 0, 4)))
 
-/obj/vehicle/ridden/secway/obj_break()
+/obj/vehicle/ridden/secway/atom_break()
 	START_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/vehicle/ridden/secway/process()
-	if(obj_integrity >= integrity_failure * max_integrity)
+	if(atom_integrity >= integrity_failure * max_integrity)
 		return PROCESS_KILL
 	if(prob(20))
 		return
@@ -36,11 +36,11 @@
 
 /obj/vehicle/ridden/secway/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour == TOOL_WELDER && user.a_intent != INTENT_HARM)
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			if(W.use_tool(src, user, 0, volume = 50, amount = 1))
 				user.visible_message("<span class='notice'>[user] repairs some damage to [name].</span>", "<span class='notice'>You repair some damage to \the [src].</span>")
-				obj_integrity += min(10, max_integrity-obj_integrity)
-				if(obj_integrity == max_integrity)
+				atom_integrity += min(10, max_integrity-atom_integrity)
+				if(atom_integrity == max_integrity)
 					to_chat(user, "<span class='notice'>It looks to be fully repaired now.</span>")
 		return TRUE
 
@@ -79,7 +79,7 @@
 	if(eddie_murphy)
 		. += "<span class='warning'>Something appears to be stuck in its exhaust...</span>"
 
-/obj/vehicle/ridden/secway/obj_destruction()
+/obj/vehicle/ridden/secway/atom_destruction()
 	explosion(src, -1, 0, 2, 4, flame_range = 3)
 	return ..()
 

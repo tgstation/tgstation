@@ -53,7 +53,7 @@
 		unwrenched_plaque.desc = desc
 		unwrenched_plaque.engraved = engraved
 	unwrenched_plaque.icon_state = icon_state
-	unwrenched_plaque.obj_integrity = obj_integrity
+	unwrenched_plaque.atom_integrity = atom_integrity
 	unwrenched_plaque.setDir(dir)
 	qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
 	return TRUE
@@ -62,7 +62,7 @@
 	. = ..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, "<span class='warning'>This plaque is already in perfect condition.</span>")
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -73,14 +73,14 @@
 		return TRUE
 	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
 						 "<span class='notice'>You finish repairing [src].</span>")
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/item/plaque/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, "<span class='warning'>This plaque is already in perfect condition.</span>")
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -91,7 +91,7 @@
 		return TRUE
 	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
 						 "<span class='notice'>You finish repairing [src].</span>")
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/structure/plaque/attackby(obj/item/I, mob/user, params)
@@ -183,6 +183,6 @@
 		placed_plaque.desc = desc
 		placed_plaque.engraved = engraved
 	placed_plaque.icon_state = icon_state
-	placed_plaque.obj_integrity = obj_integrity
+	placed_plaque.atom_integrity = atom_integrity
 	placed_plaque.setDir(dir)
 	qdel(src)

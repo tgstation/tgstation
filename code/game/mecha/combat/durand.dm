@@ -137,7 +137,7 @@ own integrity back to max. Shield is automatically dropped if we run out of powe
 	invisibility = INVISIBILITY_MAXIMUM //no showing on right-click
 	pixel_y = 4
 	max_integrity = 10000
-	obj_integrity = 10000
+	atom_integrity = 10000
 	anchored = TRUE
 	var/obj/mecha/combat/durand/chassis ///Our link back to the durand
 	var/switching = FALSE ///To keep track of things during the animation
@@ -197,10 +197,10 @@ the shield is disabled by means other than the action button (like running out o
 		return
 	. = ..()
 	flick("shield_impact", src)
-	if(!chassis.use_power((max_integrity - obj_integrity) * 100))
+	if(!chassis.use_power((max_integrity - atom_integrity) * 100))
 		chassis.cell?.charge = 0
 		chassis.defense_action.Activate(forced_state = TRUE)
-	obj_integrity = 10000
+	atom_integrity = 10000
 
 /obj/durand_shield/play_attack_sound()
 	playsound(src, 'sound/mecha/mech_shield_deflect.ogg', 100, TRUE)

@@ -48,7 +48,7 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	if(resource_delay <= world.time)
 		resource_delay = world.time + 10 // 1 second
 		overmind.add_points(point_rate)
-	overmind.blob_core.obj_integrity = min(overmind.blob_core.max_integrity, overmind.blob_core.obj_integrity+core_regen)
+	overmind.blob_core.atom_integrity = min(overmind.blob_core.max_integrity, overmind.blob_core.atom_integrity+core_regen)
 
 /datum/blobstrain/proc/attack_living(mob/living/L, list/nearby_blobs) // When the blob attacks people
 	send_message(L)

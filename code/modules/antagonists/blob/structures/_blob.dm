@@ -124,7 +124,7 @@
 	if(pulse_timestamp <= world.time)
 		ConsumeTile()
 		if(heal_timestamp <= world.time)
-			obj_integrity = min(max_integrity, obj_integrity+health_regen)
+			atom_integrity = min(max_integrity, atom_integrity+health_regen)
 			heal_timestamp = world.time + 20
 		update_icon()
 		pulse_timestamp = world.time + 10
@@ -250,7 +250,7 @@
 /obj/structure/blob/proc/typereport(mob/user)
 	RETURN_TYPE(/list)
 	return list("<b>Blob Type:</b> <span class='notice'>[uppertext(initial(name))]</span>",
-							"<b>Health:</b> <span class='notice'>[obj_integrity]/[max_integrity]</span>",
+							"<b>Health:</b> <span class='notice'>[atom_integrity]/[max_integrity]</span>",
 							"<b>Effects:</b> <span class='notice'>[scannerreport()]</span>")
 
 
@@ -269,7 +269,7 @@
 		if(BURN)
 			playsound(src.loc, 'sound/items/welder.ogg', 100, TRUE)
 
-/obj/structure/blob/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/structure/blob/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	switch(damage_type)
 		if(BRUTE)
 			damage_amount *= brute_resist
@@ -288,10 +288,10 @@
 
 /obj/structure/blob/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
-	if(. && obj_integrity > 0)
+	if(. && atom_integrity > 0)
 		update_icon()
 
-/obj/structure/blob/obj_destruction(damage_flag)
+/obj/structure/blob/atom_destruction(damage_flag)
 	if(overmind)
 		overmind.blobstrain.death_reaction(src, damage_flag)
 	..()
@@ -334,19 +334,19 @@
 	name = "normal blob"
 	icon_state = "blob"
 	light_range = 0
-	obj_integrity = 21 //doesn't start at full health
+	atom_integrity = 21 //doesn't start at full health
 	max_integrity = 25
 	health_regen = 1
 	brute_resist = 0.25
 
 /obj/structure/blob/normal/scannerreport()
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		return "Currently weak to brute damage."
 	return "N/A"
 
 /obj/structure/blob/normal/update_icon()
 	..()
-	if(obj_integrity <= 15)
+	if(atom_integrity <= 15)
 		icon_state = "blob_damaged"
 		name = "fragile blob"
 		desc = "A thin lattice of slightly twitching tendrils."

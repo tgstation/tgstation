@@ -198,7 +198,7 @@
 			F.constructionStep = CONSTRUCTION_PANEL_OPEN
 		else
 			F.constructionStep = CONSTRUCTION_WIRES_EXPOSED
-			F.obj_integrity = F.max_integrity * 0.5
+			F.atom_integrity = F.max_integrity * 0.5
 		F.update_icon()
 	qdel(src)
 

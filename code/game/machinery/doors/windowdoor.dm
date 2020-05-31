@@ -44,7 +44,7 @@
 /obj/machinery/door/window/Destroy()
 	density = FALSE
 	QDEL_LIST(debris)
-	if(obj_integrity == 0)
+	if(atom_integrity == 0)
 		playsound(src, "shatter", 70, TRUE)
 	electronics = null
 	return ..()

@@ -347,7 +347,7 @@
 			continue
 		if(isstructure(atm))
 			var/obj/structure/S = atm
-			S.obj_integrity = S.max_integrity
+			S.atom_integrity = S.max_integrity
 		else if(!is_type_in_typecache(atm, ctf_object_typecache))
 			qdel(atm)
 

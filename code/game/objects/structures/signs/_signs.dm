@@ -86,7 +86,7 @@
 		unwrenched_sign.sign_path = type
 		unwrenched_sign.set_custom_materials(custom_materials) //This is here so picture frames and wooden things don't get messed up.
 		unwrenched_sign.is_editable = is_editable
-	unwrenched_sign.obj_integrity = obj_integrity //Transfer how damaged it is.
+	unwrenched_sign.atom_integrity = atom_integrity //Transfer how damaged it is.
 	unwrenched_sign.setDir(dir)
 	qdel(src) //The sign structure on the wall goes poof and only the sign item from unwrenching remains.
 	return TRUE
@@ -95,7 +95,7 @@
 	. = ..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, "<span class='warning'>This sign is already in perfect condition.</span>")
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -106,14 +106,14 @@
 		return TRUE
 	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
 						 "<span class='notice'>You finish repairing [src].</span>")
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/item/sign/welder_act(mob/living/user, obj/item/I)
 	. = ..()
 	if(user.a_intent == INTENT_HARM)
 		return FALSE
-	if(obj_integrity == max_integrity)
+	if(atom_integrity == max_integrity)
 		to_chat(user, "<span class='warning'>This sign is already in perfect condition.</span>")
 		return TRUE
 	if(!I.tool_start_check(user, amount=0))
@@ -124,7 +124,7 @@
 		return TRUE
 	user.visible_message("<span class='notice'>[user] finishes repairing [src].</span>", \
 						 "<span class='notice'>You finish repairing [src].</span>")
-	obj_integrity = max_integrity
+	atom_integrity = max_integrity
 	return TRUE
 
 /obj/structure/sign/attackby(obj/item/I, mob/user, params)
@@ -150,7 +150,7 @@
 		var/obj/structure/sign/changedsign = new sign_type(get_turf(src))
 		changedsign.pixel_x = pixel_x
 		changedsign.pixel_y = pixel_y
-		changedsign.obj_integrity = obj_integrity
+		changedsign.atom_integrity = atom_integrity
 		qdel(src)
 		user.visible_message("<span class='notice'>[user] finishes changing the sign.</span>", \
 					 "<span class='notice'>You finish changing the sign.</span>")
@@ -206,7 +206,7 @@
 	user.visible_message("<span class='notice'>[user] fastens [src] to [target_turf].</span>", \
 						 "<span class='notice'>You attach the sign to [target_turf].</span>")
 	playsound(target_turf, 'sound/items/deconstruct.ogg', 50, TRUE)
-	placed_sign.obj_integrity = obj_integrity
+	placed_sign.atom_integrity = atom_integrity
 	placed_sign.setDir(dir)
 	qdel(src)
 

@@ -83,7 +83,7 @@
 		var/obj/item/stack/sheet/cloth/C = W
 		C.use(1)
 		update_clothes_damaged_state(FALSE)
-		obj_integrity = max_integrity
+		atom_integrity = max_integrity
 		to_chat(user, "<span class='notice'>You fix the damage on [src] with [C].</span>")
 		return 1
 	return ..()
@@ -224,7 +224,7 @@
 			. = "X"
 	return .
 
-/obj/item/clothing/obj_break(damage_flag)
+/obj/item/clothing/atom_break(damage_flag)
 	if(!damaged_clothes)
 		update_clothes_damaged_state(TRUE)
 	if(ismob(loc)) //It's not important enough to warrant a message if nobody's wearing it
@@ -403,7 +403,7 @@ BLIND     // can't see anything
 	return 0
 
 
-/obj/item/clothing/obj_destruction(damage_flag)
+/obj/item/clothing/atom_destruction(damage_flag)
 	if(damage_flag == "bomb" || damage_flag == "melee")
 		var/turf/T = get_turf(src)
 		//so the shred survives potential turf change from the explosion.
@@ -413,14 +413,14 @@ BLIND     // can't see anything
 		..()
 /obj/item/clothing/proc/set_sensor_glob()
 	var/mob/living/carbon/human/H = src.loc
-	
+
 	if (istype(H.w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/U = H.w_uniform
 		if (U.has_sensor && U.sensor_mode && U.has_sensor != BROKEN_SENSORS)
 			GLOB.suit_sensors_list |= H
-			
-		else 
+
+		else
 			GLOB.suit_sensors_list -= H
-		
-	else 
-		GLOB.suit_sensors_list -= H	
+
+	else
+		GLOB.suit_sensors_list -= H

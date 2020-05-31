@@ -496,7 +496,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 	if(time_charged == max_charge)
 		var/area/A = get_area(src)
 		priority_announce("Spatial object has reached peak energy charge in [A.map_name], please stand-by.", "Central Command Spatial Corps")
-		obj_integrity = INFINITY
+		atom_integrity = INFINITY
 		desc = "A rift akin to the ones space carp use to travel long distances.  This one is fully charged, and is capable of bringing many carp to the station's location."
 		icon_state = "carp_rift_charged"
 		light_color = LIGHT_COLOR_YELLOW

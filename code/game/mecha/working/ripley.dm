@@ -108,7 +108,7 @@
 /obj/mecha/working/ripley/mining
 	desc = "An old, dusty mining Ripley."
 	name = "\improper APLU \"Miner\""
-	obj_integrity = 75 //Low starting health
+	atom_integrity = 75 //Low starting health
 
 /obj/mecha/working/ripley/mining/Initialize()
 	. = ..()

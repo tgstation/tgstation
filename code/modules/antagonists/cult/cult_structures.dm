@@ -38,17 +38,17 @@
 	if(iscultist(user) || isobserver(user))
 		var/t_It = p_they(TRUE)
 		var/t_is = p_are()
-		return "<span class='cult'>[t_It] [t_is] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>"
+		return "<span class='cult'>[t_It] [t_is] at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.</span>"
 	return ..()
 
 /obj/structure/destructible/cult/attack_animal(mob/living/simple_animal/M)
 	if(istype(M, /mob/living/simple_animal/hostile/construct/artificer))
-		if(obj_integrity < max_integrity)
+		if(atom_integrity < max_integrity)
 			M.changeNext_move(CLICK_CD_MELEE)
-			obj_integrity = min(max_integrity, obj_integrity + 5)
+			atom_integrity = min(max_integrity, atom_integrity + 5)
 			Beam(M, icon_state="sendbeam", time=4)
 			M.visible_message("<span class='danger'>[M] repairs \the <b>[src]</b>.</span>", \
-				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[round(obj_integrity * 100 / max_integrity)]%</b> stability.</span>")
+				"<span class='cult'>You repair <b>[src]</b>, leaving [p_they()] at <b>[round(atom_integrity * 100 / max_integrity)]%</b> stability.</span>")
 		else
 			to_chat(M, "<span class='cult'>You cannot repair [src], as [p_theyre()] undamaged!</span>")
 	else

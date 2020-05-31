@@ -123,7 +123,7 @@
 		return 0
 	if(!M.has_charge(required_mecha_charge))
 		return 0
-	if(M.obj_integrity < M.max_integrity*0.5)
+	if(M.atom_integrity < M.max_integrity*0.5)
 		return 0
 	return 1
 
@@ -217,7 +217,7 @@
 				return
 
 			//Too Much Damage - Eject
-			if(mecha.obj_integrity < mecha.max_integrity*0.1)
+			if(mecha.atom_integrity < mecha.max_integrity*0.1)
 				exit_mecha(mecha)
 				return
 
@@ -227,7 +227,7 @@
 					mecha.smoke_action.Activate()
 
 			//Heavy damage - Defense Power or Retreat
-			if(mecha.obj_integrity < mecha.max_integrity*0.25)
+			if(mecha.atom_integrity < mecha.max_integrity*0.25)
 				if(prob(defense_mode_chance))
 					if(mecha.defense_action && mecha.defense_action.owner && !mecha.defense_mode)
 						mecha.leg_overload_mode = 0

@@ -5,6 +5,7 @@
 	icon_state = "r_wall"
 	opacity = 1
 	density = TRUE
+	max_integrity = 1000 //2x the integrity of a plain wall
 
 	var/d_state = INTACT
 	hardness = 10

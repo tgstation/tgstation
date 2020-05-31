@@ -291,7 +291,7 @@
 
 /obj/mecha/examine(mob/user)
 	. = ..()
-	var/integrity = obj_integrity*100/max_integrity
+	var/integrity = atom_integrity*100/max_integrity
 	switch(integrity)
 		if(85 to 100)
 			. += "It's fully intact."
@@ -405,7 +405,7 @@
 				else
 					occupant.throw_alert("charge", /obj/screen/alert/emptycell)
 
-		var/integrity = obj_integrity/max_integrity*100
+		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
 				occupant.throw_alert("mech damage", /obj/screen/alert/low_mech_integrity, 1)
@@ -685,7 +685,7 @@
 	if(!islist(possible_int_damage) || !length(possible_int_damage))
 		return
 	if(prob(20))
-		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
+		if(ignore_threshold || atom_integrity*100/max_integrity < internal_damage_threshold)
 			for(var/T in possible_int_damage)
 				if(internal_damage & T)
 					possible_int_damage -= T
@@ -694,7 +694,7 @@
 				if(int_dam_flag)
 					setInternalDamage(int_dam_flag)
 	if(prob(5))
-		if(ignore_threshold || obj_integrity*100/max_integrity < internal_damage_threshold)
+		if(ignore_threshold || atom_integrity*100/max_integrity < internal_damage_threshold)
 			if (length(equipment))
 				var/obj/item/mecha_parts/mecha_equipment/ME = pick(equipment)
 				qdel(ME)
@@ -917,7 +917,7 @@
 	visible_message("<span class='notice'>[user] starts to climb into [name].</span>")
 
 	if(do_after(user, enter_delay, target = src))
-		if(obj_integrity <= 0)
+		if(atom_integrity <= 0)
 			to_chat(user, "<span class='warning'>You cannot get in the [name], it has been destroyed!</span>")
 		else if(occupant)
 			to_chat(user, "<span class='danger'>[occupant] was faster! Try better next time, loser.</span>")
@@ -1080,7 +1080,7 @@
 
 	if(L && L.client)
 		L.update_mouse_pointer()
-		L.client.view_size.resetToDefault() 
+		L.client.view_size.resetToDefault()
 		zoom_mode = 0
 
 /////////////////////////

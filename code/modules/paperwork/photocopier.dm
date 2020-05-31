@@ -251,7 +251,7 @@
 	else
 		return ..()
 
-/obj/machinery/photocopier/obj_break(damage_flag)
+/obj/machinery/photocopier/atom_break(damage_flag)
 	. = ..()
 	if(. && toner > 0)
 		new /obj/effect/decal/cleanable/oil(get_turf(src))

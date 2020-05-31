@@ -37,6 +37,16 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
+	//integrity stuff
+	if(atom_integrity == null)
+		atom_integrity = max_integrity
+	if (islist(armor))
+		armor = getArmor(arglist(armor))
+	else if (!armor)
+		armor = getArmor()
+	else if (!istype(armor, /datum/armor))
+		stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
+
 /turf/closed/wall/Destroy()
 	if(is_station_level(z))
 		GLOB.station_turfs -= src
@@ -52,7 +62,10 @@
 /turf/closed/wall/attack_tk()
 	return
 
-/turf/closed/wall/proc/dismantle_wall(devastated=0, explode=0)
+/turf/closed/wall/atom_destruction(damage_flag)
+	dismantle_wall(TRUE)
+
+/turf/closed/wall/proc/dismantle_wall(devastated=FALSE, explode=FALSE)
 	if(devastated)
 		devastate_wall()
 	else
@@ -138,16 +151,14 @@
 
 /turf/closed/wall/attack_hulk(mob/user)
 	..()
-	if(prob(hardness))
-		playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
-		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		dismantle_wall(1)
-	else
-		playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
-		add_dent(WALL_DENT_HIT)
-		user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
-					"<span class='danger'>You smash \the [src]!</span>", \
-					"<span class='hear'>You hear a booming smash!</span>")
+	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
+	user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
+	playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+	add_dent(WALL_DENT_HIT)
+	user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
+				"<span class='danger'>You smash \the [src]!</span>", \
+				"<span class='hear'>You hear a booming smash!</span>")
+	take_damage(100, BRUTE, "melee")
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)

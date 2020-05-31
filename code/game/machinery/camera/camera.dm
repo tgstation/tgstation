@@ -229,7 +229,7 @@
 	if(!panel_open)
 		return
 	toggle_cam(user, 1)
-	obj_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
+	atom_integrity = max_integrity //this is a pretty simplistic way to heal the camera, but there's no reason for this to be complex.
 	machine_stat &= ~BROKEN
 	I.play_tool_sound(src)
 	return TRUE
@@ -348,12 +348,12 @@
 	return ..()
 
 
-/obj/machinery/camera/run_obj_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
+/obj/machinery/camera/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
 	if(machine_stat & BROKEN)
 		return damage_amount
 	. = ..()
 
-/obj/machinery/camera/obj_break(damage_flag)
+/obj/machinery/camera/atom_break(damage_flag)
 	if(!status)
 		return
 	. = ..()
@@ -372,7 +372,7 @@
 			assembly = null
 		else
 			var/obj/item/I = new /obj/item/wallframe/camera (loc)
-			I.obj_integrity = I.max_integrity * 0.5
+			I.atom_integrity = I.max_integrity * 0.5
 			new /obj/item/stack/cable_coil(loc, 2)
 	qdel(src)
 

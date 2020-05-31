@@ -61,7 +61,7 @@
 	. = ..()
 	if(istype(I, /obj/item/reagent_containers/food/snacks/grown/banana))
 		var/obj/item/reagent_containers/food/snacks/grown/banana/banana = I
-		obj_integrity += min(banana.seed.potency, max_integrity-obj_integrity)
+		atom_integrity += min(banana.seed.potency, max_integrity-atom_integrity)
 		to_chat(user, "<span class='danger'>You use the [banana] to repair the [src]!</span>")
 		qdel(banana)
 
