@@ -20,7 +20,7 @@
 		var/pagecount = 0
 		page = text2num(page)
 		var/datum/DBQuery/query_count_admin_logs = SSdbcore.NewQuery(
-			"SELECT COUNT(id) FROM [format_table_name("admin_log")] WHERE (:target IS NULL OR ckey = :target) AND (:operation IS NULL OR operation = :operation)",
+			"SELECT COUNT(id) FROM [format_table_name("admin_log")] WHERE (:target IS NULL OR adminckey = :target) AND (:operation IS NULL OR operation = :operation)",
 			list("target" = target, "operation" = operation)
 		)
 		if(!query_count_admin_logs.warn_execute())
