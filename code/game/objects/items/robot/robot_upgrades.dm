@@ -273,7 +273,6 @@
 	require_module = 1
 	var/repair_amount = -1
 	var/repair_tick = 1
-	var/msg_cooldown = 0
 	var/on = FALSE
 	var/powercost = 10
 	var/datum/action/toggle_action
@@ -355,14 +354,14 @@
 			cyborg.cell.use(5)
 		repair_tick = 0
 
-		if((world.time - 2000) > msg_cooldown )
+		if(!TIMER_COOLDOWN_CHECK(src, COOLDOWN_BORG_SELF_REPAIR))
+			TIMER_COOLDOWN_START(src, COOLDOWN_BORG_SELF_REPAIR, 200 SECONDS)
 			var/msgmode = "standby"
 			if(cyborg.health < 0)
 				msgmode = "critical"
 			else if(cyborg.health < cyborg.maxHealth)
 				msgmode = "normal"
 			to_chat(cyborg, "<span class='notice'>Self-repair is active in <span class='boldnotice'>[msgmode]</span> mode.</span>")
-			msg_cooldown = world.time
 	else
 		deactivate_sr()
 
