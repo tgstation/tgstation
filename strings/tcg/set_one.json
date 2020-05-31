@@ -375,8 +375,8 @@
 			"resolve": 0,
 			"faction": "",
 			"summoncost": 1,
-			"cardtype": "Equipment",
-			"cardsubtype": "Armour",
+			"cardtype": "Creature",
+			"cardsubtype": "Human Worker",
 			"series": "coreset2020",
 			"rarity": "common"
 		},
