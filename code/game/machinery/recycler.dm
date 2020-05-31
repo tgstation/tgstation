@@ -46,7 +46,6 @@
 	The safety-mode light is [safety_mode ? "on" : "off"].
 	The safety-sensors status light is [obj_flags & EMAGGED ? "off" : "on"]."}
 
-
 /obj/machinery/recycler/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
@@ -140,7 +139,6 @@
 			qdel(content)
 
 /obj/machinery/recycler/proc/recycle_item(obj/item/O)
-
 	var/obj/item/grown/log/L = O
 	if(istype(L))
 		var/seed_modifier = 0
@@ -154,6 +152,7 @@
 		if (material_amount)
 			mat_container.insert_item(O, material_amount, multiplier = (amount_produced / 100))
 			mat_container.retrieve_all()
+
 
 /obj/machinery/recycler/proc/emergency_stop()
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
