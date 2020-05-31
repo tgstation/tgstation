@@ -1,4 +1,5 @@
 #!/bin/sh
+# `sh` must be used here instead of `bash` to support GitHub Desktop.
 set -e
 if command -v python3 >/dev/null 2>&1; then
 	PY=python3
