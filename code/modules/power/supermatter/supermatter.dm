@@ -149,69 +149,75 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Determines the rate of positve change in gas comp values
 	var/gas_change_rate = 0.05
 	///The list of gases we will be interacting with in process_atoms()
-	var/list/gases_we_care_about = list(/datum/gas/oxygen,
-										/datum/gas/water_vapor,
-										/datum/gas/plasma,
-										/datum/gas/carbon_dioxide,
-										/datum/gas/nitrous_oxide,
-										/datum/gas/nitrogen,
-										/datum/gas/pluoxium,
-										/datum/gas/tritium,
-										/datum/gas/bz,
-										/datum/gas/freon,
-										/datum/gas/hydrogen,
-										)
+	var/list/gases_we_care_about = list(
+		/datum/gas/oxygen,
+		/datum/gas/water_vapor,
+		/datum/gas/plasma,
+		/datum/gas/carbon_dioxide,
+		/datum/gas/nitrous_oxide,
+		/datum/gas/nitrogen,
+		/datum/gas/pluoxium,
+		/datum/gas/tritium,
+		/datum/gas/bz,
+		/datum/gas/freon,
+		/datum/gas/hydrogen,
+	)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
-	var/list/gas_comp = list(/datum/gas/oxygen = 0,
-							/datum/gas/water_vapor = 0,
-							/datum/gas/plasma = 0,
-							/datum/gas/carbon_dioxide = 0,
-							/datum/gas/nitrous_oxide = 0,
-							/datum/gas/nitrogen = 0,
-							/datum/gas/pluoxium = 0,
-							/datum/gas/tritium = 0,
-							/datum/gas/bz = 0,
-							/datum/gas/freon = 0,
-							/datum/gas/hydrogen = 0,
-							)
+	var/list/gas_comp = list(
+		/datum/gas/oxygen = 0,
+		/datum/gas/water_vapor = 0,
+		/datum/gas/plasma = 0,
+		/datum/gas/carbon_dioxide = 0,
+		/datum/gas/nitrous_oxide = 0,
+		/datum/gas/nitrogen = 0,
+		/datum/gas/pluoxium = 0,
+		/datum/gas/tritium = 0,
+		/datum/gas/bz = 0,
+		/datum/gas/freon = 0,
+		/datum/gas/hydrogen = 0,
+	)
 	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
-	var/list/gas_trans = list(/datum/gas/oxygen = OXYGEN_TRANSMIT_MODIFIER,
-							/datum/gas/water_vapor = H2O_TRANSMIT_MODIFIER,
-							/datum/gas/plasma = PLASMA_TRANSMIT_MODIFIER,
-							/datum/gas/pluoxium = PLUOXIUM_TRANSMIT_MODIFIER,
-							/datum/gas/tritium = TRITIUM_TRANSMIT_MODIFIER,
-							/datum/gas/bz = BZ_TRANSMIT_MODIFIER,
-							/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
-							)
+	var/list/gas_trans = list(
+		/datum/gas/oxygen = OXYGEN_TRANSMIT_MODIFIER,
+		/datum/gas/water_vapor = H2O_TRANSMIT_MODIFIER,
+		/datum/gas/plasma = PLASMA_TRANSMIT_MODIFIER,
+		/datum/gas/pluoxium = PLUOXIUM_TRANSMIT_MODIFIER,
+		/datum/gas/tritium = TRITIUM_TRANSMIT_MODIFIER,
+		/datum/gas/bz = BZ_TRANSMIT_MODIFIER,
+		/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
+	)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
-	var/list/gas_heat = list(/datum/gas/oxygen = OXYGEN_HEAT_PENALTY,
-							/datum/gas/water_vapor = H2O_HEAT_PENALTY,
-							/datum/gas/plasma = PLASMA_HEAT_PENALTY,
-							/datum/gas/carbon_dioxide = CO2_HEAT_PENALTY,
-							/datum/gas/nitrogen = NITROGEN_HEAT_PENALTY,
-							/datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY,
-							/datum/gas/tritium = TRITIUM_HEAT_PENALTY,
-							/datum/gas/bz = BZ_HEAT_PENALTY,
-							/datum/gas/freon = FREON_HEAT_PENALTY,
-							/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
-							)
+	var/list/gas_heat = list(
+		/datum/gas/oxygen = OXYGEN_HEAT_PENALTY,
+		/datum/gas/water_vapor = H2O_HEAT_PENALTY,
+		/datum/gas/plasma = PLASMA_HEAT_PENALTY,
+		/datum/gas/carbon_dioxide = CO2_HEAT_PENALTY,
+		/datum/gas/nitrogen = NITROGEN_HEAT_PENALTY,
+		/datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY,
+		/datum/gas/tritium = TRITIUM_HEAT_PENALTY,
+		/datum/gas/bz = BZ_HEAT_PENALTY,
+		/datum/gas/freon = FREON_HEAT_PENALTY,
+		/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
+	)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
-	var/list/gas_resist = list(/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
-								/datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE,
-								/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
-								)
+	var/list/gas_resist = list(
+		/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
+		/datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE,
+		/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
+	)
 	///The list of gases mapped against their powermix ratio
-	var/list/gas_powermix = list(/datum/gas/oxygen = 1,
-								/datum/gas/water_vapor = 1,
-								/datum/gas/plasma = 1,
-								/datum/gas/carbon_dioxide = 1,
-								/datum/gas/nitrogen = -1,
-								/datum/gas/pluoxium = -1,
-								/datum/gas/tritium = 1,
-								/datum/gas/bz = 1,
-								/datum/gas/freon = -1,
-								/datum/gas/hydrogen = 1,
-								)
+	var/list/gas_powermix = list(
+		/datum/gas/oxygen = 1,
+		/datum/gas/water_vapor = 1,
+		/datum/gas/plasma = 1,
+		/datum/gas/carbon_dioxide = 1,
+		/datum/gas/nitrogen = -1,
+		/datum/gas/pluoxium = -1,
+		/datum/gas/tritium = 1,
+		/datum/gas/bz = 1,
+		/datum/gas/freon = -1,
+		/datum/gas/hydrogen = 1,
+	)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
 	///Affects the power gain the sm experiances from heat
