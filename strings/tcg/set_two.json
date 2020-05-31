@@ -7,7 +7,7 @@
 	],
 	"cards": [
 		{
-			"id": 1,
+			"id": "xenoborg",
 			"name": "Xenoborg",
 			"desc": "With a mini-gun in one hand and a rocket launcher in the other, the Xenoborg is a failed hybridization of a Xenomorph and a cyborg.",
 			"rules": "Asimov, Hivemind",
@@ -22,7 +22,7 @@
 			"rarity": "epic"
 		},
 		{
-			"id": 2,
+			"id": "sentinel",
 			"name": "Xenomorph Sentinel",
 			"desc": "The juices from a Sentinel's neurotoxin gland pair brilliantly with a Pan-Galactic Gargle Blaster.",
 			"rules": "Hivemind",
@@ -37,7 +37,7 @@
 			"rarity": "common"
 		},
 		{
-			"id": 3,
+			"id": "drone",
 			"name": "Xenomorph Drone",
 			"desc": "Rarely seen on the frontlines, the Drone is your average worker that lays the foundation of the hive.",
 			"rules": "Hivemind",
@@ -52,7 +52,7 @@
 			"rarity": "common"
 		},
 		{
-			"id": 4,
+			"id": "hunter",
 			"name": "Xenomorph Hunter (Resin Frontier)",
 			"desc": "A rare strain of Hunter that prioritizes slaying prey over infecting them.",
 			"rules": "Hivemind",
@@ -67,7 +67,7 @@
 			"rarity": "uncommon"
 		},
 		{
-			"id": 5,
+			"id": "spitter",
 			"name": "Xenomorph Spitter",
 			"desc": "While their acid gland is too dangerous to mix with alcohol (not that it stops the marines), a Spitter's acid is useful for industry as it can melt almost anything with ease.",
 			"rules": "Hivemind",
@@ -82,7 +82,7 @@
 			"rarity": "uncommon"
 		},
 		{
-			"id": 6,
+			"id": "runner",
 			"name": "Xenomorph Runner",
 			"desc": "Running fast and dying faster, the sheer number of Runner corpses from a battle are enough to keep a research facility busy for years.",
 			"rules": "First Strike, Hivemind",
@@ -97,7 +97,7 @@
 			"rarity": "common"
 		},
 		{
-			"id": 7,
+			"id": "praetorian",
 			"name": "Xenomorph Praetorian",
 			"desc": "The Praetorian is the Queen's royal guard, never seen far from the Queen's chambers.",
 			"rules": "Hivemind",
@@ -112,7 +112,7 @@
 			"rarity": "rare"
 		},
 		{
-			"id": 8,
+			"id": "hivelord",
 			"name": "Xenomorph Hivelord",
 			"desc": "The Hivelord is the last word in construction, capable of building entire hives in a matter of seconds.",
 			"rules": "Hivemind. For two mana, tap this card and summon a 0/2 Resin Wall counter creature.",
@@ -127,7 +127,7 @@
 			"rarity": "rare"
 		},
 		{
-			"id": 9,
+			"id": "boiler",
 			"name": "Xenomorph Boiler",
 			"desc": "The Boiler is a long-range artillery machine, capable of spewing clouds of acid that melt everything in seconds.",
 			"rules": "Hivemind",
@@ -142,7 +142,7 @@
 			"rarity": "rare"
 		},
 		{
-			"id": 10,
+			"id": "ravager",
 			"name": "Xenomorph Ravager",
 			"desc": "With large scythe claws for hands, the furious Ravager goes berserk at the sight of fire.",
 			"rules": "Hivemind",
@@ -157,7 +157,7 @@
 			"rarity": "rare"
 		},
 		{
-			"id": 11,
+			"id": "crusher",
 			"name": "Xenomorph Crusher",
 			"desc": "Extensive testing has revealed that a pulse rifle is unable to penetrate a Crusher's thick armored head.",
 			"rules": "Hivemind",
@@ -172,7 +172,7 @@
 			"rarity": "rare"
 		},
 		{
-			"id": 12,
+			"id": "defender",
 			"name": "Xenomorph Defender",
 			"desc": "The Defender's armored head crest makes an excellent makeshift shield.",
 			"rules": "Defender, Hivemind",
@@ -187,7 +187,7 @@
 			"rarity": "common"
 		},
 		{
-			"id": 13,
+			"id": "warrior",
 			"name": "Xenomorph Warrior",
 			"desc": "Warriors exhibit greater cruelty than other Xeno strains, enjoying snapping a victim's limbs before finishing them off.",
 			"rules": "Hivemind",
@@ -202,7 +202,7 @@
 			"rarity": "uncommon"
 		},
 		{
-			"id": 14,
+			"id": "queen",
 			"name": "Xenomorph Queen (Resin Frontier)",
 			"desc": "The ruler of the hive. Organs from a Queen fetch a high price amongst researchers and less-than-moral surgeons.",
 			"rules": "Hivemind. For 2 mana, tap this creature and summon a 1/1 Xenomorph Brood counter creature, with Hivemind.",
@@ -217,7 +217,7 @@
 			"rarity": "epic"
 		},
 		{
-			"id": 15,
+			"id": "carrier",
 			"name": "Xenomorph Carrier",
 			"desc": "Carriers are like the Easter Bunny except the eggs they hide will kill you.",
 			"rules": "Hivemind",
@@ -232,7 +232,7 @@
 			"rarity": "uncommon"
 		},
 		{
-			"id": 16,
+			"id": "defiler",
 			"name": "Xenomorph Defiler",
 			"desc": "Instead of utilizing eggs, the Defiler prefers to inject an unknown chemical in their victim, causing a devastating infection.",
 			"rules": "",
@@ -247,7 +247,7 @@
 			"rarity": "rare"
 		},
 		{
-			"id": 17,
+			"id": "predalien",
 			"name": "Predalien",
 			"desc": "No concrete information is available on this elusive creature as no one that has seen it has lived to tell the tale.",
 			"rules": "Hivemind",
@@ -262,7 +262,7 @@
 			"rarity": "legendary"
 		},
 		{
-			"id": 18,
+			"id": "shrike",
 			"name": "Xenomorph Shrike",
 			"desc": "It is unknown why Shrikes are able to lead a Hive, but their hives are always much smaller than a Queen's.",
 			"rules": "Hivemind",
@@ -277,7 +277,7 @@
 			"rarity": "rare"
 		},
 		{
-			"id": 19,
+			"id": "bull",
 			"name": "Xenomorph Bull",
 			"desc": "Popular in illegal rodeos, a Bull's horn can pierce a reinforced wall with ease.",
 			"rules": "First Strike, Hivemind",
@@ -292,7 +292,7 @@
 			"rarity": "uncommon"
 		},
 		{
-			"id": 20,
+			"id": "hivemind",
 			"name": "Xenomorph Hivemind",
 			"desc": "Recently discovered to have sapience, this pulsating orb will dig into the earth and rapidly spread resin throughout planets.",
 			"rules": "Defender, Hivemind",
@@ -307,7 +307,7 @@
 			"rarity": "uncommon"
 		},
 		{
-			"id": 21,
+			"id": "screecher",
 			"name": "Xenomorph Screecher",
 			"desc": "The Screecher's screeches are more psychologically damaging than the resulting hearing damage.",
 			"rules": "Hivemind",
@@ -322,7 +322,7 @@
 			"rarity": "epic"
 		},
 		{
-			"id": 22,
+			"id": "creep",
 			"name": "Xenomorph Creep",
 			"desc": "This special Hunter strain prioritizes stalking its target. It evolves into a strain of Hunter that is (mercifully) rarely seen aboard space stations.",
 			"rules": "Hivemind",

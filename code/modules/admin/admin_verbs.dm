@@ -549,17 +549,32 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 /client/proc/reload_cards()
 	set name = "Reload Cards"
 	set category = "Debug"
-	reloadAllCardFiles(GLOB.card_files, GLOB.card_directory)
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	reloadAllCardFiles(SStrading_card_game.card_files, SStrading_card_game.card_directory)
 
 /client/proc/validate_cardpacks()
 	set name = "Validate Cardpacks"
 	set category = "Debug"
-	checkCardpacks(GLOB.card_packs)
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	checkCardpacks(SStrading_card_game.card_packs)
 
 /client/proc/test_cardpack_distribution()
 	set name = "Test Cardpack Distribution"
 	set category = "Debug"
-	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(GLOB.card_packs)
+	if(!check_rights(R_DEBUG))
+		return
+	if(!SStrading_card_game.loaded)
+		message_admins("The card subsystem is not currently loaded")
+		return
+	var/pack = input("Which pack should we test?", "You fucked it didn't you") as null|anything in sortList(SStrading_card_game.card_packs)
 	var/batchCount = input("How many times should we open it?", "Don't worry, I understand") as null|num
 	var/batchSize = input("How many cards per batch?", "I hope you remember to check the validation") as null|num
 	var/guar = input("Should we use the pack's guaranteed rarity? If so, how many?", "We've all been there. Man you should have seen the old system") as null|num

@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	icon_state = "runtime"
 	w_class = WEIGHT_CLASS_TINY
 	 //Unique ID, for use in lookups and storage, used to index the global datum list where the rest of the card's info is stored
-	var/id = -1
+	var/id = "code"
 	//Used along with the id for lookup
 	var/series = "coderbus"
 	///Is the card flipped?
@@ -24,7 +24,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	if(!datum_series)
 		datum_series = series
 	if(!datum_id)
-		datum_id = series
+		datum_id = id
 	var/list/L = GLOB.cached_cards[datum_series]
 	if(!L)
 		return
@@ -46,7 +46,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		desc = "It's the back of a trading card... no peeking!"
 		icon_state = "cardback"
 	else
-		var/datum/card/template = GLOB.cached_cards[series]["ALL"]["[id]"]
+		var/datum/card/template = GLOB.cached_cards[series]["ALL"][id]
 		name = template.name
 		desc = template.desc
 		icon_state = template.icon_state
@@ -205,7 +205,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 /datum/card
 	///Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD IN AS SERIES, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
-	var/id = -1
+	var/id = "coder"
 	var/name = "Coder"
 	var/desc = "Wow, a mint condition coder card! Better tell the Github all about this!"
 	///This handles any extra rules for the card, i.e. extra attributes, special effects, etc. If you've played any other card game, you know how this works.
@@ -286,23 +286,26 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		var/list/cards = pack.buildCardListWithRarity(batchSize, guaranteed)
 		for(var/id in cards)
 			totalCards++
-			cardsByCount["[id]"] += 1
+			cardsByCount[id] += 1
 	var/toSend = "Out of [totalCards] cards"
 	for(var/id in sortList(cardsByCount, /proc/cmp_num_string_asc))
 		if(id)
-			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"]["[id]"]
+			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"][id]
 			toSend += "\nID:[id] [template.name] [(cardsByCount[id] * 100) / totalCards]% Total:[cardsByCount[id]]"
 	message_admins(toSend)
 	qdel(pack)
 
 ///Empty the rarity cache so we can safely add new cards
 /proc/clearCards()
+	SStrading_card_game.loaded = FALSE
 	GLOB.cached_cards = list()
 
 ///Reloads all card files
 /proc/reloadAllCardFiles(cardFiles, directory)
 	clearCards()
 	loadAllCardFiles(cardFiles, directory)
+	SStrading_card_game.loaded = TRUE
+
 ///Loads the contents of a json file into our global card list
 /proc/loadCardFile(filename, directory = "strings/tcg")
 	var/list/json = json_decode(file2text("[directory]/[filename]"))
@@ -318,6 +321,6 @@ GLOBAL_LIST_EMPTY(cached_cards)
 			GLOB.cached_cards[c.series]["ALL"] = list()
 		if(!GLOB.cached_cards[c.series][c.rarity])
 			GLOB.cached_cards[c.series][c.rarity] = list()
-		GLOB.cached_cards[c.series][c.rarity] += "[c.id]"
+		GLOB.cached_cards[c.series][c.rarity] += c.id
 		//And series too, why not, it's semi cheap
-		GLOB.cached_cards[c.series]["ALL"]["[c.id]"] = c
+		GLOB.cached_cards[c.series]["ALL"][c.id] = c
