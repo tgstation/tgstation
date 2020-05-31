@@ -14,13 +14,18 @@
 	inhand_icon_state = "ore"
 	full_w_class = WEIGHT_CLASS_BULKY
 	singular_name = "ore chunk"
-	var/points = 0 //How many points this ore gets you from the ore redemption machine
-	var/refined_type = null //What this ore defaults to being refined into
-	var/mine_experience = 5 //How much experience do you get for mining this ore?
+	///How many points this ore gets you from the ore redemption machine
+	var/points = 0
+	///What this ore defaults to being refined into
+	var/refined_type = null
+	///How much experience do you get for mining this ore?
+	var/mine_experience = 5
 	novariants = TRUE // Ore stacks handle their icon updates themselves to keep the illusion that there's more going
 	var/list/stack_overlays
-	var/scan_state = "" //Used by mineral turfs for their scan overlay.
-	var/spreadChance = 0 //Also used by mineral turfs for spreading veins
+	///Used by mineral turfs for their scan overlay.
+	var/scan_state = ""
+	///Also used by mineral turfs for spreading veins
+	var/spreadChance = 0
 
 /obj/item/stack/ore/update_overlays()
 	. = ..()
@@ -210,6 +215,26 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	mine_experience = 3
 	scan_state = "rock_Titanium"
 	spreadChance = 5
+
+/obj/item/stack/ore/plastic
+	name = "coal ore"
+	icon_state = "Coal ore"
+	inhand_icon_state = "Coal ore"
+	singular_name = "coal ore chunk"
+	points = 6
+	custom_materials = list(/datum/material/plastic=MINERAL_MATERIAL_AMOUNT)
+	refined_type = /obj/item/stack/sheet/plastic
+	mine_experience = 2
+	scan_state = "rock_Coal"
+	spreadChance = 10
+
+GLOBAL_LIST_INIT(coal_recipes, list(\
+		new /datum/stack_recipe("lump of coke fuel", /obj/item/stack/sheet/mineral/coal, 1, 1, 50)\
+))
+
+/obj/item/stack/ore/plastic/get_main_recipes()
+	. = ..()
+	. += GLOB.coal_recipes
 
 /obj/item/stack/ore/slag
 	name = "slag"
