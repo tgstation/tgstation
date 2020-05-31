@@ -229,7 +229,7 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 			has_question_mark[column] = TRUE
 	for (var/column in special_columns)
 		columns[column] = special_columns[column]
-		has_question_mark[column] = !!findtext(special_columns[column], "?")
+		has_question_mark[column] = findtext(special_columns[column], "?")
 
 	// Prepare SQL query full of placeholders
 	var/list/query_parts = list("INSERT")

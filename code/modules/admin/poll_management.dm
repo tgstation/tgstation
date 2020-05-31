@@ -654,7 +654,7 @@
 
 	var/update_data = list()
 	for (var/k in values)
-		update_data += "[k] = values([k])"
+		update_data += "[k] = VALUES([k])"
 
 	var/datum/DBQuery/query_update_poll_option = SSdbcore.NewQuery(
 		"INSERT INTO [format_table_name("poll_option")] ([jointext(values, ",")]) VALUES (:[jointext(values, ",:")]) ON DUPLICATE KEY UPDATE [jointext(update_data, ", ")]",
