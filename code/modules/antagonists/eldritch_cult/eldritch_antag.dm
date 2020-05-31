@@ -244,12 +244,9 @@
 	explanation_text = "Sacrifice at least [target_amount] people."
 
 /datum/objective/sacrifice_ecult/check_completion()
-	var/list/datum/mind/owners = get_owners()
-	for(var/M in owners)
-		if(!M)
-			continue
-		var/datum/mind/mind = M
-		var/datum/antagonist/heretic/cultie = mind.has_antag_datum(/datum/antagonist/heretic)
-		if(!cultie)
-			continue
-		return cultie.total_sacrifices >= target_amount
+	if(!owner)
+		return FALSE
+	var/datum/antagonist/heretic/cultie = owner.has_antag_datum(/datum/antagonist/heretic)
+	if(!cultie)
+		return FALSE
+	return cultie.total_sacrifices >= target_amount
