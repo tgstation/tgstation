@@ -47,7 +47,7 @@
 "aj" = (
 /obj/structure/table/wood,
 /obj/item/gun/energy/floragun{
-	pixel_z = 6
+	pixel_y = 6
 	},
 /obj/item/gun/energy/floragun{
 	pixel_y = 4
