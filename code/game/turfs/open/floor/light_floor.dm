@@ -28,6 +28,7 @@
 	. = ..()
 	. += "<span class='notice'>There's a <b>small crack</b> on the edge of it.</span>"
 	. += "<span class='notice'>Use a multitool on it to change colors.</span>"
+	. += "<span class='notice'>Use a screwdriver to turn it off or on.</span>"
 	if(state) ///check if broken
 		. += "<span class='danger'>The light bulb seems fried!</span>"
 
@@ -85,11 +86,9 @@
 	set_light(0)
 	return ..()
 
-/turf/open/floor/light/AltClick(mob/living/user)
-	..()
+/turf/open/floor/light/screwdriver_act(mob/living/user, obj/item/I)
+	. = ..()
 	if(!can_modify_colour)
-		return
-	if(!user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK))
 		return
 	on = !on
 	update_icon()
