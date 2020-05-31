@@ -154,7 +154,12 @@
 			break
 
 /obj/structure/closet/proc/open(mob/living/user)
-	if(opened || !can_open(user))
+	if(!can_open(user))
+		return
+	return openFully()
+
+/obj/structure/closet/proc/openFully()
+	if(opened)
 		return
 	playsound(loc, open_sound, open_sound_volume, TRUE, -3)
 	opened = TRUE

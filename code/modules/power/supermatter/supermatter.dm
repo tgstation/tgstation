@@ -149,17 +149,69 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	///Determines the rate of positve change in gas comp values
 	var/gas_change_rate = 0.05
 	///The list of gases we will be interacting with in process_atoms()
-	var/list/gases_we_care_about = list(/datum/gas/oxygen, /datum/gas/water_vapor, /datum/gas/plasma, /datum/gas/carbon_dioxide, /datum/gas/nitrous_oxide, /datum/gas/nitrogen, /datum/gas/pluoxium, /datum/gas/tritium, /datum/gas/bz, /datum/gas/freon, /datum/gas/hydrogen)
+	var/list/gases_we_care_about = list(/datum/gas/oxygen,
+										/datum/gas/water_vapor,
+										/datum/gas/plasma,
+										/datum/gas/carbon_dioxide,
+										/datum/gas/nitrous_oxide,
+										/datum/gas/nitrogen,
+										/datum/gas/pluoxium,
+										/datum/gas/tritium,
+										/datum/gas/bz,
+										/datum/gas/freon,
+										/datum/gas/hydrogen,
+										)
 	///The list of gases mapped against their current comp. We use this to calculate different values the supermatter uses, like power or heat resistance. It doesn't perfectly match the air around the sm, instead moving up at a rate determined by gas_change_rate per call. Ranges from 0 to 1
-	var/list/gas_comp = list(/datum/gas/oxygen = 0, /datum/gas/water_vapor = 0, /datum/gas/plasma = 0, /datum/gas/carbon_dioxide = 0, /datum/gas/nitrous_oxide = 0, /datum/gas/nitrogen = 0, /datum/gas/pluoxium = 0, /datum/gas/tritium = 0, /datum/gas/bz = 0, /datum/gas/freon = 0, /datum/gas/hydrogen = 0)
+	var/list/gas_comp = list(/datum/gas/oxygen = 0,
+							/datum/gas/water_vapor = 0,
+							/datum/gas/plasma = 0,
+							/datum/gas/carbon_dioxide = 0,
+							/datum/gas/nitrous_oxide = 0,
+							/datum/gas/nitrogen = 0,
+							/datum/gas/pluoxium = 0,
+							/datum/gas/tritium = 0,
+							/datum/gas/bz = 0,
+							/datum/gas/freon = 0,
+							/datum/gas/hydrogen = 0,
+							)
 	///The list of gases mapped against their transmit values. We use it to determine the effect different gases have on radiation
-	var/list/gas_trans = list(/datum/gas/oxygen = OXYGEN_TRANSMIT_MODIFIER, /datum/gas/water_vapor = H2O_TRANSMIT_MODIFIER, /datum/gas/plasma = PLASMA_TRANSMIT_MODIFIER, /datum/gas/pluoxium = PLUOXIUM_TRANSMIT_MODIFIER, /datum/gas/tritium = TRITIUM_TRANSMIT_MODIFIER, /datum/gas/bz = BZ_TRANSMIT_MODIFIER, /datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER)
+	var/list/gas_trans = list(/datum/gas/oxygen = OXYGEN_TRANSMIT_MODIFIER,
+							/datum/gas/water_vapor = H2O_TRANSMIT_MODIFIER,
+							/datum/gas/plasma = PLASMA_TRANSMIT_MODIFIER,
+							/datum/gas/pluoxium = PLUOXIUM_TRANSMIT_MODIFIER,
+							/datum/gas/tritium = TRITIUM_TRANSMIT_MODIFIER,
+							/datum/gas/bz = BZ_TRANSMIT_MODIFIER,
+							/datum/gas/hydrogen = HYDROGEN_TRANSMIT_MODIFIER,
+							)
 	///The list of gases mapped against their heat penaltys. We use it to determin molar and heat output
-	var/list/gas_heat = list(/datum/gas/oxygen = OXYGEN_HEAT_PENALTY, /datum/gas/water_vapor = H2O_HEAT_PENALTY, /datum/gas/plasma = PLASMA_HEAT_PENALTY, /datum/gas/carbon_dioxide = CO2_HEAT_PENALTY, /datum/gas/nitrogen = NITROGEN_HEAT_PENALTY, /datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY, /datum/gas/tritium = TRITIUM_HEAT_PENALTY, /datum/gas/bz = BZ_HEAT_PENALTY, /datum/gas/freon = FREON_HEAT_PENALTY, /datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY)
+	var/list/gas_heat = list(/datum/gas/oxygen = OXYGEN_HEAT_PENALTY,
+							/datum/gas/water_vapor = H2O_HEAT_PENALTY,
+							/datum/gas/plasma = PLASMA_HEAT_PENALTY,
+							/datum/gas/carbon_dioxide = CO2_HEAT_PENALTY,
+							/datum/gas/nitrogen = NITROGEN_HEAT_PENALTY,
+							/datum/gas/pluoxium = PLUOXIUM_HEAT_PENALTY,
+							/datum/gas/tritium = TRITIUM_HEAT_PENALTY,
+							/datum/gas/bz = BZ_HEAT_PENALTY,
+							/datum/gas/freon = FREON_HEAT_PENALTY,
+							/datum/gas/hydrogen = HYDROGEN_HEAT_PENALTY,
+							)
 	///The list of gases mapped against their heat resistance. We use it to moderate heat damage.
-	var/list/gas_resist = list(/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE, /datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE, /datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE)
+	var/list/gas_resist = list(/datum/gas/nitrous_oxide = N2O_HEAT_RESISTANCE,
+								/datum/gas/pluoxium = PLUOXIUM_HEAT_RESISTANCE,
+								/datum/gas/hydrogen = HYDROGEN_HEAT_RESISTANCE,
+								)
 	///The list of gases mapped against their powermix ratio
-	var/list/gas_powermix = list(/datum/gas/oxygen = 1, /datum/gas/water_vapor = 1, /datum/gas/plasma = 1, /datum/gas/carbon_dioxide = 1, /datum/gas/nitrogen = -1, /datum/gas/pluoxium = -1, /datum/gas/tritium = 1, /datum/gas/bz = 1, /datum/gas/freon = -1, /datum/gas/hydrogen = 1)
+	var/list/gas_powermix = list(/datum/gas/oxygen = 1,
+								/datum/gas/water_vapor = 1,
+								/datum/gas/plasma = 1,
+								/datum/gas/carbon_dioxide = 1,
+								/datum/gas/nitrogen = -1,
+								/datum/gas/pluoxium = -1,
+								/datum/gas/tritium = 1,
+								/datum/gas/bz = 1,
+								/datum/gas/freon = -1,
+								/datum/gas/hydrogen = 1,
+								)
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
 	///Affects the power gain the sm experiances from heat
@@ -647,14 +699,15 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			for(var/i in 1 to zap_count)
 				supermatter_zap(src, range, clamp(power*2, 4000, 20000), list(), flags)
 
-		if(prob(15) && power > POWER_PENALTY_THRESHOLD)
-			supermatter_pull(src.loc, power/750)
 		if(prob(5))
 			supermatter_anomaly_gen(src, FLUX_ANOMALY, rand(5, 10))
 		if(power > SEVERE_POWER_PENALTY_THRESHOLD && prob(5) || prob(1))
 			supermatter_anomaly_gen(src, GRAVITATIONAL_ANOMALY, rand(5, 10))
 		if((power > SEVERE_POWER_PENALTY_THRESHOLD && prob(2)) || (prob(0.3) && power > POWER_PENALTY_THRESHOLD))
 			supermatter_anomaly_gen(src, PYRO_ANOMALY, rand(5, 10))
+
+	if(prob(15))
+		supermatter_pull(loc, min(power/750, 5))
 
 	//Tells the engi team to get their butt in gear
 	if(damage > warning_point) // while the core is still damaged and it's still worth noting its status
@@ -940,24 +993,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	base_icon_state = "darkmatter"
 	icon_state = "darkmatter"
 
-/obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 10)
-	playsound(src.loc, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = 7)
+/obj/machinery/power/supermatter_crystal/proc/supermatter_pull(turf/center, pull_range = 5)
+	playsound(center, 'sound/weapons/marauder.ogg', 100, TRUE, extrarange = pull_range - world.view)
 	for(var/atom/movable/P in orange(pull_range,center))
-		if(P.anchored || P.move_resist >= MOVE_FORCE_EXTREMELY_STRONG) //move resist memes.
+		if((P.anchored || P.move_resist >= MOVE_FORCE_EXTREMELY_STRONG)) //move resist memes.
+			if(istype(P, /obj/structure/closet))
+				var/obj/structure/closet/toggle = P
+				toggle.openFully()
 			continue
 		if(ishuman(P))
 			var/mob/living/carbon/human/H = P
 			if(H.incapacitated() || !(H.mobility_flags & MOBILITY_STAND) || H.mob_negates_gravity())
-				return //You can't knock down someone who is already knocked down or has immunity to gravity
-			H.visible_message("<span class='danger'>[H] is suddenly knocked down, as if [H.p_their()] [(H.get_num_legs() == 1) ? "leg had" : "legs have"] been pulled out from underneath [H.p_them()]!</span>",\
-				"<span class='userdanger'>A sudden gravitational pulse knocks you down!</span>",\
-				"<span class='hear'>You hear a thud.</span>")
-			H.apply_effect(40, EFFECT_PARALYZE, 0)
-		else //you're not human so you get sucked in
-			step_towards(P,center)
-			step_towards(P,center)
-			step_towards(P,center)
-			step_towards(P,center)
+				continue //You can't knock down someone who is already knocked down or has immunity to gravity
+		step_towards(P,center)
 
 /obj/machinery/power/supermatter_crystal/proc/supermatter_anomaly_gen(turf/anomalycenter, type = FLUX_ANOMALY, anomalyrange = 5)
 	var/turf/L = pick(orange(anomalyrange, anomalycenter))
