@@ -37,8 +37,14 @@
 				pagecount++
 			output += "|"
 		var/datum/DBQuery/query_search_admin_logs = SSdbcore.NewQuery({"
-			SELECT datetime, round_id, IFNULL((SELECT byond_key FROM [format_table_name("player")]
-			WHERE ckey = adminckey), adminckey), operation, IF(ckey IS NULL, target, byond_key), log FROM [format_table_name("admin_log")]
+			SELECT
+				datetime,
+				round_id,
+				IFNULL((SELECT byond_key FROM [format_table_name("player")] WHERE ckey = adminckey), adminckey),
+				operation,
+				IF(ckey IS NULL, target, byond_key),
+				log
+			FROM [format_table_name("admin_log")]
 			LEFT JOIN [format_table_name("player")] ON target = ckey
 			WHERE (:target IS NULL OR ckey = :target) AND (:operation IS NULL OR operation = :operation)
 			ORDER BY datetime DESC
