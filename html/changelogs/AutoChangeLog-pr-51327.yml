@@ -1,0 +1,4 @@
+author: "Fhaxaris"
+delete-after: True
+changes: 
+  - bugfix: "baton, health analyzer, classic baton, PDA and pinpointer."
