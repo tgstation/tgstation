@@ -21,7 +21,7 @@
 	owner.announce_objectives()
 	to_chat(owner, "<span class='cult'>The book whispers, the forbidden knowledge walks once again!<br>\
 	Your book allows you to research abilities, read it very carefully! you cannot undo what has been done!<br>\
-	You gain charges by either collecitng influences or sacrifcing people tracked by the living heart<br>
+	You gain charges by either collecitng influences or sacrifcing people tracked by the living heart<br> \
 	You can find a basic guide at :https://tgstation13.org/wiki/Heresy_101 </span>")
 
 /datum/antagonist/heretic/on_gain()
