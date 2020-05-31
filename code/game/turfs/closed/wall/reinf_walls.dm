@@ -5,7 +5,10 @@
 	icon_state = "r_wall"
 	opacity = 1
 	density = TRUE
+
 	max_integrity = 1000 //2x the integrity of a plain wall
+	armor = list("melee" = 95, "bullet" = 50, "laser" = 50, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 0)
+	damage_deflection = 20
 
 	var/d_state = INTACT
 	hardness = 10

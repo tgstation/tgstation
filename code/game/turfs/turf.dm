@@ -53,6 +53,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	flags_1 |= INITIALIZED_1
 
+	set_up_integrity()
+
 	// by default, vis_contents is inherited from the turf that was here before
 	vis_contents.Cut()
 

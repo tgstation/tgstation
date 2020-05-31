@@ -187,16 +187,6 @@
 	if(color)
 		add_atom_colour(color, FIXED_COLOUR_PRIORITY)
 
-	//integrity stuff
-	if(atom_integrity == null)
-		atom_integrity = max_integrity
-	if (islist(armor))
-		armor = getArmor(arglist(armor))
-	else if (!armor)
-		armor = getArmor()
-	else if (!istype(armor, /datum/armor))
-		stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
-
 	if (light_power && light_range)
 		update_light()
 
@@ -263,6 +253,17 @@
 	QDEL_NULL(light)
 
 	return ..()
+
+/// To be ran during initialization of any subclass of atom that needs integrity, IE /obj, /turf.
+/atom/proc/set_up_integrity()
+	if(atom_integrity == null)
+		atom_integrity = max_integrity
+	if (islist(armor))
+		armor = getArmor(arglist(armor))
+	else if (!armor)
+		armor = getArmor()
+	else if (!istype(armor, /datum/armor))
+		stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
 
 /atom/proc/handle_ricochet(obj/projectile/P)
 	var/turf/p_turf = get_turf(P)
@@ -1377,7 +1378,7 @@
 
 ///returns the damage value of the attack after processing the atom's various armor protections
 /atom/proc/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir, armour_penetration = 0)
-	if(damage_flag == "melee" && damage_amount < damage_deflection)
+	if(damage_amount < damage_deflection)
 		return 0
 	switch(damage_type)
 		if(BRUTE)

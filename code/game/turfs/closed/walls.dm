@@ -14,6 +14,9 @@
 
 	flags_ricochet = RICOCHET_HARD
 
+	armor = list("melee" = 95, "bullet" = 25, "laser" = 25, "energy" = 100, "bomb" = 0, "bio" = 100, "rad" = 0, "fire" = 95, "acid" = 0)
+	damage_deflection = 15
+
 	///lower numbers are harder. Used to determine the probability of a hulk smashing through. Also, (hardness - 40) is used as a modifier for objects trying to embed in this (hardness of 30 results in a -10% chance)
 	var/hardness = 40
 	var/slicing_duration = 100  //default time taken to slice the wall
@@ -158,7 +161,7 @@
 	user.visible_message("<span class='danger'>[user] smashes \the [src]!</span>", \
 				"<span class='danger'>You smash \the [src]!</span>", \
 				"<span class='hear'>You hear a booming smash!</span>")
-	take_damage(100, BRUTE, "melee")
+	take_damage(100, BRUTE, "melee", FALSE, user.dir, 100)
 	return TRUE
 
 /turf/closed/wall/attack_hand(mob/user)

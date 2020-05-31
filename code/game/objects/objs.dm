@@ -43,6 +43,8 @@
 /obj/Initialize()
 	. = ..()
 
+	set_up_integrity()
+
 	if (set_obj_flags)
 		var/flagslist = splittext(set_obj_flags,";")
 		var/list/string_to_objflag = GLOB.bitfields["obj_flags"]
