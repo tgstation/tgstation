@@ -40,16 +40,6 @@
 	if(is_station_level(z))
 		GLOB.station_turfs += src
 
-	//integrity stuff
-	if(atom_integrity == null)
-		atom_integrity = max_integrity
-	if (islist(armor))
-		armor = getArmor(arglist(armor))
-	else if (!armor)
-		armor = getArmor()
-	else if (!istype(armor, /datum/armor))
-		stack_trace("Invalid type [armor.type] found in .armor during /atom Initialize()")
-
 /turf/closed/wall/Destroy()
 	if(is_station_level(z))
 		GLOB.station_turfs -= src
