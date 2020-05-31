@@ -249,7 +249,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if (smoke_all)
 					to_smoke = reagents.total_volume/((smoketime * 2) / (dragtime / 10))
 
-				reagents.reaction(C, INGEST, fraction)
+				reagents.expose(C, INGEST, fraction)
 				var/obj/item/organ/lungs/L = C.getorganslot(ORGAN_SLOT_LUNGS)
 				if(L && !(L.organ_flags & ORGAN_SYNTHETIC))
 					C.adjustOrganLoss(ORGAN_SLOT_LUNGS, lung_harm)
@@ -934,7 +934,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			var/mob/living/carbon/C = loc
 			if (src == C.wear_mask) // if it's in the human/monkey mouth, transfer reagents to the mob
 				var/fraction = min(REAGENTS_METABOLISM/reagents.total_volume, 1) //this will react instantly, making them a little more dangerous than cigarettes
-				reagents.reaction(C, INGEST, fraction)
+				reagents.expose(C, INGEST, fraction)
 				if(!reagents.trans_to(C, REAGENTS_METABOLISM))
 					reagents.remove_any(REAGENTS_METABOLISM)
 				if(reagents.get_reagent_amount(/datum/reagent/fuel))

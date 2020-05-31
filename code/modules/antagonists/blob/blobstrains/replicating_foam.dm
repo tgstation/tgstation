@@ -30,6 +30,6 @@
 	taste_description = "duplication"
 	color = "#7B5A57"
 
-/datum/reagent/blob/replicating_foam/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/replicating_foam/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.apply_damage(0.7*reac_volume, BRUTE)

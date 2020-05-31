@@ -29,7 +29,7 @@
 	taste_description = "toxic mold"
 	color = "#65ADA2"
 
-/datum/reagent/blob/synchronous_mesh/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
+/datum/reagent/blob/synchronous_mesh/expose_mob(mob/living/M, method=TOUCH, reac_volume, show_message, touch_protection, mob/camera/blob/O)
 	reac_volume = ..()
 	M.apply_damage(0.2*reac_volume, BRUTE)
 	if(M && reac_volume)
