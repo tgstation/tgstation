@@ -148,7 +148,6 @@
 	decal.setDir(dir)
 
 /mob/living/simple_animal/hostile/eldritch/armsy/Destroy()
-	UnregisterSignal(src,COMSIG_MOVABLE_MOVED)
 	if(front)
 		front.icon_state = "armsy_end"
 		front.icon_living = "armsy_end"
