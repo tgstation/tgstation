@@ -50,7 +50,7 @@
 	name = "space violin"
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon_state = "violin"
-	item_state = "violin"
+	inhand_icon_state = "violin"
 	hitsound = "swing_hit"
 	allowed_instrument_ids = "violin"
 
@@ -58,15 +58,15 @@
 	name = "golden violin"
 	desc = "A golden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon_state = "golden_violin"
-	item_state = "golden_violin"
+	inhand_icon_state = "golden_violin"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 
 /obj/item/instrument/piano_synth
 	name = "synthesizer"
 	desc = "An advanced electronic synthesizer that can be used as various instruments."
 	icon_state = "synth"
-	item_state = "synth"
-	allowed_instrument_ids = "piano"
+	inhand_icon_state = "synth"
+ 	allowed_instrument_ids = "piano"
 
 /obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
@@ -79,7 +79,7 @@
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 	icon_state = "headphones"
-	item_state = "headphones"
+	inhand_icon_state = "headphones"
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
@@ -110,17 +110,26 @@
 	name = "\improper Nanotrasen space pods"
 	desc = "Flex your money, AND ignore what everyone else says, all at once!"
 	icon_state = "spacepods"
-	item_state = "spacepods"
+	inhand_icon_state = "spacepods"
 	slot_flags = ITEM_SLOT_EARS
 	strip_delay = 100 //air pods don't fall out
 	instrument_range = 0 //you're paying for quality here
 	custom_premium_price = 1800
 
+/obj/item/instrument/banjo
+	name = "banjo"
+	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
+	icon_state = "banjo"
+	inhand_icon_state = "banjo"
+	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
+	hitsound = 'sound/weapons/banjoslap.ogg'
+	allowed_instrument_ids = "banjo"
+ 
 /obj/item/instrument/guitar
 	name = "guitar"
 	desc = "It's made of wood and has bronze strings."
 	icon_state = "guitar"
-	item_state = "guitar"
+	inhand_icon_state = "guitar"
 	attack_verb = list("played metal on", "serenaded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
 	allowed_instrument_ids = "guitar"
@@ -129,7 +138,7 @@
 	name = "electric guitar"
 	desc = "Makes all your shredding needs possible."
 	icon_state = "eguitar"
-	item_state = "eguitar"
+	inhand_icon_state = "eguitar"
 	force = 12
 	attack_verb = list("played metal on", "shredded", "crashed", "smashed")
 	hitsound = 'sound/weapons/stringsmash.ogg'
@@ -139,28 +148,28 @@
 	name = "glockenspiel"
 	desc = "Smooth metal bars perfect for any marching band."
 	icon_state = "glockenspiel"
-	item_state = "glockenspiel"
 	allowed_instrument_ids = "glockenspiel"
+	inhand_icon_state = "glockenspiel"
 
 /obj/item/instrument/accordion
 	name = "accordion"
 	desc = "Pun-Pun not included."
 	icon_state = "accordion"
-	item_state = "accordion"
 	allowed_instrument_ids = "accordion"
+	inhand_icon_state = "accordion"
 
 /obj/item/instrument/trumpet
 	name = "trumpet"
 	desc = "To announce the arrival of the king!"
 	icon_state = "trumpet"
-	item_state = "trombone"
 	allowed_instrument_ids = "trombone"
+	inhand_icon_state = "trumpet"
 
 /obj/item/instrument/trumpet/spectral
 	name = "spectral trumpet"
 	desc = "Things are about to get spooky!"
-	icon_state = "trumpet"
-	item_state = "trombone"
+	icon_state = "spectral_trumpet"
+	inhand_icon_state = "spectral_trumpet"
 	force = 0
 	attack_verb = list("played","jazzed","trumpeted","mourned","dooted","spooked")
 
@@ -176,14 +185,14 @@
 	name = "saxophone"
 	desc = "This soothing sound will be sure to leave your audience in tears."
 	icon_state = "saxophone"
-	item_state = "saxophone"
 	allowed_instrument_ids = "saxophone"
+	inhand_icon_state = "saxophone"
 
 /obj/item/instrument/saxophone/spectral
 	name = "spectral saxophone"
 	desc = "This spooky sound will be sure to leave mortals in bones."
 	icon_state = "saxophone"
-	item_state = "saxophone"
+	inhand_icon_state = "saxophone"
 	force = 0
 	attack_verb = list("played","jazzed","saxxed","mourned","dooted","spooked")
 
@@ -199,14 +208,14 @@
 	name = "trombone"
 	desc = "How can any pool table ever hope to compete?"
 	icon_state = "trombone"
-	item_state = "trombone"
 	allowed_instrument_ids = "trombone"
+	inhand_icon_state = "trombone"
 
 /obj/item/instrument/trombone/spectral
 	name = "spectral trombone"
 	desc = "A skeleton's favorite instrument. Apply directly on the mortals."
 	icon_state = "trombone"
-	item_state = "trombone"
+	inhand_icon_state = "trombone"
 	force = 0
 	attack_verb = list("played","jazzed","tromboned","mourned","dooted","spooked")
 
@@ -223,15 +232,15 @@
 	desc = "Just like in school, playing ability and all."
 	force = 5
 	icon_state = "recorder"
-	item_state = "recorder"
 	allowed_instrument_ids = "recorder"
+	inhand_icon_state = "recorder"
 
 /obj/item/instrument/harmonica
 	name = "harmonica"
 	desc = "For when you get a bad case of the space blues."
 	icon_state = "harmonica"
-	item_state = "harmonica"
 	allowed_instrument_ids = "harmonica"
+	inhand_icon_state = "harmonica"
 	slot_flags = ITEM_SLOT_MASK
 	force = 5
 	w_class = WEIGHT_CLASS_SMALL
@@ -254,7 +263,7 @@
 	name = "gilded bike horn"
 	desc = "An exquisitely decorated bike horn, capable of honking in a variety of notes."
 	icon_state = "bike_horn"
-	item_state = "bike_horn"
+	inhand_icon_state = "bike_horn"
 	lefthand_file = 'icons/mob/inhands/equipment/horns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/horns_righthand.dmi'
 	attack_verb = list("beautifully honks")
@@ -264,15 +273,6 @@
 	throw_speed = 3
 	throw_range = 15
 	hitsound = 'sound/items/bikehorn.ogg'
-
-/obj/item/instrument/banjo
-	name = "banjo"
-	desc = "A 'Mura' brand banjo. It's pretty much just a drum with a neck and strings."
-	icon_state = "banjo"
-	item_state = "banjo"
-	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
-	hitsound = 'sound/weapons/banjoslap.ogg'
-	allowed_instrument_ids = "banjo"
 
 /obj/item/choice_beacon/music
 	name = "instrument delivery beacon"

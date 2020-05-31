@@ -321,7 +321,7 @@
 		else
 			skin_tone = ""
 
-		body_gender = H.gender
+		body_gender = H.body_type
 		should_draw_gender = S.sexes
 
 		if((MUTCOLORS in S.species_traits) || (DYNCOLORS in S.species_traits))

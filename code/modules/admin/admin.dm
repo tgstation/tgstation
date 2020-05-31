@@ -60,6 +60,7 @@
 	body += "<a href='?_src_=vars;[HrefToken()];Vars=[REF(M)]'>VV</a> - "
 	if(M.mind)
 		body += "<a href='?_src_=holder;[HrefToken()];traitor=[REF(M)]'>TP</a> - "
+		body += "<a href='?_src_=holder;[HrefToken()];skill=[REF(M)]'>SKILLS</a> - "
 	else
 		body += "<a href='?_src_=holder;[HrefToken()];initmind=[REF(M)]'>Init Mind</a> - "
 	if (iscyborg(M))
@@ -183,6 +184,7 @@
 		body += "<A href='?_src_=holder;[HrefToken()];tdome2=[REF(M)]'>Thunderdome 2</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeadmin=[REF(M)]'>Thunderdome Admin</A> | "
 		body += "<A href='?_src_=holder;[HrefToken()];tdomeobserve=[REF(M)]'>Thunderdome Observer</A> | "
+		body += "<A href='?_src_=holder;[HrefToken()];admincommend=[REF(M)]'>Commend Behavior</A> | "
 
 	body += "<br>"
 	body += "</body></html>"
@@ -738,22 +740,35 @@
 	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
-/datum/admins/proc/show_traitor_panel(mob/M in GLOB.mob_list)
+/datum/admins/proc/show_traitor_panel(mob/target_mob in GLOB.mob_list)
 	set category = "Admin - Game"
 	set desc = "Edit mobs's memory and role"
 	set name = "Show Traitor Panel"
-
-	if(!istype(M))
-		to_chat(usr, "This can only be used on instances of type /mob", confidential = TRUE)
-		return
-	if(!M.mind)
+	var/datum/mind/target_mind = target_mob.mind
+	if(!target_mind)
 		to_chat(usr, "This mob has no mind!", confidential = TRUE)
 		return
-
-	M.mind.traitor_panel()
+	if(!istype(target_mob) && !istype(target_mind))
+		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		return
+	target_mind.traitor_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Traitor Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/datum/admins/proc/show_skill_panel(var/target)
+	set category = "Admin - Game"
+	set desc = "Edit mobs's experience and skill levels"
+	set name = "Show Skill Panel"
+	var/datum/mind/target_mind
+	if(ismob(target))
+		var/mob/target_mob = target
+		target_mind = target_mob.mind
+	else if (istype(target, /datum/mind))
+		target_mind = target
+	else
+		to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+		return
+	var/datum/skill_panel/SP  = new(usr, target_mind)
+	SP.ui_interact(usr)
 
 /datum/admins/proc/toggletintedweldhelmets()
 	set category = "Debug"

@@ -350,7 +350,7 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 			main_objective.completed = TRUE
 	sound_to_playing_players('sound/machines/alarm.ogg')
 	sleep(100)
-	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds.  Evacuation of the remamining crew will begin immediately.", "Central Command Spacial Corps")
+	priority_announce("A large amount of lifeforms have been detected approaching [station_name()] at extreme speeds.  Evacuation of the remamining crew will begin immediately.", "Central Command Spatial Corps")
 	for(var/obj/structure/carp_rift/rift in rift_list)
 		rift.carp_stored = 999999
 	sleep(50)
@@ -492,10 +492,10 @@ mob/living/simple_animal/hostile/space_dragon/proc/dragon_fire_line(turf/T)
 		notify_ghosts("The carp rift can summon an additional carp!", source = src, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Carp Spawn Available")
 	if(time_charged == (max_charge - 120))
 		var/area/A = get_area(src)
-		priority_announce("A rift is causing an unnaturally large energy flux in [A.map_name].  Stop it at all costs!", "Central Command Spacial Corps", 'sound/ai/spanomalies.ogg')
+		priority_announce("A rift is causing an unnaturally large energy flux in [A.map_name].  Stop it at all costs!", "Central Command Spatial Corps", 'sound/ai/spanomalies.ogg')
 	if(time_charged == max_charge)
 		var/area/A = get_area(src)
-		priority_announce("Spatial object has reached peak energy charge in [A.map_name], please stand-by.", "Central Command Spacial Corps")
+		priority_announce("Spatial object has reached peak energy charge in [A.map_name], please stand-by.", "Central Command Spatial Corps")
 		obj_integrity = INFINITY
 		desc = "A rift akin to the ones space carp use to travel long distances.  This one is fully charged, and is capable of bringing many carp to the station's location."
 		icon_state = "carp_rift_charged"
