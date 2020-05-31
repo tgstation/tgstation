@@ -4243,7 +4243,7 @@
 	icon_state = "wood_table";
 	max_integrity = 55;
 	name = "flipped table";
-	obj_integrity = 55
+	atom_integrity = 55
 	},
 /turf/open/floor/plasteel/yellowsiding{
 	dir = 1
@@ -4422,7 +4422,7 @@
 	icon_state = "wood_table";
 	max_integrity = 55;
 	name = "flipped table";
-	obj_integrity = 55
+	atom_integrity = 55
 	},
 /turf/open/floor/plasteel,
 /area/awaymission/research/interior/dorm)
@@ -4613,7 +4613,7 @@
 	icon_state = "wood_table";
 	max_integrity = 55;
 	name = "flipped table";
-	obj_integrity = 55
+	atom_integrity = 55
 	},
 /turf/open/floor/plasteel/yellowsiding,
 /area/awaymission/research/interior/dorm)
