@@ -119,13 +119,13 @@
   * Automatically creates more reality smashes
   */
 /datum/reality_smash_tracker/proc/Generate(var/n)
-	var/chance = max(n * 2.5,10)
+	var/number = round(max(n * 6,10),1)
 
-	for(var/sloc in GLOB.generic_event_spawns)
-		var/obj/effect/landmark/event_spawn/ES = sloc
-		if(prob(chance))
-			var/obj/effect/reality_smash/RS = new(ES.drop_location())
-			smashes += RS
+	for(var/i in 0 to number)
+
+		var/obj/effect/landmark/L = pick(GLOB.generic_event_spawns + GLOB.landmarks_list)
+		var/obj/effect/reality_smash/RS = new(L.drop_location())
+		smashes += RS
 
 /**
   * Adds a mind to the list of people that can see the reality smashes

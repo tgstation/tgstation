@@ -27,13 +27,10 @@
 		H = humie
 	if(!H)
 		return
-	var/mob/dead/observer/G
-	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //we are just looking for the owner of the body
-		if(ghost.mind && ghost.mind.current == H && ghost.client)  //the dead mobs list can contain clientless mobs
-			G = ghost
-			break
 
-	if(!G || !G.reenter_corpse())
+	H?.grab_ghost()
+
+	if(!H.mind || !H.client)
 		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [H.real_name], a voiceless dead", ROLE_HERETIC, null, ROLE_HERETIC, 50,H)
 		if(!LAZYLEN(candidates))
 			return
@@ -41,10 +38,6 @@
 		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(H)]) to replace an AFK player.")
 		H.ghostize(0)
 		H.key = C.key
-
-	if(!H.mind || !H.client)
-		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
-		return
 
 	if(!check_ghouls(user) || HAS_TRAIT(H,TRAIT_HUSK))
 		return
@@ -94,15 +87,13 @@
 	var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)
 	if(E)
 		E.on_effect()
-		H.bleed_rate = min(H.bleed_rate + 4, 8)
+		H.bleed_rate += 5
+
 	if(H.stat != DEAD)
 		to_chat(user, "<span class='warning'>This spell can only affect the dead!</span>")
 		return
 
-	for(var/mob/dead/observer/ghost in GLOB.dead_mob_list) //excludes new players
-		if(ghost.mind && ghost.mind.current == H && ghost.client)  //the dead mobs list can contain clientless mobs
-			ghost.reenter_corpse()
-			break
+	H.grab_ghost()
 
 	if(!H.mind || !H.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")

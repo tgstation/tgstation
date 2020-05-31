@@ -21,12 +21,12 @@
 
 /datum/eldritch_knowledge/rust_fist/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(ishumanbasic(target))
+	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
 		var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)
 		if(E)
 			E.on_effect()
-			H.bleed_rate = min(H.bleed_rate + 4, 8)
+			H.adjustOrganLoss(pick(ORGAN_SLOT_BRAIN,ORGAN_SLOT_EARS,ORGAN_SLOT_EYES,ORGAN_SLOT_LIVER,ORGAN_SLOT_LUNGS,ORGAN_SLOT_STOMACH,ORGAN_SLOT_HEART),25)
 	target.rust_heretic_act()
 	return
 
@@ -100,11 +100,11 @@
 
 /datum/eldritch_knowledge/armor
 	name = "Armorer's ritual"
-	desc = "You can now create eldritch armor using a table and a kitchen knife."
+	desc = "You can now create eldritch armor using a table and a gas mask."
 	gain_text = "For I am the heir to the throne of doom."
 	cost = 1
 	next_knowledge = list(/datum/eldritch_knowledge/rust_regen,/datum/eldritch_knowledge/flesh_ghoul)
-	required_atoms = list(/obj/structure/table,/obj/item/kitchen/knife)
+	required_atoms = list(/obj/structure/table,/obj/item/clothing/mask/gas)
 	result_atoms = list(/obj/item/clothing/suit/hooded/cultrobes/eldritch)
 
 /datum/eldritch_knowledge/essence
@@ -181,7 +181,7 @@
 /datum/rust_spread
 	var/list/edge_turfs = list()
 	var/list/turfs = list()
-	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed/wall/rust,/turf/closed/wall/r_wall/rust,/turf/open/space,/turf/open/lava,/turf/open/chasm,/turf/open/floor/plating/rust))
+	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed/wall/rust,/turf/closed/wall/r_wall/rust,/turf/open/space,/turf/open/lava,/turf/open/chasm))
 	var/spread_per_tick = 6
 
 

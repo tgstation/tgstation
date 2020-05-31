@@ -39,12 +39,14 @@
 ///Gives you a charge and destroys a corresponding influence
 /obj/item/forbidden_book/proc/get_power_from_influence(atom/target, mob/user)
 	var/obj/effect/reality_smash/RS = target
+	to_chat(target, "<span class='warning'>You start drawing power from influence...</span>")
 	if(do_after(user,10 SECONDS,FALSE,RS))
 		qdel(RS)
 		charge += 1
 
 ///Draws a rune on a selected turf
 /obj/item/forbidden_book/proc/draw_rune(atom/target,mob/user)
+
 	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
 		return
 	for(var/turf/T in range(1,target))
@@ -52,13 +54,18 @@
 			to_chat(target, "<span class='warning'>The terrain doesn't support runes!</span>")
 			return
 	var/A = get_turf(target)
+	to_chat(target, "<span class='warning'>You start drawing a rune...</span>")
+
 	if(do_after(user,30 SECONDS,A))
+
 		new /obj/effect/eldritch/big(A)
 
 ///Removes runes from the selected turf
 /obj/item/forbidden_book/proc/remove_rune(atom/target,mob/user)
+
 	if(!user.mind.has_antag_datum(/datum/antagonist/heretic))
 		return
+	to_chat(target, "<span class='warning'>You start removing a rune...</span>")
 	if(do_after(user,2 SECONDS,user))
 		qdel(target)
 

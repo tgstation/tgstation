@@ -19,11 +19,11 @@
 
 	switch(dist)
 		if(0 to 15)
-			to_chat(user,"<span class='warning'>[target.real_name] is near you. They are to the [lowertext("[dir]")] of you!</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is near you. They are to the [dir2text(dir)] of you!</span>")
 		if(16 to 31)
-			to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty. They are to the [lowertext("[dir]")] of you!</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is somewhere in your vicinty. They are to the [dir2text(dir)] of you!</span>")
 		if(32 to 127)
-			to_chat(user,"<span class='warning'>[target.real_name] is far away from you. They are to the [lowertext("[dir]")] of you!</span>")
+			to_chat(user,"<span class='warning'>[target.real_name] is far away from you. They are to the [dir2text(dir)] of you!</span>")
 		else
 			to_chat(user,"<span class='warning'>[target.real_name] is beyond our reach.</span>")
 
@@ -108,6 +108,8 @@
 	inhand_icon_state = "eldritch_armor"
 	allowed = list(/obj/item/melee/sickly_blade, /obj/item/forbidden_book)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
+	// slightly better than normal cult robes
+	armor = list("melee" = 50, "bullet" = 50, "laser" = 50,"energy" = 50, "bomb" = 35, "bio" = 20, "rad" = 0, "fire" = 20, "acid" = 20)
 
 /obj/item/reagent_containers/glass/beaker/eldritch
 	name = "flask of eldritch essence"
