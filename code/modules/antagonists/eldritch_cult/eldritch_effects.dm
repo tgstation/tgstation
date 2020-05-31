@@ -112,6 +112,16 @@
 		targets -= Y
 	. = ..()
 
+/**
+  * Automatically fixes the target and smash network
+  *
+  * Fixes any bugs that are caused by late Generate()
+  */
+/datum/reality_smash_tracker/proc/ReworkNetwork()
+	for(var/mind in targets)
+		for(var/X in smashes)
+			var/obj/effect/reality_smash/reality_smash = X
+			reality_smash.AddMind(mind)
 
 /**
   * Generates a set amount of reality smashes based on the N value
@@ -126,6 +136,8 @@
 		var/obj/effect/landmark/L = pick(GLOB.generic_event_spawns + GLOB.landmarks_list)
 		var/obj/effect/reality_smash/RS = new(L.drop_location())
 		smashes += RS
+
+	ReworkNetwork()
 
 /**
   * Adds a mind to the list of people that can see the reality smashes
