@@ -1,0 +1,7 @@
+author: "PrimordialOoze"
+delete-after: True
+changes: 
+  - tweak: "Split the Ignore verb into two verbs (Ignore and Unignore)"
+  - rscadd: "Unignore allows you to view your ignore list"
+  - rscadd: "Unignore allows you to unignore players who are offline"
+  - admin: "Ignore and Unignore should not interfere with Stealth Mode"
