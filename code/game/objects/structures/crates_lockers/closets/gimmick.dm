@@ -119,7 +119,7 @@
 	storage_capacity = 7
 
 /obj/structure/closet/mini_fridge/PopulateContents()
-	..()
+	. = ..()
 	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
 	new /obj/effect/spawner/lootdrop/refreshing_beverage(src)
 	if(prob(50))
@@ -128,4 +128,3 @@
 		new /obj/item/reagent_containers/food/snacks/pizzaslice/moldy(src)
 	else if(prob(30))
 		new /obj/item/reagent_containers/food/snacks/syndicake(src)
-
