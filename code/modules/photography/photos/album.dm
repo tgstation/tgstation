@@ -6,7 +6,7 @@
 	desc = "A big book used to store photos and mementos."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "album"
-	item_state = "album"
+	inhand_icon_state = "album"
 	lefthand_file = 'icons/mob/inhands/misc/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/books_righthand.dmi'
 	resistance_flags = FLAMMABLE

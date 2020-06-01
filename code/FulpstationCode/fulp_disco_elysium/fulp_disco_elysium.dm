@@ -1,10 +1,10 @@
 /obj/item/clothing/suit/det_suit/disco
 	name = "disco-ass blazer"
 	desc = "Looks like someone skinned this blazer off some long extinct disco-animal. It has an enigmatic white rectangle on the back and the right sleeve."
-	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
+	worn_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "jamrock_blazer"
-	item_state = "jamrock_blazer_held"
+	inhand_icon_state = "jamrock_blazer_held"
 	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
 	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 
@@ -12,15 +12,15 @@
 	name = "aerostatic bomber jacket"
 	desc = "An unquestionably gaudy and peculiar yet also curiously flattering bomber jacket. It emanates a strange air of authority."
 	icon_state = "aerostatic_bomber_jacket"
-	item_state = "aerostatic_bomber_jacket_held"
+	inhand_icon_state = "aerostatic_bomber_jacket_held"
 
 /obj/item/clothing/under/rank/security/detective/disco
 	name = "jamrock suit"
 	desc = "An 'interesting' looking ensemble consisting of golden-brown flare cut trousers and an obviously hard worn white satin shirt."
-	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
+	worn_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "jamrock_suit"
-	item_state = "jamrock_suit_held"
+	inhand_icon_state = "jamrock_suit_held"
 	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
 	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 	alt_covers_chest = TRUE
@@ -29,36 +29,36 @@
 	name = "aerostatic suit"
 	desc = "A crisp and well-pressed suit; professional, comfortable and curiously authoritative."
 	icon_state = "aerostatic_suit"
-	item_state = "aerostatic_suit_held"
+	inhand_icon_state = "aerostatic_suit_held"
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/shoes/sneakers/disco
 	name = "green lizardskin shoes"
 	desc = "Though depleted of lustre with the passage of time, these well-worn green lizard leather shoes fit almost perfectly."
-	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
+	worn_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "lizardskin_shoes"
-	item_state = "lizardskin_shoes_held"
+	inhand_icon_state = "lizardskin_shoes_held"
 	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
 	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 
 /obj/item/clothing/shoes/jackboots/aerostatic
 	name = "aerostatic boots"
 	desc = "Sharp and comfortable looking boots crafted from tough brown leather."
-	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
+	worn_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "aerostatic_boots"
-	item_state = "aerostatic_boots_held"
+	inhand_icon_state = "aerostatic_boots_held"
 	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
 	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 
 /obj/item/clothing/gloves/color/black/aerostatic_gloves
 	name = "aerostatic gloves"
 	desc = "Vivid red gloves that exude a mysterious style."
-	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
+	worn_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "aerostatic_gloves"
-	item_state = "aerostatic_gloves_held"
+	inhand_icon_state = "aerostatic_gloves_held"
 	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
 	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 	can_be_cut = FALSE
@@ -66,10 +66,10 @@
 /obj/item/clothing/neck/tie/detective/disco_necktie
 	name = "horrific necktie"
 	desc = "The necktie is adorned with a garish pattern. It's disturbingly vivid. Somehow you feel as if it would be wrong to ever take it off. It's your friend now. You will betray it if you change it for some boring scarf."
-	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
+	worn_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "eldritch_tie"
-	item_state = "eldritch_tie_held"
+	inhand_icon_state = "eldritch_tie_held"
 	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
 	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'
 	var/possessed
@@ -143,9 +143,9 @@
 /obj/item/clothing/glasses/sunglasses/disco
 	name = "binoclard lenses"
 	desc = "Stylish round lenses subtly shaded for your protection and criminal discomfort."
-	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
+	worn_icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium_worn.dmi'
 	icon = 'icons/Fulpicons/Surreal_stuff/disco_elysium.dmi'
 	icon_state = "binoclard_lenses"
-	item_state = "binoclard_lenses_held"
+	inhand_icon_state = "binoclard_lenses_held"
 	lefthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_left.dmi'
 	righthand_file = 'icons/Fulpicons/Surreal_stuff/disco_elysium_inhand_right.dmi'

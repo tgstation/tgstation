@@ -340,7 +340,7 @@
 	lefthand_file = 'icons/mob/inhands/misc/touchspell_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/touchspell_righthand.dmi'
 	icon_state = "disintegrate"
-	item_state = "disintegrate"
+	inhand_icon_state = "disintegrate"
 	item_flags = NEEDS_PERMIT | ABSTRACT | DROPDEL
 
 	w_class = WEIGHT_CLASS_HUGE
@@ -436,28 +436,18 @@
 									   "<span class='userdanger'>A feeling of warmth washes over you, rays of holy light surround your body and protect you from the flash of light!</span>")
 
 		else
-			if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
+			to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
+			L.Paralyze(16 SECONDS)
+			L.flash_act(1,TRUE)
+			if(issilicon(target))
+				var/mob/living/silicon/S = L
+				S.emp_act(EMP_HEAVY)
+			else if(iscarbon(target))
 				var/mob/living/carbon/C = L
-				to_chat(user, "<span class='cultitalic'>Their mind was stronger than expected, but you still managed to do some damage!</span>")
-				C.stuttering += 8
-				C.dizziness += 30
-				C.Jitter(8)
-				C.drop_all_held_items()
-				C.bleed(40)
-				C.apply_damage(60, STAMINA, BODY_ZONE_CHEST)
-			else
-				to_chat(user, "<span class='cultitalic'>In a brilliant flash of red, [L] falls to the ground!</span>")
-				L.Paralyze(160)
-				L.flash_act(1,1)
-				if(issilicon(target))
-					var/mob/living/silicon/S = L
-					S.emp_act(EMP_HEAVY)
-				else if(iscarbon(target))
-					var/mob/living/carbon/C = L
-					C.silent += 6
-					C.stuttering += 15
-					C.cultslurring += 15
-					C.Jitter(15)
+				C.silent += 6
+				C.stuttering += 15
+				C.cultslurring += 15
+				C.Jitter(1.5 SECONDS)
 		uses--
 	..()
 

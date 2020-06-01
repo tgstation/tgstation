@@ -9,6 +9,8 @@
 #define TEXT_EAST			"[EAST]"
 #define TEXT_WEST			"[WEST]"
 
+/// Inverse direction, taking into account UP|DOWN if necessary.
+#define REVERSE_DIR(dir) ( ((dir & 85) << 1) | ((dir & 170) >> 1) )
 
 //Human Overlays Indexes/////////
 #define MUTATIONS_LAYER			28		//mutations. Tk headglows, cold resistance glow, etc
@@ -486,6 +488,11 @@ GLOBAL_LIST_INIT(pda_styles, sortList(list(MONO, VT, ORBITRON, SHARE)))
 #define ALIGNMENT_GOOD "good"
 #define ALIGNMENT_NEUT "neutral"
 #define ALIGNMENT_EVIL "evil"
+
+
+// Play time / EXP
+#define PLAYTIME_HARDCORE_RANDOM 120
+#define PLAYTIME_VETERAN 300000 //Playtime is tracked in minutes. 300,000 minutes = 5,000 hours
 
 // The alpha we give to stuff under tiles, if they want it
 #define ALPHA_UNDERTILE 128

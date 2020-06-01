@@ -27,7 +27,7 @@
 	desc = "A simple wooden stake carved to a sharp point."
 	icon = 'icons/Fulpicons/fulpitems.dmi'
 	icon_state = "wood" // Inventory Icon
-	item_state = "wood" // In-hand Icon
+	inhand_icon_state = "wood" // In-hand Icon
 	lefthand_file = 'icons/Fulpicons/fulpitems_hold_left.dmi' // File for in-hand icon
 	righthand_file = 'icons/Fulpicons/fulpitems_hold_right.dmi'
 	//origin_tech = "biotech=1;combat=1"
@@ -177,7 +177,7 @@
 	name = "silver stake"
 	desc = "Polished and sharp at the end. For when some mofo is always trying to iceskate uphill."
 	icon_state = "silver" // Inventory Icon
-	item_state = "silver" // In-hand Icon
+	inhand_icon_state = "silver" // In-hand Icon
 	//origin_tech = "materials=1;combat=1;"
 	siemens_coefficient = 1 //flags = CONDUCT // var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
 	force = 9

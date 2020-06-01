@@ -6,8 +6,8 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_laceups"
-	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_laceups"
+	worn_icon = 'icons/mob/feet_fulp.dmi'
+	inhand_icon_state = "digi_laceups"
 
 /obj/item/clothing/shoes/workboots/digitigrade
 	name = "digitigrade workboots"
@@ -16,8 +16,8 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_workboots"
-	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_workboots"
+	worn_icon = 'icons/mob/feet_fulp.dmi'
+	inhand_icon_state = "digi_workboots"
 
 /obj/item/clothing/shoes/digicombat
 	name = "digitigrade combat boots"
@@ -26,8 +26,8 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_combats"
-	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_combats"
+	worn_icon = 'icons/mob/feet_fulp.dmi'
+	inhand_icon_state = "digi_combats"
 	resistance_flags = FIRE_PROOF
 	permeability_coefficient = 0.05
 	armor = list("melee" = 15, "bullet" = 15, "laser" = 15, "energy" = 15, "bomb" = 20, "bio" = 5, "rad" = 0, "fire" = 40, "acid" = 20)
@@ -40,8 +40,8 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_jackboots"
-	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_jackboots"
+	worn_icon = 'icons/mob/feet_fulp.dmi'
+	inhand_icon_state = "digi_jackboots"
 
 /obj/item/clothing/shoes/clown_shoes/digitigrade
 	name = "digitigrade clown shoes"
@@ -50,8 +50,8 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_clown"
-	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_clown"
+	worn_icon = 'icons/mob/feet_fulp.dmi'
+	inhand_icon_state = "digi_clown"
 
 /obj/item/clothing/shoes/sandal/digitigrade
 	name = "digitigrade sandals"
@@ -60,8 +60,8 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_wizard"
-	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_wizard"
+	worn_icon = 'icons/mob/feet_fulp.dmi'
+	inhand_icon_state = "digi_wizard"
 
 /obj/item/clothing/shoes/sneakers/brown/digitigrade
 	name = "digitigrade brown shoes"
@@ -70,8 +70,8 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_brown"
-	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_brown"
+	worn_icon = 'icons/mob/feet_fulp.dmi'
+	inhand_icon_state = "digi_brown"
 
 // not working, will fix later
 ///obj/item/clothing/shoes/magboots/digitigrade
@@ -91,5 +91,5 @@
 	fulp_item = TRUE
 	icon = 'icons/obj/clothing/shoes_fulp.dmi'
 	icon_state = "digi_mime"
-	mob_overlay_icon = 'icons/mob/feet_fulp.dmi'
-	item_state = "digi_mime"
+	worn_icon = 'icons/mob/feet_fulp.dmi'
+	inhand_icon_state = "digi_mime"

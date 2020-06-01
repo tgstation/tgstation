@@ -17,9 +17,9 @@
 	name = "detective's glasses"
 	desc = "Stylish glasses with integrated medical, diagnostic and security HUDs and reagent scanning used by detectives. The Meson Scanner mode lets you see basic structural and terrain layouts through walls. WARNING! Flash proofing has been compromised to accomodate HUD integration."
 	icon = 'icons/Fulpicons/Surreal_stuff/detective_obs.dmi'
-	mob_overlay_icon = 'icons/Fulpicons/Surreal_stuff/detective_obs_worn.dmi'
+	worn_icon = 'icons/Fulpicons/Surreal_stuff/detective_obs_worn.dmi'
 	icon_state = "sundetect-"
-	item_state = "sunglasses"
+	inhand_icon_state = "sunglasses"
 	actions_types = list(/datum/action/item_action/toggle_mode)
 
 	vision_flags = NONE
@@ -157,7 +157,7 @@
 	update_mob()
 
 /obj/item/clothing/glasses/detective/proc/update_mob()
-	item_state = icon_state
+	inhand_icon_state = icon_state
 	if(isliving(loc))
 		var/mob/living/user = loc
 		if(user.get_item_by_slot(ITEM_SLOT_EYES) == src)

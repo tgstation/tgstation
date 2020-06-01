@@ -3,7 +3,7 @@
 	desc = "A cheap plastic suit with zero practical use."
 	icon_state = "zerosuit"
 	icon = 'icons/fulpicons/halloween_costumes/samus_icon.dmi'
-	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/samus_worn.dmi'
+	worn_icon = 'icons/fulpicons/halloween_costumes/samus_worn.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	fitted = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //copied blindly from mech jumpsuit lmao
@@ -27,7 +27,7 @@
 	desc = "It's variapparent that this is injection-moulded."
 	icon_state = "varia_suit"
 	icon = 'icons/fulpicons/halloween_costumes/samus_icon.dmi'
-	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/samus_worn.dmi'
+	worn_icon = 'icons/fulpicons/halloween_costumes/samus_worn.dmi'
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/gun/ballistic/shotgun/toy/toy_arm_cannon)
 	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/toy/varia
 
@@ -49,7 +49,7 @@
 	desc = "A cheap plastic helmet spring-loaded into the suit."
 	icon_state = "hardsuit0-varia" //hardsuit helmet code is weird - has to follow this format: 'hardsuit0-[hardsuit_type]' and have 'hardsuit1-[hardsuit_type]'' as the icon for the light-on ver
 	icon = 'icons/fulpicons/halloween_costumes/samus_icon.dmi'
-	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/samus_worn.dmi'
+	worn_icon = 'icons/fulpicons/halloween_costumes/samus_worn.dmi'
 	hardsuit_type = "varia"
 
 /obj/item/ammo_casing/caseless/foam_dart/arm_ball
@@ -70,7 +70,7 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/toy/arm_ball
 	icon = 'icons/fulpicons/halloween_costumes/samus_icon.dmi'
 	icon_state = "arm_cannon"
-	item_state = "arm_cannon"
+	inhand_icon_state = "arm_cannon"
 	lefthand_file = 'icons/fulpicons/halloween_costumes/samus_lefthand.dmi'
 	righthand_file = 'icons/fulpicons/halloween_costumes/samus_righthand.dmi'
 	inhand_x_dimension = 32

@@ -2,7 +2,7 @@
 	name = "Green Alien Head"
 	desc = "Now you too can look like a Martian."
 	icon = 'icons/fulpicons/halloween_costumes/jo_icon.dmi'
-	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/jo_costumes.dmi'
+	worn_icon = 'icons/fulpicons/halloween_costumes/jo_costumes.dmi'
 	icon_state = "green_head"
 	dynamic_hair_suffix = ""
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACIALHAIR
@@ -11,5 +11,5 @@
 	name = "Green Alien"
 	desc = "Sexy Martian."
 	icon = 'icons/fulpicons/halloween_costumes/jo_icon.dmi'
-	mob_overlay_icon = 'icons/fulpicons/halloween_costumes/jo_costumes.dmi'
+	worn_icon = 'icons/fulpicons/halloween_costumes/jo_costumes.dmi'
 	icon_state = "green_alien"

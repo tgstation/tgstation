@@ -34,11 +34,19 @@
 /datum/nanite_program/monitoring/enable_passive_effect()
 	. = ..()
 	SSnanites.nanite_monitored_mobs |= host_mob
+	if(ishuman(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		if(!(H in GLOB.nanite_sensors_list))
+			GLOB.nanite_sensors_list |= H
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/monitoring/disable_passive_effect()
 	. = ..()
 	SSnanites.nanite_monitored_mobs -= host_mob
+	if(ishuman(host_mob))
+		var/mob/living/carbon/human/H = host_mob
+		GLOB.nanite_sensors_list -= H
+
 	host_mob.hud_set_nanite_indicator()
 
 /datum/nanite_program/self_scan

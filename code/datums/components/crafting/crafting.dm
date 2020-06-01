@@ -197,9 +197,9 @@
 	Set var amt to the value current cycle req is pointing to, its amount of type we need to delete
 	Get var/surroundings list of things accessable to crafting by get_environment()
 	Check the type of the current cycle req
-		If its reagent then do a while loop, inside it try to locate() reagent containers, inside such containers try to locate needed reagent, if there isnt remove thing from surroundings
+		If its reagent then do a while loop, inside it try to locate() reagent containers, inside such containers try to locate needed reagent, if there isn't remove thing from surroundings
 			If there is enough reagent in the search result then delete the needed amount, create the same type of reagent with the same data var and put it into deletion list
-			If there isnt enough take all of that reagent from the container, put into deletion list, substract the amt var by the volume of reagent, remove the container from surroundings list and keep searching
+			If there isn't enough take all of that reagent from the container, put into deletion list, substract the amt var by the volume of reagent, remove the container from surroundings list and keep searching
 			While doing above stuff check deletion list if it already has such reagnet, if yes merge instead of adding second one
 		If its stack check if it has enough amount
 			If yes create new stack with the needed amount and put in into deletion list, substract taken amount from the stack
@@ -210,7 +210,7 @@
 	Then do a loop over parts var of the recipe
 		Do similar stuff to what we have done above, but now in deletion list, until the parts conditions are satisfied keep taking from the deletion list and putting it into parts list for return
 
-	After its done loop over deletion list and delete all the shit that wasnt taken by parts loop
+	After its done loop over deletion list and delete all the shit that wasn't taken by parts loop
 
 	del_reqs return the list of parts resulting object will receive as argument of CheckParts proc, on the atom level it will add them all to the contents, on all other levels it calls ..() and does whatever is needed afterwards but from contents list already
 */

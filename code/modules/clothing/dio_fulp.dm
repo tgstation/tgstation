@@ -4,7 +4,7 @@
 	fulp_item = TRUE
 	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "diobands"
-	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
+	worn_icon = 'icons/mob/clothing_dio.dmi'
 
 /obj/item/clothing/head/dioband
 	name = "Green-heart Headband"
@@ -12,7 +12,7 @@
 	fulp_item = TRUE
 	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "dio_headband"
-	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
+	worn_icon = 'icons/mob/clothing_dio.dmi'
 	clothing_flags = SNUG_FIT
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 
@@ -22,7 +22,7 @@
 	fulp_item = TRUE
 	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "dio_shoes"
-	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
+	worn_icon = 'icons/mob/clothing_dio.dmi'
 
 /obj/item/clothing/suit/diojacket
 	name = "Menacing Jacket"
@@ -30,7 +30,7 @@
 	fulp_item = TRUE
 	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "dio_jacket"
-	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
+	worn_icon = 'icons/mob/clothing_dio.dmi'
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS
 	armor = list("melee" = 10, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 100)
 
@@ -40,7 +40,7 @@
 	fulp_item = TRUE
 	icon = 'icons/Fulpicons/dio_clothing.dmi'
 	icon_state = "dio_jumpsuit"
-	mob_overlay_icon = 'icons/mob/clothing_dio.dmi'
+	worn_icon = 'icons/mob/clothing_dio.dmi'
 
 /datum/outfit/dio_brando
 	name = "Dio"

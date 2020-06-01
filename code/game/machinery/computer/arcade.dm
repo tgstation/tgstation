@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "A pamphlet encouraging the reader to maintain a balanced lifestyle and take care of their mental health, while still enjoying video games in a healthy way. You probably don't need this..."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pamphlet"
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_TINY
 
 
@@ -792,6 +792,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				event = null
 
 				if(killed_crew >= 4)
+					xp_gained -= 15//no cheating by spamming game overs
 					report_player(usr)
 			else if(obj_flags & EMAGGED)
 				if(usr.name == sheriff)

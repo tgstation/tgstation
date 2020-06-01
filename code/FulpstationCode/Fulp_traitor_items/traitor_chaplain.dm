@@ -153,7 +153,7 @@
 	name = "sith hood"
 	desc = "It stinks of old man, ozone and the Dark Side."
 	icon_state = "crusader"
-	item_state = "crusader"
+	inhand_icon_state = "crusader"
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
@@ -161,7 +161,7 @@
 	name = "sith robes"
 	desc = "They stink of old man, ozone and the Dark Side."
 	icon_state = "crusader"
-	item_state = "crusader"
+	inhand_icon_state = "crusader"
 
 
 /obj/effect/proc_holder/spell/targeted/force_lightning/proc/spark_setup()

@@ -2,6 +2,9 @@
  * tgui external
  *
  * Contains all external tgui declarations.
+ *
+ * Copyright (c) 2020 Aleksej Komarov
+ * SPDX-License-Identifier: MIT
  */
 
 /**
