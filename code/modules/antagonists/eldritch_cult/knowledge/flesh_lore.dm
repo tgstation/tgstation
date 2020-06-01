@@ -81,7 +81,7 @@
 
 /datum/eldritch_knowledge/flesh_grasp/on_mansus_grasp(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(!ishumanbasic(target))
+	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/H = target
 	var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)
