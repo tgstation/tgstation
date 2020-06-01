@@ -16,7 +16,7 @@
 	cost = 350
 	contains = list(/obj/item/ammo_box/c38/match)
 
-/datum/supply_pack/goody/match38
+/datum/supply_pack/goody/rubber
 	name = ".38 Rubber Speedloader"
 	desc = "Contains one speedloader of bouncy rubber .38 ammunition, for when you want to bounce your shots off anything and everything."
 	cost = 350
