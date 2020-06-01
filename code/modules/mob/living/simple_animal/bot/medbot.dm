@@ -419,7 +419,7 @@
 /mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
 	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
 		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='danger'>You begin tipping over [src]...</span>")
-		speak(pick(list("Hey, wait...", "Please don't...", "Whoa, hold on-", "Wait!-")))
+		speak(pick(list("Hey, wait...", "Please don't...", "Whoa, hold on-", "Wait!-", "I trusted you!")))
 		if(do_after(H, 3 SECONDS, target=src))
 			tip_over(H)
 	else if(H.a_intent == INTENT_HELP && mode == BOT_TIPPED)
