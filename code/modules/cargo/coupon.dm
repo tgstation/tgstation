@@ -43,6 +43,7 @@ obj/item/coupon
 /obj/item/coupon/Destroy()
 	if(inserted_console)
 		LAZYREMOVE(inserted_console.loaded_coupons, src)
+		inserted_console = null
 	. = ..()
 
 #undef COUPON_OMEN

@@ -118,13 +118,7 @@
 	cost = 1500
 	contains = list(/obj/item/toy/plush/beeplushie)
 
-/datum/supply_pack/goody/camera
-	name = "Photography Pack"
-	desc = "A camera with a spare roll of film. Just because you die doesn't mean your memories have to!"
-	cost = 250
-	contains = list(/obj/item/camera, /obj/item/camera_film)
-
-/datum/supply_pack/goody/camera
+/datum/supply_pack/goody/beach_ball
 	name = "Beach Ball"
 	desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"
 	cost = 200

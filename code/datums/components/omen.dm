@@ -23,6 +23,7 @@
 /datum/component/omen/Destroy(force, silent)
 	if(vessel)
 		vessel.visible_message("<span class='warning'>[vessel] burns up in a sinister flash, taking an evil energy with it...</span>")
+		vessel = null
 	return ..()
 
 /datum/component/omen/RegisterWithParent()
@@ -52,7 +53,7 @@
 
 /// If we get knocked down, see if we have a really bad slip and bash our head hard
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
-	if(amount <= 0 || !prob(50))
+	if(amount <= 0 || prob(50)) // 50% chance to bonk our head
 		return
 
 	var/obj/item/bodypart/the_head = our_guy.get_bodypart(BODY_ZONE_HEAD)
