@@ -2130,6 +2130,7 @@
 #include "code\modules\mob\living\death.dm"
 #include "code\modules\mob\living\emote.dm"
 #include "code\modules\mob\living\inhand_holder.dm"
+#include "code\modules\mob\living\init_signals.dm"
 #include "code\modules\mob\living\life.dm"
 #include "code\modules\mob\living\living.dm"
 #include "code\modules\mob\living\living_defense.dm"
