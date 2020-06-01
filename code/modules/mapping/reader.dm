@@ -303,7 +303,7 @@
 
 	// I have no idea how you could POSSIBLY manage this but
 	if(bounds[1] == 1.#INF || bounds[4] == 1.#INF)
-		CRASH("Mapload didn't actually load any turfs. Something is broken about this template. [path] [name]")
+		CRASH("Mapload didn't actually load any turfs. Something is broken about this template. ([original_path])")
 	return bounds
 
 /datum/parsed_map/proc/build_cache(no_changeturf, bad_paths=null)
