@@ -164,7 +164,7 @@ GLOBAL_VAR_INIT(deaths_during_shift, 0)
 /datum/game_mode/gang/proc/five_minute_warning()
 	priority_announce("Julio G coming to you live from Radio Los Spess! The space cops are closing in on [station_name()] and will arrive in about 5 minutes! Better clear on out of there if you don't want to get hurt!", "Radio Los Spess", 'sound/voice/beepsky/radio.ogg')
 
- /datum/game_mode/gang/set_round_result()
+/datum/game_mode/gang/set_round_result()
 	var/alive_gangsters = 0
 	var/alive_cops = 0
 	for(var/G in gangbangers)
