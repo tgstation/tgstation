@@ -1,0 +1,5 @@
+author: "nemvar"
+delete-after: True
+changes: 
+  - tweak: "Glow will now always be a random color."
+  - tweak: "Antiglow will now absorb all light equally."
