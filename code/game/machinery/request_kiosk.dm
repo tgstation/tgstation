@@ -30,6 +30,11 @@
 		else
 			to_chat(user, "There's no account assigned with this ID.")
 			return TRUE
+	if(istype(I, /obj/item/bounty_card))
+		var/obj/item/bounty_card/curr_bounty = I
+		if(!curr_bounty.bounty_price)
+			return
+		request_list += list("owner" = user.name, "value" = curr_bounty.bounty_price, "", "description" = curr_bounty.bounty_desc, "applicants" = list())
 
 /obj/machinery/request_kiosk/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
