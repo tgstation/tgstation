@@ -1,7 +1,13 @@
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
-
+#define MEDBOT_PANIC_NONE	0
+#define MEDBOT_PANIC_LOW	15
+#define MEDBOT_PANIC_MED	35
+#define MEDBOT_PANIC_HIGH	55
+#define MEDBOT_PANIC_FUCK	70
+#define MEDBOT_PANIC_ENDING	90
+#define MEDBOT_PANIC_END	100
 
 /mob/living/simple_animal/bot/medbot
 	name = "\improper Medibot"
@@ -55,6 +61,10 @@
 	var/datum/techweb/linked_techweb
 ///Is the medbot currently tending wounds
 	var/tending = FALSE
+///How panicked we are about being tipped over (why would you do this?)
+	var/tipped_status = MEDBOT_PANIC_NONE
+///The name we got when we were tipped
+	var/tipper_name
 
 /mob/living/simple_animal/bot/medbot/mysterious
 	name = "\improper Mysterious Medibot"
@@ -226,8 +236,74 @@
 	else
 		return
 
+/mob/living/simple_animal/bot/medbot/proc/tip_over(mob/user)
+	playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
+	user.visible_message("<span class='danger'>[user] tips over [src]!</span>", "<span class='danger'>You tip [src] over!</span>")
+	mode = BOT_TIPPED
+	var/matrix/mat = transform
+	transform = mat.Turn(180)
+	tipper_name = user.name
+
+/mob/living/simple_animal/bot/medbot/proc/set_right(mob/user)
+	if(user)
+		playsound(src, 'sound/machines/ping.ogg', 50)
+		user.visible_message("<span class='notice'>[user] sets [src] right-side up!</span>", "<span class='green'>You set [src] right-side up!</span>")
+		speak("Thank you!")
+	else
+		visible_message("<span class='notice'>[src] manages to write around enough to right itself.</span>")
+		tipper_name = null
+	tipped_status = MEDBOT_PANIC_NONE
+	mode = BOT_IDLE
+	transform = matrix()
+
+/// if someone tipped us over, check whether we should ask for help or just right ourselves eventually
+/mob/living/simple_animal/bot/medbot/proc/handle_panic()
+	tipped_status++
+	switch(tipped_status)
+		if(MEDBOT_PANIC_LOW)
+			speak("Please put me back.")
+		if(MEDBOT_PANIC_MED)
+			speak("Hey, I need help! Please help me up!")
+		if(MEDBOT_PANIC_HIGH)
+			speak("Please help! This is scaring me!!")
+		if(MEDBOT_PANIC_FUCK)
+			speak("I DON'T LIKE BEING TIPPED! PLEASE HELP ME!!")
+		if(MEDBOT_PANIC_ENDING)
+			speak("THIS HURTS, PLEASE HELP ME!!")
+		if(MEDBOT_PANIC_END)
+			speak("SECURITY ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please watch for violent behavior.", FREQ_SECURITY)
+			speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
+			set_right() // strong independent medbot
+
+	if(prob(tipped_status))
+		do_jitter_animation(tipped_status * 0.1)
+
+	if(prob(tipped_status * 0.25))
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 50)
+
+/mob/living/simple_animal/bot/medbot/examine(mob/user)
+	. = ..()
+	if(tipped_status == MEDBOT_PANIC_NONE)
+		return
+
+	switch(tipped_status)
+		if(MEDBOT_PANIC_NONE to MEDBOT_PANIC_LOW)
+			. += "It appears to be tipped over, and is quietly waiting for someone to set it right."
+		if(MEDBOT_PANIC_LOW to MEDBOT_PANIC_MED)
+			. += "It is tipped over and requesting help."
+		if(MEDBOT_PANIC_MED to MEDBOT_PANIC_HIGH)
+			. += "They are tipped over and appear visibly distressed." // now we humanize the medbot as a they, not an it
+		if(MEDBOT_PANIC_HIGH to MEDBOT_PANIC_FUCK)
+			. += "<span class='warning'>They are tipped over and visibly panicking!</span>"
+		if(MEDBOT_PANIC_FUCK to INFINITY)
+			. += "<span class='warning'><b>They are freaking out from being tipped over!</b></span>"
+
 /mob/living/simple_animal/bot/medbot/handle_automated_action()
 	if(!..())
+		return
+
+	if(mode == BOT_TIPPED)
+		handle_panic()
 		return
 
 	if(mode == BOT_HEALING)
@@ -340,6 +416,17 @@
 
 	if(C.getToxLoss() >= heal_threshold)
 		return TRUE
+
+/mob/living/simple_animal/bot/medbot/attack_hand(mob/living/carbon/human/H)
+	if(H.a_intent == INTENT_DISARM && mode != BOT_TIPPED)
+		H.visible_message("<span class='danger'>[H] begins tipping over [src].</span>", "<span class='danger'>You begin tipping over [src]...</span>")
+		speak(pick(list("Hey, wait...", "Please don't...", "Whoa, hold on-", "Wait!-")))
+		if(do_after(H, 3 SECONDS, target=src))
+			tip_over(H)
+	else if(H.a_intent == INTENT_HELP && mode == BOT_TIPPED)
+		H.visible_message("<span class='notice'>[H] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
+		if(do_after(H, 3 SECONDS, target=src))
+			set_right(H)
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
 	if(iscarbon(A) && !tending)
