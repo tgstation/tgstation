@@ -13,8 +13,8 @@
 	ui_x = 300
 	ui_y = 232
 
-	///Have we entered a broken canister icon state
-	var/has_been_broken
+	///The base iconstate, used to make dealing with breaking the canister less hellish
+	var/base_icon_state = "yellow"
 	var/valve_open = FALSE
 	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
 	var/release_log = ""
@@ -291,11 +291,11 @@
 	air_contents.gases[/datum/gas/nitrogen][MOLES] = (N2STANDARD * maximum_pressure * filled) * air_contents.volume / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 /obj/machinery/portable_atmospherics/canister/update_icon_state()
-	if(machine_stat & BROKEN && !has_been_broken)
-		icon_state = "[icon_state]-1"
-		has_been_broken = TRUE
+	if(machine_stat & BROKEN)
+		icon_state = "[base_icon_state]-1"
 	else
-		has_been_broken = FALSE
+		base_icon_state = icon_state
+
 /obj/machinery/portable_atmospherics/canister/update_overlays()
 	. = ..()
 	var/isBroken = machine_stat & BROKEN
