@@ -105,3 +105,9 @@ require only minor tweaks.
 #define PLACE_LAVA_RUIN "lavaland" //On lavaland ruin z levels(s)
 #define PLACE_BELOW "below" //On z levl below - centered on same tile
 #define PLACE_ISOLATED "isolated" //On isolated ruin z level
+
+//map template annihilate_bounds
+/// Annihilate template bounds before loading
+#define MAP_TEMPLATE_ANNIHILATE_PRELOAD 1
+/// Annihilate template bounds during load by empty()ing a turf before writing to it.
+#define MAP_TEMPLATE_ANNIHILATE_LOADING 2
