@@ -312,9 +312,9 @@
 			pixelX -= 2
 
 	if(throwingdatum.init_dir in list(NORTH,  WEST, NORTHWEST, SOUTHWEST))
-		overlay = mutable_appearance(icon=weapon.righthand_file,icon_state=weapon.item_state)
+		overlay = mutable_appearance(icon=weapon.righthand_file,icon_state=weapon.inhand_icon_state)
 	else
-		overlay = mutable_appearance(icon=weapon.lefthand_file,icon_state=weapon.item_state)
+		overlay = mutable_appearance(icon=weapon.lefthand_file,icon_state=weapon.inhand_icon_state)
 
 	var/matrix/M = matrix()
 	M.Translate(pixelX, pixelY)

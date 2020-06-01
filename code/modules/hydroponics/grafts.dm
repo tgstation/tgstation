@@ -8,7 +8,7 @@
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "graft_plant"
 	attack_verb = list("planted", "vegitized", "cropped", "reaped", "farmed")
-	///This stored the trait taken from the parent plant. Defaults to perenial growth.
+	///The stored trait taken from the parent plant. Defaults to perenial growth.
 	var/datum/plant_gene/trait/stored_trait
 	///Determines the appearance of the graft. Rudimentary right now so it just picks randomly.
 	var/graft_appearance
@@ -30,14 +30,22 @@
 	var/yield
 
 
-/obj/item/graft/Initialize()
+/obj/item/graft/Initialize(mapload, datum/plant_gene/trait/trait_path)
 	. = ..()
-	stored_trait = new /datum/plant_gene/trait/repeated_harvest //Default gene is repeated harvest.
+	//Default gene is repeated harvest.
+	if(trait_path)
+		stored_trait = new trait_path
+	else
+		stored_trait = new /datum/plant_gene/trait/repeated_harvest 
 	icon_state = pick(
 		10 ; "graft_plant" , \
 		5 ; "graft_flower" , \
 		4 ; "graft_mushroom" , \
 		1 ; "graft_doom" )
+
+/obj/item/graft/Destroy()
+	QDEL_NULL(stored_trait)
+	return ..()
 
 /obj/item/graft/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/plant_analyzer) && user.a_intent == INTENT_HELP)
