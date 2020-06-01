@@ -8,8 +8,9 @@ SUBSYSTEM_DEF(skills)
 	init_order = INIT_ORDER_SKILLS
 	///Dictionary of skill.type || skill ref
 	var/list/all_skills = list() 
-	///List of level names with index corresponding to skill level
-	var/list/level_names = list("None", "Novice", "Apprentice", "Journeyman", "Expert", "Master", "Legendary") //List of skill level names. Note that indexes can be accessed like so: level_names[SKILL_LEVEL_NOVICE]
+	///Static assoc list of levels (ints) - strings
+	var/list/level_names = list("Novice", "Apprentice", "Journeyman", "Expert", "Master", "Legendary")//This list is already in the right order, due to indexing
+
 
 /datum/controller/subsystem/skills/Initialize(timeofday)
 	InitializeSkills()
@@ -17,6 +18,6 @@ SUBSYSTEM_DEF(skills)
 
 ///Ran on initialize, populates the skills dictionary
 /datum/controller/subsystem/skills/proc/InitializeSkills(timeofday)
-	for(var/type in GLOB.skill_types)
+	for(var/type in subtypesof(/datum/skill))
 		var/datum/skill/ref = new type
 		all_skills[type] = ref
