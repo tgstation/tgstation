@@ -1,5 +1,7 @@
 /**
- * @file
+ * This plugin saves overall about 10KB on the final bundle size, so it's
+ * sort of worth it.
+ *
  * We are using a .cjs extension because:
  *
  * 1. Webpack CLI only supports CommonJS modules;
@@ -9,8 +11,9 @@
  * We need to copy-paste the whole "multiline" function because we can't
  * synchronously import an ES module from a CommonJS module.
  *
- * This plugin saves overall about 10KB on the final bundle size, so it's
- * sort of worth it.
+ * @file
+ * @copyright 2020 Aleksej Komarov
+ * @license MIT
  */
 
 /**

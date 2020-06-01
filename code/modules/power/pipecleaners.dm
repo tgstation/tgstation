@@ -183,7 +183,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	gender = NEUTER //That's a pipe_cleaner coil sounds better than that's some pipe_cleaner coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "pipecleaner"
-	item_state = "pipecleaner"
+	inhand_icon_state = "pipecleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_amount = MAXCOIL
@@ -238,7 +238,7 @@ By design, d1 is the smallest direction and d2 is the highest
 
 
 /obj/item/stack/pipe_cleaner_coil/update_icon()
-	icon_state = "[initial(item_state)][amount < 3 ? amount : ""]"
+	icon_state = "[initial(inhand_icon_state)][amount < 3 ? amount : ""]"
 	name = "pipe cleaner [amount < 3 ? "piece" : "coil"]"
 	color = null
 	add_atom_colour(pipe_cleaner_color, FIXED_COLOUR_PRIORITY)

@@ -498,4 +498,4 @@
 		owner.losebreath += 20
 		severe_cooldown = world.time + 30 SECONDS
 	if(prob(emp_vulnerability/severity))	//Chance of permanent effects
-		organ_flags = ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.
+		organ_flags |= ORGAN_SYNTHETIC_EMP //Starts organ faliure - gonna need replacing soon.

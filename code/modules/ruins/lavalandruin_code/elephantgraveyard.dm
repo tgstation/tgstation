@@ -106,7 +106,7 @@
 //***Grave mounds.
 /obj/structure/closet/crate/grave
 	name = "burial mound"
-	desc = "An marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
+	desc = "A marked patch of soil, showing signs of a burial long ago. You wouldn't disturb a grave... right?"
 	icon = 'icons/obj/crates.dmi'
 	icon_state = "grave"
 	dense_when_open = TRUE

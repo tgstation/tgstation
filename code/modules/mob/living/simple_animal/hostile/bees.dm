@@ -283,7 +283,7 @@
 	name = "queen bee"
 	desc = "She's the queen of bees, BZZ BZZ!"
 	icon_state = "queen_item"
-	item_state = ""
+	inhand_icon_state = ""
 	icon = 'icons/mob/bees.dmi'
 	var/mob/living/simple_animal/hostile/poison/bees/queen/queen
 

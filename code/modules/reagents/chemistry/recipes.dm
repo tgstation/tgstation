@@ -66,7 +66,7 @@
   * * amount_to_spawn - how much /mob to spawn
   * * reaction_name - what is the name of this reaction. be creative, the world is your oyster after all!
   * * mob_class - determines if the mob will be friendly, neutral or hostile
-  * * mob_faction - used in determining targets, mobs from the same faction wont harm eachother.
+  * * mob_faction - used in determining targets, mobs from the same faction won't harm eachother.
   * * random - creates random mobs. self explanatory.
   */
 /datum/chemical_reaction/proc/chemical_mob_spawn(datum/reagents/holder, amount_to_spawn, reaction_name, mob_class = HOSTILE_SPAWN, mob_faction = "chemicalsummon", random = TRUE)
