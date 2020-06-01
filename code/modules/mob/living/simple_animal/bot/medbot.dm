@@ -250,7 +250,7 @@
 		user.visible_message("<span class='notice'>[user] sets [src] right-side up!</span>", "<span class='green'>You set [src] right-side up!</span>")
 		speak("Thank you!")
 	else
-		visible_message("<span class='notice'>[src] manages to write around enough to right itself.</span>")
+		visible_message("<span class='notice'>[src] manages to writhe around enough to right itself.</span>")
 		tipper_name = null
 	tipped_status = MEDBOT_PANIC_NONE
 	mode = BOT_IDLE
@@ -271,8 +271,7 @@
 		if(MEDBOT_PANIC_ENDING)
 			speak("THIS HURTS, PLEASE HELP ME!!")
 		if(MEDBOT_PANIC_END)
-			speak("SECURITY ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please watch for violent behavior.", FREQ_SECURITY)
-			speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", FREQ_MEDICAL)
+			speak("PSYCH ALERT: Crewmember [tipper_name] recorded displaying antisocial tendencies torturing bots in [get_area(src)]. Please schedule psych evaluation.", radio_channel)
 			set_right() // strong independent medbot
 
 	if(prob(tipped_status))
@@ -547,3 +546,11 @@
 
 /obj/machinery/bot_core/medbot
 	req_one_access = list(ACCESS_MEDICAL, ACCESS_ROBOTICS)
+
+#undef MEDBOT_PANIC_NONE
+#undef MEDBOT_PANIC_LOW
+#undef MEDBOT_PANIC_MED
+#undef MEDBOT_PANIC_HIGH
+#undef MEDBOT_PANIC_FUCK
+#undef MEDBOT_PANIC_ENDING
+#undef MEDBOT_PANIC_END
