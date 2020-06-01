@@ -60,7 +60,12 @@
 
 #define SURGERY_SLOWDOWN_CAP_MULTIPLIER 2 //increase to make surgery slower but fail less, and decrease to make surgery faster but fail more
 
-/datum/surgery_step/proc/initiate(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+/datum/surgery_step/proc/initiate(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+	// Only followers of Asclepius have the ability to use Healing Touch and perform miracle feats of surgery.
+	// Prevents people from performing multiple simultaneous surgeries unless they're holding a Rod of Asclepius.
+	if(LAZYLEN(user.do_afters) && !user.has_status_effect(STATUS_EFFECT_HIPPOCRATIC_OATH))
+		return
+
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
 	var/fail_prob = 0//100 - fail_prob = success_prob
