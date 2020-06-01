@@ -1109,7 +1109,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(T)
 		qdel(src)
 		new/obj/machinery/destabilized_crystal(T)
-		explosion(T,round(portal_numbers/10),round(portal_numbers/5),round(portal_numbers),1,1,1)
+		explosion(T,0,round(portal_numbers/5),round(portal_numbers),1,1,1)
 
 /obj/overlay/psy
 	icon = 'icons/obj/supermatter.dmi'

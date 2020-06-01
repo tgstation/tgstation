@@ -1,4 +1,4 @@
-GLOBAL_LIST_INIT(waves, list("small wave" = list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=1),
+GLOBAL_LIST_INIT(crystal_invasion_waves, list("small wave" = list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=1),
 "medium wave" = list(/obj/structure/crystal_portal/small=4, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=1),
 "big wave" = list(/obj/structure/crystal_portal/small=5, /obj/structure/crystal_portal/medium=3, /obj/structure/crystal_portal/big=2, /obj/structure/crystal_portal/huge=1),
 "huge wave" = list(/obj/structure/crystal_portal/small=7, /obj/structure/crystal_portal/medium=5, /obj/structure/crystal_portal/big=3, /obj/structure/crystal_portal/huge=2)))
@@ -43,13 +43,13 @@ This section is for the event controller
 			"huge wave" = 3))
 	switch(wave_name)
 		if("small wave")
-			portal_numbers = pick(2, 3, 4, 5)
+			portal_numbers = rand(2, 5)
 		if("medium wave")
-			portal_numbers = pick(4, 5, 6, 7)
+			portal_numbers = rand(4, 7)
 		if("big wave")
-			portal_numbers = pick(6, 7, 8, 9)
+			portal_numbers = rand(6, 9)
 		if("huge wave")
-			portal_numbers = pick(9, 10, 11, 12)
+			portal_numbers = rand(9, 12)
 		else
 			WARNING("Wave name of [wave_name] not recognised.")
 			kill()
@@ -57,10 +57,8 @@ This section is for the event controller
 	var/list/sm_crystal = list()
 	for(var/obj/machinery/power/supermatter_crystal/temp in GLOB.machines)
 		if(QDELETED(temp))
-			WARNING("No engine found.")
-			kill()
+			continue
 		if(istype(temp, /obj/machinery/power/supermatter_crystal/shard))
-			message_admins("found a shard, skipping it")
 			continue
 		sm_crystal += temp
 	if(sm_crystal == null)
@@ -77,11 +75,11 @@ This section is for the event controller
 	addtimer(CALLBACK(src, .proc/spawn_portals), 10 SECONDS)
 
 /datum/round_event/crystal_invasion/proc/spawn_portals()
-	for(var/i = 0, i< portal_numbers, i++)
-		spawn_portal(GLOB.waves[wave_name])
+	for(var/i in 1 to portal_numbers)
+		spawn_portal(GLOB.crystal_invasion_waves[wave_name])
 		spawn_anomaly()
 
-	addtimer(CALLBACK(src, .proc/more_portals, GLOB.waves[wave_name]), 10 MINUTES)
+	addtimer(CALLBACK(src, .proc/more_portals, GLOB.crystal_invasion_waves[wave_name]), 10 MINUTES)
 
 ///Spawn an anomaly randomly in a different location than spawn_portal()
 /datum/round_event/crystal_invasion/proc/spawn_anomaly()
@@ -89,7 +87,7 @@ This section is for the event controller
 	for(var/obj/effect/landmark/event_spawn/temp in GLOB.generic_event_spawns)
 		if(QDELETED(temp))
 			continue
-		if(is_station_level(temp.loc.z))
+		if(is_station_level(temp.z))
 			spawners += temp
 
 	if(!spawners.len)
@@ -120,8 +118,8 @@ This section is for the event controller
 	priority_announce("WARNING - Detected another spike from the destabilized crystal. More portals are spawning all around the station, the next spike could \
 						cause a \[REDACTED] class event we assume you have 10 more minutes before total crystal annihilation", "Alert")
 	sound_to_playing_players('sound/misc/notice1.ogg')
-	for(var/i = 0, i< 8, i++)
-		spawn_portal(GLOB.waves["small wave"])
+	for(var/i in 1 to 8)
+		spawn_portal(GLOB.crystal_invasion_waves["small wave"])
 
 	for(var/C in GLOB.destabilized_crystals)
 		addtimer(CALLBACK(C, /obj/machinery/destabilized_crystal/proc/zk_event), 10 MINUTES)
@@ -157,7 +155,6 @@ This section is for the destabilized SM
 /obj/machinery/destabilized_crystal/process()
 	if(active)
 		if(prob(75))
-			src.fire_nuclear_particle()
 			radiation_pulse(src, 250, 6)
 		var/turf/T = loc
 		var/datum/gas_mixture/env = T.return_air()
@@ -189,15 +186,15 @@ This section is for the destabilized SM
 		return MAP_ERROR
 
 	var/obj/spawner = pick_n_take(spawners)
-	var/pick_portal = pickweight(GLOB.waves["huge wave"])
-	for(var/i = 0, i < 10, i++)
+	var/pick_portal = pickweight(GLOB.crystal_invasion_waves["huge wave"])
+	for(var/i in 1 to 10)
 		new pick_portal(spawner.loc)
 	explosion(src, 7, 10, 25, 25)
 	is_zk = TRUE
 	qdel(src)
 
 /obj/machinery/destabilized_crystal/attackby(obj/item/W, mob/living/user, params)
-	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
+	if(!istype(user))
 		return
 	if(istype(W, /obj/item/crystal_stabilizer))
 		var/obj/item/crystal_stabilizer/injector = W
@@ -243,7 +240,15 @@ This section is for the crystal stabilizer item
 	///The stabilizer is one use only
 	var/filled = FALSE
 
+/obj/item/crystal_stabilizer/examine(user)
+	. = ..()
+	if(!filled)
+		. += "<span class='notice'>The [src] is empty.</span>"
+	else
+		. += "<span class='notice'>The [src] is full and can be used to stabilize the Supermatter.</span>"
+
 /obj/item/crystal_stabilizer/attackby(obj/item/W, mob/living/user, params)
+	. = ..()
 	if(!istype(W) || (W.item_flags & ABSTRACT) || !istype(user))
 		return
 	if(istype(W, /obj/item/assembly/signaler/anomaly))
@@ -317,55 +322,38 @@ This section is for the crystal portals variations
 /obj/structure/crystal_portal/small
 	name = "Small Portal"
 	desc = "A small portal to an unkown dimension!"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "anom"
 	color = "#B2FFFE"
-	anchored = TRUE
 	max_mobs = 3
 	spawn_time = 200
 	mob_types = list(/mob/living/simple_animal/hostile/crystal_monster/minion, /mob/living/simple_animal/hostile/crystal_monster/thug)
-	spawn_text = "emerges from"
-	faction = list("crystal")
+
 /obj/structure/crystal_portal/medium
 	name = "Medium Portal"
 	desc = "A medium portal to an unkown dimension!"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "anom"
 	color = "#93F3B2"
-	anchored = TRUE
 	max_mobs = 5
 	spawn_time = 180
 	mob_types = list(/mob/living/simple_animal/hostile/crystal_monster/minion, /mob/living/simple_animal/hostile/crystal_monster/thug,\
 					 /mob/living/simple_animal/hostile/crystal_monster/recruit)
-	spawn_text = "emerges from"
-	faction = list("crystal")
+
 /obj/structure/crystal_portal/big
 	name = "Big Portal"
 	desc = "A big portal to an unkown dimension!"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "anom"
 	color = "#F4F48A"
-	anchored = TRUE
 	max_mobs = 8
 	spawn_time = 160
 	mob_types = list(/mob/living/simple_animal/hostile/crystal_monster/minion, /mob/living/simple_animal/hostile/crystal_monster/thug,\
 					 /mob/living/simple_animal/hostile/crystal_monster/recruit, /mob/living/simple_animal/hostile/crystal_monster/killer)
-	spawn_text = "emerges from"
-	faction = list("crystal")
+
 /obj/structure/crystal_portal/huge
 	name = "Huge Portal"
 	desc = "A huge portal to an unkown dimension!"
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "anom"
 	color = "#F97575"
-	anchored = TRUE
 	max_mobs = 12
 	spawn_time = 140
 	mob_types = list(/mob/living/simple_animal/hostile/crystal_monster/minion, /mob/living/simple_animal/hostile/crystal_monster/thug,\
 					 /mob/living/simple_animal/hostile/crystal_monster/recruit, /mob/living/simple_animal/hostile/crystal_monster/killer, \
 					 /mob/living/simple_animal/hostile/crystal_monster/boss)
-	spawn_text = "emerges from"
-	faction = list("crystal")
 
 /*
 This section is for the crystal monsters variations
@@ -378,7 +366,7 @@ This section is for the crystal monsters variations
 	icon_living = "crystal_minion"
 	icon_dead = "crystal_minion"
 	gender = NEUTER
-	mob_biotypes = MOB_UNDEAD|MOB_HUMANOID
+	mob_biotypes = MOB_MINERAL|MOB_HUMANOID
 	turns_per_move = 5
 	speak_emote = list("resonates")
 	emote_see = list("resonates")
