@@ -18,7 +18,8 @@
 	. = ..()
 	if(!request_list)
 		request_list = list()
-		request_list += list("owner" = "Pat Sajack", "value" = 100, "description" = "Ayo get me some fuckin coffee ya dig?", "applicants" = list())
+		//The below is a test case, and will be removed for the final product.
+		request_list += list(list("owner" = "Pat Sajack", "value" = 100, "description" = "Ayo get me some coffee ya dig?", "req_number" = 1, "applicants" = list()))
 
 /obj/machinery/request_kiosk/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -33,8 +34,11 @@
 	if(istype(I, /obj/item/bounty_card))
 		var/obj/item/bounty_card/curr_bounty = I
 		if(!curr_bounty.bounty_price)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 			return
-		request_list += list("owner" = user.name, "value" = curr_bounty.bounty_price, "", "description" = curr_bounty.bounty_desc, "applicants" = list())
+		request_list += list(list("owner" = user.name, "value" = curr_bounty.bounty_price, "description" = curr_bounty.bounty_desc, "req_number" = rand(1,1000), "applicants" = list()))
+		playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+		qdel(I)
 
 /obj/machinery/request_kiosk/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
@@ -52,24 +56,29 @@
 /obj/machinery/request_kiosk/ui_act(action, list/params)
 	if(..())
 		return
+	var/list/applicants = locate(params["applicants"])
 	switch(action)
-		if("ApplyRequest")
-			say("Applied for a request.")
 		if("CreateBounty")
 			say("Dispensing Card.")
 			new /obj/item/bounty_card(loc)
+		if("Apply")		//Yeah this part is fucked, please advise.
+			if(current_user.account_holder == usr.name)
+				return
+			applicants += list("name" = usr.name)
 		if("PayApplicant")
 			say("Paid out [request_amount] credits to someone.")
 		if("Clear")
 			if(current_user)
 				current_user = null
 				say("Account Reset.")
+				return
 		if("DeleteRequest")
 			say("Deleted Current Request.")
 		if("amount")
 			var/input = text2num(params["amount"])
 			if(input)
 				request_amount = input
+	. = TRUE
 
 /obj/item/bounty_card
 	name = "bounty card"
