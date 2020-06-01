@@ -15,6 +15,10 @@
 	var/processing = FALSE
 	var/chosen = /datum/material/iron //which material will be used to make coins
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
 =======
 
 >>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
@@ -43,6 +47,7 @@
 		return
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	var/datum/component/material_container/mat_container = GetComponent(/datum/component/material_container)
 	var/obj/item/stack/O = target
 
@@ -53,6 +58,10 @@
 			unload_mineral(O)
 		else
 			qdel(O)
+=======
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/obj/item/stack/S = target
+>>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
 =======
 	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
 	var/obj/item/stack/S = target

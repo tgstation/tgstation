@@ -146,6 +146,7 @@
 		unload_mineral(O)
 	else
 <<<<<<< HEAD
+<<<<<<< HEAD
 		var/loaded_amount = mat_container.insert_item(O, material_amount)
 		if(loaded_amount < material_amount) //if there is not enough space, eject it
 			unload_mineral(O)
@@ -156,10 +157,15 @@
 		CONSOLE.updateUsrDialog()
 
 =======
+=======
+>>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
 		materials.insert_item(O)
 		qdel(O)
 		if(CONSOLE)
 			CONSOLE.updateUsrDialog()
+<<<<<<< HEAD
+>>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
+=======
 >>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
 
 /obj/machinery/mineral/processing_unit/proc/get_machine_data()
