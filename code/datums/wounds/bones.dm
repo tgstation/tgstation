@@ -56,8 +56,6 @@
 /datum/wound/brute/bone/remove_wound(ignore_limb, replaced)
 	limp_slowdown = 0
 	QDEL_NULL(active_trauma)
-	if(limb)
-		REMOVE_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 	if(victim)
 		UnregisterSignal(victim, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
 	return ..()
@@ -189,9 +187,7 @@
 
 	if(initial(disabling) && splinted)
 		disabling = FALSE
-		REMOVE_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 	else if(initial(disabling))
-		ADD_TRAIT(limb, TRAIT_LIMB_DISABLED_WOUND, src)
 		disabling = TRUE
 
 	limb.update_wounds()
@@ -369,6 +365,13 @@
 	brain_trauma_group = BRAIN_TRAUMA_SEVERE
 	trauma_cycle_cooldown = 2.5 MINUTES
 	chance_internal_bleeding = 60
+
+// doesn't make much sense for "a" bone to stick out of your head
+/datum/wound/brute/bone/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited)
+	if(L.body_zone == BODY_ZONE_HEAD)
+		occur_text = "splits open, exposing bits of brain matter through the flesh and blood"
+		examine_desc = "has a nauseating indent, with bits of pink and purple mush peeking through"
+	. = ..()
 
 /// if someone is using bone gel on our wound
 /datum/wound/brute/bone/proc/gel(obj/item/stack/medical/bone_gel/I, mob/user)
