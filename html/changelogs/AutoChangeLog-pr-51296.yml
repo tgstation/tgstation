@@ -1,5 +1,0 @@
-author: "Helianthus00"
-delete-after: True
-changes: 
-  - bugfix: "Fixed the air supply and scrubber pipes to be more neat, as well as fixing a few displaced vents in medbay"
-  - rscdel: "removed the double cable on one of the AI upload doors."
