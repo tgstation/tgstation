@@ -14,13 +14,16 @@
 		return
 
 	var/list/preview = list()
-	for(var/S in template.get_affected_turfs(T,centered = TRUE))
+	var/list/orientations = list("South" = SOUTH, "North" = NORTH, "East" = EAST, "West" = WEST)
+	var/choice = input(src, "Which orientation? Maps are normally facing SOUTH.", "Template Orientation", "South") as null|anything in orientations
+	var/orientation = orientations[choice]
+	for(var/S in template.get_affected_turfs(T, centered = TRUE, orientation))
 		var/image/item = image('icons/turf/overlays.dmi',S,"greenOverlay")
 		item.plane = ABOVE_LIGHTING_PLANE
 		preview += item
 	images += preview
 	if(alert(src,"Confirm location.","Template Confirm","Yes","No") == "Yes")
-		if(template.load(T, centered = TRUE))
+		if(template.load(T, centered = TRUE, orientation = orientation))
 			message_admins("<span class='adminnotice'>[key_name_admin(src)] has placed a map template ([template.name]) at [ADMIN_COORDJMP(T)]</span>")
 		else
 			to_chat(src, "Failed to place map", confidential = TRUE)

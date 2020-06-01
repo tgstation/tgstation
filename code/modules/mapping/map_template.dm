@@ -1,14 +1,31 @@
+/**
+  * Map Templates
+  *
+  * These datums are used for holding data about .dmm files to be loaded at runtime.
+  * They do not themselves hold the actual data from a .dmm, rather than loading the .dmm using a /datum/parsed_map when necessary.
+  * They do store metadata like name, size, ztraits, and all that, though, and sometimes cache the parsed_map even after loading for performance.
+  */
 /datum/map_template
+	/// The name of the template
 	var/name = "Default Template Name"
-	var/width = 0				//all these are for SOUTH!
+	/// Width of the template's contained map when facing SOUTH.
+	var/width = 0
+	/// Height of the template's contained map when facing SOUTH.
 	var/height = 0
+	/// Zlevel amount of the template's contained map.
 	var/zdepth = 1
+	/// The map path to the contained map, if it's a map on disk, or potentially a file object (? citation needed) if an admin is proccalling.
 	var/mappath
-	var/loaded = 0 // Times loaded this round
+	/// Number of times we have been loaded in the current round.
+	var/loaded = 0
+	/// The cached parsed_map. Uses lots of memory, so don't cache this stuff unless you absolutely need to!
 	var/datum/parsed_map/cached_map
+	/// Default for if we should keep our parsed_map cached after loading vs deleting it
 	var/keep_cached_map = FALSE
+	/// Default value for annihilate_bounds.
 	var/default_annihilate = FALSE
-	var/list/ztraits				//zlevel traits for load_new_z
+	/// List of ztraits when using [load_new_z()].
+	var/list/ztraits
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
 	if(path)
@@ -22,6 +39,13 @@
 	QDEL_NULL(cached_map)
 	return ..()
 
+/**
+  * Loads in and stores the size of our map.
+  * If [keep_cached_map] or force_cache is not FALSE, we will keep the parsed_map around.
+  *
+  * @params
+  * * force_cache - FALSE/TRUE: whether or not we want to forcefully cache the map after we get its size.
+  */
 /datum/map_template/proc/preload_size(path = mappath, force_cache = FALSE)
 	if(cached_map)
 		return cached_map.parsed_bounds
@@ -35,20 +59,33 @@
 			cached_map = parsed
 	return bounds
 
+/**
+  * Gets the parsed bounds of our map. This means the size of the map file/map itself.
+  */
 /datum/map_template/proc/get_parsed_bounds()
 	return preload_size(mappath)
 
+/**
+  * Gets our last loaded bounds. This means the bounds of the area in the game world it was last loaded into.
+  */
 /datum/map_template/proc/get_last_loaded_bounds()
 	if(cached_map)
 		return cached_map.bounds
 	return get_parsed_bounds()
 
+/**
+  * Like get_last_loaded_bounds() but instead gets turf block.
+  * Crashes if cached_map doesn't exist, so if you are using a non cached map_template, you should just grab the loaded bounds from the loading itself, which is more perferred anyways.
+  */
 /datum/map_template/proc/get_last_loaded_turf_block()
 	if(!cached_map)
 		CRASH("Improper use of get_last_loaded_turf_block, no cached_map.")
 	var/list/B = cached_map.bounds
 	return block(locate(B[MAP_MINX], B[MAP_MINY], B[MAP_MINZ]), locate(B[MAP_MAXX], B[MAP_MAXY], B[MAP_MAXZ]))
 
+/**
+  * Gets the size of this template in a specific orientation as a 3 element list of x, y, z.
+  */
 /datum/map_template/proc/get_size(orientation = SOUTH)
 	if(!width || !height || !zdepth)
 		preload_size(mappath)
@@ -57,6 +94,10 @@
 		return list(height, width, zdepth)
 	return list(width, height, zdepth)
 
+/**
+  * Initialize objects in the template after it's done loading all at once, so every atom doesn't individually initialize.
+  * This gives the proper behavior as if it was being loaded roundstart rather than normal object initialization.
+  */
 /datum/parsed_map/proc/initTemplateBounds()
 	var/list/obj/machinery/atmospherics/atmos_machines = list()
 	var/list/obj/structure/cable/cables = list()
@@ -87,6 +128,14 @@
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 
+/**
+  * Loads this map_template as a new zlevel.
+  *
+  * @params
+  * * orientation - direction to load this in, with default being SOUTH.
+  * * ztrait - Override the zlevel traits to load it in with as a zlevel trait list. This should probably be set!
+  * * Centered - Whether or or not to load this at the center of the zlevel or at the bottom left corner.
+  */
 /datum/map_template/proc/load_new_z(orientation = SOUTH, list/ztraits = src.ztraits || list(ZTRAIT_AWAY = TRUE), centered = TRUE)
 	var/x = centered? max(round((world.maxx - width) / 2), 1) : 1
 	var/y = centered? max(round((world.maxy - height) / 2), 1) : 1

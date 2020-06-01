@@ -26,14 +26,14 @@
 	mappath = "[prefix][shuttle_id].dmm"
 	. = ..()
 
-/datum/map_template/shuttle/preload_size(path, cache)
+/datum/map_template/shuttle/preload_size(path = mappath, force_cache = FALSE)
 	. = ..(path, TRUE) // Done this way because we still want to know if someone actualy wanted to cache the map
 	if(!cached_map)
 		return
 
 	discover_port_offset()
 
-	if(!cache)
+	if(!cached_map)
 		cached_map = null
 
 /datum/map_template/shuttle/proc/discover_port_offset()

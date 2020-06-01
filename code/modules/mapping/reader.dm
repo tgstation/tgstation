@@ -301,7 +301,10 @@
 		testing("Skipped loading [turfsSkipped] default turfs")
 	#endif
 
-	return TRUE
+	// I have no idea how you could POSSIBLY manage this but
+	if(bounds[1] == 1.#INF || bounds[4] == 1.#INF)
+		CRASH("Mapload didn't actually load any turfs. Something is broken about this template. [path] [name]")
+	return bounds
 
 /datum/parsed_map/proc/build_cache(no_changeturf, bad_paths=null)
 	if(modelCache && !bad_paths)
