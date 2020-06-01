@@ -17,7 +17,7 @@
 	var/list/orientations = list("South" = SOUTH, "North" = NORTH, "East" = EAST, "West" = WEST)
 	var/choice = input(src, "Which orientation? Maps are normally facing SOUTH.", "Template Orientation", "South") as null|anything in orientations
 	var/orientation = orientations[choice]
-	for(var/S in template.get_affected_turfs(T, centered = TRUE, orientation))
+	for(var/S in template.get_affected_turfs(T, TRUE, orientation))
 		var/image/item = image('icons/turf/overlays.dmi',S,"greenOverlay")
 		item.plane = ABOVE_LIGHTING_PLANE
 		preview += item
