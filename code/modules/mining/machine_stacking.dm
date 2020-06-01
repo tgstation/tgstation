@@ -113,11 +113,10 @@
 	qdel(inp)
 
 	if(materials.silo && !materials.on_hold()) //Dump the sheets to the silo
-		var/material_amount = materials.mat_container.get_item_material_amount(storage)
-		if (material_amount) //no materials, incinerate it
-			var/loaded_amount = materials.mat_container.insert_item(storage, material_amount)
-			var/mats = storage.custom_materials & materials.mat_container.materials
-			materials.silo_log(src, "collected", loaded_amount, "sheets", mats)
+		var/matlist = storage.custom_materials & materials.mat_container.materials
+		if (length(matlist))
+			var/inserted = materials.mat_container.insert_item(storage)
+			materials.silo_log(src, "collected", inserted, "sheets", matlist)
 			if (QDELETED(storage))
 				stack_list -= key
 			return

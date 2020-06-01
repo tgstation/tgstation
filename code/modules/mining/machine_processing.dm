@@ -140,12 +140,12 @@
 	return ..()
 
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
-	var/datum/component/material_container/mat_container = GetComponent(/datum/component/material_container)
-	var/material_amount = mat_container.get_item_material_amount(O)
-
-	if (!material_amount) //no materials, incinerate it
-		qdel(O)
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/material_amount = materials.get_item_material_amount(O)
+	if(!materials.has_space(material_amount))
+		unload_mineral(O)
 	else
+<<<<<<< HEAD
 		var/loaded_amount = mat_container.insert_item(O, material_amount)
 		if(loaded_amount < material_amount) //if there is not enough space, eject it
 			unload_mineral(O)
@@ -155,6 +155,12 @@
 	if(CONSOLE)
 		CONSOLE.updateUsrDialog()
 
+=======
+		materials.insert_item(O)
+		qdel(O)
+		if(CONSOLE)
+			CONSOLE.updateUsrDialog()
+>>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
 
 /obj/machinery/mineral/processing_unit/proc/get_machine_data()
 	var/dat = "<b>Smelter control console</b><br><br>"

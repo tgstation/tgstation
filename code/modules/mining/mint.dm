@@ -14,6 +14,10 @@
 	var/produced_coins = 0 // how many coins the machine has made in it's last cycle
 	var/processing = FALSE
 	var/chosen = /datum/material/iron //which material will be used to make coins
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
 
 /obj/machinery/mineral/mint/Initialize()
 	. = ..()
@@ -38,6 +42,7 @@
 	if(!istype(target, /obj/item/stack))
 		return
 
+<<<<<<< HEAD
 	var/datum/component/material_container/mat_container = GetComponent(/datum/component/material_container)
 	var/obj/item/stack/O = target
 
@@ -48,7 +53,13 @@
 			unload_mineral(O)
 		else
 			qdel(O)
+=======
+	var/datum/component/material_container/materials = GetComponent(/datum/component/material_container)
+	var/obj/item/stack/S = target
+>>>>>>> parent of f2ef245a32... Ok more fixes.  Now the orm works upgraded
 
+	if(materials.insert_item(S))
+		qdel(S)
 
 /obj/machinery/mineral/mint/process()
 	if(processing)
