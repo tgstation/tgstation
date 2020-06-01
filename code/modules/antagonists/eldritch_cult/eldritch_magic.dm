@@ -211,7 +211,7 @@
 
 /obj/effect/proc_holder/spell/pointed/ash_cleave
 	name = "Cleave"
-	desc = "Causes severe bleeding on a target and people around him"
+	desc = "Causes severe bleeding on a target and people around them"
 	school = "transmutation"
 	charge_max = 350
 	clothes_req = FALSE
@@ -458,3 +458,15 @@
 		T.hotspot_expose(700,50,1)
 
 
+/obj/effect/proc_holder/spell/targeted/worm_contract
+	name = "Oath of Fire"
+	desc = "For a minute you will passively create a ring of fire around you."
+	invocation = "FL'MS"
+	invocation_type = "whisper"
+	clothes_req = FALSE
+	action_background_icon_state = "bg_ecult"
+	range = -1
+	include_user = TRUE
+	charge_max = 700
+	action_icon = 'icons/mob/actions/actions_ecult.dmi'
+	action_icon_state = "fire_ring"

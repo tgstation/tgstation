@@ -161,7 +161,7 @@
 /datum/eldritch_knowledge/ash_final
 	name = "Ashlord's rite"
 	gain_text = "The forgotten lords have spoken! The lord of ash have come! Fear the fire!"
-	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful abiltiy that let's you breath flames of the beast."
+	desc = "Bring 3 corpses onto a transmutation rune, you will become immune to fire ,space ,cold and other enviromental hazards and become overall sturdier to all other damages. You will gain a spell that passively creates ring of fire around you as well ,as you will gain a powerful abiltiy that let's you create a wave of flames all around you."
 	required_atoms = list(/mob/living/carbon/human)
 	cost = 3
 	route = "Ash"
@@ -185,6 +185,9 @@
 	priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the blaze, for Ashbringer [user.real_name] has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/fire_cascade/big)
 	user.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/fire_sworn)
+	var/mob/living/carbon/human/H = user
+	H.physiology.brute_mod *= 0.5
+	H.physiology.burn_mod *= 0.5
 	for(var/X in trait_list)
 		ADD_TRAIT(user,X,MAGIC_TRAIT)
 	finished = TRUE

@@ -367,8 +367,8 @@
 
 /datum/status_effect/eldritch/rust/on_effect()
 	for(var/obj/item/I in owner.GetAllContents())
-		if(prob(75))
-			I.take_damage(rand(0,200))
+		//Affects roughly 75% of items
+		I.take_damage(100 * prob(75))
 	return ..()
 
 /datum/status_effect/stacking/saw_bleed

@@ -130,6 +130,13 @@
 /mob/living/simple_animal/hostile/eldritch/armsy/can_be_pulled()
 	return FALSE
 
+///Updates chain links to force move onto a single tile
+/mob/living/simple_animal/hostile/eldritch/armsy/proc/contract_next_chain_into_single_tile()
+	if(back)
+		back.forceMove(loc)
+		back.contract_next_chain_into_single_tile()
+	return
+
 ///Updates the next mob in the chain to move to our last location, fixed the worm if somehow broken.
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/update_chain_links()
 	gib_trail()

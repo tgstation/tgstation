@@ -166,6 +166,7 @@
 	return
 
 /datum/eldritch_knowledge/summon
+	//Mob to summon
 	var/mob/living/mob_to_summon
 
 
@@ -181,14 +182,14 @@
 	summoned.ghostize(FALSE)
 	summoned.key = C.key
 
-	to_chat(summoned,"<span class='warning'>You are bound to [user.real_name]'s' will! Don't let your master die, protect him at all cost!</span>")
+	to_chat(summoned,"<span class='warning'>You are bound to [user.real_name]'s' will! Don't let your master die, protect them at all cost!</span>")
 ///////////////
 ///Base lore///
 ///////////////
 
 /datum/eldritch_knowledge/spell/basic
 	name = "Break of dawn"
-	desc = "Starts your journey in the mansus. Allows you to get a select a target using a living heart on a transmutation rune."
+	desc = "Starts your journey in the mansus. Allows you to select a target using a living heart on a transmutation rune."
 	gain_text = "Gates of mansus open up to your mind."
 	next_knowledge = list(/datum/eldritch_knowledge/base_rust,/datum/eldritch_knowledge/base_ash,/datum/eldritch_knowledge/base_flesh)
 	cost = 0
