@@ -387,7 +387,7 @@ GLOBAL_LIST_INIT(cable_coil_recipes, list(new/datum/stack_recipe("cable restrain
 	gender = NEUTER //That's a cable coil sounds better than that's some cable coils
 	icon = 'icons/obj/power.dmi'
 	icon_state = "coil"
-	item_state = "coil"
+	inhand_icon_state = "coil"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	max_amount = MAXCOIL
@@ -449,7 +449,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 		"Layer 2" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-yellow"),
 		"Layer 3" = image(icon = 'icons/mob/radial.dmi', icon_state = "coil-blue"),
 		"Multilayer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cable_bridge"),
-		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable")		
+		"Multi Z layer cable hub" = image(icon = 'icons/obj/power.dmi', icon_state = "cablerelay-broken-cable")
 		)
 	var/layer_result = show_radial_menu(user, src, GLOB.cable_radial_layer_list, custom_check = CALLBACK(src, .proc/check_menu, user), require_near = TRUE, tooltips = TRUE)
 	if(!check_menu(user))
@@ -627,7 +627,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 /obj/structure/cable/multilayer/update_icon()
 
 	machinery_node?.alpha = machinery_layer & MACHINERY_LAYER_1 ? 255 : 0
-	
+
 	cable_node_1?.alpha = cable_layer & CABLE_LAYER_1 ? 255 : 0
 
 	cable_node_2?.alpha = cable_layer & CABLE_LAYER_2 ? 255 : 0
@@ -645,7 +645,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 			C.deconstruct()						// remove adversary cable
 	if(!mapload)
 		auto_propagate_cut_cable(src)
-	
+
 	machinery_node = new /obj/effect/node()
 	vis_contents += machinery_node
 	cable_node_1 = new /obj/effect/node/layer1()
@@ -660,7 +660,7 @@ GLOBAL_LIST(cable_radial_layer_list)
 	QDEL_NULL(machinery_node)
 	QDEL_NULL(cable_node_1)
 	QDEL_NULL(cable_node_2)
-	QDEL_NULL(cable_node_3) 
+	QDEL_NULL(cable_node_3)
 	return ..()									// then go ahead and delete the cable
 
 /obj/structure/cable/multilayer/examine(mob/user)

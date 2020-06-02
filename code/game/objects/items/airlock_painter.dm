@@ -3,7 +3,7 @@
 	desc = "An advanced autopainter preprogrammed with several paintjobs for airlocks. Use it on an airlock during or after construction to change the paintjob."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "paint sprayer"
-	item_state = "paint sprayer"
+	inhand_icon_state = "paint sprayer"
 
 	w_class = WEIGHT_CLASS_SMALL
 
@@ -149,7 +149,7 @@
 	desc = "An airlock painter, reprogramed to use a different style of paint in order to apply decals for floor tiles as well, in addition to repainting doors. Decals break when the floor tiles are removed. Alt-Click to change design."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "decal_sprayer"
-	item_state = "decalsprayer"
+	inhand_icon_state = "decalsprayer"
 	custom_materials = list(/datum/material/iron=2000, /datum/material/glass=500)
 	var/stored_dir = 2
 	var/stored_color = ""

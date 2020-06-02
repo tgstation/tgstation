@@ -1,7 +1,7 @@
 /obj/item/clothing/under
 	name = "under"
 	icon = 'icons/obj/clothing/under/default.dmi'
-	mob_overlay_icon = 'icons/mob/clothing/under/default.dmi'
+	worn_icon = 'icons/mob/clothing/under/default.dmi'
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	permeability_coefficient = 0.9
 	slot_flags = ITEM_SLOT_ICLOTHING
@@ -87,6 +87,7 @@
 		H.fan_hud_set_fandom()
 		if(attached_accessory.above_suit)
 			H.update_inv_wear_suit()
+	set_sensor_glob()	
 
 /obj/item/clothing/under/dropped(mob/user)
 	if(attached_accessory)
@@ -96,7 +97,7 @@
 			H.fan_hud_set_fandom()
 			if(attached_accessory.above_suit)
 				H.update_inv_wear_suit()
-
+	set_sensor_glob()	
 	..()
 
 /obj/item/clothing/under/proc/attach_accessory(obj/item/I, mob/user, notifyAttach = 1)
