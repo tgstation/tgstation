@@ -306,14 +306,6 @@
 	overlays_file = 'icons/obj/doors/airlocks/station2/overlays.dmi'
 	assemblytype = /obj/structure/door_assembly/door_assembly_public
 
-/obj/machinery/door/airlock/public/Initialize()
-	..()
-	if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
-		color = GLOB.pride_month_colors[GLOB.current_window_pride_color]
-		GLOB.current_window_pride_color++
-		if(GLOB.current_window_pride_color > GLOB.pride_month_colors.len)
-			GLOB.current_window_pride_color = 1
-
 /obj/machinery/door/airlock/public/glass
 	opacity = 0
 	glass = TRUE

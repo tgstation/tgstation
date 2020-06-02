@@ -701,6 +701,13 @@ GLOBAL_LIST_EMPTY(vending_products)
 			max_amount = R.max_amount,
 			ref = REF(R)
 		)
+		if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
+			data["name"] = "pride [R.name]"
+			if(R.custom_price)
+				data["price"] = R.custom_price * 1.25
+			else
+				data["price"] = default_price * 1.25
+
 		.["product_records"] += list(data)
 	.["coin_records"] = list()
 	for (var/datum/data/vending_product/R in coin_records)
@@ -712,6 +719,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 			ref = REF(R),
 			premium = TRUE
 		)
+		if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
+			data["name"] = "pride [R.name]"
+			if(R.custom_price)
+				data["price"] = R.custom_premium_price * 1.25
+			else
+				data["price"] = extra_price * 1.25
 		.["coin_records"] += list(data)
 	.["hidden_records"] = list()
 	for (var/datum/data/vending_product/R in hidden_records)
@@ -723,6 +736,12 @@ GLOBAL_LIST_EMPTY(vending_products)
 			ref = REF(R),
 			premium = TRUE
 		)
+		if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
+			data["name"] = "pride [R.name]"
+			if(R.custom_price)
+				data["price"] = R.custom_premium_price * 1.25
+			else
+				data["price"] = extra_price * 1.25
 		.["hidden_records"] += list(data)
 
 /obj/machinery/vending/ui_data(mob/user)
@@ -811,6 +830,8 @@ GLOBAL_LIST_EMPTY(vending_products)
 					price_to_use = 0
 				if(coin_records.Find(R) || hidden_records.Find(R))
 					price_to_use = R.custom_premium_price ? R.custom_premium_price : extra_price
+				if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
+					price_to_use *= 1.25
 				if(price_to_use && !account.adjust_money(-price_to_use))
 					say("You do not possess the funds to purchase [R.name].")
 					flick(icon_deny,src)
@@ -822,15 +843,20 @@ GLOBAL_LIST_EMPTY(vending_products)
 					SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 					log_econ("[price_to_use] credits were inserted into [src] by [D.account_holder] to buy [R].")
 			if(last_shopper != usr || purchase_message_cooldown < world.time)
-				say("Thank you for shopping with [src]!")
+				if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
+					say("[src] supports Pride Week, and is happy that you support it too!")
+				else
+					say("Thank you for shopping with [src]!")
 				purchase_message_cooldown = world.time + 5 SECONDS
 				last_shopper = usr
 			use_power(5)
 			if(icon_vend) //Show the vending animation if needed
 				flick(icon_vend,src)
 			playsound(src, 'sound/machines/machine_vend.ogg', 50, TRUE, extrarange = -3)
-			new R.product_path(get_turf(src))
+			var/obj/O = new R.product_path(get_turf(src))
 			R.amount--
+			if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
+				O.color = pick(GLOB.pride_month_colors)
 			SSblackbox.record_feedback("nested tally", "vending_machine_usage", 1, list("[type]", "[R.product_path]"))
 			vend_ready = TRUE
 

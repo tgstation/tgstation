@@ -1,6 +1,6 @@
 GLOBAL_LIST_INIT(pride_month_colors, list("#fe0000","#fe9900","#ffff00","#009900","#0000fe","#cc0098","#fbfaf6","#feb0c8","#75d8ed", "#603814", "#000100"))
 GLOBAL_VAR_INIT(current_pride_color, 1)
-GLOBAL_VAR_INIT(current_window_pride_color, 1)
+
 /obj/effect/turf_decal/tile
 	name = "tile decal"
 	icon_state = "tile_corner"

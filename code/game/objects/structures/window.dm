@@ -64,12 +64,6 @@
 	//windows only block while reinforced and fulltile, so we'll use the proc
 	real_explosion_block = explosion_block
 	explosion_block = EXPLOSION_BLOCK_PROC
-	if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
-		color = GLOB.pride_month_colors[GLOB.current_window_pride_color]
-		GLOB.current_window_pride_color++
-		if(GLOB.current_window_pride_color > GLOB.pride_month_colors.len)
-			GLOB.current_window_pride_color = 1
-
 /obj/structure/window/ComponentInitialize()
 	. = ..()
 	AddComponent(/datum/component/simple_rotation,ROTATION_ALTCLICK | ROTATION_CLOCKWISE | ROTATION_COUNTERCLOCKWISE | ROTATION_VERBS ,null,CALLBACK(src, .proc/can_be_rotated),CALLBACK(src,.proc/after_rotation))
