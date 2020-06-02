@@ -990,8 +990,8 @@
 		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
 
 	// spread awareness to a very serious issue
-	if(rand(0,100) <= 100)
-		addtimer(CALLBACK(L, /mob/living/carbon/proc/david_reimer, user), rand(5, 10))
+	if(rand(0,100) <= 41)
+		addtimer(CALLBACK(L, /mob/living/carbon/proc/david_reimer, user), rand(60, 300))
 
 	L.regenerate_icons()
 	qdel(src)
