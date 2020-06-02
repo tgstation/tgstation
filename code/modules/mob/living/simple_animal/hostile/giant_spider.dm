@@ -267,7 +267,7 @@
 
 /mob/living/simple_animal/hostile/poison/giant_spider/nurse/handle_automated_action()
 	if(..())
-		var/list/can_see = cheap_view(10, src)
+		var/list/can_see = view(10, src)
 		if(!busy && prob(30))	//30% chance to stop wandering and do something
 			//first, check for potential food nearby to cocoon
 			for(var/mob/living/C in can_see)

@@ -39,7 +39,7 @@
 		return
 	if(world.time > next_check && world.time > next_scare)
 		next_check = world.time + 50
-		var/list/seen_atoms = cheap_view(7, owner)
+		var/list/seen_atoms = view(7, owner)
 
 		if(LAZYLEN(trigger_objs))
 			for(var/obj/O in seen_atoms)

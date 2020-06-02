@@ -468,7 +468,8 @@ Turf and target are separate in case you want to teleport some distance from a t
 					return FALSE
 	return TRUE
 
-/proc/cheap_view(distance = 7, atom/center, include_turfs = TRUE, include_objects = TRUE, include_mobs = TRUE)
+// Uses raycasting, doesn't care about lighting levels, and allows you to filter the results.
+/proc/complex_view(distance = 7, atom/center, include_turfs = TRUE, include_objects = TRUE, include_mobs = TRUE)
 	. = list()
 	var/list/turfs_to_check = RANGE_TURFS(distance, center)
 	for(var/T in turfs_to_check)

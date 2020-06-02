@@ -33,7 +33,7 @@
 	for(var/obj/machinery/satellite/meteor_shield/A in GLOB.machines)
 		if(!A.active || !is_station_level(A.z))
 			continue
-		coverage |= cheap_view(A.kill_range,A)
+		coverage |= view(A.kill_range,A)
 	return coverage.len
 
 /obj/machinery/computer/sat_control

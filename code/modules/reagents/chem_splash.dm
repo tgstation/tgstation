@@ -34,7 +34,7 @@
 		steam.attach(epicenter)
 		steam.start()
 
-		var/list/viewable = cheap_view(affected_range, epicenter)
+		var/list/viewable = view(affected_range, epicenter)
 
 		var/list/accessible = list(epicenter)
 		for(var/i=1; i<=affected_range; i++)
