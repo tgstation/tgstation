@@ -799,7 +799,7 @@
 							"<span class='warning'>You struggle as you fail to break free of [pulledby]'s grip!</span>", null, null, pulledby)
 			to_chat(pulledby, "<span class='danger'>[src] struggles as they fail to break free of your grip!</span>")
 		if(moving_resist && client) //we resisted by trying to move
-			client.move_delay = world.time + 20
+			client.move_delay = world.time + 40
 	else
 		pulledby.stop_pulling()
 		return FALSE
