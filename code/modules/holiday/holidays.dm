@@ -239,6 +239,16 @@
 /datum/holiday/bee/getStationPrefix()
 	return pick("Bee","Honey","Hive","Africanized","Mead","Buzz")
 
+/datum/holiday/pride_month
+	name = "Pride Month"
+	begin_day = 1
+	begin_month = JUNE
+	end_day = 30
+	end_month = JUNE
+
+/datum/holiday/pride_month/getStationPrefix()
+	return pick("Pride","Love","Trans","LGBTQIAP","Gender","Identity","John Money","Hypnosis")
+
 /datum/holiday/summersolstice
 	name = "Summer Solstice"
 	begin_day = 21

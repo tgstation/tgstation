@@ -969,6 +969,38 @@
 	L.regenerate_icons()
 	qdel(src)
 
+/obj/item/slimepotion/pride // Pride Month Transgender Potion
+	name = "transgender potion"
+	desc = "A potion full of pride."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "pottrans"
+
+/obj/item/slimepotion/pride/attack_self(mob/user)
+	var/mob/living/carbon/L = user
+	if(!L)
+		to_chat(user, "<span class='warning'>The potion can only be used by gendered things, but you are still valid!</span>")
+		return
+
+	// handle neuters and plurals
+	if(L.gender == FEMALE)
+		L.gender = MALE
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more masculine!</span>", "<span class='boldwarning'>You suddenly feel more masculine!</span>")
+	else
+		L.gender = FEMALE
+		L.visible_message("<span class='boldnotice'>[L] suddenly looks more feminine!</span>", "<span class='boldwarning'>You suddenly feel more feminine!</span>")
+
+	// spread awareness to a very serious issue
+	if(rand(0,100) <= 100)
+		addtimer(CALLBACK(L, /mob/living/carbon/proc/david_reimer, user), rand(5, 10))
+
+	L.regenerate_icons()
+	qdel(src)
+
+/mob/living/carbon/proc/david_reimer(mob/user)
+	user.visible_message("<span class='suicide'>[user] is suddenly coming to terms with a life full of regret! It looks like [user.p_theyre()] trying to commit suicide!</span>")
+	ADD_TRAIT(src, TRAIT_DISFIGURED, TRAIT_GENERIC)
+	src.inflate_gib()
+
 /obj/item/slimepotion/slime/renaming
 	name = "renaming potion"
 	desc = "A potion that allows a self-aware being to change what name it subconciously presents to the world."
