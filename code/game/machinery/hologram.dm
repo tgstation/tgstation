@@ -41,6 +41,8 @@ Possible to do for anyone motivated enough:
 	max_integrity = 300
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	circuit = /obj/item/circuitboard/machine/holopad
+	ui_x = 500
+	ui_y = 300
 	var/list/masters //List of living mobs that use the holopad
 	var/list/holorays //Holoray-mob link.
 	var/last_request = 0 //to prevent request spam. ~Carn
@@ -179,21 +181,27 @@ obj/machinery/holopad/secure/Initialize()
 			return
 		to_chat(user,"<span class='notice'>You insert [P] into [src].</span>")
 		disk = P
-		updateDialog()
 		return
 
 	return ..()
 
-
-/obj/machinery/holopad/ui_interact(mob/living/carbon/human/user) //Carn: Hologram requests.
-	. = ..()
-	if(!istype(user))
-		return
-
+/obj/machinery/holopad/ui_status(mob/user)
+	if(!ishuman(user))
+		return UI_CLOSE
 	if(outgoing_call || user.incapacitated() || !is_operational())
-		return
+		return UI_CLOSE
+	return ..()
 
-	user.set_machine(src)
+/obj/machinery/holopad/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "Holopad", name, ui_x, ui_y, master_ui, state)
+		ui.open()
+
+/*
+/obj/machinery/holopad/ui_interact(mob/living/carbon/human/user)
+
 	var/dat
 	if(temp)
 		dat = temp
@@ -238,12 +246,25 @@ obj/machinery/holopad/secure/Initialize()
 				var/datum/holocall/HC = I
 				if(HC.connected_holopad == src)
 					dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user]</a><br>"
+*/
 
-
-	var/datum/browser/popup = new(user, "holopad", name, 300, 175)
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
-	popup.open()
+/obj/machinery/holopad/ui_data(mob/user)
+	var/list/data = list()
+	data["on_network"] = on_network
+	data["allowed"] = allowed(user)
+	data["disk"] = disk ? TRUE : FALSE
+	data["disk_record"] = disk.record ? TRUE : FALSE
+	data["holo_calls"] = list()
+	for(var/I in holo_calls)
+		var/datum/holocall/HC = I
+		var/list/call_data = list(
+			call_area = get_area(HC.calling_holopad),
+			caller = HC.user,
+			connected = HC.connected_holopad == src ? TRUE : FALSE,
+			ref = REF(HC)
+		)
+	data["holo_calls"] += list(call_data)
+	return data
 
 //Stop ringing the AI!!
 /obj/machinery/holopad/proc/hangup_all_calls()
@@ -251,98 +272,88 @@ obj/machinery/holopad/secure/Initialize()
 		var/datum/holocall/HC = I
 		HC.Disconnect(src)
 
-/obj/machinery/holopad/Topic(href, href_list)
-	if(..() || isAI(usr))
+/obj/machinery/holopad/ui_act(action, list/params)
+	. = ..()
+	if(.)
 		return
-	add_fingerprint(usr)
-	if(!is_operational())
-		return
-	if (href_list["AIrequest"])
-		if(last_request + 200 < world.time)
-			last_request = world.time
-			temp = "You requested an AI's presence.<BR>"
-			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
-			var/area/area = get_area(src)
-			for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
-				if(!AI.client)
-					continue
-				to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>.</span>")
-		else
-			temp = "A request for AI presence was already sent recently.<BR>"
-			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
 
-	else if(href_list["Holocall"] || href_list["Holoconnect"])
-		if(outgoing_call)
-			return
-		var/head_call = FALSE
-		if(href_list["Holoconnect"])
-			head_call = TRUE
-
-		temp = "You must stand on the holopad to make a call!<br>"
-		temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
-		if(usr.loc == loc)
-			var/list/callnames = list()
-			for(var/I in holopads)
-				var/area/A = get_area(I)
-				if(A)
-					LAZYADD(callnames[A], I)
-			callnames -= get_area(src)
-
-			var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
-			if(QDELETED(usr) || !result || outgoing_call)
-				return
-
-			if(usr.loc == loc)
-				temp = "Dialing...<br>"
+	switch(action)
+		if("AIrequest")
+			if(last_request + 200 < world.time)
+				last_request = world.time
+				temp = "You requested an AI's presence.<BR>"
 				temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
-				new /datum/holocall(usr, src, callnames[result], head_call)
-
-	else if(href_list["connectcall"])
-		var/datum/holocall/call_to_connect = locate(href_list["connectcall"]) in holo_calls
-		if(!QDELETED(call_to_connect))
-			call_to_connect.Answer(src)
-		temp = ""
-
-	else if(href_list["disconnectcall"])
-		var/datum/holocall/call_to_disconnect = locate(href_list["disconnectcall"]) in holo_calls
-		if(!QDELETED(call_to_disconnect))
-			call_to_disconnect.Disconnect(src)
-		temp = ""
-
-	else if(href_list["mainmenu"])
-		temp = ""
-		if(outgoing_call)
-			outgoing_call.Disconnect()
-
-	else if(href_list["disk_eject"])
-		if(disk && !replay_mode)
-			disk.forceMove(drop_location())
-			disk = null
-
-	else if(href_list["replay_stop"])
-		replay_stop()
-	else if(href_list["replay_start"])
-		replay_start()
-	else if(href_list["loop_start"])
-		loop_mode = TRUE
-		replay_start()
-	else if(href_list["record_start"])
-		record_start(usr)
-	else if(href_list["record_stop"])
-		record_stop()
-	else if(href_list["record_clear"])
-		record_clear()
-	else if(href_list["offset"])
-		offset++
-		if (offset > 4)
-			offset = FALSE
-		var/turf/new_turf
-		if (!offset)
-			new_turf = get_turf(src)
-		else
-			new_turf = get_step(src, GLOB.cardinals[offset])
-		replay_holo.forceMove(new_turf)
-	updateDialog()
+				var/area/area = get_area(src)
+				for(var/mob/living/silicon/ai/AI in GLOB.silicon_mobs)
+					if(!AI.client)
+						continue
+					to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>.</span>")
+			else
+				temp = "A request for AI presence was already sent recently.<BR>"
+				temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
+		if("Holocall")
+			if(outgoing_call)
+				return
+			var/head_call = FALSE
+			if(params["headcall"])
+				head_call = TRUE
+			temp = "You must stand on the holopad to make a call!<br>"
+			temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
+			if(usr.loc == loc)
+				var/list/callnames = list()
+				for(var/I in holopads)
+					var/area/A = get_area(I)
+					if(A)
+						LAZYADD(callnames[A], I)
+				callnames -= get_area(src)
+				var/result = input(usr, "Choose an area to call", "Holocall") as null|anything in sortNames(callnames)
+				if(QDELETED(usr) || !result || outgoing_call)
+					return
+				if(usr.loc == loc)
+					temp = "Dialing...<br>"
+					temp += "<A href='?src=[REF(src)];mainmenu=1'>Main Menu</A>"
+					new /datum/holocall(usr, src, callnames[result], head_call)
+		if("connectcall")
+			var/datum/holocall/call_to_connect = locate(params["connectcall"]) in holo_calls
+			if(!QDELETED(call_to_connect))
+				call_to_connect.Answer(src)
+			temp = ""
+		if("disconnectcall")
+			var/datum/holocall/call_to_disconnect = locate(params["disconnectcall"]) in holo_calls
+			if(!QDELETED(call_to_disconnect))
+				call_to_disconnect.Disconnect(src)
+			temp = ""
+		if("mainmenu")
+			temp = ""
+			if(outgoing_call)
+				outgoing_call.Disconnect()
+		if("disk_eject")
+			if(disk && !replay_mode)
+				disk.forceMove(drop_location())
+				disk = null
+		if("replay_stop")
+			replay_stop()
+		if["replay_start")
+			replay_start()
+		if("loop_start")
+			loop_mode = TRUE
+			replay_start()
+		if("record_start")
+			record_start(usr)
+		if("record_stop")
+			record_stop()
+		if("record_clear")
+			record_clear()
+		if("offset")
+			offset++
+			if(offset > 4)
+				offset = FALSE
+			var/turf/new_turf
+			if(!offset)
+				new_turf = get_turf(src)
+			else
+				new_turf = get_step(src, GLOB.cardinals[offset])
+			replay_holo.forceMove(new_turf)
 
 //do not allow AIs to answer calls or people will use it to meta the AI sattelite
 /obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
@@ -600,7 +611,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		temp = null
 		QDEL_NULL(replay_holo)
 		SetLightsAndPower()
-		updateDialog()
 
 /obj/machinery/holopad/proc/record_start(mob/living/user)
 	if(!user || !disk || disk.record)
@@ -679,12 +689,10 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 		record_mode = FALSE
 		temp = null
 		record_user = null
-		updateDialog()
 
 /obj/machinery/holopad/proc/record_clear()
 	if(disk && disk.record)
 		QDEL_NULL(disk.record)
-	updateDialog()
 
 /obj/effect/overlay/holo_pad_hologram
 	initial_language_holder = /datum/language_holder/universal
