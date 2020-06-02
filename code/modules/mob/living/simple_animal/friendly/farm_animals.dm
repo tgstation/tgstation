@@ -12,15 +12,16 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4, /obj/item/clothing/head/goatpelt = 1)
+	butcher_results = list(/obj/item/reagent_containers/food/snacks/meat/slab = 4)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
 	response_harm_continuous = "kicks"
 	response_harm_simple = "kick"
-	faction = list("goat")
+	faction = list("neutral")
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
+	attack_same = 1
 	attack_verb_continuous = "kicks"
 	attack_verb_simple = "kick"
 	attack_sound = 'sound/weapons/punch1.ogg'
