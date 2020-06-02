@@ -116,6 +116,7 @@
 	if(H == connected_holopad || H == calling_holopad)
 		if(!graceful && H != calling_holopad)
 			calling_holopad.say("Connection failure.")
+		H.calling = FALSE
 		qdel(src)
 		return
 
@@ -125,6 +126,7 @@
 		if(graceful)
 			calling_holopad.say("Call rejected.")
 		testing("No recipients, terminating")
+		H.calling = FALSE
 		qdel(src)
 
 //Answers a call made to a holopad `H` which cannot be the calling holopad. Pads not in the call are ignored
@@ -154,6 +156,7 @@
 	if(!Check())
 		return
 
+	calling_holopad.calling = FALSE
 	hologram = H.activate_holo(user)
 	hologram.HC = src
 
@@ -189,7 +192,6 @@
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
 				calling_holopad.say("No answer received.")
-				calling_holopad.temp = ""
 
 	if(!.)
 		testing("Holocall Check fail")
