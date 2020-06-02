@@ -157,7 +157,7 @@
 	H.adjustFireLoss(-3, FALSE)
 	H.adjustToxLoss(-3, FALSE)
 	H.adjustOxyLoss(-1, FALSE)
-	H.adjustStaminaLoss(-10
+	H.adjustStaminaLoss(-10)
 
 
 /**

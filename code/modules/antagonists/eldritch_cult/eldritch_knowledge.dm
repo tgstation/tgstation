@@ -178,7 +178,7 @@
 		return
 	var/mob/living/summoned = new mob_to_summon(loc)
 	var/mob/dead/observer/C = pick(candidates)
-	message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
+	log_game("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]), their master is [user.real_name]")
 	summoned.ghostize(FALSE)
 	summoned.key = C.key
 

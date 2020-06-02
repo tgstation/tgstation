@@ -43,7 +43,7 @@
 		return
 
 	ADD_TRAIT(H,TRAIT_MUTE,MAGIC_TRAIT)
-
+	log_game("[key_name_admin(H)] has become a voiceless dead, their master is [user.real_name]")
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
 	H.setMaxHealth(50)
 	H.health = 50 // Voiceless dead are much tougher than ghouls
@@ -109,6 +109,7 @@
 		return
 
 	LAZYADD(spooky_scaries,H)
+	log_game("[key_name_admin(H)] has become a ghoul, their master is [user.real_name]")
 
 
 	H.revive(full_heal = TRUE, admin_revive = TRUE)
@@ -248,7 +249,7 @@
 				return
 			var/mob/dead/observer/C = pick(candidates)
 			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for vassal of arms has ascended! Terror of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
-			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
+			log_game("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
 			summoned.ghostize(0)
 			summoned.key = C.key
 			user.SetImmobilized(0)
@@ -260,6 +261,7 @@
 			summoned.ghostize(0)
 			user.SetImmobilized(0)
 			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for king of arms has ascended! Lord of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
+			log_game("[user.real_name] ascended as [summoned.real_name]")
 			var/mob/living/carbon/C = user
 			C.mind.transfer_to(summoned,TRUE)
 			C.gib()
