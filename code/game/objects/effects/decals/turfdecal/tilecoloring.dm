@@ -11,7 +11,7 @@ GLOBAL_VAR_INIT(current_pride_color, 1)
 /obj/effect/turf_decal/tile/Initialize()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		color = "#[random_short_color()]"
-	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH])
+	if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
 		for(var/obj/effect/turf_decal/tile/T in get_turf(src))
 			if(!T.pride_already_applied)
 				T.color = GLOB.pride_month_colors[GLOB.current_pride_color]
@@ -72,7 +72,7 @@ GLOBAL_VAR_INIT(current_pride_color, 1)
 /obj/effect/turf_decal/trimline/Initialize()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		color = "#[random_short_color()]"
-	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH])
+	if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
 		for(var/obj/effect/turf_decal/tile/T in get_turf(src))
 			if(!T.pride_already_applied)
 				T.color = GLOB.pride_month_colors[GLOB.current_pride_color]
