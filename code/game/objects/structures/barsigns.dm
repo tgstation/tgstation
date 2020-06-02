@@ -293,10 +293,6 @@
 	name = "The Pride Bar"
 	icon = "pridebar"
 	desc = "Show your true colors and have a drink!"
-
-
-
-
 /datum/barsign/hiddensigns
 	hidden = TRUE
 
