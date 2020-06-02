@@ -5,7 +5,7 @@
 	desc = "A nulling power sink which drains energy from electrical systems."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "powersink0"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY

@@ -18,7 +18,7 @@
 	name = "South Bronx Paradise bar"
 	desc = "Lose weight, guaranteed! Caramel Mocha Flavor. Something about product consumption..."
 	icon_state = "bronx"
-	item_state = "candy"
+	inhand_icon_state = "candy"
 	trash = /obj/item/trash/candy
 	list_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/sugar = 2, /datum/reagent/yuck = 1)
 	junkiness = 10

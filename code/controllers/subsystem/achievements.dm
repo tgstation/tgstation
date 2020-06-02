@@ -13,7 +13,7 @@ SUBSYSTEM_DEF(achievements)
 
 /datum/controller/subsystem/achievements/Initialize(timeofday)
 	if(!SSdbcore.Connect())
-		return
+		return ..()
 	achievements_enabled = TRUE
 
 	for(var/T in subtypesof(/datum/award/achievement))

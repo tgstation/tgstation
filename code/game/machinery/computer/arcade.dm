@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/card/emagfake = 1,
 		/obj/item/clothing/shoes/wheelys = 2,
 		/obj/item/clothing/shoes/kindleKicks = 2,
-		/obj/item/toy/plush/goatplushie/angry/realgoat = 2,
+		/obj/item/toy/plush/goatplushie = 2,
 		/obj/item/toy/plush/moth = 2,
 		/obj/item/storage/belt/military/snack = 2,
 		/obj/item/toy/brokenradio = 2,
@@ -383,7 +383,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "A pamphlet encouraging the reader to maintain a balanced lifestyle and take care of their mental health, while still enjoying video games in a healthy way. You probably don't need this..."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "pamphlet"
-	item_state = "paper"
+	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_TINY
 
 

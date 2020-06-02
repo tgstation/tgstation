@@ -3,7 +3,7 @@
 	desc = "A terrible, terrible thing. It's really awful!"
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "riotgun"
-	item_state = "riotgun"
+	inhand_icon_state = "riotgun"
 	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 7

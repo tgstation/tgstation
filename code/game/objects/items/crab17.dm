@@ -84,7 +84,7 @@
 	add_overlay("hatch")
 	add_overlay("legs_retracted")
 	addtimer(CALLBACK(src, .proc/startUp), 50)
-	QDEL_IN(src, 8 MINUTES) //Self destruct after 8 min
+	QDEL_IN(src, 8 MINUTES) //Self-destruct after 8 min
 
 
 /obj/structure/checkoutmachine/proc/startUp() //very VERY snowflake code that adds a neat animation when the pod lands.
@@ -193,7 +193,7 @@
 	icon = 'icons/obj/money_machine_64.dmi'
 	pixel_z = 300
 	desc = "Get out of the way!"
-	layer = FLY_LAYER//that wasnt flying, that was falling with style!
+	layer = FLY_LAYER//that wasn't flying, that was falling with style!
 	icon_state = "missile_blur"
 
 /obj/effect/dumpeetTarget

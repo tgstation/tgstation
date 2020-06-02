@@ -6888,9 +6888,6 @@
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden{
 	dir = 4
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
@@ -6898,10 +6895,10 @@
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aos" = (
+/obj/structure/cable,
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/brig)
 "aou" = (
@@ -7442,9 +7439,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
@@ -7452,10 +7446,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 9
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "apD" = (
@@ -14989,7 +14983,7 @@
 /area/engine/engineering)
 "aIf" = (
 /obj/machinery/camera{
-	c_tag = "Auxillary Base Construction";
+	c_tag = "Auxiliary Base Construction";
 	dir = 1
 	},
 /obj/machinery/button/door{
@@ -19122,7 +19116,7 @@
 "aSL" = (
 /obj/machinery/power/apc{
 	areastring = "/area/construction/mining/aux_base";
-	name = "Auxillary Base Construction APC";
+	name = "Auxiliary Base Construction APC";
 	pixel_y = -23
 	},
 /obj/effect/turf_decal/tile/yellow,
@@ -63574,9 +63568,9 @@
 /area/space)
 "cYK" = (
 /obj/machinery/computer/security/telescreen{
-	desc = "Used for the Auxillary Mining Base.";
+	desc = "Used for the Auxiliary Mining Base.";
 	dir = 1;
-	name = "Auxillary Base Monitor";
+	name = "Auxiliary Base Monitor";
 	network = list("auxbase");
 	pixel_y = -28
 	},
@@ -63591,7 +63585,7 @@
 "cYL" = (
 /obj/machinery/door/poddoor/shutters{
 	id = "aux_base_shutters";
-	name = "Auxillary Base Shutters"
+	name = "Auxiliary Base Shutters"
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/plasteel,
@@ -63601,7 +63595,7 @@
 	dir = 1
 	},
 /obj/machinery/door/airlock/engineering{
-	name = "Auxillary Base Construction";
+	name = "Auxiliary Base Construction";
 	req_one_access_txt = "32;47;48"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -67628,6 +67622,9 @@
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 8
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plasteel,
 /area/security/brig)
 "dCh" = (
@@ -70878,10 +70875,10 @@
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden{
 	dir = 1
 	},
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/maintenance/port/fore)
 "ifK" = (
@@ -105099,9 +105096,9 @@ agL
 aky
 awp
 awp
+awp
+awp
 aos
-apF
-apF
 apF
 atM
 auV

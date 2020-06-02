@@ -40,6 +40,18 @@
 	else
 		..()
 
+/obj/machinery/nanite_program_hub/screwdriver_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_screwdriver(user, "nanite_program_hub_t", "nanite_program_hub", I)
+
+/obj/machinery/nanite_program_hub/crowbar_act(mob/living/user, obj/item/I)
+	if(..())
+		return TRUE
+
+	return default_deconstruction_crowbar(I)
+
 /obj/machinery/nanite_program_hub/proc/eject(mob/living/user)
 	if(!disk)
 		return

@@ -3,7 +3,7 @@
 
 /obj/structure/votebox
 	name = "voting box"
-	desc = "A automatic voting box."
+	desc = "An automatic voting box."
 
 	icon = 'icons/obj/votebox.dmi'
 	icon_state = "votebox_maint"

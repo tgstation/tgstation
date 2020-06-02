@@ -79,7 +79,7 @@
 	name = "The Lens of Truesight"
 	desc = "I can see forever!"
 	icon_state = "monocle"
-	item_state = "headset"
+	inhand_icon_state = "headset"
 
 
 /obj/structure/academy_wizard_spawner
@@ -235,7 +235,7 @@
 			user.death()
 		if(3)
 			//Swarm of creatures
-			T.visible_message("<span class='userdanger'>A swarm of creatures surround [user]!</span>")
+			T.visible_message("<span class='userdanger'>A swarm of creatures surrounds [user]!</span>")
 			for(var/direction in GLOB.alldirs)
 				new /mob/living/simple_animal/hostile/netherworld(get_step(get_turf(user),direction))
 		if(4)
@@ -262,7 +262,7 @@
 			var/atom/throw_target = get_edge_target_turf(user, throw_dir)
 			user.throw_at(throw_target, 200, 4)
 		if(8)
-			//Fueltank Explosion
+			//Fuel tank Explosion
 			T.visible_message("<span class='userdanger'>An explosion bursts into existence around [user]!</span>")
 			explosion(get_turf(user),-1,0,2, flame_range = 2)
 		if(9)
