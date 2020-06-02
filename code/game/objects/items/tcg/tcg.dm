@@ -77,17 +77,17 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		"common" = 900,
 		"uncommon" = 300,
 		"rare" = 100,
-		"epic" = 25,
-		"legendary" = 10,
+		"epic" = 30,
+		"legendary" = 5,
 		"misprint" = 1)
 	///The amount of cards to draw from the guarenteed rarity table
 	var/guaranteed_count = 1
 	///The guaranteed rarity table, acts about the same as the rarity table. it can have as many or as few raritys as you'd like
 	var/list/guar_rarity = list(
-		"legendary" = 10,
-		"epic" = 15,
-		"rare" = 25,
-		"uncommon" = 50)
+		"legendary" = 1,
+		"epic" = 9,
+		"rare" = 30,
+		"uncommon" = 60)
 
 /obj/item/cardpack/series_one
 	name = "Trading Card Pack: Series 1"
@@ -108,8 +108,8 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		"common" = 900,
 		"uncommon" = 300,
 		"rare" = 100,
-		"epic" = 25,
-		"legendary" = 10)
+		"epic" = 30,
+		"legendary" = 5)
 
 /obj/item/cardpack/Initialize()
 	. = ..()
