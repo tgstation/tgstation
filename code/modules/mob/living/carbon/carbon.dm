@@ -514,7 +514,7 @@
 		total_brute	+= (BP.brute_dam * BP.body_damage_coeff)
 		total_burn	+= (BP.burn_dam * BP.body_damage_coeff)
 		total_stamina += (BP.stamina_dam * BP.stam_damage_coeff)
-	health = round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION)
+	set_health(round(maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute, DAMAGE_PRECISION))
 	staminaloss = round(total_stamina, DAMAGE_PRECISION)
 	update_stat()
 	update_mobility()
@@ -756,28 +756,37 @@
 	if(hud_used && hud_used.spacesuit)
 		hud_used.spacesuit.icon_state = "spacesuit_[cell_state]"
 
+
+/mob/living/carbon/set_health(new_value)
+	. = ..()
+	if(. > hardcrit_threshold)
+		if(health <= hardcrit_threshold && !HAS_TRAIT(src, TRAIT_NOHARDCRIT))
+			ADD_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
+	else if(health > hardcrit_threshold)
+		REMOVE_TRAIT(src, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
+	if(CONFIG_GET(flag/near_death_experience))
+		if(. > HEALTH_THRESHOLD_NEARDEATH)
+			if(health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
+				ADD_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
+		else if(health > HEALTH_THRESHOLD_NEARDEATH)
+			REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
+
+
+
 /mob/living/carbon/update_stat()
 	if(status_flags & GODMODE)
 		return
 	if(stat != DEAD)
 		if(health <= HEALTH_THRESHOLD_DEAD && !HAS_TRAIT(src, TRAIT_NODEATH))
 			death()
-			cure_blind(UNCONSCIOUS_BLIND)
 			return
-		if(IsUnconscious() || IsSleeping() || getOxyLoss() > 50 || (HAS_TRAIT(src, TRAIT_DEATHCOMA)) || (health <= HEALTH_THRESHOLD_FULLCRIT && !HAS_TRAIT(src, TRAIT_NOHARDCRIT)))
+		if(HAS_TRAIT(src, TRAIT_KNOCKEDOUT))
 			set_stat(UNCONSCIOUS)
-			become_blind(UNCONSCIOUS_BLIND)
-			if(CONFIG_GET(flag/near_death_experience) && health <= HEALTH_THRESHOLD_NEARDEATH && !HAS_TRAIT(src, TRAIT_NODEATH))
-				ADD_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
-			else
-				REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 		else
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
 				set_stat(SOFT_CRIT)
 			else
 				set_stat(CONSCIOUS)
-			cure_blind(UNCONSCIOUS_BLIND)
-			REMOVE_TRAIT(src, TRAIT_SIXTHSENSE, "near-death")
 		update_mobility()
 	update_damage_hud()
 	update_health_hud()

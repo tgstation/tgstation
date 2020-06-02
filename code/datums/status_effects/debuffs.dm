@@ -68,10 +68,10 @@
 	. = ..()
 	if(!.)
 		return
-	ADD_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/incapacitating/unconscious/on_remove()
-	REMOVE_TRAIT(owner, TRAIT_INCAPACITATED, TRAIT_STATUS_EFFECT(id))
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/incapacitating/unconscious/tick()
@@ -97,6 +97,16 @@
 /datum/status_effect/incapacitating/sleeping/Destroy()
 	carbon_owner = null
 	human_owner = null
+	return ..()
+
+/datum/status_effect/incapacitating/sleeping/on_apply()
+	. = ..()
+	if(!.)
+		return
+	ADD_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
+
+/datum/status_effect/incapacitating/sleeping/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_KNOCKEDOUT, TRAIT_STATUS_EFFECT(id))
 	return ..()
 
 /datum/status_effect/incapacitating/sleeping/tick()
