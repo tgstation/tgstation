@@ -41,3 +41,9 @@ Assistant
 			uniform = /obj/item/clothing/under/color/random
 		else
 			uniform = /obj/item/clothing/under/color/jumpskirt/random
+	if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
+		if(H.jumpsuit_style == PREF_SUIT)
+			uniform = /obj/item/clothing/under/color/rainbow
+		else
+			uniform = /obj/item/clothing/under/color/jumpskirt/rainbow
+
