@@ -34,6 +34,8 @@
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
+	var/total_geneticspoints = 10
+	var/total_chem_storage = 75
 	var/purchasedpowers = list()
 
 	var/mimicing = ""
