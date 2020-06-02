@@ -36,11 +36,6 @@
 		debris += new /obj/item/stack/rods(src, rods)
 	if(cable)
 		debris += new /obj/item/stack/cable_coil(src, cable)
-	if(SSevents.holidays && SSevents.holidays[PRIDE_WEEK])
-		color = GLOB.pride_month_colors[GLOB.current_window_pride_color]
-		GLOB.current_window_pride_color++
-		if(GLOB.current_window_pride_color > GLOB.pride_month_colors.len)
-			GLOB.current_window_pride_color = 1
 
 /obj/machinery/door/window/ComponentInitialize()
 	. = ..()
