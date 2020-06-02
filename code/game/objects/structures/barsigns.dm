@@ -289,6 +289,14 @@
 	icon = "goose"
 	desc = "Drink till you puke and/or break the laws of reality!"
 
+/datum/barsign/pridebar
+	name = "The Pride Bar"
+	icon = "pridebar"
+	desc = "Show your true colors and have a drink!"
+
+
+
+
 /datum/barsign/hiddensigns
 	hidden = TRUE
 
