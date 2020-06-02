@@ -1881,7 +1881,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "afr" = (
-/obj/structure/cable,
 /obj/machinery/flasher{
 	id = "AI";
 	pixel_x = 32;
@@ -1891,6 +1890,7 @@
 	name = "AI Core Door";
 	req_access_txt = "16"
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "afs" = (
@@ -23787,6 +23787,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bsf" = (
@@ -39662,7 +39663,6 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -40309,6 +40309,7 @@
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cBa" = (
@@ -43103,7 +43104,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "dTe" = (
-/obj/structure/cable,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -43115,6 +43115,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "dUO" = (
@@ -43505,6 +43506,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "eIE" = (
@@ -43525,7 +43527,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "eJx" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 9
 	},
@@ -46222,7 +46223,6 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "Gravity Generator Room Main";
 	dir = 1
@@ -46663,6 +46663,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
+"kzm" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/ai_monitored/turret_protected/ai)
 "kzT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -47291,7 +47295,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "lME" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -48881,7 +48884,6 @@
 /obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -49478,6 +49480,7 @@
 /area/ai_monitored/storage/eva)
 "qbd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "qbW" = (
@@ -51320,13 +51323,13 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/safe)
 "uch" = (
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "ucw" = (
@@ -51362,6 +51365,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "uea" = (
@@ -82212,7 +82216,7 @@ bfv
 bii
 bii
 dPQ
-tsX
+kzm
 tsX
 tsX
 afq
