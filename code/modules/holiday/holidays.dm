@@ -640,3 +640,13 @@
 
 /datum/holiday/hebrew/passover/getStationPrefix()
 	return pick("Matzah", "Moses", "Red Sea")
+
+/datum/holiday/pride_month
+	name = "Pride Month"
+	begin_day = 1
+	begin_month = JUNE
+	end_day = 30
+	end_month = JUNE
+
+/datum/holiday/pride_month/getStationPrefix()
+	return pick("Trans Rights Are Human Rights","Stonewall","LGBTQIAP+","Justice For George Floyd","Black Lives Matter","Trans Rights","LGBTQIAP+ Rights")

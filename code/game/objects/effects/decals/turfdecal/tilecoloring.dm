@@ -1,12 +1,24 @@
+GLOBAL_LIST_INIT(pride_month_colors, list("#fe0000","#fe9900","#ffff00","#009900","#0000fe","#cc0098","#fbfaf6","#feb0c8","#75d8ed", "#603814", "#000100"))
+GLOBAL_VAR_INIT(current_pride_color, 1)
 /obj/effect/turf_decal/tile
 	name = "tile decal"
 	icon_state = "tile_corner"
 	layer = TURF_PLATING_DECAL_LAYER
 	alpha = 110
+	var/pride_already_applied = FALSE
+
 
 /obj/effect/turf_decal/tile/Initialize()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		color = "#[random_short_color()]"
+	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH])
+		for(var/obj/effect/turf_decal/tile/T in get_turf(src))
+			if(!T.pride_already_applied)
+				T.color = GLOB.pride_month_colors[GLOB.current_pride_color]
+				T.pride_already_applied = TRUE
+		GLOB.current_pride_color++
+		if(GLOB.current_pride_color > GLOB.pride_month_colors.len)
+			GLOB.current_pride_color = 1
 	. = ..()
 
 /obj/effect/turf_decal/tile/blue
@@ -60,6 +72,14 @@
 /obj/effect/turf_decal/trimline/Initialize()
 	if(SSevents.holidays && SSevents.holidays[APRIL_FOOLS])
 		color = "#[random_short_color()]"
+	if(SSevents.holidays && SSevents.holidays[PRIDE_MONTH])
+		for(var/obj/effect/turf_decal/tile/T in get_turf(src))
+			if(!T.pride_already_applied)
+				T.color = GLOB.pride_month_colors[GLOB.current_pride_color]
+				T.pride_already_applied = TRUE
+		GLOB.current_pride_color++
+		if(GLOB.current_pride_color > GLOB.pride_month_colors.len)
+			GLOB.current_pride_color = 1
 	. = ..()
 
 /obj/effect/turf_decal/trimline/white
