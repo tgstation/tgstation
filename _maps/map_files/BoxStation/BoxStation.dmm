@@ -37254,13 +37254,13 @@
 /area/maintenance/starboard/aft)
 "chE" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "chH" = (
@@ -38802,7 +38802,6 @@
 /turf/open/space,
 /area/solar/starboard/aft)
 "cpq" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -38924,7 +38923,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cpX" = (
@@ -42635,6 +42633,13 @@
 /obj/machinery/chem_heater,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"dkI" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "dlg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -45497,7 +45502,6 @@
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -45610,7 +45614,6 @@
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -45866,10 +45869,6 @@
 /area/security/brig)
 "iUz" = (
 /obj/structure/chair/office/light,
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"iXH" = (
-/obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -46203,6 +46202,7 @@
 /obj/structure/table,
 /obj/item/paper/guides/jobs/engi/gravity_gen,
 /obj/item/pen/blue,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jCq" = (
@@ -46227,13 +46227,17 @@
 	c_tag = "Gravity Generator Room Main";
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jDf" = (
-/obj/structure/table,
 /obj/item/radio/intercom{
 	pixel_y = -35
 	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jEy" = (
@@ -50186,7 +50190,6 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "rKL" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -76093,7 +76096,7 @@ gny
 hcj
 hES
 ijf
-iXH
+jaN
 jCE
 mzQ
 jUd
@@ -78661,7 +78664,7 @@ cfe
 cfD
 iQF
 chE
-iQF
+dkI
 gwO
 cji
 cDZ
