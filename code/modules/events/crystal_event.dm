@@ -62,7 +62,7 @@ This section is for the event controller
 			continue
 		sm_crystal += temp
 	if(sm_crystal == null)
-		WARNING("No engine found.")
+		log_game("No engine found, killing the crystal invasion event.")
 		kill()
 	var/obj/machinery/power/supermatter_crystal/crystal = pick(sm_crystal)
 	crystal.destabilize(portal_numbers)
