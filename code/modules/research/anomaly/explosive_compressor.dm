@@ -120,7 +120,7 @@
 	mix.merge(mix1)
 	mix.merge(mix2)
 	mix.react()
-	if(mix < TANK_FRAGMENT_PRESSURE)
+	if(mix.return_pressure() < TANK_FRAGMENT_PRESSURE)
 		// They failed so miserably we're going to give them their bomb back.
 		inserted_bomb.forceMove(drop_location())
 		inserted_core.forceMove(drop_location())
