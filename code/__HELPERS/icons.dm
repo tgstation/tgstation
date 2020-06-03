@@ -1156,7 +1156,8 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 	I = icon(I, icon_state, dir, frame, moving)
 
 	key = "[generate_asset_name(I)].png"
-	register_asset(key, I)
+	if(!SSassets.cache[key])
+		register_asset(key, I)
 	for (var/thing2 in targets)
 		send_asset(thing2, key)
 
