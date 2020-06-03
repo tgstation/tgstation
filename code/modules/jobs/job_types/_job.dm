@@ -75,6 +75,9 @@
 
 	var/list/roundstart_experience
 
+	if(!ishuman(H))
+		return
+
 	if(!config)	//Needed for robots.
 		roundstart_experience = minimal_skills
 
@@ -83,7 +86,7 @@
 	else
 		roundstart_experience = skills
 
-	if(roundstart_experience && ishuman(H))
+	if(roundstart_experience)
 		var/mob/living/carbon/human/experiencer = H
 		for(var/i in roundstart_experience)
 			experiencer.mind.adjust_experience(i, roundstart_experience[i], TRUE)
