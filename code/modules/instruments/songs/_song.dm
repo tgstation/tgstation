@@ -169,6 +169,7 @@
   * Sets our instrument, caching anything necessary for faster accessing. Accepts an ID, typepath, or instantiated instrument datum.
   */
 /datum/song/proc/set_instrument(datum/instrument/I)
+	terminate_all_sounds()
 	var/old_legacy
 	if(using_instrument)
 		using_instrument.songs_using -= src
