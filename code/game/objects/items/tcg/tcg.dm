@@ -300,6 +300,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 					toAdd += "\n[a] with a value of [target.vars[a]]"
 			if(shouldAdd)
 				toReturn += toAdd
+	qdel(thing)
 	return toReturn
 
 ///Used to test open a large amount of cardpacks
