@@ -11,6 +11,9 @@
 /obj/item/trash/Initialize(mapload)
 	#ifdef EVENTMODE
 	///AUTO CLEAN
+	if(mapload) // Except if intentionally filthy
+		return ..()
+
 	QDEL_IN(src, 30)
 	return ..()
 	#endif
