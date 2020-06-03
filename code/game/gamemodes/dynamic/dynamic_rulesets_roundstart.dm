@@ -170,7 +170,7 @@
 	. = ..()
 	var/num_ecult = antag_cap[indice_pop] * (scaled_times + 1)
 
-	new /datum/reality_smash_tracker()
+
 	GLOB.reality_smash_track.Generate(num_ecult)
 
 	for (var/i = 1 to num_ecult)

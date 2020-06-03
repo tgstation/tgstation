@@ -95,14 +95,6 @@
 	///List of mobs with ability to see the smashes
 	var/list/targets = list()
 
-/datum/reality_smash_tracker/New()
-	. = ..()
-	if(!GLOB.reality_smash_track)
-		GLOB.reality_smash_track = src
-	else
-		stack_trace("/datum/reality_smash_tracker was initialized while one already exists. Deleting")
-		qdel(src)
-
 /datum/reality_smash_tracker/Destroy(force, ...)
 	if(GLOB.reality_smash_track == src)
 		stack_trace("/datum/reality_smash_tracker was deleted. Heretics may no longer access any influences. Fix it or call coder support")

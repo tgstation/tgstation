@@ -12,4 +12,4 @@ GLOBAL_DATUM(start_state, /datum/station_state) // Used in round-end report
 GLOBAL_DATUM(cult_narsie, /obj/singularity/narsie/large/cult)
 
 ///We want reality_smash_tracker to exist only once and be accesable from anywhere.
-GLOBAL_DATUM(reality_smash_track, /datum/reality_smash_tracker)
+GLOBAL_DATUM_INIT(reality_smash_track, /datum/reality_smash_tracker, new)

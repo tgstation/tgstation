@@ -309,13 +309,10 @@
 
 /datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite)
-		marked_underlay.pixel_x = -owner.pixel_x
-		marked_underlay.pixel_y = -owner.pixel_y
-		owner.underlays += marked_underlay
+		marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_OBJ_LAYER)
+		owner.add_overlay(marked_underlay)
 		return TRUE
 	return FALSE
-
 
 /**
   * What happens when this mark gets popped
@@ -328,7 +325,7 @@
 
 /datum/status_effect/eldritch/Destroy()
 	if(owner)
-		owner.underlays -= marked_underlay
+		owner.cut_overlay(marked_underlay)
 	QDEL_NULL(marked_underlay)
 	return ..()
 

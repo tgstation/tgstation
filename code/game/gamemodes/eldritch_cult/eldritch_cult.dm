@@ -56,7 +56,6 @@
 		return TRUE
 
 /datum/game_mode/e_cult/post_setup()
-	new /datum/reality_smash_tracker()
 	GLOB.reality_smash_track.Generate(num_ecult)
 	for(var/c in culties)
 		var/datum/mind/cultie = c
