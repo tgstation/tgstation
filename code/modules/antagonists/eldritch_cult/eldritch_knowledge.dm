@@ -207,18 +207,18 @@
 	return FALSE
 
 /datum/eldritch_knowledge/spell/basic/on_finished_recipe(mob/living/user, list/atoms, loc)
-
+	var/mob/living/carbon/carbon_user = user
 	for(var/obj/item/living_heart/LH in atoms)
 
 		if(LH.target && LH.target.stat == DEAD)
-			to_chat(user,"<span class='danger'>Your patrons accepts your offer..</span>")
+			to_chat(carbon_user,"<span class='danger'>Your patrons accepts your offer..</span>")
 			var/mob/living/carbon/human/H = LH.target
 			H.gib()
 			LH.target = null
-			var/datum/antagonist/heretic/EC = user.mind.has_antag_datum(/datum/antagonist/heretic)
+			var/datum/antagonist/heretic/EC = carbon_user.mind.has_antag_datum(/datum/antagonist/heretic)
 
 			EC.total_sacrifices++
-			for(var/X in user.GetAllContents())
+			for(var/X in carbon_user.get_all_gear())
 				if(!istype(X,/obj/item/forbidden_book))
 					continue
 				var/obj/item/forbidden_book/FB = X

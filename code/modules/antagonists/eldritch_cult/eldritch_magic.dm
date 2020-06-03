@@ -483,3 +483,6 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "cleave"
 	duration = 6
+
+/obj/effect/temp_visual/cleave/Initialize()
+	. = ..()

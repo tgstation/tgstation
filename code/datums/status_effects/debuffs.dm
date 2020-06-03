@@ -324,8 +324,7 @@
 	qdel(src) //what happens when this is procced.
 
 /datum/status_effect/eldritch/Destroy()
-	if(owner)
-		owner.cut_overlay(marked_underlay)
+	owner.cut_overlay(marked_underlay)
 	QDEL_NULL(marked_underlay)
 	return ..()
 
@@ -373,9 +372,13 @@
 	effect_sprite = "emark3"
 
 /datum/status_effect/eldritch/rust/on_effect()
-	for(var/obj/item/I in owner.GetAllContents())
+	if(!iscarbon(owner))
+		return
+	var/mob/living/carbon/carbon_owner = owner
+	for(var/obj/item/I in carbon_owner.get_all_gear())
 		//Affects roughly 75% of items
-		I.take_damage(100 * prob(75))
+		if(!QDELETED(I)) //Just in case
+			I.take_damage(100 * prob(75))
 	return ..()
 
 /datum/status_effect/stacking/saw_bleed
