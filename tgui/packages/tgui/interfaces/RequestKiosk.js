@@ -14,30 +14,28 @@ export const RequestKiosk = (props, context) => {
     Requests =[],
     Applicants =[],
   } = data;
-  const color = 'rgba(13, 13, 213, 1)';
+  const color = 'rgba(13, 13, 213, 0.7)';
+  const backcolor = 'rgba(0, 0, 69, 0.5)'
   return (
     <Window resizable>
       <div className="RequestKiosk__right">
         <Window.Content scrollable>
           <Flex mb={1}>
-            <Flex.Item mr={1}>
-              <Section>
-                replace
-              </Section>
-            </Flex.Item>
             <Flex.Item grow={1} basis={0}>
               <Section
                 buttons={(
-                  <Fragment>
-                    <Button
-                      icon="power-off"
-                      content="Log out"
-                      onClick={() => act('Clear')} />
-                    <Button
-                      icon="power-off"
-                      content="Print Bounty Slip"
-                      onClick={() => act('CreateBounty')} />
-                  </Fragment>
+                  <Flex>
+                    <Flex.Item mt={2}>
+                      <Button
+                        icon="power-off"
+                        content="Log out"
+                        onClick={() => act('Clear')} />
+                      <Button
+                        icon="print"
+                        content="Print Bounty Slip"
+                        onClick={() => act('CreateBounty')} />
+                    </Flex.Item>
+                  </Flex>
                 )}>
                 <LabeledList
                   title="Create Requests">
@@ -50,7 +48,7 @@ export const RequestKiosk = (props, context) => {
               {Requests?.map(request => (
                 <Section>
                   <Flex spacing={1} align="baseline">
-                    <Flex.Item bold width="320px">
+                    <Flex.Item bold width="310px">
                       {request.owner}
                     </Flex.Item>
                     <Flex.Item>
@@ -58,16 +56,17 @@ export const RequestKiosk = (props, context) => {
                     </Flex.Item>
                     <Flex.Item>
                       <Button
+                        icon="pen-fancy"
                         content="Apply"
                         onClick={() => act('Apply', {
-                          request: request.req_number,
+                          request: request.acc_number,
                         })} />
                       <Button
-                        icon="pause"
+                        icon="trash-alt"
                         content="Delete"
                         color="red"
                         onClick={() => act('DeleteRequest', {
-                          request: request.req_number,
+                          request: request.acc_number,
                         })} />
                     </Flex.Item>
                   </Flex>
@@ -77,14 +76,13 @@ export const RequestKiosk = (props, context) => {
                   <Section
                     title="Request Applicants">
                     {Applicants?.map(applicant => (
-					
-        
+					applicant.requestee_id === request.acc_number && (
                       <Flex>
                         <Flex.Item
                           grow={1}
-                          ml={1}
-                          backgroundColor="#000030"
-                          width="500px"
+                          p={0.5}
+                          backgroundColor= {backcolor}
+                          width="510px"
                           style={{
                             border: `2px solid ${color}`,
                           }}>
@@ -93,12 +91,15 @@ export const RequestKiosk = (props, context) => {
                         <Flex.Item 
                           align="end">
                           <Button
-                            icon="play"
+                            fluid
+                            icon="cash-register"
                             onClick={() => act('PayApplicant', {
-                              applicant: applicant.app_number,
+                              applicant: applicant.requestee_id,
+                              request: request.acc_number,
                             })} />
                         </Flex.Item>
                       </Flex>
+					  )
                     ))}
                   </Section>
                 </Section>  

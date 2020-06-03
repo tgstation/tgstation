@@ -7,8 +7,8 @@
 	desc = "Alows you to place requests for goods and services across the station, as well as pay those who actually did it."
 	icon = 'icons/obj/terminals.dmi'
 	icon_state = "request_kiosk"
-	ui_x = 601
-	ui_y = 601
+	ui_x = 550
+	ui_y = 600
 	light_color = LIGHT_COLOR_GREEN
 	///Static, global list for containing request datums across all request kiosks.
 	var/static/list/request_list
@@ -24,7 +24,7 @@
 	if(!request_list)
 		request_list = list()
 		//The below is a test case, and will be removed for the final product.
-		var/datum/station_request/testcase = new /datum/station_request("Pat Sajack", 100, "Ayo get me some coffee ya dig?", 1)
+		var/datum/station_request/testcase = new /datum/station_request("Pat Sajack", 100, "Ayo get me some coffee ya dig?", ((SSeconomy.get_dep_account(ACCOUNT_CAR)).account_id), SSeconomy.get_dep_account(ACCOUNT_CAR))
 		request_list += testcase
 	if(!request_number)
 		request_number = 2
@@ -40,13 +40,17 @@
 			to_chat(user, "There's no account assigned with this ID.")
 			return TRUE
 	if(istype(I, /obj/item/bounty_card))
+		if(!current_user)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+			return TRUE
 		var/obj/item/bounty_card/curr_bounty = I
 		var/datum/station_request/curr_request = curr_bounty.new_request
 		if(!curr_request)
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
-			return
-		curr_request.req_number = request_number
-		request_list += list(curr_bounty.new_request)
+			return TRUE
+		curr_request.req_number = current_user.account_id
+		curr_request.owner_account = current_user
+		request_list += list(curr_request)
 		request_number++
 		playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 		qdel(I)
@@ -60,16 +64,19 @@
 /obj/machinery/request_kiosk/ui_data(mob/user)
 	var/list/data = list()
 	var/list/formatted_requests = list()
+	var/list/formatted_applicants = list()
 	for(var/i in request_list)
 		if(!i)
 			continue
 		var/datum/station_request/request = i
-		formatted_requests += list(list("owner" = request.owner, "value" = request.value, "description" = request.description, "req_number" = request.req_number, "applicants" = request.applicants))
+		formatted_requests += list(list("owner" = request.owner, "value" = request.value, "description" = request.description, "acc_number" = request.req_number, "applicants" = request.applicants))
+		if(request.applicants)
+			for(var/datum/bank_account/j in request.applicants)
+				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
 	if(current_user)
 		data["AccountName"] = current_user.account_holder
-	if(active_request)
-		data["Applicants"] = active_request.applicants_strings
 	data["Requests"] = formatted_requests
+	data["Applicants"] = formatted_applicants
 	return data
 
 /obj/machinery/request_kiosk/ui_act(action, list/params)
@@ -78,17 +85,14 @@
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
-	say("[current_ref_num] is the current_ref_num, [current_app_num] is the current_ref_num")
 	for(var/datum/station_request/i in request_list)
-		say("[i.req_number] is the loop number.")
 		if("[i.req_number]" == "[current_ref_num]") //Why do we not have a num2string function? Even MATLAB has a num2string! And matlab sucks!
 			active_request = i
-			say("Active Request set! The number is [active_request.req_number].")
 			break
 	if(active_request)
-		for(var/datum/request_applicant/j in active_request.applicants)
-			if("[current_app_num]" == "[j.application_number]")
-				request_target = j.applicant_account
+		for(var/datum/bank_account/j in active_request.applicants)
+			if(j.account_id == current_app_num)
+				request_target = j
 	switch(action)
 		if("CreateBounty")
 			say("Dispensing Card.")
@@ -101,14 +105,10 @@
 			if(current_user.account_holder == active_request.owner)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
-			var/datum/request_applicant/new_applicant = new /datum/request_applicant(current_user.account_holder, current_user, (active_request.applicants.len++))
-			active_request.applicants += list(new_applicant)
-			active_request.applicants_strings += list(list("name" = current_user.account_holder, "account" = current_user, "app_number" = active_request.app_value))
-			say("Created Application number [active_request.app_value]")
-			active_request.app_value ++
+			active_request.applicants += list(current_user)
 		if("PayApplicant")
 			request_target.transfer_money(current_user, active_request.value)
-			say("Paid out [active_request.value] credits to someone.")
+			say("Paid out [active_request.value] credits.")
 			return TRUE
 		if("Clear")
 			if(current_user)
@@ -153,6 +153,10 @@
 		. += (new_request.description)
 		. += ("The Price on this bounty is set for [new_request.value] credits.")
 
+/**
+  * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
+  * All of this is passed to the Request Console UI in order to present in organized way.
+  */
 /datum/station_request
 	///Name of the Request Owner.
 	var/owner
@@ -160,35 +164,18 @@
 	var/value
 	///Text description of the request to be shown within the UI.
 	var/description
-	///Internal number of the request for organizing.
+	///Internal number of the request for organizing. Id card number.
 	var/req_number
-	///The number of the response.
-	var/app_value = 1
-	///List of applicants who are attempting the task, contains account numbers for payout.
+	///The account of the request owner.
+	var/datum/bank_account/owner_account
+	///the account of the request fulfiller.
 	var/list/applicants = list()
-	///List containing data from applicants to pass to the UI.
-	var/list/applicants_strings = list()
 
-/datum/station_request/New(var/owned, var/newvalue, var/newdescription, var/reqnum)
+/datum/station_request/New(var/owned, var/newvalue, var/newdescription, var/reqnum, var/own_account)
 	. = ..()
 	owner = owned
 	value = newvalue
 	description = newdescription
 	req_number = reqnum
-	if(!applicants)
-		applicants = list()
-	if(!applicants_strings)
-		applicants_strings = list()
-
-/datum/request_applicant
-	var/applicant_name
-	var/datum/bank_account/applicant_account
-	var/application_number
-
-/datum/request_applicant/New(var/name, var/account, var/acc_num)
-	. = ..()
-	applicant_name = name
-	application_number = acc_num
-	if(!istype(account,/datum/bank_account))
-		return
-	applicant_account = account
+	if(istype(own_account, /datum/bank_account))
+		owner_account = own_account
