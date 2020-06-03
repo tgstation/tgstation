@@ -294,16 +294,10 @@
 		if(head_revolutionaries.len < max_headrevs && head_revolutionaries.len < round(heads.len - ((8 - sec.len) / 3)))
 			var/list/datum/mind/non_heads = members - head_revolutionaries
 			var/list/datum/mind/promotable = list()
-			var/list/datum/mind/nonhuman_promotable = list()
 			for(var/datum/mind/khrushchev in non_heads)
 				if(khrushchev.current && !khrushchev.current.incapacitated() && !khrushchev.current.restrained() && khrushchev.current.client && khrushchev.current.stat != DEAD)
 					if(ROLE_REV in khrushchev.current.client.prefs.be_special)
-						if(ishuman(khrushchev.current))
-							promotable += khrushchev
-						else
-							nonhuman_promotable += khrushchev
-			if(!promotable.len && nonhuman_promotable.len) //if only nonhuman revolutionaries remain, promote one of them to the leadership.
-				promotable = nonhuman_promotable
+						promotable += khrushchev
 			if(promotable.len)
 				var/datum/mind/new_leader = pick(promotable)
 				var/datum/antagonist/rev/rev = new_leader.has_antag_datum(/datum/antagonist/rev)
