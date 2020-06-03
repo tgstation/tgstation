@@ -261,3 +261,12 @@
 
 /obj/structure/fluff/hedge/opaque //useful for mazes and such
 	opacity = 1
+
+/obj/structure/fluff/tombofhorrors
+	name = "great green devil"
+	desc = "On the wall before you is a relief statue of a devil formed of mosaic plastics. The face has a huge O of a mouth, inside of which the space is dead black darkness."
+	icon = 'icons/mob/32x64.dmi'
+	icon_state = "dnd reference"
+	density = TRUE
+	anchored = TRUE
+	deconstructible = FALSE
