@@ -1100,14 +1100,19 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 		obj_flags &= ~FROZEN
 
 
-//Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
-// exporting it as text, and then parsing the base64 from that.
-// (This relies on byond automatically storing icons in savefiles as base64)
-/proc/icon2base64(icon/icon, iconKey = "misc")
+/// Save file used in icon2base64. Used for converting icons to base64.
+GLOBAL_DATUM_INIT(dummySave, /savefile, new("tmp/dummySave.sav")) //Cache of icons for the browser output
+
+/**
+  * Converts an icon to base64. Operates by putting the icon in the iconCache savefile,
+  * exporting it as text, and then parsing the base64 from that.
+  * (This relies on byond automatically storing icons in savefiles as base64)
+  */
+/proc/icon2base64(icon/icon)
 	if (!isicon(icon))
 		return FALSE
-	WRITE_FILE(GLOB.iconCache[iconKey], icon)
-	var/iconData = GLOB.iconCache.ExportText(iconKey)
+	WRITE_FILE(GLOB.dummySave["dummy"], icon)
+	var/iconData = GLOB.dummySave.ExportText("dummy")
 	var/list/partial = splittext(iconData, "{")
 	return replacetext(copytext_char(partial[2], 3, -5), "\n", "")
 
@@ -1191,7 +1196,7 @@ GLOBAL_LIST_INIT(freon_color_matrix, list("#2E5E69", "#60A2A8", "#A1AFB1", rgb(0
 			I = icon()
 			I.Insert(temp, dir = SOUTH)
 
-		bicon_cache[key] = icon2base64(I, key)
+		bicon_cache[key] = icon2base64(I)
 
 	return "<img class='icon icon-[A.icon_state]' src='data:image/png;base64,[bicon_cache[key]]'>"
 
