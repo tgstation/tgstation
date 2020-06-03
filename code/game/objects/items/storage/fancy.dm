@@ -147,6 +147,7 @@
 		user.put_in_hands(attached_coupon)
 		attached_coupon.generate()
 		attached_coupon = null
+		spawn_coupon = FALSE
 		name = "discarded cigarette packet"
 		desc = "An old cigarette packet with the back torn off, worth less than nothing now."
 		var/datum/component/storage/STR = GetComponent(/datum/component/storage)

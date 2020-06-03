@@ -127,7 +127,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		value += SO.pack.cost
 		SSshuttle.shoppinglist -= SO
 		SSshuttle.orderhistory += SO
-		qdel(SO.applied_coupon)
+		QDEL_NULL(SO.applied_coupon)
 
 		if(SO.pack.goody) //goody means it gets piled in the miscbox
 			if(SO.paying_account)
