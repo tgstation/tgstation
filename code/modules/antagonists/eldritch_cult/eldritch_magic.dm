@@ -230,7 +230,8 @@
 		return FALSE
 
 	for(var/mob/living/carbon/human/C in range(1,targets[1]))
-		targets += C
+		targets |= C
+
 
 	for(var/X in targets)
 		var/mob/living/carbon/human/target = X
@@ -247,6 +248,7 @@
 
 		target.bleed_rate += 15
 		target.adjustFireLoss(20)
+		new /obj/effect/temp_visual/cleave(target.drop_location())
 
 /obj/effect/proc_holder/spell/pointed/ash_cleave/can_target(atom/target, mob/user, silent)
 	. = ..()
@@ -459,14 +461,25 @@
 
 
 /obj/effect/proc_holder/spell/targeted/worm_contract
-	name = "Oath of Fire"
-	desc = "For a minute you will passively create a ring of fire around you."
-	invocation = "FL'MS"
-	invocation_type = "whisper"
+	name = "Force Contract"
+	desc = "Forces all the worm parts to collapse onto a single turf"
+	invocation_type = "none"
 	clothes_req = FALSE
 	action_background_icon_state = "bg_ecult"
 	range = -1
 	include_user = TRUE
-	charge_max = 700
+	charge_max = 300
 	action_icon = 'icons/mob/actions/actions_ecult.dmi'
-	action_icon_state = "fire_ring"
+	action_icon_state = "worm_contract"
+
+/obj/effect/proc_holder/spell/targeted/worm_contract/cast(list/targets, mob/user)
+	. = ..()
+	if(!istype(user,/mob/living/simple_animal/hostile/eldritch/armsy))
+		to_chat(user, "<span class='userdanger'>You try to contract your muscles but nothing happens...</span>")
+	var/mob/living/simple_animal/hostile/eldritch/armsy/armsy = user
+	armsy.contract_next_chain_into_single_tile()
+
+/obj/effect/temp_visual/cleave
+	icon = 'icons/effects/eldritch.dmi'
+	icon_state = "cleave"
+	duration = 6

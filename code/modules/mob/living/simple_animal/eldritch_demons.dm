@@ -74,6 +74,7 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	move_resist = MOVE_FORCE_OVERPOWERING+1
+	spells_to_add = list(/obj/effect/proc_holder/spell/targeted/worm_contract)
 	///Previous segment in the chain
 	var/mob/living/simple_animal/hostile/eldritch/armsy/back
 	///Next segment in the chain
@@ -180,7 +181,6 @@
 				prev.icon_living = "armsy_end"
 				prev.front = src
 				prev.AIStatus = AI_OFF
-
 				current_stacks = 0
 
 	adjustBruteLoss(-maxHealth * 0.5, FALSE)
