@@ -202,8 +202,6 @@ obj/machinery/holopad/secure/Initialize()
 	return ..()
 
 /obj/machinery/holopad/ui_status(mob/user)
-	if(!ishuman(user))
-		return UI_CLOSE
 	if(user.incapacitated())
 		return UI_CLOSE
 	if(!is_operational())
