@@ -68,7 +68,7 @@
 	if(current_user)
 		data["AccountName"] = current_user.account_holder
 	if(active_request)
-		data["Applicants"] = active_request.applicants
+		data["Applicants"] = active_request.applicants_strings
 	data["Requests"] = formatted_requests
 	return data
 
@@ -76,14 +76,19 @@
 	if(..())
 		return
 	var/current_ref_num = params["request"]
-	var/datum/bank_account/current_applicant = params["applicant"]
-	say("[current_ref_num] is the current_ref_num")
+	var/current_app_num = params["applicant"]
+	var/datum/bank_account/request_target
+	say("[current_ref_num] is the current_ref_num, [current_app_num] is the current_ref_num")
 	for(var/datum/station_request/i in request_list)
 		say("[i.req_number] is the loop number.")
 		if("[i.req_number]" == "[current_ref_num]") //Why do we not have a num2string function? Even MATLAB has a num2string! And matlab sucks!
 			active_request = i
 			say("Active Request set! The number is [active_request.req_number].")
 			break
+	if(active_request)
+		for(var/datum/request_applicant/j in active_request.applicants)
+			if("[current_app_num]" == "[j.application_number]")
+				request_target = j.applicant_account
 	switch(action)
 		if("CreateBounty")
 			say("Dispensing Card.")
@@ -96,9 +101,13 @@
 			if(current_user.account_holder == active_request.owner)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
-			active_request.applicants += list(list("name" = current_user.account_holder, "account" = current_user, "second_req_number" = active_request.req_number))
+			var/datum/request_applicant/new_applicant = new /datum/request_applicant(current_user.account_holder, current_user, (active_request.applicants.len++))
+			active_request.applicants += list(new_applicant)
+			active_request.applicants_strings += list(list("name" = current_user.account_holder, "account" = current_user, "app_number" = active_request.app_value))
+			say("Created Application number [active_request.app_value]")
+			active_request.app_value ++
 		if("PayApplicant")
-			current_applicant.transfer_money(current_applicant, 15)
+			request_target.transfer_money(current_user, active_request.value)
 			say("Paid out [active_request.value] credits to someone.")
 			return TRUE
 		if("Clear")
@@ -153,15 +162,33 @@
 	var/description
 	///Internal number of the request for organizing.
 	var/req_number
+	///The number of the response.
+	var/app_value = 1
 	///List of applicants who are attempting the task, contains account numbers for payout.
 	var/list/applicants = list()
+	///List containing data from applicants to pass to the UI.
+	var/list/applicants_strings = list()
 
-/datum/station_request/New(var/owned, var/newvalue, var/newdescription, var/reqnum, var/list/apps = list())
+/datum/station_request/New(var/owned, var/newvalue, var/newdescription, var/reqnum)
 	. = ..()
 	owner = owned
 	value = newvalue
 	description = newdescription
 	req_number = reqnum
-	applicants = apps
 	if(!applicants)
 		applicants = list()
+	if(!applicants_strings)
+		applicants_strings = list()
+
+/datum/request_applicant
+	var/applicant_name
+	var/datum/bank_account/applicant_account
+	var/application_number
+
+/datum/request_applicant/New(var/name, var/account, var/acc_num)
+	. = ..()
+	applicant_name = name
+	application_number = acc_num
+	if(!istype(account,/datum/bank_account))
+		return
+	applicant_account = account

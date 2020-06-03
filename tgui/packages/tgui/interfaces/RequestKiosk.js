@@ -95,7 +95,7 @@ export const RequestKiosk = (props, context) => {
                           <Button
                             icon="play"
                             onClick={() => act('PayApplicant', {
-                              applicant: applicant.account,
+                              applicant: applicant.app_number,
                             })} />
                         </Flex.Item>
                       </Flex>
