@@ -67,7 +67,7 @@
 		return
 	on_process()
 
-/mob/living/proc/get_trait_string(medical, category) //helper string. gets a string of all the traits the mob has
+/mob/living/proc/get_quirk_string(medical, category) //helper string. gets a string of all the traits the mob has
 	var/list/dat = list()
 	switch(category)
 		if(CAT_QUIRK_ALL)
