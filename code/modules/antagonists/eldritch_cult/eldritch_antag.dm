@@ -222,10 +222,8 @@
 	name = "spendtime"
 	var/timer = 5 MINUTES
 
-
 /datum/objective/stalk/update_explanation_text()
-	if(timer == initial(timer))//just so admins can mess with it
-		timer += pick(-3 MINUTES, 3 MINUTES)
+	timer += pick(-3 MINUTES, 3 MINUTES)
 	if(target?.current)
 		explanation_text = "Stalk [target.name] for at least [DisplayTimeText(timer)] while they're alive."
 	else
