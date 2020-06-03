@@ -51,9 +51,17 @@
 /datum/component/decal/proc/apply(atom/thing)
 	var/atom/master = thing || parent
 	RegisterSignal(master,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/apply_overlay)
-	master.update_icon() //could use some queuing here now maybe.
+	if(master.flags_1 & INITIALIZED_1)
+		master.update_icon() //could use some queuing here now maybe.
+	else
+		RegisterSignal(master,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE,.proc/late_update_icon)
 	if(isitem(master))
 		addtimer(CALLBACK(master, /obj/item/.proc/update_slot_icon), 0, TIMER_UNIQUE)
+
+/datum/component/decal/proc/late_update_icon(atom/source)
+	if(source && istype(source))
+		source.update_icon()
+		UnregisterSignal(source,COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZE)
 
 /datum/component/decal/proc/apply_overlay(atom/source, list/overlay_list)
 	overlay_list += pic

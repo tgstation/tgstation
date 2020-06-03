@@ -2322,7 +2322,7 @@
 		if(prob(50))
 			the_toy = pickweight(GLOB.arcade_prize_pool)
 		else
-			the_toy = pick(subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/goatplushie/angry/kinggoat))
+			the_toy = pick(subtypesof(/obj/item/toy/plush))
 		new the_toy(.)
 
 /datum/supply_pack/costumes_toys/wizard
@@ -2423,6 +2423,20 @@
 			new /obj/item/clothing/mask/fakemoustache/italian(C)
 	if(prob(10)) //A little extra sugar every now and then to shake things up.
 		new	/obj/item/switchblade(C)
+
+/datum/supply_pack/costumes_toys/randomised/tcg
+	name = "Big-Ass Booster Pack Pack"
+	desc = "A bumper load of NT TCG Booster Packs of varying series. Collect them all!"
+	cost = 1000
+	contains = list()
+	crate_name = "booster pack pack"
+
+/datum/supply_pack/costumes_toys/randomised/tcg/generate()
+	. = ..()
+	var/cardpacktype
+	for(var/i in 1 to 10)
+		cardpacktype = pick(subtypesof(/obj/item/cardpack))
+		new cardpacktype(.)
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Miscellaneous ///////////////////////////////////
