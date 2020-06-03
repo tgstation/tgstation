@@ -9,13 +9,11 @@
 	///list of objects that can be spawned when the turf spawns flora
 	var/list/flora_types = list(/obj/structure/flora/grass/jungle)
 	///list of mobs that can be spawned when the turf spawns fauna
-	var/list/fauna_types = list(
-	/mob/living/simple_animal/hostile/jungle/mook{faction = list("wildlife")} = 50,
-	)
+	var/list/fauna_types = list()
 
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(var/turf/T)
-	T.ChangeTurf(turf_type)
+	T.ChangeTurf(turf_type, null, CHANGETURF_DEFER_CHANGE)
 	if(prob(fauna_density))
 		var/mob/fauna = pick(fauna_types)
 		new fauna(T)
@@ -38,17 +36,9 @@
 	turf_type = /turf/open/floor/plating/grass/jungle
 	flora_types = list(/obj/structure/flora/grass/jungle,/obj/structure/flora/grass/jungle/b, /obj/structure/flora/tree/jungle, /obj/structure/flora/rock/jungle, /obj/structure/flora/junglebush, /obj/structure/flora/junglebush/b, /obj/structure/flora/junglebush/c, /obj/structure/flora/junglebush/large, /obj/structure/flora/rock/pile/largejungle)
 	flora_density = 40
-	fauna_density = 0.2
-	fauna_types = list(
-	/mob/living/simple_animal/hostile/jungle/mook{faction = list("wildlife")} = 10,
-	/mob/living/simple_animal/hostile/jungle/leaper{faction = list("wildlife")} = 20,
-	/mob/living/simple_animal/hostile/jungle/mega_arachnid{faction = list("wildlife")} = 20,
-	/mob/living/simple_animal/hostile/jungle/seedling{faction = list("wildlife")} = 10,
-	)
 
 /datum/biome/jungle/deep
 	flora_density = 65
-	fauna_density = 0.25
 
 /datum/biome/wasteland
 	turf_type = /turf/open/floor/plating/dirt/jungle/wasteland

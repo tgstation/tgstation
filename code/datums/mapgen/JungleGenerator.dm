@@ -3,7 +3,12 @@
 
 /datum/map_generator/jungle_generator
 	///2D list of all biomes based on heat and humidity combos.
-	var/list/possible_biomes = list(BIOME_LOW_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGH_HUMIDITY = /datum/biome/water), BIOME_LOWMEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/mudlands), BIOME_HIGHMEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle/deep, BIOME_HIGH_HUMIDITY = /datum/biome/jungle), BIOME_HIGH_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/wasteland, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep))
+	var/list/possible_biomes = list(BIOME_LOW_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/mudlands, BIOME_HIGH_HUMIDITY = /datum/biome/water),\
+	BIOME_LOWMEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/mudlands),\
+	BIOME_HIGHMEDIUM_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/plains, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle/deep, BIOME_HIGH_HUMIDITY = /datum/biome/jungle),\
+	BIOME_HIGH_HEAT = list(BIOME_LOW_HUMIDITY = /datum/biome/wasteland, BIOME_LOWMEDIUM_HUMIDITY = /datum/biome/plains, BIOME_HIGHMEDIUM_HUMIDITY = /datum/biome/jungle, BIOME_HIGH_HUMIDITY = /datum/biome/jungle/deep))
+	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
+	var/perlin_zoom = 65
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/jungle_generator/generate_terrain(var/list/turfs)
@@ -16,13 +21,13 @@
 		var/x = T.x + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)
 		var/y = T.y + rand(-BIOME_RANDOM_SQUARE_DRIFT, BIOME_RANDOM_SQUARE_DRIFT)
 
-		var/height = CLAMP01(text2num(rustg_noise_get_at_coordinates("[height_seed]", "[x / 65]", "[y / 65]")))
+		var/height = text2num(rustg_noise_get_at_coordinates("[height_seed]", "[x / perlin_zoom]", "[y / perlin_zoom]"))
 
 
 		var/datum/biome/selected_biome
 		if(height <= 0.85) //If height is less than 0.85, we generate biomes based on the heat and humidity of the area.
-			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[x / 65]", "[y / 65]"))
-			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[x / 65]", "[y / 65]"))
+			var/humidity = text2num(rustg_noise_get_at_coordinates("[humidity_seed]", "[x / perlin_zoom]", "[y / perlin_zoom]"))
+			var/heat = text2num(rustg_noise_get_at_coordinates("[heat_seed]", "[x / perlin_zoom]", "[y / perlin_zoom]"))
 			var/heat_level //Type of heat zone we're in LOW-MEDIUM-HIGH
 			var/humidity_level  //Type of humidity zone we're in LOW-MEDIUM-HIGH
 
