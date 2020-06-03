@@ -76,7 +76,7 @@ export const RequestKiosk = (props, context) => {
                   <Section
                     title="Request Applicants">
                     {Applicants?.map(applicant => (
-					applicant.requestee_id === request.acc_number && (
+					applicant.request_id === request.acc_number && (
                       <Flex>
                         <Flex.Item
                           grow={1}

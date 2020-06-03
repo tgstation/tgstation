@@ -91,8 +91,9 @@
 			break
 	if(active_request)
 		for(var/datum/bank_account/j in active_request.applicants)
-			if(j.account_id == current_app_num)
+			if("j.account_id" == "current_app_num")
 				request_target = j
+				break
 	switch(action)
 		if("CreateBounty")
 			say("Dispensing Card.")
