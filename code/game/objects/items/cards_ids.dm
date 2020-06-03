@@ -588,13 +588,6 @@ update_label()
 	registered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	. = ..()
 
-/obj/item/card/id/debug/random
-		name = "\improper Randomized Debug ID"
-
-/obj/item/card/id/debug/random/Initialize()
-	. = ..()
-	registered_account = new /datum/bank_account("Lil Orang", new /datum/job/assistant(), 1)
-
 /obj/item/card/id/prisoner
 	name = "prisoner ID card"
 	id_type_name = "prisoner ID card"

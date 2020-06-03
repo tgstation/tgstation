@@ -15,7 +15,7 @@ export const RequestKiosk = (props, context) => {
     Applicants =[],
   } = data;
   const color = 'rgba(13, 13, 213, 0.7)';
-  const backcolor = 'rgba(0, 0, 69, 0.5)'
+  const backcolor = 'rgba(0, 0, 69, 0.5)';
   return (
     <Window resizable>
       <div className="RequestKiosk__right">
@@ -76,30 +76,30 @@ export const RequestKiosk = (props, context) => {
                   <Section
                     title="Request Applicants">
                     {Applicants?.map(applicant => (
-					applicant.request_id === request.acc_number && (
-                      <Flex>
-                        <Flex.Item
-                          grow={1}
-                          p={0.5}
-                          backgroundColor= {backcolor}
-                          width="510px"
-                          style={{
-                            border: `2px solid ${color}`,
-                          }}>
-                          {applicant.name}
-                        </Flex.Item>
-                        <Flex.Item 
-                          align="end">
-                          <Button
-                            fluid
-                            icon="cash-register"
-                            onClick={() => act('PayApplicant', {
-                              applicant: applicant.requestee_id,
-                              request: request.acc_number,
-                            })} />
-                        </Flex.Item>
-                      </Flex>
-					  )
+                      applicant.request_id === request.acc_number && (
+                        <Flex>
+                          <Flex.Item
+                            grow={1}
+                            p={0.5}
+                            backgroundColor={backcolor}
+                            width="510px"
+                            style={{
+                              border: `2px solid ${color}`,
+                            }}>
+                            {applicant.name}
+                          </Flex.Item>
+                          <Flex.Item 
+                            align="end">
+                            <Button
+                              fluid
+                              icon="cash-register"
+                              onClick={() => act('PayApplicant', {
+                                applicant: applicant.requestee_id,
+                                request: request.acc_number,
+                              })} />
+                          </Flex.Item>
+                        </Flex>
+                      )
                     ))}
                   </Section>
                 </Section>  

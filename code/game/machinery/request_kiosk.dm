@@ -23,11 +23,6 @@
 	. = ..()
 	if(!request_list)
 		request_list = list()
-		//The below is a test case, and will be removed for the final product.
-		var/datum/station_request/testcase = new /datum/station_request("Pat Sajack", 100, "Ayo get me some coffee ya dig?", ((SSeconomy.get_dep_account(ACCOUNT_CAR)).account_id), SSeconomy.get_dep_account(ACCOUNT_CAR))
-		request_list += testcase
-	if(!request_number)
-		request_number = 2
 
 /obj/machinery/request_kiosk/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -52,6 +47,7 @@
 		curr_request.owner_account = current_user
 		request_list += list(curr_request)
 		request_number++
+		say("Request #[request_number] created.")
 		playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 		qdel(I)
 
@@ -69,7 +65,7 @@
 		if(!i)
 			continue
 		var/datum/station_request/request = i
-		formatted_requests += list(list("owner" = request.owner, "value" = request.value, "description" = request.description, "acc_number" = request.req_number, "applicants" = request.applicants))
+		formatted_requests += list(list("owner" = request.owner, "value" = request.value, "description" = request.description, "acc_number" = request.req_number))
 		if(request.applicants)
 			for(var/datum/bank_account/j in request.applicants)
 				formatted_applicants += list(list("name" = j.account_holder, "request_id" = request.owner_account.account_id, "requestee_id" = j.account_id))
@@ -86,12 +82,12 @@
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
 	for(var/datum/station_request/i in request_list)
-		if("[i.req_number]" == "[current_ref_num]") //Why do we not have a num2string function? Even MATLAB has a num2string! And matlab sucks!
+		if("[i.req_number]" == "[current_ref_num]")
 			active_request = i
 			break
 	if(active_request)
 		for(var/datum/bank_account/j in active_request.applicants)
-			if("j.account_id" == "current_app_num")
+			if("[j.account_id]" == "[current_app_num]")
 				request_target = j
 				break
 	switch(action)
@@ -101,13 +97,16 @@
 			return TRUE
 		if("Apply")
 			if(!current_user)
-				say("Please swipe your ID card first.")
+				say("Please swipe a valid ID first.")
 				return TRUE
 			if(current_user.account_holder == active_request.owner)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			active_request.applicants += list(current_user)
 		if("PayApplicant")
+			if(!current_user.has_money(active_request.value))
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+				return
 			request_target.transfer_money(current_user, active_request.value)
 			say("Paid out [active_request.value] credits.")
 			return TRUE
@@ -120,7 +119,7 @@
 			if(active_request.owner != current_user.account_holder)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
-			say("Deleted Current Request.")
+			say("Deleted current request.")
 			request_list.Remove(active_request)
 			return TRUE
 	. = TRUE
