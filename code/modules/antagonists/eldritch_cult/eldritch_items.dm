@@ -119,7 +119,6 @@
 /obj/item/reagent_containers/glass/beaker/eldritch
 	name = "flask of eldritch essence"
 	desc = "Toxic to the close minded. Healing to those with knowledge of the beyond."
-	icon = 'icons/obj/drinks.dmi'
-	icon_state = "holyflask"
-	color = "#359656"
+	icon = 'icons/obj/eldritch.dmi'
+	icon_state = "eldrich_flask"
 	list_reagents = list(/datum/reagent/eldritch = 50)
