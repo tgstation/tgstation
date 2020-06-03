@@ -1,0 +1,4 @@
+author: "Fikou"
+delete-after: True
+changes: 
+  - tweak: "atmos jumpsuit now has the same armor values as engi jumpsuit"
