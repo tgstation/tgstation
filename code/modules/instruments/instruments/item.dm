@@ -66,7 +66,7 @@
 	desc = "An advanced electronic synthesizer that can be used as various instruments."
 	icon_state = "synth"
 	inhand_icon_state = "synth"
- 	allowed_instrument_ids = "piano"
+	allowed_instrument_ids = "piano"
 
 /obj/item/instrument/piano_synth/Initialize(mapload)
 	. = ..()
@@ -124,7 +124,7 @@
 	attack_verb = list("scruggs-styled", "hum-diggitied", "shin-digged", "clawhammered")
 	hitsound = 'sound/weapons/banjoslap.ogg'
 	allowed_instrument_ids = "banjo"
- 
+
 /obj/item/instrument/guitar
 	name = "guitar"
 	desc = "It's made of wood and has bronze strings."
