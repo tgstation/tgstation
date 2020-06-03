@@ -1,0 +1,9 @@
+author: "Tlaltecuhtli"
+delete-after: True
+changes: 
+  - bugfix: "lightfloor makes colored lights and are more visible"
+  - bugfix: "you can turn them off/on by using your screwdriver"
+  - bugfix: "you can emp em"
+  - bugfix: "breaking them actually works"
+  - bugfix: "using a broken bulb wont fix em
+sprites: flicker states for each colour"

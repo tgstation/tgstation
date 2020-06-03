@@ -1,4 +1,0 @@
-author: "Kelenius"
-delete-after: True
-changes: 
-  - tweak: "DNA scanner can now store any amount of mutations and chromosomes."
