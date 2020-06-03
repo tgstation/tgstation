@@ -59,6 +59,7 @@
 
 	if(!dialed_holopads.len)
 		calling_pad.say("Connection failure.")
+		calling_pad.calling = FALSE
 		qdel(src)
 		return
 
@@ -195,6 +196,7 @@
 
 	if(!.)
 		testing("Holocall Check fail")
+		calling_holopad.calling = FALSE
 		qdel(src)
 
 /datum/action/innate/end_holocall

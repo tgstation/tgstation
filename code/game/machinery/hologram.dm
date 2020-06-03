@@ -41,28 +41,43 @@ Possible to do for anyone motivated enough:
 	max_integrity = 300
 	armor = list("melee" = 50, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 50, "acid" = 0)
 	circuit = /obj/item/circuitboard/machine/holopad
-	ui_x = 407
-	ui_y = 215
-	var/list/masters //List of living mobs that use the holopad
-	var/list/holorays //Holoray-mob link.
-	var/last_request = 0 //to prevent request spam. ~Carn
-	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
-	var/list/holo_calls	//array of /datum/holocalls
-	var/datum/holocall/outgoing_call	//do not modify the datums only check and call the public procs
-	var/obj/item/disk/holodisk/disk //Record disk
-	var/replay_mode = FALSE //currently replaying a recording
-	var/loop_mode = FALSE //currently looping a recording
-	var/record_mode = FALSE //currently recording
-	var/record_start = 0  	//recording start time
-	var/record_user			//user that inititiated the recording
-	var/obj/effect/overlay/holo_pad_hologram/replay_holo	//replay hologram
-	var/static/force_answer_call = FALSE	//Calls will be automatically answered after a couple rings, here for debugging
+	ui_x = 440
+	ui_y = 245
+	/// List of living mobs that use the holopad
+	var/list/masters
+	/// Holoray-mob link
+	var/list/holorays
+	/// To prevent request spam. ~Carn
+	var/last_request = 0
+	/// Change to change how far the AI can move away from the holopad before deactivating
+	var/holo_range = 5
+	/// Array of /datum/holocalls
+	var/list/holo_calls
+	/// Currently outgoing holocall, do not modify the datums only check and call the public procs
+	var/datum/holocall/outgoing_call
+	/// Record disk
+	var/obj/item/disk/holodisk/disk
+	/// Currently replaying a recording
+	var/replay_mode = FALSE
+	/// Currently looping a recording
+	var/loop_mode = FALSE
+	/// Currently recording
+	var/record_mode = FALSE
+	/// Recording start time
+	var/record_start = 0
+	/// User that inititiated the recording
+	var/record_user
+	/// Replay hologram
+	var/obj/effect/overlay/holo_pad_hologram/replay_holo
+	/// Calls will be automatically answered after a couple rings, here for debugging
+	var/static/force_answer_call = FALSE
 	var/static/list/holopads = list()
 	var/obj/effect/overlay/holoray/ray
 	var/ringing = FALSE
 	var/offset = FALSE
 	var/on_network = TRUE
-	var/secure = FALSE //for pads in secure areas; do not allow forced connecting
+	/// For pads in secure areas; do not allow forced connecting
+	var/secure = FALSE
 	/// If we are currently calling another holopad
 	var/calling = FALSE
 
@@ -204,32 +219,6 @@ obj/machinery/holopad/secure/Initialize()
 		ui = new(user, src, ui_key, "Holopad", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
-/*
-/obj/machinery/holopad/ui_interact(mob/living/carbon/human/user)
-
-		if(LAZYLEN(holo_calls))
-			dat += "=====================================================<br>"
-
-		if(on_network)
-			var/one_answered_call = FALSE
-			var/one_unanswered_call = FALSE
-			for(var/I in holo_calls)
-				var/datum/holocall/HC = I
-				if(HC.connected_holopad != src)
-					dat += "<a href='?src=[REF(src)];connectcall=[REF(HC)]'>Answer call from [get_area(HC.calling_holopad)]</a><br>"
-					one_unanswered_call = TRUE
-				else
-					one_answered_call = TRUE
-
-			if(one_answered_call && one_unanswered_call)
-				dat += "=====================================================<br>"
-			//we loop twice for formatting
-			for(var/I in holo_calls)
-				var/datum/holocall/HC = I
-				if(HC.connected_holopad == src)
-					dat += "<a href='?src=[REF(src)];disconnectcall=[REF(HC)]'>Disconnect call from [HC.user]</a><br>"
-*/
-
 /obj/machinery/holopad/ui_data(mob/user)
 	var/list/data = list()
 	data["calling"] = calling
@@ -245,19 +234,12 @@ obj/machinery/holopad/secure/Initialize()
 	for(var/I in holo_calls)
 		var/datum/holocall/HC = I
 		var/list/call_data = list(
-			call_area = get_area(HC.calling_holopad),
 			caller = HC.user,
 			connected = HC.connected_holopad == src ? TRUE : FALSE,
 			ref = REF(HC)
 		)
 		data["holo_calls"] += list(call_data)
 	return data
-
-//Stop ringing the AI!!
-/obj/machinery/holopad/proc/hangup_all_calls()
-	for(var/I in holo_calls)
-		var/datum/holocall/HC = I
-		HC.Disconnect(src)
 
 /obj/machinery/holopad/ui_act(action, list/params)
 	. = ..()
@@ -292,22 +274,20 @@ obj/machinery/holopad/secure/Initialize()
 				if(QDELETED(usr) || !result || outgoing_call)
 					return
 				if(usr.loc == loc)
-					var/head_call = FALSE
-					var/value = params["headcall"]
-					if(value == 1)
-						head_call = TRUE
-					new /datum/holocall(usr, src, callnames[result], head_call)
+					var/input = text2num(params["headcall"])
+					var/headcall = input == 1 ? TRUE : FALSE
+					new /datum/holocall(usr, src, callnames[result], headcall)
 					calling = TRUE
 				return TRUE
 			else
 				to_chat(usr, "<span class='warning'>You must stand on the holopad to make a call!</span>")
 		if("connectcall")
-			var/datum/holocall/call_to_connect = locate(params["connectcall"]) in holo_calls
+			var/datum/holocall/call_to_connect = locate(params["holopad"]) in holo_calls
 			if(!QDELETED(call_to_connect))
 				call_to_connect.Answer(src)
 				return TRUE
 		if("disconnectcall")
-			var/datum/holocall/call_to_disconnect = locate(params["disconnectcall"]) in holo_calls
+			var/datum/holocall/call_to_disconnect = locate(params["holopad"]) in holo_calls
 			if(!QDELETED(call_to_disconnect))
 				call_to_disconnect.Disconnect(src)
 				return TRUE
@@ -322,11 +302,8 @@ obj/machinery/holopad/secure/Initialize()
 		if("replay_start")
 			replay_start()
 			return TRUE
-		if("loop_start")
-			loop_mode = TRUE
-			return TRUE
-		if("loop_stop")
-			loop_mode = FALSE
+		if("loop_change")
+			loop_mode = !loop_mode
 			return TRUE
 		if("record_start")
 			record_start(usr)
@@ -352,6 +329,14 @@ obj/machinery/holopad/secure/Initialize()
 			if(outgoing_call)
 				outgoing_call.Disconnect(src)
 				return TRUE
+
+/**
+  * hangup_all_calls: Disconnects all current holocalls from the holopad
+  */
+/obj/machinery/holopad/proc/hangup_all_calls()
+	for(var/I in holo_calls)
+		var/datum/holocall/HC = I
+		HC.Disconnect(src)
 
 //do not allow AIs to answer calls or people will use it to meta the AI sattelite
 /obj/machinery/holopad/attack_ai(mob/living/silicon/ai/user)
