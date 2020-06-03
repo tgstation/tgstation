@@ -290,6 +290,23 @@
 	category = list("initial","Misc","Equipment")
 	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO
 
+/datum/design/breathmask
+	name = "Breath Mask"
+	id = "breathmask"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/glass = 1000)
+	build_path = /obj/item/clothing/mask/breath
+	category = list("initial","Misc","Equipment")
+
+/datum/design/gas_mask
+	name = "Gas Mask"
+	id = "gas_mask"
+	build_type = AUTOLATHE | PROTOLATHE
+	materials = list(/datum/material/iron = 2000)
+	build_path = /obj/item/clothing/mask/gas
+	category = list("hacked","Misc","Equipment")
+	departmental_flags = DEPARTMENTAL_FLAG_ENGINEERING | DEPARTMENTAL_FLAG_CARGO | DEPARTMENTAL_FLAG_SCIENCE
+
 /datum/design/metal
 	name = "Metal"
 	id = "metal"
