@@ -1,6 +1,6 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
+import { Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Holopad = (props, context) => {
@@ -10,18 +10,22 @@ export const Holopad = (props, context) => {
   } = data;
   return (
     <Window resizable>
-      {calling && (
-        <Fragment>
+      {!!calling && (
+        <Modal
+          fontSize="36px"
+          fontFamily="monospace">
+          <Flex align="center">
+            <Flex.Item mr={2} mt={2}>
+              <Icon
+                name="phone-alt"
+                rotation={25} />
+            </Flex.Item>
+            <Flex.Item mr={2}>
+              {'Dialing...'}
+            </Flex.Item>
+          </Flex>
           <Box
-            bold
-            fontSize="36px"
-            mt={5}
-            mb={2}
-            textAlign="center"
-            fontFamily="monospace">
-            Dialing...
-          </Box>
-          <Box
+            mt={2}
             textAlign="center"
             fontSize="24px">
             <Button
@@ -31,12 +35,11 @@ export const Holopad = (props, context) => {
               color="bad"
               onClick={() => act('hang_up')} />
           </Box>
-        </Fragment>
-      ) || (
-        <Window.Content scrollable>
-          <HolopadContent />
-        </Window.Content>
+        </Modal>
       )}
+      <Window.Content scrollable>
+        <HolopadContent />
+      </Window.Content>
     </Window>
   );
 };
@@ -118,15 +121,13 @@ const HolopadContent = (props, context) => {
                 content={replay_mode ? 'Stop' : 'Replay'}
                 selected={replay_mode}
                 disabled={record_mode || !disk_record}
-                onClick={() => act(replay_mode
-                  ? 'replay_stop'
-                  : 'replay_start')} />
+                onClick={() => act('replay_mode')} />
               <Button
                 icon={'sync'}
                 content={loop_mode ? 'Looping' : 'Loop'}
                 selected={loop_mode}
                 disabled={record_mode || !disk_record}
-                onClick={() => act('loop_change')} />
+                onClick={() => act('loop_mode')} />
               <Button
                 icon="exchange-alt"
                 content="Change Offset"
@@ -139,9 +140,7 @@ const HolopadContent = (props, context) => {
                 content={record_mode ? 'End Recording' : 'Record'}
                 selected={record_mode}
                 disabled={(disk_record && !record_mode) || replay_mode}
-                onClick={() => act(record_mode
-                  ? 'record_stop'
-                  : 'record_start')} />
+                onClick={() => act('record_mode')} />
               <Button
                 icon="trash"
                 content="Clear Recording"

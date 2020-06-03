@@ -59,7 +59,6 @@
 
 	if(!dialed_holopads.len)
 		calling_pad.say("Connection failure.")
-		calling_pad.calling = FALSE
 		qdel(src)
 		return
 
@@ -89,6 +88,7 @@
 	dialed_holopads.Cut()
 
 	if(calling_holopad)
+		calling_holopad.calling = FALSE
 		calling_holopad.outgoing_call = null
 		calling_holopad.SetLightsAndPower()
 		calling_holopad = null
@@ -117,7 +117,6 @@
 	if(H == connected_holopad || H == calling_holopad)
 		if(!graceful && H != calling_holopad)
 			calling_holopad.say("Connection failure.")
-		H.calling = FALSE
 		qdel(src)
 		return
 
@@ -127,7 +126,6 @@
 		if(graceful)
 			calling_holopad.say("Call rejected.")
 		testing("No recipients, terminating")
-		H.calling = FALSE
 		qdel(src)
 
 //Answers a call made to a holopad `H` which cannot be the calling holopad. Pads not in the call are ignored
@@ -196,7 +194,6 @@
 
 	if(!.)
 		testing("Holocall Check fail")
-		calling_holopad.calling = FALSE
 		qdel(src)
 
 /datum/action/innate/end_holocall

@@ -202,8 +202,6 @@ obj/machinery/holopad/secure/Initialize()
 	return ..()
 
 /obj/machinery/holopad/ui_status(mob/user)
-	if(user.incapacitated())
-		return UI_CLOSE
 	if(!is_operational())
 		return UI_CLOSE
 	if(outgoing_call && !calling)
@@ -254,10 +252,10 @@ obj/machinery/holopad/secure/Initialize()
 					if(!AI.client)
 						continue
 					to_chat(AI, "<span class='info'>Your presence is requested at <a href='?src=[REF(AI)];jumptoholopad=[REF(src)]'>\the [area]</a>.</span>")
+				return TRUE
 			else
 				to_chat(usr, "<span class='info'>A request for AI presence was already sent recently.</span>")
 				return
-			return TRUE
 		if("holocall")
 			if(outgoing_call)
 				return
@@ -276,7 +274,7 @@ obj/machinery/holopad/secure/Initialize()
 					var/headcall = input == 1 ? TRUE : FALSE
 					new /datum/holocall(usr, src, callnames[result], headcall)
 					calling = TRUE
-				return TRUE
+					return TRUE
 			else
 				to_chat(usr, "<span class='warning'>You must stand on the holopad to make a call!</span>")
 		if("connectcall")
@@ -294,21 +292,23 @@ obj/machinery/holopad/secure/Initialize()
 				disk.forceMove(drop_location())
 				disk = null
 				return TRUE
-		if("replay_stop")
-			replay_stop()
-			return TRUE
-		if("replay_start")
-			replay_start()
-			return TRUE
-		if("loop_change")
+		if("replay_mode")
+			if(replay_mode)
+				replay_stop()
+				return TRUE
+			else
+				replay_start()
+				return TRUE
+		if("loop_mode")
 			loop_mode = !loop_mode
 			return TRUE
-		if("record_start")
-			record_start(usr)
-			return TRUE
-		if("record_stop")
-			record_stop()
-			return TRUE
+		if("record_mode")
+			if(record_mode)
+				record_stop()
+				return TRUE
+			else
+				record_start(usr)
+				return TRUE
 		if("record_clear")
 			record_clear()
 			return TRUE
