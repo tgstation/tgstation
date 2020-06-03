@@ -565,7 +565,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	reloadAllCardFiles(SStrading_card_game.card_files, SStrading_card_game.card_directory)
 
 /client/proc/validate_cards()
-	set name = "Validate Cardpacks"
+	set name = "Validate Cards"
 	set category = "Debug"
 	if(!check_rights(R_DEBUG))
 		return
