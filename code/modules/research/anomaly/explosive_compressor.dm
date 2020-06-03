@@ -12,6 +12,7 @@
 	desc = "An advanced machine capable of implosion-compressing raw anomaly cores into finished artifacts."
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "explosive_compressor"
+	density = TRUE
 
 	/// The raw core inserted in the machine.
 	var/obj/item/raw_anomaly_core/inserted_core
@@ -81,7 +82,16 @@
 
 /obj/machinery/research/explosive_compressor/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
-	if(istype(I, /obj/item/transfer_valve))
+	if(istype(I, /obj/item/raw_anomaly_core))
+		if(inserted_core)
+			to_chat(user, "<span class='warning'>There is already a core in [src].</span>")
+			return
+		if(!user.transferItemToLoc(I, src))
+			to_chat(user, "<span class='warning'>[I] is stuck to your hand.</span>")
+			return
+		inserted_core = I
+		to_chat(user, "<span class='notice'>You insert [I] into [src].</span>")
+	else if(istype(I, /obj/item/transfer_valve))
 		// If they don't have a bomb core inserted, don't let them insert this. If they do, insert and do implosion.
 		if(!inserted_core)
 			to_chat(user, "<span class='warning'>There is no core inserted in [src]. What would be the point of detonating an implosion without a core?</span>")
@@ -94,6 +104,7 @@
 			to_chat(user, "<span class='warning'>[I] is stuck to your hand.</span>")
 			return
 		inserted_bomb = I
+		to_chat(user, "<span class='notice'>You insert [I] and press the start button.</span>")
 		do_implosion()
 
 /**
