@@ -30,6 +30,54 @@
 	if(ishumanbasic(H) || isfelinid(H))
 		H.remove_language(/datum/language/uncommon)
 
+/datum/quirk/unintelligible
+	name = "Unintelligible"
+	desc = "You can't speak properly!"
+	value = 0
+	gain_text = null // mutation handles it
+	lose_text = null
+	medical_record_text = "Patient has distorted speech."
+
+/datum/quirk/unintelligible/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.dna.add_mutation(UNINTELLIGIBLE)
+
+/datum/quirk/unintelligible/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.dna.remove_mutation(UNINTELLIGIBLE)
+
+/datum/quirk/swedish
+	name = "Swedish"
+	desc = "You have a cool accent!"
+	value = 0
+	gain_text = null // mutation handles it
+	lose_text = null
+	medical_record_text = "Patient has a Swedish accent."
+
+/datum/quirk/swedish/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.dna.add_mutation(SWEDISH)
+
+/datum/quirk/swedish/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.dna.remove_mutation(SWEDISH)
+
+/datum/quirk/chav
+	name = "Chav"
+	desc = "You have a cool accent!"
+	value = 0
+	gain_text = null // mutation handles it
+	lose_text = null
+	medical_record_text = "Patient speaks like a Chav."
+
+/datum/quirk/chav/add()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.dna.add_mutation(CHAV)
+
+/datum/quirk/chav/remove()
+	var/mob/living/carbon/human/H = quirk_holder
+	H.dna.remove_mutation(CHAV)
+
 /datum/quirk/vegetarian
 	name = "Vegetarian"
 	desc = "You find the idea of eating meat morally and physically repulsive."
