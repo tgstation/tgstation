@@ -82,7 +82,7 @@ Note: If your code uses output() with assets you will need to call asset_flush o
 
 //This proc "registers" an asset, it adds it to the cache for further use, you cannot touch it from this point on or you'll fuck things up.
 //icons and virtual assets get copied to the dyn rsc before use
-/proc/register_asset(asset_name, asset)
+/proc/register_asset(asset_name, asset, log_dupes = TRUE)
 	var/datum/asset_cache_item/ACI = new(asset_name, asset)
 	
 	//this is technically never something that was supported and i want metrics on how often it happens if at all.
@@ -90,7 +90,7 @@ Note: If your code uses output() with assets you will need to call asset_flush o
 		var/datum/asset_cache_item/OACI = SSassets.cache[asset_name]
 		if (OACI.md5 != ACI.md5)
 			stack_trace("ERROR: new asset added to the asset cache with the same name as another asset: [asset_name] existing asset md5: [OACI.md5] new asset md5:[ACI.md5]")
-		else
+		else if(log_dupes)
 			var/list/stacktrace = gib_stack_trace()
 			log_asset("WARNING: dupe asset added to the asset cache: [asset_name] existing asset md5: [OACI.md5] new asset md5:[ACI.md5]\n[stacktrace.Join("\n")]")
 	SSassets.cache[asset_name] = ACI
