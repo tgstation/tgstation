@@ -250,17 +250,17 @@
 /obj/item/crusher_trophy/broodmother_tongue/attack_self(mob/user)
 	if(!isliving(user))
 		return
-	var/mob/living/L = user
+	var/mob/living/living_user = user
 	if(use_time > world.time)
-		to_chat(L, "<b>The tongue looks dried out. You'll need to wait longer to use it again.</b>")
+		to_chat(living_user, "<b>The tongue looks dried out. You'll need to wait longer to use it again.</b>")
 		return
-	else if("lava" in L.weather_immunities)
-		to_chat(L, "<b>You stare at the tongue. You don't think this is any use to you.</b>")
+	else if("lava" in living_user.weather_immunities)
+		to_chat(living_user, "<b>You stare at the tongue. You don't think this is any use to you.</b>")
 		return
-	L.weather_immunities |= "lava"
-	to_chat(L, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
-	addtimer(CALLBACK(src, .proc/remove_lavaproofing, L), 100)
+	living_user.weather_immunities |= "lava"
+	to_chat(living_user, "<b>You squeeze the tongue, and some transluscent liquid shoots out all over you.</b>")
+	addtimer(CALLBACK(src, .proc/remove_lavaproofing, living_user), 10 SECONDS)
 	use_time = world.time + 60 SECONDS
 	
-/obj/item/crusher_trophy/broodmother_tongue/proc/remove_lavaproofing(mob/living/L)
-	L.weather_immunities -= "lava"
+/obj/item/crusher_trophy/broodmother_tongue/proc/remove_lavaproofing(mob/living/user)
+	user.weather_immunities -= "lava"
