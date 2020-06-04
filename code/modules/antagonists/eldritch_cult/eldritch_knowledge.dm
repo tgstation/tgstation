@@ -176,6 +176,7 @@
 	var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [initial(mob_to_summon.real_name)]", ROLE_HERETIC, null, ROLE_HERETIC, 50,initial(mob_to_summon))
 	if(!LAZYLEN(candidates))
 		to_chat(user,"<span class='warning'>No ghost could be found...</span>")
+		atoms = list()
 		return
 	var/mob/living/summoned = new mob_to_summon(loc)
 	var/mob/dead/observer/C = pick(candidates)

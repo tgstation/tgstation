@@ -241,10 +241,10 @@
 	user.SetImmobilized(10 HOURS) // no way someone will stand 10 hours in a spot, just so he can move while the alert is still showing.
 	switch(alert_)
 		if("No")
-
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy(loc)
 			message_admins("[summoned.name] is being summoned by [user.real_name] in [loc]")
 			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_HERETIC, null, ROLE_HERETIC, 50,summoned)
+			user.SetImmobilized(0)
 			if(!LAZYLEN(candidates))
 				return
 			var/mob/dead/observer/ghost_candidate = pick(candidates)
@@ -252,9 +252,6 @@
 			log_game("[key_name_admin(ghost_candidate)] has taken control of ([key_name_admin(summoned)]).")
 			summoned.ghostize(FALSE)
 			summoned.key = ghost_candidate.key
-			user.SetImmobilized(0)
-
-
 			to_chat(summoned,"<span class='warning'>You are bound to [user.real_name]'s' will! Don't let your master die, protect him at all cost!</span>")
 		if("Yes")
 			var/mob/living/summoned = new /mob/living/simple_animal/hostile/eldritch/armsy/prime(loc,spawn_more = TRUE,len = 10)

@@ -108,7 +108,7 @@
 /**
   * Automatically fixes the target and smash network
   *
-  * Fixes any bugs that are caused by late Generate()
+  * Fixes any bugs that are caused by late Generate() or exchanging clients
   */
 /datum/reality_smash_tracker/proc/ReworkNetwork()
 	for(var/mind in targets)
@@ -138,6 +138,7 @@
   * Use this whenever you want to add someone to the list
   */
 /datum/reality_smash_tracker/proc/AddMind(var/datum/mind/M)
+	RegisterSignal(M.current,COMSIG_MOB_LOGIN,.proc/ReworkNetwork)
 	targets |= M
 	for(var/X in smashes)
 		var/obj/effect/reality_smash/reality_smash = X

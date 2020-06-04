@@ -302,35 +302,40 @@
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REPLACE
 	alert_type = null
+	on_remove_on_mob_delete = TRUE
 	///underlay used to indicate that someone is marked
 	var/mutable_appearance/marked_underlay
 	///path for the underlay
 	var/effect_sprite = ""
 
 /datum/status_effect/eldritch/on_apply()
+	marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_MOB_LAYER)
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
-		marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_OBJ_LAYER)
-		owner.add_overlay(marked_underlay)
+		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
+		owner.update_icon()
 		return TRUE
 	return FALSE
 
+/datum/status_effect/eldritch/on_remove()
+	UnregisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS)
+	owner.update_icon()
+	return ..()
+
+/datum/status_effect/eldritch/proc/update_owner_underlay(atom/source, list/overlays)
+	overlays += marked_underlay
+
+/datum/status_effect/eldritch/Destroy()
+	QDEL_NULL(marked_underlay)
+	return ..()
+
 /**
-  * What happens when this mark gets popped
+  * What happens when this mark gets poppedd
   *
   * Adds actual functionality to each mark
   */
 /datum/status_effect/eldritch/proc/on_effect()
 	playsound(owner, 'sound/magic/repulse.ogg', 75, TRUE)
 	qdel(src) //what happens when this is procced.
-
-/datum/status_effect/eldritch/Destroy()
-	owner.cut_overlay(marked_underlay)
-	QDEL_NULL(marked_underlay)
-	return ..()
-
-/datum/status_effect/eldritch/be_replaced()
-	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
-	return ..()
 
 //Each mark has diffrent effects when it is destroyed that combine with the mansus grasp effect.
 /datum/status_effect/eldritch/flesh
