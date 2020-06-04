@@ -188,8 +188,6 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	. = ..()
 	if(istype(I, /obj/item/organ/regenerative_core) && activity == TUMOR_INACTIVE && !boosted)
 		var/obj/item/organ/regenerative_core/core = I
-		if(!core.preserved)
-			return
 		visible_message("<span class='boldwarning'>As [user] drops the core into [src], [src] appears to swell.</span>")
 		icon_state = "advanced_tumor"
 		boosted = TRUE

@@ -309,7 +309,7 @@
 	denied_type = /obj/item/crusher_trophy/legionnaire_spine
 	bonus_value = 20
 	/// Time at which the item becomes usable again
-	var/use_time
+	var/next_use_time
 
 /obj/item/crusher_trophy/legionnaire_spine/effect_desc()
 	return "mark detonation to have a <b>[bonus_value]%</b> chance to summon a loyal legion skull"
@@ -325,13 +325,13 @@
 /obj/item/crusher_trophy/legionnaire_spine/attack_self(mob/user)
 	if(!isliving(user))
 		return
-	var/mob/living/L = user
-	if(use_time > world.time)
-		L.visible_message("<span class='warning'>[L] shakes the [src], but nothing happens...</span>")
-		to_chat(L, "<b>You need to wait longer to use this again.</b>")
+	var/mob/living/LivingUser = user
+	if(next_use_time > world.time)
+		LivingUser.visible_message("<span class='warning'>[LivingUser] shakes the [src], but nothing happens...</span>")
+		to_chat(LivingUser, "<b>You need to wait longer to use this again.</b>")
 		return
-	L.visible_message("<span class='boldwarning'>[L] shakes the [src] and summons a legion skull!</span>")
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(L.loc)
-	A.friends += L
-	A.faction = L.faction.Copy()
-	use_time = world.time + 4 SECONDS
+	LivingUser.visible_message("<span class='boldwarning'>[LivingUser] shakes the [src] and summons a legion skull!</span>")
+	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/LegionSkull = new /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion(LivingUser.loc)
+	LegionSkull.friends += LivingUser
+	LegionSkull.faction = LivingUser.faction.Copy()
+	next_use_time = world.time + 4 SECONDS
