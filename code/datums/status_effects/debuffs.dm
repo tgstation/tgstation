@@ -308,8 +308,11 @@
 	///path for the underlay
 	var/effect_sprite = ""
 
-/datum/status_effect/eldritch/on_apply()
+/datum/status_effect/eldritch/on_creation(mob/living/new_owner, ...)
 	marked_underlay = mutable_appearance('icons/effects/effects.dmi', effect_sprite,BELOW_MOB_LAYER)
+	return ..()
+
+/datum/status_effect/eldritch/on_apply()
 	if(owner.mob_size >= MOB_SIZE_HUMAN)
 		RegisterSignal(owner,COMSIG_ATOM_UPDATE_OVERLAYS,.proc/update_owner_underlay)
 		owner.update_icon()
