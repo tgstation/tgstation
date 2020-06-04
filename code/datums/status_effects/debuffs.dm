@@ -377,8 +377,8 @@
 	var/mob/living/carbon/carbon_owner = owner
 	for(var/obj/item/I in carbon_owner.get_all_gear())
 		//Affects roughly 75% of items
-		if(!QDELETED(I)) //Just in case
-			I.take_damage(100 * prob(75))
+		if(!QDELETED(I) && prob(75)) //Just in case
+			I.take_damage(100)
 	return ..()
 
 /datum/status_effect/stacking/saw_bleed

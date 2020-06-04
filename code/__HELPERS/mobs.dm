@@ -602,5 +602,3 @@ GLOBAL_LIST_EMPTY(species_list)
 		else
 			. = pick(ais)
 	return .
-
-

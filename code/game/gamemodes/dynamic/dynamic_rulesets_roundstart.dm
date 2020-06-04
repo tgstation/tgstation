@@ -174,11 +174,11 @@
 	GLOB.reality_smash_track.Generate(num_ecult)
 
 	for (var/i = 1 to num_ecult)
-		var/mob/M = pick_n_take(candidates)
-		assigned += M.mind
-		M.mind.restricted_roles = restricted_roles
-		M.mind.special_role = ROLE_HERETIC
-		GLOB.pre_setup_antags += M.mind
+		var/mob/picked_candidate = pick_n_take(candidates)
+		assigned += picked_candidate.mind
+		picked_candidate.mind.restricted_roles = restricted_roles
+		picked_candidate.mind.special_role = ROLE_HERETIC
+		GLOB.pre_setup_antags += picked_candidate.mind
 	return TRUE
 
 /datum/dynamic_ruleset/roundstart/e_cult/execute()

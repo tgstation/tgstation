@@ -83,24 +83,24 @@
 	. = ..()
 	if(!ishuman(target))
 		return
-	var/mob/living/carbon/human/H = target
-	var/datum/status_effect/eldritch/E = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)
-	if(E)
-		E.on_effect()
-		H.bleed_rate += 5
+	var/mob/living/carbon/human/human_target = target
+	var/datum/status_effect/eldritch/eldritch_effect = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)
+	if(eldritch_effect)
+		eldritch_effect.on_effect()
+		human_target.bleed_rate += 5
 
-	if(H.stat != DEAD)
+	if(human_target.stat != DEAD)
 		to_chat(user, "<span class='warning'>This spell can only affect the dead!</span>")
 		return
 
-	H.grab_ghost()
+	human_target.grab_ghost()
 
-	if(!H.mind || !H.client)
+	if(!human_target.mind || !human_target.client)
 		to_chat(user, "<span class='warning'>There is no soul connected to this body...</span>")
 		return
 
 	check_ghouls(user)
-	if(HAS_TRAIT(H,TRAIT_HUSK))
+	if(HAS_TRAIT(human_target, TRAIT_HUSK))
 		to_chat(user, "<span class='warning'>You cannot revive a dead ghoul!</span>")
 		return
 
@@ -108,32 +108,32 @@
 		to_chat(user, "<span class='warning'>Your patron cannot support more ghouls on this plane!</span>")
 		return
 
-	LAZYADD(spooky_scaries,H)
-	log_game("[key_name_admin(H)] has become a ghoul, their master is [user.real_name]")
+	LAZYADD(spooky_scaries, human_target)
+	log_game("[key_name_admin(human_target)] has become a ghoul, their master is [user.real_name]")
 
 
-	H.revive(full_heal = TRUE, admin_revive = TRUE)
-	H.setMaxHealth(25)
-	H.health = 25
-	H.become_husk()
-	H.faction |= "e_cult"
-	H.fully_replace_character_name(H.real_name,"Ghouled [H.real_name]")
-	to_chat(H, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(H, "<span class='big bold'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
+	human_target.revive(full_heal = TRUE, admin_revive = TRUE)
+	human_target.setMaxHealth(25)
+	human_target.health = 25
+	human_target.become_husk()
+	human_target.faction |= "e_cult"
+	human_target.fully_replace_character_name(H.real_name,"Ghouled [human_target.real_name]")
+	to_chat(human_target, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
+	to_chat(human_target, "<span class='big bold'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
 	return
 
 /datum/eldritch_knowledge/flesh_grasp/proc/check_ghouls(mob/user)
 	if(LAZYLEN(spooky_scaries) == 0)
 		return
 
-	for(var/X in spooky_scaries)
-		if(!ishuman(X))
-			LAZYREMOVE(spooky_scaries,X)
+	for(var/spook in spooky_scaries)
+		if(!ishuman(spook))
+			LAZYREMOVE(spooky_scaries, spook)
 			continue
-		var/mob/living/carbon/human/H = X
-		if(H.stat == DEAD)
-			to_chat(H, "<span class='big bold'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
-			LAZYREMOVE(spooky_scaries,X)
+		var/mob/living/carbon/human/ghoul = spook
+		if(ghoul.stat == DEAD)
+			to_chat(ghoul, "<span class='big bold'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
+			LAZYREMOVE(spooky_scaries, spook)
 			continue
 
 	listclearnulls(spooky_scaries)
@@ -149,9 +149,9 @@
 
 /datum/eldritch_knowledge/flesh_mark/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(istype(target,/mob/living))
-		var/mob/living/L = target
-		L.apply_status_effect(/datum/status_effect/eldritch/flesh)
+	if(isliving(target))
+		var/mob/living/living_target = target
+		living_target.apply_status_effect(/datum/status_effect/eldritch/flesh)
 
 /datum/eldritch_knowledge/flesh_blade_upgrade
 	name = "Bleeding Steel"
@@ -165,9 +165,9 @@
 /datum/eldritch_knowledge/flesh_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(ishuman(target))
-		var/mob/living/carbon/human/C = target
-		C.bleed_rate += 3
-		C.blood_volume -= 10
+		var/mob/living/carbon/human/carbon_target = target
+		carbon_target.bleed_rate += 3
+		carbon_target.blood_volume -= 10
 
 /datum/eldritch_knowledge/summon/raw_prophet
 	name = "Raw Ritual"
@@ -247,11 +247,11 @@
 			var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [summoned.real_name]", ROLE_HERETIC, null, ROLE_HERETIC, 50,summoned)
 			if(!LAZYLEN(candidates))
 				return
-			var/mob/dead/observer/C = pick(candidates)
+			var/mob/dead/observer/ghost_candidate = pick(candidates)
 			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for vassal of arms has ascended! Terror of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
-			log_game("[key_name_admin(C)] has taken control of ([key_name_admin(summoned)]).")
-			summoned.ghostize(0)
-			summoned.key = C.key
+			log_game("[key_name_admin(ghost_candidate)] has taken control of ([key_name_admin(summoned)]).")
+			summoned.ghostize(FALSE)
+			summoned.key = ghost_candidate.key
 			user.SetImmobilized(0)
 
 
@@ -262,7 +262,7 @@
 			user.SetImmobilized(0)
 			priority_announce("$^@&#*$^@(#&$(@&#^$&#^@# Fear the dark, for king of arms has ascended! Lord of the night has come! $^@&#*$^@(#&$(@&#^$&#^@#","#$^@&#*$^@(#&$(@&#^$&#^@#", 'sound/ai/spanomalies.ogg')
 			log_game("[user.real_name] ascended as [summoned.real_name]")
-			var/mob/living/carbon/C = user
-			C.mind.transfer_to(summoned,TRUE)
-			C.gib()
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.mind.transfer_to(summoned, TRUE)
+			carbon_user.gib()
 	return ..()

@@ -49,15 +49,15 @@
 
 /datum/eldritch_knowledge/rust_regen/on_life(mob/user)
 	. = ..()
-	var/turf/T = get_turf(user)
-	if(!istype(T,/turf/open/floor/plating/rust) || !isliving(user))
+	var/turf/user_loc_turf = get_turf(user)
+	if(!istype(user_loc_turf, /turf/open/floor/plating/rust) || !isliving(user))
 		return
-	var/mob/living/L = user
-	L.adjustBruteLoss(-2, FALSE)
-	L.adjustFireLoss(-2, FALSE)
-	L.adjustToxLoss(-2, FALSE)
-	L.adjustOxyLoss(-0.5, FALSE)
-	L.adjustStaminaLoss(-2)
+	var/mob/living/living_user = user
+	living_user.adjustBruteLoss(-2, FALSE)
+	living_user.adjustFireLoss(-2, FALSE)
+	living_user.adjustToxLoss(-2, FALSE)
+	living_user.adjustOxyLoss(-0.5, FALSE)
+	living_user.adjustStaminaLoss(-2)
 
 /datum/eldritch_knowledge/rust_mark
 	name = "Mark of Rust"
@@ -70,9 +70,9 @@
 
 /datum/eldritch_knowledge/rust_mark/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(istype(target,/mob/living))
-		var/mob/living/L = target
-		L.apply_status_effect(/datum/status_effect/eldritch/rust)
+	if(isliving(target))
+		var/mob/living/living_target = target
+		living_target.apply_status_effect(/datum/status_effect/eldritch/rust)
 
 /datum/eldritch_knowledge/rust_blade_upgrade
 	name = "Toxic blade"
@@ -86,8 +86,8 @@
 /datum/eldritch_knowledge/rust_blade_upgrade/on_eldritch_blade(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
 	if(iscarbon(target))
-		var/mob/living/carbon/C = target
-		C.reagents.add_reagent(/datum/reagent/toxin,5)
+		var/mob/living/carbon/carbon_target = target
+		carbon_target.reagents.add_reagent(/datum/reagent/toxin, 5)
 
 /datum/eldritch_knowledge/spell/rust_wave
 	name = "Wave of Rust"
@@ -152,12 +152,12 @@
 	. = ..()
 	if(!finished)
 		return
-	var/mob/living/carbon/human/H = user
-	H.adjustBruteLoss(-3, FALSE)
-	H.adjustFireLoss(-3, FALSE)
-	H.adjustToxLoss(-3, FALSE)
-	H.adjustOxyLoss(-1, FALSE)
-	H.adjustStaminaLoss(-10)
+	var/mob/living/carbon/human/human_user = user
+	human_user.adjustBruteLoss(-3, FALSE)
+	human_user.adjustFireLoss(-3, FALSE)
+	human_user.adjustToxLoss(-3, FALSE)
+	human_user.adjustOxyLoss(-1, FALSE)
+	human_user.adjustStaminaLoss(-10)
 
 
 /**
@@ -176,9 +176,9 @@
 
 /datum/rust_spread/New(loc)
 	. = ..()
-	var/turf/T = get_turf(loc)
-	T.rust_heretic_act()
-	turfs += T
+	var/turf/turf_loc = get_turf(loc)
+	turf_loc.rust_heretic_act()
+	turfs += turf_loc
 	START_PROCESSING(SSprocessing,src)
 
 

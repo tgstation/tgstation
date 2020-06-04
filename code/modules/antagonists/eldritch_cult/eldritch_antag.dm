@@ -155,9 +155,10 @@
 	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
 
-	if(objectives.len)
+	if(length(objectives))
 		var/count = 1
-		for(var/datum/objective/objective in objectives)
+		for(var/o in objectives)
+			var/datum/objective/objective = o
 			if(objective.check_completion())
 				parts += "<b>Objective #[count]</b>: [objective.explanation_text] <span class='greentext'>Success!</b></span>"
 			else
@@ -223,7 +224,7 @@
 	var/timer = 5 MINUTES
 
 /datum/objective/stalk/update_explanation_text()
-	timer += pick(-3 MINUTES, 3 MINUTES)
+	timer += rand(-3 MINUTES, 3 MINUTES)
 	if(target?.current)
 		explanation_text = "Stalk [target.name] for at least [DisplayTimeText(timer)] while they're alive."
 	else

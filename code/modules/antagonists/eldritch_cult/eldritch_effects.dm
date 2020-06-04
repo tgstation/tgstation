@@ -13,7 +13,7 @@
 	try_activate(user)
 
 /obj/effect/eldritch/proc/try_activate(mob/living/user)
-	if(! IS_HERETIC(user) )
+	if(!IS_HERETIC(user))
 		return
 	activate(user)
 
@@ -28,7 +28,8 @@
 	var/list/knowledge = cultie.get_all_knowledge()
 	var/list/atoms_in_range = list()
 
-	for(var/atom/atom_in_range in range(1,src))
+	for(var/a in range(1, src))
+		atom/atom_in_range = a
 		if(istype(atom_in_range,/mob/living))
 			var/mob/living/living_in_range = atom_in_range
 			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
@@ -102,7 +103,7 @@
 		qdel(X)
 	for(var/Y in targets)
 		targets -= Y
-	. = ..()
+	return ..()
 
 /**
   * Automatically fixes the target and smash network
@@ -181,8 +182,9 @@
 
 /obj/effect/reality_smash/Destroy()
 
-	for(var/datum/mind/cultie in minds)
-		if(cultie && cultie.current && cultie.current.client)
+	for(var/cm in minds)
+		var/datum/mind/cultie = cm
+		if(cultie.current?.client)
 			cultie.current.client.images -= img
 		//clear the list
 		minds -= cultie
