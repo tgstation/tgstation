@@ -36,7 +36,7 @@
 	stamina = 30
 	armour_penetration = -30
 	ricochets_max = 6
-	ricochet_incidence_leeway = 70
+	ricochet_incidence_leeway = 0
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.8
 	shrapnel_type = NONE

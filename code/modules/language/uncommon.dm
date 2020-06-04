@@ -1,9 +1,6 @@
 /datum/language/uncommon
 	name = "Galactic Uncommon"
 	desc = "The second-most spoken Human language."
-	speech_verb = "says"
-	whisper_verb = "whispers"
-	sing_verb = "sings"
 	key = "!"
 	flags = TONGUELESS_SPEECH
 	space_chance = 50
