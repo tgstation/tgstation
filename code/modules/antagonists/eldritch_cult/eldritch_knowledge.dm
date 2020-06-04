@@ -143,11 +143,11 @@
 
 	var/list/compiled_list = list()
 
-	for(var/h in GLOB.human_list)
-		var/mob/living/carbon/human/human_to_check = h
-		if(fingerprints[md5(H.dna.uni_identity)])
-			compiled_list |= H.real_name
-			compiled_list[H.real_name] = H
+	for(var/H in GLOB.human_list)
+		var/mob/living/carbon/human/human_to_check = H
+		if(fingerprints[md5(human_to_check.dna.uni_identity)])
+			compiled_list |= human_to_check.real_name
+			compiled_list[human_to_check.real_name] = human_to_check
 
 	if(compiled_list.len == 0)
 		to_chat(user, "<span class='warning'>The items don't posses required fingerprints.</span>")

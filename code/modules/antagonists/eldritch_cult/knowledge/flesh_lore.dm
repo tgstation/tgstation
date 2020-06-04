@@ -84,7 +84,7 @@
 	if(!ishuman(target))
 		return
 	var/mob/living/carbon/human/human_target = target
-	var/datum/status_effect/eldritch/eldritch_effect = H.has_status_effect(/datum/status_effect/eldritch/rust) || H.has_status_effect(/datum/status_effect/eldritch/ash) || H.has_status_effect(/datum/status_effect/eldritch/flesh)
+	var/datum/status_effect/eldritch/eldritch_effect = human_target.has_status_effect(/datum/status_effect/eldritch/rust) || human_target.has_status_effect(/datum/status_effect/eldritch/ash) || human_target.has_status_effect(/datum/status_effect/eldritch/flesh)
 	if(eldritch_effect)
 		eldritch_effect.on_effect()
 		human_target.bleed_rate += 5
@@ -117,7 +117,7 @@
 	human_target.health = 25
 	human_target.become_husk()
 	human_target.faction |= "e_cult"
-	human_target.fully_replace_character_name(H.real_name,"Ghouled [human_target.real_name]")
+	human_target.fully_replace_character_name(human_target.real_name,"Ghouled [human_target.real_name]")
 	to_chat(human_target, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
 	to_chat(human_target, "<span class='big bold'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
 	return

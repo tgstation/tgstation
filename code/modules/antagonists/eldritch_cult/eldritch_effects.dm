@@ -29,7 +29,7 @@
 	var/list/atoms_in_range = list()
 
 	for(var/a in range(1, src))
-		atom/atom_in_range = a
+		var/atom/atom_in_range = a
 		if(istype(atom_in_range,/mob/living))
 			var/mob/living/living_in_range = atom_in_range
 			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
