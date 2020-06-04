@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - code_imp: "Removed some dead unused code in languages."
