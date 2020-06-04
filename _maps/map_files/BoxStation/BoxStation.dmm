@@ -1881,7 +1881,6 @@
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "afr" = (
-/obj/structure/cable,
 /obj/machinery/flasher{
 	id = "AI";
 	pixel_x = 32;
@@ -1891,6 +1890,7 @@
 	name = "AI Core Door";
 	req_access_txt = "16"
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "afs" = (
@@ -23787,6 +23787,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/circuit,
 /area/ai_monitored/turret_protected/ai)
 "bsf" = (
@@ -37254,13 +37255,13 @@
 /area/maintenance/starboard/aft)
 "chE" = (
 /obj/structure/disposalpipe/segment,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/manifold/scrubbers/hidden/layer1{
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 8
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "chH" = (
@@ -38802,7 +38803,6 @@
 /turf/open/space,
 /area/solar/starboard/aft)
 "cpq" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -38924,7 +38924,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 4
 	},
-/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "cpX" = (
@@ -39664,7 +39663,6 @@
 /obj/machinery/ai_slipper{
 	uses = 10
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -40311,6 +40309,7 @@
 	uses = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "cBa" = (
@@ -42635,6 +42634,13 @@
 /obj/machinery/chem_heater,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"dkI" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
+/obj/structure/cable,
+/turf/open/floor/plasteel,
+/area/engine/engineering)
 "dlg" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -43098,7 +43104,6 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "dTe" = (
-/obj/structure/cable,
 /obj/machinery/firealarm{
 	dir = 1;
 	pixel_y = -24
@@ -43110,6 +43115,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "dUO" = (
@@ -43500,6 +43506,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 5
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "eIE" = (
@@ -43520,7 +43527,6 @@
 /turf/open/floor/wood,
 /area/crew_quarters/dorms)
 "eJx" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 9
 	},
@@ -45497,7 +45503,6 @@
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -45610,7 +45615,6 @@
 	name = "Gravity Generator";
 	req_access_txt = "11"
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -45866,10 +45870,6 @@
 /area/security/brig)
 "iUz" = (
 /obj/structure/chair/office/light,
-/turf/open/floor/plasteel,
-/area/engine/gravity_generator)
-"iXH" = (
-/obj/machinery/power/terminal,
 /obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
@@ -46203,6 +46203,7 @@
 /obj/structure/table,
 /obj/item/paper/guides/jobs/engi/gravity_gen,
 /obj/item/pen/blue,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jCq" = (
@@ -46222,18 +46223,21 @@
 /obj/machinery/power/smes{
 	charge = 5e+006
 	},
-/obj/structure/cable,
 /obj/machinery/camera{
 	c_tag = "Gravity Generator Room Main";
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jDf" = (
-/obj/structure/table,
 /obj/item/radio/intercom{
 	pixel_y = -35
 	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plasteel,
 /area/engine/gravity_generator)
 "jEy" = (
@@ -46659,6 +46663,10 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
+"kzm" = (
+/obj/structure/cable,
+/turf/closed/wall,
+/area/ai_monitored/turret_protected/ai)
 "kzT" = (
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 6
@@ -47287,7 +47295,6 @@
 /turf/open/floor/plasteel/white,
 /area/science/mixing)
 "lME" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -48877,7 +48884,6 @@
 /obj/machinery/status_display/ai{
 	pixel_x = 32
 	},
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
@@ -49474,6 +49480,7 @@
 /area/ai_monitored/storage/eva)
 "qbd" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "qbW" = (
@@ -50186,7 +50193,6 @@
 /turf/open/floor/plasteel,
 /area/science/lab)
 "rKL" = (
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
@@ -51317,13 +51323,13 @@
 /turf/open/floor/plasteel/freezer,
 /area/security/prison/safe)
 "uch" = (
-/obj/structure/cable,
 /obj/machinery/light{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer3{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "ucw" = (
@@ -51359,6 +51365,7 @@
 	pixel_x = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
+/obj/structure/cable,
 /turf/open/floor/plasteel/dark,
 /area/ai_monitored/turret_protected/ai)
 "uea" = (
@@ -76093,7 +76100,7 @@ gny
 hcj
 hES
 ijf
-iXH
+jaN
 jCE
 mzQ
 jUd
@@ -78661,7 +78668,7 @@ cfe
 cfD
 iQF
 chE
-iQF
+dkI
 gwO
 cji
 cDZ
@@ -82209,7 +82216,7 @@ bfv
 bii
 bii
 dPQ
-tsX
+kzm
 tsX
 tsX
 afq
