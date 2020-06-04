@@ -873,7 +873,7 @@
 	..()
 	shatter()
 
-/obj/item/light/attack_obj(obj/O, mob/living/user)
+/obj/item/light/attack_atom(atom/O, mob/living/user)
 	..()
 	shatter()
 

@@ -33,7 +33,7 @@
 	if(cell && !(. & EMP_PROTECT_CONTENTS))
 		cell.emp_act(severity)
 
-/obj/item/inducer/attack_obj(obj/O, mob/living/carbon/user)
+/obj/item/inducer/attack_atom(atom/O, mob/living/carbon/user)
 	if(user.a_intent == INTENT_HARM)
 		return ..()
 

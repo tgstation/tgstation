@@ -361,7 +361,7 @@
 			return ..()
 	return
 
-/obj/item/gun/attack_obj(obj/O, mob/user)
+/obj/item/gun/attack_atom(atom/O, mob/user)
 	if(user.a_intent == INTENT_HARM)
 		if(bayonet)
 			O.attackby(bayonet, user)

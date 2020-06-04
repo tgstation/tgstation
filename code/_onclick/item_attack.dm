@@ -50,13 +50,14 @@
   *
   * See: [/obj/item/proc/melee_attack_chain]
   */
-/atom/proc/attackby(obj/item/W, mob/user, params)
-	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, W, user, params) & COMPONENT_NO_AFTERATTACK)
+/atom/proc/attackby(obj/item/I, mob/user, params)
+	if(SEND_SIGNAL(src, COMSIG_PARENT_ATTACKBY, I, user, params) & COMPONENT_NO_AFTERATTACK)
 		return TRUE
+	I.attack_atom(src, user)
 	return FALSE
 
 /obj/attackby(obj/item/I, mob/living/user, params)
-	return ..() || ((obj_flags & CAN_BE_HIT) && I.attack_obj(src, user))
+	return ..() || ((obj_flags & CAN_BE_HIT))
 
 /mob/living/attackby(obj/item/I, mob/living/user, params)
 	if(..())
@@ -106,7 +107,7 @@
 
 
 /// The equivalent of the standard version of [/obj/item/proc/attack] but for object targets.
-/obj/item/proc/attack_obj(obj/O, mob/living/user)
+/obj/item/proc/attack_atom(atom/O, mob/living/user)
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_OBJ, O, user) & COMPONENT_NO_ATTACK_OBJ)
 		return
 	if(item_flags & NOBLUDGEON)
@@ -116,8 +117,9 @@
 	O.attacked_by(src, user)
 
 /// Called from [/obj/item/proc/attack_obj] and [/obj/item/proc/attack] if the attack succeeds
-/atom/movable/proc/attacked_by()
-	return
+/atom/proc/attacked_by(obj/item/I, mob/living/user)
+	if(atom_integrity)//atom_integrity is null if not set up
+		take_damage(I.force, I.damtype, "melee", TRUE, user.dir)
 
 /obj/attacked_by(obj/item/I, mob/living/user)
 	if(I.force)
@@ -125,7 +127,7 @@
 					"<span class='danger'>You hit [src] with [I]!</span>", null, COMBAT_MESSAGE_RANGE)
 		//only witnesses close by and the victim see a hit message.
 		log_combat(user, src, "attacked", I)
-	take_damage(I.force, I.damtype, "melee", 1)
+	..()
 
 /mob/living/attacked_by(obj/item/I, mob/living/user)
 	send_item_attack_message(I, user)
