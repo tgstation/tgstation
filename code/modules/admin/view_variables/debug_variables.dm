@@ -16,8 +16,8 @@
 		header = "<li>"
 
 	var/item
-	var/name_part = D ? name : VV_HTML_ENCODE(name)
-	if(level > 0) //handling keys in assoc lists
+	var/name_part = VV_HTML_ENCODE(name)
+	if(level > 0 || islist(D)) //handling keys in assoc lists
 		if(istype(name,/datum))
 			name_part = "<a href='?_src_=vars;[HrefToken()];Vars=[REF(name)]'>[VV_HTML_ENCODE(name)] [REF(name)]</a>"
 		else if(islist(name))
@@ -78,9 +78,9 @@
 
 				items += debug_variable(key, val, level + 1, sanitize = sanitize)
 
-			item = "<a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a><ul>[items.Join()]</ul>"
+			item = "[name_part] = <a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>/list ([L.len])</a><ul>[items.Join()]</ul>"
 		else
-			item = "<a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>[VV_HTML_ENCODE(name)] = /list ([L.len])</a>"
+			item = "[name_part] = <a href='?_src_=vars;[HrefToken()];Vars=[REF(value)]'>/list ([L.len])</a>"
 
 	else if (name in GLOB.bitfields)
 		var/list/flags = list()
