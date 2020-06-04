@@ -10,7 +10,9 @@
 					/obj/item/toy/cards/deck/kotahi = 3,
 					/obj/item/hourglass = 2,
 					/obj/item/instrument/piano_synth/headphones = 4,
-					/obj/item/camera = 3)
+					/obj/item/camera = 3,
+					/obj/item/cardpack/series_one = 10,
+					/obj/item/cardpack/resin = 10)
 	contraband = list(/obj/item/dice/fudge = 9)
 	premium = list(/obj/item/melee/skateboard/pro = 3,
 					/obj/item/melee/skateboard/hoverboard = 1)
