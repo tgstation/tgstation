@@ -1,4 +1,0 @@
-author: "TheChosenEvilOne"
-delete-after: True
-changes: 
-  - bugfix: "Dynamic will no longer give antagonist roles to jobs who shouldn't have them when restricted roles is set in the config."

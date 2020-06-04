@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes: 
-  - rscadd: "Organic Pest Killer is now available in the biogenerator."
-  - bugfix: "Pest Killer and Weed Killer now applies the correct amount of toxicity and doesn't individually harm the plant's health."
-  - tweak: "Pest/Week killer bottles now have a transfer rate of 1 ,2, and 5 units per use, and a max capacity of 30 units."
