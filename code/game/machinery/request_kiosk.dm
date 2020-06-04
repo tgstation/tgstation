@@ -2,7 +2,7 @@
   * A machine that acts basically like a quest board.
   * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
   */
-/obj/machinery/request_kiosk
+/obj/machinery/bounty_board
 	name = "request kiosk"
 	desc = "Alows you to place requests for goods and services across the station, as well as pay those who actually did it."
 	icon = 'icons/obj/terminals.dmi'
@@ -19,12 +19,16 @@
 	///The station request datum being affected by UI actions.
 	var/datum/station_request/active_request
 
-/obj/machinery/request_kiosk/Initialize()
+/obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()
 	if(!request_list)
 		request_list = list()
+	if(building)
+		setDir(ndir)
+		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
+		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
 
-/obj/machinery/request_kiosk/attackby(obj/item/I, mob/living/user, params)
+/obj/machinery/bounty_board/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
 	if(istype(I,/obj/item/card/id))
 		var/obj/item/card/id/current_card = I
@@ -34,7 +38,7 @@
 		else
 			to_chat(user, "There's no account assigned with this ID.")
 			return TRUE
-	if(istype(I, /obj/item/bounty_card))
+	else if(istype(I, /obj/item/bounty_card))
 		if(!current_user)
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 			return TRUE
@@ -50,14 +54,29 @@
 		say("Request #[request_number] created.")
 		playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
 		qdel(I)
+	else if(I.tool_behaviour == TOOL_WRENCH)
+		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
+		I.play_tool_sound(src)
+		if(I.use_tool(src, user, 30))
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+			if(machine_stat & BROKEN)
+				to_chat(user, "<span class='warning'>The broken remains of [src] fall on the ground.</span>")
+				new /obj/item/stack/sheet/metal(loc, 3)
+				new /obj/item/shard(loc)
+			else
+				to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secure [name].</span>")
+				new /obj/item/wallframe/bounty_board(loc)
+			qdel(src)
+	else
+		return ..()
 
-/obj/machinery/request_kiosk/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
+/obj/machinery/bounty_board/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "RequestKiosk", name, ui_x, ui_y, master_ui, state)
 		ui.open()
 
-/obj/machinery/request_kiosk/ui_data(mob/user)
+/obj/machinery/bounty_board/ui_data(mob/user)
 	var/list/data = list()
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
@@ -75,7 +94,7 @@
 	data["Applicants"] = formatted_applicants
 	return data
 
-/obj/machinery/request_kiosk/ui_act(action, list/params)
+/obj/machinery/bounty_board/ui_act(action, list/params)
 	if(..())
 		return
 	var/current_ref_num = params["request"]
@@ -150,8 +169,15 @@
 /obj/item/bounty_card/examine(mob/user)
 	. = ..()
 	if(new_request)
-		. += (new_request.description)
+		. += ("[new_request.description]")
 		. += ("The Price on this bounty is set for [new_request.value] credits.")
+
+/obj/item/wallframe/bounty_board
+	name = "disassembled bounty board"
+	desc = "Used to build a new bounty board, just secure to the wall."
+	icon_state = "request_kiosk"
+	custom_materials = list(/datum/material/iron=14000, /datum/material/glass=8000)
+	result_path = /obj/machinery/bounty_board
 
 /**
   * A combined all in one datum that stores everything about the request, the requester's account, as well as the requestee's account
