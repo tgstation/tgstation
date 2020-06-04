@@ -162,7 +162,7 @@
 	var/new_cost = input(user, "Set the cost for this request.","Bounty cost") as num|null
 	if(!new_cost || !(user.canUseTopic(src, BE_CLOSE, FALSE, NO_TK)))
 		return
-	new_cost = clamp(round(new_cost, 1), 0, 1000)
+	new_cost = round(clamp(new_cost, 0, 1000), 1)
 	new_request = new /datum/station_request(user.name, new_cost, description)
 	icon_state = "bountycardfull"
 
