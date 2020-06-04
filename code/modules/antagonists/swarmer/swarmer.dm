@@ -62,8 +62,8 @@
 	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
 	mob_biotypes = MOB_ROBOTIC
-	health = 40
-	maxHealth = 40
+	health = 50
+	maxHealth = 50
 	status_flags = CANPUSH
 	icon_state = "swarmer"
 	icon_living = "swarmer"
@@ -75,8 +75,8 @@
 	maxbodytemp = 500
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	unsuitable_atmos_damage = 0
-	melee_damage_lower = 15
-	melee_damage_upper = 15
+	melee_damage_lower = 20
+	melee_damage_upper = 40
 	melee_damage_type = STAMINA
 	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD)
@@ -92,7 +92,6 @@
 	AIStatus = AI_OFF
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_TINY
-	ventcrawler = VENTCRAWLER_ALWAYS
 	ranged = 1
 	projectiletype = /obj/projectile/beam/disabler
 	ranged_cooldown_time = 20
@@ -171,7 +170,7 @@
 	return FALSE //would logically be TRUE, but we don't want AI swarmers eating player spawn chances.
 
 /obj/effect/mob_spawn/swarmer/IntegrateAmount()
-	return 50
+	return 40
 
 /turf/closed/indestructible/swarmer_act()
 	return FALSE
@@ -385,7 +384,7 @@
 			return FALSE
 
 /obj/item/deactivated_swarmer/IntegrateAmount()
-	return 50
+	return 40
 
 /obj/machinery/hydroponics/soil/swarmer_act(mob/living/simple_animal/hostile/swarmer/S)
 	to_chat(S, "<span class='warning'>This object does not contain enough materials to work with.</span>")
@@ -584,25 +583,25 @@
 /mob/living/simple_animal/hostile/swarmer/proc/CreateTrap()
 	set name = "Create trap"
 	set category = "Swarmer"
-	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 5 resources."
+	set desc = "Creates a simple trap that will non-lethally electrocute anything that steps on it. Costs 4 resources."
 	if(locate(/obj/structure/swarmer/trap) in loc)
 		to_chat(src, "<span class='warning'>There is already a trap here. Aborting.</span>")
 		return
-	Fabricate(/obj/structure/swarmer/trap, 5)
+	Fabricate(/obj/structure/swarmer/trap, 4)
 
 
 /mob/living/simple_animal/hostile/swarmer/proc/CreateBarricade()
 	set name = "Create barricade"
 	set category = "Swarmer"
-	set desc = "Creates a barricade that will stop anything but swarmers and disabler beams from passing through."
+	set desc = "Creates a barricade that will stop anything but swarmers and disabler beams from passing through.  Costs 4 resources."
 	if(locate(/obj/structure/swarmer/blockade) in loc)
 		to_chat(src, "<span class='warning'>There is already a blockade here. Aborting.</span>")
 		return
-	if(resources < 5)
+	if(resources < 4)
 		to_chat(src, "<span class='warning'>We do not have the resources for this!</span>")
 		return
 	if(do_mob(src, src, 10))
-		Fabricate(/obj/structure/swarmer/blockade, 5)
+		Fabricate(/obj/structure/swarmer/blockade, 4)
 
 
 /obj/structure/swarmer/blockade
@@ -624,7 +623,7 @@
 	set category = "Swarmer"
 	set desc = "Creates a shell for a new swarmer. Swarmers will self activate."
 	to_chat(src, "<span class='info'>We are attempting to replicate ourselves. We will need to stand still until the process is complete.</span>")
-	if(resources < 50)
+	if(resources < 40)
 		to_chat(src, "<span class='warning'>We do not have the resources for this!</span>")
 		return
 	if(!isturf(loc))
@@ -632,7 +631,7 @@
 		return
 	if(do_mob(src, src, 100))
 		var/createtype = SwarmerTypeToCreate()
-		if(createtype && Fabricate(createtype, 50))
+		if(createtype && Fabricate(createtype, 40))
 			playsound(loc,'sound/items/poster_being_created.ogg',50, TRUE, -1)
 
 
@@ -648,7 +647,7 @@
 		return
 	to_chat(src, "<span class='info'>Attempting to repair damage to our body, stand by...</span>")
 	if(do_mob(src, src, 100))
-		adjustHealth(-100)
+		adjustHealth(-maxHealth)
 		to_chat(src, "<span class='info'>We successfully repaired ourselves.</span>")
 
 /mob/living/simple_animal/hostile/swarmer/proc/ToggleLight()
