@@ -11,9 +11,9 @@
 /// Morgue access
 #define ACCESS_MORGUE 6
 /// R&D department, R&D console, burn chamber on some maps
-#define ACCESS_TOX 7
+#define ACCESS_RND 7
 /// Toxins storage, burn chamber on some maps
-#define ACCESS_TOX_STORAGE 8
+#define ACCESS_TOXINS 8
 /// Genetics access
 #define ACCESS_GENETICS 9
 /// Engineering area, power monitor, power flow control console
