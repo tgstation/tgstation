@@ -75,7 +75,7 @@
 			on = !on
 		if(prob(100 / severity))
 			direction = PUMP_OUT
-		pressure_limit = rand(0, 100 * ONE_ATMOSPHERE)
+		target_pressure = rand(0, 100 * ONE_ATMOSPHERE)
 		update_icon()
 
 /obj/machinery/portable_atmospherics/pump/replace_tank(mob/living/user, close_valve)
