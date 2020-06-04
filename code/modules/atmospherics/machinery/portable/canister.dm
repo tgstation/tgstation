@@ -386,32 +386,18 @@
 		valve_open = !valve_open
 		timing = FALSE
 
-	var/our_pressure = air_contents.return_pressure()
-	var/our_temperature = air_contents.return_temperature()
-
 	// Handle gas transfer.
 	if(valve_open)
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
 
-		var/output_starting_pressure = target_air.return_pressure()
-
-		if((release_pressure - output_starting_pressure) >= 0.01)
-
-			//Calculate necessary moles to transfer using PV=nRT
-			if((air_contents.total_moles() > 0) && (our_temperature > 0))
-				var/pressure_delta = release_pressure - output_starting_pressure
-				var/transfer_moles = pressure_delta*target_air.volume/(our_temperature * R_IDEAL_GAS_EQUATION)
-
-				//Actually transfer the gas
-				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-				target_air.merge(removed)
-
-				// Update the environment if needed.
-				if(!holding)
-					air_update_turf()
+		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
+			air_update_turf()
 
 	update_icon()
+
+	var/our_pressure = air_contents.return_pressure()
+	var/our_temperature = air_contents.return_temperature()
 
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can recieve, if the heat and pressure are way higher than the limit the more damage will be done
 	if(our_temperature > heat_limit || our_pressure > pressure_limit)
