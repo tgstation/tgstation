@@ -91,9 +91,7 @@
 
 /datum/nanite_program/protocol/offline/check_conditions()
 	var/is_offline = FALSE
-	if(nanites.host_mob.IsSleeping() || nanites.host_mob.IsUnconscious())
-		is_offline = TRUE
-	if(nanites.host_mob.stat == DEAD || HAS_TRAIT(nanites.host_mob, TRAIT_DEATHCOMA))
+	if(nanites.host_mob.stat >= UNCONSCIOUS) //DEAD or UNCONSCIOUS
 		is_offline = TRUE
 	if(nanites.host_mob.InCritical() && !HAS_TRAIT(nanites.host_mob, TRAIT_NOSOFTCRIT))
 		is_offline = TRUE
