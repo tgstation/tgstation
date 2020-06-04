@@ -96,12 +96,12 @@
 		return
 
 /mob/living/simple_animal/mouse/ClickOn(atom/A, params)
-	if(istype(A, /obj/item/reagent_containers/food/snacks/cheesewedge))
+	if(istype(A, /obj/item/reagent_containers/food/snacks/cheesewedge) && src.canUseTopic(A, BE_CLOSE, NO_DEXTERITY))
 		if(health == maxHealth)
 			to_chat(src,"<span class='warning'>You don't need to eat or heal.</span>")
 			return
 		to_chat(src,"<span class='green'>You nibble some cheese, restoring your health.</span>")
-		health = maxHealth
+		adjustHealth(-(maxHealth-health))
 		qdel(A)
 	..()
 
