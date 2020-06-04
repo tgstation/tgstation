@@ -94,7 +94,7 @@
 	mob_size = MOB_SIZE_TINY
 	ranged = 1
 	projectiletype = /obj/projectile/beam/disabler
-	ranged_cooldown_time = 20
+	ranged_cooldown_time = 10
 	projectilesound = 'sound/weapons/taser2.ogg'
 	loot = list(/obj/effect/decal/cleanable/robot_debris, /obj/item/stack/ore/bluespace_crystal)
 	del_on_death = 1
@@ -110,6 +110,7 @@
 	verbs -= /mob/living/verb/pulled
 	for(var/datum/atom_hud/data/diagnostic/diag_hud in GLOB.huds)
 		diag_hud.add_to_hud(src)
+	AddComponent(/datum/component/gps, "Obscure Signal")
 
 /mob/living/simple_animal/hostile/swarmer/med_hud_set_health()
 	var/image/holder = hud_list[DIAG_HUD]
