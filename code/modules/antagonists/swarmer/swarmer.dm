@@ -62,8 +62,8 @@
 	initial_language_holder = /datum/language_holder/swarmer
 	bubble_icon = "swarmer"
 	mob_biotypes = MOB_ROBOTIC
-	health = 50
-	maxHealth = 50
+	health = 120
+	maxHealth = 120
 	status_flags = CANPUSH
 	icon_state = "swarmer"
 	icon_living = "swarmer"
