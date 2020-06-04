@@ -247,16 +247,16 @@
 	name = "bottle"
 
 /obj/item/reagent_containers/glass/bottle/killer
-	volume = 50
-	amount_per_transfer_from_this = 10
-	possible_transfer_amounts = list(1,2,5,10,15,25,50)
+	volume = 30
+	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list(1,2,5)
 
 /obj/item/reagent_containers/glass/bottle/killer/weedkiller
 	name = "bottle of weed killer"
 	desc = "Contains a herbicide."
-	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 50)
+	list_reagents = list(/datum/reagent/toxin/plantbgone/weedkiller = 30)
 
 /obj/item/reagent_containers/glass/bottle/killer/pestkiller
 	name = "bottle of pest spray"
 	desc = "Contains a pesticide."
-	list_reagents = list(/datum/reagent/toxin/pestkiller = 50)
+	list_reagents = list(/datum/reagent/toxin/pestkiller = 30)
