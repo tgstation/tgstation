@@ -27,15 +27,16 @@ obj/item/coupon
 		discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
 
-/obj/item/coupon/attack_obj(obj/O, mob/living/user)
+/obj/item/coupon/attack_atom(atom/O, mob/living/user)
 	if(!istype(O, /obj/machinery/computer/cargo))
 		return ..()
+	var/obj/machinery/computer/cargo/cargocomp = O
 	if(discount_pct_off == COUPON_OMEN)
-		to_chat(user, "<span class='warning'>\The [O] validates the coupon as authentic, but refuses to accept it...</span>")
-		O.say("Coupon fulfillment already in progress...")
+		to_chat(user, "<span class='warning'>\The [cargocomp] validates the coupon as authentic, but refuses to accept it...</span>")
+		cargocomp.say("Coupon fulfillment already in progress...")
 		return
 
-	inserted_console = O
+	inserted_console = cargocomp
 	LAZYADD(inserted_console.loaded_coupons, src)
 	inserted_console.say("Coupon for [initial(discounted_pack.name)] applied!")
 	forceMove(inserted_console)
