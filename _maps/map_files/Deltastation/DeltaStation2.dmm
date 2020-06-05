@@ -114071,11 +114071,6 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
-"nlV" = (
-/obj/structure/sign/warning/securearea,
-/obj/structure/sign/departments/chemistry,
-/turf/closed/wall/r_wall,
-/area/medical/chemistry)
 "nnQ" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning,
 /turf/open/floor/plasteel/white,
@@ -115321,6 +115316,10 @@
 /obj/item/kirbyplants{
 	icon_state = "plant-21"
 	},
+/obj/structure/sign/warning/bodysposal{
+	pixel_x = 32;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
 "svv" = (
@@ -116162,12 +116161,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
-"woc" = (
-/obj/structure/sign/warning/bodysposal{
-	pixel_y = 0
-	},
-/turf/closed/wall,
-/area/medical/morgue)
 "wpB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -116261,6 +116254,9 @@
 "wPT" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
+	},
+/obj/structure/sign/departments/chemistry{
+	pixel_y = 32
 	},
 /turf/open/floor/plasteel,
 /area/hallway/primary/aft)
@@ -156551,7 +156547,7 @@ wMZ
 fYL
 dHD
 qUN
-xvf
+inw
 oYi
 eQS
 dNO
@@ -156808,7 +156804,7 @@ wMZ
 fYL
 dHE
 dIV
-nlV
+xvf
 wPT
 mie
 dNO
@@ -157581,7 +157577,7 @@ dCy
 dCy
 dCy
 pSL
-woc
+dCy
 dCy
 dLa
 dMz
