@@ -13,7 +13,6 @@
 	ui_y = 232
 
 	var/valve_open = FALSE
-	var/obj/machinery/atmospherics/components/binary/passive_gate/pump
 	var/release_log = ""
 
 	volume = 1000
@@ -261,16 +260,8 @@
 		air_contents.copy_from(existing_mixture)
 	else
 		create_gas()
-	pump = new(src, FALSE)
-	pump.on = TRUE
-	pump.machine_stat = 0
-	SSair.add_to_rebuild_queue(pump)
 	update_overlays()
 
-/obj/machinery/portable_atmospherics/canister/Destroy()
-	qdel(pump)
-	pump = null
-	return ..()
 
 /obj/machinery/portable_atmospherics/canister/proc/create_gas()
 	if(gas_type)
@@ -394,25 +385,23 @@
 	if(timing && valve_timer < world.time)
 		valve_open = !valve_open
 		timing = FALSE
+
+	// Handle gas transfer.
 	if(valve_open)
 		var/turf/T = get_turf(src)
-		pump.airs[1] = air_contents
-		pump.airs[2] = holding ? holding.air_contents : T.return_air()
-		pump.target_pressure = release_pressure
+		var/datum/gas_mixture/target_air = holding ? holding.air_contents : T.return_air()
 
-		pump.process_atmos() // Pump gas.
-		if(!holding)
-			air_update_turf() // Update the environment if needed.
-	else
-		pump.airs[1] = null
-		pump.airs[2] = null
+		if(air_contents.release_gas_to(target_air, release_pressure) && !holding)
+			air_update_turf()
 
 	update_icon()
-	var/pressure = air_contents.return_pressure()
-	var/temperature = air_contents.return_temperature()
+
+	var/our_pressure = air_contents.return_pressure()
+	var/our_temperature = air_contents.return_temperature()
+
 	///function used to check the limit of the canisters and also set the amount of damage that the canister can recieve, if the heat and pressure are way higher than the limit the more damage will be done
-	if(temperature > heat_limit || pressure > pressure_limit)
-		take_damage(clamp((temperature/heat_limit) * (pressure/pressure_limit), 5, 50), BURN, 0)
+	if(our_temperature > heat_limit || our_pressure > pressure_limit)
+		take_damage(clamp((our_temperature/heat_limit) * (our_pressure/pressure_limit), 5, 50), BURN, 0)
 		return
 
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
