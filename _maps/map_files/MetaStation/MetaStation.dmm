@@ -50290,7 +50290,7 @@
 	pixel_x = 28
 	},
 /obj/machinery/camera{
-	c_tag = "Engineering - Foyer - Starboard";
+	c_tag = "Genetics Lab East";
 	dir = 8
 	},
 /turf/open/floor/plasteel/white,
@@ -61954,7 +61954,7 @@
 	dir = 8
 	},
 /obj/machinery/camera{
-	c_tag = "Chapel - Starboard";
+	c_tag = "Genetics Lab East";
 	dir = 8
 	},
 /turf/open/floor/plasteel/chapel{
