@@ -39,7 +39,10 @@ PROCESSING_SUBSYSTEM_DEF(instruments)
 			continue
 		I = new path
 		I.Initialize()
-		instrument_data[I.id || "[I.type]"] = I
+		if(!I.id)
+			qdel(I)
+			continue
+		instrument_data[I.id] = I
 		CHECK_TICK
 
 /datum/controller/subsystem/processing/instruments/proc/get_instrument(id_or_path)
