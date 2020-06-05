@@ -123,9 +123,11 @@
 			to_chat(user, "<span class='boldnotice'>[target] was one of us. We have absorbed their power.</span>")
 			target_ling.remove_changeling_powers()
 			changeling.geneticpoints += round(target_ling.geneticpoints/2)
+			changeling.total_geneticspoints = changeling.geneticpoints //updates the total sum of genetic points when you absorb another ling
 			target_ling.geneticpoints = 0
 			target_ling.canrespec = 0
 			changeling.chem_storage += round(target_ling.chem_storage/2)
+			changeling.total_chem_storage = changeling.chem_storage //updates the total sum of chemicals stored for when you absorb another ling
 			changeling.chem_charges += min(target_ling.chem_charges, changeling.chem_storage)
 			target_ling.chem_charges = 0
 			target_ling.chem_storage = 0
