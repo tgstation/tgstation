@@ -114366,10 +114366,6 @@
 /obj/machinery/dna_scannernew,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
-"oBV" = (
-/obj/structure/cable,
-/turf/closed/wall/r_wall,
-/area/medical/chemistry)
 "oCS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/neutral{
@@ -156049,7 +156045,7 @@ xvf
 xvf
 inw
 emj
-oBV
+xvf
 xvf
 xvf
 xvf
