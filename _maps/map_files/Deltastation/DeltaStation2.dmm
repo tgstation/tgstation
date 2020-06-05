@@ -91997,7 +91997,7 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
 	dir = 4
 	},
-/turf/closed/wall,
+/turf/open/floor/plating,
 /area/medical/chemistry)
 "dpt" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden,
@@ -112235,7 +112235,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/mixing/chamber)
 "foK" = (
-/obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -112339,6 +112338,10 @@
 /obj/structure/cable,
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
+"gam" = (
+/obj/effect/turf_decal/tile/yellow,
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "gaK" = (
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	dir = 8
@@ -112368,10 +112371,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
-"gqD" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/closed/wall,
-/area/medical/chemistry)
 "gvO" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
@@ -113795,7 +113794,6 @@
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
 "lXR" = (
-/obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -113996,7 +113994,6 @@
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "mWu" = (
-/obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -115889,7 +115886,6 @@
 /turf/open/floor/plasteel/white,
 /area/medical/chemistry)
 "veK" = (
-/obj/effect/turf_decal/tile/yellow,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
 	},
@@ -156798,7 +156794,7 @@ dcO
 dcO
 veI
 dcO
-dcO
+gam
 veK
 wMZ
 fYL
@@ -157055,7 +157051,7 @@ dcO
 dcO
 veI
 dcO
-dcO
+gam
 veK
 wMZ
 fYL
@@ -157312,7 +157308,7 @@ dqW
 dqW
 vDv
 dqW
-dcO
+gam
 veK
 pgV
 pJU
@@ -157561,7 +157557,7 @@ dcS
 dgZ
 dcS
 dkk
-gqD
+dlW
 rKo
 dpi
 vrf
@@ -157569,7 +157565,7 @@ dqW
 dcO
 veI
 dqW
-dcO
+gam
 veK
 dAV
 dCy
@@ -157826,7 +157822,7 @@ dpn
 dcO
 veI
 dpn
-dcO
+gam
 veK
 dpm
 rKv
@@ -158083,7 +158079,7 @@ tcO
 dcO
 veI
 tcO
-dcO
+gam
 lXR
 jZU
 dCy
@@ -158340,8 +158336,8 @@ tcO
 tcO
 nKD
 tcO
-dcO
-dpi
+gam
+dqW
 sLr
 dCy
 gRN
@@ -158597,8 +158593,8 @@ uoL
 uoL
 rAh
 vhE
-dcO
-dpi
+gam
+dqW
 dAR
 dCy
 dDP
@@ -158854,8 +158850,8 @@ dcO
 dcO
 veI
 vrf
-dcO
-dpi
+gam
+dqW
 nqx
 dCy
 dDM
@@ -159619,13 +159615,13 @@ diA
 dkq
 dlX
 dcM
-gqD
-gqD
+dlW
+dlW
 dcM
 dcM
 dps
 bbj
-gqD
+dlW
 dcM
 dcM
 dCy
