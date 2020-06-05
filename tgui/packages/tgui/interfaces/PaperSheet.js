@@ -33,7 +33,10 @@ const walkTokens = token => {
 };
 
 const run_marked_default = value => {
-  const clean = DOMPurify.sanitize(value);
+  const clean = DOMPurify.sanitize(value,
+    // { FORBID_TAGS: ['a'] }
+    { ALLOWED_TAGS: [] } // Fuck html, you can't have any of it
+  );
   return marked(clean,
     { breaks: true,
       smartypants: true,
