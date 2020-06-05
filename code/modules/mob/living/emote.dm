@@ -503,3 +503,102 @@
 	key = "exhale"
 	key_third_person = "exhales"
 	message = "breathes out."
+
+/datum/emote/living/bababooey
+	key = "bababooey"
+	key_third_person = "bababooeys"
+	message = "spews bababooey."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+
+/datum/emote/living/bababooey/can_run_emote(mob/living/user, status_check = TRUE , intentional)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/bababooey/get_sound(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			else
+				return 'sound/voice/human/bababooey.ogg'
+
+/datum/emote/living/fafafooey
+	key = "fafafooey"
+	key_third_person = "fafafooeys"
+	message = "spews fafafooey."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+
+/datum/emote/living/fafafooey/can_run_emote(mob/living/user, status_check = TRUE , intentional)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/fafafooey/get_sound(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			else
+				return pick('sound/voice/human/fafafooey.ogg', 'sound/voice/human/fafafooey2.ogg')
+
+/datum/emote/living/fafafoggy
+	key = "fafafoggy"
+	key_third_person = "fafafoggys"
+	message = "spews fafafoggy."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+
+/datum/emote/living/fafafoggy/can_run_emote(mob/living/user, status_check = TRUE , intentional)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/fafafoggy/get_sound(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			else
+				return pick('sound/voice/human/fafafoggy.ogg', 'sound/voice/human/fafafoggy2.ogg')
+
+/datum/emote/living/hohohoy
+	key = "hohohoy"
+	key_third_person = "hohohoys"
+	message = "spews hohohoy."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+
+/datum/emote/living/hohohoy/can_run_emote(mob/living/user, status_check = TRUE , intentional)
+	. = ..()
+	if(. && iscarbon(user))
+		var/mob/living/carbon/C = user
+		return !C.silent
+
+/datum/emote/living/hohohoy/get_sound(mob/living/user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			else
+				return 'sound/voice/human/hohohoy.ogg'
+
+/datum/emote/living/ffff
+	key = "ffff"
+	key_third_person = "ffffs"
+	message = "spews something untelligble."
+	vary = TRUE
+	sound = 'sound/voice/human/ffff.ogg'
