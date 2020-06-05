@@ -19,7 +19,7 @@
 //#define VISUALIZE_ACTIVE_TURFS	//Highlights atmos active turfs in green
 #endif
 
-#define REFERENCE_TRACKING		//Enables extools-powered reference tracking system, letting you see what is
+//#define REFERENCE_TRACKING		//Enables extools-powered reference tracking system, letting you see what is
 									//referencing objects that refuse to hard delete
 
 //#define UNIT_TESTS			//Enables unit tests via TEST_RUN_PARAMETER
