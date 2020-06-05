@@ -1,3 +1,4 @@
+GLOBAL_LIST_EMPTY(allbountyboards)
 /**
   * A machine that acts basically like a quest board.
   * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
@@ -23,10 +24,15 @@
 	. = ..()
 	if(!request_list)
 		request_list = list()
+	GLOB.allbountyboards += src
 	if(building)
 		setDir(ndir)
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -32 : 32)
 		pixel_y = (dir & 3)? (dir ==1 ? -32 : 32) : 0
+
+/obj/machinery/bounty_board/Destroy()
+	. = ..()
+	GLOB.allbountyboards -= src
 
 /obj/machinery/bounty_board/attackby(obj/item/I, mob/living/user, params)
 	. = ..()
@@ -51,8 +57,8 @@
 		curr_request.owner_account = current_user
 		request_list += list(curr_request)
 		request_number++
-		say("Request #[request_number] created.")
-		playsound(src, 'sound/effects/cashregister.ogg', 20, TRUE)
+		for(var/obj/machinery/bounty_board/i in GLOB.allbountyboards)
+			i.localAlert()
 		qdel(I)
 	else if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -69,6 +75,11 @@
 			qdel(src)
 	else
 		return ..()
+
+/obj/machinery/bounty_board/proc/localAlert()
+	say("New bounty has been added!")
+	playsound(src, 'sound/effects/cashregister.ogg', 30, TRUE)
+	return
 
 /obj/machinery/bounty_board/ui_interact(mob/user, ui_key, datum/tgui/ui, force_open, datum/tgui/master_ui, datum/ui_state/state)
 	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
