@@ -98646,7 +98646,11 @@
 /area/medical/morgue)
 "dEZ" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
+/obj/machinery/shower{
+	dir = 1
+	},
+/obj/effect/turf_decal/bot,
+/turf/open/floor/plasteel,
 /area/medical/morgue)
 "dFb" = (
 /obj/effect/turf_decal/tile/neutral{
@@ -113822,6 +113826,17 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab/range)
+"lXR" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	icon_state = "trimline_corner_fill";
+	dir = 8
+	},
+/turf/open/floor/plasteel/white,
+/area/medical/chemistry)
 "lYb" = (
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
@@ -114741,6 +114756,18 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel,
 /area/medical/morgue)
+"pSL" = (
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/stripes/line,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/obj/machinery/door/airlock/grunge{
+	name = "Morgue";
+	req_access_txt = "6"
+	},
+/turf/open/floor/plasteel,
+/area/medical/morgue)
 "pXY" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
@@ -115412,13 +115439,13 @@
 /area/crew_quarters/kitchen)
 "sSb" = (
 /obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Chemistry Maintenance";
-	req_access_txt = "33"
-	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/machinery/door/airlock/medical{
+	name = "Chemistry";
+	req_access_txt = "69;33"
 	},
 /turf/open/floor/plasteel,
 /area/medical/chemistry)
@@ -115812,10 +115839,6 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 8
 	},
-/obj/machinery/shower{
-	dir = 4
-	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/medical/morgue)
 "uLB" = (
@@ -157591,7 +157614,7 @@ dCy
 dCy
 dCy
 dCy
-dCE
+pSL
 dCy
 dCy
 dLa
@@ -158099,7 +158122,7 @@ dcO
 veI
 tcO
 dcO
-dpi
+lXR
 jZU
 dCy
 ide
