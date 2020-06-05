@@ -1,0 +1,4 @@
+author: "IradT"
+delete-after: True
+changes: 
+  - bugfix: "fixed changeling reset function not giving the right values after absorbing another changeling"

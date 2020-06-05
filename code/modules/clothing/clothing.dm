@@ -413,14 +413,12 @@ BLIND     // can't see anything
 		..()
 /obj/item/clothing/proc/set_sensor_glob()
 	var/mob/living/carbon/human/H = src.loc
-	
-	if (istype(H.w_uniform, /obj/item/clothing/under))
+
+	if (istype(H) && istype(H.w_uniform, /obj/item/clothing/under))
 		var/obj/item/clothing/under/U = H.w_uniform
 		if (U.has_sensor && U.sensor_mode && U.has_sensor != BROKEN_SENSORS)
 			GLOB.suit_sensors_list |= H
-			
-		else 
+		else
 			GLOB.suit_sensors_list -= H
-		
-	else 
-		GLOB.suit_sensors_list -= H	
+	else
+		GLOB.suit_sensors_list -= H
