@@ -89267,11 +89267,10 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 9;
-	step_x = 0
-	},
 /obj/effect/turf_decal/stripes/corner,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /mob/living/carbon/monkey,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -89313,11 +89312,6 @@
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "djE" = (
-/obj/structure/sign/warning/nosmoking{
-	step_x = 0;
-	step_y = 0;
-	pixel_y = 32
-	},
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
@@ -90334,10 +90328,6 @@
 	dir = 8
 	},
 /obj/structure/cable,
-/obj/effect/turf_decal/stripes/line{
-	dir = 9;
-	step_x = 31
-	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "dlu" = (
@@ -90352,6 +90342,9 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/nanite)
 "dlv" = (
@@ -90721,9 +90714,7 @@
 	},
 /obj/machinery/airalarm{
 	dir = 8;
-	step_x = 1;
-	step_y = 0;
-	pixel_x = 23
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -93018,22 +93009,16 @@
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/reinforced,
 /obj/item/clothing/gloves/color/latex{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = 8;
-	pixel_y = 10
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /obj/item/radio/headset/headset_medsci{
-	step_x = 0;
-	step_y = 0;
 	pixel_x = -7;
-	pixel_y = 7
+	pixel_y = 4
 	},
 /obj/item/storage/box/gloves{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = 5;
-	pixel_y = 1
+	pixel_x = 6;
+	pixel_y = -2
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -93053,26 +93038,20 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/table/reinforced,
 /obj/item/storage/box/monkeycubes{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = 5;
-	pixel_y = 7
+	pixel_x = 6;
+	pixel_y = 9
 	},
 /obj/item/storage/box/monkeycubes{
 	pixel_x = 4;
 	pixel_y = 0
 	},
 /obj/item/storage/pill_bottle/mutadone{
-	step_x = 0;
-	step_y = 0;
 	pixel_x = -8;
-	pixel_y = 11
+	pixel_y = 9
 	},
 /obj/item/reagent_containers/spray/cleaner{
-	step_x = 0;
-	step_y = 0;
 	pixel_x = -10;
-	pixel_y = 1
+	pixel_y = -1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -101525,10 +101504,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/loading_area,
 /obj/machinery/button/massdriver{
-	step_x = 0;
-	step_y = 1;
-	pixel_x = 24;
-	id = "toxinsdriver"
+	id = "toxinsdriver";
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel,
 /area/science/misc_lab)
@@ -112854,6 +112831,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/maintenance/port)
+"hTO" = (
+/obj/structure/sign/warning/nosmoking,
+/turf/closed/wall/r_wall,
+/area/science/xenobiology)
 "hVS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/simple/supply/hidden{
@@ -114955,16 +114936,12 @@
 /obj/effect/turf_decal/tile/neutral,
 /obj/structure/table/reinforced,
 /obj/item/storage/box/disks{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = -6;
-	pixel_y = 10
+	pixel_x = 6;
+	pixel_y = 9
 	},
 /obj/item/storage/box/bodybags{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = 4;
-	pixel_y = 2
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -146087,7 +146064,7 @@ dck
 cNd
 cOM
 dgs
-cMY
+hTO
 djE
 dlr
 dmE

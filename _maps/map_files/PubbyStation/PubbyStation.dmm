@@ -27111,9 +27111,7 @@
 	dir = 9
 	},
 /obj/item/cautery{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = 9;
+	pixel_x = 5;
 	pixel_y = 2
 	},
 /turf/open/floor/plasteel/white,
@@ -33000,10 +32998,7 @@
 /obj/effect/turf_decal/tile/purple{
 	dir = 8
 	},
-/obj/machinery/suit_storage_unit/rd{
-	step_x = 0;
-	step_y = 0
-	},
+/obj/machinery/suit_storage_unit/rd,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hor)
 "bEU" = (
@@ -33017,10 +33012,8 @@
 	dir = 8
 	},
 /obj/item/stamp/rd{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = -10;
-	pixel_y = 13
+	pixel_x = -8;
+	pixel_y = 14
 	},
 /obj/item/cartridge/signal/toxins{
 	pixel_x = -9;
@@ -33035,23 +33028,16 @@
 	pixel_y = -1
 	},
 /obj/item/paper_bin{
-	step_x = 0;
-	step_y = 0;
-	layer = 2.9;
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/folder/white{
 	pixel_x = 7;
 	pixel_y = 4
 	},
-/obj/item/folder/white{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = 7;
-	pixel_y = 5
-	},
 /obj/item/pen{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = 8;
-	pixel_y = 6
+	pixel_x = 7;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/hor)
@@ -49098,6 +49084,12 @@
 /area/maintenance/department/security/brig)
 "dfm" = (
 /obj/machinery/vending/wardrobe/gene_wardrobe,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "dfr" = (
@@ -50926,9 +50918,7 @@
 	},
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/stripes/line{
-	dir = 10;
-	step_x = 0;
-	step_y = 0
+	dir = 10
 	},
 /turf/open/floor/plasteel/white,
 /area/science/genetics)
@@ -52397,6 +52387,12 @@
 /obj/machinery/computer/scan_consolenew{
 	dir = 8
 	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "klo" = (
@@ -52930,14 +52926,9 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced{
-	dir = 1;
-	step_x = 0;
-	step_y = 0
+	dir = 1
 	},
-/mob/living/simple_animal/butterfly{
-	step_x = 0;
-	step_y = 1
-	},
+/mob/living/simple_animal/butterfly,
 /turf/open/floor/grass,
 /area/science/genetics)
 "lhu" = (
@@ -52969,14 +52960,9 @@
 /turf/closed/wall/r_wall,
 /area/medical/medbay/zone2)
 "llS" = (
+/obj/structure/sink/puddle,
 /obj/structure/window/reinforced{
-	dir = 1;
-	step_x = 0;
-	step_y = 0
-	},
-/obj/structure/sink/puddle{
-	step_x = 0;
-	step_y = 0
+	dir = 1
 	},
 /mob/living/carbon/monkey,
 /turf/open/floor/grass,
@@ -53668,11 +53654,9 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/neutral{
-	step_x = 1
-	},
-/obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
+/obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "mTp" = (
@@ -54776,16 +54760,12 @@
 	dir = 4
 	},
 /obj/item/storage/box/bodybags{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = -7;
-	pixel_y = 11
+	pixel_x = -6;
+	pixel_y = 10
 	},
 /obj/item/storage/box/disks{
-	step_x = 0;
-	step_y = 0;
 	pixel_x = 5;
-	pixel_y = 3
+	pixel_y = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -56088,9 +56068,12 @@
 /turf/open/floor/plasteel,
 /area/security/main)
 "rKL" = (
-/obj/machinery/dna_scannernew{
-	step_x = 0;
-	step_y = 0
+/obj/machinery/dna_scannernew,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -56214,10 +56197,7 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/machinery/dna_scannernew{
-	step_x = 0;
-	step_y = 1
-	},
+/obj/machinery/dna_scannernew,
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -56273,28 +56253,20 @@
 	dir = 4
 	},
 /obj/item/reagent_containers/dropper{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = -4;
-	pixel_y = 11
+	pixel_x = -1;
+	pixel_y = 12
 	},
 /obj/item/pen{
-	step_x = 0;
-	step_y = 0;
 	pixel_x = 8;
-	pixel_y = -2
-	},
-/obj/item/paper_bin{
-	step_x = 0;
-	step_y = 0;
-	pixel_x = -6;
 	pixel_y = 0
 	},
-/obj/item/folder/white{
-	step_x = 0;
-	step_y = 0;
+/obj/item/paper_bin{
 	pixel_x = -6;
 	pixel_y = 1
+	},
+/obj/item/folder/white{
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -58625,24 +58597,26 @@
 "xan" = (
 /obj/structure/table/glass,
 /obj/item/storage/pill_bottle/mutadone{
-	step_x = 0;
-	step_y = 0;
 	pixel_x = 10;
-	pixel_y = 14
+	pixel_y = 11
 	},
 /obj/item/storage/box/monkeycubes{
 	pixel_x = -6;
 	pixel_y = 11
 	},
 /obj/item/storage/box/monkeycubes{
-	pixel_x = -7;
-	pixel_y = 0
+	pixel_x = -5;
+	pixel_y = 1
 	},
 /obj/item/reagent_containers/spray/cleaner{
-	step_x = 0;
-	step_y = 0;
 	pixel_x = 9;
-	pixel_y = 2
+	pixel_y = -1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)

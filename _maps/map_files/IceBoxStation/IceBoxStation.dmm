@@ -32839,14 +32839,17 @@
 /area/crew_quarters/heads/hor)
 "bzO" = (
 /obj/structure/table/glass,
-/obj/item/paper_bin{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/pen,
 /obj/item/reagent_containers/spray/cleaner{
-	step_x = 8;
-	step_y = 0
+	pixel_x = 9;
+	pixel_y = 0
+	},
+/obj/item/paper_bin{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = -5;
+	pixel_y = 3
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -33276,8 +33279,8 @@
 "bAR" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/bodybags{
-	step_x = 0;
-	step_y = 6
+	pixel_x = -1;
+	pixel_y = 6
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -51474,8 +51477,8 @@
 "eFD" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/disks{
-	pixel_x = 2;
-	pixel_y = 2
+	pixel_x = 1;
+	pixel_y = 5
 	},
 /obj/machinery/light,
 /turf/open/floor/plasteel/dark,
@@ -52606,18 +52609,17 @@
 /area/medical/pharmacy)
 "kGS" = (
 /obj/structure/table/glass,
-/obj/item/storage/pill_bottle/mannitol,
 /obj/item/radio/headset/headset_sci{
-	pixel_x = -3
+	pixel_x = -7;
+	pixel_y = 6
 	},
-/obj/item/folder/white,
-/obj/item/storage/pill_bottle/mutadone{
-	step_x = 11;
-	step_y = 2
+/obj/item/folder/white{
+	pixel_x = 2;
+	pixel_y = 0
 	},
 /obj/item/storage/pill_bottle/mutadone{
-	step_x = 11;
-	step_y = 2
+	pixel_x = 11;
+	pixel_y = 7
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
@@ -54513,10 +54515,13 @@
 "taM" = (
 /obj/structure/table/glass,
 /obj/item/storage/box/monkeycubes{
-	step_x = 5;
-	step_y = 6
+	pixel_x = 6;
+	pixel_y = 7
 	},
-/obj/item/storage/box/monkeycubes,
+/obj/item/storage/box/monkeycubes{
+	pixel_x = -5;
+	pixel_y = 0
+	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
 "tbd" = (
@@ -55577,9 +55582,7 @@
 /obj/structure/closet/radiation,
 /obj/machinery/airalarm{
 	dir = 8;
-	step_x = 1;
-	step_y = 0;
-	pixel_x = 23
+	pixel_x = 24
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/genetics)
