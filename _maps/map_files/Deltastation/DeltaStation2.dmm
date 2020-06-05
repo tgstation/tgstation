@@ -114103,6 +114103,11 @@
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/central)
+"nlV" = (
+/obj/structure/sign/warning/securearea,
+/obj/structure/sign/departments/chemistry,
+/turf/closed/wall/r_wall,
+/area/medical/chemistry)
 "npR" = (
 /obj/structure/table,
 /obj/item/storage/secure/safe{
@@ -116202,6 +116207,12 @@
 	},
 /turf/open/floor/plasteel,
 /area/science/mixing)
+"woc" = (
+/obj/structure/sign/warning/bodysposal{
+	pixel_y = 0
+	},
+/turf/closed/wall,
+/area/medical/morgue)
 "wpB" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden{
 	dir = 4
@@ -156842,7 +156853,7 @@ wMZ
 fYL
 dHE
 dIV
-inw
+nlV
 wPT
 mie
 dNO
@@ -157615,7 +157626,7 @@ dCy
 dCy
 dCy
 pSL
-dCy
+woc
 dCy
 dLa
 dMz
