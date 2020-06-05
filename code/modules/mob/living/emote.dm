@@ -511,17 +511,12 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
-
-/datum/emote/living/bababooey/can_run_emote(mob/living/user, status_check = TRUE , intentional)
-	. = ..()
-	if(. && iscarbon(user))
-		var/mob/living/carbon/C = user
-		return !C.silent
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/bababooey/get_sound(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			else
@@ -534,17 +529,12 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
-
-/datum/emote/living/fafafooey/can_run_emote(mob/living/user, status_check = TRUE , intentional)
-	. = ..()
-	if(. && iscarbon(user))
-		var/mob/living/carbon/C = user
-		return !C.silent
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/fafafooey/get_sound(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			else
@@ -557,17 +547,12 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
-
-/datum/emote/living/fafafoggy/can_run_emote(mob/living/user, status_check = TRUE , intentional)
-	. = ..()
-	if(. && iscarbon(user))
-		var/mob/living/carbon/C = user
-		return !C.silent
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/fafafoggy/get_sound(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			else
@@ -580,17 +565,12 @@
 	emote_type = EMOTE_AUDIBLE
 	muzzle_ignore = FALSE
 	vary = TRUE
-
-/datum/emote/living/hohohoy/can_run_emote(mob/living/user, status_check = TRUE , intentional)
-	. = ..()
-	if(. && iscarbon(user))
-		var/mob/living/carbon/C = user
-		return !C.silent
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
 
 /datum/emote/living/hohohoy/get_sound(mob/living/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.dna.species.id == "human" && (!H.mind || !H.mind.miming))
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			else
@@ -600,5 +580,12 @@
 	key = "ffff"
 	key_third_person = "ffffs"
 	message = "spews something untelligble."
+	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
-	sound = 'sound/voice/human/ffff.ogg'
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/ffff/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			return 'sound/voice/human/ffff.ogg'
