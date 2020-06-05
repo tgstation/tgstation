@@ -197,10 +197,13 @@
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/proc/infest(mob/living/carbon/human/H)
 	visible_message("<span class='warning'>[name] burrows into the flesh of [H]!</span>")
 	var/mob/living/simple_animal/hostile/asteroid/hivelord/legion/L
-	if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
-		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
+	if (brood_type == /mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/snow)
+		L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow(H.loc) 			//basically if is snow head thing no else if dwarf legion thing no else normal legion, and yes i hate myself for doing it
 	else
-		L = new(H.loc)
+		if(HAS_TRAIT(H, TRAIT_DWARF)) //dwarf legions aren't just fluff!
+			L = new /mob/living/simple_animal/hostile/asteroid/hivelord/legion/dwarf(H.loc)
+		else
+			L = new(H.loc)
 	visible_message("<span class='warning'>[L] staggers to [L.p_their()] feet!</span>")
 	H.death()
 	H.adjustBruteLoss(1000)
