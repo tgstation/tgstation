@@ -297,7 +297,7 @@
 	sound_effect = 'sound/effects/dismember.ogg'
 	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 	severity = WOUND_SEVERITY_LOSS
-	threshold_minimum = 150
+	threshold_minimum = 180
 	status_effect_type = null
 
 /datum/wound/brute/cut/loss/apply_wound(obj/item/bodypart/L, silent, datum/wound/brute/cut/old_wound, smited = FALSE)

@@ -618,6 +618,9 @@
 	if(generic_bleedstacks > 0)
 		bleed_rate++
 
+	if(brute_dam >= 40)
+		bleed_rate += (brute_dam * 0.008)
+
 	//We want an accurate reading of .len
 	listclearnulls(embedded_objects)
 	for(var/obj/item/embeddies in embedded_objects)
