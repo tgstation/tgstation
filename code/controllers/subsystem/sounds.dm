@@ -107,8 +107,14 @@ SUBSYSTEM_DEF(sounds)
 	reserved_channels -= text_channel
 	// push reserve index up, which makes it now on a channel that is reserved
 	channel_reserve_high++
-	// swap the reserved channel wtih the unreserved channel so the reserve index is now on an unoccupied channel
+	// swap the reserved channel wtih the unreserved channel so the reserve index is now on an unoccupied channel and the freed channel is next to be used.
 	channel_list.Swap(channel_reserve_high, index)
+	// now, an existing reserved channel will likely (exception: unreserving last reserved channel) be at index
+	// get it, and update position.
+	var/text_reserved = num2text(channel_list[index])
+	if(!reserved_channels[text_reserved])				//if it isn't already reserved make sure we don't accidently mistakenly put it on reserved list!
+		return
+	reserved_channels[text_reserved] = index
 
 /// Random available channel, returns text.
 /datum/controller/subsystem/sounds/proc/random_available_channel_text()
