@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - code_imp: "Added some unit tests for cards, hopefully you'll see fun things with this soon."
