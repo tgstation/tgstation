@@ -1,3 +1,5 @@
+#define OPEN_DURATION 6
+#define CLOSE_DURATION 6
 
 // A place where tube pods stop, and people can get in or out.
 // Mappers: use "Generate Instances from Directions" for this
@@ -18,9 +20,6 @@
 	var/reverse_launch = FALSE
 	var/base_icon = "station0"
 	var/boarding_dir //from which direction you can board the tube
-
-	var/const/OPEN_DURATION = 6
-	var/const/CLOSE_DURATION = 6
 
 /obj/structure/transit_tube/station/New()
 	..()

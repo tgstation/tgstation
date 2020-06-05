@@ -1,9 +1,10 @@
+#define FAILED_DB_CONNECTION_CUTOFF 5
+
 SUBSYSTEM_DEF(dbcore)
 	name = "Database"
 	flags = SS_BACKGROUND
 	wait = 1 MINUTES
 	init_order = INIT_ORDER_DBCORE
-	var/const/FAILED_DB_CONNECTION_CUTOFF = 5
 	var/failed_connection_timeout = 0
 
 	var/schema_mismatch = 0
