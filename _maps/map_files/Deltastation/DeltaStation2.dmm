@@ -98646,10 +98646,10 @@
 /area/medical/morgue)
 "dEZ" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot,
 /obj/machinery/shower{
 	dir = 1
 	},
-/obj/effect/turf_decal/bot,
 /turf/open/floor/plasteel,
 /area/medical/morgue)
 "dFb" = (
