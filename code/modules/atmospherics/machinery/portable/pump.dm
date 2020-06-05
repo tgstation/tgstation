@@ -63,7 +63,7 @@
 		receiving = (holding ? holding.air_contents : air_contents)
 
 
-	if(sending.pump_gas_to(receiving, pressure_limit) && !holding)
+	if(sending.pump_gas_to(receiving, target_pressure) && !holding)
 		air_update_turf() // Update the environment if needed.
 
 /obj/machinery/portable_atmospherics/pump/emp_act(severity)
