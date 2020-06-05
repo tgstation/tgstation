@@ -581,15 +581,6 @@ generate/load female uniform sprites matching all previously decided variables
 		. += "-coloured-[dna.features["mcolor"]]"
 	else
 		. += "-not_coloured"
-	var/G = MALE
-	switch(gender)
-		if(MALE)
-			G = "m"
-		if(FEMALE)
-			G = "f"
-		else
-			G = (body_type == MALE ? "m" : "f")
-	. += "-[G]"
 
 	. += "-[body_type]"
 
