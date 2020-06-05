@@ -498,23 +498,14 @@ GLOBAL_LIST_EMPTY(species_list)
 
 //Used in chemical_mob_spawn. Generates a random mob based on a given gold_core_spawnable value.
 /proc/create_random_mob(spawn_location, mob_class = HOSTILE_SPAWN)
-	var/static/list/mob_spawn_meancritters = list() // list of possible hostile mobs
-	var/static/list/mob_spawn_nicecritters = list() // and possible friendly mobs
+	var/static/list/mob_spawn_critters = list() // list of possible mobs
 
-	if(mob_spawn_meancritters.len <= 0 || mob_spawn_nicecritters.len <= 0)
-		for(var/T in typesof(/mob/living/simple_animal))
-			var/mob/living/simple_animal/SA = T
-			switch(initial(SA.gold_core_spawnable))
-				if(HOSTILE_SPAWN)
-					mob_spawn_meancritters += T
-				if(FRIENDLY_SPAWN)
-					mob_spawn_nicecritters += T
+	for(var/T in typesof(/mob/living/simple_animal))
+		var/mob/living/simple_animal/SA = T
+		if(initial(SA.gold_core_spawnable) == mob_class)
+			mob_spawn_critters += T
 
-	var/chosen
-	if(mob_class == FRIENDLY_SPAWN)
-		chosen = pick(mob_spawn_nicecritters)
-	else
-		chosen = pick(mob_spawn_meancritters)
+	var/chosen = pick(mob_spawn_critters)
 	var/mob/living/simple_animal/C = new chosen(spawn_location)
 	return C
 
