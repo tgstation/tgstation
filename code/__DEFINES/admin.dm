@@ -114,3 +114,7 @@
 
 //How many things you can spawn at once with spawn verb/create panel
 #define ADMIN_SPAWN_CAP 100
+
+// LOG BROWSE TYPES
+#define BROWSE_ROOT_ALL_LOGS 1
+#define BROWSE_ROOT_CURRENT_LOGS 2

@@ -14,7 +14,7 @@
 	var/sound/S = sound(get_sfx(soundin))
 	var/maxdistance = (world.view + extrarange)
 	var/source_z = turf_source.z
-	var/list/listeners = SSmobs.clients_by_zlevel[source_z]
+	var/list/listeners = SSmobs.clients_by_zlevel[source_z].Copy()
 
 	var/turf/above_turf = SSmapping.get_turf_above(turf_source)
 	var/turf/below_turf = SSmapping.get_turf_below(turf_source)
