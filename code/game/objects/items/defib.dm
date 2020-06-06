@@ -571,9 +571,9 @@
 						fail_reason = "Patient's soul appears to be on another plane of existence. Further attempts futile."
 					if (DEFIB_FAIL_NO_HEART)
 						fail_reason = "Patient's heart is missing."
-					if (DEFIB_FAIL_FAILING_HEART, DEFIB_FAIL_HUSK)
+					if (DEFIB_FAIL_FAILING_HEART)
 						fail_reason = "Patient's heart too damaged, replace or repair and try again."
-					if (DEFIB_FAIL_TISSUE_DAMAGE)
+					if (DEFIB_FAIL_TISSUE_DAMAGE, DEFIB_FAIL_HUSK)
 						fail_reason = "Tissue damage too severe, repair and try again."
 					if (DEFIB_FAIL_FAILING_BRAIN)
 						fail_reason = "Patient's brain is too damaged, repair and try again."
