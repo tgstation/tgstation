@@ -33,7 +33,7 @@
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// The list of wounds it belongs in, WOUND_TYPE_BONE, WOUND_TYPE_CUT, or WOUND_TYPE_BURN
+	/// The list of wounds it belongs in, WOUND_LIST_BONE, WOUND_LIST_CUT, or WOUND_LIST_BURN
 	var/wound_type
 
 	/// What body zones can we affect
@@ -314,5 +314,3 @@
 			return "Severe"
 		if(WOUND_SEVERITY_CRITICAL)
 			return "Critical"
-
-/datum/wound/brute

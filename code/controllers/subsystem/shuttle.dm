@@ -1,7 +1,4 @@
 #define MAX_TRANSIT_REQUEST_RETRIES 10
-#define STUB_TOE_BASELINE_TIME 35 MINUTES // after this many minutes our chances of stubbing our toe are at 0%
-#define STUB_TOE_MULT_GREEN	1.5
-#define STUB_TOE_MULT_BLUE	1.25
 
 SUBSYSTEM_DEF(shuttle)
 	name = "Shuttle"
@@ -243,23 +240,6 @@ SUBSYSTEM_DEF(shuttle)
 	frequency.post_signal(src, status_signal)
 
 	var/area/A = get_area(user)
-
-	if(iscarbon(user) && security_num != SEC_LEVEL_DELTA)
-		var/mob/living/carbon/comdom = user
-		var/minutes_into_shift = round((world.time - SSticker.round_start_time) / 60)
-		var/stub_chance = STUB_TOE_BASELINE_TIME - minutes_into_shift
-		switch(security_num)
-			if(SEC_LEVEL_GREEN)
-				stub_chance *= STUB_TOE_MULT_GREEN
-			if(SEC_LEVEL_BLUE)
-				stub_chance *= STUB_TOE_MULT_BLUE
-
-		if(prob(stub_chance))
-			var/obj/item/bodypart/leg = comdom.get_bodypart(pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG))
-			if(leg)
-				var/datum/wound/brute/stubbed_toe/stub = new
-				comdom.visible_message("<span class='danger'>[comdom] stubs [comdom.p_their()] toe on the communications console, justifying the shuttle call!</span>", "<span class='danger'><b>Ow! You stubbed your toe on the communications console!</b></span>")
-				stub.apply_wound(leg, silent=TRUE)
 
 	log_shuttle("[key_name(user)] has called the emergency shuttle.")
 	deadchat_broadcast(" has called the shuttle at <span class='name'>[A.name]</span>.", "<span class='name'>[user.real_name]</span>", user, message_type=DEADCHAT_ANNOUNCEMENT)
@@ -911,6 +891,3 @@ SUBSYSTEM_DEF(shuttle)
 					log_admin("[key_name(usr)] loaded [mdp] with the shuttle manipulator.</span>")
 					SSblackbox.record_feedback("text", "shuttle_manipulator", 1, "[mdp.name]")
 
-#undef STUB_TOE_BASELINE_TIME
-#undef STUB_TOE_MULT_GREEN
-#undef STUB_TOE_MULT_BLUE

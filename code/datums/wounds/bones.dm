@@ -9,7 +9,7 @@
 */
 /datum/wound/brute/bone
 	sound_effect = 'sound/effects/crack1.ogg'
-	wound_type = WOUND_TYPE_BONE
+	wound_type = WOUND_LIST_BONE
 
 	/// The item we're currently splinted with, if there is one
 	var/obj/item/stack/splinted

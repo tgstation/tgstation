@@ -6,7 +6,7 @@
 /datum/wound/brute/cut
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
-	wound_type = WOUND_TYPE_CUT
+	wound_type = WOUND_LIST_CUT
 	treatable_by = list(/obj/item/stack/medical/suture, /obj/item/stack/medical/gauze)
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY

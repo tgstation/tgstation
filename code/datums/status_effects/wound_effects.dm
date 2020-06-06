@@ -114,14 +114,6 @@
 	var/datum/wound/linked_wound
 	alert_type = NONE
 
-/datum/status_effect/wound/Destroy()
-	STOP_PROCESSING(SSfastprocess, src)
-	if(owner)
-		LAZYREMOVE(owner.status_effects, src)
-		on_remove()
-		owner = null
-	return ..()
-
 /datum/status_effect/wound/on_creation(mob/living/new_owner, incoming_wound)
 	. = ..()
 	var/datum/wound/W = incoming_wound

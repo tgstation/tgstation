@@ -255,9 +255,7 @@
 	if(!iscarbon(owner))
 		return
 	var/mob/living/carbon/C = owner
-	for(var/i in C.all_scars)
-		var/datum/scar/S = i
-		qdel(S)
+	QDEL_LIST(C.all_scars)
 
 /obj/screen/alert/status_effect/fleshmend
 	name = "Fleshmend"

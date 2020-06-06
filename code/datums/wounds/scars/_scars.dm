@@ -27,7 +27,6 @@
 	if(limb)
 		LAZYREMOVE(limb.scars, src)
 	if(victim)
-		to_chat(victim, "<span class='notice'>You feel the scars on your [limb.name] fade away!</span>")
 		LAZYREMOVE(victim.all_scars, src)
 	. = ..()
 

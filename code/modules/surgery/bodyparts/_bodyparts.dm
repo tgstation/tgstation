@@ -253,17 +253,18 @@
 
 	switch(woundtype)
 		if(WOUND_SHARP)
-			wounds_checking = WOUND_TYPE_CUT
+			wounds_checking = WOUND_LIST_CUT
 		if(WOUND_BRUTE)
-			wounds_checking = WOUND_TYPE_BONE
+			wounds_checking = WOUND_LIST_BONE
 		if(WOUND_BURN)
-			wounds_checking = WOUND_TYPE_BURN
+			wounds_checking = WOUND_LIST_BURN
 
 	//var/datum/wound/W
 	for(var/PW in wounds_checking)
 		var/datum/wound/possible_wound = PW
 		var/datum/wound/replaced_wound
-		for(var/datum/wound/existing_wound in wounds)
+		for(var/i in wounds)
+			var/datum/wound/existing_wound = i
 			if(existing_wound.type in wounds_checking)
 				if(existing_wound.severity >= initial(possible_wound.severity))
 					return
@@ -281,7 +282,8 @@
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart
 /obj/item/bodypart/proc/force_wound_upwards(specific_woundtype, smited = FALSE)
 	var/datum/wound/potential_wound = specific_woundtype
-	for(var/datum/wound/existing_wound in wounds)
+	for(var/i in wounds)
+		var/datum/wound/existing_wound = i
 		if(existing_wound.type in (initial(potential_wound.wound_type)))
 			if(existing_wound.severity < initial(potential_wound.severity)) // we only try if the existing one is inferior to the one we're trying to force
 				existing_wound.replace_wound(potential_wound, smited)
