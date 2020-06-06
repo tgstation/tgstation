@@ -368,22 +368,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	return TRUE
 
-//////////////////////////////
-//Distance procs
-//////////////////////////////
-
-//Distance associates with all directions movement
-/turf/proc/Distance(var/turf/T)
-	return get_dist(src,T)
-
-//  This Distance proc assumes that only cardinal movement is
-//  possible. It results in more efficient (CPU-wise) pathing
-//  for bots and anything else that only moves in cardinal dirs.
-/turf/proc/Distance_cardinal(turf/T)
-	if(!src || !T)
-		return FALSE
-	return abs(x - T.x) + abs(y - T.y)
-
 ////////////////////////////////////////////////////
 
 /turf/singularity_act()

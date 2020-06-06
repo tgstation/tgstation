@@ -822,12 +822,12 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 	catch
 		return
 
-/proc/num2loadingbar(percent as num, var/numSquares = 20, var/reverse = FALSE) 
-	var/loadstring = "" 
-	for (var/i in 1 to numSquares) 
+/proc/num2loadingbar(percent as num, var/numSquares = 20, var/reverse = FALSE)
+	var/loadstring = ""
+	for (var/i in 1 to numSquares)
 		var/limit = reverse ? numSquares - percent*numSquares : percent*numSquares
-		if (i <= limit) 
-			loadstring += "█" 
-		else 
-			loadstring += "░" 
-	return "\[" + loadstring + "]" 
+		if (i <= limit)
+			loadstring += "█"
+		else
+			loadstring += "░"
+	return "\[" + loadstring + "]"
