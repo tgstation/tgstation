@@ -875,7 +875,7 @@
 	if (BR.suicided || BR.brainmob.suiciding)
 		return DEFIB_FAIL_SUICIDE
 
-	return TRUE
+	return DEFIB_POSSIBLE
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))

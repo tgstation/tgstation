@@ -444,7 +444,7 @@
 		do_harm(H, user)
 		return
 
-	if(H.can_defib() == TRUE)
+	if(H.can_defib() == DEFIB_POSSIBLE)
 		H.notify_ghost_cloning("Your heart is being defibrillated!")
 		H.grab_ghost() // Shove them back in their body.
 
