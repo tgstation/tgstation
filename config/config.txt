@@ -462,7 +462,7 @@ MINUTE_CLICK_LIMIT 400
 
 
 ## Allow admin hrefs that don't use the new token system, will eventually be removed
-DEBUG_ADMIN_HREFS
+#DEBUG_ADMIN_HREFS
 
 ###Master Controller High Pop Mode###
 

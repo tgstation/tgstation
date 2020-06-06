@@ -3,18 +3,20 @@
 /datum/bank_account
 	var/account_holder = "Rusty Venture"
 	var/account_balance = 0
+	var/payday_modifier
 	var/datum/job/account_job
 	var/list/bank_cards = list()
 	var/add_to_accounts = TRUE
 	var/account_id
 	var/being_dumped = FALSE //pink levels are rising
 
-/datum/bank_account/New(newname, job)
+/datum/bank_account/New(newname, job, modifier = 1)
 	if(add_to_accounts)
 		SSeconomy.bank_accounts += src
 	account_holder = newname
 	account_job = job
 	account_id = rand(111111,999999)
+	payday_modifier = modifier
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
@@ -48,7 +50,7 @@
 	return FALSE
 
 /datum/bank_account/proc/payday(amt_of_paychecks, free = FALSE)
-	var/money_to_transfer = account_job.paycheck * amt_of_paychecks
+	var/money_to_transfer = account_job.paycheck * payday_modifier * amt_of_paychecks
 	if(free)
 		adjust_money(money_to_transfer)
 		SSblackbox.record_feedback("amount", "free_income", money_to_transfer)

@@ -323,6 +323,10 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 					stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
 					continue
 				ruleset.vars[variable] = rule_conf[variable]
+		if(CONFIG_GET(flag/protect_roles_from_antagonist))
+			ruleset.restricted_roles |= ruleset.protected_roles
+		if(CONFIG_GET(flag/protect_assistant_from_antagonist))
+			ruleset.restricted_roles |= "Assistant"
 	for(var/i in GLOB.new_player_list)
 		var/mob/dead/new_player/player = i
 		if(player.ready == PLAYER_READY_TO_PLAY && player.mind)
@@ -576,6 +580,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/datum/dynamic_ruleset/rule = sent_rule
 	spend_threat(rule.cost)
 	threat_log += "[worldtime2text()]: [rule.ruletype] [rule.name] spent [rule.cost]"
+	rule.pre_execute()
 	if (rule.execute())
 		log_game("DYNAMIC: Injected a [rule.ruletype == "latejoin" ? "latejoin" : "midround"] ruleset [rule.name].")
 		if(rule.flags & HIGHLANDER_RULESET)

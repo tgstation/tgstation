@@ -64,7 +64,7 @@
 								"<span class='danger'>You avoid [M]'s punch!</span>", "<span class='hear'>You hear a swoosh!</span>", COMBAT_MESSAGE_RANGE, M)
 				to_chat(M, "<span class='warning'>Your punch misses [name]!</span>")
 		if("disarm")
-			if(!IsUnconscious())
+			if(stat < UNCONSCIOUS)
 				M.do_attack_animation(src, ATTACK_EFFECT_DISARM)
 				if (prob(25))
 					Paralyze(40)

@@ -237,7 +237,7 @@
 			else //Already set by admins/something else?
 				nuke_team.memorized_code = nuke.r_code
 		else
-			stack_trace("Station self destruct not found during lone op team creation.")
+			stack_trace("Station self-destruct not found during lone op team creation.")
 			nuke_team.memorized_code = null
 
 /datum/antagonist/nukeop/reinforcement

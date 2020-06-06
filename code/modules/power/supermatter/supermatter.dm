@@ -19,7 +19,7 @@
 #define CO2_HEAT_PENALTY 0.1
 #define NITROGEN_HEAT_PENALTY -1.5
 #define BZ_HEAT_PENALTY 5
-#define H2O_HEAT_PENALTY 8  //still under testing, but should be enough to make a lot of heat
+#define H2O_HEAT_PENALTY 8
 #define FREON_HEAT_PENALTY -10 //very good heat absorbtion and less plasma and o2 generation
 #define HYDROGEN_HEAT_PENALTY 10 // similar heat penalty as tritium (dangerous)
 
@@ -31,14 +31,13 @@
 #define BZ_TRANSMIT_MODIFIER -2
 #define TRITIUM_TRANSMIT_MODIFIER 30 //We divide by 10, so this works out to 3
 #define PLUOXIUM_TRANSMIT_MODIFIER -5 //Should halve the power output
-#define H2O_TRANSMIT_MODIFIER -9
+#define H2O_TRANSMIT_MODIFIER 2
 #define HYDROGEN_TRANSMIT_MODIFIER 25 //increase the radiation emission, but less than the trit (2.5)
 
 #define BZ_RADIOACTIVITY_MODIFIER 5 //Improves the effect of transmit modifiers
 
 #define N2O_HEAT_RESISTANCE 6          //Higher == Gas makes the crystal more resistant against heat damage.
 #define PLUOXIUM_HEAT_RESISTANCE 3
-#define H2O_HEAT_RESISTANCE 10
 #define HYDROGEN_HEAT_RESISTANCE 2 // just a bit of heat resistance to spice it up
 
 #define POWERLOSS_INHIBITION_GAS_THRESHOLD 0.20         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
@@ -157,10 +156,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/h2obonus = 0
 	///it allows us to remove the power generation while freon is inside the chamber
 	var/freonbonus = 1
-	///used when calculating if the h2o "malus" is applied, the malus is an increase in power, waste gases and heat (wich is bad if not ready) also now used when calculating amount of radiations
-	var/h2omalus = 1
-	///fix for the heat penalty, making it work differently at different %
-	var/h2ofixed = 0.5
 
 	///The last air sample's total molar count, will always be above or equal to 0
 	var/combined_gas = 0
@@ -301,23 +296,26 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	integrity = integrity < 0 ? 0 : integrity
 	return integrity
 
+/obj/machinery/power/supermatter_crystal/update_overlays()
+	. = ..()
+	if(final_countdown)
+		. += "casuality_field"
+
 /obj/machinery/power/supermatter_crystal/proc/countdown()
 	set waitfor = FALSE
 
 	if(final_countdown) // We're already doing it go away
 		return
 	final_countdown = TRUE
-
-	var/image/causality_field = image(icon, null, "causality_field")
-	add_overlay(causality_field, TRUE)
+	update_icon()
 
 	var/speaking = "[emergency_alert] The supermatter has reached critical integrity failure. Emergency causality destabilization field has been activated."
 	radio.talk_into(src, speaking, common_channel, language = get_selected_language())
 	for(var/i in SUPERMATTER_COUNTDOWN_TIME to 0 step -10)
 		if(damage < explosion_point) // Cutting it a bit close there engineers
 			radio.talk_into(src, "[safe_alert] Failsafe has been disengaged.", common_channel)
-			cut_overlay(causality_field, TRUE)
 			final_countdown = FALSE
+			update_icon()
 			return
 		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy
 			sleep(10)
@@ -361,6 +359,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			var/obj/singularity/energy_ball/E = new(T)
 			E.energy = power
 	investigate_log("has exploded.", INVESTIGATE_SUPERMATTER)
+	//Dear mappers, balance the sm max explosion radius to 17.5, 37, 39, 41
 	explosion(get_turf(T), explosion_power * max(gasmix_power_ratio, 0.205) * 0.5 , explosion_power * max(gasmix_power_ratio, 0.205) + 2, explosion_power * max(gasmix_power_ratio, 0.205) + 4 , explosion_power * max(gasmix_power_ratio, 0.205) + 6, 1, 1)
 	qdel(src)
 
@@ -480,34 +479,16 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			pluoxiumbonus = 0
 
-		if (h2ocomp >= 0.35 && h2ocomp <= 0.45) //heat protection from h2o only works when it's between 35 and 45%
-			h2obonus = 1
-		else
-			h2obonus = 0
-
 		if(freoncomp <= 0.03)
 			freonbonus = 1
 		else
 			freonbonus = 0 //stop any power generation by removing radiation output
 
-		switch(h2ocomp)
-			if (-INFINITY to 0.05) //non h2o delamination fix
-				h2omalus = 1
-			if(0.05 to 0.45) //the engine will stop producing power from 5% to 45% h2o (slow down the o2 and plasma generation too)
-				h2omalus = 0.05
-			if (0.45 to INFINITY)
-				h2omalus = 2  //when gas comp is above 0.45 the engine will start to freak out
-
-		switch(h2ocomp)  //variability in the h2o penalty calculation depending on the %
-			if(-INFINITY to 0.30)
-				h2ofixed = 1
-			if(0.30 to 0.50)
-				h2ofixed = 0.5
-			if(0.5 to INFINITY)
-				h2ofixed = 2
+		h2obonus = 1 - (h2ocomp * 0.25)//At max this value should be 0.75
 
 		//No less then zero, and no greater then one, we use this to do explosions and heat to power transfer
-		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp + h2comp - pluoxiumcomp - n2comp - freoncomp) * h2omalus), 0), 1)
+		//Be very careful with modifing this var by large amounts, and for the love of god do not push it past 1
+		gasmix_power_ratio = min(max(((plasmacomp + o2comp + co2comp + h2ocomp + tritiumcomp + bzcomp + h2comp - pluoxiumcomp - n2comp - freoncomp)), 0), 1)
 		//Minimum value of 1.5, maximum value of 23
 		dynamic_heat_modifier = plasmacomp * PLASMA_HEAT_PENALTY
 		dynamic_heat_modifier += o2comp * OXYGEN_HEAT_PENALTY
@@ -518,21 +499,20 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		dynamic_heat_modifier += bzcomp * BZ_HEAT_PENALTY
 		dynamic_heat_modifier += freoncomp * FREON_HEAT_PENALTY
 		dynamic_heat_modifier += h2comp * HYDROGEN_HEAT_PENALTY
-		dynamic_heat_modifier *= h2omalus
-		dynamic_heat_modifier += h2ocomp * H2O_HEAT_PENALTY * h2ofixed
+		dynamic_heat_modifier += h2ocomp * H2O_HEAT_PENALTY
+		dynamic_heat_modifier *= h2obonus
 		dynamic_heat_modifier = max(dynamic_heat_modifier, 0.5)
 		//Value between 1 and 10
-		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((h2ocomp * H2O_HEAT_RESISTANCE) * h2obonus) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus) + (h2comp * HYDROGEN_HEAT_RESISTANCE), 1)
+		dynamic_heat_resistance = max((n2ocomp * N2O_HEAT_RESISTANCE) + ((pluoxiumcomp * PLUOXIUM_HEAT_RESISTANCE) * pluoxiumbonus) + (h2comp * HYDROGEN_HEAT_RESISTANCE), 1)
 		//Value between 30 and -5, used to determine radiation output as it concerns things like collectors
 		power_transmission_bonus = plasmacomp * gas_trans["PL"]
 		power_transmission_bonus += o2comp * gas_trans["O2"]
-		power_transmission_bonus += (h2ocomp * gas_trans["WV"])*h2obonus
+		power_transmission_bonus += (h2ocomp * gas_trans["WV"])
 		power_transmission_bonus += bzcomp * gas_trans["BZ"]
 		power_transmission_bonus += tritiumcomp * gas_trans["TRIT"]
 		power_transmission_bonus += (pluoxiumcomp * gas_trans["PLX"]) * pluoxiumbonus
 		power_transmission_bonus += h2comp * gas_trans["H2"]
-		power_transmission_bonus *= h2omalus
-
+		power_transmission_bonus *= h2obonus
 		//more moles of gases are harder to heat than fewer, so let's scale heat damage around them
 		mole_heat_penalty = max(combined_gas / MOLE_HEAT_PENALTY, 0.25)
 

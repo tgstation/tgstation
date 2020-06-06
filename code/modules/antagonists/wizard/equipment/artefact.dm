@@ -8,7 +8,7 @@
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "render"
-	item_state = "knife"
+	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	force = 15
@@ -197,7 +197,7 @@
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "necrostone"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY
@@ -276,7 +276,7 @@
 	desc = "Something creepy about it."
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "voodoo"
-	item_state = "electronic"
+	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/misc/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/misc/devices_righthand.dmi'
 	var/mob/living/carbon/human/target = null

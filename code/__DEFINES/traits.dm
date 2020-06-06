@@ -76,6 +76,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 */
 
 //mob traits
+#define TRAIT_KNOCKEDOUT		"knockedout" //Forces the user to stay unconscious.
 #define TRAIT_INCAPACITATED		"incapacitated"
 #define TRAIT_BLIND 			"blind"
 #define TRAIT_MUTE				"mute"
@@ -257,6 +258,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define GLASSES_TRAIT "glasses"
 #define VEHICLE_TRAIT "vehicle" // inherited from riding vehicles
 #define INNATE_TRAIT "innate"
+#define CRIT_HEALTH_TRAIT "crit_health"
+#define OXYLOSS_TRAIT "oxyloss"
 
 // unique trait sources, still defines
 #define CLONING_POD_TRAIT "cloning-pod"

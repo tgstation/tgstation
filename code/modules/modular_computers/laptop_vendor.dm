@@ -260,7 +260,7 @@
 			say("Insufficient credits on card to purchase!")
 			return
 		credits += target_credits
-		say("[target_credits] cr has been desposited from your account.")
+		say("[target_credits] cr has been deposited from your account.")
 		return
 	return ..()
 
