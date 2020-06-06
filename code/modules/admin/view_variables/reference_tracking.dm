@@ -12,10 +12,6 @@
 /proc/clear_references(datum/D)
 	return
 
-/datum/Del()
-	clear_references(src)
-	..()
-
 /client/verb/view_refs(atom/D) //it actually supports datums as well but byond no likey
 	set category = "Debug"
 	set name = "View References"
