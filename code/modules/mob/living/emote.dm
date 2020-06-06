@@ -579,7 +579,7 @@
 /datum/emote/living/ffff
 	key = "ffff"
 	key_third_person = "ffffs"
-	message = "spews something untelligble."
+	message = "spews something unintelligible."
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
