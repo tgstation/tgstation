@@ -3,7 +3,7 @@
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
-//Misc Medal hub IDs
+//Misc Medal DB IDs
 #define MEDAL_METEOR 			"Your Life Before Your Eyes"
 #define MEDAL_PULSE 			"Jackpot"
 #define MEDAL_TIMEWASTE 		"Overextended The Joke"
@@ -25,13 +25,15 @@
 #define MEDAL_LOOKOUTSIR		"Look Out, Sir!"
 #define MEDAL_GOTTEM			"GOTTEM"
 
-//Skill medal hub IDs
+//Skill medal DB IDs
 #define MEDAL_LEGENDARY_MINER		"Legendary Miner"
 
+//Holiday medal DB IDs
+#define MEDAL_SUMMER_2020		"Summer 2020"
 
 //Boss medals
 
-// Medal hub IDs for boss medals (Pre-fixes)
+// Medal DB IDs for boss medals (Pre-fixes)
 #define BOSS_MEDAL_ANY		  "Boss Killer"
 #define BOSS_MEDAL_MINER	  "Blood-drunk Miner Killer"
 #define BOSS_MEDAL_FROSTMINER "Demonic-frost Miner Killer"
@@ -56,7 +58,7 @@
 #define BOSS_MEDAL_WENDIGO_CRUSHER		"Wendigo Crusher"
 #define BOSS_MEDAL_KINGGOAT_CRUSHER		"King Goat Crusher"
 
-// Medal hub IDs for boss-kill scores
+// Medal DB IDs for boss-kill scores
 #define BOSS_SCORE 	         "Bosses Killed"
 #define MINER_SCORE 		 "BDMs Killed"
 #define FROST_MINER_SCORE 	 "DFMs Killed"
