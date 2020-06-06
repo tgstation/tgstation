@@ -169,7 +169,9 @@
 
 /obj/effect/particle_effect/foam/proc/spread_foam()
 	var/turf/t_loc = get_turf(src)
-	for(var/turf/T in t_loc.reachableAdjacentTurfs())
+	for(var/turf/T in t_loc.atmos_adjacent_turfs)
+		if(isspaceturf(T))
+			continue
 		var/obj/effect/particle_effect/foam/foundfoam = locate() in T //Don't spread foam where there's already foam!
 		if(foundfoam)
 			continue
