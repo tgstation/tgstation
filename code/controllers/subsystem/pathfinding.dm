@@ -156,51 +156,54 @@ Actual Adjacent procs :
 #define PF_TIEBREAKER 0.005
 //tiebreker weight.To help to choose between equal paths
 //////////////////////
-//datum/PathNode object
+//datum/path_node object
 //////////////////////
-#define MASK_ODD 85
-#define MASK_EVEN 170
 
+/**
+  * A node used for the A* "family" of pathfinding algorithms.
+  */
+/datum/path_node
+	/// The turf we represent
+	var/turf/turf
+	/// The previous path_node we're from
+	var/datum/path_node/previous
+	/// A* node weight
+	var/weight
+	/// Movement cost from the start of the pathfind to us
+	var/cost
+	/// Heuristic of cost needed to get to end.
+	var/heuristic
+	/// Our node depth
+	var/depth
+	/// Dir to expand in.
+	var/expansion_dir
 
-//A* nodes variables
-/datum/PathNode
-	var/turf/source //turf associated with the PathNode
-	var/datum/PathNode/prevNode //link to the parent PathNode
-	var/f		//A* Node weight (f = g + h)
-	var/g		//A* movement cost variable
-	var/h		//A* heuristic variable
-	var/nt		//count the number of Nodes traversed
-	var/bf		//bitflag for dir to expand.Some sufficiently advanced motherfuckery
+/datum/path_node/New(turf, previous, cost, heuristic, depth, expansion_dir)
+	src.turf = turf
+	src.previous = previous
+	src.weight = cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT
+	src.cost = cost
+	src.heuristic = heuristic
+	src.depth = depth
+	src.expansion_dir = expansion_dir
 
-/datum/PathNode/New(s,p,pg,ph,pnt,_bf)
-	source = s
-	prevNode = p
-	g = pg
-	h = ph
-	f = g + h*(1+ PF_TIEBREAKER)
-	nt = pnt
-	bf = _bf
-
-/datum/PathNode/proc/setp(p,pg,ph,pnt)
-	prevNode = p
-	g = pg
-	h = ph
-	f = g + h*(1+ PF_TIEBREAKER)
-	nt = pnt
-
-/datum/PathNode/proc/calc_f()
-	f = g + h
+/datum/path_node/proc/set_previous(new_previous, new_cost, new_heuristic, new_depth)
+	previous = new_previous
+	cost = new_cost
+	heuristic = new_heuristic
+	depth = new_depth
+	f=  cost * new_heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT
 
 //////////////////////
 //A* procs
 //////////////////////
 
 //the weighting function, used in the A* algorithm
-/proc/PathWeightCompare(datum/PathNode/a, datum/PathNode/b)
+/proc/PathWeightCompare(datum/path_node/a, datum/path_node/b)
 	return a.f - b.f
 
 //reversed so that the Heap is a MinHeap rather than a MaxHeap
-/proc/HeapPathWeightCompare(datum/PathNode/a, datum/PathNode/b)
+/proc/HeapPathWeightCompare(datum/path_node/a, datum/path_node/b)
 	return b.f - a.f
 
 //wrapper that returns an empty list if A* failed to find a path
@@ -245,7 +248,7 @@ Actual Adjacent procs :
 	var/list/openc = new() //open list for node check
 	var/list/path = null //the returned path, if any
 	//initialization
-	var/datum/PathNode/cur = new /datum/PathNode(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
+	var/datum/path_node/cur = new /datum/path_node(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
 	//then run the main loop
@@ -273,8 +276,8 @@ Actual Adjacent procs :
 				if(cur.bf & f)
 					var/T = get_step(cur.source,f)
 					if(T != exclude)
-						var/datum/PathNode/CN = openc[T]  //current checking turf
-						var/r=((f & MASK_ODD)<<1)|((f & MASK_EVEN)>>1) //getting reverse direction throught swapping even and odd bits.((f & 01010101)<<1)|((f & 10101010)>>1)
+						var/datum/path_node/CN = openc[T]  //current checking turf
+						var/r= REVERSE_DIR(f)
 						var/newg = cur.g + call(cur.source,dist)(T)
 
 						if(CN)
