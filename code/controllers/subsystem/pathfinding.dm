@@ -1,3 +1,5 @@
+// This file contains the pathfinding subsystem and all base procs related to pathfinding.
+
 SUBSYSTEM_DEF(pathfinding)
 	name = "Pathfinding"
 	init_order = INIT_ORDER_PATH
@@ -37,6 +39,7 @@ SUBSYSTEM_DEF(pathfinding)
 
 #define CARDINAL_METRIC(A, B)		(abs(A.x - B.x) + abs(A.y - B.y))
 #define DIAGONAL_METRIC(A, B)		get_dist(A, B)
+#define DIST(A, B)					(diagonal_allowed? DIAGONAL_METRIC(A, B) : CARDINAL_METRIC(A, B))
 
 /**
   * Warns and logs when a pathfinding operation times out. Since we don't want to add more overhead, we can't terminate it early, but we can record it.
@@ -44,6 +47,41 @@ SUBSYSTEM_DEF(pathfinding)
 /datum/controller/subsystem/pathfinding/proc/warn_overtime(message)
 	message_admins("Pathfinding Timeout: [message]")
 	CRASH(message)
+
+/**
+  * A node used for the A* "family" of pathfinding algorithms.
+  */
+/datum/path_node
+	/// The turf we represent
+	var/turf/turf
+	/// The previous path_node we're from
+	var/datum/path_node/previous
+	/// A* node weight
+	var/weight
+	/// Movement cost from the start of the pathfind to us
+	var/cost
+	/// Heuristic of cost needed to get to end.
+	var/heuristic
+	/// Our node depth
+	var/depth
+	/// Dir to expand in.
+	var/expansion_dir
+
+/datum/path_node/New(turf, previous, cost, heuristic, depth, expansion_dir)
+	src.turf = turf
+	src.previous = previous
+	src.weight = cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT
+	src.cost = cost
+	src.heuristic = heuristic
+	src.depth = depth
+	src.expansion_dir = expansion_dir
+
+/datum/path_node/proc/set_previous(new_previous, new_cost, new_heuristic, new_depth)
+	previous = new_previous
+	cost = new_cost
+	heuristic = new_heuristic
+	depth = new_depth
+	f=  cost * new_heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT
 
 /**
   * Runs a pathfind with jump point search, a variant of A* with much, much higher performance.
@@ -92,6 +130,7 @@ SUBSYSTEM_DEF(pathfinding)
 
 #undef CARDINAL_METRIC
 #undef DIAGONAL_METRIC
+#undef DIST
 
 // TURF PROCS - Should these be inlined later? Would be a loss of customization.. but uh, proccall overhead hurts!
 /**
@@ -153,46 +192,6 @@ Actual Adjacent procs :
 	/turf/proc/reachableAdjacentAtmosTurfs : returns turfs in cardinal directions reachable via atmos
 
 */
-#define PF_TIEBREAKER 0.005
-//tiebreker weight.To help to choose between equal paths
-//////////////////////
-//datum/path_node object
-//////////////////////
-
-/**
-  * A node used for the A* "family" of pathfinding algorithms.
-  */
-/datum/path_node
-	/// The turf we represent
-	var/turf/turf
-	/// The previous path_node we're from
-	var/datum/path_node/previous
-	/// A* node weight
-	var/weight
-	/// Movement cost from the start of the pathfind to us
-	var/cost
-	/// Heuristic of cost needed to get to end.
-	var/heuristic
-	/// Our node depth
-	var/depth
-	/// Dir to expand in.
-	var/expansion_dir
-
-/datum/path_node/New(turf, previous, cost, heuristic, depth, expansion_dir)
-	src.turf = turf
-	src.previous = previous
-	src.weight = cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT
-	src.cost = cost
-	src.heuristic = heuristic
-	src.depth = depth
-	src.expansion_dir = expansion_dir
-
-/datum/path_node/proc/set_previous(new_previous, new_cost, new_heuristic, new_depth)
-	previous = new_previous
-	cost = new_cost
-	heuristic = new_heuristic
-	depth = new_depth
-	f=  cost * new_heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT
 
 //////////////////////
 //A* procs
@@ -200,11 +199,11 @@ Actual Adjacent procs :
 
 //the weighting function, used in the A* algorithm
 /proc/PathWeightCompare(datum/path_node/a, datum/path_node/b)
-	return a.f - b.f
+	return a.weight - b.weight
 
 //reversed so that the Heap is a MinHeap rather than a MaxHeap
 /proc/HeapPathWeightCompare(datum/path_node/a, datum/path_node/b)
-	return b.f - a.f
+	return b.weight - a.weight
 
 //wrapper that returns an empty list if A* failed to find a path
 /proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
@@ -258,42 +257,41 @@ Actual Adjacent procs :
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
-			closeenough = call(cur.source,dist)(end) <= mintargetdist
-
+			closeenough = call(cur.turf,dist)(end) <= mintargetdist
 
 		//found the target turf (or close enough), let's create the path to it
-		if(cur.source == end || closeenough)
+		if(cur.turf == end || closeenough)
 			path = new()
-			path.Add(cur.source)
-			while(cur.prevNode)
-				cur = cur.prevNode
-				path.Add(cur.source)
+			path.Add(cur.turf)
+			while(cur.previous)
+				cur = cur.previous
+				path.Add(cur.turf)
 			break
 		//get adjacents turfs using the adjacent proc, checking for access with id
 		if((!maxnodedepth)||(cur.nt <= maxnodedepth))//if too many steps, don't process that path
 			for(var/i = 0 to 3)
 				var/f= 1<<i //get cardinal directions.1,2,4,8
-				if(cur.bf & f)
-					var/T = get_step(cur.source,f)
+				if(cur.expansion_dir & f)
+					var/T = get_step(cur.turf,f)
 					if(T != exclude)
 						var/datum/path_node/CN = openc[T]  //current checking turf
 						var/r= REVERSE_DIR(f)
-						var/newg = cur.g + call(cur.source,dist)(T)
+						var/newg = cur.g + call(cur.turf,dist)(T)
 
 						if(CN)
 						//is already in open list, check if it's a better way from the current turf
-							CN.bf &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
-							if((newg < CN.g) )
-								if(call(cur.source,adjacent)(caller, T, id, simulated_only))
-									CN.setp(cur,newg,CN.h,cur.nt+1)
+							CN.expansion_dir &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
+							if((newg < CN.cost) )
+								if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
+									CN.set_previous(cur, newg, CN.heuristic, cur.depth+1)
 									open.ReSort(CN)//reorder the changed element in the list
 						else
 						//is not already in open list, so add it
-							if(call(cur.source,adjacent)(caller, T, id, simulated_only))
-								CN = new(T,cur,newg,call(T,dist)(end),cur.nt+1,15^r)
+							if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
+								CN = new(T, cur, newg, call(T,dist)(end), cur.depth+1, 15^r)
 								open.Insert(CN)
 								openc[T] = CN
-		cur.bf = 0
+		cur.expansion_dir = 0
 		CHECK_TICK
 	//reverse the path to get it from start to finish
 	if(path)
