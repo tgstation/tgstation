@@ -44,12 +44,14 @@
 		to_chat(user, "<span class='warning'>The devilish contract doesn't include the 'mind swappable' package, please try again another lifetime.</span>")
 		user.death(FALSE) //fancy suicide
 		user.ghostize(FALSE)
+		return
 
 	//You should not be able to enter a statue that is nearly indestructible
 	if(HAS_TRAIT_FROM(victim, TRAIT_MUTE, STATUE_MUTE)) // that means it is a statue okay?
 		to_chat(user, "<span class='warning'>Your mind leaves your body but the stone resists your influence stranding you in the ethereal plane!</span>")
 		user.death(FALSE) //fancy suicide
 		user.ghostize(FALSE)
+		return
 
 	//MIND TRANSFER BEGIN
 	var/mob/dead/observer/ghost = victim.ghostize()
