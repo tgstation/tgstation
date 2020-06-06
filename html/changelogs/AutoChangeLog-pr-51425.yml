@@ -1,4 +1,0 @@
-author: "Skoglol"
-delete-after: True
-changes: 
-  - bugfix: "Box gravity generator and AI core APC rewired to smes, will not run out roundstart anymore. P.A.C.M.A.N. added to grav gen for emergencies."

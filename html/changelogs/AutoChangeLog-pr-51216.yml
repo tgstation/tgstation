@@ -1,5 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes: 
-  - rscadd: "Cigarette packets now have coupons on the back for small cargo items! Smoking DOES pay!"
-  - tweak: "Single/small items in cargo have been rebranded as goodies, come in lockboxes rather than crates, and can only be purchased with private accounts. They also are immune to the 10% private account fee, obviously."

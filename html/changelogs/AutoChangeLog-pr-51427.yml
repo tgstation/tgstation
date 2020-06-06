@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes: 
-  - bugfix: "Neckgrabs and especially floor neckgrabs are no longer near impossible to escape."
-  - balance: "Resisting a grab is more consistent across the board, but you get less chances at resisting a grab and take more stamina damage."
