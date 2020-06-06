@@ -520,7 +520,25 @@
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
 			else
-				return 'sound/voice/human/bababooey.ogg'
+				return pick('sound/voice/human/bababooey.ogg', 'sound/voice/human/bababooey2.ogg')
+
+/datum/emote/living/babafooey
+	key = "babafooey"
+	key_third_person = "babafooeys"
+	message = "spews babafooey."
+	emote_type = EMOTE_AUDIBLE
+	muzzle_ignore = FALSE
+	vary = TRUE
+	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
+
+/datum/emote/living/babafooey/get_sound(mob/living/user)
+	if(isliving(user))
+		var/mob/living/L = user
+		if(!L.mind || !L.mind.miming)
+			if(user.is_muzzled())
+				return 'sound/voice/human/ffff.ogg'
+			else
+				return 'sound/voice/human/babafooey.ogg'
 
 /datum/emote/living/fafafooey
 	key = "fafafooey"
@@ -537,8 +555,10 @@
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
+			if(prob(10))
+				return 'sound/voice/human/fafafohowa.ogg'
 			else
-				return pick('sound/voice/human/fafafooey.ogg', 'sound/voice/human/fafafooey2.ogg')
+				return pick('sound/voice/human/fafafooey.ogg', 'sound/voice/human/fafafooey2.ogg', 'sound/voice/human/fafafooey3.ogg')
 
 /datum/emote/living/fafafoggy
 	key = "fafafoggy"
@@ -555,6 +575,8 @@
 		if(!L.mind || !L.mind.miming)
 			if(user.is_muzzled())
 				return 'sound/voice/human/ffff.ogg'
+			if(prob(10))
+				return 'sound/voice/human/fafafohowa.ogg'
 			else
 				return pick('sound/voice/human/fafafoggy.ogg', 'sound/voice/human/fafafoggy2.ogg')
 
@@ -579,7 +601,7 @@
 /datum/emote/living/ffff
 	key = "ffff"
 	key_third_person = "ffffs"
-	message = "spews something unintelligible."
+	message = "spews something softly."
 	emote_type = EMOTE_AUDIBLE
 	vary = TRUE
 	mob_type_allowed_typecache = list(/mob/living/carbon/human, /mob/living/brain, /mob/living/silicon)
