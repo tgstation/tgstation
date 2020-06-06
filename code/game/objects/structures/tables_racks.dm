@@ -30,7 +30,7 @@
 	var/framestackamount = 2
 	var/deconstruction_ready = 1
 	custom_materials = list(/datum/material/iron = 2000)
-	max_integrity = 100
+	max_integrity = 99999
 	integrity_failure = 0.33
 	smooth = SMOOTH_TRUE
 	canSmoothWith = list(/obj/structure/table, /obj/structure/table/reinforced, /obj/structure/table/greyscale)
@@ -283,7 +283,7 @@
 	icon_state = "glass_table"
 	buildstack = /obj/item/stack/sheet/glass
 	canSmoothWith = null
-	max_integrity = 70
+	max_integrity = 99999
 	resistance_flags = ACID_PROOF
 	armor = list("melee" = 0, "bullet" = 0, "laser" = 0, "energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 100)
 	var/list/debris = list()
@@ -363,7 +363,7 @@
 	framestack = /obj/item/stack/sheet/mineral/wood
 	buildstack = /obj/item/stack/sheet/mineral/wood
 	resistance_flags = FLAMMABLE
-	max_integrity = 70
+	max_integrity = 99999
 	canSmoothWith = list(/obj/structure/table/wood,
 		/obj/structure/table/wood/poker,
 		/obj/structure/table/wood/bar)
@@ -466,7 +466,7 @@
 	deconstruction_ready = 0
 	buildstack = /obj/item/stack/sheet/plasteel
 	canSmoothWith = list(/obj/structure/table/reinforced, /obj/structure/table)
-	max_integrity = 200
+	max_integrity = 99999
 	integrity_failure = 0.25
 	armor = list("melee" = 10, "bullet" = 30, "laser" = 30, "energy" = 100, "bomb" = 20, "bio" = 0, "rad" = 0, "fire" = 80, "acid" = 70)
 
@@ -571,7 +571,7 @@
 	density = TRUE
 	anchored = TRUE
 	pass_flags = LETPASSTHROW //You can throw objects over this, despite it's density.
-	max_integrity = 20
+	max_integrity = 99999
 
 /obj/structure/rack/examine(mob/user)
 	. = ..()
