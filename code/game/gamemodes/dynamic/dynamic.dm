@@ -286,7 +286,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 			configuration = json_decode(file2text(json_file))
 			if(configuration["Dynamic"])
 				for(var/variable in configuration["Dynamic"])
-					if(variable in vars)
+					if(!(variable in vars))
 						stack_trace("Invalid dynamic configuration variable [variable] in game mode variable changes.")
 						continue
 					vars[variable] = configuration["dynamic"][variable]
