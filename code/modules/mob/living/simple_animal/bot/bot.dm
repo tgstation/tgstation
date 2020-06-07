@@ -540,7 +540,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	var/datum/job/captain/All = new/datum/job/captain
 	all_access.access = All.get_access()
 
-	set_path(get_path_to(src, waypoint, /turf/proc/Distance_cardinal, 0, 200, id=all_access))
+	var/list/calcpath = SSpathfinding.JPS_pathfind(src, get_turf(src), get_turf(waypoint), null, PATHFINDING_HEURISTIC_MANHATTAN, 200, 0, 0, null, PATHFINDING_QUEUE_MOBS, all_access)
+	if(!islist(calcpath))
+		calcpath = list()
+	set_path(calcpath)
 	calling_ai = caller //Link the AI to the bot!
 	ai_waypoint = waypoint
 
@@ -756,17 +759,21 @@ Pass a positive integer as an argument to override a bot's default speed.
 
 // calculates a path to the current destination
 // given an optional turf to avoid
-/mob/living/simple_animal/bot/proc/calc_path(turf/avoid)
+/mob/living/simple_animal/bot/proc/calc_path()
 	check_bot_access()
-	set_path(get_path_to(src, patrol_target, /turf/proc/Distance_cardinal, 0, 120, id=access_card, exclude=avoid))
+	var/list/calcpath = SSpathfinding.JPS_pathfind(src, get-turf(src), get_turf(patrol_target), null, PATHFINDING_HEURISTIC_MANHATTAN, 120, 0, 0, null, PATHFINDING_QUEUE_MOBS, access_card)
+	if(!islist(calcpath))
+		calcpath = list()
+	set_path(calcpath)
 
-/mob/living/simple_animal/bot/proc/calc_summon_path(turf/avoid)
+/mob/living/simple_animal/bot/proc/calc_summon_path()
 	check_bot_access()
-	INVOKE_ASYNC(src, .proc/do_calc_summon_path, avoid)
+	INVOKE_ASYNC(src, .proc/do_calc_summon_path)
 
-/mob/living/simple_animal/bot/proc/do_calc_summon_path(turf/avoid)
-	set_path(get_path_to(src, summon_target, /turf/proc/Distance_cardinal, 0, 150, id=access_card, exclude=avoid))
+/mob/living/simple_animal/bot/proc/do_calc_summon_path()
+	path = SSpathfinding.JPS_pathfind(src, get-turf(src), get_turf(summon_target), null, PATHFINDING_HEURISTIC_MANHATTAN, 150, 0, 0, null, PATHFINDING_QUEUE_MOBS, access_card)
 	if(!length(path)) //Cannot reach target. Give up and announce the issue.
+		path = list()
 		speak("Summon command failed, destination unreachable.",radio_channel)
 		bot_reset()
 

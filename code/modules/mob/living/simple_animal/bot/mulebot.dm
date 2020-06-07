@@ -570,7 +570,10 @@
 // calculates a path to the current destination
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
-	path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 250, id=access_card, exclude=avoid)
+	#warn Took out turf/avoid support, maybe add automatic sidestepping?
+	path = SSpathfinding.JPS_pathfind(src, get_turf(src), target, null, PATHFINDING_HEURISTIC_MANHATTAN, 250, 0, null, null, PATHFINDING_QUEUE_MOBS, access_card)
+	if(!islist(path))
+		path = list()
 
 // sets the current destination
 // signals all beacons matching the delivery code

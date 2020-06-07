@@ -53,6 +53,7 @@ SUBSYSTEM_DEF(pathfinding)
 	message_admins("Pathfinding Timeout: [message]")
 	CRASH(message)
 
+#warn is it possible to inline this easily later because this is just unnecessary overhead
 /**
   * A node used for the A* "family" of pathfinding algorithms.
   */
@@ -95,8 +96,9 @@ SUBSYSTEM_DEF(pathfinding)
   * This is also not going to at times return as good/uniform of a path as normal A*
   * In general though, it won't matter much, so use this if you can, as this is an order of magnitude faster than A* proper.
   *
-  * Returns either a list of turfs forming a continuous path to the target or a list of turfs constituted of the nodes of the path found.
+  * Returns either a list of turfs forming a path to the target or a list of turfs constituted of the nodes of the path found.
   * If queue is full, returns PATHFIND_FAIL_QUEUE_FULL.
+  * **WARNING**: Unlike base AStar, this does not return a continuous list of turfs! You must handle this yourself, as this proc is already slow enough without adding the overhead of automatically converting this list into a continuous stream of turfs.
   *
   * @params
   * * caller - What called this. Can be null, datum, atom, whatever.
@@ -111,7 +113,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * queue - queue to put this in/use with this.
   * * ID - obj/item/card/id to provide access. why this uses an id card and not an access list, .. don't ask.
   */
-/datum/controller/subsystem/pathfinding/proc/JPS_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_nodes = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT)
+/datum/controller/subsystem/pathfinding/proc/JPS_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_nodes = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT, obj/item/card/id/ID)
 	if(!end)
 		. = PATHFIND_FAIL_NO_END_TURF
 		CRASH("No ending turf")
@@ -130,67 +132,50 @@ SUBSYSTEM_DEF(pathfinding)
 	deltimer(timerid)
 	queues[queue] -= timerid
 
-/datum/controller/subsystem/pathfinding/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, list/turf_blacklist_typecache)
+/datum/controller/subsystem/pathfinding/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
 
-#undef CARDINAL_METRIC
-#undef DIAGONAL_METRIC
-#undef EUCLIDEAN_METRIC
-#undef DIST
-
-// TURF PROCS - Should these be inlined later? Would be a loss of customization.. but uh, proccall overhead hurts!
 /**
-  * Returns whether or not a pathfinding operation with a specified caller can cross to another turf.
+  * Runs a pathfind with normal A*
+  * For 99.99% of applications, you probably want JPS, seen above.
+  * The reason A* is kept is because it's more likely to return a more optimized path.
+  * Plus, in the far unknown future because I am so, so sure someone will give a care about this, you can implement turf movement costs.
+  * However, for the most part, yeah haha nah, use JPS, not worth the CPU cost.
+  *
+  * @params
+  * * caller - What called this. Can be null, datum, atom, whatever.
+  * * start - turf to start on. If not set, defaults to caller's turf if it's an atom. If neither are set, the proc crashes.
+  * * end - turf to path to.
+  * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach)
+  * * heuristic type. see [code/__DEFINES/pathfinding.dm]
+  * * max_node_depth - maximum depth of nodes to search. 0 for infinite.
+  * * max_path_nodes - maximum nodes the returned path can be. 0 for infinite.
+  * * min_target_distance - minimum distance to target to terminate pathfinding. Used to get close to a target rather than to it.
+  * * turf_blacklist_typecache - blacklist typecache of turfs we can't cross no matter what. defaults to space tiles.
+  * * queue - queue to put this in/use with this.
+  * * ID - obj/item/card/id to provide access. why this uses an id card and not an access list, .. don't ask.
   */
-/turf/proc/pathfinding_can_cross(caller, turf/other, obj/item/card/id/ID, dir_to_other = get_dir(src, other))
-	if(dir_to_other & (dir_to_other - 1))		// diagonal check
-		#warn cardinal movement checks like how real diagonal movement works
-		return thing
-	// check density first. good litmus test.
-	if(other.density)
-		return FALSE
-	var/reverse_dir = REVERSE_DIR(dir_to_other)
-	// we should probably do all on edge objects but honestly can't be arsed right now
-	for(var/obj/structure/window/W in src)
-		if(!W.CanAStarPass(ID, dir_to_other))
-			return FALSE
-	for(var/obj/machinery/door/window/W in src)
-		if(!W.CanAStarPass(ID, dir_to_other))
-			return FALSE
-	for(var/obj/O in T)
-		if(!O.CanAStarPass(ID, reverse_dir, caller))
-			return FALSE
-	return TRUE
+/datum/controller/subsystem/pathfinding/proc/AStar_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_nodes = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT, obj/item/card/id/ID)
+	if(!end)
+		. = PATHFIND_FAIL_NO_END_TURF
+		CRASH("No ending turf")
+	if(!start)
+		start = get_turf(caller)
+		if(!start)
+			. = PATHFIND_FAIL_NO_START_TURF
+			CRASH("No starting turf")
+	LAZYINITLIST(queues[queue])
+	if(length(queues[queue]) > max_per_queue[queue])
+		return PATHFIND_FAIL_QUEUE_FULL
+	var/timeout = queue_timeouts[queue] || 10 SECONDS
+	var/timerid = addtimer(CALLBACK(src, .proc/warn_overtime, "AStar pathfind timed out over [timeout]: [caller], [COORD(start)], [COORD(end)], ..."), timeout, TIMER_STOPPABLE)
+	queues[queue] += timerid
+	. = run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, turf_blacklist_typecache)
+	deltimer(timerid)
+	queues[queue] -= timerid
 
-/*
-A Star pathfinding algorithm
-Returns a list of tiles forming a path from A to B, taking dense objects as well as walls, and the orientation of
-windows along the route into account.
-Use:
-your_list = AStar(start location, end location, moving atom, distance proc, max nodes, maximum node depth, minimum distance to target, adjacent proc, atom id, turfs to exclude, check only simulated)
-
-Optional extras to add on (in order):
-Distance proc : the distance used in every A* calculation (length of path and heuristic)
-MaxNodes: The maximum number of nodes the returned path can be (0 = infinite)
-Maxnodedepth: The maximum number of nodes to search (default: 30, 0 = infinite)
-Mintargetdist: Minimum distance to the target before path returns, could be used to get
-near a target, but not right to it - for an AI mob with a gun, for example.
-Adjacent proc : returns the turfs to consider around the actually processed node
-Simulated only : whether to consider unsimulated turfs or not (used by some Adjacent proc)
-
-Also added 'exclude' turf to avoid travelling over; defaults to null
-
-Actual Adjacent procs :
-
-	/turf/proc/reachableAdjacentTurfs : returns reachable turfs in cardinal directions (uses simulated_only)
-
-	/turf/proc/reachableAdjacentAtmosTurfs : returns turfs in cardinal directions reachable via atmos
-
-*/
-
-//////////////////////
-//A* procs
-//////////////////////
+/datum/controller/subsystem/pathfinding/proc/run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
+	PRIVATE_PROC(TRUE)
 
 //the weighting function, used in the A* algorithm
 /proc/PathWeightCompare(datum/path_node/a, datum/path_node/b)
@@ -209,17 +194,6 @@ Actual Adjacent procs :
 	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
 
 	SSpathfinder.mobs.found(l)
-	if(!path)
-		path = list()
-	return path
-
-/proc/cir_get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
-	var/l = SSpathfinder.circuits.getfree(caller)
-	while(!l)
-		stoplag(3)
-		l = SSpathfinder.circuits.getfree(caller)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-	SSpathfinder.circuits.found(l)
 	if(!path)
 		path = list()
 	return path
@@ -314,3 +288,32 @@ Actual Adjacent procs :
 			return TRUE
 
 	return FALSE
+
+#undef CARDINAL_METRIC
+#undef DIAGONAL_METRIC
+#undef EUCLIDEAN_METRIC
+#undef DIST
+
+// TURF PROCS - Should these be inlined later? Would be a loss of customization.. but uh, proccall overhead hurts!
+/**
+  * Returns whether or not a pathfinding operation with a specified caller can cross to another turf.
+  */
+/turf/proc/pathfinding_can_cross(caller, turf/other, obj/item/card/id/ID, dir_to_other = get_dir(src, other))
+	if(dir_to_other & (dir_to_other - 1))		// diagonal check
+		#warn cardinal movement checks like how real diagonal movement works
+		return thing
+	// check density first. good litmus test.
+	if(other.density)
+		return FALSE
+	var/reverse_dir = REVERSE_DIR(dir_to_other)
+	// we should probably do all on edge objects but honestly can't be arsed right now
+	for(var/obj/structure/window/W in src)
+		if(!W.CanAStarPass(ID, dir_to_other))
+			return FALSE
+	for(var/obj/machinery/door/window/W in src)
+		if(!W.CanAStarPass(ID, dir_to_other))
+			return FALSE
+	for(var/obj/O in T)
+		if(!O.CanAStarPass(ID, reverse_dir, caller))
+			return FALSE
+	return TRUE

@@ -243,12 +243,9 @@
 			path = list()
 			return
 		if(path.len == 0)
-			if(!isturf(target))
-				var/turf/TL = get_turf(target)
-				path = get_path_to(src, TL, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
-			else
-				path = get_path_to(src, target, /turf/proc/Distance_cardinal, 0, 30, id=access_card,simulated_only = FALSE)
-
+			path = SSpathfinding.JPS_pathfind(src, get-turf(src), get_turf(target), null, PATHFINDING_HEURISTIC_MANHATTAN, 30, 0, 0, list(), PATHFINDING_QUEUE_MOBS, access_card)
+			if(!islist(path))
+				path = list()
 			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null
