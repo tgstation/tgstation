@@ -66,6 +66,12 @@
 	description = "Who knows what lies within?"
 	suffix = "icemoon_underground_abandoned_village.dmm"
 
+/datum/map_template/ruin/icemoon/underground/syndicate_base
+	name = "Syndicate Ice Base"
+	id = "ice-base"
+	description = "A secret base researching illegal bioweapons, it is closely guarded by an elite team of syndicate agents."
+	suffix = "icemoon_underground_syndicate_base1.dmm"
+
 /datum/map_template/ruin/icemoon/underground/library
 	name = "Buried Library"
 	id = "buriedlibrary"
