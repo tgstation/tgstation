@@ -7,3 +7,10 @@
 
 /// extra weight applied to heuristic to tiebreaks when dealing with multiple equally good paths.
 #define PATHFINDING_HEURISTIC_TIEBREAKING_WEIGHT 0.005
+
+/// manhattan distance - cardinal moves only
+#define PATHFINDING_HEURISTIC_MANHATTAN				1
+/// byond distance - smallest number of alldir moves to get to location
+#define PATHFINDING_HEURISTIC_BYOND					2
+/// euclidean distance - sqrt(dx^2 + dy^2)
+#define PATHFINDING_HEURISTIC_EUCLIDEAN				3

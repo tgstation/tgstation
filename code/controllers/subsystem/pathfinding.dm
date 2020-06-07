@@ -26,6 +26,10 @@ SUBSYSTEM_DEF(pathfinding)
 	var/static/mutable_appearance/continuous_to_node = mutable_appearance('icons/debug/pathfinding_path.dmi', "continuous_solid")
 	var/static/mutable_appearance/arrow_terminated = mutable_appearance('icons/debug/pathfinding_path.dmi', "arrow_dotted")
 	var/static/mutable_appearance/continuous_terminated = mutable_appearance('icons/debug/pathfinding_path.dmi', "continuous_dotted")
+
+	var/static/loop_delay = 0.5
+	var/static/visualize_jps_linescanning = FALSE
+	var/static/visual_lifetime = 10 SECONDS
 #endif
 
 /datum/controller/subsystem/pathfinding/Initialize()
@@ -39,6 +43,7 @@ SUBSYSTEM_DEF(pathfinding)
 
 #define CARDINAL_METRIC(A, B)		(abs(A.x - B.x) + abs(A.y - B.y))
 #define DIAGONAL_METRIC(A, B)		get_dist(A, B)
+#define EUCLIDEAN_METRIC(A, B)		(sqrt((A.x - B.x)**2 + (A.y - B.y)**2))
 #define DIST(A, B)					(diagonal_allowed? DIAGONAL_METRIC(A, B) : CARDINAL_METRIC(A, B))
 
 /**
@@ -98,7 +103,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * start - turf to start on. If not set, defaults to caller's turf if it's an atom. If neither are set, the proc crashes.
   * * end - turf to path to.
   * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach)
-  * * diagonal_allowed - whether or not to allow diagonal moves. determines if we use manhattan distance (cardinals) or get_dist (diagonals). used to be a distance proc but proccall overhead bad.
+  * * heuristic type. see [code/__DEFINES/pathfinding.dm]
   * * max_node_depth - maximum depth of nodes to search. 0 for infinite.
   * * max_path_nodes - maximum nodes the returned path can be. 0 for infinite.
   * * min_target_distance - minimum distance to target to terminate pathfinding. Used to get close to a target rather than to it.
@@ -106,7 +111,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * queue - queue to put this in/use with this.
   * * ID - obj/item/card/id to provide access. why this uses an id card and not an access list, .. don't ask.
   */
-/datum/controller/subsystem/pathfinding/proc/JPS_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, diagonals_allowed = TRUE, max_node_depth = 30, max_path_nodes = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT)
+/datum/controller/subsystem/pathfinding/proc/JPS_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_nodes = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT)
 	if(!end)
 		. = PATHFIND_FAIL_NO_END_TURF
 		CRASH("No ending turf")
@@ -121,36 +126,26 @@ SUBSYSTEM_DEF(pathfinding)
 	var/timeout = queue_timeouts[queue] || 10 SECONDS
 	var/timerid = addtimer(CALLBACK(src, .proc/warn_overtime, "JPS pathfind timed out over [timeout]: [caller], [COORD(start)], [COORD(end)], ..."), timeout, TIMER_STOPPABLE)
 	queues[queue] += timerid
-	. = run_JPS_pathfind(caller, start, end, can_cross_proc, diagonals_allowed, max_node_depth, max_path_nodes, min_target_distance, turf_blacklist_typecache)
+	. = run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, turf_blacklist_typecache)
 	deltimer(timerid)
 	queues[queue] -= timerid
 
-/datum/controller/subsystem/pathfinding/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, diagonals_allowed, max_node_depth, max_path_nodes, min_target_distance, list/turf_blacklist_typecache)
+/datum/controller/subsystem/pathfinding/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, list/turf_blacklist_typecache)
 	PRIVATE_PROC(TRUE)
 
 #undef CARDINAL_METRIC
 #undef DIAGONAL_METRIC
+#undef EUCLIDEAN_METRIC
 #undef DIST
 
 // TURF PROCS - Should these be inlined later? Would be a loss of customization.. but uh, proccall overhead hurts!
 /**
-  * Generic heuristic distance for all directions movement.
-  * Byond get_dist
-  */
-/turf/proc/heuristic_distance_alldirs(turf/other)
-	return get_dist(src, other)
-
-/**
-  * Generic heuristic distance for cardinal movement only.
-  * Manhattan distance metric
-  */
-/turf/proc/heuristic_distance_cardinals(turf/other)
-	return abs(x - other.x) + abs(y - other.y)
-
-/**
   * Returns whether or not a pathfinding operation with a specified caller can cross to another turf.
   */
 /turf/proc/pathfinding_can_cross(caller, turf/other, obj/item/card/id/ID, dir_to_other = get_dir(src, other))
+	if(dir_to_other & (dir_to_other - 1))		// diagonal check
+		#warn cardinal movement checks like how real diagonal movement works
+		return thing
 	// check density first. good litmus test.
 	if(other.density)
 		return FALSE
@@ -240,14 +235,14 @@ Actual Adjacent procs :
 		return FALSE
 	if(maxnodes)
 		//if start turf is farther than maxnodes from end turf, no need to do anything
-		if(call(start, dist)(end) > maxnodes)
+		if(DIST(start, end) > maxnodes)
 			return FALSE
 		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
 	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
 	var/list/openc = new() //open list for node check
 	var/list/path = null //the returned path, if any
 	//initialization
-	var/datum/path_node/cur = new /datum/path_node(start,null,0,call(start,dist)(end),0,15,1)//current processed turf
+	var/datum/path_node/cur = new /datum/path_node(start,null,0,DIST(start, end),0,15,1)//current processed turf
 	open.Insert(cur)
 	openc[start] = cur
 	//then run the main loop
@@ -257,7 +252,7 @@ Actual Adjacent procs :
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
-			closeenough = call(cur.turf,dist)(end) <= mintargetdist
+			closeenough = DIST(cur.turf, end) <= mintargetdist
 
 		//found the target turf (or close enough), let's create the path to it
 		if(cur.turf == end || closeenough)
@@ -276,7 +271,7 @@ Actual Adjacent procs :
 					if(T != exclude)
 						var/datum/path_node/CN = openc[T]  //current checking turf
 						var/r= REVERSE_DIR(f)
-						var/newg = cur.g + call(cur.turf,dist)(T)
+						var/newg = cur.g + DIST(cur.turf, T)
 
 						if(CN)
 						//is already in open list, check if it's a better way from the current turf
@@ -288,7 +283,7 @@ Actual Adjacent procs :
 						else
 						//is not already in open list, so add it
 							if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
-								CN = new(T, cur, newg, call(T,dist)(end), cur.depth+1, 15^r)
+								CN = new(T, cur, newg, DIST(T, end), cur.depth+1, 15^r)
 								open.Insert(CN)
 								openc[T] = CN
 		cur.expansion_dir = 0
