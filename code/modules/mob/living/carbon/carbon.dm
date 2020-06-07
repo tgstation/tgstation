@@ -853,27 +853,31 @@
 	if ((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
-	var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
+	// Plasmamen do not need a heart to live
+	if (!isplasmaman(src))
+		var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
 
-	if (!heart)
-		return DEFIB_FAIL_NO_HEART
+		if (!heart)
+			return DEFIB_FAIL_NO_HEART
 
-	if (heart.organ_flags & ORGAN_FAILING)
-		return DEFIB_FAIL_FAILING_HEART
+		if (heart.organ_flags & ORGAN_FAILING)
+			return DEFIB_FAIL_FAILING_HEART
 
-	var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
+	// Carbons with HARS do not need a brain
+	if (!dna?.check_mutation(HARS))
+		var/obj/item/organ/brain/BR = getorgan(/obj/item/organ/brain)
 
-	if (QDELETED(BR))
-		return DEFIB_FAIL_NO_BRAIN
+		if (QDELETED(BR))
+			return DEFIB_FAIL_NO_BRAIN
 
-	if (BR.organ_flags & ORGAN_FAILING)
-		return DEFIB_FAIL_FAILING_BRAIN
+		if (BR.organ_flags & ORGAN_FAILING)
+			return DEFIB_FAIL_FAILING_BRAIN
 
-	if (!BR.brainmob)
-		return DEFIB_FAIL_NO_INTELLIGENCE
+		if (!BR.brainmob)
+			return DEFIB_FAIL_NO_INTELLIGENCE
 
-	if (BR.suicided || BR.brainmob.suiciding)
-		return DEFIB_FAIL_SUICIDE
+		if (BR.suicided || BR.brainmob.suiciding)
+			return DEFIB_FAIL_SUICIDE
 
 	return DEFIB_POSSIBLE
 
