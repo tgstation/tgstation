@@ -91,7 +91,7 @@ SUBSYSTEM_DEF(pathfinder)
 		__INJECTION_RIGHT = __INJECTION_LISTLEN; \
 		__INJECTION_MID = (__INJECTION_LEFT + __INJECTION_RIGHT) >> 1;\
 		while(__INJECTION_LEFT < __INJECTION_RIGHT) {\
-			if(nodelist[NODE_WEIGHT] >= heaplist[__INJECTION_MID][NODE_WEIGHT]) { \
+			if(nodelist[NODE_WEIGHT] <= heaplist[__INJECTION_MID][NODE_WEIGHT]) { \
 				__INJECTION_LEFT = __INJECTION_MID + 1; \
 			}; \
 			else{ \
@@ -159,7 +159,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/timerid = addtimer(CALLBACK(src, .proc/warn_overtime, "JPS pathfind timed out over [timeout]: [caller], [COORD(start)], [COORD(end)], ..."), timeout, TIMER_STOPPABLE)
 	queues[queue] += timerid
 	#warn USING BASE ASTAR FOR DEBUGGING
-	. = run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, turf_blacklist_typecache)
+	. = run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, turf_blacklist_typecache, ID)
 	deltimer(timerid)
 	queues[queue] -= timerid
 
@@ -207,7 +207,7 @@ SUBSYSTEM_DEF(pathfinder)
 			else { \
 				if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
 					CALCULATE_DISTANCE(expand_turf, end); \
-					SETUP_NODE(open, expand_turf, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
+					SETUP_NODE(open, current, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
 				}; \
 			}; \
 		}; \
@@ -248,7 +248,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/timeout = queue_timeouts[queue] || 10 SECONDS
 	var/timerid = addtimer(CALLBACK(src, .proc/warn_overtime, "AStar pathfind timed out over [timeout]: [caller], [COORD(start)], [COORD(end)], ..."), timeout, TIMER_STOPPABLE)
 	queues[queue] += timerid
-	. = run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, turf_blacklist_typecache)
+	. = run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, turf_blacklist_typecache, ID)
 	deltimer(timerid)
 	queues[queue] -= timerid
 
