@@ -81,17 +81,17 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/__INJECTING_NODE;
 
 /// Binary inserts a node into the node list. Snowflake implementation to avoid overhead, as this will never handle datums. Lowest weighted nodes go towards the end of the list as list.len-- is faster when popping.
-#define INJECT_NODE(list, nodelist) \
-	__INJECTION_LISTLEN = length(list); \
+#define INJECT_NODE(heaplist, nodelist) \
+	__INJECTION_LISTLEN = length(heaplist); \
 	if(!__INJECTION_LISTLEN) { \
-		list[++list.len] = nodelist; \
+		heaplist[++heaplist.len] = nodelist; \
 	}; \
 	else { \
 		__INJECTION_LEFT = 1; \
 		__INJECTION_RIGHT = __INJECTION_LISTLEN; \
 		__INJECTION_MID = (__INJECTION_LEFT + __INJECTION_RIGHT) >> 1;\
 		while(__INJECTION_LEFT < __INJECTION_RIGHT) {\
-			if(nodelist[NODE_WEIGHT] >= list[__INJECTION_MID][NODE_WEIGHT]) { \
+			if(nodelist[NODE_WEIGHT] >= heaplist[__INJECTION_MID][NODE_WEIGHT]) { \
 				__INJECTION_LEFT = __INJECTION_MID + 1; \
 			}; \
 			else{ \
@@ -99,7 +99,7 @@ SUBSYSTEM_DEF(pathfinder)
 			}; \
 			__INJECTION_MID = (__INJECTION_LEFT + __INJECTION_RIGHT) >> 1;\
 		}; \
-		list.Insert((nodelist[NODE_WEIGHT] > list[__INJECTION_MID][NODE_WEIGHT])? __INJECTION_MID : __INJECTION_MID + 1, nodelist) \
+		heaplist.Insert((nodelist[NODE_WEIGHT] > heaplist[__INJECTION_MID][NODE_WEIGHT])? __INJECTION_MID : __INJECTION_MID + 1, list(nodelist)) \
 	};
 
 /// Sets up a node list with these values
