@@ -761,7 +761,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/proc/calc_path()
 	check_bot_access()
-	var/list/calcpath = SSpathfinding.JPS_pathfind(src, get-turf(src), get_turf(patrol_target), null, PATHFINDING_HEURISTIC_MANHATTAN, 120, 0, 0, null, PATHFINDING_QUEUE_MOBS, access_card)
+	var/list/calcpath = SSpathfinding.JPS_pathfind(src, get_turf(src), get_turf(patrol_target), null, PATHFINDING_HEURISTIC_MANHATTAN, 120, 0, 0, null, PATHFINDING_QUEUE_MOBS, access_card)
 	if(!islist(calcpath))
 		calcpath = list()
 	set_path(calcpath)
@@ -771,7 +771,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 	INVOKE_ASYNC(src, .proc/do_calc_summon_path)
 
 /mob/living/simple_animal/bot/proc/do_calc_summon_path()
-	path = SSpathfinding.JPS_pathfind(src, get-turf(src), get_turf(summon_target), null, PATHFINDING_HEURISTIC_MANHATTAN, 150, 0, 0, null, PATHFINDING_QUEUE_MOBS, access_card)
+	path = SSpathfinding.JPS_pathfind(src, get_turf(src), get_turf(summon_target), null, PATHFINDING_HEURISTIC_MANHATTAN, 150, 0, 0, null, PATHFINDING_QUEUE_MOBS, access_card)
 	if(!length(path)) //Cannot reach target. Give up and announce the issue.
 		path = list()
 		speak("Summon command failed, destination unreachable.",radio_channel)

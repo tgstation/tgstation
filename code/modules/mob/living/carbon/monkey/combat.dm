@@ -30,7 +30,7 @@
 		return 0
 
 	if(myPath.len <= 0)
-		myPath = SSpathfinding.JPS_pathfind(src, get-turf(src), get_turf(target), null, PATHFINDING_HEURISTIC_BYOND, 30, MAX_RANGE_FIND + 1, 1, null, PATHFINDING_QUEUE_MOBS)
+		myPath = SSpathfinding.JPS_pathfind(src, get_turf(src), get_turf(target), null, PATHFINDING_HEURISTIC_BYOND, 30, MAX_RANGE_FIND + 1, 1, null, PATHFINDING_QUEUE_MOBS)
 
 	if(myPath)
 		if(myPath.len > 0)

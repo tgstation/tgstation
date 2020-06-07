@@ -41,10 +41,62 @@ SUBSYSTEM_DEF(pathfinding)
 	name = "pathfinding debug overlay"
 #endif
 
-#define CARDINAL_METRIC(A, B)		(abs(A.x - B.x) + abs(A.y - B.y))
-#define DIAGONAL_METRIC(A, B)		get_dist(A, B)
-#define EUCLIDEAN_METRIC(A, B)		(sqrt((A.x - B.x)**2 + (A.y - B.y)**2))
-#define DIST(A, B)					(diagonal_allowed? DIAGONAL_METRIC(A, B) : CARDINAL_METRIC(A, B))
+#define MANHATTAN(A, B)		(abs(A.x - B.x) + abs(A.y - B.y))
+#define BYOND(A, B)		get_dist(A, B)
+#define EUCLIDEAN(A, B)		(sqrt((A.x - B.x)**2 + (A.y - B.y)**2))
+
+// Let's sing the listmos song!
+
+/// Total size of node "list", which is indexed by turf.
+#define NODE_LIST_LENGTH 6
+/// Since we're using turfs, this is just the previous turf.
+#define NODE_PREVIOUS 1
+/// AStar node weight, lower is better, the list will be sorted by this
+#define NODE_WEIGHT 2
+/// Node cost from root
+#define NODE_COST 3
+/// Node heuristic cost to target
+#define NODE_HEURISTIC 4
+/// Node depth from root
+#define NODE_DEPTH 5
+/// Direction to expand in
+#define NODE_DIR 6
+
+// forgive me, for this (and everything below it) is a sin.
+#define SETUP_NODE(list, previous, cost, heuristic, depth, dir) \
+	var/list/__##list##previous##cost##heuristic##depth##dir = NODE(previous, cost, heuristic, depth, dir) \
+	INJECT_NODE(list, __##list##previous##cost##heuristic##depth##dir)
+
+/// Sets up variables needed for binary insert to avoid variable def overhead
+#define INJECTION_SETUP \
+	var/__INJECTION_LISTLEN; \
+	var/__INJECTION_LEFT; \
+	var/__INJECTION_RIGHT; \
+	var/__INJECTION_MID;
+
+/// Binary inserts a node into the node list. Snowflake implementation to avoid overhead, as this will never handle datums. Lowest weighted nodes go towards the end of the list as list.len-- is faster when popping.
+#define INJECT_NODE(list, nodelist) \
+	__INJECTION_LISTLEN = length(list); \
+	if(!__INJECTION_LISTLEN) { \
+		list[++__INJECTION_LISTLEN] = nodelist; \
+	}; \
+	else { \
+		__INJECTION_LEFT = 1; \
+		__INJECTION_RIGHT = __INJECTION_LISTLEN; \
+		__INJECTION_MID = (__INJECTION_LEFT + __INJECTION_RIGHT) >> 1;\
+		while(__INJECTION_LEFT < __INJECTION_RIGHT) {\
+			if(nodelist[NODE_WEIGHT] >= list[__INJECTION_MID][NODE_WEIGHT)]) { \		// if it's higher weight we want to put it at front of the list
+				__INJECTION_LEFT = __INJECTION_MID + 1; \
+			}; else{ \		// otherwise, put it at the back as popping with len-- is faster.
+				__INJECTION_RIGHT = __INJECTION_MID; \
+			}; \
+			__INJECTION_MID = (__INJECTION_LEFT + __INJECTION_RIGHT) >> 1;\
+		}; \
+		list.Insert(, nodelist) \
+	};
+
+/// Sets up a node list with these values
+#define NODE(previous, cost, heuristic, depth, dir) list(previous, cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT, cost, heuristic, depth, dir)
 
 /**
   * Warns and logs when a pathfinding operation times out. Since we don't want to add more overhead, we can't terminate it early, but we can record it.
@@ -52,42 +104,6 @@ SUBSYSTEM_DEF(pathfinding)
 /datum/controller/subsystem/pathfinding/proc/warn_overtime(message)
 	message_admins("Pathfinding Timeout: [message]")
 	CRASH(message)
-
-#warn is it possible to inline this easily later because this is just unnecessary overhead
-/**
-  * A node used for the A* "family" of pathfinding algorithms.
-  */
-/datum/path_node
-	/// The turf we represent
-	var/turf/turf
-	/// The previous path_node we're from
-	var/datum/path_node/previous
-	/// A* node weight
-	var/weight
-	/// Movement cost from the start of the pathfind to us
-	var/cost
-	/// Heuristic of cost needed to get to end.
-	var/heuristic
-	/// Our node depth
-	var/depth
-	/// Dir to expand in.
-	var/expansion_dir
-
-/datum/path_node/New(turf, previous, cost, heuristic, depth, expansion_dir)
-	src.turf = turf
-	src.previous = previous
-	src.weight = cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT
-	src.cost = cost
-	src.heuristic = heuristic
-	src.depth = depth
-	src.expansion_dir = expansion_dir
-
-/datum/path_node/proc/set_previous(new_previous, new_cost, new_heuristic, new_depth)
-	previous = new_previous
-	cost = new_cost
-	heuristic = new_heuristic
-	depth = new_depth
-	f=  cost * new_heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT
 
 /**
   * Runs a pathfind with jump point search, a variant of A* with much, much higher performance.
@@ -105,15 +121,15 @@ SUBSYSTEM_DEF(pathfinding)
   * * start - turf to start on. If not set, defaults to caller's turf if it's an atom. If neither are set, the proc crashes.
   * * end - turf to path to.
   * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach)
-  * * heuristic type. see [code/__DEFINES/pathfinding.dm]
+  * * heuristic_type - heuristic type of distance/cost calculations see [code/__DEFINES/pathfinding.dm]
   * * max_node_depth - maximum depth of nodes to search. 0 for infinite.
-  * * max_path_nodes - maximum nodes the returned path can be. 0 for infinite.
+  * * max_path_distance - maximum length of returned path using given heuristic can be. 0 for infinite.
   * * min_target_distance - minimum distance to target to terminate pathfinding. Used to get close to a target rather than to it.
   * * turf_blacklist_typecache - blacklist typecache of turfs we can't cross no matter what. defaults to space tiles.
   * * queue - queue to put this in/use with this.
   * * ID - obj/item/card/id to provide access. why this uses an id card and not an access list, .. don't ask.
   */
-/datum/controller/subsystem/pathfinding/proc/JPS_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_nodes = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT, obj/item/card/id/ID)
+/datum/controller/subsystem/pathfinding/proc/JPS_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_distance = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT, obj/item/card/id/ID)
 	if(!end)
 		. = PATHFIND_FAIL_NO_END_TURF
 		CRASH("No ending turf")
@@ -128,11 +144,11 @@ SUBSYSTEM_DEF(pathfinding)
 	var/timeout = queue_timeouts[queue] || 10 SECONDS
 	var/timerid = addtimer(CALLBACK(src, .proc/warn_overtime, "JPS pathfind timed out over [timeout]: [caller], [COORD(start)], [COORD(end)], ..."), timeout, TIMER_STOPPABLE)
 	queues[queue] += timerid
-	. = run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, turf_blacklist_typecache)
+	. = run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, turf_blacklist_typecache)
 	deltimer(timerid)
 	queues[queue] -= timerid
 
-/datum/controller/subsystem/pathfinding/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
+/datum/controller/subsystem/pathfinding/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
 
 /**
@@ -147,15 +163,15 @@ SUBSYSTEM_DEF(pathfinding)
   * * start - turf to start on. If not set, defaults to caller's turf if it's an atom. If neither are set, the proc crashes.
   * * end - turf to path to.
   * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach)
-  * * heuristic type. see [code/__DEFINES/pathfinding.dm]
+  * * heuristic_type - heuristic type of distance/cost calculations see [code/__DEFINES/pathfinding.dm]
   * * max_node_depth - maximum depth of nodes to search. 0 for infinite.
-  * * max_path_nodes - maximum nodes the returned path can be. 0 for infinite.
+  * * max_path_distance - maximum length of returned path using given heuristic can be. 0 for infinite.
   * * min_target_distance - minimum distance to target to terminate pathfinding. Used to get close to a target rather than to it.
   * * turf_blacklist_typecache - blacklist typecache of turfs we can't cross no matter what. defaults to space tiles.
   * * queue - queue to put this in/use with this.
   * * ID - obj/item/card/id to provide access. why this uses an id card and not an access list, .. don't ask.
   */
-/datum/controller/subsystem/pathfinding/proc/AStar_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_nodes = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT, obj/item/card/id/ID)
+/datum/controller/subsystem/pathfinding/proc/AStar_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_distance = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT, obj/item/card/id/ID)
 	if(!end)
 		. = PATHFIND_FAIL_NO_END_TURF
 		CRASH("No ending turf")
@@ -170,12 +186,46 @@ SUBSYSTEM_DEF(pathfinding)
 	var/timeout = queue_timeouts[queue] || 10 SECONDS
 	var/timerid = addtimer(CALLBACK(src, .proc/warn_overtime, "AStar pathfind timed out over [timeout]: [caller], [COORD(start)], [COORD(end)], ..."), timeout, TIMER_STOPPABLE)
 	queues[queue] += timerid
-	. = run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, turf_blacklist_typecache)
+	. = run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, turf_blacklist_typecache)
 	deltimer(timerid)
 	queues[queue] -= timerid
 
-/datum/controller/subsystem/pathfinding/proc/run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_nodes, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
+/datum/controller/subsystem/pathfinding/proc/run_AStar_pathfind(caller, turf/start, turf/end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
+	// We're going to assume everything is valid type-wise as we're only ran by a wrapper.
+	// If anything ISN'T valid, we're going to crash and burn, because why are you not using the wrapper and/or passing in invalid arguments?
+	// simple checks first
+	if(start.z != end.z)
+		return PATHFIND_FAIL_MULTIZ
+	// fun fact, variable declarations are costly, so let's just do it all here.
+	// we want to optimize for cpu so expect some messy code, these vars may or may not be used depending on where, they'll only be set and used if they're being used more than once to avoid more calculations.
+	var/current_distance		// current distance in whatever context it's used.
+	// if we have max path distance, make sure we're not too far
+	if(max_path_distance || min_target_distance)
+		switch(heuristic_type)
+			if(PATHFINDING_HEURISTIC_MANHATTAN)
+				current_distance = MANHATTAN(start_end)
+				if(current_distance > max_path_distance)
+					return PATHFIND_FAIL_TOO_FAR
+				if(current_distance < min_target_distance)
+					return PATHFIND_FAIL_TOO_CLOSE
+			if(PATHFINDING_HEURISTIC_BYOND)
+				current_distance = BYOND(start_end)
+				if(current_distance > max_path_distance)
+					return PATHFIND_FAIL_TOO_FAR
+				if(current_distance < min_target_distance)
+					return PATHFIND_FAIL_TOO_CLOSE
+			if(PATHFINDING_HEURISTIC_EUCLIDEAN)
+				current_distance = EUCLIDEAN(start_end)
+				if(current_distance > max_path_distance)
+					return PATHFIND_FAIL_TOO_FAR
+				if(current_distance < min_target_distance)
+					return PATHFIND_FAIL_TOO_CLOSE
+	// basic stuff is done.
+	// this used to use a datum/Heap but let's Not(tm) because proccall overhead is a Thing(tm) in byond and that's Bad(tm) for us.
+	// instead we're going to play the list game
+	INJECTION_SETUP // See defines
+	var/list/open = list()		// astar open node list, see defines
 
 //the weighting function, used in the A* algorithm
 /proc/PathWeightCompare(datum/path_node/a, datum/path_node/b)
@@ -185,33 +235,7 @@ SUBSYSTEM_DEF(pathfinding)
 /proc/HeapPathWeightCompare(datum/path_node/a, datum/path_node/b)
 	return b.weight - a.weight
 
-//wrapper that returns an empty list if A* failed to find a path
-/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
-	var/l = SSpathfinder.mobs.getfree(caller)
-	while(!l)
-		stoplag(3)
-		l = SSpathfinder.mobs.getfree(caller)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
-
-	SSpathfinder.mobs.found(l)
-	if(!path)
-		path = list()
-	return path
-
 /proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
-	//sanitation
-	var/turf/end = get_turf(_end)
-	var/turf/start = get_turf(caller)
-	if(!start || !end)
-		stack_trace("Invalid A* start or destination")
-		return FALSE
-	if( start.z != end.z || start == end ) //no pathfinding between z levels
-		return FALSE
-	if(maxnodes)
-		//if start turf is farther than maxnodes from end turf, no need to do anything
-		if(DIST(start, end) > maxnodes)
-			return FALSE
-		maxnodedepth = maxnodes //no need to consider path longer than maxnodes
 	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
 	var/list/openc = new() //open list for node check
 	var/list/path = null //the returned path, if any
@@ -271,12 +295,12 @@ SUBSYSTEM_DEF(pathfinding)
 	return path
 
 /turf/proc/reachableTurftest(caller, turf/T, ID, simulated_only)
-	if(T && !T.density && !(simulated_only && SSpathfinder.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
+	if(T && !T.density && !(simulated_only && SSpathfinding.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
 		return TRUE
 
 /turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
 	var/adir = get_dir(src, T)
-	var/rdir = ((adir & MASK_ODD)<<1)|((adir & MASK_EVEN)>>1)
+	var/rdir = REVERSE_DIR(adir)
 	for(var/obj/structure/window/W in src)
 		if(!W.CanAStarPass(ID, adir))
 			return TRUE
@@ -289,10 +313,9 @@ SUBSYSTEM_DEF(pathfinding)
 
 	return FALSE
 
-#undef CARDINAL_METRIC
-#undef DIAGONAL_METRIC
-#undef EUCLIDEAN_METRIC
-#undef DIST
+#undef MANHATTAN
+#undef BYOND
+#undef EUCLIDEAN
 
 // TURF PROCS - Should these be inlined later? Would be a loss of customization.. but uh, proccall overhead hurts!
 /**
