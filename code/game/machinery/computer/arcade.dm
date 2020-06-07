@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/list/enemy_passive_list = list("short temper","poisonous", "smart", "shotgun", "magical", "chonker")
 	///if all the enemy's weakpoints have been triggered becomes TRUE
 	var/finishing_move = FALSE
-	///linked to passives, when it's equal or above 3 finishing move will become TRUE
+	///linked to passives, when it's equal or above the max_passive finishing move will become TRUE
 	var/pissed_off = 0
 	///the number of passives the enemy will start with
 	var/max_passive = 3
@@ -197,7 +197,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	current_enemy_passive = list()
 
 	var/list/passive_available = enemy_passive_list.Copy()
-	while(length(current_enemy_passive) < 3)
+	while(length(current_enemy_passive) < max_passive)
 		var/picked_passive = pick(passive_available)
 		current_enemy_passive += picked_passive
 		passive_available -= picked_passive
@@ -207,6 +207,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 
 /obj/machinery/computer/arcade/battle/Reset()
+	max_passive = 3
 	var/name_action
 	var/name_part1
 	var/name_part2
@@ -261,10 +262,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		dat += "<center><b><a href='byond://?src=[REF(src)];power_attack=1'>Power attack</a>"
 
 	dat += "</b></center>"
-	var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
-	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
-	popup.open()
+	if(user.mind?.key) //mainly here to avoid a runtime when the player gets gibbed when losing the emag mode.
+		var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
+		popup.set_content(dat)
+		popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
+		popup.open()
 
 
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
@@ -324,7 +326,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	else if (href_list["newgame"]) //Reset everything
 		temp = "<br><center><h3>New Round<center><h3>"
-		enemy_setup()
 
 		if(obj_flags & EMAGGED)
 			Reset()
@@ -355,12 +356,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/battle/proc/enemy_action(player_stance,mob/user)
 	temp = ""
 
-	if(length(last_three_move) < max_passive) //we keep the last three action of the player in a list here
+	if(length(last_three_move) < 3) //we keep the last three action of the player in a list here
 		last_three_move += player_stance[2]
 
-	else if(length(last_three_move) == max_passive)
+	else if(length(last_three_move) == 3)
 		last_three_move -= last_three_move[1]
 		last_three_move += player_stance[2]
+
+	else if(length(last_three_move) > 3)
+		last_three_move = list() //this shouldn't even happen but we empty the list if it somehow goes above 3
 
 	var/enemy_stance
 	var/attack_amount = rand(8,10)
@@ -372,7 +376,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if("chonker" in current_enemy_passive)
 		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
 			temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
-			enemy_hp -= 40
+			enemy_hp -= 30
 
 //yeah I used the shotgun as a passive, you know why? because the shotgun gives +5 attack which is pretty good
 	if("shotgun" in current_enemy_passive)
@@ -396,7 +400,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		else if(player_stance["counter_attack"])
 			temp += "<br><center><h3>[enemy_name] is not taking your bait. <center><h3> "
 			if("short temper" in current_enemy_passive)
-				temp += "however controlling their hatred of you still takes a toll on their mental and physical health!"
+				temp += "However controlling their hatred of you still takes a toll on their mental and physical health!"
 				enemy_hp -= 5
 				enemy_mp -= 5
 			enemy_stance = "defensive"
@@ -423,18 +427,17 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			var success = pick(TRUE,FALSE)
 
 			if(success)
-				added_temp = "you!"
-				player_hp -= attack_amount * 2
-				enemy_hp -= attack_amount
+				added_temp = "you for [attack_amount + 5] damage!"
+				player_hp -= attack_amount + 5
 				enemy_stance = "attack"
 			if(!success)
-				added_temp = "the wall and breaks their skull in the process!" //[enemy_name] you have a literal dent in your skull
+				added_temp = "the wall and breaking their skull in the process!" //[enemy_name] you have a literal dent in your skull
 				enemy_hp -= attack_amount
 				enemy_stance = "attack"
 
 			temp += "<br><center><h3>[enemy_name] grits their teeth and charge right into [added_temp]<center><h3>"
 
-//in the case none of the previous passive triggered, doesn't have a weakpoint as its not linked to a passive
+//in the case none of the previous passive triggered, Mainly here to set an enemy stance for passives that needs it like the magical passive.
 	if(!enemy_stance)
 		enemy_stance = pick("attack","defensive")
 		if(enemy_stance == "attack")
@@ -452,7 +455,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			enemy_mp -= 15
 			enemy_hp += 5
 
-//magical passive trait
+//magical passive trait, recharges MP nearly every turn it's not blasting you with magic.
 	if("magical" in current_enemy_passive)
 		if(player_mp >= 50)
 			temp += "<br><center><h3>the huge amount of magical energy you have acumulated throws [enemy_name] off balance!<center><h3>"
@@ -467,8 +470,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if(enemy_hp >= 20 && enemy_mp >= 20 && enemy_stance == "defensive")
 			temp += "<br><center><h3>[enemy_name] Blasts you with magic from afar and gets hurt in the process!<center><h3>"
+			enemy_mp -= 20
 			enemy_hp -= 10
-			player_hp -= 15
+			player_hp -= 25
 
 		else if(enemy_hp < 20 && enemy_mp >= 20 && enemy_stance == "defensive") //it's a pretty expensive spell so they can't spam it that much
 			temp += "<br><center><h3>[enemy_name] heal themselves with magic and gain back 10 hp!<center><h3>"
@@ -494,9 +498,10 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	playsound(src, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3)
 
 	gameover_check(user)
+	screen_setup(user)
 	timer_id = null
 	blocked = FALSE
-	screen_setup(user)
+
 
 
 /obj/machinery/computer/arcade/battle/proc/gameover_check(mob/user)
@@ -532,7 +537,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
-			usr.gib()
+			user.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 
@@ -564,6 +569,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		return
 	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
+	max_passive = 6
 	enemy_setup()
 	screen_setup(user)
 	gameover = FALSE
