@@ -317,7 +317,7 @@
 	death = FALSE
 	random = TRUE
 	mob_species = /datum/species/human
-	short_desc = "You've been hunting polar bears for 40 years now! What do these "NaniteTrans" newcomers want?"
+	short_desc = "You've been hunting polar bears for 40 years now! What do these 'NaniteTrans' newcomers want?"
 	flavour_text = "You were fine hunting polar bears and taming wolves out here on your own, but now that there are corporate stooges around, you need to watch your step."
 	assignedrole = "Hermit"
 
