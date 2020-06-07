@@ -542,7 +542,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(length(last_three_move) < 3)
 		return FALSE
 
-	if(last_three_move[1] == first_move && last_three_move[2] == second_move && last_three_move[3] == third_move && passive in current_enemy_passive)
+	if(last_three_move[1] == first_move && last_three_move[2] == second_move && last_three_move[3] == third_move && (passive in current_enemy_passive))
 		current_enemy_passive -= passive
 		pissed_off++
 		return TRUE
