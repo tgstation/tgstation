@@ -141,6 +141,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		to_chat(user, "<span class='notice'>You turn in 2 tickets to the [src] and claim a prize!</span>")
 		return
 
+
 // ** BATTLE ** //
 
 
@@ -149,16 +150,61 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
+
 	var/enemy_name = "Space Villain"
-	var/temp = "Winners don't use space drugs" //Temporary message, for attack messages, etc
-	var/player_hp = 30 //Player health/attack points
-	var/player_mp = 10
-	var/enemy_hp = 45 //Enemy health/attack points
-	var/enemy_mp = 20
+	///Enemy health/attack points
+	var/enemy_hp = 100
+	var/enemy_mp = 40
+	///Temporary message, for attack messages, etc
+	var/temp = "<br><center><h3>Winners don't use space drugs<center><h3>"
+	///the list of passive skill the enemy currently has
+	var/list/current_enemy_passive = list()
+	///the list of passive skills the enemy can get
+	var/list/enemy_passive_list = list("short temper","poisonous", "smart", "shotgun", "magical", "chonker")
+	///if all the enemy's weakpoints have been triggered becomes TRUE
+	var/finishing_move = FALSE
+	///linked to passives, when it's equal or above 3 finishing move will become TRUE
+	var/pissed_off = 0
+	///the number of passives the enemy will start with
+	var/max_passive = 3
+	///weapon wielded by the enemy, the shotgun doesn't count.
+	var/chosen_weapon
+
+	///Player health/attack points
+	var/player_hp = 85
+	var/player_mp = 20
+	///used to remember the last move of the player before this turn
+	var/list/last_three_move = list()
 	var/gameover = FALSE
-	var/blocked = FALSE //Player cannot attack/heal while set
-	var/turtle = 0
+	///Player cannot attack/heal while set
+	var/blocked = FALSE
+	///used to clear the enemy_action proc timer when the game is restarted
+	var/timer_id
+	///TODO : use weapons in actions in some way or delete the list.
 	var/list/weapons = list()
+
+
+/obj/machinery/computer/arcade/battle/proc/enemy_setup()
+	player_hp = 85
+	player_mp = 20
+	enemy_hp = 100
+	enemy_mp = 40
+	gameover = FALSE
+	blocked = FALSE
+	finishing_move = FALSE
+	pissed_off = 0
+	last_three_move = list()
+	current_enemy_passive = list()
+
+	var/list/passive_available = enemy_passive_list.Copy()
+	while(length(current_enemy_passive) < 3)
+		var/picked_passive = pick(passive_available)
+		current_enemy_passive += picked_passive
+		passive_available -= picked_passive
+
+	if("chonker" in current_enemy_passive)
+		enemy_hp += 20
+
 
 /obj/machinery/computer/arcade/battle/Reset()
 	var/name_action
@@ -188,21 +234,31 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	enemy_name = ("The " + name_part1 + " " + name_part2)
 	name = (name_action + " " + enemy_name)
+	chosen_weapon = pick(weapons)
+
+	enemy_setup()
+
 
 /obj/machinery/computer/arcade/battle/ui_interact(mob/user)
 	. = ..()
+	screen_setup(user)
+
+
+///I prefer being able to set up the screen within my own proc instead of relying on ui_interact
+/obj/machinery/computer/arcade/battle/proc/screen_setup(mob/user)
 	var/dat = "<a href='byond://?src=[REF(src)];close=1'>Close</a>"
 	dat += "<center><h4>[enemy_name]</h4></center>"
 
-	dat += "<br><center><h3>[temp]</h3></center>"
+	dat += "[temp]"
 	dat += "<br><center>Health: [player_hp] | Magic: [player_mp] | Enemy Health: [enemy_hp]</center>"
 
 	if (gameover)
 		dat += "<center><b><a href='byond://?src=[REF(src)];newgame=1'>New Game</a>"
 	else
-		dat += "<center><b><a href='byond://?src=[REF(src)];attack=1'>Attack</a> | "
-		dat += "<a href='byond://?src=[REF(src)];heal=1'>Heal</a> | "
-		dat += "<a href='byond://?src=[REF(src)];charge=1'>Recharge Power</a>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];attack=1'>Light attack</a>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];defend=1'>Defend</a>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];counter_attack=1'>Counter attack</a>"
+		dat += "<center><b><a href='byond://?src=[REF(src)];power_attack=1'>Power attack</a>"
 
 	dat += "</b></center>"
 	var/datum/browser/popup = new(user, "arcade", "Space Villain 2000")
@@ -210,86 +266,248 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
 
+
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())
 		return
 
 	if (!blocked && !gameover)
-		var/gamerSkillLevel = usr.mind?.get_skill_level(/datum/skill/gaming)
 		var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
+		var/attackamt = rand(5,7) + rand(0, gamerSkill)
+
+		if(finishing_move) //time to bonk that fucker
+			attackamt *= 10
+			finishing_move = FALSE
+
 		if (href_list["attack"])
-			blocked = TRUE
-			var/attackamt = rand(2,6) + rand(0, gamerSkill)
-			var/weapon = pick(weapons)
-			temp = "You attack with a [weapon] for [attackamt] damage!"
-			playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-			updateUsrDialog()
-			if(turtle > 0)
-				turtle--
-
-			sleep(10)
+			temp = "<br><center><h3>you do quick jab for [attackamt] of damage!</h3></center>"
 			enemy_hp -= attackamt
-			arcade_action(usr)
+			arcade_action(usr,href_list,attackamt)
 
-		else if (href_list["heal"])
-			blocked = TRUE
-			var/maxPointCost = 3
-			if(gamerSkillLevel >= SKILL_LEVEL_JOURNEYMAN)
-				maxPointCost = 2
-			var/pointamt = rand(1, maxPointCost)
-			var/healamt = rand(6,8) + rand(0, gamerSkill)
-			temp = "You use [pointamt] magic to heal for [healamt] damage!"
-			playsound(loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-			updateUsrDialog()
-			turtle++
+//defend lets you gain back MP and take less damage from non magical attack.
+		else if(href_list["defend"])
+			temp = "<br><center><h3>you take a defensive stance and gain back 10 mp!</h3></center>"
+			player_mp += 10
+			arcade_action(usr,href_list,attackamt)
+			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-			sleep(10)
-			player_mp -= pointamt
-			player_hp += healamt
-			blocked = TRUE
-			updateUsrDialog()
-			arcade_action(usr)
+		//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
+		else if(href_list["counter_attack"] && player_mp >= 10)
+			temp = "<br><center><h3>you prepare yourself to counter the next attack!</h3></center>"
+			player_mp -= 10
+			arcade_action(usr,href_list,attackamt)
+			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-		else if (href_list["charge"])
-			blocked = TRUE
-			var/chargeamt = rand(4,7) + rand(0, gamerSkill)
-			temp = "You regain [chargeamt] points."
-			playsound(loc, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-			player_mp += chargeamt
-			if(turtle > 0)
-				turtle--
+		else if(href_list["counter_attack"] && player_mp < 10)
+			temp = "<br><center><h3>you don't have the mp necessary to counter attack and defend yourself instead</h3></center>"
+			href_list[2] = "defend"
+			player_mp += 10
+			arcade_action(usr,href_list,attackamt)
+			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-			updateUsrDialog()
-			sleep(10)
-			arcade_action(usr)
+		//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
+		else if (href_list["power_attack"] && player_mp >= 20)
+			temp = "<br><center><h3>You attack [enemy_name] with all your might for [attackamt * 2] damage!</h3></center>"
+			enemy_hp -= attackamt * 2
+			player_mp -= 20
+			arcade_action(usr,href_list,attackamt)
+
+		else if(href_list["power_attack"] && player_mp < 20)
+			temp = "<br><center><h3>You don't have the mp necessary for a power attack and settle for a light attack!</h3></center>"
+			href_list[2] = "attack"
+			enemy_hp -= attackamt
+			arcade_action(usr,href_list,attackamt)
 
 	if (href_list["close"])
 		usr.unset_machine()
 		usr << browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
-		temp = "New Round"
-		player_hp = 30
-		player_mp = 10
-		enemy_hp = 45
-		enemy_mp = 20
-		gameover = FALSE
-		turtle = 0
+		temp = "<br><center><h3>New Round<center><h3>"
+		enemy_setup()
 
 		if(obj_flags & EMAGGED)
 			Reset()
 			obj_flags &= ~EMAGGED
 
+		screen_setup(usr)
+
+
 	add_fingerprint(usr)
 	updateUsrDialog()
 	return
 
-/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user)
+
+/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user,href_list,attackamt)
+	screen_setup(user)
+	blocked = TRUE
+	if(href_list["attack"] || href_list["power_attack"])
+		if(attackamt > 40)
+			playsound(src, 'sound/arcade/boom.ogg', 50, TRUE, extrarange = -3)
+		else
+			playsound(src, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3)
+
+	timer_id = addtimer(CALLBACK(src, .proc/enemy_action,href_list,user),1 SECONDS,TIMER_STOPPABLE)
+	gameover_check(user)
+
+
+///the enemy turn, the enemy's action entirely depend on their current passive and a teensy tiny bit of randomness
+/obj/machinery/computer/arcade/battle/proc/enemy_action(player_stance,mob/user)
+	temp = ""
+
+	if(length(last_three_move) < max_passive) //we keep the last three action of the player in a list here
+		last_three_move += player_stance[2]
+
+	else if(length(last_three_move) == max_passive)
+		last_three_move -= last_three_move[1]
+		last_three_move += player_stance[2]
+
+	var/enemy_stance
+	var/attack_amount = rand(8,10)
+
+	if(player_stance["defend"])
+		attack_amount -= 5
+
+//heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
+	if("chonker" in current_enemy_passive)
+		if(weakpoint_check("chonker","power_attack","power_attack","power_attack"))
+			temp += "<br><center><h3>After a lot of power attacks you manage to tip over [enemy_name] as they fall over their enormous weight<center><h3> "
+			enemy_hp -= 40
+
+//yeah I used the shotgun as a passive, you know why? because the shotgun gives +5 attack which is pretty good
+	if("shotgun" in current_enemy_passive)
+		if(weakpoint_check("shotgun","defend","defend","power_attack"))
+			temp += "<br><center><h3>You manage to disarm [enemy_name] with a surprise power attack and shoot him with his shotgun until it runs out of ammo! <center><h3> "
+			enemy_hp -= 10
+		else
+			attack_amount += 5
+
+//smart passive trait, mainly works in tandem with other traits, makes the enemy unable to be counter_attacked
+	if("smart" in current_enemy_passive)
+		if(weakpoint_check("smart","defend","defend","attack"))
+			temp += "<br><center><h3>[enemy_name] is confused by your illogical strategy!<center><h3> "
+			attack_amount -= 5
+
+		else if(attack_amount >= player_hp)
+			player_hp -= attack_amount
+			temp += "<br><center><h3>[enemy_name] figures out you are really close to death and finishes you off with their [chosen_weapon]!<center><h3>"
+			enemy_stance = "attack"
+
+		else if(player_stance["counter_attack"])
+			temp += "<br><center><h3>[enemy_name] is not taking your bait. <center><h3> "
+			if("short temper" in current_enemy_passive)
+				temp += "however controlling their hatred of you still takes a toll on their mental and physical health!"
+				enemy_hp -= 5
+				enemy_mp -= 5
+			enemy_stance = "defensive"
+
+//short temper passive trait, gets easily baited into being counter attacked but will bypass your counter when low on HP
+	if("short temper" in current_enemy_passive)
+		if(weakpoint_check("short temper","counter_attack","counter_attack","counter_attack"))
+			temp += "<br><center><h3>[enemy_name] is getting frustrated at all your counter attacks and throws a tantrum!<center><h3>"
+			enemy_hp -= attack_amount
+
+		else if(player_stance["counter_attack"] && enemy_hp > 30 && !("smart" in current_enemy_passive))
+			temp += "<br><center><h3>[enemy_name] took the bait and allowed you to counter attack!<center><h3>"
+			player_hp -= attack_amount
+			enemy_hp -= attack_amount * 2
+			enemy_stance = "attack"
+
+		else if(player_stance["counter_attack"] && enemy_hp <= 30)
+			temp += "<br><center><h3>[enemy_name] is getting tired of your tricks and breaks through your counter with their [chosen_weapon]!<center><h3>"
+			player_hp -= attack_amount
+			enemy_stance = "attack"
+
+		else if(!enemy_stance)
+			var/added_temp
+			var success = pick(TRUE,FALSE)
+
+			if(success)
+				added_temp = "you!"
+				player_hp -= attack_amount * 2
+				enemy_hp -= attack_amount
+				enemy_stance = "attack"
+			if(!success)
+				added_temp = "the wall and breaks their skull in the process!" //[enemy_name] you have a literal dent in your skull
+				enemy_hp -= attack_amount
+				enemy_stance = "attack"
+
+			temp += "<br><center><h3>[enemy_name] grits their teeth and charge right into [added_temp]<center><h3>"
+
+//in the case none of the previous passive triggered, doesn't have a weakpoint as its not linked to a passive
+	if(!enemy_stance)
+		enemy_stance = pick("attack","defensive")
+		if(enemy_stance == "attack")
+			player_hp -= attack_amount
+			temp += "<br><center><h3>[enemy_name] attacks you for [attack_amount] points of damage with their [chosen_weapon]<center><h3>"
+			if(player_stance["counter_attack"])
+				enemy_hp -= attack_amount * 2
+				temp += "<br><center><h3>You counter [enemy_name]'s attack and deal [attack_amount * 2] points of damage!<center><h3>"
+
+		if(enemy_stance == "defensive" && enemy_mp < 15)
+			temp += "<br><center><h3>[enemy_name] take some time to get some mp back!<center><h3> "
+			enemy_mp += attack_amount
+		else if (enemy_stance == "defensive" && enemy_mp >= 15)
+			temp += "<br><center><h3>[enemy_name] quickly heal themselves for 5 hp!<center><h3> "
+			enemy_mp -= 15
+			enemy_hp += 5
+
+//magical passive trait
+	if("magical" in current_enemy_passive)
+		if(player_mp >= 50)
+			temp += "<br><center><h3>the huge amount of magical energy you have acumulated throws [enemy_name] off balance!<center><h3>"
+			enemy_mp -= enemy_mp
+			current_enemy_passive -= "magical"
+			pissed_off++
+
+		else if("smart" in current_enemy_passive && player_stance["counter_attack"] && enemy_mp > 20)
+			temp += "<br><center><h3>[enemy_name] blasts you with magic from afar for 10 points of damage before you can counter!<center><h3>"
+			player_hp -= 10
+			enemy_mp -= 20
+
+		else if(enemy_hp >= 20 && enemy_mp >= 20 && enemy_stance == "defensive")
+			temp += "<br><center><h3>[enemy_name] Blasts you with magic from afar and gets hurt in the process!<center><h3>"
+			enemy_hp -= 10
+			player_hp -= 15
+
+		else if(enemy_hp < 20 && enemy_mp >= 20 && enemy_stance == "defensive") //it's a pretty expensive spell so they can't spam it that much
+			temp += "<br><center><h3>[enemy_name] heal themselves with magic and gain back 10 hp!<center><h3>"
+			enemy_hp += 10
+			enemy_mp -= 20
+		else
+			temp += "<br><center><h3>[enemy_name]'s magical nature lets them get some mp back!<center><h3>"
+			enemy_mp += attack_amount
+
+//poisonous passive trait, while it's less damage added than the shotgun it acts up even when the enemy doesn't attack at all.
+	if("poisonous" in current_enemy_passive)
+		if(weakpoint_check("poisonous","attack","attack","attack"))
+			temp += "<br><center><h3>your flurry of attack throws back the poisonnous gas at [enemy_name] and makes them choke on it!<center><h3> "
+			enemy_hp -= 5
+		else
+			temp += "<br><center><h3>the stinky breath of [enemy_name] hurts you for 3 hp!<center><h3> "
+			player_hp -= 3
+
+	if(pissed_off >= max_passive)
+		temp += "<br><center><h3>You have weakened [enemy_name] enough for them to show their weak point, you will do 10 times as much damage with your attacks next turn!<center><h3> "
+		finishing_move = TRUE
+
+	playsound(src, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3)
+
+	gameover_check(user)
+	timer_id = null
+	blocked = FALSE
+	screen_setup(user)
+
+
+/obj/machinery/computer/arcade/battle/proc/gameover_check(mob/user)
 	var/xp_gained = 0
-	if ((enemy_mp <= 0) || (enemy_hp <= 0))
+	if (enemy_hp <= 0)
 		if(!gameover)
+			if(timer_id)
+				deltimer(timer_id)
 			gameover = TRUE
-			temp = "[enemy_name] has fallen! Rejoice!"
+			blocked = FALSE
+			temp = "<br><center><h3>[enemy_name] has fallen! Rejoice!<center><h3>"
 			playsound(loc, 'sound/arcade/win.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 
 			if(obj_flags & EMAGGED)
@@ -304,76 +522,58 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				prizevend(user)
 				xp_gained += 50
 			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("win", (obj_flags & EMAGGED ? "emagged":"normal")))
+			return
 
-
-	else if ((obj_flags & EMAGGED) && (turtle >= 4))
-		var/boomamt = rand(5,10)
-		temp = "[enemy_name] throws a bomb, exploding you for [boomamt] damage!"
-		playsound(loc, 'sound/arcade/boom.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		player_hp -= boomamt
-
-	else if ((enemy_mp <= 5) && (prob(70)))
-		var/stealamt = rand(2,3)
-		temp = "[enemy_name] steals [stealamt] of your power!"
-		playsound(loc, 'sound/arcade/steal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		player_mp -= stealamt
-		updateUsrDialog()
-
-		if (player_mp <= 0)
-			gameover = TRUE
-			sleep(10)
-			temp = "You have been drained! GAME OVER"
-			playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-			if(obj_flags & EMAGGED)
-				usr.gib()
-			SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "mana", (obj_flags & EMAGGED ? "emagged":"normal")))
-
-	else if ((enemy_hp <= 10) && (enemy_mp > 4))
-		temp = "[enemy_name] heals for 4 health!"
-		playsound(loc, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		enemy_hp += 4
-		enemy_mp -= 4
-
-	else
-		var/attackamt = rand(3,6)
-		temp = "[enemy_name] attacks for [attackamt] damage!"
-		playsound(loc, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3, falloff = 10)
-		player_hp -= attackamt
-
-	if ((player_mp <= 0) || (player_hp <= 0))
+	if (player_hp <= 0)
+		if(timer_id)
+			deltimer(timer_id)
 		gameover = TRUE
-		temp = "You have been crushed! GAME OVER"
+		temp = "<br><center><h3>You have been crushed! GAME OVER<center><h3>"
 		playsound(loc, 'sound/arcade/lose.ogg', 50, TRUE, extrarange = -3, falloff = 10)
 		xp_gained += 10//pity points
 		if(obj_flags & EMAGGED)
 			usr.gib()
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
+		user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
 
-	user?.mind?.adjust_experience(/datum/skill/gaming, xp_gained+1)//always gain at least 1 point of XP
-	blocked = FALSE
-	return
+
+///used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet
+/obj/machinery/computer/arcade/battle/proc/weakpoint_check(passive,first_move,second_move,third_move)
+	if(length(last_three_move) < 3)
+		return FALSE
+
+	if(last_three_move[1] == first_move && last_three_move[2] == second_move && last_three_move[3] == third_move && passive in current_enemy_passive)
+		current_enemy_passive -= passive
+		pissed_off++
+		return TRUE
+	else
+		return FALSE
+
+
+/obj/machinery/computer/arcade/battle/Destroy()
+	current_enemy_passive = null
+	enemy_passive_list = null
+	current_enemy_passive = null
+	weapons = null
+	last_three_move = null
+	return ..() //well boys we did it, lists are no more
 
 
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
 	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
-	temp = "If you die in the game, you die for real!"
-	player_hp = 30
-	player_mp = 10
-	enemy_hp = 45
-	enemy_mp = 20
+	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
+	enemy_setup()
+	screen_setup(user)
 	gameover = FALSE
-	blocked = FALSE
 
 	obj_flags |= EMAGGED
 
 	enemy_name = "Cuban Pete"
 	name = "Outbomb Cuban Pete"
 
-
 	updateUsrDialog()
-
 
 
 // *** THE ORION TRAIL ** //
