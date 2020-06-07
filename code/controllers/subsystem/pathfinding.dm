@@ -65,8 +65,9 @@ SUBSYSTEM_DEF(pathfinding)
 #define NODE_TURF 7
 
 // forgive me, for this (and everything below it) is a sin.
-#define SETUP_NODE(list, previous, cost, heuristic, depth, dir) \
-	__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir) \
+#define SETUP_NODE(list, previous, cost, heuristic, depth, dir, turf) \
+	__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir, turf); \
+	node_by_turf[turf] = __INJECTING_NODE; \
 	INJECT_NODE(list, __INJECTING_NODE)
 
 /// Sets up variables needed for binary insert to avoid variable def overhead
@@ -139,7 +140,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * caller - What called this. Can be null, datum, atom, whatever.
   * * start - turf to start on. If not set, defaults to caller's turf if it's an atom. If neither are set, the proc crashes.
   * * end - turf to path to.
-  * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach)
+  * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach, obj/item/card/id/ID, dir_to_them, dir_from_them)
   * * heuristic_type - heuristic type of distance/cost calculations see [code/__DEFINES/pathfinding.dm]
   * * max_node_depth - maximum depth of nodes to search. INFINITY for infinite.
   * * max_path_distance - maximum length of returned path using given heuristic can be. 0 for infinite.
@@ -170,6 +171,54 @@ SUBSYSTEM_DEF(pathfinding)
 /datum/controller/subsystem/pathfinding/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
 
+
+/**
+  * Because a loop is laggy, we're going to use a define.
+  * You can't have comments in the middle of a multi line define so we'll explain how this works here.
+  * This is called in every direction you WANT to POTENTIALLY check.
+  * First, it checks if the node needs to go that dir via bitflags
+  * If it does, we continue, grabbing the turf we're trying to expand to.
+  * We check if it's a valid/existing turf (incase we hit edge of map)
+  * If it is, we try to access node_by_turf to find an existing node to set into `expand` variable which holds the "node" list of the turf we're "expanding" to.
+  * We also calculate the distance from current turf ot the expanding turf, set the potential new cost of the expand turf based on that, and find the reverse direction to them.
+  *
+  * If expand isn't null, that means it's already a node.
+  * We seal off the expanded turf's node towards us, as they don't need to check us anymore since we checked towards them already.
+  * If the path is better from us to them than their previous node, AND we can reach them, we set their previous node to us and recalculate their cost, weight, and depth accordingly.
+  *
+  * If expand is null, that means there is no node.
+  * In which case, we check if we can reach the node, and if we can, we add the turf with a new node to our open list.
+  */
+#define RUN_ASTAR(dir) \
+	if(current[NODE_DIR] & dir) { \
+		expand_turf = get_step(current[NODE_TURF], dir); \
+		if(T && !turf_blacklist_typecache[T.type]) { \
+			expand = node_by_turf[T]; \
+			CALCULATE_DISTANCE(current_turf, expand_turf); \
+			new_cost = current[NODE_COST] + current_distance; \
+			reverse_dir_of_expand = REVERSE_DIR(dir); \
+			if(expand) { \
+				expand[NODE_DIR] = expand[NODE_DIR] & ((NORTH|SOUTH|EAST|WEST) ^ reverse_dir_of_expand); \
+				if(new_cost < expand[NODE_COST]) { \
+					if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
+						expand[NODE_PREVIOUS] = current; \
+						expand[NODE_COST] = new_cost; \
+						expand[NODE_WEIGHT] = new_cost + expand[NODE_HEURISTIC] * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT; \
+						expand[NODE_DEPTH] = current[NODE_DEPTH] + 1; \
+						open -= expand; \
+						INJECT_NODE(open, expand); \
+					}; \
+				}; \
+			}; \
+			else { \
+				if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
+					CALCULATE_DISTANCE(expand_turf, end); \
+					SETUP_NODE(open, T, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
+				};
+			}; \
+		}; \
+	};
+
 /**
   * Runs a pathfind with normal A*
   * For 99.99% of applications, you probably want JPS, seen above.
@@ -181,7 +230,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * caller - What called this. Can be null, datum, atom, whatever.
   * * start - turf to start on. If not set, defaults to caller's turf if it's an atom. If neither are set, the proc crashes.
   * * end - turf to path to.
-  * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach)
+  * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach, obj/item/card/id/ID, dir_to_them, dir_from_them)
   * * heuristic_type - heuristic type of distance/cost calculations see [code/__DEFINES/pathfinding.dm]
   * * max_node_depth - maximum depth of nodes to search. INFINITY for infinite.
   * * max_path_distance - maximum length of returned path using given heuristic can be. 0 for infinite.
@@ -244,10 +293,15 @@ SUBSYSTEM_DEF(pathfinding)
 	// this used to use a datum/Heap but let's Not(tm) because proccall overhead is a Thing(tm) in byond and that's Bad(tm) for us.
 	// instead we're going to play the list game
 	INJECTION_SETUP // See defines
-	var/list/open = list()		// astar open node list, see defines - turf = node list.
+	var/list/open = list()		// astar open node list, see defines
+	var/list/node_by_turf = list()		//turf = node assoc list for reverse lookup.
 	var/list/path = list()		// assembled turf path
 	var/list/current = list()		//current node list
 	var/turf/current_turf		// because unironically : operators are slower (not to mention the fact they're banned) than .'s for some reason?
+	var/turf/expand_turf		// turf we're trying to expand to
+	var/list/expand = list()	// node list of turf we're trying to expand to, if it exists.
+	var/new_cost				// new cost of a new turf being expanded to.
+	var/reverse_dir_of_expand	// reverse direction of where we're expanding to.
 	SETUP_NODE(open, null, 0, current_distance, 0, NORTH|SOUTH|EAST|WEST, start)		// initially we want to explore all cardinals.
 	while(length(open))		// while we still have open nodes
 		current = open[open.len--]		// pop a node
@@ -266,36 +320,19 @@ SUBSYSTEM_DEF(pathfinding)
 		// if we get to this point, the !fun! begins.
 		if(current[NODE_DEPTH] > max_node_depth)		// too deep, skip
 			continue
+		// Run each direction
+		RUN_ASTAR(NORTH)
+		RUN_ASTAR(SOUTH)
+		RUN_ASTAR(EAST)
+		RUN_ASTAR(WEST)
+		// Clear directions, we're done with this node.
+		current[NODE_DIR] = NONE
+		CHECK_TICK
 
 	reverseRange(path)
 	return path
 
-/proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
-		//get adjacents turfs using the adjacent proc, checking for access with id
-		for(var/i = 0 to 3)
-			var/f= 1<<i //get cardinal directions.1,2,4,8
-			if(cur.expansion_dir & f)
-				var/T = get_step(cur.turf,f)
-				if(T != exclude)
-					var/datum/path_node/CN = openc[T]  //current checking turf
-					var/r= REVERSE_DIR(f)
-					var/newg = cur.g + DIST(cur.turf, T)
-
-					if(CN)
-					//is already in open list, check if it's a better way from the current turf
-						CN.expansion_dir &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
-						if((newg < CN.cost) )
-							if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
-								CN.set_previous(cur, newg, CN.heuristic, cur.depth+1)
-								open.ReSort(CN)//reorder the changed element in the list
-					else
-					//is not already in open list, so add it
-						if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
-							CN = new(T, cur, newg, DIST(T, end), cur.depth+1, 15^r)
-							open.Insert(CN)
-							openc[T] = CN
-		cur.expansion_dir = 0
-		CHECK_TICK
+#undef RUN_ASTAR
 
 #undef MANHATTAN
 #undef BYOND
@@ -318,14 +355,13 @@ SUBSYSTEM_DEF(pathfinding)
 /**
   * Returns whether or not a pathfinding operation with a specified caller can cross to another turf.
   */
-/turf/proc/pathfinding_can_cross(caller, turf/other, obj/item/card/id/ID, dir_to_other = get_dir(src, other))
+/turf/proc/pathfinding_can_cross(caller, turf/other, obj/item/card/id/ID, dir_to_other, reverse_dir)
 	if(dir_to_other & (dir_to_other - 1))		// diagonal check
 		#warn cardinal movement checks like how real diagonal movement works
 		return thing
 	// check density first. good litmus test.
 	if(other.density)
 		return FALSE
-	var/reverse_dir = REVERSE_DIR(dir_to_other)
 	// we should probably do all on edge objects but honestly can't be arsed right now
 	for(var/obj/structure/window/W in src)
 		if(!W.CanAStarPass(ID, dir_to_other))
