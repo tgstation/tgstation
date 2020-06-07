@@ -159,7 +159,6 @@
 	cost = 15
 	scaling_cost = 15
 	requirements = list(70,70,60,50,40,20,20,10,10,10)
-	high_population_requirement = 10
 	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
 
 
