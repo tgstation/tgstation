@@ -272,7 +272,7 @@
 		return
 
 	if(patient && path.len == 0 && (get_dist(src,patient) > 1))
-		path = SSpathfinding.JPS_pathfind(src, get_turf(src), get_turf(patient), null, PATHFINDING_HEURISTIC_MANHATTAN, 30, 0, 1, null, PATHFINDING_QUEUE_MOBS, access_card)
+		path = SSpathfinder.JPS_pathfind(src, get_turf(src), get_turf(patient), null, PATHFINDING_HEURISTIC_MANHATTAN, 30, 0, 1, null, PATHFINDING_QUEUE_MOBS, access_card)
 		mode = BOT_MOVING
 		if(!path.len) //try to get closer if you can't reach the patient directly
 			soft_reset()

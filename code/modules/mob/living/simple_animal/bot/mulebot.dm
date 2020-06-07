@@ -571,7 +571,7 @@
 // given an optional turf to avoid
 /mob/living/simple_animal/bot/mulebot/calc_path(turf/avoid = null)
 	#warn Took out turf/avoid support, maybe add automatic sidestepping?
-	path = SSpathfinding.JPS_pathfind(src, get_turf(src), target, null, PATHFINDING_HEURISTIC_MANHATTAN, 250, 0, null, null, PATHFINDING_QUEUE_MOBS, access_card)
+	path = SSpathfinder.JPS_pathfind(src, get_turf(src), target, null, PATHFINDING_HEURISTIC_MANHATTAN, 250, 0, null, null, PATHFINDING_QUEUE_MOBS, access_card)
 	if(!islist(path))
 		path = list()
 

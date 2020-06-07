@@ -47,7 +47,9 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!AStar(user, target.loc, /turf/proc/Distance, changeling.sting_range, simulated_only = FALSE))
+	#warn maybe get rid of this who the hell thought this was possibly a good idea?
+	var/list/path = SSpathfinder.JPS_pathfind(user, null, get_turf(target), max_path_distance = changeling.sting_range)
+	if(!islist(path))
 		return
 	if(target.mind && target.mind.has_antag_datum(/datum/antagonist/changeling))
 		sting_feedback(user, target)

@@ -13,6 +13,8 @@
 #define PATHFIND_FAIL_TOO_FAR				"TARGET_TOO_FAR"
 /// Target is already within minimum distance
 #define PATHFIND_FAIL_TOO_CLOSE				"TARGET_TOO_CLOSE"
+/// Failed to find path
+#define PATHFIND_FAIL_NO_PATH				"NO_PATH"
 
 /// extra weight applied to heuristic to tiebreaks when dealing with multiple equally good paths.
 #define PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT 0.005

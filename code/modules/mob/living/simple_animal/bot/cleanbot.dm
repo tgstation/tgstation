@@ -265,7 +265,7 @@
 
 		if(!path || path.len == 0) //No path, need a new one
 			//Try to produce a path to the target, and ignore airlocks to which it has access.
-			path = SSpathfinding.JPS_pathfind(src, get_turf(src), get_turf(target), null, PATHFINDING_HEURISTIC_MANHATTAN, 30, 0, 0, null, PATHFINDING_QUEUE_MOBS, access_card)
+			path = SSpathfinder.JPS_pathfind(src, get_turf(src), get_turf(target), null, PATHFINDING_HEURISTIC_MANHATTAN, 30, 0, 0, null, PATHFINDING_QUEUE_MOBS, access_card)
 			if(!bot_move(target))
 				add_to_ignore(target)
 				target = null

@@ -632,7 +632,8 @@
 					item = I
 					break
 		if(item)
-			if(!AStar(src, get_turf(item), /turf/proc/Distance_cardinal))
+			var/list/path = SSpathfinder.JPS_pathfind(src, null, get_turf(item), queue = PATHFINDING_QUEUE_MOBS)
+			if(!islist(path))
 				item = null
 				continue
 			return item

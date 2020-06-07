@@ -231,7 +231,7 @@
 		return
 
 	if(target_fire && (get_dist(src, target_fire) > 2))
-		path = SSpathfinding.JPS_pathfind(src, get_turf(src), get_turf(target_fire), null, PATHFINDING_HEURISTIC_MANHATTAN, 30, 0, 1, null, PATHFINDING_QUEUE_MOBS, access_card)
+		path = SSpathfinder.JPS_pathfind(src, get_turf(src), get_turf(target_fire), null, PATHFINDING_HEURISTIC_MANHATTAN, 30, 0, 1, null, PATHFINDING_QUEUE_MOBS, access_card)
 		mode = BOT_MOVING
 		if(!path.len)
 			soft_reset()
