@@ -36,10 +36,12 @@ SUBSYSTEM_DEF(pathfinding)
 	space_type_cache = typecacheof(/turf/open/space)
 	return ..()
 
-#ifdef PATHFINDING_DEBUG
-/obj/effect/overlay/pathfinding
-	name = "pathfinding debug overlay"
-#endif
+/**
+  * Warns and logs when a pathfinding operation times out. Since we don't want to add more overhead, we can't terminate it early, but we can record it.
+  */
+/datum/controller/subsystem/pathfinding/proc/warn_overtime(message)
+	message_admins("Pathfinding Timeout: [message]")
+	CRASH(message)
 
 #define MANHATTAN(A, B)		(abs(A.x - B.x) + abs(A.y - B.y))
 #define BYOND(A, B)		get_dist(A, B)
@@ -116,14 +118,6 @@ SUBSYSTEM_DEF(pathfinding)
 			current_distance = EUCLIDEAN(A, B); \
 		}; \
 	};
-
-
-/**
-  * Warns and logs when a pathfinding operation times out. Since we don't want to add more overhead, we can't terminate it early, but we can record it.
-  */
-/datum/controller/subsystem/pathfinding/proc/warn_overtime(message)
-	message_admins("Pathfinding Timeout: [message]")
-	CRASH(message)
 
 /**
   * Runs a pathfind with jump point search, a variant of A* with much, much higher performance.
@@ -213,7 +207,7 @@ SUBSYSTEM_DEF(pathfinding)
 			else { \
 				if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
 					CALCULATE_DISTANCE(expand_turf, end); \
-					SETUP_NODE(open, T, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
+					SETUP_NODE(open, expand_turf, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
 				}; \
 			}; \
 		}; \
@@ -362,7 +356,7 @@ SUBSYSTEM_DEF(pathfinding)
 		var/eastwest = dir_to_other & (EAST|WEST)
 		var/turf/one = get_step(src, northsouth)
 		var/turf/two = get_step(src, eastwest)
-		return (one && pathfinding_can_cross(caller, one, ID, , ) && one.pathfinding_can_cross(caller, other, ID, , )) || (two && pathfinding_can_cross(caller, two, ID, , ) && two.pathfinding_can_cross(caller, other, ID, , ))
+		return (one && pathfinding_can_cross(caller, one, ID, northsouth, REVERSE_DIR(northsouth)) && one.pathfinding_can_cross(caller, other, ID, eastwest, REVERSE_DIR(eastwest))) || (two && pathfinding_can_cross(caller, two, ID, eastwest, REVERSE_DIR(eastwest)) && two.pathfinding_can_cross(caller, other, ID, northsouth, REVERSE_DIR(northsouth)))
 	// check density first. good litmus test.
 	if(other.density)
 		return FALSE
@@ -377,3 +371,8 @@ SUBSYSTEM_DEF(pathfinding)
 		if(!O.CanAStarPass(ID, reverse_dir, caller))
 			return FALSE
 	return TRUE
+
+#ifdef PATHFINDING_DEBUG
+/obj/effect/overlay/pathfinding
+	name = "pathfinding debug overlay"
+#endif
