@@ -23641,10 +23641,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
-/obj/structure/frame/computer{
-	icon_state = "0";
-	dir = 8
-	},
+/obj/machinery/computer/operating,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery/room_b)
 "brg" = (
@@ -49551,10 +49548,7 @@
 /obj/machinery/airalarm{
 	pixel_y = 24
 	},
-/obj/structure/frame/computer{
-	icon_state = "0";
-	dir = 4
-	},
+/obj/machinery/computer/operating,
 /turf/open/floor/plasteel/white,
 /area/medical/surgery)
 "nPr" = (
