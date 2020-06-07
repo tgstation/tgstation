@@ -141,7 +141,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * end - turf to path to.
   * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach)
   * * heuristic_type - heuristic type of distance/cost calculations see [code/__DEFINES/pathfinding.dm]
-  * * max_node_depth - maximum depth of nodes to search. 0 for infinite.
+  * * max_node_depth - maximum depth of nodes to search. INFINITY for infinite.
   * * max_path_distance - maximum length of returned path using given heuristic can be. 0 for infinite.
   * * min_target_distance - minimum distance to target to terminate pathfinding. Used to get close to a target rather than to it.
   * * turf_blacklist_typecache - blacklist typecache of turfs we can't cross no matter what. defaults to space tiles.
@@ -183,7 +183,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * end - turf to path to.
   * * can_cross_proc - proc to call on turfs to find if we can pass from it to another turf. /turf/proc/procname, called with arguments(caller, turf/trying_to_reach)
   * * heuristic_type - heuristic type of distance/cost calculations see [code/__DEFINES/pathfinding.dm]
-  * * max_node_depth - maximum depth of nodes to search. 0 for infinite.
+  * * max_node_depth - maximum depth of nodes to search. INFINITY for infinite.
   * * max_path_distance - maximum length of returned path using given heuristic can be. 0 for infinite.
   * * min_target_distance - minimum distance to target to terminate pathfinding. Used to get close to a target rather than to it.
   * * turf_blacklist_typecache - blacklist typecache of turfs we can't cross no matter what. defaults to space tiles.
@@ -251,83 +251,51 @@ SUBSYSTEM_DEF(pathfinding)
 	SETUP_NODE(open, null, 0, current_distance, 0, NORTH|SOUTH|EAST|WEST, start)		// initially we want to explore all cardinals.
 	while(length(open))		// while we still have open nodes
 		current = open[open.len--]		// pop a node
-		current_turf = current[NODE_TURF]
+		current_turf = current[NODE_TURF] // get its turf
+		// see how far we are
+		CALCULATE_DISTANCE(current_turf, end)
+		// if we're at the end or close enough, we're done
+		if((current_turf == end) || (current_distance <= min_target_distance))
+			// assemble our path
+			path += current_turf
+			// go up the chain
+			while(current[NODE_PREVIOUS])
+				current = current[NODE_PREVIOUS]
+				path += current[NODE_TURF]
+			break		// we're done!
+		// if we get to this point, the !fun! begins.
+		if(current[NODE_DEPTH] > max_node_depth)		// too deep, skip
+			continue
 
-
-//the weighting function, used in the A* algorithm
-/proc/PathWeightCompare(datum/path_node/a, datum/path_node/b)
-	return a.weight - b.weight
-
-//reversed so that the Heap is a MinHeap rather than a MaxHeap
-/proc/HeapPathWeightCompare(datum/path_node/a, datum/path_node/b)
-	return b.weight - a.weight
-
-/proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
-		//if we only want to get near the target, check if we're close enough
-		var/closeenough
-		if(mintargetdist)
-			closeenough = DIST(cur.turf, end) <= mintargetdist
-
-		//found the target turf (or close enough), let's create the path to it
-		if(cur.turf == end || closeenough)
-			path = new()
-			path.Add(cur.turf)
-			while(cur.previous)
-				cur = cur.previous
-				path.Add(cur.turf)
-			break
-		//get adjacents turfs using the adjacent proc, checking for access with id
-		if((!maxnodedepth)||(cur.nt <= maxnodedepth))//if too many steps, don't process that path
-			for(var/i = 0 to 3)
-				var/f= 1<<i //get cardinal directions.1,2,4,8
-				if(cur.expansion_dir & f)
-					var/T = get_step(cur.turf,f)
-					if(T != exclude)
-						var/datum/path_node/CN = openc[T]  //current checking turf
-						var/r= REVERSE_DIR(f)
-						var/newg = cur.g + DIST(cur.turf, T)
-
-						if(CN)
-						//is already in open list, check if it's a better way from the current turf
-							CN.expansion_dir &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
-							if((newg < CN.cost) )
-								if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
-									CN.set_previous(cur, newg, CN.heuristic, cur.depth+1)
-									open.ReSort(CN)//reorder the changed element in the list
-						else
-						//is not already in open list, so add it
-							if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
-								CN = new(T, cur, newg, DIST(T, end), cur.depth+1, 15^r)
-								open.Insert(CN)
-								openc[T] = CN
-		cur.expansion_dir = 0
-		CHECK_TICK
-	//reverse the path to get it from start to finish
-	if(path)
-		for(var/i = 1 to round(0.5*path.len))
-			path.Swap(i,path.len-i+1)
-	openc = null
-	//cleaning after us
+	reverseRange(path)
 	return path
 
-/turf/proc/reachableTurftest(caller, turf/T, ID, simulated_only)
-	if(T && !T.density && !(simulated_only && SSpathfinding.space_type_cache[T.type]) && !LinkBlockedWithAccess(T,caller, ID))
-		return TRUE
+/proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
+		//get adjacents turfs using the adjacent proc, checking for access with id
+		for(var/i = 0 to 3)
+			var/f= 1<<i //get cardinal directions.1,2,4,8
+			if(cur.expansion_dir & f)
+				var/T = get_step(cur.turf,f)
+				if(T != exclude)
+					var/datum/path_node/CN = openc[T]  //current checking turf
+					var/r= REVERSE_DIR(f)
+					var/newg = cur.g + DIST(cur.turf, T)
 
-/turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
-	var/adir = get_dir(src, T)
-	var/rdir = REVERSE_DIR(adir)
-	for(var/obj/structure/window/W in src)
-		if(!W.CanAStarPass(ID, adir))
-			return TRUE
-	for(var/obj/machinery/door/window/W in src)
-		if(!W.CanAStarPass(ID, adir))
-			return TRUE
-	for(var/obj/O in T)
-		if(!O.CanAStarPass(ID, rdir, caller))
-			return TRUE
-
-	return FALSE
+					if(CN)
+					//is already in open list, check if it's a better way from the current turf
+						CN.expansion_dir &= 15^r //we have no closed, so just cut off exceed dir.00001111 ^ reverse_dir.We don't need to expand to checked turf.
+						if((newg < CN.cost) )
+							if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
+								CN.set_previous(cur, newg, CN.heuristic, cur.depth+1)
+								open.ReSort(CN)//reorder the changed element in the list
+					else
+					//is not already in open list, so add it
+						if(call(cur.turf,adjacent)(caller, T, id, simulated_only))
+							CN = new(T, cur, newg, DIST(T, end), cur.depth+1, 15^r)
+							open.Insert(CN)
+							openc[T] = CN
+		cur.expansion_dir = 0
+		CHECK_TICK
 
 #undef MANHATTAN
 #undef BYOND
