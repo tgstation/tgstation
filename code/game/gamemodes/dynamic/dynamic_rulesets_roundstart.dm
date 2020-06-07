@@ -158,8 +158,8 @@
 	weight = 3
 	cost = 15
 	scaling_cost = 15
-	requirements = list(70,70,60,50,40,20,20,10,10,10)
-	antag_cap = list(1,1,1,1,1,2,2,2,2,3)
+	requirements = list(50,50,50,40,40,20,20,10,10,10)
+	antag_cap = list(1,1,1,2,2,2,2,3,3,3)
 
 
 /datum/dynamic_ruleset/roundstart/e_cult/pre_execute()
