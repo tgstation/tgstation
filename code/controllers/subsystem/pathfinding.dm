@@ -64,15 +64,16 @@ SUBSYSTEM_DEF(pathfinding)
 
 // forgive me, for this (and everything below it) is a sin.
 #define SETUP_NODE(list, previous, cost, heuristic, depth, dir) \
-	var/list/__##list##previous##cost##heuristic##depth##dir = NODE(previous, cost, heuristic, depth, dir) \
-	INJECT_NODE(list, __##list##previous##cost##heuristic##depth##dir)
+	var/list/__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir) \
+	INJECT_NODE(list, __INJECTING_NODE)
 
 /// Sets up variables needed for binary insert to avoid variable def overhead
 #define INJECTION_SETUP \
 	var/__INJECTION_LISTLEN; \
 	var/__INJECTION_LEFT; \
 	var/__INJECTION_RIGHT; \
-	var/__INJECTION_MID;
+	var/__INJECTION_MID; \
+	var/list/__INJECTING_NODE;
 
 /// Binary inserts a node into the node list. Snowflake implementation to avoid overhead, as this will never handle datums. Lowest weighted nodes go towards the end of the list as list.len-- is faster when popping.
 #define INJECT_NODE(list, nodelist) \
@@ -85,14 +86,15 @@ SUBSYSTEM_DEF(pathfinding)
 		__INJECTION_RIGHT = __INJECTION_LISTLEN; \
 		__INJECTION_MID = (__INJECTION_LEFT + __INJECTION_RIGHT) >> 1;\
 		while(__INJECTION_LEFT < __INJECTION_RIGHT) {\
-			if(nodelist[NODE_WEIGHT] >= list[__INJECTION_MID][NODE_WEIGHT)]) { \		// if it's higher weight we want to put it at front of the list
+			if(nodelist[NODE_WEIGHT] >= list[__INJECTION_MID][NODE_WEIGHT]) { \
 				__INJECTION_LEFT = __INJECTION_MID + 1; \
-			}; else{ \		// otherwise, put it at the back as popping with len-- is faster.
+			}; \
+			else{ \
 				__INJECTION_RIGHT = __INJECTION_MID; \
 			}; \
 			__INJECTION_MID = (__INJECTION_LEFT + __INJECTION_RIGHT) >> 1;\
 		}; \
-		list.Insert(, nodelist) \
+		list.Insert((nodelist[NODE_WEIGHT] > list[__INJECTION_MID][NODE_WEIGHT])? __INJECTION_MID : INJECTION_MID + 1, nodelist) \
 	};
 
 /// Sets up a node list with these values
@@ -204,19 +206,19 @@ SUBSYSTEM_DEF(pathfinding)
 	if(max_path_distance || min_target_distance)
 		switch(heuristic_type)
 			if(PATHFINDING_HEURISTIC_MANHATTAN)
-				current_distance = MANHATTAN(start_end)
+				current_distance = MANHATTAN(start, end)
 				if(current_distance > max_path_distance)
 					return PATHFIND_FAIL_TOO_FAR
 				if(current_distance < min_target_distance)
 					return PATHFIND_FAIL_TOO_CLOSE
 			if(PATHFINDING_HEURISTIC_BYOND)
-				current_distance = BYOND(start_end)
+				current_distance = BYOND(start, end)
 				if(current_distance > max_path_distance)
 					return PATHFIND_FAIL_TOO_FAR
 				if(current_distance < min_target_distance)
 					return PATHFIND_FAIL_TOO_CLOSE
 			if(PATHFINDING_HEURISTIC_EUCLIDEAN)
-				current_distance = EUCLIDEAN(start_end)
+				current_distance = EUCLIDEAN(start, end)
 				if(current_distance > max_path_distance)
 					return PATHFIND_FAIL_TOO_FAR
 				if(current_distance < min_target_distance)
@@ -226,6 +228,7 @@ SUBSYSTEM_DEF(pathfinding)
 	// instead we're going to play the list game
 	INJECTION_SETUP // See defines
 	var/list/open = list()		// astar open node list, see defines
+
 
 //the weighting function, used in the A* algorithm
 /proc/PathWeightCompare(datum/path_node/a, datum/path_node/b)
