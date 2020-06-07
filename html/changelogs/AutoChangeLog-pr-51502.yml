@@ -1,4 +1,0 @@
-author: "TheChosenEvilOne"
-delete-after: True
-changes: 
-  - bugfix: "fixed dynamic runtiming with invalid configurations."
