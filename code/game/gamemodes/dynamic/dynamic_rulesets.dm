@@ -56,8 +56,6 @@
 	/// Requirements are the threat level requirements per pop range.
 	/// With the default values, The rule will never get drafted below 10 threat level (aka: "peaceful extended"), and it requires a higher threat level at lower pops.
 	var/list/requirements = list(40,30,20,10,10,10,10,10,10,10)
-	/// An alternative, static requirement used instead when pop is over mode's high_pop_limit.
-	var/high_population_requirement = 10
 	/// Reference to the mode, use this instead of SSticker.mode.
 	var/datum/game_mode/dynamic/mode = null
 	/// If a role is to be considered another for the purpose of banning.
@@ -101,16 +99,13 @@
 		return FALSE
 	if(maximum_players > 0 && population > maximum_players)
 		return FALSE
-	if (population >= GLOB.dynamic_high_pop_limit)
-		indice_pop = 10
-		return (threat_level >= high_population_requirement)
-	else
-		pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
-		if(antag_cap.len && requirements.len != antag_cap.len)
-			message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
-			log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
-		indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
-		return (threat_level >= requirements[indice_pop])
+
+	pop_per_requirement = pop_per_requirement > 0 ? pop_per_requirement : mode.pop_per_requirement
+	if(antag_cap.len && requirements.len != antag_cap.len)
+		message_admins("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
+		log_game("DYNAMIC: requirements and antag_cap lists have different lengths in ruleset [name]. Likely config issue, report this.")
+	indice_pop = min(requirements.len,round(population/pop_per_requirement)+1)
+	return (threat_level >= requirements[indice_pop])
 
 /// Called when a suitable rule is picked during roundstart(). Will some times attempt to scale a rule up when there is threat remaining. Returns the additional threat from scaling up.
 /datum/dynamic_ruleset/proc/scale_up(extra_rulesets = 0, remaining_threat_level = 0)
