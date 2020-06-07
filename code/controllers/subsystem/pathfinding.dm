@@ -100,6 +100,21 @@ SUBSYSTEM_DEF(pathfinding)
 /// Sets up a node list with these values
 #define NODE(previous, cost, heuristic, depth, dir) list(previous, cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT, cost, heuristic, depth, dir)
 
+/// Sets current_distance.
+#define CALCULATE_DISTANCE \
+	switch(heuristic_type) { \
+		if(PATHFINDING_HEURISTIC_MANHATTAN) { \
+			current_distance = MANHATTAN(start, end); \
+		}; \
+		if(PATHFINDING_HEURISTIC_BYOND) { \
+			current_distance = BYOND(start, end); \
+		}; \
+		if(PATHFINDING_HEURISTIC_EUCLIDEAN) { \
+			current_distance = EUCLIDEAN(start, end); \
+		}; \
+	};
+
+
 /**
   * Warns and logs when a pathfinding operation times out. Since we don't want to add more overhead, we can't terminate it early, but we can record it.
   */
@@ -228,6 +243,9 @@ SUBSYSTEM_DEF(pathfinding)
 	// instead we're going to play the list game
 	INJECTION_SETUP // See defines
 	var/list/open = list()		// astar open node list, see defines
+	var/list/path = list()		// assembled turf path
+	CALCULATE_DISTANCE
+	SETUP_NODE(open, null, 0, current_distance, 0, NORTH|SOUTH|EAST|WEST)
 
 
 //the weighting function, used in the A* algorithm
@@ -319,6 +337,19 @@ SUBSYSTEM_DEF(pathfinding)
 #undef MANHATTAN
 #undef BYOND
 #undef EUCLIDEAN
+
+#undef NODE_LIST_LENGTH
+#undef NODE_PREVIOUS
+#undef NODE_WEIGHT
+#undef NODE_COST
+#undef NODE_HEURISTIC
+#undef NODE_DEPTH
+#undef NODE_DIR
+#undef SETUP_NODE
+#undef INJECTION_SETUP
+#undef INJECT_NODE
+#undef NODE
+#undef CALCULATE_DISTANCE
 
 // TURF PROCS - Should these be inlined later? Would be a loss of customization.. but uh, proccall overhead hurts!
 /**
