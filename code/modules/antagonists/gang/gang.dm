@@ -25,6 +25,13 @@
 	/// A reference to the handler datum that manages the families gamemode. In case of no handler (admin-spawned during round), this will be null; this is fine.
 	var/datum/gang_handler/handler
 
+/datum/antagonist/gang/get_team()
+	return my_gang
+
+/datum/antagonist/gang/get_admin_commands()
+	. = ..()
+	.["Give extra equipment"] = CALLBACK(src,.proc/equip_gangster_in_inventory)
+
 /datum/antagonist/gang/create_team(team_given) // gets called whenever add_antag_datum() is called on a mind
 	if(team_given)
 		my_gang = team_given
@@ -58,19 +65,7 @@
 
 /datum/antagonist/gang/on_gain()
 	if(starter_gangster)
-		if(istype(owner.current, /mob/living/carbon/human))
-			for(var/C in my_gang.free_clothes)
-				var/obj/O = new C(owner.current)
-				var/list/slots = list (
-					"backpack" = ITEM_SLOT_BACKPACK,
-					"left pocket" = ITEM_SLOT_LPOCKET,
-					"right pocket" = ITEM_SLOT_RPOCKET
-				)
-				var/mob/living/carbon/human/H = owner.current
-				var/equipped = H.equip_in_one_of_slots(O, slots)
-				if(!equipped)
-					to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
-					qdel(O)
+		equip_gangster_in_inventory()
 	owner.current.playsound_local(get_turf(owner.current), 'sound/ambience/antag/thatshowfamiliesworks.ogg', 100, FALSE, pressure_affected = FALSE)
 	..()
 
@@ -86,7 +81,14 @@
 		that imprint on generic teams, but i'm too lazy to refactor THAT too */
 	..()
 
+/datum/antagonist/gang/greet()
+	to_chat(owner.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
 
+	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
+	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
+	to_chat(owner.current, "<B><font size=4 color=red>Don't fuck with non-gangsters unless they fuck with you first.</font></B>")
+	to_chat(owner.current, "<B><font size=4 color=red>Don't blow shit up or make the station uninhabitable.</font></B>")
+	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [gang_objective]</font>")
 
 /datum/antagonist/gang/apply_innate_effects(mob/living/mob_override)
 	..()
@@ -102,7 +104,6 @@
 		H.infodisplay += giving_wanted_lvl
 		H.mymob.client.screen += giving_wanted_lvl
 
-
 /datum/antagonist/gang/remove_innate_effects(mob/living/mob_override)
 	package_spawner.Remove(owner.current)
 	var/mob/living/M = mob_override || owner.current
@@ -113,10 +114,6 @@
 		QDEL_NULL(H.wanted_lvl)
 	..()
 
-
-/datum/antagonist/gang/get_team()
-	return my_gang
-
 /// Passes points gained to the family team.
 /datum/antagonist/gang/proc/add_gang_points(points_to_add)
 	if(my_gang)
@@ -126,14 +123,106 @@
 /datum/antagonist/gang/proc/check_gang_objective()
 	return TRUE
 
-/datum/antagonist/gang/greet()
-	to_chat(owner.current, "<B>As you're the first gangster, your uniform and spraycan are in your inventory!</B>")
+/// Gives a gangster their equipment in their backpack and / or pockets.
+/datum/antagonist/gang/proc/equip_gangster_in_inventory()
+	if(istype(owner.current, /mob/living/carbon/human))
+		for(var/C in my_gang.free_clothes)
+			var/obj/O = new C(owner.current)
+			var/list/slots = list (
+				"backpack" = ITEM_SLOT_BACKPACK,
+				"left pocket" = ITEM_SLOT_LPOCKET,
+				"right pocket" = ITEM_SLOT_RPOCKET
+			)
+			var/mob/living/carbon/human/H = owner.current
+			var/equipped = H.equip_in_one_of_slots(O, slots)
+			if(!equipped)
+				to_chat(owner.current, "Unfortunately, you could not bring your [O] to this shift. You will need to find one.")
+				qdel(O)
 
-	to_chat(owner.current, "<B><font size=3 color=red>[gang_name] for life!</font></B>")
-	to_chat(owner.current, "<B><font size=2 color=red>You're a member of the [gang_name] now!<br>Tag turf with a spraycan, wear your group's colors, and recruit more gangsters with the Induction Packages!</font></B>")
-	to_chat(owner.current, "<B><font size=4 color=red>Don't fuck with non-gangsters unless they fuck with you first.</font></B>")
-	to_chat(owner.current, "<B><font size=4 color=red>Don't blow shit up or make the station uninhabitable.</font></B>")
-	to_chat(owner.current, "<B><font size=4 color=red>Family's Objective:</B> [gang_objective]</font>")
+/datum/team/gang
+	/// The number of points this family has gained. Used for determining a victor if multiple families complete their objectives.
+	var/points = 0
+	/// The abbreviation of this family.
+	var/gang_id = "LLJK"
+	/// The list of clothes that are acceptable to show allegiance to this family.
+	var/list/acceptable_clothes = list()
+	/// The list of clothes that are given to family members upon induction into the family.
+	var/list/free_clothes = list()
+	/// The specific, occupied family member antagonist datum that is used to reach the handler / check objectives, and from which the above properties (sans points) are inherited.
+	var/datum/antagonist/gang/my_gang_datum
+
+/datum/team/gang/roundend_report()
+	var/list/report = list()
+	report += "<span class='header'>[name]:</span>"
+	if(!members.len)
+		report += "<span class='redtext'>The family was wiped out!</span>"
+	else if(my_gang_datum.check_gang_objective())
+		report += "<span class='greentext'>The family completed their objective!</span>"
+	else
+		report += "<span class='redtext big'>The family failed their objective!</span>"
+	report += "Objective: [my_gang_datum.gang_objective]"
+	report += "Points: [points]"
+	if(members.len)
+		report += "[my_gang_datum.roundend_category] were:"
+		report += printplayerlist(members)
+
+	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
+
+/// Adds points to the points var.
+/datum/team/gang/proc/adjust_points(var/points_to_adjust)
+	points += points_to_adjust
+
+/datum/action/cooldown/spawn_induction_package
+	name = "Create Induction Package"
+	desc = "Generate an induction package for your family."
+	check_flags = AB_CHECK_CONSCIOUS
+	button_icon_state = "recruit"
+	icon_icon = 'icons/obj/gang/actions.dmi'
+	cooldown_time = 300
+	/// The family antagonist datum of the "owner" of this action.
+	var/datum/antagonist/gang/my_gang_datum
+
+/datum/action/cooldown/spawn_induction_package/Trigger()
+	if(!..())
+		return FALSE
+	if(!IsAvailable())
+		return FALSE
+	if(!my_gang_datum)
+		return FALSE
+	if(!istype(owner, /mob/living/carbon/human))
+		return FALSE
+	var/mob/living/carbon/human/H = owner
+	if(H.stat)
+		return FALSE
+
+	var/gang_balance_cap // we need some stuff to fall back on if we're handlerless
+	if(my_gang_datum.handler)
+		gang_balance_cap = my_gang_datum.handler.gang_balance_cap
+	else
+		gang_balance_cap = 5 //just a filler default value
+
+	var/lowest_gang_count = my_gang_datum.my_gang.members.len
+	for(var/datum/team/gang/TT in GLOB.antagonist_teams)
+		var/alive_gangsters = 0
+		for(var/datum/mind/gangers in TT.members)
+			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
+				alive_gangsters++
+		if(!alive_gangsters || TT.members.len <= 1) // Dead or inactive gangs don't count towards the cap.
+			continue
+		if(TT != my_gang_datum.my_gang)
+			if(alive_gangsters < lowest_gang_count)
+				lowest_gang_count = alive_gangsters
+	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + gang_balance_cap))
+		to_chat(H, "Your gang is pretty packed right now. You don't need more members just yet. If the other families expand, you can recruit more members.")
+		return FALSE
+	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
+	var/obj/item/gang_induction_package/GP = new(get_turf(H))
+	GP.name = "\improper [my_gang_datum.name] signup package"
+	GP.handler = my_gang_datum.handler
+	GP.gang_to_use = my_gang_datum.type
+	GP.team_to_use = my_gang_datum.my_gang
+	StartCooldown()
+	return TRUE
 
 /datum/antagonist/gang/red
 	show_in_antagpanel = TRUE
@@ -216,7 +305,6 @@
 		return TRUE
 	return FALSE
 
-
 /datum/antagonist/gang/russian_mafia
 	show_in_antagpanel = TRUE
 	name = "Russian Mafia"
@@ -246,7 +334,6 @@
 				continue
 		return FALSE // didnt pass the bottle check, no point in continuing to loop
 	return TRUE
-
 
 /datum/antagonist/gang/italian_mob
 	show_in_antagpanel = TRUE
@@ -327,7 +414,6 @@
 	gang_objective = "Orders from up high. We need to up our drug operation. Ensure that at least 25% of the station is addicted to meth."
 	antag_hud_name = "Vagos"
 
-
 /datum/antagonist/gang/vagos/check_gang_objective()
 	var/people_on_station = 0
 	var/people_on_crack = 0
@@ -343,7 +429,6 @@
 	if(0.25*people_on_station > people_on_crack)
 		return FALSE
 	return TRUE
-
 
 /datum/antagonist/gang/henchmen
 	show_in_antagpanel = TRUE
@@ -429,7 +514,6 @@
 				return TRUE
 	return FALSE
 
-
 /datum/antagonist/gang/dutch
 	show_in_antagpanel = TRUE
 	name = "Dutch van der Linde's Gang"
@@ -463,90 +547,4 @@
 	var/datum/component/material_container/mat_container = S.GetComponent(/datum/component/material_container)
 	if(mat_container.materials[SSmaterials.GetMaterialRef(/datum/material/gold)] >= 2000) // if theres at least 1 bar of gold left in the silo, they've failed to heist all of it
 		return FALSE
-	return TRUE
-
-
-/datum/team/gang
-	/// The number of points this family has gained. Used for determining a victor if multiple families complete their objectives.
-	var/points = 0
-	/// The abbreviation of this family.
-	var/gang_id = "LLJK"
-	/// The list of clothes that are acceptable to show allegiance to this family.
-	var/list/acceptable_clothes = list()
-	/// The list of clothes that are given to family members upon induction into the family.
-	var/list/free_clothes = list()
-	/// The specific, occupied family member antagonist datum that is used to reach the handler / check objectives, and from which the above properties (sans points) are inherited.
-	var/datum/antagonist/gang/my_gang_datum
-
-/// Adds points to the points var.
-/datum/team/gang/proc/adjust_points(var/points_to_adjust)
-	points += points_to_adjust
-
-/datum/team/gang/roundend_report()
-	var/list/report = list()
-	report += "<span class='header'>[name]:</span>"
-	if(!members.len)
-		report += "<span class='redtext'>The family was wiped out!</span>"
-	else if(my_gang_datum.check_gang_objective())
-		report += "<span class='greentext'>The family completed their objective!</span>"
-	else
-		report += "<span class='redtext big'>The family failed their objective!</span>"
-	report += "Objective: [my_gang_datum.gang_objective]"
-	report += "Points: [points]"
-	if(members.len)
-		report += "[my_gang_datum.roundend_category] were:"
-		report += printplayerlist(members)
-
-	return "<div class='panel redborder'>[report.Join("<br>")]</div>"
-
-/datum/action/cooldown/spawn_induction_package
-	name = "Create Induction Package"
-	desc = "Generate an induction package for your family."
-	check_flags = AB_CHECK_CONSCIOUS
-	button_icon_state = "recruit"
-	icon_icon = 'icons/obj/gang/actions.dmi'
-	cooldown_time = 300
-	/// The family antagonist datum of the "owner" of this action.
-	var/datum/antagonist/gang/my_gang_datum
-
-/datum/action/cooldown/spawn_induction_package/Trigger()
-	if(!..())
-		return FALSE
-	if(!IsAvailable())
-		return FALSE
-	if(!my_gang_datum)
-		return FALSE
-	if(!istype(owner, /mob/living/carbon/human))
-		return FALSE
-	var/mob/living/carbon/human/H = owner
-	if(H.stat)
-		return FALSE
-
-	var/gang_balance_cap // we need some stuff to fall back on if we're handlerless
-	if(my_gang_datum.handler)
-		gang_balance_cap = my_gang_datum.handler.gang_balance_cap
-	else
-		gang_balance_cap = 5 //just a filler default value
-
-	var/lowest_gang_count = my_gang_datum.my_gang.members.len
-	for(var/datum/team/gang/TT in GLOB.antagonist_teams)
-		var/alive_gangsters = 0
-		for(var/datum/mind/gangers in TT.members)
-			if(ishuman(gangers.current) && gangers.current.client && !gangers.current.stat)
-				alive_gangsters++
-		if(!alive_gangsters || TT.members.len <= 1) // Dead or inactive gangs don't count towards the cap.
-			continue
-		if(TT != my_gang_datum.my_gang)
-			if(alive_gangsters < lowest_gang_count)
-				lowest_gang_count = alive_gangsters
-	if(my_gang_datum.my_gang.members.len >= (lowest_gang_count + gang_balance_cap))
-		to_chat(H, "Your gang is pretty packed right now. You don't need more members just yet. If the other families expand, you can recruit more members.")
-		return FALSE
-	to_chat(H, "You pull an induction package from your pockets and place it on the ground.")
-	var/obj/item/gang_induction_package/GP = new(get_turf(H))
-	GP.name = "\improper [my_gang_datum.name] signup package"
-	GP.handler = my_gang_datum.handler
-	GP.gang_to_use = my_gang_datum.type
-	GP.team_to_use = my_gang_datum.my_gang
-	StartCooldown()
 	return TRUE

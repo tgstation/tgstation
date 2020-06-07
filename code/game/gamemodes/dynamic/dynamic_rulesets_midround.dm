@@ -218,7 +218,8 @@
 	name = "Family Head Aspirants"
 	persistent = TRUE
 	antag_flag = ROLE_FAMILIES
-	restricted_roles = list("Cyborg", "AI", "Prisoner","Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Head of Personnel")
+	protected_roles = list("Prisoner", "Head of Personnel")
+	restricted_roles = list("Cyborg", "AI", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
 	required_candidates = 6 // gotta have 'em ALL
 	weight = 1
 	cost = 25
