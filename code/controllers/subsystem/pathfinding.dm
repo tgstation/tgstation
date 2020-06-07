@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(pathfinding)
 			}; \
 			__INJECTION_MID = (__INJECTION_LEFT + __INJECTION_RIGHT) >> 1;\
 		}; \
-		list.Insert((nodelist[NODE_WEIGHT] > list[__INJECTION_MID][NODE_WEIGHT])? __INJECTION_MID : INJECTION_MID + 1, nodelist) \
+		list.Insert((nodelist[NODE_WEIGHT] > list[__INJECTION_MID][NODE_WEIGHT])? __INJECTION_MID : __INJECTION_MID + 1, nodelist) \
 	};
 
 /// Sets up a node list with these values
@@ -192,7 +192,7 @@ SUBSYSTEM_DEF(pathfinding)
 #define RUN_ASTAR(dir) \
 	if(current[NODE_DIR] & dir) { \
 		expand_turf = get_step(current[NODE_TURF], dir); \
-		if(T && !turf_blacklist_typecache[T.type]) { \
+		if(expand_turf && !turf_blacklist_typecache[expand_turf.type]) { \
 			expand = node_by_turf[T]; \
 			CALCULATE_DISTANCE(current_turf, expand_turf); \
 			new_cost = current[NODE_COST] + current_distance; \
