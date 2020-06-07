@@ -549,9 +549,9 @@
   * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
   */
 /atom/proc/examine_more(mob/user)
-	return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
-	//SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
-
+	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
+	if(!.)
+		return list("<span class='notice'><i>You examine [src] closer, but find nothing of interest...</i></span>")
 
 /// Updates the icon of the atom
 /atom/proc/update_icon()

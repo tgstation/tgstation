@@ -151,9 +151,6 @@
 		return
 
 	if(!(silent || demoted))
-		if(!from_smite)
-			LAZYINITLIST(SSblackbox.who_wounded)
-			SSblackbox.who_wounded[victim]++
 		var/msg = "<span class='danger'>[victim]'s [limb.name] [occur_text]!</span>"
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
@@ -176,9 +173,6 @@
 		already_scarred = TRUE
 		var/datum/scar/new_scar = new
 		new_scar.generate(limb, src)
-		if(!from_smite)
-			LAZYINITLIST(SSblackbox.who_scarred)
-			SSblackbox.who_scarred[victim]++
 	if(victim)
 		LAZYREMOVE(victim.all_wounds, src)
 		if(!victim.all_wounds)

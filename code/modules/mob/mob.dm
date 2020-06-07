@@ -421,8 +421,9 @@
 	var/list/result
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-		if(!isnull(client.recent_examines[A]) && client.recent_examines[A] > world.time) // originally this wasn't an assoc list, but sometimes the timer failed and atoms stayed in a client's recent_examines, so we check here manually
-			result = A.examine_more(src)
+		if(!isnull(client.recent_examines[A])) // originally this wasn't an assoc list, but sometimes the timer failed and atoms stayed in a client's recent_examines, so we check here manually
+			if(client && client.recent_examines[A] > world.time)
+				result = A.examine_more(src)
 		else
 			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME
 			result = A.examine(src)

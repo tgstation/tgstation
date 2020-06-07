@@ -16,10 +16,6 @@ SUBSYSTEM_DEF(blackbox)
 							"science_techweb_unlock" = 2,
 							"round_end_stats" = 2,
 							"testmerged_prs" = 2) //associative list of any feedback variables that have had their format changed since creation and their current version, remember to update this
-	/// A list of who's been wounded and how many times during the shift
-	var/list/who_wounded
-	/// A list of who's been scarred and how many times during the shift (not including fake scars)
-	var/list/who_scarred
 
 /datum/controller/subsystem/blackbox/Initialize()
 	triggertime = world.time
