@@ -64,7 +64,7 @@ SUBSYSTEM_DEF(pathfinding)
 
 // forgive me, for this (and everything below it) is a sin.
 #define SETUP_NODE(list, previous, cost, heuristic, depth, dir) \
-	var/list/__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir) \
+	__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir) \
 	INJECT_NODE(list, __INJECTING_NODE)
 
 /// Sets up variables needed for binary insert to avoid variable def overhead
