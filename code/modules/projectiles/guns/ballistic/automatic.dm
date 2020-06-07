@@ -59,7 +59,7 @@
 	name = "\improper C-20r SMG"
 	desc = "A bullpup two-round burst .45 SMG, designated 'C-20r'. Has a 'Scarborough Arms - Per falcis, per pravitas' buttstamp."
 	icon_state = "c20r"
-	item_state = "c20r"
+	inhand_icon_state = "c20r"
 	mag_type = /obj/item/ammo_box/magazine/smgm45
 	fire_delay = 2
 	burst_size = 3
@@ -82,7 +82,7 @@
 	name = "security auto rifle"
 	desc = "An outdated personal defence weapon. Uses 4.6x30mm rounds and is designated the WT-550 Automatic Rifle."
 	icon_state = "wt550"
-	item_state = "arg"
+	inhand_icon_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/wt550m9
 	fire_delay = 2
 	can_suppress = FALSE
@@ -109,7 +109,7 @@
 	name = "\improper M-90gl Carbine"
 	desc = "A three-round burst 5.56 toploading carbine, designated 'M-90gl'. Has an attached underbarrel grenade launcher which can be toggled on and off."
 	icon_state = "m90"
-	item_state = "m90"
+	inhand_icon_state = "m90"
 	mag_type = /obj/item/ammo_box/magazine/m556
 	can_suppress = FALSE
 	var/obj/item/gun/ballistic/revolver/grenadelauncher/underbarrel
@@ -182,7 +182,7 @@
 	name = "\improper Thompson SMG"
 	desc = "Based on the classic 'Chicago Typewriter'."
 	icon_state = "tommygun"
-	item_state = "shotgun"
+	inhand_icon_state = "shotgun"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
@@ -195,7 +195,7 @@
 	name = "\improper NT-ARG 'Boarder'"
 	desc = "A robust assault rifle used by Nanotrasen fighting forces."
 	icon_state = "arg"
-	item_state = "arg"
+	inhand_icon_state = "arg"
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/m556
 	can_suppress = FALSE
@@ -209,7 +209,7 @@
 	name = "\improper L6 SAW"
 	desc = "A heavily modified 7.12x82mm light machine gun, designated 'L6 SAW'. Has 'Aussec Armoury - 2531' engraved on the receiver below the designation."
 	icon_state = "l6"
-	item_state = "l6closedmag"
+	inhand_icon_state = "l6closedmag"
 	w_class = WEIGHT_CLASS_HUGE
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/mm712x82
@@ -283,7 +283,7 @@
 	name = "sniper rifle"
 	desc = "A long ranged weapon that does significant damage. No, you can't quickscope."
 	icon_state = "sniper"
-	item_state = "sniper"
+	inhand_icon_state = "sniper"
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	fire_sound_volume = 90
 	vary_fire_sound = FALSE
@@ -298,7 +298,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	zoomable = TRUE
 	zoom_amt = 10 //Long range, enough to see in front of you, but no tiles behind you.
-	zoom_out_amt = 13
+	zoom_out_amt = 5
 	slot_flags = ITEM_SLOT_BACK
 	actions_types = list()
 	mag_display = TRUE
@@ -316,7 +316,7 @@
 	name = "Surplus Rifle"
 	desc = "One of countless obsolete ballistic rifles that still sees use as a cheap deterrent. Uses 10mm ammo and its bulky frame prevents one-hand firing."
 	icon_state = "surplus"
-	item_state = "moistnugget"
+	inhand_icon_state = "moistnugget"
 	weapon_weight = WEAPON_HEAVY
 	mag_type = /obj/item/ammo_box/magazine/m10mm/rifle
 	fire_delay = 30
@@ -334,7 +334,7 @@
 	name = "laser rifle"
 	desc = "Though sometimes mocked for the relatively weak firepower of their energy weapons, the logistic miracle of rechargeable ammunition has given Nanotrasen a decisive edge over many a foe."
 	icon_state = "oldrifle"
-	item_state = "arg"
+	inhand_icon_state = "arg"
 	mag_type = /obj/item/ammo_box/magazine/recharge
 	fire_delay = 2
 	can_suppress = FALSE

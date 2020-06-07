@@ -3,7 +3,7 @@
 	desc = "A spray bottle, with an unscrewable top."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "sprayer_large"
-	item_state = "cleaner"
+	inhand_icon_state = "cleaner"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	item_flags = NOBLUDGEON
@@ -196,7 +196,7 @@
 	desc = "Manufactured by UhangInc, used to blind and down an opponent quickly."
 	icon = 'icons/obj/items_and_weapons.dmi'
 	icon_state = "pepperspray"
-	item_state = "pepperspray"
+	inhand_icon_state = "pepperspray"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/security_righthand.dmi'
 	volume = 50
@@ -223,7 +223,7 @@
 	desc = "A seemingly innocent sunflower...with a twist."
 	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
-	item_state = "sunflower"
+	inhand_icon_state = "sunflower"
 	amount_per_transfer_from_this = 1
 	volume = 10
 	list_reagents = list(/datum/reagent/water = 10)
@@ -286,7 +286,7 @@
 	desc = "A utility used to spray large amounts of reagents in a given area."
 	icon = 'icons/obj/guns/projectile.dmi'
 	icon_state = "chemsprayer"
-	item_state = "chemsprayer"
+	inhand_icon_state = "chemsprayer"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	throwforce = 0
@@ -324,7 +324,7 @@
 	name = "janitor chem sprayer"
 	desc = "A utility used to spray large amounts of cleaning reagents in a given area. It regenerates space cleaner by itself but it's unable to be fueled by normal means."
 	icon_state = "chemsprayer_janitor"
-	item_state = "chemsprayer_janitor"
+	inhand_icon_state = "chemsprayer_janitor"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	reagent_flags = NONE
@@ -356,7 +356,7 @@
 	desc = "Kills those pesky weeds!"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbgone"
-	item_state = "plantbgone"
+	inhand_icon_state = "plantbgone"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	volume = 100
@@ -367,7 +367,7 @@
 	desc = "A spray bottle, with a high performance plastic nozzle. The color scheme makes you feel slightly uneasy."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "sprayer_sus_8"
-	item_state = "sprayer_sus"
+	inhand_icon_state = "sprayer_sus"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	spray_range = 4
@@ -383,7 +383,7 @@
 	name = "medical spray bottle"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "sprayer_med_red"
-	item_state = "sprayer_med_red"
+	inhand_icon_state = "sprayer_med_red"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	volume = 100
@@ -399,11 +399,11 @@
 	..()
 	switch(icon_state)
 		if("sprayer_med_red")
-			item_state = "sprayer_med_red"
+			inhand_icon_state = "sprayer_med_red"
 		if("sprayer_med_yellow")
-			item_state = "sprayer_med_yellow"
+			inhand_icon_state = "sprayer_med_yellow"
 		if("sprayer_med_blue")
-			item_state = "sprayer_med_blue"
+			inhand_icon_state = "sprayer_med_blue"
 	M.update_inv_hands()
 
 /obj/item/reagent_containers/spray/hercuri

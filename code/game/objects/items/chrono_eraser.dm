@@ -5,7 +5,7 @@
 	desc = "The result of outlawed time-bluespace research, this device is capable of wiping a being from the timestream. They never are, they never were, they never will be."
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronobackpack"
-	item_state = "backpack"
+	inhand_icon_state = "backpack"
 	lefthand_file = 'icons/mob/inhands/equipment/backpack_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/backpack_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
@@ -46,7 +46,7 @@
 	desc = "It's as if they never existed in the first place."
 	icon = 'icons/obj/chronos.dmi'
 	icon_state = "chronogun"
-	item_state = "chronogun"
+	inhand_icon_state = "chronogun"
 	w_class = WEIGHT_CLASS_NORMAL
 	item_flags = DROPDEL
 	ammo_type = list(/obj/item/ammo_casing/energy/chrono_beam)

@@ -197,7 +197,7 @@
 	desc = "Bon appetit!"
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "baguette"
-	item_state = "baguette"
+	inhand_icon_state = "baguette"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 2, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 6, /datum/reagent/consumable/nutriment/vitamin = 1)
 	bitesize = 3
@@ -213,7 +213,7 @@
 	desc = "Alas, it is limited."
 	icon = 'icons/obj/food/burgerbread.dmi'
 	icon_state = "garlicbread"
-	item_state = "garlicbread"
+	inhand_icon_state = "garlicbread"
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 2)
 	list_reagents = list(/datum/reagent/consumable/nutriment = 5, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/consumable/garlic = 2)
 	bitesize = 3
@@ -237,7 +237,7 @@
 	plane = initial(plane)
 	lefthand_file = fried.lefthand_file
 	righthand_file = fried.righthand_file
-	item_state = fried.item_state
+	inhand_icon_state = fried.inhand_icon_state
 	desc = fried.desc
 	w_class = fried.w_class
 	slowdown = fried.slowdown

@@ -75,12 +75,12 @@ SUBSYSTEM_DEF(vote)
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
 					if(C.prefs.preferred_map)
-						if(choices[C.prefs.preferred_map]) //No votes if the map isnt in the vote.
+						if(choices[C.prefs.preferred_map]) //No votes if the map isn't in the vote.
 							var/preferred_map = C.prefs.preferred_map
 							choices[preferred_map] += 1
 							greatest_votes = max(greatest_votes, choices[preferred_map])
 					else if(config.defaultmap)
-						if(choices[config.defaultmap]) //No votes if the map isnt in the vote.
+						if(choices[config.defaultmap]) //No votes if the map isn't in the vote.
 							var/default_map = config.defaultmap.map_name
 							choices[default_map] += 1
 							greatest_votes = max(greatest_votes, choices[default_map])

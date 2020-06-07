@@ -145,7 +145,7 @@
 					message_admins("[key_name(usr)] created an abductor team.")
 					log_admin("[key_name(usr)] created an abductor team.")
 				else
-					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunatly there were not enough candidates available.")
+					message_admins("[key_name_admin(usr)] tried to create an abductor team. Unfortunately there were not enough candidates available.")
 					log_admin("[key_name(usr)] failed to create an abductor team.")
 			if("revenant")
 				if(src.makeRevenant())
@@ -846,25 +846,6 @@
 		message_admins("[key_name(usr)] set 'stacking_limit' to [GLOB.dynamic_stacking_limit].")
 		dynamic_mode_options(usr)
 
-	else if(href_list["f_dynamic_high_pop_limit"])
-		if(!check_rights(R_ADMIN))
-			return
-
-		if(SSticker && SSticker.mode)
-			return alert(usr, "The game has already started.", null, null, null, null)
-
-		if(GLOB.master_mode != "dynamic")
-			return alert(usr, "The game mode has to be dynamic mode!", null, null, null, null)
-
-		var/new_value = input(usr, "Enter the high-pop override threshold for dynamic mode.", "High pop override") as num
-		if (new_value < 0)
-			return alert(usr, "Only positive values allowed!", null, null, null, null)
-		GLOB.dynamic_high_pop_limit = new_value
-
-		log_admin("[key_name(usr)] set 'high_pop_limit' to [GLOB.dynamic_high_pop_limit].")
-		message_admins("[key_name(usr)] set 'high_pop_limit' to [GLOB.dynamic_high_pop_limit].")
-		dynamic_mode_options(usr)
-
 	else if(href_list["f_dynamic_forced_threat"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1544,6 +1525,26 @@
 				D.traitor_panel()
 		else
 			show_traitor_panel(M)
+
+	else if(href_list["skill"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(!SSticker.HasRoundStarted())
+			alert("The game hasn't started yet!")
+			return
+
+		var/target = locate(href_list["skill"])
+		var/datum/mind/target_mind
+		if(ismob(target))
+			var/mob/target_mob = target
+			target_mind = target_mob.mind
+		else if (istype(target, /datum/mind))
+			target_mind = target
+		else
+			to_chat(usr, "This can only be used on instances of type /mob and /mind", confidential = TRUE)
+			return
+		show_skill_panel(target_mind)
 
 	else if(href_list["borgpanel"])
 		if(!check_rights(R_ADMIN))
@@ -2250,6 +2251,15 @@
 		var/datum/poll_option/option = locate(href_list["submitoption"]) in GLOB.poll_options
 		var/datum/poll_question/poll = locate(href_list["submitoptionpoll"]) in GLOB.polls
 		poll_option_parse_href(href_list, poll, option)
+
+	else if(href_list["admincommend"])
+		if(!SSticker.IsRoundInProgress())
+			to_chat(usr, "<span class='warning'>The round must be in progress to use this!</span>")
+			return
+		var/mob/heart_recepient = locate(href_list["admincommend"])
+		if(tgalert(usr, "Are you sure you'd like to anonymously commend [heart_recepient.ckey]? NOTE: This is logged, please use this sparingly and only for actual kind behavior, not as a reward for your friends.", "<3?", "Yes", "No") == "No")
+			return
+		usr.nominate_heart(heart_recepient)
 
 /datum/admins/proc/HandleCMode()
 	if(!check_rights(R_ADMIN))

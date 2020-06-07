@@ -92,7 +92,7 @@
 
 /proc/log_econ(text)
 	if (CONFIG_GET(flag/log_econ))
-		WRITE_LOG(GLOB.world_attack_log, "MONEY: [text]")
+		WRITE_LOG(GLOB.world_econ_log, "MONEY: [text]")
 
 /proc/log_manifest(ckey, datum/mind/mind,mob/body, latejoin = FALSE)
 	if (CONFIG_GET(flag/log_manifest))

@@ -171,7 +171,6 @@
 	cost = 10
 	requirements = list(50,40,30,20,10,10,10,10,10,10)
 	repeatable = TRUE
-	high_population_requirement = 10
 	flags = TRAITOR_RULESET
 
 /datum/dynamic_ruleset/midround/autotraitor/acceptable(population = 0, threat = 0)
@@ -292,7 +291,6 @@
 	weight = 3
 	cost = 35
 	requirements = list(101,101,80,70,60,60,50,50,40,40)
-	high_population_requirement = 35
 	required_type = /mob/living/silicon/ai
 	var/ion_announce = 33
 	var/removeDontImproveChance = 10
@@ -342,7 +340,6 @@
 	weight = 1
 	cost = 20
 	requirements = list(90,90,70,40,30,20,10,10,10,10)
-	high_population_requirement = 50
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/wizard/ready(forced = FALSE)
@@ -374,7 +371,6 @@
 	weight = 5
 	cost = 35
 	requirements = list(90,90,90,80,60,40,30,20,10,10)
-	high_population_requirement = 10
 	var/list/operative_cap = list(2,2,3,3,4,5,5,5,5,5)
 	var/datum/team/nuclear/nuke_team
 	flags = HIGHLANDER_RULESET
@@ -417,7 +413,6 @@
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
-	high_population_requirement = 50
 	repeatable = TRUE
 
 /datum/dynamic_ruleset/midround/from_ghosts/blob/generate_ruleset_body(mob/applicant)
@@ -440,7 +435,6 @@
 	weight = 3
 	cost = 10
 	requirements = list(101,101,101,70,50,40,20,15,10,10)
-	high_population_requirement = 50
 	repeatable = TRUE
 	var/list/vents = list()
 
@@ -487,7 +481,6 @@
 	weight = 3
 	cost = 10
 	requirements = list(101,101,101,70,50,40,20,15,10,10)
-	high_population_requirement = 50
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 
@@ -534,7 +527,6 @@
 	weight = 4
 	cost = 10
 	requirements = list(101,101,101,80,60,50,30,20,10,10)
-	high_population_requirement = 50
 	repeatable = TRUE
 	var/list/spawn_locs = list()
 

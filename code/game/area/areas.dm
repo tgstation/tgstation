@@ -312,7 +312,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 					INVOKE_ASYNC(D, (opening ? /obj/machinery/door/firedoor.proc/open : /obj/machinery/door/firedoor.proc/close))
 
 /**
-  * Generate an firealarm alert for this area
+  * Generate a firealarm alert for this area
   *
   * Sends to all ai players, alert consoles, drones and alarm monitor programs in the world
   *

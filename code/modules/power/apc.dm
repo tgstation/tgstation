@@ -797,7 +797,7 @@
 		var/mob/living/carbon/human/H = user
 		var/datum/species/ethereal/E = H.dna.species
 		if((H.a_intent == INTENT_HARM) && (E.drain_time < world.time))
-			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldnt drain it
+			if(cell.charge <= (cell.maxcharge / 2)) // if charge is under 50% you shouldn't drain it
 				to_chat(H, "<span class='warning'>The APC doesn't have much power, you probably shouldn't drain any.</span>")
 				return
 			var/obj/item/organ/stomach/ethereal/stomach = H.getorganslot(ORGAN_SLOT_STOMACH)
@@ -1069,6 +1069,7 @@
 		return
 	if(!is_station_level(z))
 		return
+	malf.ShutOffDoomsdayDevice()
 	occupier = new /mob/living/silicon/ai(src, malf.laws, malf) //DEAR GOD WHY?	//IKR????
 	occupier.adjustOxyLoss(malf.getOxyLoss())
 	if(!findtext(occupier.name, "APC Copy"))

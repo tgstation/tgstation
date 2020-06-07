@@ -1,7 +1,7 @@
 /obj/item/grenade/antigravity
 	name = "antigravity grenade"
 	icon_state = "emp"
-	item_state = "emp"
+	inhand_icon_state = "emp"
 
 	var/range = 7
 	var/forced_value = 0

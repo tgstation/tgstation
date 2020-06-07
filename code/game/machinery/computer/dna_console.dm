@@ -49,14 +49,10 @@
 
 	/// Link to the techweb's stored research. Used to retrieve stored mutations
 	var/datum/techweb/stored_research
-	/// Maximum number of mutations that DNA Consoles are able to store
-	var/max_storage = 6
 	/// Duration for enzyme radiation pulses
 	var/radduration = 2
 	/// Strength for enzyme radiation pulses
 	var/radstrength = 1
-	/// Maximum number of chromosomes that DNA Consoles are able to store.
-	var/max_chromosomes = 6
 	/// Maximum number of enzymes we can store
 	var/list/genetic_makeup_buffer[NUMBER_OF_BUFFERS]
 	/// List of all mutations stored on the DNA Console
@@ -145,12 +141,9 @@
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user, params)
 	// Store chromosomes in the console if there's room
 	if (istype(I, /obj/item/chromosome))
-		if(LAZYLEN(stored_chromosomes) < max_chromosomes)
-			I.forceMove(src)
-			stored_chromosomes += I
-			to_chat(user, "<span class='notice'>You insert [I].</span>")
-		else
-			to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
+		I.forceMove(src)
+		stored_chromosomes += I
+		to_chat(user, "<span class='notice'>You insert [I].</span>")
 		return
 
 	// Insert data disk if console disk slot is empty
@@ -174,20 +167,23 @@
 			if(A.research)
 				if(prob(60))
 					var/c_typepath = generate_chromosome()
-					var/obj/item/chromosome/CM = new c_typepath (drop_location())
-					if(LAZYLEN(stored_chromosomes) < max_chromosomes)
-						CM.forceMove(src)
-						stored_chromosomes += CM
-						to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
-					else
-						to_chat(user, "<span class='warning'>You cannot store any more chromosomes!</span>")
-						to_chat(user, "<span class='notice'>[capitalize(CM.name)] added on top of the console.</span>")
+					var/obj/item/chromosome/CM = new c_typepath (src)
+					stored_chromosomes += CM
+					to_chat(user,"<span class='notice'>[capitalize(CM.name)] added to storage.</span>")
 				else
 					to_chat(user, "<span class='notice'>There was not enough genetic data to extract a viable chromosome.</span>")
 			qdel(I)
 			return
 
 	return ..()
+
+
+/obj/machinery/computer/scan_consolenew/AltClick(mob/user)
+	// Make sure the user can interact with the machine.
+	if(!user.canUseTopic(src, !issilicon(user)))
+		return
+
+	eject_disk(user)
 
 /obj/machinery/computer/scan_consolenew/Initialize()
 	. = ..()
@@ -336,10 +332,8 @@
 		data["diskHasMakeup"] = FALSE
 		data["diskMakeupBuffer"] = null
 
-	data["mutationCapacity"] = max_storage - LAZYLEN(stored_mutations)
 	//data["mutationStorage"] = tgui_console_mutations
 	data["storage"]["console"] = tgui_console_mutations
-	data["chromoCapacity"] = max_chromosomes - LAZYLEN(stored_chromosomes)
 	data["chromoStorage"] = tgui_console_chromosomes
 	data["makeupCapacity"] = NUMBER_OF_BUFFERS
 	data["makeupStorage"] = tgui_genetic_makeup
@@ -655,11 +649,6 @@
 				if("disk")
 					search_flags |= SEARCH_DISKETTE
 
-			// GUARD CHECK - Is mutation storage full?
-			if(LAZYLEN(stored_mutations) >= max_storage)
-				to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
-				return
-
 			var/bref = params["mutref"]
 			var/datum/mutation/human/HM = get_mut_by_ref(bref, search_flags)
 
@@ -806,12 +795,6 @@
 		// params["secondref"] -  ATOM Ref of second mutation for combination
 		//  mutation
 		if("combine_console")
-			// GUaRD CHECK - Make sure mutation storage isn't full. If it is, we won't
-			//  be able to store the new combo mutation
-			if(LAZYLEN(stored_mutations) >= max_storage)
-				to_chat(usr,"<span class='warning'>Mutation storage is full.</span>")
-				return
-
 			// GUARD CHECK - We're running a research-type operation. If, for some
 			//  reason, somehow the DNA Console has been disconnected from the research
 			//  network - Or was never in it to begin with - don't proceed
@@ -1048,13 +1031,7 @@
 
 		// Eject stored diskette from console
 		if("eject_disk")
-			// GUARD CHECK - This code shouldn't even be callable without a diskette
-			//  inserted. Unexpected result
-			if(!diskette)
-				return
-
-			diskette.forceMove(drop_location())
-			diskette = null
+			eject_disk(usr)
 			return
 
 		// Create a Genetic Makeup injector. These injectors are timed and thus are
@@ -1986,6 +1963,26 @@
 	tgui_view_state["storageConsSubMode"] = "mutations"
 	tgui_view_state["storageDiskSubMode"] = "mutations"
 
+/**
+  * Ejects the DNA Disk from the console.
+	*
+	* Will insert into the user's hand if possible, otherwise will drop it at the
+	* console's location.
+	*
+	* Arguments:
+  * * user - The mob that is attempting to eject the diskette.
+  */
+/obj/machinery/computer/scan_consolenew/proc/eject_disk(mob/user)
+	// Check for diskette.
+	if(!diskette)
+		return
+
+	to_chat(user, "<span class='notice'>You eject [diskette] from [src].</span>")
+
+	// If the disk shouldn't pop into the user's hand for any reason, drop it on the console instead.
+	if(!istype(user) || !Adjacent(user) || !user.put_in_active_hand(diskette))
+		diskette.forceMove(drop_location())
+	diskette = null
 
 #undef INJECTOR_TIMEOUT
 #undef NUMBER_OF_BUFFERS

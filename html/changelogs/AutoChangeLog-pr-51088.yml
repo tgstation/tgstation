@@ -1,4 +1,0 @@
-author: "wesoda25"
-delete-after: True
-changes: 
-  - bugfix: "The progress bar for butchering large mobs is no longer offset."
