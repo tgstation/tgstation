@@ -146,7 +146,6 @@ SUBSYSTEM_DEF(vote)
 				active_admins = TRUE
 				break
 		if(!active_admins)
-			SSmapping.maprotate()	//shuffle the map
 			SSticker.Reboot("Restart vote successful.", "restart vote", 1)	//no delay in case the restart is due to lag
 		else
 			to_chat(world, "<span style='boldannounce'>Notice:Restart vote will not restart the server automatically because there are active admins on.</span>")
