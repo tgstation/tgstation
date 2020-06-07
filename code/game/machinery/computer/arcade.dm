@@ -184,6 +184,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/list/weapons = list()
 
 
+///creates the enemy base stats for a new round.
 /obj/machinery/computer/arcade/battle/proc/enemy_setup()
 	player_hp = 85
 	player_mp = 20
@@ -245,7 +246,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	screen_setup(user)
 
 
-///I prefer being able to set up the screen within my own proc instead of relying on ui_interact
+///sets up the main screen for the user
 /obj/machinery/computer/arcade/battle/proc/screen_setup(mob/user)
 	var/dat = "<a href='byond://?src=[REF(src)];close=1'>Close</a>"
 	dat += "<center><h4>[enemy_name]</h4></center>"
@@ -302,7 +303,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if(href_list["counter_attack"] && player_mp < 10)
 			temp = "<br><center><h3>you don't have the mp necessary to counter attack and defend yourself instead</h3></center>"
-			href_list[2] = "defend"
+			href_list["counter_attack"] = "defend"
 			player_mp += 10
 			arcade_action(usr,href_list,attackamt)
 			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
@@ -316,7 +317,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		else if(href_list["power_attack"] && player_mp < 20)
 			temp = "<br><center><h3>You don't have the mp necessary for a power attack and settle for a light attack!</h3></center>"
-			href_list[2] = "attack"
+			href_list["power_attack"] = "attack"
 			enemy_hp -= attackamt
 			arcade_action(usr,href_list,attackamt)
 
@@ -331,6 +332,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			Reset()
 			obj_flags &= ~EMAGGED
 
+		enemy_setup()
 		screen_setup(usr)
 
 
@@ -431,7 +433,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 				player_hp -= attack_amount + 5
 				enemy_stance = "attack"
 			if(!success)
-				added_temp = "the wall and breaking their skull in the process!" //[enemy_name] you have a literal dent in your skull
+				added_temp = "the wall, breaking their skull in the process!" //[enemy_name] you have a literal dent in your skull
 				enemy_hp -= attack_amount
 				enemy_stance = "attack"
 
@@ -468,16 +470,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			player_hp -= 10
 			enemy_mp -= 20
 
-		else if(enemy_hp >= 20 && enemy_mp >= 20 && enemy_stance == "defensive")
-			temp += "<br><center><h3>[enemy_name] Blasts you with magic from afar and gets hurt in the process!<center><h3>"
-			enemy_mp -= 20
-			enemy_hp -= 10
-			player_hp -= 25
+		else if(enemy_hp >= 20 && enemy_mp >= 30 && enemy_stance == "defensive")
+			temp += "<br><center><h3>[enemy_name] Blasts you with magic from afar!<center><h3>"
+			enemy_mp -= 30
+			player_hp -= 30
 
 		else if(enemy_hp < 20 && enemy_mp >= 20 && enemy_stance == "defensive") //it's a pretty expensive spell so they can't spam it that much
-			temp += "<br><center><h3>[enemy_name] heal themselves with magic and gain back 10 hp!<center><h3>"
-			enemy_hp += 10
-			enemy_mp -= 20
+			temp += "<br><center><h3>[enemy_name] heal themselves with magic and gain back 20 hp!<center><h3>"
+			enemy_hp += 20
+			enemy_mp -= 30
 		else
 			temp += "<br><center><h3>[enemy_name]'s magical nature lets them get some mp back!<center><h3>"
 			enemy_mp += attack_amount
