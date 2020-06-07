@@ -26,32 +26,32 @@
 	if(!humie)
 		return
 
-	H?.grab_ghost()
+	humie?.grab_ghost()
 
-	if(!H.mind || !H.client)
-		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [H.real_name], a voiceless dead", ROLE_HERETIC, null, ROLE_HERETIC, 50,H)
+	if(!humie.mind || humie.client)
+		var/list/mob/dead/observer/candidates = pollCandidatesForMob("Do you want to play as a [humie.real_name], a voiceless dead", ROLE_HERETIC, null, ROLE_HERETIC, 50,humie)
 		if(!LAZYLEN(candidates))
 			return
 		var/mob/dead/observer/C = pick(candidates)
-		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(H)]) to replace an AFK player.")
-		H.ghostize(0)
-		H.key = C.key
+		message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(humie)]) to replace an AFK player.")
+		humie.ghostize(0)
+		humie.key = C.key
 
-	if(!check_ghouls(user) || HAS_TRAIT(H,TRAIT_HUSK))
+	if(!check_ghouls(user) || HAS_TRAIT(humie,TRAIT_HUSK))
 		return
 
-	ADD_TRAIT(H,TRAIT_MUTE,MAGIC_TRAIT)
-	log_game("[key_name_admin(H)] has become a voiceless dead, their master is [user.real_name]")
-	H.revive(full_heal = TRUE, admin_revive = TRUE)
-	H.setMaxHealth(50)
-	H.health = 50 // Voiceless dead are much tougher than ghouls
-	H.become_husk()
-	H.faction |= "e_cult"
-	H.fully_replace_character_name(H.real_name,"Voiceless [H.real_name]")
-	to_chat(H, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
-	to_chat(H, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
-	atoms -= H
-	ghouls += H
+	ADD_TRAIT(humie,TRAIT_MUTE,MAGIC_TRAIT)
+	log_game("[key_name_admin(humie)] has become a voiceless dead, their master is [user.real_name]")
+	humie.revive(full_heal = TRUE, admin_revive = TRUE)
+	humie.setMaxHealth(50)
+	humie.health = 50 // Voiceless dead are much tougher than ghouls
+	humie.become_husk()
+	humie.faction |= "e_cult"
+	humie.fully_replace_character_name(humie.real_name,"Voiceless [humie.real_name]")
+	to_chat(humie, "<span class='userdanger'>You have been revived by </span><B>[user.real_name]!</B>")
+	to_chat(humie, "<span class='userdanger'>[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!</span>")
+	atoms -= humie
+	ghouls += humie
 
 /datum/eldritch_knowledge/flesh_ghoul/proc/check_ghouls(mob/living/user)
 
