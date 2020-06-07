@@ -22,10 +22,8 @@
 	var/list/ghouls = list()
 
 /datum/eldritch_knowledge/flesh_ghoul/on_finished_recipe(mob/living/user,list/atoms,loc)
-	var/mob/living/carbon/human/H
-	for(var/mob/living/carbon/human/humie in atoms)
-		H = humie
-	if(!H)
+	var/mob/living/carbon/human/humie = locate() in atoms
+	if(!humie)
 		return
 
 	H?.grab_ghost()
