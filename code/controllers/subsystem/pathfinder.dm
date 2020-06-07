@@ -298,7 +298,8 @@ SUBSYSTEM_DEF(pathfinder)
 	var/reverse_dir_of_expand	// reverse direction of where we're expanding to.
 	SETUP_NODE(open, null, 0, current_distance, 0, NORTH|SOUTH|EAST|WEST, start)		// initially we want to explore all cardinals.
 	while(length(open))		// while we still have open nodes
-		current = open[open.len--]		// pop a node
+		current = open[length(open)]		// pop a node
+		open.len--
 		current_turf = current[NODE_TURF] // get its turf
 		// see how far we are
 		CALCULATE_DISTANCE(current_turf, end)
