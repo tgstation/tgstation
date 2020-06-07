@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(pathfinding)
 // Let's sing the listmos song!
 
 /// Total size of node "list", which is indexed by turf.
-#define NODE_LIST_LENGTH 6
+#define NODE_LIST_LENGTH 7
 /// Since we're using turfs, this is just the previous turf.
 #define NODE_PREVIOUS 1
 /// AStar node weight, lower is better, the list will be sorted by this
@@ -61,6 +61,8 @@ SUBSYSTEM_DEF(pathfinding)
 #define NODE_DEPTH 5
 /// Direction to expand in
 #define NODE_DIR 6
+/// Node's actual turf because I forgot to do associative list and I'm not sure assoc would even perform better
+#define NODE_TURF 7
 
 // forgive me, for this (and everything below it) is a sin.
 #define SETUP_NODE(list, previous, cost, heuristic, depth, dir) \
@@ -98,19 +100,19 @@ SUBSYSTEM_DEF(pathfinding)
 	};
 
 /// Sets up a node list with these values
-#define NODE(previous, cost, heuristic, depth, dir) list(previous, cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT, cost, heuristic, depth, dir)
+#define NODE(previous, cost, heuristic, depth, dir, turf) list(previous, cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT, cost, heuristic, depth, dir, turf)
 
 /// Sets current_distance.
-#define CALCULATE_DISTANCE \
+#define CALCULATE_DISTANCE(A, B) \
 	switch(heuristic_type) { \
 		if(PATHFINDING_HEURISTIC_MANHATTAN) { \
-			current_distance = MANHATTAN(start, end); \
+			current_distance = MANHATTAN(A, B); \
 		}; \
 		if(PATHFINDING_HEURISTIC_BYOND) { \
-			current_distance = BYOND(start, end); \
+			current_distance = BYOND(A, B); \
 		}; \
 		if(PATHFINDING_HEURISTIC_EUCLIDEAN) { \
-			current_distance = EUCLIDEAN(start, end); \
+			current_distance = EUCLIDEAN(A, B); \
 		}; \
 	};
 
@@ -242,10 +244,14 @@ SUBSYSTEM_DEF(pathfinding)
 	// this used to use a datum/Heap but let's Not(tm) because proccall overhead is a Thing(tm) in byond and that's Bad(tm) for us.
 	// instead we're going to play the list game
 	INJECTION_SETUP // See defines
-	var/list/open = list()		// astar open node list, see defines
+	var/list/open = list()		// astar open node list, see defines - turf = node list.
 	var/list/path = list()		// assembled turf path
-	CALCULATE_DISTANCE
-	SETUP_NODE(open, null, 0, current_distance, 0, NORTH|SOUTH|EAST|WEST)
+	var/list/current = list()		//current node list
+	var/turf/current_turf		// because unironically : operators are slower (not to mention the fact they're banned) than .'s for some reason?
+	SETUP_NODE(open, null, 0, current_distance, 0, NORTH|SOUTH|EAST|WEST, start)		// initially we want to explore all cardinals.
+	while(length(open))		// while we still have open nodes
+		current = open[open.len--]		// pop a node
+		current_turf = current[NODE_TURF]
 
 
 //the weighting function, used in the A* algorithm
@@ -257,17 +263,6 @@ SUBSYSTEM_DEF(pathfinding)
 	return b.weight - a.weight
 
 /proc/AStar(caller, _end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableTurftest, id=null, turf/exclude=null, simulated_only = TRUE)
-	var/datum/Heap/open = new /datum/Heap(/proc/HeapPathWeightCompare) //the open list
-	var/list/openc = new() //open list for node check
-	var/list/path = null //the returned path, if any
-	//initialization
-	var/datum/path_node/cur = new /datum/path_node(start,null,0,DIST(start, end),0,15,1)//current processed turf
-	open.Insert(cur)
-	openc[start] = cur
-	//then run the main loop
-	while(!open.IsEmpty() && !path)
-		cur = open.Pop() //get the lower f turf in the open list
-		//get the lower f node on the open list
 		//if we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
