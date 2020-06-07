@@ -214,7 +214,7 @@ SUBSYSTEM_DEF(pathfinding)
 				if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
 					CALCULATE_DISTANCE(expand_turf, end); \
 					SETUP_NODE(open, T, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
-				};
+				}; \
 			}; \
 		}; \
 	};
