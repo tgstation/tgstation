@@ -149,7 +149,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * queue - queue to put this in/use with this.
   * * ID - obj/item/card/id to provide access. why this uses an id card and not an access list, .. don't ask.
   */
-/datum/controller/subsystem/pathfinding/proc/JPS_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_distance = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT, obj/item/card/id/ID)
+/datum/controller/subsystem/pathfinding/proc/JPS_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_distance = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDING_QUEUE_DEFAULT, obj/item/card/id/ID)
 	if(!end)
 		. = PATHFIND_FAIL_NO_END_TURF
 		CRASH("No ending turf")
@@ -193,7 +193,7 @@ SUBSYSTEM_DEF(pathfinding)
 	if(current[NODE_DIR] & dir) { \
 		expand_turf = get_step(current[NODE_TURF], dir); \
 		if(expand_turf && !turf_blacklist_typecache[expand_turf.type]) { \
-			expand = node_by_turf[T]; \
+			expand = node_by_turf[expand_turf]; \
 			CALCULATE_DISTANCE(current_turf, expand_turf); \
 			new_cost = current[NODE_COST] + current_distance; \
 			reverse_dir_of_expand = REVERSE_DIR(dir); \
@@ -239,7 +239,7 @@ SUBSYSTEM_DEF(pathfinding)
   * * queue - queue to put this in/use with this.
   * * ID - obj/item/card/id to provide access. why this uses an id card and not an access list, .. don't ask.
   */
-/datum/controller/subsystem/pathfinding/proc/AStar_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_distance = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDER_QUEUE_DEFAULT, obj/item/card/id/ID)
+/datum/controller/subsystem/pathfinding/proc/AStar_pathfind(caller, turf/start, turf/end, can_cross_proc = /turf/proc/pathfinding_can_cross, heuristic_type = PATHFINDING_HEURISTIC_BYOND, max_node_depth = 30, max_path_distance = 0, min_target_distance = 0, turf_blacklist_typecache = SSpathfinding.space_type_cache, queue = PATHFINDING_QUEUE_DEFAULT, obj/item/card/id/ID)
 	if(!end)
 		. = PATHFIND_FAIL_NO_END_TURF
 		CRASH("No ending turf")
