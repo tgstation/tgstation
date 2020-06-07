@@ -106,8 +106,6 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	var/only_ruleset_executed = FALSE
 	/// Dynamic configuration, loaded on pre_setup
 	var/list/configuration = null
-	/// Antags rolled by rules so far, to keep track of and discourage scaling past a certain ratio of crew/antags especially on lowpop.
-	var/antags_rolled = 0
 
 /datum/game_mode/dynamic/admin_panel()
 	var/list/dat = list("<html><head><meta http-equiv='Content-Type' content='text/html; charset=UTF-8'><title>Game Mode Panel</title></head><body><h1><B>Game Mode Panel</B></h1>")
