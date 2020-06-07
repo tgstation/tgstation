@@ -357,8 +357,12 @@ SUBSYSTEM_DEF(pathfinding)
   */
 /turf/proc/pathfinding_can_cross(caller, turf/other, obj/item/card/id/ID, dir_to_other, reverse_dir)
 	if(dir_to_other & (dir_to_other - 1))		// diagonal check
-		#warn cardinal movement checks like how real diagonal movement works
-		return thing
+		// let's handle it like how diagonal movement does realistically.
+		var/northsouth = dir_to_other & (NORTH|SOUTH)
+		var/eastwest = dir_to_other & (EAST|WEST)
+		var/turf/one = get_step(src, northsouth)
+		var/turf/two = get_step(src, eastwest)
+		return (one && pathfinding_can_cross(caller, one, ID, , ) && one.pathfinding_can_cross(caller, other, ID, , )) || (two && pathfinding_can_cross(caller, two, ID, , ) && two.pathfinding_can_cross(caller, other, ID, , ))
 	// check density first. good litmus test.
 	if(other.density)
 		return FALSE
