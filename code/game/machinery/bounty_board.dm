@@ -1,4 +1,5 @@
 GLOBAL_LIST_EMPTY(allbountyboards)
+GLOBAL_LIST_EMPTY(request_list)
 /**
   * A machine that acts basically like a quest board.
   * Enables crew to create requests, crew can sign up to perform the request, and the requester can chose who to pay-out.
@@ -22,8 +23,6 @@ GLOBAL_LIST_EMPTY(allbountyboards)
 
 /obj/machinery/bounty_board/Initialize(mapload, ndir, building)
 	. = ..()
-	if(!request_list)
-		request_list = list()
 	GLOB.allbountyboards += src
 	if(building)
 		setDir(ndir)
@@ -55,7 +54,7 @@ GLOBAL_LIST_EMPTY(allbountyboards)
 			return TRUE
 		curr_request.req_number = current_user.account_id
 		curr_request.owner_account = current_user
-		request_list += list(curr_request)
+		GLOB.request_list += list(curr_request)
 		request_number++
 		for(var/obj/machinery/bounty_board/i in GLOB.allbountyboards)
 			i.localAlert()
@@ -91,7 +90,7 @@ GLOBAL_LIST_EMPTY(allbountyboards)
 	var/list/data = list()
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
-	for(var/i in request_list)
+	for(var/i in GLOB.request_list)
 		if(!i)
 			continue
 		var/datum/station_request/request = i
@@ -111,7 +110,7 @@ GLOBAL_LIST_EMPTY(allbountyboards)
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
-	for(var/datum/station_request/i in request_list)
+	for(var/datum/station_request/i in GLOB.request_list)
 		if("[i.req_number]" == "[current_ref_num]")
 			active_request = i
 			break
@@ -150,7 +149,7 @@ GLOBAL_LIST_EMPTY(allbountyboards)
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			say("Deleted current request.")
-			request_list.Remove(active_request)
+			GLOB.request_list.Remove(active_request)
 			return TRUE
 	. = TRUE
 
