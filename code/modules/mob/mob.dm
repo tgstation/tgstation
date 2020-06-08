@@ -421,15 +421,14 @@
 	var/list/result
 	if(client)
 		LAZYINITLIST(client.recent_examines)
-		if(!isnull(client.recent_examines[A])) // originally this wasn't an assoc list, but sometimes the timer failed and atoms stayed in a client's recent_examines, so we check here manually
-			if(client && client.recent_examines[A] > world.time)
-				result = A.examine_more(src)
-		else
+		if(isnull(client.recent_examines[A]) || client.recent_examines[A] < world.time) // originally this wasn't an assoc list, but sometimes the timer failed and atoms stayed in a client's recent_examines, so we check here manually
 			client.recent_examines[A] = world.time + EXAMINE_MORE_TIME
 			result = A.examine(src)
 			addtimer(CALLBACK(src, .proc/clear_from_recent_examines, A), EXAMINE_MORE_TIME)
+		else
+			result = A.examine_more(src)
 	else
-		result = A.examine(src)
+		result = A.examine(src) // if a tree is examined but no client is there to see it, did the tree ever really exist?
 
 	to_chat(src, result.Join("\n"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)

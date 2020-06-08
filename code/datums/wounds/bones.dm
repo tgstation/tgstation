@@ -369,8 +369,8 @@
 // doesn't make much sense for "a" bone to stick out of your head
 /datum/wound/brute/bone/critical/apply_wound(obj/item/bodypart/L, silent, datum/wound/old_wound, smited)
 	if(L.body_zone == BODY_ZONE_HEAD)
-		occur_text = "splits open, exposing bits of brain matter through the flesh and blood"
-		examine_desc = "has a nauseating indent, with bits of pink and purple mush peeking through"
+		occur_text = "splits open, exposing a bare, cracked skull through the flesh and blood"
+		examine_desc = "has an unsettling indent, with bits of skull poking out"
 	. = ..()
 
 /// if someone is using bone gel on our wound

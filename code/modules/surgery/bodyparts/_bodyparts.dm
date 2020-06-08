@@ -236,19 +236,26 @@
 	update_disabled()
 	return update_bodypart_damage_state() || .
 
-
+/**
+  * check_wounding() is where we handle rolling for, selecting, and applying a wound if we meet the criteria
+  *
+  * We generate a "score" for how woundable the attack was based on the damage and other factors discussed in [check_wounding_mods()], then go down the list from most severe to least severe wounds in that category.
+  * We can promote a wound from a lesser to a higher severity this way, but we give up if we have a wound of the given type and fail to roll a higher severity, so no sidegrades/downgrades
+  *
+  * Arguments:
+  * * woundtype- Either WOUND_SHARP, WOUND_BRUTE, or WOUND_BURN based on the attack type.
+  * * damage- How much damage is tied to this attack, since wounding potential scales with damage in an attack (see: WOUND_DAMAGE_EXPONENT)
+  * * wound_bonus- The wound_bonus of an attack
+  * * bare_wound_bonus- The bare_wound_bonus of an attack
+  */
 /obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
-	// damage clothes if applicable, part of wounds
-
-	//TODO: do this better
 	// actually roll wounds if applicable
 	if(HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE))
 		damage *= 1.5
 
-	var/injury_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
-	//testing("Init roll| (1, [round(damage ** WOUND_DAMAGE_EXPONENT)]): [injury_roll]")
+	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
+	var/injury_roll = base_roll
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
-	//testing("Final roll: [injury_roll]")
 	var/list/wounds_checking
 
 	switch(woundtype)
@@ -259,7 +266,7 @@
 		if(WOUND_BURN)
 			wounds_checking = WOUND_LIST_BURN
 
-	//var/datum/wound/W
+	//cycle through the wounds of the relevant category from the most severe down
 	for(var/PW in wounds_checking)
 		var/datum/wound/possible_wound = PW
 		var/datum/wound/replaced_wound
@@ -273,10 +280,12 @@
 
 		if(initial(possible_wound.threshold_minimum) < injury_roll)
 			if(replaced_wound)
-				replaced_wound.replace_wound(possible_wound)
+				var/datum/wound/new_wound = replaced_wound.replace_wound(possible_wound)
+				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll)
 			else
 				var/datum/wound/new_wound = new possible_wound
 				new_wound.apply_wound(src)
+				log_wound(owner, new_wound, damage, wound_bonus, bare_wound_bonus, base_roll)
 			return
 
 // try forcing a specific wound, but only if there isn't already a wound of that severity or greater for that type on this bodypart

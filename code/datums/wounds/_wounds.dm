@@ -112,6 +112,7 @@
   * * L: The bodypart we're wounding, we don't care about the person, we can get them through the limb
   * * silent: Not actually necessary I don't think, was originally used for demoting wounds so they wouldn't make new messages, but I believe old_wound took over that, I may remove this shortly
   * * old_wound: If our new wound is a replacement for one of the same time (promotion or demotion), we can reference the old one just before it's removed to copy over necessary vars
+  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
   */
 /datum/wound/proc/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE)
 	if(!istype(L) || !L.owner || !(L.body_zone in viable_zones) || isalien(L.owner))
@@ -182,13 +183,22 @@
 		LAZYREMOVE(limb.wounds, src)
 		limb.update_wounds()
 
-/// When you want to swap out one wound for another (typically a promotion or demotion in the same wound type). First we remove the old one, then we apply the new one with a reference to the old one, then we qdel the old one fully
+/**
+  * replace_wound() is used when you want to replace the current wound with a new wound, presumably of the same category, just of a different severity (either up or down counts)
+  *
+  * This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.
+  *
+  * Arguments:
+  * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/brute/cut/severe
+  * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
+  */
 /datum/wound/proc/replace_wound(new_type, smited = FALSE)
 	var/datum/wound/new_wound = new new_type
 	already_scarred = TRUE
 	remove_wound(replaced=TRUE)
 	new_wound.apply_wound(limb, old_wound = src, smited = smited)
 	qdel(src)
+	return new_wound
 
 /// The immediate negative effects faced as a result of the wound
 /datum/wound/proc/wound_injury(datum/wound/old_wound = null)
