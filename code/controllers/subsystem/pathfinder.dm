@@ -79,7 +79,7 @@ SUBSYSTEM_DEF(pathfinder)
 		__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir, turf); \
 		current_effect = new(turf); \
 		debug_effects += current_effect; \
-		debug_turf_to_node += current_effect; \
+		debug_turf_to_node[turf] = current_effect; \
 		current_effect.color = node_color_potential; \
 		current_effect.alpha = node_alpha; \
 		node_by_turf[turf] = __INJECTING_NODE; \
@@ -138,6 +138,13 @@ SUBSYSTEM_DEF(pathfinder)
 		} \
 	};
 
+/// Pause for 0.5 ds if debugging with visuals.
+#ifdef PATHFINDING_DEBUG
+#define PAUSE_IF_DEBUGGING if(visualize_pathfinding) sleep(0.5)
+#else
+#define PAUSE_IF_DEBUGGING
+#endif
+
 /**
   * Runs a pathfind with jump point search, a variant of A* with much, much higher performance.
   * You want to use this whenever possible.
@@ -185,17 +192,11 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
 
-/*
 #ifdef PATHFINDING_DEBUG
-*/
-//#define CHECK_NODE_BLANK if(!expand[NODE_DIR]) current_effect = debug_turf_to_node[expand[NODE_TURF]]; current_effect.color = node_color_explored;
-//				CHECK_NODE_BLANK; \
-
-/*
+	#define CHECK_NODE_BLANK if(!expand[NODE_DIR]) current_effect = debug_turf_to_node[expand[NODE_TURF]]; current_effect.color = node_color_explored;
 #else
 	#define CHECK_NODE_BLANK
 #endif
-*/
 
 /**
   * Because a loop is laggy, we're going to use a define.
@@ -224,6 +225,7 @@ SUBSYSTEM_DEF(pathfinder)
 			reverse_dir_of_expand = REVERSE_DIR(dir); \
 			if(expand) { \
 				expand[NODE_DIR] = expand[NODE_DIR] & ((NORTH|SOUTH|EAST|WEST) ^ reverse_dir_of_expand); \
+				CHECK_NODE_BLANK \
 				if(new_cost < expand[NODE_COST]) { \
 					if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
 						expand[NODE_PREVIOUS] = current; \
@@ -243,6 +245,8 @@ SUBSYSTEM_DEF(pathfinder)
 			}; \
 		}; \
 	};
+
+#undef CHECK_NODE_BLANK
 
 /**
   * Runs a pathfind with normal A*
@@ -345,6 +349,7 @@ SUBSYSTEM_DEF(pathfinder)
 	var/new_cost				// new cost of a new turf being expanded to.
 	var/reverse_dir_of_expand	// reverse direction of where we're expanding to.
 	SETUP_NODE(open, null, 0, current_distance, 0, NORTH|SOUTH|EAST|WEST, start)		// initially we want to explore all cardinals.
+	PAUSE_IF_DEBUGGING
 	while(length(open))		// while we still have open nodes
 		current = open[length(open)]		// pop a node
 		open.len--
@@ -352,6 +357,7 @@ SUBSYSTEM_DEF(pathfinder)
 #ifdef PATHFINDING_DEBUG
 		current_effect = debug_turf_to_node[current_turf]
 		current_effect.color = node_color_current
+		PAUSE_IF_DEBUGGING
 #endif
 		// see how far we are
 		CALCULATE_DISTANCE(current_turf, end)
@@ -371,9 +377,13 @@ SUBSYSTEM_DEF(pathfinder)
 			continue
 		// Run each direction
 		RUN_ASTAR(NORTH)
+		PAUSE_IF_DEBUGGING
 		RUN_ASTAR(SOUTH)
+		PAUSE_IF_DEBUGGING
 		RUN_ASTAR(EAST)
+		PAUSE_IF_DEBUGGING
 		RUN_ASTAR(WEST)
+		PAUSE_IF_DEBUGGING
 		// Clear directions, we're done with this node.
 		current[NODE_DIR] = NONE
 #ifdef PATHFINDING_DEBUG
@@ -382,6 +392,10 @@ SUBSYSTEM_DEF(pathfinder)
 #endif
 		CHECK_TICK
 
+#ifdef PATHFINDING_DEBUG
+	QDEL_LIST_IN(debug_effects, visual_lifetime)
+#endif
+
 	return path || PATHFIND_FAIL_NO_PATH
 
 #undef RUN_ASTAR
@@ -389,6 +403,8 @@ SUBSYSTEM_DEF(pathfinder)
 #undef MANHATTAN
 #undef BYOND
 #undef EUCLIDEAN
+
+#undef PAUSE_IF_DEBUGGING
 
 #undef NODE_LIST_LENGTH
 #undef NODE_PREVIOUS
