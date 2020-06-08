@@ -26,9 +26,15 @@ SUBSYSTEM_DEF(pathfinder)
 	var/static/mutable_appearance/continuous_to_node = mutable_appearance('icons/debug/pathfinding_path.dmi', "continuous_solid")
 	var/static/mutable_appearance/arrow_terminated = mutable_appearance('icons/debug/pathfinding_path.dmi', "arrow_dotted")
 	var/static/mutable_appearance/continuous_terminated = mutable_appearance('icons/debug/pathfinding_path.dmi', "continuous_dotted")
+	var/static/mutable_appearance/successful_pathfind = mutable_appearance('icons/debug/pathfinding_path.dmi', "successful_pathfind")
 
-	var/static/loop_delay = 0.5
+	/// varedit to true to visualize pathfinding, forcing a 0.5 ds interval between loops
+	var/static/visualize_pathfinding = FALSE
+	/// invisibility var of the effets
+	var/static/visual_invisibility = 0
+	/// whether or not to visualize jps "jump scanning". if on, it'll be subject to the same 0.5 ds intervals between recursions.
 	var/static/visualize_jps_linescanning = FALSE
+	/// how long effects last
 	var/static/visual_lifetime = 10 SECONDS
 #endif
 
@@ -66,11 +72,24 @@ SUBSYSTEM_DEF(pathfinder)
 /// Node's actual turf because I forgot to do associative list and I'm not sure assoc would even perform better
 #define NODE_TURF 7
 
+
 // forgive me, for this (and everything below it) is a sin.
-#define SETUP_NODE(list, previous, cost, heuristic, depth, dir, turf) \
-	__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir, turf); \
-	node_by_turf[turf] = __INJECTING_NODE; \
-	INJECT_NODE(list, __INJECTING_NODE)
+#ifdef PATHFINDING_DEBUG
+	#define SETUP_NODE(list, previous, cost, heuristic, depth, dir, turf) \
+		__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir, turf); \
+		current_effect = new(turf); \
+		debug_effects += current_effect; \
+		debug_turf_to_node += current_effect; \
+		current_effect.color = node_color_potential; \
+		current_effect.alpha = node_alpha; \
+		node_by_turf[turf] = __INJECTING_NODE; \
+		INJECT_NODE(list, __INJECTING_NODE)
+#else
+	#define SETUP_NODE(list, previous, cost, heuristic, depth, dir, turf) \
+		__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir, turf); \
+		node_by_turf[turf] = __INJECTING_NODE; \
+		INJECT_NODE(list, __INJECTING_NODE)
+#endif
 
 /// Sets up variables needed for binary insert to avoid variable def overhead
 #define INJECTION_SETUP \
@@ -166,6 +185,18 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
 
+/*
+#ifdef PATHFINDING_DEBUG
+*/
+//#define CHECK_NODE_BLANK if(!expand[NODE_DIR]) current_effect = debug_turf_to_node[expand[NODE_TURF]]; current_effect.color = node_color_explored;
+//				CHECK_NODE_BLANK; \
+
+/*
+#else
+	#define CHECK_NODE_BLANK
+#endif
+*/
+
 /**
   * Because a loop is laggy, we're going to use a define.
   * You can't have comments in the middle of a multi line define so we'll explain how this works here.
@@ -254,6 +285,23 @@ SUBSYSTEM_DEF(pathfinder)
 
 /datum/controller/subsystem/pathfinder/proc/run_AStar_pathfind(caller, turf/start, turf/end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
+#ifdef PATHFINDING_DEBUG
+	var/list/obj/effect/overlay/pathfinding/debug_effects = list()
+	var/list/obj/effect/overlay/pathfinding/debug_turf_to_node = list()
+	var/obj/effect/overlay/pathfinding/current_effect
+	if(visualize_pathfinding)
+		current_effect = new(start)
+		current_effect.alpha = node_alpha
+		current_effect.color = node_color_starting
+		current_effect.layer += 1
+		current_effect.invisibility = visual_invisibility
+		debug_effects += current_effect
+		current_effect = new(end)
+		current_effect.alpha = node_alpha
+		current_effect.invisibility = visual_invisibility
+		current_effect.color = node_color_goal
+		current_effect.layer += 1
+#endif
 	// We're going to assume everything is valid type-wise as we're only ran by a wrapper.
 	// If anything ISN'T valid, we're going to crash and burn, because why are you not using the wrapper and/or passing in invalid arguments?
 	// simple checks first
@@ -301,6 +349,10 @@ SUBSYSTEM_DEF(pathfinder)
 		current = open[length(open)]		// pop a node
 		open.len--
 		current_turf = current[NODE_TURF] // get its turf
+#ifdef PATHFINDING_DEBUG
+		current_effect = debug_turf_to_node[current_turf]
+		current_effect.color = node_color_current
+#endif
 		// see how far we are
 		CALCULATE_DISTANCE(current_turf, end)
 		// if we're at the end or close enough, we're done
@@ -324,6 +376,10 @@ SUBSYSTEM_DEF(pathfinder)
 		RUN_ASTAR(WEST)
 		// Clear directions, we're done with this node.
 		current[NODE_DIR] = NONE
+#ifdef PATHFINDING_DEBUG
+		current_effect = debug_turf_to_node[current_turf]
+		current_effect.color = node_color_explored
+#endif
 		CHECK_TICK
 
 	return path || PATHFIND_FAIL_NO_PATH
