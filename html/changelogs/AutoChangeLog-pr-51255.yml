@@ -1,0 +1,4 @@
+author: "SpaceManiac"
+delete-after: True
+changes: 
+  - refactor: "BSQL has been replaced with rust-g, improving SQL reliability and safety."
