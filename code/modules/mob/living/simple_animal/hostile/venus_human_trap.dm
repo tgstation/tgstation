@@ -97,6 +97,8 @@
 	var/vine_grab_distance = 5
 	/// Whether or not this plant is ghost possessable
 	var/playable_plant = TRUE
+	/// copied over from the code from eyeballs (the mob) to make it easier for venus human traps to see in kudzu that has the vision-blocking mutation
+	sight = SEE_SELF|SEE_MOBS|SEE_OBJS|SEE_TURFS
 
 /mob/living/simple_animal/hostile/venus_human_trap/Life()
 	. = ..()
