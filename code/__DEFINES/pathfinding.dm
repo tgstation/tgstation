@@ -16,8 +16,8 @@
 /// Failed to find path
 #define PATHFIND_FAIL_NO_PATH				"NO_PATH"
 
-/// extra weight applied to heuristic to tiebreaks when dealing with multiple equally good paths.
-#define PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT 0.005
+/// Weight to multiply heuristic value by. There's currently no need to change this, so it's a define for now.
+#define PATHFINDING_HEURISTIC_WEIGHT 1.015
 
 /// manhattan distance - cardinal moves only
 #define PATHFINDING_HEURISTIC_MANHATTAN				1

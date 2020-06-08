@@ -230,7 +230,7 @@ SUBSYSTEM_DEF(pathfinder)
 						if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
 							expand[NODE_PREVIOUS] = current; \
 							expand[NODE_COST] = new_cost; \
-							expand[NODE_WEIGHT] = new_cost + expand[NODE_HEURISTIC] * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT; \
+							expand[NODE_WEIGHT] = new_cost + expand[NODE_HEURISTIC] * PATHFINDING_HEURISTIC_WEIGHT; \
 							current_node_effect?.loc.maptext = "[expand[NODE_WEIGHT]]"; \
 							expand[NODE_DEPTH] = current[NODE_DEPTH] + 1; \
 							open -= expand; \
@@ -276,7 +276,7 @@ SUBSYSTEM_DEF(pathfinder)
 						if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
 							expand[NODE_PREVIOUS] = current; \
 							expand[NODE_COST] = new_cost; \
-							expand[NODE_WEIGHT] = new_cost + expand[NODE_HEURISTIC] * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT; \
+							expand[NODE_WEIGHT] = new_cost + expand[NODE_HEURISTIC] * PATHFINDING_HEURISTIC_WEIGHT; \
 							expand[NODE_DEPTH] = current[NODE_DEPTH] + 1; \
 							open -= expand; \
 							INJECT_NODE(open, expand); \
@@ -428,7 +428,8 @@ SUBSYSTEM_DEF(pathfinder)
 				if(visualize_pathfinding)
 					current_arrow_effect = new(current[NODE_TURF])
 					current_arrow_effect.appearance = successful_pathfind
-					current_arrow_effect.orient(traceback_dir))
+					current_arrow_effect.orient(traceback_dir)
+					debug_effects += current_arrow_effect
 #endif
 			// get the path in the right direction
 			reverseRange(path)
@@ -438,18 +439,15 @@ SUBSYSTEM_DEF(pathfinder)
 			continue
 		// Run each direction
 		RUN_ASTAR(NORTH)
-		PAUSE_IF_DEBUGGING
 		RUN_ASTAR(SOUTH)
-		PAUSE_IF_DEBUGGING
 		RUN_ASTAR(EAST)
-		PAUSE_IF_DEBUGGING
 		RUN_ASTAR(WEST)
-		PAUSE_IF_DEBUGGING
 		// Clear directions, we're done with this node.
 		current[NODE_DIR] = NONE
 #ifdef PATHFINDING_DEBUG
-		current_node_effect = debug_turf_to_node[current_turf]
-		current_node_effect.color = node_color_explored
+		if(visualize_pathfinding)
+			current_node_effect = debug_turf_to_node[current_turf]
+			current_node_effect.color = node_color_explored
 #endif
 		CHECK_TICK
 
@@ -520,13 +518,13 @@ SUBSYSTEM_DEF(pathfinder)
 
 /obj/effect/overlay/pathfinding/arrow/proc/orient(d)
 	if(d & NORTH)
-		pixel_y = 8
+		pixel_y = 16
 	else if(d & SOUTH)
-		pixel_y = -8
+		pixel_y = -16
 	if(d & EAST)
-		pixel_x = 8
+		pixel_x = 16
 	else if(d & WEST)
-		pixel_x = -8
+		pixel_x = -16
 	var/matrix/t = matrix()
 	t.Turn(dir2angle(d))
 	transform = t
