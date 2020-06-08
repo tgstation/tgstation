@@ -20138,6 +20138,7 @@
 	dir = 1
 	},
 /obj/item/storage/fancy/donut_box,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bhk" = (
@@ -20181,10 +20182,13 @@
 	dir = 8;
 	pixel_x = 24
 	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
+/obj/machinery/power/apc{
+	areastring = "/area/security/checkpoint/medical";
+	dir = 8;
+	name = "Medbay Security APC";
+	pixel_y = 23
 	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bhm" = (
@@ -20653,6 +20657,7 @@
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
 "biw" = (
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bix" = (
@@ -21131,6 +21136,10 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 6
 	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
+	dir = 10
+	},
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bjN" = (
@@ -21138,14 +21147,19 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 4
 	},
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/reagent_dispensers/peppertank{
-	pixel_x = 30
+/obj/structure/closet/secure_closet/security/med,
+/obj/item/radio/headset/headset_med,
+/obj/machinery/light_switch{
+	pixel_x = 28
 	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3{
 	dir = 9
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
 	},
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
@@ -21526,21 +21540,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/plasteel/white,
 /area/medical/pharmacy)
-"bkO" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/closet/secure_closet/security/med,
-/obj/item/radio/headset/headset_med,
-/obj/machinery/light_switch{
-	pixel_x = 28
-	},
-/turf/open/floor/plasteel,
-/area/security/checkpoint/medical)
 "bkP" = (
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/blue,
@@ -21739,7 +21738,10 @@
 /obj/effect/turf_decal/tile/red{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "blq" = (
@@ -22257,27 +22259,16 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 10
 	},
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Office";
+	req_access_txt = "63"
+	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bmO" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/item/kirbyplants/random,
-/obj/machinery/power/apc{
-	areastring = "/area/security/checkpoint/medical";
-	dir = 8;
-	name = "Medbay Security APC";
-	pixel_x = -25
-	},
-/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
-	dir = 5
-	},
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "bmP" = (
@@ -22486,16 +22477,6 @@
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /turf/open/floor/plasteel,
 /area/quartermaster/office)
-"bnF" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay)
 "bnG" = (
 /obj/item/paper_bin{
 	pixel_x = -3;
@@ -22711,45 +22692,28 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "boj" = (
+/obj/item/kirbyplants/random,
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	icon_state = "trimline_fill";
-	dir = 5
-	},
-/obj/item/kirbyplants/random,
-/obj/machinery/light{
-	dir = 4
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bok" = (
-/obj/effect/turf_decal/tile/red,
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/effect/turf_decal/tile/red{
-	dir = 1
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Office";
-	req_access_txt = "63"
-	},
 /obj/machinery/atmospherics/pipe/simple/supply/hidden/layer3,
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1,
 /obj/structure/cable,
 /obj/structure/cable,
-/turf/open/floor/plasteel,
-/area/security/checkpoint/medical)
-"bol" = (
+/obj/effect/turf_decal/trimline/blue/filled/corner{
+	icon_state = "trimline_corner_fill";
+	dir = 4
+	},
 /obj/effect/turf_decal/trimline/blue/filled/corner{
 	icon_state = "trimline_corner_fill";
 	dir = 1
 	},
 /turf/open/floor/plasteel/white,
-/area/medical/medbay)
+/area/security/checkpoint/medical)
 "bom" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	icon_state = "trimline_fill";
@@ -43054,10 +43018,6 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/main)
 "dBq" = (
-/obj/effect/turf_decal/trimline/blue/filled/corner{
-	icon_state = "trimline_corner_fill";
-	dir = 4
-	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer1,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
@@ -44492,6 +44452,7 @@
 	dir = 8
 	},
 /obj/effect/landmark/start/depsec/medical,
+/obj/structure/cable,
 /turf/open/floor/plasteel,
 /area/security/checkpoint/medical)
 "fxH" = (
@@ -45447,13 +45408,13 @@
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/lobby)
 "gUq" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	icon_state = "trimline_fill";
-	dir = 9
-	},
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
 	},
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/cmo)
@@ -46363,6 +46324,16 @@
 "ipA" = (
 /turf/open/floor/plating,
 /area/maintenance/department/medical/morgue)
+"irD" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/security/checkpoint/medical)
 "isi" = (
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	icon_state = "trimline_fill";
@@ -46838,17 +46809,6 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison/safe)
-"jgW" = (
-/obj/effect/turf_decal/trimline/blue/filled/line{
-	icon_state = "trimline_fill";
-	dir = 1
-	},
-/obj/structure/extinguisher_cabinet{
-	pixel_x = -5;
-	pixel_y = 30
-	},
-/turf/open/floor/plasteel/white,
-/area/medical/medbay)
 "jiK" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/tile/yellow,
@@ -48288,6 +48248,20 @@
 	},
 /turf/open/floor/plating,
 /area/construction/mining/aux_base)
+"lCB" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = -5;
+	pixel_y = 30
+	},
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
+/area/security/checkpoint/medical)
 "lDM" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
@@ -52783,10 +52757,11 @@
 /turf/open/floor/plasteel,
 /area/security/prison)
 "tgE" = (
-/obj/effect/spawner/structure/window/reinforced,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/plating,
+/obj/effect/turf_decal/trimline/blue/filled/line{
+	icon_state = "trimline_fill";
+	dir = 1
+	},
+/turf/open/floor/plasteel/white,
 /area/security/checkpoint/medical)
 "thX" = (
 /obj/structure/cable,
@@ -93175,8 +93150,8 @@ bhi
 bhi
 bhi
 bfK
-bfK
-jgW
+lCB
+imb
 eMx
 dYG
 nRO
@@ -93433,7 +93408,7 @@ bjX
 blp
 bmO
 tgE
-boh
+imb
 bwz
 bqY
 btZ
@@ -93690,7 +93665,7 @@ biw
 bjM
 bmN
 bok
-gwR
+boc
 bpP
 bfG
 ujV
@@ -93945,9 +93920,9 @@ bhl
 biy
 bjY
 bjN
-bkO
-bhi
-boh
+bmO
+tgE
+imb
 mtt
 bfG
 iis
@@ -94203,8 +94178,8 @@ bfK
 bfK
 bfK
 bfK
-bfK
-bnF
+irD
+imb
 deP
 bof
 bsx
@@ -94461,7 +94436,7 @@ oYr
 eOl
 bmR
 gUq
-bol
+imb
 pfp
 bof
 bof
