@@ -117,7 +117,7 @@
 			pull_vines()
 			ranged_cooldown = world.time + (ranged_cooldown_time * 0.5)
 			return
-	if(get_dist(src,the_target) > vine_grab_distance || vines.len == max_vines)
+	if(get_dist(src,the_target) > vine_grab_distance || vines.len >= max_vines)
 		return
 	for(var/turf/T in getline(src,target))
 		if (T.density)
