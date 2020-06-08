@@ -25,8 +25,8 @@
 	icon_dead = "pandora_dead"
 	icon_gib = "syndicate_gib"
 	health_doll_icon = "pandora"
-	maxHealth = 800
-	health = 800
+	maxHealth = 1000
+	health = 1000
 	melee_damage_lower = 15
 	melee_damage_upper = 15
 	attack_verb_continuous = "smashes into the side of"
@@ -128,7 +128,7 @@
 			new /obj/effect/temp_visual/hierophant/blast/pandora(t, src)
 
 /mob/living/simple_animal/hostile/asteroid/elite/pandora/proc/pandora_teleport(target)
-	ranged_cooldown = world.time + cooldown_time
+	ranged_cooldown = world.time + (cooldown_time * 2)
 	var/turf/T = get_turf(target)
 	var/turf/source = get_turf(src)
 	new /obj/effect/temp_visual/hierophant/telegraph(T, src)
