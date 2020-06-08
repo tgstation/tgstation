@@ -27684,6 +27684,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 4
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/white,
 /area/medical/cryo)
 "bCF" = (
@@ -45696,6 +45697,10 @@
 	dir = 5
 	},
 /area/science/research)
+"hoO" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/white,
+/area/medical/pharmacy)
 "hrz" = (
 /obj/structure/closet/secure_closet/injection,
 /obj/machinery/power/apc{
@@ -46155,6 +46160,7 @@
 	},
 /obj/item/storage/box/rxglasses,
 /obj/item/hand_labeler,
+/obj/item/gun/syringe,
 /obj/item/gun/syringe,
 /turf/open/floor/plasteel/white,
 /area/medical/storage)
@@ -47296,6 +47302,10 @@
 	},
 /turf/open/floor/plasteel,
 /area/security/prison)
+"jQp" = (
+/obj/machinery/holopad,
+/turf/open/floor/plasteel/white,
+/area/medical/storage)
 "jQQ" = (
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 4
@@ -54719,6 +54729,7 @@
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer1{
 	dir = 8
 	},
+/obj/machinery/holopad,
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/cmo)
 "wid" = (
@@ -90592,7 +90603,7 @@ bfF
 bhb
 owD
 bjO
-owD
+hoO
 owD
 tes
 bnC
@@ -96516,7 +96527,7 @@ bvr
 bzm
 rxb
 aFa
-bCY
+jQp
 bEk
 bFG
 bFG
