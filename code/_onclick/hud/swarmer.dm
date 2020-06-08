@@ -13,6 +13,22 @@
 		var/mob/living/simple_animal/hostile/swarmer/S = usr
 		S.CreateTrap()
 
+/**
+  * # SwarmerPylonButton
+  *
+  * The ui object operating as a button to create pylons.
+  */
+
+/obj/screen/swarmer/Pylon
+	icon_state = "ui_barricade"
+	name = "Create pylon (Costs 5 Resources)"
+	desc = "Creates a pylon, which expands the area swarmers may operate in. (Costs 25 resources)"
+
+/obj/screen/swarmer/Pylon/Click()
+	if(isswarmer(usr))
+		var/mob/living/simple_animal/hostile/swarmer/S = usr
+		S.CreatePylon()
+
 /obj/screen/swarmer/Barricade
 	icon_state = "ui_barricade"
 	name = "Create barricade (Costs 5 Resources)"
@@ -68,31 +84,36 @@
 	var/obj/screen/using
 
 	using = new /obj/screen/swarmer/FabricateTrap()
-	using.screen_loc = ui_hand_position(2)
+	using.screen_loc = ui_swarmer_trap
 	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Barricade()
-	using.screen_loc = ui_hand_position(1)
+	using.screen_loc = ui_swarmer_barricade
+	using.hud = src
+	static_inventory += using
+	
+	using = new /obj/screen/swarmer/Pylon()
+	using.screen_loc = ui_swarmer_pylon
 	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/Replicate()
-	using.screen_loc = ui_zonesel
+	using.screen_loc = ui_swarmer_replicate
 	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/RepairSelf()
-	using.screen_loc = ui_storage1
+	using.screen_loc = ui_swarmer_repair
 	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/ToggleLight()
-	using.screen_loc = ui_back
+	using.screen_loc = ui_swarmer_light
 	using.hud = src
 	static_inventory += using
 
 	using = new /obj/screen/swarmer/ContactSwarmers()
-	using.screen_loc = ui_inventory
+	using.screen_loc = ui_swarmer_contact
 	using.hud = src
 	static_inventory += using

@@ -101,6 +101,15 @@
 #define ui_drone_storage "CENTER-2:14,SOUTH:5"
 #define ui_drone_head "CENTER-3:14,SOUTH:5"
 
+//Swarmers
+#define ui_swarmer_contact "WEST:6,SOUTH:5"
+#define ui_swarmer_light "CENTER-2:14,SOUTH:5"
+#define ui_swarmer_repair "CENTER+1:18,SOUTH:5"
+#define ui_swarmer_replicate "EAST-1:28,SOUTH:5"
+#define ui_swarmer_pylon "CENTER+1:0,SOUTH+0:5"
+#define ui_swarmer_barricade "CENTER-1:0,SOUTH+0:5"
+#define ui_swarmer_trap "CENTER+0:0,SOUTH+0:5"
+
 //Cyborgs
 #define ui_borg_health "EAST-1:28,CENTER-1:15"
 #define ui_borg_pull "EAST-2:26,SOUTH+1:7"
