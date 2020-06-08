@@ -1,0 +1,69 @@
+"aB" = (/obj/machinery/computer/security{dir = 4},/turf/open/floor/plasteel/showroomfloor,/area/space)
+"bR" = (/obj/structure/table,/turf/open/floor/plasteel/dark,/area/space)
+"cq" = (/turf/open/floor/plasteel,/area/space)
+"cu" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"dz" = (/obj/structure/filingcabinet,/obj/machinery/requests_console{department = "Security"; departmentType = 5; pixel_y = 30},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"dB" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plasteel/dark,/area/space)
+"ef" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/obj/machinery/suit_storage_unit/security,/turf/open/floor/plasteel/dark,/area/space)
+"gq" = (/turf/closed/wall/r_wall,/area/space)
+"gE" = (/obj/structure/chair/office{dir = 1},/turf/open/floor/plasteel,/area/space)
+"ix" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/tile/neutral{dir = 1},/obj/effect/turf_decal/tile/neutral,/obj/effect/turf_decal/tile/neutral{dir = 4},/obj/effect/turf_decal/tile/neutral{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
+"kp" = (/obj/structure/punching_bag,/turf/open/floor/plasteel,/area/space)
+"mF" = (/obj/machinery/newscaster{pixel_x = -32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"mG" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/space)
+"oG" = (/obj/machinery/door/firedoor,/obj/effect/turf_decal/delivery,/obj/machinery/door/airlock/security{name = "Equipment Room"; req_access_txt = "1"},/turf/open/floor/plasteel,/area/space)
+"ps" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"pV" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"pX" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"ry" = (/obj/structure/rack,/obj/structure/sign/warning/nosmoking{pixel_x = 32},/turf/open/floor/plasteel/dark,/area/space)
+"rL" = (/obj/structure/filingcabinet/chestdrawer,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"sm" = (/obj/structure/table,/obj/item/laser_pointer/red,/obj/item/wrench,/obj/item/crowbar,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"tc" = (/obj/structure/lattice,/turf/open/space,/area/space)
+"ue" = (/obj/structure/closet/bombcloset/security,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"uu" = (/obj/machinery/computer/secure_data,/turf/open/floor/plasteel,/area/space)
+"vm" = (/obj/structure/reagent_dispensers/peppertank{pixel_x = 32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"vs" = (/obj/structure/closet/secure_closet/security/sec,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"wN" = (/obj/machinery/light_switch{dir = 9; pixel_x = -22},/turf/open/floor/plasteel/showroomfloor,/area/space)
+"xW" = (/obj/structure/table,/obj/machinery/recharger,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"yM" = (/obj/machinery/photocopier,/obj/machinery/computer/security/telescreen/entertainment{pixel_y = 32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"yV" = (/obj/structure/lattice,/obj/machinery/camera/motion{c_tag = "Armory External"; dir = 1},/turf/open/space,/area/space)
+"zf" = (/obj/structure/table/wood,/obj/machinery/recharger,/turf/open/floor/plasteel,/area/space)
+"zj" = (/obj/machinery/power/apc{dir = 8; name = "Security Office APC"; pixel_x = -25},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"zk" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"zW" = (/obj/structure/table,/obj/structure/plaque/static_plaque/golden{pixel_y = 32},/obj/machinery/light{dir = 1},/obj/item/storage/box/handcuffs{pixel_x = 1; pixel_y = 3},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"BT" = (/obj/machinery/camera{c_tag = "Security Office"; dir = 4},/obj/item/radio/intercom{dir = 4; pixel_x = -31},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"Ca" = (/obj/structure/rack,/turf/open/floor/plasteel/dark,/area/space)
+"Cp" = (/obj/structure/table,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"FO" = (/turf/open/floor/plasteel/showroomfloor,/area/space)
+"FR" = (/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"GI" = (/turf/open/floor/plasteel/dark,/area/space)
+"Ho" = (/obj/machinery/computer/security,/turf/open/floor/plasteel,/area/space)
+"Il" = (/obj/machinery/vending/coffee,/obj/machinery/status_display/evac{pixel_y = 32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"La" = (/obj/machinery/holopad/secure,/turf/open/floor/plasteel,/area/space)
+"LD" = (/obj/machinery/computer/secure_data{dir = 4},/turf/open/floor/plasteel/showroomfloor,/area/space)
+"LW" = (/obj/structure/closet/l3closet/security,/obj/effect/turf_decal/delivery,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"MC" = (/turf/closed/wall,/area/space)
+"MO" = (/obj/structure/table,/obj/item/storage/fancy/donut_box{pixel_y = 2},/obj/structure/noticeboard{pixel_y = 32},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"Nq" = (/obj/structure/weightmachine/weightlifter,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"Qo" = (/obj/machinery/camera/motion{c_tag = "Armory Motion Sensor"},/obj/structure/closet{name = "Evidence Closet"},/turf/open/floor/plasteel/dark,/area/space)
+"QA" = (/obj/structure/table/wood,/obj/item/flashlight/lamp/green{pixel_x = -4; pixel_y = 12},/obj/item/pen,/obj/item/folder/red{layer = 2.9; pixel_x = 8},/turf/open/floor/plasteel,/area/space)
+"Sz" = (/obj/machinery/light_switch{dir = 9; pixel_x = -22},/obj/effect/turf_decal/tile/red{dir = 1},/obj/effect/turf_decal/tile/red{dir = 8},/turf/open/floor/plasteel,/area/space)
+"Tn" = (/obj/machinery/door/airlock/security{name = "Brig Control"; req_access_txt = "3"},/obj/machinery/door/firedoor,/turf/open/floor/plasteel/showroomfloor,/area/space)
+"VZ" = (/obj/effect/turf_decal/tile/red,/obj/effect/turf_decal/tile/red{dir = 4},/turf/open/floor/plasteel,/area/space)
+"Zx" = (/obj/structure/chair/stool,/turf/open/floor/plasteel,/area/space)
+
+(1,1,1) = {"
+GIdBtcyVtcmGFOFONqFONqFOFO
+GIgqgqgqgqgqFOFOFOFOFOFOFO
+GIGIQoGIbRgqwNLWvsvsvsueFO
+bRGIGIGIbRgqoGMCMCMCMCMCoG
+CaGICaGIrygqzkdzMOzWIlyMvm
+CaGICaGICagqzjcqZxZxcqcqVZ
+CaGICaGICagqmFcqcqcqcqcqFR
+efGIGIGIefgqpsQAuucqQAHoVZ
+mGixmGixmGgqBTcqgELacqgEVZ
+LDFOFOFOxWgqSzQAzfcqQAzfVZ
+aBFOFOFOxWmGpVcqgEcqcqgEpX
+CpFOFOFOFOTnpscqcqcqcqcqVZ
+smCpFOFOrLmGzkcucukpcucuzk
+"}

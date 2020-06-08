@@ -1,0 +1,223 @@
+"aa" = (/turf/open/space/basic,/area/space)
+"ab" = (/turf/closed/wall,/area/space)
+"ac" = (/obj/machinery/door/airlock/grunge,/turf/open/floor/plasteel,/area/space)
+"ad" = (/obj/machinery/door/airlock,/turf/open/floor/plasteel,/area/space)
+"ae" = (/obj/effect/spawner/structure/window/reinforced/tinted,/turf/open/floor/plating,/area/space)
+"af" = (/obj/machinery/door/airlock/maintenance{req_access_txt = "12"},/turf/open/floor/plating,/area/space)
+"ag" = (/obj/structure/table/wood,/obj/item/folder,/turf/open/floor/wood,/area/space)
+"ah" = (/turf/open/floor/wood,/area/space)
+"ai" = (/obj/structure/table/wood,/obj/machinery/newscaster{pixel_y = 32},/obj/item/lighter,/turf/open/floor/wood,/area/space)
+"aj" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/under/misc/assistantformal,/turf/open/floor/wood,/area/space)
+"ak" = (/obj/structure/bed,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/item/bedsheet/dorms,/turf/open/floor/wood,/area/space)
+"al" = (/obj/effect/turf_decal/tile/neutral{dir = 1},/turf/open/floor/plasteel,/area/space)
+"am" = (/turf/open/floor/plasteel,/area/space)
+"an" = (/obj/effect/turf_decal/tile/neutral,/turf/open/floor/plasteel,/area/space)
+"ao" = (/obj/effect/decal/cleanable/cobweb,/obj/structure/bed,/obj/item/bedsheet/dorms,/turf/open/floor/carpet,/area/space)
+"ap" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/under/suit/burgundy,/turf/open/floor/carpet,/area/space)
+"aq" = (/obj/structure/dresser,/obj/machinery/newscaster{pixel_y = 32},/turf/open/floor/carpet,/area/space)
+"ar" = (/obj/structure/reagent_dispensers/fueltank,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"as" = (/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel,/area/space)
+"at" = (/obj/structure/closet/toolcloset,/obj/item/radio/intercom{pixel_y = 28},/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel,/area/space)
+"au" = (/obj/structure/closet/toolcloset,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel,/area/space)
+"av" = (/obj/structure/table/wood,/turf/open/floor/wood,/area/space)
+"aw" = (/obj/structure/table/wood,/obj/item/paper_bin{pixel_x = -2; pixel_y = 6},/obj/machinery/newscaster{pixel_y = 32},/turf/open/floor/wood,/area/space)
+"ax" = (/obj/structure/chair/wood{dir = 1},/turf/open/floor/wood,/area/space)
+"ay" = (/obj/machinery/door/airlock{id_tag = "Cabin3"; name = "Cabin 1"},/turf/open/floor/wood,/area/space)
+"az" = (/obj/machinery/door/airlock{id_tag = "Cabin4"; name = "Cabin 2"},/turf/open/floor/wood,/area/space)
+"aA" = (/turf/open/floor/carpet,/area/space)
+"aB" = (/obj/structure/rack,/obj/item/clothing/gloves/color/fyellow,/obj/item/clothing/suit/hazardvest,/obj/item/multitool,/obj/effect/spawner/lootdrop/maintenance,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"aC" = (/obj/machinery/camera{c_tag = "Auxiliary Tool Storage"; dir = 8},/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/turf/open/floor/plasteel,/area/space)
+"aD" = (/obj/item/radio/intercom{pixel_x = -29},/turf/open/floor/wood,/area/space)
+"aE" = (/obj/structure/chair/comfy/black{dir = 4},/turf/open/floor/carpet,/area/space)
+"aF" = (/obj/item/folder/white{pixel_x = 4; pixel_y = -3},/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"aG" = (/obj/structure/chair/office{dir = 8},/turf/open/floor/carpet,/area/space)
+"aH" = (/obj/structure/table/wood,/obj/item/camera_film{pixel_x = 6; pixel_y = 7},/obj/item/camera_film{pixel_x = -3; pixel_y = 5},/turf/open/floor/wood,/area/space)
+"aI" = (/obj/structure/extinguisher_cabinet{pixel_x = 27},/obj/effect/turf_decal/tile/neutral,/turf/open/floor/plasteel,/area/space)
+"aJ" = (/obj/structure/table,/obj/item/storage/toolbox/emergency,/obj/effect/turf_decal/tile/yellow{dir = 1},/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"aK" = (/obj/structure/table,/obj/item/stack/sheet/metal/fifty,/obj/item/stack/sheet/metal/fifty,/obj/item/storage/box/lights/mixed,/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"aL" = (/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"aM" = (/obj/structure/rack,/obj/item/electronics/apc,/obj/effect/spawner/lootdrop/maintenance,/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"aN" = (/obj/structure/table,/obj/item/stack/sheet/glass/fifty,/obj/item/stack/rods/fifty,/obj/effect/turf_decal/tile/yellow,/obj/effect/turf_decal/tile/yellow{dir = 4},/obj/effect/turf_decal/tile/yellow{dir = 8},/turf/open/floor/plasteel,/area/space)
+"aO" = (/obj/machinery/shower{dir = 4},/turf/open/floor/plasteel/freezer,/area/space)
+"aP" = (/turf/open/floor/plasteel/freezer,/area/space)
+"aQ" = (/obj/machinery/shower{dir = 8},/turf/open/floor/plasteel/freezer,/area/space)
+"aR" = (/obj/item/folder/blue,/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"aS" = (/obj/machinery/newscaster{pixel_y = 32},/obj/structure/dresser,/turf/open/floor/carpet,/area/space)
+"aT" = (/obj/structure/closet/secure_closet/personal/cabinet,/obj/item/clothing/under/suit/tan,/turf/open/floor/carpet,/area/space)
+"aU" = (/obj/structure/bed,/obj/item/bedsheet/dorms,/turf/open/floor/carpet,/area/space)
+"aV" = (/obj/machinery/camera{c_tag = "Dormitories - Fore"; dir = 8},/obj/effect/turf_decal/tile/neutral,/turf/open/floor/plasteel,/area/space)
+"aW" = (/obj/structure/bed,/obj/item/bedsheet/dorms,/turf/open/floor/wood,/area/space)
+"aX" = (/obj/machinery/newscaster{pixel_y = 32},/obj/structure/table/wood,/obj/item/paper,/turf/open/floor/wood,/area/space)
+"aY" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/space)
+"aZ" = (/obj/machinery/door/airlock/engineering,/obj/machinery/navbeacon/wayfinding,/turf/open/floor/plasteel,/area/space)
+"ba" = (/obj/structure/mirror{pixel_x = -28},/obj/machinery/shower{dir = 4},/turf/open/floor/plasteel/freezer,/area/space)
+"bb" = (/obj/item/bikehorn/rubberducky,/turf/open/floor/plasteel/freezer,/area/space)
+"bc" = (/obj/structure/mirror{pixel_x = 28},/obj/machinery/shower{dir = 8},/turf/open/floor/plasteel/freezer,/area/space)
+"bd" = (/obj/structure/table/wood,/obj/item/flashlight/lamp,/turf/open/floor/wood,/area/space)
+"be" = (/obj/structure/chair/office,/turf/open/floor/wood,/area/space)
+"bf" = (/obj/structure/table/wood,/obj/item/paper_bin{pixel_x = 1; pixel_y = 9},/turf/open/floor/wood,/area/space)
+"bg" = (/obj/machinery/door/airlock{id_tag = "Cabin2"; name = "Cabin 4"},/turf/open/floor/wood,/area/space)
+"bh" = (/obj/machinery/door/airlock{id_tag = "Cabin5"; name = "Cabin 3"},/turf/open/floor/wood,/area/space)
+"bi" = (/obj/structure/table/wood,/obj/item/paper,/obj/structure/sign/poster/official/random{pixel_y = -32},/turf/open/floor/wood,/area/space)
+"bj" = (/obj/structure/table/wood,/obj/item/folder/white{pixel_x = 4; pixel_y = -3},/turf/open/floor/wood,/area/space)
+"bk" = (/obj/structure/table/wood,/obj/item/folder/white{pixel_x = 4; pixel_y = -3},/obj/item/book/manual/wiki/security_space_law{pixel_x = -3; pixel_y = 5},/turf/open/floor/wood,/area/space)
+"bl" = (/obj/item/toy/cards/deck,/obj/structure/table/wood,/turf/open/floor/wood,/area/space)
+"bm" = (/obj/machinery/door/airlock{name = "Unisex Showers"},/turf/open/floor/plasteel/freezer,/area/space)
+"bn" = (/obj/machinery/door/airlock/grunge,/turf/open/floor/plating,/area/space)
+"bo" = (/obj/structure/toilet{pixel_y = 8},/obj/machinery/newscaster{pixel_y = -32},/turf/open/floor/plasteel/freezer,/area/space)
+"bp" = (/obj/machinery/door/airlock{id_tag = "Toilet3"; name = "Unit 3"},/turf/open/floor/plasteel/freezer,/area/space)
+"bq" = (/obj/structure/urinal{pixel_y = 29},/turf/open/floor/plasteel/freezer,/area/space)
+"br" = (/obj/machinery/newscaster{pixel_y = 32},/turf/open/floor/plasteel/freezer,/area/space)
+"bs" = (/obj/machinery/capture_the_flag/blue,/turf/open/space/basic,/area/space)
+"bt" = (/obj/machinery/capture_the_flag/red,/turf/open/space/basic,/area/space)
+"bu" = (/turf/closed/wall/r_wall,/area/space)
+"bv" = (/obj/structure/table/wood,/obj/item/storage/secure/briefcase{desc = "A large briefcase with a digital locking system, and the Nanotrasen logo emblazoned on the sides."; name = "\improper Nanotrasen-brand secure briefcase exhibit"; pixel_y = 2},/turf/open/floor/carpet,/area/space)
+"bw" = (/obj/structure/showcase/machinery/microwave{dir = 1; pixel_y = 2},/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"bx" = (/obj/machinery/camera{c_tag = "Restrooms"; dir = 4},/turf/open/floor/plasteel/freezer,/area/space)
+"by" = (/obj/machinery/door/airlock{name = "Unisex Restrooms"},/turf/open/floor/plasteel/freezer,/area/space)
+"bC" = (/obj/structure/window/reinforced,/obj/structure/showcase/mecha/ripley,/obj/effect/decal/cleanable/cobweb,/turf/open/floor/carpet,/area/space)
+"bE" = (/obj/structure/sign/plaques/kiddie/perfect_drone{pixel_y = 32},/obj/structure/table/wood,/obj/item/storage/backpack/duffelbag/drone,/obj/structure/window/reinforced,/turf/open/floor/carpet,/area/space)
+"bG" = (/obj/machinery/door/airlock/command,/turf/open/floor/wood,/area/space)
+"bH" = (/obj/structure/bookcase,/turf/open/floor/wood,/area/space)
+"bI" = (/obj/structure/table/wood,/obj/item/phone{desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in."; pixel_x = -3; pixel_y = 3},/obj/item/cigbutt/cigarbutt{pixel_x = 5; pixel_y = -1},/obj/item/radio/intercom{pixel_y = 21},/turf/open/floor/wood,/area/space)
+"bJ" = (/obj/effect/spawner/structure/window/reinforced,/obj/machinery/door/poddoor/shutters/preopen{id = "corporate_privacy"; name = "showroom shutters"},/turf/open/floor/plating,/area/space)
+"bK" = (/obj/structure/table/wood,/obj/item/clothing/shoes/laceup,/obj/item/clothing/under/suit/black_really,/obj/item/clothing/glasses/sunglasses,/obj/machinery/camera{c_tag = "Corporate Showroom"},/turf/open/floor/wood,/area/space)
+"bL" = (/obj/machinery/door/airlock{id_tag = "Toilet2"; name = "Unit 2"},/turf/open/floor/plasteel/freezer,/area/space)
+"bM" = (/obj/structure/sign/poster/official/random{pixel_y = -32},/turf/open/floor/plasteel/freezer,/area/space)
+"bN" = (/obj/structure/extinguisher_cabinet{pixel_x = 27},/turf/open/floor/plasteel/freezer,/area/space)
+"bP" = (/turf/open/floor/engine{name = "Holodeck Projector Floor"},/area/space)
+"bQ" = (/obj/machinery/capture_the_flag,/turf/open/space/basic,/area/space)
+"bR" = (/obj/effect/decal/cleanable/dirt,/turf/open/floor/wood,/area/space)
+"bS" = (/obj/structure/showcase/mecha/marauder,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/turf/open/floor/carpet,/area/space)
+"bT" = (/obj/structure/showcase/perfect_employee,/obj/structure/sign/plaques/kiddie/perfect_man{pixel_y = 32},/obj/structure/window/reinforced,/turf/open/floor/carpet,/area/space)
+"bU" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/structure/showcase/machinery/cloning_pod{layer = 4; pixel_x = 2; pixel_y = 5},/turf/open/floor/carpet,/area/space)
+"bV" = (/obj/structure/sink{dir = 8; pixel_x = 11},/obj/structure/mirror{pixel_x = 28},/turf/open/floor/plasteel/freezer,/area/space)
+"bW" = (/obj/machinery/door/airlock{id_tag = "Toilet4"; name = "Unit 4"},/turf/open/floor/plasteel/freezer,/area/space)
+"bX" = (/obj/machinery/door/airlock{name = "Unit B"},/turf/open/floor/plasteel/freezer,/area/space)
+"bY" = (/obj/effect/decal/cleanable/oil,/turf/open/floor/wood,/area/space)
+"bZ" = (/obj/structure/window/reinforced,/obj/effect/decal/cleanable/cobweb/cobweb2,/obj/structure/showcase/machinery/implanter{layer = 2.7; pixel_y = 4},/turf/open/floor/carpet,/area/space)
+"ca" = (/turf/open/floor/wood{icon_state = "wood-broken6"},/area/space)
+"cb" = (/obj/item/cigbutt,/turf/open/floor/wood,/area/space)
+"cc" = (/obj/item/bodypart/chest/robot{pixel_x = -2; pixel_y = 2},/obj/item/bodypart/head/robot{pixel_x = 3; pixel_y = 2},/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"cd" = (/turf/open/floor/wood{icon_state = "wood-broken3"},/area/space)
+"ce" = (/obj/machinery/door/airlock{id_tag = "Toilet1"; name = "Unit 1"},/turf/open/floor/plasteel/freezer,/area/space)
+"cf" = (/obj/structure/toilet{dir = 4},/obj/machinery/newscaster{pixel_x = 32},/turf/open/floor/plasteel/freezer,/area/space)
+"cg" = (/obj/machinery/recharge_station,/turf/open/floor/plasteel/freezer,/area/space)
+"cj" = (/obj/structure/table/wood,/obj/structure/extinguisher_cabinet{pixel_x = -27},/obj/item/folder/blue,/obj/item/clothing/head/collectable/HoP{name = "novelty HoP hat"},/turf/open/floor/carpet,/area/space)
+"ck" = (/obj/item/toy/beach_ball{desc = "The simple beach ball is one of Nanotrasen's most popular products. 'Why do we make beach balls? Because we can! (TM)' - Nanotrasen"; name = "\improper Nanotrasen-brand beach ball"; pixel_y = 7},/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"cl" = (/obj/machinery/cell_charger,/obj/item/stock_parts/cell/crap,/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"cm" = (/obj/effect/decal/cleanable/dirt,/obj/machinery/holopad,/turf/open/floor/carpet,/area/space)
+"cn" = (/obj/structure/table/wood,/obj/item/toy/plush/carpplushie{color = "red"; name = "\improper Nanotrasen wildlife department space carp plushie"},/turf/open/floor/carpet,/area/space)
+"co" = (/obj/machinery/nuclearbomb/beer{pixel_x = 2; pixel_y = 6},/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"cp" = (/obj/item/storage/box/matches{pixel_x = -2; pixel_y = 3},/obj/item/clothing/mask/cigarette/cigar{pixel_x = 4; pixel_y = 1},/obj/item/clothing/mask/cigarette/cigar{pixel_x = -4; pixel_y = 1},/obj/item/clothing/mask/cigarette/cigar/cohiba,/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"cr" = (/obj/structure/table/wood,/obj/machinery/button/door{id = "corporate_privacy"; name = "corporate showroom shutters control"; pixel_x = 28; req_access_txt = "19"},/obj/item/poster/random_official,/obj/item/poster/random_official,/obj/item/poster/random_official,/obj/item/poster/random_official,/obj/item/poster/random_official,/obj/item/paicard{desc = "A real Nanotrasen success, these personal AIs provide all of the companionship of an AI without any law related red-tape."; name = "\improper Nanotrasen-brand personal AI device exhibit"},/turf/open/floor/carpet,/area/space)
+"cs" = (/obj/structure/showcase/machinery/tv{dir = 1; pixel_x = 2; pixel_y = 3},/obj/structure/table/wood,/turf/open/floor/carpet,/area/space)
+"cv" = (/obj/machinery/light/small{dir = 1},/obj/machinery/firealarm{pixel_y = 27},/turf/open/floor/plasteel,/area/space)
+"cw" = (/obj/machinery/airalarm{pixel_y = 24},/turf/open/floor/plasteel,/area/space)
+"cy" = (/obj/item/book/manual/wiki/security_space_law{name = "space law"; pixel_y = 2},/obj/item/toy/gun,/obj/item/restraints/handcuffs,/obj/structure/table/wood,/obj/item/clothing/head/collectable/HoS{name = "novelty HoS hat"},/turf/open/floor/carpet,/area/space)
+"cz" = (/obj/machinery/computer/holodeck{dir = 4},/turf/open/floor/plasteel,/area/space)
+"cA" = (/obj/structure/chair{dir = 8},/obj/effect/landmark/start/assistant,/turf/open/floor/plasteel,/area/space)
+"cD" = (/obj/structure/table,/obj/item/paper/fluff/holodeck/disclaimer,/obj/item/storage/firstaid/regular{pixel_x = 3; pixel_y = -3},/turf/open/floor/plasteel,/area/space)
+"cE" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel,/area/space)
+"cF" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security{name = "Interrogation Monitoring"; req_one_access_txt = "1;4"},/turf/open/floor/plasteel/grimy,/area/space)
+"cG" = (/turf/open/floor/plasteel/grimy,/area/space)
+"cH" = (/obj/machinery/light/small{dir = 1},/turf/open/floor/plasteel/grimy,/area/space)
+"cI" = (/obj/item/phone{desc = "Supposedly a direct line to Nanotrasen Central Command. It's not even plugged in."; pixel_x = -3; pixel_y = 3},/obj/item/cigbutt/cigarbutt{pixel_x = 5; pixel_y = -1},/obj/structure/table/wood,/obj/machinery/firealarm{dir = 8; pixel_x = 28},/turf/open/floor/plasteel/grimy,/area/space)
+"cJ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Holodeck Door"},/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 4},/turf/open/floor/plasteel,/area/space)
+"cK" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Holodeck Door"},/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 8},/turf/open/floor/plasteel,/area/space)
+"cL" = (/obj/machinery/camera{c_tag = "Holodeck"; dir = 1},/obj/item/radio/intercom{pixel_y = -28},/obj/machinery/light/small,/turf/open/floor/plasteel,/area/space)
+"cN" = (/obj/structure/chair,/turf/open/floor/plasteel/grimy,/area/space)
+"cO" = (/obj/structure/chair,/obj/machinery/computer/security/telescreen/interrogation{dir = 1; pixel_y = -30},/turf/open/floor/plasteel/grimy,/area/space)
+"cP" = (/obj/item/paper_bin{pixel_x = -3; pixel_y = 7},/obj/structure/table/wood,/obj/item/radio/intercom{frequency = 1423; name = "Interrogation Intercom"; pixel_y = -31},/turf/open/floor/plasteel/grimy,/area/space)
+"cY" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security{name = "Interrogation"; req_access_txt = "63"},/turf/open/floor/plasteel/dark,/area/space)
+"db" = (/obj/structure/table,/obj/item/flashlight/lamp,/turf/open/floor/plasteel/dark,/area/space)
+"dd" = (/obj/machinery/camera{c_tag = "Interrogation room"; dir = 8; network = list("interrogation")},/turf/open/floor/plasteel/dark,/area/space)
+"dj" = (/obj/structure/chair{dir = 4},/turf/open/floor/plasteel/dark,/area/space)
+"dk" = (/obj/structure/table,/obj/item/folder/red,/obj/item/taperecorder,/obj/item/radio/intercom{broadcasting = 1; frequency = 1423; listening = 0; name = "Interrogation Intercom"; pixel_y = -24},/turf/open/floor/plasteel/dark,/area/space)
+"dl" = (/obj/structure/chair{dir = 8},/turf/open/floor/plasteel/dark,/area/space)
+"dm" = (/turf/open/floor/plasteel/dark,/area/space)
+"pj" = (/turf/open/floor/plasteel/bluespace,/area/space)
+"wa" = (/obj/item/disk/data{pixel_x = 9; pixel_y = -1},/obj/item/disk/tech_disk{pixel_x = -2; pixel_y = -3},/obj/item/disk/design_disk{name = "component design disk"; pixel_y = 6},/obj/structure/table/wood,/obj/item/toy/talking/AI{name = "\improper Nanotrasen-brand toy AI"; pixel_y = 6},/turf/open/floor/carpet,/area/space)
+"RN" = (/obj/structure/sign/warning/securearea,/turf/closed/wall/r_wall,/area/space)
+
+(1,1,1) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabababacabaaaaabaaabababababadaeadabababababaaabababafabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabagahahababababaaabaiajakabalamanabaoapaqabaaabarasasatauabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabahahahavawavabaaabaxahahayalamanazaAaAaAabaaabaBamamamaCabaaaaaaabababababaaaaaaaaaaaaaaaaaaaa
+aaabaDahaEaFaGaHabaaabababababalamaIabababababaaabaJaKaLaMaNabaaaaaaabaOaPaQabaaaaaaaaaaaaaaaaaaaa
+aaabahahaEaRaAahabaaabaSaTaUabalamaVabaWajaXabaaababaYaZaYababaaaaaaabbabbbcabaaaaaaaaaaaaaaaaaaaa
+aaabbdbeahahbebfabaaabaAaAaAbgalamanbhahahaxabaaaaaaaaaaaaaaaaaaaaaaabaOaPaQabaaaaaaaaaaaaaaaaaaaa
+aaabbfbibjahbkblabaaabababababalamanabababababaaaaaaaaaaaaabababafabababbmababaaaaaaaaaaaaaaaaaaaa
+aaababababbnabababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbobpaPbqbqbqaPbrabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaabsaabtaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababbxaPaPaPaPaPbyaaaaaaaaaaaaaaaaaaaa
+aaabaYaYaYaYaYaYaaaaaaaaaaaabubJbubJbububGbububJbubJbuaaaaabbobLaPaPabaPbMbNabaaaaaaaaaaaaaaaaaaaa
+aaaYbPbPbPbPbPaYaaaaaabQaaaabubCbEbSbHbIahbKbHbUbTbZabaaaaabababaPbVabbWabbXabaaaaaaaaaaaaaaaaaaaa
+aaaYbPbPbPbPbPaYaaaaaaaaaaaaabbRbYahbRahahbRahcabRcbabaaaaabboceaPbVabcfabcgabaaaaaaaaaaaaaaaaaaaa
+aaaYbPbPbPbPbPababababaaaaaaabccbRbRcdclcmcnbRahahcrabaaaaabababbybyabababababaaaaaaaaaaaaaaaaaaaa
+aacJbPbPbPbPbPcKcvcwaYaaaaaaabcjbvahbwckcocpcsbRwacyabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaYbPbPbPbPbPaYczcAaYaaaaaabubJRNbGbubJbJbJbubGRNbJbuaaaaaaaaaaaabubuababababaaaaaaaaaaaaaaaaaaaa
+aaaYbPbPbPbPbPaYcDcEaYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacFcGcGcHcIabaaaaaaaaaaaaaaaaaaaa
+aacJbPbPbPbPbPcKcLamabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabucNcOcNcPabaaaaaaaaaaaaaaaaaaaa
+aaaYbPbPbPbPbPababafabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabubuaeaeaeababaaaaaaaaaaaaaaaaaaaa
+aaaYbPbPbPbPbPabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabudmdmdmdmdmabaaaaaaaaaaaaaaaaaaaa
+aaaYbPbPbPbPbPabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacYdmdjdbdlddabaaaaaaaaaaaaaaaaaaaa
+aaabababababababaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabudmdjdkdldmabaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabuababababababaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
+(1,1,2) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaabababababababababababababababaaabababababababababababababababaaabababababababababababababababaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaaabpjpjpjpjpjpjpjpjpjpjpjpjpjabaa
+aaabababpjpjababababababababababababababpjpjababababababababababababababpjpjababababababababababaa
+aaabahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahabaa
+aaabahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahabaa
+aaabahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahabaa
+aaabababababababababababababababababababababababababababababababababababababababababababababababaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
+(1,1,3) = {"
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+"}
