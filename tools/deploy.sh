@@ -37,4 +37,3 @@ cp -r strings/* $1/strings/
 
 #dlls on windows
 cp rust_g* $1/ || true
-cp *BSQL.* $1/ || true
