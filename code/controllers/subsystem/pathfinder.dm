@@ -30,10 +30,8 @@ SUBSYSTEM_DEF(pathfinder)
 
 	/// varedit to true to visualize pathfinding, forcing a 0.5 ds interval between loops
 	var/static/visualize_pathfinding = FALSE
-	/// invisibility var of the effets
+	/// invisibility var of the effets. one day you'll want to do debugging on live and you'll be happy this is here.
 	var/static/visual_invisibility = 0
-	/// whether or not to visualize jps "jump scanning". if on, it'll be subject to the same 0.5 ds intervals between recursions.
-	var/static/visualize_jps_linescanning = FALSE
 	/// whether or not to slow down pathfinding to 0.5 ds operations while visualizing
 	var/static/visualize_sleep = FALSE
 	/// how long effects last
@@ -50,6 +48,10 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/proc/warn_overtime(message)
 	message_admins("Pathfinding Timeout: [message]")
 	CRASH(message)
+
+///////////////////////////////////////////////////
+//////// COMMON ASTAR CODE START //////////////////
+///////////////////////////////////////////////////
 
 #define MANHATTAN(A, B)		(abs(A.x - B.x) + abs(A.y - B.y))
 #define BYOND(A, B)		get_dist(A, B)
@@ -144,11 +146,43 @@ SUBSYSTEM_DEF(pathfinder)
 	};
 
 /// Pause for 0.5 ds if debugging with visuals.
+/// SETUP_VISUALS sets up and defines common things used in the debug visualizer, that will likely be useful when visualizing basically any algorithm.
 #ifdef PATHFINDING_DEBUG
-#define PAUSE_IF_DEBUGGING if(visualize_pathfinding && visualize_sleep) { sleep(0.5); }
+#define PAUSE_IF_DEBUGGING if(visualize_pathfinding && visualize_sleep) { sleep(0); }
+#define SETUP_VISUALS \
+	var/list/obj/effect/overlay/pathfinding/debug_effects = list(); \
+	var/list/obj/effect/overlay/pathfinding/debug_turf_to_node = list(); \
+	var/obj/effect/overlay/pathfinding/current_node_effect; \
+	var/obj/effect/overlay/pathfinding/arrow/current_arrow_effect; \
+	var/traceback_dir; \
+	if(visualize_pathfinding) { \
+		current_node_effect = new(start); \
+		current_node_effect.appearance = debug_appearance_node; \
+		current_node_effect.alpha = debug_visual_alpha ; \
+		current_node_effect.color = node_color_starting; \
+		current_node_effect.layer += 1; \
+		current_node_effect.invisibility = visual_invisibility; \
+		debug_effects += current_node_effect; \
+		current_node_effect = new(end); \
+		current_node_effect.appearance = debug_appearance_node; \
+		current_node_effect.alpha = debug_visual_alpha; \
+		current_node_effect.invisibility = visual_invisibility; \
+		current_node_effect.color = node_color_goal; \
+		current_node_effect.layer += 1; \
+		debug_effects += current_node_effect; \
+	};
 #else
 #define PAUSE_IF_DEBUGGING
+#define SETUP_VISUALS
 #endif
+
+///////////////////////////////////////////////////
+//////// COMMON ASTAR CODE END ////////////////////
+///////////////////////////////////////////////////
+
+///////////////////////////////////////////////////
+//////// JUMP POINT SEARCH VARIANT-ASTAR START ////
+///////////////////////////////////////////////////
 
 /**
   * Runs a pathfind with jump point search, a variant of A* with much, much higher performance.
@@ -189,13 +223,123 @@ SUBSYSTEM_DEF(pathfinder)
 	var/timeout = queue_timeouts[queue] || 10 SECONDS
 	var/timerid = addtimer(CALLBACK(src, .proc/warn_overtime, "JPS pathfind timed out over [timeout]: [caller], [COORD(start)], [COORD(end)], ..."), timeout, TIMER_STOPPABLE)
 	queues[queue] += timerid
-	#warn USING BASE ASTAR FOR DEBUGGING
-	. = run_AStar_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, turf_blacklist_typecache, ID)
+	. = run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, turf_blacklist_typecache, ID)
 	deltimer(timerid)
 	queues[queue] -= timerid
 
 /datum/controller/subsystem/pathfinder/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
+	SETUP_VISUALS
+	// We're going to assume everything is valid type-wise as we're only ran by a wrapper.
+	// If anything ISN'T valid, we're going to crash and burn, because why are you not using the wrapper and/or passing in invalid arguments?
+	// simple checks first
+	if(start.z != end.z)
+		return PATHFIND_FAIL_MULTIZ
+	// fun fact, variable declarations are costly, so let's just do it all here.
+	// we want to optimize for cpu so expect some messy code, these vars may or may not be used depending on where, they'll only be set and used if they're being used more than once to avoid more calculations.
+	var/current_distance		// current distance in whatever context it's used.
+	// if we have max path distance, make sure we're not too far
+	if(max_path_distance || min_target_distance)
+		switch(heuristic_type)
+			if(PATHFINDING_HEURISTIC_MANHATTAN)
+				current_distance = MANHATTAN(start, end)
+				if(current_distance > max_path_distance)
+					return PATHFIND_FAIL_TOO_FAR
+				if(current_distance < min_target_distance)
+					return PATHFIND_FAIL_TOO_CLOSE
+			if(PATHFINDING_HEURISTIC_BYOND)
+				current_distance = BYOND(start, end)
+				if(current_distance > max_path_distance)
+					return PATHFIND_FAIL_TOO_FAR
+				if(current_distance < min_target_distance)
+					return PATHFIND_FAIL_TOO_CLOSE
+			if(PATHFINDING_HEURISTIC_EUCLIDEAN)
+				current_distance = EUCLIDEAN(start, end)
+				if(current_distance > max_path_distance)
+					return PATHFIND_FAIL_TOO_FAR
+				if(current_distance < min_target_distance)
+					return PATHFIND_FAIL_TOO_CLOSE
+	// basic stuff is done.
+	// this used to use a datum/Heap but let's Not(tm) because proccall overhead is a Thing(tm) in byond and that's Bad(tm) for us.
+	// instead we're going to play the list game
+	INJECTION_SETUP // See defines
+	var/list/open = list()		// astar open node list, see defines
+	var/list/node_by_turf = list()		//turf = node assoc list for reverse lookup.
+	var/list/path				// assembled turf path
+	var/list/current = list()		//current node list
+	var/turf/current_turf		// because unironically : operators are slower (not to mention the fact they're banned) than .'s for some reason?
+	var/turf/expand_turf		// turf we're trying to expand to
+	var/list/expand = list()	// node list of turf we're trying to expand to, if it exists.
+	var/new_cost				// new cost of a new turf being expanded to.
+	var/reverse_dir_of_expand	// reverse direction of where we're expanding to.
+	SETUP_NODE(open, null, 0, current_distance, 0, NORTH|SOUTH|EAST|WEST, start)		// initially we want to explore all cardinals.
+	PAUSE_IF_DEBUGGING
+	while(length(open))		// while we still have open nodes
+		current = open[length(open)]		// pop a node
+		open.len--
+		current_turf = current[NODE_TURF] // get its turf
+#ifdef PATHFINDING_DEBUG
+		if(visualize_pathfinding)
+			current_node_effect = debug_turf_to_node[current_turf]
+			current_node_effect.color = node_color_current
+			PAUSE_IF_DEBUGGING
+#endif
+		// see how far we are
+		CALCULATE_DISTANCE(current_turf, end)
+		// if we're at the end or close enough, we're done
+		if((current_turf == end) || (current_distance <= min_target_distance))
+			// assemble our path
+			path = list(current_turf)
+			// go up the chain
+			while(current[NODE_PREVIOUS])
+#ifdef PATHFINDING_DEBUG
+				traceback_dir = turn(get_dir(current[NODE_TURF], current[NODE_PREVIOUS][NODE_TURF]), 180)
+#endif
+				current = current[NODE_PREVIOUS]
+				path += current[NODE_TURF]
+#ifdef PATHFINDING_DEBUG
+				if(visualize_pathfinding)
+					current_arrow_effect = new(current[NODE_TURF])
+					current_arrow_effect.appearance = successful_pathfind
+					current_arrow_effect.orient(traceback_dir)
+					debug_effects += current_arrow_effect
+#endif
+			// get the path in the right direction
+			reverseRange(path)
+			break		// we're done!
+		// if we get to this point, the !fun! begins.
+		if(current[NODE_DEPTH] > max_node_depth)		// too deep, skip
+			continue
+		// Run each direction
+		RUN_ASTAR(NORTH)
+		RUN_ASTAR(SOUTH)
+		RUN_ASTAR(EAST)
+		RUN_ASTAR(WEST)
+		// Clear directions, we're done with this node.
+		current[NODE_DIR] = NONE
+#ifdef PATHFINDING_DEBUG
+		if(visualize_pathfinding)
+			current_node_effect = debug_turf_to_node[current_turf]
+			current_node_effect.color = node_color_explored
+		else
+			CHECK_TICK
+#else
+		CHECK_TICK
+#endif
+
+#ifdef PATHFINDING_DEBUG
+	QDEL_LIST_IN(debug_effects, visual_lifetime)
+#endif
+
+	return path || PATHFIND_FAIL_NO_PATH
+
+///////////////////////////////////////////////////
+//////// JUMP POINT SEARCH VARIANT-ASTAR END //////
+///////////////////////////////////////////////////
+
+///////////////////////////////////////////////////
+//////// BASE ASTAR START /////////////////////////
+///////////////////////////////////////////////////
 
 /**
   * Because a loop is laggy, we're going to use a define.
@@ -334,28 +478,7 @@ SUBSYSTEM_DEF(pathfinder)
 
 /datum/controller/subsystem/pathfinder/proc/run_AStar_pathfind(caller, turf/start, turf/end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
-#ifdef PATHFINDING_DEBUG
-	var/list/obj/effect/overlay/pathfinding/debug_effects = list()
-	var/list/obj/effect/overlay/pathfinding/debug_turf_to_node = list()
-	var/obj/effect/overlay/pathfinding/current_node_effect
-	var/obj/effect/overlay/pathfinding/arrow/current_arrow_effect
-	var/traceback_dir
-	if(visualize_pathfinding)
-		current_node_effect = new(start)
-		current_node_effect.appearance = debug_appearance_node
-		current_node_effect.alpha = debug_visual_alpha
-		current_node_effect.color = node_color_starting
-		current_node_effect.layer += 1
-		current_node_effect.invisibility = visual_invisibility
-		debug_effects += current_node_effect
-		current_node_effect = new(end)
-		current_node_effect.appearance = debug_appearance_node
-		current_node_effect.alpha = debug_visual_alpha
-		current_node_effect.invisibility = visual_invisibility
-		current_node_effect.color = node_color_goal
-		current_node_effect.layer += 1
-		debug_effects += current_node_effect
-#endif
+	SETUP_VISUALS
 	// We're going to assume everything is valid type-wise as we're only ran by a wrapper.
 	// If anything ISN'T valid, we're going to crash and burn, because why are you not using the wrapper and/or passing in invalid arguments?
 	// simple checks first
@@ -419,7 +542,6 @@ SUBSYSTEM_DEF(pathfinder)
 			// go up the chain
 			while(current[NODE_PREVIOUS])
 #ifdef PATHFINDING_DEBUG
-				PAUSE_IF_DEBUGGING
 				traceback_dir = turn(get_dir(current[NODE_TURF], current[NODE_PREVIOUS][NODE_TURF]), 180)
 #endif
 				current = current[NODE_PREVIOUS]
@@ -448,8 +570,11 @@ SUBSYSTEM_DEF(pathfinder)
 		if(visualize_pathfinding)
 			current_node_effect = debug_turf_to_node[current_turf]
 			current_node_effect.color = node_color_explored
-#endif
+		else
+			CHECK_TICK
+#else
 		CHECK_TICK
+#endif
 
 #ifdef PATHFINDING_DEBUG
 	QDEL_LIST_IN(debug_effects, visual_lifetime)
@@ -458,6 +583,10 @@ SUBSYSTEM_DEF(pathfinder)
 	return path || PATHFIND_FAIL_NO_PATH
 
 #undef RUN_ASTAR
+
+///////////////////////////////////////////////////
+//////// BASE ASTAR END ///////////////////////////
+///////////////////////////////////////////////////
 
 #undef MANHATTAN
 #undef BYOND
@@ -477,6 +606,10 @@ SUBSYSTEM_DEF(pathfinder)
 #undef INJECT_NODE
 #undef NODE
 #undef CALCULATE_DISTANCE
+
+///////////////////////////////////////////////////
+//////// PATHING ALGORITHMS END ///////////////////
+///////////////////////////////////////////////////
 
 // TURF PROCS - Should these be inlined later? Would be a loss of customization.. but uh, proccall overhead hurts!
 /**
