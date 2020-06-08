@@ -285,27 +285,26 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if (href_list["attack"])
 			temp = "<br><center><h3>you do quick jab for [attackamt] of damage!</h3></center>"
 			enemy_hp -= attackamt
-			arcade_action(usr,href_list,attackamt)
+			arcade_action(usr,"attack",attackamt)
 
 //defend lets you gain back MP and take less damage from non magical attack.
 		else if(href_list["defend"])
 			temp = "<br><center><h3>you take a defensive stance and gain back 10 mp!</h3></center>"
 			player_mp += 10
-			arcade_action(usr,href_list,attackamt)
+			arcade_action(usr,"defend",attackamt)
 			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
 		//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
 		else if(href_list["counter_attack"] && player_mp >= 10)
 			temp = "<br><center><h3>you prepare yourself to counter the next attack!</h3></center>"
 			player_mp -= 10
-			arcade_action(usr,href_list,attackamt)
+			arcade_action(usr,"counter_attack",attackamt)
 			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
 		else if(href_list["counter_attack"] && player_mp < 10)
 			temp = "<br><center><h3>you don't have the mp necessary to counter attack and defend yourself instead</h3></center>"
-			href_list["counter_attack"] = "defend"
 			player_mp += 10
-			arcade_action(usr,href_list,attackamt)
+			arcade_action(usr,"defend",attackamt)
 			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
 		//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
@@ -313,13 +312,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp = "<br><center><h3>You attack [enemy_name] with all your might for [attackamt * 2] damage!</h3></center>"
 			enemy_hp -= attackamt * 2
 			player_mp -= 20
-			arcade_action(usr,href_list,attackamt)
+			arcade_action(usr,"power_attack",attackamt)
 
 		else if(href_list["power_attack"] && player_mp < 20)
 			temp = "<br><center><h3>You don't have the mp necessary for a power attack and settle for a light attack!</h3></center>"
-			href_list["power_attack"] = "attack"
 			enemy_hp -= attackamt
-			arcade_action(usr,href_list,attackamt)
+			arcade_action(usr,"attack",attackamt)
 
 	if (href_list["close"])
 		usr.unset_machine()
@@ -341,16 +339,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	return
 
 
-/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user,href_list,attackamt)
+/obj/machinery/computer/arcade/battle/proc/arcade_action(mob/user,player_stance,attackamt)
 	screen_setup(user)
 	blocked = TRUE
-	if(href_list["attack"] || href_list["power_attack"])
+	if(player_stance == "attack" || player_stance == "power_attack")
 		if(attackamt > 40)
 			playsound(src, 'sound/arcade/boom.ogg', 50, TRUE, extrarange = -3)
 		else
 			playsound(src, 'sound/arcade/hit.ogg', 50, TRUE, extrarange = -3)
 
-	timer_id = addtimer(CALLBACK(src, .proc/enemy_action,href_list,user),1 SECONDS,TIMER_STOPPABLE)
+	timer_id = addtimer(CALLBACK(src, .proc/enemy_action,player_stance,user),1 SECONDS,TIMER_STOPPABLE)
 	gameover_check(user)
 
 
@@ -358,12 +356,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/battle/proc/enemy_action(player_stance,mob/user)
 	temp = ""
 
-	if(length(last_three_move) < 3) //we keep the last three action of the player in a list here
-		LAZYADD(last_three_move, player_stance[2])
+	if(LAZYLEN(last_three_move) < 3) //we keep the last three action of the player in a list here
+		LAZYADD(last_three_move, player_stance)
 
-	else if(length(last_three_move) == 3)
+	else if(LAZYLEN(last_three_move) == 3)
 		LAZYREMOVE(last_three_move, last_three_move[1])
-		LAZYADD(last_three_move, player_stance[2])
+		LAZYADD(last_three_move, player_stance)
 
 	else if(length(last_three_move) > 3)
 		last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
@@ -371,7 +369,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/enemy_stance
 	var/attack_amount = rand(8,10)
 
-	if(player_stance["defend"])
+	if(player_stance == "defend")
 		attack_amount -= 5
 
 //heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
@@ -399,7 +397,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp += "<br><center><h3>[enemy_name] figures out you are really close to death and finishes you off with their [chosen_weapon]!<center><h3>"
 			enemy_stance = "attack"
 
-		else if(player_stance["counter_attack"])
+		else if(player_stance == "counter_attack")
 			temp += "<br><center><h3>[enemy_name] is not taking your bait. <center><h3> "
 			if("short temper" in current_enemy_passive)
 				temp += "However controlling their hatred of you still takes a toll on their mental and physical health!"
@@ -413,13 +411,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp += "<br><center><h3>[enemy_name] is getting frustrated at all your counter attacks and throws a tantrum!<center><h3>"
 			enemy_hp -= attack_amount
 
-		else if(player_stance["counter_attack"] && enemy_hp > 30 && !("smart" in current_enemy_passive))
+		else if(player_stance == "counter_attack" && enemy_hp > 30 && !("smart" in current_enemy_passive))
 			temp += "<br><center><h3>[enemy_name] took the bait and allowed you to counter attack!<center><h3>"
 			player_hp -= attack_amount
 			enemy_hp -= attack_amount * 2
 			enemy_stance = "attack"
 
-		else if(player_stance["counter_attack"] && enemy_hp <= 30)
+		else if(player_stance == "counter_attack" && enemy_hp <= 30)
 			temp += "<br><center><h3>[enemy_name] is getting tired of your tricks and breaks through your counter with their [chosen_weapon]!<center><h3>"
 			player_hp -= attack_amount
 			enemy_stance = "attack"
@@ -445,7 +443,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(enemy_stance == "attack")
 			player_hp -= attack_amount
 			temp += "<br><center><h3>[enemy_name] attacks you for [attack_amount] points of damage with their [chosen_weapon]<center><h3>"
-			if(player_stance["counter_attack"])
+			if(player_stance == "counter_attack")
 				enemy_hp -= attack_amount * 2
 				temp += "<br><center><h3>You counter [enemy_name]'s attack and deal [attack_amount * 2] points of damage!<center><h3>"
 
@@ -465,7 +463,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			LAZYREMOVE(current_enemy_passive, "magical")
 			pissed_off++
 
-		else if("smart" in current_enemy_passive && player_stance["counter_attack"] && enemy_mp > 20)
+		else if("smart" in current_enemy_passive && player_stance == "counter_attack" && enemy_mp > 20)
 			temp += "<br><center><h3>[enemy_name] blasts you with magic from afar for 10 points of damage before you can counter!<center><h3>"
 			player_hp -= 10
 			enemy_mp -= 20
