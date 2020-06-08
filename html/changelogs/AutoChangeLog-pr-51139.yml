@@ -1,0 +1,6 @@
+author: "IndieanaJones"
+delete-after: True
+changes: 
+  - rscadd: "Lavaland elite loot drops for Broodmother and Legionnaire now have in-hand use functions"
+  - balance: "Lavaland elites now have more health in their arena fights, along with several other balance changes"
+  - bugfix: "Fixed lavaland elites not being able to damage mechs"
