@@ -285,7 +285,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 		if(finishing_move) //time to bonk that fucker,cuban pete will sometime survive a finishing move.
 			attackamt *= 10
-			finishing_move = FALSE
 
 //light attack suck absolute ass but it doesn't cost any MP so it's pretty good to finish an enemy off
 		if (href_list["attack"])
@@ -378,7 +377,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	if(player_stance == "defend")
 		attack_amount -= 5
 
-///if emagged cuban pete will set up a bomb acting up as a timer.
+///if emagged, cuban pete will set up a bomb acting up as a timer. when it reaches 0 the player fucking dies
 	if(obj_flags & EMAGGED)
 		if(bomb_cooldown == 18)
 			temp += "<br><center><h3>[enemy_name] takes two valve tank and links them together, what's he planning?<center><h3>"
@@ -512,8 +511,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			temp += "<br><center><h3>the stinky breath of [enemy_name] hurts you for 3 hp!<center><h3> "
 			player_hp -= 3
 
-	if(pissed_off >= max_passive)
-		temp += "<br><center><h3>You have weakened [enemy_name] enough for them to show their weak point, you will do 10 times as much damage with your attacks next turn!<center><h3> "
+//if all passive's weakpoint have been triggered, set finishing_move to TRUE
+	if(pissed_off >= max_passive && !finishing_move)
+		temp += "<br><center><h3>You have weakened [enemy_name] enough for them to show their weak point, you will do 10 times as much damage with your next attack!<center><h3> "
 		finishing_move = TRUE
 
 	playsound(src, 'sound/arcade/heal.ogg', 50, TRUE, extrarange = -3)
