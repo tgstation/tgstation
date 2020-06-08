@@ -87,10 +87,6 @@
 		eldritch_effect.on_effect()
 		human_target.bleed_rate += 5
 
-	if(human_target.stat != DEAD)
-		to_chat(user, "<span class='warning'>This spell can only affect the dead!</span>")
-		return
-
 	human_target.grab_ghost()
 
 	if(!human_target.mind || !human_target.client)
