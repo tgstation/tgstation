@@ -170,7 +170,7 @@
 /datum/rust_spread
 	var/list/edge_turfs = list()
 	var/list/turfs = list()
-	var/static/list/blacklisted_turfs = typecacheof(list(/turf/closed/wall/rust,/turf/closed/wall/r_wall/rust,/turf/open/space,/turf/open/lava,/turf/open/chasm))
+	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/indestructible,/turf/closed/indestructible,/turf/open/space,/turf/open/lava,/turf/open/chasm))
 	var/spread_per_tick = 6
 
 
@@ -206,6 +206,8 @@
 			turfs -=X
 			continue
 		for(var/turf/T in range(1,X))
+			if(T in turfs)
+				continue
 			if(is_type_in_typecache(T,blacklisted_turfs))
 				continue
 			edge_turfs += T

@@ -150,6 +150,7 @@
   * Use this whenever you want to remove someone from the list
   */
 /datum/reality_smash_tracker/proc/RemoveMind(var/datum/mind/M)
+	UnregisterSignal(M.current,COMSIG_MOB_LOGIN)
 	targets -= M
 	for(var/obj/effect/reality_smash/RS in smashes)
 		RS.RemoveMind(M)
@@ -182,7 +183,11 @@
 	generate_name()
 
 /obj/effect/reality_smash/Destroy()
+	on_destroy()
+	return ..()
 
+///Custom effect that happens on destruction
+/obj/effect/reality_smash/proc/on_destroy()
 	for(var/cm in minds)
 		var/datum/mind/cultie = cm
 		if(cultie.current?.client)
@@ -191,7 +196,6 @@
 		minds -= cultie
 	img = null
 	new /obj/effect/broken_illusion(drop_location())
-	return ..()
 
 ///Makes the mind able to see this effect
 /obj/effect/reality_smash/proc/AddMind(var/datum/mind/cultie)

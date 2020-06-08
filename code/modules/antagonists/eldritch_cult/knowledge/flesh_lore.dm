@@ -59,7 +59,7 @@
 
 	for(var/mob/living/carbon/human/ghoul in ghouls)
 		if(ghoul.stat == DEAD)
-			to_chat(user, "<span class='big bold'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
+			to_chat(ghoul, "<span class='big bold'>You feel the evil influence leave your body... you are no longer enslaved to [user.real_name]</span>")
 			ghouls -= ghoul
 			current_amt--
 

@@ -24,7 +24,7 @@
 	to_chat(owner, "<span class='cult'>The book whispers, the forbidden knowledge walks once again!<br>\
 	Your book allows you to research abilities, read it very carefully! you cannot undo what has been done!<br>\
 	You gain charges by either collecitng influences or sacrifcing people tracked by the living heart<br> \
-	You can find a basic guide at :https://tgstation13.org/wiki/Heresy_101 </span>")
+	You can find a basic guide at : https://tgstation13.org/wiki/Heresy_101 </span>")
 
 /datum/antagonist/heretic/on_gain()
 	var/mob/living/current = owner.current
@@ -81,19 +81,11 @@
 			SEND_SIGNAL(H.back, COMSIG_TRY_STORAGE_SHOW, H)
 		return TRUE
 
-
 /datum/antagonist/heretic/process()
 
 	for(var/X in researched_knowledge)
 		var/datum/eldritch_knowledge/EK = X
 		EK.on_life(owner.current)
-
-	for(var/X in objectives)
-		if(!istype(X,/datum/objective/stalk))
-			continue
-		var/datum/objective/stalk/S = X
-		if(S.target && S.target.current.stat == CONSCIOUS && (S.target in view(7,src)))
-			S.timer -= 1 SECONDS
 
 /datum/antagonist/heretic/proc/forge_primary_objectives()
 	var/list/assasination = list()
@@ -151,8 +143,6 @@
 	var/cultiewin = TRUE
 
 	parts += printplayer(owner)
-
-	//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 	parts += "<b>Sacrifices Made:</b> [total_sacrifices]"
 
 	if(length(objectives))
@@ -223,8 +213,21 @@
 	name = "spendtime"
 	var/timer = 5 MINUTES
 
+/datum/objective/stalk/process()
+	if(target?.current.stat != DEAD && (target in view(5,owner.current)))
+		timer -= 1 SECONDS
+	///we don't want to process after the counter reaches 0, otherwise it is wasted processing
+	if(timer <= 0)
+		STOP_PROCESSING(SSprocessing,src)
+
+/datum/objective/stalk/Destroy(force, ...)
+	STOP_PROCESSING(SSprocessing,src)
+	return ..()
+
 /datum/objective/stalk/update_explanation_text()
+	//we want to start processing after we set the timer
 	timer += rand(-3 MINUTES, 3 MINUTES)
+	START_PROCESSING(SSprocessing,src)
 	if(target?.current)
 		explanation_text = "Stalk [target.name] for at least [DisplayTimeText(timer)] while they're alive."
 	else
@@ -238,7 +241,7 @@
 
 /datum/objective/sacrifice_ecult/update_explanation_text()
 	. = ..()
-	target_amount = rand(4,6)
+	target_amount = rand(2,6)
 	explanation_text = "Sacrifice at least [target_amount] people."
 
 /datum/objective/sacrifice_ecult/check_completion()
