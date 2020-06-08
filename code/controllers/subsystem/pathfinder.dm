@@ -127,7 +127,7 @@ SUBSYSTEM_DEF(pathfinder)
 	};
 
 /// Sets up a node list with these values
-#define NODE(previous, cost, heuristic, depth, dir, turf) list(previous, cost + heuristic * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT, cost, heuristic, depth, dir, turf)
+#define NODE(previous, cost, heuristic, depth, dir, turf) list(previous, cost + heuristic * PATHFINDING_HEURISTIC_WEIGHT, cost, heuristic, depth, dir, turf)
 
 /// Sets current_distance.
 #define CALCULATE_DISTANCE(A, B) \
