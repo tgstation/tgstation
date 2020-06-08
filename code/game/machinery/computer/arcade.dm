@@ -182,10 +182,12 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	var/timer_id
 	///weapon used by the enemy, pure fluff.for certain actions
 	var/list/weapons
+	///unique to the emag mode, acts as a time limit where the player dies when it reaches 0.
+	var/bomb_cooldown = 18
 
 
 ///creates the enemy base stats for a new round.
-/obj/machinery/computer/arcade/battle/proc/enemy_setup()
+/obj/machinery/computer/arcade/battle/proc/enemy_setup(player_skill)
 	player_hp = 85
 	player_mp = 20
 	enemy_hp = 100
@@ -205,6 +207,9 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 	if("chonker" in current_enemy_passive)
 		enemy_hp += 20
+
+	if(player_skill)
+		player_hp += player_skill * 2
 
 
 /obj/machinery/computer/arcade/battle/Reset()
@@ -238,7 +243,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = (name_action + " " + enemy_name)
 	chosen_weapon = pick(weapons)
 
-	enemy_setup()
+	enemy_setup(0) //in the case it's reset we assume the player skill is 0 because the VOID isn't a gamer
 
 
 /obj/machinery/computer/arcade/battle/ui_interact(mob/user)
@@ -273,15 +278,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/battle/Topic(href, href_list)
 	if(..())
 		return
+	var/gamerSkill = usr.mind?.get_skill_level(/datum/skill/gaming)
 
 	if (!blocked && !gameover)
-		var/gamerSkill = usr.mind?.get_skill_modifier(/datum/skill/gaming, SKILL_RANDS_MODIFIER)
 		var/attackamt = rand(5,7) + rand(0, gamerSkill)
 
-		if(finishing_move) //time to bonk that fucker
+		if(finishing_move) //time to bonk that fucker,cuban pete will sometime survive a finishing move.
 			attackamt *= 10
 			finishing_move = FALSE
 
+//light attack suck absolute ass but it doesn't cost any MP so it's pretty good to finish an enemy off
 		if (href_list["attack"])
 			temp = "<br><center><h3>you do quick jab for [attackamt] of damage!</h3></center>"
 			enemy_hp -= attackamt
@@ -294,7 +300,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			arcade_action(usr,"defend",attackamt)
 			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-		//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
+//mainly used to counter short temper and their absurd damage, will deal twice the damage the player took of a non magical attack.
 		else if(href_list["counter_attack"] && player_mp >= 10)
 			temp = "<br><center><h3>you prepare yourself to counter the next attack!</h3></center>"
 			player_mp -= 10
@@ -307,7 +313,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			arcade_action(usr,"defend",attackamt)
 			playsound(src, 'sound/arcade/mana.ogg', 50, TRUE, extrarange = -3)
 
-		//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
+//power attack deals twice the amount of damage but is really expensive MP wise, mainly used with combos to get weakpoints.
 		else if (href_list["power_attack"] && player_mp >= 20)
 			temp = "<br><center><h3>You attack [enemy_name] with all your might for [attackamt * 2] damage!</h3></center>"
 			enemy_hp -= attackamt * 2
@@ -330,7 +336,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			Reset()
 			obj_flags &= ~EMAGGED
 
-		enemy_setup()
+		enemy_setup(gamerSkill)
 		screen_setup(usr)
 
 
@@ -367,10 +373,26 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
 
 	var/enemy_stance
-	var/attack_amount = rand(8,10)
+	var/attack_amount = rand(8,10) //making the attack amount not vary too much so that it's easier to see if the enemy has a shotgun
 
 	if(player_stance == "defend")
 		attack_amount -= 5
+
+///if emagged cuban pete will set up a bomb acting up as a timer.
+	if(obj_flags & EMAGGED)
+		if(bomb_cooldown == 18)
+			temp += "<br><center><h3>[enemy_name] takes two valve tank and links them together, what's he planning?<center><h3>"
+		if(bomb_cooldown == 15)
+			temp += "<br><center><h3>[enemy_name] adds a remote control to the tan- ho god is that a bomb?<center><h3>"
+		if(bomb_cooldown == 12)
+			temp += "<br><center><h3>[enemy_name] throws the bomb next to you, you'r too scared to pick it up. <center><h3>"
+		if(bomb_cooldown == 6)
+			temp += "<br><center><h3>[enemy_name]'s hand brushes the remote linked to the bomb, your heart skipped a beat. <center><h3>"
+		if(bomb_cooldown == 2)
+			temp += "<br><center><h3>[enemy_name] is going to press the button! it's now or never! <center><h3>"
+		if(bomb_cooldown == 0)
+			player_hp -= attack_amount * 1000 //hey it's a maxcap we might as well go all in
+		bomb_cooldown--
 
 //heccing chonker passive, only gives more HP at the start of a new game but has one of the hardest weakpoint to trigger.
 	if("chonker" in current_enemy_passive)
@@ -565,10 +587,16 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/battle/emag_act(mob/user)
 	if(obj_flags & EMAGGED)
 		return
+
 	to_chat(user, "<span class='warning'>A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!</span>")
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
 	max_passive = 6
-	enemy_setup()
+	bomb_cooldown = 18
+	var/gamerSkill = usr.mind?.get_skill_level(/datum/skill/gaming)
+	enemy_setup(gamerSkill)
+	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
+	player_hp += 15 //the player will also get a few extra HP in order to have a fucking chance
+
 	screen_setup(user)
 	gameover = FALSE
 
