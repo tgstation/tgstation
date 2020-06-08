@@ -22758,6 +22758,7 @@
 /obj/structure/sign/warning/nosmoking/circle{
 	pixel_x = 32
 	},
+/obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bon" = (
@@ -29598,6 +29599,7 @@
 /obj/structure/extinguisher_cabinet{
 	pixel_x = 27
 	},
+/obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay)
 "bIr" = (
@@ -47899,6 +47901,7 @@
 	icon_state = "trimline_fill";
 	dir = 10
 	},
+/obj/structure/bed/roller,
 /turf/open/floor/plasteel/white,
 /area/medical/medbay/aft)
 "kWe" = (
