@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	///Temporary message, for attack messages, etc
 	var/temp = "<br><center><h3>Winners don't use space drugs<center><h3>"
 	///the list of passive skill the enemy currently has
-	var/list/current_enemy_passive = list()
+	var/list/current_enemy_passive
 	///the list of passive skills the enemy can get
 	var/list/enemy_passive_list = list("short temper","poisonous", "smart", "shotgun", "magical", "chonker")
 	///if all the enemy's weakpoints have been triggered becomes TRUE
@@ -173,15 +173,15 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	///Player health/attack points
 	var/player_hp = 85
 	var/player_mp = 20
-	///used to remember the last move of the player before this turn
-	var/list/last_three_move = list()
+	///used to remember the last three move of the player before this turn.
+	var/list/last_three_move
 	var/gameover = FALSE
-	///Player cannot attack/heal while set
+	///the player cannot make any move while this is set to TRUE. is basically only TRUE during enemy turns.
 	var/blocked = FALSE
 	///used to clear the enemy_action proc timer when the game is restarted
 	var/timer_id
-	///TODO : use weapons in actions in some way or delete the list.
-	var/list/weapons = list()
+	///weapon used by the enemy, pure fluff.for certain actions
+	var/list/weapons
 
 
 ///creates the enemy base stats for a new round.
@@ -194,13 +194,13 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	blocked = FALSE
 	finishing_move = FALSE
 	pissed_off = 0
-	last_three_move = list()
-	current_enemy_passive = list()
+	last_three_move = null
+	current_enemy_passive = null
 
 	var/list/passive_available = enemy_passive_list.Copy()
-	while(length(current_enemy_passive) < max_passive)
+	while(LAZYLEN(current_enemy_passive) < max_passive)
 		var/picked_passive = pick(passive_available)
-		current_enemy_passive += picked_passive
+		LAZYADD(current_enemy_passive, picked_passive)
 		passive_available -= picked_passive
 
 	if("chonker" in current_enemy_passive)
@@ -359,14 +359,14 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	temp = ""
 
 	if(length(last_three_move) < 3) //we keep the last three action of the player in a list here
-		last_three_move += player_stance[2]
+		LAZYADD(last_three_move, player_stance[2])
 
 	else if(length(last_three_move) == 3)
-		last_three_move -= last_three_move[1]
-		last_three_move += player_stance[2]
+		LAZYREMOVE(last_three_move, last_three_move[1])
+		LAZYADD(last_three_move, player_stance[2])
 
 	else if(length(last_three_move) > 3)
-		last_three_move = list() //this shouldn't even happen but we empty the list if it somehow goes above 3
+		last_three_move = null //this shouldn't even happen but we empty the list if it somehow goes above 3
 
 	var/enemy_stance
 	var/attack_amount = rand(8,10)
@@ -462,7 +462,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		if(player_mp >= 50)
 			temp += "<br><center><h3>the huge amount of magical energy you have acumulated throws [enemy_name] off balance!<center><h3>"
 			enemy_mp -= enemy_mp
-			current_enemy_passive -= "magical"
+			LAZYREMOVE(current_enemy_passive, "magical")
 			pissed_off++
 
 		else if("smart" in current_enemy_passive && player_stance["counter_attack"] && enemy_mp > 20)
@@ -545,11 +545,11 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 
 ///used to check if the last three move of the player are the one we want in the right order and if the passive's weakpoint has been triggered yet
 /obj/machinery/computer/arcade/battle/proc/weakpoint_check(passive,first_move,second_move,third_move)
-	if(length(last_three_move) < 3)
+	if(LAZYLEN(last_three_move) < 3)
 		return FALSE
 
 	if(last_three_move[1] == first_move && last_three_move[2] == second_move && last_three_move[3] == third_move && (passive in current_enemy_passive))
-		current_enemy_passive -= passive
+		LAZYREMOVE(current_enemy_passive, passive)
 		pissed_off++
 		return TRUE
 	else
@@ -559,7 +559,6 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/battle/Destroy()
 	current_enemy_passive = null
 	enemy_passive_list = null
-	current_enemy_passive = null
 	weapons = null
 	last_three_move = null
 	return ..() //well boys we did it, lists are no more
