@@ -89,7 +89,8 @@
 	var/current_stacks = 0
 
 //I tried Initalize but it didnt work, like at all. This proc just wouldnt fire if it was Initalize instead of New
-/mob/living/simple_animal/hostile/eldritch/armsy/New(spawn_more = TRUE,len = 6)
+/mob/living/simple_animal/hostile/eldritch/armsy/Initialize(mapload,spawn_more = TRUE,len = 6)
+	message_admins("Armsy Initalized")
 	. = ..()
 	if(len < 3)
 		stack_trace("Eldritch Armsy created with invalid len ([len]). Reverting to 3.")
@@ -109,14 +110,14 @@
 		prev = current
 		//i tried using switch, but byond is really fucky and it didnt work as intended. Im sorry
 		if(i == 0)
-			current = new type(drop_location(),spawn_more = FALSE)
+			current = new type(drop_location(),FALSE)
 			current.icon_state = "armsy_mid"
 			current.icon_living = "armsy_mid"
 			current.front = src
 			current.AIStatus = AI_OFF
 			back = current
 		else if(i < len)
-			current = new type(drop_location(),spawn_more = FALSE)
+			current = new type(drop_location(),FALSE)
 			prev.back = current
 			prev.icon_state = "armsy_mid"
 			prev.icon_living = "armsy_mid"
@@ -152,7 +153,7 @@
 /mob/living/simple_animal/hostile/eldritch/armsy/proc/gib_trail()
 	if(front) // head makes gibs
 		return
-	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/gibs))
+	var/chosen_decal = pick(typesof(/obj/effect/decal/cleanable/blood/tracks))
 	var/obj/effect/decal/cleanable/blood/gibs/decal = new chosen_decal(drop_location())
 	decal.setDir(dir)
 
