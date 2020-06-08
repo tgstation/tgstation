@@ -47,7 +47,6 @@
 		return
 	if(!isturf(user.loc))
 		return
-	#warn maybe get rid of this who the hell thought this was possibly a good idea?
 	var/list/path = SSpathfinder.JPS_pathfind(user, null, get_turf(target), max_path_distance = changeling.sting_range)
 	if(!islist(path))
 		return

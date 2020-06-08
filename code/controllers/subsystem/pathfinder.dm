@@ -140,7 +140,7 @@ SUBSYSTEM_DEF(pathfinder)
 
 /// Pause for 0.5 ds if debugging with visuals.
 #ifdef PATHFINDING_DEBUG
-#define PAUSE_IF_DEBUGGING if(visualize_pathfinding) sleep(0.5)
+#define PAUSE_IF_DEBUGGING if(visualize_pathfinding) { sleep(0.5); }
 #else
 #define PAUSE_IF_DEBUGGING
 #endif
