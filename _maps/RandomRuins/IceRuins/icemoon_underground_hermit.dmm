@@ -105,8 +105,8 @@
 /obj/item/seeds/plump,
 /obj/item/seeds/tower,
 /obj/item/seeds/reishi,
-/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom/glowcap,
 /obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
 /turf/open/floor/plating,
 /area/ruin/powered/shuttle)
 "ON" = (
