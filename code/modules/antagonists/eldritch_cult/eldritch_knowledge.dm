@@ -74,7 +74,7 @@
 	if(result_atoms.len == 0)
 		return FALSE
 
-	for(var/atom/A in result_atoms)
+	for(var/A in result_atoms)
 		new A(loc)
 
 	return TRUE

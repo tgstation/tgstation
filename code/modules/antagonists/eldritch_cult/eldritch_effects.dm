@@ -30,6 +30,8 @@
 
 	for(var/a in range(1, src))
 		var/atom/atom_in_range = a
+		if(istype(atom_in_range,/turf)) // we dont want turfs
+			continue
 		if(istype(atom_in_range,/mob/living))
 			var/mob/living/living_in_range = atom_in_range
 			if(living_in_range.stat != DEAD || living_in_range == user) // we only accept corpses, no living beings allowed.
@@ -38,38 +40,33 @@
 
 	for(var/X in knowledge)
 		var/datum/eldritch_knowledge/current_eldritch_knowledge = X
-		var/list/local_required_atoms = current_eldritch_knowledge.required_atoms
-		if(!local_required_atoms || local_required_atoms.len == 0)
+
+		//has to be done so that we can freely edit the local_required_atoms without fucking up the eldritch knowledge
+		var/list/local_required_atoms = list()
+
+		if(!current_eldritch_knowledge.required_atoms || current_eldritch_knowledge.required_atoms.len == 0)
 			continue
+
+		local_required_atoms += current_eldritch_knowledge.required_atoms
 
 		var/list/selected_atoms = list()
 
 		if(!current_eldritch_knowledge.recipe_snowflake_check(atoms_in_range,drop_location(),selected_atoms))
 			continue
 
-		for(var/local_required_atom in local_required_atoms)
-			local_required_atoms[local_required_atom] = FALSE
+		for(var/LR in local_required_atoms)
+			var/list/local_required_atom_list = LR
 
-		for(var/local_atom_in_range in atoms_in_range)
+			for(var/LAIR in atoms_in_range)
+				var/atom/local_atom_in_range = LAIR
+				if(is_type_in_list(local_atom_in_range,local_required_atom_list))
+					selected_atoms |= local_atom_in_range
+					local_required_atoms -= list(local_required_atom_list)
+					atoms_in_range -= local_atom_in_range
 
-			var/atom/first_atom = local_atom_in_range
-			for(var/local_required_atom_in_range in local_required_atoms)
-				var/list/local_required_atom_list_in_range = local_required_atom_in_range
-				if(!is_type_in_list(first_atom,local_required_atom_list_in_range) || local_required_atoms[local_required_atom_in_range] == TRUE)
-					continue
-				local_required_atoms[local_required_atom_in_range] = TRUE
-				selected_atoms |= first_atom
-
-		if(selected_atoms.len == 0)
+		if(length(local_required_atoms) > 0)
 			continue
-		var/skip = FALSE
-		for(var/secondary_local_required_atom in local_required_atoms)
-			if(local_required_atoms[secondary_local_required_atom] != TRUE)
-				skip = TRUE
-				break
 
-		if(skip)
-			continue
 		flick("[icon_state]_active",src)
 		playsound(user, 'sound/magic/castsummon.ogg', 75, TRUE)
 		current_eldritch_knowledge.on_finished_recipe(user,selected_atoms,loc)
