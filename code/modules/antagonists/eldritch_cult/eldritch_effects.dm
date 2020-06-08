@@ -51,6 +51,7 @@
 			local_required_atoms[local_required_atom] = FALSE
 
 		for(var/local_atom_in_range in atoms_in_range)
+
 			var/atom/first_atom = local_atom_in_range
 			for(var/local_required_atom_in_range in local_required_atoms)
 				var/list/local_required_atom_list_in_range = local_required_atom_in_range

@@ -88,6 +88,7 @@
 	///Currently eaten arms
 	var/current_stacks = 0
 
+//I tried Initalize but it didnt work, like at all. This proc just wouldnt fire if it was Initalize instead of New
 /mob/living/simple_animal/hostile/eldritch/armsy/New(spawn_more = TRUE,len = 6)
 	. = ..()
 	if(len < 3)
