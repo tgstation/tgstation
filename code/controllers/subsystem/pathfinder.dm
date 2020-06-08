@@ -15,18 +15,18 @@ SUBSYSTEM_DEF(pathfinder)
 	)
 	var/static/space_type_cache
 #ifdef PATHFINDING_DEBUG
-	var/static/mutable_appearance/pathfinding_node = mutable_appearance('icons/debug/pathfinding.dmi', "node")
+	var/static/mutable_appearance/debug_appearance_node = mutable_appearance('icons/debug/pathfinding.dmi', "node")
 	var/static/node_color_starting = rgb(255, 150, 150)
 	var/static/node_color_current = rgb(255, 255, 0)
 	var/static/node_color_potential = rgb(100, 100, 255)
 	var/static/node_color_explored = rgb(150, 150, 150)
 	var/static/node_color_goal = rgb(100, 255, 100)
-	var/static/node_alpha = 125
-	var/static/mutable_appearance/arrow_to_node = mutable_appearance('icons/debug/pathfinding_path.dmi', "arrow_solid")
-	var/static/mutable_appearance/continuous_to_node = mutable_appearance('icons/debug/pathfinding_path.dmi', "continuous_solid")
-	var/static/mutable_appearance/arrow_terminated = mutable_appearance('icons/debug/pathfinding_path.dmi', "arrow_dotted")
-	var/static/mutable_appearance/continuous_terminated = mutable_appearance('icons/debug/pathfinding_path.dmi', "continuous_dotted")
-	var/static/mutable_appearance/successful_pathfind = mutable_appearance('icons/debug/pathfinding_path.dmi', "successful_pathfind")
+	var/static/debug_visual_alpha = 125
+	var/static/mutable_appearance/arrow_to_node = mutable_appearance('icons/debug/pathfinding.dmi', "arrow_solid")
+	var/static/mutable_appearance/continuous_to_node = mutable_appearance('icons/debug/pathfinding.dmi', "continuous_solid")
+	var/static/mutable_appearance/arrow_terminated = mutable_appearance('icons/debug/pathfinding.dmi', "arrow_dotted")
+	var/static/mutable_appearance/continuous_terminated = mutable_appearance('icons/debug/pathfinding.dmi', "continuous_dotted")
+	var/static/mutable_appearance/successful_pathfind = mutable_appearance('icons/debug/pathfinding.dmi', "successful_pathfind")
 
 	/// varedit to true to visualize pathfinding, forcing a 0.5 ds interval between loops
 	var/static/visualize_pathfinding = FALSE
@@ -34,6 +34,8 @@ SUBSYSTEM_DEF(pathfinder)
 	var/static/visual_invisibility = 0
 	/// whether or not to visualize jps "jump scanning". if on, it'll be subject to the same 0.5 ds intervals between recursions.
 	var/static/visualize_jps_linescanning = FALSE
+	/// whether or not to slow down pathfinding to 0.5 ds operations while visualizing
+	var/static/visualize_sleep = FALSE
 	/// how long effects last
 	var/static/visual_lifetime = 10 SECONDS
 #endif
@@ -77,12 +79,15 @@ SUBSYSTEM_DEF(pathfinder)
 #ifdef PATHFINDING_DEBUG
 	#define SETUP_NODE(list, previous, cost, heuristic, depth, dir, turf) \
 		__INJECTING_NODE = NODE(previous, cost, heuristic, depth, dir, turf); \
-		current_effect = new(turf); \
-		debug_effects += current_effect; \
-		debug_turf_to_node[turf] = current_effect; \
-		current_effect.color = node_color_potential; \
-		current_effect.alpha = node_alpha; \
-		node_by_turf[turf] = __INJECTING_NODE; \
+		if(visualize_pathfinding) { \
+			current_node_effect = new(turf); \
+			debug_effects += current_node_effect; \
+			current_node_effect.appearance = debug_appearance_node; \
+			debug_turf_to_node[turf] = current_node_effect; \
+			current_node_effect.color = node_color_potential; \
+			current_node_effect.alpha = debug_visual_alpha; \
+			node_by_turf[turf] = __INJECTING_NODE; \
+		}; \
 		INJECT_NODE(list, __INJECTING_NODE)
 #else
 	#define SETUP_NODE(list, previous, cost, heuristic, depth, dir, turf) \
@@ -140,7 +145,7 @@ SUBSYSTEM_DEF(pathfinder)
 
 /// Pause for 0.5 ds if debugging with visuals.
 #ifdef PATHFINDING_DEBUG
-#define PAUSE_IF_DEBUGGING if(visualize_pathfinding) { sleep(0.5); }
+#define PAUSE_IF_DEBUGGING if(visualize_pathfinding && visualize_sleep) { sleep(0.5); }
 #else
 #define PAUSE_IF_DEBUGGING
 #endif
@@ -192,12 +197,6 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/proc/run_JPS_pathfind(caller, start, end, can_cross_proc, heuristic_type, max_node_depth, max_path_distance, min_target_distance, list/turf_blacklist_typecache, obj/item/card/id/ID)
 	PRIVATE_PROC(TRUE)
 
-#ifdef PATHFINDING_DEBUG
-	#define CHECK_NODE_BLANK if(!expand[NODE_DIR]) current_effect = debug_turf_to_node[expand[NODE_TURF]]; current_effect.color = node_color_explored;
-#else
-	#define CHECK_NODE_BLANK
-#endif
-
 /**
   * Because a loop is laggy, we're going to use a define.
   * You can't have comments in the middle of a multi line define so we'll explain how this works here.
@@ -215,38 +214,84 @@ SUBSYSTEM_DEF(pathfinder)
   * If expand is null, that means there is no node.
   * In which case, we check if we can reach the node, and if we can, we add the turf with a new node to our open list.
   */
-#define RUN_ASTAR(dir) \
-	if(current[NODE_DIR] & dir) { \
-		expand_turf = get_step(current[NODE_TURF], dir); \
-		if(expand_turf && !turf_blacklist_typecache[expand_turf.type]) { \
-			expand = node_by_turf[expand_turf]; \
-			CALCULATE_DISTANCE(current_turf, expand_turf); \
-			new_cost = current[NODE_COST] + current_distance; \
-			reverse_dir_of_expand = REVERSE_DIR(dir); \
-			if(expand) { \
-				expand[NODE_DIR] = expand[NODE_DIR] & ((NORTH|SOUTH|EAST|WEST) ^ reverse_dir_of_expand); \
-				CHECK_NODE_BLANK \
-				if(new_cost < expand[NODE_COST]) { \
+#ifdef PATHFINDING_DEBUG
+	#define RUN_ASTAR(dir) \
+		if(current[NODE_DIR] & dir) { \
+			expand_turf = get_step(current[NODE_TURF], dir); \
+			if(expand_turf && !turf_blacklist_typecache[expand_turf.type]) { \
+				expand = node_by_turf[expand_turf]; \
+				CALCULATE_DISTANCE(current_turf, expand_turf); \
+				new_cost = current[NODE_COST] + current_distance; \
+				reverse_dir_of_expand = REVERSE_DIR(dir); \
+				if(expand) { \
+					current_node_effect = debug_turf_to_node[expand[NODE_TURF]]; \
+					expand[NODE_DIR] = expand[NODE_DIR] & ((NORTH|SOUTH|EAST|WEST) ^ reverse_dir_of_expand); \
+					if(new_cost < expand[NODE_COST]) { \
+						if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
+							expand[NODE_PREVIOUS] = current; \
+							expand[NODE_COST] = new_cost; \
+							expand[NODE_WEIGHT] = new_cost + expand[NODE_HEURISTIC] * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT; \
+							current_node_effect?.loc.maptext = "[expand[NODE_WEIGHT]]"; \
+							expand[NODE_DEPTH] = current[NODE_DEPTH] + 1; \
+							open -= expand; \
+							INJECT_NODE(open, expand); \
+						}; \
+					}; \
+				}; \
+				else { \
+					if(visualize_pathfinding) { \
+						current_arrow_effect = new(current_turf); \
+						debug_effects += current_arrow_effect;\
+					}; \
 					if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
-						expand[NODE_PREVIOUS] = current; \
-						expand[NODE_COST] = new_cost; \
-						expand[NODE_WEIGHT] = new_cost + expand[NODE_HEURISTIC] * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT; \
-						expand[NODE_DEPTH] = current[NODE_DEPTH] + 1; \
-						open -= expand; \
-						INJECT_NODE(open, expand); \
+						CALCULATE_DISTANCE(expand_turf, end); \
+						SETUP_NODE(open, current, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
+						if(visualize_pathfinding) { \
+							current_arrow_effect.appearance = arrow_to_node; \
+							current_arrow_effect.color = node_color_explored; \
+							current_arrow_effect.orient(dir); \
+							current_node_effect.loc.maptext = "[__INJECTING_NODE[NODE_WEIGHT]]"; \
+						}; \
+					}; \
+					else if(visualize_pathfinding) { \
+						current_arrow_effect.appearance = arrow_terminated; \
+						current_arrow_effect.color = node_color_explored; \
+						current_arrow_effect.orient(dir); \
 					}; \
 				}; \
 			}; \
-			else { \
-				if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
-					CALCULATE_DISTANCE(expand_turf, end); \
-					SETUP_NODE(open, current, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
+		};
+#else
+	#define RUN_ASTAR(dir) \
+		if(current[NODE_DIR] & dir) { \
+			expand_turf = get_step(current[NODE_TURF], dir); \
+			if(expand_turf && !turf_blacklist_typecache[expand_turf.type]) { \
+				expand = node_by_turf[expand_turf]; \
+				CALCULATE_DISTANCE(current_turf, expand_turf); \
+				new_cost = current[NODE_COST] + current_distance; \
+				reverse_dir_of_expand = REVERSE_DIR(dir); \
+				if(expand) { \
+					expand[NODE_DIR] = expand[NODE_DIR] & ((NORTH|SOUTH|EAST|WEST) ^ reverse_dir_of_expand); \
+					if(new_cost < expand[NODE_COST]) { \
+						if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
+							expand[NODE_PREVIOUS] = current; \
+							expand[NODE_COST] = new_cost; \
+							expand[NODE_WEIGHT] = new_cost + expand[NODE_HEURISTIC] * PATHFINDING_HEURISTIC_TIEBREAKER_WEIGHT; \
+							expand[NODE_DEPTH] = current[NODE_DEPTH] + 1; \
+							open -= expand; \
+							INJECT_NODE(open, expand); \
+						}; \
+					}; \
+				}; \
+				else { \
+					if(call(current_turf, can_cross_proc)(caller, expand_turf, ID, dir, reverse_dir_of_expand)) { \
+						CALCULATE_DISTANCE(expand_turf, end); \
+						SETUP_NODE(open, current, new_cost, current_distance, current[NODE_DEPTH] + 1, (NORTH|SOUTH|EAST|WEST)^reverse_dir_of_expand, expand_turf); \
+					}; \
 				}; \
 			}; \
-		}; \
-	};
-
-#undef CHECK_NODE_BLANK
+		};
+#endif
 
 /**
   * Runs a pathfind with normal A*
@@ -292,19 +337,24 @@ SUBSYSTEM_DEF(pathfinder)
 #ifdef PATHFINDING_DEBUG
 	var/list/obj/effect/overlay/pathfinding/debug_effects = list()
 	var/list/obj/effect/overlay/pathfinding/debug_turf_to_node = list()
-	var/obj/effect/overlay/pathfinding/current_effect
+	var/obj/effect/overlay/pathfinding/current_node_effect
+	var/obj/effect/overlay/pathfinding/arrow/current_arrow_effect
+	var/traceback_dir
 	if(visualize_pathfinding)
-		current_effect = new(start)
-		current_effect.alpha = node_alpha
-		current_effect.color = node_color_starting
-		current_effect.layer += 1
-		current_effect.invisibility = visual_invisibility
-		debug_effects += current_effect
-		current_effect = new(end)
-		current_effect.alpha = node_alpha
-		current_effect.invisibility = visual_invisibility
-		current_effect.color = node_color_goal
-		current_effect.layer += 1
+		current_node_effect = new(start)
+		current_node_effect.appearance = debug_appearance_node
+		current_node_effect.alpha = debug_visual_alpha
+		current_node_effect.color = node_color_starting
+		current_node_effect.layer += 1
+		current_node_effect.invisibility = visual_invisibility
+		debug_effects += current_node_effect
+		current_node_effect = new(end)
+		current_node_effect.appearance = debug_appearance_node
+		current_node_effect.alpha = debug_visual_alpha
+		current_node_effect.invisibility = visual_invisibility
+		current_node_effect.color = node_color_goal
+		current_node_effect.layer += 1
+		debug_effects += current_node_effect
 #endif
 	// We're going to assume everything is valid type-wise as we're only ran by a wrapper.
 	// If anything ISN'T valid, we're going to crash and burn, because why are you not using the wrapper and/or passing in invalid arguments?
@@ -355,9 +405,10 @@ SUBSYSTEM_DEF(pathfinder)
 		open.len--
 		current_turf = current[NODE_TURF] // get its turf
 #ifdef PATHFINDING_DEBUG
-		current_effect = debug_turf_to_node[current_turf]
-		current_effect.color = node_color_current
-		PAUSE_IF_DEBUGGING
+		if(visualize_pathfinding)
+			current_node_effect = debug_turf_to_node[current_turf]
+			current_node_effect.color = node_color_current
+			PAUSE_IF_DEBUGGING
 #endif
 		// see how far we are
 		CALCULATE_DISTANCE(current_turf, end)
@@ -367,8 +418,18 @@ SUBSYSTEM_DEF(pathfinder)
 			path = list(current_turf)
 			// go up the chain
 			while(current[NODE_PREVIOUS])
+#ifdef PATHFINDING_DEBUG
+				PAUSE_IF_DEBUGGING
+				traceback_dir = turn(get_dir(current[NODE_TURF], current[NODE_PREVIOUS][NODE_TURF]), 180)
+#endif
 				current = current[NODE_PREVIOUS]
 				path += current[NODE_TURF]
+#ifdef PATHFINDING_DEBUG
+				if(visualize_pathfinding)
+					current_arrow_effect = new(current[NODE_TURF])
+					current_arrow_effect.appearance = successful_pathfind
+					current_arrow_effect.orient(traceback_dir))
+#endif
 			// get the path in the right direction
 			reverseRange(path)
 			break		// we're done!
@@ -387,8 +448,8 @@ SUBSYSTEM_DEF(pathfinder)
 		// Clear directions, we're done with this node.
 		current[NODE_DIR] = NONE
 #ifdef PATHFINDING_DEBUG
-		current_effect = debug_turf_to_node[current_turf]
-		current_effect.color = node_color_explored
+		current_node_effect = debug_turf_to_node[current_turf]
+		current_node_effect.color = node_color_explored
 #endif
 		CHECK_TICK
 
@@ -449,4 +510,24 @@ SUBSYSTEM_DEF(pathfinder)
 #ifdef PATHFINDING_DEBUG
 /obj/effect/overlay/pathfinding
 	name = "pathfinding debug overlay"
+
+/obj/effect/overlay/pathfinding/Destroy()
+	loc.maptext = null
+	return ..()
+
+/obj/effect/overlay/pathfinding/arrow
+	name = "pathfinding arrow overlay"
+
+/obj/effect/overlay/pathfinding/arrow/proc/orient(d)
+	if(d & NORTH)
+		pixel_y = 8
+	else if(d & SOUTH)
+		pixel_y = -8
+	if(d & EAST)
+		pixel_x = 8
+	else if(d & WEST)
+		pixel_x = -8
+	var/matrix/t = matrix()
+	t.Turn(dir2angle(d))
+	transform = t
 #endif
