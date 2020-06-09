@@ -713,6 +713,7 @@
 	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
 		holder.remove_reagent(/datum/reagent/toxin/lexorin, 3)
 		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2)
+		holder.add_reagent(/datum/reagent/toxin/histamine, 1)
 	if(M.health <= M.crit_threshold)
 		M.adjustToxLoss(-0.5*REM, 0)
 		M.adjustBruteLoss(-0.5*REM, 0)
