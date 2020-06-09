@@ -710,6 +710,9 @@
 	..()
 
 /datum/reagent/medicine/epinephrine/on_mob_life(mob/living/carbon/M)
+	if(holder.has_reagent(/datum/reagent/toxin/lexorin))
+		holder.remove_reagent(/datum/reagent/toxin/lexorin, 3)
+		holder.remove_reagent(/datum/reagent/medicine/epinephrine, 2)
 	if(M.health <= M.crit_threshold)
 		M.adjustToxLoss(-0.5*REM, 0)
 		M.adjustBruteLoss(-0.5*REM, 0)
