@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes: 
-  - bugfix: "Breaking a canister while it's wrenched down will no longer cause it to look \"goofy\""
