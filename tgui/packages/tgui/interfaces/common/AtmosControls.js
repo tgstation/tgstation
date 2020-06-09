@@ -38,7 +38,7 @@ export const Vent = (props, context) => {
         <LabeledList.Item label="Mode">
           <Button
             icon="sign-in-alt"
-            content={direction ? 'Pressurizing' : 'Scrubbing' }
+            content={direction ? 'Pressurizing' : 'Scrubbing'}
             color={!direction && 'danger'}
             onClick={() => act('direction', {
               id_tag,
