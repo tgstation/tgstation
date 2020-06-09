@@ -20,13 +20,16 @@
 	var/const/duration = 13 //Directly relates to the 'knockdown' duration. Lowered by armor (i.e. helmets)
 	isGlass = TRUE
 	foodtype = ALCOHOL
-	age_restricted = TRUE // wrryy can't set an init value to see if foodtype contains ALCOHOL so here we go
+	obj_flags = AGE_RESTRICTED
+
+/obj/item/reagent_containers/food/drinks/bottle/empty
+	obj_flags = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/update_overlays()
 	. = ..()
 	. += "[initial(icon_state)]shine"
 
-/obj/item/reagent_containers/food/drinks/bottle/small
+/obj/item/reagent_containers/food/drinks/bottle/empty/small
 	name = "small glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
 	icon_state = "glassbottlesmall"
@@ -198,7 +201,7 @@
 	icon_state = "bottleofnothing"
 	list_reagents = list(/datum/reagent/consumable/nothing = 100)
 	foodtype = NONE
-	age_restricted = FALSE
+	obj_flags = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
@@ -364,7 +367,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/orangejuice = 100)
 	foodtype = FRUIT | BREAKFAST
-	age_restricted = FALSE
+	obj_flags = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/cream
 	name = "milk cream"
@@ -377,7 +380,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/cream = 100)
 	foodtype = DAIRY
-	age_restricted = FALSE
+	obj_flags = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "tomato juice"
@@ -390,7 +393,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/tomatojuice = 100)
 	foodtype = VEGETABLES
-	age_restricted = FALSE
+	obj_flags = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/limejuice
 	name = "lime juice"
@@ -403,7 +406,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/limejuice = 100)
 	foodtype = FRUIT
-	age_restricted = FALSE
+	obj_flags = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/pineapplejuice
 	name = "pineapple juice"
@@ -416,7 +419,7 @@
 	isGlass = FALSE
 	list_reagents = list(/datum/reagent/consumable/pineapplejuice = 100)
 	foodtype = FRUIT | PINEAPPLE
-	age_restricted = FALSE
+	obj_flags = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/menthol
 	name = "menthol"
@@ -437,7 +440,7 @@
 	isGlass = TRUE
 	list_reagents = list(/datum/reagent/consumable/grenadine = 100)
 	foodtype = FRUIT
-	age_restricted = FALSE
+	obj_flags = NONE
 
 /obj/item/reagent_containers/food/drinks/bottle/applejack
 	name = "Buckin' Bronco's Applejack"

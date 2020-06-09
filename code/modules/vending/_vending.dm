@@ -320,7 +320,9 @@ GLOBAL_LIST_EMPTY(vending_products)
 		R.max_amount = amount
 		R.custom_price = initial(temp.custom_price)
 		R.custom_premium_price = initial(temp.custom_premium_price)
-		R.age_restricted = initial(temp.age_restricted)
+		if(ispath(temp, /obj))
+			var/obj/temp_obj = temp
+			R.age_restricted = (initial(temp_obj.obj_flags) & AGE_RESTRICTED)
 		recordlist += R
 /**
   * Refill a vending machine from a refill canister

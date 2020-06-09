@@ -58,7 +58,7 @@
 	name = "Trappist Bottle"
 	time = 15
 	reqs = list(
-		/obj/item/reagent_containers/food/drinks/bottle/small = 1,
+		/obj/item/reagent_containers/food/drinks/bottle/empty/small = 1,
 		/datum/reagent/consumable/ethanol/trappist = 50
 	)
 	result = /obj/item/reagent_containers/food/drinks/bottle/trappist
