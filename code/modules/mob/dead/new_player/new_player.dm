@@ -61,8 +61,22 @@
 			var/isadmin = FALSE
 			if(client?.holder)
 				isadmin = TRUE
-			var/sql_ckey = sanitizeSQL(ckey)
-			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery("SELECT id FROM [format_table_name("poll_question")] WHERE [(isadmin ? "" : "adminonly = 0 AND")] Now() BETWEEN starttime AND endtime AND deleted = 0 AND id NOT IN (SELECT pollid FROM [format_table_name("poll_vote")] WHERE ckey = '[sql_ckey]' AND deleted = 0) AND id NOT IN (SELECT pollid FROM [format_table_name("poll_textreply")] WHERE ckey = '[sql_ckey]' AND deleted = 0)")
+			var/datum/DBQuery/query_get_new_polls = SSdbcore.NewQuery({"
+				SELECT id FROM [format_table_name("poll_question")]
+				WHERE (adminonly = 0 OR :isadmin = 1)
+				AND Now() BETWEEN starttime AND endtime
+				AND deleted = 0
+				AND id NOT IN (
+					SELECT pollid FROM [format_table_name("poll_vote")]
+					WHERE ckey = :ckey
+					AND deleted = 0
+				)
+				AND id NOT IN (
+					SELECT pollid FROM [format_table_name("poll_textreply")]
+					WHERE ckey = :ckey
+					AND deleted = 0
+				)
+			"}, list("isadmin" = isadmin, "ckey" = ckey))
 			var/rs = REF(src)
 			if(!query_get_new_polls.Execute())
 				qdel(query_get_new_polls)

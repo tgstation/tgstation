@@ -1,4 +1,0 @@
-author: "tmtmtl30"
-delete-after: True
-changes: 
-  - tweak: "Dynamic roundstart ruleset scaling on second-rolled roundstart rulesets has been slightly tweaked."
