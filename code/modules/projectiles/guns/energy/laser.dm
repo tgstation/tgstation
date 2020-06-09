@@ -31,9 +31,8 @@
 
 /obj/item/gun/energy/laser/retro/hellgun
 	name ="hellfire laser gun"
-	desc = "A relic of a laser gun, tuned to a much higher power level than Nanotrasen's modern beam laser weapons. While devastatingly effective against lightly armored humanoids, TerraGov balked at the grotesque burns it inflicted, and withheld their lucrative arms contracts until the power was lowered."
+	desc = "A relic of a weapon, built before NT began installing regulators on its laser weaponry. This pattern of laser gun became infamous for the gruesome burn wounds it caused, and was quietly discontinued once it began to affect NT's reputation."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire)
-	ammo_x_offset = 3
 
 /obj/item/gun/energy/laser/captain
 	name = "antique laser gun"
