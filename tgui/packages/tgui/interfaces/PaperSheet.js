@@ -50,12 +50,10 @@ const run_marked_default = value => {
 const PaperSheetView = (props, context) => {
   const { data } = useBackend(context);
   const {
-   // paper_color = "#000000",
-  //  pen_color = "#FFFFFF",
+    paper_color = "#FFFFFF",
+    pen_color = "#000000",
     text = '',
   } = data;
-  const paper_color = "#FFFFFF";
-  const pen_color = "#000000";
   const {
     value = text || '',
     ...rest
@@ -142,8 +140,8 @@ const PaperSheetEdit = (props, context) => {
         {previewSelected === "Edit" && (
           <TextArea
             value={text}
-            backgroundColor="white"
-            textColor="black"
+            backgroundColor="#FFFFFF"
+            textColor="#000000"
             height={(window.innerHeight - 80)+ "px"}
             onInput={onInputHandler} />
         ) || (
