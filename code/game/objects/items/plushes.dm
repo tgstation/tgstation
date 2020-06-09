@@ -585,3 +585,4 @@
 	inhand_icon_state = "pkplush"
 	attack_verb = list("hugged", "squeezed")
 	squeak_override = list('sound/weapons/thudswoosh.ogg'=1)
+	
