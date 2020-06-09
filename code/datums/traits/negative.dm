@@ -150,7 +150,7 @@
 			if("Scientist")
 				heirloom_type = /obj/item/toy/plush/slimeplushie
 			if("Roboticist")
-				heirloom_type = pick(subtypesof(/obj/item/toy/prize)) //look at this nerd
+				heirloom_type = pick(subtypesof(/obj/item/toy/prize), /obj/item/toy/plush/pkplush) //look at this nerd
 			if("Geneticist")
 				heirloom_type = /obj/item/clothing/under/shorts/purple
 			//Medical
