@@ -6,8 +6,11 @@
 @use '../base.scss';
 @use '../functions.scss' as *;
 
+$text-color: #272727 !default;
 $border-color: #88bfff !default;
 $border-radius: base.$border-radius !default;
+$color-background: #bb9b68 !default;
+$color-border: #272727 !default;
 
 .TextArea {
   overflow: hidden;
@@ -18,8 +21,7 @@ $border-radius: base.$border-radius !default;
   border: 1px solid rgba($border-color, 0.75);
   border-radius: $border-radius;
   color: #fff;
-  background-color: #000;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: $color-background;
   margin-right: 2px;
   line-height: 17px;
   overflow: visible;
@@ -69,7 +71,7 @@ $border-radius: base.$border-radius !default;
   padding: 0 6px;
   font-family: Verdana, sans-serif;
   background-color: transparent;
-  color: #fff;
+  color: $text-color;
   color: inherit;
   box-sizing: border-box;
   width: 100%;
@@ -91,7 +93,7 @@ $border-radius: base.$border-radius !default;
   &:-ms-input-placeholder {
     font-style: italic;
     color: #777;
-    color: rgba(255, 255, 255, 0.45);
+  /*  color: rgba(255, 255, 255, 0.45);*/
   }
 }
 

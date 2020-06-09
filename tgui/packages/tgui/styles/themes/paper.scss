@@ -45,7 +45,11 @@
     'color-background': #ffffff,
   ));
 
+
   .Layout__content {
+    background-image: none;
+  }
+  .Window {
     background-image: none;
   }
 

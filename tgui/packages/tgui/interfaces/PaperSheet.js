@@ -50,10 +50,12 @@ const run_marked_default = value => {
 const PaperSheetView = (props, context) => {
   const { data } = useBackend(context);
   const {
-    paper_color = "white",
-    pen_color = "black",
+   // paper_color = "#000000",
+  //  pen_color = "#FFFFFF",
     text = '',
   } = data;
+  const paper_color = "#FFFFFF";
+  const pen_color = "#000000";
   const {
     value = text || '',
     ...rest
