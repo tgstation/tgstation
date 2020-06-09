@@ -178,24 +178,28 @@
 	for(var/option in results)
 		tally += "<li>\"<div class='content'>[option]</div>\" - [results[option]] Vote[results[option] > 1 ? "s" : ""].</li>"
 	tally += "</ol>"
-	P.extra_headers = {"
-	<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
-	<style>
-		.content{
-			max-width:250px;
-			display:inline-block;
-			overflow:hidden;
-			text-overflow:ellipsis;
-			white-space:nowrap;
-			vertical-align:bottom
-		}
-		.content br {
-			display: none;
-		}
-		.content hr {
-			display: none;
-		}
-	</style>"}
+	/*
+		// Papers dosn't have extra headers anymore.  might need to change this
+		// to markup
+		P.extra_headers = {"
+		<meta http-equiv='X-UA-Compatible' content='IE=edge'/>
+		<style>
+			.content{
+				max-width:250px;
+				display:inline-block;
+				overflow:hidden;
+				text-overflow:ellipsis;
+				white-space:nowrap;
+				vertical-align:bottom
+			}
+			.content br {
+				display: none;
+			}
+			.content hr {
+				display: none;
+			}
+		</style>"}
+	*/
 	P.info = tally.Join()
 	P.name = "Voting Results"
 	P.update_icon()
