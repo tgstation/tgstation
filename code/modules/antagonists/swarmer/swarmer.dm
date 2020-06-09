@@ -174,7 +174,7 @@
 ////CTRL CLICK FOR SWARMERS AND SWARMER_ACT()'S////
 /mob/living/simple_animal/hostile/swarmer/AttackingTarget()
 	if(!isliving(target))
-		return attempt_attack(A)
+		return attempt_attack(target)
 	else
 		return ..()
 
