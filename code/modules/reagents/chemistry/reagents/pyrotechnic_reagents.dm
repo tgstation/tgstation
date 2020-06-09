@@ -66,8 +66,11 @@
 					new /obj/effect/hotspot(F)
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
-		if(prob(reac_volume))
+		//You live by chance, you die by chance
+		if(prob(min(reac_volume,90)))
+			playsound(master, 'sound/items/welder.ogg', 100, TRUE)
 			W.ScrapeAway()
+			new /obj/effect/hotspot(T.drop_location())
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
