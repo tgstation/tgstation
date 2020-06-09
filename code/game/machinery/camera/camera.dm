@@ -95,7 +95,7 @@
 		proximity_monitor = new(src, 1)
 
 /obj/machinery/camera/proc/set_area_motion(area/A)
-	area_motion = src
+	area_motion = A
 	create_prox_monitor()
 
 /obj/machinery/camera/Destroy()
