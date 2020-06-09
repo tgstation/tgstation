@@ -1,0 +1,4 @@
+author: "TiviPlus"
+delete-after: True
+changes: 
+  - tweak: "Succesful restart votes will now complete instantly"
