@@ -21,7 +21,7 @@
 
 /obj/screen/swarmer/Pylon
 	icon_state = "ui_barricade"
-	name = "Create pylon (Costs 5 Resources)"
+	name = "Create pylon (Costs 25 Resources)"
 	desc = "Creates a pylon, which expands the area swarmers may operate in. (Costs 25 resources)"
 
 /obj/screen/swarmer/Pylon/Click()
