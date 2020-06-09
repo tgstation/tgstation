@@ -67,7 +67,7 @@
 	if(iswallturf(T))
 		var/turf/closed/wall/W = T
 		//You live by chance, you die by chance
-		if(prob(min(reac_volume,90)))
+		if(prob(min(reac_volume,75)))
 			playsound(master, 'sound/items/welder.ogg', 100, TRUE)
 			W.ScrapeAway()
 			new /obj/effect/hotspot(T.drop_location())
