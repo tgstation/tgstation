@@ -42,6 +42,8 @@
 	var/heal_amount = 2.5
 /// Start healing when they have this much damage in a category
 	var/heal_threshold = 10
+/// What damage type does this bot support. Because the default is brute, if the medkit is brute-oriented there is a slight bonus to healing. set to "all" for it to heal any of the 4 base damage types
+	var/damagetype_healer = BRUTE
 /// If active, the bot will transmit a critical patient alert to MedHUD users.
 	var/declare_crit = TRUE
 /// Prevents spam of critical patient alerts.
@@ -60,12 +62,14 @@
 	name = "\improper Mysterious Medibot"
 	desc = "International Medibot of mystery."
 	skin = "bezerk"
+	damagetype_healer = "all"
 	heal_amount = 10
 
 /mob/living/simple_animal/bot/medbot/derelict
 	name = "\improper Old Medibot"
 	desc = "Looks like it hasn't been modified since the late 2080s."
 	skin = "bezerk"
+	damagetype_healer = "all"
 	heal_threshold = 0
 	declare_crit = 0
 	heal_amount = 5
@@ -90,13 +94,18 @@
 
 /mob/living/simple_animal/bot/medbot/Initialize(mapload, new_skin)
 	. = ..()
-	var/datum/job/doctor/J = new /datum/job/doctor
+	var/datum/job/paramedic/J = new /datum/job/paramedic
 	access_card.access += J.get_access()
 	prev_access = access_card.access
 	qdel(J)
 	skin = new_skin
 	update_icon()
 	linked_techweb = SSresearch.science_tech
+	if(damagetype_healer == "all")
+		return
+	var/obj/item/storage/firstaid/FA = firstaid
+	if(initial(FA.damagetype_healed))
+		damagetype_healer = initial(FA.damagetype_healed)
 
 /mob/living/simple_animal/bot/medbot/update_mobility()
 	. = ..()
@@ -185,7 +194,7 @@
 		if(tech_boosters)
 			heal_amount = (round(tech_boosters/2,0.1)*initial(heal_amount))+initial(heal_amount) //every 2 tend wounds tech gives you an extra 100% healing, adjusting for unique branches (combo is bonus)
 			if(oldheal_amount < heal_amount)
-				speak("Surgerical Knowledge Found! Efficiency is increased by [round(heal_amount/oldheal_amount*100)]%!")
+				speak("Surgical Knowledge Found! Efficiency is increased by [round(heal_amount/oldheal_amount*100)]%!")
 	update_controls()
 	return
 
@@ -329,16 +338,22 @@
 		declare(C)
 
 	//They're injured enough for it!
+	var/list/treat_me_for = list()
 	if(C.getBruteLoss() >= heal_threshold)
-		return TRUE //If they're already medicated don't bother!
+		treat_me_for += BRUTE
 
 	if(C.getOxyLoss() >= (5 + heal_threshold))
-		return TRUE
+		treat_me_for += OXY
 
 	if(C.getFireLoss() >= heal_threshold)
-		return TRUE
+		treat_me_for += BURN
 
 	if(C.getToxLoss() >= heal_threshold)
+		treat_me_for += TOX
+
+	if(damagetype_healer in treat_me_for)
+		return TRUE
+	if(damagetype_healer == "all" && treat_me_for.len)
 		return TRUE
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
@@ -378,18 +393,27 @@
 	tending = TRUE
 	while(tending)
 		var/treatment_method
+		var/list/potential_methods = list()
 
 		if(C.getBruteLoss() >= heal_threshold)
-			treatment_method = BRUTE
+			potential_methods += BRUTE
 
 		else if(C.getFireLoss() >= heal_threshold)
-			treatment_method = BURN
+			potential_methods += BURN
 
 		else if(C.getOxyLoss() >= (5 + heal_threshold))
-			treatment_method = OXY
+			potential_methods += OXY
 
 		else if(C.getToxLoss() >= heal_threshold)
-			treatment_method = TOX
+			potential_methods += TOX
+
+		for(var/i in potential_methods)
+			if(i != damagetype_healer)
+				continue
+			treatment_method = i
+
+		if(damagetype_healer == "all" && potential_methods.len)
+			treatment_method = pick(potential_methods)
 
 		if(!treatment_method && emagged != 2) //If they don't need any of that they're probably cured!
 			if(C.maxHealth - C.health < heal_threshold)
@@ -408,8 +432,8 @@
 				if((get_dist(src, patient) <= 1) && (on) && assess_patient(patient))
 					var/healies = heal_amount
 					var/obj/item/storage/firstaid/FA = firstaid
-					if(treatment_method == initial(FA.damagetype_healed)) //using the damage specific medkits give bonuses when healing this type of damage.
-						healies *= 1.5
+					if(treatment_method == BRUTE && initial(FA.damagetype_healed) == BRUTE) //specialized brute gets a bit of bonus, as a snack.
+						healies *= 1.1
 					if(emagged == 2)
 						patient.reagents.add_reagent(/datum/reagent/toxin/chloralhydrate, 5)
 						patient.apply_damage_type((healies*1),treatment_method)
