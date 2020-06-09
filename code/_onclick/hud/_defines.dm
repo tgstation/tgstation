@@ -103,8 +103,8 @@
 
 //Swarmers
 #define ui_swarmer_contact "WEST:6,SOUTH:5"
-#define ui_swarmer_light "CENTER-2:14,SOUTH:5"
-#define ui_swarmer_repair "CENTER+1:18,SOUTH:5"
+#define ui_swarmer_light "CENTER-3:14,SOUTH:5"
+#define ui_swarmer_repair "CENTER+2:18,SOUTH:5"
 #define ui_swarmer_replicate "EAST-1:28,SOUTH:5"
 #define ui_swarmer_pylon "CENTER+1:0,SOUTH+0:5"
 #define ui_swarmer_barricade "CENTER-1:0,SOUTH+0:5"
