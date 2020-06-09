@@ -27,7 +27,7 @@
 	time = 125
 	silicons_obey_prob = TRUE
 	repeatable = TRUE
-	experience_given = 0 //experience recieved scales with what's being dissected + which step you're doing.
+	experience_given = 0 //experience received scales with what's being dissected + which step you're doing.
 
 /datum/surgery_step/dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] starts dissecting [target].</span>", "<span class='notice'>You start dissecting [target].</span>")

@@ -32,7 +32,7 @@
 	var/datum/action/innate/end_holocall/hangup	//hangup action
 
 	var/call_start_time
-	var/head_call = FALSE //calls from a head of staff autoconnect, if the recieving pad is not secure.
+	var/head_call = FALSE //calls from a head of staff autoconnect, if the receiving pad is not secure.
 
 //creates a holocall made by `caller` from `calling_pad` to `callees`
 /datum/holocall/New(mob/living/caller, obj/machinery/holopad/calling_pad, list/callees, elevated_access = FALSE)
