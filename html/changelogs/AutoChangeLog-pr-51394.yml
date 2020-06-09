@@ -1,0 +1,6 @@
+author: "Cobby"
+delete-after: True
+changes: 
+  - balance: "craftable medbots now only heal brute unless they are built with specialized medkits."
+  - balance: "medbots built with the brute medkit heal 10% more"
+  - balance: "medbots built with the advance medkit heal all damage types"
