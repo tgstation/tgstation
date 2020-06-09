@@ -58988,7 +58988,7 @@
 	},
 /obj/machinery/disposal/bin,
 /obj/structure/sign/warning/vacuum{
-	step_x = -32
+	pixel_x = -32
 	},
 /turf/open/floor/plasteel/dark,
 /area/science/xenobiology)
