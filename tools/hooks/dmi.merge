@@ -1,2 +1,2 @@
-#!/bin/bash
+#!/bin/sh
 exec tools/hooks/python.sh -m merge_driver_dmi "$@"

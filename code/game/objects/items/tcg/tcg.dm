@@ -203,6 +203,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 			log_runtime("The index [rarity] of rarity_table does not exist in the global cache")
 	return toReturn
 
+//All of these values should be overriden by either a template or a card itself
 /datum/card
 	///Unique ID, for use in lookups and (eventually) for persistence. MAKE SURE THIS IS UNIQUE FOR EACH CARD IN AS SERIES, OR THE ENTIRE SYSTEM WILL BREAK, AND I WILL BE VERY DISAPPOINTED.
 	var/id = "coder"
@@ -211,13 +212,13 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	///This handles any extra rules for the card, i.e. extra attributes, special effects, etc. If you've played any other card game, you know how this works.
 	var/rules = "There are no rules here. There is no escape. No Recall or Intervention can work in this place."
 	var/icon = "icons/obj/tcg.dmi"
-	var/icon_state = "runtime"
+	var/icon_state = "template"
 	///What it costs to summon this card to the battlefield.
 	var/summoncost = -1
 	///How hard this card hits (by default)
-	var/power = 0
+	var/power = -1
 	///How hard this card can get hit (by default)
-	var/resolve = 0
+	var/resolve = -1
 	///Someone please come up with a ruleset so I can comment this
 	var/faction = "socks"
 	///Used to define the behaviour the card uses during the game.
@@ -225,7 +226,7 @@ GLOBAL_LIST_EMPTY(cached_cards)
 	///An extra descriptor for the card. Combined with the cardtype for a larger card descriptor, i.e. Creature- Xenomorph, Spell- Instant, that sort of thing. For creatures, this has no effect, for spells, this is important.
 	var/cardsubtype = "Weeb"
 	///Defines the series that the card originates from, this is *very* important for spawning the cards via packs.
-	var/series = "coreset2020"
+	var/series = "hunter2"
 	///The rarity of this card, determines how much (or little) it shows up in packs. Rarities are common, uncommon, rare, epic, legendary and misprint.
 	var/rarity = "uber rare to the extreme"
 
@@ -259,22 +260,48 @@ GLOBAL_LIST_EMPTY(cached_cards)
 
 ///Checks the passed type list for missing raritys, or raritys out of bounds
 /proc/checkCardpacks(cardPackList)
+	var/toReturn = ""
 	for(var/cardPack in cardPackList)
 		var/obj/item/cardpack/pack = new cardPack()
 		//Lets see if someone made a type yeah?
 		if(!GLOB.cached_cards[pack.series])
-			message_admins("[pack.series] does not have any related cards")
+			toReturn += "[pack.series] does not have any cards in it\n"
 			continue
 		for(var/card in GLOB.cached_cards[pack.series]["ALL"])
 			var/datum/card/template = GLOB.cached_cards[pack.series]["ALL"][card]
+			if(template.rarity == "ALL")
+				toReturn += "[pack.type] has a rarity [template.rarity] on the card [template.id] that needs to be changed to something that isn't \"ALL\"\n"
+				continue
 			if(!(template.rarity in pack.rarity_table))
-				message_admins("[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist")
+				toReturn += "[pack.type] has a rarity [template.rarity] on the card [template.id] that does not exist\n"
 				continue
 		//Lets run a check to see if all the rarities exist that we want to exist exist
 		for(var/I in pack.rarity_table)
 			if(!GLOB.cached_cards[pack.series][I])
-				message_admins("[pack.type] does not have the required rarity [I]")
+				toReturn += "[pack.type] does not have the required rarity [I]\n"
 		qdel(pack)
+	return toReturn
+
+///Checks the global card list for cards that don't override all the default values of the card datum
+/proc/checkCardDatums()
+	var/toReturn = ""
+	var/datum/thing = new()
+	for(var/series in GLOB.cached_cards)
+		var/cards = GLOB.cached_cards[series]["ALL"]
+		for(var/card in cards)
+			var/datum/card/target = GLOB.cached_cards[series]["ALL"][card]
+			var/toAdd = "The card [target.id] in [series] has the following default variables:"
+			var/shouldAdd = FALSE
+			for(var/a in (target.vars ^ thing.vars))
+				if(a == "icon" && target.vars[a] == "icons/obj/tcg.dmi")
+					continue
+				if(target.vars[a] == initial(target.vars[a]))
+					shouldAdd = TRUE
+					toAdd += "\n[a] with a value of [target.vars[a]]"
+			if(shouldAdd)
+				toReturn += toAdd
+	qdel(thing)
+	return toReturn
 
 ///Used to test open a large amount of cardpacks
 /proc/checkCardDistribution(cardPack, batchSize, batchCount, guaranteed)
@@ -322,5 +349,5 @@ GLOBAL_LIST_EMPTY(cached_cards)
 		if(!GLOB.cached_cards[c.series][c.rarity])
 			GLOB.cached_cards[c.series][c.rarity] = list()
 		GLOB.cached_cards[c.series][c.rarity] += c.id
-		//And series too, why not, it's semi cheap
+		//Let's actually store the datum here
 		GLOB.cached_cards[c.series]["ALL"][c.id] = c
