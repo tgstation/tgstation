@@ -1,6 +1,6 @@
 
 /*
-	Cuts
+	Pierce
 */
 
 /datum/wound/pierce
@@ -37,7 +37,7 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
-/datum/wound/pierce/wound_injury(datum/wound/slash/old_wound = null)
+/datum/wound/pierce/wound_injury(datum/wound/pierce/old_wound = null)
 	blood_flow = initial_flow
 	if(old_wound)
 		blood_flow = max(old_wound.blood_flow, initial_flow)
@@ -238,10 +238,10 @@
 
 /datum/wound/pierce/moderate
 	name = "Skin Breakage"
-	desc = "Patient's skin has been broken open, causing severe bruising in affected area."
+	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
 	treat_text = "Application of clean bandages or first-aid grade sutures, followed by food and rest."
-	examine_desc = "has a dark bruise with oozing blood"
-	occur_text = "spurts out a thin stream of blood from an impact wound"
+	examine_desc = "has a dark bruise, slowly oozing blood"
+	occur_text = "spurts out a thin stream of blood from the impact wound"
 	sound_effect = 'sound/effects/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 2
@@ -255,10 +255,10 @@
 
 /datum/wound/pierce/severe
 	name = "Open Puncture"
-	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding."
+	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and organ damage."
 	treat_text = "Speedy application of first-aid grade sutures and clean bandages, followed by vitals monitoring to ensure recovery."
-	examine_desc = "has a severe cut"
-	occur_text = "jerks violently as a spray of blood and flesh exit the other side of the impact wound"
+	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
+	occur_text = "looses a violent spray of blood and flesh through both sides of the impact wound"
 	sound_effect = 'sound/effects/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 3.25
@@ -273,10 +273,10 @@
 
 /datum/wound/pierce/critical
 	name = "Ruptured Cavity"
-	desc = "Patient's internal tissue and circulatory system is openly shredded, causing significant internal bleeding."
+	desc = "Patient's internal tissue and circulatory system is shredded, causing significant internal bleeding and damage to internal organs."
 	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
-	examine_desc = "is spurting blood at an alarming rate"
-	occur_text = "is ripped clear through, with blood streaming from both sides of the open wound"
+	examine_desc = "is ripped clear through, providing a clear view of the inside"
+	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 4.25

@@ -42,6 +42,7 @@
 	ricochet_chance = 130
 	ricochet_decay_damage = 0.8
 	shrapnel_type = NONE
+	atk_type = ATK_BLUNT
 
 /obj/projectile/bullet/c38/dumdum
 	name = ".38 DumDum bullet"
@@ -50,6 +51,7 @@
 	ricochets_max = 0
 	wound_bonus = 0
 	shrapnel_type = /obj/item/shrapnel/bullet/c38/dumdum
+	atk_type = ATK_SLASH
 
 /obj/projectile/bullet/c38/trac
 	name = ".38 TRAC bullet"
