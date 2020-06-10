@@ -1526,13 +1526,13 @@
 	if(!ceiling) //We are at the highest z-level.
 		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
 		return
-	else if(!istransparentturf(floor)) //There is no turf we can look through below us
-		var/list/checkturfs = block(locate(x-1,y-1,z),locate(x+1,y+1,z))-floor //Try find hole near of us
+	else if(!istransparentturf(ceiling)) //There is no turf we can look through below us
+		var/list/checkturfs = block(locate(x-1,y-1,ceiling.z),locate(x+1,y+1,ceiling.z))-ceiling //Try find hole near of us
 		for(var/turf/checkhole in checkturfs)
 			if(istransparentturf(checkhole))
-				lower_level = get_step_multiz(checkhole, UP)
+				ceiling = get_step_multiz(checkhole, UP)
 				break
-		if(!istransparentturf(floor))
+		if(!istransparentturf(ceiling))
 			to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
 			return
 
