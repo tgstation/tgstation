@@ -88,6 +88,7 @@
 	dialed_holopads.Cut()
 
 	if(calling_holopad)
+		calling_holopad.calling = FALSE
 		calling_holopad.outgoing_call = null
 		calling_holopad.SetLightsAndPower()
 		calling_holopad = null
@@ -154,6 +155,7 @@
 	if(!Check())
 		return
 
+	calling_holopad.calling = FALSE
 	hologram = H.activate_holo(user)
 	hologram.HC = src
 
@@ -189,7 +191,6 @@
 			. = world.time < (call_start_time + HOLOPAD_MAX_DIAL_TIME)
 			if(!.)
 				calling_holopad.say("No answer received.")
-				calling_holopad.temp = ""
 
 	if(!.)
 		testing("Holocall Check fail")

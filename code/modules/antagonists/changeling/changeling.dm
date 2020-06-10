@@ -34,6 +34,8 @@
 	var/isabsorbing = 0
 	var/islinking = 0
 	var/geneticpoints = 10
+	var/total_geneticspoints = 10
+	var/total_chem_storage = 75
 	var/purchasedpowers = list()
 
 	var/mimicing = ""
@@ -107,9 +109,9 @@
 /datum/antagonist/changeling/proc/reset_properties()
 	changeling_speak = 0
 	chosen_sting = null
-	geneticpoints = initial(geneticpoints)
+	geneticpoints = total_geneticspoints
 	sting_range = initial(sting_range)
-	chem_storage = initial(chem_storage)
+	chem_storage = total_chem_storage
 	chem_recharge_rate = initial(chem_recharge_rate)
 	chem_charges = min(chem_charges, chem_storage)
 	chem_recharge_slowdown = initial(chem_recharge_slowdown)
