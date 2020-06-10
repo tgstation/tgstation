@@ -118,8 +118,9 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 	for (var/TT in masters)
 		var/turf/T = TT
-		if (T.lighting_object)
-			SSlighting.objects_queue[T.lighting_object] = TRUE
+		var/atom/movable/lighting_object/lo = T.lighting_object
+		if (lo)
+			SSlighting.objects_queue[lo] = TRUE
 
 
 /datum/lighting_corner/dummy/New()
