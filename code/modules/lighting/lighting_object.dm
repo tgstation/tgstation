@@ -18,7 +18,7 @@
 	//is totally unsuitable for this object, as we are always changing it's colour manually
 	color = LIGHTING_BASE_MATRIX
 
-	var/turf/myturf = loc
+	var/turf/myturf = get_turf(src)
 	if (myturf.lighting_object)
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
