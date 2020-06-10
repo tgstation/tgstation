@@ -3,10 +3,10 @@
 	Cuts
 */
 
-/datum/wound/slash
+/datum/wound/pierce
 	sound_effect = 'sound/weapons/slice.ogg'
 	processes = TRUE
-	wound_type = WOUND_LIST_SLASH
+	wound_type = WOUND_LIST_PIERCE
 	treatable_by = list(/obj/item/stack/medical/suture, /obj/item/stack/medical/gauze)
 	treatable_by_grabbed = list(/obj/item/gun/energy/laser)
 	treatable_tool = TOOL_CAUTERY
@@ -37,7 +37,7 @@
 	/// A bad system I'm using to track the worst scar we earned (since we can demote, we want the biggest our wound has been, not what it was when it was cured (probably moderate))
 	var/datum/scar/highest_scar
 
-/datum/wound/slash/wound_injury(datum/wound/slash/old_wound = null)
+/datum/wound/pierce/wound_injury(datum/wound/slash/old_wound = null)
 	blood_flow = initial_flow
 	if(old_wound)
 		blood_flow = max(old_wound.blood_flow, initial_flow)
@@ -52,13 +52,13 @@
 		highest_scar = new
 		highest_scar.generate(limb, src, add_to_scars=FALSE)
 
-/datum/wound/slash/remove_wound(ignore_limb, replaced)
+/datum/wound/pierce/remove_wound(ignore_limb, replaced)
 	if(!replaced && highest_scar)
 		already_scarred = TRUE
 		highest_scar.lazy_attach(limb)
 	return ..()
 
-/datum/wound/slash/get_examine_description(mob/user)
+/datum/wound/pierce/get_examine_description(mob/user)
 	if(!current_bandage)
 		return ..()
 
@@ -75,11 +75,11 @@
 			bandage_condition = "clean "
 	return "<B>The cuts on [victim.p_their()] [limb.name] are wrapped with [bandage_condition] [current_bandage.name]!</B>"
 
-/datum/wound/brute/cut/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(victim.stat != DEAD && wounding_type == WOUND_SHARP) // can't stab dead bodies to make it bleed faster this way
+/datum/wound/pierce/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	if(victim.stat != DEAD && wounding_type == WOUND_SLASH) // can't stab dead bodies to make it bleed faster this way
 		blood_flow += 0.05 * wounding_dmg
 
-/datum/wound/slash/handle_process()
+/datum/wound/pierce/handle_process()
 	blood_flow = min(blood_flow, WOUND_CUT_MAX_BLOODFLOW)
 
 	if(victim.reagents && victim.reagents.has_reagent(/datum/reagent/toxin/heparin))
@@ -111,11 +111,11 @@
 
 /* BEWARE, THE BELOW NONSENSE IS MADNESS. bones.dm looks more like what I have in mind and is sufficiently clean, don't pay attention to this messiness */
 
-/datum/wound/slash/check_grab_treatments(obj/item/I, mob/user)
+/datum/wound/pierce/check_grab_treatments(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
 		return TRUE
 
-/datum/wound/slash/treat(obj/item/I, mob/user)
+/datum/wound/pierce/treat(obj/item/I, mob/user)
 	if(istype(I, /obj/item/gun/energy/laser))
 		las_cauterize(I, user)
 	else if(I.tool_behaviour == TOOL_CAUTERY || I.get_temperature() > 300)
@@ -125,7 +125,7 @@
 	else if(istype(I, /obj/item/stack/medical/suture))
 		suture(I, user)
 
-/datum/wound/slash/try_handling(mob/living/carbon/human/user)
+/datum/wound/pierce/try_handling(mob/living/carbon/human/user)
 	if(user.pulling != victim || user.zone_selected != limb.body_zone || user.a_intent == INTENT_GRAB)
 		return FALSE
 
@@ -136,7 +136,7 @@
 	return TRUE
 
 /// if a felinid is licking this cut to reduce bleeding
-/datum/wound/slash/proc/lick_wounds(mob/living/carbon/human/user)
+/datum/wound/pierce/proc/lick_wounds(mob/living/carbon/human/user)
 	if(INTERACTING_WITH(user, victim))
 		to_chat(user, "<span class='warning'>You're already interacting with [victim]!</span>")
 		return
@@ -155,12 +155,12 @@
 	else if(demotes_to)
 		to_chat(user, "<span class='green'>You successfully lower the severity of [victim]'s cuts.</span>")
 
-/datum/wound/slash/on_xadone(power)
+/datum/wound/pierce/on_xadone(power)
 	. = ..()
 	blood_flow -= 0.03 * power // i think it's like a minimum of 3 power, so .09 blood_flow reduction per tick is pretty good for 0 effort
 
 /// If someone's putting a laser gun up to our cut to cauterize it
-/datum/wound/slash/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
+/datum/wound/pierce/proc/las_cauterize(obj/item/gun/energy/laser/lasgun, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.25 : 1)
 	user.visible_message("<span class='warning'>[user] begins aiming [lasgun] directly at [victim]'s [limb.name]...</span>", "<span class='userdanger'>You begin aiming [lasgun] directly at [user == victim ? "your" : "[victim]'s"] [limb.name]...</span>")
 	if(!do_after(user, base_treat_time  * self_penalty_mult, target=victim, extra_checks = CALLBACK(src, .proc/still_exists)))
@@ -176,7 +176,7 @@
 	victim.visible_message("<span class='warning'>The cuts on [victim]'s [limb.name] scar over!</span>")
 
 /// If someone is using either a cautery tool or something with heat to cauterize this cut
-/datum/wound/slash/proc/tool_cauterize(obj/item/I, mob/user)
+/datum/wound/pierce/proc/tool_cauterize(obj/item/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.5 : 1)
 	user.visible_message("<span class='danger'>[user] begins cauterizing [victim]'s [limb.name] with [I]...</span>", "<span class='danger'>You begin cauterizing [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER) || 1
@@ -197,7 +197,7 @@
 		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
 
 /// If someone is using a suture to close this cut
-/datum/wound/slash/proc/suture(obj/item/stack/medical/suture/I, mob/user)
+/datum/wound/pierce/proc/suture(obj/item/stack/medical/suture/I, mob/user)
 	var/self_penalty_mult = (user == victim ? 1.4 : 1)
 	user.visible_message("<span class='notice'>[user] begins stitching [victim]'s [limb.name] with [I]...</span>", "<span class='notice'>You begin stitching [user == victim ? "your" : "[victim]'s"] [limb.name] with [I]...</span>")
 	var/time_mod = user.mind?.get_skill_modifier(/datum/skill/healing, SKILL_SPEED_MODIFIER) || 1
@@ -215,7 +215,7 @@
 		to_chat(user, "<span class='green'>You successfully lower the severity of [user == victim ? "your" : "[victim]'s"] cuts.</span>")
 
 /// If someone is using gauze on this cut
-/datum/wound/slash/proc/bandage(obj/item/stack/I, mob/user)
+/datum/wound/pierce/proc/bandage(obj/item/stack/I, mob/user)
 	if(current_bandage)
 		if(current_bandage.absorption_capacity > I.absorption_capacity + 1)
 			to_chat(user, "<span class='warning'>The [current_bandage] on [victim]'s [limb.name] is still in better condition than your [I.name]!</span>")
@@ -236,12 +236,12 @@
 	I.use(1)
 
 
-/datum/wound/slash/moderate
-	name = "Rough Abrasion"
-	desc = "Patient's skin has been badly scraped, generating moderate blood loss."
+/datum/wound/pierce/moderate
+	name = "Skin Breakage"
+	desc = "Patient's skin has been broken open, causing severe bruising in affected area."
 	treat_text = "Application of clean bandages or first-aid grade sutures, followed by food and rest."
-	examine_desc = "has an open cut"
-	occur_text = "is cut open, slowly leaking blood"
+	examine_desc = "has a dark bruise with oozing blood"
+	occur_text = "spurts out a thin stream of blood from an impact wound"
 	sound_effect = 'sound/effects/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 2
@@ -250,15 +250,15 @@
 	clot_rate = 0.15
 	threshold_minimum = 20
 	threshold_penalty = 10
-	status_effect_type = /datum/status_effect/wound/slash/moderate
+	status_effect_type = /datum/status_effect/wound/pierce/moderate
 	scarring_descriptions = list("light, faded lines", "minor cut marks", "a small faded slit", "a series of small scars")
 
-/datum/wound/slash/severe
-	name = "Open Laceration"
-	desc = "Patient's skin is ripped clean open, allowing significant blood loss."
+/datum/wound/pierce/severe
+	name = "Open Puncture"
+	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding."
 	treat_text = "Speedy application of first-aid grade sutures and clean bandages, followed by vitals monitoring to ensure recovery."
 	examine_desc = "has a severe cut"
-	occur_text = "is ripped open, veins spurting blood"
+	occur_text = "jerks violently as a spray of blood and flesh exit the other side of the impact wound"
 	sound_effect = 'sound/effects/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 3.25
@@ -267,16 +267,16 @@
 	max_per_type = 4
 	threshold_minimum = 50
 	threshold_penalty = 25
-	demotes_to = /datum/wound/slash/moderate
-	status_effect_type = /datum/status_effect/wound/slash/severe
+	demotes_to = /datum/wound/pierce/moderate
+	status_effect_type = /datum/status_effect/wound/pierce/severe
 	scarring_descriptions = list("a twisted line of faded gashes", "a gnarled sickle-shaped slice scar", "a long-faded puncture wound")
 
-/datum/wound/slash/critical
-	name = "Weeping Avulsion"
-	desc = "Patient's skin is completely torn open, along with significant loss of tissue. Extreme blood loss will lead to quick death without intervention."
+/datum/wound/pierce/critical
+	name = "Ruptured Cavity"
+	desc = "Patient's internal tissue and circulatory system is openly shredded, causing significant internal bleeding."
 	treat_text = "Immediate bandaging and either suturing or cauterization, followed by supervised resanguination."
 	examine_desc = "is spurting blood at an alarming rate"
-	occur_text = "is torn open, spraying blood wildly"
+	occur_text = "is ripped clear through, with blood streaming from both sides of the open wound"
 	sound_effect = 'sound/effects/blood3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 4.25
@@ -285,25 +285,6 @@
 	max_per_type = 5
 	threshold_minimum = 80
 	threshold_penalty = 40
-	demotes_to = /datum/wound/slash/severe
-	status_effect_type = /datum/status_effect/wound/slash/critical
+	demotes_to = /datum/wound/pierce/severe
+	status_effect_type = /datum/status_effect/wound/pierce/critical
 	scarring_descriptions = list("a winding path of very badly healed scar tissue", "a series of peaks and valleys along a gruesome line of cut scar tissue", "a grotesque snake of indentations and stitching scars")
-
-// TODO: see about moving dismemberment over to this, i'll have to add judging dismembering power/wound potential wrt item size i guess
-/datum/wound/slash/loss
-	name = "Dismembered"
-	desc = "oof ouch!!"
-	occur_text = "is violently dismembered!"
-	sound_effect = 'sound/effects/dismember.ogg'
-	viable_zones = list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM, BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	severity = WOUND_SEVERITY_LOSS
-	threshold_minimum = 180
-	status_effect_type = null
-
-/datum/wound/slash/loss/apply_wound(obj/item/bodypart/L, silent, datum/wound/slash/old_wound, smited = FALSE)
-	if(!L.dismemberable)
-		qdel(src)
-		return
-
-	L.dismember()
-	qdel(src)

@@ -33,7 +33,7 @@
 
 	/// Either WOUND_SEVERITY_TRIVIAL (meme wounds like stubbed toe), WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, or WOUND_SEVERITY_CRITICAL (or maybe WOUND_SEVERITY_LOSS)
 	var/severity = WOUND_SEVERITY_MODERATE
-	/// The list of wounds it belongs in, WOUND_LIST_BONE, WOUND_LIST_CUT, or WOUND_LIST_BURN
+	/// The list of wounds it belongs in, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN
 	var/wound_type
 
 	/// What body zones can we affect
@@ -189,7 +189,7 @@
   * This proc actually instantiates the new wound based off the specific type path passed, then returns the new instantiated wound datum.
   *
   * Arguments:
-  * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/brute/cut/severe
+  * * new_type- The TYPE PATH of the wound you want to replace this, like /datum/wound/slash/severe
   * * smited- If this is a smite, we don't care about this wound for stat tracking purposes (not yet implemented)
   */
 /datum/wound/proc/replace_wound(new_type, smited = FALSE)

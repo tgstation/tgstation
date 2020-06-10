@@ -407,9 +407,9 @@
 			C.emote("scream")
 			for(var/i in C.bodyparts)
 				var/obj/item/bodypart/bone = i
-				var/datum/wound/brute/bone/severe/oof_ouch = new
+				var/datum/wound/blunt/severe/oof_ouch = new
 				oof_ouch.apply_wound(bone)
-				var/datum/wound/brute/bone/critical/oof_OUCH = new
+				var/datum/wound/blunt/critical/oof_OUCH = new
 				oof_OUCH.apply_wound(bone)
 
 			for(var/i in C.bodyparts)

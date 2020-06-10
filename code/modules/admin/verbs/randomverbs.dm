@@ -1159,7 +1159,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				return
 			var/mob/living/carbon/C = target
 			for(var/obj/item/bodypart/squish_part in C.bodyparts)
-				var/type_wound = pick(list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate))
+				var/type_wound = pick(list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate))
 				squish_part.force_wound_upwards(type_wound, smited=TRUE)
 		if(ADMIN_PUNISHMENT_BLEED)
 			if(!iscarbon(target))
@@ -1167,11 +1167,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				return
 			var/mob/living/carbon/C = target
 			for(var/obj/item/bodypart/slice_part in C.bodyparts)
-				var/type_wound = pick(list(/datum/wound/brute/cut/severe, /datum/wound/brute/cut/moderate))
+				var/type_wound = pick(list(/datum/wound/slash/severe, /datum/wound/slash/moderate))
 				slice_part.force_wound_upwards(type_wound, smited=TRUE)
-				type_wound = pick(list(/datum/wound/brute/cut/critical, /datum/wound/brute/cut/severe, /datum/wound/brute/cut/moderate))
+				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate))
 				slice_part.force_wound_upwards(type_wound, smited=TRUE)
-				type_wound = pick(list(/datum/wound/brute/cut/critical, /datum/wound/brute/cut/severe))
+				type_wound = pick(list(/datum/wound/slash/critical, /datum/wound/slash/severe))
 				slice_part.force_wound_upwards(type_wound, smited=TRUE)
 		if(ADMIN_PUNISHMENT_SCARIFY)
 			if(!iscarbon(target))

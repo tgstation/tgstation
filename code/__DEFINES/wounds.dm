@@ -21,8 +21,9 @@
 #define CANT_WOUND -100
 
 // list in order of highest severity to lowest
-#define WOUND_LIST_BONE		list(/datum/wound/brute/bone/critical, /datum/wound/brute/bone/severe, /datum/wound/brute/bone/moderate)
-#define WOUND_LIST_CUT		list(/datum/wound/brute/cut/loss, /datum/wound/brute/cut/critical, /datum/wound/brute/cut/severe, /datum/wound/brute/cut/moderate)
+#define WOUND_LIST_BLUNT		list(/datum/wound/blunt/critical, /datum/wound/blunt/severe, /datum/wound/blunt/moderate)
+#define WOUND_LIST_SLASH		list(/datum/wound/slash/loss, /datum/wound/slash/critical, /datum/wound/slash/severe, /datum/wound/slash/moderate)
+#define WOUND_LIST_PIERCE		list(/datum/wound/pierce/critical, /datum/wound/pierce/severe, /datum/wound/pierce/moderate)
 #define WOUND_LIST_BURN		list(/datum/wound/burn/critical, /datum/wound/burn/severe, /datum/wound/burn/moderate)
 
 // Thresholds for infection for burn wounds, once infestation hits each threshold, things get steadily worse

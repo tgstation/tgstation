@@ -1160,11 +1160,11 @@
 /**
   * generate_fake_scars()- for when you want to scar someone, but you don't want to hurt them first. These scars don't count for temporal scarring (hence, fake)
   *
-  * If you want a specific wound scar, pass that wound type as the second arg, otherwise you can pass a list like WOUND_LIST_CUT to generate a random cut scar.
+  * If you want a specific wound scar, pass that wound type as the second arg, otherwise you can pass a list like WOUND_LIST_SLASH to generate a random cut scar.
   *
   * Arguments:
   * * num_scars- A number for how many scars you want to add
-  * * forced_type- Which wound or category of wounds you want to choose from, WOUND_LIST_BONE, WOUND_LIST_CUT, or WOUND_LIST_BURN (or some combination). If passed a list, picks randomly from the listed wounds. Defaults to all 3 types
+  * * forced_type- Which wound or category of wounds you want to choose from, WOUND_LIST_BLUNT, WOUND_LIST_SLASH, or WOUND_LIST_BURN (or some combination). If passed a list, picks randomly from the listed wounds. Defaults to all 3 types
   */
 /mob/living/carbon/proc/generate_fake_scars(num_scars, forced_type)
 	for(var/i in 1 to num_scars)
@@ -1178,7 +1178,7 @@
 			else
 				wound_type = forced_type
 		else
-			wound_type = pick(WOUND_LIST_BONE + WOUND_LIST_CUT + WOUND_LIST_BURN)
+			wound_type = pick(WOUND_LIST_BLUNT + WOUND_LIST_SLASH + WOUND_LIST_BURN)
 
 		var/datum/wound/W = new wound_type
 		S.generate(BP, W)
