@@ -56,8 +56,9 @@ GLOBAL_LIST_EMPTY(request_list)
 		curr_request.owner_account = current_user
 		GLOB.request_list += list(curr_request)
 		request_number++
-		for(var/obj/machinery/bounty_board/i in GLOB.allbountyboards)
-			i.localAlert()
+		for(var/obj/i in GLOB.allbountyboards)
+			i.say("New bounty has been added!")
+			playsound(i.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 		qdel(I)
 	else if(I.tool_behaviour == TOOL_WRENCH)
 		to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
@@ -133,7 +134,9 @@ GLOBAL_LIST_EMPTY(request_list)
 				return TRUE
 			active_request.applicants += list(current_user)
 		if("PayApplicant")
-			if(!current_user.has_money(active_request.value))
+			if(!current_user)
+				return
+			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
 				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
 			request_target.transfer_money(current_user, active_request.value)

@@ -1,7 +1,7 @@
 /datum/computer_file/program/bounty_board
-	filename = "arcade"
+	filename = "bountyboard"
 	filedesc = "Nanotrasen Bounty Request Network"
-	program_icon_state = "request"
+	program_icon_state = "bountyboard"
 	extended_desc = "A multi-platform network for placing requests across the station, with payment across the network being possible.."
 	requires_ntnet = TRUE
 	network_destination = "bounty board interface"
@@ -18,13 +18,20 @@
 
 /datum/computer_file/program/bounty_board/proc/localAlert()
 	computer.say("New bounty has been added!")
-	playsound(src, 'sound/effects/cashregister.ogg', 30, TRUE)
+	playsound(computer, 'sound/effects/cashregister.ogg', 30, TRUE)
 	return
 
 /datum/computer_file/program/bounty_board/ui_data(mob/user)
 	var/list/data = get_header_data()
 	var/list/formatted_requests = list()
 	var/list/formatted_applicants = list()
+	var/obj/item/computer_hardware/card_slot/card_slot = computer.all_components[MC_CARD]
+	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
+	var/printer_text = "No Printer Detected."
+	if(card_slot && card_slot.stored_card && card_slot.stored_card.registered_account)
+		current_user = card_slot.stored_card.registered_account
+	if(printer)
+		printer_text = "[printer.stored_paper]/[printer.max_paper]"
 	for(var/i in GLOB.request_list)
 		if(!i)
 			continue
@@ -37,6 +44,7 @@
 		data["AccountName"] = current_user.account_holder
 	data["Requests"] = formatted_requests
 	data["Applicants"] = formatted_applicants
+	data["PrinterPaper"] = printer_text
 	return data
 
 /datum/computer_file/program/bounty_board/ui_act(action, list/params)
@@ -45,6 +53,7 @@
 	var/current_ref_num = params["request"]
 	var/current_app_num = params["applicant"]
 	var/datum/bank_account/request_target
+	var/obj/item/computer_hardware/printer/printer = computer.all_components[MC_PRINT]
 	for(var/datum/station_request/i in GLOB.request_list)
 		if("[i.req_number]" == "[current_ref_num]")
 			active_request = i
@@ -56,20 +65,26 @@
 				break
 	switch(action)
 		if("CreateBounty")
+			if(printer.stored_paper < 1)
+				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				return TRUE
 			computer.say("Dispensing Card.")
 			new /obj/item/bounty_card(get_turf(computer))
+			printer.stored_paper -= 1
 			return TRUE
 		if("Apply")
 			if(!current_user)
 				computer.say("Please swipe a valid ID first.")
 				return TRUE
 			if(current_user.account_holder == active_request.owner)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			active_request.applicants += list(current_user)
 		if("PayApplicant")
-			if(!current_user.has_money(active_request.value))
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
+			if(!current_user)
+				return
+			if(!current_user.has_money(active_request.value) || (current_user.account_holder != active_request.owner))
+				playsound(computer, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
 			request_target.transfer_money(current_user, active_request.value)
 			computer.say("Paid out [active_request.value] credits.")
@@ -81,7 +96,7 @@
 				return TRUE
 		if("DeleteRequest")
 			if(active_request.owner != current_user.account_holder)
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
+				playsound(computer, 'sound/machines/buzz-sigh.ogg', 20, TRUE)
 				return TRUE
 			computer.say("Deleted current request.")
 			GLOB.request_list.Remove(active_request)
