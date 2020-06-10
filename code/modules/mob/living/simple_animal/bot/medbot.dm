@@ -441,6 +441,8 @@
 		H.visible_message("<span class='notice'>[H] begins righting [src].</span>", "<span class='notice'>You begin righting [src]...</span>")
 		if(do_after(H, 3 SECONDS, target=src))
 			set_right(H)
+	else
+		..()
 
 /mob/living/simple_animal/bot/medbot/UnarmedAttack(atom/A)
 	if(iscarbon(A) && !tending)
