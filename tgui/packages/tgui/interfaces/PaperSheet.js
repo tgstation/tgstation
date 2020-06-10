@@ -119,32 +119,58 @@ class PaperSheetEdit extends Component {
     }
     return false; // otherwise there is no point
   }
-
+  // sets up combined text from state to make the preview to be as close
+  // to what it will look like.  Its all fixed once its submited
+  createPreviewText(text) {
+    const { act, data } = useBackend(this.context);
+    if (data.is_crayon) {
+      return this.state.old_text
+      + "<font face=\"" + data.pen_font
+      + "\" color=\"" + data.pen_color
+      + "\"><b>" + text + "</b></font>";
+    } else {
+      return this.state.old_text
+        + "<font face=\"" + data.pen_font
+        + "\" color=\"" + data.pen_color
+        + "\">" + text + "</font>";
+    }
+  }
   onInputHandler(e, value) {
     if (value !== this.state.textarea_text) {
-      const combined_length = this.state.old_text.length + this.state.textarea_text.length;
+      const combined_length = this.state.old_text.length
+        + this.state.textarea_text.length;
       if (combined_length > MAX_TEXT_LENGTH) {
         if ((combined_length - MAX_TEXT_LENGTH) >= value.length) {
           value = ''; // basicly we cannot add any more text to the paper
         } else {
-          value = value.substr(0, value.length- (combined_length - MAX_TEXT_LENGTH));
+          value = value.substr(0, value.length
+            - (combined_length - MAX_TEXT_LENGTH));
         }
         // we check again to save an update
         if (value === this.state.textarea_text) { return; }// do nooothing
       }
-      const combined_text = this.state.old_text + this.state.textarea_text;
-      this.setState(() => { return { textarea_text: value, combined_text: combined_text }; });
-
+      const combined_text = this.createPreviewText(this.state.textarea_text);
+      this.setState(() => {
+        return { textarea_text: value,
+          combined_text: combined_text }; });
     }
+  }
+  // the final update send to byond, final upkeep
+  finalUpdate(text) {
+    return sanatize_text(text + "\n \n"); // add an end line
   }
   render() {
     const { act, data } = useBackend(this.context);
     const {
-      value,
+      value="",
+      backgroundColor,
+      textColor,
+      textFont,
+      stamps = "",
       ...rest
     } = this.props;
     return (
-      <Flex direction="column">
+      <Flex direction="column" >
         <Flex.Item>
           <Tabs>
             <Tabs.Tab
@@ -152,7 +178,7 @@ class PaperSheetEdit extends Component {
               textColor={'black'}
               backgroundColor={this.state.previewSelected === "Edit" ? "grey" : "white"}
               selected={this.state.previewSelected === "Edit"}
-              onClick={() => this.setState({ previewSelected: "Edit"})}>
+              onClick={() => this.setState({ previewSelected: "Edit" })}>
               Edit
             </Tabs.Tab>
             <Tabs.Tab
@@ -175,9 +201,9 @@ class PaperSheetEdit extends Component {
                 || this.state.previewSelected === "save"}
               onClick={() => {
                 if (this.state.previewSelected === "confirm") {
-                  act('save', { text: sanatize_text(this.state.textarea_text) });
+                  act('save', { text: this.finalUpdate(this.state.textarea_text) });
                 } else {
-                  this.setState({ previewSelected: "confirm"});
+                  this.setState({ previewSelected: "confirm" });
                 }
               }}>
               { this.state.previewSelected === "confirm" ? "confirm" : "save" }
@@ -193,17 +219,20 @@ class PaperSheetEdit extends Component {
               value={this.state.textarea_text}
               backgroundColor="#FFFFFF"
               textColor="#000000"
+              textFont={textFont}
               height={(window.innerHeight - 80) + "px"}
               onInput={this.onInputHandler.bind(this)} {...rest} />
           ) || (
             <PaperSheetView
-              value={this.state.combined_text} {...rest} />
+              value={this.state.combined_text+stamps}
+              backgroundColor={backgroundColor}
+              textColor={textColor} />
           )}
         </Flex.Item>
       </Flex>
     );
   }
-};
+}
 
 export const PaperSheet = (props, context) => {
   const { data } = useBackend(context);
@@ -223,7 +252,8 @@ export const PaperSheet = (props, context) => {
             textColor={pen_color}
             textFont={pen_font} />
         ) || (
-          <PaperSheetView fillPositionedParent value={text} />
+          <PaperSheetView fillPositionedParent
+            value={text} backgroundColor={paper_color} />
         )}
       </Window.Content>
     </Window>

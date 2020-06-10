@@ -311,14 +311,15 @@
 				ui_close(usr)
 			else
 				if(is_crayon)
-					in_paper = "<font face=\"[pen_font]\" color=[pen_color]><b>[in_paper]</b></font>"
+					info += "<font face=\"[pen_font]\" color=[pen_color]><b>[in_paper]</b></font>"
 				else
-					in_paper = "<font face=\"[pen_font]\" color=[pen_color]>[in_paper]</font>"
+					info += "<font face=\"[pen_font]\" color=[pen_color]>[in_paper]</font>"
+				info = regex("%s(?:ign)?(?=\\s|$)", "igm").Replace(info, "<font face=\"[SIGNFONT]\"><i>[usr.real_name]</i></font>")
 
-				in_paper = replacetext(in_paper, regex("%s(?:ign)?(?=\\s|$)", "igm"), "<font face=\"[SIGNFONT]\"><i>[usr.real_name]</i></font>")
-				info += in_paper
 				log_paper("[key_name(usr)] writing to paper [name]")
-				to_chat(usr, "You have added your paper masterpiece!");
+				to_chat(usr, "You have added to your paper masterpiece!");
+				readonly=TRUE	// Force an update to show it as normal paper
+				ui_update()
 				update_icon()
 			. = TRUE
 
