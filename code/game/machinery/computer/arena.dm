@@ -3,6 +3,7 @@
 #define ARENA_DEFAULT_ID "arena_default"
 #define ARENA_CORNER_A "cornerA"
 #define ARENA_CORNER_B "cornerB"
+#define ARENA_EXIT "arena_exit"
 
 /// Arena related landmarks
 /obj/effect/landmark/arena
@@ -18,9 +19,14 @@
 	name = "arena corner B"
 	landmark_tag = ARENA_CORNER_B
 
-/// Controller for admin event arenas
+/obj/effect/landmark/arena/exit
+	name = "arena exit"
+	landmark_tag = ARENA_EXIT
+
+/// Controller for admin event arenas.
 /obj/machinery/computer/arena
 	name = "arena controller"
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	/// Arena ID
 	var/arena_id = ARENA_DEFAULT_ID
 	/// Enables/disables spawning
@@ -58,9 +64,19 @@
 	var/start_time
 	var/list/countdowns = list() //List of countdown effects ticking down to start
 
+	//If positive players will get notice when the round ended (does not reset automatically)
+	var/round_time = -1
+
 	//Sound played when the fight starts.
 	var/start_sound = 'sound/items/airhorn2.ogg'
 	var/start_sound_volume = 50
+
+	var/objects_delete_on_leaving_arena = FALSE
+	var/list/mv_trackers = list()
+	var/list/turf_lookup = list()
+
+	//If true living mobs with keys will be kicked to arena exit when resetting the arena instead of deleted
+	var/safe_reset = FALSE
 
 /obj/machinery/computer/arena/Initialize(mapload, obj/item/circuitboard/C)
 	. = ..()
@@ -108,6 +124,7 @@
 	return block(lp,hp)
 
 /obj/machinery/computer/arena/proc/clear_arena()
+	QDEL_LIST(mv_trackers)
 	for(var/turf/T in get_arena_turfs())
 		T.empty(turf_type = /turf/open/indestructible)
 	current_arena_template = "None"
@@ -131,12 +148,23 @@
 	var/bd = M.load(get_load_point())
 	if(bd)
 		current_arena_template = arena_template
+
+	turf_lookup = list()
+	for(var/turf/T in get_arena_turfs())
+		turf_lookup[T] = TRUE
+		if(objects_delete_on_leaving_arena)
+			for(var/O in T.GetAllContents(/obj))
+				var/datum/movement_detector/tracker = new(O, CALLBACK(src, .proc/delete_out_of_bounds))
+				mv_trackers += tracker
+
 	loading = FALSE
 
 	message_admins("[key_name_admin(user)] loaded [arena_template] event arena for [arena_id] arena.")
 	log_admin("[key_name(user)] loaded [arena_template] event arena for [arena_id] arena.")
 
-
+/obj/machinery/computer/arena/proc/delete_out_of_bounds(atom/movable/mover)
+	if(!turf_lookup[get_turf(mover)])
+		qdel(mover)
 
 /obj/machinery/computer/arena/proc/add_new_arena_template(user,fname,friendly_name)
 	if(!fname)
@@ -212,13 +240,20 @@
 
 /obj/machinery/computer/arena/proc/all_contestants()
 	. = list()
-	for(var/team in team_keys)
-		for(var/key in team_keys[team])
-			var/mob/M = get_mob_by_key(key)
-			if(M)
-				. += M
+	if(length(teams))
+		for(var/team in team_keys)
+			for(var/key in team_keys[team])
+				var/mob/M = get_mob_by_key(key)
+				if(M)
+					. += M
+	else //If no teams are set we assume everyone inside arena bounds is a player
+		for(var/mob/living/L in GLOB.player_list)
+			if(turf_lookup[get_turf(L)])
+				. += L
 
 /obj/machinery/computer/arena/proc/reset_arena()
+	if(safe_reset)
+		kick_players_out()
 	clear_arena()
 	set_doors(closed = TRUE)
 
@@ -227,19 +262,27 @@
 		if(A.arena_id == arena_id && A.team == team)
 			return A
 
+/obj/machinery/computer/arena/proc/kick_players_out()
+	for(var/mob/living/L in GLOB.player_list)
+		if(turf_lookup[get_turf(L)])
+			L.forceMove(get_landmark_turf(ARENA_EXIT))
+
 /obj/machinery/computer/arena/proc/start_match(mob/user)
 	//TODO: Check if everyone is spawned in, if not ask for confirmation.
-	var/timetext = DisplayTimeText(start_delay)
-	to_chat(user,"<span class='notice'>The match will start in [timetext].</span>")
-	for(var/mob/M in all_contestants())
-		to_chat(M,"<span class='userdanger'>The gates will open in [timetext]!</span>")
-	start_time = world.time + start_delay
-	addtimer(CALLBACK(src,.proc/begin),start_delay)
-	for(var/team in teams)
-		var/obj/machinery/arena_spawn/team_spawn = get_spawn(team)
-		var/obj/effect/countdown/arena/A = new(team_spawn)
-		A.start()
-		countdowns += A
+	if(start_delay > 0)
+		var/timetext = DisplayTimeText(start_delay)
+		to_chat(user,"<span class='notice'>The match will start in [timetext].</span>")
+		for(var/mob/M in all_contestants())
+			to_chat(M,"<span class='userdanger'>The gates will open in [timetext]!</span>")
+		start_time = world.time + start_delay
+		addtimer(CALLBACK(src,.proc/begin),start_delay)
+		for(var/team in teams)
+			var/obj/machinery/arena_spawn/team_spawn = get_spawn(team)
+			var/obj/effect/countdown/arena/A = new(team_spawn)
+			A.start()
+			countdowns += A
+	else
+		begin()
 
 /obj/machinery/computer/arena/proc/begin()
 	ready_to_spawn = FALSE
@@ -253,8 +296,12 @@
 	//Clean up the countdowns
 	QDEL_LIST(countdowns)
 	start_time = null
+	if(round_time > 0)
+		addtimer(CALLBACK(src,.proc/round_timeout),round_time)
 	updateUsrDialog()
 
+/obj/machinery/computer/arena/proc/round_timeout()
+	to_chat(all_contestants(),"<span class='userdanger'>ROUND OVER!</span>")
 
 /obj/machinery/computer/arena/proc/set_doors(closed = FALSE)
 	for(var/obj/machinery/door/poddoor/D in GLOB.machines) //I really dislike pathing of these
@@ -299,6 +346,8 @@
 				load_random_arena(user)
 			if("spawntrophy")
 				trophy_for_last_man_standing(user)
+			if("kickall")
+				kick_players_out()
 	if(href_list["member_action"])
 		var/ckey = href_list["ckey"]
 		var/team = href_list["team"]
@@ -363,6 +412,7 @@
 	dat += "<a href='?src=[REF(src)];special=reset'>Reset Arena.</a><br>"
 	dat += "<a href='?src=[REF(src)];special=randomarena'>Load random arena.</a><br>"
 	dat += "<a href='?src=[REF(src)];special=spawntrophy'>Spawn trophies for survivors.</a><br>"
+	dat += "<a href='?src=[REF(src)];special=kickall'>Kick players to exit.</a><br>"
 
 	var/datum/browser/popup = new(user, "arena controller", "Arena Controller", 500, 600)
 	popup.set_content(dat.Join())
