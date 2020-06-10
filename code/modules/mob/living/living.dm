@@ -1521,7 +1521,7 @@
 	if(!ceiling) //We are at the highest z-level.
 		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
 		return
-	else if(!istransparentturf(ceiling) && !HAS_TRAIT(src, TRAIT_XRAY_VISION)) //There is no turf we can look through above us
+	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
 		to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
 		return
 
@@ -1555,7 +1555,7 @@
 	if(!lower_level) //We are at the lowest z-level.
 		to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
 		return
-	else if(!istransparentturf(floor) && !HAS_TRAIT(src, TRAIT_XRAY_VISION)) //There is no turf we can look through below us
+	else if(!istransparentturf(floor)) //There is no turf we can look through below us
 		to_chat(src, "<span class='warning'>You can't see through the floor below you.</span>")
 		return
 
