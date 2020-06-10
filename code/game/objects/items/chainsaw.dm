@@ -73,10 +73,6 @@
 		var/datum/action/A = X
 		A.UpdateButtonIcon()
 
-/obj/item/chainsaw/get_dismemberment_chance()
-	if(wielded)
-		. = ..()
-
 /obj/item/chainsaw/doomslayer
 	name = "THE GREAT COMMUNICATOR"
 	desc = "<span class='warning'>VRRRRRRR!!!</span>"
