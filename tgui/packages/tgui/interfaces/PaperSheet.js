@@ -42,7 +42,7 @@ const sanatize_text = value => {
     { ALLOWED_TAGS:
         ['br', 'code', 'li', 'p', 'pre',
           'span', 'table', 'td', 'tr',
-          'th', 'ul', 'font', 'b', 'center'] }
+          'th', 'ul', 'ol', 'menu', 'font', 'b', 'center'] }
   );
 };
 
@@ -62,7 +62,7 @@ const run_marked_default = value => {
 // want to control updates
 class PaperSheetView extends Component {
   constructor(props, context) {
-    super(props,context);
+    super(props, context);
     const {
       value = '',
     } = props;
@@ -102,18 +102,18 @@ class PaperSheetView extends Component {
 // low and keep the wierd flashing down
 class PaperSheetEdit extends Component {
   constructor(props, context) {
+    super(props, context);
     this.state = {
       previewSelected: "Edit",
       old_text: props.value || "",
-      textarea_text:"",
+      textarea_text: "",
       combined_text: props.value || "",
-
-    }
+    };
   }
 
-
   shouldComponentUpdate(nextProps, nextState) {
-    if(nextState.previewSelected != this.state.previewSelected) {
+    if (nextState.previewSelected !== this.state.previewSelected
+      || this.state.textarea_text !== nextState.textarea_text) {
       // change tab, so we want to update for sure
       return true;
     }
@@ -121,11 +121,11 @@ class PaperSheetEdit extends Component {
   }
 
   onInputHandler(e, value) {
-    if (value !== his.state.textarea_text) {
-      const combined_length = his.state.old_text.length + his.state.textarea_text.length;
+    if (value !== this.state.textarea_text) {
+      const combined_length = this.state.old_text.length + this.state.textarea_text.length;
       if (combined_length > MAX_TEXT_LENGTH) {
         if ((combined_length - MAX_TEXT_LENGTH) >= value.length) {
-          value='';   // basicly we cannot add any more text to the paper
+          value = ''; // basicly we cannot add any more text to the paper
         } else {
           value = value.substr(0, value.length- (combined_length - MAX_TEXT_LENGTH));
         }
@@ -133,48 +133,54 @@ class PaperSheetEdit extends Component {
         if (value === this.state.textarea_text) { return; }// do nooothing
       }
       const combined_text = this.state.old_text + this.state.textarea_text;
-      this.setState({ { __new_text: value, __combined_text: combined_text });
-  };
-  render()
+      this.setState(() => { return { textarea_text: value, combined_text: combined_text }; });
+
+    }
+  }
+  render() {
     const { act, data } = useBackend(this.context);
-      return (
+    const {
+      value,
+      ...rest
+    } = this.props;
+    return (
       <Flex direction="column">
         <Flex.Item>
           <Tabs>
             <Tabs.Tab
               key="marked_edit"
               textColor={'black'}
-              backgroundColor={previewSelected === "Edit" ? "grey" : "white"}
-              selected={previewSelected === "Edit"}
-              onClick={() => setPreviewSelected("Edit")}>
+              backgroundColor={this.state.previewSelected === "Edit" ? "grey" : "white"}
+              selected={this.state.previewSelected === "Edit"}
+              onClick={() => this.setState({ previewSelected: "Edit"})}>
               Edit
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_preview"
               textColor={'black'}
-              backgroundColor={previewSelected === "Preview" ? "grey" : "white"}
-              selected={previewSelected === "Preview"}
-              onClick={() => setPreviewSelected("Preview")}>
+              backgroundColor={this.state.previewSelected === "Preview" ? "grey" : "white"}
+              selected={this.state.previewSelected === "Preview"}
+              onClick={() => this.setState({ previewSelected: "Preview" })}>
               Preview
             </Tabs.Tab>
             <Tabs.Tab
               key="marked_done"
               textColor={'black'}
-              backgroundColor={previewSelected === "confirm"
+              backgroundColor={this.state.previewSelected === "confirm"
                 ? "red"
-                : previewSelected === "save"
+                : this.state.previewSelected === "save"
                   ? "grey"
                   : "white"}
-              selected={previewSelected === "confirm"
-                || previewSelected === "save"}
+              selected={this.state.previewSelected === "confirm"
+                || this.state.previewSelected === "save"}
               onClick={() => {
-                if (previewSelected === "confirm") {
-                  act('save', { text: DOMPurify.sanitize(text) });
+                if (this.state.previewSelected === "confirm") {
+                  act('save', { text: sanatize_text(this.state.textarea_text) });
                 } else {
-                  setPreviewSelected("confirm");
+                  this.setState({ previewSelected: "confirm"});
                 }
               }}>
-              { previewSelected === "confirm" ? "confirm" : "save" }
+              { this.state.previewSelected === "confirm" ? "confirm" : "save" }
             </Tabs.Tab>
           </Tabs>
 
@@ -182,18 +188,16 @@ class PaperSheetEdit extends Component {
         <Flex.Item
           grow={1}
           basis={1}>
-          {previewSelected === "Edit" && (
+          {this.state.previewSelected === "Edit" && (
             <TextArea
-              value={editedText.__new_text}
+              value={this.state.textarea_text}
               backgroundColor="#FFFFFF"
               textColor="#000000"
               height={(window.innerHeight - 80) + "px"}
-              onInput={onInputHandler} />
+              onInput={this.onInputHandler.bind(this)} {...rest} />
           ) || (
             <PaperSheetView
-              value={editedText.__combined_text}
-              backgroundColor={paper_color}
-              textColor={pen_color} />
+              value={this.state.combined_text} {...rest} />
           )}
         </Flex.Item>
       </Flex>
@@ -214,7 +218,10 @@ export const PaperSheet = (props, context) => {
     <Window resizable theme="paper">
       <Window.Content scrollable>
         {edit_sheet && (
-          <PaperSheetEdit value={text} backgroundColor={paper_color} textColor={pen_color} textFont={pen_font} >
+          <PaperSheetEdit value={text}
+            backgroundColor={paper_color}
+            textColor={pen_color}
+            textFont={pen_font} />
         ) || (
           <PaperSheetView fillPositionedParent value={text} />
         )}
