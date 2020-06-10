@@ -1,0 +1,4 @@
+author: "TheChosenEvilOne"
+delete-after: True
+changes: 
+  - bugfix: "Fixed dynamic giving antagonist roles to jobs that shouldn't get them (again)."

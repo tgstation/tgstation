@@ -1912,6 +1912,7 @@
 #include "code\modules\food_and_drinks\recipes\tablecraft\recipes_spaghetti.dm"
 #include "code\modules\games\cas.dm"
 #include "code\modules\games\kotahi.dm"
+#include "code\modules\games\tarot.dm"
 #include "code\modules\goonchat\browserOutput.dm"
 #include "code\modules\holiday\easter.dm"
 #include "code\modules\holiday\foreign_calendar.dm"
