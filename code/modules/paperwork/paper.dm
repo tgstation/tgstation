@@ -10,6 +10,7 @@
  ** paper and getting rid of that crashing bug
  **/
 /obj/item/paper
+	var/const/MAX_PAPER_LENGTH = 1000
 	name = "paper"
 	gender = NEUTER
 	icon = 'icons/obj/bureaucracy.dmi'
@@ -30,7 +31,7 @@
 	grind_results = list(/datum/reagent/cellulose = 3)
 	color = "white"
 	/// What's actually written on the paper.
-	var/info
+	var/info = ""
 
 	/// The (text for the) stamps on the paper.
 	var/stamps
@@ -46,12 +47,14 @@
 
 	var/ui_x = 600
 	var/ui_y = 800
-	/// When a piece of paper cannot be edited, this makes it mutable
-	var/finalized = FALSE
+	/// When the sheet can be "filled out"
+	var/form_sheet = FALSE
 	/// We MAY be edited, mabye we are just looking at it or something.
 	var/readonly = FALSE
-	/// Color of the pin that wrote on this paper
+	/// Color of the pin that last wrote
 	var/pen_color = "black"
+	var/pen_font = ""
+	var/is_crayon = FALSE
 
 /**
  ** This proc copies this sheet of paper to a new
@@ -61,9 +64,7 @@
 /obj/item/paper/proc/copy()
 	var/obj/item/paper/N = new(arglist(args))
 	N.info = info
-	N.pen_color = pen_color
 	N.color = color
-	N.finalized = TRUE
 	N.update_icon_state()
 	N.stamps = stamps
 	N.stamped = stamped.Copy()
@@ -152,8 +153,7 @@
 
 
 /obj/item/paper/proc/clearpaper()
-	finalized = FALSE
-	info = null
+	info = ""
 	stamps = null
 	LAZYCLEARLIST(stamped)
 	cut_overlays()
@@ -173,17 +173,21 @@
 /obj/item/paper/attackby(obj/item/P, mob/living/carbon/human/user, params)
 	readonly = TRUE		/// Assume we are just reading it
 	if(istype(P, /obj/item/pen) || istype(P, /obj/item/toy/crayon))
-		if(finalized)
-			to_chat(user, "<span class='warning'>This sheet of paper has already been written too!</span>")
+		if(!form_sheet && length(info) >= 1000) // Sheet must have less than 1000 charaters
+			to_chat(user, "<span class='warning'>This sheet of paper is full!</span>")
 			return
-		readonly = FALSE	/// Nope we are going to write stuff
+		readonly = FALSE	// we are read only becausse the sheet is full
 		/// should a crayon be in the same subtype as a pen?  How about a brush or charcoal?
-		if(istype(P, /obj/item/pen))
-			var/obj/item/pen/PEN = P
-			pen_color = PEN.colour
-		else
+		is_crayon = istype(P, /obj/item/toy/crayon);
+		if(is_crayon)
 			var/obj/item/toy/crayon/PEN = P
-			pen_color = PEN.crayon_color
+			pen_font = CRAYON_FONT
+			pen_color = PEN.paint_color
+		else
+			var/obj/item/pen/PEN = P
+			pen_font = PEN.font
+			pen_color = PEN.colour
+
 		ui_interact(user)
 		return
 	else if(istype(P, /obj/item/stamp))
@@ -257,14 +261,37 @@
 /obj/item/paper/ui_data(mob/user)
 	var/list/data = list()
 	data["text"] = info
+	data["max_length"] = MAX_PAPER_LENGTH
 	data["paper_state"] = icon_state	/// TODO: show the sheet will bloodied or crinkling
 	data["pen_color"] = pen_color
-	data["paper_color"] = color || "white"	// color might not be set
-	data["edit_sheet"] = readonly || finalized ? FALSE : TRUE
+	data["paper_color"] = !color || color == "white" ? "#FFFFFF" : color	// color might not be set
+	data["edit_sheet"] = readonly ? FALSE : TRUE
 	/// data["stamps_info"] = list(stamp_info)
 	data["stamps"] = stamps
+	data["is_crayon"] = is_crayon
+	data["pen_font"] = pen_font
 	return data
 
+/obj/item/paper/proc/parsepencode(t, obj/item/pen/P, mob/user, iscrayon = 0)
+	if(length(t) < 1)		//No input means nothing needs to be parsed
+		return
+
+	t = parsemarkdown(t, user, iscrayon)
+
+
+
+	// Count the fields
+	//var/laststart = 1
+	//while(fields < 15)
+	//	var/i = findtext(t, "<span class=\"paper_field\">", laststart)
+	//	if(i == 0)
+	//		break
+	//	laststart = i+1
+	//	fields++
+	// in_paper = replacetext(in_paper, regex("%s(?:ign)?(?=\\s|$)", "igm"), user ? "<font face=\"[SIGNFONT]\"><i>[user.real_name]</i></font>" : "<span class=\"paper_field\"></span>")
+	// in_paper = replacetext(in_paper, regex("%f(?:ield)?(?=\\s|$)", "igm"), "<span class=\"paper_field\"></span>")
+
+	return t
 
 /obj/item/paper/ui_act(action, params)
 	if(..())
@@ -272,15 +299,27 @@
 	switch(action)
 		if("save")
 			var/in_paper = params["text"]
-			if(length(in_paper) > 0 && length(in_paper) < 1000) // Sheet must have less than 1000 charaters
-				info = in_paper
-				finalized = TRUE		// once you have writen to a sheet you cannot write again
-				to_chat(usr, "You have finished your paper masterpiece!");
-				ui_update()
-			else
+			var/paper_len = length(in_paper) + length(info)
+			// side note, this is also checked inside of tgui
+			// but we get here, kill the changes as we
+			// shouldn't get here leagly
+			if(paper_len > MAX_PAPER_LENGTH)
+				log_paper("[key_name(usr)] writing to paper [name], and overwrote it by [MAX_PAPER_LENGTH-paper_len], aborting")
+				ui_close(usr)
+			else if(paper_len == 0)
 				to_chat(usr, pick("Writing block strikes again!", "You forgot to write anthing!"))
 				ui_close(usr)
-			update_icon()
+			else
+				if(is_crayon)
+					in_paper = "<font face=\"[pen_font]\" color=[pen_color]><b>[in_paper]</b></font>"
+				else
+					in_paper = "<font face=\"[pen_font]\" color=[pen_color]>[in_paper]</font>"
+
+				in_paper = replacetext(in_paper, regex("%s(?:ign)?(?=\\s|$)", "igm"), "<font face=\"[SIGNFONT]\"><i>[usr.real_name]</i></font>")
+				info += in_paper
+				log_paper("[key_name(usr)] writing to paper [name]")
+				to_chat(usr, "You have added your paper masterpiece!");
+				update_icon()
 			. = TRUE
 
 
