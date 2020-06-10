@@ -167,19 +167,21 @@
 
 /mob/living/proc/adjustOxyLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && (status_flags & GODMODE))
-		return FALSE
+		return
+	. = oxyloss
 	oxyloss = clamp((oxyloss + (amount * CONFIG_GET(number/damage_multiplier))), 0, maxHealth * 2)
 	if(updating_health)
 		updatehealth()
-	return amount
+
 
 /mob/living/proc/setOxyLoss(amount, updating_health = TRUE, forced = FALSE)
-	if(status_flags & GODMODE)
-		return 0
+	if(!forced && status_flags & GODMODE)
+		return
+	. = oxyloss
 	oxyloss = amount
 	if(updating_health)
 		updatehealth()
-	return amount
+
 
 /mob/living/proc/getToxLoss()
 	return toxloss
