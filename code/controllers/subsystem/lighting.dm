@@ -55,7 +55,6 @@ SUBSYSTEM_DEF(lighting)
 		var/datum/lighting_corner/C = queue[i]
 
 		C.update_objects()
-		C.needs_update = FALSE
 		if(init_tick_checks)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)
@@ -76,7 +75,6 @@ SUBSYSTEM_DEF(lighting)
 			continue
 
 		O.update()
-		O.needs_update = FALSE
 		if(init_tick_checks)
 			CHECK_TICK
 		else if (MC_TICK_CHECK)

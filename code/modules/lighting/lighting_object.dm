@@ -11,9 +11,6 @@
 	layer            = LIGHTING_LAYER
 	invisibility     = INVISIBILITY_LIGHTING
 
-	var/needs_update = FALSE
-	var/turf/myturf
-
 /atom/movable/lighting_object/Initialize(mapload)
 	. = ..()
 	verbs.Cut()
@@ -21,7 +18,7 @@
 	//is totally unsuitable for this object, as we are always changing it's colour manually
 	color = LIGHTING_BASE_MATRIX
 
-	myturf = loc
+	var/turf/myturf = loc
 	if (myturf.lighting_object)
 		qdel(myturf.lighting_object, force = TRUE)
 	myturf.lighting_object = src
@@ -30,20 +27,15 @@
 	for(var/turf/open/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		S.update_starlight()
 
-	needs_update = TRUE
-	SSlighting.objects_queue += src
+	SSlighting.objects_queue[src] = TRUE
 
 /atom/movable/lighting_object/Destroy(var/force)
 	if (force)
 		SSlighting.objects_queue -= src
-		if (loc != myturf)
-			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
-			stack_trace("A lighting object was qdeleted with a different loc then it is suppose to have ([COORD(oldturf)] -> [COORD(newturf)])")
+		var/turf/myturf = get_turf(src)
 		if (isturf(myturf))
 			myturf.lighting_object = null
 			myturf.luminosity = 1
-		myturf = null
 
 		return ..()
 
@@ -51,15 +43,6 @@
 		return QDEL_HINT_LETMELIVE
 
 /atom/movable/lighting_object/proc/update()
-	if (loc != myturf)
-		if (loc)
-			var/turf/oldturf = get_turf(myturf)
-			var/turf/newturf = get_turf(loc)
-			warning("A lighting object realised it's loc had changed in update() ([myturf]\[[myturf ? myturf.type : "null"]]([COORD(oldturf)]) -> [loc]\[[ loc ? loc.type : "null"]]([COORD(newturf)]))!")
-
-		qdel(src, TRUE)
-		return
-
 	// To the future coder who sees this and thinks
 	// "Why didn't he just use a loop?"
 	// Well my man, it's because the loop performed like shit.
@@ -71,6 +54,7 @@
 	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
+	var/turf/myturf = get_turf(src)
 	var/list/corners = myturf.corners
 	var/datum/lighting_corner/cr = dummy_lighting_corner
 	var/datum/lighting_corner/cg = dummy_lighting_corner

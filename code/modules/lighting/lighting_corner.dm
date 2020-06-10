@@ -10,15 +10,12 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	var/list/datum/light_source/affecting // Light sources affecting us.
 	var/active                            = FALSE  // TRUE if one of our masters has dynamic lighting.
 
-	var/x     = 0
-	var/y     = 0
-	var/z     = 0
+	var/x
+	var/y
 
 	var/lum_r = 0
 	var/lum_g = 0
 	var/lum_b = 0
-
-	var/needs_update = FALSE
 
 	var/cache_r  = LIGHTING_SOFT_THRESHOLD
 	var/cache_g  = LIGHTING_SOFT_THRESHOLD
@@ -29,7 +26,6 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	. = ..()
 	masters = list()
 	masters[new_turf] = turn(diagonal, 180)
-	z = new_turf.z
 
 	var/vertical   = diagonal & ~(diagonal - 1) // The horizontal directions (4 and 8) are bigger than the vertical ones (1 and 2), so we can reliably say the lsb is the horizontal direction.
 	var/horizontal = diagonal & ~vertical       // Now that we know the horizontal one we can get the vertical one.
@@ -94,9 +90,7 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 	lum_g += delta_g
 	lum_b += delta_b
 
-	if (!needs_update)
-		needs_update = TRUE
-		SSlighting.corners_queue += src
+	SSlighting.corners_queue[src] = TRUE
 
 /datum/lighting_corner/proc/update_objects()
 	// Cache these values ahead of time so 4 individual lighting objects don't all calculate them individually.
@@ -124,9 +118,8 @@ GLOBAL_LIST_INIT(LIGHTING_CORNER_DIAGONAL, list(NORTHEAST, SOUTHEAST, SOUTHWEST,
 
 	for (var/TT in masters)
 		var/turf/T = TT
-		if (T.lighting_object && !T.lighting_object.needs_update)
-			T.lighting_object.needs_update = TRUE
-			SSlighting.objects_queue += T.lighting_object
+		if (T.lighting_object)
+			SSlighting.objects_queue[T.lighting_object] = TRUE
 
 
 /datum/lighting_corner/dummy/New()
