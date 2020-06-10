@@ -853,8 +853,8 @@
 	if ((getBruteLoss() >= MAX_REVIVE_BRUTE_DAMAGE) || (getFireLoss() >= MAX_REVIVE_FIRE_DAMAGE))
 		return DEFIB_FAIL_TISSUE_DAMAGE
 
-	// Plasmamen do not need a heart to live
-	if (!isplasmaman(src))
+	// Only check for a heart if they actually need a heart. Who would've thunk
+	if (needs_heart())
 		var/obj/item/organ/heart = getorgan(/obj/item/organ/heart)
 
 		if (!heart)
