@@ -71,6 +71,8 @@
 			playsound(T, 'sound/items/welder.ogg', 100, TRUE)
 			W.ScrapeAway()
 			new /obj/effect/hotspot(T.drop_location())
+			return
+		T.visible_message("The liquid evaportes mid-melting leaving the wall untouched!")
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
