@@ -126,13 +126,11 @@ There are several things that need to be remembered:
 		var/mutable_appearance/uniform_overlay
 
 		if(dna && dna.species.sexes)
-			var/G = (gender == FEMALE) ? "f" : "m"
-			if(G == "f" && U.fitted != NO_FEMALE_UNIFORM)
+			if(body_type == FEMALE && U.fitted != NO_FEMALE_UNIFORM)
 				uniform_overlay = U.build_worn_icon(default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/clothing/under/default.dmi', isinhands = FALSE, femaleuniform = U.fitted, override_state = target_overlay)
 
 		if(!uniform_overlay)
 			uniform_overlay = U.build_worn_icon(default_layer = UNIFORM_LAYER, default_icon_file = 'icons/mob/clothing/under/default.dmi', isinhands = FALSE, override_state = target_overlay)
-
 
 		if(OFFSET_UNIFORM in dna.species.offset_features)
 			uniform_overlay.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
@@ -292,7 +290,7 @@ There are several things that need to be remembered:
 		if(client && hud_used && hud_used.hud_shown)
 			client.screen += s_store
 		update_observer_view(s_store)
-		var/t_state = s_store.item_state
+		var/t_state = s_store.inhand_icon_state
 		if(!t_state)
 			t_state = s_store.icon_state
 		overlays_standing[SUIT_STORE_LAYER]	= mutable_appearance('icons/mob/clothing/belt_mirror.dmi', t_state, -SUIT_STORE_LAYER)
@@ -499,20 +497,20 @@ generate/load female uniform sprites matching all previously decided variables
 	if(override_state)
 		t_state = override_state
 	else
-		if (mob_overlay_state)
-			t_state = mob_overlay_state
-		else if(isinhands && item_state)
-			t_state = item_state
-		else
-			t_state = icon_state
-	var/t_icon = mob_overlay_icon
+		t_state = icon_state
+		if(isinhands)
+			if(inhand_icon_state)
+				t_state = inhand_icon_state
+		else if(worn_icon_state)
+			t_state = worn_icon_state
+	var/t_icon = worn_icon
 	if(!t_icon)
 		t_icon = default_icon_file
 
 	//Find a valid icon file from variables+arguments
 	var/file2use
-	if(!isinhands && mob_overlay_icon)
-		file2use = mob_overlay_icon
+	if(!isinhands && worn_icon)
+		file2use = worn_icon
 	if(!file2use)
 		file2use = default_icon_file
 
@@ -584,7 +582,7 @@ generate/load female uniform sprites matching all previously decided variables
 	else
 		. += "-not_coloured"
 
-	. += "-[gender]"
+	. += "-[body_type]"
 
 	for(var/X in bodyparts)
 		var/obj/item/bodypart/BP = X

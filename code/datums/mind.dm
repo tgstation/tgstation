@@ -67,15 +67,16 @@
 
 	var/list/learned_recipes //List of learned recipe TYPES.
 
-	///Assoc list of skills - level
+	///List of skills the user has recieved a reward for. Should not be used to keep track of currently known skills. Lazy list because it shouldnt be filled often
+	var/list/skills_rewarded
+	///Assoc list of skills. Use SKILL_LVL to access level, and SKILL_EXP to access skill's exp.
 	var/list/known_skills = list()
-	///Assoc list of skills - exp
-	var/list/skill_experience = list()
 
 /datum/mind/New(key)
 	src.key = key
 	soulOwner = src
 	martial_art = default_martial_art
+	init_known_skills()
 
 /datum/mind/Destroy()
 	SSticker.minds -= src
@@ -123,61 +124,83 @@
 		new_character.key = key		//now transfer the key to link the client to our new body
 	current.update_atom_languages()
 
+/datum/mind/proc/init_known_skills()
+	for (var/type in GLOB.skill_types)
+		known_skills[type] = list(SKILL_LEVEL_NONE, 0)
+
+///Return the amount of EXP needed to go to the next level. Returns 0 if max level
+/datum/mind/proc/exp_needed_to_level_up(skill)
+	var/lvl = update_skill_level(skill)
+	if (lvl >= length(SKILL_EXP_LIST)) //If we're already past the last exp threshold
+		return 0
+	return SKILL_EXP_LIST[lvl+1] - known_skills[skill][SKILL_EXP]
 
 ///Adjust experience of a specific skill
-/datum/mind/proc/adjust_experience(skill, amt, silent = FALSE)
+/datum/mind/proc/adjust_experience(skill, amt, silent = FALSE, force_old_level = 0)
 	var/datum/skill/S = GetSkillRef(skill)
-	skill_experience[S] = max(0, skill_experience[S] + amt) //Prevent going below 0
-	var/old_level = known_skills[S]
-	switch(skill_experience[S])
-		if(SKILL_EXP_LEGENDARY to INFINITY)
-			known_skills[S] = SKILL_LEVEL_LEGENDARY
-		if(SKILL_EXP_MASTER to SKILL_EXP_LEGENDARY)
-			known_skills[S] = SKILL_LEVEL_MASTER
-		if(SKILL_EXP_EXPERT to SKILL_EXP_MASTER)
-			known_skills[S] = SKILL_LEVEL_EXPERT
-		if(SKILL_EXP_JOURNEYMAN to SKILL_EXP_EXPERT)
-			known_skills[S] = SKILL_LEVEL_JOURNEYMAN
-		if(SKILL_EXP_APPRENTICE to SKILL_EXP_JOURNEYMAN)
-			known_skills[S] = SKILL_LEVEL_APPRENTICE
-		if(SKILL_EXP_NOVICE to SKILL_EXP_APPRENTICE)
-			known_skills[S] = SKILL_LEVEL_NOVICE
-		if(0 to SKILL_EXP_NOVICE)
-			known_skills[S] = SKILL_LEVEL_NONE
-	if(isnull(old_level) || known_skills[S] == old_level)
-		return //same level or we just started earning xp towards the first level.
+	var/old_level = force_old_level ? force_old_level : known_skills[skill][SKILL_LVL] //Get current level of the S skill
+	known_skills[skill][SKILL_EXP] = max(0, known_skills[skill][SKILL_EXP] + amt) //Update exp. Prevent going below 0
+	known_skills[skill][SKILL_LVL] = update_skill_level(skill)//Check what the current skill level is based on that skill's exp
 	if(silent)
 		return
-	if(known_skills[S] >= old_level)
-		S.level_gained(src, known_skills[S], old_level)
-	else
-		S.level_lost(src, known_skills[S], old_level)
+	if(known_skills[skill][SKILL_LVL] > old_level)
+		S.level_gained(src, known_skills[skill][SKILL_LVL], old_level)
+	else if(known_skills[skill][SKILL_LVL] < old_level)
+		S.level_lost(src, known_skills[skill][SKILL_LVL], old_level)
+
+///Set experience of a specific skill to a number
+/datum/mind/proc/set_experience(skill, amt, silent = FALSE)
+	var/old_level = known_skills[skill][SKILL_EXP]
+	known_skills[skill][SKILL_EXP] = amt
+	adjust_experience(skill, 0, silent, old_level) //Make a call to adjust_experience to handle updating level
+
+///Set level of a specific skill
+/datum/mind/proc/set_level(skill, newlevel, silent = FALSE)
+	var/oldlevel = get_skill_level(skill)
+	var/difference = SKILL_EXP_LIST[newlevel] - SKILL_EXP_LIST[oldlevel]
+	adjust_experience(skill, difference, silent)
+
+///Check what the current skill level is based on that skill's exp
+/datum/mind/proc/update_skill_level(skill)
+	var/i = 0
+	for (var/exp in SKILL_EXP_LIST)
+		i ++
+		if (known_skills[skill][SKILL_EXP] >= SKILL_EXP_LIST[i])
+			continue
+		return i - 1 //Return level based on the last exp requirement that we were greater than
+	return i //If we had greater EXP than even the last exp threshold, we return the last level
 
 ///Gets the skill's singleton and returns the result of its get_skill_modifier
 /datum/mind/proc/get_skill_modifier(skill, modifier)
 	var/datum/skill/S = GetSkillRef(skill)
-	return S.get_skill_modifier(modifier, known_skills[S] || SKILL_LEVEL_NONE)
+	return S.get_skill_modifier(modifier, known_skills[skill][SKILL_LVL])
 
+///Gets the player's current level number from the relevant skill
 /datum/mind/proc/get_skill_level(skill)
-	var/datum/skill/S = GetSkillRef(skill)
-	return known_skills[S] || SKILL_LEVEL_NONE
+	return known_skills[skill][SKILL_LVL]
+
+///Gets the player's current exp from the relevant skill
+/datum/mind/proc/get_skill_exp(skill)
+	return known_skills[skill][SKILL_EXP]
+
+/datum/mind/proc/get_skill_level_name(skill)
+	var/level = get_skill_level(skill)
+	return SSskills.level_names[level]
 
 /datum/mind/proc/print_levels(user)
 	var/list/shown_skills = list()
 	for(var/i in known_skills)
-		if(known_skills[i]) //Do we actually have a level in this?
+		if(known_skills[i][SKILL_LVL] > SKILL_LEVEL_NONE) //Do we actually have a level in this?
 			shown_skills += i
 	if(!length(shown_skills))
 		to_chat(user, "<span class='notice'>You don't seem to have any particularly outstanding skills.</span>")
 		return
-	var/msg = ""
-	msg += "<span class='info'>*---------*\n<EM>Your skills</EM></span>\n<span class='notice'>"
+	var/msg = "<span class='info'>*---------*\n<EM>Your skills</EM></span>\n<span class='notice'>"
 	for(var/i in shown_skills)
-		var/datum/skill/S = i
-		msg += "[i] - [SSskills.level_names[known_skills[S]]]\n"
+		var/datum/skill/the_skill = i
+		msg += "[initial(the_skill.name)] - [get_skill_level_name(the_skill)]\n"
 	msg += "</span>"
 	to_chat(user, msg)
-
 
 /datum/mind/proc/set_death_time()
 	last_death = world.time

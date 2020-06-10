@@ -145,8 +145,10 @@ RLD
 				to_chat(user, no_ammo_message)
 			return FALSE
 
-		silo_mats.mat_container.use_materials(list(/datum/material/iron = 500), amount)
-		silo_mats.silo_log(src, "consume", -amount, "build", list(GLOB.materials_list["iron"] = 500))
+		var/list/materials = list()
+		materials[SSmaterials.GetMaterialRef(/datum/material/iron)] = 500
+		silo_mats.mat_container.use_materials(materials, amount)
+		silo_mats.silo_log(src, "consume", -amount, "build", materials)
 		return TRUE
 
 /obj/item/construction/proc/checkResource(amount, mob/user)
@@ -562,7 +564,7 @@ RLD
 
 /obj/item/construction/rcd/borg/syndicate
 	icon_state = "ircd"
-	item_state = "ircd"
+	inhand_icon_state = "ircd"
 	energyfactor = 66
 
 /obj/item/construction/rcd/loaded
@@ -571,7 +573,7 @@ RLD
 /obj/item/construction/rcd/combat
 	name = "industrial RCD"
 	icon_state = "ircd"
-	item_state = "ircd"
+	inhand_icon_state = "ircd"
 	max_matter = 500
 	matter = 500
 	canRturf = TRUE
@@ -581,7 +583,7 @@ RLD
 	desc = "Highly compressed matter for the RCD."
 	icon = 'icons/obj/ammo.dmi'
 	icon_state = "rcd"
-	item_state = "rcdammo"
+	inhand_icon_state = "rcdammo"
 	w_class = WEIGHT_CLASS_TINY
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
@@ -611,7 +613,7 @@ RLD
 	delay_mod = 0.6
 	ranged = TRUE
 	icon_state = "arcd"
-	item_state = "oldrcd"
+	inhand_icon_state = "oldrcd"
 	has_ammobar = FALSE
 
 /obj/item/construction/rcd/arcd/afterattack(atom/A, mob/user)

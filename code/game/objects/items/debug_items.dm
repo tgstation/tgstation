@@ -5,7 +5,7 @@
 	desc = "Spawn a human by aiming at a turf and clicking. Use in hand to change type."
 	icon = 'icons/obj/guns/magic.dmi'
 	icon_state = "nothingwand"
-	item_state = "wand"
+	inhand_icon_state = "wand"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
@@ -29,7 +29,7 @@
 	desc = "The original hypertool, born before them all. Use it in hand to unleash it's true power."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hypertool"
-	item_state = "hypertool"
+	inhand_icon_state = "hypertool"
 	toolspeed = 0.1
 	tool_behaviour = null
 

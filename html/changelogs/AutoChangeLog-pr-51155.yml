@@ -1,4 +1,0 @@
-author: "qustinnus"
-delete-after: True
-changes: 
-  - bugfix: "you can no longer move up when you are going to fall down anyways, or you know, dead."
