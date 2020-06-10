@@ -1182,6 +1182,14 @@ GLOBAL_LIST_INIT(uplink_items, subtypesof(/datum/uplink_item))
 	item = /obj/item/multitool/ai_detect
 	cost = 1
 
+/datum/uplink_item/stealthy_tools/adv_chameleon
+	name = "Advanced Chameleon Kit"
+	desc = "An improved version of the original chameleon kit, adding no-slips, sunglasses, insulated gloves, and an armored jumpsuit and hat. \
+	All items in this kit utilize chameleon technology which can be disguised to make you look like anything."
+	item = /obj/item/storage/box/syndie_kit/adv_chameleon
+	cost = 8
+	exclude_modes = list(/datum/game_mode/nuclear) //clown ops are allowed to buy this kit, since it's basically a costume
+
 /datum/uplink_item/stealthy_tools/chameleon
 	name = "Chameleon Kit"
 	desc = "A set of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more! \
