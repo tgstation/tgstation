@@ -28,8 +28,10 @@
 	var/list/knowledge = cultie.get_all_knowledge()
 	var/list/atoms_in_range = list()
 
-	for(var/a in range(1, src))
-		var/atom/atom_in_range = a
+	for(var/A in range(1, src))
+		var/atom/atom_in_range = A
+		if(istype(atom_in_range,/area))
+			continue
 		if(istype(atom_in_range,/turf)) // we dont want turfs
 			continue
 		if(istype(atom_in_range,/mob/living))
@@ -62,7 +64,6 @@
 				if(is_type_in_list(local_atom_in_range,local_required_atom_list))
 					selected_atoms |= local_atom_in_range
 					local_required_atoms -= list(local_required_atom_list)
-					atoms_in_range -= local_atom_in_range
 
 		if(length(local_required_atoms) > 0)
 			continue
