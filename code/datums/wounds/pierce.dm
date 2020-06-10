@@ -241,7 +241,7 @@
 	desc = "Patient's skin has been broken open, causing severe bruising and minor internal bleeding in affected area."
 	treat_text = "Application of clean bandages or first-aid grade sutures, followed by food and rest."
 	examine_desc = "has a dark bruise, slowly oozing blood"
-	occur_text = "spurts out a thin stream of blood from the impact wound"
+	occur_text = "spurts out a thin stream of blood from the impact"
 	sound_effect = 'sound/effects/blood1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 2
@@ -258,7 +258,7 @@
 	desc = "Patient's internal tissue is penetrated, causing sizeable internal bleeding and organ damage."
 	treat_text = "Speedy application of first-aid grade sutures and clean bandages, followed by vitals monitoring to ensure recovery."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
-	occur_text = "looses a violent spray of blood and flesh through both sides of the impact wound"
+	occur_text = "looses a violent spray of blood and flesh through both sides of the impact site"
 	sound_effect = 'sound/effects/blood2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 3.25

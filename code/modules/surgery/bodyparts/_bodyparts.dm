@@ -205,7 +205,7 @@
 	if(owner && wounding_dmg > 4 && wound_bonus != CANT_WOUND)
 		// if you want to make tox wounds or some other type, this will need to be expanded and made more modular
 		// handle all our wounding stuff
-		check_wounding(wounding_type, wounding_dmg, wound_bonus, bare_wound_bonus)
+		check_wounding(atk_type, wounding_dmg, wound_bonus, bare_wound_bonus)
 
 	var/can_inflict = max_damage - get_damage()
 	var/total_damage = brute + burn
@@ -221,7 +221,7 @@
 
 	for(var/i in wounds)
 		var/datum/wound/W = i
-		W.receive_damage(wounding_type, wounding_dmg, wound_bonus)
+		W.receive_damage(atk_type, wounding_dmg, wound_bonus)
 
 	//We've dealt the physical damages, if there's room lets apply the stamina damage.
 	stamina_dam += round(clamp(stamina, 0, max_stamina_damage - stamina_dam), DAMAGE_PRECISION)
@@ -248,14 +248,14 @@
   * * wound_bonus- The wound_bonus of an attack
   * * bare_wound_bonus- The bare_wound_bonus of an attack
   */
-/obj/item/bodypart/proc/check_wounding(woundtype, damage, wound_bonus, bare_wound_bonus)
+/obj/item/bodypart/proc/check_wounding(atk_type, damage, wound_bonus, bare_wound_bonus)
 	// actually roll wounds if applicable
 	if(HAS_TRAIT(owner, TRAIT_EASYLIMBDISABLE))
 		damage *= 1.5
 
 	var/base_roll = rand(1, round(damage ** WOUND_DAMAGE_EXPONENT))
 	var/injury_roll = base_roll
-	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
+	injury_roll += check_woundings_mods(atk_type, damage, wound_bonus, bare_wound_bonus)
 	var/list/wounds_checking
 
 	switch(woundtype)
@@ -301,7 +301,7 @@
 	var/datum/wound/new_wound = new potential_wound
 	new_wound.apply_wound(src, smited = smited)
 
-/obj/item/bodypart/proc/check_woundings_mods(wounding_type, damage, wound_bonus, bare_wound_bonus)
+/obj/item/bodypart/proc/check_woundings_mods(atk_type, damage, wound_bonus, bare_wound_bonus)
 	var/armor_ablation = 0
 	var/injury_mod = 0
 
