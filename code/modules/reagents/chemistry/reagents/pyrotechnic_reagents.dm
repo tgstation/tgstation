@@ -72,7 +72,7 @@
 			W.ScrapeAway()
 			new /obj/effect/hotspot(T.drop_location())
 			return
-		T.visible_message("The liquid evaportes mid-melting leaving the wall untouched!")
+		T.visible_message("<span class='warning'>The liquid evaportes mid-melting leaving the wall untouched!</span>")
 
 /datum/reagent/clf3/reaction_mob(mob/living/M, method=TOUCH, reac_volume)
 	if(istype(M))
