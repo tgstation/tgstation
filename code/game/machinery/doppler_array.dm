@@ -1,4 +1,4 @@
-#define PRINTER_TIMEOUT 20
+#define PRINTER_TIMEOUT 40
 
 /obj/machinery/doppler_array
 	name = "tachyon-doppler array"
@@ -7,14 +7,14 @@
 	icon_state = "tdoppler"
 	density = TRUE
 	verb_say = "states coldly"
-	ui_x = 475
+	ui_x = 500
 	ui_y = 225
 	var/cooldown = 10
 	var/next_announce = 0
 	var/max_dist = 150
-	/// Number which will be part of the name of the next record, increased by one by each already created record
+	/// Number which will be part of the name of the next record, increased by one for each already created record
 	var/record_number = 1
-	/// Cooldown variable for the print function
+	/// Cooldown for the print function
 	var/printer_ready = 0
 	/// List of all explosion records in the form of /datum/data/tachyon_record
 	var/list/records = list()
@@ -46,7 +46,6 @@
 /obj/machinery/doppler_array/ui_data(mob/user)
 	var/list/data = list()
 	data["records"] = list()
-
 	for(var/datum/data/tachyon_record/R in records)
 		var/list/record_data = list(
 			name = R.name,
@@ -74,13 +73,13 @@
 			if(!records || !(record in records))
 				return
 			records -= record
-			. = TRUE
+			return TRUE
 		if("print_record")
 			var/datum/data/tachyon_record/record  = locate(params["ref"]) in records
 			if(!records || !(record in records))
 				return
 			print(usr, record)
-			. = TRUE
+			return TRUE
 
 /obj/machinery/doppler_array/proc/print(mob/user, datum/data/tachyon_record/record)
 	if(!record)
@@ -97,22 +96,23 @@
 /obj/item/paper/record_printout/Initialize(mapload, datum/data/tachyon_record/record)
 	. = ..()
 
-	name = "paper - [record.name]"
+	if(record)
+		name = "paper - [record.name]"
 
-	info += {"<h2>[record.name]</h2></br>
-	<ul><li>Timestamp: [record.timestamp]</li>
-	<li>Coordinates: [record.coordinates]</li>
-	<li>Displacement: [record.displacement] seconds</li>
-	<li>Epicenter Radius: [record.factual_radius["epicenter_radius"]]</li>
-	<li>Outer Radius: [record.factual_radius["outer_radius"]]</li>
-	<li>Shockwave Radius: [record.factual_radius["shockwave_radius"]]</li></ul>"}
+		info += {"<h2>[record.name]</h2>
+		<ul><li>Timestamp: [record.timestamp]</li>
+		<li>Coordinates: [record.coordinates]</li>
+		<li>Displacement: [record.displacement] seconds</li>
+		<li>Epicenter Radius: [record.factual_radius["epicenter_radius"]]</li>
+		<li>Outer Radius: [record.factual_radius["outer_radius"]]</li>
+		<li>Shockwave Radius: [record.factual_radius["shockwave_radius"]]</li></ul>"}
 
-	if(length(record.theory_radius))
-		info += {"</br><li>Theoretical Epicenter Radius: [record.theory_radius["epicenter_radius"]]</li>
-		<li>Theoretical Outer Radius: [record.theory_radius["outer_radius"]]</li>
-		<li>Theoretical Shockwave Radius: [record.theory_radius["shockwave_radius"]]</li>"}
+		if(length(record.theory_radius))
+			info += {"<ul><li>Theoretical Epicenter Radius: [record.theory_radius["epicenter_radius"]]</li>
+			<li>Theoretical Outer Radius: [record.theory_radius["outer_radius"]]</li>
+			<li>Theoretical Shockwave Radius: [record.theory_radius["shockwave_radius"]]</li></ul>"}
 
-	update_icon()
+		update_icon()
 
 /obj/machinery/doppler_array/attackby(obj/item/I, mob/user, params)
 	if(I.tool_behaviour == TOOL_WRENCH)
@@ -207,9 +207,7 @@
 		return
 
 	var/point_gain = 0
-
 	/*****The Point Calculator*****/
-
 	if(orig_light_range < 10)
 		say("Explosion not large enough for research calculations.")
 		return
