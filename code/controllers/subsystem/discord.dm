@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(discord)
 		pass() // The list can just stay as its default (blank). Pass() exists because it needs a catch
 	var/notifymsg = jointext(people_to_notify, ", ")
 	if(notifymsg)
-		send2chat(trim(notifymsg), CONFIG_GET(string/chat_announce_new_game)) // Sends the message to the discord, using same config option as the roundstart notification
+		send2chat(trim(notifymsg), CONFIG_GET(string/chat_new_game_notifications)) // Sends the message to the discord, using same config option as the roundstart notification
 	fdel(notify_file) // Deletes the file
 	return ..()
 
@@ -82,8 +82,10 @@ SUBSYSTEM_DEF(discord)
 
 // Returns ID from ckey
 /datum/controller/subsystem/discord/proc/lookup_id(lookup_ckey)
+	//We cast the discord ID to varchar to prevent BYOND mangling
+	//it into it's scientific notation
 	var/datum/DBQuery/query_get_discord_id = SSdbcore.NewQuery(
-		"SELECT discord_id FROM [format_table_name("player")] WHERE ckey = :ckey",
+		"SELECT CAST(discord_id AS VARCHAR(25)) FROM [format_table_name("player")] WHERE ckey = :ckey",
 		list("ckey" = lookup_ckey)
 	)
 	if(!query_get_discord_id.Execute())
