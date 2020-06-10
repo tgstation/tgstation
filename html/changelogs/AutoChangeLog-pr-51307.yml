@@ -1,7 +1,0 @@
-author: "Kelenius"
-delete-after: True
-changes: 
-  - bugfix: "Hygienebot construction has been fixed."
-  - balance: "Hygienebots now require a proximity sensor between welding and tubing."
-  - balance: "Hygienebots no longer slip their path while chasing someone."
-  - balance: "Hygienebots are less spammy."
