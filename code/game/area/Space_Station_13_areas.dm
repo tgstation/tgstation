@@ -308,7 +308,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "meeting"
 
 /area/bridge/meeting_room/council
-	name = "Council Chamber"
+	name = "High-roller Suite"
 	icon_state = "meeting"
 
 /area/bridge/showroom/corporate
@@ -411,7 +411,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 
 /area/crew_quarters/fitness/recreation
-	name = "Recreation Area"
+	name = "Boardwalk"
 	icon_state = "rec"
 
 /area/crew_quarters/cafeteria
@@ -441,18 +441,18 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "abandoned_m_den"
 
 /area/crew_quarters/abandoned_gambling_den
-	name = "Abandoned Gambling Den"
+	name = "Casino"
 	icon_state = "abandoned_g_den"
 
 /area/crew_quarters/abandoned_gambling_den/secondary
 	icon_state = "abandoned_g_den_2"
 
 /area/crew_quarters/theatre
-	name = "Theatre"
+	name = "Lower Casino"
 	icon_state = "theatre"
 
 /area/crew_quarters/theatre/abandoned
-	name = "Abandoned Theatre"
+	name = "Theatre Backstage"
 	icon_state = "abandoned_theatre"
 
 /area/library
