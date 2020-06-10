@@ -873,11 +873,8 @@
 		if (BR.organ_flags & ORGAN_FAILING)
 			return DEFIB_FAIL_FAILING_BRAIN
 
-		if (!BR.brainmob)
+		if (BR.suicided || BR.brainmob?.suiciding)
 			return DEFIB_FAIL_NO_INTELLIGENCE
-
-		if (BR.suicided || BR.brainmob.suiciding)
-			return DEFIB_FAIL_SUICIDE
 
 	return DEFIB_POSSIBLE
 
